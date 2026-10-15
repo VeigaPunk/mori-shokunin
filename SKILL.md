@@ -89,3 +89,21 @@ were ruled out and must stay out:
 Also excluded: `ps e` / `/proc/<pid>/environ` (`omp` carries
 `HL_INITIAL_WORKSPACE_TOKEN`), `cat /proc/<pid>/fd/*` (`omp` holds 51 readable fds
 onto session JSONL), and any journal output mode that keeps `MESSAGE`.
+
+## Disk thresholds are a PROPOSAL, not a measurement
+
+`DISK_WARN_PCT=85` / `DISK_CRIT_PCT=95` carry **no write-rate evidence** and are
+labeled as such. Falsification results worth keeping:
+
+- The fleet's *actually reported* disk failures are **quota** events (`EDQUOT`,
+  "disk-quota pressure") — a capacity-percent probe cannot see them, and the quota
+  numbers are unreadable on this host.
+- **Never threshold the btrfs chunk percent.** Data-chunk fill reads **94.25%**
+  while `df -P` Capacity on the same device reads **10%**; a probe that used the
+  chunk percent would fire `DISK_LOW` against every proposed default today. Keep
+  the `df -P` parser.
+- **Never OR a byte floor against `df -P`'s Available column** — it is in
+  1024-blocks, so a bytes-denominated floor false-fires on a 10%-full filesystem.
+- One pair only. A sibling note proposing 90 and another proposing 80 must not be
+  described as the default beside 85/95, or a later diff cannot say which proposal
+  was tested.

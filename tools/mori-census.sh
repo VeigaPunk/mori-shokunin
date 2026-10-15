@@ -80,6 +80,11 @@ GIT_BIN=${MORI_GIT_BIN:-git}
 DISK_TARGETS=${MORI_DISK_TARGETS:-"$ROOT /tmp"}
 WATCHDOG_STALE_S=${MORI_WATCHDOG_STALE_S:-900}
 WAVE_UNSETTLED_S=${MORI_WAVE_UNSETTLED_S:-7200}
+# PROPOSAL, NOT MEASURED. No write-rate evidence exists for either number: the
+# fleet's own reported disk failures are quota events (EDQUOT), which a capacity-%
+# probe cannot see. 85/95 is the single R1 proposal pair; do not install a
+# "better" percent without a measured write rate, and do not OR a byte floor
+# against df -P's 1024-block Available column (a unit trap that false-fires today).
 DISK_WARN_PCT=${MORI_DISK_WARN_PCT:-85}
 DISK_CRIT_PCT=${MORI_DISK_CRIT_PCT:-95}
 LANE_SILENCE_S=${MORI_LANE_SILENCE_S:-7200}

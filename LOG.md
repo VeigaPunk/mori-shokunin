@@ -51,3 +51,15 @@ daemon; the erratum's `w5`–`w11` generalization was superseded by measurement
 script sha for this round: see the receipt block above. Carried debt: the
 pgrep-unavailable arm is latent and unproven by fixture; silence has no
 `unavailable` state; `/scratch/tmp` is outside the default disk targets.
+
+**Round-1 correction 6 (appended 2026-10-15).** Disk thresholds are now explicitly
+labeled `PROPOSAL, NOT MEASURED` in the gate and in `SKILL.md`, with the two traps
+named (btrfs chunk percent reads 94.25% against a 10% `df` Capacity — never
+threshold it; a byte floor OR'd against `df -P`'s 1024-block column false-fires on
+a 10%-full filesystem). No new percent was installed.
+
+**Lane telemetry (recorded, not a failure).** The `DiskThresholds` seat ended
+without a final message (`failed` per the harness) while its **19 KB report landed
+on disk** — an artifact-exists/status-failed case, not a lost lane. Its content is
+used above; the process defect is recorded so the harness status is not read as a
+missing deliverable.
