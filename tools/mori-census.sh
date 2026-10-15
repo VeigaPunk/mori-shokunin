@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# mori-census.sh — read-only fleet/host observability census (mori-shokunin r1).
+# mori-census.sh — read-only fleet/host observability census (mori-shokunin r2).
 #
 # Domain: whether the fleet, its waves and its host are alive and progressing.
 # Product: verdict + surface lines + stable finding ids. Never remediates.
@@ -13,7 +13,9 @@
 #   journal   journalctl --user -b kill/OOM class counts (this boot)
 #   cgroup    memory.events / memory.current (user slice)
 #   disk      df runway on fleet root + /tmp + optional scratch
-#   silence   lane silent|progressing|progressing-weak (PROTOCOL.md)
+#   silence   per-lane launch/closure/authorship grading (PROTOCOL.md:153-168;
+#             contract corpus/knowledge/silence-grading-r2.md) — states silent |
+#             progressing | progressing-weak | young | not-open | unavailable
 #   tmux      optional session list (absence = unavailable, not DRIFT)
 #
 # Live mode writes nothing. --selftest writes only under
@@ -23,6 +25,7 @@
 #   MORI_SHOKUNIN_ROOT   fleet root (default: parent of tools/../ or cwd probe)
 #   MORI_UFO_DIR         default $ROOT/.ufo
 #   MORI_WATCHDOG_LOG    default $UFO/watchdog.log
+#   MORI_TIMELINE_FILE   launch/close ledger for lane silence; default $WATCHDOG_LOG
 #   MORI_STATE_DIR       default $UFO/state
 #   MORI_WAVES_DIR       default $UFO/waves
 #   MORI_CGROUP_EVENTS   default user-slice memory.events path
@@ -55,7 +58,7 @@ set -euo pipefail
 # `cmd=journalctl --user -b --no-pager` re-run prints MESSAGE by design.
 set +o xtrace
 
-VERSION=census-r1
+VERSION=census-r2
 SELF=$(readlink -f -- "${BASH_SOURCE[0]}" 2>/dev/null || {
   p=$0
   case "$p" in /*) printf '%s' "$p" ;; *) printf '%s' "$PWD/$p" ;; esac
@@ -72,6 +75,10 @@ esac
 ROOT=${MORI_SHOKUNIN_ROOT:-$DEFAULT_ROOT}
 UFO=${MORI_UFO_DIR:-$ROOT/.ufo}
 WATCHDOG_LOG=${MORI_WATCHDOG_LOG:-$UFO/watchdog.log}
+# The launch/close ledger is the watchdog log on this fleet; the override exists
+# so a scenario driver can point the probe at the same bytes it writes
+# (tools/mori-silence-cases.sh exports MORI_TIMELINE_FILE).
+TIMELINE_FILE=${MORI_TIMELINE_FILE:-$WATCHDOG_LOG}
 STATE_DIR=${MORI_STATE_DIR:-$UFO/state}
 WAVES_DIR=${MORI_WAVES_DIR:-$UFO/waves}
 CGROUP_EVENTS=${MORI_CGROUP_EVENTS:-/sys/fs/cgroup/user.slice/user-$(id -u).slice/memory.events}
@@ -246,7 +253,7 @@ probe_watchdog() {
 # Never call unsettled "failed".
 probe_waves() {
   local cmd="find $WAVES_DIR -maxdepth 1 -mindepth 1 -type d"
-  local n_total=0 n_settled=0 n_unsettled=0 n_empty=0 n_aged=0
+  local n_total=0 n_settled=0 n_unsettled=0 n_empty=0 n_aged=0 n_age_unread=0
   local d base has_reg has_disp has_run has_settle newest age st
 
   if [ ! -d "$WAVES_DIR" ]; then
@@ -280,7 +287,19 @@ probe_waves() {
       done
     fi
 
-    newest=$(find "$d" -type f -printf '%T@\n' 2>/dev/null | sort -n | tail -1 | cut -d. -f1)
+    # r2: this age used to be read through a `find | sort | tail | cut` command
+    # substitution whose nonzero pipeline rc (pipefail) aborted the whole census
+    # under `set -e` when the walk hit an unreadable subtree — the same construct
+    # the silence probe carried at line 517 of the r1 file. The rc is graded now:
+    # an unreadable wave age is counted and disclosed, and never compared against
+    # a threshold the read cannot prove.
+    cap find "$d" -type f -printf '%T@\n'
+    newest=''
+    if [ "$CAP_RC" -eq 0 ]; then
+      newest=$(printf '%s\n' "$CAP_OUT" | sort -n | tail -1 | cut -d. -f1)
+    else
+      n_age_unread=$((n_age_unread + 1))
+    fi
     age=0
     if [ -n "${newest:-}" ]; then age=$((NOW_EPOCH - newest)); fi
 
@@ -298,7 +317,7 @@ probe_waves() {
     fi
   done
 
-  emit_surface waves "$st" "cmd=$cmd; total=$n_total settled=$n_settled unsettled=$n_unsettled aged_unsettled=$n_aged empty=$n_empty threshold_s=$WAVE_UNSETTLED_S; ts=$TS_UTC"
+  emit_surface waves "$st" "cmd=$cmd; total=$n_total settled=$n_settled unsettled=$n_unsettled aged_unsettled=$n_aged empty=$n_empty age_unreadable=$n_age_unread threshold_s=$WAVE_UNSETTLED_S; ts=$TS_UTC"
 }
 
 # ---- surface: journal kill/OOM ----------------------------------------------
@@ -481,12 +500,37 @@ probe_disk() {
   fi
 }
 
-# ---- surface: lane silence --------------------------------------------------
-# PROTOCOL.md:158-167 — progressing = lane-authored commit OR non-git files
-# newer than launch/window; sibling-authored alone = progressing-weak;
-# neither = silent. Commit sparsity is NOT silence.
-# r1 approximation without launch-ts ledger: window = NOW - LANE_SILENCE_S.
-# Grade per roster lane against $ROOT/<lane>-shokunin (protocol/aggregator -> ROOT).
+# ---- surface: lane silence (r2: launch-aware, authorship-aware) -------------
+# Authority: PROTOCOL.md:153-168. Contract: corpus/knowledge/silence-grading-r2.md.
+# Decision rows, first match wins:
+#   1 unavailable  ledger unreadable, repo absent, git rc!=0, tree unreadable,
+#                  launch ts unparseable
+#   2 not-open     no launch/steer line for the lane
+#   3 young        launch epoch in the future
+#   4 closed       a later same-round complete/wrap line (no grade)
+#   6 closed       report at HEAD, newest path commit ct in (launch, NOW]
+#   7 not-open     .ufo/state/<lane>.round advanced past the anchor round
+#   8 young        age_s <= LANE_SILENCE_S (only age > gate is gradeable-old)
+#   9 authorship   A progressing (exact subject-authored commit in (launch, NOW])
+#                  B progressing (untracked/dirty file newer than the anchor;
+#                    attribution inference, disclosed on the row)
+#                  C progressing-weak (other-authored commits only)
+#                  D silent — the ONLY LANE_SILENT emission
+# Ledger grammar (live-measured): "<ISO-8601+offset> launch <lane> round=<N>
+# <tail>" where <tail> is pid=|runId=|mission= or absent; legacy "<ISO> steer
+# <lane> -> round <N>"; closes "<ISO> complete|wrap <lane> round=<N>...". Tails
+# are ignored; 'launch' outranks the legacy 'steer'; the LAST matching line in
+# file order wins (the clock is not the tie-breaker); launch-fail and
+# lane-round-failed never start a mission. Epoch = first parseable timestamp
+# token (field 1; the synthetic "ts=<epoch>" form is accepted as a fallback).
+# Identity: exact "%an <%ae>" line "<lane>-shokunin <lane>@shokunin.local>"
+# (never %cn/%ce, never a substring, never read from repo config).
+# Scope: a child lane scans its own repo; the main-repo lanes (protocol,
+# aggregator) scan the fleet root minus nested *-shokunin/** checkouts and
+# .ufo/** driver churn — .ufo/reports/** stays, it is the lane's own deliverable
+# path, not churn. Row A drops .ufo entirely (a committed report is graded by
+# row 6, not as progress); row B keeps .ufo/reports/**.
+# unavailable != unhealthy: only row D flips the roll.
 lane_repo() {
   case "$1" in
     protocol|aggregator) printf '%s' "$ROOT" ;;
@@ -494,52 +538,310 @@ lane_repo() {
   esac
 }
 
+is_root_lane() { case "$1" in protocol|aggregator) return 0 ;; *) return 1 ;; esac; }
+is_int() { case "${1:-}" in ''|*[!0-9]*) return 1 ;; *) return 0 ;; esac; }
+
+in_lane_scope() { # <lane> <repo-relative path>
+  local lane=$1 path=$2
+  is_root_lane "$lane" || return 0
+  case "$path" in
+    *-shokunin/*) return 1 ;;
+    .ufo/reports/*) return 0 ;;
+    .ufo|.ufo/*) return 1 ;;
+  esac
+  return 0
+}
+
+iso_to_epoch() { # <iso-8601+offset> -> epoch, empty when unparseable
+  local out
+  if ! out=$(date -u -d "$1" +%s 2>/dev/null); then out=''; fi
+  printf '%s' "$out"
+}
+
+ledger_ts_fallback() { # <ledger line> -> epoch from a "ts=<epoch>" token, else empty
+  local tok v
+  for tok in $1; do
+    case "$tok" in
+      ts=*)
+        v=${tok#ts=}
+        if is_int "$v"; then printf '%s' "$v"; return 0; fi
+        ;;
+    esac
+  done
+  printf ''
+}
+
+# ledger_anchor <lane>: one pass over the ledger;
+#   sets LA_LINE LA_EPOCH LA_ROUND LA_CLOSED (LA_LINE=0 = no start line at all)
+ledger_anchor() {
+  local lane=$1 n=0 line f1 f2 f3 f4 f5 f6 rest ep round
+  local l_ln=0 l_ep='' l_round='' s_ln=0 s_ep='' s_round=''
+  local close_ln=0 close_round=''
+  LA_LINE=0; LA_EPOCH=''; LA_ROUND=''; LA_CLOSED=0
+  while IFS= read -r line; do
+    n=$((n + 1))
+    line=${line%$'\r'}
+    # Candidate ledger lines: the live grammar's field 1 is an ISO-8601 token, so
+    # the line starts with a digit; the superseded synthetic grammar prefixes a
+    # "TIMESTAMP" token and carries the epoch in "ts=<epoch>", accepted here so
+    # that fallback is reachable at all.
+    case "$line" in
+      [0-9]*T*) ;;
+      *' ts='[0-9]*) ;;
+      *) continue ;;
+    esac
+    read -r f1 f2 f3 f4 f5 f6 rest <<< "$line" || true
+    case "$f2" in
+      launch)
+        [ "$f3" = "$lane" ] || continue
+        case "$f4" in round=*) ;; *) continue ;; esac
+        round=${f4#round=}; round=${round%%;*}
+        ep=$(iso_to_epoch "$f1")
+        if [ -z "$ep" ]; then ep=$(ledger_ts_fallback "$line"); fi
+        l_ln=$n; l_ep=$ep; l_round=$round
+        ;;
+      steer)
+        [ "$f3" = "$lane" ] || continue
+        [ "$f4" = '->' ] || continue
+        [ "$f5" = round ] || continue
+        ep=$(iso_to_epoch "$f1")
+        if [ -z "$ep" ]; then ep=$(ledger_ts_fallback "$line"); fi
+        s_ln=$n; s_ep=$ep; s_round=$f6
+        ;;
+      complete|wrap)
+        [ "$f3" = "$lane" ] || continue
+        case "$f4" in round=*) ;; *) continue ;; esac
+        round=${f4#round=}; round=${round%%;*}
+        close_ln=$n; close_round=$round
+        ;;
+    esac
+  done <<< "$LEDGER"
+  if [ "$l_ln" -gt 0 ]; then
+    LA_LINE=$l_ln; LA_EPOCH=$l_ep; LA_ROUND=$l_round
+  elif [ "$s_ln" -gt 0 ]; then
+    LA_LINE=$s_ln; LA_EPOCH=$s_ep; LA_ROUND=$s_round
+  fi
+  if [ "$LA_LINE" -gt 0 ] && [ "$close_ln" -gt "$LA_LINE" ] && [ "$close_round" = "$LA_ROUND" ]; then
+    LA_CLOSED=1
+  fi
+}
+
+# Tree readability gate: an unreadable subtree grades unavailable, it must never
+# abort the run. r1's `find | sort | tail | cut` command substitution did abort
+# here: the nonzero pipeline rc (pipefail) tripped `set -e` and killed the census
+# before any verdict (measured with the unreadable-.git fixture; harness case 9).
+ps_walk() { # <lane> <repo> -> PS_WALK_RC
+  local lane=$1 repo=$2
+  if is_root_lane "$lane"; then
+    cap find "$repo" -path '*/.git' -prune -o -name '*-shokunin' -prune -o -type d -printf ''
+  else
+    cap find "$repo" -path '*/.git' -prune -o -type d -printf ''
+  fi
+  PS_WALK_RC=$CAP_RC
+}
+
+# Row 6: report present at HEAD AND newest commit touching it in (launch, NOW].
+# The report path is repo-relative to the fleet root for every lane
+# (PROTOCOL.md:137; driver report_of()), and best-effort: an unreadable report
+# repo does not make a lane unavailable (the lane's own repo is the primary
+# evidence source).
+ps_report_closed() { # <lane> <round> <launch_epoch> -> rc 0 = closed
+  local lane=$1 round=$2 launch=$3
+  local rpath=".ufo/reports/round-$round/$lane.md" ct
+  cap env GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$ROOT" cat-file -e "HEAD:$rpath"
+  [ "$CAP_RC" -eq 0 ] || return 1
+  cap env GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$ROOT" log -1 --format=%ct -- "$rpath"
+  [ "$CAP_RC" -eq 0 ] || return 1
+  ct=${CAP_OUT%%$'\n'*}
+  ct=${ct//[[:space:]]/}
+  is_int "$ct" || return 1
+  [ "$ct" -gt "$launch" ] || return 1
+  [ "$ct" -le "$NOW_EPOCH" ] || return 1
+  return 0
+}
+
+# grade_lane <lane>: sets GL_STATE GL_ROUND GL_LAUNCH GL_AGE GL_BASIS GL_EXTRA
+grade_lane() {
+  local lane=$1 repo
+  repo=$(lane_repo "$lane")
+  GL_STATE=''; GL_ROUND='-'; GL_LAUNCH='-'; GL_AGE='-'; GL_BASIS=''; GL_EXTRA=''
+
+  # -- row 1: unreadable inputs ------------------------------------------------
+  if [ ! -r "$TIMELINE_FILE" ]; then
+    GL_STATE=unavailable; GL_BASIS='row-1'
+    GL_EXTRA="reason=ledger-unreadable path=$TIMELINE_FILE"
+    return 0
+  fi
+  if [ ! -d "$repo" ]; then
+    GL_STATE=unavailable; GL_BASIS='row-1'
+    GL_EXTRA="reason=repo-absent repo=$repo"
+    return 0
+  fi
+  cap env GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" rev-parse --git-dir
+  if [ "$CAP_RC" -ne 0 ]; then
+    GL_STATE=unavailable; GL_BASIS='row-1'
+    GL_EXTRA="reason=git-unreadable rc=$CAP_RC repo=$repo"
+    return 0
+  fi
+  ps_walk "$lane" "$repo"
+  if [ "$PS_WALK_RC" -ne 0 ]; then
+    GL_STATE=unavailable; GL_BASIS='row-1'
+    GL_EXTRA="reason=tree-unreadable rc=$PS_WALK_RC repo=$repo"
+    return 0
+  fi
+
+  # -- rows 2-8: launch anchor, closure, age ----------------------------------
+  ledger_anchor "$lane"
+  if [ "$LA_LINE" -eq 0 ]; then
+    GL_STATE=not-open; GL_BASIS='row-2'; GL_EXTRA='reason=no-launch-line'
+    return 0
+  fi
+  if ! is_int "$LA_EPOCH"; then
+    GL_STATE=unavailable; GL_BASIS='row-1'; GL_EXTRA='reason=launch-ts-unparseable'
+    return 0
+  fi
+  GL_ROUND=$LA_ROUND; GL_LAUNCH=$LA_EPOCH
+  if [ "$LA_EPOCH" -gt "$NOW_EPOCH" ]; then
+    GL_STATE=young; GL_BASIS='row-3'; GL_EXTRA='reason=launch-in-future'
+    return 0
+  fi
+  if [ "$LA_CLOSED" -eq 1 ]; then
+    GL_STATE=not-open; GL_BASIS='row-4'
+    GL_EXTRA="reason=ledger-close round=$LA_ROUND"
+    return 0
+  fi
+  local round_state
+  round_state=$(read_file "$STATE_DIR/$lane.round")
+  if is_int "$round_state" && is_int "$LA_ROUND" && [ "$round_state" -gt "$LA_ROUND" ]; then
+    GL_STATE=not-open; GL_BASIS='row-7'
+    GL_EXTRA="reason=round-advanced state_round=$round_state anchor_round=$LA_ROUND"
+    return 0
+  fi
+  local age=$((NOW_EPOCH - LA_EPOCH))
+  GL_AGE=$age
+  if [ "$age" -le "$LANE_SILENCE_S" ]; then
+    GL_STATE=young; GL_BASIS='row-8'; GL_EXTRA="reason=age_le_gate gate_s=$LANE_SILENCE_S"
+    return 0
+  fi
+
+  # -- facts shared by rows 6 and 9 --------------------------------------------
+  cap env GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -c core.quotePath=false -C "$repo" ls-files -mo --exclude-standard
+  if [ "$CAP_RC" -ne 0 ]; then
+    GL_STATE=unavailable; GL_BASIS='row-1'
+    GL_EXTRA="reason=git-ls-files-error rc=$CAP_RC repo=$repo"
+    return 0
+  fi
+  local lsm=$CAP_OUT
+
+  if ps_report_closed "$lane" "$LA_ROUND" "$LA_EPOCH"; then
+    GL_STATE=not-open; GL_BASIS='row-6'
+    GL_EXTRA="reason=committed-report round=$LA_ROUND path=.ufo/reports/round-$LA_ROUND/$lane.md"
+    return 0
+  fi
+
+  # -- row 9: authorship -------------------------------------------------------
+  local has_head=0 subj=0 sib=0 sibn=0 n_rowb=0 example='' path mt inwin
+  cap env GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" rev-parse --verify -q HEAD
+  if [ "$CAP_RC" -eq 0 ]; then
+    has_head=1
+    local lg_args=(--since="@$LA_EPOCH" --format='%ct %an <%ae>')
+    # Rows A/C scan all post-launch commits (a subject commit hidden behind a
+    # later sibling HEAD still counts). The pathspecs bind the main-repo lanes to
+    # the root's own scope; a child lane's repo is the lane scope entire.
+    if is_root_lane "$lane"; then
+      lg_args+=(-- . ':(exclude).ufo' ':(exclude,glob)**/*-shokunin/**')
+    fi
+    cap env GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" log "${lg_args[@]}"
+    if [ "$CAP_RC" -ne 0 ]; then
+      GL_STATE=unavailable; GL_BASIS='row-1'
+      GL_EXTRA="reason=git-log-error rc=$CAP_RC repo=$repo"
+      return 0
+    fi
+    # --since is committer-date based and inclusive at equality (measured on git
+    # 2.55.0), so the strict window (launch, NOW] is applied by an explicit %ct
+    # comparison here — that is what keeps a commit at ct == launch out of both
+    # attribution and closure.
+    inwin=$(printf '%s\n' "$CAP_OUT" | awk -v lo="$LA_EPOCH" -v hi="$NOW_EPOCH" \
+      '$1 ~ /^[0-9]+$/ && $1+0 > lo+0 && $1+0 <= hi+0 { print }')
+    if [ -n "$inwin" ]; then
+      sibn=$(printf '%s\n' "$inwin" | awk 'END { print NR }')
+      if printf '%s\n' "$inwin" | sed -E 's/^[0-9]+ //' | grep -Fxq -- "$lane-shokunin <$lane@shokunin.local>"; then
+        subj=1
+      else
+        sib=1
+      fi
+    fi
+  fi
+
+  if [ "$subj" -eq 1 ]; then
+    GL_STATE=progressing; GL_BASIS='row-A'
+    GL_EXTRA='subject_commits=yes window=launch..NOW'
+    return 0
+  fi
+
+  # Row B: untracked or dirty files newer than the anchor. Only paths git already
+  # flags are examined, so a clean tracked file can never be promoted (the
+  # spec's named falsifier); ignored trees never enter (`--exclude-standard`).
+  if [ -n "$lsm" ]; then
+    while IFS= read -r path; do
+      [ -n "$path" ] || continue
+      in_lane_scope "$lane" "$path" || continue
+      mt=$(epoch_mtime "$repo/$path")
+      is_int "$mt" || continue
+      if [ "$mt" -gt "$LA_EPOCH" ]; then
+        n_rowb=$((n_rowb + 1))
+        [ -n "$example" ] || example=$path
+      fi
+    done <<< "$lsm"
+  fi
+  if [ "$n_rowb" -gt 0 ]; then
+    GL_STATE=progressing; GL_BASIS='row-B'
+    GL_EXTRA="rowb_files=$n_rowb attribution=inference example=$example"
+    return 0
+  fi
+
+  if [ "$sib" -eq 1 ]; then
+    GL_STATE=progressing-weak; GL_BASIS='row-C'
+    GL_EXTRA="other_authored_commits=$sibn"
+    return 0
+  fi
+  GL_STATE=silent; GL_BASIS='row-D'
+  GL_EXTRA="no_subject_commits=yes no_other_commits=yes no_fresh_files=yes has_head=$has_head"
+}
+
 probe_silence() {
-  local cmd="git -C <repo> log -1 --format=%ct; find <repo> -newermt @window"
-  local st=ok lane repo head_t newest_t window_start grade n_silent=0 n_prog=0 n_weak=0 n_skip=0
-  window_start=$((NOW_EPOCH - LANE_SILENCE_S))
+  local cmd="git -C <repo> log --since=@<launch> --format='%ct %an <%ae>'; git -C <repo> ls-files -mo; git -C <root> cat-file -e HEAD:.ufo/reports/round-<N>/<lane>.md"
+  local st=ok lane n_silent=0 n_prog=0 n_weak=0 n_young=0 n_notopen=0 n_unavail=0 n_lanes=0
+  if [ -r "$TIMELINE_FILE" ]; then
+    LEDGER=$(cat -- "$TIMELINE_FILE" 2>/dev/null || true)
+  else
+    LEDGER=''
+  fi
 
   for lane in $ROSTER_LANES; do
-    repo=$(lane_repo "$lane")
-    if [ ! -d "$repo" ]; then
-      n_skip=$((n_skip + 1))
-      continue
-    fi
-    head_t=0
-    if have "$GIT_BIN" || [ -x "$GIT_BIN" ]; then
-      if [ -d "$repo/.git" ]; then
-        cap "$GIT_BIN" -C "$repo" log -1 --format=%ct
-        if [ "$CAP_RC" -eq 0 ] && [ -n "$CAP_OUT" ]; then
-          head_t=$(printf '%s\n' "$CAP_OUT" | head -n1 | tr -d '[:space:]')
-        fi
-      fi
-    fi
-    newest_t=$(find "$repo" -type f -not -path '*/.git/*' -printf '%T@\n' 2>/dev/null | sort -n | tail -1 | cut -d. -f1)
-    newest_t=${newest_t:-0}
-    head_t=${head_t:-0}
-
-    grade=silent
-    # progressing: head or files inside window
-    if [ "$head_t" -ge "$window_start" ] 2>/dev/null || [ "$newest_t" -ge "$window_start" ] 2>/dev/null; then
-      # r1: without author check, treat in-window activity as progressing
-      # (progressing-weak needs author ≠ lane — deferred; sibling-commit alone
-      # without file mtime would need git log --format=%an — kept weak only when
-      # head is in-window but files are not and we cannot prove authorship).
-      if [ "$newest_t" -ge "$window_start" ] 2>/dev/null; then
-        grade=progressing
-        n_prog=$((n_prog + 1))
-      elif [ "$head_t" -ge "$window_start" ] 2>/dev/null; then
-        grade=progressing-weak
-        n_weak=$((n_weak + 1))
-      fi
-    else
-      n_silent=$((n_silent + 1))
-      emit_finding LANE_SILENT warn "lane=$lane head_epoch=$head_t newest_epoch=$newest_t window_s=$LANE_SILENCE_S"
-      st=drift
-    fi
+    n_lanes=$((n_lanes + 1))
+    grade_lane "$lane"
+    case "$GL_STATE" in
+      silent)
+        n_silent=$((n_silent + 1)); st=drift
+        emit_finding LANE_SILENT warn "lane=$lane round=${GL_ROUND} launch_epoch=${GL_LAUNCH} age_s=${GL_AGE} gate_s=$LANE_SILENCE_S basis=row-D"
+        ;;
+      progressing) n_prog=$((n_prog + 1)) ;;
+      progressing-weak) n_weak=$((n_weak + 1)) ;;
+      young) n_young=$((n_young + 1)) ;;
+      not-open) n_notopen=$((n_notopen + 1)) ;;
+      unavailable) n_unavail=$((n_unavail + 1)) ;;
+    esac
+    # The per-lane row is the state the scenario driver reads; it is not counted
+    # as an extra surface (surfaces=N stays the surface list).
+    SURFACE_LINES+=("SURFACE lane.$lane: $GL_STATE (lane=$lane round=${GL_ROUND} launch_epoch=${GL_LAUNCH} age_s=${GL_AGE} basis=${GL_BASIS} ${GL_EXTRA}; ts=$TS_UTC)")
   done
 
-  emit_surface silence "$st" "cmd=$cmd; silent=$n_silent progressing=$n_prog progressing_weak=$n_weak skipped=$n_skip window_s=$LANE_SILENCE_S; ts=$TS_UTC"
+  # A missing surface is unavailable, never unhealthy; only row D flips the roll.
+  if [ "$n_silent" -eq 0 ] && [ "$n_lanes" -gt 0 ] && [ "$n_unavail" -eq "$n_lanes" ]; then
+    st=unavailable
+  fi
+  emit_surface silence "$st" "cmd=$cmd; silent=$n_silent progressing=$n_prog progressing_weak=$n_weak young=$n_young not_open=$n_notopen unavailable=$n_unavail skipped=0 window_s=$LANE_SILENCE_S; ts=$TS_UTC"
 }
 
 # ---- surface: tmux (optional) -----------------------------------------------
@@ -596,11 +898,18 @@ run_selftest() {
   # A non-local holder keeps the path visible to the trap.
   MORI_SELFTEST_WORK=$(mktemp -d /tmp/mori-census-selftest.XXXXXX)
   local work="$MORI_SELFTEST_WORK"
-  trap 'rm -rf -- "${MORI_SELFTEST_WORK:-}"' EXIT INT TERM
+  # chmod first: the unreadable-subtree cases (silence tree-unreadable, waves
+  # age-unreadable) leave mode-000 dirs behind, and `rm -rf` cannot descend into
+  # what it cannot read.
+  trap 'chmod -R u+rwX "${MORI_SELFTEST_WORK:-}" 2>/dev/null; rm -rf -- "${MORI_SELFTEST_WORK:-}"' EXIT INT TERM
   bin="$work/bin"
   mkdir -p "$bin" "$work/fx"
 
-  # dispatcher stubs — answer only from MORI_FIXTURE tree
+  # dispatcher stubs — answer only from MORI_FIXTURE tree. git is arg-aware: the
+  # r2 silence probe asks distinct questions (rev-parse / ls-files / cat-file /
+  # `log` for authorship vs `log -1` for the newest report-path commit), so the
+  # stub answers per verb from $fx/stub/git-<verb>[.rc]; an absent file answers
+  # empty output with rc 0.
   cat > "$bin/.dispatch" <<'STUB'
 #!/usr/bin/env bash
 set -uo pipefail
@@ -620,7 +929,19 @@ case "$name" in
   tmux)
     out_of tmux; exit "$(rc_of tmux)" ;;
   git)
-    out_of git; exit "$(rc_of git)" ;;
+    verb=''
+    for a in "$@"; do
+      case "$a" in
+        rev-parse) verb=rev-parse; break ;;
+        ls-files) verb=ls-files; break ;;
+        cat-file) verb=cat-file; break ;;
+        log)
+          case " $* " in *" -1 "*) verb=log1 ;; *) verb=log ;; esac
+          break ;;
+      esac
+    done
+    [ -n "$verb" ] || verb=other
+    out_of "git-$verb"; exit "$(rc_of "git-$verb")" ;;
 esac
 printf 'fixture dispatcher: unknown %s\n' "$name" >&2
 exit 96
@@ -632,7 +953,10 @@ STUB
   ok() { PASS=$((PASS + 1)); printf 'PASS %s\n' "$*"; }
   bad() { FAIL=$((FAIL + 1)); printf 'FAIL %s\n' "$*" >&2; }
 
-  fx_hash() { find "$1" -type f -exec sha256sum {} + 2>/dev/null | LC_ALL=C sort | sha256sum | cut -d' ' -f1; }
+  # The braces keep a failed walk (an intentionally unreadable fixture subtree)
+  # from tripping pipefail inside this command substitution: the hash covers what
+  # is readable, in both the before and the after pass.
+  fx_hash() { { find "$1" -type f -exec sha256sum {} + 2>/dev/null || true; } | LC_ALL=C sort | sha256sum | cut -d' ' -f1; }
   fx_no_mutation() {
     local d=$1 before=$2 after
     after=$(fx_hash "$d")
@@ -665,8 +989,9 @@ STUB
     printf 'Filesystem 1024-blocks Used Available Capacity Mounted on\n/dev/fx 1000000 10000 990000 2%% /fx\n' > "$d/stub/df"
     printf 0 > "$d/stub/df.rc"
     printf 'fx_session: 1 windows\n' > "$d/stub/tmux"; printf 0 > "$d/stub/tmux.rc"
-    # git head recent
-    printf '%s\n' "1700000000" > "$d/stub/git"; printf 0 > "$d/stub/git.rc"
+    # git answers per verb via stub/git-<verb>[.rc] (see the dispatcher above):
+    # rev-parse / ls-files / cat-file / log / log1. Absent fixture files answer
+    # empty output with rc 0.
     # lane file recent — touch in check with NOW
     printf 'x\n' > "$d/lanes/kagi-shokunin/LOG.md"
   }
@@ -762,6 +1087,9 @@ STUB
   # --- cases ---------------------------------------------------------------
   PIN_NOW=1700000000
 
+  # ISO-8601 with offset, the live ledger's timestamp grammar (field 1)
+  ts_iso() { date -u -d "@$1" +%Y-%m-%dT%H:%M:%S+00:00 2>/dev/null || date -u -r "$1" +%Y-%m-%dT%H:%M:%S+00:00; }
+
   FX="$work/fx/clean"; mkdir -p "$FX"; fx_quiet "$FX"
   # df target must exist
   mkdir -p "$FX/root"
@@ -835,25 +1163,151 @@ SKIP_FRESHEN=1
     '^SURFACE disk: ok'
 
   FX="$work/fx/lane-silent"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
-  # old lane file + old git head
-  printf '0\n' > "$FX/stub/git"
-  printf 'old\n' > "$FX/lanes/kagi-shokunin/LOG.md"
-  touch -d '@1600000000' "$FX/lanes/kagi-shokunin/LOG.md" 2>/dev/null || true
-  EXTRA_ENV=(MORI_LANE_SILENCE_S=60)
-  # a lane whose newest non-.git file is far older than the window: backdated
-  # explicitly, with a real threshold, so the age comparison is what is proved.
-  # lane_repo() resolves $ROOT/<lane>-shokunin — the fixture must put the lane
-  # repo where the probe looks, not in a sibling "lanes/" dir (measured: the
-  # misplaced fixture made the probe SKIP the lane and report CLEAN).
+  # r2 grades silence against the LAUNCH anchor, not a rolling window and not the
+  # repo's file mtimes. The fixture writes a real-grammar launch line into the
+  # ledger with the pinned clock and leaves the lane repo readable, with no
+  # post-launch subject commit, no other-lane commit and no fresh file — the
+  # only row-D shape, and the only case allowed to emit LANE_SILENT.
   mkdir -p "$FX/root/kagi-shokunin"
   printf 'old\n' > "$FX/root/kagi-shokunin/LOG.md"
   touch -d '@1600000000' "$FX/root/kagi-shokunin/LOG.md" 2>/dev/null || true
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  printf 1 > "$FX/stub/git-cat-file.rc"
   PIN_NOW=1700000000
   SKIP_FRESHEN=1
   EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
   check 'drift: LANE_SILENT' 1 DRIFT \
     'FINDING LANE_SILENT' \
-    'lane=kagi'
+    'lane=kagi round=7 launch_epoch=1699998000 age_s=2000' \
+    '^SURFACE lane\.kagi: silent '
+  SKIP_FRESHEN=0
+
+  # --- r2 silence grading: launch-aware, closure-aware, authorship-aware -------
+  # Contract corpus/knowledge/silence-grading-r2.md. The ledger is the watchdog
+  # log in the live grammar ("<ISO-8601+offset> launch <lane> round=<N> <tail>");
+  # git answers per verb through the fixture dispatcher (git-log / git-log1 /
+  # git-cat-file / git-ls-files / git-rev-parse). No case branches on fixture
+  # shape or on MORI_FIXTURE: the probe reads the same facts live and here.
+
+  FX="$work/fx/sil-subject-progressing"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  printf '%s\n' "1699998600 kagi-shokunin <kagi@shokunin.local>" > "$FX/stub/git-log"
+  printf 1 > "$FX/stub/git-cat-file.rc"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'silence: subject commit post-launch -> progressing' 0 CLEAN \
+    '^SURFACE lane\.kagi: progressing ' \
+    'basis=row-A'
+
+  FX="$work/fx/sil-prelaunch-silent"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  # The lane's only commit predates the launch: a repo HEAD (or a file mtime) is
+  # not the clock — the launch anchor is. Nothing is credited after it => silent.
+  printf '%s\n' "1699995000 kagi-shokunin <kagi@shokunin.local>" > "$FX/stub/git-log"
+  printf 1 > "$FX/stub/git-cat-file.rc"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'silence: pre-launch commit only -> silent' 1 DRIFT \
+    '^SURFACE lane\.kagi: silent ' \
+    'FINDING LANE_SILENT' \
+    'launch_epoch=1699998000 age_s=2000'
+
+  FX="$work/fx/sil-eq-launch-silent"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  # A commit whose ct EQUALS the launch is not post-launch (measured: git --since
+  # is inclusive at equality, so the strict window needs an explicit comparison).
+  printf '%s\n' "1699998000 kagi-shokunin <kagi@shokunin.local>" > "$FX/stub/git-log"
+  printf 1 > "$FX/stub/git-cat-file.rc"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'silence: commit at ct==launch is not post-launch -> silent' 1 DRIFT \
+    '^SURFACE lane\.kagi: silent ' \
+    'FINDING LANE_SILENT'
+
+  FX="$work/fx/sil-weak-not-promoted"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  # Near-miss identity: the NAME is a superstring of the lane's, the email is
+  # exact. It is not the lane, so it must not be promoted to progressing.
+  printf '%s\n' "1699998600 kagi-helper-shokunin <kagi@shokunin.local>" > "$FX/stub/git-log"
+  printf 1 > "$FX/stub/git-cat-file.rc"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'silence: other-authored commit only -> progressing-weak' 0 CLEAN \
+    '^SURFACE lane\.kagi: progressing-weak ' \
+    'basis=row-C'
+
+  FX="$work/fx/sil-young-eq-gate"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  # age == gate is YOUNG: only age > LANE_SILENCE_S is gradeable-old, so a
+  # subject commit in the window is not even reached at this age.
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 900)))" >> "$FX/ufo/watchdog.log"
+  printf '%s\n' "1699999600 kagi-shokunin <kagi@shokunin.local>" > "$FX/stub/git-log"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'silence: strict age gate (age == gate) -> young' 0 CLEAN \
+    '^SURFACE lane\.kagi: young ' \
+    'basis=row-8'
+
+  FX="$work/fx/sil-synthetic-ts"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  # The superseded synthetic grammar prefixes a "TIMESTAMP" token and carries the
+  # epoch in ts=<epoch>: the anchor must come from that token, and the row must
+  # show the parsed epoch (the live grammar's field 1 cannot supply it).
+  printf 'TIMESTAMP launch kagi round=7 ts=%s\n' "$((PIN_NOW - 2000))" >> "$FX/ufo/watchdog.log"
+  printf '%s\n' "1699998600 kagi-shokunin <kagi@shokunin.local>" > "$FX/stub/git-log"
+  printf 1 > "$FX/stub/git-cat-file.rc"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'silence: synthetic ts= ledger anchor' 0 CLEAN \
+    '^SURFACE lane\.kagi: progressing ' \
+    'launch_epoch=1699998000 age_s=2000'
+
+  FX="$work/fx/sil-bad-ts"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  # A launch line whose timestamp cannot be parsed is an unreadable input, not a
+  # licence to guess an epoch: unavailable, never silent, never zero-age.
+  printf '%s launch kagi round=7 pid=4242\n' '2026-10-15T99:99:99+00:00' >> "$FX/ufo/watchdog.log"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'silence: unparseable launch ts -> unavailable' 0 CLEAN \
+    '^SURFACE lane\.kagi: unavailable ' \
+    'reason=launch-ts-unparseable'
+
+  FX="$work/fx/sil-report-closed"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  # Report present at HEAD and its newest path commit is in (launch, NOW] =>
+  # closed, so the subject commit below must NOT be graded: closure wins.
+  printf 0 > "$FX/stub/git-cat-file.rc"
+  printf '%s\n' "1699998600" > "$FX/stub/git-log1"
+  printf '%s\n' "1699998700 kagi-shokunin <kagi@shokunin.local>" > "$FX/stub/git-log"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'silence: committed report in window -> not-open' 0 CLEAN \
+    '^SURFACE lane\.kagi: not-open ' \
+    'basis=row-6'
+
+  FX="$work/fx/sil-git-unreadable"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  printf 128 > "$FX/stub/git-rev-parse.rc"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'silence: git rc!=0 -> unavailable, never silent' 0 CLEAN \
+    '^SURFACE lane\.kagi: unavailable ' \
+    'reason=git-unreadable'
+
+  FX="$work/fx/sil-tree-unreadable"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin/locked"
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  # The r1 crash shape: the walk hits a subtree it cannot read and the nonzero
+  # pipeline rc (pipefail) killed the census before any verdict. r2 grades
+  # unavailable and still prints the verdict.
+  chmod 000 "$FX/root/kagi-shokunin/locked"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'silence: unreadable subtree -> unavailable verdict, no crash' 0 CLEAN \
+    '^SURFACE lane\.kagi: unavailable ' \
+    'reason=tree-unreadable' \
+    '^MORI_CENSUS: CLEAN '
+
+  FX="$work/fx/wave-age-unreadable"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  mkdir -p "$FX/ufo/waves/wave-locked/nested"
+  printf '{"wave":"wave-locked"}\n' > "$FX/ufo/waves/wave-locked/swarm-registry.json"
+  printf '{"wave":"wave-locked"}\n' > "$FX/ufo/waves/wave-locked/dispatch.json"
+  # backdate so a PROVEN age would exceed the threshold and fire; the walk fails
+  # on the locked subdir, so the age is disclosed as unreadable and nothing fires
+  find "$FX/ufo/waves/wave-locked" -type f -exec touch -d '@1600000000' {} + 2>/dev/null || true
+  chmod 000 "$FX/ufo/waves/wave-locked/nested"
+  EXTRA_ENV=(MORI_WAVE_UNSETTLED_S=900)
+  SKIP_FRESHEN=1
+  check 'waves: unreadable wave age -> no crash, no false finding' 0 CLEAN \
+    '^SURFACE waves: ok' \
+    'age_unreadable=1'
   SKIP_FRESHEN=0
 
   FX="$work/fx/cgroup-unavail"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"

@@ -106,3 +106,68 @@ SHA-256 yield `unavailable` rows and do not reproduce these receipts.
   `script_sha256=e3073a2b…`, `window_s=900`); `round-2/completed-before.txt`,
   `round-2/dispatch.json` — round-2 attempt records (see `SCORECARD.md` round-2
   section and `LOG.md`).
+
+## Round-3 receipts (r2 census cutover) — produced by the receipts-writer seat
+
+Round-3 goal wave, seat `receipts-writer`. Detection and report only — nothing was
+remediated, killed, restarted or reconfigured; no host or fleet state was written.
+`tools/mori-silence-cases.sh` is FROZEN this round (sha `505a7504…`; its sha was
+recorded around the oracle runs and did not change). `tools/mori-census.sh` moved from r1
+`e3073a2b…` to r2 `fe22a14f0bb6d90ffed14506abfcd76153ebf31cf3cb769b97e7eec61cc2f3c9`,
+which was stable before, during and after every capture (the `CENSUS_SHA256_BEFORE`
+/ `_AFTER` pairs inside each receipt are identical). Every receipt carries its own
+`CAPTURED_UTC`, exact command, exit code, duration and the script SHA-256 under test.
+
+| File | Captured UTC | Exit | Verdict / tally |
+|---|---|---|---|
+| `cutover-r3-20261015T164140Z-before.log` | 16:41:40–16:49:31Z | 0 / 1 / 1 | before-leg at r1: selftest `PASS (14 cases, 14 passed, 0 failed)`; oracle `matched=10 total=27` (17 FAILs, full list in the file); live `DRIFT (findings=21 drift=21 unavailable=1 surfaces=7)`; §4 `:283` repro rc=1 vs control rc=0 |
+| `cutover-r3-20261015T165712Z-selftest.log` | 2026-10-15T16:57:12Z | 0 | `MORI_CENSUS_SELFTEST: PASS (25 cases, 25 passed, 0 failed)` at r2 `fe22a14f…` |
+| `cutover-r3-20261015T165712Z-oracle.log` | 2026-10-15T16:57:13Z | 1 | `MORI_SILENCE_CASES: matched=25 total=27`; 15 cases moved FAIL→PASS; the 2 remaining FAILs are the frozen matcher defect below, each with passing state/finding/rc halves |
+| `cutover-r3-20261015T165712Z-live.log` | 2026-10-15T16:57:14Z | 1 | `census-r2` live: 9× `SURFACE lane.*: progressing` (kasegi `basis=row-A`; aggregator `basis=row-B attribution=inference`), `SURFACE silence: ok (silent=0 progressing=9 progressing_weak=0 young=0 not_open=0 unavailable=0 skipped=0)`, `DRIFT (findings=14 drift=14 unavailable=1 surfaces=7)` where the 1 unavailable is tmux — not DRIFT; reverify exit/finding-set identical |
+| `cutover-r3-20261015T165712Z-oracle-counterfactual.log` | 2026-10-15T16:58:24Z | 1 (frozen) / 0 (cf) | scratch copy with a one-block matcher fix, same census bytes: frozen 25/27 exit 1 vs counterfactual **27/27 exit 0**; frozen oracle sha unchanged (was never edited) |
+
+Receipt-file SHA-256 at build time:
+
+- `bb5491394b2153106f2fa4d420952b91f20235e29cbe239ab3f4f0264fd34912` (before)
+- `59d3980b1323d8400d28b69a35e2e335149662b915545e5e9dc85d70e8491970` (selftest)
+- `335c7b658c26fcb6a611241338ec52621c0ce440d84fcf9a52355e740c684a9d` (oracle)
+- `913d129a02bc8524213c0e3819ae20a3330c48271ce133611ef34912f250ab2c` (live)
+- `44208f357b7823102fdca34b599b1144ff6bd6f970a98927f3724b3f7322f130` (counterfactual)
+
+**Why the 2 remaining oracle FAILs are a harness defect, not census behavior.**
+`tools/mori-silence-cases.sh` asserts with `case "$obs" in $want)`; measured on
+this host (bash 5.3.15), a `|` introduced by parameter expansion is a LITERAL
+character, not alternation (`w='a|b'; case a in $w)` → no match). Two calls pass
+alternation strings — `:455` `'not-open|unavailable'` (case
+`ledger-missing-not-silent`) and `:613` `'progressing-weak|silent'` (case
+`report-future-no-close`) — so those two cases can never match any state and the
+registered end-goal `matched=N total=M, N=M` is unattainable at the frozen sha
+(maximum 25/27). The counterfactual receipt carries the semantics probe, the
+one-block patch (`[[ "$obs" =~ ^($want)$ ]]`) and both runs at the same census
+sha. The frozen file was not edited; the fix belongs to round 4.
+
+Re-run recipes (cwd = lane root; the after receipts apply only at these SHAs):
+
+```sh
+cd /home/vgpnk/Projects/shokunin/mori-shokunin
+sha256sum tools/mori-census.sh        # must equal fe22a14f… for the after receipts
+sha256sum tools/mori-silence-cases.sh # must equal 505a7504… (frozen)
+bash tools/mori-census.sh --selftest  # hermetic; expect exit 0, PASS (25 cases …)
+bash tools/mori-silence-cases.sh      # frozen oracle; expect matched=25 total=27, exit 1
+bash tools/mori-census.sh             # live; expect per-lane rows + deferred verdict
+# counterfactual (optional, /tmp only; frozen untouched): recipe inside the receipt
+```
+
+**Re-run preconditions (recorded, not invented):** the live receipt describes the
+host at its capture time; finding counts are mutable observations — a re-run is
+"same receipt" only in formula (exit code, finding-id set, per-lane state
+contract), never in byte equality (graded lanes' `age_s` grows; the journal
+`kill_signal` count is a boot-scope observation). The hermetic receipts (selftest,
+oracle, counterfactual) reproduce only at the pinned census sha; a different sha
+invalidates them.
+
+**Not claimed here:** no remediation, kill, restart or host/unit change was
+performed or is implied; no causal claim about fleet liveness; the counterfactual
+is a scratch experiment, not frozen-oracle behavior; live counts are one clock's
+observation; the per-case move (15 FAIL→PASS) is bound to the before/after oracle
+receipts plus the counterfactual, not to independent re-derivation.

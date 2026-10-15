@@ -14,9 +14,9 @@ reporting it. **Detection and report only. This lane never remediates.**
 |---|---|---|---|
 | Is the shokunin fleet alive? | watchdog pid + log freshness + lane counters | restarting a daemon; killing a pid | `liveness` rows: pid, start time, last tick, state |
 | Did a wave settle? | `.ufo/waves/*/swarm-registry.json` + dispatch/results pair | assuming an unsettled wave is a failed one | per-wave settled/unsettled with age |
-| Did something get killed? | `journalctl --user -b` OOM/kill lines + cgroup `memory.events` | remediating, renicing, killing | classified kill events with cgroup + timestamp |
+| Did something get killed? | `journalctl --user -b` OOM/kill lines + cgroup event counters | remediating, renicing, killing | journal class counts; cgroup count with selected source path/scope and observation time, not an event timestamp |
 | Is there resource runway? | `df` on the fleet + scratch roots; memory pressure counters | deleting files; resizing | runway rows with the measured value |
-| Was a lane silent? | lane HEAD vs last report mtime | declaring failure from commit sparsity | silent / progressing / progressing-weak |
+| Was a lane silent? | launch epoch from `.ufo/watchdog.log` + post-launch authorship (commits/files) | declaring failure from commit sparsity | silent / progressing / progressing-weak / young / not-open / unavailable |
 
 ## Error patterns
 
@@ -24,7 +24,7 @@ reporting it. **Detection and report only. This lane never remediates.**
 |---|---|
 | watchdog pid gone, no `complete` line | daemon death — a fleet-liveness finding, not a lane failure |
 | wave registry present, no results | wave dispatched but never settled — age it, do not call it failed |
-| `oom_kill` in `memory.events` | a real kill event: record cgroup, timestamp, and the killed pid |
+| Positive cgroup `oom_kill` | cumulative counter for the named source; counters alone identify neither the killed PID, event time nor fleet membership |
 | process alive, last tick stale | wedged, not dead — report the age |
 
 ## Boundaries (hard)
@@ -108,22 +108,46 @@ labeled as such. Falsification results worth keeping:
   described as the default beside 85/95, or a later diff cannot say which proposal
   was tested.
 
-## Lane-silence grading is a PROVISIONAL approximation (rule divergence recorded)
+## Lane-silence grading is launch-aware and authorship-aware (r2 contract)
 
-The protocol rule is `PROTOCOL.md:155-168`: grade **only a mission still open**, age
-it **from its launch line**, and call sibling-only activity **`progressing-weak`**,
-never `progressing`. The landed `probe_silence` uses a rolling 7200 s window with
-no launch line and no author check. Two measured divergences:
+**Revision marker r2 — round 3, 2026-10-15.** This section replaces the round-1
+rolling-window description. The binding decision table (lifecycle rows, exact
+identity policy, named preconditions) is `corpus/knowledge/silence-grading-r2.md`;
+it implements `PROTOCOL.md:153-168`.
 
-- **aggregator** — the grader says `progressing` because `find` on the fleet root
-  sees a gitignored `game-dev-3d` `watch.log`; the window's commits are
-  `protocol-shokunin` and `shokunin-fleet`, not aggregator. The protocol label for
-  that evidence is **`progressing-weak`**.
-- **kasegi** — the labels agree (`progressing`, five `kasegi-shokunin` commits in
-  window) but **applicability does not**: round 17 wrapped at
-  `.ufo/watchdog.log:287`, and the protocol assigns a wrapped mission **no grade**.
+`probe_silence` grades each roster lane against the launch epoch of its current
+round, read from `.ufo/watchdog.log` (never log mtime, never the `tick=` counter),
+and emits a per-lane row `SURFACE lane.<id>: <state> (lane=<id> round=<N>
+launch_epoch=<e> age_s=<s> basis=<row> …; ts=…)` with state in {`silent`,
+`progressing`, `progressing-weak`, `young`, `not-open`, `unavailable`}; the
+aggregate `SURFACE silence:` row keeps the per-state counters (`silent=` /
+`progressing=` / `progressing_weak=` / `young=` / `not_open=` / `unavailable=` /
+`skipped=`).
 
-Unblock: read the launch line per lane from `.ufo/watchdog.log` and require an open
-mission before grading; add an author check so sibling-only activity lands
-`progressing-weak`. Until then, treat a `progressing` row as "recent filesystem
-activity in the window", not as a protocol verdict.
+- **Only a still-open mission is graded — closed reads `not-open`.** A
+  `complete`/`wrap` line for the same lane+round closes it, as does a committed
+  report at HEAD whose newest path commit has `launch_epoch < ct ≤ now`; a later
+  same-round `launch` reopens it and a state-round advance hands the grade to the
+  new round. No matching launch line → `not-open`; unreadable ledger/repo/git
+  input → `unavailable` — a missing surface is never unhealthy.
+- **Strict age gate.** Only `now − launch_epoch > LANE_SILENCE_S` (default 7200)
+  is gradeable-old; age at or below the gate, or a future launch → `young`.
+- **Authorship decides open-and-old, matching both identity fields exactly** —
+  `<lane>-shokunin <lane>@shokunin.local`, never substring, never `%cn`/`%ce` —
+  over ALL post-launch commits: a lane-authored commit → `progressing`; no subject
+  commits but unexplained untracked/dirty recent files in the lane's own scope →
+  `progressing` (attribution inference disclosed); sibling-only activity with a
+  clean checkout → `progressing-weak`; nothing attributed → `silent`.
+- **`FINDING LANE_SILENT severity=warn` fires only for the row-D clean-old-silent
+  case**, carrying lane/round/launch_epoch/age_s — replacing the r1
+  `head_epoch=`/`newest_epoch=` pair. `unavailable`/`not-open`/`young` emit no
+  finding and no DRIFT.
+
+The two measured r1 divergences this contract closes: the aggregator was
+over-credited `progressing` by sibling commits plus a gitignored `game-dev-3d`
+`watch.log`; kasegi was graded while its round had wrapped
+(`.ufo/watchdog.log:287`; `LOG.md:73-80`).
+
+Cutover receipt: `census-r2` landed in `tools/mori-census.sh` — sha256
+`fe22a14f0bb6d90ffed14506abfcd76153ebf31cf3cb769b97e7eec61cc2f3c9` — round
+receipts `corpus/evidence/cutover-r3-*.log`.
