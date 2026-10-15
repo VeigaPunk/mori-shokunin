@@ -1,0 +1,30 @@
+Measured commit: 0715198ed683445768944cec2db75bce12a1d202
+Command: MORI_SHOKUNIN_ROOT=/home/vgpnk/Projects/shokunin MORI_LANE_SILENCE_S=900 MORI_ROSTER_LANES="protocol aggregator kaidoku kasegi kengaku kake kumitate kotoba kagi kama lore revenger tameshi mado tsukuroi tabi mori chousa" bash tools/mori-census.sh
+Execution: ran script bytes from the named Git commit in a temporary baseline file; fleet root explicit.
+Exit: 1
+Mutable live observation; not a before/after causal comparison.
+
+mori-census census-r1 — ts=2026-10-15T04:53:48Z — mode=live — read-only
+SURFACE watchdog: ok (cmd=pgrep -af shokunin-watchdog; stat /home/vgpnk/Projects/shokunin/.ufo/watchdog.log; ls /home/vgpnk/Projects/shokunin/.ufo/state; pids=19; log=ok; age_s=171; stale_threshold_s=900; state_rounds=21; ts=2026-10-15T04:53:48Z)
+SURFACE waves: drift (cmd=find /home/vgpnk/Projects/shokunin/.ufo/waves -maxdepth 1 -mindepth 1 -type d; total=36 settled=13 unsettled=10 aged_unsettled=9 empty=13 threshold_s=7200; ts=2026-10-15T04:53:48Z)
+SURFACE journal: drift (cmd=journalctl --user -b --no-pager; oom_kill=1 kill_signal=0 segfault=659 unit_failure=2 rc=0; ts=2026-10-15T04:53:48Z)
+SURFACE cgroup: ok (cmd=cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.events; cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.current; oom_kill=1 oom=0 high=0 max=0 current=26842595328; ts=2026-10-15T04:53:48Z)
+SURFACE disk: ok (cmd=df -P; targets=/home/vgpnk/Projects/shokunin /tmp; warn_pct=85 crit_pct=95; ts=2026-10-15T04:53:48Z)
+SURFACE silence: drift (cmd=git -C <repo> log -1 --format=%ct; find <repo> -newermt @window; silent=2 progressing=16 progressing_weak=0 skipped=0 window_s=900; ts=2026-10-15T04:53:48Z)
+SURFACE tmux: ok (cmd=tmux ls; sessions=1; ts=2026-10-15T04:53:48Z)
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p1-audit age_s=15371 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-15T04:53:48Z script_sha256=e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p2-kumitate age_s=15051 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-15T04:53:48Z script_sha256=e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p3-kengaku age_s=16632 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-15T04:53:48Z script_sha256=e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p4-mori-r1 age_s=14266 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-15T04:53:48Z script_sha256=e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p5-chousa-r1 age_s=13353 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-15T04:53:48Z script_sha256=e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013 age_s=110955 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-15T04:53:48Z script_sha256=e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013-w2 age_s=105176 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-15T04:53:48Z script_sha256=e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013-w3 age_s=100006 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-15T04:53:48Z script_sha256=e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013-w4 age_s=97144 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-15T04:53:48Z script_sha256=e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2
+FINDING OOM_KILL_JOURNAL severity=crit obs=class=oom_kill count=1 boot=current scope=user ts=2026-10-15T04:53:48Z script_sha256=e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2
+FINDING SEGFAULT_JOURNAL severity=info obs=class=segfault count=659 boot=current scope=user ts=2026-10-15T04:53:48Z script_sha256=e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2
+FINDING UNIT_FAILURE_OUT_OF_SCOPE severity=info obs=class=unit_failure count=2 note=non-fleet units (desktop/OS) — tsukuroi owns these ts=2026-10-15T04:53:48Z script_sha256=e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2
+FINDING CGROUP_OOM_KILL_CUMULATIVE severity=info obs=parent_slice_oom_kill=1 service_scope_oom_kill=0 note=cumulative boot counter; attribute the event before treating it as fleet evidence ts=2026-10-15T04:53:48Z script_sha256=e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2
+FINDING LANE_SILENT severity=warn obs=lane=kaidoku head_epoch=1791965515 newest_epoch=1791965515 window_s=900 ts=2026-10-15T04:53:48Z script_sha256=e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2
+FINDING LANE_SILENT severity=warn obs=lane=kama head_epoch=1792024774 newest_epoch=1792024774 window_s=900 ts=2026-10-15T04:53:48Z script_sha256=e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2
+MORI_CENSUS: DRIFT (findings=15 drift=12 unavailable=0 surfaces=7)

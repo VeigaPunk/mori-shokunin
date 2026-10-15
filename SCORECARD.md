@@ -93,3 +93,39 @@ Named debt and concrete unblock:
 This is one blocked attempt, not three blocked rounds and not saturation.
 Next actual round remains **2**; the operator's minimum 100 verified-round goal
 is unchanged. No shared ledger or historical report was rewritten.
+
+## Round 2 verdict — 2026-10-15 (goal wave; the blocked attempt above remains the prior record)
+
+Selected axis: **coverage** (the lower owned LIVE axis; operability live). One
+falsifiable claim: before — `bash tools/mori-silence-cases.sh` exits 1 in
+fixture setup with no `MORI_SILENCE_CASES` tally, no per-surface notes exist,
+no watch receipts, `progressing-weak` unproven; after — the harness runs
+end-to-end emitting an honest tally, seven per-surface notes + first dated watch
+receipts land under `corpus/`, and the authorship proof is landed or explicitly
+deferred with named precondition. Wave: one batched 13-seat flash call; report
+`.ufo/reports/round-2/mori-goalwave.md`; integration commit under the mori lane
+identity; acceptance re-run by the parent.
+
+| axis | verdict | before → after evidence |
+|---|---|---|
+| coverage | **improved** | Before `e30b2e3`: exit 1 in fixture setup, no tally (blocked-attempt records). After: `bash tools/mori-silence-cases.sh` (sha `505a7504…`) → all 27 cases run, `MORI_SILENCE_CASES: matched=10 total=27`, exit 1, two reruns byte-identical; seven per-surface sections: `grep -cE '^## [1-7]\.' corpus/knowledge/observability-surfaces-r2.md` → 7; receipts `corpus/evidence/watch-r2-20261015T15{2746,2855,3003}Z.log` + index; authorship check `MORI_AUTHORSHIP_CHECK: matched=10 total=10` exit 0 (extract sha `9c91e0a0…`). The 17 FAILs = 16 r2-contract gap vs the still-r1 census + 1 measured r1 defect (`tools/mori-census.sh:517` pipefail crash) — reported as-is, not weakened. |
+| operability | **improved** | Harness now operational end-to-end with exit-code contract (0 all-pass / 1 case-failures + tally / 2 setup+diagnostic); before: exit 1 with no diagnostic and no tally. Census `bash tools/mori-census.sh --selftest` → `PASS (14 cases, 14 passed, 0 failed)` exit 0 both before and after (census sha `e3073a2b…` unchanged). |
+| depth | **improved** | Root-cause mechanism pinned and independently reproduced by two seats (`(A||B)&&C` precedence + `--allow-empty` empty root commit; `core.autocrlf` typo in the dead branch); census `:517` pipefail crash isolated with minimal chmod-000 repro; six census defects with path:line in the surfaces note. |
+| freshness | **improved narrowly** | Three dated, hash-pinned, re-runnable watch receipts + index README; method limitation stated (repeated spaced censuses — the census has no watch mode); a drift pin is still absent, disclosed. |
+| calibration | **improved narrowly** | Every grading rule labeled `proven`/`proposed` with named preconditions (`silence-grading-r2.md`); expected gradient pre-registered and mutant-census probes executed (falsifier/critic seats — no-op → `matched=1`, all-zero → `matched=4`, mutator → caught); byte-defective identity recipe (missing `>`) caught and fixed at integration. No threshold tuning claimed. |
+| adjacency | **unchanged** | Scope-sentinel: zero remediation/kill/config content in any artifact; fleet root read-only for all seats; out-of-province findings (unit failures, parent-slice OOM counter) reported, not absorbed. |
+
+Admission: five axes improved, adjacency unchanged, **none harmed → ADMIT**. No
+scalar score. Learning trends: expansion **improved** (three knowledge notes +
+one lesson), quality **improved** (honest failure counting; defects at path:line;
+receipt hashes verified), discernment **unchanged** (no outside spot-check — the
+wave's seats are the lane per protocol).
+
+SHONEN (all four remain `[ ]`: no named non-author verifier yet; wave seats are
+the lane): [ ] decision tables · [ ] end-to-end task logged · [ ] executable
+without oral context · [ ] no cross-domain bleed.
+
+Named debt for round 3: the r2 `probe_silence` census cutover (preconditions in
+`corpus/knowledge/silence-grading-r2.md`; passing tally `matched=N total=M,
+N=M` registered as the claim), the census `:517` (and `:283`) pipefail crash →
+`unavailable` semantics, and the frozen-behavioral drift pin.

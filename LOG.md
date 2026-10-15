@@ -188,3 +188,33 @@ The report-time own-mission age was 581 s from the recorded launch, below two
 450-second ticks; no stale-lane failure was inferred. This delivery commit
 adds records only: no new check, candidate admission, production cutover,
 receipt, native judgment, mission completion or round-count advancement.
+
+**Round 2 — goal-wave admission (2026-10-15).** Motivating evidence: the blocked
+attempt's named debt above — the quarantined oracle candidate
+`tools/mori-silence-cases.sh` (sha `61db3df3…`) exited 1 in fixture setup with no
+scenario tally. This round dispatched one 13-seat flash wave (single batched call;
+diag/falsifier/critic/verifier seats among it). Landed: the harness reconciled to
+revision `505a7504` (deterministic stage-then-commit `gc` with `die` → exit 2;
+fixtures bound to the live watchdog-log grammar and the live report path
+`.ufo/reports/round-<N>/<lane>.md`; root cause `(A||B)&&C` + `--allow-empty`
+empty-root-commit pinned by two independent seats); seven per-surface notes
+(`corpus/knowledge/observability-surfaces-r2.md`); the silence-grading decision
+table (`corpus/knowledge/silence-grading-r2.md`); the progressing-weak authorship
+discrimination proof with runnable 10-case check
+(`corpus/knowledge/progressing-weak-r2.md`; extract sha `9c91e0a0…`,
+`MORI_AUTHORSHIP_CHECK: matched=10 total=10` exit 0); three dated live-census
+watch receipts (`corpus/evidence/watch-r2-20261015T15{2746,2855,3003}Z.log`,
+indexed in `corpus/evidence/README.md`). Parent acceptance at integration:
+`bash tools/mori-census.sh --selftest` → `MORI_CENSUS_SELFTEST: PASS (14 cases,
+14 passed, 0 failed)` exit 0 (census untouched, sha `e3073a2b…`);
+`bash tools/mori-silence-cases.sh` → `MORI_SILENCE_CASES: matched=10 total=27`
+exit 1 — the honest gradient (16 cases = r2 contract gap vs the still-r1 census;
+1 = measured r1 defect at `tools/mori-census.sh:517`, pipefail crash, minimal
+repro). Parent integration fixes: byte-defective identity recipe (missing
+closing `>`) in `lane-silence-r2.md`/`silence-grading-r2.md`; `mission=` tail
+count 4→3 plus one untailed launch; stale pre-wave line citations annotated with
+a revision-scope line per note; `corpus/README.md` six→seven surfaces + coverage
+rows; lesson `corpus/lessons/2026-10-15-oracle-honesty-crash-masking.md`.
+Round report: `.ufo/reports/round-2/mori-goalwave.md` (the blocked attempt's
+`mori.md` remains untouched). No remediation, no kills, no host config edits; no
+push (the lane repo has no remote). Verified lane rounds: 1 → 2.
