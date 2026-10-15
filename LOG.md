@@ -451,3 +451,25 @@ the mori identity.
 
 Round report: `.ufo/reports/round-8/mori-goalwave.md` · Verified lane rounds:
 7 → 8.
+
+## Round 9 — selftest flake eliminated (goal wave)
+
+**Round 9 — goal-wave admission (2026-10-15).** Motivating evidence: the
+round-8 defect — selftest false-FAILs at 1/8–25% via a grep-over-live-pipe
+SIGPIPE race. Landed (evidence commit `cffb37e`): census `1c49238a…`, diff
+21/7 all inside `run_selftest()` — six live-pipe-grep sites converted to
+capture-once-then-grep-file; production path byte-identical (VERSION kept
+`census-r5`; oracle `448f7723…` frozen and 28/28 with wants unchanged). Race
+measured at the mechanism: 15/8000 rc=141 (SIGPIPE) pre-fix, 0/60000 post-fix.
+Batteries: A 20/20, B 20/20 under 4 CPU hogs, parent 10/10. Archaeology: the
+race predates r8 (reproduced at r7 bytes). Wave: 28-seat flash call, 28/28.
+
+**Verdicts.** ADMIT: operability/depth **improved**; everything else
+**unchanged**; none harmed. Round 10 registered: the drift pin (freshness) —
+committed behavioral baseline + `--drift` mode + volatile-fields list.
+
+**Boundaries held.** Detection/report only; hogs killed; fixtures `/tmp`; no
+commits by seats; parent integrated under the mori identity.
+
+Round report: `.ufo/reports/round-9/mori-goalwave.md` · Verified lane rounds:
+8 → 9.

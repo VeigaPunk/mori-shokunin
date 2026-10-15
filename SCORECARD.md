@@ -435,3 +435,44 @@ No scalar score. Learning trends: expansion/quality **improved**, discernment
 **unchanged**. Round 9 registered: eliminate the selftest flake class
 (`:1783/:1809` SIGPIPE/grep race) — receipt-backed 0-flake over a ≥20-run
 battery, selftest 56 green, oracle 28/28, zero probe-behavior change.
+
+## Round 9 verdict — 2026-10-15 (goal wave; evidence commit `cffb37e`)
+
+Selected axis: **operability** — the round-8 correction's named top debt: the
+selftest harness flake. Wave: one 28-seat flash call, 28/28. Report:
+`.ufo/reports/round-9/mori-goalwave.md`.
+
+**Before** (`390ab9cd…`): selftest false-failed at 1/8–25% on a random case —
+a grep-over-live-pipe SIGPIPE race (`grep -q` matches and exits while the
+writer is still writing; pipefail turns the writer's SIGPIPE (rc 141) into a
+scored "missing match"). The impl measured the class directly: 15/8000
+non-zero rcs, all rc=141, concentrated when the match sits early in the
+stream; 12–15/10000 false misses by payload size.
+
+**After** (census `1c49238a…`, diff 21/7 **all inside `run_selftest()`** —
+VERSION stays `census-r5` so production output is byte-identical; six
+live-pipe-grep sites converted to capture-once-then-grep-file; zero pipelines
+added; the two deliberately-kept pipes are read-all with no early-exiting
+consumer, outside the class): race rate 0/60000 in the impl's micro-bench;
+battery A 20/20 green (4-way concurrent); battery B 20/20 green **under 4 CPU
+hogs**; parent battery 10/10 green; oracle `448f7723…` byte-frozen and 28/28
+exit 0 (production path untouched — proven by the unchanged oracle wants);
+live census honest (`DRIFT findings=15 drift=14 unavailable=1`). Git
+archaeology (two seats, independent): the race predates r8 — reproducible at
+the r7 bytes — r8's additions only widened the exposure.
+
+| axis | verdict | evidence (before → after) |
+|---|---|---|
+| operability | **improved** | 1/8–25% flake → 0 across 70+ post-fix runs incl. load (races measured 15/8000 → 0/60000 at the mechanism level); the selftest is now deterministic; production census byte-identical (oracle frozen, wants unchanged). |
+| coverage | **unchanged** | 56 selftest cases, names byte-identical; no surface change. |
+| depth | **improved** | `corpus/knowledge/selftest-flake-r9.md` (mechanism, rc=141 SIGPIPE anatomy, the capture-then-grep pattern, archaeology); lesson folded there + the pipefail lesson lineage. |
+| freshness | **unchanged** | receipts at the new SHA; the drift pin remains the carried item — round 10's registered claim. |
+| calibration | **unchanged** | the determinism bar (two independent ≥20-run batteries, one loaded) was met as written. |
+| adjacency | **unchanged** | scope-sentinel clean; oracle byte-frozen; CPU hogs killed by their seats; no remediation content. |
+
+Admission: **ADMIT** (operability/depth improved, none harmed). No scalar
+score. Learning trends: expansion/quality **improved**, discernment
+**unchanged**. Round 10 registered: the long-carried **drift pin** (freshness)
+— a committed behavioral baseline plus a `--drift` mode with a declared
+volatile-fields list, so census behavioral drift is itself detected; selftest
+cases + receipts; oracle held green.
