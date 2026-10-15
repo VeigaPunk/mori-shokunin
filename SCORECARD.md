@@ -476,3 +476,46 @@ score. Learning trends: expansion/quality **improved**, discernment
 — a committed behavioral baseline plus a `--drift` mode with a declared
 volatile-fields list, so census behavioral drift is itself detected; selftest
 cases + receipts; oracle held green.
+
+## Round 10 verdict — 2026-10-15 (goal wave; evidence commit `5be8943`)
+
+Selected axis: coverage-of-self — the drift pin, carried since round 2.
+Wave: one 29-seat flash call, 29/29. Report:
+`.ufo/reports/round-10/mori-goalwave.md`.
+
+**Before** (`1c49238a…`): no behavioral baseline; census regressions were
+catchable only by humans reading receipts (rounds 2–9 relied on seat
+discipline; the r8 flake existed for rounds before detection).
+
+**After** (census `d7710981…`, selftest 66 = +10; oracle `448f7723…` frozen,
+28/28; parent acceptance 2026-10-15T22:40Z): `--pin` writes a normalized
+baseline with a declared volatile contract (`ts/age_s/*_epoch/counters/psi/
+io_avg/script_sha256` masked to `<V>`, the list recorded in the baseline
+header); `--drift` reports `MORI_DRIFT: none` (exit 0) or names the changed
+non-volatile fields / `-key`/`+key` / `-FINDING:<id>` / line ids / `VERDICT`
+(exit 1); missing/unreadable/malformed baseline → exit 2. The lane committed
+its own live baseline (`corpus/evidence/baseline-r10-20261015T2231Z.json`) and
+the parent re-ran `--drift` against it: clean, exit 0. Independent verifiers:
+pin→drift roundtrip ×5 deterministic; injected regressions name exactly the
+field (`warn_pct`, `+tester_extra`, `-SURFACE:disk`, `+state_lag_sec
+-state_lag`, `VERDICT` on tampering); the overmask hunter could NOT hide a
+dropped row, a rename, or a threshold change; live churn over 70 s stays
+`none` (mask exercised, not trivial). Default-mode output byte-identical
+(stamp-normalized hash equal both bytes).
+
+| axis | verdict | evidence (before → after) |
+|---|---|---|
+| coverage | **improved** | the census's own behavior over time is now a measured surface: baseline + drift contract + 10 new selftest cases + committed lane baseline + re-run recipe in the evidence index. |
+| operability | **unchanged** | 66/66 green ×4; oracle 28/28; drift runs add no sampling delay (perf seat). |
+| depth | **improved** | `corpus/knowledge/drift-pin-r10.md` (design, volatile rationale, over/under-masking risks, re-pin policy); lesson `2026-10-15-volatile-contract-behavioral-baselines.md`. |
+| freshness | **improved** | the round-2-carried drift pin is LANDED; seven receipts + the baseline at pinned SHAs. Named: unmasked state words (`rc=`, `log=`, surface states) legitimately flip with host state — a future red drift may be baseline aging; the re-pin policy is documented, not hidden. |
+| calibration | **unchanged** | the volatile contract was measured (three live runs, field-by-field diff) before being declared; under-masking risks are named with examples. |
+| adjacency | **unchanged** | scope-sentinel clean; oracle byte-frozen; no remediation content. |
+
+Admission: **ADMIT** (coverage/depth/freshness improved, none harmed). No
+scalar score. Learning trends: expansion/quality **improved**, discernment
+**unchanged**. Round 11 registered (capstone, operator-directed strong model):
+a full-lane deep audit on `openai-codex/gpt-6.1-sol` — every admitted round's
+evidence chain re-verified, carried debts adjudicated, SHONEN readiness
+assessed without self-attestation, and the four most load-bearing historical
+claims re-executed at today's bytes.

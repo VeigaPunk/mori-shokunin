@@ -473,3 +473,28 @@ commits by seats; parent integrated under the mori identity.
 
 Round report: `.ufo/reports/round-9/mori-goalwave.md` · Verified lane rounds:
 8 → 9.
+
+## Round 10 — drift pin landed (goal wave)
+
+**Round 10 — goal-wave admission (2026-10-15).** Motivating evidence: the
+round-2-carried drift pin. Landed (evidence commit `5be8943`): census
+`d7710981…` with `--pin`/`--drift` and the declared volatile contract
+(selftest 66 = +10); the lane committed its live baseline
+(`corpus/evidence/baseline-r10-20261015T2231Z.json`) and the parent's drift
+re-run is clean. Oracle `448f7723…` frozen, 28/28; default output byte-
+identical (stamp-normalized). Independent verifiers: regressions name exactly
+the changed field; the overmask hunter could not hide a dropped row/rename/
+threshold change; 70 s of live churn stays `none`. Wave: 29-seat flash call,
+29/29.
+
+**Verdicts.** ADMIT: coverage/depth/freshness **improved**; operability/
+calibration/adjacency **unchanged**; none harmed. Named: unmasked state words
+flip with host state — red drift may be baseline aging; re-pin policy
+documented in `drift-pin-r10.md`. Round 11 registered (capstone, operator-
+directed): full-lane deep audit on `openai-codex/gpt-6.1-sol` (32 seats).
+
+**Boundaries held.** Detection/report only; fixtures `/tmp`; no commits by
+seats; parent integrated under the mori identity.
+
+Round report: `.ufo/reports/round-10/mori-goalwave.md` · Verified lane
+rounds: 9 → 10.
