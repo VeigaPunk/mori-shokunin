@@ -112,3 +112,15 @@ test cannot see; five settled train waves were aged into false
 landed elsewhere, so "age" remains the wrong clock for them — the independent
 `WaveAgeMath` critique is carried as debt, and a wave reported here as
 `WAVE_UNSETTLED_AGE` may be surface silence rather than an unsettled wave.
+
+## Finding → owner routing (appended 2026-10-15)
+
+Two tiers, because a single-tier map deadlocks: `tsukuroi` and `kama` refuse to
+act by their own provinces, so a finding routed to them for remediation stalls.
+**Tier 1 (triage, read-only):** tsukuroi / kama / kumitate / mori each re-probe and
+diagnose in their own domain. **Tier 2 (actuation):** `kumitate` for automated
+orchestration actions, the **operator** for host mutations. Never collapse
+everything onto the operator — that is the drowning trap. Payloads must be typed
+(`pid`, `comm`, `cgroup`, `mount`, `use_pct`, `wave_dir`, `newest_file_age_s`) so
+Tier 1 can diagnose without re-probing. An `WAVE_UNSETTLED_AGE` finding must not
+auto-settle a wave that is still being written to.

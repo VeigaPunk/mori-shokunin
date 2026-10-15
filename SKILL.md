@@ -49,3 +49,25 @@ reporting it. **Detection and report only. This lane never remediates.**
 `tools/mori-census.sh` — read-only census over the fleet-liveness surfaces.
 `verify` → `MORI_CENSUS: CLEAN|DRIFT` exit 0/1, `--selftest` over fixtures,
 exit 2 for setup/usage. Registry row lands with the gate.
+
+## Finding → owner routing (two tiers — a deadlock was measured here)
+
+Routing a finding to `tsukuroi` or `kama` for *remediation* deadlocks: both
+provinces explicitly refuse to act (`tsukuroi/PROVINCE.md:16-17` "never restarts
+services ... the operator remediates"; `kama/PROVINCE.md:22-26` "kama never writes
+to `~/.config`, `~/.omp`, or systemd units ... the operator repoints them"). mori
+never remediates either. So a finding carries **two** owners:
+
+| Tier | Role | Who | Acts how |
+|---|---|---|---|
+| 1 — triage/diagnosis | read-only domain specialist | `tsukuroi` (OS substrate, units, drivers) · `kama` (loopback model ports, baseURL drift) · `kumitate` (wave settlement, dispatcher queue, watchdog state) · `mori` (census hygiene, fixtures) | re-probes with its own tool and produces a diagnosis |
+| 2 — actuation | authorized actor | `kumitate` for **automated orchestration** actions (`ufo-swarm-wave.mjs`, `fleet-dispatcher.mjs repend`, `ufo-sighting complete`) · **operator** for **host** mutations (service restarts, pacman, cgroup limits, mounts, deletions) | performs the change |
+
+**Never collapse all findings onto `operator`** — that drowns the human in raw
+kernel stacks and counter deltas with no domain triage. mori's payload must carry
+enough typed context (`pid`, `comm`, `cgroup`, `mount`, `use_pct`, `wave_dir`,
+`schema`, `newest_file_age_s`) that Tier 1 can diagnose without re-probing.
+
+**Premature-settlement guard:** an `WAVE_UNSETTLED_AGE` finding must never trigger
+an automated settle while lanes are still writing; require
+`newest_file_age_s` past a conservative stall threshold first.
