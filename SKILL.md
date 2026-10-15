@@ -71,3 +71,21 @@ enough typed context (`pid`, `comm`, `cgroup`, `mount`, `use_pct`, `wave_dir`,
 **Premature-settlement guard:** an `WAVE_UNSETTLED_AGE` finding must never trigger
 an automated settle while lanes are still writing; require
 `newest_file_age_s` past a conservative stall threshold first.
+
+## Secret-exposure exclusions (measured by a sentinel audit)
+
+The census is count-only over the journal and shape-only over host paths. Two forms
+were ruled out and must stay out:
+
+- **Never print journal `MESSAGE` content.** This boot's user journal carries 221
+  `1password` lines and 2 `gnome-keyring-daemon` lines with opaque runs; the probe
+  counts them and never echoes the text. Never run the gate under `set -x`, and
+  never capture journal output into a variable that is later echoed.
+- **Never read a cgroup counter outside `/sys/fs/cgroup/`.** `read_file` echoes the
+  first line into the surface row, so an operator-pointed `MORI_CGROUP_CURRENT`
+  would print another file's first line; the probe refuses out-of-tree paths
+  shape-only (`refused:outside-sysfs-cgroup`).
+
+Also excluded: `ps e` / `/proc/<pid>/environ` (`omp` carries
+`HL_INITIAL_WORKSPACE_TOKEN`), `cat /proc/<pid>/fd/*` (`omp` holds 51 readable fds
+onto session JSONL), and any journal output mode that keeps `MESSAGE`.

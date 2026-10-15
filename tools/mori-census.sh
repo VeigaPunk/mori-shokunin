@@ -388,7 +388,14 @@ probe_cgroup() {
   oom=$(cgroup_field "$CGROUP_EVENTS" oom)
   high=$(cgroup_field "$CGROUP_EVENTS" high)
   max=$(cgroup_field "$CGROUP_EVENTS" max)
-  cur=$(read_file "$CGROUP_CURRENT")
+  # A cgroup counter path must stay inside /sys/fs/cgroup: read_file echoes the
+  # first line into the surface row, so an operator-pointed MORI_CGROUP_CURRENT at
+  # any other file would print that file's first line. Refuse out-of-tree paths
+  # (shape-only refusal, never a read).
+  case "$CGROUP_CURRENT" in
+    /sys/fs/cgroup/*) cur=$(read_file "$CGROUP_CURRENT") ;;
+    *) cur='refused:outside-sysfs-cgroup' ;;
+  esac
   oom_kill=${oom_kill:-0}
 
   # presence flag semantics (tsukuroi note): oom_kill is a flag/counter, not a meter to clear
