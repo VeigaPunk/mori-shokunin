@@ -452,3 +452,85 @@ covers the re-exec design at `3307761a`; the earlier intermediate revision's
 runtime-`unset` design and the exec-optimization artifact behind that earlier
 reading are recorded in the oracle's own comments
 (`tools/mori-silence-cases.sh:196-206`), not re-measured here.
+
+## Round-7 receipts (coverage pivot: the four r2 surface gaps) — produced by the receipts-writer seat
+
+Round-7 goal wave, seat `receipts-writer`. Detection and report only — nothing was
+remediated, killed, restarted or reconfigured; no host or fleet state was written.
+Fixtures live under `/tmp` only. Every receipt carries its own `CAPTURED_UTC`, exact
+command(s), exit code(s) and the SHA-256 of the script bytes under test.
+
+Two revisions are pinned by this set (and only by these SHAs). Both were uncommitted
+working-tree edits at capture time; the bytes held stable for ≥2 min before the first
+receipt and were re-verified unchanged at set close (19:54:52Z):
+
+- `tools/mori-census.sh` sha256
+  `c7c3569b842ab3911cbfdf415eb7023766c950c60f354af95f6a4f020b5671af` (`VERSION=census-r4`,
+  2004 lines). Closes the four r2 gaps: tmux relevance (pane-cwd rule), memory pressure
+  (PSI `avg10` + fill %, thresholds labeled local), disk write-rate (since-boot average;
+  instantaneous rate is a bounded deferral), `state_rounds` values vs the ledger
+  (`WATCHDOG_STATE_LAG`/`AHEAD` info findings).
+- `tools/mori-silence-cases.sh` sha256
+  `448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5` (1090 lines) —
+  re-baselined only for the census's additive output; registry still 28 ids / 28 cases.
+
+`CENSUS_SHA256_BEFORE`/`_AFTER` (and `ORACLE_SHA256_BEFORE`/`_AFTER` where exercised)
+are identical within every receipt; the four gap receipts carry the oracle SHA
+re-verified at set close.
+
+| File (`surfaces-r7-20261015T1948Z-…`) | Captured UTC | Exit | Verdict / tally |
+|---|---|---|---|
+| `selftest.log` | 19:48:31–19:48:47Z | 0 | `MORI_CENSUS_SELFTEST: PASS (45 cases, 45 passed, 0 failed)`; 15 new cases: tmux ×3, pressure/fill ×5, write-rate ×3, state values ×4 |
+| `oracle.log` | 19:49:13–19:49:39Z | 0 / 0 | `matched=28 total=28` both runs; fresh shuffle then `MORI_SHUFFLE_SEED=1503128629` rerun → `ORDER_IDENTICAL_WHEN_SEED_PINNED=yes`; header at output line 29, after all 28 case lines |
+| `live.log` | 19:50:06–19:50:17Z | 1 / 1 / 1 | new ×2 + r6-from-HEAD ×1 all `DRIFT (findings=15 drift=14 unavailable=1 surfaces=7)`; per-surface `key=` diff old→new: `old_only_keys=[]` for all seven surfaces; added keys exactly `state_rounds_max/state_lag/state_ahead/state_cmp/state_val_unreadable` (watchdog), `local_oom_kill/psi_some_avg10/psi_full_avg10/psi_source/psi_warn_avg10/mem_fill_pct/mem_fill_scope/host_mem_avail_pct` (cgroup), `io_basis/io_avg_since_boot/io_avg_unavailable` (disk) |
+| `tmux.log` | 19:50:42–19:50:52Z | 1 ×5 | live `unavailable (rc=1)` — no tmux server on this host at capture; controlled stub arm `sessions=2; relevant=1 foreign=1 unclassified=0` + `TMUX_FOREIGN_SESSION session=nw`; stub `list-panes` rc=2 arm → `relevance=unavailable reason=panes-rc=2` + `TMUX_RELEVANCE_UNAVAILABLE … unnoticed_but_counted` |
+| `memory.log` | 19:51:45–19:52:03Z | 1 ×5 | live row: `psi_some_avg10=0.00 psi_full_avg10=0.00 psi_source=ok psi_warn_avg10=10 mem_fill_pct=unavailable mem_fill_scope=host-ram host_mem_avail_pct=59` (slice max=unlimited); arm `psi=99.00` → `MEM_PRESSURE_HIGH` warn (threshold 10, labeled local); control `9.99` silent; numeric limit at 90% fill → `MEM_FILL_HIGH` warn (threshold 85, labeled local); control 4× limit silent |
+| `diskrate.log` | 19:53:31–19:54:02Z | 1 / 1 / 1 | live `io_basis=since-boot io_avg_since_boot=dm-0:9549258Bps/11748s io_avg_unavailable=tmpfs:not-a-block-device`; manual `sectors*512/uptime` = 9547128Bps ~11 s later (drift note in receipt); fixture diskstats → `dm-0:10534Bps/600s` = exact manual 12345*512/600; fixture without dm-0 → `dm-0:device-not-in-diskstats`; measured 10 s instant sample 715980Bps (addendum: single-pair noise is the datum behind the deferral) |
+| `staterounds.log` | 19:54:26–19:54:36Z | 1 / 1 / 1 | live values listed next to the ledger's launch lines; fixture lag/ahead: `state_rounds=3 state_rounds_max=99 state_lag=1 state_ahead=1 state_cmp=3` + `WATCHDOG_STATE_LAG lane=kagi state_round=1 ledger_round=7` / `WATCHDOG_STATE_AHEAD lane=kama state_round=99 ledger_round=7`; mode-000 value arm → `state_val_unreadable=1`, verdict still emitted (no crash) |
+
+**Additive-only output.** The live receipt runs the r6 census bytes (`git show
+HEAD:tools/mori-census.sh`, sha `af2d4e79…`) and the r7 census side by side and diffs
+the per-surface `key=` token sets: no r6 key is lost on any of the seven surfaces, and
+the only new keys are the four gaps' fields listed above. The verdict-line shape is
+unchanged. This is the "re-baselined ONLY for additive output" check for this round.
+
+**Live-state honesty.** `sessions=1`-style claims from r2 are superseded by the rule,
+but on this host at capture time tmux had no server, so the live relevance row is
+`unavailable` (disclosed, never DRIFT) and the classification is demonstrated only in
+the controlled stub arm. All live numbers are mutable host observations pinned to one
+clock; a re-run reproduces formula (exit codes, surface states, schema keys), never
+byte equality. The r6 census run in `live.log` shows the host's drift too (journal
+counts and wave ages differ from the round-6 receipts).
+
+**Not claimed here:** no remediation/kill/restart/host-config change; no causal claim
+about fleet liveness; the since-boot write average is not an instantaneous rate (that
+is the recorded bounded deferral); the tmux relevance rule is path-based and its
+boundary (a fleet worker whose pane cwd is outside the fleet root reads `foreign`) is
+disclosed on the row; thresholds (`psi_warn_avg10=10`, `mem_fill 85`, `mem_avail 10`,
+`io_basis`) are LOCAL placeholders, never tuned as universal.
+
+Re-run recipes (cwd = lane root; this receipt set applies only at the two SHAs above):
+
+```sh
+sha256sum tools/mori-census.sh         # must equal c7c3569b… for this whole set
+sha256sum tools/mori-silence-cases.sh  # must equal 448f7723…
+bash tools/mori-census.sh --selftest   # hermetic; expect exit 0, PASS (45 cases, 45 passed)
+bash tools/mori-silence-cases.sh       # expect exit 0, matched=28 total=28, header AFTER the case lines
+bash tools/mori-census.sh              # live; expect a MORI_CENSUS verdict + the new gap fields on the rows
+# controlled gap arms (fixtures /tmp only; sources embedded in each receipt):
+#   tmux:   MORI_TMUX_BIN=<stub with ls + list-panes -a> bash tools/mori-census.sh
+#   memory: MORI_CGROUP_PRESSURE=<fx pressure> bash tools/mori-census.sh
+#           MORI_CGROUP_MAX=<fx limit>        bash tools/mori-census.sh
+#   disk:   MORI_DISKSTATS=<fx> MORI_UPTIME=<fx> bash tools/mori-census.sh
+#   state:  MORI_STATE_DIR=<fx> MORI_TIMELINE_FILE=<fx ledger> bash tools/mori-census.sh
+```
+
+Receipt-file SHA-256 at set close (after all embedded sources/addenda):
+
+- `ca9f50fd3e398a11c795533ba941a92f3a72ea1fe8edaaf64d4068058d763d33` (selftest)
+- `e29b9507dc4ac7659e5ac53d8466ebff30de67f5675890140f569f057b16a5ff` (oracle)
+- `b8342bdd514fd17d31f66f560fc64b26eb05d76e024961ce7470c27f457ffcae` (live)
+- `6a7ad7b138fb09decaedcfa7b390ad2c67c939fce681400ba9a12e9f303aaf7f` (tmux)
+- `a5be36cb1196fc9659c29fc4e5b86a0e83dd48482e637a046fb64e3fdf5e8499` (memory)
+- `8b6ec98377b0eb14b7b29b28e087ea4362808ab8f547f7eadd4a15faa0aee9d6` (diskrate)
+- `b5e756922ac6b067a1b2e6e41e0f7fd96f8a78f710bb9d4dd6e160707b6054e7` (staterounds)

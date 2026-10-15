@@ -8,15 +8,62 @@
 # Exit:    0 CLEAN | 1 DRIFT | 2 setup/usage
 #
 # Surfaces:
-#   watchdog  pid + .ufo/watchdog.log freshness + .ufo/state/*.round
+#   watchdog  pid + .ufo/watchdog.log freshness + .ufo/state/*.round values
+#             (count, max, and ledger-vs-state mismatch — r7)
 #   waves     .ufo/waves/* settlement (registry/dispatch/run × results/closeout)
 #   journal   journalctl --user -b kill/OOM class counts (this boot)
-#   cgroup    memory.events / memory.current (user slice)
-#   disk      df runway on fleet root + /tmp + optional scratch
+#   cgroup    memory.events / memory.current / memory.pressure / memory.max
+#             (user slice; r7 adds PSI + fill/avail grading, labeled local)
+#   disk      df runway on fleet root + /tmp + optional scratch; r7 adds a
+#             since-boot write average per target device (/proc/diskstats)
 #   silence   per-lane launch/closure/authorship grading (PROTOCOL.md:153-168;
 #             contract corpus/knowledge/silence-grading-r2.md) — states silent |
 #             progressing | progressing-weak | young | not-open | unavailable
-#   tmux      optional session list (absence = unavailable, not DRIFT)
+#   tmux      optional session list; r7 classifies every session fleet-relevant
+#             vs foreign by pane current path under the fleet root (absence =
+#             unavailable, not DRIFT)
+#
+# ROUND-7 GAP CLOSURE — sources are the "Gaps" sections of
+# corpus/knowledge/observability-surfaces-r2.md, one entry per gap:
+#   1 tmux relevance   IMPLEMENTED: probe_tmux reads `tmux list-panes -a` pane
+#                      data and classifies each session by pane current path
+#                      under $ROOT (fleet root; the class is a rule, not a
+#                      guess). Rule boundary disclosed on the row: a session
+#                      whose panes all sit outside the fleet root is foreign
+#                      even if its process tree works on fleet files.
+#   2 memory pressure  IMPLEMENTED: memory.pressure PSI `some`/`full` avg10 is
+#                      read and the `some` average is graded against
+#                      MORI_MEM_PSI_WARN_AVG10 (labeled local); fill pressure is
+#                      current/max when the cgroup has a numeric max, else the
+#                      host MemAvailable/MemTotal floor at MORI_MEM_AVAIL_MIN_PCT
+#                      with the scope named on the row (`fill_scope=`). Both
+#                      numbers are LOCAL placeholders for this host, not
+#                      measured for it and never tuned as universal.
+#   3 disk write-rate  IMPLEMENTED as an AVERAGE SINCE BOOT: sectors_written*512
+#                      /uptime per target's device from MORI_DISKSTATS, no
+#                      sampling interval added to census runtime. The row carries
+#                      it as `io_avg_since_boot=<dev>:<rate>Bps/<uptime>s` with
+#                      the divisor folded in, and every target it could not
+#                      measure appears in `io_avg_unavailable=<dev>:<reason>`
+#                      (never as 0 B/s). BOUNDED
+#                      DEFERRAL: the INSTANTANEOUS write rate (two-sample
+#                      delta) is NOT implemented; precondition to lift it —
+#                      measure the wall-time a second sample adds and record it
+#                      in the round note. This average is the "measured write
+#                      rate" the r2 note required before touching 85/95.
+#   4 state_rounds     IMPLEMENTED: `.ufo/state/*.round` VALUES are read; the
+#                      maximum is reported and every value is compared with the
+#                      last `launch <lane> round=N` ledger line for that lane
+#                      (the watchdog's own state: it writes the state file and
+#                      then the launch line in the same tick,
+#                      scripts/shokunin-watchdog.sh:80-81). A value below the
+#                      ledger round is WATCHDOG_STATE_LAG, above it is
+#                      WATCHDOG_STATE_AHEAD; both are INFO (a state file can be
+#                      inconsistent without the fleet being unhealthy, so
+#                      neither may flip the roll — the gap being closed is
+#                      invisibility, not severity).
+# All r7 threshold defaults are LOCAL to this fleet host and are labeled local
+# on every row and finding; none is a scalar score and none is universal.
 #
 # Live mode writes nothing. --selftest writes only under
 # /tmp/mori-census-selftest.XXXXXX and asserts the fixture tree is unchanged.
@@ -30,6 +77,10 @@
 #   MORI_WAVES_DIR       default $UFO/waves
 #   MORI_CGROUP_EVENTS   default user-slice memory.events path
 #   MORI_CGROUP_CURRENT  default user-slice memory.current path
+#   MORI_CGROUP_PRESSURE default <events dir>/memory.pressure (PSI; r7)
+#   MORI_CGROUP_MAX      default <events dir>/memory.max (fill limit; r7)
+#   MORI_DISKSTATS       default /proc/diskstats (write-rate counters; r7)
+#   MORI_UPTIME          default /proc/uptime (since-boot divisor; r7)
 #   MORI_MEMINFO         default /proc/meminfo
 #   MORI_DF_BIN          default df
 #   MORI_PGREP_BIN       default pgrep
@@ -39,17 +90,23 @@
 #   MORI_DISK_TARGETS    space-separated paths for df (default: ROOT /tmp)
 #   MORI_WATCHDOG_STALE_S MORI_WAVE_UNSETTLED_S MORI_DISK_WARN_PCT
 #   MORI_DISK_CRIT_PCT    MORI_LANE_SILENCE_S
+#   MORI_MEM_PSI_WARN_AVG10 MORI_MEM_FILL_WARN_PCT MORI_MEM_AVAIL_MIN_PCT
+#                        labeled-local memory thresholds (round-7 block above)
+#   MORI_TMUX_SCOPE_ROOT fleet root for session classification (default $ROOT)
 #   MORI_ROSTER_LANES    space-separated lane ids for silence grading
 #   MORI_NOW_EPOCH       pin "now" (selftest)
 #   MORI_FIXTURE         selftest marker (optional)
 #
 # Finding ids (stable compare contract):
 #   WATCHDOG_ABSENT WATCHDOG_STALE WATCHDOG_LOG_UNAVAILABLE
+#   WATCHDOG_PROBE_UNAVAILABLE WATCHDOG_STATE_LAG WATCHDOG_STATE_AHEAD
 #   WAVE_UNSETTLED_AGE
 #   OOM_KILL_JOURNAL KILL_SIGNAL_JOURNAL SEGFAULT_JOURNAL UNIT_FAILURE_JOURNAL
-#   CGROUP_OOM_KILL CGROUP_UNAVAILABLE
-#   DISK_LOW DISK_CRITICAL DISK_UNAVAILABLE
+#   CGROUP_OOM_KILL CGROUP_UNAVAILABLE MEM_PRESSURE_HIGH MEM_FILL_HIGH
+#   MEM_AVAIL_LOW
+#   DISK_LOW DISK_CRITICAL DISK_UNAVAILABLE DISK_IO_UNMEASURED
 #   LANE_SILENT
+#   TMUX_FOREIGN_SESSION TMUX_RELEVANCE_UNAVAILABLE
 #
 set -euo pipefail
 # The journal is held in a shell variable (CAP_OUT) and the raw text can carry
@@ -58,7 +115,7 @@ set -euo pipefail
 # `cmd=journalctl --user -b --no-pager` re-run prints MESSAGE by design.
 set +o xtrace
 
-VERSION=census-r3
+VERSION=census-r4
 SELF=$(readlink -f -- "${BASH_SOURCE[0]}" 2>/dev/null || {
   p=$0
   case "$p" in /*) printf '%s' "$p" ;; *) printf '%s' "$PWD/$p" ;; esac
@@ -83,6 +140,12 @@ STATE_DIR=${MORI_STATE_DIR:-$UFO/state}
 WAVES_DIR=${MORI_WAVES_DIR:-$UFO/waves}
 CGROUP_EVENTS=${MORI_CGROUP_EVENTS:-/sys/fs/cgroup/user.slice/user-$(id -u).slice/memory.events}
 CGROUP_CURRENT=${MORI_CGROUP_CURRENT:-/sys/fs/cgroup/user.slice/user-$(id -u).slice/memory.current}
+# r7: pressure and limit siblings of the events file, so an operator who pins
+# MORI_CGROUP_EVENTS pins the whole scope (the selftest does exactly that).
+CGROUP_PRESSURE=${MORI_CGROUP_PRESSURE:-${CGROUP_EVENTS%.events}.pressure}
+CGROUP_MAX=${MORI_CGROUP_MAX:-${CGROUP_EVENTS%.events}.max}
+DISKSTATS=${MORI_DISKSTATS:-/proc/diskstats}
+UPTIME_FILE=${MORI_UPTIME:-/proc/uptime}
 MEMINFO=${MORI_MEMINFO:-/proc/meminfo}
 DF_BIN=${MORI_DF_BIN:-df}
 PGREP_BIN=${MORI_PGREP_BIN:-pgrep}
@@ -90,6 +153,7 @@ JOURNALCTL_BIN=${MORI_JOURNALCTL_BIN:-journalctl}
 TMUX_BIN=${MORI_TMUX_BIN:-tmux}
 GIT_BIN=${MORI_GIT_BIN:-git}
 DISK_TARGETS=${MORI_DISK_TARGETS:-"$ROOT /tmp"}
+TMUX_SCOPE_ROOT=${MORI_TMUX_SCOPE_ROOT:-$ROOT}
 WATCHDOG_STALE_S=${MORI_WATCHDOG_STALE_S:-900}
 WAVE_UNSETTLED_S=${MORI_WAVE_UNSETTLED_S:-7200}
 # PROPOSAL, NOT MEASURED. No write-rate evidence exists for either number: the
@@ -100,6 +164,15 @@ WAVE_UNSETTLED_S=${MORI_WAVE_UNSETTLED_S:-7200}
 DISK_WARN_PCT=${MORI_DISK_WARN_PCT:-85}
 DISK_CRIT_PCT=${MORI_DISK_CRIT_PCT:-95}
 LANE_SILENCE_S=${MORI_LANE_SILENCE_S:-7200}
+# r7 memory thresholds. LOCAL PLACEHOLDERS for this host, deliberately not
+# derived from a measurement of it: the r2 note's rule is that a number is
+# either measured or labeled, and there is no measured memory-pressure
+# distribution yet. They exist so the four r2 gaps stop being unmeasured, and
+# they must be recalibrated here (not carried as universal) by any operator who
+# reuses this gate elsewhere.
+MEM_PSI_WARN_AVG10=${MORI_MEM_PSI_WARN_AVG10:-10}
+MEM_FILL_WARN_PCT=${MORI_MEM_FILL_WARN_PCT:-85}
+MEM_AVAIL_MIN_PCT=${MORI_MEM_AVAIL_MIN_PCT:-10}
 ROSTER_LANES=${MORI_ROSTER_LANES:-"protocol aggregator kasegi kengaku kake kumitate kotoba kagi kama"}
 
 SCRIPT_SHA256=$(sha256sum "$SELF" 2>/dev/null | cut -d' ' -f1)
@@ -180,6 +253,80 @@ cgroup_field() { # file key -> value
   awk -v key="$k" '$1 == key { print $2; exit }' "$f" 2>/dev/null || true
 }
 
+# num_of — SHAPE-VALIDATED numeric first line of a file, empty otherwise.
+# r7 readers of operator-pinnable paths (memory.max, memory.pressure,
+# memory.current's numeric arm) print only what this returns: a value that is
+# not a plain non-negative integer is dropped, so no arbitrary file's bytes can
+# reach a row through these fields. That is the same print-safety rule the
+# CGROUP_CURRENT prefix check enforces differently for the echoed line.
+num_of() {
+  local f=$1 v
+  v=$(read_file "$f")
+  v=${v//[[:space:]]/}
+  is_int "$v" || return 0
+  printf '%s' "$v"
+}
+
+# is_decimal — digits with at most one dot (PSI avg10 shape). Anything else is
+# refused by the caller rather than echoed, keeping operator-pinned paths from
+# printing foreign bytes.
+is_decimal() {
+  case "${1:-}" in ''|*[!0-9.]*) return 1 ;; esac
+  case "${1//[0-9]/}" in ''|.) return 0 ;; *) return 1 ;; esac
+}
+
+# meminfo_field <Key> -> kB integer or empty (shape-validated, never raw echo)
+meminfo_field() {
+  local k=$1 v
+  v=$(awk -v key="$k:" '$1 == key { print $2; exit }' "$MEMINFO" 2>/dev/null || true)
+  is_int "$v" || return 0
+  printf '%s' "$v"
+}
+
+# psi_avg10 <psiy-text> <some|full> -> avg10 token or empty; awk only (no
+# pipeline into a consumer), so an empty or short PSI file cannot trip pipefail.
+psi_avg10() {
+  printf '%s\n' "$1" | awk -v kind="$2" '$1 == kind { for (i = 2; i <= NF; i++) if ($i ~ /^avg10=/) { sub(/^avg10=/, "", $i); print $i; exit } }' || true
+}
+
+# load_ledger — rc-gated read of the launch/close ledger into LEDGER.
+# `cat` on an unreadable file must never abort the gate (the pipefail lesson:
+# corpus/lessons/2026-10-15-errexit-pipefail-silent-crash.md). LEDGER_RC is the
+# read's rc so a caller can disclose an unprovable comparison instead of
+# reporting a fabricated 0; an unreadable ledger is not evidence of agreement.
+load_ledger() {
+  LEDGER=''; LEDGER_RC=1
+  [ -r "$TIMELINE_FILE" ] || return 0
+  cap cat -- "$TIMELINE_FILE"
+  LEDGER_RC=$CAP_RC
+  LEDGER=$CAP_OUT
+}
+
+# ledger_last_launch_round <lane> -> last `launch <lane> round=<N>` round in
+# file order (empty when the lane has no launch line). Same candidate-line
+# filter and last-wins rule as ledger_anchor, deliberately: two independent
+# readings of one grammar that disagree would be a bug in one of them.
+ledger_last_launch_round() {
+  local lane=$1 line f1 f2 f3 f4 f5 f6 rest round
+  local out=''
+  while IFS= read -r line; do
+    line=${line%$'\r'}
+    case "$line" in
+      [0-9]*T*) ;;
+      *' ts='[0-9]*) ;;
+      *) continue ;;
+    esac
+    read -r f1 f2 f3 f4 f5 f6 rest <<< "$line" || true
+    [ "$f2" = launch ] || continue
+    [ "$f3" = "$lane" ] || continue
+    case "$f4" in round=*) ;; *) continue ;; esac
+    round=${f4#round=}; round=${round%%;*}
+    is_int "$round" || continue
+    out=$round
+  done <<< "${LEDGER:-}"
+  printf '%s' "$out"
+}
+
 epoch_mtime() {
   local f=$1
   stat -c %Y -- "$f" 2>/dev/null || stat -f %m -- "$f" 2>/dev/null || printf ''
@@ -230,11 +377,53 @@ probe_watchdog() {
   # an unreadable state dir renders the count `unavailable` with a disclosure
   # field and every other surface still reports. A missing or empty dir cannot
   # fail the walk, so it keeps the plain provable count.
-  local state_n=0 state_read=ok state_field=''
+  #
+  # r7: the count alone could not see a FROZEN round counter (r2 note §1 Gaps).
+  # The VALUES are read now, the maximum is reported, and each value is compared
+  # with the watchdog's own record of that lane's last launch round — the
+  # ledger's last `launch <lane> round=N` line, which the driver writes in the
+  # same tick right after the state file (scripts/shokunin-watchdog.sh:80-81).
+  # A value below that round is WATCHDOG_STATE_LAG, above it is
+  # WATCHDOG_STATE_AHEAD; both INFO. An inconsistent state file is evidence a
+  # reader must see, not proof the fleet is unhealthy, so neither flips the
+  # roll: the gap closed here is invisibility, not severity.
+  local state_n=0 state_read=ok state_field='' state_max=0 state_lag=0 state_ahead=0
+  local state_unread_vals=0 state_cmp=0 sf lane_id v lr state_list=''
+  LEDGER=''; LEDGER_RC=1
   if [ -d "$STATE_DIR" ]; then
     cap find "$STATE_DIR" -maxdepth 1 -type f -name '*.round'
     if [ "$CAP_RC" -eq 0 ]; then
-      state_n=$(printf '%s\n' "$CAP_OUT" | grep -c . || true)
+      # The walk output is copied BEFORE load_ledger runs: load_ledger (like
+      # every cap caller) overwrites CAP_OUT, and reading the state list out of
+      # CAP_OUT after that call iterates the ledger instead of the state files
+      # (measured live: 402 unreadable "values" = the ledger's line count).
+      state_list=$CAP_OUT
+      state_n=$(printf '%s\n' "$state_list" | grep -c . || true)
+      load_ledger
+      while IFS= read -r sf; do
+        [ -n "$sf" ] || continue
+        # read_file is [ -r ]-gated; a mode-000 file yields empty, counted as an
+        # unreadable VALUE rather than silently as a zero.
+        v=$(read_file "$sf")
+        v=${v//[[:space:]]/}
+        lane_id=$(basename -- "$sf"); lane_id=${lane_id%.round}
+        if ! is_int "$v"; then
+          state_unread_vals=$((state_unread_vals + 1))
+          continue
+        fi
+        if [ "$v" -gt "$state_max" ]; then state_max=$v; fi
+        [ "$LEDGER_RC" -eq 0 ] || continue
+        lr=$(ledger_last_launch_round "$lane_id")
+        is_int "$lr" || continue
+        state_cmp=$((state_cmp + 1))
+        if [ "$v" -lt "$lr" ]; then
+          state_lag=$((state_lag + 1))
+          emit_finding WATCHDOG_STATE_LAG info "lane=$lane_id state_round=$v ledger_round=$lr path=$sf"
+        elif [ "$v" -gt "$lr" ]; then
+          state_ahead=$((state_ahead + 1))
+          emit_finding WATCHDOG_STATE_AHEAD info "lane=$lane_id state_round=$v ledger_round=$lr path=$sf"
+        fi
+      done <<< "$state_list"
     else
       state_read=unreadable
     fi
@@ -252,10 +441,12 @@ probe_watchdog() {
   fi
 
   # The disclosure only appears when the walk failed; a readable dir keeps the
-  # exact r2 row bytes (`state_rounds=<n>`).
-  state_field="state_rounds=$state_n"
+  # r2 fields (`state_rounds=<n>`) with the r7 value fields appended.
+  state_field="state_rounds=$state_n state_rounds_max=$state_max state_lag=$state_lag state_ahead=$state_ahead state_cmp=$state_cmp state_val_unreadable=$state_unread_vals"
   if [ "$state_read" = unreadable ]; then
     state_field='state_rounds=unavailable state_unreadable=1'
+  elif [ "$LEDGER_RC" -ne 0 ]; then
+    state_field="$state_field state_ledger=unreadable"
   fi
   detail="cmd=$cmd_bits; pids=$pid_n; log=$log_state; age_s=${age:-?}; stale_threshold_s=$WATCHDOG_STALE_S; $state_field; ts=$TS_UTC"
   emit_surface watchdog "$st" "$detail"
@@ -408,7 +599,7 @@ probe_journal() {
 
 # ---- surface: cgroup memory -------------------------------------------------
 probe_cgroup() {
-  local cmd="cat $CGROUP_EVENTS; cat $CGROUP_CURRENT"
+  local cmd="cat $CGROUP_EVENTS; cat $CGROUP_CURRENT; cat $CGROUP_PRESSURE; cat $CGROUP_MAX"
   local oom_kill='' oom='' high='' max='' cur='' st=ok
 
   if [ ! -r "$CGROUP_EVENTS" ]; then
@@ -455,6 +646,91 @@ probe_cgroup() {
   esac
   oom_kill=${oom_kill:-0}
 
+  # ---- r7: memory pressure (r2 note §4 Gaps: "unmeasured — no number proposed")
+  # PSI is the kernel's own stall accounting, so it is the pressure reading that
+  # needs no invented model: `some` = at least one task stalled, `full` = all
+  # did. Only shape-validated decimals are printed (is_decimal), so an
+  # operator-pinned MORI_CGROUP_PRESSURE at an arbitrary file cannot leak its
+  # bytes into the row. Graded on the integer part of `some avg10` against
+  # MEM_PSI_WARN_AVG10, a LOCAL placeholder (see the defaults block).
+  local psi_some='' psi_full='' psi_state=ok psi10=''
+  if [ -r "$CGROUP_PRESSURE" ]; then
+    cap cat -- "$CGROUP_PRESSURE"
+    if [ "$CAP_RC" -eq 0 ]; then
+      psi_some=$(psi_avg10 "$CAP_OUT" some)
+      psi_full=$(psi_avg10 "$CAP_OUT" full)
+      is_decimal "$psi_some" || psi_some=''
+      is_decimal "$psi_full" || psi_full=''
+    else
+      psi_state=unreadable
+    fi
+  elif [ -e "$CGROUP_PRESSURE" ]; then
+    # Present but not readable is a DIFFERENT fact from absent, and the state
+    # field must not claim the file does not exist (measured: a mode-000
+    # MORI_CGROUP_PRESSURE was reported `absent` before this branch existed).
+    psi_state=unreadable
+  else
+    psi_state=absent
+  fi
+  if [ -n "$psi_some" ]; then
+    psi10=${psi_some%%.*}
+    if is_int "$psi10"; then
+      psi10=$((10#$psi10))
+      if [ "$psi10" -ge "$MEM_PSI_WARN_AVG10" ]; then
+        emit_finding MEM_PRESSURE_HIGH warn "psi_some_avg10=$psi_some threshold_avg10=$MEM_PSI_WARN_AVG10 threshold_label=local path=$CGROUP_PRESSURE"
+        st=drift
+      fi
+    fi
+  fi
+
+  # ---- r7: fill pressure -----------------------------------------------------
+  # current/limit when the cgroup has a numeric memory.max (the general case:
+  # any container or scope with a set limit). This host's user slice reads
+  # `max` (unlimited), so the closed-container ratio does not exist here and the
+  # fallback is the host's own MemAvailable/MemTotal ratio — a different scope,
+  # named on the row (`mem_fill_scope=host-ram`), graded against a LOCAL floor.
+  # The current value used for the ratio is the shape-validated numeric read
+  # (num_of); the `current=` field above keeps its existing refusal semantics.
+  # The limit keeps the literal token `max` (cgroup v2 says "unlimited" with it),
+  # which num_of would drop, so it is read with its own shape test: `max` or
+  # digits, nothing else may pass into the row.
+  local mem_limit='' limit_raw='' fill_pct='' fill_scope='' avail_pct='' mtotal='' mavail='' cur_num=''
+  limit_raw=$(read_file "$CGROUP_MAX"); limit_raw=${limit_raw//[[:space:]]/}
+  case "$limit_raw" in
+    max) mem_limit=max ;;
+    '') ;;
+    *) if is_int "$limit_raw"; then mem_limit=$limit_raw; fi ;;
+  esac
+  cur_num=$(num_of "$CGROUP_CURRENT")
+  # Branch order matters: the literal `max` is tested FIRST, because
+  # `[ max -gt 0 ]` is a bash arithmetic-argument error — measured live as
+  # `tools/mori-census.sh: line 705: [: max: integer expected` on stderr while
+  # the elif still produced the right answer. A probe must not print shell
+  # diagnostics in its normal path (the selftest now fails on that noise).
+  if [ "$mem_limit" = max ]; then
+    fill_scope=host-ram
+    mtotal=$(meminfo_field MemTotal)
+    mavail=$(meminfo_field MemAvailable)
+    if [ -n "$mtotal" ] && [ "$mtotal" -gt 0 ] && [ -n "$mavail" ]; then
+      avail_pct=$((mavail * 100 / mtotal))
+      if [ "$avail_pct" -le "$MEM_AVAIL_MIN_PCT" ]; then
+        emit_finding MEM_AVAIL_LOW warn "scope=host-ram host_mem_avail_pct=$avail_pct floor_pct=$MEM_AVAIL_MIN_PCT threshold_label=local note=slice memory.max is unlimited, so fill pressure is graded at host scope"
+        st=drift
+      fi
+    else
+      fill_scope=unavailable
+    fi
+  elif [ -n "$mem_limit" ] && [ "$mem_limit" -gt 0 ] && [ -n "$cur_num" ]; then
+    fill_scope=cgroup
+    fill_pct=$((cur_num * 100 / mem_limit))
+    if [ "$fill_pct" -ge "$MEM_FILL_WARN_PCT" ]; then
+      emit_finding MEM_FILL_HIGH warn "scope=cgroup mem_fill_pct=$fill_pct threshold_pct=$MEM_FILL_WARN_PCT threshold_label=local current=$cur_num limit=$mem_limit"
+      st=drift
+    fi
+  else
+    fill_scope=unavailable
+  fi
+
   # presence flag semantics (tsukuroi note): oom_kill is a flag/counter, not a meter to clear
   if [ -n "$service_oom_kill" ] && [ "$service_oom_kill" -gt 0 ] 2>/dev/null; then
     emit_finding CGROUP_OOM_KILL crit "local_oom_kill=$service_oom_kill path=${LOCAL_EVENTS} (local counter: kills in this cgroup only)"
@@ -463,18 +739,65 @@ probe_cgroup() {
     emit_finding CGROUP_OOM_KILL_CUMULATIVE info "parent_slice_oom_kill=$oom_kill service_scope_oom_kill=${service_oom_kill:-unavailable} note=cumulative boot counter; attribute the event before treating it as fleet evidence"
   fi
 
-  emit_surface cgroup "$st" "cmd=$cmd; oom_kill=$oom_kill oom=${oom:-?} high=${high:-?} max=${max:-?} current=${cur:-?}; ts=$TS_UTC"
+  # r7 disclosure for r2 defect 3: the bare `oom_kill=` above is the PARENT
+  # cumulative counter; the session-service reading that can actually name a
+  # fleet kill is now printed next to it instead of living only inside finding
+  # text.
+  local fill_field
+  if [ -n "$fill_pct" ]; then
+    fill_field="mem_fill_pct=$fill_pct mem_fill_scope=cgroup"
+  elif [ "$fill_scope" = host-ram ] && [ -n "$avail_pct" ]; then
+    fill_field="mem_fill_pct=unavailable mem_fill_scope=host-ram host_mem_avail_pct=$avail_pct"
+  else
+    fill_field="mem_fill_pct=unavailable mem_fill_scope=unavailable"
+  fi
+  emit_surface cgroup "$st" "cmd=$cmd; oom_kill=$oom_kill oom=${oom:-?} high=${high:-?} max=${max:-?} current=${cur:-?}; local_oom_kill=${service_oom_kill:-unavailable} psi_some_avg10=${psi_some:-unavailable} psi_full_avg10=${psi_full:-unavailable} psi_source=$psi_state psi_warn_avg10=$MEM_PSI_WARN_AVG10 $fill_field; ts=$TS_UTC"
 }
 
 # ---- surface: disk runway ---------------------------------------------------
+# r7 write-rate helpers. The r2 note required a MEASURED write rate before any
+# threshold could be revisited for disk; /proc/diskstats holds per-boot
+# counters, so the only rate derivable without a sampling interval is the
+# AVERAGE SINCE BOOT — reported with that name and never as an instantaneous
+# rate. No sampling interval is added to census runtime (bounded deferral
+# recorded in the header block).
+dev_of() { # <df source> -> device basename (dm-0, nvme0n1p2) or empty
+  local src=$1 real
+  case "$src" in /dev/*) ;; *) return 0 ;; esac
+  real=$(readlink -f -- "$src" 2>/dev/null || printf '%s' "$src")
+  printf '%s' "${real#/dev/}"
+}
+
+io_of() { # <devname> -> "<rate>Bps" or "unavailable:<reason>"; reads up_s
+  local dev=$1 line sectors
+  if [ -z "${up_s:-}" ]; then printf 'unavailable:no-uptime'; return 0; fi
+  if [ ! -r "$DISKSTATS" ]; then printf 'unavailable:no-diskstats'; return 0; fi
+  cap awk -v d="$dev" 'NF >= 10 && $3 == d { print; exit }' "$DISKSTATS"
+  if [ "$CAP_RC" -ne 0 ]; then printf 'unavailable:diskstats-rc%s' "$CAP_RC"; return 0; fi
+  line=$CAP_OUT
+  if [ -z "$line" ]; then printf 'unavailable:device-not-in-diskstats'; return 0; fi
+  # field 10 of a diskstats line = sectors written (field 8 is writes completed);
+  # 512 bytes per sector is the counter's unit, not an assumption about the
+  # device's physical sector size. The `|| true` is the pipefail lesson applied
+  # to a new pipeline: a failed extraction must grade `counter-parse`, never
+  # abort the gate under `set -e` (the r3 crash class).
+  sectors=$(printf '%s\n' "$line" | awk '{print $10}' || true)
+  if ! is_int "$sectors"; then printf 'unavailable:counter-parse'; return 0; fi
+  printf '%sBps' "$((sectors * 512 / up_s))"
+}
+
 probe_disk() {
   local cmd="$DF_BIN -P"
   local st=ok t line fs size used avail pctp pct target_found=0
+  local up_s='' up_raw dev io_val io_meas='' io_unmeas=''
 
   if ! have "$DF_BIN" && [ ! -x "$DF_BIN" ]; then
     emit_surface disk unavailable "cmd=$cmd; df=missing; ts=$TS_UTC"
     return 0
   fi
+
+  up_raw=$(read_file "$UPTIME_FILE"); up_raw=${up_raw%% *}; up_raw=${up_raw%%.*}
+  if is_int "$up_raw" && [ "$up_raw" -gt 0 ]; then up_s=$up_raw; fi
 
   for t in $DISK_TARGETS; do
     if [ ! -e "$t" ]; then
@@ -510,12 +833,37 @@ probe_disk() {
       emit_finding DISK_LOW warn "path=$t fs=$fs size=$size used=$used avail=$avail used_pct=$pct threshold=$DISK_WARN_PCT"
       st=drift
     fi
+    # r7: write rate for this target's device. A tmpfs/overlay target has no
+    # diskstats entry at all, and that is disclosed as a reason, not as 0 B/s.
+    dev=$(dev_of "$fs")
+    if [ -z "$dev" ]; then
+      io_unmeas="${io_unmeas:+$io_unmeas }${fs:-unknown-source}:not-a-block-device"
+    else
+      io_val=$(io_of "$dev")
+      case "$io_val" in
+        # The divisor travels WITH the rate (`<dev>:<rate>Bps/<up>s`) rather than
+        # as a field of its own. Measured reason: a standalone `io_up_s=` read
+        # from /proc/uptime made two runs of the SAME fixture differ by a second
+        # and the oracle's shape-invariance case (byte-compare of normalized
+        # stdout) failed intermittently — a live-varying value must not appear
+        # when no fixture-driven rate was measured.
+        *Bps) io_meas="${io_meas:+$io_meas }$dev:$io_val/${up_s}s" ;;
+        unavailable:*) io_unmeas="${io_unmeas:+$io_unmeas }$dev:${io_val#unavailable:}" ;;
+        *) io_unmeas="${io_unmeas:+$io_unmeas }$dev:unknown" ;;
+      esac
+    fi
   done
+
+  # A measured-nothing disclosure: when no target device yielded a rate, the
+  # row would otherwise read as if the probe simply had nothing to say.
+  if [ "$target_found" -eq 1 ] && [ -z "$io_meas" ]; then
+    emit_finding DISK_IO_UNMEASURED info "no target device yielded a since-boot write average unmeasured=${io_unmeas:-none} basis=since-boot"
+  fi
 
   if [ "$target_found" -eq 0 ]; then
     emit_surface disk unavailable "cmd=$cmd; targets=$DISK_TARGETS; none present; ts=$TS_UTC"
   else
-    emit_surface disk "$st" "cmd=$cmd; targets=$DISK_TARGETS; warn_pct=$DISK_WARN_PCT crit_pct=$DISK_CRIT_PCT; ts=$TS_UTC"
+    emit_surface disk "$st" "cmd=$cmd; targets=$DISK_TARGETS; warn_pct=$DISK_WARN_PCT crit_pct=$DISK_CRIT_PCT; io_basis=since-boot io_avg_since_boot=${io_meas:-none} io_avg_unavailable=${io_unmeas:-none}; ts=$TS_UTC"
   fi
 }
 
@@ -880,6 +1228,17 @@ probe_silence() {
 }
 
 # ---- surface: tmux (optional) -----------------------------------------------
+# r7 relevance classification (r2 note §7 Gaps: "sessions=1 cannot distinguish a
+# fleet session from any other tmux server"). Rule, receipt-backed by the
+# fleet's own pane record (read-only, in the fleet root):
+#   .ufo/interactive-l1-20261015T050057Z/interactive-panes.json
+#   schema shokunin-interactive-panes-v1, tmuxSession ufo_sighting, every lane
+#   pane cwd under <root>/<lane>-shokunin
+# so: a session is fleet-RELEVANT iff at least one of its panes has a current
+# path equal to or under MORI_TMUX_SCOPE_ROOT (default the fleet root), and
+# FOREIGN otherwise. Boundary, disclosed on the row: the rule is path-based, so
+# a fleet worker whose pane cwd sits outside the fleet root is reported foreign;
+# a session with no readable pane line is neither (relevance=unavailable).
 probe_tmux() {
   local cmd="$TMUX_BIN ls"
   if ! have "$TMUX_BIN" && [ ! -x "$TMUX_BIN" ]; then
@@ -892,9 +1251,55 @@ probe_tmux() {
     emit_surface tmux unavailable "cmd=$cmd; rc=$CAP_RC; ts=$TS_UTC"
     return 0
   fi
-  local n
+  local n rel=ok reason='' n_fleet=0 n_foreign=0 n_unclass=0
+  local fmt line sess path
   n=$(printf '%s\n' "$CAP_OUT" | grep -c . || true)
-  emit_surface tmux ok "cmd=$cmd; sessions=$n; ts=$TS_UTC"
+
+  declare -A SESS_CLASS=()
+  fmt=$'#{session_name}\t#{pane_current_path}'
+  cap "$TMUX_BIN" list-panes -a -F "$fmt"
+  if [ "$CAP_RC" -ne 0 ]; then
+    rel=unavailable; reason="panes-rc=$CAP_RC"
+  else
+    while IFS= read -r line; do
+      [ -n "$line" ] || continue
+      # Pane lines are tab-separated by the format above; anything else (a bare
+      # `tmux ls` table from a stub, a truncated line) is not pane data and is
+      # not guessed at.
+      case "$line" in *$'\t'*) ;; *) continue ;; esac
+      sess=${line%%$'\t'*}; path=${line#*$'\t'}
+      [ -n "$sess" ] || continue
+      # One fleet pane is enough for the whole session; a foreign pane never
+      # demotes a session already marked fleet.
+      case "$path" in
+        "$TMUX_SCOPE_ROOT"|"$TMUX_SCOPE_ROOT"/*) SESS_CLASS[$sess]=fleet ;;
+        *) if [ "${SESS_CLASS[$sess]:-}" != fleet ]; then SESS_CLASS[$sess]=foreign; fi ;;
+      esac
+    done <<< "$CAP_OUT"
+    if [ "${#SESS_CLASS[@]}" -eq 0 ]; then
+      rel=unavailable; reason=no-pane-data
+    else
+      for sess in "${!SESS_CLASS[@]}"; do
+        case "${SESS_CLASS[$sess]}" in
+          fleet) n_fleet=$((n_fleet + 1)) ;;
+          *) n_foreign=$((n_foreign + 1))
+             emit_finding TMUX_FOREIGN_SESSION info "session=$sess relevance=foreign rule=pane_cwd_under_fleet_root scope_root=$TMUX_SCOPE_ROOT" ;;
+        esac
+      done
+      if [ "$n" -gt "$((n_fleet + n_foreign))" ] 2>/dev/null; then
+        n_unclass=$((n - n_fleet - n_foreign))
+      fi
+    fi
+  fi
+
+  if [ "$rel" = unavailable ]; then
+    # Sessions were counted but not classified: disclose instead of implying a
+    # classification that was never made.
+    emit_finding TMUX_RELEVANCE_UNAVAILABLE info "session relevance unreadable reason=$reason probe=$TMUX_BIN list-panes -a sessions=$n unnoticed_but_counted"
+    emit_surface tmux ok "cmd=$cmd; sessions=$n; relevance=unavailable reason=$reason rule=pane_cwd_under_fleet_root; ts=$TS_UTC"
+  else
+    emit_surface tmux ok "cmd=$cmd; sessions=$n; relevant=$n_fleet foreign=$n_foreign unclassified=$n_unclass rule=pane_cwd_under_fleet_root; ts=$TS_UTC"
+  fi
 }
 
 # ---- live run ---------------------------------------------------------------
@@ -962,7 +1367,14 @@ case "$name" in
     # ignore args; emit fixture table
     out_of df; exit "$(rc_of df)" ;;
   tmux)
-    out_of tmux; exit "$(rc_of tmux)" ;;
+    # r7: the census asks two different questions — `tmux ls` (session count)
+    # and `tmux list-panes -a -F ...` (pane cwd for relevance). Answer per
+    # subcommand from $fx/stub/tmux[-panes]; an absent file is empty output
+    # with rc 0, so the no-pane-data arm is drivable too.
+    case " $* " in
+      *" list-panes "*) out_of tmux-panes; exit "$(rc_of tmux-panes)" ;;
+      *) out_of tmux; exit "$(rc_of tmux)" ;;
+    esac ;;
   git)
     verb=''
     for a in "$@"; do
@@ -1016,7 +1428,18 @@ STUB
     # cgroup quiet
     printf 'low 0\nhigh 0\nmax 0\noom 0\noom_kill 0\noom_group_kill 0\n' > "$d/cgroup/memory.events"
     printf '123456\n' > "$d/cgroup/memory.current"
-    printf 'MemAvailable: 20000000 kB\n' > "$d/meminfo"
+    # r7 cgroup siblings: PSI quiet (some/full avg10=0.00) and the unlimited
+    # limit token this host's user slice reports, so the baseline drives the
+    # host-ram fill arm; MemTotal is present so that arm is provable, not
+    # silently unavailable.
+    printf 'some avg10=0.00 avg60=0.00 avg300=0.00 total=100\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=50\n' > "$d/cgroup/memory.pressure"
+    printf 'max\n' > "$d/cgroup/memory.max"
+    printf 'MemTotal: 32000000 kB\nMemAvailable: 20000000 kB\n' > "$d/meminfo"
+    # r7 disk-rate fixtures: one diskstats line for the df stub's device and an
+    # uptime divisor. sectors written = field 10 = 20000, uptime = 1000 s, so
+    # the baseline rate is exactly 20000*512/1000 = 10240 Bps.
+    printf '8 0 fx 100 0 1000 0 500 0 20000 0 0 0 0 0 0\n' > "$d/diskstats"
+    printf '1000.00 4000.00\n' > "$d/uptime"
     # stubs
     printf '1234 bash /path/scripts/shokunin-watchdog.sh\n' > "$d/stub/pgrep"
     printf 0 > "$d/stub/pgrep.rc"
@@ -1024,6 +1447,10 @@ STUB
     printf 'Filesystem 1024-blocks Used Available Capacity Mounted on\n/dev/fx 1000000 10000 990000 2%% /fx\n' > "$d/stub/df"
     printf 0 > "$d/stub/df.rc"
     printf 'fx_session: 1 windows\n' > "$d/stub/tmux"; printf 0 > "$d/stub/tmux.rc"
+    # r7 pane fixture: one session whose pane cwd is the fixture fleet root, so
+    # the baseline exercises the relevance rule as fleet-relevant (tab-separated,
+    # the format the probe asks tmux for).
+    printf 'fx_session\t%s\n' "$d/root" > "$d/stub/tmux-panes"; printf 0 > "$d/stub/tmux-panes.rc"
     # git answers per verb via stub/git-<verb>[.rc] (see the dispatcher above):
     # rev-parse / ls-files / cat-file / log / log1. Absent fixture files answer
     # empty output with rc 0.
@@ -1062,7 +1489,11 @@ STUB
       MORI_CGROUP_SERVICE_EVENTS="$FX/cgroup/memory.events" \
       MORI_CGROUP_LOCAL_EVENTS="$FX/cgroup/memory.events" \
       MORI_CGROUP_CURRENT="$FX/cgroup/memory.current" \
+      MORI_CGROUP_PRESSURE="$FX/cgroup/memory.pressure" \
+      MORI_CGROUP_MAX="$FX/cgroup/memory.max" \
       MORI_MEMINFO="$FX/meminfo" \
+      MORI_DISKSTATS="$FX/diskstats" \
+      MORI_UPTIME="$FX/uptime" \
       MORI_DF_BIN="$bin/df" \
       MORI_PGREP_BIN="$bin/pgrep" \
       MORI_JOURNALCTL_BIN="$bin/journalctl" \
@@ -1084,6 +1515,13 @@ STUB
       bad "$label: exit $rc want $wrc; tail=$(printf '%s' "$out" | tail -n3 | tr '\n' '|')"
     elif ! printf '%s\n' "$out" | grep -qE "^MORI_CENSUS: ${wverdict} "; then
       bad "$label: verdict want $wverdict; got=$(printf '%s\n' "$out" | grep '^MORI_CENSUS:' | head -n1)"
+    elif printf '%s\n' "$out" | grep -qE 'integer expected|line [0-9]+: \[: '; then
+      # r7: a probe whose normal path prints a bash diagnostic (e.g. a `[` test
+      # called with a non-integer) is defective even when its answer happens to
+      # be right — measured: `[: max: integer expected` on stderr from the
+      # memory fill arm while the row still read correctly. The output is
+      # captured with 2>&1, so this catches stderr noise in every case.
+      bad "$label: shell diagnostic noise in census output: $(printf '%s\n' "$out" | grep -m1 -E 'integer expected|line [0-9]+: \[: ')"
     else
       miss=''
       for re in "$@"; do
@@ -1408,6 +1846,134 @@ SKIP_FRESHEN=1
   : > "$FX/stub/journal"
   check 'clean: empty journal' 0 CLEAN \
     '^SURFACE journal: ok'
+
+  # --- r7 coverage cases: the four r2 surface gaps ----------------------------
+  # Each probe gets a firing case and a near-miss case, and every case here is
+  # driven through the same fixture env as the rest of the suite (no case
+  # branches on fixture shape; the probe reads the same fields live).
+
+  # Gap 1 — tmux relevance. Two sessions: one fleet pane (cwd under the fixture
+  # fleet root), one foreign pane. The rule must separate them and the foreign
+  # one must be NAMED, not merely counted.
+  FX="$work/fx/tmux-mixed"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf 'fx_session: 1 windows\nother_session: 1 windows\n' > "$FX/stub/tmux"
+  printf 'fx_session\t%s\nother_session\t/srv/other\n' "$FX/root" > "$FX/stub/tmux-panes"
+  check 'tmux: fleet vs foreign pane classification' 0 CLEAN \
+    'relevant=1 foreign=1 unclassified=0' \
+    'FINDING TMUX_FOREIGN_SESSION .*session=other_session' \
+    '^MORI_CENSUS: CLEAN '
+
+  # The count-only shape the frozen oracle's stub answers with (no tab): pane
+  # data is absent, so relevance is DISCLOSED as unavailable rather than
+  # guessed foreign, and the session count is still reported.
+  FX="$work/fx/tmux-nopane"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf 'fx_session: 1 windows\n' > "$FX/stub/tmux-panes"
+  check 'tmux: no pane data -> relevance unavailable, count intact' 0 CLEAN \
+    '^SURFACE tmux: ok' \
+    'sessions=1' \
+    'relevance=unavailable reason=no-pane-data' \
+    'FINDING TMUX_RELEVANCE_UNAVAILABLE' \
+    '^MORI_CENSUS: CLEAN '
+
+  FX="$work/fx/tmux-panerc"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf 1 > "$FX/stub/tmux-panes.rc"
+  check 'tmux: pane probe rc!=0 -> relevance unavailable' 0 CLEAN \
+    'relevance=unavailable reason=panes-rc=1' \
+    '^MORI_CENSUS: CLEAN '
+
+  # Gap 2 — memory pressure. PSI: above the local threshold fires, just below it
+  # does not (the direction is proved, not assumed).
+  FX="$work/fx/mem-psi-high"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf 'some avg10=25.00 avg60=1.00 avg300=0.10 total=900\nfull avg10=12.00 avg60=0.50 avg300=0.05 total=400\n' > "$FX/cgroup/memory.pressure"
+  check 'drift: MEM_PRESSURE_HIGH at local PSI threshold' 1 DRIFT \
+    'FINDING MEM_PRESSURE_HIGH .*threshold_avg10=10 threshold_label=local' \
+    'psi_some_avg10=25.00' \
+    'psi_full_avg10=12.00'
+
+  FX="$work/fx/mem-psi-under"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf 'some avg10=9.99 avg60=1.00 avg300=0.10 total=900\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n' > "$FX/cgroup/memory.pressure"
+  check 'clean: PSI just under the local threshold does not fire' 0 CLEAN \
+    'psi_some_avg10=9.99' \
+    '^MORI_CENSUS: CLEAN '
+
+  # Fill arm with a numeric slice limit, both sides of the labeled-local pct.
+  FX="$work/fx/mem-fill-high"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf '1000\n' > "$FX/cgroup/memory.max"
+  printf '900\n' > "$FX/cgroup/memory.current"
+  check 'drift: MEM_FILL_HIGH vs numeric cgroup limit' 1 DRIFT \
+    'FINDING MEM_FILL_HIGH .*scope=cgroup mem_fill_pct=90' \
+    'mem_fill_pct=90 mem_fill_scope=cgroup'
+
+  FX="$work/fx/mem-fill-under"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf '1000\n' > "$FX/cgroup/memory.max"
+  printf '100\n' > "$FX/cgroup/memory.current"
+  check 'clean: cgroup fill under threshold does not fire' 0 CLEAN \
+    'mem_fill_pct=10 mem_fill_scope=cgroup' \
+    '^MORI_CENSUS: CLEAN '
+
+  # Host-ram arm (this host's shape: memory.max is the literal `max`).
+  FX="$work/fx/mem-avail-low"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf 'MemTotal: 32000000 kB\nMemAvailable: 2000000 kB\n' > "$FX/meminfo"
+  check 'drift: MEM_AVAIL_LOW at unlimited-slice host scope' 1 DRIFT \
+    'FINDING MEM_AVAIL_LOW .*host_mem_avail_pct=6 floor_pct=10 threshold_label=local' \
+    'mem_fill_scope=host-ram host_mem_avail_pct=6'
+
+  # Gap 3 — disk write rate. The rate is arithmetic on the fixture counters
+  # (20000 sectors * 512 / 500 s = 20480 Bps): a wrong divisor or a wrong
+  # diskstats field fails this case, so it proves the math and not just that a
+  # number appeared.
+  FX="$work/fx/disk-io"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf '500.00 1000.00\n' > "$FX/uptime"
+  check 'disk: since-boot write average from diskstats' 0 CLEAN \
+    'io_basis=since-boot io_avg_since_boot=fx:20480Bps/500s' \
+    '^MORI_CENSUS: CLEAN '
+
+  FX="$work/fx/disk-io-nodev"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf '8 0 sdz 1 0 1 0 1 0 1 0 0 0 0 0 0\n' > "$FX/diskstats"
+  check 'disk: device missing from diskstats -> unmeasured disclosed' 0 CLEAN \
+    'io_avg_unavailable=fx:device-not-in-diskstats' \
+    'FINDING DISK_IO_UNMEASURED' \
+    '^MORI_CENSUS: CLEAN '
+
+  FX="$work/fx/disk-io-nouptime"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  rm -f "$FX/uptime"
+  check 'disk: missing uptime -> rate unavailable, not zero' 0 CLEAN \
+    'io_avg_since_boot=none' \
+    'io_avg_unavailable=fx:no-uptime' \
+    'FINDING DISK_IO_UNMEASURED'
+
+  # Gap 4 — state_rounds values vs the watchdog's own record. LAG and AHEAD are
+  # INFO by design, so both cases must stay CLEAN while the inconsistency is
+  # visible in the row and as a finding.
+  FX="$work/fx/state-lag"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf '5\n' > "$FX/ufo/state/kagi.round"
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  check 'watchdog: state value below ledger launch -> LAG info' 0 CLEAN \
+    'FINDING WATCHDOG_STATE_LAG .*lane=kagi state_round=5 ledger_round=7' \
+    'state_rounds_max=5 state_lag=1 state_ahead=0 state_cmp=1' \
+    '^MORI_CENSUS: CLEAN '
+
+  FX="$work/fx/state-ahead"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf '9\n' > "$FX/ufo/state/kagi.round"
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  check 'watchdog: state value above ledger launch -> AHEAD info' 0 CLEAN \
+    'FINDING WATCHDOG_STATE_AHEAD .*lane=kagi state_round=9 ledger_round=7' \
+    'state_rounds_max=9 state_lag=0 state_ahead=1 state_cmp=1' \
+    '^MORI_CENSUS: CLEAN '
+
+  FX="$work/fx/state-match"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf '7\n' > "$FX/ufo/state/kagi.round"
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  check 'clean: matching state and ledger compare, no mismatch finding' 0 CLEAN \
+    'state_rounds_max=7 state_lag=0 state_ahead=0 state_cmp=1 state_val_unreadable=0' \
+    '^MORI_CENSUS: CLEAN '
+
+  FX="$work/fx/state-val-unreadable"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  chmod 000 "$FX/ufo/state/kagi.round"
+  check 'watchdog: unreadable round value counted, no crash' 0 CLEAN \
+    'state_val_unreadable=1' \
+    'state_rounds=1' \
+    '^MORI_CENSUS: CLEAN '
 
   check_cli 'cli: unknown arg exit 2' 2 'mori-census:' -- --bogus
   check_cli 'cli: --help exit 0' 0 'usage: mori-census' -- --help

@@ -12,6 +12,7 @@
 | `knowledge/verdict-machine-r4.md` | the r4 verdict machine at oracle `be0e28b8…` / census `af2d4e79…`: the matcher defect and its `want_match` fix, the sniffer channels and the named order-replay residual, the `:227` rc-gate, per-anchor-round close tracking, final tallies | round-4 wave, 2026-10-15 |
 | `knowledge/verdict-machine-r5.md` | the r5 run-order close at oracle `7143ccc2…` / census `af2d4e79…` (frozen): seeded shuffle + per-run nonce, the enumerated attack-class tallies, and the residual seed channels R1–R4 | round-5 wave, 2026-10-15 |
 | `knowledge/verdict-machine-r6.md` | the r6 verdict machine at oracle `3307761a…` / census `af2d4e79…` (frozen): the r5 stdout-backchannel (fd/1 header + pinned environ) and naive content-keyed classes closed — header printed only after the case loop, pins scrubbed from the exec-time environ by a one-time self re-exec, per-run salt woven into fixture content — with the attack tallies and the two named residuals (full-grammar normalizing memorizer; surviving-ancestor pin) | round-6 wave, 2026-10-15 |
+| `knowledge/surfaces-r7.md` | the r7 closure of the four r2 surface Gaps (tmux relevance, memory pressure, disk write-rate, `state_rounds` values): per-gap probe design, hermetic proofs + live rows, named limits, and the additive-only oracle re-pin at census `c7c3569b…` / oracle `448f7723…` | round-7 wave, 2026-10-15 |
 | `lessons/2026-10-15-errexit-pipefail-silent-crash.md` | the pipefail silent-crash class (rc 1 collides with DRIFT, no verdict line); `:517`/`:283` hardened (r3), `:227` rc-gated (r4, `verdict-machine-r4.md` §3) | round-3 wave, `/tmp` canaries |
 | `lessons/2026-10-15-forgeable-oracle-visible-fixtures.md` | the forgeable-oracle class: visible case identity + a matcher taking expanded alternation literally let a no-logic census reach the ceiling (27/27); r4 opaque case dirs drop the same sniffer to 1/28 | round-4 wave, `/tmp` canaries |
 | `lessons/2026-10-15-run-order-spoofing-shuffle-nonce-limits.md` | the r5 lesson: the seeded shuffle + per-run nonce close the enumerated replay classes, and the two forgers that still reach 28/28 (content memorizer; `/proc` run-header leak), with countermeasures | round-5 wave, `/tmp` canaries |
@@ -115,6 +116,32 @@
   0, and a pin in a *surviving ancestor's* exec-time environ (wrapper-CI
   pattern) stays readable for the whole run (`knowledge/verdict-machine-r6.md`
   §4-§5; `lessons/2026-10-15-run-secret-timing-and-content-freshness-limits.md`).
+- **Surface gaps closed (round 7): census `c7c3569b…` (`VERSION=census-r4`), oracle
+  `448f7723…`.** All four `knowledge/observability-surfaces-r2.md` Gaps are measured
+  probes now: tmux sessions classified by pane current path under the fleet root
+  (`sessions= relevant= foreign= unclassified= rule=pane_cwd_under_fleet_root`;
+  `TMUX_FOREIGN_SESSION` names the session); memory graded — PSI `some`/`full` avg10
+  (`MEM_PRESSURE_HIGH`) and fill `current/max` or a named host-ram floor
+  (`MEM_FILL_HIGH`/`MEM_AVAIL_LOW`), thresholds labeled local; disk gains a since-boot
+  write average (`io_basis=since-boot io_avg_since_boot=<dev>:<rate>Bps/<uptime>s`,
+  unmeasurable targets named with a reason, never 0 B/s); `state_rounds` VALUES read
+  and compared with the lane's last ledger launch round (`state_rounds_max state_lag
+  state_ahead state_val_unreadable`; `WATCHDOG_STATE_LAG`/`_AHEAD` info-only). Machine
+  green: selftest 30 → 45, `PASS (45 cases, 45 passed, 0 failed)` exit 0; oracle
+  re-pin additive-only — 8 inserted lines, 0 deletions, 28 ids/wants byte-identical —
+  `matched=28 total=28` exit 0; live `DRIFT (findings=15 drift=14 unavailable=1
+  surfaces=7)` exit 1; every r6 field name still present (field-set diff). Method,
+  live rows and per-gap limits: `knowledge/surfaces-r7.md`; receipts
+  `corpus/evidence/surfaces-r7-20261015T1948Z-*.log`.
+- **Round-7 named limits:** the instantaneous disk write rate is a bounded deferral
+  (precondition: measure the wall-time a second sample adds —
+  `tools/mori-census.sh:48-52`); the since-boot average counts every write to the
+  device, not fleet-attributable, and the second default target `/tmp` is tmpfs on
+  this host (`io_avg_unavailable=`); tmux relevance is fixture-proved only (no tmux
+  server live this round, so the live row keeps the r6 unavailable shape) and
+  per-session freshness stays unmeasured; the three memory thresholds are local
+  placeholders that **do** flip the roll; `state_cmp` can be smaller than
+  `state_rounds` for a lane with no ledger launch line.
 - **Row-6 closure is presence + window only (spec residual):** a fresh,
   contentless committed marker satisfies it while the running driver would reject
   that shape (`knowledge/silence-grading-r2.md:191-197`). No frozen-behavioral

@@ -114,6 +114,19 @@ comment "still try log" false (r1 `:176-182` already names the arm latent; the s
 never removes the pgrep stub, `:706-709`). Selftest proves absent and stale arms
 (`:772-789`) but not the probe-unavailable arm.
 
+**r7 update (2026-10-15) — the `state_rounds` count-only clause: closed.** At census
+`c7c3569b…` (`VERSION=census-r4`, 2004 lines) the walk reads every `.ufo/state/*.round`
+value, the row adds `state_rounds_max= state_lag= state_ahead= state_cmp=
+state_val_unreadable=` (`tools/mori-census.sh:445`), and each value is compared with the
+lane's last `launch <lane> round=N` ledger line — below → `WATCHDOG_STATE_LAG` info
+(`:421`), above → `WATCHDOG_STATE_AHEAD` info (`:424`), neither flipping the roll. Live
+19:54:10Z row: `state_rounds=21 state_rounds_max=18 state_lag=0 state_ahead=0
+state_cmp=21 state_val_unreadable=0`; four selftest cases (`:1951`, `:1959`, `:1967`,
+`:1973`; receipt `corpus/evidence/surfaces-r7-20261015T1948Z-staterounds.log`). The
+halt-vs-death, match-precision and pgrep-missing-arm clauses above are
+outside the r7 move and remain as written. Pointer: `corpus/knowledge/surfaces-r7.md:159-189`
+(§4).
+
 Controlled false-positive demonstration (not fleet state): with a synthetic
 `bash -c 'sleep 9; echo shokunin-watchdog >/dev/null'` alive,
 
@@ -213,6 +226,24 @@ and unavailable-not-drift (`:859-864`); it does not drive parent>0/service=0, so
 cumulative-info branch and the local-vs-service discrimination are unproved by
 fixture.
 
+**r7 update (2026-10-15) — the memory-pressure clause: closed with labeled-local
+numbers.** At census `c7c3569b…` the cgroup probe reads `memory.pressure` (PSI) and
+grades `some avg10` ≥ `MORI_MEM_PSI_WARN_AVG10` (default 10, `threshold_label=local`) →
+`MEM_PRESSURE_HIGH` warn (`tools/mori-census.sh:680`); fill pressure is `current/max`
+against `MORI_MEM_FILL_WARN_PCT` (default 85) → `MEM_FILL_HIGH` warn (`:727`) when
+`memory.max` is numeric, else the host `MemAvailable/MemTotal` floor against
+`MORI_MEM_AVAIL_MIN_PCT` (default 10) → `MEM_AVAIL_LOW` warn (`:717`) with the scope
+named on the row (`mem_fill_scope=`). Live 19:54:10Z row: `local_oom_kill=0
+psi_some_avg10=0.00 psi_full_avg10=0.00 psi_source=ok psi_warn_avg10=10
+mem_fill_pct=unavailable mem_fill_scope=host-ram host_mem_avail_pct=69` (receipt
+`corpus/evidence/surfaces-r7-20261015T1948Z-memory.log`); this host's `memory.max` is
+`max`, so only the host-ram arm is live-observable. Five selftest cases (`:1888`,
+`:1895`, `:1903`, `:1910`, `:1917`); all three r7 memory findings are `warn` and do
+flip the roll — the numbers are local placeholders, deliberately not derived from a
+measurement of this host (`surfaces-r7.md:110-118`). The same row also closes the
+defect-3 disclosure with `local_oom_kill=` (`surfaces-r7.md:88-90`). Pointer:
+`corpus/knowledge/surfaces-r7.md:72-118` (§2).
+
 ## 5. disk — runway
 
 **Measures.** `df -P` on each path in `MORI_DISK_TARGETS` (default `$ROOT /tmp`, `:85`);
@@ -233,6 +264,26 @@ classify it; coverage exists only when an operator pins `MORI_DISK_TARGETS` (r1
 `:182-184`). Do not OR a byte floor against `df -P`'s 1024-block Available column
 (`:91-92`). Selftest proves crit vs under-warn (`:827-835`); the target-absent /
 df-failed arms have no case.
+
+**r7 update (2026-10-15) — the no-write-rate clause: a since-boot average is now
+measured; the instantaneous rate is a bounded deferral.** At census `c7c3569b…` the
+disk probe maps each `df` source to its device and reports `io_basis=since-boot
+io_avg_since_boot=<dev>:<rate>Bps/<up_s>s` from `/proc/diskstats` sectors-written
+(`tools/mori-census.sh:764-787`, row `:866`), with every unmeasurable target named in
+`io_avg_unavailable=` (e.g. `tmpfs:not-a-block-device`) and `DISK_IO_UNMEASURED` info
+(`:860`) when nothing is measurable. Live 19:54:10Z row:
+`io_avg_since_boot=dm-0:9547707Bps/11784s`. This is the "measured write rate" the
+clause above demanded — and no threshold moved: `warn_pct=85 crit_pct=95` unchanged.
+Not implemented, as an explicit bounded deferral: the **instantaneous** two-sample
+rate; the precondition to lift it — *measure the wall-time a second sample adds and
+record it in the round note* (impl header `tools/mori-census.sh:48-52`) — is now met
+as a datum: the r7 diskrate receipt measures a 10 s two-sample pair on dm-0 (13984
+sectors → 715980 Bps), whole-gate wall time 3436 ms, and tiny/zero idle-window deltas
+(`corpus/evidence/surfaces-r7-20261015T1948Z-diskrate.log:16-18`), so the in-census
+probe stays deferred on measured grounds (`surfaces-r7.md:140-151`). Three selftest
+cases (`:1927`, `:1933`, `:1940`); the average is not fleet-attributable and cannot
+detect a burst (`surfaces-r7.md:153-157`). Pointer:
+`corpus/knowledge/surfaces-r7.md:120-157` (§3).
 
 ## 6. silence — lane silent / progressing / progressing-weak
 
@@ -280,6 +331,20 @@ wave/lane activity is unmeasured and not claimed here. The unavailable arm (miss
 tmux, rc ≠ 0) is declared in the header but never fixture-proved — no tmux case exists
 among the selftest cases (`:762-872`). Round 1's note omitted this surface entirely
 (r1 `:10-17`).
+
+**r7 update (2026-10-15) — the relevance-test clause: closed; live proof still
+absent.** At census `c7c3569b…` `probe_tmux` (`tools/mori-census.sh:1242-1302`) keeps
+the `tmux ls` count and adds `tmux list-panes -a` pane current paths: a session is
+`fleet` iff a pane sits at/under `$TMUX_SCOPE_ROOT` (default `$ROOT`, `:156`), else
+`foreign` (`TMUX_FOREIGN_SESSION` info names it, `:1286`); the row carries
+`sessions=N relevant=F foreign=X unclassified=U rule=pane_cwd_under_fleet_root`
+(`:1301`), or `relevance=unavailable reason=…` with `TMUX_RELEVANCE_UNAVAILABLE` info
+(`:1298`). The unavailable arm is fixture-proved now — three selftest cases (`:1861`,
+`:1871`, `:1880`; previously none). Live proof is still absent: this host had no tmux
+server at the r7 clocks (`tmux ls` rc 1 → the old `unavailable` row shape; receipt
+`corpus/evidence/surfaces-r7-20261015T1948Z-tmux.log`), so relevance classification is
+fixture-proved only, and per-session freshness remains unmeasured
+(`surfaces-r7.md:65-70`). Pointer: `corpus/knowledge/surfaces-r7.md:38-70` (§1).
 
 ## Cross-surface constraints
 

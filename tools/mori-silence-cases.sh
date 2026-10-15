@@ -337,6 +337,12 @@ case_skeleton() {
   printf 'Filesystem 1024-blocks Used Available Capacity Mounted on\n/dev/fx 1000000 10000 990000 2%% /fx\n' > "$CASE_STUB/df"
   printf '0' > "$CASE_STUB/df.rc"
   printf 'fx_session: 1 windows\n' > "$CASE_STUB/tmux"; printf '0' > "$CASE_STUB/tmux.rc"
+  # r7 pinnable inputs: census-r4 grades a since-boot write average from
+  # MORI_DISKSTATS / MORI_UPTIME (defaults /proc/diskstats, /proc/uptime). Left
+  # unpinned, the live uptime's integer seconds tick inside the disk row between
+  # two runs and break the two-shape stdout invariance of case 28.
+  printf '100000.00 20000.00\n' > "$CASE_STUB/uptime"
+  : > "$CASE_STUB/diskstats"
   # the launch/close ledger IS this watchdog log (no separate ledger file)
 }
 
@@ -468,6 +474,8 @@ run_census() {
     MORI_CGROUP_LOCAL_EVENTS="$CASE_DIR/cgroup/memory.events" \
     MORI_CGROUP_CURRENT="$CASE_DIR/cgroup/memory.current" \
     MORI_MEMINFO="$CASE_DIR/meminfo" \
+    MORI_UPTIME="$CASE_STUB/uptime" \
+    MORI_DISKSTATS="$CASE_STUB/diskstats" \
     MORI_DF_BIN="$BIN/df" \
     MORI_PGREP_BIN="$BIN/pgrep" \
     MORI_JOURNALCTL_BIN="$BIN/journalctl" \
