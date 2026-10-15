@@ -96,3 +96,83 @@ two consecutive runs leave **0**. Independently proved by the same seat: the gat
 idempotent on a frozen fixture (stdout diff empty, 21-file manifest unchanged,
 `strace` 0 successful writes outside the fixture) and a canary write planted in a
 scratch copy was killed (`forbidden 1`).
+
+## round 2 — interactive cutover attempt (blocked; no completion credit)
+
+2026-10-15 · Sole interactive mori L1 · baseline
+`0715198ed683445768944cec2db75bce12a1d202` · selected axis **coverage**, the lower
+owned LIVE axis in the actual scorecard. The read-only fleet ledger contains
+one mori round-1 closure (`ok`, `7ca17b1`). Launch counter 2 is not a completed
+round count. No prior entry, completed report, session, or round was reset.
+
+**Motivation and reconciliation.** `SKILL.md:111-129` and this log's round-1
+correction 8 name the launch/authorship divergence. The interrupted worker left
+a silence note and scenario driver, two cgroup wording edits in `SKILL.md`, and
+dispatch/baseline receipts. The production census is still the round-1 script.
+The inherited nine-seat dispatch records do not satisfy this operator's
+32-seat/routing contract. Originals remain unchanged and intentionally
+uncommitted; exact non-session bytes are quarantined as evidence in
+`.ufo/round-2/interactive-cutover/inherited-candidates.json`, with provenance
+and hashes in `inherited-inventory.json`. These snapshots are not corpus
+admission or a production cutover. Native session material was not read or
+committed.
+
+**Plan and dispatch evidence.** Saved WWKD before work at
+`.ufo/round-2/interactive-cutover/wwkd.md`. Saved exactly 32 distinct scopes
+with disjoint report ownership at `wave/spec.json`. The actual canonical
+`node scripts/ufo-swarm-wave.mjs plan --spec <saved-spec> --route-families`
+ran from the UFO checkout and exited 0; complete output is
+`wave/plan-command.json`. No `run`, registry persistence or task batch followed.
+Route preflight observes 25 planned seats on `@m_mid`, six on `@m_strong`, one
+on `@m_fast`; status `unprobed`, zero pings. Global config digest:
+`08788ddcbbb48180b987e6f54b517af294c85cacceb07bdd594843a53e668dcc`.
+Required content `@m_composer`, audit `@m_grok`, connector `@m_antigravity`
+with `@m_zfl` fallback are not bound to the used task roles. Exact actual and
+required bindings are in `wave/admission.json`. No model/route/config overlay
+was substituted and no host or source remediation was attempted.
+
+**Own gate and actual CLI smoke.** Full argv, stdout/stderr, timestamps and
+exit codes are in `.ufo/round-2/interactive-cutover/checks/`.
+Measured production script SHA-256:
+`e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2`.
+
+- `bash tools/mori-census.sh --selftest` →
+  `MORI_CENSUS_SELFTEST: PASS (14 cases, 14 passed, 0 failed)`, exit **0**.
+- `env MORI_ROSTER_LANES=mori MORI_LANE_SILENCE_S=900 bash tools/mori-census.sh`
+  → `MORI_CENSUS: DRIFT (findings=14 drift=11 unavailable=0 surfaces=7)`,
+  exit **1**, observed at `2026-10-15T05:08:17Z`. This is an observation, not
+  an instruction to remediate. Journal content remains count-only. User-slice
+  cumulative OOM count is not evidence of a fleet kill.
+- `bash tools/mori-silence-cases.sh` → exit **1** during fixture setup,
+  stdout ends `nothing added to commit but untracked files present (use "git
+  add" to track)`. No PASS/FAIL case or `MORI_SILENCE_CASES` line was emitted;
+  no behavioral tally or passing cutover is claimed. The source's `gc` helper
+  chains `commit --allow-empty ... || add ... && commit ...`; deterministic
+  stage-then-commit setup is the concrete reconciliation target. The original
+  candidate was not patched to disguise this failed admission check.
+
+**Verdicts.** Coverage, operability, depth, freshness, calibration and adjacency:
+**unchanged** for this blocked attempt. Expansion, quality and discernment:
+**unchanged**. No new knowledge admitted, no improved axis claimed, no outside
+spot-check, promotion, native judgment, frozen behavioral comparison or
+successful round-2 receipt. Current scorecard records the evidence and debt;
+historical scalar scores are not advanced.
+
+**Receipt and continuation boundary.** `receipt-applicability.json` records
+the exact running Sighting mission/run/session metadata selected read-only.
+Its metadata provides no `task_` plus 24-hex queue key or authoritative expected
+receipt-binding bag. The default dispatcher queue path is absent. Mechanical
+shape-valid receipt generation with invented identities would not be applicable
+acceptance evidence, so neither mint nor validate nor Sighting completion was
+invoked. The earlier fleet-reported Phase-0 contract-sync/self-iter failures
+were not rerun. Concrete unblock: operator/integrator supplies the authorized
+role bindings and applicable receipt metadata; a **fresh** L1 retries actual
+round 2, reconciles the quarantined candidates and issues the full validated
+32-seat batch. Verified lane rounds remain **1**. This attempt is neither
+saturation nor three consecutive blocked rounds.
+
+Only this log, the appended scorecard status and explicitly named
+repository-local `.ufo` artifacts are included in the cutover commits. The
+report and continuation land after the evidence commit and cite its exact
+hash. Shared fleet reports/ledgers, dirty originals and session storage are
+outside those commits; no push is performed.
