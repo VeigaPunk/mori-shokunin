@@ -237,3 +237,49 @@ five-axis read — operability/depth/calibration improved, coverage/freshness/
 adjacency unchanged, **none harmed → ADMIT**. No scalar score. Learning trends:
 expansion/quality **improved**, discernment **unchanged** (same-wave
 verification only).
+
+## Round 5 verdict — 2026-10-15 (goal wave; evidence commit `a420deb7`)
+
+Selected axis: **operability** — close the run-order spoofing channel (the
+round-4 correction's named residual). Wave: one 32-seat flash call, 32/32.
+Report: `.ufo/reports/round-5/mori-goalwave.md`.
+
+**Before** (oracle `be0e28b8…`): fixed registry case order, no per-run secret —
+a zero-logic census counting its own invocations replayed canned grades for
+`matched=28 total=28` exit 0 (sniffer-v3 class, reproduced at r4 bytes by five
+seats).
+
+**After** (oracle `7143ccc2…`: seeded Fisher–Yates case order (xorshift32;
+`SHUFFLE_SEED`/`CASE_ORDER` logged; seed never exported to the census;
+`MORI_SHUFFLE_SEED` pins for repro) + per-run `RUN_NONCE` delivered three ways
+(env, fixture file, and the disk-target dir name `nonce-<N>` which the frozen
+census echoes in its disk row; every case requires the literal token —
+stale/missing fails as `canned/replayed output?`); census `af2d4e79…` frozen;
+parent acceptance 2026-10-15T18:30Z: selftest `PASS (30 cases…)` exit 0; oracle
+`matched=28 total=28` exit 0 across runs with **different orders** (parent seeds
+3335873357 / 1612830277); attack battery all exit 1 (invocation-count canned
+`0/28`, stale-nonce `0/28`, adaptive positional `8/28`, env-reading v4 `10/28`);
+grade tuples byte-identical across shuffles; order-pair probes (4 groups) show
+no inter-case state leakage; live census honest.
+
+**Correction folded same-round:** "zero-logic cannot fake" holds for the four
+enumerated classes; two residuals remain, reproduced at `7143ccc2`: (R1)
+**stdout-backchannel** — the census reads `CASE_ORDER`/`RUN_NONCE` from the
+oracle's own stdout via `/proc/<ppid>/fd/1` (or `environ` on pinned runs) and
+replays by position → 28/28 exit 0 (fix direction: print the run header AFTER
+the case loop); (R2) **content-keyed forgery** — a memorized content→state
+table still passes because the nonce binds no fixture content (fix: embed the
+nonce in fixture content). Both named in `verdict-machine-r5.md`, registered as
+round 6's claim.
+
+| axis | verdict | evidence (before → after) |
+|---|---|---|
+| operability | **improved** | fixed-order/no-secret execution → seeded shuffle + triple-channel nonce; four attack classes closed with receipt-backed tallies (`order-r5-20261015T180431Z-sniffer.log`); cross-shuffle grade stability + in-run determinism proven; registry byte-identical (28 ids/wants). |
+| coverage | **unchanged** | registry unchanged; no new measured surface. |
+| depth | **improved** | `corpus/knowledge/verdict-machine-r5.md` (design, seed contract, R1/R2 mechanisms); lesson `corpus/lessons/2026-10-15-run-order-spoofing-shuffle-nonce-limits.md`. |
+| freshness | **unchanged** | six r5 receipts at pinned SHAs incl. per-run seeds/orders; drift pin still carried. |
+| calibration | **improved narrowly** | attack classes enumerated, tested, honestly scoped; residuals named with repro SHAs, not dropped. |
+| adjacency | **unchanged** | scope-sentinel clean; census frozen and verified unchanged; no remediation content. |
+
+Admission: ADMIT-with-correction (R1/R2 named, none harmed). No scalar score.
+Learning trends: expansion/quality **improved**, discernment **unchanged**.

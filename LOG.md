@@ -325,3 +325,33 @@ identity; the fleet root stayed read-only for seats.
 
 Round report: `.ufo/reports/round-4/mori-goalwave.md` · Verified lane rounds:
 3 → 4.
+
+## Round 5 — run-order channel closed (goal wave)
+
+**Round 5 — goal-wave admission (2026-10-15).** Motivating evidence: the
+round-4 correction — a zero-logic run-order sniffer faked 28/28 at
+`be0e28b8…`. Landed (evidence commit `a420deb7`): oracle `7143ccc2…` with
+seeded Fisher–Yates case shuffling (`SHUFFLE_SEED`/`CASE_ORDER` logged, seed
+never exported, `MORI_SHUFFLE_SEED` pins repro) and a per-run `RUN_NONCE`
+delivered via env + fixture file + the disk-target dir name `nonce-<N>` (which
+the frozen census echoes in its disk row); every case requires the literal
+nonce token. Census `af2d4e79…` frozen and verified unchanged. Wave: one 32-seat
+flash call, 32/32.
+
+**Parent acceptance (2026-10-15T18:30Z).** selftest 30/30 exit 0; oracle
+28/28 exit 0 across runs with different orders (seeds 3335873357 /
+1612830277); attack battery all exit 1 (canned-count 0/28, stale-nonce 0/28,
+adaptive 8/28, env-reading 10/28); live census honest.
+
+**Verdicts.** ADMIT-with-correction: operability/depth/calibration **improved**;
+coverage/freshness/adjacency **unchanged**; none harmed. Corrections named: (R1)
+stdout-backchannel spoofing via `/proc/<ppid>/fd/1` still reaches 28/28 (fix:
+header after the case loop); (R2) content-keyed forgery still passes (fix:
+nonce in fixture content). Both registered as round 6's claim; see
+`corpus/knowledge/verdict-machine-r5.md`.
+
+**Boundaries held.** Detection/report only; no remediation/kills; fixtures
+`/tmp`; seats committed nothing; parent integrated under the mori identity.
+
+Round report: `.ufo/reports/round-5/mori-goalwave.md` · Verified lane rounds:
+4 → 5.
