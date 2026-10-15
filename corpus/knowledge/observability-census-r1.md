@@ -197,3 +197,25 @@ lines (they share the MESSAGE_ID but not that text), and counting *any*
 `COREDUMP_SIGNAL` line would add them to the segfaults. The probe filters on
 `COREDUMP_SIGNAL=11` at the journal, so its count is signal-specific — keep that
 filter, and never "simplify" it to a generic coredump count.
+
+## Erratum 7 (appended 2026-10-15) — two hardenings from the threat model
+
+**Tracing is disabled in the gate.** The probe holds the raw user journal in a
+shell variable, and that text can carry token-shaped lines (this boot: 9166 user
+entries including 245 `1password` and 2 `gnome-keyring-daemon` lines with 32+
+character opaque runs). `bash -x` would print the variable, and the published
+`cmd=journalctl --user -b --no-pager` re-run prints `MESSAGE` by design. The script
+now runs `set +o xtrace`, so a traced invocation leaks nothing — verified: running
+the selftest under `bash -x` emits **0** journal lines.
+
+**The cgroup prefix check resolves the path first.** A `case` prefix match admitted
+`/sys/fs/cgroup/../..` — which would then echo the first line of whatever file the
+path escaped to. The probe now `realpath`s the candidate before matching; the
+escape is refused shape-only (`current=refused:outside-sysfs-cgroup`).
+
+**Carried debt (threat model, not fixed here):** live mode still accepts
+`MORI_*_BIN` overrides (an operator-supplied `df` can automount via the unquoted
+`MORI_DISK_TARGETS` list) — a live-mode refusal unless explicitly allowed is the
+unblock; and `/proc/<pid>/environ` is readable for 95 pids on this host and is
+**not** forbidden by the `ps`/`/proc` contract, so a future probe must not adopt it
+(a sibling seat already read environ for a key check).

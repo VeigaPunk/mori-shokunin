@@ -49,6 +49,11 @@
 #   LANE_SILENT
 #
 set -euo pipefail
+# The journal is held in a shell variable (CAP_OUT) and the raw text can carry
+# token-shaped lines (measured: 245 1password lines in this boot's user journal).
+# Never trace: `bash -x` would print that variable, and the published
+# `cmd=journalctl --user -b --no-pager` re-run prints MESSAGE by design.
+set +o xtrace
 
 VERSION=census-r1
 SELF=$(readlink -f -- "${BASH_SOURCE[0]}" 2>/dev/null || {
@@ -404,8 +409,10 @@ probe_cgroup() {
   # first line into the surface row, so an operator-pointed MORI_CGROUP_CURRENT at
   # any other file would print that file's first line. Refuse out-of-tree paths
   # (shape-only refusal, never a read).
-  case "$CGROUP_CURRENT" in
-    /sys/fs/cgroup/*) cur=$(read_file "$CGROUP_CURRENT") ;;
+  local cg_real
+  cg_real=$(realpath -m -- "$CGROUP_CURRENT" 2>/dev/null || printf '%s' "$CGROUP_CURRENT")
+  case "$cg_real" in
+    /sys/fs/cgroup/*) cur=$(read_file "$cg_real") ;;
     *) cur='refused:outside-sysfs-cgroup' ;;
   esac
   oom_kill=${oom_kill:-0}

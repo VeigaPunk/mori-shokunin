@@ -78,3 +78,11 @@ kasegi round 17 wrapped), and it labels any in-window file activity `progressing
 where sibling-only activity must be `progressing-weak` (measured: aggregator, whose
 window evidence is a gitignored `game-dev-3d` log plus `protocol-shokunin` and
 `shokunin-fleet` commits). Unblock: launch-line aging plus an author check.
+
+**Round-1 correction 9 (appended 2026-10-15).** Two hardenings landed from the
+threat model: `set +o xtrace` (the gate holds raw journal text that can carry
+token-shaped lines — verified 0 leaked under `bash -x`) and a `realpath` before the
+cgroup prefix check (the `/sys/fs/cgroup/../..` escape is now refused shape-only).
+Selftest 14/14. Carried debt: live-mode `MORI_*_BIN` overrides and the unquoted
+`MORI_DISK_TARGETS` list can automount; `/proc/<pid>/environ` is readable for 95
+pids and is not contract-forbidden, so no future probe may adopt it.
