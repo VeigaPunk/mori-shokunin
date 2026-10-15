@@ -313,7 +313,17 @@ probe_journal() {
 
   c_oom=$(printf '%s\n' "$text" | grep -ciE 'Out of memory|oom-kill|oom_reaper|Killed process' || true)
   c_kill=$(printf '%s\n' "$text" | grep -ciE 'status=9/KILL|Failed with result .signal|SIGKILL' || true)
+  # Segfaults are a STRUCTURED field (COREDUMP_SIGNAL=11), not the word
+  # "segfault": a text grep over the user journal returns 0 while the same
+  # journal holds 656 signal-11 entries (measured 2026-10-15). Count the text form
+  # first (fixtures drive it), then take the JSON count as an ADDITIONAL signal on
+  # a live host — never a replacement, so a stub journalctl cannot silence it.
   c_seg=$(printf '%s\n' "$text" | grep -ciE 'segfault|general protection fault' || true)
+  if [ -z "${MORI_FIXTURE:-}" ]; then
+    c_seg_json=$(cap "$JOURNALCTL_BIN" --user -b --no-pager -o json COREDUMP_SIGNAL=11 2>/dev/null; printf '%s' "${CAP_OUT:-}" | grep -c 'COREDUMP_SIGNAL' || true)
+    case "$c_seg_json" in ''|*[!0-9]*) c_seg_json=0 ;; esac
+    if [ "$c_seg_json" -gt "$c_seg" ] 2>/dev/null; then c_seg=$c_seg_json; fi
+  fi
   # Unit failures are tsukuroi's domain unless the unit is a FLEET unit: the
   # unscoped grep matched desktop daemons (measured: pipewire-pulse.service
   # core-dump), which is OS triage, not fleet health.

@@ -140,3 +140,21 @@ entirely).
 path now `ENOENT`. The mint's demand instance is the operator's separate account of
 a webbridge OOM-death; this boot's kill is an unrelated desktop event and must not
 be cited as that demand's evidence.
+
+## Erratum 4 (appended 2026-10-15) — the segfault count was blind, and the compare key
+
+**Segfaults are a structured field, not a word.** My text grep
+(`segfault|general protection fault`) returns **0** over the user journal, but the
+same journal holds **656** entries under `COREDUMP_SIGNAL=11` — the journal stores
+the signal as a field, so a text search cannot see it. The probe now counts the
+text form first (fixtures drive it) and takes the JSON count as an *additional*
+signal on a live host, so a stub `journalctl` cannot silence it. Live receipt moved
+from `segfault=0` to `SEGFAULT_JOURNAL info count=656`. The earlier erratum that
+said the gate was "correct for its scope, 0 segfault lines" was wrong for this
+reason, and the system-journal gap (`626` there) is the same class.
+
+**Compare key.** Two live runs differ only in `ts=`, every `age_s`, and
+`current=`; with `MORI_NOW_EPOCH` pinned they match on every timestamp and differ
+only in `current=`. Finding ids, severities and subjects were identical across four
+runs, so a comparer must drop `current=` and the clock fields — the ids are the
+stable contract, not the byte stream.

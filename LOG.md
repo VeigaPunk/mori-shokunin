@@ -34,3 +34,11 @@ broke its own fixture — the fixture had no service-scope path — which was re
 in the same pass). Live census moved from `findings=10 drift=9` to
 `findings=9 drift=7`. Carried debt: the wave-age clock is provisional
 (`WaveAgeMath`), and the system-journal segfault scope is still missing.
+
+**Round-1 correction 4 (appended 2026-10-15).** The segfault count was blind: the
+journal stores signal 11 as `COREDUMP_SIGNAL`, so the text grep read 0 while the
+user journal holds **656**. Fixed additively (JSON count can only raise the text
+count, never replace it — a fixture stub must not be able to silence it); selftest
+stays **14/14**, live now reports `SEGFAULT_JOURNAL count=656`. The compare key for
+two runs is the finding-id set, not the byte stream (`current=` and the clock
+fields move by construction).
