@@ -247,7 +247,21 @@ probe_waves() {
     [ -f "$d/swarm-registry.json" ] && has_reg=1
     [ -f "$d/dispatch.json" ] && has_disp=1
     [ -f "$d/run.json" ] && has_run=1
-    [ -f "$d/results.json" ] || [ -f "$d/closeout.json" ] || [ -f "$d/mission-result.json" ] && has_settle=1
+    # Settlement is a TYPED token, not just a filename: this host's wave dirs
+    # close out with `closeout.md` (markdown) and/or a registry carrying
+    # `"closed": true`, neither of which a results-file test sees. Measured
+    # 2026-10-15: w5..w11 are closed with ADMIT verdicts and no results file, so a
+    # filename-only test aged five settled waves into false WAVE_UNSETTLED_AGE.
+    if [ -f "$d/results.json" ] || [ -f "$d/closeout.json" ] || [ -f "$d/mission-result.json" ] || [ -f "$d/closeout.md" ]; then
+      has_settle=1
+    else
+      for cand in "$d/swarm-registry.json" "$d/dispatch.json" "$d/run.json" "$d/spec.json"; do
+        [ -f "$cand" ] || continue
+        if grep -qE '"(closed|settled)"[[:space:]]*:[[:space:]]*true|"status"[[:space:]]*:[[:space:]]*"closed"' "$cand" 2>/dev/null; then
+          has_settle=1; break
+        fi
+      done
+    fi
 
     newest=$(find "$d" -type f -printf '%T@\n' 2>/dev/null | sort -n | tail -1 | cut -d. -f1)
     age=0
@@ -300,7 +314,11 @@ probe_journal() {
   c_oom=$(printf '%s\n' "$text" | grep -ciE 'Out of memory|oom-kill|oom_reaper|Killed process' || true)
   c_kill=$(printf '%s\n' "$text" | grep -ciE 'status=9/KILL|Failed with result .signal|SIGKILL' || true)
   c_seg=$(printf '%s\n' "$text" | grep -ciE 'segfault|general protection fault' || true)
+  # Unit failures are tsukuroi's domain unless the unit is a FLEET unit: the
+  # unscoped grep matched desktop daemons (measured: pipewire-pulse.service
+  # core-dump), which is OS triage, not fleet health.
   c_unit=$(printf '%s\n' "$text" | grep -ciE 'Failed with result|Unit entered failed state' || true)
+  c_unit_fleet=$(printf '%s\n' "$text" | grep -iE 'Failed with result|Unit entered failed state' | grep -ciE 'shokunin|ufo-sighting|tmux-spawn|the-tick|fleet' || true)
 
   if [ "$c_oom" -gt 0 ]; then
     emit_finding OOM_KILL_JOURNAL crit "class=oom_kill count=$c_oom boot=current scope=user"
@@ -313,8 +331,11 @@ probe_journal() {
   if [ "$c_seg" -gt 0 ]; then
     emit_finding SEGFAULT_JOURNAL info "class=segfault count=$c_seg boot=current scope=user"
   fi
-  if [ "$c_unit" -gt 0 ]; then
-    emit_finding UNIT_FAILURE_JOURNAL info "class=unit_failure count=$c_unit boot=current scope=user"
+  if [ "$c_unit_fleet" -gt 0 ]; then
+    emit_finding UNIT_FAILURE_JOURNAL info "class=unit_failure count=$c_unit_fleet scope=fleet-units"
+  fi
+  if [ "$c_unit" -gt "$c_unit_fleet" ] 2>/dev/null; then
+    emit_finding UNIT_FAILURE_OUT_OF_SCOPE info "class=unit_failure count=$((c_unit - c_unit_fleet)) note=non-fleet units (desktop/OS) — tsukuroi owns these"
   fi
 
   emit_surface journal "$st" "cmd=$cmd; oom_kill=$c_oom kill_signal=$c_kill segfault=$c_seg unit_failure=$c_unit rc=$rc; ts=$TS_UTC"
@@ -332,6 +353,16 @@ probe_cgroup() {
   fi
 
   oom_kill=$(cgroup_field "$CGROUP_EVENTS" oom_kill)
+  # Cgroup v2 memory.events counters are CUMULATIVE across the boot, so the parent
+  # user slice can report a kill that is days old and belongs to a desktop process.
+  # Measured 2026-10-15: parent user-1000.slice oom_kill=1 while
+  # user@1000.service (the scope that actually contains fleet processes) reads 0,
+  # and the event was a terminal python3 on 2026-10-13. Firing `crit` on the parent
+  # counter forced a permanent false DRIFT and absorbed tsukuroi's OS triage into
+  # mori. The fleet-relevant reading is the session service.
+  SERVICE_EVENTS=${MORI_CGROUP_SERVICE_EVENTS:-/sys/fs/cgroup/user.slice/user-$(id -u).slice/user@$(id -u).service/memory.events}
+  service_oom_kill=''
+  if [ -r "$SERVICE_EVENTS" ]; then service_oom_kill=$(cgroup_field "$SERVICE_EVENTS" oom_kill); fi
   oom=$(cgroup_field "$CGROUP_EVENTS" oom)
   high=$(cgroup_field "$CGROUP_EVENTS" high)
   max=$(cgroup_field "$CGROUP_EVENTS" max)
@@ -339,9 +370,11 @@ probe_cgroup() {
   oom_kill=${oom_kill:-0}
 
   # presence flag semantics (tsukuroi note): oom_kill is a flag/counter, not a meter to clear
-  if [ "$oom_kill" -gt 0 ] 2>/dev/null; then
-    emit_finding CGROUP_OOM_KILL crit "oom_kill=$oom_kill oom=${oom:-?} high=${high:-?} max=${max:-?} current=${cur:-?} path=$CGROUP_EVENTS"
+  if [ -n "$service_oom_kill" ] && [ "$service_oom_kill" -gt 0 ] 2>/dev/null; then
+    emit_finding CGROUP_OOM_KILL crit "oom_kill=$service_oom_kill scope=user@$(id -u).service (fleet-bearing) path=$SERVICE_EVENTS"
     st=drift
+  elif [ "$oom_kill" -gt 0 ] 2>/dev/null; then
+    emit_finding CGROUP_OOM_KILL_CUMULATIVE info "parent_slice_oom_kill=$oom_kill service_scope_oom_kill=${service_oom_kill:-unavailable} note=cumulative boot counter; attribute the event before treating it as fleet evidence"
   fi
 
   emit_surface cgroup "$st" "cmd=$cmd; oom_kill=$oom_kill oom=${oom:-?} high=${high:-?} max=${max:-?} current=${cur:-?}; ts=$TS_UTC"
@@ -613,6 +646,7 @@ STUB
       MORI_STATE_DIR="$FX/ufo/state" \
       MORI_WAVES_DIR="$FX/ufo/waves" \
       MORI_CGROUP_EVENTS="$FX/cgroup/memory.events" \
+      MORI_CGROUP_SERVICE_EVENTS="$FX/cgroup/memory.events" \
       MORI_CGROUP_CURRENT="$FX/cgroup/memory.current" \
       MORI_MEMINFO="$FX/meminfo" \
       MORI_DF_BIN="$bin/df" \

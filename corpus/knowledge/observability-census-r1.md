@@ -83,3 +83,32 @@ lines are `2026-09-28T23:55:00-03:00 wrap kagi round=16 complete; NOT respawning
 (fleet-wrap)` — the driver was deliberately halted on **2026-09-28** and no
 `fleet-wrap` file exists now, so it simply has not been restarted. Recorded so the
 finding is not read as an undetected crash.
+
+## Erratum 2 (appended 2026-10-15) — two probe scopes corrected after cross-domain audit
+
+**`CGROUP_OOM_KILL` was firing on a cumulative, non-fleet counter.** Cgroup v2
+`memory.events` counters are monotonic across the boot. Measured: parent
+`user-1000.slice` reads `oom_kill 1` while `user@1000.service` — the scope that
+actually contains fleet processes — reads `0`, and the event was a desktop
+terminal `python3` killed on **2026-10-13 23:44:30**
+(`app-Hyprland-xdg-terminal-exec-dd9e67bd.scope: Failed with result 'oom-kill'`).
+Firing `crit` on the parent counter forced a permanent false DRIFT on every run
+and absorbed tsukuroi's OS triage into mori. The probe now fires `crit` only on
+the session-service counter and reports the parent counter as
+`CGROUP_OOM_KILL_CUMULATIVE` (info). **The round-1 receipt's headline "a real OOM
+kill occurred on this boot" was wrong as characterized** — the kill was ~25 h old
+and not a fleet process.
+
+**`UNIT_FAILURE_JOURNAL` was scraping desktop units.** The unscoped grep matched
+`pipewire-pulse.service: Failed with result 'core-dump'` — OS triage, tsukuroi's
+domain. Fleet-relevant units now fire `UNIT_FAILURE_JOURNAL`; everything else is
+`UNIT_FAILURE_OUT_OF_SCOPE` (info) with the owner named.
+
+**Wave settlement is a typed token, not a filename.** `w5`–`w11` close out with
+`closeout.md` and/or a registry carrying `"closed": true`, which a results-file
+test cannot see; five settled train waves were aged into false
+`WAVE_UNSETTLED_AGE`. The probe now accepts those tokens. **Still provisional:**
+`w1`–`w4` have registry+dispatch and no closeout token while their lane reports
+landed elsewhere, so "age" remains the wrong clock for them — the independent
+`WaveAgeMath` critique is carried as debt, and a wave reported here as
+`WAVE_UNSETTLED_AGE` may be surface silence rather than an unsettled wave.

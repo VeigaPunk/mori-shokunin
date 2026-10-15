@@ -26,3 +26,11 @@ the fixture harness, not the live logic.
 
 **Carried debt:** per-surface notes still owed; `progressing-weak` authorship
 proof deferred; thresholds for disk/memory are proposals with no evidence yet.
+
+**Round-1 corrections (appended 2026-10-15).** A cross-domain audit falsified two
+probe scopes and one settlement rule in the landed gate; all three were fixed and
+the fixture suite re-verified at **14/14 PASS** (the cgroup scoping change first
+broke its own fixture — the fixture had no service-scope path — which was repaired
+in the same pass). Live census moved from `findings=10 drift=9` to
+`findings=9 drift=7`. Carried debt: the wave-age clock is provisional
+(`WaveAgeMath`), and the system-journal segfault scope is still missing.
