@@ -129,3 +129,64 @@ Named debt for round 3: the r2 `probe_silence` census cutover (preconditions in
 `corpus/knowledge/silence-grading-r2.md`; passing tally `matched=N total=M,
 N=M` registered as the claim), the census `:517` (and `:283`) pipefail crash →
 `unavailable` semantics, and the frozen-behavioral drift pin.
+
+## Round 3 verdict — 2026-10-15 (goal wave; evidence commit `1439c47`)
+
+Selected axis: **coverage** — the registered round-2 debt (above): land the r2
+`probe_silence` in `tools/mori-census.sh` implementing the
+`corpus/knowledge/silence-grading-r2.md` contract, harden `:517`/`:283`, add
+selftest cases, re-baseline the frozen oracle per-case, never branch on
+`MORI_FIXTURE`/fixture paths. Wave: one 32-seat flash AgentSwarm call (24
+completed; 8 seats lost to a provider content-filter false positive —
+alibaba-token-plan `data_inspection_failed` — and re-dispatched as an 8-seat
+backfill, 8/8 completed; the cascade shim was fixed to fall through that class
+of 400). Report: `.ufo/reports/round-3/mori-goalwave.md`.
+
+**Before** (r1 census `e3073a2b…`; receipt
+`corpus/evidence/cutover-r3-20261015T164140Z-before.log`): oracle `matched=10
+total=27` exit 1 (16 contract gaps + 1 crash); selftest 14/14; live
+aggregate-only silence row with 7 × `LANE_SILENT` (`head_epoch=`/`newest_epoch=`);
+`:283` crash repro header-only.
+
+**After** (r2 census `fe22a14f…`, `VERSION=census-r2`; receipts
+`cutover-r3-20261015T165712Z-{selftest,oracle,live,oracle-counterfactual}.log`;
+parent acceptance re-run 2026-10-15T17:24Z, all matching the receipts): selftest
+`PASS (25 cases, 25 passed, 0 failed)` exit 0; oracle `matched=25 total=27`
+exit 1 — 15 FAIL→PASS, 10 held; the 2 residual FAILs
+(`ledger-missing-not-silent`, `report-future-no-close`) are the **frozen
+oracle's matcher defect** — `case "$obs" in $want)` takes the expansion-introduced
+`|` literally (`tools/mori-silence-cases.sh:362-365`); the observed states sit
+inside the intended want-sets, proven by the counterfactual one-block matcher
+patch: `matched=27 total=27` exit 0, independently reproduced byte-identical
+(scratch sha `ae95b601…`) by four seats; live census r2: 9/9 per-lane rows all
+`progressing` (8 × `row-A`; aggregator `row-B` with `attribution=inference`),
+`SURFACE silence: ok (silent=0 progressing=9 …)`, zero `LANE_SILENT`,
+`MORI_CENSUS: DRIFT (findings=15 drift=14 unavailable=1 surfaces=7)` (parent
+run; receipt had findings=14 — the +1 is a mutable `SEGFAULT_JOURNAL` info
+count; the 1 unavailable is tmux, never DRIFT).
+
+| axis | verdict | before → after evidence |
+|---|---|---|
+| coverage | **improved** | r1 rolling mtime window, no launch/closure/authorship → every spec element implemented (26-row spec map, `silence-cutover-r3.md` §1, all rows `implemented`/`verified`); per-lane rows with the six states on the live fleet; 15 of 17 oracle fails flipped with per-case justification (§5). The literal `N=M` is arithmetically unattainable under the frozen matcher (max 25/27) — reported as-is; 27/27 proven at identical census bytes via the counterfactual. |
+| operability | **improved** | census crash on unreadable repos (rc 1, no verdict) → `:517` construct deleted and `:283` rc-gated (`age_unreadable=`); `unreadable-git-unavailable` now grades `unavailable` with a full verdict; selftest 14 → 25; live census runs to a full verdict; perf ~5.7× faster live with linear parser scaling (perf seat, median of 3). Residual named: `:227` `state_n` is the same bare-pipeline shape (critic re-measured the crash) — carried to round 4. |
+| depth | **improved** | `silence-cutover-r3.md` maps every spec row to file:line with seven named divergences D-a–D-g (none affects findings/DRIFT); the crash class pinned as a lesson with canaries (`corpus/lessons/2026-10-15-errexit-pipefail-silent-crash.md`); closure predicate verified branch-by-branch (13 fixture cases incl. ct==NOW inclusive, ct==launch strict, closure-over-authorship precedence, relaunch reopening). |
+| freshness | **improved narrowly** | five dated, hash-pinned receipts at the new SHA (before/selftest/oracle/live/counterfactual), indexed with re-run recipes (`corpus/evidence/README.md:110-173`); drift pin still absent — carried debt. |
+| calibration | **improved** | strict age gate proven at the equality boundary; `LANE_SILENT` fires only for row D across every probe (critic's adversarial fixtures included); `unavailable` not over-broad (empty repo + old launch → `silent`, not `unavailable`); no fixture branching in the silence path (26/26 differential fixture probes byte-identical; zero `MORI_FIXTURE` refs in `:503-845`); mutant censuses grade honestly (no-op → `matched=1`, all-zero → `matched=4`) — with the disclosed caveat that a no-logic case-id *sniffer* can fake a tally, which is why the honesty case rests on source + differential evidence (named round-4 hardening). |
+| adjacency | **unchanged** | scope-sentinel: detection/report only; frozen oracle byte-unchanged; fleet root read-only for seats; out-of-province observations (other surfaces' findings, `:227`) reported, not absorbed. |
+
+Admission: five axes improved, adjacency unchanged, **none harmed → ADMIT**.
+No scalar score. Learning trends: expansion **improved** (cutover note, lesson,
+SKILL r2 contract section, receipt index, README updates); quality **improved**
+(honest 25/27; matcher defect diagnosed by a bash-semantics probe + patch +
+counterfactual, not asserted; per-case justification for all 27); discernment
+**unchanged** (no outside spot-check; the counterfactual is a same-wave
+experiment).
+
+Named debt for round 4 (registered claim): the frozen-oracle matcher fix (one
+block; witness `ae95b601…`) **plus** oracle anti-sniff hardening (opaque per-case
+dirs, stop exporting `MORI_FIXTURE`, shape-invariance case — per the falsifier
+seat) **plus** the census `:227` pipefail hardening and the critic's per-round
+close-tracking fix; end-goal: `MORI_SILENCE_CASES: matched=27 total=27` exit 0
+at pinned oracle+census SHAs, selftest green, live census honest. Carried
+unchanged: the drift pin, the row-6 presence-only residual, the receipt-binding
+and role-routing debts from the blocked attempt.
