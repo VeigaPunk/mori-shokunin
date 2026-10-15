@@ -288,3 +288,40 @@ parent integrated under the mori identity; the frozen oracle was not edited.
 
 Round report: `.ufo/reports/round-3/mori-goalwave.md` · Verified lane rounds:
 2 → 3.
+
+## Round 4 — verdict machine (goal wave)
+
+**Round 4 — goal-wave admission (2026-10-15).** Motivating evidence: the
+round-3 verdict's named debt (evidence `1439c47`, records `bbcc1ad`) — the
+frozen-oracle matcher defect, the fixture-signal leak (case-id sniffer faked
+27/27), the census `:227` crash, and the anywhere-close tracking bug. Landed
+(evidence commit `5b62c897`): oracle `be0e28b8…` (alternation-safe
+`want_match`; opaque per-case `mktemp -d` dirs; `MORI_FIXTURE` no longer
+exported; new case 28 `shape-invariance` grading the same fixture under two
+dir names and requiring identical grades); census `af2d4e79…` (`:227` rc-gated,
+3 new watchdog state-dir selftest cases; per-anchor-round close tracking, 2 new
+cases; selftest 25 → 30); `corpus/knowledge/verdict-machine-r4.md`; lesson
+`corpus/lessons/2026-10-15-forgeable-oracle-visible-fixtures.md`; five receipts
+`verdict-r4-20261015T173551Z-{canary227,live,oracle,selftest,sniffer-v2}.log`;
+README updates. Wave: one 32-seat flash call, 32/32 (zero dispatch losses —
+the cascade content-filter fix held).
+
+**Parent acceptance (2026-10-15T17:55Z).** selftest `PASS (30 cases, 30 passed,
+0 failed)` exit 0; oracle `matched=28 total=28` exit 0, two runs byte-identical;
+live `DRIFT (findings=15 drift=14 unavailable=1 surfaces=7)`, 9/9 lanes
+progressing, 0 `LANE_SILENT`; sniffer v1 reconstruction 1–2/28 (case-id channel
+closed), path-shape sniffer 27/28 (shape-invariance is the catch).
+
+**Verdicts.** ADMIT-with-correction: operability/depth/calibration **improved**;
+coverage/freshness/adjacency **unchanged**; none harmed. Correction: "a sniffer
+attempt cannot fake a pass" holds for the case-id/path channel only — a
+run-order sniffer (critic's v3) still fakes 28/28; channel + unblock (case-order
+shuffle / run nonce) named in `verdict-machine-r4.md`, registered as round 5.
+Full per-axis before→after: SCORECARD Round 4 section.
+
+**Boundaries held.** Detection/report only; no remediation/kills/config edits;
+fixtures under `/tmp`; seats made no commits; parent integrated under the mori
+identity; the fleet root stayed read-only for seats.
+
+Round report: `.ufo/reports/round-4/mori-goalwave.md` · Verified lane rounds:
+3 → 4.

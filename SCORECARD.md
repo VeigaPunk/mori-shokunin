@@ -190,3 +190,50 @@ close-tracking fix; end-goal: `MORI_SILENCE_CASES: matched=27 total=27` exit 0
 at pinned oracle+census SHAs, selftest green, live census honest. Carried
 unchanged: the drift pin, the row-6 presence-only residual, the receipt-binding
 and role-routing debts from the blocked attempt.
+
+## Round 4 verdict — 2026-10-15 (goal wave; evidence commit `5b62c897`)
+
+Selected axis: **operability** — the registered round-3 debt: make the verdict
+machine trustworthy end-to-end (oracle matcher, fixture-signal leak, census
+`:227` crash, per-round close tracking). Wave: one 32-seat flash AgentSwarm
+call, 32/32 completed (the cascade content-filter fix held — zero dispatch
+losses). Report: `.ufo/reports/round-4/mori-goalwave.md`.
+
+**Before** (oracle `505a7504…`, census `fe22a14f…`): oracle capped at
+`matched=25 total=27` by its own matcher (`case "$obs" in $want)` literal `|`);
+case-id-sniffer census faked `27/27` exit 0 via fixture-path signal; `:227`
+chmod-000 `.ufo/state` crashed the whole census (rc 1, header only, 0
+verdicts); `complete r7; complete r5` misgraded a closed r7 anchor.
+
+**After** (oracle `be0e28b8…` — matcher `want_match` exact-string alternation,
+opaque `mktemp -d` per-case dirs, no `MORI_FIXTURE` export, new case 28
+`shape-invariance`; census `af2d4e79…` — `:227` rc-gated, per-anchor-round
+close tracking, selftest 25 → 30; parent acceptance 2026-10-15T17:55Z):
+selftest `PASS (30 cases, 30 passed, 0 failed)` exit 0; oracle
+`matched=28 total=28` exit 0, ×2 byte-identical (parent runs), all 27
+pre-registered ids PASS + shape-invariance; live census honest
+(`DRIFT (findings=15 drift=14 unavailable=1 surfaces=7)`, 9/9 lanes
+progressing, 0 `LANE_SILENT`); sniffers: case-id channel closed (v1
+reconstruction scores 1–2/28), path-shape sniffer caught at 27/28 by the
+shape-invariance case.
+
+| axis | verdict | before → after evidence |
+|---|---|---|
+| operability | **improved** | matcher defect (25/27 cap) → `want_match` alternation-safe, 28/28 at pinned SHAs ×3 deterministic; `:227` crash → rc-gated + 3 new selftest cases; close-anywhere → per-anchor-round tracking + 2 new cases (12 monotone + adversarial close sequences held); selftest 25 → 30; full regression batteries green (young/not-open, unavailable, root-lane, exit-contract, waves-hardening, close-reopen, journal arm untouched). |
+| coverage | **unchanged** | No new measured domain surface; the case registry grew by exactly the disclosed shape-invariance case (28 total). |
+| depth | **improved** | `corpus/knowledge/verdict-machine-r4.md`: matcher mechanism (bash case-pattern semantics), the three sniffer channels and what closed them, `:227` and close-tracking fixes, canaries; lesson `corpus/lessons/2026-10-15-forgeable-oracle-visible-fixtures.md`. |
+| freshness | **unchanged** | five r4 receipts (`verdict-r4-20261015T173551Z-*.log`) at the new SHAs; drift pin still absent — carried. |
+| calibration | **improved narrowly** | attack-class measurements now receipt-backed: sniffer v1/v2 logs, canary-227 before/after; the honest scoping correction below. |
+| adjacency | **unchanged** | scope-sentinel clean; fixtures `/tmp` only; fleet root read-only; no remediation content. |
+
+**Correction folded same-round (honest scoping):** the claim's clause "a
+sniffer-v2 attempt cannot fake a pass" is **true only for the case-id/path
+channel**. A run-order sniffer (canned grades keyed on deterministic invocation
+order, no fixture bytes read) still reaches `matched=28 total=28` exit 0
+(critic's sniffer-v3, reproduced by the admission seat). The channel and its
+unblock (per-run case-order shuffle / run nonce) are named in
+`verdict-machine-r4.md` and registered as round 5's claim. ADMIT-with-correction:
+five-axis read — operability/depth/calibration improved, coverage/freshness/
+adjacency unchanged, **none harmed → ADMIT**. No scalar score. Learning trends:
+expansion/quality **improved**, discernment **unchanged** (same-wave
+verification only).
