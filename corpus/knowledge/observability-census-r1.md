@@ -124,3 +124,19 @@ everything onto the operator — that is the drowning trap. Payloads must be typ
 (`pid`, `comm`, `cgroup`, `mount`, `use_pct`, `wave_dir`, `newest_file_age_s`) so
 Tier 1 can diagnose without re-probing. An `WAVE_UNSETTLED_AGE` finding must not
 auto-settle a wave that is still being written to.
+
+## Erratum 3 (appended 2026-10-15) — the cgroup discriminator, and what that kill was NOT
+
+A cgroup walk of **101 cgroups** found **no live cgroup with local `oom_kill > 0`**;
+the parent slice's `1` is a propagated count, and `memory.events.local` reads `0`.
+The probe now prefers `memory.events.local`, which is immune to both traps the
+ancestor/service reads hit: propagation (a parent counts a descendant's kill) and
+restart (`user@1000.service` started `2026-10-14 13:11:07`, *after* the
+`2026-10-13 23:44:30` kill, so a service-only read misses an ancestor event
+entirely).
+
+**The killed process was not the webbridge daemon.** Journal: pid `1732581`
+(`python3`) in `app-Hyprland-xdg-terminal-exec-dd9e67bd.scope`, argv unknown, cgroup
+path now `ENOENT`. The mint's demand instance is the operator's separate account of
+a webbridge OOM-death; this boot's kill is an unrelated desktop event and must not
+be cited as that demand's evidence.

@@ -360,9 +360,21 @@ probe_cgroup() {
   # and the event was a terminal python3 on 2026-10-13. Firing `crit` on the parent
   # counter forced a permanent false DRIFT and absorbed tsukuroi's OS triage into
   # mori. The fleet-relevant reading is the session service.
+  # Prefer `memory.events.local` — it counts kills in THIS cgroup only, so it is
+  # immune to two traps the cumulative/ancestor reads hit: (1) propagation, since
+  # a parent's counter includes a descendant's kill (measured: parent slice 1,
+  # memory.events.local 0), and (2) a restart, since user@1000.service started
+  # 2026-10-14 13:11:07, AFTER the 2026-10-13 23:44:30 kill, so a service-only
+  # read would miss an ancestor event entirely. A walk of 101 cgroups found no
+  # live cgroup with local oom_kill > 0.
+  LOCAL_EVENTS=${MORI_CGROUP_LOCAL_EVENTS:-${CGROUP_EVENTS%.events}.events.local}
   SERVICE_EVENTS=${MORI_CGROUP_SERVICE_EVENTS:-/sys/fs/cgroup/user.slice/user-$(id -u).slice/user@$(id -u).service/memory.events}
   service_oom_kill=''
-  if [ -r "$SERVICE_EVENTS" ]; then service_oom_kill=$(cgroup_field "$SERVICE_EVENTS" oom_kill); fi
+  if [ -r "$LOCAL_EVENTS" ]; then
+    service_oom_kill=$(cgroup_field "$LOCAL_EVENTS" oom_kill)
+  elif [ -r "$SERVICE_EVENTS" ]; then
+    service_oom_kill=$(cgroup_field "$SERVICE_EVENTS" oom_kill)
+  fi
   oom=$(cgroup_field "$CGROUP_EVENTS" oom)
   high=$(cgroup_field "$CGROUP_EVENTS" high)
   max=$(cgroup_field "$CGROUP_EVENTS" max)
@@ -371,7 +383,7 @@ probe_cgroup() {
 
   # presence flag semantics (tsukuroi note): oom_kill is a flag/counter, not a meter to clear
   if [ -n "$service_oom_kill" ] && [ "$service_oom_kill" -gt 0 ] 2>/dev/null; then
-    emit_finding CGROUP_OOM_KILL crit "oom_kill=$service_oom_kill scope=user@$(id -u).service (fleet-bearing) path=$SERVICE_EVENTS"
+    emit_finding CGROUP_OOM_KILL crit "local_oom_kill=$service_oom_kill path=${LOCAL_EVENTS} (local counter: kills in this cgroup only)"
     st=drift
   elif [ "$oom_kill" -gt 0 ] 2>/dev/null; then
     emit_finding CGROUP_OOM_KILL_CUMULATIVE info "parent_slice_oom_kill=$oom_kill service_scope_oom_kill=${service_oom_kill:-unavailable} note=cumulative boot counter; attribute the event before treating it as fleet evidence"
@@ -647,6 +659,7 @@ STUB
       MORI_WAVES_DIR="$FX/ufo/waves" \
       MORI_CGROUP_EVENTS="$FX/cgroup/memory.events" \
       MORI_CGROUP_SERVICE_EVENTS="$FX/cgroup/memory.events" \
+      MORI_CGROUP_LOCAL_EVENTS="$FX/cgroup/memory.events" \
       MORI_CGROUP_CURRENT="$FX/cgroup/memory.current" \
       MORI_MEMINFO="$FX/meminfo" \
       MORI_DF_BIN="$bin/df" \
