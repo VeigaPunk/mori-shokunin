@@ -12,3 +12,7 @@
   disk, silence); round 1 landed a single consolidated receipt instead.
 - `progressing-weak` (sibling-authored activity) is deferred: the probe cannot yet
   prove authorship, so it grades in-window activity as `progressing`.
+
+- **Journal scope (measured 2026-10-15):** the census reads the USER journal only
+  (0 segfault lines); the system journal holds 626, with 1228 core dumps. A
+  system-journal probe with its own finding id is the named unblock.

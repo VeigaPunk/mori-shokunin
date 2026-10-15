@@ -59,3 +59,27 @@ Detection and report only: the gate writes nothing in live mode, restarts
 nothing, and refuses dispatch (kumitate) and OS-package state (tsukuroi). Its
 `--selftest` writes only under its own temp dir and asserts the fixture tree is
 unchanged after every case.
+
+## Erratum (appended 2026-10-15) — journal scope limit, and the watchdog's halt is old
+
+**Scope limit, measured.** The `journal` probe reads `journalctl --user -b` only.
+The independent `LiveReceipt` seat reported 588 segfault lines; re-measured here:
+
+| Scope | `grep -ciE 'segfault|general protection fault'` |
+|---|---|
+| `journalctl --user -b` (this gate's scope) | **0** |
+| `journalctl -b` (system journal) | **626** |
+
+`coredumpctl list` → **1228** entries. So the gate is correct for its declared
+scope and **blind to host-level segfaults**, which are fleet-relevant (a crashed
+process can be a fleet process). Named coverage gap; unblock: add a system-journal
+probe with its own finding id (`SEGFAULT_SYSTEM`), keeping the user scope as the
+primary. 626 segfaults + 1228 core dumps on this boot is itself an operator-facing
+observation that this round did not previously surface.
+
+**The watchdog's halt is old, not fresh.** `WATCHDOG_ABSENT` + `WATCHDOG_STALE`
+are correct as observations, but the cause is not a recent death: the log's last
+lines are `2026-09-28T23:55:00-03:00 wrap kagi round=16 complete; NOT respawning
+(fleet-wrap)` — the driver was deliberately halted on **2026-09-28** and no
+`fleet-wrap` file exists now, so it simply has not been restarted. Recorded so the
+finding is not read as an undetected crash.
