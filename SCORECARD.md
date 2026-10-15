@@ -335,3 +335,51 @@ attack classes with two honest boundary classes named. Round 7 pivots to
 **coverage**: the surface gaps measured in round 2 (`observability-surfaces-r2.md`:
 tmux session relevance, memory-pressure threshold, disk write-rate,
 `state_rounds` count-only) — registered as the round-7 claim.
+
+## Round 7 verdict — 2026-10-15 (goal wave; evidence commit `d30b4e4`)
+
+Selected axis: **coverage** — the round-2 pivot: close the four measured
+surface gaps. Wave: one 31-seat flash call, 31/31. Report:
+`.ufo/reports/round-7/mori-goalwave.md`.
+
+**Before** (census `af2d4e79…`, selftest 30): tmux counted but never
+classified; memory pressure never measured; disk rows point-in-time only;
+`state_rounds` counted files, never read values (all receipt-backed in
+`observability-surfaces-r2.md`).
+
+**After** (census r4 `c7c3569b…`, oracle rebased `448f7723…`; parent
+acceptance 2026-10-15T20:10Z): selftest `PASS (45 cases, 45 passed, 0 failed)`
+(+15, none removed/renamed); oracle `matched=28 total=28` exit 0 ×2 at the new
+SHAs (re-baseline additive-only — every case's state/finding/rc semantics
+unchanged); live census shows all four new probes: `SURFACE tmux …
+rule=pane_cwd_under_fleet_root` (unavailable rc=1 handled when no server),
+cgroup row with `psi_some_avg10=/psi_full_avg10=/mem_fill_pct=/local_oom_kill=`,
+disk row with `io_basis=since-boot io_avg_since_boot=dm-0:9433966Bps/12427s`
++ honest `io_avg_unavailable=tmpfs:not-a-block-device`, watchdog row with
+`state_rounds_max=/state_lag=/state_ahead=/state_cmp=` and info findings
+`WATCHDOG_STATE_LAG`/`WATCHDOG_STATE_AHEAD`.
+
+Gap dispositions: **tmux relevance** — implemented (pane-cwd-under-fleet-root
+rule, `TMUX_FOREIGN_SESSION`/`TMUX_RELEVANCE_UNAVAILABLE` info findings);
+**memory pressure** — implemented (PSI avg10 some/full + cgroup fill % + host
+avail %, thresholds labeled local, `MEM_PRESSURE_HIGH`/`MEM_FILL_HIGH`/
+`MEM_AVAIL_LOW` warn); **disk write-rate** — since-boot average implemented
++ instantaneous two-sample explicitly deferred with named precondition
+(`tools/mori-census.sh:48-52`, `surfaces-r7.md`); **state_rounds values** —
+implemented (per-value read, lag/ahead vs ledger, info-severity so an
+inconsistency is visible but cannot flip the roll).
+
+| axis | verdict | evidence (before → after) |
+|---|---|---|
+| coverage | **improved** | four receipt-backed gaps closed (three fully, one honestly partially); +15 selftest cases with positive/negative fixtures; per-gap tester seats verified live rows against independent recomputation (diskstats arithmetic, state-file values). |
+| operability | **unchanged** | selftest 30 → 45 all green; oracle 28/28 held through an additive-only re-baseline; pipefail-auditor found two new bare pipelines mid-wave — fixed by census-impl before close (receipt-backed). |
+| depth | **improved** | `corpus/knowledge/surfaces-r7.md` (probe designs, labeled-local thresholds, deferral precondition); `observability-surfaces-r2.md` gap sections updated with pointers; lesson `2026-10-15-free-lunch-measurements-counter-baselines.md`. |
+| freshness | **improved narrowly** | seven r7 receipts at the new SHAs (incl. per-gap live receipts); the drift pin remains the one carried item. |
+| calibration | **unchanged** | thresholds labeled local, never tuned as universal; info-vs-warn severities assigned so visibility ≠ DRIFT. |
+| adjacency | **unchanged** | unit-failure counts stay out-of-scope-flagged (tsukuroi's province); scope-sentinel clean; no remediation content. |
+
+Honest residuals (named in `surfaces-r7.md`): instantaneous write-rate
+(deferral); tmux per-session freshness (not claimed); `*.round` symlink/dir
+invisibility; memory-tester's three residual items. Admission: **ADMIT** (one
+axis improved, none harmed). No scalar score. Learning trends:
+expansion/quality **improved**, discernment **unchanged**.

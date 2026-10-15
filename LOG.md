@@ -386,3 +386,34 @@ write-rate, `state_rounds` values).
 
 Round report: `.ufo/reports/round-6/mori-goalwave.md` · Verified lane rounds:
 5 → 6.
+
+## Round 7 — surface gaps closed (goal wave)
+
+**Round 7 — goal-wave admission (2026-10-15).** Motivating evidence: the
+round-2 surfaces note's four measured gaps. Landed (evidence commit `d30b4e4`):
+census r4 `c7c3569b…` — tmux relevance (pane-cwd-under-fleet-root rule),
+memory pressure (PSI + cgroup fill + host avail, local-labeled thresholds),
+disk write-rate (since-boot per-device average; instantaneous deferred with
+precondition), state_rounds values (lag/ahead info findings); selftest 30 → 45
+(+15); additive-only: oracle re-baselined at `448f7723…`, 28/28 held. Mid-wave
+defects (two new bare pipelines, a `[: max:` stderr class) found by the
+pipefail auditor and memory tester, fixed by census-impl before close —
+interim FAILs superseded at the final bytes. Wave: 31-seat flash call, 31/31.
+
+**Parent acceptance (2026-10-15T20:10Z).** selftest 45/45; oracle 28/28 ×2;
+live shows all four new probe families with honest unavailable/deferral
+disclosures; `DRIFT findings=15 drift=14 unavailable=1`.
+
+**Verdicts.** ADMIT: coverage/depth/freshness **improved**; operability/
+calibration/adjacency **unchanged**; none harmed. Residuals named in
+`surfaces-r7.md` (instantaneous rate deferral; tmux per-session freshness;
+`*.round` symlink/dir invisibility). Round 8 registered: close the r7
+deferrals/residuals with measurements (instantaneous write-rate cost
+measurement; tmux per-session freshness probe).
+
+**Boundaries held.** Detection/report only; read-only host measurement; no
+remediation; seats committed nothing; parent integrated under the mori
+identity.
+
+Round report: `.ufo/reports/round-7/mori-goalwave.md` · Verified lane rounds:
+6 → 7.
