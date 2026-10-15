@@ -176,3 +176,15 @@ repository-local `.ufo` artifacts are included in the cutover commits. The
 report and continuation land after the evidence commit and cite its exact
 hash. Shared fleet reports/ledgers, dirty originals and session storage are
 outside those commits; no push is performed.
+
+**Round-2 delivery append (same blocked attempt).** Evidence commit
+`49049ab6c7c4b492457b3398ba402afbf51b3a7f` landed under the required mori
+identity. After that commit, the lane wrote its repository-local report
+`.ufo/reports/round-2/mori.md` and fresh-session handoffs
+`.ufo/round-2/interactive-cutover/continuation.md` / `continuation.json`.
+They cite that exact evidence commit, full gate verdicts/exits, unchanged
+axis/trend verdicts, the missing role/receipt bindings and next actual round 2.
+The report-time own-mission age was 581 s from the recorded launch, below two
+450-second ticks; no stale-lane failure was inferred. This delivery commit
+adds records only: no new check, candidate admission, production cutover,
+receipt, native judgment, mission completion or round-count advancement.

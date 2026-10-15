@@ -1,0 +1,89 @@
+{
+  "schema": "mori-interactive-round-handoff-v1",
+  "kind": "blocked-attempt-not-receipt",
+  "lane": "mori",
+  "actualRound": 2,
+  "status": "blocked",
+  "selectedLiveAxis": "coverage",
+  "baselineCommit": "0715198ed683445768944cec2db75bce12a1d202",
+  "evidenceCommit": "49049ab6c7c4b492457b3398ba402afbf51b3a7f",
+  "reportPath": ".ufo/reports/round-2/mori.md",
+  "reportCommitLookup": "git log -1 --format=%H -- .ufo/reports/round-2/mori.md",
+  "verifiedCompletedRounds": 1,
+  "targetMinimumVerifiedRounds": 100,
+  "advanceRound": false,
+  "nextActualRound": 2,
+  "requiresFreshL1": true,
+  "dispatch": {
+    "plannedScopes": 32,
+    "validatedScopes": 32,
+    "validationExitCode": 0,
+    "launchedSeats": 0,
+    "taskBatches": 0,
+    "registryPersisted": false,
+    "routeStatus": "unprobed"
+  },
+  "expertiseAxes": {
+    "coverage": "unchanged",
+    "operability": "unchanged",
+    "depth": "unchanged",
+    "freshness": "unchanged",
+    "calibration": "unchanged",
+    "adjacency": "unchanged"
+  },
+  "learningTrends": {
+    "expansion": "unchanged",
+    "quality": "unchanged",
+    "discernment": "unchanged"
+  },
+  "mission": {
+    "id": "m_edf73945add6407db817adddacb7c5f6",
+    "runId": "shk-mori-interactive-20261015T050057Z",
+    "sessionId": "shk-mori-interactive-20261015T050057Z",
+    "completionClaimed": false
+  },
+  "receipt": {
+    "minted": false,
+    "validated": false,
+    "reason": "No authoritative queue taskKey or expected receipt-binding bag for direct Sighting launch"
+  },
+  "blockers": [
+    {
+      "id": "role-route-binding",
+      "owner": "operator/integrator",
+      "evidence": ".ufo/round-2/interactive-cutover/wave/admission.json",
+      "unblock": "Provide existing authorized role routing: content m_composer, audits m_grok, connector m_antigravity with m_zfl fallback. No lane config/overlay changes."
+    },
+    {
+      "id": "candidate-fixture-setup",
+      "owner": "mori after authorized fresh dispatch",
+      "evidence": ".ufo/round-2/interactive-cutover/checks/silence-cases.json",
+      "unblock": "Reconcile inherited real-git fixture setup and timeline/report path contracts before any pass tally or production cutover."
+    },
+    {
+      "id": "applicable-receipt-binding",
+      "owner": "integrator",
+      "evidence": ".ufo/round-2/interactive-cutover/receipt-applicability.json",
+      "unblock": "Supply authoritative task_24hex identity plus expected prompt/config/report binding; then mint and validate against all expected fields without claiming a native verdict."
+    }
+  ],
+  "inheritedWork": {
+    "unchangedOriginals": true,
+    "quarantinedSnapshot": ".ufo/round-2/interactive-cutover/inherited-candidates.json",
+    "inventory": ".ufo/round-2/interactive-cutover/inherited-inventory.json",
+    "admittedToCorpus": false
+  },
+  "continuation": [
+    "Do not infer completed rounds from driver counter 2.",
+    "Do not relaunch or loop another round from this session.",
+    "After prerequisite is supplied, a fresh interactive L1 re-reads actual state and retries actual round 2.",
+    "Revalidate before dispatch; issue one exact complete 32-member native task batch from canonical rendered payload only when role binding is authorized.",
+    "Keep canonical source and all substrates read-only, including renderer registry output containment.",
+    "Integrate one coverage move, run local acceptance and real CLI smoke, record six axes and three learning trends, and report outside spot-check honestly.",
+    "Commit actual owned paths under mori identity; no push or shared ledgers."
+  ],
+  "laneStopDeclared": false,
+  "saturation": false,
+  "nativeJudgment": false,
+  "knownPhase0FailuresRetried": false
+}
