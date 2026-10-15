@@ -258,3 +258,90 @@ when classification succeeds.
   relevance).
 - The r2 note's own Gaps sections and the round-1 files' six-vs-seven surface framing are
   owned by other seats; this note only points at them.
+
+## Honest residuals — r8 dispositions (pointers; the r7 record above is unchanged)
+
+Round 8 (goal wave, 2026-10-15) closed or re-measured the four residuals the r7
+verdict registered (`SCORECARD.md:381-385`, `.ufo/reports/round-7/mori-goalwave.md:42-48`).
+The dispositions live in `corpus/knowledge/surfaces-r8.md` — sha256
+`90fe6033b664a8d98cfe2fdb979a280944d9daa6c4b5eedd4f7fea3057270b37`, 275 lines read (274
+by `wc -l`; final line unterminated), the revision as read 2026-10-15T20:41–20:57Z (the
+note-writer revised it once, at 20:53Z, to cite the durable receipts) — at the round's
+frozen pair: census
+`390ab9cd2db17b9d71508639f4f61cc61646ae090b61bf48243cda3e7211cae1` (`VERSION=census-r5`,
+2380 lines) / oracle `448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5`
+(byte-unchanged from r7 — no re-baseline required; the 28 cases held at the new census
+bytes, `surfaces-r8.md:217-222`), with durable receipts now landed:
+`corpus/evidence/residuals-r8-20261015T2040Z-{selftest,oracle,live,tmux,instantaneous,memory,roundfiles}.log`
+(7 files; the oracle receipt's set-close check re-verifies both SHAs at 20:48:18Z,
+`surfaces-r8.md:14-19`). **Pointer-only edit:** nothing above is rewritten and this seat
+measured nothing new; every number below is read from `surfaces-r8.md`. The census
+header's back-pointer to a `Honest residuals` section of this note
+(`tools/mori-census.sh:76-78`) lands on this section.
+
+- **Instantaneous write rate** — §3's bounded deferral (`:140-151`) is now a deferral
+  *with the measured cost*: three independent isolations put the 0.2 s two-sample
+  variant's minimum at 208 ms (the impl's n=30 arm medians 229 ms, p90 240) against the
+  round's 50 ms bar — 4.16× over — so the windowed rate stays unimplemented; the 1.0 s
+  variant medians ~1020 ms; the extra diskstats reads alone are 16 ms median / 27 ms p90,
+  the dwell is the entire cost (`surfaces-r8.md:45-81`; impl header
+  `tools/mori-census.sh:80-92`). The live disk row is byte-stable from r7
+  (`surfaces-r8.md:83-91`).
+- **tmux per-session freshness** — the §1 limitation (b) (`:65-70`) and the "does not
+  claim" bullet (`:256-258`) are closed as an implementation: one time-bounded
+  `display-message '#{session_activity}'` per fleet-relevant session (`run_timeout`
+  `tools/mori-census.sh:344`, default bound `MORI_TMUX_TIMEOUT_S=2` at `:249`); rc 124,
+  a non-integer answer, rc≠0 and a missing `timeout` binary each grade
+  `freshness=unavailable` with a reason; idleness grades INFO-only `TMUX_SESSION_IDLE`
+  (3600 s, labeled local). Bounds measured: an 8 s hang stub fires at the bound (whole
+  gate 2328 ms), a TERM-ignoring 9 s stub costs 3369 ms — at most ~3 s per wedged
+  session (`surfaces-r8.md:93-130`). Fixture-proved only: no tmux server on this host
+  at any clock this round.
+- **`*.round` symlink/dir invisibility** (registered for r8 in the r7 report `:47` and
+  `SCORECARD.md:381-383`; the probe it concerns is above §4, `:159-189`) — closed with
+  reason codes: every entry is classified before any read; symlinks count
+  `reason=symlink-not-followed` and are never followed, directories `reason=is-directory`,
+  other non-regular entries (a FIFO included) `reason=non-regular`; the row splits
+  `state_val_unread_reasons=file:N symlink:N dir:N other:N` (`tools/mori-census.sh:587`)
+  while `state_rounds` keeps its r7 regular-file meaning; live all-zero
+  (`surfaces-r8.md:132-160`).
+- **Memory-probe residuals** — each of the three §2 limitations (`:110-118`) now
+  carries a measurement: two host sampling windows during the wave (PSI some 0.00–0.65
+  vs the 10 placeholder; host avail 49–54% vs the 10% floor) keep the three thresholds
+  **labeled local**; the 108-scope `memory.max` census (107 `max`, 1 numeric, 0
+  unreadable) is answered live by `mem_peak=`/`mem_peak_source=`/`mem_peak_anchor=`
+  (row `tools/mori-census.sh:925`; live `mem_peak=28812898304 mem_peak_source=ok
+  mem_peak_anchor=1792082289`); the fixture arms no longer stand alone, with the
+  numeric-`max` arm still fixture-only (`surfaces-r8.md:162-193`).
+- **Verdict machine at the frozen pair** (`surfaces-r8.md:195-222`): selftest 45 → 56
+  cases, `PASS (56 cases, 56 passed, 0 failed)`; oracle `matched=28 total=28` ×2 exit 0;
+  live `MORI_CENSUS: DRIFT (findings=15 drift=14 unavailable=1 surfaces=7)` ×2;
+  field-set diff additive-only (removed none); interleaved old-vs-new fixture delta
+  +14 ms.
+- **All-pass is not reliably observable at these bytes under load — harness-side, not
+  census-side; measured by this updater seat.** Of my 14 `--selftest` runs against
+  `390ab9cd…` (2026-10-15T20:36–20:55Z), 12 were `PASS (56 cases, 56 passed, 0 failed)`
+  exit 0 and two were false reds — one at 20:46:41Z on the frozen bytes:
+  `FAIL (56 cases, 55 passed, 1 failed)`,
+  case `watchdog: state value below ledger launch -> LAG info`, missing match
+  `|state_rounds_max=5 state_lag=1 state_ahead=0 state_cmp=1|` (stderr verbatim in
+  `/tmp/r7nu-selftest.err`); three immediate re-runs were green. A second false red
+  (20:51:38Z, case `watchdog: symlink *.round counted with reason, never followed`) on
+  a copy instrumented only to dump the failing case's census output proved the class:
+  the dump **contains** the pattern the harness called missing. Mechanism:
+  `tools/mori-census.sh:1783` (and `:1809`) run
+  `printf '%s\n' "$out" | grep -qE -- "$re" || miss=…` under `set -euo pipefail`; when
+  `grep -q` exits at the match before `printf` finishes writing, the pipeline rc is
+  SIGPIPE 141, `||` fires and a matched pattern is recorded missing — measured in
+  isolation at 8 rc-141 misses / 6400 iterations under 16-way CPU contention, 0/800
+  quiet (load-dependent). This qualifies the r8 note's defect 2 (`:237-246`), whose
+  "every later run at the frozen bytes was green" the 20:46:41Z red contradicts; the
+  construct predates r8 (`git show HEAD:tools/mori-census.sh:1528`, `:1554`). Fix
+  direction, not applied (census-impl owns the file): `grep -qE -- "$re" <<<"$out"` has
+  no producer to signal.
+- **Open items r8 names and does not close** (`surfaces-r8.md:224-254`): the
+  pre-existing unbounded hang when `MORI_DISKSTATS`/`MORI_UPTIME` points at a
+  writer-less FIFO (only the new tmux client call is latency-bounded), plus the
+  selftest-match-harness false-miss class measured above (the r8 note's own defect-3
+  doc nit — its header pointing at a `Honest residuals` section of this note — is
+  resolved by this section's name).

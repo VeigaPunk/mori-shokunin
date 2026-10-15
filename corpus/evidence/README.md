@@ -534,3 +534,84 @@ Receipt-file SHA-256 at set close (after all embedded sources/addenda):
 - `a5be36cb1196fc9659c29fc4e5b86a0e83dd48482e637a046fb64e3fdf5e8499` (memory)
 - `8b6ec98377b0eb14b7b29b28e087ea4362808ab8f547f7eadd4a15faa0aee9d6` (diskrate)
 - `b5e756922ac6b067a1b2e6e41e0f7fd96f8a78f710bb9d4dd6e160707b6054e7` (staterounds)
+
+## Round-8 receipts (residual closure: the four r7 residuals) — produced by the receipts-writer seat
+
+Round-8 goal wave, seat `receipts-writer`. Detection and report only — nothing was
+remediated, killed, restarted or reconfigured; no host or fleet state was written.
+Fixtures live under `/tmp` only (`/tmp/mori-r8-receipts/`). Every receipt carries its own
+`CAPTURED_UTC`, exact command(s), exit code(s) and the SHA-256 of the script bytes under
+test; the set opened `2026-10-15T20:39:32Z` and closed `2026-10-15T20:48:18Z`, both SHAs
+re-verified identical at close.
+
+Pinned bytes:
+
+- `tools/mori-census.sh` sha256
+  `390ab9cd2db17b9d71508639f4f61cc61646ae090b61bf48243cda3e7211cae1`
+  (`VERSION=census-r5`, 2380 lines; `git diff --numstat` vs HEAD = `397 +`, `21 -`),
+  carrying the r8 residual work: tmux per-session freshness (one `run_timeout`-bounded
+  `tmux display-message` per fleet session, default bound 2 s, rc 124 → unavailable,
+  `TMUX_SESSION_IDLE` info at a labeled-local 3600 s threshold), `*.round` entry
+  classification with reason codes (`WATCHDOG_STATE_ENTRY_UNREADABLE`,
+  `state_val_unread_reasons=file:N symlink:N dir:N other:N`), `memory.peak` with its
+  instance anchor (`mem_peak` / `mem_peak_source` / `mem_peak_anchor`), and the disk
+  instantaneous rate left deferred on the round-8 measured number.
+- `tools/mori-silence-cases.sh` sha256
+  `448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5` — **byte-unchanged
+  from the r7 pin**. The r8 re-baseline was resolved as "no re-baseline required": the
+  owner note (`corpus/knowledge/surfaces-r8.md:5-8,215-222`) records the oracle as
+  byte-unchanged and names the round's pinned pair (census `390ab9cd…`, oracle
+  `448f7723…`), with 28/28 at the new census bytes. This set's oracle receipt is the
+  receipt-side confirmation (two runs, 0 B stderr, registry diff 0 added / 0 removed);
+  nothing is pending re-pin.
+
+| File (`residuals-r8-20261015T2040Z-…`) | Captured UTC | Exit | Verdict / tally |
+|---|---|---|---|
+| `selftest.log` | 20:39:32Z | 0 | `MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)`, 0 B stderr, 22.77 s; 0 of r7's 45 cases removed, +11 added and named (6 tmux freshness/bound, 3 watchdog round-entry, 2 cgroup peak) |
+| `oracle.log` | 20:40:20Z | 0 / 0 | `matched=28 total=28` twice (fresh shuffle + pinned seed), 0 B stderr; `CASE_IDS` diff vs HEAD empty (0 added / 0 removed) |
+| `live.log` | 20:41:18Z | 1 / 1 / 1 | r8 census ×2 and r7-HEAD census ×1 all `DRIFT (findings=15 drift=14 unavailable=1 surfaces=7)`, 0 B stderr; deterministic fixture additive block: `old_only_keys=[]` on every surface, added exactly cgroup `mem_peak mem_peak_source mem_peak_anchor`, tmux `freshness freshness_unavailable idle idle_warn_s probed`, watchdog `state_val_unread_reasons`; both revisions CLEAN on that fixture |
+| `instantaneous.log` | 20:41:20Z | — | decision evidence: `grep -nE 'io-instant\|io_instant\|window_us'` → no match (no windowed sampler in the census; `sleep 0.` matches only the header comment); own two-sample pairs 0.2 s ×5 (`wall_ms` 200.2–203.8) and 1.0 s ×5 (`1000.2–1004.7`) on dm-0; header deferral block cites the round-8 datum (median +213 ms for the 0.2 s variant vs the 50 ms budget); disk row unchanged `io_basis=since-boot io_avg_since_boot=dm-0:…Bps/…s` |
+| `tmux.log` | 20:42:32Z | 1 ×7 | live `unavailable (cmd=tmux ls; rc=1)` (still no tmux server on this host, so relevance+freshness are stub-proved only); stub arms: fresh `freshness=ok probed=1 idle=0`; idle `freshness=ok probed=1 idle=1` + `TMUX_SESSION_IDLE … idle_s=100000 threshold_s=3600 threshold_label=local basis=session_activity` and the foreign session NOT probed; hang arm (stub sleeps 300 s in `/tmp`) → `TMUX_FRESHNESS_UNAVAILABLE … reason=rc-124 timeout_s=2`, whole gate finished in 18.5 s; unparse arm → `reason=unparseable-probe-output`; `list-panes` rc 2 arm → relevance AND freshness unavailable; `MORI_TIMEOUT_BIN=/nonexistent/timeout` → `reason=no-timeout-bin … unbounded_probe_refused` |
+| `roundfiles.log` | 20:44:18Z | 1 / 1 | mixed fixture: `state_rounds=2 state_rounds_max=3 state_lag=1 state_ahead=0 state_cmp=1 state_val_unreadable=5 state_val_unread_reasons=file:1 symlink:2 dir:1 other:1` + four `WATCHDOG_STATE_ENTRY_UNREADABLE` findings (`reason=is-directory`, `symlink-not-followed` ×2, `non-regular` fifo); control fixture (regular file only): `state_rounds=1 … state_val_unreadable=0 state_val_unread_reasons=file:0 symlink:0 dir:0 other:0` — r7 row semantics preserved; symlink targets never followed (no target integer in any row) |
+| `memory.log` | 20:44:54Z | 1 ×8 | live: `mem_peak=28812898304 mem_peak_source=ok mem_peak_anchor=1792082289` (slice `memory.max` still `max`, so the closed-container ratio is not live-constructible here); psi 99.00 → `MEM_PRESSURE_HIGH` (threshold 10, labeled local); psi 9.99 → ok; MemAvailable 6% → `MEM_AVAIL_LOW` (floor 10); limit sized for 90% fill → `MEM_FILL_HIGH` (88% observed); limit 4× current → ok; peak arms ok / `shape-refused` (junk bytes never echoed) / `absent` |
+
+**Additive-only output.** On one deterministic fixture (pinned `MORI_NOW_EPOCH`, stubbed
+df/pgrep/journalctl/git/tmux, fixture cgroup/diskstats/meminfo/state) the r7 census bytes
+from `git HEAD` (`c7c3569b…`) and the r8 census are diffed per surface on their `key=`
+token sets: no r7 key is lost on any surface and the only new keys are the ones listed
+above. Live rows confirm the same shape (`DRIFT findings=15` on all three runs); live key
+sets can differ between instants when a surface's own state changes, which is exactly why
+the fixture block — not the live diff — is the additive proof.
+
+**Live-state honesty / not claimed.** No remediation, kill/restart or host-config change;
+live numbers are mutable observations at the quoted clocks. The tmux live arm stays
+`unavailable` (no server today). The instantaneous disk rate is NOT implemented — the
+receipt shows both the negative grep and the measured cost that keeps it deferred. The
+oracle half is closed as byte-unchanged (see the pinned-bytes bullet above). `mem_peak`/PSI
+numbers are this host's readings; the 3600 s tmux idle threshold and the r7 thresholds
+stay labeled local, never universal.
+
+Re-run recipes (cwd = lane root; this set applies only at the two SHAs above):
+
+```sh
+sha256sum tools/mori-census.sh         # must equal 390ab9cd… for this whole set
+sha256sum tools/mori-silence-cases.sh  # 448f7723… (r7 pin; unchanged at capture)
+bash tools/mori-census.sh --selftest   # hermetic; expect exit 0, PASS (56 cases)
+bash tools/mori-silence-cases.sh       # expect exit 0, matched=28 total=28
+bash tools/mori-census.sh              # live; DRIFT + the new r8 fields on the rows
+# controlled arms (fixtures /tmp only; sources embedded in each receipt):
+#   tmux:   MORI_TMUX_BIN=<stub with ls | list-panes -a | display-message> bash tools/mori-census.sh
+#   round:  MORI_SHOKUNIN_ROOT=<fx> bash tools/mori-census.sh
+#   memory: MORI_CGROUP_PRESSURE|_MAX|_PEAK=<fx> [MORI_MEMINFO=<fx>] bash tools/mori-census.sh
+#   disk:   no window path exists to arm; the deferral is proven by the grep + timings
+```
+
+Receipt-file SHA-256 (as committed):
+
+- `079bc78321abb08ce40b0cbcc051a247b8409c0072be217c1e3e1fc7193c97ec` (selftest)
+- `7261dfb59c330d6fb6df0abbde9129ccec3038727ebef01a6e974658d160411c` (oracle)
+- `76dcedb3327be49475129c2e3b8ade5274c6ecd854ac6143a3ec0c36cf2fea26` (live)
+- `7155b70353f8d4c5b317b61395b2bcbf64f8b803d5f291526d7c7f8552b3e4f8` (instantaneous)
+- `8ceb29c02ea4d9880ea74765719e7389cfcba507b760f33fcbe30de9ef80678c` (tmux)
+- `0e10135648f15ada1c44b17ce426e47348b126a4f2dbc429f704f18c52f55cf3` (roundfiles)
+- `604557903174acbdd731abd8bbd2896e78ff2f63551d212c012d993a2ee24d97` (memory)

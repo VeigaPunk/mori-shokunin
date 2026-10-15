@@ -13,10 +13,12 @@
 | `knowledge/verdict-machine-r5.md` | the r5 run-order close at oracle `7143ccc2…` / census `af2d4e79…` (frozen): seeded shuffle + per-run nonce, the enumerated attack-class tallies, and the residual seed channels R1–R4 | round-5 wave, 2026-10-15 |
 | `knowledge/verdict-machine-r6.md` | the r6 verdict machine at oracle `3307761a…` / census `af2d4e79…` (frozen): the r5 stdout-backchannel (fd/1 header + pinned environ) and naive content-keyed classes closed — header printed only after the case loop, pins scrubbed from the exec-time environ by a one-time self re-exec, per-run salt woven into fixture content — with the attack tallies and the two named residuals (full-grammar normalizing memorizer; surviving-ancestor pin) | round-6 wave, 2026-10-15 |
 | `knowledge/surfaces-r7.md` | the r7 closure of the four r2 surface Gaps (tmux relevance, memory pressure, disk write-rate, `state_rounds` values): per-gap probe design, hermetic proofs + live rows, named limits, and the additive-only oracle re-pin at census `c7c3569b…` / oracle `448f7723…` | round-7 wave, 2026-10-15 |
+| `knowledge/surfaces-r8.md` | the r8 disposition of the four r7 residuals — instantaneous disk write-rate deferral now carrying its measured cost (the 50 ms condition fails), timeout-bounded tmux per-session freshness, `*.round` symlink/dir reason codes, memory-probe residuals measured — plus the sampling-cost adjudication, the open items, and the pinned pair census `390ab9cd…` / oracle `448f7723…` (no re-baseline needed) | round-8 wave, 2026-10-15 |
 | `lessons/2026-10-15-errexit-pipefail-silent-crash.md` | the pipefail silent-crash class (rc 1 collides with DRIFT, no verdict line); `:517`/`:283` hardened (r3), `:227` rc-gated (r4, `verdict-machine-r4.md` §3) | round-3 wave, `/tmp` canaries |
 | `lessons/2026-10-15-forgeable-oracle-visible-fixtures.md` | the forgeable-oracle class: visible case identity + a matcher taking expanded alternation literally let a no-logic census reach the ceiling (27/27); r4 opaque case dirs drop the same sniffer to 1/28 | round-4 wave, `/tmp` canaries |
 | `lessons/2026-10-15-run-order-spoofing-shuffle-nonce-limits.md` | the r5 lesson: the seeded shuffle + per-run nonce close the enumerated replay classes, and the two forgers that still reach 28/28 (content memorizer; `/proc` run-header leak), with countermeasures | round-5 wave, `/tmp` canaries |
 | `lessons/2026-10-15-run-secret-timing-and-content-freshness-limits.md` | the r6 lesson: when a run secret is emitted is part of the secret (timing), and freshness woven into fixture content re-prices memorization rather than closing it — the pattern-normalizing memorizer still reaches 28/28; fingerprint size drift as a derived component | round-6 wave, `/tmp` canaries |
+| `lessons/2026-10-15-probe-pricing-dwell-bounds-filter-drop.md` | the r8 lesson: a deferred probe's four prices — the counter's found-ness (an unfound counter reads `0 B/s`), marginal wall time (resolvable only when the instrument's noise is under budget; serial +212 ms vs overlapped 0 ms), the enforceable vs nominal bound (`timeout 0.3` bound at 1510 ms against a SIGTERM-ignoring peer; `-k 1 2` → rc 137), and an enumeration filter's drop set (a count means only what survived the filter) | round-8 wave, `/tmp` canaries |
 
 ## Known gaps
 
@@ -141,7 +143,56 @@
   server live this round, so the live row keeps the r6 unavailable shape) and
   per-session freshness stays unmeasured; the three memory thresholds are local
   placeholders that **do** flip the roll; `state_cmp` can be smaller than
-  `state_rounds` for a lane with no ledger launch line.
+  `state_rounds` for a lane with no ledger launch line. Round 8 closes the two
+  unmeasured items in this list (tmux freshness, the disk deferral's cost) — next
+  bullet; the rest (attribution, tmpfs, the still-local memory thresholds,
+  `state_cmp`) carry unchanged.
+- **Surface residuals closed (round 8): census `390ab9cd…` (`VERSION=census-r5`,
+  2380 lines), oracle `448f7723…` byte-unchanged — no re-baseline was needed and
+  `matched=28 total=28` held at the new census bytes.** Each r7 residual is
+  disposed of. Instantaneous disk write-rate **stays deferred, now
+  receipt-backed**: isolated n=30 arms price the two extra `diskstats` reads at
+  16 ms median / 27 ms p90 and the two-sample reads + 0.2 s dwell at min 210 /
+  median 229 ms, with the minimum across the three independent isolations 208 ms
+  — 4.16× the round's 50 ms bar — so the windowed rate stays unimplemented by the
+  round's own condition; gate-level wall time (≥5 s drift under wave load) is
+  reported unusable as a decision instrument; the disk row keeps the since-boot
+  average, `warn_pct=85 crit_pct=95` untouched. tmux per-session freshness
+  **implemented, timeout-bounded**: one `display-message '#{session_activity}'`
+  per fleet-relevant session under `run_timeout` (`MORI_TMUX_TIMEOUT_S=2`; rc
+  124 / non-integer output / probe rc≠0 / a missing `timeout` binary each yield
+  `freshness=unavailable` with its reason, never `idle=0` — the missing-binary
+  arm refuses the probe rather than run it unbounded), graded INFO-only against
+  the labeled-local `TMUX_IDLE_WARN_S=3600` (`TMUX_SESSION_IDLE`); the row
+  carries `freshness= probed= idle= freshness_unavailable= idle_warn_s=`;
+  fixture-proved only (no tmux server live again this round). `*.round`
+  non-regular entries are **classified with reason codes**: the state walk no
+  longer filters on `-type f`, symlinks are never followed, a FIFO is classified
+  and never opened, and the row splits `state_val_unreadable=` into
+  `state_val_unread_reasons=file:N symlink:N dir:N other:N`
+  (`WATCHDOG_STATE_ENTRY_UNREADABLE reason=symlink-not-followed|is-directory|non-regular`);
+  `state_rounds` keeps its regular-file meaning so existing state dirs read
+  unchanged. Memory-probe residuals are **closed for scope/live-evidence**: the
+  local placeholders now sit behind a measured window (21 PSI/avail samples 3 s
+  apart — `psi_some_avg10` 0.00–0.39 against 10, host avail 49–53% against the
+  10% floor, i.e. 15–25× / ~4.9× away; still labeled local), the row gains
+  `mem_peak`/`mem_peak_source`/`mem_peak_anchor` (anchor = scope-dir mtime; live
+  slice `28812898304`), and a 108-scope `memory.max` walk (107 the literal
+  `max`, 1 numeric, 0 unreadable) explains why the closed-container fill ratio
+  never exists on this host. Machine green at the pair: selftest 45 → 56,
+  `PASS (56 cases, 56 passed, 0 failed)` exit 0 (+11, none removed), oracle
+  `matched=28 total=28` exit 0 ×2, live `DRIFT (findings=15 drift=14
+  unavailable=1 surfaces=7)` exit 1, stderr 0 B; field-set diff adds exactly 9
+  names on one fixture (4 live) and removes none; interleaved old-vs-new on one
+  fixture +14 ms median. Open items stay named: the pre-existing unbounded-FIFO
+  hang class (unpinned `MORI_DISKSTATS`/`MORI_UPTIME`) is not fixed; one of 16
+  selftest runs during the write window failed intermittently (`CGROUP_OOM_KILL`
+  missing-match, not attributed to a code path; frozen-bytes repeats green); and
+  gate-level timing is not a decision instrument under load. Method, arms, open
+  items: `knowledge/surfaces-r8.md`; lesson
+  `lessons/2026-10-15-probe-pricing-dwell-bounds-filter-drop.md`; receipts
+  `corpus/evidence/residuals-r8-20261015T2040Z-*.log` (7 logs, every one naming
+  the frozen pair; the note's own pointer still says `surfaces-r8-*.log`).
 - **Row-6 closure is presence + window only (spec residual):** a fresh,
   contentless committed marker satisfies it while the running driver would reject
   that shape (`knowledge/silence-grading-r2.md:191-197`). No frozen-behavioral
