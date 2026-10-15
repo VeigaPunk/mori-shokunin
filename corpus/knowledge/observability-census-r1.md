@@ -182,3 +182,18 @@ not build it — named debt.
 **Also named debt:** lane silence has no `unavailable` state, so an unread `HEAD`
 (epoch 0) can surface as `LANE_SILENT`; `/scratch/tmp` is absent and is not in the
 default disk targets, so `unavailable=0` does not classify it.
+
+## Erratum 6 (appended 2026-10-15) — coredump taxonomy: signal 5 is not signal 11
+
+The segfault count must be **signal-specific**. Measured: `COREDUMP_SIGNAL=11`
+entries = **656**; all coredump-signal entries = **1051**; and
+`journalctl --user -b -g 'terminated abnormally'` = **7**, all of them
+`Process <pid> (MainThread) of user 1000 terminated abnormally without generating a
+coredump.` with `COREDUMP_SIGNAL=5` (SIGTRAP) sharing the coredump
+`MESSAGE_ID=fc2e22bc6ee647b6b90729ab34a250b1`.
+
+So a naive count conflates classes: a `dumped core` text grep misses the SIGTRAP
+lines (they share the MESSAGE_ID but not that text), and counting *any*
+`COREDUMP_SIGNAL` line would add them to the segfaults. The probe filters on
+`COREDUMP_SIGNAL=11` at the journal, so its count is signal-specific — keep that
+filter, and never "simplify" it to a generic coredump count.

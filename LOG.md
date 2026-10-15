@@ -63,3 +63,9 @@ without a final message (`failed` per the harness) while its **19 KB report land
 on disk** — an artifact-exists/status-failed case, not a lost lane. Its content is
 used above; the process defect is recorded so the harness status is not read as a
 missing deliverable.
+
+**Round-1 correction 7 (appended 2026-10-15).** Coredump taxonomy recorded: the
+segfault probe filters `COREDUMP_SIGNAL=11` at the journal, which keeps it
+signal-specific — `terminated abnormally` lines are signal **5** (SIGTRAP) and share
+the coredump MESSAGE_ID without carrying the `dumped core` text, so neither a text
+grep nor a generic coredump count may stand in for it.
