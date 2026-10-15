@@ -681,3 +681,105 @@ Receipt-file SHA-256 (as committed):
 - `6043cb8e4c310cfc65fee14912f049b5b6066f9d9eb73813df27b046a7b5f1bf` (selftest)
 - `3c7a7240edf13308008e21d8c6248c9d3e7c38c51edbcea1e2145f5861d8aecb` (oracle)
 - `fc71df9b6d7f5fee18d52957d0b31865f9f2ad8e768dde1a0e51ec1025752a71` (live)
+
+## Round-10 receipts (drift pin: committed behavioral baseline + `--pin`/`--drift`) — produced by the receipts-writer seat
+
+Round-10 goal wave, seat `receipts-writer`. Detection and report only — nothing was
+remediated, killed, restarted or reconfigured; no host or fleet state was written.
+Fixtures live under `/tmp` only (`/tmp/mori-r10-receipts/`). This set lands the
+long-carried freshness item (SCORECARD r9 verdict): a committed behavioral baseline
+plus a `--drift` mode with a declared volatile-fields list, so the census's OWN
+behavioral drift is detectable without a human reading receipts.
+
+Pinned bytes:
+
+- `tools/mori-census.sh` sha256
+  `d7710981aa1c7571ff9d6fd7f75822811173010e5f4e298ac3c47fab274a0b20`
+  (`VERSION=census-r5` still, `:243`; 2833 lines). r10 adds `--pin <path>` (run the
+  census, normalize the full output, write it with a header carrying `census_sha256`,
+  `pinned_ts` and the declared `volatile_fields` list; volatile values masked to
+  `<V>`) and `--drift <path>` (re-run, re-normalize with the CURRENT list, report
+  `MORI_DRIFT: none` exit 0 or the changed non-volatile field names exit 1;
+  missing/unreadable/malformed baseline exit 2).
+- `tools/mori-silence-cases.sh` sha256
+  `448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5` — **byte-frozen
+  this round**: before = after in every receipt that checks it, and 28/28 exit 0 in
+  both runs (unpinned and pinned-seed). Its wish-list is unchanged.
+
+**The lane baseline (this round's committed artifact): `baseline-r10-20261015T2231Z.json`**
+— `--pin` of the live fleet, sha256
+`0993b23505deab2aeb05b2309bdf7dd6eaad2b82f27852491352511aa9670478`, 6779 bytes / 39
+lines. Header records `census_sha256=d7710981…`, `pinned_ts=2026-10-15T22:26:29Z`, the
+declared volatile list (timestamps/ages/epochs, PSI/rate gauges, counters, the
+`state_val_unread_reasons` compound, `script_sha256` and the row-B `example`), and the
+canonical full output with 178 values masked to `<V>`. The check is behavioral, not
+revision-bound: two different census SHAs with identical normalized output are `none`;
+changing the volatile list itself surfaces as drift on every affected field.
+
+| File (`pin-r10-20261015T2231Z-…`) | Captured UTC | Exit | Key output |
+|---|---|---|---|
+| `selftest.log` | 22:26:22Z | 0 | `MORI_CENSUS_SELFTEST: PASS (66 cases, 66 passed, 0 failed)`, 0 B stderr; 0 removed vs r9's 56, +10 named: 8 `drift:` arms (pin writes a baseline, baseline records the contract, changed volatile contract reported, pin→drift clean, volatile churn stays clean, one-field regression names the field, removed finding named, missing baseline exit 2) + 2 `cli:` contract arms |
+| `oracle.log` | 22:26:29Z (run1) / 22:32:21Z (pinned run2) | 0 / 0 | frozen oracle `448f7723…` byte-unchanged; `matched=28 total=28` unpinned (seed `3234475890`) and pinned (seed `86424790`); `CASE_IDS` diff vs HEAD 0 added / 0 removed; seed-boundary note below |
+| `pin.log` | 22:26:58Z | 0 | `MORI_PIN: ok path=…`; write-scope: the ONLY new `git status` entry is the baseline path itself; baseline header + masked-value count verbatim in the receipt |
+| `drift.log` | 22:30:28Z | 0 / 0 / 1 / 1 / 2 / 2 | clean ×2 (`MORI_DRIFT: none`) at the same bytes with live churn between them (`age_s` 62911→62990); one-field mutant (`warn_pct` 85→86) → `MORI_DRIFT: warn_pct` exit 1; finding-removal mutant → `MORI_DRIFT: -FINDING:WATCHDOG_ABSENT` exit 1; missing and malformed baselines → exit 2 with diagnostics |
+| `live.log` | 22:31:53Z (+ re-run 22:32:51Z) | 1 / 1 / 1 | new bytes ×2 and entering bytes ×1 (root pinned) all `DRIFT (findings=15 drift=14 unavailable=1 surfaces=7)`; finding-id multiset and surface-state list **identical** across revisions; deterministic-fixture byte-diff of default output entering-vs-new: `raw_diff_lines=8 norm_diff_lines=0` (the 8 raw lines are exactly the 3 FINDING lines' own `script_sha256=` identity token; nothing behavioral changed) |
+
+Receipt-file SHA-256 (as committed):
+
+- `9c160f41452401aec8f4cf947714486417c7fb534f885e5d60b2aa079e4c3a1e` (selftest)
+- `30d018f7d9be5d260d25d008a69e047cf83a0e5570006b5068ddcf6d6acb122f` (oracle)
+- `04bae8a296667bb9a19956e2fd4e6e66fc7e6fff7d38b6683ef9e5fd9f83d6fd` (pin)
+- `ba73cba07f4c8ac96f86aa0d7058d227af4d002d5cf2a548df4c56751d70d50f` (drift)
+- `49b3b71deb0ab8b29c457095ce8b1c99ca1dc0a4b8b10dfd5ae74718ac8226b6` (live)
+
+**Seed-boundary note (observed, frozen oracle — reported, not fixed).** The first
+pinned oracle attempt used the generator's `SEED=$(date +%s%N | tail -c 10)` =
+`045484716` (leading zero). `tools/mori-silence-cases.sh:224` validates the pin with an
+all-digits shape check, which a leading-zero numeric string passes; the value then
+reaches the shuffle arithmetic (`xs32()`, `tools/mori-silence-cases.sh:1052`) where bash
+reads it as an invalid octal and aborts:
+`line 1052: 045484716: value too great for base (error token is "045484716")` — exit 1,
+149 B stderr, no case output (the run header prints only after the case loop). Repro:
+`MORI_SHUFFLE_SEED=045484716 bash tools/mori-silence-cases.sh`. Scope: operator-pin
+boundary only — an unpinned run generates an in-range seed, and the leading-zero-free
+pinned re-run recorded in the receipt is 28/28 exit 0. The frozen file was not edited.
+
+**Seam note (recorded, not hidden).** The first "entering bytes" live leg ran the
+`/tmp` copy of the r9 census without `MORI_SHOKUNIN_ROOT`; a `/tmp` copy resolves
+`LANE_ROOT=/tmp` → `DEFAULT_ROOT=/tmp` (`tools/mori-census.sh:207-212`) and censed
+/tmp instead of the fleet (`findings=5 drift=2 unavailable=3`, no fleet findings). That
+leg was discarded and is not evidence; the recorded leg pins the root, and the two
+regression mutants carry the same pin for the same reason.
+
+**What this set does and does not claim.** The live drift arms are one clock's
+observations (finding counts are mutable), and a live `--drift` re-run is "same verdict"
+in formula, not byte equality: a non-volatile live change (wave ids, surface states,
+finding presence) would be reported as drift, and a re-pin is the intended response to a
+real behavioral change. The volatile list is this check's blind spot by construction and
+is recorded verbatim in the baseline header. Revision invariance of the default output
+rests on the deterministic-fixture byte-diff plus the frozen oracle, not on live bytes.
+
+Re-run recipes (cwd = lane root; this set applies only at the two SHAs above):
+
+```sh
+sha256sum tools/mori-census.sh         # must equal d7710981… for this whole set
+sha256sum tools/mori-silence-cases.sh  # 448f7723… (frozen)
+bash tools/mori-census.sh --selftest   # hermetic; expect exit 0, PASS (66 cases, 66 passed)
+bash tools/mori-silence-cases.sh       # expect exit 0, matched=28 total=28
+bash tools/mori-census.sh              # live; expect a MORI_CENSUS verdict + per-lane rows
+# the drift check against the committed lane baseline (expect exit 0, MORI_DRIFT: none):
+bash tools/mori-census.sh --drift corpus/evidence/baseline-r10-20261015T2231Z.json
+# re-pin (writes a NEW file; do not overwrite the committed baseline in place):
+bash tools/mori-census.sh --pin /tmp/baseline-$(date -u +%Y%m%dT%H%MZ).json
+# injected-regression arm (mutant /tmp copy; MORI_SHOKUNIN_ROOT pins the fleet root):
+sed 's/warn_pct=[$]DISK_WARN_PCT/warn_pct=$((DISK_WARN_PCT+1))/' tools/mori-census.sh > /tmp/mut.sh
+MORI_SHOKUNIN_ROOT=/home/vgpnk/Projects/shokunin bash /tmp/mut.sh --drift corpus/evidence/baseline-r10-20261015T2231Z.json
+# expect exit 1, MORI_DRIFT: warn_pct
+```
+
+**Not claimed here:** no remediation, kill, restart or host/unit change was performed or
+is implied; no causal claim about fleet liveness. `--pin`/`--drift` detects drift of
+the census's own normalized output under the declared contract — it is not a proof that
+the contract is complete, and a change confined to volatile fields is invisible by
+design. The lane baseline pins the host's live state at its clock; it is not a
+cross-host template (thresholds stay labeled local).

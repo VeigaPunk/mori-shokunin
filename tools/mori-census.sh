@@ -142,8 +142,50 @@
 # placeholder), and the INFO severity of TMUX_SESSION_IDLE is what keeps a local
 # placeholder from producing a false DRIFT.
 #
+# ROUND-10 DRIFT PIN — a behavioral baseline for the census's own output
+# (the freshness item carried since round 2; SCORECARD r9: "a committed
+# behavioral baseline plus a --drift mode with a declared volatile-fields
+# list, so census behavioral drift is itself detected").
+#   --pin <path>    run the census (live, read-only), normalize its FULL
+#                   output, and write it to <path>. The file header records
+#                   the census bytes' sha256, the pin clock, and the DECLARED
+#                   VOLATILE FIELD LIST (values that legitimately change
+#                   run-to-run; masked to <V> in the canonical block):
+#                     timestamps/ages  ts age_s mtime_age_s *_epoch
+#                                      mem_peak_anchor
+#                     gauges/decimals  psi_some_avg10 psi_full_avg10
+#                     rates            io_avg_since_boot (the "N Bps/up s"
+#                                      pair; device names are kept)
+#                     counters         the DRIFT_COUNTER_KEYS list in the code
+#                                      block below (pids, state_rounds*, wave
+#                                      counts, journal counts, cgroup gauges,
+#                                      lane/tmux counts, verdict tallies,
+#                                      DISK finding sizes, row-B files, ...)
+#                     compounds        state_val_unread_reasons
+#                     stamps           script_sha256 (behavior, not revision,
+#                                      is compared), example (row-B path)
+#                   Write failure = exit 2. The census's own CLEAN/DRIFT roll
+#                   is recorded in the canonical block but never decides the
+#                   pin's exit code: pinning a DRIFT host is still a pin.
+#   --drift <path>  run the census, normalize with the CURRENT script's
+#                   volatile list, and diff against the baseline:
+#                     equal  -> 'MORI_DRIFT: none' (exit 0)
+#                     differ -> 'MORI_DRIFT: <changed non-volatile field
+#                               names>' (exit 1): a changed value names its
+#                               key; a removed/added field names -key/+key;
+#                               a removed/added line names -<id>/+<id>
+#                               (e.g. -FINDING WATCHDOG_ABSENT); a line
+#                               differing only outside key=value tokens names
+#                               its id (e.g. VERDICT, SURFACE watchdog); a
+#                               pure reorder names output-order.
+#                     baseline missing/unreadable/malformed -> exit 2.
+#                   The check is behavioral, not revision-bound: two different
+#                   census SHAs with the same normalized output are 'none'
+#                   (comment-only edits), while a change to the volatile list
+#                   itself surfaces as drift on every affected field.
 # Live mode writes nothing. --selftest writes only under
 # /tmp/mori-census-selftest.XXXXXX and asserts the fixture tree is unchanged.
+# --pin writes exactly the named baseline file; --drift writes nothing.
 #
 # Env overrides (selftest / operator pin); empty = live host defaults:
 #   MORI_SHOKUNIN_ROOT   fleet root (default: parent of tools/../ or cwd probe)
@@ -287,15 +329,21 @@ declare -a SURFACE_LINES=()
 
 usage() {
   cat <<'EOF'
-usage: mori-census.sh [--selftest] [--help]
+usage: mori-census.sh [--selftest] [--pin <path>] [--drift <path>] [--help]
 
   (no flags)   live read-only census over fleet/host observability surfaces
+  --pin <path>     run the census and write a normalized behavioral baseline
+                   to <path>: full output with the declared volatile fields
+                   masked to <V>; the volatile list is recorded in the header
+  --drift <path>   run the census, normalize, and diff against the baseline:
+                   'MORI_DRIFT: none' (exit 0) or the changed non-volatile
+                   fields (exit 1); missing/unreadable/malformed baseline 2
   --selftest   hermetic fixture-tree proof (writes only under
                /tmp/mori-census-selftest.*); exit 0 pass, 1 fail
   --help       this text
 
 Verdict: MORI_CENSUS: CLEAN|DRIFT (findings=N drift=M unavailable=U surfaces=S)
-Exit:    0 CLEAN | 1 DRIFT | 2 setup/usage
+Exit:    0 CLEAN | 1 DRIFT | 2 setup/usage (also --pin/--drift contract exits)
 Read-only: live mode creates no files; never remediates.
 EOF
 }
@@ -1567,6 +1615,268 @@ run_census() {
   esac
 }
 
+# ---- drift pin (r10): behavioral baseline + drift check ---------------------
+# Contract in the header block above. Design constraints:
+#   - NO live pipes in this section: the census output is captured into a
+#     variable and normalized by ONE sed pass fed by a here-string (the r9
+#     lesson's flake class was a live-piped early-exit consumer, not a reader);
+#   - every mask rule is a fixed regex over the emitted grammar, so an edit
+#     that changes a key NAME, drops a field, or changes a state word surfaces
+#     as drift instead of being silently masked;
+#   - the declared VOLATILE list is this check's blind spot BY CONSTRUCTION; it
+#     is recorded verbatim in the baseline header so an auditor can see exactly
+#     what is masked, and a change to the list itself surfaces as drift on
+#     every affected field. Non-volatile fields the check cannot name
+#     individually fall back to the line's id (state words, command text).
+
+# Integer-valued live measurements (counters/gauges/file-presence flags).
+# Longest-first where one key is a prefix of another (state_rounds_max before
+# state_rounds before state_round; used_pct before used; availability counts
+# before the verdict words they shadow).
+DRIFT_COUNTER_KEYS=(
+  age_unreadable aged_unsettled avail count current disp drift empty findings
+  foreign freshness_unavailable has_head high host_mem_avail_pct idle idle_s
+  kill_signal ledger_round local_oom_kill max mem_fill_pct mem_peak not_open
+  oom oom_kill other_authored_commits pids probed progressing progressing_weak
+  reg relevant round rowb_files run segfault sessions settle settled silent
+  size skipped state_ahead state_cmp state_lag state_round state_rounds
+  state_rounds_max state_val_unreadable surfaces total unclassified
+  unit_failure unavailable unsettled used used_pct young
+)
+# Non-counter volatile entries, each with its own mask rule below.
+DRIFT_VOLATILE_SPECIAL='ts age_s mtime_age_s *_epoch mem_peak_anchor psi_some_avg10 psi_full_avg10 io_avg_since_boot state_val_unread_reasons script_sha256 example'
+DRIFT_VOLATILE_LIST="$DRIFT_VOLATILE_SPECIAL ${DRIFT_COUNTER_KEYS[*]}"
+
+# drift_normalize — stdin: raw census output; stdout: canonical form (volatile
+# values replaced by <V>, line order and non-volatile bytes preserved).
+drift_normalize() {
+  local cre=${DRIFT_COUNTER_KEYS[*]}
+  cre=${cre// /|}
+  sed -E \
+    -e 's/\bstate_val_unread_reasons=file:[0-9]+ symlink:[0-9]+ dir:[0-9]+ other:[0-9]+/state_val_unread_reasons=<V>/g' \
+    -e 's/\bmtime_age_s=[0-9]+/mtime_age_s=<V>/g' \
+    -e 's/\bts=[^ ;)]*/ts=<V>/g' \
+    -e 's/\bage_s=[0-9]+/age_s=<V>/g' \
+    -e 's/\b([a-z_]+_epoch)=[0-9]+/\1=<V>/g' \
+    -e 's/\bmem_peak_anchor=[0-9]+/mem_peak_anchor=<V>/g' \
+    -e 's/\bpsi_(some|full)_avg10=[0-9.]+/psi_\1_avg10=<V>/g' \
+    -e 's/[0-9]+Bps\/[0-9]+s/<V>Bps\/<V>s/g' \
+    -e 's/\bscript_sha256=[0-9a-f]+/script_sha256=<V>/g' \
+    -e 's/\bexample=[^ ;]*/example=<V>/g' \
+    -e "s/\\b(${cre})=[0-9]+/\\1=<V>/g"
+}
+
+# cap_census — capture the whole census for pin/drift. run_census ends with
+# `exit`, which inside the command substitution ends only that subshell; its rc
+# (0/1) is kept in CENSUS_RC. The captured TEXT is the frozen input every
+# comparison reads — no consumer ever reads a live pipe (r9 race lesson).
+cap_census() {
+  set +e
+  CENSUS_CAPTURE=$(run_census live 2>&1)
+  CENSUS_RC=$?
+  set -e
+}
+
+# drift_line_id — pairing identity of a canonical line. SURFACE/FINDING keep
+# their name/id; the header and the verdict line are singletons. Colon-joined
+# so every identity is ONE whitespace-free token.
+drift_line_id() {
+  local head rest
+  case "$1" in
+    SURFACE\ *) head=${1%%:*}; printf 'SURFACE:%s' "${head#SURFACE }" ;;
+    FINDING\ *) rest=${1#FINDING }; printf 'FINDING:%s' "${rest%% severity=*}" ;;
+    MORI_CENSUS:*) printf 'VERDICT' ;;
+    mori-census\ *) printf 'HEADER' ;;
+    '') printf 'BLANK' ;; # a zero-findings run prints one blank line (pre-existing `"${FINDING_LINES[@]:-}"` expansion); name it instead of an empty `+`
+    *) printf '%s' "$1" ;;
+  esac
+}
+
+# drift_scan <line> — set globals DRIFT_KEYS (first-seen order) and
+# DRIFT_KEYVAL (assoc). A token counts as a field only when it is key=value
+# with a key-shaped key, so shell text like `-af` or `(cmd=df` contributes
+# nothing. A duplicated key's values are concatenated, so one occurrence
+# cannot hide behind another. `set -f` keeps a literal glob in command text
+# from pathname-expanding mid-scan.
+drift_scan() {
+  local tok key
+  set -f
+  DRIFT_KEYS=()
+  declare -gA DRIFT_KEYVAL=()
+  DRIFT_KEYVAL=()
+  for tok in $1; do
+    tok=${tok#(}
+    tok=${tok%;}
+    tok=${tok%)}
+    case "$tok" in *=*) ;; *) continue ;; esac
+    key=${tok%%=*}
+    case "$key" in ''|*[!A-Za-z0-9_]*) continue ;; esac
+    [ -n "${DRIFT_KEYVAL[$key]+set}" ] || DRIFT_KEYS+=("$key")
+    DRIFT_KEYVAL[$key]="${DRIFT_KEYVAL[$key]:-}${tok#*=}"
+  done
+  set +f
+}
+
+# drift_field_report <base-line> <new-line> <id> — print one changed
+# non-volatile field per line (a changed value names its key; a removed/added
+# field names -key/+key). A difference that lives outside key=value tokens
+# (state word, command text, verdict roll) falls back to the line's id.
+drift_field_report() {
+  local bl=$1 nl=$2 id=$3 k
+  local -a bkeys=() nkeys=() changed=()
+  local -A bval=() nval=()
+  drift_scan "$bl"
+  bkeys=("${DRIFT_KEYS[@]}")
+  for k in "${bkeys[@]}"; do bval[$k]=${DRIFT_KEYVAL[$k]}; done
+  drift_scan "$nl"
+  nkeys=("${DRIFT_KEYS[@]}")
+  for k in "${nkeys[@]}"; do nval[$k]=${DRIFT_KEYVAL[$k]}; done
+  for k in "${bkeys[@]}"; do
+    if [ -z "${nval[$k]+set}" ]; then changed+=("-$k"); continue; fi
+    [ "${bval[$k]}" = "${nval[$k]}" ] || changed+=("$k")
+  done
+  for k in "${nkeys[@]}"; do
+    [ -n "${bval[$k]+set}" ] || changed+=("+$k")
+  done
+  if [ "${#changed[@]}" -eq 0 ]; then changed+=("$id"); fi
+  printf '%s\n' "${changed[@]}"
+}
+
+# drift_report — globals in: DRIFT_BASE_LINES / DRIFT_NEW_LINES (the two
+# canonical line arrays; the joined strings were already compared unequal by
+# the caller). Out: DRIFT_REPORT = one space-joined token list naming the
+# changed non-volatile fields.
+drift_report() {
+  DRIFT_REPORT=''
+  local -a base_used=() new_used=() rep=()
+  local i j id matched fields
+  # pass 1 — exact matches (multiset), so a removed/added line is not
+  # mispaired with a same-id sibling and mis-reported as a field change.
+  for i in "${!DRIFT_BASE_LINES[@]}"; do
+    for j in "${!DRIFT_NEW_LINES[@]}"; do
+      [ "${new_used[$j]:-0}" = 1 ] && continue
+      if [ "${DRIFT_NEW_LINES[$j]}" = "${DRIFT_BASE_LINES[$i]}" ]; then
+        base_used[$i]=1; new_used[$j]=1; break
+      fi
+    done
+  done
+  # pass 2 — same-id pairing for the remainder: name the changed fields.
+  for i in "${!DRIFT_BASE_LINES[@]}"; do
+    [ "${base_used[$i]:-0}" = 1 ] && continue
+    id=$(drift_line_id "${DRIFT_BASE_LINES[$i]}")
+    matched=-1
+    for j in "${!DRIFT_NEW_LINES[@]}"; do
+      [ "${new_used[$j]:-0}" = 1 ] && continue
+      [ "$(drift_line_id "${DRIFT_NEW_LINES[$j]}")" = "$id" ] || continue
+      matched=$j; break
+    done
+    if [ "$matched" -ge 0 ]; then
+      new_used[$matched]=1
+      fields=$(drift_field_report "${DRIFT_BASE_LINES[$i]}" "${DRIFT_NEW_LINES[$matched]}" "$id")
+      while IFS= read -r f; do [ -n "$f" ] && rep+=("$f"); done <<< "$fields"
+    else
+      rep+=("-$id")
+    fi
+  done
+  # pass 3 — anything left on the new side was added.
+  for j in "${!DRIFT_NEW_LINES[@]}"; do
+    [ "${new_used[$j]:-0}" = 1 ] && continue
+    rep+=("+$(drift_line_id "${DRIFT_NEW_LINES[$j]}")")
+  done
+  # The joined strings differed, yet no line/field was named: a pure reorder
+  # (pass 1 is order-independent). Say so instead of a false 'none'.
+  if [ "${#rep[@]}" -eq 0 ]; then rep+=("output-order"); fi
+  local joined sorted
+  joined=$(printf '%s\n' "${rep[@]}")
+  sorted=$(LC_ALL=C sort -u <<< "$joined")
+  DRIFT_REPORT=${sorted//$'\n'/ }
+}
+
+run_pin() { # <path>
+  local path=$1 canon text
+  cap_census
+  canon=$(drift_normalize <<< "$CENSUS_CAPTURE")
+  text=''
+  text+='# mori-drift-baseline v1 — written by mori-census.sh --pin'$'\n'
+  text+="# census_sha256=$SCRIPT_SHA256"$'\n'
+  text+="# pinned_ts=$TS_UTC"$'\n'
+  text+="# volatile_fields=$DRIFT_VOLATILE_LIST"$'\n'
+  text+='# volatile_note=values of these fields are masked to <V>; --drift re-normalizes with the CURRENT list and reports every changed non-volatile line/field. Changing the list is itself drift; census_sha256 is informational (behavior, not revision, is compared).'$'\n'
+  text+='# --- canonical output follows ---'$'\n'
+  text+="$canon"$'\n'
+  if ! printf '%s' "$text" > "$path" 2>/dev/null; then
+    printf 'mori-census: --pin failed to write baseline path=%s\n' "$path" >&2
+    exit 2
+  fi
+  printf 'MORI_PIN: ok path=%s\n' "$path"
+  exit 0
+}
+
+run_drift() { # <path>
+  local path=$1 line marker='# --- canonical output follows ---'
+  local in_block=0 have_vol=0 base_str='' canon new_str='' base_vol='' vol_token=''
+  local -a base_lines=() new_lines=()
+  if [ ! -e "$path" ]; then
+    printf 'mori-census: --drift baseline missing: %s\n' "$path" >&2
+    exit 2
+  fi
+  if [ ! -r "$path" ]; then
+    printf 'mori-census: --drift baseline unreadable: %s\n' "$path" >&2
+    exit 2
+  fi
+  while IFS= read -r line; do
+    line=${line%$'\r'}
+    if [ "$in_block" -eq 1 ]; then
+      base_lines+=("$line")
+      base_str+="$line"$'\n'
+    elif [ "$line" = "$marker" ]; then
+      in_block=1
+    else
+      case "$line" in
+        '# volatile_fields='*) have_vol=1; base_vol=${line#'# volatile_fields='} ;;
+      esac
+    fi
+  done < "$path"
+  if [ "$in_block" -ne 1 ]; then
+    printf 'mori-census: --drift baseline malformed (canonical marker absent): %s\n' "$path" >&2
+    exit 2
+  fi
+  if [ "$have_vol" -ne 1 ]; then
+    printf 'mori-census: --drift baseline malformed (volatile_fields contract absent): %s\n' "$path" >&2
+    exit 2
+  fi
+  if [ "${#base_lines[@]}" -eq 0 ]; then
+    printf 'mori-census: --drift baseline malformed (empty canonical block): %s\n' "$path" >&2
+    exit 2
+  fi
+  # The declared contract is compared too: a baseline pinned under a DIFFERENT
+  # volatile list is drifting even when this run's output happens not to
+  # exercise the changed mask (the recorded list is the contract, and the
+  # comparison makes "changing the list is itself drift" literal).
+  if [ "$base_vol" != "$DRIFT_VOLATILE_LIST" ]; then vol_token=volatile_fields; fi
+
+  cap_census
+  canon=$(drift_normalize <<< "$CENSUS_CAPTURE")
+  while IFS= read -r line; do
+    new_lines+=("$line")
+    new_str+="$line"$'\n'
+  done <<< "$canon"
+
+  if [ "$base_str" = "$new_str" ]; then
+    if [ -n "$vol_token" ]; then
+      printf 'MORI_DRIFT: %s\n' "$vol_token"
+      exit 1
+    fi
+    printf 'MORI_DRIFT: none\n'
+    exit 0
+  fi
+  DRIFT_BASE_LINES=("${base_lines[@]}")
+  DRIFT_NEW_LINES=("${new_lines[@]}")
+  drift_report
+  printf 'MORI_DRIFT: %s\n' "${DRIFT_REPORT:-none}${vol_token:+ $vol_token}"
+  exit 1
+}
+
 # ---- hermetic selftest ------------------------------------------------------
 run_selftest() {
   local bin FX PASS=0 FAIL=0 OUT_FILE
@@ -1716,6 +2026,47 @@ STUB
   }
 
   EXTRA_ENV=()
+
+  # sut_env — the ONE fixture environment every census invocation gets
+  # (check() and the r10 pd_run helper). Kept in one place so a pin/drift case
+  # can never grade a different environment than the fixture it is compared
+  # against; ${PIN_NOW} is read here, so a case changes the pinned clock by
+  # setting PIN_NOW before invoking.
+  sut_env() {
+    SUT_ENV=(
+      PATH="$bin:/usr/bin:/bin"
+      HOME="$work/home"
+      MORI_FIXTURE="$FX"
+      MORI_SHOKUNIN_ROOT="$FX/root"
+      MORI_UFO_DIR="$FX/ufo"
+      MORI_WATCHDOG_LOG="$FX/ufo/watchdog.log"
+      MORI_STATE_DIR="$FX/ufo/state"
+      MORI_WAVES_DIR="$FX/ufo/waves"
+      MORI_CGROUP_EVENTS="$FX/cgroup/memory.events"
+      MORI_CGROUP_SERVICE_EVENTS="$FX/cgroup/memory.events"
+      MORI_CGROUP_LOCAL_EVENTS="$FX/cgroup/memory.events"
+      MORI_CGROUP_CURRENT="$FX/cgroup/memory.current"
+      MORI_CGROUP_PRESSURE="$FX/cgroup/memory.pressure"
+      MORI_CGROUP_MAX="$FX/cgroup/memory.max"
+      MORI_MEMINFO="$FX/meminfo"
+      MORI_DISKSTATS="$FX/diskstats"
+      MORI_UPTIME="$FX/uptime"
+      MORI_DF_BIN="$bin/df"
+      MORI_PGREP_BIN="$bin/pgrep"
+      MORI_JOURNALCTL_BIN="$bin/journalctl"
+      MORI_TMUX_BIN="$bin/tmux"
+      MORI_GIT_BIN="$bin/git"
+      MORI_DISK_TARGETS="$FX/root"
+      MORI_ROSTER_LANES="kagi"
+      MORI_NOW_EPOCH="${PIN_NOW:-1700000000}"
+      MORI_WATCHDOG_STALE_S=900
+      MORI_WAVE_UNSETTLED_S=7200
+      MORI_DISK_WARN_PCT=85
+      MORI_DISK_CRIT_PCT=95
+      MORI_LANE_SILENCE_S=7200
+    )
+  }
+
   check() { # LABEL WANT_RC WANT_VERDICT [WANT_RE...]
     local label=$1 wrc=$2 wverdict=$3
     shift 3
@@ -1732,40 +2083,9 @@ STUB
     fi
 
     before=$(fx_hash "$FX")
+    sut_env
     set +e
-    out=$(env -i \
-      PATH="$bin:/usr/bin:/bin" \
-      HOME="$work/home" \
-      MORI_FIXTURE="$FX" \
-      MORI_SHOKUNIN_ROOT="$FX/root" \
-      MORI_UFO_DIR="$FX/ufo" \
-      MORI_WATCHDOG_LOG="$FX/ufo/watchdog.log" \
-      MORI_STATE_DIR="$FX/ufo/state" \
-      MORI_WAVES_DIR="$FX/ufo/waves" \
-      MORI_CGROUP_EVENTS="$FX/cgroup/memory.events" \
-      MORI_CGROUP_SERVICE_EVENTS="$FX/cgroup/memory.events" \
-      MORI_CGROUP_LOCAL_EVENTS="$FX/cgroup/memory.events" \
-      MORI_CGROUP_CURRENT="$FX/cgroup/memory.current" \
-      MORI_CGROUP_PRESSURE="$FX/cgroup/memory.pressure" \
-      MORI_CGROUP_MAX="$FX/cgroup/memory.max" \
-      MORI_MEMINFO="$FX/meminfo" \
-      MORI_DISKSTATS="$FX/diskstats" \
-      MORI_UPTIME="$FX/uptime" \
-      MORI_DF_BIN="$bin/df" \
-      MORI_PGREP_BIN="$bin/pgrep" \
-      MORI_JOURNALCTL_BIN="$bin/journalctl" \
-      MORI_TMUX_BIN="$bin/tmux" \
-      MORI_GIT_BIN="$bin/git" \
-      MORI_DISK_TARGETS="$FX/root" \
-      MORI_ROSTER_LANES="kagi" \
-      MORI_NOW_EPOCH="$env_now" \
-      MORI_WATCHDOG_STALE_S=900 \
-      MORI_WAVE_UNSETTLED_S=7200 \
-      MORI_DISK_WARN_PCT=85 \
-      MORI_DISK_CRIT_PCT=95 \
-      MORI_LANE_SILENCE_S=7200 \
-      "${EXTRA_ENV[@]+"${EXTRA_ENV[@]}"}" \
-      bash "$SELF" 2>&1)
+    out=$(env -i "${SUT_ENV[@]}" "${EXTRA_ENV[@]+"${EXTRA_ENV[@]}"}" bash "$SELF" 2>&1)
     rc=$?
     set -e
     # r9 FIX: every match below greps the ONE capture file, never a live pipe.
@@ -1823,6 +2143,40 @@ STUB
         grep -qE -- "$re" "$OUT_FILE" || miss="$miss |$re|"
       done
       if [ -n "$miss" ]; then bad "$label: missing $miss"; else ok "$label (exit $rc)"; fi
+    fi
+  }
+
+  # r10: pin/drift runners. pd_run executes the census under the SAME fixture
+  # env check() uses (sut_env), with arbitrary args, capturing all output into
+  # a file; PD_RC carries the exit. pd_check asserts on that file the same way
+  # check_cli() does (grep over a captured file, never a live pipe).
+  pd_run() { # <script> <outfile> <args...>
+    local scr=$1 outf=$2
+    shift 2
+    sut_env
+    set +e
+    env -i "${SUT_ENV[@]}" "${EXTRA_ENV[@]+"${EXTRA_ENV[@]}"}" bash "$scr" "$@" > "$outf" 2>&1
+    PD_RC=$?
+    set -e
+    EXTRA_ENV=()
+  }
+
+  pd_check() { # <label> <rc> <want-rc> <file> <re...>
+    local label=$1 rc=$2 wrc=$3 file=$4
+    shift 4
+    local miss='' re tailtext=''
+    if [ "$rc" -ne "$wrc" ]; then
+      tailtext=$(tail -n2 "$file" 2>/dev/null)
+      bad "$label: exit $rc want $wrc; tail=${tailtext//$'\n'/|}"
+      return 0
+    fi
+    for re in "$@"; do
+      grep -qE -- "$re" "$file" || miss="$miss |$re|"
+    done
+    if [ -n "$miss" ]; then
+      bad "$label: missing match $miss"
+    else
+      ok "$label (exit $rc)"
     fi
   }
 
@@ -2365,8 +2719,83 @@ SKIP_FRESHEN=1
     'mem_peak=unavailable mem_peak_source=shape-refused' \
     '^MORI_CENSUS: CLEAN '
 
+  # --- r10 drift-pin cases -----------------------------------------------------
+  # The carried freshness item: --pin records a canonical baseline of the
+  # census's own output; --drift re-runs and names any changed non-volatile
+  # field. Five arms on ONE deterministic fixture: clean round-trip, volatile
+  # churn (a new ts with moved ages) staying clean, two injected source
+  # regressions (a changed field, a removed finding), and the missing-baseline
+  # contract. The mutants are /tmp copies of THIS script run through the real
+  # --drift path, so the graded comparison is the shipped one. The fixture is
+  # pinned with a stale watchdog log AND no process match, so two warn findings
+  # (WATCHDOG_STALE, WATCHDOG_ABSENT) are in the baseline; the removal mutant
+  # isolates one line without flipping the roll (a roll flip would legitimately
+  # also name VERDICT, which this arm must not need).
+  FX="$work/fx/drift-pin"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  : > "$FX/stub/pgrep"; printf 1 > "$FX/stub/pgrep.rc"
+  PD_DIR="$work/dp"; mkdir -p "$PD_DIR"
+  PIN_NOW=1700000000
+  touch -d "@$((PIN_NOW - 1000))" "$FX/ufo/watchdog.log" 2>/dev/null || true
+  touch -d "@$PIN_NOW" "$FX/lanes/kagi-shokunin/LOG.md" 2>/dev/null || true
+  find "$FX/ufo/waves" -type f -exec touch -d "@$PIN_NOW" {} + 2>/dev/null || true
+  dp_before=$(fx_hash "$FX")
+
+  pd_run "$SELF" "$PD_DIR/pin.out" --pin "$PD_DIR/base.txt"
+  pd_check 'drift: --pin writes a baseline' "$PD_RC" 0 "$PD_DIR/pin.out" '^MORI_PIN: ok path='
+  # The baseline must carry its own contract or the drift side can never be
+  # audited: the volatile list in the header, the marker, and the canonical
+  # header line of the census output itself.
+  pd_check 'drift: baseline records the volatile contract' 0 0 "$PD_DIR/base.txt" \
+    '^# volatile_fields=ts ' \
+    '^# --- canonical output follows ---$' \
+    '^mori-census '
+
+  pd_run "$SELF" "$PD_DIR/d1.out" --drift "$PD_DIR/base.txt"
+  pd_check 'drift: pin -> drift is clean' "$PD_RC" 0 "$PD_DIR/d1.out" '^MORI_DRIFT: none$'
+
+  # Volatile churn: the same fixture pinned, then drifted at NOW+300 s — every
+  # ts/age is new but masked, so the report must stay clean. (The fixture
+  # mtimes stay at the pin clock, so the ages really do move.)
+  PIN_NOW=1700000300
+  pd_run "$SELF" "$PD_DIR/d2.out" --drift "$PD_DIR/base.txt"
+  pd_check 'drift: volatile churn (new ts, moved ages) stays clean' "$PD_RC" 0 "$PD_DIR/d2.out" '^MORI_DRIFT: none$'
+  PIN_NOW=1700000000
+
+  # Injected source regression 1: one emitted non-volatile value changes
+  # (disk warn_pct 85 -> 86). The mutant is a /tmp copy of THIS script; the
+  # field must be named, alone.
+  sed 's/warn_pct=[$]DISK_WARN_PCT/warn_pct=$((DISK_WARN_PCT+1))/' "$SELF" > "$PD_DIR/mutant-field.sh"
+  if cmp -s "$SELF" "$PD_DIR/mutant-field.sh"; then
+    bad 'drift: one-field regression (mutation anchor no longer matches the source)'
+  else
+    pd_run "$PD_DIR/mutant-field.sh" "$PD_DIR/d3.out" --drift "$PD_DIR/base.txt"
+    pd_check 'drift: one-field regression names the field' "$PD_RC" 1 "$PD_DIR/d3.out" '^MORI_DRIFT: warn_pct$'
+  fi
+
+  # Injected source regression 2: a finding disappears (line-level detection —
+  # the removed line is named by its id, not absorbed silently).
+  sed 's/emit_finding WATCHDOG_ABSENT warn/:/' "$SELF" > "$PD_DIR/mutant-finding.sh"
+  if cmp -s "$SELF" "$PD_DIR/mutant-finding.sh"; then
+    bad 'drift: finding-removal regression (mutation anchor no longer matches the source)'
+  else
+    pd_run "$PD_DIR/mutant-finding.sh" "$PD_DIR/d4.out" --drift "$PD_DIR/base.txt"
+    pd_check 'drift: removed finding is named' "$PD_RC" 1 "$PD_DIR/d4.out" '^MORI_DRIFT: -FINDING:WATCHDOG_ABSENT$'
+  fi
+
+  # Contract: a missing baseline is exit 2 with a diagnostic, never a verdict.
+  pd_run "$SELF" "$PD_DIR/d5.out" --drift "$PD_DIR/no-such-baseline.txt"
+  pd_check 'drift: missing baseline exits 2 with a diagnostic' "$PD_RC" 2 "$PD_DIR/d5.out" 'baseline missing'
+  # Contract: the recorded volatile list is compared too — a baseline pinned
+  # under a different list is drifting even when this run's output is not.
+  sed 's/^# volatile_fields=.*/# volatile_fields=ts/' "$PD_DIR/base.txt" > "$PD_DIR/base-oldlist.txt"
+  pd_run "$SELF" "$PD_DIR/d6.out" --drift "$PD_DIR/base-oldlist.txt"
+  pd_check 'drift: changed volatile contract is reported' "$PD_RC" 1 "$PD_DIR/d6.out" '^MORI_DRIFT: volatile_fields$'
+  fx_no_mutation "$FX" "$dp_before"
+
   check_cli 'cli: unknown arg exit 2' 2 'mori-census:' -- --bogus
   check_cli 'cli: --help exit 0' 0 'usage: mori-census' -- --help
+  check_cli 'cli: --pin without a path exits 2' 2 'mori-census:' -- --pin
+  check_cli 'cli: --drift without a path exits 2' 2 'mori-census:' -- --drift
 
   printf 'MORI_CENSUS_SELFTEST: %s (%d cases, %d passed, %d failed)\n' \
     "$([ "$FAIL" -eq 0 ] && printf PASS || printf FAIL)" "$((PASS + FAIL))" "$PASS" "$FAIL"
@@ -2375,10 +2804,12 @@ SKIP_FRESHEN=1
 
 # ---- main -------------------------------------------------------------------
 main() {
-  local selftest=0
+  local selftest=0 pin_path='' drift_path=''
   while [ $# -gt 0 ]; do
     case "$1" in
       --selftest) selftest=1; shift ;;
+      --pin) [ $# -ge 2 ] || die_usage '--pin requires a baseline path'; pin_path=$2; shift 2 ;;
+      --drift) [ $# -ge 2 ] || die_usage '--drift requires a baseline path'; drift_path=$2; shift 2 ;;
       --help|-h) usage; exit 0 ;;
       verify|--verify) shift ;; # accepted alias
       *) die_usage "unknown argument: $1" ;;
@@ -2386,6 +2817,14 @@ main() {
   done
   if [ "$selftest" -eq 1 ]; then
     run_selftest
+    return
+  fi
+  if [ -n "$pin_path" ]; then
+    run_pin "$pin_path"
+    return
+  fi
+  if [ -n "$drift_path" ]; then
+    run_drift "$drift_path"
     return
   fi
   run_census live

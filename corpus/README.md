@@ -15,12 +15,14 @@
 | `knowledge/surfaces-r7.md` | the r7 closure of the four r2 surface Gaps (tmux relevance, memory pressure, disk write-rate, `state_rounds` values): per-gap probe design, hermetic proofs + live rows, named limits, and the additive-only oracle re-pin at census `c7c3569b…` / oracle `448f7723…` | round-7 wave, 2026-10-15 |
 | `knowledge/surfaces-r8.md` | the r8 disposition of the four r7 residuals — instantaneous disk write-rate deferral now carrying its measured cost (the 50 ms condition fails), timeout-bounded tmux per-session freshness, `*.round` symlink/dir reason codes, memory-probe residuals measured — plus the sampling-cost adjudication, the open items, and the pinned pair census `390ab9cd…` / oracle `448f7723…` (no re-baseline needed) | round-8 wave, 2026-10-15 |
 | `knowledge/selftest-flake-r9.md` | the r9 selftest-determinism close: the live-pipe SIGPIPE race in the harness's `printf`-into-`grep -qE` assertions under `pipefail` (rc 141 read as "missing match"), its mechanism replays (13 300 trials → 2 real rc=141 fires; the fixed form 0/2 000) and git archaeology (present since the r1 landing, not a regression), the capture-file fix at all five harness sites (`:1771`/`:1773`/`:1779`/`:1783`/`:1809` at r5) with `+21/−7` hunks confined to `run_selftest()`, the 50-run battery evidence (pre-fix 10/10; arm A 20/20; arm B 20/20 under 4 CPU hogs) at census `1c49238a…` (a revision of `census-r5`), the byte-frozen oracle `448f7723…` held at 28/28, and the named same-class production debt `:1322` | round-9 wave, 2026-10-15 |
+| `knowledge/drift-pin-r10.md` | the r10 drift pin at the **settled** census `d7710981…` (revision of `census-r5` distinguished by SHA; `+475/−36`, deletions confined to the usage text, the selftest runner and `main()` — no `run_census`/`emit_*` edit): `--pin` writes a normalized full-output baseline whose header records `census_sha256`, `pinned_ts` and the declared `volatile_fields` list (six special rules + `DRIFT_COUNTER_KEYS`, `:1636-1647`; the pin exits 0 whatever the census's roll is); `--drift` compares behaviorally (`MORI_DRIFT: none` exit 0 / named changed non-volatile fields incl. `-FINDING:<id>`/`+key`/`output-order`/`volatile_fields` exit 1 / missing-unreadable-malformed exit 2); the adopted lane baseline `evidence/baseline-r10-20261015T2231Z.json` (sha `0993b235…`, pinned at the settled `d7710981…` bytes; supersedes the round's interim `…T2210Z` file, deleted during receipt regeneration); the over-mask blind spots (counter magnitudes read `none` by construction; ≈47% of the schema sits in the counter class) and the under-mask env caveat (no `MORI_*` env recorded); and the per-round admission ritual (pin on admit, drift first, re-pin as a recorded act with a reason) | round-10 wave, 2026-10-15 |
 | `lessons/2026-10-15-errexit-pipefail-silent-crash.md` | the pipefail silent-crash class (rc 1 collides with DRIFT, no verdict line); `:517`/`:283` hardened (r3), `:227` rc-gated (r4, `verdict-machine-r4.md` §3) | round-3 wave, `/tmp` canaries |
 | `lessons/2026-10-15-forgeable-oracle-visible-fixtures.md` | the forgeable-oracle class: visible case identity + a matcher taking expanded alternation literally let a no-logic census reach the ceiling (27/27); r4 opaque case dirs drop the same sniffer to 1/28 | round-4 wave, `/tmp` canaries |
 | `lessons/2026-10-15-run-order-spoofing-shuffle-nonce-limits.md` | the r5 lesson: the seeded shuffle + per-run nonce close the enumerated replay classes, and the two forgers that still reach 28/28 (content memorizer; `/proc` run-header leak), with countermeasures | round-5 wave, `/tmp` canaries |
 | `lessons/2026-10-15-run-secret-timing-and-content-freshness-limits.md` | the r6 lesson: when a run secret is emitted is part of the secret (timing), and freshness woven into fixture content re-prices memorization rather than closing it — the pattern-normalizing memorizer still reaches 28/28; fingerprint size drift as a derived component | round-6 wave, `/tmp` canaries |
 | `lessons/2026-10-15-probe-pricing-dwell-bounds-filter-drop.md` | the r8 lesson: a deferred probe's four prices — the counter's found-ness (an unfound counter reads `0 B/s`), marginal wall time (resolvable only when the instrument's noise is under budget; serial +212 ms vs overlapped 0 ms), the enforceable vs nominal bound (`timeout 0.3` bound at 1510 ms against a SIGTERM-ignoring peer; `-k 1 2` → rc 137), and an enumeration filter's drop set (a count means only what survived the filter) | round-8 wave, `/tmp` canaries |
 | `lessons/2026-10-15-selftest-grep-sigpipe-race.md` | the r9 lesson: under `pipefail` a producer-piped `grep -q` assertion's rc answers "did every element exit 0", not "did the consumer match" — grep exited 0 while the producer died of SIGPIPE (141); construct sweep, `PIPESTATUS` attribution, strace, the production-shaped 3-stage variant, and the here-string countermeasure (0 misses) | round-9 wave, `/tmp` canaries |
+| `lessons/2026-10-15-volatile-contract-behavioral-baselines.md` | the r10 lesson: a behavioral baseline is (raw artifact) + (explicit per-field volatile set) + (derivation window/host) — measured live churn (79 field tokens, 6 churning in 72 s, 32/33 lines; `segfault=` 104→225 over ~69 min; `mem_peak` + anchor moved within ~7 min), why line-granularity masking is vacuous (32/33 lines carry a volatile token) and field-granularity keeps detection power, the count-only change behind an existing finding id reading `none` by construction (37/79 tokens in the counter class), the exit-2 third value for absence, and the re-pin discipline (never to silence red) | round-10 wave, `/tmp` canaries |
 
 ## Known gaps
 
@@ -229,8 +231,37 @@
   lesson `lessons/2026-10-15-selftest-grep-sigpipe-race.md`.
 - **Row-6 closure is presence + window only (spec residual):** a fresh,
   contentless committed marker satisfies it while the running driver would reject
-  that shape (`knowledge/silence-grading-r2.md:191-197`). No frozen-behavioral
-  drift pin exists (round-3 debt, carried).
+  that shape (`knowledge/silence-grading-r2.md:191-197`). The census-output
+  frozen-behavioral drift pin **landed round 10** (next bullet); this presence +
+  window residual itself stays open.
+- **Census drift pin landed (round 10): census `d7710981…` (still
+  `VERSION=census-r5`, sha-distinguished; `+475/−36`, deletions confined to the
+  usage text, the selftest runner and `main()` — no `run_census`/`emit_*` edit),
+  oracle `448f7723…` byte-frozen.** `--pin <path>` runs the live census read-only,
+  normalizes its full output and writes it with a header carrying `census_sha256`,
+  `pinned_ts` and the declared `volatile_fields` list
+  (`tools/mori-census.sh:1636-1647`); the pin exits 0 whatever the census's own
+  roll is (a DRIFT host still pins), write failure → exit 2. `--drift <path>`
+  re-runs, re-normalizes with the current list and byte-compares the canonical
+  block: equal → `MORI_DRIFT: none` exit 0; changed non-volatile fields are named
+  (changed keys, `-FINDING:<id>`/`+FINDING:<id>`, `output-order`, `volatile_fields`)
+  exit 1; baseline missing/unreadable/malformed → exit 2. The adopted lane baseline
+  `corpus/evidence/baseline-r10-20261015T2231Z.json` (sha `0993b235…`; pinned
+  `2026-10-15T22:26:29Z` at the settled census bytes; `mori-drift-baseline v1` text despite the
+  `.json` suffix) reads `MORI_DRIFT: none`; selftest 56 → 66
+  (10 pin/drift arms, `:2722-2798`), `PASS (66 cases, 66 passed, 0 failed)` exit 0;
+  the no-flag output is byte-unchanged (no production-path hunk). Named blind
+  spots: counter magnitudes inside an existing finding id (a count-only change
+  reads `none` by construction — ≈47% of the schema sits in the counter class),
+  watermarks/gauges, `*_epoch`/`round=`, `example=`, `script_sha256` and the
+  verdict tallies; the baseline records no env, so pin and drift must share the
+  invocation (a `MORI_*` override difference reports as drift, measured). Re-pin is
+  a recorded act with a reason, never a way to make red green. Method, masking
+  risks, ritual: `knowledge/drift-pin-r10.md`; churn/masking lesson:
+  `lessons/2026-10-15-volatile-contract-behavioral-baselines.md`; the
+  receipts-writer's committed drift-leg set lands under `corpus/evidence/` as
+  `pin-r10-*.log` (at this README's clock the baseline is the round's only r10
+  evidence file in place).
 
 - **Journal scope (measured 2026-10-15):** the census reads the USER journal only
   (0 segfault lines); the system journal holds 626, with 1228 core dumps. A
