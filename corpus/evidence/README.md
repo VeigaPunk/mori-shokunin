@@ -241,3 +241,85 @@ is implied; no causal claim about fleet liveness; the sniffer receipt is an atta
 measurement (the named round-4 claim), not an impossibility proof — the census process can
 still detect that it runs inside a fixture tree, which `shape-invariance` neutralizes for
 grade branching but does not forbid.
+
+## Round-5 receipts (run-order close: seeded shuffle + per-run nonce) — produced by the receipts-writer seat
+
+Round-5 goal wave, seat `receipts-writer`. Detection and report only — nothing was
+remediated, killed, restarted or reconfigured; no host or fleet state was written. This
+receipt set closes the round-4 correction (`SCORECARD.md:229-238`): the run-order spoofing
+channel. Two tool revisions are pinned by this set (and only by these SHAs):
+
+- `tools/mori-silence-cases.sh` sha256 `7143ccc2a14221713334c33ade56e24ca711fbd0d3d17f31d33e151be544f017`
+  (r5 oracle, 970 lines): run header `SHUFFLE_SEED=` / `RUN_NONCE=` / `CASE_ORDER=`; the 28
+  case ids are executed in a seed-shuffled order (Fisher-Yates with a local xorshift32,
+  `:944-960`) and every case requires the current run's nonce token in the census output
+  (fixture disk-target token `nonce-<N>`, check `:422-427`, `:490-494`). Seed pin
+  `MORI_SHUFFLE_SEED=<int>` (same seed ⇒ same order); nonce pin `MORI_RUN_NONCE=<int>`.
+  The order seed is deliberately not exported to the census (`:353`).
+- `tools/mori-census.sh` sha256 `af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7`
+  (`VERSION=census-r3`) — **frozen this round**, byte-identical before/after every run.
+
+Every receipt carries its own `*_SHA256_BEFORE` / `*_SHA256_AFTER` pair (identical within
+each receipt) and the exact command; the oracle receipts carry SHUFFLE_SEED, RUN_NONCE and
+the full CASE_ORDER of their run.
+
+| File | Captured UTC | Exit | Verdict / tally |
+|---|---|---|---|
+| `order-r5-20261015T180431Z-oracle-1.log` | 2026-10-15T18:04:31Z | 0 | `matched=28 total=28`; seed `1612512038`; order recorded; sorted per-case tuples sha `a70af583…` |
+| `order-r5-20261015T180431Z-oracle-2.log` | 18:04:33Z | 0 | `matched=28 total=28`; fresh seed `1323201475`, different order; same sorted tuple sha |
+| `order-r5-20261015T180431Z-oracle-3.log` | 18:04:35Z | 0 | seed pinned to oracle-1's (`MORI_SHUFFLE_SEED=1612512038`): `CASE_ORDER` identical to oracle-1, `diff` vs oracle-1 = the RUN_NONCE line only; `matched=28 total=28` |
+| `order-r5-20261015T180431Z-selftest.log` | 18:04:37Z | 0 | `MORI_CENSUS_SELFTEST: PASS (30 cases, 30 passed, 0 failed)` at the frozen census sha |
+| `order-r5-20261015T180431Z-live.log` | 18:04:38Z (+ reverify 18:05:04Z) | 1 | `MORI_CENSUS: DRIFT (findings=15 drift=14 unavailable=1 surfaces=7)`; finding-id sets of the two spots identical; the 1 unavailable is tmux, never DRIFT |
+| `order-r5-20261015T180431Z-sniffer.log` | before 17:59:18Z / after 18:05:21–18:06:18Z | 0 (before) / 1 each (after) | same attackers: r4 snapshot (`be0e28b8…`) `28/28` exit 0 → r5 `0/28` (v3a/v3b/v3c canned, v3e stale-nonce) and `6/28` (v3d live-nonce echo + positional table), all exit 1; channel probe: run seed/CASE_ORDER 0 hits in 29 census env dumps, nonce visible by design |
+
+Receipt-file SHA-256 at build time:
+
+- `3b074829314007a125cbc99b9253180655690a33578778788e7e8116ec97327b` (oracle-1)
+- `6a8e66061c86ccd6d2d9a0b5236e60d6e0ecf4cf979305990fe1dc69b619635e` (oracle-2)
+- `bb88e332b2feaeaab2f1aea6386e93b90b1472a4d1d5807e1a6d84464acb0620` (oracle-3)
+- `de80300d0ad75fa63c62cd632dfaf4b2eebaf16d64800a94ed48d74c7ece55a7` (selftest)
+- `8f6b5d9f743d73933f7bfc9a59073fee5378c54c1d0c273d15a46416f77f6541` (live)
+- `3c51f5373723252c9349941ab9e9699bbb4808f14037bfbabb85d809a7e27c0f` (sniffer)
+
+**What moved vs the round-4 record.** The three no-logic attackers that reached
+`matched=28 total=28` exit 0 at the r4 oracle (re-verified before the landing against a
+byte-checked r4 snapshot) score `0/28` exit 1 at the landed revision; the strongest
+adaptation measured (fresh-nonce echo + fixed positional table; no case identification)
+scores `6/28` exit 1 — the residual 6 are accidental positional coincidences, which the
+seeded shuffle closes further; the stale-nonce replay scores `0/28`. The honest census is
+unaffected: `28/28` exit 0 at three seeds with byte-identical per-case grade tuples
+(`a70af583bb01b8362a49f07aa8f2b66814fac22b119a22f9b273c5024573c752`), and the pinned seed
+reproduces the exact run order. Channel probe (embedded in the sniffer receipt): over all
+29 census invocations of a probe run, the order seed and CASE_ORDER appear 0 times in the
+census env; the nonce token appears (exported as `MORI_RUN_NONCE` and inside
+`MORI_DISK_TARGETS`) — by design, and v3d shows that alone is not sufficient.
+
+Re-run recipes (cwd = lane root; this receipt set applies only at the two SHAs above):
+
+```sh
+cd /home/vgpnk/Projects/shokunin/mori-shokunin
+sha256sum tools/mori-silence-cases.sh  # must equal 7143ccc2… for this whole set
+sha256sum tools/mori-census.sh         # must equal af2d4e79…
+bash tools/mori-silence-cases.sh       # expect exit 0: header seed/nonce/CASE_ORDER + matched=28 total=28
+env MORI_SHUFFLE_SEED=<seed> bash tools/mori-silence-cases.sh   # same seed => same CASE_ORDER
+bash tools/mori-census.sh --selftest   # hermetic; expect exit 0, PASS (30 cases, 30 passed)
+bash tools/mori-census.sh              # live; expect a MORI_CENSUS verdict + per-lane rows
+# attacks (sources embedded verbatim in the sniffer receipt; run from /tmp only):
+#   bash tools/mori-silence-cases.sh /tmp/<sniffer>.sh   ; before-side needs an r4
+#   oracle snapshot (git show 5b62c897:tools/mori-silence-cases.sh must hash be0e28b8…)
+```
+
+**Re-run preconditions (recorded, not invented):** the live receipt describes the host at
+its capture time; finding counts are mutable observations — a re-run is "same receipt" only
+in formula, never in byte equality. The hermetic receipts reproduce only at the pinned
+oracle+census SHAs; a different sha invalidates them. The pinned-seed reproduction depends
+on the documented `MORI_SHUFFLE_SEED` interface; an unpinned run necessarily produces a
+fresh seed and a different order. The attack tallies are properties of the attacker scripts
+embedded in the sniffer receipt, not of the census.
+
+**Not claimed here:** no remediation, kill, restart or host/unit change was performed or is
+implied; no causal claim about fleet liveness. The after-side is an attack-class measurement
+of the named round-5 claim, not an impossibility proof: a forger keyed on fixture *content*
+(memorized content→expectation table) remains out of scope, as do channels outside the
+census process env/paths probed here (seed-guessing is bounded by the probe showing no
+census-side seed or order channel, not by a cryptographic claim).

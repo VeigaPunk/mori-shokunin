@@ -1,0 +1,430 @@
+RECEIPT   mori-shokunin round-5 — adversarial: the run-order/replay spoof class vs the landed oracle
+SEAT      receipts-writer (round-5 flash wave)
+CAPTURED_UTC  before-side runs 2026-10-15T17:59:18Z -> 2026-10-15T17:59:19Z; after-side runs 2026-10-15T18:05:21Z -> 2026-10-15T18:06:18Z;
+          channel probe 2026-10-15T18:06:58Z
+COMMANDS  after-side (one per attacker; attacker is passed AS the census):
+          bash tools/mori-silence-cases.sh /tmp/mori-receipts-r5/sniffer-v3a-fixed-table.sh
+          bash tools/mori-silence-cases.sh /tmp/mori-receipts-r5/sniffer-v3b-critic-composite.sh
+          bash tools/mori-silence-cases.sh /tmp/mori-receipts-r5/sniffer-v3c-admission-order.sh
+          bash tools/mori-silence-cases.sh /tmp/mori-receipts-r5/sniffer-v3d-live-nonce.sh
+          bash tools/mori-silence-cases.sh /tmp/mori-receipts-r5/sniffer-v3e-stale-nonce.sh
+          before-side (r4 snapshot oracle; attackers a/b/c):
+          bash /tmp/mori-receipts-r5/oracle-r4-before.sh /tmp/mori-receipts-r5/sniffer-v3{a,b,c}-*.sh
+ORACLE (r5, landed)  7143ccc2a14221713334c33ade56e24ca711fbd0d3d17f31d33e151be544f017
+ORACLE (r4 snapshot) be0e28b8bf3cc34e2a35e6cea7c05bffff376111b42d985b6bec7f0e21f59456
+CENSUS_SHA256        af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7 (frozen; identical before/after every run below)
+LANE_HEAD 7a3629a83c2e81774ebeb65b4b92a07b65830add   FLEET_HEAD 90ce10bf2098b082755c484b63c05ac299857d22
+
+==== BEFORE side — same attacks vs a byte-verified r4 oracle snapshot ====
+The snapshot is a copy of /tmp/mori-critic-r4/landed-oracle.sh whose sha256
+was verified by this seat as be0e28b8bf3cc34e2a35e6cea7c05bffff376111b42d985b6bec7f0e21f59456
+(the lane oracle sha at capture time, before the order-impl landing), so these
+runs measure the round-4 bytes, not the landed revision.
+---- before-side tallies (verbatim) ----
+-- v3a vs r4 oracle (be0e28b8bf3c), exit 0
+MORI_SILENCE_CASES: matched=28 total=28
+-- v3b vs r4 oracle (be0e28b8bf3c), exit 0
+MORI_SILENCE_CASES: matched=28 total=28
+-- v3c vs r4 oracle (be0e28b8bf3c), exit 0
+MORI_SILENCE_CASES: matched=28 total=28
+---- end before-side ----
+
+==== AFTER side — same attacks (plus two stronger ones) vs the landed r5 oracle ====
+All five score below the ceiling and exit 1. Two defenses compose:
+  * the canned/replayed attackers (v3a/v3b/v3c) carry NO current nonce,
+    so every case fails the nonce gate: matched=0 total=28;
+  * v3d echoes the CURRENT nonce (read from MORI_RUN_NONCE) and still
+    fails on state mismatch caused by the seeded shuffle: matched=6 total=28
+    (6 accidental positional coincidences, all other 22 cases mismatch);
+  * v3e echoes only a STALE token (oracle-1 run nonce) and fails: matched=0 total=28.
+---- after-side tallies + key FAIL lines (verbatim) ----
+-- v3a: seed=1460521949 nonce=2466648709 exit=1
+MORI_SILENCE_CASES: matched=0 total=28
+FAIL subject-postlaunch-progressing: state want [progressing] got [silent] via lane finding want=0 got=1 rc want=0 got=1 verdict='MORI_CENSUS: DRIFT (findings=1 drift=1 unavailable=0 surfaces=7)' run-nonce want=[nonce-2466648709] missing (canned/replayed output?)
+FAIL readonly-no-mutation: run-nonce want=[nonce-2466648709] missing (canned/replayed output?)
+FAIL shape-invariance: run-nonce want=[nonce-2466648709] missing in a shape run (canned/replayed output?)
+-- v3b: seed=3453975409 nonce=3034287289 exit=1
+MORI_SILENCE_CASES: matched=0 total=28
+FAIL report-future-no-close: run-nonce want=[nonce-3034287289] missing (canned/replayed output?)
+FAIL readonly-no-mutation: run-nonce want=[nonce-3034287289] missing (canned/replayed output?)
+FAIL shape-invariance: run-nonce want=[nonce-3034287289] missing in a shape run (canned/replayed output?)
+-- v3c: seed=3308784509 nonce=2771790592 exit=1
+MORI_SILENCE_CASES: matched=0 total=28
+FAIL repo-missing-unavailable: state want [unavailable] got [silent] via lane finding want=0 got=1 rc want=0 got=1 verdict='MORI_CENSUS: DRIFT (findings=1 drift=1 unavailable=0 surfaces=1)' run-nonce want=[nonce-2771790592] missing (canned/replayed output?)
+FAIL readonly-no-mutation: run-nonce want=[nonce-2771790592] missing (canned/replayed output?)
+FAIL shape-invariance: run-nonce want=[nonce-2771790592] missing in a shape run (canned/replayed output?)
+-- v3d: seed=2906323666 nonce=2741855261 exit=1
+MORI_SILENCE_CASES: matched=6 total=28
+FAIL substring-email-mismatch-weak: state want [progressing-weak] got [not-open] via lane
+FAIL shape-invariance: same fixture graded differently under two dir names: A=[state=progressing-weak api=lane finding=0 rc=0 verdict=[MORI_CENSUS: CLEAN (findings=0 drift=0 unavailable=0 surfaces=7)]] B=[state=progressing api=lane finding=0 rc=0 verdict=[MORI_CENSUS: CLEAN (findings=0 drift=0 unavailable=0 surfaces=7)]]
+-- v3e: seed=972720598 nonce=690367550 exit=1
+MORI_SILENCE_CASES: matched=0 total=28
+FAIL readonly-no-mutation: run-nonce want=[nonce-690367550] missing (canned/replayed output?)
+FAIL readonly-no-mutation: run-nonce want=[nonce-690367550] missing (canned/replayed output?)
+FAIL shape-invariance: run-nonce want=[nonce-690367550] missing in a shape run (canned/replayed output?)
+---- end after-side ----
+
+==== run seeds + case orders for every after-side attack run ====
+-- v3a SHUFFLE_SEED=1460521949 RUN_NONCE=2466648709
+   CASE_ORDER=subject-postlaunch-progressing sibling-clean-checkout-weak shape-invariance substring-email-mismatch-weak main-repo-noise-silent report-eq-launch-no-close young-age-equals-gate author-subject-committer-sibling-progress report-future-no-close old-report-before-relaunch-silent young-future-launch author-sibling-committer-subject-weak untracked-recent-progress silent-open readonly-no-mutation nolane-launch-not-open completed-not-open subject-hidden-behind-sibling-head committed-report-closes same-round-relaunch-silent substring-name-mismatch-weak young-under-gate untracked-report-progress unreadable-git-unavailable dirty-same-path-as-sibling-progress repo-missing-unavailable legacy-steer-open-silent ledger-missing-not-silent
+-- v3b SHUFFLE_SEED=3453975409 RUN_NONCE=3034287289
+   CASE_ORDER=report-future-no-close readonly-no-mutation report-eq-launch-no-close legacy-steer-open-silent unreadable-git-unavailable ledger-missing-not-silent nolane-launch-not-open untracked-recent-progress shape-invariance young-age-equals-gate main-repo-noise-silent young-under-gate repo-missing-unavailable young-future-launch subject-postlaunch-progressing author-subject-committer-sibling-progress dirty-same-path-as-sibling-progress same-round-relaunch-silent untracked-report-progress author-sibling-committer-subject-weak substring-email-mismatch-weak silent-open committed-report-closes old-report-before-relaunch-silent subject-hidden-behind-sibling-head completed-not-open substring-name-mismatch-weak sibling-clean-checkout-weak
+-- v3c SHUFFLE_SEED=3308784509 RUN_NONCE=2771790592
+   CASE_ORDER=repo-missing-unavailable young-age-equals-gate subject-hidden-behind-sibling-head substring-email-mismatch-weak untracked-recent-progress ledger-missing-not-silent legacy-steer-open-silent untracked-report-progress subject-postlaunch-progressing shape-invariance nolane-launch-not-open young-under-gate readonly-no-mutation main-repo-noise-silent same-round-relaunch-silent report-eq-launch-no-close completed-not-open dirty-same-path-as-sibling-progress committed-report-closes unreadable-git-unavailable sibling-clean-checkout-weak report-future-no-close substring-name-mismatch-weak author-subject-committer-sibling-progress silent-open old-report-before-relaunch-silent young-future-launch author-sibling-committer-subject-weak
+-- v3d SHUFFLE_SEED=2906323666 RUN_NONCE=2741855261
+   CASE_ORDER=main-repo-noise-silent substring-email-mismatch-weak old-report-before-relaunch-silent repo-missing-unavailable nolane-launch-not-open author-sibling-committer-subject-weak dirty-same-path-as-sibling-progress subject-postlaunch-progressing same-round-relaunch-silent untracked-report-progress report-future-no-close sibling-clean-checkout-weak author-subject-committer-sibling-progress committed-report-closes untracked-recent-progress substring-name-mismatch-weak legacy-steer-open-silent shape-invariance report-eq-launch-no-close ledger-missing-not-silent young-under-gate young-age-equals-gate young-future-launch subject-hidden-behind-sibling-head unreadable-git-unavailable silent-open completed-not-open readonly-no-mutation
+-- v3e SHUFFLE_SEED=972720598 RUN_NONCE=690367550
+   CASE_ORDER=readonly-no-mutation subject-hidden-behind-sibling-head young-age-equals-gate sibling-clean-checkout-weak author-subject-committer-sibling-progress ledger-missing-not-silent report-eq-launch-no-close subject-postlaunch-progressing committed-report-closes untracked-recent-progress main-repo-noise-silent untracked-report-progress same-round-relaunch-silent dirty-same-path-as-sibling-progress completed-not-open unreadable-git-unavailable repo-missing-unavailable substring-name-mismatch-weak young-future-launch substring-email-mismatch-weak legacy-steer-open-silent old-report-before-relaunch-silent nolane-launch-not-open silent-open report-future-no-close shape-invariance young-under-gate author-sibling-committer-subject-weak
+
+==== channel probe — what the census can read (seed vs nonce) ====
+A probe run of the landed oracle (seed 4230613377 nonce 1879033843, 29 census
+invocations) dumped its full fixture env per invocation to scratch;
+measured over the whole dump (29 blocks):
+  grep -c "<run seed>"    -> 0   (the order seed never reaches the census)
+  grep -c "CASE_ORDER"    -> 0   (the executed order never reaches the census)
+  grep -c "SHUFFLE_SEED"  -> 0   (not exported)
+  grep -c "<run nonce>"   -> 58  (the nonce IS census-visible, by design; e.g.)
+    MORI_RUN_NONCE=1879033843
+    MORI_DISK_TARGETS=/tmp/mori-silence-cases.4HY1hC/case.82uyCTWZ/nonce-1879033843
+  => a seed-guessing attacker has no census-side oracle for the seed; the
+     nonce is deliberately readable and its gate is only one of the two
+     defenses (v3d shows a live nonce echo alone does not pass).
+
+==== attacker sources (verbatim; run AS the census) ====
+SOURCE_A  sniffer-v3a-fixed-table.sh  sha256 f1c8acdfe7c5d39e4c19637e06c7cff1f4a6d636081e91afe5015ac430175840
+          (this seat's reconstruction of the r4 v2-runorder attacker: fixed
+           positional table, zero fixture bytes, calibrated 28/28 at r4 above)
+#!/usr/bin/env bash
+# sniffer-v3a — the round-4 "invocation-order replay" attacker (sniffer-v2-runorder,
+# 29cb09ce…, which scored 28/28 exit 0 at the r4 oracle), reconstructed from the
+# round-4 sniffer-v2 receipt (v2b source, positions 28/29 both answered `progressing`
+# so the shape pair agrees with itself). Zero grading logic: it counts its own
+# invocations under the oracle WORK dir and replays a fixed answer table keyed on
+# position; it never reads fixture bytes beyond the stub-dir path it derives WORK from.
+set -u
+
+sd=${MORI_STUB_DIR:-}
+case "$sd" in
+  */case.*/stub | */shape.*/stub) case_dir=$(dirname "$sd"); work=$(dirname "$case_dir") ;;
+  *) exit 0 ;;
+esac
+
+CTR=$work/.sniffer-v3a-counter
+n=0
+[ -f "$CTR" ] && n=$(wc -l < "$CTR" | tr -d ' ')
+n=$((n + 1))
+printf '%s\n' "$n" >> "$CTR"
+
+lanes=${MORI_ROSTER_LANES:-kagi}
+lane=${lanes%% *}
+
+emit() { # <state> <finding 0|1> <rc>
+  printf 'SURFACE lane.%s: %s (lane=%s round=7 launch_epoch=1 age_s=99999 basis=sniffer-v3a; ts=1970-01-01T00:00:00Z)\n' "$lane" "$1" "$lane"
+  if [ "$2" = 1 ]; then
+    printf 'FINDING LANE_SILENT severity=warn lane=%s round=7 launch_epoch=1 age_s=99999 gate_s=900 basis=row-D\n' "$lane"
+    printf 'SURFACE silence: drift (cmd=none; silent=1 progressing=0 progressing_weak=0 young=0 not_open=0 unavailable=0 skipped=0 window_s=900; ts=1970-01-01T00:00:00Z)\n'
+    printf 'MORI_CENSUS: DRIFT (findings=1 drift=1 unavailable=0 surfaces=7)\n'
+    exit 1
+  fi
+  printf 'SURFACE silence: ok (cmd=none; silent=0 progressing=1 progressing_weak=0 young=0 not_open=0 unavailable=0 skipped=0 window_s=900; ts=1970-01-01T00:00:00Z)\n'
+  printf 'MORI_CENSUS: CLEAN (findings=0 drift=0 unavailable=0 surfaces=7)\n'
+  exit 0
+}
+
+# r3/r4 want table by invocation position (1..26 assert cases in r4 source order,
+# 27 = readonly (output ignored), 28/29 = shape A/B answered identically).
+case "$n" in
+  1)  emit silent 1 1 ;;
+  2)  emit not-open 0 0 ;;
+  3)  emit young 0 0 ;;
+  4)  emit young 0 0 ;;
+  5)  emit young 0 0 ;;
+  6)  emit not-open 0 0 ;;
+  7)  emit not-open 0 0 ;;
+  8)  emit unavailable 0 0 ;;
+  9)  emit unavailable 0 0 ;;
+  10) emit silent 1 1 ;;
+  11) emit silent 1 1 ;;
+  12) emit progressing 0 0 ;;
+  13) emit progressing 0 0 ;;
+  14) emit progressing-weak 0 0 ;;
+  15) emit progressing-weak 0 0 ;;
+  16) emit progressing 0 0 ;;
+  17) emit progressing-weak 0 0 ;;
+  18) emit progressing-weak 0 0 ;;
+  19) emit progressing 0 0 ;;
+  20) emit progressing 0 0 ;;
+  21) emit not-open 0 0 ;;
+  22) emit silent 1 1 ;;
+  23) emit silent 1 1 ;;
+  24) emit progressing-weak 0 0 ;;
+  25) emit progressing 0 0 ;;
+  26) emit silent 1 1 ;;
+  27) emit progressing 0 0 ;;
+  28) emit progressing 0 0 ;;
+  29) emit progressing 0 0 ;;
+  *)  exit 0 ;;
+esac
+SOURCE_B  sniffer-v3b-critic-composite.sh  sha256 9f02beeb448293cc27fec8d8bdc17137a2dd1e2bc7356ea89f1ca06e8ff201f2
+          (round-4 critic sniffer-v3 (/tmp/mori-critic-r4/sniffer-v3.sh, sha
+           ba2a11ba70745c93bbb4fa5dd69ecb5ad7b35ef25ec11b2a78c6efd92706a147)
+           with TABLE/ST paths rewritten for isolated scratch; diff below)
+8,9c8,9
+< TABLE=/tmp/mori-critic-r4/table-real.tsv
+< ST=/tmp/mori-critic-r4/counter-v3.state
+---
+> TABLE=/tmp/mori-receipts-r5/table-real.tsv
+> ST=/tmp/mori-receipts-r5/counter-v3b.state
+#!/usr/bin/env bash
+# critic-r4 sniffer v3 (composite): index-table for the graded `case.*`
+# invocations + a CONSTANT answer for anything named `shape.*` (so the
+# shape-invariance pair is grade-identical and normalized-stdout-identical).
+# Zero fleet semantics: reads only the fixture directory NAME and an invocation
+# counter. Never opens the ledger, repo, state or any surface.
+set -uo pipefail
+TABLE=/tmp/mori-receipts-r5/table-real.tsv
+ST=/tmp/mori-receipts-r5/counter-v3b.state
+
+lane=${MORI_ROSTER_LANES%% *}
+d=$(basename -- "$(dirname -- "${MORI_SHOKUNIN_ROOT:-nonexistent}")")
+
+emit() { # <state> <find> <rc>
+  if [ "$2" = 1 ]; then
+    printf 'FINDING LANE_SILENT severity=warn obs=lane=%s round=1 launch_epoch=1 age_s=1 gate_s=900 basis=row-sniff3 ts=x script_sha256=x\n' "$lane"
+  fi
+  printf 'SURFACE lane.%s: %s (lane=%s round=1 launch_epoch=1 age_s=1 basis=row-sniff3 d=%s; ts=x)\n' "$lane" "$1" "$lane" "${d%%.*}"
+  if [ "$3" = 1 ]; then
+    printf 'MORI_CENSUS: DRIFT (findings=1 drift=1 unavailable=0 surfaces=7)\n'
+  else
+    printf 'MORI_CENSUS: CLEAN (findings=0 drift=0 unavailable=0 surfaces=7)\n'
+  fi
+  exit "$3"
+}
+
+case "$d" in
+  shape.*) emit progressing 0 0 ;;   # both sides identical => shape case passes
+esac
+
+total=27
+n=$(( $(cat "$ST" 2>/dev/null || echo 0) + 1 ))
+[ "$n" -gt "$total" ] && n=1
+printf '%s\n' "$n" > "$ST"
+row=$(awk -F'\t' -v n="$n" '$1 == n {print $2"\t"$3"\t"$4"\t"$5}' "$TABLE")
+emit "$(printf '%s' "$row" | cut -f2)" "$(printf '%s' "$row" | cut -f3)" "$(printf '%s' "$row" | cut -f4)"
+SOURCE_C  sniffer-v3c-admission-order.sh  sha256 22d298f8a3c9fe27a49596042f69876bf4e27676226e48b45c3800fa02dfeb46
+          (verbatim copy of the round-5 admission seat's /tmp/mori-adm-r5/sniffer-order.sh,
+           sha at copy time 22d298f8a3c9fe27a49596042f69876bf4e27676226e48b45c3800fa02dfeb46)
+#!/usr/bin/env bash
+# sniffer-order — zero-logic census: counts its own invocations, replays a
+# canned grade sequence keyed on position. Reads NO fixture bytes (only its
+# own counter, derived from the shape of MORI_SHOKUNIN_ROOT) and MORI_ROSTER_LANES
+# (the lane name it must print, handed to it in the environment).
+set -uo pipefail
+root=${MORI_SHOKUNIN_ROOT:-}
+# work dir = ROOT three levels up (WORK/case.XXXX/root or WORK/shape.XXXX/root)
+w=$(dirname -- "$(dirname -- "$root")")
+cnt_f="$w/.cnt"
+n=0
+[ -f "$cnt_f" ] && n=$(cat "$cnt_f")
+n=$((n + 1))
+printf '%s\n' "$n" > "$cnt_f"
+
+lane=${MORI_ROSTER_LANES:-kagi}
+
+case "$n" in
+  1)  st=silent ;;
+  2)  st=not-open ;;
+  3)  st=young ;;
+  4)  st=young ;;
+  5)  st=young ;;
+  6)  st=not-open ;;
+  7)  st=unavailable ;;
+  8)  st=unavailable ;;
+  9)  st=unavailable ;;
+  10) st=silent ;;
+  11) st=silent ;;
+  12) st=progressing ;;
+  13) st=progressing ;;
+  14) st=progressing-weak ;;
+  15) st=progressing-weak ;;
+  16) st=progressing ;;
+  17) st=progressing-weak ;;
+  18) st=progressing-weak ;;
+  19) st=progressing ;;
+  20) st=progressing ;;
+  21) st=not-open ;;
+  22) st=silent ;;
+  23) st=silent ;;
+  24) st=progressing-weak ;;
+  25) st=progressing ;;
+  26) st=silent ;;
+  *)  st=progressing ;;
+esac
+
+printf 'SURFACE lane.%s: %s (sniff)\n' "$lane" "$st"
+if [ "$st" = silent ]; then
+  printf 'FINDING LANE_SILENT severity=warn obs=sniff lane=%s ts=fixture\n' "$lane"
+  printf 'MORI_CENSUS: DRIFT (findings=1 drift=1 unavailable=0 surfaces=1)\n'
+  exit 1
+fi
+printf 'MORI_CENSUS: CLEAN (findings=0 drift=0 unavailable=0 surfaces=1)\n'
+exit 0
+SOURCE_D  sniffer-v3d-live-nonce.sh  sha256 927df342aeb6c837d80f863080f9dd571eb4a7e087d1aa36c06c2cf273116847
+#!/usr/bin/env bash
+# sniffer-v3d — adaptive zero-logic attacker: the v3a positional replay PLUS a
+# live echo of the CURRENT run's nonce token (read from MORI_RUN_NONCE in its
+# own environment), so the r5 nonce-presence check passes. It still has no way
+# to know WHICH case it is answering (the order seed is not exported), so its
+# fixed positional table meets a shuffled execution order. Measures whether the
+# shuffle alone (not the nonce) closes the invocation-count class.
+set -u
+
+sd=${MORI_STUB_DIR:-}
+case "$sd" in
+  */case.*/stub | */shape.*/stub) case_dir=$(dirname "$sd"); work=$(dirname "$case_dir") ;;
+  *) exit 0 ;;
+esac
+
+CTR=$work/.sniffer-v3d-counter
+n=0
+[ -f "$CTR" ] && n=$(wc -l < "$CTR" | tr -d ' ')
+n=$((n + 1))
+printf '%s\n' "$n" >> "$CTR"
+
+lanes=${MORI_ROSTER_LANES:-kagi}
+lane=${lanes%% *}
+token="nonce-${MORI_RUN_NONCE:-0}"
+
+emit() { # <state> <finding 0|1> <rc>
+  # echo the current nonce token the way the honest census's disk row does
+  printf 'SURFACE disk: ok (cmd=none; targets=%s; ts=1970-01-01T00:00:00Z)\n' "${MORI_DISK_TARGETS:-/none/$token}"
+  printf 'SURFACE lane.%s: %s (lane=%s round=7 launch_epoch=1 age_s=99999 basis=sniffer-v3d; ts=1970-01-01T00:00:00Z)\n' "$lane" "$1" "$lane"
+  if [ "$2" = 1 ]; then
+    printf 'FINDING LANE_SILENT severity=warn lane=%s round=7 launch_epoch=1 age_s=99999 gate_s=900 basis=row-D\n' "$lane"
+    printf 'SURFACE silence: drift (cmd=none; silent=1 progressing=0 progressing_weak=0 young=0 not_open=0 unavailable=0 skipped=0 window_s=900; ts=1970-01-01T00:00:00Z)\n'
+    printf 'MORI_CENSUS: DRIFT (findings=1 drift=1 unavailable=0 surfaces=7)\n'
+    exit 1
+  fi
+  printf 'SURFACE silence: ok (cmd=none; silent=0 progressing=1 progressing_weak=0 young=0 not_open=0 unavailable=0 skipped=0 window_s=900; ts=1970-01-01T00:00:00Z)\n'
+  printf 'MORI_CENSUS: CLEAN (findings=0 drift=0 unavailable=0 surfaces=7)\n'
+  exit 0
+}
+
+case "$n" in
+  1)  emit silent 1 1 ;;
+  2)  emit not-open 0 0 ;;
+  3)  emit young 0 0 ;;
+  4)  emit young 0 0 ;;
+  5)  emit young 0 0 ;;
+  6)  emit not-open 0 0 ;;
+  7)  emit not-open 0 0 ;;
+  8)  emit unavailable 0 0 ;;
+  9)  emit unavailable 0 0 ;;
+  10) emit silent 1 1 ;;
+  11) emit silent 1 1 ;;
+  12) emit progressing 0 0 ;;
+  13) emit progressing 0 0 ;;
+  14) emit progressing-weak 0 0 ;;
+  15) emit progressing-weak 0 0 ;;
+  16) emit progressing 0 0 ;;
+  17) emit progressing-weak 0 0 ;;
+  18) emit progressing-weak 0 0 ;;
+  19) emit progressing 0 0 ;;
+  20) emit progressing 0 0 ;;
+  21) emit not-open 0 0 ;;
+  22) emit silent 1 1 ;;
+  23) emit silent 1 1 ;;
+  24) emit progressing-weak 0 0 ;;
+  25) emit progressing 0 0 ;;
+  26) emit silent 1 1 ;;
+  27) emit progressing 0 0 ;;
+  28) emit progressing 0 0 ;;
+  29) emit progressing 0 0 ;;
+  *)  exit 0 ;;
+esac
+SOURCE_E  sniffer-v3e-stale-nonce.sh  sha256 b3fe3fbdd7a73b0a6528d85c614aab568e35dbb83a594ebcc4a2ffa53f04a867
+          (v3d with the disk row forced to the stale token from oracle-1's run)
+#!/usr/bin/env bash
+# sniffer-v3d — adaptive zero-logic attacker: the v3a positional replay PLUS a
+# live echo of the CURRENT run's nonce token (read from MORI_RUN_NONCE in its
+# own environment), so the r5 nonce-presence check passes. It still has no way
+# to know WHICH case it is answering (the order seed is not exported), so its
+# fixed positional table meets a shuffled execution order. Measures whether the
+# shuffle alone (not the nonce) closes the invocation-count class.
+set -u
+
+sd=${MORI_STUB_DIR:-}
+case "$sd" in
+  */case.*/stub | */shape.*/stub) case_dir=$(dirname "$sd"); work=$(dirname "$case_dir") ;;
+  *) exit 0 ;;
+esac
+
+CTR=$work/.sniffer-v3e-counter
+n=0
+[ -f "$CTR" ] && n=$(wc -l < "$CTR" | tr -d ' ')
+n=$((n + 1))
+printf '%s\n' "$n" >> "$CTR"
+
+lanes=${MORI_ROSTER_LANES:-kagi}
+lane=${lanes%% *}
+token="nonce-483626538"
+
+emit() { # <state> <finding 0|1> <rc>
+  # echo ONLY the stale token captured from the oracle-1 run (483626538); the
+  # current run's fresh token never appears in this output.
+  printf 'SURFACE disk: ok (cmd=none; targets=/stale/nonce-483626538; ts=1970-01-01T00:00:00Z)\n'
+  printf 'SURFACE lane.%s: %s (lane=%s round=7 launch_epoch=1 age_s=99999 basis=sniffer-v3d; ts=1970-01-01T00:00:00Z)\n' "$lane" "$1" "$lane"
+  if [ "$2" = 1 ]; then
+    printf 'FINDING LANE_SILENT severity=warn lane=%s round=7 launch_epoch=1 age_s=99999 gate_s=900 basis=row-D\n' "$lane"
+    printf 'SURFACE silence: drift (cmd=none; silent=1 progressing=0 progressing_weak=0 young=0 not_open=0 unavailable=0 skipped=0 window_s=900; ts=1970-01-01T00:00:00Z)\n'
+    printf 'MORI_CENSUS: DRIFT (findings=1 drift=1 unavailable=0 surfaces=7)\n'
+    exit 1
+  fi
+  printf 'SURFACE silence: ok (cmd=none; silent=0 progressing=1 progressing_weak=0 young=0 not_open=0 unavailable=0 skipped=0 window_s=900; ts=1970-01-01T00:00:00Z)\n'
+  printf 'MORI_CENSUS: CLEAN (findings=0 drift=0 unavailable=0 surfaces=7)\n'
+  exit 0
+}
+
+case "$n" in
+  1)  emit silent 1 1 ;;
+  2)  emit not-open 0 0 ;;
+  3)  emit young 0 0 ;;
+  4)  emit young 0 0 ;;
+  5)  emit young 0 0 ;;
+  6)  emit not-open 0 0 ;;
+  7)  emit not-open 0 0 ;;
+  8)  emit unavailable 0 0 ;;
+  9)  emit unavailable 0 0 ;;
+  10) emit silent 1 1 ;;
+  11) emit silent 1 1 ;;
+  12) emit progressing 0 0 ;;
+  13) emit progressing 0 0 ;;
+  14) emit progressing-weak 0 0 ;;
+  15) emit progressing-weak 0 0 ;;
+  16) emit progressing 0 0 ;;
+  17) emit progressing-weak 0 0 ;;
+  18) emit progressing-weak 0 0 ;;
+  19) emit progressing 0 0 ;;
+  20) emit progressing 0 0 ;;
+  21) emit not-open 0 0 ;;
+  22) emit silent 1 1 ;;
+  23) emit silent 1 1 ;;
+  24) emit progressing-weak 0 0 ;;
+  25) emit progressing 0 0 ;;
+  26) emit silent 1 1 ;;
+  27) emit progressing 0 0 ;;
+  28) emit progressing 0 0 ;;
+  29) emit progressing 0 0 ;;
+  *)  exit 0 ;;
+esac
+---- end sources ----
+
+SCOPE     Claimed: every zero-logic/replay attacker measured here fails at the
+          landed oracle — invocation-count replay (v3a/v3b/v3c: 28/28 at r4
+          -> 0/28), live-nonce positional replay (v3d: 6/28, shuffle fails it),
+          stale-nonce replay (v3e: 0/28). The before-side is the r4 snapshot at
+          the recorded sha; the honest census is unaffected (see the oracle-1/2/3
+          receipts: 28/28 exit 0 at three seeds, tuples byte-identical).
+          NOT claimed: impossibility. A forger keyed on fixture CONTENT
+          (memorized content->expectation) is out of this receipt's scope, as is
+          any exotic channel outside the census process env/paths probed here.

@@ -26,10 +26,30 @@
 #   / ...), and no fixture-marker variable is exported; case `shape-invariance`
 #   proves a census cannot branch on the fixture directory name.
 #
-# Output:
+# Output (run header first, then one line per case in SHUFFLED order):
+#   SHUFFLE_SEED=<seed>           seeds the case-order shuffle
+#   RUN_NONCE=<nonce>             per-run fixture nonce every case must echo
+#   CASE_ORDER=<id> <id> ...      the order this run executed
 #   PASS <id> ... | FAIL <id> ... (one line per case)
 #   MORI_SILENCE_CASES: matched=N total=M
 #   exit 0 iff matched == total.
+#
+# Run-order channel (r5). Round 4 admitted one residual spoofing channel: the
+# cases ran in fixed source order and carried no per-run secret, so a census
+# with no grading logic could count its own invocations and replay a canned
+# grade sequence (corpus/knowledge/verdict-machine-r4.md §2.4). Two independent,
+# unpredictable-per-run defenses; both are logged in the header:
+#   * seeded shuffle — Fisher-Yates over the 28 case ids driven by a local
+#     xorshift32 seeded from RUN_SEED (pin: MORI_SHUFFLE_SEED=<int>; same seed
+#     => same order). Invocation position does not map to a case identity.
+#   * per-run nonce — RUN_NONCE is generated independently of the seed
+#     (pin: MORI_RUN_NONCE=<int>), exported to the census as MORI_RUN_NONCE,
+#     written into every fixture (a $CASE_DIR/run-nonce file and a
+#     $CASE_DIR/nonce-<N> directory) and handed to the census as its disk
+#     target, so the census's own disk row echoes the literal token `nonce-<N>`.
+#     Every case requires the CURRENT run's token in its census output: a
+#     canned answer is missing it, a replayed answer carries a stale one — both
+#     FAIL the case.
 #
 # Grading against old (r1 rolling-window) and new (r2 launch-aware) census:
 #   If the census emits per-lane rows `SURFACE lane.<id>: <state> (...)` the
@@ -78,8 +98,11 @@
 #   gate                   grade only when NOW - launch_epoch > LANE_SILENCE_S
 #                          (strictly greater; age exactly gate => young)
 #
-# Determinism: fixed epoch NOW=1700000000, LANE_SILENCE_S=900, TZ=UTC,
+# Determinism: fixed epoch NOW=1700000000 (unchanged in r5 — the per-run nonce
+# is a fixture/target token, not a clock shift), LANE_SILENCE_S=900, TZ=UTC,
 # LC_ALL=C, env -i census runs, single lane in MORI_ROSTER_LANES per case.
+# Case ORDER and the fixture nonce are the only per-run variation; pin both
+# (MORI_SHUFFLE_SEED / MORI_RUN_NONCE) for a byte-identical rerun.
 # Writes happen only under the fresh mktemp work dir; census must not mutate
 # any fixture (guarded by case readonly-no-mutation).
 set -euo pipefail
@@ -97,6 +120,51 @@ command -v git >/dev/null 2>&1 || { printf 'mori-silence-cases: real git require
 
 # setup failures must be loud and distinct from case verdicts (documented exit 2)
 die() { printf 'mori-silence-cases: %s\n' "$*" >&2; exit 2; }
+
+# ---- run entropy: case-order seed + fixture nonce ----------------------------
+# Two independent unpredictable values, both logged in the run header (r5):
+#   RUN_SEED  seeds the case-order shuffle (see CASE REGISTRY at the bottom).
+#             The shuffle is a Fisher-Yates over the 28 ids driven by a local
+#             xorshift32, so "same seed => same order" is reproducible in this
+#             file, not via bash's RANDOM. Pin it: MORI_SHUFFLE_SEED=<int>.
+#             Never exported to the census: the SUT must not be able to read
+#             the order.
+#   RUN_NONCE is the per-run fixture nonce. It is NOT derived from the seed, so
+#             guessing the order seed does not reveal it, and it is regenerated
+#             independently each run, so a replayed previous run carries a
+#             stale value. It reaches the census three ways: exported as
+#             MORI_RUN_NONCE, written into every fixture
+#             ($CASE_DIR/run-nonce), and used as the name of the fixture's disk
+#             target directory, which the census echoes in its own disk row as
+#             `targets=<case-dir>/nonce-<N>`. assert_case requires that token in
+#             every case's census output. Pin it: MORI_RUN_NONCE=<int>
+#             (operator reproducibility only; a normal run never sets it).
+rand32() {
+  local v=''
+  if [ -r /dev/urandom ]; then
+    v=$(od -An -N4 -tu4 < /dev/urandom 2>/dev/null | tr -dc '0-9' || true)
+  fi
+  case "$v" in ''|*[!0-9]*) v=0 ;; esac
+  if [ "$v" -eq 0 ]; then
+    v=$(( ((RANDOM << 16) | RANDOM) ^ ($$ << 7) ^ ($(date +%s) & 65535) ))
+    [ "$v" -gt 0 ] || v=1
+  fi
+  printf '%s' "$v"
+}
+
+RUN_SEED=${MORI_SHUFFLE_SEED:-}
+case "$RUN_SEED" in
+  '') RUN_SEED=$(rand32) ;;
+  *[!0-9]*) die "MORI_SHUFFLE_SEED must be a non-negative integer" ;;
+esac
+[ "$RUN_SEED" -ne 0 ] || RUN_SEED=1
+RUN_NONCE=${MORI_RUN_NONCE:-}
+case "$RUN_NONCE" in
+  '') RUN_NONCE=$(rand32) ;;
+  *[!0-9]*) die "MORI_RUN_NONCE must be a non-negative integer" ;;
+esac
+[ "$RUN_NONCE" -ne 0 ] || RUN_NONCE=1
+NONCE_TOKEN="nonce-$RUN_NONCE"
 
 # ---- pinned time base --------------------------------------------------------
 T0=1700000000            # NOW for every case
@@ -150,6 +218,13 @@ iso() { date -u -d "@$1" +%Y-%m-%dT%H:%M:%S+00:00; }
 # under two independent, randomly named directory trees.
 case_skeleton() {
   mkdir -p "$CASE_ROOT" "$CASE_UFO/state" "$CASE_UFO/waves" "$CASE_DIR/cgroup" "$CASE_STUB" "$CASE_DIR/home"
+
+  # per-run nonce artifacts: a fixture file plus the disk target directory. Both
+  # live in CASE_DIR, the parent of every fixture repo (root/, ufo/), so they
+  # are never untracked files inside a graded tree; the census echoes the target
+  # path in its disk row, which is how assert_case sees the current nonce.
+  printf '%s\n' "$RUN_NONCE" > "$CASE_DIR/run-nonce"
+  mkdir -p "$CASE_DIR/$NONCE_TOKEN"
 
   # quiet watchdog: process stub + fresh log (content uses the real tick grammar)
   printf '%s tick=1\n' "$(iso "$T0")" > "$CASE_UFO/watchdog.log"
@@ -272,6 +347,10 @@ AGG_NAME=aggregator-shokunin;       AGG_MAIL=aggregator@shokunin.local
 PROTO_NAME=protocol-shokunin;       PROTO_MAIL=protocol@shokunin.local
 
 # ---- census run ---------------------------------------------------------------
+# env -i: only the fixture env reaches the census. MORI_DISK_TARGETS points at
+# the per-run nonce directory, so the census's own disk row echoes the current
+# run's nonce token; MORI_RUN_NONCE carries it explicitly. RUN_SEED is
+# deliberately NOT exported: the SUT must not be able to read the order seed.
 CASE_OUT=''
 CASE_RC=0
 run_census() {
@@ -295,7 +374,8 @@ run_census() {
     MORI_PGREP_BIN="$BIN/pgrep" \
     MORI_JOURNALCTL_BIN="$BIN/journalctl" \
     MORI_TMUX_BIN="$BIN/tmux" \
-    MORI_DISK_TARGETS="$CASE_ROOT" \
+    MORI_DISK_TARGETS="$CASE_DIR/$NONCE_TOKEN" \
+    MORI_RUN_NONCE="$RUN_NONCE" \
     MORI_ROSTER_LANES="$CASE_LANE" \
     MORI_NOW_EPOCH=$T0 \
     MORI_WATCHDOG_STALE_S=$GATE \
@@ -339,6 +419,13 @@ finding_present() { # 1 iff LANE_SILENT exists (roster is one lane)
   [ "${n:-0}" -gt 0 ]
 }
 
+# nonce_present — 1 iff this case's census output carries the CURRENT run's
+# nonce token. The token reaches the census through the fixture (disk-target
+# path, MORI_RUN_NONCE env, run-nonce file) and is echoed in the census's own
+# disk row; a canned answer cannot produce it and a replayed answer carries the
+# previous run's value. Every case asserts it: stale or missing nonce FAILs.
+nonce_present() { case "$CASE_OUT" in *"$NONCE_TOKEN"*) return 0 ;; *) return 1 ;; esac; }
+
 # want_match <obs> <want[|want2[|...]]> — true iff obs exactly equals one of the
 # '|'-separated alternatives. `case "$obs" in $want)` CANNOT express alternation:
 # a `|` introduced by parameter expansion is a literal pattern character in bash
@@ -355,6 +442,7 @@ want_match() {
 
 # assert_case <id> <want-state[|set]> <want-finding 0|1|auto> <want-rc 0|1|auto>
 # auto = consistency with observed state (finding/rc present iff silent).
+# Every case additionally requires the per-run nonce token in the output (r5).
 assert_case() {
   local id=$1 want=$2 wf=$3 wrc=$4
   run_census
@@ -399,10 +487,15 @@ assert_case() {
   if [ "$CASE_RC" -ne "$wrr" ]; then
     ok=0; why="$why rc want=$wrr got=$CASE_RC verdict='$verdict'"
   fi
+  # r5 run-order close: the output must carry the CURRENT run's nonce token.
+  local nonce_ok=0; nonce_present && nonce_ok=1
+  if [ "$nonce_ok" -ne 1 ]; then
+    ok=0; why="$why run-nonce want=[$NONCE_TOKEN] missing (canned/replayed output?)"
+  fi
 
   if [ "$ok" = 1 ]; then
     PASS_N=$((PASS_N + 1))
-    printf 'PASS %s (state=%s via %s finding=%s rc=%s)\n' "$id" "$obs" "$api" "$fobs" "$CASE_RC"
+    printf 'PASS %s (state=%s via %s finding=%s rc=%s nonce=1)\n' "$id" "$obs" "$api" "$fobs" "$CASE_RC"
   else
     FAILED_IDS+=("$id")
     printf 'FAIL %s: %s\n' "$id" "${why# }"
@@ -424,268 +517,328 @@ fx_fingerprint() {
 # =================================================================================
 # CASES — each grades behavior of the actual census CLI on an isolated fixture.
 # Want columns: lane state, LANE_SILENT present, census rc.
+# Every case is a function named case_<id with '-' as '_'>. The runner at the
+# bottom executes them in the SEED-SHUFFLED order (never in this source order),
+# so a census cannot map its invocation position to a case identity.
 # =================================================================================
 
 # 1 — open mission older than gate, nothing attributed, no recent files.
-new_case silent-open kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch kagi 7 "$OLD"
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
-assert_case silent-open silent 1 1
+case_silent_open() {
+  new_case silent-open kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch kagi 7 "$OLD"
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  assert_case silent-open silent 1 1
+}
 
 # 2 — launch + matching complete: mission closed; old content must not be graded.
-new_case completed-not-open kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch kagi 7 "$VOLD"
-jl_complete kagi 7 1699997000
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
-assert_case completed-not-open not-open 0 0
+case_completed_not_open() {
+  new_case completed-not-open kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch kagi 7 "$VOLD"
+  jl_complete kagi 7 1699997000
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  assert_case completed-not-open not-open 0 0
+}
 
 # 3 — open mission age 800 < 900: under gate, not graded.
-new_case young-under-gate kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch kagi 7 $((T0 - 800))
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
-assert_case young-under-gate young 0 0
+case_young_under_gate() {
+  new_case young-under-gate kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch kagi 7 $((T0 - 800))
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  assert_case young-under-gate young 0 0
+}
 
 # 4 — age exactly at gate: grade is strictly-greater => young.
-new_case young-age-equals-gate kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch kagi 7 $((T0 - GATE))
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
-assert_case young-age-equals-gate young 0 0
+case_young_age_equals_gate() {
+  new_case young-age-equals-gate kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch kagi 7 $((T0 - GATE))
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  assert_case young-age-equals-gate young 0 0
+}
 
 # 5 — future launch line cannot be old.
-new_case young-future-launch kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch kagi 7 $((T0 + 1200))
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
-assert_case young-future-launch young 0 0
+case_young_future_launch() {
+  new_case young-future-launch kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch kagi 7 $((T0 + 1200))
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  assert_case young-future-launch young 0 0
+}
 
 # 6 — ledger exists with a launch-fail line for this lane (never a mission
 #      start, scripts/shokunin-watchdog.sh:83) and a launch for another lane:
 #      not-open for kagi, never silent.
-new_case nolane-launch-not-open kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch_fail kagi 7 "$VOLD"
-jl_launch kengaku 2 "$VOLD"
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
-assert_case nolane-launch-not-open not-open 0 0
+case_nolane_launch_not_open() {
+  new_case nolane-launch-not-open kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch_fail kagi 7 "$VOLD"
+  jl_launch kengaku 2 "$VOLD"
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  assert_case nolane-launch-not-open not-open 0 0
+}
 
 # 7 — watchdog log (the launch ledger) absent entirely: not-open OR
 #     unavailable, must not be silent.
-new_case ledger-missing-not-silent kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-no_ledger
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
-assert_case ledger-missing-not-silent 'not-open|unavailable' 0 0
+case_ledger_missing_not_silent() {
+  new_case ledger-missing-not-silent kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  no_ledger
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  assert_case ledger-missing-not-silent 'not-open|unavailable' 0 0
+}
 
 # 8 — roster lane directory missing: unavailable, not silent (r1 skips => same).
-new_case repo-missing-unavailable kagi
-jl_launch kagi 7 "$OLD"
-assert_case repo-missing-unavailable unavailable 0 0
+case_repo_missing_unavailable() {
+  new_case repo-missing-unavailable kagi
+  jl_launch kagi 7 "$OLD"
+  assert_case repo-missing-unavailable unavailable 0 0
+}
 
 # 9 — repo present but .git unreadable: must not become silent.
-new_case unreadable-git-unavailable kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch kagi 7 "$OLD"
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
-chmod 000 "$CASE_ROOT/kagi-shokunin/.git"
-assert_case unreadable-git-unavailable unavailable 0 0
+case_unreadable_git_unavailable() {
+  new_case unreadable-git-unavailable kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch kagi 7 "$OLD"
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  chmod 000 "$CASE_ROOT/kagi-shokunin/.git"
+  assert_case unreadable-git-unavailable unavailable 0 0
+}
 
 # 10 — complete then LATER launch line for the same round reopens the attempt
 #      (line order matters); reopened attempt is old with nothing after => silent.
-new_case same-round-relaunch-silent kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch kagi 7 1699992800
-jl_complete kagi 7 1699994600
-jl_launch kagi 7 "$OLD"
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' 1699991000 "$KAGI_NAME" "$KAGI_MAIL"
-assert_case same-round-relaunch-silent silent 1 1
+case_same_round_relaunch_silent() {
+  new_case same-round-relaunch-silent kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch kagi 7 1699992800
+  jl_complete kagi 7 1699994600
+  jl_launch kagi 7 "$OLD"
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' 1699991000 "$KAGI_NAME" "$KAGI_MAIL"
+  assert_case same-round-relaunch-silent silent 1 1
+}
 
 # 11 — legacy 'steer' line is a start marker when no launch exists.
-new_case legacy-steer-open-silent kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_steer kagi 7 "$OLD"
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
-assert_case legacy-steer-open-silent silent 1 1
+case_legacy_steer_open_silent() {
+  new_case legacy-steer-open-silent kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_steer kagi 7 "$OLD"
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old work' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  assert_case legacy-steer-open-silent silent 1 1
+}
 
 # 12 — subject commit dated AFTER launch but OUTSIDE the r1 rolling window:
 #      launch-aware attribution must grade progressing. Ledger uses the runId=
 #      tail here — the parser must ignore the tail (both tails occur live).
-new_case subject-postlaunch-progressing kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch_rid kagi 7 "$OLD"
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
-gc "$CASE_ROOT/kagi-shokunin" notes.md 'postlaunch subject work' 1699998600 "$KAGI_NAME" "$KAGI_MAIL"
-assert_case subject-postlaunch-progressing progressing 0 0
+case_subject_postlaunch_progressing() {
+  new_case subject-postlaunch-progressing kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch_rid kagi 7 "$OLD"
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  gc "$CASE_ROOT/kagi-shokunin" notes.md 'postlaunch subject work' 1699998600 "$KAGI_NAME" "$KAGI_MAIL"
+  assert_case subject-postlaunch-progressing progressing 0 0
+}
 
 # 13 — subject commit post-launch but HIDDEN BEHIND a later sibling HEAD commit
 #      (both outside r1 window): scan ALL post-launch commits => progressing.
-new_case subject-hidden-behind-sibling-head kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch kagi 7 1699997000
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
-gc "$CASE_ROOT/kagi-shokunin" sub.md 'subject work' 1699998000 "$KAGI_NAME" "$KAGI_MAIL"
-gc "$CASE_ROOT/kagi-shokunin" sib.md 'sibling work' 1699998500 "$AGG_NAME" "$AGG_MAIL"
-assert_case subject-hidden-behind-sibling-head progressing 0 0
+case_subject_hidden_behind_sibling_head() {
+  new_case subject-hidden-behind-sibling-head kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch kagi 7 1699997000
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  gc "$CASE_ROOT/kagi-shokunin" sub.md 'subject work' 1699998000 "$KAGI_NAME" "$KAGI_MAIL"
+  gc "$CASE_ROOT/kagi-shokunin" sib.md 'sibling work' 1699998500 "$AGG_NAME" "$AGG_MAIL"
+  assert_case subject-hidden-behind-sibling-head progressing 0 0
+}
 
 # 14 — sibling-only commit post-launch; subject's last commit is PRE-launch;
 #      clean checkout mtimes (LOG.md newer than launch, == commit ct) must NOT
 #      be promoted to subject progress => progressing-weak.
-new_case sibling-clean-checkout-weak kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch kagi 7 "$OLD"
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'subject base' 1699997900 "$KAGI_NAME" "$KAGI_MAIL"
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'sibling edit' 1699998500 "$AGG_NAME" "$AGG_MAIL"
-touch -d '@1699998505' "$CASE_ROOT/kagi-shokunin/LOG.md"
-assert_case sibling-clean-checkout-weak progressing-weak 0 0
+case_sibling_clean_checkout_weak() {
+  new_case sibling-clean-checkout-weak kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch kagi 7 "$OLD"
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'subject base' 1699997900 "$KAGI_NAME" "$KAGI_MAIL"
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'sibling edit' 1699998500 "$AGG_NAME" "$AGG_MAIL"
+  touch -d '@1699998505' "$CASE_ROOT/kagi-shokunin/LOG.md"
+  assert_case sibling-clean-checkout-weak progressing-weak 0 0
+}
 
 # 15 — author=sibling, committer=subject: attribution follows the AUTHOR.
-new_case author-sibling-committer-subject-weak kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch kagi 7 "$OLD"
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
-gc "$CASE_ROOT/kagi-shokunin" notes.md 'sibling-authored' 1699998600 "$AGG_NAME" "$AGG_MAIL" "$KAGI_NAME" "$KAGI_MAIL"
-assert_case author-sibling-committer-subject-weak progressing-weak 0 0
+case_author_sibling_committer_subject_weak() {
+  new_case author-sibling-committer-subject-weak kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch kagi 7 "$OLD"
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  gc "$CASE_ROOT/kagi-shokunin" notes.md 'sibling-authored' 1699998600 "$AGG_NAME" "$AGG_MAIL" "$KAGI_NAME" "$KAGI_MAIL"
+  assert_case author-sibling-committer-subject-weak progressing-weak 0 0
+}
 
 # 16 — author=subject, committer=sibling: still subject progress.
-new_case author-subject-committer-sibling-progress kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch kagi 7 "$OLD"
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
-gc "$CASE_ROOT/kagi-shokunin" notes.md 'subject-authored' 1699998600 "$KAGI_NAME" "$KAGI_MAIL" "$AGG_NAME" "$AGG_MAIL"
-assert_case author-subject-committer-sibling-progress progressing 0 0
+case_author_subject_committer_sibling_progress() {
+  new_case author-subject-committer-sibling-progress kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch kagi 7 "$OLD"
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  gc "$CASE_ROOT/kagi-shokunin" notes.md 'subject-authored' 1699998600 "$KAGI_NAME" "$KAGI_MAIL" "$AGG_NAME" "$AGG_MAIL"
+  assert_case author-subject-committer-sibling-progress progressing 0 0
+}
 
 # 17 — identity substring trap (name wrong, email exact): kagi-helper-shokunin
 #      must NOT count as kagi-subject => sibling-only => progressing-weak.
-new_case substring-name-mismatch-weak kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch kagi 7 "$OLD"
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
-gc "$CASE_ROOT/kagi-shokunin" notes.md 'helper' 1699998600 'kagi-helper-shokunin' "$KAGI_MAIL"
-assert_case substring-name-mismatch-weak progressing-weak 0 0
+case_substring_name_mismatch_weak() {
+  new_case substring-name-mismatch-weak kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch kagi 7 "$OLD"
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  gc "$CASE_ROOT/kagi-shokunin" notes.md 'helper' 1699998600 'kagi-helper-shokunin' "$KAGI_MAIL"
+  assert_case substring-name-mismatch-weak progressing-weak 0 0
+}
 
 # 18 — identity trap in the other field (name exact, email wrong):
 #      kagi-helper@shokunin.local must NOT count => progressing-weak.
-new_case substring-email-mismatch-weak kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch kagi 7 "$OLD"
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
-gc "$CASE_ROOT/kagi-shokunin" notes.md 'wrong mail' 1699998600 "$KAGI_NAME" 'kagi-helper@shokunin.local'
-assert_case substring-email-mismatch-weak progressing-weak 0 0
+case_substring_email_mismatch_weak() {
+  new_case substring-email-mismatch-weak kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch kagi 7 "$OLD"
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  gc "$CASE_ROOT/kagi-shokunin" notes.md 'wrong mail' 1699998600 "$KAGI_NAME" 'kagi-helper@shokunin.local'
+  assert_case substring-email-mismatch-weak progressing-weak 0 0
+}
 
 # 19 — dirty uncommitted edit on the SAME path a sibling committed post-launch:
 #      the dirty work is unexplained recent filesystem evidence => progressing.
-new_case dirty-same-path-as-sibling-progress kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch kagi 7 1699997000
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'sibling edit' 1699998000 "$AGG_NAME" "$AGG_MAIL"
-printf 'subject dirty work\n' > "$CASE_ROOT/kagi-shokunin/LOG.md"
-touch -d "@$RECENT" "$CASE_ROOT/kagi-shokunin/LOG.md"
-assert_case dirty-same-path-as-sibling-progress progressing 0 0
+case_dirty_same_path_as_sibling_progress() {
+  new_case dirty-same-path-as-sibling-progress kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch kagi 7 1699997000
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'sibling edit' 1699998000 "$AGG_NAME" "$AGG_MAIL"
+  printf 'subject dirty work\n' > "$CASE_ROOT/kagi-shokunin/LOG.md"
+  touch -d "@$RECENT" "$CASE_ROOT/kagi-shokunin/LOG.md"
+  assert_case dirty-same-path-as-sibling-progress progressing 0 0
+}
 
 # 20 — untracked recent file with no post-launch commit: unexplained recent
 #      files => progressing (filesystem evidence, attribution disclosed).
-new_case untracked-recent-progress kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch kagi 7 1699997000
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
-mkdir -p "$CASE_ROOT/kagi-shokunin/scratch"
-printf 'wip\n' > "$CASE_ROOT/kagi-shokunin/scratch/notes.md"
-touch -d "@$RECENT" "$CASE_ROOT/kagi-shokunin/scratch/notes.md"
-assert_case untracked-recent-progress progressing 0 0
+case_untracked_recent_progress() {
+  new_case untracked-recent-progress kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch kagi 7 1699997000
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  mkdir -p "$CASE_ROOT/kagi-shokunin/scratch"
+  printf 'wip\n' > "$CASE_ROOT/kagi-shokunin/scratch/notes.md"
+  touch -d "@$RECENT" "$CASE_ROOT/kagi-shokunin/scratch/notes.md"
+  assert_case untracked-recent-progress progressing 0 0
+}
 
 # 21 — committed report post-launch CLOSES the mission; a later unrelated HEAD
 #      commit must not break closure (path-scoped history, not overall HEAD).
 #      Report path is the live one: .ufo/reports/round-2/<lane>.md.
-new_case committed-report-closes aggregator
-git_init "$CASE_ROOT"
-jl_launch aggregator 2 1699997000
-gc "$CASE_ROOT" README.md 'root base' "$PRE" "$AGG_NAME" "$AGG_MAIL"
-gc "$CASE_ROOT" .ufo/reports/round-2/aggregator.md 'round report' 1699998000 "$AGG_NAME" "$AGG_MAIL"
-gc "$CASE_ROOT" docs/other.md 'unrelated churn' 1699998500 "$AGG_NAME" "$AGG_MAIL"
-assert_case committed-report-closes not-open 0 0
+case_committed_report_closes() {
+  new_case committed-report-closes aggregator
+  git_init "$CASE_ROOT"
+  jl_launch aggregator 2 1699997000
+  gc "$CASE_ROOT" README.md 'root base' "$PRE" "$AGG_NAME" "$AGG_MAIL"
+  gc "$CASE_ROOT" .ufo/reports/round-2/aggregator.md 'round report' 1699998000 "$AGG_NAME" "$AGG_MAIL"
+  gc "$CASE_ROOT" docs/other.md 'unrelated churn' 1699998500 "$AGG_NAME" "$AGG_MAIL"
+  assert_case committed-report-closes not-open 0 0
+}
 
 # 22 — old committed report predates complete AND the same-round relaunch:
 #      reopened attempt must stay open (old marker does not close) => silent.
 #      Relaunch uses the mission= tail — the parser must ignore the tail.
-new_case old-report-before-relaunch-silent aggregator
-git_init "$CASE_ROOT"
-jl_launch aggregator 2 1699992800
-gc "$CASE_ROOT" .ufo/reports/round-2/aggregator.md 'previous report' 1699995000 "$AGG_NAME" "$AGG_MAIL"
-jl_complete aggregator 2 1699995100
-jl_launch_mission aggregator 2 "$OLD"
-assert_case old-report-before-relaunch-silent silent 1 1
+case_old_report_before_relaunch_silent() {
+  new_case old-report-before-relaunch-silent aggregator
+  git_init "$CASE_ROOT"
+  jl_launch aggregator 2 1699992800
+  gc "$CASE_ROOT" .ufo/reports/round-2/aggregator.md 'previous report' 1699995000 "$AGG_NAME" "$AGG_MAIL"
+  jl_complete aggregator 2 1699995100
+  jl_launch_mission aggregator 2 "$OLD"
+  assert_case old-report-before-relaunch-silent silent 1 1
+}
 
 # 23 — report path-change commit epoch EXACTLY == launch: closure is strict >
 #      launch, so the attempt stays open => silent (with attribution strict too:
 #      ct==launch is not post-launch, so no subject progress).
-new_case report-eq-launch-no-close aggregator
-git_init "$CASE_ROOT"
-jl_launch aggregator 2 "$OLD"
-gc "$CASE_ROOT" .ufo/reports/round-2/aggregator.md 'edge report' "$OLD" "$AGG_NAME" "$AGG_MAIL"
-assert_case report-eq-launch-no-close silent 1 1
+case_report_eq_launch_no_close() {
+  new_case report-eq-launch-no-close aggregator
+  git_init "$CASE_ROOT"
+  jl_launch aggregator 2 "$OLD"
+  gc "$CASE_ROOT" .ufo/reports/round-2/aggregator.md 'edge report' "$OLD" "$AGG_NAME" "$AGG_MAIL"
+  assert_case report-eq-launch-no-close silent 1 1
+}
 
 # 24 — report path-change commit dated AFTER NOW: never closes. The commit is
 #      authored by a real other lane (protocol), so the remaining open-mission
 #      grade may legitimately be progressing-weak (future-dated sibling commit
 #      seen) or silent (commits filtered at <= NOW) — never not-open, and never
 #      subject progress; finding/rc must be consistent with the observed state.
-new_case report-future-no-close aggregator
-git_init "$CASE_ROOT"
-jl_launch aggregator 2 "$OLD"
-gc "$CASE_ROOT" .ufo/reports/round-2/aggregator.md 'future report' "$FUT" "$PROTO_NAME" "$PROTO_MAIL"
-assert_case report-future-no-close 'progressing-weak|silent' auto auto
+case_report_future_no_close() {
+  new_case report-future-no-close aggregator
+  git_init "$CASE_ROOT"
+  jl_launch aggregator 2 "$OLD"
+  gc "$CASE_ROOT" .ufo/reports/round-2/aggregator.md 'future report' "$FUT" "$PROTO_NAME" "$PROTO_MAIL"
+  assert_case report-future-no-close 'progressing-weak|silent' auto auto
+}
 
 # 25 — report file present but UNCOMMITTED (recent, untracked): does not close;
 #      it is unexplained recent work => progressing.
-new_case untracked-report-progress aggregator
-git_init "$CASE_ROOT"
-jl_launch aggregator 2 "$OLD"
-gc "$CASE_ROOT" README.md 'root base' "$PRE" "$AGG_NAME" "$AGG_MAIL"
-mkdir -p "$CASE_ROOT/.ufo/reports/round-2"
-printf 'draft\n' > "$CASE_ROOT/.ufo/reports/round-2/aggregator.md"
-touch -d "@$RECENT" "$CASE_ROOT/.ufo/reports/round-2/aggregator.md"
-assert_case untracked-report-progress progressing 0 0
+case_untracked_report_progress() {
+  new_case untracked-report-progress aggregator
+  git_init "$CASE_ROOT"
+  jl_launch aggregator 2 "$OLD"
+  gc "$CASE_ROOT" README.md 'root base' "$PRE" "$AGG_NAME" "$AGG_MAIL"
+  mkdir -p "$CASE_ROOT/.ufo/reports/round-2"
+  printf 'draft\n' > "$CASE_ROOT/.ufo/reports/round-2/aggregator.md"
+  touch -d "@$RECENT" "$CASE_ROOT/.ufo/reports/round-2/aggregator.md"
+  assert_case untracked-report-progress progressing 0 0
+}
 
 # 26 — main-repo lane: post-launch noise that MUST NOT confer progress —
 #      tracked .ufo/state churn commit under the EXACT subject identity,
 #      nested lane repository with fresh commits/files, ignored work/ tree
 #      with a fresh file. Nothing inside the lane scope => silent.
-new_case main-repo-noise-silent aggregator ../root/.ufo
-git_init "$CASE_ROOT"
-printf 'work/\n*-shokunin/\n' > "$CASE_ROOT/.gitignore"
-gc "$CASE_ROOT" .gitignore 'work/
+case_main_repo_noise_silent() {
+  new_case main-repo-noise-silent aggregator ../root/.ufo
+  git_init "$CASE_ROOT"
+  printf 'work/\n*-shokunin/\n' > "$CASE_ROOT/.gitignore"
+  gc "$CASE_ROOT" .gitignore 'work/
 *-shokunin/' "$PRE" "$AGG_NAME" "$AGG_MAIL" 'gitignore'
-jl_launch aggregator 3 "$OLD"
-gc "$CASE_ROOT" README.md 'root base' "$PRE" "$AGG_NAME" "$AGG_MAIL"
-mkdir -p "$CASE_ROOT/.ufo/state"
-printf '3\n' > "$CASE_ROOT/.ufo/state/aggregator.round"
-touch -d '@1699998600' "$CASE_ROOT/.ufo/state/aggregator.round"
-gc "$CASE_ROOT" .ufo/state/aggregator.round '3' 1699998600 "$AGG_NAME" "$AGG_MAIL" '' '' 1699998600 'driver state churn'
-mkdir -p "$CASE_ROOT/work"
-printf 'ignored wip\n' > "$CASE_ROOT/work/inprogress.md"
-touch -d '@1699999940' "$CASE_ROOT/work/inprogress.md"
-git_init "$CASE_ROOT/kagi-shokunin"
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'nested lane work' 1699999000 "$KAGI_NAME" "$KAGI_MAIL"
-assert_case main-repo-noise-silent silent 1 1
+  jl_launch aggregator 3 "$OLD"
+  gc "$CASE_ROOT" README.md 'root base' "$PRE" "$AGG_NAME" "$AGG_MAIL"
+  mkdir -p "$CASE_ROOT/.ufo/state"
+  printf '3\n' > "$CASE_ROOT/.ufo/state/aggregator.round"
+  touch -d '@1699998600' "$CASE_ROOT/.ufo/state/aggregator.round"
+  gc "$CASE_ROOT" .ufo/state/aggregator.round '3' 1699998600 "$AGG_NAME" "$AGG_MAIL" '' '' 1699998600 'driver state churn'
+  mkdir -p "$CASE_ROOT/work"
+  printf 'ignored wip\n' > "$CASE_ROOT/work/inprogress.md"
+  touch -d '@1699999940' "$CASE_ROOT/work/inprogress.md"
+  git_init "$CASE_ROOT/kagi-shokunin"
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'nested lane work' 1699999000 "$KAGI_NAME" "$KAGI_MAIL"
+  assert_case main-repo-noise-silent silent 1 1
+}
 
 # 27 — read-only guard: a census run must not mutate its fixture tree
-#      (live mode writes nothing; consumer-visible contract).
-new_case readonly-no-mutation kagi
-git_init "$CASE_ROOT/kagi-shokunin"
-jl_launch kagi 7 "$OLD"
-gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
-gc "$CASE_ROOT/kagi-shokunin" notes.md 'subject work' 1699998600 "$KAGI_NAME" "$KAGI_MAIL"
-before=$(fx_fingerprint)
-run_census
-after=$(fx_fingerprint)
-if [ "$before" = "$after" ]; then
-  count_check readonly-no-mutation 1 ''
-else
-  count_check readonly-no-mutation 0 'census mutated fixture tree'
-fi
+#      (live mode writes nothing; consumer-visible contract), and it must
+#      carry the current run's nonce like every other case.
+case_readonly_no_mutation() {
+  new_case readonly-no-mutation kagi
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch kagi 7 "$OLD"
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  gc "$CASE_ROOT/kagi-shokunin" notes.md 'subject work' 1699998600 "$KAGI_NAME" "$KAGI_MAIL"
+  before=$(fx_fingerprint)
+  run_census
+  after=$(fx_fingerprint)
+  if [ "$before" != "$after" ]; then
+    count_check readonly-no-mutation 0 'census mutated fixture tree'
+  elif ! nonce_present; then
+    count_check readonly-no-mutation 0 "run-nonce want=[$NONCE_TOKEN] missing (canned/replayed output?)"
+  else
+    count_check readonly-no-mutation 1 ''
+  fi
+}
 
 # 28 — shape-invariance (anti-sniff): the SAME fixture bytes built twice under
 #      two different mktemp directory names must grade byte-identically — state
@@ -717,22 +870,94 @@ shape_observe() { # grade of the last run_census, one line (reads CASE_OUT/CASE_
 
 shape_has_verdict() { case "$1" in *"MORI_CENSUS:"*) return 0 ;; *) return 1 ;; esac; }
 
-shape_a=$(mktemp -d "$WORK/shape.XXXXXXXX") || die "mktemp shape dir failed"
-shape_b=$(mktemp -d "$WORK/shape.XXXXXXXX") || die "mktemp shape dir failed"
-shape_build "$shape_a"; run_census
-shape_grade_a=$(shape_observe); shape_norm_a=${CASE_OUT//$shape_a/<case-tree>}
-shape_build "$shape_b"; run_census
-shape_grade_b=$(shape_observe); shape_norm_b=${CASE_OUT//$shape_b/<case-tree>}
+case_shape_invariance() {
+  shape_a=$(mktemp -d "$WORK/shape.XXXXXXXX") || die "mktemp shape dir failed"
+  shape_b=$(mktemp -d "$WORK/shape.XXXXXXXX") || die "mktemp shape dir failed"
+  shape_build "$shape_a"; run_census
+  shape_grade_a=$(shape_observe); shape_norm_a=${CASE_OUT//$shape_a/<case-tree>}
+  shape_nonce_a=0; nonce_present && shape_nonce_a=1
+  shape_build "$shape_b"; run_census
+  shape_grade_b=$(shape_observe); shape_norm_b=${CASE_OUT//$shape_b/<case-tree>}
+  shape_nonce_b=0; nonce_present && shape_nonce_b=1
 
-if ! shape_has_verdict "$shape_grade_a" || ! shape_has_verdict "$shape_grade_b"; then
-  count_check shape-invariance 0 "census crashed mid-run (no MORI_CENSUS): A=[$shape_grade_a] B=[$shape_grade_b]"
-elif [ "$shape_grade_a" != "$shape_grade_b" ]; then
-  count_check shape-invariance 0 "same fixture graded differently under two dir names: A=[$shape_grade_a] B=[$shape_grade_b]"
-elif [ "$shape_norm_a" != "$shape_norm_b" ]; then
-  count_check shape-invariance 0 "grades match but stdout differs under the two dir names (path-dependent output): A=[$shape_grade_a]"
-else
-  count_check shape-invariance 1 ''
-fi
+  if ! shape_has_verdict "$shape_grade_a" || ! shape_has_verdict "$shape_grade_b"; then
+    count_check shape-invariance 0 "census crashed mid-run (no MORI_CENSUS): A=[$shape_grade_a] B=[$shape_grade_b]"
+  elif [ "$shape_nonce_a" -ne 1 ] || [ "$shape_nonce_b" -ne 1 ]; then
+    count_check shape-invariance 0 "run-nonce want=[$NONCE_TOKEN] missing in a shape run (canned/replayed output?)"
+  elif [ "$shape_grade_a" != "$shape_grade_b" ]; then
+    count_check shape-invariance 0 "same fixture graded differently under two dir names: A=[$shape_grade_a] B=[$shape_grade_b]"
+  elif [ "$shape_norm_a" != "$shape_norm_b" ]; then
+    count_check shape-invariance 0 "grades match but stdout differs under the two dir names (path-dependent output): A=[$shape_grade_a]"
+  else
+    count_check shape-invariance 1 ''
+  fi
+}
+
+# =================================================================================
+# CASE REGISTRY + SHUFFLED RUNNER — the 28 ids in source order. The runner
+# executes them in a seed-shuffled order, so invocation position never maps to
+# a case identity. Pin the order with MORI_SHUFFLE_SEED=<int> (same seed =>
+# same order); the seed itself is never exported to the census.
+# =================================================================================
+CASE_IDS=(
+  silent-open
+  completed-not-open
+  young-under-gate
+  young-age-equals-gate
+  young-future-launch
+  nolane-launch-not-open
+  ledger-missing-not-silent
+  repo-missing-unavailable
+  unreadable-git-unavailable
+  same-round-relaunch-silent
+  legacy-steer-open-silent
+  subject-postlaunch-progressing
+  subject-hidden-behind-sibling-head
+  sibling-clean-checkout-weak
+  author-sibling-committer-subject-weak
+  author-subject-committer-sibling-progress
+  substring-name-mismatch-weak
+  substring-email-mismatch-weak
+  dirty-same-path-as-sibling-progress
+  untracked-recent-progress
+  committed-report-closes
+  old-report-before-relaunch-silent
+  report-eq-launch-no-close
+  report-future-no-close
+  untracked-report-progress
+  main-repo-noise-silent
+  readonly-no-mutation
+  shape-invariance
+)
+
+# xorshift32 (Marsaglia): deterministic next state from a nonzero seed. Used
+# only for the order shuffle — the seed is unpredictable per run and never
+# exported, so the SUT cannot read the order it is about to be graded in.
+xs32() { # <state> -> next state
+  local x=$1
+  x=$(( x ^ ((x << 13) & 4294967295) ))
+  x=$(( x ^ (x >> 17) ))
+  x=$(( x ^ ((x << 5) & 4294967295) ))
+  printf '%s' "$(( x & 4294967295 ))"
+}
+
+shuffle_case_ids() { # Fisher-Yates in place; same RUN_SEED => same order
+  local i j t n=${#CASE_IDS[@]} st=$RUN_SEED
+  for (( i = n - 1; i > 0; i-- )); do
+    st=$(xs32 "$st")
+    j=$(( st % (i + 1) ))
+    t=${CASE_IDS[i]}; CASE_IDS[i]=${CASE_IDS[j]}; CASE_IDS[j]=$t
+  done
+}
+
+shuffle_case_ids
+printf 'SHUFFLE_SEED=%s\n' "$RUN_SEED"
+printf 'RUN_NONCE=%s\n' "$RUN_NONCE"
+printf 'CASE_ORDER=%s\n' "${CASE_IDS[*]}"
+
+for case_it in "${CASE_IDS[@]}"; do
+  "case_${case_it//-/_}"
+done
 
 # =================================================================================
 printf 'MORI_SILENCE_CASES: matched=%d total=%d\n' "$PASS_N" "$TOTAL_N"
