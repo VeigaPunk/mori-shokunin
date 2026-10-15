@@ -107,3 +107,23 @@ labeled as such. Falsification results worth keeping:
 - One pair only. A sibling note proposing 90 and another proposing 80 must not be
   described as the default beside 85/95, or a later diff cannot say which proposal
   was tested.
+
+## Lane-silence grading is a PROVISIONAL approximation (rule divergence recorded)
+
+The protocol rule is `PROTOCOL.md:155-168`: grade **only a mission still open**, age
+it **from its launch line**, and call sibling-only activity **`progressing-weak`**,
+never `progressing`. The landed `probe_silence` uses a rolling 7200 s window with
+no launch line and no author check. Two measured divergences:
+
+- **aggregator** — the grader says `progressing` because `find` on the fleet root
+  sees a gitignored `game-dev-3d` `watch.log`; the window's commits are
+  `protocol-shokunin` and `shokunin-fleet`, not aggregator. The protocol label for
+  that evidence is **`progressing-weak`**.
+- **kasegi** — the labels agree (`progressing`, five `kasegi-shokunin` commits in
+  window) but **applicability does not**: round 17 wrapped at
+  `.ufo/watchdog.log:287`, and the protocol assigns a wrapped mission **no grade**.
+
+Unblock: read the launch line per lane from `.ufo/watchdog.log` and require an open
+mission before grading; add an author check so sibling-only activity lands
+`progressing-weak`. Until then, treat a `progressing` row as "recent filesystem
+activity in the window", not as a protocol verdict.

@@ -69,3 +69,12 @@ segfault probe filters `COREDUMP_SIGNAL=11` at the journal, which keeps it
 signal-specific — `terminated abnormally` lines are signal **5** (SIGTRAP) and share
 the coredump MESSAGE_ID without carrying the `dumped core` text, so neither a text
 grep nor a generic coredump count may stand in for it.
+
+**Round-1 correction 8 (appended 2026-10-15).** The lane-silence grader is recorded
+as a **provisional approximation** with its rule divergence named against
+`PROTOCOL.md:155-168`: it grades a rolling window instead of aging from the launch
+line, so it grades wrapped missions that the protocol leaves ungraded (measured:
+kasegi round 17 wrapped), and it labels any in-window file activity `progressing`
+where sibling-only activity must be `progressing-weak` (measured: aggregator, whose
+window evidence is a gitignored `game-dev-3d` log plus `protocol-shokunin` and
+`shokunin-fleet` commits). Unblock: launch-line aging plus an author check.
