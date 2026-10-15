@@ -1,50 +1,30 @@
-# MINT.md — mori-shokunin
+# MINT — mori-shokunin (2026-10-14)
 
-**Minted by:** <integrator session / operator directive, `YYYY-MM-DD`>, on <evidence basis —
-e.g. aggregator evidence: N independent demand instances of the same unplaceable defect
-class>.
+**Cause:** operator directive (the 12-hour shokunin fleet program, 2026-10-14),
+plus documented demand the roster could not absorb.
 
-**Domain claimed:** fleet & host observability (森) — fleet liveness, wave settlement, kill/OOM events, resource runway; detection and report only — <surfaces, drift-sensitive values, probe and reconciliation
-concerns; cite real paths / process names / config keys in backticks as they are verified>.
+**Demand instances (evidence):**
 
-## Reasoning and cause
+1. **The 2026-10-14 webbridge daemon OOM-death went undetected for hours.** The
+   operator reports the kimi-webbridge daemon died and nobody noticed until much
+   later. No lane watches daemon liveness. Evidence: operator mission text
+   (`.ufo/scopes/shokunin-12h-20261014/operator-demand.md`).
+2. **The parallel training fleet runs unsupervised waves.** Waves are dispatched
+   by the L1 and settle asynchronously; a wave that never settles is invisible
+   unless a human looks. Evidence: the fleet's own `.ufo/waves/*` directory with
+   `swarm-registry.json` + dispatch/results pairs and no settlement watcher.
+3. **tsukuroi owns OS state but nobody owns fleet health.** tsukuroi's province
+   is pacman/systemd/driver/boot; kama's is endpoint identity; kumitate's is
+   dispatch mechanism. None of them answers "is the fleet alive right now".
 
-<NUMBER> *independent* lanes discovered the same unplaceable defect class, on different
-surfaces, in different rounds:
+**Roster scan (rejected fit):** 17 lanes scanned
+(`.ufo/scopes/shokunin-12h-20261014/mint-roster-scan.json`, per-lane
+`PROVINCE.md` sha256 recorded). tsukuroi — OS planes, refuses fleet-process
+observability. kumitate — dispatch mechanism, complementary not overlapping.
+kama — endpoint identity only. kagi — credential custody only. No province
+absorbs standing fleet/host liveness observation.
 
-1. **<lane id> round <N>** (`.ufo/reports/round-<N>/mori.md`): <demand instance — what
-   was observed, with cited paths, values, and command outputs>.
-2. **<lane id> round <N>** (`.ufo/reports/round-<N>/mori.md` + <corroborating pointer,
-   e.g. an aggregator routing-table row>): <second demand instance — same defect class,
-   different surface>.
+**Domain boundary:** observe and report only. Refuses dispatch (kumitate) and
+OS-package state (tsukuroi). Never remediates.
 
-<Optional: any additional drift / absence evidence supporting the same defect class — e.g.
-a path or endpoint a sibling's config cited that no longer resolves.>
-
-## Roster scan (rejected fits)
-
-`MANIFEST.json` roster at mint time, and why none absorb this:
-
-| Lane | Province | Why the demand doesn't fit |
-|---|---|---|
-| <lane id> | <lane province> | <why this lane cannot absorb the demand> |
-| <lane id> | <lane province> | <why this lane cannot absorb the demand> |
-
-<Aggregator rulings: which rounds found the lane mint-eligible, that the surface has no
-owning province, and any standing mint-table row — each dated.>
-
-## Domain boundary (claimed)
-
-**Owns:** <the surfaces this lane owns — processes, their ports/paths, config values
-referenced by consumers, identity-vs-reality reconciliation, probe conventions, drift
-detection, the cross-lane registry of which consumer config points at which surface>.
-
-**Refuses:** <quality/eval concern> (<sibling lane id>), <credential material / auth flows>
-(<sibling lane id>), <dispatch / route mechanism> (<sibling lane id>), <remote surfaces>
-(<sibling lane id>). Boundary rule: mori answers "<the identity/liveness question this
-lane answers>" — never "<the quality question>" or "<the request-safety question>".
-
-## Probation
-
-Per PROTOCOL.md §Lifecycle "Sibling mint": this lane self-iterates ≥3 verified rounds
-building `corpus/` + `PROVINCE.md` before the operator adds a `MANIFEST.json` roster row.
+**Probation:** >=3 verified rounds before a roster row. Roster row withheld.

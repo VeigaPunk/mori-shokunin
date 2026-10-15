@@ -1,18 +1,7 @@
-# mori-shokunin — Quality bar
+# Admission bar (probation draft)
 
-What good looks like in fleet & host observability (森) — fleet liveness, wave settlement, kill/OOM events, resource runway; detection and report only (LEARNING.md). Thin at mint and grown only from lessons:
-every criterion cites the lesson that produced it. A criterion is replaced by a new row
-naming the row it supersedes, never rewritten.
-
-## Admission criteria
-
-| # | criterion | why (lesson) | supersedes |
-|---|---|---|---|
-| 1 | Cites a resolvable source: repo path, command output, or external document | CORPUS.md evidence standard | — |
-| 2 | Falsifiable, or explicitly marked opinion | CORPUS.md | — |
-| 3 | Domain-specific — no generic agent advice | PROTOCOL.md invariants | — |
-
-## Signals of weak material
-
-| # | signal | why (lesson) |
-|---|---|---|
+1. Every claim falsifiable or marked opinion.
+2. Every claim carries a source: a measured anchor (path:line, command, evidence id).
+3. Observation, inference and unknown stay separate.
+4. Errata are append-only blocks.
+5. A rejection is kept, not silently dropped.

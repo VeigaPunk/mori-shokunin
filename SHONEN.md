@@ -1,9 +1,3 @@
-<!-- CANONICAL TEMPLATE: the block below must stay byte-identical to the canonical
-     SHONEN.md seed in PROTOCOL.md (upstream main repo, master HEAD, block headed
-     "The canonical `SHONEN.md` seed (verbatim -- mori is the only substitution)",
-     lines 386-393), modulo mori = the minted repo directory name. Regenerate from
-     PROTOCOL.md on gate changes; never hand-edit. -->
-
 # mori — Promotion checklist
 
 Promotion to shokunin requires all of:

@@ -1,19 +1,18 @@
 # mori-shokunin — Province
 
-**Domain:** fleet & host observability (森) — fleet liveness, wave settlement, kill/OOM events, resource runway; detection and report only — <surface summary>, <drift-prone values>, <probe and reconciliation
-conventions>. The domain is a frontier, not a fence: it grows by evidence (LEARNING.md).
+**Domain:** fleet & host observability (森) — whether the fleet, its waves and
+its host are alive and progressing.
 
-## Core
+**Owns (read-only probes):** shokunin watchdog liveness (pid, start time, log
+freshness, lane counters); `.ufo/waves/*` settlement state (registry + results
+pair); kill/OOM event classes from `journalctl --user` and cgroup
+`memory.events`; resource runway (disk on the fleet and scratch roots, memory
+pressure); lane silence grading (silent / progressing / progressing-weak).
 
-<the surfaces this lane owns now>, their <ports / paths / config keys>, <liveness and
-readiness probes>, <the cross-lane registry this lane maintains>.
+**Refuses:** dispatch and orchestration mechanism (→ kumitate); OS package,
+systemd unit, driver/firmware and boot state (→ tsukuroi) — mori reads journal
+and cgroup events as fleet evidence and reports them, never owning OS state;
+endpoint and model-serving health (→ kama); credential material (→ kagi).
+**Detection and report only — never remediation.**
 
-## Frontier
-
-<areas being explored and not yet held — each moves to Core by a LOG.md entry citing the
-corpus entries that earned it>.
-
-## Adjacent
-
-<sibling-owned ground (sibling lane id)> — report cross-domain evidence back to the
-orchestrator rather than absorbing it.
+**Out of province → report, never absorb.**
