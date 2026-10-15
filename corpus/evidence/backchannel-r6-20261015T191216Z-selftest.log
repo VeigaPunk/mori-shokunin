@@ -1,0 +1,93 @@
+RECEIPT   backchannel-r6 20261015T191216Z selftest (census frozen af2d4e79)
+SEAT      receipts-writer (round-6 flash wave)
+LANE      mori-shokunin  LANE_HEAD 848b3a6b1a8d68c8c148d18299e5def473ebecbd  FLEET_HEAD 90ce10bf2098b082755c484b63c05ac299857d22
+PINNED_SHAS_AT_HEADER  oracle=3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9 census=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+NOTE  census-only hermetic selftest; census must be byte-frozen this round.
+NOTE  the two setup-contract legs pin the documented exit-2 paths.
+
+==== LEG selftest ====
+CAPTURED_UTC_START 2026-10-15T19:12:25Z
+CAPTURED_UTC_END   2026-10-15T19:12:28Z
+DURATION_S 3
+COMMAND   bash tools/mori-census.sh --selftest   # cwd=mori-shokunin lane root
+ORACLE_SHA256_BEFORE 3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9
+ORACLE_SHA256_AFTER  3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9
+CENSUS_SHA256_BEFORE af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+CENSUS_SHA256_AFTER  af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+EXIT_CODE 0
+OUTPUT_SHA256 6012c3519c9ca20fba03cc805428afc67393a442152c9f0fffc3490c5a781c81
+RAW_COPY /tmp/mori-receipts-r6/after/selftest.out
+---- derived ----
+verdict=MORI_CENSUS_SELFTEST: PASS (30 cases, 30 passed, 0 failed)
+---- end derived ----
+---- output (verbatim) ----
+PASS clean: all quiet (exit 0 CLEAN)
+PASS drift: WATCHDOG_ABSENT (exit 1 DRIFT)
+PASS drift: WATCHDOG_STALE (exit 1 DRIFT)
+PASS watchdog: unreadable state dir -> unavailable-disclosed, no crash (exit 0 CLEAN)
+PASS watchdog: missing state dir -> provable 0, no crash (exit 0 CLEAN)
+PASS watchdog: empty state dir -> provable 0, no crash (exit 0 CLEAN)
+PASS drift: WAVE_UNSETTLED_AGE (exit 1 DRIFT)
+PASS clean: unsettled young wave does not fire (exit 0 CLEAN)
+PASS drift: OOM_KILL_JOURNAL (exit 1 DRIFT)
+PASS drift: CGROUP_OOM_KILL (exit 1 DRIFT)
+PASS drift: DISK_CRITICAL (exit 1 DRIFT)
+PASS clean: disk under warn (exit 0 CLEAN)
+PASS drift: LANE_SILENT (exit 1 DRIFT)
+PASS silence: subject commit post-launch -> progressing (exit 0 CLEAN)
+PASS silence: pre-launch commit only -> silent (exit 1 DRIFT)
+PASS silence: commit at ct==launch is not post-launch -> silent (exit 1 DRIFT)
+PASS silence: other-authored commit only -> progressing-weak (exit 0 CLEAN)
+PASS silence: strict age gate (age == gate) -> young (exit 0 CLEAN)
+PASS silence: synthetic ts= ledger anchor (exit 0 CLEAN)
+PASS silence: unparseable launch ts -> unavailable (exit 0 CLEAN)
+PASS silence: committed report in window -> not-open (exit 0 CLEAN)
+PASS silence: close r7 then close r5 -> r7 anchor stays closed (exit 0 CLEAN)
+PASS silence: close for another round does not close the anchor (exit 1 DRIFT)
+PASS silence: git rc!=0 -> unavailable, never silent (exit 0 CLEAN)
+PASS silence: unreadable subtree -> unavailable verdict, no crash (exit 0 CLEAN)
+PASS waves: unreadable wave age -> no crash, no false finding (exit 0 CLEAN)
+PASS clean: CGROUP_UNAVAILABLE is not DRIFT (exit 0 CLEAN)
+PASS clean: empty journal (exit 0 CLEAN)
+PASS cli: unknown arg exit 2 (exit 2)
+PASS cli: --help exit 0 (exit 0)
+MORI_CENSUS_SELFTEST: PASS (30 cases, 30 passed, 0 failed)
+---- end output ----
+
+==== LEG setup-contract-census-missing ====
+CAPTURED_UTC_START 2026-10-15T19:12:28Z
+CAPTURED_UTC_END   2026-10-15T19:12:28Z
+DURATION_S 0
+COMMAND   bash tools/mori-silence-cases.sh /nonexistent-census-path   # cwd=mori-shokunin lane root
+ORACLE_SHA256_BEFORE 3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9
+ORACLE_SHA256_AFTER  3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9
+CENSUS_SHA256_BEFORE af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+CENSUS_SHA256_AFTER  af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+EXIT_CODE 2
+OUTPUT_SHA256 22a39d3c10f1b6e87a5ef9f9e4c41d8dc167d8f6147a51fbdb030d411d004ad1
+RAW_COPY /tmp/mori-receipts-r6/after/setup-contract-census-missing.out
+---- derived ----
+expected exit 2 (setup failure distinct from case verdicts)
+---- end derived ----
+---- output (verbatim) ----
+mori-silence-cases: census not readable: /nonexistent-census-path
+---- end output ----
+
+==== LEG setup-contract-bad-seed ====
+CAPTURED_UTC_START 2026-10-15T19:12:28Z
+CAPTURED_UTC_END   2026-10-15T19:12:28Z
+DURATION_S 0
+COMMAND   env MORI_SHUFFLE_SEED=abc bash tools/mori-silence-cases.sh   # cwd=mori-shokunin lane root
+ORACLE_SHA256_BEFORE 3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9
+ORACLE_SHA256_AFTER  3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9
+CENSUS_SHA256_BEFORE af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+CENSUS_SHA256_AFTER  af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+EXIT_CODE 2
+OUTPUT_SHA256 0f4a23c92bea17b9a0cac5200ba564c7795319a76ad690138256cc5954d59394
+RAW_COPY /tmp/mori-receipts-r6/after/setup-contract-bad-seed.out
+---- derived ----
+r5 contract: non-integer pin aborts exit 2
+---- end derived ----
+---- output (verbatim) ----
+mori-silence-cases: MORI_SHUFFLE_SEED must be a non-negative integer
+---- end output ----

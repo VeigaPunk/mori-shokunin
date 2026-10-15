@@ -323,3 +323,132 @@ of the named round-5 claim, not an impossibility proof: a forger keyed on fixtur
 (memorized content→expectation table) remains out of scope, as do channels outside the
 census process env/paths probed here (seed-guessing is bounded by the probe showing no
 census-side seed or order channel, not by a cryptographic claim).
+
+## Round-6 receipts (r1 stdout-backchannel close + r2 content-keyed forgery close) — produced by the receipts-writer seat
+
+Round-6 goal wave, seat `receipts-writer`. Detection and report only — nothing was
+remediated, killed, restarted or reconfigured; no host or fleet state was written.
+This set tests the round-6 claim on two residuals reproduced at the round-5 oracle:
+(R1) the run header must print only **after** the case loop, so no living census
+invocation can read seed/nonce/order from the oracle's stdout or environ; (R2)
+fixture content must carry per-run freshness, so memorized content→row tables are
+stale at the next run.
+
+Two revisions are pinned by this set (and only by these SHAs):
+
+- `tools/mori-silence-cases.sh` sha256
+  `3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9` (r6 oracle,
+  uncommitted working-tree edit at capture time; the file held this SHA for 10
+  consecutive 30 s checks 19:06:33–19:11:43Z before capture and did not change
+  during or after any leg). Mechanism: header printed after the case loop; pins
+  removed by a one-time self re-exec (`tools/mori-silence-cases.sh:196-221`);
+  per-run nonce + content salt woven into fixture bodies and commit messages.
+- `tools/mori-census.sh` sha256 `af2d4e79…` — **FROZEN this round**; identical
+  before/after every leg of every receipt (`CENSUS_SHA256_BEFORE/_AFTER` pairs).
+
+The **before-legs** embedded in the two attack receipts are static LEG blocks
+captured by this seat in the same dispatch at the r5 oracle `7143ccc2…`; the
+after-legs are at the r6 bytes above. Every leg records its own
+`ORACLE_SHA256_BEFORE/_AFTER` and raw-output SHA-256; all 26 after-leg pairs are
+identical (`3307761a…`). An earlier r6 intermediate revision (`b2ebe5e7…`) was
+captured while the impl was still iterating and then superseded by the re-exec
+revision above; those superseded receipts were removed from this directory in
+favor of the settled-revision set below.
+
+| File | Captured UTC | Exit | Verdict / tally |
+|---|---|---|---|
+| `backchannel-r6-20261015T191216Z-oracle-1.log` | 19:12:16–19:12:20Z | 0 | `matched=28 total=28`; seed `1387974308`, nonce `1744128128`; header at output lines **29-31**, last case line 28; per-case tuple sha `a70af583bb01b8362a49f07aa8f2b66814fac22b119a22f9b273c5024573c752`; `REGISTRY_BLOCK_IDENTICAL_TO_R5_HEAD` (diff empty); full uncommitted r5→r6 diff embedded (325 lines) |
+| `…-oracle-2.log` | 19:12:20Z | 0 | `matched=28 total=28`; fresh seed `2126228259`; different `CASE_ORDER` (28 ids); same tuple sha; `per-case_grade_tuples=BYTE-IDENTICAL_ACROSS_RUNS` |
+| `…-oracle-3.log` | 19:12:21–19:12:23Z | 0 | seed pinned to oracle-1's: `CASE_ORDER` **identical** to oracle-1; `oracle-3b` (both pins) output **byte-identical** to oracle-1's |
+| `…-selftest.log` | 19:12:25–19:12:28Z | 0 / 2 / 2 | `MORI_CENSUS_SELFTEST: PASS (30 cases, 30 passed, 0 failed)`; setup-contract: missing census → exit 2, `MORI_SHUFFLE_SEED=abc` → exit 2 |
+| `…-live.log` | 19:12:28–19:12:50Z (+ reverify) | 1 | two spots `MORI_CENSUS: DRIFT (findings=15 drift=14 unavailable=1 surfaces=7)`; finding-id sets identical; the 1 unavailable is tmux, never DRIFT |
+| `…-attack-r1.log` | r5 legs 18:44–18:56Z / r6 legs 19:12:57–19:13:07Z | before 0/1, after 1 | R1 class 28/28 exit 0 → **0/28 exit 1** (redirect and pipe); mid-run probe 29/29 header-readable → **0/29**, incl. 0/29 seed-in-environ on the pinned run |
+| `…-attack-r2.log` | r5 legs 18:44–18:51Z / r6 legs 19:13:08–19:13:21Z | before 0, after 1 | R2 class 28/28 exit 0 → **0/28 exit 1** (old table, fresh-learn replay, and the nonce-normalized variant); learn-A vs learn-B fingerprint overlap **0** |
+
+**R1 — stdout-backchannel (receipt `…-attack-r1.log`).** Attacker: zero fixture
+reads, zero grading logic; reads the run's `CASE_ORDER` (else `SHUFFLE_SEED`) from
+the oracle's own captured stdout via `/proc` ancestry mid-run, replays a canned
+position table and echoes the env nonce. Before (r5 `7143ccc2…`): regular-file
+capture `matched=28 total=28` exit 0; pipe capture `0/28` exit 1 (channel
+control); pinned-seed run `28/28` exit 0 (environ sub-channel); per-invocation
+probe `29/29` invocations read the header from the oracle's captured fd/1, and on
+the pinned run `29/29` read `MORI_SHUFFLE_SEED` from the oracle's environ. After
+(r6 `3307761a…`): redirect `matched=0 total=28` exit 1; pipe `0/28` exit 1;
+pinned-environ `0/28` exit 1; probe `0/29` header hits and `0/29` seed-in-environ
+hits (unpinned **and** pinned runs) while the env nonce remains visible by design
+(`29/29`). Header position is measured in the run output itself: the
+`SHUFFLE_SEED=`/`RUN_NONCE=`/`CASE_ORDER=` lines sit at output lines 29-31 with
+the last case line at 28 in every r6 run; the probe logs the examined ancestor
+chain (`chain=<pid>:bash,…,<pid>:kimi`) per invocation. The attacker's fail text
+is `census emitted no MORI_CENSUS verdict (rc=0)` — the mid-run read finds no
+header, so the forged row is never emitted.
+
+**R2 — content-keyed forgery (receipt `…-attack-r2.log`).** Witness class: learn
+(F = sha256 over every file path+size+content under the case tree, excluding
+`run-nonce`, `nonce-*`, `.git/index`) → (state, finding, rc) in one observed run;
+replay the table in a **separate** run with the env nonce echoed; zero grading
+logic. Before (r5): learn `28/28`; replay `28/28` exit 0; the nonce-normalized
+variant (strips the current nonce from paths and contents before fingerprinting)
+also learn/replay `28/28` exit 0 (addendum 2 in the receipt). After (r6): the
+r5-learned table `0/28` exit 1; a **fresh** table learned at r6 (learn-A, 29
+rows, 0 conflicts) replayed in a later run `0/28` exit 1; the normalized variant
+`0/28` exit 1; learn-A vs learn-B (two separate runs) share **zero** fingerprints
+(`F_set_overlap_learnA_vs_learnB=0`). Mechanism evidence: two content probes (29
+invocations each) show the run nonce woven into committed file bodies
+(`./root/kagi-shokunin/LOG.md`, `notes.md`, `./root/.ufo/reports/round-2/aggregator.md`,
+`README.md`, …) and per-run F multisets that differ between two runs
+(`80058d3e…` vs `7dff44fb…`).
+
+Receipt-file SHA-256 at build time (final bytes, after embedded sources/addenda):
+
+- `f9947ef1dd521ae7fb71ae10e18b5149674397f5b8093bdc6c0759677594d05d` (attack-r1)
+- `5c520f2591bab2e7169c1ccda0b2e6761aace5622a3b0ced911a44c91302a9d7` (attack-r2)
+- `9da735b2ea8dc34b8da974b5adaf79bf1b7a79bc16b8f99a918c3437d28af4a2` (live)
+- `d0ce730a451b54e8af9ca97e8ad611e8d0cdea69c150bb8f63de3b017a5150bc` (oracle-1)
+- `dcb5dff68c9f2cedfe905e813e7cf9eabb5825a392d0a4b457bb27a205838a4e` (oracle-2)
+- `43ac38aca6b0a3cfa878772f9bac147a5eb800197088ebb5a3fa9e1f62bdfaf5` (oracle-3)
+- `e547fdce92c0b2080c4e2f58eb186e6776e4ddcd8fc3793a165eb3320729174f` (selftest)
+
+**What moved vs the round-5 record.** The two residuals named in `SCORECARD.md`
+(R1 stdout-backchannel, R2 content-keyed forgery) are closed for the enumerated
+witness classes at the pinned revision: every attack leg that reached `28/28 exit
+0` at r5 reaches `0/28 exit 1` at r6, while the honest census stays `28/28` exit 0
+across shuffled runs with byte-identical grade tuples and both pins reproduce
+oracle-1 byte-for-byte. Registry block is byte-identical to r5 HEAD.
+
+Re-run recipes (cwd = lane root; this receipt set applies only at the two SHAs above):
+
+```sh
+cd /home/vgpnk/Projects/shokunin/mori-shokunin
+sha256sum tools/mori-silence-cases.sh  # must equal 3307761a… for this whole set
+sha256sum tools/mori-census.sh         # must equal af2d4e79…
+bash tools/mori-silence-cases.sh       # expect exit 0, matched=28 total=28, header AFTER the case lines
+env MORI_SHUFFLE_SEED=<seed> bash tools/mori-silence-cases.sh   # same seed => same CASE_ORDER
+bash tools/mori-census.sh --selftest   # hermetic; expect exit 0, PASS (30 cases, 30 passed)
+bash tools/mori-census.sh              # live; expect a MORI_CENSUS verdict + per-lane rows
+# attacks (sources embedded verbatim in each attack receipt; run from /tmp only):
+#   bash tools/mori-silence-cases.sh /tmp/<attacker>.sh   ; the r5 before-side needs an
+#   r5 oracle snapshot (git show HEAD:tools/mori-silence-cases.sh must hash 7143ccc2…)
+```
+
+**Re-run preconditions (recorded, not invented):** the live receipt describes the
+host at its capture time; finding counts are mutable observations — a re-run is
+"same receipt" only in formula (exit code, finding-id set, per-lane state
+contract), never in byte equality. The hermetic receipts reproduce only at the
+pinned r6 oracle + frozen census SHAs; a different SHA invalidates them. The
+pinned-seed reproduction depends on the documented `MORI_SHUFFLE_SEED` interface;
+an unpinned run necessarily produces a fresh seed and a different order. Attack
+tallies are properties of the attacker scripts embedded in the receipts, not of
+the census.
+
+**Not claimed here:** no remediation, kill, restart or host/unit change was
+performed or is implied; no causal claim about fleet liveness. The attack-side is
+an attack-class measurement of the round-6 claim, not an impossibility proof:
+only the enumerated witness classes were run (no-read replay, position-keyed
+table, env-token echo, content memorization, nonce-normalized memorization, and
+`/proc` stdout/environ walks); other channels (e.g. `ptrace`, non-Linux `/proc`
+semantics) are outside this measurement. The environ sub-channel measurement
+covers the re-exec design at `3307761a`; the earlier intermediate revision's
+runtime-`unset` design and the exec-optimization artifact behind that earlier
+reading are recorded in the oracle's own comments
+(`tools/mori-silence-cases.sh:196-206`), not re-measured here.

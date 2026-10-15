@@ -24,13 +24,16 @@
 #   Anti-sniff: every case tree is a mktemp dir carrying NO case id in any
 #   path handed to the census (MORI_SHOKUNIN_ROOT / MORI_UFO_DIR / MORI_STUB_DIR
 #   / ...), and no fixture-marker variable is exported; case `shape-invariance`
-#   proves a census cannot branch on the fixture directory name.
+#   proves a census cannot branch on the fixture directory name. Every fixture
+#   also carries per-run fresh content (nonce token + run salt), so a memorized
+#   content table from a previous run has no key to match.
 #
-# Output (run header first, then one line per case in SHUFFLED order):
+# Output (one line per case in SHUFFLED order, then the run header, then the
+# tally — r6: the header is printed only AFTER the last case has run):
+#   PASS <id> ... | FAIL <id> ... (one line per case; no run secrets)
 #   SHUFFLE_SEED=<seed>           seeds the case-order shuffle
 #   RUN_NONCE=<nonce>             per-run fixture nonce every case must echo
 #   CASE_ORDER=<id> <id> ...      the order this run executed
-#   PASS <id> ... | FAIL <id> ... (one line per case)
 #   MORI_SILENCE_CASES: matched=N total=M
 #   exit 0 iff matched == total.
 #
@@ -50,6 +53,34 @@
 #     Every case requires the CURRENT run's token in its census output: a
 #     canned answer is missing it, a replayed answer carries a stale one — both
 #     FAIL the case.
+#
+# Stdout/environ backchannel (r6, closes r5 residual R1). The r5 revision logged
+# the run header BEFORE the case loop, so a same-user census could read
+# SHUFFLE_SEED/RUN_NONCE/CASE_ORDER from this process while it ran: through
+# /proc/<oracle>/fd/1 when stdout is a captured regular file, and through
+# /proc/<oracle>/environ when the operator pinned MORI_SHUFFLE_SEED (the pin
+# arrives through the environment). Both channels are closed here:
+#   * the header is printed only AFTER every case has run — during the loop only
+#     PASS/FAIL lines appear, and those carry no run secret (failure texts
+#     redact the nonce token; case ids were never secret);
+#   * the pinned values are removed from the process tree before any census can
+#     run: when a pin is present, the oracle re-execs itself once with the pins
+#     dropped from its environment and passes them through a pipe fd (drained at
+#     startup; no env, no argv, no file). /proc/<oracle>/environ shows the
+#     exec-time environment, so the re-exec — not a runtime `unset` — is what
+#     scrubs the channel (measured 2026-10-15; see the re-exec block below).
+#
+# Content-keyed memorization (r6, closes r5 residual R2). A census that learned
+# a (fixture bytes -> output row) table from one observed run could replay it
+# because every fixture was byte-stable across runs apart from the nonce
+# artifacts it could exclude by name. Now every fixture's content is per-run:
+#   * the live nonce token and a per-run RUN_SALT are woven into every committed
+#     file body and every commit message, so the .git objects change too;
+#   * case_skeleton adds per-run salt/blob files (random names and content)
+#     under CASE_DIR, outside every graded tree — a memorized fingerprint cannot
+#     match, and file-count variation is not pattern-normalizable.
+# Tables learned from a previous run are therefore stale; the round-6 note lists
+# the discriminating cases and the residual normalizing-attacker class.
 #
 # Grading against old (r1 rolling-window) and new (r2 launch-aware) census:
 #   If the census emits per-lane rows `SURFACE lane.<id>: <state> (...)` the
@@ -98,11 +129,13 @@
 #   gate                   grade only when NOW - launch_epoch > LANE_SILENCE_S
 #                          (strictly greater; age exactly gate => young)
 #
-# Determinism: fixed epoch NOW=1700000000 (unchanged in r5 — the per-run nonce
-# is a fixture/target token, not a clock shift), LANE_SILENCE_S=900, TZ=UTC,
-# LC_ALL=C, env -i census runs, single lane in MORI_ROSTER_LANES per case.
-# Case ORDER and the fixture nonce are the only per-run variation; pin both
-# (MORI_SHUFFLE_SEED / MORI_RUN_NONCE) for a byte-identical rerun.
+# Determinism: fixed epoch NOW=1700000000 (unchanged since r5 — the per-run
+# nonce is a fixture/target token, not a clock shift), LANE_SILENCE_S=900,
+# TZ=UTC, LC_ALL=C, env -i census runs, single lane in MORI_ROSTER_LANES per
+# case. Per-run variation: the case ORDER, the fixture nonce/nonce token, and
+# the content salt (never pinnable, never printed, never grade-bearing). Pin
+# seed+nonce (MORI_SHUFFLE_SEED / MORI_RUN_NONCE) for the same order and nonce;
+# pinned stdout stays byte-identical because no case's grade depends on the salt.
 # Writes happen only under the fresh mktemp work dir; census must not mutate
 # any fixture (guarded by case readonly-no-mutation).
 set -euo pipefail
@@ -121,14 +154,18 @@ command -v git >/dev/null 2>&1 || { printf 'mori-silence-cases: real git require
 # setup failures must be loud and distinct from case verdicts (documented exit 2)
 die() { printf 'mori-silence-cases: %s\n' "$*" >&2; exit 2; }
 
-# ---- run entropy: case-order seed + fixture nonce ----------------------------
-# Two independent unpredictable values, both logged in the run header (r5):
+# ---- run entropy: case-order seed + fixture nonce + content salt --------------
+# Three independent unpredictable values. The first two are logged in the run
+# header (r5); the salt is deliberately never printed:
 #   RUN_SEED  seeds the case-order shuffle (see CASE REGISTRY at the bottom).
 #             The shuffle is a Fisher-Yates over the 28 ids driven by a local
 #             xorshift32, so "same seed => same order" is reproducible in this
 #             file, not via bash's RANDOM. Pin it: MORI_SHUFFLE_SEED=<int>.
 #             Never exported to the census: the SUT must not be able to read
-#             the order.
+#             the order. r6: a pin present in this process's environment is
+#             moved out of /proc/<pid>/environ by a one-time self re-exec at
+#             startup (see the re-exec block below; a runtime `unset` cannot
+#             change the exec-time environ region).
 #   RUN_NONCE is the per-run fixture nonce. It is NOT derived from the seed, so
 #             guessing the order seed does not reveal it, and it is regenerated
 #             independently each run, so a replayed previous run carries a
@@ -139,6 +176,8 @@ die() { printf 'mori-silence-cases: %s\n' "$*" >&2; exit 2; }
 #             `targets=<case-dir>/nonce-<N>`. assert_case requires that token in
 #             every case's census output. Pin it: MORI_RUN_NONCE=<int>
 #             (operator reproducibility only; a normal run never sets it).
+#             r6: like the seed, removed from this process's environment by the
+#             one-time self re-exec when it is pinned.
 rand32() {
   local v=''
   if [ -r /dev/urandom ]; then
@@ -153,18 +192,52 @@ rand32() {
 }
 
 RUN_SEED=${MORI_SHUFFLE_SEED:-}
+RUN_NONCE=${MORI_RUN_NONCE:-}
+# r6 R1 (environ channel): the reproducibility pins arrive through this
+# process's environment. A runtime `unset` does NOT scrub /proc/<pid>/environ —
+# measured 2026-10-15: /proc/pid/environ shows the exec-time environment region,
+# which a running bash never rewrites (an earlier "unset scrubs it" reading was
+# an artifact of bash exec-optimizing its last command into sleep and replacing
+# the process image). So when a pin is present this process re-execs itself ONCE
+# with the pins removed from the exported environment; the values travel through
+# a pipe fd — no env, no argv, no file — that is drained at startup, before the
+# first fixture exists. The pre-exec image carries the pins for the few
+# milliseconds before the exec; no census invocation exists yet (the first one
+# runs only after fixture setup), so no living census can read them.
+if [ "${MORI_CASES_SCRUBBED:-}" != 1 ]; then
+  case "${MORI_SHUFFLE_SEED:-}${MORI_RUN_NONCE:-}" in
+    '') ;;  # nothing pinned: this process's environ carries no run secret
+    *)
+      exec 3< <(printf '%s|%s\n' "${MORI_SHUFFLE_SEED:-}" "${MORI_RUN_NONCE:-}")
+      export MORI_CASES_SCRUBBED=1
+      unset MORI_SHUFFLE_SEED MORI_RUN_NONCE
+      exec bash "$SELF" "$CENSUS"
+      ;;
+  esac
+fi
+if [ "${MORI_CASES_SCRUBBED:-}" = 1 ]; then
+  IFS='|' read -r RUN_SEED RUN_NONCE <&3 || die "pinned-entropy channel read failed"
+  exec 3<&-
+fi
 case "$RUN_SEED" in
   '') RUN_SEED=$(rand32) ;;
   *[!0-9]*) die "MORI_SHUFFLE_SEED must be a non-negative integer" ;;
 esac
 [ "$RUN_SEED" -ne 0 ] || RUN_SEED=1
-RUN_NONCE=${MORI_RUN_NONCE:-}
 case "$RUN_NONCE" in
   '') RUN_NONCE=$(rand32) ;;
   *[!0-9]*) die "MORI_RUN_NONCE must be a non-negative integer" ;;
 esac
 [ "$RUN_NONCE" -ne 0 ] || RUN_NONCE=1
 NONCE_TOKEN="nonce-$RUN_NONCE"
+
+# r6 R2: per-run content salt — a third, independent unpredictable value woven
+# into fixture bodies and commit messages (and named in per-run blob files). It
+# never affects any grade and never appears on stdout; its job is to make every
+# fixture's byte content unique per run, so a content memorizer that learned
+# (bytes -> row) from a previous run has no key to match today.
+RUN_SALT_HEX=$(printf '%08x%08x' "$(rand32)" "$(rand32)")
+RUN_SALT="salt-$RUN_SALT_HEX"
 
 # ---- pinned time base --------------------------------------------------------
 T0=1700000000            # NOW for every case
@@ -225,6 +298,22 @@ case_skeleton() {
   # path in its disk row, which is how assert_case sees the current nonce.
   printf '%s\n' "$RUN_NONCE" > "$CASE_DIR/run-nonce"
   mkdir -p "$CASE_DIR/$NONCE_TOKEN"
+
+  # r6 R2: per-run content variation under CASE_DIR — one salt file plus 0-2
+  # random blob files, random names and random content, old mtimes so no
+  # recent-file window sees them. No census surface walks CASE_DIR itself
+  # (MORI_SHOKUNIN_ROOT / MORI_UFO_DIR / STATE_DIR / WAVES_DIR all live under
+  # it), but every content fingerprint does: an attacker that memorized
+  # (bytes -> row) from a previous run cannot match today's tree, and varying
+  # the file COUNT is not pattern-normalizable by excluding known names.
+  printf '%s\n' "$RUN_SALT_HEX" > "$CASE_DIR/$RUN_SALT"
+  touch -d "@$PRE" "$CASE_DIR/$RUN_SALT"
+  local nb i
+  nb=$(( 0x${RUN_SALT_HEX:0:4} % 3 ))
+  for (( i = 0; i < nb; i++ )); do
+    printf 'blob %s %s\n' "$RUN_SALT_HEX" "$(rand32)" > "$CASE_DIR/blob-$i-$RUN_SALT_HEX"
+    touch -d "@$PRE" "$CASE_DIR/blob-$i-$RUN_SALT_HEX"
+  done
 
   # quiet watchdog: process stub + fresh log (content uses the real tick grammar)
   printf '%s tick=1\n' "$(iso "$T0")" > "$CASE_UFO/watchdog.log"
@@ -319,6 +408,15 @@ git_init() { # <repo-dir>
 gc() {
   local repo=$1 rel=$2 content=$3 ct=$4 an=$5 ae=$6
   local cn=${7:-$an} ce=${8:-$ae} mt=${9:-$ct} msg=${10:-update $rel}
+  # r6 R2: every committed body carries the live nonce token and the run salt,
+  # and every commit message carries the salt — so even a constant-blob commit
+  # lands in a per-run git object. Exceptions are the two files whose bytes the
+  # census itself parses: .gitignore patterns and *.round state numbers.
+  case "$rel" in
+    .gitignore|*/.gitignore|*.round) ;;
+    *) content="$content [$NONCE_TOKEN $RUN_SALT_HEX]" ;;
+  esac
+  msg="$msg [$RUN_SALT_HEX]"
   mkdir -p "$repo/$(dirname -- "$rel")"
   printf '%s\n' "$content" > "$repo/$rel"
   touch -d "@$mt" "$repo/$rel"
@@ -440,6 +538,12 @@ want_match() {
   return 1
 }
 
+# redact — strip the current run's nonce token from a census fragment before it
+# is echoed into a per-case line. r6 R1: per-case stdout is written while later
+# census invocations can still read this process's stdout via /proc, so no
+# per-case line may carry a run secret (case ids are not secret).
+redact() { printf '%s' "${1//$NONCE_TOKEN/nonce-<redacted>}"; }
+
 # assert_case <id> <want-state[|set]> <want-finding 0|1|auto> <want-rc 0|1|auto>
 # auto = consistency with observed state (finding/rc present iff silent).
 # Every case additionally requires the per-run nonce token in the output (r5).
@@ -459,7 +563,7 @@ assert_case() {
 
   if [ "$CASE_RC" -gt 1 ]; then
     printf 'FAIL %s: census setup rc=%s; %s\n' "$id" "$CASE_RC" \
-      "$(printf '%s' "$CASE_OUT" | tail -n1 | tr '\n' '|')"
+      "$(redact "$(printf '%s' "$CASE_OUT" | tail -n1 | tr '\n' '|')")"
     FAILED_IDS+=("$id"); return 0
   fi
   # No verdict line = the census never reached its summary. Measured: an
@@ -469,7 +573,7 @@ assert_case() {
   # such a run; report the crash, not a phantom grade.
   if [ -z "$verdict" ]; then
     printf 'FAIL %s: census emitted no MORI_CENSUS verdict (rc=%s) — crashed mid-run; tail=%s\n' \
-      "$id" "$CASE_RC" "$(printf '%s' "$CASE_OUT" | tail -n1 | tr '\n' '|')"
+      "$id" "$CASE_RC" "$(redact "$(printf '%s' "$CASE_OUT" | tail -n1 | tr '\n' '|')")"
     FAILED_IDS+=("$id"); return 0
   fi
 
@@ -488,9 +592,11 @@ assert_case() {
     ok=0; why="$why rc want=$wrr got=$CASE_RC verdict='$verdict'"
   fi
   # r5 run-order close: the output must carry the CURRENT run's nonce token.
+  # r6: the failure text names no token — per-case lines must not put a run
+  # secret on stdout while later invocations can still read it.
   local nonce_ok=0; nonce_present && nonce_ok=1
   if [ "$nonce_ok" -ne 1 ]; then
-    ok=0; why="$why run-nonce want=[$NONCE_TOKEN] missing (canned/replayed output?)"
+    ok=0; why="$why run-nonce missing: the current run's token is absent (canned/replayed output?)"
   fi
 
   if [ "$ok" = 1 ]; then
@@ -714,7 +820,7 @@ case_dirty_same_path_as_sibling_progress() {
   git_init "$CASE_ROOT/kagi-shokunin"
   jl_launch kagi 7 1699997000
   gc "$CASE_ROOT/kagi-shokunin" LOG.md 'sibling edit' 1699998000 "$AGG_NAME" "$AGG_MAIL"
-  printf 'subject dirty work\n' > "$CASE_ROOT/kagi-shokunin/LOG.md"
+  printf 'subject dirty work %s %s\n' "$NONCE_TOKEN" "$RUN_SALT_HEX" > "$CASE_ROOT/kagi-shokunin/LOG.md"
   touch -d "@$RECENT" "$CASE_ROOT/kagi-shokunin/LOG.md"
   assert_case dirty-same-path-as-sibling-progress progressing 0 0
 }
@@ -727,7 +833,7 @@ case_untracked_recent_progress() {
   jl_launch kagi 7 1699997000
   gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
   mkdir -p "$CASE_ROOT/kagi-shokunin/scratch"
-  printf 'wip\n' > "$CASE_ROOT/kagi-shokunin/scratch/notes.md"
+  printf 'wip %s %s\n' "$NONCE_TOKEN" "$RUN_SALT_HEX" > "$CASE_ROOT/kagi-shokunin/scratch/notes.md"
   touch -d "@$RECENT" "$CASE_ROOT/kagi-shokunin/scratch/notes.md"
   assert_case untracked-recent-progress progressing 0 0
 }
@@ -790,7 +896,7 @@ case_untracked_report_progress() {
   jl_launch aggregator 2 "$OLD"
   gc "$CASE_ROOT" README.md 'root base' "$PRE" "$AGG_NAME" "$AGG_MAIL"
   mkdir -p "$CASE_ROOT/.ufo/reports/round-2"
-  printf 'draft\n' > "$CASE_ROOT/.ufo/reports/round-2/aggregator.md"
+  printf 'draft %s %s\n' "$NONCE_TOKEN" "$RUN_SALT_HEX" > "$CASE_ROOT/.ufo/reports/round-2/aggregator.md"
   touch -d "@$RECENT" "$CASE_ROOT/.ufo/reports/round-2/aggregator.md"
   assert_case untracked-report-progress progressing 0 0
 }
@@ -812,7 +918,7 @@ case_main_repo_noise_silent() {
   touch -d '@1699998600' "$CASE_ROOT/.ufo/state/aggregator.round"
   gc "$CASE_ROOT" .ufo/state/aggregator.round '3' 1699998600 "$AGG_NAME" "$AGG_MAIL" '' '' 1699998600 'driver state churn'
   mkdir -p "$CASE_ROOT/work"
-  printf 'ignored wip\n' > "$CASE_ROOT/work/inprogress.md"
+  printf 'ignored wip %s %s\n' "$NONCE_TOKEN" "$RUN_SALT_HEX" > "$CASE_ROOT/work/inprogress.md"
   touch -d '@1699999940' "$CASE_ROOT/work/inprogress.md"
   git_init "$CASE_ROOT/kagi-shokunin"
   gc "$CASE_ROOT/kagi-shokunin" LOG.md 'nested lane work' 1699999000 "$KAGI_NAME" "$KAGI_MAIL"
@@ -834,7 +940,7 @@ case_readonly_no_mutation() {
   if [ "$before" != "$after" ]; then
     count_check readonly-no-mutation 0 'census mutated fixture tree'
   elif ! nonce_present; then
-    count_check readonly-no-mutation 0 "run-nonce want=[$NONCE_TOKEN] missing (canned/replayed output?)"
+    count_check readonly-no-mutation 0 "run-nonce missing: the current run's token is absent (canned/replayed output?)"
   else
     count_check readonly-no-mutation 1 ''
   fi
@@ -883,7 +989,7 @@ case_shape_invariance() {
   if ! shape_has_verdict "$shape_grade_a" || ! shape_has_verdict "$shape_grade_b"; then
     count_check shape-invariance 0 "census crashed mid-run (no MORI_CENSUS): A=[$shape_grade_a] B=[$shape_grade_b]"
   elif [ "$shape_nonce_a" -ne 1 ] || [ "$shape_nonce_b" -ne 1 ]; then
-    count_check shape-invariance 0 "run-nonce want=[$NONCE_TOKEN] missing in a shape run (canned/replayed output?)"
+    count_check shape-invariance 0 "run-nonce missing in a shape run: the current run's token is absent (canned/replayed output?)"
   elif [ "$shape_grade_a" != "$shape_grade_b" ]; then
     count_check shape-invariance 0 "same fixture graded differently under two dir names: A=[$shape_grade_a] B=[$shape_grade_b]"
   elif [ "$shape_norm_a" != "$shape_norm_b" ]; then
@@ -951,13 +1057,19 @@ shuffle_case_ids() { # Fisher-Yates in place; same RUN_SEED => same order
 }
 
 shuffle_case_ids
-printf 'SHUFFLE_SEED=%s\n' "$RUN_SEED"
-printf 'RUN_NONCE=%s\n' "$RUN_NONCE"
-printf 'CASE_ORDER=%s\n' "${CASE_IDS[*]}"
 
+# r6 R1: the run header is printed only AFTER the last case has run, so no
+# living census invocation (nor any same-user process walking /proc) can read
+# the seed, the shuffled order, or the nonce from this process's stdout while
+# the cases are still executing. During the loop only PASS/FAIL lines are
+# written, and those carry no run secret.
 for case_it in "${CASE_IDS[@]}"; do
   "case_${case_it//-/_}"
 done
+
+printf 'SHUFFLE_SEED=%s\n' "$RUN_SEED"
+printf 'RUN_NONCE=%s\n' "$RUN_NONCE"
+printf 'CASE_ORDER=%s\n' "${CASE_IDS[*]}"
 
 # =================================================================================
 printf 'MORI_SILENCE_CASES: matched=%d total=%d\n' "$PASS_N" "$TOTAL_N"

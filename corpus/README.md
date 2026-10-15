@@ -11,9 +11,11 @@
 | `knowledge/silence-cutover-r3.md` | the r3 cutover receipt: spec-row map for census r2 `fe22a14f…`, named deltas, `:517`/`:283` hardening, selftest 25/25, frozen-oracle re-baseline 25/27 per case | round-3 wave, 2026-10-15 |
 | `knowledge/verdict-machine-r4.md` | the r4 verdict machine at oracle `be0e28b8…` / census `af2d4e79…`: the matcher defect and its `want_match` fix, the sniffer channels and the named order-replay residual, the `:227` rc-gate, per-anchor-round close tracking, final tallies | round-4 wave, 2026-10-15 |
 | `knowledge/verdict-machine-r5.md` | the r5 run-order close at oracle `7143ccc2…` / census `af2d4e79…` (frozen): seeded shuffle + per-run nonce, the enumerated attack-class tallies, and the residual seed channels R1–R4 | round-5 wave, 2026-10-15 |
+| `knowledge/verdict-machine-r6.md` | the r6 verdict machine at oracle `3307761a…` / census `af2d4e79…` (frozen): the r5 stdout-backchannel (fd/1 header + pinned environ) and naive content-keyed classes closed — header printed only after the case loop, pins scrubbed from the exec-time environ by a one-time self re-exec, per-run salt woven into fixture content — with the attack tallies and the two named residuals (full-grammar normalizing memorizer; surviving-ancestor pin) | round-6 wave, 2026-10-15 |
 | `lessons/2026-10-15-errexit-pipefail-silent-crash.md` | the pipefail silent-crash class (rc 1 collides with DRIFT, no verdict line); `:517`/`:283` hardened (r3), `:227` rc-gated (r4, `verdict-machine-r4.md` §3) | round-3 wave, `/tmp` canaries |
 | `lessons/2026-10-15-forgeable-oracle-visible-fixtures.md` | the forgeable-oracle class: visible case identity + a matcher taking expanded alternation literally let a no-logic census reach the ceiling (27/27); r4 opaque case dirs drop the same sniffer to 1/28 | round-4 wave, `/tmp` canaries |
 | `lessons/2026-10-15-run-order-spoofing-shuffle-nonce-limits.md` | the r5 lesson: the seeded shuffle + per-run nonce close the enumerated replay classes, and the two forgers that still reach 28/28 (content memorizer; `/proc` run-header leak), with countermeasures | round-5 wave, `/tmp` canaries |
+| `lessons/2026-10-15-run-secret-timing-and-content-freshness-limits.md` | the r6 lesson: when a run secret is emitted is part of the secret (timing), and freshness woven into fixture content re-prices memorization rather than closing it — the pattern-normalizing memorizer still reaches 28/28; fingerprint size drift as a derived component | round-6 wave, `/tmp` canaries |
 
 ## Known gaps
 
@@ -34,7 +36,8 @@
   path. Receipts under `corpus/evidence/cutover-r3-*`; spec-row map and named
   deltas in `knowledge/silence-cutover-r3.md`. The r4 oracle `be0e28b8…`
   supersedes the frozen `505a7504…`, and the r5 oracle `7143ccc2…` supersedes
-  that in turn (anti-sniff round-5 bullet below).
+  that in turn (anti-sniff round-5 bullet below); the r6 working-tree revision
+  `3307761a…` supersedes the r5 bytes in turn (anti-sniff round-6 bullet below).
 - **Oracle tally (round-3 residual, closed in round 4):** the frozen oracle's
   matcher (`tools/mori-silence-cases.sh:362-365` at `505a7504…`) compared the
   `|`-joined want string literally, pinning the honest census at `matched=25
@@ -86,7 +89,32 @@
   expose it, 0–1/28 — R2); the nonce alone is echo-able by design and gates
   staleness only (R3); a fixture-content memorizer still reaches `28/28` (R4,
   carried from round 4) (`knowledge/verdict-machine-r5.md` §4;
-  `lessons/2026-10-15-run-order-spoofing-shuffle-nonce-limits.md`).
+  `lessons/2026-10-15-run-order-spoofing-shuffle-nonce-limits.md`). The
+  oracle-reachable seed channels (R1/R2) and the naive content memorizer (R4)
+  are closed at the r6 oracle `3307761a…`; the surviving-ancestor pin and the
+  full-grammar normalizer stay named (round-6 bullet below).
+- **Anti-sniff (round 6): the r5 stdout-backchannel and content-keyed classes
+  closed at oracle `3307761a…` (census frozen `af2d4e79…`); two residuals stay
+  named.** The run header (`SHUFFLE_SEED=` / `RUN_NONCE=` / `CASE_ORDER=`) now
+  prints only **after** the case loop (`tools/mori-silence-cases.sh:1066-1072`),
+  per-case lines redact the nonce token (`:545`), and a pinned
+  `MORI_SHUFFLE_SEED`/`MORI_RUN_NONCE` is scrubbed from the exec-time
+  environment by a one-time self re-exec that passes the pins on a pipe fd
+  (`:207-220`); every fixture's content is per-run — committed bodies and commit
+  messages carry `[nonce-<N> <salt>]` (`:417`,`:419`) and the case dir gains
+  salt/blob files (`:309`,`:314-315`), with four cases binding the marker into
+  untracked/dirty content (`:823`,`:836`,`:899`,`:921`). Receipts
+  `corpus/evidence/backchannel-r6-20261015T{190229,190453,191216}Z-*.log` (the
+  `T191216Z` set binds the final sha): fd/1 `CASE_ORDER` replay `28/28` exit 0
+  (r5 bytes) → `0/28` exit 1; pinned-environ reader `28/28` → `0/28`; r5-learned
+  content table `28/28` → `0/28`; fresh learn-then-replay `0/28`; honest census
+  unchanged — `28/28` exit 0 across shuffles, per-case tuples byte-identical
+  (sha `a70af583…`). **Not closed — named residuals:** a full-grammar
+  normalizing memorizer (strips both marker grammars; a bracket-only normalizer
+  dies at `24/28`, the four untracked/dirty-marker cases) reaches `28/28` exit
+  0, and a pin in a *surviving ancestor's* exec-time environ (wrapper-CI
+  pattern) stays readable for the whole run (`knowledge/verdict-machine-r6.md`
+  §4-§5; `lessons/2026-10-15-run-secret-timing-and-content-freshness-limits.md`).
 - **Row-6 closure is presence + window only (spec residual):** a fresh,
   contentless committed marker satisfies it while the running driver would reject
   that shape (`knowledge/silence-grading-r2.md:191-197`). No frozen-behavioral
