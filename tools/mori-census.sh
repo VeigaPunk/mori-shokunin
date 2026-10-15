@@ -589,9 +589,14 @@ run_census() {
 
 # ---- hermetic selftest ------------------------------------------------------
 run_selftest() {
-  local work bin FX PASS=0 FAIL=0
-  work=$(mktemp -d /tmp/mori-census-selftest.XXXXXX)
-  trap 'rm -rf -- "${work:-}"' EXIT INT TERM
+  local bin FX PASS=0 FAIL=0
+  # The trap path must NOT be a `local`: the EXIT trap fires after this function
+  # returns, when a local is out of scope, so `rm -rf -- "${work:-}"` expanded to
+  # `rm -rf -- ''` and every run leaked its temp dir (measured: 45 leftovers).
+  # A non-local holder keeps the path visible to the trap.
+  MORI_SELFTEST_WORK=$(mktemp -d /tmp/mori-census-selftest.XXXXXX)
+  local work="$MORI_SELFTEST_WORK"
+  trap 'rm -rf -- "${MORI_SELFTEST_WORK:-}"' EXIT INT TERM
   bin="$work/bin"
   mkdir -p "$bin" "$work/fx"
 

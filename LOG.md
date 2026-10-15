@@ -86,3 +86,13 @@ cgroup prefix check (the `/sys/fs/cgroup/../..` escape is now refused shape-only
 Selftest 14/14. Carried debt: live-mode `MORI_*_BIN` overrides and the unquoted
 `MORI_DISK_TARGETS` list can automount; `/proc/<pid>/environ` is readable for 95
 pids and is not contract-forbidden, so no future probe may adopt it.
+
+**Round-1 correction 10 (appended 2026-10-15).** The selftest cleanup trap used a
+`local` variable, so the EXIT trap — which fires after the function returns —
+expanded to `rm -rf -- ''` and **every run leaked its temp dir** (measured: 45
+leftover `/tmp/mori-census-selftest.*` dirs, and the leftover was the only
+detector). The path now lives in a non-local holder; 45 leftovers were cleaned and
+two consecutive runs leave **0**. Independently proved by the same seat: the gate is
+idempotent on a frozen fixture (stdout diff empty, 21-file manifest unchanged,
+`strace` 0 successful writes outside the fixture) and a canary write planted in a
+scratch copy was killed (`forbidden 1`).
