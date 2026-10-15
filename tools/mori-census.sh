@@ -85,6 +85,9 @@ DISK_CRIT_PCT=${MORI_DISK_CRIT_PCT:-95}
 LANE_SILENCE_S=${MORI_LANE_SILENCE_S:-7200}
 ROSTER_LANES=${MORI_ROSTER_LANES:-"protocol aggregator kasegi kengaku kake kumitate kotoba kagi kama"}
 
+SCRIPT_SHA256=$(sha256sum "$SELF" 2>/dev/null | cut -d' ' -f1)
+[ -n "$SCRIPT_SHA256" ] || SCRIPT_SHA256=unavailable
+
 NOW_EPOCH=${MORI_NOW_EPOCH:-}
 if [ -z "$NOW_EPOCH" ]; then NOW_EPOCH=$(date +%s); fi
 TS_UTC=$(date -u -d "@$NOW_EPOCH" +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -u -r "$NOW_EPOCH" +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -u +%Y-%m-%dT%H:%M:%SZ)
@@ -119,7 +122,9 @@ die_usage() { printf 'mori-census: %s\n' "$1" >&2; usage >&2; exit 2; }
 emit_finding() { # id severity observation
   local id=$1 sev=$2 obs=$3
   N_FINDINGS=$((N_FINDINGS + 1))
-  FINDING_LINES+=("FINDING $id severity=$sev obs=$obs")
+  # A finding must be a REUSABLE observation: stamp the clock and the script
+  # revision so a later reader can re-run the same probe against the same code.
+  FINDING_LINES+=("FINDING $id severity=$sev obs=$obs ts=$TS_UTC script_sha256=$SCRIPT_SHA256")
   case "$sev" in
     warn|crit)
       N_DRIFT=$((N_DRIFT + 1))
@@ -179,6 +184,8 @@ probe_watchdog() {
     fi
   else
     emit_surface watchdog unavailable "cmd=$cmd_bits; pgrep=missing; ts=$TS_UTC"
+    emit_finding WATCHDOG_PROBE_UNAVAILABLE info "pgrep unavailable — daemon liveness UNKNOWN, not absent"
+    return 0
     emit_finding WATCHDOG_LOG_UNAVAILABLE info "pgrep binary missing — cannot assess pid"
     # still try log
   fi

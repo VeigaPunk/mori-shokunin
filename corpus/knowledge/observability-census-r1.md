@@ -104,10 +104,14 @@ and not a fleet process.
 domain. Fleet-relevant units now fire `UNIT_FAILURE_JOURNAL`; everything else is
 `UNIT_FAILURE_OUT_OF_SCOPE` (info) with the owner named.
 
-**Wave settlement is a typed token, not a filename.** `w5`–`w11` close out with
-`closeout.md` and/or a registry carrying `"closed": true`, which a results-file
-test cannot see; five settled train waves were aged into false
-`WAVE_UNSETTLED_AGE`. The probe now accepts those tokens. **Still provisional:**
+**Wave settlement is a typed token, not a filename.** On disk at the audited
+window: `w5` has **no** closeout file at all, `w6`–`w11` carry `closeout.json`, and
+the receipt that aged five waves aged `w1`–`w5` — of which only `w5` carries an
+ADMIT/closed token. The earlier wording here ("`w5`–`w11` close out with
+`closeout.md`") generalized from one sample and is superseded by that measurement;
+`w12`–`w14` are `closeout.md` + `registry.json`, not a results join. The probe
+accepts a results join, `closeout.json`, `closeout.md`, or a registry declaring
+`"closed": true`. The probe now accepts those tokens. **Still provisional:**
 `w1`–`w4` have registry+dispatch and no closeout token while their lane reports
 landed elsewhere, so "age" remains the wrong clock for them — the independent
 `WaveAgeMath` critique is carried as debt, and a wave reported here as
@@ -158,3 +162,23 @@ reason, and the system-journal gap (`626` there) is the same class.
 only in `current=`. Finding ids, severities and subjects were identical across four
 runs, so a comparer must drop `current=` and the clock fields — the ids are the
 stable contract, not the byte stream.
+
+## Erratum 5 (appended 2026-10-15) — findings are now self-stamped; two collapses named
+
+**Every `FINDING` line now carries `ts=` and `script_sha256=`.** Before this, a
+finding named an observation with no clock and no code revision, so it was not a
+reusable observation — the numbers quoted in this file (588, 626, 1228, 656) came
+from *different* probes at different times and were never the same measurement.
+A reader can now re-run the exact script revision against the exact clock.
+
+**`WATCHDOG_ABSENT` no longer collapses an unknown into a dead daemon.** A missing
+`pgrep` previously emitted `SURFACE watchdog: unavailable` and then fell through, so
+`pid_n=0` became `WATCHDOG_ABSENT` (warn) plus a second `drift` surface line — an
+unknown pid printed as a dead daemon. The probe now emits
+`WATCHDOG_PROBE_UNAVAILABLE` (info) and returns. **Latent and not fixture-proved:**
+that arm is unreachable on this host (`pgrep` is on `PATH`) and the selftest does
+not build it — named debt.
+
+**Also named debt:** lane silence has no `unavailable` state, so an unread `HEAD`
+(epoch 0) can surface as `LANE_SILENT`; `/scratch/tmp` is absent and is not in the
+default disk targets, so `unavailable=0` does not classify it.

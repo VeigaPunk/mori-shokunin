@@ -42,3 +42,12 @@ count, never replace it — a fixture stub must not be able to silence it); self
 stays **14/14**, live now reports `SEGFAULT_JOURNAL count=656`. The compare key for
 two runs is the finding-id set, not the byte stream (`current=` and the clock
 fields move by construction).
+
+**Round-1 correction 5 (appended 2026-10-15).** `FINDING` lines now stamp `ts=` and
+`script_sha256=` (a finding without a clock and a code revision is not a reusable
+observation); `WATCHDOG_ABSENT` no longer collapses a missing `pgrep` into a dead
+daemon; the erratum's `w5`–`w11` generalization was superseded by measurement
+(`w5` has no closeout file, `w6`–`w11` have `closeout.json`). Receipt clock and
+script sha for this round: see the receipt block above. Carried debt: the
+pgrep-unavailable arm is latent and unproven by fixture; silence has no
+`unavailable` state; `/scratch/tmp` is outside the default disk targets.
