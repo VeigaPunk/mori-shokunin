@@ -283,3 +283,55 @@ round 6's claim.
 
 Admission: ADMIT-with-correction (R1/R2 named, none harmed). No scalar score.
 Learning trends: expansion/quality **improved**, discernment **unchanged**.
+
+## Round 6 verdict — 2026-10-15 (goal wave; evidence commit `92b2e42`)
+
+Selected axis: **operability** — close the round-5 residuals R1 (stdout
+backchannel) and R2 (content-keyed forgery). Wave: one 32-seat flash call,
+33/33 reports. Report: `.ufo/reports/round-6/mori-goalwave.md`.
+
+**Before** (`7143ccc2…`): run header printed secrets before the case loop —
+a census reading `/proc/<ppid>/fd/1` replayed by position for 28/28 exit 0
+(R1); fixture content was nonce-free and run-invariant — memorized
+content→state tables passed (R2).
+
+**After** (oracle `3307761a…`: header moved after the case loop — parent
+acceptance shows `SHUFFLE_SEED` at line 29 of 32, after all case lines;
+`redact()` strips the token from echoed fragments; pinned-seed re-exec drops
+env pins before any census exists (environ/fd probe 29/29 zero hits vs r5
+positive control 2/1); R2: per-run `RUN_SALT_HEX` in every committed body +
+random `blob-*` payloads outside graded trees; registry (28 ids/wants)
+byte-identical; census `af2d4e79…` frozen). Parent acceptance 2026-10-15T19:20Z:
+selftest 30/30 exit 0; oracle 28/28 exit 0 ×2 byte-identical, distinct orders;
+live census honest (`DRIFT findings=15 drift=14 unavailable=1`); R1 attacker
+0–1/28 (the 1 is shape-invariance self-agreement, not a grading pass); R2
+memorizer fails at the salt-discriminating cases.
+
+**Corrections / boundaries named (not claimed away):** (a) the impl iterated
+mid-wave (`7143ccc2` → `9ce164ec` → `3307761a`) — at the first revision the
+claim did NOT hold (R1 attacker still read the header); the re-exec revision
+closed it, and the admission battery pins the FINAL bytes only; (b) residual
+class: a **full-grammar normalizer** (strips nonce/salt shapes AND excludes
+`salt-*`/`blob-*` names from its keys) still memorizes 28/28 — the honest
+boundary: finite fixtures + deterministic grades are memorizable in principle;
+anti-forgery here is depth, not impossibility (`verdict-machine-r6.md`); (c)
+operator-invocation hygiene: a surviving ANCESTOR's environ can still carry
+`MORI_SHUFFLE_SEED` — outside the oracle's control, named.
+
+| axis | verdict | evidence (before → after) |
+|---|---|---|
+| operability | **improved** | fd/environ backchannel → header-after-loop + re-exec scrub (probe 0 hits); content memorization → per-run salt + random blobs (memorizer caught); 28/28 honest held ×10 (impl) ×2 (parent). |
+| coverage | **unchanged** | registry byte-identical. |
+| depth | **improved** | `corpus/knowledge/verdict-machine-r6.md`; lesson `corpus/lessons/2026-10-15-run-secret-timing-and-content-freshness-limits.md`. |
+| freshness | **unchanged** | seven r6 receipts at pinned SHAs; drift pin carried. |
+| calibration | **improved narrowly** | the mid-wave revision history admitted; the normalizer-class boundary measured (not asserted); attacker tallies receipt-backed (`backchannel-r6-20261015T191216Z-attack-r1/r2.log`). |
+| adjacency | **unchanged** | scope-sentinel clean; census frozen and diff-verified; no remediation content. |
+
+Admission: ADMIT-with-correction (normalizer-class boundary + ancestor-pin
+caveat named; none harmed). No scalar score. Learning trends:
+expansion/quality **improved**, discernment **unchanged**. The verdict-machine
+arc (r3–r6) is complete: the oracle+census pair is now hardened against six
+attack classes with two honest boundary classes named. Round 7 pivots to
+**coverage**: the surface gaps measured in round 2 (`observability-surfaces-r2.md`:
+tmux session relevance, memory-pressure threshold, disk write-rate,
+`state_rounds` count-only) — registered as the round-7 claim.

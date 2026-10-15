@@ -355,3 +355,34 @@ nonce in fixture content). Both registered as round 6's claim; see
 
 Round report: `.ufo/reports/round-5/mori-goalwave.md` · Verified lane rounds:
 4 → 5.
+
+## Round 6 — R1/R2 closed (goal wave)
+
+**Round 6 — goal-wave admission (2026-10-15).** Motivating evidence: the
+round-5 correction (R1 stdout-backchannel 28/28 via `/proc/<ppid>/fd/1`; R2
+content-memorizer passes). Landed (evidence commit `92b2e42`): oracle
+`3307761a…` — run header after the case loop + `redact()` + pinned-seed re-exec
+(env pins dropped before any census exists; probe 29/29 zero hits); per-run
+`RUN_SALT_HEX` in committed bodies + random `blob-*` payloads. Registry
+byte-identical; census `af2d4e79…` frozen. Mid-wave honesty: the claim did not
+hold at the first landed revision (`9ce164ec`); the re-exec revision closed it;
+acceptance pins the final bytes. Wave: 32-seat flash call, 33/33 reports.
+
+**Parent acceptance (2026-10-15T19:20Z).** selftest 30/30; oracle 28/28 ×2
+byte-identical (header at line 29/32 — after the case lines); live
+`DRIFT findings=15 drift=14 unavailable=1`; R1 attacker 0–1/28; R2 memorizer
+fails at salt-discriminating cases.
+
+**Verdicts.** ADMIT-with-correction: operability/depth/calibration **improved**;
+coverage/freshness/adjacency **unchanged**; none harmed. Boundaries named: the
+full-grammar normalizer class still memorizes 28/28 (finite fixtures +
+deterministic grades are memorizable in principle — depth, not impossibility);
+ancestor-environ pin hygiene is operator-side. Round 7 registered: coverage —
+the round-2 surface gaps (tmux relevance, memory-pressure threshold, disk
+write-rate, `state_rounds` values).
+
+**Boundaries held.** Detection/report only; no remediation/kills; fixtures
+`/tmp`; seats committed nothing; parent integrated under the mori identity.
+
+Round report: `.ufo/reports/round-6/mori-goalwave.md` · Verified lane rounds:
+5 → 6.
