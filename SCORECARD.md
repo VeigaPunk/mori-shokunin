@@ -383,3 +383,55 @@ Honest residuals (named in `surfaces-r7.md`): instantaneous write-rate
 invisibility; memory-tester's three residual items. Admission: **ADMIT** (one
 axis improved, none harmed). No scalar score. Learning trends:
 expansion/quality **improved**, discernment **unchanged**.
+
+## Round 8 verdict — 2026-10-15 (goal wave; evidence commit `9738f1a`)
+
+Selected axis: coverage/operability residual closure — the four `surfaces-r7.md`
+residuals. Wave: one 31-seat flash call, 31/31. Report:
+`.ufo/reports/round-8/mori-goalwave.md`.
+
+**Before** (`c7c3569b…`, selftest 45): instantaneous write-rate deferred
+without a cost number; tmux per-session freshness unmeasured; `*.round`
+symlink/dir cases silently invisible; memory-probe residuals open.
+
+**After** (census r5 `390ab9cd…`, selftest 56 = +11; oracle `448f7723…`
+**not** rebased — the census delta was additive-only and the oracle fixtures
+see the new probes as `unavailable`, so 28/28 held unmodified; parent
+acceptance 2026-10-15T21:05Z): (1) write-rate: **deferral upgraded to measured
+numbers** — isolated micro n=30/arm: 0.2 s two-sample adds +213 ms median (min
+210 ms = 4.2× the 50 ms budget) → the admission rule says defer, so it defers
+ON THE NUMBER, recorded in the header + `surfaces-r8.md`; (2) tmux per-session
+freshness implemented (timeout-bounded, rc-gated, `freshness/probed/idle/
+idle_warn_s` fields, 4 canaries incl. a frozen-tmux no-hang proof); (3)
+roundfile diagnosis implemented (`state_val_unread_reasons=file/symlink/dir/
+other` with per-reason counts; symlink target never read); (4) memory residuals
+disposed per the note. Live rows carry the new fields (`state_rounds_max=18
+state_lag=0`, `mem_peak/mem_peak_anchor`, `io_avg_since_boot=dm-0:8625212Bps/
+15821s`); additive-only proven by a pinned-fixture field diff (exactly the 4
+new names, none lost).
+
+**Defect folded at admission (measured, not asserted):** the selftest harness
+has a flaky-failure class — a grep-over-pipe SIGPIPE race at
+`tools/mori-census.sh:1783/:1809`: admission seat ~25% false-FAIL in one
+battery; parent determinism battery 1/8 (55/56, "missing match" on a silence
+case); parent main acceptance 5/5 green. Root-caused to the harness pipe race,
+NOT to probe logic (every false-FAIL is a different case, all green on rerun).
+Verdict: **ADMIT-with-correction** — the four residual dispositions are
+receipt-backed and additive-only holds, but "selftest all-pass" is currently
+~87-100% deterministic; the flake is the registered round-9 top debt (fix the
+race; add a determinism gate to admission).
+
+| axis | verdict | evidence (before → after) |
+|---|---|---|
+| coverage | **improved** | three residuals closed with measured probes (freshness, roundfile reasons, memory) + one closed-by-measurement (write-rate deferral with numbers); +11 selftest cases; per-gap testers verified live rows against independent recomputation. |
+| operability | **improved narrowly** | selftest 45 → 56; oracle 28/28 held WITHOUT a rebase (additive-only proof by pinned-fixture field diff); hang-guard bounded the new probe's worst case. Correction: the harness flake (:1783/:1809) measured at 1/8–25% — named, top r9 debt. |
+| depth | **improved** | `corpus/knowledge/surfaces-r8.md` (dispositions, the cost-adjudication numbers from two independent measures, open items); lesson `2026-10-15-probe-pricing-dwell-bounds-filter-drop.md`. |
+| freshness | **improved narrowly** | eight r8 receipts at pinned SHAs; drift pin still carried. |
+| calibration | **unchanged** | the 50 ms budget rule was applied as written (defer won on the number); thresholds remain labeled local. |
+| adjacency | **unchanged** | scope-sentinel clean; stub binaries slept only inside /tmp fixtures; no remediation content. |
+
+Admission: ADMIT-with-correction (flake named; none harmed on the substance).
+No scalar score. Learning trends: expansion/quality **improved**, discernment
+**unchanged**. Round 9 registered: eliminate the selftest flake class
+(`:1783/:1809` SIGPIPE/grep race) — receipt-backed 0-flake over a ≥20-run
+battery, selftest 56 green, oracle 28/28, zero probe-behavior change.

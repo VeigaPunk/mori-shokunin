@@ -417,3 +417,37 @@ identity.
 
 Round report: `.ufo/reports/round-7/mori-goalwave.md` · Verified lane rounds:
 6 → 7.
+
+## Round 8 — r7 residuals disposed (goal wave)
+
+**Round 8 — goal-wave admission (2026-10-15).** Motivating evidence:
+`surfaces-r7.md`'s four residuals. Landed (evidence commit `9738f1a`): census r5
+`390ab9cd…` — write-rate deferral upgraded to measured numbers (0.2 s
+double-sample: +213 ms median vs 16 ms floor, min 210 ms = 4.2× the 50 ms
+budget → defer stands ON THE NUMBER); tmux per-session freshness (bounded,
+rc-gated, canaries incl. no-hang proof); `*.round` symlink/dir diagnosis
+(reason codes, symlink target never read); memory residuals disposed. Selftest
+45 → 56 (+11). Oracle `448f7723…` NOT rebased: additive-only proven by
+pinned-fixture field diff (exactly 4 new field names, none lost), 28/28 held.
+Wave: 31-seat flash call, 31/31.
+
+**Parent acceptance (2026-10-15T21:05Z).** selftest 56/56 ×2 + determinism
+battery 7/8 (see defect); oracle 28/28 ×2; live rows carry all new fields;
+`DRIFT findings=15 drift=14 unavailable=1`.
+
+**Defect at admission (measured).** Selftest harness flake: grep-over-pipe
+SIGPIPE race at `tools/mori-census.sh:1783/:1809` — admission seat ~25%, parent
+battery 1/8, every false-FAIL a different case, all green on rerun. Probe logic
+untouched; the harness race is the registered round-9 top debt with a
+determinism gate.
+
+**Verdicts.** ADMIT-with-correction: coverage/depth/freshness **improved**;
+operability improved narrowly (with the flake named); calibration/adjacency
+**unchanged**; none harmed on substance.
+
+**Boundaries held.** Detection/report only; host measurement read-only; stubs
+slept only in /tmp fixtures; seats committed nothing; parent integrated under
+the mori identity.
+
+Round report: `.ufo/reports/round-8/mori-goalwave.md` · Verified lane rounds:
+7 → 8.
