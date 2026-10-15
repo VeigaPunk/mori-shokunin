@@ -519,3 +519,62 @@ a full-lane deep audit on `openai-codex/gpt-6.1-sol` — every admitted round's
 evidence chain re-verified, carried debts adjudicated, SHONEN readiness
 assessed without self-attestation, and the four most load-bearing historical
 claims re-executed at today's bytes.
+
+## Round 11 verdict — 2026-10-15 (capstone audit, operator-directed strong
+model `openai-codex/gpt-6.1-sol`; evidence commit `e4855e8`)
+
+Selected axis: **calibration** — deep discernment: an independent-quality audit
+of the whole lane corpus (the operator directed the strong model for this
+round). Wave: one 32-seat call on `gpt-6.1-sol` (max effort), 34/34 reports.
+Report: `.ufo/reports/round-11/mori-goalwave.md`; consolidated findings:
+`corpus/knowledge/audit-r11.md`.
+
+**What the audit confirmed (measured coverage, not vibes):** all 50 r2–r10
+receipts exist and hash-verify; the evidence README indexes them completely;
+every cited commit resolves and is ancestral; the cumulative tools/ diff equals
+the sum of the rounds' claimed changes (no silent hunks); every round's
+per-axis table satisfies the admission rule with verdict vocabulary only; the
+correction-disposition ledger shows every named correction/residual either
+dispositioned or still open — no silent drops; the four load-bearing
+historical claims re-executed at today's bytes (r3 counterfactual class: 136
+case evaluations; r4/r5 sniffer class: 195 case results, attackers in the
+0–2/28 class; r9 flake battery: 0 flakes; r10 drift: clean + tamper named the
+field). Parent battery at acceptance: selftest 66/66, oracle 28/28,
+`MORI_DRIFT: none` exit 0 against the committed baseline (baseline byte-
+unchanged since `5be8943`), live honest.
+
+**What the audit corrected (folded at admission):** (1) **SHONEN: hold
+promotion — 0/4 boxes gate-ready**: box 2 is `ready-for-named-non-author-
+review`; boxes 1/3/4 are blocked-by-X (source-linkage; dead baseline recipe +
+inconsistent instructions; external-shim attribution). Same-wave seats are the
+lane per protocol; the gate needs a named non-author verifier. (2) **140/275
+historical fixture fingerprints are not independently recomputable** from
+durable artifacts (they live in /tmp scratch from their rounds) — a scratch-
+evidence class; the audit could verify the receipts but not re-derive every
+fixture tree. (3) **Three independently established defect categories** (per
+the admission seat) with the register in `audit-r11.md`. (4) Report-format
+nit: rounds 5–10 reports collapse the four SHONEN box lines into one physical
+line. (5) Parent hygiene fold: the r10 acceptance's drift line was measured
+through a pipe with a wrong-glob (`.txt` vs `.json`) — conclusion correct
+(verified now with a direct run: `none`, exit 0), method sloppy; the r11
+admission ritual gains an exit-code discipline line.
+
+| axis | verdict | evidence |
+|---|---|---|
+| calibration | **improved** | the lane now knows, with measured coverage, WHAT is verified (50/50 receipts, resolved commits, re-executed claims) and WHAT is not (scratch fixtures, universal correctness, promotion gates) — discernment at depth, strong-model seats per operator directive. |
+| depth | **improved** | `corpus/knowledge/audit-r11.md`: findings table, final debt register, SHONEN readiness, operator recommendations; lesson `2026-10-15-settle-evidence-references-with-artifacts.md`. |
+| coverage | **unchanged** | no new measured surface (the audit measured the measuring). |
+| operability | **unchanged** | battery green at today's pins; the audit changed no tool bytes. |
+| freshness | **unchanged** | baseline still clean (aging risk named, not realized). |
+| adjacency | **unchanged** | audit seats wrote only their assigned artifacts; tools/ untouched (scope-sentinel verified). |
+
+Admission: **ADMIT-with-correction** (calibration/depth improved; corrections
+named; none harmed). No scalar score. Learning trends: expansion/quality
+**improved**, discernment **improved** (the audit itself is the first round
+whose core product is discernment; it was externally probed by the critic-of-
+the-audit seat and still ships named limits).
+
+**mori rounds 2–11 complete: ten admitted rounds.** Carried forward to the
+operator (not lane debts): named-non-author SHONEN verification, the receipt-
+binding and role-routing debts (blocked-attempt, operator/integrator
+surfaces), and the promotion decision itself.

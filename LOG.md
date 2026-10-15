@@ -498,3 +498,34 @@ seats; parent integrated under the mori identity.
 
 Round report: `.ufo/reports/round-10/mori-goalwave.md` · Verified lane
 rounds: 9 → 10.
+
+## Round 11 — capstone deep audit (goal wave, strong model per operator)
+
+**Round 11 — goal-wave admission (2026-10-15).** Motivating evidence: the
+operator directed the 10th swarm round to run on `openai-codex/gpt-6.1-sol`
+(max effort, 32 seats) as a full-lane audit. Landed (evidence commit
+`e4855e8`): `corpus/knowledge/audit-r11.md` + lesson; the audit confirmed with
+measured coverage: 50/50 receipts hash-verified, all cited commits resolve,
+cumulative tools/ diff = sum of claimed round changes, every verdict satisfies
+the admission rule, every correction is dispositioned (no silent drops), and
+the four load-bearing historical claims re-execute at today's bytes
+(counterfactual 136 evals; sniffer class 195 results at 0–2/28; flake battery
+0; drift clean + tamper-named). Corrections folded: SHONEN 0/4 — HOLD
+promotion (box 2 ready-for-named-non-author-review; 1/3/4 blocked-by-X);
+140/275 historical fixture fingerprints not recomputable from durable
+artifacts (scratch-evidence class); three defect categories registered; parent
+r10 drift acceptance had a pipe-exit/wrong-glob hygiene slip (conclusion
+correct — direct re-run: `none`, exit 0; baseline unchanged). Parent battery:
+66/66, 28/28, drift none, live honest. Wave: 32 seats on gpt-6.1-sol, 34/34
+reports.
+
+**Verdicts.** ADMIT-with-correction: calibration/depth **improved**; all else
+**unchanged**; none harmed. Discernment trend: **improved** (first round whose
+product is discernment, externally probed by the critic-of-the-audit seat).
+mori rounds 2–11: ten admitted rounds complete.
+
+**Boundaries held.** Audit seats wrote only assigned artifacts; tools/
+untouched; SCORECARD/LOG edits parent-only; fleet root read-only.
+
+Round report: `.ufo/reports/round-11/mori-goalwave.md` · Verified lane
+rounds: 10 → 11.
