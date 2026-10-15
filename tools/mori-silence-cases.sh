@@ -21,6 +21,10 @@
 #   grades behavior only: exact per-lane state, presence/absence of the
 #   LANE_SILENT finding, census exit rc and MORI_CENSUS verdict. It never
 #   greps census source, wiring, or default constants.
+#   Anti-sniff: every case tree is a mktemp dir carrying NO case id in any
+#   path handed to the census (MORI_SHOKUNIN_ROOT / MORI_UFO_DIR / MORI_STUB_DIR
+#   / ...), and no fixture-marker variable is exported; case `shape-invariance`
+#   proves a census cannot branch on the fixture directory name.
 #
 # Output:
 #   PASS <id> ... | FAIL <id> ... (one line per case)
@@ -141,19 +145,10 @@ FAILED_IDS=()
 iso() { date -u -d "@$1" +%Y-%m-%dT%H:%M:%S+00:00; }
 
 # ---- fixture skeleton --------------------------------------------------------
-# new_case <id> <lane> [ufo-relative-under-root]  — default ufo outside root.
-new_case() {
-  CASE_ID=$1
-  CASE_LANE=$2
-  CASE_UFO_REL=${3:-../ufo}
-  CASE_DIR=$WORK/c/$CASE_ID
-  CASE_ROOT=$CASE_DIR/root
-  case "$CASE_UFO_REL" in
-    /*) CASE_UFO=$CASE_UFO_REL ;;
-    ../*) CASE_UFO=$CASE_DIR/${CASE_UFO_REL#../} ;;
-    *) CASE_UFO=$CASE_DIR/root/$CASE_UFO_REL ;;
-  esac
-  CASE_STUB=$CASE_DIR/stub
+# case_skeleton — quiet stubs/logs for the case tree named by the CASE_* globals.
+# Split out of new_case so the shape-invariance case can build the same bytes
+# under two independent, randomly named directory trees.
+case_skeleton() {
   mkdir -p "$CASE_ROOT" "$CASE_UFO/state" "$CASE_UFO/waves" "$CASE_DIR/cgroup" "$CASE_STUB" "$CASE_DIR/home"
 
   # quiet watchdog: process stub + fresh log (content uses the real tick grammar)
@@ -179,6 +174,25 @@ new_case() {
   printf '0' > "$CASE_STUB/df.rc"
   printf 'fx_session: 1 windows\n' > "$CASE_STUB/tmux"; printf '0' > "$CASE_STUB/tmux.rc"
   # the launch/close ledger IS this watchdog log (no separate ledger file)
+}
+
+# new_case <id> <lane> [ufo-relative-under-root]  — default ufo outside root.
+# The case tree lives under a mktemp dir with NO case id inside (anti-sniff:
+# no path handed to the census — MORI_SHOKUNIN_ROOT, MORI_UFO_DIR,
+# MORI_STUB_DIR, MORI_DISK_TARGETS, ... — encodes which case is running).
+new_case() {
+  CASE_ID=$1
+  CASE_LANE=$2
+  CASE_UFO_REL=${3:-../ufo}
+  CASE_DIR=$(mktemp -d "$WORK/case.XXXXXXXX") || die "mktemp case dir failed"
+  CASE_ROOT=$CASE_DIR/root
+  case "$CASE_UFO_REL" in
+    /*) CASE_UFO=$CASE_UFO_REL ;;
+    ../*) CASE_UFO=$CASE_DIR/${CASE_UFO_REL#../} ;;
+    *) CASE_UFO=$CASE_DIR/root/$CASE_UFO_REL ;;
+  esac
+  CASE_STUB=$CASE_DIR/stub
+  case_skeleton
 }
 
 # ---- ledger verbs (real grammar; ledger file = $CASE_UFO/watchdog.log) --------
@@ -266,7 +280,6 @@ run_census() {
     PATH="$BIN:/usr/bin:/bin" \
     HOME="$WORK/home" TZ=UTC LC_ALL=C \
     MORI_STUB_DIR="$CASE_STUB" \
-    MORI_FIXTURE=1 \
     MORI_SHOKUNIN_ROOT="$CASE_ROOT" \
     MORI_UFO_DIR="$CASE_UFO" \
     MORI_WATCHDOG_LOG="$CASE_UFO/watchdog.log" \
@@ -326,6 +339,20 @@ finding_present() { # 1 iff LANE_SILENT exists (roster is one lane)
   [ "${n:-0}" -gt 0 ]
 }
 
+# want_match <obs> <want[|want2[|...]]> — true iff obs exactly equals one of the
+# '|'-separated alternatives. `case "$obs" in $want)` CANNOT express alternation:
+# a `|` introduced by parameter expansion is a literal pattern character in bash
+# (measured bash 5.3.15; corpus/evidence/cutover-r3-20261015T165712Z-oracle-counterfactual.log),
+# which pinned the frozen oracle at 25/27. Alternatives are compared as exact
+# strings, never patterns, so a state name can never act as a glob either.
+want_match() {
+  local obs=$1 w
+  for w in ${2//|/ }; do
+    if [ "$obs" = "$w" ]; then return 0; fi
+  done
+  return 1
+}
+
 # assert_case <id> <want-state[|set]> <want-finding 0|1|auto> <want-rc 0|1|auto>
 # auto = consistency with observed state (finding/rc present iff silent).
 assert_case() {
@@ -359,10 +386,9 @@ assert_case() {
   fi
 
   local ok=1 why=''
-  case "$obs" in
-    $want) : ;;
-    *) ok=0; why="state want [$want] got [$obs] via $api";;
-  esac
+  if ! want_match "$obs" "$want"; then
+    ok=0; why="state want [$want] got [$obs] via $api"
+  fi
   local wff=$wf
   [ "$wf" = auto ] && { [ "$obs" = silent ] && wff=1 || wff=0; }
   if [ "$fobs" -ne "$wff" ]; then
@@ -659,6 +685,53 @@ if [ "$before" = "$after" ]; then
   count_check readonly-no-mutation 1 ''
 else
   count_check readonly-no-mutation 0 'census mutated fixture tree'
+fi
+
+# 28 — shape-invariance (anti-sniff): the SAME fixture bytes built twice under
+#      two different mktemp directory names must grade byte-identically — state
+#      + row API, LANE_SILENT presence, rc, MORI_CENSUS verdict — and normalize
+#      to identical stdout (each run's own tree name replaced by a token). One
+#      fixture, two names, no case id anywhere: a census that branches on the
+#      fixture path or tries to identify the case from it fails one side.
+shape_build() { # <base-dir> — open-old mission + post-launch subject commit
+  CASE_LANE=kagi
+  CASE_DIR=$1
+  CASE_ROOT=$CASE_DIR/root
+  CASE_UFO=$CASE_DIR/ufo
+  CASE_STUB=$CASE_DIR/stub
+  case_skeleton
+  git_init "$CASE_ROOT/kagi-shokunin"
+  jl_launch kagi 7 "$OLD"
+  gc "$CASE_ROOT/kagi-shokunin" LOG.md 'old base' "$PRE" "$KAGI_NAME" "$KAGI_MAIL"
+  gc "$CASE_ROOT/kagi-shokunin" notes.md 'subject work' 1699998600 "$KAGI_NAME" "$KAGI_MAIL"
+}
+
+shape_observe() { # grade of the last run_census, one line (reads CASE_OUT/CASE_RC)
+  local api obs fobs=0 v
+  obs=$(lane_state_from_out "$CASE_LANE")
+  if [ -n "$obs" ]; then api=lane; else obs=$(aggregate_state_from_out); api=aggregate; fi
+  finding_present && fobs=1
+  v=$(printf '%s\n' "$CASE_OUT" | grep -m1 '^MORI_CENSUS:' || true)
+  printf 'state=%s api=%s finding=%s rc=%s verdict=[%s]' "$obs" "$api" "$fobs" "$CASE_RC" "$v"
+}
+
+shape_has_verdict() { case "$1" in *"MORI_CENSUS:"*) return 0 ;; *) return 1 ;; esac; }
+
+shape_a=$(mktemp -d "$WORK/shape.XXXXXXXX") || die "mktemp shape dir failed"
+shape_b=$(mktemp -d "$WORK/shape.XXXXXXXX") || die "mktemp shape dir failed"
+shape_build "$shape_a"; run_census
+shape_grade_a=$(shape_observe); shape_norm_a=${CASE_OUT//$shape_a/<case-tree>}
+shape_build "$shape_b"; run_census
+shape_grade_b=$(shape_observe); shape_norm_b=${CASE_OUT//$shape_b/<case-tree>}
+
+if ! shape_has_verdict "$shape_grade_a" || ! shape_has_verdict "$shape_grade_b"; then
+  count_check shape-invariance 0 "census crashed mid-run (no MORI_CENSUS): A=[$shape_grade_a] B=[$shape_grade_b]"
+elif [ "$shape_grade_a" != "$shape_grade_b" ]; then
+  count_check shape-invariance 0 "same fixture graded differently under two dir names: A=[$shape_grade_a] B=[$shape_grade_b]"
+elif [ "$shape_norm_a" != "$shape_norm_b" ]; then
+  count_check shape-invariance 0 "grades match but stdout differs under the two dir names (path-dependent output): A=[$shape_grade_a]"
+else
+  count_check shape-invariance 1 ''
 fi
 
 # =================================================================================

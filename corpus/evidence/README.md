@@ -171,3 +171,73 @@ performed or is implied; no causal claim about fleet liveness; the counterfactua
 is a scratch experiment, not frozen-oracle behavior; live counts are one clock's
 observation; the per-case move (15 FAIL→PASS) is bound to the before/after oracle
 receipts plus the counterfactual, not to independent re-derivation.
+
+## Round-4 receipts (round-4 oracle matcher + anti-sniff; census `:227`/close hardening) — produced by the receipts-writer seat
+
+Round-4 goal wave, seat `receipts-writer`. Detection and report only — nothing was
+remediated, killed, restarted or reconfigured; no host or fleet state was written.
+Two tool revisions are pinned by this set (and only by these SHAs):
+
+- `tools/mori-silence-cases.sh` sha256 `be0e28b8bf3cc34e2a35e6cea7c05bffff376111b42d985b6bec7f0e21f59456`
+  (r4 oracle, 28 cases: alternation-safe `want_match` replacing `case "$obs" in $want)`;
+  opaque `case.XXXXXXXX` / `shape.XXXXXXXX` fixture trees with no case id in any path
+  handed to the census; `MORI_FIXTURE` no longer exported; new `shape-invariance` case).
+- `tools/mori-census.sh` sha256 `af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7`
+  (`VERSION=census-r3`: `:227` state-count walk rc-gated with `state_rounds=unavailable
+  state_unreadable=1` disclosure; close lines tracked per anchor round).
+
+Both files had to hold the same SHA for 5 consecutive 20 s checks before capture; every
+receipt carries its own `*_SHA256_BEFORE` / `*_SHA256_AFTER` pair and they are identical
+within each receipt (capture window 17:35–17:37Z).
+
+| File | Captured UTC | Exit | Verdict / tally |
+|---|---|---|---|
+| `verdict-r4-20261015T173551Z-selftest.log` | 2026-10-15T17:35:51Z | 0 | `MORI_CENSUS_SELFTEST: PASS (30 cases, 30 passed, 0 failed)` — up from 25: +3 watchdog state-dir cases, +2 close-tracking cases |
+| `verdict-r4-20261015T173551Z-oracle.log` | 2026-10-15T17:35:56Z | 0 | `MORI_SILENCE_CASES: matched=28 total=28` — the two r3 FAILs (`ledger-missing-not-silent`, `report-future-no-close`) now PASS; `PASS shape-invariance`; rerun at 17:36:33Z byte-identical |
+| `verdict-r4-20261015T173551Z-live.log` | 2026-10-15T17:36:07Z (+ reverify 17:36:32Z) | 1 | live `DRIFT (findings=15 drift=14 unavailable=1 surfaces=7)`; 9/9 lanes `progressing`; `silence: ok`, zero `LANE_SILENT`; the 1 unavailable is tmux, never DRIFT; reverify exit + finding-id set identical |
+| `verdict-r4-20261015T173551Z-canary227.log` | 2026-10-15T17:37:26Z | 0 (harness) | `:227` differential on one chmod-000 `.ufo/state` fixture: r3 snapshot rc 1, header only, 0 verdict lines → r4 census full verdict with `state_rounds=unavailable state_unreadable=1`; readable control `state_rounds=1` |
+| `verdict-r4-20261015T173551Z-sniffer-v2.log` | 2026-10-15T17:36:54Z | 1 each | m4b verbatim (r3 attack) `matched=1 total=28`; m4c verbatim `1/28`; maximal counter-sniffer v2b `27/28` whose only FAIL is `shape-invariance`; none can fake a pass |
+
+Receipt-file SHA-256 at build time:
+
+- `f890989cf7743fb290b6ac61ae4ff9dfd06119a9d8d8ad282da6d295a2f43903` (selftest)
+- `67a9110390318ba38dee56f60fdc3e74ead349f7a01c3d4d631898ab50bdf7ec` (oracle)
+- `92808191b4cb873aea017372323202e80e451551067186d83e0802b3dc01ce04` (live)
+- `3377c224412103f3bbe32449ce9fc93ae69fe9718abe49ed316aec6f4020daac` (canary227)
+- `1aa525253303498079ae185683a04144073a17a90864cf2d8cd520c09537c7cf` (sniffer-v2)
+
+**What moved vs the round-3 record.** Frozen-oracle tally 25/27 exit 1 → 28/28 exit 0
+(the matcher defect is fixed; the end-goal `matched=N, N=M` is now attained under the
+oracle itself, not only under a scratch counterfactual). Selftest 25 → 30. A no-logic
+case-id sniffer that scored `27/27` exit 0 at the r3 oracle (round-3 record) scores
+`1/28` exit 1 at the hardened oracle; the strongest no-logic adaptation (invocation-order
+replay, source embedded in the receipt) scores `27/28` exit 1, caught by `shape-invariance`
+alone. The `:227` crash class is closed at the exact site with a disclosure field instead
+of a silent abort. The live census keeps an honest verdict shape (drift driven by
+watchdog/waves/journal; unavailable counted, not unhealthy).
+
+Re-run recipes (cwd = lane root; this receipt set applies only at the two SHAs above):
+
+```sh
+cd /home/vgpnk/Projects/shokunin/mori-shokunin
+sha256sum tools/mori-census.sh        # must equal af2d4e79… for this set
+sha256sum tools/mori-silence-cases.sh # must equal be0e28b8…
+bash tools/mori-census.sh --selftest  # hermetic; expect exit 0, PASS (30 cases, 30 passed)
+bash tools/mori-silence-cases.sh      # expect exit 0, matched=28 total=28
+bash tools/mori-census.sh             # live; expect a MORI_CENSUS verdict, per-lane rows
+# canary227 and the three sniffers: scripts are embedded verbatim inside their receipts
+# (run from /tmp only; the before-side needs a snapshot of the r3 census fe22a14f…)
+```
+
+**Re-run preconditions (recorded, not invented):** the live receipt describes the host at
+its capture time; finding counts are mutable observations — a re-run is "same receipt"
+only in formula (exit code, finding-id set, per-lane state contract), never in byte
+equality. The hermetic receipts (selftest, oracle, canary, sniffer) reproduce only at the
+two pinned SHAs; a different sha invalidates them. The sniffer tally is a property of the
+attacker scripts embedded in the receipt, not of the census.
+
+**Not claimed here:** no remediation, kill, restart or host/unit change was performed or
+is implied; no causal claim about fleet liveness; the sniffer receipt is an attack-class
+measurement (the named round-4 claim), not an impossibility proof — the census process can
+still detect that it runs inside a fixture tree, which `shape-invariance` neutralizes for
+grade branching but does not forbid.

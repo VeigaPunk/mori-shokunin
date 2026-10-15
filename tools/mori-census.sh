@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# mori-census.sh — read-only fleet/host observability census (mori-shokunin r2).
+# mori-census.sh — read-only fleet/host observability census (mori-shokunin r3).
 #
 # Domain: whether the fleet, its waves and its host are alive and progressing.
 # Product: verdict + surface lines + stable finding ids. Never remediates.
@@ -58,7 +58,7 @@ set -euo pipefail
 # `cmd=journalctl --user -b --no-pager` re-run prints MESSAGE by design.
 set +o xtrace
 
-VERSION=census-r2
+VERSION=census-r3
 SELF=$(readlink -f -- "${BASH_SOURCE[0]}" 2>/dev/null || {
   p=$0
   case "$p" in /*) printf '%s' "$p" ;; *) printf '%s' "$PWD/$p" ;; esac
@@ -222,9 +222,22 @@ probe_watchdog() {
     fi
   fi
 
-  local state_n=0
+  # r4: this used to be a bare `find | wc -l | tr` pipeline — under `set -euo
+  # pipefail` an unreadable `.ufo/state` failed the whole pipeline and killed the
+  # census before any verdict (rc 1, header only; canary B in
+  # corpus/lessons/2026-10-15-errexit-pipefail-silent-crash.md, re-measured at
+  # fe22a14f). The walk is rc-gated now, like the wave-age read at `:296-302`:
+  # an unreadable state dir renders the count `unavailable` with a disclosure
+  # field and every other surface still reports. A missing or empty dir cannot
+  # fail the walk, so it keeps the plain provable count.
+  local state_n=0 state_read=ok state_field=''
   if [ -d "$STATE_DIR" ]; then
-    state_n=$(find "$STATE_DIR" -maxdepth 1 -type f -name '*.round' 2>/dev/null | wc -l | tr -d ' ')
+    cap find "$STATE_DIR" -maxdepth 1 -type f -name '*.round'
+    if [ "$CAP_RC" -eq 0 ]; then
+      state_n=$(printf '%s\n' "$CAP_OUT" | grep -c . || true)
+    else
+      state_read=unreadable
+    fi
   fi
 
   if [ "$pid_n" -eq 0 ]; then
@@ -238,7 +251,13 @@ probe_watchdog() {
     if [ "$pid_n" -eq 0 ] && [ "$log_state" != ok ]; then st=drift; fi
   fi
 
-  detail="cmd=$cmd_bits; pids=$pid_n; log=$log_state; age_s=${age:-?}; stale_threshold_s=$WATCHDOG_STALE_S; state_rounds=$state_n; ts=$TS_UTC"
+  # The disclosure only appears when the walk failed; a readable dir keeps the
+  # exact r2 row bytes (`state_rounds=<n>`).
+  state_field="state_rounds=$state_n"
+  if [ "$state_read" = unreadable ]; then
+    state_field='state_rounds=unavailable state_unreadable=1'
+  fi
+  detail="cmd=$cmd_bits; pids=$pid_n; log=$log_state; age_s=${age:-?}; stale_threshold_s=$WATCHDOG_STALE_S; $state_field; ts=$TS_UTC"
   emit_surface watchdog "$st" "$detail"
 }
 
@@ -576,7 +595,10 @@ ledger_ts_fallback() { # <ledger line> -> epoch from a "ts=<epoch>" token, else 
 ledger_anchor() {
   local lane=$1 n=0 line f1 f2 f3 f4 f5 f6 rest ep round
   local l_ln=0 l_ep='' l_round='' s_ln=0 s_ep='' s_round=''
-  local close_ln=0 close_round=''
+  # r4: closes are remembered as "<line> <round>" pairs, one per close line, so
+  # the anchor round's own later close can be found after the pass (the r3 code
+  # kept only the LAST close line anywhere — see the complete|wrap arm).
+  local close_pairs='' cl cr
   LA_LINE=0; LA_EPOCH=''; LA_ROUND=''; LA_CLOSED=0
   while IFS= read -r line; do
     n=$((n + 1))
@@ -612,7 +634,10 @@ ledger_anchor() {
         [ "$f3" = "$lane" ] || continue
         case "$f4" in round=*) ;; *) continue ;; esac
         round=${f4#round=}; round=${round%%;*}
-        close_ln=$n; close_round=$round
+        # r4: keyed per round, not "last close anywhere". Measured misgrade at
+        # fe22a14f: `complete <lane> round=7` followed by `complete <lane>
+        # round=5` erased the r7 close and graded the closed r7 anchor silent.
+        close_pairs="$close_pairs$n $round"$'\n'
         ;;
     esac
   done <<< "$LEDGER"
@@ -621,8 +646,18 @@ ledger_anchor() {
   elif [ "$s_ln" -gt 0 ]; then
     LA_LINE=$s_ln; LA_EPOCH=$s_ep; LA_ROUND=$s_round
   fi
-  if [ "$LA_LINE" -gt 0 ] && [ "$close_ln" -gt "$LA_LINE" ] && [ "$close_round" = "$LA_ROUND" ]; then
-    LA_CLOSED=1
+  # r4: the anchor is closed only by a close line for the ANCHOR ROUND that is
+  # later in file order than the anchor launch. Any such close qualifies (the
+  # last one for the round is also the latest), and closes for other rounds are
+  # irrelevant — whether they sit before or after this anchor.
+  if [ "$LA_LINE" -gt 0 ] && [ -n "$close_pairs" ]; then
+    while read -r cl cr; do
+      [ -n "$cl" ] || continue
+      if [ "$cl" -gt "$LA_LINE" ] && [ "$cr" = "$LA_ROUND" ]; then
+        LA_CLOSED=1
+        break
+      fi
+    done <<< "$close_pairs"
   fi
 }
 
@@ -1116,6 +1151,33 @@ SKIP_FRESHEN=1
     '^MORI_CENSUS: DRIFT '
   SKIP_FRESHEN=0
 
+  # --- r4: watchdog state-dir rc-gate -----------------------------------------
+  # The state walk was a bare `find | wc -l | tr` pipeline: an unreadable
+  # `.ufo/state` failed it under pipefail and killed the census before any
+  # verdict (canary B; re-measured at fe22a14f: rc 1, header only, 0 verdict
+  # lines). The three variants pin the rc-graded contract: unreadable ->
+  # disclosed `unavailable` count, missing/empty -> provable 0 (the walk cannot
+  # fail), each with a full verdict and every other surface still reporting.
+  FX="$work/fx/wd-state-unreadable"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  chmod 000 "$FX/ufo/state"
+  check 'watchdog: unreadable state dir -> unavailable-disclosed, no crash' 0 CLEAN \
+    '^SURFACE watchdog: ok' \
+    'state_rounds=unavailable' \
+    'state_unreadable=1' \
+    '^MORI_CENSUS: CLEAN '
+
+  FX="$work/fx/wd-state-missing"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  rm -rf "$FX/ufo/state"
+  check 'watchdog: missing state dir -> provable 0, no crash' 0 CLEAN \
+    '^SURFACE watchdog: ok' \
+    'state_rounds=0'
+
+  FX="$work/fx/wd-state-empty"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  rm -f "$FX/ufo/state"/*
+  check 'watchdog: empty state dir -> provable 0, no crash' 0 CLEAN \
+    '^SURFACE watchdog: ok' \
+    'state_rounds=0'
+
   FX="$work/fx/wave-aged"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
   mkdir -p "$FX/ufo/waves/wave-hang"
   printf '{}\n' > "$FX/ufo/waves/wave-hang/swarm-registry.json"
@@ -1274,6 +1336,31 @@ SKIP_FRESHEN=1
   check 'silence: committed report in window -> not-open' 0 CLEAN \
     '^SURFACE lane\.kagi: not-open ' \
     'basis=row-6'
+
+  # --- r4: close tracking is per anchor round ---------------------------------
+  # r3 remembered only the LAST close line anywhere, so an r5 close after an r7
+  # close erased the r7 close and the closed r7 anchor graded silent (critic
+  # defect 1; re-measured at fe22a14f). File order + anchor round decide.
+  FX="$work/fx/sil-close-out-of-order"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  printf '%s complete kagi round=7; respawning\n' "$(ts_iso $((PIN_NOW - 1900)))" >> "$FX/ufo/watchdog.log"
+  # A later-file-order close for an OLDER round must not erase the r7 close.
+  printf '%s complete kagi round=5; respawning\n' "$(ts_iso $((PIN_NOW - 1800)))" >> "$FX/ufo/watchdog.log"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'silence: close r7 then close r5 -> r7 anchor stays closed' 0 CLEAN \
+    '^SURFACE lane\.kagi: not-open ' \
+    'basis=row-4' \
+    'reason=ledger-close round=7'
+
+  FX="$work/fx/sil-close-other-round"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  # The complementary guard: a close for a DIFFERENT round must never close the
+  # anchor, wherever it sits — closes are keyed on the anchor round.
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  printf '%s complete kagi round=5; respawning\n' "$(ts_iso $((PIN_NOW - 1900)))" >> "$FX/ufo/watchdog.log"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'silence: close for another round does not close the anchor' 1 DRIFT \
+    '^SURFACE lane\.kagi: silent ' \
+    'FINDING LANE_SILENT'
 
   FX="$work/fx/sil-git-unreadable"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
   printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
