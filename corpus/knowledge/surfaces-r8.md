@@ -244,6 +244,25 @@ pinned pair for this round is therefore (census `390ab9cd…`, oracle `448f7723�
    (`20:21Z`–`20:25Z`); every later run at the frozen bytes was green (8/8 in the
    repeat set, SHA re-verified unchanged after the set). Not attributed to a code path
    in this note; the round's "selftest all-pass" claim rests on the frozen-bytes runs.
+   **Disposition (r9, 2026-10-15).** Root-caused to the `printf | grep -q` SIGPIPE
+   race: `grep -q` exits on its first match and closes the pipe while the forked
+   `printf` producer is still writing line-by-line; the producer dies of SIGPIPE
+   (rc 141), `pipefail` makes that rc the pipeline's, and the `|| miss=` records a
+   false `missing match` on a random case (`corpus/knowledge/selftest-flake-r9.md`
+   §1–§1c reproduces this item's exact message template with a different case; class
+   lesson `corpus/lessons/2026-10-15-selftest-grep-sigpipe-race.md`). Fixed at census
+   sha256 `1c49238a…` (+21/−7, hunks confined to `run_selftest()`): all five harness
+   live-pipe greps (`:1771`/`:1773`/`:1779`/`:1783`/`:1809` at r5 numbering) now grep
+   one captured `$OUT_FILE` — no producer remains to SIGPIPE. Verified: selftest
+   `PASS (56 cases, 56 passed, 0 failed)` exit 0 (my run at the new bytes, sha
+   re-verified unchanged around it); the note's two ≥20-run batteries (20 + 20, one
+   under 4-CPU-hog load) read 0 flakes; its oracle run at the new bytes reads
+   `matched=28 total=28` with `448f7723…` byte-frozen. Honest scope: r8's specific
+   failures are attributed by mechanism and symptom, not re-run; a symptom-identical
+   second cause (reading the census while it is being written — this item's
+   observation window) is addressed by the note's battery rule, not by the code fix;
+   `:1322` (production silence path) is the same race class, untouched under the
+   production byte-freeze — named debt, not closure.
 3. **Doc nit:** the header `:76-78` points at
    `corpus/knowledge/surfaces-r7.md` (`Honest residuals`) — that section name is in the
    r7 *report* (`.ufo/reports/round-7/mori-goalwave.md:42-48`); the note carries

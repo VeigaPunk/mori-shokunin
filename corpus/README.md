@@ -14,11 +14,13 @@
 | `knowledge/verdict-machine-r6.md` | the r6 verdict machine at oracle `3307761a…` / census `af2d4e79…` (frozen): the r5 stdout-backchannel (fd/1 header + pinned environ) and naive content-keyed classes closed — header printed only after the case loop, pins scrubbed from the exec-time environ by a one-time self re-exec, per-run salt woven into fixture content — with the attack tallies and the two named residuals (full-grammar normalizing memorizer; surviving-ancestor pin) | round-6 wave, 2026-10-15 |
 | `knowledge/surfaces-r7.md` | the r7 closure of the four r2 surface Gaps (tmux relevance, memory pressure, disk write-rate, `state_rounds` values): per-gap probe design, hermetic proofs + live rows, named limits, and the additive-only oracle re-pin at census `c7c3569b…` / oracle `448f7723…` | round-7 wave, 2026-10-15 |
 | `knowledge/surfaces-r8.md` | the r8 disposition of the four r7 residuals — instantaneous disk write-rate deferral now carrying its measured cost (the 50 ms condition fails), timeout-bounded tmux per-session freshness, `*.round` symlink/dir reason codes, memory-probe residuals measured — plus the sampling-cost adjudication, the open items, and the pinned pair census `390ab9cd…` / oracle `448f7723…` (no re-baseline needed) | round-8 wave, 2026-10-15 |
+| `knowledge/selftest-flake-r9.md` | the r9 selftest-determinism close: the live-pipe SIGPIPE race in the harness's `printf`-into-`grep -qE` assertions under `pipefail` (rc 141 read as "missing match"), its mechanism replays (13 300 trials → 2 real rc=141 fires; the fixed form 0/2 000) and git archaeology (present since the r1 landing, not a regression), the capture-file fix at all five harness sites (`:1771`/`:1773`/`:1779`/`:1783`/`:1809` at r5) with `+21/−7` hunks confined to `run_selftest()`, the 50-run battery evidence (pre-fix 10/10; arm A 20/20; arm B 20/20 under 4 CPU hogs) at census `1c49238a…` (a revision of `census-r5`), the byte-frozen oracle `448f7723…` held at 28/28, and the named same-class production debt `:1322` | round-9 wave, 2026-10-15 |
 | `lessons/2026-10-15-errexit-pipefail-silent-crash.md` | the pipefail silent-crash class (rc 1 collides with DRIFT, no verdict line); `:517`/`:283` hardened (r3), `:227` rc-gated (r4, `verdict-machine-r4.md` §3) | round-3 wave, `/tmp` canaries |
 | `lessons/2026-10-15-forgeable-oracle-visible-fixtures.md` | the forgeable-oracle class: visible case identity + a matcher taking expanded alternation literally let a no-logic census reach the ceiling (27/27); r4 opaque case dirs drop the same sniffer to 1/28 | round-4 wave, `/tmp` canaries |
 | `lessons/2026-10-15-run-order-spoofing-shuffle-nonce-limits.md` | the r5 lesson: the seeded shuffle + per-run nonce close the enumerated replay classes, and the two forgers that still reach 28/28 (content memorizer; `/proc` run-header leak), with countermeasures | round-5 wave, `/tmp` canaries |
 | `lessons/2026-10-15-run-secret-timing-and-content-freshness-limits.md` | the r6 lesson: when a run secret is emitted is part of the secret (timing), and freshness woven into fixture content re-prices memorization rather than closing it — the pattern-normalizing memorizer still reaches 28/28; fingerprint size drift as a derived component | round-6 wave, `/tmp` canaries |
 | `lessons/2026-10-15-probe-pricing-dwell-bounds-filter-drop.md` | the r8 lesson: a deferred probe's four prices — the counter's found-ness (an unfound counter reads `0 B/s`), marginal wall time (resolvable only when the instrument's noise is under budget; serial +212 ms vs overlapped 0 ms), the enforceable vs nominal bound (`timeout 0.3` bound at 1510 ms against a SIGTERM-ignoring peer; `-k 1 2` → rc 137), and an enumeration filter's drop set (a count means only what survived the filter) | round-8 wave, `/tmp` canaries |
+| `lessons/2026-10-15-selftest-grep-sigpipe-race.md` | the r9 lesson: under `pipefail` a producer-piped `grep -q` assertion's rc answers "did every element exit 0", not "did the consumer match" — grep exited 0 while the producer died of SIGPIPE (141); construct sweep, `PIPESTATUS` attribution, strace, the production-shaped 3-stage variant, and the here-string countermeasure (0 misses) | round-9 wave, `/tmp` canaries |
 
 ## Known gaps
 
@@ -187,12 +189,44 @@
   fixture +14 ms median. Open items stay named: the pre-existing unbounded-FIFO
   hang class (unpinned `MORI_DISKSTATS`/`MORI_UPTIME`) is not fixed; one of 16
   selftest runs during the write window failed intermittently (`CGROUP_OOM_KILL`
-  missing-match, not attributed to a code path; frozen-bytes repeats green); and
+  missing-match; root-caused in round 9 as the live-pipe-grep SIGPIPE race —
+  next bullet; frozen-bytes repeats green); and
   gate-level timing is not a decision instrument under load. Method, arms, open
   items: `knowledge/surfaces-r8.md`; lesson
   `lessons/2026-10-15-probe-pricing-dwell-bounds-filter-drop.md`; receipts
   `corpus/evidence/residuals-r8-20261015T2040Z-*.log` (7 logs, every one naming
   the frozen pair; the note's own pointer still says `surfaces-r8-*.log`).
+- **Selftest determinism closed (round 9): census `1c49238a…` — a revision of
+  `census-r5` (`:201`; same version label, distinguished by SHA) — and the oracle
+  `448f7723…` byte-frozen.** The r8 flake class: under `set -euo pipefail`
+  (`:194`), `printf '%s\n' "$out" | grep -qE -- "$re"` lets `grep -q` exit 0 at
+  the first match while the printf producer is still writing; the producer dies
+  of SIGPIPE (rc 141), `pipefail` makes that the pipeline rc, and the `|| miss=`
+  guard records a false `missing match` on a random case (green on rerun). The
+  fix rewrites all five harness sites (`:1771`/`:1773`/`:1779`/`:1783`/`:1809`
+  at r5 numbering) to grep one capture file (`OUT_FILE`, declared `:1572`, set
+  `:1585`; `check()` writes it once at `:1781`, `check_cli()` at `:1817`) — no
+  live piped early-exit consumer remains in the selftest path and the `+21/−7`
+  diff adds no pipe, with every hunk inside `run_selftest()` (reached only from
+  the `--selftest` branch, so production probe bytes are untouched). Machine
+  evidence at the new bytes: the identical `PASS (56 cases, 56 passed, 0
+  failed)` exit 0 in all 50 battery runs (pre-fix 10/10; post-fix arm A 20/20
+  and arm B 20/20 under 4 owned-and-killed CPU hogs); replays of the 56 real
+  payload/pattern pairs fired the race 2× in 13 300 trials — real cases, match
+  present — while the fixed form fired 0/2 000; a detection-power mutant still
+  fails (`55/56`, exit 1). The oracle returns `matched=28 total=28` exit 0 at
+  the new bytes with want-sets unchanged; live `DRIFT (findings=15 drift=14
+  unavailable=1 surfaces=7)` with the 16 surface key-sets and the finding-id set
+  identical to the r8 receipt run1 (`.ufo/round-9/goal-wave/measurements-ledger.md`
+  after-side; a durable r9 receipt set was not yet in `corpus/evidence/` at the
+  note's clock). Git
+  archaeology: the idiom is as old as the harness (r1 landing `7ca17b1`), so
+  this was not an r8 regression; the production silence path `:1322` carries the
+  same class and stays **named debt** under this round's production byte-freeze,
+  and r8's second "random case, green on rerun" cause (reading the census while
+  it was still being written) stays distinguished from this class. Method,
+  mechanism replays, gate recommendation: `knowledge/selftest-flake-r9.md`;
+  lesson `lessons/2026-10-15-selftest-grep-sigpipe-race.md`.
 - **Row-6 closure is presence + window only (spec residual):** a fresh,
   contentless committed marker satisfies it while the running driver would reject
   that shape (`knowledge/silence-grading-r2.md:191-197`). No frozen-behavioral

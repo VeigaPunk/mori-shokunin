@@ -1,0 +1,37 @@
+==== mori-shokunin round-9 receipt — flake-r9-20261015T2119Z-selftest-battery-a (20 x --selftest, sequential, no artificial load (host wave load recorded)) ====
+SET_STAMP=20261015T2119Z
+battery=selftest-battery-a n=20 hogs=0 start_utc=2026-10-15T21:23:35Z loadavg=96.89 102.44 96.75
+end_utc=2026-10-15T21:30:28Z loadavg=101.25 96.55 95.44
+CENSUS_SHA256_BEFORE=1c49238a7fd87277151ff5776acfb4d62fadd9d69764a02f0ede03ef0d3902d2
+CENSUS_SHA256_AFTER=1c49238a7fd87277151ff5776acfb4d62fadd9d69764a02f0ede03ef0d3902d2
+ORACLE_SHA256=448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5 (frozen pin, must stay 448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5)
+COMMAND (per run): bash tools/mori-census.sh --selftest   (cwd = lane root; sequential; stdout->run-NN.out, stderr->run-NN.err)
+---- per-run results ----
+run=01 rc=0 wall_ms=23719 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:23:35Z..2026-10-15T21:23:58Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=02 rc=0 wall_ms=23127 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:23:58Z..2026-10-15T21:24:22Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=03 rc=0 wall_ms=23441 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:24:22Z..2026-10-15T21:24:45Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=04 rc=0 wall_ms=23410 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:24:45Z..2026-10-15T21:25:08Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=05 rc=0 wall_ms=24756 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:25:08Z..2026-10-15T21:25:33Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=06 rc=0 wall_ms=22023 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:25:33Z..2026-10-15T21:25:55Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=07 rc=0 wall_ms=18475 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:25:55Z..2026-10-15T21:26:14Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=08 rc=0 wall_ms=18543 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:26:14Z..2026-10-15T21:26:32Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=09 rc=0 wall_ms=18599 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:26:32Z..2026-10-15T21:26:51Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=10 rc=0 wall_ms=18281 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:26:51Z..2026-10-15T21:27:09Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=11 rc=0 wall_ms=18402 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:27:09Z..2026-10-15T21:27:28Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=12 rc=0 wall_ms=18597 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:27:28Z..2026-10-15T21:27:46Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=13 rc=0 wall_ms=19162 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:27:46Z..2026-10-15T21:28:05Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=14 rc=0 wall_ms=19473 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:28:05Z..2026-10-15T21:28:25Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=15 rc=0 wall_ms=18535 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:28:25Z..2026-10-15T21:28:43Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=16 rc=0 wall_ms=20014 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:28:44Z..2026-10-15T21:29:04Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=17 rc=0 wall_ms=20838 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:29:04Z..2026-10-15T21:29:24Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=18 rc=0 wall_ms=22009 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:29:24Z..2026-10-15T21:29:46Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=19 rc=0 wall_ms=20721 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:29:46Z..2026-10-15T21:30:07Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+run=20 rc=0 wall_ms=20909 pass_lines=56 fail_lines=0 stderr_bytes=0 ts=2026-10-15T21:30:07Z..2026-10-15T21:30:28Z tally=MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed)
+---- summary ----
+runs=20 bad_runs=0 total_stderr_bytes=0
+distinct_tallies=1: [MORI_CENSUS_SELFTEST: PASS (56 cases, 56 passed, 0 failed) (x20)] 
+FLAKE_COUNT=0 (0 failed runs / 0 FAIL lines / all tallies identical PASS 56)
+---- interpretation ----
+Every run must exit 0 with the identical PASS (56 cases, 56 passed, 0 failed) tally,
+0 FAIL lines on stderr and 0 B stderr. Any FAIL-line run or non-zero rc here is a flake.
+---- end ----

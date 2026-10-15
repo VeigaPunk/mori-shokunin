@@ -1569,7 +1569,7 @@ run_census() {
 
 # ---- hermetic selftest ------------------------------------------------------
 run_selftest() {
-  local bin FX PASS=0 FAIL=0
+  local bin FX PASS=0 FAIL=0 OUT_FILE
   # The trap path must NOT be a `local`: the EXIT trap fires after this function
   # returns, when a local is out of scope, so `rm -rf -- "${work:-}"` expanded to
   # `rm -rf -- ''` and every run leaked its temp dir (measured: 45 leftovers).
@@ -1581,6 +1581,8 @@ run_selftest() {
   # what it cannot read.
   trap 'chmod -R u+rwX "${MORI_SELFTEST_WORK:-}" 2>/dev/null; rm -rf -- "${MORI_SELFTEST_WORK:-}"' EXIT INT TERM
   bin="$work/bin"
+  # r9: the one capture file every harness match greps (see the note at check()).
+  OUT_FILE="$work/.last-out"
   mkdir -p "$bin" "$work/fx"
 
   # dispatcher stubs — answer only from MORI_FIXTURE tree. git is arg-aware: the
@@ -1766,21 +1768,32 @@ STUB
       bash "$SELF" 2>&1)
     rc=$?
     set -e
+    # r9 FIX: every match below greps the ONE capture file, never a live pipe.
+    # The replaced idiom (`printf '%s\n' "$out" | grep -qE …`) raced: grep -q
+    # exits at the first match while printf is still writing, printf takes
+    # SIGPIPE mid-stream, pipefail makes the pipeline rc 141, and a regex that
+    # IS present is scored as missing — a random false-FAIL, green on rerun.
+    # Measured at these output sizes (2.5-4 KB): 15/8000 invocations rc=141 with
+    # the match present (match near the top of the stream), 0/10000 with the
+    # match at the end. Once the text is in a file there is no writer left for
+    # grep to kill.
+    # corpus/lessons/2026-10-15-selftest-grep-sigpipe-race.md.
+    printf '%s\n' "$out" > "$OUT_FILE"
     if [ "$rc" -ne "$wrc" ]; then
       bad "$label: exit $rc want $wrc; tail=$(printf '%s' "$out" | tail -n3 | tr '\n' '|')"
-    elif ! printf '%s\n' "$out" | grep -qE "^MORI_CENSUS: ${wverdict} "; then
-      bad "$label: verdict want $wverdict; got=$(printf '%s\n' "$out" | grep '^MORI_CENSUS:' | head -n1)"
-    elif printf '%s\n' "$out" | grep -qE 'integer expected|line [0-9]+: \[: '; then
+    elif ! grep -qE "^MORI_CENSUS: ${wverdict} " "$OUT_FILE"; then
+      bad "$label: verdict want $wverdict; got=$(grep -m1 '^MORI_CENSUS:' "$OUT_FILE" || true)"
+    elif grep -qE 'integer expected|line [0-9]+: \[: ' "$OUT_FILE"; then
       # r7: a probe whose normal path prints a bash diagnostic (e.g. a `[` test
       # called with a non-integer) is defective even when its answer happens to
       # be right — measured: `[: max: integer expected` on stderr from the
       # memory fill arm while the row still read correctly. The output is
       # captured with 2>&1, so this catches stderr noise in every case.
-      bad "$label: shell diagnostic noise in census output: $(printf '%s\n' "$out" | grep -m1 -E 'integer expected|line [0-9]+: \[: ')"
+      bad "$label: shell diagnostic noise in census output: $(grep -m1 -E 'integer expected|line [0-9]+: \[: ' "$OUT_FILE" || true)"
     else
       miss=''
       for re in "$@"; do
-        printf '%s\n' "$out" | grep -qE -- "$re" || miss="$miss |$re|"
+        grep -qE -- "$re" "$OUT_FILE" || miss="$miss |$re|"
       done
       if [ -n "$miss" ]; then
         bad "$label: missing match $miss"
@@ -1801,12 +1814,13 @@ STUB
     out=$(bash "$SELF" "$@" 2>&1)
     rc=$?
     set -e
+    printf '%s\n' "$out" > "$OUT_FILE"
     if [ "$rc" -ne "$wrc" ]; then
       bad "$label: exit $rc want $wrc"
     else
       miss=''
       for re in "${res[@]}"; do
-        printf '%s\n' "$out" | grep -qE -- "$re" || miss="$miss |$re|"
+        grep -qE -- "$re" "$OUT_FILE" || miss="$miss |$re|"
       done
       if [ -n "$miss" ]; then bad "$label: missing $miss"; else ok "$label (exit $rc)"; fi
     fi

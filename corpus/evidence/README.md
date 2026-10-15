@@ -615,3 +615,69 @@ Receipt-file SHA-256 (as committed):
 - `8ceb29c02ea4d9880ea74765719e7389cfcba507b760f33fcbe30de9ef80678c` (tmux)
 - `0e10135648f15ada1c44b17ce426e47348b126a4f2dbc429f704f18c52f55cf3` (roundfiles)
 - `604557903174acbdd731abd8bbd2896e78ff2f63551d212c012d993a2ee24d97` (memory)
+
+## Round-9 receipts (selftest determinism: the grep-over-pipe SIGPIPE race eliminated) — produced by the receipts-writer seat
+
+Round-9 goal wave, seat `receipts-writer`. Detection and report only — nothing was
+remediated, killed, restarted or reconfigured; no host or fleet state was written. The
+batteries and fixtures live under `/tmp` only (`/tmp/mori-r9-receipts/`); the battery-B
+CPU hogs were spawned by this seat (`yes >/dev/null`, 12 pids) and killed by exact PID,
+with the kill verified gone (pids + `gone=yes` recorded in that receipt). The set opened
+`2026-10-15T21:19:40Z` at census `1c49238a…` / oracle `448f7723…`, and every artifact in
+the set re-verified those two SHAs; the set-close check is the last line of the oracle
+receipt (`2026-10-15T21:40:30Z`).
+
+Pinned bytes:
+
+- `tools/mori-census.sh` sha256
+  `1c49238a7fd87277151ff5776acfb4d62fadd9d69764a02f0ede03ef0d3902d2` — the r9 flake fix
+  (+21/−7 vs the r8 bytes `390ab9cd…`): all four race-class sites in `run_selftest()`
+  (r8 `:1771/:1773/:1783/:1809`) converted from `printf '%s\n' "$out" | grep -qE …` live
+  pipes to `grep -qE … "$OUT_FILE"` file reads (one `printf > "$OUT_FILE"` capture per
+  case, so no writer process is left for an early-exiting `grep -q` to SIGPIPE), plus the
+  two message-text fallbacks (`grep -m1` on the file, `|| true`). Every diff hunk sits
+  inside `run_selftest()` (source-localization block in the live receipt); the case ledger
+  stays 56 (0 removed vs r8); the whole-file race-class sweep leaves one pre-existing
+  site at `:1322` (the production silence path) — reported, not touched, per the round's
+  fix-the-`--selftest`-path-only scope.
+- `tools/mori-silence-cases.sh` sha256
+  `448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5` — **byte-frozen this
+  round**: before = after in every receipt that checks it, no seat wrote the oracle, and
+  the 28-id registry diff vs the r8 receipts is empty (0 added / 0 removed).
+
+| File (`flake-r9-20261015T2119Z-…`) | Captured UTC | Exit | Key output |
+|---|---|---|---|
+| `selftest-battery-a.log` | 21:23:35Z–21:30:28Z | 0 ×20 | 20/20 runs `rc=0`, identical `PASS (56 cases, 56 passed, 0 failed)`, 0 FAIL lines, 0 B stderr, 0 flakes (wall 18.3–24.8 s/run; host loadavg 96.89→101.25) |
+| `selftest-battery-b.log` | 21:31:14Z–21:38:30Z | 0 ×20 | same under 12 own CPU hogs: 20/20 `rc=0`, identical tally, 0 FAIL lines, 0 B stderr, 0 flakes (wall 18.9–24.5 s/run; loadavg 101.78→121.14); hogs killed by exact PID, `gone=yes` |
+| `selftest.log` | 21:19:40Z–21:20:10Z | 0 | `PASS (56 cases, 56 passed, 0 failed)`, 30.13 s, 0 B stderr; case ledger 56/56, 0 removed vs r8; race-class audit: selftest region 0 hits, 0 new bare pipelines in the diff; the one whole-file hit is `:1322` (production path, unchanged) |
+| `oracle.log` | 21:23:40Z | 0 / 0 | `matched=28 total=28` twice (fresh seed `2900075682` + pinned seed `1862321375`), 0 B stderr; id set = r8 set (0 added / 0 removed); header after the case lines (line 32 of 32) |
+| `live.log` | 21:20:45Z–21:23:27Z | 1 ×3 | new bytes ×2 + HEAD bytes ×1: `MORI_CENSUS: DRIFT (findings=15 drift=14 unavailable=1 surfaces=7)` on all three, 0 B stderr; per-surface key sets IDENTICAL new-vs-HEAD both directions on all 16 surfaces AND identical to the r8 receipt's live rows (shape preserved); finding-id multiset identical; all fix hunks inside `run_selftest()` |
+
+**What the batteries do and do not prove.** They are the round's registered behavioral
+bar: two independent 20-run batteries — one at wave load, one under 12 of this seat's own
+CPU hogs — all 40 runs green, 0 flakes, all at the pinned bytes. The decisive elimination
+evidence is structural plus measured: the diff removes the live-pipe construct from the
+harness (no writer → no SIGPIPE channel; audit above), and the lesson
+`corpus/lessons/2026-10-15-selftest-grep-sigpipe-race.md` measures the construct's
+mechanism and its countermeasure. The pre-fix rate is load-sensitive at this host: the
+scribe's 16-run battery at the r8 bytes read 0/16, so no honest 20-run battery at this
+clock has the resolving power to *demonstrate* a rare class either way — the batteries
+bound the after-side at 0/40, and the source diff is what closed the class.
+
+Re-run recipes (cwd = lane root; this set applies only at the two SHAs above):
+
+```sh
+sha256sum tools/mori-census.sh         # must equal 1c49238a… for this whole set
+sha256sum tools/mori-silence-cases.sh  # 448f7723… (frozen this round)
+bash tools/mori-census.sh --selftest   # hermetic; expect exit 0, PASS (56 cases)
+bash tools/mori-silence-cases.sh       # expect exit 0, matched=28 total=28
+bash tools/mori-census.sh              # live; DRIFT
+```
+
+Receipt-file SHA-256 (as committed):
+
+- `12ebc124599e601746131582320d990a3782886d8a5f7075d42ea93bb7ff05dc` (selftest-battery-a)
+- `cc30d62102095a583504b0f345697a8f6513ba37da4d8d6b945ca151bc835756` (selftest-battery-b)
+- `6043cb8e4c310cfc65fee14912f049b5b6066f9d9eb73813df27b046a7b5f1bf` (selftest)
+- `3c7a7240edf13308008e21d8c6248c9d3e7c38c51edbcea1e2145f5861d8aecb` (oracle)
+- `fc71df9b6d7f5fee18d52957d0b31865f9f2ad8e768dde1a0e51ec1025752a71` (live)
