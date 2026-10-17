@@ -538,3 +538,10 @@ planned (`## Planned`), retired (`## Retired`). Added by this rollout, purely
 additively at the end of `SCORECARD.md`: `## Capabilities` (empty repertoire
 scaffold) and `## Saturation` (declaration deferred to the lane's next round).
 No axis claim was made and no score moved; this is not a craft round.
+
+## 2026-10-17 — repository README
+
+- **Trigger.** The repository root had no `README.md`.
+- **Evidence.** Probes and refusals are `PROVINCE.md`. Decision table is `SKILL.md`. Usage line is `tools/mori-census.sh` (`--selftest`, `--pin`, `--drift`). Ran `bash tools/mori-census.sh --selftest` on 2026-10-17: `MORI_CENSUS_SELFTEST: PASS (66 cases, 66 passed, 0 failed)`, exit 0.
+- **Action.** Added `README.md`. Corpus indexes were not edited. No Devin wiki URL was present.
+- **Outcome.** No axis claim; no score moved.
