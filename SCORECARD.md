@@ -578,3 +578,15 @@ the-audit seat and still ships named limits).
 operator (not lane debts): named-non-author SHONEN verification, the receipt-
 binding and role-routing debts (blocked-attempt, operator/integrator
 surfaces), and the promotion decision itself.
+
+## Capabilities
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| — none yet — | | | |
+
+Rows enter only through a round that demonstrates the capability running (`AXES.md` §Capabilities); none enter through this rollout.
+
+## Saturation
+
+The lane's saturation line + stagnation window N are to be declared by the lane on its next round per `AXES.md` §The stagnation nudge; not asserted by this conformance change.

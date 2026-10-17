@@ -529,3 +529,12 @@ untouched; SCORECARD/LOG edits parent-only; fleet root read-only.
 
 Round report: `.ufo/reports/round-11/mori-goalwave.md` · Verified lane
 rounds: 10 → 11.
+
+## 2026-10-16 — protocol conformance: SCORECARD contract fields
+
+Operator rollout for the 2026-10-16 fleet amendment (`AXES.md` §SCORECARD.md
+contract). Already present as real sections: axes (`## Axes` score table),
+planned (`## Planned`), retired (`## Retired`). Added by this rollout, purely
+additively at the end of `SCORECARD.md`: `## Capabilities` (empty repertoire
+scaffold) and `## Saturation` (declaration deferred to the lane's next round).
+No axis claim was made and no score moved; this is not a craft round.
