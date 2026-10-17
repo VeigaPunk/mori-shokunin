@@ -12,10 +12,11 @@ reporting it. **Detection and report only. This lane never remediates.**
 
 | Intent | Correct surface | Never | Expected output |
 |---|---|---|---|
-| Is the shokunin fleet alive? | watchdog pid + log freshness + lane counters | restarting a daemon; killing a pid | `liveness` rows: pid, start time, last tick, state |
+| Is the shokunin fleet alive? | watchdog pid + log freshness + `.ufo/state/*.round` values (count, max, per-lane value vs the ledger's last launch round) | restarting a daemon; killing a pid | `liveness` rows: pid, start time, last tick, state; `WATCHDOG_STATE_LAG`/`_AHEAD` are info — visibility, not severity |
 | Did a wave settle? | `.ufo/waves/*/swarm-registry.json` + dispatch/results pair | assuming an unsettled wave is a failed one | per-wave settled/unsettled with age |
 | Did something get killed? | `journalctl --user -b` OOM/kill lines + cgroup event counters | remediating, renicing, killing | journal class counts; cgroup count with selected source path/scope and observation time, not an event timestamp |
-| Is there resource runway? | `df` on the fleet + scratch roots; memory pressure counters | deleting files; resizing | runway rows with the measured value |
+| Is there resource runway? | `df -P` on the fleet + scratch roots; since-boot write average per target device; memory pressure PSI + fill/avail against labeled-local thresholds; scope high-watermark `memory.peak` | deleting files; resizing; tuning a labeled-local threshold to fit one observation | runway rows with the measured value: `used_pct`, `io_basis=since-boot`, `psi_some_avg10`, `mem_fill_scope`, `mem_peak` + `mem_peak_anchor` |
+| Is a tmux session fleet work? | `tmux ls` + `list-panes -a` pane current paths under the fleet root; per-relevant-session `display-message` activity under a per-call timeout bound | killing/attaching to/steering sessions; treating foreign, or idle past a labeled-local number, as unhealthy | `sessions=N relevant=R foreign=F unclassified=U`; relevance rows carry `freshness=ok probed=P idle=I freshness_unavailable=U`; `TMUX_FOREIGN_SESSION` info per foreign session (path-based rule); `TMUX_SESSION_IDLE` info (r8) |
 | Was a lane silent? | launch epoch from `.ufo/watchdog.log` + post-launch authorship (commits/files) | declaring failure from commit sparsity | silent / progressing / progressing-weak / young / not-open / unavailable |
 
 ## Error patterns
@@ -26,6 +27,13 @@ reporting it. **Detection and report only. This lane never remediates.**
 | wave registry present, no results | wave dispatched but never settled — age it, do not call it failed |
 | Positive cgroup `oom_kill` | cumulative counter for the named source; counters alone identify neither the killed PID, event time nor fleet membership |
 | process alive, last tick stale | wedged, not dead — report the age |
+| `state_lag=` / `state_ahead=` counters | per-lane round VALUE vs the ledger's last `launch <lane> round=N` line; both info — a state file can disagree without the fleet being unhealthy |
+| `state_val_unread_reasons=file:N symlink:N dir:N other:N` | every `*.round` ENTRY is classified before any read; a symlink/directory/non-regular entry is counted with its `WATCHDOG_STATE_ENTRY_UNREADABLE` info instead of vanishing, and symlinks are never followed; `state_val_unreadable` totals them (unreadable values + non-regular entries) while `state_rounds` still counts regular files only |
+| `psi_some_avg10` past `psi_warn_avg10`, or fill/avail past their floor | memory pressure graded against labeled-local thresholds (`MEM_PRESSURE_HIGH`/`MEM_FILL_HIGH`/`MEM_AVAIL_LOW` are warn — a local placeholder can flip the roll); `mem_fill_scope=` names the scope — `cgroup` with a numeric `memory.max`, else the `host-ram` fallback, `unavailable` when neither can be read |
+| cgroup `mem_peak=` / `mem_peak_source=` / `mem_peak_anchor=` | the scope's kernel high-watermark, comparable only within one cgroup instance (the anchor is the scope dir's mtime); `shape-refused`/`absent`/`unreadable` when it cannot be read — never a fake zero, and it is not a threshold |
+| disk row `io_avg_since_boot=` | a since-boot AVERAGE (sectors written × 512 ÷ uptime), never an instantaneous rate; `DISK_IO_UNMEASURED` info when no target device yielded one; the two-sample instantaneous rate stays deferred on measured grounds (the 0.2 s dwell costs ≈208–222 ms across three independent isolations, the extra reads alone 16 ms median); an operator-pinned writer-less FIFO for `MORI_DISKSTATS`/`MORI_UPTIME` is a named open hang, not the live default |
+| tmux `foreign=` / `TMUX_FOREIGN_SESSION` | pane-cwd classification only; foreign is a relevance fact, never an unhealthy fleet; a session absent from pane data counts `unclassified`, and no pane data at all → `relevance=unavailable` — neither is foreign |
+| tmux `freshness=` / `TMUX_SESSION_IDLE` | idle = now − `session_activity`, probed for fleet-relevant sessions only via one timeout-bounded client call each (default bound 2 s per call, so the freshness block's worst case scales with the relevant-session count); past `idle_warn_s` (default 3600, labeled local) it is info, never DRIFT; `freshness=unavailable` carries its reason (`rc-<N>` — `rc-124` when the bound fired, `rc-137` when the grace kill did, `unparseable` on the row / `unparseable-probe-output` on the finding, `no-timeout-bin` — the probe refuses to run unbounded, `mixed` when only some relevant sessions could be measured) and is never idleness |
 
 ## Boundaries (hard)
 
@@ -49,6 +57,49 @@ reporting it. **Detection and report only. This lane never remediates.**
 `tools/mori-census.sh` — read-only census over the fleet-liveness surfaces.
 `verify` → `MORI_CENSUS: CLEAN|DRIFT` exit 0/1, `--selftest` over fixtures,
 exit 2 for setup/usage. Registry row lands with the gate.
+
+**Drift pin (r10).** `--pin <path>` runs the census (live, read-only) and
+writes its full output normalized against a declared VOLATILE FIELD LIST —
+volatile values masked to `<V>` (timestamps/ages, gauges, since-boot rates,
+counters, `script_sha256`); the list is recorded verbatim in the baseline
+header and defined in the script header (`tools/mori-census.sh:145-188`).
+The baseline names the census bytes' sha256 and the pin clock, both
+informational: behavior, not revision, is compared (two SHAs with the same
+normalized output stay `none`). `--drift <path>` re-runs and diffs:
+`MORI_DRIFT: none` exit 0, or the changed non-volatile fields/lines named —
+`key` (changed value), `-key`/`+key` (removed/added field),
+`-FINDING:<id>`/`+FINDING:<id>` (removed/added line; `output-order` for a pure
+reorder) — exit 1; a missing, unreadable or
+malformed baseline is exit 2, never a verdict. Pinning a DRIFT host is still
+a pin (the CLEAN/DRIFT roll never decides the pin's exit code) and `--drift`
+writes nothing. Selftest coverage (56 → 65 cases, r10): pin→drift clean,
+volatile churn staying clean, an injected one-field regression naming its
+field, a removed finding, the missing-baseline exit 2, and the two arity
+cases. The lane's own live baseline is `corpus/evidence/baseline-r10-20261015T2210Z.json`
+(pinned at census `1ddb7ff8…`; a fresh live re-run reads `MORI_DRIFT: none`) with its
+re-run recipe in the r10 evidence set.
+
+`tools/mori-silence-cases.sh` — behavioral gate over `mori-census.sh`'s
+lane-silence grading: one `PASS <id> …` / `FAIL <id>: …` line per case over
+hermetic fixtures, tally `MORI_SILENCE_CASES: matched=N total=M`, exit 0 iff
+all matched (1 on failures, 2 for setup/usage). **r5 run-order + r6
+backchannel contract:** cases execute in a seeded-shuffled order and every
+case requires the current run's nonce token `nonce-<N>` in its census output —
+a stale or missing token fails the case (`run-nonce missing: the current run's
+token is absent (canned/replayed output?)`; failure texts never name the
+token). The run header prints `SHUFFLE_SEED=`, `RUN_NONCE=` and
+`CASE_ORDER=<id> <id> …` (the order executed) only AFTER the last case — a
+census running mid-loop cannot read the seed or order from the oracle's stdout
+or process environment (the live nonce stays in the census's own env by
+design); the graded `PASS` lines carry `nonce=1` (the two check-style
+cases, `shape-invariance` and `readonly-no-mutation`, print bare `PASS <id>`).
+Fixture content is per-run: the nonce token and an unprinted run salt are
+woven into fixture bodies, commit messages and per-run blob files, so a
+content→grade table memorized from an earlier run no longer matches. Pin
+`MORI_SHUFFLE_SEED=<int>` / `MORI_RUN_NONCE=<int>` at invocation for a
+byte-identical rerun (same seed → same order; both pins are dropped from the
+process tree before any case runs); unset, both are random per run, and the
+salt is never pinnable or printed.
 
 ## Finding → owner routing (two tiers — a deadlock was measured here)
 
@@ -84,7 +135,10 @@ were ruled out and must stay out:
 - **Never read a cgroup counter outside `/sys/fs/cgroup/`.** `read_file` echoes the
   first line into the surface row, so an operator-pointed `MORI_CGROUP_CURRENT`
   would print another file's first line; the probe refuses out-of-tree paths
-  shape-only (`refused:outside-sysfs-cgroup`).
+  shape-only (`refused:outside-sysfs-cgroup`). r7's PSI/limit readers and r8's
+  `memory.peak` reader reach the same no-echo outcome by shape: only validated
+  tokens (`is_decimal` avg10, `is_int` bytes, the literal `max`) can enter a row
+  (`mem_peak_source=shape-refused` otherwise).
 
 Also excluded: `ps e` / `/proc/<pid>/environ` (`omp` carries
 `HL_INITIAL_WORKSPACE_TOKEN`), `cat /proc/<pid>/fd/*` (`omp` holds 51 readable fds
@@ -93,7 +147,16 @@ onto session JSONL), and any journal output mode that keeps `MESSAGE`.
 ## Disk thresholds are a PROPOSAL, not a measurement
 
 `DISK_WARN_PCT=85` / `DISK_CRIT_PCT=95` carry **no write-rate evidence** and are
-labeled as such. Falsification results worth keeping:
+labeled as such. (**r7/r8 update — `census-r4` → `census-r5`:** the census
+measures a write rate, but only the **average since boot** —
+`io_basis=since-boot`, `io_avg_since_boot=<dev>:<Bps>/<uptime>s`, sectors
+written × 512 ÷ uptime from `/proc/diskstats`, no sampling interval added to
+runtime. The instantaneous two-sample rate stays a deferral, and r8 paid its
+named precondition — the 0.2 s-window variant measured ≈208–222 ms across three
+independent 15–30× isolations (minimum 208 ms) over the two-read floor against a
+50 ms budget; the dwell is the cost, the reads alone 16 ms median — so it stays
+out of census runtime on measured grounds, not an estimate. The average is not a
+licence to recalibrate 85/95.) Falsification results worth keeping:
 
 - The fleet's *actually reported* disk failures are **quota** events (`EDQUOT`,
   "disk-quota pressure") — a capacity-percent probe cannot see them, and the quota
@@ -107,6 +170,9 @@ labeled as such. Falsification results worth keeping:
 - One pair only. A sibling note proposing 90 and another proposing 80 must not be
   described as the default beside 85/95, or a later diff cannot say which proposal
   was tested.
+- The since-boot average counts **every** write to the device since boot (OS and
+  desktop included) and smooths bursts; it is not attributable to the fleet and
+  is not a distribution to threshold against.
 
 ## Lane-silence grading is launch-aware and authorship-aware (r2 contract)
 
