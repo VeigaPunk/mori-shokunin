@@ -538,3 +538,10 @@ planned (`## Planned`), retired (`## Retired`). Added by this rollout, purely
 additively at the end of `SCORECARD.md`: `## Capabilities` (empty repertoire
 scaffold) and `## Saturation` (declaration deferred to the lane's next round).
 No axis claim was made and no score moved; this is not a craft round.
+
+## 2026-10-17 — root README
+
+Motivating evidence: no root `README.md`. The page follows `PROVINCE.md`
+(detection and report only), the `SKILL.md` decision table, and the header
+of `tools/mori-census.sh` (`MORI_CENSUS: CLEAN|DRIFT`, exits 0/1/2).
+`SHONEN.md` boxes are open. No Devin wiki URL exists in this repo.
