@@ -538,3 +538,16 @@ planned (`## Planned`), retired (`## Retired`). Added by this rollout, purely
 additively at the end of `SCORECARD.md`: `## Capabilities` (empty repertoire
 scaffold) and `## Saturation` (declaration deferred to the lane's next round).
 No axis claim was made and no score moved; this is not a craft round.
+
+## 2026-10-17 — first-class README (not a craft round)
+
+**Evidence.** This repository either had no root `README.md` or only the
+generic 22-line lane stub (`A **shokunin lane** — an expert agent for one
+domain…`). A new agent landing here had to reconstruct the province from
+`PROVINCE.md`, `SKILL.md` (when present), the directory listing, and
+`LOG.md`. Wrote `README.md` from those sources: owned domain and refusals
+from `PROVINCE.md`, start-here commands from files that exist in-tree
+(`tools/`, `scripts/`, `verifiers/`, `corpus/`), and fleet links to
+`VeigaPunk/shokunin`. No axis claim. No Devin wiki URL was added or
+rewritten (the only in-tree Devin wiki link remains the fleet-root
+`README.md` line).
