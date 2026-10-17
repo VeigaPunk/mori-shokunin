@@ -538,3 +538,15 @@ planned (`## Planned`), retired (`## Retired`). Added by this rollout, purely
 additively at the end of `SCORECARD.md`: `## Capabilities` (empty repertoire
 scaffold) and `## Saturation` (declaration deferred to the lane's next round).
 No axis claim was made and no score moved; this is not a craft round.
+
+## 2026-10-17 — readable front door
+
+Root README was absent. `bash tools/mori-census.sh --selftest` is the hermetic door in the script usage text; the no-flag census is documented as read-only and able to DRIFT off-host. SHONEN.md boxes are `[ ]`. MINT.md says the roster row is withheld.
+
+Corpus index: `corpus/README.md` is line-cited throughout the round drafts and was not edited. `corpus/knowledge/`, `corpus/lessons/`, evidence, fixtures, and earlier LOG entries were not rewrapped.
+
+Lint fixes: none. Human-legible Markdown in this repo had no unpinned same-line defect.
+
+Lint left in place: none in the human-legible set (README, PROVINCE, SKILL, SHONEN, MINT, AGENTS, corpus/README, corpus/QUALITY, plans/*.md).
+
+Devin: a search for `devin.ai` in this repo found no URL to edit. No wiki URL was added.
