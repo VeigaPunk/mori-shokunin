@@ -538,3 +538,8 @@ planned (`## Planned`), retired (`## Retired`). Added by this rollout, purely
 additively at the end of `SCORECARD.md`: `## Capabilities` (empty repertoire
 scaffold) and `## Saturation` (declaration deferred to the lane's next round).
 No axis claim was made and no score moved; this is not a craft round.
+## 2026-10-17 — root README added
+
+- **Trigger.** Operator request for a repository front door. This checkout had no root `README.md`.
+- **Action.** Added `README.md` from `PROVINCE.md` (森, detection and report, refusals) and the headers of `tools/mori-census.sh` (`MORI_CENSUS: CLEAN|DRIFT`, exit 0/1/2) and `tools/mori-silence-cases.sh` (hermetic cases, exit 0 iff every case matched). Fleet mint note withholds the roster row and says never remediate.
+- **Non-claims.** No Devin wiki URL existed here and none was added. No axis claim, no score change, no census run. Not a craft round.
