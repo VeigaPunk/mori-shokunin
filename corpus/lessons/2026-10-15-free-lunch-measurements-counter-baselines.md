@@ -289,3 +289,7 @@ rather than an invented constant.
 - All numbers are mutable live observations pinned to the clocks quoted. No
   threshold value is proposed; a threshold an implementer installs later is
   local and needs its own labeling.
+
+## Erratum (round 12 post-review, 2026-10-19)
+
+The phrase “Live mode writes nothing.” is at `tools/mori-census.sh:186`, not `:21`; line 21 is the `/proc/diskstats` since-boot write-average comment. This corrects the pointer in §The lesson; the original text remains historical.

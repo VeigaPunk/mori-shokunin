@@ -34,3 +34,9 @@ LANES= are not lanes` (77/77); the gating mutant (gate line → `:`) fails 2 cas
 above are unchanged (20 / 21 / 23): every `id|` row of the live conf sits inside a `LANES` block, so
 the whole-file grep in §Measured sets and the census agree today — they would diverge only if
 another variable held lane-shaped rows. `resolve_roster()` now spans `tools/mori-census.sh:386-497`.
+
+## Post-review source correction (2026-10-19)
+
+The original header's `FLEET/` paths are not lane-relative. This appended `source:` points at S034, the lane's own opened measurement receipt; it establishes only the observed config/state union, not a complete fleet inventory.
+
+source: S034 — `corpus/evidence/roster-r12-20261019T220912Z-live.log:1-34` (opened 2026-10-19; census script SHA-256 `3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164`).

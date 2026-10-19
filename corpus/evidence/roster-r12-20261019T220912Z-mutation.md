@@ -38,3 +38,24 @@ final census `3da5b098…` reads rows only inside `LANES="…"` assignments, wit
 outside LANES= are not lanes`, `MORI_CENSUS_SELFTEST: FAIL (77 cases, 75 passed, 2 failed)`.
 M01–M12 above ran on `4fe9786d…`; the gating change touches only the conf loop (M01/M03/M04/M06
 territory) and was not re-run for those twelve.
+
+## Post-review mutation re-run at round-12 head (2026-10-19)
+
+Target: lane commit `1f07f1dd1eed59f10c4859726e2f780199190b22`, census SHA-256 `3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164`. The pristine scratch copy matched that SHA; `bash tools/mori-census.sh --selftest` passed **77/77** before mutation. Each mutant below was a separate scratch copy; each `--selftest` exited 1 and named the expected failing assertion.
+
+| mutant | mutation | selftest result | verdict |
+|---|---|---|---|
+| M01 | source config instead of parsing | 72/77; canary and parser assertions fail | killed |
+| M02 | drop state set | 73/77; state-only, mismatch and roster assertions fail | killed |
+| M03 | drop config set | 73/77; config-only, mismatch and roster assertions fail | killed |
+| M04 | accept malformed lane IDs | 76/77; invalid-ID assertion fails | killed |
+| M05 | follow `*.round` symlinks | 75/77; symlink exclusion assertions fail | killed |
+| M06 | skip quote-terminated config rows | 73/77; quote-row and roster assertions fail | killed |
+| M07 | promote mismatch INFO to warn | 75/77; mismatch exit/severity assertions fail | killed |
+| M08 | disable `MORI_ROSTER_LANES` override | 76/77; override assertion fails | killed |
+| M09 | require state IDs before using readable config | 76/77; config-only assertion fails | killed |
+| M10 | reverse state-only ordering | 76/77; ordered mismatch assertion fails | killed |
+| M11 | remove conf/state deduplication | 75/77; roster-count assertions fail | killed |
+| M12 | treat unreadable config as available | 76/77; no-false-mismatch assertion fails | killed |
+
+Result at final bytes: **12 killed, 0 survived, 0 inconclusive**. All mutations and test outputs were confined to `/tmp/mori-r12-postreview.v9wCnp`; the lane tree was not mutated.

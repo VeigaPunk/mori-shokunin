@@ -701,3 +701,13 @@ never sourced; no fleet-root writes.
 
 Round report: `fleet-ledger/.ufo/reports/round-12/mori.md` · Verified lane rounds: 11 → 12 pending
 non-author verification.
+
+## Round 12 — post-review corrections (appended 2026-10-19)
+
+- Expansion count corrected to four admitted knowledge entries on uncovered ground; `roster-truth-r12.md` is local measured census evidence, not a fifth expansion entry.
+- Added opened own-work source S034 for the final-census live roster receipt and appended the corrected `source:` to `roster-truth-r12.md`; original `FLEET/` header preserved.
+- Appended the dead-pointer correction: “Live mode writes nothing.” is `tools/mori-census.sh:186`, not `:21`, in `corpus/lessons/2026-10-15-free-lunch-measurements-counter-baselines.md`.
+- SHONEN seed claim corrected in the report: the current file substitutes `mori-shokunin` for `<name>` and removes four-space indentation from five remaining nonblank template lines; six lines differ.
+- Calibration verdict is **improved** per the campaign binding; score held at 5 because the non-author reviewer could not re-derive 6. Adjacency verdict is **unchanged**, score 6 held, because its contract repair was unclaimed and unmeasured.
+- W3ReviewMori's non-author sample agreed on two admits and two rejects (4/4); the limitation to this one reviewer's sample is retained.
+- Re-ran the 12-mutant battery at the round head: census SHA-256 `3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164`, pristine selftest 77/77, **12 killed / 0 survived / 0 inconclusive**; detailed results appended to `corpus/evidence/roster-r12-20261019T220912Z-mutation.md`.

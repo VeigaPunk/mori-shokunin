@@ -170,3 +170,19 @@ followed — reported as untrusted content, not acted on.
 - The roster seat did not run its own gates; its first receipts carried `NOT_RUN`/peer-reported
   placeholders. The L1 re-ran selftest and oracle on the final census bytes and replaced both
   receipts with real output (`evidence/roster-r12-20261019T220912Z-{selftest,oracle}.log`).
+
+## Post-review addendum (2026-10-19)
+
+### SOURCES opening — S034 (contract v1 rule 1)
+
+Opened the lane's own live roster receipt `corpus/evidence/roster-r12-20261019T220912Z-live.log` (run 2026-10-19T22:38:11Z, census SHA-256 `3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164`). Quote: “roster_source=conf+state roster_n=23 conf_n=20 state_n=21” at line 34. S034 is `own-work`, tier A for the observed config/state union only; it does not prove those inputs exhaust the fleet universe. The `source:` correction was appended to `knowledge/roster-truth-r12.md` rather than rewriting its original line.
+
+### Non-author spot-check and verdict corrections
+
+W3ReviewMori re-opened two admits and two rejects: agree on the kernel-counter entry (S003 `oom_kill.c:935-936`), agree on the userspace-killer entry (S011 `oomd-util.c:269/306`), agree on rejecting S030 (free-text journal grep plus service installation/tuning), and agree on rejecting the resident eBPF tracer (scope breaks the read-only gate). Result: 4/4 agree on this one reviewer's sample; it is not a universal correctness proof. The eBPF rejection's dead citation is corrected in the appended erratum to `2026-10-15-free-lunch-measurements-counter-baselines.md`.
+
+The expansion trend counts four admitted knowledge entries on uncovered ground; `roster-truth-r12.md` is local measurement evidence and is not a fifth expansion entry. Calibration verdict: **improved** under the kaika campaign binding that mistake mining into lesson-grounded QUALITY criteria is calibration work; scalar score held at **5** because the non-author review did not re-derive 6. Adjacency is **unchanged**, score **6 held**: the unclaimed contract repair has no counting command and no score move.
+
+### Final-byte mutation battery
+
+Re-ran the 12 roster mutants against the round-head census SHA-256 `3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164` at lane commit `1f07f1dd1eed59f10c4859726e2f780199190b22`. Pristine selftest: 77/77; mutants: **12 killed, 0 survived, 0 inconclusive**. Per-mutant outcomes are appended to `corpus/evidence/roster-r12-20261019T220912Z-mutation.md`.

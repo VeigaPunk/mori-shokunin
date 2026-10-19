@@ -647,3 +647,10 @@ leaves headroom, and 3 rounds avoids firing the nudge on a one-round plateau.
 3. **coverage (frontier → core)** — FR1: a MESSAGE-free system-journal kernel-OOM count probe
    with its own finding id; before 0 kernel-OOM records visible to the census, after the 5
    retained records counted with `unavailable` when the system journal is unreadable.
+
+## Round 12 post-review corrections (appended 2026-10-19)
+
+- **Expansion:** four admitted knowledge entries qualify on uncovered ground; `corpus/knowledge/roster-truth-r12.md` is local measured census evidence, not a fifth expansion entry. This supersedes any reading of the trend count that includes it.
+- **Calibration:** verdict **improved** under the kaika campaign binding (mistake mining into lesson-grounded QUALITY criteria is calibration work); scalar score **held at 5**, not 6, because the non-author reviewer could not re-derive 6.
+- **Adjacency:** verdict **unchanged**, score **6 held**. The contract repair was unclaimed and had no counting command or score move; this supersedes the round-12 row's unsupported “improved” verdict.
+- **Mutation coverage:** on round-head census SHA-256 `3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164`, baseline selftest 77/77 and the re-run battery killed 12/12 mutants (0 survived, 0 inconclusive); receipt `corpus/evidence/roster-r12-20261019T220912Z-mutation.md` post-review section.
