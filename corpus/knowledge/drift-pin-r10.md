@@ -286,3 +286,16 @@ bash tools/mori-census.sh --pin /tmp/<new>.txt     # re-pin deliberately, with a
   `unavailable` on this host, so the tmux rows' masked counters are unexercised).
 - The lane baseline and the receipts are the receipts-writer's artifacts; this note cites them
   and adds one independent drift reading of its own, not their verification.
+
+## Erratum (round 12, 2026-10-19) — dead baseline path in §3 recipe
+
+The path `corpus/evidence/baseline-r10-20261015T2210Z.json` named at lines 195, 200, 209, 226
+and 227 above does not resolve at any committed revision (`ls corpus/evidence | grep -c 2210Z`
+→ 0; audit finding F03, `corpus/knowledge/audit-r11.md`). It was the round's interim pin,
+deleted during receipt regeneration. The adopted baseline is
+`corpus/evidence/baseline-r10-20261015T2231Z.json` (header `census_sha256=d7710981…`,
+`pinned_ts=2026-10-15T22:26:29Z`). Re-run recipe: `MORI_SHOKUNIN_ROOT=<fleet root> bash
+tools/mori-census.sh --drift corpus/evidence/baseline-r10-20261015T2231Z.json`. At
+2026-10-19 it reads red (exit 1); every token is classified in
+`corpus/evidence/drift-r12-20261019T2204Z-classification.md` — no census regression; new boot,
+souji sweep `e20f4fa`, aggregator evidence row-B → row-C. The text above is kept as filed.

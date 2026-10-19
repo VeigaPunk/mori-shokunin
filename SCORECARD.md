@@ -590,3 +590,60 @@ Rows enter only through a round that demonstrates the capability running (`AXES.
 ## Saturation
 
 The lane's saturation line + stagnation window N are to be declared by the lane on its next round per `AXES.md` §The stagnation nudge; not asserted by this conformance change.
+
+## Round 12 — kaika campaign: sources, mistakes, roster (2026-10-19)
+
+Steered round 12 (orchestrator steer table; lane LOG and MANIFEST agree on 11). Base
+`20e2255`; measured at the round-12 commit (hash in the round-12 LOG entry and
+`.ufo/reports/round-12/mori.md`). Commands run from the lane root; the census needs
+`MORI_SHOKUNIN_ROOT=<fleet root>` when run from a worktree.
+
+| # | claim (type) | axis | before → after | counting command | evidence |
+|---|---|---|---|---|---|
+| 1 | source-linked depth (capability acquisition: source registry) | depth | SKILL URLs 0 → 5, unregistered or non-A/non-mined 0 → 0; knowledge entries with `source:`/`verified-at:`/`recheck:` on lines 1–3 citing an A/mined row 0 → 4; SOURCES rows 0 → 33 with a clean contract-v1 census | `grep -oE 'https?://[^ )>\|`]+' SKILL.md \| sort -u \| wc -l`; the planner's A/mined linkage counter (`corpus/lessons/round-12.md` §Gate cites it); SOURCES-CONTRACT-v1 census block | `corpus/SOURCES.md`; `corpus/knowledge/*-r12.md`; `SKILL.md` error-pattern rows |
+| 2 | mistakes → lesson-cited criteria | calibration | QUALITY criteria citing a lesson 0 → 20; `## Mistakes` rows 0 → 26 (captured-by `none` 5, each with a reason) | `grep -cE '^[0-9]+\. .*lessons/' corpus/QUALITY.md`; `grep -cE '^\| M[0-9]+ \|' corpus/lessons/round-12.md`; `grep -cE '^\| M[0-9]+ \|.*\| none \|' corpus/lessons/round-12.md` | `corpus/QUALITY.md` §Criteria added round 12; `corpus/lessons/round-12.md` |
+| 3 | silence roster = declared lanes ∪ driver counters | coverage | live `SURFACE lane.*` rows 9 → 23 (`roster_source=conf+state`, `ROSTER_SET_MISMATCH` info: conf-only kotodama,souji; state-only audio,game-dev-2d,game-dev-3d); selftest 66 → 77 PASS; oracle 28/28 at unchanged sha `448f7723…` | `MORI_SHOKUNIN_ROOT=/home/vgpnk/Projects/shokunin bash tools/mori-census.sh \| grep -c '^SURFACE lane\.'`; `bash tools/mori-census.sh --selftest`; `bash tools/mori-silence-cases.sh` | `corpus/evidence/roster-r12-20261019T220912Z-*.log`; `corpus/knowledge/roster-truth-r12.md`; census `d7710981…` → `3da5b098…` |
+
+| axis | verdict (lane self-assessment, pending non-author verification) | score | evidence |
+|---|---|---|---|
+| depth | **improved** | 4 → 5 | claim 1; every SKILL URL resolves to an A/mined row; four knowledge rechecks re-executed by the L1 (line numbers 935/936/447/452/945/1820/1825/4966/269/306/66/604/884 and counts 7/9/5 reproduced) |
+| calibration | **improved** | 5 → 6 | claim 2; discernment *trend* stays unjudged until the outside spot-check (`LEARNING.md` §Discernment) |
+| coverage | **improved** | 5 → 6 | claim 3; 14 lanes graded that were invisible (incl. mori itself) |
+| operability | **unchanged** | 6 | gates green at new bytes; cost named, not hidden: live census wall time 1884/1830/1930 ms → 4345/4339/4278 ms (`evidence/roster-r12-20261019T220912Z-walltime.log`), linear in roster size (≈0.17 s per graded lane), no declared runtime budget exists to breach — the critic seat disputes "unchanged" for want of a budget; operator to rule |
+| freshness | **unchanged** | 5 | r10 pin was red before the round (aging, every token classified: `evidence/drift-r12-20261019T2204Z-classification.md`); after the roster change it additionally names exactly the 14 new lane rows and the roster fields (`evidence/drift-r12-20261019T2230Z-after-roster.log`) — detection working, no re-pin this round |
+| adjacency | **improved** | 6 (held) | unclaimed contract repair, not one of the round's three claims, so no counting command and no score move: souji added to PROVINCE `## Adjacent` (siblings named 4 → 5); inbound TSUKUROI-F1-MEM-01 answered in PROVINCE (no retained kill record overlaps 2026-10-15T04:53:46Z; all 5 are dated 2026-10-18); tsukuroi's `oom-event-plane.md`/`kill-event-deep-r8.md` cited from each kill entry |
+
+Correction to the score table at the top of this file (frozen at round 1; 4 of 6 pointers stale —
+STATE dossier §2): the table is left as filed; this section's scores supersede it. Stale pointers:
+coverage ("per-surface notes still owed" — landed r2), operability ("14/14" — 76 at r12),
+freshness ("no drift pin yet" — landed r10), calibration ("`progressing-weak` deferred" — landed r3).
+
+Capability rows (below) enter through this round's demonstrations.
+
+## Capabilities (round 12 demonstrations)
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| source registry | curate where mori learns: 33 opened, tiered, anchored rows with paths and a search log; contract-v1 census clean (malformed 0, duplicates/enums/tier-inflation/missing used-by empty) | `corpus/SOURCES.md` + contract census commands | 12 |
+| live census | read-only census of watchdog, waves, journal, cgroup, disk, tmux and lane silence, now over the declared lane universe (23 lanes) | `corpus/evidence/roster-r12-20261019T220912Z-live.log` | 1 |
+| census self-test | hermetic fixture self-test asserting exit code + finding id | `corpus/evidence/roster-r12-20261019T220912Z-selftest.log` (77/77) | 1 |
+| silence oracle | behavioral gate with seeded shuffle + per-run nonce over the silence grading | `corpus/evidence/roster-r12-20261019T220912Z-oracle.log` (28/28) | 2 |
+| drift pin | behavioral baseline compare naming every changed non-volatile field | `corpus/evidence/drift-r12-20261019T2230Z-after-roster.log` (names the 14 new lane rows) | 10 |
+
+## Saturation (declared round 12)
+
+Saturation line: **8/10** on each owned axis (coverage, operability). Stagnation window **N = 3**
+admitted rounds without a capability entering the table. Reason: owned axes sit at 6 and 6; 8
+leaves headroom, and 3 rounds avoids firing the nudge on a one-round plateau.
+
+## Planned (round 13)
+
+1. **freshness** — re-pin after classification: before `--drift baseline-r10-20261015T2231Z.json`
+   exit 1 (classified tokens); after a new baseline file pinned with a recorded reason, old file
+   kept, `--drift <new>` → `MORI_DRIFT: none` exit 0. Falsified by any unclassified token.
+2. **operability** — close audit F01/F02: before, the long-history fixture grades
+   `progressing-weak` despite a lane commit and the BANANA verdict wrapper scores 28/28; after,
+   the fixture grades `progressing` and the wrapper fails while the honest oracle stays 28/28.
+3. **coverage (frontier → core)** — FR1: a MESSAGE-free system-journal kernel-OOM count probe
+   with its own finding id; before 0 kernel-OOM records visible to the census, after the 5
+   retained records counted with `unavailable` when the system journal is unreadable.

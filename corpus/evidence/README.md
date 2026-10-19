@@ -783,3 +783,21 @@ the census's own normalized output under the declared contract — it is not a p
 the contract is complete, and a change confined to volatile fields is invisible by
 design. The lane baseline pins the host's live state at its clock; it is not a
 cross-host template (thresholds stay labeled local).
+## Round 12 (2026-10-19) — roster coverage and drift re-verification
+
+Census `3da5b098…` (base `d7710981…`); oracle `448f7723…` unchanged. Fleet root pinned with
+`MORI_SHOKUNIN_ROOT=/home/vgpnk/Projects/shokunin` (the lane ran in a worktree).
+
+| file | holds |
+|---|---|
+| `roster-r12-20261019T220912Z-before-live.log` | base-bytes live census: 9 `SURFACE lane.*` rows |
+| `roster-r12-20261019T220912Z-live.log` | final live census: 23 lane rows, `roster_source=conf+state`, `ROSTER_SET_MISMATCH` info |
+| `roster-r12-20261019T220912Z-selftest.log` | `--selftest` PASS 77/77 on the final bytes (L1 run) |
+| `roster-r12-20261019T220912Z-oracle.log` | `mori-silence-cases.sh` 28/28 on the final bytes (L1 run) |
+| `roster-r12-20261019T220912Z-walltime.log` | live wall time before/after, 3+3 interleaved runs |
+| `roster-r12-20261019T220912Z-mutation.md` | 12/12 mutants killed (seat, on `4fe9786d…`) + LANES-gating mutant killed (L1, on `3da5b098…`) |
+| `drift-r12-20261019T2204Z-classification.md` | every token of the red r10 drift classified (base bytes); host kill-event facts, MESSAGE-free |
+| `drift-r12-20261019T2230Z-after-roster.log` | drift on the final bytes: the 14 new lane rows + roster fields, plus the classified aging |
+
+Census rows print `cmd=journalctl --user -b --no-pager` as provenance; re-running that string
+prints MESSAGE text — never use it as a recheck (count-only forms are in the knowledge entries).

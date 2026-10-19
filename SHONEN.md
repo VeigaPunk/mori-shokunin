@@ -1,4 +1,4 @@
-# mori — Promotion checklist
+# mori-shokunin — Promotion checklist
 
 Promotion to shokunin requires all of:
 

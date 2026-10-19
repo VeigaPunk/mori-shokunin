@@ -17,7 +17,7 @@ reporting it. **Detection and report only. This lane never remediates.**
 | Did something get killed? | `journalctl --user -b` OOM/kill lines + cgroup event counters | remediating, renicing, killing | journal class counts; cgroup count with selected source path/scope and observation time, not an event timestamp |
 | Is there resource runway? | `df -P` on the fleet + scratch roots; since-boot write average per target device; memory pressure PSI + fill/avail against labeled-local thresholds; scope high-watermark `memory.peak` | deleting files; resizing; tuning a labeled-local threshold to fit one observation | runway rows with the measured value: `used_pct`, `io_basis=since-boot`, `psi_some_avg10`, `mem_fill_scope`, `mem_peak` + `mem_peak_anchor` |
 | Is a tmux session fleet work? | `tmux ls` + `list-panes -a` pane current paths under the fleet root; per-relevant-session `display-message` activity under a per-call timeout bound | killing/attaching to/steering sessions; treating foreign, or idle past a labeled-local number, as unhealthy | `sessions=N relevant=R foreign=F unclassified=U`; relevance rows carry `freshness=ok probed=P idle=I freshness_unavailable=U`; `TMUX_FOREIGN_SESSION` info per foreign session (path-based rule); `TMUX_SESSION_IDLE` info (r8) |
-| Was a lane silent? | launch epoch from `.ufo/watchdog.log` + post-launch authorship (commits/files) | declaring failure from commit sparsity | silent / progressing / progressing-weak / young / not-open / unavailable |
+| Was a lane silent? | roster = `shokunin.conf` lane ids (parsed, never sourced) ∪ `.ufo/state/*.round` names (r12; `MORI_ROSTER_LANES` overrides); launch epoch from `.ufo/watchdog.log` + post-launch authorship (commits/files) | declaring failure from commit sparsity; sourcing the conf | silent / progressing / progressing-weak / young / not-open / unavailable; `roster_source=` + `ROSTER_SET_MISMATCH` info naming conf-only / state-only ids |
 
 ## Error patterns
 
@@ -26,6 +26,9 @@ reporting it. **Detection and report only. This lane never remediates.**
 | watchdog pid gone, no `complete` line | daemon death — a fleet-liveness finding, not a lane failure |
 | wave registry present, no results | wave dispatched but never settled — age it, do not call it failed |
 | Positive cgroup `oom_kill` | cumulative counter for the named source; counters alone identify neither the killed PID, event time nor fleet membership |
+| `oom_kill=0` (cgroup `memory.events` or `/proc/vmstat`) | no **kernel** OOM kills — not "no memory kills": both counters move only at the kernel victim site ([oom_kill.c:935-936 v7.2](https://raw.githubusercontent.com/torvalds/linux/v7.2/mm/oom_kill.c)); systemd-oomd kills via `cgroup.kill`/`kill()` and records `user.oomd_ooms`/`user.oomd_kill` xattrs instead ([oomd-util.c:269-306 v261](https://raw.githubusercontent.com/systemd/systemd/v261/src/oom/oomd-util.c)); an inactive oomd/earlyoom is `unavailable (inactive)`, never 0 — `corpus/knowledge/oom-kill-counter-kernel-only-r12.md`, `userspace-oom-killers-r12.md` |
+| journal kill/OOM class counts | count by catalog `MESSAGE_ID` (`fe6faa94…` unit hit by kernel OOM, `d989611b…` oomd kill, `fc2e22bc…` core dump — [systemd.catalog.in](https://raw.githubusercontent.com/systemd/systemd/cf8ebfc6159cf0b3b99aa9a0164ccb07c4c9c5af/catalog/systemd.catalog.in)) with `-o json --output-fields=`, never `MESSAGE` text ([journal-fields](https://www.freedesktop.org/software/systemd/man/latest/systemd.journal-fields.html)); `fe6faa94…` is per unit, not per kill (measured 5 kills vs 7 user + 9 system notices, one boot) — scopes are never summed — `kill-classes-by-message-id-r12.md` |
+| a kill needs PID / uid / cgroup / time | the kernel `oom-kill:constraint=…,task_memcg=…,pid=…,uid=…` record in the system journal (`journalctl -k`, `__REALTIME_TIMESTAMP` always printed — [journalctl(1)](https://www.freedesktop.org/software/systemd/man/latest/journalctl.html)) is event-time attribution; only shape-validated tokens may leave a probe; re-reading the victim's cgroup later is not attribution (`ENOENT`) — `kernel-oom-line-attribution-r12.md`; not yet a census probe (PROVINCE Frontier) |
 | process alive, last tick stale | wedged, not dead — report the age |
 | `state_lag=` / `state_ahead=` counters | per-lane round VALUE vs the ledger's last `launch <lane> round=N` line; both info — a state file can disagree without the fleet being unhealthy |
 | `state_val_unread_reasons=file:N symlink:N dir:N other:N` | every `*.round` ENTRY is classified before any read; a symlink/directory/non-regular entry is counted with its `WATCHDOG_STATE_ENTRY_UNREADABLE` info instead of vanishing, and symlinks are never followed; `state_val_unreadable` totals them (unreadable values + non-regular entries) while `state_rounds` still counts regular files only |
@@ -56,7 +59,15 @@ reporting it. **Detection and report only. This lane never remediates.**
 
 `tools/mori-census.sh` — read-only census over the fleet-liveness surfaces.
 `verify` → `MORI_CENSUS: CLEAN|DRIFT` exit 0/1, `--selftest` over fixtures,
-exit 2 for setup/usage. Registry row lands with the gate.
+exit 2 for setup/usage. Registry (PROTOCOL.md §Gate standard fields):
+
+| name | kind | entry | verdict map | self-test | pinned values | write scope | owner |
+|---|---|---|---|---|---|---|---|
+| census | gate | `bash tools/mori-census.sh` (`MORI_SHOKUNIN_ROOT=<fleet root>` outside the fleet tree) | 0 clean · 1 failed (DRIFT) · 2 could-not-evaluate | `--selftest` (77 cases at r12) | expected ids/exits in `run_selftest()` | none live; selftest temp tree | mori |
+| drift pin | gate | `bash tools/mori-census.sh --drift <baseline>` | 0 clean (`none`) · 1 failed · 2 could-not-evaluate (baseline missing/unreadable/malformed) | `--selftest` pin/drift arms | `corpus/evidence/baseline-r10-20261015T2231Z.json` | none (`--pin` writes only its path) | mori |
+| silence oracle | gate | `bash tools/mori-silence-cases.sh` | 0 clean (all matched) · 1 failed · 2 could-not-evaluate | itself (hermetic case table, 28 cases) | case table in-script | temp fixtures | mori |
+
+Where mori learns — tiers, study paths, search log: `corpus/SOURCES.md`.
 
 **Drift pin (r10).** `--pin <path>` runs the census (live, read-only) and
 writes its full output normalized against a declared VOLATILE FIELD LIST —
@@ -72,12 +83,13 @@ normalized output stay `none`). `--drift <path>` re-runs and diffs:
 reorder) — exit 1; a missing, unreadable or
 malformed baseline is exit 2, never a verdict. Pinning a DRIFT host is still
 a pin (the CLEAN/DRIFT roll never decides the pin's exit code) and `--drift`
-writes nothing. Selftest coverage (56 → 65 cases, r10): pin→drift clean,
+writes nothing. Selftest coverage (56 → 66 cases, r10): pin→drift clean,
 volatile churn staying clean, an injected one-field regression naming its
 field, a removed finding, the missing-baseline exit 2, and the two arity
-cases. The lane's own live baseline is `corpus/evidence/baseline-r10-20261015T2210Z.json`
-(pinned at census `1ddb7ff8…`; a fresh live re-run reads `MORI_DRIFT: none`) with its
-re-run recipe in the r10 evidence set.
+cases. The lane's own live baseline is `corpus/evidence/baseline-r10-20261015T2231Z.json`
+(pinned 2026-10-15T22:26:29Z at census `d7710981…`; it read `MORI_DRIFT: none` at
+r10 and reads red from 2026-10-19 — tokens classified in `corpus/lessons/round-12.md`)
+with its re-run recipe in the r10 evidence set.
 
 `tools/mori-silence-cases.sh` — behavioral gate over `mori-census.sh`'s
 lane-silence grading: one `PASS <id> …` / `FAIL <id>: …` line per case over
@@ -104,8 +116,8 @@ salt is never pinnable or printed.
 ## Finding → owner routing (two tiers — a deadlock was measured here)
 
 Routing a finding to `tsukuroi` or `kama` for *remediation* deadlocks: both
-provinces explicitly refuse to act (`tsukuroi/PROVINCE.md:16-17` "never restarts
-services ... the operator remediates"; `kama/PROVINCE.md:22-26` "kama never writes
+provinces explicitly refuse to act (`tsukuroi-shokunin/PROVINCE.md:19` "never restarts
+services. Detection and report; the operator remediates."; `kama-shokunin/PROVINCE.md:45-47` "kama never writes
 to `~/.config`, `~/.omp`, or systemd units ... the operator repoints them"). mori
 never remediates either. So a finding carries **two** owners:
 

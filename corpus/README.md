@@ -23,6 +23,17 @@
 | `lessons/2026-10-15-probe-pricing-dwell-bounds-filter-drop.md` | the r8 lesson: a deferred probe's four prices — the counter's found-ness (an unfound counter reads `0 B/s`), marginal wall time (resolvable only when the instrument's noise is under budget; serial +212 ms vs overlapped 0 ms), the enforceable vs nominal bound (`timeout 0.3` bound at 1510 ms against a SIGTERM-ignoring peer; `-k 1 2` → rc 137), and an enumeration filter's drop set (a count means only what survived the filter) | round-8 wave, `/tmp` canaries |
 | `lessons/2026-10-15-selftest-grep-sigpipe-race.md` | the r9 lesson: under `pipefail` a producer-piped `grep -q` assertion's rc answers "did every element exit 0", not "did the consumer match" — grep exited 0 while the producer died of SIGPIPE (141); construct sweep, `PIPESTATUS` attribution, strace, the production-shaped 3-stage variant, and the here-string countermeasure (0 misses) | round-9 wave, `/tmp` canaries |
 | `lessons/2026-10-15-volatile-contract-behavioral-baselines.md` | the r10 lesson: a behavioral baseline is (raw artifact) + (explicit per-field volatile set) + (derivation window/host) — measured live churn (79 field tokens, 6 churning in 72 s, 32/33 lines; `segfault=` 104→225 over ~69 min; `mem_peak` + anchor moved within ~7 min), why line-granularity masking is vacuous (32/33 lines carry a volatile token) and field-granularity keeps detection power, the count-only change behind an existing finding id reading `none` by construction (37/79 tokens in the counter class), the exit-2 third value for absence, and the re-pin discipline (never to silence red) | round-10 wave, `/tmp` canaries |
+| `knowledge/audit-r11.md` | the round-11 capstone audit of evidence/receipt coverage, current-byte re-executions, consolidated defects, and carried debt | committed round-2–10 reports and receipts; `tools/mori-census.sh`; `tools/mori-silence-cases.sh`; `SCORECARD.md`; `LOG.md` |
+| `knowledge/lane-silence-r2.md` | launch-anchored, authorship-aware silence-grading inputs, states, decision order, and evidence-status limits | `PROTOCOL.md`; `scripts/shokunin-watchdog.sh`; `.ufo/watchdog.log`; `tools/mori-census.sh`; round-2 live-before receipt |
+| `lessons/2026-10-15-free-lunch-measurements-counter-baselines.md` | the one-shot gate's measurement-cost rule: use source-maintained aggregates, price added dwell, and anchor cumulative counters | kernel PSI docs; `/proc/pressure/*`; cgroup `memory.pressure`; `/proc/diskstats`; `/proc/uptime`; `tools/mori-census.sh` |
+| `lessons/2026-10-15-oracle-honesty-crash-masking.md` | setup-crash masking and genuine fixture repair can yield the same tally; pre-register gradients and assert fixture preconditions | `tools/mori-silence-cases.sh`; round-2 fixture/oracle evidence; mutant and read-only canaries |
+| `lessons/2026-10-15-settle-evidence-references-with-artifacts.md` | resolve active recipes against delivered replacement artifacts and record what replacements do not verify retroactively | `LOG.md:477-500`; round-10 report; evidence index; committed baseline and pin receipt; `tools/mori-census.sh --drift` |
+| `knowledge/oom-kill-counter-kernel-only-r12.md` | `memory.events`/`.local` and `/proc/vmstat` `oom_kill` move only at the kernel victim site (v7.2 `oom_kill.c:935-936`); userspace killers move neither — `oom_kill=0` is "no kernel OOM kills", not "no memory kills"; tsukuroi overlap cited | S002, S003, S004, S007, S011, S016 (`SOURCES.md`); host counts 2026-10-19 |
+| `knowledge/kill-classes-by-message-id-r12.md` | kill/OOM journal classes counted by catalog `MESSAGE_ID` (`fe6faa94…`, `d989611b…`, `fc2e22bc…`) MESSAGE-free; notice ≠ kill (5 kernel kills vs 7 user + 9 system notices in one boot); scopes never summed | S003, S013, S014, S015; MESSAGE-free journal counts 2026-10-19 |
+| `knowledge/kernel-oom-line-attribution-r12.md` | the kernel `oom-kill:constraint=…task_memcg=…pid=…uid=…` record as event-time attribution (5 records, 2026-10-18); token-only, never MESSAGE; fleet attribution [UNKNOWN] without a validated `task_memcg` token | S003, S004, S014, S015 |
+| `knowledge/userspace-oom-killers-r12.md` | systemd-oomd (`user.oomd_ooms`/`user.oomd_kill` xattrs, D-Bus `Killed`, `d989611b…`) and earlyoom kill paths; inactive on this host → `unavailable (inactive)`, never 0; OS/unit state is tsukuroi's | S002, S003, S007, S011, S012, S013, S016 |
+| `knowledge/roster-truth-r12.md` | the three lane-roster sets (census default 9, `shokunin.conf` 20, `.ufo/state` 21 → union 23) and the r12 census roster derivation (`roster_source=`, `ROSTER_SET_MISMATCH` info; conf rows read only inside `LANES="…"`) at census `3da5b098…` | `shokunin.conf`, `scripts/shokunin-watchdog.sh:14`, `PROTOCOL-APPENDIX.md` 'Lane universe', `evidence/roster-r12-*` |
+| `lessons/round-12.md` | round-12 lesson: `## Mistakes` (M1–M26 mined from the lane's own errata, each with captured-by), pointer re-verification, and `## Gate` (candidates, admits, rejects with reasons, SOURCES access records) | LOG round-12 entries; dossiers `kaika-w1/mori-{state,art}.md` |
 
 ## Known gaps
 
@@ -266,3 +277,26 @@
 - **Journal scope (measured 2026-10-15):** the census reads the USER journal only
   (0 segfault lines); the system journal holds 626, with 1228 core dumps. A
   system-journal probe with its own finding id is the named unblock.
+
+## Frontier
+
+| id | frontier | first evidence | boundary |
+|---|---|---|---|
+| FR1 | System-journal kill/segfault scope, kernel OOM attribution, and fleet correlation | `knowledge/kernel-oom-line-attribution-r12.md:10-16`; `knowledge/kill-classes-by-message-id-r12.md:10-16`; `knowledge/audit-r11.md:203-204` | System-journal coverage is not the current user-journal probe; never echo `MESSAGE`; a host event alone does not prove a fleet-caused kill. |
+| FR2 | Quota/EDQUOT observability | `knowledge/audit-r11.md:218-222` | `df` capacity percentages cannot detect quota exhaustion; observe and report only, never change quota state. |
+| FR3 | Authoritative wave settlement and emptied-by-hygiene versus never-written | `knowledge/audit-r11.md:202`; `../../kumitate-shokunin/corpus/knowledge/swarm-wave-lifecycle.md:28-34,91-120` | Mori reports filesystem shape; kumitate owns orchestration/result semantics; `empty` alone does not prove never-written, and receipt review stays offline. |
+| FR4 | Driver-state versus MANIFEST versus lane-LOG round reconciliation | `../../fleet-ledger/.ufo/waves/kaika-w1/mori-state.md:31,190`; `knowledge/observability-surfaces-r2.md:118-125` | Census compares driver state with watchdog launch lines only; it does not establish MANIFEST admission or lane-LOG agreement. |
+| FR5 | Watchdog daemon identity and degraded-pgrep visibility | `knowledge/audit-r11.md:200-201` | An unavailable pid probe is not absence, and argv-substring matches do not establish daemon identity. |
+| FR6 | Instantaneous disk write-rate | `knowledge/surfaces-r8.md:75-89` | Keep the since-boot average distinct; a two-sample rate stays deferred until its added latency meets the stated budget. |
+| FR7 | Live tmux relevance/freshness arm | `knowledge/surfaces-r8.md:120-124` | Host arm is fixture-proved only; do not create or steer sessions, and unavailable is not unhealthy. |
+| FR8 | Alert-threshold calibration | `knowledge/audit-r11.md:205` | Thresholds remain labeled local; a quiet window is not a workload distribution or an alert-cost rule. |
+| FR9 | Durable fixture evidence | `knowledge/audit-r11.md:41-46` | Scratch paths and unreconstructable fingerprints are not durable evidence; retain a reproducible fixture generator and digest before making replay claims. |
+| FR10 | Userspace OOM killers (systemd-oomd and earlyoom) | `knowledge/userspace-oom-killers-r12.md:10-15` | Inactive killers are unavailable, not zero; `memory.events oom_kill` does not cover every userspace kill; never enable or tune a killer. |
+| FR11 | New-since-pin journal kill counts via cursors | `SOURCES.md:20-21` | Cursor queries stay read-only and pin-scoped; [UNKNOWN] behavior after cursor rotation/vacuum and ordering across boots. |
+| FR12 | Event-driven pressure and CPU/IRQ PSI | `SOURCES.md:7-8,16`; `lessons/2026-10-15-free-lunch-measurements-counter-baselines.md:57-73` | A PSI trigger watcher is resident, not a one-shot census probe; system CPU `full=0` is not evidence of no stall. |
+| FR13 | eBPF kill/OOM tracing | `SOURCES.md:11-12,23-26` | Privilege and version matter; a resident tracer is outside the census, so retain this as knowledge/frontier only. |
+| FR14 | Agent-workload telemetry | `SOURCES.md:28-32` | Mori is consume-only; telemetry emission belongs to the emitting lanes and orchestration. |
+
+## Known gaps — round-12 note
+
+The existing Known gaps list mixes closed history with open gaps. Open items now live in `## Frontier`; the historical list above is unchanged.

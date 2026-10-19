@@ -538,3 +538,166 @@ planned (`## Planned`), retired (`## Retired`). Added by this rollout, purely
 additively at the end of `SCORECARD.md`: `## Capabilities` (empty repertoire
 scaffold) and `## Saturation` (declaration deferred to the lane's next round).
 No axis claim was made and no score moved; this is not a craft round.
+
+## 2026-10-19 — round 12: named corrections owed since round 11
+
+Protocol basis: `PROTOCOL.md:351-352` — "A falsified claim in an append-only file
+gets a named correction entry in the lane's next round". Findings from
+`corpus/knowledge/audit-r11.md:158-169`. Every item below is appended; no
+historical line is rewritten. Commands run 2026-10-19 from the lane worktree;
+census calls set `MORI_SHOKUNIN_ROOT=/home/vgpnk/Projects/shokunin`.
+
+- **F03 — dead baseline path.** Superseded: `corpus/knowledge/drift-pin-r10.md:195-200,224-227`
+  and `SKILL.md:78` (at `20e2255`) name `corpus/evidence/baseline-r10-20261015T2210Z.json`,
+  digest `bdf46496…`. Correct: `corpus/evidence/baseline-r10-20261015T2231Z.json`,
+  sha256 `0993b23505deab2aeb05b2309bdf7dd6eaad2b82f27852491352511aa9670478`.
+  Re-measured: `git cat-file -e 5be8943:corpus/evidence/baseline-r10-20261015T2210Z.json`
+  → `fatal: path '…2210Z.json' does not exist in '5be8943'`, rc 128;
+  `test -e …2210Z` → absent; `ls corpus/evidence | grep -c 2210Z` → 0;
+  `ls corpus/evidence | grep -c 2231Z` → 6;
+  `bash tools/mori-census.sh --drift corpus/evidence/baseline-r10-20261015T2231Z.json`
+  → `MORI_DRIFT: +FINDING:UNIT_FAILURE_OUT_OF_SCOPE +other_authored_commits
+  -FINDING:KILL_SIGNAL_JOURNAL -FINDING:SEGFAULT_JOURNAL -FINDING:WAVE_UNSETTLED_AGE
+  -attribution -example -rowb_files SURFACE:journal basis obs`, rc 1 (baseline aging
+  across the 2026-10-19 boot; class in `corpus/lessons/round-12.md#M15`). Fixed this
+  round: L1's `SKILL.md` edit corrects `:75`/`:78`. Routed: the r10 note's active
+  adopted-baseline table and rerun recipe stay owed (outside round-12 write scope).
+
+- **F04 — r6 receipt references.** Superseded: `corpus/knowledge/verdict-machine-r6.md:19-20,110,135,255-266`
+  cites `T190229Z`/`T190453Z` logs. Correct: only the `T191216Z` set landed (7 logs;
+  supersession explained at `corpus/evidence/README.md:349-356`). Re-measured:
+  `ls corpus/evidence | grep -c 190229` → 0; `… 190453` → 0; `… 191216` → 7.
+  Routed: the active note is outside round-12 write scope; its pointers remain owed.
+
+- **F05 — tallies vs delivered artifacts.** Superseded: `SCORECARD.md:429` "eight r8
+  receipts" → correct 7; `:511` "seven receipts + the baseline" → correct 5 logs + 1
+  baseline = 6 r10 files; `:410-411` "exactly the 4 new names" → the pinned-fixture
+  field diff adds 9 names, the live diff 4 (`corpus/knowledge/surfaces-r8.md:203-204`).
+  Re-measured: `ls corpus/evidence | grep -c r8` → 7; `ls corpus/evidence | grep -c r10`
+  → 6. Routed: historical SCORECARD text is append-only; the counts are corrected here.
+
+- **F06 — collapsed SHENON box lines.** Superseded: r5–r10 reports put four boxes on one
+  physical line (e.g. `.ufo/reports/round-10/mori-goalwave.md:45-47`); correct is one
+  `- [ ]` line per box. Re-measured (`awk` over each `## SHENON` section): r2 4, r3 4,
+  r4 4, r5–r10 1 each — 6/9 affected. Routed: report format for the next report; no
+  historical report rewritten.
+
+- **F07 — r2 report identity.** Superseded: `.ufo/reports/round-2/mori-goalwave.md:5`
+  names the entering baseline `e30b2e3`; correct is the commit carrying the work,
+  `3da8414970382c1690f7a8b020b75c2def6eaba5` (2026-10-15T13:07:37-03:00). Re-measured:
+  `git log --diff-filter=A --format='%H %cI' -- .ufo/reports/round-2/mori-goalwave.md`
+  → that hash. Routed: historical report preserved; class recorded
+  (`corpus/lessons/round-12.md#M23`).
+
+- **F08 — a fifth verdict value.** Superseded: nine cells `**improved narrowly**`
+  (`SCORECARD.md:114,115,173,226,281,327,377,427,429`). Correct: `AXES.md:79` admits
+  `improved`, `harmed`, `unchanged`, `unprovable-but-better`; qualifications belong in
+  the evidence cell. Re-measured: `grep -c 'improved narrowly' SCORECARD.md` → 9;
+  exact-cell recount improved 24 / improved narrowly 9 / unchanged 27. Fixed this
+  round: L1's round-12 SCORECARD entry uses the admitted vocabulary; the nine
+  historical cells stay as history.
+
+- **F09 — malformed-baseline guarantee.** Superseded: the implied claim that a
+  format/version header is mandatory. Correct: the validator accepts a headerless
+  baseline (marker + volatile list + nonempty block only). Re-measured today: control
+  `--drift` rc 1 with the 11 drift tokens above; headerless copy (first line removed)
+  rc 1 with the same tokens; junk consisting of `# mori-drift-baseline v1` + `# junk`
+  → `mori-census: --drift baseline malformed (canonical marker absent)`, rc 2.
+  Headerless acceptance is confirmed; a format contract remains owed (routed).
+
+- **F10 — inherited dirty SKILL.** Superseded: `SKILL.md` was uncommitted across
+  r5–r10 (last touch `1439c47`). Correct: the accumulated prose landed in `20e2255`
+  (2026-10-17); today's ` M SKILL.md` is L1's round-12 edit, not inherited drift.
+  Re-measured: `git log --format='%h %cI' -- SKILL.md` → `20e2255
+  2026-10-17T00:28:33-03:00`, `1439c47 2026-10-15T14:25:51-03:00`;
+  `git status --short` → ` M SKILL.md`. Fixed by `20e2255`; its missing LOG entry is
+  recorded below.
+
+- **F11 — timestamps later than commits.** Superseded labels: 17:55Z, 18:30Z, 20:10Z
+  (`SCORECARD.md:211,258-259,350-351`) and 21:50Z
+  (`.ufo/reports/round-9/mori-goalwave.md:26`). Correct commit clocks: `7a3629a`
+  17:53:05Z, `848b3a6` 18:28:43Z, `ed9de46` 20:06:34Z, `6a549b9` 21:48:43Z.
+  Re-measured: `git show -s --format='%h %cI' 7a3629a 848b3a6 ed9de46 6a549b9` →
+  those clocks. The labels are rounded estimates, not capture clocks; recorded here
+  (append-only).
+
+- **F14 — scratch evidence.** Superseded: the claim that every original experiment is
+  re-creatable from delivered material. Correct: 140/275 historical fixture
+  fingerprints are not recomputable; the `2210Z` run has no delivered input; a `/tmp`
+  path is never evidence. Re-measured: `grep -c '140/275' SCORECARD.md` → 1;
+  `find . -name 'expected*.json' -not -path './.git/*' | wc -l` → 0;
+  `ls corpus/evidence | grep -c 2210Z` → 0. Routed: future fixtures commit generator
+  + digest (QUALITY criterion 23); the historical gap stays disclosed.
+
+- **`20e2255` had no LOG entry (LANE/AGENTS.md rule 2, line 4).**
+  `git show --numstat --format='%h %s' 20e2255` → `.gitignore 1/0`, `SKILL.md 70/4`;
+  stat `2 files changed, 71 insertions(+), 4 deletions(-)`. Subject: "mori: document
+  watchdog liveness, runway, and tmux session checks in SKILL.md". The `.gitignore`
+  addition is a new file whose only line is `.ufo/interactive-sessions/`; the SKILL.md
+  hunk adds the watchdog-liveness, runway and tmux sections plus the drift paragraph
+  that carried the stale `65`/`2210Z` pointers corrected under F03/F10. This bullet is
+  that missing entry.
+
+Named corrections appended: 10 (F03–F11, F14) plus the missing `20e2255` entry.
+
+## Round 12 — kaika campaign: source registry, mistakes → criteria, roster coverage
+
+**Round 12 (steered, 2026-10-19).** Motivating evidence: kaika W1 dossiers
+`fleet-ledger/.ufo/waves/kaika-w1/mori-state.md` (depth 4 lowest; 0 URLs in SKILL.md; 0
+QUALITY criteria cite a lesson; census grades 9 of 20 declared lanes) and `mori-art.md` (kill-event
+ground uncovered; 30 candidate sources). Prompt: `fleet-ledger/.ufo/prompts/mori-round-12.md`
+(`d8c86ad`). Base `20e2255`, worktree branch `kaika/round`.
+
+Claims (each re-measured at the round-12 commit):
+1. **depth** (capability: source registry) — `corpus/SOURCES.md` 33 opened rows (A=30 B=2 C=1;
+   mined 11, queued 21, rejected 1 — S030), contract-v1 census clean; four kill-event knowledge
+   entries (`*-r12.md`) with `source:`/`verified-at:`/`recheck:` headers citing A/mined rows; SKILL.md
+   error-pattern rows citing 5 tier-A URLs (0 → 5, 0 unregistered). L1 re-executed every recheck:
+   oom_kill.c v7.2 :935/:936/:447/:452/:945, memcontrol.c :1820/:1825/:4966, oomd-util.c v261
+   :269/:306, catalog :66/:604/:884; `fe6faa94…` 7 user / 9 system; kernel kills 5 (dated
+   2026-10-18T17:46:17Z…23:57:18Z, MESSAGE-free `__REALTIME_TIMESTAMP`).
+2. **calibration** — `corpus/lessons/round-12.md` `## Mistakes` (26 rows, 5 captured-by `none` with
+   reasons) and `## Gate`; `corpus/QUALITY.md` criteria 6–25, each citing a lesson (0 → 20).
+3. **coverage** — census roster = `shokunin.conf` ids (parsed, never sourced) ∪ `.ufo/state/*.round`;
+   live lane rows 9 → 23, `roster_source=conf+state`, info `ROSTER_SET_MISMATCH` (conf-only
+   kotodama,souji; state-only audio,game-dev-2d,game-dev-3d). Census `d7710981…` → `3da5b098…`;
+   selftest 66 → 77 PASS; oracle 28/28 at unchanged `448f7723…`; mutation seat 12/12 mutants killed
+   on `4fe9786d…` (seat-reported) plus the L1's LANES-gating mutant killed on `3da5b098…` (the critic
+   seat showed rows outside `LANES="…"` were read as lanes at `4fe9786d…`; fixed with a selftest
+   case); wall time ≈1.9 s → ≈4.3 s (receipt `roster-r12-*-walltime.log`).
+
+**Re-verification (freshness).** `--drift baseline-r10-20261015T2231Z.json` exit 1 before the round;
+every token classified (`corpus/evidence/drift-r12-20261019T2204Z-classification.md`): new boot,
+souji sweep `e20f4fa`, aggregator row-B → row-C — no census regression. After claim 3 the drift
+additionally names the 14 new lane rows and roster fields (`drift-r12-20261019T2230Z-after-roster.log`).
+No re-pin (planned r13).
+
+**Contract repairs (not claims).** SHONEN.md regenerated from the canonical seed (`mori-shokunin`);
+PROVINCE `## Core`/`## Frontier` (FR1–FR14)/`## Adjacent` (souji added; TSUKUROI-F1-MEM-01
+answered: no retained kill record overlaps 2026-10-15T04:53:46Z) + scratch-roots correction;
+corpus/README coverage rows for 5 unindexed + 6 new entries, `## Frontier`; SKILL.md registry
+table (census / drift pin / silence oracle) and pointer fixes at :75/:78/:107-108 (F03, sibling
+lines); erratum appended to `knowledge/drift-pin-r10.md` (dead `…2210Z` path); SCORECARD round-12
+section, capabilities (5 rows), saturation (8/10, N=3), planned r13.
+
+**Phase-2 findings folded before commit** (reviewer, critic, sentinel seats — still the lane):
+knowledge `source:`/`recheck:` URLs pinned to the registry's revisions (S004 `c03c1a14`, S013
+`cf8ebfc6`, S016 earlyoom README `8477c902`) and re-executed (1825/4966, 66/604/884, earlyoom 1/2);
+SOURCES ids made contiguous (S031–S033; the unopened Bash-manual lead holds no id); conf parser
+limited to `LANES="…"` blocks (census `4fe9786d…` → `3da5b098…`, selftest 77/77); QUALITY 6 and 9
+anchors widened to the lines that carry the claim; moved SKILL pointers fixed (PROVINCE kagi row
+`:49`, userspace entry `:54`); Gate R5 now quotes the real SKILL cell (`:18`). Not changed, recorded
+for the operator: the critic contests claim 1's axis (entries = expansion, not depth), claim 2's
+verdict (no outside spot-check yet) and operability "unchanged" (≈2.3× wall time, no budget); the
+sentinel's two LOW pre-existing census items (`COREDUMP_SIGNAL=11` json read without
+`--output-fields`, unvalidated `MORI_ROSTER_LANES` tokens) are routed to r13.
+
+**Wave.** One batched L2 call of 12 seats (planner, connector, 4 executors, scribe, scout,
+reviewer, critic, mutation-tester, sentinel) after four `Background job limit reached (100)`
+refusals; five seats (all executors + mutation) then died on a provider rate limit
+(`resource_exhausted`) and were re-dispatched as fresh `…B` seats with identical prompts and file
+sets. No seat committed. Boundaries held: detection/report only; journal MESSAGE-free; conf parsed,
+never sourced; no fleet-root writes.
+
+Round report: `fleet-ledger/.ufo/reports/round-12/mori.md` · Verified lane rounds: 11 → 12 pending
+non-author verification.
