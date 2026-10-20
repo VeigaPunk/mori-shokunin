@@ -328,3 +328,44 @@ completeness, authentication or victim claim is added.
   fetched page bytes; the `Last-Modified` values pin the page revisions observed on 2026-10-20.
 - No live journal read, census invocation, fixture execution, gate run or drift-pin change was
   performed by this seat. Fixture packs are not evidence and no tally is predicted.
+
+## Measured implementation — L1, round 15
+
+This section supplies the execution evidence the source-opening seat did not
+claim. At **1822145d95682709069bbc8f4e1b947ddbe20078**, final r15 gate
+SHA `6a55c33c…` runs the same 63 fixture cases against frozen entering
+`0e41cb83…` and delivered census `f1f8d1b6…`: behavioral case failures
+**34→0**, strict rc **1→0**, green63/63, with specifically reproduced
+34/34 frozen missing-alarm controls and no inconclusive control. Command:
+
+```sh
+/usr/bin/jq -s '[.[].summary.sut_behavior_fail]' .ufo/waves/round-15/evidence/red-before-final/run-manifest.json .ufo/waves/round-15/evidence/green-after-final/run-manifest.json
+```
+
+Observed output `[34,0]`, exit0. These are fixture failures, not 34 unique
+host defects. Full-schema failures63→0 include metadata absent from the old
+bytes. Nonzero fixture witnesses are not live event observations.
+
+Separate boundary evidence, `capture-boundary/run-manifest.json` under the
+same evidence root: seven cases pass, with one reproduced frozen red control.
+rc124/137 map to unavailable:timeout; rc5, stderr and malformed JSON also
+leave positive-looking producer bytes unavailable, never positive0. A valid
+system arm still alarms when the user capture fails. The initial setup
+contradiction in `boundary-pin-red.json` is an oracle error, not production
+red; fixed expectation derivation excludes failed scopes, not their warning.
+
+Census selftest at `26f6589` passes113/113, including valid primitive-neighbor,
+primitive-only and truncated-JSON cases. Explicit object branches precede
+aggregate indexing, removing boolean-evaluation-order dependence at that
+boundary. r13/r14 preservation and oracle receipts at the same source bytes
+pass; those production bytes are unchanged in 1822145.
+
+Live receipt `evidence/live-census.json` observes separate user/system scoped
+rows, all six raw class counts and all four positive counts zero in each.
+The whole census is DRIFT for other fleet findings; neither zero row proves
+no event or positive-load behavior. Every one of the 126 core paired target
+runs records 12 journal calls; no extra producer query is introduced.
+Exact count reproduction:
+`/usr/bin/jq '[.runs[].journal_argv_count] | unique' .ufo/waves/round-15/evidence/green-after-final/run-manifest.json`
+→ `[12]`. No speedup, exhaustive detection or authenticated attribution is
+claimed. Current r10 drift comparison stays red; no baseline is re-pinned.

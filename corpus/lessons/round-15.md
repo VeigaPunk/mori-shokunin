@@ -136,3 +136,31 @@ table includes that unchanged failing case plus a separately added surviving
 other-scope case; no claim of whole-pack byte-identical causal isolation is
 made for this setup repair. Core C1 red/green isolation remains the original
 63 unchanged fixture cases on identical gate bytes.
+
+## Measured Gate decision
+
+The lane admits the bounded C1 knowledge and capability **pending independent
+non-author closure**. At 1822145, final same-gate before/after behavioral
+failures are34→0, core green63/63, frozen missing-alarm controls34/34, with
+no inconclusive controls. Seven additional capture-boundary cases pass.
+The counting command and actual values are in
+`.ufo/waves/round-15/evidence/c1-measurement.json`; the paired manifests retain
+all captured runs. The initial candidate row under `## Gate` is superseded
+by this measured decision, not by an internal seat's endorsement.
+
+Rejects remain rejected: no absence/health inference from subset0; no
+MESSAGE or malformed-JSON salvage; no foreign/array identity promotion;
+no re-pin-to-silence. The current delivered gate refuses the former hidden
+control-bypass flags with exit2, and its selftest checks completed control
+misses separately from exec error/timeout/integrity failure. These are actual
+L1 executions over committed inputs, not the earlier midflight seat checks.
+
+Source census before and after both exit0 with the same W04 informational
+duplicate-URL warnings. `sources-before.json` and `sources-after.json` under
+the round-15 wave retain stdout/rc/counts. Rows38→38, A35/B2/C1 held,
+mined17/queued20/rejected1 held; rows added A0/B0/C0. Four used-by changes
+are logged above; status/recheck unchanged. One new admitted knowledge entry
+advances FR1 failure-mode ground, not kernel attribution or all-event scope.
+
+Current outside admit/reject sampling remains pending; all 64 seats are the
+author lane. M4–M6 procedural debt is disclosed and not called a passed gate.

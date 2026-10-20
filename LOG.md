@@ -961,3 +961,29 @@ The r15 gate now removes each generated sandbox after both target runs.
 Committed fixture packs, expected tables, pinned targets and stdout/stderr
 captures retain replay authority; transient constructed trees are not swept
 into the evidence commit. This is evidence cleanup, not a predicate change.
+
+### Round-15 final measurement
+
+Delivered r15 gate SHA `6a55c33cc13e2cd862ebd44db66e8af635a35d7cd2a85168360569c886d62ffe`
+measured at **1822145d95682709069bbc8f4e1b947ddbe20078**:
+final selftest exit0; same 63 core cases give behavior34→0/schema63→0,
+strict exits1→0; green63/63; frozen34/34 with no inconclusive/unexpected
+controls. Boundary7/7 with frozen1/1, including failed-capture positive bytes
+and an independently surviving system arm. Removed control-bypass flags
+exit2. Actual commands/outputs, input hashes and exact scope paths:
+`.ufo/waves/round-15/evidence/*-final.json`,
+`capture-boundary.json`, `control-bypass-refused.json`.
+
+Core counting command:
+`/usr/bin/jq -s '[.[].summary.sut_behavior_fail]' .ufo/waves/round-15/evidence/red-before-final/run-manifest.json .ufo/waves/round-15/evidence/green-after-final/run-manifest.json`
+→ `[34,0]`, exit0. No distinct-bug count or universal completeness inferred.
+All126 core target runs record12 journal queries. Census/r13/r14/oracle
+preservation receipts at 26f6589 still bind their unchanged tool bytes.
+
+SOURCES final validator exit0; rows38→38/A35/B2/C1/mined17/queued20/
+rejected1 held. All64 original seat reports exist; no new wave or model
+parameter was used. Current outside closure is still required. Scores held
+6/7/5/5/5/6; C1 coverage improved, all other axis verdicts unchanged.
+Expansion/quality/discernment improve at the explicit bounded evidence;
+procedural conformance debt remains reported. No install/update, pacman
+transaction, host restart, remediation or new L0 question by L1.

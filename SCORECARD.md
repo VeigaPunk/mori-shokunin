@@ -840,3 +840,57 @@ failure-mode boundary within C1; retain the old red drift pin as declared debt
 without re-pinning. Dirty-path capture and active wording clarifications from
 `corpus/lessons/round-14-verifier-spotcheck.md:134–140` are unclaimed
 conformance/learning work. Independent outside closure remains required.
+
+### Round-15 measured result
+
+**C1 verified by the lane, pending non-author closure.** Measured gate/input
+commit **1822145d95682709069bbc8f4e1b947ddbe20078**. The same final gate
+SHA `6a55c33cc13e2cd862ebd44db66e8af635a35d7cd2a85168360569c886d62ffe`
+grades pinned entering census `0e41cb83…` and delivered census `f1f8d1b6…`
+against the same 63 committed cases. **Behavioral failures 34 → 0**; strict
+run exits **1 → 0**, after **63/63 pass**. Full-schema failures are
+63→0 because the old implementation also lacks the new fields; neither 34
+nor 63 is a count of distinct production bugs.
+
+Counting command, executed exit0, output `[34,0]`:
+
+```sh
+/usr/bin/jq -s '[.[].summary.sut_behavior_fail]' .ufo/waves/round-15/evidence/red-before-final/run-manifest.json .ufo/waves/round-15/evidence/green-after-final/run-manifest.json
+```
+
+Both runs reproduce **34/34** specifically missing-alarm frozen controls,
+with zero inconclusive or unexpected controls; the other 29 legacy controls
+pass. Seven separate capture-boundary cases pass, including valid-looking
+bytes from failed rc124/137/5, stderr and malformed capture, plus a surviving
+other-scope alarm. Evidence: `evidence/c1-measurement.json`,
+`capture-boundary/run-manifest.json` under `.ufo/waves/round-15/`.
+
+| Axis | Verdict | Active score | Evidence / limitation |
+|---|---|---|---|
+| coverage | improved | **6 held** | C1 finite mixed-record failure modes 34→0; raw unavailable preserved; not full event coverage |
+| operability | unchanged | **7 held** | census113/113, oracle28/28, r13 24pass+2mutation-red, r14 44/44; delivered r15 selftest and full controls pass; capture-oracle setup error retained and repaired |
+| depth | unchanged | **5 held** | S014/S015/S037/S038 ground predicates; no separate depth claim |
+| freshness | unchanged | **5 held** | live recheck has two scoped zero rows; old r10 drift remains red exit1, no re-pin |
+| calibration | unchanged | **5 held** | complete totals vs subset evidence explicit; procedural violations and actual setup failure disclosed, outside closure pending |
+| adjacency | unchanged | **6 held** | aggregate-only owner partition and tsukuroi route preserved; no dispatch/OS actuation or membership takeover |
+
+The preserved gates/census were measured at `26f6589dfa2a07e41a6dcfda99c2998bce2c0932`;
+their verdict-driving bytes are unchanged in 1822145. Final r15 receipts name
+real HEAD plus exact dirty paths and input hashes; `stable=true` and unchanged
+input digests refer to measured scope, never every host surface.
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| partial positive journal alarms | retain critical OOM/user-signal WARN from qualified current-boot records while invalid aggregate totals remain unavailable | `.ufo/waves/round-15/evidence/green-after-final/run-manifest.json`; `corpus/knowledge/journal-positive-evidence-r15.md` | 15 |
+
+SOURCES **38→38**, A35/B2/C1 and mined17/queued20/rejected1 held; four used-by
+cells extend to the new knowledge note, no immutable changes or new rows.
+Trends: expansion improved (FR1 failure-mode ground); quality improved
+(stronger measured alarm contract); discernment improved through prior
+outside findings learned as Q33–Q36, not through calling our own seats outside.
+Round execution carries procedural conformance debt M4–M6; no blanket
+conformance or independent admission is self-certified.
+
+Next steered-round plan, not executed here: coverage/FR11 cursor-bounded
+new-since-pin observation; retain the reasoned drift re-pin as separate
+freshness debt until an actual semantic review is assigned.
