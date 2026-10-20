@@ -1,0 +1,9 @@
+{
+  "schema": "mori-r14-scoped-count-preservation-v1",
+  "source": "round-13-verifier-spotcheck.md C1 and round-13 committed nonzero fixtures",
+  "required_scope_names": ["user", "system"],
+  "required_counters_per_scope": ["kernel_oom_notice", "oomd_notice", "coredump_notice", "segfault_signal11", "unit_sigkill_record", "unit_failure_record"],
+  "semantics": "Counts are records/notices, never unique victims. The six raw totals must remain measurable even if failed-subject metadata is missing; failure classification is a separate count of known fleet/nonfleet/unknown subjects. Scopes are never summed.",
+  "positive_alarm_policy": "kernel_oom_notice or observed UNIT_RESULT=oom-kill => critical OOM_KILL_JOURNAL and DRIFT independently of subject classification; user unit_sigkill_record => KILL_SIGNAL_JOURNAL WARN",
+  "routing_policy": "UNIT_FAILURE_JOURNAL is fleet only; UNIT_FAILURE_OUT_OF_SCOPE nonfleet with owner=tsukuroi; absent/unsafe subject => unknown without arbitrary payload echo"
+}
