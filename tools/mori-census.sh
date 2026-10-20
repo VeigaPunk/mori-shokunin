@@ -17,7 +17,12 @@
 #             system separate; r14 restores the OOM crit alarm (kernel-OOM unit
 #             notice in either scope, or UNIT_RESULT=oom-kill) and splits unit
 #             failures into fleet / non-fleet (owner tsukuroi) / unknown from
-#             the subject UNIT/USER_UNIT metadata
+#             the subject UNIT/USER_UNIT metadata; r15 adds per-scope
+#             validated-positive tokens (positive_kernel_oom, positive_unit_oom,
+#             positive_unit_signal, positive_process_sigkill) so an
+#             individually valid current-boot record still alarms when an
+#             adjacent malformed/nonmatching/foreign-boot record invalidates
+#             the aggregate class (the raw count stays unavailable)
 #   cgroup    memory.events / memory.current / memory.pressure / memory.max /
 #             memory.peak (user slice; r7 adds PSI + fill/avail grading, r8 the
 #             scope high-watermark with its instance anchor; thresholds labeled
@@ -163,7 +168,9 @@
 #                                      pair; device names are kept)
 #                     counters         the DRIFT_COUNTER_KEYS list in the code
 #                                      block below (pids, state_rounds*, wave
-#                                      counts, journal counts, cgroup gauges,
+#                                      counts, journal counts incl. r15
+#                                      positive_* / *_positive_* evidence,
+#                                      cgroup gauges,
 #                                      lane/tmux counts, verdict tallies,
 #                                      DISK finding sizes, row-B files, ...)
 #                     compounds        state_val_unread_reasons
@@ -946,11 +953,70 @@ probe_waves() {
 #   unknown      a non-string/missing UNIT_RESULT contributes only to
 #                unit_oom_result_unknown: never a fabricated known 0 and never
 #                oom evidence.
+#
+# R15 validated-positive evidence (mixed-stream alarm retention):
+#   Why      the aggregate class is whole-stream validation: ONE malformed,
+#            nonmatching or foreign-boot record makes all raw counts and splits
+#            for that class unavailable (r14 behavior, preserved). That was an
+#            alarm-silencing path: a real current-boot OOM/SIGKILL record next
+#            to one bad record produced no crit/warn at all.
+#   What     the SAME successful, stderr-free, valid-JSON capture of each class
+#            query is reused. On a healthy (fully valid) aggregate the raw count
+#            IS the positive count and NO extra parser runs. Only after a
+#            SEMANTIC aggregate failure (record-invalid / multi-boot /
+#            boot-mismatch) does ONE index-safe jq fallback scan that same
+#            captured stream: no second journal query and no second producer
+#            invocation. It counts ONLY records that are individually valid:
+#            JSON object, scalar string _BOOT_ID equal to the expected current
+#            boot, scalar string MESSAGE_ID equal to the class id, plus the
+#            class field below. Unsafe/nonmatching records are excluded, not
+#            reinterpreted. A failed producer capture, nonempty stderr, a jq
+#            error on the aggregate, or a malformed aggregate/fallback response
+#            leaves positives unavailable (fail closed, never salvaged).
+#   Tokens   positive_kernel_oom      feat fe6faa94 records
+#            positive_unit_oom        d9b373ed records with UNIT_RESULT exactly
+#                                     the string "oom-kill"
+#            positive_unit_signal     d9b373ed records with UNIT_RESULT exactly
+#                                     the string "signal"
+#            positive_process_sigkill 98e32220 records with EXIT_CODE exactly the
+#                                     string "killed" and EXIT_STATUS scalar
+#                                     string "9" or scalar number 9 (bool,
+#                                     array, null and other values rejected)
+#            They appear on BOTH scope rows (scope-local values) and are never
+#            summed. `unavailable:<reason>` when that class's capture, stderr or
+#            JSON parse failed; a parsed stream with no individually valid
+#            record is a real 0 for the positive token (it is NOT a class total).
+#   Alarm    OOM_KILL_JOURNAL fires once if ANY positive_kernel_oom or
+#            positive_unit_oom is > 0, even while the matching raw counter is
+#            unavailable:<reason>. KILL_SIGNAL_JOURNAL (user) fires if the
+#            user_positive_process_sigkill or user_positive_unit_signal
+#            evidence is > 0. OOMD notices remain INFO only (no positive token;
+#            no inherited alarm).
+#   Fields   raw counters/splits keep their exact names and unavailable
+#            semantics. The four exact positive_* tokens are scope-local on the
+#            journal.<scope> SURFACE rows. OOM_KILL_JOURNAL carries
+#            user_positive_kernel_oom/system_positive_kernel_oom and
+#            user_positive_unit_oom/system_positive_unit_oom integers (never a
+#            summed bare positive_* duplicate); KILL_SIGNAL_JOURNAL carries
+#            user_positive_process_sigkill and user_positive_unit_signal. Both
+#            alarm lines add positive_basis=validated-subset-lower-bound and
+#            positive_validation=scalar-id+current-boot (signal adds
+#            +exact-fields), alarm_basis=scoped-record-count or
+#            validated-positive-records or scoped-record-count+validated-
+#            positive-records, and raw_basis=scoped-record-count. Every field
+#            appears once and no scope is combined into one value.
+#   Not      a completeness claim, an authenticated id, a unique-victim or
+#            kill-total count, a repair of arbitrary malformed JSON, a new
+#            route, or an actuation. The fleet/non-fleet/unknown owner
+#            partition stays aggregate-only and unavailable on an invalid
+#            stream; no positive subject routing is invented.
 # No query asks for MESSAGE. A nonzero journalctl rc (never parsed as a count),
 # an absent journalctl/jq, malformed JSON, a record without the validated
 # fields, a non-matching MESSAGE_ID, or records from more than one boot makes
-# that class unavailable — it is never reported as 0, and its split tokens read
-# unavailable:<reason> (a timeout is unavailable, never an alarm). A
+# that RAW class unavailable — it is never reported as 0, and its split tokens
+# read unavailable:<reason> (a timeout is unavailable, never an alarm). Its
+# positive token is the only record evidence that may survive such a semantic
+# failure, and only from individually valid current-boot records. A
 # system-scope zero says the queried journal scope held no matching records; it
 # does not say whether a service was active or inactive.
 #
@@ -970,10 +1036,23 @@ JOURNAL_ID_UNIT_SIGKILL=98e322203f7a4ed290d09fe03c09fe15
 JOURNAL_ID_UNIT_FAILURE=d9b373ed55a64feb8242e02dbe79a49c
 # One jq pass validates every record and emits `<records>\t<boots>\t<boot>`.
 # Slurped empty input is `[]` -> `0	0	none` at rc 0: a valid empty query is 0.
-JOURNAL_JQ_TAIL='then [length, ([.[]._BOOT_ID] | unique | length), ([.[]._BOOT_ID][0] // "none")] | @tsv else (if all(.[]; type == "object" and (._BOOT_ID | type) == "string" and ((._BOOT_ID | length) > 0)) then ([.[]._BOOT_ID] | unique | length) as $b | if $b > 1 then "multi-boot" elif all(.[]; ._BOOT_ID == $boot) then "record-invalid" else "boot-mismatch" end else "record-invalid" end) end'
-JOURNAL_JQ_MSGID="if all(.[]; type == \"object\" and (._BOOT_ID | type) == \"string\" and (._BOOT_ID == \$boot) and (.MESSAGE_ID == \$id)) $JOURNAL_JQ_TAIL"
-JOURNAL_JQ_SIGKILL="if all(.[]; type == \"object\" and (._BOOT_ID | type) == \"string\" and (._BOOT_ID == \$boot) and (.MESSAGE_ID == \$id) and (.EXIT_CODE == \"killed\") and ((.EXIT_STATUS | tostring) == \"9\")) $JOURNAL_JQ_TAIL"
-JOURNAL_JQ_SIGSEGV="if all(.[]; type == \"object\" and (._BOOT_ID | type) == \"string\" and (._BOOT_ID == \$boot) and (.MESSAGE_ID == \$id) and ((.COREDUMP_SIGNAL | tostring) == \"11\")) $JOURNAL_JQ_TAIL"
+JOURNAL_JQ_TAIL='then [length, ([.[]._BOOT_ID] | unique | length), ([.[]._BOOT_ID][0] // "none")] | @tsv else (if all(.[]; if type == "object" then (._BOOT_ID | type) == "string" and ((._BOOT_ID | length) > 0) else false end) then ([.[]._BOOT_ID] | unique | length) as $b | if $b > 1 then "multi-boot" elif all(.[]; ._BOOT_ID == $boot) then "record-invalid" else "boot-mismatch" end else "record-invalid" end) end'
+JOURNAL_JQ_MSGID="if all(.[]; if type == \"object\" then (._BOOT_ID | type) == \"string\" and (._BOOT_ID == \$boot) and (.MESSAGE_ID == \$id) else false end) $JOURNAL_JQ_TAIL"
+JOURNAL_JQ_SIGKILL="if all(.[]; if type == \"object\" then (._BOOT_ID | type) == \"string\" and (._BOOT_ID == \$boot) and (.MESSAGE_ID == \$id) and (.EXIT_CODE == \"killed\") and ((.EXIT_STATUS | tostring) == \"9\") else false end) $JOURNAL_JQ_TAIL"
+JOURNAL_JQ_SIGSEGV="if all(.[]; if type == \"object\" then (._BOOT_ID | type) == \"string\" and (._BOOT_ID == \$boot) and (.MESSAGE_ID == \$id) and ((.COREDUMP_SIGNAL | tostring) == \"11\") else false end) $JOURNAL_JQ_TAIL"
+
+# r15 validated-positive fallback expressions. They are NOT part of the
+# aggregate filter: journal_query runs one only after a semantic aggregate
+# failure (record-invalid / multi-boot / boot-mismatch) over the SAME captured
+# stream, so a healthy class pays no extra jq process and a failed capture or
+# structurally invalid parser response leaves positives unavailable. Every
+# selector filters non-objects and non-string ids BEFORE indexing them, so one
+# valid-JSON string (or number/array) neighbor cannot fail the scan. Identity is
+# exact type==string equality; no tostring/default/salvage.
+JOURNAL_JQ_POS_BASE="select(type == \"object\") | select((._BOOT_ID | type) == \"string\") | select(._BOOT_ID == \$boot) | select((.MESSAGE_ID | type) == \"string\") | select(.MESSAGE_ID == \$id)"
+JOURNAL_JQ_POS_KERNEL="[.[] | $JOURNAL_JQ_POS_BASE] | length"
+JOURNAL_JQ_POS_SIGKILL="[.[] | $JOURNAL_JQ_POS_BASE | select((.EXIT_CODE | type) == \"string\") | select(.EXIT_CODE == \"killed\") | select(((.EXIT_STATUS | type) == \"string\" and .EXIT_STATUS == \"9\") or ((.EXIT_STATUS | type) == \"number\" and .EXIT_STATUS == 9))] | length"
+JOURNAL_JQ_POS_UNIT="[([.[] | $JOURNAL_JQ_POS_BASE | select((.UNIT_RESULT | type) == \"string\") | select(.UNIT_RESULT == \"oom-kill\")] | length), ([.[] | $JOURNAL_JQ_POS_BASE | select((.UNIT_RESULT | type) == \"string\") | select(.UNIT_RESULT == \"signal\")] | length)] | @tsv"
 
 # r14 unit-failure split: ONE jq pass over the d9b373ed record set, so the
 # subsets cannot race a second journal scan. Column order (15 columns, checked
@@ -1016,7 +1095,7 @@ def fleet: .kind == "unit" and (.name | test($fleet));
 def oom: ((.UNIT_RESULT? | type) == "string" and .UNIT_RESULT == "oom-kill");
 def sig: ((.UNIT_RESULT? | type) == "string" and .UNIT_RESULT == "signal");
 def resunk: ((.UNIT_RESULT? | type) != "string");
-if all(.[]; type == "object" and (._BOOT_ID | type) == "string" and (._BOOT_ID == $boot) and (.MESSAGE_ID == $id)) then
+if all(.[]; if type == "object" then (._BOOT_ID | type) == "string" and (._BOOT_ID == $boot) and (.MESSAGE_ID == $id) else false end) then
   [ .[] | {s: subject, o: oom, g: sig, ru: resunk} ] as $r
   | [ ($r|length),
       ($r|map(select(.s|fleet))|length),
@@ -1034,21 +1113,60 @@ if all(.[]; type == "object" and (._BOOT_ID | type) == "string" and (._BOOT_ID =
       ([.[]._BOOT_ID]|unique|length),
       ([.[]._BOOT_ID][0] // "none")
     ] | @tsv
-else (if all(.[]; type == "object" and (._BOOT_ID | type) == "string" and ((._BOOT_ID | length) > 0)) then ([.[]._BOOT_ID] | unique | length) as $b | if $b > 1 then "multi-boot" elif all(.[]; ._BOOT_ID == $boot) then "record-invalid" else "boot-mismatch" end else "record-invalid" end) end'
+else (if all(.[]; if type == "object" then (._BOOT_ID | type) == "string" and ((._BOOT_ID | length) > 0) else false end) then ([.[]._BOOT_ID] | unique | length) as $b | if $b > 1 then "multi-boot" elif all(.[]; ._BOOT_ID == $boot) then "record-invalid" else "boot-mismatch" end else "record-invalid" end) end'
 
+
+# journal_positive_scan <raw> <width> <filter> [jq args...]
+# -> JQ_POS_VEC (tab-separated validated integers, or empty)
+# r15: counts individually valid records in the SAME captured stream. Called
+# only after a SEMANTIC aggregate failure (the aggregate response parsed and was
+# structurally an integer vector/reason token). A failed aggregate parse, a
+# structurally malformed response, an empty filter or a failed/failed-shape
+# scan leaves JQ_POS_VEC empty, i.e. positives unavailable: no salvage from an
+# invalid parser response and no stale value from an earlier class.
+journal_positive_scan() {
+  local raw=$1 width=$2 filter=$3
+  shift 3
+  JQ_POS_VEC=''
+  [ "$width" -gt 0 ] || return 0
+  local out rc
+  # 2>/dev/null retained: jq/jaq print offending VALUES in type errors, and a
+  # hostile record could carry a canary there. stderr is never a data path.
+  set +e
+  out=$("$JQ_BIN" -s -r "$@" "$filter" <<< "$raw" 2>/dev/null)
+  rc=$?
+  set -e
+  [ "$rc" -eq 0 ] || return 0
+  case "$out" in *$'\n'*) return 0 ;; esac
+  local -a pv=()
+  IFS=$'\t' read -r -a pv <<< "$out" || true
+  [ "${#pv[@]}" -eq "$width" ] || return 0
+  local i
+  for ((i = 0; i < width; i++)); do
+    is_int "${pv[$i]}" || return 0
+  done
+  JQ_POS_VEC=$out
+}
 
 # journal_query <scope-flag> <output-fields> <match words> <jq-filter> [jq args...]
-# -> JQ_N JQ_BOOTS JQ_BOOT JQ_VEC JQ_STATUS
+# -> JQ_N JQ_BOOTS JQ_BOOT JQ_VEC JQ_STATUS JQ_POS_VEC
 # JOURNAL_Q_WIDTH (a caller-prefixed assignment) is the exact column count the
 # filter must emit; the default 3 is the legacy <records>\t<boots>\t<boot>.
-# The match words are whitespace-split (journalctl wants one FIELD=value per
-# argv element; every value here is whitespace-free).
+# JOURNAL_Q_POSITIVE_WIDTH (r15, default 0) is the column count of the
+# validated-positive fallback vector (tab-separated integers), and
+# JOURNAL_Q_POSITIVE_FILTER is its index-safe jq selector. The fallback runs
+# over the SAME captured stream ONLY after a semantic aggregate failure, so a
+# healthy class pays no extra jq process. JQ_POS_VEC stays empty — positives
+# unavailable — when capture failed (rc, stderr, timeout), the aggregate parser
+# response was invalid, or either the fallback or its shape/number check failed.
+# The match words are whitespace-split (journalctl wants one FIELD=value
+# per argv element; every value here is whitespace-free).
 journal_query() {
   local flag=$1 fields=$2 match=$3 filter=$4
   shift 4
   local -a m=()
   read -r -a m <<< "$match"
-  JQ_N=''; JQ_BOOTS=''; JQ_BOOT=''; JQ_STATUS=''; JQ_VEC=''
+  JQ_N=''; JQ_BOOTS=''; JQ_BOOT=''; JQ_STATUS=''; JQ_VEC=''; JQ_POS_VEC=''
   if ! have "$TIMEOUT_BIN" && [ ! -x "$TIMEOUT_BIN" ]; then
     # Never run an unbounded journal scan when the bound is unavailable.
     JQ_STATUS=no-timeout-bin
@@ -1094,14 +1212,19 @@ journal_query() {
     return 0
   fi
   local raw=$CAP_OUT parsed jrc n nb boot width=${JOURNAL_Q_WIDTH:-3}
-  local -a vec=()
+  local pwidth=${JOURNAL_Q_POSITIVE_WIDTH:-0} pfilter=${JOURNAL_Q_POSITIVE_FILTER:-}
+  local -a vec=() jqargs=("$@")
   set +e
-  parsed=$("$JQ_BIN" -s -r "$@" "$filter" <<< "$raw" 2>/dev/null)
+  parsed=$("$JQ_BIN" -s -r "${jqargs[@]}" "$filter" <<< "$raw" 2>/dev/null)
   jrc=$?
   set -e
   if [ "$jrc" -ne 0 ]; then JQ_STATUS=malformed-json; return 0; fi
   case "$parsed" in
-    record-invalid|multi-boot|boot-mismatch) JQ_STATUS=$parsed; return 0 ;;
+    record-invalid|multi-boot|boot-mismatch)
+      if [ -n "$pfilter" ] && [ "$pwidth" -gt 0 ]; then
+        journal_positive_scan "$raw" "$pwidth" "$pfilter" "${jqargs[@]}"
+      fi
+      JQ_STATUS=$parsed; return 0 ;;
   esac
   # r14: a filter may emit more columns than the legacy <n>\t<boots>\t<boot>.
   # The column COUNT is checked exactly, every count column must be a plain
@@ -1119,19 +1242,37 @@ journal_query() {
   boot=${vec[$((width - 1))]}
   if ! is_int "$nb"; then JQ_STATUS=malformed-json; return 0; fi
   if [ "$nb" -eq 0 ]; then
-    [ "$n" -eq 0 ] || { JQ_STATUS=record-invalid; return 0; }
+    [ "$n" -eq 0 ] || {
+      if [ -n "$pfilter" ] && [ "$pwidth" -gt 0 ]; then
+        journal_positive_scan "$raw" "$pwidth" "$pfilter" "${jqargs[@]}"
+      fi
+      JQ_STATUS=record-invalid; return 0; }
     JQ_N=0; JQ_BOOTS=0; JQ_STATUS=ok
     JQ_VEC=$parsed
     return 0
   fi
-  if [ "$nb" -ne 1 ]; then JQ_STATUS=multi-boot; return 0; fi
+  if [ "$nb" -ne 1 ]; then
+    if [ -n "$pfilter" ] && [ "$pwidth" -gt 0 ]; then
+      journal_positive_scan "$raw" "$pwidth" "$pfilter" "${jqargs[@]}"
+    fi
+    JQ_STATUS=multi-boot; return 0
+  fi
   # The only journal-derived string this probe echoes is a boot id. systemd
   # emits exactly 32 lowercase hex chars; anything else could forge tokens or an
   # extra output line, so it grades the class unavailable instead.
   case "$boot" in
-    *[!0-9a-f]*) JQ_STATUS=record-invalid; return 0 ;;
+    *[!0-9a-f]*)
+      if [ -n "$pfilter" ] && [ "$pwidth" -gt 0 ]; then
+        journal_positive_scan "$raw" "$pwidth" "$pfilter" "${jqargs[@]}"
+      fi
+      JQ_STATUS=record-invalid; return 0 ;;
   esac
-  if [ "${#boot}" -ne 32 ]; then JQ_STATUS=record-invalid; return 0; fi
+  if [ "${#boot}" -ne 32 ]; then
+    if [ -n "$pfilter" ] && [ "$pwidth" -gt 0 ]; then
+      journal_positive_scan "$raw" "$pwidth" "$pfilter" "${jqargs[@]}"
+    fi
+    JQ_STATUS=record-invalid; return 0
+  fi
   JQ_N=$n; JQ_BOOTS=$nb; JQ_BOOT=$boot; JQ_VEC=$parsed; JQ_STATUS=ok
 }
 
@@ -1153,11 +1294,38 @@ probe_journal() {
   local flag scope cls key n subj d st rc_n uf
   local -a classes=(kernel_oom_notice oomd_notice coredump_notice segfault_signal11 unit_sigkill_record unit_failure_record)
   local -A ids=( [kernel_oom_notice]=$JOURNAL_ID_KERNEL_OOM [oomd_notice]=$JOURNAL_ID_OOMD [coredump_notice]=$JOURNAL_ID_COREDUMP [unit_failure_record]=$JOURNAL_ID_UNIT_FAILURE [segfault_signal11]='' [unit_sigkill_record]='' )
-  local -A jn=() js=() sboot=() src=() ucnt=()
+  local -A jn=() js=() sboot=() src=() ucnt=() jpos=()
   local -a vec=() unit_fields=(fleet nonfleet unknown missing ambiguous malformed oom oom_fleet oom_nonfleet oom_subject_unknown oom_result_unknown signal)
   local oom_fire=0 oom_paths='' oom_fields=''
   local ko uo uou ps us kill_fire=0 kill_paths=''
   local oom_path_k=0 oom_path_u=0
+
+  # r15 validated-positive lookup: on an ok aggregate the raw count IS the
+  # positive count (the same records passed whole-stream validation), so no
+  # fallback pass runs. On a semantic aggregate failure the fallback vector was
+  # captured from the same stream; when that capture or parse failed the token
+  # is unavailable:<class-status>, never a stale value and never a fake zero.
+  journal_pos() { # <scope> <class> <column:0 kernel/process,0|1 unit>
+    local key="$1:$2" idx=$3
+    if [ "${js[$key]}" = ok ]; then
+      case "$2:$idx" in
+        kernel_oom_notice:0|unit_sigkill_record:0) printf '%s' "${jn[$key]}" ;;
+        unit_failure_record:0) printf '%s' "${ucnt["$1:oom"]}" ;;
+        unit_failure_record:1) printf '%s' "${ucnt["$1:signal"]}" ;;
+        *) printf '%s' 'unavailable:internal-mapping' ;;
+      esac
+      return 0
+    fi
+    if [ -n "${jpos[$key]:-}" ]; then
+      local -a pv=()
+      IFS=$'\t' read -r -a pv <<< "${jpos[$key]}"
+      if [ "${#pv[@]}" -gt "$idx" ] && is_int "${pv[$idx]}"; then
+        printf '%s' "${pv[$idx]}"
+        return 0
+      fi
+    fi
+    printf 'unavailable:%s' "${js[$key]}"
+  }
 
   # Named coverage loss, not a look-alike zero. Each unmeasured class carries a
   # reason that separates a RETIRED TEXT HEURISTIC from an unimplemented
@@ -1190,15 +1358,19 @@ probe_journal() {
     for cls in "${classes[@]}"; do
       key="$scope:$cls"
       case "$cls" in
+        kernel_oom_notice)
+          JOURNAL_Q_POSITIVE_WIDTH=1 JOURNAL_Q_POSITIVE_FILTER="$JOURNAL_JQ_POS_KERNEL" journal_query "$flag" '_BOOT_ID,MESSAGE_ID' "MESSAGE_ID=${ids[$cls]}" "$JOURNAL_JQ_MSGID" --arg boot "$BOOT_ID_EXPECTED" --arg id "${ids[$cls]}" ;;
         segfault_signal11)
           journal_query "$flag" '_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL' "MESSAGE_ID=$JOURNAL_ID_COREDUMP COREDUMP_SIGNAL=11" "$JOURNAL_JQ_SIGSEGV" --arg boot "$BOOT_ID_EXPECTED" --arg id "$JOURNAL_ID_COREDUMP" ;;
         unit_sigkill_record)
-          journal_query "$flag" '_BOOT_ID,MESSAGE_ID,EXIT_CODE,EXIT_STATUS' "MESSAGE_ID=$JOURNAL_ID_UNIT_SIGKILL EXIT_CODE=killed EXIT_STATUS=9" "$JOURNAL_JQ_SIGKILL" --arg boot "$BOOT_ID_EXPECTED" --arg id "$JOURNAL_ID_UNIT_SIGKILL" ;;
+          JOURNAL_Q_POSITIVE_WIDTH=1 JOURNAL_Q_POSITIVE_FILTER="$JOURNAL_JQ_POS_SIGKILL" journal_query "$flag" '_BOOT_ID,MESSAGE_ID,EXIT_CODE,EXIT_STATUS' "MESSAGE_ID=$JOURNAL_ID_UNIT_SIGKILL EXIT_CODE=killed EXIT_STATUS=9" "$JOURNAL_JQ_SIGKILL" --arg boot "$BOOT_ID_EXPECTED" --arg id "$JOURNAL_ID_UNIT_SIGKILL" ;;
         unit_failure_record)
           # One record set, one jq pass: the class total and its fleet /
           # non-fleet / unknown / oom / signal subsets share the validated
-          # records, so no subset can disagree with or race the total.
-          JOURNAL_Q_WIDTH=15 journal_query "$flag" '_BOOT_ID,MESSAGE_ID,UNIT,USER_UNIT,UNIT_RESULT' "MESSAGE_ID=${ids[$cls]}" "$JOURNAL_JQ_UNITS" --arg boot "$BOOT_ID_EXPECTED" --arg id "${ids[$cls]}" --arg fleet "$FLEET_UNIT_TOKENS"
+          # records, so no subset can disagree with or race the total. The
+          # positive fallback reads the same captured stream only when the
+          # aggregate is semantically invalid.
+          JOURNAL_Q_WIDTH=15 JOURNAL_Q_POSITIVE_WIDTH=2 JOURNAL_Q_POSITIVE_FILTER="$JOURNAL_JQ_POS_UNIT" journal_query "$flag" '_BOOT_ID,MESSAGE_ID,UNIT,USER_UNIT,UNIT_RESULT' "MESSAGE_ID=${ids[$cls]}" "$JOURNAL_JQ_UNITS" --arg boot "$BOOT_ID_EXPECTED" --arg id "${ids[$cls]}" --arg fleet "$FLEET_UNIT_TOKENS"
           if [ "$JQ_STATUS" = ok ]; then
             IFS=$'\t' read -r -a vec <<< "$JQ_VEC"
             ucnt["$scope:total"]=${vec[0]}
@@ -1218,13 +1390,13 @@ probe_journal() {
         *)
           journal_query "$flag" '_BOOT_ID,MESSAGE_ID' "MESSAGE_ID=${ids[$cls]}" "$JOURNAL_JQ_MSGID" --arg boot "$BOOT_ID_EXPECTED" --arg id "${ids[$cls]}" ;;
       esac
-      jn[$key]=$JQ_N; js[$key]=$JQ_STATUS
+      jn[$key]=$JQ_N; js[$key]=$JQ_STATUS; jpos[$key]=$JQ_POS_VEC
       case "$JQ_STATUS" in
         rc-*) if [ "${src[$scope]}" -eq 0 ]; then src[$scope]=${JQ_STATUS#rc-}; fi ;;
       esac
-      # Every ok filter already enforced _BOOT_ID == BOOT_ID_EXPECTED, so the
-      # scope boot for the row is just the validated one. Mixed/foreign boots
-      # never reach here: they graded multi-boot/boot-mismatch above.
+      # sboot only advances on an ok aggregate, whose filter enforced equality
+      # with the expected boot; an invalid/foreign stream contributes no boot
+      # value (positives carry none), so the row falls back to the expected id.
       if [ "$JQ_STATUS" = ok ] && [ -n "$JQ_BOOT" ]; then sboot[$scope]=$JQ_BOOT; fi
     done
   done
@@ -1290,67 +1462,130 @@ probe_journal() {
     fi
   done
 
-  # ---- OOM alarm (r14 restoration) -----------------------------------------
-  # EXACTLY ONE global OOM_KILL_JOURNAL crit line per census. The four counters
-  # are per scope and per source, appear once, and are NEVER summed. A
+  # ---- OOM alarm (r14 restoration, r15 positive retention) -----------------
+  # EXACTLY ONE global OOM_KILL_JOURNAL crit line per census. The four raw
+  # counters are per scope and per source, appear once, and are NEVER summed. A
   # kernel-OOM unit notice in either scope is an alarm even though it is a
   # notice, not a unique-victim count; a unit that failed with UNIT_RESULT
   # oom-kill is an alarm regardless of subject classification. The result path
-  # may come from the kernel OOM killer or from systemd-oomd. An unavailable
-  # source keeps its own unavailable:<reason> token and does not alarm; another
-  # positive source still does. Drift counts this alarm LINE, not records and
-  # not kills.
+  # may come from the kernel OOM killer or from systemd-oomd.
+  # r15: an alarm also fires when the RAW class is unavailable but at least one
+  # INDIVIDUALLY valid current-boot record exists (positive_kernel_oom /
+  # positive_unit_oom > 0). The raw token then stays unavailable:<reason> and
+  # alarm_basis names validated-positive-records, so an unavailable raw count is
+  # never presented as the firing basis. An unavailable source with no positive
+  # evidence does not alarm; another positive source still does. OOMD notices
+  # remain INFO-only and never feed these positives. Drift counts this alarm
+  # LINE, not records and not kills.
+  local pko puo oom_raw_fire=0 oom_pos_fire=0 oom_basis='' kst ust
   for scope in user system; do
     key="$scope:kernel_oom_notice"
-    if [ "${js[$key]}" = ok ]; then ko=${jn[$key]}; else ko="unavailable:${js[$key]}"; fi
+    kst=${js[$key]}
+    if [ "$kst" = ok ]; then ko=${jn[$key]}; else ko="unavailable:${kst}"; fi
     key="$scope:unit_failure_record"
-    if [ "${js[$key]}" = ok ]; then
+    ust=${js[$key]}
+    if [ "$ust" = ok ]; then
       uo=${ucnt["$scope:oom"]}
       uou=${ucnt["$scope:oom_result_unknown"]}
     else
-      uo="unavailable:${js[$key]}"
-      uou="unavailable:${js[$key]}"
+      uo="unavailable:${ust}"
+      uou="unavailable:${ust}"
     fi
+    pko=$(journal_pos "$scope" kernel_oom_notice 0)
+    puo=$(journal_pos "$scope" unit_failure_record 0)
     case "$ko" in
       unavailable:*) ;;
-      *) if [ "$ko" -gt 0 ]; then oom_fire=1; oom_path_k=1; fi ;;
+      *) if [ "$ko" -gt 0 ]; then oom_fire=1; oom_path_k=1; oom_raw_fire=1; fi ;;
     esac
     case "$uo" in
       unavailable:*) ;;
-      *) if [ "$uo" -gt 0 ]; then oom_fire=1; oom_path_u=1; fi ;;
+      *) if [ "$uo" -gt 0 ]; then oom_fire=1; oom_path_u=1; oom_raw_fire=1; fi ;;
+    esac
+    case "$pko" in
+      unavailable:*) ;;
+      *) if is_int "$pko" && [ "$pko" -gt 0 ]; then
+           oom_fire=1; oom_path_k=1
+           [ "$kst" = ok ] || oom_pos_fire=1
+         fi ;;
+    esac
+    case "$puo" in
+      unavailable:*) ;;
+      *) if is_int "$puo" && [ "$puo" -gt 0 ]; then
+           oom_fire=1; oom_path_u=1
+           [ "$ust" = ok ] || oom_pos_fire=1
+         fi ;;
     esac
     if [ "$scope" = user ]; then
-      oom_fields="$oom_fields user_notice=$ko user_unit_oom=$uo user_unit_oom_result_unknown=$uou"
+      oom_fields="$oom_fields user_notice=$ko user_unit_oom=$uo user_unit_oom_result_unknown=$uou user_positive_kernel_oom=$pko user_positive_unit_oom=$puo"
     else
-      oom_fields="$oom_fields system_notice=$ko system_unit_oom=$uo system_unit_oom_result_unknown=$uou"
+      oom_fields="$oom_fields system_notice=$ko system_unit_oom=$uo system_unit_oom_result_unknown=$uou system_positive_kernel_oom=$pko system_positive_unit_oom=$puo"
     fi
   done
   if [ "$oom_path_k" -eq 1 ]; then oom_paths=kernel_oom_notice; fi
   if [ "$oom_path_u" -eq 1 ]; then oom_paths="${oom_paths:+$oom_paths,}unit_result_oom_kill"; fi
   if [ "$oom_fire" -eq 1 ]; then
-    emit_finding OOM_KILL_JOURNAL crit "class=oom_kill alarm=1 paths=$oom_paths$oom_fields scope=user,system trust=client-supplied basis=scoped-record-count boot=$BOOT_ID_EXPECTED note=one alarm line per census; per-scope/per-source counters are separate and never summed; a per-unit notice or unit result is not a unique-victim, kill-total or fleet-cause count (kernel OOM or systemd-oomd); drift counts this alarm line, not records"
+    if [ "$oom_raw_fire" -eq 1 ] && [ "$oom_pos_fire" -eq 1 ]; then
+      oom_basis='scoped-record-count+validated-positive-records'
+    elif [ "$oom_raw_fire" -eq 1 ]; then
+      oom_basis='scoped-record-count'
+    else
+      oom_basis='validated-positive-records'
+    fi
+    emit_finding OOM_KILL_JOURNAL crit "class=oom_kill alarm=1 paths=$oom_paths$oom_fields positive_basis=validated-subset-lower-bound positive_validation=scalar-id+current-boot alarm_basis=$oom_basis raw_basis=scoped-record-count scope=user,system trust=client-supplied boot=$BOOT_ID_EXPECTED note=one alarm line per census; per-scope/per-source raw and positive counters are separate and never summed; a per-unit notice or unit result is not a unique-victim, kill-total or fleet-cause count (kernel OOM or systemd-oomd); a validated positive is not proof of completeness or of an authenticated id; drift counts this alarm line, not records"
   fi
 
-  # ---- user KILL_SIGNAL warn (r14) -----------------------------------------
+  # ---- user KILL_SIGNAL warn (r14, r15 positive retention) ------------------
   # The pre-r13 text class warned on a user unit process killed by SIGKILL and
   # on a user unit whose failure result was 'signal'. Both structured paths
-  # keep the SAME one warn line with separate counters (never summed): the
+  # keep the SAME one warn line with separate raw counters (never summed): the
   # unit-process SIGKILL records and the UNIT_RESULT=signal unit failures. A
   # user signal result alone is DRIFT. The system scope keeps no such warn.
+  # r15: the warn also fires from an individually valid user record when the
+  # aggregate is unavailable; raw tokens stay unavailable:<reason>.
+  local pps pus kill_raw_fire=0 kill_pos_fire=0 kill_basis='' kill_k=0 kill_u=0 sst ust
   key='user:unit_sigkill_record'
-  if [ "${js[$key]}" = ok ]; then ps=${jn[$key]}; else ps="unavailable:${js[$key]}"; fi
+  sst=${js[$key]}
+  if [ "$sst" = ok ]; then ps=${jn[$key]}; else ps="unavailable:${sst}"; fi
   key='user:unit_failure_record'
-  if [ "${js[$key]}" = ok ]; then us=${ucnt["user:signal"]}; else us="unavailable:${js[$key]}"; fi
+  ust=${js[$key]}
+  if [ "$ust" = ok ]; then us=${ucnt["user:signal"]}; else us="unavailable:${ust}"; fi
+  pps=$(journal_pos user unit_sigkill_record 0)
+  pus=$(journal_pos user unit_failure_record 1)
   case "$ps" in
     unavailable:*) ;;
-    *) if [ "$ps" -gt 0 ]; then kill_fire=1; kill_paths=process_sigkill; fi ;;
+    *) if [ "$ps" -gt 0 ]; then kill_k=1; kill_raw_fire=1; fi ;;
   esac
   case "$us" in
     unavailable:*) ;;
-    *) if [ "$us" -gt 0 ]; then kill_fire=1; kill_paths="${kill_paths:+$kill_paths,}unit_result_signal"; fi ;;
+    *) if [ "$us" -gt 0 ]; then kill_u=1; kill_raw_fire=1; fi ;;
   esac
+  case "$pps" in
+    unavailable:*) ;;
+    *) if is_int "$pps" && [ "$pps" -gt 0 ]; then
+         kill_k=1
+         [ "$sst" = ok ] || kill_pos_fire=1
+       fi ;;
+  esac
+  case "$pus" in
+    unavailable:*) ;;
+    *) if is_int "$pus" && [ "$pus" -gt 0 ]; then
+         kill_u=1
+         [ "$ust" = ok ] || kill_pos_fire=1
+       fi ;;
+  esac
+  # Build paths once from the two kind flags: a raw and its mirrored positive
+  # must never append the same token twice.
+  if [ "$kill_k" -eq 1 ]; then kill_paths=process_sigkill; kill_fire=1; fi
+  if [ "$kill_u" -eq 1 ]; then kill_paths="${kill_paths:+$kill_paths,}unit_result_signal"; kill_fire=1; fi
   if [ "$kill_fire" -eq 1 ]; then
-    emit_finding KILL_SIGNAL_JOURNAL warn "class=kill_signal paths=$kill_paths count=$ps process_sigkill=$ps user_unit_signal=$us scope=user attribution=none basis=scoped-record-count boot=$BOOT_ID_EXPECTED note=unit process exited on SIGKILL and/or unit failed with result signal; cause unknown (a kernel OOM can also deliver SIGKILL); counters are separate and never summed"
+    if [ "$kill_raw_fire" -eq 1 ] && [ "$kill_pos_fire" -eq 1 ]; then
+      kill_basis='scoped-record-count+validated-positive-records'
+    elif [ "$kill_raw_fire" -eq 1 ]; then
+      kill_basis='scoped-record-count'
+    else
+      kill_basis='validated-positive-records'
+    fi
+    emit_finding KILL_SIGNAL_JOURNAL warn "class=kill_signal paths=$kill_paths count=$ps process_sigkill=$ps user_unit_signal=$us user_positive_process_sigkill=$pps user_positive_unit_signal=$pus positive_basis=validated-subset-lower-bound positive_validation=scalar-id+current-boot+exact-fields alarm_basis=$kill_basis raw_basis=scoped-record-count scope=user attribution=none trust=client-supplied boot=$BOOT_ID_EXPECTED note=unit process exited on SIGKILL and/or unit failed with result signal; cause unknown (a kernel OOM can also deliver SIGKILL); raw and positive counters are separate and never summed; no unit name is emitted"
   fi
 
   for scope in user system; do
@@ -1377,6 +1612,17 @@ probe_journal() {
         d="$d unit_$uf=unavailable:${js[$key]}"
       fi
     done
+    # r15 validated-positive evidence: individually valid current-boot records
+    # from the SAME captured stream, never a class total. A semantic aggregate
+    # failure leaves the raw token above unavailable:<reason> while these stay
+    # measurable; a capture/parser failure makes them unavailable:<reason>. A
+    # real 0 says only "no individually valid record in the captured stream" —
+    # never that no event happened.
+    d="$d positive_kernel_oom=$(journal_pos "$scope" kernel_oom_notice 0)"
+    d="$d positive_unit_oom=$(journal_pos "$scope" unit_failure_record 0)"
+    d="$d positive_unit_signal=$(journal_pos "$scope" unit_failure_record 1)"
+    d="$d positive_process_sigkill=$(journal_pos "$scope" unit_sigkill_record 0)"
+    d="$d positive_basis=validated-subset-lower-bound positive_validation=scalar-id+current-boot"
     rc_n=${src[$scope]:-0}
     # The current boot is known even when this scope held zero matching records,
     # so an empty class still reports the validated boot context, not a hole.
@@ -2267,7 +2513,16 @@ DRIFT_COUNTER_KEYS=(
   unit_oom_subject_unknown unit_oom_result_unknown unit_oom_fleet unit_oom_nonfleet
   unit_nonfleet unit_fleet unit_unknown unit_missing unit_ambiguous unit_malformed
   unit_oom unit_signal user_unit_signal process_sigkill
+  positive_kernel_oom positive_unit_oom positive_unit_signal positive_process_sigkill
+  user_positive_kernel_oom system_positive_kernel_oom
+  user_positive_unit_oom system_positive_unit_oom
+  user_positive_process_sigkill user_positive_unit_signal
 )
+# r15: the positive_* / *_positive_* entries are integer counts of individually
+# valid records. Their MAGNITUDES are masked like every other counter; masking
+# never removes the token, the finding line, or its severity. An
+# `unavailable:<reason>` value contains no digits and therefore stays visible
+# (an unavailable class is behavior, not a volatile count).
 # Non-counter volatile entries, each with its own mask rule below.
 DRIFT_VOLATILE_SPECIAL='ts age_s mtime_age_s *_epoch mem_peak_anchor psi_some_avg10 psi_full_avg10 io_avg_since_boot state_val_unread_reasons boot script_sha256 example'
 DRIFT_VOLATILE_LIST="$DRIFT_VOLATILE_SPECIAL ${DRIFT_COUNTER_KEYS[*]}"
@@ -2427,7 +2682,7 @@ run_pin() { # <path>
   text+="# census_sha256=$SCRIPT_SHA256"$'\n'
   text+="# pinned_ts=$TS_UTC"$'\n'
   text+="# volatile_fields=$DRIFT_VOLATILE_LIST"$'\n'
-  text+='# volatile_note=values of these fields are masked to <V>; --drift re-normalizes with the CURRENT list and reports every changed non-volatile line/field. Changing the list is itself drift; census_sha256 is informational (behavior, not revision, is compared).'$'\n'
+  text+='# volatile_note=values of these fields are masked to <V>; counter masking suppresses MAGNITUDES only — token existence, finding-line presence and severity are never masked. --drift re-normalizes with the CURRENT list and reports every changed non-volatile line/field. Changing the list is itself drift; census_sha256 is informational (behavior, not revision, is compared).'$'\n'
   text+='# --- canonical output follows ---'$'\n'
   text+="$canon"$'\n'
   if ! printf '%s' "$text" > "$path" 2>/dev/null; then
@@ -3067,7 +3322,7 @@ SKIP_FRESHEN=1
   check 'journal: unit query rc1 unavailable; kernel OOM still crit, split tokens unavailable' 1 DRIFT \
     'FINDING OOM_KILL_JOURNAL severity=crit .*user_notice=1 .*user_unit_oom=unavailable:rc-1' \
     'unit_failure_record=unavailable:rc-1' \
-    'unit_fleet=unavailable:rc-1' 'unit_oom=unavailable:rc-1' 'unit_signal=unavailable:rc-1' \
+    'unit_fleet=unavailable:rc-1' '[ ]unit_oom=unavailable:rc-1' '[ ]unit_signal=unavailable:rc-1' \
     '^MORI_CENSUS: DRIFT '
   if grep -qE '^FINDING UNIT_FAILURE_' "$OUT_FILE"; then bad 'journal: routing finding emitted from an unavailable unit class'; fi
 
@@ -3117,7 +3372,7 @@ SKIP_FRESHEN=1
   FX="$work/fx/journal-unit-signal"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
   jrec "$FX/stub/journal-user-unit_failure" d9b373ed55a64feb8242e02dbe79a49c ',"USER_UNIT":"kagi-shokunin.service","UNIT_RESULT":"signal"'
   check 'journal: user unit result signal alone warns and DRIFTS' 1 DRIFT \
-    'unit_signal=1' \
+    '[ ]unit_signal=1' \
     'FINDING KILL_SIGNAL_JOURNAL severity=warn .*paths=unit_result_signal .*count=0 .*process_sigkill=0 .*user_unit_signal=1 .*scope=user' \
     '^MORI_CENSUS: DRIFT '
 
@@ -3135,7 +3390,7 @@ SKIP_FRESHEN=1
     'FINDING OOM_KILL_JOURNAL severity=crit .*paths=unit_result_oom_kill .*user_notice=0 .*system_unit_oom=1' \
     'unit_failure_record=1' \
     'unit_unknown=1 unit_missing=1' \
-    'unit_oom=1' \
+    '[ ]unit_oom=1' \
     'unit_oom_subject_unknown=1' \
     'FINDING UNIT_FAILURE_UNATTRIBUTED_JOURNAL severity=info .*count=1 .*scope=system' \
     '^MORI_CENSUS: DRIFT '
@@ -3143,7 +3398,7 @@ SKIP_FRESHEN=1
   FX="$work/fx/journal-unit-result-array"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
   jrec "$FX/stub/journal-user-unit_failure" d9b373ed55a64feb8242e02dbe79a49c ',"USER_UNIT":"kagi-shokunin.service","UNIT_RESULT":["oom-kill"]'
   check 'journal: array UNIT_RESULT is unknown, not oom evidence; CLEAN' 0 CLEAN \
-    'unit_oom=0' 'unit_oom_result_unknown=1' \
+    '[ ]unit_oom=0' 'unit_oom_result_unknown=1' \
     'FINDING UNIT_FAILURE_JOURNAL severity=info .*count=1' \
     '^MORI_CENSUS: CLEAN '
   if grep -qE '^FINDING OOM_KILL_JOURNAL' "$OUT_FILE"; then bad 'journal: array UNIT_RESULT produced an OOM alarm'; fi
@@ -3176,7 +3431,7 @@ SKIP_FRESHEN=1
   check 'journal: legacy text ids are not counted (Q15)' 0 CLEAN \
     '^SURFACE journal\.user: ok .*kernel_oom_notice=0' \
     '^SURFACE journal\.system: ok .*kernel_oom_notice=0' \
-    'unit_oom=0' 'unit_signal=0'
+    '[ ]unit_oom=0' '[ ]unit_signal=0'
   if grep -qE '^FINDING (OOM_KILL_JOURNAL|KILL_SIGNAL_JOURNAL|SEGFAULT_JOURNAL|UNIT_FAILURE_JOURNAL|UNIT_FAILURE_OUT_OF_SCOPE|UNIT_FAILURE_UNATTRIBUTED_JOURNAL)' "$OUT_FILE"; then
     bad 'journal: legacy text class produced a finding'
   fi
@@ -3234,6 +3489,98 @@ SKIP_FRESHEN=1
     >> "$FX/stub/journal-user-oomd"
   check 'journal: records from several boots -> unavailable:multi-boot' 0 CLEAN \
     '^SURFACE journal\.user: unavailable .*oomd_notice=unavailable:multi-boot'
+
+  # --- r15 validated-positive retention -------------------------------------
+  # Each fixture pairs ONE individually valid current-boot record with an
+  # adjacent record that invalidates the aggregate class. The raw tokens must
+  # stay unavailable:<reason>; the positive token must count only the valid
+  # record; and the alarm must fire from that positive with an explicit
+  # alarm_basis. These are static fixtures, not live journal evidence.
+  FX="$work/fx/journal-positive-kernel-mixed"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-user-kernel_oom" fe6faa94e7774663a0da52717891d8ef
+  printf '{"_BOOT_ID":"%s","MESSAGE_ID":["fe6faa94e7774663a0da52717891d8ef"]}\n' "$BOOT13" \
+    >> "$FX/stub/journal-user-kernel_oom"
+  printf '{"_BOOT_ID":"%s","MESSAGE_ID":"d989611b15e44c9dbf31e3c81256e4ed"}\n' "$BOOT13" \
+    >> "$FX/stub/journal-user-kernel_oom"
+  check 'journal: one valid OOM record survives a mixed invalid kernel stream' 1 DRIFT \
+    'kernel_oom_notice=unavailable:record-invalid' \
+    '[ ]positive_kernel_oom=1' \
+    '[ ]positive_unit_oom=0' \
+    'FINDING OOM_KILL_JOURNAL severity=crit .*paths=kernel_oom_notice .*user_notice=unavailable:record-invalid .*user_positive_kernel_oom=1 .*alarm_basis=validated-positive-records .*raw_basis=scoped-record-count' \
+    '^MORI_CENSUS: DRIFT '
+
+  FX="$work/fx/journal-positive-unit-oom-boot"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-user-unit_failure" d9b373ed55a64feb8242e02dbe79a49c ',"USER_UNIT":"kagi-shokunin.service","UNIT_RESULT":"oom-kill"'
+  printf '{"_BOOT_ID":"ffffffffffffffffffffffffffffffff","MESSAGE_ID":"d9b373ed55a64feb8242e02dbe79a49c","USER_UNIT":"kagi-shokunin.service","UNIT_RESULT":"oom-kill"}\n' \
+    >> "$FX/stub/journal-user-unit_failure"
+  check 'journal: valid unit oom-kill survives a foreign-boot sibling' 1 DRIFT \
+    'unit_failure_record=unavailable:multi-boot' \
+    '[ ]positive_unit_oom=1' \
+    '[ ]positive_unit_signal=0' \
+    'FINDING OOM_KILL_JOURNAL severity=crit .*paths=unit_result_oom_kill .*user_unit_oom=unavailable:multi-boot .*user_positive_unit_oom=1 .*alarm_basis=validated-positive-records' \
+    '^MORI_CENSUS: DRIFT '
+  if grep -qE '^FINDING UNIT_FAILURE' "$OUT_FILE"; then bad 'journal: owner routing emitted from an invalid aggregate'; fi
+
+  FX="$work/fx/journal-positive-unit-signal-boot"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-user-unit_failure" d9b373ed55a64feb8242e02dbe79a49c ',"USER_UNIT":"kagi-shokunin.service","UNIT_RESULT":"signal"'
+  printf '{"_BOOT_ID":"ffffffffffffffffffffffffffffffff","MESSAGE_ID":"d9b373ed55a64feb8242e02dbe79a49c","USER_UNIT":"kagi-shokunin.service","UNIT_RESULT":"signal"}\n' \
+    >> "$FX/stub/journal-user-unit_failure"
+  check 'journal: valid unit signal survives a foreign-boot sibling and warns' 1 DRIFT \
+    'unit_failure_record=unavailable:multi-boot' \
+    '[ ]positive_unit_signal=1' \
+    'FINDING KILL_SIGNAL_JOURNAL severity=warn .*paths=unit_result_signal .*user_unit_signal=unavailable:multi-boot .*user_positive_unit_signal=1 .*alarm_basis=validated-positive-records .*trust=client-supplied' \
+    '^MORI_CENSUS: DRIFT '
+  if grep -qE '^FINDING OOM_KILL_JOURNAL' "$OUT_FILE"; then bad 'journal: unit signal positive produced an OOM alarm'; fi
+
+  FX="$work/fx/journal-positive-sigkill-mixed"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-user-unit_sigkill" 98e322203f7a4ed290d09fe03c09fe15 ',"EXIT_CODE":"killed","EXIT_STATUS":9'
+  printf '{"_BOOT_ID":"%s","MESSAGE_ID":"98e322203f7a4ed290d09fe03c09fe15","EXIT_CODE":"killed","EXIT_STATUS":"15"}\n' "$BOOT13" \
+    >> "$FX/stub/journal-user-unit_sigkill"
+  check 'journal: numeric status 9 is valid; a non-9 sibling suppresses only the aggregate' 1 DRIFT \
+    'unit_sigkill_record=unavailable:record-invalid' \
+    '[ ]positive_process_sigkill=1' \
+    'FINDING KILL_SIGNAL_JOURNAL severity=warn .*paths=process_sigkill .*process_sigkill=unavailable:record-invalid .*user_positive_process_sigkill=1 .*alarm_basis=validated-positive-records' \
+    '^MORI_CENSUS: DRIFT '
+
+  FX="$work/fx/journal-positive-unsafe"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  for v in null true '[9]' '{"n":9}'; do
+    printf '{"_BOOT_ID":"%s","MESSAGE_ID":"98e322203f7a4ed290d09fe03c09fe15","EXIT_CODE":"killed","EXIT_STATUS":%s}\n' \
+      "$BOOT13" "$v" >> "$FX/stub/journal-user-unit_sigkill"
+  done
+  check 'journal: non-scalar/non-9 status records are never positive evidence' 0 CLEAN \
+    'unit_sigkill_record=unavailable:record-invalid' \
+    '[ ]positive_process_sigkill=0' \
+    '^MORI_CENSUS: CLEAN '
+  if grep -qE '^FINDING KILL_SIGNAL_JOURNAL' "$OUT_FILE"; then bad 'journal: unsafe status record produced a signal warn'; fi
+
+  FX="$work/fx/journal-positive-foreign-only"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf '{"_BOOT_ID":"ffffffffffffffffffffffffffffffff","MESSAGE_ID":"fe6faa94e7774663a0da52717891d8ef"}\n' \
+    > "$FX/stub/journal-user-kernel_oom"
+  check 'journal: foreign-boot-only stream leaves positive at a real zero' 0 CLEAN \
+    'kernel_oom_notice=unavailable:boot-mismatch' \
+    '[ ]positive_kernel_oom=0' \
+    '^MORI_CENSUS: CLEAN '
+  if grep -qE '^FINDING OOM_KILL_JOURNAL' "$OUT_FILE"; then bad 'journal: zero positive evidence produced an OOM alarm'; fi
+
+  FX="$work/fx/journal-positive-nonobjects"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-user-kernel_oom" fe6faa94e7774663a0da52717891d8ef
+  printf '%s\n' '"noise"' '[1]' '9' >> "$FX/stub/journal-user-kernel_oom"
+  check 'journal: parseable non-object neighbors preserve an independent OOM witness' 1 DRIFT \
+    'kernel_oom_notice=unavailable:record-invalid' '[ ]positive_kernel_oom=1' \
+    'FINDING OOM_KILL_JOURNAL severity=crit ' '^MORI_CENSUS: DRIFT '
+
+  FX="$work/fx/journal-positive-nonobjects-only"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf '%s\n' '"noise"' '[1]' '9' > "$FX/stub/journal-user-kernel_oom"
+  check 'journal: non-object records alone never fabricate positive evidence' 0 CLEAN \
+    'kernel_oom_notice=unavailable:record-invalid' '[ ]positive_kernel_oom=0' '^MORI_CENSUS: CLEAN '
+  if grep -qE '^FINDING OOM_KILL_JOURNAL' "$OUT_FILE"; then bad 'journal: non-object records fabricated OOM'; fi
+
+  FX="$work/fx/journal-positive-truncated"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-user-kernel_oom" fe6faa94e7774663a0da52717891d8ef
+  printf '%s\n' '{' >> "$FX/stub/journal-user-kernel_oom"
+  check 'journal: valid record plus truncated JSON stays unavailable without salvage' 0 CLEAN \
+    'kernel_oom_notice=unavailable:malformed-json' '[ ]positive_kernel_oom=unavailable:malformed-json' '^MORI_CENSUS: CLEAN '
+  if grep -qE '^FINDING OOM_KILL_JOURNAL' "$OUT_FILE"; then bad 'journal: truncated JSON fabricated OOM'; fi
 
   FX="$work/fx/journal-no-jq"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
   EXTRA_ENV=(MORI_JQ_BIN="$work/absent-jq")

@@ -14,7 +14,7 @@ reporting it. **Detection and report only. This lane never remediates.**
 |---|---|---|---|
 | Is the shokunin fleet alive? | watchdog pid + log freshness + `.ufo/state/*.round` values (count, max, per-lane value vs the ledger's last launch round) | restarting a daemon; killing a pid | `liveness` rows: pid, start time, last tick, state; `WATCHDOG_STATE_LAG`/`_AHEAD` are info — visibility, not severity |
 | Did a wave settle? | `.ufo/waves/*/swarm-registry.json` + dispatch/results pair | assuming an unsettled wave is a failed one | per-wave settled/unsettled with age |
-| Did something get killed? | MESSAGE-free `journalctl --user/--system -b` catalog-ID records — kernel-OOM notice, oomd notice, coredump, unit-process SIGKILL, unit-failure with result — plus the validated `UNIT_RESULT=oom-kill` and user `UNIT_RESULT=signal` paths; cgroup event counters | remediating, renicing, killing; treating a client-set MESSAGE_ID as authenticated or a notice as a unique victim | independent `scope=user or scope=system` record counts and current-boot anchor; ONE global `OOM_KILL_JOURNAL` crit → DRIFT carrying four separate counters (`user_notice`/`system_notice`/`user_unit_oom`/`system_unit_oom`, never summed); fleet `UNIT_FAILURE_JOURNAL` info vs non-fleet `UNIT_FAILURE_OUT_OF_SCOPE` info `owner=tsukuroi`, subject from exactly one valid `UNIT`/`USER_UNIT`, unclassifiable `UNIT_FAILURE_UNATTRIBUTED_JOURNAL` info `owner=unresolved`; user SIGKILL/`UNIT_RESULT=signal` `KILL_SIGNAL_JOURNAL` warn; arbitrary unreported signal paths remain unmeasured; cgroup count with selected source path/scope and observation time, not an event timestamp |
+| Did something get killed? | MESSAGE-free `journalctl --user/--system -b` catalog-ID records — kernel-OOM notice, oomd notice, coredump, unit-process SIGKILL, unit-failure with result — plus the validated `UNIT_RESULT=oom-kill` and user `UNIT_RESULT=signal` paths; cgroup event counters | remediating, renicing, killing; treating a client-set MESSAGE_ID as authenticated or a notice as a unique victim | independent `scope=user or scope=system` record counts and current-boot anchor; per-scope validated-positive tokens `positive_kernel_oom`/`positive_unit_oom`/`positive_unit_signal`/`positive_process_sigkill` survive an adjacent invalid record while every raw aggregate/split token stays `unavailable`; ONE global `OOM_KILL_JOURNAL` crit → DRIFT when any independently valid positive OOM record exists, carrying four separate raw counters (`user_notice`/`system_notice`/`user_unit_oom`/`system_unit_oom`, never summed); fleet `UNIT_FAILURE_JOURNAL` info vs non-fleet `UNIT_FAILURE_OUT_OF_SCOPE` info `owner=tsukuroi`, subject from exactly one valid `UNIT`/`USER_UNIT`, unclassifiable `UNIT_FAILURE_UNATTRIBUTED_JOURNAL` info `owner=unresolved` (owner partition aggregate-only); user SIGKILL/`UNIT_RESULT=signal` `KILL_SIGNAL_JOURNAL` warn from independently valid user records even when raw `count`/`process_sigkill` is `unavailable`; arbitrary unreported signal paths remain unmeasured; cgroup count with selected source path/scope and observation time, not an event timestamp |
 | Is there resource runway? | `df -P` on the fleet root and `/tmp`; since-boot write average per target device; memory pressure PSI + fill/avail against labeled-local thresholds; scope high-watermark `memory.peak` | deleting files; resizing; tuning a labeled-local threshold to fit one observation | runway rows with the measured value: `used_pct`, `io_basis=since-boot`, `psi_some_avg10`, `mem_fill_scope`, `mem_peak` + `mem_peak_anchor` |
 | Is a tmux session fleet work? | `tmux ls` + `list-panes -a` pane current paths under the fleet root; per-relevant-session `display-message` activity under a per-call timeout bound | killing/attaching to/steering sessions; treating foreign, or idle past a labeled-local number, as unhealthy | `sessions=N relevant=R foreign=F unclassified=U`; relevance rows carry `freshness=ok probed=P idle=I freshness_unavailable=U`; `TMUX_FOREIGN_SESSION` info per foreign session (path-based rule); `TMUX_SESSION_IDLE` info (r8) |
 | Was a lane silent? | roster = `shokunin.conf` lane ids (parsed, never sourced) ∪ `.ufo/state/*.round` names (r12; `MORI_ROSTER_LANES` overrides); launch epoch from `.ufo/watchdog.log` + post-launch authorship (commits/files) | declaring failure from commit sparsity; sourcing the conf | silent / progressing / progressing-weak / young / not-open / unavailable; `roster_source=` + `ROSTER_SET_MISMATCH` info naming conf-only / state-only ids |
@@ -27,13 +27,13 @@ reporting it. **Detection and report only. This lane never remediates.**
 | wave registry present, no results | wave dispatched but never settled — age it, do not call it failed |
 | Positive cgroup `oom_kill` | cumulative counter for the named source; counters alone identify neither the killed PID, event time nor fleet membership, and cover only the selected cgroup — descendants and other scopes sit outside it, so it is not a substitute for the journal `OOM_KILL_JOURNAL` alarm |
 | `oom_kill=0` (cgroup `memory.events` or `/proc/vmstat`) | no **kernel** OOM kills — not "no memory kills": both counters move only at the kernel victim site ([oom_kill.c:935-936 v7.2](https://raw.githubusercontent.com/torvalds/linux/v7.2/mm/oom_kill.c)); systemd-oomd kills via `cgroup.kill`/`kill()` and records `user.oomd_ooms`/`user.oomd_kill` xattrs instead ([oomd-util.c:269-306 v261](https://raw.githubusercontent.com/systemd/systemd/v261/src/oom/oomd-util.c)); an inactive oomd/earlyoom is `unavailable (inactive)`, never 0 — `corpus/knowledge/oom-kill-counter-kernel-only-r12.md`, `userspace-oom-killers-r12.md` |
-| journal class counts | count records carrying catalog `MESSAGE_ID` (`fe6faa94…` kernel-OOM unit notice, `d989611b…` oomd notice, `fc2e22bc…` coredump, `98e32220…` unit-process SIGKILL, `d9b373ed…` unit failed — [systemd.catalog.in](https://raw.githubusercontent.com/systemd/systemd/cf8ebfc6159cf0b3b99aa9a0164ccb07c4c9c5af/catalog/systemd.catalog.in)) with `-o json --output-fields=`, never `MESSAGE` text; `COREDUMP_SIGNAL=11` and `EXIT_CODE=killed`/`EXIT_STATUS=9` are separate validated-field classes. IDs are client-set ([journal-fields](https://www.freedesktop.org/software/systemd/man/latest/systemd.journal-fields.html)), not authenticated emitters. Scopes are never summed; nonzero query rc, multi-boot or malformed records is unavailable, not zero; `drift=` counts warning/critical FINDING lines, not notice records or killed processes — `corpus/knowledge/structured-journal-scopes-r13.md`, `corpus/knowledge/journal-alarm-routing-r14.md` |
-| positive OOM notice (`fe6faa94…`) in either scope, or a validated `UNIT_RESULT=oom-kill` record | ONE global `OOM_KILL_JOURNAL severity=crit` per census → DRIFT, with four separate counters `user_notice`/`system_notice`/`user_unit_oom`/`system_unit_oom` that are never summed; a known positive arm alarms even when another arm is `unknown` (`user_unit_oom_result_unknown`/`system_unit_oom_result_unknown` stay explicit, never fabricated zeros). This restores the r13-demoted mint-critical alarm. The class reports an OOM **event**, not a unique victim: it carries no pid/uid/cgroup/time and cannot choose between several notices; a client-set ID makes it a reportable notice, not authenticated causation. The crit grade is mint demand (a kill is worth a human look), not a trust or victim-attribution claim |
+| journal class counts | count records carrying catalog `MESSAGE_ID` (`fe6faa94…` kernel-OOM unit notice, `d989611b…` oomd notice, `fc2e22bc…` coredump, `98e32220…` unit-process SIGKILL, `d9b373ed…` unit failed — [systemd.catalog.in](https://raw.githubusercontent.com/systemd/systemd/cf8ebfc6159cf0b3b99aa9a0164ccb07c4c9c5af/catalog/systemd.catalog.in)) with `-o json --output-fields=`, never `MESSAGE` text; `COREDUMP_SIGNAL=11` and `EXIT_CODE=killed`/`EXIT_STATUS=9` are separate validated-field classes. IDs are client-set ([journal-fields](https://www.freedesktop.org/software/systemd/man/latest/systemd.journal-fields.html)), not authenticated emitters. Scopes are never summed; nonzero query rc, stderr, timeout or malformed JSON makes both aggregate and positive evidence unavailable. A semantic record failure in a successfully parsed capture makes raw aggregate/split tokens `unavailable`, never zero, but may retain individually qualified r15 positive evidence (see below). `drift=` counts warning/critical FINDING lines, not notice records or killed processes — `corpus/knowledge/structured-journal-scopes-r13.md`, `corpus/knowledge/journal-alarm-routing-r14.md` |
+| positive OOM notice (`fe6faa94…`) in either scope, a validated `UNIT_RESULT=oom-kill` record, or a `positive_kernel_oom`/`positive_unit_oom` token > 0 | ONE global `OOM_KILL_JOURNAL severity=crit` per census → DRIFT when any independently valid positive OOM record exists, with four separate raw counters `user_notice`/`system_notice`/`user_unit_oom`/`system_unit_oom` that are never summed; a raw counter may read `unavailable:<reason>` while the positive token is > 0 — an adjacent malformed, nonmatching or foreign-boot record invalidates the aggregate, not the individually valid record. A known positive arm alarms even when another arm is `unknown` (`user_unit_oom_result_unknown`/`system_unit_oom_result_unknown` stay explicit, never fabricated zeros). This restores the r13-demoted mint-critical alarm. The class reports an OOM **event**, not a unique victim or a complete total: it carries no pid/uid/cgroup/time and cannot choose between several notices; a client-set ID makes it a reportable notice, not authenticated causation. The crit grade is mint demand (a kill is worth a human look), not a trust or victim-attribution claim |
 | fleet vs non-fleet unit failure | generic severity is `info` on both sides: fleet `UNIT_FAILURE_JOURNAL`, non-fleet `UNIT_FAILURE_OUT_OF_SCOPE owner=tsukuroi` (triage pointer, never an action this lane takes). Classification takes exactly one valid subject field — `UNIT` or `USER_UNIT`, independent of journal scope, shaped as a 1–255-char systemd unit name with a known suffix — with `classification_rule=unit-name-token` over the historical case-insensitive tokens `shokunin`, `ufo-sighting`, `tmux-spawn`, `the-tick`, `fleet` (frozen `probe_journal` r12); "non-fleet" means no marker, not proof of unrelatedness, and this is not a claim of exhaustive fleet membership. No fallback to `_SYSTEMD_UNIT`/`_SYSTEMD_USER_UNIT` emitter metadata, and only a validated count leaves the parser (unit bytes are never echoed). The system-scope id previously counted **all** system unit failures; it now counts fleet-only — new semantics, not a silent reuse of the id |
-| unit subject absent, malformed, or ambiguous | `UNIT_FAILURE_UNATTRIBUTED_JOURNAL` in either scope, `severity=info count=N scope=user\|system owner=unresolved reason=subject-metadata-unknown` — never `non-fleet` and never a fake zero. Both subject fields present is `unknown` even when identical; a failed or multi-boot query makes that class `unavailable`; the fleet split is only as good as the fields the query kept |
-| user `UNIT_RESULT=signal` on a unit-failure record | one user-scope `KILL_SIGNAL_JOURNAL severity=warn` line with separate never-summed counters `process_sigkill` (`EXIT_CODE=killed`/`EXIT_STATUS=9`) and `user_unit_signal` (`UNIT_RESULT=signal`), restoring the legacy text class `Failed with result 'signal'` through the structured result field. A signal result alone is DRIFT for that user unit; a generic `signal` result is **not** proof of signal 9 and is never counted as signal-9 evidence, and cause stays unknown (a kernel OOM can also deliver SIGKILL). The system scope keeps no such warn — its unit results stay `info` through the failure-routing ids. Signal numbers other than 9, and kills leaving no retained record, remain unknown/unmeasured — never zero |
+| unit subject absent, malformed, or ambiguous | `UNIT_FAILURE_UNATTRIBUTED_JOURNAL` in either scope, `severity=info count=N scope=user\|system owner=unresolved reason=subject-metadata-unknown` — never `non-fleet` and never a fake zero. Both subject fields present is `unknown` even when identical; a failed, malformed or multi-boot query makes that class and the whole owner partition `unavailable` — aggregate-only, with no positive salvage into the partition and no partial bucket — and the fleet split is only as good as the fields the query kept |
+| user `UNIT_RESULT=signal` on a unit-failure record, or a user `positive_unit_signal`/`positive_process_sigkill` token > 0 | one user-scope `KILL_SIGNAL_JOURNAL severity=warn` line with separate never-summed raw counters `process_sigkill` (`EXIT_CODE=killed`/`EXIT_STATUS=9`) and `user_unit_signal` (`UNIT_RESULT=signal`), restoring the legacy text class `Failed with result 'signal'` through the structured result field. The warn fires when either independently valid current-boot positive record exists, even if the raw `count=`/`process_sigkill`/`user_unit_signal` fields read `unavailable:<reason>` because an adjacent record invalidated the class; those raw fields are never rewritten as positive counts. A signal result alone is DRIFT for that user unit; a generic `signal` result is **not** proof of signal 9 and is never counted as signal-9 evidence, and cause stays unknown (a kernel OOM can also deliver SIGKILL). The system scope keeps no such warn — its unit results stay `info` through the failure-routing ids. Signal numbers other than 9, and kills leaving no retained record, remain unknown/unmeasured — never zero |
 | `JOURNAL_CLASSES_UNMEASURED` reasons | names why each remaining class is unmeasured instead of a fake zero: `kernel_victim_text`/`gpf_text`/`uncataloged_unit_failure` are retired text heuristics (never aliases, never counted), `other_signals` is a structured field this probe has not implemented (EXIT_CODE/EXIT_STATUS records exist; S036 — only `EXIT_STATUS=9` is counted here), and `absent_records=possible:no-retained-record-is-not-no-event` keeps a missing record distinct from a missing event. No categorical "no structured field exists" claim |
-| a kill needs PID / uid / cgroup / time | the kernel `oom-kill:constraint=…,task_memcg=…,pid=…,uid=…` record in the system journal (`journalctl -k`, `__REALTIME_TIMESTAMP` always printed — [journalctl(1)](https://www.freedesktop.org/software/systemd/man/latest/journalctl.html)) is event-time attribution; only shape-validated tokens may leave a probe; re-reading the victim's cgroup later is not attribution (`ENOENT`) — `kernel-oom-line-attribution-r12.md`; not yet a census probe (PROVINCE Frontier). `OOM_KILL_JOURNAL` and the `UNIT_RESULT=oom-kill` subtype are alarms, not this attribution — neither names a unique victim |
+| a kill needs PID / uid / cgroup / time | the kernel `oom-kill:constraint=…,task_memcg=…,pid=…,uid=…` record in the system journal (`journalctl -k`, `__REALTIME_TIMESTAMP` always printed — [journalctl(1)](https://www.freedesktop.org/software/systemd/man/latest/journalctl.html)) is event-time attribution; only shape-validated tokens may leave a probe; re-reading the victim's cgroup later is not attribution (`ENOENT`) — `kernel-oom-line-attribution-r12.md`; not yet a census probe (PROVINCE Frontier). `OOM_KILL_JOURNAL`, its r15 positive tokens and the `UNIT_RESULT=oom-kill` subtype are alarms, not this attribution — none names a unique victim |
 | process alive, last tick stale | wedged, not dead — report the age |
 | `state_lag=` / `state_ahead=` counters | per-lane round VALUE vs the ledger's last `launch <lane> round=N` line; both info — a state file can disagree without the fleet being unhealthy |
 | `state_val_unread_reasons=file:N symlink:N dir:N other:N` | every `*.round` ENTRY is classified before any read; a symlink/directory/non-regular entry is counted with its `WATCHDOG_STATE_ENTRY_UNREADABLE` info instead of vanishing, and symlinks are never followed; `state_val_unreadable` totals them (unreadable values + non-regular entries) while `state_rounds` still counts regular files only |
@@ -42,6 +42,64 @@ reporting it. **Detection and report only. This lane never remediates.**
 | disk row `io_avg_since_boot=` | a since-boot AVERAGE (sectors written × 512 ÷ uptime), never an instantaneous rate; `DISK_IO_UNMEASURED` info when no target device yielded one; the two-sample instantaneous rate stays deferred on measured grounds (the 0.2 s dwell costs ≈208–222 ms across three independent isolations, the extra reads alone 16 ms median); an operator-pinned writer-less FIFO for `MORI_DISKSTATS`/`MORI_UPTIME` is a named open hang, not the live default |
 | tmux `foreign=` / `TMUX_FOREIGN_SESSION` | pane-cwd classification only; foreign is a relevance fact, never an unhealthy fleet; a session absent from pane data counts `unclassified`, and no pane data at all → `relevance=unavailable` — neither is foreign |
 | tmux `freshness=` / `TMUX_SESSION_IDLE` | idle = now − `session_activity`, probed for fleet-relevant sessions only via one timeout-bounded client call each (default bound 2 s per call, so the freshness block's worst case scales with the relevant-session count); past `idle_warn_s` (default 3600, labeled local) it is info, never DRIFT; `freshness=unavailable` carries its reason (`rc-<N>` — `rc-124` when the bound fired, `rc-137` when the grace kill did, `unparseable` on the row / `unparseable-probe-output` on the finding, `no-timeout-bin` — the probe refuses to run unbounded, `mixed` when only some relevant sessions could be measured) and is never idleness |
+
+## Positive evidence vs an unavailable aggregate (r15)
+
+The r15 repair is deliberately narrow: it preserves an alarm from an individually
+valid structured record when an adjacent record invalidates its class. It does
+not make the class complete and does not repair malformed input.
+
+- **Per-scope evidence tokens.** `positive_kernel_oom`, `positive_unit_oom`,
+  `positive_unit_signal` and `positive_process_sigkill` count only object
+  records with a scalar `MESSAGE_ID` equal to the class id and a scalar
+  `_BOOT_ID` equal to the current boot. The unit-OOM/signal tokens require
+  `UNIT_RESULT` to be exactly `oom-kill`/`signal`; the process token requires
+  `EXIT_CODE` exactly `killed` and scalar `EXIT_STATUS` 9 (string `"9"` or
+  number `9`; bool, array and null are rejected). Subject metadata is
+  irrelevant to these predicates, so a valid positive does not need a usable
+  `UNIT`/`USER_UNIT`. The tokens appear scope-local on each
+  `journal.<scope>` surface row, followed by
+  `positive_basis=validated-subset-lower-bound` and
+  `positive_validation=scalar-id+current-boot`; the single OOM line carries the
+  scope-prefixed `user_positive_kernel_oom`/`system_positive_kernel_oom` and
+  `user_positive_unit_oom`/`system_positive_unit_oom` with the same two basis
+  tokens; the user signal line carries
+  `user_positive_process_sigkill`/`user_positive_unit_signal`
+  (user-only; the system INFO path carries none),
+  `positive_basis=validated-subset-lower-bound`,
+  `positive_validation=scalar-id+current-boot+exact-fields`, and
+  `alarm_basis=validated-positive-records` (or
+  `scoped-record-count+validated-positive-records`) names the firing basis.
+- **Raw counts stay aggregate-only.** When any record invalidates a class, its
+  raw aggregate/split token — and the unit owner partition — stays
+  `unavailable:<reason>`. A positive token is separate evidence, never spliced
+  into that raw token and never a partial total. Scopes remain separate and are
+  never summed.
+- **Alarm rule.** One global `OOM_KILL_JOURNAL crit` fires once if any
+  independently valid positive OOM record exists, even when every raw OOM
+  counter is `unavailable`. The user `KILL_SIGNAL_JOURNAL warn` likewise fires
+  from an independently valid user unit-signal or process-SIGKILL record even
+  when raw `count`/`process_sigkill`/`user_unit_signal` is unavailable; the
+  system scope keeps no signal warn.
+- **Failure rule.** The positive pass consumes the same captured, stderr-free,
+  valid JSON stream as the class counts — no second journal query. A nonzero
+  query rc, timeout, stderr bytes, or unparseable JSON makes the positive
+  tokens `unavailable:<reason>` (for example `unavailable:rc-1`,
+  `unavailable:timeout`, `unavailable:stderr-nonempty`,
+  `unavailable:malformed-json`), never numeric zero. Semantic aggregate statuses
+  (`record-invalid`, `multi-boot`, `boot-mismatch`) alone do not invalidate an
+  independently parsed positive subset. A
+  parsed stream with no individually valid record is a real 0 for that positive
+  token — not a class total; excluded records never become counts. Array/non-string
+  `MESSAGE_ID`/`_BOOT_ID`, foreign boots, and array/null/wrong-case result
+  fields are excluded per record.
+- **Not claimed.** Positive evidence is not completeness, not a victim count,
+  not a unique victim or authenticated emitter, and not fleet causation.
+  Malformed JSON is still unknown, not repaired; owner routing stays
+  aggregate-only, and no new route or actuation is added.
+
+Ground and full decision table: `corpus/knowledge/journal-positive-evidence-r15.md`
+(S014/S015/S037/S038; an interface reading, not a measured live positive).
 
 ## Boundaries (hard)
 
@@ -73,6 +131,7 @@ exit 2 for setup/usage. Registry (PROTOCOL.md §Gate standard fields):
 | silence oracle | gate | `bash tools/mori-silence-cases.sh` | 0 clean (all matched) · 1 failed · 2 could-not-evaluate | itself (hermetic case table, 28 cases) | case table in-script | temp fixtures | mori |
 | r13 regressions | gate | `python3 tools/mori-round13-regressions.py --output <dir>` (`--census`/`--oracle` default to the repo `tools/*.sh`; `--frozen-dir` default `.ufo/waves/round-13/frozen`) | 0 clean · 1 failed (claim mismatch) · 2 could-not-evaluate (usage/setup, unreadable target, `snapshot_tampered`, unbuildable requested mutation) | `python3 tools/mori-round13-regressions.py --selftest` — parser checks plus isolated real-gate subprocess cases asserting exit and stable finding ids; measured tally in round-14 evidence | in-script `FROZEN_PINS` and `FROZEN_BASE_COMMIT` independently pin the default frozen census/oracle/manifest; custom frozen directories are manifest-only and explicitly unpinned; expected claim ids/values are in-script; evidence names revision and dirty flag | `<dir>` evidence tree only; fixtures removed unless `--keep-fixtures` | mori |
 | r14 regressions | gate | `python3 tools/mori-round14-regressions.py --output <dir>` (`--census` default `tools/mori-census.sh`; `--frozen` red control default `.ufo/waves/round-14/frozen/mori-census.sh`) | 0 clean · 1 failed (claim failed, or the frozen control did not reproduce the defect) · 2 could-not-evaluate (usage/setup/pin, `snapshot_tampered`, unexpected internal error) | `python3 tools/mori-round14-regressions.py --selftest` — 20 checks including real-gate red rc1 and tamper rc2 at 5601d12, harness SHA `c39e5a73…`; `evidence/r14-selftest-accepted.json` under round-14 waves | in-script `PINNED_SHA256` for `.ufo/waves/round-14/frozen/mori-census.sh` (`39abda0a…`, the r13 delivered bytes) + expected claim ids/values | `<dir>` evidence tree only; fixtures removed unless `--keep-fixtures` | mori |
+| r15 regressions | gate | `python3 tools/mori-round15-regressions.py --output <dir>` (`--census` default `tools/mori-census.sh`; `--fixtures` default `.ufo/waves/round-15/fixtures`; `--expected` default `.ufo/waves/round-15/expected.json`; `--frozen` default `.ufo/waves/round-15/frozen/mori-census.sh`, else `git show 0fa5e0d:tools/mori-census.sh`; `--pin-fixtures <path>` regenerates the expected table after packs settle) | 0 clean (all SUT expectations pass and the frozen control reproduces the entering red state on red-relevant cases) · 1 failed (a SUT fixture expectation failed) · 2 could-not-evaluate (usage/setup/pin/fixture-schema/control error, digest or expected-table mismatch, `snapshot_tampered`, missing expected table, unexpected internal error) | `python3 tools/mori-round15-regressions.py --selftest` — actual isolated gate subprocesses with temp packs/wrappers, asserting exit and stable expected ids; `--no-frozen-control` is selftest-internal and requires the hidden `--selftest-child`; tally is measured at L1 integration, not predicted here | in-script `PINNED_FROZEN_SHA256` `0e41cb83…` and `PINNED_BASE_COMMIT` `0fa5e0d…` (never trusted from a manifest; digest mismatch exits 2); expected table `.ufo/waves/round-15/expected.json` pins each fixture pack SHA-256, static per-case expectations, and gate/r14-helper/frozen digests (any later gate or r14 edit requires re-pin); runs store `expected.json` + `run-manifest.json` (revision, dirty path scope) under `<dir>` | `<dir>` evidence tree only, and `--output` must not equal/cover the fixture directory, repository root, `tools/`, `.git/` or `corpus/`; fixture packs read-only, a `MESSAGE` key is a setup error | mori |
 
 Where mori learns — tiers, study paths, search log: `corpus/SOURCES.md`.
 
@@ -80,12 +139,17 @@ The journal arm needs `jq`, `timeout`, and `wc`; missing parser/timeout is
 unavailable, never an unbounded or fake-zero scan. Each serial current-boot
 class query (twelve in the r13 bytes) has a labeled-local 2-second bound plus
 one-second kill grace (`MORI_JOURNAL_TIMEOUT_S`), not a whole-census deadline.
+The r15 positive pass reuses each class capture; it adds no journal query.
 Only known class fields and the validated boot identifier leave the parser;
 stderr bytes are counted then discarded. `oomd_activity=unmeasured` prevents
 interpreting zero notice records as active/healthy oomd. Full store access,
 cursor dedup and authenticated emitters are not claimed; the restored
-`OOM_KILL_JOURNAL` crit is one global alarm over reported notices, with four
-separate never-summed arms, not an authenticated or unique-victim kill count.
+`OOM_KILL_JOURNAL` crit is one global alarm over reported notices or
+independently valid positive records, with four separate never-summed raw arms
+plus the r15 per-scope positive tokens, and is neither an authenticated nor a
+unique-victim kill count. Positive tokens are `unavailable` on capture/parser
+failure and are never a total when the class is invalid (see the r15 section
+above).
 
 **Regression gates (r14).** `tools/mori-round13-regressions.py` re-measures the
 committed round-13 claims from frozen inputs — long-history exact-author
@@ -108,6 +172,31 @@ L1 measured the delivered r13 gate selftest at 8d22d18 (33 checks, 2 isolated
 cases) and r14 gate at 5601d12 (20 checks); receipts are under
 `.ufo/waves/round-14/evidence/`. The accepted r14 suite is 43 cases plus one
 frozen-red control, 44 assertions passing, not 44 separate domain claims.
+
+An earlier r14 selftest receipt at `8d22d18` exited 1 (`real-gate-red-oom-id`,
+`real-gate-red-unit-id`, `real-gate-red-evidence`); it is superseded by the
+`5601d12` accepted receipt and is not reported as green.
+
+**Regression gate (r15).** `tools/mori-round15-regressions.py` (registered above
+as `r15 regressions`) consumes the fixture packs under
+`.ufo/waves/round-15/fixtures/` and checks the narrow salvage from both sides:
+a valid current-boot record next to an invalid sibling must keep the OOM crit
+or user signal warn and the matching positive token while the raw class token
+stays `unavailable:<reason>`; negative and clean controls must stay silent. The
+frozen entering census (`0e41cb83…` at `0fa5e0d`, in-script pin) is the red
+control: red-relevant cases — those whose expected alarm depends on a class the
+case's `invalid_class` makes unavailable — must miss the alarm there, while
+every other case passes. A normal run also requires the committed expected
+table (`.ufo/waves/round-15/expected.json`); a missing or mismatched table is
+could-not-evaluate (exit 2), never a pass. The gate does not parse a malformed
+JSON stream and does not claim completeness, authenticated ids or unique
+victims; no tally is predicted here, and L1
+measures the delivered selftest and gate revisions once after integration.
+
+The positive counters are declared count-magnitude measurements and join the
+census's drift volatile list; the existing r10 baseline therefore reports
+`volatile_fields` rather than hiding the schema change. No re-pin is performed
+or claimed in r15 — the old red pin remains status-neutral debt (L1 decision).
 
 **Drift pin (r10).** `--pin <path>` runs the census (live, read-only) and
 writes its full output normalized against a declared VOLATILE FIELD LIST —

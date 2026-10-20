@@ -26,6 +26,16 @@ endpoint and model-serving health (→ kama); credential material (→ kagi).
 - **tmux relevance** — `SURFACE tmux`: classify sessions by pane path; bound the freshness probe for each relevant session.
 - **Lane silence** — `SURFACE lane.<id>` rows: launch-anchored authorship grading as silent, progressing, progressing-weak, young, not-open, or unavailable.
 
+Round-15 C1 addresses the FR1 **mixed-class alarm suppression** boundary:
+individually validated current-boot OOM or user-signal positive evidence may
+raise the existing global critical/user warning alarm while an invalidated
+class total and subject partition stay unavailable. The additional
+`positive_*` fields describe evidence subsets, never a complete count or a
+unique victim. Syntactically malformed JSON, unsuccessful or stderr-bearing
+capture, missing parser and timeout still produce unavailable, not inferred
+positive evidence. Kernel event-time attribution, exhaustive fleet membership
+and authenticated client labels remain frontier; no remediation is added.
+
 ## Frontier
 
 - **FR1 — Kernel OOM event-time attribution and fleet correlation** (state F1/F8 + art F2). First evidence: `corpus/knowledge/kernel-oom-line-attribution-r12.md:10-16`; `corpus/knowledge/audit-r11.md:203-204`. Round 13 advances structured system-journal notice records to Core; event-time kernel summary/victim token validation and fleet correlation remain frontier. No raw `MESSAGE` is emitted, and a host record alone does not prove a fleet-caused kill.

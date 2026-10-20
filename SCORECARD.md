@@ -811,3 +811,32 @@ membership, all-or-nothing malformed class handling (can hide an alarm),
 unavailable does not imply DRIFT, unvalidated environment overrides, partial
 store access/retention, old drift pin redness and broader oracle tally/forgery
 debt. No SHONEN mark or rank is changed.
+
+## Round 15 — declared coverage claim
+
+Entering revision: `0fa5e0d` (the round-14 non-author spot-check).
+Active owned axes remain coverage **6**, operability **7**; the former is
+the lowest owned non-retired axis. Other scores remain depth/freshness/
+calibration **5/5/5**, adjacency **6**. No stagnation waiver is used.
+
+**C1 coverage:** preserve an OOM critical/DRIFT or user signal WARN/DRIFT
+from an individually valid current-boot structured record when another
+record invalidates the aggregate class. Existing raw totals and subject
+partitions remain unavailable; additive `positive_*` tokens are validated
+evidence subsets, not replacement complete totals. No malformed-JSON salvage,
+extra journal query, authenticated membership or unique-victim claim.
+
+Falsifiable metric: the same committed fixture packs and gate run against
+pinned entering and delivered census bytes; count failed C1 case assertions
+before → after. Mixed-positive failures must become zero, negative controls
+must stay clean, and homogeneous scoped counts/owner routes must survive.
+This repairs the explicitly disclosed suppression gap, not every event path.
+Scores are held rather than awarding a point for fixture quantity.
+
+### Planned (supersedes prior next-round intentions)
+
+Only steered round 15 is executed here. Work the FR1 malformed-class
+failure-mode boundary within C1; retain the old red drift pin as declared debt
+without re-pinning. Dirty-path capture and active wording clarifications from
+`corpus/lessons/round-14-verifier-spotcheck.md:134–140` are unclaimed
+conformance/learning work. Independent outside closure remains required.

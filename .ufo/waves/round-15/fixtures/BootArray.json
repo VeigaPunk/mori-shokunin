@@ -1,0 +1,111 @@
+[
+  {
+    "id": "bootarray-user-kernel-oom-boot-array-current",
+    "user": [
+      {
+        "__CURSOR": "s=r15-bootarray-1a",
+        "__REALTIME_TIMESTAMP": "1700000000000101",
+        "__MONOTONIC_TIMESTAMP": "1001",
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "fe6faa94e7774663a0da52717891d8ef"
+      },
+      {
+        "__CURSOR": "s=r15-bootarray-1b",
+        "__REALTIME_TIMESTAMP": "1700000000000102",
+        "__MONOTONIC_TIMESTAMP": "1002",
+        "_BOOT_ID": [
+          "11111111111111111111111111111111"
+        ],
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "fe6faa94e7774663a0da52717891d8ef"
+      }
+    ],
+    "system": [],
+    "want_oom": true,
+    "want_signal": false,
+    "invalid_class": "kernel_oom_notice"
+  },
+  {
+    "id": "bootarray-user-kernel-oom-boot-null",
+    "user": [
+      {
+        "__CURSOR": "s=r15-bootarray-2a",
+        "__REALTIME_TIMESTAMP": "1700000000000201",
+        "__MONOTONIC_TIMESTAMP": "2001",
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "fe6faa94e7774663a0da52717891d8ef"
+      },
+      {
+        "__CURSOR": "s=r15-bootarray-2b",
+        "__REALTIME_TIMESTAMP": "1700000000000202",
+        "__MONOTONIC_TIMESTAMP": "2002",
+        "_BOOT_ID": null,
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "fe6faa94e7774663a0da52717891d8ef"
+      }
+    ],
+    "system": [],
+    "want_oom": true,
+    "want_signal": false,
+    "invalid_class": "kernel_oom_notice"
+  },
+  {
+    "id": "bootarray-system-kernel-oom-boot-array-multi",
+    "user": [],
+    "system": [
+      {
+        "__CURSOR": "s=r15-bootarray-3a",
+        "__REALTIME_TIMESTAMP": "1700000000000301",
+        "__MONOTONIC_TIMESTAMP": "3001",
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "fe6faa94e7774663a0da52717891d8ef"
+      },
+      {
+        "__CURSOR": "s=r15-bootarray-3b",
+        "__REALTIME_TIMESTAMP": "1700000000000302",
+        "__MONOTONIC_TIMESTAMP": "3002",
+        "_BOOT_ID": [
+          "11111111111111111111111111111111",
+          "22222222222222222222222222222222"
+        ],
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "fe6faa94e7774663a0da52717891d8ef"
+      }
+    ],
+    "want_oom": true,
+    "want_signal": false,
+    "invalid_class": "kernel_oom_notice"
+  },
+  {
+    "id": "bootarray-user-unit-signal-boot-null",
+    "user": [
+      {
+        "__CURSOR": "s=r15-bootarray-4a",
+        "__REALTIME_TIMESTAMP": "1700000000000401",
+        "__MONOTONIC_TIMESTAMP": "4001",
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "USER_UNIT": "shokunin-fixture.service",
+        "UNIT_RESULT": "signal"
+      },
+      {
+        "__CURSOR": "s=r15-bootarray-4b",
+        "__REALTIME_TIMESTAMP": "1700000000000402",
+        "__MONOTONIC_TIMESTAMP": "4002",
+        "_BOOT_ID": null,
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "USER_UNIT": "shokunin-fixture.service",
+        "UNIT_RESULT": "oom-kill"
+      }
+    ],
+    "system": [],
+    "want_oom": false,
+    "want_signal": true,
+    "invalid_class": "unit_failure_record"
+  }
+]

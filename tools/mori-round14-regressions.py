@@ -53,7 +53,7 @@ CLAIMS (stable ids; one FINDING line each)
   R14_WRONG_BOOT_UNAVAILABLE         foreign _BOOT_ID -> unavailable:boot-mismatch
   R14_MULTI_BOOT_UNAVAILABLE         several boots -> unavailable:multi-boot
   R14_IGNORE_FILTERS_INVALID         kernel query returns another class -> record-invalid
-  R14_SEC_DUP_MSGID_MIXED            valid OOM + MESSAGE_ID array -> record-invalid, no fake zero
+  R14_SEC_DUP_MSGID_MIXED            valid OOM + malformed MESSAGE_ID -> raw unavailable, one retained crit alarm
   R14_SEC_UNIT_CANARY                newline/token unit canary never reaches output
   R14_MESSAGE_CANARY                 MESSAGE bytes/unit subject never emitted; no MESSAGE request
   R14_TEXT_ONLY_NOT_ADMITTED         MESSAGE text alone never counts as OOM (Q15)
@@ -64,8 +64,11 @@ CLAIMS (stable ids; one FINDING line each)
 SETTLED r14 SCHEMA PINS (L1 final ruling, relayed by CensusRepair)
 
   OOM: exactly ONE global FINDING OOM_KILL_JOURNAL severity=crit per census
-  when any of user_notice/system_notice/user_unit_oom/system_unit_oom > 0.
-  No count= total and no summed field. The line carries, once:
+  when any of user_notice/system_notice/user_unit_oom/system_unit_oom > 0, or
+  when any scope's validated-positive token (positive_kernel_oom /
+  positive_unit_oom) is > 0 while the matching raw counter is
+  unavailable:<reason> (r15 mixed-stream retention). No count= total and no
+  summed field. The line carries, once:
     user_notice=<n|unavailable:reason> system_notice=<...>
     user_unit_oom=<...> system_unit_oom=<...>
     user_unit_oom_result_unknown=<...> system_unit_oom_result_unknown=<...>
@@ -102,11 +105,37 @@ SETTLED r14 SCHEMA PINS (L1 final ruling, relayed by CensusRepair)
   Retired: KERNEL_OOM_NOTICE_JOURNAL_USER, KERNEL_OOM_NOTICE_JOURNAL_SYSTEM.
   Only the global crit OOM line and the user SIGKILL/signal warn flip the roll.
 
-  Retained control, not a green waiver: R14_SEC_DUP_MSGID_MIXED shows the
-  inherited all-or-nothing validation grades a stream containing one valid OOM
-  record plus a malformed MESSAGE_ID record as record-invalid/unavailable. It
-  is honest (never a fake zero) but it can silence a valid alarm; that residual
-  limitation is named in the seat report for L1 routing.
+  Historical residual control, superseded by round 15 (not a no-harm waiver):
+  on the pinned r13 bytes the inherited all-or-nothing validation graded a
+  stream containing one valid OOM record plus a malformed MESSAGE_ID record as
+  record-invalid/unavailable and silenced the valid alarm. R14_SEC_DUP_MSGID_MIXED
+  now pins the round-15 partial-positive behavior instead: the raw aggregate
+  count stays unavailable:record-invalid, while the independently valid
+  current-boot OOM record keeps ONE crit OOM_KILL_JOURNAL alarm (DRIFT). Drift
+  counts that one alarm line, never a record total, and no raw total is
+  fabricated. No other case migrates: foreign-boot, multi-boot, wrong-class,
+  whole-stream-malformed, producer-failure and timeout fixtures contain no
+  independently valid current-boot positive, so they stay alarm-free and keep
+  their aggregate-unavailability checks.
+
+REVISION PROVENANCE
+
+  evidence.json names real `git rev-parse HEAD` and retains the exact
+  `git status --porcelain --untracked-files=all` scope twice: once as the
+  harness starts and once after the last run, before evidence is written.
+  Untracked entries are requested explicitly and retained as paths only; git
+  status never emits file contents, and no repository file other than the
+  harness and the resolved targets is read. `MORI_EVIDENCE_REVISION`, when set,
+  is recorded only as `asserted_revision`; the start/end comparison always uses
+  the real HEAD, so a pin cannot make it vacuous. Porcelain entries under
+  harness-written output paths (runs/, targets/, evidence.json, the fixture
+  root) are excluded from `status_changed`, but never a path that is itself a
+  resolved input; the exact dirty scope stays in `start`/`end`.
+  `status_changed` alone cannot prove stationary content (an already-dirty path
+  keeps its line), so the harness content-hashes itself at import and every
+  resolved target at load, then again after the last run, reporting
+  `inputs_changed` and `harness_changed` per facet. No universal moving:false
+  is claimed. Capture unavailability is recorded, never fatal.
 
 CONTRACT
 
@@ -311,6 +340,14 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
+# Executing-gate digest captured at import, before CLI parsing or any run. A
+# post-import edit then compares unequal instead of becoming a false start.
+try:
+    HARNESS_SHA_IMPORT = sha256_file(Path(__file__).resolve())
+except OSError:
+    HARNESS_SHA_IMPORT = None
+
+
 def redact(text: str) -> str:
     out = text
     for canary in CANARIES:
@@ -336,6 +373,200 @@ def json_dump(path: Path, obj) -> None:
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_text(json.dumps(obj, indent=2, sort_keys=False) + "\n", encoding="utf-8")
     os.replace(tmp, path)
+
+
+# ---------------------------------------------------------------------------
+# revision provenance (evidence-only; never a gate input)
+# ---------------------------------------------------------------------------
+
+# Explicit git env: host GIT_* variables cannot redirect the measured tree, and
+# optional locks stay off so status never rewrites the index it is measuring.
+GIT_ENV = {
+    "PATH": "/usr/bin:/bin",
+    "HOME": os.environ.get("HOME", "/tmp"),
+    "GIT_CONFIG_GLOBAL": "/dev/null",
+    "GIT_CONFIG_SYSTEM": "/dev/null",
+    "GIT_TERMINAL_PROMPT": "0",
+    "GIT_OPTIONAL_LOCKS": "0",
+}
+GIT_TIMEOUT_S = 10
+PORCELAIN_ARGS = (
+    "--no-optional-locks",
+    "status",
+    "--porcelain",
+    "--untracked-files=all",
+)
+
+
+def git_capture(args):
+    """Run one read-only git command; return (stdout|None, state)."""
+    try:
+        proc = subprocess.run(
+            ["git", "-C", str(REPO), "-c", "core.fsmonitor=false"]
+            + list(args),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            env=dict(GIT_ENV),
+            timeout=GIT_TIMEOUT_S,
+        )
+    except (OSError, subprocess.SubprocessError) as exc:
+        return None, "unavailable:%s" % type(exc).__name__
+    if proc.returncode != 0:
+        return None, "unavailable:git-exit-%d" % proc.returncode
+    return proc.stdout, "ok"
+
+
+def capture_revision(captured: str) -> dict:
+    """Capture real HEAD and the exact porcelain scope (paths only).
+
+    Untracked entries are explicit paths; porcelain carries status codes and
+    path names, so no file content, journal text or credential value can enter
+    evidence through this capture. `MORI_EVIDENCE_REVISION`, when set, is only
+    an intended-revision annotation: the comparison always uses real
+    `git rev-parse HEAD`, so a pin cannot make the start/end head check
+    vacuous. Unavailability is recorded, never raised.
+    """
+    out, state = git_capture(("rev-parse", "HEAD"))
+    if out is not None and out.strip():
+        head, head_state = out.strip(), "ok:git-rev-parse-HEAD"
+    else:
+        head = None
+        head_state = state if state != "ok" else "unavailable:empty"
+    out, state = git_capture(PORCELAIN_ARGS)
+    porcelain = out.splitlines() if out is not None else None
+    return {
+        "captured": captured,
+        "captured_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "repo": str(REPO),
+        "head": head,
+        "head_state": head_state,
+        "asserted_revision": (
+            os.environ.get("MORI_EVIDENCE_REVISION", "").strip() or None),
+        "porcelain_source": "git --no-optional-locks status --porcelain "
+                            "--untracked-files=all",
+        "porcelain_state": state,
+        "porcelain": porcelain,
+        "porcelain_entries": len(porcelain) if porcelain is not None else None,
+        "dirty": None if out is None else bool(out.strip()),
+    }
+
+
+def _porcelain_path(line: str) -> str:
+    """Path field of a porcelain v1 line (rename/copy keeps the new path)."""
+    rest = line[3:] if len(line) > 3 else ""
+    if " -> " in rest:
+        rest = rest.rsplit(" -> ", 1)[1]
+    if len(rest) >= 2 and rest.startswith('"') and rest.endswith('"'):
+        rest = rest[1:-1]
+    return rest
+
+
+def harness_owned_paths(output: Path, fixture_root=None, inputs=()):
+    """Repo-relative paths this harness writes itself, never a measured input.
+
+    A candidate is dropped when a resolved input lives at or below it, so a
+    census, frozen file or fixture placed under --output remains compared. The
+    whole --output tree is never excluded.
+    """
+    try:
+        out_rel = Path(output).resolve().relative_to(REPO.resolve())
+    except (OSError, ValueError):
+        return []
+    prefix = out_rel.as_posix()
+    if prefix in ("", "."):
+        return []
+    candidates = [
+        prefix + "/runs",
+        prefix + "/targets",
+        prefix + "/evidence.json",
+        prefix + "/evidence.json.tmp",
+    ]
+    if fixture_root is not None:
+        try:
+            rel = Path(fixture_root).resolve().relative_to(REPO.resolve())
+        except (OSError, ValueError):
+            rel = None
+        if rel is not None:
+            candidates.append(rel.as_posix())
+    resolved = [str(Path(p).resolve()) for p in inputs if p]
+    owned = []
+    for candidate in candidates:
+        candidate_abs = str((REPO / candidate).resolve())
+        if any(path == candidate_abs or path.startswith(candidate_abs + os.sep)
+               for path in resolved):
+            continue
+        owned.append(candidate)
+    return owned
+
+
+def _is_owned(path: str, owned) -> bool:
+    for prefix in owned:
+        if path == prefix or path.startswith(prefix + "/"):
+            return True
+    return False
+
+
+def porcelain_scope(revision, owned):
+    """Return (lines|None, excluded) with only harness-owned output removed."""
+    if not revision or revision.get("porcelain") is None:
+        return None, 0
+    kept, excluded = [], 0
+    for line in revision["porcelain"]:
+        path = _porcelain_path(line)
+        if _is_owned(path, owned):
+            excluded += 1
+            continue
+        kept.append(line)
+    return kept, excluded
+
+
+def scope_facets(start, end, owned, output: Path) -> dict:
+    """Per-facet start/end observations; never a universal `moving:false`.
+
+    `head_changed` compares real HEAD, `status_changed` compares porcelain with
+    only harness-written entries removed. A false status delta cannot prove
+    file contents were stationary (an already-dirty path keeps the same line);
+    `inputs_changed` and `harness_changed` are supplied by the caller from
+    actual digests.
+    """
+    start = start or {}
+    end = end or {}
+    head_changed = None
+    if start.get("head") and end.get("head"):
+        head_changed = start["head"] != end["head"]
+    start_scope, start_excluded = porcelain_scope(start, owned)
+    end_scope, end_excluded = porcelain_scope(end, owned)
+    status_changed = None
+    added, removed = [], []
+    if start_scope is not None and end_scope is not None:
+        status_changed = start_scope != end_scope
+        if status_changed:
+            added = sorted(set(end_scope) - set(start_scope))
+            removed = sorted(set(start_scope) - set(end_scope))
+    return {
+        "head_changed": head_changed,
+        "status_changed": status_changed,
+        "porcelain_added": added,
+        "porcelain_removed": removed,
+        "dirty_excluding_harness_output": {
+            "start": None if start_scope is None else bool(start_scope),
+            "end": None if end_scope is None else bool(end_scope),
+        },
+        "output_scope": {
+            "path": str(Path(output).resolve()),
+            "excluded_prefixes": list(owned),
+            "excluded_entries": {
+                "start": start_excluded,
+                "end": end_excluded,
+            },
+        },
+        "not_measured": "content edits inside already-dirty tracked paths "
+                        "other than the harness and the resolved targets; no "
+                        "other file bytes are read",
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -1544,23 +1775,33 @@ def build_cases():
         forbid_prefixes=(RETIRED_PREFIX,),
     ))
 
-    # 28. Retained control: a malformed duplicate MESSAGE_ID in an otherwise
-    # valid stream still grades that class unavailable (honest, never a fake
-    # zero). The all-or-nothing validation is inherited from r13; the
-    # alarm-silencing limitation is named in the report, not waived by a green
-    # expectation.
+    # 28. Round-15 partial-positive migration (L1-routed): the malformed
+    # MESSAGE_ID record makes the aggregate class unavailable, but the
+    # independently valid current-boot OOM record must still keep ONE crit
+    # alarm. Raw aggregate and unit counts stay unavailable/zero as captured;
+    # no total is fabricated and the positive token is not a class count.
     add(Case(
         "R14_SEC_DUP_MSGID_MIXED",
-        "valid OOM + MESSAGE_ID array -> class record-invalid, never a fake zero",
+        "valid current-boot OOM + malformed MESSAGE_ID -> raw aggregate "
+        "unavailable:record-invalid, one retained crit alarm",
         mode="dup-kernel",
         user=(kernel_oom(), kernel_oom(MESSAGE_ID=[KERNEL_ID])),
+        expect_rc=1,
+        expect_verdict="DRIFT",
+        expect_drift=1,
+        expect_findings=(
+            oom_expect("unavailable:record-invalid", 0, 0, 0),
+        ),
+        exact_counts=((OOM_ID, 1),),
+        forbid_ids=tuple(OUT_ID.values()),
+        forbid_prefixes=(RETIRED_PREFIX,),
         surfaces=(
             ("user", surface(state="unavailable",
-                             kernel_oom_notice="unavailable:record-invalid")),
+                             kernel_oom_notice="unavailable:record-invalid",
+                             positive_kernel_oom=1,
+                             positive_unit_oom=0)),
             ("system", surface()),
         ),
-        forbid_ids=FORBID_OOM + tuple(OUT_ID.values()),
-        forbid_prefixes=(RETIRED_PREFIX,),
     ))
 
     # 29. Security: newline/token unit canary never reaches output; raw count
@@ -1947,6 +2188,14 @@ class Harness:
         self.pairs = []
         self.index = 0
         self.frozen_only = False
+        self.revision_start = None
+        self.revision_end = None
+        self.harness_sha_start = None
+        self.harness_sha_end = None
+        self.harness_changed = None
+        self.input_scope = {}
+        self.inputs_changed = None
+        self.owned_paths = []
 
     # -- setup -------------------------------------------------------------
 
@@ -1977,6 +2226,13 @@ class Harness:
         except OSError as exc:
             raise SetupError("cannot create evidence tree under %s: %s"
                              % (self.output, exc))
+        # Start scope: after the harness-owned output tree exists, so its own
+        # directories are already present and can be excluded as noise.
+        self.revision_start = capture_revision("start")
+        self.harness_sha_start = HARNESS_SHA_IMPORT
+        self.owned_paths = harness_owned_paths(
+            self.output, self.fixture_root,
+            [target.original for target in self.targets.values()])
 
     def load_target(self, label: str, path: Path, pinned: bool) -> Target:
         if not path.is_file() or not os.access(path, os.R_OK):
@@ -2138,6 +2394,36 @@ class Harness:
             ),
         })
 
+    def capture_input_end(self):
+        """Re-hash every resolved target after the last run.
+
+        Porcelain equality cannot prove an input was stationary (an
+        already-dirty path keeps its status line), so the driving bytes are
+        compared directly. Only the gate's own inputs are read.
+        """
+        rows = {}
+        for label, target in sorted(self.targets.items()):
+            try:
+                digest = sha256_file(target.original)
+                state = "ok"
+            except OSError as exc:
+                digest, state = None, "unavailable:%s" % type(exc).__name__
+            rows[label] = {
+                "source": str(target.original),
+                "start_sha256": target.sha256,
+                "end_sha256": digest,
+                "changed": None if digest is None else digest != target.sha256,
+                "end_state": state,
+            }
+        values = [row["changed"] for row in rows.values()]
+        if any(value is True for value in values):
+            changed = True
+        elif any(value is None for value in values):
+            changed = None
+        else:
+            changed = False
+        return rows, changed
+
     def run(self) -> int:
         self.prepare()
         sut = self.targets["sut"]
@@ -2198,6 +2484,18 @@ class Harness:
                     },
                 })
 
+        # End scope: every census run has finished and evidence is not written
+        # yet, so only external movement (not our own artifacts) can appear.
+        self.revision_end = capture_revision("end")
+        try:
+            self.harness_sha_end = sha256_file(Path(__file__).resolve())
+        except OSError:
+            self.harness_sha_end = None
+        if self.harness_sha_start and self.harness_sha_end:
+            self.harness_changed = self.harness_sha_start != self.harness_sha_end
+        else:
+            self.harness_changed = None
+        self.input_scope, self.inputs_changed = self.capture_input_end()
         failed = [c for c in self.claims if c["status"] != "pass"]
         code = 1 if failed else 0
         self.emit(code, green_results, frozen_results, frozen_claim)
@@ -2220,6 +2518,10 @@ class Harness:
         counts = {}
         for claim in self.claims:
             counts[claim["status"]] = counts.get(claim["status"], 0) + 1
+        facets = scope_facets(self.revision_start, self.revision_end,
+                              self.owned_paths, self.output)
+        facets["inputs_changed"] = self.inputs_changed
+        facets["harness_changed"] = self.harness_changed
         evidence = {
             "schema": SCHEMA,
             "generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
@@ -2234,13 +2536,31 @@ class Harness:
             },
             "harness": {
                 "path": str(Path(__file__).resolve()),
-                "sha256": sha256_file(Path(__file__).resolve()),
+                "sha256": self.harness_sha_end,
+                "executed_sha256": HARNESS_SHA_IMPORT,
+                "start_sha256": self.harness_sha_start,
+                "end_sha256": self.harness_sha_end,
+                "changed": self.harness_changed,
             },
             "pinned": {
                 "base_commit": PINNED_BASE_COMMIT,
                 "sha256": PINNED_SHA256,
                 "crosschecked_manifest": str(
                     Path(self.args.frozen_dir).resolve() / "inputs.json"),
+            },
+            # Exact revision scope, paths only, plus content hashes of the
+            # driving scripts. Per-facet changes (head/status/inputs/harness)
+            # replace a universal moving flag: porcelain equality alone cannot
+            # prove an already-dirty input did not change.
+            "revision": {
+                "repo": str(REPO),
+                "asserted_revision": (
+                    os.environ.get("MORI_EVIDENCE_REVISION", "").strip()
+                    or None),
+                "start": self.revision_start,
+                "end": self.revision_end,
+                "inputs": self.input_scope,
+                **facets,
             },
             "claims": self.claims,
             "frozen_required_red": list(FROZEN_RED_REQUIRED),
@@ -2396,6 +2716,10 @@ def write_tamper_evidence(args, exc) -> None:
         "schema": SCHEMA,
         "generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "mode": "setup",
+        "revision": {
+            "repo": str(REPO),
+            "capture": capture_revision("setup"),
+        },
         "finding": "snapshot_tampered",
         "observed": one_line(exc),
         "pinned": {"base_commit": PINNED_BASE_COMMIT, "sha256": PINNED_SHA256},

@@ -37,6 +37,7 @@
 | `knowledge/structured-journal-scopes-r13.md` | independently scoped MESSAGE-free catalog-ID record counts, structured unit results and numeric signal-11 records; client-set IDs are not authenticated kills; FR1 notice/result plane advances without claiming kernel victim attribution | S013/S014/S015 reopened, S035/S036 added round 13; `.ufo/waves/round-13/evidence/live-measurement.json` |
 | `knowledge/verdict-contract-r13.md` | capture-safe long-history author membership and strict single final-verdict grammar/rc validation; tested invalid wrappers, not universal forgery resistance | S031 reopened round 13; audit-r11 F01/F02; round-13 behavioral receipts |
 | `knowledge/journal-alarm-routing-r14.md` | measured structured OOM/legacy signal alarms and fleet/non-fleet/unattributed subject triage; one OOM critical line with separate scope/path counters, not a victim count; `UNIT`/`USER_UNIT` name-token rule, not membership proof; cgroup-local is not a substitute and unavailable is not an alarm; six named acceptance failures 6 → 0 at 5601d12, 12/12 all-zero live counter parity, nonzero fixture parity retained | S002/S013/S015/S035/S036/S037/S038; `.ufo/waves/round-14/evidence/c1-measurement.json`; measured receipt appended to the note |
+| `knowledge/journal-positive-evidence-r15.md` | mixed-class positive preservation for the journal alarms: per-scope `positive_kernel_oom` / `positive_unit_oom` / `positive_unit_signal` / `positive_process_sigkill` count only object records with scalar matching `MESSAGE_ID` and scalar current `_BOOT_ID` (unit result exactly `oom-kill`/`signal`; process exactly `killed`+status 9) from the same single captured stream, so a valid current-boot witness still raises the one critical OOM line or the one user signal WARN while any malformed/nonmatching/foreign-boot neighbour leaves the raw aggregate/split class `unavailable:<reason>`; raw counters and the INFO routing partition keep authority, positives are additive evidence — decision table only, not full parsing/completeness, authenticated ids, unique victims or fleet membership | S014/S015/S037/S038 reopened round 15 (`corpus/SOURCES.md` used-by updated); no live journal read, census run or tally measured by this note |
 
 ## Known gaps
 
@@ -307,11 +308,27 @@
   The source set, signal warning restoration, trust limits and measured receipt
   are in `knowledge/journal-alarm-routing-r14.md`.
 
+- **Mixed-class positive preservation (round 15, decision table):** the r14 residual
+  `R14_SEC_DUP_MSGID_MIXED` is the failure mode this contract narrows
+  (`knowledge/journal-positive-evidence-r15.md`). A class total is all-or-nothing, but an
+  independently valid current-boot object record is a separate existential claim: the four
+  per-scope `positive_kernel_oom` / `positive_unit_oom` / `positive_unit_signal` /
+  `positive_process_sigkill` tokens preserve the existing critical `OOM_KILL_JOURNAL` line or
+  user `KILL_SIGNAL_JOURNAL` WARN when an adjacent malformed, nonmatching or foreign-boot record
+  makes the aggregate class unavailable. Raw class/split counts keep their
+  `unavailable:<reason>` values and stay authoritative; positives are never written into a raw
+  slot, never summed across scopes or sources, and never repair the aggregate-only
+  fleet/non-fleet/unattributed INFO partition. **This is FR1 failure-mode coverage only — not
+  full parsing, not completeness, not authenticated `MESSAGE_ID`s, and not unique victims;** a
+  stream-level parse/capture failure or an identity-invalid sole positive still loses the alarm,
+  and arbitrary malformed JSON is not repaired. No measurement is claimed here: the note
+  predicts no tally and L1 owns the delivered census and gate bytes.
+
 ## Frontier
 
 | id | frontier | first evidence | boundary |
 |---|---|---|---|
-| FR1 | Kernel OOM event-time attribution and fleet correlation | `knowledge/kernel-oom-line-attribution-r12.md:10-16`; `knowledge/audit-r11.md:203-204` | Structured system-journal notice records advance round 13; kernel victim/summary token validation and fleet task correlation remain frontier. Catalog-ID records are not authenticated unique kills. |
+| FR1 | Kernel OOM event-time attribution and fleet correlation | `knowledge/kernel-oom-line-attribution-r12.md:10-16`; `knowledge/audit-r11.md:203-204` | Structured system-journal notice records advance round 13; kernel victim/summary token validation and fleet task correlation remain frontier. Catalog-ID records are not authenticated unique kills. Round 15 adds mixed-class failure-mode coverage only: a validated current-boot positive record can still fire the alarm while the aggregate class is unavailable, which is alarm preservation, not full parsing and not completeness. |
 | FR2 | Quota/EDQUOT observability | `knowledge/audit-r11.md:218-222` | `df` capacity percentages cannot detect quota exhaustion; observe and report only, never change quota state. |
 | FR3 | Authoritative wave settlement and emptied-by-hygiene versus never-written | `knowledge/audit-r11.md:202`; `../../kumitate-shokunin/corpus/knowledge/swarm-wave-lifecycle.md:28-34,91-120` | Mori reports filesystem shape; kumitate owns orchestration/result semantics; `empty` alone does not prove never-written, and receipt review stays offline. |
 | FR4 | Driver-state versus MANIFEST versus lane-LOG round reconciliation | `../../fleet-ledger/.ufo/waves/kaika-w1/mori-state.md:31,190`; `knowledge/observability-surfaces-r2.md:118-125` | Census compares driver state with watchdog launch lines only; it does not establish MANIFEST admission or lane-LOG agreement. |

@@ -1,0 +1,102 @@
+[
+  {
+    "id": "psu_system_missing_subject_foreign_boot",
+    "user": [],
+    "system": [
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "UNIT_RESULT": "oom-kill",
+        "_SYSTEMD_UNIT": "kagi-shokunin.service"
+      },
+      {
+        "_BOOT_ID": "ffffffffffffffffffffffffffffffff",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "UNIT_RESULT": "oom-kill",
+        "UNIT": "kagi-shokunin.service"
+      }
+    ],
+    "want_oom": true,
+    "want_signal": false,
+    "invalid_class": "unit_failure_record"
+  },
+  {
+    "id": "psu_array_subject_msgid_array",
+    "user": [
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "UNIT_RESULT": "oom-kill",
+        "USER_UNIT": [
+          "kagi-shokunin.service",
+          "pipewire-pulse.service"
+        ]
+      },
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": [
+          "d9b373ed55a64feb8242e02dbe79a49c"
+        ],
+        "UNIT_RESULT": "oom-kill",
+        "UNIT": "kagi-shokunin.service"
+      }
+    ],
+    "system": [],
+    "want_oom": true,
+    "want_signal": false,
+    "invalid_class": "unit_failure_record"
+  },
+  {
+    "id": "psu_ambiguous_subject_kernel_msgid_array",
+    "user": [
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "UNIT_RESULT": "oom-kill",
+        "UNIT": "kagi-shokunin.service",
+        "USER_UNIT": "pipewire-pulse.service"
+      },
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": [
+          "fe6faa94e7774663a0da52717891d8ef"
+        ],
+        "UNIT_RESULT": "oom-kill"
+      }
+    ],
+    "system": [],
+    "want_oom": true,
+    "want_signal": false,
+    "invalid_class": "kernel_oom_notice"
+  },
+  {
+    "id": "psu_array_subject_sigkill_foreign_boot",
+    "user": [
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "UNIT_RESULT": "oom-kill",
+        "USER_UNIT": [
+          "kagi-shokunin.service",
+          "pipewire-pulse.service"
+        ]
+      },
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "98e322203f7a4ed290d09fe03c09fe15",
+        "EXIT_CODE": "killed",
+        "EXIT_STATUS": "9"
+      },
+      {
+        "_BOOT_ID": "ffffffffffffffffffffffffffffffff",
+        "MESSAGE_ID": "98e322203f7a4ed290d09fe03c09fe15",
+        "EXIT_CODE": "killed",
+        "EXIT_STATUS": "9"
+      }
+    ],
+    "system": [],
+    "want_oom": true,
+    "want_signal": true,
+    "invalid_class": "unit_sigkill_record"
+  }
+]

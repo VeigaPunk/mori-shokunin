@@ -864,3 +864,67 @@ planner. No tool installation/update, remediation, sibling write, promotion,
 driver restart or steering was performed. No L0 question is added. Stale-lane:
 this assigned round progressed through lane-authored commits; no other mori
 mission is assigned to this L1. SHONEN remains unchecked.
+
+## Round 15 — positive evidence is not a complete count (2026-10-20)
+
+Trigger: non-author round-14 spot-check
+`corpus/lessons/round-14-verifier-spotcheck.md:134–140` routes exact dirty-path
+provenance and two interface-wording corrections, while the retained
+`R14_SEC_DUP_MSGID_MIXED` witness documents a valid OOM record hidden by a
+malformed adjacent record. Entering commit `0fa5e0d`; lane worktree initially
+clean; no inherited uncommitted lane work or protected review edits.
+
+Declared C1 coverage (lowest owned axis6 versus operability7): preserve
+individually validated current-boot positive alarms while keeping invalidated
+aggregate totals unavailable. S014/S015/S037/S038 ground field selection and
+typing; local severity remains policy, not upstream proof of causation.
+The exact metric is in SCORECARD.md's round-15 declaration.
+
+One validated 64-seat build wave, policy v2, `.ufo/waves/round-15/spec.json`
+and `dispatch.json`: executor24/scout8/connector6/reviewer8/critic8/
+scribe6/sentinel2/revenger2. L1 holds canonical planner. Seats advise, not
+outside non-author closure. Registry ids were bound by L1 with the validator's
+`record` command; two rejected record attempts (absolute registry path, then
+prefixed member names) changed no registry bindings before the successful
+relative-path/unprefixed-name call.
+
+Host-safety amendment from the orchestrator was sent to all 64 exact seat
+ids and retained in `.ufo/waves/round-15/host-safety-amendment.txt`.
+No credential store/database or separate omp CLI is part of this work.
+No drift baseline is re-pinned, no host service restarted, no remediation
+or sibling ownership taken.
+
+### Round-15 integration before measurement
+
+Changes motivated by the trigger above:
+- `tools/mori-census.sh`: reuse valid raw counts on healthy queries; only a
+  semantic aggregate failure invokes the strict object/id/current-boot
+  positive fallback on the same capture. Existing aggregate counts and owner
+  routing remain unchanged. New scoped evidence and explicit subset basis
+  explain positive-only OOM/user-signal alarms. No producer query is added.
+- `tools/mori-round13-regressions.py` and `mori-round14-regressions.py`:
+  prospective exact dirty-path scope and load/end input digests replace the
+  opaque provenance reading; historical receipts are not reconstructed.
+  The sole r14 behavioral expectation migrated is its disclosed
+  `R14_SEC_DUP_MSGID_MIXED` suppression control.
+- `tools/mori-round15-regressions.py`, frozen entering census and fixture
+  packs: an independently expected, input-pinned same-case before/after gate.
+  Final internal review (`build/ReviewHarnessGate.md` under round-15 waves)
+  caught arbitrary-failure red confirmation and hidden control bypasses before
+  L1 accepted or measured any gate result; both are returned for repair.
+- `SKILL.md`, `PROVINCE.md`, `corpus/README.md`, new
+  `corpus/knowledge/journal-positive-evidence-r15.md`, `corpus/QUALITY.md`:
+  distinguish complete class counts, positive evidence and capture failure;
+  learn routed r14 provenance/wording debt through lesson-backed Q33–Q36.
+  Four existing source rows gain the knowledge path, without immutable-cell
+  changes or new source rows. The exact changes are in `lessons/round-15.md`.
+- L1 tightened aggregate object guards and added primitive-neighbor and
+  truncated-JSON selftest cases after the producer released its file. The
+  producer's conditional parser caveat is not accepted as a substitute for a
+  delivered measurement.
+
+Procedural debt is not hidden: a critic broadcast to `agent://all`, source
+fetches were written under `/tmp`, and a gate author ran isolated-wrapper
+selftests before the L1 barrier. `lessons/round-15.md` M4–M6 records the
+violations and the exact-id/no-more-checks corrections. Those runs are not
+the committed-input production proof, nor are they outside verification.

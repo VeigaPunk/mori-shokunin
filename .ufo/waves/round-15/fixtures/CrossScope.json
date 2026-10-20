@@ -1,0 +1,87 @@
+[
+  {
+    "id": "crossscope_system_unit_signal_no_user_warn",
+    "user": [],
+    "system": [
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "USER_UNIT": "kagi-shokunin.service",
+        "UNIT_RESULT": "signal"
+      }
+    ],
+    "want_oom": false,
+    "want_signal": false,
+    "invalid_class": null
+  },
+  {
+    "id": "crossscope_system_signal_positives_user_foreign_sigkill_no_warn",
+    "user": [
+      {
+        "_BOOT_ID": "22222222222222222222222222222222",
+        "MESSAGE_ID": "98e322203f7a4ed290d09fe03c09fe15",
+        "EXIT_CODE": "killed",
+        "EXIT_STATUS": "9"
+      }
+    ],
+    "system": [
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "98e322203f7a4ed290d09fe03c09fe15",
+        "EXIT_CODE": "killed",
+        "EXIT_STATUS": "9"
+      },
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "USER_UNIT": "kagi-shokunin.service",
+        "UNIT_RESULT": "signal"
+      }
+    ],
+    "want_oom": false,
+    "want_signal": false,
+    "invalid_class": "unit_sigkill_record"
+  },
+  {
+    "id": "crossscope_user_boot_array_kernel_negative_vs_system_kernel_oom",
+    "user": [
+      {
+        "_BOOT_ID": [
+          "11111111111111111111111111111111"
+        ],
+        "MESSAGE_ID": "fe6faa94e7774663a0da52717891d8ef"
+      }
+    ],
+    "system": [
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "fe6faa94e7774663a0da52717891d8ef"
+      }
+    ],
+    "want_oom": true,
+    "want_signal": false,
+    "invalid_class": "kernel_oom_notice"
+  },
+  {
+    "id": "crossscope_user_foreign_unit_negative_vs_system_unit_oom",
+    "user": [
+      {
+        "_BOOT_ID": "22222222222222222222222222222222",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "USER_UNIT": "kagi-shokunin.service",
+        "UNIT_RESULT": "oom-kill"
+      }
+    ],
+    "system": [
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "USER_UNIT": "kagi-shokunin.service",
+        "UNIT_RESULT": "oom-kill"
+      }
+    ],
+    "want_oom": true,
+    "want_signal": false,
+    "invalid_class": "unit_failure_record"
+  }
+]

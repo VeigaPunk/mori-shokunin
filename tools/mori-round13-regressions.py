@@ -126,7 +126,24 @@ Exit codes (declared registry map: 0 clean · 1 failed · 2 could-not-evaluate)
 Evidence: <output>/evidence.json plus <output>/runs/<run-id>.{stdout,stderr}.
 Evidence names the measured git revision (explicit `MORI_EVIDENCE_REVISION` or
 `git rev-parse HEAD`), the dirty flag, the registry status and the pinned
-digests. Synthetic canary text is redacted before anything is written.
+digests. Starting with this revision it also retains the exact
+`git status --porcelain --untracked-files=all` output (status codes and paths
+only, never file bytes) at harness start and end, with parsed status/path
+records, so a dirty boolean can no longer hide which paths moved.
+`MORI_EVIDENCE_REVISION` is retained as `asserted_revision` and still selects
+the historical `head`; the start/end scope separately records real
+`git rev-parse HEAD` as `observed_head`, so a pin cannot make the comparison
+vacuous. Files under harness-written output paths (runs/, wrappers/, mutants/,
+evidence.json, the fixture root) are excluded from `status_changed`, but never
+a path that is itself a resolved input. The driving script is hashed at import
+and after the last run, so a post-import edit is visible even when porcelain
+text is unchanged. `MORI_EVIDENCE_DIRTY` may still assert the historical dirty
+boolean; evidence labels `dirty_source` (`env:MORI_EVIDENCE_DIRTY` or
+`porcelain`) and retains the captured `dirty_captured` so an env assertion is
+never presented as an observed status. Historical receipts cannot be
+reconstructed: a past `dirty=true` was never accompanied by a path list, and
+the worktree that produced it is gone, so only future runs carry the new
+scope. Synthetic canary text is redacted before anything is written.
 """
 
 from __future__ import annotations
@@ -490,6 +507,14 @@ def sha256_file(path: Path) -> str:
     return h.hexdigest()
 
 
+# Executing-gate digest captured at import, before CLI parsing or any run. A
+# post-import edit then compares unequal instead of becoming a false start.
+try:
+    HARNESS_SHA_IMPORT = sha256_file(Path(__file__).resolve())
+except OSError:
+    HARNESS_SHA_IMPORT = None
+
+
 def one_line(text, limit=240) -> str:
     text = " ".join(str(text).replace(CANARY, "<canary>").split())
     if len(text) > limit:
@@ -547,6 +572,136 @@ def json_dump(path: Path, obj) -> None:
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_text(json.dumps(obj, indent=2, sort_keys=False) + "\n", encoding="utf-8")
     os.replace(tmp, path)
+
+
+# ---------------------------------------------------------------------------
+# revision provenance (evidence-only; the verdict never consumes it)
+# ---------------------------------------------------------------------------
+
+
+def porcelain_entry(line: str) -> dict:
+    """Parse one porcelain v1 line into status/path fields (paths only)."""
+    status = line[:2]
+    rest = line[3:] if len(line) > 3 else ""
+
+    def unquote(value):
+        if len(value) >= 2 and value.startswith('"') and value.endswith('"'):
+            return value[1:-1]
+        return value
+
+    if " -> " in rest:
+        orig, new = rest.rsplit(" -> ", 1)
+        return {"status": status, "path": unquote(new),
+                "orig_path": unquote(orig)}
+    return {"status": status, "path": unquote(rest)}
+
+
+def output_prefix(output: Path):
+    """Posix prefix when --output lives inside REPO, else None."""
+    try:
+        rel = Path(output).resolve().relative_to(REPO.resolve())
+    except (OSError, ValueError):
+        return None
+    prefix = rel.as_posix()
+    return None if prefix in ("", ".") else prefix
+
+
+def harness_owned_paths(output: Path, fixture_root=None, inputs=()):
+    """Repo-relative paths this harness writes itself, never a measured input.
+
+    A candidate is dropped when a resolved input lives at or below it, so a
+    census, oracle, shonen or frozen file placed under --output remains in the
+    comparison. The whole --output tree is never excluded.
+    """
+    prefix = output_prefix(output)
+    if prefix is None:
+        return []
+    candidates = [
+        prefix + "/runs",
+        prefix + "/wrappers",
+        prefix + "/mutants",
+        prefix + "/evidence.json",
+        prefix + "/evidence.json.tmp",
+    ]
+    if fixture_root is not None:
+        try:
+            rel = Path(fixture_root).resolve().relative_to(REPO.resolve())
+        except (OSError, ValueError):
+            rel = None
+        if rel is not None:
+            candidates.append(rel.as_posix())
+    resolved = [str(Path(p).resolve()) for p in inputs if p]
+    owned = []
+    for candidate in candidates:
+        candidate_abs = str((REPO / candidate).resolve())
+        if any(path == candidate_abs or path.startswith(candidate_abs + os.sep)
+               for path in resolved):
+            continue
+        owned.append(candidate)
+    return owned
+
+
+def _is_owned(path: str, owned) -> bool:
+    for prefix in owned:
+        if path == prefix or path.startswith(prefix + "/"):
+            return True
+    return False
+
+
+def scope_porcelain(scope, owned):
+    """Return (lines|None, excluded) with only harness-owned output removed."""
+    if not scope or scope.get("porcelain") is None:
+        return None, 0
+    kept, excluded = [], 0
+    for line in scope["porcelain"]:
+        if _is_owned(porcelain_entry(line)["path"], owned):
+            excluded += 1
+            continue
+        kept.append(line)
+    return kept, excluded
+
+
+def scope_facets(start, end, owned, output: Path) -> dict:
+    """Per-facet start/end observations; no universal `moving:false`.
+
+    `status_changed` compares porcelain with only harness-written entries
+    removed. It cannot prove file contents were stationary (an already-dirty
+    path keeps the same line); the evidence labels that limit instead of
+    claiming movement was absent.
+    """
+    start = start or {}
+    end = end or {}
+    head_changed = None
+    if start.get("head") and end.get("head"):
+        head_changed = start["head"] != end["head"]
+    start_scope, start_excluded = scope_porcelain(start, owned)
+    end_scope, end_excluded = scope_porcelain(end, owned)
+    status_changed = None
+    added, removed = [], []
+    if start_scope is not None and end_scope is not None:
+        status_changed = start_scope != end_scope
+        if status_changed:
+            added = sorted(set(end_scope) - set(start_scope))
+            removed = sorted(set(start_scope) - set(end_scope))
+    return {
+        "head_changed": head_changed,
+        "status_changed": status_changed,
+        "porcelain_added": added,
+        "porcelain_removed": removed,
+        "dirty_excluding_harness_output": {
+            "start": None if start_scope is None else bool(start_scope),
+            "end": None if end_scope is None else bool(end_scope),
+        },
+        "output_scope": {
+            "path": str(Path(output).resolve()),
+            "excluded_prefixes": list(owned),
+            "excluded_entries": {"start": start_excluded,
+                                 "end": end_excluded},
+        },
+        "not_measured": "content edits inside already-dirty tracked paths "
+                        "other than the driving script; no other file bytes "
+                        "are read",
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -987,6 +1142,13 @@ class Harness:
         self.inputs_sha256 = None
         self.revision = None
         self.dirty = None
+        self.dirty_source = None
+        self.dirty_captured = None
+        self.revision_scope_start = None
+        self.revision_scope_end = None
+        self.harness_sha_start = None
+        self.harness_sha_end = None
+        self.harness_changed = None
         self.census = None
         self.oracle = None
 
@@ -1044,24 +1206,28 @@ class Harness:
             self.frozen_pins = "not-supplied"
 
     @staticmethod
-    def record_revision():
-        """Name the measured revision; unavailable revision is could-not-evaluate.
+    def revision_scope(captured="start"):
+        """Capture real HEAD plus the exact porcelain scope (paths only).
 
-        `MORI_EVIDENCE_REVISION` lets an L1 wrapper pin the receipt revision
-        explicitly; otherwise the tree HEAD is read with an explicit git env.
-        The dirty flag is recorded, never hidden.
+        `GIT_OPTIONAL_LOCKS=0` and `core.fsmonitor=false` keep this probe from
+        writing or consulting optional state. `MORI_EVIDENCE_REVISION` is
+        recorded as an asserted revision only; the scope head is always real
+        `git rev-parse HEAD`, so a pin cannot make start/end comparison
+        vacuous. A capture failure is recorded, never raised here.
         """
         env = {
             "PATH": "/usr/bin:/bin",
             "HOME": os.environ.get("HOME", "/tmp"),
             "GIT_CONFIG_GLOBAL": "/dev/null",
             "GIT_CONFIG_SYSTEM": "/dev/null",
+            "GIT_OPTIONAL_LOCKS": "0",
         }
 
         def git(args):
             try:
                 proc = subprocess.run(
-                    ["git", "-C", str(REPO)] + args,
+                    ["git", "--no-optional-locks", "-C", str(REPO),
+                     "-c", "core.fsmonitor=false"] + args,
                     stdout=subprocess.PIPE,
                     stderr=subprocess.PIPE,
                     text=True,
@@ -1070,15 +1236,43 @@ class Harness:
                     env=env,
                     timeout=10,
                 )
-            except (OSError, subprocess.SubprocessError):
-                return None
+            except (OSError, subprocess.SubprocessError) as exc:
+                return None, "unavailable:%s" % type(exc).__name__
             if proc.returncode != 0:
-                return None
-            return proc.stdout
+                return None, "unavailable:git-exit-%d" % proc.returncode
+            return proc.stdout, "ok"
 
-        revision = os.environ.get("MORI_EVIDENCE_REVISION", "").strip()
-        if not revision:
-            revision = (git(["rev-parse", "HEAD"]) or "").strip()
+        out, state = git(["rev-parse", "HEAD"])
+        if out is not None and out.strip():
+            head, head_state = out.strip(), "ok:git-rev-parse-HEAD"
+        else:
+            head = None
+            head_state = state if state != "ok" else "unavailable:empty"
+        out, state = git(["status", "--porcelain", "--untracked-files=all"])
+        porcelain = out.splitlines() if out is not None else None
+        return {
+            "captured": captured,
+            "captured_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "repo": str(REPO),
+            "head": head,
+            "head_state": head_state,
+            "asserted_revision": (
+                os.environ.get("MORI_EVIDENCE_REVISION", "").strip() or None),
+            "porcelain_source": "git --no-optional-locks -c core.fsmonitor=false "
+                                "status --porcelain --untracked-files=all",
+            "porcelain_state": state,
+            "porcelain": porcelain,
+            "paths": ([porcelain_entry(line) for line in porcelain]
+                      if porcelain is not None else None),
+            "porcelain_entries": len(porcelain) if porcelain is not None else None,
+            "dirty": None if out is None else bool(out.strip()),
+        }
+
+    @staticmethod
+    def revision_from_scope(scope):
+        """Derive the historical (head, dirty) pair from one captured scope."""
+        scope = scope or {}
+        revision = scope.get("asserted_revision") or scope.get("head")
         if not revision:
             raise SetupError(
                 "revision unavailable: git rev-parse failed and "
@@ -1089,16 +1283,39 @@ class Harness:
         if dirty_env in ("true", "false"):
             dirty = dirty_env == "true"
         else:
-            status = git(["status", "--porcelain"])
-            dirty = None if status is None else bool(status.strip())
+            dirty = scope.get("dirty")
         return revision, dirty
+
+    @staticmethod
+    def dirty_source_label():
+        """Name where the historical dirty boolean came from (CE7 label)."""
+        if os.environ.get("MORI_EVIDENCE_DIRTY", "").strip().lower() in (
+                "true", "false"):
+            return "env:MORI_EVIDENCE_DIRTY"
+        return "porcelain"
+
+    @staticmethod
+    def record_revision():
+        """Name the measured revision; unavailable is could-not-evaluate.
+
+        Contract preserved: returns (head, dirty) and raises when no revision
+        is available. `MORI_EVIDENCE_REVISION` still pins the reported head,
+        while revision_scope() separately records real `git rev-parse HEAD`
+        for the start/end comparison. The dirty flag is recorded, never hidden.
+        """
+        return Harness.revision_from_scope(Harness.revision_scope("start"))
 
     def prepare(self) -> None:
         if not CANONICAL_SHONEN:
             raise SetupError("canonical SHONEN seed is empty")
         if sha256_bytes(CANONICAL_SHONEN.encode()) != CANONICAL_SHONEN_SHA256:
             raise SetupError("canonical SHONEN seed digest drifted from its constant")
-        self.revision, self.dirty = self.record_revision()
+        self.revision_scope_start = Harness.revision_scope("start")
+        self.revision, self.dirty = Harness.revision_from_scope(
+            self.revision_scope_start)
+        self.dirty_source = Harness.dirty_source_label()
+        self.dirty_captured = (self.revision_scope_start or {}).get("dirty")
+        self.harness_sha_start = HARNESS_SHA_IMPORT
         census, oracle = self.resolve_targets()
         self.snapshot_verify(census, oracle)
         self.census, self.oracle = census, oracle
@@ -2494,6 +2711,16 @@ class Harness:
             code = 2
         else:
             code = 0
+        # End scope: all runs and checks are complete, evidence is not written.
+        self.revision_scope_end = Harness.revision_scope("end")
+        try:
+            self.harness_sha_end = sha256_file(Path(__file__).resolve())
+        except OSError:
+            self.harness_sha_end = None
+        if self.harness_sha_start and self.harness_sha_end:
+            self.harness_changed = self.harness_sha_start != self.harness_sha_end
+        else:
+            self.harness_changed = None
         self.emit(code)
         return code
 
@@ -2513,16 +2740,40 @@ class Harness:
         for claim in self.claims:
             counts[claim["status"]] = counts.get(claim["status"], 0) + 1
         gate_state, gate_row = registry_status()
+        inputs = [self.census, self.oracle, Path(self.args.shonen).resolve(),
+                  *self.frozen.values()]
+        owned = harness_owned_paths(self.output, self.fixture_root, inputs)
+        facets = scope_facets(self.revision_scope_start,
+                              self.revision_scope_end, owned, self.output)
         evidence = {
             "schema": SCHEMA,
             "generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "revision": {
                 "head": self.revision,
                 "dirty": self.dirty,
+                "dirty_source": self.dirty_source,
+                "dirty_captured": self.dirty_captured,
                 "source": (
                     "MORI_EVIDENCE_REVISION" if os.environ.get(
                         "MORI_EVIDENCE_REVISION") else "git rev-parse HEAD"
                 ),
+                # The asserted pin annotates the receipt; observed_head and the
+                # start/end scope always measure real git rev-parse HEAD.
+                "asserted_revision": (
+                    os.environ.get("MORI_EVIDENCE_REVISION", "").strip()
+                    or None),
+                "observed_head": (
+                    (self.revision_scope_start or {}).get("head")),
+                "start": self.revision_scope_start,
+                "end": self.revision_scope_end,
+                **facets,
+            },
+            "harness": {
+                "path": str(Path(__file__).resolve()),
+                "executed_sha256": HARNESS_SHA_IMPORT,
+                "start_sha256": self.harness_sha_start,
+                "end_sha256": self.harness_sha_end,
+                "changed": self.harness_changed,
             },
             "mode": "baseline" if self.args.baseline else (
                 "mutation" if self.args.mutation != "none" else "strict"
@@ -2895,14 +3146,23 @@ def write_snapshot_evidence(args, exc) -> None:
         except (OSError, ValueError):
             expected = {"error": "unreadable inputs.json"}
     try:
-        revision, dirty = Harness.record_revision()
+        scope = Harness.revision_scope("setup")
+        revision, dirty = Harness.revision_from_scope(scope)
     except SetupError:
-        revision, dirty = None, None
+        scope, revision, dirty = None, None, None
     gate_state, gate_row = registry_status()
     evidence = {
         "schema": SCHEMA,
         "generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-        "revision": {"head": revision, "dirty": dirty},
+        "revision": {
+            "head": revision,
+            "dirty": dirty,
+            "dirty_source": Harness.dirty_source_label(),
+            "dirty_captured": (scope or {}).get("dirty"),
+            "asserted_revision": (
+                (scope or {}).get("asserted_revision")),
+            "scope": scope,
+        },
         "mode": "setup",
         "finding": "snapshot_tampered",
         "observed": str(exc),
