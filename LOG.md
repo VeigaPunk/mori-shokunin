@@ -816,3 +816,51 @@ exceptions to explicit could-not-evaluate exit 2, preventing a setup exception
 from masquerading as a failed behavioral comparison. Census/oracle/r13-gate
 bytes are unchanged by this correction. The affected r14 selftest and strict
 paired runs require fresh measured receipts on the correction commit.
+
+Correction measured at **5601d1201926124f7884bc694568abac2ead6d5c**:
+new-gate selftest **20 checks**, exit 0; strict frozen before **43 failed
+assertions**, exit 1 with actual named missing-alarm/routing reasons; repaired
+after **44 pass**, exit 0 (43 cases + required frozen-red control). Six named
+behavioral acceptance arms fail **6 → 0**, actual jq command and outputs in
+`evidence/c1-measurement.json` under `.ufo/waves/round-14/`. New metadata
+completeness requirements make even frozen controls fail; 43 is not a count of
+43 production defects. No expectation or production census was weakened to
+turn that run green. The deterministic case generator/gate SHA is identical
+for before/after; fixture temporary paths differ and full-tree byte equality
+is not claimed.
+
+Positive scoped-count preservation is independent: in six-class order,
+user **3/0/2/1/2/1**, system **2/1/4/3/0/2**, identical frozen/delivered.
+Live domain task trigger — rejected-harmed journal cutover; action — repaired
+typed alarm/subject classification, strict frozen controls and read-only
+current-boot source bracketing; outcome — **2 → 2** scoped rows, **12/12**
+matched live cells, all zero, plus nonzero fixture alarms/triage verified.
+Live wall-time pair **3.022859 → 2.975920 s**, not a distribution or speedup
+claim. Exact reproducer and stdout: `evidence/live-measurement.json`.
+Current live census exits DRIFT for other fleet findings; no live positive
+OOM, victim identity, service activity or fleet causation is inferred.
+
+All six routed mori corrections are addressed: alarms and owner distinction,
+unmeasured-reason vocabulary, gate registration and actual delivered selftest
+receipts, qualified whole-function/shim provenance, historical index and Q16
+quote correction. NH2 additionally restored user UNIT_RESULT=signal WARN
+without treating it as signal9. Source-reading false universals about cgroup
+fallback, slice notice exclusion and subject-vs-emitter scopes were corrected
+in advisory reports/knowledge; bounded seat jq probes are supporting evidence,
+not main gate verification or independent outside review.
+
+SOURCES closes **36 → 38**, A33 → A35/B2/C1, mined15 → 17/queued20/rejected1;
+initial and final validation exit 0, W04 only. S037/S038 and reopened
+S002/S013/S015/S035/S036 support the learned typed subject/result plane.
+Old r10 drift baseline remains red (exit 1 at 5601d12) and unchanged; no re-pin.
+C1 coverage verified, score 6 held; operability/depth/freshness/calibration
+unchanged at 7/5/5/5; adjacency improved through measured tsukuroi-route
+restoration, score 6 held. Trends expansion/quality/discernment improved with
+lesson/receipt pointers; outside round-14 closure is still required.
+
+One validated 32-seat wave: 9 executors, 6 scouts, 3 connectors, 3 reviewers,
+4 critics, 3 scribes, 2 sentinels, 1 revenger, 1 mutation-tester; L1 held
+planner. No tool installation/update, remediation, sibling write, promotion,
+driver restart or steering was performed. No L0 question is added. Stale-lane:
+this assigned round progressed through lane-authored commits; no other mori
+mission is assigned to this L1. SHONEN remains unchecked.

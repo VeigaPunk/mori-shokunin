@@ -347,3 +347,45 @@ fleet causation remain frontier. The cgroup-local plane remains its own surface.
 - S037 and S038 are L1-registered rows (`corpus/SOURCES.md` S037/S038, both mined and used-by
   this note). If a final row scope differs, adjust its used-by cell without rewriting this note's
   source claim.
+
+## Measured implementation — L1, round 14
+
+This supersedes the candidate/awaiting-measurement status of the target contract
+above, not its source/version/trust limits. Census SHA-256
+`0e41cb83fce2e8c5c711171e1cde2e6fa2809dcfce630eccabe52bcbe41516d9`
+was measured at 8d22d18 (104/104 selftest) and 5601d12 (same census bytes).
+The latter changes only the new gate's setup formatting and error map.
+
+Commands `python3 tools/mori-round14-regressions.py --census
+.ufo/waves/round-14/frozen/mori-census.sh --output
+.ufo/waves/round-14/evidence/red-before-accepted` and the same command with
+`--census tools/mori-census.sh --output
+.ufo/waves/round-14/evidence/green-after-accepted` used the same committed
+gate SHA `c39e5a7352666d09dc662293e1ea7be47ee3523b53247a5a6ae02e7dda19288d`.
+Before: exit 1 with actual missing OOM critical alarms, signal-result warning
+and fleet/non-fleet routing. After: exit 0, 43 cases plus the frozen-red control
+pass (44 assertions). Six named behavioral acceptance arms fail **6 → 0**,
+counted by the recorded jq command in `evidence/c1-measurement.json` under
+`.ufo/waves/round-14/`. Frozen controls also fail new metadata-completeness
+requirements; **43 failed assertions is not 43 production defects**.
+
+Independent positive fixture counters, in class order kernel notice, oomd,
+coredump, signal11, process SIGKILL, unit failure, are identical before/after:
+user **3/0/2/1/2/1**, system **2/1/4/3/0/2**. Current-boot live bracketing
+queries match all **12/12** cells, all zero; this is not live positive-load or
+service-health proof (`evidence/live-measurement.json`, including reproducer).
+The typed failed-subject partition, OOM result subset and source/error canaries
+are fixture-proved, not authenticated fleet membership.
+
+System fleet/non-fleet finding ids carry `_SYSTEM` suffixes; user ids retain
+`UNIT_FAILURE_JOURNAL` / `UNIT_FAILURE_OUT_OF_SCOPE`. The unattributed id is
+the same literal in both scopes, distinguished by `scope=`. Signal-only WARN
+may carry `count=0` because that legacy field counts process SIGKILL records;
+the positive `user_unit_signal` count is separate and is never summed.
+
+The restored alarm is bounded: malformed class metadata, query denial or
+timeout still yields explicit unavailable, not zero or DRIFT. A mixed stream
+with a malformed MESSAGE_ID can hide an otherwise valid OOM indication
+(`R14_SEC_DUP_MSGID_MIXED`); this inherited residual is disclosed, not certified
+safe. Environment-selected binaries/timeout overrides, full store access,
+retention and exhaustive fleet-name matching remain outside the guarantee.

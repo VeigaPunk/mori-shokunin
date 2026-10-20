@@ -75,3 +75,48 @@ All status and recheck cells unchanged.
 Initial rows 36, A33/B2/C1, mined15/queued20/rejected1; exact census and
 validator stdout/exit 0 retained in `.ufo/waves/round-14/sources-before.json`.
 Rows are not a learning metric.
+
+## Measured gate decision
+
+L1 **admits C1 at its bounded measured scope**, pending independent non-author
+closure. The initial candidate row is superseded by this measurement, not by
+a seat's opinion. At 5601d12, the same strict r14 gate runs frozen entering
+and repaired census bytes: six named behavioral arms fail **6 → 0** (counting
+command, digests and selected ids in
+`.ufo/waves/round-14/evidence/c1-measurement.json`).
+Inspected red reasons include missing critical OOM/DRIFT, missing tsukuroi
+route and absent user unit-signal warning; repaired positives and negatives
+all pass. The broader before run is 43 failed assertions partly from new
+metadata requirements even on controls; it is not 43 distinct old bugs.
+After is 43 cases plus frozen-red control, 44 pass, exit 0.
+
+The r14 gate initially crashed during fixture setup. That original output is
+retained and **not** used as behavioral red evidence. The actual selftest
+rejected missing stable ids; escaping the shell printf placeholder and mapping
+unexpected errors to could-not-evaluate produced the accepted 20-check
+selftest and strict paired receipts. Production census did not change during
+this gate-only correction. Census selftest 104/104 and migrated r13 selftest
+33 checks/2 isolated cases were measured at 8d22d18 on their delivered bytes;
+the r13 strict suite remained 24 pass + 2 mutation-red, honest oracle 28/28
+and BANANA 0/28. The whole-function/shim provenance limits still apply.
+
+Raw nonzero fixture counters hold user **3/0/2/1/2/1**, system
+**2/1/4/3/0/2** before/after. Live source bracketing matches 12/12 cells, all
+zero; no live positive-load claim. New typed subject/result knowledge cites
+mined S037/S038 on the FR1 notice/result plane, not kernel-victim attribution.
+Final sources: 38 rows, A35/B2/C1, mined17/queued20/rejected1; validator exit 0
+with informational W04 for separately scoped duplicate URLs.
+
+Retained rejects above remain rejected: unique-victim/fleet-cause inference,
+cgroup-local substitution, missing subject → non-fleet and re-pin-to-silence.
+Malformed class metadata can still suppress an otherwise valid alarm through
+explicit unavailable (`R14_SEC_DUP_MSGID_MIXED`); unavailable is not a fake
+zero or a guarantee of safety. Environment override, retention/access,
+name-token recall and broader oracle forgery limitations are named, not fixed
+by this round. No all-event completeness or unspoofable alarm is admitted.
+
+Trends: expansion **improved** through typed subject/result-plane knowledge;
+quality **improved** through a rejected entry's actual repair and rechecks;
+discernment **improved** because the previous outside disagreement produced
+Q29–Q32 with able-to-fail witnesses. This round's own admit/reject outside
+spot-check remains pending; all 32 seats are still the author lane.

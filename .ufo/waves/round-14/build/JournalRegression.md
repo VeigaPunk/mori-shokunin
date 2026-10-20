@@ -8,7 +8,7 @@ frozen, fleet, sibling, MANIFEST or verifier file was edited. No commits.
 
 | Path | SHA-256 (at report time) |
 |---|---|
-| `tools/mori-round14-regressions.py` (new, 2,470 lines, executable) | `7af94b4ce8651b8ee75b2a334098cb0a52909c2da2aec56d457e24f4a3ca58ac` |
+| `tools/mori-round14-regressions.py` (new, 2,476 lines, executable; Main applied the `%%s` fix at line 632) | `c39e5a7352666d09dc662293e1ea7be47ee3523b53247a5a6ae02e7dda19288d` |
 | `tools/mori-census.sh` (production owner CensusRepair, read-only here) | `0e41cb83fce2e8c5c711171e1cde2e6fa2809dcfce630eccabe52bcbe41516d9` |
 | `.ufo/waves/round-14/frozen/mori-census.sh` (pinned red input) | `39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985` |
 
@@ -32,6 +32,36 @@ pass every claim. The gate exits:
 SUT digest equals the pinned frozen digest, the gate runs the suite once and exits `1` with the
 stable failing case ids. `--no-frozen-control` measures the green snapshot alone.
 `--only ID[,ID…]` is a focused real run (used by `--selftest`).
+
+### Measured receipts (Main, commit 5601d12; this seat ran none)
+
+- `r14-selftest-accepted.json`: exit 0, `SELFTEST: pass checks=20`, harness `c39e5a…`.
+- `red-before-accepted.json` + `red-before-accepted/evidence.json`: exit 1, mode `red-before`,
+  43 claims / 43 fail, harness `c39e5a…`, 20.8 s.
+- `green-after-accepted.json` + `green-after-accepted/evidence.json`: exit 0, mode
+  `strict-with-frozen-control`, 44 claims / 44 pass (43 cases + `R14_FROZEN_CONTROL`),
+  harness `c39e5a…`, 41.8 s.
+- `c1-measurement.json` counts the six named acceptance arms (user/system kernel OOM,
+  unit oom-kill, fleet, nonfleet, user signal) as 6 fail on the frozen bytes and 0 on the
+  repaired census, and independently reports all 12 raw scope counts identical between the
+  two receipts. It states the red limit explicitly: **43/43 failing is not 43 production
+  defects**—the frozen schema also lacks the added unit tokens/query fields, including on
+  retained controls. The receipts contain observed results, not fixture specifications; both
+  runs share the case ids and harness bytes, temporary fixture paths differ, and byte-identical
+  full fixture trees are not claimed.
+- The earlier `r14-selftest.json` / `red-before.json` (harness `7af94b…`) are **setup
+  failures**, not a valid red-before: `build_common` formatted a literal shell `printf '%s'`
+  through Python `%`, raising `TypeError`. Main fixed it to `%%s` and added a generic
+  `except Exception` that returns rc2 (`R14_INTERNAL`) instead of a false behavioral rc1.
+
+### Source-only formatting audit (post-fix)
+
+The only unsafe literal-`%` inside a `%`-formatted string was the PATH tripwire body
+(`printf '%s'` at line 632); it is now `printf '%%s'`. Every other `%` call site was audited:
+`git`/`pgrep`/`tmux` bodies are static; the `df` stub's `1%%` is not `%`-formatted (it is
+passed as a literal body, so the shell prints `%`); the journal stub template is assembled by
+`.replace`, and its inner `%` formats are `scope=%s rc=%d` with 2/2 arguments. No similar
+hazard remains.
 
 ### Isolation and faithfulness
 
@@ -113,25 +143,28 @@ R=/home/vgpnk/Projects/shokunin/mori-shokunin
 python3 "$R/tools/mori-round14-regressions.py" \
   --census "$R/.ufo/waves/round-14/frozen/mori-census.sh" \
   --output /tmp/r14-red
-# expected exit 1; FINDING R14_OOM_ALARM_USER status=fail,
-# R14_UNIT_OOM_KILL status=fail, R14_UNIT_FAILED_NONFLEET status=fail, ... (29 required)
+# measured at 5601d12: exit 1; all 43 cases fail (coarse red, see risk 2);
+# the named acceptance arms and 12-cell raw parity are counted in c1-measurement.json
 
 python3 "$R/tools/mori-round14-regressions.py" \
   --census "$R/tools/mori-census.sh" \
   --frozen "$R/.ufo/waves/round-14/frozen/mori-census.sh" \
   --output /tmp/r14-green
-# expected exit 0; R14_FROZEN_CONTROL status=pass; 43/43 claims pass
+# measured at 5601d12: exit 0; 44/44 pass (43 cases + R14_FROZEN_CONTROL)
 
 python3 "$R/tools/mori-round14-regressions.py" --selftest
-# expected exit 0: parser checks + a real focused gate subprocess over the pinned
-# frozen bytes (exit 1, FINDING R14_OOM_ALARM_USER/R14_UNIT_OOM_KILL status=fail)
-# + a tampered-copy subprocess (exit 2, R14_SNAPSHOT_TAMPERED)
+# measured at 5601d12: exit 0, checks=20: parser checks + a real focused gate
+# subprocess over the pinned frozen bytes (exit 1, FINDING R14_OOM_ALARM_USER/
+# R14_UNIT_OOM_KILL status=fail) + a tampered-copy subprocess (exit 2,
+# R14_SNAPSHOT_TAMPERED)
 ```
 
-Required red set: 29 ids in `FROZEN_RED_REQUIRED`, including every OOM/unit-oom arm, every
-routing/unknown arm, both signal arms, parity/scope separation, partial error, valid-unit
-canary and MESSAGE canary. The gate's `pairs` block records each case's red and green reasons
-and stdout/stderr hashes for the before→after receipt.
+Required red set: 29 ids in `FROZEN_RED_REQUIRED`; this is the gate's red-control contract.
+It is not a defect count. The reported before→after differential is the six named acceptance
+arms (6 fail on frozen, 0 on the repaired census) plus independent 12-cell raw-counter parity,
+as recorded in `c1-measurement.json`; L1 explicitly ruled that the 43/43 coarse red is not 43
+production defects. The gate's `pairs` block records each case's red and green reasons and
+stdout/stderr hashes for the receipt.
 
 ## Risks, limits, blockers
 
@@ -143,22 +176,38 @@ and stdout/stderr hashes for the before→after receipt.
    residual limitation. A future fix that counts the valid record must update this control
    deliberately (it will otherwise fail on the pinned unavailable expectation), so the gate
    cannot silently bless either behavior.
-2. **Query-shape pin.** The gate asserts exactly two unit queries (one per scope) with
+2. **Coarse red-before differential (acknowledged; no code change).** The accepted red-before
+   fails all 43 frozen cases, including controls (empty, notice-only-info, query-error,
+   SIGKILL warn), because the r13 rows lack the 12 `unit_*` tokens and the unit query lacks
+   `UNIT/USER_UNIT/UNIT_RESULT`; the token-completeness and unit-argv invariants alone fail
+   every frozen case. Per L1's ruling this is **not 43 production defects**: the report counts
+   six named acceptance arms (user/system kernel OOM, unit oom-kill, fleet, nonfleet, user
+   signal) as 6 fail on frozen and 0 on the repaired census, with the alarm/severity/routing
+   reasons inspected, plus independent 12-cell raw-counter parity from
+   `c1-measurement.json`. `c1-measurement.json` also records the provenance limit: receipts
+   are observed results, not fixture specifications; case ids and harness bytes are shared,
+   temporary fixture paths differ, and byte-identical full fixture trees are not claimed.
+   A cleaner per-case differential would apply completeness/argv checks to the SUT or add a
+   frozen-specific expectation mode; that is an L1 design decision and was not changed here.
+3. **Query-shape pin.** The gate asserts exactly two unit queries (one per scope) with
    `_BOOT_ID,MESSAGE_ID,UNIT,USER_UNIT,UNIT_RESULT`. A legitimate redesign with a different
    call shape must update this invariant deliberately; it cannot pass by never requesting the
    fields.
-3. **Runtime.** 43 cases × 2 targets ≈ 86 census invocations; normal runs are sub-second and
+4. **Runtime.** 43 cases × 2 targets ≈ 86 census invocations; normal runs are sub-second and
    `R14_TIMEOUT_UNAVAILABLE` costs ~1 s per query (bounded by `MORI_JOURNAL_TIMEOUT_S=1`).
-   Expect roughly one to two minutes for the full green run. `--only` exists for focused runs.
-4. **Selftest green path.** `--selftest` proves the real red path (exit 1 + stable ids) and the
+   Accepted green elapsed 41.8 s; `--only` exists for focused runs.
+5. **Selftest green path.** `--selftest` proves the real red path (exit 1 + stable ids) and the
    tamper path (exit 2 + `R14_SNAPSHOT_TAMPERED`) in subprocesses; it does not execute the
-   repaired census. The green proof is the L1 run above.
-5. **Schema ownership.** Expected values are persisted from L1's final ruling and the landed
+   repaired census. The green proof is the accepted strict run above.
+6. **Schema ownership.** Expected values are persisted from L1's final ruling and the landed
    bytes at report time. If CensusRepair changes ids/severity/fields again, the gate fails
    loudly rather than silently accepting the change.
 
 ## Tooling / verification
 
-No tools installed or upgraded. No build, lint, test, formatter, smoke, census or gate run was
-executed by this seat (lane rule: L1 runs verification once after all changes land). The
-digests and line counts above come from `sha256sum`/`grep` reads only.
+No tools installed or upgraded. This seat ran no build, lint, test, formatter, smoke, census or
+gate; all measured receipts under `.ufo/waves/round-14/evidence/` were produced by Main at
+commit `5601d12` against harness `c39e5a…`. The seat's post-fix work was the source-only
+`%`-format audit (line 632 was the sole unsafe literal-`%` locus; it is now `%%s`, and no
+similar hazard remains) and this report update. The digests and line counts above come from
+`sha256sum`/`grep` reads only.

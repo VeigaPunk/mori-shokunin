@@ -756,3 +756,58 @@ fresh delivered-selftest evidence, provenance and index corrections are
 unclaimed conformance/learning work. Original frozen-byte failures remain
 primary for F01/F02; their mutations are whole-function F01 and reconstructed
 F02-prefix-shim witnesses, not byte-exact membership-line restorations.
+
+### Round-14 measured result
+
+**C1 verified (coverage improved; score 6 held).** The measured acceptance
+counter is six named behavioral arms, not six independent production defects.
+Against frozen entering census `39abda0a…`, the arms fail **6 → 0** after the
+repair, using the same gate SHA `c39e5a73…`. Measured commit:
+**5601d1201926124f7884bc694568abac2ead6d5c**. Census and migrated r13 gate
+were already measured at 8d22d18 and did not change in 5601d12.
+
+Counting command (lane root), executed exit 0, output `[6,0]`:
+
+```sh
+jq -s '[.[] | [.claims[] | select(.id == "R14_OOM_ALARM_USER" or .id == "R14_OOM_ALARM_SYSTEM" or .id == "R14_UNIT_OOM_KILL" or .id == "R14_UNIT_FAILED_FLEET" or .id == "R14_UNIT_FAILED_NONFLEET" or .id == "R14_UNIT_SIGNAL_WARN") | select(.status == "fail")] | length]' .ufo/waves/round-14/evidence/red-before-accepted/evidence.json .ufo/waves/round-14/evidence/green-after-accepted/evidence.json
+```
+
+The full strict before run exits 1 (43 failed assertions, including new
+metadata requirements absent even from frozen controls); after exits 0
+(43 cases + one required frozen-red control = **44 pass**). This is not a
+claim of 43 historical bugs. Inspected named reasons show CLEAN/no critical
+OOM → DRIFT/one critical alarm; missing non-fleet route → INFO owner=tsukuroi;
+legacy generic signal-result warning is also restored. Raw positive counters
+hold user `3/0/2/1/2/1`, system `2/1/4/3/0/2`, in six-class order. Both live
+scoped rows remain (2 → 2), **12/12** bracketing cells match, all zero.
+Evidence/counts: `.ufo/waves/round-14/evidence/c1-measurement.json`,
+`live-measurement.json`.
+
+| axis | verdict | score | evidence / limitation |
+|---|---|---|---|
+| coverage | improved | **6 held** | C1 restores prior harm and acquires typed subject/result handling; no extra point for repairing a rejected cutover |
+| operability | unchanged | **7 held** | F01/F02 preserved: r13 suite 24 pass + 2 mutation-red, honest 28/28/BANANA 0/28; census 104/104; new gate setup defect caught and repaired, not counted as successful red evidence |
+| depth | unchanged | **5 held** | S037/S038 support the C1 subject/result semantics; no independent depth claim |
+| freshness | unchanged | **5 held** | old r10 baseline still exits 1 at 5601d12 (`evidence/drift-current.json`); no re-pin or clean-current-drift claim |
+| calibration | unchanged | **5 held** | Q29–Q32 and explicit unknown/mutation qualifications are lesson-backed repairs, not scalar credit or outside self-certification |
+| adjacency | improved | **6 held** | collateral restoration within C1: `R14_UNIT_FAILED_NONFLEET` fails before, passes after with owner=tsukuroi; diagnosis only, no sibling/OS mutations or new ownership claim |
+
+Capability acquired through C1, not a second claim:
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| typed journal alarm and subject triage | restore OOM/legacy signal alarms and partition failed-unit subjects fleet/non-fleet/unknown using structured fields, independently of scoped totals | `evidence/green-after-accepted/evidence.json` under `.ufo/waves/round-14/`; `corpus/knowledge/journal-alarm-routing-r14.md` | 14 |
+
+SOURCES **36 → 38**, A33 → A35/B2/C1, mined15 → 17/queued20/rejected1;
+both validator invocations exit 0 (informational duplicate-URL W04 only).
+Trends: expansion **improved** (typed subject/result-plane knowledge), quality
+**improved** (repaired rejected entry, live counter recheck and actual gate
+self-invocations), discernment **improved** (outside disagreement learned as
+Q29–Q32 with failing witnesses). This round's non-author admit/reject
+spot-check remains pending; our 32 dispatched seats do not satisfy it.
+
+Residuals remain explicit: client-set labels, name-token routing not exhaustive
+membership, all-or-nothing malformed class handling (can hide an alarm),
+unavailable does not imply DRIFT, unvalidated environment overrides, partial
+store access/retention, old drift pin redness and broader oracle tally/forgery
+debt. No SHONEN mark or rank is changed.

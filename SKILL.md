@@ -68,11 +68,11 @@ exit 2 for setup/usage. Registry (PROTOCOL.md §Gate standard fields):
 
 | name | kind | entry | verdict map | self-test | pinned values | write scope | owner |
 |---|---|---|---|---|---|---|---|
-| census | gate | `bash tools/mori-census.sh` (`MORI_SHOKUNIN_ROOT=<fleet root>` outside the fleet tree) | 0 clean · 1 failed (DRIFT) · 2 could-not-evaluate | `--selftest` (91 cases measured at r13 bytes; r14 tally pending L1 measurement) | expected ids/exits in `run_selftest()` | none live; selftest temp tree | mori |
+| census | gate | `bash tools/mori-census.sh` (`MORI_SHOKUNIN_ROOT=<fleet root>` outside the fleet tree) | 0 clean · 1 failed (DRIFT) · 2 could-not-evaluate | `--selftest` (104/104 at 8d22d18, census SHA `0e41cb83…`; `.ufo/waves/round-14/evidence/census-selftest.json`) | expected ids/exits in `run_selftest()` | none live; selftest temp tree | mori |
 | drift pin | gate | `bash tools/mori-census.sh --drift <baseline>` | 0 clean (`none`) · 1 failed · 2 could-not-evaluate (baseline missing/unreadable/malformed) | `--selftest` pin/drift arms | `corpus/evidence/baseline-r10-20261015T2231Z.json` | none (`--pin` writes only its path) | mori |
 | silence oracle | gate | `bash tools/mori-silence-cases.sh` | 0 clean (all matched) · 1 failed · 2 could-not-evaluate | itself (hermetic case table, 28 cases) | case table in-script | temp fixtures | mori |
 | r13 regressions | gate | `python3 tools/mori-round13-regressions.py --output <dir>` (`--census`/`--oracle` default to the repo `tools/*.sh`; `--frozen-dir` default `.ufo/waves/round-13/frozen`) | 0 clean · 1 failed (claim mismatch) · 2 could-not-evaluate (usage/setup, unreadable target, `snapshot_tampered`, unbuildable requested mutation) | `python3 tools/mori-round13-regressions.py --selftest` — parser checks plus isolated real-gate subprocess cases asserting exit and stable finding ids; measured tally in round-14 evidence | in-script `FROZEN_PINS` and `FROZEN_BASE_COMMIT` independently pin the default frozen census/oracle/manifest; custom frozen directories are manifest-only and explicitly unpinned; expected claim ids/values are in-script; evidence names revision and dirty flag | `<dir>` evidence tree only; fixtures removed unless `--keep-fixtures` | mori |
-| r14 regressions | gate | `python3 tools/mori-round14-regressions.py --output <dir>` (`--census` default `tools/mori-census.sh`; `--frozen` red control default `.ufo/waves/round-14/frozen/mori-census.sh`) | 0 clean · 1 failed (claim failed, or the frozen control did not reproduce the defect) · 2 could-not-evaluate (usage/setup/pin, `snapshot_tampered`) | `python3 tools/mori-round14-regressions.py --selftest` — parsers plus the real gate over isolated fixtures asserting red rc1 and tamper rc2 (numeric tally pending L1 measurement) | in-script `PINNED_SHA256` for `.ufo/waves/round-14/frozen/mori-census.sh` (`39abda0a…`, the r13 delivered bytes) + expected claim ids/values | `<dir>` evidence tree only; fixtures removed unless `--keep-fixtures` | mori |
+| r14 regressions | gate | `python3 tools/mori-round14-regressions.py --output <dir>` (`--census` default `tools/mori-census.sh`; `--frozen` red control default `.ufo/waves/round-14/frozen/mori-census.sh`) | 0 clean · 1 failed (claim failed, or the frozen control did not reproduce the defect) · 2 could-not-evaluate (usage/setup/pin, `snapshot_tampered`, unexpected internal error) | `python3 tools/mori-round14-regressions.py --selftest` — 20 checks including real-gate red rc1 and tamper rc2 at 5601d12, harness SHA `c39e5a73…`; `evidence/r14-selftest-accepted.json` under round-14 waves | in-script `PINNED_SHA256` for `.ufo/waves/round-14/frozen/mori-census.sh` (`39abda0a…`, the r13 delivered bytes) + expected claim ids/values | `<dir>` evidence tree only; fixtures removed unless `--keep-fixtures` | mori |
 
 Where mori learns — tiers, study paths, search log: `corpus/SOURCES.md`.
 
@@ -104,8 +104,10 @@ unchanged scoped-count gains, an empty-zero/CLEAN control, query-error and
 missing-metadata `unknown` (never a fake zero), no MESSAGE canary output, no
 scope summing, and generic SIGKILL warn preservation. Neither gate replaces the
 production census and neither is a universal forgery or audit-closure proof;
-their self-test tallies stay unstated here until L1 measures the delivered
-bytes.
+L1 measured the delivered r13 gate selftest at 8d22d18 (33 checks, 2 isolated
+cases) and r14 gate at 5601d12 (20 checks); receipts are under
+`.ufo/waves/round-14/evidence/`. The accepted r14 suite is 43 cases plus one
+frozen-red control, 44 assertions passing, not 44 separate domain claims.
 
 **Drift pin (r10).** `--pin <path>` runs the census (live, read-only) and
 writes its full output normalized against a declared VOLATILE FIELD LIST —

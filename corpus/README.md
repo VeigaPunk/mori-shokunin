@@ -36,7 +36,7 @@
 | `lessons/round-12.md` | round-12 lesson: `## Mistakes` (M1–M26 mined from the lane's own errata, each with captured-by), pointer re-verification, and `## Gate` (candidates, admits, rejects with reasons, SOURCES access records) | LOG round-12 entries; dossiers `kaika-w1/mori-{state,art}.md` |
 | `knowledge/structured-journal-scopes-r13.md` | independently scoped MESSAGE-free catalog-ID record counts, structured unit results and numeric signal-11 records; client-set IDs are not authenticated kills; FR1 notice/result plane advances without claiming kernel victim attribution | S013/S014/S015 reopened, S035/S036 added round 13; `.ufo/waves/round-13/evidence/live-measurement.json` |
 | `knowledge/verdict-contract-r13.md` | capture-safe long-history author membership and strict single final-verdict grammar/rc validation; tested invalid wrappers, not universal forgery resistance | S031 reopened round 13; audit-r11 F01/F02; round-13 behavioral receipts |
-| `knowledge/journal-alarm-routing-r14.md` | one global `OOM_KILL_JOURNAL` crit per census (notice alarm ≠ unique victim), separate no-sum counters `user_notice`/`system_notice`/`user_unit_oom`/`system_unit_oom`; user `KILL_SIGNAL_JOURNAL` warn from process SIGKILL9 or `UNIT_RESULT=signal`; fleet/non-fleet by `UNIT=`/`USER_UNIT=` subject presence (`classification_rule=unit-name-token`, heuristic not membership proof), unattributed → `UNIT_FAILURE_UNATTRIBUTED_JOURNAL` info owner=unresolved; cgroup-local not a substitution; signal/GPF unimplemented-versus-unrecorded; unavailable ≠ alarm; candidate contract, no delivery/schema claim before L1 measurement | S002, S013, S015, S035, S036, S037, S038 (round 14); `lessons/round-13-verifier-spotcheck.md` routed defects 1–3 |
+| `knowledge/journal-alarm-routing-r14.md` | measured structured OOM/legacy signal alarms and fleet/non-fleet/unattributed subject triage; one OOM critical line with separate scope/path counters, not a victim count; `UNIT`/`USER_UNIT` name-token rule, not membership proof; cgroup-local is not a substitute and unavailable is not an alarm; six named acceptance failures 6 → 0 at 5601d12, 12/12 all-zero live counter parity, nonzero fixture parity retained | S002/S013/S015/S035/S036/S037/S038; `.ufo/waves/round-14/evidence/c1-measurement.json`; measured receipt appended to the note |
 
 ## Known gaps
 
@@ -299,9 +299,13 @@
   subject presence under a named heuristic rule
   (`classification_rule=unit-name-token`, not membership proof), while
   unattributed records stay `UNIT_FAILURE_UNATTRIBUTED_JOURNAL` info (owner
-  unresolved), never invented non-fleet membership; the note is a candidate
-  contract with no delivery/schema claim before L1 measurement, and its source
-  set and limits are in `knowledge/journal-alarm-routing-r14.md`.
+  unresolved), never invented non-fleet membership. L1 measured the repair at
+  `5601d12`: six named alarm/routing acceptance arms fail **6 → 0** and the
+  complete gate passes 44 assertions (43 cases plus frozen-red control).
+  `.ufo/waves/round-14/evidence/c1-measurement.json` records the command and
+  independent positive scoped-counter parity; live 12/12 cells were all zero.
+  The source set, signal warning restoration, trust limits and measured receipt
+  are in `knowledge/journal-alarm-routing-r14.md`.
 
 ## Frontier
 
