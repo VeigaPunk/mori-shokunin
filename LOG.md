@@ -711,3 +711,10 @@ non-author verification.
 - Calibration verdict is **improved** per the campaign binding; score held at 5 because the non-author reviewer could not re-derive 6. Adjacency verdict is **unchanged**, score 6 held, because its contract repair was unclaimed and unmeasured.
 - W3ReviewMori's non-author sample agreed on two admits and two rejects (4/4); the limitation to this one reviewer's sample is retained.
 - Re-ran the 12-mutant battery at the round head: census SHA-256 `3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164`, pristine selftest 77/77, **12 killed / 0 survived / 0 inconclusive**; detailed results appended to `corpus/evidence/roster-r12-20261019T220912Z-mutation.md`.
+
+## 2026-10-17 — README: Devin wiki link
+
+- Operator directive (2026-10-17): insert the Devin wiki link into the README header of every repository with a generated wiki.
+- Change: `README.md` created (lane-header convention) with a `**Wiki:**` link to https://app.devin.ai/org/veigapunk/wiki/VeigaPunk/mori-shokunin?branch=master.
+- Evidence: the org's Devin wiki index lists this repo's generated wiki; sibling lane READMEs carry the same `**Wiki:**` header.
+- Documentation-only change; no round run, no axis moved, no verdict changed.
