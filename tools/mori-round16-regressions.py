@@ -27,7 +27,7 @@ Fixture pack schema (one JSON object per file under --fixtures DIR):
         "want_id": "MORI_JOURNAL_WINDOW_OK" |
                    "MORI_JOURNAL_WINDOW_UNAVAILABLE" |
                    "MORI_JOURNAL_WINDOW_SETUP",
-        "want": {"<output key>": <scalar>, ...}       # required; {} = no
+        "want": {"<output key>": <scalar>, ...}       # optional on rc2
     }]}
 
 `want` is a strict subset match against the tool's single stdout JSON object:
@@ -132,10 +132,10 @@ CANARY_TOKEN_RE = re.compile(r"[A-Z][A-Z0-9_]{10,}")
 
 CASE_REQUIRED_KEYS = {
     "id", "scope", "anchor", "stdout", "stderr", "returncode",
-    "want_rc", "want_id", "want",
+    "want_rc", "want_id",
 }
 CASE_ALLOWED_KEYS = CASE_REQUIRED_KEYS | {
-    "anchor_raw", "timeout", "overflow", "max_bytes",
+    "want", "anchor_raw", "timeout", "overflow", "max_bytes",
 }
 PACK_ALLOWED_KEYS = {"cases", "note"}
 
@@ -464,7 +464,7 @@ def analyze_case(pack_name: str, obj) -> CaseSpec:
 
     want_rc = obj["want_rc"]
     want_id = obj["want_id"]
-    want = obj["want"]
+    want = obj.get("want", {})
     if isinstance(want_rc, bool) or want_rc not in (0, 2):
         raise SetupError("%s/%s: want_rc must be 0 or 2" % (pack_name, cid))
     if want_id not in FINDING_IDS:
@@ -1649,7 +1649,9 @@ def selftest() -> int:
     checks = []
     with tempfile.TemporaryDirectory(prefix="mori-r16-selftest-") as td:
         root = Path(td)
-        stub = root / "mori-journal-window.py"
+        tool_dir = root / "tools"
+        tool_dir.mkdir()
+        stub = tool_dir / "mori-journal-window.py"
         stub.write_text(_STUB_TOOL, encoding="utf-8")
         fixtures = _selftest_fixtures(root)
         expected = root / "expected.json"
@@ -1670,7 +1672,7 @@ def selftest() -> int:
         checks.append("green_rc0_verdict_ok")
 
         absent_out = root / "out-absent"
-        _selftest_run(gate, ["--tool", str(root / "absent-tool.py"),
+        _selftest_run(gate, ["--tool", str(tool_dir / "absent-tool.py"),
                              "--fixtures", str(fixtures),
                              "--expected", str(expected),
                              "--output", str(absent_out)], 1, "absent")
@@ -1679,7 +1681,7 @@ def selftest() -> int:
         assert all(c["status"] == "capability_absent" for c in man["cases"])
         checks.append("absent_rc1_capability_absent")
 
-        tampered = root / "tampered-tool.py"
+        tampered = tool_dir / "tampered-tool.py"
         tampered.write_text(_STUB_TOOL + "\n# drift\n", encoding="utf-8")
         _selftest_run(gate, ["--tool", str(tampered),
                              "--fixtures", str(fixtures),

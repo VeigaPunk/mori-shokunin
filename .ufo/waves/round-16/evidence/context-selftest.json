@@ -1,0 +1,37 @@
+{
+  "argv": [
+    "python3",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round16-context-check.py",
+    "--selftest"
+  ],
+  "env": {
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started_at": "2026-10-20T09:09:47.838187+00:00",
+  "elapsed_s": 0.46913259600114543,
+  "exit_code": 0,
+  "stdout": "{\"arms\": 15, \"claims_runtime_prevention\": false, \"finding_id\": \"SELFTEST_OK\", \"static_only\": true}\n",
+  "stderr": "",
+  "revision": {
+    "start": {
+      "head": "114ebe5e141805a72d704e05c618a5f2be3927da",
+      "porcelain": "?? .ufo/waves/round-16/evidence/gate-selftest.json\n?? .ufo/waves/round-16/evidence/window-selftest.json\n",
+      "sha256": {
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-journal-window.py": "d61e0d220a1825d738e2b9526b2bdd92047e39a4543d0ca0a040795d84ba0aeb",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round16-regressions.py": "293e5800110242e4e10487106e3b8f9f45ad0a8f054a4f8c40a2e92a49eb9b2f",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round16-context-check.py": "b0bd0aacfae6532426865f3a2201c162b3d349cefe14fb733716ac44c369cee9"
+      }
+    },
+    "end": {
+      "head": "114ebe5e141805a72d704e05c618a5f2be3927da",
+      "porcelain": "?? .ufo/waves/round-16/evidence/gate-selftest.json\n?? .ufo/waves/round-16/evidence/window-selftest.json\n",
+      "sha256": {
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-journal-window.py": "d61e0d220a1825d738e2b9526b2bdd92047e39a4543d0ca0a040795d84ba0aeb",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round16-regressions.py": "293e5800110242e4e10487106e3b8f9f45ad0a8f054a4f8c40a2e92a49eb9b2f",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round16-context-check.py": "b0bd0aacfae6532426865f3a2201c162b3d349cefe14fb733716ac44c369cee9"
+      }
+    }
+  },
+  "inputs_unchanged": true,
+  "head_stable": true
+}

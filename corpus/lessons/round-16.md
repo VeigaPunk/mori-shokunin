@@ -165,3 +165,29 @@ tool and harness once after integration.
 - Deviations M7–M10, M12–M19, M21–M25 (and M26, disclosure only): routed to L1 for disposition; excluded from delivered verification; not runtime prevention; not repaired by admonition.
 - Distinction kept per parent (L1) rule: static reads, version/help/man lookups, and static parses of a seat's own fixture are allowed and are not counted as runtime violations; real outside-lane writes, live or synthetic probes, and background jobs are deviations regardless of intent.
 - M20 (placeholder overwrite): restored here; ReviewCounts instructed never to touch this file again; owner-side confirmation of the restored text is requested.
+
+## L1 integration errata and observed setup failures
+
+The owner restoration was inspected by L1: the full declared claim,
+correction queue, Mistakes, source openings and Gate sections are present;
+the overwritten placeholder does not survive. Read-time open items above
+are superseded by the active SKILL row, appended SCORECARD fixture-vector
+correction and corrected Knowledge note in input commit `114ebe5`.
+Q37 now keeps L1 omission and seat violation separate; Q42 names exact
+anchor start, not gap-free continuity.
+
+| id | class | evidence pointer | captured-by | fix |
+|---|---|---|---|---|
+| M31 | setup-layout | `evidence/gate-selftest.json` under `.ufo/waves/round-16/`: child gate rejects output under the selftest stub's parent, outer exit1 | first authorized L1 selftest | Put all selftest tool paths in a disjoint tools subtree; do not weaken the production output guard. Same selftest command is re-run on the committed repair. |
+| M32 | fixture-schema mismatch | `evidence/pin.json`: exit2, `KernelSystem.json: case lacks key(s): want` | first authorized L1 pin command | Default omitted refusal `want` to an empty subset; keep complete success expectations and global no-totals-on-refusal assertions. Fixture bytes are unchanged. |
+
+These are actual failing setup witnesses, not production behavioral red.
+The first authorized window selftest measured16/16, not the producer's
+predicted17. Context selftest measured15 arms. Original wave1's explicit
+live-journal prohibition was missing (exit1); its context-only corrected
+fixture passed (exit0). Text conformance is not runtime prevention.
+
+Operator wrap-up supersedes the planned wave2 duty: its32 seats were never
+validated or dispatched; the round total remains64. No workers were spawned
+after that directive. All seat live/synthetic probes and outside-scope
+staging remain excluded from acceptance, regardless of their source value.

@@ -1054,3 +1054,21 @@ the entering pins. F01's whole-function transplant and F02's reconstructed
 prefix shim remain bounded witnesses, not byte-exact single-locus causal
 proofs. The old red drift pin requires a separate semantic review and is
 neither re-run to manufacture a new verdict nor re-pinned here.
+
+### Round-16 first authorized measurement and setup repairs
+
+At input commit `114ebe5`, L1's first authorized executions produced:
+window selftest exit0 with **16/16** (the author's predicted17 is not the
+measurement); context selftest exit0 with15 arms; original wave1 context
+exit1 `CONTEXT_MISSING no_live_journal_queries`; context-only corrected,
+never-dispatched fixture exit0 `CONTEXT_OK`. Receipts are
+`.ufo/waves/round-16/evidence/{window-selftest,context-selftest,context-original,context-corrected}.json`.
+
+Two real gate-setup failures were found, retained and repaired, not counted
+as production bugs: `gate-selftest.json` exit1 contains its child gate's
+exit2 output-overlap refusal because the selftest put its stub in the output
+parent; `pin.json` exit2 rejected a legitimate rc2 fixture without optional
+`want`. The selftest now puts all tool paths in a disjoint `tools/` subtree;
+the loader defaults absent refusal `want` to an empty subset while successful
+cases still require all five count expectations. Same-command remeasurements
+follow on committed repair bytes. No fixture input was changed.
