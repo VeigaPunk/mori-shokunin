@@ -1206,3 +1206,19 @@ runs. `evidence/mutation-artifacts.json` relocates394 files byte-exact before
 discarding mutation clones; generated sandboxes are deliberately not evidence.
 R16 precision is appended to its own lesson, old draft index wording is
 superseded, and the current SCORECARD register names calibration5 explicitly.
+
+### Corrected-input landing and actual final-check failure
+
+Corrected source and predeclared controls landed as
+**2be82940828424ef4a2d623173d7e603b8a18f93**. L1 verification ran from a
+separate clone at that commit, not the managed lane checkout. Six instruments
+passed; the census selftest failed 1 of 132 cases on its trace-canary oracle.
+`evidence/final/census-selftest.json` retains the exact rc1/stdout/stderr.
+
+L1 found the common fake-binary dispatcher simulating Git trace writes for df
+and other non-Git stubs. The bounded repair restricts that hook to executable
+name git, with direct positive-Git and negative-df controls so disabling the
+hook cannot produce a vacuous pass. No production Git scrub or warning is
+removed. This under-30-line single-file correction is owned by L1 and recorded
+as lesson M19; the next committed input declaration preserves the old failed
+revision rather than rewriting its receipt.

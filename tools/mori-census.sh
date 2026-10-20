@@ -3034,8 +3034,12 @@ fx=${MORI_FIXTURE:-}
 # r17 C2: simulate git's trace sink. Real git writes GIT_TRACE*/GIT_TRACE2_*
 # targets; if the census leaks either variable into this child the canary file
 # appears, which is exactly what the scrub is meant to prevent.
-if [ -n "${GIT_TRACE:-}" ]; then printf 'trace %s\n' "$*" >> "$GIT_TRACE" 2>/dev/null || true; fi
-if [ -n "${GIT_TRACE2_EVENT:-}" ]; then printf 'trace2 %s\n' "$*" >> "$GIT_TRACE2_EVENT" 2>/dev/null || true; fi
+# The shared dispatcher also serves non-Git binaries, which do not honor Git's
+# trace variables. Only the git child is the scrub boundary being asserted.
+if [ "$name" = git ]; then
+  if [ -n "${GIT_TRACE:-}" ]; then printf 'trace %s\n' "$*" >> "$GIT_TRACE" 2>/dev/null || true; fi
+  if [ -n "${GIT_TRACE2_EVENT:-}" ]; then printf 'trace2 %s\n' "$*" >> "$GIT_TRACE2_EVENT" 2>/dev/null || true; fi
+fi
 rc_of() { local f="$fx/stub/$1.rc"; if [ -f "$f" ]; then cat "$f"; else printf 0; fi; }
 out_of() { local f="$fx/stub/$1"; if [ -f "$f" ]; then cat "$f"; fi; }
 case "$name" in
@@ -4279,6 +4283,20 @@ SKIP_FRESHEN=1
   # The branch probes must still answer normally (progressing row-A), and the
   # MORI_* stub bindings are untouched by the scrub.
   rm -f "$work/trace-canary" "$work/trace2-canary"
+  # Prove the simulated boundary itself: Git honors these variables, df does not.
+  env MORI_FIXTURE="$FX" GIT_TRACE="$work/trace-canary" GIT_TRACE2_EVENT="$work/trace2-canary" "$bin/git" rev-parse --git-dir >/dev/null 2>&1 || true
+  if [ -e "$work/trace-canary" ] && [ -e "$work/trace2-canary" ]; then
+    ok 'git env: trace canary hook active on git stub'
+  else
+    bad 'git env: trace canary hook missing on git stub'
+  fi
+  rm -f "$work/trace-canary" "$work/trace2-canary"
+  env MORI_FIXTURE="$FX" GIT_TRACE="$work/trace-canary" GIT_TRACE2_EVENT="$work/trace2-canary" "$bin/df" >/dev/null 2>&1 || true
+  if [ -e "$work/trace-canary" ] || [ -e "$work/trace2-canary" ]; then
+    bad 'git env: non-git stub incorrectly honors trace variables'
+  else
+    ok 'git env: non-git stub ignores trace variables'
+  fi
   EXTRA_ENV=(MORI_LANE_SILENCE_S=900 GIT_TRACE="$work/trace-canary" GIT_TRACE2_EVENT="$work/trace2-canary" GIT_CONFIG_GLOBAL="$work/poison-global.conf" GIT_CONFIG_COUNT=1)
   check 'git env: inherited GIT_TRACE*/GIT_CONFIG* scrubbed, branch normal' 0 CLEAN \
     '^SURFACE lane\.kagi: progressing ' \

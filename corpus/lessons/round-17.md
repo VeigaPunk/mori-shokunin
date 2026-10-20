@@ -260,3 +260,23 @@ live scan. They falsify permanent-death interpretation even though the current
 tool reports only terminal-at-scan state. C2 process exits1→0 are captured by
 the outer `evidence/c2-{before,after}.json` wrappers, not inferred from a missing
 exit_code key inside the nested manifests.
+
+## Final-check oracle failure and bounded repair
+
+At corrected source commit `2be82940828424ef4a2d623173d7e603b8a18f93`,
+L1 ran checks from an isolated verification clone. Terminal selftest49 arms,
+seat-gate selftest, jj-gate selftest, misroot12 arms, context31 arms and the
+silence oracle28/28 returned rc0. Census selftest returned rc1:
+`FAIL (132 cases, 131 passed, 1 failed)` with
+`FAIL git env: trace canary written — GIT_TRACE* leaked to the Git child`.
+The exact failed run is retained as `evidence/final/census-selftest.json`;
+it is not silently overwritten by a later green.
+
+| ID | Class | Evidence pointer | Captured-by | Fix / falsifier |
+|---|---|---|---|---|
+| M19 | vacuous | M3 census selftest trace-canary failure; common dispatcher source3034–3038 at that commit | independent fixture realism | The shared fake-binary dispatcher simulated Git trace writes for **all** binaries, including df/journalctl. Real non-Git binaries do not honor GIT_TRACE. Gate the simulator by executable name `git`; add direct positive Git-canary and negative df-canary controls, so disabling the canary cannot fake a pass. Production Git scrubbing is not weakened. Re-run only after this committed correction. |
+
+This is a real test-oracle repair, not a new claim or suppression of an
+observed production warning. Other passed instruments' source bytes remain
+unchanged; final primary C1/C2/C3 measurements use the corrected committed
+input set, and the failing receipt retains its original revision.
