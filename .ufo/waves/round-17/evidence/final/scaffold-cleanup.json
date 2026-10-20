@@ -1,0 +1,20 @@
+{
+  "removed_owned_root": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17",
+  "removed_owned_children": [
+    "CensusJj",
+    "ContextCheck17",
+    "FinalChecks",
+    "FinalVerification",
+    "FinalVerificationFixed",
+    "FinalVerificationMetadata",
+    "JjGate",
+    "MisrootSweep",
+    "SeatFixtures",
+    "SeatGate",
+    "SeatTool"
+  ],
+  "basis": "All source/verification/mutation seats settled; source bytes committed and exact streams/fixtures/relocations retained. Only owned cloned/sandbox copies removed, never source repo or sibling state.",
+  "retained_mutation_artifacts": 394,
+  "retained_delivered_streams": 132,
+  "verification_branch_attestation": "verification-checkout-attestation.json"
+}

@@ -1238,3 +1238,50 @@ overflow bit, retaining numeric code strings within the configured input-span
 bound without large-integer conversion. Unknown Z.AI causes remain other unless
 explicit evidence says otherwise. Lesson M20 records this one-file correction;
 other C2 inputs and passed instrument bytes remain unchanged.
+
+### Round-17 final verified measurements and cleanup
+
+Final C1/C3 code/input commit:
+**91940fa339e38006f8db5bd7d78bb6f037f4d016**. C2 measured commit:
+**fe9fa9083db998ead1554459d656568c4173f288**, with its census/gate/frozen
+hashes unchanged at the final input commit. `FINAL-PINNED_INPUTS.json` and
+`final-measurements.json` under `.ufo/waves/round-17/` are the current indexes.
+
+Executed final counting receipts all exit 0: C1 **66→0** unmet requirements,
+C2 **60→0** failed out of the same **204** assertions, C3 **1→0** known missed
+artifact with **0→0** unexpected candidates. Delivered C1 matches **66/66**,
+all **132** retained streams match size/SHA, and C2 matches **17/17** scenarios.
+The final C3 fixture setup pins exact witness, meaningful tracked control,
+sibling control, tool, expected table and recipe before/after both invocations.
+The first weaker counts and both actual L1 failures are retained, not rerolled.
+
+Census selftest **134/134** and terminal selftest **49** arms pass after their
+specific repairs. Other named selftests, misroot **12** arms, context **31**
+arms and oracle **28/28** pass. Final preservation gates pass r13 **24/24**,
+r14 **44/44**, r15 **63/63**, frozen red **34/34**. Seven historical instrument/
+baseline bytes remain unchanged; r10 redness is carried without a new live
+drift run or re-pin. The real background-clause survivor now produces the
+named missing-clause rc1 while its positive spec remains green.
+
+The final canonical-redacted live receipt observes **469** files, **94** aged
+rate-limit errors and **90** retry-exhausted records. Actual aged-error labels:
+**93 zai/glm-5.3-flash**, **1 anthropic/claude-opus-5-5**. These are scoped
+last-observed transcript states, not permanent deaths, incidents or endpoint
+health. Human actors for the package events remain unknown/inferred; only the
+bounded other-session command-stream correlation is retained for tsukuroi.
+
+Source census start/final both exit 0; rows **40→48**, A **37→45**,
+mined **19→25**, queued **20→22**, rejected **1** held. All eight new quotes
+are located and corrected byte-verbatim; old mutable cells remain unchanged.
+QUALITY **Q43–Q50** and precise append-only corrections learn the routed r16
+mistakes and actual new failures. Expansion/quality/discernment improve at the
+bounded stated scopes; current non-author closure remains pending.
+
+The final fleet status sweep had no pathspec; the misroot probe found **0**
+candidates. Driver baselines and unattributed transient files were not claimed
+or deleted. Both waves delivered **70/70** and **64/64** reports, **134** unique
+seats, **0 reported dead**, no replacements. Owned scratch and mutation clones
+are removed after retaining exact artifacts and revision attestations
+(`evidence/final/scaffold-cleanup.json`). No tool install/update, package/service
+action, new L0 question, promotion or next-round execution occurred. Initial
+scope/privacy/VCS/selftest deviations remain explicit conformance debt.

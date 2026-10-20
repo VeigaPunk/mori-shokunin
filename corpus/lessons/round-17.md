@@ -302,3 +302,69 @@ The selftest's own long-code expected metadata is corrected to the same
 contract; the separate fixture is not changed to make the run green. The
 metadata failure and the earlier census oracle failure remain separate,
 revision-pinned records. Other C2 inputs are unchanged by this C1-only fix.
+
+## Final verified delivery scope
+
+Final C1/C3 input commit: **91940fa339e38006f8db5bd7d78bb6f037f4d016**.
+C2 input commit: **fe9fa9083db998ead1554459d656568c4173f288**; its census,
+gate and frozen-control hashes are identical at the final C1/C3 commit.
+`FINAL-PINNED_INPUTS.json` and `final-measurements.json` are the current
+measurement indexes; the earlier declarations and failed receipts remain history.
+
+| Claim | Final result | Actual evidence under `.ufo/waves/round-17/evidence/final/` |
+|---|---|---|
+| C1 coverage | **66→0** unmet, **66/66** match with the unchanged independently pinned fixture; 96 source-file pins | `count-c1.json`, `seat-after-fixed/run-manifest.json`, `stream-integrity.json` (132 exact streams) |
+| C2 operability | **60→0** failed out of the same **204** assertions; **17/17** match after | `count-c2.json`, `jj-before/run-manifest.json`, `jj-after/run-manifest.json`; default scratch retention false |
+| C3 calibration | known missed artifact **1→0**, unexpected candidates **0→0**, all strict controls match | `c3-fixture-setup.json`, `c3-before-pinned.json`, `c3-after-pinned.json`, `c3-assertions.json` (all input hashes bound) |
+
+Other unprefixed receipt names in this closing section use that same
+`evidence/final/` base; code/input ledgers remain at the round root.
+
+The C1 tool's fixed selftest passes 49 arms. Census selftest passes 134/134.
+The seat-gate/jj-gate selftests, misroot 12-arm selftest, context 31-arm
+selftest and silence oracle 28/28 pass; unchanged instrument bytes allow
+the M3 selftest receipts to remain valid at the final input pin. Final
+preservation gates against the corrected census pass r13 24/24, r14 44/44,
+r15 63/63 with frozen red 34/34. The seven historical instruments/pin bytes
+remain unchanged (`evidence/final/preservation.json`). No live drift re-run or
+re-pin is asserted.
+
+The exact background-ban mutant that survived now returns rc1 with only
+`no_background_jobs` missing, while its original returns rc0 and the positive
+spec remains green (`context-survivor-before.json`, `context-survivor-after.json`,
+`context-positive-after.json`).
+The live-journal deletion remains correctly red. These are static instruction
+checks only, never runtime prevention.
+
+Fresh live C1 observation again reports **469** scoped files: completed 368,
+aged rate-limit 94, aborted 6, incomplete 1, unavailable 0; retry-exhausted 90.
+Actual answering labels for the aged-error cohort are **zai/glm-5.3-flash:93**
+and **anthropic/claude-opus-5-5:1**. This is not an endpoint-health or incident
+claim. The final live receipt canonical-redacts the directory identifier and
+marks the transformation plus raw/canonical hashes. The older unredacted
+identifier is metadata, not authentication; its retained history is not silently
+rewritten. No raw live message, usage or credential payload is admitted.
+
+Source census start/final both exit0, retaining only the existing W04 notices.
+The final unrestricted `git status --porcelain` sweep has no pathspec and the
+misroot detector reports **0 candidates**. Ten untracked entries belonged to
+driver baselines or unattributed material; none was claimed or deleted as an
+own-seat artifact. A transient `stdout.toon` was observed in status and was
+already absent when read; ownership remains unknown. All driver state is left
+unmodified. No runtime-prevention or universal-clean-fleet claim is made.
+
+Both genuine waves settled **70/70** and **64/64** reports: **134** unique
+identities, **0 reported dead**, no replacements. L1 holds planner; role mixes
+and failed all-wave job-cap attempts are in `wave-settlement.json`. Resumed
+correction writers kept their identities and isolated clones. No third wave or
+new round was started.
+
+Learning verdicts: expansion improved through the sourced bounded FR14 entry
+and capabilities; quality improved through actual code/oracle/wording repairs;
+discernment improved through prior non-author r16 disagreements becoming
+Q43–Q46 and precise appended corrections. Author-lane findings produced
+Q47–Q50 but are **not** outside agreement. Current non-author admit/reject
+spotcheck remains pending. Execution is not fully conformant: conduct findings
+V1–V15 and M8–M20 retain their admitted/inferred/non-violation dispositions and
+actual failures. No SHONEN promotion, new L0 question, tool install/update,
+package transaction or service action is claimed.

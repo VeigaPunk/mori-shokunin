@@ -138,3 +138,13 @@ Source tiers: see corpus/SOURCES.md (contract v1); this file holds claim admissi
     exclude main sessions, and never turn a missing prefix into a clean lane
     report. Vendor business codes take priority over generic HTTP 429.
     ← lessons/round-17.md#M7.
+49. A shared fake-binary dispatcher models only the selected binary's side
+    effects: Git trace variables must affect the Git stub, not df/journalctl.
+    Prove the simulator boundary with a direct positive Git control and negative
+    non-Git control before treating a canary as a production-scrub failure.
+    ← lessons/round-17.md#M19 (retained rc1 oracle failure, then 134/134).
+50. Derived metadata honors the declared retention contract, not an arbitrary
+    display cap. Numeric error codes remain strings within the configured input
+    span; unknown cause is not permission to drop the code. Independent
+    `want.records` expectations stay unchanged across the fix.
+    ← lessons/round-17.md#M20 (65/66 to 66/66 with the same fixture table).

@@ -147,3 +147,8 @@ inside the 09:16 full-upgrade transaction (round-17 evidence
 No new journal query or re-pin is implied. The closure admitted the bounded
 capability (`round-16-verifier-spotcheck.md:9–17`); alias false-unavailable,
 vacuum/cross-boot unknowns and anchor-only live qualifications remain unchanged.
+
+Primary version lookup pointers for that historical correction are
+`corpus/lessons/round-16.md:69,73,153`; the non-author closure is the routing
+authority, not the original version measurement. No current daemon-version
+claim is inferred from the package upgrade.

@@ -1079,3 +1079,51 @@ Fresh wave2's three killed implementation mutants and one context survivor are
 recorded honestly; A2 corrects the survivor and concrete source/guard/oracle
 findings before final measurement. Initial54/21/1 counters are retained as
 first-measurement evidence, not silently treated as final A2 instrument results.
+
+### Round-17 final measured verdicts (supersede the weaker first instrument)
+
+Final input ledger: `.ufo/waves/round-17/FINAL-PINNED_INPUTS.json`.
+C1/C3 measured code commit **91940fa339e38006f8db5bd7d78bb6f037f4d016**.
+C2 measured commit **fe9fa9083db998ead1554459d656568c4173f288**; its three
+own input hashes are byte-identical at the final C1/C3 commit. Causal separation
+is measured, not assumed. `final-measurements.json` records each pin and unit.
+
+| Claim | Final before→after | Score delta | Counting receipt |
+|---|---|---|---|
+| C1 coverage | unmet synthetic requirements **66→0**, delivered **66/66**; same expected table, **96** source-file pins; entering `24526ea` has no tool (cat-file rc128) | 6→6 | `evidence/final/count-c1.json` rc0; gate exits 1→0 |
+| C2 operability | failed assertions **60→0** over the same **204** assertions; matched cases **7/17→17/17** | 7→7 | `evidence/final/count-c2.json` rc0; gate exits 1→0 |
+| C3 calibration | missed exact archived artifact **1→0**, unexpected candidates **0→0**; tracked token-bearing and sibling controls unclaimed | 5→5 | `evidence/final/count-c3.json` rc0; strict pinned controls all match |
+
+```sh
+jq -s '[.[] | (.summary.capability_absent + .summary.mismatched)]' .ufo/waves/round-17/evidence/final/seat-before/run-manifest.json .ufo/waves/round-17/evidence/final/seat-after-fixed/run-manifest.json
+jq -s '[.[].totals.failed_assertions]' .ufo/waves/round-17/evidence/final/jj-before/run-manifest.json .ufo/waves/round-17/evidence/final/jj-after/run-manifest.json
+jq -c '.missed_unexpected' .ufo/waves/round-17/evidence/final/c3-assertions.json
+```
+
+C1 absence is capability red, not 66 historical production defects. The
+implemented prototype fails eight stronger expectations; the delivered tool
+matches all 66 after an independent 65/66 metadata failure was repaired without
+changing the fixture. C2's earlier 21/0 counts used a weaker conditional
+denominator; 60/0 under a constant 204 is the final comparable measure.
+C3 after rc1 means the probe correctly found its known candidate, not a failed gate.
+
+| Axis | Final L1 verdict | Active score | Evidence / qualification |
+|---|---|---:|---|
+| coverage | improved | 6 held | finite C1 66/66 and 469 actual transcript observations; no permanent-death, complete-retention or incident-count claim |
+| operability | improved | 7 held | C2 17/17 with young/sidebranch/unresolved-mirror controls; fixed guard/context/oracle failures retained |
+| calibration | improved | 5 held | C3 independent precommitted witness/control pins and exact candidate sets; r16 disagreements learned as Q43–Q50 |
+| depth | unchanged | 5 held | primary sources support bounded claims, no separate depth score |
+| freshness | unchanged | 5 held | stale pending/version wording superseded; old r10 red retained, no re-pin |
+| adjacency | unchanged | 6 held | detection/report only; OS/routing/cleanup ownership preserved; procedural deviations disclosed, not compliance credit |
+
+Final demonstration pointers for the round-17 capability rows:
+`evidence/final/seat-after-fixed/run-manifest.json`, canonical-redacted
+`evidence/final/seat-live-final.json`, and `evidence/final/c3-assertions.json`.
+They supersede earlier round-17 demonstration pointers, not their retained bytes.
+Census selftest 134/134, terminal 49 arms, other named selftests, oracle 28/28,
+r13 24/24, r14 44/44 and r15 63/63 (frozen red 34/34) pass. The two actual L1
+failures remain in the lesson and receipts. Source census final rc0; all 134
+reports delivered, 0 reported dead, no replacements or new L0 question.
+
+No promotion or non-author admission is self-certified. Planned work is only
+the completed steered round-17 scope; any next claims require a new external steer.
