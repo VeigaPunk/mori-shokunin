@@ -928,3 +928,36 @@ fetches were written under `/tmp`, and a gate author ran isolated-wrapper
 selftests before the L1 barrier. `lessons/round-15.md` M4–M6 records the
 violations and the exact-id/no-more-checks corrections. Those runs are not
 the committed-input production proof, nor are they outside verification.
+
+### Round-15 initial committed-input measurements and boundary correction
+
+At committed input `26f6589dfa2a07e41a6dcfda99c2998bce2c0932`, census
+selftest passed **113/113**, r13 selftest **33 checks/2 cases**, r14 selftest
+**20**, and r15 selftest passed with actual isolated full frozen controls.
+Core paired r15 runs showed **34 → 0 behavior failures**, with **63 → 0**
+full-schema failures (old bytes lack the new metadata); both runs reproduced
+**34/34** frozen red controls without inconclusive controls. Core commands,
+raw stdout/stderr, rc, real HEAD, exact porcelain and unchanged input hashes
+are retained under `.ufo/waves/round-15/evidence/`.
+
+Preservation at those exact bytes: r13 strict + F01/F02 mutations exit0,
+r14 **44/44** exit0, silence oracle **28/28** exit0. Live census exits1 with
+20 findings/11 drift/1 unavailable/8 surfaces; old r10 drift pin stays exit1.
+These are measurements, not a live positive OOM claim or a silent re-pin.
+
+The additional capture-boundary fixture setup then exposed an oracle defect:
+positive-looking bytes from a failed producer were correctly unavailable in
+production, but the gate derived expected alarm booleans from pre-failure
+record counts and rejected the fixture during pinning. Actual exit2 and text
+are in `evidence/boundary-pin-red.json`; this is setup failure, not C1
+behavioral red. L1 fixes the expectation derivation to omit failed scopes
+while retaining independently available scopes. The seven boundary cases
+cover rc124/137 timeout mapping, rc5, stderr, malformed JSON, a real mixed-red
+control, and a surviving other-scope alarm. Their separate expected table and
+the core table are re-pinned only because the gate bytes changed; the old
+host drift baseline remains untouched. Delivered-gate measurement follows.
+
+The r15 gate now removes each generated sandbox after both target runs.
+Committed fixture packs, expected tables, pinned targets and stdout/stderr
+captures retain replay authority; transient constructed trees are not swept
+into the evidence commit. This is evidence cleanup, not a predicate change.

@@ -550,9 +550,6 @@ def analyze_case(pack_name: str, obj: dict) -> CaseSpec:
     capture = normalize_capture(obj.get("capture"))
     invalid_scope, invalid_cls = split if split is not None else (None, None)
     if capture is not None:
-        if want_oom or want_signal:
-            raise SetupError("%s/%s: capture-control cases cannot expect alarms"
-                             % (pack_name, cid))
         if invalid_cls is not None:
             raise SetupError("%s/%s: capture-control cases cannot expect an "
                              "invalid aggregate" % (pack_name, cid))
@@ -573,14 +570,17 @@ def analyze_case(pack_name: str, obj: dict) -> CaseSpec:
 
     oom_triggers = []
     signal_triggers = []
+    failed_scopes = capture["scopes"] if capture is not None else ()
     for scope, counts in (("user", user_counts), ("system", system_counts)):
+        if scope in failed_scopes:
+            continue
         if counts["positive_kernel_oom"] > 0:
             oom_triggers.append((scope, "positive_kernel_oom"))
         if counts["positive_unit_oom"] > 0:
             oom_triggers.append((scope, "positive_unit_oom"))
-    if user_counts["positive_unit_signal"] > 0:
+    if "user" not in failed_scopes and user_counts["positive_unit_signal"] > 0:
         signal_triggers.append(("user", "positive_unit_signal"))
-    if user_counts["positive_process_sigkill"] > 0:
+    if "user" not in failed_scopes and user_counts["positive_process_sigkill"] > 0:
         signal_triggers.append(("user", "positive_process_sigkill"))
 
     if want_oom != bool(oom_triggers):
@@ -1668,6 +1668,9 @@ def run_gate(args, r14, gate_sha: str, r14_sha: str) -> int:
             },
             "frozen": frozen_record,
         })
+        # Packs, expected values and captures retain the replay authority.
+        # Discard the generated per-case sandbox after both targets finish.
+        shutil.rmtree(root)
 
     revision_end = capture_revision("end", output)
     # Moving input: re-hash every verdict-driving input after the run.

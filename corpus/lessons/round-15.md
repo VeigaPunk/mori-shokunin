@@ -123,3 +123,16 @@ failure counted as red, and hidden flags could bypass the control), plus
 bounded capture/provenance/path issues. They are routed back to the same
 gate owner before pinning or measurement. A future receipt is not assumed
 green merely because the source author called it finished.
+
+### Boundary mistake found by L1
+
+Class **scope** · evidence
+`.ufo/waves/round-15/evidence/boundary-pin-red.json` · captured-by Q3/Q6/Q35 ·
+fix: the gate's static trigger derivation must ignore a failed capture's
+positive-looking bytes, while preserving positives from an unaffected scope.
+The first boundary pin exited2 with an actual contradiction at `boundary_rc124`.
+It is not counted as a production failure. The successful regenerated boundary
+table includes that unchanged failing case plus a separately added surviving
+other-scope case; no claim of whole-pack byte-identical causal isolation is
+made for this setup repair. Core C1 red/green isolation remains the original
+63 unchanged fixture cases on identical gate bytes.

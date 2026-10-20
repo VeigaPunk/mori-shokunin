@@ -1,0 +1,10 @@
+{
+  "schema": "mori-r15-observed-setup-failure-v1",
+  "measured_gate_commit": "26f6589dfa2a07e41a6dcfda99c2998bce2c0932",
+  "gate_sha256": "31e8e17a51684c738110078639418d97acd90867f51d017af9e45c21f2d03d27",
+  "argv": ["python3", "tools/mori-round15-regressions.py", "--fixtures", ".ufo/waves/round-15/boundary-fixtures", "--pin-fixtures", ".ufo/waves/round-15/boundary-expected.json"],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "exit": 2,
+  "combined_tool_output": "GATE ERROR: capture.json/boundary_rc124: want_oom=False contradicts independently valid OOM records=1\nGATE ERROR exit=2\n",
+  "meaning": "Actual setup rejection, not behavioral production red. A capture-failure fixture contained positive-looking bytes that must not count because producer rc124 invalidates capture. Oracle trigger derivation incorrectly used pre-failure record counts. L1 fixes oracle derivation, not production expectations or producer failure handling."
+}

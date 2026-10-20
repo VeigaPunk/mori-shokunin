@@ -1782,7 +1782,7 @@
   ],
   "frozen_sha256": "0e41cb83fce2e8c5c711171e1cde2e6fa2809dcfce630eccabe52bcbe41516d9",
   "frozen_source": "git:0fa5e0de194bcc270a927a166664113e6821442b:tools/mori-census.sh",
-  "gate_sha256": "31e8e17a51684c738110078639418d97acd90867f51d017af9e45c21f2d03d27",
+  "gate_sha256": "6a55c33cc13e2cd862ebd44db66e8af635a35d7cd2a85168360569c886d62ffe",
   "pinned_frozen_sha256": "0e41cb83fce2e8c5c711171e1cde2e6fa2809dcfce630eccabe52bcbe41516d9",
   "r14_helper": "tools/mori-round14-regressions.py",
   "r14_helper_sha256": "533218a566030fdabf7ca6a1c78111ca10be3fb3cb0e4a7b22734959f847e4ef",
