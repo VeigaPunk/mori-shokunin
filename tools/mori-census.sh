@@ -32,12 +32,19 @@
 #   silence   per-lane launch/closure/authorship grading (PROTOCOL.md:153-168;
 #             contract corpus/knowledge/silence-grading-r2.md) — states silent |
 #             progressing | progressing-weak | young | not-open | unavailable.
-#             r17 C2: rows 6/9 read refs/heads/<branch> (resolved like
-#             jj-lane.sh detect_branch), never bare HEAD; a HEAD the branch does
-#             not contain is HEAD_BRANCH_MISMATCH and a lane-committed commit by
-#             a non-@shokunin.local author is LANE_AUTHOR_MISMATCH, both warn.
-#             Amendment A1: when no branch resolves the probes keep the entering
-#             HEAD anchor and emit neither finding.
+#             r17 C2: rows 6/9 read refs/heads/<branch>, never bare HEAD; a HEAD
+#             the branch does not contain is HEAD_BRANCH_MISMATCH and a
+#             lane-committed commit by a non-@shokunin.local author is
+#             LANE_AUTHOR_MISMATCH, both warn. The branch comes from the helper
+#             lane mirror `git config lane.branch` (jj-lane.sh:98-103) when it
+#             names an existing ref. Amendment A2: a `.jj`-colocated repo has no
+#             other authority — missing/dangling mirror => lane unavailable
+#             reason=ref-unresolved, never an attached side bookmark. Ordinary
+#             non-jj git keeps attached -> origin/HEAD -> unique master/main, and
+#             keeps the entering HEAD anchor when none resolves (A1), emitting
+#             neither finding. The committer-author diagnostic runs before the
+#             young/report-closed early returns, and every Git child is spawned
+#             through git_cap() with GIT_DIR/GIT_TRACE*/GIT_CONFIG* neutralised.
 #   tmux      optional session list; r7 classifies every session fleet-relevant
 #             vs foreign by pane current path under the fleet root; r8 adds a
 #             timeout-bounded per-session freshness probe for the relevant ones
@@ -556,6 +563,35 @@ cap() { # run read-only; capture stdout+stderr + rc without set -e trip
   CAP_OUT=$("$@" 2>&1)
   CAP_RC=$?
   set -e
+}
+
+# r17 C2: ONE scrubbed environment for every Git child, used through git_cap().
+# Rationale (each entry was a measured hazard class):
+#   GIT_DIR/GIT_WORK_TREE/GIT_INDEX_FILE — an inherited value overrides `git -C`,
+#     so the probe would answer for the wrong repository (audit-r11 F10).
+#   GIT_TRACE* — git writes trace files (outside this gate's read-only contract)
+#     and the trace bytes land in CAP_OUT (``2>&1``), where every answer is read;
+#     a poisoned trace target could fail the child and disable branch probes.
+#   GIT_CONFIG* — an inherited config file/override can redirect the lane mirror
+#     or the repository config the probes read. GIT_CONFIG_COUNT gates the
+#     GIT_CONFIG_KEY_n/VALUE_n pairs, so unsetting it disables them.
+# MORI_*, PATH, HOME and every other variable are untouched: the fixture stubs
+# depend on MORI_GIT_BIN/MORI_FIXTURE and the live path needs PATH/HOME.
+GIT_SCRUB=(
+  -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE
+  -u GIT_TRACE -u GIT_TRACE_PACKET -u GIT_TRACE_PACK_ACCESS
+  -u GIT_TRACE_PACKFILE -u GIT_TRACE_PERFORMANCE -u GIT_TRACE_SETUP
+  -u GIT_TRACE_CURL -u GIT_TRACE_CURL_NO_DATA -u GIT_TRACE_REDACT
+  -u GIT_TRACE2 -u GIT_TRACE2_EVENT -u GIT_TRACE2_EVENT_NESTING
+  -u GIT_TRACE2_PERF -u GIT_TRACE2_PERF_BRIEF -u GIT_TRACE2_CONFIG_PARAMS
+  -u GIT_TRACE2_DST_DEBUG
+  -u GIT_CONFIG -u GIT_CONFIG_GLOBAL -u GIT_CONFIG_SYSTEM
+  -u GIT_CONFIG_NOSYSTEM -u GIT_CONFIG_COUNT -u GIT_CONFIG_PARAMETERS
+)
+git_cap() { # <repo> <git args...> -> CAP_OUT/CAP_RC
+  local repo=$1
+  shift
+  cap env "${GIT_SCRUB[@]}" GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" "$@"
 }
 
 # run_timeout <secs> <cmd...> — cap() under a wall-clock bound. rc 124 means the
@@ -2099,18 +2135,43 @@ ps_walk() { # <lane> <repo> -> PS_WALK_RC
 # A jj commit moves the working-copy parent (git HEAD) immediately and the
 # bookmark only in a later, separate command, so a bare `HEAD` observes commits
 # that are not on the lane branch and are not pushed (JjAuditMori F3). Every
-# row-6/row-9 git question is asked of refs/heads/<branch>; the branch is
-# resolved exactly like scripts/hyaku/jj-lane.sh detect_branch: an attached
-# HEAD, else origin/HEAD, else the single existing master/main branch.
+# row-6/row-9 git question is asked of refs/heads/<branch>.
+#
+# Authority order (L1 round-17 amendment A2):
+#   1. the helper's pure-git lane mirror, `git config --get lane.branch`
+#      (scripts/hyaku/jj-lane.sh:98-103), accepted only when it names a VALID
+#      branch AND refs/heads/<branch> exists. `jj-lane.sh init` always writes
+#      it; a missing, malformed or dangling mirror is not a licence to guess.
+#   2. a `.jj`-colocated repo has no other authority. An unresolved mirror means
+#      the lane is unmeasurable (callers report unavailable reason=ref-unresolved).
+#      An attached HEAD is NOT evidence there: after `jj commit` it is a
+#      detached working-copy parent, and a side bookmark must never self-anchor.
+#   3. ordinary (non-jj) git keeps the init-order fallback used by detect_branch:
+#      attached HEAD, else origin/HEAD, else the unique master/main. This is the
+#      legacy path old fixtures and uncolocated lanes exercise; it is never
+#      consulted for a colocated repo.
 # Hardening is the row-1/row-9 form on every call: GIT_DIR/GIT_WORK_TREE/
 # GIT_INDEX_FILE are unset (an inherited value overrides `git -C`) and optional
 # locks are off.
 valid_branch() { [[ $1 =~ ^[a-zA-Z0-9][a-zA-Z0-9._/-]*$ ]] && [[ $1 != jj/* && $1 != *..* ]] ; }
 
 lane_branch_probe() { # <repo> -> BRANCH_OUT ; rc 0 = resolved
-  local repo=$1 b ref c=()
-  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
-    "$GIT_BIN" -C "$repo" symbolic-ref -q HEAD
+  local repo=$1 b ref rec c=()
+  # 1. recorded lane mirror (pure git; jj-lane.sh lane_branch_git:98-103).
+  git_cap \
+    "$repo" config --get lane.branch
+  rec=${CAP_OUT%%$'\n'*}
+  rec=${rec//[[:space:]]/}
+  if valid_branch "$rec"; then
+    git_cap \
+      "$repo" rev-parse --verify -q "refs/heads/$rec"
+    if [ "$CAP_RC" -eq 0 ]; then BRANCH_OUT=$rec; return 0; fi
+  fi
+  # 2. colocated: the mirror is the only authority (never guess from HEAD).
+  if [ -d "$repo/.jj" ]; then BRANCH_OUT=''; return 1; fi
+  # 3. ordinary git: init-order detection (jj-lane.sh detect_branch).
+  git_cap \
+    "$repo" symbolic-ref -q HEAD
   b=${CAP_OUT%%$'\n'*}
   b=${b//[[:space:]]/}
   case "$b" in
@@ -2118,8 +2179,8 @@ lane_branch_probe() { # <repo> -> BRANCH_OUT ; rc 0 = resolved
       b=${b#refs/heads/}
       if valid_branch "$b"; then BRANCH_OUT=$b; return 0; fi ;;
   esac
-  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
-    "$GIT_BIN" -C "$repo" symbolic-ref -q refs/remotes/origin/HEAD
+  git_cap \
+    "$repo" symbolic-ref -q refs/remotes/origin/HEAD
   ref=${CAP_OUT%%$'\n'*}
   ref=${ref//[[:space:]]/}
   case "$ref" in
@@ -2127,11 +2188,11 @@ lane_branch_probe() { # <repo> -> BRANCH_OUT ; rc 0 = resolved
       b=${ref#refs/remotes/origin/}
       if valid_branch "$b"; then BRANCH_OUT=$b; return 0; fi ;;
   esac
-  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
-    "$GIT_BIN" -C "$repo" show-ref -q --verify refs/heads/master
+  git_cap \
+    "$repo" show-ref -q --verify refs/heads/master
   [ "$CAP_RC" -eq 0 ] && c+=(master)
-  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
-    "$GIT_BIN" -C "$repo" show-ref -q --verify refs/heads/main
+  git_cap \
+    "$repo" show-ref -q --verify refs/heads/main
   [ "$CAP_RC" -eq 0 ] && c+=(main)
   [ ${#c[@]} -eq 1 ] && { BRANCH_OUT=${c[0]}; return 0; }
   BRANCH_OUT=''
@@ -2147,20 +2208,20 @@ lane_branch_probe() { # <repo> -> BRANCH_OUT ; rc 0 = resolved
 # answer (no HEAD, or a repository with no commits) is silence, not a mismatch.
 head_branch_probe() { # <repo> <branch>
   local repo=$1 branch=$2 h t
-  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
-    "$GIT_BIN" -C "$repo" rev-parse --verify -q HEAD
+  git_cap \
+    "$repo" rev-parse --verify -q HEAD
   [ "$CAP_RC" -eq 0 ] || return 0
   h=${CAP_OUT%%$'\n'*}
   h=${h//[[:space:]]/}
   [ -n "$h" ] || return 0
   [[ $h =~ ^[0-9a-f]{40,64}$ ]] || return 0
-  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
-    "$GIT_BIN" -C "$repo" merge-base --is-ancestor HEAD "refs/heads/$branch"
+  git_cap \
+    "$repo" merge-base --is-ancestor HEAD "refs/heads/$branch"
   case "$CAP_RC" in
     0) ;;
     1)
-      cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
-        "$GIT_BIN" -C "$repo" rev-parse --verify -q "refs/heads/$branch"
+      git_cap \
+        "$repo" rev-parse --verify -q "refs/heads/$branch"
       t=${CAP_OUT%%$'\n'*}
       t=${t//[[:space:]]/}
       [[ $t =~ ^[0-9a-f]{40,64}$ ]] || return 0
@@ -2170,6 +2231,36 @@ head_branch_probe() { # <repo> <branch>
       ;;
   esac
   return 0
+}
+
+# lane_author_probe <lane> <repo> <launch_epoch> -> GL_AMN.
+# LANE_AUTHOR_MISMATCH used to be computed inside row 9, so a young lane or a
+# lane whose report was already committed returned before it ever ran (the
+# CensusNewBranches counterexample: the alert was hidden for most jj rounds).
+# The diagnostic is independent of the row state, so it runs here — after the
+# branch anchor and before every early return — over the same strict
+# (launch, NOW] window and the same root-lane pathspecs as rows A/C. ONLY the
+# committer pass moved; row 9's exact-author scan/parser is untouched.
+# Rule (A1): committer == "<lane>-shokunin <lane>@shokunin.local>", author
+# differs, and the author email does not end in @shokunin.local (a sibling fleet
+# lane is legitimate). A failed scan emits nothing.
+lane_author_probe() { # <lane> <repo> <launch_epoch>
+  local lane=$1 repo=$2 launch=$3 expected paths=()
+  [ -n "$GL_BRANCH" ] || return 0
+  expected="$lane-shokunin <$lane@shokunin.local>"
+  if is_root_lane "$lane"; then
+    paths+=(-- . ':(exclude).ufo' ':(exclude,glob)**/*-shokunin/**')
+  fi
+  git_cap "$repo" log --since="@$launch" --format='%ct%x09%cn <%ce>%x09%an <%ae>' \
+    "refs/heads/$GL_BRANCH" "${paths[@]+"${paths[@]}"}"
+  [ "$CAP_RC" -eq 0 ] || return 0
+  GL_AMN=$(awk -F '\t' -v lo="$launch" -v hi="$NOW_EPOCH" -v ident="$expected" '
+    NF == 3 && $1 ~ /^[0-9]+$/ && $1 + 0 > lo + 0 && $1 + 0 <= hi + 0 {
+      a = $3; ae = a
+      sub(/^.*</, "", ae); sub(/>.*$/, "", ae)
+      if ($2 == ident && a != ident && ae !~ /@shokunin\.local$/) n++
+    }
+    END { print n + 0 }' <<< "$CAP_OUT")
 }
 
 # Row 6: report present on the lane BRANCH AND newest commit touching it in
@@ -2183,11 +2274,11 @@ head_branch_probe() { # <repo> <branch>
 ps_report_closed() { # <lane> <round> <launch> <rev> -> rc 0 = closed
   local lane=$1 round=$2 launch=$3 rev=$4
   local rpath=".ufo/reports/round-$round/$lane.md" ct
-  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
-    "$GIT_BIN" -C "$ROOT" cat-file -e "$rev:$rpath"
+  git_cap \
+    "$ROOT" cat-file -e "$rev:$rpath"
   [ "$CAP_RC" -eq 0 ] || return 1
-  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
-    "$GIT_BIN" -C "$ROOT" log -1 --format=%ct "$rev" -- "$rpath"
+  git_cap \
+    "$ROOT" log -1 --format=%ct "$rev" -- "$rpath"
   [ "$CAP_RC" -eq 0 ] || return 1
   ct=${CAP_OUT%%$'\n'*}
   ct=${ct//[[:space:]]/}
@@ -2215,7 +2306,7 @@ grade_lane() {
     GL_EXTRA="reason=repo-absent repo=$repo"
     return 0
   fi
-  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" rev-parse --git-dir
+  git_cap "$repo" rev-parse --git-dir
   if [ "$CAP_RC" -ne 0 ]; then
     GL_STATE=unavailable; GL_BASIS='row-1'
     GL_EXTRA="reason=git-unreadable rc=$CAP_RC repo=$repo"
@@ -2232,12 +2323,29 @@ grade_lane() {
   # Resolve the branch once, and measure the HEAD-vs-branch invariant HERE,
   # before every early return, so a jj-drifted HEAD is reported for every lane
   # this census can read — not only for lanes that happen to grade through rows
-  # A/B/C. Neither probe changes a row state; they only record.
-  if lane_branch_probe "$repo"; then GL_BRANCH=$BRANCH_OUT; fi
+  # A/B/C. Note the split (A2): a non-jj repo without a resolvable branch keeps
+  # the entering HEAD anchor, while a `.jj`-colocated repo without an
+  # authoritative lane.branch mirror is UNMEASURABLE here (reason=ref-unresolved)
+  # and is never graded from an attached side bookmark.
+  if lane_branch_probe "$repo"; then
+    GL_BRANCH=$BRANCH_OUT
+  elif [ -d "$repo/.jj" ]; then
+    GL_STATE=unavailable; GL_BASIS='row-1'
+    GL_EXTRA="reason=ref-unresolved repo=$repo"
+    return 0
+  fi
   if [ -n "$GL_BRANCH" ]; then head_branch_probe "$repo" "$GL_BRANCH"; fi
 
   # -- rows 2-8: launch anchor, closure, age ----------------------------------
   ledger_anchor "$lane"
+  # r17 C2 / CensusNewBranches: the committer-author diagnostic is a window
+  # observation, not a row grade. It runs HERE, before the young/report-closed
+  # early returns below, exactly like the HEAD diagnostic runs before them — a
+  # young lane (age <= gate) or a lane with an already committed report must not
+  # hide the alert. The same strict (launch, NOW] window is applied inside.
+  if [ "$LA_LINE" -gt 0 ] && is_int "$LA_EPOCH" && [ "$LA_EPOCH" -le "$NOW_EPOCH" ]; then
+    lane_author_probe "$lane" "$repo" "$LA_EPOCH"
+  fi
   if [ "$LA_LINE" -eq 0 ]; then
     GL_STATE=not-open; GL_BASIS='row-2'; GL_EXTRA='reason=no-launch-line'
     return 0
@@ -2271,13 +2379,14 @@ grade_lane() {
   fi
 
   # -- facts shared by rows 6 and 9 --------------------------------------------
-  # Every git fact below is read from refs/heads/<branch> when one resolves;
-  # amendment A1 keeps the entering HEAD anchor when none does (r13/r14/r15
-  # stubs answer empty/rc0 for symbolic-ref, and their output must not change).
+  # Every git fact below is read from refs/heads/<branch> when one resolves.
+  # A non-jj repo with no resolvable branch keeps the entering HEAD anchor
+  # (r13/r14/r15 stubs answer empty/rc0 for symbolic-ref, and their output must
+  # not change); a colocated repo never reaches this point unresolved.
   # Safety (audit-r11 r13 advisory): `ls-files` can execute the repo's
   # core.fsmonitor command, and an inherited GIT_DIR/GIT_WORK_TREE/GIT_INDEX_FILE
   # overrides `git -C`. This gate is read-only and must query the named repo.
-  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -c core.fsmonitor=false -c core.quotePath=false -C "$repo" ls-files -mo --exclude-standard
+  git_cap "$repo" -c core.fsmonitor=false -c core.quotePath=false ls-files -mo --exclude-standard
   if [ "$CAP_RC" -ne 0 ]; then
     GL_STATE=unavailable; GL_BASIS='row-1'
     GL_EXTRA="reason=git-ls-files-error rc=$CAP_RC repo=$repo"
@@ -2286,15 +2395,18 @@ grade_lane() {
   local lsm=$CAP_OUT
 
   # Row 6 asks the REPORT repo ($ROOT) for its own branch: a child lane's repo
-  # and the fleet root can be different repositories. No branch there = the
-  # literal HEAD revision (entering behavior).
-  local root_rev="HEAD"
+  # and the fleet root can be different repositories. A non-jj root without a
+  # resolvable branch keeps the literal HEAD revision (entering behavior); a
+  # `.jj` root without an authoritative mirror is never read from HEAD either —
+  # the closure probe is skipped and row 9 still grades the lane mirror.
+  local root_rev=''
   if [ "$repo" = "$ROOT" ]; then
     [ -n "$GL_BRANCH" ] && root_rev="refs/heads/$GL_BRANCH"
   elif lane_branch_probe "$ROOT"; then
     root_rev="refs/heads/$BRANCH_OUT"
   fi
-  if ps_report_closed "$lane" "$LA_ROUND" "$LA_EPOCH" "$root_rev"; then
+  if [ -z "$root_rev" ] && [ ! -d "$ROOT/.jj" ]; then root_rev="HEAD"; fi
+  if [ -n "$root_rev" ] && ps_report_closed "$lane" "$LA_ROUND" "$LA_EPOCH" "$root_rev"; then
     GL_STATE=not-open; GL_BASIS='row-6'
     GL_EXTRA="reason=committed-report round=$LA_ROUND path=.ufo/reports/round-$LA_ROUND/$lane.md"
     return 0
@@ -2303,13 +2415,14 @@ grade_lane() {
   # -- row 9: authorship -------------------------------------------------------
   # The revision is refs/heads/<branch> when one resolves (a jj commit can leave
   # HEAD one commit ahead of the bookmark, and grading that commit as lane
-  # progress would credit work the branch does not carry). Amendment A1: with no
-  # resolved branch the revision is the literal HEAD — the entering anchor.
+  # progress would credit work the branch does not carry). A1 fallback: a NON-jj
+  # repo with no resolved branch keeps the literal HEAD anchor; a colocated repo
+  # never reaches this row unresolved (it exited at the branch gate).
   local rev="HEAD"
   [ -n "$GL_BRANCH" ] && rev="refs/heads/$GL_BRANCH"
   local has_head=0 subj=0 sib=0 sibn=0 n_rowb=0 example='' path mt inwin authors
   local expected
-  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" rev-parse --verify -q "$rev"
+  git_cap "$repo" rev-parse --verify -q "$rev"
   if [ "$CAP_RC" -eq 0 ]; then
     has_head=1
     # Rows A/C keep the entering author line format and parser: this call answers
@@ -2323,7 +2436,7 @@ grade_lane() {
     if is_root_lane "$lane"; then
       lg_paths+=(-- . ':(exclude).ufo' ':(exclude,glob)**/*-shokunin/**')
     fi
-    cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" log "${lg_args[@]}" "$rev" "${lg_paths[@]+"${lg_paths[@]}"}"
+    git_cap "$repo" log "${lg_args[@]}" "$rev" "${lg_paths[@]+"${lg_paths[@]}"}"
     if [ "$CAP_RC" -ne 0 ]; then
       GL_STATE=unavailable; GL_BASIS='row-1'
       GL_EXTRA="reason=git-log-error rc=$CAP_RC repo=$repo"
@@ -2352,24 +2465,6 @@ grade_lane() {
         *$'\n'"$expected"$'\n'*) subj=1 ;;
         *) sib=1 ;;
       esac
-    fi
-    # r17 C2 LANE_AUTHOR_MISMATCH: a SECOND pass answers committer identity in
-    # its own tab-separated fields, so the authorship parse above is untouched.
-    # The finding needs a resolved branch (A1: no branch = entering behavior).
-    # A lane-committed commit by a NON-@shokunin.local author is the jj defect
-    # (F4); a sibling lane's <lane2>@shokunin.local author is legitimate.
-    if [ -n "$GL_BRANCH" ]; then
-      cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" log --since="@$LA_EPOCH" --format='%ct%x09%cn <%ce>%x09%an <%ae>' "$rev" "${lg_paths[@]+"${lg_paths[@]}"}"
-      if [ "$CAP_RC" -eq 0 ]; then
-        expected="$lane-shokunin <$lane@shokunin.local>"
-        GL_AMN=$(awk -F '\t' -v lo="$LA_EPOCH" -v hi="$NOW_EPOCH" -v ident="$expected" '
-          NF == 3 && $1 ~ /^[0-9]+$/ && $1 + 0 > lo + 0 && $1 + 0 <= hi + 0 {
-            a = $3; ae = a
-            sub(/^.*</, "", ae); sub(/>.*$/, "", ae)
-            if ($2 == ident && a != ident && ae !~ /@shokunin\.local$/) n++
-          }
-          END { print n + 0 }' <<< "$CAP_OUT")
-      fi
     fi
   fi
 
@@ -2936,6 +3031,11 @@ set -uo pipefail
 name=${0##*/}
 fx=${MORI_FIXTURE:-}
 [ -n "$fx" ] || { printf 'fixture dispatcher: MORI_FIXTURE unset\n' >&2; exit 97; }
+# r17 C2: simulate git's trace sink. Real git writes GIT_TRACE*/GIT_TRACE2_*
+# targets; if the census leaks either variable into this child the canary file
+# appears, which is exactly what the scrub is meant to prevent.
+if [ -n "${GIT_TRACE:-}" ]; then printf 'trace %s\n' "$*" >> "$GIT_TRACE" 2>/dev/null || true; fi
+if [ -n "${GIT_TRACE2_EVENT:-}" ]; then printf 'trace2 %s\n' "$*" >> "$GIT_TRACE2_EVENT" 2>/dev/null || true; fi
 rc_of() { local f="$fx/stub/$1.rc"; if [ -f "$f" ]; then cat "$f"; else printf 0; fi; }
 out_of() { local f="$fx/stub/$1"; if [ -f "$f" ]; then cat "$f"; fi; }
 case "$name" in
@@ -3019,6 +3119,7 @@ case "$name" in
           done
           break ;;
         merge-base) verb=merge-base; break ;;
+        config) verb=config; break ;;
         ls-files) verb=ls-files; break ;;
         cat-file) verb=cat-file; break ;;
         log)
@@ -3027,6 +3128,19 @@ case "$name" in
             *"%cn"*) verb=log-committer ;;
             *) verb=log ;;
           esac
+          # A2: an OPTIONAL per-revision slot (`git-log-<branch>`, same for
+          # log1/log-committer) makes the revision the census actually chose
+          # observable — e.g. recorded master vs an attached side bookmark.
+          # Absent per-revision files keep every existing case on its base slot.
+          for a in "$@"; do
+            case "$a" in
+              refs/heads/*)
+                b=${a#refs/heads/}
+                if [ -f "$fx/stub/git-$verb-$b" ] || [ -f "$fx/stub/git-$verb-$b.rc" ]; then
+                  verb="$verb-$b"
+                fi ;;
+            esac
+          done
           break ;;
       esac
     done
@@ -3100,12 +3214,15 @@ STUB
     # the dispatcher answers empty (the unparseable arm).
     printf '1700000000\n' > "$d/stub/tmux-activity"; printf 0 > "$d/stub/tmux-activity.rc"
     # git answers per verb via stub/git-<verb>[.rc] (see the dispatcher above):
-    # rev-parse / rev-parse-branch / symbolic-ref / symbolic-ref-origin /
-    # show-ref-<branch> / merge-base / ls-files / cat-file / log /
-    # log-committer / log1. Absent fixture files answer empty output with rc 0.
-    # r17 C2: the fixture lane is an attached git lane on master unless a case
-    # says otherwise; the branch-anchor probes read this slot exactly as git
-    # answers `symbolic-ref -q HEAD`.
+    # config / rev-parse / rev-parse-branch / symbolic-ref /
+    # symbolic-ref-origin / show-ref-<branch> / merge-base / ls-files /
+    # cat-file / log / log-committer / log1, plus an optional per-revision
+    # `git-log[-committer|-1]-<branch>` slot. Absent fixture files answer empty
+    # output with rc 0.
+    # r17 C2 / A2: the baseline fixture is an ORDINARY git lane — no `.jj` and no
+    # lane.branch mirror — attached on master, so the resolver takes the legacy
+    # non-jj path exactly as the entering census did. Cases that model a
+    # colocated repo create `.jj` and write stub/git-config.
     printf 'refs/heads/master\n' > "$d/stub/git-symbolic-ref"
     printf 0 > "$d/stub/git-symbolic-ref.rc"
     # lane file recent — touch in check with NOW
@@ -4058,9 +4175,9 @@ SKIP_FRESHEN=1
 
   FX="$work/fx/sil-no-branch-fallback"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
   printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
-  # No attached HEAD, no origin/HEAD, neither master nor main: amendment A1 keeps
-  # the entering HEAD anchor here, so the lane still grades from HEAD and emits
-  # neither finding. The output must be identical to the attached case.
+  # Ordinary (non-jj) git with no attached HEAD, no origin/HEAD, neither master
+  # nor main: amendment A1 keeps the entering HEAD anchor here, so the lane
+  # still grades from HEAD and emits neither finding.
   : > "$FX/stub/git-symbolic-ref"; printf 1 > "$FX/stub/git-symbolic-ref.rc"
   : > "$FX/stub/git-symbolic-ref-origin"; printf 1 > "$FX/stub/git-symbolic-ref-origin.rc"
   printf 1 > "$FX/stub/git-show-ref-master.rc"
@@ -4069,14 +4186,107 @@ SKIP_FRESHEN=1
   printf '%s\n' "1699998600 kagi-shokunin <kagi@shokunin.local>" > "$FX/stub/git-log"
   printf '%s\n' "3333333333333333333333333333333333333333" > "$FX/stub/git-rev-parse"
   EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
-  check 'jj: no resolvable branch -> entering HEAD anchor, no finding' 0 CLEAN \
+  check 'git: no resolvable branch -> entering HEAD anchor, no finding' 0 CLEAN \
     '^SURFACE lane\.kagi: progressing ' \
     'basis=row-A' \
     '^MORI_CENSUS: CLEAN \(findings=[0-9]+ drift=0 '
   if grep -qE '^FINDING (HEAD_BRANCH_MISMATCH|LANE_AUTHOR_MISMATCH) ' "$OUT_FILE"; then
-    bad 'jj: unresolved branch emitted a C2 finding'
+    bad 'git: unresolved branch emitted a C2 finding'
   else
-    ok 'jj: unresolved branch emitted no C2 finding'
+    ok 'git: unresolved branch emitted no C2 finding'
+  fi
+
+  # --- r17 C2/A2: a colocated repo resolves ONLY the recorded lane mirror -----
+  # CriticC2Final / CensusNewBranches: preferring the attached HEAD let a jj lane
+  # on a side bookmark self-anchor to that bookmark and credit its commits as
+  # lane progress. The helper's mirror (`git config lane.branch`,
+  # jj-lane.sh:98-103) is authoritative and must name an existing ref; a
+  # missing/dangling mirror is ref-unresolved, never a guess.
+
+  FX="$work/fx/jj-sidebranch-mirror"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin/.jj"
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  # Colocated lane, helper recorded master, checked out on sidework. The
+  # per-revision log slots make the CHOSEN revision observable: only
+  # refs/heads/master carries the subject commit; the base log slot is a
+  # sibling, so a sidework anchor would grade progressing-weak.
+  printf 'master\n' > "$FX/stub/git-config"
+  printf 'refs/heads/sidework\n' > "$FX/stub/git-symbolic-ref"
+  printf '%s\n' "3333333333333333333333333333333333333333" > "$FX/stub/git-rev-parse-branch"
+  printf '%s\n' "1699998600 kagi-shokunin <kagi@shokunin.local>" > "$FX/stub/git-log-master"
+  printf '%s\n' "1699998600 aggregator-shokunin <aggregator@shokunin.local>" > "$FX/stub/git-log"
+  printf 1 > "$FX/stub/git-cat-file.rc"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'jj: recorded master mirror beats attached side branch' 0 CLEAN \
+    '^SURFACE lane\.kagi: progressing ' \
+    'basis=row-A' \
+    '^MORI_CENSUS: CLEAN \(findings=[0-9]+ drift=0 '
+  if grep -qE '^FINDING (HEAD_BRANCH_MISMATCH|LANE_AUTHOR_MISMATCH) ' "$OUT_FILE"; then
+    bad 'jj: sidebranch control emitted a C2 finding'
+  else
+    ok 'jj: sidebranch control emitted no C2 finding'
+  fi
+
+  FX="$work/fx/jj-no-mirror"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin/.jj"
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  # No lane.branch record at all, while an attached HEAD and a master ref exist:
+  # a colocated repo has no other authority, so the lane is unavailable. It is
+  # never credited from an attached side bookmark nor guessed from master/main.
+  : > "$FX/stub/git-config"; printf 1 > "$FX/stub/git-config.rc"
+  printf 'refs/heads/sidework\n' > "$FX/stub/git-symbolic-ref"
+  printf 'refs/heads/master\n' > "$FX/stub/git-show-ref-master"
+  printf 0 > "$FX/stub/git-show-ref-master.rc"
+  printf 1 > "$FX/stub/git-show-ref-main.rc"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'jj: no lane.branch mirror -> unavailable ref-unresolved' 0 CLEAN \
+    '^SURFACE lane\.kagi: unavailable .*reason=ref-unresolved ' \
+    '^MORI_CENSUS: CLEAN '
+
+  FX="$work/fx/jj-dangling-mirror"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin/.jj"
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  # The mirror names `ghost`, which has no refs/heads/ghost: a dangling record is
+  # ref-unresolved, not a fall-back to the attached side branch.
+  printf 'ghost\n' > "$FX/stub/git-config"
+  printf 'refs/heads/sidework\n' > "$FX/stub/git-symbolic-ref"
+  printf 1 > "$FX/stub/git-rev-parse-branch.rc"
+  printf 'refs/heads/master\n' > "$FX/stub/git-show-ref-master"
+  printf 0 > "$FX/stub/git-show-ref-master.rc"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'jj: mirror names a missing ref -> unavailable ref-unresolved' 0 CLEAN \
+    '^SURFACE lane\.kagi: unavailable .*reason=ref-unresolved ' \
+    '^MORI_CENSUS: CLEAN '
+
+  # --- r17 C2 / CensusNewBranches: diagnostic window and Git child env ---------
+
+  FX="$work/fx/young-ambient-author"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  # age == gate is YOUNG (row-8 returns before rows A/B/C). The committer-author
+  # diagnostic must still run: CensusNewBranches counted the alert hidden behind
+  # this early return for 40/47 jj rounds. The authorship pass is never reached
+  # (young), so only the committer slot is needed.
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 900)))" >> "$FX/ufo/watchdog.log"
+  printf '1699999600\tkagi-shokunin <kagi@shokunin.local>\tJoao Pedro <jp@example.invalid>\n' > "$FX/stub/git-log-committer"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'young: ambient-author diagnostic precedes the age gate' 1 DRIFT \
+    'FINDING LANE_AUTHOR_MISMATCH severity=warn .*lane=kagi count=1' \
+    '^SURFACE lane\.kagi: young ' \
+    'basis=row-8'
+
+  FX="$work/fx/git-trace-scrub"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  printf 1 > "$FX/stub/git-cat-file.rc"
+  printf '%s\n' "1699998600 kagi-shokunin <kagi@shokunin.local>" > "$FX/stub/git-log"
+  # Inherited tracing/config vars must not reach the Git child: the stub writes a
+  # canary only while GIT_TRACE/GIT_TRACE2_EVENT is still in its environment.
+  # The branch probes must still answer normally (progressing row-A), and the
+  # MORI_* stub bindings are untouched by the scrub.
+  rm -f "$work/trace-canary" "$work/trace2-canary"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900 GIT_TRACE="$work/trace-canary" GIT_TRACE2_EVENT="$work/trace2-canary" GIT_CONFIG_GLOBAL="$work/poison-global.conf" GIT_CONFIG_COUNT=1)
+  check 'git env: inherited GIT_TRACE*/GIT_CONFIG* scrubbed, branch normal' 0 CLEAN \
+    '^SURFACE lane\.kagi: progressing ' \
+    'basis=row-A'
+  if [ -e "$work/trace-canary" ] || [ -e "$work/trace2-canary" ]; then
+    bad 'git env: trace canary written — GIT_TRACE* leaked to the Git child'
+  else
+    ok 'git env: trace canary absent — GIT_TRACE* scrubbed'
   fi
 
   # --- r4: close tracking is per anchor round ---------------------------------

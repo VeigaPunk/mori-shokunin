@@ -1,0 +1,41 @@
+# CaseReview05 — C1 quota case falsification
+
+**Scope:** `quota_quota_word` / `QuotaWord` and `quota_quota_usage_limit` / `QuotaUsageLimit`; classifier and gate comparison; retained L1 before/after evidence. Static review only. I did not run the terminal tool, gate, or selftests.
+
+## Findings (severity order)
+
+### High — A2-required independent metadata assertions are absent and the gate cannot accept them
+
+The current contract's Amendment A2 says C1 fixture expectations gain independent `want.reason`, `want.records`, and `want.top` assertions (`.ufo/waves/round-17/contract.md:142-144`). Neither assigned case has any of those fields: the `quota_quota_word` want contains only `rc`, `finding_id`, `totals`, and `seats` (`.ufo/waves/round-17/fixtures/seat/expected.json:295-310`); the same is true for `quota_quota_usage_limit` (`.../expected.json:320-335`). More than an omission in these two rows, the gate's allowlist is still exactly `{"rc", "finding_id", "totals", "seats"}` (`tools/mori-round17-seat-regressions.py:214-216`) and `_analyze_case` rejects every other want key (`.../mori-round17-seat-regressions.py:639-645`). Its `compare_want` comparison is limited to totals and seats (`.../mori-round17-seat-regressions.py:1215-1259`). Thus the required metadata cannot be independently asserted by these cases or their current gate. The retained `match` statuses only certify the older assertion surface; A2 itself says earlier measurements remain historical, not rewritten passes (`contract.md:127-128`).
+
+### High — target error text is retained in the classifier view, contrary to A2's projection rule
+
+A2 permits reading error-message class tokens but requires reducing error text immediately to flags/code/retry metadata and never retaining the original (`contract.md:133-137`). For both assigned transcripts, `_message_view` obtains the complete `errorMessage` (`tools/mori-seat-terminal.py:214-223`) and returns it in `view["error_message"]` (`.../mori-seat-terminal.py:224-243`); `_classify` later reads that retained text for substring matching (`.../mori-seat-terminal.py:247-272`). The target synthetic records exercise this path: `QuotaWord/quota-word.jsonl:2` and `QuotaUsageLimit/quota-usage-limit.jsonl:2`. Their retained stdout does not echo the text (`evidence/seat-after/runs/quota_quota_word.stdout:1`; `.../quota_quota_usage_limit.stdout:1`), so this is a retention-contract violation, not an observed output leak.
+
+### Low — per-case pack hashes are not comparable between absent-tool and executed-tool runs
+
+For an absent tool the gate hashes a global fixture snapshot filtered by a pack-prefixed path (`tools/mori-round17-seat-regressions.py:1670-1685`, via `pack_digest` at `:368-372`). For an executed case it hashes `snapshot_tree(pack_dir)`, whose keys are relative to the pack root (`.../mori-round17-seat-regressions.py:1715-1726`). The retained L1 before/after case rows consequently report different per-case hashes despite unchanged source bytes: QuotaWord `207316...` before vs `98d214...` after; QuotaUsageLimit `1ee44b...` before vs `98f812...` after (`evidence/seat-before/run-manifest.json:1`, `evidence/seat-after/run-manifest.json:1`, filtered by the two case IDs). The pinned file hashes are identical across the evidence and current expected pins (`expected.json:56-57`; before/after `.fixtures.inputs_before`/`.fixtures.inputs_after`). This is a digest canonicalization mismatch, not fixture mutation: both per-run `pack_changed` values are false. It makes the per-case hashes misleading for cross-run identity comparisons, though it does not alter the class result or the gate's top-level input pins.
+
+## Per-case oracle and observation checks
+
+Both expected classes are independently derivable from the explicit A1 rule and the synthetic bytes. A1 lists `quota` and `usage limit` as quota tokens and fixes the 900-second settle rule (`contract.md:112-114`). Each record has `completedAt=1760998000000`; each case pins `--now-ms 1761000000000`, so its age is 2,000,000 ms (2,000 s), older than the 900 s settle window. The lowercase `quota` / `usage limit` token therefore selects `dead_quota` in the classifier (`tools/mori-seat-terminal.py:78-88,247-273`). The expected rows pin all eight class totals, one named seat, rc 1 and `MORI_SEAT_TERMINAL_DEAD` (`expected.json:289-336`). Their fixture bytes are also pinned (`expected.json:56-57`; the pin map has 81 entries). The expected result is contract-derived, not copied from a tool run. S043 supports the separate Z.AI business-code precedence, not these exact synthetic prose strings (contract.md:123; `corpus/lessons/round-17.md:49`); no claim is made that these synthetic phrases were observed in production.
+
+The retained stdout payloads match every currently asserted field for each case: one scanned seat, `dead_quota: 1`, all other totals zero, `rc=1`, `finding_id=MORI_SEAT_TERMINAL_DEAD`, echoed `now_ms` and `settle_seconds=900`, the expected seat/key, and no stderr (`evidence/seat-after/runs/quota_quota_word.stdout:1`, `.../quota_quota_word.stderr:1`, `.../quota_quota_usage_limit.stdout:1`, `.../quota_quota_usage_limit.stderr:1`). The gate requires all eight output totals and re-derives the tally from graded seat rows (`mori-round17-seat-regressions.py:71-95,1364-1405`); these wants declare all eight classes despite the gate permitting a want subset (`.../mori-round17-seat-regressions.py:480-495,1215-1259`). It also rejects unexpected seats (`:1249-1260`). Therefore the currently asserted class is not vacuously accepted. The cases are valid scan inputs, not setup cases; the after manifest records `match`, `rc=1`, `files_scanned=1`, and `seat_count=1` for each (`evidence/seat-after/run-manifest.json:1`). Missing-tool cases are explicitly `capability_absent`, `ok:false`, and gate rc1 rather than green (`mori-round17-seat-regressions.py:1670-1707`; before manifest `:1`).
+
+A real competing-class negative control exists: the synthetic `CodeRate1302QuotaWord` record carries both `quota` and `(type=1302)` with status 429 (`fixtures/seat/CodeRate1302QuotaWord/code-1302-quota.jsonl:1-2`); its want requires `dead_rate_limit:1`, `dead_quota:0` (`fixtures/seat/expected.json:1286-1307`), and retained after stdout has exactly that split (`evidence/seat-after/runs/code_rate_1302_beats_quota_token.stdout:1`; manifest status `match`, `evidence/seat-after/run-manifest.json:1`). This is a genuine counter-control, not an empty pack or an unexecuted expected row.
+
+## Required read-only count
+
+Command (no probe execution):
+
+```sh
+jq -s '[.[] | {verdict, exit_code, cases: [.cases[] | select(.id=="quota_quota_word" or .id=="quota_quota_usage_limit") | {id, status, ok, reasons, rc: .observed.rc, finding_id: .observed.finding_id}], scoped_counts: ([.cases[] | select(.id=="quota_quota_word" or .id=="quota_quota_usage_limit")] | group_by(.status) | map({status: .[0].status, count: length}))}]' \
+  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/evidence/seat-before/run-manifest.json \
+  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/evidence/seat-after/run-manifest.json
+```
+
+Observed **rc=0**. Before: both cases `capability_absent`, count 2, manifest verdict `capability_absent`, exit 1. After: both `match`, `ok:true`, empty reasons, each observed rc 1 and `MORI_SEAT_TERMINAL_DEAD`; count 2, verdict `ok`, exit 0. This is consistent with the retained L1 overall counts (54 absent → 54 matched), but is not A2-complete evidence for the reasons above.
+
+Additional read-only identity checks: current SHA-256 values for `mori-seat-terminal.py`, `mori-round17-seat-regressions.py`, and `expected.json` match their `PINNED_INPUTS.json` values: `5819c3c0…adbdba`, `21285c2b…b97f7a`, and `b684c63b…b01f`, respectively. Both target fixture file hashes match `expected.json` pins. No build, test, selftest, or tool execution was performed.
+
+LSP was unavailable: `read xd://lsp` returned `No such tool: xd://lsp` and the mounted-device list had no LSP device. No references/definition/diagnostics conclusions are claimed; literal search was used only to locate source lines, with findings grounded in direct file reads and retained outputs.

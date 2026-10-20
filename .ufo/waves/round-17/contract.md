@@ -121,3 +121,44 @@ C1 tool/fixtures/gate:
 
 C2 census (see message to CensusJj): severity `warn`; LANE_AUTHOR_MISMATCH only when the author email does not end in `@shokunin.local`; unresolved branch => exact old HEAD behavior; SURFACE/GL_EXTRA text unchanged.
 10. (S043, Z.AI error-code table) a `(type=1113)` or `(type=1308)` error code means usage/balance => `dead_quota` even under HTTP 429; `(type=1302)` => rate limit. The code test runs before the token tests.
+
+## Amendment A2 — wave-2 falsification corrections (2026-10-20)
+
+These refine implementation/evidence before final measurement; initial measurements and
+surviving mutants remain historical evidence, never rewritten into passes.
+
+- C1 rejects a symlink root and directory traversal failure as setup; skipped lstat failures
+  cannot fabricate a clean partial scan. Open descriptors nonblocking/no-follow and fstat
+  regular before header/tail access to prevent regular-to-FIFO replacement hangs.
+- The input field projection may read top-level `type`, session `version`, message
+  `role/stopReason/errorStatus/provider/model/errorMessage` class tokens, message/record
+  `completedAt/timestamp` for settle age. Unapproved content, usage and credential-pin values
+  must not be materialized. Reduce permitted error text immediately to flags/code/retry
+  metadata, never retain or print the original text.
+- Bare `resource_exhausted` does not identify a rate-limit cause; absent explicit
+  rate/429/quota/code clues it is `dead_error_other`. Z.AI business-code overrides are scoped
+  to provider `zai`; linkage of a transcript `(type=NNNN)` token to vendor code is an
+  inference, not authenticated cause evidence.
+- C1 fixture expectations gain independent `want.reason`, `want.records` and `want.top`
+  metadata assertions. New root-symlink/unreadable-directory cases are recreated only in
+  per-case sandboxes. Reject symlink ancestors before any FIFO-parent creation.
+- C2 retains the same scenario universe and checks expected diagnostic details even when
+  a finding is absent, so before/after assertion denominators match. Guard output/scratch
+  paths before writes and clean owned scratch by default; forensic retention is opt-in.
+- C3's Git child environment must not inherit trace/config write settings. Final C3
+  measurement persists witness/tool/control hashes before and after each invocation and
+  checks exact candidate sets, with expectations and replay recipe committed before it.
+- The static context checker's background-job clause requires a background-job prohibition;
+  a host-service restart ban alone cannot satisfy it. The wave-2 survivor is retained red.
+- Resumed original writer identities edit separate observed-base5c1dfb8 clones; L1 alone
+  integrates and executes final checks. Their correction assignments forbid test execution.
+
+A2 terminal-age/branch-authority precision:
+- A timestamp-free terminal error is `unavailable reason=terminal-time`; unknown age
+  cannot establish an aged error. Unknown Z.AI business codes do not become a
+  guessed rate-limit cause from HTTP429 alone without explicit text support.
+- C2 prefers the helper's pure-Git `lane.branch` mirror. In a .jj-colocated repo,
+  absent/invalid/missing-ref mirror means unavailable, never a guessed branch or
+  HEAD fallback. Helper init writes the mirror; raw uninitialized jj has no proven
+  lane branch. Ordinary Git/stub callers retain their existing fallback behavior.
+  Recorded master must remain the anchor even with HEAD attached to a side branch.

@@ -14,11 +14,19 @@ below. The r16 failure this replaces is recorded at
 
 - File: `.ufo/worktrees/round-17/MisrootSweep/tools/mori-misroot-sweep.py` (clone-relative;
   absolute `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MisrootSweep/tools/mori-misroot-sweep.py`).
-- Size: 898 lines / 32993 bytes; SHA-256
-  `0a852fe67f14afa1da9f5f8e806c63fa640e8df2a90b87909e6a2453c66b3dca`.
+- Size: 961 lines / 36080 bytes; SHA-256
+  `51072bd7a891fd24779ecadeb4f624de9583c91f798b86f7017ed20b1d6b04c3`.
 - python3 stdlib only (`argparse`, `base64`, `hashlib`, `json`, `os`, `re`, `shutil`,
   `stat`, `subprocess`, `sys`, `tempfile`). No installs were needed (no
   pacman/uv/npm/cargo activity).
+
+**Execution status (F3 wave, L1 hold).** The last *observed* green selftest (11 arms, rc0) ran
+on digest `0a852fe6…6b3dca`, before the F3 allowlist change. The delivered digest
+`51072bd7…b04c3` adds the allowlisted Git child environment, the poisoned
+`GIT_TRACE`/`GIT_TRACE2_EVENT`/`GIT_CONFIG*` arm (12 arms total) and the
+`poisoned_paths_absent` output key. Per L1 ("DO NOT run tests now; L1 executes after settle")
+it was **not executed** in this wave: no selftest, no live fleet sweep. Only a read-only
+`ast.parse` syntax check was performed.
 
 Interface exactly as assigned:
 
@@ -31,15 +39,21 @@ mori-misroot-sweep.py --selftest
   --porcelain=v1 -z --untracked-files=all` with `GIT_OPTIONAL_LOCKS=0`; the `-- P ...` tail is
   appended only when `--legacy-pathspec` is given. `-z` rename/copy records consume their
   second NUL field and are skipped (`:118-146`).
-- Repository redirection hardening (`_REDIRECT_ENV` `:69`, `_git_env` `:84`, `_GIT_GLOBAL`
-  `:81`, `_git_cmd` `:93`): every git call, including the selftest sandbox's
-  `init`/`add`/`commit`, spawns `git --no-optional-locks -c core.fsmonitor=false` with
-  `GIT_DIR`, `GIT_WORK_TREE`, `GIT_INDEX_FILE`, `GIT_COMMON_DIR`, `GIT_OBJECT_DIRECTORY`,
-  `GIT_ALTERNATE_OBJECT_DIRECTORIES`, `GIT_NAMESPACE` and `GIT_PREFIX` removed from the child
-  environment (JjAudit F10 pattern). `GIT_CEILING_DIRECTORIES` is kept deliberately: it only
-  bounds upward discovery (it isolates the selftest sandbox) and a poisoned value can force a
-  setup failure, never a different repository. The emitted `git_command` shows the effective
-  argv; `git version 2.56.0` was observed to accept both flags.
+- Git child environment is an **allowlist**, never an `os.environ` copy (SandboxFinal F3;
+  `_ENV_ALLOWLIST` `:78`, `_git_env` `:84`, `_GIT_GLOBAL` `:81`, `_git_cmd` `:103`): only
+  `PATH`, `TMPDIR`, `LANG`, `LC_ALL`, `LC_CTYPE` and `TZ` are inherited, so repository
+  redirection (`GIT_DIR`, `GIT_WORK_TREE`, `GIT_INDEX_FILE`, `GIT_COMMON_DIR`,
+  `GIT_OBJECT_DIRECTORY`, `GIT_ALTERNATE_OBJECT_DIRECTORIES`, `GIT_NAMESPACE`, `GIT_PREFIX`),
+  trace writes (`GIT_TRACE`, `GIT_TRACE2`, `GIT_TRACE2_EVENT`, the other `GIT_TRACE*`
+  switches) and config injection (`GIT_CONFIG_COUNT`/`GIT_CONFIG_KEY_n`/`GIT_CONFIG_VALUE_n`)
+  cannot reach Git. Explicit controls are then set: `GIT_CONFIG_NOSYSTEM=1`,
+  `GIT_CONFIG_GLOBAL=/dev/null`, `GIT_CONFIG_SYSTEM=/dev/null` (config-null),
+  `GIT_OPTIONAL_LOCKS=0` plus argv `--no-optional-locks` (nooptional), and
+  `-c core.fsmonitor=false` (fsmonitor). `GIT_CEILING_DIRECTORIES` is the only repository
+  discovery variable deliberately re-added: it bounds upward discovery (the selftest sandbox
+  uses it) and can never select another repository. This applies to the selftest sandbox's
+  `init`/`add`/`commit` as well. The emitted `git_command` shows the effective argv;
+  `git version 2.56.0` was observed to accept both flags.
 - Every untracked path is `lstat`ed; only regular files are opened, with
   `O_NOFOLLOW | O_NONBLOCK` and an `fstat` re-check, then at most 65536 bytes are read
   (`:167-198`, cap `:50`). Non-regular entries are counted and skipped; nothing is followed.
@@ -59,11 +73,15 @@ mori-misroot-sweep.py --selftest
   `arguments_required`, `invalid_round`, `fleet_root_missing`,
   `selftest_takes_no_sweep_flags`). Unknown flags are argparse rc2 (observed: 0-byte stdout,
   201-byte stderr).
-- `--help` states the limits (`:789-800`): candidate is a review lead, not ownership proof;
+- Vocabulary: the scan document uses the lane-owned key `finding` with values
+  `MORI_MISROOT_CLEAN` / `MORI_MISROOT_CANDIDATE` / `MORI_MISROOT_SETUP`. Round-17 receipts
+  depend on that key, so it is kept unchanged and **no `finding_id` alias is emitted**; the
+  choice is documented in `--help` (`:847-866`) and in the docstring.
+- `--help` states the limits (`:847-866`): candidate is a review lead, not ownership proof;
   first 64 KiB only; git-ignored files are invisible; paths are relative to `--fleet-root`;
   `--legacy-pathspec` is comparison-only; detection only, never moves or deletes.
 
-## Selftest evidence (own item; final run on the delivered digest)
+## Selftest evidence (own item; last observed run pre-F3, 11 arms)
 
 Command, run in my clone with scratch TMPDIR:
 
@@ -78,7 +96,12 @@ TMPDIR="$PWD/.scratch" python3 tools/mori-misroot-sweep.py --selftest
 rc=0
 ```
 
-The selftest (`:466-788`) builds a fresh `git init` sandbox under `TMPDIR` and plants, at the
+That block is the *last observed* run (pre-F3 digest). The delivered digest adds the
+trace/config arm and the `poisoned_paths_absent` key, so L1's run will report `"arms": 12` and
+one extra key; the witness booleans above are unchanged by the F3 edit. Details below describe
+the delivered selftest (`:476-844`), including the arm that has not yet been executed.
+
+The selftest (`:476-844`) builds a fresh `git init` sandbox under `TMPDIR` and plants, at the
 sandbox root, `MoriR16.Lesson` holding the **byte-exact archived r16 bytes** (see the C3
 section; its content names neither lane nor round — only the name does); plus a sibling `TabiNote.md`
 (`TabiR17`), a tracked `tracked.txt` whose committed body also names Mori/round-16, an
@@ -93,6 +116,7 @@ Arms (all passed; candidate sets are exact set assertions):
 | no-pathspec-round16 | Mori/16, no pathspec | rc1, `{nested, MoriR16.Lesson}`, ignored/big/tracked/sibling absent, `truncated_files>=1` |
 | legacy-pathspec-round16 | Mori/16, `-- .ufo/waves .ufo/reports` | rc1, `{nested}` only — **planted root file absent** |
 | poisoned-env-scans-intended-fleet | Mori/16 with `GIT_DIR`/`GIT_WORK_TREE`/`GIT_INDEX_FILE` pointing at a decoy repo whose untracked `MoriR16.decoy.md` names Mori+round-16 | rc1, `{nested, MoriR16.Lesson}`, decoy absent, `fleet_root` == intended sandbox, `untracked_entries=5` (decoy holds 1) |
+| poisoned-trace-config-env (new, unexecuted) | Mori/16 with `GIT_TRACE`, `GIT_TRACE2`, `GIT_TRACE2_EVENT`, `GIT_TRACE_PERFORMANCE`, `GIT_TRACE_SETUP` and `GIT_CONFIG_GLOBAL`/`GIT_CONFIG_SYSTEM` pointing at paths under `<tmp>/external/`, plus `GIT_CONFIG_COUNT=1`/`KEY_0=core.fsmonitor`/`VALUE_0=true` | expected rc1, same intended candidate set, `fleet_root` == sandbox, `untracked_entries=5`, every external path absent after the run; aggregate key `poisoned_paths_absent=true` |
 | other-lane-not-flagged | Mori/17 | rc0 clean (`TabiNote.md` not flagged) |
 | sibling-detected-for-own-lane | Tabi/17 | rc1, `{TabiNote.md}` (positive control: the zero above is not blindness) |
 | unrelated-lane-round | Tameshi/16 | rc0 |
@@ -107,14 +131,15 @@ The headline booleans are the r16 failure, shown able to fail:
 the planted candidate is matched by `matched_in=["path"]` with `read_bytes=size_bytes=847`
 (file content alone names nothing). The sandbox snapshot taken before the arms is asserted
 equal to the archived bytes, and the whole tree (including `.git`) is byte-identical after all
-eleven arms (`sandbox_unchanged=true`), which is the no-move/no-delete assertion. The temp tree is
+arms (`sandbox_unchanged=true`; 11 arms in the observed run, 12 in the delivered digest), which is the no-move/no-delete assertion. The temp tree is
 removed in `finally`; `.scratch` was empty after every run.
 
 ### Falsifiers of the selftest itself (disclosed extra execution, same own-selftest scope)
 
-Four mutated copies of the delivered digest were written under my clone `.scratch`, run with
-the same `TMPDIR`, and deleted; no other code was touched. All four fail the selftest, each on
-its intended axis:
+Four mutated copies of the **pre-F3** digest (`0a852fe6…`) were written under my clone
+`.scratch`, run with the same `TMPDIR`, and deleted; no other code was touched. All four fail
+the selftest, each on its intended axis. The F3 allowlist and the new trace/config arm have
+not been exercised here (L1 hold):
 
 - M1 — make the legacy pathspec the default (`pathspecs = pathspecs or [".ufo/waves",
   ".ufo/reports"]`): FAIL, rc1, 14 failures, `planted_found_without_pathspec=false`,
@@ -201,6 +226,9 @@ $ TMPDIR="$PWD/.scratch" python3 tools/mori-misroot-sweep.py --selftest
 rc=0
 ```
 
+That selftest output was observed on the pre-F3 digest; the command and the C3 witness booleans
+are unchanged in the delivered digest (which adds one arm and one key).
+
 C3 measurement on this witness: known misroot artifacts missed **1→0**; the sibling
 `TabiNote.md` (Tabi/17, arm 4) and the tracked/ignored controls stay unclaimed. Content-token
 coverage is still witnessed separately by `.ufo/waves/round-16/build/MoriNote.md` (its content
@@ -223,6 +251,14 @@ names `MoriR16`), so replacing the synthetic planted body did not drop that path
 - Matching is lexical: lane ids are left-guarded only, round tokens are not left-guarded
   (seat ids concatenate them), and `mori` also matches the lane checkout path
   `/home/.../mori-shokunin`. Candidates are deliberately over-inclusive.
+- The Git allowlist is Linux-shaped (`PATH`, `TMPDIR`, locale, `TZ`); a port to a platform that
+  needs another inherited variable (for example `SYSTEMROOT` on Windows) would have to extend
+  `_ENV_ALLOWLIST` explicitly.
+- config-null removes system and global config, not repository-local config: repo config must
+  still be read for a repository to function. `-c core.fsmonitor=false` overrides a repo-level
+  fsmonitor setting on the command line.
+- The poisoned trace/config arm is the F3 witness; it was added but not executed in this wave
+  (L1 hold), so its green state is unobserved until L1 runs the selftest.
 
 ## Discipline
 
@@ -231,6 +267,10 @@ names `MoriR16`), so replacing the synthetic planted body did not drop that path
 - No VCS mutation in the lane, fleet root, or my clone. The selftest's `git init/add/commit`
   runs only in the throwaway sandbox under `TMPDIR` (a nested repo inside `.scratch`, removed
   afterwards); main queries use `GIT_OPTIONAL_LOCKS=0`.
-- Writes: the assigned tool in my clone and this report. Clone `git status` at completion:
-  `?? tools/mori-misroot-sweep.py` (scratch clean).
-- Verdict: capability delivered and self-falsified; fleet root was clean at the observed time.
+- Writes: the assigned tool in my clone (` M tools/mori-misroot-sweep.py` against base
+  `5c1dfb8`, where it is tracked) and this report. `.scratch` left empty.
+- Execution in this wave: F3 edit was static only. No selftest, no live fleet sweep, no
+  journalctl, no background jobs, no VCS command that writes. One read-only `ast.parse`
+  syntax check of the delivered file was run (no bytecode written).
+- Verdict: capability delivered; the last observed selftest was green (11 arms) and the four
+  pre-F3 mutants failed as intended; the allowlist and the 12th arm await L1's execution.

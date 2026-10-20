@@ -1,348 +1,278 @@
-# JjGate — C2 jj-colocation regression gate (round 17, wave 1, build)
+# JjGate — C2 jj-colocation regression gate, falsification-driven revision
 
-Seat: `MoriR17.JjGate-5` (executor, leaf). Date 2026-10-20. Advises only; L1
-`MoriR17` is the sole judge/integrator.
+Seat: `MoriR17.JjGate-5` (executor, leaf). Date 2026-10-20.
+Assigned clone recreated at base `5c1dfb8`; own only
+`tools/mori-round17-jj-regressions.py` plus this report.
 
-Deliverable (the only implementation file I wrote):
+Deliverable (the only implementation file written this pass):
 
 ```
 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/JjGate/tools/mori-round17-jj-regressions.py
-sha256 1067e4ae97ba8a60c55f1cc65bfaf042a6c6384ae1064a644919cdfd409ee0e3
-1319 lines / 52989 bytes / mode 0755
+sha256 da3e080aa5181e8e00872c1d5f0dd97862c495da03adce0b1aa31e27fbcb89f0
+2028 lines / mode 0755
 ```
 
-No other implementation file, harness, MANIFEST, `.ufo/state`, fleet script or
-sibling lane was written. This report is the only retained write outside that
-clone (the one accidental `/tmp` file is disclosed and removed below).
-No VCS write happened in the lane, the fleet root, or the clone's own repo; all
-git/jj writes were fixture commits inside throw-away sandbox repos the gate
-creates under `--scratch` (my `.scratch`), exactly as contract C2 prescribes.
-Scratch is untracked in the clone; no `git add`, `commit`, `stash`, `checkout`,
-`switch`, `reset`, `pull` or `push` was run against it.
+**No test was run this pass** (L1 executes settled commits). Every count below
+is an *unexecuted prediction from the assertion construction*, not a
+measurement. The only commands executed against the file were static syntax
+checks (`ast.parse` and `bash -n` of the extracted fixture string, both rc0);
+no census, gate run, jj or git command was executed. No tool was installed or
+upgraded.
 
-## Verdict (measured)
+## What changed, and for which falsification
 
-| run | census sha256 | cases | match | mismatch | assertions | failed | rc |
-|---|---|---|---|---|---|---|---|
-| entering census (`git show 24526ea:tools/mori-census.sh`) | `f1f8d1b62bb617bbcc4664057ab807d3fed8c275b7aabbdf7b373323c5501ff7` | 12 | 7 | 5 | 124 | **21** | **1** |
-| scratch reference carrying C2 + the A1 amendment | `33e2120a4c39b8d50c3bc55f359e91e4a1ba0def95e3d6458892a7b4535bc56c` | 12 | **12** | 0 | 134 | **0** | **0** |
-| `--selftest` (dormant fixture census + HEAD mutant + missing census) | n/a | n/a | n/a | n/a | n/a | 0 | **0** |
+### 1. SandboxFinal F2 — output and scratch are constrained
 
-The reference is **validation scaffolding only**, saved under
-`.scratch/mori-census-c2.sh` (not a deliverable, not installed): it exists so a
-green run is possible to measure and so the gate is proven able to pass. The
-census edit itself belongs to its own seat. The gate records both digests in
-`run-manifest.json` (`gate.sha256`, `census.sha256`).
+`--output` is validated **before any mkdir/write**:
 
-## Interface (implemented)
+- rejected if it is a symlink (including dangling), exists as a non-directory,
+  or exists as a non-empty directory (`check_output_path`, `:1186`);
+- rejected if it equals or is an ancestor of any source/census repo root, or
+  lies inside protected `tools/`, `corpus/`, `.git/`, `.jj/`, or `.ufo/` —
+  **`.ufo/waves/` is deliberately allowed** as lane evidence;
+- rejected if it overlaps the census input or the gate source.
 
-```
-mori-round17-jj-regressions.py --census PATH --output DIR [--scratch DIR]
-mori-round17-jj-regressions.py --selftest [--scratch DIR]
-```
+`--scratch` is validated before any write (`check_scratch_path`, `:1202`):
 
-- `--scratch` default: `<output>/scratch`; with `--selftest` it is the temp
-  parent (`tempfile.mkdtemp(dir=scratch)`). No `/tmp` is used by a run that
-  passes `--scratch`.
-- Writes `DIR/run-manifest.json` (schema `mori-round17-jj-regressions-v1`) and
-  `DIR/cases/<id>.out` = the exact combined census stream for that case.
-- Manifest: `gate{path,sha256}`, `census{path,present,sha256}`, `tools{git,jj,
-  bash,jq,timeout}` with versions, `scratch_run`, `environment`, per-case
-  `status` (`match|mismatch|capability_absent|setup_failed`), `assertions[]`
-  (`id, ok, detail`), `failed_assertions`, `observed{state,basis,roll,rc,
-  findings,verdict_fields,refs}`, and `totals` + top-level `failed`
-  (failed-assertion count) and `failed_cases`.
-- Exit 0 only when every assertion holds; 1 on any failed assertion or
-  capability gap (a missing census marks all cases `capability_absent` and exits
-  1, mirroring the C1 gate); 2 on gate setup/usage error.
+- symlink / non-directory rejection, `/` rejection;
+- reject `/tmp` and `/var/tmp` (and everything below them);
+- reject protected/input overlaps and the output's own `cases/` or
+  `run-manifest.json`;
+- a child of `--output` (the default `<output>/scratch`) is accepted.
 
-## Sandbox design
+A fresh gate-owned `run-<UTCstamp>-<pid>-<n>` child is created with `os.mkdir`
+(`make_run_dir`, `:1219`), never reusing an existing entry.
 
-One fleet root per case under `--scratch`:
+### 2. SandboxFinal F4 — explicit retention policy
+
+The run sandbox is removed by default before the manifest is written (so
+`retained`/`retention.cleanup` are accurate); only the fresh run child is
+removed (never output, the scratch parent, or anything else). `--keep-scratch` opts into forensic retention. The manifest now records:
 
 ```
-<case>/root/shokunin.conf              LANES="\nalpha|alpha-shokunin|axis\n"
-<case>/root/.ufo/state/alpha.round     1 (equal to the ledger anchor)
-<case>/root/.ufo/watchdog.log          one launch line, age 8000 s > 7200 gate
-<case>/root/.ufo/reports/round-1/      report path root for closure cases
-<case>/root/alpha-shokunin/            real child lane repo (git or jj-colocated)
-<case>/root/                           real git repo (row-6 closure is root-relative)
-<case>/home/                           HOME, XDG_CONFIG_HOME, JJ_CONFIG, GIT_CONFIG_GLOBAL
-<case>/stub/                           pgrep, df, journalctl, tmux, jq-fail
-<case>/fix/                            cgroup files, meminfo, diskstats, uptime, boot_id
+"retained": true|false,
+"retention": {"policy": "cleanup"|"keep", "cleanup": "removed"|"kept"|"failed",
+              "scratch_run": "<path>"},
+"scratch_run": "<path>"
 ```
 
-`MORI_NOW_EPOCH` is pinned at run start +120 s, so every fixture commit
-(real clock) falls inside the `(launch, NOW]` window and the 8000 s age stays
-over the census's 7200 s silence gate.
+Per-case `sandbox` paths are recorded only when retention is requested
+(otherwise `null`, so a cleaned run never advertises stale paths). If cleanup
+fails, `retained` flips true and `cleanup_error` is recorded.
 
-Guard compliance (L1 interjection, SentinelJjSandbox) is enforced in code:
+### 3. PatternConsistency C2 — exact receipt fields, not short-hash substrings
 
-- every non-init jj call is `jj -R <sandbox> ...` **after** asserting
-  `<sandbox>/.jj` is a directory (`tools/...:249-255`);
-- `jj git init --colocate <absolute sandbox path>` is the only exception, run
-  from `<case>` (outside every repo) (`:268-274`);
-- every git call is `git -C <sandbox dir> ...` (repo commands use the repo, the
-  init uses the case directory as the `-C` target), with
-  `GIT_CEILING_DIRECTORIES` set to the case sandbox and
-  `GIT_DIR/GIT_WORK_TREE/GIT_INDEX_FILE` absent (`git` helper `:206-207`,
-  init `:210-215`, env `:187`, `:396`);
-- `HOME`, `XDG_CONFIG_HOME`, `JJ_CONFIG`, `GIT_CONFIG_GLOBAL`,
-  `GIT_CONFIG_SYSTEM=/dev/null`, `GIT_CONFIG_NOSYSTEM=1` point into
-  `<case>/home` for both the fixturing tools and the census. Observed positive
-  evidence: `<case>/home/.config/jj/` is created by `jj git init --colocate` in
-  every jj case (assertion `jj_config_redirected`), and reference runs passed
-  it for all jj cases.
-- no remote is configured in any sandbox; `refs/remotes/origin/HEAD` is absent.
+`HEAD_BRANCH_MISMATCH` is now asserted against the census's own grammar
+(`mori-census.sh:2443`):
 
-## Hermetic census run
+- `head=<first 12 hex of the full HEAD OID>`
+- `branch_tip=<first 12 hex of the full refs/heads/<branch> OID>`
+- `basis=merge-base-not-ancestor`
 
-The census is executed as `bash <census>` with its own override environment
-(census header, `tools/mori-census.sh:202-241`), all pinned to sandbox files or
-stubs: `MORI_SHOKUNIN_ROOT`, `MORI_UFO_DIR`, `MORI_WATCHDOG_LOG`,
-`MORI_TIMELINE_FILE`, `MORI_STATE_DIR`, `MORI_WAVES_DIR`, `MORI_FLEET_CONF`,
-`MORI_ROSTER_LANES=`, `MORI_CGROUP_{EVENTS,CURRENT,PRESSURE,MAX,PEAK,
-LOCAL_EVENTS,SERVICE_EVENTS}`, `MORI_DISKSTATS`, `MORI_UPTIME`, `MORI_MEMINFO`,
-`MORI_BOOT_ID_FILE`, `MORI_DF_BIN`, `MORI_PGREP_BIN`, `MORI_JOURNALCTL_BIN`,
-`MORI_JQ_BIN`, `MORI_TMUX_BIN`, `MORI_TIMEOUT_BIN`, `MORI_GIT_BIN`,
-`MORI_DISK_TARGETS`, `MORI_TMUX_SCOPE_ROOT`, `MORI_NOW_EPOCH`.
+The expected values come from `_oid12()` (`:274`), which resolves the **full**
+OID and slices 12 characters; `rev-parse --short` is no longer used as an
+oracle. Tokens are compared as exact whitespace-separated tokens, not
+substrings. `LANE_AUTHOR_MISMATCH` is asserted against `mori-census.sh:2446`:
+`lane=<id>`, `count=1`, `basis=committer-lane-author-foreign-email`.
 
-Observed in every case output (e.g.
-`.scratch/out-final-c2/cases/jj-helper-commit.out`): journal rows name
-`<case>/stub/journalctl`; the tmux rows name `<case>/stub/tmux`; the disk row
-names `<case>/stub/df`; the watchdog row names `<case>/stub/pgrep`; the cgroup
-row names `<case>/fix/cgroup/memory.events` and prints
-`current=refused:outside-sysfs-cgroup` (the census refuses to read a
-`MORI_CGROUP_CURRENT` outside `/sys/fs/cgroup`, so no live cgroup read is even
-attempted). No surface lacked an override, so the "stop and report" branch was
-not needed. `MORI_JQ_BIN` is the real `jq` (present at `/usr/bin/jq`); if it is
-absent the census itself degrades the journal rows to `unavailable` before any
-query.
+### 4. ReceiptC2Controls Q1 — one assertion universe on both sides
 
-Read-only proof: each case snapshots lane/root `HEAD` and `refs/heads/master`
-before and after the census and asserts equality (`refs_unchanged`). It passed
-in every case of every run.
+`evaluate()` (`:968`) now emits the presence, severity, token, and substring
+checks for every required finding **even when the finding is absent**; a
+missing finding fails every one of its checks instead of shrinking the
+denominator. The before and after runs now have identical assertion counts.
 
-## Cases (12) and measured behaviour
+### 5. CensusJj A2 — authoritative lane.branch mirror, fail-closed
 
-`E` = entering census observed; `R` = reference observed.
+The gate encodes the resolver semantics confirmed by `MoriR17.CensusJj-5`:
 
-| # | case | fixture | expected delivered | E | R |
-|---|---|---|---|---|---|
-| 1 | `git-plain-progress` | plain git, lane-authored commit on branch | progressing row-A, no findings, CLEAN 0 | pass | pass |
-| 2 | `git-detached-at-tip` | detached exactly at branch tip | progressing row-A, no mismatch | pass | pass |
-| 3 | `git-detached-commit` | plain git commit on detached HEAD (ahead) | silent row-D + `HEAD_BRANCH_MISMATCH`, DRIFT 1 | **fail 5** (progressing row-A, no finding) | pass |
-| 4 | `git-detached-behind` | lane commit on branch, then detach at `HEAD~1` | progressing row-A from the branch, no mismatch | **fail 4** (silent row-D) | pass |
-| 5 | `git-report-on-branch` | report committed on root branch | not-open row-6 | pass | pass |
-| 6 | `git-report-off-branch` | report committed only on detached root HEAD | silent row-D (**not** row-6) | **fail 4** (not-open row-6) | pass |
-| 7 | `git-foreign-author` | ambient author+committer on branch | progressing-weak row-C, **no** author finding | pass | pass |
-| 8 | `jj-helper-commit` | jj colocated; `metaedit --update-author` + `commit` + `bookmark set` | progressing row-A, no findings | pass | pass |
-| 9 | `jj-commit-no-bookmark` | jj `commit` only (HEAD ahead, branch lags) | silent row-D + `HEAD_BRANCH_MISMATCH`, DRIFT 1 | **fail 5** (progressing-weak row-C, no finding) | pass |
-| 10 | `jj-ambient-author` | ambient author in `@`, lane committer, bookmark moved | progressing-weak row-C + `LANE_AUTHOR_MISMATCH`, DRIFT 1 | **fail 3** (no author finding; CLEAN) | pass |
-| 11 | `jj-sibling-author` | `kengaku-shokunin <kengaku@shokunin.local>` author, alpha committer, bookmark moved | progressing-weak row-C, **no** author finding (A1 negative control) | pass | pass |
-| 12 | `git-fallback-head` | branch `trunk`, detached at tip, no master/main/origin HEAD | progressing row-A via unchanged HEAD fallback | pass | pass |
+- a `.jj`-colocated lane requires `git config lane.branch <b>` naming an
+  **existing** ref; missing/invalid/missing-ref grades `SURFACE lane.<id>:
+  unavailable (... basis=row-1 reason=ref-unresolved ...)`, with **no HEAD
+  fallback and no C2 finding**;
+- a non-jj lane uses the mirror only when valid, else attached HEAD ->
+  `refs/remotes/origin/HEAD` -> unique `master`/`main` -> the unchanged
+  entering HEAD fallback;
+- a jj fleet root with an unusable mirror makes row-6 closure **skip** (never
+  HEAD), so an off-branch report cannot close the lane.
 
-Both findings are asserted `severity=warn` exactly (not merely warn|crit), per
-the L1 amendment. `HEAD_BRANCH_MISMATCH` detail is asserted to contain
-`lane=alpha` and the short HEAD and short branch-tip hashes; `LANE_AUTHOR_MISMATCH`
-detail is asserted to contain `lane=alpha`. Field names other than `lane=` are
-not over-specified.
+All normal jj controls now set the helper mirror exactly as
+`scripts/hyaku/jj-lane.sh:439` does (`git config lane.branch master`,
+`set_lane_branch`, `:287`).
 
-Entering failures in detail (21 failed assertions over 5 cases; cases 1,2,5,7,8,
-11,12 match):
+### 6. CensusNewBranches — diagnostics survive early returns
 
-- `git-detached-commit`: `census_exit`, `verdict_roll`, `lane_state`,
-  `lane_basis`, `finding:HEAD_BRANCH_MISMATCH:present`.
-- `git-detached-behind`: `census_exit`, `verdict_roll`, `lane_state`,
-  `lane_basis`.
-- `git-report-off-branch`: `census_exit`, `verdict_roll`, `lane_state`,
-  `lane_basis`.
-- `jj-commit-no-bookmark`: same five as `git-detached-commit`.
-- `jj-ambient-author`: `census_exit`, `verdict_roll`,
-  `finding:LANE_AUTHOR_MISMATCH:present`.
+Both C2 diagnostics are computed and emitted before the row/young/report-closed
+returns. A new young-case fixture (`launch age < 7200 s`) proves
+`LANE_AUTHOR_MISMATCH` is still a warn while the lane surface is `young`
+(row-8). `set_launch_age` (`:298`) rewrites the ledger anchor for that case.
+The adult ambient-author case and its controls are unchanged, so the young
+scenario is genuinely new rather than a re-labelled control.
 
-Exact entering lines (from `out-final-entering/cases/`):
+### 7. `--selftest` arms added (no test executed here)
 
-```
-jj-commit-no-bookmark: SURFACE lane.alpha: progressing-weak (... basis=row-C other_authored_commits=1; ...)
-                       MORI_CENSUS: CLEAN (findings=2 drift=0 unavailable=0 surfaces=8)
-git-report-off-branch: SURFACE lane.alpha: not-open (... basis=row-6 reason=committed-report round=1 ...)
-git-detached-behind:   SURFACE lane.alpha: silent (... basis=row-D ...)
-```
+`run_selftest` (`:1484`) now also contains arms that (when L1 executes the
+settled commit) prove:
 
-Exact reference lines (`out-final-c2/cases/`):
+- output/scratch guard arms over an isolated synthetic repo (repo root,
+  `tools/`, `corpus/`, `.git/`, `.jj/`, `.ufo/state`, `.ufo/waves` allowance,
+  non-empty dir, symlink, ancestor, gate source, scratch under `/tmp`, scratch
+  input-file/ancestor, valid scratch);
+- exact-field arm: a `MODE=wrongtip` fixture emits `branch_tip=` one character
+  short, and the gate must name the failed exact-token check;
+- fixed-universe arm: compliant / HEAD-mutant / wrongtip manifests must have the
+  same `totals.assertions`;
+- retention arms: default run `retained=false` and the run tree gone; a
+  `--keep-scratch` run `retained=true` and the run tree present;
+- raw-argument symlink arms with an untouched empty sentinel:
+  `--output <symlink>`, `--output <nested-symlink>/newout`, and
+  `--scratch <symlink>` each return 2 and leave the sentinel tree unchanged;
+- the existing missing-census `capability_absent` arm.
+
+The selftest temp parent comes from `--scratch` or `TMPDIR`, and `/tmp` /
+`/var/tmp` are refused. Suggested settled-commit command:
+`python3 tools/mori-round17-jj-regressions.py --selftest --scratch .scratch`
+from the clone (L1 executes).
+
+### 8. Residual — raw symlink arguments
+
+`main` previously resolved `--output`/`--scratch` before the guard, so a raw
+symlink argument was followed by `resolve()` and `is_symlink()` was false on
+the resolved path. Now `main` anchors a relative arg at cwd **without**
+resolving, checks the raw path and every existing ancestor
+(`_has_symlink_component`, `:1188`) plus a `..` refusal, and only then
+canonicalises for the containment checks. The selftest subprocess arms above
+are designed to prove this end-to-end (not executed here): the gate must
+return 2 and the empty sentinel target must be unchanged for final-symlink,
+nested-symlink and scratch-symlink args.
+
+## Interface (unchanged shape)
 
 ```
-jj-commit-no-bookmark: SURFACE lane.alpha: silent (... basis=row-D ...)
-  FINDING HEAD_BRANCH_MISMATCH severity=warn obs=lane=alpha head=8edc03e branch=master branch_tip=820d1fd rule=merge-base-is-ancestor
-  MORI_CENSUS: DRIFT (findings=4 drift=2 unavailable=0 surfaces=8)
-jj-ambient-author:     SURFACE lane.alpha: progressing-weak (... basis=row-C ...)
-  FINDING LANE_AUTHOR_MISMATCH severity=warn obs=lane=alpha commits=1 rule=committer-lane-author-email-foreign
-  MORI_CENSUS: DRIFT (findings=3 drift=1 unavailable=0 surfaces=8)
-jj-sibling-author:     SURFACE lane.alpha: progressing-weak (... basis=row-C ...)
-  MORI_CENSUS: CLEAN (findings=2 drift=0 unavailable=0 surfaces=8)      # no author finding
-git-fallback-head:     SURFACE lane.alpha: progressing (... basis=row-A ...)
-  MORI_CENSUS: CLEAN (findings=2 drift=0 unavailable=0 surfaces=8)
+mori-round17-jj-regressions.py --census PATH --output DIR [--scratch DIR] [--keep-scratch]
+mori-round17-jj-regressions.py --selftest [--scratch DIR] [--keep-scratch]
 ```
 
-## Mutation checks on the gate itself
+A fresh, empty `--output` is required per run (F2); the standard receipt
+directory must be absent or empty before the run. Exit 0 only when every
+assertion holds; 1 on any failed assertion/capability gap; 2 on gate setup
+error.
 
-Three red controls prove the assertions are not tautological:
+## Cases (17) and unexecuted expectations
 
-| mutant (scratch only) | gate rc | failed assertions / cases | named failure |
+`B` = predicted against the frozen entering census `f1f8d1b6…1ff7`
+(no lane.branch support); `A` = predicted against the settled A2 census.
+All case expectations are shared by both sides, so the assertion count per case
+is identical.
+
+| # | case | expected after (A) | B prediction |
 |---|---|---|---|
-| reference with the pre-amendment author rule (`author != committer`) | 1 | 3 / 1 | `jj-sibling-author`: `finding:LANE_AUTHOR_MISMATCH:absent`, `verdict_roll`, `census_exit` |
-| reference emitting both findings as `severity=info` | 1 | 5 / 3 | `finding:HEAD_BRANCH_MISMATCH:severity` (cases 3,9), `finding:LANE_AUTHOR_MISMATCH:severity` + roll/rc (case 10) |
-| missing census path | 1 | 12 / 12 (`capability_absent` each) | `census_present` |
+| 1 | git-plain-progress | progressing row-A, CLEAN 0 | match |
+| 2 | git-detached-at-tip | progressing row-A, no mismatch | match |
+| 3 | git-detached-commit | silent row-D + HEAD_BRANCH_MISMATCH warn, DRIFT 1 | 10 failed |
+| 4 | git-detached-behind | progressing row-A, no mismatch | 4 failed |
+| 5 | git-report-on-branch | not-open row-6 | match |
+| 6 | git-report-off-branch | silent row-D, not row-6 | 4 failed |
+| 7 | git-foreign-author | progressing-weak row-C, no author finding | match |
+| 8 | jj-helper-commit (lane.branch mirror) | progressing row-A | match |
+| 9 | jj-commit-no-bookmark (mirror) | silent row-D + mismatch, DRIFT 1 | 10 failed |
+| 10 | jj-ambient-author (mirror) | progressing-weak row-C + author warn, DRIFT 1 | 7 failed |
+| 11 | jj-young-ambient-author (mirror, age < 7200 s) | **young row-8** + author warn, DRIFT 1 | 7 failed |
+| 12 | jj-sibling-author (mirror) | progressing-weak row-C, author finding absent | match |
+| 13 | jj-sidebranch-mirror (mirror=master, attached side commit) | silent row-D + mismatch warn, no side credit | 10 failed |
+| 14 | jj-unresolved-mirror (`.jj`, no mirror) | unavailable row-1 `reason=ref-unresolved`, no findings, CLEAN 0 | 3 failed |
+| 15 | jj-missingref-mirror (`lane.branch=master`, ref gone) | unavailable row-1 `reason=ref-unresolved`, no findings, CLEAN 0 | 3 failed |
+| 16 | jj-root-unresolved-closure (jj root, no mirror; report at root HEAD) | progressing row-A (row-6 skipped, never HEAD) | 2 failed |
+| 17 | git-fallback-head (non-jj, trunk, detached) | progressing row-A via unchanged HEAD fallback | match |
 
-`--selftest` (green, 13 checks) additionally asserts: fixture rc0 / 12 cases /
-0 failed; stable ids `finding:HEAD_BRANCH_MISMATCH:present` and
-`finding:LANE_AUTHOR_MISMATCH:present` pass under the compliant fixture;
-`finding:LANE_AUTHOR_MISMATCH:absent` passes for the sibling control;
-`git-fallback-head` passes; the HEAD-only mutant exits 1 and names
-`finding:HEAD_BRANCH_MISMATCH:present` as failed; the missing census exits 1
-with all cases `capability_absent`. Its fixture census is dormant source in the
-gate (never installed) and its temp tree is created under `--scratch` when
-given.
+`jj-sidebranch-mirror` also creates `main` at the base so the entering
+census's unique-`master`/`main` fallback is ambiguous and its before behavior is
+deterministically the HEAD fallback; the recorded mirror is the only input the
+A2 census uses.
 
-## Commands and exit codes (retained)
+## Predicted counts (not measured)
 
-All run from
-`/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/JjGate`.
+| side | cases | assertions | failed assertions | mismatch cases | rc |
+|---|---|---|---|---|---|
+| before (frozen entering census) | 17 | **204** | **60** | **10** | 1 |
+| after (settled A2 census) | 17 | **204** | **0** | 0 | 0 |
 
-```
-$ git show 24526ea:tools/mori-census.sh > .scratch/mori-census-entering.sh      rc 0   (4189 lines)
-$ python3 tools/mori-round17-jj-regressions.py \
-    --census .scratch/mori-census-entering.sh \
-    --output .scratch/out-final-entering --scratch .scratch/jj-final-entering   rc 1
-  cases=12 match=7 mismatch=5 capability_absent=0 setup_failed=0 assertions=124 failed=21
-$ python3 tools/mori-round17-jj-regressions.py \
-    --census .scratch/mori-census-c2.sh \
-    --output .scratch/out-final-c2 --scratch .scratch/jj-final-c2               rc 0
-  cases=12 match=12 mismatch=0 capability_absent=0 setup_failed=0 assertions=134 failed=0
-$ python3 tools/mori-round17-jj-regressions.py --selftest --scratch .scratch/selftest-root   rc 0
-  SELFTEST ok: ok_rc0,ok_cases,ok_failed_zero,ok_mismatch_finding,ok_mismatch_severity,
-  ok_author_finding,ok_sibling_negative,ok_fallback_head,head_rc1,
-  head_names_missing_mismatch,head_failed_assertions,absent_rc1,absent_capability_absent
-$ python3 tools/mori-round17-jj-regressions.py --census .scratch/mori-census-oldauthor.sh \
-    --output .scratch/out-oldauthor --scratch .scratch/jj-gate-oldauthor         rc 1  (3 failed / 1 case)
-$ python3 tools/mori-round17-jj-regressions.py --census .scratch/mori-census-info.sh \
-    --output .scratch/out-info --scratch .scratch/jj-gate-info                   rc 1  (5 failed / 3 cases)
-$ python3 tools/mori-round17-jj-regressions.py --census .scratch/mori-census-c2.sh \
-    --output .scratch/out-default2                                              rc 0  (default scratch: <output>/scratch)
-$ python3 tools/mori-round17-jj-regressions.py --census .scratch/no-such-census.sh \
-    --output .scratch/out-missing2                                              rc 1  (12 capability_absent)
-```
+Arithmetic, so the integrator can audit the prediction without a run:
 
-Manifests (evidence): `.scratch/out-final-entering/run-manifest.json`,
-`.scratch/out-final-c2/run-manifest.json`, `.scratch/out-oldauthor/`,
-`.scratch/out-info/`, `.scratch/out-default2/`, `.scratch/out-missing2/`;
-per-case streams under each `cases/<id>.out`. The two mutant runs' sandbox
-trees were deleted after measurement; their manifests and case streams were
-retained.
+- the prior gate's measured 12-case receipt was **124 / 21 → 134 / 0**;
+- the fixed universe on those same 12 cases is **138 / 35** (124+10 detail
+  checks that were suppressed + 4 exact-field checks; 21+10+4);
+- the five new cases add 66 assertions (young 15, sidebranch 16, unresolved 12,
+  missingref 12, root 11) and 25 before-failures (7+10+3+3+2) → **204 / 60**;
+- after side keeps the same 204 assertions and every check passes → **204 / 0**,
+  10 before-mismatch cases (3,4,6,9,10,11,13,14,15,16), 7 controls.
 
-## Reference scaffold (validation only, not delivered)
+**This supersedes the admitted 21 → 0 receipt.** The old receipt remains valid
+for the old gate bytes; it must not be paired with these new bytes. The prior
+report's scratch-reference quotes (`commits=1 rule=…`, `rule=merge-base-is-…`)
+were a Q2 defect: the delivered census emits `count=1 committer=… window=… 
+basis=committer-lane-author-foreign-email` and
+`basis=merge-base-not-ancestor`; this gate now asserts the delivered grammar.
 
-`.scratch/mori-census-c2.sh` is the entering census plus the C2 changes needed
-to make a green run measurable:
+## Evidence retained
 
-1. `detect_branch()` with the `jj-lane.sh:115-126` order
-   (`symbolic-ref HEAD` -> `refs/remotes/origin/HEAD` -> unique
-   `master`/`main`);
-2. row 6 closure queries `refs/heads/<branch>` for `cat-file -e` and
-   `log -1`, with HEAD as the fallback when the resolver has no input;
-3. row 9 `rev-parse` and `log --since` are branch-anchored (HEAD fallback);
-4. `HEAD_BRANCH_MISMATCH` when `merge-base --is-ancestor HEAD
-   refs/heads/<branch>` fails (branch resolvable only);
-5. `LANE_AUTHOR_MISMATCH` (warn) for a post-launch branch commit whose
-   committer is the lane identity and whose author email does **not** end in
-   `@shokunin.local` (A1 amendment; sibling lanes are quiet);
-6. both findings are `warn`.
+- `tools/mori-round17-jj-regressions.py` — the deliverable, sha256
+  `da3e080a…89f0`, 2028 lines, 17 cases.
+- Static checks (re-runnable, no test semantics): `ast.parse` on the file and
+  `bash -n` on the extracted `FIXTURE_CENSUS`, both rc0.
+- No run manifest exists for this revision because no run was executed; the
+  first settled-commit run will write `run-manifest.json` with `retained`,
+  per-case assertions, `gate.sha256`, `census.sha256`, and `observed.refs`
+  (full OIDs plus `head12`/`branch12` for provenance).
 
-The gate does not depend on this file; it is hashed and named only so the green
-run can be reproduced.
+## Guard and host-access disclosure
 
-## Risks, limits, blockers
+- **This pass executed no jj or git command** and no census/gate/selftest; all
+  work was file edits plus the static syntax checks. No `/tmp` or `/var/tmp`
+  write occurred. No host surface (journal/systemd/tmux/cgroup) was read.
+- Historical, from the prior pass on the superseded clone (same seat): jj was
+  run in sandbox repos under `.scratch` without `-R`, and
+  `jj git init --colocate` was run without an explicit path, before the L1
+  sandbox guard arrived; the exact command list is in the prior revision of
+  this report (replaced by this file). The guarded gate now uses
+  `jj git init --colocate <absolute sandbox path>` and `jj -R <sandbox>` after
+  asserting `<sandbox>/.jj`; every git call uses `git -C <sandbox dir>` with
+  `GIT_CEILING_DIRECTORIES` and no `GIT_DIR/GIT_WORK_TREE/GIT_INDEX_FILE`.
+- The prior pass also created and immediately removed a 237-byte
+  `/tmp/does-not-exist` by a mistaken redirection; this pass wrote nothing to
+  `/tmp`.
+- Peer coordination: a direct `write agent://CensusJj-5` attempt failed because
+  the peer was not running at that moment; `MoriR17.CensusJj-5` then sent the A2
+  semantics quoted above, which this revision implements. No reply was sent
+  afterward.
 
-- **Root-vs-lane scope of `HEAD_BRANCH_MISMATCH`.** The gate assumes the
-  mismatch check is evaluated in the lane's own repo (contract: "detail names
-  lane"). `git-report-off-branch` therefore forbids `HEAD_BRANCH_MISMATCH` while
-  the *root* HEAD is detached ahead of the root branch, because the lane repo is
-  clean. An implementation that evaluates the mismatch against `$ROOT` for every
-  lane (instead of `$repo`) would fail case 6. Flagged for L1; I did not encode
-  the alternative because it would make the finding fire for child lanes on
-  unrelated main-repo churn.
-- **Detail field names are free.** Only `lane=<id>` and the short hashes are
-  asserted for `HEAD_BRANCH_MISMATCH`; a rename of `head=`/`branch_tip=` is
-  tolerated as long as the short hashes appear.
-- **Fallback case can pass for the wrong reason.** `git-fallback-head` asserts
-  the surface (progressing row-A), not that the resolver specifically failed;
-  the fixture guarantees no master/main/origin HEAD, so the resolver has no
-  input.
-- **A1 churn.** If the author rule changes again, cases 10 and 11 (`jj-ambient
-  author`, `jj-sibling-author`) must move with it; they are the two arms of the
-  amendment.
-- **jj version.** Behaviour is measured with `jj 0.45.1-7c41cdeb...`; a jj
-  upgrade that changes where colocated git HEAD lands after `commit`/`bookmark
-  set` would change the fixtures (and the C2 premise), not just the gate.
-- **Sandbox placement.** `--scratch` may be under the lane tree (my clone's
-  `.scratch` is). The `-R`/`GIT_CEILING_DIRECTORIES` guard is what keeps that
-  safe; the gate never relies on cwd discovery.
-- No blockers: all 12 cases and the selftest are executable and green against a
-  contract-compliant census.
+## Risks / limits
 
-## Guard disclosure (SentinelJjSandbox interjection)
-
-Before the L1 guard arrived I ran jj in sandbox repos under this clone's
-`.scratch` **without `-R`**, and ran `jj git init --colocate` without an
-explicit path. Exact commands (all cwd inside my own `.scratch` experiment
-repos, all removed afterwards):
-
-- `jj git init --colocate` (cwd `.scratch/exp/repo`), then in that repo:
-  `jj bookmark list`, `jj log --no-graph -r '@ | @-'`,
-  `jj --config user.name/user.email ... file track`, `jj --config ...
-  metaedit --update-author`, `jj --config ... commit -m ...`,
-  `jj --ignore-working-copy log --no-graph -r '@-' -T commit_id`,
-  `jj --ignore-working-copy bookmark set master -r <hash>`;
-- `jj git init --colocate` (cwd `.scratch/exp2/lane`), then
-  `jj --ignore-working-copy log`, `jj --config ... commit`,
-  `jj --ignore-working-copy log`, `jj --ignore-working-copy bookmark set`;
-- `jj git init --colocate` (cwd `.scratch/exp3/lane`), then
-  `jj --ignore-working-copy log -r @`, `jj --config ... commit`;
-- two gate runs (`out-entering`, the first `out-c2`) whose then-current code
-  also ran `jj git init --colocate` with cwd = sandbox lane and no `-R` on the
-  follow-up calls.
-
-The lane's `.jj` (`/home/vgpnk/Projects/shokunin/mori-shokunin/.jj`) exists; I
-did not read it, and no jj command was ever given the lane as target. After
-`jj git init --colocate` each sandbox had its own `.jj` (observed with `ls -d`),
-so the nearest-workspace discovery would have selected the sandbox — but I did
-not observe what those pre-guard calls read, so this is **[INFERENCE]**, not a
-claim. All post-guard gate runs use `-R <sandbox>` after asserting `.jj`, and
-`jj git init --colocate <absolute sandbox path>` from `<case>`.
-
-Also disclosed: one mistaken shell redirection wrote a 237-byte file at
-`/tmp/does-not-exist` (it captured one gate summary line). I removed it
-immediately (`rm -f`, path confirmed absent). No probe outputs, downloads or
-scratch were written to `/tmp`; the only `/tmp` artifact was that accidental
-file, and every gate/selftest run used `--scratch` under the clone.
-
-## Tools and installs
-
-No install or upgrade. Versions observed:
-`jj 0.45.1-7c41cdeb16b6b321c64e789a966b6adf723816a5`
-(`/home/vgpnk/.local/bin/jj`), `git version 2.56.0`, `Python 3.14.8`, real
-`jq` (`/usr/bin/jq`) and `/usr/bin/timeout` used as census dependencies.
-
-## Axes (godspeed)
-
-1. **Contract fidelity** — one assertion per contract sentence (branch anchor,
-   two findings, warn severity, A1 sibling arm, HEAD fallback), written as
-   stable ids in the manifest.
-2. **Hermeticity** — every census host surface pinned to a sandbox stub/file;
-   the census output itself names those paths and `refused:outside-sysfs-cgroup`.
-3. **Fixture realism** — real git and real jj colocation, helper-shaped command
-   order, real branch/bookmark semantics; no stub git.
-4. **Red-ness** — the entering census, a pre-amendment author rule, an
-   info-severity mutant and a missing census all turn the gate red and name the
-   failing assertion.
+1. **Unmeasured counts.** 204 / 60 → 204 / 0 is an assertion-construction
+   prediction. L1's settled-commit run is the measurement; the old `21 → 0`
+   receipt is not comparable.
+2. **A2 census not present in this clone.** The clone's `tools/mori-census.sh`
+   is still the pre-A2 file. The after-side prediction assumes the exact
+   semantics CensusJj-5 stated (`reason=ref-unresolved`, row-1, findings
+   suppressed); if the settled census emits a different basis token or reason,
+   cases 14–16 and 11 need the corresponding expectation edit.
+3. **Sidebranch jj-init shape.** `jj git init --colocate` on a repo whose HEAD is
+   attached to `side` is expected to import cleanly (rc0) but was not run here;
+   a setup failure would surface as `setup_failed` for case 13, not as a
+   false green.
+4. **Young age effective value.** `set_launch_age(100)` places the anchor 100 s
+   before real now; the census pins NOW at real now + 120 s, so the observed age
+   is ≈220 s, still below 7200. The state remains `young`; the exact age value
+   is not asserted.
+5. **Output strictness (F2).** Every run needs a fresh empty `--output`; a
+   second run into the same directory is rejected by design. Receipt runners
+   must pick a new path per run.
+6. **Selftest temp policy.** `--selftest` without `--scratch` requires `TMPDIR`
+   and refuses `/tmp`/`/var/tmp`; the integrator should pass
+   `--scratch <clone>/.scratch` (the wave ban).
+7. **Scope of `HEAD_BRANCH_MISMATCH`.** The gate still evaluates the mismatch in
+   the lane's own repo (the contract's "detail names lane"); the root-jj case
+   only pins row-6 closure, not a root-level mismatch.
+8. **Detail-field names beyond `lane=`** are not over-specified for the author
+   finding (`count=` and `basis=` are); `committer=` is emitted by the fixture
+   but not required, so a rename of that one token does not fail the gate.

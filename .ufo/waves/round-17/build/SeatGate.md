@@ -432,4 +432,97 @@ Retained evidence:
   every case pins `--now-ms`, wants use `finding_id` and the eight A1 classes, and the
   loader-invariant check reports 0 defects. Gate file unchanged by this check.
 
+## A2 oracle + sandbox hardening (clone at 5c1dfb8; tests intentionally not run)
+
+L1 recreated the same SeatGate clone at `5c1dfb8d0530c74eb0e1630c2b522b735b486274`. Only
+`tools/mori-round17-seat-regressions.py` and this report were written; no VCS command, no
+test/selftest run, no install.
+
+Implemented per `falsify/SandboxFinal.md` F1 and CaseReview12/14/15/18/25/26:
+
+- **F1 closed (no out-of-sandbox mkdir).** `fifo_files` source paths whose existing
+  ancestors contain a symlink or non-directory are rejected at fixture load, before any
+  sandbox exists. In the sandbox, `_create_fifo_safely` first lstat-scans every existing
+  ancestor and rejects symlink/escape **before any mkdir**, then creates missing components
+  one at a time with `os.mkdir` (never `mkdir -p` through a link), re-checking lstat and
+  containment after each component before `os.mkfifo`. `_copy_fixture_tree` still recreates
+  symlinks without following them.
+- **Oracle strengthened**: optional `want.reason` (exact top-level scalar), `want.top`
+  (only `main_sessions` / `duplicate_stems`, type-strict and required-present), and
+  `want.records` = `{A1 relative key: {seat field: value}}`. Only listed record fields are
+  compared, type-strict; the record must exist by exact relative key (no stem fallback).
+  A declared record `class` must agree with `want.seats` for the same key.
+- **Identity metadata required**: every emitted seat must carry `key` and `prefix`
+  (`REQUIRED_SEAT_KEYS` now includes `key`); `want.seats` is looked up by A1 relative key
+  only, so a path-collapsed key or stem fallback is a mismatch. Record/seat `reason`
+  accepts the wave-2 set `schema|no-message|unreadable|terminal-time`.
+- **`unreadable_dirs`** case metadata: pack-relative real source directories (source kept
+  readable, no overlap/nesting with unreadable_files/fifo_files). They are chmod 000 only
+  in the sandbox copy after copying, and `restore_sandbox_modes` returns them to 0700 after
+  the run so output cleanup cannot fail. Files below them use the documented loose
+  `files_scanned` bound.
+- **Tracked root-symlink case**: an explicit `--sessions-dir {pack}/root-link` is lexically
+  rebased to `<sandbox>/root-link`; the source tree is never the run root, the symlink is
+  recreated by the copy, and the tool is expected to reject it (`root-symlink`). All other
+  args stay unchanged.
+- **Pack digest normalization (ReceiptStreams F1)**: `pack_before_sha256` and
+  `pack_after_sha256` now both use `pack_tree_digest(pack_dir)` =
+  `sha256(canonical(snapshot_tree(pack_dir)))`, or null for absent/empty packs, in the
+  capability_absent and executed branches alike. Manifest rows add `sessions_arg` and
+  `unreadable_dirs`.
+- **Provenance**: `capture_revision` scrubs every `GIT_*` variable (including `GIT_TRACE*`
+  and `GIT_CONFIG*`) and keeps `--no-optional-locks -c core.fsmonitor=false`; receipt
+  remains branch-anchored (`branch_tip`/`receipt_ref`, `head` diagnostic only).
+
+Selftest arms added (not executed here; L1 runs after settlement): 
+`symlink_ancestor_fifo_trap_rc2` (trap fixture must exit 2 and create no external target),
+`unreadable_dirs_sandbox_rc0` (dir mode 000 inside the copy, restored afterwards, source
+readable, `walk-error` reason matched), `root_symlink_rebase_rc0` (sessions arg stays
+`.../sessions/root-link`, reason `root-symlink`), `key_metadata_required_rc1`
+(stripping key/prefix must go red), and `wrong_type_metadata_rc1` (the fake tool emits
+JSON `true` where the wish is integer `1`/`429`; strict equality must go red). Existing
+green/dead/main/setup arms now also exercise `want.records`, `want.top` and `want.reason`,
+and the absent arm asserts the pack-digest definition equals the green branch's. Total
+expected arms: 19.
+
+JSON-type exactness: `want.reason`, `want.top` and `want.records` are compared with
+`strict_eq` (`type(actual) is type(want) and actual == want`), so `true` never equals `1`
+and `1.0` never equals integer `1`. Fixture-side validators independently reject
+bool/float values for integer record/top fields (`is_int` / `type(v) is int`). The
+`wrong_type_metadata_rc1` arm is staged but not executed, per L1.
+
+Wave-2 tool tolerances (confirmed with SeatTool-5, no execution): `error_status` null,
+per-seat reasons `terminal-time` / `schema`, escaped tokens/codes, and long digit
+`error_code` strings are accepted; the digit-string cap was relaxed from 16 to 64 so
+13+-digit `(type=...)` codes cannot false-red. The gate classifies nothing itself — it
+compares fixture-declared class/reason.
+
+Static evidence (no execution):
+
+- `python3 -c "ast.parse(...)"` = `AST OK`; `wc -l` = 3093;
+  `sha256sum tools/mori-round17-seat-regressions.py` =
+  `3f3512c41d94c20c5e8aae55ffe17fa219c4c1146ea99e2248d4f924f5da2314`.
+- Read-only validation of the current SeatFixtures clone table
+  (`SeatFixtures/.ufo/waves/round-17/fixtures/seat/expected.json`, observed sha256
+  `30978148ea75ac81d213ac4fe2c7aa669c74c55ddebce1eed33050c0b3f100c2`): **59 cases, 89 pins,
+  0 defects** against the gate's loader invariants (ids/args/packs, metadata safety, pins
+  exact including symlink targets, want reason/top/records shapes, totals/seats tally,
+  record/seat class agreement). Source tree has no FIFO and no mode-000 files; the
+  `SecurityRootSymlink/root-link -> target` tracked symlink and `SecurityUnreadableDir/sub`
+  exist; `fifo_skipped` has `fifo_files:["pipe.jsonl"]` with no source FIFO; nested and
+  duplicate cases use A1 relative keys; rc2 reasons observed are
+  `unavailable-dir`, `too-many-files`, `prefix-matched-none`, `root-symlink`, `walk-error`.
+- Note: SeatFixtures' earlier message reported sha `3ca06ef2…` / 88 pins; its FINAL message
+  confirms `30978148ea75ac81d213ac4fe2c7aa669c74c55ddebce1eed33050c0b3f100c2` / 89 pins /
+  48 present packs + absent MissingDir, matching exactly the bytes this gate validated.
+  The table above is the final delivered table.
+
+Not run: gate selftest (per L1), any tool/census/live probe, any VCS command. Integration
+run and final acceptance remain L1's.
+
+Residual risks: the new selftest arms are unexecuted by design; `want.records` compares
+`error_code` with strict type, so fixtures use the tool's string form (`"1302"`) while the
+gate's own stub arm uses an int; `duplicate_stems` semantics remain accepted as either a
+count or a string list.
+
 No blockers.

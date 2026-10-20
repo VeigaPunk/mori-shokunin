@@ -4,6 +4,13 @@
 > are historical. The appended **Amendment A1 delta** section supersedes them
 > (54 cases, 44 pack dirs incl. absent `MissingDir`, tree `pins`, readable
 > fixtures only).
+>
+> **A2 strengthening update (2026-10-20):** the appended **A2 fixture
+> strengthening** section supersedes both (59 cases, 49 pack dirs, 89 pins).
+>
+> **PrivacyFinal parser update (2026-10-20):** final state is **66 cases,
+> 56 pack dirs (55 present + absent `MissingDir`), 96 pins**; see the
+> appended **PrivacyFinal parser counterexamples** section for the final SHA.
 
 Executor: `MoriR17.SeatFixtures-5` (leaf; advisory only). Delivered into this
 executor's clone, never the lane checkout:
@@ -477,3 +484,316 @@ dropped, and pins/expected.json were re-hashed to
    path without `.jsonl`; `want.seats` is keyed by those paths, not stems.
 6. **Strict settle boundary.** Exactly `now - settle*1000` is settled (dead);
    only strictly newer is `error_unsettled`.
+
+---
+
+# A2 fixture strengthening (L1/CriticC1Final/CaseReview03/12/14/15/18/25/26, 2026-10-20)
+
+Applied in place in the executor clone's `fixtures/seat` tree; no tool, gate,
+selftest or test was run. Final state:
+
+* **59 cases** (+5 new, 2 renamed, several wants strengthened);
+* **89 pins** = 85 regular files + 4 symlinks (no source FIFO);
+* **49 pack dirs** (48 present + intentionally absent `MissingDir`);
+* `expected.json` sha256
+  `30978148ea75ac81d213ac4fe2c7aa669c74c55ddebce1eed33050c0b3f100c2`.
+
+## Review-driven changes
+
+* **want.reason on setup cases (CaseReview14/18 + security):**
+  `missing_dir_rc2`=`unavailable-dir`, `max_files_exceeded`=`too-many-files`,
+  `prefix_filter_no_match`=`prefix-matched-none`,
+  `root_symlink_setup_rc2`=`root-symlink`,
+  `unreadable_dir_setup_rc2`=`walk-error`.
+* **want.records (CaseReview12/15/25/26):** per A1 relative key, subset of
+  `{key,prefix,retries,error_code,retry_exhausted,reason}` with type-strict
+  comparison. Added to: `unavailable_empty_file` (schema),
+  `unavailable_malformed_and_shape` / `unavailable_non_message_records_only`
+  (no-message), `unavailable_unreadable_file` (locked=unreadable,
+  open=completed), `tail_small_window_far_terminal_lost` (far=no-message),
+  `schema_version_unavailable` (all three=schema), `nested_directories`
+  (relative keys + prefixes), `retry_after_1_retry` (retries 1,
+  retry_exhausted true, code 1302), `rate_limit_zai_retry_exhausted`
+  (10/true/1302), the three code cases (1113/1308/1302),
+  `duplicate_stems_two_entries` (d1/stem,d2/stem), `error_other_*`
+  (thinking-loop retry false; bare-error reason terminal-time),
+  `rate_limit_devin_resource_exhausted`, `rate_limit_free_model_*`
+  (retry false), `unknown_time_*` (terminal-time), `unknown_code_1309`
+  (code 1309).
+* **want.top (CaseReview25/26):** `duplicate_stems_two_entries`
+  `{duplicate_stems:1, main_sessions:0}`; `main_session_excluded_from_totals`
+  `{main_sessions:1, duplicate_stems:0}`.
+* **Relative seat keys (CaseReview15 + gate):** `nested_directories` now keys
+  `want.seats`/`want.records` by `a/b/c/deep-seat`, `a/b/deep-two`,
+  `a/shallow-seat` (flat packs already key==stem).
+* **toolResult control fix:** `IncompleteToolResult` now has a preceding
+  assistant `stop` (completed) before the terminal `toolResult`, so dropping
+  the toolResult would yield `completed`, not the same `incomplete` class.
+* **quota 402 isolation:** `Quota402` terminal has `errorStatus: null` and
+  relies only on the `402` message token (class `dead_quota` unchanged).
+* **tail naming:** `tail_default_window_all_classified` renamed to
+  `tail_explicit_262144_all_classified`; the distinct true-default case
+  `tail_a1_default_window` (no flag) remains.
+* **security packs:** `SecurityRootSymlink` contains tracked symlink
+  `root-link -> target` plus `target/inside.jsonl`; case args pin
+  `--sessions-dir {pack}/root-link`, rc2 `root-symlink`.
+  `SecurityUnreadableDir` holds `root-ok.jsonl` + `sub/inside.jsonl`; case
+  metadata `unreadable_dirs: ["sub"]` (gate chmods only the sandbox copy),
+  rc2 `walk-error`. Sources stay readable.
+
+## A2/CriticC1Final corrections (recorded)
+
+* **bare `resource_exhausted`:** no longer a rate cause; the existing
+  `rate_limit_devin_resource_exhausted` case now expects
+  `dead_error_other` (rc1, other=1). New control
+  `RateLimitFreeModel/free-model.jsonl` carries
+  `resource_exhausted: Reached free model rate limit` and expects
+  `dead_rate_limit` (lower-case `rate limit` token).
+* **timestamp-free terminal error:** class `unavailable`,
+  per-record `reason: "terminal-time"`, never aged dead.
+  `ErrorOther/bare-error.jsonl` updated to unavailable/terminal-time, and
+  `UnknownTime/unknown-time.jsonl` is the dedicated control (error with
+  429/1302/rate text but no `completedAt`/`timestamp` -> unavailable,
+  reason terminal-time, rc0).
+* **unknown type code under 429:** `UnknownCode1309` has `errorStatus: 429`,
+  `vendor failure (type=1309)`, no rate/quota text, settled timestamp ->
+  `dead_error_other` (code 1309 not 1113/1308/1302).
+  [INFERENCE] A bare 429 with no unknown code keeps A1's rate-limit rule
+  (`RateLimitStatus429` unchanged); only the unknown-code evidence suppresses
+  the HTTP fallback.
+* **ID clean cutover:** `rate_limit_beats_quota_by_status_and_token` renamed
+  `quota_precedes_rate_limit_status_and_token` (semantics unchanged:
+  quota-first). Prior case-54 receipts retain the old id by design.
+
+## Case-table delta
+
+| case id | pack | args (after --now-ms) | rc | finding_id | reason/top | seats -> class | totals nonzero |
+|---|---|---|---|---|---|---|---|
+| `rate_limit_devin_resource_exhausted` (CHANGED) | RateLimitResourceExhausted | — | 1 | `MORI_SEAT_TERMINAL_DEAD` | — | `devin-resource-exhausted`→`dead_error_other` | dead_error_other:1 |
+| `quota_precedes_rate_limit_status_and_token` (CHANGED) | RateLimitOrdering | — | 1 | `MORI_SEAT_TERMINAL_DEAD` | — | `status-beats-quota`→`dead_quota`, `token-beats-quota`→`dead_quota` | dead_quota:2 |
+| `error_other_thinking_and_bare` (CHANGED) | ErrorOther | — | 1 | `MORI_SEAT_TERMINAL_DEAD` | — | `bare-error`→`unavailable`, `thinking-loop-error`→`dead_error_other` | dead_error_other:1, unavailable:1 |
+| `nested_directories` (CHANGED) | NestedDirs | — | 0 | `MORI_SEAT_TERMINAL_OK` | — | `a/b/c/deep-seat`→`completed`, `a/b/deep-two`→`incomplete`, `a/shallow-seat`→`aborted` | completed:1, aborted:1, incomplete:1 |
+| `tail_explicit_262144_all_classified` (CHANGED) | TailBoundary | `--max-tail-bytes 262144` | 0 | `MORI_SEAT_TERMINAL_OK` | — | `tail-far`→`completed`, `tail-near`→`completed`, `tail-partial`→`completed` | completed:3 |
+| `main_session_excluded_from_totals` (CHANGED) | MainSessionExclusion | — | 0 | `MORI_SEAT_TERMINAL_OK` | top={"duplicate_stems": 0, "main_sessions": 1} | `nested-ok`→`completed` | completed:1 |
+| `duplicate_stems_two_entries` (CHANGED) | DuplicateStems | — | 1 | `MORI_SEAT_TERMINAL_DEAD` | top={"duplicate_stems": 1, "main_sessions": 0} | `d1/stem`→`dead_rate_limit`, `d2/stem`→`dead_rate_limit` | dead_rate_limit:2 |
+| `rate_limit_free_model_resource_exhausted` (NEW) | RateLimitFreeModel | — | 1 | `MORI_SEAT_TERMINAL_DEAD` | — | `free-model`→`dead_rate_limit` | dead_rate_limit:1 |
+| `root_symlink_setup_rc2` (NEW) | SecurityRootSymlink | `--sessions-dir {pack}/root-link` | 2 | `MORI_SEAT_TERMINAL_SETUP` | reason=root-symlink | — | — |
+| `unreadable_dir_setup_rc2` (NEW) | SecurityUnreadableDir | — | 2 | `MORI_SEAT_TERMINAL_SETUP` | reason=walk-error | — | — |
+| `unknown_time_terminal_error_unavailable` (NEW) | UnknownTime | — | 0 | `MORI_SEAT_TERMINAL_OK` | — | `unknown-time`→`unavailable` | unavailable:1 |
+| `unknown_code_1309_dead_error_other` (NEW) | UnknownCode1309 | — | 1 | `MORI_SEAT_TERMINAL_DEAD` | — | `unknown-code-1309`→`dead_error_other` | dead_error_other:1 |
+
+## Final pack digests (A2; sha256sum recipe over regular files)
+
+Recipe unchanged; symlinks excluded by `find -type f` and pinned separately.
+
+| pack | files | sha256 (aggregate) |
+|---|---|---|
+| Aborted | 1 | `38d6d061ffc5dd9e3f1f0b4a119ea600d56f1913e16a21f61aa203f59c0f2bfd` |
+| AbortedErrorFields | 1 | `88b358c9ad2d3ba4fd262dd22e443044662c1397455a5d679fdd30f79616ed1f` |
+| CodeQuota1113 | 1 | `f7c8f4bc2abde0d3ebafcd6ef9863f1383b532ef7ff51149589ab119043b09a4` |
+| CodeQuota1308 | 1 | `c06daf96f50635b2ecb6c1dd7884b0b5d18787868a634210abc30f4994704d92` |
+| CodeRate1302QuotaWord | 1 | `987dc603478573309afdb8b17dff6b87e31393fb3565a299f829e4fa50754d49` |
+| Completed | 1 | `77526fe4644d932b18c204b827aa81ef173734e91e381a7b5f412248e84bafd2` |
+| CompletedTrailing | 1 | `bbf8e7d7de86df6352716af627d85247869545f80eab8854b0e4360f860deeec` |
+| CredentialPinTrap | 1 | `3613df2f859ff53d0032955d6e743de6a0caa4186821bdcc2dc17f21618db2c2` |
+| DuplicateStems | 2 | `1c614b3dcc97bc195deaa56166e86bfec82d85e1528ec9330aac64b7c7de5c17` |
+| EmptyDir | 1 | `94fe3bc362dc9047f8395fb8b7df7a3dde4ecc4f8ed091c6d6f1c7c037803bd6` |
+| ErrorOther | 2 | `97d910227e6e76b5c9e809464196a94e8dffa344ecd6906e16360992c3b0e3f3` |
+| ErrorUnsettled | 3 | `a129b85aeed3e384c514ab30ddba1f643cc6a17c132fe082dec1b06abe6ebec0` |
+| FifoSkip | 1 | `131834891d60e158b8926d6b78620d3acb63866422bd91a2fe2f4248a3d9270c` |
+| IncompleteToolResult | 1 | `b67c866f2c68b3fe259b60a221dab46578ee3f1828ab92e64e4383f361e51414` |
+| IncompleteToolUse | 2 | `518a3849b0fd51fc0260c98e0f641c097c575325d0620997301719ba5f8e88b0` |
+| IncompleteUser | 1 | `4a4ccd68447f184552b12d433f9a1136a52a95e29c917e5f328aae3475466aa2` |
+| MainSessionExclusion | 2 | `70a7439121726f774adc80fceb894493e48160526ff02d14708f6782ceeee230` |
+| MalformedLineSkip | 1 | `0fb380d814061147d15481abdd7e8f2e1f33fa7715a8fff067431ea38b75bc2e` |
+| MaxFiles | 2 | `b049250769189ee8a8c1128768ef297aef1985e8c52a2afbf3c61eb152602d66` |
+| MixedFinding | 8 | `91ba93ffac2044f0a486c78dd14838a12e4e66bb291cde483192f71dd5bf9f53` |
+| NestedDirs | 3 | `6e69931d5a6ca534940aec9e40ac63825ed8177622c0c00db81764ed1bab2054` |
+| NonJsonlIgnored | 6 | `358a514eff3c059829aced2b692320212d56ae3e84cfb9feed1b48989abfd76f` |
+| PrefixAttribution | 7 | `722113103cca79e54940681b728b086657d9bf1f76cea5961f237c10c38590f1` |
+| Quota402 | 1 | `ea5e170f0db14d1ffeb7d3914e3d59514e6c217416d1d9f9d8bf9ae993d94fd1` |
+| QuotaCredits | 1 | `b9ea2372a20a5a072c968b313d761163d0b15cf8466149b66bac7fc08e9a2008` |
+| QuotaUsageLimit | 1 | `b27d70499f4a44ca8a08f4358f868c9e924e9f7b139f6ff92cfb323ffb256609` |
+| QuotaWord | 1 | `89a0133f23b8e685ddf7e6a684929be882386511b052a223125e26ede1504c7c` |
+| RateLimitFreeModel | 1 | `43813cecce0ea378bf91c79109f9c0d4c1169304f68915036938e0d62122885a` |
+| RateLimitOrdering | 2 | `326775e29594deae17699f64dd8e9f1a84644d280f142bbffb790938152d8fcf` |
+| RateLimitResourceExhausted | 1 | `69081d76f7be23768a126a64850e4394b682c36c615a2061b4b48a248ae5a54c` |
+| RateLimitRetryExhausted | 1 | `5d0acb137f85195d5475d0a0691b1b1ab12210b2b6559fbae09b16b6e171b6cf` |
+| RateLimitStatus429 | 1 | `48ae8dd43e50dc96da4505d6d2280b0f44f148c3381e6fe1fd1f8f31a211a431` |
+| RateLimitToken429 | 1 | `9f2687a760af17adb56944e67c7294ae645bdbf87758a6efdd86c854247ca170` |
+| RateLimitTokenCapitalRateLimit | 1 | `4663f3c4a5ea140ebc1123292758ffca1fe427f3882a840ee9a3bd16c4812a46` |
+| RateLimitTokenRateLimitUnderscore | 1 | `949cf685cfdd44229e2bca5d7466e461fa4a7ceafcb7e1596d5c486dc4f2ba82` |
+| RateLimitTokenUpper | 1 | `e72d477e16c20894635d25c4de9a1b237650a859f08315b1b99409217a5aadd8` |
+| RetrySingle | 1 | `a28c19a3498c2decc10ada843d9afeb05a3b6a4f12e0d08dd0ff508ff49b1f57` |
+| SchemaVersionUnavailable | 3 | `2cee595e314f21b47bff4c97b21716419875fae4711152f0b659fd1e240270d8` |
+| SecurityRootSymlink | 1 | `96863975b6bcbc77ba9100722bac6098ad99aaf63a83160442b2fdaa48046b9f` |
+| SecurityUnreadableDir | 2 | `1ae51ad51eb32bdaecb22fc1ad02a63d0a0650e9ddd12f7d2842eac86bcb1885` |
+| SymlinkIgnore | 3 | `12c928f0ef3e66f25a2a0f769b9a52ecb0cdf8be6c5c7ad8196f29c4a40896cb` |
+| TailBoundary | 4 | `910350faf1a24e81f713efe9b6a5f841f3a2f0e1772e58c31fa8547d78bc7683` |
+| UnavailableEmpty | 1 | `3135eeb0fa4de50c47583d1661fc9382624c82b553a1746e20977e625ea06db0` |
+| UnavailableMalformed | 1 | `e35c3a8f0bde7864c06a8efa025efbbc32841dd4d61fab9220854815cb80310d` |
+| UnavailableNonMessage | 1 | `30a567139d69ec86a41f28935cf4e333f24174774d5e8cb0f1af96453ea0e0cc` |
+| UnknownCode1309 | 1 | `38f8bc9575eb4f4fe1a403a2f5e1dacab86e7a4cbe8c15037debefdd765c904f` |
+| UnknownTime | 1 | `f3f3449b163e58fc53f71187ebe5324cd6d938514ee802b81609e51261f44afe` |
+| UnreadableFile | 2 | `852189f6d2cb22d673dfa3d3eb3234468563290ae7e4c3940f636de24ff1574c` |
+| MissingDir | 0 (absent) | — intentional: no directory, rc2 case |
+
+`expected.json` sha256:
+`30978148ea75ac81d213ac4fe2c7aa669c74c55ddebce1eed33050c0b3f100c2`.
+
+## Pins and sandbox metadata (A2 final)
+
+* 89 pins = 85 regular + 4 symlinks; directories omitted; `expected.json`
+  excluded; **no source FIFO**.
+* Existing symlinks: `SymlinkIgnore/{Link,Dangling,linked-dir}` plus the new
+  `SecurityRootSymlink/root-link -> target`; the root-link pin is
+  `sha256(b"target")` =
+  `34a04005bcaf206eec990bd9637d9fdb6725e0a0c0d4aebf003f17f4c956eb5c`.
+* `FifoSkip` source has only `real.jsonl`; `fifo_files: ["pipe.jsonl"]` is
+  sandbox-only (gate `os.mkfifo`).
+* `SecurityUnreadableDir` metadata `unreadable_dirs: ["sub"]`; source `sub` is
+  a readable real directory, chmod 000 only in the per-case sandbox copy.
+* No mode-000 regular file exists in the source tree; all fixture sources are
+  readable.
+
+## Verification (no tool/gate/test run)
+
+| command | rc | result |
+|---|---|---|
+| `TMPDIR=<clone>/.scratch python3 .scratch/strengthen_a2.py <fixtures/seat>` | 0 | `wrote 59 cases, 88 pins` (A2 base) |
+| `TMPDIR=<clone>/.scratch python3 .scratch/tail_gap.py <fixtures/seat>` | 0 | `gap bytes 300062 total 300197 cases 59 pins 89` |
+| structural validator over expected.json + tree + pins | 0 | `ok cases 59 pins 89`; rc counts 0:26, 1:28, 2:5; totals sums match |
+| `sha256sum` per-pack recipe + `sha256sum expected.json` | 0 | table above; expected SHA recorded |
+| `readlink`/`stat` spot checks | 0 | root-link -> target; target/inside.jsonl present; sources readable |
+
+No C1 tool, gate, selftest, test, build or formatter was run. No VCS write.
+The A2 transform script lived only in the executor's `.scratch` and is removed
+after this report.
+
+## A2 residual risks
+
+1. **Gate metadata implementation.** `want.reason/top/records`, relative
+   `want.seats` keys, `unreadable_dirs`, and root-link arg rebasing were
+   confirmed with SeatGate; any loader mismatch is a gate-side fix.
+2. **Tool A2 semantics.** `terminal-time`, `root-symlink`, `walk-error`, and
+   unknown-code fallback must match the tool owner's wave2 implementation;
+   fixtures pin the L1/SeatTool-confirmed strings.
+3. **429-without-code interpretation.** [INFERENCE] `RateLimitStatus429`
+   remains `dead_rate_limit` per A1; only an unknown code (1309) suppresses
+   the HTTP fallback to `dead_error_other`.
+4. **Tracked symlink.** `SecurityRootSymlink/root-link` is persisted as a
+   symlink (Git/jj capable); the gate rebases the `{pack}/root-link` suffix
+   into its sandbox and passes the sandbox path to the tool.
+5. **Pins.** Any later edit to fixture bytes must recompute `pins`; mismatch
+   yields gate `snapshot_tampered` rc2 before any run.
+
+## Final CaseReview20 tail-default fix (supersedes the counts above)
+
+* Added `TailBoundary/tail-old-default-gap.jsonl`: v3 session header plus a
+  completed terminal, followed by **300,062 bytes** of benign `custom` padding
+  (`seq`/`payload` ticks); total file **300,197 bytes** (<1 MiB). The terminal
+  message is therefore 300,062 bytes before EOF — strictly >262,144 and
+  <524,288. `tail_a1_default_window` still passes only `--now-ms` (no
+  `--max-tail-bytes`).
+* Expected behaviour: default 512 KiB reads the whole 300 KB file and sees the
+  terminal -> `completed` (4 completed, rc0). An old 256 KiB default would
+  drop the terminal -> `unavailable`; the explicit `--max-tail-bytes 262144`
+  case now pins exactly that (`completed:3, unavailable:1`), and the 1000/64
+  byte window cases were updated (`completed:2, unavailable:2`;
+  `unavailable:4`).
+* Case count stays **59** (no new case); pins increase by one to **89**
+  (85 regular + 4 symlinks). `TailBoundary` pack aggregate:
+  `910350faf1a24e81f713efe9b6a5f841f3a2f0e1772e58c31fa8547d78bc7683`
+  (4 files).
+* Final `expected.json` sha256:
+  `30978148ea75ac81d213ac4fe2c7aa669c74c55ddebce1eed33050c0b3f100c2`.
+* No tool, gate, selftest or test was run; no VCS write. The tail-gap
+  transform script lived only in `.scratch` and is removed.
+
+---
+
+# PrivacyFinal parser counterexamples (final, 2026-10-20)
+
+Tool owner informed; no tool, gate, selftest or test was run. These are the
+surviving parser counterexamples from PrivacyFinal, not padding.
+
+Final state: **66 cases**, **96 pins** = 92 regular + 4 symlinks, **56 pack
+dirs** (55 present + intentionally absent `MissingDir`). `expected.json`
+sha256:
+`78071149679cf9871343286baff411cd0cb9215952521a8ed4dffd1d823853a9`.
+
+## New cases
+
+| case id | pack | rc | finding_id | seat -> class | totals nonzero |
+|---|---|---|---|---|---|
+| `escaped_quota_token_classified` | EscapedQuota | 1 | `MORI_SEAT_TERMINAL_DEAD` | `quota-escaped`→`dead_quota` | dead_quota:1 |
+| `escaped_rate_token_classified` | EscapedRate | 1 | `MORI_SEAT_TERMINAL_DEAD` | `rate-escaped`→`dead_rate_limit` | dead_rate_limit:1 |
+| `malformed_field_lines_skipped` | MalformedFieldSkip | 0 | `MORI_SEAT_TERMINAL_OK` | `malformed-field-skip`→`completed` | completed:1 |
+| `decimal_timestamp_unknown_age` | DecimalTimestamp | 0 | `MORI_SEAT_TERMINAL_OK` | `decimal-timestamp`→`unavailable` | unavailable:1 |
+| `decimal_schema_version_unavailable` | DecimalSchema | 0 | `MORI_SEAT_TERMINAL_OK` | `decimal-schema`→`unavailable` | unavailable:1 |
+| `decimal_status_not_429` | DecimalStatus | 1 | `MORI_SEAT_TERMINAL_DEAD` | `decimal-status`→`dead_error_other` | dead_error_other:1 |
+| `long_code_13_digit_unknown` | LongCode13 | 1 | `MORI_SEAT_TERMINAL_DEAD` | `long-code-13`→`dead_error_other` | dead_error_other:1 |
+
+## Counterexample detail
+
+* **Escaped tokens decode before matching.**
+  `EscapedQuota/quota-escaped.jsonl:2` stores literal
+  `"qu\u006fta exceeded"` (bytes; `json.loads` -> `"quota exceeded"`) and must
+  be `dead_quota`. `EscapedRate/rate-escaped.jsonl:2` stores
+  `"rate_\u006cimit"` (-> `"rate_limit"`) and must be `dead_rate_limit`.
+  `want.records` pins key/prefix/retry false/null/code null for both.
+* **Malformed field escape/number skips the line, not the session.**
+  `MalformedFieldSkip/malformed-field-skip.jsonl` is: v3 header; assistant
+  `stop`; a message line with invalid JSON escape `bad\qescape`; a message line
+  with invalid JSON number `"completedAt":01`. Both lines fail strict JSON
+  parse and must be skipped; the preceding `stop` remains terminal ->
+  `completed` (rc0), never a false error.
+* **No silent decimal truncation.**
+  - `DecimalTimestamp/decimal-timestamp.jsonl:2` has
+    `"completedAt":1760998000000.5` (JSON float) plus a 429/rate message.
+    Non-integer terminal age is unknown: class `unavailable`,
+    per-record `reason: "terminal-time"` (rc0), not an aged dead rate-limit.
+  - `DecimalSchema/decimal-schema.jsonl:1` has `"version":3.0` (float). Only
+    integer version 3 is accepted: class `unavailable`,
+    `reason: "schema"` (rc0).
+  - `DecimalStatus/decimal-status.jsonl:2` has `"errorStatus":429.0` (float)
+    with generic text. A decimal status is not integer 429 and supplies no
+    vendor cause: class `dead_error_other` (rc1), not `dead_rate_limit`.
+* **13-digit unknown type code under 429.**
+  `LongCode13/long-code-13.jsonl:2` has `errorStatus: 429` and
+  `vendor failure (type=9999999999999)` (13 digits) with no rate/quota text.
+  The unknown code does not fall back to HTTP status: class
+  `dead_error_other` (rc1); `want.records.error_code` pins the full
+  `"9999999999999"`.
+
+## New pack digests (prior A2 table rows are unchanged)
+
+| pack | files | sha256 (aggregate) |
+|---|---|---|
+| EscapedQuota | 1 | `4623c766877479e67dd5324ae387c8e282b7781ccb4b0f859a69b4ee15b0a527` |
+| EscapedRate | 1 | `38a5bcd25951e665c1a727e95e51678ea3d89964830f36999f28d841e23e1b89` |
+| MalformedFieldSkip | 1 | `36171d53cdde6ff6cd888535966fc1229560ca22b378e518dbe7f4bc379417f6` |
+| DecimalTimestamp | 1 | `6cc13630224794915e5fc4707f51e4189bc4fa83aa2823f2a94c4748c3aa3ce2` |
+| DecimalSchema | 1 | `0d4335aad71590fda397517ab339c1a00b6a098458a2f59198f1c911908627b9` |
+| DecimalStatus | 1 | `c8e9cd9326e4e67eeb2e9fb60e09f7bbacb36c56cd3e50e2fd9e2107fe6d9ce2` |
+| LongCode13 | 1 | `762dc017b6c13263b62c13bb7ed6c8a9ab5d803afc375ac664ead1fdce6e3c64` |
+| MissingDir | 0 (absent) | — intentional: no directory, rc2 case |
+
+## Verification
+
+| command | rc | result |
+|---|---|---|
+| `TMPDIR=<clone>/.scratch python3 .scratch/parser_cases.py <fixtures/seat>` | 0 | `cases 66 pins 96` |
+| parse/type spot checks (`json.loads`) | 0 | escapes decode to `quota exceeded` / `rate_limit`; malformed lines fail; decimal fields are float |
+| structural validator over expected.json + tree + pins | 0 | totals sums match seats; pins exact (96); no extra/missing |
+| `sha256sum` per-pack recipe + `sha256sum expected.json` | 0 | 7 new packs above; final expected SHA recorded |
+
+No C1 tool, gate, selftest, test, build or formatter was run; no VCS write.
+The parser-case transform script lived only in `.scratch` and is removed.
+
+## PrivacyFinal residual risk
+
+The classifications above depend on the tool owner's announced parser fixes
+(strict JSON line skipping; type-strict timestamp/version/status; escaped
+tokens decoded before matching; unknown long codes not falling back to 429).
+Any tool-side deviation is a real C1 parser bug caught by these cases.

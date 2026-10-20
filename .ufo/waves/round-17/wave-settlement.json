@@ -1,0 +1,46 @@
+{
+  "waves": {
+    "wave1": {
+      "seats": 70,
+      "role_mix": {
+        "executor": 7,
+        "scout": 23,
+        "scribe": 13,
+        "connector": 6,
+        "reviewer": 12,
+        "critic": 4,
+        "sentinel": 2,
+        "revenger": 3
+      },
+      "expected_reports": 70,
+      "present": 70,
+      "missing": [],
+      "reported_dead_seats": 0,
+      "dead_basis": "No failed task result observed; all assigned report files delivered. No replacement seats."
+    },
+    "wave2": {
+      "seats": 64,
+      "role_mix": {
+        "reviewer": 27,
+        "scout": 17,
+        "connector": 4,
+        "critic": 4,
+        "sentinel": 2,
+        "mutation-tester": 4,
+        "executor": 3,
+        "scribe": 3
+      },
+      "expected_reports": 64,
+      "present": 64,
+      "missing": [],
+      "reported_dead_seats": 0,
+      "dead_basis": "No failed task result observed; all assigned report files delivered. No replacement seats."
+    }
+  },
+  "total_unique_seats": 134,
+  "planner": "MoriR17 L1",
+  "build_jobcap_refusals": 4,
+  "falsify_jobcap_refusals": 3,
+  "resumed_writers": "Original identities on new isolated base5c1dfb8 clones; no replacement/extra seats",
+  "routing": "Role-only, validator taskCall unchanged; zero model parameters"
+}

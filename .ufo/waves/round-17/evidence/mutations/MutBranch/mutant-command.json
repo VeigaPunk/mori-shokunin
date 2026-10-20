@@ -1,0 +1,30 @@
+{
+  "stage": "mutant",
+  "argv": [
+    "/usr/bin/python3",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutBranch/tools/mori-round17-jj-regressions.py",
+    "--census",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutBranch/tools/mori-census.sh",
+    "--output",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutBranch/.scratch/evidence/mutant",
+    "--scratch",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutBranch/.scratch/sandboxes/mutant"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutBranch",
+  "environment": {
+    "PATH": "/home/vgpnk/.local/bin:/usr/local/bin:/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutBranch/.scratch/driver-home",
+    "XDG_CONFIG_HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutBranch/.scratch/driver-home/.config",
+    "TMPDIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutBranch/.scratch",
+    "MORI_JJ_BIN": "/home/vgpnk/.local/bin/jj",
+    "PYTHONDONTWRITEBYTECODE": "1"
+  },
+  "started_at": "2026-10-20T19:48:30.891186+00:00",
+  "finished_at": "2026-10-20T19:48:32.693369+00:00",
+  "rc": 1,
+  "stdout": "mori-round17-jj-regressions: cases=12 match=9 mismatch=3 capability_absent=0 setup_failed=0 assertions=134 failed=9\nmanifest: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutBranch/.scratch/evidence/mutant/run-manifest.json\n",
+  "stderr": ""
+}

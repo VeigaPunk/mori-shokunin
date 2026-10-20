@@ -1,0 +1,1467 @@
+{
+  "schema": "mori-seat-terminal-expected-v1",
+  "pins": {
+    "Aborted/aborted-terminal.jsonl": "1f59604fa5caaf03531167ce2830dc6d0acda6430cb89b890c7afe1edef663fb",
+    "AbortedErrorFields/aborted-with-error-fields.jsonl": "9b52be45da49eda0cbaa5578e904b3fc68ed2c2e63b5d76134438118706085f7",
+    "CodeQuota1113/code-1113.jsonl": "fcfc824e4fa71f1b4d7375a7f14418bf77c73911cf1abfdc3cd1618087d77218",
+    "CodeQuota1308/code-1308.jsonl": "c9517ccff713adfeeb434847f3e1bbf977bfc253550a777d8e74c785dda643b7",
+    "CodeRate1302QuotaWord/code-1302-quota.jsonl": "9e9ca057cd448b360210e9be71fc0b843b9cadfab9a29edd3247c3259358c30d",
+    "Completed/completed-after-error.jsonl": "4f7ff47a37697bb61659f924e6dd00f2f55c51f551a5273254a20fe32ad6abfa",
+    "CompletedTrailing/completed-trailing-nonmessage.jsonl": "802b73ee506408042afd99a13091b491e2780f1574b30f0465dd4757734d32be",
+    "CredentialPinTrap/credential-trap.jsonl": "3054f64f04fcefc292cc458360e43861800b6c56bc7313ec4194963c2a025b34",
+    "DuplicateStems/d1/stem.jsonl": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
+    "DuplicateStems/d2/stem.jsonl": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
+    "EmptyDir/README.txt": "32607b0d574d777a3fea1ed3dad07e0e28140149a49d2d8eed5c6bde100deeb4",
+    "ErrorOther/bare-error.jsonl": "90aa1d0884b23e3a3224c61d9428f31e78d2d29119c6443927bec0a073b9e708",
+    "ErrorOther/thinking-loop-error.jsonl": "5f46e413a6b1674330d8af0bee1ed7978c407cede06af8354ad6f3d781398afd",
+    "ErrorUnsettled/boundary.jsonl": "5d494a8fd0da54f1b88fb134d7aebd79df9e3dc56c580491bad45094cb4d3173",
+    "ErrorUnsettled/recent.jsonl": "5dd5a3844c8d14b6c6cda1694dff80959240afcbb761ae7e99d05668acafafb9",
+    "ErrorUnsettled/timestamp-recent.jsonl": "44bc42e82a9e5b00270a2f43f11a858275a730767f67ba06d5d96ad4298aa48b",
+    "FifoSkip/real.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
+    "IncompleteToolResult/incomplete-tool-result.jsonl": "378812178442010e75ba62396d4a4ba4446567a7b25e9bce5f23821e7ac29fc1",
+    "IncompleteToolUse/no-stop-reason.jsonl": "99eec30bf279091ea911906af9fbca92397d9ca4df1b4dce474fd9575f5a1faa",
+    "IncompleteToolUse/tool-use-terminal.jsonl": "831cf05f933d7717faf9409416ad6d84ad56ac3d3244d61dde91bf59e9cd7bfd",
+    "IncompleteUser/incomplete-user.jsonl": "8a6bd3e8f451fdb9c210a89c5e09d1d1a14d50c9566ada1ad62f2fe935618530",
+    "MainSessionExclusion/2026-10-20T15-00-00Z_0123abcd.jsonl": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
+    "MainSessionExclusion/nested-ok.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
+    "MalformedLineSkip/malformed-then-completed.jsonl": "8eab5db35ed7fa95c8eb6740d88a778fa518c90b823d5bb6f1f6bd17b10df7e5",
+    "MaxFiles/max-a.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
+    "MaxFiles/max-b.jsonl": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
+    "MixedFinding/m-aborted.jsonl": "0e934d65715dd5a15a1252f8db8393f4c0a16109e556ff80b591a1efb793496b",
+    "MixedFinding/m-completed.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
+    "MixedFinding/m-incomplete.jsonl": "53ed56e8e610a000416accc149beb8e0c0b69f6749f112938ac11a1770a4dee8",
+    "MixedFinding/m-other.jsonl": "3142b3e29c124fb4e729e0cbe5b458b33d81aefc3d04249050719a1a7ed46369",
+    "MixedFinding/m-quota.jsonl": "bcf77a7aaa159dee2a55b789bc4acc20f8ddb03c2c969b768580ed1c4369d1e8",
+    "MixedFinding/m-rate.jsonl": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
+    "MixedFinding/m-unavailable.jsonl": "9e3d118a099fcaf7a9a87b82866128e7047c2dc047292b0c4a417afd3a7558de",
+    "MixedFinding/m-unsettled.jsonl": "5dd5a3844c8d14b6c6cda1694dff80959240afcbb761ae7e99d05668acafafb9",
+    "NestedDirs/a/b/c/deep-seat.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
+    "NestedDirs/a/b/deep-two.jsonl": "53ed56e8e610a000416accc149beb8e0c0b69f6749f112938ac11a1770a4dee8",
+    "NestedDirs/a/shallow-seat.jsonl": "0e934d65715dd5a15a1252f8db8393f4c0a16109e556ff80b591a1efb793496b",
+    "NonJsonlIgnored/Fake.jsonl/inner.txt": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
+    "NonJsonlIgnored/UPPER.JSONL": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
+    "NonJsonlIgnored/data.jsonl.bak": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
+    "NonJsonlIgnored/good.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
+    "NonJsonlIgnored/notes.txt": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
+    "NonJsonlIgnored/other.json": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
+    "PrefixAttribution/KumitateR17-2.Q.jsonl": "0e934d65715dd5a15a1252f8db8393f4c0a16109e556ff80b591a1efb793496b",
+    "PrefixAttribution/SoujiR17-3.W.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
+    "PrefixAttribution/SoujiR17-3.Z.jsonl": "bcf77a7aaa159dee2a55b789bc4acc20f8ddb03c2c969b768580ed1c4369d1e8",
+    "PrefixAttribution/SoujiR17-30.Trap.jsonl": "0e934d65715dd5a15a1252f8db8393f4c0a16109e556ff80b591a1efb793496b",
+    "PrefixAttribution/TsukuroiR17.X.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
+    "PrefixAttribution/TsukuroiR17.Y.jsonl": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
+    "PrefixAttribution/TsukuroiR17Extra.Xtrap.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
+    "Quota402/quota-402.jsonl": "7443dbf42713b0f9af4fd22be1c0cb710099825c7e71cd1222361c99956523ec",
+    "QuotaCredits/quota-credits.jsonl": "691072a80c71f453abd7e0b679904ad5cdc7b7ece4b9c83084c2c834175107e3",
+    "QuotaUsageLimit/quota-usage-limit.jsonl": "7c056cea54fafc39ba949c8eacb66624f3583df890bd3fc42bc225e90263a83c",
+    "QuotaWord/quota-word.jsonl": "81e0a7629e2c6af1b65ad1b2dd6531f948331469388ff749066e53016203f0f4",
+    "RateLimitOrdering/status-beats-quota.jsonl": "a6844bd6e80167404b902f71bc0c0189b6d3297d166fcc76ff948eab612b4fdc",
+    "RateLimitOrdering/token-beats-quota.jsonl": "12ad7566573edb00cba346ec110b95699140d18e6ec35cc561d3efc8934917a5",
+    "RateLimitResourceExhausted/devin-resource-exhausted.jsonl": "4f4d80c6d5bdf1dd771b868fd67940e2bdefd58103510fb2f1ae073c3e2b6650",
+    "RateLimitRetryExhausted/zai-retry-exhausted.jsonl": "fd1cd2989743e9789f751fbe1a8709c0cb17ef3d8c3653bec807f164ac35fb69",
+    "RateLimitStatus429/zai-status-429.jsonl": "a3747772cffdfe5132dbc05ffad1cce0898269e9d428f4ec80308be9945d031b",
+    "RateLimitToken429/zai-token-429.jsonl": "752336ea386df7c465127db08bb1cc4b2fefe78042122ea81dedd456dfbbc3b5",
+    "RateLimitTokenCapitalRateLimit/zai-token-capital.jsonl": "f9de2c5b0c171ca7a69b7ed958a5182d58b3be48e46a47885130a2a28defa882",
+    "RateLimitTokenRateLimitUnderscore/zai-token-underscore.jsonl": "a09163f185d504df036c1e17b179d90fa04328b75a9cd677282b9d1ca0265dca",
+    "RateLimitTokenUpper/zai-token-upper.jsonl": "71aa77b76d7c413c2295307229190fe5d88a8a07fc24906a1c120ccf14e317b1",
+    "RetrySingle/retry-one.jsonl": "e9a4436e3acc600990cb479cbaab5ec278222ffc64918a2676f7ac4ded276d49",
+    "SchemaVersionUnavailable/absent.jsonl": "dc1332c422a45bedbd7ea15ecfb195751f3ab673e0e1a7db340ea308aa2be2be",
+    "SchemaVersionUnavailable/late.jsonl": "116101cbbc283e740a7c2f2cee98fc191477998889586e2a9a4ef6390a04206f",
+    "SchemaVersionUnavailable/version2.jsonl": "8edeb11139eea812262e87f65ebb8dccda319e353f481d163ca0e9a5905710a5",
+    "SymlinkIgnore/Dangling.jsonl": "4c4f26b5bfa5e7fde652d541cc18bbeac4d5c62647b0f6876e38fb17f9dfea61",
+    "SymlinkIgnore/Link.jsonl": "d375ae560652ffd51d50c1f99ecdc3f618876fcdf23d72598ac4399aad261fe1",
+    "SymlinkIgnore/linked-dir": "cecc25cca6256f99432df01faa747b551709b337646f79ee7017997e1c8f25ab",
+    "SymlinkIgnore/real-dir/notes.txt": "18c4f85a180cf29ddc1f8e3a3143ff54d643d1c306dbe610f4f70482632071d4",
+    "SymlinkIgnore/real.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
+    "SymlinkIgnore/trap.txt": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
+    "TailBoundary/tail-far.jsonl": "7017e332bddff57f9544fd8200cba77ebf785509ba5deb50427fddcd9dbd65cd",
+    "TailBoundary/tail-near.jsonl": "dd92252ce0bf4a66f5fb2ccbae893467c14e1124e7916ad4af1d986a026f5433",
+    "TailBoundary/tail-partial.jsonl": "1217652b097b839829cf4b02e358e4f80f30884ee7c55b67a81d77e344878251",
+    "UnavailableEmpty/empty.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "UnavailableMalformed/malformed.jsonl": "bfa68778a26126e3709915610640d1e79e1df18ce432dd9bacccbc2e8c14bee8",
+    "UnavailableNonMessage/non-message-only.jsonl": "ee5a7634a7942d4d835c4537489646b202bf72d2891d96f75c22dd043b3cc6a1",
+    "UnreadableFile/locked.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "UnreadableFile/open.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722"
+  },
+  "cases": [
+    {
+      "id": "rate_limit_zai_status_429",
+      "pack": "RateLimitStatus429",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 1,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "zai-status-429": "dead_rate_limit"
+        }
+      }
+    },
+    {
+      "id": "rate_limit_zai_token_429",
+      "pack": "RateLimitToken429",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 1,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "zai-token-429": "dead_rate_limit"
+        }
+      }
+    },
+    {
+      "id": "rate_limit_zai_token_underscore",
+      "pack": "RateLimitTokenRateLimitUnderscore",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 1,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "zai-token-underscore": "dead_rate_limit"
+        }
+      }
+    },
+    {
+      "id": "rate_limit_zai_token_capital",
+      "pack": "RateLimitTokenCapitalRateLimit",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 1,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "zai-token-capital": "dead_rate_limit"
+        }
+      }
+    },
+    {
+      "id": "rate_limit_zai_token_upper",
+      "pack": "RateLimitTokenUpper",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 1,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "zai-token-upper": "dead_rate_limit"
+        }
+      }
+    },
+    {
+      "id": "rate_limit_devin_resource_exhausted",
+      "pack": "RateLimitResourceExhausted",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 1,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "devin-resource-exhausted": "dead_rate_limit"
+        }
+      }
+    },
+    {
+      "id": "rate_limit_zai_retry_exhausted",
+      "pack": "RateLimitRetryExhausted",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 1,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "zai-retry-exhausted": "dead_rate_limit"
+        }
+      }
+    },
+    {
+      "id": "rate_limit_beats_quota_by_status_and_token",
+      "pack": "RateLimitOrdering",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 2,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "status-beats-quota": "dead_quota",
+          "token-beats-quota": "dead_quota"
+        }
+      }
+    },
+    {
+      "id": "quota_quota_word",
+      "pack": "QuotaWord",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 1,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "quota-word": "dead_quota"
+        }
+      }
+    },
+    {
+      "id": "quota_quota_usage_limit",
+      "pack": "QuotaUsageLimit",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 1,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "quota-usage-limit": "dead_quota"
+        }
+      }
+    },
+    {
+      "id": "quota_quota_402",
+      "pack": "Quota402",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 1,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "quota-402": "dead_quota"
+        }
+      }
+    },
+    {
+      "id": "quota_quota_credits",
+      "pack": "QuotaCredits",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 1,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "quota-credits": "dead_quota"
+        }
+      }
+    },
+    {
+      "id": "completed_after_mid_session_error",
+      "pack": "Completed",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 1,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "completed-after-error": "completed"
+        }
+      }
+    },
+    {
+      "id": "completed_trailing_nonmessage_records",
+      "pack": "CompletedTrailing",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 1,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "completed-trailing-nonmessage": "completed"
+        }
+      }
+    },
+    {
+      "id": "aborted_terminal",
+      "pack": "Aborted",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 0,
+          "aborted": 1,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "aborted-terminal": "aborted"
+        }
+      }
+    },
+    {
+      "id": "aborted_beats_error_fields",
+      "pack": "AbortedErrorFields",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 0,
+          "aborted": 1,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "aborted-with-error-fields": "aborted"
+        }
+      }
+    },
+    {
+      "id": "error_other_thinking_and_bare",
+      "pack": "ErrorOther",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 2,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "bare-error": "dead_error_other",
+          "thinking-loop-error": "dead_error_other"
+        }
+      }
+    },
+    {
+      "id": "incomplete_toolresult_terminal",
+      "pack": "IncompleteToolResult",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 1,
+          "unavailable": 0
+        },
+        "seats": {
+          "incomplete-tool-result": "incomplete"
+        }
+      }
+    },
+    {
+      "id": "incomplete_user_terminal",
+      "pack": "IncompleteUser",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 1,
+          "unavailable": 0
+        },
+        "seats": {
+          "incomplete-user": "incomplete"
+        }
+      }
+    },
+    {
+      "id": "incomplete_tooluse_and_no_stop_reason",
+      "pack": "IncompleteToolUse",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 2,
+          "unavailable": 0
+        },
+        "seats": {
+          "no-stop-reason": "incomplete",
+          "tool-use-terminal": "incomplete"
+        }
+      }
+    },
+    {
+      "id": "unavailable_empty_file",
+      "pack": "UnavailableEmpty",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 1
+        },
+        "seats": {
+          "empty": "unavailable"
+        }
+      }
+    },
+    {
+      "id": "unavailable_malformed_and_shape",
+      "pack": "UnavailableMalformed",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 1
+        },
+        "seats": {
+          "malformed": "unavailable"
+        }
+      }
+    },
+    {
+      "id": "unavailable_non_message_records_only",
+      "pack": "UnavailableNonMessage",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 1
+        },
+        "seats": {
+          "non-message-only": "unavailable"
+        }
+      }
+    },
+    {
+      "id": "unavailable_unreadable_file",
+      "pack": "UnreadableFile",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 1,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 1
+        },
+        "seats": {
+          "locked": "unavailable",
+          "open": "completed"
+        }
+      },
+      "unreadable_files": [
+        "locked.jsonl"
+      ]
+    },
+    {
+      "id": "empty_dir_no_jsonl_rc0",
+      "pack": "EmptyDir",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {}
+      }
+    },
+    {
+      "id": "missing_dir_rc2",
+      "pack": "MissingDir",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 2,
+        "finding_id": "MORI_SEAT_TERMINAL_SETUP"
+      }
+    },
+    {
+      "id": "max_files_exceeded",
+      "pack": "MaxFiles",
+      "args": [
+        "--now-ms",
+        "1761000000000",
+        "--max-files",
+        "1"
+      ],
+      "want": {
+        "rc": 2,
+        "finding_id": "MORI_SEAT_TERMINAL_SETUP"
+      }
+    },
+    {
+      "id": "max_files_two_allowed",
+      "pack": "MaxFiles",
+      "args": [
+        "--now-ms",
+        "1761000000000",
+        "--max-files",
+        "2"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 1,
+          "aborted": 0,
+          "dead_rate_limit": 1,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "max-a": "completed",
+          "max-b": "dead_rate_limit"
+        }
+      }
+    },
+    {
+      "id": "nested_directories",
+      "pack": "NestedDirs",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 1,
+          "aborted": 1,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 1,
+          "unavailable": 0
+        },
+        "seats": {
+          "deep-seat": "completed",
+          "deep-two": "incomplete",
+          "shallow-seat": "aborted"
+        }
+      }
+    },
+    {
+      "id": "prefix_all",
+      "pack": "PrefixAttribution",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 3,
+          "aborted": 2,
+          "dead_rate_limit": 1,
+          "dead_quota": 1,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "KumitateR17-2.Q": "aborted",
+          "SoujiR17-3.W": "completed",
+          "SoujiR17-3.Z": "dead_quota",
+          "SoujiR17-30.Trap": "aborted",
+          "TsukuroiR17.X": "completed",
+          "TsukuroiR17.Y": "dead_rate_limit",
+          "TsukuroiR17Extra.Xtrap": "completed"
+        }
+      }
+    },
+    {
+      "id": "prefix_filter_tsukuroi",
+      "pack": "PrefixAttribution",
+      "args": [
+        "--now-ms",
+        "1761000000000",
+        "--prefix",
+        "TsukuroiR17"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 1,
+          "aborted": 0,
+          "dead_rate_limit": 1,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "TsukuroiR17.X": "completed",
+          "TsukuroiR17.Y": "dead_rate_limit"
+        }
+      }
+    },
+    {
+      "id": "prefix_filter_souji",
+      "pack": "PrefixAttribution",
+      "args": [
+        "--now-ms",
+        "1761000000000",
+        "--prefix",
+        "SoujiR17-3"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 1,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 1,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "SoujiR17-3.W": "completed",
+          "SoujiR17-3.Z": "dead_quota"
+        }
+      }
+    },
+    {
+      "id": "prefix_filter_kumitate",
+      "pack": "PrefixAttribution",
+      "args": [
+        "--now-ms",
+        "1761000000000",
+        "--prefix",
+        "KumitateR17-2"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 0,
+          "aborted": 1,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "KumitateR17-2.Q": "aborted"
+        }
+      }
+    },
+    {
+      "id": "prefix_filter_multi",
+      "pack": "PrefixAttribution",
+      "args": [
+        "--now-ms",
+        "1761000000000",
+        "--prefix",
+        "TsukuroiR17",
+        "--prefix",
+        "SoujiR17-3"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 2,
+          "aborted": 0,
+          "dead_rate_limit": 1,
+          "dead_quota": 1,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "SoujiR17-3.W": "completed",
+          "SoujiR17-3.Z": "dead_quota",
+          "TsukuroiR17.X": "completed",
+          "TsukuroiR17.Y": "dead_rate_limit"
+        }
+      }
+    },
+    {
+      "id": "prefix_filter_no_match",
+      "pack": "PrefixAttribution",
+      "args": [
+        "--now-ms",
+        "1761000000000",
+        "--prefix",
+        "Tsukuroi"
+      ],
+      "want": {
+        "rc": 2,
+        "finding_id": "MORI_SEAT_TERMINAL_SETUP"
+      }
+    },
+    {
+      "id": "tail_small_window_far_terminal_lost",
+      "pack": "TailBoundary",
+      "args": [
+        "--now-ms",
+        "1761000000000",
+        "--max-tail-bytes",
+        "1000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 2,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 1
+        },
+        "seats": {
+          "tail-far": "unavailable",
+          "tail-near": "completed",
+          "tail-partial": "completed"
+        }
+      }
+    },
+    {
+      "id": "tail_default_window_all_classified",
+      "pack": "TailBoundary",
+      "args": [
+        "--now-ms",
+        "1761000000000",
+        "--max-tail-bytes",
+        "262144"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 3,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "tail-far": "completed",
+          "tail-near": "completed",
+          "tail-partial": "completed"
+        }
+      }
+    },
+    {
+      "id": "tail_tiny_window_all_unavailable",
+      "pack": "TailBoundary",
+      "args": [
+        "--now-ms",
+        "1761000000000",
+        "--max-tail-bytes",
+        "64"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 3
+        },
+        "seats": {
+          "tail-far": "unavailable",
+          "tail-near": "unavailable",
+          "tail-partial": "unavailable"
+        }
+      }
+    },
+    {
+      "id": "tail_a1_default_window",
+      "pack": "TailBoundary",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 3,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "tail-far": "completed",
+          "tail-near": "completed",
+          "tail-partial": "completed"
+        }
+      }
+    },
+    {
+      "id": "non_jsonl_files_ignored",
+      "pack": "NonJsonlIgnored",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 1,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "good": "completed"
+        }
+      }
+    },
+    {
+      "id": "symlinks_never_followed",
+      "pack": "SymlinkIgnore",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 1,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "real": "completed"
+        }
+      }
+    },
+    {
+      "id": "credential_pin_trap_skipped",
+      "pack": "CredentialPinTrap",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 1,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "credential-trap": "completed"
+        }
+      }
+    },
+    {
+      "id": "mixed_one_seat_per_class",
+      "pack": "MixedFinding",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 1,
+          "aborted": 1,
+          "dead_rate_limit": 1,
+          "dead_quota": 1,
+          "dead_error_other": 1,
+          "error_unsettled": 1,
+          "incomplete": 1,
+          "unavailable": 1
+        },
+        "seats": {
+          "m-aborted": "aborted",
+          "m-completed": "completed",
+          "m-incomplete": "incomplete",
+          "m-other": "dead_error_other",
+          "m-quota": "dead_quota",
+          "m-rate": "dead_rate_limit",
+          "m-unavailable": "unavailable",
+          "m-unsettled": "error_unsettled"
+        }
+      }
+    },
+    {
+      "id": "error_unsettled_default_settle",
+      "pack": "ErrorUnsettled",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 1,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 2,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "boundary": "dead_rate_limit",
+          "recent": "error_unsettled",
+          "timestamp-recent": "error_unsettled"
+        }
+      }
+    },
+    {
+      "id": "error_unsettled_custom_settle_60",
+      "pack": "ErrorUnsettled",
+      "args": [
+        "--now-ms",
+        "1761000000000",
+        "--settle-seconds",
+        "60"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 2,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 1,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "boundary": "dead_rate_limit",
+          "recent": "dead_rate_limit",
+          "timestamp-recent": "error_unsettled"
+        }
+      }
+    },
+    {
+      "id": "code_quota_1113_beats_429",
+      "pack": "CodeQuota1113",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 1,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "code-1113": "dead_quota"
+        }
+      }
+    },
+    {
+      "id": "code_quota_1308_beats_429",
+      "pack": "CodeQuota1308",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 1,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "code-1308": "dead_quota"
+        }
+      }
+    },
+    {
+      "id": "code_rate_1302_beats_quota_token",
+      "pack": "CodeRate1302QuotaWord",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 1,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "code-1302-quota": "dead_rate_limit"
+        }
+      }
+    },
+    {
+      "id": "retry_after_1_retry",
+      "pack": "RetrySingle",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 1,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "retry-one": "dead_rate_limit"
+        }
+      }
+    },
+    {
+      "id": "main_session_excluded_from_totals",
+      "pack": "MainSessionExclusion",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 1,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "nested-ok": "completed"
+        }
+      }
+    },
+    {
+      "id": "duplicate_stems_two_entries",
+      "pack": "DuplicateStems",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 2,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "d1/stem": "dead_rate_limit",
+          "d2/stem": "dead_rate_limit"
+        }
+      }
+    },
+    {
+      "id": "schema_version_unavailable",
+      "pack": "SchemaVersionUnavailable",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 3
+        },
+        "seats": {
+          "absent": "unavailable",
+          "late": "unavailable",
+          "version2": "unavailable"
+        }
+      }
+    },
+    {
+      "id": "malformed_lines_skipped",
+      "pack": "MalformedLineSkip",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 1,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "malformed-then-completed": "completed"
+        }
+      }
+    },
+    {
+      "id": "fifo_skipped",
+      "pack": "FifoSkip",
+      "fifo_files": [
+        "pipe.jsonl"
+      ],
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 1,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "real": "completed"
+        }
+      }
+    }
+  ]
+}

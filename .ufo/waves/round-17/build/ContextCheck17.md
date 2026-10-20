@@ -1,10 +1,19 @@
 # ContextCheck17 — round-17 wave-spec context gate (build)
 
+> **Wave-2 amendment (2026-10-20, L1-directed):** the wave-2 mutation probe
+> `falsify/MutContext.md` killed `no_live_journal_queries` but **survived** on
+> `no_background_jobs`. The binding half of that clause was tightened and the exact
+> survivor was committed as a selftest arm; see "Wave-2 amendment — survivor B" at the
+> end of this report. Current file: 856 lines, sha256
+> `ffdcd1154f5bc0d5af45cea6f14a4c125852f1f667ca0990350872261213681c`. Nothing below this
+> block was executed in wave 2.
+
 Scope: extend the round-16 static context gate with the four round-17 clauses, in the assigned
 clone only. Deliverable file:
 `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/ContextCheck17/tools/mori-round17-context-check.py`
 (clone at base `24526ea9617cd020fee16c28fe4d4a2789dc28cb`; 810 lines; sha256
-`4bb17c3759f80b02f8426686ea60f4960be822aee8869b942460cadaa7bab2ae`). No lane file other than this
+`4bb17c3759f80b02f8426686ea60f4960be822aee8869b942460cadaa7bab2ae` — wave-1 delivery, pinned by
+`MutContext` and by the lane copy at `5c1dfb8`). No lane file other than this
 report was written; no VCS mutation was run anywhere.
 
 ## Interface kept from round 16
@@ -56,7 +65,7 @@ one-line context, `no_background_jobs` still passed because the `/tmp` sentence
 `contract.md`). It is used by all four prohibition groups. The r16 clause bodies were left exactly
 as they were.
 
-## Selftest (executed, rc 0)
+## Selftest (executed in wave 1 at sha `4bb17c37…`, rc 0 — not re-run after the amendment)
 
 Command, run inside the clone with scratch confined to it:
 
@@ -79,7 +88,7 @@ weak-second-context, no-spec-echo (sentinel must not appear in stdout), invalid 
 The near-miss and single-line arms exist because both failure modes were reachable: a clause whose
 two groups collapse into one loose pattern, and a window that spans sentences on a one-line context.
 
-## Real-spec run (read-only), rc 0
+## Real-spec run (read-only, wave-1 checker at sha `4bb17c37…`), rc 0
 
 ```
 python3 tools/mori-round17-context-check.py \
@@ -148,3 +157,63 @@ network access, no downloads. No background jobs, no journal queries, no `/tmp` 
 - No git/jj command of any kind was run for state change; no `git add/commit/stash/checkout/
   switch/reset/pull/push`, no `jj` mutation. `git status --porcelain` in the clone shows only
   `?? .scratch/` and `?? tools/mori-round17-context-check.py`.
+
+## Wave-2 amendment — survivor B (L1-directed, 2026-10-20)
+
+**Trigger (observed by another seat, not re-run here).** `falsify/MutContext.md` records mutant B:
+from the wave-2 context (`.ufo/waves/round-17/wave2-spec.json`, spec sha256
+`6a2dc375e6131ac4c3b2fb342979ff920048e3ee0be9d295237b68ff6760cd2e`, context length 3121) it deleted
+exactly 20 bytes, `No background jobs. `, and ran the wave-1 checker (`4bb17c37…`) on the mutant
+retained at `.ufo/worktrees/round-17/MutContext/.scratch/wave2-no-background.json` (mutant sha
+`503cfd25…`): rc 0, `CONTEXT_OK`, no `missing` key. Its diagnosis, confirmed here by inspection of
+the mutant text: the surviving pacman sentence `All pacman transactions are paused host-wide;
+never -S/-Sy/-Syu/-U/-R, downgrade, restart host service.` satisfied the clause's *binding* group
+through the host-service alternative, so the gate reported the clause present with the only
+background-job ban deleted. The mention group was never the problem — the ban itself was.
+
+**Fix.** In `no_background_jobs` the binding group now accepts only prohibitions bound to
+`background job(s)` / `background process(es)`; the `long-lived process(es)` / `host service(s)`
+alternative is gone (`tools/mori-round17-context-check.py:286-293`). The mention group is
+unchanged, so a context whose surviving sentence only bans host services still has a mention but
+no binding and goes red — which is the requested semantics. The docstring entry (`:43-53`) now
+states the strict binding and names the survivor. The other 11 clauses, their order, the rc
+contract, `claims_runtime_prevention: false` and `static_only: true` are untouched.
+
+**Committed regression arms** (the exact survivor, frozen):
+- `_WAVE2_CONTEXT` (`:552-568`) — the wave-2 spec context, exact bytes, deliberately frozen at the
+  wave-2 revision and never updated with later waves.
+- `_WAVE2_BACKGROUND_SENTENCE = "No background jobs. "` (`:570`) — the exact 20 bytes mutant B
+  deleted.
+- arm `wave2-positive` (`:696-700`): `{"context": _WAVE2_CONTEXT}` → expect rc 0 `CONTEXT_OK`.
+- arm `wave2-survivor-b` (`:701-707`): `{"context": _WAVE2_CONTEXT.replace(_WAVE2_BACKGROUND_SENTENCE, "", 1)}`
+  → expect rc 1 `CONTEXT_MISSING`, `missing == ["no_background_jobs"]`, no sibling clause missing
+  (`want_missing` and `forbid_missing` both set).
+- build-time guard (`:691-695`): if the sentence does not occur exactly once in the frozen context,
+  the selftest records a failure before any arm runs.
+- arm count 29 → 31.
+
+**Not executed.** Per the wave-2 instruction, neither `--selftest` nor `--spec` was run on the
+edited file; the L1 runs settled code. Static checks actually performed, all by `python3` AST
+parsing of the file (the module was never imported or executed): `ast.parse` succeeds;
+`_WAVE2_CONTEXT == spec["context"]` is `True` at 3121 characters; the sentence occurs exactly once;
+`_CLAUSES` still has 12 entries in the original id order; the `no_background_jobs` binding group
+now holds exactly 2 alternatives, both containing `\bbackground\s+(?:jobs?|processes?)\b`.
+
+Expected behaviour is **[INFERENCE]**, reasoned from the regexes: the pristine wave-2 context
+still matches through the forward alternative (`No` + space filler + `background jobs`, no sentence
+break), and after the deletion no `background` token remains anywhere in the context, so both
+alternatives fail. The 11 other clauses bind to text the mid-line deletion does not touch, so the
+mutant should red exactly one clause. The `wave2-positive` arm is additionally anchored by
+MutContext's observed `CONTEXT_OK` on a byte-identical context under the wave-1 checker, whose
+other 11 clauses are byte-identical to this file's.
+
+**Diff and hash (read-only checks).** Inside the clone, `git diff --stat` against `5c1dfb8`:
+1 file changed, 53 insertions(+), 7 deletions(-) — only the tool. New file: 856 lines, sha256
+`ffdcd1154f5bc0d5af45cea6f14a4c125852f1f667ca0990350872261213681c`. The 29 pre-existing arms were
+last executed in wave 1 at sha `4bb17c37…` (rc 0, `SELFTEST_OK`); that run is not evidence for the
+amended clause.
+
+**Writes this turn.** Only the clone's `tools/mori-round17-context-check.py` and this report. The
+MutContext clone was read (report, retained mutant JSON, its `.scratch` listings) and not edited.
+No VCS mutation (`git diff`/`git status`/`sha256sum` are read-only), no install, no background job,
+no journal query, no `/tmp` write.

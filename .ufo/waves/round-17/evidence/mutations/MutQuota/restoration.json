@@ -1,0 +1,9 @@
+{
+  "pristine_sha256": "5819c3c06e4ceded02b043ef1edbe15043359f176f1b24830b4d3cae24adbdba",
+  "mutant_sha256": "ac8769a260622cfeda85a937621ecdfb838c53df84c0f4e822e22fe8e8731d09",
+  "restored_sha256": "5819c3c06e4ceded02b043ef1edbe15043359f176f1b24830b4d3cae24adbdba",
+  "restored_bytes_equal_pristine": true,
+  "source_tool_sha256_after": "5819c3c06e4ceded02b043ef1edbe15043359f176f1b24830b4d3cae24adbdba",
+  "gate_sha256_after": "21285c2b7000bf63cd9fd679f4b88a7d5d4ff250eee0279576d6d0dcb3b97f7a",
+  "expected_sha256_after": "b684c63bf3cebe70f24d3d02f3f0df4f63aad3f547a365a3ca1864f5f57cb01f"
+}

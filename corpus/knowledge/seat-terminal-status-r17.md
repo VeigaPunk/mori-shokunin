@@ -54,3 +54,30 @@ No transcript content, errorMessage text, credential-pin record or usage is prin
 
 The knowledge entry is admitted only at the finite scope measured in the round-17 lesson.
 Any independent closure remains outside the author lane.
+
+## A2 precision after fresh falsification
+
+The initial implementation's timestamp-free errors were not proved older than
+the settle window. Final classification makes them unavailable with reason
+`terminal-time`, never an aged error. A root symlink or failed traversal is
+setup, not a clean empty scan. Safely opened regular descriptors and selective
+JSON field projection keep content/usage/credential-pin payloads unmaterialized.
+Permitted session-version and timestamp fields support schema/age checks only.
+
+The code mapping is explicitly Z.AI-scoped. S043 does not document OMP's
+`(type=NNNN)` text wrapper: equating that token to a business code is
+**[INFERENCE]**, not authenticated cause. Only the selected known code rules
+are claimed; an unknown Z.AI business code under HTTP 429 without explicit
+rate/quota text is an unspecified error, not a guessed rate-limit cause.
+Bare `resource_exhausted` likewise does not identify which resource limit was
+reached. This narrows cause attribution while retaining the full error count.
+
+The old decision-table rows are superseded for these cases; final committed
+measurements and expanded independent expected fields are in the round-17
+lesson. Error text is reduced immediately to the permitted flags/code/counts;
+neither the raw string nor other transcript payload is retained in the view.
+
+No-follow scope is the selected root's final component and descriptor-relative
+descendant traversal/opening. The caller selects the root; OS resolution of
+symlinks in its ancestor pathname is not an authenticated-root guarantee.
+Use a trusted canonical root for observation. A final-root symlink is rejected.

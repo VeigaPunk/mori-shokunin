@@ -9,6 +9,9 @@
     "Completed/completed-after-error.jsonl": "4f7ff47a37697bb61659f924e6dd00f2f55c51f551a5273254a20fe32ad6abfa",
     "CompletedTrailing/completed-trailing-nonmessage.jsonl": "802b73ee506408042afd99a13091b491e2780f1574b30f0465dd4757734d32be",
     "CredentialPinTrap/credential-trap.jsonl": "3054f64f04fcefc292cc458360e43861800b6c56bc7313ec4194963c2a025b34",
+    "DecimalSchema/decimal-schema.jsonl": "c8c6d191f8e02e712aac64f5da3871574c8f9abf7004466dc55ccc3e5e5941cd",
+    "DecimalStatus/decimal-status.jsonl": "4e730999df1deae41bef4c744c13ee50a3f939c425cccc349151ab4c3ae0b209",
+    "DecimalTimestamp/decimal-timestamp.jsonl": "689534ff92e8a8db82a9824548ef9093923e5664dca5177659c719f9a78bb55f",
     "DuplicateStems/d1/stem.jsonl": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
     "DuplicateStems/d2/stem.jsonl": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
     "EmptyDir/README.txt": "32607b0d574d777a3fea1ed3dad07e0e28140149a49d2d8eed5c6bde100deeb4",
@@ -17,13 +20,17 @@
     "ErrorUnsettled/boundary.jsonl": "5d494a8fd0da54f1b88fb134d7aebd79df9e3dc56c580491bad45094cb4d3173",
     "ErrorUnsettled/recent.jsonl": "5dd5a3844c8d14b6c6cda1694dff80959240afcbb761ae7e99d05668acafafb9",
     "ErrorUnsettled/timestamp-recent.jsonl": "44bc42e82a9e5b00270a2f43f11a858275a730767f67ba06d5d96ad4298aa48b",
+    "EscapedQuota/quota-escaped.jsonl": "69ddca6c424249d5a71168aa043fbb2ed5e121b2e225a586ba7f7ad85e9c9118",
+    "EscapedRate/rate-escaped.jsonl": "28f1f6a70edd767ff78d4650dc4bba60acb19cd02d096b1e32676c233119d8a1",
     "FifoSkip/real.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
-    "IncompleteToolResult/incomplete-tool-result.jsonl": "378812178442010e75ba62396d4a4ba4446567a7b25e9bce5f23821e7ac29fc1",
+    "IncompleteToolResult/incomplete-tool-result.jsonl": "cda7455190c98ef5be34e22f1470a612660e54757b47e01c63b61b56aa90c309",
     "IncompleteToolUse/no-stop-reason.jsonl": "99eec30bf279091ea911906af9fbca92397d9ca4df1b4dce474fd9575f5a1faa",
     "IncompleteToolUse/tool-use-terminal.jsonl": "831cf05f933d7717faf9409416ad6d84ad56ac3d3244d61dde91bf59e9cd7bfd",
     "IncompleteUser/incomplete-user.jsonl": "8a6bd3e8f451fdb9c210a89c5e09d1d1a14d50c9566ada1ad62f2fe935618530",
+    "LongCode13/long-code-13.jsonl": "da2c0b1a776c6844f14cd99908cd10346558e8c7743c44fad361785e0c8651c6",
     "MainSessionExclusion/2026-10-20T15-00-00Z_0123abcd.jsonl": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
     "MainSessionExclusion/nested-ok.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
+    "MalformedFieldSkip/malformed-field-skip.jsonl": "e0f407c65f493fdd0ee62d17ccc6e4fc69d2fdba0a5a8465cc803bbfa1a03d28",
     "MalformedLineSkip/malformed-then-completed.jsonl": "8eab5db35ed7fa95c8eb6740d88a778fa518c90b823d5bb6f1f6bd17b10df7e5",
     "MaxFiles/max-a.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
     "MaxFiles/max-b.jsonl": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
@@ -51,10 +58,11 @@
     "PrefixAttribution/TsukuroiR17.X.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
     "PrefixAttribution/TsukuroiR17.Y.jsonl": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
     "PrefixAttribution/TsukuroiR17Extra.Xtrap.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
-    "Quota402/quota-402.jsonl": "7443dbf42713b0f9af4fd22be1c0cb710099825c7e71cd1222361c99956523ec",
+    "Quota402/quota-402.jsonl": "084188cfe799cb1a2c1b7236f4ef210a51e34d5b2d444dca784f93006b2c0ea5",
     "QuotaCredits/quota-credits.jsonl": "691072a80c71f453abd7e0b679904ad5cdc7b7ece4b9c83084c2c834175107e3",
     "QuotaUsageLimit/quota-usage-limit.jsonl": "7c056cea54fafc39ba949c8eacb66624f3583df890bd3fc42bc225e90263a83c",
     "QuotaWord/quota-word.jsonl": "81e0a7629e2c6af1b65ad1b2dd6531f948331469388ff749066e53016203f0f4",
+    "RateLimitFreeModel/free-model.jsonl": "13806b0eedf6e23aefb98fb17d10794973faa5a44beffaf3f3588fd95b280512",
     "RateLimitOrdering/status-beats-quota.jsonl": "a6844bd6e80167404b902f71bc0c0189b6d3297d166fcc76ff948eab612b4fdc",
     "RateLimitOrdering/token-beats-quota.jsonl": "12ad7566573edb00cba346ec110b95699140d18e6ec35cc561d3efc8934917a5",
     "RateLimitResourceExhausted/devin-resource-exhausted.jsonl": "4f4d80c6d5bdf1dd771b868fd67940e2bdefd58103510fb2f1ae073c3e2b6650",
@@ -68,6 +76,10 @@
     "SchemaVersionUnavailable/absent.jsonl": "dc1332c422a45bedbd7ea15ecfb195751f3ab673e0e1a7db340ea308aa2be2be",
     "SchemaVersionUnavailable/late.jsonl": "116101cbbc283e740a7c2f2cee98fc191477998889586e2a9a4ef6390a04206f",
     "SchemaVersionUnavailable/version2.jsonl": "8edeb11139eea812262e87f65ebb8dccda319e353f481d163ca0e9a5905710a5",
+    "SecurityRootSymlink/root-link": "34a04005bcaf206eec990bd9637d9fdb6725e0a0c0d4aebf003f17f4c956eb5c",
+    "SecurityRootSymlink/target/inside.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
+    "SecurityUnreadableDir/root-ok.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
+    "SecurityUnreadableDir/sub/inside.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722",
     "SymlinkIgnore/Dangling.jsonl": "4c4f26b5bfa5e7fde652d541cc18bbeac4d5c62647b0f6876e38fb17f9dfea61",
     "SymlinkIgnore/Link.jsonl": "d375ae560652ffd51d50c1f99ecdc3f618876fcdf23d72598ac4399aad261fe1",
     "SymlinkIgnore/linked-dir": "cecc25cca6256f99432df01faa747b551709b337646f79ee7017997e1c8f25ab",
@@ -76,10 +88,13 @@
     "SymlinkIgnore/trap.txt": "187e2d13b8e0ceb5bd0c96d82fe8fff644f614ee162d7bac6fa8b4d9031d1f69",
     "TailBoundary/tail-far.jsonl": "7017e332bddff57f9544fd8200cba77ebf785509ba5deb50427fddcd9dbd65cd",
     "TailBoundary/tail-near.jsonl": "dd92252ce0bf4a66f5fb2ccbae893467c14e1124e7916ad4af1d986a026f5433",
+    "TailBoundary/tail-old-default-gap.jsonl": "dba4651507bd086fb7e0652081b61c43d966897658eddcc89110b35bd7f7ed79",
     "TailBoundary/tail-partial.jsonl": "1217652b097b839829cf4b02e358e4f80f30884ee7c55b67a81d77e344878251",
     "UnavailableEmpty/empty.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "UnavailableMalformed/malformed.jsonl": "bfa68778a26126e3709915610640d1e79e1df18ce432dd9bacccbc2e8c14bee8",
     "UnavailableNonMessage/non-message-only.jsonl": "ee5a7634a7942d4d835c4537489646b202bf72d2891d96f75c22dd043b3cc6a1",
+    "UnknownCode1309/unknown-code-1309.jsonl": "ccf66b543ba6407ab702f2546ea81266b6fb6c46932b03cf6c7d988ea2669a06",
+    "UnknownTime/unknown-time.jsonl": "0e6617aa44911f1b84fb477bf7a29344f7b58157b26e49a4c5b823d4105a9c1a",
     "UnreadableFile/locked.jsonl": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "UnreadableFile/open.jsonl": "76e28a1b6fd4176dc68361f99990b165db2615ca520bd697fbd7626cb797b722"
   },
@@ -222,15 +237,24 @@
         "totals": {
           "completed": 0,
           "aborted": 0,
-          "dead_rate_limit": 1,
+          "dead_rate_limit": 0,
           "dead_quota": 0,
-          "dead_error_other": 0,
+          "dead_error_other": 1,
           "error_unsettled": 0,
           "incomplete": 0,
           "unavailable": 0
         },
         "seats": {
-          "devin-resource-exhausted": "dead_rate_limit"
+          "devin-resource-exhausted": "dead_error_other"
+        },
+        "records": {
+          "devin-resource-exhausted": {
+            "key": "devin-resource-exhausted",
+            "prefix": "devin-resource-exhausted",
+            "retries": null,
+            "retry_exhausted": false,
+            "error_code": null
+          }
         }
       }
     },
@@ -256,11 +280,20 @@
         },
         "seats": {
           "zai-retry-exhausted": "dead_rate_limit"
+        },
+        "records": {
+          "zai-retry-exhausted": {
+            "key": "zai-retry-exhausted",
+            "prefix": "zai-retry-exhausted",
+            "retries": 10,
+            "retry_exhausted": true,
+            "error_code": "1302"
+          }
         }
       }
     },
     {
-      "id": "rate_limit_beats_quota_by_status_and_token",
+      "id": "quota_precedes_rate_limit_status_and_token",
       "pack": "RateLimitOrdering",
       "args": [
         "--now-ms",
@@ -500,14 +533,28 @@
           "aborted": 0,
           "dead_rate_limit": 0,
           "dead_quota": 0,
-          "dead_error_other": 2,
+          "dead_error_other": 1,
           "error_unsettled": 0,
           "incomplete": 0,
-          "unavailable": 0
+          "unavailable": 1
         },
         "seats": {
-          "bare-error": "dead_error_other",
+          "bare-error": "unavailable",
           "thinking-loop-error": "dead_error_other"
+        },
+        "records": {
+          "thinking-loop-error": {
+            "key": "thinking-loop-error",
+            "prefix": "thinking-loop-error",
+            "retries": null,
+            "retry_exhausted": false,
+            "error_code": null
+          },
+          "bare-error": {
+            "key": "bare-error",
+            "prefix": "bare-error",
+            "reason": "terminal-time"
+          }
         }
       }
     },
@@ -609,6 +656,13 @@
         },
         "seats": {
           "empty": "unavailable"
+        },
+        "records": {
+          "empty": {
+            "key": "empty",
+            "prefix": "empty",
+            "reason": "schema"
+          }
         }
       }
     },
@@ -634,6 +688,13 @@
         },
         "seats": {
           "malformed": "unavailable"
+        },
+        "records": {
+          "malformed": {
+            "key": "malformed",
+            "prefix": "malformed",
+            "reason": "no-message"
+          }
         }
       }
     },
@@ -659,6 +720,13 @@
         },
         "seats": {
           "non-message-only": "unavailable"
+        },
+        "records": {
+          "non-message-only": {
+            "key": "non-message-only",
+            "prefix": "non-message-only",
+            "reason": "no-message"
+          }
         }
       }
     },
@@ -685,6 +753,21 @@
         "seats": {
           "locked": "unavailable",
           "open": "completed"
+        },
+        "records": {
+          "locked": {
+            "key": "locked",
+            "prefix": "locked",
+            "reason": "unreadable"
+          },
+          "open": {
+            "key": "open",
+            "prefix": "open",
+            "retries": null,
+            "retry_exhausted": false,
+            "error_code": null,
+            "reason": null
+          }
         }
       },
       "unreadable_files": [
@@ -723,7 +806,8 @@
       ],
       "want": {
         "rc": 2,
-        "finding_id": "MORI_SEAT_TERMINAL_SETUP"
+        "finding_id": "MORI_SEAT_TERMINAL_SETUP",
+        "reason": "unavailable-dir"
       }
     },
     {
@@ -737,7 +821,8 @@
       ],
       "want": {
         "rc": 2,
-        "finding_id": "MORI_SEAT_TERMINAL_SETUP"
+        "finding_id": "MORI_SEAT_TERMINAL_SETUP",
+        "reason": "too-many-files"
       }
     },
     {
@@ -789,9 +874,26 @@
           "unavailable": 0
         },
         "seats": {
-          "deep-seat": "completed",
-          "deep-two": "incomplete",
-          "shallow-seat": "aborted"
+          "a/b/c/deep-seat": "completed",
+          "a/b/deep-two": "incomplete",
+          "a/shallow-seat": "aborted"
+        },
+        "records": {
+          "a/b/c/deep-seat": {
+            "key": "a/b/c/deep-seat",
+            "prefix": "deep-seat",
+            "reason": null
+          },
+          "a/b/deep-two": {
+            "key": "a/b/deep-two",
+            "prefix": "deep-two",
+            "reason": null
+          },
+          "a/shallow-seat": {
+            "key": "a/shallow-seat",
+            "prefix": "shallow-seat",
+            "reason": null
+          }
         }
       }
     },
@@ -952,7 +1054,8 @@
       ],
       "want": {
         "rc": 2,
-        "finding_id": "MORI_SEAT_TERMINAL_SETUP"
+        "finding_id": "MORI_SEAT_TERMINAL_SETUP",
+        "reason": "prefix-matched-none"
       }
     },
     {
@@ -975,17 +1078,25 @@
           "dead_error_other": 0,
           "error_unsettled": 0,
           "incomplete": 0,
-          "unavailable": 1
+          "unavailable": 2
         },
         "seats": {
           "tail-far": "unavailable",
           "tail-near": "completed",
+          "tail-old-default-gap": "unavailable",
           "tail-partial": "completed"
+        },
+        "records": {
+          "tail-far": {
+            "key": "tail-far",
+            "prefix": "tail-far",
+            "reason": "no-message"
+          }
         }
       }
     },
     {
-      "id": "tail_default_window_all_classified",
+      "id": "tail_explicit_262144_all_classified",
       "pack": "TailBoundary",
       "args": [
         "--now-ms",
@@ -1004,11 +1115,12 @@
           "dead_error_other": 0,
           "error_unsettled": 0,
           "incomplete": 0,
-          "unavailable": 0
+          "unavailable": 1
         },
         "seats": {
           "tail-far": "completed",
           "tail-near": "completed",
+          "tail-old-default-gap": "unavailable",
           "tail-partial": "completed"
         }
       }
@@ -1033,11 +1145,12 @@
           "dead_error_other": 0,
           "error_unsettled": 0,
           "incomplete": 0,
-          "unavailable": 3
+          "unavailable": 4
         },
         "seats": {
           "tail-far": "unavailable",
           "tail-near": "unavailable",
+          "tail-old-default-gap": "unavailable",
           "tail-partial": "unavailable"
         }
       }
@@ -1053,7 +1166,7 @@
         "rc": 0,
         "finding_id": "MORI_SEAT_TERMINAL_OK",
         "totals": {
-          "completed": 3,
+          "completed": 4,
           "aborted": 0,
           "dead_rate_limit": 0,
           "dead_quota": 0,
@@ -1065,6 +1178,7 @@
         "seats": {
           "tail-far": "completed",
           "tail-near": "completed",
+          "tail-old-default-gap": "completed",
           "tail-partial": "completed"
         }
       }
@@ -1254,6 +1368,15 @@
         },
         "seats": {
           "code-1113": "dead_quota"
+        },
+        "records": {
+          "code-1113": {
+            "key": "code-1113",
+            "prefix": "code-1113",
+            "retries": null,
+            "retry_exhausted": false,
+            "error_code": "1113"
+          }
         }
       }
     },
@@ -1279,6 +1402,15 @@
         },
         "seats": {
           "code-1308": "dead_quota"
+        },
+        "records": {
+          "code-1308": {
+            "key": "code-1308",
+            "prefix": "code-1308",
+            "retries": null,
+            "retry_exhausted": false,
+            "error_code": "1308"
+          }
         }
       }
     },
@@ -1304,6 +1436,15 @@
         },
         "seats": {
           "code-1302-quota": "dead_rate_limit"
+        },
+        "records": {
+          "code-1302-quota": {
+            "key": "code-1302-quota",
+            "prefix": "code-1302-quota",
+            "retries": null,
+            "retry_exhausted": false,
+            "error_code": "1302"
+          }
         }
       }
     },
@@ -1329,6 +1470,15 @@
         },
         "seats": {
           "retry-one": "dead_rate_limit"
+        },
+        "records": {
+          "retry-one": {
+            "key": "retry-one",
+            "prefix": "retry-one",
+            "retries": 1,
+            "retry_exhausted": true,
+            "error_code": "1302"
+          }
         }
       }
     },
@@ -1354,6 +1504,10 @@
         },
         "seats": {
           "nested-ok": "completed"
+        },
+        "top": {
+          "main_sessions": 1,
+          "duplicate_stems": 0
         }
       }
     },
@@ -1380,6 +1534,26 @@
         "seats": {
           "d1/stem": "dead_rate_limit",
           "d2/stem": "dead_rate_limit"
+        },
+        "top": {
+          "duplicate_stems": 1,
+          "main_sessions": 0
+        },
+        "records": {
+          "d1/stem": {
+            "key": "d1/stem",
+            "prefix": "stem",
+            "retries": null,
+            "retry_exhausted": false,
+            "error_code": null
+          },
+          "d2/stem": {
+            "key": "d2/stem",
+            "prefix": "stem",
+            "retries": null,
+            "retry_exhausted": false,
+            "error_code": null
+          }
         }
       }
     },
@@ -1407,6 +1581,23 @@
           "absent": "unavailable",
           "late": "unavailable",
           "version2": "unavailable"
+        },
+        "records": {
+          "absent": {
+            "key": "absent",
+            "prefix": "absent",
+            "reason": "schema"
+          },
+          "version2": {
+            "key": "version2",
+            "prefix": "version2",
+            "reason": "schema"
+          },
+          "late": {
+            "key": "late",
+            "prefix": "late",
+            "reason": "schema"
+          }
         }
       }
     },
@@ -1460,6 +1651,371 @@
         },
         "seats": {
           "real": "completed"
+        }
+      }
+    },
+    {
+      "id": "rate_limit_free_model_resource_exhausted",
+      "pack": "RateLimitFreeModel",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 1,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "free-model": "dead_rate_limit"
+        },
+        "records": {
+          "free-model": {
+            "key": "free-model",
+            "prefix": "free-model",
+            "retries": null,
+            "retry_exhausted": false,
+            "error_code": null
+          }
+        }
+      }
+    },
+    {
+      "id": "root_symlink_setup_rc2",
+      "pack": "SecurityRootSymlink",
+      "args": [
+        "--now-ms",
+        "1761000000000",
+        "--sessions-dir",
+        "{pack}/root-link"
+      ],
+      "want": {
+        "rc": 2,
+        "finding_id": "MORI_SEAT_TERMINAL_SETUP",
+        "reason": "root-symlink"
+      }
+    },
+    {
+      "id": "unreadable_dir_setup_rc2",
+      "pack": "SecurityUnreadableDir",
+      "unreadable_dirs": [
+        "sub"
+      ],
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 2,
+        "finding_id": "MORI_SEAT_TERMINAL_SETUP",
+        "reason": "walk-error"
+      }
+    },
+    {
+      "id": "unknown_time_terminal_error_unavailable",
+      "pack": "UnknownTime",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 1
+        },
+        "seats": {
+          "unknown-time": "unavailable"
+        },
+        "records": {
+          "unknown-time": {
+            "key": "unknown-time",
+            "prefix": "unknown-time",
+            "reason": "terminal-time"
+          }
+        }
+      }
+    },
+    {
+      "id": "unknown_code_1309_dead_error_other",
+      "pack": "UnknownCode1309",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 1,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "unknown-code-1309": "dead_error_other"
+        },
+        "records": {
+          "unknown-code-1309": {
+            "key": "unknown-code-1309",
+            "prefix": "unknown-code-1309",
+            "retries": null,
+            "retry_exhausted": false,
+            "error_code": "1309"
+          }
+        }
+      }
+    },
+    {
+      "id": "escaped_quota_token_classified",
+      "pack": "EscapedQuota",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 1,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "quota-escaped": "dead_quota"
+        },
+        "records": {
+          "quota-escaped": {
+            "key": "quota-escaped",
+            "prefix": "quota-escaped",
+            "retries": null,
+            "retry_exhausted": false,
+            "error_code": null
+          }
+        }
+      }
+    },
+    {
+      "id": "escaped_rate_token_classified",
+      "pack": "EscapedRate",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 1,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "rate-escaped": "dead_rate_limit"
+        },
+        "records": {
+          "rate-escaped": {
+            "key": "rate-escaped",
+            "prefix": "rate-escaped",
+            "retries": null,
+            "retry_exhausted": false,
+            "error_code": null
+          }
+        }
+      }
+    },
+    {
+      "id": "malformed_field_lines_skipped",
+      "pack": "MalformedFieldSkip",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 1,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "malformed-field-skip": "completed"
+        },
+        "records": {
+          "malformed-field-skip": {
+            "key": "malformed-field-skip",
+            "prefix": "malformed-field-skip",
+            "retries": null,
+            "retry_exhausted": false,
+            "error_code": null
+          }
+        }
+      }
+    },
+    {
+      "id": "decimal_timestamp_unknown_age",
+      "pack": "DecimalTimestamp",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 1
+        },
+        "seats": {
+          "decimal-timestamp": "unavailable"
+        },
+        "records": {
+          "decimal-timestamp": {
+            "key": "decimal-timestamp",
+            "prefix": "decimal-timestamp",
+            "reason": "terminal-time"
+          }
+        }
+      }
+    },
+    {
+      "id": "decimal_schema_version_unavailable",
+      "pack": "DecimalSchema",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 0,
+        "finding_id": "MORI_SEAT_TERMINAL_OK",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 1
+        },
+        "seats": {
+          "decimal-schema": "unavailable"
+        },
+        "records": {
+          "decimal-schema": {
+            "key": "decimal-schema",
+            "prefix": "decimal-schema",
+            "reason": "schema"
+          }
+        }
+      }
+    },
+    {
+      "id": "decimal_status_not_429",
+      "pack": "DecimalStatus",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 1,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "decimal-status": "dead_error_other"
+        },
+        "records": {
+          "decimal-status": {
+            "key": "decimal-status",
+            "prefix": "decimal-status",
+            "retries": null,
+            "retry_exhausted": false,
+            "error_code": null
+          }
+        }
+      }
+    },
+    {
+      "id": "long_code_13_digit_unknown",
+      "pack": "LongCode13",
+      "args": [
+        "--now-ms",
+        "1761000000000"
+      ],
+      "want": {
+        "rc": 1,
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "completed": 0,
+          "aborted": 0,
+          "dead_rate_limit": 0,
+          "dead_quota": 0,
+          "dead_error_other": 1,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": {
+          "long-code-13": "dead_error_other"
+        },
+        "records": {
+          "long-code-13": {
+            "key": "long-code-13",
+            "prefix": "long-code-13",
+            "retries": null,
+            "retry_exhausted": false,
+            "error_code": "9999999999999"
+          }
         }
       }
     }

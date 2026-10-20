@@ -1,0 +1,10 @@
+{
+  "detector_source_lines": "285-288",
+  "regex": "(?:no|never|forbidden|prohibit(?:ed|s)?|banned|do\\s+not|don't|must\\s+not)\\b(?:[^\\n.]|\\.(?=\\S)){0,60}\\b(?:long[- ]lived\\s+(?:process|processes|services?)|host\\s+services?)\\b",
+  "matched_text": "never -S/-Sy/-Syu/-U/-R, downgrade, restart host service",
+  "context_span": [
+    2651,
+    2707
+  ],
+  "background_jobs_phrase_remaining": false
+}

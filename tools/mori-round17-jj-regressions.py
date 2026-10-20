@@ -1,19 +1,32 @@
 #!/usr/bin/env python3
 """mori round-17 C2 gate: jj-colocation correctness of tools/mori-census.sh.
 
-Contract (round-17 contract.md, C2):
-  * the census resolves the lane branch like scripts/hyaku/jj-lane.sh
-    detect_branch (symbolic-ref HEAD -> refs/remotes/origin/HEAD -> the unique
-    of refs/heads/master / refs/heads/main) and queries refs/heads/<branch>
-    instead of HEAD for report closure (row 6) and authorship (row 9);
+Contract (round-17 contract.md, C2, plus the CensusJj fail-closed amendment):
+  * the census resolves the lane branch from the helper mirror
+    `git config lane.branch` (scripts/hyaku/jj-lane.sh init writes it) before
+    any guess, and queries refs/heads/<branch> instead of HEAD for report
+    closure (row 6) and authorship (row 9);
+  * a jj-colocated lane (`.jj` present) REQUIRES a valid, existing mirror:
+    missing/invalid/missing-ref grades the lane `unavailable` row-1, with no
+    HEAD fallback and no C2 finding (intentional fail-closed);
+  * a non-jj lane resolves like detect_branch (symbolic-ref HEAD ->
+    refs/remotes/origin/HEAD -> the unique of refs/heads/master /
+    refs/heads/main), and an unresolved non-jj lane keeps the entering HEAD
+    fallback unchanged;
   * HEAD_BRANCH_MISMATCH (severity warn, global drift) when HEAD resolves and
-    `merge-base --is-ancestor HEAD refs/heads/<branch>` fails;
+    `merge-base --is-ancestor HEAD refs/heads/<branch>` fails; the receipt is
+    the census's exact `head=`/`branch_tip=` 12-hex-character fields (NOT
+    `rev-parse --short`), plus `basis=merge-base-not-ancestor`;
   * LANE_AUTHOR_MISMATCH (severity warn, global drift) for a post-launch commit
     on the branch whose committer is <lane>-shokunin <lane>@shokunin.local while
     the author email does NOT end in @shokunin.local (the A1 amendment: a
     sibling-shokunin author such as kengaku@shokunin.local is legitimate and is
-    a required negative control);
-  * a missing branch-resolver input falls back to the unchanged HEAD behavior.
+    a required negative control); the receipt is `count=` plus
+    `basis=committer-lane-author-foreign-email`;
+  * both diagnostics are observations about the branch anchor and are emitted
+    BEFORE the row/young/report-closed early returns (CensusNewBranches): a
+    young lane still reports LANE_AUTHOR_MISMATCH, and a jj fleet root with an
+    unusable mirror skips row-6 closure instead of falling back to HEAD.
 
 The gate builds one throw-away fleet root per case under --scratch:
   <root>/shokunin.conf            LANES row for exactly one lane (`alpha`)
@@ -37,6 +50,21 @@ jj-colocated lane, the sandbox guard is enforced on every call:
 The gate never invokes jj or git against the lane or the fleet root; all
 sandbox fleet roots live under --scratch (default: <output>/scratch).
 
+Write-root guards (falsify SandboxFinal F2 + residual): the RAW `--output`/
+`--scratch` argument and every existing ancestor are checked for symlinks
+BEFORE resolve()/mkdir (resolve() follows the link and would erase the
+evidence), and `..` components are refused; only then is the canonical path
+checked. `--output` must be absent or an empty non-symlink directory, and
+neither path may be the repo root, an ancestor of it, or inside a protected
+`tools/`, `corpus/`, `.git/`, `.jj/`, `.ufo/` (except `.ufo/waves/` evidence),
+the census input, the gate source, the output artifacts, `/tmp`, or
+`/var/tmp`. A fresh gate-owned `run-<stamp>-<pid>-<n>` child is created under
+scratch. Retention (F4): that run tree is removed unless `--keep-scratch` is
+given. Cleanup runs after the run body (including every caught error) and
+BEFORE the manifest is written, so `retained`/`retention.cleanup` are
+accurate; a BaseException escape (Ctrl-C) is the only path that can leave the
+tree.
+
 Hermeticity: the census is run with its own override environment, so no live
 journal, systemd, tmux, cgroup, pgrep, df or boot-id query happens. Every
 override below is read from the census header (tools/mori-census.sh:202-241)
@@ -55,25 +83,33 @@ refuses to read such a path (`refused:outside-sysfs-cgroup`), which is the
 provable "no live cgroup read" state, not a live query.
 
 Usage:
-  mori-round17-jj-regressions.py --census PATH --output DIR [--scratch DIR]
-  mori-round17-jj-regressions.py --selftest [--scratch DIR]
+  mori-round17-jj-regressions.py --census PATH --output DIR [--scratch DIR] [--keep-scratch]
+  mori-round17-jj-regressions.py --selftest [--scratch DIR] [--keep-scratch]
 
-The 12 cases cover: plain git progress; detached at tip; detached ahead
+The 17 cases cover: plain git progress; detached at tip; detached ahead
 (plain git commit); detached behind; report on-branch closure; report only
 off-branch (not closed); foreign author+committer; helper-shaped jj commit
-(metaedit --update-author, commit, bookmark set); jj commit without bookmark
-move; ambient author + lane committer; sibling-shokunin author + lane
-committer (negative control); and no-resolver-input HEAD fallback.
+(metaedit --update-author, commit, bookmark set, with the lane.branch mirror);
+jj commit without bookmark move; ambient author + lane committer; a YOUNG jj
+lane (age < 7200 s) whose ambient-author finding must still be emitted; and a
+sibling-shokunin author + lane committer (negative control); recorded
+lane.branch=master with an attached subject-authored side branch (master is
+graded, mismatch, no side credit); jj-colocated unresolved mirror
+(unavailable, no HEAD fallback); jj-colocated mirror naming a missing ref
+(unavailable); a jj fleet root with an unresolved mirror whose row-6 closure
+must skip HEAD; and the non-jj no-resolver-input HEAD fallback (unchanged).
 
-Writes DIR/run-manifest.json (per-case assertions, failed count) and
+Writes DIR/run-manifest.json (per-case assertions, failed count, retained) and
 DIR/cases/<id>.out (the exact census stream). Exit 0 = every assertion held;
 1 = at least one failed assertion or a capability gap; 2 = gate setup error.
 
---selftest needs no live census: it runs the gate over a dormant fixture census
-(MODE=ok, the amended contract) and over a HEAD-only mutant (MODE=head), then
-over a missing census, and asserts exit codes plus the stable finding ids
-HEAD_BRANCH_MISMATCH / LANE_AUTHOR_MISMATCH. Its temp tree is created under
---scratch when given (never required to be /tmp).
+--selftest needs no live census: it runs the gate over a dormant compliant
+fixture census, a HEAD-only mutant, and a one-character-short branch_tip
+mutant, then over a missing census, and asserts exit codes, the stable finding
+ids HEAD_BRANCH_MISMATCH / LANE_AUTHOR_MISMATCH, the exact receipt fields, the
+same assertion universe on every side, the output/scratch guard arms, and the
+retention policy. Its temp tree is created under --scratch or TMPDIR, never
+under /tmp or /var/tmp.
 """
 
 from __future__ import annotations
@@ -241,9 +277,40 @@ def git_rev(repo: Path, rev: str, env) -> str:
     return res["stdout"].strip() if res["rc"] == 0 else ""
 
 
-def git_short(repo: Path, rev: str, env) -> str:
-    res = git(repo, ["rev-parse", "--short", rev], env)
-    return res["stdout"].strip() if res["rc"] == 0 else ""
+def _oid12(repo: Path, rev: str, env) -> str:
+    """Full object name, sliced to the census's 12-char receipt field.
+
+    The census emits `head=`/`branch_tip=` as the first 12 hex characters of
+    the full OID (mori-census.sh:2443); `rev-parse --short` is a different
+    grammar and is never used as the oracle here.
+    """
+    full = git_rev(repo, rev, env)
+    if not re.fullmatch(r"[0-9a-f]{40,64}", full):
+        raise RuntimeError(f"cannot resolve a full commit OID for {rev} in {repo}: {full!r}")
+    return full[:12]
+
+
+def set_lane_branch(sb: dict, branch: str = BRANCH) -> None:
+    """Mirror scripts/hyaku/jj-lane.sh init: git config lane.branch <branch>.
+
+    The helper writes this mirror at init (jj-lane.sh:439); the census resolver
+    reads it as the only jj-colocated branch input.
+    """
+    res = git(sb["lane"], ["config", "lane.branch", branch], sb["tool_env"])
+    if res["rc"] != 0:
+        raise RuntimeError(f"git config lane.branch failed: {res['stderr'].strip()}")
+
+
+def set_launch_age(sb: dict, age_seconds: int) -> None:
+    """Rewrite the ledger launch anchor so the census sees a younger lane.
+
+    Commit timestamps use the real clock; the anchor is therefore placed
+    age_seconds before real now. The census pins NOW at real now + 120 s, so
+    the observed age is age_seconds + 120 (still < 7200 for the young case).
+    """
+    launch = int(time.time()) - int(age_seconds)
+    write(sb["ufo"] / "watchdog.log",
+          f"{iso_utc(launch)} launch {LANE} round={ROUND} pid=4242\n")
 
 
 def jj_run(jj: str, repo: Path, args, env, timeout=120):
@@ -448,9 +515,16 @@ def refs_snapshot(sb: dict) -> dict:
     env = sb["tool_env"]
     snap = {}
     for label, repo in (("root", sb["root"]), ("lane", sb["lane"])):
+        head = git_rev(repo, "HEAD", env)
+        branch = git_rev(repo, f"refs/heads/{BRANCH}", env)
+        # Full OIDs state the revision measured; the 12-char slices are the
+        # census receipt grammar, recorded so a reader can compare them without
+        # re-deriving a `rev-parse --short`.
         snap[label] = {
-            "head": git_rev(repo, "HEAD", env),
-            "branch": git_rev(repo, f"refs/heads/{BRANCH}", env),
+            "head": head,
+            "head12": head[:12],
+            "branch": branch,
+            "branch12": branch[:12],
         }
     return snap
 
@@ -503,14 +577,48 @@ def expect_closed():
     }
 
 
+def expect_unavailable():
+    """Fail-closed resolver: no progress and no C2 finding, not a row grade."""
+    return {
+        "state": "unavailable",
+        "basis": "row-1",
+        "roll": "CLEAN",
+        "rc": 0,
+        "require": [],
+        "forbid": [FINDING_MISMATCH, FINDING_AUTHOR],
+        # CensusJj A2: every unusable mirror reports this exact reason.
+        "detail_contains": ["reason=ref-unresolved"],
+    }
+
+
+def expect_young():
+    """Row-8 young: the author diagnostic must still fire as a warn."""
+    return {
+        "state": "young",
+        "basis": "row-8",
+        "roll": "DRIFT",
+        "rc": 1,
+        "require": [],
+        "forbid": [FINDING_MISMATCH],
+    }
+
+
 def mismatch_requirement(sb: dict) -> dict:
     env = sb["tool_env"]
-    head_short = git_short(sb["lane"], "HEAD", env)
-    branch_short = git_short(sb["lane"], f"refs/heads/{BRANCH}", env)
+    head12 = _oid12(sb["lane"], "HEAD", env)
+    branch12 = _oid12(sb["lane"], f"refs/heads/{BRANCH}", env)
     return {
         "id": FINDING_MISMATCH,
         "severity_exact": "warn",
-        "obs_contains": [f"lane={LANE}", head_short, branch_short],
+        # Exact whitespace tokens from the census's own receipt grammar
+        # (mori-census.sh:2443): head= and branch_tip= are the first 12 hex
+        # characters of the FULL OIDs, plus the fixed basis token.
+        "obs_tokens": [
+            f"head={head12}",
+            f"branch_tip={branch12}",
+            "basis=merge-base-not-ancestor",
+        ],
+        "obs_contains": [f"lane={LANE}"],
     }
 
 
@@ -518,7 +626,13 @@ def author_requirement() -> dict:
     return {
         "id": FINDING_AUTHOR,
         "severity_exact": "warn",
-        "obs_contains": [f"lane={LANE}"],
+        # Exact tokens from mori-census.sh:2446: count= and the fixed basis.
+        "obs_tokens": [
+            f"lane={LANE}",
+            "count=1",
+            "basis=committer-lane-author-foreign-email",
+        ],
+        "obs_contains": [],
     }
 
 
@@ -600,6 +714,7 @@ def case_jj_helper_commit(sb, tools):
     jj = tools["jj"]
     env = sb["tool_env"]
     lane = sb["lane"]
+    set_lane_branch(sb)
     jj_colocate(jj, lane, sb["case_dir"], env)
     with (lane / "seed.txt").open("a", encoding="utf-8") as handle:
         handle.write("helper work\n")
@@ -619,6 +734,7 @@ def case_jj_commit_no_bookmark(sb, tools):
     jj = tools["jj"]
     env = sb["tool_env"]
     lane = sb["lane"]
+    set_lane_branch(sb)
     jj_colocate(jj, lane, sb["case_dir"], env)
     with (lane / "seed.txt").open("a", encoding="utf-8") as handle:
         handle.write("off-branch jj work\n")
@@ -635,6 +751,7 @@ def case_jj_ambient_author(sb, tools):
     jj = tools["jj"]
     env = sb["tool_env"]
     lane = sb["lane"]
+    set_lane_branch(sb)
     jj_colocate(jj, lane, sb["case_dir"], env)
     with (lane / "seed.txt").open("a", encoding="utf-8") as handle:
         handle.write("ambient-authored work\n")
@@ -651,6 +768,26 @@ def case_jj_ambient_author(sb, tools):
     return expect
 
 
+def case_jj_young_ambient_author(sb, tools):
+    """Young jj lane (age < 7200 s): LANE_AUTHOR_MISMATCH still warns."""
+    jj = tools["jj"]
+    env = sb["tool_env"]
+    lane = sb["lane"]
+    set_lane_branch(sb)
+    jj_colocate(jj, lane, sb["case_dir"], env)
+    with (lane / "seed.txt").open("a", encoding="utf-8") as handle:
+        handle.write("young ambient work\n")
+    jj_ok(jj, lane, ["--config", f"user.name={LANE_NAME}",
+                     "--config", f"user.email={LANE_EMAIL}",
+                     "commit", "-m", "young ambient work"], env)
+    commit = jj_head_commit(jj, lane, env)
+    jj_ok(jj, lane, ["--ignore-working-copy", "bookmark", "set", BRANCH, "-r", commit], env)
+    set_launch_age(sb, 100)
+    expect = expect_young()
+    expect["require"] = [author_requirement()]
+    return expect
+
+
 def case_jj_sibling_author(sb, tools):
     """Kengaku-style negative control: committer lane, author a sibling lane.
 
@@ -660,6 +797,7 @@ def case_jj_sibling_author(sb, tools):
     jj = tools["jj"]
     env = sb["tool_env"]
     lane = sb["lane"]
+    set_lane_branch(sb)
     jj_colocate(jj, lane, sb["case_dir"], env)
     with (lane / "seed.txt").open("a", encoding="utf-8") as handle:
         handle.write("sibling-authored work\n")
@@ -674,6 +812,85 @@ def case_jj_sibling_author(sb, tools):
     # Author is kengaku (a lane identity), so grading is progressing-weak, and
     # the amended author rule must NOT emit LANE_AUTHOR_MISMATCH.
     return expect_weak()
+
+
+def case_jj_sidebranch_mirror(sb, tools):
+    """Recorded lane.branch=master wins over an attached `side` branch.
+
+    The side commit is subject-authored but off the lane branch: master is the
+    only graded ref, so it earns no progress credit; HEAD ahead of master is a
+    HEAD_BRANCH_MISMATCH. A second base branch (`main`) keeps the entering
+    census's unique-master/main fallback ambiguous, so its before behavior is
+    the HEAD fallback deterministically.
+    """
+    jj = tools["jj"]
+    env = sb["tool_env"]
+    lane = sb["lane"]
+    set_lane_branch(sb)
+    res = git(lane, ["branch", "main", BRANCH], env)
+    if res["rc"] != 0:
+        raise RuntimeError(f"git branch main failed: {res['stderr'].strip()}")
+    res = git(lane, ["checkout", "-q", "-b", "side"], env)
+    if res["rc"] != 0:
+        raise RuntimeError(f"git checkout -b side failed: {res['stderr'].strip()}")
+    write(lane / "side.txt", "side work\n")
+    git_commit(lane, env, "side work", author=(LANE_NAME, LANE_EMAIL), paths=["side.txt"])
+    jj_colocate(jj, lane, sb["case_dir"], env)
+    expect = expect_silent(FINDING_AUTHOR)
+    expect["require"] = [mismatch_requirement(sb)]
+    return expect
+
+
+def case_jj_unresolved_mirror(sb, tools):
+    """.jj lane with no lane.branch mirror: unavailable, never HEAD-anchored."""
+    jj = tools["jj"]
+    env = sb["tool_env"]
+    lane = sb["lane"]
+    res = git(lane, ["branch", "-m", "master", "trunk"], env)
+    if res["rc"] != 0:
+        raise RuntimeError(f"git branch -m failed: {res['stderr'].strip()}")
+    write(lane / "work.txt", "lane work\n")
+    git_commit(lane, env, "lane work", author=(LANE_NAME, LANE_EMAIL), paths=["work.txt"])
+    tip = git_rev(lane, "refs/heads/trunk", env)
+    res = git(lane, ["checkout", "-q", "--detach", tip], env)
+    if res["rc"] != 0:
+        raise RuntimeError(f"git checkout --detach failed: {res['stderr'].strip()}")
+    jj_colocate(jj, lane, sb["case_dir"], env)
+    return expect_unavailable()
+
+
+def case_jj_missingref_mirror(sb, tools):
+    """lane.branch names a ref that does not exist: unavailable, no attached fallback."""
+    jj = tools["jj"]
+    env = sb["tool_env"]
+    lane = sb["lane"]
+    set_lane_branch(sb)  # lane.branch=master, then remove the master ref
+    res = git(lane, ["branch", "-m", "master", "trunk"], env)
+    if res["rc"] != 0:
+        raise RuntimeError(f"git branch -m failed: {res['stderr'].strip()}")
+    write(lane / "work.txt", "lane work\n")
+    git_commit(lane, env, "lane work", author=(LANE_NAME, LANE_EMAIL), paths=["work.txt"])
+    tip = git_rev(lane, "refs/heads/trunk", env)
+    res = git(lane, ["checkout", "-q", "--detach", tip], env)
+    if res["rc"] != 0:
+        raise RuntimeError(f"git checkout --detach failed: {res['stderr'].strip()}")
+    jj_colocate(jj, lane, sb["case_dir"], env)
+    return expect_unavailable()
+
+
+def case_jj_root_unresolved_closure(sb, tools):
+    """jj fleet root with no lane.branch mirror: row-6 never falls back to HEAD."""
+    jj = tools["jj"]
+    env = sb["tool_env"]
+    report = sb["reports"] / f"{LANE}.md"
+    write(report, "# alpha report on root HEAD\n")
+    git_commit(sb["root"], env, "committed report",
+               paths=[report.relative_to(sb["root"])])
+    write(sb["lane"] / "work.txt", "lane work\n")
+    git_commit(sb["lane"], env, "lane work",
+               author=(LANE_NAME, LANE_EMAIL), paths=["work.txt"])
+    jj_colocate(jj, sb["root"], sb["case_dir"], env)
+    return expect_progressing()
 
 
 def case_git_fallback_head(sb, tools):
@@ -702,8 +919,13 @@ CASES = [
     ("jj-helper-commit", "helper-shaped jj commit (metaedit, commit, bookmark set) is progressing", case_jj_helper_commit),
     ("jj-commit-no-bookmark", "jj commit without bookmark move: mismatch + no progress credit", case_jj_commit_no_bookmark),
     ("jj-ambient-author", "ambient author + lane committer on the branch -> LANE_AUTHOR_MISMATCH", case_jj_ambient_author),
+    ("jj-young-ambient-author", "young jj lane (age < 7200 s): LANE_AUTHOR_MISMATCH warn is still emitted", case_jj_young_ambient_author),
     ("jj-sibling-author", "sibling-shokunin author + lane committer -> no LANE_AUTHOR_MISMATCH (negative control)", case_jj_sibling_author),
-    ("git-fallback-head", "no resolver input (branch trunk, detached) -> unchanged HEAD grading", case_git_fallback_head),
+    ("jj-sidebranch-mirror", "recorded lane.branch=master + attached side branch: master graded, mismatch, no side credit", case_jj_sidebranch_mirror),
+    ("jj-unresolved-mirror", ".jj lane without a lane.branch mirror -> unavailable, no HEAD fallback", case_jj_unresolved_mirror),
+    ("jj-missingref-mirror", ".jj lane whose lane.branch ref is missing -> unavailable, no attached fallback", case_jj_missingref_mirror),
+    ("jj-root-unresolved-closure", "jj root without lane.branch mirror: row-6 skips closure (never HEAD), lane still graded", case_jj_root_unresolved_closure),
+    ("git-fallback-head", "non-jj lane with no resolver input (branch trunk, detached) -> unchanged HEAD grading", case_git_fallback_head),
 ]
 
 
@@ -771,6 +993,9 @@ def evaluate(sb: dict, census_path: Path, expect: dict, refs_before: dict) -> di
           f"state={parsed['state']} expected={expect['state']}")
     check("lane_basis", parsed["basis"] == expect["basis"],
           f"basis={parsed['basis']} expected={expect['basis']}")
+    for needle in expect.get("detail_contains", []):
+        check(f"lane_detail_contains:{needle}", needle in parsed["detail"],
+              f"detail={parsed['detail']}")
     check("refs_unchanged", refs_before == refs_after,
           f"before={json.dumps(refs_before, sort_keys=True)} after={json.dumps(refs_after, sort_keys=True)}")
 
@@ -780,22 +1005,33 @@ def evaluate(sb: dict, census_path: Path, expect: dict, refs_before: dict) -> di
 
     for requirement in expect["require"]:
         fid = requirement["id"]
-        present = fid in by_id
+        finding = by_id.get(fid)
+        present = finding is not None
         check(f"finding:{fid}:present", present, f"findings={sorted(by_id)}")
-        if not present:
-            continue
-        finding = by_id[fid]
-        if requirement.get("severity_exact"):
+        # Fixed assertion universe (falsify ReceiptC2Controls Q1): severity and
+        # every detail check are emitted even when the finding is absent, so the
+        # before and after runs have the same denominator and a missing field
+        # fails its own check instead of shrinking the universe.
+        expected_sev = requirement.get("severity_exact")
+        if expected_sev:
             check(
                 f"finding:{fid}:severity",
-                finding["severity"] == requirement["severity_exact"],
-                f"severity={finding['severity']} expected={requirement['severity_exact']}",
+                present and finding["severity"] == expected_sev,
+                f"severity={finding['severity'] if present else 'absent'} expected={expected_sev}",
+            )
+        obs = finding["obs"] if present else ""
+        obs_tokens = set(obs.split())
+        for token in requirement.get("obs_tokens", []):
+            check(
+                f"finding:{fid}:obs_token:{token}",
+                token in obs_tokens,
+                f"token={token!r} present={present} obs={obs or 'absent'}",
             )
         for needle in requirement.get("obs_contains", []):
             check(
                 f"finding:{fid}:obs_contains:{needle}",
-                needle in finding["obs"],
-                f"obs={finding['obs']}",
+                present and needle in obs,
+                f"needle={needle!r} present={present} obs={obs or 'absent'}",
             )
 
     for fid in expect["forbid"]:
@@ -879,15 +1115,160 @@ def tool_version(argv) -> str:
 
 
 # ---------------------------------------------------------------------------
+# output / scratch guards (falsify SandboxFinal F2/F4)
+# ---------------------------------------------------------------------------
+#
+# The gate writes two things: the output directory (manifest + case streams)
+# and a fresh run tree under scratch (real git/jj sandboxes). Both are validated
+# BEFORE any write, must not overlap the gate/census checkouts, their protected
+# subtrees, or the census input, and the scratch run tree is removed by default
+# (--keep-scratch opts into forensic retention; the manifest records retained).
+
+PROTECTED_DIRS = ("tools", "corpus", ".git", ".jj")
+TMP_ROOTS = (Path("/tmp"), Path("/var/tmp"))
+
+
+def _within(path: Path, parent: Path) -> bool:
+    try:
+        path.relative_to(parent)
+        return True
+    except ValueError:
+        return False
+
+
+def _repo_root_of(path: Path) -> Path | None:
+    """Nearest ancestor carrying .git or .jj -- filesystem only, no git call."""
+    try:
+        current = path.resolve()
+    except OSError:
+        return None
+    if not current.is_dir():
+        current = current.parent
+    for candidate in (current, *current.parents):
+        if (candidate / ".git").exists() or (candidate / ".jj").exists():
+            return candidate
+    return None
+
+
+def _repo_roots(paths) -> list:
+    roots = []
+    for path in paths:
+        if path is None:
+            continue
+        root = _repo_root_of(Path(path))
+        if root is not None and root not in roots:
+            roots.append(root)
+    return roots
+
+
+def _protected_error(path: Path, label: str, roots, inputs, gate_file: Path) -> str | None:
+    for root in roots:
+        if _within(root, path):
+            return f"{label} is the repo root or an ancestor of it: {path} (repo {root})"
+        for name in PROTECTED_DIRS:
+            if _within(path, root / name):
+                return f"{label} is inside protected {name}/: {path}"
+        ufo = root / ".ufo"
+        if _within(path, ufo) and not _within(path, ufo / "waves"):
+            return (
+                f"{label} is inside protected .ufo/ "
+                f"(only .ufo/waves evidence is allowed): {path}"
+            )
+    for input_path in inputs:
+        if path == input_path or _within(input_path, path):
+            return f"{label} overlaps the input path: {input_path}"
+    if path == gate_file or _within(gate_file, path):
+        return f"{label} overlaps the gate source: {gate_file}"
+    return None
+
+
+def _canonical(path: Path) -> Path:
+    try:
+        return path.resolve()
+    except OSError:
+        return path.absolute()
+
+
+def _has_symlink_component(path: Path) -> bool:
+    """True when the raw path or any existing ancestor is a symlink.
+
+    This MUST run before resolve(): resolve() follows the link, so
+    `path.is_symlink()` on the resolved path is false for a raw symlink arg.
+    """
+    current = path
+    while True:
+        if current.is_symlink():
+            return True
+        parent = current.parent
+        if parent == current:
+            return False
+        current = parent
+
+
+def check_output_path(path: Path, roots, inputs, gate_file: Path) -> str | None:
+    """Raw-path checks first, then canonical containment; no write happens."""
+    if ".." in path.parts:
+        return f"--output may not contain '..': {path}"
+    if _has_symlink_component(path):
+        return f"--output or an existing ancestor is a symlink: {path}"
+    if os.path.lexists(path) and not path.is_dir():
+        return f"--output exists and is not a directory: {path}"
+    if path.is_dir():
+        try:
+            if any(path.iterdir()):
+                return f"--output is not empty: {path}"
+        except OSError as exc:
+            return f"--output is unreadable: {path}: {exc}"
+    return _protected_error(_canonical(path), "--output", roots, inputs, gate_file)
+
+
+def check_scratch_path(path: Path, roots, inputs, gate_file: Path, output: Path) -> str | None:
+    """Validate the scratch parent before any mkdir/run-child creation."""
+    if ".." in path.parts:
+        return f"--scratch may not contain '..': {path}"
+    if _has_symlink_component(path):
+        return f"--scratch or an existing ancestor is a symlink: {path}"
+    if os.path.lexists(path) and not path.is_dir():
+        return f"--scratch exists and is not a directory: {path}"
+    resolved = _canonical(path)
+    output_resolved = _canonical(output)
+    if resolved == Path("/"):
+        return "--scratch may not be the filesystem root"
+    for tmp in TMP_ROOTS:
+        if _within(resolved, tmp):
+            return f"--scratch may not live under {tmp}: {resolved}"
+    if _within(resolved, output_resolved / "cases") or resolved == output_resolved / "run-manifest.json":
+        return f"--scratch overlaps output artifacts: {resolved}"
+    return _protected_error(resolved, "--scratch", roots, inputs, gate_file)
+
+
+def make_run_dir(scratch: Path) -> Path:
+    """Create a fresh, gate-owned child of scratch; never reuse an entry."""
+    stamp = _dt.datetime.now(_dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    for attempt in range(1000):
+        candidate = scratch / f"run-{stamp}-{os.getpid()}-{attempt}"
+        try:
+            os.mkdir(candidate, 0o700)
+            return candidate
+        except FileExistsError:
+            continue
+    raise RuntimeError(f"cannot create a fresh run directory under {scratch}")
+
+
+# ---------------------------------------------------------------------------
 # selftest (PROTOCOL gate standard: isolated fixtures, stable finding ids)
 # ---------------------------------------------------------------------------
 #
-# Two dormant fixture censuses exercise the gate itself, never a live census:
-#   MODE=ok    the amended C2 contract (branch-anchored rows 6/9, both warn
-#              findings, sibling-author negative arm, HEAD fallback when the
-#              resolver has no input);
-#   MODE=head  the entering behavior (bare HEAD, no C2 findings), used as the
-#              mutant: the gate MUST turn red and name the missing finding.
+# Three dormant fixture censuses exercise the gate itself, never a live census:
+#   MODE=ok       the amended C2 contract (branch-anchored rows 6/9, both warn
+#                 findings with the exact head=/branch_tip=/count= receipt
+#                 grammar, sibling-author negative arm, HEAD fallback when the
+#                 resolver has no input);
+#   MODE=head     the entering behavior (bare HEAD, no C2 findings), used as the
+#                 mutant: the gate MUST turn red and name the missing finding;
+#   MODE=wrongtip the compliant fixture with branch_tip= one character short,
+#                 used to prove the exact-field assertion is not a substring
+#                 check.
 # The fixture reproduces only what this gate parses (lane surface, findings,
 # verdict); it is not a census implementation and is never installed.
 
@@ -911,35 +1292,96 @@ emit_finding() {
   DRIFT=1
 }
 
+valid_branch() { [[ $1 =~ ^[a-zA-Z0-9][a-zA-Z0-9._/-]*$ ]] && [[ $1 != jj/* && $1 != *..* ]] ; }
+
 resolve_branch() {
   local dir=$1 b ref
   local -a c=()
+  # The helper mirror (git config lane.branch, jj-lane.sh:439) is the only
+  # jj-colocated input; attached/origin/unique guesses are not used there.
+  b=$(git -C "$dir" config --get lane.branch 2>/dev/null || true)
+  if [ -n "$b" ]; then
+    if valid_branch "$b" && git -C "$dir" rev-parse --verify -q "refs/heads/$b" >/dev/null 2>&1; then
+      printf '%s\n' "$b"
+      return 0
+    fi
+    if [ -d "$dir/.jj" ]; then return 2; fi
+    # Non-jj: an unusable mirror falls through to the ordinary detection.
+  elif [ -d "$dir/.jj" ]; then
+    return 2
+  fi
   b=$(git -C "$dir" symbolic-ref -q HEAD 2>/dev/null || true)
-  case $b in refs/heads/*) printf '%s\n' "${b#refs/heads/}"; return 0 ;; esac
+  case $b in refs/heads/*) b=${b#refs/heads/}; if valid_branch "$b"; then printf '%s\n' "$b"; return 0; fi ;; esac
   ref=$(git -C "$dir" symbolic-ref -q refs/remotes/origin/HEAD 2>/dev/null || true)
-  case $ref in refs/remotes/origin/*) printf '%s\n' "${ref#refs/remotes/origin/}"; return 0 ;; esac
+  case $ref in refs/remotes/origin/*) ref=${ref#refs/remotes/origin/}; if valid_branch "$ref"; then printf '%s\n' "$ref"; return 0; fi ;; esac
   git -C "$dir" show-ref -q --verify refs/heads/master 2>/dev/null && c+=(master)
   git -C "$dir" show-ref -q --verify refs/heads/main 2>/dev/null && c+=(main)
   [ "${#c[@]}" -eq 1 ] && { printf '%s\n' "${c[0]}"; return 0; }
   return 1
 }
 
-branch=$(resolve_branch "$REPO" || true)
-[ "$MODE" = head ] && branch=''
+branch=''
+branch_rc=1
+if [ "$MODE" != head ]; then
+  branch=$(resolve_branch "$REPO")
+  branch_rc=$?
+fi
+if [ "$branch_rc" -eq 2 ]; then
+  # Fail-closed jj resolver: no branch input = unavailable, no progress and no
+  # C2 finding (the entering behavior is NOT used for a .jj lane).
+  printf 'SURFACE lane.%s: unavailable (lane=%s round=- launch_epoch=- age_s=- basis=row-1 reason=ref-unresolved; ts=fixture)\n' "$LANE" "$LANE"
+  printf 'MORI_CENSUS: CLEAN (findings=0 drift=0 unavailable=1 surfaces=1)\n'
+  exit 0
+fi
+# The report repo has its own resolver result: a jj root with an unusable
+# mirror skips row-6 closure instead of falling back to HEAD.
+root_branch=''
+root_rc=1
+if [ "$MODE" != head ]; then
+  root_branch=$(resolve_branch "$ROOT")
+  root_rc=$?
+fi
 head=$(git -C "$REPO" rev-parse --verify -q HEAD 2>/dev/null || true)
+lane_ref=HEAD
+[ -n "$branch" ] && lane_ref="refs/heads/$branch"
+
+round='-'
+launch_ep=''
+anchor=$(grep -E " launch $LANE round=" "$LEDGER" 2>/dev/null | tail -n 1 || true)
+if [ -n "$anchor" ]; then
+  round=$(printf '%s\n' "$anchor" | awk '{for (i = 1; i <= NF; i++) if ($i ~ /^round=/) { v = $i; sub(/^round=/, "", v); print v; exit }}')
+  launch_ts=$(printf '%s\n' "$anchor" | awk '{print $1; exit}')
+  launch_ep=$(date -u -d "$launch_ts" +%s 2>/dev/null || true)
+fi
+
+# C2 diagnostics are observations about the branch anchor and are emitted
+# BEFORE any row/young/closure early return: the entering census lost the
+# author scan on young and report-closed lanes (CensusNewBranches).
+if [ "$MODE" != head ] && [ -n "$branch" ] && [ -n "$head" ] && [ -n "$launch_ep" ] && [ "$launch_ep" -le "$NOW" ]; then
+  btip=$(git -C "$REPO" rev-parse --verify -q "refs/heads/$branch" 2>/dev/null || true)
+  if [ -n "$btip" ] && ! git -C "$REPO" merge-base --is-ancestor "$head" "refs/heads/$branch" 2>/dev/null; then
+    head12=${head:0:12}
+    btip12=${btip:0:12}
+    # wrongtip: one character short, the exact-field arm's red fixture.
+    if [ "$MODE" = wrongtip ]; then btip12=${btip12:0:11}; fi
+    emit_finding HEAD_BRANCH_MISMATCH "lane=$LANE head=$head12 branch=$branch branch_tip=$btip12 basis=merge-base-not-ancestor"
+  fi
+  am=$(git -C "$REPO" log --since="@$launch_ep" --format='%ct|%an|%ae|%cn|%ce' "$lane_ref" 2>/dev/null \
+    | awk -F'|' -v lo="$launch_ep" -v hi="$NOW" \
+      '$1 ~ /^[0-9]+$/ && $1 + 0 > lo + 0 && $1 + 0 <= hi + 0 && $4 == "alpha-shokunin" && $5 == "alpha@shokunin.local" && $3 !~ /@shokunin[.]local$/ { n++ } END { print n + 0 }')
+  case $am in ''|*[!0-9]*) am=0 ;; esac
+  if [ "$am" -gt 0 ]; then
+    emit_finding LANE_AUTHOR_MISMATCH "lane=$LANE count=$am committer=$LANE-shokunin <$LANE@shokunin.local> window=launch..NOW basis=committer-lane-author-foreign-email"
+  fi
+fi
+
 state=unavailable
 basis=row-1
-round='-'
-launch_ep='-'
 age='-'
-anchor=$(grep -E " launch $LANE round=" "$LEDGER" 2>/dev/null | tail -n 1 || true)
 if [ -z "$anchor" ]; then
   state=not-open
   basis=row-2
 else
-  round=$(printf '%s\n' "$anchor" | awk '{for (i = 1; i <= NF; i++) if ($i ~ /^round=/) { v = $i; sub(/^round=/, "", v); print v; exit }}')
-  launch_ts=$(printf '%s\n' "$anchor" | awk '{print $1; exit}')
-  launch_ep=$(date -u -d "$launch_ts" +%s 2>/dev/null || true)
   if [ -z "$launch_ep" ]; then
     state=unavailable
     basis=row-1
@@ -959,13 +1401,15 @@ else
       state=not-open
       basis=row-7
     else
-      ref=HEAD
-      [ -n "$branch" ] && ref="refs/heads/$branch"
       rpath=".ufo/reports/round-$round/$LANE.md"
       closed=0
-      if git -C "$ROOT" cat-file -e "$ref:$rpath" 2>/dev/null; then
-        ct=$(git -C "$ROOT" log -1 --format=%ct "$ref" -- "$rpath" 2>/dev/null || true)
-        if [ -n "$ct" ] && [ "$ct" -gt "$launch_ep" ] && [ "$ct" -le "$NOW" ]; then closed=1; fi
+      if [ "$root_rc" -ne 2 ]; then
+        root_ref=HEAD
+        [ -n "$root_branch" ] && root_ref="refs/heads/$root_branch"
+        if git -C "$ROOT" cat-file -e "$root_ref:$rpath" 2>/dev/null; then
+          ct=$(git -C "$ROOT" log -1 --format=%ct "$root_ref" -- "$rpath" 2>/dev/null || true)
+          if [ -n "$ct" ] && [ "$ct" -gt "$launch_ep" ] && [ "$ct" -le "$NOW" ]; then closed=1; fi
+        fi
       fi
       if [ "$closed" -eq 1 ]; then
         state=not-open
@@ -974,7 +1418,7 @@ else
         subj=0
         sib=0
         if [ -n "$head" ]; then
-          lg=$(git -C "$REPO" log --since="@$launch_ep" --format='%ct %an <%ae>' "$ref" 2>/dev/null || true)
+          lg=$(git -C "$REPO" log --since="@$launch_ep" --format='%ct %an <%ae>' "$lane_ref" 2>/dev/null || true)
           inwin=$(awk -v lo="$launch_ep" -v hi="$NOW" '$1 ~ /^[0-9]+$/ && $1 + 0 > lo + 0 && $1 + 0 <= hi + 0' <<< "$lg")
           if [ -n "$inwin" ]; then
             authors=$(awk '{ sub(/^[0-9]+ /, ""); print }' <<< "$inwin")
@@ -982,21 +1426,6 @@ else
               *$'\n'"$LANE-shokunin <$LANE@shokunin.local>"$'\n'*) subj=1 ;;
               *) sib=1 ;;
             esac
-          fi
-          if [ -n "$branch" ]; then
-            btip=$(git -C "$REPO" rev-parse --verify -q "refs/heads/$branch" 2>/dev/null || true)
-            if [ -n "$btip" ] && ! git -C "$REPO" merge-base --is-ancestor "$head" "refs/heads/$branch" 2>/dev/null; then
-              hshort=$(git -C "$REPO" rev-parse --short "$head" 2>/dev/null || true)
-              bshort=$(git -C "$REPO" rev-parse --short "$btip" 2>/dev/null || true)
-              emit_finding HEAD_BRANCH_MISMATCH "lane=$LANE head=$hshort branch=$branch branch_tip=$bshort"
-            fi
-          fi
-          if [ "$MODE" = ok ]; then
-            am=$(git -C "$REPO" log --since="@$launch_ep" --format='%ct|%an|%ae|%cn|%ce' "$ref" 2>/dev/null \
-              | awk -F'|' -v lo="$launch_ep" -v hi="$NOW" \
-                '$1 ~ /^[0-9]+$/ && $1 + 0 > lo + 0 && $1 + 0 <= hi + 0 && $4 == "alpha-shokunin" && $5 == "alpha@shokunin.local" && $3 !~ /@shokunin[.]local$/ { n++ } END { print n + 0 }')
-            case $am in ''|*[!0-9]*) am=0 ;; esac
-            if [ "$am" -gt 0 ]; then emit_finding LANE_AUTHOR_MISMATCH "lane=$LANE commits=$am"; fi
           fi
         fi
         if [ "$subj" -eq 1 ]; then
@@ -1034,14 +1463,29 @@ def write_fixture_census(root: Path, mode: str) -> Path:
     return path
 
 
-def _run_gate(gate: Path, census: Path, output: Path, scratch: Path):
+def _run_gate(gate: Path, census: Path, output: Path, scratch: Path, extra=()):
     return subprocess.run(
         [sys.executable, str(gate),
          "--census", str(census),
          "--output", str(output),
-         "--scratch", str(scratch)],
+         "--scratch", str(scratch),
+         *extra],
         capture_output=True, text=True, timeout=600,
     )
+
+
+def _run_gate_argv(gate: Path, argv):
+    return subprocess.run(
+        [sys.executable, str(gate), *argv],
+        capture_output=True, text=True, timeout=600,
+    )
+
+
+def _tree_state(root: Path):
+    try:
+        return sorted(str(p.relative_to(root)) for p in root.rglob("*"))
+    except OSError:
+        return ["<unreadable>"]
 
 
 def _case(manifest: dict, case_id: str) -> dict:
@@ -1058,15 +1502,42 @@ def _assertion_failed(manifest: dict, case_id: str, assertion_id: str) -> bool:
     return any(a["id"] == assertion_id and not a["ok"] for a in case["assertions"])
 
 
-def run_selftest(scratch_parent: str) -> int:
+def _assertion_matching(manifest: dict, case_id: str, prefix: str, ok: bool) -> bool:
+    case = _case(manifest, case_id)
+    return any(a["id"].startswith(prefix) and a["ok"] == ok for a in case["assertions"])
+
+
+def _selftest_parent(scratch_parent: str) -> tuple[Path | None, str | None]:
+    if scratch_parent:
+        parent = Path(scratch_parent).expanduser().resolve()
+    else:
+        tmp = os.environ.get("TMPDIR", "").strip()
+        if not tmp:
+            return None, "selftest needs --scratch DIR or TMPDIR (no /tmp fallback)"
+        parent = Path(tmp).expanduser().resolve()
+    for forbidden in TMP_ROOTS:
+        if _within(parent, forbidden):
+            return None, f"selftest temp parent may not live under {forbidden}: {parent}"
+    return parent, None
+
+
+def run_selftest(scratch_parent: str, keep_scratch: bool = False) -> int:
     gate = Path(__file__).resolve()
-    parent = Path(scratch_parent).expanduser().resolve() if scratch_parent else None
-    if parent is not None:
-        parent.mkdir(parents=True, exist_ok=True)
-    work = Path(tempfile.mkdtemp(
-        prefix="mori-r17-jj-selftest-",
-        dir=str(parent) if parent is not None else None,
-    ))
+    parent, parent_err = _selftest_parent(scratch_parent)
+    if parent_err:
+        print(f"mori-round17-jj-regressions: setup: {parent_err}", file=sys.stderr)
+        return 2
+    roots = _repo_roots([gate.parent, Path.cwd()])
+    overlap = _protected_error(parent, "--scratch", roots, [], gate)
+    if overlap:
+        print(f"mori-round17-jj-regressions: setup: {overlap}", file=sys.stderr)
+        return 2
+    parent.mkdir(parents=True, exist_ok=True)
+    if parent.is_symlink() or not parent.is_dir():
+        print(f"mori-round17-jj-regressions: setup: selftest parent is not a real directory: {parent}",
+              file=sys.stderr)
+        return 2
+    work = Path(tempfile.mkdtemp(prefix="mori-r17-jj-selftest-", dir=str(parent)))
     checks = []
     failures = []
 
@@ -1077,46 +1548,207 @@ def run_selftest(scratch_parent: str) -> int:
             failures.append(f"{label}{(': ' + detail) if detail else ''}")
 
     try:
+        # --- isolated guard arms: pure checks over a synthetic repo tree ---
+        fake = work / "fake-repo"
+        for name in ("tools", "corpus", ".git", ".jj", ".ufo/state", ".ufo/waves/evidence"):
+            (fake / name).mkdir(parents=True, exist_ok=True)
+        fake_census = fake / "tools" / "census.sh"
+        write(fake_census, "#!/bin/sh\nexit 0\n", 0o755)
+        fake_gate = fake / "tools" / "gate.py"
+        write(fake_gate, "")
+        fake_roots = [fake]
+        fake_inputs = [fake_census]
+        out_probe = work / "guard-out"
+
+        expect("guard_output_repo_root",
+               _protected_error(fake, "--output", fake_roots, [], fake_gate) is not None)
+        for name in PROTECTED_DIRS:
+            expect(f"guard_output_{name.strip('.')}",
+                   check_output_path(fake / name / "out", fake_roots, fake_inputs, fake_gate) is not None)
+        expect("guard_output_dotufo",
+               check_output_path(fake / ".ufo" / "state" / "out",
+                                 fake_roots, fake_inputs, fake_gate) is not None)
+        expect("guard_output_waves_allowed",
+               check_output_path(fake / ".ufo" / "waves" / "evidence" / "out",
+                                 fake_roots, fake_inputs, fake_gate) is None)
+        nonempty = work / "nonempty"
+        nonempty.mkdir()
+        write(nonempty / "artifact", "x")
+        expect("guard_output_nonempty",
+               check_output_path(nonempty, fake_roots, fake_inputs, fake_gate) is not None)
+        link = work / "outlink"
+        link.symlink_to(fake / ".ufo" / "waves")
+        expect("guard_output_symlink",
+               check_output_path(link, fake_roots, fake_inputs, fake_gate) is not None)
+        linkdir = work / "linkdir"
+        linkdir.symlink_to(fake / ".ufo" / "waves")
+        expect("guard_output_ancestor_symlink",
+               check_output_path(linkdir / "out", fake_roots, fake_inputs, fake_gate) is not None)
+        expect("guard_scratch_ancestor_symlink",
+               check_scratch_path(linkdir / "tmp", fake_roots, fake_inputs,
+                                  fake_gate, out_probe) is not None)
+        ancestor = work / "ancestor"
+        ancestor.mkdir()
+        ancestor_repo = ancestor / "repo"
+        (ancestor_repo / ".git").mkdir(parents=True)
+        expect("guard_output_ancestor",
+               _protected_error(ancestor, "--output", [ancestor_repo], [], fake_gate) is not None)
+        gate_src = work / "gate-src"
+        gate_src.mkdir()
+        gate_file = gate_src / "gate.py"
+        write(gate_file, "")
+        expect("guard_output_gate_source",
+               _protected_error(gate_src, "--output", [], [], gate_file) is not None)
+        expect("guard_scratch_tools",
+               check_scratch_path(fake / "tools" / "tmp",
+                                  fake_roots, fake_inputs, fake_gate, out_probe) is not None)
+        expect("guard_scratch_input_file",
+               check_scratch_path(fake_census,
+                                  fake_roots, fake_inputs, fake_gate, out_probe) is not None)
+        input_dir = work / "inputs"
+        input_dir.mkdir()
+        input_census = input_dir / "census.sh"
+        write(input_census, "")
+        expect("guard_scratch_input_ancestor",
+               check_scratch_path(input_dir, [], [input_census], fake_gate, out_probe) is not None)
+        expect("guard_scratch_tmp",
+               check_scratch_path(Path("/tmp") / "jj-gate-selftest",
+                                  fake_roots, fake_inputs, fake_gate, out_probe) is not None)
+        expect("guard_scratch_ok",
+               check_scratch_path(work / "scratch-ok",
+                                  fake_roots, fake_inputs, fake_gate, out_probe) is None)
+
+        # --- compliant fixture: green, exact receipt fields, cleaned scratch ---
         ok_census = write_fixture_census(work, "ok")
         head_census = write_fixture_census(work, "head")
+        wrongtip_census = write_fixture_census(work, "wrongtip")
         absent_census = work / "absent-census.sh"
 
-        out_ok = work / "out-ok"
-        proc = _run_gate(gate, ok_census, out_ok, work / "scratch-ok")
-        manifest = json.loads((out_ok / "run-manifest.json").read_text(encoding="utf-8"))
-        expect("ok_rc0", proc.returncode == 0, f"rc={proc.returncode} {proc.stdout.strip()} {proc.stderr.strip()}")
-        expect("ok_cases", manifest["totals"]["cases"] == len(CASES), f"cases={manifest['totals']['cases']}")
-        expect("ok_failed_zero", manifest["totals"]["failed_assertions"] == 0,
-               f"failed={manifest['totals']['failed_assertions']}")
-        expect("ok_mismatch_finding",
-               _assertion_ok(manifest, "jj-commit-no-bookmark", f"finding:{FINDING_MISMATCH}:present"))
-        expect("ok_mismatch_severity",
-               _assertion_ok(manifest, "jj-commit-no-bookmark", f"finding:{FINDING_MISMATCH}:severity"))
-        expect("ok_author_finding",
-               _assertion_ok(manifest, "jj-ambient-author", f"finding:{FINDING_AUTHOR}:present"))
-        expect("ok_sibling_negative",
-               _assertion_ok(manifest, "jj-sibling-author", f"finding:{FINDING_AUTHOR}:absent"))
-        expect("ok_fallback_head",
-               _assertion_ok(manifest, "git-fallback-head", "lane_basis")
-               and _assertion_ok(manifest, "git-fallback-head", f"finding:{FINDING_MISMATCH}:absent"))
+        # Raw --output/--scratch symlink arguments must be rejected BEFORE
+        # resolve(), and the sentinel target must stay byte-identical (the
+        # SandboxFinal residual: resolving first erased the symlink evidence).
+        sentinel = work / "sentinel-empty"
+        sentinel.mkdir()
+        out_link = work / "out-link"
+        out_link.symlink_to(sentinel)
+        before = _tree_state(sentinel)
+        proc = _run_gate_argv(gate, ["--census", str(ok_census),
+                                     "--output", str(out_link)])
+        expect("argv_output_symlink_rc2", proc.returncode == 2, f"rc={proc.returncode}")
+        expect("argv_output_symlink_target_unchanged", _tree_state(sentinel) == before)
 
+        nested_link = work / "nested-link"
+        nested_link.symlink_to(sentinel)
+        before = _tree_state(sentinel)
+        proc = _run_gate_argv(gate, ["--census", str(ok_census),
+                                     "--output", str(nested_link / "newout")])
+        expect("argv_output_nested_symlink_rc2", proc.returncode == 2, f"rc={proc.returncode}")
+        expect("argv_output_nested_symlink_target_unchanged", _tree_state(sentinel) == before)
+
+        scratch_link = work / "scratch-link"
+        scratch_link.symlink_to(sentinel)
+        out_guard = work / "out-guard-scratch"
+        before = _tree_state(sentinel)
+        proc = _run_gate_argv(gate, ["--census", str(ok_census),
+                                     "--output", str(out_guard),
+                                     "--scratch", str(scratch_link)])
+        expect("argv_scratch_symlink_rc2", proc.returncode == 2, f"rc={proc.returncode}")
+        expect("argv_scratch_symlink_target_unchanged", _tree_state(sentinel) == before)
+        expect("argv_scratch_symlink_output_untouched", not out_guard.exists())
+
+        out_ok = work / "out-ok"
+        proc = _run_gate(gate, ok_census, out_ok, work / "scratch-ok-run")
+        manifest_ok = json.loads((out_ok / "run-manifest.json").read_text(encoding="utf-8"))
+        expect("ok_rc0", proc.returncode == 0,
+               f"rc={proc.returncode} {proc.stdout.strip()} {proc.stderr.strip()}")
+        expect("ok_cases", manifest_ok["totals"]["cases"] == len(CASES),
+               f"cases={manifest_ok['totals']['cases']}")
+        expect("ok_failed_zero", manifest_ok["totals"]["failed_assertions"] == 0,
+               f"failed={manifest_ok['totals']['failed_assertions']}")
+        expect("ok_mismatch_finding",
+               _assertion_ok(manifest_ok, "jj-commit-no-bookmark",
+                             f"finding:{FINDING_MISMATCH}:present"))
+        expect("ok_mismatch_severity",
+               _assertion_ok(manifest_ok, "jj-commit-no-bookmark",
+                             f"finding:{FINDING_MISMATCH}:severity"))
+        expect("ok_exact_head",
+               _assertion_matching(manifest_ok, "jj-commit-no-bookmark",
+                                   f"finding:{FINDING_MISMATCH}:obs_token:head=", True))
+        expect("ok_exact_branch_tip",
+               _assertion_matching(manifest_ok, "jj-commit-no-bookmark",
+                                   f"finding:{FINDING_MISMATCH}:obs_token:branch_tip=", True))
+        expect("ok_mismatch_basis",
+               _assertion_ok(manifest_ok, "jj-commit-no-bookmark",
+                             f"finding:{FINDING_MISMATCH}:obs_token:basis=merge-base-not-ancestor"))
+        expect("ok_author_finding",
+               _assertion_ok(manifest_ok, "jj-ambient-author",
+                             f"finding:{FINDING_AUTHOR}:present"))
+        expect("ok_author_count",
+               _assertion_ok(manifest_ok, "jj-ambient-author",
+                             f"finding:{FINDING_AUTHOR}:obs_token:count=1"))
+        expect("ok_sibling_negative",
+               _assertion_ok(manifest_ok, "jj-sibling-author", f"finding:{FINDING_AUTHOR}:absent"))
+        expect("ok_fallback_head",
+               _assertion_ok(manifest_ok, "git-fallback-head", "lane_basis")
+               and _assertion_ok(manifest_ok, "git-fallback-head",
+                                 f"finding:{FINDING_MISMATCH}:absent"))
+        expect("ok_retained_false", manifest_ok.get("retained") is False,
+               f"retained={manifest_ok.get('retained')!r}")
+        scratch_run_ok = manifest_ok.get("scratch_run") or ""
+        expect("ok_scratch_removed",
+               scratch_run_ok != "" and not os.path.lexists(scratch_run_ok))
+
+        # --keep-scratch: forensic retention is opt-in and recorded.
+        out_keep = work / "out-keep"
+        proc = _run_gate(gate, ok_census, out_keep, work / "scratch-keep",
+                         extra=["--keep-scratch"])
+        manifest_keep = json.loads((out_keep / "run-manifest.json").read_text(encoding="utf-8"))
+        expect("keep_rc0", proc.returncode == 0, f"rc={proc.returncode}")
+        expect("keep_retained_true", manifest_keep.get("retained") is True,
+               f"retained={manifest_keep.get('retained')!r}")
+        expect("keep_scratch_present",
+               bool(manifest_keep.get("scratch_run"))
+               and os.path.isdir(manifest_keep["scratch_run"]))
+
+        # --- exact-field mutant: branch_tip= one character short is red ---
+        out_wrong = work / "out-wrongtip"
+        proc = _run_gate(gate, wrongtip_census, out_wrong, work / "scratch-wrongtip")
+        manifest_wrong = json.loads((out_wrong / "run-manifest.json").read_text(encoding="utf-8"))
+        expect("wrongtip_rc1", proc.returncode == 1, f"rc={proc.returncode}")
+        expect("wrongtip_names_branch_tip",
+               _assertion_matching(manifest_wrong, "jj-commit-no-bookmark",
+                                   f"finding:{FINDING_MISMATCH}:obs_token:branch_tip=", False))
+
+        # --- entering mutant: same universe, red on the missing finding ---
         out_head = work / "out-head"
         proc = _run_gate(gate, head_census, out_head, work / "scratch-head")
-        manifest = json.loads((out_head / "run-manifest.json").read_text(encoding="utf-8"))
+        manifest_head = json.loads((out_head / "run-manifest.json").read_text(encoding="utf-8"))
         expect("head_rc1", proc.returncode == 1, f"rc={proc.returncode}")
         expect("head_names_missing_mismatch",
-               _assertion_failed(manifest, "jj-commit-no-bookmark", f"finding:{FINDING_MISMATCH}:present"))
-        expect("head_failed_assertions", manifest["totals"]["failed_assertions"] > 0,
-               f"failed={manifest['totals']['failed_assertions']}")
+               _assertion_failed(manifest_head, "jj-commit-no-bookmark",
+                                 f"finding:{FINDING_MISMATCH}:present"))
+        expect("head_failed_assertions", manifest_head["totals"]["failed_assertions"] > 0,
+               f"failed={manifest_head['totals']['failed_assertions']}")
+
+        # The before/after denominator must be identical (ReceiptC2Controls Q1).
+        expect("same_assertion_universe",
+               manifest_ok["totals"]["assertions"] == manifest_head["totals"]["assertions"]
+               == manifest_wrong["totals"]["assertions"],
+               f"ok={manifest_ok['totals']['assertions']} "
+               f"head={manifest_head['totals']['assertions']} "
+               f"wrongtip={manifest_wrong['totals']['assertions']}")
 
         out_absent = work / "out-absent"
         proc = _run_gate(gate, absent_census, out_absent, work / "scratch-absent")
-        manifest = json.loads((out_absent / "run-manifest.json").read_text(encoding="utf-8"))
+        manifest_absent = json.loads((out_absent / "run-manifest.json").read_text(encoding="utf-8"))
         expect("absent_rc1", proc.returncode == 1, f"rc={proc.returncode}")
         expect("absent_capability_absent",
-               all(c["status"] == "capability_absent" for c in manifest["cases"]))
+               all(c["status"] == "capability_absent" for c in manifest_absent["cases"]))
     finally:
-        shutil.rmtree(work, ignore_errors=True)
+        if keep_scratch:
+            print(f"SELFTEST kept: {work}")
+        else:
+            shutil.rmtree(work, ignore_errors=True)
 
     if failures:
         print("SELFTEST FAIL: " + "; ".join(failures))
@@ -1135,40 +1767,78 @@ def main(argv=None) -> int:
     parser.add_argument(
         "--scratch",
         default="",
-        help="sandbox tree (default: <output>/scratch; with --selftest, the selftest temp parent)",
+        help="sandbox tree (default: <output>/scratch; with --selftest, the selftest temp parent). "
+             "Must not be /tmp, /var/tmp, or overlap a repo root, tools/, corpus/, .git/, .jj/, "
+             "the census input, or the output artifacts.",
+    )
+    parser.add_argument(
+        "--keep-scratch",
+        action="store_true",
+        help="retain the fresh per-run sandbox tree for forensics (manifest retained=true); "
+             "the default removes only the run tree this invocation created",
     )
     parser.add_argument(
         "--selftest",
         action="store_true",
-        help="isolated fixture proof of this gate (dormant fixture census + HEAD mutant); no live census needed",
+        help="isolated fixture proof of this gate (compliant/HEAD/wrongtip fixture censuses, "
+             "output/scratch guard arms); no live census needed",
     )
     args = parser.parse_args(argv)
 
     if args.selftest:
-        return run_selftest(args.scratch)
+        return run_selftest(args.scratch, args.keep_scratch)
     if not args.census:
         parser.error("--census is required unless --selftest")
     if not args.output:
         parser.error("--output is required unless --selftest")
 
-    output = Path(args.output).expanduser().resolve()
+    gate_path = Path(__file__).resolve()
     census = Path(args.census).expanduser().resolve()
-    scratch = Path(args.scratch).expanduser().resolve() if args.scratch else output / "scratch"
 
-    try:
-        output.mkdir(parents=True, exist_ok=True)
-        cases_out = output / "cases"
-        cases_out.mkdir(parents=True, exist_ok=True)
-        run_stamp = _dt.datetime.now(_dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-        run_dir = scratch / f"run-{run_stamp}-{os.getpid()}"
-        run_dir.mkdir(parents=True, exist_ok=False)
-    except OSError as exc:
-        print(f"mori-round17-jj-regressions: setup: {exc}", file=sys.stderr)
+    # RAW paths: no resolve() before the guard. resolve() follows a symlink and
+    # would erase the evidence the no-symlink rule needs (SandboxFinal
+    # residual). Relative args are anchored at cwd WITHOUT normalising '..'.
+    raw_output = Path(args.output).expanduser()
+    if not raw_output.is_absolute():
+        raw_output = Path.cwd() / raw_output
+    raw_scratch = Path(args.scratch).expanduser() if args.scratch else raw_output / "scratch"
+    if not raw_scratch.is_absolute():
+        raw_scratch = Path.cwd() / raw_scratch
+
+    roots = _repo_roots([gate_path.parent, Path.cwd(), census.parent])
+    inputs = [census]
+
+    # Raw path + existing-ancestor symlink checks run BEFORE resolve/mkdir;
+    # only then are the canonical containment guards applied.
+    guard_err = check_output_path(raw_output, roots, inputs, gate_path)
+    if guard_err:
+        print(f"mori-round17-jj-regressions: setup: {guard_err}", file=sys.stderr)
         return 2
+    guard_err = check_scratch_path(raw_scratch, roots, inputs, gate_path, raw_output)
+    if guard_err:
+        print(f"mori-round17-jj-regressions: setup: {guard_err}", file=sys.stderr)
+        return 2
+
+    output = _canonical(raw_output)
+    scratch = _canonical(raw_scratch)
 
     try:
         tools = resolve_tools(args)
     except RuntimeError as exc:
+        print(f"mori-round17-jj-regressions: setup: {exc}", file=sys.stderr)
+        return 2
+
+    try:
+        output.mkdir(parents=True, exist_ok=True)
+        if output.is_symlink() or not output.is_dir():
+            raise RuntimeError(f"--output changed type during creation: {output}")
+        cases_out = output / "cases"
+        cases_out.mkdir(parents=True, exist_ok=True)
+        scratch.mkdir(parents=True, exist_ok=True)
+        if scratch.is_symlink() or not scratch.is_dir():
+            raise RuntimeError(f"--scratch changed type during creation: {scratch}")
+        run_dir = make_run_dir(scratch)
+    except (OSError, RuntimeError) as exc:
         print(f"mori-round17-jj-regressions: setup: {exc}", file=sys.stderr)
         return 2
 
@@ -1179,14 +1849,15 @@ def main(argv=None) -> int:
     now = int(time.time()) + 120
 
     try:
-        gate_sha = sha256_bytes(Path(__file__).resolve().read_bytes())
+        gate_sha = sha256_bytes(gate_path.read_bytes())
     except OSError:
         gate_sha = "unavailable"
 
+    keep_scratch = bool(args.keep_scratch)
     manifest = {
         "schema": SCHEMA,
         "generated_at": _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "gate": {"path": str(Path(__file__).resolve()), "sha256": gate_sha},
+        "gate": {"path": str(gate_path), "sha256": gate_sha},
         "census": {
             "path": str(census),
             "present": census_present,
@@ -1203,6 +1874,8 @@ def main(argv=None) -> int:
             "timeout": tools["timeout"],
         },
         "scratch_run": str(run_dir),
+        "retained": None,
+        "retention": {},
         "environment": {
             "HOME": "redirected per case into <case>/home",
             "XDG_CONFIG_HOME": "redirected per case into <case>/home/.config",
@@ -1215,71 +1888,79 @@ def main(argv=None) -> int:
     }
 
     case_results = []
+    run_error = None
 
-    for case_id, description, setup in CASES:
-        case_dir = run_dir / case_id
-        needs_jj = case_id.startswith("jj-")
+    try:
+        for case_id, description, setup in CASES:
+            case_dir = run_dir / case_id
+            needs_jj = case_id.startswith("jj-")
+            # A non-retained run's sandbox paths are removed below, so the
+            # manifest records them only when forensic retention was requested.
+            sandbox_field = str(case_dir) if keep_scratch else None
 
-        if not census_present:
+            if not census_present:
+                case_results.append(manifest_case(
+                    case_id, description, "capability_absent",
+                    [{"id": "census_present", "ok": False,
+                      "detail": f"missing or unreadable: {census}"}],
+                    sandbox=sandbox_field,
+                ))
+                continue
+
+            if needs_jj and not tools["jj"]:
+                case_results.append(manifest_case(
+                    case_id, description, "capability_absent",
+                    [{"id": "jj_present", "ok": False,
+                      "detail": "no executable jj at ~/.local/bin/jj or PATH"}],
+                    sandbox=sandbox_field,
+                ))
+                continue
+
+            try:
+                sb = build_sandbox(case_dir, now, tools)
+                sb["jj"] = tools["jj"] if needs_jj else ""
+                expect = setup(sb, tools)
+                refs_before = refs_snapshot(sb)
+            except Exception as exc:  # setup is our own fixture, never the census
+                case_results.append(manifest_case(
+                    case_id, description, "setup_failed",
+                    [{"id": "sandbox_build", "ok": False, "detail": str(exc)}],
+                    sandbox=sandbox_field,
+                ))
+                continue
+
+            outcome = evaluate(sb, census, expect, refs_before)
+            res = outcome["result"]
+            text = outcome["text"]
+            out_file = cases_out / f"{case_id}.out"
+            write(out_file, text)
+
+            parsed = outcome["parsed"]
+            status = "match" if outcome["failed_assertions"] == 0 else "mismatch"
+            observed = {
+                "state": parsed["state"],
+                "basis": parsed["basis"],
+                "roll": parsed["verdict"],
+                "rc": res["rc"],
+                "findings": [
+                    {"id": f["id"], "severity": f["severity"]} for f in parsed["findings"]
+                ],
+                "verdict_fields": parsed["verdict_fields"],
+                "refs": outcome["refs_after"],
+            }
             case_results.append(manifest_case(
-                case_id, description, "capability_absent",
-                [{"id": "census_present", "ok": False, "detail": f"missing or unreadable: {census}"}],
-                sandbox=str(case_dir),
+                case_id,
+                description,
+                status,
+                outcome["checks"],
+                observed=observed,
+                output_file=str(out_file.relative_to(output)),
+                sandbox=sandbox_field,
+                census_command=res["argv"],
+                census_sha=sha256_text(text),
             ))
-            continue
-
-        if needs_jj and not tools["jj"]:
-            case_results.append(manifest_case(
-                case_id, description, "capability_absent",
-                [{"id": "jj_present", "ok": False, "detail": "no executable jj at ~/.local/bin/jj or PATH"}],
-                sandbox=str(case_dir),
-            ))
-            continue
-
-        try:
-            sb = build_sandbox(case_dir, now, tools)
-            sb["jj"] = tools["jj"] if needs_jj else ""
-            expect = setup(sb, tools)
-            refs_before = refs_snapshot(sb)
-        except Exception as exc:  # setup is our own fixture, never the census
-            case_results.append(manifest_case(
-                case_id, description, "setup_failed",
-                [{"id": "sandbox_build", "ok": False, "detail": str(exc)}],
-                sandbox=str(case_dir),
-            ))
-            continue
-
-        outcome = evaluate(sb, census, expect, refs_before)
-        res = outcome["result"]
-        text = outcome["text"]
-        out_file = cases_out / f"{case_id}.out"
-        write(out_file, text)
-
-        refs_after = outcome["refs_after"]
-        parsed = outcome["parsed"]
-        status = "match" if outcome["failed_assertions"] == 0 else "mismatch"
-        observed = {
-            "state": parsed["state"],
-            "basis": parsed["basis"],
-            "roll": parsed["verdict"],
-            "rc": res["rc"],
-            "findings": [
-                {"id": f["id"], "severity": f["severity"]} for f in parsed["findings"]
-            ],
-            "verdict_fields": parsed["verdict_fields"],
-            "refs": refs_after,
-        }
-        case_results.append(manifest_case(
-            case_id,
-            description,
-            status,
-            outcome["checks"],
-            observed=observed,
-            output_file=str(out_file.relative_to(output)),
-            sandbox=str(case_dir),
-            census_command=res["argv"],
-            census_sha=sha256_text(text),
-        ))
+    except Exception as exc:
+        run_error = f"{type(exc).__name__}: {exc}"
 
     manifest["cases"] = case_results
     total_assertions = sum(len(c["assertions"]) for c in case_results)
@@ -1299,19 +1980,47 @@ def main(argv=None) -> int:
         "failed_cases": failed_cases,
     }
     manifest["failed"] = failed_assertions
+    if run_error:
+        manifest["error"] = run_error
+
+    # F4 retention policy: the fresh run tree is removed unless forensics were
+    # requested. Only the child created above is ever removed -- never output,
+    # the scratch parent, or anything else.
+    retained = keep_scratch
+    cleanup = "kept" if retained else "removed"
+    if not retained:
+        shutil.rmtree(run_dir, ignore_errors=True)
+        if os.path.lexists(run_dir):
+            retained = True
+            cleanup = "failed"
+            manifest["cleanup_error"] = f"could not remove {run_dir}"
+    manifest["retained"] = retained
+    manifest["retention"] = {
+        "policy": "keep" if keep_scratch else "cleanup",
+        "cleanup": cleanup,
+        "scratch_run": str(run_dir),
+    }
 
     manifest_path = output / "run-manifest.json"
-    write(manifest_path, json.dumps(manifest, indent=2, sort_keys=False) + "\n")
+    try:
+        write(manifest_path, json.dumps(manifest, indent=2, sort_keys=False) + "\n")
+    except OSError as exc:
+        print(f"mori-round17-jj-regressions: setup: cannot write manifest: {exc}",
+              file=sys.stderr)
+        return 2
 
     print(
         f"mori-round17-jj-regressions: cases={len(case_results)} "
         f"match={statuses.get('match', 0)} mismatch={statuses.get('mismatch', 0)} "
         f"capability_absent={statuses.get('capability_absent', 0)} "
         f"setup_failed={statuses.get('setup_failed', 0)} "
-        f"assertions={total_assertions} failed={failed_assertions}"
+        f"assertions={total_assertions} failed={failed_assertions} "
+        f"retained={retained}"
     )
     print(f"manifest: {manifest_path}")
 
+    if run_error:
+        return 2
     return 0 if failed_assertions == 0 and failed_cases == 0 else 1
 
 

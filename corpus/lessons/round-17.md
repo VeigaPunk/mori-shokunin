@@ -162,3 +162,101 @@ reproduces40→48, A37→45/B2/C1, mined19→25/queued20→22/rejected1.
 The wave2 preflight initially failed the explicit transcript-field clause;
 `context-check-wave2-original.json` rc1→`context-check-wave2.json` rc0 after the
 allowlist was spelled out. This was caught before dispatch, not repaired after it.
+
+## Wave-2 findings and append-only precision corrections
+
+Fresh wave2 dispatched 64 seats after three all-64 job-cap refusals. These are
+author-lane falsifiers, not independent outside closure. The initial wave1
+ClaimSeparability report predates C3; the later contract/SCORECARD declaration
+supersedes its “conformance-only sweep” wording. C3 was committed before L1
+measurements. All six scores remain held.
+
+### Corrected verbatim quotes (supersede escaped-byte versions above)
+
+The original S041/S042/S044 table accidentally retained JSON-style backslashes
+around internal quotation marks. These are formatting defects, not changed
+source facts. Correct byte-verbatim located quotes, all accessed 2026-10-20:
+
+| Row | URL and location | Correct quote (≤25 words) |
+|---|---|---|
+| S041 | https://www.rfc-editor.org/rfc/rfc6585 §4, text lines 134–135 | The 429 status code indicates that the user has sent too many requests in a given amount of time ("rate limiting"). |
+| S042 | https://www.rfc-editor.org/rfc/rfc9110#section-10.2.3 | Servers send the "Retry-After" header field to indicate how long the user agent ought to wait before making a follow-up request. |
+| S044 | https://docs.jj-vcs.dev/latest/git-compatibility/ Colocated workspaces | jj commands will usually put the Git repo in a "detached HEAD" state, since in jj there is not concept of a "currently tracked branch". |
+
+S045's quote location is CLI metaedit author options, lines 2220–2238, quoted
+sentence at 2226 in its opening extract. Tier A is scoped to that official flag
+description despite the page's experimental/generated label; it does not certify
+all `/latest/` content against jj 0.45.1. The local help cross-check only verifies
+the quoted flag. The commit-author limitation is an explicit boundary, not an
+extra documented guarantee.
+
+S043's HTTP/business-code mapping is primary-sourced; interpreting OMP's
+`(type=NNNN)` transcript text as that business code is **[INFERENCE]**. Source
+scope does not authenticate emitters. A2 binds code overrides to `provider=zai`
+and treats bare `resource_exhausted` as unspecified cause rather than inventing
+a rate-limit cause. S046 remains a load-bearing sourced C2 claim independently.
+
+### Routing and source-file dispositions
+
+- `JjAuditMori` call sites 1/2 are census grading row6 (fleet-root report presence/
+  timestamp); audit 5/6 are grading row9 (lane revision/authorship). The C2 fix
+  resolves each repository's own branch, never the child branch for a root report.
+- `JjTrialMori.md` H1: cite only helper v2 `landed` after remote verification.
+  H2: repo config lives outside .jj; isolated gate scratch uses HOME and
+  XDG_CONFIG_HOME, and no live .jj copying is used. H3/H5: intent-to-add and jj
+  index reset make cached staging reads unsuitable; only the helper tracks/
+  commits live lane files. H4: no `@{u}` or attached-HEAD identity assumption.
+  Its recommendations2–5 need no live config mutation: preserve helper config,
+  explicit refs/unique master-main fallback, local scratch only, no real remote.
+- Audit gate-side HEAD fields (rows10/12/15/17), r15/r16 env hardening and old
+  .jj output guards remain historical residuals, not silently fixed. The r17
+  successor gate uses explicit branch provenance and guarded output. Old gates
+  were run only by L1 with scrubbed Git environment and safe evidence paths;
+  wrapper branch-tip equality establishes their measured commit on this run.
+- The new knowledge entries are `seat-terminal-status-r17.md` and
+  `jj-branch-anchor-r17.md`; QUALITY gained Q43–Q48 append-only. A1 was developed
+  after initial build dispatch but committed before the first measurements.
+  A2 responds to fresh wave2 findings before final measurement. Existing SOURCES
+  mutable cells stayed untouched throughout; new field metadata does not change
+  that source-registry statement.
+- The r16 checker used pre-wave1 had eight clauses **including**
+  `no_live_journal_queries` (its committed source), not twelve. The r17 checker
+  did not exist before wave1. Wave2 used the twelve-clause checker; neither
+  result claims runtime prevention.
+- The fleet report is intentionally absent during author-wave review because
+  PROTOCOL requires it to land after child work. The header pointer must resolve
+  at closure; its temporary absence is not claimed as an already-landed report.
+- The original counts/tokens with missing typographic spaces above are historic
+  prose defects. Full hashes in PINNED_INPUTS and raw counting receipts are the
+  authoritative numeric records; `landed 273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7`
+  is the correctly spaced first helper marker.
+
+### Additional Mistakes / conduct precision
+
+| ID | Class | Evidence pointer | Captured-by | Fix / disposition |
+|---|---|---|---|---|
+| M11 | scope | `falsify/ConformanceAudit.md` V2/V5; `build/JjGate.md:296–328` | wave1 sandbox/write bounds | Ad hoc pre-guard git/jj sandbox experiments without -R and accidental `/tmp/does-not-exist` are violations, not only “own selftests”. L1's C2 receipts use the guarded gate and do not rely on those experiments. No retroactive compliance. |
+| M12 | scope | `falsify/ConformanceAudit.md` V6/V7/V12/V14 | QUALITY38/39, read-only jj clause | Entering census's hardcoded /tmp selftest write is inferred from code; MisrootSweep sandbox git writes exceeded its narrow exception; SentinelJjSandbox config-path lookup lacked ignore flag; some git-status calls lacked optional-lock guards. Retain these as scoped deviations, not proof of live data loss. |
+| M13 | scope | `falsify/ConformanceAudit.md` V8–V10/V13 | transcript field allowlist | session_exit values, retry-recovery values and parse-then-discard credential records exceeded the stated projection. Those reads are excluded from admission evidence. A2 production projection skips unapproved values before materialization. |
+| M14 | scope | `falsify/ConformanceAudit.md` V11 | bounded actor-trace assignment | PacmanActorTrace's shell-history/login/sudoers reads exceeded the command-log-only task. Retain only the command-stream/UUID correlation as bounded evidence; human actor identity remains unknown/inferred. No broader access is authorized. |
+| M15 | vacuous | `falsify/MutContext.md` | new context selftest | Background-clause deletion survived because the host-service ban satisfied an overbroad alternative. A2 requires the background-job ban itself; old survivor stays retained and final red/green proof is separately recorded. |
+| M16 | scope | `falsify/{PrivacyFinal,SandboxFinal}.md` | source/output invariants | A2 fixes walk-error false-clean, root/FIFO race, FIFO-parent escape, C2 output guards and inherited Git trace writes; final checks use settled committed corrections. |
+| M17 | vacuous | `falsify/CaseReview{12,14,15,18,25,26}.md` | expected-field independence | A2 expected reason/records/top metadata prevents wrong reasons, missing relative keys, missing retry/main/duplicate counts from passing merely on classes. Existing initial green is finite and weaker, not rewritten. |
+| M18 | reference-drift | `falsify/Receipt{Pins,Inputs,C3}.md`, `CriticC3Final.md` | independent witness pin | Initial C3 receipts omitted witness/tool hashes and the expected/recipe postdated that run. Final C3 uses precommitted expectations/recipe, hashes witness/tool/meaningful tracked+sibling controls before/after, and checks exact candidate sets. |
+
+M8 precision: ReviewSkillRows ran three unflagged jj commands — `status`,
+`diff --stat`, and `diff --git` (`build/ReviewSkillRows.md:37–38`). The observed
+op45a25744584d snapshot is specifically the diff-stat command; a read-only
+operation receipt records its args/time. No claim that all three were harmless
+is made. M9's display remains a real breach; no values are copied into corpus.
+Network source openings alone are not violations under the wave context (V15).
+Host package events (V4) are detections by another session, not transactions by
+these round-17 seats; whether an operator-scoped pause applied there is not
+resolved by mori.
+
+Resumed-after-error support is the field-only historical analyses in
+`build/{CriticC1,TranscriptShapes,RetryRecoveryShape}.md`, not the one terminal
+live scan. They falsify permanent-death interpretation even though the current
+tool reports only terminal-at-scan state. C2 process exits1→0 are captured by
+the outer `evidence/c2-{before,after}.json` wrappers, not inferred from a missing
+exit_code key inside the nested manifests.

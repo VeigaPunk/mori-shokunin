@@ -249,3 +249,22 @@ discernment unchanged (outside closure pending; repeated seat violations earn
 no prevention credit). The round is not fully execution-conformant.
 No new L0 question, install/update, pacman transaction, host service change
 or worker dispatch after operator wrap-up was performed by L1.
+
+## Round-17 append-only precision correction (2026-10-20)
+
+This new entry leaves every filed r16 byte above intact. M7 under-described
+BootContinuity's unauthorized live probes: `.ufo/waves/round-16/build/BootContinuity.md`
+records a current-boot `-b -n 2` query at line23, an anchor `--cursor` query
+at24, a fabricated-cursor query with rc1 at25, `--user -n 1` at26, and
+`id -nG` at28; line42 reasons from the inadmissible fabricated-cursor result.
+They are violations in addition to the `/tmp` writes/background job named by M7.
+No admitted r16 knowledge result relies on them. The r17 lesson M2 and QUALITY45
+make disclosure completeness explicit.
+
+M33's two relocated report files were not the whole r16 misroot set:
+the fleet-root plain file `MoriR16.Lesson` was missed by the mandated pathspec
+sweep. The non-author closure later identified it and the orchestrator archived
+its exact 847 bytes, SHA-256 `15f9f82d707d5c79b11643eed1ab4754b6959d2bede5887e07364442ada5510e`.
+R17 retains those bytes, a no-pathspec filename-aware detector and a falsifiable
+legacy-miss/default-find witness. This is an outside-lane write, not expanded
+ownership. See `round-16-verifier-spotcheck.md:202–219` and `round-17.md#M1`.

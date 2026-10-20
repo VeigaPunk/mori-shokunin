@@ -23,6 +23,10 @@ filename carries them.  ``--selftest`` therefore plants those exact bytes under
 that exact name and asserts that the no-pathspec sweep finds the file by path
 alone while the legacy pathspec still misses it.
 
+Vocabulary: stdout uses the lane-owned key ``finding`` (``MORI_MISROOT_CLEAN`` /
+``MORI_MISROOT_CANDIDATE`` / ``MORI_MISROOT_SETUP``).  Historical receipts depend
+on that key, so no ``finding_id`` alias is emitted.
+
 Limits: a candidate is a *review lead*, not proof of seat ownership (read the
 file header before acting); only the first 64 KiB of each file is inspected;
 git-ignored files are invisible to ``git status``; a path in the status output
@@ -60,33 +64,39 @@ FINDING_SETUP = "MORI_MISROOT_SETUP"
 # ---------------------------------------------------------------------------
 
 
-# Environment variables that relocate git's view of the repository.  If a
-# parent process exports any of them, `-C <fleet-root>` would be redirected to
-# another repo (the JjAudit F10 pattern), so they are scrubbed before every git
-# call, including the selftest sandbox's writes.  GIT_CEILING_DIRECTORIES is
-# deliberately kept: it only bounds upward discovery and is used to isolate the
-# selftest sandbox from the enclosing clone.
-_REDIRECT_ENV = (
-    "GIT_DIR",
-    "GIT_WORK_TREE",
-    "GIT_INDEX_FILE",
-    "GIT_COMMON_DIR",
-    "GIT_OBJECT_DIRECTORY",
-    "GIT_ALTERNATE_OBJECT_DIRECTORIES",
-    "GIT_NAMESPACE",
-    "GIT_PREFIX",
-)
+# The Git child environment is built from an allowlist, never from an
+# os.environ copy (SandboxFinal F3).  Nothing inherited can redirect the
+# repository (GIT_DIR, GIT_WORK_TREE, GIT_INDEX_FILE, GIT_COMMON_DIR,
+# GIT_OBJECT_DIRECTORY, GIT_ALTERNATE_OBJECT_DIRECTORIES, GIT_NAMESPACE,
+# GIT_PREFIX), write a trace file (GIT_TRACE, GIT_TRACE2, GIT_TRACE2_EVENT and
+# the other GIT_TRACE* switches), or inject configuration
+# (GIT_CONFIG_COUNT / GIT_CONFIG_KEY_n / GIT_CONFIG_VALUE_n).  Global and
+# system configuration are pinned to /dev/null.  GIT_CEILING_DIRECTORIES is the
+# only repository-discovery variable deliberately re-added: it bounds upward
+# discovery and isolates the selftest sandbox, but can never select another
+# repository.
+_ENV_ALLOWLIST = ("PATH", "TMPDIR", "LANG", "LC_ALL", "LC_CTYPE", "TZ")
 
 # Global flags: no optional index locks, no fsmonitor subprocess.
 _GIT_GLOBAL = ("--no-optional-locks", "-c", "core.fsmonitor=false")
 
 
 def _git_env():
-    env = dict(os.environ)
-    for name in _REDIRECT_ENV:
-        env.pop(name, None)
-    # Belt and braces with --no-optional-locks: the sweep must not write.
+    env = {}
+    for name in _ENV_ALLOWLIST:
+        value = os.environ.get(name)
+        if value is not None:
+            env[name] = value
+    ceiling = os.environ.get("GIT_CEILING_DIRECTORIES")
+    if ceiling:
+        env["GIT_CEILING_DIRECTORIES"] = ceiling
+    # nooptional (belt and braces with --no-optional-locks) and no prompt.
     env["GIT_OPTIONAL_LOCKS"] = "0"
+    env["GIT_TERMINAL_PROMPT"] = "0"
+    # config-null: no system or global config file can be read or written.
+    env["GIT_CONFIG_NOSYSTEM"] = "1"
+    env["GIT_CONFIG_GLOBAL"] = os.devnull
+    env["GIT_CONFIG_SYSTEM"] = os.devnull
     return env
 
 
@@ -474,8 +484,21 @@ def _selftest():
     try:
         repo = os.path.join(tmp_root, "fleet")
         decoy = os.path.join(tmp_root, "decoy")
+        external_dir = os.path.join(tmp_root, "external")
+        trace_paths = tuple(
+            os.path.join(external_dir, name)
+            for name in (
+                "git-trace.log",
+                "git-trace2.log",
+                "git-trace2-event.json",
+                "git-trace-performance.log",
+                "git-trace-setup.log",
+                "poisoned-gitconfig",
+            )
+        )
         os.makedirs(repo)
         os.makedirs(decoy, exist_ok=True)
+        os.makedirs(external_dir, exist_ok=True)
         hooks_dir = os.path.join(tmp_root, "no-hooks")
 
         try:
@@ -572,6 +595,30 @@ def _selftest():
                     "GIT_DIR": os.path.join(decoy, ".git"),
                     "GIT_WORK_TREE": decoy,
                     "GIT_INDEX_FILE": os.path.join(decoy, ".git", "index"),
+                },
+            ),
+            (
+                "poisoned-trace-config-env",
+                base + ["--lane", "Mori", "--round", "16"],
+                {
+                    "rc": RC_CANDIDATE,
+                    "finding": FINDING_CANDIDATE,
+                    "paths": {_NESTED_REL, _PLANTED_NAME},
+                    "fleet_root": repo,
+                    "scan_untracked": 5,
+                    "must_be_absent": trace_paths,
+                },
+                {
+                    "GIT_TRACE": trace_paths[0],
+                    "GIT_TRACE2": trace_paths[1],
+                    "GIT_TRACE2_EVENT": trace_paths[2],
+                    "GIT_TRACE_PERFORMANCE": trace_paths[3],
+                    "GIT_TRACE_SETUP": trace_paths[4],
+                    "GIT_CONFIG_GLOBAL": trace_paths[5],
+                    "GIT_CONFIG_SYSTEM": trace_paths[5],
+                    "GIT_CONFIG_COUNT": "1",
+                    "GIT_CONFIG_KEY_0": "core.fsmonitor",
+                    "GIT_CONFIG_VALUE_0": "true",
                 },
             ),
             (
@@ -672,6 +719,10 @@ def _selftest():
             for absent in want.get("absent", ()):
                 if absent in got_paths:
                     fail("%s: unexpected candidate %r" % (label, absent))
+            for absent_path in want.get("must_be_absent", ()):
+                if os.path.exists(absent_path):
+                    fail("%s: external path was written: %s"
+                         % (label, absent_path))
             if "fleet_root" in want and payload.get("fleet_root") != want["fleet_root"]:
                 fail("%s: fleet_root=%r want=%r"
                      % (label, payload.get("fleet_root"), want["fleet_root"]))
@@ -742,6 +793,11 @@ def _selftest():
         if not planted_missed_legacy:
             fail("regression arm: planted root file found with legacy pathspec")
 
+        poisoned_paths_absent = all(
+            not os.path.exists(item) for item in trace_paths
+        )
+        if not poisoned_paths_absent:
+            fail("poisoned trace/config paths exist after the arms")
         if failures:
             return _emit(
                 {
@@ -754,6 +810,7 @@ def _selftest():
                     "planted_matched_in": None
                     if planted_match is None
                     else planted_match.get("matched_in"),
+                    "poisoned_paths_absent": poisoned_paths_absent,
                     "planted_found_without_pathspec": planted_found,
                     "planted_found_with_legacy_pathspec": not
                     planted_missed_legacy,
@@ -771,6 +828,7 @@ def _selftest():
                 "planted_matched_in": None
                 if planted_match is None
                 else planted_match.get("matched_in"),
+                "poisoned_paths_absent": poisoned_paths_absent,
                 "planted_found_without_pathspec": planted_found,
                 "planted_found_with_legacy_pathspec": not
                 planted_missed_legacy,
@@ -796,6 +854,11 @@ limits:
   * --legacy-pathspec reproduces the round-16 pathspec blind spot and is for
     comparison only;
   * detection only: the tool never moves, deletes, edits or commits anything.
+
+vocabulary:
+  * stdout uses the lane-owned key `finding` with values MORI_MISROOT_CLEAN /
+    MORI_MISROOT_CANDIDATE / MORI_MISROOT_SETUP. Historical round-17 receipts
+    depend on that key, so no `finding_id` alias is emitted.
 """
 
 

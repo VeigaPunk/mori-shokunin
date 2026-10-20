@@ -1,0 +1,394 @@
+{
+  "path": ".ufo/waves/round-17/falsify/swarm-registry.json",
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r17-w2-falsify",
+  "createdAt": "2026-10-20T19:37:20.543Z",
+  "updatedAt": "2026-10-20T19:46:54.733Z",
+  "reportDir": ".ufo/waves/round-17/falsify",
+  "members": {
+    "CaseReview01": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview01-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview02": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview02-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview03": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview03-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview04": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview04-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview05": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview05-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview06": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview06-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview07": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview07-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview08": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview08-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview09": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview09-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview10": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview10-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview11": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview11-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview12": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview12-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview13": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview13-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview14": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview14-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview15": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview15-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview16": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview16-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview17": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview17-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview18": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview18-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview19": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview19-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview20": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview20-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview21": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview21-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview22": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview22-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview23": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview23-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview24": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview24-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview25": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview25-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview26": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview26-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseReview27": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CaseReview27-4",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReopenRfc6585": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReopenRfc6585-4",
+      "role": "scout",
+      "item": null
+    },
+    "ReopenRfc9110": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReopenRfc9110-4",
+      "role": "scout",
+      "item": null
+    },
+    "ReopenZai": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReopenZai-4",
+      "role": "scout",
+      "item": null
+    },
+    "ReopenJjCompat": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReopenJjCompat-4",
+      "role": "scout",
+      "item": null
+    },
+    "ReopenJjAuthor": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReopenJjAuthor-4",
+      "role": "scout",
+      "item": null
+    },
+    "ReopenGitAncestor": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReopenGitAncestor-4",
+      "role": "scout",
+      "item": null
+    },
+    "ReopenGitSymbolic": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReopenGitSymbolic-4",
+      "role": "scout",
+      "item": null
+    },
+    "ReopenPacmanLog": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReopenPacmanLog-4",
+      "role": "scout",
+      "item": null
+    },
+    "ReceiptInputs": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReceiptInputs-4",
+      "role": "scout",
+      "item": null
+    },
+    "ReceiptStreams": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReceiptStreams-4",
+      "role": "scout",
+      "item": null
+    },
+    "ReceiptPins": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReceiptPins-4",
+      "role": "scout",
+      "item": null
+    },
+    "ReceiptC2Controls": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReceiptC2Controls-4",
+      "role": "scout",
+      "item": null
+    },
+    "ReceiptC3": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReceiptC3-4",
+      "role": "scout",
+      "item": null
+    },
+    "WaveContextHashes": {
+      "kind": "spawn",
+      "agentId": "MoriR17.WaveContextHashes-4",
+      "role": "scout",
+      "item": null
+    },
+    "SourceCensus": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SourceCensus-4",
+      "role": "scout",
+      "item": null
+    },
+    "StaleSupersession": {
+      "kind": "spawn",
+      "agentId": "MoriR17.StaleSupersession-4",
+      "role": "scout",
+      "item": null
+    },
+    "CensusNewBranches": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CensusNewBranches-4",
+      "role": "scout",
+      "item": null
+    },
+    "SeparateThree": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SeparateThree-4",
+      "role": "connector",
+      "item": null
+    },
+    "AdjacentOwnership": {
+      "kind": "spawn",
+      "agentId": "MoriR17.AdjacentOwnership-4",
+      "role": "connector",
+      "item": null
+    },
+    "TrendGrounding": {
+      "kind": "spawn",
+      "agentId": "MoriR17.TrendGrounding-4",
+      "role": "connector",
+      "item": null
+    },
+    "PatternConsistency": {
+      "kind": "spawn",
+      "agentId": "MoriR17.PatternConsistency-4",
+      "role": "connector",
+      "item": null
+    },
+    "CriticC1Final": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CriticC1Final-4",
+      "role": "critic",
+      "item": null
+    },
+    "CriticC2Final": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CriticC2Final-4",
+      "role": "critic",
+      "item": null
+    },
+    "CriticC3Final": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CriticC3Final-4",
+      "role": "critic",
+      "item": null
+    },
+    "CriticOverall": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CriticOverall-4",
+      "role": "critic",
+      "item": null
+    },
+    "PrivacyFinal": {
+      "kind": "spawn",
+      "agentId": "MoriR17.PrivacyFinal-4",
+      "role": "sentinel",
+      "item": null
+    },
+    "SandboxFinal": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SandboxFinal-4",
+      "role": "sentinel",
+      "item": null
+    },
+    "MutQuota": {
+      "kind": "spawn",
+      "agentId": "MoriR17.MutQuota-4",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutBranch": {
+      "kind": "spawn",
+      "agentId": "MoriR17.MutBranch-4",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutMisroot": {
+      "kind": "spawn",
+      "agentId": "MoriR17.MutMisroot-4",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutContext": {
+      "kind": "spawn",
+      "agentId": "MoriR17.MutContext-4",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "CountC1": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CountC1-4",
+      "role": "executor",
+      "item": null
+    },
+    "CountC2": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CountC2-4",
+      "role": "executor",
+      "item": null
+    },
+    "CountC3": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CountC3-4",
+      "role": "executor",
+      "item": null
+    },
+    "LessonAudit": {
+      "kind": "spawn",
+      "agentId": "MoriR17.LessonAudit-4",
+      "role": "scribe",
+      "item": null
+    },
+    "ReportTrace": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReportTrace-4",
+      "role": "scribe",
+      "item": null
+    },
+    "ConformanceAudit": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ConformanceAudit-4",
+      "role": "scribe",
+      "item": null
+    }
+  }
+}

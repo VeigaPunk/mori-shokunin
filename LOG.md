@@ -1180,3 +1180,29 @@ SOURCES census exit0 at both ends; count40→48/A37→45/mined19→25, existing
 rows untouched. FIFO/chmod fixture state was made reproducible with explicit
 case metadata before this landing; transient copied session trees are cleaned
 after recording exact streams and source digests.
+
+### Round-17 fresh falsification and A2 correction landing
+
+Measurement-evidence landing **5c1dfb8d0530c74eb0e1630c2b522b735b486274**
+preceded fresh wave2. Both waves are now settled:70/70 build and64/64 falsify
+reports,134 unique seats,0 reported dead, no replacements. `wave-settlement.json`
+records role mixes, assignments and four/three all-wave job-cap refusals.
+
+Fresh falsifiers killed quota/branch/path mutants and retained a real
+background-clause survivor. Concrete findings caused A2: strict bounded field
+projection and no-follow descriptors; unknown terminal-age/vendor-cause limits;
+independent reason/record/top expectations; FIFO-parent/output/scratch guards;
+Git trace/config child isolation; authoritative jj lane.branch mirror with
+fail-closed unresolved refs and early young-window authorship diagnostics;
+constant C2 assertion universe; precommitted C3 witness/control/recipe pins.
+Their original reports and weaker first receipts stay retained, not rewritten.
+
+The source corrections were written by the same original identities in separate
+base5c1dfb8 clones, with test execution forbidden. Final static privacy and
+sandbox dispositions are appended in `falsify/{PrivacyFinal,SandboxFinal}.md`;
+L1 alone executes the corrected committed tools in an isolated verification
+clone. `final-declared-inputs.json` pins the source/fixture inputs before those
+runs. `evidence/mutation-artifacts.json` relocates394 files byte-exact before
+discarding mutation clones; generated sandboxes are deliberately not evidence.
+R16 precision is appended to its own lesson, old draft index wording is
+superseded, and the current SCORECARD register names calibration5 explicitly.

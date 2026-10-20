@@ -53,3 +53,36 @@ Detection and report only. A mismatch does not authorize bookmark repair, rebase
 changing author fields, routing or replacing a worker. No full update-safety/OS diagnosis is
 absorbed from tsukuroi. New C2 checks run only in real isolated git/jj sandboxes; live lane
 VCS remains helper-only.
+
+## Source and migration precision after wave-2 review
+
+S047 supplies the resolver's premise: `git symbolic-ref -q HEAD` may return
+silently nonzero for detached HEAD, so empty symbolic-ref output is not absence
+of repository history and the resolver continues to origin/unique local refs.
+The resolver does **not** use the numeric 1-versus-128 distinction; only the
+merge-base diagnostic relies on S046's numeric error distinction.
+S045 is primary for the documented metaedit flag, even though the generated
+CLI page self-labels experimental; it is not a universal commit-author source.
+The ambient-author behavior comes from the routed empirical JjAuditMori F4.
+
+JjTrialMori H1 is superseded operationally by helper v2's final `landed` marker,
+not its abandoned/rewritten draft hashes. H2 config-outside-repo means isolated
+scratch redirects XDG_CONFIG_HOME and never copies live .jj state. H3/H5
+intent-to-add/index reset means no staging-based commit flow; only the helper
+tracks requested paths and no concurrent seat mutates lane VCS. H4 detached
+HEAD breaks `@{u}`: measurement and census use explicit branch refs instead.
+The census leaves `ls-files -mo` worktree evidence intact, not cached staging
+claims. Missing origin/HEAD is covered by unique master/main fallback; other
+branch names without an authoritative ref remain a disclosed fallback limit.
+
+## A2 authoritative mirror correction
+
+The initial init-style resolver above is insufficient for a running jj lane:
+an attached side-branch HEAD can otherwise redefine the apparent lane branch.
+Final C2 first reads the helper's pure-Git `lane.branch` mirror. A colocated
+.jj repo without a valid mirror/ref is unavailable, not silently graded from
+HEAD or an inferred master/main. Normal helper init always writes this mirror.
+Non-jj Git/stub callers retain legacy fallback for compatibility with their
+different evidence model; that path makes no jj branch-identity claim.
+Fresh sandbox controls explicitly cover attached side branch and missing mirror.
+This supersedes the earlier permissive unresolved-jj fallback, not its history.

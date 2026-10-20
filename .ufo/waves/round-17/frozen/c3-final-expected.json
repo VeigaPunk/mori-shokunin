@@ -1,0 +1,58 @@
+{
+  "schema": "mori-r17-c3-final-expected-v1",
+  "tree": ".ufo/waves/round-17/frozen/c3-tree",
+  "inputs": {
+    "TrackedMoriR16.Lesson": {
+      "bytes": 74,
+      "sha256": "6a95bc386b0f6a501d69c7755a43db7b88ed5de339ccb99525fde5534d6dadaf"
+    },
+    "TabiR16.Lesson": {
+      "bytes": 29,
+      "sha256": "b1d6711066ac26df3d58d106844ef13b34e44f09fc35b597859c050c5b02ede2"
+    },
+    "seed": {
+      "bytes": 5,
+      "sha256": "4a6689419b00b11700c9b6246bcfa8936c8f5e1e824db3a7e57030e2d1c1a684"
+    },
+    "MoriR16.Lesson": {
+      "bytes": 847,
+      "sha256": "15f9f82d707d5c79b11643eed1ab4754b6959d2bede5887e07364442ada5510e"
+    }
+  },
+  "tracked": [
+    "seed",
+    "TrackedMoriR16.Lesson"
+  ],
+  "untracked": [
+    "MoriR16.Lesson",
+    "TabiR16.Lesson"
+  ],
+  "known_candidates": [
+    "MoriR16.Lesson"
+  ],
+  "before": {
+    "legacy_pathspec": [
+      ".ufo/waves",
+      ".ufo/reports"
+    ],
+    "rc": 0,
+    "candidate_paths": [],
+    "missed": 1,
+    "unexpected": 0
+  },
+  "after": {
+    "rc": 1,
+    "candidate_paths": [
+      "MoriR16.Lesson"
+    ],
+    "matched_in": [
+      "path"
+    ],
+    "missed": 0,
+    "unexpected": 0
+  },
+  "control_expectations": {
+    "TabiR16.Lesson": "untracked sibling unclaimed",
+    "TrackedMoriR16.Lesson": "token-bearing tracked file excluded"
+  }
+}

@@ -24,12 +24,16 @@ expected.json:
         "args": ["--sessions-dir", "{pack}", "--now-ms", "<ms>", ...],
         "unreadable_files": ["locked.jsonl"],   # optional, pack-relative
         "fifo_files": ["pipe.jsonl"],            # optional, absent in source
+        "unreadable_dirs": ["locked-dir"],       # optional, sandbox chmod
         "want": {"rc": 0 | 1 | 2,
                  "finding_id": "MORI_SEAT_TERMINAL_OK" |
                                "MORI_SEAT_TERMINAL_DEAD" |
                                "MORI_SEAT_TERMINAL_SETUP",
                  "totals": {<declared classes>: <int >= 0>},
-                 "seats": {"<seat stem or key>": "<class>"}}
+                 "seats": {"<A1 relative key>": "<class>"},
+                 "reason": "<exact top-level reason>",   # optional
+                 "records": {"<A1 relative key>": {"<seat field>": <value>}},
+                 "top": {"main_sessions" | "duplicate_stems": <value>}}
      }]}
 
 `pins` is mandatory and is independent persisted evidence: every
@@ -55,14 +59,19 @@ and points the tool's `--sessions-dir` there.  Paths listed in the case's
 chmod 000 only in that copy, then the sandbox is discarded with the output
 tree.  Paths listed in `fifo_files` must not exist in the source pack (a FIFO
 is untrackable by Git/jj): the gate creates them with `os.mkfifo` only in the
-sandbox, creating any missing parent directories inside the sandbox.  Pins
-therefore exclude generated FIFOs, `files_scanned` counts only regular
-source `*.jsonl` files, and a correct ignored-FIFO zero-seat result stays
-green.  Git/jj cannot preserve mode 000 either, so source fixtures and
-`pins` always stay on source bytes; the transient mode/FIFO state is
-expected metadata.  A case whose pack is absent (rc2 unavailable-directory
-fixtures such as MissingDir) gets no sandbox and the nonexistent source path
-is passed unchanged.
+sandbox, rejecting every symlink ancestor and escape before any mkdir and
+creating missing components one at a time (never `mkdir -p` through a link).
+`unreadable_dirs` names pack-relative real directories that are chmod 000 in
+the sandbox after the copy and restored to 0700 after the run so output
+cleanup cannot fail.  Pins exclude generated FIFOs and hash source bytes only;
+`files_scanned` counts regular source `*.jsonl` files (files below an
+unreadable dir use the documented loose bound).  An explicit
+`--sessions-dir {pack}/subpath` (used for the tracked root-symlink case) is
+rebased to `<sandbox>/subpath`; every other arg stays unchanged.  Git/jj
+cannot preserve mode 000, so source fixtures and `pins` always stay on source
+bytes.  A case whose pack is absent (rc2 unavailable-directory fixtures such
+as MissingDir) gets no sandbox and the nonexistent source path is passed
+unchanged.
 
 Grading (both sides of every rc0/rc1 case, per contract Amendment A1):
 
@@ -73,22 +82,31 @@ Grading (both sides of every rc0/rc1 case, per contract Amendment A1):
       class tally re-derived from the graded seats; a want may declare a
       subset of classes and every declared class is compared exactly.
     * the tool's `seats` may be the contract's list, or an equivalent
-      seat/key -> object map.  Every seat object carries the original nine
-      contract fields and may add the A1 fields `key`, `kind`,
-      `terminal_ms`, `reason`; `prefix` equals the stem before the first
-      `.`; ids are sorted by stem or by key.  Entries with `kind == "main"`
-      are counted in `main_sessions` and excluded from totals, by_prefix,
-      by_provider_model, retry_exhausted and want.seats grading, but still
-      count in `files_scanned` and the seat list.  want.seats keys may be
-      seat stems or key paths (key lookup first, then stem).
+      key -> object map.  Every seat object carries the original nine
+      contract fields plus `key` (required) and `prefix` (required; equal to
+      the stem before the first `.`); it may add the A1 fields `kind`,
+      `terminal_ms`, `reason`.  Ids are sorted by stem or by key.  Entries
+      with `kind == "main"` are counted in `main_sessions` and excluded from
+      totals, by_prefix, by_provider_model, retry_exhausted and want.seats
+      grading, but still count in `files_scanned` and the seat list.
+      want.seats keys must be A1 relative keys (a flat pack's key equals its
+      stem); there is no stem fallback.
+    * optional independent wants are compared exactly and type-strict:
+      `want.reason` against the top-level `reason`; `want.top` only for
+      `main_sessions` / `duplicate_stems` against those output fields; and
+      `want.records` as `{A1 relative key: {seat field: value}}`, where only
+      the listed fields are compared and the record must exist by exact key
+      (again no stem fallback).  A record's declared `class` must agree with
+      want.seats when both name the same key.
     * the A1 scan metadata `now_ms`, `settle_seconds`, `main_sessions` and
       `duplicate_stems` is validated when present (and `now_ms` /
       `settle_seconds` must echo a pinned `--now-ms` / `--settle-seconds`
       argument); a pre-A1 producer is not required to carry them.
     * `files_scanned` must equal the walked *.jsonl file count and len(seats)
       when no --prefix is passed and every fixture file is readable; a
-      prefix-filtered pack or a pack holding an unreadable file must stay
-      within [len(seats), walked-file count].
+      prefix-filtered pack, a pack holding an unreadable file, or a pack with
+      an unreadable directory must stay within [len(seats), walked-file
+      count].
     * stdout must be exactly one strict JSON object (duplicate keys and
       NaN/Infinity rejected); unknown top-level or seat keys fail; any
       forbidden transcript field (errorMessage, content, usage, raw
@@ -125,13 +143,18 @@ Manifest `git` metadata records the resolved `branch`, its `branch_source`
 (attached / origin-head / unique-master-main / unresolved), `receipt_ref`,
 the receipt `branch_tip` = `rev-parse refs/heads/<branch>`, and `head` as a
 diagnostic only.  Receipts are measured against `branch_tip`, never `head`.
-Git metadata is collected with GIT_DIR/GIT_WORK_TREE/GIT_INDEX_FILE
-scrubbed and with `--no-optional-locks -c core.fsmonitor=false`.
+Git metadata is collected with all GIT_* variables (including GIT_TRACE*
+and GIT_CONFIG*) scrubbed and with `--no-optional-locks -c
+core.fsmonitor=false`.
 
 Every fixture entry is also hashed before and after the run (symlinks by
 link text, never followed; FIFOs by type; unreadable empty files by their
 known empty content hash), but those runtime hashes are a second signal:
-the persisted `pins` are checked first.  The tool is run with HOME pointing
+the persisted `pins` are checked first.  `pack_before_sha256` and
+`pack_after_sha256` use one definition in both branches:
+`sha256(canonical(snapshot_tree(pack_dir)))`, or null when the pack is
+absent/empty (so capability_absent and executed receipts are comparable).
+The tool is run with HOME pointing
 at the per-case directory so an implementation cannot reach a real user
 profile by accident.
 
@@ -188,7 +211,8 @@ FINDINGS = (FINDING_OK, FINDING_DEAD, FINDING_SETUP)
 RC_FINDING_ID = {0: FINDING_OK, 1: FINDING_DEAD, 2: FINDING_SETUP}
 
 MAIN_KIND = "main"
-SEAT_REASONS = frozenset(("schema", "no-message", "unreadable"))
+SEAT_REASONS = frozenset(("schema", "no-message", "unreadable",
+                          "terminal-time"))
 
 TOP_KEYS = {
     "schema", "sessions_dir", "files_scanned", "totals",
@@ -206,14 +230,18 @@ SEAT_KEYS = {
 REQUIRED_SEAT_KEYS = {
     "seat", "prefix", "class", "provider", "model",
     "error_status", "retry_exhausted", "retries", "error_code",
+    "key",
 }
 FORBIDDEN_KEYS = {
     "errorMessage", "error_message", "content", "usage", "message",
     "message_text", "messages", "transcript", "raw", "text",
 }
 CASE_KEYS = {"id", "pack", "args", "want", "note", "unreadable_files",
-             "fifo_files"}
-WANT_KEYS = {"rc", "finding_id", "totals", "seats"}
+             "fifo_files", "unreadable_dirs"}
+WANT_KEYS = {"rc", "finding_id", "totals", "seats", "reason", "records",
+             "top"}
+WANT_TOP_KEYS = frozenset(("main_sessions", "duplicate_stems"))
+UNSET = object()
 
 CASE_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,80}$")
 PACK_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,80}$")
@@ -307,6 +335,22 @@ def is_int(value) -> bool:
     return isinstance(value, int) and not isinstance(value, bool)
 
 
+def strict_eq(actual, want) -> bool:
+    """Type-strict equality: True != 1, "1" != 1."""
+    return type(actual) is type(want) and actual == want
+
+
+def is_scalar(value) -> bool:
+    return value is None or type(value) in (str, int, bool)
+
+
+def safe_relative(rel) -> bool:
+    return (isinstance(rel, str) and bool(rel)
+            and not rel.startswith("/") and "\\" not in rel
+            and ".." not in rel.split("/")
+            and all(ord(ch) >= 32 for ch in rel))
+
+
 # ---------------------------------------------------------------------------
 # fixture inputs: hashing and loading
 # ---------------------------------------------------------------------------
@@ -365,13 +409,19 @@ def snapshot_tree(root: Path) -> dict:
     return dict(sorted(rows.items()))
 
 
-def pack_digest(snapshot: dict, pack: str) -> str | None:
-    prefix = pack + "/"
-    subset = {key: value for key, value in snapshot.items()
-              if key.startswith(prefix)}
-    if not subset:
+def pack_tree_digest(pack_dir: Path) -> str | None:
+    """One definition for pack_before/after in every branch.
+
+    sha256 of canonical(snapshot_tree(pack_dir)); None when the pack is
+    absent or empty (including MissingDir, where both sides are null).
+    """
+    pack_dir = Path(pack_dir)
+    if not pack_dir.is_dir() or pack_dir.is_symlink():
         return None
-    return sha256_bytes(canonical(subset).encode("utf-8"))
+    snapshot = snapshot_tree(pack_dir)
+    if not snapshot:
+        return None
+    return sha256_bytes(canonical(snapshot).encode("utf-8"))
 
 
 PIN_RE = re.compile(r"^[0-9a-f]{64}$")
@@ -475,6 +525,10 @@ class CaseSpec:
     want_seats: dict
     unreadable_files: tuple
     fifo_files: tuple
+    unreadable_dirs: tuple
+    want_reason: object
+    want_records: dict
+    want_top: dict
 
 
 def _validate_want_totals(obj) -> dict:
@@ -589,7 +643,166 @@ def _validate_fifo_files(value, cid: str, pack_dir: Path,
                 "case %s: fifo_files path must not exist in the source pack "
                 "(FIFOs are untrackable; create them only via metadata): %s"
                 % (cid, rel))
+        current = pack_dir
+        for part in rel.split("/")[:-1]:
+            current = current / part
+            try:
+                info = current.lstat()
+            except FileNotFoundError:
+                break
+            except OSError as exc:
+                raise SetupError("case %s: cannot stat FIFO ancestor %s: %s"
+                                 % (cid, rel, exc))
+            if stat.S_ISLNK(info.st_mode):
+                raise SetupError(
+                    "case %s: fifo_files ancestor is a symlink (no "
+                    "out-of-sandbox creation): %s" % (cid, rel))
+            if not stat.S_ISDIR(info.st_mode):
+                raise SetupError("case %s: fifo_files ancestor is not a "
+                                 "directory: %s" % (cid, rel))
     return tuple(paths)
+
+
+def _validate_unreadable_dirs(value, cid: str, pack_dir: Path,
+                              unreadable: tuple, fifos: tuple) -> tuple:
+    """Pack-relative real directories to chmod 000 in the sandbox copy."""
+    if value is None:
+        return ()
+    if not isinstance(value, list):
+        raise SetupError("case %s: unreadable_dirs must be a list" % cid)
+    paths = []
+    for rel in value:
+        if not safe_relative(rel):
+            raise SetupError("case %s: unreadable_dirs entries must be "
+                             "pack-relative paths" % cid)
+        if rel in paths:
+            raise SetupError("case %s: duplicate unreadable_dirs entry %s"
+                             % (cid, rel))
+        paths.append(rel)
+    if not paths:
+        return ()
+    if not pack_dir.is_dir() or pack_dir.is_symlink():
+        raise SetupError("case %s: unreadable_dirs on a missing pack" % cid)
+    root = pack_dir.resolve()
+    for rel in paths:
+        target = pack_dir / rel
+        try:
+            info = target.lstat()
+        except OSError as exc:
+            raise SetupError("case %s: unreadable_dirs target missing: %s "
+                             "(%s)" % (cid, rel, exc))
+        if stat.S_ISLNK(info.st_mode) or not stat.S_ISDIR(info.st_mode):
+            raise SetupError("case %s: unreadable_dirs target is not a "
+                             "real source directory: %s" % (cid, rel))
+        try:
+            target.resolve().relative_to(root)
+        except ValueError:
+            raise SetupError("case %s: unreadable_dirs escapes the pack: %s"
+                             % (cid, rel))
+        if not os.access(target, os.R_OK | os.X_OK):
+            raise SetupError("case %s: unreadable_dirs source must stay "
+                             "readable: %s" % (cid, rel))
+        for other in unreadable + fifos:
+            if other == rel or other.startswith(rel + "/"):
+                raise SetupError("case %s: unreadable_dirs overlaps "
+                                 "unreadable_files/fifo_files at %s"
+                                 % (cid, rel))
+    for index, rel in enumerate(paths):
+        for other in paths[index + 1:]:
+            if rel.startswith(other + "/") or other.startswith(rel + "/"):
+                raise SetupError("case %s: nested unreadable_dirs entries "
+                                 "are not supported: %s, %s"
+                                 % (cid, rel, other))
+    return tuple(paths)
+
+
+def _validate_record_value(field: str, value) -> bool:
+    if field == "class":
+        return isinstance(value, str) and value in CLASS_SET
+    if field in ("seat", "key", "prefix", "kind"):
+        return (isinstance(value, str) and bool(value)
+                and len(value) <= 4096
+                and all(ord(ch) >= 32 for ch in value))
+    if field in ("provider", "model"):
+        return value is None or isinstance(value, str)
+    if field == "retry_exhausted":
+        return type(value) is bool
+    if field == "reason":
+        return value is None or value in SEAT_REASONS
+    if field in ("error_status", "retries", "terminal_ms"):
+        return value is None or (is_int(value) and value >= 0)
+    if field == "error_code":
+        return (value is None or (is_int(value) and value >= 0)
+                or (isinstance(value, str) and value.isdigit()
+                    and len(value) <= 64))
+    return False
+
+
+def _validate_want_records(value, cid: str) -> dict:
+    if value is None:
+        return {}
+    if not isinstance(value, dict) or not value:
+        raise SetupError("case %s: want.records must be a non-empty object"
+                         % cid)
+    records = {}
+    for key, fields in value.items():
+        if not safe_relative(key):
+            raise SetupError("case %s: want.records key is not an A1 "
+                             "relative key: %r" % (cid, key))
+        if not isinstance(fields, dict) or not fields:
+            raise SetupError("case %s: want.records[%s] must be a non-empty "
+                             "field object" % (cid, key))
+        unknown = set(fields) - SEAT_KEYS
+        if unknown:
+            raise SetupError("case %s: want.records[%s] unknown field(s): "
+                             "%s" % (cid, key, ",".join(sorted(unknown))))
+        checked = {}
+        for field, expected in fields.items():
+            if not is_scalar(expected) or not _validate_record_value(
+                    field, expected):
+                raise SetupError("case %s: want.records[%s].%s has an "
+                                 "invalid value" % (cid, key, field))
+            checked[field] = expected
+        records[key] = checked
+    return records
+
+
+def _validate_want_top(value, cid: str) -> dict:
+    if value is None:
+        return {}
+    if not isinstance(value, dict) or not value:
+        raise SetupError("case %s: want.top must be a non-empty object"
+                         % cid)
+    unknown = set(value) - WANT_TOP_KEYS
+    if unknown:
+        raise SetupError("case %s: want.top unknown field(s): %s"
+                         % (cid, ",".join(sorted(unknown))))
+    top = {}
+    for field, expected in value.items():
+        if field == "main_sessions":
+            if not is_int(expected) or expected < 0:
+                raise SetupError("case %s: want.top.main_sessions must be a "
+                                 "non-bool int >= 0" % cid)
+        else:  # duplicate_stems
+            ok = (is_int(expected) and expected >= 0) or (
+                isinstance(expected, list)
+                and all(isinstance(item, str) for item in expected))
+            if not ok:
+                raise SetupError("case %s: want.top.duplicate_stems must be "
+                                 "an int >= 0 or a string list" % cid)
+        top[field] = expected
+    return top
+
+
+def _validate_want_reason(value, cid: str):
+    if value is UNSET:
+        return UNSET
+    if value is None:
+        return None
+    if not isinstance(value, str):
+        raise SetupError("case %s: want.reason must be a string or null"
+                         % cid)
+    return value
 
 
 def _analyze_case(fixtures_dir: Path, obj, index: int, seen: set) -> CaseSpec:
@@ -635,6 +848,8 @@ def _analyze_case(fixtures_dir: Path, obj, index: int, seen: set) -> CaseSpec:
         obj.get("unreadable_files"), cid, pack_dir)
     fifos = _validate_fifo_files(
         obj.get("fifo_files"), cid, pack_dir, unreadable)
+    dirs = _validate_unreadable_dirs(
+        obj.get("unreadable_dirs"), cid, pack_dir, unreadable, fifos)
 
     want = obj.get("want")
     if not isinstance(want, dict):
@@ -643,6 +858,9 @@ def _analyze_case(fixtures_dir: Path, obj, index: int, seen: set) -> CaseSpec:
     if unknown:
         raise SetupError("case %s: unknown want key(s): %s"
                          % (cid, ",".join(sorted(unknown))))
+    want_reason = _validate_want_reason(want.get("reason", UNSET), cid)
+    want_records = _validate_want_records(want.get("records"), cid)
+    want_top = _validate_want_top(want.get("top"), cid)
     rc = want.get("rc")
     if not is_int(rc) or rc not in (0, 1, 2):
         raise SetupError("case %s: want.rc must be 0, 1 or 2" % cid)
@@ -692,10 +910,18 @@ def _analyze_case(fixtures_dir: Path, obj, index: int, seen: set) -> CaseSpec:
                                      "%d, want.totals says %d"
                                      % (cid, cls, derived[cls], value))
 
+    for key, fields in want_records.items():
+        if "class" in fields and key in seats \
+                and seats[key] != fields["class"]:
+            raise SetupError("case %s: want.records[%s].class disagrees "
+                             "with want.seats" % (cid, key))
+
     return CaseSpec(cid=cid, pack=pack, args=tuple(args), want_rc=rc,
                     want_finding_id=finding_id, want_totals=totals,
                     want_seats=seats, unreadable_files=unreadable,
-                    fifo_files=fifos)
+                    fifo_files=fifos, unreadable_dirs=dirs,
+                    want_reason=want_reason, want_records=want_records,
+                    want_top=want_top)
 
 
 def load_expected(fixtures_dir: Path):
@@ -775,12 +1001,14 @@ def guard_output(raw: Path, protected) -> None:
 # ---------------------------------------------------------------------------
 
 
-def fixture_scan_bounds(pack_dir: Path):
+def fixture_scan_bounds(pack_dir: Path, unreadable_dirs=()):
     """Count regular non-symlink *.jsonl files and unreadable ones.
 
     The tool contract walks regular files named *.jsonl and never follows
-    symlinks; an unreadable regular file still yields an `unavailable` seat,
-    but an implementation may or may not count it in `files_scanned`.
+    symlinks; an unreadable regular file (or any file below an
+    `unreadable_dirs` directory) still yields an `unavailable`/skipped
+    result, but an implementation may or may not count it in
+    `files_scanned`.
     """
     if not pack_dir.is_dir() or pack_dir.is_symlink():
         return 0, 0
@@ -799,7 +1027,10 @@ def fixture_scan_bounds(pack_dir: Path):
             if not stat.S_ISREG(mode):
                 continue
             total += 1
-            if not os.access(path, os.R_OK):
+            rel = path.relative_to(pack_dir).as_posix()
+            below = any(rel == directory or rel.startswith(directory + "/")
+                        for directory in unreadable_dirs)
+            if below or not os.access(path, os.R_OK):
                 unreadable += 1
     return total, unreadable
 
@@ -830,7 +1061,7 @@ def expand_args(spec: CaseSpec, fixtures_dir: Path) -> tuple:
         found = [str(pack_dir)]
     if not found[0]:
         raise SetupError("case %s: empty --sessions-dir" % spec.cid)
-    return tuple(tokens), Path(found[0]).resolve()
+    return tuple(tokens), Path(found[0])
 
 
 def _arg_int(tokens, name: str):
@@ -883,6 +1114,76 @@ def _copy_fixture_tree(source: Path, target: Path) -> None:
         # sockets/devices are ignored, matching the tool contract
 
 
+def _create_fifo_safely(root: Path, rel: str, cid: str) -> None:
+    """Create one FIFO without ever following a symlink ancestor.
+
+    Phase 1 lstat-scans every existing ancestor and rejects symlinks or
+    escape before any mkdir.  Phase 2 creates missing components one at a
+    time with os.mkdir (never mkdir -p through a link), checking each new
+    component's type and containment again.
+    """
+    root = Path(root)
+    root_resolved = root.resolve()
+    parts = rel.split("/")
+    current = root
+    missing_index = None
+    for index, part in enumerate(parts[:-1]):
+        nxt = current / part
+        try:
+            info = nxt.lstat()
+        except FileNotFoundError:
+            missing_index = index
+            break
+        except OSError as exc:
+            raise SetupError("case %s: cannot stat FIFO ancestor in sandbox "
+                             "%s: %s" % (cid, rel, exc))
+        if stat.S_ISLNK(info.st_mode):
+            raise SetupError(
+                "case %s: FIFO ancestor is a symlink in the sandbox "
+                "(refused before mkdir): %s" % (cid, rel))
+        if not stat.S_ISDIR(info.st_mode):
+            raise SetupError("case %s: FIFO ancestor is not a directory: %s"
+                             % (cid, rel))
+        try:
+            nxt.resolve().relative_to(root_resolved)
+        except ValueError:
+            raise SetupError("case %s: FIFO ancestor escapes the sandbox: %s"
+                             % (cid, rel))
+        current = nxt
+    if missing_index is not None:
+        for part in parts[missing_index:-1]:
+            current = current / part
+            try:
+                os.mkdir(current, 0o700)
+            except FileExistsError:
+                pass
+            except OSError as exc:
+                raise SetupError("case %s: cannot create FIFO parent in "
+                                 "sandbox %s: %s" % (cid, rel, exc))
+            try:
+                info = current.lstat()
+            except OSError as exc:
+                raise SetupError("case %s: cannot lstat new FIFO parent %s: "
+                                 "%s" % (cid, rel, exc))
+            if stat.S_ISLNK(info.st_mode) or not stat.S_ISDIR(info.st_mode):
+                raise SetupError("case %s: FIFO parent became unsafe: %s"
+                                 % (cid, rel))
+            try:
+                current.resolve().relative_to(root_resolved)
+            except ValueError:
+                raise SetupError("case %s: FIFO parent escapes the sandbox: "
+                                 "%s" % (cid, rel))
+    leaf = current / parts[-1]
+    if leaf.is_symlink() or leaf.exists():
+        raise SetupError("case %s: FIFO target already exists in the "
+                         "sandbox: %s" % (cid, rel))
+    try:
+        os.mkfifo(leaf)
+    except OSError as exc:
+        raise SetupError("case %s: cannot create FIFO in sandbox %s: %s"
+                         % (cid, rel, exc))
+
+
 def materialize_sandbox(case_dir: Path, pack_dir: Path,
                         spec: CaseSpec) -> Path:
     """Copy the source pack per case and apply transient modes there.
@@ -909,27 +1210,65 @@ def materialize_sandbox(case_dir: Path, pack_dir: Path,
                              "%s" % (spec.cid, rel))
         os.chmod(target, 0)
     for rel in spec.fifo_files:
+        _create_fifo_safely(sandbox, rel, spec.cid)
+    for rel in sorted(spec.unreadable_dirs,
+                      key=lambda item: item.count("/"), reverse=True):
         target = sandbox / rel
-        parent = target.parent
         try:
-            parent.mkdir(parents=True, exist_ok=True)
+            info = target.lstat()
         except OSError as exc:
-            raise SetupError("case %s: cannot create FIFO parent in sandbox "
-                             "%s: %s" % (spec.cid, rel, exc))
+            raise SetupError("case %s: unreadable_dirs target missing from "
+                             "sandbox: %s (%s)" % (spec.cid, rel, exc))
+        if stat.S_ISLNK(info.st_mode) or not stat.S_ISDIR(info.st_mode):
+            raise SetupError("case %s: unreadable_dirs target is not a real "
+                             "sandbox directory: %s" % (spec.cid, rel))
         try:
-            parent.resolve().relative_to(root)
+            target.resolve().relative_to(root)
         except ValueError:
-            raise SetupError("case %s: FIFO parent escapes the sandbox: %s"
-                             % (spec.cid, rel))
-        if target.exists() or target.is_symlink():
-            raise SetupError("case %s: FIFO target already exists in the "
-                             "sandbox: %s" % (spec.cid, rel))
-        try:
-            os.mkfifo(target)
-        except OSError as exc:
-            raise SetupError("case %s: cannot create FIFO in sandbox %s: %s"
-                             % (spec.cid, rel, exc))
+            raise SetupError("case %s: unreadable_dirs escapes the sandbox: "
+                             "%s" % (spec.cid, rel))
+        os.chmod(target, 0)
     return sandbox
+
+
+def restore_sandbox_modes(sandbox, spec: CaseSpec) -> None:
+    """Restore chmod-000 directories so output cleanup cannot fail."""
+    if sandbox is None:
+        return
+    for rel in sorted(spec.unreadable_dirs,
+                      key=lambda item: item.count("/"), reverse=True):
+        target = Path(sandbox) / rel
+        try:
+            if target.is_symlink():
+                continue
+            info = target.lstat()
+            if stat.S_ISDIR(info.st_mode):
+                os.chmod(target, 0o700)
+        except OSError:
+            continue
+
+
+def _rebase_sessions(tokens, sessions_source, pack_dir: Path,
+                     sandbox: Path, cid: str) -> tuple:
+    """Map an explicit pack/subpath sessions dir into the sandbox.
+
+    `--sessions-dir {pack}/root-link` becomes `<sandbox>/root-link` so a
+    tracked symlink root can be exercised without following it; the source
+    tree is never the run root.
+    """
+    source = Path(sessions_source)
+    if not source.is_absolute():
+        raise SetupError("case %s: explicit --sessions-dir must be absolute "
+                         "(use {pack}/...)" % cid)
+    source = Path(os.path.abspath(source))
+    pack = Path(os.path.abspath(pack_dir))
+    try:
+        relative = source.relative_to(pack)
+    except ValueError:
+        raise SetupError("case %s: --sessions-dir must be the pack root or "
+                         "a subpath of it" % cid)
+    target = sandbox if relative == Path(".") else sandbox / relative
+    return _replace_sessions_dir(tokens, target), target
 
 
 def _replace_sessions_dir(tokens, sessions_dir) -> tuple:
@@ -1064,7 +1403,7 @@ def _validate_seat_item(item, index: int, reasons):
     code = item["error_code"]
     code_ok = (code is None or (is_int(code) and code >= 0)
                or (isinstance(code, str) and code.isdigit()
-                   and len(code) <= 16))
+                   and len(code) <= 64))
     if not code_ok:
         reasons.append("seat_%d_error_code" % index)
 
@@ -1225,39 +1564,64 @@ def compare_want(spec: CaseSpec, totals_row, rows, reasons) -> None:
     if rows is None or not (strict or spec.want_seats):
         return
     by_key = {}
-    by_seat = {}
     for row in rows:
         cls = row.get("class")
-        if cls not in CLASS_SET:
-            continue
         key = row.get("key")
-        if isinstance(key, str) and key not in by_key:
+        if cls in CLASS_SET and isinstance(key, str) and key not in by_key:
             by_key[key] = cls
-        by_seat.setdefault(row["seat"], set()).add(cls)
     missing = []
-    for ident, want in spec.want_seats.items():
-        if ident in by_key:
-            if by_key[ident] != want:
-                reasons.append("want.seat_class:%s" % ident)
-        elif ident in by_seat:
-            if by_seat[ident] != {want}:
-                reasons.append("want.seat_class:%s" % ident)
-        else:
-            missing.append(ident)
+    for key, want in spec.want_seats.items():
+        if key not in by_key:
+            missing.append(key)
+        elif by_key[key] != want:
+            reasons.append("want.seat_class:%s" % key)
     if missing:
         reasons.append("want.seat_missing:%s" % missing[0])
     for row in rows:
         cls = row.get("class")
-        if cls not in CLASS_SET:
-            continue
         key = row.get("key")
-        if isinstance(key, str) and spec.want_seats.get(key) == cls:
-            continue
-        if spec.want_seats.get(row["seat"]) == cls:
+        if cls in CLASS_SET and isinstance(key, str) \
+                and spec.want_seats.get(key) == cls:
             continue
         reasons.append("unexpected_seat:%s"
                        % (key if isinstance(key, str) else row["seat"]))
         break
+
+
+def compare_independent_want(spec: CaseSpec, parsed, rows, reasons) -> None:
+    """Compare want.reason / want.top / want.records exactly (JSON-type).
+
+    Uses strict_eq: JSON true never equals 1, and 1.0 never equals integer 1.
+    """
+    if spec.want_reason is not UNSET:
+        if not isinstance(parsed, dict) or "reason" not in parsed:
+            reasons.append("want.reason=missing")
+        elif not strict_eq(parsed["reason"], spec.want_reason):
+            reasons.append("want.reason=%r" % (parsed.get("reason"),))
+    for field, want in spec.want_top.items():
+        if not isinstance(parsed, dict) or field not in parsed:
+            reasons.append("want.top.%s=missing" % field)
+        elif not strict_eq(parsed[field], want):
+            reasons.append("want.top.%s=%r" % (field, parsed.get(field)))
+    if not spec.want_records:
+        return
+    by_key = {}
+    for row in rows or ():
+        key = row.get("key")
+        if isinstance(key, str):
+            by_key[key] = row
+    for key, fields in spec.want_records.items():
+        row = by_key.get(key)
+        if row is None:
+            reasons.append("want.record_missing:%s" % key)
+            continue
+        for field, want in fields.items():
+            if field not in row:
+                reasons.append("want.record_field_missing:%s.%s"
+                               % (key, field))
+            elif not strict_eq(row[field], want):
+                reasons.append("want.record:%s.%s=%r"
+                               % (key, field, row.get(field)))
 
 
 def evaluate(spec: CaseSpec, out: bytes, err: bytes, rc, timed_out: bool,
@@ -1457,6 +1821,8 @@ def evaluate(spec: CaseSpec, out: bytes, err: bytes, rc, timed_out: bool,
                 reasons.extend(seat_reasons)
             compare_want(spec, totals_row, rows, reasons)
 
+    compare_independent_want(spec, parsed, rows, reasons)
+
     if canaries and (text is not None or err):
         haystack = (text or "") + "\n" + err.decode("utf-8", "replace")
         for canary in sorted(canaries):
@@ -1513,13 +1879,12 @@ def capture_revision() -> dict:
     Branch resolution: attached HEAD -> origin/HEAD -> unique
     refs/heads/master|main.  `branch_tip` is the receipt (rev-parse
     refs/heads/<branch>); `head` is diagnostic only and is never a receipt.
-    GIT_DIR/GIT_WORK_TREE/GIT_INDEX_FILE are scrubbed and git runs with
-    --no-optional-locks and core.fsmonitor=false so metadata collection
-    cannot write or be redirected by an ambient repository.
+    GIT_* variables (including GIT_TRACE* and GIT_CONFIG*) are scrubbed and
+    git runs with --no-optional-locks and core.fsmonitor=false so metadata
+    collection cannot write or be redirected by an ambient repository.
     """
-    env = dict(os.environ)
-    for key in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE"):
-        env.pop(key, None)
+    env = {key: value for key, value in os.environ.items()
+           if not key.startswith("GIT_")}
     base = ["git", "--no-optional-locks", "-c", "core.fsmonitor=false"]
 
     def git(args):
@@ -1672,21 +2037,25 @@ def run_gate(args, gate_sha: str) -> int:
         # is recorded absent, never green and never a production bug claim.
         for spec in specs:
             tokens, sessions = expand_args(spec, fixtures_dir)
+            sessions = Path(os.path.abspath(sessions))
+            digest = pack_tree_digest(fixtures_dir / spec.pack)
             manifest["cases"].append({
                 "id": spec.cid,
                 "pack": spec.pack,
                 "argv": list(tokens),
                 "sessions_dir": str(sessions),
+                "sessions_arg": str(sessions),
                 "status": "capability_absent",
                 "ok": False,
                 "reasons": ["capability_absent"],
                 "observed": None,
-                "pack_before_sha256": pack_digest(inputs_before, spec.pack),
-                "pack_after_sha256": pack_digest(inputs_before, spec.pack),
+                "pack_before_sha256": digest,
+                "pack_after_sha256": digest,
                 "pack_changed": False,
                 "sandbox": None,
                 "unreadable_files": list(spec.unreadable_files),
                 "fifo_files": list(spec.fifo_files),
+                "unreadable_dirs": list(spec.unreadable_dirs),
                 "stdout_sha256": None,
                 "stderr_sha256": None,
             })
@@ -1716,16 +2085,17 @@ def run_gate(args, gate_sha: str) -> int:
         pack_exists = pack_dir.is_dir() and not pack_dir.is_symlink()
         sandbox = materialize_sandbox(case_dir, pack_dir, spec) \
             if pack_exists else None
-        run_sessions = sandbox if sandbox is not None else sessions_source
-        tokens = _replace_sessions_dir(tokens, run_sessions)
+        if sandbox is not None:
+            tokens, run_sessions = _rebase_sessions(
+                tokens, sessions_source, pack_dir, sandbox, spec.cid)
+        else:
+            run_sessions = Path(os.path.abspath(sessions_source))
+            tokens = _replace_sessions_dir(tokens, run_sessions)
         sessions = Path(run_sessions).resolve()
-        pack_before_snapshot = snapshot_tree(pack_dir) \
-            if pack_exists else {}
-        pack_before = sha256_bytes(canonical(pack_before_snapshot)
-                                   .encode("utf-8")) \
-            if pack_before_snapshot else None
+        pack_before = pack_tree_digest(pack_dir)
         canaries = collect_canaries(pack_dir)
-        fixture_files, fixture_unreadable = fixture_scan_bounds(pack_dir)
+        fixture_files, fixture_unreadable = fixture_scan_bounds(
+            pack_dir, spec.unreadable_dirs)
         prefix_filtered = any(
             token == "--prefix" or token.startswith("--prefix=")
             for token in tokens)
@@ -1737,6 +2107,7 @@ def run_gate(args, gate_sha: str) -> int:
         argv = [sys.executable, str(tool_path)] + list(tokens)
         out, err, rc, timed_out, capped, exec_error = run_tool(
             argv, env, case_dir, args.run_timeout, args.capture_cap)
+        restore_sandbox_modes(sandbox, spec)
 
         atomic_bytes(output / "runs" / ("%s.stdout" % spec.cid), out)
         atomic_bytes(output / "runs" / ("%s.stderr" % spec.cid), err)
@@ -1746,11 +2117,7 @@ def run_gate(args, gate_sha: str) -> int:
             canaries, fixture_files, fixture_unreadable, prefix_filtered,
             now_arg, settle_arg)
 
-        pack_after_snapshot = snapshot_tree(pack_dir) \
-            if pack_dir.is_dir() and not pack_dir.is_symlink() else {}
-        pack_after = sha256_bytes(canonical(pack_after_snapshot)
-                                  .encode("utf-8")) if pack_after_snapshot \
-            else None
+        pack_after = pack_tree_digest(pack_dir)
         pack_changed = pack_after != pack_before
         pack_changed_any = pack_changed_any or pack_changed
 
@@ -1763,6 +2130,7 @@ def run_gate(args, gate_sha: str) -> int:
             "pack": spec.pack,
             "argv": list(tokens),
             "sessions_dir": str(sessions),
+            "sessions_arg": str(run_sessions),
             "status": "match" if ok else "mismatch",
             "ok": ok,
             "reasons": reasons,
@@ -1773,6 +2141,7 @@ def run_gate(args, gate_sha: str) -> int:
             "sandbox": rel_or_abs(sandbox) if sandbox is not None else None,
             "unreadable_files": list(spec.unreadable_files),
             "fifo_files": list(spec.fifo_files),
+            "unreadable_dirs": list(spec.unreadable_dirs),
             "stdout_sha256": sha256_bytes(out),
             "stderr_sha256": sha256_bytes(err),
             "stdout_bytes": len(out),
@@ -1896,15 +2265,33 @@ def main():
             settle_seconds = int(token.split("=", 1)[1])
         index += 1
     if not sessions:
-        emit({"schema": SCHEMA, "finding_id": FINDING_SETUP}, 2)
+        emit({"schema": SCHEMA, "finding_id": FINDING_SETUP,
+              "reason": "sessions-dir-required"}, 2)
+    if os.path.islink(sessions):
+        emit({"schema": SCHEMA, "sessions_dir": sessions,
+              "finding_id": FINDING_SETUP, "reason": "root-symlink"}, 2)
     if not os.path.isdir(sessions):
         emit({"schema": SCHEMA, "sessions_dir": sessions,
-              "finding_id": FINDING_SETUP}, 2)
+              "finding_id": FINDING_SETUP,
+              "reason": "unavailable-dir"}, 2)
     if os.path.exists(os.path.join(sessions, "drift-arm.flag")):
         with open(os.path.join(source or sessions, "drift.jsonl"), "a",
                   encoding="utf-8") as handle:
             handle.write('{"type":"message","message":{"role":"assistant",'
                          '"stopReason":"stop"}}\n')
+    if os.path.exists(os.path.join(sessions, "dir-arm.flag")):
+        locked_dir = os.path.join(sessions, "locked-dir")
+        try:
+            mode_zero = (os.stat(locked_dir).st_mode & 0o777) == 0
+        except OSError:
+            mode_zero = False
+        if mode_zero:
+            emit({"schema": SCHEMA, "sessions_dir": sessions,
+                  "finding_id": FINDING_SETUP,
+                  "reason": "walk-error"}, 2)
+        emit({"schema": SCHEMA, "sessions_dir": sessions,
+              "finding_id": FINDING_SETUP,
+              "reason": "dir-mode-not-applied"}, 2)
     if os.path.exists(os.path.join(sessions, "readability-arm.flag")):
         locked = os.path.join(sessions, "Zeta.six.jsonl")
         try:
@@ -1931,7 +2318,8 @@ def main():
                       "openai", "gpt-synthetic", kind=MAIN_KIND),
             make_seat("Alpha.one", "completed", "anthropic", "m1"),
         ]
-    elif os.path.exists(os.path.join(sessions, "dead-arm.flag")):
+    elif os.path.exists(os.path.join(sessions, "dead-arm.flag")) \
+            or os.path.exists(os.path.join(sessions, "wrong-type-arm.flag")):
         seats = [make_seat("Beta.two", "dead_rate_limit", "zai", "glm",
                            error_status=429, retry_exhausted=True,
                            retries=10, error_code=1302)]
@@ -1953,9 +2341,17 @@ def main():
                 (seat["provider"], seat["model"])]
         by_pm.setdefault(key, totals(same))
     dead = sum(1 for seat in graded if seat["class"].startswith("dead_"))
+    wrong_type = os.path.exists(os.path.join(sessions,
+                                              "wrong-type-arm.flag"))
+    if wrong_type:
+        seats[0]["error_status"] = True
+    main_count = len(seats) - len(graded)
     shaped = seats
     if os.path.exists(os.path.join(sessions, "dict-arm.flag")):
         shaped = {seat["seat"]: seat for seat in seats}
+    if os.path.exists(os.path.join(sessions, "no-key-arm.flag")):
+        shaped = [{key: value for key, value in row.items()
+                   if key not in ("key", "prefix")} for row in seats]
     emit({"schema": SCHEMA, "sessions_dir": sessions,
           "files_scanned": len(seats), "totals": totals(graded),
           "retry_exhausted": sum(1 for seat in graded
@@ -1963,7 +2359,8 @@ def main():
           "by_prefix": by_prefix, "by_provider_model": by_pm,
           "seats": shaped,
           "now_ms": now_ms, "settle_seconds": settle_seconds,
-          "main_sessions": len(seats) - len(graded), "duplicate_stems": 0,
+          "main_sessions": True if wrong_type else main_count,
+          "duplicate_stems": 0,
           "finding_id": FINDING_DEAD if dead else FINDING_OK},
          1 if dead else 0)
 
@@ -1999,7 +2396,12 @@ def _case_dead() -> dict:
                  "--now-ms", str(_SELFTEST_NOW_MS)],
         "want": {"rc": 1, "finding_id": FINDING_DEAD,
                  "totals": _totals(dead_rate_limit=1),
-                 "seats": {"Beta.two": "dead_rate_limit"}},
+                 "seats": {"Beta.two": "dead_rate_limit"},
+                 "records": {"Beta.two": {
+                     "key": "Beta.two", "prefix": "Beta",
+                     "class": "dead_rate_limit", "error_status": 429,
+                     "retries": 10, "error_code": 1302,
+                     "retry_exhausted": True, "reason": None}}},
     }
 
 
@@ -2008,7 +2410,8 @@ def _case_setup() -> dict:
         "id": "st-setup", "pack": "pack-absent",
         "args": ["--sessions-dir", "{pack}",
                  "--now-ms", str(_SELFTEST_NOW_MS)],
-        "want": {"rc": 2, "finding_id": FINDING_SETUP},
+        "want": {"rc": 2, "finding_id": FINDING_SETUP,
+                 "reason": "unavailable-dir"},
     }
 
 
@@ -2078,7 +2481,11 @@ def _selftest_tree(root: Path, kind: str) -> Path:
         _write_line(main_pack, "Alpha.one.jsonl", message)
         _write_line(main_pack, "2026-10-20T12-00-00Z_abc123.jsonl", message)
         (main_pack / "main-arm.flag").write_text("", encoding="utf-8")
-        cases = [dict(_case_ok(), pack="pack-main", id="st-main")]
+        main_case = dict(_case_ok(), pack="pack-main", id="st-main")
+        main_case["want"] = dict(main_case["want"],
+                                 top={"main_sessions": 1,
+                                      "duplicate_stems": 0})
+        cases = [main_case]
     elif kind == "scan":
         scan_pack = fixtures / "pack-scan"
         scan_pack.mkdir()
@@ -2109,6 +2516,69 @@ def _selftest_tree(root: Path, kind: str) -> Path:
             want={"rc": 0, "finding_id": FINDING_OK,
                   "totals": _totals(unavailable=1),
                   "seats": {"Zeta.six": "unavailable"}})]
+    elif kind == "trap":
+        trap_pack = fixtures / "pack-trap"
+        trap_pack.mkdir()
+        escape_target = root / "escape-target"
+        (trap_pack / "link").symlink_to(str(escape_target))
+        cases = [{
+            "id": "st-trap", "pack": "pack-trap", "args": [],
+            "fifo_files": ["link/new/pipe.jsonl"],
+            "want": {"rc": 2, "finding_id": FINDING_SETUP},
+        }]
+    elif kind == "dirs":
+        dirs_pack = fixtures / "pack-dirs"
+        dirs_pack.mkdir()
+        locked_dir = dirs_pack / "locked-dir"
+        locked_dir.mkdir()
+        _write_line(locked_dir, "inner.jsonl", message)
+        (dirs_pack / "dir-arm.flag").write_text("", encoding="utf-8")
+        cases = [{
+            "id": "st-dir", "pack": "pack-dirs",
+            "args": ["--now-ms", str(_SELFTEST_NOW_MS)],
+            "unreadable_dirs": ["locked-dir"],
+            "want": {"rc": 2, "finding_id": FINDING_SETUP,
+                     "reason": "walk-error"},
+        }]
+    elif kind == "rootlink":
+        rootlink_pack = fixtures / "pack-rootlink"
+        rootlink_pack.mkdir()
+        real_dir = rootlink_pack / "real-dir"
+        real_dir.mkdir()
+        _write_line(real_dir, "completed.jsonl", message)
+        (rootlink_pack / "root-link").symlink_to("real-dir")
+        cases = [{
+            "id": "st-rootlink", "pack": "pack-rootlink",
+            "args": ["--sessions-dir", "{pack}/root-link",
+                     "--now-ms", str(_SELFTEST_NOW_MS)],
+            "want": {"rc": 2, "finding_id": FINDING_SETUP,
+                     "reason": "root-symlink"},
+        }]
+    elif kind == "nokey":
+        nokey_pack = fixtures / "pack-nokey"
+        nokey_pack.mkdir()
+        _write_line(nokey_pack, "Alpha.one.jsonl", message)
+        (nokey_pack / "no-key-arm.flag").write_text("", encoding="utf-8")
+        cases = [dict(_case_ok(), pack="pack-nokey", id="st-nokey")]
+    elif kind == "wrongtype":
+        wrong_pack = fixtures / "pack-wrongtype"
+        wrong_pack.mkdir()
+        _write_line(wrong_pack, "Beta.two.jsonl",
+                    {"type": "message",
+                     "message": {"role": "assistant", "stopReason": "error",
+                                 "errorStatus": 429,
+                                 "errorMessage": "429 rate_limit"}})
+        (wrong_pack / "wrong-type-arm.flag").write_text(
+            "", encoding="utf-8")
+        cases = [{
+            "id": "st-wrongtype", "pack": "pack-wrongtype",
+            "args": ["--now-ms", str(_SELFTEST_NOW_MS)],
+            "want": {"rc": 1, "finding_id": FINDING_DEAD,
+                     "totals": _totals(dead_rate_limit=1),
+                     "seats": {"Beta.two": "dead_rate_limit"},
+                     "records": {"Beta.two": {"error_status": 429}},
+                     "top": {"main_sessions": 0}},
+        }]
     else:
         raise AssertionError("unknown selftest tree kind %s" % kind)
 
@@ -2237,6 +2707,7 @@ def selftest() -> int:
         _assert(not (green / "pack-ok/Pipe.jsonl").exists()
                 and not (green / "pack-ok/Pipe.jsonl").is_symlink(),
                 "green source has no FIFO", proc)
+        green_pack_before = green_ok["pack_before_sha256"]
         checks.append("green_rc0_and_manifest")
 
         # capability_absent: missing --tool path, rc1, every case absent.
@@ -2252,6 +2723,11 @@ def selftest() -> int:
                     for c in man["cases"]), "absent statuses", proc)
         _assert(man["summary"]["capability_absent"] == 3,
                 "absent summary", proc)
+        absent_ok = man["cases"][0]
+        _assert(absent_ok["pack_before_sha256"] == green_pack_before,
+                "pack digest definition matches across branches", proc)
+        _assert(absent_ok["pack_after_sha256"] == green_pack_before,
+                "absent pack digest stable", proc)
         checks.append("capability_absent_rc1")
 
         # mismatch: a factually wrong but coherent want must go red.
@@ -2339,6 +2815,88 @@ def selftest() -> int:
         _assert(not source_fifo.exists() and not source_fifo.is_symlink(),
                 "source FIFO absent", proc)
         checks.append("generated_fifo_rc0")
+
+        # F1 trap: a symlinked FIFO ancestor must be rejected before any
+        # mkdir; the external target must never be created.
+        trap_tree = _selftest_tree(root, "trap")
+        escape_target = root / "escape-target"
+        proc = _gate_proc(gate, ["--tool", str(stub), "--fixtures",
+                                 str(trap_tree), "--output",
+                                 str(root / "out-trap")])
+        _assert(proc.returncode == 2, "trap rc=%s" % proc.returncode, proc)
+        _assert("ancestor is a symlink" in proc.stderr,
+                "trap symlink reason: %r" % one_line(proc.stderr), proc)
+        _assert(not escape_target.exists()
+                and not escape_target.is_symlink(),
+                "trap created no out-of-sandbox dir", proc)
+        checks.append("symlink_ancestor_fifo_trap_rc2")
+
+        # unreadable_dirs: chmod 000 only in the sandbox copy; the tool sees
+        # the walk error; modes are restored so cleanup works.
+        dirs_tree = _selftest_tree(root, "dirs")
+        out_dirs = root / "out-dirs"
+        proc = _gate_proc(gate, ["--tool", str(stub), "--fixtures",
+                                 str(dirs_tree), "--output", str(out_dirs)])
+        _assert(proc.returncode == 0, "dirs rc=%s" % proc.returncode, proc)
+        man = _manifest(out_dirs)
+        dir_case = man["cases"][0]
+        _assert(dir_case["status"] == "match", "dirs reason match", proc)
+        _assert(dir_case["unreadable_dirs"] == ["locked-dir"],
+                "dirs metadata recorded", proc)
+        sandbox_dir = Path(dir_case["sandbox"]) / "locked-dir"
+        _assert((os.stat(sandbox_dir).st_mode & 0o700) == 0o700,
+                "sandbox dir mode restored", proc)
+        source_dir = dirs_tree / "pack-dirs/locked-dir"
+        _assert(os.access(source_dir, os.R_OK | os.X_OK),
+                "source dir stays readable", proc)
+        checks.append("unreadable_dirs_sandbox_rc0")
+
+        # tracked root symlink is rebased into the sandbox and rejected.
+        rootlink_tree = _selftest_tree(root, "rootlink")
+        out_rootlink = root / "out-rootlink"
+        proc = _gate_proc(gate, ["--tool", str(stub), "--fixtures",
+                                 str(rootlink_tree), "--output",
+                                 str(out_rootlink)])
+        _assert(proc.returncode == 0, "rootlink rc=%s" % proc.returncode,
+                proc)
+        man = _manifest(out_rootlink)
+        link_case = man["cases"][0]
+        _assert(link_case["status"] == "match", "rootlink reason match",
+                proc)
+        _assert(link_case["sessions_arg"].endswith("/sessions/root-link"),
+                "rootlink sessions arg: %r" % link_case["sessions_arg"],
+                proc)
+        checks.append("root_symlink_rebase_rc0")
+
+        # Missing key/prefix metadata must go red (no stem fallback).
+        nokey_tree = _selftest_tree(root, "nokey")
+        out_nokey = root / "out-nokey"
+        proc = _gate_proc(gate, ["--tool", str(stub), "--fixtures",
+                                 str(nokey_tree), "--output",
+                                 str(out_nokey)])
+        _assert(proc.returncode == 1, "nokey rc=%s" % proc.returncode, proc)
+        man = _manifest(out_nokey)
+        reasons = man["cases"][0]["reasons"]
+        _assert(any("key" in reason for reason in reasons),
+                "nokey reasons: %r" % reasons[:4], proc)
+        checks.append("key_metadata_required_rc1")
+
+        # JSON-type-exact metadata: the fake tool emits bool where the wish
+        # is integer (True vs 1); strict_eq must reject it, not loose ==.
+        wrong_tree = _selftest_tree(root, "wrongtype")
+        out_wrong = root / "out-wrongtype"
+        proc = _gate_proc(gate, ["--tool", str(stub), "--fixtures",
+                                 str(wrong_tree), "--output",
+                                 str(out_wrong)])
+        _assert(proc.returncode == 1, "wrongtype rc=%s" % proc.returncode,
+                proc)
+        man = _manifest(out_wrong)
+        _assert(man["verdict"] == "mismatch", "wrongtype verdict", proc)
+        reasons = man["cases"][0]["reasons"]
+        _assert(any("want.record" in reason or "want.top" in reason
+                    or "error_status" in reason for reason in reasons),
+                "wrongtype reasons: %r" % reasons[:4], proc)
+        checks.append("wrong_type_metadata_rc1")
 
         # Persisted pins are independent evidence: a tree moved after pinning
         # is rc2 snapshot_tampered before any tool run.
@@ -2468,22 +3026,28 @@ def parse_args(argv=None):
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "expected.json: {\"pins\":{<relpath>:<sha256hex>},"
-            "\"cases\":[{\"id\",\"pack\",\"args\","
-            "\"want\":{\"rc\",\"finding_id\",\"totals\",\"seats\"}}]}\n"
+            "\"cases\":[{\"id\",\"pack\",\"args\",\"unreadable_files\","
+            "\"fifo_files\",\"unreadable_dirs\","
+            "\"want\":{\"rc\",\"finding_id\",\"totals\",\"seats\","
+            "\"reason\",\"records\",\"top\"}}]}\n"
             "pins: every non-directory fixture entry except expected.json; "
             "regular=file sha256, symlink=sha256(target text), "
             "FIFO=sha256(b\"fifo\"); verified before any run.\n"
             "args: {pack}/{fixtures} expand to absolute paths; "
-            "--sessions-dir is prepended when absent; other args "
-            "(--now-ms included) pass unchanged.\n"
+            "--sessions-dir is prepended when absent; an explicit "
+            "{pack}/subpath sessions dir is rebased into the sandbox; other "
+            "args (--now-ms included) pass unchanged.\n"
             "sandbox: each existing pack is copied per case under "
-            "output/cases/<id>/sessions; unreadable_files paths are chmod000 "
-            "in the copy only, fifo_files paths are os.mkfifo-created only "
-            "there and must be absent from the source tree.\n"
+            "output/cases/<id>/sessions; unreadable_files/unreadable_dirs are "
+            "mode 000 only in the copy (dirs restored after the run), "
+            "fifo_files are os.mkfifo-created only there with componentwise "
+            "symlink-ancestor rejection, and must be absent from the "
+            "source tree.\n"
             "grading: rc0/rc1 wants must carry a totals subset and a seats "
-            "map; seats are projected and compared exactly, totals are "
-            "re-derived from the graded seats (main-kind excluded) and every "
-            "declared class compared.\n"
+            "map; seats are keyed by A1 relative key (key+prefix required), "
+            "totals are re-derived from the graded seats (main-kind "
+            "excluded), and optional want.reason/top/records are compared "
+            "exactly and type-strict.\n"
             "output: absent or empty directory; may sit under repo .ufo; "
             "refused under the fixture tree, tool file, tools/, .git/, "
             ".jj/ or corpus/, and never equal/contain the repo root.\n"

@@ -365,3 +365,13 @@ package-log state (`knowledge/journal-cursor-window-r16.md` appended correction)
 R10 drift pin remains red debt without a re-pin. Package transaction detections
 are handed to tsukuroi/operator, not absorbed as OS state ownership.
 
+
+Round-17 precision superseding the r16 coverage-map row's “no journal read”:
+that phrase described the draft seat, not the delivered lane capability. L1
+later ran one bounded user and one bounded system journal query at the r16
+measured revision; both were anchor-only with zero records after anchor
+(`knowledge/journal-cursor-window-r16.md:127–136`, r16 live receipts).
+This proves path reachability, not no events, complete access or positive load.
+The r16 host version remains historical 261.2-1; primary version rows are
+`lessons/round-16.md:69,73,153`, before today's package-log upgrade to 262-1.
+

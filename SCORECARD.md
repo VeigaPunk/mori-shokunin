@@ -1060,3 +1060,22 @@ Selftests and counts are L1 runs on settled committed inputs, not seat attestati
 Procedural violations remain disclosed in the lesson; static context checks are
 not prevention. Fresh wave2 falsification and independent outside closure are
 separate; neither is self-certified here.
+
+### Current axis register (round17 supersedes frozen historical headers)
+
+| Axis | Active score | Round17 role | Evidence |
+|---|---:|---|---|
+| coverage | 6 | C1 selected | finite transcript observation, source-linked FR14 advance |
+| operability | 7 | C2 selected | branch-authority and real sandbox regression measure |
+| calibration | 5 | C3 selected; lowest score | known false-clean misroot witness and grounded outside-r16 corrections |
+| depth | 5 | observed, unchanged | S041–S048 and scoped knowledge notes |
+| freshness | 5 | observed, unchanged | r10 red remains carried, no re-pin |
+| adjacency | 6 | observed, unchanged | detection/report only, sibling ownership retained |
+
+The top round1 table and original coverage+operability-only header are historical,
+not the active score/selection register. Selecting calibration here adds no new
+functional province. No axis is retired and no stagnation waiver is used.
+Fresh wave2's three killed implementation mutants and one context survivor are
+recorded honestly; A2 corrects the survivor and concrete source/guard/oracle
+findings before final measurement. Initial54/21/1 counters are retained as
+first-measurement evidence, not silently treated as final A2 instrument results.

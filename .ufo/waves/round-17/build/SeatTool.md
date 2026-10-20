@@ -9,7 +9,7 @@ Lane checkout untouched; no VCS mutation anywhere.
 
 | Path (inside the SeatTool clone) | Size | Mode | SHA-256 |
 |---|---|---|---|
-| `tools/mori-seat-terminal.py` (new; A1) | 62383 bytes | `-rwxr-xr-x` | `5819c3c06e4ceded02b043ef1edbe15043359f176f1b24830b4d3cae24adbdba` |
+| `tools/mori-seat-terminal.py` (A1 + wave-2 strict projection) | 102173 bytes | `-rwxr-xr-x` | `93d7948786285a1f91eff09573c099f46df58ee5cb8c1992db5977ece2b3635d` |
 
 No other file was created or edited; `.scratch/` was used only as `TMPDIR` for the selftest.
 
@@ -245,3 +245,205 @@ seat-dead coherence, `now_ms` pinned to `--now-ms`, and `settle_seconds`.
   message text, satisfying "never rc1" but hiding the cause by design.
 - No real OMP transcript, journal, credential file or `/tmp` path was read or written; no tool
   install or upgrade was performed.
+
+---
+
+# Wave 2 — PrivacyFinal filesystem/privacy hardening (clone base `5c1dfb8`, QUALITY39)
+
+Clone recreated at `5c1dfb8d0530c74eb0e1630c2b522b735b486274`; the only file changed in this
+wave is `tools/mori-seat-terminal.py` (the report itself is this append). Per QUALITY39 no
+selftest, probe, lint, build or Python execution was performed. All statements below are static
+code/interface evidence; the selftest arm counts are static, not observed runs.
+
+Artifact: `tools/mori-seat-terminal.py`, 88642 bytes, `-rwxr-xr-x`,
+SHA-256 `e2991600bbee98f5816aea280c1901e100be9e3bdac07ca3e8e2d3a1c2790b10`.
+
+## Fixes mapped to `falsify/PrivacyFinal.md`
+
+| Finding | Fix (anchors in the tool) |
+|---|---|
+| HIGH false clean from suppressed traversal | Root opened once (`_open_dir` `:642-647`); walk errors raise setup (`_collect_entries` `:684-748`); every `lstat`/`entry` stat error raises `lstat-failed` (`:713-715`); no `continue` on a failed stat remains. `os.walk` is gone |
+| MEDIUM regular→FIFO open hang | Files opened `O_RDONLY|O_NOFOLLOW|O_NONBLOCK` (`_file_flags` `:634-639`), then `fstat` must be regular (`_open_regular_at` `:669-681`, `_open_regular` `:602-623`); FIFO open cannot block and is rejected before any read |
+| MEDIUM symlinked sessions root | Trailing separators stripped before `islink` (`_scan` `:834-843`); root opened `O_DIRECTORY|O_NOFOLLOW` and ELOOP maps to rc2 `root-symlink` (`:838-843`) |
+| MEDIUM source reads exceed allowlist | Whole-line `json.loads` replaced by a bounded byte scanner (`:257-406`) and field projector (`:416-518`); `json.loads` now appears only for bounded approved spans (`:380`) and for the selftest's own tool-output parse |
+| MEDIUM committed live receipt path | Not a tool change; evidence redaction is L1/gate work. The tool still emits the caller-supplied `sessions_dir` verbatim as the contract requires. No receipt was read or edited by this seat |
+
+## Filesystem safety detail
+
+- Traversal is descriptor-relative: the sessions root is opened once and every child directory is
+  opened with `O_NOFOLLOW|O_DIRECTORY` relative to its parent descriptor (`_collect_entries`
+  `:684-748`). A symlinked ancestor introduced after discovery cannot redirect the walk.
+- Analysis opens the leaf through `_open_leaf` (`:649-667`): each path component is opened
+  `O_NOFOLLOW|O_DIRECTORY` with `dir_fd`, and the leaf with `O_NOFOLLOW|O_NONBLOCK`; the root
+  descriptor is held for the whole scan (`_scan` `:830-912`), so a swapped path prefix or root
+  rename cannot substitute a different tree.
+- Both the 4096-byte header and the bounded tail come from one descriptor (`_analyze_fd`
+  `:763-781`); the `fstat` regular-file check covers the bytes actually read.
+- `os.scandir` is fed a duplicated descriptor and the duplicate is closed defensively with EBADF
+  ignored (`:696-743`), so the held directory descriptor is never at the mercy of iterator
+  ownership. Directory descriptors for pending subtrees are closed by the traversal `finally`.
+- Discovery skips symlinks, FIFOs and devices by `lstat` mode; a path accepted as regular but
+  replaced by a non-regular inode before open becomes an `unavailable` row with reason
+  `unreadable` (no hang, no silently dropped seat).
+
+## Parser/privacy safety detail
+
+- Each line is scanned byte-by-byte: strings, objects, arrays, numbers, booleans and null are
+  structurally walked without decoding their contents. Only approved field spans are decoded;
+  `content`, `usage`, `credential_pin` payloads and every unapproved member are stepped over in
+  place and never copied or materialized.
+- Approved decodes are bounded: keys/type 64 bytes, role/stopReason 256, provider/model 512,
+  numeric spans 32 bytes, retry/code digits 12. Over-bound values are ignored.
+- `errorMessage` is never decoded. Its raw string span is folded immediately into derived
+  metadata: retry-exhausted prefix (`bytes.startswith`), `after N retr(y|ies)` count,
+  `(type=NNNN)` digit string, and literal quota/rate token presence (`bytes.find`). Escaped
+  spellings are not decoded and are therefore not matched; the original text never enters the
+  view, output, or class decision other than through those derived scalars.
+- Header validation decodes only `type` and `version` from the first 4096 bytes; a non-session,
+  absent, non-integer or non-3 version yields `unavailable` reason `schema`.
+- Malformed, truncated, undecodable or trailing-garbage lines fail the structural match and are
+  skipped; an unexpected exception is caught at the top and reported as rc2 `internal-error`,
+  never rc1.
+- Permitted input set is documented in the module docstring (`:26-50`) and help epilog: record
+  type and record/message `completedAt`/`timestamp`; message `role`, `stopReason`,
+  `errorStatus`, `provider`, `model`; `errorMessage`-derived metadata only.
+
+## Semantic corrections folded in
+
+- Terminal assistant error with no usable numeric `completedAt`/`timestamp` is `unavailable`
+  with reason `terminal-time` (`_classify` `:570-576`), not dead and not unsettled.
+- Z.AI business codes are scoped to provider exactly `zai` (`_classify` `:577-596`): 1113/1308 →
+  dead_quota, 1302 → dead_rate_limit. An unmapped Z.AI code is not rate evidence from HTTP 429
+  alone: explicit quota/rate text still classifies, otherwise dead_error_other. Codes are ignored
+  for other providers. This is a classification hint, not an authenticated vendor cause and not
+  a full vendor table.
+- Bare `resource_exhausted` was removed from the rate token set (it can be quota/resource); it
+  now falls through to dead_error_other unless an explicit status/rate/quota/code clue exists.
+  Lower-case `rate limit` remains a rate token.
+- Classes/CLI/output schema unchanged otherwise (`finding_id` values, `totals`, `by_*`,
+  `main_sessions`, `duplicate_stems`, `now_ms`, `settle_seconds`, per-seat fields).
+
+## Selftest arms added (static; NOT executed per QUALITY39)
+
+41 subprocess arms plus 2 direct safety arms (43 total) are present. New wave-2 arms:
+
+| Arm | Static expectation |
+|---|---|
+| `a2-root-symlink` | symlinked sessions root → rc2 SETUP `root-symlink` |
+| `a2-root-symlink-trailing-slash` | same with a trailing separator spelling → rc2 `root-symlink` |
+| `a2-walk-error` | chmod-000 nested directory → rc2 SETUP `walk-error` (requires non-root execution) |
+| `a2-fifo-open-safety` (direct, daemon-thread with 10 s join) | `_analyze` on a FIFO returns `(None, "unavailable", "unreadable")` without blocking |
+| `a2-walk-error-raiser` (direct) | `_raise_walk_error` raises `_SetupError("walk-error")` |
+| `a2-credential-pin-only` | header + credential_pin/custom records with fake token → unavailable `no-message`, token/sentinel absent from stdout |
+| `a2-error-no-terminal-time` | assistant error with 429/rate text but no timestamp → unavailable `terminal-time`, rc0 |
+| `a2-unknown-zai-code` | zai `(type=9999)` under 429 without text → dead_error_other; with `rate limit` text → dead_rate_limit |
+| `a2-nonzai-code-control` | same 1113/1302 codes under non-zai providers ignored → dead_error_other |
+| `resource-exhausted-other` | bare `resource_exhausted` → dead_error_other |
+| `devin-free-model-rate-limit` | `Reached free model rate limit` → dead_rate_limit |
+
+All pre-existing error-terminal arms were given settled `completedAt` timestamps so they still
+test their intended dead classes under the new `terminal-time` rule. Every scan arm keeps the
+prior shape assertions (one JSON document, empty stderr, exact key sets, sorted keys, totals,
+main exclusion, duplicate count, prefix/provider tallies, finding coherence, pinned now_ms).
+
+## Coordination (IRC, 2026-10-20)
+
+- `MoriR17.SeatGate-5`: A2 cases pin `root-symlink` and `walk-error` exactly; the gate compares a
+  declared `want.reason` type-strict and does not hardcode reasons. Confirmed my emissions;
+  `lstat-failed` is an additional possible setup reason.
+- `MoriR17.SeatFixtures-5`: fixture pins confirmed for root symlink, chmod-000 walk error, static
+  FIFO skip, credential_pin-only `no-message`, bare `resource_exhausted` → dead_error_other,
+  free-model `rate limit` → dead_rate_limit, timestamp-free error → `terminal-time`, and unknown
+  zai code (their example 1309) under 429 → dead_error_other.
+
+## Risks / limits (no blocker)
+
+- **No execution in this wave (QUALITY39).** The 43-arm selftest, `--help`, and gate fixtures have
+  not been run against this revision; L1 owns the settled executed check. Static review only.
+- `a2-walk-error` depends on chmod-000 actually denying the scanning user; under uid 0 the walk
+  would succeed and that arm would fail. It is documented rather than special-cased.
+- Empty/`unreadable` directories are reported as setup (`walk-error`) by design; the tool no
+  longer attempts a partial scan.
+- A regular file that shrinks between `fstat` and `pread` can yield a short/empty tail and thus
+  `unavailable`/`no-message`; it cannot fabricate a dead class or hang.
+- `os.scandir` on a duplicated fd is used for entry metadata; the duplicate-close wrapper makes
+  the held descriptor ownership-independent, but this path is unexecuted in this wave.
+- Raw-span token/code matching is literal: JSON-escaped spellings of the allowed tokens/codes
+  are ignored (documented). This is deliberate field-minimization, not a full text decoder.
+- `duplicate_stems` remains extra-copies-beyond-first over seat rows (gate type-checks only);
+  main rows stay under `--prefix` (gate tolerates; fixture main case has no prefix).
+- No live transcript, journal, credential file, `/tmp` path, VCS mutation, build, or test was
+  performed in this wave; no tool install or upgrade was needed.
+
+---
+
+# Wave 2 follow-up — strict projection (still no execution, QUALITY39)
+
+This subsection supersedes the artifact metadata above for the current tool revision.
+
+Artifact: `tools/mori-seat-terminal.py`, 102173 bytes, `-rwxr-xr-x`,
+SHA-256 `93d7948786285a1f91eff09573c099f46df58ee5cb8c1992db5977ece2b3635d`.
+No selftest, probe or Python execution was performed.
+
+## Counterexamples closed (PrivacyFinal.md:61-67)
+
+- **Strict skipped-value syntax.** `_scan_string` (`:301-336`) now validates every JSON escape
+  form (`\" \\ \/ \b \f \n \r \t \uXXXX`) and raw UTF-8 sequences via `_utf8_length`
+  (`:272-298`), including overlong/surrogate/out-of-range rejection. `_scan_number`
+  (`:339-363`) implements the complete JSON number grammar; arbitrary `+-.eE` runs and leading
+  zeros no longer parse. Any invalid token makes the whole line fail the structural walk and be
+  skipped.
+- **Escaped class tokens.** `errorMessage` is stream-decoded through `_iter_decoded`
+  (`:493-552`) into `_error_metadata` (`:555-636`): ASCII code points reached via `\u` escapes
+  are yielded, non-ASCII yields a sentinel that breaks token continuity, and the decoded text is
+  never retained. Token/prefix/retry matching uses a bounded 97-byte carry window (64 retained).
+  Escaped `rate_limit`, `quota`, `Retry budget exhausted`, retry counts and `(type=1302)` now
+  classify as intended.
+- **Overlong unknown Z.AI codes.** `_error_metadata` keeps an `unknown_code_present` bit when a
+  `(type=...)` token has more than the 12-digit display bound; `_classify` (`:792-804`) treats
+  code-present-but-unmapped Z.AI errors conservatively, so a 13+-digit code under 429 without
+  explicit text is `dead_error_other`, not status-only rate-limit.
+- **Integer-only selected numbers.** `_parse_int_span` (`:473-481`) uses `_INT_RE`
+  (`:148`) full-match only: schema version, `errorStatus`, and `completedAt`/`timestamp` reject
+  fractions/exponents. `429.0` status is null (no status-rate inference), a decimal timestamp is
+  `terminal-time` (age unproven), and `3.0` header version is `schema`.
+- **Root ancestor caveat.** Kept explicit in the docstring (`:24-27`): the caller-selected root
+  pathname is resolved once with only its final component O_NOFOLLOW-checked; ancestors above it
+  are caller scope. Every descendant component is opened relative to a held descriptor with
+  O_NOFOLLOW, so the child tree remains no-follow.
+- **PrivacyFinal F6 (`resource_exhausted`) rejected as stale contract text.** L1's A2 line
+  explicitly removes bare `resource_exhausted` as rate evidence; the tool keeps the removal.
+  Bare `resource_exhausted` remains `dead_error_other` unless an explicit status/text/code clue
+  exists; lower-case `rate limit` remains a rate token.
+
+## Selftest arms added (named; NOT executed)
+
+47 subprocess arms plus 2 direct safety arms (49 total). New strict-projection arms:
+
+| Arm | Static expectation |
+|---|---|
+| `a2-strict-escape` | line with invalid `\q` escape inside skipped content is skipped; following completed message wins, rc0 |
+| `a2-strict-number` | line with `42+9` status number is skipped (old parser would have accepted it and classified quota), following completed message wins, rc0 |
+| `a2-escaped-error-tokens` | `(type=\u0031302)` → dead_rate_limit with code 1302; escaped `rate\u005flimit` + `after 2 retries` → dead_rate_limit, retry flags |
+| `a2-long-zai-code` | 13-digit `(type=1234567890123)` under zai/429 → dead_error_other |
+| `a2-float-status-time` | `429.0` status → error_status null and dead_error_other; decimal timestamp → unavailable terminal-time |
+| `a2-float-version` | header `version:3.0` → unavailable schema |
+
+Fixtures (SeatFixtures-5, IRC) report matching emitted cases: `escaped_quota_token_classified`,
+`escaped_rate_token_classified`, `malformed_field_lines_skipped` (invalid `\q` and `:01`),
+`decimal_timestamp_unknown_age`, `decimal_schema_version_unavailable`,
+`decimal_status_not_429`, `long_code_13_digit_unknown`; 66 cases / 96 pins, expected SHA
+`78071149679cf9871343286baff411cd0cb9215952521a8ed4dffd1d823853a9` (their artifact, not re-read
+here). Gate (SeatGate-5) confirms tolerance for null `error_status`, `terminal-time`, `schema`,
+escaped tokens/codes and long code strings; no class/reason pin conflict.
+
+## Risks (strict-projection follow-up)
+
+- Unverified by execution; L1 owns the settled run. Static review only.
+- `_error_metadata` intentionally drops digit bytes inside a `(type=...)` token from its carry
+  window; a contract token that overlaps code digits is not expected and would not match.
+- Escaped non-ASCII code points yield a break sentinel; escaped ASCII spellings of the approved
+  tokens match, but a token split by a non-ASCII escape is intentionally not reconstructed.
+- The retry-count regex remains display-bounded at 12 digits; an absurd longer retry count reads
+  as null while the retry-exhausted prefix still matches.
+- `a2-walk-error` still requires non-root execution to deny chmod-000 traversal.
