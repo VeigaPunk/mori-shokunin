@@ -799,3 +799,20 @@ F01 `grade_lane` replacement and a reconstructed F02 prefix-presence shim,
 not original-byte membership-line restorations. Original frozen failures
 remain primary. Active knowledge and SCORECARD carry appended qualifications;
 audit D01/D02 are only partially closed, with tally/aggregate/forgery residuals.
+
+Integrated code/knowledge checkpoint **8d22d18fb4a4124becb35123ca839c93cbae0028**:
+all 32 seats completed. L1's serial verification observed census syntax clean
+and selftest **104/104**, migrated r13 selftest **33 checks + 2 isolated cases**,
+and strict preserved suite **24 pass + 2 mutation-red**, all exit 0. The r14
+gate instead crashed during fixture setup: an unescaped shell `printf '%s'`
+placeholder in a Python `%`-formatted tripwire string raised `TypeError`.
+Its rc1 was **not behavioral red-before evidence**; the r14 selftest failed
+its required stable-id/evidence assertions. Original receipts remain in
+`.ufo/waves/round-14/evidence/` as `r14-selftest.json`, `red-before.json`,
+`green-after.json`; no result is relabelled.
+
+L1 repairs only the harness literal (`%%s`) and maps unexpected internal
+exceptions to explicit could-not-evaluate exit 2, preventing a setup exception
+from masquerading as a failed behavioral comparison. Census/oracle/r13-gate
+bytes are unchanged by this correction. The affected r14 selftest and strict
+paired runs require fresh measured receipts on the correction commit.

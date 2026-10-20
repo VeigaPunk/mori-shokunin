@@ -117,7 +117,7 @@ CONTRACT
 
   No live journal is read. Every journalctl call resolves to a generated stub;
   a PATH tripwire records any accidental bare `journalctl`. Fixture roots are
-  opaque and live under --output, never under the repository. The host
+  opaque and live only under the explicitly selected --output tree. The host
   environment is not inherited: each census run gets an explicit env built by
   census_env(). Canary bytes are checked on the RAW capture and redacted from
   every retained artifact. The journal stub projects each record onto the
@@ -629,7 +629,7 @@ def build_common(base: Path) -> None:
     write_exec(
         base / "bin" / "journalctl",
         "#!/usr/bin/env bash\n"
-        "printf '%s\\n' \"$*\" >> %r\n"
+        "printf '%%s\\n' \"$*\" >> %r\n"
         "exit 96\n" % str(base / "journal" / "tripwire.log"),
     )
 
@@ -2455,6 +2455,12 @@ def main(argv=None) -> int:
         print('FINDING R14_SETUP status=fail axis=operability observed="%s"'
               % one_line(exc))
         print("MORI_R14_REGRESSIONS: setup %s exit=2" % one_line(exc, 120))
+        code = 2
+    except Exception as exc:
+        print("FINDING R14_INTERNAL status=unavailable axis=operability "
+              'observed="%s"' % one_line("%s: %s" %
+                                        (type(exc).__name__, exc)))
+        print("MORI_R14_REGRESSIONS: setup internal-error exit=2")
         code = 2
     except KeyboardInterrupt:
         print("mori-round14-regressions: interrupted", file=sys.stderr)
