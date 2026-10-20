@@ -1,0 +1,728 @@
+{
+ "schema": "mori-retention-population-v1",
+ "commit": "d005cdde0e009dea6c0cc29b37163de536528658",
+ "policy_sha256": "db06e9810bbfd243fb0a753a46960573df39083ea90174ce463cf2a0ab523128",
+ "summary": {
+  "hits": 119,
+  "non_author": 3,
+  "must_redact": 40,
+  "files": 28,
+  "metric_before": 116
+ },
+ "hits": [
+  {
+   "path": ".ufo/round-2/interactive-cutover/wave/admission.json",
+   "line": 12,
+   "class": "R7",
+   "line_sha256": "3d1896a836062a52dae07cde08930676b1e833af5bc95dccb244fdcc1139760a"
+  },
+  {
+   "path": ".ufo/round-2/interactive-cutover/wave/plan-command.json",
+   "line": 15,
+   "class": "R7",
+   "line_sha256": "39ddf124c7175a0984c165105af858c5dcf434d1089a7e302eb48ae62bd831ba"
+  },
+  {
+   "path": ".ufo/round-2/interactive-cutover/wwkd.md",
+   "line": 29,
+   "class": "R7",
+   "line_sha256": "d211e02da331900c57ac61fa5148ced3e06a0bc39472930a0258757141ee8ae8"
+  },
+  {
+   "path": ".ufo/round-2/interactive-cutover/wwkd.md",
+   "line": 29,
+   "class": "R8",
+   "line_sha256": "d211e02da331900c57ac61fa5148ced3e06a0bc39472930a0258757141ee8ae8"
+  },
+  {
+   "path": ".ufo/waves/round-16/build/AttackPermission.md",
+   "line": 16,
+   "class": "R2",
+   "line_sha256": "b77377f6cdfdbd9ae8b61be183e8d71c4724dcf7dc0addb89e271d9ad371f406"
+  },
+  {
+   "path": ".ufo/waves/round-16/build/AttackPermission.md",
+   "line": 65,
+   "class": "R2",
+   "line_sha256": "f2c2aa7606429ffd374e5995060111b959dacbd3dbdef41aafee267d95eecf7f"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/CriticC1.md",
+   "line": 50,
+   "class": "R1",
+   "line_sha256": "589f9d598e2700b141a9375ed176f53996440e5a593affad219f8d039c451914"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/CriticC1.md",
+   "line": 50,
+   "class": "R2",
+   "line_sha256": "589f9d598e2700b141a9375ed176f53996440e5a593affad219f8d039c451914"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/DeadSeatCrossCheck.md",
+   "line": 11,
+   "class": "R1",
+   "line_sha256": "22855141507d7ef7f6fdbae79fb4eaadb701f19655c2a224c11221a0e7a6a6be"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/DeadSeatCrossCheck.md",
+   "line": 11,
+   "class": "R2",
+   "line_sha256": "22855141507d7ef7f6fdbae79fb4eaadb701f19655c2a224c11221a0e7a6a6be"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/DeadSeatCrossCheck.md",
+   "line": 82,
+   "class": "R1",
+   "line_sha256": "8317eea2bfaeb754c15af6a0b1854d9388929601ea92fe4ebeeb8ccfbbd0556c"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/DeadSeatCrossCheck.md",
+   "line": 82,
+   "class": "R2",
+   "line_sha256": "8317eea2bfaeb754c15af6a0b1854d9388929601ea92fe4ebeeb8ccfbbd0556c"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/DeadSeatCrossCheck.md",
+   "line": 209,
+   "class": "R1",
+   "line_sha256": "e475e8d1346bf37f3e50dd7e3fc47716309798b4e637616e5d59451d0f958501"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/DeadSeatCrossCheck.md",
+   "line": 209,
+   "class": "R2",
+   "line_sha256": "e475e8d1346bf37f3e50dd7e3fc47716309798b4e637616e5d59451d0f958501"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryConfig.md",
+   "line": 4,
+   "class": "R7",
+   "line_sha256": "6a6ab11f2b0720003160e3fc6b143cfd3c9e408bcd9616ebab0e4fa847c3dce0"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryConfig.md",
+   "line": 4,
+   "class": "R8",
+   "line_sha256": "6a6ab11f2b0720003160e3fc6b143cfd3c9e408bcd9616ebab0e4fa847c3dce0"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryConfig.md",
+   "line": 14,
+   "class": "R7",
+   "line_sha256": "d449cf2a0143ea6257eef0c8f592c70b179e36d90070469930906d38ded6e8bb"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryConfig.md",
+   "line": 15,
+   "class": "R8",
+   "line_sha256": "cf04a955ce11b5b55d2ef55bd183c63bd1a7434db052f5e95548182df026c603"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryConfig.md",
+   "line": 21,
+   "class": "R8",
+   "line_sha256": "102e45f360026e06eb7b0526779960927eb993fdfdc2dbb1cfa6c4ab57a90fef"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryConfig.md",
+   "line": 24,
+   "class": "R8",
+   "line_sha256": "2556603b71a79bb443ed236eb34f556e5fc2df2a4d93cde7dfdfeba4c259df31"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryConfig.md",
+   "line": 36,
+   "class": "R7",
+   "line_sha256": "ecdb5529fa1eda79d974588994041d207e6328ca0524c5aed194bfc18a465642"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryConfig.md",
+   "line": 40,
+   "class": "R8",
+   "line_sha256": "5006cd10bc12944547a04326e58bdfceb324bc9d7dc5665dd7d6f674f334adaa"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryConfig.md",
+   "line": 44,
+   "class": "R8",
+   "line_sha256": "16760c8b218012b2d401dbe97b6ee3536965236d469d17e87b6e2c24e4912da2"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryConfig.md",
+   "line": 47,
+   "class": "R8",
+   "line_sha256": "baf1639852e99d3f48a4507065c3a1bdc4da1e18aaefd931eb3737478e2e5545"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryConfig.md",
+   "line": 151,
+   "class": "R9",
+   "line_sha256": "ac1adc8bbff32c038138ff1451d062590c4e1e78d1160c2ee2a345a86062ae4e"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryConfig.md",
+   "line": 155,
+   "class": "R7",
+   "line_sha256": "5ffcaaf7c1a919e6dc003cce6e088555e005e2a6df11fcae10cf0f449196f64a"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryConfig.md",
+   "line": 157,
+   "class": "R9",
+   "line_sha256": "b6eacce608d61ce46926b3565264c071d45bc35121523aaba085cc33f4cd1d48"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryConfig.md",
+   "line": 158,
+   "class": "R9",
+   "line_sha256": "17ebb0aab336165d897b477e0664927e750c1e74974eabe937c83f93bf3790d7"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryConfig.md",
+   "line": 172,
+   "class": "R8",
+   "line_sha256": "1dd0c4972face256ae3f64591c7a4010b93ca0258c60bafeff4b75a8c1ae5e1f"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryConfig.md",
+   "line": 177,
+   "class": "R7",
+   "line_sha256": "53cbd720be33baf7f55d2aee3a763a8022619da95ecab1aba39bf52d4ebaa386"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryConfig.md",
+   "line": 210,
+   "class": "R9",
+   "line_sha256": "e8fef4d82b2f8078c2ca4091d8ba89ee4aad40a31e1de120b7c2a816c1704fdc"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryDocs.md",
+   "line": 34,
+   "class": "R2",
+   "line_sha256": "e2a3934fffb3e1e502a591b6c1ac58f71d885614a8b90e791dbf887293a8ce59"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryDocs.md",
+   "line": 42,
+   "class": "R9",
+   "line_sha256": "f4f0ece1c6a376c43b20df30a0cb162c5f8fb8f3fcfdf02413245814ed0e27f5"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OmpRetryDocs.md",
+   "line": 55,
+   "class": "R9",
+   "line_sha256": "c7406a71ea9493c27ea6dddce87c8b3c4601eb6e1441d867fd6a430dcf975d59"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/OverlapTsukuroi.md",
+   "line": 96,
+   "class": "R4",
+   "line_sha256": "9e0a71be8e562c0ebe64f376879b594b85339627d97f226d35679ca33e497d65"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 31,
+   "class": "R2",
+   "line_sha256": "c64054bd767d50b40645cf7c3f103263c21522a5add68cd6f219b9e0eb392d0b"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 32,
+   "class": "R1",
+   "line_sha256": "d22bdd5f51a1f7a08e482b2a072b4704c697b46505acb87fd0699c59ca29b0a7"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 34,
+   "class": "R1",
+   "line_sha256": "a45c0aa6c56ed146036a126d646d052a7cedb4e15c36e7d3ef723c78d15d6867"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 36,
+   "class": "R3",
+   "line_sha256": "fee021d10d393a3df79a1b54b876f8d2eddbdaa5cfc27c35c536e4ea70c2b134"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 45,
+   "class": "R3",
+   "line_sha256": "2fda0f8165ec341257b3968787f76ef8b519f8bb383881100fec407a094b24df"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 47,
+   "class": "R3",
+   "line_sha256": "652bf4e2d5090cb721bb79e14678699ad8ff55f77a112350220658bb0f902365"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 48,
+   "class": "R3",
+   "line_sha256": "ec142596138e8d2d0015d3beeb39efa4c75acd62b02322348b5118685478c735"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 53,
+   "class": "R4",
+   "line_sha256": "98d67e9e7cfb1f385c3d79ba99b846116feec296c8b0f17e1457945ca8891200"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 66,
+   "class": "R1",
+   "line_sha256": "22855141507d7ef7f6fdbae79fb4eaadb701f19655c2a224c11221a0e7a6a6be"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 66,
+   "class": "R2",
+   "line_sha256": "22855141507d7ef7f6fdbae79fb4eaadb701f19655c2a224c11221a0e7a6a6be"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 90,
+   "class": "R3",
+   "line_sha256": "ec32fccbe5c16b82a2620ec7541dbaa5a4fb1444c20ce25074b50cfed22e72c9"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 95,
+   "class": "R5",
+   "line_sha256": "03f6be499cf17ca5491408c27f724050d0c6a272db22d8fe838cf3903020602b"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 103,
+   "class": "R6",
+   "line_sha256": "ab5ce9864976f696ec001d6876d0879031ba5497dd942404482af6b462b1e2a9"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 144,
+   "class": "R3",
+   "line_sha256": "87401ee73d37322364685c1466111908e844d4d214ce37feca0b0dae9b72b751"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 145,
+   "class": "R3",
+   "line_sha256": "82d3da7d6a75d918534b72a884f4e9b8d1328a8c67267c86adcd7844fe29f639"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 146,
+   "class": "R5",
+   "line_sha256": "85f2c3b6dda4372becc19ad659f58c91c0872586dfeb9048f2c43c1e298a92ac"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 147,
+   "class": "R5",
+   "line_sha256": "11fe48d0ded81fbbecf32ed495c231f6e4e13e26f78bdb2079c862d9f457bd79"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanActorTrace.md",
+   "line": 152,
+   "class": "R6",
+   "line_sha256": "cce93e9da49d92bd168f34df51c13a1d94e9a7975403ca90b1e2852690e1b51f"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/PacmanTxnToday.md",
+   "line": 119,
+   "class": "R4",
+   "line_sha256": "76e720e340da8863f68bb23618f8e9449e3a8cd374d123c6d68b8bf460920b91"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/RetryRecoveryShape.md",
+   "line": 12,
+   "class": "R1",
+   "line_sha256": "d2dd50c5e5aa03b39fd7df941d88d7d270ae14c845229c481291abd3cc026a30"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/RetryRecoveryShape.md",
+   "line": 12,
+   "class": "R2",
+   "line_sha256": "d2dd50c5e5aa03b39fd7df941d88d7d270ae14c845229c481291abd3cc026a30"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/ReviewC1Contract.md",
+   "line": 13,
+   "class": "R1",
+   "line_sha256": "275cba91ef8c87c9772347107c662ed553aab1d345fd4c8733384782b6902c1b"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/ReviewC1Contract.md",
+   "line": 13,
+   "class": "R2",
+   "line_sha256": "275cba91ef8c87c9772347107c662ed553aab1d345fd4c8733384782b6902c1b"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/ReviewSchemaDrift.md",
+   "line": 9,
+   "class": "R2",
+   "line_sha256": "13fd6b8fb4b3fc89df6f0bdca663b9082dff063c8d62d3a19fb944248496911d"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/ReviewSeatBreachDetect.md",
+   "line": 29,
+   "class": "R2",
+   "line_sha256": "b7aab3a4656e93648ea475f1739bf3a9d21d5965ebc5949aad84cba9c2c6b76a"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/ReviewSeatBreachDetect.md",
+   "line": 68,
+   "class": "R9",
+   "line_sha256": "55572f88ea43cfbd6c87d8f28d0f9e568a2f7f3a01b59e1ae892d025d035e8eb"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/ReviewSeatBreachDetect.md",
+   "line": 94,
+   "class": "R9",
+   "line_sha256": "da045ab3748666daebeae8425562784a45ef7d5739c5170ea593720061a58e00"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/SeatNaming.md",
+   "line": 15,
+   "class": "R1",
+   "line_sha256": "8cd3f37bd5c342e4c6b9d9401d3518f0d15849e3c50bc8e0f05e5a48bd5688c0"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/SeatNaming.md",
+   "line": 15,
+   "class": "R2",
+   "line_sha256": "8cd3f37bd5c342e4c6b9d9401d3518f0d15849e3c50bc8e0f05e5a48bd5688c0"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/SeatNaming.md",
+   "line": 33,
+   "class": "R3",
+   "line_sha256": "bde28b9d8a016ee2322b53e47f49e8046dbd68072d4f842466473b0c7a7851ce"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/SentinelTranscripts.md",
+   "line": 39,
+   "class": "R9",
+   "line_sha256": "661371a61bc744c5a35bb2ba8ccb5e50dfe587dac579679ae4942a1a0dfb93f8"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/SentinelTranscripts.md",
+   "line": 173,
+   "class": "R9",
+   "line_sha256": "85df3409e543ee22d8feacff16a0c0d45d17d07375e34dd43bb486f7beb73ba3"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/SessionExitCorrelation.md",
+   "line": 5,
+   "class": "R9",
+   "line_sha256": "5806bb720f82e7f585ff3a9d47803ac33adc5b522edc0574def956dc3a1b195b"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/SessionExitCorrelation.md",
+   "line": 12,
+   "class": "R1",
+   "line_sha256": "aa82c2bab7fb57cf0ac5df6d4958b9740b3a49f638fc35b2ba4a0c816c101956"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/SessionExitCorrelation.md",
+   "line": 12,
+   "class": "R2",
+   "line_sha256": "aa82c2bab7fb57cf0ac5df6d4958b9740b3a49f638fc35b2ba4a0c816c101956"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/SessionExitCorrelation.md",
+   "line": 30,
+   "class": "R9",
+   "line_sha256": "3b49d1c47c9f4de9d48eba9b9098fd3b247455bc4a3d9a6ab64451b08b43d162"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/SessionExitCorrelation.md",
+   "line": 107,
+   "class": "R9",
+   "line_sha256": "1e5ee4a820214d2c27ea04357377aa8f48a3a0812d7e1388b6884dc5c5d4dab9"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/TranscriptShapes.md",
+   "line": 16,
+   "class": "R2",
+   "line_sha256": "cfac1a99492465d7cd7d2bd18fe20a237faa3bf2888ad491baa9d1ad2490a11e"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/TranscriptShapes.md",
+   "line": 72,
+   "class": "R1",
+   "line_sha256": "0609d87a6d0e459cffb9992604bf63640ff20ab494efeade53a822577a65f8d2"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/TranscriptShapes.md",
+   "line": 192,
+   "class": "R1",
+   "line_sha256": "5137db98a4c1bff4279f0413d5eac47fa57b7a68e755b3dea8a90ba6f5f733ca"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/TranscriptShapes.md",
+   "line": 280,
+   "class": "R1",
+   "line_sha256": "5cfe8e40a897686e15367315f9a186eb64448bea75eca82948cffec5cddfd62c"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/TranscriptShapes.md",
+   "line": 297,
+   "class": "R9",
+   "line_sha256": "33edad9ca53949886ec6d8c08a800a9212a3f0476c6ff9ae0e7de0aae5c537db"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/TranscriptTailBounds.md",
+   "line": 8,
+   "class": "R2",
+   "line_sha256": "77cac0d6bf17e2c329ba84c82f79d9625cdaa73df157a8ce17399301fe1ea2fe"
+  },
+  {
+   "path": ".ufo/waves/round-17/build/TranscriptTailBounds.md",
+   "line": 22,
+   "class": "R2",
+   "line_sha256": "cf006717e795e4d63e46bc26ea60c8d7d4f99c11039f46d0162fc930e421d38f"
+  },
+  {
+   "path": ".ufo/waves/round-17/evidence/seat-live.json",
+   "line": 9,
+   "class": "R1",
+   "line_sha256": "d3472f93dc33b1b223f5d664a7e0f7734a643caf056045a071cf06f8e5c351f3"
+  },
+  {
+   "path": ".ufo/waves/round-17/evidence/seat-live.json",
+   "line": 9,
+   "class": "R2",
+   "line_sha256": "d3472f93dc33b1b223f5d664a7e0f7734a643caf056045a071cf06f8e5c351f3"
+  },
+  {
+   "path": ".ufo/waves/round-17/evidence/seat-live.json",
+   "line": 23,
+   "class": "R1",
+   "line_sha256": "eefa67bbd2003e69cf9039480b79d4b7da68164a89fe1fa099a4cb836e30114b"
+  },
+  {
+   "path": ".ufo/waves/round-17/evidence/seat-live.json",
+   "line": 23,
+   "class": "R2",
+   "line_sha256": "eefa67bbd2003e69cf9039480b79d4b7da68164a89fe1fa099a4cb836e30114b"
+  },
+  {
+   "path": ".ufo/waves/round-17/falsify/ConformanceAudit.md",
+   "line": 43,
+   "class": "R9",
+   "line_sha256": "f41f1d13d0350d0b30336118bdf7b3189fdd52b8a6664a34a9ba316eed7b48a8"
+  },
+  {
+   "path": ".ufo/waves/round-17/falsify/ConformanceAudit.md",
+   "line": 44,
+   "class": "R7",
+   "line_sha256": "8de187ab2fabfdb923a1dde890dc46e0b6dcd772f46eb2c7c0ccda3e9af2a319"
+  },
+  {
+   "path": ".ufo/waves/round-17/falsify/ConformanceAudit.md",
+   "line": 44,
+   "class": "R9",
+   "line_sha256": "8de187ab2fabfdb923a1dde890dc46e0b6dcd772f46eb2c7c0ccda3e9af2a319"
+  },
+  {
+   "path": ".ufo/waves/round-17/falsify/ConformanceAudit.md",
+   "line": 46,
+   "class": "R3",
+   "line_sha256": "22465d90379d23601814115ba9250f4f5308d1066e212c9410b0a1f7b275af4a"
+  },
+  {
+   "path": ".ufo/waves/round-17/falsify/ConformanceAudit.md",
+   "line": 46,
+   "class": "R5",
+   "line_sha256": "22465d90379d23601814115ba9250f4f5308d1066e212c9410b0a1f7b275af4a"
+  },
+  {
+   "path": ".ufo/waves/round-17/falsify/ConformanceAudit.md",
+   "line": 46,
+   "class": "R6",
+   "line_sha256": "22465d90379d23601814115ba9250f4f5308d1066e212c9410b0a1f7b275af4a"
+  },
+  {
+   "path": ".ufo/waves/round-17/falsify/ConformanceAudit.md",
+   "line": 74,
+   "class": "R9",
+   "line_sha256": "615eb07331c47fe324e42354d643ab63ef95d0410cb5495c9baf1ed7ee5abd17"
+  },
+  {
+   "path": ".ufo/waves/round-17/falsify/ConformanceAudit.md",
+   "line": 75,
+   "class": "R9",
+   "line_sha256": "9634076935132e1cdbcf3d06aef5e5e93ba0536e7c10c1167b02e54c0ae40e02"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-dispatch.json",
+   "line": 497,
+   "class": "R2",
+   "line_sha256": "f3fc43c4a79d24d866bce0b514fbc42bb37541b09156760c6664639aa62d68a9"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-dispatch.json",
+   "line": 502,
+   "class": "R1",
+   "line_sha256": "9f01f61831412162e14a5b666c1d4af9458d3d923de50abd9d02972ef2b42129"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-dispatch.json",
+   "line": 502,
+   "class": "R2",
+   "line_sha256": "9f01f61831412162e14a5b666c1d4af9458d3d923de50abd9d02972ef2b42129"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-dispatch.json",
+   "line": 507,
+   "class": "R1",
+   "line_sha256": "a8d26966235e8cc4a4f8c4c9c3b107eb0c92d0f9f1a92e1627942523ef134411"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-dispatch.json",
+   "line": 507,
+   "class": "R2",
+   "line_sha256": "a8d26966235e8cc4a4f8c4c9c3b107eb0c92d0f9f1a92e1627942523ef134411"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-dispatch.json",
+   "line": 522,
+   "class": "R7",
+   "line_sha256": "2859c9a9de8747eee8fec409f8c33514cf4144c90f7489b23d10b9b6dba30313"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-dispatch.json",
+   "line": 522,
+   "class": "R8",
+   "line_sha256": "2859c9a9de8747eee8fec409f8c33514cf4144c90f7489b23d10b9b6dba30313"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-dispatch.json",
+   "line": 602,
+   "class": "R2",
+   "line_sha256": "1fd3f00ee5e063f1a9fb6787151748933849ce2103317ec8db2fd6c2553ad8e1"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-dispatch.json",
+   "line": 607,
+   "class": "R9",
+   "line_sha256": "b1b281ae8031fcdc0d5d5e3cedb2655dda37c328f3ef6c98c3a13fbd7d482943"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-dispatch.json",
+   "line": 707,
+   "class": "R1",
+   "line_sha256": "baeb4bfc22e1f9b846d69f4aeda86217d38f1f5e2a3bdb98ac2f410c2a3d6549"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-dispatch.json",
+   "line": 707,
+   "class": "R2",
+   "line_sha256": "baeb4bfc22e1f9b846d69f4aeda86217d38f1f5e2a3bdb98ac2f410c2a3d6549"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-spec.json",
+   "line": 45,
+   "class": "R2",
+   "line_sha256": "3e2558803e905810f3423e43d9ccf90164f65704879873d540d75bc2e60c7baf"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-spec.json",
+   "line": 50,
+   "class": "R1",
+   "line_sha256": "6f280367408f5d122dccc742f990e3be098e7722206852d4a3641d6bf03eee19"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-spec.json",
+   "line": 50,
+   "class": "R2",
+   "line_sha256": "6f280367408f5d122dccc742f990e3be098e7722206852d4a3641d6bf03eee19"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-spec.json",
+   "line": 55,
+   "class": "R1",
+   "line_sha256": "ed2f99f4410c3e9746f0eeff1909b85012575b281b40d17df5c2e4b6d8b6313b"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-spec.json",
+   "line": 55,
+   "class": "R2",
+   "line_sha256": "ed2f99f4410c3e9746f0eeff1909b85012575b281b40d17df5c2e4b6d8b6313b"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-spec.json",
+   "line": 70,
+   "class": "R7",
+   "line_sha256": "43707315f5d440715186f48dc89cf44e161196ab26ec6d8d50d6b173ed42b083"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-spec.json",
+   "line": 70,
+   "class": "R8",
+   "line_sha256": "43707315f5d440715186f48dc89cf44e161196ab26ec6d8d50d6b173ed42b083"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-spec.json",
+   "line": 150,
+   "class": "R2",
+   "line_sha256": "4c84b07f56005f2e8e7697117e049e7dff4c979ec62236e582d5e3ff197cd28d"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-spec.json",
+   "line": 155,
+   "class": "R9",
+   "line_sha256": "2eb76b4a2158d326196d7727d36cbe8c3b58ee98e8e4a58b54996fb1431fa73d"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-spec.json",
+   "line": 255,
+   "class": "R1",
+   "line_sha256": "a238aeabc3e966e9e46842cc7c8f7c9c62c6463833531111b7be24f5b01e8151"
+  },
+  {
+   "path": ".ufo/waves/round-17/wave1-spec.json",
+   "line": 255,
+   "class": "R2",
+   "line_sha256": "a238aeabc3e966e9e46842cc7c8f7c9c62c6463833531111b7be24f5b01e8151"
+  },
+  {
+   "path": "corpus/evidence/round-1-cgroup-dispatch.json",
+   "line": 11,
+   "class": "R7",
+   "line_sha256": "4b68e5fa88138342a7e7de6168308da19c54abab3c16acb224d0221d7fa25d11"
+  },
+  {
+   "path": "corpus/evidence/round-2/dispatch.json",
+   "line": 7,
+   "class": "R7",
+   "line_sha256": "3ae95c1d81070f85f246facae78576a6c32ddfe2c582be8e52308f56a6fa36f8"
+  },
+  {
+   "path": "corpus/lessons/round-17-verifier-spotcheck.md",
+   "line": 312,
+   "class": "R9",
+   "line_sha256": "b01e7483a8095ced090ce2b6400948474fc570c0c3e9b289338bb2dfacafb1d2"
+  },
+  {
+   "path": "corpus/lessons/round-17-verifier-spotcheck.md",
+   "line": 315,
+   "class": "R6",
+   "line_sha256": "a05f9cb73a366c5fa59a9cf66b78d75a489b14fd9e2f2c2b1018d67088957ffe"
+  },
+  {
+   "path": "corpus/lessons/round-17-verifier-spotcheck.md",
+   "line": 341,
+   "class": "R6",
+   "line_sha256": "25ea86d2f05b5505bcc34420af7ca70558b415d4b47417c3e14cace80c7433fe"
+  },
+  {
+   "path": "corpus/lessons/round-17.md",
+   "line": 241,
+   "class": "R6",
+   "line_sha256": "469c83039fa897c68dae0d9329873ce365e8f33c477841b3964731cac7b00948"
+  }
+ ]
+}

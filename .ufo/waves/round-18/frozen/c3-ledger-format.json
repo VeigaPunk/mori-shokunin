@@ -1,0 +1,22 @@
+{
+  "schema": "mori-dispatch-ledger-v1",
+  "frozen_by": "MoriR18Recovery (L1), before any round-18 implementation",
+  "payload_identity": "payload_sha256 = SHA-256 of the UTF-8 bytes of json.dumps({\"context\": taskCall.context, \"tasks\": taskCall.tasks}, ensure_ascii=False, sort_keys=True, separators=(',', ':')), where taskCall is the validator `run` output field committed as <wave>-dispatch.json; payload_bytes is that byte length; tasks_count = len(tasks)",
+  "ledger": "JSON array committed as <wave>-attempts.json; one object per task-call attempt, appended in order before the call result is known and completed with the observed result",
+  "row_fields": {
+    "attempt": "1-based integer, contiguous",
+    "at": "ISO-8601 local time with offset, taken immediately before the task call",
+    "wave": "validator wave name",
+    "dispatch_path": "lane-relative path of the committed validator dispatch JSON",
+    "payload_sha256": "as payload_identity",
+    "payload_bytes": "integer",
+    "tasks_count": "integer",
+    "slot_grant": "the wave-slot.sh `granted` line for this attempt, or null",
+    "result": "refused | started | partial",
+    "refused_text": "exact refusal message for refused rows, else null",
+    "started_ids": "count of agent ids returned for started/partial rows, else 0"
+  },
+  "verify_rule": "bound(row) iff payload_sha256 and payload_bytes equal the recomputation from dispatch_path at the measured revision and tasks_count matches. A ledger is clean iff every row is bound, attempts are contiguous from 1, `at` is non-decreasing, exactly one row has result started or partial and it is the last row, and a started row's started_ids equals tasks_count. unbound count = rows not bound (a legacy row without payload_sha256 is unbound).",
+  "metric": "C3 count = unbound attempt rows over the round's dispatch ledgers. Before: round-17 wave1/wave2 attempt receipts as committed (legacy shape). After: round-18 ledgers.",
+  "known_limit": "The binding proves the committed dispatch payload equals what the ledger hashed; it cannot prove the task tool received those exact bytes beyond the L1 copying the payload unchanged and the returned ids matching the registry."
+}
