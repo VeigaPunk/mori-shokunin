@@ -1,0 +1,10 @@
+{
+  "id": "syntax-census",
+  "measured_commit": "18d7d55",
+  "command": "bash -n tools/mori-census.sh",
+  "started_utc": "2026-10-20T04:27:26.131118+00:00",
+  "elapsed_s": 0.003,
+  "exit": 0,
+  "stdout": "",
+  "stderr": ""
+}

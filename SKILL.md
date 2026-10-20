@@ -63,7 +63,7 @@ exit 2 for setup/usage. Registry (PROTOCOL.md §Gate standard fields):
 
 | name | kind | entry | verdict map | self-test | pinned values | write scope | owner |
 |---|---|---|---|---|---|---|---|
-| census | gate | `bash tools/mori-census.sh` (`MORI_SHOKUNIN_ROOT=<fleet root>` outside the fleet tree) | 0 clean · 1 failed (DRIFT) · 2 could-not-evaluate | `--selftest` (87 cases at r13) | expected ids/exits in `run_selftest()` | none live; selftest temp tree | mori |
+| census | gate | `bash tools/mori-census.sh` (`MORI_SHOKUNIN_ROOT=<fleet root>` outside the fleet tree) | 0 clean · 1 failed (DRIFT) · 2 could-not-evaluate | `--selftest` (91 cases measured at r13) | expected ids/exits in `run_selftest()` | none live; selftest temp tree | mori |
 | drift pin | gate | `bash tools/mori-census.sh --drift <baseline>` | 0 clean (`none`) · 1 failed · 2 could-not-evaluate (baseline missing/unreadable/malformed) | `--selftest` pin/drift arms | `corpus/evidence/baseline-r10-20261015T2231Z.json` | none (`--pin` writes only its path) | mori |
 | silence oracle | gate | `bash tools/mori-silence-cases.sh` | 0 clean (all matched) · 1 failed · 2 could-not-evaluate | itself (hermetic case table, 28 cases) | case table in-script | temp fixtures | mori |
 

@@ -153,7 +153,7 @@ SURFACE_SCOPED_RE = re.compile(
     r"^SURFACE journal\.(user|system): (\S+) \((.*)\)\s*$", re.M
 )
 LANE_ROW_RE = re.compile(r"^SURFACE lane\.(\w+): (\S+) \((.*)\)\s*$", re.M)
-FINDING_RE = re.compile(r"^FINDING (\w+) (\w+) (.*)$", re.M)
+FINDING_RE = re.compile(r"^FINDING (\w+) severity=(\w+) obs=(.*)$", re.M)
 TOKEN_RE = re.compile(r"([A-Za-z0-9_.:-]+)=([^\s;]*)")
 SUMMARY_RE = re.compile(r"^MORI_SILENCE_CASES: matched=(\d+) total=(\d+)\s*$", re.M)
 PASS_CASE_RE = re.compile(r"^PASS (\S+)(?: \(state=(\S+) )?", re.M)
@@ -1837,6 +1837,12 @@ def selftest() -> int:
     check("banana-malformed", verdict_roll(banana, 0)[1] == "malformed")
     check("clean-rc1", verdict_roll(ok, 1)[1].startswith("inconsistent"))
     check("drift-rc0", verdict_roll(drift, 0)[1].startswith("inconsistent"))
+    emitted = findings("FINDING EXAMPLE severity=info obs=count=2 scope=system ts=x")
+    check(
+        "emitted-finding-schema",
+        bool(emitted) and emitted[0][:3]
+        == ("EXAMPLE", "info", {"count": "2", "scope": "system", "ts": "x"}),
+    )
     check(
         "lane-row",
         lane_row(
