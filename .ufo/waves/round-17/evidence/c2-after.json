@@ -1,0 +1,25 @@
+{
+  "label": "c2-after",
+  "started_at": "2026-10-20T16:32:57.594835-03:00",
+  "ended_at": "2026-10-20T16:32:59.477922-03:00",
+  "argv": [
+    "python3",
+    "tools/mori-round17-jj-regressions.py",
+    "--census",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh",
+    "--output",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/evidence/jj-after",
+    "--scratch",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-after"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "branch_ref": "refs/heads/master",
+  "measured_commit": "273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7",
+  "branch_tip_after": "273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7",
+  "rc": 0,
+  "duration_s": 1.883059523999691,
+  "stdout": "mori-round17-jj-regressions: cases=12 match=12 mismatch=0 capability_absent=0 setup_failed=0 assertions=134 failed=0\nmanifest: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/evidence/jj-after/run-manifest.json\n",
+  "stderr": "",
+  "stdout_sha256": "93a500930a13e3d6f399874265768f0e84b28a0258f5191351b0777d182c4a2b",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1026,3 +1026,37 @@ drives status1-versus-error handling in C2. Finite fixtures do not certify
 permanent seat death, universal jj behavior, current journal completeness or
 remote publication. All admission measurements are recorded below after L1
 execution on settled committed inputs.
+
+### Round-17 measured claims (L1, before fresh falsification)
+
+Measured committed branch input:
+**273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7**. The branch-tip/input digest
+ledger is `.ufo/waves/round-17/PINNED_INPUTS.json`; exact counting argv, rc and
+stdout are `evidence/count-c{1,2,3}.json` under that round root.
+
+| Claim | Before→after | Score delta | Verdict at measured finite scope |
+|---|---|---|---|
+| C1 coverage | unmet synthetic capability cases54→0; gates1→0; delivered54/54 match | 6→6 | improved; absent capability is not54 production bugs; live469 observations with94 aged rate-limit errors, not permanent deaths/incidents |
+| C2 operability | failed real git/jj sandbox assertions21→0; matching cases7/12→12/12; gates1→0 | 7→7 | improved; local branch identity only, no remote publication or universal jj proof |
+| C3 calibration | missed known exact root artifact assertions1→0; legacy false-clean0→candidate1 | 5→5 | improved; filename-only archived artifact found without a pathspec; candidate is not ownership proof |
+
+Reproduction commands (lane root):
+
+```sh
+jq -s '[.[] | (.summary.capability_absent + .summary.mismatched)]' .ufo/waves/round-17/evidence/seat-before/run-manifest.json .ufo/waves/round-17/evidence/seat-after/run-manifest.json
+jq -s '[.[].totals.failed_assertions]' .ufo/waves/round-17/evidence/jj-before/run-manifest.json .ufo/waves/round-17/evidence/jj-after/run-manifest.json
+jq -s '[.[] | (.stdout|fromjson) | 1 - ([.candidates[]|select(.path=="MoriR16.Lesson")]|length)]' .ufo/waves/round-17/evidence/c3-before.json .ufo/waves/round-17/evidence/c3-after.json
+```
+
+| Capability | What it can now do | Evidence | First-working round |
+|---|---|---|---|
+| terminal-at-scan seat observation | passively classify supported bounded transcript tails, distinguish aged errors/quotas/settle states and retain relative-path/prefix qualifications without content emission | `.ufo/waves/round-17/evidence/seat-after/run-manifest.json` (54/54); `evidence/seat-live.json`; `corpus/knowledge/seat-terminal-status-r17.md` | 17 |
+| no-pathspec misroot witness | detect filename-only prior own-lane root artifacts while leaving sibling controls unclaimed | `evidence/c3-{before,after}.json`, `frozen/c3-expected.json` under round-17 waves | 17 |
+
+Depth5/freshness5/adjacency6 held unchanged. Existing census125/125,
+oracle28/28, r13 24/24, r14 44/44 and r15 63/63 with frozen red34/34 pass;
+seven historical instruments/pin bytes unchanged. No re-pin makes r10 green.
+Selftests and counts are L1 runs on settled committed inputs, not seat attestations.
+Procedural violations remain disclosed in the lesson; static context checks are
+not prevention. Fresh wave2 falsification and independent outside closure are
+separate; neither is self-certified here.

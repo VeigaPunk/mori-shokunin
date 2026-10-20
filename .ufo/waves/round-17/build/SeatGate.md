@@ -423,5 +423,13 @@ Retained evidence:
 - `wc -l` = 2529; `ast.parse` = `AST OK`; `.scratch` = 0 entries; clone FIFO count = 0.
 - Key/path base and semantics confirmed with `MoriR17.SeatFixtures-5`: case-level
   `fifo_files`, pack-relative, source path absent, pins exclude, sandbox-only creation.
+- Read-only validation of the delivered fixture table after the migration
+  (`SeatFixtures/.ufo/waves/round-17/fixtures/seat/expected.json`, sha256
+  `b684c63bf3cebe70f24d3d02f3f0df4f63aad3f547a365a3ca1864f5f57cb01f`): 54 cases,
+  81 pins with 0 missing / 0 extra / 0 mismatched (no `FifoSkip/pipe.jsonl` pin),
+  `fifo_skipped.fifo_files == ["pipe.jsonl"]` with the source path absent,
+  `unavailable_unreadable_file.unreadable_files == ["locked.jsonl"]` at mode 0644,
+  every case pins `--now-ms`, wants use `finding_id` and the eight A1 classes, and the
+  loader-invariant check reports 0 defects. Gate file unchanged by this check.
 
 No blockers.

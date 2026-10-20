@@ -1,0 +1,20 @@
+{
+  "label": "misroot-selftest",
+  "started_at": "2026-10-20T16:32:35.848404-03:00",
+  "ended_at": "2026-10-20T16:32:36.215864-03:00",
+  "argv": [
+    "python3",
+    "tools/mori-misroot-sweep.py",
+    "--selftest"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "branch_ref": "refs/heads/master",
+  "measured_commit": "273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7",
+  "branch_tip_after": "273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7",
+  "rc": 0,
+  "duration_s": 0.36749647399847163,
+  "stdout": "{\"arms\": 11, \"finding\": \"MORI_MISROOT_SELFTEST_OK\", \"fixture_bytes\": 847, \"fixture_sha256\": \"15f9f82d707d5c79b11643eed1ab4754b6959d2bede5887e07364442ada5510e\", \"planted_found_with_legacy_pathspec\": false, \"planted_found_without_pathspec\": true, \"planted_matched_in\": [\"path\"], \"sandbox_unchanged\": true, \"schema\": \"mori-misroot-sweep-v1\"}\n",
+  "stderr": "",
+  "stdout_sha256": "1ea3b806ad9ac919b9723efde563f817fe00f3385d301de14ac0edcb55af3f2f",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,29 @@
+{
+  "label": "c3-before",
+  "started_at": "2026-10-20T16:34:52.901574-03:00",
+  "ended_at": "2026-10-20T16:34:52.933757-03:00",
+  "argv": [
+    "python3",
+    "tools/mori-misroot-sweep.py",
+    "--fleet-root",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/c3-fleet",
+    "--lane",
+    "mori",
+    "--round",
+    "16",
+    "--legacy-pathspec",
+    ".ufo/waves",
+    "--legacy-pathspec",
+    ".ufo/reports"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "branch_ref": "refs/heads/master",
+  "measured_commit": "273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7",
+  "branch_tip_after": "273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7",
+  "rc": 0,
+  "duration_s": 0.03219401599926641,
+  "stdout": "{\"candidate_count\": 0, \"candidates\": [], \"detection_only\": true, \"finding\": \"MORI_MISROOT_CLEAN\", \"fleet_root\": \"/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/c3-fleet\", \"git_command\": [\"git\", \"--no-optional-locks\", \"-c\", \"core.fsmonitor=false\", \"-C\", \"/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/c3-fleet\", \"status\", \"--porcelain=v1\", \"-z\", \"--untracked-files=all\", \"--\", \".ufo/waves\", \".ufo/reports\"], \"lane\": \"mori\", \"legacy_pathspec\": [\".ufo/waves\", \".ufo/reports\"], \"moves_or_deletes\": false, \"repo_root\": \"/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/c3-fleet\", \"round\": 16, \"scan\": {\"bytes_read\": 0, \"non_regular_skipped\": 0, \"read_cap\": 65536, \"regular_files\": 0, \"truncated_files\": 0, \"unreadable\": 0, \"untracked_entries\": 0}, \"schema\": \"mori-misroot-sweep-v1\"}\n",
+  "stderr": "",
+  "stdout_sha256": "67153f7d55fa2e60ecd52681e4ea1631ff3bd8385ec8d79cb6e3114acba60be3",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

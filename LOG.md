@@ -1155,3 +1155,28 @@ OverlapTsukuroi}.md`); mori performs no package/service action. R10 drift red an
 r16 alias/vacuum/cross-boot/anchor-only qualifications remain carried, no re-pin.
 Final committed measurements and citable lane/report hashes follow in appended
 entries and the fleet report, never inferred from seat selftests.
+
+### Round-17 first landing and executed measurements
+
+Input/tool/docs landing: **273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7**.
+L1 then measured those settled committed bytes; branch tips before/after each
+receipt remain273aa74, while tool/fixture hashes are independently persisted.
+`PINNED_INPUTS.json` binds this revision to the three counting receipts.
+C1 unmet54→0, C2 failed assertions21→0, C3 missed exact-artifact assertions1→0;
+all three counting commands exit0 (`evidence/count-c1.json`, `count-c2.json`,
+`count-c3.json`). Exact argv and before/after gate rc are in the wrappers.
+
+Selftests census125, terminal33, seat gate14, jj gate13, misroot11,
+context29 all pass; oracle28/28. Preservation gates r13 24/24, r14 44/44,
+r15 63/63 with frozen red34/34 pass against delivered census. Seven old
+instruments/baseline bytes stay unchanged (`evidence/preservation.json`);
+the old red baseline is not re-pinned or recertified fresh.
+
+Live terminal-at-scan observation (rc1, `evidence/seat-live.json`) sees469
+scoped files, aged rate-limit94, retry-exhausted90; per-prefix22/44/28 for
+TabiR17/TsukuroiR17/SoujiR17-3. This is time/filter-specific seat observation,
+not the operator's earlier17/43/28+ incident figure and not permanent death.
+SOURCES census exit0 at both ends; count40→48/A37→45/mined19→25, existing
+rows untouched. FIFO/chmod fixture state was made reproducible with explicit
+case metadata before this landing; transient copied session trees are cleaned
+after recording exact streams and source digests.

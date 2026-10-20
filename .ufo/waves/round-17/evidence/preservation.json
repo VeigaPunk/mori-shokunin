@@ -1,0 +1,51 @@
+{
+  "entering_commit": "24526ea9617cd020fee16c28fe4d4a2789dc28cb",
+  "measured_commit": "273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7",
+  "files": [
+    {
+      "path": "tools/mori-silence-cases.sh",
+      "entering_sha256": "34cd5770889ec6e7521b477aa9976cece7a64e07b83774c12ce2aea73161abfa",
+      "measured_sha256": "34cd5770889ec6e7521b477aa9976cece7a64e07b83774c12ce2aea73161abfa",
+      "unchanged": true
+    },
+    {
+      "path": "tools/mori-round13-regressions.py",
+      "entering_sha256": "23b753c1b0f742ddf7ea4e1e1ff3df6aa16a89dc8742b50c135a9d356db9f53b",
+      "measured_sha256": "23b753c1b0f742ddf7ea4e1e1ff3df6aa16a89dc8742b50c135a9d356db9f53b",
+      "unchanged": true
+    },
+    {
+      "path": "tools/mori-round14-regressions.py",
+      "entering_sha256": "533218a566030fdabf7ca6a1c78111ca10be3fb3cb0e4a7b22734959f847e4ef",
+      "measured_sha256": "533218a566030fdabf7ca6a1c78111ca10be3fb3cb0e4a7b22734959f847e4ef",
+      "unchanged": true
+    },
+    {
+      "path": "tools/mori-round15-regressions.py",
+      "entering_sha256": "6a55c33cc13e2cd862ebd44db66e8af635a35d7cd2a85168360569c886d62ffe",
+      "measured_sha256": "6a55c33cc13e2cd862ebd44db66e8af635a35d7cd2a85168360569c886d62ffe",
+      "unchanged": true
+    },
+    {
+      "path": "tools/mori-round16-regressions.py",
+      "entering_sha256": "e70ed67ce502a7b25fdaa3dac562589df3e4fce02f770ec0adf21f47a1921fce",
+      "measured_sha256": "e70ed67ce502a7b25fdaa3dac562589df3e4fce02f770ec0adf21f47a1921fce",
+      "unchanged": true
+    },
+    {
+      "path": "tools/mori-journal-window.py",
+      "entering_sha256": "d61e0d220a1825d738e2b9526b2bdd92047e39a4543d0ca0a040795d84ba0aeb",
+      "measured_sha256": "d61e0d220a1825d738e2b9526b2bdd92047e39a4543d0ca0a040795d84ba0aeb",
+      "unchanged": true
+    },
+    {
+      "path": "corpus/evidence/baseline-r10-20261015T2231Z.json",
+      "entering_sha256": "0993b23505deab2aeb05b2309bdf7dd6eaad2b82f27852491352511aa9670478",
+      "measured_sha256": "0993b23505deab2aeb05b2309bdf7dd6eaad2b82f27852491352511aa9670478",
+      "unchanged": true
+    }
+  ],
+  "all_unchanged": true,
+  "live_drift_rerun": false,
+  "baseline_repinned": false
+}

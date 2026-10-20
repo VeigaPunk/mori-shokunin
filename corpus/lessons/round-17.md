@@ -98,3 +98,67 @@ No pacman transaction, package install or service change was performed by this l
 ## Measurement records
 
 Committed measurement manifests, counts and revision are appended below only after execution.
+
+### L1 measurement at committed branch tip273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7
+
+The helper returned `landed273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7` (space
+between marker/hash in actual helper stdout). `PINNED_INPUTS.json` retains input
+digests and `evidence/*.json` receipts retain exact argv, timestamps, rc, streams,
+branch ref and before/after branch tips. All admission checks below are L1 runs
+after build writers settled, not quoted seat selftests.
+
+| Claim | Executed counting command from lane root | Observed rc/output |
+|---|---|---|
+| C1 | `jq -s '[.[] | (.summary.capability_absent + .summary.mismatched)]' .ufo/waves/round-17/evidence/seat-before/run-manifest.json .ufo/waves/round-17/evidence/seat-after/run-manifest.json` | rc0 `[54,0]`; gate exits1→0, delivered54/54 match |
+| C2 | `jq -s '[.[].totals.failed_assertions]' .ufo/waves/round-17/evidence/jj-before/run-manifest.json .ufo/waves/round-17/evidence/jj-after/run-manifest.json` | rc0 `[21,0]`; gate exits1→0, cases7/12→12/12 match |
+| C3 | `jq -s '[.[] | (.stdout|fromjson) | 1 - ([.candidates[]|select(.path=="MoriR16.Lesson")]|length)]' .ufo/waves/round-17/evidence/c3-before.json .ufo/waves/round-17/evidence/c3-after.json` | rc0 `[1,0]`; probe exits0 false-clean→1 candidate found |
+
+C1 entering capability absence is not54 old production defects. The same
+54 synthetic expected cases independently pin81 source inputs; missing/changed
+pins are setup/tamper, not a compared green. Generated FIFO and chmod000 live
+only in per-case copies; they cannot be committed as POSIX special-file modes.
+Copied session sandboxes were removed after capture; source packs, exact
+stdout/stderr and their digests remain retained. The root's source fixture FIFO
+was caught at commit inventory and replaced by `fifo_files` metadata before
+the measured commit; this is an actual reproducibility correction, not a pass
+of the untrackable state.
+
+C2 counts failed assertions, not distinct bugs. Assertion totals124→134 because
+detail/severity checks run only when the expected diagnostic exists. The same12
+scenario expectations are used on both sides; five case mismatches disappear.
+The positive/negative controls include plain Git, detached-at-tip, sibling author
+and unresolved-branch fallback. Real jj writes are only in isolated gate-created
+sandboxes with explicit -R and HOME/XDG_CONFIG_HOME isolation. JjGate disclosed
+one accidental removed `/tmp` file in its build report; it is a procedural
+violation, not admitted measurement evidence.
+
+C3's separate non-selftest measurement builds a sandbox fleet, plants the exact
+847-byte archived root artifact and a sibling control, and invokes both probe
+modes. Legacy pathspec detects0, default detects exactlyMoriR16.Lesson by path
+alone; sibling stays unclaimed. Frozen `c3-expected.json` pins the witness hash.
+The rc1 after is the detector correctly raising a candidate, not a gate failure.
+
+### Preserved instruments and live observation
+
+L1 selftests: census125/125; terminal33 arms; seat gate14 arms; jj gate13 checks;
+misroot11 arms; context29 arms — all rc0. Silence oracle28/28 rc0. Existing
+gates against the delivered census: r13 24/24, r14 44/44, r15 63/63 with frozen
+red34/34 — all rc0. Exact commands/results are the correspondingly named
+`evidence/*selftest.json`, `silence-oracle.json`, `r{13,14,15}-preserved.json`.
+`preservation.json` verifies7 unchanged historical instruments/pin bytes;
+no live drift rerun/re-pin is claimed. Old red remains carried debt.
+
+Live C1 command (`evidence/seat-live.json`, rc1) targets the current session
+directory with exact prefixes TabiR17/TsukuroiR17/SoujiR17-3. At
+`now_ms1792524914623`, settle900seconds, it reports469 observations:
+completed368 / aged rate-limit94 / aborted6 / incomplete1 / unavailable0,
+retry-exhausted90. Per-prefix aged rate-limit22/44/28. The earlier first-wave
+zai-only tally18/44/28 and operator17/43/28+ are different times/filters, not a
+constant incident count. Resumed-after-error remains a measured counterexample
+to permanent death. No routing/fallback change was performed.
+
+Source census start/end both rc0 with the existing W04 notices. `source-count.json`
+reproduces40→48, A37→45/B2/C1, mined19→25/queued20→22/rejected1.
+The wave2 preflight initially failed the explicit transcript-field clause;
+`context-check-wave2-original.json` rc1→`context-check-wave2.json` rc0 after the
+allowlist was spelled out. This was caught before dispatch, not repaired after it.
