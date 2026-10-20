@@ -280,3 +280,25 @@ This is a real test-oracle repair, not a new claim or suppression of an
 observed production warning. Other passed instruments' source bytes remain
 unchanged; final primary C1/C2/C3 measurements use the corrected committed
 input set, and the failing receipt retains its original revision.
+
+### Independent metadata failure, not an expectation reroll
+
+At `fe9fa9083db998ead1554459d656568c4173f288`, the repaired census
+selftest passed **134/134**. C2's fixed universe measured **204 assertions on
+both sides, 60→0 failed**, cases7/17→17/17. C1 capability-absent before
+recorded66 unmet requirements, but delivered initially matched **65/66**:
+`long_code_13_digit_unknown` returned the correct `dead_error_other` class
+while omitting its numeric `error_code`. The independent fixture required
+`"9999999999999"`, consistent with the original digit-string contract.
+`evidence/final/{c1-after.json,seat-after/run-manifest.json}` retains this failure.
+The entering implemented prototype matched58/66 under the stronger table;
+that is eight failed expectations, not eight distinct bugs.
+
+| ID | Class | Evidence pointer | Captured-by | Fix / falsifier |
+|---|---|---|---|---|
+| M20 | scope | final C1 65/66 failure, LongCode13 record metadata | independent `want.records` expectation | An arbitrary 12-digit display cap contradicted the promised code-string extraction. Retain the complete numeric code within the already bounded input span, never convert it to a large integer; remove the now-redundant overflow-state bit. Keep the fixture unchanged and keep unknown Z.AI codes conservatively classified as other. |
+
+The selftest's own long-code expected metadata is corrected to the same
+contract; the separate fixture is not changed to make the run green. The
+metadata failure and the earlier census oracle failure remain separate,
+revision-pinned records. Other C2 inputs are unchanged by this C1-only fix.

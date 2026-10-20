@@ -40,9 +40,9 @@ PERMITTED INPUT SET (decoded field projection)
   decoded, copied into a view, or emitted. ``errorMessage`` is stream-decoded
   through its JSON escapes with a bounded carry window so escaped spellings of
   the approved ASCII tokens/codes are recognized, while the decoded text is
-  never materialized; non-ASCII code points break token continuity. A
-  ``(type=...)`` token longer than the 12-digit display bound still sets an
-  unknown-code-present bit.
+  never materialized; non-ASCII code points break token continuity. Complete
+  numeric ``(type=...)`` codes are retained within the configured input-span
+  bound; they are never converted to unbounded-size integers.
 
   Syntax is strict: strings validate JSON escape forms and UTF-8, numbers
   validate the complete JSON number grammar, and schema version, status, and
@@ -557,8 +557,8 @@ def _error_metadata(buf, value_start, value_end):
 
     The span is stream-decoded through its JSON escapes; the full decoded text
     is never materialized. Token and retry matching uses a 97-byte carry window
-    (64 bytes retained), and code detection is a small state machine so a
-    13+-digit (type=...) token still sets an unknown-code-present bit.
+    (64 bytes retained). A small state machine retains numeric code strings;
+    their maximum size is bounded by the selected input span, not a display cap.
     """
     prefix_target = RETRY_EXHAUSTED_PREFIX_BYTES
     prefix = bytearray()
@@ -568,7 +568,6 @@ def _error_metadata(buf, value_start, value_end):
     retries = None
     retry_exhausted = False
     error_code = None
-    unknown_code_present = False
 
     code_prefix = b"(type="
     prefix_state = 0
@@ -585,17 +584,11 @@ def _error_metadata(buf, value_start, value_end):
         if in_digits:
             if 0x30 <= byte <= 0x39:
                 digit_count += 1
-                if digit_count <= 12:
-                    digit_buf.append(byte)
+                digit_buf.append(byte)
                 continue
             in_digits = False
             if byte == 0x29 and digit_count >= 1:  # ')' closes a code token
-                if digit_count <= 12:
-                    error_code = bytes(digit_buf).decode("ascii")
-                    unknown_code_present = False
-                else:
-                    error_code = None
-                    unknown_code_present = True
+                error_code = bytes(digit_buf).decode("ascii")
 
         if byte == code_prefix[prefix_state]:
             prefix_state += 1
@@ -629,7 +622,6 @@ def _error_metadata(buf, value_start, value_end):
         "retry_exhausted": retry_exhausted,
         "retries": retries,
         "error_code": error_code,
-        "unknown_code_present": unknown_code_present,
         "rate_token": rate_token,
         "quota_token": quota_token,
     }
@@ -680,7 +672,6 @@ def _project_message_record(line):
         "retry_exhausted": False,
         "retries": None,
         "error_code": None,
-        "unknown_code_present": False,
         "rate_token": False,
         "quota_token": False,
     }
@@ -715,7 +706,6 @@ def _project_message_record(line):
             view["retry_exhausted"] = metadata["retry_exhausted"]
             view["retries"] = metadata["retries"]
             view["error_code"] = metadata["error_code"]
-            view["unknown_code_present"] = metadata["unknown_code_present"]
             view["rate_token"] = metadata["rate_token"]
             view["quota_token"] = metadata["quota_token"]
         # Every other member is skipped without decoding.
@@ -789,13 +779,13 @@ def _classify(view, now_ms, settle_seconds):
     if terminal_ms > now_ms - settle_seconds * 1000:
         return "error_unsettled", None
     error_code = view["error_code"]
-    code_present = error_code is not None or view["unknown_code_present"]
+    code_present = error_code is not None
     if view["provider"] == ZAI_PROVIDER and code_present:
         if error_code in QUOTA_CODES:
             return "dead_quota", None
         if error_code in RATE_CODES:
             return "dead_rate_limit", None
-        # Unmapped or overlong Z.AI business code: HTTP 429 alone is not cause
+        # Unmapped Z.AI business code: HTTP 429 alone is not cause
         # evidence; only explicit text clues may classify.
         if view["quota_token"]:
             return "dead_quota", None
@@ -2278,7 +2268,7 @@ def _selftest():
                 "rc": 1,
                 "finding_id": FINDING_DEAD,
                 "seats": {"LongCode.Seat": "dead_error_other"},
-                "records": {"LongCode.Seat": {"error_code": None}},
+                "records": {"LongCode.Seat": {"error_code": "1234567890123"}},
                 "files_scanned": 1,
             },
         )

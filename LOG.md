@@ -1222,3 +1222,19 @@ hook cannot produce a vacuous pass. No production Git scrub or warning is
 removed. This under-30-line single-file correction is owned by L1 and recorded
 as lesson M19; the next committed input declaration preserves the old failed
 revision rather than rewriting its receipt.
+
+### Final C2 pass and independent C1 metadata failure
+
+At **fe9fa9083db998ead1554459d656568c4173f288**, the oracle-corrected
+census selftest passed134/134. The real C2 gate measured a constant204
+assertions before/after, **60→0 failed**, and **7/17→17/17** matched cases.
+C1's stronger independent table found **65/66**, not a pass: an unknown
+13-digit code had the right other-error class but `error_code=null` instead
+of the promised complete digit string. The failed receipt remains under
+`evidence/final/c1-after.json`; no fixture expectation was rerolled.
+
+L1's bounded C1 repair removes the arbitrary12-digit display cap and its dead
+overflow bit, retaining numeric code strings within the configured input-span
+bound without large-integer conversion. Unknown Z.AI causes remain other unless
+explicit evidence says otherwise. Lesson M20 records this one-file correction;
+other C2 inputs and passed instrument bytes remain unchanged.
