@@ -34,3 +34,23 @@ Catalog counts cannot see kills that produced no retained journal record, entrie
 
 ## Fills (coverage-map ground; Frontier row)
 Coverage-map ground: structured OOM-class counts and the notice-versus-victim unit boundary. Frontier F1/F2: userspace OOM notices and kernel OOM journal attribution.
+
+## Round-13 correction — matching MESSAGE is not structured counting
+
+The kernel-record commands in the original `recheck:` and Evidence bullets use
+`journalctl --grep`, which S014 defines as matching `MESSAGE=`. Restricting
+`--output-fields` prevents MESSAGE **output**, not MESSAGE **matching**. Those
+historical counts are text-selected retained records, not a structured
+kernel-victim gate or an authenticated unique-kill census. They must not satisfy
+Q15 or the round-13 structured coverage claim. They remain historical samples,
+with retention, rate-limit and duplicate/victim-identity limitations unresolved.
+
+The admitted structured rule is narrower: count records carrying the specified
+catalog ID separately in user/system scopes. S015 places MESSAGE_ID among
+client-supplied User Journal Fields; an ID does not authenticate the sender.
+The phrase “scoped fleet-evidence” above is superseded by **host-journal-scoped
+records**. Zero notice records means no retained matches in that query, not that
+oomd was active, healthy, or made no kills. The active implementation and limits
+are `structured-journal-scopes-r13.md`; kernel attribution remains FR1.
+Correction evidence: `.ufo/waves/round-13/build/ReviewSources.md` and
+`EvidenceScribe.md`; round-13 lesson Gate.

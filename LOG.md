@@ -718,3 +718,21 @@ non-author verification.
 - Change: `README.md` created (lane-header convention) with a `**Wiki:**` link to https://app.devin.ai/org/veigapunk/wiki/VeigaPunk/mori-shokunin?branch=master.
 - Evidence: the org's Devin wiki index lists this repo's generated wiki; sibling lane READMEs carry the same `**Wiki:**` header.
 - Documentation-only change; no round run, no axis moved, no verdict changed.
+
+## Round 13 — structured journal scopes and verdict-contract repair (2026-10-20)
+
+Steered round 13, attempt 1; entering HEAD `6531ac6029e200a6392bb76673b6a17d3c895c96`.
+Declared claims: **C1 coverage**, structured journal notice counts in separately labeled user/system scopes; **C2 operability**, close audit F01's long-history authorship loss and F02's invalid-verdict oracle acceptance.
+Motivation: `corpus/knowledge/audit-r11.md:156-157,308-396`; planned row `SCORECARD.md:639-649`; prior outside correction `corpus/lessons/round-12-verifier-spotcheck.md`.
+Lowest owned axes coverage/operability both enter at 6. Freshness re-pin is not claimed and the r10 baseline is retained.
+
+One validated 32-seat batch: `.ufo/waves/round-13/spec.json`, `dispatch.json`, `build/swarm-registry.json`; campaign policy band 32–64, no model arguments, canonical planner seat held by L1 with bounded PlanningWalk scout.
+Eight executors, eight scouts, four connectors, five reviewers, three critics, two scribes, one sentinel, one revenger; all leaves and disjoint file ownership. Seats were explicitly barred from verification mid-flight; L1 runs the integrated evidence once afterward.
+Source-linked candidates and rejected overclaims are recorded in `corpus/lessons/round-13.md` Gate; S013/S014/S015/S031 are reopened, with only allowed source cells changing.
+Prior review lessons: calibration remains 5 and adjacency remains 6; the SHONEN seed indentation is restored without checking any box, and Q26–Q28 make F01/F02/seed mistakes falsifiable.
+No inherited uncommitted lane changes were observed at round start; protected non-author spot-checks remain untouched.
+
+Round-13 integration correction: ReviewPromotion caught L1 copying the protocol code block's four-space presentation indentation into SHONEN.md. The canonical mint template content block is unindented (`kimi-shokunin/templates/mint/SHONEN.md:7-14`); the working checklist is restored to its entering bytes, every box unchecked. Q28 and lesson M3 record the distinction; the earlier “indentation restored” wording above is superseded, not rewritten.
+
+Integration review decisions: C1 is explicitly a partial FR1 move, not the planned text-selected “five kernel records” census. Reviewer/Scribe found `--grep` matches MESSAGE internally; append-only errata in `kill-classes-by-message-id-r12.md` and `kernel-oom-line-attribution-r12.md` narrow their historical claims. Catalog-ID records are client-supplied labels, not authenticated kills. ClaimAttack identified a structured process-exit SIGKILL replacement so the existing user warning path need not be lost; supported unit-failure records remain INFO, and oomd record counts do not assert service activity. No baseline is re-pinned.
+Prior routed LOW roster-override token validation remains a disclosed residual (lesson M5); the unfiltered signal-11 JSON read is removed by C1's field-restricted queries. No operator teaching file matching `corpus/lessons/operator-*` was present in the initial glob; the daily reflection `considerthese/2026-10-19.md` was read and its drift/path-sweep guidance is honored without taking its proposals as actions.

@@ -33,3 +33,19 @@ Kernel OOM records do not observe systemd-oomd's userspace cgroup kill, earlyoom
 
 ## Fills (coverage-map ground; Frontier row)
 Coverage-map ground: event-time kernel OOM victim attribution from the system journal. Frontier F2: kernel OOM attribution, with token-only output and no `MESSAGE` echo.
+
+## Round-13 correction — historical text selection, not an admitted parser
+
+The `--grep` commands above select MESSAGE text internally even though their
+output excludes MESSAGE. The five retained samples are therefore historical
+text-selected records, not a Q15-conformant structured kernel-victim count.
+The distinction corrects any reading of “MESSAGE-free extraction” as meaning
+no MESSAGE matching. The source-backed event-time field layout remains useful,
+but a live kernel-token parser is not implemented or admitted by this note.
+Neither the matched line count nor a PID establishes a unique victim count.
+Kernel summary rate limiting, retained-journal loss, duplicate records and PID
+reuse are not solved here. `-k` implies current boot unless `-b all` overrides it.
+FR1 retains event-time token validation and fleet correlation; round 13's
+structured scope probe counts catalog-ID records, not these text-selected lines.
+Evidence: `.ufo/waves/round-13/build/ReviewSources.md`,
+`EvidenceScribe.md`; source S014 `--grep`, `-k`, `--output-fields=`.

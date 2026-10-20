@@ -5,9 +5,9 @@ its host are alive and progressing.
 
 **Owns (read-only probes):** shokunin watchdog liveness (pid, start time, log
 freshness, lane counters); `.ufo/waves/*` settlement state (registry + results
-pair); kill/OOM event classes from `journalctl --user` and cgroup
-`memory.events`; resource runway (disk on the fleet and scratch roots, memory
-pressure); lane silence grading (silent / progressing / progressing-weak).
+pair); kill/OOM-related catalog-ID records and signal-11 coredump records from
+independently labeled user/system journals, plus cgroup `memory.events`;
+resource runway (disk on the fleet root and `/tmp`, memory pressure); lane silence grading (silent / progressing / progressing-weak).
 
 **Refuses:** dispatch and orchestration mechanism (→ kumitate); OS package,
 systemd unit, driver/firmware and boot state (→ tsukuroi) — mori reads journal
@@ -21,14 +21,14 @@ endpoint and model-serving health (→ kama); credential material (→ kagi).
 
 - **Watchdog liveness** — census `SURFACE watchdog`: watchdog pid/start and log freshness, plus `.ufo/state/*.round` values against each lane's latest launch-ledger entry.
 - **Wave settlement** — `SURFACE waves`: registry/dispatch/results presence and per-wave age; report settled, unsettled, or empty without calling an aged wave failed.
-- **Kill/OOM classes** — `SURFACE journal` and `SURFACE cgroup`: user-journal OOM/kill/segfault/unit-failure counts plus cgroup memory-event counters; these are scoped counts, not victim, event-time, or fleet-cause attribution.
+- **Kill/OOM classes** — structured, MESSAGE-free journal records carrying catalog IDs for kernel-OOM unit notices, oomd notices, coredumps, unit-process SIGKILL results and unit failures, plus a distinct numeric signal-11 coredump count; independently labeled user/system scopes, never summed. `SURFACE cgroup` retains kernel memory-event counters. Journal IDs are client-set, not authenticated producer identity; records are not unique victims or fleet-cause attribution. Arbitrary signals without these records remain unmeasured.
 - **Resource runway** — `SURFACE disk` and `SURFACE cgroup`: default `df -P` targets `$ROOT` and `/tmp`, since-boot device-write average, memory PSI/fill/avail, and scope high-watermark.
 - **tmux relevance** — `SURFACE tmux`: classify sessions by pane path; bound the freshness probe for each relevant session.
 - **Lane silence** — `SURFACE lane.<id>` rows: launch-anchored authorship grading as silent, progressing, progressing-weak, young, not-open, or unavailable.
 
 ## Frontier
 
-- **FR1 — System-journal kill/segfault scope, kernel OOM attribution, and fleet correlation** (state F1/F8 + art F2). First evidence: `corpus/knowledge/kernel-oom-line-attribution-r12.md:10-16`; `corpus/knowledge/kill-classes-by-message-id-r12.md:10-16`; `corpus/knowledge/audit-r11.md:203-204`. Boundary: system-journal coverage is not the current user-journal probe; never echo `MESSAGE`, and a host event alone does not prove a fleet-caused kill.
+- **FR1 — Kernel OOM event-time attribution and fleet correlation** (state F1/F8 + art F2). First evidence: `corpus/knowledge/kernel-oom-line-attribution-r12.md:10-16`; `corpus/knowledge/audit-r11.md:203-204`. Round 13 advances structured system-journal notice records to Core; event-time kernel summary/victim token validation and fleet correlation remain frontier. No raw `MESSAGE` is emitted, and a host record alone does not prove a fleet-caused kill.
 - **FR2 — Quota/EDQUOT observability** (state F2). First evidence: `corpus/knowledge/audit-r11.md:218-222`. Boundary: `df` capacity percentages cannot detect quota exhaustion; observe and report only, never change quota state.
 - **FR3 — Authoritative wave settlement and emptied-by-hygiene versus never-written** (state F3). First evidence: `corpus/knowledge/audit-r11.md:202`; `../kumitate-shokunin/corpus/knowledge/swarm-wave-lifecycle.md:28-34,91-120`. Boundary: mori reports filesystem shape; kumitate owns orchestration/result semantics; `empty` alone does not prove never-written, and receipt review stays offline.
 - **FR4 — Driver-state versus MANIFEST versus lane-LOG round reconciliation** (state F4). First evidence: `../fleet-ledger/.ufo/waves/kaika-w1/mori-state.md:31,190`; `corpus/knowledge/observability-surfaces-r2.md:118-125`. Boundary: the census compares driver state with watchdog launch lines only; it does not establish MANIFEST admission or lane-LOG agreement.

@@ -34,6 +34,8 @@
 | `knowledge/userspace-oom-killers-r12.md` | systemd-oomd (`user.oomd_ooms`/`user.oomd_kill` xattrs, D-Bus `Killed`, `d989611b…`) and earlyoom kill paths; inactive on this host → `unavailable (inactive)`, never 0; OS/unit state is tsukuroi's | S002, S003, S007, S011, S012, S013, S016 |
 | `knowledge/roster-truth-r12.md` | the three lane-roster sets (census default 9, `shokunin.conf` 20, `.ufo/state` 21 → union 23) and the r12 census roster derivation (`roster_source=`, `ROSTER_SET_MISMATCH` info; conf rows read only inside `LANES="…"`) at census `3da5b098…` | `shokunin.conf`, `scripts/shokunin-watchdog.sh:14`, `PROTOCOL-APPENDIX.md` 'Lane universe', `evidence/roster-r12-*` |
 | `lessons/round-12.md` | round-12 lesson: `## Mistakes` (M1–M26 mined from the lane's own errata, each with captured-by), pointer re-verification, and `## Gate` (candidates, admits, rejects with reasons, SOURCES access records) | LOG round-12 entries; dossiers `kaika-w1/mori-{state,art}.md` |
+| `knowledge/structured-journal-scopes-r13.md` | independently scoped MESSAGE-free catalog-ID record counts and numeric signal-11 records; client-set IDs are not authenticated kills; FR1 notice plane advances without claiming kernel victim attribution | S013/S014/S015 reopened round 13; round-13 measurement receipts |
+| `knowledge/verdict-contract-r13.md` | capture-safe long-history author membership and strict single final-verdict grammar/rc validation; tested invalid wrappers, not universal forgery resistance | S031 reopened round 13; audit-r11 F01/F02; round-13 behavioral receipts |
 
 ## Known gaps
 
@@ -274,15 +276,13 @@
   `pin-r10-*.log` (at this README's clock the baseline is the round's only r10
   evidence file in place).
 
-- **Journal scope (measured 2026-10-15):** the census reads the USER journal only
-  (0 segfault lines); the system journal holds 626, with 1228 core dumps. A
-  system-journal probe with its own finding id is the named unblock.
+- **Journal scope correction (round 13):** the old user-only/text-signature census is superseded by independently labeled user/system structured journal record counts (`knowledge/structured-journal-scopes-r13.md`). Historical text-selected counts are not a current measurement or unique kill count. Structured process-result SIGKILL and unit-failure records preserve the supported class paths; arbitrary unreported signal paths and kernel victim attribution remain unmeasured (FR1).
 
 ## Frontier
 
 | id | frontier | first evidence | boundary |
 |---|---|---|---|
-| FR1 | System-journal kill/segfault scope, kernel OOM attribution, and fleet correlation | `knowledge/kernel-oom-line-attribution-r12.md:10-16`; `knowledge/kill-classes-by-message-id-r12.md:10-16`; `knowledge/audit-r11.md:203-204` | System-journal coverage is not the current user-journal probe; never echo `MESSAGE`; a host event alone does not prove a fleet-caused kill. |
+| FR1 | Kernel OOM event-time attribution and fleet correlation | `knowledge/kernel-oom-line-attribution-r12.md:10-16`; `knowledge/audit-r11.md:203-204` | Structured system-journal notice records advance round 13; kernel victim/summary token validation and fleet task correlation remain frontier. Catalog-ID records are not authenticated unique kills. |
 | FR2 | Quota/EDQUOT observability | `knowledge/audit-r11.md:218-222` | `df` capacity percentages cannot detect quota exhaustion; observe and report only, never change quota state. |
 | FR3 | Authoritative wave settlement and emptied-by-hygiene versus never-written | `knowledge/audit-r11.md:202`; `../../kumitate-shokunin/corpus/knowledge/swarm-wave-lifecycle.md:28-34,91-120` | Mori reports filesystem shape; kumitate owns orchestration/result semantics; `empty` alone does not prove never-written, and receipt review stays offline. |
 | FR4 | Driver-state versus MANIFEST versus lane-LOG round reconciliation | `../../fleet-ledger/.ufo/waves/kaika-w1/mori-state.md:31,190`; `knowledge/observability-surfaces-r2.md:118-125` | Census compares driver state with watchdog launch lines only; it does not establish MANIFEST admission or lane-LOG agreement. |

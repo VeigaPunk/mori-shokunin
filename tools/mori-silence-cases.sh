@@ -19,7 +19,8 @@
 #   file the live driver writes (scripts/shokunin-watchdog.sh:81,83,106,109).
 #   Each case runs the actual census CLI (bash "$CENSUS", no --selftest) and
 #   grades behavior only: exact per-lane state, presence/absence of the
-#   LANE_SILENT finding, census exit rc and MORI_CENSUS verdict. It never
+#   LANE_SILENT finding, census exit rc and the MORI_CENSUS final roll graded
+#   against its admitted grammar (see "Verdict integrity" below). It never
 #   greps census source, wiring, or default constants.
 #   Anti-sniff: every case tree is a mktemp dir carrying NO case id in any
 #   path handed to the census (MORI_SHOKUNIN_ROOT / MORI_UFO_DIR / MORI_STUB_DIR
@@ -36,6 +37,34 @@
 #   CASE_ORDER=<id> <id> ...      the order this run executed
 #   MORI_SILENCE_CASES: matched=N total=M
 #   exit 0 iff matched == total.
+#
+# Verdict integrity (r13, closes audit-r11 F02 / Appendix C). Every case grades
+# the FINAL ROLL, not the presence of a prefix — including the two guards that
+# do not go through assert_case (readonly-no-mutation, shape-invariance). The
+# admitted contract is the census's own:
+#   MORI_CENSUS: CLEAN|DRIFT (findings=N drift=M unavailable=U surfaces=S)
+# and it is satisfied only when ALL of these hold:
+#   * exactly ONE line begins `MORI_CENSUS:` — a second roll is ambiguous, so it
+#     is a FAIL, not a "last line wins";
+#   * that line matches the whole grammar above — a substituted word (r11's
+#     proxy renamed CLEAN/DRIFT to BANANA and kept the real rc) or a mangled
+#     tail is a FAIL, not an accepted prefix;
+#   * that line is the LAST non-empty line of the run — "final" means final; a
+#     valid-looking roll followed by more output is a replayed or moved roll;
+#   * the process rc is the word's contract: CLEAN => 0, DRIFT => 1. CLEAN with
+#     rc 1 and DRIFT with rc 0 are FAILs; rc > 1 is a crash and is rejected
+#     before the roll is read (never graded as DRIFT);
+#   * the word agrees with drift=: ROLL flips to DRIFT exactly when a warn|crit
+#     finding increments N_DRIFT (`emit_finding` warn|crit branch), so CLEAN
+#     with drift>0 and DRIFT with drift=0 are FAILs. surfaces= and unavailable=
+#     are NOT cross-counted: lane rows bypass emit_surface and append to
+#     SURFACE_LINES directly (`SURFACE_LINES+=("SURFACE lane.` in
+#     probe_silence);
+#   * no raw target bytes reach per-case stdout: a malformed roll is echoed
+#     through redact(), because it can carry the per-run nonce.
+# corpus/knowledge/audit-r11.md:156,376-407; census usage() "Verdict:" contract
+# and run_census's final `printf 'MORI_CENSUS: ...'` (line numbers shift under
+# the round-13 census rewrite — cite the symbols, not the lines).
 #
 # Run-order channel (r5). Round 4 admitted one residual spoofing channel: the
 # cases ran in fixed source order and carried no per-run secret, so a census
@@ -269,7 +298,17 @@ rc_of() { local f="$fx/$1.rc"; if [ -f "$f" ]; then cat "$f"; else printf 0; fi;
 out_of() { local f="$fx/$1"; if [ -f "$fx/$1" ]; then cat "$f"; fi; }
 case "$name" in
   pgrep)     out_of pgrep;     exit "$(rc_of pgrep)" ;;
-  journalctl) out_of journal;  exit "$(rc_of journal)" ;;
+  journalctl)
+    # r13: structured queries (`-o json`, `--output=json`, `--output json`) are
+    # served from journal.json — empty in every fixture, i.e. zero records —
+    # while text queries keep reading journal. rc is shared: the query ran.
+    jf=journal
+    for a in "$@"; do
+      case "$a" in *json*) jf=journal.json ;; esac
+    done
+    out_of "$jf"
+    exit "$(rc_of journal)"
+    ;;
   df)        out_of df;        exit "$(rc_of df)" ;;
   tmux)      out_of tmux;      exit "$(rc_of tmux)" ;;
 esac
@@ -333,7 +372,14 @@ case_skeleton() {
   printf '123456\n' > "$CASE_DIR/cgroup/memory.current"
   printf 'MemAvailable: 20000000 kB\n' > "$CASE_DIR/meminfo"
   # quiet journal / disk / tmux stubs
-  : > "$CASE_STUB/journal"; printf '0' > "$CASE_STUB/journal.rc"
+  # r13: empty output is the zero-record answer for BOTH journal grammars — the
+  # text form (`--no-pager`) and the structured form (`-o json` MESSAGE_ID
+  # queries). The structured channel gets its own file so a JSON probe never
+  # parses a text fixture; both stay empty because every case is a QUIET
+  # journal and no case seeds journal content. rc 0 = the query itself worked.
+  : > "$CASE_STUB/journal"
+  : > "$CASE_STUB/journal.json"
+  printf '0' > "$CASE_STUB/journal.rc"
   printf 'Filesystem 1024-blocks Used Available Capacity Mounted on\n/dev/fx 1000000 10000 990000 2%% /fx\n' > "$CASE_STUB/df"
   printf '0' > "$CASE_STUB/df.rc"
   printf 'fx_session: 1 windows\n' > "$CASE_STUB/tmux"; printf '0' > "$CASE_STUB/tmux.rc"
@@ -532,6 +578,71 @@ finding_present() { # 1 iff LANE_SILENT exists (roster is one lane)
 # previous run's value. Every case asserts it: stale or missing nonce FAILs.
 nonce_present() { case "$CASE_OUT" in *"$NONCE_TOKEN"*) return 0 ;; *) return 1 ;; esac; }
 
+# verdict_grade <output> <rc> — grade the final-roll contract; prints 'ok' or a
+# reason (never a run secret). r13 / audit-r11 F02: asking whether a line
+# begins `MORI_CENSUS:` let a proxy rename the roll to BANANA and still score
+# 28/28. The admitted grammar is the census's own contract
+# (census usage() "Verdict:" contract and run_census's final printf): exactly
+# one line of
+#   MORI_CENSUS: CLEAN|DRIFT (findings=N drift=M unavailable=U surfaces=S)
+# whose word matches the process rc (CLEAN=>0, DRIFT=>1). Missing, duplicate,
+# malformed, non-final and inconsistent rolls are all rejected. A malformed
+# line is echoed only through redact(): it can carry the run nonce, and the r6
+# rule keeps run secrets off per-case stdout.
+# Here-strings keep the match fed by this shell's own capture — no live
+# producer pipe exists to take SIGPIPE (corpus/QUALITY.md criterion 7).
+VERDICT_RE='^MORI_CENSUS: (CLEAN|DRIFT) \(findings=[0-9]+ drift=([0-9]+) unavailable=[0-9]+ surfaces=[0-9]+\)$'
+verdict_grade() {
+  local out=$1 rc=$2 n line last word drift
+  n=$(grep -c '^MORI_CENSUS:' <<<"$out" || true)
+  case "${n:-0}" in
+    0) printf 'missing'; return 0 ;;
+    1) ;;
+    *) printf 'duplicate (%s lines)' "$n"; return 0 ;;
+  esac
+  line=$(grep -m1 '^MORI_CENSUS:' <<<"$out")
+  if [[ ! $line =~ $VERDICT_RE ]]; then
+    # Never echo the roll unredacted: a malformed/replayed line can carry the
+    # run nonce (r6). redact() replaces the current run's token only.
+    printf 'malformed (line=%s)' "$(redact "$line")"
+    return 0
+  fi
+  word=${BASH_REMATCH[1]}
+  drift=${BASH_REMATCH[2]}
+  # The census prints the roll and exits, so it owns the last non-empty line.
+  # A valid-looking roll followed by more output is a replayed/moved roll, not
+  # a verdict.
+  last=$(awk 'NF { last = $0 } END { print last }' <<<"$out")
+  if [ "$last" != "$line" ]; then
+    printf 'not-final (the roll is not the last non-empty line)'
+    return 0
+  fi
+  case "$word:$rc" in
+    CLEAN:0|DRIFT:1) ;;
+    *) printf 'inconsistent (word=%s rc=%s)' "$word" "$rc"; return 0 ;;
+  esac
+  # ROLL flips to DRIFT exactly when emit_finding increments N_DRIFT in its
+  # warn|crit branch, so the word and drift= cannot disagree: CLEAN drift>0 and
+  # DRIFT drift=0 are forged or mangled rolls. Compare the captured digits as
+  # STRINGS — `$((10#…))` silently wraps (measured bash 5.3.15:
+  # 10#18446744073709551616 => 0), so a forged `CLEAN drift=<2^64>` would pass
+  # a numeric `==0` test. The census prints %d, so no leading zeros exist:
+  # CLEAN is exactly `0`, DRIFT is `[1-9][0-9]*`. surfaces= and unavailable=
+  # are deliberately NOT cross-counted: lane rows append to SURFACE_LINES
+  # directly (`SURFACE_LINES+=("SURFACE lane.` in probe_silence) and never
+  # increment N_SURFACES, so an honest run's surfaces= is smaller than its row
+  # count.
+  if [ "$word" = CLEAN ]; then
+    if [ "$drift" = 0 ]; then printf 'ok'
+    else printf 'inconsistent (CLEAN drift=%s)' "$drift"; fi
+  else
+    case "$drift" in
+      [1-9]*) printf 'ok' ;;
+      *) printf 'inconsistent (DRIFT drift=%s)' "$drift" ;;
+    esac
+  fi
+}
+
 # want_match <obs> <want[|want2[|...]]> — true iff obs exactly equals one of the
 # '|'-separated alternatives. `case "$obs" in $want)` CANNOT express alternation:
 # a `|` introduced by parameter expansion is a literal pattern character in bash
@@ -566,22 +677,24 @@ assert_case() {
     obs=$(aggregate_state_from_out); api=aggregate
   fi
   local fobs=0; finding_present && fobs=1
-  local verdict
+  local verdict vcheck
   verdict=$(printf '%s\n' "$CASE_OUT" | grep -m1 '^MORI_CENSUS:' || true)
+  vcheck=$(verdict_grade "$CASE_OUT" "$CASE_RC")
 
   if [ "$CASE_RC" -gt 1 ]; then
     printf 'FAIL %s: census setup rc=%s; %s\n' "$id" "$CASE_RC" \
       "$(redact "$(printf '%s' "$CASE_OUT" | tail -n1 | tr '\n' '|')")"
     FAILED_IDS+=("$id"); return 0
   fi
-  # No verdict line = the census never reached its summary. Measured: an
-  # unreadable lane .git makes r1's `newest_t=$(find ...)` abort under
-  # errexit/pipefail (tools/mori-census.sh:51,517) after the header line only —
-  # rc=1, no SURFACE row, no MORI_CENSUS. No want-state can be satisfied by
-  # such a run; report the crash, not a phantom grade.
-  if [ -z "$verdict" ]; then
-    printf 'FAIL %s: census emitted no MORI_CENSUS verdict (rc=%s) — crashed mid-run; tail=%s\n' \
-      "$id" "$CASE_RC" "$(redact "$(printf '%s' "$CASE_OUT" | tail -n1 | tr '\n' '|')")"
+  # r13 (F02): a `MORI_CENSUS:` prefix is not a verdict. Exactly one
+  # well-formed CLEAN|DRIFT line whose word matches rc is required; a missing
+  # roll here is the old crash signature (unreadable .git aborts mid-run), a
+  # duplicate is ambiguous, and a substituted/mismatched roll is the proxy
+  # attack from audit-r11 Appendix C. No want-state can excuse any of them.
+  if [ "$vcheck" != ok ]; then
+    printf 'FAIL %s: MORI_CENSUS verdict %s (rc=%s) — one well-formed CLEAN|DRIFT line matching its rc is required; got=[%s] tail=%s\n' \
+      "$id" "$vcheck" "$CASE_RC" "$(redact "$verdict")" \
+      "$(redact "$(printf '%s' "$CASE_OUT" | tail -n1 | tr '\n' '|')")"
     FAILED_IDS+=("$id"); return 0
   fi
 
@@ -597,7 +710,7 @@ assert_case() {
   local wrr=$wrc
   [ "$wrc" = auto ] && { [ "$obs" = silent ] && wrr=1 || wrr=0; }
   if [ "$CASE_RC" -ne "$wrr" ]; then
-    ok=0; why="$why rc want=$wrr got=$CASE_RC verdict='$verdict'"
+    ok=0; why="$why rc want=$wrr got=$CASE_RC verdict='$(redact "$verdict")'"
   fi
   # r5 run-order close: the output must carry the CURRENT run's nonce token.
   # r6: the failure text names no token — per-case lines must not put a run
@@ -945,8 +1058,15 @@ case_readonly_no_mutation() {
   before=$(fx_fingerprint)
   run_census
   after=$(fx_fingerprint)
+  local vcheck
+  vcheck=$(verdict_grade "$CASE_OUT" "$CASE_RC")
   if [ "$before" != "$after" ]; then
     count_check readonly-no-mutation 0 'census mutated fixture tree'
+  elif [ "$vcheck" != ok ]; then
+    # r13 (F02): the read-only guard is still a case — it must see the same
+    # admitted final roll as every assert_case, not just absence of mutation.
+    count_check readonly-no-mutation 0 \
+      "MORI_CENSUS verdict $vcheck (rc=$CASE_RC) — one well-formed CLEAN|DRIFT line matching its rc is required"
   elif ! nonce_present; then
     count_check readonly-no-mutation 0 "run-nonce missing: the current run's token is absent (canned/replayed output?)"
   else
@@ -979,23 +1099,32 @@ shape_observe() { # grade of the last run_census, one line (reads CASE_OUT/CASE_
   if [ -n "$obs" ]; then api=lane; else obs=$(aggregate_state_from_out); api=aggregate; fi
   finding_present && fobs=1
   v=$(printf '%s\n' "$CASE_OUT" | grep -m1 '^MORI_CENSUS:' || true)
-  printf 'state=%s api=%s finding=%s rc=%s verdict=[%s]' "$obs" "$api" "$fobs" "$CASE_RC" "$v"
+  # r6: this grade string is echoed in shape FAIL lines while later census
+  # invocations can still read this process's stdout, and a malformed roll can
+  # carry the run nonce — redact at construction so every consumer is safe.
+  printf 'state=%s api=%s finding=%s rc=%s verdict=[%s]' "$obs" "$api" "$fobs" "$CASE_RC" "$(redact "$v")"
 }
-
-shape_has_verdict() { case "$1" in *"MORI_CENSUS:"*) return 0 ;; *) return 1 ;; esac; }
 
 case_shape_invariance() {
   shape_a=$(mktemp -d "$WORK/shape.XXXXXXXX") || die "mktemp shape dir failed"
   shape_b=$(mktemp -d "$WORK/shape.XXXXXXXX") || die "mktemp shape dir failed"
+  local va vb
+
   shape_build "$shape_a"; run_census
   shape_grade_a=$(shape_observe); shape_norm_a=${CASE_OUT//$shape_a/<case-tree>}
   shape_nonce_a=0; nonce_present && shape_nonce_a=1
+  va=$(verdict_grade "$CASE_OUT" "$CASE_RC")
+
   shape_build "$shape_b"; run_census
   shape_grade_b=$(shape_observe); shape_norm_b=${CASE_OUT//$shape_b/<case-tree>}
   shape_nonce_b=0; nonce_present && shape_nonce_b=1
+  vb=$(verdict_grade "$CASE_OUT" "$CASE_RC")
 
-  if ! shape_has_verdict "$shape_grade_a" || ! shape_has_verdict "$shape_grade_b"; then
-    count_check shape-invariance 0 "census crashed mid-run (no MORI_CENSUS): A=[$shape_grade_a] B=[$shape_grade_b]"
+  # r13 (F02): both shape runs must carry the admitted final roll. Equal-but-
+  # bad grades (same BANANA, same duplicate, same rc mismatch) would otherwise
+  # satisfy the invariance comparison; the contract is checked per side first.
+  if [ "$va" != ok ] || [ "$vb" != ok ]; then
+    count_check shape-invariance 0 "MORI_CENSUS verdict contract broken: A=[$(redact "$shape_grade_a")] verdict=$va B=[$(redact "$shape_grade_b")] verdict=$vb"
   elif [ "$shape_nonce_a" -ne 1 ] || [ "$shape_nonce_b" -ne 1 ]; then
     count_check shape-invariance 0 "run-nonce missing in a shape run: the current run's token is absent (canned/replayed output?)"
   elif [ "$shape_grade_a" != "$shape_grade_b" ]; then

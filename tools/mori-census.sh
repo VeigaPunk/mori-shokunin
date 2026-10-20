@@ -12,7 +12,8 @@
 #             (count, max, ledger-vs-state mismatch — r7; r8 adds every
 #             non-regular `*.round` entry, by reason)
 #   waves     .ufo/waves/* settlement (registry/dispatch/run × results/closeout)
-#   journal   journalctl --user -b kill/OOM class counts (this boot)
+#   journal   structured per-scope notice counts (this boot): catalog MESSAGE_ID
+#             classes + COREDUMP_SIGNAL=11, no MESSAGE, user and system separate
 #   cgroup    memory.events / memory.current / memory.pressure / memory.max /
 #             memory.peak (user slice; r7 adds PSI + fill/avail grading, r8 the
 #             scope high-watermark with its instance anchor; thresholds labeled
@@ -205,6 +206,7 @@
 #   MORI_DF_BIN          default df
 #   MORI_PGREP_BIN       default pgrep
 #   MORI_JOURNALCTL_BIN  default journalctl
+#   MORI_JQ_BIN          default jq (safe JSON parser for journal records; r13)
 #   MORI_TMUX_BIN        default tmux
 #   MORI_TIMEOUT_BIN     default timeout (bounds the r8 tmux freshness probe)
 #   MORI_GIT_BIN         default git
@@ -216,6 +218,11 @@
 #   MORI_TMUX_SCOPE_ROOT fleet root for session classification (default $ROOT)
 #   MORI_TMUX_IDLE_WARN_S labeled-local session idle threshold (r8, default 3600)
 #   MORI_TMUX_TIMEOUT_S  per-call bound for the r8 freshness probe (default 2)
+#   MORI_JOURNAL_TIMEOUT_S per-journalctl-query bound (r13, local default 2; rc 124/137
+#                        grades the class unavailable, never a partial count)
+#   MORI_BOOT_ID         expected current boot id (32 lowercase hex, dashless);
+#                        default read from /proc/sys/kernel/random/boot_id (r13)
+#   MORI_BOOT_ID_FILE    default /proc/sys/kernel/random/boot_id (r13)
 #   MORI_FLEET_CONF      parsed (never sourced) lane declarations; default $ROOT/shokunin.conf
 #   MORI_NOW_EPOCH       pin "now" (selftest)
 #   MORI_FIXTURE         selftest marker (optional)
@@ -225,7 +232,13 @@
 #   WATCHDOG_PROBE_UNAVAILABLE WATCHDOG_STATE_LAG WATCHDOG_STATE_AHEAD
 #   WATCHDOG_STATE_ENTRY_UNREADABLE
 #   WAVE_UNSETTLED_AGE
-#   OOM_KILL_JOURNAL KILL_SIGNAL_JOURNAL SEGFAULT_JOURNAL UNIT_FAILURE_JOURNAL
+#   KERNEL_OOM_NOTICE_JOURNAL_{USER,SYSTEM}
+#   OOMD_NOTICE_JOURNAL_{USER,SYSTEM}
+#   COREDUMP_NOTICE_JOURNAL_{USER,SYSTEM}
+#   SEGFAULT_SIGNAL11_JOURNAL_{USER,SYSTEM}
+#   KILL_SIGNAL_JOURNAL KILL_SIGNAL_JOURNAL_SYSTEM
+#   UNIT_FAILURE_JOURNAL UNIT_FAILURE_JOURNAL_SYSTEM
+#   JOURNAL_CLASSES_UNMEASURED
 #   CGROUP_OOM_KILL CGROUP_UNAVAILABLE MEM_PRESSURE_HIGH MEM_FILL_HIGH
 #   MEM_AVAIL_LOW
 #   DISK_LOW DISK_CRITICAL DISK_UNAVAILABLE DISK_IO_UNMEASURED
@@ -234,13 +247,12 @@
 #   TMUX_FRESHNESS_UNAVAILABLE
 #
 set -euo pipefail
-# The journal is held in a shell variable (CAP_OUT) and the raw text can carry
-# token-shaped lines (measured: 245 1password lines in this boot's user journal).
-# Never trace: `bash -x` would print that variable, and the published
-# `cmd=journalctl --user -b --no-pager` re-run prints MESSAGE by design.
+# The journal is held in a shell variable (CAP_OUT) and even a hostile stub could
+# return MESSAGE text the probe never asked for. Never trace: `bash -x` would
+# print that variable. Only validated counts and _BOOT_ID values reach stdout.
 set +o xtrace
 
-VERSION=census-r5
+VERSION=census-r6
 SELF=$(readlink -f -- "${BASH_SOURCE[0]}" 2>/dev/null || {
   p=$0
   case "$p" in /*) printf '%s' "$p" ;; *) printf '%s' "$PWD/$p" ;; esac
@@ -276,6 +288,7 @@ MEMINFO=${MORI_MEMINFO:-/proc/meminfo}
 DF_BIN=${MORI_DF_BIN:-df}
 PGREP_BIN=${MORI_PGREP_BIN:-pgrep}
 JOURNALCTL_BIN=${MORI_JOURNALCTL_BIN:-journalctl}
+JQ_BIN=${MORI_JQ_BIN:-jq}
 TMUX_BIN=${MORI_TMUX_BIN:-tmux}
 TIMEOUT_BIN=${MORI_TIMEOUT_BIN:-timeout}
 GIT_BIN=${MORI_GIT_BIN:-git}
@@ -289,6 +302,25 @@ TMUX_SCOPE_ROOT=${MORI_TMUX_SCOPE_ROOT:-$ROOT}
 # carries `threshold_label=local` on the finding, and it fires INFO only — a
 # quiet pane is evidence a reader must see, not proof the fleet is unhealthy.
 TMUX_TIMEOUT_S=${MORI_TMUX_TIMEOUT_S:-2}
+# r13: a field-filtered journalctl read scans the boot's journal; one wedged or
+# enormous store must not hang the census. Every structured query is bounded and
+# rc 124/137 grades the class unavailable, never a partial count. 2 s is a LOCAL
+# placeholder for this host's store (the same bound the r8 tmux probe uses), not
+# a measured cost of a journal scan.
+JOURNAL_TIMEOUT_S=${MORI_JOURNAL_TIMEOUT_S:-2}
+# r13 boot anchor: journal _BOOT_ID is 32 lowercase hex without dashes; the proc
+# file is a dashed UUID. Every counted record must carry this exact id, so a
+# stale, mixed or wrongly scoped stream is unavailable rather than counted. An
+# invalid/absent anchor disables counting (never a fake 0).
+BOOT_ID_FILE=${MORI_BOOT_ID_FILE:-/proc/sys/kernel/random/boot_id}
+BOOT_ID_EXPECTED=${MORI_BOOT_ID:-}
+if [ -z "$BOOT_ID_EXPECTED" ] && [ -r "$BOOT_ID_FILE" ]; then
+  BOOT_ID_EXPECTED=$(tr -d -- '-\n' < "$BOOT_ID_FILE" 2>/dev/null || true)
+fi
+case "$BOOT_ID_EXPECTED" in
+  *[!0-9a-f]*) BOOT_ID_EXPECTED='' ;;
+esac
+if [ "${#BOOT_ID_EXPECTED}" -ne 32 ]; then BOOT_ID_EXPECTED=''; fi
 TMUX_IDLE_WARN_S=${MORI_TMUX_IDLE_WARN_S:-3600}
 WATCHDOG_STALE_S=${MORI_WATCHDOG_STALE_S:-900}
 WAVE_UNSETTLED_S=${MORI_WAVE_UNSETTLED_S:-7200}
@@ -844,71 +876,257 @@ probe_waves() {
   emit_surface waves "$st" "cmd=$cmd; total=$n_total settled=$n_settled unsettled=$n_unsettled aged_unsettled=$n_aged empty=$n_empty age_unreadable=$n_age_unread threshold_s=$WAVE_UNSETTLED_S; ts=$TS_UTC"
 }
 
-# ---- surface: journal kill/OOM ----------------------------------------------
-# Classes counted (content is evidence; never acted on):
-#   oom_kill      Out of memory|oom-kill|oom_reaper|Killed process
-#   kill_signal   status=9/KILL|Failed with result 'signal'|SIGKILL
-#   segfault      segfault|general protection fault
-#   unit_failure  Failed with result|Unit entered failed state
-# DRIFT on oom_kill>0 or kill_signal>0 (mint demand). segfault/unit_failure = info.
+# ---- surface: journal notice classes (r13) ----------------------------------
+# Authority: corpus/knowledge/kill-classes-by-message-id-r12.md (catalog ids,
+# notice != kill, scopes never summed), corpus/QUALITY.md #15/#16, S013 catalog
+# at commit cf8ebfc6 (:66, :561, :568, :604, :884).
+#
+# A journal class is counted by a stable STRUCTURED field, never by MESSAGE text
+# (QUALITY #15; lessons/round-12.md#M13). Counts are scoped RECORD counts: one
+# kernel kill can produce several per-unit notices, a fc2e22bc record is a
+# coredump notice, and d989611b is systemd-oomd's per-unit notice. None is a
+# victim or fleet-cause count. Every non-underscore journal field here
+# (MESSAGE_ID, EXIT_CODE, EXIT_STATUS, COREDUMP_SIGNAL) is client-supplied, so
+# counts are labelled `trust=client-supplied`; `_BOOT_ID` is requested and
+# validated on every record, and one 32-lowercase-hex boot id per scope is the
+# only journal value echoed. User and system journals are separate SURFACE rows
+# (journal.user / journal.system) and are never summed.
+#
+# Classes (6 queries per scope):
+#   kernel_oom_notice    MESSAGE_ID=fe6faa94e7774663a0da52717891d8ef  notice
+#   oomd_notice          MESSAGE_ID=d989611b15e44c9dbf31e3c81256e4ed  notice
+#   coredump_notice      MESSAGE_ID=fc2e22bc6ee647b6b90729ab34a250b1  notice
+#   segfault_signal11    COREDUMP_SIGNAL=11 (RECORD subset of coredump records)
+#   unit_sigkill_record  MESSAGE_ID=98e322203f7a4ed290d09fe03c09fe15
+#                        EXIT_CODE=killed EXIT_STATUS=9 (unit process, SIGKILL)
+#   unit_failure_record  MESSAGE_ID=d9b373ed55a64feb8242e02dbe79a49c (Unit failed)
+# No query asks for MESSAGE. A nonzero journalctl rc (never parsed as a count),
+# an absent journalctl/jq, malformed JSON, a record without the validated
+# fields, or records from more than one boot makes that class unavailable — it
+# is never reported as 0. A system-scope zero says the queried journal scope held
+# no matching records; it does not say whether a service was active or inactive.
+#
+# The prior TEXT classes are gone, not aliased: the old probe grepped MESSAGE
+# text, which is not metadata (QUALITY #15) and cannot be a reliable kill
+# counter (measured: 5 kernel kills vs 7 user + 9 system fe6faa94 notices, same
+# boot — round-12 M19). Their anchored replacements are the three catalog notice
+# classes above. KILL_SIGNAL_JOURNAL keeps its warn severity ONLY for the user
+# scope and now names a structured unit-process SIGKILL record (attribution
+# none); UNIT_FAILURE_JOURNAL keeps its info severity for the catalog "Unit
+# failed" record. Remaining text-only surfaces are named `unmeasured=`, never a
+# look-alike 0: kernel OOM victim lines (no stable MESSAGE_ID), signals other
+# than 9, and unit failures that emit no catalog record.
+JOURNAL_ID_KERNEL_OOM=fe6faa94e7774663a0da52717891d8ef
+JOURNAL_ID_OOMD=d989611b15e44c9dbf31e3c81256e4ed
+JOURNAL_ID_COREDUMP=fc2e22bc6ee647b6b90729ab34a250b1
+JOURNAL_ID_UNIT_SIGKILL=98e322203f7a4ed290d09fe03c09fe15
+JOURNAL_ID_UNIT_FAILURE=d9b373ed55a64feb8242e02dbe79a49c
+# One jq pass validates every record and emits `<records>\t<boots>\t<boot>`.
+# Slurped empty input is `[]` -> `0	0	none` at rc 0: a valid empty query is 0.
+JOURNAL_JQ_TAIL='then [length, ([.[]._BOOT_ID] | unique | length), ([.[]._BOOT_ID][0] // "none")] | @tsv else (if all(.[]; type == "object" and (._BOOT_ID | type) == "string" and ((._BOOT_ID | length) > 0)) then ([.[]._BOOT_ID] | unique | length) as $b | if $b > 1 then "multi-boot" elif all(.[]; ._BOOT_ID == $boot) then "record-invalid" else "boot-mismatch" end else "record-invalid" end) end'
+JOURNAL_JQ_MSGID="if all(.[]; type == \"object\" and (._BOOT_ID | type) == \"string\" and (._BOOT_ID == \$boot) and (.MESSAGE_ID == \$id)) $JOURNAL_JQ_TAIL"
+JOURNAL_JQ_SIGKILL="if all(.[]; type == \"object\" and (._BOOT_ID | type) == \"string\" and (._BOOT_ID == \$boot) and (.MESSAGE_ID == \$id) and (.EXIT_CODE == \"killed\") and ((.EXIT_STATUS | tostring) == \"9\")) $JOURNAL_JQ_TAIL"
+JOURNAL_JQ_SIGSEGV="if all(.[]; type == \"object\" and (._BOOT_ID | type) == \"string\" and (._BOOT_ID == \$boot) and (.MESSAGE_ID == \$id) and ((.COREDUMP_SIGNAL | tostring) == \"11\")) $JOURNAL_JQ_TAIL"
+
+# journal_query <scope-flag> <output-fields> <match words> <jq-filter> [jq args...]
+# -> JQ_N JQ_BOOTS JQ_BOOT JQ_STATUS
+# The match words are whitespace-split (journalctl wants one FIELD=value per
+# argv element; every value here is whitespace-free).
+journal_query() {
+  local flag=$1 fields=$2 match=$3 filter=$4
+  shift 4
+  local -a m=()
+  read -r -a m <<< "$match"
+  JQ_N=''; JQ_BOOTS=''; JQ_BOOT=''; JQ_STATUS=''
+  if ! have "$TIMEOUT_BIN" && [ ! -x "$TIMEOUT_BIN" ]; then
+    # Never run an unbounded journal scan when the bound is unavailable.
+    JQ_STATUS=no-timeout-bin
+    return 0
+  fi
+  # The coprocess is `wc -c`: it drains stderr continuously (a large warning can
+  # never block the producer on a full pipe) and emits only the byte count, never
+  # the bytes. Coproc descriptors are not available inside the capture's
+  # command-substitution subshell, so duplicate them into ordinary persistent
+  # dynamic fds and close the originals: the capture redirects to `$w`, and `wc`
+  # sees EOF when OUR `$w` closes, not when a leaked original is collected. The
+  # PID is captured first because bash may clear the coproc array once reaped.
+  local w r err_pid cin cout
+  coproc JOURNAL_ERR { wc -c; }
+  err_pid=$JOURNAL_ERR_PID; cin=${JOURNAL_ERR[1]}; cout=${JOURNAL_ERR[0]}
+  exec {w}>&"$cin"
+  exec {r}<&"$cout"
+  exec {cin}>&-
+  exec {cout}<&-
+  set +e
+  CAP_OUT=$("$TIMEOUT_BIN" -k 1 "$JOURNAL_TIMEOUT_S" "$JOURNALCTL_BIN" "$flag" -b --no-pager -o json --output-fields="$fields" "${m[@]}" 2>&"$w")
+  CAP_RC=$?
+  set -e
+  exec {w}>&-
+  local err_bytes=0
+  IFS= read -r err_bytes <&"$r" || true
+  err_bytes=${err_bytes//[[:space:]]/}
+  case "$err_bytes" in ''|*[!0-9]*) err_bytes=0 ;; esac
+  wait "$err_pid" 2>/dev/null || true
+  exec {r}<&-
+  unset JOURNAL_ERR JOURNAL_ERR_PID
+  if [ "$CAP_RC" -ne 0 ]; then
+    # A producer failure is unavailable: never parse or count its partial bytes.
+    case "$CAP_RC" in
+      124|137) JQ_STATUS=timeout ;;
+      *) JQ_STATUS="rc-$CAP_RC" ;;
+    esac
+    return 0
+  fi
+  if [ "$err_bytes" -gt 0 ]; then
+    # Presence only: the bytes were counted and discarded, never stored/echoed.
+    JQ_STATUS=stderr-nonempty
+    return 0
+  fi
+  local raw=$CAP_OUT parsed jrc n nb boot
+  set +e
+  parsed=$("$JQ_BIN" -s -r "$@" "$filter" <<< "$raw" 2>/dev/null)
+  jrc=$?
+  set -e
+  if [ "$jrc" -ne 0 ]; then JQ_STATUS=malformed-json; return 0; fi
+  case "$parsed" in
+    record-invalid) JQ_STATUS=record-invalid; return 0 ;;
+    multi-boot) JQ_STATUS=multi-boot; return 0 ;;
+    boot-mismatch) JQ_STATUS=boot-mismatch; return 0 ;;
+  esac
+  IFS=$'\t' read -r n nb boot <<< "$parsed" || true
+  if ! is_int "$n" || ! is_int "$nb"; then JQ_STATUS=malformed-json; return 0; fi
+  if [ "$nb" -eq 0 ]; then
+    [ "$n" -eq 0 ] || { JQ_STATUS=record-invalid; return 0; }
+    JQ_N=0; JQ_BOOTS=0; JQ_STATUS=ok
+    return 0
+  fi
+  if [ "$nb" -ne 1 ]; then JQ_STATUS=multi-boot; return 0; fi
+  # The only journal-derived string this probe echoes is a boot id. systemd
+  # emits exactly 32 lowercase hex chars; anything else could forge tokens or an
+  # extra output line, so it grades the class unavailable instead.
+  case "$boot" in
+    *[!0-9a-f]*) JQ_STATUS=record-invalid; return 0 ;;
+  esac
+  if [ "${#boot}" -ne 32 ]; then JQ_STATUS=record-invalid; return 0; fi
+  JQ_N=$n; JQ_BOOTS=$nb; JQ_BOOT=$boot; JQ_STATUS=ok
+}
+
+journal_finding_id() { # <scope> <class>
+  case "$1:$2" in
+    user:kernel_oom_notice)    printf '%s' KERNEL_OOM_NOTICE_JOURNAL_USER ;;
+    system:kernel_oom_notice)  printf '%s' KERNEL_OOM_NOTICE_JOURNAL_SYSTEM ;;
+    user:oomd_notice)          printf '%s' OOMD_NOTICE_JOURNAL_USER ;;
+    system:oomd_notice)        printf '%s' OOMD_NOTICE_JOURNAL_SYSTEM ;;
+    user:coredump_notice)      printf '%s' COREDUMP_NOTICE_JOURNAL_USER ;;
+    system:coredump_notice)    printf '%s' COREDUMP_NOTICE_JOURNAL_SYSTEM ;;
+    user:segfault_signal11)    printf '%s' SEGFAULT_SIGNAL11_JOURNAL_USER ;;
+    system:segfault_signal11)  printf '%s' SEGFAULT_SIGNAL11_JOURNAL_SYSTEM ;;
+    user:unit_sigkill_record)  printf '%s' KILL_SIGNAL_JOURNAL ;;
+    system:unit_sigkill_record) printf '%s' KILL_SIGNAL_JOURNAL_SYSTEM ;;
+    user:unit_failure_record)  printf '%s' UNIT_FAILURE_JOURNAL ;;
+    system:unit_failure_record) printf '%s' UNIT_FAILURE_JOURNAL_SYSTEM ;;
+  esac
+}
+
 probe_journal() {
-  local cmd="$JOURNALCTL_BIN --user -b --no-pager"
-  local text='' rc=0
-  local c_oom=0 c_kill=0 c_seg=0 c_unit=0
-  local st=ok
+  local cmd_tmpl="$JOURNALCTL_BIN <--user|--system> -b --no-pager -o json --output-fields=_BOOT_ID,MESSAGE_ID[,...] MESSAGE_ID=<id>"
+  local flag scope cls key n sev subj d st rc_n
+  local -a classes=(kernel_oom_notice oomd_notice coredump_notice segfault_signal11 unit_sigkill_record unit_failure_record)
+  local -A ids=( [kernel_oom_notice]=$JOURNAL_ID_KERNEL_OOM [oomd_notice]=$JOURNAL_ID_OOMD [coredump_notice]=$JOURNAL_ID_COREDUMP [unit_failure_record]=$JOURNAL_ID_UNIT_FAILURE [segfault_signal11]='' [unit_sigkill_record]='' )
+  local -A jn=() js=() sboot=() src=()
 
+  # Named coverage loss, not a look-alike zero: these surfaces have no anchored
+  # structured field, and MESSAGE text is not an acceptable substitute (Q15).
+  # Emitted on every run, including a run where journalctl itself is missing.
+  emit_finding JOURNAL_CLASSES_UNMEASURED info "classes=oom_kill_text,other_signals,other_unit_failure_text basis=unmeasured reason=no-anchored-structured-field note=prior text counts were not reliable kill counters (MESSAGE text is not metadata; one kill can yield several per-unit notices)"
   if ! have "$JOURNALCTL_BIN" && [ ! -x "$JOURNALCTL_BIN" ]; then
-    emit_surface journal unavailable "cmd=$cmd; journalctl=missing; ts=$TS_UTC"
+    for scope in user system; do
+      emit_surface "journal.$scope" unavailable "cmd=$cmd_tmpl; scope=$scope; journalctl=missing; unit=notice trust=client-supplied rc=na; ts=$TS_UTC"
+    done
+    return 0
+  fi
+  if ! have "$JQ_BIN" && [ ! -x "$JQ_BIN" ]; then
+    for scope in user system; do
+      emit_surface "journal.$scope" unavailable "cmd=$cmd_tmpl; scope=$scope; parser=missing bin=$JQ_BIN; unit=notice trust=client-supplied rc=na; ts=$TS_UTC"
+    done
+    return 0
+  fi
+  if [ -z "$BOOT_ID_EXPECTED" ]; then
+    for scope in user system; do
+      emit_surface "journal.$scope" unavailable "cmd=$cmd_tmpl; scope=$scope; boot_id=unavailable source=$BOOT_ID_FILE; unit=notice trust=client-supplied rc=na; ts=$TS_UTC"
+    done
     return 0
   fi
 
-  cap "$JOURNALCTL_BIN" --user -b --no-pager
-  rc=$CAP_RC
-  text=$CAP_OUT
-  # rc 0/1 both acceptable (1 can mean empty on some builds); other = unavailable
-  if [ "$rc" -gt 1 ]; then
-    emit_surface journal unavailable "cmd=$cmd; rc=$rc; ts=$TS_UTC"
-    return 0
-  fi
+  for flag in --user --system; do
+    scope=${flag#--}
+    src[$scope]=0
+    for cls in "${classes[@]}"; do
+      key="$scope:$cls"
+      case "$cls" in
+        segfault_signal11)
+          journal_query "$flag" '_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL' "MESSAGE_ID=$JOURNAL_ID_COREDUMP COREDUMP_SIGNAL=11" "$JOURNAL_JQ_SIGSEGV" --arg boot "$BOOT_ID_EXPECTED" --arg id "$JOURNAL_ID_COREDUMP" ;;
+        unit_sigkill_record)
+          journal_query "$flag" '_BOOT_ID,MESSAGE_ID,EXIT_CODE,EXIT_STATUS' "MESSAGE_ID=$JOURNAL_ID_UNIT_SIGKILL EXIT_CODE=killed EXIT_STATUS=9" "$JOURNAL_JQ_SIGKILL" --arg boot "$BOOT_ID_EXPECTED" --arg id "$JOURNAL_ID_UNIT_SIGKILL" ;;
+        *)
+          journal_query "$flag" '_BOOT_ID,MESSAGE_ID' "MESSAGE_ID=${ids[$cls]}" "$JOURNAL_JQ_MSGID" --arg boot "$BOOT_ID_EXPECTED" --arg id "${ids[$cls]}" ;;
+      esac
+      jn[$key]=$JQ_N; js[$key]=$JQ_STATUS
+      case "$JQ_STATUS" in
+        rc-*) if [ "${src[$scope]}" -eq 0 ]; then src[$scope]=${JQ_STATUS#rc-}; fi ;;
+      esac
+      # Every ok filter already enforced _BOOT_ID == BOOT_ID_EXPECTED, so the
+      # scope boot for the row is just the validated one. Mixed/foreign boots
+      # never reach here: they graded multi-boot/boot-mismatch above.
+      if [ "$JQ_STATUS" = ok ] && [ -n "$JQ_BOOT" ]; then sboot[$scope]=$JQ_BOOT; fi
+    done
+  done
 
-  c_oom=$(printf '%s\n' "$text" | grep -ciE 'Out of memory|oom-kill|oom_reaper|Killed process' || true)
-  c_kill=$(printf '%s\n' "$text" | grep -ciE 'status=9/KILL|Failed with result .signal|SIGKILL' || true)
-  # Segfaults are a STRUCTURED field (COREDUMP_SIGNAL=11), not the word
-  # "segfault": a text grep over the user journal returns 0 while the same
-  # journal holds 656 signal-11 entries (measured 2026-10-15). Count the text form
-  # first (fixtures drive it), then take the JSON count as an ADDITIONAL signal on
-  # a live host — never a replacement, so a stub journalctl cannot silence it.
-  c_seg=$(printf '%s\n' "$text" | grep -ciE 'segfault|general protection fault' || true)
-  if [ -z "${MORI_FIXTURE:-}" ]; then
-    c_seg_json=$(cap "$JOURNALCTL_BIN" --user -b --no-pager -o json COREDUMP_SIGNAL=11 2>/dev/null; printf '%s' "${CAP_OUT:-}" | grep -c 'COREDUMP_SIGNAL' || true)
-    case "$c_seg_json" in ''|*[!0-9]*) c_seg_json=0 ;; esac
-    if [ "$c_seg_json" -gt "$c_seg" ] 2>/dev/null; then c_seg=$c_seg_json; fi
-  fi
-  # Unit failures are tsukuroi's domain unless the unit is a FLEET unit: the
-  # unscoped grep matched desktop daemons (measured: pipewire-pulse.service
-  # core-dump), which is OS triage, not fleet health.
-  c_unit=$(printf '%s\n' "$text" | grep -ciE 'Failed with result|Unit entered failed state' || true)
-  c_unit_fleet=$(printf '%s\n' "$text" | grep -iE 'Failed with result|Unit entered failed state' | grep -ciE 'shokunin|ufo-sighting|tmux-spawn|the-tick|fleet' || true)
+  # Positive counts only: 0 is a surface value, not a finding. KILL_SIGNAL_JOURNAL
+  # is the one warn: a user-scope unit-process SIGKILL record preserves the DRIFT
+  # path the text class had, with attribution explicitly left none.
+  for scope in user system; do
+    for cls in "${classes[@]}"; do
+      key="$scope:$cls"
+      [ "${js[$key]}" = ok ] || continue
+      n=${jn[$key]}
+      [ "$n" -gt 0 ] || continue
+      sev=info
+      if [ "$scope:$cls" = 'user:unit_sigkill_record' ]; then sev=warn; fi
+      case "$cls" in
+        segfault_signal11)
+          subj="class=segfault_signal11 unit=record source_field=COREDUMP_SIGNAL value=11 count=$n scope=$scope basis=scoped-record-count boot=${sboot[$scope]}" ;;
+        unit_sigkill_record)
+          subj="class=unit_sigkill_record unit=record message_id=$JOURNAL_ID_UNIT_SIGKILL signal=9 count=$n scope=$scope attribution=none note=unit process exited on SIGKILL; not an OOM or fleet-caused kill boot=${sboot[$scope]}" ;;
+        unit_failure_record)
+          subj="class=unit_failure_record unit=record message_id=$JOURNAL_ID_UNIT_FAILURE count=$n scope=$scope attribution=none note=unit entered failed state; no fleet classification boot=${sboot[$scope]}" ;;
+        *)
+          subj="class=$cls unit=notice message_id=${ids[$cls]} count=$n scope=$scope trust=client-supplied basis=scoped-record-count boot=${sboot[$scope]}" ;;
+      esac
+      emit_finding "$(journal_finding_id "$scope" "$cls")" "$sev" "$subj"
+    done
+  done
 
-  if [ "$c_oom" -gt 0 ]; then
-    emit_finding OOM_KILL_JOURNAL crit "class=oom_kill count=$c_oom boot=current scope=user"
-    st=drift
-  fi
-  if [ "$c_kill" -gt 0 ]; then
-    emit_finding KILL_SIGNAL_JOURNAL warn "class=kill_signal count=$c_kill boot=current scope=user"
-    st=drift
-  fi
-  if [ "$c_seg" -gt 0 ]; then
-    emit_finding SEGFAULT_JOURNAL info "class=segfault count=$c_seg boot=current scope=user"
-  fi
-  if [ "$c_unit_fleet" -gt 0 ]; then
-    emit_finding UNIT_FAILURE_JOURNAL info "class=unit_failure count=$c_unit_fleet scope=fleet-units"
-  fi
-  if [ "$c_unit" -gt "$c_unit_fleet" ] 2>/dev/null; then
-    emit_finding UNIT_FAILURE_OUT_OF_SCOPE info "class=unit_failure count=$((c_unit - c_unit_fleet)) note=non-fleet units (desktop/OS) — tsukuroi owns these"
-  fi
-
-  emit_surface journal "$st" "cmd=$cmd; oom_kill=$c_oom kill_signal=$c_kill segfault=$c_seg unit_failure=$c_unit rc=$rc; ts=$TS_UTC"
+  for scope in user system; do
+    st=ok
+    d="cmd=$JOURNALCTL_BIN --$scope -b --no-pager -o json --output-fields=_BOOT_ID,MESSAGE_ID[,...] MESSAGE_ID=<id>; scope=$scope"
+    for cls in "${classes[@]}"; do
+      key="$scope:$cls"
+      if [ "${js[$key]}" = ok ]; then
+        d="$d $cls=${jn[$key]}"
+      else
+        st=unavailable
+        d="$d $cls=unavailable:${js[$key]}"
+      fi
+    done
+    rc_n=${src[$scope]:-0}
+    # The current boot is known even when this scope held zero matching records,
+    # so an empty class still reports the validated boot context, not a hole.
+    d="$d; boot=${sboot[$scope]:-$BOOT_ID_EXPECTED}"
+    d="$d; unit=notice notice_classes=kernel_oom_notice,oomd_notice,coredump_notice record_classes=segfault_signal11,unit_sigkill_record,unit_failure_record trust=client-supplied field=user:MESSAGE_ID oomd_activity=unmeasured rc=$rc_n"
+    d="$d; unmeasured=oom_kill_text,other_signals,other_unit_failure_text reason=no-anchored-structured-field; ts=$TS_UTC"
+    emit_surface "journal.$scope" "$st" "$d"
+  done
 }
 
 # ---- surface: cgroup memory -------------------------------------------------
@@ -1403,7 +1621,7 @@ grade_lane() {
     GL_EXTRA="reason=repo-absent repo=$repo"
     return 0
   fi
-  cap env GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" rev-parse --git-dir
+  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" rev-parse --git-dir
   if [ "$CAP_RC" -ne 0 ]; then
     GL_STATE=unavailable; GL_BASIS='row-1'
     GL_EXTRA="reason=git-unreadable rc=$CAP_RC repo=$repo"
@@ -1451,7 +1669,10 @@ grade_lane() {
   fi
 
   # -- facts shared by rows 6 and 9 --------------------------------------------
-  cap env GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -c core.quotePath=false -C "$repo" ls-files -mo --exclude-standard
+  # Safety (audit-r11 r13 advisory): `ls-files` can execute the repo's
+  # core.fsmonitor command, and an inherited GIT_DIR/GIT_WORK_TREE/GIT_INDEX_FILE
+  # overrides `git -C`. This gate is read-only and must query the named repo.
+  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -c core.fsmonitor=false -c core.quotePath=false -C "$repo" ls-files -mo --exclude-standard
   if [ "$CAP_RC" -ne 0 ]; then
     GL_STATE=unavailable; GL_BASIS='row-1'
     GL_EXTRA="reason=git-ls-files-error rc=$CAP_RC repo=$repo"
@@ -1466,8 +1687,9 @@ grade_lane() {
   fi
 
   # -- row 9: authorship -------------------------------------------------------
-  local has_head=0 subj=0 sib=0 sibn=0 n_rowb=0 example='' path mt inwin
-  cap env GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" rev-parse --verify -q HEAD
+  local has_head=0 subj=0 sib=0 sibn=0 n_rowb=0 example='' path mt inwin authors
+  local expected
+  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" rev-parse --verify -q HEAD
   if [ "$CAP_RC" -eq 0 ]; then
     has_head=1
     local lg_args=(--since="@$LA_EPOCH" --format='%ct %an <%ae>')
@@ -1477,7 +1699,7 @@ grade_lane() {
     if is_root_lane "$lane"; then
       lg_args+=(-- . ':(exclude).ufo' ':(exclude,glob)**/*-shokunin/**')
     fi
-    cap env GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" log "${lg_args[@]}"
+    cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" log "${lg_args[@]}"
     if [ "$CAP_RC" -ne 0 ]; then
       GL_STATE=unavailable; GL_BASIS='row-1'
       GL_EXTRA="reason=git-log-error rc=$CAP_RC repo=$repo"
@@ -1487,15 +1709,25 @@ grade_lane() {
     # 2.55.0), so the strict window (launch, NOW] is applied by an explicit %ct
     # comparison here — that is what keeps a commit at ct == launch out of both
     # attribution and closure.
-    inwin=$(printf '%s\n' "$CAP_OUT" | awk -v lo="$LA_EPOCH" -v hi="$NOW_EPOCH" \
-      '$1 ~ /^[0-9]+$/ && $1+0 > lo+0 && $1+0 <= hi+0 { print }')
+    # F01 (audit-r11 §4 + Appendix B): the old `printf | sed | grep -Fxq`
+    # handed a live producer to an early-exit consumer under pipefail. On a long
+    # history grep exits at the first match while sed is still writing, sed dies
+    # of SIGPIPE (141), pipefail makes the pipeline rc 141, and an exact subject
+    # commit that IS present grades progressing-weak (measured: one subject +
+    # 12,000 siblings -> other_authored_commits=12001, rc 0). The capture and the
+    # membership test are now separate: one awk pass writes the author list into
+    # a variable, and a bash pattern match tests WHOLE-LINE membership. No
+    # process feeds a reader, so no writer can be killed mid-stream.
+    inwin=$(awk -v lo="$LA_EPOCH" -v hi="$NOW_EPOCH" \
+      '$1 ~ /^[0-9]+$/ && $1+0 > lo+0 && $1+0 <= hi+0 { print }' <<< "$CAP_OUT")
     if [ -n "$inwin" ]; then
-      sibn=$(printf '%s\n' "$inwin" | awk 'END { print NR }')
-      if printf '%s\n' "$inwin" | sed -E 's/^[0-9]+ //' | grep -Fxq -- "$lane-shokunin <$lane@shokunin.local>"; then
-        subj=1
-      else
-        sib=1
-      fi
+      sibn=$(awk 'END { print NR + 0 }' <<< "$inwin")
+      authors=$(awk '{ sub(/^[0-9]+ /, ""); print }' <<< "$inwin")
+      expected="$lane-shokunin <$lane@shokunin.local>"
+      case $'\n'"$authors"$'\n' in
+        *$'\n'"$expected"$'\n'*) subj=1 ;;
+        *) sib=1 ;;
+      esac
     fi
   fi
 
@@ -1763,15 +1995,17 @@ run_census() {
 DRIFT_COUNTER_KEYS=(
   age_unreadable aged_unsettled avail count current disp drift empty findings
   foreign freshness_unavailable has_head high host_mem_avail_pct idle idle_s
-  kill_signal ledger_round local_oom_kill max mem_fill_pct mem_peak not_open
+  ledger_round local_oom_kill max mem_fill_pct mem_peak not_open
   oom oom_kill other_authored_commits pids probed progressing progressing_weak
-  reg relevant round rowb_files run segfault sessions settle settled silent
+  reg relevant round rowb_files run sessions settle settled silent
   size skipped state_ahead state_cmp state_lag state_round state_rounds
   state_rounds_max state_val_unreadable surfaces total unclassified
-  unit_failure unavailable unsettled used used_pct young
+  unavailable unsettled used used_pct young
+  kernel_oom_notice oomd_notice coredump_notice segfault_signal11
+  unit_sigkill_record unit_failure_record
 )
 # Non-counter volatile entries, each with its own mask rule below.
-DRIFT_VOLATILE_SPECIAL='ts age_s mtime_age_s *_epoch mem_peak_anchor psi_some_avg10 psi_full_avg10 io_avg_since_boot state_val_unread_reasons script_sha256 example'
+DRIFT_VOLATILE_SPECIAL='ts age_s mtime_age_s *_epoch mem_peak_anchor psi_some_avg10 psi_full_avg10 io_avg_since_boot state_val_unread_reasons boot script_sha256 example'
 DRIFT_VOLATILE_LIST="$DRIFT_VOLATILE_SPECIAL ${DRIFT_COUNTER_KEYS[*]}"
 
 # drift_normalize — stdin: raw census output; stdout: canonical form (volatile
@@ -1786,6 +2020,7 @@ drift_normalize() {
     -e 's/\bage_s=[0-9]+/age_s=<V>/g' \
     -e 's/\b([a-z_]+_epoch)=[0-9]+/\1=<V>/g' \
     -e 's/\bmem_peak_anchor=[0-9]+/mem_peak_anchor=<V>/g' \
+    -e 's/\bboot=[^ ;)]*/boot=<V>/g' \
     -e 's/\bpsi_(some|full)_avg10=[0-9.]+/psi_\1_avg10=<V>/g' \
     -e 's/[0-9]+Bps\/[0-9]+s/<V>Bps\/<V>s/g' \
     -e 's/\bscript_sha256=[0-9a-f]+/script_sha256=<V>/g' \
@@ -2039,6 +2274,31 @@ case "$name" in
   pgrep)
     out_of pgrep; exit "$(rc_of pgrep)" ;;
   journalctl)
+    # r13: the probe asks six structured questions per scope. Answer by
+    # scope+class from $fx/stub/journal-<scope>-<class>[.rc]; a missing slot
+    # falls back to $fx/stub/journal[.rc] (the quiet baseline is an empty file,
+    # i.e. a valid zero). class = kernel_oom | oomd | coredump | unit_sigkill |
+    # unit_failure | segfault.
+    jscope=system
+    jcls=all
+    for a in "$@"; do
+      case "$a" in
+        --user) jscope=user ;;
+        --system) jscope=system ;;
+        MESSAGE_ID=fe6faa94*) jcls=kernel_oom ;;
+        MESSAGE_ID=d989611b*) jcls=oomd ;;
+        MESSAGE_ID=fc2e22bc*) jcls=coredump ;;
+        MESSAGE_ID=98e32220*) jcls=unit_sigkill ;;
+        MESSAGE_ID=d9b373ed*) jcls=unit_failure ;;
+        COREDUMP_SIGNAL=11) jcls=segfault ;;
+      esac
+    done
+    jslot="$fx/stub/journal-$jscope-$jcls"
+    if [ -f "$jslot" ] || [ -f "$jslot.rc" ] || [ -f "$jslot.err" ]; then
+      [ -f "$jslot" ] && cat "$jslot"
+      [ -f "$jslot.err" ] && cat "$jslot.err" >&2
+      exit "$(rc_of "journal-$jscope-$jcls")"
+    fi
     out_of journal; exit "$(rc_of journal)" ;;
   df)
     # ignore args; emit fixture table
@@ -2185,6 +2445,7 @@ STUB
       MORI_DISK_TARGETS="$FX/root"
       MORI_ROSTER_LANES="kagi"
       MORI_NOW_EPOCH="${PIN_NOW:-1700000000}"
+      MORI_BOOT_ID=0123456789abcdef0123456789abcdef
       MORI_WATCHDOG_STALE_S=900
       MORI_WAVE_UNSETTLED_S=7200
       MORI_DISK_WARN_PCT=85
@@ -2472,11 +2733,133 @@ SKIP_FRESHEN=1
   check 'clean: unsettled young wave does not fire' 0 CLEAN \
     '^SURFACE waves: ok'
 
-  FX="$work/fx/oom-journal"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
-  printf 'kernel: Out of memory: Killed process 4242\n' > "$FX/stub/journal"
-  check 'drift: OOM_KILL_JOURNAL' 1 DRIFT \
-    'FINDING OOM_KILL_JOURNAL' \
+  # --- r13 structured journal scopes ----------------------------------------
+  # One SURFACE row per scope (journal.user / journal.system); catalog MESSAGE_ID
+  # classes plus field-validated signal-11 and unit records; never summed, never
+  # a MESSAGE read. Counts are INFO except the user unit-SIGKILL record, which
+  # keeps KILL_SIGNAL_JOURNAL's warn.
+  BOOT13=0123456789abcdef0123456789abcdef
+  jrec() { # <slot-file> <message-id> [extra json]
+    printf '{"_BOOT_ID":"%s","MESSAGE_ID":"%s"%s,"MESSAGE":"MORI_JOURNAL_CANARY"}\n' \
+      "$BOOT13" "$2" "${3:-}" >> "$1"
+  }
+
+  FX="$work/fx/journal-matrix"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  for i in 1 2 3; do jrec "$FX/stub/journal-user-kernel_oom" fe6faa94e7774663a0da52717891d8ef; done
+  jrec "$FX/stub/journal-user-coredump" fc2e22bc6ee647b6b90729ab34a250b1
+  jrec "$FX/stub/journal-user-segfault" fc2e22bc6ee647b6b90729ab34a250b1 ',"COREDUMP_SIGNAL":"11"'
+  jrec "$FX/stub/journal-user-unit_sigkill" 98e322203f7a4ed290d09fe03c09fe15 ',"EXIT_CODE":"killed","EXIT_STATUS":"9"'
+  jrec "$FX/stub/journal-user-unit_failure" d9b373ed55a64feb8242e02dbe79a49c
+  for i in 1 2 3 4 5; do jrec "$FX/stub/journal-system-kernel_oom" fe6faa94e7774663a0da52717891d8ef; done
+  for i in 1 2; do jrec "$FX/stub/journal-system-oomd" d989611b15e44c9dbf31e3c81256e4ed; done
+  check 'journal: per-scope catalog counts; user unit SIGKILL is the only warn' 1 DRIFT \
+    '^SURFACE journal\.user: ok .*scope=user' \
+    '^SURFACE journal\.system: ok .*scope=system' \
+    'kernel_oom_notice=3' 'oomd_notice=0' 'coredump_notice=1' 'segfault_signal11=1' \
+    'unit_sigkill_record=1' 'unit_failure_record=1' \
+    '^SURFACE journal\.system: ok .*kernel_oom_notice=5' \
+    '^SURFACE journal\.system: ok .*oomd_notice=2' \
+    "boot=$BOOT13" \
+    'FINDING KERNEL_OOM_NOTICE_JOURNAL_USER .*count=3 .*scope=user' \
+    'FINDING KERNEL_OOM_NOTICE_JOURNAL_SYSTEM .*count=5 .*scope=system' \
+    'FINDING OOMD_NOTICE_JOURNAL_SYSTEM .*count=2 .*scope=system' \
+    'FINDING COREDUMP_NOTICE_JOURNAL_USER .*count=1 .*scope=user' \
+    'FINDING SEGFAULT_SIGNAL11_JOURNAL_USER .*unit=record .*count=1 .*scope=user' \
+    'FINDING KILL_SIGNAL_JOURNAL severity=warn .*unit=record .*count=1 .*scope=user' \
+    'FINDING UNIT_FAILURE_JOURNAL severity=info .*unit=record .*count=1 .*scope=user' \
+    'unit=notice .*trust=client-supplied' \
     '^MORI_CENSUS: DRIFT '
+  # The fixtures carry MESSAGE text; the census must never print it (a read of
+  # MESSAGE is the M13 defect this probe replaces).
+  if grep -q 'MORI_JOURNAL_CANARY' "$OUT_FILE"; then bad 'journal: MESSAGE canary leaked to census output'; fi
+
+  FX="$work/fx/journal-text-only"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  # Every queried slot answers a valid empty stream; the legacy text lives only
+  # in the global journal file, so a text-counting probe would read it while the
+  # structured queries must stay 0.
+  : > "$FX/stub/journal"
+  for cls in kernel_oom oomd coredump unit_sigkill unit_failure segfault; do
+    : > "$FX/stub/journal-user-$cls"; : > "$FX/stub/journal-system-$cls"
+  done
+  printf 'kernel: Out of memory: Killed process 4242 status=9/KILL\nFailed with result signal SIGKILL\n' > "$FX/stub/journal"
+  check 'journal: legacy text ids are not counted (Q15)' 0 CLEAN \
+    '^SURFACE journal\.user: ok .*kernel_oom_notice=0' \
+    '^SURFACE journal\.system: ok .*kernel_oom_notice=0'
+  if grep -qE 'FINDING (OOM_KILL_JOURNAL|KILL_SIGNAL_JOURNAL|SEGFAULT_JOURNAL|UNIT_FAILURE_JOURNAL)\b' "$OUT_FILE"; then
+    bad 'journal: legacy text class produced a finding'
+  fi
+
+  FX="$work/fx/journal-user-rc1"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  : > "$FX/stub/journal-user-kernel_oom"; printf 1 > "$FX/stub/journal-user-kernel_oom.rc"
+  check 'journal: user producer rc1 -> user unavailable, system still counted' 0 CLEAN \
+    '^SURFACE journal\.user: unavailable .*kernel_oom_notice=unavailable:rc-1' \
+    '^SURFACE journal\.user: unavailable .*rc=1' \
+    '^SURFACE journal\.system: ok .*kernel_oom_notice=0'
+
+  FX="$work/fx/journal-system-rc2"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  : > "$FX/stub/journal-system-oomd"; printf 2 > "$FX/stub/journal-system-oomd.rc"
+  check 'journal: system producer rc2 -> system unavailable, user ok' 0 CLEAN \
+    '^SURFACE journal\.system: unavailable .*oomd_notice=unavailable:rc-2' \
+    '^SURFACE journal\.system: unavailable .*rc=2' \
+    '^SURFACE journal\.user: ok .*oomd_notice=0'
+
+  FX="$work/fx/journal-system-rc1"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  : > "$FX/stub/journal-system-coredump"; printf 1 > "$FX/stub/journal-system-coredump.rc"
+  check 'journal: system producer rc1 -> system unavailable, user still counted' 0 CLEAN \
+    '^SURFACE journal\.system: unavailable .*coredump_notice=unavailable:rc-1' \
+    '^SURFACE journal\.user: ok .*coredump_notice=0'
+
+  FX="$work/fx/journal-stderr"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  : > "$FX/stub/journal-user-unit_sigkill"
+  printf 'warning: partial journal access MORI_STDERR_CANARY\n' > "$FX/stub/journal-user-unit_sigkill.err"
+  check 'journal: nonempty stderr -> unavailable, never counted' 0 CLEAN \
+    '^SURFACE journal\.user: unavailable .*unit_sigkill_record=unavailable:stderr-nonempty' \
+    '^SURFACE journal\.system: ok '
+  if grep -q 'MORI_STDERR_CANARY' "$OUT_FILE"; then bad 'journal: stderr bytes leaked to census output'; fi
+
+  FX="$work/fx/journal-malformed"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf '{not json\n' > "$FX/stub/journal-user-coredump"
+  check 'journal: malformed JSON -> unavailable, never 0' 0 CLEAN \
+    '^SURFACE journal\.user: unavailable .*coredump_notice=unavailable:malformed-json' \
+    '^SURFACE journal\.system: ok '
+
+  FX="$work/fx/journal-identity-mismatch"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  # A record carrying a DIFFERENT catalog id must not be counted for the query.
+  jrec "$FX/stub/journal-system-kernel_oom" d989611b15e44c9dbf31e3c81256e4ed
+  check 'journal: record identity mismatch -> unavailable' 0 CLEAN \
+    '^SURFACE journal\.system: unavailable .*kernel_oom_notice=unavailable:record-invalid'
+
+  FX="$work/fx/journal-foreign-boot"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf '{"_BOOT_ID":"ffffffffffffffffffffffffffffffff","MESSAGE_ID":"fe6faa94e7774663a0da52717891d8ef","MESSAGE":"MORI_JOURNAL_CANARY"}\n' \
+    > "$FX/stub/journal-user-kernel_oom"
+  check 'journal: record from another boot -> unavailable' 0 CLEAN \
+    '^SURFACE journal\.user: unavailable .*kernel_oom_notice=unavailable:boot-mismatch'
+
+  FX="$work/fx/journal-multi-boot"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  printf '{"_BOOT_ID":"ffffffffffffffffffffffffffffffff","MESSAGE_ID":"d989611b15e44c9dbf31e3c81256e4ed"}\n' \
+    >> "$FX/stub/journal-user-oomd"
+  printf '{"_BOOT_ID":"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee","MESSAGE_ID":"d989611b15e44c9dbf31e3c81256e4ed"}\n' \
+    >> "$FX/stub/journal-user-oomd"
+  check 'journal: records from several boots -> unavailable:multi-boot' 0 CLEAN \
+    '^SURFACE journal\.user: unavailable .*oomd_notice=unavailable:multi-boot'
+
+  FX="$work/fx/journal-no-jq"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  EXTRA_ENV=(MORI_JQ_BIN="$work/absent-jq")
+  check 'journal: absent JSON parser -> both scopes unavailable, no counts' 0 CLEAN \
+    '^SURFACE journal\.user: unavailable .*parser=missing' \
+    '^SURFACE journal\.system: unavailable .*parser=missing'
+
+  FX="$work/fx/journal-no-bin"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  EXTRA_ENV=(MORI_JOURNALCTL_BIN="$work/absent-journalctl")
+  check 'journal: absent journalctl -> both scopes unavailable' 0 CLEAN \
+    '^SURFACE journal\.user: unavailable .*journalctl=missing' \
+    '^SURFACE journal\.system: unavailable .*journalctl=missing'
+
+  FX="$work/fx/journal-no-boot"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  EXTRA_ENV=(MORI_BOOT_ID=not-a-boot-id)
+  check 'journal: invalid boot anchor -> both scopes unavailable' 0 CLEAN \
+    '^SURFACE journal\.user: unavailable .*boot_id=unavailable' \
+    '^SURFACE journal\.system: unavailable .*boot_id=unavailable'
 
   FX="$work/fx/cgroup-oom"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
   printf 'low 0\nhigh 0\nmax 0\noom 1\noom_kill 1\noom_group_kill 0\n' > "$FX/cgroup/memory.events"
@@ -2562,6 +2945,30 @@ SKIP_FRESHEN=1
   check 'silence: other-authored commit only -> progressing-weak' 0 CLEAN \
     '^SURFACE lane\.kagi: progressing-weak ' \
     'basis=row-C'
+
+  # F01 / audit-r11 Appendix B: a large history used to make the authorship
+  # membership test a live pipe into an early-exit grep. One exact subject record
+  # at the head of 12,000 siblings MUST still grade progressing; the exact count
+  # of sibling records is asserted in the negative arm.
+  FX="$work/fx/sil-f01-long-subject"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  { printf '1699998600 kagi-shokunin <kagi@shokunin.local>\n'
+    for ((i = 0; i < 12000; i++)); do printf '1699998600 aggregator-shokunin <aggregator@shokunin.local>\n'; done
+  } > "$FX/stub/git-log"
+  printf 1 > "$FX/stub/git-cat-file.rc"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'silence: 12k-history exact subject -> progressing (F01)' 0 CLEAN \
+    '^SURFACE lane\.kagi: progressing ' \
+    'basis=row-A'
+
+  FX="$work/fx/sil-f01-long-siblings"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+  for ((i = 0; i < 12000; i++)); do printf '1699998600 aggregator-shokunin <aggregator@shokunin.local>\n'; done > "$FX/stub/git-log"
+  printf 1 > "$FX/stub/git-cat-file.rc"
+  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
+  check 'silence: 12k-history siblings only -> progressing-weak, exact count' 0 CLEAN \
+    '^SURFACE lane\.kagi: progressing-weak ' \
+    'other_authored_commits=12000'
 
   FX="$work/fx/sil-young-eq-gate"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
   # age == gate is YOUNG: only age > LANE_SILENCE_S is gradeable-old, so a
@@ -2676,7 +3083,9 @@ SKIP_FRESHEN=1
   FX="$work/fx/journal-empty-ok"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
   : > "$FX/stub/journal"
   check 'clean: empty journal' 0 CLEAN \
-    '^SURFACE journal: ok'
+    '^SURFACE journal\.user: ok .*kernel_oom_notice=0 .*oomd_notice=0 .*coredump_notice=0' \
+    '^SURFACE journal\.system: ok .*kernel_oom_notice=0 .*oomd_notice=0 .*coredump_notice=0' \
+    '^SURFACE journal\.user: ok .*boot=0123456789abcdef0123456789abcdef'
 
   # --- r7 coverage cases: the four r2 surface gaps ----------------------------
   # Each probe gets a firing case and a near-miss case, and every case here is
