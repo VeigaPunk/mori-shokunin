@@ -136,10 +136,10 @@ C1_FINDINGS = {
         "SEGFAULT_SIGNAL11_JOURNAL_SYSTEM": ("segfault", 3),
     },
     "user": {
-        "KERNEL_OOM_NOTICE_JOURNAL_USER": ("kernel", 0),
+        "KERNEL_OOM_NOTICE_JOURNAL_USER": ("kernel", 3),
         "OOMD_NOTICE_JOURNAL_USER": ("oomd", 0),
-        "COREDUMP_NOTICE_JOURNAL_USER": ("coredump", 0),
-        "SEGFAULT_SIGNAL11_JOURNAL_USER": ("segfault", 0),
+        "COREDUMP_NOTICE_JOURNAL_USER": ("coredump", 1),
+        "SEGFAULT_SIGNAL11_JOURNAL_USER": ("segfault", 1),
     },
 }
 UNMEASURED_CLASSES = ("oom_kill_text", "other_signals", "other_unit_failure_text")
