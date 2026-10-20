@@ -1,5 +1,5 @@
 source: S013 — https://raw.githubusercontent.com/systemd/systemd/cf8ebfc6159cf0b3b99aa9a0164ccb07c4c9c5af/catalog/systemd.catalog.in — pinned commit cf8ebfc6159cf0b3b99aa9a0164ccb07c4c9c5af (2026-10-19), fetched 2026-10-20, sha256 e53707db7e6963b284e504dc17f36a4d5a2bdb4bd8a9611b2cf95c075ad86592: `e9bf28e6…` :58-64 loss notice, `fc2e22bc…` :66-75 coredump notice, `fe6faa94…` :604-616 kernel-OOM unit notice, `1f4e0a44…` :870-881 abnormal-termination notice, `d989611b…` :884-894 systemd-oomd notice; S035 — https://raw.githubusercontent.com/systemd/systemd/cf8ebfc6159cf0b3b99aa9a0164ccb07c4c9c5af/catalog/systemd.catalog.in — same pinned commit cf8ebfc6, catalog/systemd.catalog.in:561-575, scope “structured process-termination and unit-result identifiers”: `d9b373ed…` :561-566 unit-failure notice, `98e32220…` :568-575 unit-process-exit notice, opened 2026-10-20, sha256 e53707db7e6963b284e504dc17f36a4d5a2bdb4bd8a9611b2cf95c075ad86592; S036 — https://raw.githubusercontent.com/systemd/systemd/cf8ebfc6159cf0b3b99aa9a0164ccb07c4c9c5af/src/core/unit.c — src/core/unit.c:6333-6392, `unit_log_failure` :6333-6342 and `unit_log_process_exit` :6355-6392 emitter schemas (level policy, `LOG_MESSAGE_ID`, `UNIT_RESULT`, `EXIT_CODE`, `EXIT_STATUS`), opened 2026-10-20, sha256 4833056a6313b250ad6b53de3121a51e8dee602733e1aedf4a7d3d2687d547ed; same-commit supporting reads opened 2026-10-20: src/systemd/sd-messages.h :178-185 sha256 fb613f71807344eb29b9353cad8c09cb644fff4a18b1651fda9b49e0a23064fc, src/basic/process-util.c :2306-2315 sha256 a749f285bf168bdbb74bc7021055e8f121ec7a0bbbcb6a40e40283f5f699a4fe
-verified-at: 2026-10-20 (source re-open only; lane base 6531ac6; host kernel 7.2.3-arch1-3, systemd 261 (261.2-1-arch); no live journal query)
+verified-at: 2026-10-20 — source openings at base 6531ac6; L1 fixture and live measurements against c13df48 (census SHA-256 39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985).
 recheck: curl -fsSL https://raw.githubusercontent.com/systemd/systemd/cf8ebfc6159cf0b3b99aa9a0164ccb07c4c9c5af/catalog/systemd.catalog.in | grep -nE '^-- (e9bf28e6|fc2e22bc|fe6faa94|1f4e0a44|d989611b|d9b373ed|98e32220)'; curl -fsSL https://raw.githubusercontent.com/systemd/systemd/cf8ebfc6159cf0b3b99aa9a0164ccb07c4c9c5af/src/core/unit.c | grep -nF 'EXIT_CODE=%s'; curl -fsSL https://raw.githubusercontent.com/systemd/systemd/cf8ebfc6159cf0b3b99aa9a0164ccb07c4c9c5af/src/systemd/sd-messages.h | grep -nE 'UNIT_PROCESS_EXIT_STR|UNIT_FAILURE_RESULT_STR'; curl -fsSL https://www.freedesktop.org/software/systemd/man/latest/journalctl.html | grep -nF 'id="--output-fields="'; curl -fsSL https://www.freedesktop.org/software/systemd/man/latest/journalctl.html | grep -nF 'JSON array is used as field value'; curl -fsSL https://www.freedesktop.org/software/systemd/man/latest/systemd.journal-fields.html | grep -nF 'id="MESSAGE_ID="'; curl -fsSL https://www.freedesktop.org/software/systemd/man/latest/systemd.journal-fields.html | grep -nF 'cannot be altered by client code' → catalog 58,66,561,568,604,870,884; unit.c 6388; sd-messages 178,185; journalctl 230; journalctl 215; fields 40; fields 83
 
 ## Claim
@@ -79,3 +79,26 @@ Catalog `MESSAGE_ID` counts cannot see: processes outside a systemd manager, or 
 
 ## Fills (coverage-map ground; Frontier row)
 Coverage-map ground: MESSAGE-free structured journal notice-class counts with independent user/system scope labels and exact boot context, plus the systemd-observed signal-9 exit class and its cause blindness. Frontier FR1: partial advance only — notice and exit records are countable per scope, but kernel victim attribution, per-process roll-up, signal-sender identity and fleet correlation remain frontier. FR11: cursor mechanics documented (`--after-cursor=`, opaque `__CURSOR`), with rotation/vacuum behavior still unknown.
+
+## Measured round-13 receipt
+
+L1 ran `python3 tools/mori-round13-regressions.py --mutation both --jobs 1
+--output .ufo/waves/round-13/evidence/regressions-accepted`: 19 contract checks
+passed, 2 exact-locus mutations reproduced the old defects, exit 0. C1's five
+checks cover system positives 2/1/3/3, user zeros, independent user positives
+3/0/1/1, MESSAGE-canary exclusion, and the full scoped-row/CLEAN contract.
+The census selftest observed 91/91, including scope-error and positive user
+SIGKILL-warning cases (`evidence/census-selftest.json` under the same wave).
+
+Live source-counter comparison: execute the `python` member retained in
+`.ufo/waves/round-13/evidence/live-measurement.json` (its `reproduce` command
+is executable). Twelve independently queried class/scope cells bracketed the
+census and matched 12/12; all were zero in the named current boot. Explicit
+scoped journal surfaces increased 0 → 2 versus frozen r12 bytes. This proves
+live query and label operation, not observation of a new real kill.
+One interleaved full-census pair took 3.025310 s old / 2.960516 s new; one pair
+is not a latency distribution or a speedup claim.
+
+Counting command, from the lane root:
+`jq '[.result.baseline.stdout,.result.delivered.stdout] | map(split("\n") | map(select(startswith("SURFACE journal."))) | length)' .ufo/waves/round-13/evidence/live-measurement.json`
+→ `[0,2]`, measured against c13df48 and frozen base 6531ac6.

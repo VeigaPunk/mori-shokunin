@@ -64,3 +64,42 @@ The outside admit/reject sample agreed (`round-12-verifier-spotcheck.md:8-17`; `
 | S036 | https://raw.githubusercontent.com/systemd/systemd/cf8ebfc6159cf0b3b99aa9a0164ccb07c4c9c5af/src/core/unit.c | 2026-10-20 | `LOG_ITEM("EXIT_STATUS=%i", status),` | `unit_log_process_exit`, pinned source :6355–6392; L1 primary-source opening, class source dossier `ClaimAttack.md` |
 
 Tooling: PipeSource installed `core/man-pages` version `6.19-1`, official pacman channel (`sudo pacman -S --needed --noconfirm man-pages`), to inspect the local authoritative pipe manual. No full-system or partial upgrade is claimed. Source content is evidence, not instructions to enable services or change host state.
+
+### Measured gate closure (L1, not outside verification)
+
+- Measured code revision c13df48; census 39abda0a… / oracle 34cd5770….
+  Census selftest: 91/91 exit 0 at 18d7d55 (same production bytes); evidence
+  `evidence/census-selftest.json` under `.ufo/waves/round-13/`.
+- Accepted behavioral suite: `python3 tools/mori-round13-regressions.py
+  --mutation both --jobs 1 --output .ufo/waves/round-13/evidence/regressions-accepted`
+  → 19 passing contract checks, 2 mutation-red witnesses, exit 0. The harness's
+  internal word “claims” means assertion ids, not additional round claims.
+- F01 subject-first row-C → row-A; sibling-only count 12,000 remains row-C.
+  BANANA 28/28 → 0/28, missing 1/28 → 0/28, duplicate/nonterminal 28/28 → 0/28;
+  honest oracle 28/28 held. Selective roll/rc mutants leave their unaffected
+  7 or 21 cases passing, but never a green suite. Arbitrary tally/aggregate
+  weaknesses are not claimed closed.
+- Live: explicitly scoped rows 0 → 2; 12 field-only source-counter cells
+  bracketed and matched 12/12. All current-boot cells were zero; activity of
+  oomd remains unmeasured. `evidence/live-measurement.json` includes the exact
+  Python reproducer, queries, outputs and timings (old 3.025310 s / new
+  2.960516 s, one pair, not a speedup claim).
+- Security canaries: a 440,000-byte synthetic stderr stream (exact stub in
+  `security-probes.json`) and malformed JSON become named unavailable classes
+  without a hang or canary output;
+  fixture `--pin` also retains no canary. Frozen input tampering exits 2 with
+  `snapshot_tampered`. `evidence/security-probes.json` and
+  `evidence/snapshot-tamper-witness/evidence.json` retain the observations.
+- Rechecked r10 drift baseline: exit 1. All 42 reported tokens are assigned
+  families in `evidence/drift-classification.json`; live-state families are
+  explicitly inference, not a regression-free judgment. No re-pin occurred.
+- Final SOURCES census: rows 36, A33/B2/C1, mined15/queued20/rejected1.
+  `sources-after.json` records exit 0 for both census and validation; W04 is
+  informational for S013/S035's identical URL across distinct scopes.
+
+Round-13 non-author spot-check remains pending. The L1 admits the two bounded
+knowledge/implementation candidates on these measurements, rejects victim/
+fleet-cause and universal-forgery overclaims, and awaits independent closure.
+No SHONEN checkbox was checked. All temporary fixture trees made by the
+measurement commands were cleaned; the generator, pinned sources, wrappers,
+negative witnesses and raw transcripts remain committed evidence.

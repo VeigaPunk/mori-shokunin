@@ -1,0 +1,541 @@
+{
+  "measured_commit": "c13df48",
+  "python": "import json, os, re, subprocess, time, hashlib\nfrom pathlib import Path\nfrom datetime import datetime, timezone\nroot=Path('/home/vgpnk/Projects/shokunin/mori-shokunin')\nboot=Path('/proc/sys/kernel/random/boot_id').read_text().strip().replace('-','')\nclasses={\n'kernel_oom_notice':['MESSAGE_ID=fe6faa94e7774663a0da52717891d8ef'],\n'oomd_notice':['MESSAGE_ID=d989611b15e44c9dbf31e3c81256e4ed'],\n'coredump_notice':['MESSAGE_ID=fc2e22bc6ee647b6b90729ab34a250b1'],\n'segfault_signal11':['MESSAGE_ID=fc2e22bc6ee647b6b90729ab34a250b1','COREDUMP_SIGNAL=11'],\n'unit_sigkill_record':['MESSAGE_ID=98e322203f7a4ed290d09fe03c09fe15','EXIT_CODE=killed','EXIT_STATUS=9'],\n'unit_failure_record':['MESSAGE_ID=d9b373ed55a64feb8242e02dbe79a49c']}\ndef query(scope, matches):\n    argv=['journalctl','--'+scope,'-b','--no-pager','-o','json','--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS']+matches\n    p=subprocess.run(argv,text=True,capture_output=True,timeout=5)\n    result={'argv':argv,'exit':p.returncode,'stderr_bytes':len(p.stderr.encode())}\n    if p.returncode or p.stderr:\n        result['status']='unavailable'; return result\n    try:\n        rows=[json.loads(line) for line in p.stdout.splitlines() if line.strip()]\n        valid=all(isinstance(r,dict) and r.get('_BOOT_ID')==boot and 'MESSAGE' not in r for r in rows)\n        for match in matches:\n            key,value=match.split('=',1)\n            valid=valid and all(str(r.get(key))==value for r in rows)\n        if not valid: raise ValueError('shape')\n    except (ValueError,TypeError):\n        result['status']='unavailable:record-invalid'; return result\n    return {**result,'status':'ok','count':len(rows)}\ndef counts():\n    return {scope:{key:query(scope,matches) for key,matches in classes.items()} for scope in ('user','system')}\ndef census(path):\n    argv=['bash',str(path)]; start=time.monotonic()\n    p=subprocess.run(argv,cwd=root,env={**os.environ,'MORI_SHOKUNIN_ROOT':'/home/vgpnk/Projects/shokunin'},text=True,capture_output=True,timeout=90)\n    return {'argv':argv,'elapsed_s':round(time.monotonic()-start,6),'exit':p.returncode,'stdout':p.stdout,'stderr':p.stderr,'sha256':hashlib.sha256(path.read_bytes()).hexdigest()}\nbaseline=census(root/'.ufo/waves/round-13/frozen/mori-census.sh')\npre=counts(); delivered=census(root/'tools/mori-census.sh'); post=counts()\nscoped={}\nfor scope,state,body in re.findall(r'^SURFACE journal\\.(user|system): (\\S+) \\((.*)\\)$',delivered['stdout'],re.M):\n    scoped[scope]={'state':state,'tokens':dict(re.findall(r'([a-z0-9_]+)=([^\\s;]+)',body))}\nchecks=[]\nfor scope in ('user','system'):\n    for key in classes:\n        a,b=pre[scope][key],post[scope][key]; actual=scoped.get(scope,{}).get('tokens',{}).get(key)\n        okay=a['status']==b['status']=='ok' and actual is not None and actual.isdigit() and a['count']<=int(actual)<=b['count']\n        checks.append({'scope':scope,'class':key,'before':a.get('count'),'actual':actual,'after':b.get('count'),'matched':okay})\nresult={'captured_utc':datetime.now(timezone.utc).isoformat(),'boot':boot,'baseline':baseline,'before_queries':pre,'delivered':delivered,'after_queries':post,'comparisons':checks,'matched':sum(c['matched'] for c in checks),'total':len(checks),'before_scoped_rows':len(re.findall(r'^SURFACE journal\\.(?:user|system):',baseline['stdout'],re.M)),'after_scoped_rows':len(scoped)}\nprint(json.dumps(result,indent=2))\n",
+  "reproduce": "python3 -c 'import json; exec(json.load(open(\".ufo/waves/round-13/evidence/live-measurement.json\"))[\"python\"])'",
+  "result": {
+    "captured_utc": "2026-10-20T04:33:14.552897+00:00",
+    "boot": "430d3038185949e682cf5fc475d1b3d0",
+    "baseline": {
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-13/frozen/mori-census.sh"
+      ],
+      "elapsed_s": 3.02531,
+      "exit": 1,
+      "stdout": "mori-census census-r5 \u2014 ts=2026-10-20T04:33:08Z \u2014 mode=live \u2014 read-only\nSURFACE watchdog: drift (cmd=pgrep -af shokunin-watchdog; stat /home/vgpnk/Projects/shokunin/.ufo/watchdog.log; ls /home/vgpnk/Projects/shokunin/.ufo/state; pids=0; log=ok; age_s=1009; stale_threshold_s=900; state_rounds=21 state_rounds_max=18 state_lag=6 state_ahead=0 state_cmp=21 state_val_unreadable=0 state_val_unread_reasons=file:0 symlink:0 dir:0 other:0; ts=2026-10-20T04:33:08Z)\nSURFACE waves: drift (cmd=find /home/vgpnk/Projects/shokunin/.ufo/waves -maxdepth 1 -mindepth 1 -type d; total=48 settled=13 unsettled=10 aged_unsettled=10 empty=25 age_unreadable=0 threshold_s=7200; ts=2026-10-20T04:33:08Z)\nSURFACE journal: ok (cmd=journalctl --user -b --no-pager; oom_kill=0 kill_signal=0 segfault=0 unit_failure=0 rc=0; ts=2026-10-20T04:33:08Z)\nSURFACE cgroup: ok (cmd=cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.events; cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.current; cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.pressure; cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.max; oom_kill=0 oom=0 high=0 max=0 current=19217588224; local_oom_kill=0 psi_some_avg10=0.00 psi_full_avg10=0.00 psi_source=ok psi_warn_avg10=10 mem_fill_pct=unavailable mem_fill_scope=host-ram host_mem_avail_pct=85 mem_peak=23607717888 mem_peak_source=ok mem_peak_anchor=1792460904; ts=2026-10-20T04:33:08Z)\nSURFACE disk: ok (cmd=df -P; targets=/home/vgpnk/Projects/shokunin /tmp; warn_pct=85 crit_pct=95; io_basis=since-boot io_avg_since_boot=dm-0:689613Bps/9906s io_avg_unavailable=tmpfs:not-a-block-device; ts=2026-10-20T04:33:08Z)\nSURFACE lane.protocol: progressing (lane=protocol round=14 launch_epoch=1792039857 age_s=430931 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:08Z)\nSURFACE lane.aggregator: progressing (lane=aggregator round=10 launch_epoch=1792039857 age_s=430931 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:08Z)\nSURFACE lane.kaidoku: progressing (lane=kaidoku round=1 launch_epoch=1792039857 age_s=430931 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:08Z)\nSURFACE lane.kasegi: progressing (lane=kasegi round=17 launch_epoch=1792039857 age_s=430931 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:08Z)\nSURFACE lane.kengaku: progressing (lane=kengaku round=13 launch_epoch=1792039857 age_s=430931 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:08Z)\nSURFACE lane.kake: progressing (lane=kake round=16 launch_epoch=1792039857 age_s=430931 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:08Z)\nSURFACE lane.kumitate: progressing (lane=kumitate round=18 launch_epoch=1792039857 age_s=430931 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:08Z)\nSURFACE lane.kotoba: progressing (lane=kotoba round=16 launch_epoch=1792039857 age_s=430931 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:08Z)\nSURFACE lane.kagi: progressing (lane=kagi round=16 launch_epoch=1792039857 age_s=430931 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:08Z)\nSURFACE lane.kama: young (lane=kama round=12 launch_epoch=1792469779 age_s=1009 basis=row-8 reason=age_le_gate gate_s=7200; ts=2026-10-20T04:33:08Z)\nSURFACE lane.lore: progressing (lane=lore round=1 launch_epoch=1792039857 age_s=430931 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:08Z)\nSURFACE lane.revenger: not-open (lane=revenger round=1 launch_epoch=1792039857 age_s=430931 basis=row-6 reason=committed-report round=1 path=.ufo/reports/round-1/revenger.md; ts=2026-10-20T04:33:08Z)\nSURFACE lane.tameshi: not-open (lane=tameshi round=12 launch_epoch=1792467671 age_s=- basis=row-4 reason=ledger-close round=12; ts=2026-10-20T04:33:08Z)\nSURFACE lane.mado: young (lane=mado round=13 launch_epoch=1792469045 age_s=1743 basis=row-8 reason=age_le_gate gate_s=7200; ts=2026-10-20T04:33:08Z)\nSURFACE lane.tsukuroi: not-open (lane=tsukuroi round=12 launch_epoch=1792467670 age_s=- basis=row-4 reason=ledger-close round=12; ts=2026-10-20T04:33:08Z)\nSURFACE lane.tabi: not-open (lane=tabi round=12 launch_epoch=1792468845 age_s=- basis=row-4 reason=ledger-close round=12; ts=2026-10-20T04:33:08Z)\nSURFACE lane.mori: young (lane=mori round=13 launch_epoch=1792469084 age_s=1704 basis=row-8 reason=age_le_gate gate_s=7200; ts=2026-10-20T04:33:08Z)\nSURFACE lane.chousa: progressing (lane=chousa round=1 launch_epoch=1792039857 age_s=430931 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:08Z)\nSURFACE lane.kotodama: not-open (lane=kotodama round=- launch_epoch=- age_s=- basis=row-2 reason=no-launch-line; ts=2026-10-20T04:33:08Z)\nSURFACE lane.souji: not-open (lane=souji round=- launch_epoch=- age_s=- basis=row-2 reason=no-launch-line; ts=2026-10-20T04:33:08Z)\nSURFACE lane.audio: progressing (lane=audio round=1 launch_epoch=1792039542 age_s=431246 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:08Z)\nSURFACE lane.game-dev-2d: progressing (lane=game-dev-2d round=1 launch_epoch=1792039542 age_s=431246 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:08Z)\nSURFACE lane.game-dev-3d: progressing (lane=game-dev-3d round=1 launch_epoch=1792039542 age_s=431246 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:08Z)\nSURFACE silence: ok (cmd=git -C <repo> log --since=@<launch> --format='%ct %an <%ae>'; git -C <repo> ls-files -mo; git -C <root> cat-file -e HEAD:.ufo/reports/round-<N>/<lane>.md; roster_source=conf+state roster_n=23 conf_n=23 state_n=21 conf_dropped_n=0 state_dropped_n=0; silent=0 progressing=14 progressing_weak=0 young=3 not_open=6 unavailable=0 skipped=0 window_s=7200; ts=2026-10-20T04:33:08Z)\nSURFACE tmux: unavailable (cmd=tmux ls; rc=1; ts=2026-10-20T04:33:08Z)\nFINDING WATCHDOG_STALE severity=warn obs=watchdog.log mtime_age_s=1009 threshold_s=900 path=/home/vgpnk/Projects/shokunin/.ufo/watchdog.log ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING WATCHDOG_STATE_LAG severity=info obs=lane=kama state_round=1 ledger_round=12 path=/home/vgpnk/Projects/shokunin/.ufo/state/kama.round ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING WATCHDOG_STATE_LAG severity=info obs=lane=mado state_round=1 ledger_round=13 path=/home/vgpnk/Projects/shokunin/.ufo/state/mado.round ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING WATCHDOG_STATE_LAG severity=info obs=lane=mori state_round=2 ledger_round=13 path=/home/vgpnk/Projects/shokunin/.ufo/state/mori.round ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING WATCHDOG_STATE_LAG severity=info obs=lane=tabi state_round=1 ledger_round=12 path=/home/vgpnk/Projects/shokunin/.ufo/state/tabi.round ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING WATCHDOG_STATE_LAG severity=info obs=lane=tameshi state_round=1 ledger_round=12 path=/home/vgpnk/Projects/shokunin/.ufo/state/tameshi.round ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING WATCHDOG_STATE_LAG severity=info obs=lane=tsukuroi state_round=1 ledger_round=12 path=/home/vgpnk/Projects/shokunin/.ufo/state/tsukuroi.round ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING WATCHDOG_ABSENT severity=warn obs=no shokunin-watchdog process matched by pgrep -af ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p1-audit age_s=446131 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p2-kumitate age_s=445811 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p3-kengaku age_s=447392 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p4-mori-r1 age_s=445026 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p5-chousa-r1 age_s=444113 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013 age_s=541715 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013-w2 age_s=535936 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013-w3 age_s=530766 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013-w4 age_s=527904 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261016-w24 age_s=304648 threshold_s=7200 reg=0 disp=1 run=0 settle=0 ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nFINDING ROSTER_SET_MISMATCH severity=info obs=conf_only=kotodama,souji state_only=none ts=2026-10-20T04:33:08Z script_sha256=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164\nMORI_CENSUS: DRIFT (findings=19 drift=12 unavailable=1 surfaces=7)\n",
+      "stderr": "",
+      "sha256": "3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164"
+    },
+    "before_queries": {
+      "user": {
+        "kernel_oom_notice": {
+          "argv": [
+            "journalctl",
+            "--user",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=fe6faa94e7774663a0da52717891d8ef"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "oomd_notice": {
+          "argv": [
+            "journalctl",
+            "--user",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=d989611b15e44c9dbf31e3c81256e4ed"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "coredump_notice": {
+          "argv": [
+            "journalctl",
+            "--user",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=fc2e22bc6ee647b6b90729ab34a250b1"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "segfault_signal11": {
+          "argv": [
+            "journalctl",
+            "--user",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=fc2e22bc6ee647b6b90729ab34a250b1",
+            "COREDUMP_SIGNAL=11"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "unit_sigkill_record": {
+          "argv": [
+            "journalctl",
+            "--user",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=98e322203f7a4ed290d09fe03c09fe15",
+            "EXIT_CODE=killed",
+            "EXIT_STATUS=9"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "unit_failure_record": {
+          "argv": [
+            "journalctl",
+            "--user",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=d9b373ed55a64feb8242e02dbe79a49c"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        }
+      },
+      "system": {
+        "kernel_oom_notice": {
+          "argv": [
+            "journalctl",
+            "--system",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=fe6faa94e7774663a0da52717891d8ef"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "oomd_notice": {
+          "argv": [
+            "journalctl",
+            "--system",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=d989611b15e44c9dbf31e3c81256e4ed"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "coredump_notice": {
+          "argv": [
+            "journalctl",
+            "--system",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=fc2e22bc6ee647b6b90729ab34a250b1"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "segfault_signal11": {
+          "argv": [
+            "journalctl",
+            "--system",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=fc2e22bc6ee647b6b90729ab34a250b1",
+            "COREDUMP_SIGNAL=11"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "unit_sigkill_record": {
+          "argv": [
+            "journalctl",
+            "--system",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=98e322203f7a4ed290d09fe03c09fe15",
+            "EXIT_CODE=killed",
+            "EXIT_STATUS=9"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "unit_failure_record": {
+          "argv": [
+            "journalctl",
+            "--system",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=d9b373ed55a64feb8242e02dbe79a49c"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        }
+      }
+    },
+    "delivered": {
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh"
+      ],
+      "elapsed_s": 2.960516,
+      "exit": 1,
+      "stdout": "mori-census census-r6 \u2014 ts=2026-10-20T04:33:11Z \u2014 mode=live \u2014 read-only\nSURFACE watchdog: drift (cmd=pgrep -af shokunin-watchdog; stat /home/vgpnk/Projects/shokunin/.ufo/watchdog.log; ls /home/vgpnk/Projects/shokunin/.ufo/state; pids=0; log=ok; age_s=1012; stale_threshold_s=900; state_rounds=21 state_rounds_max=18 state_lag=6 state_ahead=0 state_cmp=21 state_val_unreadable=0 state_val_unread_reasons=file:0 symlink:0 dir:0 other:0; ts=2026-10-20T04:33:11Z)\nSURFACE waves: drift (cmd=find /home/vgpnk/Projects/shokunin/.ufo/waves -maxdepth 1 -mindepth 1 -type d; total=48 settled=13 unsettled=10 aged_unsettled=10 empty=25 age_unreadable=0 threshold_s=7200; ts=2026-10-20T04:33:11Z)\nSURFACE journal.user: ok (cmd=journalctl --user -b --no-pager -o json --output-fields=_BOOT_ID,MESSAGE_ID[,...] MESSAGE_ID=<id>; scope=user kernel_oom_notice=0 oomd_notice=0 coredump_notice=0 segfault_signal11=0 unit_sigkill_record=0 unit_failure_record=0; boot=430d3038185949e682cf5fc475d1b3d0; unit=notice notice_classes=kernel_oom_notice,oomd_notice,coredump_notice record_classes=segfault_signal11,unit_sigkill_record,unit_failure_record trust=client-supplied field=user:MESSAGE_ID oomd_activity=unmeasured rc=0; unmeasured=oom_kill_text,other_signals,other_unit_failure_text reason=no-anchored-structured-field; ts=2026-10-20T04:33:11Z)\nSURFACE journal.system: ok (cmd=journalctl --system -b --no-pager -o json --output-fields=_BOOT_ID,MESSAGE_ID[,...] MESSAGE_ID=<id>; scope=system kernel_oom_notice=0 oomd_notice=0 coredump_notice=0 segfault_signal11=0 unit_sigkill_record=0 unit_failure_record=0; boot=430d3038185949e682cf5fc475d1b3d0; unit=notice notice_classes=kernel_oom_notice,oomd_notice,coredump_notice record_classes=segfault_signal11,unit_sigkill_record,unit_failure_record trust=client-supplied field=user:MESSAGE_ID oomd_activity=unmeasured rc=0; unmeasured=oom_kill_text,other_signals,other_unit_failure_text reason=no-anchored-structured-field; ts=2026-10-20T04:33:11Z)\nSURFACE cgroup: ok (cmd=cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.events; cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.current; cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.pressure; cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.max; oom_kill=0 oom=0 high=0 max=0 current=19288936448; local_oom_kill=0 psi_some_avg10=0.00 psi_full_avg10=0.00 psi_source=ok psi_warn_avg10=10 mem_fill_pct=unavailable mem_fill_scope=host-ram host_mem_avail_pct=85 mem_peak=23607717888 mem_peak_source=ok mem_peak_anchor=1792460904; ts=2026-10-20T04:33:11Z)\nSURFACE disk: ok (cmd=df -P; targets=/home/vgpnk/Projects/shokunin /tmp; warn_pct=85 crit_pct=95; io_basis=since-boot io_avg_since_boot=dm-0:689535Bps/9909s io_avg_unavailable=tmpfs:not-a-block-device; ts=2026-10-20T04:33:11Z)\nSURFACE lane.protocol: progressing (lane=protocol round=14 launch_epoch=1792039857 age_s=430934 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:11Z)\nSURFACE lane.aggregator: progressing (lane=aggregator round=10 launch_epoch=1792039857 age_s=430934 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:11Z)\nSURFACE lane.kaidoku: progressing (lane=kaidoku round=1 launch_epoch=1792039857 age_s=430934 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:11Z)\nSURFACE lane.kasegi: progressing (lane=kasegi round=17 launch_epoch=1792039857 age_s=430934 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:11Z)\nSURFACE lane.kengaku: progressing (lane=kengaku round=13 launch_epoch=1792039857 age_s=430934 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:11Z)\nSURFACE lane.kake: progressing (lane=kake round=16 launch_epoch=1792039857 age_s=430934 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:11Z)\nSURFACE lane.kumitate: progressing (lane=kumitate round=18 launch_epoch=1792039857 age_s=430934 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:11Z)\nSURFACE lane.kotoba: progressing (lane=kotoba round=16 launch_epoch=1792039857 age_s=430934 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:11Z)\nSURFACE lane.kagi: progressing (lane=kagi round=16 launch_epoch=1792039857 age_s=430934 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:11Z)\nSURFACE lane.kama: young (lane=kama round=12 launch_epoch=1792469779 age_s=1012 basis=row-8 reason=age_le_gate gate_s=7200; ts=2026-10-20T04:33:11Z)\nSURFACE lane.lore: progressing (lane=lore round=1 launch_epoch=1792039857 age_s=430934 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:11Z)\nSURFACE lane.revenger: not-open (lane=revenger round=1 launch_epoch=1792039857 age_s=430934 basis=row-6 reason=committed-report round=1 path=.ufo/reports/round-1/revenger.md; ts=2026-10-20T04:33:11Z)\nSURFACE lane.tameshi: not-open (lane=tameshi round=12 launch_epoch=1792467671 age_s=- basis=row-4 reason=ledger-close round=12; ts=2026-10-20T04:33:11Z)\nSURFACE lane.mado: young (lane=mado round=13 launch_epoch=1792469045 age_s=1746 basis=row-8 reason=age_le_gate gate_s=7200; ts=2026-10-20T04:33:11Z)\nSURFACE lane.tsukuroi: not-open (lane=tsukuroi round=12 launch_epoch=1792467670 age_s=- basis=row-4 reason=ledger-close round=12; ts=2026-10-20T04:33:11Z)\nSURFACE lane.tabi: not-open (lane=tabi round=12 launch_epoch=1792468845 age_s=- basis=row-4 reason=ledger-close round=12; ts=2026-10-20T04:33:11Z)\nSURFACE lane.mori: young (lane=mori round=13 launch_epoch=1792469084 age_s=1707 basis=row-8 reason=age_le_gate gate_s=7200; ts=2026-10-20T04:33:11Z)\nSURFACE lane.chousa: progressing (lane=chousa round=1 launch_epoch=1792039857 age_s=430934 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:11Z)\nSURFACE lane.kotodama: not-open (lane=kotodama round=- launch_epoch=- age_s=- basis=row-2 reason=no-launch-line; ts=2026-10-20T04:33:11Z)\nSURFACE lane.souji: not-open (lane=souji round=- launch_epoch=- age_s=- basis=row-2 reason=no-launch-line; ts=2026-10-20T04:33:11Z)\nSURFACE lane.audio: progressing (lane=audio round=1 launch_epoch=1792039542 age_s=431249 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:11Z)\nSURFACE lane.game-dev-2d: progressing (lane=game-dev-2d round=1 launch_epoch=1792039542 age_s=431249 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:11Z)\nSURFACE lane.game-dev-3d: progressing (lane=game-dev-3d round=1 launch_epoch=1792039542 age_s=431249 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-20T04:33:11Z)\nSURFACE silence: ok (cmd=git -C <repo> log --since=@<launch> --format='%ct %an <%ae>'; git -C <repo> ls-files -mo; git -C <root> cat-file -e HEAD:.ufo/reports/round-<N>/<lane>.md; roster_source=conf+state roster_n=23 conf_n=23 state_n=21 conf_dropped_n=0 state_dropped_n=0; silent=0 progressing=14 progressing_weak=0 young=3 not_open=6 unavailable=0 skipped=0 window_s=7200; ts=2026-10-20T04:33:11Z)\nSURFACE tmux: unavailable (cmd=tmux ls; rc=1; ts=2026-10-20T04:33:11Z)\nFINDING WATCHDOG_STALE severity=warn obs=watchdog.log mtime_age_s=1012 threshold_s=900 path=/home/vgpnk/Projects/shokunin/.ufo/watchdog.log ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING WATCHDOG_STATE_LAG severity=info obs=lane=kama state_round=1 ledger_round=12 path=/home/vgpnk/Projects/shokunin/.ufo/state/kama.round ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING WATCHDOG_STATE_LAG severity=info obs=lane=mado state_round=1 ledger_round=13 path=/home/vgpnk/Projects/shokunin/.ufo/state/mado.round ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING WATCHDOG_STATE_LAG severity=info obs=lane=mori state_round=2 ledger_round=13 path=/home/vgpnk/Projects/shokunin/.ufo/state/mori.round ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING WATCHDOG_STATE_LAG severity=info obs=lane=tabi state_round=1 ledger_round=12 path=/home/vgpnk/Projects/shokunin/.ufo/state/tabi.round ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING WATCHDOG_STATE_LAG severity=info obs=lane=tameshi state_round=1 ledger_round=12 path=/home/vgpnk/Projects/shokunin/.ufo/state/tameshi.round ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING WATCHDOG_STATE_LAG severity=info obs=lane=tsukuroi state_round=1 ledger_round=12 path=/home/vgpnk/Projects/shokunin/.ufo/state/tsukuroi.round ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING WATCHDOG_ABSENT severity=warn obs=no shokunin-watchdog process matched by pgrep -af ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p1-audit age_s=446134 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p2-kumitate age_s=445814 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p3-kengaku age_s=447395 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p4-mori-r1 age_s=445029 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p5-chousa-r1 age_s=444116 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013 age_s=541718 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013-w2 age_s=535939 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013-w3 age_s=530769 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013-w4 age_s=527907 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261016-w24 age_s=304651 threshold_s=7200 reg=0 disp=1 run=0 settle=0 ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING JOURNAL_CLASSES_UNMEASURED severity=info obs=classes=oom_kill_text,other_signals,other_unit_failure_text basis=unmeasured reason=no-anchored-structured-field note=prior text counts were not reliable kill counters (MESSAGE text is not metadata; one kill can yield several per-unit notices) ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nFINDING ROSTER_SET_MISMATCH severity=info obs=conf_only=kotodama,souji state_only=none ts=2026-10-20T04:33:11Z script_sha256=39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985\nMORI_CENSUS: DRIFT (findings=20 drift=12 unavailable=1 surfaces=8)\n",
+      "stderr": "",
+      "sha256": "39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985"
+    },
+    "after_queries": {
+      "user": {
+        "kernel_oom_notice": {
+          "argv": [
+            "journalctl",
+            "--user",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=fe6faa94e7774663a0da52717891d8ef"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "oomd_notice": {
+          "argv": [
+            "journalctl",
+            "--user",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=d989611b15e44c9dbf31e3c81256e4ed"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "coredump_notice": {
+          "argv": [
+            "journalctl",
+            "--user",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=fc2e22bc6ee647b6b90729ab34a250b1"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "segfault_signal11": {
+          "argv": [
+            "journalctl",
+            "--user",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=fc2e22bc6ee647b6b90729ab34a250b1",
+            "COREDUMP_SIGNAL=11"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "unit_sigkill_record": {
+          "argv": [
+            "journalctl",
+            "--user",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=98e322203f7a4ed290d09fe03c09fe15",
+            "EXIT_CODE=killed",
+            "EXIT_STATUS=9"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "unit_failure_record": {
+          "argv": [
+            "journalctl",
+            "--user",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=d9b373ed55a64feb8242e02dbe79a49c"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        }
+      },
+      "system": {
+        "kernel_oom_notice": {
+          "argv": [
+            "journalctl",
+            "--system",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=fe6faa94e7774663a0da52717891d8ef"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "oomd_notice": {
+          "argv": [
+            "journalctl",
+            "--system",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=d989611b15e44c9dbf31e3c81256e4ed"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "coredump_notice": {
+          "argv": [
+            "journalctl",
+            "--system",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=fc2e22bc6ee647b6b90729ab34a250b1"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "segfault_signal11": {
+          "argv": [
+            "journalctl",
+            "--system",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=fc2e22bc6ee647b6b90729ab34a250b1",
+            "COREDUMP_SIGNAL=11"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "unit_sigkill_record": {
+          "argv": [
+            "journalctl",
+            "--system",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=98e322203f7a4ed290d09fe03c09fe15",
+            "EXIT_CODE=killed",
+            "EXIT_STATUS=9"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        },
+        "unit_failure_record": {
+          "argv": [
+            "journalctl",
+            "--system",
+            "-b",
+            "--no-pager",
+            "-o",
+            "json",
+            "--output-fields=_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL,EXIT_CODE,EXIT_STATUS",
+            "MESSAGE_ID=d9b373ed55a64feb8242e02dbe79a49c"
+          ],
+          "exit": 0,
+          "stderr_bytes": 0,
+          "status": "ok",
+          "count": 0
+        }
+      }
+    },
+    "comparisons": [
+      {
+        "scope": "user",
+        "class": "kernel_oom_notice",
+        "before": 0,
+        "actual": "0",
+        "after": 0,
+        "matched": true
+      },
+      {
+        "scope": "user",
+        "class": "oomd_notice",
+        "before": 0,
+        "actual": "0",
+        "after": 0,
+        "matched": true
+      },
+      {
+        "scope": "user",
+        "class": "coredump_notice",
+        "before": 0,
+        "actual": "0",
+        "after": 0,
+        "matched": true
+      },
+      {
+        "scope": "user",
+        "class": "segfault_signal11",
+        "before": 0,
+        "actual": "0",
+        "after": 0,
+        "matched": true
+      },
+      {
+        "scope": "user",
+        "class": "unit_sigkill_record",
+        "before": 0,
+        "actual": "0",
+        "after": 0,
+        "matched": true
+      },
+      {
+        "scope": "user",
+        "class": "unit_failure_record",
+        "before": 0,
+        "actual": "0",
+        "after": 0,
+        "matched": true
+      },
+      {
+        "scope": "system",
+        "class": "kernel_oom_notice",
+        "before": 0,
+        "actual": "0",
+        "after": 0,
+        "matched": true
+      },
+      {
+        "scope": "system",
+        "class": "oomd_notice",
+        "before": 0,
+        "actual": "0",
+        "after": 0,
+        "matched": true
+      },
+      {
+        "scope": "system",
+        "class": "coredump_notice",
+        "before": 0,
+        "actual": "0",
+        "after": 0,
+        "matched": true
+      },
+      {
+        "scope": "system",
+        "class": "segfault_signal11",
+        "before": 0,
+        "actual": "0",
+        "after": 0,
+        "matched": true
+      },
+      {
+        "scope": "system",
+        "class": "unit_sigkill_record",
+        "before": 0,
+        "actual": "0",
+        "after": 0,
+        "matched": true
+      },
+      {
+        "scope": "system",
+        "class": "unit_failure_record",
+        "before": 0,
+        "actual": "0",
+        "after": 0,
+        "matched": true
+      }
+    ],
+    "matched": 12,
+    "total": 12,
+    "before_scoped_rows": 0,
+    "after_scoped_rows": 2
+  }
+}

@@ -1,6 +1,6 @@
 source: S031 — https://man7.org/linux/man-pages/man7/pipe.7.html — man-pages 6.19, “I/O on pipes and FIFOs” (write after every read end closes generates SIGPIPE) and “Pipe capacity” (default 16 pages), opened 2026-10-20; `tools/mori-census.sh` sha256 `3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164` (r12 base, wave base commit `6531ac6`): `:7-8,236,329-333,352-353,360-372,503-508,1469,1490-1494,1503,1530-1533,1733-1740,1745-1749,2196-2231,3008-3010`; `tools/mori-silence-cases.sh` sha256 `448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5` (r11 final): `:141,458-495,500-524,535-548,552-618,939-953,976-1006,1016,1074-1080`; `corpus/knowledge/audit-r11.md:156-157` (F01/F02 rows), `:308-374` (Appendix B), `:376-395` (Appendix C)
-verified-at: 2026-10-20 — source read at those pinned bytes and pipe(7) opened this date. No reproducer was re-run: every measured figure quoted below is audit-r11's at its own pins (`census d7710981…`, `oracle 448f7723…`), never a figure measured by this note.
-recheck: `sha256sum tools/mori-census.sh tools/mori-silence-cases.sh`; `sed -n '1488,1496p;1733,1740p' tools/mori-census.sh`; `sed -n '566,606p' tools/mori-silence-cases.sh`; then audit-r11 Appendix B and Appendix C unchanged (they write only under `/tmp`).
+verified-at: 2026-10-20 — original source analysis at the pinned frozen bytes and S031; L1's appended implementation receipt measures c13df48. Historical figures in sections 1–6 retain audit-r11's own pins; they are not retroactively re-observed.
+recheck: python3 tools/mori-round13-regressions.py --jobs 1 --output .ufo/waves/round-13/recheck; source archaeology uses the committed frozen scripts under .ufo/waves/round-13/frozen/ with their inputs.json digests, not the moved numeric line positions in current production files.
 
 # The verdict contract, round 13 — attribution membership and the final roll are two different gates
 
@@ -237,3 +237,31 @@ Whether the live fleet presently has a lane whose post-launch window is large en
 the F01 window; whether any wrapper outside `/tmp` has ever substituted a roll word; and what
 the counters tuple would show if compared against the emitted FINDING/SURFACE lines. None of
 these was established here.
+
+## Measured implementation — round 13
+
+The source analysis above is historical at its named hashes; L1 measured the
+repair at c13df48. Receipt:
+`.ufo/waves/round-13/evidence/regressions-accepted/evidence.json`,
+command `python3 tools/mori-round13-regressions.py --mutation both --jobs 1
+--output .ufo/waves/round-13/evidence/regressions-accepted` → 19 passed,
+2 mutation-red, exit 0.
+
+- F01: exact subject followed by 12,000 siblings is `progressing/row-A`;
+  sibling-only control remains `progressing-weak/row-C`, count 12,000.
+  Reverting only grade_lane reproduces row-C with 12,001 records.
+- F02: honest oracle remains 28/28. BANANA, duplicate, missing, trailer and
+  verdict-first proxies each score 0/28, exit 1. CLEAN-only/DRIFT-only tally
+  or rc mutations correctly preserve their unaffected cases: 7/28 or 21/28,
+  never a green suite. They are not asserted to reject every unaffected case.
+  Reverting only verdict validation makes BANANA green 28/28 again.
+- Final rolls must be terminal, unique, grammatically complete and rc-consistent;
+  CLEAN has drift=0 and DRIFT has a positive canonical decimal drift count.
+  Arbitrary finding-total corruption, aggregate fallback/registry-count
+  vacuity, duplicate lane rows and full adaptive forgery remain outside this
+  demonstrated fix; audit debt D02 is only partially addressed.
+
+The new evidence harness initially rejected correct C1 output because of its
+own schema and expected-fixture mistakes. Both red runs remain committed;
+LOG.md round-13 and lesson M7 identify the exact corrections. No production
+census/oracle bytes changed to accommodate an inaccurate expected result.

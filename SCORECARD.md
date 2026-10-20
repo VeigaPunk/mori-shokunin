@@ -654,3 +654,78 @@ leaves headroom, and 3 rounds avoids firing the nudge on a one-round plateau.
 - **Calibration:** verdict **improved** under the kaika campaign binding (mistake mining into lesson-grounded QUALITY criteria is calibration work); scalar score **held at 5**, not 6, because the non-author reviewer could not re-derive 6.
 - **Adjacency:** verdict **unchanged**, score **6 held**. The contract repair was unclaimed and had no counting command or score move; this supersedes the round-12 row's unsupported “improved” verdict.
 - **Mutation coverage:** on round-head census SHA-256 `3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164`, baseline selftest 77/77 and the re-run battery killed 12/12 mutants (0 survived, 0 inconclusive); receipt `corpus/evidence/roster-r12-20261019T220912Z-mutation.md` post-review section.
+
+## Round 13 — structured journal scopes and verdict-contract repair
+
+Steered round 13, attempt 1, 2026-10-20. Exactly **two** causally separable
+claims: C1 coverage (capability acquisition), C2 operability. Both owned axes
+entered at 6; the lowest-owned-axis obligation is met. The planned freshness
+re-pin is not claimed. The prior FR1 plan's “five kernel records” is corrected:
+those historical `--grep` matches were MESSAGE-selected and belonged to a
+prior boot. This round advances structured notice/result coverage only.
+
+Measured revision: **c13df48**, census SHA-256
+`39abda0a67028575d888d9157b8548dec0b4944c3d8c165691e88ab657fc3985`,
+oracle SHA-256
+`34cd5770889ec6e7521b477aa9976cece7a64e07b83774c12ce2aea73161abfa`.
+Before inputs: frozen r12 census/oracle from `6531ac6`, pinned by
+`.ufo/waves/round-13/frozen/inputs.json`; the before measurement's harness
+revision is 80bd58a. Two harness-only expectation corrections are recorded in
+LOG.md and retained red receipts; production bytes did not change for them.
+
+| claim | axis | before → after | counting command (lane root) | evidence |
+|---|---|---|---|---|
+| C1 dual-scope structured journal records | coverage | explicit scoped surfaces **0 → 2**; source-counter parity **12/12**; five C1 behavioral checks pass | `jq '[.result.baseline.stdout,.result.delivered.stdout] \| map(split("\n") \| map(select(startswith("SURFACE journal."))) \| length)' .ufo/waves/round-13/evidence/live-measurement.json` → `[0,2]` | `live-measurement.json` includes executable Python reproducer, full censuses and bracketing field-only queries; `regressions-accepted/evidence.json`; sourced by S013/S014/S015/S035/S036 |
+| C2 exact-author and final-verdict correctness | operability | demonstrated named defects **2 → 0**; subject-first history row-C → row-A; BANANA oracle 28/28 accepted → 0/28 rejected; honest oracle 28/28 held | `jq -s '[.[] \| [.claims[] \| select(.id == "R13_F01_EXACT_AUTHOR_LONG_HISTORY" or .id == "R13_F02_REJECT_BANANA") \| select(.status == "expected-defect" or .status == "fail")] \| length]' .ufo/waves/round-13/evidence/regressions-before-final/evidence.json .ufo/waves/round-13/evidence/regressions-accepted/evidence.json` → `[2,0]` | frozen before + accepted after receipts; 19 contract checks pass, 2 exact-locus mutation-red witnesses, exit 0; S031 and audit-r11 F01/F02 |
+
+Local score rubric (not a fleet scalar): retain the entering 6; add one point
+for C1 only when the two scoped surfaces exist, all five C1 behavioral checks
+pass, and all twelve live cells match; add one operability point only when the
+two named defects are absent, honest oracle/control cases hold, and both
+exact-locus negative witnesses reproduce the old failure. The commands and
+receipts above re-derive both conditions. No score is awarded for row volume,
+test volume, unclaimed repairs, or the raw fact that a baseline-mode run exits 0.
+
+| axis | verdict (lane assessment; outside closure pending) | active score | evidence / limitation |
+|---|---|---|---|
+| coverage | improved | **6 → 7** | C1 rubric met; user SIGKILL WARN path retained through structured result metadata, not a silent deletion; system notice/result plane only, kernel attribution remains FR1 |
+| operability | improved | **6 → 7** | C2 rubric met; census selftest **91/91**, harness pure checks **24/24**, honest oracle **28/28**, 19 behavior checks plus 2 mutation-red; audit D02's arbitrary tally/aggregate weaknesses remain outside this demonstrated fix |
+| depth | unchanged | **5 held** | new sourced notes support the two claims; no independent depth claim or score |
+| freshness | unchanged | **5 held** | r10 baseline retained; current compare exits 1; 42 tokens classified into intentional journal schema, carried r12 roster schema, and explicitly inferred live-state families; not a regression-free proof and no re-pin |
+| calibration | unchanged | **5 held** | honors round-12 non-author score correction; Q26–Q28 and harness-error lesson are unclaimed contract/learning work, not scalar credit |
+| adjacency | unchanged | **6 held** | tsukuroi owns OS diagnosis, kumitate orchestration; no remediation, publishing, sibling edits or assumed handoff closure |
+
+Costs: one interleaved live pair took **3.025310 s → 2.960516 s**, not a
+distribution or a speedup claim. The honest hermetic oracle took 1.881 s
+before / 3.132 s after in the recorded suite. Journal producers are now bounded
+at 2 s + 1 s grace per query (12 queries); parsing and other surfaces are not
+covered by that producer bound. No existing declared budget was tuned.
+
+### Capabilities demonstrated round 13
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| dual-scope journal records | report six boot-anchored class counters separately for user/system, unavailable on unsafe reads, never MESSAGE or summed kill totals | `.ufo/waves/round-13/evidence/live-measurement.json` (12/12); `corpus/knowledge/structured-journal-scopes-r13.md` | 13 |
+| strict census verdict validation | reject malformed/duplicate/nonterminal/rc-inconsistent final rolls while retaining honest lane cases | `.ufo/waves/round-13/evidence/regressions-accepted/evidence.json` (BANANA 0/28; honest 28/28) | 13 |
+
+### Frontier, trends and remaining limits
+
+FR1 notice/result plane advances to Core; kernel victim-token attribution and
+fleet correlation remain Frontier. FR11 cursor semantics remain unknown.
+SOURCES 34 → 36 (A31 → A33, B2/C1 held), mined12 → 15, queued21 → 20,
+rejected1 held; validation exits 0 with informational W04 for S013/S035's
+same URL across different scopes. Mistakes and all mutable source-cell
+old→new changes are in `corpus/lessons/round-13.md`.
+
+Trends: expansion improved (new working dual-scope capability); quality improved
+(F01/F02 repairs, stronger structured selection and marked historical
+`--grep` overclaims); discernment improved through a lesson-backed Q28 response
+to the previous outside review, not through calling this round's own seats
+independent. Current non-author admit/reject verification remains pending.
+
+Named residuals: client-set journal identifiers, duplicate records,
+fail-closed array values, silent partial-store access, kernel-token parsing,
+unvalidated roster overrides, oracle aggregate/registry-count vacuity and
+arbitrary finding-tally corruption. No broad “cannot fake” claim is made.
+Next steered work starts from these residuals and the deferred, reasoned
+drift re-pin; no next round was started.
