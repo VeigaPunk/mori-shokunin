@@ -12,8 +12,12 @@
 #             (count, max, ledger-vs-state mismatch — r7; r8 adds every
 #             non-regular `*.round` entry, by reason)
 #   waves     .ufo/waves/* settlement (registry/dispatch/run × results/closeout)
-#   journal   structured per-scope notice counts (this boot): catalog MESSAGE_ID
-#             classes + COREDUMP_SIGNAL=11, no MESSAGE, user and system separate
+#   journal   structured per-scope notice/record counts (this boot): catalog
+#             MESSAGE_ID classes + COREDUMP_SIGNAL=11, no MESSAGE, user and
+#             system separate; r14 restores the OOM crit alarm (kernel-OOM unit
+#             notice in either scope, or UNIT_RESULT=oom-kill) and splits unit
+#             failures into fleet / non-fleet (owner tsukuroi) / unknown from
+#             the subject UNIT/USER_UNIT metadata
 #   cgroup    memory.events / memory.current / memory.pressure / memory.max /
 #             memory.peak (user slice; r7 adds PSI + fill/avail grading, r8 the
 #             scope high-watermark with its instance anchor; thresholds labeled
@@ -232,12 +236,14 @@
 #   WATCHDOG_PROBE_UNAVAILABLE WATCHDOG_STATE_LAG WATCHDOG_STATE_AHEAD
 #   WATCHDOG_STATE_ENTRY_UNREADABLE
 #   WAVE_UNSETTLED_AGE
-#   KERNEL_OOM_NOTICE_JOURNAL_{USER,SYSTEM}
+#   OOM_KILL_JOURNAL
 #   OOMD_NOTICE_JOURNAL_{USER,SYSTEM}
 #   COREDUMP_NOTICE_JOURNAL_{USER,SYSTEM}
 #   SEGFAULT_SIGNAL11_JOURNAL_{USER,SYSTEM}
 #   KILL_SIGNAL_JOURNAL KILL_SIGNAL_JOURNAL_SYSTEM
 #   UNIT_FAILURE_JOURNAL UNIT_FAILURE_JOURNAL_SYSTEM
+#   UNIT_FAILURE_OUT_OF_SCOPE UNIT_FAILURE_OUT_OF_SCOPE_SYSTEM
+#   UNIT_FAILURE_UNATTRIBUTED_JOURNAL
 #   JOURNAL_CLASSES_UNMEASURED
 #   CGROUP_OOM_KILL CGROUP_UNAVAILABLE MEM_PRESSURE_HIGH MEM_FILL_HIGH
 #   MEM_AVAIL_LOW
@@ -876,20 +882,21 @@ probe_waves() {
   emit_surface waves "$st" "cmd=$cmd; total=$n_total settled=$n_settled unsettled=$n_unsettled aged_unsettled=$n_aged empty=$n_empty age_unreadable=$n_age_unread threshold_s=$WAVE_UNSETTLED_S; ts=$TS_UTC"
 }
 
-# ---- surface: journal notice classes (r13) ----------------------------------
-# Authority: corpus/knowledge/kill-classes-by-message-id-r12.md (catalog ids,
-# notice != kill, scopes never summed), corpus/QUALITY.md #15/#16, S013 catalog
-# at commit cf8ebfc6 (:66, :561, :568, :604, :884).
+# ---- surface: journal notice/record classes (r13; r14 alarm + routing) ------
+# Authority: corpus/knowledge/kill-classes-by-message-id-r12.md and
+# corpus/knowledge/structured-journal-scopes-r13.md (catalog ids, notice !=
+# kill, scopes never summed), S013/S035/S036 (pinned catalog + unit.c
+# emitters), S015 (UNIT=/USER_UNIT= name the unit a manager logs ABOUT;
+# _SYSTEMD_* describe the emitting process), QUALITY #15/#16.
 #
 # A journal class is counted by a stable STRUCTURED field, never by MESSAGE text
 # (QUALITY #15; lessons/round-12.md#M13). Counts are scoped RECORD counts: one
 # kernel kill can produce several per-unit notices, a fc2e22bc record is a
 # coredump notice, and d989611b is systemd-oomd's per-unit notice. None is a
-# victim or fleet-cause count. Every non-underscore journal field here
-# (MESSAGE_ID, EXIT_CODE, EXIT_STATUS, COREDUMP_SIGNAL) is client-supplied, so
-# counts are labelled `trust=client-supplied`; `_BOOT_ID` is requested and
-# validated on every record, and one 32-lowercase-hex boot id per scope is the
-# only journal value echoed. User and system journals are separate SURFACE rows
+# victim or fleet-cause count. Every non-underscore journal field here is
+# client-supplied, so counts carry `trust=client-supplied`; `_BOOT_ID` is
+# requested and validated on every record, and a validated boot id is the only
+# journal value echoed. User and system journals are separate SURFACE rows
 # (journal.user / journal.system) and are never summed.
 #
 # Classes (6 queries per scope):
@@ -900,22 +907,62 @@ probe_waves() {
 #   unit_sigkill_record  MESSAGE_ID=98e322203f7a4ed290d09fe03c09fe15
 #                        EXIT_CODE=killed EXIT_STATUS=9 (unit process, SIGKILL)
 #   unit_failure_record  MESSAGE_ID=d9b373ed55a64feb8242e02dbe79a49c (Unit failed)
+# The unit_failure query additionally requests UNIT,USER_UNIT,UNIT_RESULT and
+# splits ONE record set in ONE jq pass (no second query, so the subsets cannot
+# race): a fleet | non-fleet | unknown subject partition (sum == total) and the
+# UNIT_RESULT=oom-kill subset.
+#
+# R14 routing rules:
+#   subject      exactly one of UNIT/USER_UNIT present, in EITHER journal scope
+#                (USER_UNIT records can legitimately appear in the system
+#                journal). Both present — even with equal values — neither
+#                present, or a value that is not a valid systemd unit name
+#                (string, 1..255, systemd charset incl. @ : and \xHH escapes,
+#                known unit suffix) is UNKNOWN, never non-fleet.
+#                _SYSTEMD_UNIT/_SYSTEMD_USER_UNIT are the EMITTER and are never
+#                read for classification.
+#   fleet        case-insensitive substring match of the frozen r12 marker set
+#                (`classification_rule=unit-name-token`) against the subject
+#                name only. "non-fleet" means "no marker" — a routing hint for
+#                tsukuroi, not proof that a unit is unrelated to fleet work.
+#   findings     UNIT_FAILURE_JOURNAL(_SYSTEM) info, fleet-only;
+#                UNIT_FAILURE_OUT_OF_SCOPE(_SYSTEM) info owner=tsukuroi;
+#                UNIT_FAILURE_UNATTRIBUTED_JOURNAL info (ONE id, scope=user|system,
+#                owner=unresolved reason=subject-metadata-unknown). Only the OOM
+#                crit and the user KILL_SIGNAL warn (process SIGKILL OR unit
+#                result signal) flip the roll.
+#   universe     r13's UNIT_FAILURE_JOURNAL_SYSTEM counted ALL system unit
+#                failures; r14 makes it fleet-only. Pre-r13 history had no
+#                system scope, so this split is new semantics, not a silent
+#                reuse of the id.
+#   oom          a kernel-OOM unit notice (fe6faa94) in EITHER scope, or a unit
+#                that failed with UNIT_RESULT=oom-kill in either scope, emits
+#                EXACTLY ONE global OOM_KILL_JOURNAL crit. Per-scope/per-source
+#                counters (user_notice, system_notice, user_unit_oom,
+#                system_unit_oom) are separate, appear once and are never
+#                summed. Drift counts that alarm LINE, not records or kills; the
+#                result path can come from the kernel OOM killer or from
+#                systemd-oomd. Subject validity never gates the alarm.
+#   unknown      a non-string/missing UNIT_RESULT contributes only to
+#                unit_oom_result_unknown: never a fabricated known 0 and never
+#                oom evidence.
 # No query asks for MESSAGE. A nonzero journalctl rc (never parsed as a count),
 # an absent journalctl/jq, malformed JSON, a record without the validated
-# fields, or records from more than one boot makes that class unavailable — it
-# is never reported as 0. A system-scope zero says the queried journal scope held
-# no matching records; it does not say whether a service was active or inactive.
+# fields, a non-matching MESSAGE_ID, or records from more than one boot makes
+# that class unavailable — it is never reported as 0, and its split tokens read
+# unavailable:<reason> (a timeout is unavailable, never an alarm). A
+# system-scope zero says the queried journal scope held no matching records; it
+# does not say whether a service was active or inactive.
 #
 # The prior TEXT classes are gone, not aliased: the old probe grepped MESSAGE
 # text, which is not metadata (QUALITY #15) and cannot be a reliable kill
-# counter (measured: 5 kernel kills vs 7 user + 9 system fe6faa94 notices, same
-# boot — round-12 M19). Their anchored replacements are the three catalog notice
-# classes above. KILL_SIGNAL_JOURNAL keeps its warn severity ONLY for the user
-# scope and now names a structured unit-process SIGKILL record (attribution
-# none); UNIT_FAILURE_JOURNAL keeps its info severity for the catalog "Unit
-# failed" record. Remaining text-only surfaces are named `unmeasured=`, never a
-# look-alike 0: kernel OOM victim lines (no stable MESSAGE_ID), signals other
-# than 9, and unit failures that emit no catalog record.
+# counter: a historical MESSAGE-selected text sample (round-12 M19, r13 errata)
+# counted 5 kernel "Killed process" text matches against 7 user + 9 system
+# fe6faa94 notices in the same boot; that is not a victim census and the text
+# counts are not reproduced here. JOURNAL_CLASSES_UNMEASURED names each remaining
+# unmeasured class with a reason that distinguishes a retired text heuristic, an
+# unimplemented structured field, and the possibility that no record was
+# retained at all. Remaining text-only surfaces are never a look-alike 0.
 JOURNAL_ID_KERNEL_OOM=fe6faa94e7774663a0da52717891d8ef
 JOURNAL_ID_OOMD=d989611b15e44c9dbf31e3c81256e4ed
 JOURNAL_ID_COREDUMP=fc2e22bc6ee647b6b90729ab34a250b1
@@ -928,8 +975,72 @@ JOURNAL_JQ_MSGID="if all(.[]; type == \"object\" and (._BOOT_ID | type) == \"str
 JOURNAL_JQ_SIGKILL="if all(.[]; type == \"object\" and (._BOOT_ID | type) == \"string\" and (._BOOT_ID == \$boot) and (.MESSAGE_ID == \$id) and (.EXIT_CODE == \"killed\") and ((.EXIT_STATUS | tostring) == \"9\")) $JOURNAL_JQ_TAIL"
 JOURNAL_JQ_SIGSEGV="if all(.[]; type == \"object\" and (._BOOT_ID | type) == \"string\" and (._BOOT_ID == \$boot) and (.MESSAGE_ID == \$id) and ((.COREDUMP_SIGNAL | tostring) == \"11\")) $JOURNAL_JQ_TAIL"
 
+# r14 unit-failure split: ONE jq pass over the d9b373ed record set, so the
+# subsets cannot race a second journal scan. Column order (15 columns, checked
+# exactly by journal_query):
+#   total fleet nonfleet unknown missing ambiguous malformed
+#   oom oom_fleet oom_nonfleet oom_subject_unknown oom_result_unknown signal
+#   boots boot
+# Invariants: fleet+nonfleet+unknown == total. oom and signal are MUTUALLY
+# EXCLUSIVE result subsets (one UNIT_RESULT string per record); each overlaps
+# the fleet/nonfleet/unknown subject buckets, so neither is disjoint from them.
+#   subject  exactly one of UNIT/USER_UNIT present (has(), so a null field still
+#            counts as present). Both present — even equal — neither present, or
+#            a non-string/invalid name is UNKNOWN, never non-fleet. Valid names
+#            are strings 1..255 over the ASCII safe set [A-Za-z0-9_.:@-] plus
+#            ONLY literal \xHH escape sequences (a bare backslash or \q is
+#            malformed), with a known unit suffix.
+#   oom      UNIT_RESULT is the STRING "oom-kill". A non-string/array/null/
+#            missing UNIT_RESULT is oom_result_unknown, never oom evidence.
+#   signal   UNIT_RESULT is the STRING "signal" (the pre-r13 text class warned
+#            on "Failed with result 'signal'"; it is a result ordinal, not proof
+#            of SIGKILL).
+#   output   only integers and the validated _BOOT_ID token; no unit or result
+#            value is ever printed (unit bytes never reach a row or finding).
+FLEET_UNIT_TOKENS='shokunin|ufo-sighting|tmux-spawn|the-tick|fleet'
+JOURNAL_JQ_UNITS='def subject:
+  ((has("UNIT") | if . then 1 else 0 end) + (has("USER_UNIT") | if . then 1 else 0 end)) as $np
+  | if $np == 0 then {kind:"missing"}
+    elif $np > 1 then {kind:"ambiguous"}
+    else
+      (.UNIT // .USER_UNIT) as $v
+      | if ($v | type) == "string"
+           and ($v | length) > 0
+           and ($v | length) <= 255
+           and ($v | test("^([A-Za-z0-9_.:@-]|\\\\x[0-9A-Fa-f]{2})+$"))
+           and ($v | test("\\.(service|socket|device|mount|automount|swap|target|path|timer|slice|scope)$"))
+        then {kind:"unit", name:($v | ascii_downcase)}
+        else {kind:"malformed"} end
+    end;
+def fleet: .kind == "unit" and (.name | test($fleet));
+def oom: ((.UNIT_RESULT? | type) == "string" and .UNIT_RESULT == "oom-kill");
+def sig: ((.UNIT_RESULT? | type) == "string" and .UNIT_RESULT == "signal");
+def resunk: ((.UNIT_RESULT? | type) != "string");
+if all(.[]; type == "object" and (._BOOT_ID | type) == "string" and (._BOOT_ID == $boot) and (.MESSAGE_ID == $id)) then
+  [ .[] | {s: subject, o: oom, g: sig, ru: resunk} ] as $r
+  | [ ($r|length),
+      ($r|map(select(.s|fleet))|length),
+      ($r|map(select(.s.kind=="unit" and ((.s|fleet)|not)))|length),
+      ($r|map(select(.s.kind!="unit"))|length),
+      ($r|map(select(.s.kind=="missing"))|length),
+      ($r|map(select(.s.kind=="ambiguous"))|length),
+      ($r|map(select(.s.kind=="malformed"))|length),
+      ($r|map(select(.o))|length),
+      ($r|map(select(.o and (.s|fleet)))|length),
+      ($r|map(select(.o and .s.kind=="unit" and ((.s|fleet)|not)))|length),
+      ($r|map(select(.o and .s.kind!="unit"))|length),
+      ($r|map(select(.ru))|length),
+      ($r|map(select(.g))|length),
+      ([.[]._BOOT_ID]|unique|length),
+      ([.[]._BOOT_ID][0] // "none")
+    ] | @tsv
+else (if all(.[]; type == "object" and (._BOOT_ID | type) == "string" and ((._BOOT_ID | length) > 0)) then ([.[]._BOOT_ID] | unique | length) as $b | if $b > 1 then "multi-boot" elif all(.[]; ._BOOT_ID == $boot) then "record-invalid" else "boot-mismatch" end else "record-invalid" end) end'
+
+
 # journal_query <scope-flag> <output-fields> <match words> <jq-filter> [jq args...]
-# -> JQ_N JQ_BOOTS JQ_BOOT JQ_STATUS
+# -> JQ_N JQ_BOOTS JQ_BOOT JQ_VEC JQ_STATUS
+# JOURNAL_Q_WIDTH (a caller-prefixed assignment) is the exact column count the
+# filter must emit; the default 3 is the legacy <records>\t<boots>\t<boot>.
 # The match words are whitespace-split (journalctl wants one FIELD=value per
 # argv element; every value here is whitespace-free).
 journal_query() {
@@ -937,7 +1048,7 @@ journal_query() {
   shift 4
   local -a m=()
   read -r -a m <<< "$match"
-  JQ_N=''; JQ_BOOTS=''; JQ_BOOT=''; JQ_STATUS=''
+  JQ_N=''; JQ_BOOTS=''; JQ_BOOT=''; JQ_STATUS=''; JQ_VEC=''
   if ! have "$TIMEOUT_BIN" && [ ! -x "$TIMEOUT_BIN" ]; then
     # Never run an unbounded journal scan when the bound is unavailable.
     JQ_STATUS=no-timeout-bin
@@ -982,22 +1093,35 @@ journal_query() {
     JQ_STATUS=stderr-nonempty
     return 0
   fi
-  local raw=$CAP_OUT parsed jrc n nb boot
+  local raw=$CAP_OUT parsed jrc n nb boot width=${JOURNAL_Q_WIDTH:-3}
+  local -a vec=()
   set +e
   parsed=$("$JQ_BIN" -s -r "$@" "$filter" <<< "$raw" 2>/dev/null)
   jrc=$?
   set -e
   if [ "$jrc" -ne 0 ]; then JQ_STATUS=malformed-json; return 0; fi
   case "$parsed" in
-    record-invalid) JQ_STATUS=record-invalid; return 0 ;;
-    multi-boot) JQ_STATUS=multi-boot; return 0 ;;
-    boot-mismatch) JQ_STATUS=boot-mismatch; return 0 ;;
+    record-invalid|multi-boot|boot-mismatch) JQ_STATUS=$parsed; return 0 ;;
   esac
-  IFS=$'\t' read -r n nb boot <<< "$parsed" || true
-  if ! is_int "$n" || ! is_int "$nb"; then JQ_STATUS=malformed-json; return 0; fi
+  # r14: a filter may emit more columns than the legacy <n>\t<boots>\t<boot>.
+  # The column COUNT is checked exactly, every count column must be a plain
+  # non-negative integer, the boot column must be the 32-hex id (or `none` for
+  # the proven-empty vector). A short/long/injected row is malformed, never a
+  # partial count.
+  IFS=$'\t' read -r -a vec <<< "$parsed" || true
+  if [ "${#vec[@]}" -ne "$width" ]; then JQ_STATUS=malformed-json; return 0; fi
+  local i
+  for ((i = 0; i < width - 2; i++)); do
+    is_int "${vec[$i]}" || { JQ_STATUS=malformed-json; return 0; }
+  done
+  n=${vec[0]}
+  nb=${vec[$((width - 2))]}
+  boot=${vec[$((width - 1))]}
+  if ! is_int "$nb"; then JQ_STATUS=malformed-json; return 0; fi
   if [ "$nb" -eq 0 ]; then
     [ "$n" -eq 0 ] || { JQ_STATUS=record-invalid; return 0; }
     JQ_N=0; JQ_BOOTS=0; JQ_STATUS=ok
+    JQ_VEC=$parsed
     return 0
   fi
   if [ "$nb" -ne 1 ]; then JQ_STATUS=multi-boot; return 0; fi
@@ -1008,13 +1132,11 @@ journal_query() {
     *[!0-9a-f]*) JQ_STATUS=record-invalid; return 0 ;;
   esac
   if [ "${#boot}" -ne 32 ]; then JQ_STATUS=record-invalid; return 0; fi
-  JQ_N=$n; JQ_BOOTS=$nb; JQ_BOOT=$boot; JQ_STATUS=ok
+  JQ_N=$n; JQ_BOOTS=$nb; JQ_BOOT=$boot; JQ_VEC=$parsed; JQ_STATUS=ok
 }
 
 journal_finding_id() { # <scope> <class>
   case "$1:$2" in
-    user:kernel_oom_notice)    printf '%s' KERNEL_OOM_NOTICE_JOURNAL_USER ;;
-    system:kernel_oom_notice)  printf '%s' KERNEL_OOM_NOTICE_JOURNAL_SYSTEM ;;
     user:oomd_notice)          printf '%s' OOMD_NOTICE_JOURNAL_USER ;;
     system:oomd_notice)        printf '%s' OOMD_NOTICE_JOURNAL_SYSTEM ;;
     user:coredump_notice)      printf '%s' COREDUMP_NOTICE_JOURNAL_USER ;;
@@ -1023,22 +1145,26 @@ journal_finding_id() { # <scope> <class>
     system:segfault_signal11)  printf '%s' SEGFAULT_SIGNAL11_JOURNAL_SYSTEM ;;
     user:unit_sigkill_record)  printf '%s' KILL_SIGNAL_JOURNAL ;;
     system:unit_sigkill_record) printf '%s' KILL_SIGNAL_JOURNAL_SYSTEM ;;
-    user:unit_failure_record)  printf '%s' UNIT_FAILURE_JOURNAL ;;
-    system:unit_failure_record) printf '%s' UNIT_FAILURE_JOURNAL_SYSTEM ;;
   esac
 }
 
 probe_journal() {
   local cmd_tmpl="$JOURNALCTL_BIN <--user|--system> -b --no-pager -o json --output-fields=_BOOT_ID,MESSAGE_ID[,...] MESSAGE_ID=<id>"
-  local flag scope cls key n sev subj d st rc_n
+  local flag scope cls key n subj d st rc_n uf
   local -a classes=(kernel_oom_notice oomd_notice coredump_notice segfault_signal11 unit_sigkill_record unit_failure_record)
   local -A ids=( [kernel_oom_notice]=$JOURNAL_ID_KERNEL_OOM [oomd_notice]=$JOURNAL_ID_OOMD [coredump_notice]=$JOURNAL_ID_COREDUMP [unit_failure_record]=$JOURNAL_ID_UNIT_FAILURE [segfault_signal11]='' [unit_sigkill_record]='' )
-  local -A jn=() js=() sboot=() src=()
+  local -A jn=() js=() sboot=() src=() ucnt=()
+  local -a vec=() unit_fields=(fleet nonfleet unknown missing ambiguous malformed oom oom_fleet oom_nonfleet oom_subject_unknown oom_result_unknown signal)
+  local oom_fire=0 oom_paths='' oom_fields=''
+  local ko uo uou ps us kill_fire=0 kill_paths=''
+  local oom_path_k=0 oom_path_u=0
 
-  # Named coverage loss, not a look-alike zero: these surfaces have no anchored
-  # structured field, and MESSAGE text is not an acceptable substitute (Q15).
-  # Emitted on every run, including a run where journalctl itself is missing.
-  emit_finding JOURNAL_CLASSES_UNMEASURED info "classes=oom_kill_text,other_signals,other_unit_failure_text basis=unmeasured reason=no-anchored-structured-field note=prior text counts were not reliable kill counters (MESSAGE text is not metadata; one kill can yield several per-unit notices)"
+  # Named coverage loss, not a look-alike zero. Each unmeasured class carries a
+  # reason that separates a RETIRED TEXT HEURISTIC from an unimplemented
+  # STRUCTURED class from the possibility that no record was retained at all
+  # (MESSAGE text is not an acceptable substitute, Q15). Emitted on every run,
+  # including a run where journalctl itself is missing.
+  emit_finding JOURNAL_CLASSES_UNMEASURED info "classes=kernel_victim_text,gpf_text,other_signals,uncataloged_unit_failure basis=unmeasured reasons=kernel_victim_text:text-heuristic-retired,gpf_text:text-heuristic-retired,other_signals:structured-field-unimplemented,uncataloged_unit_failure:text-heuristic-retired counted_structured=kernel_oom_notice,oomd_notice,coredump_notice,segfault_signal11,unit_sigkill_record,unit_failure_record absent_records=possible:no-retained-record-is-not-no-event note=other_signals has structured EXIT_CODE/EXIT_STATUS records (S036) but only EXIT_STATUS=9 is implemented here; the retired text classes are not aliases and are never counted"
   if ! have "$JOURNALCTL_BIN" && [ ! -x "$JOURNALCTL_BIN" ]; then
     for scope in user system; do
       emit_surface "journal.$scope" unavailable "cmd=$cmd_tmpl; scope=$scope; journalctl=missing; unit=notice trust=client-supplied rc=na; ts=$TS_UTC"
@@ -1068,6 +1194,27 @@ probe_journal() {
           journal_query "$flag" '_BOOT_ID,MESSAGE_ID,COREDUMP_SIGNAL' "MESSAGE_ID=$JOURNAL_ID_COREDUMP COREDUMP_SIGNAL=11" "$JOURNAL_JQ_SIGSEGV" --arg boot "$BOOT_ID_EXPECTED" --arg id "$JOURNAL_ID_COREDUMP" ;;
         unit_sigkill_record)
           journal_query "$flag" '_BOOT_ID,MESSAGE_ID,EXIT_CODE,EXIT_STATUS' "MESSAGE_ID=$JOURNAL_ID_UNIT_SIGKILL EXIT_CODE=killed EXIT_STATUS=9" "$JOURNAL_JQ_SIGKILL" --arg boot "$BOOT_ID_EXPECTED" --arg id "$JOURNAL_ID_UNIT_SIGKILL" ;;
+        unit_failure_record)
+          # One record set, one jq pass: the class total and its fleet /
+          # non-fleet / unknown / oom / signal subsets share the validated
+          # records, so no subset can disagree with or race the total.
+          JOURNAL_Q_WIDTH=15 journal_query "$flag" '_BOOT_ID,MESSAGE_ID,UNIT,USER_UNIT,UNIT_RESULT' "MESSAGE_ID=${ids[$cls]}" "$JOURNAL_JQ_UNITS" --arg boot "$BOOT_ID_EXPECTED" --arg id "${ids[$cls]}" --arg fleet "$FLEET_UNIT_TOKENS"
+          if [ "$JQ_STATUS" = ok ]; then
+            IFS=$'\t' read -r -a vec <<< "$JQ_VEC"
+            ucnt["$scope:total"]=${vec[0]}
+            ucnt["$scope:fleet"]=${vec[1]}
+            ucnt["$scope:nonfleet"]=${vec[2]}
+            ucnt["$scope:unknown"]=${vec[3]}
+            ucnt["$scope:missing"]=${vec[4]}
+            ucnt["$scope:ambiguous"]=${vec[5]}
+            ucnt["$scope:malformed"]=${vec[6]}
+            ucnt["$scope:oom"]=${vec[7]}
+            ucnt["$scope:oom_fleet"]=${vec[8]}
+            ucnt["$scope:oom_nonfleet"]=${vec[9]}
+            ucnt["$scope:oom_subject_unknown"]=${vec[10]}
+            ucnt["$scope:oom_result_unknown"]=${vec[11]}
+            ucnt["$scope:signal"]=${vec[12]}
+          fi ;;
         *)
           journal_query "$flag" '_BOOT_ID,MESSAGE_ID' "MESSAGE_ID=${ids[$cls]}" "$JOURNAL_JQ_MSGID" --arg boot "$BOOT_ID_EXPECTED" --arg id "${ids[$cls]}" ;;
       esac
@@ -1082,34 +1229,134 @@ probe_journal() {
     done
   done
 
-  # Positive counts only: 0 is a surface value, not a finding. KILL_SIGNAL_JOURNAL
-  # is the one warn: a user-scope unit-process SIGKILL record preserves the DRIFT
-  # path the text class had, with attribution explicitly left none.
+  # Positive counts only: 0 is a surface value, not a finding. The OOM alarm and
+  # the user KILL_SIGNAL warn are single global lines; the fleet/non-fleet/
+  # unattributed routing is one line per scope (below); every other class keeps
+  # one line per scope.
   for scope in user system; do
     for cls in "${classes[@]}"; do
+      case "$cls" in
+        kernel_oom_notice|unit_failure_record) continue ;;
+        unit_sigkill_record) if [ "$scope" = user ]; then continue; fi ;;
+      esac
       key="$scope:$cls"
       [ "${js[$key]}" = ok ] || continue
       n=${jn[$key]}
       [ "$n" -gt 0 ] || continue
-      sev=info
-      if [ "$scope:$cls" = 'user:unit_sigkill_record' ]; then sev=warn; fi
       case "$cls" in
         segfault_signal11)
           subj="class=segfault_signal11 unit=record source_field=COREDUMP_SIGNAL value=11 count=$n scope=$scope basis=scoped-record-count boot=${sboot[$scope]}" ;;
         unit_sigkill_record)
-          subj="class=unit_sigkill_record unit=record message_id=$JOURNAL_ID_UNIT_SIGKILL signal=9 count=$n scope=$scope attribution=none note=unit process exited on SIGKILL; not an OOM or fleet-caused kill boot=${sboot[$scope]}" ;;
-        unit_failure_record)
-          subj="class=unit_failure_record unit=record message_id=$JOURNAL_ID_UNIT_FAILURE count=$n scope=$scope attribution=none note=unit entered failed state; no fleet classification boot=${sboot[$scope]}" ;;
+          subj="class=unit_sigkill_record unit=record message_id=$JOURNAL_ID_UNIT_SIGKILL signal=9 count=$n scope=$scope attribution=none note=unit process exited on SIGKILL; cause unknown (a kernel OOM can also deliver SIGKILL) boot=${sboot[$scope]}" ;;
         *)
           subj="class=$cls unit=notice message_id=${ids[$cls]} count=$n scope=$scope trust=client-supplied basis=scoped-record-count boot=${sboot[$scope]}" ;;
       esac
-      emit_finding "$(journal_finding_id "$scope" "$cls")" "$sev" "$subj"
+      emit_finding "$(journal_finding_id "$scope" "$cls")" info "$subj"
     done
   done
+
+  # ---- unit-failure routing (r14) -----------------------------------------
+  # One validated record set split three ways by the SUBJECT unit metadata:
+  # fleet (historical marker set, owner=mori), non-fleet (owner=tsukuroi; the
+  # desktop/OS diagnosis route), unattributed (owner=unresolved). All three are
+  # INFO and none flips the roll: only the OOM crit and the user KILL_SIGNAL
+  # warn do. No unit byte is echoed — only integer counts.
+  for scope in user system; do
+    key="$scope:unit_failure_record"
+    [ "${js[$key]}" = ok ] || continue
+    fleetn=${ucnt["$scope:fleet"]}
+    nonfleetn=${ucnt["$scope:nonfleet"]}
+    unknownn=${ucnt["$scope:unknown"]}
+    if [ "$fleetn" -gt 0 ]; then
+      if [ "$scope" = user ]; then
+        emit_finding UNIT_FAILURE_JOURNAL info "class=unit_failure_record unit=record message_id=$JOURNAL_ID_UNIT_FAILURE count=$fleetn subject=fleet owner=mori classification_rule=unit-name-token scope=user basis=scoped-record-count boot=${sboot[$scope]} note=unit entered failed state; the subject unit name carries a fleet marker (any UNIT_RESULT, oom-kill included); marker match is a routing rule, not proof of fleet ownership"
+      else
+        emit_finding UNIT_FAILURE_JOURNAL_SYSTEM info "class=unit_failure_record unit=record message_id=$JOURNAL_ID_UNIT_FAILURE count=$fleetn subject=fleet owner=mori classification_rule=unit-name-token scope=system basis=scoped-record-count boot=${sboot[$scope]} note=unit entered failed state; the subject unit name carries a fleet marker (any UNIT_RESULT, oom-kill included); marker match is a routing rule, not proof of fleet ownership"
+      fi
+    fi
+    if [ "$nonfleetn" -gt 0 ]; then
+      if [ "$scope" = user ]; then
+        emit_finding UNIT_FAILURE_OUT_OF_SCOPE info "class=unit_failure_record count=$nonfleetn subject=nonfleet owner=tsukuroi classification_rule=unit-name-token scope=user basis=scoped-record-count boot=${sboot[$scope]} note=non-fleet units (desktop/OS) — tsukuroi owns these; no fleet marker in the subject unit name (a routing hint, not proof of non-fleet ownership)"
+      else
+        emit_finding UNIT_FAILURE_OUT_OF_SCOPE_SYSTEM info "class=unit_failure_record count=$nonfleetn subject=nonfleet owner=tsukuroi classification_rule=unit-name-token scope=system basis=scoped-record-count boot=${sboot[$scope]} note=non-fleet units (desktop/OS) — tsukuroi owns these; no fleet marker in the subject unit name (a routing hint, not proof of non-fleet ownership)"
+      fi
+    fi
+    if [ "$unknownn" -gt 0 ]; then
+      if [ "$scope" = user ]; then
+        emit_finding UNIT_FAILURE_UNATTRIBUTED_JOURNAL info "class=unit_failure_record count=$unknownn missing=${ucnt["$scope:missing"]} ambiguous=${ucnt["$scope:ambiguous"]} malformed=${ucnt["$scope:malformed"]} subject=unknown owner=unresolved reason=subject-metadata-unknown scope=user basis=scoped-record-count boot=${sboot[$scope]} note=subject UNIT/USER_UNIT absent, both present, or not a valid unit name; the raw count stays in SURFACE unit_failure_record; never classified fleet or non-fleet"
+      else
+        emit_finding UNIT_FAILURE_UNATTRIBUTED_JOURNAL info "class=unit_failure_record count=$unknownn missing=${ucnt["$scope:missing"]} ambiguous=${ucnt["$scope:ambiguous"]} malformed=${ucnt["$scope:malformed"]} subject=unknown owner=unresolved reason=subject-metadata-unknown scope=system basis=scoped-record-count boot=${sboot[$scope]} note=subject UNIT/USER_UNIT absent, both present, or not a valid unit name; the raw count stays in SURFACE unit_failure_record; never classified fleet or non-fleet"
+      fi
+    fi
+  done
+
+  # ---- OOM alarm (r14 restoration) -----------------------------------------
+  # EXACTLY ONE global OOM_KILL_JOURNAL crit line per census. The four counters
+  # are per scope and per source, appear once, and are NEVER summed. A
+  # kernel-OOM unit notice in either scope is an alarm even though it is a
+  # notice, not a unique-victim count; a unit that failed with UNIT_RESULT
+  # oom-kill is an alarm regardless of subject classification. The result path
+  # may come from the kernel OOM killer or from systemd-oomd. An unavailable
+  # source keeps its own unavailable:<reason> token and does not alarm; another
+  # positive source still does. Drift counts this alarm LINE, not records and
+  # not kills.
+  for scope in user system; do
+    key="$scope:kernel_oom_notice"
+    if [ "${js[$key]}" = ok ]; then ko=${jn[$key]}; else ko="unavailable:${js[$key]}"; fi
+    key="$scope:unit_failure_record"
+    if [ "${js[$key]}" = ok ]; then
+      uo=${ucnt["$scope:oom"]}
+      uou=${ucnt["$scope:oom_result_unknown"]}
+    else
+      uo="unavailable:${js[$key]}"
+      uou="unavailable:${js[$key]}"
+    fi
+    case "$ko" in
+      unavailable:*) ;;
+      *) if [ "$ko" -gt 0 ]; then oom_fire=1; oom_path_k=1; fi ;;
+    esac
+    case "$uo" in
+      unavailable:*) ;;
+      *) if [ "$uo" -gt 0 ]; then oom_fire=1; oom_path_u=1; fi ;;
+    esac
+    if [ "$scope" = user ]; then
+      oom_fields="$oom_fields user_notice=$ko user_unit_oom=$uo user_unit_oom_result_unknown=$uou"
+    else
+      oom_fields="$oom_fields system_notice=$ko system_unit_oom=$uo system_unit_oom_result_unknown=$uou"
+    fi
+  done
+  if [ "$oom_path_k" -eq 1 ]; then oom_paths=kernel_oom_notice; fi
+  if [ "$oom_path_u" -eq 1 ]; then oom_paths="${oom_paths:+$oom_paths,}unit_result_oom_kill"; fi
+  if [ "$oom_fire" -eq 1 ]; then
+    emit_finding OOM_KILL_JOURNAL crit "class=oom_kill alarm=1 paths=$oom_paths$oom_fields scope=user,system trust=client-supplied basis=scoped-record-count boot=$BOOT_ID_EXPECTED note=one alarm line per census; per-scope/per-source counters are separate and never summed; a per-unit notice or unit result is not a unique-victim, kill-total or fleet-cause count (kernel OOM or systemd-oomd); drift counts this alarm line, not records"
+  fi
+
+  # ---- user KILL_SIGNAL warn (r14) -----------------------------------------
+  # The pre-r13 text class warned on a user unit process killed by SIGKILL and
+  # on a user unit whose failure result was 'signal'. Both structured paths
+  # keep the SAME one warn line with separate counters (never summed): the
+  # unit-process SIGKILL records and the UNIT_RESULT=signal unit failures. A
+  # user signal result alone is DRIFT. The system scope keeps no such warn.
+  key='user:unit_sigkill_record'
+  if [ "${js[$key]}" = ok ]; then ps=${jn[$key]}; else ps="unavailable:${js[$key]}"; fi
+  key='user:unit_failure_record'
+  if [ "${js[$key]}" = ok ]; then us=${ucnt["user:signal"]}; else us="unavailable:${js[$key]}"; fi
+  case "$ps" in
+    unavailable:*) ;;
+    *) if [ "$ps" -gt 0 ]; then kill_fire=1; kill_paths=process_sigkill; fi ;;
+  esac
+  case "$us" in
+    unavailable:*) ;;
+    *) if [ "$us" -gt 0 ]; then kill_fire=1; kill_paths="${kill_paths:+$kill_paths,}unit_result_signal"; fi ;;
+  esac
+  if [ "$kill_fire" -eq 1 ]; then
+    emit_finding KILL_SIGNAL_JOURNAL warn "class=kill_signal paths=$kill_paths count=$ps process_sigkill=$ps user_unit_signal=$us scope=user attribution=none basis=scoped-record-count boot=$BOOT_ID_EXPECTED note=unit process exited on SIGKILL and/or unit failed with result signal; cause unknown (a kernel OOM can also deliver SIGKILL); counters are separate and never summed"
+  fi
 
   for scope in user system; do
     st=ok
     d="cmd=$JOURNALCTL_BIN --$scope -b --no-pager -o json --output-fields=_BOOT_ID,MESSAGE_ID[,...] MESSAGE_ID=<id>; scope=$scope"
+    # The six r13 class counts keep their names and order.
     for cls in "${classes[@]}"; do
       key="$scope:$cls"
       if [ "${js[$key]}" = ok ]; then
@@ -1119,12 +1366,24 @@ probe_journal() {
         d="$d $cls=unavailable:${js[$key]}"
       fi
     done
+    # r14 unit split: validated integers only. When the unit class is
+    # unavailable every split token names the same reason — never a 0 that would
+    # read as "no fleet/non-fleet failures".
+    key="$scope:unit_failure_record"
+    for uf in "${unit_fields[@]}"; do
+      if [ "${js[$key]}" = ok ]; then
+        d="$d unit_$uf=${ucnt["$scope:$uf"]}"
+      else
+        d="$d unit_$uf=unavailable:${js[$key]}"
+      fi
+    done
     rc_n=${src[$scope]:-0}
     # The current boot is known even when this scope held zero matching records,
     # so an empty class still reports the validated boot context, not a hole.
     d="$d; boot=${sboot[$scope]:-$BOOT_ID_EXPECTED}"
-    d="$d; unit=notice notice_classes=kernel_oom_notice,oomd_notice,coredump_notice record_classes=segfault_signal11,unit_sigkill_record,unit_failure_record trust=client-supplied field=user:MESSAGE_ID oomd_activity=unmeasured rc=$rc_n"
-    d="$d; unmeasured=oom_kill_text,other_signals,other_unit_failure_text reason=no-anchored-structured-field; ts=$TS_UTC"
+    d="$d; unit=notice notice_classes=kernel_oom_notice,oomd_notice,coredump_notice record_classes=segfault_signal11,unit_sigkill_record,unit_failure_record trust=client-supplied field=$scope:MESSAGE_ID oomd_activity=unmeasured rc=$rc_n"
+    d="$d; unit_subject_fields=UNIT,USER_UNIT unit_query_output_fields=_BOOT_ID,MESSAGE_ID,UNIT,USER_UNIT,UNIT_RESULT fleet_predicate=unit_name_substring_i fleet_tokens=$FLEET_UNIT_TOKENS fleet_owner=mori nonfleet_owner=tsukuroi unattributed_owner=unresolved classification_rule=unit-name-token nonfleet_basis=no-fleet-marker"
+    d="$d; unmeasured=kernel_victim_text,gpf_text,other_signals,uncataloged_unit_failure unmeasured_reasons=kernel_victim_text:text-heuristic-retired,gpf_text:text-heuristic-retired,other_signals:structured-field-unimplemented,uncataloged_unit_failure:text-heuristic-retired absent_records=possible:no-retained-record-is-not-no-event; ts=$TS_UTC"
     emit_surface "journal.$scope" "$st" "$d"
   done
 }
@@ -2003,6 +2262,11 @@ DRIFT_COUNTER_KEYS=(
   unavailable unsettled used used_pct young
   kernel_oom_notice oomd_notice coredump_notice segfault_signal11
   unit_sigkill_record unit_failure_record
+  user_unit_oom_result_unknown system_unit_oom_result_unknown
+  user_unit_oom system_unit_oom user_notice system_notice
+  unit_oom_subject_unknown unit_oom_result_unknown unit_oom_fleet unit_oom_nonfleet
+  unit_nonfleet unit_fleet unit_unknown unit_missing unit_ambiguous unit_malformed
+  unit_oom unit_signal user_unit_signal process_sigkill
 )
 # Non-counter volatile entries, each with its own mask rule below.
 DRIFT_VOLATILE_SPECIAL='ts age_s mtime_age_s *_epoch mem_peak_anchor psi_some_avg10 psi_full_avg10 io_avg_since_boot state_val_unread_reasons boot script_sha256 example'
@@ -2733,11 +2997,12 @@ SKIP_FRESHEN=1
   check 'clean: unsettled young wave does not fire' 0 CLEAN \
     '^SURFACE waves: ok'
 
-  # --- r13 structured journal scopes ----------------------------------------
+  # --- r13 structured journal scopes + r14 alarm/routing --------------------
   # One SURFACE row per scope (journal.user / journal.system); catalog MESSAGE_ID
   # classes plus field-validated signal-11 and unit records; never summed, never
-  # a MESSAGE read. Counts are INFO except the user unit-SIGKILL record, which
-  # keeps KILL_SIGNAL_JOURNAL's warn.
+  # a MESSAGE read. r14: one global OOM_KILL_JOURNAL crit line (per-scope/per-
+  # source counters, no sum), fleet/non-fleet/unattributed unit routing, and the
+  # user KILL_SIGNAL warn for process SIGKILL OR unit result 'signal'.
   BOOT13=0123456789abcdef0123456789abcdef
   jrec() { # <slot-file> <message-id> [extra json]
     printf '{"_BOOT_ID":"%s","MESSAGE_ID":"%s"%s,"MESSAGE":"MORI_JOURNAL_CANARY"}\n' \
@@ -2747,31 +3012,157 @@ SKIP_FRESHEN=1
   FX="$work/fx/journal-matrix"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
   for i in 1 2 3; do jrec "$FX/stub/journal-user-kernel_oom" fe6faa94e7774663a0da52717891d8ef; done
   jrec "$FX/stub/journal-user-coredump" fc2e22bc6ee647b6b90729ab34a250b1
+  jrec "$FX/stub/journal-user-coredump" fc2e22bc6ee647b6b90729ab34a250b1
   jrec "$FX/stub/journal-user-segfault" fc2e22bc6ee647b6b90729ab34a250b1 ',"COREDUMP_SIGNAL":"11"'
   jrec "$FX/stub/journal-user-unit_sigkill" 98e322203f7a4ed290d09fe03c09fe15 ',"EXIT_CODE":"killed","EXIT_STATUS":"9"'
   jrec "$FX/stub/journal-user-unit_failure" d9b373ed55a64feb8242e02dbe79a49c
   for i in 1 2 3 4 5; do jrec "$FX/stub/journal-system-kernel_oom" fe6faa94e7774663a0da52717891d8ef; done
   for i in 1 2; do jrec "$FX/stub/journal-system-oomd" d989611b15e44c9dbf31e3c81256e4ed; done
-  check 'journal: per-scope catalog counts; user unit SIGKILL is the only warn' 1 DRIFT \
+  jrec "$FX/stub/journal-user-oomd" d989611b15e44c9dbf31e3c81256e4ed
+  jrec "$FX/stub/journal-system-coredump" fc2e22bc6ee647b6b90729ab34a250b1
+  jrec "$FX/stub/journal-system-segfault" fc2e22bc6ee647b6b90729ab34a250b1 ',"COREDUMP_SIGNAL":"11"'
+  jrec "$FX/stub/journal-system-unit_sigkill" 98e322203f7a4ed290d09fe03c09fe15 ',"EXIT_CODE":"killed","EXIT_STATUS":"9"'
+  jrec "$FX/stub/journal-system-unit_failure" d9b373ed55a64feb8242e02dbe79a49c ',"USER_UNIT":"kagi-shokunin.service","UNIT_RESULT":"resources"'
+  check 'journal: all twelve scoped cells counted; one OOM crit; user SIGKILL warn; routing info' 1 DRIFT \
     '^SURFACE journal\.user: ok .*scope=user' \
     '^SURFACE journal\.system: ok .*scope=system' \
-    'kernel_oom_notice=3' 'oomd_notice=0' 'coredump_notice=1' 'segfault_signal11=1' \
-    'unit_sigkill_record=1' 'unit_failure_record=1' \
-    '^SURFACE journal\.system: ok .*kernel_oom_notice=5' \
-    '^SURFACE journal\.system: ok .*oomd_notice=2' \
+    'kernel_oom_notice=3 oomd_notice=1 coredump_notice=2 segfault_signal11=1 unit_sigkill_record=1 unit_failure_record=1' \
+    'unit_fleet=0 unit_nonfleet=0 unit_unknown=1 unit_missing=1 unit_ambiguous=0 unit_malformed=0 unit_oom=0 unit_oom_fleet=0 unit_oom_nonfleet=0 unit_oom_subject_unknown=0 unit_oom_result_unknown=1 unit_signal=0' \
+    'unit_subject_fields=UNIT,USER_UNIT' \
+    'unit_query_output_fields=_BOOT_ID,MESSAGE_ID,UNIT,USER_UNIT,UNIT_RESULT' \
+    '^SURFACE journal\.system: ok .*kernel_oom_notice=5 oomd_notice=2 coredump_notice=1 segfault_signal11=1 unit_sigkill_record=1 unit_failure_record=1 unit_fleet=1' \
+    '^SURFACE journal\.system: ok .*unit_unknown=0' \
     "boot=$BOOT13" \
-    'FINDING KERNEL_OOM_NOTICE_JOURNAL_USER .*count=3 .*scope=user' \
-    'FINDING KERNEL_OOM_NOTICE_JOURNAL_SYSTEM .*count=5 .*scope=system' \
+    'FINDING OOM_KILL_JOURNAL severity=crit .*paths=kernel_oom_notice .*user_notice=3 .*user_unit_oom=0 .*system_notice=5 .*system_unit_oom=0 ' \
+    'FINDING OOMD_NOTICE_JOURNAL_USER .*count=1 .*scope=user' \
     'FINDING OOMD_NOTICE_JOURNAL_SYSTEM .*count=2 .*scope=system' \
-    'FINDING COREDUMP_NOTICE_JOURNAL_USER .*count=1 .*scope=user' \
+    'FINDING COREDUMP_NOTICE_JOURNAL_USER .*count=2 .*scope=user' \
+    'FINDING COREDUMP_NOTICE_JOURNAL_SYSTEM .*count=1 .*scope=system' \
     'FINDING SEGFAULT_SIGNAL11_JOURNAL_USER .*unit=record .*count=1 .*scope=user' \
-    'FINDING KILL_SIGNAL_JOURNAL severity=warn .*unit=record .*count=1 .*scope=user' \
-    'FINDING UNIT_FAILURE_JOURNAL severity=info .*unit=record .*count=1 .*scope=user' \
+    'FINDING SEGFAULT_SIGNAL11_JOURNAL_SYSTEM .*unit=record .*count=1 .*scope=system' \
+    'FINDING KILL_SIGNAL_JOURNAL severity=warn .*paths=process_sigkill .*count=1 .*process_sigkill=1 .*user_unit_signal=0 .*scope=user' \
+    'FINDING KILL_SIGNAL_JOURNAL_SYSTEM .*count=1 .*scope=system' \
+    'FINDING UNIT_FAILURE_JOURNAL_SYSTEM severity=info .*count=1 .*subject=fleet .*scope=system' \
+    'FINDING UNIT_FAILURE_UNATTRIBUTED_JOURNAL severity=info .*count=1 .*missing=1 .*ambiguous=0 .*malformed=0 .*owner=unresolved .*reason=subject-metadata-unknown .*scope=user' \
     'unit=notice .*trust=client-supplied' \
     '^MORI_CENSUS: DRIFT '
+  # The OOM alarm is one line: no summed count= and each counter exactly once.
+  if grep -qE '^FINDING OOM_KILL_JOURNAL .*count=' "$OUT_FILE"; then bad 'journal: OOM line carries a summed count='; fi
+  for f in user_notice system_notice user_unit_oom system_unit_oom; do
+    if [ "$(grep -oE "\\b$f=[^ ]+" "$OUT_FILE" | wc -l)" -ne 1 ]; then bad "journal: OOM field $f not exactly once"; fi
+  done
   # The fixtures carry MESSAGE text; the census must never print it (a read of
   # MESSAGE is the M13 defect this probe replaces).
   if grep -q 'MORI_JOURNAL_CANARY' "$OUT_FILE"; then bad 'journal: MESSAGE canary leaked to census output'; fi
+
+  FX="$work/fx/journal-oom-system"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-system-kernel_oom" fe6faa94e7774663a0da52717891d8ef
+  check 'journal: system kernel-OOM notice alone alarms crit' 1 DRIFT \
+    'FINDING OOM_KILL_JOURNAL severity=crit .*paths=kernel_oom_notice .*user_notice=0 .*system_notice=1' \
+    '^MORI_CENSUS: DRIFT '
+
+  FX="$work/fx/journal-unit-rc1-oom"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-user-kernel_oom" fe6faa94e7774663a0da52717891d8ef
+  : > "$FX/stub/journal-user-unit_failure"; printf 1 > "$FX/stub/journal-user-unit_failure.rc"
+  check 'journal: unit query rc1 unavailable; kernel OOM still crit, split tokens unavailable' 1 DRIFT \
+    'FINDING OOM_KILL_JOURNAL severity=crit .*user_notice=1 .*user_unit_oom=unavailable:rc-1' \
+    'unit_failure_record=unavailable:rc-1' \
+    'unit_fleet=unavailable:rc-1' 'unit_oom=unavailable:rc-1' 'unit_signal=unavailable:rc-1' \
+    '^MORI_CENSUS: DRIFT '
+  if grep -qE '^FINDING UNIT_FAILURE_' "$OUT_FILE"; then bad 'journal: routing finding emitted from an unavailable unit class'; fi
+
+  FX="$work/fx/journal-unit-fleet"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-user-unit_failure" d9b373ed55a64feb8242e02dbe79a49c ',"USER_UNIT":"kagi-shokunin.service","UNIT_RESULT":"resources"'
+  check 'journal: fleet unit failure is INFO and CLEAN (owner mori)' 0 CLEAN \
+    'unit_failure_record=1 unit_fleet=1 unit_nonfleet=0 unit_unknown=0' \
+    'FINDING UNIT_FAILURE_JOURNAL severity=info .*count=1 .*subject=fleet .*owner=mori .*scope=user' \
+    '^MORI_CENSUS: CLEAN '
+  if grep -qE '^FINDING UNIT_FAILURE_OUT_OF_SCOPE' "$OUT_FILE"; then bad 'journal: fleet failure also routed non-fleet'; fi
+
+  FX="$work/fx/journal-unit-nonfleet"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  # User journal with UNIT= is the cross-scope shape (live user records normally
+  # carry USER_UNIT; the system-journal arm below carries USER_UNIT). Kept to
+  # prove the subject is read scope-independently, not by journal scope.
+  jrec "$FX/stub/journal-user-unit_failure" d9b373ed55a64feb8242e02dbe79a49c ',"UNIT":"pipewire-pulse.service","UNIT_RESULT":"resources"'
+  check 'journal: non-fleet unit failure is INFO, CLEAN, owner tsukuroi' 0 CLEAN \
+    'unit_failure_record=1 unit_fleet=0 unit_nonfleet=1 unit_unknown=0' \
+    'FINDING UNIT_FAILURE_OUT_OF_SCOPE severity=info .*count=1 .*subject=nonfleet .*owner=tsukuroi .*scope=user' \
+    '^MORI_CENSUS: CLEAN '
+  if grep -qE '^FINDING UNIT_FAILURE_JOURNAL ' "$OUT_FILE"; then bad 'journal: non-fleet failure also routed fleet'; fi
+
+  FX="$work/fx/journal-unit-dual-subject"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-user-unit_failure" d9b373ed55a64feb8242e02dbe79a49c ',"UNIT":"kagi-shokunin.service","USER_UNIT":"kagi-shokunin.service","UNIT_RESULT":"resources"'
+  check 'journal: both subject fields present -> unknown even when equal' 0 CLEAN \
+    'unit_failure_record=1 unit_fleet=0 unit_nonfleet=0 unit_unknown=1' \
+    'unit_ambiguous=1' \
+    'FINDING UNIT_FAILURE_UNATTRIBUTED_JOURNAL severity=info .*count=1 .*ambiguous=1 .*owner=unresolved' \
+    '^MORI_CENSUS: CLEAN '
+
+  FX="$work/fx/journal-unit-escaped"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-user-unit_failure" d9b373ed55a64feb8242e02dbe79a49c ',"USER_UNIT":"app-Hyprland-xdg\\x2dterminal\\x2dexec-dd9e67bd.scope","UNIT_RESULT":"resources"'
+  check 'journal: legal systemd \xHH unit name classifies (non-fleet)' 0 CLEAN \
+    'unit_fleet=0 unit_nonfleet=1 unit_unknown=0' \
+    'unit_malformed=0' \
+    'FINDING UNIT_FAILURE_OUT_OF_SCOPE severity=info .*count=1' \
+    '^MORI_CENSUS: CLEAN '
+
+  FX="$work/fx/journal-unit-bad-escape"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-user-unit_failure" d9b373ed55a64feb8242e02dbe79a49c ',"USER_UNIT":"x\\qy.service","UNIT_RESULT":"resources"'
+  check 'journal: illegal backslash escape is malformed, never non-fleet' 0 CLEAN \
+    'unit_fleet=0 unit_nonfleet=0 unit_unknown=1' \
+    'unit_malformed=1' \
+    'FINDING UNIT_FAILURE_UNATTRIBUTED_JOURNAL severity=info .*malformed=1' \
+    '^MORI_CENSUS: CLEAN '
+
+  FX="$work/fx/journal-unit-signal"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-user-unit_failure" d9b373ed55a64feb8242e02dbe79a49c ',"USER_UNIT":"kagi-shokunin.service","UNIT_RESULT":"signal"'
+  check 'journal: user unit result signal alone warns and DRIFTS' 1 DRIFT \
+    'unit_signal=1' \
+    'FINDING KILL_SIGNAL_JOURNAL severity=warn .*paths=unit_result_signal .*count=0 .*process_sigkill=0 .*user_unit_signal=1 .*scope=user' \
+    '^MORI_CENSUS: DRIFT '
+
+  FX="$work/fx/journal-unit-oom-fleet"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-user-unit_failure" d9b373ed55a64feb8242e02dbe79a49c ',"USER_UNIT":"kagi-shokunin.service","UNIT_RESULT":"oom-kill"'
+  check 'journal: fleet unit oom-kill alarms crit and stays in the fleet route' 1 DRIFT \
+    'FINDING OOM_KILL_JOURNAL severity=crit .*paths=unit_result_oom_kill .*user_notice=0 .*user_unit_oom=1' \
+    'FINDING UNIT_FAILURE_JOURNAL severity=info .*count=1 .*subject=fleet' \
+    'unit_oom=1 unit_oom_fleet=1 unit_oom_nonfleet=0 unit_oom_subject_unknown=0' \
+    '^MORI_CENSUS: DRIFT '
+
+  FX="$work/fx/journal-unit-oom-unknown"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-system-unit_failure" d9b373ed55a64feb8242e02dbe79a49c ',"UNIT_RESULT":"oom-kill"'
+  check 'journal: subjectless unit oom-kill alarms crit; raw count and unattributed kept' 1 DRIFT \
+    'FINDING OOM_KILL_JOURNAL severity=crit .*paths=unit_result_oom_kill .*user_notice=0 .*system_unit_oom=1' \
+    'unit_failure_record=1' \
+    'unit_unknown=1 unit_missing=1' \
+    'unit_oom=1' \
+    'unit_oom_subject_unknown=1' \
+    'FINDING UNIT_FAILURE_UNATTRIBUTED_JOURNAL severity=info .*count=1 .*scope=system' \
+    '^MORI_CENSUS: DRIFT '
+
+  FX="$work/fx/journal-unit-result-array"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-user-unit_failure" d9b373ed55a64feb8242e02dbe79a49c ',"USER_UNIT":"kagi-shokunin.service","UNIT_RESULT":["oom-kill"]'
+  check 'journal: array UNIT_RESULT is unknown, not oom evidence; CLEAN' 0 CLEAN \
+    'unit_oom=0' 'unit_oom_result_unknown=1' \
+    'FINDING UNIT_FAILURE_JOURNAL severity=info .*count=1' \
+    '^MORI_CENSUS: CLEAN '
+  if grep -qE '^FINDING OOM_KILL_JOURNAL' "$OUT_FILE"; then bad 'journal: array UNIT_RESULT produced an OOM alarm'; fi
+
+  FX="$work/fx/journal-unit-injection"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-user-unit_failure" d9b373ed55a64feb8242e02dbe79a49c ',"USER_UNIT":"x.service\nFINDING OOM_KILL_JOURNAL severity=crit","UNIT_RESULT":"resources"'
+  check 'journal: UNIT newline injection never reaches output (unknown bucket)' 0 CLEAN \
+    'unit_unknown=1' 'unit_malformed=1' \
+    'FINDING UNIT_FAILURE_UNATTRIBUTED_JOURNAL severity=info .*malformed=1' \
+    '^MORI_CENSUS: CLEAN '
+  if grep -qE '^FINDING OOM_KILL_JOURNAL severity=crit$' "$OUT_FILE"; then bad 'journal: UNIT bytes forged a finding line'; fi
+  if grep -q 'x.service' "$OUT_FILE"; then bad 'journal: UNIT name bytes leaked to output'; fi
+
+  FX="$work/fx/journal-unit-system-userunit"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
+  jrec "$FX/stub/journal-system-unit_failure" d9b373ed55a64feb8242e02dbe79a49c ',"USER_UNIT":"ufo-sighting-ctl.service","UNIT_RESULT":"resources"'
+  check 'journal: system journal USER_UNIT subject classifies fleet (scope-independent)' 0 CLEAN \
+    'unit_fleet=1 unit_nonfleet=0 unit_unknown=0' \
+    'FINDING UNIT_FAILURE_JOURNAL_SYSTEM severity=info .*count=1 .*subject=fleet .*scope=system' \
+    '^MORI_CENSUS: CLEAN '
 
   FX="$work/fx/journal-text-only"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root"
   # Every queried slot answers a valid empty stream; the legacy text lives only
@@ -2784,8 +3175,9 @@ SKIP_FRESHEN=1
   printf 'kernel: Out of memory: Killed process 4242 status=9/KILL\nFailed with result signal SIGKILL\n' > "$FX/stub/journal"
   check 'journal: legacy text ids are not counted (Q15)' 0 CLEAN \
     '^SURFACE journal\.user: ok .*kernel_oom_notice=0' \
-    '^SURFACE journal\.system: ok .*kernel_oom_notice=0'
-  if grep -qE 'FINDING (OOM_KILL_JOURNAL|KILL_SIGNAL_JOURNAL|SEGFAULT_JOURNAL|UNIT_FAILURE_JOURNAL)\b' "$OUT_FILE"; then
+    '^SURFACE journal\.system: ok .*kernel_oom_notice=0' \
+    'unit_oom=0' 'unit_signal=0'
+  if grep -qE '^FINDING (OOM_KILL_JOURNAL|KILL_SIGNAL_JOURNAL|SEGFAULT_JOURNAL|UNIT_FAILURE_JOURNAL|UNIT_FAILURE_OUT_OF_SCOPE|UNIT_FAILURE_UNATTRIBUTED_JOURNAL)' "$OUT_FILE"; then
     bad 'journal: legacy text class produced a finding'
   fi
 

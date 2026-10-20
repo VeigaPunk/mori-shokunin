@@ -102,3 +102,24 @@ is not a latency distribution or a speedup claim.
 Counting command, from the lane root:
 `jq '[.result.baseline.stdout,.result.delivered.stdout] | map(split("\n") | map(select(startswith("SURFACE journal."))) | length)' .ufo/waves/round-13/evidence/live-measurement.json`
 → `[0,2]`, measured against c13df48 and frozen base 6531ac6.
+
+## Round-14 correction — counts did not establish no harm
+
+The implementation described above is the **historical census-r6 contract**,
+not the repaired current alarm policy. Outside review rejected round 13:
+positive OOM notices were silently demoted to INFO, fleet/non-fleet failed-unit
+semantics and tsukuroi triage routing disappeared, and the unmeasured reason
+overstated the absence of structured fields. The accepted fixture's CLEAN
+expectation measured this harm rather than proving alarm preservation.
+The dual-scope counts remain valid bounded record-count gains.
+
+`journal-alarm-routing-r14.md` supersedes the current alarm/routing policy.
+It does not promote notices to unique victims or fleet-caused kills. The
+selected cgroup's local OOM counter is not a coverage substitute for journal
+records from descendants or other scopes. Historical 5/7/9 samples above are
+not jointly MESSAGE-free kernel-victim evidence: `--grep` selected MESSAGE
+text where used, even when output fields omitted it.
+
+The “exact-locus” mutation wording in the receipt above is qualified by
+`verdict-contract-r13.md`'s round-14 provenance correction: whole-function F01
+replacement and reconstructed F02 shim, with original frozen failures primary.

@@ -1,21 +1,53 @@
 #!/usr/bin/env python3
-"""mori-round13-regressions.py — isolated integration regressions for round 13.
+"""mori-round13-regressions.py — round-13 regression gate (migrated round 14).
 
-EVIDENCE HARNESS, NOT A GATE. It is deliberately not registered in any gate
-registry; it exists so the round-13 claims can be re-measured from committed
-inputs with their original commands and outputs retained. If an operator later
-registers it, `--selftest` covers the harness's own pure verdict/parser logic
-and touches no repository path.
+REGISTERED GATE (registry home: this lane's SKILL.md; row `r13 regressions`).
+It reads committed targets, compares them against the expected values pinned in
+this file, and returns a verdict. It is no longer described as an evidence
+harness: a verdict-producing tool is a gate under PROTOCOL §Gate standard.
+
+Round-14 C1 migration. The round-13 strict contract expected every structured
+journal notice to be INFO and the roll to be CLEAN. The non-author round-13
+spot-check rejected that cutover as harmed: the historical critical OOM alarm
+and the fleet/non-fleet unit-failure partition disappeared. The C1 family below
+now measures the RESTORED semantics (the round-14 repair):
+
+  * a positive kernel-OOM notice in EITHER journal scope, or a structured
+    `UNIT_RESULT=oom-kill` unit result, emits ONE global critical
+    `OOM_KILL_JOURNAL` line whose separate `user_notice`/`system_notice`/
+    `user_unit_oom`/`system_unit_oom` counters are never summed, and rolls
+    DRIFT;
+  * fleet unit failures keep the historical INFO `UNIT_FAILURE_JOURNAL`
+    (evidence: pre-cutover probe_journal in the round-13 frozen census);
+  * non-fleet unit failures emit INFO `UNIT_FAILURE_OUT_OF_SCOPE` with
+    `owner=tsukuroi` and do not flip the roll;
+  * absent/non-string subject metadata (`UNIT`/`USER_UNIT`, never the manager
+    emitter `_SYSTEMD_UNIT`) is the explicit INFO
+    `UNIT_FAILURE_UNATTRIBUTED_JOURNAL` class (`owner=unresolved`), and the raw
+    six scoped counts still include those records;
+  * a user-scope generic SIGKILL process-exit record keeps its WARN
+    `KILL_SIGNAL_JOURNAL` and DRIFT;
+  * oomd/coredump/segfault notices stay INFO, so a positive notice-only
+    fixture is the CLEAN control that keeps the alarm specific to OOM.
+
+The six scoped counters, boot validation, error controls and MESSAGE exclusion
+are preserved exactly; only the severity/partition expectations migrated. The
+F01/F02 claims and their original-frozen comparisons are unchanged.
 
 Claims measured (stable ids; one FINDING line each)
 
   R13_SHONEN_CANONICAL_BYTES            canonical HEAD SHONEN bytes (unindented)
   R13_SHONEN_INDENT_WITNESS             the comparator rejects indented bytes
-  R13_C1_SYSTEM_NOTICE_COUNTS           system scope: structured MESSAGE_ID counts
+  R13_C1_SYSTEM_NOTICE_COUNTS           system scope: six structured counts + OOM alarm
   R13_C1_USER_SCOPE_INDEPENDENT         user scope: separate zero tokens, never summed
-  R13_C1_USER_SCOPE_NONZERO             user-only fixture counts stay on user tokens
+  R13_C1_USER_SCOPE_NONZERO             user-only kernel OOM => critical alarm + DRIFT
   R13_C1_NO_MESSAGE_TEXT                no synthetic MESSAGE key/value in stdout
-  R13_C1_CLEAN_VERDICT                  notices INFO => exactly one CLEAN/rc0 roll
+  R13_C1_OOM_ALARM_DRIFT                kernel OOM notice => crit OOM_KILL_JOURNAL, DRIFT
+  R13_C1_NOTICE_CLEAN_CONTROL           oomd/coredump/segfault notices stay INFO => CLEAN
+  R13_C1_EMPTY_CLEAN_CONTROL            no records => six zero counts, CLEAN, no alarm
+  R13_C1_UNIT_OOM_KILL_ALARM            UNIT_RESULT=oom-kill => crit alarm, raw count kept
+  R13_C1_UNIT_FAILURE_ROUTING           fleet INFO / non-fleet INFO owner=tsukuroi / unknown
+  R13_C1_SIGKILL_WARN_PRESERVED         generic user SIGKILL record keeps WARN => DRIFT
   R13_F01_EXACT_AUTHOR_LONG_HISTORY     12001-line history: subject commit grades progressing
   R13_F01_SIBLING_CONTROL_LONG_HISTORY  12000 sibling commits grade progressing-weak
   R13_F02_HONEST_28_OF_28               honest census scores 28/28 rc0
@@ -38,12 +70,24 @@ Fixture provenance (no `/tmp` evidence, no live host reads)
     stub `git` (a 12,001-line writer into the membership test).
   * Adversarial wrappers reproduce Appendix C and its siblings: a proxy census
     that renames or duplicates the final roll, or mismatches the roll to rc.
-  * The C1 fixture serves synthetic `journalctl -o json` records keyed by the
-    exact argv CensusFix documented (scope + MESSAGE_ID / COREDUMP_SIGNAL).
-    The synthetic MESSAGE value is a canary; the host journal is never opened.
+  * The C1 fixture serves synthetic `journalctl -o json` records through a stub
+    that implements exact field matching (`FIELD=value` argv, OR within one
+    field) and projects only `--output-fields`. Records carry structured
+    `UNIT`/`USER_UNIT`/`UNIT_RESULT` fields as well as catalog MESSAGE_IDs, so
+    the probe's queries — not a canned answer table — select the records. The
+    synthetic MESSAGE value is a canary; the host journal is never opened.
   * Every fixture is created under a fresh temp directory inside the explicit
     --output tree, never under the repository and never at a live MORI path,
     and removed after the run unless --keep-fixtures.
+
+Pinned values (independent of the snapshot they verify)
+
+  The default round-13 frozen directory is pinned by `FROZEN_PINS` below: the
+  two script digests, the `inputs.json` digest and the base commit are committed
+  constants, so a coordinated edit of a frozen file *and* its sibling manifest
+  still reads `snapshot_tampered`. A custom `--frozen-dir` cannot be pinned
+  ahead of time; it is verified against its own manifest and recorded as
+  `unpinned (custom frozen dir)` rather than pretending to a pin.
 
 Modes
 
@@ -52,19 +96,37 @@ Modes
                    *record* the audit-predicted defects. Expected defects are
                    reported as `expected-defect`, never `pass`; an observation
                    that does not match the baseline table is `baseline-deviation`.
-  --mutation ID    run the strict suite, then transplant the named frozen
-                   function body into an isolated copy of the fixed target and
-                   require the pre-fix defect to reappear. IDs: f01, f02, both.
+                   The frozen pre-fix census is also the primary original-byte
+                   before evidence; keep those runs primary over mutation claims.
+  --mutation ID    run the strict suite, then build one isolated mutant from the
+                   named fixed target and require the pre-fix defect to reappear.
+                   IDs: f01, f02, both.
 
-Exit codes
+Mutation provenance (do not read these as byte-exact restoration)
 
-  0  every claim satisfied in the selected mode
-  1  a claim failed (or a baseline observation deviated)
-  2  usage / setup error
-  3  all contract claims held but a requested mutation could not be built
+  * f01 transplants the WHOLE frozen `grade_lane` function into the fixed
+    census. It is not a membership-lines-only reversal and not a single-line
+    revert: the frozen function also carries its older environment-hardening and
+    fsmonitor behavior. The mutant proves the frozen function's behavior
+    reappears; the original frozen bytes under `--baseline` remain the primary
+    historical evidence.
+  * f02 replaces the fixed `verdict_grade` with a RECONSTRUCTED prefix-presence
+    shim (`frozen_source=null`, `reverted_by=pre_fix_prefix_presence_shim`); the
+    pre-fix oracle had no such function body to restore. It proves the single
+    verdict-validation locus is sufficient for BANANA acceptance, not
+    original-byte causality.
+
+Exit codes (declared registry map: 0 clean · 1 failed · 2 could-not-evaluate)
+
+  0  clean: every claim satisfied in the selected mode
+  1  failed: a claim failed (or a baseline observation deviated)
+  2  could-not-evaluate: usage, setup, unreadable target, snapshot_tampered,
+     unavailable revision, or a requested mutation that could not be built
 
 Evidence: <output>/evidence.json plus <output>/runs/<run-id>.{stdout,stderr}.
-Synthetic canary text is redacted before anything is written.
+Evidence names the measured git revision (explicit `MORI_EVIDENCE_REVISION` or
+`git rev-parse HEAD`), the dirty flag, the registry status and the pinned
+digests. Synthetic canary text is redacted before anything is written.
 """
 
 from __future__ import annotations
@@ -84,12 +146,29 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-SCHEMA = "mori-round13-regressions-v1"
+SCHEMA = "mori-round13-regressions-v2"
 REPO = Path(__file__).resolve().parent.parent
 DEFAULT_CENSUS = REPO / "tools/mori-census.sh"
 DEFAULT_ORACLE = REPO / "tools/mori-silence-cases.sh"
 DEFAULT_FROZEN = REPO / ".ufo/waves/round-13/frozen"
 DEFAULT_SHONEN = REPO / "SHONEN.md"
+REGISTRY_FILE = REPO / "SKILL.md"
+GATE_REGISTRY_NAME = "r13 regressions"
+GATE_ENTRY = "python3 tools/mori-round13-regressions.py --output <dir>"
+
+# Committed expected values for the default historical frozen snapshot. They
+# are constants in this file, not read from `.ufo/waves/round-13/frozen/inputs.json`,
+# so editing a frozen file together with its sibling manifest still reads
+# snapshot_tampered. `inputs.json` remains a secondary consistency check.
+FROZEN_PINS = {
+    "mori-census.sh":
+        "3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164",
+    "mori-silence-cases.sh":
+        "448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5",
+    "inputs.json":
+        "d91690dc0417aecd9bffd507b53cd4e2a32fc6614753c82ccbc0c5b590cfdc3f",
+}
+FROZEN_BASE_COMMIT = "6531ac6029e200a6392bb76673b6a17d3c895c96"
 
 NOW_EPOCH = 1700000000
 LAUNCH_EPOCH = 1699998000
@@ -100,55 +179,97 @@ HISTORY_SIBLINGS = 12000
 KERNEL_ID = "fe6faa94e7774663a0da52717891d8ef"
 OOMD_ID = "d989611b15e44c9dbf31e3c81256e4ed"
 COREDUMP_ID = "fc2e22bc6ee647b6b90729ab34a250b1"
-MESSAGE_IDS = (KERNEL_ID, OOMD_ID, COREDUMP_ID)
+UNIT_FAILURE_ID = "d9b373ed55a64feb8242e02dbe79a49c"
+UNIT_SIGKILL_ID = "98e322203f7a4ed290d09fe03c09fe15"
 JOURNAL_BOOT = "0123456789abcdef0123456789abcdef"
 CANARY = "R13-SYNTHETIC-JOURNAL-MESSAGE-CANARY"
 
-# CensusFix round-13 surface rows (corrected 2026-10-20): TWO rows, six
-# classes, boot-anchored, no summed field.
-#   SURFACE journal.user: ok (... scope=user kernel_oom_notice=N ... ;
-#                              boot=<32 lowercase hex>; unit=notice ...)
-#   SURFACE journal.system: (same, scope=system)
-C1_SURFACE_TOKENS = (
-    ("kernel_oom_notice", KERNEL_ID, "kernel"),
-    ("oomd_notice", OOMD_ID, "oomd"),
-    ("coredump_notice", COREDUMP_ID, "coredump"),
-    ("segfault_signal11", None, "segfault"),
+# Restored round-14 stable finding ids and severity map (L1 final ruling).
+# The generic unit failure id is historical INFO (pre-cutover
+# probe_journal:904-908); only the OOM alarm and the generic SIGKILL record flip
+# the roll. ONE global OOM_KILL_JOURNAL line carries separate counters that are
+# never summed; routing findings keep per-scope ids (duplicate ids would break
+# --drift line pairing), and missing/ambiguous subject metadata is
+# UNIT_FAILURE_UNATTRIBUTED_JOURNAL, never fleet or non-fleet.
+OOM_FINDING = "OOM_KILL_JOURNAL"
+OOM_COUNTERS = (
+    "user_notice",
+    "system_notice",
+    "user_unit_oom",
+    "system_unit_oom",
+    "user_unit_oom_result_unknown",
+    "system_unit_oom_result_unknown",
 )
-C1_RECORD_TOKENS = ("unit_sigkill_record", "unit_failure_record")
+UNIT_FLEET_FINDING = "UNIT_FAILURE_JOURNAL"
+UNIT_FLEET_FINDING_SYSTEM = "UNIT_FAILURE_JOURNAL_SYSTEM"
+UNIT_OUT_OF_SCOPE_FINDING = "UNIT_FAILURE_OUT_OF_SCOPE"
+UNIT_OUT_OF_SCOPE_FINDING_SYSTEM = "UNIT_FAILURE_OUT_OF_SCOPE_SYSTEM"
+UNIT_UNATTRIBUTED_FINDING = "UNIT_FAILURE_UNATTRIBUTED_JOURNAL"
+KILL_SIGNAL_FINDING = "KILL_SIGNAL_JOURNAL"
+KILL_SIGNAL_FINDING_SYSTEM = "KILL_SIGNAL_JOURNAL_SYSTEM"
+EXPECTED_SEVERITY = {
+    OOM_FINDING: "crit",
+    UNIT_FLEET_FINDING: "info",
+    UNIT_FLEET_FINDING_SYSTEM: "info",
+    UNIT_OUT_OF_SCOPE_FINDING: "info",
+    UNIT_OUT_OF_SCOPE_FINDING_SYSTEM: "info",
+    UNIT_UNATTRIBUTED_FINDING: "info",
+    KILL_SIGNAL_FINDING: "warn",
+    KILL_SIGNAL_FINDING_SYSTEM: "info",
+}
+# Historical fleet predicate restored over the structured SUBJECT unit
+# (UNIT/USER_UNIT). _SYSTEMD_UNIT/_SYSTEMD_USER_UNIT describe the emitter and
+# are never consulted.
+FLEET_SUBJECT_RE = re.compile(
+    r"shokunin|ufo-sighting|tmux-spawn|the-tick|fleet", re.IGNORECASE
+)
+
+# The six scoped counters are preserved exactly. `kind` keys the synthetic
+# record builders; `token` is the SURFACE token the probe must emit.
+C1_SURFACE_TOKENS = (
+    ("kernel_oom_notice", "kernel"),
+    ("oomd_notice", "oomd"),
+    ("coredump_notice", "coredump"),
+    ("segfault_signal11", "segfault"),
+    ("unit_sigkill_record", "sigkill"),
+    ("unit_failure_record", "unit_failure"),
+)
+C1_CLASS_KINDS = tuple(kind for _, kind in C1_SURFACE_TOKENS)
+C1_PARTITION_TOKENS = (
+    "unit_fleet", "unit_nonfleet", "unit_missing", "unit_ambiguous",
+    "unit_malformed", "unit_oom", "unit_oom_fleet", "unit_oom_nonfleet",
+    "unit_oom_subject_unknown", "unit_oom_result_unknown", "unit_signal",
+)
 C1_SYSTEM_COUNTS = {
     "kernel": 2,
     "oomd": 1,
     "coredump": 3,
     "segfault": 3,  # the three coredump records carry COREDUMP_SIGNAL=11
+    "sigkill": 0,
+    "unit_failure": 0,
 }
 C1_USER_COUNTS = {
     "kernel": 3,
     "oomd": 0,
     "coredump": 1,
     "segfault": 1,  # the single user coredump record carries COREDUMP_SIGNAL=11
+    "sigkill": 0,
+    "unit_failure": 0,
 }
-C1_FINDINGS = {
-    "system": {
-        "KERNEL_OOM_NOTICE_JOURNAL_SYSTEM": ("kernel", 2),
-        "OOMD_NOTICE_JOURNAL_SYSTEM": ("oomd", 1),
-        "COREDUMP_NOTICE_JOURNAL_SYSTEM": ("coredump", 3),
-        "SEGFAULT_SIGNAL11_JOURNAL_SYSTEM": ("segfault", 3),
-    },
-    "user": {
-        "KERNEL_OOM_NOTICE_JOURNAL_USER": ("kernel", 3),
-        "OOMD_NOTICE_JOURNAL_USER": ("oomd", 0),
-        "COREDUMP_NOTICE_JOURNAL_USER": ("coredump", 1),
-        "SEGFAULT_SIGNAL11_JOURNAL_USER": ("segfault", 1),
-    },
+C1_NOTICE_ONLY_COUNTS = {
+    "kernel": 0,
+    "oomd": 1,
+    "coredump": 2,
+    "segfault": 2,
+    "sigkill": 0,
+    "unit_failure": 0,
 }
-UNMEASURED_CLASSES = ("oom_kill_text", "other_signals", "other_unit_failure_text")
+C1_EMPTY_COUNTS = {kind: 0 for kind in C1_CLASS_KINDS}
 
 VERDICT_RE = re.compile(
     r"^MORI_CENSUS: (CLEAN|DRIFT) "
     r"\(findings=[0-9]+ drift=[0-9]+ unavailable=[0-9]+ surfaces=[0-9]+\)$"
 )
-SURFACE_JOURNAL_RE = re.compile(r"^SURFACE journal: (\S+) \((.*)\)\s*$", re.M)
 SURFACE_SCOPED_RE = re.compile(
     r"^SURFACE journal\.(user|system): (\S+) \((.*)\)\s*$", re.M
 )
@@ -243,6 +364,16 @@ BASELINE_SUCCESS = {
 }
 MUTATION_SUCCESS = {PASS, MUTATION_RED}
 
+# Committed self-invocation cases (PROTOCOL §Gate standard): each runs the real
+# gate as a subprocess over an isolated tree and asserts the exit code plus a
+# stable finding id. Expected values are literals here, never derived from the
+# gate's own functions or from the recomputation.
+SELFTEST_CASES = (
+    # (case id, expected rc, required finding ids, forbidden finding ids)
+    ("isolated-stub-target-red", 1, ("R13_C1_SYSTEM_NOTICE_COUNTS",), ()),
+    ("isolated-frozen-manifest-tamper", 2, ("R13_SNAPSHOT_TAMPERED",), ()),
+)
+
 
 # F02 mutation: the pre-fix verdict read, verbatim in behavior (audit-r11
 # Appendix C, frozen oracle): a `MORI_CENSUS:` line starting any output was
@@ -298,6 +429,55 @@ def verify_inputs_file(inputs_path: Path):
     return verified
 
 
+def verify_frozen_pins(frozen_dir: Path) -> dict:
+    """Verify the default historical snapshot against committed constants.
+
+    This is the independent pin PROTOCOL §Gate standard requires: the expected
+    digests live in this file, not only in the sibling `inputs.json` that a
+    coordinated edit could rewrite with the snapshot. The manifest is checked
+    as a secondary consistency layer (shape, base commit, per-file digests).
+    """
+    for name, expected in sorted(FROZEN_PINS.items()):
+        path = frozen_dir / name
+        if not path.is_file():
+            raise SnapshotTampered(
+                "snapshot_missing file=%s pinned=%s dir=%s"
+                % (path, expected, frozen_dir)
+            )
+        actual = sha256_file(path)
+        if actual != expected:
+            raise SnapshotTampered(
+                "snapshot_pin_mismatch file=%s expected=%s actual=%s dir=%s"
+                % (name, expected, actual, frozen_dir)
+            )
+    inputs_path = frozen_dir / "inputs.json"
+    try:
+        inputs = json.loads(inputs_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        raise SnapshotTampered(
+            "inputs_unreadable file=%s error=%s" % (inputs_path, exc)
+        )
+    declared = inputs.get("sha256")
+    targets = {"mori-census.sh", "mori-silence-cases.sh"}
+    if not isinstance(declared, dict) or set(declared) != targets:
+        raise SnapshotTampered(
+            "pinned_inputs_shape file=%s keys=%s expected=%s"
+            % (inputs_path, sorted(declared or {}), sorted(targets))
+        )
+    if inputs.get("base_commit") != FROZEN_BASE_COMMIT:
+        raise SnapshotTampered(
+            "pinned_base_mismatch file=%s expected=%s actual=%s"
+            % (inputs_path, FROZEN_BASE_COMMIT, inputs.get("base_commit"))
+        )
+    for name in sorted(targets):
+        if declared.get(name) != FROZEN_PINS[name]:
+            raise SnapshotTampered(
+                "pinned_manifest_mismatch file=%s expected=%s actual=%s"
+                % (name, FROZEN_PINS[name], declared.get(name))
+            )
+    return {name: frozen_dir / name for name in sorted(targets)}
+
+
 def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
@@ -319,6 +499,41 @@ def one_line(text, limit=240) -> str:
 
 def redact(text: str) -> str:
     return text.replace(CANARY, "<canary-redacted>")
+
+
+def registry_row_status(text: str):
+    """Pure matcher for this gate's registry row in SKILL.md text."""
+    needles = (
+        "mori-round13-regressions",
+        "regressions-r13",
+        "r13 regression",
+        "round-13 regression",
+        "round13 regression",
+    )
+    for line in text.splitlines():
+        if not line.lstrip().startswith("|"):
+            continue
+        lowered = line.lower()
+        if any(needle in lowered for needle in needles):
+            return "registered", one_line(line, 240)
+    return "registration-missing", (
+        "no SKILL.md Gates row names mori-round13-regressions.py / r13 regressions"
+    )
+
+
+def registry_status():
+    """Truthful gate-registry status from this lane's own SKILL.md.
+
+    A verdict-producing tool is a gate; this function never asserts
+    "not-registered" as a permanent identity. It reports whether the committed
+    registry row is present, missing, or unreadable, and returns the matched row
+    for evidence.
+    """
+    try:
+        text = REGISTRY_FILE.read_text(encoding="utf-8")
+    except OSError as exc:
+        return "registry-unreadable", "%s: %s" % (type(exc).__name__, exc)
+    return registry_row_status(text)
 
 
 def write_exec(path: Path, body: str) -> None:
@@ -353,13 +568,6 @@ def verdict_roll(out: str, rc: int):
     if (word, rc) not in (("CLEAN", 0), ("DRIFT", 1)):
         return word, "inconsistent (word=%s rc=%s)" % (word, rc), line
     return word, "ok", line
-
-
-def surface_body(out: str, name: str = "journal"):
-    m = SURFACE_JOURNAL_RE.search(out) if name == "journal" else None
-    if not m:
-        return None, {}
-    return m.group(1), dict(TOKEN_RE.findall(m.group(2)))
 
 
 def surface_rows(out: str):
@@ -397,6 +605,20 @@ def count_value(tokens: dict) -> int:
         return 0
 
 
+def _token_int(tokens, name: str):
+    """Integer value of a named token, or None when absent/non-numeric.
+
+    Unlike count_value this never defaults to 0: an `unavailable:<reason>` or
+    absent counter must not be readable as a healthy zero.
+    """
+    if not tokens:
+        return None
+    value = tokens.get(name)
+    if value is None or not re.fullmatch(r"[0-9]+", value):
+        return None
+    return int(value)
+
+
 def oracle_summary(out: str):
     matches = SUMMARY_RE.findall(out)
     if not matches:
@@ -430,113 +652,186 @@ def fail_reasons(out: str):
 # ---------------------------------------------------------------------------
 
 
-def journal_stub_body(system_counts: dict, user_counts: dict, message_mode: str) -> str:
-    """Synthetic journalctl with independent system and user scopes.
+def journal_record(message_id: str, **fields) -> dict:
+    """One synthetic structured journal record (boot-valid).
 
-    Keys output by argv exactly as CensusFix documented: scope (--user/--system)
-    and either MESSAGE_ID=<id> or COREDUMP_SIGNAL=11. A mismatched id yields no
-    records (rc 0), so a fixed-record stub cannot masquerade as a valid answer.
-    Text mode carries neither ids nor class words: only the structured path can
-    observe this fixture, which is the C1 point.
+    MESSAGE carries the canary so leak mode can force it: honor mode projects
+    it out because no query asks for MESSAGE, while a parser that echoes raw
+    records exposes it.
+    """
+    rec = {
+        "_BOOT_ID": JOURNAL_BOOT,
+        "MESSAGE_ID": message_id,
+        "MESSAGE": CANARY,
+    }
+    rec.update({key: str(value) for key, value in fields.items()})
+    return rec
+
+
+def notice_records(counts: dict) -> list:
+    """Record pool for the catalog notice classes plus the signal-11 subset.
+
+    The coredump query counts every COREDUMP_ID record; the segfault query
+    counts only those carrying COREDUMP_SIGNAL=11. The first `segfault` records
+    get the signal, so `coredump` >= `segfault` holds for every fixture.
+    """
+    pool = [journal_record(KERNEL_ID) for _ in range(int(counts.get("kernel", 0)))]
+    pool += [journal_record(OOMD_ID) for _ in range(int(counts.get("oomd", 0)))]
+    core = int(counts.get("coredump", 0))
+    seg = int(counts.get("segfault", 0))
+    if seg > core:
+        raise SetupError("fixture coredump=%d < segfault=%d" % (core, seg))
+    for i in range(core):
+        extra = {"COREDUMP_SIGNAL": "11"} if i < seg else {}
+        pool.append(journal_record(COREDUMP_ID, **extra))
+    return pool
+
+
+def unit_failure_records(subjects, result: str = "exit-code") -> list:
+    """Unit-failure records; each subject is None or (field, unit-name).
+
+    `result=None` omits UNIT_RESULT, the result-unknown fixture shape.
+    """
+    pool = []
+    for subject in subjects:
+        extra = {} if result is None else {"UNIT_RESULT": result}
+        if subject is not None:
+            field, name = subject
+            extra[field] = name
+        pool.append(journal_record(UNIT_FAILURE_ID, **extra))
+    return pool
+
+
+def sigkill_records(count: int) -> list:
+    return [
+        journal_record(UNIT_SIGKILL_ID, EXIT_CODE="killed", EXIT_STATUS="9")
+        for _ in range(int(count))
+    ]
+
+
+def journal_stub_body(system_records, user_records, message_mode: str) -> str:
+    """Synthetic journalctl with exact field matching and field projection.
+
+    The stub is a tiny journalctl: `FIELD=value` argv words are ANDed across
+    fields and ORed within one field, `-o json`/`--output=json` selects JSON,
+    and `--output-fields` projects exactly those keys (unless leak mode forces
+    MESSAGE). A query that does not match a fixture record yields an empty
+    stream at rc 0, so a fixed answer cannot masquerade as a valid answer.
+    Text mode never carries a class word: only the structured path can observe
+    this fixture, which is the C1 point.
+
+    Deliberate limits (documented, not defects): the projection is STRICTER
+    than real journalctl (real `-o json` always includes `__CURSOR`,
+    timestamps and `_BOOT_ID`; here only requested fields appear), so a missing
+    core field can cause a false red, never a false green. Values are joined by
+    0x1f and read line-by-line, and only backslash/quote are JSON-escaped, so a
+    newline or control-character unit-name injection cannot be represented here;
+    that injection belongs in the census selftest (or the r14 gate), not in this
+    structured fixture.
     """
 
-    def blocks(counts: dict):
-        emit_all = []
-        emit_cases = []
-        for token, mid, kind in C1_SURFACE_TOKENS:
-            if mid is None:
-                continue
-            n = int(counts.get(kind, 0))
-            emit_all.append("      emit %s %d %s" % (mid, n, kind))
-            emit_cases.append("        %s) emit %s %d %s ;;" % (mid, mid, n, kind))
-        return "\n".join(emit_all), "\n".join(emit_cases)
+    def encode(records):
+        return "\n".join(
+            "\x1f".join("%s=%s" % (key, val) for key, val in sorted(rec.items()))
+            for rec in records
+        )
 
-    system_all, system_cases = blocks(system_counts)
-    user_all, user_cases = blocks(user_counts)
     template = r"""#!/usr/bin/env bash
-# Synthetic structured journal for mori round-13 regressions.
-# Never opens the host journal. One JSON object per line, no MESSAGE unless the
-# probe's --output-fields asks for it (or leak mode forces the key).
-canary='@CANARY@'
-boot='@BOOT@'
-json=0; user=0; fields=''; want=(); signal11=0; fieldq=0
+# Synthetic structured journal for the mori round-13 gate; never opens the
+# host journal. Records are FIELD=value pairs joined by 0x1f.
+mode='@MODE@'
+json=0; scope=system; fields=''
+declare -a fk=() fv=()
+declare -A VALS=()
+declare -a PAIRS=()
 for a in "$@"; do
   case "$a" in
-    --user) user=1 ;;
-    --system) user=0 ;;
+    --user) scope=user ;;
+    --system) scope=system ;;
     --output-fields=*) fields=${a#--output-fields=} ;;
-    *json*) json=1 ;;
-    MESSAGE_ID=*) want+=("${a#MESSAGE_ID=}"); fieldq=1 ;;
-    COREDUMP_SIGNAL=11) signal11=1; fieldq=1 ;;
-    [A-Z_]*=*) fieldq=1 ;;
+    -o|--output=json|json) json=1 ;;
+    [A-Z_]*=*)
+      fk+=("${a%%=*}"); fv+=("${a#*=}") ;;
   esac
 done
 show_message=1
-if [ '@MODE@' = honor ] && [ -n "$fields" ]; then
-  case ",$fields," in *,MESSAGE,*) ;; *) show_message=0 ;; esac
+if [ "$mode" = honor ] && [ -n "$fields" ]; then
+  case ",$fields," in
+    *,MESSAGE,*) ;;
+    *) show_message=0 ;;
+  esac
 fi
-emit() { # <id> <n> <kind>
-  local id=$1 n=$2 kind=$3 i msg='' extra=''
-  [ "$n" -gt 0 ] || return 0
-  if [ "$show_message" = 1 ]; then
-    msg=',"MESSAGE":"'"$canary"'"'
-  fi
-  if [ "$kind" = coredump ]; then
-    extra=',"COREDUMP_SIGNAL":"11"'
-  fi
-  for ((i=0; i<n; i++)); do
-    printf '{"__CURSOR":"s=r13_%s_%s_%s","__REALTIME_TIMESTAMP":"1700000000000000","__MONOTONIC_TIMESTAMP":"1000","_BOOT_ID":"%s","_TRANSPORT":"journal","MESSAGE_ID":"%s"%s%s}\n' \
-      "$kind" "$id" "$i" "$boot" "$id" "$extra" "$msg"
-  done
-}
-if [ "$json" = 1 ]; then
-  if [ "$user" = 1 ]; then
-    if [ ${#want[@]} -gt 0 ]; then
-      for id in "${want[@]}"; do
-        case "$id" in
-@USER_EMIT_CASES@
-        esac
-      done
-    elif [ "$signal11" = 1 ]; then
-      emit @COREDUMP@ @USER_COREDUMP_N@ coredump
-    elif [ "$fieldq" = 1 ]; then
-      : # a structured filter with no fixture match: zero records, rc 0
-    else
-@USER_EMIT_ALL@
-    fi
-  else
-    if [ ${#want[@]} -gt 0 ]; then
-      for id in "${want[@]}"; do
-        case "$id" in
-@EMIT_CASES@
-        esac
-      done
-    elif [ "$signal11" = 1 ]; then
-      emit @COREDUMP@ @COREDUMP_N@ coredump
-    elif [ "$fieldq" = 1 ]; then
-      : # a structured filter with no fixture match: zero records, rc 0
-    else
-@EMIT_ALL@
-    fi
-  fi
-else
-  if [ "$user" = 0 ]; then
+if [ "$json" != 1 ]; then
+  # Legacy text mode: a header line only. No class words, no MESSAGE text.
+  if [ "$scope" = system ]; then
     printf '+-- Journal begins at 2026-10-14, ends at 2026-10-19. --+\n'
   fi
+  exit 0
 fi
+if [ "$scope" = user ]; then
+  pool=$(cat <<'R13POOL'
+@USER_POOL@
+R13POOL
+)
+else
+  pool=$(cat <<'R13POOL'
+@SYSTEM_POOL@
+R13POOL
+)
+fi
+record_values() { # <line> -> fill VALS
+  local line=$1 pair
+  VALS=()
+  IFS=$'\x1f' read -r -a PAIRS <<< "$line"
+  for pair in "${PAIRS[@]}"; do
+    VALS["${pair%%=*}"]="${pair#*=}"
+  done
+}
+matches() { # <line>; AND across fields, OR within repeated field filters
+  local line=$1 i key val
+  local -A need=() hit=()
+  record_values "$line"
+  for ((i=0; i<${#fk[@]}; i++)); do
+    key=${fk[i]}; val=${fv[i]}
+    [ "${VALS[$key]+x}" ] || return 1
+    need[$key]=1
+    if [ "${VALS[$key]}" = "$val" ]; then hit[$key]=1; fi
+  done
+  for key in "${!need[@]}"; do
+    [ "${hit[$key]:-0}" = 1 ] || return 1
+  done
+  return 0
+}
+emit_record() { # <line>
+  local line=$1 key val pair sep=''
+  local -a keys=()
+  record_values "$line"
+  mapfile -t keys < <(printf '%s\n' "${!VALS[@]}" | LC_ALL=C sort)
+  printf '{'
+  for key in "${keys[@]}"; do
+    if [ "$key" = MESSAGE ]; then
+      [ "$show_message" = 1 ] || continue
+    elif [ -n "$fields" ]; then
+      case ",$fields," in *,"$key",*) ;; *) continue ;; esac
+    fi
+    val=${VALS[$key]}
+    val=${val//\\/\\\\}
+    val=${val//\"/\\\"}
+    printf '%s"%s":"%s"' "$sep" "$key" "$val"
+    sep=','
+  done
+  printf '}\n'
+}
+while IFS= read -r line; do
+  [ -n "$line" ] || continue
+  if matches "$line"; then emit_record "$line"; fi
+done <<< "$pool"
 exit 0
 """
     return (
-        template.replace("@CANARY@", CANARY)
-        .replace("@BOOT@", JOURNAL_BOOT)
-        .replace("@MODE@", message_mode)
-        .replace("@COREDUMP@", COREDUMP_ID)
-        .replace("@COREDUMP_N@", str(int(system_counts.get("coredump", 0))))
-        .replace("@USER_COREDUMP_N@", str(int(user_counts.get("coredump", 0))))
-        .replace("@USER_EMIT_ALL@", user_all)
-        .replace("@USER_EMIT_CASES@", user_cases)
-        .replace("@EMIT_ALL@", system_all)
-        .replace("@EMIT_CASES@", system_cases)
+        template.replace("@MODE@", message_mode)
+        .replace("@SYSTEM_POOL@", encode(system_records))
+        .replace("@USER_POOL@", encode(user_records))
     )
 
 
@@ -658,18 +953,16 @@ def census_env(base: Path) -> dict:
 def build_history_fixture(base: Path, subject: bool) -> None:
     build_common(base)
     write_exec(base / "bin" / "git", git_stub_body(subject, HISTORY_SIBLINGS))
-    write_exec(base / "bin" / "journalctl", journal_stub_body({}, {}, "honor"))
+    write_exec(base / "bin" / "journalctl", journal_stub_body([], [], "honor"))
 
 
 def build_journal_fixture(base: Path, message_mode: str,
-                          system_counts=None, user_counts=None) -> None:
+                          system_records=None, user_records=None) -> None:
     build_common(base)
-    system_counts = C1_SYSTEM_COUNTS if system_counts is None else system_counts
-    user_counts = {} if user_counts is None else user_counts
     write_exec(base / "bin" / "git", git_stub_body(True, 0))
     write_exec(
         base / "bin" / "journalctl",
-        journal_stub_body(system_counts, user_counts, message_mode),
+        journal_stub_body(system_records or [], user_records or [], message_mode),
     )
 
 
@@ -690,6 +983,10 @@ class Harness:
         self.claims = []
         self.fixture_root = None
         self.frozen = {}
+        self.frozen_pins = "not-supplied"
+        self.inputs_sha256 = None
+        self.revision = None
+        self.dirty = None
         self.census = None
         self.oracle = None
 
@@ -712,16 +1009,25 @@ class Harness:
         Two entry points are covered: the sibling inputs.json next to an
         explicitly named target (e.g. --census frozen/mori-census.sh), and the
         --frozen-dir inputs.json used by --baseline and by mutation sources.
-        A mismatch raises SnapshotTampered; main emits the stable token
-        `snapshot_tampered` with setup rc2.
+
+        For the DEFAULT historical frozen directory the digests come from the
+        committed FROZEN_PINS constants, so editing a frozen file together with
+        its sibling manifest still raises SnapshotTampered. A custom
+        --frozen-dir cannot be pinned ahead of time; it is verified against its
+        own manifest and disclosed as `unpinned (custom frozen dir)`.
         """
         frozen_map = {}
         inputs_hash = None
         frozen_dir = Path(self.args.frozen_dir).resolve()
-        inputs_path = frozen_dir / "inputs.json"
-        if inputs_path.is_file():
-            inputs_hash = sha256_file(inputs_path)
-            frozen_map = verify_inputs_file(inputs_path)
+        default_frozen = frozen_dir == DEFAULT_FROZEN.resolve()
+        if default_frozen:
+            frozen_map = verify_frozen_pins(frozen_dir)
+            inputs_hash = sha256_file(frozen_dir / "inputs.json")
+        else:
+            inputs_path = frozen_dir / "inputs.json"
+            if inputs_path.is_file():
+                inputs_hash = sha256_file(inputs_path)
+                frozen_map = verify_inputs_file(inputs_path)
         for path in (census, oracle):
             sibling = path.parent / "inputs.json"
             if sibling.is_file():
@@ -730,12 +1036,69 @@ class Harness:
                 verify_inputs_file(sibling)
         self.frozen = frozen_map
         self.inputs_sha256 = inputs_hash
+        if default_frozen:
+            self.frozen_pins = "verified"
+        elif frozen_map:
+            self.frozen_pins = "unpinned (custom frozen dir)"
+        else:
+            self.frozen_pins = "not-supplied"
+
+    @staticmethod
+    def record_revision():
+        """Name the measured revision; unavailable revision is could-not-evaluate.
+
+        `MORI_EVIDENCE_REVISION` lets an L1 wrapper pin the receipt revision
+        explicitly; otherwise the tree HEAD is read with an explicit git env.
+        The dirty flag is recorded, never hidden.
+        """
+        env = {
+            "PATH": "/usr/bin:/bin",
+            "HOME": os.environ.get("HOME", "/tmp"),
+            "GIT_CONFIG_GLOBAL": "/dev/null",
+            "GIT_CONFIG_SYSTEM": "/dev/null",
+        }
+
+        def git(args):
+            try:
+                proc = subprocess.run(
+                    ["git", "-C", str(REPO)] + args,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True,
+                    encoding="utf-8",
+                    errors="replace",
+                    env=env,
+                    timeout=10,
+                )
+            except (OSError, subprocess.SubprocessError):
+                return None
+            if proc.returncode != 0:
+                return None
+            return proc.stdout
+
+        revision = os.environ.get("MORI_EVIDENCE_REVISION", "").strip()
+        if not revision:
+            revision = (git(["rev-parse", "HEAD"]) or "").strip()
+        if not revision:
+            raise SetupError(
+                "revision unavailable: git rev-parse failed and "
+                "MORI_EVIDENCE_REVISION is unset (a verdict must name its "
+                "revision; set the env or run inside the lane repository)"
+            )
+        dirty_env = os.environ.get("MORI_EVIDENCE_DIRTY", "").strip().lower()
+        if dirty_env in ("true", "false"):
+            dirty = dirty_env == "true"
+        else:
+            status = git(["status", "--porcelain"])
+            dirty = None if status is None else bool(status.strip())
+        return revision, dirty
 
     def prepare(self) -> None:
         if not CANONICAL_SHONEN:
             raise SetupError("canonical SHONEN seed is empty")
         if sha256_bytes(CANONICAL_SHONEN.encode()) != CANONICAL_SHONEN_SHA256:
             raise SetupError("canonical SHONEN seed digest drifted from its constant")
+        self.revision, self.dirty = self.record_revision()
         census, oracle = self.resolve_targets()
         self.snapshot_verify(census, oracle)
         self.census, self.oracle = census, oracle
@@ -781,18 +1144,37 @@ class Harness:
             rc = None
             proc = None
         if proc is not None:
+            def kill_group(sig):
+                try:
+                    os.killpg(os.getpgid(proc.pid), sig)
+                except (ProcessLookupError, PermissionError):
+                    pass
+
             try:
                 stdout, stderr = proc.communicate(timeout=timeout)
                 rc = proc.returncode
             except subprocess.TimeoutExpired:
                 timed_out = True
+                # TERM lets the oracle's own EXIT trap clean its temp tree;
+                # KILL after a short grace if it does not honor TERM.
+                kill_group(signal.SIGTERM)
                 try:
-                    os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
-                except ProcessLookupError:
-                    pass
+                    proc.wait(timeout=2)
+                except subprocess.TimeoutExpired:
+                    kill_group(signal.SIGKILL)
                 stdout, stderr = proc.communicate()
                 rc = proc.returncode
+            except BaseException:
+                # Never orphan an isolated child on an interrupt or harness bug.
+                kill_group(signal.SIGTERM)
+                try:
+                    proc.wait(timeout=2)
+                except subprocess.TimeoutExpired:
+                    kill_group(signal.SIGKILL)
+                proc.communicate()
+                raise
         duration_ms = int((time.monotonic() - started) * 1000)
+        canary_present = CANARY in (stdout or "") or CANARY in (stderr or "")
         safe_out = redact(stdout or "")
         safe_err = redact(stderr or "")
         out_path = self.runs_dir / (run_id + ".stdout")
@@ -805,6 +1187,7 @@ class Harness:
             "cwd": str(cwd) if cwd else None,
             "rc": rc,
             "timed_out": timed_out,
+            "canary_present": canary_present,
             "error": error,
             "duration_ms": duration_ms,
             "timeout_s": timeout,
@@ -1060,55 +1443,165 @@ class Harness:
     # -- C1 ------------------------------------------------------------------
 
     def check_c1(self) -> None:
-        fixture = self.fixture("c1-journal")
-        build_journal_fixture(fixture, "honor")
+        # Primary: system notices (2 kernel / 1 oomd / 3 coredump, all signal
+        # 11). The restored contract turns the positive kernel notice into the
+        # global critical alarm, so DRIFT is the expected roll by design.
+        # Fixture directory names are deliberately neutral (fx-*): the census
+        # echoes MORI_JOURNALCTL_BIN, so a case-id path would be a sniffing
+        # channel. Run ids stay descriptive in evidence only.
+        fixture = self.fixture("fx-a")
+        build_journal_fixture(
+            fixture, "honor",
+            system_records=notice_records(C1_SYSTEM_COUNTS),
+        )
         primary = self.run_census("c1.primary", fixture)
-        # Leak probe: the stub ignores --output-fields and forces a MESSAGE key
-        # into every JSON object. A parser that echoes raw records leaks the
-        # canary; a parser that projects only counts does not.
-        leak_fixture = self.fixture("c1-journal-leak")
-        build_journal_fixture(leak_fixture, "always")
+
+        # Leak probe: the stub forces a MESSAGE key into every JSON object. A
+        # parser that echoes raw records leaks the canary; a projection does not.
+        leak_fixture = self.fixture("fx-b")
+        build_journal_fixture(
+            leak_fixture, "always",
+            system_records=notice_records(C1_SYSTEM_COUNTS),
+        )
         leak = self.run_census("c1.leak", leak_fixture)
-        # Independent user arm: nonzero user counts prove the scopes are not
-        # conflated (the zero arm alone cannot distinguish "separate" from
-        # "omitted").
-        user_fixture = self.fixture("c1-journal-user")
+
+        # Independent user arm: positive user kernel notices prove the scopes
+        # are separate and that the alarm fires for the user scope too.
+        user_fixture = self.fixture("fx-c")
         build_journal_fixture(
             user_fixture, "honor",
-            system_counts={},
-            user_counts=C1_USER_COUNTS,
+            user_records=notice_records(C1_USER_COUNTS),
         )
         user_run = self.run_census("c1.user", user_fixture)
+
+        # Positive non-OOM control: oomd/coredump/segfault only -> all INFO and
+        # CLEAN. This is what keeps the restored alarm specific to OOM.
+        notice_fixture = self.fixture("fx-d")
+        build_journal_fixture(
+            notice_fixture, "honor",
+            system_records=notice_records(C1_NOTICE_ONLY_COUNTS),
+        )
+        notice_run = self.run_census("c1.notice", notice_fixture)
+
+        # Empty control: six zero counters, no alarm, CLEAN.
+        empty_fixture = self.fixture("fx-e")
+        build_journal_fixture(empty_fixture, "honor")
+        empty_run = self.run_census("c1.empty", empty_fixture)
+
+        # Structured unit routing (all INFO => CLEAN, so the roll proves the
+        # generic fleet/non-fleet failure is not escalated):
+        #   system: 2 fleet, 1 missing subject, 1 both UNIT and USER_UNIT
+        #   user:   1 non-fleet (desktop/OS, owner tsukuroi)
+        routing_fixture = self.fixture("fx-f")
+        build_journal_fixture(
+            routing_fixture, "honor",
+            system_records=(
+                unit_failure_records([
+                    ("UNIT", "shokunin-watchdog.service"),
+                    ("UNIT", "ufo-sighting.service"),
+                    None,
+                ])
+                + [journal_record(
+                    UNIT_FAILURE_ID,
+                    UNIT="shokunin-check.service",
+                    USER_UNIT="shokunin-check.service",
+                    UNIT_RESULT="exit-code",
+                )]
+            ),
+            user_records=unit_failure_records([
+                ("USER_UNIT", "pipewire-pulse.service"),
+            ]),
+        )
+        routing_run = self.run_census("c1.routing", routing_fixture)
+
+        # Structured unit OOM: two system UNIT_RESULT=oom-kill results (one
+        # fleet subject, one absent subject) plus one fleet record whose result
+        # is missing (result-unknown, never OOM). DRIFT from the crit line.
+        oom_fixture = self.fixture("fx-g")
+        build_journal_fixture(
+            oom_fixture, "honor",
+            system_records=(
+                unit_failure_records([
+                    ("UNIT", "shokunin-fleet-fixture.service"),
+                    None,
+                ], result="oom-kill")
+                + unit_failure_records([
+                    ("UNIT", "shokunin-fleet-fixture.service"),
+                ], result=None)
+            ),
+        )
+        oom_run = self.run_census("c1.unit-oom", oom_fixture)
+
+        # Generic SIGKILL control: a user process-exit killed/9 record keeps
+        # its WARN and DRIFT; it must never be reported as an OOM.
+        sigkill_fixture = self.fixture("fx-h")
+        build_journal_fixture(
+            sigkill_fixture, "honor",
+            user_records=sigkill_records(1),
+        )
+        sigkill_run = self.run_census("c1.sigkill", sigkill_fixture)
 
         out = primary["stdout"]
         srows = surface_rows(out)
         verdict_word, verdict_reason, _ = verdict_roll(out, primary["rc"])
         rows = findings(out)
-        zero_counts = {kind: 0 for kind in C1_SYSTEM_COUNTS}
 
-        def scoped(rows_map, scope, expected):
-            """Check one scoped row's six class tokens, boot and no-sum shape."""
+        def scoped(rows_map, scope, expected, expected_tokens=None):
+            """Check one scoped row: six counts, r14 partition tokens, boot.
+
+            The six round-13 count tokens are pinned byte-identically. The r14
+            added tokens must be present on an ok row and must partition the
+            raw unit-failure count; `unit_unknown` is a derived bucket, so the
+            invariant is checked on the concrete categories instead of guessing
+            its definition.
+            """
             state, tokens = rows_map.get(scope, (None, {}))
             ok = state == "ok"
             observed = []
-            for stem, mid, kind in C1_SURFACE_TOKENS:
+            for stem, kind in C1_SURFACE_TOKENS:
                 got = tokens.get(stem)
                 observed.append("%s=%s" % (stem, got if got is not None else "<absent>"))
                 if got != str(expected[kind]):
                     ok = False
-            for name in C1_RECORD_TOKENS:
+            for name in C1_PARTITION_TOKENS:
                 got = tokens.get(name)
                 observed.append("%s=%s" % (name, got if got is not None else "<absent>"))
-                if got != "0":
+                if got is None:
                     ok = False
-            all_zero = all(
-                tokens.get(stem) == "0" for stem, mid, kind in C1_SURFACE_TOKENS
-            ) and all(tokens.get(name) == "0" for name in C1_RECORD_TOKENS)
+            if expected_tokens:
+                for name, want in expected_tokens.items():
+                    if tokens.get(name) != str(want):
+                        ok = False
+            # Counters that only the alarm/SIGKILL fixtures may raise default
+            # to zero everywhere else; an unpinned nonzero value is a failure.
+            pinned = expected_tokens or {}
+            for name in ("unit_oom", "unit_signal"):
+                if name not in pinned and _token_int(tokens, name) != 0:
+                    ok = False
+            raw = _token_int(tokens, "unit_failure_record")
+            parts = [
+                _token_int(tokens, name) for name in (
+                    "unit_fleet", "unit_nonfleet", "unit_missing",
+                    "unit_ambiguous", "unit_malformed",
+                )
+            ]
+            if raw is not None and all(value is not None for value in parts):
+                if sum(parts) != raw:
+                    ok = False
+                    observed.append("partition_mismatch=%s!=%d" % (parts, raw))
+            oom = _token_int(tokens, "unit_oom")
+            oom_parts = [
+                _token_int(tokens, name) for name in (
+                    "unit_oom_fleet", "unit_oom_nonfleet",
+                    "unit_oom_subject_unknown",
+                )
+            ]
+            if oom is not None and all(v is not None for v in oom_parts):
+                if sum(oom_parts) != oom:
+                    ok = False
+                    observed.append("oom_partition_mismatch=%s!=%d" % (oom_parts, oom))
+            all_zero = all(tokens.get(stem) == "0" for stem, kind in C1_SURFACE_TOKENS)
             boot = tokens.get("boot")
-            # The landed probe emits the validated boot only when a record was
-            # seen; an all-zero scope has no record, so it renders
-            # `unavailable:no-records`. That is the correct zero anchor, not a
-            # boot mismatch (a mismatched record grades the class unavailable).
             if not (boot == JOURNAL_BOOT or
                     (all_zero and boot == "unavailable:no-records")):
                 ok = False
@@ -1118,15 +1611,57 @@ class Harness:
                 ok = False
             return ok, state, tokens, observed
 
+        def oom_line(rec, rows_map):
+            """Exactly one global crit OOM line, counters equal to the rows.
+
+            L1 final schema: one line, six named counters, no `count=`/`total`/
+            `sum`, and each counter equals the matching scoped SURFACE token
+            (including an `unavailable:<reason>` value). Missing or duplicated
+            lines are a failure, not an absent alarm.
+            """
+            hits = [row for row in findings(rec["stdout"]) if row[0] == OOM_FINDING]
+            if len(hits) != 1:
+                return None, "lines=%d" % len(hits)
+            fid, sev, tok, rest = hits[0]
+            note = "sev=%s" % sev
+            ok = sev == EXPECTED_SEVERITY[OOM_FINDING]
+            if any(name in tok for name in ("count", "total", "sum")):
+                ok = False
+                note += ",summed"
+            pairs = {
+                "user_notice": ("user", "kernel_oom_notice"),
+                "system_notice": ("system", "kernel_oom_notice"),
+                "user_unit_oom": ("user", "unit_oom"),
+                "system_unit_oom": ("system", "unit_oom"),
+                "user_unit_oom_result_unknown": (
+                    "user", "unit_oom_result_unknown"),
+                "system_unit_oom_result_unknown": (
+                    "system", "unit_oom_result_unknown"),
+            }
+            for field, (scope, token) in pairs.items():
+                got = tok.get(field)
+                want = rows_map.get(scope, ("", {}))[1].get(token)
+                if got is None or want is None or got != want:
+                    ok = False
+                    note += ",%s=%s!=%s" % (field, got, want)
+            return tok, note if not ok else None
+
         system_ok, state, stokens, system_observed = scoped(
             srows, "system", C1_SYSTEM_COUNTS
         )
-        for fid, (kind, count) in C1_FINDINGS["system"].items():
-            if count > 0 and not any(
-                r[0] == fid and r[2].get("count") == str(count) for r in rows
-            ):
+        if system_ok:
+            _tok, oom_note = oom_line(primary, srows)
+            if oom_note is not None:
                 system_ok = False
-        if primary["rc"] != 0 or primary["timed_out"]:
+                system_observed.append("oom=" + oom_note)
+            if any(fid in (UNIT_FLEET_FINDING, UNIT_FLEET_FINDING_SYSTEM,
+                           UNIT_OUT_OF_SCOPE_FINDING,
+                           UNIT_OUT_OF_SCOPE_FINDING_SYSTEM,
+                           UNIT_UNATTRIBUTED_FINDING,
+                           KILL_SIGNAL_FINDING, KILL_SIGNAL_FINDING_SYSTEM)
+                   for fid, sev, tok, rest in rows):
+                system_ok = False
+        if primary["timed_out"]:
             system_ok = False
         if self.args.baseline:
             # Pre-fix has no scoped structured rows: absent counts are the
@@ -1136,22 +1671,28 @@ class Harness:
             status = PASS if system_ok else FAIL
         self.claim(
             "R13_C1_SYSTEM_NOTICE_COUNTS", status, "coverage",
-            "expected [%s]; observed [%s]; state=%s rc=%s system_findings=%s"
+            "expected [%s]; observed [%s]; state=%s rc=%s verdict=%s/%s"
             % (
                 " ".join("%s=%d" % (stem, C1_SYSTEM_COUNTS[kind])
-                         for stem, mid, kind in C1_SURFACE_TOKENS),
+                         for stem, kind in C1_SURFACE_TOKENS),
                 " ".join(system_observed), state, primary["rc"],
-                ",".join(f for f, s, t, r in rows if f.endswith("_SYSTEM")) or "none",
+                verdict_word, verdict_reason,
             ),
             run_ids=["c1.primary"],
         )
 
+
         # User scope zero arm: an independent row with zero class tokens, its
-        # own boot anchor, and no summed field. No user finding at zero.
-        user_ok, ustate, utokens, user_observed = scoped(srows, "user", zero_counts)
+        # own boot anchor, and no summed field. The global OOM line has no
+        # per-scope id suffix, so a user leak is detected from the finding's own
+        # scope token and from the counter equality checked above, never from
+        # `_USER` id suffixes.
+        user_ok, ustate, utokens, user_observed = scoped(
+            srows, "user", C1_EMPTY_COUNTS
+        )
         if "user" not in srows:
             user_ok = False
-        if any(fid.endswith("_USER") for fid, sev, tok, rest in rows):
+        if any(tok.get("scope") == "user" for fid, sev, tok, rest in rows):
             user_ok = False
         if self.args.baseline:
             status = EXPECTED_DEFECT if not user_ok else BASELINE_DEVIATION
@@ -1165,31 +1706,33 @@ class Harness:
             run_ids=["c1.primary"],
         )
 
-        # User scope nonzero arm: the same fixture machinery with only user
-        # records. Counts must land on the user row while every system class
-        # stays 0; the rows are never summed.
+        # User scope nonzero arm: user-only kernel notices must produce the
+        # global critical alarm and DRIFT, while every system class stays 0 and
+        # the per-scope counters stay separate.
         nrows = surface_rows(user_run["stdout"])
         nu_ok, nustate, nutokens, nuser_observed = scoped(
             nrows, "user", C1_USER_COUNTS
         )
         ns_ok, nsstate, nstokens, nsystem_observed = scoped(
-            nrows, "system", zero_counts
+            nrows, "system", C1_EMPTY_COUNTS
         )
         unonzero_ok = nu_ok and ns_ok
         urows = findings(user_run["stdout"])
-        for fid, (kind, count) in C1_FINDINGS["user"].items():
-            match = [
-                r for r in urows
-                if r[0] == fid and r[2].get("count") == str(count)
-            ]
-            if count > 0 and not match:
+        uoom, uoom_note = oom_line(user_run, nrows)
+        if uoom_note is not None:
+            unonzero_ok = False
+            uoom_observed = "oom=" + uoom_note
+        else:
+            if _token_int(uoom, "user_notice") != C1_USER_COUNTS["kernel"]:
                 unonzero_ok = False
-            if count == 0 and any(r[0] == fid for r in urows):
+            if _token_int(uoom, "system_notice") != 0:
                 unonzero_ok = False
-        if any(fid.endswith("_SYSTEM") for fid, sev, tok, rest in urows):
+            uoom_observed = "oom user_notice=%s system_notice=%s" % (
+                uoom.get("user_notice"), uoom.get("system_notice"))
+        if any(tok.get("scope") == "system" for fid, sev, tok, rest in urows):
             unonzero_ok = False
         uword, ureason, _ = verdict_roll(user_run["stdout"], user_run["rc"])
-        if uword != "CLEAN" or ureason != "ok" or user_run["rc"] != 0:
+        if (uword, ureason, user_run["rc"]) != ("DRIFT", "ok", 1):
             unonzero_ok = False
         if self.args.baseline:
             status_u = EXPECTED_DEFECT if not unonzero_ok else BASELINE_DEVIATION
@@ -1198,19 +1741,22 @@ class Harness:
         self.claim(
             "R13_C1_USER_SCOPE_NONZERO", status_u, "coverage",
             "fixture user=%s; user=[%s] state=%s; system=[%s] state=%s; "
-            "verdict=%s/%s rc=%s"
+            "%s; verdict=%s/%s rc=%s"
             % (C1_USER_COUNTS, " ".join(nuser_observed), nustate,
-               " ".join(nsystem_observed), nsstate, uword, ureason,
-               user_run["rc"]),
+               " ".join(nsystem_observed), nsstate, uoom_observed,
+               uword, ureason, user_run["rc"]),
             run_ids=["c1.user"],
         )
 
         # MESSAGE-free output, on both the honoring and the leak-forcing stub.
+        # run_process stores REDACTED stderr/stdout, so the literal canary can
+        # never appear there; the pre-redaction `canary_present` flag and the
+        # redaction marker are the leak evidence.
         message_text_ok = True
         leak_notes = []
         for label, rec in (("primary", primary), ("leak", leak)):
             blob = rec["stdout"] + "\n" + rec["stderr"]
-            if CANARY in blob:
+            if rec.get("canary_present") or "<canary-redacted>" in blob:
                 message_text_ok = False
                 leak_notes.append("%s:canary" % label)
             if MESSAGE_KEY_RE.search(blob):
@@ -1242,83 +1788,270 @@ class Harness:
             run_ids=["c1.primary", "c1.leak"],
         )
 
-        # Verdict: notices are INFO, so exactly one well-formed CLEAN matching
-        # rc 0; the unmeasured kill classes are named, never counted, and the
-        # two rows are separately shaped.
-        coverage_finding = any(
-            fid == "JOURNAL_CLASSES_UNMEASURED" and sev == "info"
-            for fid, sev, tok, rest in rows
-        )
-        row_shape_ok = "system" in srows and "user" in srows
-        for scope in ("system", "user"):
-            rstate, rtokens = srows.get(scope, (None, {}))
-            unmeasured = rtokens.get("unmeasured", "")
-            all_zero = all(
-                rtokens.get(stem) == "0" for stem, mid, kind in C1_SURFACE_TOKENS
-            ) and all(rtokens.get(name) == "0" for name in C1_RECORD_TOKENS)
-            boot = rtokens.get("boot")
-            if rstate != "ok":
-                row_shape_ok = False
-            if rtokens.get("unit") != "notice":
-                row_shape_ok = False
-            if rtokens.get("field") != "user:MESSAGE_ID":
-                row_shape_ok = False
-            if not all(cls in unmeasured for cls in UNMEASURED_CLASSES):
-                row_shape_ok = False
-            if rtokens.get("rc") != "0":
-                row_shape_ok = False
-            if not (boot == JOURNAL_BOOT or
-                    (all_zero and boot == "unavailable:no-records")):
-                row_shape_ok = False
-        kill_rows = [
-            fid for fid, sev, tok, rest in rows
-            if fid in (
-                "OOM_KILL_JOURNAL",
-                "KILL_SIGNAL_JOURNAL",
-                "KILL_SIGNAL_JOURNAL_SYSTEM",
-                "UNIT_FAILURE_JOURNAL",
-                "UNIT_FAILURE_JOURNAL_SYSTEM",
-                "UNIT_FAILURE_OUT_OF_SCOPE",
-            )
-            and count_value(tok) > 0
-        ]
-        clean_verdict_ok = (
-            verdict_word == "CLEAN" and verdict_reason == "ok"
-            and primary["rc"] == 0
-        )
-        clean_full_ok = (
-            clean_verdict_ok
-            and row_shape_ok
-            and coverage_finding
-            and not kill_rows
+        def one_finding(rows_list, fid, severity, **want):
+            hits = [row for row in rows_list if row[0] == fid]
+            if len(hits) != 1:
+                return False
+            _fid, sev, tok, _rest = hits[0]
+            if sev != severity:
+                return False
+            for key, value in want.items():
+                if tok.get(key) != str(value):
+                    return False
+            return True
+
+        # The restored alarm: kernel OOM notices are critical and roll DRIFT.
+        # Exactly one global line; the per-scope counters mirror the SURFACE
+        # tokens and are never summed.
+        oom_tok, oom_note = oom_line(primary, srows)
+        cword, creason, _ = verdict_roll(primary["stdout"], primary["rc"])
+        alarm_ok = (
+            oom_note is None
+            and _token_int(oom_tok, "system_notice")
+            == C1_SYSTEM_COUNTS["kernel"]
+            and _token_int(oom_tok, "user_notice") == 0
+            and (cword, creason, primary["rc"]) == ("DRIFT", "ok", 1)
         )
         if self.args.baseline:
-            # The roll itself is the baseline observation; the C1 schema is
-            # the expected pre-fix gap, so a clean roll without it is an
-            # expected defect, never a contract pass.
-            status = (
-                BASELINE_OK if clean_full_ok
-                else EXPECTED_DEFECT if clean_verdict_ok
-                else BASELINE_DEVIATION
-            )
+            status = EXPECTED_DEFECT if not alarm_ok else BASELINE_DEVIATION
         else:
-            status = PASS if clean_full_ok else FAIL
+            status = PASS if alarm_ok else FAIL
         self.claim(
-            "R13_C1_CLEAN_VERDICT", status, "coverage",
-            "verdict=%s reason=%s rc=%s rows=%s row_shape=%s "
-            "coverage_finding=%s positive_kill_rows=%s"
-            % (verdict_word, verdict_reason, primary["rc"],
-               ",".join(sorted(srows)) or "none",
-               "yes" if row_shape_ok else "no",
-               "yes" if coverage_finding else "no",
-               ",".join(kill_rows) or "none"),
+            "R13_C1_OOM_ALARM_DRIFT", status, "coverage",
+            "verdict=%s/%s rc=%s oom=%s"
+            % (cword, creason, primary["rc"],
+               oom_note if oom_note is not None
+               else "system_notice=%s user_notice=%s" % (
+                   (oom_tok or {}).get("system_notice"),
+                   (oom_tok or {}).get("user_notice"))),
             run_ids=["c1.primary"],
+        )
+
+        # Positive non-OOM notice fixture: still INFO and CLEAN. This is the
+        # control that keeps the restored alarm specific to OOM; severity creep
+        # on oomd/coredump/segfault fails here.
+        nrows2 = surface_rows(notice_run["stdout"])
+        nsys_ok, nsys_state, nsys_tok, nsys_obs = scoped(
+            nrows2, "system", C1_NOTICE_ONLY_COUNTS
+        )
+        nusr_ok, nusr_state, nusr_tok, nusr_obs = scoped(
+            nrows2, "user", C1_EMPTY_COUNTS
+        )
+        nfnd = findings(notice_run["stdout"])
+        nword, nreason, _ = verdict_roll(notice_run["stdout"], notice_run["rc"])
+        n_alarm = any(fid == OOM_FINDING for fid, sev, tok, rest in nfnd)
+        n_route = any(
+            fid in (
+                UNIT_FLEET_FINDING, UNIT_FLEET_FINDING_SYSTEM,
+                UNIT_OUT_OF_SCOPE_FINDING, UNIT_OUT_OF_SCOPE_FINDING_SYSTEM,
+                UNIT_UNATTRIBUTED_FINDING,
+                KILL_SIGNAL_FINDING, KILL_SIGNAL_FINDING_SYSTEM,
+            )
+            for fid, sev, tok, rest in nfnd
+        )
+        notice_roll_ok = (
+            (nword, nreason, notice_run["rc"]) == ("CLEAN", "ok", 0)
+            and not n_alarm and not n_route
+        )
+        notice_ok = notice_roll_ok and nsys_ok and nusr_ok
+        if self.args.baseline:
+            status = BASELINE_CONTROL if notice_roll_ok else BASELINE_DEVIATION
+        else:
+            status = PASS if notice_ok else FAIL
+        self.claim(
+            "R13_C1_NOTICE_CLEAN_CONTROL", status, "coverage",
+            "verdict=%s/%s rc=%s system=[%s] user=[%s] alarm=%s routing=%s"
+            % (nword, nreason, notice_run["rc"], " ".join(nsys_obs),
+               " ".join(nusr_obs), "yes" if n_alarm else "no",
+               "yes" if n_route else "no"),
+            run_ids=["c1.notice"],
+        )
+
+        # Empty negative control: six zero counters and no alarm. This is the
+        # test against an unconditional DRIFT implementation.
+        erows = surface_rows(empty_run["stdout"])
+        esys_ok, esys_state, esys_tok, esys_obs = scoped(
+            erows, "system", C1_EMPTY_COUNTS
+        )
+        eusr_ok, eusr_state, eusr_tok, eusr_obs = scoped(
+            erows, "user", C1_EMPTY_COUNTS
+        )
+        efnd = findings(empty_run["stdout"])
+        eword, ereason, _ = verdict_roll(empty_run["stdout"], empty_run["rc"])
+        e_alarm = any(fid == OOM_FINDING for fid, sev, tok, rest in efnd)
+        e_route = any(
+            fid in (
+                UNIT_FLEET_FINDING, UNIT_FLEET_FINDING_SYSTEM,
+                UNIT_OUT_OF_SCOPE_FINDING, UNIT_OUT_OF_SCOPE_FINDING_SYSTEM,
+                UNIT_UNATTRIBUTED_FINDING,
+                KILL_SIGNAL_FINDING, KILL_SIGNAL_FINDING_SYSTEM,
+            )
+            for fid, sev, tok, rest in efnd
+        )
+        empty_roll_ok = (
+            (eword, ereason, empty_run["rc"]) == ("CLEAN", "ok", 0)
+            and not e_alarm and not e_route
+        )
+        empty_ok = empty_roll_ok and esys_ok and eusr_ok
+        if self.args.baseline:
+            status = BASELINE_CONTROL if empty_roll_ok else BASELINE_DEVIATION
+        else:
+            status = PASS if empty_ok else FAIL
+        self.claim(
+            "R13_C1_EMPTY_CLEAN_CONTROL", status, "coverage",
+            "verdict=%s/%s rc=%s system=[%s] user=[%s] alarm=%s routing=%s"
+            % (eword, ereason, empty_run["rc"], " ".join(esys_obs),
+               " ".join(eusr_obs), "yes" if e_alarm else "no",
+               "yes" if e_route else "no"),
+            run_ids=["c1.empty"],
+        )
+
+        # Structured UNIT_RESULT=oom-kill is an OOM alarm in its own right,
+        # independent of subject attribution. The raw unit-failure total keeps
+        # all three records (two oom results + one missing result).
+        orows = surface_rows(oom_run["stdout"])
+        osys_ok, osys_state, osys_tok, osys_obs = scoped(
+            orows, "system", dict(C1_EMPTY_COUNTS, unit_failure=3),
+            expected_tokens={
+                "unit_oom": 2,
+                "unit_oom_fleet": 1,
+                "unit_oom_subject_unknown": 1,
+                "unit_oom_result_unknown": 1,
+                "unit_missing": 1,
+                "unit_signal": 0,
+            },
+        )
+        ousr_ok, ousr_state, ousr_tok, ousr_obs = scoped(
+            orows, "user", C1_EMPTY_COUNTS
+        )
+        oom2, oom2_note = oom_line(oom_run, orows)
+        oword, oreason, _ = verdict_roll(oom_run["stdout"], oom_run["rc"])
+        unit_oom_ok = (
+            osys_ok and ousr_ok and oom2_note is None
+            and _token_int(oom2, "system_unit_oom") == 2
+            and _token_int(oom2, "system_unit_oom_result_unknown") == 1
+            and _token_int(oom2, "user_unit_oom") == 0
+            and (oword, oreason, oom_run["rc"]) == ("DRIFT", "ok", 1)
+        )
+        if self.args.baseline:
+            status = EXPECTED_DEFECT if not unit_oom_ok else BASELINE_DEVIATION
+        else:
+            status = PASS if unit_oom_ok else FAIL
+        self.claim(
+            "R13_C1_UNIT_OOM_KILL_ALARM", status, "coverage",
+            "verdict=%s/%s rc=%s system=[%s] user=[%s] oom=%s"
+            % (oword, oreason, oom_run["rc"], " ".join(osys_obs),
+               " ".join(ousr_obs),
+               oom2_note if oom2_note is not None
+               else "system_unit_oom=%s system_unit_oom_result_unknown=%s"
+               % ((oom2 or {}).get("system_unit_oom"),
+                  (oom2 or {}).get("system_unit_oom_result_unknown"))),
+            run_ids=["c1.unit-oom"],
+        )
+
+        # Structured fleet/non-fleet/unknown partition. All findings are INFO,
+        # so the roll stays CLEAN: a generic failure is not escalated. Raw
+        # counts must equal the partition even when subject metadata is absent
+        # or ambiguous (2 fleet + 1 missing + 1 ambiguous in system; 1
+        # non-fleet in user).
+        rrows = surface_rows(routing_run["stdout"])
+        rsys_ok, rsys_state, rsys_tok, rsys_obs = scoped(
+            rrows, "system", dict(C1_EMPTY_COUNTS, unit_failure=4),
+            expected_tokens={
+                "unit_fleet": 2,
+                "unit_nonfleet": 0,
+                "unit_missing": 1,
+                "unit_ambiguous": 1,
+                "unit_malformed": 0,
+                "unit_signal": 0,
+            },
+        )
+        rusr_ok, rusr_state, rusr_tok, rusr_obs = scoped(
+            rrows, "user", dict(C1_EMPTY_COUNTS, unit_failure=1),
+            expected_tokens={
+                "unit_fleet": 0,
+                "unit_nonfleet": 1,
+                "unit_missing": 0,
+                "unit_ambiguous": 0,
+                "unit_signal": 0,
+            },
+        )
+        rfnd = findings(routing_run["stdout"])
+        rword, rreason, _ = verdict_roll(routing_run["stdout"], routing_run["rc"])
+        fleet_ok = one_finding(
+            rfnd, UNIT_FLEET_FINDING_SYSTEM, EXPECTED_SEVERITY[
+                UNIT_FLEET_FINDING_SYSTEM], count=2, scope="system"
+        )
+        nonfleet_ok = one_finding(
+            rfnd, UNIT_OUT_OF_SCOPE_FINDING, EXPECTED_SEVERITY[
+                UNIT_OUT_OF_SCOPE_FINDING], count=1, scope="user",
+            owner="tsukuroi"
+        )
+        unknown_ok = one_finding(
+            rfnd, UNIT_UNATTRIBUTED_FINDING, EXPECTED_SEVERITY[
+                UNIT_UNATTRIBUTED_FINDING], count=2, scope="system",
+            owner="unresolved", reason="subject-metadata-unknown"
+        )
+        routing_ok = (
+            rsys_ok and rusr_ok and fleet_ok and nonfleet_ok and unknown_ok
+            and not any(fid == OOM_FINDING for fid, sev, tok, rest in rfnd)
+            and not any(fid.startswith("KILL_SIGNAL")
+                        for fid, sev, tok, rest in rfnd)
+            and (rword, rreason, routing_run["rc"]) == ("CLEAN", "ok", 0)
+        )
+        if self.args.baseline:
+            status = EXPECTED_DEFECT if not routing_ok else BASELINE_DEVIATION
+        else:
+            status = PASS if routing_ok else FAIL
+        self.claim(
+            "R13_C1_UNIT_FAILURE_ROUTING", status, "coverage",
+            "verdict=%s/%s rc=%s system=[%s] user=[%s] fleet=%s nonfleet=%s "
+            "unattributed=%s"
+            % (rword, rreason, routing_run["rc"], " ".join(rsys_obs),
+               " ".join(rusr_obs), "yes" if fleet_ok else "no",
+               "yes" if nonfleet_ok else "no",
+               "yes" if unknown_ok else "no"),
+            run_ids=["c1.routing"],
+        )
+
+        # Generic SIGKILL: the user killed/9 process-exit record keeps WARN and
+        # DRIFT, and must never be relabeled as an OOM.
+        krows = surface_rows(sigkill_run["stdout"])
+        ksys_ok, ksys_state, ksys_tok, ksys_obs = scoped(
+            krows, "system", C1_EMPTY_COUNTS
+        )
+        kusr_ok, kusr_state, kusr_tok, kusr_obs = scoped(
+            krows, "user",
+            dict(C1_EMPTY_COUNTS, sigkill=1),
+            expected_tokens={},
+        )
+        kfnd = findings(sigkill_run["stdout"])
+        kword, kreason, _ = verdict_roll(sigkill_run["stdout"], sigkill_run["rc"])
+        kill_ok = one_finding(
+            kfnd, KILL_SIGNAL_FINDING, EXPECTED_SEVERITY[KILL_SIGNAL_FINDING],
+            count=1, scope="user", process_sigkill=1, user_unit_signal=0
+        )
+        sigkill_ok = (
+            ksys_ok and kusr_ok and kill_ok
+            and not any(fid == OOM_FINDING for fid, sev, tok, rest in kfnd)
+            and (kword, kreason, sigkill_run["rc"]) == ("DRIFT", "ok", 1)
+        )
+        if self.args.baseline:
+            status = EXPECTED_DEFECT if not sigkill_ok else BASELINE_DEVIATION
+        else:
+            status = PASS if sigkill_ok else FAIL
+        self.claim(
+            "R13_C1_SIGKILL_WARN_PRESERVED", status, "coverage",
+            "verdict=%s/%s rc=%s system=[%s] user=[%s] kill_warn=%s"
+            % (kword, kreason, sigkill_run["rc"], " ".join(ksys_obs),
+               " ".join(kusr_obs), "yes" if kill_ok else "no"),
+            run_ids=["c1.sigkill"],
         )
 
     # -- F01 -----------------------------------------------------------------
 
     def f01_arm(self, run_id: str, subject: bool) -> dict:
-        fixture = self.fixture("f01-" + ("subject" if subject else "sibling"))
+        fixture = self.fixture("fx-i" if subject else "fx-j")
         build_history_fixture(fixture, subject)
         return self.run_census(run_id, fixture)
 
@@ -1599,6 +2332,12 @@ class Harness:
                 target_text, source_text, func
             )
             origin = {
+                "attribution": (
+                    "whole frozen grade_lane function transplanted; not a "
+                    "membership-lines-only or byte-exact single-line revert; "
+                    "the frozen body also carries its older environment-"
+                    "hardening/fsmonitor behavior"
+                ),
                 "frozen_source": str(source),
                 "frozen_sha256": sha256_file(source),
             }
@@ -1613,6 +2352,11 @@ class Harness:
                 target_text, func, PRE_FIX_VERDICT_GRADE
             )
             origin = {
+                "attribution": (
+                    "reconstructed prefix-presence verdict_grade shim; the "
+                    "pre-fix oracle had no such function body, so this proves "
+                    "single-locus sufficiency, not original-byte restoration"
+                ),
                 "frozen_source": None,
                 "frozen_sha256": None,
                 "reverted_by": "pre_fix_prefix_presence_shim",
@@ -1658,7 +2402,7 @@ class Harness:
                 )
                 continue
             if kind == "f01":
-                fixture = self.fixture("mutation-f01")
+                fixture = self.fixture("fx-k")
                 build_history_fixture(fixture, True)
                 rec = self.run_process(
                     "mutation.f01.subject",
@@ -1677,7 +2421,9 @@ class Harness:
                     "R13_MUTATION_F01_RED_BEFORE",
                     MUTATION_RED if reproduced else MUTATION_MISS,
                     "operability",
-                    "transplanted %s: state=%s basis=%s other=%s verdict=%s/%s rc=%s; "
+                    "transplanted whole frozen %s (not a byte-exact one-line "
+                    "revert; includes its env-hardening/fsmonitor deltas): "
+                    "state=%s basis=%s other=%s verdict=%s/%s rc=%s; "
                     "expected pre-fix progressing-weak row-C"
                     % (info["function"], state, tokens.get("basis"),
                        tokens.get("other_authored_commits"), word, reason, rec["rc"]),
@@ -1701,8 +2447,9 @@ class Harness:
                     "R13_MUTATION_F02_RED_BEFORE",
                     MUTATION_RED if accepted else MUTATION_MISS,
                     "operability",
-                    "transplanted %s: matched=%s total=%s rc=%s; expected pre-fix "
-                    "BANANA accepted 28/28"
+                    "reconstructed prefix-presence shim replaced %s "
+                    "(frozen_source=null; not original bytes): matched=%s "
+                    "total=%s rc=%s; expected pre-fix BANANA accepted 28/28"
                     % (info["function"],
                        summary[0] if summary else None,
                        summary[1] if summary else None, rec["rc"]),
@@ -1742,7 +2489,9 @@ class Harness:
         if hard_fail:
             code = 1
         elif mutation_unavailable:
-            code = 3
+            # Declared verdict map: 0 clean / 1 failed / 2 could-not-evaluate.
+            # A mutation that could not be built is the last class.
+            code = 2
         else:
             code = 0
         self.emit(code)
@@ -1763,9 +2512,18 @@ class Harness:
         counts = {}
         for claim in self.claims:
             counts[claim["status"]] = counts.get(claim["status"], 0) + 1
+        gate_state, gate_row = registry_status()
         evidence = {
             "schema": SCHEMA,
             "generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+            "revision": {
+                "head": self.revision,
+                "dirty": self.dirty,
+                "source": (
+                    "MORI_EVIDENCE_REVISION" if os.environ.get(
+                        "MORI_EVIDENCE_REVISION") else "git rev-parse HEAD"
+                ),
+            },
             "mode": "baseline" if self.args.baseline else (
                 "mutation" if self.args.mutation != "none" else "strict"
             ),
@@ -1787,8 +2545,24 @@ class Harness:
                     "path": str(Path(self.args.frozen_dir).resolve() / "inputs.json"),
                     "sha256": getattr(self, "inputs_sha256", None),
                 },
+                "frozen_pins": {
+                    "state": self.frozen_pins,
+                    "expected": FROZEN_PINS,
+                    "base_commit": FROZEN_BASE_COMMIT,
+                },
             },
             "entropy": {"shuffle_seed": self.args.seed, "run_nonce": self.args.nonce},
+            "expectations": {
+                "counts": {
+                    "system": C1_SYSTEM_COUNTS,
+                    "user": C1_USER_COUNTS,
+                    "notice_only": C1_NOTICE_ONLY_COUNTS,
+                },
+                "severity": EXPECTED_SEVERITY,
+                "oom_counters": list(OOM_COUNTERS),
+                "fleet_predicate": FLEET_SUBJECT_RE.pattern,
+                "selftest_cases": [case[0] for case in SELFTEST_CASES],
+            },
             "claims": self.claims,
             "runs": sorted(self.runs, key=lambda r: r["id"]),
             "mutations": getattr(self, "mutations", []),
@@ -1796,7 +2570,17 @@ class Harness:
                 "claims": len(self.claims),
                 "counts": counts,
                 "exit": code,
-                "gate": "not-registered (evidence harness)",
+                "gate": {
+                    "name": GATE_REGISTRY_NAME,
+                    "status": gate_state,
+                    "registry": str(REGISTRY_FILE),
+                    "row": gate_row,
+                    "exit_map": {
+                        "0": "clean",
+                        "1": "failed",
+                        "2": "could-not-evaluate",
+                    },
+                },
             },
         }
         evidence_path = self.output / "evidence.json"
@@ -1810,12 +2594,134 @@ class Harness:
             )
         )
         print("EVIDENCE %s" % evidence_path)
-        print("GATE not-registered (evidence harness; --selftest available)")
+        if gate_state == "registered":
+            print("GATE registered name=%s registry=%s" % (
+                GATE_REGISTRY_NAME, REGISTRY_FILE))
+            print("GATE-ROW %s" % gate_row)
+        else:
+            print("GATE %s name=%s registry=%s row=%s" % (
+                gate_state, GATE_REGISTRY_NAME, REGISTRY_FILE, gate_row))
 
 
 # ---------------------------------------------------------------------------
-# selftest (pure logic; no repository path is read or written)
+# selftest: pure parser checks + real isolated gate self-invocation
 # ---------------------------------------------------------------------------
+
+
+def _isolated_args(root: Path, shonen: Path, census: Path,
+                   oracle: Path, frozen: Path):
+    return [
+        "--census", str(census),
+        "--oracle", str(oracle),
+        "--shonen", str(shonen),
+        "--frozen-dir", str(frozen),
+        "--output", str(root / "out"),
+        "--timeout", "30",
+        "--jobs", "1",
+    ]
+
+
+def run_isolated_case(case) -> tuple:
+    """Run the real gate as a subprocess over an isolated tree.
+
+    No repository target is read or run: SHONEN is a temp copy of the canonical
+    seed, the census/oracle are tiny stubs, and every fixture lives under the
+    fresh temp root. The case asserts the process exit code, the stable finding
+    ids, and the absence of the false "GATE not-registered" identity.
+    """
+    case_id, expected_rc, required, forbidden = case
+    root = Path(tempfile.mkdtemp(prefix="r13-selftest-"))
+    try:
+        shonen = root / "SHONEN.md"
+        shonen.write_bytes(CANONICAL_SHONEN.encode())
+        census = root / "census-stub.sh"
+        write_exec(census, "#!/usr/bin/env bash\nexit 0\n")
+        oracle = root / "oracle-stub.sh"
+        write_exec(
+            oracle,
+            "#!/usr/bin/env bash\n"
+            "printf 'MORI_SILENCE_CASES: matched=0 total=28\\n'\n"
+            "exit 1\n",
+        )
+        if case_id.endswith("manifest-tamper"):
+            frozen = root / "frozen"
+            frozen.mkdir()
+            write_exec(frozen / "mori-census.sh", "#!/usr/bin/env bash\nexit 0\n")
+            write_exec(
+                frozen / "mori-silence-cases.sh",
+                "#!/usr/bin/env bash\nexit 1\n",
+            )
+            (frozen / "inputs.json").write_text(
+                json.dumps({
+                    "base_commit": FROZEN_BASE_COMMIT,
+                    "sha256": {
+                        "mori-census.sh": "0" * 64,
+                        "mori-silence-cases.sh": sha256_file(
+                            frozen / "mori-silence-cases.sh"),
+                    },
+                }) + "\n",
+                encoding="utf-8",
+            )
+        else:
+            frozen = root / "no-frozen"
+        argv = [sys.executable, str(Path(__file__).resolve())]
+        argv += _isolated_args(root, shonen, census, oracle, frozen)
+        env = {
+            "PATH": "/usr/bin:/bin",
+            "HOME": os.environ.get("HOME", "/tmp"),
+            "TMPDIR": str(root),
+            "LANG": "C",
+            "LC_ALL": "C",
+            "TZ": "UTC",
+        }
+        try:
+            proc = subprocess.run(
+                argv,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                env=env,
+                cwd=str(root),
+                timeout=180,
+            )
+        except (OSError, subprocess.SubprocessError) as exc:
+            return False, "spawn failed: %s" % exc
+        out = proc.stdout or ""
+        problems = []
+        if proc.returncode != expected_rc:
+            problems.append("rc=%s!=%s" % (proc.returncode, expected_rc))
+        for fid in required:
+            if not re.search(r"(?m)^FINDING %s status=" % re.escape(fid), out):
+                problems.append("missing:%s" % fid)
+        for fid in forbidden:
+            if re.search(r"(?m)^FINDING %s status=" % re.escape(fid), out):
+                problems.append("forbidden:%s" % fid)
+        gate_lines = [ln for ln in out.splitlines() if ln.startswith("GATE ")]
+        if not gate_lines:
+            problems.append("no-GATE-line")
+        if any("not-registered" in ln for ln in gate_lines):
+            problems.append("false-not-registered")
+        if CANARY in out or "<canary-redacted>" in out:
+            problems.append("canary-leak")
+        if MESSAGE_KEY_RE.search(out) or MESSAGE_EQ_RE.search(out):
+            problems.append("message-leak")
+        evidence_path = root / "out" / "evidence.json"
+        if not evidence_path.is_file():
+            problems.append("no-evidence")
+        else:
+            try:
+                summary = json.loads(
+                    evidence_path.read_text(encoding="utf-8")).get("summary", {})
+            except (OSError, ValueError):
+                summary = {}
+            if summary.get("exit") != expected_rc:
+                problems.append(
+                    "evidence-exit=%s!=%s" % (summary.get("exit"), expected_rc))
+        return (not problems), ",".join(problems) or "ok"
+    finally:
+        shutil.rmtree(root, ignore_errors=True)
 
 
 def selftest() -> int:
@@ -1854,19 +2760,26 @@ def selftest() -> int:
         "SURFACE journal.user: ok (scope=user kernel_oom_notice=0 "
         "oomd_notice=0 coredump_notice=0 segfault_signal11=0 "
         "unit_sigkill_record=0 unit_failure_record=0; boot=0123; "
-        "unit=notice field=user:MESSAGE_ID; "
-        "unmeasured=oom_kill_text,other_signals,other_unit_failure_text; rc=0; ts=x)\n"
+        "unit_signal=0 unit_oom=0; rc=0; ts=x)\n"
         "SURFACE journal.system: ok (scope=system kernel_oom_notice=2 "
         "oomd_notice=1 coredump_notice=3 segfault_signal11=3 "
         "unit_sigkill_record=0 unit_failure_record=0; boot=0123; "
-        "unit=notice field=user:MESSAGE_ID; "
-        "unmeasured=oom_kill_text,other_signals,other_unit_failure_text; rc=0; ts=x)\n"
+        "unit_signal=0 unit_oom=0; rc=0; ts=x)\n"
     )
     rows = surface_rows(scoped_out)
     check("scoped-two-rows", set(rows) == {"user", "system"})
     check("scoped-user-zero", rows.get("user", ("", {}))[1].get("kernel_oom_notice") == "0")
     check("scoped-system-count", rows.get("system", ("", {}))[1].get("kernel_oom_notice") == "2")
     check("scoped-boot", rows.get("user", ("", {}))[1].get("boot") == "0123")
+    check("token-int", _token_int({"count": "3"}, "count") == 3)
+    check("token-int-unavailable", _token_int({"count": "unavailable:rc-1"}, "count") is None)
+    check("token-int-absent", _token_int({}, "count") is None)
+    check(
+        "fleet-predicate",
+        bool(FLEET_SUBJECT_RE.search("shokunin-watchdog.service"))
+        and bool(FLEET_SUBJECT_RE.search("UFO-SIGHTING.service"))
+        and not FLEET_SUBJECT_RE.search("pipewire-pulse.service"),
+    )
     check(
         "pass-cases",
         pass_cases("PASS silent-open (state=silent via lane finding=1 rc=1 nonce=1)\n")
@@ -1900,10 +2813,52 @@ def selftest() -> int:
     )
     # Wrapper shell fragments must round-trip through shlex quoting unchanged.
     check("shell-quote", shlex.quote("a b'c") == "'a b'\"'\"'c'")
-    if failures:
-        print("SELFTEST: fail %s" % " ".join(failures))
+    # Registry matcher (pure) and committed case table.
+    sample_row = (
+        "| r13 regressions | gate | `python3 tools/mori-round13-regressions.py "
+        "--output <dir>` | 0 clean · 1 failed · 2 could-not-evaluate | "
+        "`--selftest` | `FROZEN_PINS` | `--output` | mori |"
+    )
+    check(
+        "registry-row-present",
+        registry_row_status("| name |\n" + sample_row + "\n")[0] == "registered",
+    )
+    check(
+        "registry-row-absent",
+        registry_row_status("| name |\n| census | gate |\n")[0]
+        == "registration-missing",
+    )
+    check(
+        "frozen-pin-shape",
+        set(FROZEN_PINS) == {
+            "mori-census.sh", "mori-silence-cases.sh", "inputs.json"}
+        and all(re.fullmatch(r"[0-9a-f]{64}", value)
+                for value in FROZEN_PINS.values()),
+    )
+    try:
+        verify_frozen_pins(Path(DEFAULT_FROZEN).resolve())
+        pins_ok = True
+    except SnapshotTampered:
+        pins_ok = False
+    check("frozen-pins-match-default", pins_ok)
+    check(
+        "selftest-cases-committed",
+        len(SELFTEST_CASES) == 2
+        and len({case[0] for case in SELFTEST_CASES}) == len(SELFTEST_CASES),
+    )
+    case_failures = []
+    for case in SELFTEST_CASES:
+        case_ok, detail = run_isolated_case(case)
+        print("SELFTEST: case %s %s %s" % (
+            case[0], "ok" if case_ok else "bad", detail))
+        if not case_ok:
+            case_failures.append(case[0])
+    if failures or case_failures:
+        print("SELFTEST: fail pure=%s cases=%s" % (
+            " ".join(failures) or "none", " ".join(case_failures) or "none"))
         return 1
-    print("SELFTEST: pass checks=%d" % len(checks))
+    print("SELFTEST: pass checks=%d cases=%d" % (
+        len(checks), len(SELFTEST_CASES)))
     return 0
 
 
@@ -1939,9 +2894,15 @@ def write_snapshot_evidence(args, exc) -> None:
             expected = json.loads(inputs_path.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             expected = {"error": "unreadable inputs.json"}
+    try:
+        revision, dirty = Harness.record_revision()
+    except SetupError:
+        revision, dirty = None, None
+    gate_state, gate_row = registry_status()
     evidence = {
         "schema": SCHEMA,
         "generated_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "revision": {"head": revision, "dirty": dirty},
         "mode": "setup",
         "finding": "snapshot_tampered",
         "observed": str(exc),
@@ -1955,17 +2916,47 @@ def write_snapshot_evidence(args, exc) -> None:
             "claims": 1,
             "counts": {"fail": 1},
             "exit": 2,
-            "gate": "not-registered (evidence harness)",
+            "gate": {
+                "name": GATE_REGISTRY_NAME,
+                "status": gate_state,
+                "registry": str(REGISTRY_FILE),
+                "row": gate_row,
+                "exit_map": {
+                    "0": "clean",
+                    "1": "failed",
+                    "2": "could-not-evaluate",
+                },
+            },
         },
     }
     path = out / "evidence.json"
     json_dump(path, evidence)
     print("EVIDENCE %s" % path)
+    if gate_state == "registered":
+        print("GATE registered name=%s registry=%s" % (
+            GATE_REGISTRY_NAME, REGISTRY_FILE))
+    else:
+        print("GATE %s name=%s registry=%s row=%s" % (
+            gate_state, GATE_REGISTRY_NAME, REGISTRY_FILE, gate_row))
 
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(
-        description="Round-13 isolated integration regressions (evidence harness).",
+        description=(
+            "Round-13 regression gate (registered in this lane's SKILL.md; "
+            "C1 semantics migrated to the restored round-14 OOM alarm and "
+            "structured fleet routing)."
+        ),
+        epilog=(
+            "Mutation provenance: f01 transplants the WHOLE frozen grade_lane "
+            "(not a membership-lines-only or byte-exact one-line revert; it "
+            "includes the frozen body's environment-hardening deltas). f02 "
+            "replaces verdict_grade with a RECONSTRUCTED prefix-presence shim "
+            "(frozen_source=null), not original function bytes; it proves the "
+            "single validation locus is sufficient for BANANA acceptance. The "
+            "original frozen bytes under --baseline remain the primary "
+            "historical before evidence."
+        ),
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
     ap.add_argument("--census", help="census under test (default tools/mori-census.sh)")
@@ -1974,7 +2965,9 @@ def main(argv=None) -> int:
     ap.add_argument("--baseline", action="store_true",
                     help="record frozen pre-fix defects; never marks the new contract pass")
     ap.add_argument("--mutation", choices=("none", "f01", "f02", "both"), default="none",
-                    help="after the strict suite, transplant the frozen function back")
+                    help="after the strict suite, build the isolated mutant: f01 "
+                         "whole frozen grade_lane transplant; f02 reconstructed "
+                         "prefix-presence shim (neither is original-byte restoration)")
     ap.add_argument("--shonen", default=str(DEFAULT_SHONEN),
                     help="promotion seed to compare (default SHONEN.md)")
     ap.add_argument("--frozen-dir", default=str(DEFAULT_FROZEN),
@@ -1990,7 +2983,8 @@ def main(argv=None) -> int:
     ap.add_argument("--keep-fixtures", action="store_true",
                     help="keep fixture trees under the output dir for inspection")
     ap.add_argument("--selftest", action="store_true",
-                    help="run pure harness logic checks only (no repository paths read)")
+                    help="pure parser checks plus real isolated gate "
+                         "self-invocation (asserts exit code and stable finding ids)")
     args = ap.parse_args(argv)
 
     if args.selftest:
@@ -2020,6 +3014,15 @@ def main(argv=None) -> int:
         code = 2
     except KeyboardInterrupt:
         print("mori-round13-regressions: interrupted", file=sys.stderr)
+        code = 2
+    except Exception as exc:  # noqa: BLE001 - gate contract: never a false fail
+        # An unexpected harness error is could-not-evaluate (2), never failed
+        # (1): the declared verdict map must not be forged by a traceback.
+        print(
+            "mori-round13-regressions: internal error (could-not-evaluate): "
+            "%s: %s" % (type(exc).__name__, exc),
+            file=sys.stderr,
+        )
         code = 2
     finally:
         harness.cleanup()

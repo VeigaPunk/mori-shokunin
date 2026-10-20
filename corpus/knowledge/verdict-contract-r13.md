@@ -265,3 +265,22 @@ The new evidence harness initially rejected correct C1 output because of its
 own schema and expected-fixture mistakes. Both red runs remain committed;
 LOG.md round-13 and lesson M7 identify the exact corrections. No production
 census/oracle bytes changed to accommodate an inaccurate expected result.
+
+## Round-14 provenance correction
+
+The round-13 non-author spot-check rejects a byte-exact interpretation of
+“reverting only” in the measured implementation section above. F01 replaces
+the **whole frozen `grade_lane` function**, including environment-hardening
+deltas; the fixture's whitelisted environment and observed 12,001-history
+signature support the membership diagnosis, not a membership-lines-only
+reversion. F02 replaces newly introduced `verdict_grade` with a **reconstructed
+prefix-presence shim** (`frozen_source=null`), not an original function body:
+the old oracle had no such function. These are bounded function-locus
+sufficiency witnesses, not original-byte single-line restoration.
+
+The independently executed original-frozen-byte before receipts remain the
+primary historical failure evidence. This qualification also governs the
+round-13 “exact-locus” phrases in LOG.md, SCORECARD.md and the scope note.
+The verdict/author repairs verified; they did not offset the separate OOM
+alarm and owner-routing harms. See `corpus/lessons/round-14.md` M1–M5 and
+`round-13-verifier-spotcheck.md:43–89`.

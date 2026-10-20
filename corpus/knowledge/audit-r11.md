@@ -405,3 +405,22 @@ run and mutation detection support a different, narrower claim; they do not
 retroactively verify that missing experiment. The exact historic normalizer/ancestor
 attack tallies also remain bounded by their stated witness classes and preserved
 material, not elevated to universal anti-forgery proof.
+
+## Round-14 correction to historical D01/D02 action items
+
+The open-defect rows and action items above describe the audited r11 bytes,
+not current production. Round 13 repaired the measured F01 long-history
+membership loss and F02 invalid final-verdict acceptance; original frozen
+before and repaired after receipts are committed under
+`.ufo/waves/round-13/evidence/`. Its non-author spot-check verified those
+bounded gains while rejecting the round for separate journal alarm/routing
+harms (`corpus/lessons/round-13-verifier-spotcheck.md`).
+
+D01/D02 are **partially closed**, not universally solved: arbitrary tally
+corruption, aggregate/registry-count vacuity and adaptive output forgery remain
+outside the demonstrated repair. Historical numeric source anchors above
+remain attached to their audited hashes; current methods are located by
+`grade_lane` and oracle `verdict_grade`, not those moved line numbers.
+Whole-function F01 transplant and reconstructed F02 prefix shim are bounded
+mutation sufficiency witnesses; original-frozen runs establish the actual
+historical failures. See `verdict-contract-r13.md` round-14 provenance correction.

@@ -29,13 +29,14 @@
 | `lessons/2026-10-15-oracle-honesty-crash-masking.md` | setup-crash masking and genuine fixture repair can yield the same tally; pre-register gradients and assert fixture preconditions | `tools/mori-silence-cases.sh`; round-2 fixture/oracle evidence; mutant and read-only canaries |
 | `lessons/2026-10-15-settle-evidence-references-with-artifacts.md` | resolve active recipes against delivered replacement artifacts and record what replacements do not verify retroactively | `LOG.md:477-500`; round-10 report; evidence index; committed baseline and pin receipt; `tools/mori-census.sh --drift` |
 | `knowledge/oom-kill-counter-kernel-only-r12.md` | `memory.events`/`.local` and `/proc/vmstat` `oom_kill` move only at the kernel victim site (v7.2 `oom_kill.c:935-936`); userspace killers move neither — `oom_kill=0` is "no kernel OOM kills", not "no memory kills"; tsukuroi overlap cited | S002, S003, S004, S007, S011, S016 (`SOURCES.md`); host counts 2026-10-19 |
-| `knowledge/kill-classes-by-message-id-r12.md` | kill/OOM journal classes counted by catalog `MESSAGE_ID` (`fe6faa94…`, `d989611b…`, `fc2e22bc…`) MESSAGE-free; notice ≠ kill (5 kernel kills vs 7 user + 9 system notices in one boot); scopes never summed | S003, S013, S014, S015; MESSAGE-free journal counts 2026-10-19 |
-| `knowledge/kernel-oom-line-attribution-r12.md` | the kernel `oom-kill:constraint=…task_memcg=…pid=…uid=…` record as event-time attribution (5 records, 2026-10-18); token-only, never MESSAGE; fleet attribution [UNKNOWN] without a validated `task_memcg` token | S003, S004, S014, S015 |
+| `knowledge/kill-classes-by-message-id-r12.md` | kill/OOM journal classes counted by catalog `MESSAGE_ID` (`fe6faa94…`, `d989611b…`, `fc2e22bc…`) with non-`MESSAGE` output fields; notice ≠ kill or unique victim — the historical 5/7/9 one-boot samples are **not MESSAGE-free kernel kills**: 5 are `--grep`-selected kernel `Killed process` text matches and 7 user + 9 system are catalog-ID notice records; scopes never summed | S003, S013, S014, S015; catalog-ID counts + MESSAGE-selected historical samples 2026-10-19 |
+| `knowledge/kernel-oom-line-attribution-r12.md` | the kernel `oom-kill:constraint=…task_memcg=…pid=…uid=…` record as event-time attribution (5 retained samples, 2026-10-18, MESSAGE-selected by `--grep` — historical text matches, not a structured MESSAGE-free victim count); token-only output, never a `MESSAGE` echo; fleet attribution [UNKNOWN] without a validated `task_memcg` token | S003, S004, S014, S015 |
 | `knowledge/userspace-oom-killers-r12.md` | systemd-oomd (`user.oomd_ooms`/`user.oomd_kill` xattrs, D-Bus `Killed`, `d989611b…`) and earlyoom kill paths; inactive on this host → `unavailable (inactive)`, never 0; OS/unit state is tsukuroi's | S002, S003, S007, S011, S012, S013, S016 |
 | `knowledge/roster-truth-r12.md` | the three lane-roster sets (census default 9, `shokunin.conf` 20, `.ufo/state` 21 → union 23) and the r12 census roster derivation (`roster_source=`, `ROSTER_SET_MISMATCH` info; conf rows read only inside `LANES="…"`) at census `3da5b098…` | `shokunin.conf`, `scripts/shokunin-watchdog.sh:14`, `PROTOCOL-APPENDIX.md` 'Lane universe', `evidence/roster-r12-*` |
 | `lessons/round-12.md` | round-12 lesson: `## Mistakes` (M1–M26 mined from the lane's own errata, each with captured-by), pointer re-verification, and `## Gate` (candidates, admits, rejects with reasons, SOURCES access records) | LOG round-12 entries; dossiers `kaika-w1/mori-{state,art}.md` |
 | `knowledge/structured-journal-scopes-r13.md` | independently scoped MESSAGE-free catalog-ID record counts, structured unit results and numeric signal-11 records; client-set IDs are not authenticated kills; FR1 notice/result plane advances without claiming kernel victim attribution | S013/S014/S015 reopened, S035/S036 added round 13; `.ufo/waves/round-13/evidence/live-measurement.json` |
 | `knowledge/verdict-contract-r13.md` | capture-safe long-history author membership and strict single final-verdict grammar/rc validation; tested invalid wrappers, not universal forgery resistance | S031 reopened round 13; audit-r11 F01/F02; round-13 behavioral receipts |
+| `knowledge/journal-alarm-routing-r14.md` | one global `OOM_KILL_JOURNAL` crit per census (notice alarm ≠ unique victim), separate no-sum counters `user_notice`/`system_notice`/`user_unit_oom`/`system_unit_oom`; user `KILL_SIGNAL_JOURNAL` warn from process SIGKILL9 or `UNIT_RESULT=signal`; fleet/non-fleet by `UNIT=`/`USER_UNIT=` subject presence (`classification_rule=unit-name-token`, heuristic not membership proof), unattributed → `UNIT_FAILURE_UNATTRIBUTED_JOURNAL` info owner=unresolved; cgroup-local not a substitution; signal/GPF unimplemented-versus-unrecorded; unavailable ≠ alarm; candidate contract, no delivery/schema claim before L1 measurement | S002, S013, S015, S035, S036, S037, S038 (round 14); `lessons/round-13-verifier-spotcheck.md` routed defects 1–3 |
 
 ## Known gaps
 
@@ -276,7 +277,31 @@
   `pin-r10-*.log` (at this README's clock the baseline is the round's only r10
   evidence file in place).
 
-- **Journal scope correction (round 13):** the old user-only/text-signature census is superseded by independently labeled user/system structured journal record counts (`knowledge/structured-journal-scopes-r13.md`). Historical text-selected counts are not a current measurement or unique kill count. Structured process-result SIGKILL and unit-failure records preserve the supported class paths; arbitrary unreported signal paths and kernel victim attribution remain unmeasured (FR1).
+- **Journal scope correction (round 13, qualified in round 14):** the old
+  user-only/text-signature census is superseded by independently labeled
+  user/system structured journal record counts
+  (`knowledge/structured-journal-scopes-r13.md`). The r12 historical samples
+  indexed above are **not** MESSAGE-free kernel kills: their five kernel records
+  are `--grep`-selected over journal `MESSAGE` text and the 7/9 user/system
+  records are catalog-ID notices, so none is a current measurement or a
+  unique-victim count. Structured process-result SIGKILL and unit-failure records
+  preserve the supported class paths; arbitrary unreported signal paths and
+  kernel victim attribution remain unmeasured (FR1). **The r13 cutover is
+  rejected-harmed, not admitted:** it demoted the OOM notice classes to INFO,
+  away from the critical `OOM_KILL_JOURNAL`/DRIFT behavior, and collapsed the
+  fleet/non-fleet `UNIT_FAILURE_*` split together with its tsukuroi owner routing
+  (`lessons/round-13-verifier-spotcheck.md`, routed defects 1–2 and 6). Round
+  14's C1 claim retains the scoped counts and restores the alarm and routing
+  over structured journal metadata — one global `OOM_KILL_JOURNAL` critical
+  alarm (DRIFT) per census with separate, never-summed notice/unit counters and
+  no unique-victim claim; fleet `UNIT_FAILURE_JOURNAL` and non-fleet
+  `UNIT_FAILURE_OUT_OF_SCOPE` (owner tsukuroi) split on `UNIT=`/`USER_UNIT=`
+  subject presence under a named heuristic rule
+  (`classification_rule=unit-name-token`, not membership proof), while
+  unattributed records stay `UNIT_FAILURE_UNATTRIBUTED_JOURNAL` info (owner
+  unresolved), never invented non-fleet membership; the note is a candidate
+  contract with no delivery/schema claim before L1 measurement, and its source
+  set and limits are in `knowledge/journal-alarm-routing-r14.md`.
 
 ## Frontier
 

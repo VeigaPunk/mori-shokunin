@@ -754,3 +754,48 @@ Axis verdicts (lane assessment, outside closure pending): **coverage improved 6�
 Freshness recheck: `bash tools/mori-census.sh --drift corpus/evidence/baseline-r10-20261015T2231Z.json` exit 1 at c13df48; `.ufo/waves/round-13/evidence/drift-classification.json` assigns all 42 tokens to intentional journal schema, carried r12 roster schema, or explicitly inferred live-state families. This is not a regression-free proof and the old baseline is not re-pinned.
 
 Tooling: PipeSource installed `core/man-pages` **6.19-1**, official pacman channel, to inspect pipe(7); no other install/update is reported. One validated 32-seat wave completed; no lane seat committed, ran the integrated gates, wrote the fleet repo or performed remediation. L1 performed verification after their implementation deliveries. Open L0 questions added: none. Stale-lane: this steered round progressed through lane-authored commits; no other mori round mission is assigned here, and no driver restart or steering was performed.
+
+## Round 14 — repair rejected-harmed journal cutover (2026-10-20)
+
+Entering HEAD `dbe85009253c092fe50e4e93056fceeae273ec31`; inherited working tree
+was clean. Read `corpus/lessons/round-13-verifier-spotcheck.md` first. Its
+`rejected-harmed` judgment supersedes round 13's author admission: scoped-count
+and F01/F02 gains did not justify dropping the OOM critical alarm or fleet/
+non-fleet unit distinction and tsukuroi triage context.
+
+Exactly one declared claim, **C1 coverage**: restore boot-scoped structured
+OOM_KILL_JOURNAL critical/DRIFT behavior and fleet-only UNIT_FAILURE_JOURNAL,
+separately route non-fleet UNIT_FAILURE_OUT_OF_SCOPE to tsukuroi, while retaining
+all six independently scoped counts, error semantics and MESSAGE exclusion.
+Same regression command must fail over frozen entering bytes and pass repaired
+bytes; missing subject metadata is unknown, never invented non-fleet membership.
+Coverage is the lowest owned axis after the rejected round's unsupported coverage
+point is withdrawn; no scalar credit is claimed merely for restoring a contract.
+
+One validated 32-seat campaign wave, `.ufo/waves/round-14/spec.json` and
+`dispatch.json`, uses disjoint file writers plus read-only/source/attack seats.
+L1 holds planner; no model parameters or routing changes. Gates run only after
+the wave's edits settle. Frozen entering production bytes and digests are in
+`.ufo/waves/round-14/frozen/`; source-start census is `sources-before.json`.
+Gate registration, mutation provenance, historical index corrections and
+lesson-grounded criteria are unclaimed conformance/learning repairs.
+
+Repair expectations and original entering-byte snapshot were committed and
+pushed independently in **a5cc313**, before the implementation checkpoint.
+`frozen/expected.json` pre-registers strict red-before rc1, repaired rc0 and
+the six scoped-count/error/MESSAGE controls; the same harness must judge both.
+
+Source-read correction to the wave prose: L1's initial seat prompts mistakenly
+called generic fleet UNIT_FAILURE_JOURNAL WARN. Frozen r12 `probe_journal`
+`:904–908` actually emitted **INFO**, with the case-insensitive subject marker
+set `shokunin|ufo-sighting|tmux-spawn|the-tick|fleet`. The implementation, gate,
+registry and knowledge writers were explicitly corrected before integration:
+generic fleet and non-fleet failures retain INFO; OOM subtype independently
+requires critical/DRIFT, and the existing user-process SIGKILL remains WARN.
+This avoids smuggling an extra alert-policy change into a restoration claim.
+
+Provenance correction: round-13 “exact-locus” witnesses are whole-function
+F01 `grade_lane` replacement and a reconstructed F02 prefix-presence shim,
+not original-byte membership-line restorations. Original frozen failures
+remain primary. Active knowledge and SCORECARD carry appended qualifications;
+audit D01/D02 are only partially closed, with tally/aggregate/forgery residuals.

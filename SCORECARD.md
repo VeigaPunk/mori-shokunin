@@ -729,3 +729,30 @@ unvalidated roster overrides, oracle aggregate/registry-count vacuity and
 arbitrary finding-tally corruption. No broad “cannot fake” claim is made.
 Next steered work starts from these residuals and the deferred, reasoned
 drift re-pin; no next round was started.
+
+## Round 14 — outside correction and declared repair
+
+Entering revision `dbe85009253c092fe50e4e93056fceeae273ec31`. Outside closure
+`corpus/lessons/round-13-verifier-spotcheck.md` rejected round 13 as harmed:
+coverage and adjacency harmed, operability improved; depth/freshness/
+calibration unchanged. This supersedes the author no-harm/admission rows above.
+The unrestricted coverage point is withdrawn: active coverage **6**, not 7.
+Operability's independently verified F01/F02 improvement remains **7**;
+depth/freshness/calibration/adjacency remain **5/5/5/6**. Historical scores and
+receipts remain unchanged. The prior 24-check harness selftest was at
+80bd58a, not the finally delivered c13df48 revision.
+
+**One claim, C1 coverage:** restore structured OOM critical/DRIFT alarms,
+fleet-only UNIT_FAILURE_JOURNAL and non-fleet UNIT_FAILURE_OUT_OF_SCOPE with
+tsukuroi diagnosis routing, preserving six class counters in each independent
+scope. Same regression command over pinned entering and delivered bytes
+must show failed requirements before and zero failures after. Missing failed
+subject metadata is unknown, not non-fleet. This works the lowest owned
+non-retired axis, coverage (6 versus operability 7).
+
+No new scalar point is pre-awarded for repairing a prior harm; coverage stays
+6 unless an explicitly measured rubric warrants otherwise. Gate registration,
+fresh delivered-selftest evidence, provenance and index corrections are
+unclaimed conformance/learning work. Original frozen-byte failures remain
+primary for F01/F02; their mutations are whole-function F01 and reconstructed
+F02-prefix-shim witnesses, not byte-exact membership-line restorations.
