@@ -115,3 +115,22 @@ Mutable used-by cells this note needs (append-only; immutable cells unchanged):
 - **S014** used-by gains `corpus/knowledge/journal-cursor-window-r16.md`.
 - **S015** used-by gains `corpus/knowledge/journal-cursor-window-r16.md`.
 - **S039** and **S040** used-by gain `corpus/knowledge/journal-cursor-window-r16.md`.
+
+## L1 source-registry correction and measured scope
+
+The draft reconciliation paragraph under **Source-registry state** is
+superseded: final `corpus/SOURCES.md` has separate **S039 seek** and
+**S040 test** rows, both mined and both used by this note. S014 and S015 also
+list this note. There is no unresolved combined-row mapping. Exact changes
+are retained in `.ufo/waves/round-16/evidence/sources-measurement.json`.
+
+L1 subsequently measured the committed implementation at
+`87a57c13dbb1fc2d3e049bba98aca1739822b8c9`: the finite gate matched64/64
+(`evidence/capability-after/run-manifest.json` under round-16 waves; count
+command `jq '.summary'`), and one live observation per scope returned
+`MORI_JOURNAL_WINDOW_OK`, `records_after_anchor=0`, with all four positive
+subsets0 (`evidence/live-window-{user,system}.json`). These are anchor-only
+captures, not positive live load or evidence of no event. The author's
+unmeasured-source discussion above is not a current claim that the host
+path has never run. No alias/vacuum/cross-boot live experiment was performed
+by L1; those boundaries remain finite-fixture and source-supported only.

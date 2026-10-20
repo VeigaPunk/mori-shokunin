@@ -1,0 +1,75 @@
+{
+  "observed_at": "2026-10-20T09:12:11.722119+00:00",
+  "head": "87a57c13dbb1fc2d3e049bba98aca1739822b8c9",
+  "scope": "one mutable observation per accessible scope; no event total/completeness claim",
+  "runs": [
+    {
+      "scope": "user",
+      "anchor_argv": [
+        "/usr/bin/journalctl",
+        "--user",
+        "-b",
+        "-n",
+        "1",
+        "--no-pager",
+        "--quiet",
+        "--output=json",
+        "--output-fields=__CURSOR,_BOOT_ID"
+      ],
+      "anchor_rc": 0,
+      "anchor_stderr_bytes": 0,
+      "anchor_capture_sha256": "55b282b4ada9c372fec79644887bf93801b3623e910f696b2843140ccfd74e32",
+      "anchor_sha256": "41db6904aa8199088d368e79f6768cd066b06058e2cf696101ed2a65a6f0b6cb",
+      "boot_id": "430d3038185949e682cf5fc475d1b3d0",
+      "window_receipt": ".ufo/waves/round-16/evidence/live-window-user.json",
+      "window_exit_code": 0,
+      "window": {
+        "anchor_sha256": "41db6904aa8199088d368e79f6768cd066b06058e2cf696101ed2a65a6f0b6cb",
+        "cursor_semantics": "byte-equality-acceptance-only",
+        "end_cursor_sha256": null,
+        "evidence_basis": "validated-record-subsets",
+        "finding_id": "MORI_JOURNAL_WINDOW_OK",
+        "positive_kernel_oom": 0,
+        "positive_process_sigkill": 0,
+        "positive_unit_oom": 0,
+        "positive_unit_signal": 0,
+        "records_after_anchor": 0,
+        "scope": "user"
+      }
+    },
+    {
+      "scope": "system",
+      "anchor_argv": [
+        "/usr/bin/journalctl",
+        "--system",
+        "-b",
+        "-n",
+        "1",
+        "--no-pager",
+        "--quiet",
+        "--output=json",
+        "--output-fields=__CURSOR,_BOOT_ID"
+      ],
+      "anchor_rc": 0,
+      "anchor_stderr_bytes": 0,
+      "anchor_capture_sha256": "c7ffaaa7265d5e0c6d9504f8c2fc7dfff2cd9a466fdc619045e76240863bd83b",
+      "anchor_sha256": "d8b98368a7e2deec2a09e22db7ea6957f4b3fff08c9d1df083c90c8b2225e5d0",
+      "boot_id": "430d3038185949e682cf5fc475d1b3d0",
+      "window_receipt": ".ufo/waves/round-16/evidence/live-window-system.json",
+      "window_exit_code": 0,
+      "window": {
+        "anchor_sha256": "d8b98368a7e2deec2a09e22db7ea6957f4b3fff08c9d1df083c90c8b2225e5d0",
+        "cursor_semantics": "byte-equality-acceptance-only",
+        "end_cursor_sha256": null,
+        "evidence_basis": "validated-record-subsets",
+        "finding_id": "MORI_JOURNAL_WINDOW_OK",
+        "positive_kernel_oom": 0,
+        "positive_process_sigkill": 0,
+        "positive_unit_oom": 0,
+        "positive_unit_signal": 0,
+        "records_after_anchor": 0,
+        "scope": "system"
+      }
+    }
+  ]
+}

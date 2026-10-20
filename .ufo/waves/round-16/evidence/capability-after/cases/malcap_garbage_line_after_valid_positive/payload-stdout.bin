@@ -1,0 +1,3 @@
+{"__CURSOR":"s=r16malcap;i=1;b=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;m=1000;t=5e0f2a1b2c3d4;x=1","_BOOT_ID":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+{"__CURSOR":"s=r16malcap;i=2;b=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;m=2000;t=5e0f2a1b2c3d5;x=2","_BOOT_ID":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","MESSAGE_ID":"d9b373ed55a64feb8242e02dbe79a49c","UNIT_RESULT":"oom-kill"}
+not-json{garbage

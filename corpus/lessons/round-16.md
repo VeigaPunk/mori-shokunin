@@ -191,3 +191,61 @@ Operator wrap-up supersedes the planned wave2 duty: its32 seats were never
 validated or dispatched; the round total remains64. No workers were spawned
 after that directive. All seat live/synthetic probes and outside-scope
 staging remain excluded from acceptance, regardless of their source value.
+
+## Measured Gate decision — L1, superseding pending rows above
+
+C1's bounded knowledge and capability are verified by the lane, pending
+non-author closure. Measured input commit:
+`87a57c13dbb1fc2d3e049bba98aca1739822b8c9`.
+The same pinned16 packs/64 cases record capability_absent64 before (no
+subprocess behavior existed at the entering commit), and matched64 after
+with0 mismatches:30 OK,31 unavailable,3 setup. This is capability
+acquisition, not64 repaired production bugs. Command and outputs:
+`evidence/c1-count.json` under `.ufo/waves/round-16/`.
+
+The repaired regression selftest passes6 named arms (`gate-selftest-fixed.json`),
+the window selftest16/16 and context selftest15 arms pass. M31/M32's actual
+failure receipts remain committed; same commands pass on the repair, without
+changing any fixture. The context-only original→corrected comparison is
+exit1→0, for static instruction text only.
+
+Two authorized live observations return OK, one per user/system scope;
+each returns0 after-anchor records and0 in every positive subset. They
+demonstrate host reachability, not no events, positive live load, retention,
+full access or alias/vacuum behavior. Raw live anchors were temporary
+in-lane inputs and were removed; safe receipts retain anchor hashes/boot and
+aggregate output only (`evidence/live-window-{user,system}.json`).
+The Gate table's “current-boot predicate” wording is superseded here:
+this probe binds to the **anchor boot**, which may be historical.
+Its optional end cursor is a SHA-256 digest, never a raw cursor or state write.
+
+Rejects remain rejected: approximate/missing/aliased anchors are not proven
+present; mismatch is not deletion; no malformed-capture salvage, zero-event
+inference, automatic advance, census cutover, authenticated emitter or unique
+victim. Author-lane seats do not supply the required outside review.
+
+Final SOURCES census exits0 before and after (W04 S035/S037 only).
+Rows38→40, A35→37/B2/C1 held; mined17→19/queued20/rejected1 held.
+S039/S040 enter mined; their URL/access date/located23-word and12-word
+quotes are in `## Gate`. L1 reopened both official pages this round.
+Exact final mutable-cell changes:
+
+| row | used-by old → new |
+|---|---|
+| S014 | `corpus/knowledge/kill-classes-by-message-id-r12.md, corpus/knowledge/kernel-oom-line-attribution-r12.md, corpus/knowledge/structured-journal-scopes-r13.md, corpus/knowledge/journal-positive-evidence-r15.md` → `corpus/knowledge/kill-classes-by-message-id-r12.md, corpus/knowledge/kernel-oom-line-attribution-r12.md, corpus/knowledge/structured-journal-scopes-r13.md, corpus/knowledge/journal-positive-evidence-r15.md, corpus/knowledge/journal-cursor-window-r16.md` |
+| S015 | `corpus/knowledge/kill-classes-by-message-id-r12.md, corpus/knowledge/kernel-oom-line-attribution-r12.md, corpus/knowledge/structured-journal-scopes-r13.md, corpus/knowledge/journal-alarm-routing-r14.md, corpus/knowledge/journal-positive-evidence-r15.md` → `corpus/knowledge/kill-classes-by-message-id-r12.md, corpus/knowledge/kernel-oom-line-attribution-r12.md, corpus/knowledge/structured-journal-scopes-r13.md, corpus/knowledge/journal-alarm-routing-r14.md, corpus/knowledge/journal-positive-evidence-r15.md, corpus/knowledge/journal-cursor-window-r16.md` |
+
+No existing status/recheck or immutable cell changed. Temporary
+S013/S035/S037 additions were reverted before delivery; their final cells
+equal entering bytes. `sources-measurement.json` records the complete diff.
+
+| id | class | evidence pointer | captured-by | fix |
+|---|---|---|---|---|
+| M33 | misroot / scope | `evidence/misroot-sweep.json`: FieldDocs.md and ReviewLesson.md were written under fleet `.ufo/waves/round-16/build/`, despite absolute path instructions | required pre-report fleet status sweep | L1 attributed both headers, copied byte-exact to lane-relative paths, ran cmp (exit0), then deleted only the two own fleet copies under the prompt exception. All64 reports now reside in-lane. |
+
+Final learning verdicts: expansion improved (new FR11 capability), quality
+improved (stale registry corrected and actual setup failures repaired),
+discernment unchanged (outside closure pending; repeated seat violations earn
+no prevention credit). The round is not fully execution-conformant.
+No new L0 question, install/update, pacman transaction, host service change
+or worker dispatch after operator wrap-up was performed by L1.

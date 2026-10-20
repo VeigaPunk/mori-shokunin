@@ -1,0 +1,691 @@
+{
+  "cases": [
+    {
+      "id": "ANCHORVAL_SCOPE_MISMATCH_SYSTEM_ANCHOR_USER_QUERY",
+      "observed": null,
+      "ok": false,
+      "pack": "AnchorValidation.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "ANCHORVAL_BOOT_ID_UPPERCASE_REJECTED",
+      "observed": null,
+      "ok": false,
+      "pack": "AnchorValidation.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "ANCHORVAL_BOOT_ID_SHORT_REJECTED",
+      "observed": null,
+      "ok": false,
+      "pack": "AnchorValidation.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "ANCHORVAL_VALID_NEGATIVE_CONTROL",
+      "observed": null,
+      "ok": false,
+      "pack": "AnchorValidation.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "anchor_record_foreign_boot",
+      "observed": null,
+      "ok": false,
+      "pack": "BootBoundary.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "foreign_boot_immediately_after_anchor",
+      "observed": null,
+      "ok": false,
+      "pack": "BootBoundary.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "foreign_boot_after_same_boot_positive",
+      "observed": null,
+      "ok": false,
+      "pack": "BootBoundary.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "same_boot_boundary_ok",
+      "observed": null,
+      "ok": false,
+      "pack": "BootBoundary.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "timeout_user_anchor_plus_kernel_oom_and_sigkill",
+      "observed": null,
+      "ok": false,
+      "pack": "Bounds.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "timeout_system_anchor_plus_unit_oom",
+      "observed": null,
+      "ok": false,
+      "pack": "Bounds.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "overflow_user_cap_on_newline_after_positive",
+      "observed": null,
+      "ok": false,
+      "pack": "Bounds.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "exact_limit_user_total_equals_max_bytes",
+      "observed": null,
+      "ok": false,
+      "pack": "Bounds.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "cursorshape-user-later-cursor-array",
+      "observed": null,
+      "ok": false,
+      "pack": "CursorShape.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "cursorshape-user-later-cursor-null",
+      "observed": null,
+      "ok": false,
+      "pack": "CursorShape.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "cursorshape-system-later-cursor-missing",
+      "observed": null,
+      "ok": false,
+      "pack": "CursorShape.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "cursorshape-user-later-cursor-duplicate",
+      "observed": null,
+      "ok": false,
+      "pack": "CursorShape.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "anchor-only-user-empty-window",
+      "observed": null,
+      "ok": false,
+      "pack": "ExactAnchor.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "anchor-then-one-benign-user",
+      "observed": null,
+      "ok": false,
+      "pack": "ExactAnchor.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "anchor-realistic-cursor-then-benign-unit-result-system",
+      "observed": null,
+      "ok": false,
+      "pack": "ExactAnchor.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "anchor-then-two-benign-ordered-system",
+      "observed": null,
+      "ok": false,
+      "pack": "ExactAnchor.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "kernsys_oom_after_anchor_single",
+      "observed": null,
+      "ok": false,
+      "pack": "KernelSystem.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "kernsys_oom_fanout_after_anchor",
+      "observed": null,
+      "ok": false,
+      "pack": "KernelSystem.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "kernsys_wrong_ids_after_anchor_never_kernel_positive",
+      "observed": null,
+      "ok": false,
+      "pack": "KernelSystem.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "kernsys_oom_foreign_boot_after_anchor_refuses",
+      "observed": null,
+      "ok": false,
+      "pack": "KernelSystem.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "kernuser_oom_before_anchor_only",
+      "observed": null,
+      "ok": false,
+      "pack": "KernelUser.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "kernuser_oom_after_anchor_single",
+      "observed": null,
+      "ok": false,
+      "pack": "KernelUser.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "kernuser_oom_fanout_after_anchor",
+      "observed": null,
+      "ok": false,
+      "pack": "KernelUser.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "kernuser_non_oom_ids_after_anchor_never_kernel_positive",
+      "observed": null,
+      "ok": false,
+      "pack": "KernelUser.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "malcap_truncated_anchor_line",
+      "observed": null,
+      "ok": false,
+      "pack": "MalformedCapture.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "malcap_concatenated_objects_after_anchor",
+      "observed": null,
+      "ok": false,
+      "pack": "MalformedCapture.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "malcap_garbage_line_after_valid_positive",
+      "observed": null,
+      "ok": false,
+      "pack": "MalformedCapture.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "malcap_positive_record_unterminated",
+      "observed": null,
+      "ok": false,
+      "pack": "MalformedCapture.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "empty_stdout_anchor_unproven",
+      "observed": null,
+      "ok": false,
+      "pack": "MissingAnchor.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "nearest_cursor_not_anchor",
+      "observed": null,
+      "ok": false,
+      "pack": "MissingAnchor.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "anchor_present_but_not_first",
+      "observed": null,
+      "ok": false,
+      "pack": "MissingAnchor.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "anchor_vacuumed_positive_trap",
+      "observed": null,
+      "ok": false,
+      "pack": "MissingAnchor.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "killed-status9-exact-vs-other-status-and-code",
+      "observed": null,
+      "ok": false,
+      "pack": "ProcessSignal.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "killed-status9-numeric-scalar-vs-non-scalar",
+      "observed": null,
+      "ok": false,
+      "pack": "ProcessSignal.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "killed-other-status-only-zero-positive",
+      "observed": null,
+      "ok": false,
+      "pack": "ProcessSignal.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "system-scope-killed-status9-with-coredump-sibling",
+      "observed": null,
+      "ok": false,
+      "pack": "ProcessSignal.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "producer-rc5-positive-stream",
+      "observed": null,
+      "ok": false,
+      "pack": "ProducerFailure.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "producer-rc124-positive-stream",
+      "observed": null,
+      "ok": false,
+      "pack": "ProducerFailure.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "producer-rc137-positive-stream",
+      "observed": null,
+      "ok": false,
+      "pack": "ProducerFailure.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "producer-rc5-anchor-only",
+      "observed": null,
+      "ok": false,
+      "pack": "ProducerFailure.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "recordshape-leading-string-primitive-user",
+      "observed": null,
+      "ok": false,
+      "pack": "RecordShape.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "recordshape-null-neighbor-system",
+      "observed": null,
+      "ok": false,
+      "pack": "RecordShape.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "recordshape-array-neighbor-positive-decoy-user",
+      "observed": null,
+      "ok": false,
+      "pack": "RecordShape.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "recordshape-scalar-neighbors-around-positives-system",
+      "observed": null,
+      "ok": false,
+      "pack": "RecordShape.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "stderr-rc0-benign-warning-vacates-clean-user-window",
+      "observed": null,
+      "ok": false,
+      "pack": "Stderr.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "stderr-rc0-secret-canary-suppresses-all-positives-user",
+      "observed": null,
+      "ok": false,
+      "pack": "Stderr.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "stderr-rc0-multiline-warning-vacates-system-window",
+      "observed": null,
+      "ok": false,
+      "pack": "Stderr.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "stderr-rc0-smuggled-record-never-data-user",
+      "observed": null,
+      "ok": false,
+      "pack": "Stderr.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "typedfields_msgid_array_sigkill",
+      "observed": null,
+      "ok": false,
+      "pack": "TypedFields.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "typedfields_msgid_array_unit_oom",
+      "observed": null,
+      "ok": false,
+      "pack": "TypedFields.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "typedfields_exit_status_bool_true",
+      "observed": null,
+      "ok": false,
+      "pack": "TypedFields.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "typedfields_bool_status_mixed_valid",
+      "observed": null,
+      "ok": false,
+      "pack": "TypedFields.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "unitoom_exact_result_counts_user",
+      "observed": null,
+      "ok": false,
+      "pack": "UnitOom.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "unitoom_wrong_case_variants_zero_system",
+      "observed": null,
+      "ok": false,
+      "pack": "UnitOom.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "unitoom_mixed_exact_and_wrongcase_user",
+      "observed": null,
+      "ok": false,
+      "pack": "UnitOom.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "unitoom_wrongcase_absent_other_result_zero_system",
+      "observed": null,
+      "ok": false,
+      "pack": "UnitOom.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "unitsignal_user_exact_signal",
+      "observed": null,
+      "ok": false,
+      "pack": "UnitSignal.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "unitsignal_system_exact_signal_two",
+      "observed": null,
+      "ok": false,
+      "pack": "UnitSignal.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "unitsignal_user_malformed_result_not_positive",
+      "observed": null,
+      "ok": false,
+      "pack": "UnitSignal.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    },
+    {
+      "id": "unitsignal_user_nearmiss_strings_not_positive",
+      "observed": null,
+      "ok": false,
+      "pack": "UnitSignal.json",
+      "reasons": [
+        "capability_absent"
+      ],
+      "status": "capability_absent"
+    }
+  ],
+  "exit_code": 1,
+  "expected": {
+    "path": ".ufo/waves/round-16/expected.json",
+    "sha256": "89b1b5c997c43c5ad5f2bc1bdbd96b4846ac8cf5abb1c09f948c16e611faef15"
+  },
+  "fixtures": {
+    "dir": ".ufo/waves/round-16/fixtures",
+    "end_hashes": null,
+    "inputs_moved": null,
+    "start_hashes": {
+      "AnchorValidation.json": "d41bf9577ff45d8f84221ecd3acaa391828d3233a1671168b0dd88223e9081b2",
+      "BootBoundary.json": "af6ed035d4bde0db6b8ad0fc8247f978061ea4fbc3749095ad5a4905a1f5a848",
+      "Bounds.json": "30d07289219041cd0f0d4edd92b6de68405d2b95f177bf653178989a23871076",
+      "CursorShape.json": "b29a4a1d5820783f7519bf44a2f54b99b13765e9d80a3b6196ddb9b76c8436c6",
+      "ExactAnchor.json": "193dc63cdc8334da067ba23792826c8ff42be38a86a8e2610f852ecf24b7cbd3",
+      "KernelSystem.json": "a12bc349c010b053e7e7360ec12f9dd8d7921c2e0849e128547d1c5648b73222",
+      "KernelUser.json": "a0db2726d3a04429f9d7e5ef25429d15f7af39d2c77881fa87023941a62851be",
+      "MalformedCapture.json": "483a539dfd6c3221394a666422991cddd07bfb1fcc706e65c6130a0a19ad2aed",
+      "MissingAnchor.json": "fca571e28ceeb7acf25afea9540b375fa2a071f5bb57e3f66e196cd51c1a7646",
+      "ProcessSignal.json": "af911e7404bc7078977265a502a83be094cd249951133ae3e2855064a9f2f8c2",
+      "ProducerFailure.json": "ffc9c0cccb77886d5bfe64fe76fa6f2ef177949c3718205f06950aa110d970fb",
+      "RecordShape.json": "9764c4277412e2a5caec32f6f8225da2289a40dda9e53f2661dce5d252090594",
+      "Stderr.json": "88faf83d5ef8650c1174dc21331fe2731968279ea248001f5c07fbbf171c7348",
+      "TypedFields.json": "f827bffef9328ae1584a34cb074b52f14a67161a6f3f1d9024c4e513495be001",
+      "UnitOom.json": "b333347a8cf93207fcd21bc753ac0a62f779abc3b3d9dd90fd7b15c380ce0665",
+      "UnitSignal.json": "6c08238a05ae774d820f8961893231c55d02af40685aa1b46cd73af0aaf175d1"
+    }
+  },
+  "gate": "tools/mori-round16-regressions.py",
+  "gate_sha256": "e70ed67ce502a7b25fdaa3dac562589df3e4fce02f770ec0adf21f47a1921fce",
+  "git": {
+    "head": "87a57c13dbb1fc2d3e049bba98aca1739822b8c9",
+    "porcelain": "?? .ufo/waves/round-16/evidence/capability-before/\n"
+  },
+  "schema": "mori-round16-regressions-manifest-v1",
+  "summary": {
+    "capability_absent": 64,
+    "matched": 0,
+    "mismatched": 0,
+    "total": 64
+  },
+  "tool": {
+    "path": ".ufo/waves/round-16/frozen/absent-mori-journal-window.py",
+    "present": false,
+    "sha256": null
+  },
+  "verdict": "capability_absent"
+}

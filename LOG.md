@@ -1072,3 +1072,45 @@ parent; `pin.json` exit2 rejected a legitimate rc2 fixture without optional
 the loader defaults absent refusal `want` to an empty subset while successful
 cases still require all five count expectations. Same-command remeasurements
 follow on committed repair bytes. No fixture input was changed.
+
+### Round-16 delivered measurements and landing
+
+At committed pinned inputs
+`87a57c13dbb1fc2d3e049bba98aca1739822b8c9`, the same regression gate
+records64 capability_absent before, then64/64 matched after with0
+mismatches (30 OK/31 unavailable/3 setup). This is acquired capability,
+not64 production defects. Counting argv and actual JSON:
+`evidence/c1-count.json` under round-16 waves. Gate SHA
+`e70ed67ce502a7b25fdaa3dac562589df3e4fce02f770ec0adf21f47a1921fce`;
+probe SHA `d61e0d220a1825d738e2b9526b2bdd92047e39a4543d0ca0a040795d84ba0aeb`;
+expected SHA `89b1b5c997c43c5ad5f2bc1bdbd96b4846ac8cf5abb1c09f948c16e611faef15`.
+The repaired gate selftest passes6 named subprocess arms. Outer receipts
+hash every input at start/end and retain actual HEAD/porcelain; all input
+digests stay equal, while output-evidence paths make the whole tree dirty.
+
+One authorized bounded live read per scope returned OK,0 after-anchor
+records and0 positive subsets (`evidence/live-window-{user,system}.json`);
+safe anchor-acquisition metadata is `live-window-manifest.json`.
+Raw live anchor files were temporary in-lane inputs and removed before
+landing; no raw live journal payload/cursor is committed. No positive live
+event, access completeness, alias frequency or retention experiment is claimed.
+
+Source census before/after exit0; reproducible static source-count command
+in `evidence/sources-count.json` gives38→40/A35→37/mined17→19.
+Only S014/S015 final used-by cells change among entering rows; S039/S040
+are new primary docs rows. Their located quotes and transition record are
+in the lesson. `preservation.json` shows all6 entering production pins
+unchanged, including old red baseline; old gates were not re-run.
+
+The mandatory fleet misroot sweep found2 own reports, FieldDocs and
+ReviewLesson, under fleet round-16/build. L1 attributed headers to mori,
+copied them byte-exact, cmp exited0, then removed only those own fleet
+copies. All64 reports now reside under the lane; unrelated hyaku artifacts
+were left untouched (`evidence/misroot-sweep.json`, lesson M33).
+
+C1 coverage improved, score6 held; every other axis unchanged, scores
+7/5/5/5/6 held. Expansion/quality improved; discernment unchanged with
+current non-author review pending. Procedural execution remains not fully
+conformant; no static-text green grants prevention credit. No new L0
+question or tool install/update; no pacman transaction, host remediation,
+service change, next round or post-wrap worker was initiated.

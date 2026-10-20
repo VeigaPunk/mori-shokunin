@@ -943,3 +943,58 @@ planner seat; dispatched author-lane seats are not outside verification.
   ReviewCounts overwrite of the lesson are recorded in the round-16 lesson
   and excluded from acceptance evidence. No execution-conformance pass is
   inferred from a green static instruction check.
+
+### Round-16 measured result
+
+**C1 verified by L1 at its finite capability scope; outside closure pending.**
+Measured committed inputs:
+`87a57c13dbb1fc2d3e049bba98aca1739822b8c9`.
+Before: the entering commit has no window tool (`frozen/entering-capability.json`
+under round-16 waves). The gate records64 `capability_absent`, not64
+historical production failures. After: **64/64 matched**, zero mismatches,
+with30 OK/31 unavailable/3 setup cases. No distinct-bug count is inferred.
+
+Executed counting command, exit0:
+
+```sh
+jq -s '[.[] | {verdict,total:.summary.total,matched:.summary.matched,capability_absent:.summary.capability_absent,mismatched:.summary.mismatched,unmet:(.summary.capability_absent + .summary.mismatched)}]' .ufo/waves/round-16/evidence/capability-before/run-manifest.json .ufo/waves/round-16/evidence/capability-after/run-manifest.json
+```
+
+Observed unmet capability requirements64→0; strict gate exits1→0.
+Window selftest16/16, regression-gate selftest6 named arms, context
+selftest15 arms all pass. Initial gate-setup failures and their same-command
+repairs are retained, not hidden or counted as production red.
+The original context check exits1 for the missing explicit live-journal ban;
+the context-only corrected, **never dispatched** fixture exits0.
+
+Both live scopes return `MORI_JOURNAL_WINDOW_OK` from one bounded read each,
+with `records_after_anchor=0` and all four positive subsets0. These
+anchor-only captures establish host-path reachability, not absence of events,
+full store access or positive live load. Receipts, exact argv, input digests,
+real HEAD and porcelain: `.ufo/waves/round-16/evidence/`.
+Unchanged verdict-driving inputs, not a clean whole working tree, are claimed.
+
+| Axis | Verdict | Active score | Evidence / limit |
+|---|---|---|---|
+| coverage | improved | 6 held | new exact-retained anchor-boot window capability; finite64/64 and live2/2 OK |
+| operability | unchanged | 7 held | new gate selftests pass after actual setup repairs; prior production bytes unchanged |
+| depth | unchanged | 5 held | S014/S015/S039/S040 support narrow mechanics, not a separate depth claim |
+| freshness | unchanged | 5 held | old r10 pin and census bytes preserved; prior recorded red remains debt, no re-pin |
+| calibration | unchanged | 5 held | capability absence versus defect red and fixture/live scopes separated; procedural nonconformance disclosed |
+| adjacency | unchanged | 6 held | no census integration, orchestration or host remediation; unauthorized seat staging remains a violation, not expanded ownership |
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| exact-start journal record window | read one explicit scope after a byte-equal retained anchor, refusing unsafe captures without advancing state | `evidence/capability-after/run-manifest.json`, `evidence/live-window-{user,system}.json` under round-16 waves | 16 |
+
+SOURCES38→40, A35→37/B2/C1 held, mined17→19/queued20/rejected1 held;
+new rows S039/S040 and only S014/S015 used-by extensions. Both census
+invocations exit0 with the existing W04 notices. Expansion improves through
+the demonstrated FR11 capability; quality improves through corrected active
+registry/source wording. Discernment stays unchanged: outside verification
+is pending and repeated seat instruction breaches earn no improvement credit.
+
+Operator wrap-up: wave1=64, wave2 skipped before validation/dispatch,
+round total64. All64 reports are retained after relocating2 misrooted
+reports byte-exact with cmp. No workers were spawned after wrap-up.
+No next round is started; any further plan requires a fresh operator steer.
