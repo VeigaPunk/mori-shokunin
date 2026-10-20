@@ -894,3 +894,52 @@ conformance or independent admission is self-certified.
 Next steered-round plan, not executed here: coverage/FR11 cursor-bounded
 new-since-pin observation; retain the reasoned drift re-pin as separate
 freshness debt until an actual semantic review is assigned.
+
+## Round 16 — declared cursor-window capability
+
+Entering revision `b83edc6ee3db6822382ab673d7e6e984e420f22f`.
+The round-15 outside closure admitted bounded C1 with procedural and active
+registry correction debt; its finding is preserved in
+`corpus/lessons/round-15-verifier-spotcheck.md`.
+
+**C1 coverage (capability acquisition):** acquire a bounded, read-only,
+MESSAGE-free new-since-anchor journal observation for one explicitly named
+scope and boot. The first retained record must reproduce the exact anchor
+cursor bytes and boot; only subsequent same-boot records are observed.
+Nearest seeks, missing anchors, boot boundaries and failed/truncated captures
+remain unavailable, never a zero-event conclusion. No automatic cursor-state
+mutation and no production census cutover are part of this claim.
+
+Coverage **6** is the lowest owned non-retired axis versus operability **7**;
+no stagnation waiver or score increase is claimed. The falsifiable metric is
+the same finite committed CLI cases, capability absent at entering revision
+versus delivered implementation: failed cases before → after, with actual
+subprocess receipts and independently persisted input hashes. Absence is
+capability red, not a historical production bug. A live field-limited
+read-only observation demonstrates the accessible surface, not complete
+retention, authenticated emitters, unique victims or universal ordering.
+
+The old r10 drift baseline is preserved without re-pin; its existing red
+status is not made green by this separate capability. Routed round-15
+corrections are unclaimed conformance/learning work. L1 holds the canonical
+planner seat; dispatched author-lane seats are not outside verification.
+
+### Append-only corrections carried into round 16
+
+- The round-14 vectors at the historical row above
+  (`3/0/2/1/2/1` user and `2/1/4/3/0/2` system) are **fixture vectors**,
+  not live positive load. This explicitly supplies the SCORECARD correction
+  referred to by round-15 lesson M3; the original row remains unchanged.
+- Round-15's author wording “pending non-author closure” is superseded by
+  `corpus/lessons/round-15-verifier-spotcheck.md` at entering `b83edc6`:
+  status ok/admitted true at its finite fixture scope, with procedural and
+  active-registry debt. Admission did not authorize the prohibited checks.
+- The r16 window binds records to its **anchor boot**, not necessarily the
+  current host boot. Historical same-boot windows are permitted; no claim to
+  cover the current boot, all entries to now, or complete journal access is
+  made. A proposed current-boot pre-gate is rejected as a different scope.
+- Static context checks verify instruction text, not runtime compliance.
+  Repeated unauthorized seat probes/outside-lane writes and the
+  ReviewCounts overwrite of the lesson are recorded in the round-16 lesson
+  and excluded from acceptance evidence. No execution-conformance pass is
+  inferred from a green static instruction check.

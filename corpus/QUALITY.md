@@ -90,3 +90,21 @@ Source tiers: see corpus/SOURCES.md (contract v1); this file holds claim admissi
 
 36. A nonzero positive vector is labelled by its source: a fixture observation names its case id and pack, a live observation names boot, scope, capture window and receipt, and a fixture vector is never reported as live positive load, a class total, or census completeness. ← lessons/round-15.md#M3 (`round-14-verifier-spotcheck.md:138`; SCORECARD round-14 vector correction).
    - "The prior raw nonzero vectors in SCORECARD.md round-14 (`3/0/2/1/2/1` user and `2/1/4/3/0/2` system) are **fixture vectors**, not live positive load." (`lessons/round-15.md:23-25`)
+
+## Criteria added round 16
+
+37. A dispatcher carries every messaging restriction into the seat assignment it writes; an omitted restriction is an L1 dispatch defect, while a prohibited seat broadcast remains a separate seat violation. Exact-id correction is not retroactive compliance or runtime prevention. ← lessons/round-16.md#M1 (= C15-1; precedent `lessons/round-15.md:22`).
+   - "L1 sent exact-id correction to every seat; no broadcast is authorized." (`lessons/round-15.md:22`)
+38. A seat's probe, download, or expected-output file is written only to a path its assignment authorizes; a `/tmp` write is never durable evidence and is disclosed as an out-of-lane write even when its bytes are later reproduced in-lane. ← lessons/round-16.md#M2 (= C15-2; precedent `lessons/round-15.md:23`).
+   - "Temporary source downloads are not admitted durable evidence or an authorized lane write expansion." (`lessons/round-15.md:23`)
+39. Writing a selftest, or a `--selftest` entry, is not permission to run it. A seat records its selftest as unexecuted until the integration owner runs it once after all seats settle; having written the implementation never justifies an executed result. ← lessons/round-16.md#M3 (= C15-3; precedent `lessons/round-15.md:24`).
+   - "implementing a subprocess selftest arm is not permission to execute it" (`lessons/round-16.md` C15-3 fix text)
+40. A registry row is swept whenever its gate, selftest, or source changes: the active registry must match the delivered entry points and pinned values. A row found stale at read time is a finding for that read; its current status is whatever the active row shows after correction, not what an earlier read recorded. ← lessons/round-16.md#M4 (= C15-4).
+   - The read-time stale observation at `SKILL.md:134` is recorded historically in `lessons/round-16.md#M4`; this criterion does not assert the current state of that row.
+41. A green fixture or sibling gate never establishes drift freshness. A red or unevaluated drift pin stays carried debt. Any re-pin requires a separately reasoned semantic review that names what changed and why the new pin is correct; a stated reason alone is not sufficient, and a re-pin that only turns red green is rejected (QUALITY #10). ← lessons/round-16.md#C15-5 (debt, **not** a mistake; no M5 is asserted; outside closure of the prior r15 round).
+   - "A green C1 fixture gate does not establish freshness." (`lessons/round-16.md` C15-5)
+42. Exact anchor start, not gap-free continuity: an incremental journal window counts records only after its first record reproduces the anchor cursor bytes and boot. A mismatch, boot boundary or failed/truncated capture is unavailable, not an empty success. Cursors remain opaque: exact-byte equality is conservative acceptance, while inequality may refuse an alias and does not prove deletion; no general entry-equivalence, deduplication or complete-access guarantee follows. ← lessons/round-16.md ## Gate, S039/S040.
+   - "If no entry matching the specified cursor is found the call will seek to the next closest entry" (S039, `sd_journal_seek_cursor`, opened 2026-10-20). A seek fallback is therefore never an anchor observation.
+   - "cursor strings do not uniquely identify an entry" (S040, `sd_journal_test_cursor`, opened 2026-10-20).
+   - "The format of the cursor is private and subject to change." (S014, `journalctl(1)` `--show-cursor`).
+   - Transfer caveat: S039/S040 document the libsystemd `sd_journal_*` API. The `journalctl --cursor` missing-anchor behavior is not stated in the S014 text read here and is not measured; the criterion does not assume it.

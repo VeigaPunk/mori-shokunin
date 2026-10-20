@@ -1,0 +1,7 @@
+{
+  "received_at": "2026-10-20T08:57:29.241880+00:00",
+  "directive": "wrapping up training run; commit and push as lanes finish; reboot afterwards; do not spawn more workers",
+  "wave1": "dispatched64",
+  "wave2": "planned32, NOT validated or dispatched; skipped by operator wrap-up",
+  "round_total_seats": 64
+}

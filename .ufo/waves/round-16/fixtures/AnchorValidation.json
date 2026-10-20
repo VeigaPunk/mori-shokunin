@@ -1,0 +1,75 @@
+{
+  "cases": [
+    {
+      "id": "ANCHORVAL_SCOPE_MISMATCH_SYSTEM_ANCHOR_USER_QUERY",
+      "scope": "user",
+      "anchor": {
+        "schema": "mori-journal-anchor-v1",
+        "scope": "system",
+        "boot_id": "11111111111111111111111111111111",
+        "cursor": "s=cur-r16-av-anchor-0001;i=1;b=11111111111111111111111111111111;m=1000;t=1700000000000000;x=1"
+      },
+      "stdout": "{\"__CURSOR\":\"s=cur-r16-av-anchor-0001;i=1;b=11111111111111111111111111111111;m=1000;t=1700000000000000;x=1\",\"_BOOT_ID\":\"11111111111111111111111111111111\",\"MESSAGE_ID\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1\"}\n{\"__CURSOR\":\"s=cur-r16-av-next-0002;i=2;b=11111111111111111111111111111111;m=2000;t=1700000000000001;x=2\",\"_BOOT_ID\":\"11111111111111111111111111111111\",\"MESSAGE_ID\":\"fe6faa94e7774663a0da52717891d8ef\"}\n",
+      "stderr": "",
+      "returncode": 0,
+      "want_rc": 2,
+      "want_id": "MORI_JOURNAL_WINDOW_SETUP",
+      "want": {}
+    },
+    {
+      "id": "ANCHORVAL_BOOT_ID_UPPERCASE_REJECTED",
+      "scope": "user",
+      "anchor": {
+        "schema": "mori-journal-anchor-v1",
+        "scope": "user",
+        "boot_id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+        "cursor": "s=cur-r16-av-anchor-0003;i=1;b=11111111111111111111111111111111;m=3000;t=1700000000000002;x=3"
+      },
+      "stdout": "{\"__CURSOR\":\"s=cur-r16-av-anchor-0003;i=1;b=11111111111111111111111111111111;m=3000;t=1700000000000002;x=3\",\"_BOOT_ID\":\"11111111111111111111111111111111\",\"MESSAGE_ID\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1\"}\n{\"__CURSOR\":\"s=cur-r16-av-next-0004;i=2;b=11111111111111111111111111111111;m=4000;t=1700000000000003;x=4\",\"_BOOT_ID\":\"11111111111111111111111111111111\",\"MESSAGE_ID\":\"98e322203f7a4ed290d09fe03c09fe15\",\"EXIT_CODE\":\"killed\",\"EXIT_STATUS\":\"9\"}\n",
+      "stderr": "",
+      "returncode": 0,
+      "want_rc": 2,
+      "want_id": "MORI_JOURNAL_WINDOW_SETUP",
+      "want": {}
+    },
+    {
+      "id": "ANCHORVAL_BOOT_ID_SHORT_REJECTED",
+      "scope": "user",
+      "anchor": {
+        "schema": "mori-journal-anchor-v1",
+        "scope": "user",
+        "boot_id": "1111111111111111",
+        "cursor": "s=cur-r16-av-anchor-0005;i=1;b=11111111111111111111111111111111;m=5000;t=1700000000000004;x=5"
+      },
+      "stdout": "{\"__CURSOR\":\"s=cur-r16-av-anchor-0005;i=1;b=11111111111111111111111111111111;m=5000;t=1700000000000004;x=5\",\"_BOOT_ID\":\"11111111111111111111111111111111\",\"MESSAGE_ID\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1\"}\n{\"__CURSOR\":\"s=cur-r16-av-next-0006;i=2;b=11111111111111111111111111111111;m=6000;t=1700000000000005;x=6\",\"_BOOT_ID\":\"11111111111111111111111111111111\",\"MESSAGE_ID\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2\"}\n",
+      "stderr": "",
+      "returncode": 0,
+      "want_rc": 2,
+      "want_id": "MORI_JOURNAL_WINDOW_SETUP",
+      "want": {}
+    },
+    {
+      "id": "ANCHORVAL_VALID_NEGATIVE_CONTROL",
+      "scope": "user",
+      "anchor": {
+        "schema": "mori-journal-anchor-v1",
+        "scope": "user",
+        "boot_id": "11111111111111111111111111111111",
+        "cursor": "s=cur-r16-av-anchor-0007;i=1;b=11111111111111111111111111111111;m=7000;t=1700000000000006;x=7"
+      },
+      "stdout": "{\"__CURSOR\":\"s=cur-r16-av-anchor-0007;i=1;b=11111111111111111111111111111111;m=7000;t=1700000000000006;x=7\",\"_BOOT_ID\":\"11111111111111111111111111111111\",\"MESSAGE_ID\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1\"}\n{\"__CURSOR\":\"s=cur-r16-av-next-0008;i=2;b=11111111111111111111111111111111;m=8000;t=1700000000000007;x=8\",\"_BOOT_ID\":\"11111111111111111111111111111111\",\"MESSAGE_ID\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa3\"}\n",
+      "stderr": "",
+      "returncode": 0,
+      "want_rc": 0,
+      "want_id": "MORI_JOURNAL_WINDOW_OK",
+      "want": {
+        "scope": "user",
+        "records_after_anchor": 1,
+        "positive_kernel_oom": 0,
+        "positive_unit_oom": 0,
+        "positive_unit_signal": 0,
+        "positive_process_sigkill": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,253 @@
+{
+  "schema": "mori-r16-capture-recipe-v1",
+  "label": "live-window",
+  "wave": "mori-r16-window-build",
+  "generated_utc": "2026-10-20T09:05:00Z",
+  "generated_by": "MoriR16.ReceiptCapture",
+  "status": "recipe-only",
+  "execution": "deferred",
+  "execution_note": "This file is recipe data, not a measurement. No seat executed, is permitted to execute, or did execute any step. L1/parent executes after the wave settles; each step records its own observed rc/digests into the manifest at run time. Any execution writes only under evidence_root.",
+  "repo_root": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "evidence_root": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-16/evidence/live-window",
+  "tool_contract": {
+    "tool": "tools/mori-journal-window.py",
+    "exists_at_write": false,
+    "interface_source": "round-16 shared contract (wave1-spec context), not observed code",
+    "internal_query_must_be": "journalctl <--user|--system> --cursor=<cursor from anchor> --no-tail --quiet --output=json --output-fields=__CURSOR,_BOOT_ID,MESSAGE_ID,UNIT_RESULT,EXIT_CODE,EXIT_STATUS",
+    "internal_query_forbidden": [
+      "MESSAGE or COMMAND in --output-fields",
+      "--after-cursor (only --cursor with exact-retained first record proves continuity)",
+      "-f/--follow",
+      "--cursor-file (mutates cursor state on disk)"
+    ],
+    "expected_stdout": "one JSON object: finding_id MORI_JOURNAL_WINDOW_OK on rc0, MORI_JOURNAL_WINDOW_UNAVAILABLE on rc2 unavailable, MORI_JOURNAL_WINDOW_SETUP on rc2 setup; raw cursor and raw records never echoed; anchor SHA-256 permitted",
+    "expected_internal_checks": [
+      "first parsed record __CURSOR == anchor cursor exactly AND _BOOT_ID == anchor boot_id; that record is dropped, not counted",
+      "every later record: JSON object, _BOOT_ID == anchor boot_id, unique valid scalar __CURSOR",
+      "malformed/empty stdout, missing/mismatched/duplicate cursor, foreign boot, nonzero rc, any stderr byte, timeout, byte overflow -> rc2 unavailable, never partial or zero totals",
+      "anchor file is read-only input; anchor is never advanced or rewritten; end_cursor may be reported but is not written back"
+    ]
+  },
+  "requirements": {
+    "journalctl": {
+      "path": "/usr/bin/journalctl",
+      "observed_version": "systemd 261 (261.2-1-arch) +PAM +AUDIT -SELINUX +APPARMOR ... +UTMP +LIBARCHIVE",
+      "version_floor": "systemd >= 243 (--no-tail, --output-fields, -o json, --cursor all present in observed journalctl --help on 261.2-1-arch, 2026-10-20)",
+      "docs_basis": "S014 journalctl(1) systemd 262; S015 systemd.journal-fields(7) systemd 262; recipe argv restricted to flags confirmed on the installed binary",
+      "run_time_check": "sha256 the resolved binary and `journalctl --version` first line into manifest.tools before any journal read"
+    },
+    "python3": {
+      "path": "python3",
+      "observed_version": "Python 3.14.7",
+      "version_floor": ">=3.9 (stdlib-only tool contract)"
+    },
+    "jq": {
+      "path": "jq",
+      "observed_version": "jaq 3.1.1 resolves as jq on this host",
+      "use": "anchor projection only; filter is jq/jaq compatible; any equivalent JSON projector MAY substitute if the validation rules are identical",
+      "note": "r15 receipts pinned MORI_JQ_BIN=/usr/bin/jq; if the harness honours MORI_JQ_BIN, pin it the same way"
+    },
+    "boot_id_source": {
+      "path": "/proc/sys/kernel/random/boot_id",
+      "access": "read-only kernel interface already used by the census",
+      "normalization": "strip '-' then lowercase; must match ^[0-9a-f]{32}$"
+    },
+    "timeout_wrapper": {
+      "implementation": "coreutils timeout -k 1 <seconds> OR an equivalent subprocess wall-clock bound that kills and reaps only the owned child",
+      "observed": "uutils coreutils (sha256sum 0.8.0) provides timeout on this host"
+    }
+  },
+  "limits": {
+    "anchor_timeout_seconds": 10,
+    "window_timeout_seconds": 10,
+    "window_max_bytes": 8388608,
+    "anchor_stdout_max_bytes": 65536,
+    "stderr_required_bytes_for_success": 0,
+    "anchor_cursor_max_chars": 4096,
+    "anchor_cursor_charset": "printable scalar, no control characters",
+    "anchor_boot_id_regex": "^[0-9a-f]{32}$",
+    "limits_note": "Configured bounds, not measured latency. timeout/overflow must produce rc2 unavailable, never a partial count; Bounds fixture pack owns the refusal cases."
+  },
+  "forbidden_globally": [
+    "requesting MESSAGE or COMMAND in any --output-fields list",
+    "parsing, storing, or echoing MESSAGE text anywhere",
+    "persisting raw journal JSONL, raw anchor records, raw cursors, or producer stderr content anywhere in receipts; raw material lives only in the temporary in-lane workspace evidence/live-window/tmp/ and is deleted before the manifest is finalized",
+    "echoing raw __CURSOR values, raw record fields, or journalctl/tool stderr into the manifest or reports",
+    "writing or moving any file outside evidence_root",
+    "advancing the anchor, using --cursor-file, or mutating cursor state",
+    "--after-cursor (skips the retained-anchor proof)",
+    "follow mode (-f/--follow)",
+    "writing journald configuration, restarting journald, vacuuming, or any host mutation",
+    "partial-upgrade installs (pacman transactions are paused host-wide)"
+  ],
+  "scopes": ["user", "system"],
+  "steps": [
+    {
+      "id": "S00-precheck",
+      "purpose": "prove binaries exist and record versions/digests before any journal read",
+      "commands": [
+        {"argv": ["${JOURNALCTL}", "--version"], "capture": "manifest.tools.journalctl.version_first_line"},
+        {"argv": ["sha256sum", "${JOURNALCTL}"], "capture": "manifest.tools.journalctl.sha256"},
+        {"argv": ["python3", "--version"], "capture": "manifest.tools.python3.version"},
+        {"argv": ["sha256sum", "${TOOL}"], "capture": "manifest.tools.mori_journal_window.sha256", "required": true}
+      ],
+      "env": {"JOURNALCTL": "/usr/bin/journalctl", "TOOL": "tools/mori-journal-window.py"},
+      "on_missing_tool": "record capability_absent in manifest and stop; absent tool is not a production bug (WindowHarness contract)",
+      "writes": ["evidence/live-window/run-manifest.json (tools section only)"]
+    },
+    {
+      "id": "S01-boot-id",
+      "purpose": "read normalized current boot id for per-record validation",
+      "commands": [
+        {"argv": ["tr", "-d", "-"], "stdin_file": "/proc/sys/kernel/random/boot_id"}
+      ],
+      "validation": ["output lowercased matches ^[0-9a-f]{32}$"],
+      "on_fail": "both scopes unavailable:boot-id-unreadable; stop before any journal read",
+      "writes": ["manifest.boot_id (normalized 32-hex kernel boot id; safe, present in every record)"]
+    },
+    {
+      "id": "S02-anchor-user",
+      "purpose": "acquire the LATEST anchor for scope=user: the record cursor of the newest retained current-boot entry, field-limited JSON",
+      "argv": ["timeout", "-k", "1", "${limits.anchor_timeout_seconds}", "${JOURNALCTL}", "--user", "-b", "-n", "1", "-r", "--no-pager", "--quiet", "-o", "json", "--output-fields=__CURSOR,_BOOT_ID"],
+      "scope_flag": "--user",
+      "anchor_source_rationale": "the anchor is taken from the newest record's own __CURSOR inside the JSON object: it avoids parsing human-formatted cursor output and binds the anchor to that record's _BOOT_ID in the same object. --show-cursor/--cursor-file are not used (and --cursor-file is forbidden): the tool requires the first --cursor record to equal the anchor exactly, and a position emitted after the listing would not be that record's cursor",
+      "capture": {
+        "stdout_file": "evidence/live-window/tmp/anchor-user.raw.stdout",
+        "stderr_file": "evidence/live-window/tmp/anchor-user.stderr (count bytes then delete; content is never stored)",
+        "stdout_max_bytes": "${limits.anchor_stdout_max_bytes}",
+        "noclobber": true,
+        "mode": "0600"
+      },
+      "expected_record_shape": "one JSON object line containing only __CURSOR, __REALTIME_TIMESTAMP, __MONOTONIC_TIMESTAMP, _BOOT_ID (the last four are always printed in field modes per S014 --output-fields)",
+      "validation": [
+        "rc == 0 AND stderr byte count == 0 AND stdout bytes <= anchor_stdout_max_bytes AND timeout did not fire, else anchor unavailable for this scope",
+        "stdout is exactly one line that parses as a JSON object, else unavailable",
+        ".__CURSOR is a JSON string, length <= 4096 chars, printable with no control characters, else unavailable",
+        "._BOOT_ID is a JSON string matching ^[0-9a-f]{32}$ AND equals normalized boot_id from S01, else unavailable (foreign/older boot data is a boundary, not a fallback cue)",
+        "no MESSAGE key anywhere in the raw capture (assertion, not a read of its value)"
+      ],
+      "on_fail": "record scope=user unavailable:<reason> in manifest; do NOT write an anchor file; do NOT run S03 for this scope; never retry with a different record",
+      "writes": ["evidence/live-window/tmp/anchor-user.raw.stdout", "evidence/live-window/tmp/anchor-user.stderr (both temporary, deleted at S04)"]
+    },
+    {
+      "id": "S02b-anchor-user-write",
+      "purpose": "project the validated record into schema mori-journal-anchor-v1",
+      "jq_filter": "{schema:\"mori-journal-anchor-v1\", scope:\"user\", boot_id:(._BOOT_ID|ascii_downcase), cursor:.__CURSOR}",
+      "argv": ["jq", "-c", "--arg", "scope", "user", "{schema:\"mori-journal-anchor-v1\",scope:$scope,boot_id:(._BOOT_ID|ascii_downcase),cursor:.__CURSOR}", "evidence/live-window/tmp/anchor-user.raw.stdout"],
+      "output_file": "evidence/live-window/tmp/anchor-user.json",
+      "write_policy": "write to tmp/anchor-user.json.tmp then atomic mv; noclobber if tmp/anchor-user.json already exists; mode 0600; anchor JSON is temporary in-lane input, deleted at S04 — receipts retain only anchor_sha256 and boot_id",
+      "post_validation": [
+        "re-read written file: schema == mori-journal-anchor-v1, scope == user, boot_id matches regex and S01 value, cursor scalar <=4096 printable",
+        "record anchor_sha256 = SHA-256 of written bytes in manifest (raw cursor never recorded)"
+      ],
+      "writes": ["evidence/live-window/tmp/anchor-user.json (temporary, deleted at S04)"]
+    },
+    {
+      "id": "S02-anchor-system",
+      "purpose": "same as S02-anchor-user for scope=system",
+      "argv": ["timeout", "-k", "1", "${limits.anchor_timeout_seconds}", "${JOURNALCTL}", "--system", "-b", "-n", "1", "-r", "--no-pager", "--quiet", "-o", "json", "--output-fields=__CURSOR,_BOOT_ID"],
+      "scope_flag": "--system",
+      "scope_access_note": "system journal may be unreadable for this user (S014 access rules); rc!=0, stderr bytes, or empty stdout => unavailable, not zero",
+      "capture": {
+        "stdout_file": "evidence/live-window/tmp/anchor-system.raw.stdout",
+        "stderr_file": "evidence/live-window/tmp/anchor-system.stderr (count bytes then delete; content is never stored)",
+        "stdout_max_bytes": "${limits.anchor_stdout_max_bytes}",
+        "noclobber": true,
+        "mode": "0600"
+      },
+      "validation": "identical rules to S02-anchor-user",
+      "on_fail": "record scope=system unavailable:<reason>; skip S03-system",
+      "writes": ["evidence/live-window/tmp/anchor-system.raw.stdout", "evidence/live-window/tmp/anchor-system.stderr (both temporary, deleted at S04)"]
+    },
+    {
+      "id": "S02b-anchor-system-write",
+      "purpose": "project validated system record into mori-journal-anchor-v1",
+      "argv": ["jq", "-c", "--arg", "scope", "system", "{schema:\"mori-journal-anchor-v1\",scope:$scope,boot_id:(._BOOT_ID|ascii_downcase),cursor:.__CURSOR}", "evidence/live-window/tmp/anchor-system.raw.stdout"],
+      "output_file": "evidence/live-window/tmp/anchor-system.json",
+      "write_policy": "tmp-then-mv, noclobber, mode 0600; temporary in-lane, deleted at S04",
+      "post_validation": "same as S02b-anchor-user-write with scope=system",
+      "writes": ["evidence/live-window/tmp/anchor-system.json (temporary, deleted at S04)"]
+    },
+    {
+      "id": "S03-window-user",
+      "purpose": "bounded same-boot new-since-anchor window observation, scope=user",
+      "argv": ["python3", "tools/mori-journal-window.py", "--anchor", "evidence/live-window/tmp/anchor-user.json", "--scope", "user", "--journalctl", "/usr/bin/journalctl", "--timeout", "10", "--max-bytes", "8388608"],
+      "cwd": "${repo_root}",
+      "run_condition": "only if S02b-anchor-user-write produced a validated anchor",
+      "capture": {
+        "stdout_file": "evidence/live-window/window-user.stdout.json (safe tool JSON: digests, ids, counts only — contract guarantees no cursor/record echo)",
+        "stderr_file": "evidence/live-window/tmp/window-user.stderr (count bytes then delete; content is never stored)",
+        "noclobber": true,
+        "mode": "0600"
+      },
+      "expected": {
+        "rc0": "finding_id=MORI_JOURNAL_WINDOW_OK; fields scope, records_after_anchor, positive_kernel_oom, positive_unit_oom, positive_unit_signal, positive_process_sigkill, evidence_basis=validated-record-subsets; optional end_cursor reported but never persisted",
+        "rc2_unavailable": "finding_id=MORI_JOURNAL_WINDOW_UNAVAILABLE with stable reason: missing/vacuumed anchor, boot boundary, malformed/empty/truncated/overflowing capture, foreign boot, nonzero producer rc, stderr bytes, timeout",
+        "rc2_setup": "finding_id=MORI_JOURNAL_WINDOW_SETUP for invalid anchor file or argv",
+        "no_positive_totals": "any unavailable MUST NOT carry numeric positive totals"
+      },
+      "manifest_record": {
+        "rc": "integer",
+        "finding_id": "string from stdout JSON",
+        "records_after_anchor": "integer if rc0 else null",
+        "positive_counts": "four integers if rc0 else null",
+        "anchor_sha256": "from S02b",
+        "stdout_sha256": "SHA-256 of window-user.stdout.json",
+        "stderr_bytes": "integer count only, never content",
+        "redacted": "no cursor, no record payload, no reason strings beyond stable finding ids/reasons"
+      },
+      "writes": ["evidence/live-window/window-user.stdout.json", "evidence/live-window/tmp/window-user.stderr (temporary, deleted at S04)"]
+    },
+    {
+      "id": "S03-window-system",
+      "purpose": "bounded same-boot new-since-anchor window observation, scope=system",
+      "argv": ["python3", "tools/mori-journal-window.py", "--anchor", "evidence/live-window/tmp/anchor-system.json", "--scope", "system", "--journalctl", "/usr/bin/journalctl", "--timeout", "10", "--max-bytes", "8388608"],
+      "cwd": "${repo_root}",
+      "run_condition": "only if S02b-anchor-system-write produced a validated anchor",
+      "capture": {
+        "stdout_file": "evidence/live-window/window-system.stdout.json (safe tool JSON: digests, ids, counts only)",
+        "stderr_file": "evidence/live-window/tmp/window-system.stderr (count bytes then delete; content is never stored)",
+        "noclobber": true,
+        "mode": "0600"
+      },
+      "expected": "same outcome table as S03-window-user",
+      "manifest_record": "same shape as S03-window-user",
+      "writes": ["evidence/live-window/window-system.stdout.json", "evidence/live-window/tmp/window-system.stderr (temporary, deleted at S04)"]
+    },
+    {
+      "id": "S04-manifest",
+      "purpose": "finalize receipt manifest",
+      "fields": {
+        "schema": "mori-r16-live-window-receipt-v1",
+        "label": "live-window",
+        "generated_utc": "run-time UTC",
+        "recipe_sha256": "SHA-256 of this capture-recipe.json at run start",
+        "input_digests": {"anchor_user_sha256": "hex|null", "anchor_system_sha256": "hex|null", "tool_sha256": "hex", "journalctl_sha256": "hex"},
+        "boot_id": "normalized 32-hex kernel boot id observed for this run (safe: present in every record's _BOOT_ID)",
+        "temporary_workspace_cleanup": "BEFORE writing this manifest, delete evidence/live-window/tmp/ (raw anchor captures, anchor JSON inputs, stderr count files); assert the directory is absent or empty; raw anchor material is never committed or retained",
+        "scope_start": {"head": "git HEAD at start", "porcelain": "git status --porcelain at start"},
+        "scope_end": {"head": "git HEAD at end", "porcelain": "git status --porcelain at end"},
+        "results": {"user": "S03 manifest_record or unavailable:<reason>", "system": "S03 manifest_record or unavailable:<reason>"},
+        "invariants_checked": [
+          "no MESSAGE key or value may appear in any evidence file; the grep check '\"MESSAGE\"' over evidence/live-window MUST return nothing (allowed field list makes even the key absent)",
+          "no raw cursor anywhere in run-manifest.json or evidence files",
+          "temporary workspace absent/empty at manifest time; only anchor_sha256 + boot_id + safe aggregates persist"
+        ]
+      },
+      "writes": ["evidence/live-window/run-manifest.json"]
+    },
+    {
+      "id": "S05-final-layout",
+      "purpose": "assert the committed receipt surface is digests and safe aggregates only",
+      "expected_files": ["evidence/live-window/run-manifest.json", "evidence/live-window/window-user.stdout.json", "evidence/live-window/window-system.stdout.json"],
+      "absent": ["evidence/live-window/tmp/", "*.raw.stdout", "*.stderr", "anchor-*.json"],
+      "note": "anchor JSON files are consumed tool inputs, not receipts; their SHA-256 and boot_id are the only anchor facts retained"
+    }
+  ],
+  "interpretation_boundaries": {
+    "records_after_anchor": "count of validated same-boot records strictly after the exact retained anchor; NOT a class total, NOT an event count, NOT deduplicated",
+    "positive_tokens": "validated-record-subset witnesses per r15 predicates; never victim counts, never emitter-authenticated, never summed across scopes",
+    "unavailable": "anchor vacuum/rotation between S02 and S03, foreign-boot records, capture failure and truncation all remain unavailable by design; FR11 advances only on exact cursor continuity",
+    "no_claims": ["census cutover", "completeness of event coverage", "authenticated emitter", "unique victim", "cross-boot ordering", "no-harm or green-drift inference"]
+  }
+}

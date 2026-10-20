@@ -1,0 +1,393 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r16-window-build",
+  "createdAt": "2026-10-20T08:47:55.658Z",
+  "updatedAt": "2026-10-20T08:48:56.409Z",
+  "reportDir": ".ufo/waves/round-16/build",
+  "members": {
+    "WindowTool": {
+      "kind": "spawn",
+      "agentId": "MoriR16.WindowTool",
+      "role": "executor",
+      "item": null
+    },
+    "WindowHarness": {
+      "kind": "spawn",
+      "agentId": "MoriR16.WindowHarness",
+      "role": "executor",
+      "item": null
+    },
+    "PackExactAnchor": {
+      "kind": "spawn",
+      "agentId": "MoriR16.PackExactAnchor",
+      "role": "executor",
+      "item": null
+    },
+    "PackKernelUser": {
+      "kind": "spawn",
+      "agentId": "MoriR16.PackKernelUser",
+      "role": "executor",
+      "item": null
+    },
+    "PackKernelSystem": {
+      "kind": "spawn",
+      "agentId": "MoriR16.PackKernelSystem",
+      "role": "executor",
+      "item": null
+    },
+    "PackUnitOom": {
+      "kind": "spawn",
+      "agentId": "MoriR16.PackUnitOom",
+      "role": "executor",
+      "item": null
+    },
+    "PackUnitSignal": {
+      "kind": "spawn",
+      "agentId": "MoriR16.PackUnitSignal",
+      "role": "executor",
+      "item": null
+    },
+    "PackProcessSignal": {
+      "kind": "spawn",
+      "agentId": "MoriR16.PackProcessSignal",
+      "role": "executor",
+      "item": null
+    },
+    "PackMissingAnchor": {
+      "kind": "spawn",
+      "agentId": "MoriR16.PackMissingAnchor",
+      "role": "executor",
+      "item": null
+    },
+    "PackBootBoundary": {
+      "kind": "spawn",
+      "agentId": "MoriR16.PackBootBoundary",
+      "role": "executor",
+      "item": null
+    },
+    "PackCursorShape": {
+      "kind": "spawn",
+      "agentId": "MoriR16.PackCursorShape",
+      "role": "executor",
+      "item": null
+    },
+    "PackRecordShape": {
+      "kind": "spawn",
+      "agentId": "MoriR16.PackRecordShape",
+      "role": "executor",
+      "item": null
+    },
+    "PackMalformedCapture": {
+      "kind": "spawn",
+      "agentId": "MoriR16.PackMalformedCapture",
+      "role": "executor",
+      "item": null
+    },
+    "PackProducerFailure": {
+      "kind": "spawn",
+      "agentId": "MoriR16.PackProducerFailure",
+      "role": "executor",
+      "item": null
+    },
+    "PackStderr": {
+      "kind": "spawn",
+      "agentId": "MoriR16.PackStderr",
+      "role": "executor",
+      "item": null
+    },
+    "PackBounds": {
+      "kind": "spawn",
+      "agentId": "MoriR16.PackBounds",
+      "role": "executor",
+      "item": null
+    },
+    "PackTypedFields": {
+      "kind": "spawn",
+      "agentId": "MoriR16.PackTypedFields",
+      "role": "executor",
+      "item": null
+    },
+    "PackAnchorValidation": {
+      "kind": "spawn",
+      "agentId": "MoriR16.PackAnchorValidation",
+      "role": "executor",
+      "item": null
+    },
+    "ContextGuard": {
+      "kind": "spawn",
+      "agentId": "MoriR16.ContextGuard",
+      "role": "executor",
+      "item": null
+    },
+    "ReceiptCapture": {
+      "kind": "spawn",
+      "agentId": "MoriR16.ReceiptCapture",
+      "role": "executor",
+      "item": null
+    },
+    "Knowledge": {
+      "kind": "spawn",
+      "agentId": "MoriR16.Knowledge",
+      "role": "scribe",
+      "item": null
+    },
+    "SkillRegistry": {
+      "kind": "spawn",
+      "agentId": "MoriR16.SkillRegistry",
+      "role": "scribe",
+      "item": null
+    },
+    "Registry": {
+      "kind": "spawn",
+      "agentId": "MoriR16.Registry",
+      "role": "scribe",
+      "item": null
+    },
+    "Quality": {
+      "kind": "spawn",
+      "agentId": "MoriR16.Quality",
+      "role": "scribe",
+      "item": null
+    },
+    "Lesson": {
+      "kind": "spawn",
+      "agentId": "MoriR16.Lesson",
+      "role": "scribe",
+      "item": null
+    },
+    "FrontierIndex": {
+      "kind": "spawn",
+      "agentId": "MoriR16.FrontierIndex",
+      "role": "scribe",
+      "item": null
+    },
+    "Province": {
+      "kind": "spawn",
+      "agentId": "MoriR16.Province",
+      "role": "scribe",
+      "item": null
+    },
+    "ClaimRubric": {
+      "kind": "spawn",
+      "agentId": "MoriR16.ClaimRubric",
+      "role": "scribe",
+      "item": null
+    },
+    "CursorDocs": {
+      "kind": "spawn",
+      "agentId": "MoriR16.CursorDocs",
+      "role": "scout",
+      "item": null
+    },
+    "SeekDocs": {
+      "kind": "spawn",
+      "agentId": "MoriR16.SeekDocs",
+      "role": "scout",
+      "item": null
+    },
+    "FieldDocs": {
+      "kind": "spawn",
+      "agentId": "MoriR16.FieldDocs",
+      "role": "scout",
+      "item": null
+    },
+    "SourcePlan": {
+      "kind": "spawn",
+      "agentId": "MoriR16.SourcePlan",
+      "role": "scout",
+      "item": null
+    },
+    "RoutedDebt": {
+      "kind": "spawn",
+      "agentId": "MoriR16.RoutedDebt",
+      "role": "scout",
+      "item": null
+    },
+    "ExistingPredicates": {
+      "kind": "spawn",
+      "agentId": "MoriR16.ExistingPredicates",
+      "role": "scout",
+      "item": null
+    },
+    "LiveSurfaceRecipe": {
+      "kind": "spawn",
+      "agentId": "MoriR16.LiveSurfaceRecipe",
+      "role": "scout",
+      "item": null
+    },
+    "GatePatterns": {
+      "kind": "spawn",
+      "agentId": "MoriR16.GatePatterns",
+      "role": "scout",
+      "item": null
+    },
+    "DriftDebt": {
+      "kind": "spawn",
+      "agentId": "MoriR16.DriftDebt",
+      "role": "scout",
+      "item": null
+    },
+    "SourceCensus": {
+      "kind": "spawn",
+      "agentId": "MoriR16.SourceCensus",
+      "role": "scout",
+      "item": null
+    },
+    "SiblingScope": {
+      "kind": "spawn",
+      "agentId": "MoriR16.SiblingScope",
+      "role": "connector",
+      "item": null
+    },
+    "WindowAlarmBoundary": {
+      "kind": "spawn",
+      "agentId": "MoriR16.WindowAlarmBoundary",
+      "role": "connector",
+      "item": null
+    },
+    "BootContinuity": {
+      "kind": "spawn",
+      "agentId": "MoriR16.BootContinuity",
+      "role": "connector",
+      "item": null
+    },
+    "BudgetPricing": {
+      "kind": "spawn",
+      "agentId": "MoriR16.BudgetPricing",
+      "role": "connector",
+      "item": null
+    },
+    "HistoricalCorrections": {
+      "kind": "spawn",
+      "agentId": "MoriR16.HistoricalCorrections",
+      "role": "connector",
+      "item": null
+    },
+    "SourceChain": {
+      "kind": "spawn",
+      "agentId": "MoriR16.SourceChain",
+      "role": "connector",
+      "item": null
+    },
+    "ReviewCLI": {
+      "kind": "spawn",
+      "agentId": "MoriR16.ReviewCLI",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewAnchor": {
+      "kind": "spawn",
+      "agentId": "MoriR16.ReviewAnchor",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewCounts": {
+      "kind": "spawn",
+      "agentId": "MoriR16.ReviewCounts",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewCapture": {
+      "kind": "spawn",
+      "agentId": "MoriR16.ReviewCapture",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewHarness": {
+      "kind": "spawn",
+      "agentId": "MoriR16.ReviewHarness",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewFixtures": {
+      "kind": "spawn",
+      "agentId": "MoriR16.ReviewFixtures",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewRegistry": {
+      "kind": "spawn",
+      "agentId": "MoriR16.ReviewRegistry",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewCorpus": {
+      "kind": "spawn",
+      "agentId": "MoriR16.ReviewCorpus",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewLesson": {
+      "kind": "spawn",
+      "agentId": "MoriR16.ReviewLesson",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewNoHarm": {
+      "kind": "spawn",
+      "agentId": "MoriR16.ReviewNoHarm",
+      "role": "reviewer",
+      "item": null
+    },
+    "AttackMissingCursor": {
+      "kind": "spawn",
+      "agentId": "MoriR16.AttackMissingCursor",
+      "role": "critic",
+      "item": null
+    },
+    "AttackMixedBoot": {
+      "kind": "spawn",
+      "agentId": "MoriR16.AttackMixedBoot",
+      "role": "critic",
+      "item": null
+    },
+    "AttackOutputLeak": {
+      "kind": "spawn",
+      "agentId": "MoriR16.AttackOutputLeak",
+      "role": "critic",
+      "item": null
+    },
+    "AttackBound": {
+      "kind": "spawn",
+      "agentId": "MoriR16.AttackBound",
+      "role": "critic",
+      "item": null
+    },
+    "AttackVacuity": {
+      "kind": "spawn",
+      "agentId": "MoriR16.AttackVacuity",
+      "role": "critic",
+      "item": null
+    },
+    "AttackClaims": {
+      "kind": "spawn",
+      "agentId": "MoriR16.AttackClaims",
+      "role": "critic",
+      "item": null
+    },
+    "AttackPermission": {
+      "kind": "spawn",
+      "agentId": "MoriR16.AttackPermission",
+      "role": "critic",
+      "item": null
+    },
+    "AttackPreservation": {
+      "kind": "spawn",
+      "agentId": "MoriR16.AttackPreservation",
+      "role": "critic",
+      "item": null
+    },
+    "SecretSafety": {
+      "kind": "spawn",
+      "agentId": "MoriR16.SecretSafety",
+      "role": "sentinel",
+      "item": null
+    },
+    "HostSafety": {
+      "kind": "spawn",
+      "agentId": "MoriR16.HostSafety",
+      "role": "sentinel",
+      "item": null
+    }
+  }
+}

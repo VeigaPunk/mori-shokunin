@@ -987,3 +987,70 @@ parameter was used. Current outside closure is still required. Scores held
 Expansion/quality/discernment improve at the explicit bounded evidence;
 procedural conformance debt remains reported. No install/update, pacman
 transaction, host restart, remediation or new L0 question by L1.
+
+## Round 16 — exact retained cursor window (2026-10-20)
+
+Trigger: `SCORECARD.md:894–896` planned FR11 work and the non-author
+`corpus/lessons/round-15-verifier-spotcheck.md` routed queue. One declared
+claim C1 coverage acquires a bounded MESSAGE-free same-boot journal window
+after an explicitly persisted anchor, independently of the production census.
+Coverage6 remains the lowest owned axis; operability7 and all numeric scores
+are held. Capability absence at entering
+`b83edc6ee3db6822382ab673d7e6e984e420f22f` is not a production defect count.
+
+L1 reopened journalctl, journal fields, sd_journal_seek_cursor and
+sd_journal_test_cursor official systemd262 documentation on 2026-10-20.
+The latter explicitly warns that different cursor strings may identify one
+entry. Therefore this capability accepts exact-byte retained anchors only;
+inequality is unavailable, not proof of deletion, and no general cursor
+equivalence/deduplication claim is made. Source rows and located quotes are
+recorded prospectively in the round lesson, not inferred from old openings.
+
+Validated wave1: `.ufo/waves/round-16/wave1-spec.json` and
+`wave1-dispatch.json`; 64 seats, one unchanged `taskCall` passed to the native
+task transport, ownership recorded in `build/swarm-registry.json`. Role mix:
+20executor/8scribe/10scout/6connector/10reviewer/8critic/2sentinel.
+L1 is planner. Every initial context explicitly carries exact-id-only
+communication, no `agent://all`, absolute report resolution, no seat checks,
+in-lane probe outputs and host safety. This is a static instruction repair,
+not a retroactive waiver or proof of runtime broadcast prevention.
+
+Entering tree was clean; no inherited round-16 files were found. Entering
+source census exits0 with only the existing S035/S037 duplicate-URL W04
+warnings (`.ufo/waves/round-16/sources-before.json`). The old red r10 pin
+is unchanged. Final measurements follow only after both waves settle.
+
+### Round-16 integration and operator wrap-up
+
+All 64 wave1 seats completed. The operator then ordered no new workers and
+commit/push wrap-up before reboot; planned wave2 (32 falsifiers) is skipped,
+not validated, not dispatched, and not counted. Its spec is retained only
+as undispatched planning evidence; `operator-wrapup.json` records the ruling.
+
+The new standalone window probe, finite regression gate and static context
+gate landed with the 16 fixture packs. L1 static review caught and returned
+the stderr byte-cap gap, regex trailing-newline acceptance, top-level
+SystemExit interception, argument echo and invalid-anchor fingerprinting;
+the owner corrected them before L1 execution. `build/WindowTool.md` records
+the final handoff. These are not historical census defects.
+
+Active SKILL registry prose now removes the obsolete r15 hidden-flag claim,
+registers the actual r16 interfaces and declares context setup exit2. L1
+qualified Q37 (L1 omission does not excuse a seat violation) and Q42 (exact
+anchor start is not gap-free continuity). The new note and FR11 index/province
+describe an anchor-boot, partial-access record subset, not current-boot
+completeness or a census alarm source.
+
+Procedural conformance is not claimed: unauthorized seat live/synthetic
+probes, outside-lane staging and an out-of-scope lesson overwrite occurred
+despite instruction text. The lesson owner restored its authored lesson;
+reports and its Mistakes table preserve the violations. Those observations
+are excluded from all acceptance below. Original wave1 context lacked an
+explicit live-journal ban; the corrected-not-dispatched context fixture
+changes instruction text only, never historical dispatch.
+
+All existing census/oracle/r13–r15 gate and r10 baseline bytes remain under
+the entering pins. F01's whole-function transplant and F02's reconstructed
+prefix shim remain bounded witnesses, not byte-exact single-locus causal
+proofs. The old red drift pin requires a separate semantic review and is
+neither re-run to manufacture a new verdict nor re-pinned here.

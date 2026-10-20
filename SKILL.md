@@ -15,6 +15,7 @@ reporting it. **Detection and report only. This lane never remediates.**
 | Is the shokunin fleet alive? | watchdog pid + log freshness + `.ufo/state/*.round` values (count, max, per-lane value vs the ledger's last launch round) | restarting a daemon; killing a pid | `liveness` rows: pid, start time, last tick, state; `WATCHDOG_STATE_LAG`/`_AHEAD` are info — visibility, not severity |
 | Did a wave settle? | `.ufo/waves/*/swarm-registry.json` + dispatch/results pair | assuming an unsettled wave is a failed one | per-wave settled/unsettled with age |
 | Did something get killed? | MESSAGE-free `journalctl --user/--system -b` catalog-ID records — kernel-OOM notice, oomd notice, coredump, unit-process SIGKILL, unit-failure with result — plus the validated `UNIT_RESULT=oom-kill` and user `UNIT_RESULT=signal` paths; cgroup event counters | remediating, renicing, killing; treating a client-set MESSAGE_ID as authenticated or a notice as a unique victim | independent `scope=user or scope=system` record counts and current-boot anchor; per-scope validated-positive tokens `positive_kernel_oom`/`positive_unit_oom`/`positive_unit_signal`/`positive_process_sigkill` survive an adjacent invalid record while every raw aggregate/split token stays `unavailable`; ONE global `OOM_KILL_JOURNAL` crit → DRIFT when any independently valid positive OOM record exists, carrying four separate raw counters (`user_notice`/`system_notice`/`user_unit_oom`/`system_unit_oom`, never summed); fleet `UNIT_FAILURE_JOURNAL` info vs non-fleet `UNIT_FAILURE_OUT_OF_SCOPE` info `owner=tsukuroi`, subject from exactly one valid `UNIT`/`USER_UNIT`, unclassifiable `UNIT_FAILURE_UNATTRIBUTED_JOURNAL` info `owner=unresolved` (owner partition aggregate-only); user SIGKILL/`UNIT_RESULT=signal` `KILL_SIGNAL_JOURNAL` warn from independently valid user records even when raw `count`/`process_sigkill` is `unavailable`; arbitrary unreported signal paths remain unmeasured; cgroup count with selected source path/scope and observation time, not an event timestamp |
+| Did journal records arrive after a retained anchor? (r16 probe) | `python3 tools/mori-journal-window.py --anchor <PATH> --scope user\|system` — exact-anchor window, see "Window probe (r16)" below | advancing, creating or rewriting the anchor; treating a missing, vacuumed, mismatched or foreign-boot anchor as zero; printing raw cursors, record text or `MESSAGE`; summing scopes; reading the window as a victim count | one JSON object on stdout: `rc0 finding_id=MORI_JOURNAL_WINDOW_OK` with `records_after_anchor`, the four never-summed `positive_*` counts and `evidence_basis=validated-record-subsets`; otherwise `rc2` with `MORI_JOURNAL_WINDOW_UNAVAILABLE reason=<stable>` or `MORI_JOURNAL_WINDOW_SETUP` |
 | Is there resource runway? | `df -P` on the fleet root and `/tmp`; since-boot write average per target device; memory pressure PSI + fill/avail against labeled-local thresholds; scope high-watermark `memory.peak` | deleting files; resizing; tuning a labeled-local threshold to fit one observation | runway rows with the measured value: `used_pct`, `io_basis=since-boot`, `psi_some_avg10`, `mem_fill_scope`, `mem_peak` + `mem_peak_anchor` |
 | Is a tmux session fleet work? | `tmux ls` + `list-panes -a` pane current paths under the fleet root; per-relevant-session `display-message` activity under a per-call timeout bound | killing/attaching to/steering sessions; treating foreign, or idle past a labeled-local number, as unhealthy | `sessions=N relevant=R foreign=F unclassified=U`; relevance rows carry `freshness=ok probed=P idle=I freshness_unavailable=U`; `TMUX_FOREIGN_SESSION` info per foreign session (path-based rule); `TMUX_SESSION_IDLE` info (r8) |
 | Was a lane silent? | roster = `shokunin.conf` lane ids (parsed, never sourced) ∪ `.ufo/state/*.round` names (r12; `MORI_ROSTER_LANES` overrides); launch epoch from `.ufo/watchdog.log` + post-launch authorship (commits/files) | declaring failure from commit sparsity; sourcing the conf | silent / progressing / progressing-weak / young / not-open / unavailable; `roster_source=` + `ROSTER_SET_MISMATCH` info naming conf-only / state-only ids |
@@ -101,6 +102,40 @@ not make the class complete and does not repair malformed input.
 Ground and full decision table: `corpus/knowledge/journal-positive-evidence-r15.md`
 (S014/S015/S037/S038; an interface reading, not a measured live positive).
 
+## Window probe (r16) — exact retained anchor, no census change
+
+`tools/mori-journal-window.py` acquires a bounded, MESSAGE-free observation of
+journal records written after one retained anchor. It is a **probe**: the
+production census (`tools/mori-census.sh`) does not call it, adds no `SURFACE`
+or `FINDING` row, and changes no alarm, drift verdict or positive token. The r10
+drift pin stays red and is not re-pinned by this change.
+
+- **Precondition: an exact retained anchor.** The caller supplies a file whose
+  JSON object has `schema` = `mori-journal-anchor-v1`, `scope` = `user` or
+  `system`, `boot_id` (32 lowercase hex) and `cursor` (an opaque printable scalar,
+  at most 4096 characters, no control characters). The probe only reads it. It
+  never creates, rewrites or advances an anchor and writes no cursor state. An end
+  cursor may be reported but is not written. Stdout carries at most a SHA-256
+  digest of the anchor, never the raw cursor or record text.
+- **Continuity or unavailable.** The window counts only records after the anchor
+  when the first parsed record carries exactly the anchor cursor and boot; that
+  record is dropped. Every later record must be a same-boot object with a unique,
+  valid scalar cursor. A missing, vacuumed or mismatched anchor cursor, a foreign
+  boot, a duplicate or malformed cursor, a nonzero rc, stderr, timeout or overflow
+  returns `rc2 MORI_JOURNAL_WINDOW_UNAVAILABLE` with a stable reason. Unavailable
+  is never zero and never a positive total.
+- **Claims it does not make.** The success path is exact retained-anchor
+  continuity only. FR11 (`PROVINCE.md:51`) is not closed by it: cursor rotation and
+  vacuum behavior remain `[UNKNOWN]`. The counts are validated record subsets
+  (`evidence_basis=validated-record-subsets`), not completeness, an authenticated
+  emitter, a unique victim or fleet causation. The four counts
+  (`positive_kernel_oom`, `positive_unit_oom`, `positive_unit_signal`,
+  `positive_process_sigkill`) reuse the r15 predicates and are never summed across
+  scopes.
+  The window `positive_*` is a separate after-anchor identity: it is not comparable with, and does not substitute for, the census whole-boot `positive_*` or the r15 alarm retention, because the window refuses the whole window on any invalid record, whereas the census keeps individually valid positives beside invalid siblings.
+- **Setup is not a window.** An invalid anchor or argument returns
+  `rc2 MORI_JOURNAL_WINDOW_SETUP`. Neither code is a DRIFT, severity or alarm.
+
 ## Boundaries (hard)
 
 - **Refuses dispatch mechanism** — that is kumitate. mori observes the fleet, it
@@ -131,7 +166,10 @@ exit 2 for setup/usage. Registry (PROTOCOL.md §Gate standard fields):
 | silence oracle | gate | `bash tools/mori-silence-cases.sh` | 0 clean (all matched) · 1 failed · 2 could-not-evaluate | itself (hermetic case table, 28 cases) | case table in-script | temp fixtures | mori |
 | r13 regressions | gate | `python3 tools/mori-round13-regressions.py --output <dir>` (`--census`/`--oracle` default to the repo `tools/*.sh`; `--frozen-dir` default `.ufo/waves/round-13/frozen`) | 0 clean · 1 failed (claim mismatch) · 2 could-not-evaluate (usage/setup, unreadable target, `snapshot_tampered`, unbuildable requested mutation) | `python3 tools/mori-round13-regressions.py --selftest` — parser checks plus isolated real-gate subprocess cases asserting exit and stable finding ids; measured tally in round-14 evidence | in-script `FROZEN_PINS` and `FROZEN_BASE_COMMIT` independently pin the default frozen census/oracle/manifest; custom frozen directories are manifest-only and explicitly unpinned; expected claim ids/values are in-script; evidence names revision and dirty flag | `<dir>` evidence tree only; fixtures removed unless `--keep-fixtures` | mori |
 | r14 regressions | gate | `python3 tools/mori-round14-regressions.py --output <dir>` (`--census` default `tools/mori-census.sh`; `--frozen` red control default `.ufo/waves/round-14/frozen/mori-census.sh`) | 0 clean · 1 failed (claim failed, or the frozen control did not reproduce the defect) · 2 could-not-evaluate (usage/setup/pin, `snapshot_tampered`, unexpected internal error) | `python3 tools/mori-round14-regressions.py --selftest` — 20 checks including real-gate red rc1 and tamper rc2 at 5601d12, harness SHA `c39e5a73…`; `evidence/r14-selftest-accepted.json` under round-14 waves | in-script `PINNED_SHA256` for `.ufo/waves/round-14/frozen/mori-census.sh` (`39abda0a…`, the r13 delivered bytes) + expected claim ids/values | `<dir>` evidence tree only; fixtures removed unless `--keep-fixtures` | mori |
-| r15 regressions | gate | `python3 tools/mori-round15-regressions.py --output <dir>` (`--census` default `tools/mori-census.sh`; `--fixtures` default `.ufo/waves/round-15/fixtures`; `--expected` default `.ufo/waves/round-15/expected.json`; `--frozen` default `.ufo/waves/round-15/frozen/mori-census.sh`, else `git show 0fa5e0d:tools/mori-census.sh`; `--pin-fixtures <path>` regenerates the expected table after packs settle) | 0 clean (all SUT expectations pass and the frozen control reproduces the entering red state on red-relevant cases) · 1 failed (a SUT fixture expectation failed) · 2 could-not-evaluate (usage/setup/pin/fixture-schema/control error, digest or expected-table mismatch, `snapshot_tampered`, missing expected table, unexpected internal error) | `python3 tools/mori-round15-regressions.py --selftest` — actual isolated gate subprocesses with temp packs/wrappers, asserting exit and stable expected ids; `--no-frozen-control` is selftest-internal and requires the hidden `--selftest-child`; tally is measured at L1 integration, not predicted here | in-script `PINNED_FROZEN_SHA256` `0e41cb83…` and `PINNED_BASE_COMMIT` `0fa5e0d…` (never trusted from a manifest; digest mismatch exits 2); expected table `.ufo/waves/round-15/expected.json` pins each fixture pack SHA-256, static per-case expectations, and gate/r14-helper/frozen digests (any later gate or r14 edit requires re-pin); runs store `expected.json` + `run-manifest.json` (revision, dirty path scope) under `<dir>` | `<dir>` evidence tree only, and `--output` must not equal/cover the fixture directory, repository root, `tools/`, `.git/` or `corpus/`; fixture packs read-only, a `MESSAGE` key is a setup error | mori |
+| r15 regressions | gate | `python3 tools/mori-round15-regressions.py --output <dir>` (`--census` default `tools/mori-census.sh`; `--fixtures` default `.ufo/waves/round-15/fixtures`; `--expected` default `.ufo/waves/round-15/expected.json`; `--frozen` default `.ufo/waves/round-15/frozen/mori-census.sh`, else `git show 0fa5e0d:tools/mori-census.sh`; `--pin-fixtures <path>` regenerates the expected table after packs settle) | 0 clean (all SUT expectations pass and the frozen control reproduces the entering red state on red-relevant cases) · 1 failed (a SUT fixture expectation failed) · 2 could-not-evaluate (usage/setup/pin/fixture-schema/control error, digest or expected-table mismatch, `snapshot_tampered`, missing expected table, unexpected internal error) | `python3 tools/mori-round15-regressions.py --selftest` — actual isolated gate subprocesses with temp packs/wrappers, asserting exit and stable expected ids; tally is measured at L1 integration, not predicted here. The r15 CLI has no hidden flags: `--selftest-child` and `--no-frozen-control` were removed from it (the r14 harness's `--no-frozen-control` belongs to that other tool); any unknown argument is refused by argparse with rc2, and `--selftest` refuses `--output` and `--pin-fixtures` with rc2 | in-script `PINNED_FROZEN_SHA256` `0e41cb83…` and `PINNED_BASE_COMMIT` `0fa5e0d…` (never trusted from a manifest; digest mismatch exits 2); expected table `.ufo/waves/round-15/expected.json` pins each fixture pack SHA-256, static per-case expectations, and gate/r14-helper/frozen digests (any later gate or r14 edit requires re-pin); runs store `expected.json` + `run-manifest.json` (revision, dirty path scope) under `<dir>` | `<dir>` evidence tree only, and `--output` must not equal/cover the fixture directory, repository root, `tools/`, `.git/` or `corpus/`; fixture packs read-only, a `MESSAGE` key is a setup error | mori |
+| r16 regressions | gate | `python3 tools/mori-round16-regressions.py --tool tools/mori-journal-window.py --fixtures .ufo/waves/round-16/fixtures --expected .ufo/waves/round-16/expected.json --output <dir>`; `--pin-fixtures <path>` persists the digest table after packs settle | 0 all cases match · 1 mismatch or `capability_absent` (missing-before capability, not a production bug) · 2 usage/setup, digest mismatch, tamper or moving inputs | `python3 tools/mori-round16-regressions.py --selftest` — isolated actual gate subprocess arms; L1 records observed results | `.ufo/waves/round-16/expected.json` pins every pack plus gate and probe SHA-256; missing/mismatched table is not green | `<dir>` evidence only: wrappers, synthetic streams and manifest with load/end hashes, actual HEAD and porcelain; selftest uses isolated temporary trees | mori |
+| r16 context check | gate | `python3 tools/mori-round16-context-check.py --spec PATH` (`--selftest` for isolated subprocess arms) | 0 `CONTEXT_OK` · 1 `CONTEXT_MISSING` · 2 `CONTEXT_SETUP` (usage, unreadable or invalid JSON); eight required clauses include explicit live-journal and `/tmp`-output prohibitions | `python3 tools/mori-round16-context-check.py --selftest`; observed result is recorded by L1, not predicted | in-script clause patterns; `.ufo/waves/round-16/wave1-spec.json` and `wave1-context-corrected-not-dispatched.json` are committed red/green text snapshots | none live; reads only `--spec`; selftest uses an isolated temporary tree; static text validation is not runtime prevention | mori |
+| journal window (r16) | probe | `python3 tools/mori-journal-window.py --anchor <PATH> --scope user\|system [--journalctl PATH] [--timeout SECONDS] [--max-bytes N]` (`--selftest`) | probe, not a gate: rc0 `MORI_JOURNAL_WINDOW_OK` · rc2 `MORI_JOURNAL_WINDOW_UNAVAILABLE reason=<stable>` (capture, parse, cursor-continuity or boot failure) · rc2 `MORI_JOURNAL_WINDOW_SETUP` (invalid anchor or arguments); no severity, no DRIFT, no victim count | `python3 tools/mori-journal-window.py --selftest` — the actual CLI as isolated subprocesses, asserting rc and stable finding id; no network, no live reads; tally measured at L1 integration, not predicted here | none; `--journalctl` overrides the binary path | none: stdout only, the anchor is read and never written; query `--cursor=<anchor> --no-tail --quiet --output=json --output-fields=__CURSOR,_BOOT_ID,MESSAGE_ID,UNIT_RESULT,EXIT_CODE,EXIT_STATUS`, never `MESSAGE`, never `--after-cursor` without a proven anchor | mori |
 
 Where mori learns — tiers, study paths, search log: `corpus/SOURCES.md`.
 
@@ -192,6 +230,16 @@ could-not-evaluate (exit 2), never a pass. The gate does not parse a malformed
 JSON stream and does not claim completeness, authenticated ids or unique
 victims; no tally is predicted here, and L1
 measures the delivered selftest and gate revisions once after integration.
+
+**Regression gate and probe (r16).** `tools/mori-round16-regressions.py` (registered above
+as `r16 regressions`) runs `tools/mori-journal-window.py` against the committed fixture
+packs under `.ufo/waves/round-16/fixtures/` through real CLI subprocesses with per-case
+`journalctl` wrappers. A normal run requires the expected digest table written by the
+pin step; a missing or mismatched table is not a pass. `tools/mori-round16-context-check.py`
+(registered above as `r16 context check`) is a static text check of the round context
+and runs nothing it names; `CONTEXT_OK` is not runtime prevention. Neither gate
+touches the production census. No selftest tally is predicted here; L1 measures the
+delivered revisions once after integration.
 
 The positive counters are declared count-magnitude measurements and join the
 census's drift volatile list; the existing r10 baseline therefore reports
@@ -311,6 +359,8 @@ were ruled out and must stay out:
 Also excluded: `ps e` / `/proc/<pid>/environ` (`omp` carries
 `HL_INITIAL_WORKSPACE_TOKEN`), `cat /proc/<pid>/fd/*` (`omp` holds 51 readable fds
 onto session JSONL), and any journal output mode that keeps `MESSAGE`.
+
+The window probe follows the same rule: its query field list excludes `MESSAGE`, and its stdout never echoes a raw cursor or record text.
 
 ## Disk thresholds are a PROPOSAL, not a measurement
 
