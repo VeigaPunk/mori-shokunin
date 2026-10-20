@@ -347,3 +347,21 @@
 ## Known gaps — round-12 note
 
 The existing Known gaps list mixes closed history with open gaps. Open items now live in `## Frontier`; the historical list above is unchanged.
+
+## Round-17 coverage additions and corrections
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| FR14 consume-only agent telemetry | `knowledge/seat-terminal-status-r17.md` | Version-3 transcript terminal-at-scan classes, bounded field-limited observation; aged errors can resume, prefixes are names, totals are observations not incidents |
+| Lane-silence VCS provenance | `knowledge/jj-branch-anchor-r17.md` | Local branch rather than bare HEAD for jj-colocated progress; warn on off-branch HEAD or ambient author, no VCS repair or remote-publication proof |
+| Fleet-root blind-sweep calibration | `lessons/round-17.md#M1` | Byte-exact r16 filename-only misroot witness; no-pathspec filename-or-content detection, candidate ownership reviewed before moving anything |
+
+FR14 emission and authoritative orchestration semantics remain kumitate-owned;
+schema drift, concurrent scan consistency and permanent termination remain frontier.
+The round-16 window's pending wording is superseded by
+`lessons/round-16-verifier-spotcheck.md:9–17`, only at its exact-anchor, anchor-boot
+scope. The r16 host-version statement is historical261.2-1, not today's262-1
+package-log state (`knowledge/journal-cursor-window-r16.md` appended correction).
+R10 drift pin remains red debt without a re-pin. Package transaction detections
+are handed to tsukuroi/operator, not absorbed as OS state ownership.
+

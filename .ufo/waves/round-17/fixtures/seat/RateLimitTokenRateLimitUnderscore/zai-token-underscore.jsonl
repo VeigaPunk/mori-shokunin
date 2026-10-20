@@ -1,0 +1,2 @@
+{"type":"session","version":3}
+{"message":{"completedAt":1760998000000,"errorMessage":"upstream rate_limit triggered","model":"glm-4.6","provider":"zai","role":"assistant","stopReason":"error"},"type":"message"}

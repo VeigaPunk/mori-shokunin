@@ -92,3 +92,30 @@ Report shared evidence to its owner; do not absorb another lane's domain.
 ## Corrections (round 12)
 
 - The existing phrase “scratch roots” does not resolve to a measured target: `/scratch` is absent (the path inspection returned `Path '/scratch' not found`; `../fleet-ledger/.ufo/waves/kaika-w1/mori-state.md:180` records `ls /scratch` → absent). The census documents `MORI_DISK_TARGETS` as defaulting to `$ROOT /tmp` (`tools/mori-census.sh:211-212,282`); `/scratch` is not a default disk target.
+
+## Round-17 appended scope and closure notes (2026-10-20)
+
+- **Supersedes “verification pending” in the same-boot window Core row:** the
+  non-author `corpus/lessons/round-16-verifier-spotcheck.md:9–17` admitted the
+  exact-retained-anchor, explicit-scope, anchor-boot capability. It waived no
+  procedural breaches. No census cutover, cross-boot continuity, cursor alias
+  identity or journal completeness is added.
+- **Core, bounded FR14 advance:** passive terminal-at-scan transcript observation
+  (`tools/mori-seat-terminal.py`, `corpus/knowledge/seat-terminal-status-r17.md`).
+  Version-3 regular transcript files only; field-limited status tallies by naming
+  prefix/provider/model. An aged error may later resume: no permanent death,
+  authenticated lane membership, incident count or routing decision is claimed.
+- **Core, lane-silence provenance:** jj-colocated history reads use the resolved
+  local branch, with explicit off-branch HEAD and ambient-author diagnostics
+  (`corpus/knowledge/jj-branch-anchor-r17.md`). No bookmark or identity repair.
+- **Adjacent tsukuroi handoff, detection only:** today's `/var/log/pacman.log`
+  records a 09:15:30 `pacman -Syu` and a 13:23:08 `pacman -U …zcode…`.
+  `.ufo/waves/round-17/build/PacmanTxnToday.md` records their transaction evidence;
+  `PacmanActorTrace.md` correlates the former to a separate OMP session and leaves
+  the latter's human/interactive actor inferred, not authenticated. Package and
+  boot-chain interpretation/recovery remain tsukuroi/operator-owned. MorI ran no
+  package transaction or service change.
+- **FR14 remainder:** telemetry schema changes, concurrent snapshots, permanent
+  termination, authoritative wave-result semantics and emission stay frontier or
+  kumitate-owned. No scan is an orchestration verdict.
+

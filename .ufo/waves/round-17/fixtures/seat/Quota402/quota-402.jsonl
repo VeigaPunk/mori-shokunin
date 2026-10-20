@@ -1,0 +1,2 @@
+{"type":"session","version":3}
+{"message":{"completedAt":1760998000000,"errorMessage":"HTTP 402 Payment Required","errorStatus":402,"model":"gpt-synthetic","provider":"openai","role":"assistant","stopReason":"error"},"type":"message"}

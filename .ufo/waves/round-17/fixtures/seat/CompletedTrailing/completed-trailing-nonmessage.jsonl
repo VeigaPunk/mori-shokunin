@@ -1,0 +1,4 @@
+{"type":"session","version":3}
+{"message":{"content":"synthetic answer","role":"assistant","stopReason":"stop"},"type":"message"}
+{"customType":"session_marker","message":{"errorMessage":"429 rate_limit","errorStatus":429,"role":"assistant","stopReason":"error"},"type":"custom"}
+{"session_id":"synthetic-trailing","type":"session_init"}

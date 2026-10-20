@@ -1,0 +1,1 @@
+{"claims_runtime_prevention": false, "clauses_checked": 8, "context_absent": false, "contexts": 1, "contexts_failing": 1, "finding_id": "CONTEXT_MISSING", "missing": ["no_tmp_probe_outputs"], "spec_sha256": "1f58858366eae187b78fa447d8ff5e45dc4ee0f6530154c4c1bbe9b84c1211f2", "static_only": true}

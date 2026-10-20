@@ -1114,3 +1114,44 @@ current non-author review pending. Procedural execution remains not fully
 conformant; no static-text green grants prevention credit. No new L0
 question or tool install/update; no pacman transaction, host remediation,
 service change, next round or post-wrap worker was initiated.
+
+## Round 17 — declared observation/provenance/calibration moves (2026-10-20)
+
+Entering branch tip24526ea9617cd020fee16c28fe4d4a2789dc28cb. Motivating evidence:
+`corpus/lessons/round-16-verifier-spotcheck.md:199–226` routes the root misroot,
+under-disclosed BootContinuity probes, pre-dispatch checker and stale wording;
+fleet `.ufo/waves/hyaku/jj-w1/reports/JjAuditMori.md` F3/F4 routes bare-HEAD
+progress and ambient-author risk; today's zai429 terminal errors motivate
+consume-only agent telemetry (`build/{TranscriptShapes,DeadSeatCrossCheck}.md`
+under `.ufo/waves/round-17/`).
+
+Declared C1 coverage: finite terminal-at-scan transcript capability; C2
+operability: branch-anchored census and warn diagnostics; C3 calibration:
+no-pathspec filename-or-content sweep catches exact retained MoriR16.Lesson.
+C3 was declared after first-wave reconnaissance, before L1 measurement, to
+satisfy the literal lowest-axis obligation (calibration5) instead of assuming
+the historical “lowest owned” interpretation. See SCORECARD r17 declaration.
+
+Wave1 validated70 seats in one task call after four all70 job-cap refusals;
+five attempts total, final dispatch at15:52:53−03. Specs, context checks,
+registry, assignments and reports are retained under `.ufo/waves/round-17/`.
+L1 is planner and sole integration owner; seven code writers used separate
+base24526ea clones. `build/ClaimSeparability.md` records independent scopes.
+First-wave attacks caused A1 (aged-error settle window, schema3, relative keys,
+main-session exclusion, prefix-matched-none setup, quota/code precedence) and
+C2 warn/sibling-author/parser/fallback corrections, not a silent original pass.
+
+SOURCES40→48 with eight opened primary rows, six mined by two new knowledge
+entries and two queued. Sources/quotes/decisions live in `corpus/lessons/round-17.md`.
+Routed corrections are appended in PROVINCE, README, r16 cursor note, QUALITY43–48.
+The lane jj diff snapshot and credential-pin display self-disclosure, plus this
+L1's overbroad seat-selftest authorization against QUALITY39, are retained as
+procedural defects in the lesson; no runtime-prevention or compliance pass.
+No existing corpus/closure history is rewritten.
+
+Read-only pacman-log detections (09:15 -Syu, 13:23 -U zcode) and bounded actor
+correlation are handed to tsukuroi/operator (`build/{PacmanTxnToday,PacmanActorTrace,
+OverlapTsukuroi}.md`); mori performs no package/service action. R10 drift red and
+r16 alias/vacuum/cross-boot/anchor-only qualifications remain carried, no re-pin.
+Final committed measurements and citable lane/report hashes follow in appended
+entries and the fleet report, never inferred from seat selftests.

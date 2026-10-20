@@ -108,3 +108,33 @@ Source tiers: see corpus/SOURCES.md (contract v1); this file holds claim admissi
    - "cursor strings do not uniquely identify an entry" (S040, `sd_journal_test_cursor`, opened 2026-10-20).
    - "The format of the cursor is private and subject to change." (S014, `journalctl(1)` `--show-cursor`).
    - Transfer caveat: S039/S040 document the libsystemd `sd_journal_*` API. The `journalctl --cursor` missing-anchor behavior is not stated in the S014 text read here and is not measured; the criterion does not assume it.
+
+## Criteria added round 17
+
+43. A fleet-root misroot sweep has no pathspec, and candidate attribution checks
+    filename **as well as** content. A planted byte-exact prior misroot must be
+    missed by the legacy scoped sweep and found by the corrected sweep before the
+    fix counts. A clean limited sweep is not a clean fleet-root sweep.
+    ← lessons/round-17.md#M1; lessons/round-16-verifier-spotcheck.md:202–209.
+44. Before every wave dispatch, retain a `CONTEXT_OK` receipt bound to that
+    spec's SHA-256; a missing clause blocks dispatch until corrected. This tests
+    instruction text only, never runtime prevention.
+    ← lessons/round-17.md#M3; lessons/round-16-verifier-spotcheck.md:216–219.
+45. Probe disclosures enumerate every live query (including failed queries),
+    write and background job; naming only the `/tmp` writes while omitting the
+    host-probe section is an under-disclosure. Correct it by appended precision.
+    ← lessons/round-17.md#M2; lessons/round-16-verifier-spotcheck.md:210–215.
+46. A stale pending/version statement is superseded by a dated appended note
+    naming the observation time and closure, never rewritten into a claim about
+    the current host. Sweep active province, index and knowledge prose too.
+    ← lessons/round-17.md#M4; lessons/round-16-verifier-spotcheck.md:220–223.
+47. In a jj-colocated lane, distinguish an observed commit from the resolved
+    branch and from remote publication. `--is-ancestor` status 1 means divergence,
+    another nonzero status means error; rows A/C keep their exact-author parser
+    separate from committer diagnostics. Sibling-shokunin authorship is not an
+    ambient-author violation. ← lessons/round-17.md#M6.
+48. Transcript classes count observations at scan time, not incidents or
+    permanent deaths. Match exact prefixes, preserve duplicate relative paths,
+    exclude main sessions, and never turn a missing prefix into a clean lane
+    report. Vendor business codes take priority over generic HTTP 429.
+    ← lessons/round-17.md#M7.

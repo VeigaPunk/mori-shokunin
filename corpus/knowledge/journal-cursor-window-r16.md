@@ -134,3 +134,16 @@ captures, not positive live load or evidence of no event. The author's
 unmeasured-source discussion above is not a current claim that the host
 path has never run. No alias/vacuum/cross-boot live experiment was performed
 by L1; those boundaries remain finite-fixture and source-supported only.
+
+## Round-17 appended freshness correction (2026-10-20)
+
+The original `verified-at` statement that the host systemd version was not
+verified is superseded for the **round-16 observation time**: the round-16 lesson
+records host **261.2-1**, as confirmed by
+`corpus/lessons/round-16-verifier-spotcheck.md:220–223`. It is not today's
+current-version claim. Today's package log records systemd **261.2-1→262-1**
+inside the 09:16 full-upgrade transaction (round-17 evidence
+`.ufo/waves/round-17/build/{PacmanTxnToday,ProvinceNotesDraft}.md`).
+No new journal query or re-pin is implied. The closure admitted the bounded
+capability (`round-16-verifier-spotcheck.md:9–17`); alias false-unavailable,
+vacuum/cross-boot unknowns and anchor-only live qualifications remain unchanged.

@@ -1,0 +1,4 @@
+{"type":"session","version":3}
+{"session_id":"synthetic-nonmessage","type":"session_init"}
+{"customType":"not-a-message","message":{"errorMessage":"429 rate_limit","errorStatus":429,"role":"assistant","stopReason":"error"},"type":"custom"}
+{"customType":"credential_pin","token":"FAKE-SEAT-FIXTURE-TOKEN-NOT-REAL-0000","type":"custom"}

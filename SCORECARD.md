@@ -998,3 +998,31 @@ Operator wrap-up: wave1=64, wave2 skipped before validation/dispatch,
 round total64. All64 reports are retained after relocating2 misrooted
 reports byte-exact with cmp. No workers were spawned after wrap-up.
 No next round is started; any further plan requires a fresh operator steer.
+
+## Round 17 — declared claims and first-wave refinement
+
+Entering branch tip `24526ea9617cd020fee16c28fe4d4a2789dc28cb` (not bare HEAD).
+Outside r16 closure admitted the bounded window with routed procedural defects;
+`corpus/lessons/round-16-verifier-spotcheck.md` supersedes the pending language
+above. No round beyond17 is executed here.
+
+| Claim | Axis / score | Falsifiable before→after |
+|---|---|---|
+| C1 terminal-at-scan capability | coverage6 held | absent tool fails every committed synthetic requirement; delivered field-limited classifier must match them all, then run against actual transcripts with temporal/identity qualifications |
+| C2 jj branch provenance | operability7 held | same real colocated sandbox assertions against entering versus delivered census; off-branch HEAD and ambient-author failures must disappear while controls remain green |
+| C3 blind-sweep correction | calibration5 held | same retained `MoriR16.Lesson` artifact is missed by legacy pathspec sweep and found by no-pathspec filename-or-content sweep; missed known-artifact assertions1→0 |
+
+Initial wave1 declared C1/C2 under the historical “lowest owned” reading.
+`build/ScorecardAxisCheck.md` identified the literal all-six obligation. Before
+L1 claim measurements, C3 was declared in `.ufo/waves/round-17/contract.md` using
+the already-dispatched MisrootSweep item. Calibration5 satisfies the lowest
+non-retired axis without a waiver. Depth5/freshness5/adjacency6 remain observed;
+no scores are raised for fixture volume.
+
+The claims are independent files/instruments: transcript tool, census, misroot
+detector. The context checker and routed stale-wording fixes support learning,
+not a fourth axis claim. S043 drives vendor429 cause precedence in C1; S046
+drives status1-versus-error handling in C2. Finite fixtures do not certify
+permanent seat death, universal jj behavior, current journal completeness or
+remote publication. All admission measurements are recorded below after L1
+execution on settled committed inputs.
