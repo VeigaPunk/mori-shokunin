@@ -1,0 +1,5 @@
+{
+  "exit": 1,
+  "stdout": "{\"claims_runtime_prevention\": false, \"clause_ids\": [\"no_broadcast_exact_id\", \"lane_report_resolution\", \"no_verification_permission\", \"pacman_pause\", \"credential_prohibition\", \"write_scope\", \"no_live_journal_queries\", \"no_tmp_probe_outputs\", \"no_fleet_root_writes\", \"no_background_jobs\", \"no_vcs_mutation\", \"transcript_fields_only\"], \"clauses_checked\": 12, \"context_absent\": false, \"contexts\": 1, \"contexts_failing\": 1, \"finding_id\": \"CONTEXT_MISSING\", \"missing\": [\"credential_prohibition\", \"transcript_fields_only\"], \"spec_sha256\": \"26d48de2ed50f8bf085a65056c7dfd62bfcbaf4ce93397aa9b02dace84f40a19\", \"static_only\": true}\n",
+  "stderr": ""
+}

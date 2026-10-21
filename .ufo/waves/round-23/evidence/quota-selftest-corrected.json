@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "python3",
+    "-I",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+    "--selftest"
+  ],
+  "measured_revision": "f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c",
+  "exit": 0,
+  "stdout": "{\"arms\":49,\"exit_code\":0,\"finding_id\":\"QUOTA_SELFTEST_OK\",\"schema\":\"mori-quota-surface-v1\"}\n",
+  "stderr": ""
+}

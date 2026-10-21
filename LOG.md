@@ -1661,3 +1661,20 @@ and the generic device check are unchanged. This is not the independent frozen
 CaseEscapedSpace, whose topology/expected/rule are untouched and still red.
 The original selftest receipt remains evidence; the corrected actual invocation
 follows at its new committed revision. No frozen instrument is edited.
+
+### Round23 — stable guard results and fresh falsification payload
+
+Atf3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c, measure4 records C1
+original25/26→26/26, alias-bearing runs8→0, source/output/selftest/real-identity
+supplementary controls green; C2 remains exactly29/30 with original CaseEscapedSpace
+red. All274 supplementary output checks pass and the default real control matches.
+The corrected public quota selftest actually passes49/49, exit0; no frozen oracle
+or expected file was changed. These are exercised results, not strict C2 admission.
+
+Fresh W2 is96 genuine falsification atoms:26 original C1 requirements,30 C2 cases,
+ten source re-openings, eight mutations plus read-fence/claim/chronology/ownership/
+registry/count/debt/documentation checks. Its static context gate initially lacked
+two exact prohibition clauses, recorded red; explicit credential/transcript clauses
+restore12/12 before validation/dispatch. This committed spec/payload is not itself
+dispatch proof. Native attempts follow under wave-slot with before-call payload
+digest records, unchanged retries and no model parameter or dead-seat replacement.

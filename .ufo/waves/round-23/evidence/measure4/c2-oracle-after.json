@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-measure4/wave-tree/.ufo/waves/round-23/oracle-quota.py",
+    "--tool",
+    "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-measure4/staged/after/mori-quota-surface.py",
+    "--cases",
+    "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-measure4/wave-tree/.ufo/waves/round-23/frozen/quota-cases",
+    "--output",
+    "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-measure4/c2/after/after.json"
+  ],
+  "exit_code": 1,
+  "measured_revision": "f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c",
+  "name": "c2-oracle-after",
+  "recorded_utc": "2026-10-21T18:26:09.434073+00:00",
+  "schema": "mori-r23-command-receipt-v1",
+  "seal_revision": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+  "stderr": "",
+  "stdout": "{\"counts\": {\"capability_absent\": 0, \"pass\": 29, \"total\": 30, \"unmet\": 1}, \"finding_id\": \"R23_C2_QUOTA_CASES_UNMET\", \"output\": \"/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-measure4/c2/after/after.json\", \"schema\": \"mori-r23-c2-oracle-v3\", \"supplementary_counts\": {\"pass\": 274, \"total\": 274, \"unmet\": 0}, \"tool_present\": true}\n"
+}
