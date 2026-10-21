@@ -26,6 +26,8 @@ def main():
     # FinalR02/R11/R13, FixtureForbidden/InvalidRevision: verdict-field, forbidden-only and revision-attribution arms.
     cases += [('exit-code-lie',1,'RETENTION_RECONCILIATION_MISMATCH',None),('finding-lie',1,'RETENTION_RECONCILIATION_MISMATCH',None),('routed-lie',1,'RETENTION_RECONCILIATION_MISMATCH',None),('forbidden-laundered',1,'RETENTION_RECONCILIATION_MISMATCH',None),('forbidden-as-stale',1,'RETENTION_RECONCILIATION_MISMATCH',None),('forbidden-only',0,'RETENTION_RECONCILED',None),('unresolvable-consistent',2,'RETENTION_RECONCILIATION_SETUP','receipt_revision'),('help-flag',2,'RETENTION_RECONCILIATION_SETUP','usage')]
     cases += [('nested-policy-copy',0,'RETENTION_RECONCILED',None)]
+    cases += [('invalid-input-rev',2,'RETENTION_RECONCILIATION_SETUP','git_read_failed'),('repo-subdirectory',2,'RETENTION_RECONCILIATION_SETUP','repo_not_toplevel'),('repo-empty',2,'RETENTION_RECONCILIATION_SETUP','repo_not_absolute')]
+    cases += [('bom-receipt',2,'RETENTION_RECONCILIATION_SETUP','invalid_json')]
     expected_differences={'path-only':['hits'],'allowed-list-only':['allowlisted_hits'],'unallowed-list-only':['unallowlisted_hits'],'non-author-counter':['non_author'],'forged-clean':['hits','unallowlisted_hits','metric','finding_id','exit_code'],'metric-overstate':['metric'],'inject-only':['hits'],'line-raw-only':['hits'],'non-author-swap':['hits'],'exit-code-lie':['exit_code'],'finding-lie':['finding_id'],'routed-lie':['routed'],'forbidden-laundered':['finding_id','forbidden_allowlist'],'forbidden-as-stale':['finding_id','forbidden_allowlist','warnings']}
     rows=[]
     for name,code,finding,error in cases:
@@ -149,6 +151,7 @@ def main():
         wrapper['stdout']=json.dumps(value)
         if name=='malformed-stdout':wrapper['stdout']='{\"broken\":'
         (repo/'receipt.json').write_bytes(f.encoded(wrapper))
+        if name=='bom-receipt':(repo/'receipt.json').write_bytes(b'\xef\xbb\xbf'+f.encoded(wrapper))
         f.git(repo,'add','--all')
         if name=='symlink-identical':
             oid=f.git(repo,'hash-object','receipt.json').decode().strip()
@@ -163,6 +166,10 @@ def main():
         if name=='policy-path-substitution':cmd[cmd.index('--policy')+1]='copy-policy.json'
         if name=='symbolic-input':cmd[cmd.index('--rev')+1]='HEAD'
         if name=='help-flag':cmd.append('-h')
+        if name=='invalid-input-rev':cmd[cmd.index('--rev')+1]='no-such-revision'
+        if name=='repo-subdirectory':
+            (repo/'plain-subdir').mkdir();cmd[cmd.index('--repo')+1]=str(repo/'plain-subdir')
+        if name=='repo-empty':cmd[cmd.index('--repo')+1]=''
         if name.startswith('unsafe-'):
             flag='--'+name.removeprefix('unsafe-')
             cmd[cmd.index(flag)+1]='sub/../'+cmd[cmd.index(flag)+1]
@@ -187,6 +194,7 @@ def main():
             key=lambda h:(h['path'],h['line'],h['class'],h['line_sha256'])
             raw=sorted(map(key,obj.get('raw_hits',[])));parts=sorted(map(key,obj.get('scanner_hits',[])+obj.get('policy_excluded_hits',[])))
             ok=ok and raw==parts and raw==sorted(map(key,fixture['expected_scanner_hits']+fixture['expected_policy_hits'])) and sorted(map(key,obj.get('policy_excluded_hits',[])))==sorted(map(key,fixture['expected_policy_hits']))
+            ok=ok and obj.get('raw_not_allowlisted')==2 and obj.get('raw_total')==5 and obj.get('allowlisted')==3
         if code in (0,1):
             loaded={key:f.digest(f.git(repo,'show',rev+':'+cmd[cmd.index('--'+key)+1])) for key in ('receipt','policy','allowlist')}
             ok=ok and obj.get('input_revision')==rev and obj.get('measured_revision')==wrapper['measured_revision'] and obj.get('inputs_sha256')==loaded and obj.get('tool_sha256')==f.digest(Path(a.tool).read_bytes()) and obj.get('argv')==cmd[2:]

@@ -29,6 +29,11 @@ name the same existing policy-filtered metric, not two independent counts.
 Likewise `policy_excluded` equals `non_author` by definition. The full
 identity lists, not these aliases, establish membership. The no-clearance
 field is always false even when the frozen-regex retention state is clean.
+Wave2 addition: `raw_not_allowlisted` counts raw identities whose
+`(path,class,line_sha256)` is not allowlisted, including non-author hits; it
+is 9 on the r21 receipt (95−86) and 2 on the synthetic valid fixture. It is the
+truthful raw complement; the frozen field name `raw_unallowlisted` keeps its
+frozen alias meaning (4) rather than being silently redefined.
 
 ## Provenance limits
 

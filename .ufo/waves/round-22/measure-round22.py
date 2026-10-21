@@ -17,7 +17,7 @@ BASE='77a5bbe8a0b41dfbfd2546d024d36e294b814bd0'
 def sha(data):return hashlib.sha256(data).hexdigest()
 def write(path,obj):path.write_text(json.dumps(obj,sort_keys=True,indent=2)+'\n')
 def safe_outputs(observation):
-    allowed={'schema','finding_id','receipt_match','differences','raw_total','policy_excluded','exclusion_basis','scanner_total','raw_unallowlisted','scanner_unallowlisted','non_author','allowlisted','forbidden_allowlist','retention_state','privacy_clearance','input_revision','measured_revision','inputs_sha256','tool_sha256','argv','raw_hits','scanner_hits','policy_excluded_hits','receipt_authenticity','error'}
+    allowed={'schema','finding_id','receipt_match','differences','raw_total','policy_excluded','exclusion_basis','scanner_total','raw_unallowlisted','scanner_unallowlisted','raw_not_allowlisted','non_author','allowlisted','forbidden_allowlist','retention_state','privacy_clearance','input_revision','measured_revision','inputs_sha256','tool_sha256','argv','raw_hits','scanner_hits','policy_excluded_hits','receipt_authenticity','error'}
     rows=observation.get('runs',observation.get('cases',[]))
     for row in rows:
         stdout,stderr=row.get('stdout',''),row.get('stderr','')
@@ -97,13 +97,14 @@ def main():
         ('no-ancestor',[("require(git(repo,'merge-base','--is-ancestor',measured,revision,ok=(0,1)).returncode==0,'measured_not_ancestor')","pass")],{'refine:diverged-consistent','refine:cousin','refine:head-cousin'}),
         ('bool-lax',[("return type(value) is int and value>=0","return isinstance(value,int) and value>=0")],{'refine:boolean-metric','refine:boolean-non-author','refine:boolean-line-colliding'}),
         ('symlink-accepted',[("mode in (b'100644',b'100755')","mode in (b'100644',b'100755',b'120000')")],{'refine:symlink-identical'}),
-        ('argv-empty',[("'argv':sys.argv[1:]","'argv':[]")],{'refine:clean-control'}),
+        ('argv-empty',[("'argv':a.argv_seen","'argv':[]")],{'refine:clean-control'}),
         ('exit-unchecked',[("    if wrapper['exit_code']!=retention_code:differences.append('exit_code')","    pass")],{'refine:exit-code-lie'}),
         ('finding-unchecked',[(",('finding_id',retention_finding)","")],{'refine:finding-lie'}),
         ('routed-unchecked',[("('routed',routed),","")],{'refine:routed-lie'}),
         ('aux-unchecked',[("    if cf!=Counter(forbidden):differences.append('forbidden_allowlist')","    pass")],{'refine:forbidden-laundered','refine:forbidden-as-stale'}),
         ('forbidden-not-red',[("retention_code=int(bool(unallowed or forbidden))","retention_code=int(bool(unallowed))")],{'refine:forbidden-only'}),
         ('policy-copy-excluded',[("scanner=[h for h in hits if not is_non_author(h)]","scanner=[h for h in hits if not is_non_author(h) and not h['path'].endswith(paths['policy'].rsplit('/',1)[-1])]")],{'refine:nested-policy-copy'}),
+        ('repo-unbound',[("require(os.path.realpath(top)==os.path.realpath(a.repo),'repo_not_toplevel')","pass")],{'refine:repo-subdirectory'}),
     ]
     def red_rows(oracle_obs,refine_obs):
         red={'frozen:'+r['id'] for r in oracle_obs['results'] if not r['pass']}
@@ -138,6 +139,16 @@ def main():
     realrc,real=run('real-reconciliation',realcmd)
     realmatch=realrc==0 and isinstance(real,dict) and all(type(real.get(k)) is type(v) and real.get(k)==v for k,v in expected['expected'].items()) and real.get('inputs_sha256')==expected['inputs_sha256']
     realmatch=realmatch and real.get('input_revision')==expected['input_revision'] and real.get('measured_revision')==expected['measured_revision'] and real.get('tool_sha256')==sha(code_cp.stdout) and real.get('argv')==realcmd[2:]
+    identity_expected=json.loads((HERE/'frozen/expected-real-identities.json').read_bytes())['digests']
+    def identity_digest(hits):return sha(json.dumps(sorted(tuple(h[k] for k in ('path','line','class','line_sha256')) for h in hits),separators=(',',':')).encode())
+    identity_observed={k:identity_digest(real.get(k,[])) for k in identity_expected} if isinstance(real,dict) else {}
+    identity_match=identity_observed==identity_expected
+    # Same-command failing twin: the identical real command with output identities swapped must not match.
+    twin_observed=dict(identity_observed);twin_observed['scanner_hits'],twin_observed['policy_excluded_hits']=identity_observed.get('policy_excluded_hits'),identity_observed.get('scanner_hits')
+    identity_twin_rejected=twin_observed!=identity_expected
+    # raw_unallowlisted is a frozen alias of the policy metric; the truthful raw complement is 95-86=9.
+    raw_complement_ok=isinstance(real,dict) and real.get('raw_not_allowlisted')==real.get('raw_total',0)-real.get('allowlisted',0)==9
+    realmatch=realmatch and identity_match and identity_twin_rejected and raw_complement_ok
     entering=realcmd.copy();entering[entering.index('--receipt')+1]='.ufo/waves/round-21/evidence/final/retention-floor-entering.json'
     er,enteringv=run('contradictory-entering-receipt',entering)
     enteringmatch=er==2 and isinstance(enteringv,dict) and enteringv.get('error')=='receipt_revision_conflict'
@@ -170,6 +181,7 @@ def main():
             elif path.is_file():
                 if name not in members or tar.extractfile(members[name]).read()!=path.read_bytes():raise RuntimeError('archive_byte_mismatch')
     summary['workspace_archive']={'path':archive.name,'sha256':sha(archive.read_bytes()),'every_file_byte_compared':True,'scratch_retained':str(scratch)}
+    summary['real_identity']={'expected':identity_expected,'observed':identity_observed,'match':identity_match,'swapped_twin_rejected':identity_twin_rejected}
     summary['all_claim_checks_pass']=br==1 and ar==0 and before['counts']['capability_absent']==24 and after['counts']['unmet']==0 and sr==0 and rr==0 and mutations_ok and evidence_safe and realmatch and enteringmatch and gr==1 and floor['unallowlisted']==4 and floor['same_inherited_identities'] and all(x['unchanged'] for x in stable.values())
     write(output/'summary.json',summary)
     print(json.dumps({'measured_revision':a.revision,'before':summary['before'],'after':summary['after'],'real_matches_frozen_expected':realmatch,'retention_floor':floor,'all_claim_checks_pass':summary['all_claim_checks_pass']},sort_keys=True))

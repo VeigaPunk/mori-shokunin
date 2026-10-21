@@ -42,7 +42,9 @@ def no_duplicates(pairs):
 
 def parse(data):
     try:
-        return json.loads(data,object_pairs_hook=no_duplicates,parse_constant=lambda _:(_ for _ in ()).throw(Invalid('invalid_json_constant')))
+        text=data.decode('utf-8','strict') if isinstance(data,bytes) else data
+        require(not text.startswith('\ufeff'),'invalid_json')
+        return json.loads(text,object_pairs_hook=no_duplicates,parse_constant=lambda _:(_ for _ in ()).throw(Invalid('invalid_json_constant')))
     except (ValueError,UnicodeError,RecursionError):
         raise Invalid('invalid_json') from None
 
@@ -155,7 +157,12 @@ def scan(repo,revision,classes):
     return hits
 
 def check(a):
-    repo=Path(a.repo); revision=resolve(repo,a.rev)
+    require(isinstance(a.repo,str) and a.repo.startswith('/') and not any(ord(c)<32 for c in a.repo),'repo_not_absolute')
+    repo=Path(a.repo)
+    # Discovery must not climb from a plain subdirectory into an enclosing repository.
+    top=git_out(repo,'rev-parse','--show-toplevel').decode('utf8','strict').strip()
+    require(os.path.realpath(top)==os.path.realpath(a.repo),'repo_not_toplevel')
+    revision=resolve(repo,a.rev)
     paths={'receipt':safe_path(a.receipt),'policy':safe_path(a.policy),'allowlist':safe_path(a.allowlist)}
     raw={k:committed(repo,revision,p) for k,p in paths.items()}
     wrapper=parse(raw['receipt'])
@@ -225,12 +232,13 @@ def check(a):
             'receipt_match':not differences,'differences':differences,
             'raw_total':len(hits),'policy_excluded':len(excluded),'exclusion_basis':'non_author_paths_glob',
             'scanner_total':len(scanner),'raw_unallowlisted':len(unallowed),'scanner_unallowlisted':len(unallowed),
+            'raw_not_allowlisted':sum((h['path'],h['class'],h['line_sha256']) not in allowed_keys for h in hits),
             'non_author':len(excluded),'allowlisted':len(allowed),'forbidden_allowlist':len(forbidden),
             'retention_state':'red' if retention_code else 'clean-at-frozen-regex-scope',
             'privacy_clearance':False,'input_revision':revision,'measured_revision':measured,
             'receipt_authenticity':'unattested',
             'inputs_sha256':{k:digest(v) for k,v in raw.items()},'tool_sha256':digest(Path(__file__).read_bytes()),
-            'argv':sys.argv[1:],'raw_hits':hits,'scanner_hits':scanner,'policy_excluded_hits':excluded},int(bool(differences))
+            'argv':a.argv_seen,'raw_hits':hits,'scanner_hits':scanner,'policy_excluded_hits':excluded},int(bool(differences))
 
 class Parser(argparse.ArgumentParser):
     def error(self,message): raise Invalid('usage')
@@ -270,14 +278,20 @@ def main(argv=None):
         parser=Parser(description=__doc__,add_help=False); parser.add_argument('--selftest',action='store_true'); sub=parser.add_subparsers(dest='command')
         p=sub.add_parser('check',add_help=False); p.add_argument('--repo',required=True);p.add_argument('--rev',required=True);p.add_argument('--receipt',required=True);p.add_argument('--policy',required=True);p.add_argument('--allowlist',required=True)
         args=parser.parse_args(argv)
+        args.argv_seen=list(sys.argv[1:] if argv is None else argv)
         if args.selftest:
             require(args.command is None,'usage'); result,code=selftest()
         else:
             require(args.command=='check','usage');result,code=check(args)
     except Invalid as exc:
         result={'schema':SCHEMA,'finding_id':SETUP,'error':str(exc),'privacy_clearance':False,'receipt_match':False};code=2
-    except (OSError,UnicodeError,ValueError,TypeError,KeyError,RecursionError):
+    except (OSError,UnicodeError,ValueError,TypeError,KeyError,RecursionError,MemoryError):
         result={'schema':SCHEMA,'finding_id':SETUP,'error':'input_unavailable','privacy_clearance':False,'receipt_match':False};code=2
-    print(json.dumps(result,sort_keys=True,separators=(',',':')))
+    try:
+        print(json.dumps(result,sort_keys=True,separators=(',',':')))
+        sys.stdout.flush()
+    except OSError:
+        # A closed stdout cannot carry a verdict; never reuse the mismatch code.
+        os._exit(2)
     return code
 if __name__=='__main__':raise SystemExit(main())
