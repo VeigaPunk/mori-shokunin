@@ -1608,3 +1608,18 @@ any expected output after a result. Current SKILL registry and the historical
 retention note carry the schema-v2/API, absolute-repo command and ownership fences.
 No unrun count, capability demonstration, Core movement or admission is asserted;
 actual revision-bound measurements follow, with frozen bytes unchanged.
+
+### Round23 — first complete measurement catches a return-shape defect
+
+The sealed driver at production1979a9de4ef09eccad8cbbd24fd5c79404d9f8be
+records C1 original25/26→26/26, alias-bearing runs8→0, and all C1 supplementary
+guards green, but C2 only5/30 with the real control code2/input_unavailable
+(`evidence/measure1/`, outer invocation and debug trace retained). No failed receipt
+is overwritten or called a pass.
+
+The source-level cause is one generic unpacking mismatch: classify returns
+((state,enforcement,basis), mode), while evaluate expected four flat values.
+The one-line caller now destructures that actual pair; it does not weaken
+validation, suppress an exception or special-case an input. Every frozen expected
+file/oracle stays unchanged at the original seal. The corrected revision-bound
+measurement follows; no success is predicted by the patch.

@@ -90,3 +90,13 @@ were exercised by several seats despite the no-verification prose; FixtureLint,
 CaseOptionalFields and DraftSourceRows disclosed transient /tmp uses. No candidate
 or live quota command was executed. Correct W2 logging/scratch practice cannot
 retroactively remove this debt.
+
+## First exercised counterexample after integration
+
+The first complete run retained C1 original26/26 but C2 only5/30 and real-control
+code2/input_unavailable. `evidence/measure1-debug.txt` identifies a ValueError:
+classify returns ((state,enforcement,basis), mode), evaluate unpacked four flat
+values. This is a caller/callee return-shape defect, not invalid fixture evidence.
+The one-line destructuring fix changes production only; expected/oracle bytes
+and denominators remain sealed. This is the actual red-before for the fix,
+not a syntax/name-analysis claim. Corrected observations are recorded separately.

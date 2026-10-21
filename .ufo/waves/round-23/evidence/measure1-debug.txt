@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "<cell>", line 5, in <module>
+  File "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py", line 690, in probe_fixture
+    evaluated = [evaluate(row, mounts, sysfs, device_names) for row in rows]
+                 ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py", line 551, in evaluate
+    state, enforcement, basis, mode = classify(
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: not enough values to unpack (expected 4, got 2)

@@ -548,7 +548,7 @@ def evaluate(row, mounts, sysfs, device_names):
     keys = option_keys(mount.super_options)
     result["quota_option_keys"] = quota_option_keys(mount.fstype, keys)
     device_name = device_names(mount.source)
-    state, enforcement, basis, mode = classify(
+    (state, enforcement, basis), mode = classify(
         mount.fstype, keys, device_name, sysfs
     )
     result["quota_state"] = state
