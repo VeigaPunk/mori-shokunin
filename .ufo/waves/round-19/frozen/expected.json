@@ -1,0 +1,37 @@
+{
+  "schema": "mori-r19-expected-v1",
+  "c1_cases": {
+    "complete_safe": 0,
+    "missing_review": 1,
+    "duplicate_review": 2,
+    "unknown_decision": 2,
+    "digest_drift": 1,
+    "private_content": 1,
+    "provenance_only": 1,
+    "out_of_population": 2,
+    "invalid_revision": 2,
+    "tampered_population_pin": 2
+  },
+  "c1_required_finding": {
+    "complete_safe": "CONTENT_REVIEW_CLEAN",
+    "missing_review": "CONTENT_REVIEW_INCOMPLETE",
+    "digest_drift": "CONTENT_REVIEW_STALE",
+    "private_content": "CONTENT_REVIEW_UNRESOLVED",
+    "provenance_only": "CONTENT_REVIEW_UNRESOLVED"
+  },
+  "c2_checks": [
+    "measured_revision_full_oid",
+    "register_sha256",
+    "corrections_sha256",
+    "script_sha256",
+    "resolved_base_per_claim",
+    "resolved_tip_per_claim",
+    "override_recorded",
+    "command_argv",
+    "register_digest_matches_loaded_bytes",
+    "same_verdicts_as_base",
+    "no_private_values",
+    "invalid_revision_could_not_evaluate"
+  ],
+  "rule": "Expected values authored by L1 before implementation; no execution until integration. No missing implementations counted as historical defects."
+}
