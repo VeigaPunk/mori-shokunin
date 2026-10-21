@@ -1344,3 +1344,28 @@ rejected9, validator rc0 both. Trends: expansion unchanged; quality improved
 by explicit invalidation/retained evidence; discernment improved by learning
 the outside disagreement and agreed source sample. Outside closure decides
 admission. Planned scope remains the completed steered round21 only.
+
+## Round22 declaration — receipt reconciliation, not clearance
+
+L1 MoriR22; entering77a5bbe8a0b41dfbfd2546d024d36e294b814bd0.
+R21 admitted by outside closure, without privacy clearance: retained raw95,
+policy non-author-excluded5, scanner90, unallowlisted4 and0new. Original
+permission control RED11/12 and both unknown dispositions remain debt.
+
+One C1 **calibration capability**, score5→5 held (lowest non-retired tie
+with depth/freshness); no saturation waiver or retirement. All other active
+scores held coverage6/operability7/depth5/freshness5/adjacency6.
+Before is capability absent at the entering revision, not24 production
+defects. Target after:24 frozen requirements match, independently recounted
+real95/5/90/4 receipt agrees while privacy_clearance=false.
+Original declaration/source-file-exclusion mistake remains at df880b4;
+corrected policy-membership meaning and independent v2 freeze landed
+e2f549befaffa1c1301928191e1eecb6142c0dad before implementation.
+Expected real input digests and values are frozen in
+`.ufo/waves/round-22/frozen/expected-real.json`.
+
+This is a declaration, not an exercised capability row or a result.
+Actual counting commands, measured commit and verdict follow integration.
+Sourced claim: S064 reopened only for commit-resolution semantics, with
+Gate quote and source change log in `corpus/lessons/round-22.md`.
+No frontier closure, promotion, privacy improvement or subsequent round.

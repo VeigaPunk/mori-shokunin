@@ -193,3 +193,17 @@ Round21 residual-review wording correction: “independent record” in the
 connector clarification means **declared-independent record**, pending
 outside adjudication. Structural validation and hashes do not establish
 authorship or acceptance; every such declaration remains pin-blocked here.
+
+## Round22 own-evidence accounting boundary
+
+The retention reconciler independently recounts the lane's committed evidence
+and compares a retained receipt; it does not rewrite the gate, policy, allowlist
+or history. Its match is accounting agreement only, not authentication, privacy
+clearance, exposure assessment or a kumitate lifecycle/receipt decision. It
+cannot authorize baseline acceptance, cleanup, reap, continuation or dispatch.
+Non-author hits remain explicitly present in the raw population; their authors
+or the operator, not mori, own any change. Pushed-history action remains
+operator-owned, with kagi advising only on actual credential/vault concerns.
+No frontier row is closed. Ground: round22 lesson and
+`corpus/knowledge/retention-reconciliation-r22.md`; connector reports
+ConnectKagi/ConnectKumitate/ConnectSouji under round22 build evidence.

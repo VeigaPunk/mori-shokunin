@@ -530,3 +530,25 @@ This is a mandatory acceptance observation plus outside-review requirement,
 not interception of the existing raw `mori-census.sh --pin` write path.
 Bypassing the blocker violates QUALITY69; this round runs no pin.
 Trust refinement: `.ufo/waves/round-21/trust-refinement.md`.
+
+## Round22 retention receipt reconciliation (accounting agreement only)
+
+| name | kind | entry | verdict map | self-test | pinned values | write scope | owner |
+|---|---|---|---|---|---|---|---|
+| retention receipt reconciliation | gate (accounting agreement, not privacy clearance) | `python3 tools/mori-retention-reconcile.py check --repo . --rev INPUT_COMMIT --receipt .ufo/waves/round-21/evidence/final/retention-floor.json --policy .ufo/waves/round-18/frozen/c1-policy.json --allowlist corpus/evidence/retention-allowlist.json` | 0 RETENTION_RECONCILED even when retention is red; 1 RETENTION_RECONCILIATION_MISMATCH; 2 RETENTION_RECONCILIATION_SETUP | `TMPDIR=$PWD/.scratch python3 tools/mori-retention-reconcile.py --selftest`; actual isolated CLI, exit/finding assertions | `.ufo/waves/round-22/frozen/requirements-v2.json`, corrected fixture-builder-v2.py and independent oracle-reconcile-v2.py; original freeze retained with denominator-correction.md | none live; stdout only; selftest isolated fixtures | mori |
+
+Read the three inputs from the exact committed input revision; the recorded
+measurement revision, command --rev and inner commit must agree. Recount
+the measured tree independently, requiring unchanged policy/allowlist bytes.
+Report raw population and excluded identities separately: `policy_excluded`
+means the frozen policy's non-author globs, never exclusion of its own source
+file. The retained r21 split is95raw/5non-author/90scanner, with4unallowlisted.
+The exact source policy and its nested copy remain scanned normally.
+
+`privacy_clearance` is always false. An agreement result cannot replace the
+active r18 retention gate, authorize a pin, settle/reap a wave or establish
+that the old receipt's working-tree inputs were authentic. Original permission
+control11/12 remains red; both historical dispositions remain unknown and
+baseline acceptance blocked. No earlier registry row is superseded.
+Ground: `corpus/knowledge/retention-reconciliation-r22.md`, S064 at its
+commit-resolution-only scope; `corpus/lessons/round-22.md`.

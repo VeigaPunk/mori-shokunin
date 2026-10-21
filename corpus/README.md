@@ -412,3 +412,15 @@ not inferred settled/unsettled/dead. The minimized removal/preservation
 provenance is `.ufo/waves/round-21/evidence/historical-provenance.json`.
 FR3 independent lifecycle disposition remains frontier; retaining unknowns
 does not grow authoritative settlement coverage.
+
+## Round22 calibration of existing retention ground (not expansion)
+
+| Existing ground | Entry | Bounded change |
+|---|---|---|
+| Own-evidence retention accounting | `knowledge/retention-reconciliation-r22.md` | Independent committed-tree recount and exact receipt comparison; explicitly distinguishes policy non-author exclusions from source-file subtraction. Agreement is not clearance; no frontier row advanced. |
+
+The original round22 declaration misread “policy-excluded”; corrected
+pre-implementation v2 requirements retain the original bytes and error.
+R21's95raw−5non-author=90scanner population still has4unallowlisted hits.
+Original permission control11/12 remains red, two historical dispositions
+remain unknown, and the invalid r20 baseline is not accepted or re-pinned.

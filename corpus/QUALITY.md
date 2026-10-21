@@ -276,3 +276,17 @@ their placement beneath the round19 heading. Their original bytes remain.
 
 Q64/65/66/68 remain explicitly qualified debt in lessons/round-21.md.
 This supersession does not assert those separate gates were repaired.
+
+## Criterion added round22 — population identity before scalar agreement
+
+70. Every reconciled count names its exact population, measured commit and
+    policy-excluded identities. Compare full path/line/class/digest multisets
+    and independent policy membership; do not derive exclusions by subtracting
+    two totals or exclude source-policy copies to force agreement. A matched
+    receipt is accounting agreement only, never privacy clearance or acceptance
+    authority. Wrapper/argv/inner measured revisions must agree even when hit
+    lists happen to be equal. Demonstrate rejection with the same instrument
+    against a valid, count-preserving identity mutation and retain the red
+    receipt; also preserve the original permission control and unknown-loss
+    blockers. ← lessons/round-22.md#M1 and #M3; corrected pre-implementation
+    denominator freeze and exact-multiset oracle.

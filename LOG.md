@@ -1455,3 +1455,23 @@ Frozen24 finite requirements and CLI contract:
 Before capability absence is not24 historical defects. Wave1 is64
 distinct build/review items, L1 planner held; production integration and
 actual measurement follow. No scalar increase or subsequent round claimed.
+
+### Round22 pre-implementation correction and implementation provenance
+
+Supersedes only the declaration's interpretation of “policy-excluded”:
+raw95−5policy-non-author=90scanner, NOT exclusion of the policy source.
+The actual policy source has4allowlisted hits; its nested copy retains
+4unallowlisted hits. RawPartition and ReportContract identity audits caught
+L1's own mistaken source-file exclusion. Original contract/fixture/oracle
+remain at df880b4/e825c7f; corrected denominator and v2 input/expectation
+freeze landed e2f549befaffa1c1301928191e1eecb6142c0dad, before implementation.
+No operator total was contradicted and no policy exclusion was widened.
+
+All three code executors, both scribes and sentinel died on provider capacity/
+rate limits, not replaced. L1 therefore authored the shipping reconciler,
+independent frozen v2 oracle/fixture, lesson and knowledge note. Existing
+retention gate/policy/allowlist and r21 permission/loss artifacts are untouched.
+Source S064 reopened for commit-resolution semantics only; S065 re-rejected
+as sole provenance/privacy support, quotes and used-by log in round22 lesson.
+Production registration, Q70 identity criterion and own-evidence boundary
+are tied to that lesson; all actual test/measurement outcomes follow exercise.
