@@ -119,3 +119,23 @@ Report shared evidence to its owner; do not absorb another lane's domain.
   termination, authoritative wave-result semantics and emission stay frontier or
   kumitate-owned. No scan is an orchestration verdict.
 
+
+## Round-18 appended scope notes (2026-10-21)
+
+- **Core, own-evidence retention:** mori owns the retention gate over its *own* committed
+  evidence (`tools/mori-retention-gate.py`, classes in
+  `.ufo/waves/round-18/frozen/c1-policy.json`) and the minimization rule in
+  `corpus/knowledge/evidence-minimization-r18.md`. It redacts lane-authored copies at the tip
+  only; pushed history, exposure assessment, credential rotation and any history rewrite are
+  **kagi/operator**-owned (`.ufo/waves/round-18/build/ConnectKagiExposure.md`). Line digests
+  are provenance, not a secrecy claim.
+- **Core, freeze-order verdicts:** judging the lane's own claim labels against commit order
+  (`tools/mori-freeze-order.py`) is calibration of mori's own record, not a fleet ruling.
+- **Core, dispatch-attempt binding (observation only):** one ledger row per whole-wave task
+  call binds the committed payload digest to the observed result
+  (`tools/mori-dispatch-ledger.py`). Planning, slot acquisition, retrying and adjudicating
+  dispatch remain **kumitate/operator**-owned; `wave-slot.sh` grant lines are recorded as
+  evidence only (`.ufo/waves/round-18/build/ConnectKumitateDispatch.md`).
+- **Correction to the round-17 note above:** the session attribution of the 09:15 package
+  transaction is retained only in minimized form; its session identity and private context
+  were withheld at the tip in round 18. Package/boot-chain interpretation stays tsukuroi's.

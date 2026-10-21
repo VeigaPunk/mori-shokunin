@@ -148,3 +148,33 @@ Source tiers: see corpus/SOURCES.md (contract v1); this file holds claim admissi
     span; unknown cause is not permission to drop the code. Independent
     `want.records` expectations stay unchanged across the fix.
     ← lessons/round-17.md#M20 (65/66 to 66/66 with the same fixture table).
+
+## Criteria added round 18
+
+51. Committed handoff material (reports, dispatch specs, evidence JSON) carries scoped
+    summaries, counts and SHA-256 of private sources, never excerpts, session or store
+    identities, or operator configuration values. The retention gate at the measured
+    revision must report zero unallowlisted hits, and a must-redact file carries no
+    allowlist row. Disclosing a copy does not satisfy this criterion; a digest of a short,
+    guessable private line is provenance, not redaction.
+    ← lessons/round-18.md#M1; lessons/round-17-verifier-spotcheck.md:322-350,388-397.
+52. A `pre-build` freeze label is a verdict from the freeze-order check, not prose: frozen
+    inputs must strictly precede the first implementation commit and stay unchanged. A
+    co-committed input grades `co-evolved`; a `no-implementation` verdict does not yet
+    support a pre-build label. Corrections are appended rows, never rewritten labels.
+    ← lessons/round-18.md#M2; lessons/round-17-verifier-spotcheck.md:120-130,207-213,398-402.
+53. Every dispatch attempt is logged before the call with the SHA-256 and byte length of
+    its committed payload and completed with the observed result (exact refusal text for a
+    refusal). A row without a digest, with a mismatched digest, or a non-final or duplicate
+    started row is unbound. Spec-level binding (criterion 44) does not satisfy this.
+    ← lessons/round-18.md#M3; lessons/round-17-verifier-spotcheck.md:291-297,408-411.
+54. Carried procedural defects stay named debt: every wave context restates the pre-action
+    VCS (read-only `git -C` verbs only, no plain lane `git status`, no lane jj), scratch and
+    field-projection bounds, and each carried V-item keeps its disposition. Instruction
+    text is never cited as runtime prevention; a clean final state closes nothing.
+    ← lessons/round-18.md#M4; lessons/round-17-verifier-spotcheck.md:303-320,403-407.
+55. Acceptance examples in a contract are derived by applying the frozen rule, and the
+    frozen rule wins when they disagree. An executor that meets an example contradicting
+    the rule reports the conflict; the integrator fixes the implementation to the rule and
+    records the contradiction, never the rule to the example.
+    ← lessons/round-18.md#M5 (C2 `no-implementation` overclaim; C1 freeze-commit self-hits).
