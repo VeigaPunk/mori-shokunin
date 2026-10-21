@@ -1,0 +1,15 @@
+[
+ {
+  "attempt": 1,
+  "at": "2026-10-21T03:01:44.443084-03:00",
+  "wave": "mori-r18-w1-build",
+  "dispatch_path": ".ufo/waves/round-18/wave1-dispatch.json",
+  "payload_sha256": "4aa5e87bd72c40ee475f5d4a007e6c1053026f2114143be3a31d83ce1d2b2812",
+  "payload_bytes": 122530,
+  "tasks_count": 68,
+  "slot_grant": "granted lane=mori wave=18-w1 seats=68 live=31 pending=67 cap=200",
+  "result": "started",
+  "refused_text": null,
+  "started_ids": 68
+ }
+]
