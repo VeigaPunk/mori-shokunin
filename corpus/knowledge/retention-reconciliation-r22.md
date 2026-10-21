@@ -40,3 +40,23 @@ frozen alias meaning (4) rather than being silently redefined.
 The reconciler resolves the input commit once, reads receipt/policy/allowlist from Git, and recounts the full commit named consistently by wrapper/command/inner result. The measured commit must be an ancestor of or equal to the input commit. Policy and allowlist bytes must match across both commits. Output binds loaded input digests, executing tool digest, resolved revisions and argv. Git replace refs, inherited Git redirection/trace variables and lazy fetching are disabled for reads.
 
 S064 documents resolving an existing commit; it does not authenticate an actor or a historical execution. The old receipt lacks an allowlist digest and read its inputs from the working tree, so a present recount establishes reproducible accounting under these committed bytes, not proof of which allowlist was actually loaded then. A forged self-consistent receipt may also agree. Hashes are provenance, not secrecy, and no output grants privacy clearance, baseline acceptance, lifecycle settlement, cleanup, reap or dispatch permission. Four retention hits, original permission11/12red and both unknown wave dispositions remain open.
+
+## Round23 API correction — schema-v2 clean cutover
+
+The alias description in Exact populations above is historical schema-v1.
+The pre-registered r23 cutover removes `raw_unallowlisted` from every current
+output; no compatibility alias remains. `scanner_unallowlisted` names the same
+in-scope count (4 in the retained r21 control), and `raw_not_allowlisted` remains
+the raw complement (9 = four in-scope plus five non-author identities). Input
+populations, identity lists, exit/finding IDs and no-clearance semantics do not
+change. Schema is v2 on check, setup and selftest outputs.
+
+Current entry command requires absolute `--repo "$PWD"`; the earlier registry's
+`--repo .` is invalid. R22's exact oracle, five refinement cases and frozen real
+control still read the removed key and run only at their original bound checkout.
+Its driver does not stage a historical tool merely from --revision; r23 re-expresses
+the original24 predicates and separately verifies schema/alias/raw count, exact
+two-source-transform bytes, same-instance object equality, selftest schema and the
+same real identity pins/twin. All expected/oracle bytes land before production,
+with the original26 denominator distinct from supplementary controls. Evidence:
+`.ufo/waves/round-23/frozen/`, oracle-rename.py and the sealed measurement driver.

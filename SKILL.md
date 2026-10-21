@@ -562,3 +562,44 @@ revision), `measured_not_ancestor`, `policy_changed`/`allowlist_changed`,
 `receipt_path_binding`, `input_not_regular`, `unsafe_input_path`, `usage`
 (including `-h`, which never exits 0). Output digests are unsalted provenance,
 not secrecy; argv echoes caller paths, so pass only lane-relative inputs.
+
+## Round23 — current reconciliation API and quota visibility
+
+The round22 registry/field caveats above are historical v1. Current reconciliation
+schema is `mori-retention-reconciliation-v2` on check/setup/selftest outputs.
+`raw_unallowlisted` is REMOVED, not silently redefined or aliased. Use
+`scanner_unallowlisted` for the policy-filtered in-scope count and
+`raw_not_allowlisted` for the raw complement. The retained r21 control is4 versus9,
+not two estimates of the same population. All original identity/exit/finding
+semantics remain; `privacy_clearance` remains false. Frozen r22 oracles/real and
+refinement checks that name the old key reproduce only in a checkout of their bound
+revision, not by passing that revision to a changed working-tree driver.
+
+The rows below supersede only the current-entry/pins of the round22 reconciliation
+row; old evidence is not rewritten. `--repo` must be absolute (`"$PWD"`, not `.`).
+Use an existing private scratch root for selftests; do not let an invalid TMPDIR
+fall back to /tmp. New heavy scratch belongs under /fast/scratch/hyaku/mori-r23.
+
+| name | kind | entry | verdict map | self-test | pinned values | write scope | owner |
+|---|---|---|---|---|---|---|---|
+| retention reconciliation schema-v2 (r23) | gate, artifact accounting only | `python3 tools/mori-retention-reconcile.py check --repo "$PWD" --rev INPUT_COMMIT --receipt .ufo/waves/round-21/evidence/final/retention-floor.json --policy .ufo/waves/round-18/frozen/c1-policy.json --allowlist corpus/evidence/retention-allowlist.json` | 0 RETENTION_RECONCILED even when red; 1 RETENTION_RECONCILIATION_MISMATCH; 2 RETENTION_RECONCILIATION_SETUP | `TMPDIR=<existing-private-scratch> python3 tools/mori-retention-reconcile.py --selftest`; isolated actual CLI checks | `.ufo/waves/round-23/frozen/c1-requirements.json`, c1-source-delta.json, c1-expected-real.json, c1-expected-real-identities.json and oracle-rename.py; original26 separate from supplementary byte/output guards | read-only committed inputs; selftest private temporary fixtures | mori |
+| quota surface (r23) | probe, not gate or health verdict | `python3 tools/mori-quota-surface.py` (defaults fleet root + /tmp); repeated `--path ABS` only for operator-pinned runway targets | 0 QUOTA_DISABLED, mechanism observation only; 1 QUOTA_ENABLED, positive runway evidence not failure; 2 QUOTA_STATE_UNKNOWN or QUOTA_SETUP, read finding_id | `TMPDIR=<existing-private-scratch> python3 tools/mori-quota-surface.py --selftest`; isolated fixture-mode actual CLI, no host reads | independent `.ufo/waves/round-23/frozen/quota-cases/` and c2-expected-real.json are oracle evidence, not probe runtime defaults | stdout only; kernel mountinfo/stat/realpath and named btrfs sysfs reads; no configuration/commands/ioctls/writes | mori |
+
+For quota visibility, read `corpus/knowledge/quota-surface-r23.md` (S077–S086).
+XFS accounting-only is not enforcement; ext hints are unknown, not enabled.
+btrfs directory presence is initialized state, not the ON flag. Real mode reads the
+non-asserting enabled attribute and NEVER qgroups/mode (ASSERT/disable-race risk);
+null mode is intentionally unobserved. Fixture mode may project known mode metadata.
+Ambiguous covering mounts, inconsistent parent topology, unassociated devices or
+permission errors remain unknown, never fabricated disabled evidence.
+
+QUOTA_DISABLED is scoped to requested paths, not every filesystem or capacity:
+/dev/shm may have tmpfs usrquota while the defaults show disabled, and ENOSPC can
+coexist with disabled quota. No per-ID limits/usage/exhaustion, no diagnosis of old
+EDQUOT, no census cutover or threshold change. The old `:411` statement about fleet
+failures is dated historical evidence, not a universal current failure diagnosis.
+Configuration/causes belong to tsukuroi/operator: no fstab, mount units, Snapper,
+superblocks, quotactl, btrfs, xfs_quota, repquota, mount or remediation. Arbitrary
+remote/automount path resolution can block/trigger lookup; no universal effect-free
+claim. Four retention hits, permission11/12red, two unknown dispositions and blocked
+baseline acceptance remain unchanged authority; these new tools grant no clearance.

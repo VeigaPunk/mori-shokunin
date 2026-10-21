@@ -1588,3 +1588,23 @@ W2 uses a committed payload and pre-call receipt. Source/fixture-only in-memory
 checks and py_compile, plus three disclosed transient /tmp uses, exceeded W1's
 strict no-verification/scratch prose; no candidate or live quota command ran.
 These deviations are conformance debt, never hidden by a final clean tree.
+
+### Round23 — production integration after the pushed expectation seal
+
+Complete expectations/oracles/driver/dependencies landed
+22772c10f6e3c1d8d3fe1b72083a6194e9f4e687 before this production commit; the quota
+production path was absent and the reconciler entering-identical at that seal.
+Only now did L1 open the blind quota source. C1 production has exactly the two
+pre-registered changes: schema v2 and deletion of raw_unallowlisted. The new quota
+probe uses the final amended source rules, with real-mode mode reads omitted.
+
+All three isolated candidate drafts are retained under build/ImplQuota as evidence:
+v1/v2 contain rejected source-design/read hazards and are never active paths;
+v3 supplies final production after one code-only integration correction. Its
+payload limits were a list while the sealed supplementary oracle requires fixed
+boundary text; both output builders now join the same sentences into a string.
+This was found by static review before the first C2 candidate run, not by changing
+any expected output after a result. Current SKILL registry and the historical
+retention note carry the schema-v2/API, absolute-repo command and ownership fences.
+No unrun count, capability demonstration, Core movement or admission is asserted;
+actual revision-bound measurements follow, with frozen bytes unchanged.

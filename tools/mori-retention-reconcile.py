@@ -13,7 +13,7 @@ import subprocess
 import sys
 import tempfile
 
-SCHEMA='mori-retention-reconciliation-v1'
+SCHEMA='mori-retention-reconciliation-v2'
 SETUP='RETENTION_RECONCILIATION_SETUP'
 MATCH='RETENTION_RECONCILED'
 MISMATCH='RETENTION_RECONCILIATION_MISMATCH'
@@ -231,7 +231,7 @@ def check(a):
     return {'schema':SCHEMA,'finding_id':MISMATCH if differences else MATCH,
             'receipt_match':not differences,'differences':differences,
             'raw_total':len(hits),'policy_excluded':len(excluded),'exclusion_basis':'non_author_paths_glob',
-            'scanner_total':len(scanner),'raw_unallowlisted':len(unallowed),'scanner_unallowlisted':len(unallowed),
+            'scanner_total':len(scanner),'scanner_unallowlisted':len(unallowed),
             'raw_not_allowlisted':sum((h['path'],h['class'],h['line_sha256']) not in allowed_keys for h in hits),
             'non_author':len(excluded),'allowlisted':len(allowed),'forbidden_allowlist':len(forbidden),
             'retention_state':'red' if retention_code else 'clean-at-frozen-regex-scope',
