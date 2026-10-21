@@ -158,3 +158,16 @@ Report shared evidence to its owner; do not absorb another lane's domain.
   classification (`corpus/evidence/drift-classification-r20.json`); two disappearance tokens
   (`WATCHDOG_STALE` log-mtime proxy, `WAVE_UNSETTLED_AGE` emptied-wave memory) are recorded
   census design residuals, not fixed here (`corpus/knowledge/drift-repin-r20.md`).
+
+## Round21 correction — retained loss is not lifecycle settlement
+
+Supersedes the round20 freshness note's implication that the closed-class
+register licensed the re-pin. CloseMori20 rejected it: removed aggregator-r10
+and aggregator-r10-resume markers remain unresolved evidence-loss regression,
+not nonblocking live-state. QUALITY69 supersedes67. The historical r20
+baseline stays byte-unchanged but invalid for acceptance. FR3 authoritative
+settlement and independently evidenced cleanup disposition remain frontier;
+mori retains the unknown identities and provenance and blocks acceptance,
+never manufactures independent disposition or acts on old wave directories.
+The existing bounded report-presence capability remains distinct.
+Evidence: `corpus/lessons/round-21.md`; round21 retained loss evidence.

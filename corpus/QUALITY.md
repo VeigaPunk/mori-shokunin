@@ -254,3 +254,25 @@ Source tiers: see corpus/SOURCES.md (contract v1); this file holds claim admissi
     never from the sanitized working copy. Fails when a rerun or pin cites a
     present digest as historical. ← lessons/round-20.md (routed r19 closure
     R03 via `.ufo/waves/round-20/build/SpotcheckR19.md`).
+
+## Criteria added round21 — outside-closure correction
+
+Attribution correction: criteria64–68 above were authored round20, despite
+their placement beneath the round19 heading. Their original bytes remain.
+
+69. **Supersedes67.** Classify a disappearance by evidence assurance before
+    causal explanation: disappearance of required observation evidence without
+    an independently evidenced, per-identity settlement or cleanup-accounted
+    disposition is `census-regression` and blocks baseline acceptance. Unchanged
+    census code plus changed host/fleet state explains cause, not observation
+    completeness. Same-identity posthoc pushed receipts prove cleanup, never
+    independent lifecycle closure. Preserve each unresolved identity and its
+    provenance; do not infer it is still unsettled. Ordinary observed state
+    changes remain `live-state`. A `blind_spot` note cannot override the blocker.
+    The r20 baseline is a retained historical artifact, **not an accepted
+    behavioral reference**; no post-pin `none` rescues its premature acceptance.
+    ← lessons/round-21.md#M1 and #M2; round20 non-author closure C1_class_ruling
+    and quality_criteria; frozen round21 loss-unknown/cleanup-only cases.
+
+Q64/65/66/68 remain explicitly qualified debt in lessons/round-21.md.
+This supersession does not assert those separate gates were repaired.

@@ -488,13 +488,28 @@ Exit map: 0 all discovered waves `settled` or `no-spawn`; 1 any other state (or 
 
 **Never conclude dead, failed or killed.** The tool's own keys and state words never use those words (oracle `no_vocab`); member names are echoed as dispatched and may contain them. A missing report only means no regular non-empty file sat at the trailer path at scan time. Closure evidence is the watchdog `complete`/`wrap` line or a committed report (silence grading, r2); this probe is neither.
 
-**Drift re-pin ritual (r20 C1; L1 only).** `corpus/evidence/baseline-r10-20261015T2231Z.json` stays byte-unchanged.
+**Round21 correction superseding the r20 re-pin ritual.** The round20 outside
+closure rejected C1: deleted aggregator wave markers were unresolved evidence
+loss, not nonblocking `live-state`. QUALITY69 supersedes67. The r10 baseline
+stays authoritative historical comparison input; the r20 baseline stays
+byte-unchanged for provenance but is **invalid for acceptance**. Historical
+post-pin `none` proves only sameness in that window.
 
-1. Measure once at the measured commit: `bash tools/mori-census.sh --drift corpus/evidence/baseline-r10-20261015T2231Z.json > DRIFT` (census SHA must be `87b8d680…ab28`; about 2 min, heavy CPU).
-2. Count unclassified tokens against `corpus/evidence/drift-classification-r20.json` with `export LC_ALL=C` for the whole pipeline (the frozen r20 recipe set it on `comm` only and miscounts under `en_US.UTF-8`); pass only the `MORI_DRIFT:` line, never an `rc=` trailer, and remember `MORI_DRIFT: none` yields the token `none`. It must be `0` before any pin.
-3. Classify every token as exactly one of `census-schema-change | roster-change | live-state | census-regression`, each with an evidence pointer (commit, path:line or receipt) and a one-line reason.
-4. Any `census-regression` token: stop, report it verbatim, do not pin.
-5. Otherwise `bash tools/mori-census.sh --pin corpus/evidence/baseline-r20-<UTC>.json` to a **new** path (`--pin` overwrites silently and has no reason field), and record the reason in the round record.
-6. Re-run `--drift` against the new baseline; record rc and tokens whatever they are. A non-`none` result is the measured stability window: report it, never suppress it. A re-pinned baseline certifies sameness since the pin, never health (lane application of S076); the pin's own roll line keeps standing warnings visible. Knowledge: `corpus/knowledge/drift-repin-r20.md`.
+1. Preserve each disappeared required observation's identity and baseline,
+   deletion and preservation provenance. `aggregator-r10` and
+   `aggregator-r10-resume` remain unknown, never declared settled or dead.
+2. Before considering any new pin, apply QUALITY69: missing required evidence
+   without independently evidenced per-identity disposition is
+   `census-regression`, a pin blocker even with unchanged census code.
+3. A removal-actor's posthoc receipt and a `blind_spot` annotation do not
+   satisfy independent accounting. New `w24` aging is separate live-state;
+   it cannot offset either lost old identity.
+4. No re-pin runs in round21. A later steward must resolve the blocker before
+   any pin, classify every remaining drift token with semantic evidence,
+   reject census-regressions, and report the stability window honestly.
+   Never use key coverage alone as semantic classification (carried Q65).
+
+Ground: `corpus/lessons/round-21.md`; retained provenance
+`.ufo/waves/round-21/evidence/historical-provenance.json`; active QUALITY69.
 
 Never edit `tools/mori-census.sh`. `--pin` writes only its path; `--drift` writes nothing.

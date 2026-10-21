@@ -1,0 +1,41 @@
+{
+  "schema": "mori-r21-history-provenance-v1",
+  "baseline_revision": "e9f340ce986f82a60baad1b8e5ead655ab818a1c",
+  "baseline_path": "corpus/evidence/baseline-r10-20261015T2231Z.json",
+  "baseline_sha256": "0993b23505deab2aeb05b2309bdf7dd6eaad2b82f27852491352511aa9670478",
+  "removal": {
+    "command": [
+      "git",
+      "-C",
+      "/home/vgpnk/Projects/shokunin",
+      "show",
+      "--format=fuller",
+      "--name-status",
+      "e20f4fa",
+      "--",
+      ".ufo/waves/aggregator-r10",
+      ".ufo/waves/aggregator-r10-resume"
+    ],
+    "revision": "e20f4fa3fd3fc9550641af38da3eddcf3d35f528",
+    "metadata_sha256": "4276625be64ab1943bb5781dab7a3d9e8c912bdb48ea562870f20b70b753263e",
+    "actor": "souji-shokunin <souji@shokunin.local>"
+  },
+  "cleanup": {
+    "command": [
+      "git",
+      "-C",
+      "/home/vgpnk/Projects/shokunin/souji-shokunin",
+      "show",
+      "2f303dc:census/operator-sweep-20261018/approval-list.tsv"
+    ],
+    "revision": "2f303dc6e30d7650e1e513e3cbad75412efdc353",
+    "source_blob_sha256": "550da61f5da587b4d09b826259f49978c826f3cbe2ed8440b86c413251d45715",
+    "projection": "only aggregator-r10 and aggregator-r10-resume rows; not source blob identity",
+    "projection_sha256": "46f84c3a60ac701ec7d0c16523e5bbfa999be3999cb61029be8fba50785970a7",
+    "rows": 18,
+    "actor": "souji-shokunin <souji@shokunin.local>"
+  },
+  "independent_wave_disposition": null,
+  "settlement": "unknown",
+  "note": "Same-identity posthoc preservation receipts prove cleanup, not wave settlement. Neither source revision is relabelled as the revision of our projection."
+}

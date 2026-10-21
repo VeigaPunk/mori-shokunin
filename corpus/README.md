@@ -400,3 +400,15 @@ are not newly explored frontier ground.
 |---|---|---|
 | Per-seat wave settlement (FR3) | `knowledge/wave-settlement-r20.md` | Dispatch members vs report files for every lane wave, misrooted/stub/unsafe distinguished; lane and fleet scans reproduce independent ground truth. Hygiene-vs-never-written, dispatch authenticity and successor reports stay frontier. |
 | Drift baseline re-pin | `knowledge/drift-repin-r20.md` | Closed-class classification of all 50 r10 drift tokens with evidence, and a new baseline; comparator blind spots (first-word values, duplicate keys, positional pairing) named, not fixed. |
+
+## Round21 correction — loss accounting before baseline acceptance
+
+The round20 drift re-pin coverage-map row is historical, not an acceptance
+endorsement. CloseMori20 rejected the pin and QUALITY67's universal permission;
+QUALITY69 now supersedes67. `knowledge/drift-repin-r20.md` carries the erratum.
+The r20 baseline remains byte-unchanged but invalid for acceptance. Both
+aggregator-r10 identities are retained as unresolved historical observations,
+not inferred settled/unsettled/dead. The minimized removal/preservation
+provenance is `.ufo/waves/round-21/evidence/historical-provenance.json`.
+FR3 independent lifecycle disposition remains frontier; retaining unknowns
+does not grow authoritative settlement coverage.

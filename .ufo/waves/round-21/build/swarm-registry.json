@@ -1,391 +1,392 @@
 {
+  "path": ".ufo/waves/round-21/build/swarm-registry.json",
   "schema": "ufo-swarm-registry-v1",
-  "wave": "mori-r21-build",
-  "createdAt": "2026-10-21T12:36:06.088Z",
-  "updatedAt": "2026-10-21T12:36:06.088Z",
+  "wave": null,
+  "createdAt": "2026-10-21T12:41:03.337Z",
+  "updatedAt": "2026-10-21T12:41:03.337Z",
   "reportDir": ".ufo/waves/round-21/build",
   "members": {
     "ImplLoss": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.ImplLoss-4",
       "role": "executor",
       "item": null
     },
     "OracleLoss": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.OracleLoss-4",
       "role": "executor",
       "item": null
     },
     "FixtureLoss": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.FixtureLoss-4",
       "role": "executor",
       "item": null
     },
     "LessonDraft": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.LessonDraft-4",
       "role": "scribe",
       "item": null
     },
     "ConnectKumitate": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.ConnectKumitate-4",
       "role": "connector",
       "item": null
     },
     "ConnectSouji": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.ConnectSouji-4",
       "role": "connector",
       "item": null
     },
     "HistoryBaseline": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.HistoryBaseline-4",
       "role": "scout",
       "item": null
     },
     "HistoryRemoved": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.HistoryRemoved-4",
       "role": "scout",
       "item": null
     },
     "HistoryR12": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.HistoryR12-4",
       "role": "scout",
       "item": null
     },
     "HistoryTokWaves": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.HistoryTokWaves-4",
       "role": "scout",
       "item": null
     },
     "HistoryAdjudicate": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.HistoryAdjudicate-4",
       "role": "scout",
       "item": null
     },
     "HistoryQuality": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.HistoryQuality-4",
       "role": "scout",
       "item": null
     },
     "HistoryContract": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.HistoryContract-4",
       "role": "scout",
       "item": null
     },
     "HistoryPin": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.HistoryPin-4",
       "role": "scout",
       "item": null
     },
     "HistorySkill": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.HistorySkill-4",
       "role": "scout",
       "item": null
     },
     "HistoryProvince": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.HistoryProvince-4",
       "role": "scout",
       "item": null
     },
     "HistoryIndex": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.HistoryIndex-4",
       "role": "scout",
       "item": null
     },
     "HistoryScore": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.HistoryScore-4",
       "role": "scout",
       "item": null
     },
     "HistoryLog": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.HistoryLog-4",
       "role": "scout",
       "item": null
     },
     "HistorySettlement": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.HistorySettlement-4",
       "role": "scout",
       "item": null
     },
     "HistoryRetention": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.HistoryRetention-4",
       "role": "scout",
       "item": null
     },
     "SourceApproval": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.SourceApproval-4",
       "role": "scout",
       "item": null
     },
     "SourceRejected": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.SourceRejected-4",
       "role": "scout",
       "item": null
     },
     "SourceGitShow": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.SourceGitShow-4",
       "role": "scout",
       "item": null
     },
     "SourceLstat": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.SourceLstat-4",
       "role": "scout",
       "item": null
     },
     "HistoryCleanup": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.HistoryCleanup-4",
       "role": "scout",
       "item": null
     },
     "AuditEmpty": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.AuditEmpty-4",
       "role": "reviewer",
       "item": null
     },
     "AuditUnresolved": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.AuditUnresolved-4",
       "role": "reviewer",
       "item": null
     },
     "AuditDisposed": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.AuditDisposed-4",
       "role": "reviewer",
       "item": null
     },
     "AuditCleanup": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.AuditCleanup-4",
       "role": "reviewer",
       "item": null
     },
     "AuditHash": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.AuditHash-4",
       "role": "reviewer",
       "item": null
     },
     "AuditRevision": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.AuditRevision-4",
       "role": "reviewer",
       "item": null
     },
     "AuditDuplicate": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.AuditDuplicate-4",
       "role": "reviewer",
       "item": null
     },
     "AuditExtra": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.AuditExtra-4",
       "role": "reviewer",
       "item": null
     },
     "AuditPathAbsolute": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.AuditPathAbsolute-4",
       "role": "reviewer",
       "item": null
     },
     "AuditPathDotdot": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.AuditPathDotdot-4",
       "role": "reviewer",
       "item": null
     },
     "AuditPathSymlink": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.AuditPathSymlink-4",
       "role": "reviewer",
       "item": null
     },
     "AuditMalformed": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.AuditMalformed-4",
       "role": "reviewer",
       "item": null
     },
     "AuditTypes": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.AuditTypes-4",
       "role": "reviewer",
       "item": null
     },
     "AuditNoDiscovery": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.AuditNoDiscovery-4",
       "role": "reviewer",
       "item": null
     },
     "AuditNoPin": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.AuditNoPin-4",
       "role": "reviewer",
       "item": null
     },
     "AuditTranscript": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.AuditTranscript-4",
       "role": "reviewer",
       "item": null
     },
     "RuleLossUnknown": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.RuleLossUnknown-4",
       "role": "reviewer",
       "item": null
     },
     "RuleCleanupOnly": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.RuleCleanupOnly-4",
       "role": "reviewer",
       "item": null
     },
     "RuleIndependentCleanup": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.RuleIndependentCleanup-4",
       "role": "reviewer",
       "item": null
     },
     "RuleIndependentSettlement": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.RuleIndependentSettlement-4",
       "role": "reviewer",
       "item": null
     },
     "RuleOrdinaryAging": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.RuleOrdinaryAging-4",
       "role": "reviewer",
       "item": null
     },
     "RuleOrdinaryState": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.RuleOrdinaryState-4",
       "role": "reviewer",
       "item": null
     },
     "RuleNoModePreset": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.RuleNoModePreset-4",
       "role": "reviewer",
       "item": null
     },
     "RuleExpectedIndependence": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.RuleExpectedIndependence-4",
       "role": "reviewer",
       "item": null
     },
     "QualitySupersession": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.QualitySupersession-4",
       "role": "reviewer",
       "item": null
     },
     "QualityHeading": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.QualityHeading-4",
       "role": "reviewer",
       "item": null
     },
     "QualityDeferred": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.QualityDeferred-4",
       "role": "reviewer",
       "item": null
     },
     "TrendClaims": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.TrendClaims-4",
       "role": "reviewer",
       "item": null
     },
     "Separability": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.Separability-4",
       "role": "reviewer",
       "item": null
     },
     "FinalEvidence": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.FinalEvidence-4",
       "role": "reviewer",
       "item": null
     },
     "CriticFreshness": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.CriticFreshness-4",
       "role": "critic",
       "item": null
     },
     "CriticCalibration": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.CriticCalibration-4",
       "role": "critic",
       "item": null
     },
     "CriticAdmission": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.CriticAdmission-4",
       "role": "critic",
       "item": null
     },
     "CriticTrust": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.CriticTrust-4",
       "role": "critic",
       "item": null
     },
     "MutOldPermission": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.MutOldPermission-4",
       "role": "mutation-tester",
       "item": null
     },
     "MutLostIdentity": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.MutLostIdentity-4",
       "role": "mutation-tester",
       "item": null
     },
     "MutCleanupDisposition": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.MutCleanupDisposition-4",
       "role": "mutation-tester",
       "item": null
     },
     "MutDigestTrust": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR21.MutDigestTrust-4",
       "role": "mutation-tester",
       "item": null
     }

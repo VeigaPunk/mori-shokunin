@@ -1,0 +1,28 @@
+{
+  "seats": [
+    {
+      "id": "MoriR21.LessonDraft-4",
+      "role": "scribe",
+      "error": "[anthropic/claude-haiku-5-5] 429 rate_limit_error: This request would exceed your account's rate limit. Please try again later. retry-after-ms=7752000",
+      "replaced": false
+    },
+    {
+      "id": "MoriR21.CriticCalibration-4",
+      "role": "critic",
+      "error": "[openai-codex/gpt-6-luna] Retry budget exhausted after 5 retries: Codex error event: Codex is at capacity, please try again later (code=turn_rate_limit_exceeded)",
+      "replaced": false
+    },
+    {
+      "id": "MoriR21.CriticFreshness-4",
+      "role": "critic",
+      "error": "[openai-codex/gpt-6-luna] Retry budget exhausted after 5 retries: Codex error event: Codex is at capacity, please try again later (code=turn_rate_limit_exceeded)",
+      "replaced": false
+    },
+    {
+      "id": "MoriR21.OracleLoss-4",
+      "role": "executor",
+      "error": "[openai-codex/gpt-6-luna] Retry budget exhausted after 5 retries: Codex error event: Codex is at capacity, please try again later (code=turn_rate_limit_exceeded)",
+      "replaced": false
+    }
+  ]
+}

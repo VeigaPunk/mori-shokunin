@@ -76,3 +76,25 @@ pin time (`WATCHDOG_ABSENT`, ten `WAVE_UNSETTLED_AGE`) are part of the reference
 reports them every run. `MORI_DRIFT: none` means "unchanged since pin", never "healthy" (S066's
 master is approved, not proven correct). The pin header records no environment and `CENSUS_RC` is not
 checked by `--pin` (VolatileContract K10/K11): the L1 ran it with no `MORI_*` variables set.
+
+## Round21 erratum — r20 baseline acceptance rejected
+
+Supersedes sections2–3's cause-only permission and any reading of sections4–5
+as an accepted reference. The non-author CloseMori20 closure rejected C1:
+`aggregator-r10` and `aggregator-r10-resume` lost required observation markers
+without independent per-wave settlement or cleanup disposition. Unchanged
+census code explains the cause but does not restore observation completeness.
+This removed-wave component is `census-regression` in evidence assurance;
+the newly aged w24 remains separate live-state. The r20 register's zero count
+is a historical author classification, not the effective acceptance ruling.
+
+The baseline and register bytes remain for reproducibility. The r20 baseline
+is **invalid for acceptance**, not deleted or silently replaced. Its historical
+post-pin `none` remains an observed comparison only. Use QUALITY69 and the
+round21 retained evidence-loss accounting before considering any future pin;
+the two old lifecycle dispositions remain unknown and block acceptance.
+Same-identity posthoc preservation receipts are not independent settlement.
+No round21 census, pin, or drift run is represented here.
+
+Evidence: `lessons/round-21.md#M1`, `.ufo/waves/round-20/falsify/AdjudicateWaves.md:5-29`,
+`.ufo/waves/round-21/evidence/historical-provenance.json`.

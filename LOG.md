@@ -1380,3 +1380,32 @@ the final round-20 commit.
   (L1, 10:59Z). Waves: W1 76 seats (76/76 reports, 0 dead), W2 67 seats (59 reports + 8 start-stubs still running at landing; no replacements); round total 143.
 - Sources S066–S076 (S073–S076 supersede S069/S071/S070/S067 after wave-2 re-openings); Main non-author
   agreed S068 admit / S072 reject. QUALITY 64–68.
+
+## Round21 (L1 MoriR21) — outside-closure correction and retained loss
+
+Supersedes round20's C1 freshness improvement and its unqualified classification
+acceptance above. CloseMori20 rejected-harmed: freshness harmed by premature
+pin, calibration harmed by QUALITY67 self-ratification, coverage improved;
+operability/depth/adjacency unchanged. Trends: expansion improved, quality
+unprovable-but-better, discernment harmed. Evidence: fleet round20 mori
+closure, observed MANIFEST entry405, reviewer CloseMori20; lane tip e9f340c.
+No historical record or baseline is rewritten.
+
+Round21 declares C1 freshness5-held retained loss accounting and C2
+calibration5-held evidence-loss-first rule. Both are lowest non-retired ties;
+no retirement or stagnation waiver. Frozen requirements/cases landed
+3b792db133cec06c252ab696159b846c16805915. Validated64-seat build payload
+landed b9b8b440aa5a35123b5c273fa8fb028149801d0a. Three whole-wave job-cap
+refusals spawned nothing; identical fourth attempt started64. No dead seat
+is replaced. Provider terminal outcomes are retained under round21 waves.
+
+Motivating evidence: r10 baseline:26-27 retains both aggregator wave warnings;
+fleet e20f4fa removed18 paths; souji2f303dc same-identity posthoc pushed
+receipts prove preservation, not independent wave disposition. Minimized
+metadata and separate source/projection digests are in
+`.ufo/waves/round-21/evidence/historical-provenance.json`.
+QUALITY69 explicitly supersedes67, r20 pin invalid for acceptance; active
+skill ritual and province/index/knowledge carry named corrections.
+No round21 pin, census mutation, host action or lifecycle settlement claim.
+S066 reopened narrowly for approval-review semantics; S072 re-rejected;
+Main non-author agrees both samples (`evidence/source-spotcheck.json`).
