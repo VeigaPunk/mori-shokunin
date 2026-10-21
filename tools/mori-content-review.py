@@ -248,8 +248,7 @@ def check(args: argparse.Namespace, script_digest: str | None) -> tuple[dict[str
         add_finding(result, "CONTENT_REVIEW_INVALID")
         return finish(result)
     if reviews.get("schema") != REVIEWS_SCHEMA or not isinstance(reviews.get("rows"), list):
-
-[Showing lines 1-250 of 493. Use :251 to continue]        add_finding(result, "CONTENT_REVIEW_INVALID")
+        add_finding(result, "CONTENT_REVIEW_INVALID")
         return finish(result)
 
     paths_value = population["paths"]

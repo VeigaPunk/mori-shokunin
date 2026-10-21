@@ -176,14 +176,14 @@ Identical rc and output for `/usr/bin/jq` jq-1.8.2 and `~/.local/bin/jq` jq-1.8.
 | class / scope | pin | strength | anchor |
 |---|---|---|---|
 | `fe6faa94`, `d989611b` / system | `_PID=="1" and _UID=="0"` | strong: a non-root user cannot be PID 1 or uid 0 | emitter is the manager: `src/core/cgroup.c:3040-3051,3097-3101` |
-| `fe6faa94`, `d989611b` / user | `_UID==uid and _SYSTEMD_UNIT=="user@<uid>.service"` (+ `_SYSTEMD_USER_UNIT=="init.scope"` — [INFERENCE], confirm on one live record) | **weak**: the subtree is delegated to the same uid (measured `stat`: `vgpnk 755 …/user@1000.service`) | same |
+| `fe6faa94`, `d989611b` / user | `_UID==uid and _SYSTEMD_UNIT=="user@<uid>.service"` (+ `_SYSTEMD_USER_UNIT=="init.scope"` — [INFERENCE], confirm on one live record) | **weak**: the subtree is delegated to the same uid; observed account and unit-instance values withheld in round19 | same |
 | `fc2e22bc` / both | `_SYSTEMD_SLICE=="system.slice" and (_SYSTEMD_UNIT\|startswith("systemd-coredump@"))` | strong: uid 1000 cannot join root-owned system.slice cgroups | `src/coredump/coredump-submit.c:675-683` drops to the **crashing user's uid** before `sd_journal_sendv` at `:793` ("credentials journald will see are the ones of the coredumping user"), so `_UID` cannot pin and the cgroup can |
 
 Report `pinned=` and `unpinned=` separately, label the user-scope pin `pin=weak`, and keep `unpinned` visible (D5 style).
 
 **Forgery through the real emitter: `d989611b` cannot be pinned by any field.** [INFERENCE, not executed — mutation is out of scope]
 - The manager emits `d989611b` whenever the `user.oomd_ooms` xattr on the unit's cgroup has increased (`cgroup.c:3018-3031`). It reads this when the cgroup empties (`cgroup.c:2961-2962`).
-- user.* xattrs are live on the delegated cgroup (measured `getfattr`: `user.delegate="1"`, `user.invocation_id=…` on `user@1000.service`, owned by `vgpnk`).
+- Delegation metadata was observed in the historical read; account identity, unit instance and observed attribute values are withheld in round19.
 - So a uid-1000 process can raise `user.oomd_ooms` on a user unit it owns. The real user manager then writes a record that passes every pin. The same applies to PID1 and `user@1000.service` at logout.
 - `systemd-oomd` is measured `inactive` on this host right now.
 
@@ -260,4 +260,4 @@ All are hermetic. Stubs are keyed per D9 and `MORI_BOOT_ID` is pinned.
   - `src/coredump/coredump-backtrace.c:33`
   - `src/systemd/sd-messages.h:41-42,195-199`
 - Local man pages (systemd 261.2): journalctl(1) :87-96, :431-447, :496-502, :570-574, :834-835; systemd.journal-fields(7) :37-43, :120-151; journald.conf(5) :160-168.
-- Host metadata: `getfacl -p /var/log/journal`; `stat` and `getfattr -d -m 'user\.'` on `/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service`; `systemctl is-active systemd-oomd` → `inactive`; `id -nG` → `vgpnk docker input wheel`; journald.conf has no Storage/SplitMode/RateLimit overrides (defaults apply).
+- Host metadata: read-only access, delegation, activity and configuration checks were disclosed historically; account/group membership and observed configuration values are withheld in round19. No host query was repeated.

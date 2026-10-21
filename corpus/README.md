@@ -375,3 +375,21 @@ This proves path reachability, not no events, complete access or positive load.
 The r16 host version remains historical 261.2-1; primary version rows are
 `lessons/round-16.md:69,73,153`, before today's package-log upgrade to 262-1.
 
+
+## Round19 retrospective index repair (not new growth)
+
+The round18 entries existed before this index repair. Their missing rows
+did not justify the old author expansion verdict; the outside closure's
+round18 trends remain unchanged / unchanged / improved.
+
+| Existing ground | Existing entry | Scope retained |
+|---|---|---|
+| Own evidence retention | `knowledge/evidence-minimization-r18.md` | Frozen regex floor plus content adjudication; line digests are provenance, not secrecy; history action remains operator/kagi-owned |
+| Own freeze-label calibration | `knowledge/freeze-order-r18.md` | Commit ordering, historical correction versus prospective verification, and explicit input-revision binding correction |
+| Passive dispatch evidence | `knowledge/dispatch-ledger-r18.md` | Per-attempt payload identity, distinct from whole-ledger sequencing; no orchestration authority |
+
+Round19's bounded content-review population is additional to the unchanged
+R1–R9 all-blob retention scope. An incomplete review is not clean, and a
+complete review is not an automated privacy classifier or a proof that
+private material is absent everywhere. Retrospective index/table repairs
+are not newly explored frontier ground.

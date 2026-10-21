@@ -51,7 +51,7 @@ C2_CHECK_NAMES = (
     "no_private_values",
     "invalid_revision_could_not_evaluate",
 )
-OID_RE = re.compile(r"^[0-9a-f]{40}$")
+OID_RE = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
 SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 PRIVATE_SENTINEL = "SYNTHETIC_PRIVATE_SENTINEL_R19"
 GIT_TIMEOUT = 60
@@ -231,25 +231,14 @@ def marker_leaked(proc: subprocess.CompletedProcess[bytes] | None) -> bool:
     return marker in proc.stdout or marker in proc.stderr
 
 
-def all_dicts(value: Any):
-    if isinstance(value, dict):
-        yield value
-        for child in value.values():
-            yield from all_dicts(child)
-    elif isinstance(value, list):
-        for child in value:
-            yield from all_dicts(child)
-
-
-def c1_output_valid(data: dict[str, Any], *, revision: str,
+def c1_output_valid(data: dict[str, Any], *, revision: str | None,
                     population_sha: str, reviews_sha: str,
                     script_sha: str) -> bool:
     # These are the exact public receipt fields described by the contract.
     required = {
         "revision": revision,
         "population_sha256": population_sha,
-
-[Showing lines 1-250 of 1137. Use :251 to continue]        "reviews_sha256": reviews_sha,
+        "reviews_sha256": reviews_sha,
         "script_sha256": script_sha,
     }
     metadata = data.get("metadata")
@@ -264,6 +253,8 @@ def c1_output_valid(data: dict[str, Any], *, revision: str,
     for key in ("population_paths", "review_rows", "blobs_read", "findings"):
         if type(counts.get(key)) is not int or counts[key] < 0:
             return False
+    if counts["findings"] != len(findings):
+        return False
     for row in findings:
         if (not isinstance(row, dict)
                 or not isinstance(row.get("code"), str)
@@ -277,8 +268,6 @@ def c1_output_valid(data: dict[str, Any], *, revision: str,
 
 def c1_code_present(data: dict[str, Any], code: str,
                     expected_path: str | None) -> bool:
-    if data.get("finding_id") == code:
-        return True
     rows = data.get("findings")
     if not isinstance(rows, list):
         return False
@@ -396,17 +385,25 @@ def c1_case_rows(expected: dict[str, Any], tool: Path, repo: Path,
             issues.append("tool-launch")
         elif proc is None or proc.returncode != want_rc:
             issues.append("exit-code")
-        if proc is not None and marker_leaked(proc):
-            issues.append("private-value-leak")
+        if proc is not None:
+            forbidden = [PRIVATE_SENTINEL, *[row["reason"] for row in rows],
+                         *[raw.decode().strip() for raw in fixtures["blob_data"].values()]]
+            if any(token.encode() in proc.stdout or token.encode() in proc.stderr
+                   for token in forbidden):
+                issues.append("private-value-leak")
         if proc is not None and actual is None:
             issues.append("invalid-json-result")
         if proc is not None and actual is not None:
-            if case_name != "invalid_revision" and tool_sha is not None:
+            if tool_sha is not None:
                 if not c1_output_valid(
-                    actual, revision=revision, population_sha=population_sha,
+                    actual, revision=None if case_name == "invalid_revision" else revision,
+                    population_sha=population_sha,
                     reviews_sha=reviews_sha, script_sha=tool_sha,
                 ):
                     issues.append("receipt-fields")
+            expected_status = {0: "clean", 1: "failed", 2: "could-not-evaluate"}[want_rc]
+            if actual.get("exit_code") != want_rc or actual.get("status") != expected_status:
+                issues.append("receipt-status")
             code = required_findings.get(case_name)
             if code and not c1_code_present(
                 actual, code, path_for_case.get(case_name),
@@ -491,7 +488,7 @@ def c2_fixture(root: Path, tmpdir: Path,
             "synthetic_note": PRIVATE_SENTINEL,
         },
         {
-            "id": "fixture-absent", "base": base, "tip": absent_tip,
+            "id": "fixture-absent", "base": pre_tip, "tip": absent_tip,
             "frozen": ["fixture/absent/frozen.txt"],
             "impl": ["tools/fixture-absent.py"], "declared": "co-evolved",
         },
@@ -499,8 +496,7 @@ def c2_fixture(root: Path, tmpdir: Path,
             "id": "fixture-no-implementation", "base": base, "tip": noimpl_tip,
             "frozen": ["fixture/noimpl/frozen.txt"],
             "impl": ["tools/fixture-noimpl.py"], "declared": "co-evolved",
-
-[Showing lines 251-500 of 1137. Use :501 to continue]        },
+        },
         {
             "id": "fixture-edited-after-implementation", "base": base,
             "tip": edit_tip, "frozen": ["fixture/edit/frozen.txt"],
@@ -535,6 +531,7 @@ def c2_fixture(root: Path, tmpdir: Path,
         "base": base,
         "measured": measured,
         "claims": claims,
+        "expected_bases": {claim["id"]: claim["base"] for claim in claims},
         "register": register_path,
         "register_relative": register_relative,
         "register_bytes": register_bytes,
@@ -639,6 +636,9 @@ def c2_metadata_checks(expected_names: list[str], mode: str, tool: Path,
         provenance = bound.get("provenance") if isinstance(bound, dict) else None
         if not isinstance(provenance, dict):
             provenance = {}
+        legacy_provenance = baseline.get("provenance") if isinstance(baseline, dict) else None
+        if not isinstance(legacy_provenance, dict):
+            legacy_provenance = {}
         measured = provenance.get("measured_revision")
         set_result("measured_revision_full_oid",
                    measured == fixture["measured"] and isinstance(measured, str)
@@ -646,10 +646,12 @@ def c2_metadata_checks(expected_names: list[str], mode: str, tool: Path,
                    unavailable=not isinstance(bound, dict)
                    or "measured_revision" not in provenance)
         set_result("register_sha256",
-                   provenance.get("register_sha256") == fixture["register_sha256"],
+                   provenance.get("register_sha256") == fixture["register_sha256"]
+                   and legacy_provenance.get("register_sha256") == fixture["register_sha256"],
                    unavailable="register_sha256" not in provenance)
         set_result("corrections_sha256",
                    provenance.get("corrections_sha256") == fixture["corrections_sha256"]
+                   and legacy_provenance.get("corrections_sha256") == fixture["corrections_sha256"]
                    and absent_corrections is not None
                    and isinstance(absent_corrections.get("provenance"), dict)
                    and absent_corrections["provenance"].get("corrections_sha256") is None,
@@ -657,7 +659,8 @@ def c2_metadata_checks(expected_names: list[str], mode: str, tool: Path,
                                 or absent_corrections is None
                                 or not isinstance(absent_corrections.get("provenance"), dict)))
         set_result("script_sha256",
-                   tool_sha is not None and provenance.get("script_sha256") == tool_sha,
+                   tool_sha is not None and provenance.get("script_sha256") == tool_sha
+                   and legacy_provenance.get("script_sha256") == tool_sha,
                    unavailable="script_sha256" not in provenance)
 
         claim_rows = bound.get("claims") if isinstance(bound, dict) else None
@@ -671,7 +674,7 @@ def c2_metadata_checks(expected_names: list[str], mode: str, tool: Path,
             }
         identity_complete = set(by_id) == expected_ids
         bases_ok = identity_complete and all(
-            by_id[ident].get("base_revision") == fixture["base"]
+            by_id[ident].get("base_revision") == fixture["expected_bases"][ident]
             for ident in expected_ids
         )
         tips_ok = identity_complete and all(
@@ -686,17 +689,21 @@ def c2_metadata_checks(expected_names: list[str], mode: str, tool: Path,
                        "tip_revision" not in row for row in by_id.values()))
         override = provenance.get("tip_overrides")
         set_result("override_recorded",
-                   override == [fixture["override_argument"]],
+                   override == [fixture["override_argument"]]
+                   and legacy_provenance.get("tip_overrides") == [fixture["override_argument"]],
                    unavailable="tip_overrides" not in provenance)
         command_argv = provenance.get("command_argv")
         allowed_argv = []
         if bound_expected_argv is not None:
             allowed_argv = [bound_expected_argv, [sys.executable, *bound_expected_argv]]
-        set_result("command_argv", command_argv in allowed_argv,
+        set_result("command_argv", command_argv in allowed_argv
+                   and legacy_provenance.get("command_argv") in
+                   [legacy_expected_argv, [sys.executable, *legacy_expected_argv]],
                    unavailable="command_argv" not in provenance)
         register_digest_ok = (
             sha256_bytes(fixture["register_bytes"]) == fixture["register_sha256"]
             and provenance.get("register_sha256") == sha256_bytes(fixture["register_bytes"])
+            and legacy_provenance.get("register_sha256") == sha256_bytes(fixture["register_bytes"])
         )
         set_result("register_digest_matches_loaded_bytes", register_digest_ok,
                    unavailable="register_sha256" not in provenance)
@@ -705,7 +712,10 @@ def c2_metadata_checks(expected_names: list[str], mode: str, tool: Path,
         same = (base_verdicts is not None and bound_verdicts is not None
                 and base_verdicts == expected_verdicts()
                 and bound_verdicts == expected_verdicts()
-                and base_verdicts == bound_verdicts)
+                and base_verdicts == bound_verdicts
+                and legacy_provenance.get("status") == "unbound"
+                and legacy_provenance.get("measured_revision") is None
+                and provenance.get("status") == "bound")
         set_result("same_verdicts_as_base", same,
                    unavailable=(base_verdicts is None or bound_verdicts is None))
         privacy_ok = not any(marker_leaked(proc) for proc in
@@ -744,14 +754,13 @@ def supplemental_binding_checks(tool: Path, fixture: dict[str, Any],
     )
     rows.append({
         "check": "dirty_register_rejected",
-        "status": "pass" if proc is not None and proc.returncode == 2 else "regression",
+        "status": "pass" if proc is not None and proc.returncode == 2 and not marker_leaked(proc) else "regression",
         "expected_exit_code": 2,
         "actual_exit_code": proc.returncode if proc is not None else None,
         "process": process_receipt(proc, failure),
         "private_value_leak": marker_leaked(proc),
     })
-
-[Showing lines 501-750 of 1137. Use :751 to continue]    register_path.write_bytes(original)
+    register_path.write_bytes(original)
 
     external_register = root / "external-register.json"
     external_register.write_bytes(original)
@@ -761,7 +770,7 @@ def supplemental_binding_checks(tool: Path, fixture: dict[str, Any],
     )
     rows.append({
         "check": "external_register_rejected",
-        "status": "pass" if proc is not None and proc.returncode == 2 else "regression",
+        "status": "pass" if proc is not None and proc.returncode == 2 and not marker_leaked(proc) else "regression",
         "expected_exit_code": 2,
         "actual_exit_code": proc.returncode if proc is not None else None,
         "process": process_receipt(proc, failure),
@@ -776,7 +785,7 @@ def supplemental_binding_checks(tool: Path, fixture: dict[str, Any],
     )
     rows.append({
         "check": "external_corrections_rejected",
-        "status": "pass" if proc is not None and proc.returncode == 2 else "regression",
+        "status": "pass" if proc is not None and proc.returncode == 2 and not marker_leaked(proc) else "regression",
         "expected_exit_code": 2,
         "actual_exit_code": proc.returncode if proc is not None else None,
         "process": process_receipt(proc, failure),
@@ -790,7 +799,7 @@ def supplemental_binding_checks(tool: Path, fixture: dict[str, Any],
     )
     rows.append({
         "check": "dirty_corrections_rejected",
-        "status": "pass" if proc is not None and proc.returncode == 2 else "regression",
+        "status": "pass" if proc is not None and proc.returncode == 2 and not marker_leaked(proc) else "regression",
         "expected_exit_code": 2,
         "actual_exit_code": proc.returncode if proc is not None else None,
         "process": process_receipt(proc, failure),
@@ -919,15 +928,6 @@ def output_path(raw: str, inputs: list[Path]) -> Path:
     return target
 
 
-def set_status(rows: list[dict[str, Any]], pass_value: str,
-               missing_value: str = "capability_absent") -> None:
-    for row in rows:
-        if row.get("status") == "pass":
-            row["status"] = pass_value
-        elif row.get("status") == "capability_absent":
-            row["status"] = missing_value
-
-
 def counts(rows: list[dict[str, Any]]) -> dict[str, int]:
     return {
         "total": len(rows),
@@ -1001,9 +1001,7 @@ def run_harness(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
         result["c1"]["counts"] = counts(c1_rows)
 
         c2_repo_env = clean_env(setup_home, tmpdir)
-
-[Showing lines 751-1000 of 1137. Use :1001 to continue]        fixture = c2_fixture(sandbox_parent, tmpdir, c2_repo_env)
-        expected_verdict_map = expected_verdicts()
+        fixture = c2_fixture(sandbox_parent, tmpdir, c2_repo_env)
         expected_names = expected["c2_checks"]
         if freeze_tool_sha is None:
             c2_rows = [

@@ -13,19 +13,19 @@ Commands run, exit codes, verbatim stdout:
 
 | Command | rc | stdout |
 | --- | --- | --- |
-| `/home/vgpnk/.local/bin/jj --version` | 0 | `jj 0.45.1-7c41cdeb16b6b321c64e789a966b6adf723816a5` |
+| `~/.local/bin/jj --version` | 0 | `jj 0.45.1-7c41cdeb16b6b321c64e789a966b6adf723816a5` |
 | `git --version` | 0 | `git version 2.56.0` |
 | `python3 --version` | 0 | `Python 3.14.8` |
 
-- `command -v jj` → `/home/vgpnk/.local/bin/jj`.
+- `command -v jj` resolved to the user-local `~/.local/bin/jj`.
 - GitHub tag check (accessed 2026-10-20): `GET https://api.github.com/repos/jj-vcs/jj/git/ref/tags/v0.45.1`
   → `refs/tags/v0.45.1 commit 7c41cdeb16b6b321c64e789a966b6adf723816a5`.
   The embedded version hash **is** the v0.45.1 tag commit, so `v0.45.1` source
   cites below describe the installed binary.
-- Host env relevant to the question: `HOME=/home/vgpnk`,
-  `XDG_CONFIG_HOME=/home/vgpnk/.config` (set, absolute). `/home/vgpnk/.config/jj`
-  exists; `/home/vgpnk/.jjconfig.toml` does not (observed via `ls`; only
-  existence checked, no user-config contents read).
+- Host environment paths: concrete HOME and XDG values withheld in round19.
+  Only the isolation-relevant fact is retained: both variables may affect
+  default path resolution; observed user-config presence/absence is withheld.
+  No configuration contents were read by this historical seat.
 
 ## 2. Where `jj config path --repo` writes for a fresh sandbox
 
@@ -45,8 +45,8 @@ where:
   `config_dir()` = that value or `home_dir/.config/` (lines 194-195);
   `jj` selects this strategy on Linux via
   `etcetera::choose_base_strategy().config_dir()` (`cli/src/config.rs:368-370`).
-  On this host that is `/home/vgpnk/.config`, so the printed path would be
-  **`/home/vgpnk/.config/jj/repos/<config-id>/config.toml`**.
+  Applying this rule requires an explicit sandbox-local config root; the
+  **observed host-specific projection is withheld in round19**.
 - `<config-id>` = 20 lowercase ASCII hex characters (10 random bytes;
   `CONFIG_ID_BYTES = 10`, `lib/src/secure_config.rs:40,110`; alphabet
   `0123456789abcdef` in `core/src/hex_util.rs:17,84-87`; validation requires
@@ -108,7 +108,7 @@ Consequences, in order of importance for the gate:
 2. **`JJ_CONFIG=` alone is not sandbox isolation.** It drops user and system
    layers but repo/workspace configs are still discovered from
    `<config_root>/jj/...` and still written there by forcing commands. This
-   matters on this host where `XDG_CONFIG_HOME` is already set: changing only
+   matters when `XDG_CONFIG_HOME` is set to an absolute path: changing only
    `HOME` would **not** move the config root.
 3. `HOME` matters in three ways: `$HOME/.jjconfig.toml` (read in addition to the
    platform file, lowest precedence, only if present), the default
@@ -159,7 +159,7 @@ Consequences, in order of importance for the gate:
 - [INFERENCE] Exact `rand` draw→id mapping is stable only for the same
   jj/rand build; treat `JJ_RANDOMNESS_SEED` determinism as same-binary only.
 - Not checked: whether any workspace-level config currently exists under
-  `/home/vgpnk/.config/jj/workspaces/` (user config directories were not
+  `<config_root>/jj/workspaces/` (user config directories were not
   enumerated beyond the two `ls` existence checks above).
 
 ## 6. Tools and installs
@@ -175,7 +175,7 @@ None. This report file is the only write. No VCS, jj, or pacman command ran.
 ## Sources (all accessed 2026-10-20)
 
 - `jj config path --help` and `jj config path -h` output from
-  `/home/vgpnk/.local/bin/jj` (rc 0); `jj --version` (rc 0).
+  `~/.local/bin/jj` (rc 0); `jj --version` (rc 0).
 - https://raw.githubusercontent.com/jj-vcs/jj/v0.45.1/cli/src/config.rs
 - https://raw.githubusercontent.com/jj-vcs/jj/v0.45.1/cli/src/cli_util.rs
 - https://raw.githubusercontent.com/jj-vcs/jj/v0.45.1/cli/src/commands/config/path.rs

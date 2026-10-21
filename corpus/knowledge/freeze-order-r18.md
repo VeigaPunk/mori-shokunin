@@ -36,3 +36,22 @@ rows (`corpus/evidence/freeze-register.json`), never rewrites of the filed label
 - The selftest (12 arms) does not yet distinguish `--topo-order` from `--date-order` on a dated divergent DAG (round-18 MutFreezeOrder M04 survived); history with merges is judged by first-parent diffs only.
 - Path renames are seen as delete + add (`diff-tree` without `-M`), and merges are judged
   against their first parent; both are declared limits, not proofs of freeze.
+
+## Round19 operational correction — intrinsic input binding
+
+The original `recheck:` command above is a historical unbound invocation.
+For committed-input evidence now add `--rev <INPUT_REV>` explicitly. The
+register and supplied corrections must reside beneath `--repo` and their
+loaded bytes must exactly match blobs at that revision; dirty, missing,
+uncommitted or external input is could-not-evaluate. Claim tip overrides
+still name the chronology endpoints and may differ from INPUT_REV. The
+executing-script SHA is a separate identity, not a claim that this newer
+checker exists at the historical input revision.
+
+This operational correction is sourced to S064 (`git-rev-parse(1)`,
+`--verify`/commit peeling), `corpus/lessons/round-19.md` and its independent
+frozen assertions. It is not a new covered-ground knowledge entry or a
+retroactive claim that the old C2 JSON already carried these fields.
+The r18 before count remains one historical overclaim plus three
+prospective labels; their input-revision replays are recorded in round19
+evidence without changing the six original verdicts.

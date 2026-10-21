@@ -77,3 +77,136 @@ S055 was opened directly; S057's CrossRef metadata was opened directly and the
 paper body was not opened by L1; S059/S063 were opened directly. No new source row
 is created for these re-openings, because their scoped rejection decisions do not
 change. New S064/S065 remain the only added rows at this step.
+
+### Content-based residual dispositions
+
+These supersede the contradictory round18 triage wording; they do not depend
+on “same wave” provenance and never claim whole-tree privacy clearance.
+
+| Item | Content test and disposition | Scope / limit |
+|---|---|---|
+| Six round16 home-qualified loci named by `round-18/falsify/ResweepR16.md:39–44` | Five are mandatory shared RULES-file instruction references; one identifies the user-local jq executable used for a disclosed read. The account-qualified prefix was minimized to home-relative notation in all six, preserving the instruction/tool fact. | This is conservative location minimization, not proof those six lines contained private configuration values. The original R1–R9 denominator is unchanged. |
+| SW1 `FrontierLinkage.md:17,30` | Retain: code/error wording is attributed to public API documentation, with source IDs, source-reading references and explicit transcript-linkage uncertainty. | A public error-code quote is not an observed private routing assignment. |
+| SW1 `HelperFailureWindows.md` | Retain: owned-lane Git/jj refs, lane attribution fields and helper failure-window analysis support reproducible local VCS observations. | Owned repository metadata is not operator authentication/configuration content; inferred effects remain labeled. |
+| SW1 `KnowledgeJjBranch.md` | Retain: source-code paths, full commit/file identities, synthetic-audit observations and qualified branch semantics are necessary technical evidence. | Not a private-source excerpt, not authentication of an actor, and not evidence of remote publication. |
+| SW1 `JjGate.md` | Retain: synthetic gate construction, public finding grammar, owned artifact SHA and own-conduct disclosure; predicted tallies are explicitly not measurements. | Its historical prototype report is not a current green run or a private host transcript. |
+| r18 `evidence/wave1-dead-seats.json` | Minimize exact answering-provider/model alias, raw error payload and resume timestamp; retain seat count/IDs, capacity error class, no-replacement disposition and a whole-blob provenance digest. | The receipt remains failure evidence; the digest is provenance, never anonymization. |
+| Old short-line digests | Retain as named residual risk under the existing operator/kagi exposure boundary, with no new short-line hashes generated here. | Guessable lines can be confirmed; neither the old nor new gate proves secrecy or cures pushed history. |
+
+L1 directly read the four SW1 retained reports and the exact six home-locus
+lines; no private source was opened. `build/FindSW1Content.md` recommended
+broader minimization of owned revisions/digests and public API wording.
+L1 rejects that broader recommendation for the content reasons above, rather
+than relying on provenance alone. The recommendation to remove a whole-blob
+digest is also rejected: the record needs integrity linkage, while the
+guessability/secrecy limitation remains explicit.
+
+### Recovery interruption and evidence gaps
+
+The parent issued an erroneous stand-down after wave1 had started, then
+explicitly reversed it and confirmed this author lineage. Landed work was
+preserved, no duplicate first wave was started, and no failed seat was
+replaced. At recovery there were no running Mori worker jobs; many started
+seats had no final body, while some retained reports existed. Missing reports
+are missing evidence, not successful reviews or inferred provider deaths.
+Only delivered content decisions enter the initial review manifest. The
+bounded gate must report that coverage gap rather than manufacture clearance.
+
+The inherited regression-harness source had an incomplete failed edit.
+L1 completed the known path-expression and public-receipt-schema mismatches
+and kept the original independent oracle bytes unchanged. These are
+implementation repairs, not extra historical defect claims. Verification
+remains solely the integration owner's settled-input execution.
+
+### Independent admit/reject spot-check
+
+Verifier: **Main (orchestrator, non-author; not a wave seat)**, received
+2026-10-21 by exact-id coordination. Main checked the live S064/S065 rows
+and the Gate quotes and recorded:
+
+- **S064 — agree admit-A.** Resolving an explicit selector to an existing
+  commit object is accurately scoped; remote publication, authenticity and
+  input-tree equality are excluded. The verify/end-of-options/peeling
+  binding is bounded correctly.
+- **S065 — agree reject-C.** A hash API describes byte digests, not which
+  revision supplied those bytes. The flip to narrow API-behavior support
+  with separate revision evidence is appropriate.
+- Main confirmed the dispositions and at-most-25-word Gate quotes conform,
+  with no immutable source cell rewritten.
+
+This is the outside decision check, distinct from author-side wave2 URL
+re-openings. Main's communicated method names the live rows and Gate text;
+an additional source-URL fetch by Main is not asserted here.
+
+### Quote-anchor precision after fresh source falsification
+
+`falsify/SourceS055.md` correctly distinguishes the marketing quote above from
+the older immutable registry anchor. Both are on the opened page; these
+additional located quotes resolve the older anchor without rewriting it:
+
+| Row | Same opened URL | Additional quote (at most 25 words) and location |
+|---|---|---|
+| S055 | https://www.strac.io/blog/gdpr-data-minimization | “adequate, relevant and limited to what is necessary in relation to the purposes for which they are processed ('data minimisation')” — Article 5(1)(c): The Three-Part Test, blockquote |
+| S059 | https://git-scm.com/docs/git-log | “Default is off unless --first-parent is in use, in which case first-parent is the default.” — OPTIONS, `--diff-merges=<format>`; markup removed; also located by `build/QuoteS059.md` |
+| S063 | https://docs.python.org/3/library/json.html | “If True (the default), the output is guaranteed to have all incoming non-ASCII and non-printable characters escaped.” — Basic Usage, `ensure_ascii` parameter; markup removed |
+
+`falsify/SourceS057.md` also correctly notes that the abstract states its
+stronger validity claim. “Unverified” in the immutable row means its
+argument/support was not verified by a body review, not that the abstract
+omits the words. The abstract-only rejection and flip remain unchanged.
+
+### Additional findings and implementation corrections
+
+- `falsify/F2MeasuredRevisionFullOid.md` and `F2ScriptSha256.md` identified
+  missing legacy/unbound assertions and a SHA-1-only harness regex. L1
+  added assertions for legacy status, null measured revision and its
+  script digest, and accepted the runtime's full 40/64-hex OID formats.
+  No original expected case/check name or count was removed.
+- `falsify/CriticCoverage.md` and `CriticNoHarm.md` identify the trust
+  boundary of a caller-supplied population pin. The authoritative registry
+  command retains the fixed population SHA, and the actual receipt exposes
+  SHA/count/blob identities; changing both the population and the expected
+  pin is a different command, not proof about the frozen 194-path scope.
+  This generic gate authenticates neither its caller nor a reviewer's
+  self-attested content basis. No automatic privacy-proof claim is made.
+- `falsify/SentinelOutput.md` notes that stored free-form reasons can carry
+  sensitive text even though the gate never emits them. Reasons are
+  manually reviewed evidence, not an automatic sanitization guarantee.
+- A raw-read transport footer was accidentally copied into three integrated
+  Python sources and six minimization edits. Source inspection caught the
+  injected `[Showing lines ...]` records before any acceptance execution.
+  L1 restored exact completed source bytes and surgically removed only the
+  injected footer/blank records; the issue was reported through the tool QA
+  channel. Commit367927c is an intermediate malformed integration, not the
+  final measured implementation.
+- The parent reading sweep found a further r13 account/group observation at
+  `round-13/build/JSONAttack.md:179,186,263`. L1 minimized those retained
+  observations without repeating any host query or copying their values
+  into a new report. This is outside the frozen 194-path population and is
+  an explicit additional disposition, not a denominator change.
+- `CriticTrends` (wave1) and `CriticNoHarm` (wave2) disclosed broad searches
+  entering retained interactive-session material and exposing snippets to
+  their tool output. They stopped and copied no transcript text into their
+  reports. These are scope breaches, not compliance credit or evidence of
+  an authorized private-source inspection.
+
+### Mistakes continued
+
+| ID | Class | Evidence | Captured-by | Fix / remaining limit |
+|---|---|---|---|---|
+| M5 | reference-drift | Raw-read transport footers entered intermediate commit367927c's source and six edited loci | none; transport presentation was mistaken for file bytes | Exact source-byte integration replaces display projections; the final suite parses the old malformed integration as a red control and the final files as the repaired state. No original oracle is edited. |
+| M6 | provenance | Wave1 recorded a custom object/native-byte hash instead of the existing array/canonical-hash ledger shape | Q53/Q56 should have caught it | The original ledger remains filed and is not retroactively called conformant. Wave2 uses the established schema, canonical hash, pre-call timestamp and actual started count; its committed verifier result is measured below. |
+| M7 | scope | Two critics' disclosed broad retained-session searches, named above | Q54 caught neither at dispatch time; text restrictions are not enforcement | Reports keep only breach classes, no copied transcript values. No compliance or no-harm credit is inferred from a clean final state. |
+
+`SourceS059` requests a quote inside the immutable SOURCES cell as well as
+Gate. The frozen source contract puts the located at-most-25-word quote in
+the round lesson's Gate; no immutable row rewrite is authorized or needed.
+The Gate now carries both the newly located DESCRIPTION quote and the
+older merge-format anchor precision.
+
+The C2 `no_private_values` assertion is a finite synthetic-canary check:
+it is not a universal classifier for arbitrary caller-supplied claim IDs,
+labels or argv. Those are intentionally reported metadata from owned
+registers. Callers must not supply private values in metadata fields.
+Legacy/bound field parity and the checked canary cannot establish otherwise.
+The new provenance guarantee binds exact bytes; it does not sanitize them.

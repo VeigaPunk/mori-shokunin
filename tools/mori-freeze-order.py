@@ -248,8 +248,7 @@ def _tip_overrides(items, claim_ids):
 
 def _row_result(repo, claim, tip_override, effective_label):
     ident = claim["id"]
-
-[Showing lines 1-250 of 707. Use :251 to continue]    tip = tip_override if tip_override is not None else claim["tip"]
+    tip = tip_override if tip_override is not None else claim["tip"]
     result = {
         "id": ident,
         "verdict": "could-not-evaluate",
@@ -499,8 +498,7 @@ def _selftest():
     if not raw_tmp:
         print("SELFTEST freeze-order FAIL 0/11", file=sys.stderr)
         return 1
-
-[Showing lines 251-500 of 707. Use :501 to continue]    scratch = Path(raw_tmp).resolve()
+    scratch = Path(raw_tmp).resolve()
     forbidden = (Path("/tmp"), Path("/var/tmp"))
     if (not scratch.is_absolute()
             or any(scratch == path or path in scratch.parents
