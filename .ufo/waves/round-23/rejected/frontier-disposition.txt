@@ -1,0 +1,172 @@
+ROUND-23 FRONTIER DISPOSITION — DRAFT WORDING FOR L1 (not applied to any production file)
+==========================================================================================
+Seat:      MadoR22-2.DraftProvince-8 (scribe, leaf — no subagent dispatch)
+Authority: Main's explicit instruction relayed by L1 MadoR22-2 — C2 is withdrawn from the
+           production and admitted-capability surfaces after the pinned 96-seat falsification
+           wave; no FR2 Core movement and no capability acquisition; preserve the evidence; no
+           rescue experiments and no frozen changes.
+Factual pin: production revision f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c (pre-withdrawal
+           measured state), seal 22772c10f6e3c1d8d3fe1b72083a6194e9f4e687. Every number below is
+           read from that state; nothing here asserts a later commit. The parent adds the final
+           commit evidence.
+Rejected evidence: .ufo/waves/round-23/rejected/  (deployed-quota-probe.py 100644
+           sha256 e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92;
+            quota-knowledge-note.txt sha256 2614a8f133072b27a3d5e07a7ad5d70455f509ef4052c01a9ad7e112879b8c84)
+Lesson:    corpus/lessons/round-23.md (sha256 93cfe32de5d36731fa266478120ff1565d1bdd7822868598624025e185e1339b)
+Tools installed/updated: none. Live host reads: none. No build, test, lint, selftest, gate,
+oracle or probe was executed by this seat. No production file was edited.
+
+VOID NOTICE
+-----------
+The wave-1 draft at .ufo/waves/round-23/build/DraftProvince/province.md (Core-advancing FR2
+wording) is VOID and must not be landed. It was written against the pre-withdrawal contract and
+is retained only as wave-1 evidence. This file supersedes it.
+
+RULES THIS DRAFT OBEYS
+----------------------
+1. No FR2 Core movement, no capability acquisition, no census integration, no baseline re-pin.
+2. The existing Core list, the "Owns (read-only probes)" clause and the FR2 Frontier row are
+   NOT edited. Only appended text is proposed.
+3. The withdrawn quota note is not cited. The authoritative record is corpus/lessons/round-23.md
+   plus .ufo/waves/round-23/rejected/.
+4. The tsukuroi configuration/diagnosis boundary is preserved verbatim in scope.
+5. C1 is stated separately and on its own evidence; C2 is stated as withdrawn and unprovable.
+6. No placeholder, no roadmap, no future-feature claim. Facts only, pinned to f3dc07c.
+7. All carried debt and the blocked baseline are stated as unchanged.
+
+
+==========================================================================================
+BLOCK 1 — PROVINCE.md, APPENDED TEXT (append at EOF; nothing else in the file is touched)
+==========================================================================================
+
+---8<--- BEGIN VERBATIM APPEND (PROVINCE.md) ---8<---
+
+## Round-23 disposition (2026-10-21) — C1 admitted, C2 withdrawn, FR2 unchanged
+
+- **FR2 is unchanged and stays in Frontier.** No quota surface is admitted: the `Core` list, the
+  `Owns (read-only probes)` clause and the `FR2 — Quota/EDQUOT observability` row are unchanged,
+  no census row, threshold or baseline is added or re-pinned, and `df` capacity percentages still
+  cannot detect quota exhaustion.
+- **C1 (calibration) is admitted, and green on its own.** `tools/mori-retention-reconcile.py` at
+  the round-23 production revision is the entering file's bytes after exactly two pre-registered
+  substitutions — the schema literal `mori-retention-reconciliation-v1` → `…-v2`, and the deletion
+  of the single `'raw_unallowlisted':len(unallowed),` producer fragment — with no other byte changed
+  (entering blob `0795bac9…`, transformed `4599ee1a…`, mode 100755). The removed key was a
+  misleading name: `scanner_unallowlisted` keeps its in-scope meaning and `raw_not_allowlisted`
+  its raw-complement meaning; no other output key, value, exit code or finding id changed.
+  Measured at revision `f3dc07c…` against seal `22772c1…`: before 25/26 with R25 the only unmet
+  requirement and 8 alias-bearing runs, after 26/26 with 0 alias-bearing runs; the C1 real control
+  reproduces the frozen receipt and the tool self-reports the frozen target digest. This is
+  calibration of mori's own evidence accounting — not authentication, not privacy clearance and
+  not a lifecycle or acceptance decision.
+- **C2 (coverage) is withdrawn; its strict target was never provable.** The sealed 30-case target
+  measured 29/30 at `f3dc07c…`. `CaseEscapedSpace` stays red: the sealed conservative parent rule
+  requires `ambiguous_overmount` for the escaped mount point whose selected parent 43 covers a
+  shorter cover `/srv` 42, while the sealed expectation says enabled. The case, its expectation,
+  the rule, the label and the denominator are unchanged — not special-cased, excluded or
+  relabelled — so the original strict C2 target is unprovable, the sealed oracle's `--real-expected`
+  run reports one unmet requirement (`R23_C2_QUOTA_CASES_UNMET`, 30/31), and the wave driver exits
+  1 with `C34.c2_after_every_case_matches` and `C30.c2_oracle_real_control_agrees` unmet.
+- **Why C2 was withdrawn, in facts.** An incomplete per-UUID device mapping let the mocked
+  permission-loss counterexample report `disabled`, and an active tmpfs accounting token does not
+  prove the runtime enforcement flag; the source-only Unicode mount parsing, escape and hidden
+  topology limitations are retained as they are, not repaired to force admission. A `disabled`
+  answer that rests on an incomplete observation is false confidence, and `df` blindness is not
+  repaired by a probe that can answer wrongly.
+- **The withdrawn objects are evidence, not capability.** The round-23 quota prototype and its
+  note are not part of the admitted corpus or the admitted capability surfaces; their bytes are
+  retained byte-exactly under `.ufo/waves/round-23/rejected/` for review, they are not a supported
+  tool, and the rejected prototype must not be executed against host state. The authoritative
+  record is `corpus/lessons/round-23.md` together with that rejected-evidence directory.
+- **Adjacency is unchanged: quota configuration and diagnosis stay tsukuroi/operator's.** Mori
+  reads no fstab, mount unit, Snapper or superblock configuration, calls no quota command or
+  ioctl, and owns no quota configuration, cause or remediation; a cause question routes to
+  tsukuroi/operator.
+- **Debt and baseline are untouched.** 4 unallowlisted retention hits; the original permission
+  control RED 11/12 retained byte-unchanged and not rerun; two historical dispositions unknown;
+  baseline acceptance blocked; `privacy_clearance` false; no baseline re-pin; no frontier row
+  closed; no privacy clearance and no promotion.
+
+---8<--- END VERBATIM APPEND (PROVINCE.md) ---8<---
+
+
+==========================================================================================
+BLOCK 2 — corpus/README.md, APPENDED TEXT (append at EOF; the Frontier table is NOT edited)
+==========================================================================================
+
+---8<--- BEGIN VERBATIM APPEND (corpus/README.md) ---8<---
+
+## Round-23 disposition — C1 admitted, C2 withdrawn; the FR2 frontier row is unchanged
+
+| Ground | Entry | Disposition |
+|---|---|---|
+| Own-evidence retention accounting (C1, calibration) | `lessons/round-23.md`; `tools/mori-retention-reconcile.py` | Admitted and green on its own: the entering file's bytes after exactly two pre-registered substitutions (schema literal `mori-retention-reconciliation-v1` → `…-v2`; the single `'raw_unallowlisted':len(unallowed),` producer fragment deleted), entering blob `0795bac9…` → transformed `4599ee1a…`, mode 100755. Measured before 25/26 (R25 the only unmet requirement, 8 alias-bearing runs) and after 26/26 with 0 alias-bearing runs. Accounting calibration of mori's own evidence only — not authentication, privacy clearance or an acceptance decision. |
+| FR2 quota/EDQUOT observability (C2, coverage) | `lessons/round-23.md`; `.ufo/waves/round-23/rejected/` | Withdrawn from the production and admitted-capability surfaces; the `FR2` frontier row in the table above is unchanged, and no quota surface, census row or baseline is added. The sealed 30-case target measured 29/30 at revision `f3dc07c…` — `CaseEscapedSpace` stays red because the sealed conservative parent rule requires `ambiguous_overmount` where the sealed expectation says enabled, and the case, expectation, rule and denominator are unchanged — so the original strict target is unprovable. An incomplete per-UUID device mapping also let a mocked permission-loss counterexample report `disabled`, and an active tmpfs accounting token does not prove the runtime enforcement flag. The withdrawn prototype and note are retained byte-exactly as rejected evidence, are not a supported tool, and must not be executed against host state. |
+
+The `FR2` frontier row is unchanged by this disposition: quota configuration and diagnosis stay
+tsukuroi/operator's; mori reads no fstab, mount unit, Snapper or superblock configuration and
+calls no quota command or ioctl; `df` capacity percentages still cannot detect quota exhaustion.
+Carried debt is unchanged — 4 unallowlisted retention hits, the original permission control RED
+11/12 retained byte-unchanged and not rerun, two historical dispositions unknown, baseline
+acceptance blocked, `privacy_clearance` false. No frontier row is closed.
+
+---8<--- END VERBATIM APPEND (corpus/README.md) ---8<---
+
+
+==========================================================================================
+WHAT THIS DISPOSITION DELIBERATELY DOES NOT DO
+==========================================================================================
+- It does not edit PROVINCE.md or corpus/README.md. Both are byte-identical between 4dc80c1 and
+  the current HEAD 6eb889c (blob b55ad202b6dbba4598aac3c5a5e786e8934cbbe6 and
+  0fbf0e0619b48ed9037350dfe096ec7293a23b4d respectively); this file proposes appends only.
+- It does not add a Core row, does not touch the `Owns (read-only probes)` clause, does not
+  re-scope the FR2 Frontier row in PROVINCE.md or corpus/README.md, and does not integrate the
+  rejected probe into the census.
+- It does not cite corpus/knowledge/quota-surface-r23.md. The lesson and the rejected-evidence
+  directory are the record.
+- It does not claim that any production file has already been removed, and it makes no statement
+  about any commit after f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c; the parent adds the final
+  commit evidence.
+- It does not propose a retry, a redesign, a smaller probe or any other future work, and it
+  discharges no debt.
+
+==========================================================================================
+FACT SHEET — EVERY FIGURE ABOVE, WITH ITS SOURCE
+==========================================================================================
+| Fact | Value | Source |
+|---|---|---|
+| Pre-withdrawal production revision | f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c | rejected/withdrawal-manifest.json; evidence/measure4-invocation.json |
+| Frozen seal | 22772c10f6e3c1d8d3fe1b72083a6194e9f4e687 | same |
+| Driver invocation | measure-round23-v2.py --revision f3dc07c… --seal 22772c1… --output evidence/measure4; exit 1; 18.33 s | evidence/measure4-invocation.json |
+| C1 before | 25/26, unmet 1 (R25), misleading_alias_runs 8, capability_absent 0 | evidence/measure4/summary.json (before.c1_original_26) |
+| C1 after | 26/26, unmet 0, misleading_alias_runs 0; c1_original_26 pass true; c1_supplementary pass true | evidence/measure4/summary.json (after.c1_original_26, c1_supplementary) |
+| C1 exact source-2 delta | entering_revision 1bfe708a170c877db3319060d0ab38771efe03ac; entering_sha256 0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32; transformed_sha256 4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36; mode 100755; replacements: SCHEMA='mori-retention-reconciliation-v1' → '…-v2' and deletion of the single 'raw_unallowlisted':len(unallowed), | frozen/c1-source-delta.json |
+| C2 before | capability_absent 30/30 | evidence/measure4/summary.json (before.c2) |
+| C2 after (sealed cases) | pass 29, total 30, unmet 1 | evidence/measure4/summary.json (after.c2) |
+| C2 with --real-expected | pass 30, total 31, unmet 1, finding_id R23_C2_QUOTA_CASES_UNMET; supplementary 284/284 | evidence/measure4/c2-oracle-after-real.json |
+| Failing driver checks | C34.c2_after_every_case_matches; C30.c2_oracle_real_control_agrees | evidence/measure4/summary.json (checks) |
+| Overall verdict | all_claim_checks_pass false; all_claim_checks_pass_excluding_real_controls false; real_controls_pass false | evidence/measure4/summary.json |
+| The red case's exact contradiction | selected parent 43, longest strictly-shorter cover /srv 42 → the sealed conservative parent rule requires ambiguous_overmount; the sealed expectation says enabled | corpus/lessons/round-23.md "Frozen rule versus inconsistent expected topology"; evidence/parent-strict-target-disposition.txt |
+| False-confidence grounds | mocked permission-loss counterexample reports disabled from an incomplete per-UUID device mapping; active tmpfs accounting token cannot prove the runtime enforcement flag; Unicode mount parsing / escape / hidden topology limitations retained, not repaired | rejected/withdrawal-manifest.json reasons 2–4; rejected/READ-THIS.txt |
+| Withdrawn objects | tools/mori-quota-surface.py (mode 100755) → rejected/deployed-quota-probe.py (100644) sha256 e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92; corpus/knowledge/quota-surface-r23.md → rejected/quota-knowledge-note.txt sha256 2614a8f133072b27a3d5e07a7ad5d70455f509ef4052c01a9ad7e112879b8c84 | rejected/withdrawal-manifest.json; both digests recomputed here against the files on disk |
+| Carried debt (unchanged) | baseline_acceptance blocked; historical_dispositions two unknown; original_permission_control RED 11/12 retained byte-unchanged, not rerun; privacy_clearance false; unallowlisted_retention_hits 4 | evidence/measure4/summary.json (carried_open_debt) |
+| C1 real control | the measured tool reproduces the frozen r21 receipt and self-reports the frozen target SHA-256 | evidence/measure4/c1-real-control.json; frozen/c1-expected-real.json; frozen/c1-expected-real-identities.json |
+| Lesson of record | corpus/lessons/round-23.md sha256 93cfe32de5d36731fa266478120ff1565d1bdd7822868598624025e185e1339b (committed; 5 round-23 commits touched it) | computed here; git log 4dc80c1..HEAD -- corpus/lessons/round-23.md |
+| Scope boundary (preserved) | mori observes kernel-visible state on runway targets, never fstab/mount units, Snapper/config or superblock configuration and never quota commands/ioctls; causes, configuration/remediation route to tsukuroi/operator; no census integration or baseline re-pin; named default paths only; /dev/shm's tmpfs usrquota is outside the default pair; QUOTA_DISABLED can coexist with ENOSPC | corpus/lessons/round-23.md "Scope and remaining debt" |
+
+==========================================================================================
+NOTES FOR THE PARENT
+==========================================================================================
+1. Placement: Block 1 appends at the end of PROVINCE.md (after the round-22 accounting-boundary
+   section, 209 lines at HEAD 6eb889c); Block 2 appends at the end of corpus/README.md (426 lines).
+   Neither edits an existing line.
+2. The wave-1 wave-1 draft build/DraftProvince/province.md is void (see the VOID NOTICE above);
+   land nothing from it.
+3. C1's admission text names only the tool, the two substitutions, the two digests and the
+   measured 25/26 → 26/26 result. It claims no acceptance of the r20 baseline, no privacy
+   clearance and no lifecycle decision, and it leaves every carried debt item in place.
+4. If the final commit evidence changes a figure (for example the commit that removes the
+   withdrawn objects from the production tree), the parent appends that evidence; this draft
+   asserts nothing beyond f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c.
+5. Nothing in this file was executed, built, linted, probed or measured by this seat; every
+   figure is read from the retained evidence listed in the fact sheet.

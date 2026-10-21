@@ -1426,3 +1426,31 @@ Targets, not results. Other scores held operability7/depth5/freshness5/adjacency
 Open debt carried: 4 unallowlisted retention hits, permission control RED 11/12, two
 unknown historical dispositions, baseline acceptance blocked, no privacy clearance.
 No retirement, waiver, exploratory claim, promotion or subsequent round.
+
+### Round23 measured disposition — C1 independent; C2 withdrawn/not admitted
+
+| Claim | Measured before → deployed pinf3dc07c0 | Final disposition / held score |
+|---|---|---|
+| C1 calibration | original25/26→26/26; alias-bearing outputs8/18→0/18; schema-v2 outputs0/18→18/18 | retain exact two-change cutover, calibration5→5; supplementary guards are separate evidence, not extra original cases |
+| C2 FR2 coverage | absent at1bfe708a; strict29/30 atf3dc07c0 (26/27 primary+3/3 supplemental);274/274 supplementary output predicates; direct real control matches | withdrawn from production/admitted surfaces after pinned96 completed; current capability absent, strict target unprovable/not admitted; coverage6→6, no Core/repertoire advance |
+
+Original CaseEscapedSpace expected row and pre-sealed parent-ID rule remain unchanged
+and contradictory; no narrowed denominator, exclusion, relabel or special-case.
+Mocked permission-loss disproves the prototype's negative-association confidence;
+primary sources disprove reading active-accounting tokens as enforcement evidence.
+The former tool/note and all red measurements are byte-exact rejected evidence,
+not a supported quota capability. Parent ordered withdrawal, not another experiment.
+
+C1's exact source delta, same-instance replay, selftest4/4, and real r21 identities
+are independent. The real accounting remains95raw/86allowlisted/5non-author/
+90scanner/4in-scope-unallowlisted/9raw-complement, red, privacy_clearance=false.
+R01–R26 are26 requirement IDs over18 cached invocations, not26 independent detections.
+C22's supplementary comparison is tautological, not an exercised guard mutation;
+W2's actual isolated alias-return mutation supplies separate sensitivity evidence.
+
+No numeric score, promotion, lifecycle/health/baseline authority or subsequent round
+is claimed. Operability7/depth5/freshness5/adjacency6 held. Original permission11/12red,
+two historical unknown dispositions and blocked baseline acceptance remain. The
+declaration's ordering means complete seal before production landing, not before
+the explicitly permitted blind draft. Final withdrawal revision gets its own
+measurement; neither a missing tool nor source-only correction is a C2 pass.

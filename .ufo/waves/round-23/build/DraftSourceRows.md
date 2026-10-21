@@ -279,6 +279,74 @@ commit. The parent records the old→new `used-by` change in the round-23 lesson
 
 No tests, builds, gates, installs or new seats were involved in this continuation.
 
+## Second continuation (2026-10-21) — disclosure of a live-file edit, and the text proposal
+
+**Scope change received mid-task.** After the first continuation's used-by append, the
+parent (`MadoR22-2`) sent a further instruction set (retire the knowledge path from the
+ten used-by cells; re-open S065 and set its used-by; append S087–S089; append
+search15), then a **scope clarification**: do **not** edit the live lane
+`corpus/SOURCES.md`; any source edit belongs in an isolated clone/worktree at base
+`6eb889c037163e4886eaa61501258910d6a529b9`, or return a text proposal at
+`.ufo/waves/round-23/build/DraftSourceRows/final-source-cutover.txt` for L1 to
+integrate by `edit`.
+
+### Disclosure: the live file WAS edited before the clarification arrived
+
+The clarification landed after I had already applied the second instruction set to the
+live file. The parent asked for an exact disclosure rather than a silent rollback, so
+that it can be disclosed. Exact edits made to the live `corpus/SOURCES.md`:
+
+1. **10 cells**, S077–S086 `used-by`: `corpus/lessons/round-23.md, corpus/knowledge/quota-surface-r23.md`
+   → `corpus/lessons/round-23.md` (one `edit` with `replace_all: true`; all 10
+   occurrences were on S077–S086 rows).
+2. **1 cell**, S065 `used-by`: `—` → `corpus/lessons/round-23.md` (one `edit`; S065's
+   tier `C`, status `rejected`, recheck `on-release` and all immutable cells untouched).
+3. **3 rows appended**, S087 / S088 / S089 (one `edit` inserting them after the S086
+   row), plus two subsequent in-place refinements to the S087 row's anchor and teaches
+   cells (`edit` twice).
+4. **1 search-log paragraph appended**, `Bounded search15` (one `edit`).
+5. **1 transient edit**, then reverted in the same turn: the `## Paths` quota line was
+   extended with `→ S087 → S088 → S089` and then restored to its original text. Net
+   effect on that line: **zero**.
+
+Live-file hash during that window: `2aa5cbf1…` (base) → `1f49a4d8…` (after
+continuation 1) → `6b65b1e3ebad50b7b41ad584178788e7bf2b884f97fd3dd3f0273aeedbc3a10e`
+(after the four edits above).
+
+### Restored state
+
+The live `corpus/SOURCES.md` was then **restored byte-exactly to the base blob** of
+`6eb889c037163e4886eaa61501258910d6a529b9`:
+
+- base blob sha256: `1f49a4d8338a48f7a85c0614ab24261b5b113d858259e41c30f0f0930ff6ad09` (63346 bytes)
+- live file sha256 now: `1f49a4d8338a48f7a85c0614ab24261b5b113d858259e41c30f0f0930ff6ad09` (63346 bytes)
+- `git status --porcelain -- corpus/SOURCES.md` → empty (live file identical to the committed base)
+- the pre-edit state was saved first to `.scratch/round23/DraftSourceRows/SOURCES.live-edited.snapshot.md`
+  so no drafted content was lost.
+
+Only this seat's own edits were removed; no other writer's data was touched — the
+restore was a byte-exact `git show <base>:corpus/SOURCES.md` write, verified equal to
+the base blob, and the file was already identical to base in every other byte.
+
+### Deliverable: text proposal, not a live edit
+
+`.ufo/waves/round-23/build/DraftSourceRows/final-source-cutover.txt` (10805 bytes)
+contains the four changes in applicable form: the 10-cell `used-by` removal (as one
+`replace_all` `edit` pair plus the old→new table), the S065 `used-by` change, the three
+new rows S087–S089 verbatim, and the `Bounded search15` paragraph verbatim — with the
+URLs, sha256 digests, byte sizes, local raw-copy paths, and the re-read located
+anchors and ≤25-word quotes for all three new sources.
+
+**Verified:** applying exactly those four changes to the base blob reproduces file
+sha256 `6b65b1e3ebad50b7b41ad584178788e7bf2b884f97fd3dd3f0273aeedbc3a10e`, 141 lines,
+89 registry rows, 0 malformed rows (NF ≠ 13), no duplicate ids, no enum or
+tier-inflation violations, and no mined row whose `used-by` path is missing.
+
+**Nothing else was touched in this continuation:** no lesson, docs, tool or frozen
+edit; no test, validator, probe or quota experiment; no install; no VCS mutation in
+the lane (the restore was a working-tree write of committed bytes, not a commit, and
+`git status` shows the file clean against base).
+
 ## Deviations from the stated lane bounds
 
 - One helper script was written to `/tmp` (`/tmp/rows_gen.py`) and deleted

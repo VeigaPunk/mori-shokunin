@@ -484,3 +484,98 @@ in §2 after archiving, and sibling and r22 scratch remain intact.
 
 No install, no update, no upgrade, no service restart; standard-library only.
 The host-wide pacman pause was left untouched.
+
+---
+
+# §4 — withdrawal patch for SKILL.md (withdrawal, not rescue)
+
+Main authorised withdrawal of the round-23 quota surface. This seat drafted the
+minimal SKILL.md patch in its own clone; the parent integrates it. No source
+fix, no new runtime experiment, no test was run, and no active lane file,
+production tool or frozen data was touched.
+
+## Deliverables
+
+| path | role | bytes | sha256 |
+|---|---|---|---|
+| `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/build/ImplQuota/withdrawal-skill.patch` | unified diff against lane master `6eb889c` (a/ b/ prefixes) | 7742 | `65a64811e43734c703bc0e19a7c094e1b0e60b8a77a3c3b1b83cd555b2fa7787` |
+| `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/build/ImplQuota/SKILL.md` | candidate SKILL.md bytes (post-patch) | 70349 | `9fdddc8e5b69557210b38bd73d72bf280f06a027bc0ff8fae2c5b19ad6bd87ff` |
+
+Scratch: `/fast/scratch/hyaku/mori-r23/ImplQuota`, branch `withdrawal/skill-r23`,
+commit `325166d` ("round23: withdraw the quota surface from SKILL.md
+(rejected/unadmitted route)"), based on the lane master fetched read-only at
+`6eb889c`. The lane repository itself was only read.
+
+## The patch (3 hunks, SKILL.md only)
+
+1. **Heading** — `## Round23 — current reconciliation API and quota visibility`
+   → `## Round23 — current reconciliation API (the round-23 quota surface is
+   withdrawn)`.
+2. **Registry row removed** — the `| quota surface (r23) | probe, … |` row is
+   deleted, so no tool entry, registry row or support instruction for the
+   quota surface remains.
+3. **Quota prose replaced by the withdrawal record** — the former
+   "For quota visibility, read `corpus/knowledge/quota-surface-r23.md`
+   (S077–S086) …" and "QUOTA_DISABLED is scoped to requested paths …" paragraphs
+   are replaced by a withdrawal block carrying the four required points below.
+4. **One bullet in "Disk thresholds are a PROPOSAL, not a measurement"** — the
+   fleet-failure bullet is re-dated from "actually reported" to "once reported"
+   and marked "dated historical evidence, not a current failure diagnosis",
+   with a pointer to the rejected route. This hunk is required for coherence:
+   the sentence that dated that bullet lived inside the quota prose being
+   removed, so without it the bullet would be left standing as an active quota
+   claim. The other disk propositions (never threshold the btrfs chunk percent,
+   never OR a byte floor, one pair only, since-boot average) are untouched.
+
+### Retained unchanged (verified)
+
+* The C1 registry row `| retention reconciliation schema-v2 (r23) | …` is
+  **byte-identical** to the master's row (diff of the extracted line: no
+  difference), including the absolute-repo command `--repo "$PWD"` (not `.`),
+  the pinned `c1-requirements.json`, `c1-source-delta.json`,
+  `c1-expected-real.json`, `c1-expected-real-identities.json` and
+  `oracle-rename.py`, and the "original26 separate from supplementary
+  byte/output guards" split.
+* The Round23 C1 paragraphs (schema v2, the removed `raw_unallowlisted`,
+  `scanner_unallowlisted` / `raw_not_allowlisted`, the retained r21 control is
+  4 versus 9, `privacy_clearance` remains false, the bound-revision replay
+  rule, the scratch/TMPDIR rules) are unchanged.
+* No reference to `tools/mori-quota-surface.py`, to
+  `corpus/knowledge/quota-surface-r23.md`, or to any `QUOTA_*` verdict token
+  remains anywhere in the candidate file.
+
+### The four required points, and their grounding
+
+| required point | where it lands in the patch | grounded in |
+|---|---|---|
+| explicit rejected/unadmitted evidence route | "Its artifacts are retained as rejected/unadmitted evidence under `.ufo/waves/round-23/rejected/` — an evidence route, not a runnable or supported surface", plus the same pointer in the disk bullet | the L1's withdrawal decision |
+| strict original 29/30 | "The measured strict-original C2 population is **29/30** with one red retained: the frozen `CaseEscapedSpace` expectation contradicts the sealed conservative parent-ID rule, so the strict C2 target is unprovable and is **not admitted**. The frozen expectation and the sealed rule both stay unchanged, the denominator stays 30, and no expectation was repaired, relabeled or excluded." | `.ufo/waves/round-23/evidence/measure4/summary.json` (`after/c2`: pass 29, total 30, unmet 1) and `evidence/frozen-contradiction.json` (pass 29/30; primary 26/27; supplemental 3/3; disposition "Strict C2 target unprovable, not admitted") |
+| actual partial-UUID / permission false-disabled proof | "A `disabled` reading was never proof of disabled quota. The btrfs reading rests on a **partial** `/sys/fs/btrfs` listing: on this host that listing holds the uuid directory plus the non-uuid `features/` sibling, which lists no device … A permission-limited or partial listing cannot be distinguished from an absent `qgroups` directory, so a denied listing must never be read as absent — that is the false-`disabled` route, recorded by the sentinel before the seal." | `build/ReviewRealC2.md` R5 (listing yields the uuid plus `features/`; `ls -d /sys/fs/btrfs/*/qgroups` → "No such file") and A4 (`features/` has no `devices/` entry, so the "exactly one uuid lists the device" count depends on a partial listing); `build/SentinelProbe.md` ("Treating a denied `qgroups` listing as absent could falsely report `disabled`") |
+| tmpfs accounting ≠ runtime enforcement | "tmpfs accounting is not runtime enforcement. `quota`/`usrquota`/`grpquota` evidence that quota accounting and enforcement were requested for that mount; they do not evidence that any limit was armed or that EDQUOT could occur, and the tmpfs case additionally carries a selected-source provenance erratum." | S084 (tmpfs options enable accounting/enforcement on the mount) with S086 (only the four named hardlimit keys are emitted, after quota initialization) and `evidence/tmpfs-source-provenance-erratum.json` (selected source path differs from the sealed one; fixture not unchanged) |
+
+The withdrawal block closes with the retained debt (four unallowlisted hits,
+permission 11/12 red, two unknown dispositions, blocked baseline acceptance)
+and states that withdrawal is neither a clearance nor a repair, and that
+configuration and causes stay with tsukuroi/operator.
+
+## Verification performed
+
+* `git apply --check` of the delivered patch against a pristine
+  `6eb889c:SKILL.md` tree: **APPLY_CHECK_OK**; after applying, the result is
+  byte-identical to the delivered candidate SKILL.md
+  (`PATCH_REPRODUCES_DELIVERED_CANDIDATE_OK`).
+* The patch is 3 hunks, one file, `SKILL.md` only; no tool, corpus, frozen or
+  evidence file is in it.
+* C1 row extracted from master and from candidate: byte-identical.
+* Residual-reference sweep of the candidate: no `mori-quota-surface`,
+  no `quota-surface-r23`, no `QUOTA_*` token; the rejected route appears twice.
+* No source fix, no runtime experiment, no test, no selftest, no host probe,
+  no case or oracle read, no new seat, no provider change, no lane VCS
+  mutation, no edit to the production tool or to frozen data.
+
+## Parent-side actions this patch assumes (not performed here)
+
+The production tool `tools/mori-quota-surface.py` and the admitted note
+`corpus/knowledge/quota-surface-r23.md` are removed by the parent once the open
+readers settle; both are already byte-archived. This patch only removes the
+*active surface* claim from SKILL.md and points at the rejected evidence route.

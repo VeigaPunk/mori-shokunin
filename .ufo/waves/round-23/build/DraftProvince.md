@@ -139,3 +139,20 @@ line number in both lanes' `PROVINCE.md` files.
 No build, test, lint, formatter, selftest, gate or probe run.
 
 Report: .ufo/waves/round-23/build/DraftProvince.md
+
+## Addendum (round 23, after the pinned 96-seat falsification wave) — C2 withdrawn; this seat's wave-1 draft is void
+
+Main withdrew C2 from the production and admitted-capability surfaces after the pinned 96-seat
+falsification wave. The wave-1 deliverable drafted by this seat
+(`.ufo/waves/round-23/build/DraftProvince/province.md`, Core-advancing FR2 wording) is **void and
+must not be landed**; it is retained as wave-1 evidence only. The replacement draft is
+`.ufo/waves/round-23/rejected/frontier-disposition.txt`: appended PROVINCE and corpus/README
+wording only — no FR2 Core movement, no capability acquisition, no census integration, no baseline
+re-pin — pointing at `corpus/lessons/round-23.md` and the rejected evidence under
+`.ufo/waves/round-23/rejected/`, not at the withdrawn quota note. C1 is stated separately green
+with the exact two-source delta (entering blob `0795bac9…` → transformed `4599ee1a…`, mode 100755;
+measured 25/26 before and 26/26 after at revision `f3dc07c…`); C2 is stated as 29/30, strict
+unprovable, with the false-confidence grounds; the tsukuroi configuration/diagnosis boundary is
+preserved; all carried debt and the blocked baseline are unchanged. No production file was edited
+by this seat — this addendum is the only change to this report. No build, test, lint, selftest,
+gate, oracle or probe was run; no live host read; no tool install; no VCS mutation.

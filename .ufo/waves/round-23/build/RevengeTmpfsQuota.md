@@ -132,3 +132,54 @@ values" correctly handles this.
 - [INFERENCE, marked]: whether every deployed kernel in scope is ≥6.6-series with the same
   layout was not verified beyond Arch's current config; older kernels without tmpfs quota fall
   under the `CONFIG_TMPFS_QUOTA=n` caveat.
+
+## Addendum — enforcement-off semantics (ReopenS084 followup, source-only, v7.2)
+
+Refines §2's "accounting cannot be turned off post-mount": that claim stands, but enforcement
+(`DQUOT_LIMITS_ENABLED`) is independently and silently disableable while accounting remains.
+
+**Supported chain (enforcement-off, accounting-on):**
+`quotactl(Q_QUOTAOFF)` → `do_quotactl` case `Q_QUOTAOFF` (`fs/quota/quota.c:789-790`) →
+`quota_quotaoff` (`quota.c:97-104`): tmpfs `s_qcop = dquot_quotactl_sysfile_ops`
+(`shmem.c:5029`) has `.quota_disable = dquot_quota_disable` (`dquot.c:2928`) and no `.quota_off`,
+so → `dquot_quota_disable(sb, qtype_enforce_flag(type))` where the flag is only
+`FS_QUOTA_U/G/PDQ_ENFD` (`quota.c:73-84`) → `dquot_quota_disable` (`dquot.c:2641-2689`):
+requires `DQUOT_QUOTA_SYS_FILE` (tmpfs sets it, `shmem.c:303`); the `*_DQ_ACCT` → `-EOPNOTSUPP`
+refusal (`:2651-2656`) is unreachable via `Q_QUOTAOFF` (only ENFD passed) and reachable only via
+`Q_XQUOTAOFF` user flags (`quota.c:810` → `:324-333`) → `dquot_disable(sb, type,
+DQUOT_LIMITS_ENABLED)` (`:2667`) → `dquot_disable` (`dquot.c:2267-2373`) clears exactly the
+limits state bit (`:2300-2306`, bit layout `include/linux/quota.h:474-478`,
+`dquot_state_flag :493-496`), then "still have to keep quota loaded?" continue (`:2315-2317`)
+because the usage bit survives — no dquot/format/info teardown. Post-state:
+`sb_has_quota_limits_enabled` false (`quotaops.h:130-134`), `sb_has_quota_loaded` =
+usage-enabled still true (`:148-152`), not suspended (`:136-140`; `DQUOT_SUSPENDED` set only in
+`dquot_disable`'s SUSPENDED branch `dquot.c:2295-2299`, reached only via filesystem-called
+`dquot_suspend` `quotaops.h:76-79` — **zero** suspend call sites in `shmem.c`/`shmem_quota.c`)
+⇒ `sb_has_quota_active` stays true (`quotaops.h:159-163`). Reversible via `Q_QUOTAON` →
+`.quota_enable = dquot_quota_enable` (`dquot.c:2927` → `:2602-2638`), which requires usage
+enabled ("Can't enforce without accounting", `:2617-2618`). Permission: `Q_QUOTAOFF` falls to
+the `CAP_SYS_ADMIN` default in `check_quotactl_permission` (`quota.c:43-47`).
+
+**Consequence for mountinfo:** `shmem_show_options` predicates are only `sb_has_quota_active`
+(`shmem.c:4878-4881`) and `sbinfo->qlimits.* != 0` (`:4882-4893`); neither reads the limits bit,
+and `qlimits` is cleared only at `put_super` (`:4910` → `shmem_disable_quotas :323-329`).
+Output is therefore byte-invariant across a `Q_QUOTAOFF`: flag and hardlimit tokens persist
+while runtime enforcement is off. Enforcement on/off is **not distinguishable** from mountinfo;
+the contract's `enforced` means load-time `DQUOT_USAGE_ENABLED | DQUOT_LIMITS_ENABLED`
+(`shmem.c:307-309`), which can silently diverge afterwards.
+
+**Supported: hardlimit-only snapshot with NO active quota token cannot persist.** Nonzero
+`sbinfo->qlimits` requires `SHMEM_SEEN_QUOTA` at mount (sole copy site `shmem.c:5027-5034`);
+`SHMEM_SEEN_QUOTA` only from the three flag cases, each ORing ≥1 type (`:4620-4637`; hardlimit
+cases set neither seen nor types, `:4638-4673`); `shmem_enable_quotas` loads each type with
+USAGE|LIMITS and failure aborts the mount (`:298-321`); the usage bit is irremovable while
+mounted (quotactl ACCT refusal; internal `dquot_quota_off` = `dquot_disable(USAGE|LIMITS)`,
+`dquot.c:2371-2375`, only at mount-failure unwind `shmem.c:315-320` and `put_super :4910`; no
+suspension path). Hence ≥1 of `usrquota`/`grpquota` is always co-present; the only flag-less
+hardlimit token is the cross-type mount case (`usrquota,grpquota_inode_hardlimit=N` with `grpquota`
+absent), persistent for the mount lifetime but never with zero flag tokens.
+
+**Unknown / not claimed:** LSM behavior via `security_quotactl` (`quota.c:50`); other
+filesystems' suspend semantics; `CONFIG_TMPFS_QUOTA=n` (config caveat in §3). Contract impact:
+neither tmpfs row flips; verdicts and the probe's observable inputs are unchanged — only the
+runtime meaning of `enforced` can silently diverge post-`Q_QUOTAOFF`, invisibly to mountinfo.

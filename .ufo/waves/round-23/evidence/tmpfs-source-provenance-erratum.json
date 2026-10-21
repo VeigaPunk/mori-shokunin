@@ -1,0 +1,15 @@
+{
+  "seal": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+  "original_sha256": "f4814c94a8a0f330df82caa46ef1695318e5b3b297545e3b2b888519c4dd4dbb",
+  "sealed_selected_sha256": "7afd98c191a799e52bb9ac01b896b23eaa855b9e02ef1bc3f901aa13a03a49b5",
+  "fixture_unchanged": false,
+  "expected_unchanged": true,
+  "different_top_fields": [
+    "scenario",
+    "fixture",
+    "rationale"
+  ],
+  "selected_source_path": ".ufo/waves/round-23/cases-corrected/CaseTmpfsNoQuota.json",
+  "selected_source_path_at_seal": false,
+  "status": "L1 selected an author-corrected draft during source copying, then incorrectly told author original selected; author deleted draft. Frozen expected bytes themselves landed before production and remain unchanged. Preserve original/selected bytes and disclose missing intermediary; do not rewrite frozen case-decisions."
+}

@@ -1,0 +1,230 @@
+{
+  "actual": {
+    "address_space_limit_bytes": 402653184,
+    "address_space_limit_enforced": true,
+    "children_spawned": 3,
+    "determinism": {
+      "byte_identical": true,
+      "run_2_stdout_sha256": "a8cf0e8a8c31b5ae29158dd7db45b3fc35425e0e1e7b564b6222b719f0749039",
+      "run_3_stdout_sha256": "a8cf0e8a8c31b5ae29158dd7db45b3fc35425e0e1e7b564b6222b719f0749039"
+    },
+    "harness_error_run_1": {
+      "error_token": "fixture_key_set",
+      "exit": 2,
+      "finding_id": "QUOTA_SETUP",
+      "note": "harness input error on the seat side, not tool behaviour; the tool correctly refused a fixture document with the wrong top-level key set",
+      "reached_interpreter": true,
+      "stdout_file_overwritten_by_run_2": true,
+      "what": "run 1 passed the whole case FILE instead of case['fixture']"
+    },
+    "pre_exec_failures": 0,
+    "recorded_measurement_run": "run 3 (the run whose bytes are in stdout.json / stdout.txt)",
+    "successful_tool_invocations": 3,
+    "timeout_seconds": 15
+  },
+  "argv": [
+    "python3",
+    "-I",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+    "--fixture",
+    "/fast/scratch/hyaku/mori-r23/QUnsupported/fixture.json"
+  ],
+  "argv_wrapper": [
+    "prlimit",
+    "--as=402653184",
+    "--cpu=15",
+    "timeout",
+    "-s",
+    "KILL",
+    "15"
+  ],
+  "case_bytes": 5549,
+  "case_bytes_expected_sha256": "28f3080b116cf3e09e3ee77f3e8b53daff826fdfb4387a21d3c58850878b22b7",
+  "case_bytes_match_case_decisions_selected_sha256": true,
+  "case_bytes_match_seal_manifest": true,
+  "case_bytes_unchanged_since_seal": true,
+  "case_expected_bytes_modified": false,
+  "case_file": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseUnsupported.json",
+  "case_file_modified_by_seat": false,
+  "case_git_blob_at_pin_f3dc07c0": "b83dabe165543bdfd4ef149c82b422a26bb57b2d",
+  "case_git_blob_at_seal_22772c10": "b83dabe165543bdfd4ef149c82b422a26bb57b2d",
+  "case_id": "CaseUnsupported",
+  "case_sha256": "28f3080b116cf3e09e3ee77f3e8b53daff826fdfb4387a21d3c58850878b22b7",
+  "case_tier": "independent_primary (primary=true; one of the 27 independent primary C2 cases, per frozen/case-decisions.json)",
+  "corrected_case": {
+    "byte_identical_to_frozen": true,
+    "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/cases-corrected/CaseUnsupported.json",
+    "sha256": "28f3080b116cf3e09e3ee77f3e8b53daff826fdfb4387a21d3c58850878b22b7"
+  },
+  "df_covers_quota": false,
+  "exit_code": 2,
+  "exit_code_expected": 2,
+  "exit_match": true,
+  "finding_id": "QUOTA_STATE_UNKNOWN",
+  "finding_id_expected": "QUOTA_STATE_UNKNOWN",
+  "finding_id_match": true,
+  "fixture_bytes": 581,
+  "fixture_path": "/fast/scratch/hyaku/mori-r23/QUnsupported/fixture.json",
+  "fixture_semantically_identical_to_case_fixture": true,
+  "fixture_sha256": "6d0aa9bf9912cc305a226838a4dee74bfc6eb3376ca0c67353ee6d25b37998a0",
+  "fixture_source": "case['fixture'] copied verbatim via json.dump(sort_keys=True, separators=(',',':')) + trailing newline; no byte of the sealed case edited",
+  "given": {
+    "address_space_limit": "384MiB",
+    "address_space_limit_bytes": 402653184,
+    "case_only": "CaseUnsupported",
+    "child_count": 1,
+    "mode": "fixture",
+    "real_mode_used": false,
+    "timeout_seconds": 15
+  },
+  "leakage_check": {
+    "clean": true,
+    "hit_list": [],
+    "hits": 0,
+    "patterns": [
+      "nfs-server.example",
+      "/export",
+      "vers=4.2",
+      "timeo=600",
+      "retrans=2",
+      "rsize=1048576",
+      "wsize=1048576",
+      "hard",
+      "proto=tcp",
+      "sec=sys",
+      "0:61",
+      "6f1a2c3d",
+      "dm-0",
+      "/dev/mapper/root",
+      "relatime",
+      "shared:",
+      "subvolid"
+    ]
+  },
+  "mismatches": [],
+  "mode": "fixture",
+  "no_setup_error_key": true,
+  "notes": [
+    "Only this one sealed fixture-mode case (CaseUnsupported) was executed against the candidate; real mode was never used, no other case, no selftest, no driver, no build/lint.",
+    "No frozen case/rule/oracle byte was edited: the case file is byte-identical to the seal commit 22772c10f6e3c1d8d3fe1b72083a6194e9f4e687 and to the pinned revision f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c.",
+    "CaseEscapedSpace strict red was NOT executed by this seat and is NOT excused: it remains a separate reported mismatch for the seat that owns it.",
+    "QUOTA_STATE_UNKNOWN is an observability classification only, not a capacity/health/clearance verdict.",
+    "Production tool bytes (sha256 e4857413..., git blob 439ff4c1) differ from the seat's recorded build candidate .ufo/waves/round-23/build/ImplQuota/mori-quota-surface-v3.py (sha256 5199e97b): classify() return shape, empty paths list now a setup error, path-entry key set now exact, limits serialised as a string instead of a list, and one selftest arm. The pinned/committed production artifact is the measured one; the string form of limits is what the sealed oracle requires (oracle-quota.py:271-272)."
+  ],
+  "output_exit_code_field": 2,
+  "output_exit_code_field_matches_process_exit": true,
+  "output_schema": "mori-quota-surface-v1",
+  "output_schema_expected": "mori-quota-surface-v1",
+  "output_top_level_key_set_exact": true,
+  "output_top_level_key_set_expected": [
+    "df_covers_quota",
+    "exit_code",
+    "finding_id",
+    "limits",
+    "paths",
+    "schema"
+  ],
+  "output_top_level_keys": [
+    "df_covers_quota",
+    "exit_code",
+    "finding_id",
+    "limits",
+    "paths",
+    "schema"
+  ],
+  "primary": {
+    "actual_tuples": [
+      [
+        "/mnt/nfs/data",
+        "nfs4",
+        "/mnt/nfs",
+        "unknown",
+        "n/a",
+        "unsupported_fstype"
+      ]
+    ],
+    "expected_tuples": [
+      [
+        "/mnt/nfs/data",
+        "nfs4",
+        "/mnt/nfs",
+        "unknown",
+        "n/a",
+        "unsupported_fstype"
+      ]
+    ],
+    "ordered_tuple_match": true,
+    "path_count_actual": 1,
+    "path_count_expected": 1,
+    "primary_match": true,
+    "scored_fields": [
+      "path",
+      "fstype",
+      "mount_point",
+      "quota_state",
+      "enforcement",
+      "basis"
+    ]
+  },
+  "proposal_retained": {
+    "matches_decisions_original_sha256": true,
+    "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/cases-proposed/CaseUnsupported.json",
+    "sha256": "44c6f3a2d682e602a104ccb90a02cf1b23f06d878a13146518d16c25eb0a3018"
+  },
+  "schema": "mori-r23-falsify-scan-v1",
+  "seat": "QUnsupported",
+  "stderr": {
+    "bytes": 0,
+    "content": "",
+    "path": "/fast/scratch/hyaku/mori-r23/QUnsupported/stderr.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stdout": {
+    "bytes": 952,
+    "path": "/fast/scratch/hyaku/mori-r23/QUnsupported/stdout.txt",
+    "sha256": "a8cf0e8a8c31b5ae29158dd7db45b3fc35425e0e1e7b564b6222b719f0749039"
+  },
+  "stdout_json": {
+    "df_covers_quota": false,
+    "exit_code": 2,
+    "finding_id": "QUOTA_STATE_UNKNOWN",
+    "limits": "no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.",
+    "paths": [
+      {
+        "basis": "unsupported_fstype",
+        "btrfs_qgroups_mode": null,
+        "device_check": "match",
+        "enforcement": "n/a",
+        "fstype": "nfs4",
+        "mount_point": "/mnt/nfs",
+        "path": "/mnt/nfs/data",
+        "quota_option_keys": [],
+        "quota_state": "unknown"
+      }
+    ],
+    "schema": "mori-quota-surface-v1"
+  },
+  "supplementary": {
+    "actual": {
+      "btrfs_qgroups_mode": null,
+      "device_check": "match",
+      "quota_option_keys": []
+    },
+    "expected": {
+      "btrfs_qgroups_mode": null,
+      "device_check": "match",
+      "quota_option_keys": []
+    },
+    "match": true,
+    "note": "separately frozen metadata, never merged into the primary six-field denominator; for this case the sealed case file carries NO supplementary_expected key, so these values are prose-only in the rationale and are derived here from the amendment rules, unsealed",
+    "sealed_supplementary_expected_key_present": false
+  },
+  "tool": "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+  "tool_git_blob": "439ff4c1a68fc4f98182c6b855b3b4c790286851",
+  "tool_git_blob_at_pin_f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c": "439ff4c1a68fc4f98182c6b855b3b4c790286851",
+  "tool_identical_pin_to_head": true,
+  "tool_sha256": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+  "tool_working_copy_matches_index": true,
+  "verdict": "MATCH",
+  "wave": "round-23"
+}

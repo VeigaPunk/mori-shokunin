@@ -1,0 +1,109 @@
+{
+  "actual_sysfs_or_mode_reads": false,
+  "argv": [
+    "/usr/bin/python3",
+    "/fast/scratch/hyaku/mori-r23/MutModeRead/permission_loss_probe.py"
+  ],
+  "detector_sha256": "038aac818f1c205e95a4149f18e6dcf582286a142e72afe91b6f3b6f2821fb61",
+  "events": [
+    {
+      "operation": "listdir",
+      "path": "/fast/scratch/hyaku/mori-r23/MutModeRead/permission-loss-sysfs",
+      "result": [
+        "11111111-2222-4333-8444-555555555555",
+        "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee"
+      ]
+    },
+    {
+      "operation": "isdir",
+      "path": "/fast/scratch/hyaku/mori-r23/MutModeRead/permission-loss-sysfs/11111111-2222-4333-8444-555555555555",
+      "result": true
+    },
+    {
+      "exception": "PermissionError",
+      "operation": "listdir",
+      "path": "/fast/scratch/hyaku/mori-r23/MutModeRead/permission-loss-sysfs/11111111-2222-4333-8444-555555555555/devices"
+    },
+    {
+      "exception": "FileNotFoundError",
+      "operation": "stat",
+      "path": "/fast/scratch/hyaku/mori-r23/MutModeRead/permission-loss-sysfs/11111111-2222-4333-8444-555555555555/qgroups"
+    },
+    {
+      "operation": "isdir",
+      "path": "/fast/scratch/hyaku/mori-r23/MutModeRead/permission-loss-sysfs/aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
+      "result": true
+    },
+    {
+      "operation": "listdir",
+      "path": "/fast/scratch/hyaku/mori-r23/MutModeRead/permission-loss-sysfs/aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee/devices",
+      "result": [
+        "dm-0"
+      ]
+    },
+    {
+      "exception": "FileNotFoundError",
+      "operation": "stat",
+      "path": "/fast/scratch/hyaku/mori-r23/MutModeRead/permission-loss-sysfs/aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee/qgroups"
+    }
+  ],
+  "exit_code": 1,
+  "io_policy": "BTRFS_SYSFS rebound to own scratch; listdir/isdir/stat/open fully mocked without delegation",
+  "observed_base": "f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c",
+  "observed_classify_btrfs": {
+    "basis": "btrfs_qgroups_dir_absent",
+    "enforcement": "n/a",
+    "mode": null,
+    "quota_state": "disabled"
+  },
+  "observed_scan_btrfs_sysfs": {
+    "11111111-2222-4333-8444-555555555555": {
+      "devices": [],
+      "enabled": null,
+      "mode": null,
+      "qgroups": false
+    },
+    "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee": {
+      "devices": [
+        "dm-0"
+      ],
+      "enabled": null,
+      "mode": null,
+      "qgroups": false
+    }
+  },
+  "pass": false,
+  "python_version": "3.14.8",
+  "required": {
+    "disabled_permitted": false,
+    "quota_state": "unknown",
+    "reason": "Unreadable UUID devices membership must not become a complete unique association"
+  },
+  "runtime_bounds": {
+    "address_space_bytes": 402653184,
+    "concurrent_children": 1,
+    "cpu_seconds": 10,
+    "wall_seconds": 15
+  },
+  "schema": "mori-r23-permission-loss-witness-v1",
+  "source_modified": false,
+  "source_sha256_after": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+  "source_sha256_before": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+  "synthetic_fixture": {
+    "accessible_devices_uuid": "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
+    "device": "dm-0",
+    "potential_device_membership": {
+      "11111111-2222-4333-8444-555555555555": [
+        "dm-0"
+      ],
+      "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee": [
+        "dm-0"
+      ]
+    },
+    "qgroups_absent_for_both": true,
+    "unreadable_devices_uuid": "11111111-2222-4333-8444-555555555555"
+  },
+  "synthetic_root": "/fast/scratch/hyaku/mori-r23/MutModeRead/permission-loss-sysfs",
+  "tool": "/fast/scratch/hyaku/mori-r23/MutModeRead/repo/tools/mori-quota-surface.py",
+  "verdict": "safety_counterexample"
+}

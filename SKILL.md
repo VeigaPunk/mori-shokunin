@@ -408,9 +408,10 @@ independent 15–30× isolations (minimum 208 ms) over the two-read floor agains
 out of census runtime on measured grounds, not an estimate. The average is not a
 licence to recalibrate 85/95.) Falsification results worth keeping:
 
-- The fleet's *actually reported* disk failures are **quota** events (`EDQUOT`,
-  "disk-quota pressure") — a capacity-percent probe cannot see them, and the quota
-  numbers are unreadable on this host.
+- Historical records include an `EDQUOT` write failure, not a complete current
+  failure diagnosis. Capacity percentages cannot detect quota exhaustion;
+  per-ID quota limits/usage remain unmeasured here. The rejected round23 quota
+  attempt is evidence only under `.ufo/waves/round-23/rejected/`.
 - **Never threshold the btrfs chunk percent.** Data-chunk fill reads **94.25%**
   while `df -P` Capacity on the same device reads **10%**; a probe that used the
   chunk percent would fire `DISK_LOW` against every proposed default today. Keep
@@ -533,9 +534,9 @@ Trust refinement: `.ufo/waves/round-21/trust-refinement.md`.
 
 ## Round22 retention receipt reconciliation (accounting agreement only)
 
-| name | kind | entry | verdict map | self-test | pinned values | write scope | owner |
-|---|---|---|---|---|---|---|---|
-| retention receipt reconciliation | gate (accounting agreement, not privacy clearance) | `python3 tools/mori-retention-reconcile.py check --repo . --rev INPUT_COMMIT --receipt .ufo/waves/round-21/evidence/final/retention-floor.json --policy .ufo/waves/round-18/frozen/c1-policy.json --allowlist corpus/evidence/retention-allowlist.json` | 0 RETENTION_RECONCILED even when retention is red; 1 RETENTION_RECONCILIATION_MISMATCH; 2 RETENTION_RECONCILIATION_SETUP | `TMPDIR=$PWD/.scratch python3 tools/mori-retention-reconcile.py --selftest`; actual isolated CLI, exit/finding assertions | `.ufo/waves/round-22/frozen/requirements-v2.json`, corrected fixture-builder-v2.py and independent oracle-reconcile-v2.py; original freeze retained with denominator-correction.md | none live; stdout only; selftest isolated fixtures | mori |
+The historical schema-v1 registry is retained at
+`da40bb20f81da125d798f73cd1653655be1255ca:SKILL.md`. Its old predicates are not
+current API instructions; use the sole schema-v2 reconciliation row below.
 
 Read the three inputs from the exact committed input revision; the recorded
 measurement revision, command --rev and inner commit must agree. Recount
@@ -563,7 +564,7 @@ revision), `measured_not_ancestor`, `policy_changed`/`allowlist_changed`,
 (including `-h`, which never exits 0). Output digests are unsalted provenance,
 not secrecy; argv echoes caller paths, so pass only lane-relative inputs.
 
-## Round23 — current reconciliation API and quota visibility
+## Round23 — current reconciliation API; quota attempt withdrawn
 
 The round22 registry/field caveats above are historical v1. Current reconciliation
 schema is `mori-retention-reconciliation-v2` on check/setup/selftest outputs.
@@ -583,23 +584,26 @@ fall back to /tmp. New heavy scratch belongs under /fast/scratch/hyaku/mori-r23.
 | name | kind | entry | verdict map | self-test | pinned values | write scope | owner |
 |---|---|---|---|---|---|---|---|
 | retention reconciliation schema-v2 (r23) | gate, artifact accounting only | `python3 tools/mori-retention-reconcile.py check --repo "$PWD" --rev INPUT_COMMIT --receipt .ufo/waves/round-21/evidence/final/retention-floor.json --policy .ufo/waves/round-18/frozen/c1-policy.json --allowlist corpus/evidence/retention-allowlist.json` | 0 RETENTION_RECONCILED even when red; 1 RETENTION_RECONCILIATION_MISMATCH; 2 RETENTION_RECONCILIATION_SETUP | `TMPDIR=<existing-private-scratch> python3 tools/mori-retention-reconcile.py --selftest`; isolated actual CLI checks | `.ufo/waves/round-23/frozen/c1-requirements.json`, c1-source-delta.json, c1-expected-real.json, c1-expected-real-identities.json and oracle-rename.py; original26 separate from supplementary byte/output guards | read-only committed inputs; selftest private temporary fixtures | mori |
-| quota surface (r23) | probe, not gate or health verdict | `python3 tools/mori-quota-surface.py` (defaults fleet root + /tmp); repeated `--path ABS` only for operator-pinned runway targets | 0 QUOTA_DISABLED, mechanism observation only; 1 QUOTA_ENABLED, positive runway evidence not failure; 2 QUOTA_STATE_UNKNOWN or QUOTA_SETUP, read finding_id | `TMPDIR=<existing-private-scratch> python3 tools/mori-quota-surface.py --selftest`; isolated fixture-mode actual CLI, no host reads | independent `.ufo/waves/round-23/frozen/quota-cases/` and c2-expected-real.json are oracle evidence, not probe runtime defaults | stdout only; kernel mountinfo/stat/realpath and named btrfs sysfs reads; no configuration/commands/ioctls/writes | mori |
 
-For quota visibility, read `corpus/knowledge/quota-surface-r23.md` (S077–S086).
-XFS accounting-only is not enforcement; ext hints are unknown, not enabled.
-btrfs directory presence is initialized state, not the ON flag. Real mode reads the
-non-asserting enabled attribute and NEVER qgroups/mode (ASSERT/disable-race risk);
-null mode is intentionally unobserved. Fixture mode may project known mode metadata.
-Ambiguous covering mounts, inconsistent parent topology, unassociated devices or
-permission errors remain unknown, never fabricated disabled evidence.
+**C2 quota visibility is withdrawn, unadmitted evidence, not a supported tool.**
+The deployed prototype and its knowledge note were removed after all96 pinned
+readers settled; byte-exact copies and the failed observations remain under
+`.ufo/waves/round-23/rejected/`. No quota command, registry entry or capability
+is supported by those evidence files, and FR2 remains Frontier.
 
-QUOTA_DISABLED is scoped to requested paths, not every filesystem or capacity:
-/dev/shm may have tmpfs usrquota while the defaults show disabled, and ENOSPC can
-coexist with disabled quota. No per-ID limits/usage/exhaustion, no diagnosis of old
-EDQUOT, no census cutover or threshold change. The old `:411` statement about fleet
-failures is dated historical evidence, not a universal current failure diagnosis.
-Configuration/causes belong to tsukuroi/operator: no fstab, mount units, Snapper,
-superblocks, quotactl, btrfs, xfs_quota, repquota, mount or remediation. Arbitrary
-remote/automount path resolution can block/trigger lookup; no universal effect-free
-claim. Four retention hits, permission11/12red, two unknown dispositions and blocked
-baseline acceptance remain unchanged authority; these new tools grant no clearance.
+The original strict target remains **29/30, unprovable/not admitted**.
+Frozen CaseEscapedSpace, its expected enabled row and the opposing pre-sealed
+parent-ID rule all remain unchanged; there is no exception, exclusion or relabel.
+An actual fully mocked permission-loss probe also produced false `disabled`
+confidence after one UUID's device-list failure was dropped from the mapping
+(`falsify/MutModeRead/permission-loss.json` under the round23 wave directory).
+Primary kernel sources show that tmpfs active accounting tokens can persist
+after runtime limit enforcement is disabled; the former `enforced` label was
+not an observed enforcement flag. No kernel enforcement experiment was run.
+
+C1 is separate: schema-v2 reconciliation and its original26/26 plus exact-source,
+same-instance output, selftest and identity guards remain the supported work.
+This grants no privacy, history, baseline, lifecycle or health clearance.
+Four inherited retention hits, permission11/12red, two unknown dispositions and
+blocked baseline acceptance remain. Configuration/diagnosis/remediation belong
+to tsukuroi/operator; no census, threshold, Core or rank change follows withdrawal.

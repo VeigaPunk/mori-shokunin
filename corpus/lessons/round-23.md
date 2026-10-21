@@ -123,3 +123,127 @@ default stat259:1, so an intended positive fixture becomes device_mismatch.
 Correct only its input to explicit259:2, retaining the same expected positive
 output and the red-before receipt. Never use that selftest correction to claim
 the independent frozen topology case was fixed or its expected value changed.
+
+## M9 — withdraw false confidence; do not repair the target
+
+After the pinned96-seat falsification finished, Main required withdrawal from
+production and admitted capability surfaces. The actual permission-loss proof
+(`.ufo/waves/round-23/falsify/MutModeRead/permission-loss.json`) is fully mocked:
+two UUIDs can potentially associate with dm-0; one UUID's devices-list raises
+PermissionError and is discarded, so a surviving noqgroups association produces
+false disabled confidence. No actual sysfs fault or live quota change was induced.
+This is post-falsification evidence, not a pre-seal discovered/closed defect.
+Unicode mount parsing and tmpfs accounting/enforcement distinctions add unclosed
+limitations; they are not new exceptions to the original case set.
+
+The active `tools/mori-quota-surface.py` and admitted
+`corpus/knowledge/quota-surface-r23.md` were removed. Their exact bytes survive as
+`rejected/deployed-quota-probe.py` and `rejected/quota-knowledge-note.txt` beneath
+the round23 wave; the source archive is non-executable evidence, not a supported
+tool. The SKILL quota row and support instructions are withdrawn. FR2 stays
+Frontier; source-only study does not become a capability, Core or repertoire move.
+C1's separate two-change schema/alias cutover remains, with no privacy clearance.
+No enforcement experiment, special-case, relabel, changed oracle or rescue feature.
+
+The original result stays29/30, and the original strict C2 target stays
+unprovable/not admitted even though outside closure may diagnose the inconsistent
+CaseEscapedSpace oracle. Rule and expected row are both sealed and unchanged.
+After withdrawal the production capability is absent, not a newly passing case.
+Criterion71 records the general lesson: incomplete enumeration cannot justify a
+negative/unique-association claim; accounting-active is not enforcement-active.
+
+## M10 — source corrections after falsification, not expected-value repairs
+
+The late primary-source corrections are scoped to Linux v7.2 mechanisms, not an
+attestation that this host's exact kernel build/configuration has those semantics.
+Their full bytes, hashes and short literal quotes are retained in
+`evidence/post-falsification-sources.json` and `post-falsification-quotes.json`.
+
+* S087 `fs/ext4/super.c:7250`: “Enable usage tracking for all quota types.”
+  Seven words. Adjacent mount-flag handling and feature-quota paths show why
+  S083's ignored-options documentation is not complete current mechanism evidence.
+* S088 `include/linux/quotaops.h:161-162`:
+  `return sb_has_quota_loaded(sb, type) && !sb_has_quota_suspended(sb, type);`
+  Six words. This active-accounting predicate does not test the separate limits bit.
+* S089 `fs/quota/dquot.c:2667`:
+  `ret = dquot_disable(sb, type, DQUOT_LIMITS_ENABLED);`
+  Five words. With the surrounding sysfile/usage logic it supplies the static
+  counterexample to inferring current enforcement from emitted active tokens.
+
+The source corrections justify rejection; they do not change any frozen output
+label, expected row or target. No runtime limit-disable operation was performed.
+
+## M11 — discernment sample: keep source authority narrower than its appearance
+
+Admit S079 only for its explicit enabled-attribute mechanism:
+`enabled = fs_info->qgroup_flags & BTRFS_QGROUP_STATUS_FLAG_ON;` (five words).
+That primary code supports the distinction between a qgroups directory and the
+ON bit, not a per-ID limit, exhaustion verdict or complete candidate implementation.
+Its literal normalized-source quote/hash is in `evidence/source-quotes.json`.
+
+Re-opened S065 Python hashlib documentation at2026-10-21, current3.15.1, leaving
+the original row's immutable3.15.0 anchor and rejected status unchanged. Exact
+21-word quote: “At any point you can ask it for the digest of the concatenation
+of the data fed to it so far”. This is credible API documentation but does not
+authenticate historical receipt authorship, source selection, admission or loss
+disposition. Re-reject it as sole provenance authority; retain
+`evidence/rejected-source-recheck.json`. These are self admission/rejection
+decisions awaiting outside closure agreement, not claimed independent agreements.
+
+## M12 — preserve source-path and chronology defects
+
+`frozen/case-decisions.json` names a corrected CaseTmpfsNoQuota proposal whose
+transient source path is absent in the seal and every subsequent commit. The
+selected frozen bytes themselves landed before production implementation and
+remain unchanged. Original and frozen proposals have identical expected rows but
+different scenario/rationale/fixture bytes; “fixture unchanged” would be false.
+`evidence/tmpfs-source-provenance-erratum.json` records the missing pointer and
+both hashes. Do not rewrite that sealed ledger or claim a later reconstructed
+file existed before sealing.
+
+The declaration's “before any implementation” shorthand means before production
+landing: contract§delivery explicitly allowed a blind draft during wave1. The
+complete seal22772c10 precedes production1979a9de; it does not predate every draft.
+W1's canonical payload record was bound retrospectively after seven cap-refused
+calls and the successful eighth; native receipts prove64 spawned, but no later
+ledger repairs the missing pre-call chronology. W2's96 payload/spec and ledger
+binding were committed/recorded before its single successful call. All160 native
+seats completed; none died, were replaced or were reissued as new identities.
+
+## Gate — final corrections and re-rejection (2026-10-21)
+
+These scoped source decisions are self decisions awaiting outside closure, not
+independently agreed admission. S087–S089 were opened by L1 and independently
+re-fetched byte-identically by the existing source scribe; no runtime quota action.
+
+| Row | Opened URL / access date | Located literal quote (≤25 words) | Gate |
+|---|---|---|---|
+| S087 | https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/ext4/super.c ; 2026-10-21 | line7250: “Enable usage tracking for all quota types.” (7) | A/mined for conditional v7.2 usage/limits mechanism, supersedes S083's incomplete ignored-options inference |
+| S088 | https://raw.githubusercontent.com/torvalds/linux/v7.2/include/linux/quotaops.h ; 2026-10-21 | lines161-162: `return sb_has_quota_loaded(sb, type) && !sb_has_quota_suspended(sb, type);` (6) | A/mined for loaded/non-suspended versus separate limits bit; supersedes S084's runtime-enforcement inference |
+| S089 | https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/quota/dquot.c ; 2026-10-21 | line2667: `ret = dquot_disable(sb, type, DQUOT_LIMITS_ENABLED);` (5) | A/mined only with surrounding sysfile/usage logic, not an operation to execute |
+| S065 | https://docs.python.org/3/library/hashlib.html ; 2026-10-21, observed3.15.1 | Hash algorithms: “At any point you can ask it for the digest of the concatenation of the data fed to it so far” (21) | retain C/rejected as sole provenance authority; immutable3.15.0 row anchor unchanged; a narrow API question plus separate provenance evidence would be a different scope |
+
+Mutable-cell log: S077,S078,S079,S080,S081,S082,S083,S084,S085,S086 each
+used-by `corpus/lessons/round-23.md` → `corpus/lessons/round-23.md,
+corpus/knowledge/quota-surface-r23.md` during integration →
+`corpus/lessons/round-23.md` at withdrawal. S065 used-by `—` →
+`corpus/lessons/round-23.md`. All their statuses/rechecks and immutable cells remain
+unchanged. New S087–S089 are mined/on-release/used-by this lesson; no older immutable
+row is rewritten and no new row claims a current kernel build attestation.
+
+## Mistakes — final falsification and coordination
+
+| Class | Evidence | Captured-by | Disposition |
+|---|---|---|---|
+| Incomplete enumeration treated as a negative association | actual mocked `falsify/MutModeRead/permission-loss.json` | pre-seal unknown-on-permission-failure intent; now criterion71 | demonstrably false disabled on the deployed candidate; withdraw production/admitted C2 instead of an unsealed repair |
+| Accounting-active collapsed into runtime enforcement | S086 with S088/S089, source-bit evidence | none for tmpfs in the former rule | frozen labels preserved, unsupported claim rejected; no live enforcement experiment or narrowed target |
+| Transient corrected proposal deleted but selected source path retained | `evidence/tmpfs-source-provenance-erratum.json` | source-path pinning should have caught it | selected frozen bytes persist; original expected unchanged, fixture/scenario changed; missing historical pointer remains disclosed, not reconstructed as prior authorship |
+| L1 continuation gave ambiguous live-source ownership while editing other files | existing source-scribe report's second continuation and `final-source-cutover.txt` | explicit separate-checkout rule | scribe touched live SOURCES then restored exact6eb889c bytes before L1's final integration; procedural breach remains, no retroactive compliance claim |
+| W1 pre-call ledger binding absent | wave1 native attempts/retrospective ledger | Q53/Q56 timing discipline | seven no-spawn cap refusals plus64 spawned proved, chronology defect retained; W2 correctly bound before call |
+
+The source scribe's final proposal header describes its restored current state,
+not an absence of historical edits: its disclosure explicitly records the live
+window. The sole L1 integrated the final four changes after that restoration;
+no measured code result came from the transient draft. The redundant full-manual
+withdrawal scaffold was removed with its base/patch/full hash retained in
+`rejected/withdrawal-manifest.json`; the exact rejected probe/note remain intact.

@@ -290,3 +290,17 @@ This supersession does not assert those separate gates were repaired.
     receipt; also preserve the original permission control and unknown-loss
     blockers. ← lessons/round-22.md#M1 and #M3; corrected pre-implementation
     denominator freeze and exact-multiset oracle.
+
+## Criterion added round23 — negative claims require complete enumeration
+
+71. Do not turn a partial collection into a negative or uniqueness verdict.
+    If one candidate mapping cannot be enumerated, retain the failure and refuse
+    “disabled”/unique association; a successful sibling read does not complete
+    the missing population. Likewise, accounting-active evidence does not prove
+    runtime enforcement. Use only the narrower observed proposition, or withdraw
+    a capability whose advertised negative/positive verdicts cannot support it.
+    Demonstrate the rejection with a genuine controlled counterexample, not a
+    rewritten expected row. Ground: lessons/round-23.md#M9; actual mocked
+    permission-loss receipt and source-bit distinction; production withdrawal
+    rather than an unsealed repair. This is an admission rule, not a score or a
+    new supported quota implementation.

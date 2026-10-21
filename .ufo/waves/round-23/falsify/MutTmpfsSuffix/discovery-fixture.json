@@ -1,0 +1,13 @@
+{
+  "btrfs_sysfs": {},
+  "device_links": {},
+  "mountinfo": "1 0 0:52 / / rw - tmpfs tmpfs rw,bogus_hardlimit=123\n",
+  "paths": [
+    {
+      "path": "/r23/bogus-suffix",
+      "realpath": "/r23/bogus-suffix",
+      "st_dev": "0:52"
+    }
+  ],
+  "schema": "mori-quota-fixture-v1"
+}

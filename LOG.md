@@ -1678,3 +1678,30 @@ two exact prohibition clauses, recorded red; explicit credential/transcript clau
 restore12/12 before validation/dispatch. This committed spec/payload is not itself
 dispatch proof. Native attempts follow under wave-slot with before-call payload
 digest records, unchanged retries and no model parameter or dead-seat replacement.
+
+### Round23 — pinned falsification completed; production withdrawal
+
+Both native waves settled: W1 successful eighth attempt64/64, W2 first attempt96/96;
+all160 reports present, zero dead/provider-death/replacement seats. W1's first seven
+calls returned “Background job limit reached (100)” and spawned nothing. Same
+validated payloads/host role captures are preserved, with W1's retrospective
+ledger-chronology defect explicit, not repaired by a later timestamp.
+
+Main ordered withdrawal of C2 from production/admitted capability surfaces after
+the pinned96 readers finished. The prototype can say disabled after permission-
+truncated UUID mapping and cannot infer runtime tmpfs enforcement from accounting
+tokens. No rescue implementation, live enforcement experiment or frozen-label
+revision. Original29/30 and contradictory CaseEscapedSpace remain unchanged.
+
+Removed tools/mori-quota-surface.py and corpus/knowledge/quota-surface-r23.md only
+after byte-exact cmp against rejected/deployed-quota-probe.py (sourcee4857413…) and
+rejected/quota-knowledge-note.txt (2614a8f1…). Removed the active quota SKILL row and
+support instructions; FR2 stays Frontier/Core unchanged. C1 production bytes remain
+4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36.
+The generated quota bytecode/debug reference was removed, not archived as a tool.
+
+Criterion71 derives from the actual mocked counterexample and withdrawal:
+incomplete enumeration cannot justify a negative/unique association; accounting is
+not enforcement. Late S087–S089 correct source authority, not frozen expectations.
+S065 is re-rejected as sole historical-provenance authority. Source-path gaps,
+scope/resource deviations and all failed receipts remain honest evidence.

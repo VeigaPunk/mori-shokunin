@@ -1,0 +1,191 @@
+{
+  "actual": {
+    "df_covers_quota": false,
+    "exit_code": 2,
+    "finding_id": "QUOTA_STATE_UNKNOWN",
+    "limits": "no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.",
+    "paths": [
+      {
+        "basis": "ambiguous_overmount",
+        "btrfs_qgroups_mode": null,
+        "device_check": "not_checked",
+        "enforcement": "n/a",
+        "fstype": null,
+        "mount_point": null,
+        "path": "/data",
+        "quota_option_keys": [],
+        "quota_state": "unknown"
+      }
+    ],
+    "schema": "mori-quota-surface-v1"
+  },
+  "argv": [
+    "/usr/bin/prlimit",
+    "--as=402653184",
+    "/usr/bin/timeout",
+    "-s",
+    "KILL",
+    "15",
+    "/usr/bin/python3",
+    "-I",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+    "--fixture",
+    "/fast/scratch/hyaku/mori-r23/QStacked/fixture.json"
+  ],
+  "case_git_blob_at_pin_f3dc07c": "f790b6c09816bdfa1b7ce712d4b7bacdd7b2397c",
+  "case_id": "CaseStacked",
+  "case_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseStacked.json",
+  "case_schema": "mori-quota-case-v1",
+  "case_sha256": "b45f3485c170a88f75abcf8746315caf031331c4cf92b4943847f7433bf980d0",
+  "comparison": {
+    "exit_match": true,
+    "extra_actual_paths": 0,
+    "finding_id_match": true,
+    "missing_actual_paths": 0,
+    "path_count_actual": 1,
+    "path_count_expected": 1,
+    "per_path": [
+      {
+        "actual_tuple": [
+          "/data",
+          null,
+          null,
+          "unknown",
+          "n/a",
+          "ambiguous_overmount"
+        ],
+        "expected_tuple": [
+          "/data",
+          null,
+          null,
+          "unknown",
+          "n/a",
+          "ambiguous_overmount"
+        ],
+        "field_mismatches": {},
+        "index": 0,
+        "match": true,
+        "present": true,
+        "supplementary_actual": {
+          "btrfs_qgroups_mode": null,
+          "device_check": "not_checked",
+          "quota_option_keys": []
+        },
+        "supplementary_in_expected": {}
+      }
+    ],
+    "primary_fields": [
+      "path",
+      "fstype",
+      "mount_point",
+      "quota_state",
+      "enforcement",
+      "basis"
+    ],
+    "primary_tuple_match": true,
+    "supplementary_fields": [
+      "device_check",
+      "quota_option_keys",
+      "btrfs_qgroups_mode"
+    ],
+    "supplementary_separate_from_primary": true
+  },
+  "cwd": "/fast/scratch/hyaku/mori-r23/QStacked",
+  "determinism": {
+    "first_invocation_argv": [
+      "timeout",
+      "-k",
+      "2",
+      "15",
+      "prlimit",
+      "--as=402653184",
+      "--cpu=15",
+      "--nofile=256",
+      "python3",
+      "-I",
+      "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+      "--fixture",
+      "/fast/scratch/hyaku/mori-r23/QStacked/fixture.json"
+    ],
+    "identical_stderr": true,
+    "identical_stdout": true,
+    "repeat_runs": 2,
+    "second_invocation_argv": "/usr/bin/prlimit --as=402653184 /usr/bin/timeout -s KILL 15 /usr/bin/python3 -I TOOL --fixture FIX (canonical wave form, recorded above)"
+  },
+  "env_overrides": {
+    "TMPDIR": "/fast/scratch/hyaku/mori-r23/QStacked"
+  },
+  "exit_code": 2,
+  "falsification_notes": {
+    "case_escaped_space": "not executed by this seat (out of scope; owned by seat QEscapedSpace). The frozen strict-red contradiction is neither excused nor re-litigated here; this case is a separate fixture and a separate invocation with no shared state.",
+    "defense_in_depth": "Both rules exist in resolve_mount (lines 439-440 duplicate check, 443-461 parent check); the duplicate check fires first and the parent check is unreachable for this fixture.",
+    "discrimination_vs_last_line_wins": "[INFERENCE from source reading, not executed] If the stack were resolved by line order (original contract.md:106 'last line wins'), the tmpfs line (id 44, parent 31, 0:58) would be chosen, device_check match, tmpfs usrquota -> enabled/enforced/tmpfs_quota_option, exit 1 QUOTA_ENABLED: the withdrawn pre-amendment expectation in .ufo/waves/round-23/cases-proposed/CaseStacked.json (exit 1, QUOTA_ENABLED, tmpfs_quota_option). The observed exit 2 / QUOTA_STATE_UNKNOWN therefore proves the amendment rule, not the pre-amendment rule, is in force.",
+    "discrimination_vs_original_contract": "[INFERENCE from source reading, not executed] If the duplicate-covering-mountpoint refusal were absent, resolve_mount's equal-length tie-break selects the EARLIER /data line (xfs, 259:2), whose device differs from the fixture st_dev 0:58 -> basis device_mismatch, exit 2 QUOTA_STATE_UNKNOWN: same exit and finding_id but a different basis, so the six-field tuple still discriminates.",
+    "leakage_check": "stdout contains no mount source, no option value, no UUID and no decoy record content; quota_option_keys is empty on the refused row",
+    "parent_id_rule_independence": "[INFERENCE from source reading, not executed] The amendment's extra parent-id refusal (preseal-amendment.md, 'Final pre-seal clarifications') would independently refuse the tmpfs choice (parent 31 known and != ancestor '/' id 23) but would NOT refuse the earlier xfs choice (parent 23 == ancestor id 23); hence the duplicate-covering-mountpoint rule is the load-bearing rule for this case and the case is not satisfied by one rule alone.",
+    "supplementary_metadata_not_scored": {
+      "btrfs_qgroups_mode": null,
+      "device_check": "not_checked",
+      "note": "matched the sealed rationale's supplementary expectations; kept separate from the six primary fields",
+      "quota_option_keys": []
+    }
+  },
+  "fixture_copied_from": "case[\"fixture\"] verbatim (json.dumps sort_keys, indent 2 + trailing newline)",
+  "fixture_path": "/fast/scratch/hyaku/mori-r23/QStacked/fixture.json",
+  "fixture_sha256": "4dc3579d0b1543dbe4dfd28f9eeacdc8b37eaaf2ee5d5e024db28898f4ef8947",
+  "given": {
+    "exit": 2,
+    "finding_id": "QUOTA_STATE_UNKNOWN",
+    "paths": [
+      {
+        "basis": "ambiguous_overmount",
+        "enforcement": "n/a",
+        "fstype": null,
+        "mount_point": null,
+        "path": "/data",
+        "quota_state": "unknown"
+      }
+    ]
+  },
+  "harness_notes": {
+    "builds_tests_linters": "none run",
+    "case_bytes_edited": false,
+    "expected_bytes_edited": false,
+    "frozen_case_byte_identical_to_pinned_commit": true,
+    "frozen_case_sha256_at_pin": "b45f3485c170a88f75abcf8746315caf031331c4cf92b4943847f7433bf980d0",
+    "host_quota_reads": "none (fixture mode opens only the fixture file; source: load_fixture line 697 is the only open() on the fixture path; MOUNTINFO open at line 660 and sysfs read at 633 are real-mode only)",
+    "no_special_case_token": "tool source contains no case id or fixture literal; the refusal is produced by the generic covering-mountpoint duplicate rule in resolve_mount (tools/mori-quota-surface.py:439-440)",
+    "real_mode_invoked": false,
+    "scratch_root": "/fast/scratch/hyaku/mori-r23/QStacked/ (no /tmp use)"
+  },
+  "limits_applied": {
+    "address_space_bytes": 402653184,
+    "children": "one child at a time",
+    "python_isolated": "-I",
+    "timeout_seconds": 15,
+    "timeout_signal": "KILL"
+  },
+  "mode": "fixture (no host quota read; --fixture only, never real mode)",
+  "prohibitions_observed": [
+    "no live qgroup/quota reads (quotactl, btrfs qgroup, xfs_quota, repquota, mount)",
+    "no transcript reads",
+    "no credential/auth/agent.db access",
+    "no source/case/oracle edits",
+    "no sibling or fleet-root writes",
+    "no builds/tests/linters",
+    "no subagent dispatch",
+    "no /tmp scratch"
+  ],
+  "schema": "mori-r23-falsification-receipt-v1",
+  "seat": "QStacked",
+  "stderr": "",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "{\"df_covers_quota\":false,\"exit_code\":2,\"finding_id\":\"QUOTA_STATE_UNKNOWN\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[{\"basis\":\"ambiguous_overmount\",\"btrfs_qgroups_mode\":null,\"device_check\":\"not_checked\",\"enforcement\":\"n/a\",\"fstype\":null,\"mount_point\":null,\"path\":\"/data\",\"quota_option_keys\":[],\"quota_state\":\"unknown\"}],\"schema\":\"mori-quota-surface-v1\"}\n",
+  "stdout_parse_error": null,
+  "stdout_sha256": "9195b65c0b5e3c2f97f45e10c4fd10ce3d812bb48594d7600eaca16b2cfc5ed8",
+  "tool_git_blob_at_pin_f3dc07c": "439ff4c1a68fc4f98182c6b855b3b4c790286851",
+  "tool_matches_pinned_blob": true,
+  "tool_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+  "tool_sha256": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+  "verdict": "MATCH"
+}

@@ -1,0 +1,1006 @@
+{
+  "axes": [
+    "C2 parent-ID refusal detector sensitivity",
+    "unchanged original control preservation",
+    "isolated byte-exact restoration"
+  ],
+  "bindings": [
+    {
+      "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/oracle-quota.py",
+      "scratch_path": "/fast/scratch/hyaku/mori-r23/MutMountParent/clone/.ufo/waves/round-23/oracle-quota.py",
+      "sealed_equals_scratch_equals_lane": true,
+      "sha256": "f1f4a027728180436fc5161171b0f6ad4ca4176229b5240aabb33e3f2af36bec"
+    },
+    {
+      "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/SupplementHiddenMount.json",
+      "scratch_path": "/fast/scratch/hyaku/mori-r23/MutMountParent/clone/.ufo/waves/round-23/frozen/quota-cases/SupplementHiddenMount.json",
+      "sealed_equals_scratch_equals_lane": true,
+      "sha256": "d1a3a4c66008fcdefec47839d9393f1c971ebc6630d96b94c399038378187824"
+    },
+    {
+      "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseXfsUsrquota.json",
+      "scratch_path": "/fast/scratch/hyaku/mori-r23/MutMountParent/clone/.ufo/waves/round-23/frozen/quota-cases/CaseXfsUsrquota.json",
+      "sealed_equals_scratch_equals_lane": true,
+      "sha256": "3e1620f745d7a1cc6fa497b1f61f991539809cd1bde67f86b73860baaaa4244b"
+    }
+  ],
+  "bounds": {
+    "TMPDIR": "/fast/scratch/hyaku/mori-r23/MutMountParent",
+    "child_address_space_bytes": 402653184,
+    "child_cpu_limit_seconds": 15,
+    "child_timeout_seconds": 15,
+    "fixture_mode_only": true,
+    "max_simultaneous_fixture_children": 1
+  },
+  "branch": "round23/MutMountParent",
+  "clone_path": "/fast/scratch/hyaku/mori-r23/MutMountParent/clone",
+  "detector": {
+    "entrypoint": "evaluate_case(case_obj, parsed, exit_code, stdout_text)",
+    "environment": {
+      "LC_ALL": "C.UTF-8",
+      "PATH": "/usr/bin:/bin",
+      "PYTHONDONTWRITEBYTECODE": "1",
+      "PYTHONNOUSERSITE": "1",
+      "TMPDIR": "/fast/scratch/hyaku/mori-r23/MutMountParent"
+    },
+    "full_driver_or_selftest_run": false,
+    "oracle_path": "/fast/scratch/hyaku/mori-r23/MutMountParent/clone/.ufo/waves/round-23/oracle-quota.py",
+    "oracle_sha256": "f1f4a027728180436fc5161171b0f6ad4ca4176229b5240aabb33e3f2af36bec",
+    "pass_rule": "all three original six-field headline predicates true, and all supplementary checks status pass",
+    "runs": 6,
+    "same_detector_all_three_phases": true,
+    "unchanged_cases": [
+      "SupplementHiddenMount",
+      "CaseXfsUsrquota"
+    ]
+  },
+  "expectation_seal": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+  "mutation": {
+    "after": "            pass",
+    "before": "            return None, \"ambiguous_overmount\"",
+    "effect": "Omit only the parent-ID consistency refusal; duplicate covering-mountpoint refusal remains unchanged.",
+    "exact_single_statement_mutation": true,
+    "file": "/fast/scratch/hyaku/mori-r23/MutMountParent/clone/tools/mori-quota-surface.py",
+    "line": 461,
+    "source_mutant_sha256": "47f59c743ddbeb7d32035cdf9e8c44f1e9846c36371e6759ecef906579f2166c"
+  },
+  "observed_head_output": "f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c\nrefs/heads/round23/MutMountParent\n",
+  "phases": [
+    {
+      "passed": true,
+      "phase": "pristine",
+      "rows": [
+        {
+          "argv": [
+            "/usr/bin/python",
+            "/fast/scratch/hyaku/mori-r23/MutMountParent/clone/tools/mori-quota-surface.py",
+            "--fixture",
+            "/fast/scratch/hyaku/mori-r23/MutMountParent/fixtures/SupplementHiddenMount.fixture.json"
+          ],
+          "case": "SupplementHiddenMount",
+          "detector_pass": true,
+          "elapsed_seconds": 0.040188,
+          "error_class": null,
+          "expected": {
+            "exit": 2,
+            "finding_id": "QUOTA_STATE_UNKNOWN",
+            "paths": [
+              {
+                "basis": "ambiguous_overmount",
+                "enforcement": "n/a",
+                "fstype": null,
+                "mount_point": null,
+                "path": "/home/x/y/z",
+                "quota_state": "unknown"
+              }
+            ]
+          },
+          "fixture_path": "/fast/scratch/hyaku/mori-r23/MutMountParent/fixtures/SupplementHiddenMount.fixture.json",
+          "fixture_sha256": "a79ba4122e07004478a3c4bff42ec235717656584caab812a6c341e5332bd97f",
+          "headline": {
+            "exit_match": true,
+            "finding_match": true,
+            "paths_match": true
+          },
+          "headline_pass": true,
+          "oracle_reason": null,
+          "parsed": {
+            "df_covers_quota": false,
+            "exit_code": 2,
+            "finding_id": "QUOTA_STATE_UNKNOWN",
+            "limits": "no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.",
+            "paths": [
+              {
+                "basis": "ambiguous_overmount",
+                "btrfs_qgroups_mode": null,
+                "device_check": "not_checked",
+                "enforcement": "n/a",
+                "fstype": null,
+                "mount_point": null,
+                "path": "/home/x/y/z",
+                "quota_option_keys": [],
+                "quota_state": "unknown"
+              }
+            ],
+            "schema": "mori-quota-surface-v1"
+          },
+          "returncode": 2,
+          "stderr": "",
+          "stdout": "{\"df_covers_quota\":false,\"exit_code\":2,\"finding_id\":\"QUOTA_STATE_UNKNOWN\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[{\"basis\":\"ambiguous_overmount\",\"btrfs_qgroups_mode\":null,\"device_check\":\"not_checked\",\"enforcement\":\"n/a\",\"fstype\":null,\"mount_point\":null,\"path\":\"/home/x/y/z\",\"quota_option_keys\":[],\"quota_state\":\"unknown\"}],\"schema\":\"mori-quota-surface-v1\"}\n",
+          "supplementary": [
+            {
+              "check": "schema",
+              "detail": "mori-quota-surface-v1",
+              "status": "pass"
+            },
+            {
+              "check": "exit_consistency",
+              "detail": 2,
+              "status": "pass"
+            },
+            {
+              "check": "output_keys_allowed",
+              "detail": [
+                "df_covers_quota",
+                "exit_code",
+                "finding_id",
+                "limits",
+                "paths",
+                "schema"
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "output_key_set",
+              "detail": [
+                "df_covers_quota",
+                "exit_code",
+                "finding_id",
+                "limits",
+                "paths",
+                "schema"
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "error_token",
+              "detail": null,
+              "status": "pass"
+            },
+            {
+              "check": "path_key_set",
+              "detail": [
+                [
+                  "basis",
+                  "btrfs_qgroups_mode",
+                  "device_check",
+                  "enforcement",
+                  "fstype",
+                  "mount_point",
+                  "path",
+                  "quota_option_keys",
+                  "quota_state"
+                ]
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "df_covers_quota",
+              "detail": false,
+              "status": "pass"
+            },
+            {
+              "check": "limits_text",
+              "detail": "str",
+              "status": "pass"
+            },
+            {
+              "check": "no_leakage",
+              "detail": [],
+              "status": "pass"
+            }
+          ],
+          "timed_out": false
+        },
+        {
+          "argv": [
+            "/usr/bin/python",
+            "/fast/scratch/hyaku/mori-r23/MutMountParent/clone/tools/mori-quota-surface.py",
+            "--fixture",
+            "/fast/scratch/hyaku/mori-r23/MutMountParent/fixtures/CaseXfsUsrquota.fixture.json"
+          ],
+          "case": "CaseXfsUsrquota",
+          "detector_pass": true,
+          "elapsed_seconds": 0.038971,
+          "error_class": null,
+          "expected": {
+            "exit": 1,
+            "finding_id": "QUOTA_ENABLED",
+            "paths": [
+              {
+                "basis": "xfs_quota_option",
+                "enforcement": "enforced",
+                "fstype": "xfs",
+                "mount_point": "/srv/xfsquota",
+                "path": "/srv/xfsquota",
+                "quota_state": "enabled"
+              },
+              {
+                "basis": "xfs_quota_option",
+                "enforcement": "enforced",
+                "fstype": "xfs",
+                "mount_point": "/srv/xfsquota",
+                "path": "/srv/xfsquota/projects/data",
+                "quota_state": "enabled"
+              }
+            ]
+          },
+          "fixture_path": "/fast/scratch/hyaku/mori-r23/MutMountParent/fixtures/CaseXfsUsrquota.fixture.json",
+          "fixture_sha256": "5042c5ade5fe979b7944355072e20dcaf7f732cd45a08290225086463992c67d",
+          "headline": {
+            "exit_match": true,
+            "finding_match": true,
+            "paths_match": true
+          },
+          "headline_pass": true,
+          "oracle_reason": null,
+          "parsed": {
+            "df_covers_quota": false,
+            "exit_code": 1,
+            "finding_id": "QUOTA_ENABLED",
+            "limits": "no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.",
+            "paths": [
+              {
+                "basis": "xfs_quota_option",
+                "btrfs_qgroups_mode": null,
+                "device_check": "match",
+                "enforcement": "enforced",
+                "fstype": "xfs",
+                "mount_point": "/srv/xfsquota",
+                "path": "/srv/xfsquota",
+                "quota_option_keys": [
+                  "usrquota"
+                ],
+                "quota_state": "enabled"
+              },
+              {
+                "basis": "xfs_quota_option",
+                "btrfs_qgroups_mode": null,
+                "device_check": "match",
+                "enforcement": "enforced",
+                "fstype": "xfs",
+                "mount_point": "/srv/xfsquota",
+                "path": "/srv/xfsquota/projects/data",
+                "quota_option_keys": [
+                  "usrquota"
+                ],
+                "quota_state": "enabled"
+              }
+            ],
+            "schema": "mori-quota-surface-v1"
+          },
+          "returncode": 1,
+          "stderr": "",
+          "stdout": "{\"df_covers_quota\":false,\"exit_code\":1,\"finding_id\":\"QUOTA_ENABLED\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[{\"basis\":\"xfs_quota_option\",\"btrfs_qgroups_mode\":null,\"device_check\":\"match\",\"enforcement\":\"enforced\",\"fstype\":\"xfs\",\"mount_point\":\"/srv/xfsquota\",\"path\":\"/srv/xfsquota\",\"quota_option_keys\":[\"usrquota\"],\"quota_state\":\"enabled\"},{\"basis\":\"xfs_quota_option\",\"btrfs_qgroups_mode\":null,\"device_check\":\"match\",\"enforcement\":\"enforced\",\"fstype\":\"xfs\",\"mount_point\":\"/srv/xfsquota\",\"path\":\"/srv/xfsquota/projects/data\",\"quota_option_keys\":[\"usrquota\"],\"quota_state\":\"enabled\"}],\"schema\":\"mori-quota-surface-v1\"}\n",
+          "supplementary": [
+            {
+              "check": "schema",
+              "detail": "mori-quota-surface-v1",
+              "status": "pass"
+            },
+            {
+              "check": "exit_consistency",
+              "detail": 1,
+              "status": "pass"
+            },
+            {
+              "check": "output_keys_allowed",
+              "detail": [
+                "df_covers_quota",
+                "exit_code",
+                "finding_id",
+                "limits",
+                "paths",
+                "schema"
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "output_key_set",
+              "detail": [
+                "df_covers_quota",
+                "exit_code",
+                "finding_id",
+                "limits",
+                "paths",
+                "schema"
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "error_token",
+              "detail": null,
+              "status": "pass"
+            },
+            {
+              "check": "path_key_set",
+              "detail": [
+                [
+                  "basis",
+                  "btrfs_qgroups_mode",
+                  "device_check",
+                  "enforcement",
+                  "fstype",
+                  "mount_point",
+                  "path",
+                  "quota_option_keys",
+                  "quota_state"
+                ],
+                [
+                  "basis",
+                  "btrfs_qgroups_mode",
+                  "device_check",
+                  "enforcement",
+                  "fstype",
+                  "mount_point",
+                  "path",
+                  "quota_option_keys",
+                  "quota_state"
+                ]
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "df_covers_quota",
+              "detail": false,
+              "status": "pass"
+            },
+            {
+              "check": "limits_text",
+              "detail": "str",
+              "status": "pass"
+            },
+            {
+              "check": "no_leakage",
+              "detail": [],
+              "status": "pass"
+            }
+          ],
+          "timed_out": false
+        }
+      ],
+      "source_sha256": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92"
+    },
+    {
+      "passed": false,
+      "phase": "mutated",
+      "rows": [
+        {
+          "argv": [
+            "/usr/bin/python",
+            "/fast/scratch/hyaku/mori-r23/MutMountParent/clone/tools/mori-quota-surface.py",
+            "--fixture",
+            "/fast/scratch/hyaku/mori-r23/MutMountParent/fixtures/SupplementHiddenMount.fixture.json"
+          ],
+          "case": "SupplementHiddenMount",
+          "detector_pass": false,
+          "elapsed_seconds": 0.040653,
+          "error_class": null,
+          "expected": {
+            "exit": 2,
+            "finding_id": "QUOTA_STATE_UNKNOWN",
+            "paths": [
+              {
+                "basis": "ambiguous_overmount",
+                "enforcement": "n/a",
+                "fstype": null,
+                "mount_point": null,
+                "path": "/home/x/y/z",
+                "quota_state": "unknown"
+              }
+            ]
+          },
+          "fixture_path": "/fast/scratch/hyaku/mori-r23/MutMountParent/fixtures/SupplementHiddenMount.fixture.json",
+          "fixture_sha256": "a79ba4122e07004478a3c4bff42ec235717656584caab812a6c341e5332bd97f",
+          "headline": {
+            "exit_match": false,
+            "finding_match": false,
+            "paths_match": false
+          },
+          "headline_pass": false,
+          "oracle_reason": null,
+          "parsed": {
+            "df_covers_quota": false,
+            "exit_code": 1,
+            "finding_id": "QUOTA_ENABLED",
+            "limits": "no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.",
+            "paths": [
+              {
+                "basis": "btrfs_qgroups_enabled",
+                "btrfs_qgroups_mode": "qgroup",
+                "device_check": "btrfs_subvolume_skipped",
+                "enforcement": "unknown",
+                "fstype": "btrfs",
+                "mount_point": "/home/x/y",
+                "path": "/home/x/y/z",
+                "quota_option_keys": [],
+                "quota_state": "enabled"
+              }
+            ],
+            "schema": "mori-quota-surface-v1"
+          },
+          "returncode": 1,
+          "stderr": "",
+          "stdout": "{\"df_covers_quota\":false,\"exit_code\":1,\"finding_id\":\"QUOTA_ENABLED\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[{\"basis\":\"btrfs_qgroups_enabled\",\"btrfs_qgroups_mode\":\"qgroup\",\"device_check\":\"btrfs_subvolume_skipped\",\"enforcement\":\"unknown\",\"fstype\":\"btrfs\",\"mount_point\":\"/home/x/y\",\"path\":\"/home/x/y/z\",\"quota_option_keys\":[],\"quota_state\":\"enabled\"}],\"schema\":\"mori-quota-surface-v1\"}\n",
+          "supplementary": [
+            {
+              "check": "schema",
+              "detail": "mori-quota-surface-v1",
+              "status": "pass"
+            },
+            {
+              "check": "exit_consistency",
+              "detail": 1,
+              "status": "pass"
+            },
+            {
+              "check": "output_keys_allowed",
+              "detail": [
+                "df_covers_quota",
+                "exit_code",
+                "finding_id",
+                "limits",
+                "paths",
+                "schema"
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "output_key_set",
+              "detail": [
+                "df_covers_quota",
+                "exit_code",
+                "finding_id",
+                "limits",
+                "paths",
+                "schema"
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "error_token",
+              "detail": null,
+              "status": "pass"
+            },
+            {
+              "check": "path_key_set",
+              "detail": [
+                [
+                  "basis",
+                  "btrfs_qgroups_mode",
+                  "device_check",
+                  "enforcement",
+                  "fstype",
+                  "mount_point",
+                  "path",
+                  "quota_option_keys",
+                  "quota_state"
+                ]
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "df_covers_quota",
+              "detail": false,
+              "status": "pass"
+            },
+            {
+              "check": "limits_text",
+              "detail": "str",
+              "status": "pass"
+            },
+            {
+              "check": "no_leakage",
+              "detail": [],
+              "status": "pass"
+            }
+          ],
+          "timed_out": false
+        },
+        {
+          "argv": [
+            "/usr/bin/python",
+            "/fast/scratch/hyaku/mori-r23/MutMountParent/clone/tools/mori-quota-surface.py",
+            "--fixture",
+            "/fast/scratch/hyaku/mori-r23/MutMountParent/fixtures/CaseXfsUsrquota.fixture.json"
+          ],
+          "case": "CaseXfsUsrquota",
+          "detector_pass": true,
+          "elapsed_seconds": 0.042308,
+          "error_class": null,
+          "expected": {
+            "exit": 1,
+            "finding_id": "QUOTA_ENABLED",
+            "paths": [
+              {
+                "basis": "xfs_quota_option",
+                "enforcement": "enforced",
+                "fstype": "xfs",
+                "mount_point": "/srv/xfsquota",
+                "path": "/srv/xfsquota",
+                "quota_state": "enabled"
+              },
+              {
+                "basis": "xfs_quota_option",
+                "enforcement": "enforced",
+                "fstype": "xfs",
+                "mount_point": "/srv/xfsquota",
+                "path": "/srv/xfsquota/projects/data",
+                "quota_state": "enabled"
+              }
+            ]
+          },
+          "fixture_path": "/fast/scratch/hyaku/mori-r23/MutMountParent/fixtures/CaseXfsUsrquota.fixture.json",
+          "fixture_sha256": "5042c5ade5fe979b7944355072e20dcaf7f732cd45a08290225086463992c67d",
+          "headline": {
+            "exit_match": true,
+            "finding_match": true,
+            "paths_match": true
+          },
+          "headline_pass": true,
+          "oracle_reason": null,
+          "parsed": {
+            "df_covers_quota": false,
+            "exit_code": 1,
+            "finding_id": "QUOTA_ENABLED",
+            "limits": "no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.",
+            "paths": [
+              {
+                "basis": "xfs_quota_option",
+                "btrfs_qgroups_mode": null,
+                "device_check": "match",
+                "enforcement": "enforced",
+                "fstype": "xfs",
+                "mount_point": "/srv/xfsquota",
+                "path": "/srv/xfsquota",
+                "quota_option_keys": [
+                  "usrquota"
+                ],
+                "quota_state": "enabled"
+              },
+              {
+                "basis": "xfs_quota_option",
+                "btrfs_qgroups_mode": null,
+                "device_check": "match",
+                "enforcement": "enforced",
+                "fstype": "xfs",
+                "mount_point": "/srv/xfsquota",
+                "path": "/srv/xfsquota/projects/data",
+                "quota_option_keys": [
+                  "usrquota"
+                ],
+                "quota_state": "enabled"
+              }
+            ],
+            "schema": "mori-quota-surface-v1"
+          },
+          "returncode": 1,
+          "stderr": "",
+          "stdout": "{\"df_covers_quota\":false,\"exit_code\":1,\"finding_id\":\"QUOTA_ENABLED\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[{\"basis\":\"xfs_quota_option\",\"btrfs_qgroups_mode\":null,\"device_check\":\"match\",\"enforcement\":\"enforced\",\"fstype\":\"xfs\",\"mount_point\":\"/srv/xfsquota\",\"path\":\"/srv/xfsquota\",\"quota_option_keys\":[\"usrquota\"],\"quota_state\":\"enabled\"},{\"basis\":\"xfs_quota_option\",\"btrfs_qgroups_mode\":null,\"device_check\":\"match\",\"enforcement\":\"enforced\",\"fstype\":\"xfs\",\"mount_point\":\"/srv/xfsquota\",\"path\":\"/srv/xfsquota/projects/data\",\"quota_option_keys\":[\"usrquota\"],\"quota_state\":\"enabled\"}],\"schema\":\"mori-quota-surface-v1\"}\n",
+          "supplementary": [
+            {
+              "check": "schema",
+              "detail": "mori-quota-surface-v1",
+              "status": "pass"
+            },
+            {
+              "check": "exit_consistency",
+              "detail": 1,
+              "status": "pass"
+            },
+            {
+              "check": "output_keys_allowed",
+              "detail": [
+                "df_covers_quota",
+                "exit_code",
+                "finding_id",
+                "limits",
+                "paths",
+                "schema"
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "output_key_set",
+              "detail": [
+                "df_covers_quota",
+                "exit_code",
+                "finding_id",
+                "limits",
+                "paths",
+                "schema"
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "error_token",
+              "detail": null,
+              "status": "pass"
+            },
+            {
+              "check": "path_key_set",
+              "detail": [
+                [
+                  "basis",
+                  "btrfs_qgroups_mode",
+                  "device_check",
+                  "enforcement",
+                  "fstype",
+                  "mount_point",
+                  "path",
+                  "quota_option_keys",
+                  "quota_state"
+                ],
+                [
+                  "basis",
+                  "btrfs_qgroups_mode",
+                  "device_check",
+                  "enforcement",
+                  "fstype",
+                  "mount_point",
+                  "path",
+                  "quota_option_keys",
+                  "quota_state"
+                ]
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "df_covers_quota",
+              "detail": false,
+              "status": "pass"
+            },
+            {
+              "check": "limits_text",
+              "detail": "str",
+              "status": "pass"
+            },
+            {
+              "check": "no_leakage",
+              "detail": [],
+              "status": "pass"
+            }
+          ],
+          "timed_out": false
+        }
+      ],
+      "source_sha256": "47f59c743ddbeb7d32035cdf9e8c44f1e9846c36371e6759ecef906579f2166c"
+    },
+    {
+      "passed": true,
+      "phase": "restored",
+      "rows": [
+        {
+          "argv": [
+            "/usr/bin/python",
+            "/fast/scratch/hyaku/mori-r23/MutMountParent/clone/tools/mori-quota-surface.py",
+            "--fixture",
+            "/fast/scratch/hyaku/mori-r23/MutMountParent/fixtures/SupplementHiddenMount.fixture.json"
+          ],
+          "case": "SupplementHiddenMount",
+          "detector_pass": true,
+          "elapsed_seconds": 0.039923,
+          "error_class": null,
+          "expected": {
+            "exit": 2,
+            "finding_id": "QUOTA_STATE_UNKNOWN",
+            "paths": [
+              {
+                "basis": "ambiguous_overmount",
+                "enforcement": "n/a",
+                "fstype": null,
+                "mount_point": null,
+                "path": "/home/x/y/z",
+                "quota_state": "unknown"
+              }
+            ]
+          },
+          "fixture_path": "/fast/scratch/hyaku/mori-r23/MutMountParent/fixtures/SupplementHiddenMount.fixture.json",
+          "fixture_sha256": "a79ba4122e07004478a3c4bff42ec235717656584caab812a6c341e5332bd97f",
+          "headline": {
+            "exit_match": true,
+            "finding_match": true,
+            "paths_match": true
+          },
+          "headline_pass": true,
+          "oracle_reason": null,
+          "parsed": {
+            "df_covers_quota": false,
+            "exit_code": 2,
+            "finding_id": "QUOTA_STATE_UNKNOWN",
+            "limits": "no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.",
+            "paths": [
+              {
+                "basis": "ambiguous_overmount",
+                "btrfs_qgroups_mode": null,
+                "device_check": "not_checked",
+                "enforcement": "n/a",
+                "fstype": null,
+                "mount_point": null,
+                "path": "/home/x/y/z",
+                "quota_option_keys": [],
+                "quota_state": "unknown"
+              }
+            ],
+            "schema": "mori-quota-surface-v1"
+          },
+          "returncode": 2,
+          "stderr": "",
+          "stdout": "{\"df_covers_quota\":false,\"exit_code\":2,\"finding_id\":\"QUOTA_STATE_UNKNOWN\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[{\"basis\":\"ambiguous_overmount\",\"btrfs_qgroups_mode\":null,\"device_check\":\"not_checked\",\"enforcement\":\"n/a\",\"fstype\":null,\"mount_point\":null,\"path\":\"/home/x/y/z\",\"quota_option_keys\":[],\"quota_state\":\"unknown\"}],\"schema\":\"mori-quota-surface-v1\"}\n",
+          "supplementary": [
+            {
+              "check": "schema",
+              "detail": "mori-quota-surface-v1",
+              "status": "pass"
+            },
+            {
+              "check": "exit_consistency",
+              "detail": 2,
+              "status": "pass"
+            },
+            {
+              "check": "output_keys_allowed",
+              "detail": [
+                "df_covers_quota",
+                "exit_code",
+                "finding_id",
+                "limits",
+                "paths",
+                "schema"
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "output_key_set",
+              "detail": [
+                "df_covers_quota",
+                "exit_code",
+                "finding_id",
+                "limits",
+                "paths",
+                "schema"
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "error_token",
+              "detail": null,
+              "status": "pass"
+            },
+            {
+              "check": "path_key_set",
+              "detail": [
+                [
+                  "basis",
+                  "btrfs_qgroups_mode",
+                  "device_check",
+                  "enforcement",
+                  "fstype",
+                  "mount_point",
+                  "path",
+                  "quota_option_keys",
+                  "quota_state"
+                ]
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "df_covers_quota",
+              "detail": false,
+              "status": "pass"
+            },
+            {
+              "check": "limits_text",
+              "detail": "str",
+              "status": "pass"
+            },
+            {
+              "check": "no_leakage",
+              "detail": [],
+              "status": "pass"
+            }
+          ],
+          "timed_out": false
+        },
+        {
+          "argv": [
+            "/usr/bin/python",
+            "/fast/scratch/hyaku/mori-r23/MutMountParent/clone/tools/mori-quota-surface.py",
+            "--fixture",
+            "/fast/scratch/hyaku/mori-r23/MutMountParent/fixtures/CaseXfsUsrquota.fixture.json"
+          ],
+          "case": "CaseXfsUsrquota",
+          "detector_pass": true,
+          "elapsed_seconds": 0.039821,
+          "error_class": null,
+          "expected": {
+            "exit": 1,
+            "finding_id": "QUOTA_ENABLED",
+            "paths": [
+              {
+                "basis": "xfs_quota_option",
+                "enforcement": "enforced",
+                "fstype": "xfs",
+                "mount_point": "/srv/xfsquota",
+                "path": "/srv/xfsquota",
+                "quota_state": "enabled"
+              },
+              {
+                "basis": "xfs_quota_option",
+                "enforcement": "enforced",
+                "fstype": "xfs",
+                "mount_point": "/srv/xfsquota",
+                "path": "/srv/xfsquota/projects/data",
+                "quota_state": "enabled"
+              }
+            ]
+          },
+          "fixture_path": "/fast/scratch/hyaku/mori-r23/MutMountParent/fixtures/CaseXfsUsrquota.fixture.json",
+          "fixture_sha256": "5042c5ade5fe979b7944355072e20dcaf7f732cd45a08290225086463992c67d",
+          "headline": {
+            "exit_match": true,
+            "finding_match": true,
+            "paths_match": true
+          },
+          "headline_pass": true,
+          "oracle_reason": null,
+          "parsed": {
+            "df_covers_quota": false,
+            "exit_code": 1,
+            "finding_id": "QUOTA_ENABLED",
+            "limits": "no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.",
+            "paths": [
+              {
+                "basis": "xfs_quota_option",
+                "btrfs_qgroups_mode": null,
+                "device_check": "match",
+                "enforcement": "enforced",
+                "fstype": "xfs",
+                "mount_point": "/srv/xfsquota",
+                "path": "/srv/xfsquota",
+                "quota_option_keys": [
+                  "usrquota"
+                ],
+                "quota_state": "enabled"
+              },
+              {
+                "basis": "xfs_quota_option",
+                "btrfs_qgroups_mode": null,
+                "device_check": "match",
+                "enforcement": "enforced",
+                "fstype": "xfs",
+                "mount_point": "/srv/xfsquota",
+                "path": "/srv/xfsquota/projects/data",
+                "quota_option_keys": [
+                  "usrquota"
+                ],
+                "quota_state": "enabled"
+              }
+            ],
+            "schema": "mori-quota-surface-v1"
+          },
+          "returncode": 1,
+          "stderr": "",
+          "stdout": "{\"df_covers_quota\":false,\"exit_code\":1,\"finding_id\":\"QUOTA_ENABLED\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[{\"basis\":\"xfs_quota_option\",\"btrfs_qgroups_mode\":null,\"device_check\":\"match\",\"enforcement\":\"enforced\",\"fstype\":\"xfs\",\"mount_point\":\"/srv/xfsquota\",\"path\":\"/srv/xfsquota\",\"quota_option_keys\":[\"usrquota\"],\"quota_state\":\"enabled\"},{\"basis\":\"xfs_quota_option\",\"btrfs_qgroups_mode\":null,\"device_check\":\"match\",\"enforcement\":\"enforced\",\"fstype\":\"xfs\",\"mount_point\":\"/srv/xfsquota\",\"path\":\"/srv/xfsquota/projects/data\",\"quota_option_keys\":[\"usrquota\"],\"quota_state\":\"enabled\"}],\"schema\":\"mori-quota-surface-v1\"}\n",
+          "supplementary": [
+            {
+              "check": "schema",
+              "detail": "mori-quota-surface-v1",
+              "status": "pass"
+            },
+            {
+              "check": "exit_consistency",
+              "detail": 1,
+              "status": "pass"
+            },
+            {
+              "check": "output_keys_allowed",
+              "detail": [
+                "df_covers_quota",
+                "exit_code",
+                "finding_id",
+                "limits",
+                "paths",
+                "schema"
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "output_key_set",
+              "detail": [
+                "df_covers_quota",
+                "exit_code",
+                "finding_id",
+                "limits",
+                "paths",
+                "schema"
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "error_token",
+              "detail": null,
+              "status": "pass"
+            },
+            {
+              "check": "path_key_set",
+              "detail": [
+                [
+                  "basis",
+                  "btrfs_qgroups_mode",
+                  "device_check",
+                  "enforcement",
+                  "fstype",
+                  "mount_point",
+                  "path",
+                  "quota_option_keys",
+                  "quota_state"
+                ],
+                [
+                  "basis",
+                  "btrfs_qgroups_mode",
+                  "device_check",
+                  "enforcement",
+                  "fstype",
+                  "mount_point",
+                  "path",
+                  "quota_option_keys",
+                  "quota_state"
+                ]
+              ],
+              "status": "pass"
+            },
+            {
+              "check": "df_covers_quota",
+              "detail": false,
+              "status": "pass"
+            },
+            {
+              "check": "limits_text",
+              "detail": "str",
+              "status": "pass"
+            },
+            {
+              "check": "no_leakage",
+              "detail": [],
+              "status": "pass"
+            }
+          ],
+          "timed_out": false
+        }
+      ],
+      "source_sha256": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92"
+    }
+  ],
+  "production_pin": "f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c",
+  "restoration": {
+    "case_control_outputs_equal_before_after": true,
+    "exact_bytes_equal_before": true,
+    "lane_source_equal_original_pin": true,
+    "oracle_and_frozen_case_hashes_unchanged": true,
+    "original_control_identical_across_all_phases": true,
+    "source_after_sha256": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92"
+  },
+  "scope": {
+    "C1_exercised": false,
+    "CaseEscapedSpace_exercised_or_changed": false,
+    "full_frozen_target_claim": "Unchanged: strict C2 remains UNPROVABLE at 29/30 per immutable task context; this focused mutation probe does not rerun or repair the frozen contradiction.",
+    "no_live_quota_inputs": true,
+    "no_production_oracle_expectation_edits": true,
+    "tool_installs_or_updates": []
+  },
+  "seat": "MutMountParent",
+  "source_before_sha256": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+  "source_path": "/fast/scratch/hyaku/mori-r23/MutMountParent/clone/tools/mori-quota-surface.py",
+  "verdict": "killed"
+}

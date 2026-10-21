@@ -1,0 +1,132 @@
+# Round-23 SOURCE cutover proposal — SOURCES.md edits for L1 integration
+
+Seat: `MadoR22-2.DraftSourceRows-8`. **Proposal only — the live `corpus/SOURCES.md` is NOT
+edited by this seat.** Apply with the `edit` tool (or any byte-exact writer).
+
+Base for application: commit `6eb889c037163e4886eaa61501258910d6a529b9`, blob sha256
+`1f49a4d8338a48f7a85c0614ab24261b5b113d858259e41c30f0f0930ff6ad09`, 136 lines.
+Applying all four changes below yields 141 lines, 89 registry rows, file sha256
+`6b65b1e3ebad50b7b41ad584178788e7bf2b884f97fd3dd3f0273aeedbc3a10e` (measured on the
+drafted text, which was reverted from the live file before this proposal was written).
+
+## Change 1 — S077-S086 used-by: drop ONLY the retired knowledge path (10 cells)
+
+Old → new, every other byte of every row untouched:
+
+| row | used-by old | used-by new |
+|---|---|---|
+| S077 | `corpus/lessons/round-23.md, corpus/knowledge/quota-surface-r23.md` | `corpus/lessons/round-23.md` |
+| S078 | `corpus/lessons/round-23.md, corpus/knowledge/quota-surface-r23.md` | `corpus/lessons/round-23.md` |
+| S079 | `corpus/lessons/round-23.md, corpus/knowledge/quota-surface-r23.md` | `corpus/lessons/round-23.md` |
+| S080 | `corpus/lessons/round-23.md, corpus/knowledge/quota-surface-r23.md` | `corpus/lessons/round-23.md` |
+| S081 | `corpus/lessons/round-23.md, corpus/knowledge/quota-surface-r23.md` | `corpus/lessons/round-23.md` |
+| S082 | `corpus/lessons/round-23.md, corpus/knowledge/quota-surface-r23.md` | `corpus/lessons/round-23.md` |
+| S083 | `corpus/lessons/round-23.md, corpus/knowledge/quota-surface-r23.md` | `corpus/lessons/round-23.md` |
+| S084 | `corpus/lessons/round-23.md, corpus/knowledge/quota-surface-r23.md` | `corpus/lessons/round-23.md` |
+| S085 | `corpus/lessons/round-23.md, corpus/knowledge/quota-surface-r23.md` | `corpus/lessons/round-23.md` |
+| S086 | `corpus/lessons/round-23.md, corpus/knowledge/quota-surface-r23.md` | `corpus/lessons/round-23.md` |
+
+The retired note `corpus/knowledge/quota-surface-r23.md` no longer exists in the corpus
+(byte archive: `.ufo/waves/round-23/rejected/quota-knowledge-note.txt`), so the path must
+leave the ten used-by cells. The lesson citation `corpus/lessons/round-23.md` is retained
+in all ten. No other cell, and no other row, changes.
+
+Equivalent single-shot `edit` (10 occurrences, all on S077-S086 rows):
+
+```
+old_string:  | corpus/lessons/round-23.md, corpus/knowledge/quota-surface-r23.md |
+new_string:  | corpus/lessons/round-23.md |
+replace_all: true
+```
+
+## Change 2 — S065 used-by: re-rejection cited by the round lesson (1 cell)
+
+Row S065 is otherwise untouched: tier `C`, status `rejected`, opened `2026-10-21`,
+recheck `on-release`, and every immutable cell (id, source, kind, tier, scope, anchor,
+teaches) byte-unchanged — the re-open saw the live 3.15.1 page while the registry
+anchor names 3.15.0, and the anchor is immutable under contract v1.
+
+| row | used-by old | used-by new |
+|---|---|---|
+| S065 | `—` | `corpus/lessons/round-23.md` |
+
+## Change 3 — append S087-S089 (3 new registry rows)
+
+Insert these three lines immediately after the S086 row line and before the blank line
+that precedes `## Paths`. Column order is the contract-v1 header (`id | source | kind |
+tier | scope | anchor | teaches | status | opened | recheck | used-by`); all cells are
+tier `A`, kind `code`, status `mined`, opened `2026-10-21`, recheck `on-release`,
+used-by `corpus/lessons/round-23.md`. No `|` inside any cell.
+
+```
+| S087 | Linux fs/ext4/super.c at v7.2 — https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/ext4/super.c | code | A | ext4 quota mount-flag consumption and the conditional enable of usage and limits at mount; v7.2 only | quota mount-option flag table:1929-1939 (quota entries 1930-1939); mount-time quota enable:5691-5695; ext4_enable_quotas usage and limits:7250-7270; tag v7.2; sha256 4cae23697c957723 | supersedes S083 — v7.2 code consumes the quota mount flags and, where the superblock quota feature is present, enables usage for the type and limits only for a type whose mount flag was set, so the documented ignored-options wording is not the whole mechanism. | mined | 2026-10-21 | on-release | corpus/lessons/round-23.md |
+| S088 | Linux include/linux/quotaops.h at v7.2 — https://raw.githubusercontent.com/torvalds/linux/v7.2/include/linux/quotaops.h | code | A | kernel quota state predicates per superblock and quota type: usage enabled, limits enabled, suspended, loaded and active; v7.2 only | sb_has_quota_usage_enabled:124-128; sb_has_quota_limits_enabled:130-134; sb_has_quota_suspended:136-140; sb_has_quota_loaded:147-152; sb_has_quota_active:159-163; tag v7.2; sha256 2a316c7714d1e00c | supersedes S084 — sb_has_quota_active means loaded and not suspended while the limits-enabled bit is separate, so an active accounting token is not proof of runtime enforcement. | mined | 2026-10-21 | on-release | corpus/lessons/round-23.md |
+| S089 | Linux fs/quota/dquot.c at v7.2 — https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/quota/dquot.c | code | A | the kernel quota-disable path for filesystems using quota sysfiles: refusal of accounting-off requests versus a limits-only disable that keeps usage accounting; v7.2 only | dquot_disable type loop:2291-2317; dquot_quota_disable accounting refusal and limits-only disable:2641-2670; tag v7.2; sha256 951a0c8d0887f9c5 | A quota-disable request naming accounting is refused outright, while a limits-only disable clears enforcement and leaves usage accounting in place; the two are not one switch. | mined | 2026-10-21 | on-release | corpus/lessons/round-23.md |
+```
+
+Source provenance for the three rows (URLs, sha256 and raw bytes as recorded in
+`.ufo/waves/round-23/evidence/post-falsification-sources.json`; each file was re-fetched
+from its URL during this seat's work and the digest re-verified byte-for-byte):
+
+| id | url | sha256 | local raw copy |
+|---|---|---|---|
+| S087 | https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/ext4/super.c | `4cae23697c9577237cb779f62122358a4fc1fd24f7f971535b82976b673139ac` | `.ufo/waves/round-23/evidence/sources/S087-fs_ext4_super.c` (216306 bytes) |
+| S088 | https://raw.githubusercontent.com/torvalds/linux/v7.2/include/linux/quotaops.h | `2a316c7714d1e00c03361cdd46064637f523067dc9eef9abd5faa5ec437120da` | `.ufo/waves/round-23/evidence/sources/S088-include_linux_quotaops.h` (10287 bytes) |
+| S089 | https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/quota/dquot.c | `951a0c8d0887f9c55d707818190ef4ce471a3d255ed7018f316c6625e997ed21` | `.ufo/waves/round-23/evidence/sources/S089-fs_quota_dquot.c` (84353 bytes) |
+
+Located anchors, re-read in the opened files (no claim here is copied from an earlier
+note):
+
+- **S087** — `fs/ext4/super.c:1930-1939` maps `Opt_quota`/`Opt_usrquota`/`Opt_grpquota`/
+  `Opt_prjquota`/`Opt_noquota` onto `EXT4_MOUNT_QUOTA`, `EXT4_MOUNT_USRQUOTA`,
+  `EXT4_MOUNT_GRPQUOTA`, `EXT4_MOUNT_PRJQUOTA`; `:5691-5695` enables quotas at mount
+  only `if (ext4_has_feature_quota(sb) && !sb_rdonly(sb))`; `:7250-7270`
+  `ext4_enable_quotas` passes `DQUOT_USAGE_ENABLED` for every quota type with a quota
+  inode and adds `DQUOT_LIMITS_ENABLED` only for a type whose mount flag was set
+  (`quota_mopt[type] ? DQUOT_LIMITS_ENABLED : 0`). Quote (7 words): "Enable usage
+  tracking for all quota types." — so the doc's "ignored by the filesystem" wording is
+  not the whole mechanism.
+- **S088** — `include/linux/quotaops.h:124-163`: `sb_has_quota_usage_enabled`,
+  `sb_has_quota_limits_enabled`, `sb_has_quota_suspended`, `sb_has_quota_loaded`
+  (returns `sb_has_quota_usage_enabled`), and `sb_has_quota_active` =
+  `sb_has_quota_loaded(sb, type) && !sb_has_quota_suspended(sb, type)`. Quote (6 words):
+  "return sb_has_quota_loaded(sb, type) && !sb_has_quota_suspended(sb, type);" — active
+  accounting is not the limits-enabled bit, so an active accounting token is not proof
+  of runtime enforcement.
+- **S089** — `fs/quota/dquot.c:2641-2670` `dquot_quota_disable` returns `-EOPNOTSUPP`
+  when the request names accounting ("We don't support turning off accounting via
+  quotactl"), filters to types whose limits are enabled, and calls
+  `dquot_disable(sb, type, DQUOT_LIMITS_ENABLED)`; `:2291-2317` `dquot_disable` clears
+  only the requested per-type flag and keeps quota loaded when usage remains enabled.
+  Quote (5 words): "ret = dquot_disable(sb, type, DQUOT_LIMITS_ENABLED);"
+
+## Change 4 — append search-log entry `Bounded search15`
+
+Insert as one prose paragraph in `## Search log`, after the `Bounded search14` paragraph
+and its blank line, before `## Leads (unopened)`. Exact text:
+
+```
+Bounded search15 — Question: after the C2 production withdrawal, which Linux v7.2 primary sources correct the mechanism and runtime-meaning claims of the retired quota-surface note, and does the Python hashlib page still support a provenance-only reading? Where: three pinned v7.2 raw files reopened 2026-10-21 (fs/ext4/super.c, include/linux/quotaops.h, fs/quota/dquot.c) plus the Python hashlib documentation page at 3.15.1; identified 4, screened 4, included 3 as scoped correction rows S087–S089 (S087 supersedes S083, S088 supersedes S084), excluded 0; S065 re-rejected as sole measured-revision provenance authority and keeps tier C, status rejected and recheck on-release. Raw bytes and digests are retained in round-23 evidence/sources-manifest and post-falsification-sources.json. Stop: the bounded source-only correction is closed — no quota experiment, no privileged or mutating interface and no runtime capability claim was made or implied; the retired note's own scope claims are not re-admitted by these rows.
+```
+
+## Cumulative effect on the registry (measured on the drafted text)
+
+| measure | base `6eb889c` | after these four changes |
+|---|---|---|
+| rows | 86 | 89 |
+| file lines | 136 | 141 |
+| malformed rows (NF != 13) | 0 | 0 |
+| duplicate ids | none | none |
+| enum / tier-inflation violations | none | none |
+| mined rows whose used-by path does not exist | none | none (`corpus/lessons/round-23.md` exists) |
+| file sha256 | `1f49a4d8338a48f7a85c0614ab24261b5b113d858259e41c30f0f0930ff6ad09` | `6b65b1e3ebad50b7b41ad584178788e7bf2b884f97fd3dd3f0273aeedbc3a10e` |
+
+Scope proof for the drafted text: reverting only the four changes above (drop the three
+new rows, drop the search15 paragraph, restore S065's `—`, restore the retired knowledge
+path on the ten S077-S086 cells) reproduces the base blob sha256 exactly — byte delta
+2815 — so no byte outside the four intended changes differs from base.
+
+Not included, by instruction: no lesson edit, no docs edit, no tool edit, no frozen
+edit, no test or validator run, no probe or quota experiment, no install. The parent
+logs the old→new changes in the round-23 lesson.
+

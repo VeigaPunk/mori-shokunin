@@ -66,7 +66,7 @@ Report shared evidence to its owner; do not absorb another lane's domain.
 | tsukuroi | Owns host OS, package, systemd-unit, driver, firmware, and boot diagnosis. It was the only sibling hit in R12Connector's corpus search for `systemd-oomd`, `earlyoom`, `memory.events`, and `MESSAGE_ID`; this is adjacent host diagnosis, not contested fleet ownership. | `../tsukuroi-shokunin/PROVINCE.md:21-24,35-44`; `../tsukuroi-shokunin/corpus/knowledge/oom-event-plane.md:231-257,279-281,301,344-367`; `../tsukuroi-shokunin/corpus/knowledge/kill-event-deep-r8.md:30-37,97,120-135`; `PROVINCE.md:12-16` |
 | kama | Owns local model-serving and endpoint health; mori does not infer serving health from host/resource signals. | `../kama-shokunin/PROVINCE.md:3-15,40-53` |
 | kagi | Owns secrets, vault operations, and credential-hygiene evidence; mori never reads or reports credential material. | `../kagi-shokunin/PROVINCE.md:3-6`; `SKILL.md:49` |
-| souji | Owns artifact cleanup, not process/fleet health. Its province says “mori-shokunin observes fleet health and reports; souji acts on artifacts” (`../souji-shokunin/PROVINCE.md:40-41`). | `../souji-shokunin/PROVINCE.md:40-41`; `../souji-shokunin/census/round-3/operator-approval-list.tsv:56-73`; `../souji-shokunin/census/operator-sweep-20261018/approval-list.tsv:56-73`; `../souji-shokunin/census/operator-sweep-20261018/resume-verdicts.tsv:52-69` |
+| souji | Lists own-uid scratch residue and proposes removal for operator approval; routes liveness/resource findings to mori. Mori reports, never performs reclamation. | `souji-shokunin@fe7590b3010bed9b9b808b79c2bf2be1a18bce2a:PROVINCE.md:8-17,50-52`; the round21 citation erratum below retains the historical context. |
 
 - **Received packet TSUKUROI-F1-MEM-01 (ADJ-04):** `../tsukuroi-shokunin/corpus/knowledge/adjacency-handoffs-fleet-r1.md:74-112` records the 2026-10-15T04:53:46Z capture as `prepared`; boot identity/event window were not captured, and acknowledgement/acceptance/resolution are unobserved. Its request is to compare the timestamp with watchdog/wave evidence if retained, not to infer an OOM or cause.
 - **What mori can place:** 04:53:46Z is 01:53:46-03:00, between watchdog ticks at 01:50:57 and 01:58:27; `mori round=2` and `tsukuroi round=1` launched at 01:50:57 (`.ufo/watchdog.log:395-402`). Fleet commits bookend that point: `git -C /home/vgpnk/Projects/shokunin show -s --format='%h %ci %s' 99efc52 f2df270` → `99efc52 2026-10-15 01:52:09 -0300`; `f2df270 2026-10-15 01:55:17 -0300`. [INFERENCE] This locates active fleet work, not a settled-wave state at the packet's exact second.
@@ -207,3 +207,26 @@ operator-owned, with kagi advising only on actual credential/vault concerns.
 No frontier row is closed. Ground: round22 lesson and
 `corpus/knowledge/retention-reconciliation-r22.md`; connector reports
 ConnectKagi/ConnectKumitate/ConnectSouji under round22 build evidence.
+
+## Round23 disposition — no quota Core advance
+
+The declared FR2 capability did not meet its frozen target and was withdrawn from
+production and the admitted knowledge/capability surfaces. FR2 stays Frontier;
+the Core list and owned runtime probes above are unchanged. No census integration,
+threshold change, baseline re-pin, quota configuration/diagnosis or remediation.
+
+The pre-withdrawal pinf3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c measured
+29/30 sealed quota cases. Frozen CaseEscapedSpace's expected row opposes the sealed
+parent-ID rule; neither is changed or excluded. Actual mocked permission-truncated
+mapping also produced false disabled confidence, and primary kernel sources separate
+tmpfs active accounting from runtime enforcement. Byte-exact rejected source/note,
+source evidence and counterexamples are in `.ufo/waves/round-23/rejected/` and
+`corpus/lessons/round-23.md`, not a runnable supported surface.
+
+C1 is independent: the schema-v2 retention accounting cutover removes only the
+misleading duplicate key, with exact-source/identity/output guards and no clearance
+authority. Kernel-visible mechanism observations do not transfer quota configuration,
+cause or reclamation authority: tsukuroi/operator own configuration/diagnosis, souji
+proposes eligible residue handling, and operator approval owns reclamation. Four
+retention hits, original permission11/12red, two unknown dispositions and blocked
+baseline acceptance remain; no rank or subsequent-round authority is granted.

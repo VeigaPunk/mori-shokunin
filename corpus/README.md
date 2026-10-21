@@ -424,3 +424,19 @@ pre-implementation v2 requirements retain the original bytes and error.
 R21's95raw−5non-author=90scanner population still has4unallowlisted hits.
 Original permission control11/12 remains red, two historical dispositions
 remain unknown, and the invalid r20 baseline is not accepted or re-pinned.
+
+## Round23 disposition — C1 cutover, rejected quota attempt
+
+| Ground | Current disposition | Evidence |
+|---|---|---|
+| Existing retention accounting | Schema-v2 API removes raw_unallowlisted; use scanner_unallowlisted for the in-scope count and raw_not_allowlisted for the raw complement. No privacy or baseline clearance. | `knowledge/retention-reconciliation-r22.md` Round23 correction; round23 original26 and exact-source/identity/output controls |
+| FR2 quota visibility | Strict target unprovable/not admitted; prototype and note withdrawn, no Core/frontier closure or admitted capability. | `lessons/round-23.md`; `.ufo/waves/round-23/rejected/` beneath the lane root |
+
+Original quota29/30 and its contradictory frozen row/rule remain immutable evidence,
+not a narrowed pass. Permission-truncated mapping and accounting/enforcement ambiguity
+make the rejected prototype unsuitable for confident runtime statements. The former
+quota knowledge file is intentionally absent, not a dangling admitted index entry.
+The Frontier table remains unchanged. Configuration/diagnosis route to tsukuroi/
+operator; reclamation approval is operator-owned, with souji proposing within its
+scope. Four inherited hits, permission11/12red, two unknown dispositions, blocked
+baseline acceptance and privacy_clearance=false remain.
