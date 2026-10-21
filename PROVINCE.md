@@ -171,3 +171,20 @@ mori retains the unknown identities and provenance and blocks acceptance,
 never manufactures independent disposition or acts on old wave directories.
 The existing bounded report-presence capability remains distinct.
 Evidence: `corpus/lessons/round-21.md`; round21 retained loss evidence.
+
+Round21 connector clarification (`.ufo/waves/round-21/build/ConnectKumitate.md`): “blocks
+acceptance” above means **mori's own census baseline acceptance only**.
+An audit `disposed` row merely cites a structurally validated, hash-bound
+independent record; it is not mori's lifecycle settlement, result acceptance,
+or a reap/re-dispatch licence. Those remain kumitate-owned. Actor identity
+fields are declared evidence requiring outside adjudication, not authenticated
+by mori's hash checker.
+
+Round21 souji-citation erratum (`.ufo/waves/round-21/build/ConnectSouji.md`):
+the adjacency table's old quotation is historical; current souji scope is
+`../souji-shokunin/PROVINCE.md:8-17,50-52`. Its pushed receipt establishes
+removal-safety/recoverability only. The pre-removal aggregator artifacts do
+not supply independent lifecycle closure; the aggregator's round12 empty-at-
+inspection report corroborates loss, not disposition. A future independent
+per-wave disposition must come from the operator or an appropriate non-author
+wave/lifecycle owner; mori cannot author itself out of this blocker.

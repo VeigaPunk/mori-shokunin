@@ -1277,3 +1277,27 @@ and R8 (symlinked parent) plus a vocabulary guard on every selftest case kill th
 (`evidence/c2-final-selftest.txt`, `c2-after.json`, `c2-live-mori-final.json`, `c2-live-fleet-final.json`).
 Sources S073–S076 supersede over-reaching S069/S071/S070/S067 teaches. Open disagreement for the
 outside closure: WATCHDOG_STALE / WAVE_UNSETTLED_AGE class (K2/K3 dissent, AdjudicateWaves BROKEN).
+
+## Round21 — repair the round20 rejection, not a silent re-pin
+
+Entering branch e9f340ce986f82a60baad1b8e5ead655ab818a1c.
+CloseMori20's non-author closure supersedes the preceding round20 author
+verdicts: freshness **harmed**, calibration **harmed**, coverage improved;
+operability/depth/adjacency unchanged. Round20 admission false. Trends:
+expansion improved, quality unprovable-but-better, discernment harmed.
+The r20 baseline and register remain historical bytes, **invalid for
+baseline acceptance**. QUALITY69 supersedes67; this is not a re-pin.
+
+### planned: steered round21 only
+
+| Claim | Axis / held score | Falsifiable move | Frozen evidence |
+|---|---|---|---|
+| C1 retained disappearance accounting | freshness5→5 (lowest tie) | 2 omitted historical observation identities→0 omitted, explicitly retaining2 unresolved; no disposition invented and pin remains blocked | `.ufo/waves/round-21/contract.md`, `frozen/required.json`, baseline:26-27; requirements3b792db |
+| C2 evidence-loss-first permission | calibration5→5 (lowest tie) | same evaluator reads old/new rules against unchanged six cases; old cause-only permission mismatches2, new must mismatch0 | `frozen/cases.json`, `frozen/before-rule.json`, `frozen/after-rule.json` under round21 waves; freeze3b792db |
+
+Those are target expectations, not measured verdicts; exercised outcomes are
+appended after integration. Other active scores coverage6, operability7,
+depth5, adjacency6 held. No retirement, no stagnation waiver, no promotion.
+Author expansion is not claimed for historical repair/source-row volume.
+The round20 capability cell's22/22 is stale; actual final selftest was23/23
+(round20 evidence/c2-final-selftest.txt and non-author C2_remeasurement).
