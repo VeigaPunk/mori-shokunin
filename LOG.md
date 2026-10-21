@@ -1295,3 +1295,21 @@ Evidence: `.ufo/waves/round-18/evidence/`, `corpus/lessons/round-18.md`, `.ufo/w
 Correction note (append-only): LOG.md:1197's "precommitted C3 witness/control/recipe pins" is superseded by the
 r17-C3 `co-evolved` correction row in `corpus/evidence/freeze-register.json`. Knowledge `silence-grading-r2.md`
 had the operator's personal identity withheld in round 18.
+
+## Round 19 (mori19attempt2) — routed lessons and frozen requirements
+
+Motivation: `corpus/lessons/round-18-verifier-spotcheck.md:160–183` (independently
+admitted round18, with seven routed defects). Requirements/oracle landed at
+`5e393d20daa628a0b4ca9aa6a1626aa54285b3f0`; exact validated 64-seat payload at
+`290f6c0ecda171fa50a8bb00b20c948fd37eac43`. C1 adjacency adds bounded
+content-review binding; C2 calibration (lowest5) adds intrinsic freeze receipt
+provenance. No claimed increase in numeric expertise score.
+
+Correction to the round18 author report and shorthand above: the outside closure's
+trend verdicts are expansion unchanged / quality unchanged / discernment improved;
+new sources are A9/B1/C5, not A11/B1/C4. C2's 4→0 is one historical overclaim plus
+three prospective-label verifications, not four historical defect cures. The
+round17 privacy harm is cured only at the committed tip; history exposure remains
+operator/kagi-owned. The out-of-metric sweep at e2bfbd6 was not a final-tip sweep.
+Old receipt JSON stays filed unchanged; any wrapper names its actual old input.
+QUALITY57–60 learn these discrepancies (`corpus/lessons/round-19.md#Mistakes`).

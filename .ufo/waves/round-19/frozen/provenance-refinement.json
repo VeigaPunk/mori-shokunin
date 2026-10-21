@@ -1,0 +1,13 @@
+{
+  "schema": "mori-r19-provenance-refinement-v1",
+  "origin": "build/CriticProvenance.md:9-15; discovered after wave1 dispatch, supplementary co-evolved refinement, not original pre-build oracle",
+  "checks": {
+    "dirty_register_differs_from_measured_revision": {"exit": 2},
+    "external_register_not_in_measured_tree": {"exit": 2},
+    "dirty_corrections_differs_from_measured_revision": {"exit": 2},
+    "historical_overclaims_corrected": 1,
+    "prospective_labels_verified": 3
+  },
+  "rule": "A provenance-bound --rev invocation loads register/corrections exactly once, requires their paths beneath --repo, and verifies loaded bytes equal their Git blobs at the resolved measured commit. Missing/uncommitted/external/dirty inputs are could-not-evaluate, never a clean committed-revision receipt. Executing-script hash is a separate identity and does not assert the script exists at the measured tree. Legacy invocation remains explicitly unbound. Existing six claim verdicts stay identical.",
+  "historical_split_basis": "round18 independent closure: one r17-C3 co-evolved relabel, three r18 pre-build prospective claims. The split is attribution, not a new historical delta."
+}

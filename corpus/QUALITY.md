@@ -184,3 +184,28 @@ Source tiers: see corpus/SOURCES.md (contract v1); this file holds claim admissi
     started/partial row, `started_ids` equal to `tasks_count`, result values only
     refused/started/partial). A refused-only ledger can have every row bound and still fail.
     ← lessons/round-18.md#M3; .ufo/waves/round-18/falsify/ReviewQuality51to55.md.
+
+## Criteria added round 19
+
+57. A content-review decision binds the whole blob and exact measured revision,
+    covers every path in its frozen population, and says what content was reviewed.
+    Missing, changed, unresolved or provenance-only decisions cannot certify clean.
+    Same-wave origin is provenance, not a content-safety predicate. An additional
+    bounded review never replaces the all-blob retention gate or narrows its
+    allowlist denominator. ← lessons/round-19.md#M1.
+58. A freeze-order receipt carries the measured full commit, exact loaded-byte
+    register/correction digests, executing-script digest, resolved claim bases/tips,
+    overrides and argv. Unbound legacy output remains unbound; new metadata does
+    not retroactively bind old JSON. A historical correction and prospective-label
+    verification are separate units, not interchangeable defects.
+    ← lessons/round-19.md#M2.
+59. Trend verdicts use LEARNING's observables: repairs, source-row counts and
+    capability-table formatting do not by themselves establish new covered-ground
+    knowledge or re-verification of an old entry. State the census histogram from
+    the actual rows and qualify source scope rather than inflating tiers.
+    ← lessons/round-19.md#M3.
+60. Rejected source rows still need a located quote of at most 25 words in Gate,
+    or an explicit unavailable screening-only limitation with the access attempts;
+    never imply an unopened body was read. A capabilities table records the actual
+    first-working round, not the later formatting-repair round.
+    ← lessons/round-19.md#M4.

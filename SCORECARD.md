@@ -1149,3 +1149,29 @@ Waves: w1 68 seats (15 dead on provider capacity), w2 67 seats (0 dead); round t
 
 Capabilities: retention gate (C1), freeze-order check (C2), dispatch-attempt ledger verify (C3) —
 evidence `.ufo/waves/round-18/evidence/{c1-after,c2-after,c3-after-*}.json`, first working round 18.
+
+## Round 19 — declaration and round18 outside-closure correction
+
+Author `mori19attempt2`; entering tip `b3602869dadd4016675aeba8db2adf3fa1e1b531`.
+Frozen requirements/oracle `5e393d20daa628a0b4ca9aa6a1626aa54285b3f0`.
+C1 adjacency6 held: acquire a bounded content-review coverage gate; C2
+calibration5 held (lowest tie): intrinsically bind freeze receipts to exact inputs.
+No axis retirement or stagnation waiver. Missing capability/metadata is not a
+historical production defect. Other active scores remain coverage6, operability7,
+depth5 and freshness5; r10 drift red is carried without re-pin.
+
+The round18 outside closure supersedes the preceding author qualification cells:
+adjacency **improved** (r17 harm cured at committed tip), calibration **improved**
+(one historical relabel plus three prospective verifications), operability
+**improved** (dispatch-binding capability); all other axes unchanged.
+Its trends are **unchanged / unchanged / improved** (expansion / quality /
+discernment). Census additions were A9/B1/C5. These are corrections, not
+round19 growth. Evidence: `corpus/lessons/round-18-verifier-spotcheck.md:39–181`.
+
+### capabilities: round18 table-shape repair
+
+| Name | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---:|
+| Retained-context class gate | Scan every committed blob against frozen R1–R9 with explicit non-author/allowlist qualification; never emit matched text | `.ufo/waves/round-18/evidence/c1-after.json`, selftests in `evidence/final-selftests.txt`; independent closure C1 | 18 |
+| Freeze-order labels | Distinguish pre-build, co-evolved, absent and no-implementation from Git order, with appended effective-label corrections | `.ufo/waves/round-18/evidence/c2-after.json`; independent closure C2 | 18 |
+| Dispatch-attempt binding | Verify exact payload bytes/digests separately from whole-ledger sequencing and started-row requirements | `.ufo/waves/round-18/evidence/c3-after-wave1-attempts.json`, `c3-after-wave2-attempts.json`; refused-only residual failure retained | 18 |
