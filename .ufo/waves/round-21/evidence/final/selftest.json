@@ -1,0 +1,15 @@
+{
+  "schema": "mori-r21-command-receipt-v1",
+  "measured_revision": "9fb1f911cfdd6061005c300795f44b1b45523897",
+  "argv": [
+    "python3",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-evidence-loss.py",
+    "--selftest"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "started_utc": "2026-10-21T13:29:55.258019+00:00",
+  "elapsed_seconds": 0.11,
+  "exit_code": 0,
+  "stdout": "{\"checks\":114,\"failures\":[],\"finding_id\":\"mori-evidence-loss:audit:aggregator-r10:unresolved\",\"passed\":true,\"schema\":\"mori-evidence-loss-selftest-v1\"}\n",
+  "stderr": ""
+}

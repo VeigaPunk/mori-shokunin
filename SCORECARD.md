@@ -1308,3 +1308,39 @@ landed at8fed329636f53455ae2f53930c171c6186aff1fd, not3b792db. Only the
 six policy cases and old/new rule objects carry the earlier freeze.
 The empty before accounting is an explicit later reconstruction of the
 absent representation at e9f340c, not bytes claimed to exist there.
+
+### Round21 exercised outcomes — measured9fb1f911cfdd6061005c300795f44b1b45523897
+
+| Claim | Axis / delta | Before→after | Verdict / boundary |
+|---|---|---|---|
+| C1 retained disappearance accounting | freshness5→5 held | omitted2→0 of exactly2 required identities; retained0→2, unresolved0→2, invalid0 both, pin_allowed=false both; audit rc1 both | improved evidence assurance, not settlement or positive authorization. Before is the explicit absent-representation reconstruction; actual entering path absence rc128 is retained. |
+| C2 evidence-loss-first correction | calibration5→5 held | frozen synthetic mismatches2→0 of6; separately outside-adjudicated real loss/w24 sample mismatches1→0 of2 | improved bounded calibration: matches CloseMori20's outside ruling. Six synthetic cases establish consistency only; no raw-event discovery/authentication claim. |
+
+Counting instrument (lane root; full argv and resolved input/code digests in
+`.ufo/waves/round-21/evidence/final/measure-claims.json` and `claims-observed.json`):
+
+```sh
+python3 .ufo/waves/round-21/oracle-loss.py --tool "$PWD/tools/mori-evidence-loss.py" --root "$PWD" --required "$PWD/.ufo/waves/round-21/frozen/required.json" --before-accounting "$PWD/.ufo/waves/round-21/frozen/before-accounting.json" --after-accounting "$PWD/corpus/evidence/loss-accounting-r21.json" --before-rule "$PWD/.ufo/waves/round-21/frozen/before-rule.json" --after-rule "$PWD/.ufo/waves/round-21/frozen/after-rule.json" --cases "$PWD/.ufo/waves/round-21/frozen/cases.json" --revision 9fb1f911cfdd6061005c300795f44b1b45523897 --out OBSERVED.json
+python3 tools/mori-evidence-loss.py classify --rule .ufo/waves/round-21/frozen/before-rule.json --cases .ufo/waves/round-21/outside-cases.json
+python3 tools/mori-evidence-loss.py classify --rule .ufo/waves/round-21/frozen/after-rule.json --cases .ufo/waves/round-21/outside-cases.json
+```
+
+Outside runs exit1/mismatched1 then exit0/mismatched0 (`outside-before.json`,
+`outside-after.json` under final evidence). CLI selftest114 assertions passes;
+independent fixture original control11/12 rc1 intentionally rejects its
+superseded positive permission, explicit trust-refinement12/12 rc0. Five
+mutants in four probe families killed,0 survived/inconclusive; full synthetic
+workspaces were archived and every member compared before cleanup.
+
+| Name | What it can now do | Evidence | First-working round |
+|---|---|---|---:|
+| Retained-loss observation | Retain required disappeared identities, verify committed copy hashes and report missing/invalid/unknown states without authorizing a pin | final/claims-observed.json C1; selftest114; omission mutant; all under round21 waves | 21 |
+
+Other axes coverage6/operability7/depth5/adjacency6 unchanged. No score
+increase, promotion, independent settlement, positive-authorization capability
+or privacy clearance. Retention floor4→4 identical inherited policy-copy
+hits, rc1 both; still red. Final sources76→76, A62/B6/C8, mined42/queued25/
+rejected9, validator rc0 both. Trends: expansion unchanged; quality improved
+by explicit invalidation/retained evidence; discernment improved by learning
+the outside disagreement and agreed source sample. Outside closure decides
+admission. Planned scope remains the completed steered round21 only.

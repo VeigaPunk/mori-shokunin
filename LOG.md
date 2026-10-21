@@ -1409,3 +1409,32 @@ skill ritual and province/index/knowledge carry named corrections.
 No round21 pin, census mutation, host action or lifecycle settlement claim.
 S066 reopened narrowly for approval-review semantics; S072 re-rejected;
 Main non-author agrees both samples (`evidence/source-spotcheck.json`).
+
+### Round21 final measured outcome
+
+Measured9fb1f911cfdd6061005c300795f44b1b45523897:
+C1 omitted2→0 of2 required identities, retained2/unresolved2/invalid0 after,
+pin blocked, no new baseline. C2 frozen mismatches2→0/6 and separate
+CloseMori20-labeled real-event mismatches1→0/2. All actual argv, code/input
+digests and stdout/stderr in `.ufo/waves/round-21/evidence/final/`;
+`input-stability.json` binds the unchanged measurement inputs. Effective
+removed-wave class is now explicitly census-regression in
+`corpus/evidence/effective-disposition-r21.json`, not a silent r20 register
+rewrite. Q69/active instructions supersede the rejected permission.
+
+CLI selftest114 assertions green; original fixture permission control11/12
+red retained, explicit trust-refinement12/12 green; five mutants killed with
+pristine/restored controls and complete verified archives. Retention floor
+still red4→4 at identical inherited synthetic-policy-copy lines; no new
+metric hits or privacy/history clearance claim.
+
+Swarm64 started:55 original completed/9 original provider deaths,58 report
+files (three originally dead identities later left files; OracleLoss was
+peer-woken). Ordinary residual8:5 completed/3 provider deaths.72 unique
+seats,12 original provider deaths, no replacements. File presence and native
+success remain distinct. Final scan partial58/64,6 missing,0 stubs; receipt
+retains scan time and dispatch digest. Both reservations released; missing
+repeat grants and other procedural deviations remain disclosed, not compliance
+credit. Sources76→76, validator rc0 both, no new rows, S066 used-by appended,
+Main agreed S066 admit/S072 reject. No new L0 question, tool install, census
+run, host mutation, promotion or subsequent round.

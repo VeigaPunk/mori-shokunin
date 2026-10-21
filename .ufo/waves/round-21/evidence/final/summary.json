@@ -1,0 +1,79 @@
+{
+  "schema": "mori-r21-final-summary-v1",
+  "measured_revision": "9fb1f911cfdd6061005c300795f44b1b45523897",
+  "selftest": {
+    "exit_code": 0,
+    "assertions": 114
+  },
+  "C1": {
+    "omitted_before": 2,
+    "omitted_after": 0,
+    "required": 2,
+    "retained_after": 2,
+    "unresolved_after": 2,
+    "invalid_after": 0,
+    "pin_allowed": false,
+    "audit_rc_before": 1,
+    "audit_rc_after": 1,
+    "before_qualification": "Reconstructed absent representation, not an entering file or production defect count."
+  },
+  "C2": {
+    "frozen_synthetic_cases": 6,
+    "mismatched_before": 2,
+    "mismatched_after": 0,
+    "outside_cases": 2,
+    "outside_mismatched_before": 1,
+    "outside_mismatched_after": 0,
+    "qualification": "Outside-labeled interpreted events; classifier does not discover evidence-loss inputs."
+  },
+  "fixtures": {
+    "original_control": {
+      "matched": 11,
+      "total": 12,
+      "rc": 1,
+      "reason": "Expected original-positive-permission contradiction"
+    },
+    "trust_refinement": {
+      "matched": 12,
+      "total": 12,
+      "rc": 0
+    }
+  },
+  "mutations": {
+    "families": 4,
+    "mutants_killed": 5,
+    "survived": 0,
+    "inconclusive": 0,
+    "archives": ".ufo/waves/round-21/evidence/mutation-archives/manifest.json"
+  },
+  "retention": {
+    "entering_metric": 4,
+    "measured_metric": 4,
+    "same_findings": true,
+    "rc_before": 1,
+    "rc_after": 1,
+    "qualification": "Four unchanged inherited synthetic policy-copy hits, no new hits; not privacy/history clearance."
+  },
+  "wave": {
+    "native_started": 64,
+    "native_completed": 55,
+    "native_provider_dead": 9,
+    "report_present": 58,
+    "report_missing": 6,
+    "state": "partial",
+    "qualification": "Three originally provider-dead identities have report files. OracleLoss own history shows later same-identity peer-woken completion; original provider deaths are not erased. Presence never implies original native success."
+  },
+  "sources": {
+    "before_rows": 76,
+    "after_rows": 76,
+    "A": 62,
+    "B": 6,
+    "C": 8,
+    "mined": 42,
+    "queued": 25,
+    "rejected": 9,
+    "validate_before_rc": 0,
+    "validate_after_rc": 0
+  },
+  "no_pin_or_census_run": true
+}

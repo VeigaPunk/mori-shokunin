@@ -1,0 +1,18 @@
+{
+  "schema": "mori-r21-command-receipt-v1",
+  "measured_revision": "9fb1f911cfdd6061005c300795f44b1b45523897",
+  "argv": [
+    "/home/vgpnk/Projects/shokunin/scripts/sources-census.sh",
+    "census",
+    "--root",
+    "/home/vgpnk/Projects/shokunin",
+    "--file",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/round21/OracleLoss/corpus/SOURCES.md"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "started_utc": "2026-10-21T13:31:19.248574+00:00",
+  "elapsed_seconds": 0.009,
+  "exit_code": 0,
+  "stdout": "file\trows\t76\nfile\ttier.A\t62\nfile\ttier.B\t6\nfile\ttier.C\t8\nfile\tstatus.mined\t42\nfile\tstatus.queued\t25\nfile\tstatus.rejected\t9\nFLEET\trows\t76\nFLEET\ttier.A\t62\nFLEET\ttier.B\t6\nFLEET\ttier.C\t8\nFLEET\ttier.invalid\t0\nFLEET\tstatus.queued\t25\nFLEET\tstatus.mined\t42\nFLEET\tstatus.rejected\t9\nFLEET\tstatus.invalid\t0\nFLEET\tmissing\t0\n",
+  "stderr": ""
+}

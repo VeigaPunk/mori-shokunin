@@ -1,0 +1,10 @@
+{
+  "schema": "mori-r21-before-model-provenance-v1",
+  "entering_revision": "e9f340ce986f82a60baad1b8e5ead655ab818a1c",
+  "source_path": "corpus/evidence/loss-accounting-r21.json",
+  "git_cat_file_exit": 128,
+  "git_cat_file_stderr": "fatal: path 'corpus/evidence/loss-accounting-r21.json' exists on disk, but not in 'e9f340ce986f82a60baad1b8e5ead655ab818a1c'\n",
+  "reconstruction_revision": "3b792db133cec06c252ab696159b846c16805915",
+  "reconstruction_path": ".ufo/waves/round-21/frozen/before-accounting.json",
+  "note": "Actual entering representation absent. Empty file is explicit reconstructed capability-absence model, not historical bytes or two historical implementation bugs. Required population comes from the retained r10 observations at lines26-27."
+}

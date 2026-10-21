@@ -1,0 +1,17 @@
+{
+  "schema": "mori-r21-command-receipt-v1",
+  "measured_revision": "9fb1f911cfdd6061005c300795f44b1b45523897",
+  "argv": [
+    "/home/vgpnk/Projects/shokunin/scripts/sources-census.sh",
+    "validate",
+    "--root",
+    "/home/vgpnk/Projects/shokunin",
+    "mori"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "started_utc": "2026-10-21T13:31:19.257376+00:00",
+  "elapsed_seconds": 0.091,
+  "exit_code": 0,
+  "stdout": "mori\tW04\tS035 duplicate url raw.githubusercontent.com/systemd/systemd/cf8ebfc6159cf0b3b99aa9a0164ccb07c4c9c5af/catalog/systemd.catalog.in across scopes\nmori\tW04\tS037 duplicate url www.freedesktop.org/software/systemd/man/latest/systemd.journal-fields.html across scopes\nmori\tW04\tS073 duplicate url docs.python.org/3/library/pathlib.html across scopes\nmori\tW04\tS074 duplicate url kubernetes.io/docs/concepts/architecture/controller across scopes\nmori\tW04\tS075 duplicate url ftp.gnu.org/gnu/bash/bash-5.3.tar.gz across scopes\nmori\tW04\tS076 duplicate url michaelfeathers.silvrback.com/characterization-testing across scopes\nmori\tok\t/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md\n",
+  "stderr": ""
+}

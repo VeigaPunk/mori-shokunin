@@ -117,3 +117,37 @@ Wave-slot disclosure: retries2–4 did not reacquire a fresh grant after the
 first reservation; the unchanged dispatch succeeded on attempt4. The
 residual8 did acquire one. Both were released; no capacity-protection or
 procedural-compliance improvement is claimed for this round.
+
+## Exercised result
+
+At9fb1f911cfdd6061005c300795f44b1b45523897, the same committed-byte-bound
+L1 instrument observed C1 omitted2→0 of2, after retained2/unresolved2/
+invalid0 and pin blocked. Before is the reconstructed absent representation,
+not an entering file; its actual absence check returned128. C2 frozen
+mismatches2→0 of6 and outside-labeled real-sample1→0 of2. Receipts:
+`.ufo/waves/round-21/evidence/final/summary.json`, `claims-observed.json`,
+`outside-before.json`, `outside-after.json`.
+
+M1 fix is shown able to fail: the omitted-identity mutant changes omitted
+0→1→0 with exact restoration. M2 fix is shown able to fail: the old-rule
+mutant flips exactly the two loss decisions and mismatches2; restored
+control matches0. Same-actor, digest and identical-content symlink mutants
+also die. Five mutants killed,0 survived/inconclusive, all actual receipts
+and byte-compared complete workspace archives retained. CLI selftest114
+assertions pass. Original fixture control11/12 rc1 remains deliberately
+red for the old positive permission; explicit trust-refinement12/12 rc0.
+These co-evolved results do not rewrite the six frozen inputs.
+
+The retention floor remains red4→4 at identical inherited synthetic-policy
+copy lines; no new hits, no privacy/history clearance.72 original seats
+were dispatched,12 original provider deaths retained. Three original-dead
+identities have report files; OracleLoss's own history shows a later
+peer-woken completion, not a replacement. Its unused scratch candidate was
+not copied before cleanup; the spec/report and separate shipping L1 oracle
+remain, and no byte-equivalence or retained scratch-source claim is made.
+Used candidate code and all actual mutation workspaces were preserved.
+No indispensable input to the delivered counting instrument was removed.
+
+Final census76→76 (A62/B6/C8, mined42/queued25/rejected9), validator rc0
+both; only S066 used-by changes. Fleet-root misroot sweep found0 untracked
+entries; concurrent runtime/L0 changes were left untouched.
