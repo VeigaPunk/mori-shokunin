@@ -1,0 +1,36 @@
+{
+  "derived_from": ".ufo/waves/round-22/frozen/expected-real.json with the pre-registered rename only; raw_not_allowlisted 9 = raw_total 95 - allowlisted 86, as recorded by the r22 closure rechecks (rounds[427])",
+  "expected": {
+    "allowlisted": 86,
+    "exclusion_basis": "non_author_paths_glob",
+    "finding_id": "RETENTION_RECONCILED",
+    "forbidden_allowlist": 0,
+    "non_author": 5,
+    "policy_excluded": 5,
+    "privacy_clearance": false,
+    "raw_not_allowlisted": 9,
+    "raw_total": 95,
+    "receipt_match": true,
+    "retention_state": "red",
+    "scanner_total": 90,
+    "scanner_unallowlisted": 4,
+    "schema": "mori-retention-reconciliation-v2"
+  },
+  "expected_exit": 0,
+  "forbidden_keys": [
+    "raw_unallowlisted"
+  ],
+  "input_revision": "77a5bbe8a0b41dfbfd2546d024d36e294b814bd0",
+  "inputs_sha256": {
+    "allowlist": "f46c78ecad4c6d31fa9ac0ba0cfd6c72eb9137ab6b58ab4baf4239d11ea0c63b",
+    "policy": "db06e9810bbfd243fb0a753a46960573df39083ea90174ce463cf2a0ab523128",
+    "receipt": "4001e2d94afcc652b710d5d0afe63bffce2185256f120d5a5f7d33de6be8c840"
+  },
+  "measured_revision": "9fb1f911cfdd6061005c300795f44b1b45523897",
+  "paths": {
+    "allowlist": "corpus/evidence/retention-allowlist.json",
+    "policy": ".ufo/waves/round-18/frozen/c1-policy.json",
+    "receipt": ".ufo/waves/round-21/evidence/final/retention-floor.json"
+  },
+  "schema": "mori-r23-c1-real-expected-v1"
+}

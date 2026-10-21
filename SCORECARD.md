@@ -1409,3 +1409,20 @@ round-20 falsify), original permission control RED11/12, two unknown
 historical dispositions with baseline acceptance blocked. Trends (author
 proposal; outside closure decides): expansion unchanged, quality improved,
 discernment improved. No subsequent round.
+
+## Round23 declaration — misleading-field cutover and quota-surface coverage
+
+L1 MadoR22-2 (reused agent as mori L1); entering `1bfe708a170c877db3319060d0ab38771efe03ac`.
+R22 admitted (MANIFEST rounds[427]): one bounded calibration capability at held score.
+Full pre-registration: `.ufo/waves/round-23/contract.md`; frozen requirements and real
+controls in `.ufo/waves/round-23/frozen/`, all landed before any implementation.
+
+| Claim | Axis / held score | Falsifiable move | Frozen evidence |
+|---|---|---|---|
+| C1 remove misleading `raw_unallowlisted` (routed by r22 closure) | calibration 5→5 (lowest tie with depth/freshness) | `misleading_alias_runs` >0 → 0 and r23 oracle 25/26 → 26/26 (R01–R24 re-expressed, R25 schema v2/no alias, R26 raw complement) | `frozen/c1-requirements.json`, `oracle-rename.py`, `frozen/c1-expected-real.json` |
+| C2 FR2 quota-surface probe (capability; sourced S077–S084) | coverage 6→6 | sealed independent fixture cases capability_absent → all match; real host exit0 `QUOTA_DISABLED` as frozen | `contract.md` §C2, `frozen/c2-expected-real.json`; cases/oracle sealed after wave 1, before implementation |
+
+Targets, not results. Other scores held operability7/depth5/freshness5/adjacency6.
+Open debt carried: 4 unallowlisted retention hits, permission control RED 11/12, two
+unknown historical dispositions, baseline acceptance blocked, no privacy clearance.
+No retirement, waiver, exploratory claim, promotion or subsequent round.

@@ -1,0 +1,46 @@
+{
+  "after_expected": {
+    "misleading_alias_runs": 0,
+    "unmet": []
+  },
+  "before_expected": {
+    "misleading_alias_runs": ">0",
+    "unmet": [
+      "R25"
+    ]
+  },
+  "before_revision": "1bfe708a170c877db3319060d0ab38771efe03ac",
+  "contract_sha256": "2bb35aefb08d3fafc467260f859453c0f096effe18b2446503f2b2ee87fe69e7",
+  "fixture_builder_sha256": "1b3e16f74a032e066dd881c15affbc4401f2f44447d78efc650ee98a6d2d15d1",
+  "oracle_sha256": "a55b2b50d3e7447a1d5312c8b066a13137a6a6895f0343b3240ebf081d97c5f2",
+  "r22_requirements_v2_sha256": "48ea2369dad5958bd62922483438124b11597a61a5e1ddc02bbeb213c89d0bea",
+  "requirements": [
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "R05",
+    "R06",
+    "R07",
+    "R08",
+    "R09",
+    "R10",
+    "R11",
+    "R12",
+    "R13",
+    "R14",
+    "R15",
+    "R16",
+    "R17",
+    "R18",
+    "R19",
+    "R20",
+    "R21",
+    "R22",
+    "R23",
+    "R24",
+    "R25",
+    "R26"
+  ],
+  "schema": "mori-r23-c1-requirements-v1"
+}

@@ -1518,3 +1518,18 @@ one candidate, souji's own round-22 report — another lane's file, untouched.
 No tool install, census run, pin, host mutation, promotion or subsequent round.
 Procedural disclosure: one S064 used-by cell edit was applied with a python
 string replacement instead of the edit tool; bytes verified by git diff.
+
+## 2026-10-21 — round23: pre-registered declaration (before implementation)
+
+Steered mori round 23, attempt1, entering `1bfe708a170c877db3319060d0ab38771efe03ac`; L1 is
+the reused agent MadoR22-2 acting as mori L1 (Main's spawns were refused at the job cap).
+Motivation: the r22 closure (MANIFEST rounds[427]) routed (1) a pre-registered rename of the
+misleading frozen field `raw_unallowlisted` (it carries the in-scope count; the true raw
+complement is `raw_not_allowlisted`) and (2) landing expected/oracle files before code, since
+r22's `frozen/expected-real.json` landed with the implementation. C1 (calibration) removes the
+alias with a schema v2 cutover; C2 (coverage, FR2 from `PROVINCE.md` Frontier) adds a read-only
+quota-surface probe because `df` percentages cannot see quota exhaustion
+(`corpus/knowledge/audit-r11.md:218-222`). Contract `.ufo/waves/round-23/contract.md`; frozen
+C1 requirements/oracle and both real controls land in this commit. Start census exit0
+(`.ufo/waves/round-23/evidence/sources-start.txt`, six W04 duplicate-URL warnings, rows 76).
+`.scratch/` stays uncommitted. Debt carried unchanged.
