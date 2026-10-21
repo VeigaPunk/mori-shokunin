@@ -708,13 +708,12 @@ def load_fixture(path):
     require(isinstance(mountinfo, str), "fixture_mountinfo")
     mounts = parse_mountinfo(mountinfo)
     paths = obj["paths"]
-    require(isinstance(paths, list), "fixture_paths")
+    require(isinstance(paths, list) and paths, "fixture_paths")
     rows = []
     seen = set()
     for item in paths:
-        require(isinstance(item, dict), "fixture_path_entry")
-        for key in PATH_KEYS:
-            require(key in item, "fixture_path_entry")
+        require(isinstance(item, dict) and set(item) == PATH_KEYS,
+                "fixture_path_entry")
         target = item["path"]
         resolved = item["realpath"]
         device = item["st_dev"]
@@ -1774,6 +1773,20 @@ def selftest():
             RC_SETUP,
             SETUP,
             None,
+        )
+        arm(
+            "setup-empty-path-population",
+            fixture(xfs_line, []),
+            RC_SETUP,
+            SETUP,
+            [],
+        )
+        arm(
+            "setup-extra-path-record-key",
+            fixture(xfs_line, [dict(path_entry("/srv"), unexpected=True)]),
+            RC_SETUP,
+            SETUP,
+            [],
         )
         cli_arm(
             "setup-unknown-argument",

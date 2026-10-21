@@ -1623,3 +1623,23 @@ The one-line caller now destructures that actual pair; it does not weaken
 validation, suppress an exception or special-case an input. Every frozen expected
 file/oracle stays unchanged at the original seal. The corrected revision-bound
 measurement follows; no success is predicted by the patch.
+
+### Round23 — frozen contradiction retained, not repaired into a pass
+
+Second measurement at5729e7ff889875d27ab0ead4385db551572892a9 retains
+C1 all26 and supplementary guards, C2 exactly29/30, and a matching direct default
+real control. CaseEscapedSpace is the sole red: selected mount43 has parent33,
+while longest strictly-shorter covering /srv is mount42. The pre-sealed parent
+rule therefore requires unknown/ambiguous_overmount, exactly what production
+returns; the independently authored frozen expected says enabled. Both rule and
+expected remain untouched. Main explicitly directs strict C2 unprovable/not
+admitted: no exception, exclusion, relabel or result-driven oracle rewrite.
+`evidence/frozen-contradiction.json` and the original measure2 receipt bind the facts.
+
+Before fresh falsification, generic fixture validation is completed to its already
+declared contract: reject an empty path population and extra path-record members,
+with two additional co-evolved actual-CLI selftest arms. This does not change any
+sealed input/want or the red topology result. These internal tests are not new
+independent cases or criteria. C1 remains independent; the strict C2 target is
+not converted into a partial admission. Remaining work is the declared falsification
+and guards, not further interpreter/topology scope.

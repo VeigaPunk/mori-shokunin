@@ -100,3 +100,19 @@ values. This is a caller/callee return-shape defect, not invalid fixture evidenc
 The one-line destructuring fix changes production only; expected/oracle bytes
 and denominators remain sealed. This is the actual red-before for the fix,
 not a syntax/name-analysis claim. Corrected observations are recorded separately.
+
+## Frozen rule versus inconsistent expected topology
+
+Actual second run29/30 retains CaseEscapedSpace red. Decode its escaped mountpoint:
+selected43 has parent33, but longest strictly-shorter cover /srv is42, so the
+already-sealed conservative parent rule requires ambiguous_overmount. Its expected
+enabled row is inconsistent. Captured-by existing QUALITY55; the source/fixture
+checks missed normalization plus parent consistency before sealing. The fix is
+admission discipline, not a result-driven expectation repair: preserve the rule,
+expected bytes, red case and original denominator, and report strict C2 unprovable.
+The whole driver demonstrably fails while C1's separate26/26 and guards remain
+green. Main's exact ruling is retained in evidence/parent-strict-target-disposition.txt.
+
+Two generic declared fixture validations (nonempty population and exact path-record
+keys) gain co-evolved public-selftest arms. No frozen expectation changes, no
+special-case for escaped paths and no implicit Core/capability admission.

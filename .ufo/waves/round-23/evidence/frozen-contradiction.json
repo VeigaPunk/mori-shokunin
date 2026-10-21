@@ -1,0 +1,85 @@
+{
+  "schema": "mori-r23-frozen-oracle-contradiction-v1",
+  "seal": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+  "measured_revision": "5729e7ff889875d27ab0ead4385db551572892a9",
+  "case": ".ufo/waves/round-23/frozen/quota-cases/CaseEscapedSpace.json",
+  "case_sha256": "8340738a509e474a94a815637e66b407dfb60c6449511e52db55296d844abeea",
+  "original_population_result": {
+    "pass": 29,
+    "total": 30,
+    "primary_pass": 26,
+    "primary_total": 27,
+    "supplemental_pass": 3,
+    "supplemental_total": 3
+  },
+  "selected_mount_id": 43,
+  "selected_parent_id": 33,
+  "longest_strictly_shorter_cover": {
+    "mount_id": 42,
+    "mount_point": "/srv"
+  },
+  "parent_present_in_snapshot": true,
+  "sealed_rule_required": {
+    "fstype": null,
+    "mount_point": null,
+    "quota_state": "unknown",
+    "enforcement": "n/a",
+    "basis": "ambiguous_overmount"
+  },
+  "frozen_expected": {
+    "exit": 1,
+    "finding_id": "QUOTA_ENABLED",
+    "paths": [
+      {
+        "path": "/srv/my data/sub dir",
+        "fstype": "xfs",
+        "mount_point": "/srv/my data",
+        "quota_state": "enabled",
+        "enforcement": "enforced",
+        "basis": "xfs_quota_option"
+      },
+      {
+        "path": "/srv/plain",
+        "fstype": "xfs",
+        "mount_point": "/srv",
+        "quota_state": "disabled",
+        "enforcement": "n/a",
+        "basis": "xfs_noquota_option"
+      }
+    ]
+  },
+  "actual": {
+    "df_covers_quota": false,
+    "exit_code": 2,
+    "finding_id": "QUOTA_STATE_UNKNOWN",
+    "limits": "no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.",
+    "paths": [
+      {
+        "basis": "ambiguous_overmount",
+        "btrfs_qgroups_mode": null,
+        "device_check": "not_checked",
+        "enforcement": "n/a",
+        "fstype": null,
+        "mount_point": null,
+        "path": "/srv/my data/sub dir",
+        "quota_option_keys": [],
+        "quota_state": "unknown"
+      },
+      {
+        "basis": "xfs_noquota_option",
+        "btrfs_qgroups_mode": null,
+        "device_check": "match",
+        "enforcement": "n/a",
+        "fstype": "xfs",
+        "mount_point": "/srv",
+        "path": "/srv/plain",
+        "quota_option_keys": [
+          "noquota"
+        ],
+        "quota_state": "disabled"
+      }
+    ],
+    "schema": "mori-quota-surface-v1"
+  },
+  "disposition": "Contradictory pre-sealed expected output and parent-ID rule. Keep both unchanged. No exception/special case/exclusion/relabel. Strict C2 target unprovable, not admitted; outside closure may diagnose oracle but cannot turn original29/30 into demonstrated pass."
+}
