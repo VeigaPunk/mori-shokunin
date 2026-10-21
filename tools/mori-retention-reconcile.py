@@ -246,10 +246,14 @@ def selftest():
         measured=run_git('rev-parse','HEAD'); h={'path':'sample.txt','line':1,'class':'R22','line_sha256':digest(b'R22_SAMPLE')}
         inner={'finding_id':'RETENTION_FINDINGS','commit':measured,'policy_sha256':digest((root/'policy.json').read_bytes()),'metric':1,'routed':0,'non_author':0,'hits':[h],'unallowlisted_hits':[h],'allowlisted_hits':[],'forbidden_allowlist':[],'warnings':[]}
         wrapper={'schema':'mori-r21-command-receipt-v1','measured_revision':measured,'argv':['scan','--repo',str(root),'--rev',measured,'--policy','policy.json','--allowlist','allow.json'],'exit_code':1,'stdout':json.dumps(inner),'stderr':''}
-        (root/'receipt.json').write_text(json.dumps(wrapper));run_git('add','--all');run_git('commit','-q','-m','receipt');rev=run_git('rev-parse','HEAD')
+        (root/'receipt.json').write_text(json.dumps(wrapper))
+        wrong=dict(wrapper);wrong['stdout']=json.dumps(inner|{'hits':[]})
+        (root/'wrong.json').write_text(json.dumps(wrong))
+        run_git('add','--all');run_git('commit','-q','-m','receipt');rev=run_git('rev-parse','HEAD')
         base=[sys.executable,str(Path(__file__).resolve()),'check','--repo',str(root),'--rev',rev,'--receipt','receipt.json','--policy','policy.json','--allowlist','allow.json']
-        passed=0; total=3
-        for cmd,code,finding in ((base,0,MATCH),(base[:-1]+['../allow.json'],2,SETUP),(base+['--unknown'],2,SETUP)):
+        bad=base.copy();bad[bad.index('--receipt')+1]='wrong.json'
+        passed=0; total=4
+        for cmd,code,finding in ((base,0,MATCH),(bad,1,MISMATCH),(base[:-1]+['../allow.json'],2,SETUP),(base+['--unknown'],2,SETUP)):
             cp=subprocess.run(cmd,capture_output=True,text=True,env=env)
             try:v=json.loads(cp.stdout)
             except ValueError:v={}

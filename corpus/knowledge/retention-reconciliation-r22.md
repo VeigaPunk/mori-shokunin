@@ -24,6 +24,12 @@ A raw hit identity is `(path, line, class, line_sha256)`. Compare exact multiset
 
 The r21 receipt's observed metadata has95raw/5non-author/90scanner/4unallowlisted. Its source-policy file has4allowlisted hits, and a nested byte-identical policy copy contains the4unallowlisted hits. Neither source-file subtraction (giving91) nor digest/basename exclusion is the operator's scanner population. These values are historical receipt metadata; actual round22 recount receipts carry their own measured revisions.
 
+The output's `raw_unallowlisted` and `scanner_unallowlisted` intentionally
+name the same existing policy-filtered metric, not two independent counts.
+Likewise `policy_excluded` equals `non_author` by definition. The full
+identity lists, not these aliases, establish membership. The no-clearance
+field is always false even when the frozen-regex retention state is clean.
+
 ## Provenance limits
 
 The reconciler resolves the input commit once, reads receipt/policy/allowlist from Git, and recounts the full commit named consistently by wrapper/command/inner result. The measured commit must be an ancestor of or equal to the input commit. Policy and allowlist bytes must match across both commits. Output binds loaded input digests, executing tool digest, resolved revisions and argv. Git replace refs, inherited Git redirection/trace variables and lazy fetching are disabled for reads.

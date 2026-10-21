@@ -1475,3 +1475,22 @@ Source S064 reopened for commit-resolution semantics only; S065 re-rejected
 as sole provenance/privacy support, quotes and used-by log in round22 lesson.
 Production registration, Q70 identity criterion and own-evidence boundary
 are tied to that lesson; all actual test/measurement outcomes follow exercise.
+
+### Round22 author-side falsifier refinements (co-evolved, not re-frozen24)
+
+CriticPopulation/CriticAdmission and AttackR05/15/17/18/20/21 identified
+non-discriminating or uncovered instrument arms. The shipping tool binds
+recorded policy/allowlist paths, marks receipt_authenticity=unattested, and
+its CLI selftest now includes exact0/1/2finding outcomes. The unchanged
+frozen24 oracle is supplemented, not rewritten: `refinement-reconcile.py`
+defines18 extra controls for path-only/list-only/count/boolean/revision
+forgeries, same-byte symlink rejection, bound path substitution, clean and
+non-author-overlap controls, unsafe paths and malformed inner JSON.
+`measure-round22.py` validates frozen input digests, runs the identical
+before/after instrument, separately measures real red reconciliation/current
+retention debt, and mutation-tests count-only/false-clearance/wrong-population
+copies with a restored control. Every synthetic workspace is retained and
+byte-compared to its portable archive. This describes code, not unrun success.
+Retrospective entering-registry histogram is explicitly separate from the
+actual round-start census validation receipt. Wave2 has64 distinct concrete
+post-implementation attacks; L1 measures only after reviewers return.
