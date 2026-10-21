@@ -224,3 +224,33 @@ Source tiers: see corpus/SOURCES.md (contract v1); this file holds claim admissi
     the desired delta. Retain compatible and unsupported-binding observations;
     use the same final counting instrument and unchanged expected requirements
     for both sides. ← lessons/round-19.md#M9.
+64. Every dispatched wave's per-seat report presence is counted by
+    `tools/mori-wave-settlement.py scan` and the receipt (scan time, dispatch
+    path and sha256, present/stub/missing counts) is committed before the
+    round reports that wave's settlement. Fails when a reported wave count
+    differs from the receipt, when no receipt exists, or when a missing report
+    is called a dead/failed seat without a terminal cause record.
+    ← lessons/round-20.md#M1; r19 W1 scan 16/64 partial, exit 1.
+65. A red drift baseline re-observed in a round is dispositioned in that
+    round: every token classified into the closed set with an evidence pointer
+    (unclassified count 0 by the counting command), then re-pinned, or a named
+    census-regression routed with owner, or the reason no pin is safe. "Red
+    retained", "carried" or a free-text [INFERENCE] bucket is not a
+    disposition and not a classification. ← lessons/round-20.md#M2; r13
+    register 8 unclassified and 43 invalid against the r20 entering drift.
+66. A seat start marker is never counted as a delivered report: settlement
+    and seat-count claims exclude the `stub` status, and a protocol that
+    writes a marker must ship with the counter that distinguishes it.
+    ← lessons/round-20.md#M3; frozen `present` = size>0 counted 18 markers.
+67. A disappearance token whose cause is unchanged census code plus changed
+    host or fleet state is classed live-state, and when the disappearance
+    hides a still-real condition it also carries `blind_spot` with a route;
+    re-pinning never certifies health, only sameness since the pin.
+    ← lessons/round-20.md#M6; -FINDING:WATCHDOG_STALE and
+    -FINDING:WAVE_UNSETTLED_AGE dissent (VolatileContract H2/H3).
+68. A minimized or sanitized copy never moves a pinned digest: the mapping
+    records the entering-revision digest, the present digest and whether the
+    artifact was bound; a bound artifact is re-run from its original revision,
+    never from the sanitized working copy. Fails when a rerun or pin cites a
+    present digest as historical. ← lessons/round-20.md (routed r19 closure
+    R03 via `.ufo/waves/round-20/build/SpotcheckR19.md`).

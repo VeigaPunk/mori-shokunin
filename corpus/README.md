@@ -393,3 +393,10 @@ R1–R9 all-blob retention scope. An incomplete review is not clean, and a
 complete review is not an automated privacy classifier or a proof that
 private material is absent everywhere. Retrospective index/table repairs
 are not newly explored frontier ground.
+
+## Round-20 coverage additions
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| Per-seat wave settlement (FR3) | `knowledge/wave-settlement-r20.md` | Dispatch members vs report files for every lane wave, misrooted/stub/unsafe distinguished; lane and fleet scans reproduce independent ground truth. Hygiene-vs-never-written, dispatch authenticity and successor reports stay frontier. |
+| Drift baseline re-pin | `knowledge/drift-repin-r20.md` | Closed-class classification of all 50 r10 drift tokens with evidence, and a new baseline; comparator blind spots (first-word values, duplicate keys, positional pairing) named, not fixed. |

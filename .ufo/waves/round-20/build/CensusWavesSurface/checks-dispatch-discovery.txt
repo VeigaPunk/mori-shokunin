@@ -1,0 +1,28 @@
+# dispatch shape of the aged unsettled waves and the 26-task wave (jq)
+shokunin-train-20261013: {"has_taskCall":true,"taskCall_type":"object","tasks":26,"top_keys":["compaction","counts","note","policy","registry","resumeSends","schema","taskCall","wave"]}
+shokunin-train-20261013-w2: {"has_taskCall":true,"taskCall_type":"object","tasks":26,"top_keys":["compaction","counts","note","policy","registry","resumeSends","schema","taskCall","wave"]}
+shokunin-train-20261013-w3: {"has_taskCall":false,"taskCall_type":"null","tasks":0,"top_keys":["count","dispatched_at","lanes","wave"]}
+shokunin-train-20261013-w4: {"has_taskCall":false,"taskCall_type":"null","tasks":0,"top_keys":["agent_count","agents","dispatched","wave"]}
+shokunin-train-20261016-w24: {"has_taskCall":true,"taskCall_type":"object","tasks":20,"top_keys":["compaction","counts","note","policy","registry","resumeSends","schema","taskCall","wave"]}
+# depth-2 dispatch.json (probe-visible names): count
+11
+# depth-2 dispatch.json containing trailer text 'Report: write your scoped findings to': count
+0
+# fleet json (any depth) carrying trailer text
+/home/vgpnk/Projects/shokunin/.ufo/waves/hyaku/jj-w1/dispatch.json
+# lane json (any depth) carrying trailer text: count
+20
+# depth-2 dispatch.json schema values
+      8 absent
+      3 ufo-swarm-wave-dispatch-v1
+# fleet json files, any depth: count
+330
+# fleet json with top-level schema ufo-swarm-wave-dispatch-v1, any depth: count
+10
+# depth-1 directories (find -type d) / of which round-*
+62
+13
+# live grep-token match in shokunin-train-20261013-w5/swarm-registry.json (jq paths of true closed/settled)
+["closed"]
+# lane census SHA-256 (must equal 87b8d680...ab28)
+87b8d680b9b2572e89977a10ff9b91630fbaf689f23f4892e06be427b977ab28  /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh

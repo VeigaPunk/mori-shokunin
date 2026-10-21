@@ -1,0 +1,29 @@
+{
+  "schema": "mori-r20-c2-coevolved-cases-proposal-v1",
+  "status": "PROPOSAL from MoriR20.ContractReview. Not frozen. Does not modify frozen/c2-expected.json or contract.md. Each case names the CE refinement (see build/ContractReview.md section 4) it exercises. Expectations are unexecuted: no tool exists yet.",
+  "frozen_inputs_untouched": ["frozen/c2-expected.json", "contract.md"],
+  "cases": [
+    {"id": "ce-marker-only", "ce": "CE-2", "setup": "2 members. Report A is exactly the line 'STATUS: started' plus newline (16 bytes). Report B is non-empty and is not the marker.", "expect": {"exit": 1, "state": "partial", "present": 1, "started": 1}},
+    {"id": "ce-zero-tasks", "ce": "CE-1", "setup": "dispatch with taskCall {context: 'c', tasks: []}", "expect": {"exit": 1, "state": "unavailable", "members": 0}},
+    {"id": "ce-trailer-then-text", "ce": "CE-8", "setup": "1 member. Task body is ...trailer line, then a non-blank line '| godspeed'. Report exists and is non-empty.", "expect": {"exit": 1, "state": "unavailable", "unparsed": 1}},
+    {"id": "ce-trailing-blank-lines", "ce": "CE-8", "setup": "1 member. Task body ends with the trailer line followed by two empty lines. Report exists and is non-empty.", "expect": {"exit": 0, "state": "settled", "present": 1}},
+    {"id": "ce-two-trailers", "ce": "CE-8", "setup": "1 member. Task body contains two trailer-pattern lines, both naming existing non-empty files.", "expect": {"exit": 1, "state": "unavailable", "unparsed": 1}},
+    {"id": "ce-schema-collision-no-taskcall", "ce": "CE-5", "setup": "only file: top-level schema ufo-swarm-wave-dispatch-v1, no taskCall key, no wave key", "expect": {"exit": 1, "schema_collisions": 1, "waves": 0}},
+    {"id": "ce-resume-only-with-sends", "ce": "CE-15", "setup": "taskCall null and resumeSends with one entry", "expect": {"exit": 1, "state": "unavailable"}},
+    {"id": "ce-no-spawn-record", "ce": "CE-3", "setup": "2 members, no reports. Dispatch has no registry key.", "expect": {"exit": 1, "state": "unsettled", "present": 0, "spawn_record": "no-registry-key", "declared_only": true}},
+    {"id": "ce-registry-file-absent", "ce": "CE-3", "setup": "2 members, no reports. registry.path names a file that does not exist.", "expect": {"exit": 1, "state": "unsettled", "spawn_record": "registry-file-absent", "declared_only": true}},
+    {"id": "ce-registry-ids-recorded", "ce": "CE-3", "setup": "2 members, no reports. registry.path is a regular file whose members both have non-null agentId.", "expect": {"exit": 1, "state": "unsettled", "spawn_record": "ids-recorded", "declared_only": false}},
+    {"id": "ce-name-invariance", "ce": "CE-4", "setup": "two byte-identical dispatch files, one named validation-current.json and one named dispatch-preview.json, all reports present and non-marker", "expect": {"exit": 0, "state": "settled", "same_state_fields_in_both": true}},
+    {"id": "ce-symlink-in-report-path", "ce": "CE-7", "setup": "trailer path build/X.md where directory build is a symlink to a directory inside the lane that contains a non-empty X.md", "expect": {"exit": 1, "present": 0, "unsafe": 1, "reason": "symlink"}},
+    {"id": "ce-symlink-json-alias", "ce": "CE-7", "setup": "waves/alias.json is a symlink to waves/round-1/dispatch.json (valid, settled)", "expect": {"exit": 0, "waves": 1, "skipped_symlinks": 1}},
+    {"id": "ce-nested-lane-root", "ce": "CE-6", "setup": "the only valid settled dispatch sits under waves/x/final-clones/A/.ufo/waves/round-1/dispatch.json", "expect": {"exit": 0, "waves": 0, "nested_dispatch_skipped": 1}},
+    {"id": "ce-waves-dir-absent", "ce": "CE-10", "setup": "lane root with no .ufo/waves directory", "expect": {"exit": 2}},
+    {"id": "ce-all-unreadable", "ce": "CE-10", "setup": "only file: invalid JSON that contains the text ufo-swarm-wave-dispatch-v1", "expect": {"exit": 1, "waves": 0, "unreadable_json": 1}},
+    {"id": "ce-unknown-dispatch-version", "ce": "CE-10", "setup": "only dispatch-like file has schema ufo-swarm-wave-dispatch-v2 and a valid taskCall", "expect": {"exit": 1, "unknown_dispatch_schema": 1, "waves": 0}},
+    {"id": "ce-no-fleet-root-no-misroot-claim", "ce": "CE-16", "setup": "scan without --fleet-root. Report absent under lane root but present at the same relative path under a sibling directory.", "expect": {"exit": 1, "present": 0, "misrooted": 0, "fleet_root": null}},
+    {"id": "ce-empty-fleet-copy-not-misrooted", "ce": "CE-16", "setup": "report absent under lane root. A 0-byte regular file exists at the same relative path under --fleet-root.", "expect": {"exit": 1, "misrooted": 0, "missing": 1}},
+    {"id": "ce-out-inside-waves", "ce": "CE-12", "setup": "--out path located inside <lane>/.ufo/waves/", "expect": {"exit": 2}},
+    {"id": "ce-snapshot-identity", "ce": "CE-12", "setup": "unchanged tree, two runs", "expect": {"byte_identical": true, "discovery_sha256_equal": true}},
+    {"id": "ce-enum-vocabulary", "ce": "CE-9", "setup": "member named DeadSeatProbe is missing. No enum-valued field (state, status, reason, spawn_record, key names) equals dead, failed or killed.", "expect": {"exit": 1, "enum_vocab_hits": 0, "member_name_contains_dead": true}}
+  ]
+}
