@@ -60,7 +60,7 @@ on any *terminal* record). Key set is identical in all 54 occurrences:
 
 | key | JSON type | cardinality / domain | notes |
 |---|---|---|---|
-| `attempt` | int | 4 distinct: `1`×27, `2`×12, `3`×9, `4`×6 | retry-cascade depth |
+| `attempt` | int | 4 distinct (value histogram withheld, round-18 privacy repair; closure V13) | retry-cascade depth |
 | `kind` | str | 1 distinct | constant across all 54 (text not read) |
 | `note` | str | 3 distinct | short comment strings |
 | `recoveredAt` | str | 27 distinct | timestamp-shaped strings (string, not number) |
@@ -75,7 +75,7 @@ on any *terminal* record). Key set is identical in all 54 occurrences:
 | `model` | str | text, not read |
 | `provider` | str | text, not read |
 | `responseId` | str | opaque id, not read |
-| `timestamp` | int | epoch-ms, range 1792506861887 … 1792522301090, 25 distinct |
+| `timestamp` | int | epoch-ms, 25 distinct (range withheld, round-18 privacy repair; closure V13) |
 
 No arrays, booleans, or nulls anywhere in the value; no optional keys; no per-provider shape
 variation in this corpus.

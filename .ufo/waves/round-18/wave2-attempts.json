@@ -1,0 +1,15 @@
+[
+ {
+  "attempt": 1,
+  "at": "2026-10-21T03:32:51.711329-03:00",
+  "wave": "mori-r18-w2-falsify",
+  "dispatch_path": ".ufo/waves/round-18/wave2-dispatch.json",
+  "payload_sha256": "0ffedf05ef14706ce5638d8cafedeb477e8ea585d5d6423bf863d93be8223177",
+  "payload_bytes": 97156,
+  "tasks_count": 67,
+  "slot_grant": "granted lane=mori wave=18-w2 seats=67 live=132 pending=0 cap=200",
+  "result": "refused",
+  "refused_text": "Failed to start background task jobs: MoriR18Recovery.MutRetentionGate: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MoriR18Recovery.ReviewRetentionGateCode: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MoriR18Recovery.Rec",
+  "started_ids": 0
+ }
+]
