@@ -1,0 +1,62 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseTmpfsNoQuota",
+  "scenario": "A tmpfs mount whose super options carry no quota key at all (no quota, usrquota, grpquota and none of the four documented *_hardlimit keys) is visibly quota-disabled, not unknown and not enabled.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "1 0 259:2 / / rw,relatime shared:1 - ext4 /dev/nvme0n1p3 rw\n2 1 259:3 / /proc rw,nosuid,nodev,noexec,relatime shared:5 - proc proc rw\n3 1 259:3 / /sys rw,nosuid,nodev,noexec,relatime shared:7 - sysfs sysfs rw\n4 1 0:30 /@home /home rw,relatime shared:2 - btrfs /dev/mapper/root rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=257,subvol=/@home\n5 1 259:1 / /tmp rw,relatime shared:2 - xfs /dev/nvme0n1p1 rw,inode64,logbufs=8,logbsize=256k,noquota\n30 1 0:24 / /run rw,nosuid,nodev,relatime shared:9 - tmpfs tmpfs rw,size=4029068k,nr_inodes=4029068,mode=755,inode64\n31 30 0:52 / /run/user/1000 rw,nosuid,nodev,relatime shared:10 - tmpfs tmpfs rw,size=1622592k,nr_inodes=405648,mode=700,uid=1000,gid=1000,inode64\n",
+    "paths": [
+      {
+        "path": "/run/user/1000",
+        "realpath": "/run/user/1000",
+        "st_dev": "0:52"
+      },
+      {
+        "path": "/run/user/1000/mori",
+        "realpath": "/run/user/1000/mori",
+        "st_dev": "0:52"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0",
+      "/dev/nvme0n1p3": "nvme0n1p3"
+    },
+    "btrfs_sysfs": {
+      "1d02a454-c549-4a35-b567-89d60902af8e": {
+        "devices": [
+          "dm-0"
+        ],
+        "qgroups": false,
+        "qgroups_enabled": null,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 0,
+    "finding_id": "QUOTA_DISABLED",
+    "paths": [
+      {
+        "path": "/run/user/1000",
+        "fstype": "tmpfs",
+        "mount_point": "/run/user/1000",
+        "quota_state": "disabled",
+        "enforcement": "n/a",
+        "basis": "tmpfs_quota_options_absent"
+      },
+      {
+        "path": "/run/user/1000/mori",
+        "fstype": "tmpfs",
+        "mount_point": "/run/user/1000",
+        "quota_state": "disabled",
+        "enforcement": "n/a",
+        "basis": "tmpfs_quota_options_absent"
+      }
+    ]
+  },
+  "rationale": "Pre-seal amendment (round-23/preseal-amendment.md) supersedes only erroneous or ambiguous original clauses; this corrected case re-derives the same scenario under those superseding rules, with the original proposal left untouched in cases-proposed/. Authority: contract section C2 (frozen at lane commit 4dc80c1be48308075e83af17f15fbfe7e95e6cb8) plus the amendment's C2 final rules, and the kernel sources S082 and S084; no candidate implementation, oracle, or sibling expectation was read. DELTA FROM THE ORIGINAL PROPOSAL: the fixture now carries a btrfs_sysfs UUID record whose qgroups_enabled member is null (the amendment requires true/false/null on every UUID record, and qgroups false must pair with enabled null and mode null), a matching device_links entry for the btrfs source, and a fuller host-like mountinfo whose super options reproduce exactly what the kernel emits for a tmpfs without quotas (shmem_show_options prints size, nr_inodes, mode, uid, gid and inode64, and prints no quota key because no quota option was given). The six scored per-path expectations are unchanged: the amendment's tmpfs rule preserves quota, usrquota, grpquota and only the four documented usrquota_block_hardlimit, usrquota_inode_hardlimit, grpquota_block_hardlimit, grpquota_inode_hardlimit keys, and this fixture contains none of them. CLASSIFICATION: contract C2 quota-classification table, tmpfs rows - 'tmpfs | any of quota,usrquota,grpquota or a key ending _hardlimit | enabled | enforced | tmpfs_quota_option' and 'tmpfs | none of them | disabled | n/a | tmpfs_quota_options_absent'. The covering tmpfs mount /run/user/1000 has super options 'rw,size=1622592k,nr_inodes=405648,mode=700,uid=1000,gid=1000,inode64'; its keys are rw, size, nr_inodes, mode, uid, gid, inode64. None of them is quota, usrquota or grpquota, and none is one of the four documented hardlimit keys, so the second tmpfs row applies: quota_state disabled, enforcement n/a, basis tmpfs_quota_options_absent. size, nr_inodes and mode are capacity and permission settings, not quota mechanisms, and the amendment's rule that quota option VALUES are never emitted and unknown nonquota super options are ignored means they are ignored here. SOURCE ANCHORS: S084 (Documentation/filesystems/tmpfs.rst at v7.2, lines 129-143) lists the complete set of tmpfs quota mount options - quota, usrquota, grpquota, usrquota_block_hardlimit, usrquota_inode_hardlimit, grpquota_block_hardlimit, grpquota_inode_hardlimit - so no other key could have carried quota state; the same file documents size and nr_inodes outside that table. S082 (Documentation/filesystems/proc.rst at v7.2, section 3.5, lines 1965-1990) fixes the mountinfo field layout used here: fields 1-6 are mount ID, parent ID, major:minor, root, mount point and mount options, then zero or more optional tag[:value] fields, then the '-' separator, then filesystem type, mount source and super options, which is why fstype is read from field m+2 and the option list from field m+4; the shared:N fields in the fixture are the documented optional fields and are skipped. Supplementary kernel anchor outside the S077-S084 registry rows: mm/shmem.c at v7.2 (sha256 eb5d1e9107b287c8d9d2c1dda83aa0e573917d5b0f88dc17b55162f22718cefb) - shmem_show_options at 4877-4894 prints exactly ',usrquota', ',grpquota' and the four ',*_hardlimit=' keys, and prints size, nr_inodes, mode, uid, gid and inode64 unconditionally of quota, so a tmpfs mounted without a quota option emits no quota key; shmem_parse_one at 4620-4672 shows that only the quota, usrquota and grpquota options set ctx->quota_types and the hardlimit options only set ctx->qlimits. MOUNT RESOLUTION under the amendment: the covering mountpoints for /run/user/1000 and /run/user/1000/mori are /, /run and /run/user/1000, each of which occurs exactly once in the fixture, so no repeated covering mountpoint triggers the ambiguous_overmount refusal; the longest component-prefix selection therefore chooses /run/user/1000 (the ext4 root, the btrfs /home subvolume, the xfs /tmp, the proc and sysfs mounts are shorter or unrelated), giving fstype tmpfs and mount_point /run/user/1000 for both paths. The amendment's parent-ID topology check also passes: the chosen mount has mount ID 31 and parent ID 30, the parent ID is present in the snapshot, and it is the ID of the longest strictly-shorter covering mount /run, so no additional ambiguous_overmount refusal applies. DEVICE CHECK: the chosen fstype is tmpfs, not btrfs, so the mount's major:minor must equal the path's st_dev or the result would be unknown/device_mismatch; the fixture makes them equal (mountinfo '31 30 0:52 / /run/user/1000 ...' versus st_dev '0:52'), which is what a real tmpfs instance reports because a tmpfs superblock takes an anonymous block device, major 0 with a per-instance minor (mm/shmem.c shmem_get_tree uses get_tree_nodev, and fs/super.c vfs_get_super uses set_anon_super_fc, which allocates MKDEV(0, dev)). VERDICT PRECEDENCE: no path is enabled and no path is unknown, so the run is exit 0 with finding_id QUOTA_DISABLED. Both path entries give path equal to realpath and carry no dot or dotdot components, so the expectation does not depend on whether the probe echoes the requested path or the resolved realpath, and the st_dev values are canonical decimal MAJ:MIN with no signs and no leading zeros.",
+  "sources": [
+    "S082",
+    "S084"
+  ]
+}

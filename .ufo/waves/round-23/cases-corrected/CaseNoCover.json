@@ -1,0 +1,47 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseNoCover",
+  "scenario": "mountinfo carries no root '/' mount line and no mount point that covers the queried path, so mount resolution finds no candidate mount",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "24 30 0:22 / /proc rw,nosuid,nodev,noexec,relatime shared:5 - proc proc rw\n31 30 0:5 / /dev rw,nosuid,relatime shared:7 - devtmpfs devtmpfs rw,size=4022864k,nr_inodes=1006208,mode=755\n36 30 0:26 / /sys rw,nosuid,nodev,noexec,relatime shared:8 - sysfs sysfs rw\n41 30 259:1 / /tmp rw,nosuid,nodev,relatime shared:14 - xfs /dev/nvme0n1p1 rw,attr2,inode64,logbufs=8,logbsize=32k,noquota\n52 1 259:2 / /srv/quota rw,relatime shared:16 - xfs /dev/nvme0n1p2 rw,attr2,inode64,logbufs=8,logbsize=32k,noquota\n65 33 0:30 /@home /home rw,relatime shared:20 - btrfs /dev/mapper/root rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=257,subvol=/@home\n",
+    "paths": [
+      {
+        "path": "/srv/quota-probe/data",
+        "realpath": "/srv/quota-probe/data",
+        "st_dev": "259:2"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0"
+    },
+    "btrfs_sysfs": {
+      "1d02a454-c549-4a35-b567-89d60902af8e": {
+        "devices": [
+          "dm-0"
+        ],
+        "qgroups": false,
+        "qgroups_enabled": null,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 2,
+    "finding_id": "QUOTA_STATE_UNKNOWN",
+    "paths": [
+      {
+        "path": "/srv/quota-probe/data",
+        "fstype": null,
+        "mount_point": null,
+        "quota_state": "unknown",
+        "enforcement": "n/a",
+        "basis": "no_covering_mount"
+      }
+    ]
+  },
+  "rationale": "DERIVATION UNDER THE PRE-SEAL AMENDMENT (.ufo/waves/round-23/preseal-amendment.md), contract C2 unchanged otherwise. No implementation, oracle or candidate was read.\n\nDELTA FROM THE ORIGINAL PROPOSAL (cases-proposed/CaseNoCover.json, retained untouched): (a) the single btrfs_sysfs UUID record gained the now-required 'qgroups_enabled' member (null, because the record's qgroups is false, which the amendment requires to pair enabled=null/mode=null); (b) mountinfo text, paths, device_links, exit, finding_id and the whole expected path tuple are unchanged. The ext2/3/4 -> unknown/n/a/ext_quota_option_unverified rewrite and the duplicated-covering-point -> unknown/null fstype+mountpoint/ambiguous_overmount rewrite touch other seats' cases only; this case has no ext path and no duplicated covering mountpoint, so neither delta applies here.\n\n(1) FIXTURE VALIDITY UNDER THE AMENDMENT. Fixture member types: 'qgroups' false (bool), 'qgroups_enabled' null (bool-or-null), 'qgroups_mode' null (mode-or-null) - exact bool/bool-or-null/mode-or-null types as required. The UUID key 1d02a454-c549-4a35-b567-89d60902af8e is a canonical UUID; 'devices' and the device_links mapped value 'dm-0' are plain nonempty basenames without slashes or control characters; the record has exactly the four required keys (devices, qgroups, qgroups_enabled, qgroups_mode). The single path is nonempty, unique, a normalized absolute path/realpath with no dot or dotdot component, and its st_dev '259:2' is a canonical decimal MAJ:MIN with no sign and no leading zeros. The top-level fixture keys are exactly the five of contract lines 82-90 (schema, mountinfo, paths, device_links, btrfs_sysfs). The mountinfo text contains no backslash escape at all, so the amendment's rule that only 040/011/012/134 are decodable and any other backslash escape is a setup error cannot fire; every line carries fields 1-6, optional tagged fields (shared:N), the '-' separator and exactly three trailing fields (fstype, source, super options), matching the amendment's per-line 'last THREE fields of EACH chosen line' rule and proc.rst 3.5 (S082). The file ends with a newline, so the final element after splitting is empty; the amendment explicitly requires empty trailing lines to be ignored, so this remains a verdict case and not a setup error. Therefore the case is well formed: no QUOTA_SETUP condition is met.\n\n(2) MOUNT RESOLUTION (contract lines 95-103 as amended). Candidates are mounts whose mount point equals the realpath, is '/', or is a component prefix of the realpath. Mount points present in the fixture: /proc, /dev, /sys, /tmp, /srv/quota, /home. There is no '/' mount point, so the root candidate does not exist. '/srv/quota-probe/data' equals no mount point and no mount point is a component prefix of it: '/srv/quota' + '/' = '/srv/quota/' is not a prefix of '/srv/quota-probe/data' (the next character after '/srv/quota' is '-', not '/'). /proc/, /dev/, /sys/, /tmp/ and /home/ are likewise not prefixes. No candidate mount exists. The amendment's new refusal rule (any covering mountpoint occurring more than once -> unknown/n/a/ambiguous_overmount) does not fire: no mount point in the fixture occurs twice, and no mount point covers the path at all.\n\n(3) VERDICT FOR THE PATH. Contract line 99-100: none -> quota_state 'unknown', basis 'no_covering_mount'. The amendment keeps that token (it only adds 'ambiguous_overmount' for the duplicated-covering-point case, and 'btrfs_qgroups_enabled'/'btrfs_qgroups_disabled'/'btrfs_qgroups_enabled_unavailable' for the btrfs rows, none of which is a no-cover case). fstype=null and mount_point=null per contract lines 126-127 and the amendment's no-cover clause. device_check is 'not_checked' per the amendment's no-cover clause; that field is outside the six scored fields, so it is not asserted in expected (it is offered to L1 as a supplementary sealed check). No device comparison is reached, so the amendment's device-mismatch preemption does not apply.\n\n(4) ENFORCEMENT. 'n/a'. The amendment states 'ext2/3/4: quota_state ALWAYS unknown, enforcement n/a' and every other unknown row in the contract table (lines 108-122) also carries enforcement n/a; 'unknown' plus 'n/a' is the uniform contract convention for an unobservable state.\n\n(5) RUN VERDICT (contract lines 132-135, unchanged by the amendment). Not a setup error; no path is enabled; the single path is unknown -> exit 2, finding_id QUOTA_STATE_UNKNOWN. Exit 2 is shared with QUOTA_SETUP, so the finding_id is what distinguishes the two and must be compared (contract lines 142-145).\n\n(6) SCORED TUPLE. The amendment preserves the original six scored fields (path, fstype, mount_point, quota_state, enforcement, basis) and adds supplementary sealed checks over device_check, quota_option_keys and ggroups_mode 'where given'. expected.paths therefore carries exactly the six fields; the supplementary values this case would support are device_check='not_checked', quota_option_keys=[] (no covering mount, no super options) and btrfs_qgroups_mode=null (no btrfs mount chosen), but they are not asserted here because the case format's expected path objects carry the six scored fields only.\n\n(7) DISCRIMINATING POWER (preserved). st_dev '259:2' equals the major:minor of the non-covering '/srv/quota' mount, so an implementation that accepts a bare lexical prefix (realpath.startswith(mount_point) without the trailing '/') would select that xfs mount, classify it disabled with basis xfs_noquota_option and exit 0 QUOTA_DISABLED - observably different, so this case fails such an implementation. An implementation that reads field 4 (root) instead of field 5 (mount point) would also resolve a mount and fail. An implementation that treats a '/'-less mountinfo as malformed would exit 2 QUOTA_SETUP instead of QUOTA_STATE_UNKNOWN and fail (same exit, different finding_id).\n\nSOURCES: S082 (proc.rst v7.2 section 3.5, lines 1965-1990) is the only source relied on and it backs the mountinfo field layout of the fixture text; the verdict itself is contract-derived.",
+  "sources": [
+    "S082"
+  ]
+}

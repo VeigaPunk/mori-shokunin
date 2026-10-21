@@ -1,0 +1,51 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseBoundary",
+  "scenario": "A btrfs mount at /a (qgroups directory absent) and a nested xfs usrquota mount at /a/b; the queried path /a/bc is a child of /a but not of /a/b, so it must resolve to the /a mount (btrfs, quota disabled) and not to the /a/b mount.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "28 28 8:2 / / rw,relatime shared:1 - ext4 /dev/sda2 rw,errors=remount-ro\n30 28 0:30 /@a /a rw,relatime shared:2 - btrfs /dev/sdb1 rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=256,subvol=/@a\n31 30 259:1 / /a/b rw,relatime shared:3 - xfs /dev/nvme0n1p1 rw,attr2,inode64,usrquota\n",
+    "paths": [
+      {
+        "path": "/a/bc",
+        "realpath": "/a/bc",
+        "st_dev": "0:57"
+      }
+    ],
+    "device_links": {
+      "/dev/sda2": "sda2",
+      "/dev/sdb1": "sdb1",
+      "/dev/nvme0n1p1": "nvme0n1p1"
+    },
+    "btrfs_sysfs": {
+      "7c3f2a1e-9b4d-4c8a-8f61-2e5d0a7b9c33": {
+        "devices": ["sdb1"],
+        "qgroups": false,
+        "qgroups_enabled": null,
+        "qgroups_mode": null
+      },
+      "d41a9f60-3c72-4e15-9b8a-6f0c2e7d4a81": {
+        "devices": ["dm-0"],
+        "qgroups": true,
+        "qgroups_enabled": true,
+        "qgroups_mode": "squota"
+      }
+    }
+  },
+  "expected": {
+    "exit": 0,
+    "finding_id": "QUOTA_DISABLED",
+    "paths": [
+      {
+        "path": "/a/bc",
+        "fstype": "btrfs",
+        "mount_point": "/a",
+        "quota_state": "disabled",
+        "enforcement": "n/a",
+        "basis": "btrfs_qgroups_dir_absent"
+      }
+    ]
+  },
+  "rationale": "Amendment rules applied (preseal-amendment.md, C2 final rules); original proposal retained at cases-proposed/CaseBoundary.json. Delta: the required fixture member qgroups_enabled was added to every btrfs_sysfs UUID record. The record for the device behind /a has qgroups=false (the qgroups directory is absent) and therefore pairs qgroups_enabled=null with qgroups_mode=null, as the amendment requires; the decoy record on a different device (dm-0) has qgroups=true and therefore qgroups_enabled=true with mode squota (present plus enabled=true is enabled/unknown/btrfs_qgroups_enabled for that device). The expectation itself is unchanged by the amendment: the amendment preserves the absent-directory verdict 'Absent dir retains disabled/n/a/btrfs_qgroups_dir_absent', and no ext2/3/4 positive, duplicated-covering-point, tmpfs or XFS-precedence clause applies to this fixture (the ext4 root mount and the nested xfs mount are never the chosen mount for this path). Mount resolution (amendment: 'Longest component-prefix selection remains', 'Parse separator and the last THREE fields of EACH chosen line', 'ignore empty trailing lines', and if a covering mountpoint occurs more than once refuse with ambiguous_overmount): the covering mountpoints for realpath /a/bc are '/' and '/a' - '/a' qualifies because '/a/bc' starts with '/a/', '/a/b' does NOT qualify because '/a/bc' does not start with '/a/b/' ('/a/bc' is a sibling of /a/b, not a descendant) - and neither covering mountpoint occurs more than once in the file, so no ambiguous_overmount refusal applies. Longest component prefix wins: chosen mount point /a, fstype btrfs, source /dev/sdb1, major:minor 0:30; the nested xfs mount at /a/b is not chosen. Device check (amendment: 'Device mismatch PREEMPTS the filesystem table ... Btrfs skips equality only when stat major is 0'): the path st_dev is 0:57, so the stat major is 0 and the btrfs equality skip applies; the mount's 0:30 versus the stat's 0:57 is therefore not a device_mismatch and the path proceeds to the btrfs table. Source resolution (amendment: 'lookup RAW decoded source in device_links; use its mapped basename when present, otherwise basename(source)'): the raw decoded source /dev/sdb1 is a key of device_links and maps to sdb1, which is also basename(/dev/sdb1), so the lookup is invariant; exactly one uuid (7c3f2a1e-9b4d-4c8a-8f61-2e5d0a7b9c33) lists sdb1 and its qgroups is false, i.e. the qgroups directory is absent, so quota_state disabled, enforcement n/a, basis btrfs_qgroups_dir_absent. The decoy uuid (d41a9f60-3c72-4e15-9b8a-6f0c2e7d4a81, devices ['dm-0'], qgroups true, qgroups_enabled true) belongs to a different device and must not contribute. Fixture well-formedness under the amendment: paths nonempty, unique, normalized absolute with no dot components; st_dev is canonical decimal MAJ:MIN; UUID keys are canonical UUIDs; devices and mapped values are plain nonempty basenames without slashes; qgroups/qgroups_enabled/qgroups_mode have exact bool/bool-or-null/mode-or-null types; each btrfs_sysfs record has exactly the keys devices, qgroups, qgroups_enabled, qgroups_mode; the mountinfo text contains no backslash escapes (so the 040/011/012/134 decoding and the rejection of other escapes are not exercised) and its trailing empty segment is ignored. Verdict precedence (setup error -> 2 QUOTA_SETUP; else any enabled -> 1 QUOTA_ENABLED; else any unknown -> 2 QUOTA_STATE_UNKNOWN; else 0 QUOTA_DISABLED): the fixture is well formed, the single path is disabled, nothing is enabled or unknown, so exit 0 with finding_id QUOTA_DISABLED. Discriminating trap: the /a/b mount carries the xfs super option usrquota, so an implementation that wrongly resolves /a/bc to /a/b reaches the xfs table; under the amendment's preemption rule that wrong choice lands on the device check first (xfs mount 259:1 against stat 0:57, so unknown/n/a/device_mismatch, exit 2 QUOTA_STATE_UNKNOWN) and, absent the preemption, on the xfs quota row (enabled/enforced/xfs_quota_option, exit 1 QUOTA_ENABLED) - both differ from the expected exit 0 and from the expected fstype, mount_point and basis. The root '/' ext4 mount is a further wrong-choice trap (device mismatch 8:2 against stat 0:57 -> unknown, exit 2). Source anchors (S077 Documentation/admin-guide/xfs.rst quota mount options; S078 fs/xfs/xfs_super.c xfs_fs_show_options emitting usrquota on XFS_UQUOTA_ENFD; S079 fs/btrfs/sysfs.c the /sys/fs/btrfs/<uuid>/qgroups/ group with its enabled and mode attributes and the <uuid>/devices/ disk-name links; S080 fs/btrfs/qgroup.c btrfs_sysfs_add_qgroups/btrfs_sysfs_del_qgroups, the qgroups surface existing only while qgroup support is on, which is why the amendment separates initialisation from the enabled attribute; S081 fs/btrfs/inode.c btrfs_getattr stat->dev = BTRFS_I(inode)->root->anon_dev, the per-subvolume anonymous device; S082 Documentation/filesystems/proc.rst section 3.5, the mountinfo field layout (1)..(m+4) with the separator, filesystem type, mount source and super options as the last three fields).",
+  "sources": ["S077", "S078", "S079", "S080", "S081", "S082"]
+}

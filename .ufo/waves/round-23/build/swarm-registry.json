@@ -1,0 +1,393 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r23-build",
+  "createdAt": "2026-10-21T17:02:49.898Z",
+  "updatedAt": "2026-10-21T17:24:31.537Z",
+  "reportDir": ".ufo/waves/round-23/build",
+  "members": {
+    "CaseHostLike": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseHostLike-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseBtrfsQgroup": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseBtrfsQgroup-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseBtrfsSquota": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseBtrfsSquota-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseBtrfsUnmapped": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseBtrfsUnmapped-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseBtrfsTwoUuids": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseBtrfsTwoUuids-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseBtrfsDevMatch": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseBtrfsDevMatch-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseXfsUsrquota": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseXfsUsrquota-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseXfsAccountingOnly": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseXfsAccountingOnly-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseXfsMixedEnforce": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseXfsMixedEnforce-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseXfsOptionsAbsent": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseXfsOptionsAbsent-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseXfsConflict": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseXfsConflict-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseExt4Usrquota": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseExt4Usrquota-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseExt4NoOptions": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseExt4NoOptions-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseExt4Journaled": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseExt4Journaled-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseTmpfsUsrquota": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseTmpfsUsrquota-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseTmpfsNoQuota": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseTmpfsNoQuota-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseTmpfsHardlimit": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseTmpfsHardlimit-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseUnsupported": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseUnsupported-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseNoCover": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseNoCover-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseXfsDevMismatch": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseXfsDevMismatch-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseBoundary": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseBoundary-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseStacked": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseStacked-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseEscapedSpace": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseEscapedSpace-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseEnabledPlusUnknown": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseEnabledPlusUnknown-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseSetupMalformed": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseSetupMalformed-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseOptionalFields": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseOptionalFields-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "CaseSymlinkRealpath": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CaseSymlinkRealpath-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "SrcXfsDoc": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.SrcXfsDoc-8",
+      "role": "scout",
+      "item": null
+    },
+    "SrcXfsShowargs": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.SrcXfsShowargs-8",
+      "role": "scout",
+      "item": null
+    },
+    "SrcBtrfsSysfs": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.SrcBtrfsSysfs-8",
+      "role": "scout",
+      "item": null
+    },
+    "SrcBtrfsQgroup": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.SrcBtrfsQgroup-8",
+      "role": "scout",
+      "item": null
+    },
+    "SrcBtrfsGetattr": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.SrcBtrfsGetattr-8",
+      "role": "scout",
+      "item": null
+    },
+    "SrcProcMountinfo": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.SrcProcMountinfo-8",
+      "role": "scout",
+      "item": null
+    },
+    "SrcExt4Doc": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.SrcExt4Doc-8",
+      "role": "scout",
+      "item": null
+    },
+    "SrcTmpfsDoc": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.SrcTmpfsDoc-8",
+      "role": "scout",
+      "item": null
+    },
+    "ScoutRenameRefs": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.ScoutRenameRefs-8",
+      "role": "scout",
+      "item": null
+    },
+    "ScoutCensusDisk": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.ScoutCensusDisk-8",
+      "role": "scout",
+      "item": null
+    },
+    "ScoutPriorQuota": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.ScoutPriorQuota-8",
+      "role": "scout",
+      "item": null
+    },
+    "CriticContractC2": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CriticContractC2-8",
+      "role": "critic",
+      "item": null
+    },
+    "CriticRenameHarm": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CriticRenameHarm-8",
+      "role": "critic",
+      "item": null
+    },
+    "CriticFreezeOrder": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CriticFreezeOrder-8",
+      "role": "critic",
+      "item": null
+    },
+    "CriticScopeProvince": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.CriticScopeProvince-8",
+      "role": "critic",
+      "item": null
+    },
+    "ConnTsukuroi": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.ConnTsukuroi-8",
+      "role": "connector",
+      "item": null
+    },
+    "ConnSoujiKama": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.ConnSoujiKama-8",
+      "role": "connector",
+      "item": null
+    },
+    "ConnMoriCorpus": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.ConnMoriCorpus-8",
+      "role": "connector",
+      "item": null
+    },
+    "SentinelOutput": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.SentinelOutput-8",
+      "role": "sentinel",
+      "item": null
+    },
+    "SentinelProbe": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.SentinelProbe-8",
+      "role": "sentinel",
+      "item": null
+    },
+    "RevengeStDev": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.RevengeStDev-8",
+      "role": "revenger",
+      "item": null
+    },
+    "RevengeXfsHistory": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.RevengeXfsHistory-8",
+      "role": "revenger",
+      "item": null
+    },
+    "RevengeTmpfsQuota": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.RevengeTmpfsQuota-8",
+      "role": "revenger",
+      "item": null
+    },
+    "DraftKnowledge": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.DraftKnowledge-8",
+      "role": "scribe",
+      "item": null
+    },
+    "DraftSkillRows": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.DraftSkillRows-8",
+      "role": "scribe",
+      "item": null
+    },
+    "DraftSourceRows": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.DraftSourceRows-8",
+      "role": "scribe",
+      "item": null
+    },
+    "DraftLesson": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.DraftLesson-8",
+      "role": "scribe",
+      "item": null
+    },
+    "DraftProvince": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.DraftProvince-8",
+      "role": "scribe",
+      "item": null
+    },
+    "DraftRenameDocs": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.DraftRenameDocs-8",
+      "role": "scribe",
+      "item": null
+    },
+    "SimplifyRules": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.SimplifyRules-8",
+      "role": "simplifier",
+      "item": null
+    },
+    "ReviewRealC2": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.ReviewRealC2-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewRealC1": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.ReviewRealC1-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewOracleRename": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.ReviewOracleRename-8",
+      "role": "reviewer",
+      "item": null
+    },
+    "OracleQuota": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.OracleQuota-8",
+      "role": "executor",
+      "item": null
+    },
+    "ImplQuota": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.ImplQuota-8",
+      "role": "executor",
+      "item": null
+    },
+    "MeasureDriver": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.MeasureDriver-8",
+      "role": "executor",
+      "item": null
+    },
+    "FixtureLint": {
+      "kind": "spawn",
+      "agentId": "MadoR22-2.FixtureLint-8",
+      "role": "executor",
+      "item": null
+    }
+  }
+}

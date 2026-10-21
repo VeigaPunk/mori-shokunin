@@ -1,0 +1,55 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseHostLike",
+  "scenario": "Host-like default pair: a btrfs /home subvolume (mountinfo major:minor 0:30 while the path's st_dev is 0:57, i.e. the per-subvolume anonymous device) whose single listed uuid carries device dm-0 with qgroups absent, plus an xfs /tmp whose super options end in noquota and whose major:minor equals the path st_dev.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "25 1 0:30 / / rw,relatime shared:1 - btrfs /dev/mapper/root rw,relatime,ssd,space_cache,subvolid=256,subvol=/@\n26 25 0:30 /@home /home rw,relatime shared:1 - btrfs /dev/mapper/root rw,relatime,ssd,space_cache,subvolid=257,subvol=/@home\n29 25 8:2 / /tmp rw,relatime - xfs /dev/sda2 rw,attr2,inode64,logbufs=8,logbsize=32k,noquota\n",
+    "paths": [
+      {
+        "path": "/home/vgpnk/Projects/shokunin",
+        "realpath": "/home/vgpnk/Projects/shokunin",
+        "st_dev": "0:57"
+      },
+      {
+        "path": "/tmp",
+        "realpath": "/tmp",
+        "st_dev": "8:2"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0"
+    },
+    "btrfs_sysfs": {
+      "b3f1c2d4-5a6b-4c7d-8e9f-0a1b2c3d4e5f": {
+        "devices": ["dm-0"],
+        "qgroups": false,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 0,
+    "finding_id": "QUOTA_DISABLED",
+    "paths": [
+      {
+        "path": "/home/vgpnk/Projects/shokunin",
+        "fstype": "btrfs",
+        "mount_point": "/home",
+        "quota_state": "disabled",
+        "enforcement": "n/a",
+        "basis": "btrfs_qgroups_dir_absent"
+      },
+      {
+        "path": "/tmp",
+        "fstype": "xfs",
+        "mount_point": "/tmp",
+        "quota_state": "disabled",
+        "enforcement": "n/a",
+        "basis": "xfs_noquota_option"
+      }
+    ]
+  },
+  "rationale": "Derivation from contract.md section C2 only (quota-classification table, mount-resolution rule, verdict precedence) plus the kernel sources; no implementation was read.\nPATH 1 (/home/vgpnk/Projects/shokunin, btrfs). Mount resolution: candidates are the mount points that equal the realpath, are '/', or are a prefix followed by '/'; '/' (length 1) and '/home' (length 5) both cover '/home/vgpnk/Projects/shokunin', and the longest mount point wins, so the '/home' line (field 3 major:minor 0:30) is chosen. Device check: for btrfs a major:minor != path st_dev is expected and is recorded as device_check 'btrfs_subvolume_skipped' (contract section C2, citing S081: fs/btrfs/inode.c:8246 'stat->dev = BTRFS_I(inode)->root->anon_dev;'), so the 0:30 vs 0:57 difference does not make the path unknown; the xfs-only device_mismatch rule does not apply.\nQuota classification: the mount source '/dev/mapper/root' resolves to the device 'dm-0' through the fixture's device_links, and exactly one uuid lists 'dm-0' in its devices, so the btrfs device is mapped (not 'btrfs_device_unmapped'). That uuid's qgroups is false, i.e. the /sys/fs/btrfs/<uuid>/qgroups kobject is absent (S079: fs/btrfs/sysfs.c, 'qgroups' kobject created by btrfs_sysfs_add_qgroups(), attributes enabled/mode/inconsistent; S080: fs/btrfs/qgroup.c btrfs_qgroup_mode() returns BTRFS_QGROUP_MODE_DISABLED unless BTRFS_FS_QUOTA_ENABLED is set, and btrfs_sysfs_add_qgroups() is called from the quota-enable path). Contract table row 'btrfs | exactly one uuid, qgroups false' therefore gives quota_state 'disabled', enforcement 'n/a', basis 'btrfs_qgroups_dir_absent'; the btrfs super options carry no quota key, which is consistent because btrfs quota state is not a mount option. btrfs_qgroups_mode is null (no qgroups dir => no mode file).\nPATH 2 (/tmp, xfs). Candidates '/' (length 1) and '/tmp' (length 4); '/tmp' is longest and also equals the realpath, so the xfs line is chosen. Its field 3 major:minor 8:2 equals the path st_dev 8:2, so device_check is 'match' (S082: Documentation/filesystems/proc.rst section 3.5, field (3) 'major:minor: value of st_dev for files on the filesystem').\nQuota classification: the super options are the last mountinfo field 'rw,attr2,inode64,logbufs=8,logbsize=32k,noquota' (S082: field (m+4) super options), split on commas with key = text before '=' (so 'logbufs=8' and 'logbsize=32k' are keys with values and are not quota keys). The key 'noquota' is present and none of usrquota/uquota/quota/grpquota/gquota/prjquota/pquota is, so contract table row 'xfs | noquota and no quota key' applies: quota_state 'disabled', enforcement 'n/a', basis 'xfs_noquota_option'. The option is real: S078 fs/xfs/xfs_super.c declares fsparam_flag(\"noquota\", Opt_noquota) and xfs_showargs() emits ',noquota' precisely when no quota accounting flag is set (and ',usrquota' / ',uqnoenforce' / ',grpquota' / ',gqnoenforce' / ',prjquota' / ',pqnoenforce' otherwise); S077 (xfs quota documentation) documents the same quota mount-option set.\nVERDICT. Neither path is 'enabled' and neither is 'unknown', so the precedence rule yields exit 0 with finding_id 'QUOTA_DISABLED' (both paths disabled). This is the synthetic twin of the frozen real control frozen/c2-expected-real.json (fleet root -> btrfs, mount point /home, disabled, btrfs_qgroups_dir_absent, device_check btrfs_subvolume_skipped; /tmp -> xfs, /tmp, disabled, xfs_noquota_option, device_check match); device_check is not part of this case's expected.paths because the case format fixes those objects to exactly path, fstype, mount_point, quota_state, enforcement, basis.",
+  "sources": ["S077", "S078", "S079", "S080", "S081", "S082"]
+}

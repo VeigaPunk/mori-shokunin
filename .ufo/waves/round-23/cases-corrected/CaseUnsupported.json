@@ -1,0 +1,47 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseUnsupported",
+  "scenario": "An nfs4 mount at /mnt/nfs covers the requested path /mnt/nfs/data; the mount major:minor equals the path st_dev, so the device check matches and classification falls through to the unsupported-fstype row.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "29 23 0:30 / / rw,relatime,ssd,subvolid=5,subvol=/ shared:4 - btrfs /dev/mapper/root rw,ssd,subvolid=5,subvol=/\n121 29 0:61 / /mnt/nfs rw,relatime shared:9 - nfs4 nfs-server.example:/export rw,vers=4.2,hard,proto=tcp,timeo=600,retrans=2,sec=sys,rsize=1048576,wsize=1048576\n",
+    "paths": [
+      {
+        "path": "/mnt/nfs/data",
+        "realpath": "/mnt/nfs/data",
+        "st_dev": "0:61"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0"
+    },
+    "btrfs_sysfs": {
+      "6f1a2c3d-4e5f-4a7b-8c9d-0e1f2a3b4c5d": {
+        "devices": [
+          "dm-0"
+        ],
+        "qgroups": false,
+        "qgroups_enabled": null,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 2,
+    "finding_id": "QUOTA_STATE_UNKNOWN",
+    "paths": [
+      {
+        "path": "/mnt/nfs/data",
+        "fstype": "nfs4",
+        "mount_point": "/mnt/nfs",
+        "quota_state": "unknown",
+        "enforcement": "n/a",
+        "basis": "unsupported_fstype"
+      }
+    ]
+  },
+  "rationale": "CORRECTED CASE (round-23 pre-seal amendment, .ufo/waves/round-23/preseal-amendment.md, sha256 4f3707ba2069a6da4d6455a29aea19d1809ae3eba76e25b166810a7e80f25cde, written before any candidate was opened or measured). Same id and same scenario as the proposal cases-proposed/CaseUnsupported.json, which is retained unaltered. DELTA versus the proposal: the fixture's single btrfs_sysfs UUID record gains the amendment-required member qgroups_enabled (null), which the amendment pairs with qgroups=false and qgroups_mode=null ('qgroups false must pair with enabled=null/mode=null'); the UUID key is also restated in canonical RFC 4122 v4 form (6f1a2c3d-4e5f-4a7b-8c9d-0e1f2a3b4c5d) to satisfy the amendment's 'UUID keys canonical UUIDs' rule, since the proposal's version nibble was 6. The mountinfo text, the paths entry, device_links and every expected value are unchanged, and no expected value of the proposal had to change: re-derivation against the amendment's superseding C2 rules leaves the expectation identical. Re-derivation against the amendment: (1) Mount resolution - the amendment keeps longest component-prefix selection, ignores empty trailing lines, and decodes only the exact octal escapes 040/011/012/134 in root, mountpoint and source; the fixture's mountinfo has no backslash escape at all and no empty trailing line contributes a mount. The covering mountpoints for realpath /mnt/nfs/data are '/' (the btrfs root) and '/mnt/nfs' (the nfs4 export). The amendment refuses classification only when a covering mountpoint occurs more than once; here '/' occurs once and '/mnt/nfs' occurs once, so there is no ambiguous_overmount. Longest component-prefix selection then chooses '/mnt/nfs' (8 characters) over '/' (1 character), so the nfs4 line is the chosen line. (2) Field parse - 'the separator and the last THREE fields of EACH chosen line'; the chosen line's last three fields are nfs4, nfs-server.example:/export and the super options 'rw,vers=4.2,hard,proto=tcp,timeo=600,retrans=2,sec=sys,rsize=1048576,wsize=1048576', giving fstype nfs4, mount point /mnt/nfs, source nfs-server.example:/export. (3) Device check - the amendment makes device mismatch preempt the filesystem table (unknown/n/a/device_mismatch, device_check=mismatch), and btrfs skips equality only when the stat major is 0; the chosen fstype is nfs4 (not btrfs) and its major:minor 0:61 equals the path st_dev 0:61, so there is no mismatch and classification proceeds with device_check 'match'. (4) Classification - the amendment's superseding rows cover ext2/3/4, btrfs, xfs and tmpfs; fstype nfs4 falls to the retained 'other' row (not xfs, not btrfs, not ext2/ext3/ext4, not tmpfs), so quota_state 'unknown', enforcement 'n/a', basis 'unsupported_fstype'. The amendment also states that for unsupported fstypes quota_option_keys is [] and that unknown nonquota super options are ignored and quota option values are never emitted; the nfs4 super options here contain no quota key (the 'hard' option is an NFS hard-mount flag, not a quota key, and 'vers' is a protocol version), so the supplementary quota_option_keys value for this path is the empty list and no option value or mount source may appear in the output. (5) Verdict precedence - the amendment keeps the original precedence: setup error first, then any enabled, then any unknown, else disabled. No path is enabled and one path is unknown, so exit 2 with finding_id QUOTA_STATE_UNKNOWN, with paths carrying exactly the six scored fields (path, fstype, mount_point, quota_state, enforcement, basis). Supplementary sealed checks for this path would see device_check 'match', quota_option_keys [] and btrfs_qgroups_mode null. The 'unknown' rather than 'disabled' outcome is corroborated by the contract's stated limit 'no NFS/server-side or overlay/fuse quota': NFS quota is enforced by the server, so neither mountinfo super options nor /sys/fs/btrfs can support an enablement or a disablement claim, and reporting 'disabled' would assert an absence the probe did not and cannot observe. Authored by seat MadoR22-2.CaseUnsupported-8; no implementation, oracle or sibling case was read.",
+  "sources": [
+    "S082"
+  ]
+}

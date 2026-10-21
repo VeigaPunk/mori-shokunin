@@ -1560,3 +1560,31 @@ contains the source corrections/ownership fence, not an unrun capability result.
 Source used-by appends are logged in lesson23; no existing immutable source row changed.
 All privacy/history/permission/baseline debt remains. No code result or admission is
 pre-claimed by this source landing.
+
+### Round23 — complete expectation seal before production landing
+
+All64 W1 reports are present and all original64 completion results received; no
+provider-dead identity or replacement. `evidence/wave1-report-presence.json` binds
+each report path/size/hash to its native assignment. Same-identity followups corrected
+source-derived case shapes, the strict oracle envelope, setup-output comparison and
+the mode-read race before candidate measurement. The final quota candidate remains
+unopened by L1 until this expectation seal is pushed.
+
+The selected C2 population is27 independently authored original-derived cases plus3
+source-review discovery controls; `frozen/case-decisions.json` names every selected
+exact author file, original hash and exclusion. The inconsistent first symlink
+correction stays rejected evidence; its separately authored final correction restores
+the given-path identity. No L1 expected-row edit or result-driven case selection.
+C1 retains original26, separate exact source-byte/output/selftest guards and the
+unchanged r22 real identity pins/twin control. The final driver and both oracles,
+all expected files and dependencies are sealed together; no production tool changes
+are included in this commit.
+
+W1 dispatch chronology debt is explicit: `wave1-ledger.json` retrospectively binds
+all eight attempts to the unchanged canonical payload, but neither payload commit
+nor pre-call digest logging preceded those calls. Q53/56's chronology is not
+retroactively satisfied. All refusal text and exact native responses remain.
+W2 uses a committed payload and pre-call receipt. Source/fixture-only in-memory
+checks and py_compile, plus three disclosed transient /tmp uses, exceeded W1's
+strict no-verification/scratch prose; no candidate or live quota command ran.
+These deviations are conformance debt, never hidden by a final clean tree.

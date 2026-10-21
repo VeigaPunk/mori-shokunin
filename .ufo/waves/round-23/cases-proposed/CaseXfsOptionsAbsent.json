@@ -1,0 +1,43 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseXfsOptionsAbsent",
+  "scenario": "An xfs mount whose super options contain neither noquota nor any quota key is classified unknown with basis xfs_quota_options_absent.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "1 0 259:1 / / rw,relatime shared:1 - ext4 /dev/nvme0n1p2 rw,errors=remount-ro\n17 1 0:25 / /proc rw,nosuid,nodev,noexec,relatime shared:5 - proc proc rw\n20 1 0:6 / /sys rw,nosuid,nodev,noexec,relatime shared:7 - sysfs sysfs rw\n30 1 0:44 / /home rw,relatime shared:14 - btrfs /dev/mapper/root rw,ssd,space_cache,subvolid=5,subvol=/\n40 1 253:2 / /srv/data rw,relatime shared:20 - xfs /dev/mapper/data rw,attr2,inode64,logbufs=8,logbsize=32k,noalign\n",
+    "paths": [
+      {
+        "path": "/srv/data",
+        "realpath": "/srv/data",
+        "st_dev": "253:2"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0",
+      "/dev/mapper/data": "dm-3"
+    },
+    "btrfs_sysfs": {
+      "d1e4f2a0-8c3b-4f5e-9a71-2c6d0b8e5f13": {
+        "devices": ["dm-0"],
+        "qgroups": false,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 2,
+    "finding_id": "QUOTA_STATE_UNKNOWN",
+    "paths": [
+      {
+        "path": "/srv/data",
+        "fstype": "xfs",
+        "mount_point": "/srv/data",
+        "quota_state": "unknown",
+        "enforcement": "n/a",
+        "basis": "xfs_quota_options_absent"
+      }
+    ]
+  },
+  "rationale": "Contract C2 quota-classification table, xfs block, fifth row: 'xfs | neither noquota nor any quota key | unknown | n/a | xfs_quota_options_absent' is the only xfs row whose condition this fixture satisfies. The chosen mount's super options (the last mountinfo field) are 'rw,attr2,inode64,logbufs=8,logbsize=32k,noalign'; comma-split with key = text before '=', the keys are rw, attr2, inode64, logbufs, logbsize, noalign - no 'noquota' and none of usrquota,uquota,quota,grpquota,gquota,prjquota,pquota (and none of the accounting-only forms uqnoenforce,gqnoenforce,pqnoenforce,qnoenforce), so row 5 applies and the enforcement token is the table's literal 'n/a'. Mount resolution (contract C2; S082 = proc.rst v7.2 section 3.5, lines 1965-1983: field 3 major:minor, field 5 mount point, separator '-', field m+2 filesystem type, field m+3 mount source, field m+4 super options) picks the longest candidate mount point for realpath '/srv/data': '/srv/data' (exact match) beats the '/' root mount, so fstype is xfs and mount_point is '/srv/data'; the equal-mount-point tie-break ('last line wins') is not reached because no other line mounts on '/srv/data'. Device check precedes classification (contract C2: for a non-btrfs fstype a major:minor unequal to the path's st_dev yields unknown with basis device_mismatch), so the fixture sets the path st_dev to the mount's own field 3 '253:2' and the expected basis is xfs_quota_options_absent rather than device_mismatch. Verdict precedence (contract C2: setup error -> 2 QUOTA_SETUP, else any enabled -> 1 QUOTA_ENABLED, else any unknown -> 2 QUOTA_STATE_UNKNOWN, else 0 QUOTA_DISABLED): the single path is 'unknown' and none is 'enabled', so the expected exit is 2 and finding_id QUOTA_STATE_UNKNOWN. Source anchors: S077 (Documentation/admin-guide/xfs.rst v7.2, lines 171-185) fixes the xfs quota option vocabulary - noquota (171-173), uquota/usrquota/uqnoenforce/quota (175-177), gquota/grpquota/gqnoenforce (179-181), pquota/prjquota/pqnoenforce (183-185) - used as the key set for the absent/present test. S078 (fs/xfs/xfs_super.c v7.2, xfs_showargs lines 238-254: usrquota/uqnoenforce 238-241, prjquota/pqnoenforce 243-246, grpquota/gqnoenforce 248-251, ',noquota' 253-254) is the source-level reason this arm is synthetic-only: the kernel prints ',noquota' exactly when no accounting flag is set (line 253-254) and otherwise prints a quota key for each scope, so a kernel-emitted xfs super-option string always contains either noquota or at least one quota key and the 'neither' state is unreachable in real mode; this case is therefore a synthetic mori-quota-fixture-v1 fixture exercised through --fixture, with no host reads. S082 (proc.rst v7.2 section 3.5, lines 1965-1990) is the anchor for the mountinfo field layout and for scanning to the '-' separator rather than counting fixed positions.",
+  "sources": ["S077", "S078", "S082"]
+}

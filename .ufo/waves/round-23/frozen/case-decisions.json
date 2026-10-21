@@ -1,0 +1,276 @@
+{
+  "selected_cases": 30,
+  "independent_primary": 27,
+  "source_review_supplemental": 3,
+  "decisions": [
+    {
+      "id": "CaseBoundary",
+      "original": "cases-proposed/CaseBoundary.json",
+      "original_sha256": "9a40c67f4c557e296582f07f9bdd0771b4fec6f84113f51c80c3cefce733c048",
+      "selected": "cases-corrected/CaseBoundary.json",
+      "selected_sha256": "2e2ef692060105f054f2561091cb7603e77b1328b7954f63046ff57e7bea5d52",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseBtrfsDevMatch",
+      "original": "cases-proposed/CaseBtrfsDevMatch.json",
+      "original_sha256": "02a4389147083d939e421300756eb1d4bdc0d927f4ade089778c3079fb2aea70",
+      "selected": "cases-corrected/CaseBtrfsDevMatch.json",
+      "selected_sha256": "a74da5db52f71ec3f4a92018b2f2cd35fb43e349773e17ccce8a8235bbbd43bc",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseBtrfsQgroup",
+      "original": "cases-proposed/CaseBtrfsQgroup.json",
+      "original_sha256": "b7ae7632aca4f30a6defc9a5a41d9f5c6fac49dfe2ca21a18f09933e3387581e",
+      "selected": "cases-corrected/CaseBtrfsQgroup.json",
+      "selected_sha256": "38a7d5b94f8b08ddee9c7080cca8786db0cc6aa8423dcef75d8250c58d462188",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseBtrfsSquota",
+      "original": "cases-proposed/CaseBtrfsSquota.json",
+      "original_sha256": "db77e8b64ca57feaa00019de1bc20c4c280b9495f11e6abe4158359bdc376308",
+      "selected": "cases-corrected/CaseBtrfsSquota.json",
+      "selected_sha256": "b3a641541e536ce1f313b521ae25a33cd8296e2e2d8daf647bf24c168254240a",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseBtrfsTwoUuids",
+      "original": "cases-proposed/CaseBtrfsTwoUuids.json",
+      "original_sha256": "178ff8aec3d2257c8eb59eae9cffab440b36258fce5e66ce8b04b3fbc25ced19",
+      "selected": "cases-corrected/CaseBtrfsTwoUuids.json",
+      "selected_sha256": "6bdcea63cf12d1d63e82e6cbaca827c3e00729dfd016f28331d260d6f0e7328c",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseBtrfsUnmapped",
+      "original": "cases-proposed/CaseBtrfsUnmapped.json",
+      "original_sha256": "c8796c446b4ab21dbc3a328ed309ceec855b17cf7318593c679ac13504244015",
+      "selected": "cases-corrected/CaseBtrfsUnmapped.json",
+      "selected_sha256": "1986ade4a150637c62102316fcec8c55523919d35c377759a5908d1e682e59b1",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseEnabledPlusUnknown",
+      "original": "cases-proposed/CaseEnabledPlusUnknown.json",
+      "original_sha256": "73b489c634cfd1d61fef35f1f7d9cbc1cc669685585b80811163330feb57d8ff",
+      "selected": "cases-corrected/CaseEnabledPlusUnknown.json",
+      "selected_sha256": "77440e32054aef813df90b9a22d9e03b526496a3b103940df0ff601bec775828",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseEscapedSpace",
+      "original": "cases-proposed/CaseEscapedSpace.json",
+      "original_sha256": "dccf734c088e5f2d2bae8d22ac0f3c89af21e40a888b21710c0c1a1e0d7bc409",
+      "selected": "cases-corrected/CaseEscapedSpace.json",
+      "selected_sha256": "8340738a509e474a94a815637e66b407dfb60c6449511e52db55296d844abeea",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseExt4Journaled",
+      "original": "cases-proposed/CaseExt4Journaled.json",
+      "original_sha256": "08f9fee1e0718adc46edddd1b0bf21567d8c11eefb6987781b88b5f5bf045085",
+      "selected": "cases-corrected/CaseExt4Journaled.json",
+      "selected_sha256": "d317ccb1141271ed0cda2d2b2209fcfb965b57016e6dfc4e0efcf34560c9fb40",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseExt4NoOptions",
+      "original": "cases-proposed/CaseExt4NoOptions.json",
+      "original_sha256": "62c6e8c6e66a56c0aa230c9cebe9d387bad6756c221f57ed19dcf9040e4c8600",
+      "selected": "cases-corrected/CaseExt4NoOptions.json",
+      "selected_sha256": "816a5d9d321c6188eddfa373c50b51c1e70a1784fe0db3a6fbd104768c542ee9",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseExt4Usrquota",
+      "original": "cases-proposed/CaseExt4Usrquota.json",
+      "original_sha256": "ba8b7f2018a33c1e1c9b13c914b98dee5ee33b0a5bfd37c2b5b9d2a24fa70b87",
+      "selected": "cases-corrected/CaseExt4Usrquota.json",
+      "selected_sha256": "4db2fcd87bb1a2efcfadaff13311426eb8a6fc129663cfa486190a93ac959cda",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseHostLike",
+      "original": "cases-proposed/CaseHostLike.json",
+      "original_sha256": "e83132fc329dc28dcd1e6ebdc51c645c78b9f8a15b5ffe701f7c75de793c9d93",
+      "selected": "cases-corrected/CaseHostLike.json",
+      "selected_sha256": "f4580093a6aa93eab53bef9c9f61667a2a0aa2224096b60568140904b148a63c",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseNoCover",
+      "original": "cases-proposed/CaseNoCover.json",
+      "original_sha256": "27fd2e5f12fe0db0767f72649457a6cac4ed048109c6d660e7ac5e723a3d49d6",
+      "selected": "cases-corrected/CaseNoCover.json",
+      "selected_sha256": "334c7cfdddbf9b9f650e62dab94aeba656047044402de166d5b094ed1d210215",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseOptionalFields",
+      "original": "cases-proposed/CaseOptionalFields.json",
+      "original_sha256": "e80334b07474954287cae7ecab6bbababbf80aa6dda339f0f5ab4afefe9e79af",
+      "selected": "cases-corrected/CaseOptionalFields.json",
+      "selected_sha256": "9e73da479ea14cc4b7ddfccf08816c7716842eb71325d7c8bd06541779c1daf0",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseSetupMalformed",
+      "original": "cases-proposed/CaseSetupMalformed.json",
+      "original_sha256": "df424c74900811ca9c55f279a17920b6493887b8c2827f083008b7291aefeb2f",
+      "selected": "cases-corrected/CaseSetupMalformed.json",
+      "selected_sha256": "833cd8a536b33770ef11291ddc4e05ecd9cbf18ff7dcfa9abfe566021b916fe7",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseStacked",
+      "original": "cases-proposed/CaseStacked.json",
+      "original_sha256": "6104d13acc6a74f6b53f37c122fe0e57d523ddbea8d9d207f9fa4af16c54cff0",
+      "selected": "cases-corrected/CaseStacked.json",
+      "selected_sha256": "b45f3485c170a88f75abcf8746315caf031331c4cf92b4943847f7433bf980d0",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseSymlinkRealpath",
+      "original": "cases-proposed/CaseSymlinkRealpath.json",
+      "original_sha256": "e7c4018a4044827873520dbcddc17508258122c97a23c2a3017a45020a772473",
+      "selected": "cases-corrected/CaseSymlinkRealpath-final.json",
+      "selected_sha256": "275c360585a93e2f1bc7e2ded0f4cd42b07d5b0eeb16b9790d1980f456b0d07e",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseTmpfsHardlimit",
+      "original": "cases-proposed/CaseTmpfsHardlimit.json",
+      "original_sha256": "6f469ff5ebffb1487b0943f147acebce16d9588cdf39942f9904077d8cc83b58",
+      "selected": "cases-corrected/CaseTmpfsHardlimit.json",
+      "selected_sha256": "b3226093395d0753138f4761dcd91881e56ff350de213ae4b12f03a57ceb5771",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseTmpfsNoQuota",
+      "original": "cases-proposed/CaseTmpfsNoQuota.json",
+      "original_sha256": "f4814c94a8a0f330df82caa46ef1695318e5b3b297545e3b2b888519c4dd4dbb",
+      "selected": "cases-corrected/CaseTmpfsNoQuota.json",
+      "selected_sha256": "7afd98c191a799e52bb9ac01b896b23eaa855b9e02ef1bc3f901aa13a03a49b5",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseTmpfsUsrquota",
+      "original": "cases-proposed/CaseTmpfsUsrquota.json",
+      "original_sha256": "6152062f45080ace9a1ca4b3121f15ebcb6ddc544f011a2a4e0c4e53959adc3f",
+      "selected": "cases-corrected/CaseTmpfsUsrquota.json",
+      "selected_sha256": "7ecc3503a5fd3aa4b6a1bb635ae34965f7a6f97466c4ff273e9bb836517ac800",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseUnsupported",
+      "original": "cases-proposed/CaseUnsupported.json",
+      "original_sha256": "44c6f3a2d682e602a104ccb90a02cf1b23f06d878a13146518d16c25eb0a3018",
+      "selected": "cases-corrected/CaseUnsupported.json",
+      "selected_sha256": "28f3080b116cf3e09e3ee77f3e8b53daff826fdfb4387a21d3c58850878b22b7",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseXfsAccountingOnly",
+      "original": "cases-proposed/CaseXfsAccountingOnly.json",
+      "original_sha256": "84844aac55a9507d880191bfe05747a5c0570feec24221cb2e29c7f3bb09463f",
+      "selected": "cases-corrected/CaseXfsAccountingOnly.json",
+      "selected_sha256": "e03c414b1625518c5bb88171e53e5584c72ea1d5f7e54e2bed5873600f3ba135",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseXfsConflict",
+      "original": "cases-proposed/CaseXfsConflict.json",
+      "original_sha256": "197388a69be4e3c483d853c4a400fed7adc57f5ae972dff9047758f33bb4dab1",
+      "selected": "cases-corrected/CaseXfsConflict.json",
+      "selected_sha256": "84dfae8db5f4803e58e82be92d2ac07d321c98214f1a29fee9f844e9d3c56680",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseXfsDevMismatch",
+      "original": "cases-proposed/CaseXfsDevMismatch.json",
+      "original_sha256": "f6d4f5fd3dae0eb55532665e9daaea2610875b0a30dafa88be478c16e4fee377",
+      "selected": "cases-corrected/CaseXfsDevMismatch.json",
+      "selected_sha256": "e5db2d1181e0b6ab2062447e2181307a9da4ba64760ce98a0d76f55ccb492097",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseXfsMixedEnforce",
+      "original": "cases-proposed/CaseXfsMixedEnforce.json",
+      "original_sha256": "6d6bb2a6a15b762cb0d8b326a0346d5bcca90c2362153428a684dabc6a6b0d70",
+      "selected": "cases-corrected/CaseXfsMixedEnforce.json",
+      "selected_sha256": "ed13abb0eabfbbb8dd8c3391d6cc665a939d8b30b60338f08a9b840e14cd44da",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseXfsOptionsAbsent",
+      "original": "cases-proposed/CaseXfsOptionsAbsent.json",
+      "original_sha256": "7fd4c516706740a87aa2da76f00002f37999fae9ab7624bffd2eb4b764210645",
+      "selected": "cases-corrected/CaseXfsOptionsAbsent.json",
+      "selected_sha256": "d54cba9914cf85c4c4036b250b2e8c6dd3401f770e3929f5072c980797e16a58",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "CaseXfsUsrquota",
+      "original": "cases-proposed/CaseXfsUsrquota.json",
+      "original_sha256": "a8dc0a29e9c59256a861ede854e1907ec79b5a513d1d31768b72a37792afab19",
+      "selected": "cases-corrected/CaseXfsUsrquota.json",
+      "selected_sha256": "3e1620f745d7a1cc6fa497b1f61f991539809cd1bde67f86b73860baaaa4244b",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits"
+    },
+    {
+      "id": "SupplementHiddenMount",
+      "selected": "cases-supplemental/SupplementHiddenMount.json",
+      "selected_sha256": "d1a3a4c66008fcdefec47839d9393f1c971ebc6630d96b94c399038378187824",
+      "primary": false,
+      "reason": "Source-review discovery guard before candidate inspection/result"
+    },
+    {
+      "id": "SupplementQgroupDisabled",
+      "selected": "cases-supplemental/SupplementQgroupDisabled.json",
+      "selected_sha256": "f117bcb0b411cb2dd50910c62222481d8d283eeb49ff2169b40788b24dd09567",
+      "primary": false,
+      "reason": "Source-review discovery guard before candidate inspection/result"
+    },
+    {
+      "id": "SupplementQgroupUnknown",
+      "selected": "cases-supplemental/SupplementQgroupUnknown.json",
+      "selected_sha256": "22f77b779845660b131dc0b19f3e02ddf203165734dfda040c52f08a06755f56",
+      "primary": false,
+      "reason": "Source-review discovery guard before candidate inspection/result"
+    }
+  ],
+  "excluded_evidence": [
+    "cases-corrected/CaseSymlinkRealpath.json is self-inconsistent; final separately authored correction selected",
+    "original cases-proposed shapes retained but superseded by source-derived amended cases; none silently deleted"
+  ],
+  "authority": "Author-lane independent of implementation; not outside-lane adjudication"
+}

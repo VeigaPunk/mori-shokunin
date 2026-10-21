@@ -1,0 +1,42 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseSetupMalformed",
+  "scenario": "A synthetic mori-quota-fixture-v1 object that carries schema, mountinfo, paths and btrfs_sysfs but omits the required device_links top-level key, so the fixture is invalid and the probe must return the setup verdict without any per-path verdict.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "27 30 0:21 / /proc rw,nosuid,nodev,noexec,relatime shared:4 - proc proc rw\n28 30 0:22 / /sys rw,nosuid,nodev,noexec,relatime shared:5 - sysfs sysfs rw\n29 30 0:23 / /run rw,nosuid,nodev,relatime shared:6 - tmpfs run rw,mode=755,inode64,size=1638404k\n33 2 0:30 /@ / rw,noatime shared:1 - btrfs /dev/mapper/root rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=256,subvol=/@\n65 33 0:30 /@home /home rw,noatime shared:183 - btrfs /dev/mapper/root rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=257,subvol=/@home\n244 33 259:1 / /tmp rw,nosuid,nodev,noatime shared:207 - xfs /dev/nvme0n1p1 rw,inode64,logbufs=8,logbsize=256k,noquota\n",
+    "paths": [
+      {
+        "path": "/home/vgpnk/Projects/shokunin",
+        "realpath": "/home/vgpnk/Projects/shokunin",
+        "st_dev": "0:57"
+      },
+      {
+        "path": "/tmp",
+        "realpath": "/tmp",
+        "st_dev": "259:1"
+      }
+    ],
+    "btrfs_sysfs": {
+      "1d02a454-c549-4a35-b567-89d60902af8e": {
+        "devices": [
+          "dm-0"
+        ],
+        "qgroups": false,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 2,
+    "finding_id": "QUOTA_SETUP",
+    "paths": []
+  },
+  "rationale": "CONTRACT ROW: the fixture-format paragraph of contract section C2 (contract.md lines 82-93) - 'Fixture format mori-quota-fixture-v1 (JSON object, exact keys): schema, mountinfo, paths, device_links, btrfs_sysfs' followed by 'Missing/extra top-level keys, non-absolute paths, malformed st_dev, malformed JSON, unparseable mountinfo line -> exit 2 QUOTA_SETUP (no partial verdict)'. This case takes the missing-top-level-key arm: the fixture object has schema, mountinfo, paths and btrfs_sysfs, and the device_links key is absent, so the fixture is not an exact mori-quota-fixture-v1 object and the probe must fail at setup. The verdict-precedence sentence (contract.md lines 132-134) - 'Verdict precedence: setup error -> 2 QUOTA_SETUP; else any enabled -> 1 QUOTA_ENABLED ...' - makes the setup error the highest-precedence outcome: it precedes any enabled or unknown sibling, and '(no partial verdict)' forbids emitting a per-path classification. Hence expected exit 2, finding_id QUOTA_SETUP, and an empty paths list. No classification-table row applies: the quota classification table (contract.md lines 108-122) is reached only after a fixture has been accepted, so this case exercises the setup gate, not the table. DERIVATION OF THE FIXTURE'S OTHERWISE-VALID CONTENT: the mountinfo text is written in the field layout of S082 (Linux procfs documentation at v7.2, Documentation/filesystems/proc.rst, section 3.5 '/proc/<pid>/mountinfo - Information about mounts', lines 1965-1993: fields 1-6 at 1973-1978 with (3) major:minor 'value of st_dev for files on filesystem' at 1975 and (5) mount point at 1977, '(n...m) optional fields: zero or more fields of the form \"tag[:value]\"' at 1979, '(m+1) separator: marks the end of the optional fields' at 1980, '(m+2) filesystem type' at 1981, '(m+3) mount source' at 1982, '(m+4) super options: per super block options' at 1983): every line has fields 1-6, then optional 'shared:N' fields, then the '-' separator, then fstype, source and super options. The btrfs lines use the source /dev/mapper/root with subvolid/subvol super options and the xfs line uses super option noquota, which is the option string an XFS mount emits (S078, fs/xfs/xfs_super.c at v7.2, xfs_fs_show_options). The btrfs_sysfs shape - one uuid whose devices list names one device, with a qgroups flag and a qgroups_mode field - mirrors the btrfs qgroup sysfs interface (S079, fs/btrfs/sysfs.c at v7.2: qgroup_enabled_show, qgroup_mode_show and the qgroups attribute group). The fleet-root path carries st_dev 0:57 while its covering btrfs mount reports major:minor 0:30: that difference is the per-subvolume anonymous device, not an error (S081, fs/btrfs/inode.c at v7.2, btrfs_getattr: the stat dev comes from the root's anon_dev). All of this content is deliberately otherwise valid, so that the missing device_links key is the single defect the case isolates. DISCRIMINATION: a lenient implementation that treats the absent key as an empty mapping would not report a setup error. It could not map the btrfs mount source /dev/mapper/root onto a device name, so zero btrfs uuids would list that device and the path would reach the btrfs row 'zero or several uuids list the device -> unknown, n/a, btrfs_device_unmapped'; the xfs /tmp path would reach 'xfs, noquota and no quota key -> disabled, n/a, xfs_noquota_option'; with no enabled path and one unknown path the verdict would then be exit 2 QUOTA_STATE_UNKNOWN with two per-path records. The correct behaviour is exit 2 QUOTA_SETUP with an empty paths list, so the case separates 'malformed fixture rejected' from 'fixture accepted and classified' on finding_id and on paths, and it also shows that the setup gate cannot be satisfied by a lenient default for one missing key. FIXTURE VALUES: the mount major:minor pairs (0:30 btrfs, 259:1 xfs), the path st_dev values (0:57, 259:1), the btrfs source /dev/mapper/root, the device name dm-0, the uuid and the xfs super-option string are the values recorded in the contract's own frozen real control (frozen/c2-expected-real.json, observed.fleet_root and observed.tmp); no host probe was used to derive them and no implementation, oracle or sibling case was consulted. SOURCES RELIED ON: S078, S079, S081, S082 - S082 for the mountinfo line layout used to write a realistic fixture, S078 for the xfs super-option string, S079 for the btrfs_sysfs shape, S081 for the btrfs per-subvolume device difference. The expected verdict itself rests on the contract's fixture-format and verdict-precedence sentences, not on any kernel source.",
+  "sources": [
+    "S078",
+    "S079",
+    "S081",
+    "S082"
+  ]
+}

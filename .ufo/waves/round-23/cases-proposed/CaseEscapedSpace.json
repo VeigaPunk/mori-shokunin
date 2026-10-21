@@ -1,0 +1,57 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseEscapedSpace",
+  "scenario": "mount point with a space encoded as \\040 in mountinfo (/srv/my\\040data) must be decoded to /srv/my data so a path under it resolves to that xfs mount (usrquota -> enabled/enforced) instead of the shorter /srv mount (noquota -> disabled).",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "26 33 0:24 / /proc rw,nosuid,nodev,noexec,relatime shared:5 - proc proc rw\n33 2 0:30 /@ / rw,noatime shared:1 - btrfs /dev/mapper/root rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=256,subvol=/@\n42 33 0:44 / /srv rw,relatime shared:12 - xfs /dev/mapper/srv rw,inode64,logbufs=8,logbsize=256k,noquota\n43 33 0:45 / /srv/my\\040data rw,relatime shared:13 - xfs /dev/mapper/data rw,inode64,usrquota,attr2\n",
+    "paths": [
+      {
+        "path": "/srv/my data/sub dir",
+        "realpath": "/srv/my data/sub dir",
+        "st_dev": "0:45"
+      },
+      {
+        "path": "/srv/plain",
+        "realpath": "/srv/plain",
+        "st_dev": "0:44"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0",
+      "/dev/mapper/srv": "dm-1",
+      "/dev/mapper/data": "dm-2"
+    },
+    "btrfs_sysfs": {
+      "8f3c1d2e-5b6a-4c7d-9e0f-1a2b3c4d5e6f": {
+        "devices": ["dm-0"],
+        "qgroups": false,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 1,
+    "finding_id": "QUOTA_ENABLED",
+    "paths": [
+      {
+        "path": "/srv/my data/sub dir",
+        "fstype": "xfs",
+        "mount_point": "/srv/my data",
+        "quota_state": "enabled",
+        "enforcement": "enforced",
+        "basis": "xfs_quota_option"
+      },
+      {
+        "path": "/srv/plain",
+        "fstype": "xfs",
+        "mount_point": "/srv",
+        "quota_state": "disabled",
+        "enforcement": "n/a",
+        "basis": "xfs_noquota_option"
+      }
+    ]
+  },
+  "rationale": "Contract table rows: xfs + 'any of usrquota,uquota,quota,grpquota,gquota,prjquota,pquota and no noquota' -> quota_state 'enabled', enforcement 'enforced', basis 'xfs_quota_option'; xfs + 'noquota and no quota key' -> 'disabled', enforcement 'n/a', basis 'xfs_noquota_option' (contract.md C2 quota-classification table, rows 1-2). Verdict precedence: 'else any enabled -> 1 QUOTA_ENABLED (positive evidence is never hidden by an unknown sibling)' (contract.md C2 verdict precedence), so the run exits 1 with finding_id QUOTA_ENABLED even though the second path is disabled. Mount resolution: 'parse mountinfo per proc.rst 3.5 (fields 1-6, optional fields until -, then fstype, source, super options); decode octal escapes (\\040, \\011, \\012, \\134) in the mount point' and 'Candidate mounts: mount point equals realpath, or is /, or realpath starts with mount point + /. Choose the longest mount point; among equal mount points the last line wins' (contract.md C2 mount resolution). For realpath '/srv/my data/sub dir' the decoded mount points are '/', '/srv' and '/srv/my data'; the longest that prefixes it is '/srv/my data' (mountinfo line 4, field 5 written '/srv/my\\040data', decoded to '/srv/my data'), whose fstype is xfs and super options 'rw,inode64,usrquota,attr2' contain 'usrquota' and no 'noquota'. '/srv' (line 3, super options 'rw,inode64,logbufs=8,logbsize=256k,noquota') is a shorter candidate and must lose; if the octal escape were not decoded the only prefix candidate would be '/srv' and the path would be misreported as disabled/xfs_noquota_option. For realpath '/srv/plain' the candidates are '/' and '/srv' only ('/srv/my data' is not a prefix of '/srv/plain'), so mount_point '/srv', fstype xfs, super options carry 'noquota' and no quota key -> disabled/n/a/xfs_noquota_option. Device check: 'If chosen fstype is not btrfs and its major:minor != the path's st_dev -> unknown basis device_mismatch ... equal -> device_check match' (contract.md C2); the fixture gives st_dev 0:45 for the first path against mount major:minor 0:45, and 0:44 against 0:44 for the second, so no device_mismatch branch is entered. The '/' btrfs line is present for realism and as a shorter candidate only; it is never the longest match for either path, so its btrfs_sysfs entry cannot influence the verdict. Source anchors: S082 (proc.rst section 3.5, field table 1970-1983: major:minor field 3, separator, filesystem type, mount source, super options) supports the field layout used for the mount-point and super-option extraction; S077 (Documentation/admin-guide/xfs.rst, noquota 171-173, uquota/usrquota/uqnoenforce/quota 175-177) supports 'noquota' as 'Forcibly turns off all quota accounting and enforcement' and 'usrquota' as accounting enabled with limits optionally enforced; S078 (fs/xfs/xfs_super.c xfs_fs_show_options quota emission 238-254: 'usrquota' on XFS_UQUOTA_ENFD, 'uqnoenforce' on XFS_UQUOTA_ACCT, 'noquota' only when no accounting flag is set) supports that 'usrquota' and 'noquota' are the two kernel-emitted super-option keys, and therefore that the two xfs lines are internally consistent kernel output.",
+  "sources": ["S077", "S078", "S082"]
+}

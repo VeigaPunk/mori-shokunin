@@ -128,3 +128,14 @@ The amended fixture schema remains v1 within this not-yet-shipped round; ORIGINA
 proposals are preserved rejected old-shape evidence, not valid final inputs.
 Supplementary checks use separately frozen metadata, never insert keys into the
 independent six-field primary expectations. No unscored claim for metadata.
+
+## Real-mode safety correction before seal
+
+S079's mode reader ASSERTs enabled. Reading enabled1 and then mode can race a
+concurrent quota disable, so enabled-first alone does not make that read safe.
+SentinelProbe's source review agrees. Real mode therefore NEVER reads qgroups/mode
+and emits btrfs_qgroups_mode=null as intentionally unobserved, not mode-absent.
+Fixture mode still projects validated qgroup/squota metadata; all independent
+primary/supplementary fixture targets and the frozen default real control remain
+unchanged. The visible enabled claim reads only the non-asserting enabled attribute.
+Original v1/v2 candidate sources remain unexecuted rejected evidence.

@@ -1,0 +1,61 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseExt4NoOptions",
+  "scenario": "Two paths on ext4 mounts whose super options carry no quota-related key at all: the superblock quota feature is unobservable from mountinfo, so the quota state is unknown with enforcement n/a, never disabled.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "29 1 8:1 / / rw,relatime shared:1 - ext4 /dev/sda1 rw,errors=remount-ro\n30 29 0:31 / /home rw,relatime shared:2 - btrfs /dev/mapper/root rw,space_cache=v2,subvolid=5,subvol=/\n31 29 8:2 / /srv rw,relatime shared:3 - ext4 /dev/sdb1 rw,errors=remount-ro\n",
+    "paths": [
+      {
+        "path": "/srv/data",
+        "realpath": "/srv/data",
+        "st_dev": "8:2"
+      },
+      {
+        "path": "/var/log",
+        "realpath": "/var/log",
+        "st_dev": "8:1"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0"
+    },
+    "btrfs_sysfs": {
+      "b7d2e4f1-9a3c-4e6d-8f21-3c5a7b9d1e40": {
+        "devices": [
+          "dm-0"
+        ],
+        "qgroups": false,
+        "qgroups_enabled": null,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 2,
+    "finding_id": "QUOTA_STATE_UNKNOWN",
+    "paths": [
+      {
+        "path": "/srv/data",
+        "fstype": "ext4",
+        "mount_point": "/srv",
+        "quota_state": "unknown",
+        "enforcement": "n/a",
+        "basis": "ext_quota_superblock_unobservable"
+      },
+      {
+        "path": "/var/log",
+        "fstype": "ext4",
+        "mount_point": "/",
+        "quota_state": "unknown",
+        "enforcement": "n/a",
+        "basis": "ext_quota_superblock_unobservable"
+      }
+    ]
+  },
+  "rationale": "Pre-seal amendment (round-23) section 'C2 final rules superseding only erroneous/ambiguous original clauses', ext2/3/4 clause: quota_state is ALWAYS unknown with enforcement n/a; if any quota-related option key is present the basis is ext_quota_option_unverified, otherwise ext_quota_superblock_unobservable is retained. Neither mount here carries any quota-related option key: the /srv mount's super options (the last mountinfo field, proc.rst S082 section 3.5 field (m+4), lines 1982-1983) are rw,errors=remount-ro and the root mount's are rw,errors=remount-ro, so the keys are only rw and errors and the retained basis ext_quota_superblock_unobservable applies to both paths; unknown rather than disabled because S083 (Documentation/admin-guide/ext4.rst:261-265) states that the quota, noquota, grpquota and usrquota flags are ignored by the filesystem and are used only by quota tools to recognize volumes where quota should be turned on, and the amendment's ext quota-related vocabulary (which now also adds noquota and jqfmt) confirms that such keys are only hints, while the original contract's limits text records that the ext quota feature in the superblock is unobservable without privileged tools. Mount resolution (amendment, mount resolution clause; original contract lines 95-99): the separator and the last three fields of EACH line are parsed, not file-wide; candidate mounts are those whose mount point equals the realpath, is /, or is a component-prefix of the realpath, and the longest wins, so /srv/data resolves to /srv (length 4) rather than the root mount / (length 1), while /var/log is covered only by /. No covering mount point occurs more than once in this mountinfo (the mount points are /, /home and /srv, each once), so the amendment's ambiguous_overmount refusal (unknown/n/a/ambiguous_overmount with fstype=null and mount_point=null) does not fire and the paths are classified normally. Device check (amendment, device mismatch clause): device mismatch preempts the filesystem table (unknown/n/a/device_mismatch), and btrfs skips equality only when the stat major is 0, so each path's st_dev is set equal to its chosen mount's major:minor (8:2 for the /srv mount, 8:1 for the root mount) and the device_check is match; the btrfs mount at /home covers neither path and is never selected, so its device_check never applies. Fixture source resolution (amendment): the raw decoded source /dev/mapper/root is looked up in device_links and maps to the basename dm-0, which is the device listed by the single btrfs_sysfs uuid; that uuid has qgroups false paired with qgroups_enabled null and qgroups_mode null per the amendment's pairing rule, and it is a decoy for this case because no probed path resolves to the btrfs mount. Verdict precedence (amendment and original contract lines 132-135): no path is enabled and at least one path is unknown, so exit 2 with finding_id QUOTA_STATE_UNKNOWN.",
+  "sources": [
+    "S082",
+    "S083"
+  ]
+}

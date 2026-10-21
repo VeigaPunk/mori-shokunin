@@ -1,0 +1,63 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseSymlinkRealpath",
+  "scenario": "The given path /home/vgpnk/Projects/shokunin/link-to-tmp is a symlink whose realpath is /tmp/mori-quota-target, so the covering mount is resolved from the realpath (the xfs mount at /tmp) while the output path echoes the given path.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "21 30 0:26 / /proc rw,nosuid,nodev,noexec,relatime shared:12 - proc proc rw\n22 30 0:27 / /sys rw,nosuid,nodev,noexec,relatime shared:7 - sysfs sysfs rw\n23 30 0:6 / /dev rw,nosuid,relatime shared:3 - devtmpfs devtmpfs rw,size=4023424k,nr_inodes=1005856,mode=755\n25 30 0:30 / / rw,relatime shared:1 - btrfs /dev/mapper/root rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=5,subvol=/\n65 33 0:30 /@home /home rw,relatime shared:33 - btrfs /dev/mapper/root rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=257,subvol=/@home\n82 25 0:76 / /dev/shm rw,nosuid,nodev,noexec,relatime,size=16326424k shared:36 - tmpfs tmpfs rw,inode64\n244 33 259:1 / /tmp rw,relatime shared:34 - xfs /dev/nvme0n1p1 rw,inode64,logbufs=8,logbsize=256k,noquota\n",
+    "paths": [
+      {
+        "path": "/home/vgpnk/Projects/shokunin/link-to-tmp",
+        "realpath": "/tmp/mori-quota-target",
+        "st_dev": "259:1"
+      },
+      {
+        "path": "/tmp/mori-quota-target-dir",
+        "realpath": "/tmp/mori-quota-target-dir",
+        "st_dev": "259:1"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0"
+    },
+    "btrfs_sysfs": {
+      "3f6a1c02-9b4d-4e57-8a31-0d5e7c9b2a48": {
+        "devices": [
+          "dm-0"
+        ],
+        "qgroups": false,
+        "qgroups_enabled": null,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 0,
+    "finding_id": "QUOTA_DISABLED",
+    "paths": [
+      {
+        "path": "/home/vgpnk/Projects/shokunin/link-to-tmp",
+        "fstype": "xfs",
+        "mount_point": "/tmp",
+        "quota_state": "disabled",
+        "enforcement": "n/a",
+        "basis": "xfs_noquota_option"
+      },
+      {
+        "path": "/tmp/mori-quota-target",
+        "fstype": "xfs",
+        "mount_point": "/tmp",
+        "quota_state": "disabled",
+        "enforcement": "n/a",
+        "basis": "xfs_noquota_option"
+      }
+    ]
+  },
+  "rationale": "CORRECTED VARIANT of the same id under the round-23 pre-seal amendment; the original proposal at cases-proposed/CaseSymlinkRealpath.json is left untouched. There are exactly two deltas from the original proposal, and nothing else changed: (a) the mandated addition of the required btrfs_sysfs record member qgroups_enabled -- the single UUID record has qgroups false (the qgroups directory is absent), so per the amendment qgroups false pairs with enabled=null/mode=null; qgroups_enabled is therefore null, not true and not false; and (b) the synthetic name of the second probed path, /tmp/mori-quota-target-dir instead of /tmp/mori-quota-target, so that no two entries share a realpath and the fixture satisfies the amended 'Paths nonempty, unique' clause under either reading of it. The expectation is byte-identical to the original proposal's expectation, and the mountinfo, device_links and the first path entry are byte-identical, because no other amended clause reaches them: the fixture's chosen mount is the xfs mount at /tmp, so the btrfs rules (present-plus-enabled-true -> enabled/unknown/btrfs_qgroups_enabled, present-plus-enabled-false -> disabled/n/a/btrfs_qgroups_disabled, present-plus-enabled-null -> unknown/n/a/btrfs_qgroups_enabled_unavailable) are never entered; there is no ext2/3/4 mount, so the ext rule (quota_state ALWAYS unknown, basis ext_quota_option_unverified when any quota-related option key is present) is not reached; and every covering mount point (/ and /tmp for the realpath /tmp/mori-quota-target) occurs exactly once in the mountinfo, so the ambiguous_overmount refusal (unknown/n/a, fstype null, mount_point null, device_check not_checked) is not triggered. The trailing newline at the end of the mountinfo text is intentional and now safe: the amendment requires empty trailing lines to be ignored, whereas the original clause 'unparseable mountinfo line -> exit 2 QUOTA_SETUP' could have been read against that empty trailing line. Derivation, unchanged from the original proposal and re-checked against the amended rules: (1) Mount resolution (per path): candidate mounts are those whose mount point equals the realpath, is '/', or is a prefix (realpath starts with mount point + '/'), longest mount point wins. For realpath /tmp/mori-quota-target the candidates are /tmp (prefix) and / (root); /home is not a prefix of the realpath even though the given path sits under it, and /proc, /sys, /dev, /dev/shm are not either. /tmp (4 characters) beats / (1 character), so the chosen mount is the xfs line 244 33 259:1 / /tmp rw,relatime shared:34 - xfs /dev/nvme0n1p1 rw,inode64,logbufs=8,logbsize=256k,noquota and mount_point in the output is the mount's own mount point /tmp. (2) Device check: the chosen fstype is xfs, not btrfs, and its major:minor 259:1 equals the path's st_dev 259:1 (os.stat follows the symlink, so a path spelled under /home reports the device of its /tmp target), so the path is not downgraded to unknown/device_mismatch; under the amended precedence a mismatch would preempt the filesystem table, but there is no mismatch. (3) Quota classification: super options are the last three fields of the chosen line (fstype, source, super options), comma-split with key = text before '=' giving rw, inode64, logbufs, logbsize, noquota; the mount-options field (6) rw,relatime carries no quota token. Under the amended XFS precedence (conflict when noquota meets ANY quota/enforcement or noenforce key; then noquota; then any enforced key; then any accounting-only key; else absent) noquota is present alone, so the noquota row applies: quota_state disabled, enforcement n/a, basis xfs_noquota_option. 'noquota' is the kernel's own forced-off switch (S077: xfs.rst:171-173, 'noquota / Forcibly turns off all quota accounting and enforcement within the filesystem.') and the kernel emits it exactly when no quota accounting flag is set (S078: fs/xfs/xfs_super.c:253-254, 'if (!(mp->m_qflags & XFS_ALL_QUOTA_ACCT)) seq_puts(m, \",noquota\");'), which is why it appears alone here. (4) The btrfs lines exist only as the foil for a resolver that wrongly used the given path; their per-subvolume device number is the anonymous device (S081: fs/btrfs/inode.c:8246, 'stat->dev = BTRFS_I(inode)->root->anon_dev;'). The mountinfo line shape is per proc.rst section 3.5 (S082: major:minor field 3 at :1975, separator m+1 at :1980, filesystem type m+2 at :1981, mount source m+3 at :1982, super options m+4 at :1983). (5) Verdict precedence: both reported paths are disabled, so there is no enabled and no unknown path, giving exit 0 with finding_id QUOTA_DISABLED. The output path field echoes the given path, not the realpath, so row 1's compared path is /home/vgpnk/Projects/shokunin/link-to-tmp while fstype, mount_point, quota_state, enforcement and basis are those of the /tmp xfs mount; row 2 pins that a path reached directly on the same mount reports the same five mount-derived fields, and its synthetic directory name is distinct from row 1's target so that the fixture satisfies the amended 'Paths nonempty, unique' rule under either reading of that clause (unique path entries, or unique path and realpath alike). The expected paths carry exactly the six scored fields; the supplementary sealed checks for device_check (match for both rows), quota_option_keys (['noquota']) and btrfs_qgroups_mode (null) are recorded in the case report and are deliberately not asserted in the case file, so the original six-field denominator is preserved unchanged.",
+  "sources": [
+    "S077",
+    "S078",
+    "S081",
+    "S082"
+  ]
+}

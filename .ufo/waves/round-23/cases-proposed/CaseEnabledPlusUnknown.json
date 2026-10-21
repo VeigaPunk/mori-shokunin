@@ -1,0 +1,60 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseEnabledPlusUnknown",
+  "scenario": "Two paths probed in one fixture: a tmpfs mount with usrquota (quota_state enabled) and an nfs4 mount (quota_state unknown, unsupported_fstype); the enabled path must win the run verdict (exit 1 QUOTA_ENABLED) while the unknown path is still reported as unknown.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "25 30 0:22 / /proc rw,nosuid,nodev,noexec,relatime - proc proc rw\n26 30 0:23 / /sys rw,nosuid,nodev,noexec,relatime - sysfs sysfs rw\n27 30 0:5 / /dev rw,nosuid,relatime - devtmpfs devtmpfs rw,size=4026532k,nr_inodes=1006633,mode=755\n36 25 0:30 / / rw,relatime - btrfs /dev/mapper/root rw,space=error=on,subvolid=257,subvol=/@\n48 36 0:57 / /srv/quota rw,nosuid,nodev,relatime - tmpfs tmpfs rw,size=1626620k,nr_inodes=406655,inode64,usrquota\n59 36 0:82 / /mnt/nfs4 rw,relatime - nfs4 192.0.2.10:/srv/nfs4 rw,vers=4.2,hard,proto=tcp,timeo=600,retrans=2,sec=sys,rsize=1048576,wsize=1048576\n",
+    "paths": [
+      {
+        "path": "/srv/quota/data",
+        "realpath": "/srv/quota/data",
+        "st_dev": "0:57"
+      },
+      {
+        "path": "/mnt/nfs4/data",
+        "realpath": "/mnt/nfs4/data",
+        "st_dev": "0:82"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0"
+    },
+    "btrfs_sysfs": {
+      "9f3c1c2e-6b47-4a55-9d0e-71c2b6f4a803": {
+        "devices": [
+          "dm-0"
+        ],
+        "qgroups": false,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 1,
+    "finding_id": "QUOTA_ENABLED",
+    "paths": [
+      {
+        "path": "/srv/quota/data",
+        "fstype": "tmpfs",
+        "mount_point": "/srv/quota",
+        "quota_state": "enabled",
+        "enforcement": "enforced",
+        "basis": "tmpfs_quota_option"
+      },
+      {
+        "path": "/mnt/nfs4/data",
+        "fstype": "nfs4",
+        "mount_point": "/mnt/nfs4",
+        "quota_state": "unknown",
+        "enforcement": "n/a",
+        "basis": "unsupported_fstype"
+      }
+    ]
+  },
+  "rationale": "Contract section C2, verdict precedence: 'setup error -> 2 QUOTA_SETUP; else any enabled -> 1 QUOTA_ENABLED (positive evidence is never hidden by an unknown sibling); else any unknown -> 2 QUOTA_STATE_UNKNOWN; else 0 QUOTA_DISABLED'. Path 1 resolves to a tmpfs mount whose super options carry usrquota, so the contract's quota-classification table row 'tmpfs | any of quota,usrquota,grpquota or a key ending _hardlimit | enabled | enforced | tmpfs_quota_option' applies (fstype tmpfs, mount_point /srv/quota, quota_state enabled, enforcement enforced, basis tmpfs_quota_option). Path 2 resolves to an nfs4 mount; nfs4 is not xfs, btrfs, ext2/ext3/ext4 or tmpfs, so the table's last row applies: 'other | - | unknown | n/a | unsupported_fstype' (quota_state unknown, enforcement n/a, basis unsupported_fstype). Because one path is enabled, the run verdict is exit 1 with finding_id QUOTA_ENABLED; the unknown sibling does not downgrade the verdict, and the nfs4 path must still be reported with its own unknown state rather than being dropped. Mount resolution (contract C2): candidates are mounts whose mount point equals the path realpath, is '/', or is a prefix of the realpath at a '/' boundary; the longest mount point wins. For realpath /srv/quota/data the candidates are the btrfs root mount '/' and the tmpfs mount '/srv/quota'; '/srv/quota' is longer, so it is chosen. For realpath /mnt/nfs4/data the candidates are '/' and '/mnt/nfs4'; '/mnt/nfs4' is longer and is chosen. The proc, sysfs, devtmpfs and btrfs lines are inert for these two paths but make the mountinfo text structurally realistic. Device check (contract C2): 'If chosen fstype is not btrfs and its major:minor != the path's st_dev -> unknown basis device_mismatch.' Both chosen fstypes are not btrfs, and both fixtures set the path st_dev equal to the chosen mount's major:minor (0:57 for tmpfs, 0:82 for nfs4), so neither path takes the device_mismatch branch and both reach the classification table; for nfs4 this is what selects unsupported_fstype over device_mismatch. Device numbers are realistic: the kernel prints major:minor of the superblock device for each mount (fs/proc_namespace.c show_mountinfo prints MAJOR(sb->s_dev), MINOR(sb->s_dev)) and a path on that filesystem reports the same st_dev, so equality is the normal non-btrfs case. Mountinfo field layout per S082 (Documentation/filesystems/proc.rst section 3.5, lines 1965-1990): (1) mount ID, (2) parent ID, (3) major:minor, (4) root, (5) mount point, (6) mount options, optional tagged fields until the '-' separator, then (m+2) filesystem type, (m+3) mount source, (m+4) super options; each fixture line carries exactly those fields and no optional tagged fields. Super options are the last field of each line (contract: 'super options = last mountinfo field, comma-split, key = text before ='), and the quota key is read from that field only. tmpfs quota option semantics per S084 (Documentation/filesystems/tmpfs.rst quota mount-option table): 'usrquota - User quota accounting and enforcement is enabled on the mount', which supports the contract row's enabled/enforced outcome for usrquota alone; the kernel emits that flag into the mountinfo super-options field via the tmpfs show_options callback (mm/shmem.c shmem_show_options prints ',usrquota' when the user quota is active), so the fixture's last field 'rw,size=1626620k,nr_inodes=406655,inode64,usrquota' is realistic, and the contract's key-only parsing makes the value bytes immaterial to the classification. NFS4 support is deliberately absent: the contract's limits state 'no NFS/server-side or overlay/fuse quota', and no S-row in S077-S084 covers NFS, so the probe must report nfs4 as unknown with basis unsupported_fstype rather than inferring a quota state from server-side configuration; the nfs4 super options ('vers=4.2,hard,proto=tcp,timeo=600,retrans=2,sec=sys,rsize=...,wsize=...') contain no quota key, so the 'other' row is reached. The btrfs root mount is present only for realism; the device_links and btrfs_sysfs fixture sections are populated consistently with it (source /dev/mapper/root resolves to dm-0 per device_links, and the single uuid lists device dm-0 with qgroups false), but no probed path resolves to the btrfs mount, so the btrfs rows are not exercised and no btrfs expectation is asserted here.",
+  "sources": [
+    "S082",
+    "S084"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseXfsMixedEnforce",
+  "scenario": "xfs mount whose super options carry an enforced project-quota key and an accounting-only group-quota key (prjquota,gqnoenforce): one path, one mount, two quota types whose enforcement flags differ.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "1 0 259:1 / / rw,relatime shared:1 - ext4 /dev/nvme0n1p2 rw,data=ordered\n25 0 0:22 / /proc rw,nosuid,nodev,noexec,relatime shared:5 - proc proc rw\n36 1 253:2 / /data rw,relatime shared:1 - xfs /dev/mapper/data rw,inode64,prjquota,gqnoenforce\n",
+    "paths": [
+      {
+        "path": "/data/projects",
+        "realpath": "/data/projects",
+        "st_dev": "253:2"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/data": "dm-1"
+    },
+    "btrfs_sysfs": {}
+  },
+  "expected": {
+    "exit": 1,
+    "finding_id": "QUOTA_ENABLED",
+    "paths": [
+      {
+        "path": "/data/projects",
+        "fstype": "xfs",
+        "mount_point": "/data",
+        "quota_state": "enabled",
+        "enforcement": "enforced",
+        "basis": "xfs_quota_option"
+      }
+    ]
+  },
+  "rationale": "Amendment applied: .ufo/waves/round-23/preseal-amendment.md, C2 final rules. XFS precedence clause: 'conflict(noquota with ANY quota/enforcement or noenforce key), then noquota, then any enforced key, then any accounting-only key, else absent. Mixed enforced/noenforce means SOME quota-type enforcement flag is set, not all.' Super options (last mountinfo field of the chosen line) are 'rw,inode64,prjquota,gqnoenforce'; comma-split keys are rw, inode64, prjquota, gqnoenforce. Step 1 (conflict) does not fire: 'noquota' is absent, so there is no noquota-plus-quota-key combination. Step 2 (noquota) does not fire. Step 3 (any enforced key) fires: 'prjquota' is an enforced xfs quota key. Step 4 (any accounting-only key, 'gqnoenforce') is therefore never reached. Result: quota_state=enabled, enforcement=enforced, basis=xfs_quota_option, and the amendment's 'SOME quota-type enforcement flag is set, not all' clause is the reading behind 'enforced' here (project quota enforced, group quota accounting-only). Mount resolution under the amendment: empty trailing lines are ignored (the fixture text ends with a newline, as real mountinfo does); the separator and the last three fields are parsed per chosen line, so this line yields fstype 'xfs', source '/dev/mapper/data', super options 'rw,inode64,prjquota,gqnoenforce'; no backslash escapes occur, so the 040/011/012/134 octal rules are not exercised; longest component-prefix selection picks '/data' (the root ext4 line '/' also covers but is shorter); the duplicate-covering-mountpoint rule does not fire because no covering mount point occurs more than once ('/' once, '/data' once), so fstype and mount_point are not nulled to 'ambiguous_overmount'. Device check under the amendment: fstype xfs is not btrfs, the mount line's major:minor '253:2' equals the path's canonical st_dev '253:2', so device mismatch does not preempt and the path is classified rather than left unknown. Verdict precedence: no setup error and one path is enabled, so exit 1 with finding_id QUOTA_ENABLED (a runway-reporting finding, not a failure claim). Supplementary sealed values for this case: device_check 'match', quota_option_keys ['gqnoenforce','prjquota'] (sorted, recognized xfs quota/noenforce keys only; 'inode64' and 'rw' are not quota-related and are ignored; option values are never emitted), qgroups mode null (no btrfs mount in this case). The amendment's other three deltas do not touch this case: btrfs_sysfs contains no UUID record (no decoy to carry qgroups_enabled), there is no ext2/3/4 mount (no ext_quota_option_unverified), and there is no duplicated covering mount point. Fixture and expected values are therefore unchanged from the original proposal; only the derivation text is superseded. Source anchors: S078 fs/xfs/xfs_super.c at tag v7.2 - option table fsparam_flag('prjquota', Opt_prjquota) and fsparam_flag('gqnoenforce', Opt_gqnoenforce); parse cases Opt_pquota/Opt_prjquota setting (XFS_PQUOTA_ACCT|XFS_PQUOTA_ENFD) and Opt_gqnoenforce setting XFS_GQUOTA_ACCT and clearing XFS_GQUOTA_ENFD; xfs_fs_show_options printing ',prjquota' when XFS_PQUOTA_ENFD is set and ',gqnoenforce' when only XFS_GQUOTA_ACCT is set, and printing ',noquota' only when !(m_qflags & XFS_ALL_QUOTA_ACCT) (so a kernel-generated xfs super-options string never pairs noquota with a quota key, and the conflict branch is reachable only from hand-written super options). S077 Documentation/admin-guide/xfs.rst at tag v7.2 - 'noquota', 'uquota/usrquota/uqnoenforce/quota', 'gquota/grpquota/gqnoenforce', 'pquota/prjquota/pqnoenforce' (accounting enabled, limits optionally enforced). S082 Documentation/filesystems/proc.rst at tag v7.2 section 3.5 - mountinfo field layout and optional tagged fields. Fixture realism rests additionally on kernel code outside the S077-S084 range (fs/proc_namespace.c at v7.2: super options are emitted as ' ro'/' rw' plus show_sb_opts plus sb->s_op->show_options, so the xfs super options legitimately begin with 'rw'; mount points are escaped over ' \\t\\n\\\\', i.e. 040/011/012/134, and no escaping occurs in this fixture). Open source gap, not resolvable by this seat: the amendment's octal escape set is not documented in S082 (proc.rst 3.5 says nothing about escaping); it is backed by fs/proc_namespace.c, outside the S077-S084 range named by the contract. Open naming ambiguity for L1: the contract names the output key 'btrfs_qgroups_mode' while the amendment's supplementary-check wording says 'qgroups_mode'; the exact-allowed-keys check depends on that name. This case emits the value null either way. Original proposal retained unchanged at .ufo/waves/round-23/cases-proposed/CaseXfsMixedEnforce.json.",
+  "sources": ["S077", "S078", "S082"]
+}

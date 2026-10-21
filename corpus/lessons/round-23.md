@@ -75,3 +75,18 @@ Source used-by changes (all ten S077–S086): `corpus/lessons/round-23.md` →
 `corpus/lessons/round-23.md, corpus/knowledge/quota-surface-r23.md`; mined→mined and
 on-release→on-release unchanged. The note exists and cites every source. Delta receipt
 is `build/DraftSourceRows.md` under the round23 wave directory.
+
+Final source-safety correction before the seal: enabled-first plus mode-read still
+races concurrent quota disable. SentinelProbe independently agrees with omitting
+the real-mode qgroups/mode read entirely (S079 ASSERT, S080 disable ordering).
+Real-mode mode metadata is intentionally null; fixture-only mode expectations are
+unchanged. Original unexecuted candidates retain the rejected read for provenance.
+This is not a claimed host crash reproduction or a reduced primary target.
+
+Additional process disclosures: W1's attempt ledger is a retrospective binding of
+seven zero-spawn refusals and one64-seat start, not proof of pre-call committed
+payload logging (Q53/56). Static syntax/py_compile and in-memory contract checks
+were exercised by several seats despite the no-verification prose; FixtureLint,
+CaseOptionalFields and DraftSourceRows disclosed transient /tmp uses. No candidate
+or live quota command was executed. Correct W2 logging/scratch practice cannot
+retroactively remove this debt.

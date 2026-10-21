@@ -1,0 +1,48 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseXfsAccountingOnly",
+  "scenario": "An xfs mount whose super options carry only uqnoenforce and pqnoenforce (user and project quota accounting without enforcement) and no noquota: quota is visibly enabled but not enforced.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "33 33 0:30 /@ / rw,noatime shared:1 - btrfs /dev/mapper/root rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=256,subvol=/@\n65 33 0:30 /@home /home rw,noatime shared:183 - btrfs /dev/mapper/root rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=257,subvol=/@home\n29 33 0:29 / /run rw,nosuid,nodev,relatime shared:12 - tmpfs run rw,mode=755,inode64,huge=advise\n244 33 259:1 / /tmp rw,nosuid,nodev,noatime shared:207 - xfs /dev/nvme0n1p1 rw,inode64,logbufs=8,logbsize=256k,noquota\n251 33 259:3 / /srv/xfsacct rw,nosuid,nodev,noatime shared:214 - xfs /dev/nvme0n1p3 rw,inode64,logbufs=8,logbsize=256k,uqnoenforce,pqnoenforce\n",
+    "paths": [
+      {
+        "path": "/srv/xfsacct/data",
+        "realpath": "/srv/xfsacct/data",
+        "st_dev": "259:3"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0"
+    },
+    "btrfs_sysfs": {
+      "1d02a454-c549-4a35-b567-89d60902af8e": {
+        "devices": [
+          "dm-0"
+        ],
+        "qgroups": false,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 1,
+    "finding_id": "QUOTA_ENABLED",
+    "paths": [
+      {
+        "path": "/srv/xfsacct/data",
+        "fstype": "xfs",
+        "mount_point": "/srv/xfsacct",
+        "quota_state": "enabled",
+        "enforcement": "accounting_only",
+        "basis": "xfs_quota_option"
+      }
+    ]
+  },
+  "rationale": "Contract row: contract.md §C2 quota-classification table, xfs row 3 - 'xfs | only *noenforce keys (uqnoenforce,gqnoenforce,pqnoenforce,qnoenforce), no `noquota` | enabled | accounting_only | `xfs_quota_option`'. The fixture's chosen mount carries exactly uqnoenforce and pqnoenforce and no noquota, so row 3 is the only matching row: xfs row 1 needs `noquota` (absent), xfs row 2 needs one of usrquota,uquota,quota,grpquota,gquota,prjquota,pquota (none present), xfs row 4 needs `noquota` together with a quota key (no noquota), xfs row 5 needs neither `noquota` nor any quota key (a quota-related key is present). Mount resolution (contract.md §C2, 'Candidate mounts: mount point equals realpath, or is `/`, or realpath starts with mount point + `/`. Choose the longest mount point'): realpath /srv/xfsacct/data is covered by /srv/xfsacct (length 12) and by / (length 1); the longest wins, so mount_point is /srv/xfsacct and fstype is xfs; the btrfs / and /home lines, the tmpfs /run line and the xfs /tmp line (noquota) do not cover the path. Device check (contract.md §C2): fstype is not btrfs, so the mount's major:minor must equal the path's st_dev - the fixture line carries 259:3 and the fixture path carries st_dev '259:3', so the equality branch holds and the path is not collapsed to unknown/device_mismatch. Option extraction (contract.md §C2, 'super options = last mountinfo field, comma-split, key = text before `=`'): the last field of the chosen line is 'rw,inode64,logbufs=8,logbsize=256k,uqnoenforce,pqnoenforce', whose quota-related keys are uqnoenforce and pqnoenforce; inode64, logbufs and logbsize are not quota keys and the values are never echoed. Verdict (contract.md §C2, 'Verdict precedence: setup error -> 2 QUOTA_SETUP; else any `enabled` -> 1 QUOTA_ENABLED ...; else any `unknown` -> 2 QUOTA_STATE_UNKNOWN; else 0 QUOTA_DISABLED'): the single path is enabled, so exit 1 with finding_id QUOTA_ENABLED. Source anchors: S077 = Documentation/admin-guide/xfs.rst at v7.2, lines 171-185 - 'noquota' (171-173) 'Forcibly turns off all quota accounting and enforcement within the filesystem.', 'uquota/usrquota/uqnoenforce/quota' (175-177) 'User disk quota accounting enabled, and limits (optionally) enforced.', 'gquota/grpquota/gqnoenforce' (179-181), 'pquota/prjquota/pqnoenforce' (183-185) - which fixes the xfs quota option vocabulary, including that the accounting-only spellings are the *noenforce forms. S078 = fs/xfs/xfs_super.c at v7.2, xfs_showargs lines 238-254 - ',usrquota' is printed only under XFS_UQUOTA_ENFD (238-239), ',uqnoenforce' under XFS_UQUOTA_ACCT (240-241), ',prjquota' under XFS_PQUOTA_ENFD (243-244), ',pqnoenforce' under XFS_PQUOTA_ACCT (245-246), ',grpquota' (248-249), ',gqnoenforce' (250-251), and ',noquota' only when !(m_qflags & XFS_ALL_QUOTA_ACCT) (253-254) - which shows that a mount with user and project accounting but no enforcement reports exactly 'uqnoenforce,pqnoenforce' and no 'noquota', i.e. the fixture's super-options string is kernel-realistic and the accounting-without-enforcement reading of row 3 is the kernel's own. S082 = Documentation/filesystems/proc.rst at v7.2, section 3.5 lines 1965-1990 (field table 1970-1983: major:minor field 3 at 1975, mount point field 5 at 1977, mount options field 6 at 1978, separator m+1 at 1980, filesystem type m+2 at 1981, mount source m+3 at 1982, super options m+4 at 1983; optional tagged fields such as shared:N before the separator) - which fixes the layout of every fixture line and the position of the super-options column the classification reads. Fixture text note: the mountinfo text ends with a trailing newline, exactly as a real /proc/self/mountinfo does, and every line is byte-shaped like a real mountinfo line (mount ID, parent ID, major:minor, root, mount point, mount options, optional tagged fields, '-', fstype, source, super options). The btrfs and tmpfs lines are structural decoys only - they make the mount resolution non-trivial and are not claimed to reproduce any observed host mount.",
+  "sources": [
+    "S077",
+    "S078",
+    "S082"
+  ]
+}

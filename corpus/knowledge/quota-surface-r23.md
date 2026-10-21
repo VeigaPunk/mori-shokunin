@@ -95,3 +95,15 @@ makes no universal effect-free claim there. Per-ID limits/usage, EDQUOT attribut
 NFS/overlay/fuse state, btrfs-on-btrfs ambiguity, snapshot races and census integration
 remain frontier. Privacy/history clearance and baseline acceptance remain blocked
 by the existing independent debt, not changed by quota visibility.
+
+## Final pre-seal mode safety qualification
+
+The earlier enabled-first mode guard is necessary but not sufficient: concurrent
+quota disable can clear the ON flag between two reads, and S079's mode reader then
+ASSERTs enabled. This supersedes any operational instruction above to read mode
+when enabled1. Final real-mode design NEVER reads qgroups/mode; its null metadata
+means intentionally unobserved, not absent. Fixture-only qgroup/squota projection
+is still a validated synthetic observation and never invokes that kernel reader.
+The primary visible-state observation reads the non-asserting enabled attribute,
+not directory presence alone. SentinelProbe's source-only agreement and the
+pre-seal amendment retain this correction before any C2 candidate measurement.

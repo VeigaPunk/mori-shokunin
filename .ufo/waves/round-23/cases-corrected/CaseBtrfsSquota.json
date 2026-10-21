@@ -1,0 +1,50 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseBtrfsSquota",
+  "scenario": "btrfs subvolume path whose single mapped uuid has qgroups true, qgroups_enabled true and qgroups_mode \"squota\" (simple quota mode): quota_state enabled, enforcement unknown, basis btrfs_qgroups_enabled, exit 1 QUOTA_ENABLED",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "25 0 8:1 / / rw,relatime shared:1 - ext4 /dev/sda1 rw,errors=remount-ro\n28 25 0:30 /@srv /srv rw,relatime shared:2 - btrfs /dev/mapper/srv rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=257,subvol=/@srv\n29 28 0:26 / /proc rw,nosuid,nodev,noexec,relatime shared:3 - proc proc rw\n30 28 0:27 / /run rw,nosuid,nodev,relatime shared:4 - tmpfs tmpfs rw,mode=755,size=4028164k\n",
+    "paths": [
+      {
+        "path": "/srv/data",
+        "realpath": "/srv/data",
+        "st_dev": "0:57"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/srv": "dm-3"
+    },
+    "btrfs_sysfs": {
+      "6f0c9e42-58ab-4d71-9c30-6b1fe4ad2753": {
+        "devices": [
+          "dm-3"
+        ],
+        "qgroups": true,
+        "qgroups_enabled": true,
+        "qgroups_mode": "squota"
+      }
+    }
+  },
+  "expected": {
+    "exit": 1,
+    "finding_id": "QUOTA_ENABLED",
+    "paths": [
+      {
+        "path": "/srv/data",
+        "fstype": "btrfs",
+        "mount_point": "/srv",
+        "quota_state": "enabled",
+        "enforcement": "unknown",
+        "basis": "btrfs_qgroups_enabled"
+      }
+    ]
+  },
+  "rationale": "Pre-seal amendment (C2 final rules) btrfs clause: a present qgroups directory means INITIALIZED, not enabled, so each btrfs_sysfs UUID record carries the required member qgroups_enabled; present plus enabled=true gives quota_state 'enabled', enforcement 'unknown', basis 'btrfs_qgroups_enabled'. This fixture's single uuid (6f0c9e42-58ab-4d71-9c30-6b1fe4ad2753) has qgroups true, qgroups_enabled true, qgroups_mode 'squota', so the enabled branch applies and neither 'btrfs_qgroups_disabled' (enabled=false) nor 'btrfs_qgroups_enabled_unavailable' (enabled=null) nor 'btrfs_qgroups_dir_absent' (absent dir) is reached. Fixture source resolution (amendment): the raw decoded mount source '/dev/mapper/srv' is looked up in device_links and its mapped basename 'dm-3' is compared against the UUID devices lists; exactly one uuid matches, so the zero/multiple-match unknown branch is not reached. Mount resolution (amendment): the mountinfo text is parsed per line - separator and the last three fields of the chosen line give fstype 'btrfs', source '/dev/mapper/srv' and super options; the chosen line is the longest component-prefix covering mount point for realpath '/srv/data', namely '/srv' (the '/' ext4 line is a shorter cover and is not chosen); no covering mount point occurs twice in this text, so the ambiguous_overmount refusal does not apply; mount point and source contain no octal escapes, so no decoding changes them. Device check (amendment): btrfs skips the equality comparison only when the stat major is 0; the path st_dev '0:57' has major 0 and the mount's major:minor is '0:30', so no device_mismatch preemption occurs and device_check would be 'btrfs_subvolume_skipped' (the anonymous per-subvolume device, S081 fs_btrfs_inode.c:8246 stat->dev = BTRFS_I(inode)->root->anon_dev); device_check, quota_option_keys and qgroups_mode are output fields outside the six scored fields and are therefore not part of expected (the amendment notes quota_option_keys is [] for btrfs, whose mechanism is sysfs rather than mount options, and that only 'qgroup'/'squota' are accepted mode texts, so qgroups_mode would be 'squota'). Mode semantics anchors: S079 fs_btrfs_sysfs.c:2355-2368 (qgroups/enabled attribute, exact 0/1) and :2370-2395 (qgroups/mode attribute; qgroup_mode_show emits 'squota\\n' for BTRFS_QGROUP_MODE_SIMPLE and 'qgroup\\n' for BTRFS_QGROUP_MODE_FULL); S080 fs_btrfs_qgroup.c:33-50 (btrfs_qgroup_mode: DISABLED unless BTRFS_FS_QUOTA_ENABLED, SIMPLE when BTRFS_QGROUP_STATUS_FLAG_SIMPLE_MODE, else FULL; btrfs_qgroup_enabled iff mode != DISABLED); S082 proc.rst section 3.5 (mountinfo field layout used to author the fixture text). Enforcement is 'unknown' because the probe reads no per-user/group/project limit or usage value and quota presence does not imply any limit is set (contract limits; amendment boundary keeps per-ID limits/usage unknown). Verdict precedence (amendment, unchanged from contract): one 'enabled' path and no setup error gives exit 1 and finding_id 'QUOTA_ENABLED'.",
+  "sources": [
+    "S079",
+    "S080",
+    "S081",
+    "S082"
+  ]
+}
