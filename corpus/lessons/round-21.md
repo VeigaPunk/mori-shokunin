@@ -33,3 +33,25 @@ Admit: historical evidence accounting with explicit unknowns and pin-blocked sta
 ## Carried defects (not round21 improvement claims)
 
 Q64 discovery/timestamp-binding, Q65 key-only classifier discriminator, Q66 marker variants, Q68 historical-binding definitions remain routed debt unless separately demonstrated fixed. They are not needed to claim independent wave lifecycle knowledge, because none is claimed. Q64-68 were authored round20 beneath an r19 heading: this dated correction supersedes that attribution only. Existing census, report-presence tool, old frozen cases/registers/baselines are intentionally unchanged. No independent historical cleanup/settlement disposition is available in the opened evidence; this is retained unknown, not a fabricated closure.
+
+## Co-evolved trust boundary
+
+`build/CriticTrust.md` and `build/CriticAdmission.md` (under round21 waves)
+caught a new design hazard before acceptance: a same-author boolean and
+different actor string could masquerade as independence. The frozen contract
+and six policy cases remain unchanged; `.ufo/waves/round-21/trust-refinement.md`
+records the stronger implementation requirement. Audit declarations never
+authenticate actors or automatically clear acceptance; they require outside
+review and remain blocked here. Classifier positive cases are synthetic
+conditional logic only, not an independence checker or actual disposition.
+
+The raw census `--pin` still writes if directly invoked. The round21 audit
+is a mandatory **acceptance gate**, not a command interceptor; bypassing its
+red result violates QUALITY69. Neither detection/report scope nor this round
+claims technical prevention of an unauthorized write. This limitation is
+explicit, not a fake authentication fallback.
+
+OracleLoss died on Codex capacity and is not replaced. The L1 wrote the
+independent black-box measurement harness before reading implementation
+source (`.ufo/waves/round-21/oracle-loss.py`); its author provenance is L1,
+not that dead seat. The original provider failure remains recorded.

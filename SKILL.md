@@ -513,3 +513,20 @@ Ground: `corpus/lessons/round-21.md`; retained provenance
 `.ufo/waves/round-21/evidence/historical-provenance.json`; active QUALITY69.
 
 Never edit `tools/mori-census.sh`. `--pin` writes only its path; `--drift` writes nothing.
+
+## Round21 retained-loss observation and policy-test registry
+
+| name | kind | entry | verdict map | self-test | pinned values | write scope | owner |
+|---|---|---|---|---|---|---|---|
+| retained-loss audit | probe (negative baseline-acceptance evidence, not independent-disposition authority) | `python3 tools/mori-evidence-loss.py audit --root . --required .ufo/waves/round-21/frozen/required.json --accounting corpus/evidence/loss-accounting-r21.json` | 1 blocked/failed acceptance (omission, invalidity, unknown or external-review-required); 2 could-not-evaluate input/setup; 0 reserved for accepted complete disposition, **not currently produced** because actor authentication/acceptance is outside this probe | `TMPDIR=$PWD/.scratch python3 tools/mori-evidence-loss.py --selftest`; exact rc/finding IDs and isolated committed Git fixtures | required pair and original r10 baseline references in round21 frozen/required.json; each copy's full revision/SHA is checked against Git | none live; selftest isolated temporary root only | mori |
+| evidence-loss rule comparison | gate (finite synthetic policy tests) | `python3 tools/mori-evidence-loss.py classify --rule .ufo/waves/round-21/frozen/after-rule.json --cases .ufo/waves/round-21/frozen/cases.json` | 0 all synthetic expectations match; 1 mismatch; 2 malformed/setup; **not** actual baseline authorization | same `--selftest`, including citation-free false-rule negative control | six cases and old/new rule objects frozen at3b792db; independent oracle binds actual inputs/code to measured commit | none live; selftest temp tree | mori |
+
+The audit retains numeric counters and separate identity lists. Valid unresolved
+rows are not invalid; their expected real outcome is omitted0, unresolved2,
+invalid0, pin_allowed=false, exit1. A structurally valid disposed declaration
+is still external-review-required and cannot authenticate its author or clear
+the pin. The classifier's positive cases are conditional synthetic logic only.
+This is a mandatory acceptance observation plus outside-review requirement,
+not interception of the existing raw `mori-census.sh --pin` write path.
+Bypassing the blocker violates QUALITY69; this round runs no pin.
+Trust refinement: `.ufo/waves/round-21/trust-refinement.md`.

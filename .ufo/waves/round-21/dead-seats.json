@@ -23,6 +23,36 @@
       "role": "executor",
       "error": "[openai-codex/gpt-6-luna] Retry budget exhausted after 5 retries: Codex error event: Codex is at capacity, please try again later (code=turn_rate_limit_exceeded)",
       "replaced": false
+    },
+    {
+      "id": "MoriR21.AuditTranscript-4",
+      "role": "reviewer",
+      "error": "[openai-codex/gpt-6-luna] Retry budget exhausted after 5 retries: Codex error event: Codex is at capacity, please try again later (code=turn_rate_limit_exceeded)",
+      "replaced": false
+    },
+    {
+      "id": "MoriR21.SourceApproval-4",
+      "role": "scout",
+      "error": "[openai-codex/gpt-6-luna] Retry budget exhausted after 5 retries: Codex error event: Codex is at capacity, please try again later (code=turn_rate_limit_exceeded)",
+      "replaced": false
+    },
+    {
+      "id": "MoriR21.AuditRevision-4",
+      "role": "reviewer",
+      "error": "[openai-codex/gpt-6-luna] Retry budget exhausted after 5 retries: Codex error event: Codex is at capacity, please try again later (code=turn_rate_limit_exceeded)",
+      "replaced": false
+    },
+    {
+      "id": "MoriR21.AuditExtra-4",
+      "role": "reviewer",
+      "error": "[zai/glm-5.3-flash] Retry budget exhausted after 5 retries: 429 Rate limit reached for requests\nRate limit reached for requests (type=1302)",
+      "replaced": false
+    },
+    {
+      "id": "MoriR21.HistoryContract-4",
+      "role": "scout",
+      "error": "[zai/glm-5.3-flash] Retry budget exhausted after 5 retries: 429 Rate limit reached for requests\nRate limit reached for requests (type=1302)",
+      "replaced": false
     }
   ]
 }

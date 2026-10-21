@@ -257,7 +257,7 @@ Source tiers: see corpus/SOURCES.md (contract v1); this file holds claim admissi
 
 ## Criteria added round21 — outside-closure correction
 
-Attribution correction: criteria64–68 above were authored round20, despite
+Attribution correction (2026-10-21): criteria64–68 above were authored round20, despite
 their placement beneath the round19 heading. Their original bytes remain.
 
 69. **Supersedes67.** Classify a disappearance by evidence assurance before

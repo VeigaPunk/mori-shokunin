@@ -98,3 +98,10 @@ No round21 census, pin, or drift run is represented here.
 
 Evidence: `lessons/round-21.md#M1`, `.ufo/waves/round-20/falsify/AdjudicateWaves.md:5-29`,
 `.ufo/waves/round-21/evidence/historical-provenance.json`.
+
+The `recheck:` recipe at line12 is also **superseded and inactive**:
+running drift against the r20 baseline cannot evaluate acceptance. The active
+round21 acceptance check is the retained evidence-loss audit described in
+SKILL.md and QUALITY69; its expected real-data outcome is pin-blocked with
+both old dispositions unknown. A later census comparison against r10 is a
+separate observation, not permission to bypass that check.
