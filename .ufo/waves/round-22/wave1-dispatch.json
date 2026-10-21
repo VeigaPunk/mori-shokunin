@@ -1,0 +1,747 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r22-build",
+  "policy": {
+    "source": "config",
+    "maxLanes": 100,
+    "minLanes": 16,
+    "waveMinLanes": 64,
+    "waveMaxLanes": 100,
+    "declaredMaxLanes": 100,
+    "hardCeiling": 100,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-22/build/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-22/build",
+    "members": {
+      "ImplReconcile": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "OracleReconcile": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "FixtureReconcile": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "LessonDraft": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "KnowledgeDraft": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "SrcGitCommit": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "SrcRejectHash": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ConnectKagi": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null
+      },
+      "ConnectKumitate": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null
+      },
+      "ConnectSouji": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null
+      },
+      "AttackR01": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "AttackR02": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "AttackR03": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "AttackR04": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "AttackR05": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "AttackR06": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "AttackR07": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "AttackR08": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "AttackR09": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "AttackR10": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "AttackR11": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "AttackR12": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "AttackR13": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "AttackR14": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "AttackR15": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "AttackR16": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "AttackR17": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "AttackR18": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "AttackR19": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "AttackR20": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "AttackR21": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "AttackR22": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "AttackR23": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "AttackR24": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "RawPartition": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "EnteringPartition": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "PolicySemantics": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "AllowlistSemantics": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "LegacyFrozen": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "GateRaw": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "GateAllow": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "GateGit": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ReceiptBinding": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "LossUnknown": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "PermissionRed": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "OutsideClosure": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "QualityDenom": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "GateRegistry": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "KnownGaps": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "HistoryScope": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "DeadSeatRecord": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "RequirementTrace": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ReportContract": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "PriorMistake": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "CriticAdmission": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CriticPopulation": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CriticTrust": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CriticNoHarm": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "ReviewPerf": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReviewErrors": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReviewPath": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReviewFreeze": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "MutantPlan": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "SafetyReview": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "sentinel",
+        "item": null
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "# Goal and shared contract\nOne C1 calibration capability, retention receipt/denominator reconciliation. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md in full. L1 owns planner/integration; role overrides come from host, no models. Detection/report only.\n# Bounds\nEvery Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin \u2014 write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. All named paths absolute. No fleet/sibling writes. Never open or search .ufo/interactive-sessions, ~/.omp sessions, private operator config, Documents or shell history. No live journal, process, service, session probes. No matched text in outputs. Never remediate, pin, dispatch, kill, or change config.\nOnly read-only git -C <absolute-repo> plumbing (show/log/status/rev-parse/ls-tree/cat-file/merge-base/diff); never lane Git index, jj state, commits, worktrees or branches. Writer executors get separate clone directories under /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/round22; only they may initialize their own synthetic Git fixtures. No tests/builds/linters/formatters/smoke runs in this wave; L1 measures after integration. Read-only seats write only their uniquely assigned report file; no production edits, no delegation, no background jobs.\nTool authorization: read /home/vgpnk/.omp/agent/RULES.md before installs and record tool/version/channel/reason. All pacman transactions PAUSED host-wide; use uv/npx/official release only if needed. Never upgrade system or restart service.\nOpen debt: r21 admitted does NOT mean privacy clearance; retained raw95 includes5policy source hits, scanner90 includes4unallowlisted;0new. Original permission control RED11/12. Both historical wave dispositions unknown; baseline acceptance blocked. Keep original evidence byte-unchanged. Evidence is minimized metadata only; a source hash is not secrecy/authentication.\n",
+    "tasks": [
+      {
+        "name": "ImplReconcile",
+        "agent": "executor",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nImplement full CLI and selftest in isolated clone /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/round22/ImplReconcile at observed base77a5bbe8a0b41dfbfd2546d024d36e294b814bd0. You may git clone --no-hardlinks --no-checkout then read files with git show; no lane VCS writes. New candidate /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ImplReconcile/mori-retention-reconcile.py allowed (candidate not production). Follow all24 requirements. stdlib only, boring design, no import/call retention gate. Record candidate provenance. Never run candidate or tests. Read existing retention scanner functions only for documented parity.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ImplReconcile.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ImplReconcile/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/ImplReconcile.md"
+      },
+      {
+        "name": "OracleReconcile",
+        "agent": "executor",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAuthor independent black-box oracle candidate /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/OracleReconcile/oracle-reconcile.py in unique scratch clone /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/round22/OracleReconcile base77a5bbe. CLI --tool PATH --requirements PATH --output FILE; target absent yields all24 capability_absent red; present invokes actual CLI over pinned generated fixtures, observes R01..R24, preserves expected values not mode-derived pass. Obtain fixture generator from FixtureReconcile by its assigned report path when landed; independent expectations authored by you, never inferred from implementation. Do not run checks. Retain generated workspace at output parent for evidence. Pin every input fixture digest and tool digest.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/OracleReconcile.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/OracleReconcile/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/OracleReconcile.md"
+      },
+      {
+        "name": "FixtureReconcile",
+        "agent": "executor",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAuthor fixture generator candidate /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/FixtureReconcile/fixtures.py (unique scratch clone /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/round22/FixtureReconcile base77a5bbe). Build synthetic Git trees when later called, return cases for all24 contract requirements. Must generate receipt independently without invoking SUT or retention gate. Base example exactly5raw hits of which1 in policy file,4 outside; red hit remains1; allowlisted/nonauthor hits explicit. Synthetic class choose regex safe token R22_SAMPLE. Note policy regex line selfmatches token as required; avoid accidental secondary matches. Include changed policy/allowlist, divergence, unsafe and symlink inputs, malformed/duplicate/bool receipt, red/forbidden partitions, binary, no-leak/provenance checks. Communicate API via your report. Do not run generator/tests.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/FixtureReconcile.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/FixtureReconcile/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/FixtureReconcile.md"
+      },
+      {
+        "name": "LessonDraft",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nDraft /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/LessonDraft/lesson.md and quality.md: one C1 calibration capability, motivating denominator disagreement95vs90, precise source of5policy exclusion;4retained hits remainred; original permission11/12red, unknown2pinblocked. Gate sample decisions admit bounded reconciliation, reject clearance. No invented counts/results. Point to contract and r21 lesson.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/LessonDraft.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/LessonDraft/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/LessonDraft.md"
+      },
+      {
+        "name": "KnowledgeDraft",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nDraft /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/KnowledgeDraft/knowledge.md with provenance trio, exact hit multiset identity, independent source-policy subtraction, calibration vs privacy distinction, safe rerun recipe matching contract. Cite reopened S064 only at Git commit-resolution scope; no new covered-ground claim.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/KnowledgeDraft.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/KnowledgeDraft/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/KnowledgeDraft.md"
+      },
+      {
+        "name": "SrcGitCommit",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nOpen https://git-scm.com/docs/git-rev-parse and existing S064; capture <=25-word located quote and access date, assess narrow source grounding, propose used-by addition for round22 lesson only. No broad web search; no registry edits.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/SrcGitCommit.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/SrcGitCommit/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/SrcGitCommit.md"
+      },
+      {
+        "name": "SrcRejectHash",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nOpen https://docs.python.org/3/library/hashlib.html and existing S065; capture <=25-word located quote, explain why digest API cannot independently establish provenance or privacy clearance. Re-reject sole-support use; no registry edits.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/SrcRejectHash.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/SrcRejectHash/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/SrcRejectHash.md"
+      },
+      {
+        "name": "ConnectKagi",
+        "agent": "connector",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/kagi-shokunin/PROVINCE.md and mori PROVINCE.md; review proposed reconciliation boundary on privacy/exposure/historical retention ownership. Return concrete overlap/non-overlap and one falsifiable no-axis-harm check; no sibling changes.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ConnectKagi.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ConnectKagi/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/ConnectKagi.md"
+      },
+      {
+        "name": "ConnectKumitate",
+        "agent": "connector",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/kumitate-shokunin/PROVINCE.md and mori PROVINCE.md; review proposed reconciliation boundary on settlement/authentication and no dispatch authority. Return concrete overlap/non-overlap and one falsifiable no-axis-harm check; no sibling changes.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ConnectKumitate.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ConnectKumitate/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/ConnectKumitate.md"
+      },
+      {
+        "name": "ConnectSouji",
+        "agent": "connector",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/souji-shokunin/PROVINCE.md and mori PROVINCE.md; review proposed reconciliation boundary on no artifact cleanup authority and evidence preservation. Return concrete overlap/non-overlap and one falsifiable no-axis-harm check; no sibling changes.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ConnectSouji.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ConnectSouji/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/ConnectSouji.md"
+      },
+      {
+        "name": "AttackR01",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R01 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR01.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR01/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR01.md"
+      },
+      {
+        "name": "AttackR02",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R02 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR02.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR02/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR02.md"
+      },
+      {
+        "name": "AttackR03",
+        "agent": "critic",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R03 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR03.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR03/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR03.md"
+      },
+      {
+        "name": "AttackR04",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R04 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR04.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR04/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR04.md"
+      },
+      {
+        "name": "AttackR05",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R05 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR05.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR05/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR05.md"
+      },
+      {
+        "name": "AttackR06",
+        "agent": "critic",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R06 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR06.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR06/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR06.md"
+      },
+      {
+        "name": "AttackR07",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R07 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR07.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR07/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR07.md"
+      },
+      {
+        "name": "AttackR08",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R08 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR08.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR08/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR08.md"
+      },
+      {
+        "name": "AttackR09",
+        "agent": "critic",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R09 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR09.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR09/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR09.md"
+      },
+      {
+        "name": "AttackR10",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R10 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR10.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR10/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR10.md"
+      },
+      {
+        "name": "AttackR11",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R11 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR11.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR11/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR11.md"
+      },
+      {
+        "name": "AttackR12",
+        "agent": "critic",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R12 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR12.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR12/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR12.md"
+      },
+      {
+        "name": "AttackR13",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R13 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR13.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR13/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR13.md"
+      },
+      {
+        "name": "AttackR14",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R14 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR14.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR14/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR14.md"
+      },
+      {
+        "name": "AttackR15",
+        "agent": "critic",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R15 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR15.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR15/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR15.md"
+      },
+      {
+        "name": "AttackR16",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R16 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR16.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR16/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR16.md"
+      },
+      {
+        "name": "AttackR17",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R17 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR17.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR17/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR17.md"
+      },
+      {
+        "name": "AttackR18",
+        "agent": "critic",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R18 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR18.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR18/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR18.md"
+      },
+      {
+        "name": "AttackR19",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R19 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR19.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR19/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR19.md"
+      },
+      {
+        "name": "AttackR20",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R20 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR20.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR20/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR20.md"
+      },
+      {
+        "name": "AttackR21",
+        "agent": "critic",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R21 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR21.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR21/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR21.md"
+      },
+      {
+        "name": "AttackR22",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R22 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR22.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR22/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR22.md"
+      },
+      {
+        "name": "AttackR23",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R23 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR23.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR23/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR23.md"
+      },
+      {
+        "name": "AttackR24",
+        "agent": "critic",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack frozen requirement R24 in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md exclusively. Read relevant existing retention gate code and receipt shape as needed. Identify a concrete counterexample fixture and expected exit/finding/counters, semantic ambiguities and risk of superficial pass. Static review only; do not run tests. Read Impl/Fixture/Oracle candidate if available but never wait/poll. Return exact actionable criterion, not generic suggestions.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR24.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AttackR24/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AttackR24.md"
+      },
+      {
+        "name": "RawPartition",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/evidence/final/retention-floor.json. Parse wrapper stdout with read/eval; report only raw total, all partition counters and policy-path hit count; independently enumerate digest-only identities, never matching text. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/RawPartition.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/RawPartition/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/RawPartition.md"
+      },
+      {
+        "name": "EnteringPartition",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/evidence/final/retention-floor-entering.json. Compare entering receipt shape and measured revision, counts and policy membership with final receipt, no claims of same revision. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/EnteringPartition.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/EnteringPartition/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/EnteringPartition.md"
+      },
+      {
+        "name": "PolicySemantics",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-18/frozen/c1-policy.json. Map exact nonauthor/must-redact policy semantics; no copied sensitive regex strings in report. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/PolicySemantics.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/PolicySemantics/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/PolicySemantics.md"
+      },
+      {
+        "name": "AllowlistSemantics",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/retention-allowlist.json. Inspect schema and uniqueness dimensions; identify line-number omission and repeated lines implications, metadata only. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AllowlistSemantics.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/AllowlistSemantics/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/AllowlistSemantics.md"
+      },
+      {
+        "name": "LegacyFrozen",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-18/gate-snapshots/retention/retention.json. Inspect frozen shape/expected digest limitation; new tool must not rewrite historical frozen run. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/LegacyFrozen.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/LegacyFrozen/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/LegacyFrozen.md"
+      },
+      {
+        "name": "GateRaw",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-retention-gate.py. Audit _blob_hits Unicode/newline/binary semantics parity; give edge fixture. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/GateRaw.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/GateRaw/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/GateRaw.md"
+      },
+      {
+        "name": "GateAllow",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-retention-gate.py. Audit forbidden/stale allowlist and non-author overlap semantics; determine correct finding precedence. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/GateAllow.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/GateAllow/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/GateAllow.md"
+      },
+      {
+        "name": "GateGit",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-retention-gate.py. Audit tree modes/symlink blobs/object-id handling; distinguish scan symlink content vs reject symlink input file. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/GateGit.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/GateGit/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/GateGit.md"
+      },
+      {
+        "name": "ReceiptBinding",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/evidence/final/retention-floor.json. Review argv/policy/allowlist bindings missing from wrapper; require independent committed-byte checks rather than trust cwd/timestamp. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ReceiptBinding.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ReceiptBinding/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/ReceiptBinding.md"
+      },
+      {
+        "name": "LossUnknown",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/loss-accounting-r21.json. Confirm exactly two unresolved dispositions; return metadata only and preservation criterion. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/LossUnknown.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/LossUnknown/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/LossUnknown.md"
+      },
+      {
+        "name": "PermissionRed",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/fixture-loss.py. Locate default original11/12 versus trust-refinement12/12 controls; preserve explicit modes, no execution. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/PermissionRed.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/PermissionRed/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/PermissionRed.md"
+      },
+      {
+        "name": "OutsideClosure",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md. Find latest r21 bounded scope and calibration score; propose append-only clarification consistent with user independent count. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/OutsideClosure.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/OutsideClosure/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/OutsideClosure.md"
+      },
+      {
+        "name": "QualityDenom",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/QUALITY.md. Review Q51/Q57/Q63 count/binding and Q69 acceptance; one lesson-backed new criterion only, no fake privacy pass. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/QualityDenom.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/QualityDenom/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/QualityDenom.md"
+      },
+      {
+        "name": "GateRegistry",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/SKILL.md. Identify gate registry conventions and exact row fields for new agreement gate; existing retention row must stay active. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/GateRegistry.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/GateRegistry/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/GateRegistry.md"
+      },
+      {
+        "name": "KnownGaps",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/README.md. Find current frontier and distinguish this calibration repair from expansion; propose historical index row. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/KnownGaps.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/KnownGaps/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/KnownGaps.md"
+      },
+      {
+        "name": "HistoryScope",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/PROVINCE.md. Review tip-only own-evidence vs pushed history ownership; no authority widening. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/HistoryScope.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/HistoryScope/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/HistoryScope.md"
+      },
+      {
+        "name": "DeadSeatRecord",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/dead-seats.json. Observe original deaths provenance; do not revive or reinterpret reported files as successful seats. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/DeadSeatRecord.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/DeadSeatRecord/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/DeadSeatRecord.md"
+      },
+      {
+        "name": "RequirementTrace",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/contract.md. Map24 requirements to separate CLI behavior observables; detect contradictory requirements without weakening them. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/RequirementTrace.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/RequirementTrace/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/RequirementTrace.md"
+      },
+      {
+        "name": "ReportContract",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/SHONEN.md. Read four boxes and report contract; draft assertion-only assessment, not outside verification. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ReportContract.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ReportContract/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/ReportContract.md"
+      },
+      {
+        "name": "PriorMistake",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-21.md. Identify disagreement to mine: denominators and clearance, preserved red control; scope fix as fail-capable comparison not reclassification. Only named file and direct referenced public evidence, no broad filesystem searches.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/PriorMistake.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/PriorMistake/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/PriorMistake.md"
+      },
+      {
+        "name": "CriticAdmission",
+        "agent": "critic",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nTry falsifying the sole C1 capability admission: can all24 green coexist with a false claimed privacy improvement? enforce separate gate semantics and held scores.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/CriticAdmission.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/CriticAdmission/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/CriticAdmission.md"
+      },
+      {
+        "name": "CriticPopulation",
+        "agent": "critic",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack raw vs source-policy-excluded population equality using multiset duplicate/relocation/changed-line cases; compare exact identities, not scalar totals.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/CriticPopulation.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/CriticPopulation/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/CriticPopulation.md"
+      },
+      {
+        "name": "CriticTrust",
+        "agent": "critic",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack forged wrapper, revision fields, argv and mutable inputs; hashes bind bytes not actor authenticity.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/CriticTrust.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/CriticTrust/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/CriticTrust.md"
+      },
+      {
+        "name": "CriticNoHarm",
+        "agent": "critic",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nReview all six axes; identify concrete no-axis-harm checks without claiming existing debts cleared.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/CriticNoHarm.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/CriticNoHarm/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/CriticNoHarm.md"
+      },
+      {
+        "name": "ReviewPerf",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nReview proposed scan algorithm for needless repeated reads, memory/copy cost, deterministic ordering; one bounded improvement only.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ReviewPerf.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ReviewPerf/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/ReviewPerf.md"
+      },
+      {
+        "name": "ReviewErrors",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nReview fail-closed JSON and Unicode error handling; no arbitrary exception content, terminal-control or matched-text leakage.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ReviewErrors.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ReviewErrors/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/ReviewErrors.md"
+      },
+      {
+        "name": "ReviewPath",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nReview Git argument safety, safe repo-relative inputs, special pathnames and symlink input semantics; give precise payload controls without exploitation workflow.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ReviewPath.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ReviewPath/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/ReviewPath.md"
+      },
+      {
+        "name": "ReviewFreeze",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nReview freeze commit order and measured-input provenance. Frozen requirementIDs do not prove code independent expected values; report honest co-evolved refinements.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ReviewFreeze.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/ReviewFreeze/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/ReviewFreeze.md"
+      },
+      {
+        "name": "MutantPlan",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nDesign three nonexecuted isolated code mutations: replace exact equality with count equality, clear privacy on agreement, remove policy-source exclusion. State expected killed requirement/control, never run yet.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/MutantPlan.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/MutantPlan/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/MutantPlan.md"
+      },
+      {
+        "name": "SafetyReview",
+        "agent": "sentinel",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAudit contract and proposed wave read/write surfaces for privacy/credential/session leaks and actuation. Static only, no live probes. Report concrete unsafe item, no private excerpts.\nWrite final report ONLY /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/SafetyReview.md; bounded draft artifacts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/build/SafetyReview/ when explicitly assigned. Do not claim measurements not run.\n\nLane bounds: leaf member \u2014 no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-22/build/SafetyReview.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}

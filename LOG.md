@@ -1438,3 +1438,20 @@ repeat grants and other procedural deviations remain disclosed, not compliance
 credit. Sources76→76, validator rc0 both, no new rows, S066 used-by appended,
 Main agreed S066 admit/S072 reject. No new L0 question, tool install, census
 run, host mutation, promotion or subsequent round.
+
+## Round22 declaration — retention denominator reconciliation
+
+L1 MoriR22, entering77a5bbe8a0b41dfbfd2546d024d36e294b814bd0.
+One C1 calibration capability (lowest5 tie): independently reconcile the
+committed r21 retention receipt against its exact measured tree and show
+raw95 / policy-excluded5 / scanner90 distinctly; four unallowlisted hits
+remain red. No privacy/history clearance, no permission repair, no
+historical wave disposition or pin. R21 original permission11/12 remains
+red; two disappearance identities remain unknown and baseline-blocking.
+Motivation: operator's r21 independent closure census and
+`.ufo/waves/round-21/evidence/final/retention-floor.json`.
+Frozen24 finite requirements and CLI contract:
+`.ufo/waves/round-22/{contract.md,frozen/requirements.json}`.
+Before capability absence is not24 historical defects. Wave1 is64
+distinct build/review items, L1 planner held; production integration and
+actual measurement follow. No scalar increase or subsequent round claimed.
