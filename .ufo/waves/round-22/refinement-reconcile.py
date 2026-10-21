@@ -17,10 +17,29 @@ def main():
     cases += [('allowlist-path-substitution',2,'RETENTION_RECONCILIATION_SETUP','receipt_path_binding'),('clean-control',0,'RETENTION_RECONCILED',None),('non-author-overlap',0,'RETENTION_RECONCILED',None),('malformed-stdout',2,'RETENTION_RECONCILIATION_SETUP','invalid_json')]
     cases += [('forged-clean',1,'RETENTION_RECONCILIATION_MISMATCH',None)]
     cases += [('unsafe-'+key,2,'RETENTION_RECONCILIATION_SETUP','unsafe_input_path') for key in ('receipt','policy','allowlist')]
+    cases += [('diverged-consistent',2,'RETENTION_RECONCILIATION_SETUP','git_read_failed'),('cousin',2,'RETENTION_RECONCILIATION_SETUP','git_read_failed'),('head-cousin',2,'RETENTION_RECONCILIATION_SETUP','git_read_failed')]
+    cases += [('symbolic-input',0,'RETENTION_RECONCILED',None),('dirty-worktree',0,'RETENTION_RECONCILED',None),('inner-commit-split',2,'RETENTION_RECONCILIATION_SETUP','receipt_revision_conflict'),('measured-tag',2,'RETENTION_RECONCILIATION_SETUP','receipt_revision'),('wrong-policy-digest',2,'RETENTION_RECONCILIATION_SETUP','receipt_policy_digest'),('policy-path-substitution',2,'RETENTION_RECONCILIATION_SETUP','receipt_path_binding')]
     rows=[]
     for name,code,finding,error in cases:
         fixture=f.make(root/name)
         repo=Path(fixture['repo']); wrapper=json.loads((repo/'receipt.json').read_bytes()); value=json.loads(wrapper['stdout'])
+        if name in ('diverged-consistent','cousin','head-cousin'):
+            old=wrapper['measured_revision']
+            tree=f.git(repo,'rev-parse',old+'^{tree}').decode().strip()
+            args=['commit-tree',tree]
+            if name!='diverged-consistent':args+=['-p',old]
+            other=f.git(repo,*args,data=b'consistent divergent measured commit\n').decode().strip()
+            wrapper['measured_revision']=other;wrapper['argv'][wrapper['argv'].index('--rev')+1]=other;value['commit']=other
+        elif name=='measured-tag':
+            f.git(repo,'tag','-a','synthetic-tag','-m','synthetic tag',wrapper['measured_revision'])
+            tag=f.git(repo,'rev-parse','synthetic-tag').decode().strip()
+            wrapper['measured_revision']=tag;wrapper['argv'][wrapper['argv'].index('--rev')+1]=tag;value['commit']=tag
+        elif name=='inner-commit-split':
+            f.git(repo,'commit','-q','--allow-empty','-m','new measured commit')
+            new=f.git(repo,'rev-parse','HEAD').decode().strip()
+            wrapper['measured_revision']=new;wrapper['argv'][wrapper['argv'].index('--rev')+1]=new
+        elif name=='wrong-policy-digest':
+            value['policy_sha256']='0'*64
         if name=='path-only':value['hits'][0]['path']='different-path.txt'
         elif name=='allowed-list-only':value['allowlisted_hits'][0]['line']+=100
         elif name=='unallowed-list-only':value['unallowlisted_hits'][0]['line']+=100
@@ -33,9 +52,10 @@ def main():
         elif name=='forged-clean':
             value['hits']=[h for h in value['hits'] if h['path']!='unallowed.txt']
             value['unallowlisted_hits']=[];value['metric']=0;value['finding_id']='RETENTION_CLEAN';wrapper['exit_code']=0
-        elif name in ('allowlist-path-substitution','clean-control','non-author-overlap'):
-            if name=='allowlist-path-substitution':
-                (repo/'copy-allowlist.json').write_bytes((repo/'allowlist.json').read_bytes())
+        elif name in ('allowlist-path-substitution','policy-path-substitution','clean-control','non-author-overlap'):
+            if name in ('allowlist-path-substitution','policy-path-substitution'):
+                original='policy.json' if name=='policy-path-substitution' else 'allowlist.json'
+                (repo/('copy-'+original)).write_bytes((repo/original).read_bytes())
             elif name=='clean-control':
                 (repo/'unallowed.txt').unlink()
                 value['hits']=[h for h in value['hits'] if h['path']!='unallowed.txt']
@@ -58,8 +78,13 @@ def main():
             f.git(repo,'update-index','--cacheinfo',f'120000,{oid},receipt.json')
         f.git(repo,'commit','-q','--allow-empty','-m','one discriminating control')
         rev=f.git(repo,'rev-parse','HEAD').decode().strip()
+        if name=='head-cousin':f.git(repo,'update-ref','HEAD',wrapper['measured_revision'])
+        if name=='dirty-worktree':
+            for path in ('receipt.json','policy.json','allowlist.json'):(repo/path).write_bytes(b'{deliberately-dirty')
         cmd=[sys.executable,a.tool,'check','--repo',str(repo),'--rev',rev,'--receipt','receipt.json','--policy','policy.json','--allowlist','allowlist.json']
         if name=='allowlist-path-substitution':cmd[-1]='copy-allowlist.json'
+        if name=='policy-path-substitution':cmd[cmd.index('--policy')+1]='copy-policy.json'
+        if name=='symbolic-input':cmd[cmd.index('--rev')+1]='HEAD'
         if name.startswith('unsafe-'):
             flag='--'+name.removeprefix('unsafe-')
             cmd[cmd.index(flag)+1]='sub/../'+cmd[cmd.index(flag)+1]
@@ -71,6 +96,11 @@ def main():
         if name=='clean-control':ok=ok and obj.get('retention_state')=='clean-at-frozen-regex-scope' and obj.get('raw_unallowlisted')==0
         if name=='non-author-overlap':ok=ok and obj.get('allowlisted')==4 and obj.get('non_author')==1 and obj.get('raw_unallowlisted')==1
         if name=='forged-clean':ok=ok and obj.get('raw_total')==5 and obj.get('raw_unallowlisted')==1 and obj.get('retention_state')=='red'
+        if code in (0,1):
+            loaded={key:f.digest(f.git(repo,'show',rev+':'+cmd[cmd.index('--'+key)+1])) for key in ('receipt','policy','allowlist')}
+            ok=ok and obj.get('input_revision')==rev and obj.get('measured_revision')==wrapper['measured_revision'] and obj.get('inputs_sha256')==loaded and obj.get('tool_sha256')==f.digest(Path(a.tool).read_bytes()) and obj.get('argv')==cmd[2:]
+        else:
+            ok=ok and set(obj)=={'schema','finding_id','error','privacy_clearance','receipt_match'}
         rows.append({'id':name,'pass':ok,'expected_exit':code,'expected_finding':finding,'expected_error':error,'argv':cmd,'exit_code':cp.returncode,'stdout':cp.stdout,'stderr':cp.stderr})
     result={'schema':'mori-r22-refinements-v1','tool_sha256':f.digest(Path(a.tool).read_bytes()),'runner_sha256':f.digest(Path(__file__).read_bytes()),'cases':rows,'passed':sum(x['pass'] for x in rows),'total':len(rows),'fixture_files':{str(x.relative_to(root)):f.digest(x.read_bytes()) for x in root.rglob('*') if x.is_file() and not x.is_symlink()}}
     out.write_text(json.dumps(result,indent=2,sort_keys=True)+'\n');print(json.dumps({'passed':result['passed'],'total':result['total']}));return int(result['passed']!=result['total'])

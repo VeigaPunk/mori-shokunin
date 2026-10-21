@@ -16,6 +16,18 @@ LANE=HERE.parents[2]
 BASE='77a5bbe8a0b41dfbfd2546d024d36e294b814bd0'
 def sha(data):return hashlib.sha256(data).hexdigest()
 def write(path,obj):path.write_text(json.dumps(obj,sort_keys=True,indent=2)+'\n')
+def safe_outputs(observation):
+    allowed={'schema','finding_id','receipt_match','differences','raw_total','policy_excluded','exclusion_basis','scanner_total','raw_unallowlisted','scanner_unallowlisted','non_author','allowlisted','forbidden_allowlist','retention_state','privacy_clearance','input_revision','measured_revision','inputs_sha256','tool_sha256','argv','raw_hits','scanner_hits','policy_excluded_hits','receipt_authenticity','error'}
+    rows=observation.get('runs',observation.get('cases',[]))
+    for row in rows:
+        stdout,stderr=row.get('stdout',''),row.get('stderr','')
+        if stderr or any(marker in stdout+stderr for marker in ('R22_SAMPLE','retained-red','outside-author')):
+            return False
+        try:value=json.loads(stdout)
+        except (ValueError,TypeError):return False
+        if not isinstance(value,dict) or not set(value)<=allowed or value.get('privacy_clearance') is not False:
+            return False
+    return True
 def main():
     p=argparse.ArgumentParser();p.add_argument('--revision',required=True);p.add_argument('--output',required=True);a=p.parse_args()
     output=Path(a.output);output.mkdir(parents=True,exist_ok=False)
@@ -38,7 +50,17 @@ def main():
         return cp.returncode,value
     tool=LANE/'tools/mori-retention-reconcile.py'
     code_cp=subprocess.run(['git','-C',str(LANE),'show',a.revision+':tools/mori-retention-reconcile.py'],capture_output=True)
-    if code_cp.returncode or code_cp.stdout!=tool.read_bytes():raise RuntimeError('measured_code_not_committed')
+    bound_files=[tool,Path(__file__).resolve(),HERE/'refinement-reconcile.py',HERE/'oracle-reconcile-v2.py',HERE/'frozen/fixture-builder-v2.py',HERE/'frozen/requirements-v2.json',HERE/'frozen/expected-real.json']
+    bindings={}
+    for path in bound_files:
+        rel=str(path.relative_to(LANE))
+        cp=subprocess.run(['git','-C',str(LANE),'show',a.revision+':'+rel],capture_output=True)
+        bindings[rel]={'committed_sha256':sha(cp.stdout),'loaded_sha256':sha(path.read_bytes()),'matches':cp.returncode==0 and cp.stdout==path.read_bytes()}
+    write(output/'executing-input-bindings.json',bindings)
+    if not all(x['matches'] for x in bindings.values()):
+        write(output/'summary.json',{'finding_id':'measurement_inputs_uncommitted','bindings':bindings})
+        print(json.dumps({'finding_id':'measurement_inputs_uncommitted'}))
+        return 2
     absent_rc,_=run('entering-capability-absence',['git','-C',str(LANE),'cat-file','-e',BASE+':tools/mori-retention-reconcile.py'])
     if absent_rc==0:raise RuntimeError('entering_capability_not_absent')
     args=[sys.executable,str(HERE/'oracle-reconcile-v2.py'),'--requirements',str(HERE/'frozen/requirements-v2.json')]
@@ -56,6 +78,7 @@ def main():
         ('count-only',[("claimed[field]!=Counter(hit_key(h) for h in actual)","sum(claimed[field].values())!=len(actual)")]),
         ('false-clearance',[("'privacy_clearance':False","'privacy_clearance':True")]),
         ('wrong-population',[("excluded=[h for h in hits if is_non_author(h)]","excluded=[h for h in hits if h['path']==paths['policy']]"),("scanner=[h for h in hits if not is_non_author(h)]","scanner=[h for h in hits if h['path']!=paths['policy']]")]),
+        ('setup-leak',[("'error':str(exc)","'error':str(exc),'detail':'R22_SAMPLE retained-red'")]),
     ]
     mutant_results=[]
     for name,replacements in mutations:
@@ -67,8 +90,9 @@ def main():
         result_path=scratch/('mutant-'+name+'.json')
         rc,_=run('mutant-'+name,args+['--tool',str(mutant),'--output',str(result_path)])
         observation=json.loads(result_path.read_bytes())
-        killed=rc==1 and observation['counts']['unmet']>0 and observation['counts']['capability_absent']==0
-        mutant_results.append({'id':name,'killed':killed,'exit_code':rc,'unmet':observation['counts']['unmet'],'tool_sha256':sha(mutant.read_bytes())})
+        finite_killed=rc==1 and observation['counts']['unmet']>0 and observation['counts']['capability_absent']==0
+        killed=(rc==0 and not safe_outputs(observation)) if name=='setup-leak' else finite_killed
+        mutant_results.append({'id':name,'killed':killed,'kill_basis':'all-arm-output-safety' if name=='setup-leak' else 'frozen24-oracle','exit_code':rc,'unmet':observation['counts']['unmet'],'tool_sha256':sha(mutant.read_bytes())})
         (output/('mutant-'+name+'-observed.json')).write_bytes(result_path.read_bytes())
     restored_path=scratch/'restored.json'
     restored_rc,_=run('restored-control',args+['--tool',str(tool),'--output',str(restored_path)])
@@ -79,6 +103,7 @@ def main():
     realcmd=[sys.executable,str(tool),'check','--repo',str(LANE),'--rev',expected['input_revision'],'--receipt',paths['receipt'],'--policy',paths['policy'],'--allowlist',paths['allowlist']]
     realrc,real=run('real-reconciliation',realcmd)
     realmatch=realrc==0 and isinstance(real,dict) and all(type(real.get(k)) is type(v) and real.get(k)==v for k,v in expected['expected'].items()) and real.get('inputs_sha256')==expected['inputs_sha256']
+    realmatch=realmatch and real.get('input_revision')==expected['input_revision'] and real.get('measured_revision')==expected['measured_revision'] and real.get('tool_sha256')==sha(code_cp.stdout) and real.get('argv')==realcmd[2:]
     entering=realcmd.copy();entering[entering.index('--receipt')+1]='.ufo/waves/round-21/evidence/final/retention-floor-entering.json'
     er,enteringv=run('contradictory-entering-receipt',entering)
     enteringmatch=er==2 and isinstance(enteringv,dict) and enteringv.get('error')=='receipt_revision_conflict'
@@ -94,8 +119,11 @@ def main():
         cp=subprocess.run(['git','-C',str(LANE),'show',BASE+':'+path],capture_output=True)
         stable[path]={'entering_sha256':sha(cp.stdout),'current_sha256':sha((LANE/path).read_bytes()),'unchanged':cp.returncode==0 and cp.stdout==(LANE/path).read_bytes()}
     before=json.loads(before_path.read_bytes());after=json.loads(after_path.read_bytes())
+    evidence_safe=safe_outputs(after) and safe_outputs(json.loads(refinements.read_bytes())) and safe_outputs(json.loads(restored_path.read_bytes()))
     summary={'schema':'mori-r22-measurements-v1','measured_revision':a.revision,'tool_sha256':sha(tool.read_bytes()),'before':before['counts'],'after':after['counts'],'selftest_exit':sr,'selftest':selftest,'refinement_exit':rr,'real_matches_frozen_expected':realmatch,'contradictory_entering_rejected':enteringmatch,'retention_floor':floor,'unchanged_carried_inputs':stable,'original_permission_control':'RED11/12 retained byte-unchanged, not rerun','historical_dispositions':'two unknown; baseline blocked','privacy_clearance':False,'raw_recount_authenticates_historical_execution':False}
     summary['mutations']={'cases':mutant_results,'restored_exit':restored_rc,'all_killed_and_restored':mutations_ok}
+    summary['all_arm_output_safety']=evidence_safe
+    summary['executing_input_bindings']=bindings
     # Preserve all synthetic workspace bytes in a portable archive before any cleanup.
     archive=output/'synthetic-workspaces.tar.gz'
     with tarfile.open(archive,'w:gz') as tar:tar.add(scratch,arcname='workspaces',recursive=True)
@@ -108,7 +136,7 @@ def main():
             elif path.is_file():
                 if name not in members or tar.extractfile(members[name]).read()!=path.read_bytes():raise RuntimeError('archive_byte_mismatch')
     summary['workspace_archive']={'path':archive.name,'sha256':sha(archive.read_bytes()),'every_file_byte_compared':True,'scratch_retained':str(scratch)}
-    summary['all_claim_checks_pass']=br==1 and ar==0 and before['counts']['capability_absent']==24 and after['counts']['unmet']==0 and sr==0 and rr==0 and mutations_ok and realmatch and enteringmatch and gr==1 and floor['unallowlisted']==4 and floor['same_inherited_identities'] and all(x['unchanged'] for x in stable.values())
+    summary['all_claim_checks_pass']=br==1 and ar==0 and before['counts']['capability_absent']==24 and after['counts']['unmet']==0 and sr==0 and rr==0 and mutations_ok and evidence_safe and realmatch and enteringmatch and gr==1 and floor['unallowlisted']==4 and floor['same_inherited_identities'] and all(x['unchanged'] for x in stable.values())
     write(output/'summary.json',summary)
     print(json.dumps({'measured_revision':a.revision,'before':summary['before'],'after':summary['after'],'real_matches_frozen_expected':realmatch,'retention_floor':floor,'all_claim_checks_pass':summary['all_claim_checks_pass']},sort_keys=True))
     return int(not summary['all_claim_checks_pass'])

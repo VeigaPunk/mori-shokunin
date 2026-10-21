@@ -37,3 +37,25 @@ The three executor seats and both scribe seats died on provider capacity/rate li
 ## Carried scope
 
 Four unallowlisted retention hits remain open debt; this round performs no redaction, allowlist expansion or privacy/history clearance. R21 original permission control11/12 remains red; trust-refinement12/12 is a separate expectation mode, not authorization. Two historical loss dispositions stay unknown; no baseline or pin changes. Q64 discovery/time-binding, Q65 discriminator, Q66 marker variants and Q68 historical binding remain separate debt. No promotion, host remediation, dispatch-mechanism change or subsequent round.
+
+## Co-evolved instrument refinements
+
+Build-wave static attacks are author-side. CriticPopulation's path-blind and
+partition-only mutants, CriticAdmission's path-binding concern, and
+AttackR05/15/17/18/20/21's non-discriminating setup arms motivated18 explicit
+supplementary controls without rewriting the frozen24 expectations.
+AttackR05/08 prompted an actual exit1/finding selftest arm alongside0/2.
+AttackR23 exposed the valid-arm-only leak test: the measurement driver now
+checks every pristine fixture output against a bounded field whitelist and
+synthetic payload markers, and includes a setup-only synthetic leak mutant
+which the original24 oracle can miss. That fourth mutant must be killed by
+the separate all-arm output check, not falsely credited to frozen24.
+This finite check is not a proof against every transformation or privacy leak.
+
+All additional expectations are co-evolved after the first implementation,
+not pre-build-frozen or outside-adjudicated. The same committed counting
+instrument runs before and after, and archived synthetic workspaces retain
+the exact mutation/restore evidence. Actual outcomes are appended only
+after exercise. The original failed executor identities are not replaced;
+one connector attempted to notify an already-dead oracle seat, whose original
+provider death remains a death even if a later peer-wake leaves a file.
