@@ -1750,3 +1750,15 @@ in inherited-clone-copies.json.gz. This deduplicates inherited archive/source
 copies, not new red evidence. Oversized redundant unlanded packs were discarded,
 with their hashes recorded; forensic packaging is not a supported tool or a
 privacy-scanned population. Owned scratch cleanup follows durable landing only.
+
+### Round23 — durably archived scratch removed
+
+Forensic evidence/refs and final claim/capture receipts landed
+1243987a3fb60cc0840e928a66c5ddb1a998bb4c. Only then removed the owned
+`/fast/scratch/hyaku/mori-r23` and lane `.scratch/round23` trees; both are absent.
+Earlier `.scratch/` contents from entry remain untouched/out of commits; no other
+lane or unowned generic /tmp path was removed. No round-tagged mori-r23 /tmp
+matches were found; the source scribe's generic helper was already deleted per
+its disclosure. `evidence/scratch-cleanup.json` binds archive landing and removals.
+All160 seats had completed, with no replacements/deaths; no later test, code fix,
+new quota experiment, frozen change, next-round claim or admission was performed.
