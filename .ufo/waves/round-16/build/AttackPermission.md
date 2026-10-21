@@ -13,7 +13,7 @@ This is current-round evidence that the r15 correction (verifier spot-check :267
 
 No seat ran a `--selftest`, a regression gate or `mori-census.sh verify`. The transcript scan found 0 such commands. The selftest axis therefore holds so far. The probe/write axis does not.
 
-## Counterexamples (evidence: seat transcripts `~/.omp/agent/sessions/.../MoriR16/MoriR16.<Seat>.jsonl`, assistant `toolCall` arguments, plus `/tmp` stat)
+## Counterexamples (evidence: seat transcripts `<session-store path withheld>`, assistant `toolCall` arguments, plus `/tmp` stat)
 
 | # | Seat | Action (UTC) | Kind | Residual | Seat disclosure |
 |---|---|---|---|---|---|
@@ -62,6 +62,6 @@ Classification: P1–P9 and S1–S4/S6–S7 are fixable defects. S5 is a tradeof
 - My reads:
   - `find`/`stat`/`ls` over `/tmp` metadata.
   - The first ≤6 lines of a few `/tmp` files, to attribute `/tmp/x` and other mori-named files. `/tmp/x` turned out to be a rendered man page.
-  - Python over the `~/.omp/agent/sessions/.../MoriR16*.jsonl` seat transcripts, read-only. These are session transcripts, **not** `agent.db*` or a credential file. When I printed raw cursor and 32-hex values to my own transcript, I masked them, and none appear here.
+  - Python over the `<session-store path withheld>*.jsonl` seat transcripts, read-only. These are session transcripts, **not** `agent.db*` or a credential file. When I printed raw cursor and 32-hex values to my own transcript, I masked them, and none appear here.
   - Wave specs and seat reports.
 - Tools installed/updated: none.

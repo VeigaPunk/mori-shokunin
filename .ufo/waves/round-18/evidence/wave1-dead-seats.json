@@ -1,0 +1,23 @@
+{
+ "first_failure": "2026-10-21 ~03:05-03 all 15 seats: [openai-codex/gpt-6-luna] Retry budget exhausted after 10 retries: Codex error event: Codex is at capacity, please try again later (code=turn_rate_limit_exceeded)",
+ "resume_attempt": "one same-identity resume message each (no respawn); every wake turn failed with the identical error text",
+ "resumed_at": "2026-10-21T03:05:13.926480-03:00",
+ "seats": [
+  "SweepR17Build1",
+  "AdjSeatNaming",
+  "AdjSeatBreachDetect",
+  "AdjSeatLiveEvidence",
+  "SweepR17Falsify3",
+  "SweepR15Md1",
+  "AdjRetryRecoveryShape",
+  "AdjDeadSeatCrossCheck",
+  "ScoutAttemptReceipts",
+  "SweepR1314Md",
+  "SweepR17Falsify1",
+  "SweepR16Md1",
+  "AdjOmpRetryDocs",
+  "AdjTranscriptTailBounds",
+  "AdjWave1SpecDispatch"
+ ],
+ "disposition": "dead; not replaced; their items covered by L1 integration (adjudication via the gate) and wave-2 attack items over the redacted tree"
+}

@@ -47,7 +47,7 @@ L1 must correct before it can claim the coverage move:
 All reads below were field-limited: `type`, `customType`, `message.role`, `stopReason`,
 `errorStatus`, `provider`, `model`, contract tokens matched on `errorMessage` as booleans only,
 and `retryRecovery` key shape. Scope:
-`~/.omp/agent/sessions/-Projects-shokunin/2026-10-20T12-57-31-587Z_01a15963-70c3-7390-a1b4-7911b9506d07/`,
+`<session-store path withheld>`,
 2508 `*.jsonl` files, no symlinks followed. Snippets ran in the eval kernel; no files were written.
 
 ### Retained-history resurrection

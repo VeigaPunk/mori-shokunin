@@ -9,7 +9,7 @@ the same file, and (c) whether "last message record" is the right terminal rule 
 Target directory (read-only):
 
 ```
-/home/vgpnk/.omp/agent/sessions/-Projects-shokunin/2026-10-20T12-57-31-587Z_01a15963-70c3-7390-a1b4-7911b9506d07/
+<session-store path withheld>
 ```
 
 All `<file>:<line>` citations below are relative to that directory; line numbers are 1-based

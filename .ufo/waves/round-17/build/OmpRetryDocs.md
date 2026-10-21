@@ -31,7 +31,7 @@ All from the bundled docs (primary source for storage) unless marked binary.
 
 | Fact | Evidence |
 |---|---|
-| Files are JSONL under `~/.omp/agent/sessions/<encoded-cwd>/<timestamp>_<sessionId>.jsonl` | `omp://session.md:42` |
+| Files are JSONL under `<session-store path withheld>` | `omp://session.md:42` |
 | Current files begin with a fixed 256-byte `type:"title"` slot, then the `type:"session"` header, then entries | `omp://session.md:65-67` |
 | Current session version is `3` | `omp://session.md:437` |
 | `type:"message"` entries carry the `AgentMessage` directly under `message` | `omp://session.md:150-168` |

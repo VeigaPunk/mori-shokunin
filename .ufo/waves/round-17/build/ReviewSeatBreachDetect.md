@@ -26,7 +26,7 @@ shaped like the recorded breaches, with the false-positive guards derived from o
 - Transcript schema: **key paths and discriminator tokens only, never values** — the wave context explicitly
   admits key-shape reading ("the retryRecovery key shape"); the same shape-only standard was applied here.
   Commands on this seat's own transcript
-  (`~/.omp/agent/sessions/-Projects-shokunin/2026-10-20T12-57-31-587Z_…/MoriR17/MoriR17.ReviewSeatBreachDetect-5.jsonl`,
+  (`<session-store path withheld>`,
   203,523 bytes): `jq -r '.type' | sort | uniq -c`; `jq -r '.message | [paths …] | unique[]'` (paths only);
   `jq -r '… | .message.content[] | .type / .name'` and `jq -r '(.customType // "-")'` counts (discriminator
   tokens). No message text, no errorMessage, no usage, no timestamps, no other seat's record values were

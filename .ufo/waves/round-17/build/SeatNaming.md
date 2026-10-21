@@ -12,7 +12,7 @@ Seat: `MoriR17.SeatNaming-5`. Leaf member; no subagent dispatch. Lane: `/home/vg
 
 ## Target and snapshot
 
-- Target (`S`): `/home/vgpnk/.omp/agent/sessions/-Projects-shokunin/2026-10-20T12-57-31-587Z_01a15963-70c3-7390-a1b4-7911b9506d07`
+- Target (`S`): `<session-store path withheld>`
 - Interface: `.ufo/waves/round-17/contract.md:32-34` (seat id / prefix / `--prefix` equality) and `:66` ("prefixes are naming conventions, not authenticated lane membership").
 - Method: `os.walk(S, followlinks=False)` + filename aggregation only. The single content read is the permitted-field tail of six root sessions (§7.5): `type`, `message.role`, `message.stopReason` only.
 - Snapshot `T = 2026-10-20T19:01:17Z`; the directory is live (files 12615 → 12799 and seat `.md` 2395 → 2473 between 18:56Z and 19:01Z). Treat every count below as a point sample.
@@ -30,7 +30,7 @@ Seat: `MoriR17.SeatNaming-5`. Leaf member; no subagent dispatch. Lane: `/home/vg
 | max dir depth | 1 |
 | stems with >1 dot / duplicate stems / odd chars | 0 / 0 / 0 |
 
-Log grammar: `10006.bash.log` — every one of the 7488 logs matches `<pid>.<tool>.log`, tool ∈ {bash 5454, bash-original 1079, read 727, eval 225, async 3}. They are tool I/O, never seat transcripts; a C1 walker filtering `*.jsonl` excludes them correctly.
+Log grammar: `<n>.<tool>.log` — every one of the 7488 logs matches `<pid>.<tool>.log`, tool ∈ {bash 5454, bash-original 1079, read 727, eval 225, async 3}. They are tool I/O, never seat transcripts; a C1 walker filtering `*.jsonl` excludes them correctly.
 
 ## 1. Naming grammar (observed)
 

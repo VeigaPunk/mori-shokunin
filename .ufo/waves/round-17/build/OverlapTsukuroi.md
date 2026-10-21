@@ -93,7 +93,7 @@ same packet mori should mirror when handing the §1 detections over: timestamps 
   `:55` "host-wide pause was not operative (13 operator pacman runs)… only the agent-side
   pause holds", `:57` pause = post-upgrade containment, `:60` live pre-reboot guard.
 - Actor attribution: sudo-journal capture inside `boot-chain-capture.txt:76-96` — `vgpnk`
-  ran the 09:15 -Syu from `~/Documents/nvhelpme`; mori's sibling `build/PacmanActorTrace.md:53-57`
+  ran the 09:15 -Syu from `<operator document withheld>`; mori's sibling `build/PacmanActorTrace.md:53-57`
   adds that the operator's session notes planned a targeted `-S`, executed as full `-Syu`.
 - Memory/OOM plane: `build/FreshMemoryPlaneSweep.md:11-14` — oomd disabled, earlyoom enabled,
   zswap on, sysstat staged by the 09:15 -Syu; census `PLANE oom` emitter landed at

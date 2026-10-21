@@ -4,7 +4,7 @@
   "transport": "one native OMP task batch (AgentSwarm host mapping)",
   "generic_ufo_validator_used": false,
   "reason": "MISSION requires mixed planner/connector/execution/review roles; shared-writer Shokunin craft round, not a generic UFO wave",
-  "host_route_authority": "/home/vgpnk/.omp/agent/config.yml:318-330",
+  "host_route_authority": "<operator OMP config withheld>",
   "host_route_sha256": "08788ddcbbb48180b987e6f54b517af294c85cacceb07bdd594843a53e668dcc",
   "route_selection": "role names only; no per-lane model parameters or routing mutations",
   "routing_caveat": "Host role overrides differ from MISSION prose buckets; operator assignments used unchanged.",

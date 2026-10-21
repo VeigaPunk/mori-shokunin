@@ -5,7 +5,7 @@ Seat: `MoriR17.TranscriptTailBounds-5` (scout, leaf member, no subagent dispatch
 falsification of the C1 `--max-tail-bytes` default (262144) against the real OMP transcript
 corpus. Nothing was edited; no VCS operation; no `/tmp` write; no journal query; no install.
 
-Question: for every `*.jsonl` under `~/.omp/agent/sessions/-Projects-shokunin/`, what is the
+Question: for every `*.jsonl` under `<session-store path withheld>`, what is the
 byte distance from EOF to the start of the last `message` record, and how many files exceed
 262144 (so their terminal record cannot be parsed under the default tail)?
 
@@ -19,7 +19,7 @@ byte distance from EOF to the start of the last `message` record, and how many f
 | 4 | independent whole-file scan of 11 over-threshold files + 600 random files with mtime > 30 min | 611/611 offsets identical to the chunked scan; 0 mismatches |
 | 5 | first cross-check that mixed live files | 10 apparent mismatches; all were files that **grew** between the two reads (append-only), verified by differing sizes; no algorithm disagreement |
 
-Commands (all read-only; run from `/home/vgpnk/.omp/agent/sessions/-Projects-shokunin`):
+Commands (all read-only; run from `<session-store path withheld>`):
 
 - `find . -type f -name '*.jsonl' | wc -l` → `5085`, rc 0; `find . -type l -name '*.jsonl' | wc -l` → `0`, rc 0.
 - `python3 - <<'PY' … PY` stable tail scan of all 5085 files (chunked, `os.walk(followlinks=False)`), rc 0 — 11 over-threshold, 1 no-message.

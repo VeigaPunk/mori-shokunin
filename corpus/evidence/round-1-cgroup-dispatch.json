@@ -8,7 +8,7 @@
   "authority": {
     "mission": "../MISSION.md:48-60",
     "host_mapping": "skill://shokunin",
-    "route_table": "/home/vgpnk/.omp/agent/config.yml:318-330",
+    "route_table": "<operator OMP config withheld>",
     "route_config_sha256_at_dispatch": "08788ddcbbb48180b987e6f54b517af294c85cacceb07bdd594843a53e668dcc"
   },
   "scope": "cgroup OOM selected-counter provenance only; detection and report; no host mutation",

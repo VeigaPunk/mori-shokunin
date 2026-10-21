@@ -8,7 +8,7 @@ with `TabiR17`, `TsukuroiR17`, `SoujiR17` in the 12-57-31 session dir, classifie
 classes of `.ufo/waves/round-17/contract.md:33-50`?
 
 Evidence dir (absolute):
-`/home/vgpnk/.omp/agent/sessions/-Projects-shokunin/2026-10-20T12-57-31-587Z_01a15963-70c3-7390-a1b4-7911b9506d07`
+`<session-store path withheld>`
 
 **Verdict: partial.** TabiR17 **disagrees** (claimed 17, observed **18**). TsukuroiR17
 **disagrees** (claimed 43, observed **44**). SoujiR17 **agrees** (claimed "28+", observed
@@ -79,7 +79,7 @@ print("scan_utc",datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%dT%H:%M:%S
 for lane in LANES:
     c=tot[lane]
     print(lane,"files",c["files"]," ".join(k+"="+str(c[k]) for k in CLS),"zai_retry_budget="+str(extra[lane]["zai/retr"]),"zai_429_noretr="+str(extra[lane]["zai/429noretr"]),"other_429="+str(sum(v for k,v in extra[lane].items() if not k.startswith("zai"))))
-' /home/vgpnk/.omp/agent/sessions/-Projects-shokunin/2026-10-20T12-57-31-587Z_01a15963-70c3-7390-a1b4-7911b9506d07; echo "rc=$?"
+' <session-store path withheld> echo "rc=$?"
 ```
 
 Observed stdout (canonical run, `scan_utc 2026-10-20T18:59:29Z`, rc 0):
@@ -206,7 +206,7 @@ between scans (a new transcript landed). All counts in this report are point-in-
 | command | rc |
 |---|---|
 | `read .ufo/waves/round-17/contract.md` (full) | n/a |
-| `ls` / `find` over `~/.omp/agent/sessions/-Projects-shokunin/2026-10-20T12-57-31-587Z_01a15963-70c3-7390-a1b4-7911b9506d07` (structure, symlink, hidden-file, permission counts only) | 0 |
+| `ls` / `find` over `<session-store path withheld>` (structure, symlink, hidden-file, permission counts only) | 0 |
 | `grep -n` over `.ufo/waves/round-17/contract.md` (line citations) | 0 |
 | head/grep over `.ufo/waves/round-17/{wave1-context.txt,wave1-dispatch*.json,wave1-record.json}` and `build/{swarm-registry.json,KnowledgeSeatTerminal.md,SrcZaiErrorCodes.md}` (checked whether a sibling report carries the 17/43/28 figures — none does) | 0 |
 | the snippet above, run twice (18:58:43Z and canonical 18:59:29Z) | 0, 0 |

@@ -13,7 +13,7 @@ Installs/updates: **none**. No pacman, uv, npx, or binary download was needed or
 Target (read-only):
 
 ```
-/home/vgpnk/.omp/agent/sessions/-Projects-shokunin/
+<session-store path withheld>
 ```
 
 - Enumerated with `os.walk`, regular files ending `.jsonl`, symlinks skipped.
@@ -69,7 +69,7 @@ Facts that matter for the contract:
   terminal occurrences in this corpus.
 - `role` at terminal is only `assistant | toolResult | user`. A `developer` role **does exist**
   mid-transcript (seen in
-  `2026-10-14T12-27-03-446Z_01a13a61-6396-7571-8d4c-93c6eddb66bd.jsonl`) but never as a terminal
+  `<session-id withheld>`) but never as a terminal
   record here. The contract has no rule for a `developer`-terminal transcript; implement a
   defensive fallthrough to `incomplete` rather than an unguarded `if/elif` that can crash.
 - `toolResult` and `user` terminal records never carry a `stopReason`.
@@ -189,7 +189,7 @@ class is `completed`. They read `unavailable` only because a **single `custom` r
 | `KaikokuSourcesR13.SourceCritic.jsonl` | 929 299 | 309 599 | completed |
 
 The twelfth is genuinely message-free: the 785-byte
-`2026-10-20T00-53-48-976Z_01a156cc-dd2f-76f3-b1b8-c9f9f2214965.jsonl` (0 records of type
+`<session-id withheld>` (0 records of type
 `message`, only `session_init` / `thinking_level_change`).
 
 **Measured fix (falsifier, already run):** escalating the window resolves them exactly —
@@ -277,7 +277,7 @@ block is evidence about *one* prefix's shutdown, not about provider health.
   collide silently, because the contract keys seats by basename only.
 - **611 distinct prefixes.** 15 of them are **top-level session ids** of the form
   `<ISO-timestamp>_<uuid>` (files at depth 1, e.g.
-  `2026-10-14T11-37-21-891Z_01a13a33-e4e3-75aa-a391-3e9caec2b12b.jsonl`), whose "prefix" is the
+  `<session-id withheld>`), whose "prefix" is the
   whole id. They are not seats, yet they enter `seats`, `totals` and `by_prefix`. Effect on the
   snapshot: 15 of 5084 files (0.3 %) are non-seat transcripts, and `by_prefix` carries 15
   singleton keys of unbounded length.

@@ -9,7 +9,7 @@
   "taskBatches": 0,
   "routeProbeStatus": "unprobed",
   "configAuthority": {
-    "path": "/home/vgpnk/.omp/agent/config.yml",
+    "path": "<operator OMP config withheld>",
     "sha256": "08788ddcbbb48180b987e6f54b517af294c85cacceb07bdd594843a53e668dcc"
   },
   "bindings": [
