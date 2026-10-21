@@ -237,7 +237,7 @@ Privacy note: `note` is human-readable text (for example a short recovery phrase
 ## 7. Observed: seat identity does not come from a raw session filename
 
 - Main transcripts: `<timestamp>_<sessionId>.jsonl` (`omp://session.md:42`), e.g.
-  `2026-10-20T15-54-12-123Z_019c….jsonl`. Contract C1's seat id `TameshiR17.RR7-2` is not
+  `<timestamp>_<session-id>.jsonl` (example identity withheld, round-18 privacy repair). Contract C1's seat id `TameshiR17.RR7-2` is not
   that shape.
 - Subagent transcripts are nested: the stats parser classifies by depth
   (`packages/stats/src/parser.ts`):

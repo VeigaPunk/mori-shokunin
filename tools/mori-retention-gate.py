@@ -459,20 +459,20 @@ def selftest() -> tuple[str, int]:
     expected_tmp = (root / ".scratch").resolve()
     supplied_tmp = os.environ.get("TMPDIR")
     if not supplied_tmp:
-        return "SELFTEST retention-gate FAIL 0/19", 2
+        return "SELFTEST retention-gate FAIL 0/21", 2
     try:
         actual_tmp = Path(supplied_tmp).resolve(strict=True)
     except OSError:
-        return "SELFTEST retention-gate FAIL 0/19", 2
+        return "SELFTEST retention-gate FAIL 0/21", 2
     if actual_tmp != expected_tmp or not actual_tmp.is_dir():
-        return "SELFTEST retention-gate FAIL 0/19", 2
+        return "SELFTEST retention-gate FAIL 0/21", 2
 
     policy_path = root / ".ufo" / "waves" / "round-18" / "frozen" / "c1-policy.json"
     try:
         original_policy, _ = read_json(policy_path)
         validate_policy(original_policy)
     except EvaluationError:
-        return "SELFTEST retention-gate FAIL 0/19", 2
+        return "SELFTEST retention-gate FAIL 0/21", 2
 
     arm_results: list[bool] = []
     env = os.environ.copy()
@@ -559,6 +559,40 @@ def selftest() -> tuple[str, int]:
                 and result.get("finding_id") == "RETENTION_CLEAN"
                 and result.get("metric") == 0
                 and len(result.get("allowlisted_hits", [])) == 1
+            )
+
+            # Round-18 wave-2 MutRetentionGate M4: an allowlist row binds one hit
+            # (path, class, line digest), never every hit in the same path.
+            second_text = fixture("Zml4dHVyZSB+L0RvY3VtZW50cy9zZWNvbmQudHh0")
+            exit_code, result, _, _ = scan_fixture(
+                base,
+                "allowlist-same-path-other-hit",
+                {"fixture/payload.txt": allow_text + b"\n" + second_text + b"\n"},
+                base_policy,
+                ["--allowlist", str(allowlist_path)],
+            )
+            unallowed = result.get("unallowlisted_hits", []) if result is not None else []
+            arm_results.append(
+                exit_code == 1
+                and result is not None
+                and result.get("finding_id") == "RETENTION_FINDINGS"
+                and result.get("metric") == 1
+                and len(result.get("allowlisted_hits", [])) == 1
+                and [(hit.get("line"), hit.get("line_sha256")) for hit in unallowed]
+                == [(2, hashlib.sha256(second_text).hexdigest())]
+            )
+
+            # Round-18 wave-2 MutRetentionGate M5: one text line matching two
+            # classes counts once per class.
+            multi_text = fixture("fi9Eb2N1bWVudHMveCBzdWRvZXJzCg==")
+            exit_code, result, _, _ = scan_fixture(base, "multi-class-line", {"fixture/payload.txt": multi_text}, base_policy)
+            multi_hits = result.get("hits", []) if result is not None else []
+            arm_results.append(
+                exit_code == 1
+                and result is not None
+                and result.get("metric") == 2
+                and sorted(hit.get("class") for hit in multi_hits) == ["R4", "R6"]
+                and len({(hit.get("line"), hit.get("line_sha256")) for hit in multi_hits}) == 1
             )
 
             forbidden_path = "fixture/must-redact.txt"
@@ -659,10 +693,10 @@ def selftest() -> tuple[str, int]:
                 and texts["R4"].decode("utf-8") not in r4_stdout
             )
     except Exception:
-        arm_results = [False] * 19
+        arm_results = [False] * 21
 
     passed = sum(1 for passed_arm in arm_results if passed_arm)
-    total = 19
+    total = 21
     if len(arm_results) != total:
         return f"SELFTEST retention-gate FAIL {passed}/{total}", 1
     if passed == total:

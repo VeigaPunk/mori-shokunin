@@ -178,3 +178,9 @@ Source tiers: see corpus/SOURCES.md (contract v1); this file holds claim admissi
     the rule reports the conflict; the integrator fixes the implementation to the rule and
     records the contradiction, never the rule to the example.
     ← lessons/round-18.md#M5 (C2 `no-implementation` overclaim; C1 freeze-commit self-hits).
+56. Supersedes 53's wording: a dispatch-attempt **row** is bound or unbound (digest and
+    bytes recompute from the committed payload at the measured revision); a **ledger** is
+    clean or failed (contiguous attempts, non-decreasing time, exactly one final
+    started/partial row, `started_ids` equal to `tasks_count`, result values only
+    refused/started/partial). A refused-only ledger can have every row bound and still fail.
+    ← lessons/round-18.md#M3; .ufo/waves/round-18/falsify/ReviewQuality51to55.md.

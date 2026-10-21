@@ -143,14 +143,14 @@ git -C <repo> log --after=@<launch_epoch> --format='%an <%ae>' \
   `protocol-shokunin <protocol@shokunin.local>` (57 of the fleet root's last 400 commits) and
   `aggregator-shokunin <aggregator@shokunin.local>` (10).
 - The verbatim pair match closes measured traps in the fleet root's last 400 commits: human
-  author `<operator ambient git identity withheld>` (56; plus one accented `João` spelling),
+  author `<operator ambient git identity withheld>` (56; plus one accented spelling variant),
   fleet identities `ci <ci@local>` (74), `shokunin <shokunin@local>` (22),
   `shokunin-fleet <fleet@shokunin.local>` (20), `integrator <integrator@shokunin.local>` (6),
   and near-miss lane names `kagi <kagi@shokunin.local>` (1) and
   `kumitate <kumitate@shokunin.local>` (1) — lane-shaped emails whose names do not carry the
   exact `<lane>-shokunin` shape.
 - Never `%cn`/`%ce`: author≠committer is measured in fleet history (precursor note:100 —
-  author `João Pedro Veiga` with committer `GitHub`; not re-measured by this seat).
+  author `<operator ambient git identity withheld>` with committer `GitHub`; not re-measured by this seat).
 - Substring matching is unsafe: `kake` is a substring of longer strings, and identity fields
   collide across lane-shaped names — `tools/mori-silence-cases.sh:482-498` encodes the name
   and email substring traps (`kagi-helper-shokunin`, `kagi-helper@shokunin.local` must both

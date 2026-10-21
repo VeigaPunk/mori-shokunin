@@ -1,6 +1,6 @@
 source: S056 (Nosek et al. 2018, "The preregistration revolution"), S058 (git-rev-list(1), git-diff-tree(1)); lane register `.ufo/waves/round-18/frozen/c2-register.json`
 verified-at: 2026-10-21, sources opened by `.ufo/waves/round-18/build/Src{NosekPrereg,GitRevList}.md`; r17 verdicts independently re-derived by `build/RevFreezeR17C{1,2,3}.md`
-recheck: `python3 tools/mori-freeze-order.py check --repo . --register .ufo/waves/round-18/frozen/c2-register.json --corrections corpus/evidence/freeze-register.json --tip-for r18-C1=<tip> --tip-for r18-C2=<tip> --tip-for r18-C3=<tip>`; `TMPDIR=<empty dir> python3 tools/mori-freeze-order.py --selftest`
+recheck: `python3 tools/mori-freeze-order.py check --repo . --register .ufo/waves/round-18/frozen/c2-register.json --corrections corpus/evidence/freeze-register.json --tip-for r18-C1=<tip> --tip-for r18-C2=<tip> --tip-for r18-C3=<tip>`; `mkdir -p .scratch && TMPDIR=$PWD/.scratch python3 tools/mori-freeze-order.py --selftest` (TMPDIR must not be under /tmp; remove `.scratch` afterwards)
 
 # Freeze-order: a "pre-build" label is a commit-order verdict
 
@@ -33,5 +33,6 @@ rows (`corpus/evidence/freeze-register.json`), never rewrites of the filed label
 - Agreement with an oracle the register author had already read is not independent
   evidence of discernment (round-18 CriticC2Calibration); the failure-capable evidence is
   the selftest's co-commit arm and the r18 self-application at the measured tip.
+- The selftest (12 arms) does not yet distinguish `--topo-order` from `--date-order` on a dated divergent DAG (round-18 MutFreezeOrder M04 survived); history with merges is judged by first-parent diffs only.
 - Path renames are seen as delete + add (`diff-tree` without `-M`), and merges are judged
   against their first parent; both are declared limits, not proofs of freeze.

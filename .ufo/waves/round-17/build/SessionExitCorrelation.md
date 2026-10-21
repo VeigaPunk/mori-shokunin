@@ -9,7 +9,7 @@ Question (paraphrased; the verbatim wording named a session directory and is wit
 ## Scope and snapshot
 
 - Sessions directory: one OMP session directory of one project (path withheld; identify it by the provenance blob). It holds 109 top-level `*.jsonl` transcripts, 24 lane subdirectories, and two further subdirectories with no `*.jsonl`.
-- The corpus is live. Pinned snapshot window T0 = 2026-10-20T18:58:49.194Z to T1 = 18:58:54.205Z, 2509 `*.jsonl` files, each read once and parsed in one pass, so per-file counts and classes are mutually consistent.
+- The corpus is live. Pinned snapshot window of about 5 s on 2026-10-20 (exact times withheld, round-18 privacy repair, second pass), 2509 `*.jsonl` files, each read once and parsed in one pass, so per-file counts and classes are mutually consistent.
 - Reproduction requires a re-read; counts move minute to minute. Drift measured across two passes is reported below and is part of the finding.
 
 ## Method

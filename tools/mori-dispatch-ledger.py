@@ -276,6 +276,12 @@ def _verify(repo: str, rev: str, ledger_path: str) -> tuple[dict, int]:
             add_finding("AT_DECREASING", index)
         previous_at = at
 
+    # Round-18 wave-2 ReviewDispatchLedgerCode: the frozen row format admits only
+    # refused | started | partial; any other result value is a ledger finding.
+    for index, row in enumerate(ledger, 1):
+        if isinstance(row, dict) and "payload_sha256" in row and row.get("result") not in ("refused", "started", "partial"):
+            add_finding("RESULT_INVALID", index)
+
     started = [
         (index, row)
         for index, row in enumerate(ledger, 1)
@@ -376,7 +382,9 @@ def _selftest_row(digest: dict, *, attempt: int = 1, at: str = "2025-01-01T00:00
 def _write_fixture_repo(repo: Path, *, dispatch: dict | None, rows: list | None,
                         env: dict[str, str]) -> None:
     repo.mkdir(parents=True)
-    if dispatch is not None:
+    if isinstance(dispatch, bytes):
+        (repo / "dispatch.json").write_bytes(dispatch)
+    elif dispatch is not None:
         (repo / "dispatch.json").write_text(
             json.dumps(dispatch, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n",
             encoding="utf-8",
@@ -488,16 +496,41 @@ def _selftest() -> int:
             cases.append(("missing-dispatch-path", original, [missing_dispatch], 2,
                           "DISPATCH_PATH_UNAVAILABLE"))
 
+            # Round-18 wave-2 MutDispatchLedger M1/M2: independent oracle (literal
+            # digest computed outside the tool) over a non-ASCII, unsorted payload.
+            # Committed as raw, unsorted, non-ASCII bytes so key order and escaping matter.
+            oracle_dispatch = '{"run":{"tasks":[{"z":"1","a":"2","m":{"y":1,"b":2}}],"context":"h\u00e9llo \u2713"}}\n'.encode("utf-8")
+            oracle_identity = {
+                "payload_sha256": "05ae43f5745a0407136d80b505ffd4e0db16ac64b2ae8607547e1f794aec7476",
+                "payload_bytes": 70,
+                "tasks_count": 1,
+            }
+            cases.append(("independent-oracle-utf8-sorted", oracle_dispatch,
+                          [_selftest_row(oracle_identity)], 0, "LEDGER_CLEAN"))
+
+            # Round-18 wave-2 ReviewDispatchLedgerCode: invalid result value.
+            invalid_result = _selftest_row(original_identity, result="bogus", started_ids=0)
+            cases.append(("invalid-result-value", original, [invalid_result, _selftest_row(
+                original_identity, attempt=2, at="2025-01-01T00:00:01+00:00")], 1, "RESULT_INVALID"))
+
             tool = Path(__file__).resolve()
             for name, dispatch, rows, want_rc, want_id in cases:
                 repo = work / name
                 _write_fixture_repo(repo, dispatch=dispatch, rows=rows, env=env)
                 if not _run_selftest_case(tool, repo, want_rc, want_id, env):
                     failures.append(name)
+
+            # Round-18 wave-2 MutDispatchLedger M8: a changed working-tree dispatch
+            # must not affect verification at the committed revision.
+            repo = work / "worktree-isolation"
+            _write_fixture_repo(repo, dispatch=original, rows=[clean], env=env)
+            (repo / "dispatch.json").write_text(json.dumps(tampered) + "\n", encoding="utf-8")
+            if not _run_selftest_case(tool, repo, 0, "LEDGER_CLEAN", env):
+                failures.append("worktree-isolation")
     except (OSError, RuntimeError, subprocess.SubprocessError):
         return _error("SELFTEST_SETUP_FAILED", "sandbox fixture setup failed")
 
-    total = 11
+    total = 14
     passed = total - len(failures)
     if failures:
         sys.stdout.write(

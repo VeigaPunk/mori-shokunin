@@ -116,8 +116,8 @@ Pre-ruling window held only 5 invocations / 4 transactions (01:06:49, 01:07:12,
 
 - Actor identity for the post-ruling runs is **not observed here** (journal queries are
   forbidden for seats). Routed evidence: tsukuroi r17 states the journal attributes the
-  13 runs 07:45–09:39 to account `vgpnk` with PWD split `<operator document withheld>` (4),
-  `/home/vgpnk/tmp` (4), `/home/vgpnk` (5) — that is tsukuroi's read-only capture, not
+  13 runs 07:45–09:39 to the login account, with a working-directory split across three
+  operator directories (values withheld, round-18 privacy repair) — that is tsukuroi's read-only capture, not
   re-verified in this seat.
 - Whether the 09:15 `-Syu` passed tsukuroi's `/sysroot` update-safety gate is **not
   observable from `pacman.log`**. Routed evidence `.ufo/l0-questions.md` (tsukuroi r17)

@@ -523,6 +523,15 @@ def _selftest():
                          expected_fields={"oracle_disagreement": True})
             passed += 1
 
+            # 8b. Round-18 wave-2 MutFreezeOrder M07: the oracle comparison is
+            #     exact; a differently cased ruling is still a disagreement.
+            register = _write_register(root, "oracle-exact-case", base, tip,
+                                       ["frozen.txt"], ["tools/impl.py"],
+                                       ruling="PRE-BUILD")
+            _invoke_case(repo, register, 1, "pre-build",
+                         expected_fields={"oracle_disagreement": True})
+            passed += 1
+
             # 9. An unknown revision is a could-not-evaluate result (exit 2).
             repo = _new_repo(root, "unknown-revision")
             base = _commit(repo, {"frozen.txt": "frozen\n"}, "base")
@@ -558,10 +567,13 @@ def _selftest():
             _invoke_case(repo, register, 2, "could-not-evaluate")
             passed += 1
     except Exception:
-        print("SELFTEST freeze-order FAIL %d/11" % passed, file=sys.stderr)
+        print("SELFTEST freeze-order FAIL %d/12" % passed, file=sys.stderr)
         return 1
 
-    print("SELFTEST freeze-order PASS %d/11" % passed)
+    if passed != 12:
+        print("SELFTEST freeze-order FAIL %d/12" % passed, file=sys.stderr)
+        return 1
+    print("SELFTEST freeze-order PASS %d/12" % passed)
     return 0
 
 

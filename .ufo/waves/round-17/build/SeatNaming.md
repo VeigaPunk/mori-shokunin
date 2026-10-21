@@ -47,7 +47,7 @@ Invariants verified over the whole tree at T:
 - `S/SoujiR17-3.jsonl` (L1) ↔ `S/SoujiR17-3/SoujiR17-3.ConnLessonGateSection-2.jsonl` (subagent). Every nested dir has its root L1: 0 dirs without `S/<dir>.jsonl`.
 - Every nested stem starts with `<dir>.` (2399/2399); no nested stem is dot-free; no third-level dir.
 - Seat id = peer id. Verified against the live roster: `MoriR17.CensusJj-5` → `S/MoriR17/MoriR17.CensusJj-5.jsonl`; `KamaR17.ReopenS046` → `S/KamaR17/KamaR17.ReopenS046.jsonl`; L1 ids `MoriR17`, `TameshiR17`, `MadoR19` → `S/<id>.jsonl`.
-- `local/` is empty (0 files); `url-search/` is a web-search cache (329 files: 308 sources + 21 `.md` with opaque stems such as `S/url-search/15oob9dy0jxfj.md`; 0 `.jsonl`).
+- `local/` is empty (0 files); `url-search/` is a web-search cache (329 files: 308 sources + 21 `.md` with opaque stems such as `S/url-search/<opaque-stem>.md`; 0 `.jsonl`).
 
 ## 2. Root-level inventory (110 files = 18 lane + 16 closure + 69 jj + 7 probe)
 
@@ -240,7 +240,7 @@ Generated from the same snapshot; `root` + `nested` = `total`.
 | F7 | low | `Probe*`, `Smoke*`, `Runtime*` (7) | 7 | Harness probes, not lanes; each becomes a 1-seat prefix that looks like a lane in `by_prefix`. | table rows |
 | F8 | low | all 18 lane prefixes | 2388 | The L1 and its subagents share one prefix (`MoriR17` = 1 L1 + 70 subs). Prefix-level class tallies mix the L1’s terminal state with its children’s; depth distinguishes them. | root vs nested columns |
 | F9 | low | `TabiR18`, `TsukuroiR18-2` | 1 / 1 | Lane L1s with no subagent dir; every other lane L1 has one (16/16 dirs; closures 8/8). Not a misattribution, but breaks a “dir ⇔ lane” assumption. | table rows |
-| F10 | info | `url-search/`, `local/` | 329 / 0 | Non-session subtrees inside the same dir. C1’s `*.jsonl` filter excludes them today; a broader walker would mint 21 phantom prefixes from the cache `.md` names. | `S/url-search/15oob9dy0jxfj.md` |
+| F10 | info | `url-search/`, `local/` | 329 / 0 | Non-session subtrees inside the same dir. C1’s `*.jsonl` filter excludes them today; a broader walker would mint 21 phantom prefixes from the cache `.md` names. | `S/url-search/<opaque-stem>.md` |
 | F11 | info | seat-level `-N` | 735 | Must not be folded into the lane. `S/SoujiR17-3/SoujiR17-3.ConnLessonGateSection-2.jsonl` has both axes on one stem. | §4 |
 | F12 | info | fleet-dir → prefix join | — | Prefixes are CamelCase lane labels; fleet dirs are kebab (`kama-shokunin`). `game-dev-2d-shokunin` → `GameDev2d` shows the join is not `title(strip(-shokunin))`. | fleet-root listing; `JjAuditGameDev2d-2` |
 

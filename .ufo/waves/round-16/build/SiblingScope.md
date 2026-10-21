@@ -17,7 +17,7 @@ Primary documents opened:
 - `sd_journal_seek_cursor(3)` (doc page rendered as `sd_journal_seek_head`, systemd 262): "If no entry matching the specified cursor is found the call will seek to the next closest entry (in terms of time) instead." Source: https://www.freedesktop.org/software/systemd/man/latest/sd_journal_seek_cursor.html
 - Sibling provinces: `../tsukuroi-shokunin/PROVINCE.md:8-14,25-33,44-52` and `../kumitate-shokunin/PROVINCE.md:3-6,10-28`. Mori's own boundary is `PROVINCE.md:12-16,39-54`.
 
-Local, read-only journal probes (host journalctl 261.2-1, user `vgpnk` in `wheel`). Output fields were limited to `__CURSOR,_BOOT_ID,MESSAGE_ID,UNIT_RESULT,EXIT_CODE,EXIT_STATUS`. No `MESSAGE` was requested. No cursor or record content is reproduced here.
+Local, read-only journal probes (host journalctl 261.2-1; user group membership withheld, round-18 privacy repair). Output fields were limited to `__CURSOR,_BOOT_ID,MESSAGE_ID,UNIT_RESULT,EXIT_CODE,EXIT_STATUS`. No `MESSAGE` was requested. No cursor or record content is reproduced here.
 
 | Probe | Result (both scopes unless noted) |
 |---|---|

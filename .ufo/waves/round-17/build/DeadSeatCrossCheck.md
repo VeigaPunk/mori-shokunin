@@ -4,7 +4,7 @@ Seat: `MoriR17.DeadSeatCrossCheck-5` (scout, leaf member, no subagent dispatch).
 Lane: `/home/vgpnk/Projects/shokunin/mori-shokunin` (branch `master`, entering tip `24526ea`).
 Question: does the orchestrator statement **"tabi r17 lost 17, tsukuroi r17 43, souji r17 28+"**
 (zai 429 retry-budget deaths) agree with the terminal records of transcripts whose prefix starts
-with `TabiR17`, `TsukuroiR17`, `SoujiR17` in the 12-57-31 session dir, classified with the C1
+with `TabiR17`, `TsukuroiR17`, `SoujiR17` in the current project session directory (identity withheld), classified with the C1
 classes of `.ufo/waves/round-17/contract.md:33-50`?
 
 Evidence dir (absolute):
@@ -79,7 +79,7 @@ print("scan_utc",datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%dT%H:%M:%S
 for lane in LANES:
     c=tot[lane]
     print(lane,"files",c["files"]," ".join(k+"="+str(c[k]) for k in CLS),"zai_retry_budget="+str(extra[lane]["zai/retr"]),"zai_429_noretr="+str(extra[lane]["zai/429noretr"]),"other_429="+str(sum(v for k,v in extra[lane].items() if not k.startswith("zai"))))
-' <session-store path withheld> echo "rc=$?"
+' "$SESSION_DIR"; echo "rc=$?"   # SESSION_DIR: project session directory (withheld, round-18 privacy repair)
 ```
 
 Observed stdout (canonical run, `scan_utc 2026-10-20T18:59:29Z`, rc 0):

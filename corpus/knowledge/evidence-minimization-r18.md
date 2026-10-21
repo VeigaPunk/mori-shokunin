@@ -1,6 +1,6 @@
 source: S049 (OWASP Logging Cheat Sheet, "Data to exclude"), S050 (OWASP ASVS 5.0.0 V16), S051 (NIST SP 800-122 §4.2.1), S052 (OpenTelemetry "Handling sensitive data"); lane policy `.ufo/waves/round-18/frozen/c1-policy.json` (sha256 db06e9810bbfd243fb0a753a46960573df39083ea90174ce463cf2a0ab523128)
 verified-at: 2026-10-21, sources opened by round-18 scribes (`.ufo/waves/round-18/build/Src{OwaspLogging,Nist800122,OtelSensitiveData}.md`); gate run by the L1 at the round-18 measured commit (see SCORECARD round 18)
-recheck: `TMPDIR=<empty dir> python3 tools/mori-retention-gate.py --selftest`; `python3 tools/mori-retention-gate.py scan --repo . --rev <rev> --policy .ufo/waves/round-18/frozen/c1-policy.json --allowlist corpus/evidence/retention-allowlist.json`
+recheck: `mkdir -p .scratch && TMPDIR=$PWD/.scratch python3 tools/mori-retention-gate.py --selftest` (the selftest requires TMPDIR to be `<repo>/.scratch`; remove it afterwards); `python3 tools/mori-retention-gate.py scan --repo . --rev <rev> --policy .ufo/waves/round-18/frozen/c1-policy.json --allowlist corpus/evidence/retention-allowlist.json`
 
 # Evidence minimization for committed observability handoffs
 
@@ -14,8 +14,8 @@ harms **adjacency**, and that disclosing the copy does not cure it
 Rule: commit the **support** of a claim, never the observed text it came from. OWASP's
 treatment vocabulary (S049: such data "should usually not be recorded directly … but instead
 should be removed, masked, sanitized, hashed, or encrypted") and NIST's minimum-necessary
-retention (S051 §4.2.1) apply by analogy; OpenTelemetry (S052) states the same practice for
-telemetry pipelines (delete attributes not on an allow list, hash or truncate the rest).
+retention (S051 §4.2.1) apply by analogy; ASVS V16.2.5 (S050) makes it a requirement that other sensitive data such as session tokens "may only be logged by being hashed or masked". OpenTelemetry (S052) states the same practice for
+telemetry pipelines and warns that "hashes are reversible in practice if the input space is small and predictable".
 
 ## Decision table — what a mori report or evidence file may carry
 

@@ -28,8 +28,8 @@ review therefore targets the contract and the spec, not code.
 | The lane's origin is `https://github.com/VeigaPunk/mori-shokunin.git` | `git -C <lane> remote -v` |
 | The JjGate and CensusJj clones have `remote.origin.url=/home/vgpnk/Projects/shokunin/mori-shokunin`, a **local path to the lane**, with push enabled | `git -C <clone> remote -v; git config --local --list` |
 | Sandboxes go under `JjGate/.scratch` (TMPDIR rule, wave1-context.txt:7). That path is inside the lane tree, and the lane `.gitignore:2` ignores `.ufo/worktrees/` | `git check-ignore -v .ufo/worktrees/round-17/JjGate/.scratch/x` → `.gitignore:2` |
-| Global git config (key names only) includes `credential.https://github.com.helper`, `push.autosetupremote=true`, `filter.lfs.{process,clean,smudge,required}`, `init.defaultbranch=master` and a real `user.name/email`. There is no `/etc/gitconfig`, no `/etc/jj` and no `~/.jjconfig.toml` | `git config --global --list --name-only` |
-| `~/.config/jj/config.toml` sets `git.auto-local-bookmark=true` and the real user name/email | cat (name/email redacted here) |
+| Global user git configuration was listed (key names); its keys and values are withheld (round-18 privacy repair; closure V12). It was observed that no system-wide git config and no legacy jj user config file exist | `git config --global --list --name-only` |
+| The user jj configuration was read; its settings are withheld (round-18 privacy repair; closure V12) | cat (values withheld) |
 | Session env has `GIT_EDITOR=true GIT_PAGER=cat GIT_TERMINAL_PROMPT=0` and no GIT_DIR/JJ_* set right now | `env \| grep` |
 | Tools: jj 0.45.1-7c41cdeb (`~/.local/bin/jj`), git 2.56.0 | `jj --version; git --version` |
 

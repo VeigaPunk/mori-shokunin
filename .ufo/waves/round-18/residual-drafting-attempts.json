@@ -77,5 +77,18 @@
   "result": "refused",
   "refused_text": "Failed to start background task jobs: MoriR18Recovery.MinRetryRecoveryShape-6: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MoriR18Recovery.MinSeatNaming-6: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MoriR18Recovery.MinS",
   "started_ids": 0
+ },
+ {
+  "attempt": 7,
+  "at": "2026-10-21T03:36:23.373702-03:00",
+  "wave": "mori-r18-residual-min",
+  "dispatch_path": ".ufo/waves/round-18/residual-drafting-taskcall.json",
+  "payload_sha256": "cd3c43790637875c2fcf30a831522982f6d425d6b1349fa3d8941bada7ae044f",
+  "payload_bytes": 24413,
+  "tasks_count": 8,
+  "slot_grant": "same grant as attempt 1",
+  "result": "refused",
+  "refused_text": "Failed to start background task jobs: MoriR18Recovery.MinRetryRecoveryShape-7: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MoriR18Recovery.MinSeatNaming-7: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MoriR18Recovery.MinS",
+  "started_ids": 0
  }
 ]

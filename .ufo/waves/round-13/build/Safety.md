@@ -18,7 +18,7 @@ Scope: a security review of the C1 design (structured journal scopes) and C2 des
 | P3 | Two temp repos; `GIT_DIR=<other>/.git git -C <lane> log --format='%an <%ae>'` | Printed `other-author <other@x>`. An inherited GIT_DIR overrides `-C`. |
 | P4 | Temp repo with a `chmod 000` subdir holding a new file; `git ls-files -mo --exclude-standard` | **rc 0**, empty stdout, stderr `warning: could not open directory 'locked/': Permission denied`. |
 | P5 | `journalctl --version` (systemd 261), `man journalctl`, `man systemd.journal-fields` | Doc anchors used below. |
-| P6 | `id -nG` | `vgpnk docker input wheel`. This user can read the system journal. On this host, therefore, the false 0 in S2 hides; other hosts or sandboxed runners will hit it. |
+| P6 | `id -nG` | includes `wheel` (full group list withheld, round-18 privacy repair). This user can read the system journal. On this host, therefore, the false 0 in S2 hides; other hosts or sandboxed runners will hit it. |
 
 Doc anchors (`MANWIDTH=200 man -P cat …`; line numbers are offsets in that rendering):
 - journalctl(1):

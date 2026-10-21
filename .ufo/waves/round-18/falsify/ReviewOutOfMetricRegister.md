@@ -1,0 +1,75 @@
+# Review: out-of-metric finding register
+
+## Result
+
+**No.** The triage table has dispositions for several families, but it does not assign a family row to every additional finding in the existing wave-1 `Sweep*.md` and `Adj*.md` reports. It also rejects at least one family whose source findings include content explicitly forbidden by the evidence-minimization rule.
+
+## Scope and method
+
+Read the round-18 contract first, then its frozen C1 policy/population, C2 register and C3 ledger format; compared `out-of-metric-triage.md:20-35` with every existing `build/Sweep*.md` and `build/Adj*.md` file (12 sweep reports and 9 adjudication reports). The controlling privacy decision table and limits are `corpus/knowledge/evidence-minimization-r18.md:22-46`. References below identify the wave-1 review report line(s) and the finding target path/line(s); they do not reproduce private values or excerpts.
+
+The `lsp` device was unavailable (`read xd://lsp` returned “No such tool”). I used literal `grep` only to locate sections and then read the cited ranges; grep is not treated as semantic proof. No shell command, URL fetch, install, test, or repository mutation was run. Read/grep results do not expose numeric process exit codes.
+
+## Unmapped or only partially mapped findings
+
+The following findings have no family row in `out-of-metric-triage.md:22-34`, or the cited family row accounts for only a subset of the finding. “Unmapped” means no explicit family/disposition; it does not independently decide whether every flagged item qualifies as a privacy finding under the L1 rule.
+
+### Round-17 build sweeps
+
+| Sweep report line(s) | Unmapped finding(s) / target location(s) | Why not mapped |
+|---|---|---|
+| `build/SweepR17Build2.md:30` | Session-derived error-signature details in `KnowledgeSeatTerminal.md:61,71`. | Row 25 is specific to `RetryRecoveryShape`; row 26 does not name `KnowledgeSeatTerminal`. Row 31 covers its separate other-seat result at `:82`, not these session-record-derived values. |
+| `build/SweepR17Build2.md:32-33` | Peer-artifact/message material and host-probe/receipt/timing/package-query details in `LessonMistakesDraft.md:12-15,21-24`. | Row 32 names `MisrootR16Facts`, `MisrootSweep`, `LiveLaneHeadVsBranch`, and `JjGate`, not `LessonMistakesDraft`. The general lane-receipt rationale may have been intended to cover it, but the table does not say so. |
+| `build/SweepR17Build3.md:16` | Repository-ref/state probe finding in `OverlapJjSiblings.md:15` (the sweep itself marks the private-repository classification `[INFERENCE]`). | Row 29 only names the personal identity/email at `OverlapJjSiblings.md:12`. The global exclusion at triage `:14-16` may dispose of lane-internal refs/revisions, but this particular probe is not explicitly assigned to a family row. |
+| `build/SweepR17Build3.md:36-41` | Receipt/version/host-state findings in `ProvinceFrontier.md:28-31,38-44,190-214,219-278`. | Rows 31-33 do not name `ProvinceFrontier`; row 33's package-history examples name other reports. |
+| `build/SweepR17Build3.md:42-45` | Command/read-output, package/database, capture and operator-action findings in `ProvinceNotesDraft.md:19-111`. | No triage family names `ProvinceNotesDraft`. |
+| `build/SweepR17Build3.md:46-49` | Receipt/dispatch values and session-message example in `QualityCriteriaDraft.md:27-73`. | No family names `QualityCriteriaDraft`; row 25 names `RetryRecoveryShape`, not the distinct criterion draft findings. |
+| `build/SweepR17Build3.md:50-53` | Other-seat lesson/tool/journal and repeated probe findings in `R16LessonM7.md:22-79`. | Row 34 is the earlier-round carry disposition for the named R15/R16 markdown sweeps and SiblingScope finding; it does not identify this target report or these findings. |
+| `build/SweepR17Build4.md:24-26,30` | Prior-incident/receipt details (`RevengerContextChecker.md:9,19,21,23,27,31-35`); local tool/runtime output (`RevengerOmpTerminal.md:11,33-39`); session-derived values (`ReviewC1Contract.md:9,13,15`); and host-journal/capture output (`ReviewCarryForward.md:19-22`). | None of these target reports is named in a disposition row. The separate identity/store-path portions at `SweepR17Build4.md:23,27` and the `ReviewJjAuditRouting` finding at `:32` do have rows 23 and 28. |
+| `build/SweepR17Build5.md:31` | Session-header version value and query detail in `ReviewSchemaDrift.md:9,13,22`. | Row 23 covers identity-token categories, not these header values; row 26 does not name `ReviewSchemaDrift`. |
+| `build/SweepR17Build5.md:39` | Dispatch-history and search-exposure details in `ReviewSpotcheckRouting.md:25,36`. | Row 32's “dispatch timelines” rationale names other reports and does not identify this target. |
+| `build/SweepR17Build5.md:41-43` | Retry/model-shaped fixture and selftest descriptions in `SeatFixtures.md:66-72,183-189,516-517` and `SeatTool.md:98`. | No row names these reports. Row 22 applies to the routed `OmpRetryConfig` source, and row 25 to `RetryRecoveryShape`, not the flagged repeat examples. The sweep states direct derivation is unproven, so these are also a classification gap rather than proof of copied private values. |
+| `build/SweepR17Build5.md:47` | `SentinelJjSandbox.md` findings across `:25-33,52-62,75-95,193,200-204`. | Row 27 expressly covers only `SentinelJjSandbox.md:31-32` (V12). The remaining configuration, identity, environment, reachability, count and timing findings are not assigned elsewhere in the table. |
+| `build/SweepR17Build6.md:17,20` | Provider/retry and affected-seat details in `SiblingSeatDeathTools.md:99-106`; provider/client retry/error and transcript-field details in `SrcRfc9110.md:55-68`. | Row 26 names `DeadSeatCrossCheck`, not `SiblingSeatDeathTools`; row 25 names `RetryRecoveryShape`, not either report. |
+| `build/SweepR17Build7.md:37-44` | Live-store distribution, transcript path/size and corpus-derived findings in `TranscriptTailBounds.md:17-155`. | Row 26 names `TranscriptShapes`, not `TranscriptTailBounds`; row 22 names the source `SessionExitCorrelation`, not these findings in another report. |
+| `build/SweepR17Build7.md:49-58` | Cross-wave task/member identities, live-wave/death/dispatch status, transcript/status cross-tabs, and point-in-time rerun detail in `WaveRegistryVsReports.md:11-342`. | No row names `WaveRegistryVsReports`. Row 32 names other lane-timeline reports; row 26 names `DeadSeatCrossCheck`, which the sweep cites as a separate comparison source at `:76`. |
+| `build/SweepR17CorpusText.md:18-45` | Non-regex session identity/linkage, model/session-record values, identifier-retention metadata and lower-confidence execution identifiers in `corpus/lessons/round-17.md:67,73,92-93,341-346`, `PROVINCE.md:114`, and `LOG.md:1153,1268,1271`. | Row 29 names the personal-identity findings in different files; row 23 is specifically frozen-class identity tokens. It does not dispose of these sweep-reported non-regex/linkage and session/model findings. |
+| `build/SweepR17EvidenceJson.md:31,41` | Operator-home-path candidate family in tracked JSON evidence, including the separately identified non-mutation scope and the report's inability to classify the remaining hits as redacted projections. | No row names this JSON-sweep family or its path-candidate findings. Row 23 covers frozen identity-token classes, not this separately counted home-path family. The broad token counts at `:32-37` are not themselves findings according to the sweep's own cautions. |
+| `build/SweepR17Falsify2.md:15-17` | Fleet/watchdog/history and branch/configuration inventory in `CensusNewBranches.md:55-67,119-123,148-162,241-266`. | No row names `CensusNewBranches`; row 31 is limited to other-seat results in round-17 **build** reports. |
+| `build/SweepR17Falsify2.md:20,23,25-27,29-31`; `build/AdjConformanceAudit.md:26-29` | The portions not covered by row 24's named V4/V8/V9/V11 value fragments: joined host-event/actor correlation, additional history/access facts, retry-value distribution/range, host transaction details, credential-record exposure status, and cross-round activity/repeats in `ConformanceAudit.md:39,46,48,53-54,61-63,72,74-75,80,119-123`. | Row 24 names specific value fragments, not these additional findings. Row 33 does not name `ConformanceAudit`; the line-39 session-name fragment is covered only in part, not the joined host correlation. |
+| `build/SweepR17Falsify2.md:32` | Sibling worktree identity and raw command/output envelope in `CountC3.md:12,19,23,30`. | Row 23 is limited to the listed frozen identity-token categories in 22 non-routed files; row 31 is limited to build reports. No row identifies this falsify-report output family. |
+| `build/SweepR17Falsify2.md:33-35` | Live session-receipt and payload/inventory measurements in `CriticC1Final.md:22-38,113-131`. | Row 26 does not name `CriticC1Final`; row 22 is only the routed `SessionExitCorrelation` file. |
+| `build/SweepR17Falsify4.md:13,16-20` | Session-scan aggregate output in `ReportTrace.md:35,47`; host-history/config detail in `ReopenPacmanLog.md:105,111`; host/version, prior-capture and journal results in `StaleSupersession.md:7,16-17,37,50-80,83,109` and `TrendGrounding.md:88,93,97,100,108-118,209-212,228-241`. | Row 33 names `ReopenPacmanLog` but classifies it as package history; it does not name `ReportTrace`, `StaleSupersession`, or `TrendGrounding`, nor the separate ReopenPacmanLog host-configuration finding. The package-log portion at `SweepR17Falsify4.md:14` is covered by row 33. |
+
+### Adjudication reports
+
+| Adjudication report line(s) | Unmapped finding(s) / target location(s) | Why not mapped |
+|---|---|---|
+| `build/AdjRound2Evidence.md:35-46` | Run/history metadata and operator-routing/config-derived values in the five round-2 evidence artifacts identified in the report. | No row covers round 2; row 34 is explicitly limited to r15/r16. |
+| `build/AdjLesson17.md:15-20` | Session-linked package/history, live-scan outcome, provider/model and cross-session attribution findings in `corpus/lessons/round-17.md:69,74,90-96,151-158,195,253-255,341-346`. | Row 33 covers named package-history reports, not this lesson; rows 22-25 do not cover these lesson findings. |
+| `build/AdjReviewC1Schema.md:25-30` | Session-derived provider/model distributions, field inventory/error values and header-version findings in `ReviewC1Contract.md:9,13,15` and `ReviewSchemaDrift.md:9,13`. | Neither target report is named in a family row. Row 23 covers identity tokens only, not the reported values. |
+| `build/AdjCriticC1.md:17-24` | Session-derived outcomes, record-level event/error/resumption details, provider/model pairings, counts and identity/timing findings in `CriticC1.md:3,47-51,55-93,125-142,153-172,186-199`. | No row names `CriticC1`; row 26's named list does not include it. |
+| `build/AdjConformanceAudit.md:26-29` | See the partially covered `ConformanceAudit` findings above: the line-39 host-event join and the line-46 access fact, plus lines 53-54 and 61-63. | Row 24 covers only its specifically listed value-fragment subset. |
+
+The earlier-round findings in `SweepR15Md2.md:12-49`, `SweepR16Md2.md:9-16`, and `AdjR16AttackPermission.md:16-23` do have a broad carry disposition in row 34; `AdjDocumentRefs.md:29-32` has the package-history/joined-context disposition in row 33. `AdjSentinelTranscripts.md:25-29` and `AdjTranscriptShapes.md:21-34` are assigned to row 26, but that row's disposition is contradictory below rather than missing.
+
+## Dispositions inconsistent with evidence minimization
+
+### High — triage row 26 rejects content that the policy says must not be committed
+
+Triage `:26` rejects the `SentinelTranscripts`, `ReviewSeatBreachDetect`, and `TranscriptShapes` session-corpus/record findings as allowlisted fields/aggregates and provider/model or errorMessage class tokens. That characterization does not fit all findings in the assigned reports:
+
+- `AdjSentinelTranscripts.md:28` identifies literal terminal-record value fragments and frequencies; `:29` identifies corpus-derived retry/provider/model distributions. `SweepR17Build6.md:15` independently flags transcript/error/retry and provider/model-derived findings.
+- `AdjTranscriptShapes.md:24-25,33` identifies actual provider/model names/assignments and error-message-derived tokens, retry details and distributions; `SweepR17Build7.md:20-22` also identifies these categories.
+- `SweepR17Build5.md:33` flags prior-seat command/path fragments and paraphrases of other-session tool activity in `ReviewSeatBreachDetect.md`.
+- `SweepR17Build5.md:45` flags the `SeatNaming` live census, per-seat/prefix inventories, status correlations and a field read outside the permitted transcript-field set; those are broader than the row's enumerated filename counts and schema/class tokens.
+
+The governing table permits only counts/totals/class tallies with revision and denominator (`evidence-minimization-r18.md:24`), forbids other-session output excerpts and paraphrased output (`:26`), and forbids session-record reason/kind/note values, model strings and per-seat retry values (`:29`). Therefore the blanket **reject** disposition in row 26 incorrectly clears the literal/derived values and paraphrased output in those findings. The row needs to distinguish permitted schema/key names or bounded aggregates from the explicitly prohibited content; identity-token redaction alone does not resolve it.
+
+### Medium — triage row 33 overstates the permitted host-log projection
+
+Triage `:33` rejects the package-history family on the ground that world-readable host-log facts are handoff evidence, with joined private identities redacted. The source sweep identifies command, timing, path and result detail in `SweepR17Build3.md:17` and `AdjDocumentRefs.md:32`, not merely log line numbers, event classes and package names. The evidence-minimization table permits only those narrow host-log facts and prohibits adjacent private context (`evidence-minimization-r18.md:31`), under the general support-not-observed-text rule (`:14-18`). Thus the row's blanket “world-readable host log facts” rationale does not justify retaining the full reported package-history material. Its joined-private-context exception handles only that subset, not the other detailed observations.
+
+## Residual risk and verification gaps
+
+This is a register-coverage and policy-consistency review, not a claim that all unmatched sweep classifications are correct. Some sweep entries are explicitly marked `[INFERENCE]`; they need an explicit disposition rather than being silently treated as proven privacy defects. The broad family rows 26 and 33 also collapse mixed findings that require per-category decisions. No runtime, build or automated test was appropriate or run for this read-only review. No URLs were accessed and no tools were installed or updated.

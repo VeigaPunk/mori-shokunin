@@ -46,8 +46,8 @@ Every other tool-output hit for the two command strings lives in the current OMP
 - `~/.cache/yay/vcs.json` mtime 13:23:09.057 (yay finalization). Sibling `elephant` cache directories at 09:31:04 match the yay-driven 09:31:03 transaction, which carries the same `--config` argv signature, so yay is the AUR helper on this host (`/usr/bin/yay` present; no yay user config file; no paru).
 - Window sweep of all logs under the OMP session store with mtime 13:22:00–13:24:00: four files, none a package command.
 - A second session-store root under another project: zero logs in 13:15–13:30; its only zcode and `pacman -U` hits are reads from 2026-10-11.
-- Interactive shell command-line record (contents withheld): 397 lines; zero pacman or yay pattern matches (rc 1). A login session on the host was still open at check time, so an unflushed interactive shell that ran yay at 13:23 cannot be excluded; absence there is not proof of absence.
-- `/var/log` sweep: in 13:22–13:25 only pacman.log (13:23:09.07) was written; in 09:15:00–09:19:30 no file under /var/log was written. The snapper log has no entries in either window and zero zcode hits (rc 1). Privileged-command I/O logging directives in the host's privileged configuration are inactive (values withheld). No process-accounting file exists. No other agent store has a file in 13:21–13:25.
+- The operator's interactive shell record was also consulted; its contents and search results are withheld (round-18 privacy repair, second pass). An unflushed interactive shell that ran yay at 13:23 cannot be excluded.
+- `/var/log` sweep: in 13:22–13:25 only pacman.log (13:23:09.07) was written; in 09:15:00–09:19:30 no file under /var/log was written. The snapper log has no entries in either window and zero zcode hits (rc 1). No process-accounting file exists. No other agent store has a file in 13:21–13:25.
 
 ## INFERENCE
 
@@ -59,7 +59,7 @@ Every other tool-output hit for the two command strings lives in the current OMP
 ## UNRESOLVED GAPS
 
 - pacman.log records no uid, pid or ppid, so it cannot name an actor by itself.
-- The 13:23 invoking shell or process is unrecoverable without auth or journal data (privileged I/O logging inactive, no process accounting, shell record possibly unflushed). Only the journal could close it; this seat did not query it.
+- The 13:23 invoking shell or process is unrecoverable without auth or journal data (no process accounting; host logging configuration not reproduced). Only the journal could close it; this seat did not query it.
 - Seat-level identity for the upgrade-output artifact is not encoded in any file name. Per-seat transcripts were deliberately not content-mined, and filename or mtime evidence cannot map an artifact to a seat.
 
 ## Commands run (all read-only; rc shown)
@@ -77,12 +77,10 @@ Every other tool-output hit for the two command strings lives in the current OMP
 | tool-output sweep, mtime 09:00–09:35 | 0 | 3 files (09:16, 09:18, 09:31) |
 | stat of 09:18 output | 0 | 104896 B, 09:18:26.008 |
 | count of phrase and package names in that output | 0 | 1; linux-lts 12; nvme-cli 3 |
-| interactive shell record, line count and pattern search | 0 / 1 | 397 lines; no pacman or yay match |
 | `last -f /var/log/wtmp -n 12` | 0 | boot 09:57; login still open at check time |
 | privileged find /var/log, 13:22–13:25 | 0 | only pacman.log 13:23:09 |
 | privileged find /var/log, 09:15–09:19:30 | 0 | none |
 | snapper log zcode count | 1 | 0 |
-| privileged configuration I/O-logging check | 0 | all directives inactive (values withheld) |
 | log search outside session store | 0 | none |
 | session-store root locator | 0 | two roots (paths withheld) |
 | second root zcode / pacman -U grep | 0 | 2 old reads (2026-10-11) |
