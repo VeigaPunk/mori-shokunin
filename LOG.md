@@ -1705,3 +1705,20 @@ incomplete enumeration cannot justify a negative/unique association; accounting 
 not enforcement. Late S087–S089 correct source authority, not frozen expectations.
 S065 is re-rejected as sole historical-provenance authority. Source-path gaps,
 scope/resource deviations and all failed receipts remain honest evidence.
+
+### Round23 — own measured withdrawal, C1 independent
+
+Withdrawal landed0d8f2d50eb85e0d4349b1045f01c04e57318cc1b. The unmodified sealed
+driver ran ONCE against it and seal22772c10; evidence/measure-withdrawal preserves
+complete command stdout/stderr and summaries. C1 original25/26→26/26, alias8→0,
+supplementary guard pass, real control/identity match; source4599ee1a unchanged.
+Full driver exit1 is honest: C07/C15/C34/C29/C30 fail because quota production is
+absent. Its30/31capability_absent buckets are not success, and no quota real command
+was run after withdrawal. Originalf3 quota29/30 and all frozen labels remain.
+
+Final source census (same command as entry) exit0 with the same six W04 warnings.
+Independent committed-registry counter:76→89, A62→75/B6/C8; mined42→55/queued25/
+rejected9. Every older non-used-by cell unchanged; S065 used-by gained lesson23.
+Late scribe live-source edits were restored to6eb's exact bytes before L1's sole
+integration; actual separate-checkout violation and earlier runtime/probe/resource
+deviations remain in evidence/protocol-deviations.json. No retroactive compliance.

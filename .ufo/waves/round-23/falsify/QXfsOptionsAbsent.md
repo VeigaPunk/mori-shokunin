@@ -330,3 +330,18 @@ the bytes this seat executed. The frozen case bytes
 (`d54cba9914cf85c4c4036b250b2e8c6dd3401f770e3929f5072c980797e16a58`) are unchanged, so
 the measurement remains reproducible from the pinned blob regardless of the working-tree
 cutover. This observation changes no verdict and implies no admission.
+
+### 11.6 Git-probe provenance (clarification, no change)
+
+The git probes behind §1/§7 (`git show <rev>:<path>`, `git rev-parse <rev>:<path>`,
+`git ls-tree`, `git merge-base --is-ancestor`, `git status --porcelain
+--untracked-files=no`) all ran against the lane repo `mori-shokunin`, which is a normal
+clone: no `extensions.partialclone`, no `remote.origin.promisor`, no `.promisor` packs,
+`git count-objects -v` reporting 8618 loose and 745 in-pack objects. Every object those
+probes touched was already local, so no lazy fetch was possible and no blob could have
+been materialised. This seat used no blobless/partial clone and no
+`tests/report-audit/promisor-grid.py` fixture, so the "missing blob ⇒ content-derived
+refusal" premise of that lane does not apply here; the integrity claims in §1 and §7
+rest on working-tree bytes and on a pinned blob present locally
+(`439ff4c1a68fc4f98182c6b855b3b4c790286851`, sha256 `e4857413…5b8f7e92`). No change to
+any claim, measurement or verdict.

@@ -1,0 +1,2047 @@
+{
+  "after": {
+    "c1_original_26": {
+      "capability_absent": 0,
+      "misleading_alias_runs": 0,
+      "pass": 26,
+      "total": 26,
+      "unmet": 0
+    },
+    "c2": {
+      "capability_absent": 30,
+      "pass": 0,
+      "total": 30,
+      "unmet": 0
+    }
+  },
+  "all_claim_checks_pass": false,
+  "all_claim_checks_pass_excluding_real_controls": false,
+  "ancestry": {
+    "argv": [
+      "git",
+      "-C",
+      "/home/vgpnk/Projects/shokunin/mori-shokunin",
+      "merge-base",
+      "--is-ancestor",
+      "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+      "0d8f2d50eb85e0d4349b1045f01c04e57318cc1b"
+    ],
+    "measured_revision_resolved": "0d8f2d50eb85e0d4349b1045f01c04e57318cc1b",
+    "returncode": 0,
+    "seal_equals_revision": false,
+    "seal_is_strict_ancestor_of_revision": true,
+    "seal_revision_resolved": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687"
+  },
+  "before": {
+    "c1_original_26": {
+      "capability_absent": 0,
+      "misleading_alias_runs": 8,
+      "pass": 25,
+      "total": 26,
+      "unmet": 1
+    },
+    "c2": {
+      "capability_absent": 30,
+      "pass": 0,
+      "total": 30,
+      "unmet": 0
+    }
+  },
+  "c1_original_26": {
+    "after": {
+      "capability_absent": 0,
+      "misleading_alias_runs": 0,
+      "pass": 26,
+      "total": 26,
+      "unmet": 0
+    },
+    "before": {
+      "capability_absent": 0,
+      "misleading_alias_runs": 8,
+      "pass": 25,
+      "total": 26,
+      "unmet": 1
+    },
+    "denominator": 26,
+    "misleading_alias_runs": {
+      "after": 0,
+      "before": 8
+    },
+    "oracle": {
+      "after_exit": 0,
+      "before_exit": 1
+    },
+    "pass": true,
+    "unmet_after": [],
+    "unmet_before": [
+      "R25"
+    ]
+  },
+  "c1_real_control": {
+    "argv_match": true,
+    "available": true,
+    "entering": {
+      "alias_present": true,
+      "alias_value": 4,
+      "exit_code": 0,
+      "schema": "mori-retention-reconciliation-v1"
+    },
+    "exit_code": 0,
+    "expected_exit": 0,
+    "finding_id": "RETENTION_RECONCILED",
+    "forbidden_keys_present": [],
+    "identity_pins": {
+      "expected": {
+        "policy_excluded_hits": "17c348f0a05e4b7827de754fd7b5d57c75f94203377b86155bfe51b8b3a9c5f7",
+        "raw_hits": "c275d2c2ea7600f45160dea966cb107377650df03656eafecb44fe7f78d9bedf",
+        "scanner_hits": "9690b3a9cf4a7daaefacb1d0d69126a81afa441c288249fc2346aa6bc65d4970"
+      },
+      "identity_match": true,
+      "match": true,
+      "observed": {
+        "policy_excluded_hits": "17c348f0a05e4b7827de754fd7b5d57c75f94203377b86155bfe51b8b3a9c5f7",
+        "raw_hits": "c275d2c2ea7600f45160dea966cb107377650df03656eafecb44fe7f78d9bedf",
+        "scanner_hits": "9690b3a9cf4a7daaefacb1d0d69126a81afa441c288249fc2346aa6bc65d4970"
+      },
+      "reason": null,
+      "receipt_pin_match": true,
+      "receipt_sha256_pin": "4001e2d94afcc652b710d5d0afe63bffce2185256f120d5a5f7d33de6be8c840",
+      "twin_rejected": true
+    },
+    "inputs_sha256_match": true,
+    "keys": {
+      "allowlisted": {
+        "expected": 86,
+        "matches": true,
+        "observed": 86
+      },
+      "exclusion_basis": {
+        "expected": "non_author_paths_glob",
+        "matches": true,
+        "observed": "non_author_paths_glob"
+      },
+      "finding_id": {
+        "expected": "RETENTION_RECONCILED",
+        "matches": true,
+        "observed": "RETENTION_RECONCILED"
+      },
+      "forbidden_allowlist": {
+        "expected": 0,
+        "matches": true,
+        "observed": 0
+      },
+      "non_author": {
+        "expected": 5,
+        "matches": true,
+        "observed": 5
+      },
+      "policy_excluded": {
+        "expected": 5,
+        "matches": true,
+        "observed": 5
+      },
+      "privacy_clearance": {
+        "expected": false,
+        "matches": true,
+        "observed": false
+      },
+      "raw_not_allowlisted": {
+        "expected": 9,
+        "matches": true,
+        "observed": 9
+      },
+      "raw_total": {
+        "expected": 95,
+        "matches": true,
+        "observed": 95
+      },
+      "receipt_match": {
+        "expected": true,
+        "matches": true,
+        "observed": true
+      },
+      "retention_state": {
+        "expected": "red",
+        "matches": true,
+        "observed": "red"
+      },
+      "scanner_total": {
+        "expected": 90,
+        "matches": true,
+        "observed": 90
+      },
+      "scanner_unallowlisted": {
+        "expected": 4,
+        "matches": true,
+        "observed": 4
+      },
+      "schema": {
+        "expected": "mori-retention-reconciliation-v2",
+        "matches": true,
+        "observed": "mori-retention-reconciliation-v2"
+      }
+    },
+    "match": true,
+    "privacy_clearance_false": true,
+    "revisions_match": true,
+    "schema": "mori-retention-reconciliation-v2",
+    "tool_sha256_match": true
+  },
+  "c1_supplementary": {
+    "guards": {
+      "same_instance_replay": {
+        "arms": [
+          {
+            "after_exit": 0,
+            "after_shape": "check",
+            "after_tool_sha256": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+            "argv_equal": true,
+            "arm": "valid",
+            "before_exit": 0,
+            "before_shape": "check",
+            "before_tool_sha256": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32",
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          },
+          {
+            "after_exit": 1,
+            "after_shape": "check",
+            "after_tool_sha256": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+            "argv_equal": true,
+            "arm": "drop",
+            "before_exit": 1,
+            "before_shape": "check",
+            "before_tool_sha256": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32",
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          },
+          {
+            "after_exit": 1,
+            "after_shape": "check",
+            "after_tool_sha256": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+            "argv_equal": true,
+            "arm": "inject",
+            "before_exit": 1,
+            "before_shape": "check",
+            "before_tool_sha256": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32",
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          },
+          {
+            "after_exit": 1,
+            "after_shape": "check",
+            "after_tool_sha256": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+            "argv_equal": true,
+            "arm": "digest",
+            "before_exit": 1,
+            "before_shape": "check",
+            "before_tool_sha256": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32",
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          },
+          {
+            "after_exit": 1,
+            "after_shape": "check",
+            "after_tool_sha256": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+            "argv_equal": true,
+            "arm": "line",
+            "before_exit": 1,
+            "before_shape": "check",
+            "before_tool_sha256": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32",
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          },
+          {
+            "after_exit": 1,
+            "after_shape": "check",
+            "after_tool_sha256": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+            "argv_equal": true,
+            "arm": "class",
+            "before_exit": 1,
+            "before_shape": "check",
+            "before_tool_sha256": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32",
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          },
+          {
+            "after_exit": 1,
+            "after_shape": "check",
+            "after_tool_sha256": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+            "argv_equal": true,
+            "arm": "metric",
+            "before_exit": 1,
+            "before_shape": "check",
+            "before_tool_sha256": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32",
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          },
+          {
+            "after_exit": 0,
+            "after_shape": "check",
+            "after_tool_sha256": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+            "argv_equal": true,
+            "arm": "forbidden",
+            "before_exit": 0,
+            "before_shape": "check",
+            "before_tool_sha256": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32",
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          },
+          {
+            "after_exit": 2,
+            "after_shape": "setup",
+            "after_tool_sha256": null,
+            "argv_equal": true,
+            "arm": "invalid-revision",
+            "before_exit": 2,
+            "before_shape": "setup",
+            "before_tool_sha256": null,
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          },
+          {
+            "after_exit": 2,
+            "after_shape": "setup",
+            "after_tool_sha256": null,
+            "argv_equal": true,
+            "arm": "diverged",
+            "before_exit": 2,
+            "before_shape": "setup",
+            "before_tool_sha256": null,
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          },
+          {
+            "after_exit": 2,
+            "after_shape": "setup",
+            "after_tool_sha256": null,
+            "argv_equal": true,
+            "arm": "policy-changed",
+            "before_exit": 2,
+            "before_shape": "setup",
+            "before_tool_sha256": null,
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          },
+          {
+            "after_exit": 2,
+            "after_shape": "setup",
+            "after_tool_sha256": null,
+            "argv_equal": true,
+            "arm": "allowlist-changed",
+            "before_exit": 2,
+            "before_shape": "setup",
+            "before_tool_sha256": null,
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          },
+          {
+            "after_exit": 2,
+            "after_shape": "setup",
+            "after_tool_sha256": null,
+            "argv_equal": true,
+            "arm": "malformed",
+            "before_exit": 2,
+            "before_shape": "setup",
+            "before_tool_sha256": null,
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          },
+          {
+            "after_exit": 2,
+            "after_shape": "setup",
+            "after_tool_sha256": null,
+            "argv_equal": true,
+            "arm": "bool-line",
+            "before_exit": 2,
+            "before_shape": "setup",
+            "before_tool_sha256": null,
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          },
+          {
+            "after_exit": 2,
+            "after_shape": "setup",
+            "after_tool_sha256": null,
+            "argv_equal": true,
+            "arm": "duplicate",
+            "before_exit": 2,
+            "before_shape": "setup",
+            "before_tool_sha256": null,
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          },
+          {
+            "after_exit": 2,
+            "after_shape": "setup",
+            "after_tool_sha256": null,
+            "argv_equal": true,
+            "arm": "bool-metric",
+            "before_exit": 2,
+            "before_shape": "setup",
+            "before_tool_sha256": null,
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          },
+          {
+            "after_exit": 2,
+            "after_shape": "setup",
+            "after_tool_sha256": null,
+            "argv_equal": true,
+            "arm": "valid",
+            "before_exit": 2,
+            "before_shape": "setup",
+            "before_tool_sha256": null,
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          },
+          {
+            "after_exit": 2,
+            "after_shape": "setup",
+            "after_tool_sha256": null,
+            "argv_equal": true,
+            "arm": "symlink",
+            "before_exit": 2,
+            "before_shape": "setup",
+            "before_tool_sha256": null,
+            "differences": [],
+            "identical_apart_from_special_keys": true,
+            "same_instance": true
+          }
+        ]
+      },
+      "selftest": {
+        "available": true,
+        "entering": {
+          "alias_present": false,
+          "exit_code": 0,
+          "schema": "mori-retention-reconciliation-v1",
+          "tool_sha256": null
+        },
+        "measured": {
+          "alias_present": false,
+          "exit_code": 0,
+          "schema": "mori-retention-reconciliation-v2",
+          "tool_sha256": null
+        },
+        "pass": true
+      },
+      "source_byte_guard": {
+        "baseline": {
+          "mode": "100755",
+          "path": "tools/mori-retention-reconcile.py",
+          "pinned_sha256": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32",
+          "revision": "1bfe708a170c877db3319060d0ab38771efe03ac",
+          "sha256": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32"
+        },
+        "frozen_source_delta": {
+          "fields": {
+            "entering_revision": {
+              "driver": "1bfe708a170c877db3319060d0ab38771efe03ac",
+              "frozen": "1bfe708a170c877db3319060d0ab38771efe03ac",
+              "matches": true
+            },
+            "entering_sha256": {
+              "driver": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32",
+              "frozen": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32",
+              "matches": true
+            },
+            "mode": {
+              "driver": "100755",
+              "frozen": "100755",
+              "matches": true
+            },
+            "output_pair_normalization": {
+              "driver": [
+                "schema",
+                "raw_unallowlisted",
+                "tool_sha256"
+              ],
+              "frozen": [
+                "schema",
+                "raw_unallowlisted",
+                "tool_sha256"
+              ],
+              "matches": true
+            },
+            "replacements": {
+              "driver": [
+                [
+                  "SCHEMA='mori-retention-reconciliation-v1'",
+                  "SCHEMA='mori-retention-reconciliation-v2'"
+                ],
+                [
+                  "'raw_unallowlisted':len(unallowed),",
+                  ""
+                ]
+              ],
+              "frozen": [
+                [
+                  "SCHEMA='mori-retention-reconciliation-v1'",
+                  "SCHEMA='mori-retention-reconciliation-v2'"
+                ],
+                [
+                  "'raw_unallowlisted':len(unallowed),",
+                  ""
+                ]
+              ],
+              "matches": true
+            },
+            "same_fixture_required": {
+              "driver": true,
+              "frozen": true,
+              "matches": true
+            },
+            "transformed_sha256": {
+              "driver": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+              "frozen": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+              "matches": true
+            }
+          },
+          "matches": true,
+          "present": true
+        },
+        "matches": true,
+        "observed_sha256": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+        "target": {
+          "mode": "100755",
+          "mode_frozen_in_driver": "100755",
+          "observed_alias_fragment_count": 0,
+          "observed_v1_literal_count": 0,
+          "observed_v2_literal_count": 1,
+          "sha256_computed": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+          "sha256_frozen_in_driver": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36"
+        },
+        "transform_reason": null,
+        "transformations": [
+          {
+            "from": "SCHEMA='mori-retention-reconciliation-v1'",
+            "kind": "substitution",
+            "occurrences_in_baseline": 1,
+            "to": "SCHEMA='mori-retention-reconciliation-v2'"
+          },
+          {
+            "fragment": "'raw_unallowlisted':len(unallowed),",
+            "kind": "deletion",
+            "occurrences_in_baseline": 1
+          }
+        ]
+      },
+      "source_guard_mutants": [
+        {
+          "guard_rejects": true,
+          "mutant": "appended_statement",
+          "sha256": "f395a681c8a652b30902372a0f5485476ffa8227ad250f22ba6e4d785a72babf"
+        },
+        {
+          "guard_rejects": true,
+          "mutant": "removed_line",
+          "sha256": "e786fdb794d626359c2e5e3790d0112f826b1bec00d0b9a9894ff1ed0af62a83"
+        },
+        {
+          "guard_rejects": true,
+          "mutant": "whitespace_only",
+          "sha256": "d6d9da56fc6a6fad4d4c224e1e3207475acccfebc7088a54d0daac966c8b113d"
+        }
+      ]
+    },
+    "note": "supplementary guards are reported apart from the original 26 denominator",
+    "pass": true
+  },
+  "c2": {
+    "after": {
+      "capability_absent": 30,
+      "pass": 0,
+      "total": 30,
+      "unmet": 0
+    },
+    "after_with_real_expected": {
+      "capability_absent": 31,
+      "pass": 0,
+      "total": 31,
+      "unmet": 0
+    },
+    "before": {
+      "capability_absent": 30,
+      "pass": 0,
+      "total": 30,
+      "unmet": 0
+    },
+    "cases": [
+      "CaseBoundary.json",
+      "CaseBtrfsDevMatch.json",
+      "CaseBtrfsQgroup.json",
+      "CaseBtrfsSquota.json",
+      "CaseBtrfsTwoUuids.json",
+      "CaseBtrfsUnmapped.json",
+      "CaseEnabledPlusUnknown.json",
+      "CaseEscapedSpace.json",
+      "CaseExt4Journaled.json",
+      "CaseExt4NoOptions.json",
+      "CaseExt4Usrquota.json",
+      "CaseHostLike.json",
+      "CaseNoCover.json",
+      "CaseOptionalFields.json",
+      "CaseSetupMalformed.json",
+      "CaseStacked.json",
+      "CaseSymlinkRealpath.json",
+      "CaseTmpfsHardlimit.json",
+      "CaseTmpfsNoQuota.json",
+      "CaseTmpfsUsrquota.json",
+      "CaseUnsupported.json",
+      "CaseXfsAccountingOnly.json",
+      "CaseXfsConflict.json",
+      "CaseXfsDevMismatch.json",
+      "CaseXfsMixedEnforce.json",
+      "CaseXfsOptionsAbsent.json",
+      "CaseXfsUsrquota.json",
+      "SupplementHiddenMount.json",
+      "SupplementQgroupDisabled.json",
+      "SupplementQgroupUnknown.json"
+    ],
+    "cases_count": 30,
+    "cases_source": "staged from the committed seal bytes",
+    "oracle_present": true,
+    "oracle_sha256": "f1f4a027728180436fc5161171b0f6ad4ca4176229b5240aabb33e3f2af36bec",
+    "real_control": {
+      "available": true
+    }
+  },
+  "carried_open_debt": {
+    "baseline_acceptance": "blocked",
+    "historical_dispositions": "two unknown",
+    "original_permission_control": "RED 11/12 retained byte-unchanged, not rerun",
+    "privacy_clearance": false,
+    "unallowlisted_retention_hits": 4
+  },
+  "checks": [
+    {
+      "detail": "the measured revision and the seal revision must both resolve to commits",
+      "id": "C00.revisions_resolve",
+      "measured_revision_resolved": "0d8f2d50eb85e0d4349b1045f01c04e57318cc1b",
+      "pass": true,
+      "seal_revision_resolved": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687"
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin",
+        "merge-base",
+        "--is-ancestor",
+        "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+        "0d8f2d50eb85e0d4349b1045f01c04e57318cc1b"
+      ],
+      "detail": "the seal must be a strict ancestor of the measured revision (SEAL != REV and is-ancestor 0)",
+      "id": "C01.seal_is_strict_ancestor_of_revision",
+      "pass": true,
+      "returncode": 0,
+      "seal_equals_revision": false
+    },
+    {
+      "detail": "tools/mori-quota-surface.py must be absent at the seal (production path)",
+      "id": "C02.seal_quota_production_path_absent",
+      "pass": true,
+      "present_at_seal": false
+    },
+    {
+      "detail": "the reconciler at the seal must be byte-identical to the entering revision",
+      "entering_sha256": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32",
+      "id": "C03.seal_reconciler_entering_identical",
+      "pass": true,
+      "seal_sha256": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32"
+    },
+    {
+      "detail": "the seal must carry the oracles, the driver, the frozen controls, the contract, the amendment and the r22 builder/requirements dependencies",
+      "id": "C04.seal_contains_harnesses_driver_and_dependencies",
+      "missing": [],
+      "pass": true,
+      "sealed_cases": 30,
+      "sealed_proposals": 27
+    },
+    {
+      "cases": [
+        ".ufo/waves/round-23/frozen/quota-cases/CaseBoundary.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsDevMatch.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsQgroup.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsSquota.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsTwoUuids.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsUnmapped.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseEnabledPlusUnknown.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseEscapedSpace.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseExt4Journaled.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseExt4NoOptions.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseExt4Usrquota.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseHostLike.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseNoCover.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseOptionalFields.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseSetupMalformed.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseStacked.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseSymlinkRealpath.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseTmpfsHardlimit.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseTmpfsNoQuota.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseTmpfsUsrquota.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseUnsupported.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseXfsAccountingOnly.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseXfsConflict.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseXfsDevMismatch.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseXfsMixedEnforce.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseXfsOptionsAbsent.json",
+        ".ufo/waves/round-23/frozen/quota-cases/CaseXfsUsrquota.json",
+        ".ufo/waves/round-23/frozen/quota-cases/SupplementHiddenMount.json",
+        ".ufo/waves/round-23/frozen/quota-cases/SupplementQgroupDisabled.json",
+        ".ufo/waves/round-23/frozen/quota-cases/SupplementQgroupUnknown.json"
+      ],
+      "detail": "the seal must contain the accepted C2 case files",
+      "id": "C05.seal_contains_accepted_case_files",
+      "pass": true
+    },
+    {
+      "detail": "the seal must retain the original case proposals",
+      "id": "C06.seal_contains_original_proposals",
+      "pass": true,
+      "proposals": [
+        ".ufo/waves/round-23/cases-proposed/CaseBoundary.json",
+        ".ufo/waves/round-23/cases-proposed/CaseBtrfsDevMatch.json",
+        ".ufo/waves/round-23/cases-proposed/CaseBtrfsQgroup.json",
+        ".ufo/waves/round-23/cases-proposed/CaseBtrfsSquota.json",
+        ".ufo/waves/round-23/cases-proposed/CaseBtrfsTwoUuids.json",
+        ".ufo/waves/round-23/cases-proposed/CaseBtrfsUnmapped.json",
+        ".ufo/waves/round-23/cases-proposed/CaseEnabledPlusUnknown.json",
+        ".ufo/waves/round-23/cases-proposed/CaseEscapedSpace.json",
+        ".ufo/waves/round-23/cases-proposed/CaseExt4Journaled.json",
+        ".ufo/waves/round-23/cases-proposed/CaseExt4NoOptions.json",
+        ".ufo/waves/round-23/cases-proposed/CaseExt4Usrquota.json",
+        ".ufo/waves/round-23/cases-proposed/CaseHostLike.json",
+        ".ufo/waves/round-23/cases-proposed/CaseNoCover.json",
+        ".ufo/waves/round-23/cases-proposed/CaseOptionalFields.json",
+        ".ufo/waves/round-23/cases-proposed/CaseSetupMalformed.json",
+        ".ufo/waves/round-23/cases-proposed/CaseStacked.json",
+        ".ufo/waves/round-23/cases-proposed/CaseSymlinkRealpath.json",
+        ".ufo/waves/round-23/cases-proposed/CaseTmpfsHardlimit.json",
+        ".ufo/waves/round-23/cases-proposed/CaseTmpfsNoQuota.json",
+        ".ufo/waves/round-23/cases-proposed/CaseTmpfsUsrquota.json",
+        ".ufo/waves/round-23/cases-proposed/CaseUnsupported.json",
+        ".ufo/waves/round-23/cases-proposed/CaseXfsAccountingOnly.json",
+        ".ufo/waves/round-23/cases-proposed/CaseXfsConflict.json",
+        ".ufo/waves/round-23/cases-proposed/CaseXfsDevMismatch.json",
+        ".ufo/waves/round-23/cases-proposed/CaseXfsMixedEnforce.json",
+        ".ufo/waves/round-23/cases-proposed/CaseXfsOptionsAbsent.json",
+        ".ufo/waves/round-23/cases-proposed/CaseXfsUsrquota.json"
+      ]
+    },
+    {
+      "detail": "the tools/ delta between seal and revision must be exactly: reconciler modified, quota added",
+      "expected": [
+        [
+          "A",
+          "tools/mori-quota-surface.py"
+        ],
+        [
+          "M",
+          "tools/mori-retention-reconcile.py"
+        ]
+      ],
+      "id": "C07.tools_delta_seal_to_revision_exact",
+      "observed": [
+        [
+          "M",
+          "tools/mori-retention-reconcile.py"
+        ]
+      ],
+      "pass": false,
+      "raw": [
+        "M\ttools/mori-retention-reconcile.py"
+      ]
+    },
+    {
+      "detail": "every frozen artefact must exist at the seal and at the revision with identical bytes",
+      "divergent": [],
+      "files": 37,
+      "id": "C08.frozen_byte_identical_seal_to_revision",
+      "pass": true
+    },
+    {
+      "detail": "the sealed oracles must be byte-identical between the seal and the revision",
+      "divergent": [],
+      "id": "C09.sealed_oracles_byte_identical",
+      "pass": true
+    },
+    {
+      "detail": "the pre-registered contract and the pre-seal amendment must be unchanged between the seal and the revision",
+      "documents": {
+        ".ufo/waves/round-23/contract.md": {
+          "byte_identical": true,
+          "revision_sha256": "2bb35aefb08d3fafc467260f859453c0f096effe18b2446503f2b2ee87fe69e7",
+          "seal_sha256": "2bb35aefb08d3fafc467260f859453c0f096effe18b2446503f2b2ee87fe69e7"
+        },
+        ".ufo/waves/round-23/preseal-amendment.md": {
+          "byte_identical": true,
+          "revision_sha256": "16aab68bde6f4c07cd8199a2b36cf96bb16013b2ef282876a924eb726c6db196",
+          "seal_sha256": "16aab68bde6f4c07cd8199a2b36cf96bb16013b2ef282876a924eb726c6db196"
+        }
+      },
+      "id": "C10.contract_and_amendment_unchanged_since_seal",
+      "pass": true
+    },
+    {
+      "bindings": {
+        "contract_sha256": {
+          "matches": true,
+          "path": ".ufo/waves/round-23/contract.md",
+          "pinned": "2bb35aefb08d3fafc467260f859453c0f096effe18b2446503f2b2ee87fe69e7",
+          "revision_sha256": "2bb35aefb08d3fafc467260f859453c0f096effe18b2446503f2b2ee87fe69e7",
+          "seal_sha256": "2bb35aefb08d3fafc467260f859453c0f096effe18b2446503f2b2ee87fe69e7"
+        },
+        "fixture_builder_sha256": {
+          "matches": true,
+          "path": ".ufo/waves/round-22/frozen/fixture-builder-v2.py",
+          "pinned": "1b3e16f74a032e066dd881c15affbc4401f2f44447d78efc650ee98a6d2d15d1",
+          "revision_sha256": "1b3e16f74a032e066dd881c15affbc4401f2f44447d78efc650ee98a6d2d15d1",
+          "seal_sha256": "1b3e16f74a032e066dd881c15affbc4401f2f44447d78efc650ee98a6d2d15d1"
+        },
+        "oracle_sha256": {
+          "matches": true,
+          "path": ".ufo/waves/round-23/oracle-rename.py",
+          "pinned": "a55b2b50d3e7447a1d5312c8b066a13137a6a6895f0343b3240ebf081d97c5f2",
+          "revision_sha256": "a55b2b50d3e7447a1d5312c8b066a13137a6a6895f0343b3240ebf081d97c5f2",
+          "seal_sha256": "a55b2b50d3e7447a1d5312c8b066a13137a6a6895f0343b3240ebf081d97c5f2"
+        },
+        "r22_requirements_v2_sha256": {
+          "matches": true,
+          "path": ".ufo/waves/round-22/frozen/requirements-v2.json",
+          "pinned": "48ea2369dad5958bd62922483438124b11597a61a5e1ddc02bbeb213c89d0bea",
+          "revision_sha256": "48ea2369dad5958bd62922483438124b11597a61a5e1ddc02bbeb213c89d0bea",
+          "seal_sha256": "48ea2369dad5958bd62922483438124b11597a61a5e1ddc02bbeb213c89d0bea"
+        }
+      },
+      "detail": "the frozen c1-requirements digests must match the committed artefacts at the seal and at the revision",
+      "id": "C11.dependencies_pinned",
+      "pass": true
+    },
+    {
+      "detail": "the measured working copies of the harnesses and frozen files must equal their committed seal bytes",
+      "divergent": [],
+      "id": "C12.working_copies_match_committed_seal_bytes",
+      "pass": true
+    },
+    {
+      "detail": "the executing driver must be the committed seal copy of itself",
+      "executed_sha256": "5c12fdc056309966d3e716d25e3427a7908056595383f0353655b42282fdfbcd",
+      "id": "C13.driver_matches_sealed_bytes",
+      "pass": true,
+      "sealed_path": ".ufo/waves/round-23/build/MeasureDriver/measure-round23-v2.py",
+      "sealed_sha256": "5c12fdc056309966d3e716d25e3427a7908056595383f0353655b42282fdfbcd"
+    },
+    {
+      "detail": "tools/mori-quota-surface.py must be absent at the entering revision",
+      "entering_present": false,
+      "id": "C14.quota_tool_absent_at_entering_revision",
+      "pass": true
+    },
+    {
+      "detail": "tools/mori-quota-surface.py must exist at the measured revision",
+      "id": "C15.quota_tool_present_at_measured_revision",
+      "pass": false
+    },
+    {
+      "detail": "tools/mori-retention-reconcile.py must exist at both revisions",
+      "id": "C16.retention_tool_present_at_both_revisions",
+      "pass": true
+    },
+    {
+      "detail": "the frozen C1 oracle must be staged from the seal",
+      "id": "C31.rename_oracle_present_at_seal",
+      "pass": true
+    },
+    {
+      "detail": "before the cutover exactly R25 may be unmet",
+      "id": "C17.c1_before_requirement_counts",
+      "oracle_exit": 1,
+      "pass": true,
+      "pass_count": 25,
+      "total": 26,
+      "unmet": [
+        "R25"
+      ]
+    },
+    {
+      "detail": "after the cutover every original requirement must pass",
+      "id": "C18.c1_after_requirement_counts",
+      "oracle_exit": 0,
+      "pass": true,
+      "pass_count": 26,
+      "total": 26,
+      "unmet": []
+    },
+    {
+      "after": 0,
+      "before": 8,
+      "detail": "misleading_alias_runs must be greater than 0 before and 0 after",
+      "id": "C19.c1_alias_removed",
+      "oracle_counter": {
+        "after": 0,
+        "before": 8
+      },
+      "pass": true
+    },
+    {
+      "detail": "every parsed oracle run after the cutover must carry schema mori-retention-reconciliation-v2",
+      "id": "C20.c1_schema_v2_after",
+      "parsed_runs": 18,
+      "pass": true,
+      "schema_v2_runs": 18
+    },
+    {
+      "detail": "the production reconciler source must equal the baseline git blob of the entering revision after exactly the two pre-registered transformations (each occurring exactly once in the baseline), with the target SHA-256 frozen in this driver and the file mode unchanged at 100755, and the frozen source-delta artefact must agree with the constants frozen in this driver",
+      "guard": {
+        "baseline": {
+          "mode": "100755",
+          "path": "tools/mori-retention-reconcile.py",
+          "pinned_sha256": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32",
+          "revision": "1bfe708a170c877db3319060d0ab38771efe03ac",
+          "sha256": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32"
+        },
+        "frozen_source_delta": {
+          "fields": {
+            "entering_revision": {
+              "driver": "1bfe708a170c877db3319060d0ab38771efe03ac",
+              "frozen": "1bfe708a170c877db3319060d0ab38771efe03ac",
+              "matches": true
+            },
+            "entering_sha256": {
+              "driver": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32",
+              "frozen": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32",
+              "matches": true
+            },
+            "mode": {
+              "driver": "100755",
+              "frozen": "100755",
+              "matches": true
+            },
+            "output_pair_normalization": {
+              "driver": [
+                "schema",
+                "raw_unallowlisted",
+                "tool_sha256"
+              ],
+              "frozen": [
+                "schema",
+                "raw_unallowlisted",
+                "tool_sha256"
+              ],
+              "matches": true
+            },
+            "replacements": {
+              "driver": [
+                [
+                  "SCHEMA='mori-retention-reconciliation-v1'",
+                  "SCHEMA='mori-retention-reconciliation-v2'"
+                ],
+                [
+                  "'raw_unallowlisted':len(unallowed),",
+                  ""
+                ]
+              ],
+              "frozen": [
+                [
+                  "SCHEMA='mori-retention-reconciliation-v1'",
+                  "SCHEMA='mori-retention-reconciliation-v2'"
+                ],
+                [
+                  "'raw_unallowlisted':len(unallowed),",
+                  ""
+                ]
+              ],
+              "matches": true
+            },
+            "same_fixture_required": {
+              "driver": true,
+              "frozen": true,
+              "matches": true
+            },
+            "transformed_sha256": {
+              "driver": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+              "frozen": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+              "matches": true
+            }
+          },
+          "matches": true,
+          "present": true
+        },
+        "matches": true,
+        "observed_sha256": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+        "target": {
+          "mode": "100755",
+          "mode_frozen_in_driver": "100755",
+          "observed_alias_fragment_count": 0,
+          "observed_v1_literal_count": 0,
+          "observed_v2_literal_count": 1,
+          "sha256_computed": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+          "sha256_frozen_in_driver": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36"
+        },
+        "transform_reason": null,
+        "transformations": [
+          {
+            "from": "SCHEMA='mori-retention-reconciliation-v1'",
+            "kind": "substitution",
+            "occurrences_in_baseline": 1,
+            "to": "SCHEMA='mori-retention-reconciliation-v2'"
+          },
+          {
+            "fragment": "'raw_unallowlisted':len(unallowed),",
+            "kind": "deletion",
+            "occurrences_in_baseline": 1
+          }
+        ]
+      },
+      "id": "C21.c1_source_byte_guard",
+      "pass": true
+    },
+    {
+      "detail": "the byte guard must reject a source that adds, removes or changes any other code",
+      "id": "C22.c1_source_guard_discriminates",
+      "mutants": [
+        {
+          "guard_rejects": true,
+          "mutant": "appended_statement",
+          "sha256": "f395a681c8a652b30902372a0f5485476ffa8227ad250f22ba6e4d785a72babf"
+        },
+        {
+          "guard_rejects": true,
+          "mutant": "removed_line",
+          "sha256": "e786fdb794d626359c2e5e3790d0112f826b1bec00d0b9a9894ff1ed0af62a83"
+        },
+        {
+          "guard_rejects": true,
+          "mutant": "whitespace_only",
+          "sha256": "d6d9da56fc6a6fad4d4c224e1e3207475acccfebc7088a54d0daac966c8b113d"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "arms": 18,
+      "detail": "before and after must be replayed on the same synthetic fixture instance: a check output must carry the alias before and the frozen tool digests, a setup envelope must carry neither the alias nor a tool digest, and every other key and value must be equal, including argv",
+      "divergent": [],
+      "id": "C23.c1_same_instance_output_equivalence",
+      "pass": true,
+      "shapes": {
+        "check": 8,
+        "setup": 10
+      },
+      "special_keys": [
+        "schema",
+        "raw_unallowlisted",
+        "tool_sha256"
+      ]
+    },
+    {
+      "detail": "the selftest output must carry the v1 schema before and the v2 schema after, with no alias key and an otherwise identical payload",
+      "id": "C24.c1_selftest_schema",
+      "pass": true,
+      "selftest": {
+        "available": true,
+        "entering": {
+          "alias_present": false,
+          "exit_code": 0,
+          "schema": "mori-retention-reconciliation-v1",
+          "tool_sha256": null
+        },
+        "measured": {
+          "alias_present": false,
+          "exit_code": 0,
+          "schema": "mori-retention-reconciliation-v2",
+          "tool_sha256": null
+        },
+        "pass": true
+      }
+    },
+    {
+      "argv_match": true,
+      "detail": "the C1 real control must reproduce the frozen receipt values exactly and the tool must self-report the frozen target SHA-256",
+      "exit_code": 0,
+      "expected_exit": 0,
+      "forbidden_keys_present": [],
+      "id": "C25.c1_real_control_matches_frozen",
+      "inputs_sha256_match": true,
+      "keys": {
+        "allowlisted": {
+          "expected": 86,
+          "matches": true,
+          "observed": 86
+        },
+        "exclusion_basis": {
+          "expected": "non_author_paths_glob",
+          "matches": true,
+          "observed": "non_author_paths_glob"
+        },
+        "finding_id": {
+          "expected": "RETENTION_RECONCILED",
+          "matches": true,
+          "observed": "RETENTION_RECONCILED"
+        },
+        "forbidden_allowlist": {
+          "expected": 0,
+          "matches": true,
+          "observed": 0
+        },
+        "non_author": {
+          "expected": 5,
+          "matches": true,
+          "observed": 5
+        },
+        "policy_excluded": {
+          "expected": 5,
+          "matches": true,
+          "observed": 5
+        },
+        "privacy_clearance": {
+          "expected": false,
+          "matches": true,
+          "observed": false
+        },
+        "raw_not_allowlisted": {
+          "expected": 9,
+          "matches": true,
+          "observed": 9
+        },
+        "raw_total": {
+          "expected": 95,
+          "matches": true,
+          "observed": 95
+        },
+        "receipt_match": {
+          "expected": true,
+          "matches": true,
+          "observed": true
+        },
+        "retention_state": {
+          "expected": "red",
+          "matches": true,
+          "observed": "red"
+        },
+        "scanner_total": {
+          "expected": 90,
+          "matches": true,
+          "observed": 90
+        },
+        "scanner_unallowlisted": {
+          "expected": 4,
+          "matches": true,
+          "observed": 4
+        },
+        "schema": {
+          "expected": "mori-retention-reconciliation-v2",
+          "matches": true,
+          "observed": "mori-retention-reconciliation-v2"
+        }
+      },
+      "pass": true,
+      "privacy_clearance_false": true,
+      "revisions_match": true,
+      "tool_sha256_match": true
+    },
+    {
+      "detail": "the observed real population must match the frozen identity digests over the sorted full four-tuples (path, line, class, line_sha256) with the r22 driver's exact encoding, and the swapped scanner/policy twin must not match",
+      "encoding": "SHA256 of json.dumps(sorted full4tuples), separators comma/colon, default ensure_ascii; project serialization, no JCS claim",
+      "expected": {
+        "policy_excluded_hits": "17c348f0a05e4b7827de754fd7b5d57c75f94203377b86155bfe51b8b3a9c5f7",
+        "raw_hits": "c275d2c2ea7600f45160dea966cb107377650df03656eafecb44fe7f78d9bedf",
+        "scanner_hits": "9690b3a9cf4a7daaefacb1d0d69126a81afa441c288249fc2346aa6bc65d4970"
+      },
+      "id": "C35.c1_real_identity_pins",
+      "identity_match": true,
+      "observed": {
+        "policy_excluded_hits": "17c348f0a05e4b7827de754fd7b5d57c75f94203377b86155bfe51b8b3a9c5f7",
+        "raw_hits": "c275d2c2ea7600f45160dea966cb107377650df03656eafecb44fe7f78d9bedf",
+        "scanner_hits": "9690b3a9cf4a7daaefacb1d0d69126a81afa441c288249fc2346aa6bc65d4970"
+      },
+      "pass": true,
+      "reason": null,
+      "receipt_pin_match": true,
+      "receipt_sha256_pin": "4001e2d94afcc652b710d5d0afe63bffce2185256f120d5a5f7d33de6be8c840",
+      "twin_rejected": true
+    },
+    {
+      "detail": "the misleading alias must be present in the entering revision output and gone after",
+      "entering": {
+        "alias_present": true,
+        "alias_value": 4,
+        "exit_code": 0,
+        "schema": "mori-retention-reconciliation-v1"
+      },
+      "id": "C26.c1_alias_present_before_absent_after",
+      "measured": {
+        "alias_present": false,
+        "schema": "mori-retention-reconciliation-v2"
+      },
+      "pass": true
+    },
+    {
+      "detail": "the sealed C2 oracle must exist at the seal",
+      "id": "C32.c2_oracle_present_at_seal",
+      "pass": true
+    },
+    {
+      "capability_absent": 30,
+      "cases": 30,
+      "detail": "before the cutover every sealed case must be capability_absent",
+      "id": "C33.c2_before_capability_absent",
+      "oracle_exit": 0,
+      "pass": true,
+      "total": 30
+    },
+    {
+      "cases": 30,
+      "detail": "after the cutover every sealed case must match exactly",
+      "id": "C34.c2_after_every_case_matches",
+      "oracle_exit": 0,
+      "pass": false,
+      "pass_count": 0,
+      "total": 30,
+      "unmet": 0
+    },
+    {
+      "detail": "tools/mori-quota-surface.py is unavailable at the measured revision",
+      "id": "C29.c2_real_control_matches_frozen",
+      "pass": false
+    },
+    {
+      "detail": "tools/mori-quota-surface.py is unavailable at the measured revision",
+      "id": "C30.c2_oracle_real_control_agrees",
+      "pass": false
+    }
+  ],
+  "denominators": {
+    "c1_original_requirements": 26,
+    "c1_supplementary_guards": 5,
+    "c2_sealed_cases": 30
+  },
+  "dependency_pinning": {
+    "contract_sha256": {
+      "matches": true,
+      "path": ".ufo/waves/round-23/contract.md",
+      "pinned": "2bb35aefb08d3fafc467260f859453c0f096effe18b2446503f2b2ee87fe69e7",
+      "revision_sha256": "2bb35aefb08d3fafc467260f859453c0f096effe18b2446503f2b2ee87fe69e7",
+      "seal_sha256": "2bb35aefb08d3fafc467260f859453c0f096effe18b2446503f2b2ee87fe69e7"
+    },
+    "fixture_builder_sha256": {
+      "matches": true,
+      "path": ".ufo/waves/round-22/frozen/fixture-builder-v2.py",
+      "pinned": "1b3e16f74a032e066dd881c15affbc4401f2f44447d78efc650ee98a6d2d15d1",
+      "revision_sha256": "1b3e16f74a032e066dd881c15affbc4401f2f44447d78efc650ee98a6d2d15d1",
+      "seal_sha256": "1b3e16f74a032e066dd881c15affbc4401f2f44447d78efc650ee98a6d2d15d1"
+    },
+    "oracle_sha256": {
+      "matches": true,
+      "path": ".ufo/waves/round-23/oracle-rename.py",
+      "pinned": "a55b2b50d3e7447a1d5312c8b066a13137a6a6895f0343b3240ebf081d97c5f2",
+      "revision_sha256": "a55b2b50d3e7447a1d5312c8b066a13137a6a6895f0343b3240ebf081d97c5f2",
+      "seal_sha256": "a55b2b50d3e7447a1d5312c8b066a13137a6a6895f0343b3240ebf081d97c5f2"
+    },
+    "r22_requirements_v2_sha256": {
+      "matches": true,
+      "path": ".ufo/waves/round-22/frozen/requirements-v2.json",
+      "pinned": "48ea2369dad5958bd62922483438124b11597a61a5e1ddc02bbeb213c89d0bea",
+      "revision_sha256": "48ea2369dad5958bd62922483438124b11597a61a5e1ddc02bbeb213c89d0bea",
+      "seal_sha256": "48ea2369dad5958bd62922483438124b11597a61a5e1ddc02bbeb213c89d0bea"
+    }
+  },
+  "driver": "measure-round23-v2.py",
+  "driver_binding": {
+    "executed_sha256": "5c12fdc056309966d3e716d25e3427a7908056595383f0353655b42282fdfbcd",
+    "matches": true,
+    "sealed_sha256": "5c12fdc056309966d3e716d25e3427a7908056595383f0353655b42282fdfbcd"
+  },
+  "driver_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/build/MeasureDriver/measure-round23-v2.py",
+  "driver_sha256": "5c12fdc056309966d3e716d25e3427a7908056595383f0353655b42282fdfbcd",
+  "entering_revision": "1bfe708a170c877db3319060d0ab38771efe03ac",
+  "frozen_dependency_digests": {
+    ".ufo/waves/round-22/frozen/fixture-builder-v2.py": "1b3e16f74a032e066dd881c15affbc4401f2f44447d78efc650ee98a6d2d15d1",
+    ".ufo/waves/round-22/frozen/requirements-v2.json": "48ea2369dad5958bd62922483438124b11597a61a5e1ddc02bbeb213c89d0bea",
+    ".ufo/waves/round-23/build/MeasureDriver/measure-round23-v2.py": "5c12fdc056309966d3e716d25e3427a7908056595383f0353655b42282fdfbcd",
+    ".ufo/waves/round-23/contract.md": "2bb35aefb08d3fafc467260f859453c0f096effe18b2446503f2b2ee87fe69e7",
+    ".ufo/waves/round-23/frozen/c1-expected-real-identities.json": "e81c21b93c7cfa2d18cb3d97cd75ecb63748a130e1f0bd1bb097837dc40027b8",
+    ".ufo/waves/round-23/frozen/c1-expected-real.json": "f8e111a5c4d1e8ca00a32b8e96db7986798def8b76d2c8b5275b0feb7fa41bba",
+    ".ufo/waves/round-23/frozen/c1-requirements.json": "88e1b912df1a8d5f3ad3da6a9fd3fec751cab7776919c77a8aa83365f84f3184",
+    ".ufo/waves/round-23/frozen/c1-source-delta.json": "df425412405c9358caec31c2fd7c6cc303d1f395b648a169b19c982bd3567318",
+    ".ufo/waves/round-23/frozen/c2-expected-real.json": "9cbb69c03d284c4aa240d5cc9c627cef37e85306bf13a92ea2284fbd65087398",
+    ".ufo/waves/round-23/frozen/case-decisions.json": "b05a007262b52ab0266bd2e7b6a55d8fa05aab8fc518243036e84638960bc60a",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseBoundary.json": "2e2ef692060105f054f2561091cb7603e77b1328b7954f63046ff57e7bea5d52",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsDevMatch.json": "a74da5db52f71ec3f4a92018b2f2cd35fb43e349773e17ccce8a8235bbbd43bc",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsQgroup.json": "38a7d5b94f8b08ddee9c7080cca8786db0cc6aa8423dcef75d8250c58d462188",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsSquota.json": "b3a641541e536ce1f313b521ae25a33cd8296e2e2d8daf647bf24c168254240a",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsTwoUuids.json": "6bdcea63cf12d1d63e82e6cbaca827c3e00729dfd016f28331d260d6f0e7328c",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsUnmapped.json": "1986ade4a150637c62102316fcec8c55523919d35c377759a5908d1e682e59b1",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseEnabledPlusUnknown.json": "77440e32054aef813df90b9a22d9e03b526496a3b103940df0ff601bec775828",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseEscapedSpace.json": "8340738a509e474a94a815637e66b407dfb60c6449511e52db55296d844abeea",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseExt4Journaled.json": "d317ccb1141271ed0cda2d2b2209fcfb965b57016e6dfc4e0efcf34560c9fb40",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseExt4NoOptions.json": "816a5d9d321c6188eddfa373c50b51c1e70a1784fe0db3a6fbd104768c542ee9",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseExt4Usrquota.json": "4db2fcd87bb1a2efcfadaff13311426eb8a6fc129663cfa486190a93ac959cda",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseHostLike.json": "f4580093a6aa93eab53bef9c9f61667a2a0aa2224096b60568140904b148a63c",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseNoCover.json": "334c7cfdddbf9b9f650e62dab94aeba656047044402de166d5b094ed1d210215",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseOptionalFields.json": "9e73da479ea14cc4b7ddfccf08816c7716842eb71325d7c8bd06541779c1daf0",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseSetupMalformed.json": "833cd8a536b33770ef11291ddc4e05ecd9cbf18ff7dcfa9abfe566021b916fe7",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseStacked.json": "b45f3485c170a88f75abcf8746315caf031331c4cf92b4943847f7433bf980d0",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseSymlinkRealpath.json": "275c360585a93e2f1bc7e2ded0f4cd42b07d5b0eeb16b9790d1980f456b0d07e",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseTmpfsHardlimit.json": "b3226093395d0753138f4761dcd91881e56ff350de213ae4b12f03a57ceb5771",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseTmpfsNoQuota.json": "7afd98c191a799e52bb9ac01b896b23eaa855b9e02ef1bc3f901aa13a03a49b5",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseTmpfsUsrquota.json": "7ecc3503a5fd3aa4b6a1bb635ae34965f7a6f97466c4ff273e9bb836517ac800",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseUnsupported.json": "28f3080b116cf3e09e3ee77f3e8b53daff826fdfb4387a21d3c58850878b22b7",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseXfsAccountingOnly.json": "e03c414b1625518c5bb88171e53e5584c72ea1d5f7e54e2bed5873600f3ba135",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseXfsConflict.json": "84dfae8db5f4803e58e82be92d2ac07d321c98214f1a29fee9f844e9d3c56680",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseXfsDevMismatch.json": "e5db2d1181e0b6ab2062447e2181307a9da4ba64760ce98a0d76f55ccb492097",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseXfsMixedEnforce.json": "ed13abb0eabfbbb8dd8c3391d6cc665a939d8b30b60338f08a9b840e14cd44da",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseXfsOptionsAbsent.json": "d54cba9914cf85c4c4036b250b2e8c6dd3401f770e3929f5072c980797e16a58",
+    ".ufo/waves/round-23/frozen/quota-cases/CaseXfsUsrquota.json": "3e1620f745d7a1cc6fa497b1f61f991539809cd1bde67f86b73860baaaa4244b",
+    ".ufo/waves/round-23/frozen/quota-cases/SupplementHiddenMount.json": "d1a3a4c66008fcdefec47839d9393f1c971ebc6630d96b94c399038378187824",
+    ".ufo/waves/round-23/frozen/quota-cases/SupplementQgroupDisabled.json": "f117bcb0b411cb2dd50910c62222481d8d283eeb49ff2169b40788b24dd09567",
+    ".ufo/waves/round-23/frozen/quota-cases/SupplementQgroupUnknown.json": "22f77b779845660b131dc0b19f3e02ddf203165734dfda040c52f08a06755f56",
+    ".ufo/waves/round-23/frozen/seal-manifest.json": "8ff351f2dec6509d09865e827ffadb8341e522076ad88699ae433be07321c082",
+    ".ufo/waves/round-23/oracle-quota.py": "f1f4a027728180436fc5161171b0f6ad4ca4176229b5240aabb33e3f2af36bec",
+    ".ufo/waves/round-23/oracle-rename.py": "a55b2b50d3e7447a1d5312c8b066a13137a6a6895f0343b3240ebf081d97c5f2",
+    ".ufo/waves/round-23/preseal-amendment.md": "16aab68bde6f4c07cd8199a2b36cf96bb16013b2ef282876a924eb726c6db196",
+    "tools/mori-quota-surface.py": null,
+    "tools/mori-retention-reconcile.py": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32"
+  },
+  "lane": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "measured_revision": "0d8f2d50eb85e0d4349b1045f01c04e57318cc1b",
+  "observations": [
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/oracle-rename.py",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/oracle-quota.py",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/c1-requirements.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/c1-expected-real.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/c2-expected-real.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-22/frozen/fixture-builder-v2.py",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-22/frozen/requirements-v2.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/c1-expected-real-identities.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/c1-expected-real.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/c1-requirements.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/c1-source-delta.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/c2-expected-real.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/case-decisions.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseBoundary.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseBtrfsDevMatch.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseBtrfsQgroup.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseBtrfsSquota.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseBtrfsTwoUuids.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseBtrfsUnmapped.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseEnabledPlusUnknown.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseEscapedSpace.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseExt4Journaled.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseExt4NoOptions.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseExt4Usrquota.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseHostLike.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseNoCover.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseOptionalFields.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseSetupMalformed.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseStacked.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseSymlinkRealpath.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseTmpfsHardlimit.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseTmpfsNoQuota.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseTmpfsUsrquota.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseUnsupported.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseXfsAccountingOnly.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseXfsConflict.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseXfsDevMismatch.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseXfsMixedEnforce.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseXfsOptionsAbsent.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/CaseXfsUsrquota.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/SupplementHiddenMount.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/SupplementQgroupDisabled.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/quota-cases/SupplementQgroupUnknown.json",
+      "worktree_matches_sealed_bytes": true
+    },
+    {
+      "detail": "working-tree copy compared with the committed seal bytes (informational)",
+      "id": "worktree..ufo/waves/round-23/frozen/seal-manifest.json",
+      "worktree_matches_sealed_bytes": true
+    }
+  ],
+  "privacy_clearance": false,
+  "real_controls_pass": false,
+  "recorded_utc": "2026-10-21T19:50:18.852199+00:00",
+  "schema": "mori-r23-measurements-v2",
+  "scope_notes": {
+    "r22_dependencies": "pinned by digest only (fixture builder and r22 requirements)",
+    "r22_reproduction": "not attempted: the amendment states the r22 driver runs its checkout's tool, so the r22 claim is reproducible only in a checkout of da40bb20f81da125d798f73cd1653655be1255ca; the r23 oracle re-expresses the predicates and no historical r22 mutant battery is adapted here",
+    "source_evidence_kind": "exact source-byte transform of the baseline git blob, not a behavioural equivalence proof"
+  },
+  "scratch_root": "/fast/scratch/hyaku/mori-r23/MeasureDriver",
+  "seal_proof": {
+    "quota_production_path_absent_at_seal": true,
+    "reconciler_entering_identical_at_seal": true,
+    "sealed_cases": [
+      ".ufo/waves/round-23/frozen/quota-cases/CaseBoundary.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsDevMatch.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsQgroup.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsSquota.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsTwoUuids.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsUnmapped.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseEnabledPlusUnknown.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseEscapedSpace.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseExt4Journaled.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseExt4NoOptions.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseExt4Usrquota.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseHostLike.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseNoCover.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseOptionalFields.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseSetupMalformed.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseStacked.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseSymlinkRealpath.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseTmpfsHardlimit.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseTmpfsNoQuota.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseTmpfsUsrquota.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseUnsupported.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseXfsAccountingOnly.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseXfsConflict.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseXfsDevMismatch.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseXfsMixedEnforce.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseXfsOptionsAbsent.json",
+      ".ufo/waves/round-23/frozen/quota-cases/CaseXfsUsrquota.json",
+      ".ufo/waves/round-23/frozen/quota-cases/SupplementHiddenMount.json",
+      ".ufo/waves/round-23/frozen/quota-cases/SupplementQgroupDisabled.json",
+      ".ufo/waves/round-23/frozen/quota-cases/SupplementQgroupUnknown.json"
+    ],
+    "sealed_content": {
+      ".ufo/waves/round-22/frozen/fixture-builder-v2.py": {
+        "present": true,
+        "sha256": "1b3e16f74a032e066dd881c15affbc4401f2f44447d78efc650ee98a6d2d15d1"
+      },
+      ".ufo/waves/round-22/frozen/requirements-v2.json": {
+        "present": true,
+        "sha256": "48ea2369dad5958bd62922483438124b11597a61a5e1ddc02bbeb213c89d0bea"
+      },
+      ".ufo/waves/round-23/build/MeasureDriver/measure-round23-v2.py": {
+        "present": true,
+        "sha256": "5c12fdc056309966d3e716d25e3427a7908056595383f0353655b42282fdfbcd"
+      },
+      ".ufo/waves/round-23/contract.md": {
+        "present": true,
+        "sha256": "2bb35aefb08d3fafc467260f859453c0f096effe18b2446503f2b2ee87fe69e7"
+      },
+      ".ufo/waves/round-23/frozen/c1-expected-real.json": {
+        "present": true,
+        "sha256": "f8e111a5c4d1e8ca00a32b8e96db7986798def8b76d2c8b5275b0feb7fa41bba"
+      },
+      ".ufo/waves/round-23/frozen/c1-requirements.json": {
+        "present": true,
+        "sha256": "88e1b912df1a8d5f3ad3da6a9fd3fec751cab7776919c77a8aa83365f84f3184"
+      },
+      ".ufo/waves/round-23/frozen/c2-expected-real.json": {
+        "present": true,
+        "sha256": "9cbb69c03d284c4aa240d5cc9c627cef37e85306bf13a92ea2284fbd65087398"
+      },
+      ".ufo/waves/round-23/oracle-quota.py": {
+        "present": true,
+        "sha256": "f1f4a027728180436fc5161171b0f6ad4ca4176229b5240aabb33e3f2af36bec"
+      },
+      ".ufo/waves/round-23/oracle-rename.py": {
+        "present": true,
+        "sha256": "a55b2b50d3e7447a1d5312c8b066a13137a6a6895f0343b3240ebf081d97c5f2"
+      },
+      ".ufo/waves/round-23/preseal-amendment.md": {
+        "present": true,
+        "sha256": "16aab68bde6f4c07cd8199a2b36cf96bb16013b2ef282876a924eb726c6db196"
+      }
+    },
+    "sealed_proposals": [
+      ".ufo/waves/round-23/cases-proposed/CaseBoundary.json",
+      ".ufo/waves/round-23/cases-proposed/CaseBtrfsDevMatch.json",
+      ".ufo/waves/round-23/cases-proposed/CaseBtrfsQgroup.json",
+      ".ufo/waves/round-23/cases-proposed/CaseBtrfsSquota.json",
+      ".ufo/waves/round-23/cases-proposed/CaseBtrfsTwoUuids.json",
+      ".ufo/waves/round-23/cases-proposed/CaseBtrfsUnmapped.json",
+      ".ufo/waves/round-23/cases-proposed/CaseEnabledPlusUnknown.json",
+      ".ufo/waves/round-23/cases-proposed/CaseEscapedSpace.json",
+      ".ufo/waves/round-23/cases-proposed/CaseExt4Journaled.json",
+      ".ufo/waves/round-23/cases-proposed/CaseExt4NoOptions.json",
+      ".ufo/waves/round-23/cases-proposed/CaseExt4Usrquota.json",
+      ".ufo/waves/round-23/cases-proposed/CaseHostLike.json",
+      ".ufo/waves/round-23/cases-proposed/CaseNoCover.json",
+      ".ufo/waves/round-23/cases-proposed/CaseOptionalFields.json",
+      ".ufo/waves/round-23/cases-proposed/CaseSetupMalformed.json",
+      ".ufo/waves/round-23/cases-proposed/CaseStacked.json",
+      ".ufo/waves/round-23/cases-proposed/CaseSymlinkRealpath.json",
+      ".ufo/waves/round-23/cases-proposed/CaseTmpfsHardlimit.json",
+      ".ufo/waves/round-23/cases-proposed/CaseTmpfsNoQuota.json",
+      ".ufo/waves/round-23/cases-proposed/CaseTmpfsUsrquota.json",
+      ".ufo/waves/round-23/cases-proposed/CaseUnsupported.json",
+      ".ufo/waves/round-23/cases-proposed/CaseXfsAccountingOnly.json",
+      ".ufo/waves/round-23/cases-proposed/CaseXfsConflict.json",
+      ".ufo/waves/round-23/cases-proposed/CaseXfsDevMismatch.json",
+      ".ufo/waves/round-23/cases-proposed/CaseXfsMixedEnforce.json",
+      ".ufo/waves/round-23/cases-proposed/CaseXfsOptionsAbsent.json",
+      ".ufo/waves/round-23/cases-proposed/CaseXfsUsrquota.json"
+    ]
+  },
+  "seal_revision": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+  "sealed_artifacts": {
+    "documents": {
+      ".ufo/waves/round-23/contract.md": {
+        "byte_identical": true,
+        "revision_sha256": "2bb35aefb08d3fafc467260f859453c0f096effe18b2446503f2b2ee87fe69e7",
+        "seal_sha256": "2bb35aefb08d3fafc467260f859453c0f096effe18b2446503f2b2ee87fe69e7"
+      },
+      ".ufo/waves/round-23/preseal-amendment.md": {
+        "byte_identical": true,
+        "revision_sha256": "16aab68bde6f4c07cd8199a2b36cf96bb16013b2ef282876a924eb726c6db196",
+        "seal_sha256": "16aab68bde6f4c07cd8199a2b36cf96bb16013b2ef282876a924eb726c6db196"
+      }
+    },
+    "frozen": {
+      ".ufo/waves/round-23/frozen/c1-expected-real-identities.json": {
+        "byte_identical": true,
+        "revision_sha256": "e81c21b93c7cfa2d18cb3d97cd75ecb63748a130e1f0bd1bb097837dc40027b8",
+        "seal_sha256": "e81c21b93c7cfa2d18cb3d97cd75ecb63748a130e1f0bd1bb097837dc40027b8"
+      },
+      ".ufo/waves/round-23/frozen/c1-expected-real.json": {
+        "byte_identical": true,
+        "revision_sha256": "f8e111a5c4d1e8ca00a32b8e96db7986798def8b76d2c8b5275b0feb7fa41bba",
+        "seal_sha256": "f8e111a5c4d1e8ca00a32b8e96db7986798def8b76d2c8b5275b0feb7fa41bba"
+      },
+      ".ufo/waves/round-23/frozen/c1-requirements.json": {
+        "byte_identical": true,
+        "revision_sha256": "88e1b912df1a8d5f3ad3da6a9fd3fec751cab7776919c77a8aa83365f84f3184",
+        "seal_sha256": "88e1b912df1a8d5f3ad3da6a9fd3fec751cab7776919c77a8aa83365f84f3184"
+      },
+      ".ufo/waves/round-23/frozen/c1-source-delta.json": {
+        "byte_identical": true,
+        "revision_sha256": "df425412405c9358caec31c2fd7c6cc303d1f395b648a169b19c982bd3567318",
+        "seal_sha256": "df425412405c9358caec31c2fd7c6cc303d1f395b648a169b19c982bd3567318"
+      },
+      ".ufo/waves/round-23/frozen/c2-expected-real.json": {
+        "byte_identical": true,
+        "revision_sha256": "9cbb69c03d284c4aa240d5cc9c627cef37e85306bf13a92ea2284fbd65087398",
+        "seal_sha256": "9cbb69c03d284c4aa240d5cc9c627cef37e85306bf13a92ea2284fbd65087398"
+      },
+      ".ufo/waves/round-23/frozen/case-decisions.json": {
+        "byte_identical": true,
+        "revision_sha256": "b05a007262b52ab0266bd2e7b6a55d8fa05aab8fc518243036e84638960bc60a",
+        "seal_sha256": "b05a007262b52ab0266bd2e7b6a55d8fa05aab8fc518243036e84638960bc60a"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseBoundary.json": {
+        "byte_identical": true,
+        "revision_sha256": "2e2ef692060105f054f2561091cb7603e77b1328b7954f63046ff57e7bea5d52",
+        "seal_sha256": "2e2ef692060105f054f2561091cb7603e77b1328b7954f63046ff57e7bea5d52"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsDevMatch.json": {
+        "byte_identical": true,
+        "revision_sha256": "a74da5db52f71ec3f4a92018b2f2cd35fb43e349773e17ccce8a8235bbbd43bc",
+        "seal_sha256": "a74da5db52f71ec3f4a92018b2f2cd35fb43e349773e17ccce8a8235bbbd43bc"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsQgroup.json": {
+        "byte_identical": true,
+        "revision_sha256": "38a7d5b94f8b08ddee9c7080cca8786db0cc6aa8423dcef75d8250c58d462188",
+        "seal_sha256": "38a7d5b94f8b08ddee9c7080cca8786db0cc6aa8423dcef75d8250c58d462188"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsSquota.json": {
+        "byte_identical": true,
+        "revision_sha256": "b3a641541e536ce1f313b521ae25a33cd8296e2e2d8daf647bf24c168254240a",
+        "seal_sha256": "b3a641541e536ce1f313b521ae25a33cd8296e2e2d8daf647bf24c168254240a"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsTwoUuids.json": {
+        "byte_identical": true,
+        "revision_sha256": "6bdcea63cf12d1d63e82e6cbaca827c3e00729dfd016f28331d260d6f0e7328c",
+        "seal_sha256": "6bdcea63cf12d1d63e82e6cbaca827c3e00729dfd016f28331d260d6f0e7328c"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsUnmapped.json": {
+        "byte_identical": true,
+        "revision_sha256": "1986ade4a150637c62102316fcec8c55523919d35c377759a5908d1e682e59b1",
+        "seal_sha256": "1986ade4a150637c62102316fcec8c55523919d35c377759a5908d1e682e59b1"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseEnabledPlusUnknown.json": {
+        "byte_identical": true,
+        "revision_sha256": "77440e32054aef813df90b9a22d9e03b526496a3b103940df0ff601bec775828",
+        "seal_sha256": "77440e32054aef813df90b9a22d9e03b526496a3b103940df0ff601bec775828"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseEscapedSpace.json": {
+        "byte_identical": true,
+        "revision_sha256": "8340738a509e474a94a815637e66b407dfb60c6449511e52db55296d844abeea",
+        "seal_sha256": "8340738a509e474a94a815637e66b407dfb60c6449511e52db55296d844abeea"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseExt4Journaled.json": {
+        "byte_identical": true,
+        "revision_sha256": "d317ccb1141271ed0cda2d2b2209fcfb965b57016e6dfc4e0efcf34560c9fb40",
+        "seal_sha256": "d317ccb1141271ed0cda2d2b2209fcfb965b57016e6dfc4e0efcf34560c9fb40"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseExt4NoOptions.json": {
+        "byte_identical": true,
+        "revision_sha256": "816a5d9d321c6188eddfa373c50b51c1e70a1784fe0db3a6fbd104768c542ee9",
+        "seal_sha256": "816a5d9d321c6188eddfa373c50b51c1e70a1784fe0db3a6fbd104768c542ee9"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseExt4Usrquota.json": {
+        "byte_identical": true,
+        "revision_sha256": "4db2fcd87bb1a2efcfadaff13311426eb8a6fc129663cfa486190a93ac959cda",
+        "seal_sha256": "4db2fcd87bb1a2efcfadaff13311426eb8a6fc129663cfa486190a93ac959cda"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseHostLike.json": {
+        "byte_identical": true,
+        "revision_sha256": "f4580093a6aa93eab53bef9c9f61667a2a0aa2224096b60568140904b148a63c",
+        "seal_sha256": "f4580093a6aa93eab53bef9c9f61667a2a0aa2224096b60568140904b148a63c"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseNoCover.json": {
+        "byte_identical": true,
+        "revision_sha256": "334c7cfdddbf9b9f650e62dab94aeba656047044402de166d5b094ed1d210215",
+        "seal_sha256": "334c7cfdddbf9b9f650e62dab94aeba656047044402de166d5b094ed1d210215"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseOptionalFields.json": {
+        "byte_identical": true,
+        "revision_sha256": "9e73da479ea14cc4b7ddfccf08816c7716842eb71325d7c8bd06541779c1daf0",
+        "seal_sha256": "9e73da479ea14cc4b7ddfccf08816c7716842eb71325d7c8bd06541779c1daf0"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseSetupMalformed.json": {
+        "byte_identical": true,
+        "revision_sha256": "833cd8a536b33770ef11291ddc4e05ecd9cbf18ff7dcfa9abfe566021b916fe7",
+        "seal_sha256": "833cd8a536b33770ef11291ddc4e05ecd9cbf18ff7dcfa9abfe566021b916fe7"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseStacked.json": {
+        "byte_identical": true,
+        "revision_sha256": "b45f3485c170a88f75abcf8746315caf031331c4cf92b4943847f7433bf980d0",
+        "seal_sha256": "b45f3485c170a88f75abcf8746315caf031331c4cf92b4943847f7433bf980d0"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseSymlinkRealpath.json": {
+        "byte_identical": true,
+        "revision_sha256": "275c360585a93e2f1bc7e2ded0f4cd42b07d5b0eeb16b9790d1980f456b0d07e",
+        "seal_sha256": "275c360585a93e2f1bc7e2ded0f4cd42b07d5b0eeb16b9790d1980f456b0d07e"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseTmpfsHardlimit.json": {
+        "byte_identical": true,
+        "revision_sha256": "b3226093395d0753138f4761dcd91881e56ff350de213ae4b12f03a57ceb5771",
+        "seal_sha256": "b3226093395d0753138f4761dcd91881e56ff350de213ae4b12f03a57ceb5771"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseTmpfsNoQuota.json": {
+        "byte_identical": true,
+        "revision_sha256": "7afd98c191a799e52bb9ac01b896b23eaa855b9e02ef1bc3f901aa13a03a49b5",
+        "seal_sha256": "7afd98c191a799e52bb9ac01b896b23eaa855b9e02ef1bc3f901aa13a03a49b5"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseTmpfsUsrquota.json": {
+        "byte_identical": true,
+        "revision_sha256": "7ecc3503a5fd3aa4b6a1bb635ae34965f7a6f97466c4ff273e9bb836517ac800",
+        "seal_sha256": "7ecc3503a5fd3aa4b6a1bb635ae34965f7a6f97466c4ff273e9bb836517ac800"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseUnsupported.json": {
+        "byte_identical": true,
+        "revision_sha256": "28f3080b116cf3e09e3ee77f3e8b53daff826fdfb4387a21d3c58850878b22b7",
+        "seal_sha256": "28f3080b116cf3e09e3ee77f3e8b53daff826fdfb4387a21d3c58850878b22b7"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseXfsAccountingOnly.json": {
+        "byte_identical": true,
+        "revision_sha256": "e03c414b1625518c5bb88171e53e5584c72ea1d5f7e54e2bed5873600f3ba135",
+        "seal_sha256": "e03c414b1625518c5bb88171e53e5584c72ea1d5f7e54e2bed5873600f3ba135"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseXfsConflict.json": {
+        "byte_identical": true,
+        "revision_sha256": "84dfae8db5f4803e58e82be92d2ac07d321c98214f1a29fee9f844e9d3c56680",
+        "seal_sha256": "84dfae8db5f4803e58e82be92d2ac07d321c98214f1a29fee9f844e9d3c56680"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseXfsDevMismatch.json": {
+        "byte_identical": true,
+        "revision_sha256": "e5db2d1181e0b6ab2062447e2181307a9da4ba64760ce98a0d76f55ccb492097",
+        "seal_sha256": "e5db2d1181e0b6ab2062447e2181307a9da4ba64760ce98a0d76f55ccb492097"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseXfsMixedEnforce.json": {
+        "byte_identical": true,
+        "revision_sha256": "ed13abb0eabfbbb8dd8c3391d6cc665a939d8b30b60338f08a9b840e14cd44da",
+        "seal_sha256": "ed13abb0eabfbbb8dd8c3391d6cc665a939d8b30b60338f08a9b840e14cd44da"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseXfsOptionsAbsent.json": {
+        "byte_identical": true,
+        "revision_sha256": "d54cba9914cf85c4c4036b250b2e8c6dd3401f770e3929f5072c980797e16a58",
+        "seal_sha256": "d54cba9914cf85c4c4036b250b2e8c6dd3401f770e3929f5072c980797e16a58"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/CaseXfsUsrquota.json": {
+        "byte_identical": true,
+        "revision_sha256": "3e1620f745d7a1cc6fa497b1f61f991539809cd1bde67f86b73860baaaa4244b",
+        "seal_sha256": "3e1620f745d7a1cc6fa497b1f61f991539809cd1bde67f86b73860baaaa4244b"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/SupplementHiddenMount.json": {
+        "byte_identical": true,
+        "revision_sha256": "d1a3a4c66008fcdefec47839d9393f1c971ebc6630d96b94c399038378187824",
+        "seal_sha256": "d1a3a4c66008fcdefec47839d9393f1c971ebc6630d96b94c399038378187824"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/SupplementQgroupDisabled.json": {
+        "byte_identical": true,
+        "revision_sha256": "f117bcb0b411cb2dd50910c62222481d8d283eeb49ff2169b40788b24dd09567",
+        "seal_sha256": "f117bcb0b411cb2dd50910c62222481d8d283eeb49ff2169b40788b24dd09567"
+      },
+      ".ufo/waves/round-23/frozen/quota-cases/SupplementQgroupUnknown.json": {
+        "byte_identical": true,
+        "revision_sha256": "22f77b779845660b131dc0b19f3e02ddf203165734dfda040c52f08a06755f56",
+        "seal_sha256": "22f77b779845660b131dc0b19f3e02ddf203165734dfda040c52f08a06755f56"
+      },
+      ".ufo/waves/round-23/frozen/seal-manifest.json": {
+        "byte_identical": true,
+        "revision_sha256": "8ff351f2dec6509d09865e827ffadb8341e522076ad88699ae433be07321c082",
+        "seal_sha256": "8ff351f2dec6509d09865e827ffadb8341e522076ad88699ae433be07321c082"
+      }
+    },
+    "oracles": {
+      ".ufo/waves/round-23/oracle-quota.py": {
+        "byte_identical": true,
+        "revision_sha256": "f1f4a027728180436fc5161171b0f6ad4ca4176229b5240aabb33e3f2af36bec",
+        "seal_sha256": "f1f4a027728180436fc5161171b0f6ad4ca4176229b5240aabb33e3f2af36bec"
+      },
+      ".ufo/waves/round-23/oracle-rename.py": {
+        "byte_identical": true,
+        "revision_sha256": "a55b2b50d3e7447a1d5312c8b066a13137a6a6895f0343b3240ebf081d97c5f2",
+        "seal_sha256": "a55b2b50d3e7447a1d5312c8b066a13137a6a6895f0343b3240ebf081d97c5f2"
+      }
+    }
+  },
+  "staged_tools": {
+    "tools/mori-quota-surface.py": {
+      "entering": {
+        "path": "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-measure-withdrawal/staged/before/mori-quota-surface.py",
+        "present": false,
+        "sha256": null
+      },
+      "revision": {
+        "path": "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-measure-withdrawal/staged/after/mori-quota-surface.py",
+        "sha256": null
+      }
+    },
+    "tools/mori-retention-reconcile.py": {
+      "entering": {
+        "path": "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-measure-withdrawal/staged/before/mori-retention-reconcile.py",
+        "sha256": "0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32"
+      },
+      "revision": {
+        "path": "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-measure-withdrawal/staged/after/mori-retention-reconcile.py",
+        "sha256": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36"
+      },
+      "revision_equals_entering": false
+    }
+  },
+  "tools_delta": {
+    "expected": [
+      [
+        "A",
+        "tools/mori-quota-surface.py"
+      ],
+      [
+        "M",
+        "tools/mori-retention-reconcile.py"
+      ]
+    ],
+    "observed": [
+      [
+        "M",
+        "tools/mori-retention-reconcile.py"
+      ]
+    ]
+  },
+  "worktree_comparison": {
+    ".ufo/waves/round-22/frozen/fixture-builder-v2.py": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-22/frozen/requirements-v2.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/c1-expected-real-identities.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/c1-expected-real.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/c1-requirements.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/c1-source-delta.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/c2-expected-real.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/case-decisions.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseBoundary.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsDevMatch.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsQgroup.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsSquota.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsTwoUuids.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseBtrfsUnmapped.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseEnabledPlusUnknown.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseEscapedSpace.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseExt4Journaled.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseExt4NoOptions.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseExt4Usrquota.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseHostLike.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseNoCover.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseOptionalFields.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseSetupMalformed.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseStacked.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseSymlinkRealpath.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseTmpfsHardlimit.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseTmpfsNoQuota.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseTmpfsUsrquota.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseUnsupported.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseXfsAccountingOnly.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseXfsConflict.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseXfsDevMismatch.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseXfsMixedEnforce.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseXfsOptionsAbsent.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/CaseXfsUsrquota.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/SupplementHiddenMount.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/SupplementQgroupDisabled.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/quota-cases/SupplementQgroupUnknown.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/frozen/seal-manifest.json": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/oracle-quota.py": {
+      "worktree_matches_sealed_bytes": true
+    },
+    ".ufo/waves/round-23/oracle-rename.py": {
+      "worktree_matches_sealed_bytes": true
+    }
+  }
+}

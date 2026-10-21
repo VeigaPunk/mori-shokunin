@@ -247,3 +247,21 @@ window. The sole L1 integrated the final four changes after that restoration;
 no measured code result came from the transient draft. The redundant full-manual
 withdrawal scaffold was removed with its base/patch/full hash retained in
 `rejected/withdrawal-manifest.json`; the exact rejected probe/note remain intact.
+
+## Final measured withdrawal — no absence-as-pass
+
+At landed0d8f2d50eb85e0d4349b1045f01c04e57318cc1b the unchanged sealed driver
+actually records C1 original25/26→26/26, alias8→0, supplementary.pass=true and
+real-control.match=true. Exact source4599ee1a and all three real-identity digests
+match. The full driver still exits1: the original quota addition/presence/strict/
+real-control claims fail after withdrawal. C2 reports30capability_absent,0pass
+(31absent with real expectation), not a narrowed target or green unmet0. No quota
+real command executes at this revision. Originalf3's29/30 remains failed evidence.
+
+Final census exit0 retains six W04 duplicate-scope warnings. Committed rows76→89,
+A62→75/B6/C8; mined42→55/queued25/rejected9. Only S065 used-by changes among older
+rows; all their other cells remain byte-identical. Measurement/source-count argv,
+stdout, stderr and statuses are in round23 evidence. The sealed driver hardcodes
+the original lane path for committed inputs, and the real wrapper binds that path:
+not a portable-host claim or self-authenticated historical provenance. C1 source/
+behavioral delta is bounded; weak inherited predicates are not a whole-tool proof.

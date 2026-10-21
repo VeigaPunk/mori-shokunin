@@ -1454,3 +1454,25 @@ two historical unknown dispositions and blocked baseline acceptance remain. The
 declaration's ordering means complete seal before production landing, not before
 the explicitly permitted blind draft. Final withdrawal revision gets its own
 measurement; neither a missing tool nor source-only correction is a C2 pass.
+
+### Measured withdrawal revision
+
+Pushed withdrawal `0d8f2d50eb85e0d4349b1045f01c04e57318cc1b` removes the production
+quota tool/note/registry, not the frozen target. Exact exercised counting argv is in
+`.ufo/waves/round-23/evidence/measure-withdrawal-invocation.json`:
+
+```sh
+TMPDIR=/fast/scratch/hyaku/mori-r23 /usr/bin/python -I .ufo/waves/round-23/build/MeasureDriver/measure-round23-v2.py --revision 0d8f2d50eb85e0d4349b1045f01c04e57318cc1b --seal 22772c10f6e3c1d8d3fe1b72083a6194e9f4e687 --output /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/evidence/measure-withdrawal
+```
+
+Executed once with an absent output directory and existing private TMPDIR. Reproduction
+requires a fresh absent output/private scratch, not overwriting retained evidence.
+Original C1 before25/26→after26/26; alias8→0, supplementary.pass=true,
+real-control.match=true, identities exact, same source4599ee1a and mode100755.
+C1 checks C16–C26/C35 pass independently. Full driver exit1 remains RED:
+C07 expected quota addition, C15 quota presence, C34 strict C2 and C29/C30 real quota
+control fail after withdrawal. Current C2 buckets are30capability_absent/0pass and
+31capability_absent with real expectation; unmet0 is an absence bucket, NOT a pass.
+No current quota real invocation was made; f3's earlier direct real match stays
+historical. Source census exit0 at this revision; registry76→89, A62→75/B6/C8,
+mined42→55/queued25/rejected9, only old S065 used-by changed.
