@@ -210,7 +210,7 @@
   "-FINDING:WAVE_UNSETTLED_AGE": {
    "class": "live-state",
    "reason": "probe_waves byte-identical since r10; aggregator-r10 and aggregator-r10-resume were emptied by fleet sweep e20f4fa (2026-10-18), and the empty branch stops emitting them; new aged wave shokunin-train-20261016-w24 pairs with the old line as token obs",
-   "evidence": "tools/mori-census.sh:865-932; baseline-r10 lines 26-36; fleet commit e20f4fa (souji-shokunin, operator sweep 2026-10-18) with per-path non-author cleanup receipts for all 18 aggregator-r10 and aggregator-r10-resume files: souji-shokunin/census/operator-sweep-20261018/approval-list.tsv:56-73 (receipt=pushed); corpus/evidence/drift-r12-20261019T2204Z-classification.md:33,39; seat .ufo/waves/round-20/build/TokWaves.md",
+   "evidence": "tools/mori-census.sh:865-932; baseline-r10 lines 26-36; fleet commit e20f4fa (souji-shokunin, operator sweep 2026-10-18) with per-path souji cleanup receipts (committed by the same souji identity, 2f303dc, two minutes after the deletion; wave-2 FamWavesIo) for all 18 aggregator-r10 and aggregator-r10-resume files: souji-shokunin/census/operator-sweep-20261018/approval-list.tsv:56-73 (receipt=pushed); corpus/evidence/drift-r12-20261019T2204Z-classification.md:33,39; seat .ufo/waves/round-20/build/TokWaves.md",
    "blind_spot": "census keeps no memory of waves; a cleanup receipt accounts for the removal but is not settlement evidence; emptied-by-hygiene vs settled is FR3 frontier; r12 called this an evidence-loss regression, VolatileContract K3 and wave-2 AdjudicateWaves recommend census-regression (recorded dissent)"
   },
   "-SURFACE:journal": {

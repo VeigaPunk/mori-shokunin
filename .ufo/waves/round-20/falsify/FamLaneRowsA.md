@@ -1,6 +1,6 @@
 # FamLaneRowsA: C1 falsification of `+path`, `age_s`, `basis`, `+reason`, `+gate_s`, `-example`
 
-**Verdict: HOLDS.** All six classes are `live-state` and each cause re-derives from fleet state under unchanged census rules. Four rows carry incomplete or mislabeled pointers, one seat lead is wrong, and two residual blind spots need routing (section 4 to 6). None of these falsifies a class.
+**Verdict: HOLDS.** All six classes are `live-state`, and each cause re-derives from fleet state under unchanged census rules (sections 2 and 3). Nine pointer-level defects (section 4) and one wrong seat lead (section 5) need correcting. Blind spots R1 to R4 (section 6) need routing. None of these falsifies a class.
 
 ## 1. Scope, bounds, disclosure
 - Rows checked in `corpus/evidence/drift-classification-r20.json`: `+gate_s` 145-149, `+path` 150-154, `+reason` 155-159, `-example` 223-227, `age_s` 248-252, `basis` 253-257. Receipt: `.ufo/waves/round-20/evidence/c1-drift-entering.json` (census `87b8d680...ab28`, 50 tokens).
@@ -99,13 +99,14 @@ Fleet root (`git -C /home/vgpnk/Projects/shokunin`, rc 0 throughout):
 - **D6 `basis` and `+reason`.** "Emitters unchanged since r3" is true for emitted text. Add that r4 (5b62c89) changed the row-4 close predicate (pre-pin) and r17 (273aa74) changed the row-6 and row-9 revision argument, which is inert for these arms (3.2).
 - **D7 all six.** No baseline comparator pointer. Add baseline lines 13-21, with 14 for `example=` and `rowb_files=` and 18 for `age_s=<V>`.
 - **D8 all live-state tokens.** No `future_flip`, although these tokens expire. Suggest: `+gate_s` and `basis` for kama and kagi flip at gate expiry (R4); `+path`, `basis`, `+reason` for kagi flip at the round-25 launch (R1).
+- **D9 kagi arm (evidence chain).** The `+path`, `basis` and `+reason` reasons name kagi's row-6 arm, which the receipt does not show (R1). Mark that arm [INFERENCE], or retain the per-lane census lines in the receipt. The class verdicts do not depend on it: each token also has time-robust contributors. `+path`: kake and kengaku. `basis`: aggregator, kama, kumitate, kake, kengaku. `+reason`: kumitate, kama, kake, kengaku. `+gate_s`: kama. `age_s`: kumitate. `-example`: aggregator.
 
 ## 5. Seat-lead correction
 - `TokSilenceA.md` lines 35, 48 and 57 say kumitate went row-A to row-6 and emits `+path` and `-subject_commits` through row-6. That is wrong. Kumitate's row-4 test (2362-2364) precedes row-6 (2409), and E3 shows row-4. The JSON is right (`basis` and `age_s` say A to 4). Do not import the kumitate row-6 claim.
 - `TokSilenceB.md` (aggregator row-A via 1bcf59e; `+gate_s` on kama; reason on five lanes) and `TokPathAge.md` (row-4 mechanism for `age_s`; row-6 for `+path`) both match E3.
 
 ## 6. Residual risks and blind spots
-- **R1 (time-bound).** The entering state holds only while NOW is before 10:23:21Z, when kagi's round-25 launch (watchdog.log:585) takes over kagi's anchor. The re-pin already shows it: `baseline-r20-20261021T1051Z.json` line 22 has `kagi: young ... basis=row-8 reason=age_le_gate gate_s=7200`, pinned_ts 10:53:07Z. The receipt records "exact start second not recorded", so the upper bound is [INFERENCE] from wall time 103.98 s.
+- **R1 (time-bound; kagi arm inferred).** Kagi's row-6 holds from 03:32:37-03:00 until its round-25 launch at 07:23:21-03:00 (watchdog.log:585), then it becomes row-8. The receipt cannot show which arm applied, because it keeps tokens only (TokPathAge.md:51). Its timing (job after the 07:18:05 launch, wall 103.98 s) places the measurement inside row-6 [INFERENCE]. The re-pin already shows the flip: `baseline-r20-20261021T1051Z.json` line 22 reads `kagi: young ... basis=row-8 reason=age_le_gate gate_s=7200` at pinned_ts 10:53:07Z.
 - **R2 (design residual, unchanged since r3).** Kama round 20 launched at 04:06:01-03 (watchdog.log:562). It has no `complete` or `lane-dead-no-report` line before the round-21 relaunch (583). `ledger_anchor` keeps only the last launch (byte-identical since r10), so the two-hour young state hides round 20. This is not a census regression under the C1 definition. The `+gate_s` and `basis` reasons should record it, and it should route as a design residual like M6.
 - **R3 (harness limit).** The r10 aggregator row-B cannot be replayed, because row-B reads the live dirty set. E1 and E2 both give row-C. Baseline line 14 is the only evidence of row-B at pin. The six entering-state causes do not depend on it.
 - **R4 (re-pin, not re-run).** Gate expiries fall at kama 12:17:03Z and kagi 12:23:21Z. "Post-pin drift none" can hold only until then [INFERENCE, not re-run].

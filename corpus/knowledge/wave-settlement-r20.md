@@ -81,6 +81,8 @@ symlink, a directory or not stat-able also reads `missing`. `name_hint` also fir
   reports present) is invisible; a `.json` whose lstat fails (non-searchable directory) is skipped
   without a counter; totals are not de-duplicated across byte-identical dispatch copies (use
   `duplicate_of`) (`.ufo/waves/round-20/falsify/LiveRevenger.md`, `DiffAltImpl.md`).
+- `resumeSends` members are never read: a resume-only wave reads `no-spawn` exit 0 with 0 members, and an
+  unreported resume member cannot block `settled` (`.ufo/waves/round-20/falsify/ReviewProvince.md` F1).
 - Member names may contain words like `dead`; the vocabulary guarantee covers the tool's own state words.
 - Safety residuals (`.ufo/waves/round-20/falsify/SentinelTool.md`): path checks are lstat-then-open, so a
   concurrent writer can race them; no size or count limit on dispatch JSON; output carries the
