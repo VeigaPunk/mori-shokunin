@@ -55,3 +55,31 @@ OracleLoss died on Codex capacity and is not replaced. The L1 wrote the
 independent black-box measurement harness before reading implementation
 source (`.ufo/waves/round-21/oracle-loss.py`); its author provenance is L1,
 not that dead seat. The original provider failure remains recorded.
+
+## Outside-label and instrument corrections (2026-10-21)
+
+Supersedes the Claims paragraph's “independently exercised” wording:
+independence is the pre-implementation six-case freeze and CloseMori20's
+outside event adjudication, **not** a non-author harness/evaluator execution.
+The harness author is L1 and lane-dispatched reviews remain author-side.
+Six synthetic cases establish implementation consistency only. The separate
+real-loss and w24-control sample in `outside-cases.json` is bound to the
+non-author closure by `outside-cases-provenance.json` (both under round21
+waves). AdjudicateWaves and TrendClaims are lane-author evidence, not the
+independent authority for those labels. C1 omission scope is exactly the
+two contract-required identities, not all historical waves.
+
+RuleNoModePreset observed a value-dependent setup guard: a minimal false
+rule returned rc2 merely because optional free text did not self-cite Q67,
+while a true rule needed no citation. L1 removed that guard and added an
+exact rc1/finding-id minimal-false control; source interpretation remains
+bound on the frozen artifact instead. This is a co-evolved correction, not
+alteration of the six frozen expectations. AuditMalformed and
+AuditNoDiscovery also sharpened the L1 measurement instrument: schema/exit
+checks, exact two-ID population and committed-byte binding are now required.
+Original reports retain their observed/pre-implementation findings.
+
+Procedural disclosure: RuleNoModePreset ran three read-only classification
+receipts and TrendClaims two, despite their items saying no tests. Those
+runs are author-side observations, not a claim of instruction compliance;
+L1's final committed-revision runs are recorded separately.

@@ -1,0 +1,21 @@
+{
+  "schema": "mori-evidence-loss-cases-v1",
+  "cases": [
+    {
+      "id": "real-aggregator-r10-loss",
+      "required_evidence_lost": true,
+      "independent_disposition": false,
+      "ordinary_state_change": true,
+      "expected_class": "census-regression",
+      "expected_pin_allowed": false
+    },
+    {
+      "id": "real-w24-aging",
+      "required_evidence_lost": false,
+      "independent_disposition": false,
+      "ordinary_state_change": true,
+      "expected_class": "live-state",
+      "expected_pin_allowed": true
+    }
+  ]
+}
