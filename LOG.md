@@ -1533,3 +1533,30 @@ quota-surface probe because `df` percentages cannot see quota exhaustion
 C1 requirements/oracle and both real controls land in this commit. Start census exit0
 (`.ufo/waves/round-23/evidence/sources-start.txt`, six W04 duplicate-URL warnings, rows 76).
 `.scratch/` stays uncommitted. Debt carried unchanged.
+
+### Round23 — settled source review corrects the contract before C2 measurement
+
+Registration landed4dc80c1be48308075e83af17f15fbfe7e95e6cb8, before production changes.
+Wave1's unchanged64-seat payload was cap-refused seven times and started on attempt8;
+each refusal spawned zero. Original specs/payloads/response files and slot grants are
+retained under `.ufo/waves/round-23/`. The L1 holds planner; no model parameter or
+dead-seat replacement. Existing actor names retain their reused MadoR22-2 prefix.
+
+Independent source/critic reports exposed genuine design errors before the L1 opened
+or measured the blind quota candidate: ext quota hints do not prove enabled state;
+btrfs qgroups-directory initialization does not prove the ON flag; mode is ASSERT
+guarded; last-line mount ordering can hide an enabled ancestor. The separately named
+`preseal-amendment.md` fixes these source-derived rules and ambiguities without
+rewriting the original contract, original26 C1 expectations, real controls or case
+proposals. Original/corrected/supplementary cases remain distinct. Candidate drafts
+were authored concurrently in isolated executor clones, not claimed authored after
+the expectation seal; only committed production must follow the seal.
+
+S077–S086 opened and curated at scoped A authority, with exact primary-source bytes,
+digests and bounded quotes in `evidence/sources/`, `sources-manifest.json` and
+`source-quotes.json`. Initial eight IDs were forward assignments, not already-present
+registry rows at4dc80c1. The final documentary note `corpus/knowledge/quota-surface-r23.md`
+contains the source corrections/ownership fence, not an unrun capability result.
+Source used-by appends are logged in lesson23; no existing immutable source row changed.
+All privacy/history/permission/baseline debt remains. No code result or admission is
+pre-claimed by this source landing.
