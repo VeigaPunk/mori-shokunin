@@ -622,16 +622,19 @@ def c2_metadata_checks(expected_names: list[str], mode: str, tool: Path,
         else:
             set_result("same_verdicts_as_base",
                        baseline_verdicts == expected_verdicts())
-        process_set = [legacy_proc]
+        process_set = [legacy_proc, bound_proc, invalid_proc, absent_corrections_proc]
         no_values = not any(marker_leaked(proc) for proc in process_set)
         set_result("no_private_values", no_values)
-        for name in expected_names:
-            if name in ("same_verdicts_as_base", "no_private_values"):
-                continue
-            # This mode records the frozen old-tool boundary.  It intentionally
-            # uses legacy argv, so --rev-only provenance assertions are absent,
-            # not production defects.
-            set_result(name, False, unavailable=True)
+        observed = c2_metadata_checks(
+            expected_names, "after", tool, tool_sha, fixture, root, tmpdir,
+            legacy_proc, legacy_failure, legacy_expected_argv,
+            bound_proc, bound_failure, bound_expected_argv,
+            invalid_proc, invalid_failure, absent_corrections_proc,
+        )
+        for row in observed:
+            if row["check"] not in ("same_verdicts_as_base", "no_private_values"):
+                set_result(row["check"], row["status"] == "pass",
+                           unavailable=row.get("classification") == "metadata-unavailable")
     else:
         provenance = bound.get("provenance") if isinstance(bound, dict) else None
         if not isinstance(provenance, dict):
@@ -1014,25 +1017,17 @@ def run_harness(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
             legacy_proc, legacy_failure, legacy_argv = c2_invocation(
                 freeze_tool, fixture, sandbox_parent, tmpdir, bound=False,
             )
-            if args.mode == "after":
-                bound_proc, bound_failure, bound_argv = c2_invocation(
-                    freeze_tool, fixture, sandbox_parent, tmpdir, bound=True,
-                )
-                invalid_proc, invalid_failure, _ = c2_invocation(
-                    freeze_tool, fixture, sandbox_parent, tmpdir, bound=True,
-                    revision="round19-invalid-synthetic-revision",
-                )
-                absent_proc, _absent_failure, _ = c2_invocation(
-                    freeze_tool, fixture, sandbox_parent, tmpdir, bound=True,
-                    corrections=False,
-                )
-            else:
-                bound_proc = None
-                bound_failure = None
-                bound_argv = None
-                invalid_proc = None
-                invalid_failure = None
-                absent_proc = None
+            bound_proc, bound_failure, bound_argv = c2_invocation(
+                freeze_tool, fixture, sandbox_parent, tmpdir, bound=True,
+            )
+            invalid_proc, invalid_failure, _ = c2_invocation(
+                freeze_tool, fixture, sandbox_parent, tmpdir, bound=True,
+                revision="round19-invalid-synthetic-revision",
+            )
+            absent_proc, _absent_failure, _ = c2_invocation(
+                freeze_tool, fixture, sandbox_parent, tmpdir, bound=True,
+                corrections=False,
+            )
             c2_rows = c2_metadata_checks(
                 expected_names, args.mode, freeze_tool, freeze_tool_sha,
                 fixture, sandbox_parent, tmpdir,
@@ -1048,13 +1043,10 @@ def run_harness(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
             # Preserve safe process receipts, but no tool output bytes or values.
             result["c2"]["processes"] = {
                 "legacy": process_receipt(legacy_proc, legacy_failure),
+                "bound": process_receipt(bound_proc, bound_failure),
+                "invalid_revision": process_receipt(invalid_proc, invalid_failure),
+                "without_corrections": process_receipt(absent_proc),
             }
-            if args.mode == "after":
-                result["c2"]["processes"].update({
-                    "bound": process_receipt(bound_proc, bound_failure),
-                    "invalid_revision": process_receipt(invalid_proc, invalid_failure),
-                    "without_corrections": process_receipt(absent_proc),
-                })
         result["c2"]["checks"] = c2_rows
         result["c2"]["counts"] = counts(c2_rows)
         result["c2"]["supplemental"] = supplemental
