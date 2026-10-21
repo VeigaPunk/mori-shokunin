@@ -459,7 +459,7 @@ def _disposition_record_matches(data: bytes | None, observation_id: str, actor: 
         value = json.loads(data.decode("utf-8"), object_pairs_hook=_unique_object, parse_constant=_reject_constant)
     except (UnicodeDecodeError, json.JSONDecodeError, ValueError):
         return False
-    if type(value) is not dict or set(value) != {"id", "actor", "wave_id", "disposition", "independent"}:
+    if type(value) is not dict or not {"id", "actor", "wave_id", "disposition", "independent"}.issubset(value):
         return False
     return (
         value.get("id") == observation_id
@@ -608,15 +608,9 @@ def audit(root: str, required_path: str, accounting_path: str) -> tuple[dict[str
             {"id": observation_id, "finding_id": _finding_id(observation_id, "invalid")}
             for observation_id in sorted(invalid_ids)
         ]
-        retained_ids = set(accounting_by_id) & set(required_by_id)
-        pin_allowed = (
-            bool(required_rows)
-            and not omitted
-            and not unresolved
-            and not invalid
-            and len(disposed) == len(required_rows)
-            and len(retained_ids) == len(required_rows)
-        )
+        # This observer has no authenticated outside-acceptance input. It
+        # reports retention and uncertainty, never grants pin authority.
+        pin_allowed = False
         payload = {
             "schema": AUDIT_SCHEMA,
             "omitted": len(omitted),
@@ -633,7 +627,7 @@ def audit(root: str, required_path: str, accounting_path: str) -> tuple[dict[str
             "pin_allowed": pin_allowed,
             "trust_basis": "declared-record-not-authenticated",
         }
-        return payload, 0 if pin_allowed else 1
+        return payload, 1
     finally:
         os.close(root_fd)
 
@@ -782,9 +776,11 @@ def _selftest() -> int:
         if predicate is not None:
             check(f"{name}_result", payload is not None and predicate(payload))
 
-    clone_root = Path(__file__).resolve().parents[1]
+    scratch_root = os.environ.get("TMPDIR")
     try:
-        temporary = tempfile.TemporaryDirectory(prefix=".mori-evidence-loss-selftest-", dir=clone_root)
+        if not scratch_root:
+            raise OSError("TMPDIR is required for isolated selftest fixtures")
+        temporary = tempfile.TemporaryDirectory(prefix=".mori-evidence-loss-selftest-", dir=scratch_root)
     except OSError:
         _emit({
             "schema": SELFTEST_SCHEMA,
@@ -1159,6 +1155,24 @@ def _selftest() -> int:
             "mori-evidence-loss:audit:aggregator-r10:independent_disposition:independent_actor_not_distinct",
             lambda item: item.get("disposed") == 0 and item.get("unresolved") == 1
             and item.get("invalid") == 1 and item.get("pin_allowed") is False,
+        )
+        contextual_record = json.loads(files["disposition.json"])
+        contextual_record["context"] = "synthetic fixture metadata"
+        contextual_bytes = json.dumps(contextual_record, sort_keys=True).encode() + b"\n"
+        (evidence_dir / "disposition.json").write_bytes(contextual_bytes)
+        contextual_revision = _run_fixture_git(root)
+        contextual_row = copy.deepcopy(disposed_row)
+        contextual_row["independent_disposition"].update({
+            "revision": contextual_revision,
+            "sha256": hashlib.sha256(contextual_bytes).hexdigest(),
+        })
+        _write_json(accounting_path, {"schema": ACCOUNTING_SCHEMA, "observations": [contextual_row]})
+        rc, payload, stderr = invoke(audit_args)
+        cli_case(
+            "disposition_context_is_not_acceptance", rc, payload, stderr, 1,
+            "mori-evidence-loss:audit:aggregator-r10:external_review_required",
+            lambda item: item.get("disposed") == 1 and item.get("invalid") == 0
+            and item.get("unresolved") == 1 and item.get("pin_allowed") is False,
         )
 
     report = {

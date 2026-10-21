@@ -257,7 +257,7 @@ def probe(case: str, workspace: Path, evaluator: Path) -> dict[str, Any]:
         result["injection_ok"] = injection_ok
         if controls_ok and injection_ok:
             observed = parse_audit(runs["mutated"])
-            if refusal(runs["mutated"], "hash_mismatch" if case == "digest-mismatch" else "unsafe_path"):
+            if refusal(runs["mutated"], "hash_mismatch" if case == "digest-mismatch" else "unsafe_symlink"):
                 result.update(verdict="killed", reason="untrusted evidence refused with stable finding")
             elif observed is not None and (observed["pin_allowed"] or observed["disposed"] > 0
                                             or runs["mutated"]["returncode"] == 0):

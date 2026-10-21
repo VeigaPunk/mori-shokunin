@@ -83,3 +83,37 @@ Procedural disclosure: RuleNoModePreset ran three read-only classification
 receipts and TrendClaims two, despite their items saying no tests. Those
 runs are author-side observations, not a claim of instruction compliance;
 L1's final committed-revision runs are recorded separately.
+
+Additional scope disclosure: L1's initial closure-term search used the broad
+fleet `.ufo/` root with gitignore=false, which could traverse retained
+interactive-session files. Returned pointers were public reports/waves; no
+private content was retained or used. Later reads/searches use named public
+files. This is a Q54/text-bound failure disclosure, not demonstrated runtime
+enforcement or prevention credit. See `.ufo/waves/round-21/evidence/l1-safety-review.json`.
+
+## Residual integration disposition
+
+Eight integrated attack surfaces remained (code audit, rule/oracle, trust,
+historical inputs, active docs, safety, fixtures/mutants, claim bounds), below
+the64-seat band; one ordinary residual8 batch was used without padding.
+Full dispositions and procedural gaps are in
+`.ufo/waves/round-21/evidence/residual-dispositions.json`.
+The audit is a **negative-only observation prerequisite**, not a positive
+authorization gate: prior “mandatory acceptance gate” shorthand does not
+promise actor authentication or a successful disposed/rc0 path. The
+classifier is a gate only over its finite synthetic expectation table.
+Outside acceptance remains a separate non-author/operator decision.
+
+Fixture corrections preserve the original positive-permission control as
+default, with an explicit `--trust-refinement` expectation mode rather than
+silently turning its contradiction green. The corrected setup-failure
+classification, cleanup actor, identity-bound payload, exact finding IDs,
+TMPDIR selftest and mutation-control corrections are co-evolved, not changes
+to the six frozen cases. Probe originals remain in earlier committed evidence.
+ReviewAudit's reported real audit observations are author-side and its
+read-only runs exceeded the no-test item; final L1 receipts remain separate.
+
+Wave-slot disclosure: retries2–4 did not reacquire a fresh grant after the
+first reservation; the unchanged dispatch succeeded on attempt4. The
+residual8 did acquire one. Both were released; no capacity-protection or
+procedural-compliance improvement is claimed for this round.

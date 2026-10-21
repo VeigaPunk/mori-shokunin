@@ -86,6 +86,17 @@ def main():
             issues.append(phase + ':audit-pin-not-blocked')
         if audit_value.get('omitted') != expected_omitted:
             issues.append(phase + ':omission-counter-mismatch')
+        expected_retained = len(actual_ids & {x['id'] for x in required})
+        if audit_value.get('retained') != expected_retained:
+            issues.append(phase + ':retained-counter-mismatch')
+        if audit_value.get('unresolved') != expected_retained:
+            issues.append(phase + ':unresolved-counter-mismatch')
+        if audit_value.get('disposed') != 0 or audit_value.get('invalid') != 0:
+            issues.append(phase + ':disposition-or-invalid-not-zero')
+        unresolved_rows = audit_value.get('unresolved_ids', [])
+        if ({x.get('id') for x in unresolved_rows} != actual_ids
+                or any(x.get('reason') != 'unresolved' for x in unresolved_rows)):
+            issues.append(phase + ':unresolved-identities-or-reasons-mismatch')
         class_value = classify['observed'] or {}
         observations = class_value.get('cases', class_value.get('results', []))
         # Preserve the entire returned decision object. An unsupported output

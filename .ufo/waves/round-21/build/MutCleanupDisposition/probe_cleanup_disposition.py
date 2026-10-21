@@ -273,10 +273,10 @@ def main():
         if record["accounting_sha256_before"] != record["accounting_sha256_after"]:
             failures.append(f"{label}: detector changed its accounting input")
     blocked = {"omitted": 0, "retained": 1, "unresolved": 1, "disposed": 0, "invalid": 0}
-    allowed = {"omitted": 0, "retained": 1, "unresolved": 0, "disposed": 1, "invalid": 0}
+    allowed = {"omitted": 0, "retained": 1, "unresolved": 1, "disposed": 1, "invalid": 0}
     for label, counts, pin_allowed, rc in (
         ("pristine", blocked, False, 1),
-        ("independent_control", allowed, True, 0),
+        ("independent_control", allowed, False, 1),
         ("restored", blocked, False, 1),
     ):
         if label in cases:

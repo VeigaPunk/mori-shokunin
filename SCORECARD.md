@@ -1301,3 +1301,10 @@ depth5, adjacency6 held. No retirement, no stagnation waiver, no promotion.
 Author expansion is not claimed for historical repair/source-row volume.
 The round20 capability cell's22/22 is stale; actual final selftest was23/23
 (round20 evidence/c2-final-selftest.txt and non-author C2_remeasurement).
+
+Round21 provenance clarification (2026-10-21): C1's declaration was frozen
+at3b792db; `frozen/required.json` and the actual retained accounting first
+landed at8fed329636f53455ae2f53930c171c6186aff1fd, not3b792db. Only the
+six policy cases and old/new rule objects carry the earlier freeze.
+The empty before accounting is an explicit later reconstruction of the
+absent representation at e9f340c, not bytes claimed to exist there.

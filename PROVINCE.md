@@ -188,3 +188,8 @@ not supply independent lifecycle closure; the aggregator's round12 empty-at-
 inspection report corroborates loss, not disposition. A future independent
 per-wave disposition must come from the operator or an appropriate non-author
 wave/lifecycle owner; mori cannot author itself out of this blocker.
+
+Round21 residual-review wording correction: “independent record” in the
+connector clarification means **declared-independent record**, pending
+outside adjudication. Structural validation and hashes do not establish
+authorship or acceptance; every such declaration remains pin-blocked here.

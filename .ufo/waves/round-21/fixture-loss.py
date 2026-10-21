@@ -146,8 +146,6 @@ def fixture_artifacts(case_name: str) -> dict[str, bytes]:
             "disposition": "settlement",
             "id": OBSERVATION_ID,
             "independent": disposition_independent,
-            "fixture": True,
-            "kind": "independent-disposition",
             "wave_id": WAVE_ID,
         },
     }
@@ -198,7 +196,8 @@ def fixture_documents(case_name: str, root: Path, artifacts: dict[str, bytes],
             "evidence/row-baseline.json" if case_name == "wrong-baseline-v0"
             else "evidence/required-baseline.json", artifacts, revision),
         "deletion": provenance("evidence/row-deletion.json", artifacts, revision),
-        "cleanup": provenance("evidence/row-cleanup.json", artifacts, revision),
+        "cleanup": {**provenance("evidence/row-cleanup.json", artifacts, revision),
+                    "actor": CLEANUP_ACTOR},
         "independent_disposition": {
             **provenance("evidence/row-disposition.json", artifacts, revision),
             "independent": disposition_independent,
@@ -278,9 +277,10 @@ def expected_cases() -> list[dict[str, Any]]:
             "minimum": {"invalid": 1, "unresolved": 1},
         },
         {
-            "id": "duplicate-accounting-id", "expected_rc": 1,
-            "exact": {"disposed": 0, "pin_allowed": False},
-            "minimum": {"invalid": 1, "unresolved": 1},
+            "id": "duplicate-accounting-id", "expected_rc": 2,
+            "exact": {"pin_allowed": False},
+            "expected_finding_id": "mori-evidence-loss:setup:duplicate_observation_id",
+            "superseded_expectation": {"expected_rc": 1, "reason": "v0 treated malformed duplicate IDs as evaluated rows; contract maps input failure to2"},
         },
         {
             "id": "symlink-escape", "expected_rc": 1,
@@ -299,11 +299,13 @@ def expected_cases() -> list[dict[str, Any]]:
         },
         {
             "id": "false-independent-boolean", "expected_rc": 1,
+            "expected_finding_id": "mori-evidence-loss:audit:fixture-wave-observation:independent_disposition:independent_flag_invalid",
             "exact": {"disposed": 0, "pin_allowed": False},
             "minimum": {"unresolved": 1},
         },
         {
             "id": "same-actor-cleanup-only", "expected_rc": 1,
+            "expected_finding_id": "mori-evidence-loss:audit:fixture-wave-observation:independent_disposition:independent_actor_not_distinct",
             "exact": {"disposed": 0, "pin_allowed": False},
             "minimum": {"unresolved": 1},
         },
@@ -345,6 +347,12 @@ def parse_audit_output(stdout: bytes) -> tuple[dict[str, Any] | None, list[str]]
         return None, ["stdout-not-strict-json"]
     if not isinstance(value, dict) or value.get("schema") != AUDIT_SCHEMA:
         return None, ["unexpected-audit-schema"]
+    if isinstance(value.get("error"), str):
+        ids, id_errors = finding_ids(value)
+        value["_runner_finding_ids"] = ids
+        if value.get("pin_allowed") is not False:
+            id_errors.append("setup-error-not-blocked")
+        return value, id_errors
     if not isinstance(value.get("issues"), list):
         errors.append("issues-not-list")
     for key in COUNT_KEYS:
@@ -460,6 +468,7 @@ def run_case(tool: Path, parent: Path, case_spec: dict[str, Any]) -> dict[str, A
     case_result: dict[str, Any] = {
         "id": name,
         "expected_rc": case_spec["expected_rc"],
+        "superseded_expectation": case_spec.get("superseded_expectation"),
         "expected_counts": {
             "exact": case_spec.get("exact", {}),
             "minimum": case_spec.get("minimum", {}),
@@ -487,6 +496,10 @@ def run_case(tool: Path, parent: Path, case_spec: dict[str, Any]) -> dict[str, A
             add_check(case_result, prefix + "-finding-id-present",
                       bool(run["finding_ids"]), "at least one stable finding_id",
                       run["finding_ids"])
+        if case_spec.get("expected_finding_id"):
+            add_check(case_result, prefix + "-exact-finding-id",
+                      case_spec["expected_finding_id"] in run["finding_ids"],
+                      case_spec["expected_finding_id"], run["finding_ids"])
         counts = run["counts"]
         if counts is not None:
             for key, expected in case_spec.get("exact", {}).items():
@@ -573,11 +586,12 @@ def write_report(path: Path, value: dict[str, Any]) -> None:
 
 
 def run_harness(tool: Path, tool_sha256: str, output: Path,
-                tmpdir: Path) -> tuple[dict[str, Any], int]:
+                tmpdir: Path, trust_refinement: bool = False) -> tuple[dict[str, Any], int]:
     report: dict[str, Any] = {
         "schema": SCHEMA,
         "base_revision": BASE_REVISION,
         "tool": {"path": str(tool), "sha256": tool_sha256},
+        "expectation_mode": "trust-refinement" if trust_refinement else "original-positive-permission",
         "status": "running",
         "case_count": 0,
         "passed": 0,
@@ -595,6 +609,17 @@ def run_harness(tool: Path, tool_sha256: str, output: Path,
                                          dir=str(tmpdir)) as raw_workspace:
             workspace = Path(raw_workspace)
             case_specs = expected_cases()
+            if trust_refinement:
+                for spec in case_specs:
+                    if spec["id"] == "valid-independently-disposed":
+                        spec["superseded_expectation"] = {
+                            "expected_rc": spec["expected_rc"], "exact": spec["exact"],
+                            "reason": "CriticTrust/ReviewTrust: submitted declaration is not external acceptance",
+                        }
+                        spec["expected_rc"] = 1
+                        spec["exact"] = {"omitted": 0, "retained": 1, "unresolved": 1,
+                                         "disposed": 1, "invalid": 0, "pin_allowed": False}
+                        spec["expected_finding_id"] = "mori-evidence-loss:audit:fixture-wave-observation:disposition:external_review_required"
             for spec in case_specs:
                 try:
                     result = run_case(tool, workspace, spec)
@@ -624,6 +649,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--tool", required=True, metavar="PATH")
     parser.add_argument("--output", required=True, metavar="FILE")
+    parser.add_argument("--trust-refinement", action="store_true",
+                        help="apply explicitly recorded stronger outside-review expectation")
     return parser.parse_args(argv)
 
 
@@ -636,7 +663,7 @@ def main(argv: list[str] | None = None) -> int:
         tool, tool_sha = tool_path(args.tool)
         output = output_path(args.output, [tool, Path(__file__).resolve(strict=True)])
         tmpdir = tmpdir_path()
-        report, exit_code = run_harness(tool, tool_sha, output, tmpdir)
+        report, exit_code = run_harness(tool, tool_sha, output, tmpdir, args.trust_refinement)
     except HarnessError as exc:
         report = {
             "schema": SCHEMA, "base_revision": BASE_REVISION,
