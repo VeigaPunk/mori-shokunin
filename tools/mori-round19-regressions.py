@@ -611,7 +611,7 @@ def c2_metadata_checks(expected_names: list[str], mode: str, tool: Path,
 
     def set_result(name: str, ok: bool, unavailable: bool = False) -> None:
         statuses[name] = ("pass" if ok else
-                          "capability_absent" if unavailable else "regression",
+                          "capability_absent" if unavailable and mode == "before" else "regression",
                           None if ok else ("metadata-unavailable" if unavailable
                                            else "assertion-mismatch"))
 
