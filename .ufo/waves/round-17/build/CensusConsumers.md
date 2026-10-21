@@ -183,7 +183,7 @@ per-lane ids. No consumer *requires* either.
 - `LANE_AUTHOR_MISMATCH` **will fire** on jj-produced commits whose committer is the lane identity
   and whose author is not — exactly the F4 case measured in
   `.ufo/waves/hyaku/jj-w1/reports/JjAuditMori.md:79-94`
-  (`611dfb5|Joao Pedro Veiga <jpveigao10@gmail.com>|mori-shokunin <mori@shokunin.local>|subject work`).
+  (`611dfb5|<operator ambient git identity withheld>|mori-shokunin <mori@shokunin.local>|subject work`).
   Live `drift=` therefore rises by at least one for any lane that shipped such commits after
   launch. No gate parses live output; recorded live counts in reports/evidence become stale, and
   `bash tools/mori-census.sh --drift corpus/evidence/baseline-r10-20261015T2231Z.json` will add

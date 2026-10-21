@@ -143,7 +143,7 @@ git -C <repo> log --after=@<launch_epoch> --format='%an <%ae>' \
   `protocol-shokunin <protocol@shokunin.local>` (57 of the fleet root's last 400 commits) and
   `aggregator-shokunin <aggregator@shokunin.local>` (10).
 - The verbatim pair match closes measured traps in the fleet root's last 400 commits: human
-  author `Joao Pedro Veiga <jpveigao10@gmail.com>` (56; plus one accented `João` spelling),
+  author `<operator ambient git identity withheld>` (56; plus one accented `João` spelling),
   fleet identities `ci <ci@local>` (74), `shokunin <shokunin@local>` (22),
   `shokunin-fleet <fleet@shokunin.local>` (20), `integrator <integrator@shokunin.local>` (6),
   and near-miss lane names `kagi <kagi@shokunin.local>` (1) and
