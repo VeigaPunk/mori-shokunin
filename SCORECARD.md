@@ -1127,3 +1127,25 @@ reports delivered, 0 reported dead, no replacements or new L0 question.
 
 No promotion or non-author admission is self-certified. Planned work is only
 the completed steered round-17 scope; any next claims require a new external steer.
+
+## Round 18 — recovery attempt 2: repair the round-17 privacy harm, freeze-order, dispatch binding
+
+Entering `d005cdd` (r17 closure rejected-harmed, adjacency). Requirement freeze `29b0dc7`
+precedes first implementation `b8f5c6c`. Measured commit **3127c3a0aec48f41bbae3700b6bbaa13b759797a**.
+Waves: w1 68 seats (15 dead on provider capacity), w2 67 seats (0 dead); round total 135.
+
+| Claim | Axis | Before (rev) | After (3127c3a) | Counting command | L1 verdict |
+|---|---|---|---|---|---|
+| C1 retention (sourced S049–S052) | adjacency | 116 unallowlisted, routed 40 (`d005cdd`, population_match true) | 0, routed 0, 86 allowlisted name-only rows, 0 forbidden | `python3 tools/mori-retention-gate.py scan --repo . --rev <rev> --policy .ufo/waves/round-18/frozen/c1-policy.json [--allowlist corpus/evidence/retention-allowlist.json]` | metric improved; axis-level adjacency **not self-certified** (wave-2 critics: residual out-of-metric context; see `.ufo/waves/round-18/out-of-metric-triage.md`) |
+| C2 freeze-order | calibration | r17 overclaims 1 (+3 r18 no-implementation at `29b0dc7`) | 0; r17 3/3 `co-evolved` = closure; r18-C1..C3 `pre-build` | `python3 tools/mori-freeze-order.py check --repo . --register .ufo/waves/round-18/frozen/c2-register.json --corrections corpus/evidence/freeze-register.json --tip-for r18-C{1,2,3}=<rev>` | improved narrowly (historical relabel + prospective pre-build) |
+| C3 dispatch ledger | operability (capability) | r17 legacy 9/9 unbound | r18 w1 1/1, w2 2/2, residual 7/7 bound (residual ledger `STARTED_MISSING`) | `python3 tools/mori-dispatch-ledger.py verify --repo . --rev <rev> --ledger <file>` | capability acquired; not a same-population improvement |
+
+| Axis | Verdict | Score | Note |
+|---|---|---:|---|
+| adjacency | improved at frozen-class scope; residue contested | 6 held | outside closure decides harm |
+| calibration | improved narrowly | 5 held | |
+| operability | improved (capability) | 7 held | selftests 21/21, 12/12, 14/14 |
+| coverage, depth, freshness | unchanged | 6/5/5 held | r10 drift red carried, no repin |
+
+Capabilities: retention gate (C1), freeze-order check (C2), dispatch-attempt ledger verify (C3) —
+evidence `.ufo/waves/round-18/evidence/{c1-after,c2-after,c3-after-*}.json`, first working round 18.

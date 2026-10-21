@@ -1285,3 +1285,13 @@ are removed after retaining exact artifacts and revision attestations
 (`evidence/final/scaffold-cleanup.json`). No tool install/update, package/service
 action, new L0 question, promotion or next-round execution occurred. Initial
 scope/privacy/VCS/selftest deviations remain explicit conformance debt.
+
+## Round 18 (recovery attempt 2) — 2026-10-21
+
+Motivation: `corpus/lessons/round-17-verifier-spotcheck.md` (rejected-harmed, adjacency; routed defects 1–6).
+Freeze `29b0dc7`; tools `b8f5c6c`; docs `daceeec`; redactions `b8f5c6c`, `e2bfbd6`, `9db5168`; allowlist and measurement `3127c3a`.
+C1 116→0 (routed 40→0), C2 overclaims 1→0 with r18 pre-build, C3 legacy 9/9 unbound vs r18 bound ledgers.
+Evidence: `.ufo/waves/round-18/evidence/`, `corpus/lessons/round-18.md`, `.ufo/waves/round-18/out-of-metric-triage.md`.
+Correction note (append-only): LOG.md:1197's "precommitted C3 witness/control/recipe pins" is superseded by the
+r17-C3 `co-evolved` correction row in `corpus/evidence/freeze-register.json`. Knowledge `silence-grading-r2.md`
+had the operator's personal identity withheld in round 18.
