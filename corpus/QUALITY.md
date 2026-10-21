@@ -247,7 +247,7 @@ Source tiers: see corpus/SOURCES.md (contract v1); this file holds claim admissi
     hides a still-real condition it also carries `blind_spot` with a route;
     re-pinning never certifies health, only sameness since the pin.
     ← lessons/round-20.md#M6; -FINDING:WATCHDOG_STALE and
-    -FINDING:WAVE_UNSETTLED_AGE dissent (VolatileContract H2/H3).
+    -FINDING:WAVE_UNSETTLED_AGE dissent (VolatileContract K2/K3).
 68. A minimized or sanitized copy never moves a pinned digest: the mapping
     records the entering-revision digest, the present digest and whether the
     artifact was bound; a bound artifact is re-run from its original revision,

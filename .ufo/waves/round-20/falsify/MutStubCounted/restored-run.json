@@ -1,0 +1,45 @@
+{
+  "phase": "restored",
+  "before_hashes": {
+    "command": "sha256sum -- /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-wave-settlement.py /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/mori-wave-settlement.py /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/mori-wave-settlement.pristine.py /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/build/OracleHarness/c2-oracle.py /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/frozen/c2-expected.json",
+    "stdout": "c6e6091937e4bcb02775cea81ce33990924c6e27487a6ce255d2959d94f4e795  /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-wave-settlement.py\nc6e6091937e4bcb02775cea81ce33990924c6e27487a6ce255d2959d94f4e795  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/mori-wave-settlement.py\nc6e6091937e4bcb02775cea81ce33990924c6e27487a6ce255d2959d94f4e795  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/mori-wave-settlement.pristine.py\n2a0da4c8acf20f5960302e3850992fff7a164003501bf73ca912532a0f8e6914  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/build/OracleHarness/c2-oracle.py\n0984806922da727a02a7944c00154df7a5aaff356c91c6fb36f47467c4f7d2af  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/frozen/c2-expected.json\n",
+    "stderr": "",
+    "exit_code": 0,
+    "timeout_seconds": 20
+  },
+  "selftest": {
+    "command": "python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/mori-wave-settlement.py --selftest",
+    "stdout": "MORI_WAVE_SETTLEMENT_SELFTEST: PASS (21 cases, 21 passed, 0 failed)\n",
+    "stderr": "",
+    "exit_code": 0,
+    "timeout_seconds": 180
+  },
+  "oracle": {
+    "command": "python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/build/OracleHarness/c2-oracle.py --tool /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/mori-wave-settlement.py --out /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/oracle.json",
+    "stdout": "",
+    "stderr": "",
+    "exit_code": 0,
+    "timeout_seconds": 180
+  },
+  "oracle_counts": {
+    "command": "/usr/bin/jq .counts /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/oracle.json",
+    "stdout": "{\n  \"capability_absent\": 0,\n  \"matched\": 14,\n  \"mismatched\": 0\n}\n",
+    "stderr": "",
+    "exit_code": 0,
+    "timeout_seconds": 20
+  },
+  "archiving_oracle": {
+    "command": "cp -- /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/oracle.json /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/restored-oracle.json",
+    "stdout": "",
+    "stderr": "",
+    "exit_code": 0,
+    "timeout_seconds": 20
+  },
+  "after_hashes": {
+    "command": "sha256sum -- /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-wave-settlement.py /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/mori-wave-settlement.py /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/mori-wave-settlement.pristine.py /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/build/OracleHarness/c2-oracle.py /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/frozen/c2-expected.json",
+    "stdout": "c6e6091937e4bcb02775cea81ce33990924c6e27487a6ce255d2959d94f4e795  /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-wave-settlement.py\nc6e6091937e4bcb02775cea81ce33990924c6e27487a6ce255d2959d94f4e795  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/mori-wave-settlement.py\nc6e6091937e4bcb02775cea81ce33990924c6e27487a6ce255d2959d94f4e795  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/mori-wave-settlement.pristine.py\n2a0da4c8acf20f5960302e3850992fff7a164003501bf73ca912532a0f8e6914  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/build/OracleHarness/c2-oracle.py\n0984806922da727a02a7944c00154df7a5aaff356c91c6fb36f47467c4f7d2af  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/frozen/c2-expected.json\n",
+    "stderr": "",
+    "exit_code": 0,
+    "timeout_seconds": 20
+  }
+}

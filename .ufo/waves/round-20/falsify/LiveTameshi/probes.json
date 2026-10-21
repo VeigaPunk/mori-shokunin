@@ -1,0 +1,307 @@
+{
+ "P1 no .ufo": {
+  "HEAD2eeae04": {
+   "err": "",
+   "rc": 0,
+   "waves": []
+  },
+  "frozen-current": {
+   "err": "",
+   "rc": 0,
+   "waves": []
+  }
+ },
+ "P10 dispatch file is symlink": {
+  "HEAD2eeae04": {
+   "err": "",
+   "rc": 0,
+   "waves": [
+    [
+     "settled",
+     [
+      [
+       "A",
+       "present"
+      ]
+     ]
+    ]
+   ]
+  },
+  "frozen-current": {
+   "err": "",
+   "rc": 0,
+   "waves": [
+    [
+     "settled",
+     [
+      [
+       "A",
+       "present"
+      ]
+     ]
+    ]
+   ]
+  }
+ },
+ "P11 symlinked parent of report path": {
+  "HEAD2eeae04": {
+   "err": "",
+   "rc": 1,
+   "waves": [
+    [
+     "unsettled",
+     [
+      [
+       "A",
+       "missing"
+      ]
+     ]
+    ]
+   ]
+  },
+  "frozen-current": {
+   "err": "",
+   "rc": 1,
+   "waves": [
+    [
+     "unsettled",
+     [
+      [
+       "A",
+       "unsafe"
+      ]
+     ]
+    ]
+   ]
+  }
+ },
+ "P12 nonexistent fleet root": {
+  "HEAD2eeae04": {
+   "err": "",
+   "rc": 0,
+   "waves": [
+    [
+     "settled",
+     [
+      [
+       "A",
+       "present"
+      ]
+     ]
+    ]
+   ]
+  },
+  "frozen-current": {
+   "err": "mori-wave-settlement: lane root or fleet root is unreadable",
+   "rc": 2
+  }
+ },
+ "P2 .ufo/waves is symlink": {
+  "HEAD2eeae04": {
+   "err": "",
+   "rc": 0,
+   "waves": []
+  },
+  "frozen-current": {
+   "err": "",
+   "rc": 0,
+   "waves": []
+  }
+ },
+ "P3 trailing-slash trailer on file": {
+  "HEAD2eeae04": {
+   "err": "",
+   "rc": 0,
+   "waves": [
+    [
+     "settled",
+     [
+      [
+       "A",
+       "present"
+      ]
+     ]
+    ]
+   ]
+  },
+  "frozen-current": {
+   "err": "",
+   "rc": 0,
+   "waves": [
+    [
+     "settled",
+     [
+      [
+       "A",
+       "present"
+      ]
+     ]
+    ]
+   ]
+  }
+ },
+ "P4 stub a=exact c=CRLF d=spaces": {
+  "HEAD2eeae04": {
+   "err": "",
+   "rc": 1,
+   "waves": [
+    [
+     "partial",
+     [
+      [
+       "A",
+       "stub"
+      ],
+      [
+       "C",
+       "present"
+      ],
+      [
+       "D",
+       "present"
+      ]
+     ]
+    ]
+   ]
+  },
+  "frozen-current": {
+   "err": "",
+   "rc": 1,
+   "waves": [
+    [
+     "partial",
+     [
+      [
+       "A",
+       "stub"
+      ],
+      [
+       "C",
+       "present"
+      ],
+      [
+       "D",
+       "present"
+      ]
+     ]
+    ]
+   ]
+  }
+ },
+ "P5 unreadable dir inside waves": {
+  "HEAD2eeae04": {
+   "err": "mori-wave-settlement: lane root is unreadable",
+   "rc": 2
+  },
+  "frozen-current": {
+   "err": "mori-wave-settlement: lane root or fleet root is unreadable",
+   "rc": 2
+  }
+ },
+ "P6 unreadable dir holding report outside waves": {
+  "HEAD2eeae04": {
+   "err": "",
+   "rc": 1,
+   "waves": [
+    [
+     "unsettled",
+     [
+      [
+       "A",
+       "missing"
+      ]
+     ]
+    ]
+   ]
+  },
+  "frozen-current": {
+   "err": "",
+   "rc": 1,
+   "waves": [
+    [
+     "unsettled",
+     [
+      [
+       "A",
+       "missing"
+      ]
+     ]
+    ]
+   ]
+  }
+ },
+ "P7 misrooted, fleet root real dir": {
+  "HEAD2eeae04": {
+   "err": "",
+   "rc": 1,
+   "waves": [
+    [
+     "unsettled",
+     [
+      [
+       "A",
+       "misrooted"
+      ]
+     ]
+    ]
+   ]
+  },
+  "frozen-current": {
+   "err": "",
+   "rc": 1,
+   "waves": [
+    [
+     "unsettled",
+     [
+      [
+       "A",
+       "misrooted"
+      ]
+     ]
+    ]
+   ]
+  }
+ },
+ "P8 misrooted, fleet root is symlink": {
+  "HEAD2eeae04": {
+   "err": "",
+   "rc": 1,
+   "waves": [
+    [
+     "unsettled",
+     [
+      [
+       "A",
+       "missing"
+      ]
+     ]
+    ]
+   ]
+  },
+  "frozen-current": {
+   "err": "",
+   "rc": 1,
+   "waves": [
+    [
+     "unsettled",
+     [
+      [
+       "A",
+       "misrooted"
+      ]
+     ]
+    ]
+   ]
+  }
+ },
+ "P9 lane root is symlink": {
+  "HEAD2eeae04": {
+   "err": "mori-wave-settlement: lane root is unreadable",
+   "rc": 2
+  },
+  "frozen-current": {
+   "err": "mori-wave-settlement: lane root or fleet root is unreadable",
+   "rc": 2
+  }
+ }
+}

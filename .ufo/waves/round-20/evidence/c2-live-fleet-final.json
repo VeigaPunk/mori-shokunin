@@ -1,0 +1,358 @@
+{
+  "dispatch_filename_flags": [
+    {
+      "lane": "kake-shokunin",
+      "path": ".ufo/waves/round-21/wave1-validation.json"
+    },
+    {
+      "lane": "mado-shokunin",
+      "path": ".ufo/waves/fleet-round-1-interactive/dispatch-preview.json"
+    },
+    {
+      "lane": "revenger-shokunin",
+      "path": ".ufo/waves/fleet-round-1-interactive/rendered-undispatched.json"
+    },
+    {
+      "lane": "tabi-shokunin",
+      "path": ".ufo/waves/round-15/w1/validation.json"
+    },
+    {
+      "lane": "tabi-shokunin",
+      "path": ".ufo/waves/round-15/w2/validation.json"
+    },
+    {
+      "lane": "tabi-shokunin",
+      "path": ".ufo/waves/round-16/w1/validation.json"
+    },
+    {
+      "lane": "tabi-shokunin",
+      "path": ".ufo/waves/round-16/w2/validation.json"
+    },
+    {
+      "lane": "tabi-shokunin",
+      "path": ".ufo/waves/round-17/w1/validation.json"
+    },
+    {
+      "lane": "tabi-shokunin",
+      "path": ".ufo/waves/round-17/w2/validation.json"
+    },
+    {
+      "lane": "tabi-shokunin",
+      "path": ".ufo/waves/round-18/w1/validation.json"
+    },
+    {
+      "lane": "tabi-shokunin",
+      "path": ".ufo/waves/round-18/w2/validation.json"
+    },
+    {
+      "lane": "tabi-shokunin",
+      "path": ".ufo/waves/round-19/w1/validation.json"
+    },
+    {
+      "lane": "tabi-shokunin",
+      "path": ".ufo/waves/round-19/w2/validation.json"
+    },
+    {
+      "lane": "tameshi-shokunin",
+      "path": ".ufo/waves/round-20/validation-current.json"
+    }
+  ],
+  "fleet_root": "/home/vgpnk/Projects/shokunin",
+  "lanes": [
+    {
+      "empty": 0,
+      "exit": 0,
+      "lane": "audio-shokunin",
+      "members": 0,
+      "misrooted": 0,
+      "missing": 0,
+      "present": 0,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 0,
+      "unsafe": 0,
+      "waves": 0
+    },
+    {
+      "empty": 0,
+      "exit": 1,
+      "lane": "chousa-shokunin",
+      "members": 136,
+      "misrooted": 0,
+      "missing": 16,
+      "present": 120,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 0,
+      "unsafe": 0,
+      "waves": 2
+    },
+    {
+      "empty": 0,
+      "exit": 0,
+      "lane": "game-dev-2d-shokunin",
+      "members": 0,
+      "misrooted": 0,
+      "missing": 0,
+      "present": 0,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 0,
+      "unsafe": 0,
+      "waves": 0
+    },
+    {
+      "empty": 0,
+      "exit": 0,
+      "lane": "game-dev-3d-shokunin",
+      "members": 0,
+      "misrooted": 0,
+      "missing": 0,
+      "present": 0,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 0,
+      "unsafe": 0,
+      "waves": 0
+    },
+    {
+      "empty": 0,
+      "exit": 1,
+      "lane": "kagi-shokunin",
+      "members": 479,
+      "misrooted": 0,
+      "missing": 13,
+      "present": 466,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 0,
+      "unsafe": 0,
+      "waves": 7
+    },
+    {
+      "empty": 0,
+      "exit": 1,
+      "lane": "kaidoku-shokunin",
+      "members": 959,
+      "misrooted": 0,
+      "missing": 135,
+      "present": 824,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 39,
+      "unsafe": 0,
+      "waves": 14
+    },
+    {
+      "empty": 0,
+      "exit": 1,
+      "lane": "kake-shokunin",
+      "members": 325,
+      "misrooted": 0,
+      "missing": 64,
+      "present": 261,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 0,
+      "unsafe": 0,
+      "waves": 5
+    },
+    {
+      "empty": 0,
+      "exit": 1,
+      "lane": "kama-shokunin",
+      "members": 1265,
+      "misrooted": 0,
+      "missing": 195,
+      "present": 1070,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 1,
+      "unsafe": 0,
+      "waves": 20
+    },
+    {
+      "empty": 0,
+      "exit": 1,
+      "lane": "kasegi-shokunin",
+      "members": 64,
+      "misrooted": 0,
+      "missing": 20,
+      "present": 44,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 0,
+      "unsafe": 0,
+      "waves": 1
+    },
+    {
+      "empty": 0,
+      "exit": 1,
+      "lane": "kengaku-shokunin",
+      "members": 387,
+      "misrooted": 0,
+      "missing": 11,
+      "present": 376,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 0,
+      "unsafe": 0,
+      "waves": 5
+    },
+    {
+      "empty": 0,
+      "exit": 0,
+      "lane": "kotoba-shokunin",
+      "members": 0,
+      "misrooted": 0,
+      "missing": 0,
+      "present": 0,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 0,
+      "unsafe": 0,
+      "waves": 0
+    },
+    {
+      "empty": 0,
+      "exit": 0,
+      "lane": "kotodama-shokunin",
+      "members": 0,
+      "misrooted": 0,
+      "missing": 0,
+      "present": 0,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 0,
+      "unsafe": 0,
+      "waves": 0
+    },
+    {
+      "empty": 0,
+      "exit": 1,
+      "lane": "kumitate-shokunin",
+      "members": 512,
+      "misrooted": 0,
+      "missing": 44,
+      "present": 468,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 0,
+      "unsafe": 0,
+      "waves": 6
+    },
+    {
+      "empty": 0,
+      "exit": 0,
+      "lane": "lore-shokunin",
+      "members": 0,
+      "misrooted": 0,
+      "missing": 0,
+      "present": 0,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 1,
+      "unsafe": 0,
+      "waves": 0
+    },
+    {
+      "empty": 0,
+      "exit": 1,
+      "lane": "mado-shokunin",
+      "members": 1030,
+      "misrooted": 0,
+      "missing": 116,
+      "present": 914,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 2,
+      "unsafe": 0,
+      "waves": 16
+    },
+    {
+      "empty": 0,
+      "exit": 1,
+      "lane": "mori-shokunin",
+      "members": 742,
+      "misrooted": 0,
+      "missing": 88,
+      "present": 645,
+      "stub": 8,
+      "unparsed": 0,
+      "unreadable_json": 3,
+      "unsafe": 1,
+      "waves": 14
+    },
+    {
+      "empty": 0,
+      "exit": 1,
+      "lane": "revenger-shokunin",
+      "members": 32,
+      "misrooted": 0,
+      "missing": 32,
+      "present": 0,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 0,
+      "unsafe": 0,
+      "waves": 1
+    },
+    {
+      "empty": 0,
+      "exit": 1,
+      "lane": "souji-shokunin",
+      "members": 783,
+      "misrooted": 0,
+      "missing": 120,
+      "present": 663,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 0,
+      "unsafe": 0,
+      "waves": 12
+    },
+    {
+      "empty": 0,
+      "exit": 1,
+      "lane": "tabi-shokunin",
+      "members": 1007,
+      "misrooted": 0,
+      "missing": 116,
+      "present": 891,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 0,
+      "unsafe": 0,
+      "waves": 16
+    },
+    {
+      "empty": 0,
+      "exit": 1,
+      "lane": "tameshi-shokunin",
+      "members": 965,
+      "misrooted": 0,
+      "missing": 108,
+      "present": 857,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 0,
+      "unsafe": 0,
+      "waves": 16
+    },
+    {
+      "empty": 0,
+      "exit": 1,
+      "lane": "tsukuroi-shokunin",
+      "members": 834,
+      "misrooted": 0,
+      "missing": 66,
+      "present": 768,
+      "stub": 0,
+      "unparsed": 0,
+      "unreadable_json": 0,
+      "unsafe": 0,
+      "waves": 14
+    }
+  ],
+  "schema": "mori-r20-c2-fleet-live-v1"
+}

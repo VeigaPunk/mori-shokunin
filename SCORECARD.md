@@ -1229,3 +1229,51 @@ Repair/index/source-row volume is not new covered-ground knowledge. Main's
 non-author S064-admit/S065-reject agreement and lesson-backed criteria support
 discernment; author-side falsifiers do not replace that check.
 No subsequent round is initiated or claimed; this planned scope is round19 only.
+
+## Round 20 — classified drift re-pin (freshness) and per-seat wave settlement (coverage)
+
+Author L1 MoriR20; entering tip `2061780117e6ca637725004897bd288d3ba7e988` (round 19 admitted).
+Frozen contract/cases `e4d9384` precede the first implementation `2eeae04`. Active scores entering:
+coverage 6, operability 7, depth 5, freshness 5, calibration 5, adjacency 6. Lowest non-retired tie
+depth/freshness/calibration at 5; freshness selected (calibration chosen rounds 17–19; freshness
+last moved round 10). No retirement, no stagnation waiver. Sourced claims: C1 S066/S067, C2
+S068/S073/S074 (S073/S074 supersede S069/S071). Measured commit: the round-20 final lane tip named in the
+report (tool and register bytes are unchanged after it).
+
+| Claim | Axis / score | Before → after | Counting command (lane root) | L1 verdict |
+|---|---|---|---|---|
+| C1 classified re-pin | freshness 5 held | unclassified r10-drift tokens **8 → 0** of 50 (entering) and 7 → 0 of 49 (pre-pin 10:51Z); 0 census-regression; new baseline `corpus/evidence/baseline-r20-20261021T1051Z.json`, post-pin drift `none` rc 0 | `export LC_ALL=C; comm -23 <(tr ' ' '\n' < DRIFT \| grep -v '^MORI_DRIFT:$' \| grep . \| sort -u) <(/usr/bin/jq -r '.tokens\|keys[]' REG \| sort -u) \| wc -l` → `.ufo/waves/round-20/evidence/c1-count.json` | improved; two disappearance tokens carry recorded dissent (`blind_spot`) |
+| C2 wave-settlement scan | coverage 6 held | independent oracle `capability_absent` **14 → 0**, matched 0 → 14; live r19 W1 16/64 partial | `/usr/bin/jq -s '[.[].counts.capability_absent]' .ufo/waves/round-20/evidence/c2-before.json .ufo/waves/round-20/evidence/c2-after.json` → `[14,0]` | improved (capability; not 14 historical defects) |
+
+The frozen contract's C1 command set `LC_ALL=C` on `comm` only and miscounts under
+`en_US.UTF-8` (37/33; wave-2 DraftLog/DraftScorecard); the corrected command exports it for the
+whole pipeline. Frozen bytes unchanged.
+
+| Axis | Verdict | Score | Evidence / boundary |
+|---|---|---:|---|
+| freshness | improved | 5 held | first re-verification of every drift token since r10 with evidence, stale baseline replaced; stability window of a live pin is minutes–hours (`corpus/knowledge/drift-repin-r20.md` §4) |
+| coverage | improved | 6 held | per-seat settlement over 21 lanes / 196 dispatch files; FR3 partially to Core; dispatch authenticity and hygiene stay Frontier |
+| operability | unchanged | 7 held | census selftest 134/134, silence oracle 28/28, census bytes unchanged; new tool credited to coverage only |
+| calibration | unchanged | 5 held | dissent recorded rather than resolved by the author; QUALITY 64–68 are lesson-backed, no scalar credit |
+| depth | unchanged | 5 held | sourced notes support the two claims; no separate depth claim |
+| adjacency | unchanged | 6 held | kumitate result semantics and souji cleanup untouched; seat scope breaches disclosed, no credit |
+
+### capabilities: first demonstrated round 20
+
+| Name | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---:|
+| Per-seat wave settlement scan | Count declared members vs non-empty report files (stub/misrooted/unsafe distinguished) for every dispatch file of a lane or the fleet, without emitting report bytes or calling a seat dead | `.ufo/waves/round-20/evidence/c2-after.json` (14/14), `c2-live-mori.json`, `c2-live-fleet.json`; `tools/mori-wave-settlement.py --selftest` 22/22 | 20 |
+
+Trends (author proposal; outside closure decides): expansion improved (two admitted knowledge
+entries citing mined rows; the settlement note is uncovered FR3 ground), quality improved (the
+stale r10 behavioral reference re-verified token-by-token and superseded by a stronger classified
+pin), discernment improved (Main non-author agree S068 admit / S072 reject; S069 corrected by S073).
+No promotion or subsequent round is claimed.
+
+Wave-2 corrections folded before landing (`.ufo/waves/round-20/falsify/`): register classes are now
+26 schema / 19 live-state / 5 roster / 0 regression (FamRosterLanes); tool refinements R7 (in-lane `..`)
+and R8 (symlinked parent) plus a vocabulary guard on every selftest case kill the surviving mutants
+(MutTraversalAllowed, VocabFleet mutant A); final tool selftest 23/23, oracle 14/14
+(`evidence/c2-final-selftest.txt`, `c2-after.json`, `c2-live-mori-final.json`, `c2-live-fleet-final.json`).
+Sources S073–S076 supersede over-reaching S069/S071/S070/S067 teaches. Open disagreement for the
+outside closure: WATCHDOG_STALE / WAVE_UNSETTLED_AGE class (K2/K3 dissent, AdjudicateWaves BROKEN).

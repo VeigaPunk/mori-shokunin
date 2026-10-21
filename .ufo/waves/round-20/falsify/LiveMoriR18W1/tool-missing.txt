@@ -1,0 +1,15 @@
+AdjDeadSeatCrossCheck
+AdjOmpRetryDocs
+AdjRetryRecoveryShape
+AdjSeatBreachDetect
+AdjSeatLiveEvidence
+AdjSeatNaming
+AdjTranscriptTailBounds
+AdjWave1SpecDispatch
+ScoutAttemptReceipts
+SweepR1314Md
+SweepR15Md1
+SweepR16Md1
+SweepR17Build1
+SweepR17Falsify1
+SweepR17Falsify3

@@ -1,0 +1,30 @@
+argv=['/usr/bin/python3', '/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round15-regressions.py', '--fixtures', '/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/NoHarmRun/tmp/mori-r15-selftest-bnbb222t/fixtures', '--expected', '/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/NoHarmRun/tmp/mori-r15-selftest-bnbb222t/expected.json', '--census', '/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/NoHarmRun/tmp/mori-r15-selftest-bnbb222t/wrappers/tampered_id.sh', '--output', '/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/NoHarmRun/tmp/mori-r15-selftest-bnbb222t/out-tampered_id']
+rc=1
+--- stdout ---
+GATE mori-round15-regressions-v1
+EXPECTED /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/NoHarmRun/tmp/mori-r15-selftest-bnbb222t/expected.json sha256=f4250483b120c9b1d0682ebdeea8ee286f8b52ea3ff96efb06476c64de035ab0
+CENSUS /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/NoHarmRun/tmp/mori-r15-selftest-bnbb222t/wrappers/tampered_id.sh sha256=a0c3b9a9c0336c8cd83f12bc11e06ae60c188d202c710d910b74fb1ef2193047
+FROZEN git:0fa5e0de194bcc270a927a166664113e6821442b:tools/mori-census.sh sha256=0e41cb83fce2e8c5c711171e1cde2e6fa2809dcfce630eccabe52bcbe41516d9 pinned=0e41cb83fce2e8c5c711171e1cde2e6fa2809dcfce630eccabe52bcbe41516d9
+REVISION head=8f8c58ee4d923131cfa61a669777ec481d5eca1d dirty_paths=827 stable=True
+CASE self_mixed_positive sut=FAIL reasons=oom_lines=0 want=1
+SUT_BEHAVIOR self_mixed_positive status=FAIL reasons=oom_lines=0 want=1
+FROZEN self_mixed_positive control=red_confirmed actual=fail
+CASE self_adversarial_nonobject sut=FAIL reasons=oom_lines=0 want=1
+SUT_BEHAVIOR self_adversarial_nonobject status=FAIL reasons=oom_lines=0 want=1
+FROZEN self_adversarial_nonobject control=red_confirmed actual=fail
+CASE self_signal_mixed sut=PASS
+FROZEN self_signal_mixed control=red_confirmed actual=fail
+CASE self_negative sut=PASS
+FROZEN self_negative control=pass actual=pass
+CASE self_capture_rc sut=PASS
+FROZEN self_capture_rc control=pass actual=pass
+CASE self_capture_stderr sut=PASS
+FROZEN self_capture_stderr control=pass actual=pass
+CASE self_capture_malformed sut=PASS
+FROZEN self_capture_malformed control=pass actual=pass
+SUMMARY sut_pass=5 sut_fail=2 sut_behavior_fail=2 frozen_control=selected frozen_red=3/3 frozen_unexpected_pass=0 frozen_unexpected_fail=0 frozen_inconclusive=0
+MANIFEST /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/NoHarmRun/tmp/mori-r15-selftest-bnbb222t/out-tampered_id/run-manifest.json
+GATE FAIL exit=1 (SUT fixture expectation failed)
+
+--- stderr ---
+

@@ -1,0 +1,277 @@
+{
+  "counts": {
+    "capability_absent": 14,
+    "matched": 0,
+    "mismatched": 0
+  },
+  "results": [
+    {
+      "expected": {
+        "exit": 0,
+        "missing": 0,
+        "present": 3,
+        "state": "settled"
+      },
+      "id": "all-present",
+      "issues": [
+        {
+          "reason": "tool_absent",
+          "tool": "/tmp/countc2/absent.py"
+        }
+      ],
+      "observed": {
+        "tool_exists": false
+      },
+      "status": "capability_absent"
+    },
+    {
+      "expected": {
+        "exit": 1,
+        "missing": 1,
+        "missing_names": [
+          "C"
+        ],
+        "present": 2,
+        "state": "partial"
+      },
+      "id": "one-missing",
+      "issues": [
+        {
+          "reason": "tool_absent",
+          "tool": "/tmp/countc2/absent.py"
+        }
+      ],
+      "observed": {
+        "tool_exists": false
+      },
+      "status": "capability_absent"
+    },
+    {
+      "expected": {
+        "exit": 1,
+        "missing": 2,
+        "present": 0,
+        "state": "unsettled"
+      },
+      "id": "none-present",
+      "issues": [
+        {
+          "reason": "tool_absent",
+          "tool": "/tmp/countc2/absent.py"
+        }
+      ],
+      "observed": {
+        "tool_exists": false
+      },
+      "status": "capability_absent"
+    },
+    {
+      "expected": {
+        "empty": 1,
+        "exit": 1,
+        "present": 1,
+        "state": "partial"
+      },
+      "id": "empty-report",
+      "issues": [
+        {
+          "reason": "tool_absent",
+          "tool": "/tmp/countc2/absent.py"
+        }
+      ],
+      "observed": {
+        "tool_exists": false
+      },
+      "status": "capability_absent"
+    },
+    {
+      "expected": {
+        "exit": 1,
+        "misrooted": 1,
+        "present": 1,
+        "state": "partial"
+      },
+      "id": "misrooted",
+      "issues": [
+        {
+          "reason": "tool_absent",
+          "tool": "/tmp/countc2/absent.py"
+        }
+      ],
+      "observed": {
+        "tool_exists": false
+      },
+      "status": "capability_absent"
+    },
+    {
+      "expected": {
+        "exit": 0,
+        "unreadable_json": 1,
+        "waves": 1
+      },
+      "id": "malformed-dispatch",
+      "issues": [
+        {
+          "reason": "tool_absent",
+          "tool": "/tmp/countc2/absent.py"
+        }
+      ],
+      "observed": {
+        "tool_exists": false
+      },
+      "status": "capability_absent"
+    },
+    {
+      "expected": {
+        "exit": 1,
+        "present": 1,
+        "state": "partial",
+        "unparsed": 1
+      },
+      "id": "no-trailer",
+      "issues": [
+        {
+          "reason": "tool_absent",
+          "tool": "/tmp/countc2/absent.py"
+        }
+      ],
+      "observed": {
+        "tool_exists": false
+      },
+      "status": "capability_absent"
+    },
+    {
+      "expected": {
+        "exit": 1,
+        "present": 0,
+        "state": "unavailable",
+        "unsafe": 1
+      },
+      "id": "traversal",
+      "issues": [
+        {
+          "reason": "tool_absent",
+          "tool": "/tmp/countc2/absent.py"
+        }
+      ],
+      "observed": {
+        "tool_exists": false
+      },
+      "status": "capability_absent"
+    },
+    {
+      "expected": {
+        "exit": 1,
+        "state": "unavailable",
+        "unsafe": 1
+      },
+      "id": "absolute-path",
+      "issues": [
+        {
+          "reason": "tool_absent",
+          "tool": "/tmp/countc2/absent.py"
+        }
+      ],
+      "observed": {
+        "tool_exists": false
+      },
+      "status": "capability_absent"
+    },
+    {
+      "expected": {
+        "exit": 1,
+        "not_followed": true,
+        "present": 0
+      },
+      "id": "symlink-report",
+      "issues": [
+        {
+          "reason": "tool_absent",
+          "tool": "/tmp/countc2/absent.py"
+        }
+      ],
+      "observed": {
+        "tool_exists": false
+      },
+      "status": "capability_absent"
+    },
+    {
+      "expected": {
+        "exit": 0,
+        "ignored_json": 2,
+        "waves": 1
+      },
+      "id": "other-schema-ignored",
+      "issues": [
+        {
+          "reason": "tool_absent",
+          "tool": "/tmp/countc2/absent.py"
+        }
+      ],
+      "observed": {
+        "tool_exists": false
+      },
+      "status": "capability_absent"
+    },
+    {
+      "expected": {
+        "exit": 0,
+        "members": 0,
+        "state": "no-spawn"
+      },
+      "id": "no-spawn",
+      "issues": [
+        {
+          "reason": "tool_absent",
+          "tool": "/tmp/countc2/absent.py"
+        }
+      ],
+      "observed": {
+        "tool_exists": false
+      },
+      "status": "capability_absent"
+    },
+    {
+      "expected": {
+        "exit": 0,
+        "out_contains_canary": false,
+        "stdout_contains_canary": false
+      },
+      "id": "content-not-emitted",
+      "issues": [
+        {
+          "reason": "tool_absent",
+          "tool": "/tmp/countc2/absent.py"
+        }
+      ],
+      "observed": {
+        "tool_exists": false
+      },
+      "status": "capability_absent"
+    },
+    {
+      "expected": {
+        "byte_identical": true,
+        "no_vocab": [
+          "dead",
+          "failed",
+          "killed"
+        ],
+        "waves_sorted_by_path": true
+      },
+      "id": "deterministic",
+      "issues": [
+        {
+          "reason": "tool_absent",
+          "tool": "/tmp/countc2/absent.py"
+        }
+      ],
+      "observed": {
+        "tool_exists": false
+      },
+      "status": "capability_absent"
+    }
+  ],
+  "schema": "mori-r20-c2-oracle-v1",
+  "tool": "/tmp/countc2/absent.py"
+}

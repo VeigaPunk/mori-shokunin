@@ -1,0 +1,40 @@
+walk_errors 0 json_total 55 dispatch 12 non_dispatch_json 43 symlink_json 0 bad_json 0
+scan_mtime 1792580506.3878508 tool waves 12 key_set_equal True
+gt rows 783 gt files 12 gt_dup 0 gt key_set_equal True
+misrooted_member round-20/final-dispatch.json AuditCase07 .ufo/waves/round-20/final/AuditCase07.md fleet_bytes 8784
+
+PER-FILE (tool counts | live | GT | states)
+round-13/w1-dispatch.json members 32 | tool p/m/mis/stub/empty/unp 32 0 0 0 0 0 | live p/m/mis 32 0 0 | GT p/m(excl)/mis 32 0 0 | tool_state settled derived settled
+round-14/w1-dispatch.json members 32 | tool p/m/mis/stub/empty/unp 32 0 0 0 0 0 | live p/m/mis 32 0 0 | GT p/m(excl)/mis 32 0 0 | tool_state settled derived settled
+round-15/w1-dispatch.json members 64 | tool p/m/mis/stub/empty/unp 64 0 0 0 0 0 | live p/m/mis 64 0 0 | GT p/m(excl)/mis 64 0 0 | tool_state settled derived settled
+round-16/w1-dispatch.json members 65 | tool p/m/mis/stub/empty/unp 63 2 0 0 0 0 | live p/m/mis 63 2 0 | GT p/m(excl)/mis 63 2 0 | tool_state partial derived partial
+round-16/w2-dispatch.json members 79 | tool p/m/mis/stub/empty/unp 78 1 0 0 0 0 | live p/m/mis 78 1 0 | GT p/m(excl)/mis 78 1 0 | tool_state partial derived partial
+round-17/w1-dispatch.json members 78 | tool p/m/mis/stub/empty/unp 78 0 0 0 0 0 | live p/m/mis 78 0 0 | GT p/m(excl)/mis 78 0 0 | tool_state settled derived settled
+round-17/w2-dispatch.json members 71 | tool p/m/mis/stub/empty/unp 43 28 0 0 0 0 | live p/m/mis 43 28 0 | GT p/m(excl)/mis 43 28 0 | tool_state partial derived partial
+round-18/w1-dispatch.json members 91 | tool p/m/mis/stub/empty/unp 91 0 0 0 0 0 | live p/m/mis 91 0 0 | GT p/m(excl)/mis 91 0 0 | tool_state settled derived settled
+round-18/w2-dispatch.json members 79 | tool p/m/mis/stub/empty/unp 79 0 0 0 0 0 | live p/m/mis 79 0 0 | GT p/m(excl)/mis 79 0 0 | tool_state settled derived settled
+round-20/final-dispatch.json members 64 | tool p/m/mis/stub/empty/unp 63 0 1 0 0 0 | live p/m/mis 63 0 1 | GT p/m(excl)/mis 63 0 1 | tool_state partial derived partial
+round-20/recovery-dispatch.json members 64 | tool p/m/mis/stub/empty/unp 39 25 0 0 0 0 | live p/m/mis 39 25 0 | GT p/m(excl)/mis 39 25 0 | tool_state partial derived partial
+round-20/w1-dispatch.json members 64 | tool p/m/mis/stub/empty/unp 0 64 0 0 0 0 | live p/m/mis 0 64 0 | GT p/m(excl)/mis 0 64 0 | tool_state unsettled derived unsettled
+
+GT md missing-lists parsed: 6
+
+LIVE TOTALS (recomputed): members 783 {'misrooted': 1, 'missing': 120, 'present': 662}
+SCAN TOTALS (tool): {'members': 783, 'present': 662, 'missing': 120, 'misrooted': 1, 'empty': 0, 'stub': 0, 'unparsed': 0, 'unsafe': 0, 'waves': 12, 'states': {'partial': 5, 'settled': 6, 'unsettled': 1}}
+SCAN TOP: {'ignored_json': 43, 'unreadable_json': 0}
+GT TOTALS: members 783 present 662 missing_excl_misrooted 120 misrooted 1 missing_incl_misrooted 121
+COMMITTED FLEET (c2-live-fleet.json) entries: 1 {'empty': 0, 'exit': 1, 'lane': 'souji-shokunin', 'members': 783, 'misrooted': 1, 'missing': 120, 'present': 662, 'unparsed': 0, 'unreadable_json': 0, 'unsafe': 0, 'waves': 12}
+
+EDGE COUNTS: {}
+MISMATCH none
+
+GT_SNAPSHOT (GtLaneSouji.md mtime) = 1792578872.4266303 ; scan mtime = 1792580506.3878508
+POST_GT_SNAPSHOT trailer targets (mtime > GT write): 2 [('round-20/recovery-dispatch.json', 'OracleAuditCases', '.ufo/waves/round-20/recovery/OracleAuditCases.md', 3878, 1792579096.1634166), ('round-20/recovery-dispatch.json', 'OracleCallerCases', '.ufo/waves/round-20/recovery/OracleCallerCases.md', 7692, 1792580092.4322758)]
+POST_SCAN trailer targets (mtime > scan write): 0 []
+PRESENT rows where GT lane_bytes != live size: 2 [('round-20/recovery-dispatch.json', 'OracleAuditCases', '.ufo/waves/round-20/recovery/OracleAuditCases.md', 4001, 3878), ('round-20/recovery-dispatch.json', 'OracleCallerCases', '.ufo/waves/round-20/recovery/OracleCallerCases.md', 6965, 7692)]
+WHITESPACE-ONLY candidates: 0 []
+PRESENT size min/max/count: 1457 170776 662
+CROSS-WAVE duplicate trailer paths: []
+round-20/w1 directory entries: ['swarm-registry.json']
+AuditCase07 fleet copy: ('regular', 8784)
+walk errors: []

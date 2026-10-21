@@ -1,0 +1,28 @@
+{
+ "schema": "mori-r20-c1-count-v1",
+ "command": "export LC_ALL=C; comm -23 <(tr ' ' '\\n' < DRIFT | grep -v '^MORI_DRIFT:$' | grep . | sort -u) <(/usr/bin/jq -r '.tokens|keys[]' REG | sort -u) | wc -l",
+ "correction": "frozen contract.md C1 command set LC_ALL=C on comm only; under en_US.UTF-8 the inner sort mis-orders and the count is wrong (37/33, wave-2 DraftLog/DraftScorecard). Corrected: LC_ALL=C exported for the whole pipeline. Frozen bytes unchanged.",
+ "run_utc": "2026-10-21T11:04:58+00:00",
+ "rows": [
+  {
+   "drift": "evidence/c1-drift-entering-stdout.txt",
+   "register": "round-13",
+   "unclassified": 8
+  },
+  {
+   "drift": "evidence/c1-drift-entering-stdout.txt",
+   "register": "r20",
+   "unclassified": 0
+  },
+  {
+   "drift": "evidence/c1-drift-r10-prepin-stdout.txt",
+   "register": "round-13",
+   "unclassified": 7
+  },
+  {
+   "drift": "evidence/c1-drift-r10-prepin-stdout.txt",
+   "register": "r20",
+   "unclassified": 0
+  }
+ ]
+}

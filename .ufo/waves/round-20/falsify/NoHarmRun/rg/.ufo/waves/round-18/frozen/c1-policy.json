@@ -1,0 +1,30 @@
+{
+  "schema": "mori-retention-policy-v1",
+  "frozen_by": "MoriR18Recovery (L1), before any round-18 implementation",
+  "base": "d005cdde0e009dea6c0cc29b37163de536528658",
+  "scope": "every tracked blob at the scanned revision (git ls-tree -r); a blob containing a NUL byte is binary and skipped; lines split on \\n after UTF-8 decode with errors=replace",
+  "classes": [
+    {"id": "R1", "name": "session_identity", "regex": "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{3}Z_[0-9a-f]{8}-", "why": "names a concrete OMP session directory or transcript of another session"},
+    {"id": "R2", "name": "session_store_path", "regex": "\\.omp/agent/sessions/[^\\s`'\"*)\\]]", "why": "a path into the session store below its root"},
+    {"id": "R3", "name": "tool_output_artifact", "regex": "\\b[0-9]{2,}\\.(bash|bash-original|wait|read|eval|task)\\.log\\b", "why": "a numbered tool-output artifact of some session"},
+    {"id": "R4", "name": "private_document", "regex": "(/home/[^/\\s]+|~)/Documents/", "why": "operator personal documents"},
+    {"id": "R5", "name": "shell_history", "regex": "\\.bash_history", "why": "operator shell history"},
+    {"id": "R6", "name": "privileged_config", "regex": "sudoers", "why": "privileged host configuration"},
+    {"id": "R7", "name": "operator_config_ref", "regex": "config\\.yml:[0-9]|\\.omp/agent/config\\.yml", "why": "operator routing/runtime configuration file or its line references"},
+    {"id": "R8", "name": "routing_table_key", "regex": "\\b(fallbackChains|agentModelOverrides|enabledModels|modelRoles)\\b", "why": "keys whose values are private routing tables"},
+    {"id": "R9", "name": "session_record_value", "regex": "data\\.(reason|kind)|retryRecovery\\.note|\\bmodel_change\\b", "why": "session-record fields outside the round-17 metadata allowlist"}
+  ],
+  "must_redact_paths": [
+    ".ufo/waves/round-17/build/PacmanActorTrace.md",
+    ".ufo/waves/round-17/build/OmpRetryConfig.md",
+    ".ufo/waves/round-17/build/SessionExitCorrelation.md"
+  ],
+  "must_redact_source": "corpus/lessons/round-17-verifier-spotcheck.md:339-346 (non-author closure, routed defect 1 at :390-397)",
+  "non_author_paths_glob": [
+    "corpus/lessons/round-*-verifier-spotcheck.md",
+    "corpus/lessons/operator-*.md"
+  ],
+  "adjudication_rule": "A population hit outside must_redact_paths may be allowlisted only when the line carries no value copied from a private source: (a) an instruction, boundary or contract statement that names a surface without its contents; (b) a field or key name inside lane tool code, a contract or synthetic fixture; (c) a non-author file the lane may not edit (recorded as retained-by-non-author and routed). Every other hit is redacted. A must_redact_paths file may carry no allowlist entry and must scan to zero hits.",
+  "metric": "C1 count = unallowlisted hits at the measured revision, excluding non_author_paths_glob; routed sub-count = hits inside must_redact_paths. Before is measured at base; after at the measured round-18 commit.",
+  "known_limit": "Regex classes are a recall floor, not a privacy proof: private context without these tokens is found only by the reading sweep, recorded separately and outside the frozen metric."
+}

@@ -1,0 +1,16 @@
+{
+  "restore": {
+    "command": "cp -- /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/mori-wave-settlement.pristine.py /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/mori-wave-settlement.py",
+    "stdout": "",
+    "stderr": "",
+    "exit_code": 0,
+    "timeout_seconds": 20
+  },
+  "comparison": {
+    "command": "cmp -- /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/mori-wave-settlement.pristine.py /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutStubCounted/mori-wave-settlement.py",
+    "stdout": "",
+    "stderr": "",
+    "exit_code": 0,
+    "timeout_seconds": 20
+  }
+}

@@ -149,7 +149,9 @@ Report shared evidence to its owner; do not absorb another lane's domain.
   waves `settled`/`partial`/`unsettled`/`no-spawn`/`unavailable`). A missing report is not a
   dead seat; result acceptance and re-dispatch stay **kumitate**'s; a misrooted file is routed
   to its lane L1 (souji's refusal fence covers live round outputs), never moved by mori.
-  Knowledge: `corpus/knowledge/wave-settlement-r20.md`.
+  Knowledge: `corpus/knowledge/wave-settlement-r20.md`. Its `settled` means report-file
+  settlement only, not kumitate's lifecycle settlement or result acceptance (wave-2
+  `ConnKumitateRoute`); a dispatch file that was never spawned also reads `unsettled`.
 - **Still FR3 frontier:** emptied-by-hygiene versus never-written; whether a dispatch file was
   ever dispatched (spawn records are lane-specific ledgers); successor reports for re-run seats.
 - **Freshness:** the census behavioral baseline is re-pinned after a complete closed-class

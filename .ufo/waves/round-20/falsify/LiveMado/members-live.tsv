@@ -1,0 +1,1031 @@
+file	idx	name	agent	report_rel	gt_status	scan_status	live_status	live_detail	live_size	report_mtime
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	0	MadoHyprConfig	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoHyprConfig.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	1	MadoBarLauncher	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoBarLauncher.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	2	MadoTerminals	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoTerminals.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	3	MadoHyprLive	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoHyprLive.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	4	MadoBindRules	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoBindRules.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	5	MadoBarSemantics	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoBarSemantics.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	6	MadoHealthReport	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoHealthReport.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	7	MadoExecutorEvidence	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoExecutorEvidence.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	8	MadoIdleLock	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoIdleLock.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	9	MadoProvinceAudit	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoProvinceAudit.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	10	MadoWalkerDepth	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoWalkerDepth.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	11	MadoMutationProof	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoMutationProof.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	12	MadoDriftWatch	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoDriftWatch.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	13	MadoPlaneCensus	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoPlaneCensus.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	14	MadoThemeFiles	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoThemeFiles.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	15	MadoWalkerSurface	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoWalkerSurface.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	16	MadoMutationSweep	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoMutationSweep.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	17	MadoWalkerR9	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoWalkerR9.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	18	MadoSnapshotReceipt	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoSnapshotReceipt.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	19	MadoArcSynthesis	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoArcSynthesis.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	20	MadoStandingGate	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoStandingGate.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	21	MadoCloseout	reviewer	.ufo/waves/fleet-round-1-interactive/reports/MadoCloseout.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	22	MadoRouteHypr	scout	.ufo/waves/fleet-round-1-interactive/reports/MadoRouteHypr.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	23	MadoRouteWaybar	scout	.ufo/waves/fleet-round-1-interactive/reports/MadoRouteWaybar.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	24	MadoRouteWalker	scout	.ufo/waves/fleet-round-1-interactive/reports/MadoRouteWalker.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	25	MadoRouteTerminals	scout	.ufo/waves/fleet-round-1-interactive/reports/MadoRouteTerminals.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	26	MadoRouteThemes	scout	.ufo/waves/fleet-round-1-interactive/reports/MadoRouteThemes.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	27	MadoRouteIdle	scout	.ufo/waves/fleet-round-1-interactive/reports/MadoRouteIdle.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	28	MadoRouteOmarchy	scout	.ufo/waves/fleet-round-1-interactive/reports/MadoRouteOmarchy.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	29	MadoConnectAxes	connector	.ufo/waves/fleet-round-1-interactive/reports/MadoConnectAxes.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	30	MadoCriticAdmission	critic	.ufo/waves/fleet-round-1-interactive/reports/MadoCriticAdmission.md	missing	missing	missing	absent		
+.ufo/waves/fleet-round-1-interactive/dispatch-preview.json	31	MadoScribeProvenance	scribe	.ufo/waves/fleet-round-1-interactive/reports/MadoScribeProvenance.md	missing	missing	missing	absent		
+.ufo/waves/round-13/w1/dispatch.json	0	GateImplement	executor	.ufo/waves/round-13/w1/reports/GateImplement.md	present	present	present		14876	2026-10-20T01:26:10.854
+.ufo/waves/round-13/w1/dispatch.json	1	ProtocolPhases	executor	.ufo/waves/round-13/w1/reports/ProtocolPhases.md	present	present	present		12751	2026-10-20T01:22:51.886
+.ufo/waves/round-13/w1/dispatch.json	2	GlobalCapture	executor	.ufo/waves/round-13/w1/reports/GlobalCapture.md	present	present	present		5291	2026-10-20T01:19:14.004
+.ufo/waves/round-13/w1/dispatch.json	3	GlobalDocs	executor	.ufo/waves/round-13/w1/reports/GlobalDocs.md	present	present	present		8726	2026-10-20T01:23:21.129
+.ufo/waves/round-13/w1/dispatch.json	4	FixtureDesign	executor	.ufo/waves/round-13/w1/reports/FixtureDesign.md	present	present	present		6059	2026-10-20T01:25:49.804
+.ufo/waves/round-13/w1/dispatch.json	5	RegistryDraft	executor	.ufo/waves/round-13/w1/reports/RegistryDraft.md	present	present	present		33567	2026-10-20T01:33:10.635
+.ufo/waves/round-13/w1/dispatch.json	6	MistakeFix	executor	.ufo/waves/round-13/w1/reports/MistakeFix.md	present	present	present		16935	2026-10-20T01:35:24.322
+.ufo/waves/round-13/w1/dispatch.json	7	ReanchorErratum	executor	.ufo/waves/round-13/w1/reports/ReanchorErratum.md	present	present	present		10633	2026-10-20T01:13:36.906
+.ufo/waves/round-13/w1/dispatch.json	8	CensusRecon	scout	.ufo/waves/round-13/w1/reports/CensusRecon.md	present	present	present		18872	2026-10-20T01:15:54.810
+.ufo/waves/round-13/w1/dispatch.json	9	ProtocolRecon	scout	.ufo/waves/round-13/w1/reports/ProtocolRecon.md	missing	missing	missing	absent		
+.ufo/waves/round-13/w1/dispatch.json	10	RegressionRecon	scout	.ufo/waves/round-13/w1/reports/RegressionRecon.md	present	present	present		16164	2026-10-20T01:16:30.449
+.ufo/waves/round-13/w1/dispatch.json	11	SnapshotRecon	scout	.ufo/waves/round-13/w1/reports/SnapshotRecon.md	present	present	present		14398	2026-10-20T01:11:29.769
+.ufo/waves/round-13/w1/dispatch.json	12	HistoricalRecon	scout	.ufo/waves/round-13/w1/reports/HistoricalRecon.md	present	present	present		21254	2026-10-20T01:11:06.910
+.ufo/waves/round-13/w1/dispatch.json	13	SourceRevision	scout	.ufo/waves/round-13/w1/reports/SourceRevision.md	present	present	present		13409	2026-10-20T01:10:45.261
+.ufo/waves/round-13/w1/dispatch.json	14	LocalSurface	scout	.ufo/waves/round-13/w1/reports/LocalSurface.md	present	present	present		14347	2026-10-20T01:10:24.442
+.ufo/waves/round-13/w1/dispatch.json	15	SiblingOverlap	connector	.ufo/waves/round-13/w1/reports/SiblingOverlap.md	present	present	present		2671	2026-10-20T01:12:06.095
+.ufo/waves/round-13/w1/dispatch.json	16	EvidenceChain	connector	.ufo/waves/round-13/w1/reports/EvidenceChain.md	present	present	present		15620	2026-10-20T01:12:36.344
+.ufo/waves/round-13/w1/dispatch.json	17	SetSemantics	connector	.ufo/waves/round-13/w1/reports/SetSemantics.md	present	present	present		5825	2026-10-20T01:13:28.729
+.ufo/waves/round-13/w1/dispatch.json	18	PlanningWalk	connector	.ufo/waves/round-13/w1/reports/PlanningWalk.md	present	present	present		16424	2026-10-20T01:12:21.000
+.ufo/waves/round-13/w1/dispatch.json	19	ReviewCensus	reviewer	.ufo/waves/round-13/w1/reports/ReviewCensus.md	present	present	present		11878	2026-10-20T01:14:08.453
+.ufo/waves/round-13/w1/dispatch.json	20	ReviewPhases	reviewer	.ufo/waves/round-13/w1/reports/ReviewPhases.md	present	present	present		13248	2026-10-20T01:10:21.499
+.ufo/waves/round-13/w1/dispatch.json	21	ReviewRegistry	reviewer	.ufo/waves/round-13/w1/reports/ReviewRegistry.md	present	present	present		5233	2026-10-20T01:12:55.161
+.ufo/waves/round-13/w1/dispatch.json	22	ReviewSources	reviewer	.ufo/waves/round-13/w1/reports/ReviewSources.md	present	present	present		13218	2026-10-20T01:10:46.904
+.ufo/waves/round-13/w1/dispatch.json	23	ReviewNavigation	reviewer	.ufo/waves/round-13/w1/reports/ReviewNavigation.md	present	present	present		4277	2026-10-20T01:09:58.032
+.ufo/waves/round-13/w1/dispatch.json	24	AttackSets	critic	.ufo/waves/round-13/w1/reports/AttackSets.md	present	present	present		21213	2026-10-20T01:25:23.056
+.ufo/waves/round-13/w1/dispatch.json	25	AttackCoverage	critic	.ufo/waves/round-13/w1/reports/AttackCoverage.md	present	present	present		3739	2026-10-20T01:22:14.438
+.ufo/waves/round-13/w1/dispatch.json	26	AttackClaims	critic	.ufo/waves/round-13/w1/reports/AttackClaims.md	present	present	present		18295	2026-10-20T01:20:41.209
+.ufo/waves/round-13/w1/dispatch.json	27	AttackMistake	critic	.ufo/waves/round-13/w1/reports/AttackMistake.md	present	present	present		211	2026-10-20T01:10:53.571
+.ufo/waves/round-13/w1/dispatch.json	28	Safety	sentinel	.ufo/waves/round-13/w1/reports/Safety.md	present	present	present		3371	2026-10-20T01:20:39.605
+.ufo/waves/round-13/w1/dispatch.json	29	PriorIntent	revenger	.ufo/waves/round-13/w1/reports/PriorIntent.md	present	present	present		10256	2026-10-20T01:10:47.418
+.ufo/waves/round-13/w1/dispatch.json	30	EvidenceLedger	scribe	.ufo/waves/round-13/w1/reports/EvidenceLedger.md	present	present	present		9708	2026-10-20T01:46:05.459
+.ufo/waves/round-13/w1/dispatch.json	31	GateLedger	scribe	.ufo/waves/round-13/w1/reports/GateLedger.md	present	present	present		3426	2026-10-20T01:09:39.048
+.ufo/waves/round-14/w1/dispatch.json	0	GateImplement	executor	.ufo/waves/round-14/w1/reports/GateImplement.md	present	present	present		12478	2026-10-20T02:55:01.765
+.ufo/waves/round-14/w1/dispatch.json	1	MeasureBuild	executor	.ufo/waves/round-14/w1/reports/MeasureBuild.md	present	present	present		14099	2026-10-20T02:53:57.784
+.ufo/waves/round-14/w1/dispatch.json	2	ReceiptBuild	executor	.ufo/waves/round-14/w1/reports/ReceiptBuild.md	present	present	present		3954	2026-10-20T02:46:20.720
+.ufo/waves/round-14/w1/dispatch.json	3	OutputSpec	scout	.ufo/waves/round-14/w1/reports/OutputSpec.md	present	present	present		8592	2026-10-20T02:48:17.170
+.ufo/waves/round-14/w1/dispatch.json	4	ColourSpec	scout	.ufo/waves/round-14/w1/reports/ColourSpec.md	present	present	present		10289	2026-10-20T02:52:20.232
+.ufo/waves/round-14/w1/dispatch.json	5	OutputHost	scout	.ufo/waves/round-14/w1/reports/OutputHost.md	present	present	present		5915	2026-10-20T02:48:21.815
+.ufo/waves/round-14/w1/dispatch.json	6	OutputPhase	scout	.ufo/waves/round-14/w1/reports/OutputPhase.md	present	present	present		6586	2026-10-20T02:45:34.665
+.ufo/waves/round-14/w1/dispatch.json	7	HyprSupport	scout	.ufo/waves/round-14/w1/reports/HyprSupport.md	present	present	present		17077	2026-10-20T02:45:57.428
+.ufo/waves/round-14/w1/dispatch.json	8	GateRecon	scout	.ufo/waves/round-14/w1/reports/GateRecon.md	present	present	present		17726	2026-10-20T02:46:03.994
+.ufo/waves/round-14/w1/dispatch.json	9	SourceInventory	scout	.ufo/waves/round-14/w1/reports/SourceInventory.md	present	present	present		22719	2026-10-20T02:47:48.688
+.ufo/waves/round-14/w1/dispatch.json	10	WlrVersion	scout	.ufo/waves/round-14/w1/reports/WlrVersion.md	present	present	present		4338	2026-10-20T02:46:22.103
+.ufo/waves/round-14/w1/dispatch.json	11	SiblingOverlap	connector	.ufo/waves/round-14/w1/reports/SiblingOverlap.md	present	present	present		17996	2026-10-20T02:45:26.580
+.ufo/waves/round-14/w1/dispatch.json	12	PlanningWalk	connector	.ufo/waves/round-14/w1/reports/PlanningWalk.md	present	present	present		13241	2026-10-20T02:45:53.923
+.ufo/waves/round-14/w1/dispatch.json	13	EvidenceChain	connector	.ufo/waves/round-14/w1/reports/EvidenceChain.md	present	present	present		17138	2026-10-20T02:44:08.988
+.ufo/waves/round-14/w1/dispatch.json	14	BoundaryPrecision	connector	.ufo/waves/round-14/w1/reports/BoundaryPrecision.md	present	present	present		13058	2026-10-20T02:46:51.474
+.ufo/waves/round-14/w1/dispatch.json	15	ReviewResolver	reviewer	.ufo/waves/round-14/w1/reports/ReviewResolver.md	present	present	present		1864	2026-10-20T02:54:41.463
+.ufo/waves/round-14/w1/dispatch.json	16	ReviewFixtures	reviewer	.ufo/waves/round-14/w1/reports/ReviewFixtures.md	present	present	present		2861	2026-10-20T02:42:17.868
+.ufo/waves/round-14/w1/dispatch.json	17	ReviewMeasure	reviewer	.ufo/waves/round-14/w1/reports/ReviewMeasure.md	present	present	present		10164	2026-10-20T02:57:50.605
+.ufo/waves/round-14/w1/dispatch.json	18	ReviewReceipt	reviewer	.ufo/waves/round-14/w1/reports/ReviewReceipt.md	present	present	present		4318	2026-10-20T02:44:45.713
+.ufo/waves/round-14/w1/dispatch.json	19	ReviewSourceBar	reviewer	.ufo/waves/round-14/w1/reports/ReviewSourceBar.md	present	present	present		3999	2026-10-20T02:43:58.583
+.ufo/waves/round-14/w1/dispatch.json	20	ReviewCorrections	reviewer	.ufo/waves/round-14/w1/reports/ReviewCorrections.md	present	present	present		4322	2026-10-20T02:44:01.311
+.ufo/waves/round-14/w1/dispatch.json	21	AttackCoverage	critic	.ufo/waves/round-14/w1/reports/AttackCoverage.md	present	present	present		8521	2026-10-20T02:53:58.153
+.ufo/waves/round-14/w1/dispatch.json	22	AttackMetric	critic	.ufo/waves/round-14/w1/reports/AttackMetric.md	present	present	present		5319	2026-10-20T02:49:07.993
+.ufo/waves/round-14/w1/dispatch.json	23	AttackNoHarm	critic	.ufo/waves/round-14/w1/reports/AttackNoHarm.md	present	present	present		3411	2026-10-20T02:47:33.200
+.ufo/waves/round-14/w1/dispatch.json	24	AttackMistake	critic	.ufo/waves/round-14/w1/reports/AttackMistake.md	present	present	present		4398	2026-10-20T02:46:43.571
+.ufo/waves/round-14/w1/dispatch.json	25	Safety	sentinel	.ufo/waves/round-14/w1/reports/Safety.md	present	present	present		4020	2026-10-20T02:52:47.195
+.ufo/waves/round-14/w1/dispatch.json	26	SourceSafety	sentinel	.ufo/waves/round-14/w1/reports/SourceSafety.md	present	present	present		5458	2026-10-20T02:50:14.875
+.ufo/waves/round-14/w1/dispatch.json	27	ScribeClaims	scribe	.ufo/waves/round-14/w1/reports/ScribeClaims.md	present	present	present		6365	2026-10-20T02:44:18.430
+.ufo/waves/round-14/w1/dispatch.json	28	ScribeFrontier	scribe	.ufo/waves/round-14/w1/reports/ScribeFrontier.md	present	present	present		5146	2026-10-20T02:43:18.951
+.ufo/waves/round-14/w1/dispatch.json	29	RegressionIntent	revenger	.ufo/waves/round-14/w1/reports/RegressionIntent.md	present	present	present		6459	2026-10-20T02:44:13.895
+.ufo/waves/round-14/w1/dispatch.json	30	ParserIntent	revenger	.ufo/waves/round-14/w1/reports/ParserIntent.md	present	present	present		4979	2026-10-20T02:44:01.191
+.ufo/waves/round-14/w1/dispatch.json	31	MutationDesign	mutation-tester	.ufo/waves/round-14/w1/reports/MutationDesign.md	present	present	present		4511	2026-10-20T02:53:48.673
+.ufo/waves/round-15/w1/dispatch.json	0	MeasureBuild	executor	.ufo/waves/round-15/w1/reports/MeasureBuild.md	present	present	present		5072	2026-10-20T04:28:43.756
+.ufo/waves/round-15/w1/dispatch.json	1	ReceiptCorrection	executor	.ufo/waves/round-15/w1/reports/ReceiptCorrection.md	present	present	present		7529	2026-10-20T04:33:24.874
+.ufo/waves/round-15/w1/dispatch.json	2	InputDraft	executor	.ufo/waves/round-15/w1/reports/InputDraft.md	present	present	present		7005	2026-10-20T04:30:28.357
+.ufo/waves/round-15/w1/dispatch.json	3	LibinputTools	scout	.ufo/waves/round-15/w1/reports/LibinputTools.md	present	present	present		16638	2026-10-20T04:28:31.238
+.ufo/waves/round-15/w1/dispatch.json	4	LibinputList	scout	.ufo/waves/round-15/w1/reports/LibinputList.md	present	present	present		9741	2026-10-20T04:29:16.184
+.ufo/waves/round-15/w1/dispatch.json	5	LibinputEvents	scout	.ufo/waves/round-15/w1/reports/LibinputEvents.md	present	present	present		11213	2026-10-20T04:29:25.705
+.ufo/waves/round-15/w1/dispatch.json	6	LibinputRecord	scout	.ufo/waves/round-15/w1/reports/LibinputRecord.md	present	present	present		10303	2026-10-20T04:28:44.101
+.ufo/waves/round-15/w1/dispatch.json	7	LibinputReplay	scout	.ufo/waves/round-15/w1/reports/LibinputReplay.md	present	present	present		14879	2026-10-20T04:28:33.113
+.ufo/waves/round-15/w1/dispatch.json	8	WaylandKeyboard	scout	.ufo/waves/round-15/w1/reports/WaylandKeyboard.md	present	present	present		11840	2026-10-20T04:27:30.546
+.ufo/waves/round-15/w1/dispatch.json	9	WaylandPointer	scout	.ufo/waves/round-15/w1/reports/WaylandPointer.md	present	present	present		15781	2026-10-20T04:27:56.365
+.ufo/waves/round-15/w1/dispatch.json	10	WaylandSeat	scout	.ufo/waves/round-15/w1/reports/WaylandSeat.md	present	present	present		13498	2026-10-20T04:28:32.640
+.ufo/waves/round-15/w1/dispatch.json	11	HyprInputDocs	scout	.ufo/waves/round-15/w1/reports/HyprInputDocs.md	present	present	present		26395	2026-10-20T04:30:44.437
+.ufo/waves/round-15/w1/dispatch.json	12	InputVersions	scout	.ufo/waves/round-15/w1/reports/InputVersions.md	present	present	present		14135	2026-10-20T04:29:10.539
+.ufo/waves/round-15/w1/dispatch.json	13	SourceCollision	scout	.ufo/waves/round-15/w1/reports/SourceCollision.md	present	present	present		15352	2026-10-20T04:31:54.623
+.ufo/waves/round-15/w1/dispatch.json	14	GapCensus	scout	.ufo/waves/round-15/w1/reports/GapCensus.md	present	present	present		13532	2026-10-20T04:27:00.998
+.ufo/waves/round-15/w1/dispatch.json	15	PlanningWalk	connector	.ufo/waves/round-15/w1/reports/PlanningWalk.md	present	present	present		20809	2026-10-20T04:28:58.419
+.ufo/waves/round-15/w1/dispatch.json	16	SiblingBoundary	connector	.ufo/waves/round-15/w1/reports/SiblingBoundary.md	present	present	present		21264	2026-10-20T04:27:40.044
+.ufo/waves/round-15/w1/dispatch.json	17	LayerJoin	connector	.ufo/waves/round-15/w1/reports/LayerJoin.md	present	present	present		15379	2026-10-20T04:27:39.641
+.ufo/waves/round-15/w1/dispatch.json	18	PrivacyJoin	connector	.ufo/waves/round-15/w1/reports/PrivacyJoin.md	present	present	present		17946	2026-10-20T04:28:21.479
+.ufo/waves/round-15/w1/dispatch.json	19	SourceChain	connector	.ufo/waves/round-15/w1/reports/SourceChain.md	present	present	present		14994	2026-10-20T04:28:21.800
+.ufo/waves/round-15/w1/dispatch.json	20	ReceiptChain	connector	.ufo/waves/round-15/w1/reports/ReceiptChain.md	present	present	present		14523	2026-10-20T04:29:04.312
+.ufo/waves/round-15/w1/dispatch.json	21	FrontierJoin	connector	.ufo/waves/round-15/w1/reports/FrontierJoin.md	present	present	present		15242	2026-10-20T04:29:30.404
+.ufo/waves/round-15/w1/dispatch.json	22	EvidenceClassJoin	connector	.ufo/waves/round-15/w1/reports/EvidenceClassJoin.md	present	present	present		22390	2026-10-20T04:29:26.056
+.ufo/waves/round-15/w1/dispatch.json	23	ReviewLibinput	reviewer	.ufo/waves/round-15/w1/reports/ReviewLibinput.md	present	present	present		13863	2026-10-20T04:26:27.633
+.ufo/waves/round-15/w1/dispatch.json	24	ReviewKeyboard	reviewer	.ufo/waves/round-15/w1/reports/ReviewKeyboard.md	present	present	present		17351	2026-10-20T04:27:15.995
+.ufo/waves/round-15/w1/dispatch.json	25	ReviewPointer	reviewer	.ufo/waves/round-15/w1/reports/ReviewPointer.md	present	present	present		17319	2026-10-20T04:28:37.628
+.ufo/waves/round-15/w1/dispatch.json	26	ReviewSeat	reviewer	.ufo/waves/round-15/w1/reports/ReviewSeat.md	present	present	present		11026	2026-10-20T04:26:50.290
+.ufo/waves/round-15/w1/dispatch.json	27	ReviewPrivacy	reviewer	.ufo/waves/round-15/w1/reports/ReviewPrivacy.md	present	present	present		11076	2026-10-20T04:27:06.800
+.ufo/waves/round-15/w1/dispatch.json	28	ReviewSafety	reviewer	.ufo/waves/round-15/w1/reports/ReviewSafety.md	present	present	present		14378	2026-10-20T04:26:18.532
+.ufo/waves/round-15/w1/dispatch.json	29	ReviewSourceTier	reviewer	.ufo/waves/round-15/w1/reports/ReviewSourceTier.md	present	present	present		11311	2026-10-20T04:26:55.274
+.ufo/waves/round-15/w1/dispatch.json	30	ReviewCensus	reviewer	.ufo/waves/round-15/w1/reports/ReviewCensus.md	present	present	present		9916	2026-10-20T04:26:35.020
+.ufo/waves/round-15/w1/dispatch.json	31	ReviewNavigation	reviewer	.ufo/waves/round-15/w1/reports/ReviewNavigation.md	present	present	present		8448	2026-10-20T04:26:21.722
+.ufo/waves/round-15/w1/dispatch.json	32	ReviewRouted	reviewer	.ufo/waves/round-15/w1/reports/ReviewRouted.md	present	present	present		10931	2026-10-20T04:26:33.094
+.ufo/waves/round-15/w1/dispatch.json	33	ReviewScore	reviewer	.ufo/waves/round-15/w1/reports/ReviewScore.md	present	present	present		8422	2026-10-20T04:28:12.300
+.ufo/waves/round-15/w1/dispatch.json	34	ReviewNoHarm	reviewer	.ufo/waves/round-15/w1/reports/ReviewNoHarm.md	present	present	present		9018	2026-10-20T04:26:26.817
+.ufo/waves/round-15/w1/dispatch.json	35	ReviewRecheck	reviewer	.ufo/waves/round-15/w1/reports/ReviewRecheck.md	present	present	present		9475	2026-10-20T04:27:27.838
+.ufo/waves/round-15/w1/dispatch.json	36	ReviewDocsEra	reviewer	.ufo/waves/round-15/w1/reports/ReviewDocsEra.md	present	present	present		10441	2026-10-20T04:26:34.168
+.ufo/waves/round-15/w1/dispatch.json	37	ReviewRegistry	reviewer	.ufo/waves/round-15/w1/reports/ReviewRegistry.md	present	present	present		13479	2026-10-20T04:29:22.349
+.ufo/waves/round-15/w1/dispatch.json	38	ReviewPromotion	reviewer	.ufo/waves/round-15/w1/reports/ReviewPromotion.md	present	present	present		10278	2026-10-20T04:26:05.354
+.ufo/waves/round-15/w1/dispatch.json	39	AttackCoverage	critic	.ufo/waves/round-15/w1/reports/AttackCoverage.md	present	present	present		8514	2026-10-20T04:27:24.865
+.ufo/waves/round-15/w1/dispatch.json	40	AttackDefault	critic	.ufo/waves/round-15/w1/reports/AttackDefault.md	present	present	present		7171	2026-10-20T04:27:30.703
+.ufo/waves/round-15/w1/dispatch.json	41	AttackDelivery	critic	.ufo/waves/round-15/w1/reports/AttackDelivery.md	present	present	present		9143	2026-10-20T04:27:05.341
+.ufo/waves/round-15/w1/dispatch.json	42	AttackText	critic	.ufo/waves/round-15/w1/reports/AttackText.md	present	present	present		9594	2026-10-20T04:27:06.055
+.ufo/waves/round-15/w1/dispatch.json	43	AttackNoHarm	critic	.ufo/waves/round-15/w1/reports/AttackNoHarm.md	present	present	present		12814	2026-10-20T04:28:33.634
+.ufo/waves/round-15/w1/dispatch.json	44	AttackMistake	critic	.ufo/waves/round-15/w1/reports/AttackMistake.md	present	present	present		9336	2026-10-20T04:27:26.923
+.ufo/waves/round-15/w1/dispatch.json	45	AttackSource	critic	.ufo/waves/round-15/w1/reports/AttackSource.md	present	present	present		12771	2026-10-20T04:32:06.253
+.ufo/waves/round-15/w1/dispatch.json	46	AttackMetric	critic	.ufo/waves/round-15/w1/reports/AttackMetric.md	present	present	present		7551	2026-10-20T04:27:06.168
+.ufo/waves/round-15/w1/dispatch.json	47	InputSafety	sentinel	.ufo/waves/round-15/w1/reports/InputSafety.md	present	present	present		11726	2026-10-20T04:30:03.863
+.ufo/waves/round-15/w1/dispatch.json	48	ReceiptSafety	sentinel	.ufo/waves/round-15/w1/reports/ReceiptSafety.md	present	present	present		10073	2026-10-20T04:27:59.465
+.ufo/waves/round-15/w1/dispatch.json	49	PrivacyThreat	sentinel	.ufo/waves/round-15/w1/reports/PrivacyThreat.md	present	present	present		11437	2026-10-20T04:29:18.157
+.ufo/waves/round-15/w1/dispatch.json	50	SourceTrust	sentinel	.ufo/waves/round-15/w1/reports/SourceTrust.md	present	present	present		18213	2026-10-20T04:29:08.093
+.ufo/waves/round-15/w1/dispatch.json	51	OriginalIntent	revenger	.ufo/waves/round-15/w1/reports/OriginalIntent.md	present	present	present		3240	2026-10-20T04:27:46.850
+.ufo/waves/round-15/w1/dispatch.json	52	DerivedIntent	revenger	.ufo/waves/round-15/w1/reports/DerivedIntent.md	present	present	present		3712	2026-10-20T04:26:19.959
+.ufo/waves/round-15/w1/dispatch.json	53	HistoricalInput	revenger	.ufo/waves/round-15/w1/reports/HistoricalInput.md	present	present	present		3940	2026-10-20T04:26:06.503
+.ufo/waves/round-15/w1/dispatch.json	54	DocsVersion	revenger	.ufo/waves/round-15/w1/reports/DocsVersion.md	present	present	present		1420	2026-10-20T04:25:56.699
+.ufo/waves/round-15/w1/dispatch.json	55	GateDecisions	scribe	.ufo/waves/round-15/w1/reports/GateDecisions.md	present	present	present		9872	2026-10-20T04:26:07.387
+.ufo/waves/round-15/w1/dispatch.json	56	FrontierRecord	scribe	.ufo/waves/round-15/w1/reports/FrontierRecord.md	present	present	present		12905	2026-10-20T04:26:51.725
+.ufo/waves/round-15/w1/dispatch.json	57	ReportAudit	scribe	.ufo/waves/round-15/w1/reports/ReportAudit.md	present	present	present		11648	2026-10-20T04:26:18.983
+.ufo/waves/round-15/w1/dispatch.json	58	MistakeRecord	scribe	.ufo/waves/round-15/w1/reports/MistakeRecord.md	present	present	present		9717	2026-10-20T04:28:23.349
+.ufo/waves/round-15/w1/dispatch.json	59	ReceiptMutation	mutation-tester	.ufo/waves/round-15/w1/reports/ReceiptMutation.md	present	present	present		4549	2026-10-20T04:26:25.390
+.ufo/waves/round-15/w1/dispatch.json	60	SimplifyScope	simplifier	.ufo/waves/round-15/w1/reports/SimplifyScope.md	present	present	present		11614	2026-10-20T04:27:10.555
+.ufo/waves/round-15/w1/dispatch.json	61	TextInputBoundary	scout	.ufo/waves/round-15/w1/reports/TextInputBoundary.md	present	present	present		17773	2026-10-20T04:27:17.417
+.ufo/waves/round-15/w1/dispatch.json	62	AttackSynthetic	critic	.ufo/waves/round-15/w1/reports/AttackSynthetic.md	present	present	present		9792	2026-10-20T04:28:09.684
+.ufo/waves/round-15/w1/dispatch.json	63	ReviewQuotes	reviewer	.ufo/waves/round-15/w1/reports/ReviewQuotes.md	present	present	present		13347	2026-10-20T04:26:45.065
+.ufo/waves/round-16/w1/dispatch.json	0	SafetyGate	executor	.ufo/waves/round-16/w1/reports/SafetyGate.md	present	present	present		8966	2026-10-20T05:58:44.713
+.ufo/waves/round-16/w1/dispatch.json	1	MeasureBuild	executor	.ufo/waves/round-16/w1/reports/MeasureBuild.md	present	present	present		6078	2026-10-20T05:42:45.285
+.ufo/waves/round-16/w1/dispatch.json	2	SafetyCases	executor	.ufo/waves/round-16/w1/reports/SafetyCases.md	present	present	present		13749	2026-10-20T05:56:05.660
+.ufo/waves/round-16/w1/dispatch.json	3	WaybarDraft	scribe	.ufo/waves/round-16/w1/reports/WaybarDraft.md	present	present	present		5214	2026-10-20T05:40:14.804
+.ufo/waves/round-16/w1/dispatch.json	4	PlanningWalk	connector	.ufo/waves/round-16/w1/reports/PlanningWalk.md	present	present	present		11546	2026-10-20T05:40:45.194
+.ufo/waves/round-16/w1/dispatch.json	5	CustomMan	scout	.ufo/waves/round-16/w1/reports/CustomMan.md	present	present	present		13554	2026-10-20T05:42:56.869
+.ufo/waves/round-16/w1/dispatch.json	6	CustomExec	scout	.ufo/waves/round-16/w1/reports/CustomExec.md	present	present	present		19505	2026-10-20T05:45:19.054
+.ufo/waves/round-16/w1/dispatch.json	7	CustomSource	scout	.ufo/waves/round-16/w1/reports/CustomSource.md	present	present	present		18158	2026-10-20T05:44:04.542
+.ufo/waves/round-16/w1/dispatch.json	8	CustomTooltip	scout	.ufo/waves/round-16/w1/reports/CustomTooltip.md	present	present	present		19999	2026-10-20T05:43:45.822
+.ufo/waves/round-16/w1/dispatch.json	9	CustomFailure	scout	.ufo/waves/round-16/w1/reports/CustomFailure.md	present	present	present		13153	2026-10-20T05:42:41.426
+.ufo/waves/round-16/w1/dispatch.json	10	WaybarVersion	scout	.ufo/waves/round-16/w1/reports/WaybarVersion.md	present	present	present		9807	2026-10-20T05:50:11.867
+.ufo/waves/round-16/w1/dispatch.json	11	ExistingU7	scout	.ufo/waves/round-16/w1/reports/ExistingU7.md	present	present	present		13897	2026-10-20T05:44:51.667
+.ufo/waves/round-16/w1/dispatch.json	12	RegistryCollision	scout	.ufo/waves/round-16/w1/reports/RegistryCollision.md	present	present	present		11211	2026-10-20T05:43:08.655
+.ufo/waves/round-16/w1/dispatch.json	13	ClosureDebt	scout	.ufo/waves/round-16/w1/reports/ClosureDebt.md	present	present	present		20760	2026-10-20T05:45:25.655
+.ufo/waves/round-16/w1/dispatch.json	14	QualityGround	scribe	.ufo/waves/round-16/w1/reports/QualityGround.md	present	present	present		13691	2026-10-20T05:41:01.449
+.ufo/waves/round-16/w1/dispatch.json	15	SkillSafety	scribe	.ufo/waves/round-16/w1/reports/SkillSafety.md	present	present	present		7112	2026-10-20T05:40:09.016
+.ufo/waves/round-16/w1/dispatch.json	16	MistakeDraft	scribe	.ufo/waves/round-16/w1/reports/MistakeDraft.md	present	present	present		8025	2026-10-20T05:40:46.728
+.ufo/waves/round-16/w1/dispatch.json	17	GateRegistry	scribe	.ufo/waves/round-16/w1/reports/GateRegistry.md	present	present	present		14148	2026-10-20T05:39:58.461
+.ufo/waves/round-16/w1/dispatch.json	18	FrontierDraft	scribe	.ufo/waves/round-16/w1/reports/FrontierDraft.md	present	present	present		7756	2026-10-20T05:39:45.621
+.ufo/waves/round-16/w1/dispatch.json	19	SourcesDraft	scribe	.ufo/waves/round-16/w1/reports/SourcesDraft.md	present	present	present		10766	2026-10-20T05:40:58.357
+.ufo/waves/round-16/w1/dispatch.json	20	SourceHierarchy	connector	.ufo/waves/round-16/w1/reports/SourceHierarchy.md	present	present	present		20620	2026-10-20T05:45:33.723
+.ufo/waves/round-16/w1/dispatch.json	21	SiblingBoundary	connector	.ufo/waves/round-16/w1/reports/SiblingBoundary.md	present	present	present		14047	2026-10-20T05:40:31.659
+.ufo/waves/round-16/w1/dispatch.json	22	ClaimsSeparable	connector	.ufo/waves/round-16/w1/reports/ClaimsSeparable.md	present	present	present		14516	2026-10-20T05:42:07.883
+.ufo/waves/round-16/w1/dispatch.json	23	SafetyLearning	connector	.ufo/waves/round-16/w1/reports/SafetyLearning.md	present	present	present		11010	2026-10-20T05:40:37.429
+.ufo/waves/round-16/w1/dispatch.json	24	Repertoire	connector	.ufo/waves/round-16/w1/reports/Repertoire.md	present	present	present		9549	2026-10-20T05:39:36.869
+.ufo/waves/round-16/w1/dispatch.json	25	OldGateBoundary	reviewer	.ufo/waves/round-16/w1/reports/OldGateBoundary.md	present	present	present		14278	2026-10-20T05:42:47.518
+.ufo/waves/round-16/w1/dispatch.json	26	FrozenDesign	reviewer	.ufo/waves/round-16/w1/reports/FrozenDesign.md	present	present	present		10997	2026-10-20T05:42:06.466
+.ufo/waves/round-16/w1/dispatch.json	27	ExitMap	reviewer	.ufo/waves/round-16/w1/reports/ExitMap.md	present	present	present		13386	2026-10-20T05:42:22.465
+.ufo/waves/round-16/w1/dispatch.json	28	PlanSchema	reviewer	.ufo/waves/round-16/w1/reports/PlanSchema.md	present	present	present		14776	2026-10-20T05:40:20.903
+.ufo/waves/round-16/w1/dispatch.json	29	ExecBasename	reviewer	.ufo/waves/round-16/w1/reports/ExecBasename.md	present	present	present		12198	2026-10-20T05:40:39.000
+.ufo/waves/round-16/w1/dispatch.json	30	NoShell	sentinel	.ufo/waves/round-16/w1/reports/NoShell.md	present	present	present		14257	2026-10-20T05:41:46.029
+.ufo/waves/round-16/w1/dispatch.json	31	PolicyTamper	sentinel	.ufo/waves/round-16/w1/reports/PolicyTamper.md	present	present	present		14465	2026-10-20T05:41:48.887
+.ufo/waves/round-16/w1/dispatch.json	32	CredentialFence	sentinel	.ufo/waves/round-16/w1/reports/CredentialFence.md	present	present	present		12367	2026-10-20T05:42:30.015
+.ufo/waves/round-16/w1/dispatch.json	33	HostHarm	critic	.ufo/waves/round-16/w1/reports/HostHarm.md	present	present	present		9311	2026-10-20T05:45:01.346
+.ufo/waves/round-16/w1/dispatch.json	34	MetricInflation	critic	.ufo/waves/round-16/w1/reports/MetricInflation.md	present	present	present		11052	2026-10-20T05:43:23.611
+.ufo/waves/round-16/w1/dispatch.json	35	ProducerNotPixels	critic	.ufo/waves/round-16/w1/reports/ProducerNotPixels.md	present	present	present		9125	2026-10-20T05:43:03.999
+.ufo/waves/round-16/w1/dispatch.json	36	NoLiveBreach	critic	.ufo/waves/round-16/w1/reports/NoLiveBreach.md	present	present	present		11981	2026-10-20T05:45:20.602
+.ufo/waves/round-16/w1/dispatch.json	37	SourceEra	reviewer	.ufo/waves/round-16/w1/reports/SourceEra.md	present	present	present		11385	2026-10-20T05:42:27.292
+.ufo/waves/round-16/w1/dispatch.json	38	QuoteAdmission	reviewer	.ufo/waves/round-16/w1/reports/QuoteAdmission.md	present	present	present		11054	2026-10-20T05:41:09.652
+.ufo/waves/round-16/w1/dispatch.json	39	ReciprocalJoin	reviewer	.ufo/waves/round-16/w1/reports/ReciprocalJoin.md	present	present	present		11652	2026-10-20T05:41:57.624
+.ufo/waves/round-16/w1/dispatch.json	40	Navigation	reviewer	.ufo/waves/round-16/w1/reports/Navigation.md	present	present	present		9155	2026-10-20T05:41:18.579
+.ufo/waves/round-16/w1/dispatch.json	41	AppendOnly	reviewer	.ufo/waves/round-16/w1/reports/AppendOnly.md	present	present	present		12164	2026-10-20T05:42:47.094
+.ufo/waves/round-16/w1/dispatch.json	42	SHONEN	reviewer	.ufo/waves/round-16/w1/reports/SHONEN.md	present	present	present		5568	2026-10-20T05:39:30.551
+.ufo/waves/round-16/w1/dispatch.json	43	WavePaths	reviewer	.ufo/waves/round-16/w1/reports/WavePaths.md	present	present	present		6626	2026-10-20T05:41:08.752
+.ufo/waves/round-16/w1/dispatch.json	44	NoInstalls	reviewer	.ufo/waves/round-16/w1/reports/NoInstalls.md	present	present	present		5592	2026-10-20T05:39:45.178
+.ufo/waves/round-16/w1/dispatch.json	45	SafetyControlRed	critic	.ufo/waves/round-16/w1/reports/SafetyControlRed.md	present	present	present		11135	2026-10-20T05:42:35.429
+.ufo/waves/round-16/w1/dispatch.json	46	SafetyService	critic	.ufo/waves/round-16/w1/reports/SafetyService.md	present	present	present		14503	2026-10-20T05:43:41.596
+.ufo/waves/round-16/w1/dispatch.json	47	SafetyCompositor	critic	.ufo/waves/round-16/w1/reports/SafetyCompositor.md	present	present	present		15608	2026-10-20T05:43:11.151
+.ufo/waves/round-16/w1/dispatch.json	48	SafetyInput	critic	.ufo/waves/round-16/w1/reports/SafetyInput.md	present	present	present		15751	2026-10-20T05:45:39.312
+.ufo/waves/round-16/w1/dispatch.json	49	UnknownActions	reviewer	.ufo/waves/round-16/w1/reports/UnknownActions.md	present	present	present		17331	2026-10-20T05:41:09.399
+.ufo/waves/round-16/w1/dispatch.json	50	FrozenInputs	reviewer	.ufo/waves/round-16/w1/reports/FrozenInputs.md	present	present	present		14646	2026-10-20T05:41:57.651
+.ufo/waves/round-16/w1/dispatch.json	51	SelftestTruth	reviewer	.ufo/waves/round-16/w1/reports/SelftestTruth.md	present	present	present		12823	2026-10-20T05:44:30.432
+.ufo/waves/round-16/w1/dispatch.json	52	SafetyReceipt	scribe	.ufo/waves/round-16/w1/reports/SafetyReceipt.md	present	present	present		6414	2026-10-20T05:39:59.907
+.ufo/waves/round-16/w1/dispatch.json	53	SourceCensus	scout	.ufo/waves/round-16/w1/reports/SourceCensus.md	present	present	present		15486	2026-10-20T05:45:15.578
+.ufo/waves/round-16/w1/dispatch.json	54	R14History	scout	.ufo/waves/round-16/w1/reports/R14History.md	present	present	present		12566	2026-10-20T05:41:39.809
+.ufo/waves/round-16/w1/dispatch.json	55	ReportContract	scribe	.ufo/waves/round-16/w1/reports/ReportContract.md	present	present	present		12199	2026-10-20T05:40:05.693
+.ufo/waves/round-16/w1/dispatch.json	56	SafetySimplify	simplifier	.ufo/waves/round-16/w1/reports/SafetySimplify.md	present	present	present		11186	2026-10-20T05:40:18.817
+.ufo/waves/round-16/w1/dispatch.json	57	CoverageSimplify	simplifier	.ufo/waves/round-16/w1/reports/CoverageSimplify.md	present	present	present		10313	2026-10-20T05:40:49.793
+.ufo/waves/round-16/w1/dispatch.json	58	FindingStability	reviewer	.ufo/waves/round-16/w1/reports/FindingStability.md	present	present	present		14942	2026-10-20T05:41:22.535
+.ufo/waves/round-16/w1/dispatch.json	59	SourceReopen	scout	.ufo/waves/round-16/w1/reports/SourceReopen.md	present	present	present		10782	2026-10-20T05:41:23.165
+.ufo/waves/round-16/w1/dispatch.json	60	OutsideLearning	connector	.ufo/waves/round-16/w1/reports/OutsideLearning.md	present	present	present		13024	2026-10-20T05:42:05.419
+.ufo/waves/round-16/w1/dispatch.json	61	RoundConformance	reviewer	.ufo/waves/round-16/w1/reports/RoundConformance.md	present	present	present		8613	2026-10-20T05:44:18.605
+.ufo/waves/round-16/w1/dispatch.json	62	PolicyScope	reviewer	.ufo/waves/round-16/w1/reports/PolicyScope.md	present	present	present		12528	2026-10-20T05:42:23.830
+.ufo/waves/round-16/w1/dispatch.json	63	NewOnlyFuture	scribe	.ufo/waves/round-16/w1/reports/NewOnlyFuture.md	present	present	present		9012	2026-10-20T05:39:26.328
+.ufo/waves/round-16/w2/dispatch.json	0	AttackU7Source	scout	.ufo/waves/round-16/w2/reports/AttackU7Source.md	present	present	present		14223	2026-10-20T05:56:57.642
+.ufo/waves/round-16/w2/dispatch.json	1	AttackU7Code	scout	.ufo/waves/round-16/w2/reports/AttackU7Code.md	present	present	present		8718	2026-10-20T05:54:37.674
+.ufo/waves/round-16/w2/dispatch.json	2	AttackU7Privacy	sentinel	.ufo/waves/round-16/w2/reports/AttackU7Privacy.md	present	present	present		13645	2026-10-20T05:55:19.864
+.ufo/waves/round-16/w2/dispatch.json	3	AttackU7Scope	critic	.ufo/waves/round-16/w2/reports/AttackU7Scope.md	present	present	present		7800	2026-10-20T05:53:35.042
+.ufo/waves/round-16/w2/dispatch.json	4	AttackU7Join	reviewer	.ufo/waves/round-16/w2/reports/AttackU7Join.md	present	present	present		9433	2026-10-20T05:53:16.924
+.ufo/waves/round-16/w2/dispatch.json	5	AttackPriorRubric	reviewer	.ufo/waves/round-16/w2/reports/AttackPriorRubric.md	present	present	present		8690	2026-10-20T05:53:25.752
+.ufo/waves/round-16/w2/dispatch.json	6	AttackNav	reviewer	.ufo/waves/round-16/w2/reports/AttackNav.md	present	present	present		5950	2026-10-20T05:53:17.605
+.ufo/waves/round-16/w2/dispatch.json	7	AttackRegistry	scout	.ufo/waves/round-16/w2/reports/AttackRegistry.md	present	present	present		6975	2026-10-20T05:54:04.569
+.ufo/waves/round-16/w2/dispatch.json	8	AttackQuotes	reviewer	.ufo/waves/round-16/w2/reports/AttackQuotes.md	present	present	present		8988	2026-10-20T05:52:32.503
+.ufo/waves/round-16/w2/dispatch.json	9	AttackC3Metric	critic	.ufo/waves/round-16/w2/reports/AttackC3Metric.md	present	present	present		8851	2026-10-20T05:54:05.907
+.ufo/waves/round-16/w2/dispatch.json	10	AttackC3Ground	reviewer	.ufo/waves/round-16/w2/reports/AttackC3Ground.md	present	present	present		11633	2026-10-20T05:55:38.603
+.ufo/waves/round-16/w2/dispatch.json	11	AttackSeparable	connector	.ufo/waves/round-16/w2/reports/AttackSeparable.md	present	present	present		8188	2026-10-20T05:54:58.350
+.ufo/waves/round-16/w2/dispatch.json	12	AttackPause	sentinel	.ufo/waves/round-16/w2/reports/AttackPause.md	present	present	present		11353	2026-10-20T05:56:55.877
+.ufo/waves/round-16/w2/dispatch.json	13	AttackKind	critic	.ufo/waves/round-16/w2/reports/AttackKind.md	present	present	present		9246	2026-10-20T05:54:45.011
+.ufo/waves/round-16/w2/dispatch.json	14	AttackArgv	reviewer	.ufo/waves/round-16/w2/reports/AttackArgv.md	present	present	present		15934	2026-10-20T05:54:39.509
+.ufo/waves/round-16/w2/dispatch.json	15	AttackPlanSchema	reviewer	.ufo/waves/round-16/w2/reports/AttackPlanSchema.md	present	present	present		12633	2026-10-20T05:53:26.907
+.ufo/waves/round-16/w2/dispatch.json	16	AttackPolicyCases	reviewer	.ufo/waves/round-16/w2/reports/AttackPolicyCases.md	present	present	present		11945	2026-10-20T05:54:10.156
+.ufo/waves/round-16/w2/dispatch.json	17	AttackIncident	critic	.ufo/waves/round-16/w2/reports/AttackIncident.md	present	present	present		11643	2026-10-20T05:54:48.269
+.ufo/waves/round-16/w2/dispatch.json	18	AttackSelfinvoke	reviewer	.ufo/waves/round-16/w2/reports/AttackSelfinvoke.md	present	present	present		12530	2026-10-20T05:54:53.313
+.ufo/waves/round-16/w2/dispatch.json	19	AttackNoExec	critic	.ufo/waves/round-16/w2/reports/AttackNoExec.md	present	present	present		10632	2026-10-20T05:54:30.666
+.ufo/waves/round-16/w2/dispatch.json	20	AttackRegularFiles	reviewer	.ufo/waves/round-16/w2/reports/AttackRegularFiles.md	present	present	present		9115	2026-10-20T05:53:03.064
+.ufo/waves/round-16/w2/dispatch.json	21	AttackFrozenPins	critic	.ufo/waves/round-16/w2/reports/AttackFrozenPins.md	present	present	present		11611	2026-10-20T05:55:30.063
+.ufo/waves/round-16/w2/dispatch.json	22	AttackFrozenMap	reviewer	.ufo/waves/round-16/w2/reports/AttackFrozenMap.md	present	present	present		12734	2026-10-20T05:55:24.860
+.ufo/waves/round-16/w2/dispatch.json	23	AttackCodeBinding	connector	.ufo/waves/round-16/w2/reports/AttackCodeBinding.md	present	present	present		11017	2026-10-20T05:54:43.613
+.ufo/waves/round-16/w2/dispatch.json	24	AttackC2Limits	critic	.ufo/waves/round-16/w2/reports/AttackC2Limits.md	present	present	present		11922	2026-10-20T05:56:22.102
+.ufo/waves/round-16/w2/dispatch.json	25	AttackSafetyLearning	connector	.ufo/waves/round-16/w2/reports/AttackSafetyLearning.md	present	present	present		15104	2026-10-20T05:54:25.269
+.ufo/waves/round-16/w2/dispatch.json	26	AttackClosureCarry	scout	.ufo/waves/round-16/w2/reports/AttackClosureCarry.md	present	present	present		19771	2026-10-20T05:55:23.698
+.ufo/waves/round-16/w2/dispatch.json	27	AttackPromotion	reviewer	.ufo/waves/round-16/w2/reports/AttackPromotion.md	present	present	present		10235	2026-10-20T05:53:31.344
+.ufo/waves/round-16/w2/dispatch.json	28	AttackReportReadiness	scout	.ufo/waves/round-16/w2/reports/AttackReportReadiness.md	present	present	present		20230	2026-10-20T05:57:02.901
+.ufo/waves/round-16/w2/dispatch.json	29	AttackStaleReports	connector	.ufo/waves/round-16/w2/reports/AttackStaleReports.md	present	present	present		13516	2026-10-20T05:58:34.845
+.ufo/waves/round-16/w2/dispatch.json	30	AttackCoverageCeiling	critic	.ufo/waves/round-16/w2/reports/AttackCoverageCeiling.md	present	present	present		8436	2026-10-20T05:53:48.596
+.ufo/waves/round-16/w2/dispatch.json	31	AttackToolRecord	scout	.ufo/waves/round-16/w2/reports/AttackToolRecord.md	present	present	present		14142	2026-10-20T05:54:40.808
+.ufo/waves/round-17/w1/dispatch.json	0	TripwireCore	executor	.ufo/waves/round-17/w1/reports/TripwireCore.md	missing	missing	missing	absent		
+.ufo/waves/round-17/w1/dispatch.json	1	TripwireFixturesCore	executor	.ufo/waves/round-17/w1/reports/TripwireFixturesCore.md	present	present	present		4134	2026-10-20T11:37:09.998
+.ufo/waves/round-17/w1/dispatch.json	2	TripwireFixturesCompound	executor	.ufo/waves/round-17/w1/reports/TripwireFixturesCompound.md	present	present	present		5348	2026-10-20T11:04:27.324
+.ufo/waves/round-17/w1/dispatch.json	3	MeasureBuild	executor	.ufo/waves/round-17/w1/reports/MeasureBuild.md	present	present	present		4967	2026-10-20T11:04:15.082
+.ufo/waves/round-17/w1/dispatch.json	4	ReceiptLabelCheck	executor	.ufo/waves/round-17/w1/reports/ReceiptLabelCheck.md	present	present	present		2956	2026-10-20T11:03:27.197
+.ufo/waves/round-17/w1/dispatch.json	5	TamperRecut	executor	.ufo/waves/round-17/w1/reports/TamperRecut.md	present	present	present		2727	2026-10-20T11:02:20.400
+.ufo/waves/round-17/w1/dispatch.json	6	OracleR15	executor	.ufo/waves/round-17/w1/reports/OracleR15.md	present	present	present		4916	2026-10-20T11:05:09.824
+.ufo/waves/round-17/w1/dispatch.json	7	OracleR16	executor	.ufo/waves/round-17/w1/reports/OracleR16.md	present	present	present		2789	2026-10-20T11:04:47.879
+.ufo/waves/round-17/w1/dispatch.json	8	OracleR13R14	executor	.ufo/waves/round-17/w1/reports/OracleR13R14.md	present	present	present		4636	2026-10-20T11:08:00.406
+.ufo/waves/round-17/w1/dispatch.json	9	SessionIndex	executor	.ufo/waves/round-17/w1/reports/SessionIndex.md	present	present	present		2932	2026-10-20T11:02:27.634
+.ufo/waves/round-17/w1/dispatch.json	10	SchemaVariants	executor	.ufo/waves/round-17/w1/reports/SchemaVariants.md	present	present	present		6607	2026-10-20T11:06:07.293
+.ufo/waves/round-17/w1/dispatch.json	11	NoteIdle	scribe	.ufo/waves/round-17/w1/reports/NoteIdle.md	present	present	present		4798	2026-10-20T11:05:34.248
+.ufo/waves/round-17/w1/dispatch.json	12	NoteTerminal	scribe	.ufo/waves/round-17/w1/reports/NoteTerminal.md	present	present	present		4374	2026-10-20T11:03:55.242
+.ufo/waves/round-17/w1/dispatch.json	13	LessonDraft	scribe	.ufo/waves/round-17/w1/reports/LessonDraft.md	present	present	present		2816	2026-10-20T11:01:33.600
+.ufo/waves/round-17/w1/dispatch.json	14	QualityDraft	scribe	.ufo/waves/round-17/w1/reports/QualityDraft.md	present	present	present		7055	2026-10-20T11:01:55.654
+.ufo/waves/round-17/w1/dispatch.json	15	SkillRegistryDraft	scribe	.ufo/waves/round-17/w1/reports/SkillRegistryDraft.md	present	present	present		4077	2026-10-20T11:02:04.509
+.ufo/waves/round-17/w1/dispatch.json	16	ErratumDraft	scribe	.ufo/waves/round-17/w1/reports/ErratumDraft.md	present	present	present		5286	2026-10-20T11:02:08.095
+.ufo/waves/round-17/w1/dispatch.json	17	FrontierDraft	scribe	.ufo/waves/round-17/w1/reports/FrontierDraft.md	present	present	present		3664	2026-10-20T11:01:39.547
+.ufo/waves/round-17/w1/dispatch.json	18	ScoreTableDraft	scribe	.ufo/waves/round-17/w1/reports/ScoreTableDraft.md	present	present	present		1908	2026-10-20T11:01:06.275
+.ufo/waves/round-17/w1/dispatch.json	19	ReportSkeleton	scribe	.ufo/waves/round-17/w1/reports/ReportSkeleton.md	present	present	present		5523	2026-10-20T11:01:40.404
+.ufo/waves/round-17/w1/dispatch.json	20	SrcHypridleWiki	scout	.ufo/waves/round-17/w1/reports/SrcHypridleWiki.md	present	present	present		16589	2026-10-20T11:04:25.589
+.ufo/waves/round-17/w1/dispatch.json	21	SrcHyprlockWiki	scout	.ufo/waves/round-17/w1/reports/SrcHyprlockWiki.md	present	present	present		10572	2026-10-20T11:05:18.775
+.ufo/waves/round-17/w1/dispatch.json	22	SrcHypridleTag	scout	.ufo/waves/round-17/w1/reports/SrcHypridleTag.md	present	present	present		17719	2026-10-20T11:04:20.073
+.ufo/waves/round-17/w1/dispatch.json	23	SrcHypridleSrc	scout	.ufo/waves/round-17/w1/reports/SrcHypridleSrc.md	present	present	present		16546	2026-10-20T11:06:00.000
+.ufo/waves/round-17/w1/dispatch.json	24	SrcHyprlockTag	scout	.ufo/waves/round-17/w1/reports/SrcHyprlockTag.md	present	present	present		10041	2026-10-20T11:02:37.962
+.ufo/waves/round-17/w1/dispatch.json	25	SrcHyprlockLockProto	scout	.ufo/waves/round-17/w1/reports/SrcHyprlockLockProto.md	present	present	present		16414	2026-10-20T11:06:23.735
+.ufo/waves/round-17/w1/dispatch.json	26	SrcIdleNotifyProto	scout	.ufo/waves/round-17/w1/reports/SrcIdleNotifyProto.md	present	present	present		13343	2026-10-20T11:04:55.925
+.ufo/waves/round-17/w1/dispatch.json	27	SrcLogindLock	scout	.ufo/waves/round-17/w1/reports/SrcLogindLock.md	present	present	present		20411	2026-10-20T11:06:56.154
+.ufo/waves/round-17/w1/dispatch.json	28	SrcAlacrittyMan	scout	.ufo/waves/round-17/w1/reports/SrcAlacrittyMan.md	present	present	present		13655	2026-10-20T11:04:25.764
+.ufo/waves/round-17/w1/dispatch.json	29	SrcAlacrittyChangelog	scout	.ufo/waves/round-17/w1/reports/SrcAlacrittyChangelog.md	present	present	present		9346	2026-10-20T11:03:15.901
+.ufo/waves/round-17/w1/dispatch.json	30	SrcXdgTerminalExec	scout	.ufo/waves/round-17/w1/reports/SrcXdgTerminalExec.md	present	present	present		15950	2026-10-20T11:04:08.846
+.ufo/waves/round-17/w1/dispatch.json	31	SrcTerminalAlternates	scout	.ufo/waves/round-17/w1/reports/SrcTerminalAlternates.md	present	present	present		23718	2026-10-20T11:07:43.605
+.ufo/waves/round-17/w1/dispatch.json	32	HostIdleFiles	scout	.ufo/waves/round-17/w1/reports/HostIdleFiles.md	present	present	present		25092	2026-10-20T11:05:30.331
+.ufo/waves/round-17/w1/dispatch.json	33	HostTerminalFiles	scout	.ufo/waves/round-17/w1/reports/HostTerminalFiles.md	present	present	present		10877	2026-10-20T11:02:21.591
+.ufo/waves/round-17/w1/dispatch.json	34	HostOmarchyLockScripts	scout	.ufo/waves/round-17/w1/reports/HostOmarchyLockScripts.md	present	present	present		13900	2026-10-20T11:01:45.195
+.ufo/waves/round-17/w1/dispatch.json	35	ExistingIdleNotes	scout	.ufo/waves/round-17/w1/reports/ExistingIdleNotes.md	present	present	present		39939	2026-10-20T11:09:06.477
+.ufo/waves/round-17/w1/dispatch.json	36	RubricBaselineScout	scout	.ufo/waves/round-17/w1/reports/RubricBaselineScout.md	present	present	present		9241	2026-10-20T11:03:20.346
+.ufo/waves/round-17/w1/dispatch.json	37	CalibrationBaselineScout	scout	.ufo/waves/round-17/w1/reports/CalibrationBaselineScout.md	present	present	present		8044	2026-10-20T11:02:22.583
+.ufo/waves/round-17/w1/dispatch.json	38	FleetToolScan	scout	.ufo/waves/round-17/w1/reports/FleetToolScan.md	present	present	present		11128	2026-10-20T11:05:10.593
+.ufo/waves/round-17/w1/dispatch.json	39	IncidentTimeline	scout	.ufo/waves/round-17/w1/reports/IncidentTimeline.md	present	present	present		14619	2026-10-20T11:03:15.149
+.ufo/waves/round-17/w1/dispatch.json	40	M5Locate	scout	.ufo/waves/round-17/w1/reports/M5Locate.md	present	present	present		8471	2026-10-20T11:05:33.052
+.ufo/waves/round-17/w1/dispatch.json	41	SourcesRowShape	scout	.ufo/waves/round-17/w1/reports/SourcesRowShape.md	present	present	present		23343	2026-10-20T11:07:31.130
+.ufo/waves/round-17/w1/dispatch.json	42	RevPreRegistration	reviewer	.ufo/waves/round-17/w1/reports/RevPreRegistration.md	present	present	present		22691	2026-10-20T11:09:04.889
+.ufo/waves/round-17/w1/dispatch.json	43	RevRubricV	reviewer	.ufo/waves/round-17/w1/reports/RevRubricV.md	present	present	present		21481	2026-10-20T11:10:53.566
+.ufo/waves/round-17/w1/dispatch.json	44	RevTripwireContract	reviewer	.ufo/waves/round-17/w1/reports/RevTripwireContract.md	present	present	present		31594	2026-10-20T11:11:16.672
+.ufo/waves/round-17/w1/dispatch.json	45	RevR16V1Facts	reviewer	.ufo/waves/round-17/w1/reports/RevR16V1Facts.md	present	present	present		18847	2026-10-20T11:07:22.254
+.ufo/waves/round-17/w1/dispatch.json	46	RevEvidenceLabelsR15	reviewer	.ufo/waves/round-17/w1/reports/RevEvidenceLabelsR15.md	present	present	present		15521	2026-10-20T11:06:56.246
+.ufo/waves/round-17/w1/dispatch.json	47	RevEvidenceLabelsR14	reviewer	.ufo/waves/round-17/w1/reports/RevEvidenceLabelsR14.md	present	present	present		19010	2026-10-20T11:10:54.542
+.ufo/waves/round-17/w1/dispatch.json	48	RevQuality2122	reviewer	.ufo/waves/round-17/w1/reports/RevQuality2122.md	present	present	present		14904	2026-10-20T11:09:16.089
+.ufo/waves/round-17/w1/dispatch.json	49	RevHarmWatch	reviewer	.ufo/waves/round-17/w1/reports/RevHarmWatch.md	present	present	present		17718	2026-10-20T11:11:00.794
+.ufo/waves/round-17/w1/dispatch.json	50	RevSeparability	reviewer	.ufo/waves/round-17/w1/reports/RevSeparability.md	present	present	present		12438	2026-10-20T11:25:39.001
+.ufo/waves/round-17/w1/dispatch.json	51	RevPrivacy	reviewer	.ufo/waves/round-17/w1/reports/RevPrivacy.md	present	present	present		12017	2026-10-20T11:08:25.143
+.ufo/waves/round-17/w1/dispatch.json	52	SiblingOverlap	connector	.ufo/waves/round-17/w1/reports/SiblingOverlap.md	present	present	present		26015	2026-10-20T11:08:29.769
+.ufo/waves/round-17/w1/dispatch.json	53	ConsiderTheseJoin	connector	.ufo/waves/round-17/w1/reports/ConsiderTheseJoin.md	present	present	present		14778	2026-10-20T11:07:21.782
+.ufo/waves/round-17/w1/dispatch.json	54	UnknownsJoin	connector	.ufo/waves/round-17/w1/reports/UnknownsJoin.md	present	present	present		17829	2026-10-20T11:11:21.108
+.ufo/waves/round-17/w1/dispatch.json	55	SourcesUsedByJoin	connector	.ufo/waves/round-17/w1/reports/SourcesUsedByJoin.md	present	present	present		15625	2026-10-20T11:10:11.261
+.ufo/waves/round-17/w1/dispatch.json	56	TripwireClassifierJoin	connector	.ufo/waves/round-17/w1/reports/TripwireClassifierJoin.md	present	present	present		19396	2026-10-20T11:05:22.532
+.ufo/waves/round-17/w1/dispatch.json	57	LessonChainJoin	connector	.ufo/waves/round-17/w1/reports/LessonChainJoin.md	present	present	present		24052	2026-10-20T11:07:32.622
+.ufo/waves/round-17/w1/dispatch.json	58	ReportPointerJoin	connector	.ufo/waves/round-17/w1/reports/ReportPointerJoin.md	present	present	present		11647	2026-10-20T11:04:51.825
+.ufo/waves/round-17/w1/dispatch.json	59	SkillSectionJoin	connector	.ufo/waves/round-17/w1/reports/SkillSectionJoin.md	present	present	present		8584	2026-10-20T11:03:54.619
+.ufo/waves/round-17/w1/dispatch.json	60	RevengeTamperMethod	revenger	.ufo/waves/round-17/w1/reports/RevengeTamperMethod.md	present	present	present		12769	2026-10-20T11:03:25.306
+.ufo/waves/round-17/w1/dispatch.json	61	RevengeTranscriptFormat	revenger	.ufo/waves/round-17/w1/reports/RevengeTranscriptFormat.md	present	present	present		22080	2026-10-20T11:10:41.068
+.ufo/waves/round-17/w1/dispatch.json	62	RevengeEvalBang	revenger	.ufo/waves/round-17/w1/reports/RevengeEvalBang.md	present	present	present		15273	2026-10-20T11:08:14.925
+.ufo/waves/round-17/w1/dispatch.json	63	RevengeM4Misroot	revenger	.ufo/waves/round-17/w1/reports/RevengeM4Misroot.md	present	present	present		19628	2026-10-20T11:08:14.963
+.ufo/waves/round-17/w1/dispatch.json	64	CriticC1	critic	.ufo/waves/round-17/w1/reports/CriticC1.md	present	present	present		9234	2026-10-20T11:04:01.129
+.ufo/waves/round-17/w1/dispatch.json	65	CriticC2	critic	.ufo/waves/round-17/w1/reports/CriticC2.md	present	present	present		11156	2026-10-20T11:04:30.896
+.ufo/waves/round-17/w1/dispatch.json	66	CriticC3	critic	.ufo/waves/round-17/w1/reports/CriticC3.md	present	present	present		12325	2026-10-20T11:04:57.454
+.ufo/waves/round-17/w1/dispatch.json	67	CriticHonesty	critic	.ufo/waves/round-17/w1/reports/CriticHonesty.md	present	present	present		11704	2026-10-20T11:03:03.288
+.ufo/waves/round-17/w1/dispatch.json	68	SentinelTranscriptRead	sentinel	.ufo/waves/round-17/w1/reports/SentinelTranscriptRead.md	present	present	present		16713	2026-10-20T11:07:54.824
+.ufo/waves/round-17/w1/dispatch.json	69	SentinelHostPause	sentinel	.ufo/waves/round-17/w1/reports/SentinelHostPause.md	present	present	present		14471	2026-10-20T11:07:13.297
+.ufo/waves/round-17/w2/dispatch.json	0	ReMeasureC1	reviewer	.ufo/waves/round-17/w2/reports/ReMeasureC1.md	present	present	present		7290	2026-10-20T11:55:52.374
+.ufo/waves/round-17/w2/dispatch.json	1	ReMeasureC2	reviewer	.ufo/waves/round-17/w2/reports/ReMeasureC2.md	present	present	present		14013	2026-10-20T12:02:07.886
+.ufo/waves/round-17/w2/dispatch.json	2	ReMeasureHarm	reviewer	.ufo/waves/round-17/w2/reports/ReMeasureHarm.md	present	present	present		12366	2026-10-20T11:55:59.544
+.ufo/waves/round-17/w2/dispatch.json	3	CensusRerun	scout	.ufo/waves/round-17/w2/reports/CensusRerun.md	present	present	present		12549	2026-10-20T12:00:51.324
+.ufo/waves/round-17/w2/dispatch.json	4	SelftestRerun	reviewer	.ufo/waves/round-17/w2/reports/SelftestRerun.md	present	present	present		12464	2026-10-20T11:58:29.401
+.ufo/waves/round-17/w2/dispatch.json	5	AnchorRerun	reviewer	.ufo/waves/round-17/w2/reports/AnchorRerun.md	present	present	present		10257	2026-10-20T11:57:22.513
+.ufo/waves/round-17/w2/dispatch.json	6	LabelRerun	reviewer	.ufo/waves/round-17/w2/reports/LabelRerun.md	present	present	present		11863	2026-10-20T11:57:56.541
+.ufo/waves/round-17/w2/dispatch.json	7	RecutRerun	reviewer	.ufo/waves/round-17/w2/reports/RecutRerun.md	present	present	present		10945	2026-10-20T11:58:00.999
+.ufo/waves/round-17/w2/dispatch.json	8	ReopenS056	scout	.ufo/waves/round-17/w2/reports/ReopenS056.md	present	present	present		11169	2026-10-20T11:56:36.938
+.ufo/waves/round-17/w2/dispatch.json	9	ReopenS057	scout	.ufo/waves/round-17/w2/reports/ReopenS057.md	present	present	present		9575	2026-10-20T11:57:35.439
+.ufo/waves/round-17/w2/dispatch.json	10	ReopenS058	scout	.ufo/waves/round-17/w2/reports/ReopenS058.md	present	present	present		9023	2026-10-20T11:55:07.234
+.ufo/waves/round-17/w2/dispatch.json	11	ReopenS061	scout	.ufo/waves/round-17/w2/reports/ReopenS061.md	present	present	present		9785	2026-10-20T11:59:20.808
+.ufo/waves/round-17/w2/dispatch.json	12	ReopenS062	scout	.ufo/waves/round-17/w2/reports/ReopenS062.md	present	present	present		10602	2026-10-20T11:59:42.470
+.ufo/waves/round-17/w2/dispatch.json	13	ReopenS063	scout	.ufo/waves/round-17/w2/reports/ReopenS063.md	present	present	present		16197	2026-10-20T12:00:59.565
+.ufo/waves/round-17/w2/dispatch.json	14	ReopenS064	scout	.ufo/waves/round-17/w2/reports/ReopenS064.md	present	present	present		14050	2026-10-20T12:01:05.312
+.ufo/waves/round-17/w2/dispatch.json	15	ReopenS065	scout	.ufo/waves/round-17/w2/reports/ReopenS065.md	present	present	present		14077	2026-10-20T11:59:38.188
+.ufo/waves/round-17/w2/dispatch.json	16	ReopenS066	scout	.ufo/waves/round-17/w2/reports/ReopenS066.md	present	present	present		12833	2026-10-20T11:58:46.231
+.ufo/waves/round-17/w2/dispatch.json	17	ReopenS067	scout	.ufo/waves/round-17/w2/reports/ReopenS067.md	present	present	present		7873	2026-10-20T11:55:33.332
+.ufo/waves/round-17/w2/dispatch.json	18	ReopenS068	scout	.ufo/waves/round-17/w2/reports/ReopenS068.md	present	present	present		5328	2026-10-20T11:56:01.218
+.ufo/waves/round-17/w2/dispatch.json	19	ReopenS069	scout	.ufo/waves/round-17/w2/reports/ReopenS069.md	present	present	present		6634	2026-10-20T11:57:12.974
+.ufo/waves/round-17/w2/dispatch.json	20	ReopenS070	scout	.ufo/waves/round-17/w2/reports/ReopenS070.md	present	present	present		11521	2026-10-20T11:58:47.504
+.ufo/waves/round-17/w2/dispatch.json	21	ReopenS059S060	scout	.ufo/waves/round-17/w2/reports/ReopenS059S060.md	present	present	present		8315	2026-10-20T11:55:34.646
+.ufo/waves/round-17/w2/dispatch.json	22	ReopenP6Host	scout	.ufo/waves/round-17/w2/reports/ReopenP6Host.md	present	present	present		11971	2026-10-20T11:55:27.495
+.ufo/waves/round-17/w2/dispatch.json	23	AttackP6General	reviewer	.ufo/waves/round-17/w2/reports/AttackP6General.md	present	present	present		17654	2026-10-20T12:00:11.438
+.ufo/waves/round-17/w2/dispatch.json	24	AttackP6Listeners	reviewer	.ufo/waves/round-17/w2/reports/AttackP6Listeners.md	present	present	present		12737	2026-10-20T12:02:06.217
+.ufo/waves/round-17/w2/dispatch.json	25	AttackP6Unexercised	critic	.ufo/waves/round-17/w2/reports/AttackP6Unexercised.md	present	present	present		12519	2026-10-20T11:58:04.832
+.ufo/waves/round-17/w2/dispatch.json	26	AttackP4Upstream	reviewer	.ufo/waves/round-17/w2/reports/AttackP4Upstream.md	present	present	present		11203	2026-10-20T12:00:37.414
+.ufo/waves/round-17/w2/dispatch.json	27	AttackP4Claims	critic	.ufo/waves/round-17/w2/reports/AttackP4Claims.md	present	present	present		12083	2026-10-20T11:56:56.459
+.ufo/waves/round-17/w2/dispatch.json	28	AttackVersionBinding	reviewer	.ufo/waves/round-17/w2/reports/AttackVersionBinding.md	present	present	present		9023	2026-10-20T11:58:12.267
+.ufo/waves/round-17/w2/dispatch.json	29	AttackRubricGaming	critic	.ufo/waves/round-17/w2/reports/AttackRubricGaming.md	present	present	present		9365	2026-10-20T11:58:21.357
+.ufo/waves/round-17/w2/dispatch.json	30	AttackReadmeRows	reviewer	.ufo/waves/round-17/w2/reports/AttackReadmeRows.md	present	present	present		14098	2026-10-20T12:04:23.897
+.ufo/waves/round-17/w2/dispatch.json	31	AttackGateQuotesP6	reviewer	.ufo/waves/round-17/w2/reports/AttackGateQuotesP6.md	present	present	present		12499	2026-10-20T12:02:02.602
+.ufo/waves/round-17/w2/dispatch.json	32	AttackGateQuotesP4	reviewer	.ufo/waves/round-17/w2/reports/AttackGateQuotesP4.md	present	present	present		14184	2026-10-20T12:00:38.716
+.ufo/waves/round-17/w2/dispatch.json	33	AttackSourcesRows	reviewer	.ufo/waves/round-17/w2/reports/AttackSourcesRows.md	present	present	present		22140	2026-10-20T12:02:16.564
+.ufo/waves/round-17/w2/dispatch.json	34	AttackQuality23	critic	.ufo/waves/round-17/w2/reports/AttackQuality23.md	present	present	present		15392	2026-10-20T11:59:48.816
+.ufo/waves/round-17/w2/dispatch.json	35	AttackLabelCheckCode	reviewer	.ufo/waves/round-17/w2/reports/AttackLabelCheckCode.md	present	present	present		20969	2026-10-20T12:01:41.865
+.ufo/waves/round-17/w2/dispatch.json	36	MutateLabelCheck	mutation-tester	.ufo/waves/round-17/w2/reports/MutateLabelCheck.md	present	present	present		13227	2026-10-20T11:58:08.672
+.ufo/waves/round-17/w2/dispatch.json	37	AttackErratum	reviewer	.ufo/waves/round-17/w2/reports/AttackErratum.md	present	present	present		9822	2026-10-20T12:02:42.066
+.ufo/waves/round-17/w2/dispatch.json	38	AttackLessonM1M3	reviewer	.ufo/waves/round-17/w2/reports/AttackLessonM1M3.md	present	present	present		23056	2026-10-20T12:13:16.862
+.ufo/waves/round-17/w2/dispatch.json	39	AttackSeparability	reviewer	.ufo/waves/round-17/w2/reports/AttackSeparability.md	present	present	present		9573	2026-10-20T11:57:55.890
+.ufo/waves/round-17/w2/dispatch.json	40	ReviewTokenizer	reviewer	.ufo/waves/round-17/w2/reports/ReviewTokenizer.md	present	present	present		22894	2026-10-20T12:03:19.905
+.ufo/waves/round-17/w2/dispatch.json	41	ReviewPrefixes	reviewer	.ufo/waves/round-17/w2/reports/ReviewPrefixes.md	present	present	present		17468	2026-10-20T12:00:05.551
+.ufo/waves/round-17/w2/dispatch.json	42	ReviewPacman	reviewer	.ufo/waves/round-17/w2/reports/ReviewPacman.md	present	present	present		14466	2026-10-20T12:03:36.841
+.ufo/waves/round-17/w2/dispatch.json	43	ReviewVerbs	reviewer	.ufo/waves/round-17/w2/reports/ReviewVerbs.md	present	present	present		26220	2026-10-20T12:02:42.501
+.ufo/waves/round-17/w2/dispatch.json	44	ReviewEvalAst	reviewer	.ufo/waves/round-17/w2/reports/ReviewEvalAst.md	present	present	present		16953	2026-10-20T12:02:23.221
+.ufo/waves/round-17/w2/dispatch.json	45	ReviewPathSafety	reviewer	.ufo/waves/round-17/w2/reports/ReviewPathSafety.md	present	present	present		16283	2026-10-20T12:01:00.164
+.ufo/waves/round-17/w2/dispatch.json	46	MutateTripwire1	mutation-tester	.ufo/waves/round-17/w2/reports/MutateTripwire1.md	present	present	present		28370	2026-10-20T11:57:13.445
+.ufo/waves/round-17/w2/dispatch.json	47	MutateTripwire2	mutation-tester	.ufo/waves/round-17/w2/reports/MutateTripwire2.md	present	present	present		112361	2026-10-20T11:59:34.676
+.ufo/waves/round-17/w2/dispatch.json	48	MutateTripwire3	mutation-tester	.ufo/waves/round-17/w2/reports/MutateTripwire3.md	present	present	present		169137	2026-10-20T11:59:12.820
+.ufo/waves/round-17/w2/dispatch.json	49	AdversarialFixtures	executor	.ufo/waves/round-17/w2/reports/AdversarialFixtures.md	present	present	present		6169	2026-10-20T11:59:27.596
+.ufo/waves/round-17/w2/dispatch.json	50	AdversarialClean	executor	.ufo/waves/round-17/w2/reports/AdversarialClean.md	present	present	present		3033	2026-10-20T11:55:00.780
+.ufo/waves/round-17/w2/dispatch.json	51	AuditTripwireOnly1	scout	.ufo/waves/round-17/w2/reports/AuditTripwireOnly1.md	present	present	present		11962	2026-10-20T11:57:47.406
+.ufo/waves/round-17/w2/dispatch.json	52	AuditTripwireOnly2	scout	.ufo/waves/round-17/w2/reports/AuditTripwireOnly2.md	present	present	present		13487	2026-10-20T11:57:26.580
+.ufo/waves/round-17/w2/dispatch.json	53	AuditTripwireOnly3	scout	.ufo/waves/round-17/w2/reports/AuditTripwireOnly3.md	present	present	present		17689	2026-10-20T12:00:13.136
+.ufo/waves/round-17/w2/dispatch.json	54	AuditOracleOnly	scout	.ufo/waves/round-17/w2/reports/AuditOracleOnly.md	present	present	present		9564	2026-10-20T11:59:44.545
+.ufo/waves/round-17/w2/dispatch.json	55	AuditR16Scan	scout	.ufo/waves/round-17/w2/reports/AuditR16Scan.md	present	present	present		8294	2026-10-20T11:59:55.204
+.ufo/waves/round-17/w2/dispatch.json	56	AuditR14Join	scout	.ufo/waves/round-17/w2/reports/AuditR14Join.md	present	present	present		9341	2026-10-20T12:01:32.338
+.ufo/waves/round-17/w2/dispatch.json	57	RevengeMultiCallRecord	revenger	.ufo/waves/round-17/w2/reports/RevengeMultiCallRecord.md	present	present	present		17746	2026-10-20T12:02:21.520
+.ufo/waves/round-17/w2/dispatch.json	58	AuditR17Wave1	reviewer	.ufo/waves/round-17/w2/reports/AuditR17Wave1.md	present	present	present		10643	2026-10-20T11:58:49.096
+.ufo/waves/round-17/w2/dispatch.json	59	SentinelReceiptsPrivacy	sentinel	.ufo/waves/round-17/w2/reports/SentinelReceiptsPrivacy.md	present	present	present		9835	2026-10-20T11:59:38.805
+.ufo/waves/round-17/w2/dispatch.json	60	SentinelToolSafety	sentinel	.ufo/waves/round-17/w2/reports/SentinelToolSafety.md	present	present	present		12389	2026-10-20T11:57:42.396
+.ufo/waves/round-17/w2/dispatch.json	61	CriticC3Framing	critic	.ufo/waves/round-17/w2/reports/CriticC3Framing.md	present	present	present		15933	2026-10-20T12:00:36.011
+.ufo/waves/round-17/w2/dispatch.json	62	CriticAdmission	critic	.ufo/waves/round-17/w2/reports/CriticAdmission.md	present	present	present		13578	2026-10-20T12:00:06.471
+.ufo/waves/round-17/w2/dispatch.json	63	CriticTrends	critic	.ufo/waves/round-17/w2/reports/CriticTrends.md	present	present	present		14303	2026-10-20T12:03:42.628
+.ufo/waves/round-17/w2/dispatch.json	64	ConnectSiblings	connector	.ufo/waves/round-17/w2/reports/ConnectSiblings.md	present	present	present		11254	2026-10-20T11:58:32.794
+.ufo/waves/round-17/w2/dispatch.json	65	ConnectLessonChain	connector	.ufo/waves/round-17/w2/reports/ConnectLessonChain.md	present	present	present		17883	2026-10-20T12:02:33.696
+.ufo/waves/round-17/w2/dispatch.json	66	ConnectScorecard	connector	.ufo/waves/round-17/w2/reports/ConnectScorecard.md	present	present	present		17803	2026-10-20T11:58:03.623
+.ufo/waves/round-17/w2/dispatch.json	67	ConnectConsiderThese	connector	.ufo/waves/round-17/w2/reports/ConnectConsiderThese.md	present	present	present		20458	2026-10-20T12:02:06.067
+.ufo/waves/round-17/w2/dispatch.json	68	RevengeUnparsed	revenger	.ufo/waves/round-17/w2/reports/RevengeUnparsed.md	present	present	present		14484	2026-10-20T12:04:57.539
+.ufo/waves/round-17/w2/dispatch.json	69	RevengeRedaction	revenger	.ufo/waves/round-17/w2/reports/RevengeRedaction.md	present	present	present		8984	2026-10-20T11:58:05.409
+.ufo/waves/round-17/w2/dispatch.json	70	ReviewSkillRows	reviewer	.ufo/waves/round-17/w2/reports/ReviewSkillRows.md	present	present	present		15076	2026-10-20T12:04:36.188
+.ufo/waves/round-17/w2/dispatch.json	71	ReviewScorecardCorrections	reviewer	.ufo/waves/round-17/w2/reports/ReviewScorecardCorrections.md	present	present	present		11712	2026-10-20T12:05:14.319
+.ufo/waves/round-17/w2/dispatch.json	72	ReviewEvidenceIndex	reviewer	.ufo/waves/round-17/w2/reports/ReviewEvidenceIndex.md	present	present	present		20612	2026-10-20T12:08:19.037
+.ufo/waves/round-17/w2/dispatch.json	73	MisrootSweep	scout	.ufo/waves/round-17/w2/reports/MisrootSweep.md	present	present	present		16119	2026-10-20T11:57:40.882
+.ufo/waves/round-17/w2/dispatch.json	74	SimplifyTripwire	simplifier	.ufo/waves/round-17/w2/reports/SimplifyTripwire.md	present	present	present		21146	2026-10-20T12:16:16.103
+.ufo/waves/round-17/w2/dispatch.json	75	SimplifyMeasure	simplifier	.ufo/waves/round-17/w2/reports/SimplifyMeasure.md	present	present	present		13333	2026-10-20T12:01:42.754
+.ufo/waves/round-17/w2/dispatch.json	76	ScoutPrevRounds	scout	.ufo/waves/round-17/w2/reports/ScoutPrevRounds.md	present	present	present		7742	2026-10-20T11:56:49.955
+.ufo/waves/round-17/w2/dispatch.json	77	ScoutFleetPolicy	scout	.ufo/waves/round-17/w2/reports/ScoutFleetPolicy.md	present	present	present		8198	2026-10-20T11:54:48.495
+.ufo/waves/round-18/w1/dispatch.json	0	TwFrozenMode	executor	.ufo/waves/round-18/w1/reports/TwFrozenMode.md	present	present	present		7468	2026-10-20T12:48:33.580
+.ufo/waves/round-18/w1/dispatch.json	1	TwFrozenSnapshot	executor	.ufo/waves/round-18/w1/reports/TwFrozenSnapshot.md	present	present	present		7369	2026-10-20T12:48:21.240
+.ufo/waves/round-18/w1/dispatch.json	2	TwFrozenSelftest	executor	.ufo/waves/round-18/w1/reports/TwFrozenSelftest.md	present	present	present		11299	2026-10-20T12:48:19.683
+.ufo/waves/round-18/w1/dispatch.json	3	TwMissBashCVar	executor	.ufo/waves/round-18/w1/reports/TwMissBashCVar.md	present	present	present		14042	2026-10-20T12:55:52.732
+.ufo/waves/round-18/w1/dispatch.json	4	TwMissHelperFn	executor	.ufo/waves/round-18/w1/reports/TwMissHelperFn.md	present	present	present		8688	2026-10-20T12:53:09.150
+.ufo/waves/round-18/w1/dispatch.json	5	TwInstallerChannels	executor	.ufo/waves/round-18/w1/reports/TwInstallerChannels.md	present	present	present		11011	2026-10-20T12:55:08.047
+.ufo/waves/round-18/w1/dispatch.json	6	TwRecutScript	executor	.ufo/waves/round-18/w1/reports/TwRecutScript.md	present	present	present		13665	2026-10-20T12:51:01.941
+.ufo/waves/round-18/w1/dispatch.json	7	ReceiptCheck	executor	.ufo/waves/round-18/w1/reports/ReceiptCheck.md	present	present	present		6017	2026-10-20T12:44:33.457
+.ufo/waves/round-18/w1/dispatch.json	8	MeasureMutants	executor	.ufo/waves/round-18/w1/reports/MeasureMutants.md	present	present	present		9249	2026-10-20T12:50:12.224
+.ufo/waves/round-18/w1/dispatch.json	9	GateRcFix	executor	.ufo/waves/round-18/w1/reports/GateRcFix.md	present	present	present		8329	2026-10-20T12:52:48.323
+.ufo/waves/round-18/w1/dispatch.json	10	FetchVerify	executor	.ufo/waves/round-18/w1/reports/FetchVerify.md	present	present	present		6418	2026-10-20T12:45:47.659
+.ufo/waves/round-18/w1/dispatch.json	11	FetchBackfillR17	executor	.ufo/waves/round-18/w1/reports/FetchBackfillR17.md	present	present	present		12220	2026-10-20T12:46:20.398
+.ufo/waves/round-18/w1/dispatch.json	12	PipeRcCensus	executor	.ufo/waves/round-18/w1/reports/PipeRcCensus.md	present	present	present		13919	2026-10-20T12:50:44.652
+.ufo/waves/round-18/w1/dispatch.json	13	FrozenProvenanceCheck	executor	.ufo/waves/round-18/w1/reports/FrozenProvenanceCheck.md	present	present	present		7504	2026-10-20T12:49:04.951
+.ufo/waves/round-18/w1/dispatch.json	14	SessionIndexR17	executor	.ufo/waves/round-18/w1/reports/SessionIndexR17.md	present	present	present		2664	2026-10-20T12:42:22.559
+.ufo/waves/round-18/w1/dispatch.json	15	HarmWatchScript	executor	.ufo/waves/round-18/w1/reports/HarmWatchScript.md	present	present	present		10639	2026-10-20T12:49:45.822
+.ufo/waves/round-18/w1/dispatch.json	16	NoteWalker	scribe	.ufo/waves/round-18/w1/reports/NoteWalker.md	present	present	present		5512	2026-10-20T12:47:40.867
+.ufo/waves/round-18/w1/dispatch.json	17	NoteTheme	scribe	.ufo/waves/round-18/w1/reports/NoteTheme.md	present	present	present		6447	2026-10-20T12:44:59.457
+.ufo/waves/round-18/w1/dispatch.json	18	LessonDraft	scribe	.ufo/waves/round-18/w1/reports/LessonDraft.md	present	present	present		3875	2026-10-20T12:41:42.492
+.ufo/waves/round-18/w1/dispatch.json	19	QualityDraft	scribe	.ufo/waves/round-18/w1/reports/QualityDraft.md	present	present	present		10465	2026-10-20T12:42:09.836
+.ufo/waves/round-18/w1/dispatch.json	20	SkillRegistryDraft	scribe	.ufo/waves/round-18/w1/reports/SkillRegistryDraft.md	present	present	present		2614	2026-10-20T12:41:26.509
+.ufo/waves/round-18/w1/dispatch.json	21	ErratumR17	scribe	.ufo/waves/round-18/w1/reports/ErratumR17.md	present	present	present		5502	2026-10-20T12:41:50.989
+.ufo/waves/round-18/w1/dispatch.json	22	JjDisposition	scribe	.ufo/waves/round-18/w1/reports/JjDisposition.md	present	present	present		5801	2026-10-20T12:43:39.952
+.ufo/waves/round-18/w1/dispatch.json	23	FrontierDraft	scribe	.ufo/waves/round-18/w1/reports/FrontierDraft.md	present	present	present		1906	2026-10-20T12:40:21.855
+.ufo/waves/round-18/w1/dispatch.json	24	ScoreResultsDraft	scribe	.ufo/waves/round-18/w1/reports/ScoreResultsDraft.md	present	present	present		3110	2026-10-20T12:41:07.114
+.ufo/waves/round-18/w1/dispatch.json	25	ReportSkeleton	scribe	.ufo/waves/round-18/w1/reports/ReportSkeleton.md	present	present	present		4261	2026-10-20T12:40:57.395
+.ufo/waves/round-18/w1/dispatch.json	26	SrcWalkerReadme	scout	.ufo/waves/round-18/w1/reports/SrcWalkerReadme.md	present	present	present		13689	2026-10-20T12:43:35.862
+.ufo/waves/round-18/w1/dispatch.json	27	SrcWalkerDefaultConfig	scout	.ufo/waves/round-18/w1/reports/SrcWalkerDefaultConfig.md	present	present	present		14711	2026-10-20T12:44:19.034
+.ufo/waves/round-18/w1/dispatch.json	28	SrcWalkerConfigPaths	scout	.ufo/waves/round-18/w1/reports/SrcWalkerConfigPaths.md	present	present	present		10239	2026-10-20T12:43:10.142
+.ufo/waves/round-18/w1/dispatch.json	29	SrcWalkerThemes	scout	.ufo/waves/round-18/w1/reports/SrcWalkerThemes.md	present	present	present		20672	2026-10-20T12:51:11.344
+.ufo/waves/round-18/w1/dispatch.json	30	SrcWalkerChangelog	scout	.ufo/waves/round-18/w1/reports/SrcWalkerChangelog.md	present	present	present		24275	2026-10-20T12:48:32.399
+.ufo/waves/round-18/w1/dispatch.json	31	SrcElephantReadme	scout	.ufo/waves/round-18/w1/reports/SrcElephantReadme.md	present	present	present		22649	2026-10-20T12:47:09.982
+.ufo/waves/round-18/w1/dispatch.json	32	SrcElephantProviders	scout	.ufo/waves/round-18/w1/reports/SrcElephantProviders.md	present	present	present		30034	2026-10-20T12:49:10.867
+.ufo/waves/round-18/w1/dispatch.json	33	SrcWalkerDocsSite	scout	.ufo/waves/round-18/w1/reports/SrcWalkerDocsSite.md	present	present	present		11440	2026-10-20T12:46:28.648
+.ufo/waves/round-18/w1/dispatch.json	34	SrcOmarchyWalker	scout	.ufo/waves/round-18/w1/reports/SrcOmarchyWalker.md	present	present	present		23072	2026-10-20T12:44:34.186
+.ufo/waves/round-18/w1/dispatch.json	35	SrcOmarchyThemeSet	scout	.ufo/waves/round-18/w1/reports/SrcOmarchyThemeSet.md	present	present	present		20451	2026-10-20T12:42:53.430
+.ufo/waves/round-18/w1/dispatch.json	36	SrcOmarchyThemeLayout	scout	.ufo/waves/round-18/w1/reports/SrcOmarchyThemeLayout.md	present	present	present		13829	2026-10-20T12:43:30.157
+.ufo/waves/round-18/w1/dispatch.json	37	SrcOmarchyBackground	scout	.ufo/waves/round-18/w1/reports/SrcOmarchyBackground.md	present	present	present		19116	2026-10-20T12:47:48.180
+.ufo/waves/round-18/w1/dispatch.json	38	SrcSwaybgMan	scout	.ufo/waves/round-18/w1/reports/SrcSwaybgMan.md	present	present	present		16470	2026-10-20T12:44:25.213
+.ufo/waves/round-18/w1/dispatch.json	39	SrcOmarchyManualThemes	scout	.ufo/waves/round-18/w1/reports/SrcOmarchyManualThemes.md	present	present	present		19042	2026-10-20T12:49:38.646
+.ufo/waves/round-18/w1/dispatch.json	40	SrcOmarchyThemeHooks	scout	.ufo/waves/round-18/w1/reports/SrcOmarchyThemeHooks.md	present	present	present		14601	2026-10-20T12:43:34.520
+.ufo/waves/round-18/w1/dispatch.json	41	SrcThemeAlternates	scout	.ufo/waves/round-18/w1/reports/SrcThemeAlternates.md	present	present	present		32759	2026-10-20T12:56:58.814
+.ufo/waves/round-18/w1/dispatch.json	42	HostWalkerFiles	scout	.ufo/waves/round-18/w1/reports/HostWalkerFiles.md	present	present	present		26725	2026-10-20T12:44:10.564
+.ufo/waves/round-18/w1/dispatch.json	43	HostThemeFiles	scout	.ufo/waves/round-18/w1/reports/HostThemeFiles.md	present	present	present		9655	2026-10-20T12:41:36.850
+.ufo/waves/round-18/w1/dispatch.json	44	HostThemeConsumers	scout	.ufo/waves/round-18/w1/reports/HostThemeConsumers.md	present	present	present		20982	2026-10-20T12:46:01.794
+.ufo/waves/round-18/w1/dispatch.json	45	HostBackgroundChain	scout	.ufo/waves/round-18/w1/reports/HostBackgroundChain.md	present	present	present		11316	2026-10-20T12:41:28.886
+.ufo/waves/round-18/w1/dispatch.json	46	HostOmarchyCheckoutTag	scout	.ufo/waves/round-18/w1/reports/HostOmarchyCheckoutTag.md	present	present	present		12090	2026-10-20T12:43:07.551
+.ufo/waves/round-18/w1/dispatch.json	47	ExistingWalkerNotes	scout	.ufo/waves/round-18/w1/reports/ExistingWalkerNotes.md	present	present	present		39828	2026-10-20T12:52:27.672
+.ufo/waves/round-18/w1/dispatch.json	48	ExistingThemeNotes	scout	.ufo/waves/round-18/w1/reports/ExistingThemeNotes.md	present	present	present		30140	2026-10-20T12:50:42.121
+.ufo/waves/round-18/w1/dispatch.json	49	RubricBaselineScout	scout	.ufo/waves/round-18/w1/reports/RubricBaselineScout.md	present	present	present		13913	2026-10-20T12:44:40.764
+.ufo/waves/round-18/w1/dispatch.json	50	CalibrationBaselineScout	scout	.ufo/waves/round-18/w1/reports/CalibrationBaselineScout.md	present	present	present		10118	2026-10-20T12:44:08.482
+.ufo/waves/round-18/w1/dispatch.json	51	SourcesRowShape	scout	.ufo/waves/round-18/w1/reports/SourcesRowShape.md	present	present	present		25055	2026-10-20T12:47:18.335
+.ufo/waves/round-18/w1/dispatch.json	52	RevPreReg18	reviewer	.ufo/waves/round-18/w1/reports/RevPreReg18.md	present	present	present		23498	2026-10-20T12:51:43.301
+.ufo/waves/round-18/w1/dispatch.json	53	RevFrozenContract	reviewer	.ufo/waves/round-18/w1/reports/RevFrozenContract.md	present	present	present		34554	2026-10-20T12:59:00.134
+.ufo/waves/round-18/w1/dispatch.json	54	RevFetchReceiptContract	reviewer	.ufo/waves/round-18/w1/reports/RevFetchReceiptContract.md	present	present	present		51654	2026-10-20T12:57:05.702
+.ufo/waves/round-18/w1/dispatch.json	55	RevGateRcFixPlan	reviewer	.ufo/waves/round-18/w1/reports/RevGateRcFixPlan.md	present	present	present		18548	2026-10-20T12:49:31.892
+.ufo/waves/round-18/w1/dispatch.json	56	RevR17V1Facts	reviewer	.ufo/waves/round-18/w1/reports/RevR17V1Facts.md	present	present	present		13622	2026-10-20T12:44:55.132
+.ufo/waves/round-18/w1/dispatch.json	57	RevR17V2Facts	reviewer	.ufo/waves/round-18/w1/reports/RevR17V2Facts.md	present	present	present		11090	2026-10-20T12:43:48.415
+.ufo/waves/round-18/w1/dispatch.json	58	RevQualityOverlap	reviewer	.ufo/waves/round-18/w1/reports/RevQualityOverlap.md	present	present	present		23808	2026-10-20T12:49:33.803
+.ufo/waves/round-18/w1/dispatch.json	59	RevHarmWatch18	reviewer	.ufo/waves/round-18/w1/reports/RevHarmWatch18.md	present	present	present		20298	2026-10-20T12:48:30.117
+.ufo/waves/round-18/w1/dispatch.json	60	RevSeparability18	reviewer	.ufo/waves/round-18/w1/reports/RevSeparability18.md	present	present	present		36666	2026-10-20T13:05:24.053
+.ufo/waves/round-18/w1/dispatch.json	61	RevJjTrialFindings	reviewer	.ufo/waves/round-18/w1/reports/RevJjTrialFindings.md	present	present	present		11250	2026-10-20T12:44:54.380
+.ufo/waves/round-18/w1/dispatch.json	62	RevNavigation	reviewer	.ufo/waves/round-18/w1/reports/RevNavigation.md	present	present	present		11035	2026-10-20T12:46:41.748
+.ufo/waves/round-18/w1/dispatch.json	63	RevAdversarialLimits	reviewer	.ufo/waves/round-18/w1/reports/RevAdversarialLimits.md	present	present	present		18950	2026-10-20T12:56:06.968
+.ufo/waves/round-18/w1/dispatch.json	64	SiblingOverlap18	connector	.ufo/waves/round-18/w1/reports/SiblingOverlap18.md	present	present	present		29654	2026-10-20T12:52:14.553
+.ufo/waves/round-18/w1/dispatch.json	65	ConnJjFleetFixes	connector	.ufo/waves/round-18/w1/reports/ConnJjFleetFixes.md	present	present	present		27100	2026-10-20T12:47:53.286
+.ufo/waves/round-18/w1/dispatch.json	66	ConnFrozenFormats	connector	.ufo/waves/round-18/w1/reports/ConnFrozenFormats.md	present	present	present		25414	2026-10-20T12:45:35.716
+.ufo/waves/round-18/w1/dispatch.json	67	ConnUnknownsJoin	connector	.ufo/waves/round-18/w1/reports/ConnUnknownsJoin.md	present	present	present		38311	2026-10-20T12:50:38.675
+.ufo/waves/round-18/w1/dispatch.json	68	ConnSourcesUsedBy	connector	.ufo/waves/round-18/w1/reports/ConnSourcesUsedBy.md	present	present	present		18542	2026-10-20T12:50:29.958
+.ufo/waves/round-18/w1/dispatch.json	69	ConnConsiderThese	connector	.ufo/waves/round-18/w1/reports/ConnConsiderThese.md	present	present	present		22256	2026-10-20T12:50:12.118
+.ufo/waves/round-18/w1/dispatch.json	70	ConnLessonChain	connector	.ufo/waves/round-18/w1/reports/ConnLessonChain.md	present	present	present		19372	2026-10-20T12:49:21.786
+.ufo/waves/round-18/w1/dispatch.json	71	ConnSkillSection	connector	.ufo/waves/round-18/w1/reports/ConnSkillSection.md	present	present	present		15817	2026-10-20T12:49:34.760
+.ufo/waves/round-18/w1/dispatch.json	72	RevengeR17Recut	revenger	.ufo/waves/round-18/w1/reports/RevengeR17Recut.md	present	present	present		16435	2026-10-20T12:46:27.683
+.ufo/waves/round-18/w1/dispatch.json	73	RevengeKnownMisses	revenger	.ufo/waves/round-18/w1/reports/RevengeKnownMisses.md	present	present	present		13873	2026-10-20T12:47:16.655
+.ufo/waves/round-18/w1/dispatch.json	74	RevengePinRecut	revenger	.ufo/waves/round-18/w1/reports/RevengePinRecut.md	present	present	present		22252	2026-10-20T12:46:46.016
+.ufo/waves/round-18/w1/dispatch.json	75	RevengeTwSpec	revenger	.ufo/waves/round-18/w1/reports/RevengeTwSpec.md	present	present	present		18373	2026-10-20T12:48:57.186
+.ufo/waves/round-18/w1/dispatch.json	76	SimplifyTripwire	simplifier	.ufo/waves/round-18/w1/reports/SimplifyTripwire.md	present	present	present		13966	2026-10-20T12:48:03.620
+.ufo/waves/round-18/w1/dispatch.json	77	SimplifyGateStub	simplifier	.ufo/waves/round-18/w1/reports/SimplifyGateStub.md	present	present	present		11854	2026-10-20T12:48:20.622
+.ufo/waves/round-18/w1/dispatch.json	78	CriticC1	critic	.ufo/waves/round-18/w1/reports/CriticC1.md	present	present	present		15468	2026-10-20T12:45:32.603
+.ufo/waves/round-18/w1/dispatch.json	79	CriticC2	critic	.ufo/waves/round-18/w1/reports/CriticC2.md	present	present	present		13849	2026-10-20T12:45:17.376
+.ufo/waves/round-18/w1/dispatch.json	80	CriticC3	critic	.ufo/waves/round-18/w1/reports/CriticC3.md	present	present	present		13223	2026-10-20T12:46:55.712
+.ufo/waves/round-18/w1/dispatch.json	81	CriticHonesty	critic	.ufo/waves/round-18/w1/reports/CriticHonesty.md	present	present	present		17206	2026-10-20T12:43:59.256
+.ufo/waves/round-18/w1/dispatch.json	82	CriticJjDisposition	critic	.ufo/waves/round-18/w1/reports/CriticJjDisposition.md	present	present	present		16800	2026-10-20T12:49:10.015
+.ufo/waves/round-18/w1/dispatch.json	83	SentinelFrozenPrivacy	sentinel	.ufo/waves/round-18/w1/reports/SentinelFrozenPrivacy.md	present	present	present		13324	2026-10-20T12:46:52.855
+.ufo/waves/round-18/w1/dispatch.json	84	SentinelFetchBodies	sentinel	.ufo/waves/round-18/w1/reports/SentinelFetchBodies.md	present	present	present		19282	2026-10-20T12:48:28.200
+.ufo/waves/round-18/w1/dispatch.json	85	SentinelHostPause	sentinel	.ufo/waves/round-18/w1/reports/SentinelHostPause.md	present	present	present		18782	2026-10-20T12:46:08.723
+.ufo/waves/round-18/w1/dispatch.json	86	MutTripwireScan	mutation-tester	.ufo/waves/round-18/w1/reports/MutTripwireScan.md	present	present	present		43721	2026-10-20T12:47:45.764
+.ufo/waves/round-18/w1/dispatch.json	87	MutMeasureR17	mutation-tester	.ufo/waves/round-18/w1/reports/MutMeasureR17.md	present	present	present		25114	2026-10-20T12:44:12.465
+.ufo/waves/round-18/w2/dispatch.json	0	ReopenS072	scout	.ufo/waves/round-18/w2/reports/ReopenS072.md	present	present	present		10964	2026-10-20T13:02:37.212
+.ufo/waves/round-18/w2/dispatch.json	1	ReopenS073	scout	.ufo/waves/round-18/w2/reports/ReopenS073.md	present	present	present		9905	2026-10-20T13:02:22.249
+.ufo/waves/round-18/w2/dispatch.json	2	ReopenS074	scout	.ufo/waves/round-18/w2/reports/ReopenS074.md	present	present	present		8543	2026-10-20T13:01:19.611
+.ufo/waves/round-18/w2/dispatch.json	3	ReopenS075	scout	.ufo/waves/round-18/w2/reports/ReopenS075.md	present	present	present		8182	2026-10-20T13:02:48.672
+.ufo/waves/round-18/w2/dispatch.json	4	ReopenS076	scout	.ufo/waves/round-18/w2/reports/ReopenS076.md	present	present	present		7446	2026-10-20T13:02:08.908
+.ufo/waves/round-18/w2/dispatch.json	5	ReopenS077	scout	.ufo/waves/round-18/w2/reports/ReopenS077.md	present	present	present		9052	2026-10-20T13:03:46.079
+.ufo/waves/round-18/w2/dispatch.json	6	ReopenS078	scout	.ufo/waves/round-18/w2/reports/ReopenS078.md	present	present	present		7822	2026-10-20T13:01:08.879
+.ufo/waves/round-18/w2/dispatch.json	7	ReopenS079	scout	.ufo/waves/round-18/w2/reports/ReopenS079.md	present	present	present		11355	2026-10-20T13:02:48.608
+.ufo/waves/round-18/w2/dispatch.json	8	ReopenS080	scout	.ufo/waves/round-18/w2/reports/ReopenS080.md	present	present	present		9002	2026-10-20T13:03:01.637
+.ufo/waves/round-18/w2/dispatch.json	9	ReopenS081	scout	.ufo/waves/round-18/w2/reports/ReopenS081.md	present	present	present		9035	2026-10-20T13:02:08.820
+.ufo/waves/round-18/w2/dispatch.json	10	ReopenS082	scout	.ufo/waves/round-18/w2/reports/ReopenS082.md	present	present	present		5855	2026-10-20T13:01:38.845
+.ufo/waves/round-18/w2/dispatch.json	11	ReopenS083	scout	.ufo/waves/round-18/w2/reports/ReopenS083.md	present	present	present		6493	2026-10-20T13:02:51.439
+.ufo/waves/round-18/w2/dispatch.json	12	ReopenS084	scout	.ufo/waves/round-18/w2/reports/ReopenS084.md	present	present	present		9048	2026-10-20T13:04:00.529
+.ufo/waves/round-18/w2/dispatch.json	13	ReopenS085	scout	.ufo/waves/round-18/w2/reports/ReopenS085.md	present	present	present		9392	2026-10-20T13:04:16.272
+.ufo/waves/round-18/w2/dispatch.json	14	ReopenS086	scout	.ufo/waves/round-18/w2/reports/ReopenS086.md	present	present	present		9833	2026-10-20T13:02:38.010
+.ufo/waves/round-18/w2/dispatch.json	15	ReopenS087	scout	.ufo/waves/round-18/w2/reports/ReopenS087.md	present	present	present		9711	2026-10-20T13:02:01.242
+.ufo/waves/round-18/w2/dispatch.json	16	ReopenS088	scout	.ufo/waves/round-18/w2/reports/ReopenS088.md	present	present	present		8109	2026-10-20T13:02:49.373
+.ufo/waves/round-18/w2/dispatch.json	17	ReopenS089	scout	.ufo/waves/round-18/w2/reports/ReopenS089.md	present	present	present		8518	2026-10-20T13:03:11.344
+.ufo/waves/round-18/w2/dispatch.json	18	ReopenS090	scout	.ufo/waves/round-18/w2/reports/ReopenS090.md	present	present	present		15973	2026-10-20T13:06:46.978
+.ufo/waves/round-18/w2/dispatch.json	19	ReopenS091	scout	.ufo/waves/round-18/w2/reports/ReopenS091.md	present	present	present		7702	2026-10-20T13:02:51.774
+.ufo/waves/round-18/w2/dispatch.json	20	ReopenS092	scout	.ufo/waves/round-18/w2/reports/ReopenS092.md	present	present	present		9410	2026-10-20T13:02:35.967
+.ufo/waves/round-18/w2/dispatch.json	21	ReopenS093	scout	.ufo/waves/round-18/w2/reports/ReopenS093.md	present	present	present		8926	2026-10-20T13:02:37.979
+.ufo/waves/round-18/w2/dispatch.json	22	ReopenS094	scout	.ufo/waves/round-18/w2/reports/ReopenS094.md	present	present	present		13302	2026-10-20T13:07:41.901
+.ufo/waves/round-18/w2/dispatch.json	23	ReopenS095	scout	.ufo/waves/round-18/w2/reports/ReopenS095.md	present	present	present		10870	2026-10-20T13:02:24.079
+.ufo/waves/round-18/w2/dispatch.json	24	CriticC1W2	critic	.ufo/waves/round-18/w2/reports/CriticC1W2.md	present	present	present		13977	2026-10-20T13:04:57.828
+.ufo/waves/round-18/w2/dispatch.json	25	CriticC2W2	critic	.ufo/waves/round-18/w2/reports/CriticC2W2.md	present	present	present		12992	2026-10-20T13:04:17.975
+.ufo/waves/round-18/w2/dispatch.json	26	CriticC3W2	critic	.ufo/waves/round-18/w2/reports/CriticC3W2.md	present	present	present		12852	2026-10-20T13:05:05.178
+.ufo/waves/round-18/w2/dispatch.json	27	CriticAdmission	critic	.ufo/waves/round-18/w2/reports/CriticAdmission.md	missing	missing	missing	absent		
+.ufo/waves/round-18/w2/dispatch.json	28	CriticHonestyW2	critic	.ufo/waves/round-18/w2/reports/CriticHonestyW2.md	missing	missing	missing	absent		
+.ufo/waves/round-18/w2/dispatch.json	29	SentinelCommitSet	sentinel	.ufo/waves/round-18/w2/reports/SentinelCommitSet.md	present	present	present		13585	2026-10-20T13:04:27.098
+.ufo/waves/round-18/w2/dispatch.json	30	SentinelPauseW2	sentinel	.ufo/waves/round-18/w2/reports/SentinelPauseW2.md	present	present	present		7895	2026-10-20T13:02:02.501
+.ufo/waves/round-18/w2/dispatch.json	31	ReceiptCheckFix	executor	.ufo/waves/round-18/w2/reports/ReceiptCheckFix.md	present	present	present		14817	2026-10-20T13:07:17.692
+.ufo/waves/round-18/w2/dispatch.json	32	FetchVerifyFix	executor	.ufo/waves/round-18/w2/reports/FetchVerifyFix.md	missing	missing	missing	absent		
+.ufo/waves/round-18/w2/dispatch.json	33	FetchBodyPolicy	executor	.ufo/waves/round-18/w2/reports/FetchBodyPolicy.md	missing	missing	missing	absent		
+.ufo/waves/round-18/w2/dispatch.json	34	TwFrozenHarden	executor	.ufo/waves/round-18/w2/reports/TwFrozenHarden.md	missing	missing	missing	absent		
+.ufo/waves/round-18/w2/dispatch.json	35	GateRerun	executor	.ufo/waves/round-18/w2/reports/GateRerun.md	missing	missing	missing	absent		
+.ufo/waves/round-18/w2/dispatch.json	36	MeasureMutantsRerun	executor	.ufo/waves/round-18/w2/reports/MeasureMutantsRerun.md	present	present	present		14422	2026-10-20T13:02:57.170
+.ufo/waves/round-18/w2/dispatch.json	37	ProvenanceRerun	executor	.ufo/waves/round-18/w2/reports/ProvenanceRerun.md	present	present	present		8438	2026-10-20T13:02:14.165
+.ufo/waves/round-18/w2/dispatch.json	38	LiveClaimLint	executor	.ufo/waves/round-18/w2/reports/LiveClaimLint.md	present	present	present		19321	2026-10-20T13:08:30.429
+.ufo/waves/round-18/w2/dispatch.json	39	TokenJoinCheck	executor	.ufo/waves/round-18/w2/reports/TokenJoinCheck.md	present	present	present		12068	2026-10-20T13:06:24.080
+.ufo/waves/round-18/w2/dispatch.json	40	MutFrozenMode	mutation-tester	.ufo/waves/round-18/w2/reports/MutFrozenMode.md	present	present	present		153789	2026-10-20T13:04:42.138
+.ufo/waves/round-18/w2/dispatch.json	41	MutReceiptCheck	mutation-tester	.ufo/waves/round-18/w2/reports/MutReceiptCheck.md	present	present	present		12379	2026-10-20T13:06:00.054
+.ufo/waves/round-18/w2/dispatch.json	42	MutFetchVerify	mutation-tester	.ufo/waves/round-18/w2/reports/MutFetchVerify.md	present	present	present		32420	2026-10-20T13:05:32.968
+.ufo/waves/round-18/w2/dispatch.json	43	MutGateOM	mutation-tester	.ufo/waves/round-18/w2/reports/MutGateOM.md	present	present	present		15608	2026-10-20T13:05:06.682
+.ufo/waves/round-18/w2/dispatch.json	44	ReviewWalkerUpstream	reviewer	.ufo/waves/round-18/w2/reports/ReviewWalkerUpstream.md	present	present	present		22271	2026-10-20T13:08:23.643
+.ufo/waves/round-18/w2/dispatch.json	45	ReviewWalkerHost	reviewer	.ufo/waves/round-18/w2/reports/ReviewWalkerHost.md	present	present	present		21883	2026-10-20T13:08:43.258
+.ufo/waves/round-18/w2/dispatch.json	46	ReviewWalkerUnknowns	reviewer	.ufo/waves/round-18/w2/reports/ReviewWalkerUnknowns.md	missing	missing	missing	absent		
+.ufo/waves/round-18/w2/dispatch.json	47	ReviewThemeUpstream	reviewer	.ufo/waves/round-18/w2/reports/ReviewThemeUpstream.md	present	present	present		22773	2026-10-20T13:07:21.452
+.ufo/waves/round-18/w2/dispatch.json	48	ReviewThemeHost	reviewer	.ufo/waves/round-18/w2/reports/ReviewThemeHost.md	present	present	present		16313	2026-10-20T13:06:43.284
+.ufo/waves/round-18/w2/dispatch.json	49	ReviewThemeUnknowns	reviewer	.ufo/waves/round-18/w2/reports/ReviewThemeUnknowns.md	present	present	present		18217	2026-10-20T13:07:34.588
+.ufo/waves/round-18/w2/dispatch.json	50	ReviewQuality2426	reviewer	.ufo/waves/round-18/w2/reports/ReviewQuality2426.md	missing	missing	missing	absent		
+.ufo/waves/round-18/w2/dispatch.json	51	ReviewLesson18	reviewer	.ufo/waves/round-18/w2/reports/ReviewLesson18.md	missing	missing	missing	absent		
+.ufo/waves/round-18/w2/dispatch.json	52	ReviewErratumR17	reviewer	.ufo/waves/round-18/w2/reports/ReviewErratumR17.md	present	present	present		17152	2026-10-20T13:05:31.752
+.ufo/waves/round-18/w2/dispatch.json	53	ReviewSkillRegistry	reviewer	.ufo/waves/round-18/w2/reports/ReviewSkillRegistry.md	missing	missing	missing	absent		
+.ufo/waves/round-18/w2/dispatch.json	54	ReviewReadme	reviewer	.ufo/waves/round-18/w2/reports/ReviewReadme.md	present	present	present		17692	2026-10-20T13:08:29.440
+.ufo/waves/round-18/w2/dispatch.json	55	ReviewGateDiff	reviewer	.ufo/waves/round-18/w2/reports/ReviewGateDiff.md	missing	missing	missing	absent		
+.ufo/waves/round-18/w2/dispatch.json	56	ReviewTripwireDiff	reviewer	.ufo/waves/round-18/w2/reports/ReviewTripwireDiff.md	missing	missing	missing	absent		
+.ufo/waves/round-18/w2/dispatch.json	57	ReviewFrozenExpected	reviewer	.ufo/waves/round-18/w2/reports/ReviewFrozenExpected.md	missing	missing	missing	absent		
+.ufo/waves/round-18/w2/dispatch.json	58	ReviewRecutReceipts	reviewer	.ufo/waves/round-18/w2/reports/ReviewRecutReceipts.md	present	present	present		15524	2026-10-20T13:08:16.258
+.ufo/waves/round-18/w2/dispatch.json	59	ReviewMutantsJson	reviewer	.ufo/waves/round-18/w2/reports/ReviewMutantsJson.md	present	present	present		16676	2026-10-20T13:08:13.486
+.ufo/waves/round-18/w2/dispatch.json	60	ReviewJjDispositionFinal	reviewer	.ufo/waves/round-18/w2/reports/ReviewJjDispositionFinal.md	present	present	present		25448	2026-10-20T13:07:50.247
+.ufo/waves/round-18/w2/dispatch.json	61	ReviewSourcesRows	reviewer	.ufo/waves/round-18/w2/reports/ReviewSourcesRows.md	present	present	present		19399	2026-10-20T13:08:40.258
+.ufo/waves/round-18/w2/dispatch.json	62	ConnStalePinsSweep	connector	.ufo/waves/round-18/w2/reports/ConnStalePinsSweep.md	present	present	present		17351	2026-10-20T13:06:26.612
+.ufo/waves/round-18/w2/dispatch.json	63	ConnProvinceScope	connector	.ufo/waves/round-18/w2/reports/ConnProvinceScope.md	present	present	present		16001	2026-10-20T13:07:11.395
+.ufo/waves/round-18/w2/dispatch.json	64	ConnScorecardNumbers	connector	.ufo/waves/round-18/w2/reports/ConnScorecardNumbers.md	present	present	present		21358	2026-10-20T13:08:37.662
+.ufo/waves/round-18/w2/dispatch.json	65	ConnReportFacts	connector	.ufo/waves/round-18/w2/reports/ConnReportFacts.md	present	present	present		22257	2026-10-20T13:08:43.921
+.ufo/waves/round-18/w2/dispatch.json	66	RevengeOldWalkerNotes	revenger	.ufo/waves/round-18/w2/reports/RevengeOldWalkerNotes.md	missing	missing	missing	absent		
+.ufo/waves/round-18/w2/dispatch.json	67	RevengeTarballRepro	revenger	.ufo/waves/round-18/w2/reports/RevengeTarballRepro.md	present	present	present		18995	2026-10-20T13:08:21.954
+.ufo/waves/round-18/w2/dispatch.json	68	SimplifyNewScripts	simplifier	.ufo/waves/round-18/w2/reports/SimplifyNewScripts.md	present	present	present		21297	2026-10-20T13:08:44.786
+.ufo/waves/round-18/w2/dispatch.json	69	ScribeLogEntry	scribe	.ufo/waves/round-18/w2/reports/ScribeLogEntry.md	present	present	present		5394	2026-10-20T13:03:17.523
+.ufo/waves/round-18/w2/dispatch.json	70	ScribeScorecard	scribe	.ufo/waves/round-18/w2/reports/ScribeScorecard.md	present	present	present		5562	2026-10-20T13:01:52.815
+.ufo/waves/round-18/w2/dispatch.json	71	ScribeSkillUsage	scribe	.ufo/waves/round-18/w2/reports/ScribeSkillUsage.md	present	present	present		6554	2026-10-20T13:01:24.403
+.ufo/waves/round-18/w2/dispatch.json	72	ScribeReportDraft	scribe	.ufo/waves/round-18/w2/reports/ScribeReportDraft.md	present	present	present		12950	2026-10-20T13:05:58.086
+.ufo/waves/round-19/w1/dispatch.json	0	TwBashCVar	executor	.ufo/waves/round-19/w1/reports/TwBashCVar.md	present	present	present		9824	2026-10-20T14:16:37.051
+.ufo/waves/round-19/w1/dispatch.json	1	TwHelperFn	executor	.ufo/waves/round-19/w1/reports/TwHelperFn.md	present	present	present		13358	2026-10-20T14:27:50.895
+.ufo/waves/round-19/w1/dispatch.json	2	TwInstallers	executor	.ufo/waves/round-19/w1/reports/TwInstallers.md	present	present	present		13502	2026-10-20T14:19:36.940
+.ufo/waves/round-19/w1/dispatch.json	3	TwVcsClass	executor	.ufo/waves/round-19/w1/reports/TwVcsClass.md	present	present	present		13355	2026-10-20T14:15:26.984
+.ufo/waves/round-19/w1/dispatch.json	4	TwFrozenF1	executor	.ufo/waves/round-19/w1/reports/TwFrozenF1.md	present	present	present		10909	2026-10-20T14:11:55.695
+.ufo/waves/round-19/w1/dispatch.json	5	TwFrozenF2	executor	.ufo/waves/round-19/w1/reports/TwFrozenF2.md	present	present	present		11757	2026-10-20T14:15:11.817
+.ufo/waves/round-19/w1/dispatch.json	6	FrozenRepinScript	executor	.ufo/waves/round-19/w1/reports/FrozenRepinScript.md	present	present	present		8295	2026-10-20T14:14:17.855
+.ufo/waves/round-19/w1/dispatch.json	7	GateFreshJj	executor	.ufo/waves/round-19/w1/reports/GateFreshJj.md	present	present	present		14130	2026-10-20T15:56:21.941
+.ufo/waves/round-19/w1/dispatch.json	8	GateSwapReceipt	executor	.ufo/waves/round-19/w1/reports/GateSwapReceipt.md	present	present	present		8669	2026-10-20T14:15:58.485
+.ufo/waves/round-19/w1/dispatch.json	9	AnchorDurability	executor	.ufo/waves/round-19/w1/reports/AnchorDurability.md	present	present	present		11721	2026-10-20T14:34:16.026
+.ufo/waves/round-19/w1/dispatch.json	10	SupersedeSweep	executor	.ufo/waves/round-19/w1/reports/SupersedeSweep.md	present	present	present		13127	2026-10-20T14:11:42.630
+.ufo/waves/round-19/w1/dispatch.json	11	LandedCheck	executor	.ufo/waves/round-19/w1/reports/LandedCheck.md	present	present	present		8669	2026-10-20T14:10:08.286
+.ufo/waves/round-19/w1/dispatch.json	12	MeasureMutantsOut	executor	.ufo/waves/round-19/w1/reports/MeasureMutantsOut.md	present	present	present		8774	2026-10-20T14:12:38.091
+.ufo/waves/round-19/w1/dispatch.json	13	ReceiptClaims19	executor	.ufo/waves/round-19/w1/reports/ReceiptClaims19.md	present	present	present		9921	2026-10-20T14:10:57.911
+.ufo/waves/round-19/w1/dispatch.json	14	HarmWatch19	executor	.ufo/waves/round-19/w1/reports/HarmWatch19.md	present	present	present		8314	2026-10-20T14:16:35.230
+.ufo/waves/round-19/w1/dispatch.json	15	HostWalkerBytes	scout	.ufo/waves/round-19/w1/reports/HostWalkerBytes.md	present	present	present		7065	2026-10-20T14:08:13.651
+.ufo/waves/round-19/w1/dispatch.json	16	HostElephantBytes	scout	.ufo/waves/round-19/w1/reports/HostElephantBytes.md	present	present	present		5703	2026-10-20T14:07:26.711
+.ufo/waves/round-19/w1/dispatch.json	17	DeltaWalkerConfig	scout	.ufo/waves/round-19/w1/reports/DeltaWalkerConfig.md	present	present	present		17458	2026-10-20T14:14:42.234
+.ufo/waves/round-19/w1/dispatch.json	18	DeltaWalkerCli	scout	.ufo/waves/round-19/w1/reports/DeltaWalkerCli.md	present	present	present		27442	2026-10-20T14:19:08.715
+.ufo/waves/round-19/w1/dispatch.json	19	SrcS094	scout	.ufo/waves/round-19/w1/reports/SrcS094.md	present	present	present		5551	2026-10-20T14:10:53.105
+.ufo/waves/round-19/w1/dispatch.json	20	SrcS084	scout	.ufo/waves/round-19/w1/reports/SrcS084.md	present	present	present		6368	2026-10-20T14:09:50.955
+.ufo/waves/round-19/w1/dispatch.json	21	ProvinceScope	scout	.ufo/waves/round-19/w1/reports/ProvinceScope.md	present	present	present		9985	2026-10-20T15:13:31.818
+.ufo/waves/round-19/w1/dispatch.json	22	JjIncidentScan	scout	.ufo/waves/round-19/w1/reports/JjIncidentScan.md	present	present	present		36904	2026-10-20T14:23:53.332
+.ufo/waves/round-19/w1/dispatch.json	23	SkillPins	scout	.ufo/waves/round-19/w1/reports/SkillPins.md	present	present	present		7668	2026-10-20T14:10:21.563
+.ufo/waves/round-19/w1/dispatch.json	24	HtmlAnchorSweep	scout	.ufo/waves/round-19/w1/reports/HtmlAnchorSweep.md	present	present	present		12955	2026-10-20T14:12:52.418
+.ufo/waves/round-19/w1/dispatch.json	25	UnpinnedUrlSweep	scout	.ufo/waves/round-19/w1/reports/UnpinnedUrlSweep.md	present	present	present		12690	2026-10-20T14:12:19.770
+.ufo/waves/round-19/w1/dispatch.json	26	RecheckSweep	scout	.ufo/waves/round-19/w1/reports/RecheckSweep.md	present	present	present		16910	2026-10-20T14:10:14.398
+.ufo/waves/round-19/w1/dispatch.json	27	PacmanLogMoves	scout	.ufo/waves/round-19/w1/reports/PacmanLogMoves.md	present	present	present		11871	2026-10-20T14:10:12.276
+.ufo/waves/round-19/w1/dispatch.json	28	FrontierRows	scout	.ufo/waves/round-19/w1/reports/FrontierRows.md	present	present	present		6332	2026-10-20T14:10:11.659
+.ufo/waves/round-19/w1/dispatch.json	29	PtrArcSynthesis	scribe	.ufo/waves/round-19/w1/reports/PtrArcSynthesis.md	present	present	present		3253	2026-10-20T14:06:27.472
+.ufo/waves/round-19/w1/dispatch.json	30	PtrCloseoutR11	scribe	.ufo/waves/round-19/w1/reports/PtrCloseoutR11.md	present	present	present		3639	2026-10-20T14:06:54.555
+.ufo/waves/round-19/w1/dispatch.json	31	PtrConfigHealthReportR3	scribe	.ufo/waves/round-19/w1/reports/PtrConfigHealthReportR3.md	present	present	present		3408	2026-10-20T14:06:46.693
+.ufo/waves/round-19/w1/dispatch.json	32	PtrRemainingPlanesCensus	scribe	.ufo/waves/round-19/w1/reports/PtrRemainingPlanesCensus.md	present	present	present		3812	2026-10-20T14:06:58.022
+.ufo/waves/round-19/w1/dispatch.json	33	PtrWalkerDeepR9	scribe	.ufo/waves/round-19/w1/reports/PtrWalkerDeepR9.md	present	present	present		3660	2026-10-20T14:06:36.960
+.ufo/waves/round-19/w1/dispatch.json	34	PtrWalkerDeep	scribe	.ufo/waves/round-19/w1/reports/PtrWalkerDeep.md	present	present	present		4309	2026-10-20T14:07:20.881
+.ufo/waves/round-19/w1/dispatch.json	35	PtrWalkerLiveSurface	scribe	.ufo/waves/round-19/w1/reports/PtrWalkerLiveSurface.md	present	present	present		4215	2026-10-20T14:06:52.188
+.ufo/waves/round-19/w1/dispatch.json	36	PtrWaybarWalkerPlane	scribe	.ufo/waves/round-19/w1/reports/PtrWaybarWalkerPlane.md	present	present	present		3502	2026-10-20T14:06:49.075
+.ufo/waves/round-19/w1/dispatch.json	37	PtrWaybarWalkerSemantics	scribe	.ufo/waves/round-19/w1/reports/PtrWaybarWalkerSemantics.md	present	present	present		3352	2026-10-20T14:06:36.734
+.ufo/waves/round-19/w1/dispatch.json	38	LessonDraft	scribe	.ufo/waves/round-19/w1/reports/LessonDraft.md	present	present	present		6635	2026-10-20T14:08:16.656
+.ufo/waves/round-19/w1/dispatch.json	39	QualityDraft	scribe	.ufo/waves/round-19/w1/reports/QualityDraft.md	present	present	present		7369	2026-10-20T14:07:57.180
+.ufo/waves/round-19/w1/dispatch.json	40	SkillRegistryDraft	scribe	.ufo/waves/round-19/w1/reports/SkillRegistryDraft.md	present	present	present		4768	2026-10-20T14:09:02.393
+.ufo/waves/round-19/w1/dispatch.json	41	LogDraft	scribe	.ufo/waves/round-19/w1/reports/LogDraft.md	present	present	present		5159	2026-10-20T14:06:58.742
+.ufo/waves/round-19/w1/dispatch.json	42	ReportSkeleton	scribe	.ufo/waves/round-19/w1/reports/ReportSkeleton.md	present	present	present		2882	2026-10-20T14:06:31.012
+.ufo/waves/round-19/w1/dispatch.json	43	SourcesFrontierDraft	scribe	.ufo/waves/round-19/w1/reports/SourcesFrontierDraft.md	present	present	present		4483	2026-10-20T14:09:01.532
+.ufo/waves/round-19/w1/dispatch.json	44	RevDraftBashCVar	reviewer	.ufo/waves/round-19/w1/reports/RevDraftBashCVar.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	45	RevDraftHelperFn	reviewer	.ufo/waves/round-19/w1/reports/RevDraftHelperFn.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	46	RevDraftInstallers	reviewer	.ufo/waves/round-19/w1/reports/RevDraftInstallers.md	present	present	present		9444	2026-10-20T15:02:43.468
+.ufo/waves/round-19/w1/dispatch.json	47	RevPreReg19	reviewer	.ufo/waves/round-19/w1/reports/RevPreReg19.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	48	RevTwRecallPrecision	reviewer	.ufo/waves/round-19/w1/reports/RevTwRecallPrecision.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	49	RevFreshPinsCounter	reviewer	.ufo/waves/round-19/w1/reports/RevFreshPinsCounter.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	50	RevR18Mining	reviewer	.ufo/waves/round-19/w1/reports/RevR18Mining.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	51	RevSpotcheckRouting	reviewer	.ufo/waves/round-19/w1/reports/RevSpotcheckRouting.md	present	present	present		10083	2026-10-20T15:09:35.360
+.ufo/waves/round-19/w1/dispatch.json	52	RevJjDisposition	reviewer	.ufo/waves/round-19/w1/reports/RevJjDisposition.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	53	RevQualityOverlap	reviewer	.ufo/waves/round-19/w1/reports/RevQualityOverlap.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	54	RevSourcesContract	reviewer	.ufo/waves/round-19/w1/reports/RevSourcesContract.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	55	RevRubricVRisk	reviewer	.ufo/waves/round-19/w1/reports/RevRubricVRisk.md	present	present	present		20728	2026-10-20T15:29:12.606
+.ufo/waves/round-19/w1/dispatch.json	56	RevF1F2Repro	reviewer	.ufo/waves/round-19/w1/reports/RevF1F2Repro.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	57	RevPipeRcTip	reviewer	.ufo/waves/round-19/w1/reports/RevPipeRcTip.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	58	RevReceiptChecker	reviewer	.ufo/waves/round-19/w1/reports/RevReceiptChecker.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	59	RevNavigationU	reviewer	.ufo/waves/round-19/w1/reports/RevNavigationU.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	60	RevGateWalkerRow	reviewer	.ufo/waves/round-19/w1/reports/RevGateWalkerRow.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	61	RevSkillHeadGuidance	reviewer	.ufo/waves/round-19/w1/reports/RevSkillHeadGuidance.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	62	ConnSiblingTripwire	connector	.ufo/waves/round-19/w1/reports/ConnSiblingTripwire.md	present	present	present		18424	2026-10-20T14:51:42.592
+.ufo/waves/round-19/w1/dispatch.json	63	ConnSiblingAnchors	connector	.ufo/waves/round-19/w1/reports/ConnSiblingAnchors.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	64	ConnSiblingSupersede	connector	.ufo/waves/round-19/w1/reports/ConnSiblingSupersede.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	65	ConnJjAuditsFleet	connector	.ufo/waves/round-19/w1/reports/ConnJjAuditsFleet.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	66	ConnProvinceRoster	connector	.ufo/waves/round-19/w1/reports/ConnProvinceRoster.md	present	present	present		9714	2026-10-20T15:11:13.682
+.ufo/waves/round-19/w1/dispatch.json	67	ConnRegistryTools	connector	.ufo/waves/round-19/w1/reports/ConnRegistryTools.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	68	ConnCarriedLedger	connector	.ufo/waves/round-19/w1/reports/ConnCarriedLedger.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	69	ConnFrontierPlan	connector	.ufo/waves/round-19/w1/reports/ConnFrontierPlan.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	70	RevengeS094Anchor	revenger	.ufo/waves/round-19/w1/reports/RevengeS094Anchor.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	71	RevengeSweepStop	revenger	.ufo/waves/round-19/w1/reports/RevengeSweepStop.md	present	present	present		10979	2026-10-20T14:25:57.938
+.ufo/waves/round-19/w1/dispatch.json	72	RevengeFrozenValidation	revenger	.ufo/waves/round-19/w1/reports/RevengeFrozenValidation.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	73	RevengeWalkerPinHistory	revenger	.ufo/waves/round-19/w1/reports/RevengeWalkerPinHistory.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	74	SimplifyTripwireTip	simplifier	.ufo/waves/round-19/w1/reports/SimplifyTripwireTip.md	missing	missing	missing	absent		
+.ufo/waves/round-19/w1/dispatch.json	75	SimplifyCounters	simplifier	.ufo/waves/round-19/w1/reports/SimplifyCounters.md	present	present	present		20514	2026-10-20T14:53:53.368
+.ufo/waves/round-19/w1/dispatch.json	76	CriticC1	critic	.ufo/waves/round-19/w1/reports/CriticC1.md	present	present	present		16242	2026-10-20T14:20:02.888
+.ufo/waves/round-19/w1/dispatch.json	77	CriticC2	critic	.ufo/waves/round-19/w1/reports/CriticC2.md	present	present	present		14102	2026-10-20T14:10:47.767
+.ufo/waves/round-19/w1/dispatch.json	78	CriticC3	critic	.ufo/waves/round-19/w1/reports/CriticC3.md	present	present	present		14163	2026-10-20T14:15:29.148
+.ufo/waves/round-19/w1/dispatch.json	79	CriticHonesty	critic	.ufo/waves/round-19/w1/reports/CriticHonesty.md	present	present	present		14244	2026-10-20T14:12:57.102
+.ufo/waves/round-19/w1/dispatch.json	80	CriticInstallerClass	critic	.ufo/waves/round-19/w1/reports/CriticInstallerClass.md	present	present	present		12116	2026-10-20T14:12:08.485
+.ufo/waves/round-19/w1/dispatch.json	81	SentinelVcsFixtures	sentinel	.ufo/waves/round-19/w1/reports/SentinelVcsFixtures.md	present	present	present		19414	2026-10-20T14:16:47.048
+.ufo/waves/round-19/w1/dispatch.json	82	SentinelHostPause	sentinel	.ufo/waves/round-19/w1/reports/SentinelHostPause.md	present	present	present		17922	2026-10-20T14:12:57.816
+.ufo/waves/round-19/w1/dispatch.json	83	MutTripwireTip	mutation-tester	.ufo/waves/round-19/w1/reports/MutTripwireTip.md	present	present	present		42855	2026-10-20T14:15:33.643
+.ufo/waves/round-19/w1/dispatch.json	84	MutCounters	mutation-tester	.ufo/waves/round-19/w1/reports/MutCounters.md	present	present	present		32755	2026-10-20T14:09:27.912
+.ufo/waves/round-19/w1/dispatch.json	85	MutGateWalkerArms	mutation-tester	.ufo/waves/round-19/w1/reports/MutGateWalkerArms.md	present	present	present		16672	2026-10-20T14:09:45.885
+.ufo/waves/round-19/w2/dispatch.json	0	ReopenS096	scout	.ufo/waves/round-19/w2/reports/ReopenS096.md	present	present	present		10884	2026-10-20T15:15:25.855
+.ufo/waves/round-19/w2/dispatch.json	1	ReopenS097	scout	.ufo/waves/round-19/w2/reports/ReopenS097.md	present	present	present		10622	2026-10-20T15:06:17.825
+.ufo/waves/round-19/w2/dispatch.json	2	ReopenS098	scout	.ufo/waves/round-19/w2/reports/ReopenS098.md	present	present	present		13016	2026-10-20T15:18:38.528
+.ufo/waves/round-19/w2/dispatch.json	3	ReopenRejected	scout	.ufo/waves/round-19/w2/reports/ReopenRejected.md	present	present	present		12196	2026-10-20T15:18:52.478
+.ufo/waves/round-19/w2/dispatch.json	4	RerunC1	executor	.ufo/waves/round-19/w2/reports/RerunC1.md	present	present	present		12994	2026-10-20T15:07:21.387
+.ufo/waves/round-19/w2/dispatch.json	5	RerunC2	executor	.ufo/waves/round-19/w2/reports/RerunC2.md	present	present	present		12719	2026-10-20T15:14:09.453
+.ufo/waves/round-19/w2/dispatch.json	6	RerunC3	executor	.ufo/waves/round-19/w2/reports/RerunC3.md	present	present	present		8112	2026-10-20T15:05:30.454
+.ufo/waves/round-19/w2/dispatch.json	7	RerunSuites	executor	.ufo/waves/round-19/w2/reports/RerunSuites.md	present	present	present		13281	2026-10-20T15:07:30.117
+.ufo/waves/round-19/w2/dispatch.json	8	RerunGate	executor	.ufo/waves/round-19/w2/reports/RerunGate.md	present	present	present		12745	2026-10-20T15:19:40.206
+.ufo/waves/round-19/w2/dispatch.json	9	RerunGateSwap	executor	.ufo/waves/round-19/w2/reports/RerunGateSwap.md	present	present	present		12377	2026-10-20T15:11:51.670
+.ufo/waves/round-19/w2/dispatch.json	10	RerunReceipts	executor	.ufo/waves/round-19/w2/reports/RerunReceipts.md	present	present	present		15288	2026-10-20T15:11:16.551
+.ufo/waves/round-19/w2/dispatch.json	11	RerunAnchor	executor	.ufo/waves/round-19/w2/reports/RerunAnchor.md	present	present	present		16317	2026-10-20T15:15:08.406
+.ufo/waves/round-19/w2/dispatch.json	12	RerunSweep	executor	.ufo/waves/round-19/w2/reports/RerunSweep.md	present	present	present		14345	2026-10-20T15:12:42.142
+.ufo/waves/round-19/w2/dispatch.json	13	RerunHarmWatch	executor	.ufo/waves/round-19/w2/reports/RerunHarmWatch.md	present	present	present		8957	2026-10-20T15:12:45.267
+.ufo/waves/round-19/w2/dispatch.json	14	RerunCensusNav	executor	.ufo/waves/round-19/w2/reports/RerunCensusNav.md	present	present	present		10811	2026-10-20T15:15:41.849
+.ufo/waves/round-19/w2/dispatch.json	15	RerunLanded	executor	.ufo/waves/round-19/w2/reports/RerunLanded.md	present	present	present		17694	2026-10-20T15:08:20.019
+.ufo/waves/round-19/w2/dispatch.json	16	RerunMutantsOut	executor	.ufo/waves/round-19/w2/reports/RerunMutantsOut.md	present	present	present		10301	2026-10-20T15:06:35.023
+.ufo/waves/round-19/w2/dispatch.json	17	RerunPrecision	executor	.ufo/waves/round-19/w2/reports/RerunPrecision.md	present	present	present		18631	2026-10-20T15:18:33.957
+.ufo/waves/round-19/w2/dispatch.json	18	AtkPtrArcSynthesis	scout	.ufo/waves/round-19/w2/reports/AtkPtrArcSynthesis.md	present	present	present		12757	2026-10-20T15:05:25.792
+.ufo/waves/round-19/w2/dispatch.json	19	AtkPtrCloseoutR11	scout	.ufo/waves/round-19/w2/reports/AtkPtrCloseoutR11.md	present	present	present		10087	2026-10-20T15:21:46.940
+.ufo/waves/round-19/w2/dispatch.json	20	AtkPtrConfigHealthReportR3	scout	.ufo/waves/round-19/w2/reports/AtkPtrConfigHealthReportR3.md	present	present	present		13733	2026-10-20T15:10:49.876
+.ufo/waves/round-19/w2/dispatch.json	21	AtkPtrRemainingPlanesCensus	scout	.ufo/waves/round-19/w2/reports/AtkPtrRemainingPlanesCensus.md	present	present	present		11474	2026-10-20T15:09:23.374
+.ufo/waves/round-19/w2/dispatch.json	22	AtkPtrWalkerDeepR9	scout	.ufo/waves/round-19/w2/reports/AtkPtrWalkerDeepR9.md	present	present	present		9919	2026-10-20T15:07:51.985
+.ufo/waves/round-19/w2/dispatch.json	23	AtkPtrWalkerDeep	scout	.ufo/waves/round-19/w2/reports/AtkPtrWalkerDeep.md	present	present	present		11423	2026-10-20T15:08:49.797
+.ufo/waves/round-19/w2/dispatch.json	24	AtkPtrWalkerLiveSurface	scout	.ufo/waves/round-19/w2/reports/AtkPtrWalkerLiveSurface.md	present	present	present		14596	2026-10-20T15:06:46.806
+.ufo/waves/round-19/w2/dispatch.json	25	AtkPtrWaybarWalkerPlane	scout	.ufo/waves/round-19/w2/reports/AtkPtrWaybarWalkerPlane.md	present	present	present		10476	2026-10-20T15:17:03.777
+.ufo/waves/round-19/w2/dispatch.json	26	AtkPtrWaybarWalkerSemantics	scout	.ufo/waves/round-19/w2/reports/AtkPtrWaybarWalkerSemantics.md	present	present	present		12300	2026-10-20T15:11:50.306
+.ufo/waves/round-19/w2/dispatch.json	27	AtkPtrWalkerRouteR18	scout	.ufo/waves/round-19/w2/reports/AtkPtrWalkerRouteR18.md	present	present	present		11378	2026-10-20T15:07:04.233
+.ufo/waves/round-19/w2/dispatch.json	28	AtkPtrThemeRouteR18	scout	.ufo/waves/round-19/w2/reports/AtkPtrThemeRouteR18.md	present	present	present		10229	2026-10-20T15:10:11.388
+.ufo/waves/round-19/w2/dispatch.json	29	AtkSkillErratum	scout	.ufo/waves/round-19/w2/reports/AtkSkillErratum.md	present	present	present		9837	2026-10-20T15:10:08.358
+.ufo/waves/round-19/w2/dispatch.json	30	AtkGateHeader	scout	.ufo/waves/round-19/w2/reports/AtkGateHeader.md	present	present	present		12381	2026-10-20T15:18:30.411
+.ufo/waves/round-19/w2/dispatch.json	31	AtkReadmeFrontier	scout	.ufo/waves/round-19/w2/reports/AtkReadmeFrontier.md	present	present	present		18273	2026-10-20T15:08:01.525
+.ufo/waves/round-19/w2/dispatch.json	32	AtkProvinceLine	scout	.ufo/waves/round-19/w2/reports/AtkProvinceLine.md	present	present	present		9404	2026-10-20T15:11:47.251
+.ufo/waves/round-19/w2/dispatch.json	33	AdvBashCVar	executor	.ufo/waves/round-19/w2/reports/AdvBashCVar.md	present	present	present		28456	2026-10-20T15:18:02.003
+.ufo/waves/round-19/w2/dispatch.json	34	AdvHelperFn	executor	.ufo/waves/round-19/w2/reports/AdvHelperFn.md	present	present	present		20692	2026-10-20T15:16:24.074
+.ufo/waves/round-19/w2/dispatch.json	35	AdvInstallers	executor	.ufo/waves/round-19/w2/reports/AdvInstallers.md	present	present	present		27338	2026-10-20T15:21:00.399
+.ufo/waves/round-19/w2/dispatch.json	36	AdvVcs	executor	.ufo/waves/round-19/w2/reports/AdvVcs.md	present	present	present		18512	2026-10-20T15:07:38.944
+.ufo/waves/round-19/w2/dispatch.json	37	AdvFrozen	executor	.ufo/waves/round-19/w2/reports/AdvFrozen.md	present	present	present		22577	2026-10-20T15:12:38.341
+.ufo/waves/round-19/w2/dispatch.json	38	MutMergedTripwire	mutation-tester	.ufo/waves/round-19/w2/reports/MutMergedTripwire.md	present	present	present		39437	2026-10-20T15:10:57.704
+.ufo/waves/round-19/w2/dispatch.json	39	MutAnchorSweep	mutation-tester	.ufo/waves/round-19/w2/reports/MutAnchorSweep.md	present	present	present		20233	2026-10-20T15:09:23.514
+.ufo/waves/round-19/w2/dispatch.json	40	MutGateR19	mutation-tester	.ufo/waves/round-19/w2/reports/MutGateR19.md	present	present	present		18747	2026-10-20T15:09:57.151
+.ufo/waves/round-19/w2/dispatch.json	41	MutFrozenRepin	mutation-tester	.ufo/waves/round-19/w2/reports/MutFrozenRepin.md	present	present	present		15885	2026-10-20T15:08:08.210
+.ufo/waves/round-19/w2/dispatch.json	42	ReviewFrozen19	reviewer	.ufo/waves/round-19/w2/reports/ReviewFrozen19.md	present	present	present		8101	2026-10-20T15:26:49.307
+.ufo/waves/round-19/w2/dispatch.json	43	ReviewLandedTool	reviewer	.ufo/waves/round-19/w2/reports/ReviewLandedTool.md	present	present	present		8166	2026-10-20T15:55:05.377
+.ufo/waves/round-19/w2/dispatch.json	44	ReviewRepinTool	reviewer	.ufo/waves/round-19/w2/reports/ReviewRepinTool.md	present	present	present		10508	2026-10-20T15:30:24.371
+.ufo/waves/round-19/w2/dispatch.json	45	ReviewHarmTool	reviewer	.ufo/waves/round-19/w2/reports/ReviewHarmTool.md	present	present	present		7899	2026-10-20T15:27:36.232
+.ufo/waves/round-19/w2/dispatch.json	46	ReviewGateF6F9	reviewer	.ufo/waves/round-19/w2/reports/ReviewGateF6F9.md	present	present	present		10756	2026-10-20T15:37:09.766
+.ufo/waves/round-19/w2/dispatch.json	47	ReviewLessonRows	reviewer	.ufo/waves/round-19/w2/reports/ReviewLessonRows.md	present	present	present		10960	2026-10-20T16:04:38.216
+.ufo/waves/round-19/w2/dispatch.json	48	ReviewQualityNote	reviewer	.ufo/waves/round-19/w2/reports/ReviewQualityNote.md	present	present	present		14373	2026-10-20T15:33:20.128
+.ufo/waves/round-19/w2/dispatch.json	49	ReviewSourcesRows	reviewer	.ufo/waves/round-19/w2/reports/ReviewSourcesRows.md	present	present	present		10962	2026-10-20T15:34:53.802
+.ufo/waves/round-19/w2/dispatch.json	50	ReviewJjFinal	reviewer	.ufo/waves/round-19/w2/reports/ReviewJjFinal.md	present	present	present		10883	2026-10-20T15:36:19.169
+.ufo/waves/round-19/w2/dispatch.json	51	ReviewDeltaCarry	reviewer	.ufo/waves/round-19/w2/reports/ReviewDeltaCarry.md	present	present	present		9644	2026-10-20T15:33:37.694
+.ufo/waves/round-19/w2/dispatch.json	52	AtkLessonGate	scout	.ufo/waves/round-19/w2/reports/AtkLessonGate.md	present	present	present		12771	2026-10-20T15:16:56.136
+.ufo/waves/round-19/w2/dispatch.json	53	RerunFetchVerify	executor	.ufo/waves/round-19/w2/reports/RerunFetchVerify.md	present	present	present		11756	2026-10-20T15:04:54.532
+.ufo/waves/round-19/w2/dispatch.json	54	AtkDeltaCli	scout	.ufo/waves/round-19/w2/reports/AtkDeltaCli.md	present	present	present		11708	2026-10-20T15:06:59.198
+.ufo/waves/round-19/w2/dispatch.json	55	AtkInstallsRecord	scout	.ufo/waves/round-19/w2/reports/AtkInstallsRecord.md	present	present	present		8942	2026-10-20T15:11:56.602
+.ufo/waves/round-19/w2/dispatch.json	56	SentinelGatePath	sentinel	.ufo/waves/round-19/w2/reports/SentinelGatePath.md	present	present	present		10323	2026-10-20T15:10:54.182
+.ufo/waves/round-19/w2/dispatch.json	57	CriticC1W2	critic	.ufo/waves/round-19/w2/reports/CriticC1W2.md	present	present	present		10000	2026-10-20T15:06:55.170
+.ufo/waves/round-19/w2/dispatch.json	58	CriticC2W2	critic	.ufo/waves/round-19/w2/reports/CriticC2W2.md	present	present	present		19156	2026-10-20T15:17:04.078
+.ufo/waves/round-19/w2/dispatch.json	59	CriticC3W2	critic	.ufo/waves/round-19/w2/reports/CriticC3W2.md	present	present	present		15311	2026-10-20T15:07:34.659
+.ufo/waves/round-19/w2/dispatch.json	60	CriticAdmission	critic	.ufo/waves/round-19/w2/reports/CriticAdmission.md	present	present	present		12981	2026-10-20T15:11:28.913
+.ufo/waves/round-19/w2/dispatch.json	61	CriticHonestyW2	critic	.ufo/waves/round-19/w2/reports/CriticHonestyW2.md	present	present	present		18409	2026-10-20T15:14:17.217
+.ufo/waves/round-19/w2/dispatch.json	62	SentinelCommitSet	sentinel	.ufo/waves/round-19/w2/reports/SentinelCommitSet.md	present	present	present		12472	2026-10-20T15:06:34.421
+.ufo/waves/round-19/w2/dispatch.json	63	SentinelToolSafety	sentinel	.ufo/waves/round-19/w2/reports/SentinelToolSafety.md	present	present	present		13479	2026-10-20T15:13:54.668
+.ufo/waves/round-19/w2/dispatch.json	64	ScribeScorecardCheck	scribe	.ufo/waves/round-19/w2/reports/ScribeScorecardCheck.md	present	present	present		10629	2026-10-20T15:10:15.281
+.ufo/waves/round-19/w2/dispatch.json	65	ScribeLogCheck	scribe	.ufo/waves/round-19/w2/reports/ScribeLogCheck.md	present	present	present		14175	2026-10-20T15:08:18.351
+.ufo/waves/round-19/w2/dispatch.json	66	ScribePlannedRow	scribe	.ufo/waves/round-19/w2/reports/ScribePlannedRow.md	present	present	present		11608	2026-10-20T15:08:47.341
+.ufo/waves/round-20/w1/dispatch.json	0	CasePureBuiltins	executor	.ufo/waves/round-20/w1/reports/CasePureBuiltins.md	present	present	present		11711	2026-10-20T16:47:08.498
+.ufo/waves/round-20/w1/dispatch.json	1	CasePureCollections	executor	.ufo/waves/round-20/w1/reports/CasePureCollections.md	present	present	present		4678	2026-10-20T16:45:41.403
+.ufo/waves/round-20/w1/dispatch.json	2	CasePureFormatters	executor	.ufo/waves/round-20/w1/reports/CasePureFormatters.md	present	present	present		19012	2026-10-20T16:54:52.044
+.ufo/waves/round-20/w1/dispatch.json	3	CasePureCallables	executor	.ufo/waves/round-20/w1/reports/CasePureCallables.md	present	present	present		24602	2026-10-20T17:04:01.443
+.ufo/waves/round-20/w1/dispatch.json	4	CasePureCrossCell	executor	.ufo/waves/round-20/w1/reports/CasePureCrossCell.md	present	present	present		10774	2026-10-20T16:46:34.073
+.ufo/waves/round-20/w1/dispatch.json	5	CaseShadowing	executor	.ufo/waves/round-20/w1/reports/CaseShadowing.md	present	present	present		28290	2026-10-20T16:58:54.940
+.ufo/waves/round-20/w1/dispatch.json	6	CaseWrapperCrossCell	executor	.ufo/waves/round-20/w1/reports/CaseWrapperCrossCell.md	present	present	present		22705	2026-10-20T16:57:18.745
+.ufo/waves/round-20/w1/dispatch.json	7	CaseWrapperForms	executor	.ufo/waves/round-20/w1/reports/CaseWrapperForms.md	present	present	present		20118	2026-10-20T16:58:27.177
+.ufo/waves/round-20/w1/dispatch.json	8	CaseHelpBash	executor	.ufo/waves/round-20/w1/reports/CaseHelpBash.md	present	present	present		22704	2026-10-20T17:04:43.391
+.ufo/waves/round-20/w1/dispatch.json	9	CaseDryRunBash	executor	.ufo/waves/round-20/w1/reports/CaseDryRunBash.md	present	present	present		18454	2026-10-20T17:05:34.516
+.ufo/waves/round-20/w1/dispatch.json	10	CaseHelpDryRunEval	executor	.ufo/waves/round-20/w1/reports/CaseHelpDryRunEval.md	present	present	present		19300	2026-10-20T17:04:02.534
+.ufo/waves/round-20/w1/dispatch.json	11	CaseLeadsInvisible	executor	.ufo/waves/round-20/w1/reports/CaseLeadsInvisible.md	present	present	present		4821	2026-10-20T16:46:10.616
+.ufo/waves/round-20/w1/dispatch.json	12	CaseAdoptW2	executor	.ufo/waves/round-20/w1/reports/CaseAdoptW2.md	present	present	present		26279	2026-10-20T17:08:01.921
+.ufo/waves/round-20/w1/dispatch.json	13	TwRuleB	executor	.ufo/waves/round-20/w1/reports/TwRuleB.md	present	present	present		10249	2026-10-20T17:20:21.961
+.ufo/waves/round-20/w1/dispatch.json	14	TwVcsHelp	executor	.ufo/waves/round-20/w1/reports/TwVcsHelp.md	present	present	present		20945	2026-10-20T17:26:57.105
+.ufo/waves/round-20/w1/dispatch.json	15	PrecisionCounter	executor	.ufo/waves/round-20/w1/reports/PrecisionCounter.md	present	present	present		2905	2026-10-20T16:45:47.946
+.ufo/waves/round-20/w1/dispatch.json	16	CorpusDiff	executor	.ufo/waves/round-20/w1/reports/CorpusDiff.md	present	present	present		4243	2026-10-20T17:02:53.217
+.ufo/waves/round-20/w1/dispatch.json	17	IsolationHarness	executor	.ufo/waves/round-20/w1/reports/IsolationHarness.md	present	present	present		11367	2026-10-20T18:19:11.692
+.ufo/waves/round-20/w1/dispatch.json	18	TallyCheck	executor	.ufo/waves/round-20/w1/reports/TallyCheck.md	present	present	present		18251	2026-10-20T17:19:46.324
+.ufo/waves/round-20/w1/dispatch.json	19	RecallSplit	executor	.ufo/waves/round-20/w1/reports/RecallSplit.md	present	present	present		6628	2026-10-20T16:45:48.087
+.ufo/waves/round-20/w1/dispatch.json	20	HarmWatch20	executor	.ufo/waves/round-20/w1/reports/HarmWatch20.md	present	present	present		5369	2026-10-20T16:57:09.716
+.ufo/waves/round-20/w1/dispatch.json	21	ScoutRuleBMap	scout	.ufo/waves/round-20/w1/reports/ScoutRuleBMap.md	present	present	present		20922	2026-10-20T16:58:18.638
+.ufo/waves/round-20/w1/dispatch.json	22	ScoutFrozenSchema	scout	.ufo/waves/round-20/w1/reports/ScoutFrozenSchema.md	present	present	present		11095	2026-10-20T16:47:03.599
+.ufo/waves/round-20/w1/dispatch.json	23	ScoutCorpusLeads	scout	.ufo/waves/round-20/w1/reports/ScoutCorpusLeads.md	present	present	present		14722	2026-10-20T16:56:18.535
+.ufo/waves/round-20/w1/dispatch.json	24	ScoutCorpusVcsNonWrites	scout	.ufo/waves/round-20/w1/reports/ScoutCorpusVcsNonWrites.md	present	present	present		53029	2026-10-20T16:57:07.742
+.ufo/waves/round-20/w1/dispatch.json	25	ScoutBuiltinsFire	scout	.ufo/waves/round-20/w1/reports/ScoutBuiltinsFire.md	present	present	present		11292	2026-10-20T16:47:27.114
+.ufo/waves/round-20/w1/dispatch.json	26	ScoutStdlibFire	scout	.ufo/waves/round-20/w1/reports/ScoutStdlibFire.md	present	present	present		14946	2026-10-20T16:48:52.606
+.ufo/waves/round-20/w1/dispatch.json	27	ScoutJjHelpEmpirical	scout	.ufo/waves/round-20/w1/reports/ScoutJjHelpEmpirical.md	present	present	present		7478	2026-10-20T16:45:57.482
+.ufo/waves/round-20/w1/dispatch.json	28	ScoutGitDryEmpirical	scout	.ufo/waves/round-20/w1/reports/ScoutGitDryEmpirical.md	present	present	present		14412	2026-10-20T16:53:24.411
+.ufo/waves/round-20/w1/dispatch.json	29	ScoutUnshareHost	scout	.ufo/waves/round-20/w1/reports/ScoutUnshareHost.md	present	present	present		8753	2026-10-20T16:45:40.372
+.ufo/waves/round-20/w1/dispatch.json	30	ScoutR19Tallies	scout	.ufo/waves/round-20/w1/reports/ScoutR19Tallies.md	present	present	present		21117	2026-10-20T16:49:35.945
+.ufo/waves/round-20/w1/dispatch.json	31	ScoutMeasureC1	scout	.ufo/waves/round-20/w1/reports/ScoutMeasureC1.md	present	present	present		8773	2026-10-20T16:46:33.393
+.ufo/waves/round-20/w1/dispatch.json	32	ScoutOpenQueue	scout	.ufo/waves/round-20/w1/reports/ScoutOpenQueue.md	present	present	present		19331	2026-10-20T16:47:01.413
+.ufo/waves/round-20/w1/dispatch.json	33	SrcGitCommitDoc	scout	.ufo/waves/round-20/w1/reports/SrcGitCommitDoc.md	present	present	present		11040	2026-10-20T16:46:50.133
+.ufo/waves/round-20/w1/dispatch.json	34	SrcGitAddPushDoc	scout	.ufo/waves/round-20/w1/reports/SrcGitAddPushDoc.md	present	present	present		11307	2026-10-20T16:47:11.389
+.ufo/waves/round-20/w1/dispatch.json	35	SrcGitHelpSource	scout	.ufo/waves/round-20/w1/reports/SrcGitHelpSource.md	present	present	present		11144	2026-10-20T16:48:33.565
+.ufo/waves/round-20/w1/dispatch.json	36	SrcJjHelp	scout	.ufo/waves/round-20/w1/reports/SrcJjHelp.md	present	present	present		13534	2026-10-20T16:51:55.459
+.ufo/waves/round-20/w1/dispatch.json	37	SrcPyBuiltins	scout	.ufo/waves/round-20/w1/reports/SrcPyBuiltins.md	present	present	present		13017	2026-10-20T16:46:20.775
+.ufo/waves/round-20/w1/dispatch.json	38	SrcPyShlex	scout	.ufo/waves/round-20/w1/reports/SrcPyShlex.md	present	present	present		16877	2026-10-20T16:49:08.156
+.ufo/waves/round-20/w1/dispatch.json	39	SrcUnshare	scout	.ufo/waves/round-20/w1/reports/SrcUnshare.md	present	present	present		13532	2026-10-20T16:51:08.004
+.ufo/waves/round-20/w1/dispatch.json	40	SrcBashErrexit	scout	.ufo/waves/round-20/w1/reports/SrcBashErrexit.md	present	present	present		11592	2026-10-20T16:49:46.424
+.ufo/waves/round-20/w1/dispatch.json	41	RevSpecRuleB	reviewer	.ufo/waves/round-20/w1/reports/RevSpecRuleB.md	present	present	present		8553	2026-10-20T16:49:40.776
+.ufo/waves/round-20/w1/dispatch.json	42	RevSpecVcsHelp	reviewer	.ufo/waves/round-20/w1/reports/RevSpecVcsHelp.md	present	present	present		5156	2026-10-20T16:51:03.357
+.ufo/waves/round-20/w1/dispatch.json	43	RevLeadExitSemantics	reviewer	.ufo/waves/round-20/w1/reports/RevLeadExitSemantics.md	present	present	present		11536	2026-10-20T17:00:03.535
+.ufo/waves/round-20/w1/dispatch.json	44	RevNoHarmPlan	reviewer	.ufo/waves/round-20/w1/reports/RevNoHarmPlan.md	present	present	present		7797	2026-10-20T16:49:39.948
+.ufo/waves/round-20/w1/dispatch.json	45	RevR19V2Wording	reviewer	.ufo/waves/round-20/w1/reports/RevR19V2Wording.md	present	present	present		8767	2026-10-20T16:53:26.689
+.ufo/waves/round-20/w1/dispatch.json	46	RevR19V4Wording	reviewer	.ufo/waves/round-20/w1/reports/RevR19V4Wording.md	present	present	present		4370	2026-10-20T16:46:23.764
+.ufo/waves/round-20/w1/dispatch.json	47	RevR19V5Wording	reviewer	.ufo/waves/round-20/w1/reports/RevR19V5Wording.md	present	present	present		2781	2026-10-20T16:46:18.932
+.ufo/waves/round-20/w1/dispatch.json	48	RevR19V6Seats	reviewer	.ufo/waves/round-20/w1/reports/RevR19V6Seats.md	present	present	present		3516	2026-10-20T16:48:53.129
+.ufo/waves/round-20/w1/dispatch.json	49	RevCriterion29	reviewer	.ufo/waves/round-20/w1/reports/RevCriterion29.md	present	present	present		8183	2026-10-20T16:56:08.119
+.ufo/waves/round-20/w1/dispatch.json	50	RevCriterion30	reviewer	.ufo/waves/round-20/w1/reports/RevCriterion30.md	present	present	present		7355	2026-10-20T16:51:20.604
+.ufo/waves/round-20/w1/dispatch.json	51	RevSuitesLeadEdits	reviewer	.ufo/waves/round-20/w1/reports/RevSuitesLeadEdits.md	present	present	present		3428	2026-10-20T16:47:53.460
+.ufo/waves/round-20/w1/dispatch.json	52	RevRecallControls	reviewer	.ufo/waves/round-20/w1/reports/RevRecallControls.md	present	present	present		7359	2026-10-20T16:58:34.216
+.ufo/waves/round-20/w1/dispatch.json	53	RevPrecisionCounterSpec	reviewer	.ufo/waves/round-20/w1/reports/RevPrecisionCounterSpec.md	present	present	present		5399	2026-10-20T16:48:15.237
+.ufo/waves/round-20/w1/dispatch.json	54	RevHarmWatchLimits	reviewer	.ufo/waves/round-20/w1/reports/RevHarmWatchLimits.md	present	present	present		5127	2026-10-20T16:47:26.199
+.ufo/waves/round-20/w1/dispatch.json	55	RevSkillTripwireText	reviewer	.ufo/waves/round-20/w1/reports/RevSkillTripwireText.md	present	present	present		8313	2026-10-20T16:49:33.370
+.ufo/waves/round-20/w1/dispatch.json	56	RevengeRuleBIntent	revenger	.ufo/waves/round-20/w1/reports/RevengeRuleBIntent.md	present	present	present		4940	2026-10-20T16:46:37.975
+.ufo/waves/round-20/w1/dispatch.json	57	RevengeVcsHelpIntent	revenger	.ufo/waves/round-20/w1/reports/RevengeVcsHelpIntent.md	present	present	present		5318	2026-10-20T16:47:47.018
+.ufo/waves/round-20/w1/dispatch.json	58	RevengeInnsHarness	revenger	.ufo/waves/round-20/w1/reports/RevengeInnsHarness.md	present	present	present		3578	2026-10-20T16:48:05.583
+.ufo/waves/round-20/w1/dispatch.json	59	ConnSiblingClassifiers	connector	.ufo/waves/round-20/w1/reports/ConnSiblingClassifiers.md	present	present	present		13745	2026-10-20T16:49:32.337
+.ufo/waves/round-20/w1/dispatch.json	60	ConnSiblingIsolation	connector	.ufo/waves/round-20/w1/reports/ConnSiblingIsolation.md	present	present	present		8826	2026-10-20T16:48:10.677
+.ufo/waves/round-20/w1/dispatch.json	61	ConnFleetHarmPattern	connector	.ufo/waves/round-20/w1/reports/ConnFleetHarmPattern.md	present	present	present		14658	2026-10-20T16:50:08.989
+.ufo/waves/round-20/w1/dispatch.json	62	ConnSourcesOverlap	connector	.ufo/waves/round-20/w1/reports/ConnSourcesOverlap.md	present	present	present		16576	2026-10-20T16:51:26.084
+.ufo/waves/round-20/w1/dispatch.json	63	ConnQueueMapping	connector	.ufo/waves/round-20/w1/reports/ConnQueueMapping.md	present	present	present		10860	2026-10-20T16:48:20.143
+.ufo/waves/round-20/w1/dispatch.json	64	ConnCriteriaFleet	connector	.ufo/waves/round-20/w1/reports/ConnCriteriaFleet.md	present	present	present		13230	2026-10-20T16:49:02.601
+.ufo/waves/round-20/w1/dispatch.json	65	ScribeMistakes	scribe	.ufo/waves/round-20/w1/reports/ScribeMistakes.md	present	present	present		3679	2026-10-20T16:45:22.035
+.ufo/waves/round-20/w1/dispatch.json	66	ScribeCorrections	scribe	.ufo/waves/round-20/w1/reports/ScribeCorrections.md	present	present	present		4362	2026-10-20T16:45:35.865
+.ufo/waves/round-20/w1/dispatch.json	67	ScribeQuality	scribe	.ufo/waves/round-20/w1/reports/ScribeQuality.md	present	present	present		6159	2026-10-20T16:46:38.232
+.ufo/waves/round-20/w1/dispatch.json	68	ScribeSkill	scribe	.ufo/waves/round-20/w1/reports/ScribeSkill.md	present	present	present		5747	2026-10-20T16:45:50.969
+.ufo/waves/round-20/w1/dispatch.json	69	ScribeKnowledge	scribe	.ufo/waves/round-20/w1/reports/ScribeKnowledge.md	present	present	present		5282	2026-10-20T16:45:21.188
+.ufo/waves/round-20/w1/dispatch.json	70	ScribeLog	scribe	.ufo/waves/round-20/w1/reports/ScribeLog.md	present	present	present		4794	2026-10-20T16:45:14.312
+.ufo/waves/round-20/w1/dispatch.json	71	ScribeProvince	scribe	.ufo/waves/round-20/w1/reports/ScribeProvince.md	present	present	present		3570	2026-10-20T16:44:24.078
+.ufo/waves/round-20/w1/dispatch.json	72	ScribeShonen	scribe	.ufo/waves/round-20/w1/reports/ScribeShonen.md	present	present	present		5143	2026-10-20T16:44:34.946
+.ufo/waves/round-20/w1/dispatch.json	73	CriticC1Overfit	critic	.ufo/waves/round-20/w1/reports/CriticC1Overfit.md	present	present	present		7505	2026-10-20T16:50:49.540
+.ufo/waves/round-20/w1/dispatch.json	74	CriticC1Recall	critic	.ufo/waves/round-20/w1/reports/CriticC1Recall.md	present	present	present		6461	2026-10-20T16:49:55.406
+.ufo/waves/round-20/w1/dispatch.json	75	CriticC2Inflation	critic	.ufo/waves/round-20/w1/reports/CriticC2Inflation.md	present	present	present		12045	2026-10-20T16:57:45.675
+.ufo/waves/round-20/w1/dispatch.json	76	CriticNoHarmDiff	critic	.ufo/waves/round-20/w1/reports/CriticNoHarmDiff.md	present	present	present		11066	2026-10-20T16:57:55.911
+.ufo/waves/round-20/w1/dispatch.json	77	CriticIsolation	critic	.ufo/waves/round-20/w1/reports/CriticIsolation.md	present	present	present		9058	2026-10-20T16:56:07.807
+.ufo/waves/round-20/w1/dispatch.json	78	CriticTally	critic	.ufo/waves/round-20/w1/reports/CriticTally.md	present	present	present		23857	2026-10-20T17:19:30.423
+.ufo/waves/round-20/w1/dispatch.json	79	CriticHonestyR20	critic	.ufo/waves/round-20/w1/reports/CriticHonestyR20.md	present	present	present		14456	2026-10-20T16:52:11.509
+.ufo/waves/round-20/w1/dispatch.json	80	SentinelPause20	sentinel	.ufo/waves/round-20/w1/reports/SentinelPause20.md	present	present	present		25930	2026-10-20T17:18:38.061
+.ufo/waves/round-20/w1/dispatch.json	81	SentinelFixtures	sentinel	.ufo/waves/round-20/w1/reports/SentinelFixtures.md	present	present	present		32535	2026-10-20T17:25:52.092
+.ufo/waves/round-20/w1/dispatch.json	82	MutRuleBTip	mutation-tester	.ufo/waves/round-20/w1/reports/MutRuleBTip.md	present	present	present		29684	2026-10-20T16:51:02.116
+.ufo/waves/round-20/w1/dispatch.json	83	MutVcsTip	mutation-tester	.ufo/waves/round-20/w1/reports/MutVcsTip.md	present	present	present		13896	2026-10-20T16:47:56.315
+.ufo/waves/round-20/w1/dispatch.json	84	SimplifyRuleB	simplifier	.ufo/waves/round-20/w1/reports/SimplifyRuleB.md	present	present	present		13452	2026-10-20T17:34:17.857
+.ufo/waves/round-20/w2/dispatch.json	0	RerunPrecision	reviewer	.ufo/waves/round-20/w2/reports/RerunPrecision.md	present	present	present		4597	2026-10-20T17:41:20.929
+.ufo/waves/round-20/w2/dispatch.json	1	RerunRecall	reviewer	.ufo/waves/round-20/w2/reports/RerunRecall.md	present	present	present		4028	2026-10-20T17:44:10.966
+.ufo/waves/round-20/w2/dispatch.json	2	RerunMeasure	reviewer	.ufo/waves/round-20/w2/reports/RerunMeasure.md	present	present	present		4027	2026-10-20T17:41:04.444
+.ufo/waves/round-20/w2/dispatch.json	3	RerunSuites	reviewer	.ufo/waves/round-20/w2/reports/RerunSuites.md	present	present	present		3888	2026-10-20T17:42:29.416
+.ufo/waves/round-20/w2/dispatch.json	4	RerunFrozen	reviewer	.ufo/waves/round-20/w2/reports/RerunFrozen.md	present	present	present		3713	2026-10-20T17:41:55.573
+.ufo/waves/round-20/w2/dispatch.json	5	RerunTally	reviewer	.ufo/waves/round-20/w2/reports/RerunTally.md	present	present	present		5110	2026-10-20T17:43:40.244
+.ufo/waves/round-20/w2/dispatch.json	6	RerunIsolation	reviewer	.ufo/waves/round-20/w2/reports/RerunIsolation.md	present	present	present		5473	2026-10-20T17:41:01.517
+.ufo/waves/round-20/w2/dispatch.json	7	RerunCensus	reviewer	.ufo/waves/round-20/w2/reports/RerunCensus.md	present	present	present		2489	2026-10-20T17:40:14.760
+.ufo/waves/round-20/w2/dispatch.json	8	CorpusDiffV2	executor	.ufo/waves/round-20/w2/reports/CorpusDiffV2.md	present	present	present		8272	2026-10-20T17:58:00.519
+.ufo/waves/round-20/w2/dispatch.json	9	CorpusDiffIndependent	executor	.ufo/waves/round-20/w2/reports/CorpusDiffIndependent.md	present	present	present		3007	2026-10-20T17:48:13.375
+.ufo/waves/round-20/w2/dispatch.json	10	CorpusRemovedAudit	scout	.ufo/waves/round-20/w2/reports/CorpusRemovedAudit.md	present	present	present		36947	2026-10-20T17:48:02.374
+.ufo/waves/round-20/w2/dispatch.json	11	CorpusAddedAudit	scout	.ufo/waves/round-20/w2/reports/CorpusAddedAudit.md	present	present	present		20101	2026-10-20T18:00:46.410
+.ufo/waves/round-20/w2/dispatch.json	12	CorpusLeadAudit	reviewer	.ufo/waves/round-20/w2/reports/CorpusLeadAudit.md	present	present	present		11752	2026-10-20T17:54:17.643
+.ufo/waves/round-20/w2/dispatch.json	13	CorpusRuntime	scout	.ufo/waves/round-20/w2/reports/CorpusRuntime.md	present	present	present		12978	2026-10-20T17:56:45.974
+.ufo/waves/round-20/w2/dispatch.json	14	AtkCasesP1	scout	.ufo/waves/round-20/w2/reports/AtkCasesP1.md	present	present	present		12085	2026-10-20T17:44:58.936
+.ufo/waves/round-20/w2/dispatch.json	15	AtkCasesP2	scout	.ufo/waves/round-20/w2/reports/AtkCasesP2.md	present	present	present		17383	2026-10-20T17:48:38.641
+.ufo/waves/round-20/w2/dispatch.json	16	AtkCasesP3	scout	.ufo/waves/round-20/w2/reports/AtkCasesP3.md	present	present	present		17137	2026-10-20T17:51:28.739
+.ufo/waves/round-20/w2/dispatch.json	17	AtkCasesS	scout	.ufo/waves/round-20/w2/reports/AtkCasesS.md	present	present	present		15149	2026-10-20T17:53:37.532
+.ufo/waves/round-20/w2/dispatch.json	18	AtkCasesW1	scout	.ufo/waves/round-20/w2/reports/AtkCasesW1.md	present	present	present		18178	2026-10-20T17:50:18.423
+.ufo/waves/round-20/w2/dispatch.json	19	AtkCasesW2	scout	.ufo/waves/round-20/w2/reports/AtkCasesW2.md	present	present	present		17255	2026-10-20T17:53:01.437
+.ufo/waves/round-20/w2/dispatch.json	20	AtkCasesH1	scout	.ufo/waves/round-20/w2/reports/AtkCasesH1.md	present	present	present		18770	2026-10-20T17:49:20.749
+.ufo/waves/round-20/w2/dispatch.json	21	AtkCasesH2	scout	.ufo/waves/round-20/w2/reports/AtkCasesH2.md	present	present	present		19768	2026-10-20T17:51:42.697
+.ufo/waves/round-20/w2/dispatch.json	22	AtkCasesH3	scout	.ufo/waves/round-20/w2/reports/AtkCasesH3.md	present	present	present		13056	2026-10-20T17:53:58.467
+.ufo/waves/round-20/w2/dispatch.json	23	AtkCasesL	scout	.ufo/waves/round-20/w2/reports/AtkCasesL.md	present	present	present		19399	2026-10-20T17:52:33.356
+.ufo/waves/round-20/w2/dispatch.json	24	AtkHeldout	scout	.ufo/waves/round-20/w2/reports/AtkHeldout.md	present	present	present		15194	2026-10-20T17:50:16.988
+.ufo/waves/round-20/w2/dispatch.json	25	AtkFailingThree	scout	.ufo/waves/round-20/w2/reports/AtkFailingThree.md	present	present	present		19286	2026-10-20T17:50:48.340
+.ufo/waves/round-20/w2/dispatch.json	26	AdvPureShapes	critic	.ufo/waves/round-20/w2/reports/AdvPureShapes.md	present	present	present		10989	2026-10-20T17:49:20.801
+.ufo/waves/round-20/w2/dispatch.json	27	AdvRecallShapes	critic	.ufo/waves/round-20/w2/reports/AdvRecallShapes.md	present	present	present		8319	2026-10-20T17:53:28.824
+.ufo/waves/round-20/w2/dispatch.json	28	AdvLeadMarks	critic	.ufo/waves/round-20/w2/reports/AdvLeadMarks.md	present	present	present		12829	2026-10-20T17:50:24.780
+.ufo/waves/round-20/w2/dispatch.json	29	AdvVcsForms	critic	.ufo/waves/round-20/w2/reports/AdvVcsForms.md	present	present	present		10609	2026-10-20T17:55:14.604
+.ufo/waves/round-20/w2/dispatch.json	30	AdvCrash	critic	.ufo/waves/round-20/w2/reports/AdvCrash.md	present	present	present		7677	2026-10-20T17:59:21.723
+.ufo/waves/round-20/w2/dispatch.json	31	AdvDepth	scout	.ufo/waves/round-20/w2/reports/AdvDepth.md	present	present	present		12028	2026-10-20T17:46:21.288
+.ufo/waves/round-20/w2/dispatch.json	32	MutEvidence	mutation-tester	.ufo/waves/round-20/w2/reports/MutEvidence.md	present	present	present		23835	2026-10-20T17:45:35.555
+.ufo/waves/round-20/w2/dispatch.json	33	MutBinding	mutation-tester	.ufo/waves/round-20/w2/reports/MutBinding.md	present	present	present		17901	2026-10-20T17:44:26.132
+.ufo/waves/round-20/w2/dispatch.json	34	MutVcs	mutation-tester	.ufo/waves/round-20/w2/reports/MutVcs.md	present	present	present		14931	2026-10-20T17:42:33.838
+.ufo/waves/round-20/w2/dispatch.json	35	MutIsolationCheck	mutation-tester	.ufo/waves/round-20/w2/reports/MutIsolationCheck.md	present	present	present		12697	2026-10-20T17:40:18.139
+.ufo/waves/round-20/w2/dispatch.json	36	ReopenGitDocs	scout	.ufo/waves/round-20/w2/reports/ReopenGitDocs.md	present	present	present		11698	2026-10-20T17:42:40.748
+.ufo/waves/round-20/w2/dispatch.json	37	ReopenGitSource	scout	.ufo/waves/round-20/w2/reports/ReopenGitSource.md	present	present	present		11364	2026-10-20T17:44:36.796
+.ufo/waves/round-20/w2/dispatch.json	38	ReopenJj	scout	.ufo/waves/round-20/w2/reports/ReopenJj.md	present	present	present		12090	2026-10-20T17:43:40.556
+.ufo/waves/round-20/w2/dispatch.json	39	ReopenPyDocs	scout	.ufo/waves/round-20/w2/reports/ReopenPyDocs.md	present	present	present		14111	2026-10-20T17:43:26.176
+.ufo/waves/round-20/w2/dispatch.json	40	ReopenPyShlexSub	scout	.ufo/waves/round-20/w2/reports/ReopenPyShlexSub.md	present	present	present		9251	2026-10-20T17:44:34.232
+.ufo/waves/round-20/w2/dispatch.json	41	ReopenUnshare	scout	.ufo/waves/round-20/w2/reports/ReopenUnshare.md	present	present	present		14653	2026-10-20T17:47:11.907
+.ufo/waves/round-20/w2/dispatch.json	42	ReopenBash	scout	.ufo/waves/round-20/w2/reports/ReopenBash.md	present	present	present		12864	2026-10-20T17:45:38.029
+.ufo/waves/round-20/w2/dispatch.json	43	ReopenExecModel	scout	.ufo/waves/round-20/w2/reports/ReopenExecModel.md	present	present	present		8613	2026-10-20T17:42:50.323
+.ufo/waves/round-20/w2/dispatch.json	44	RevLessonMistakes	reviewer	.ufo/waves/round-20/w2/reports/RevLessonMistakes.md	present	present	present		11041	2026-10-20T17:51:38.326
+.ufo/waves/round-20/w2/dispatch.json	45	RevLessonCorrections	reviewer	.ufo/waves/round-20/w2/reports/RevLessonCorrections.md	present	present	present		8646	2026-10-20T17:47:56.068
+.ufo/waves/round-20/w2/dispatch.json	46	RevLessonGate	reviewer	.ufo/waves/round-20/w2/reports/RevLessonGate.md	present	present	present		3638	2026-10-20T17:42:12.948
+.ufo/waves/round-20/w2/dispatch.json	47	RevScorecard	reviewer	.ufo/waves/round-20/w2/reports/RevScorecard.md	present	present	present		6160	2026-10-20T18:02:14.729
+.ufo/waves/round-20/w2/dispatch.json	48	RevKnowledgeNote1	reviewer	.ufo/waves/round-20/w2/reports/RevKnowledgeNote1.md	present	present	present		5550	2026-10-20T17:45:21.169
+.ufo/waves/round-20/w2/dispatch.json	49	RevKnowledgeNote2	reviewer	.ufo/waves/round-20/w2/reports/RevKnowledgeNote2.md	present	present	present		6174	2026-10-20T17:47:20.820
+.ufo/waves/round-20/w2/dispatch.json	50	RevKnowledgeNote3	reviewer	.ufo/waves/round-20/w2/reports/RevKnowledgeNote3.md	present	present	present		4766	2026-10-20T17:45:21.083
+.ufo/waves/round-20/w2/dispatch.json	51	RevSkill	reviewer	.ufo/waves/round-20/w2/reports/RevSkill.md	present	present	present		10453	2026-10-20T17:46:59.840
+.ufo/waves/round-20/w2/dispatch.json	52	RevDocstring	reviewer	.ufo/waves/round-20/w2/reports/RevDocstring.md	present	present	present		13092	2026-10-20T18:02:12.241
+.ufo/waves/round-20/w2/dispatch.json	53	RevQuality29	critic	.ufo/waves/round-20/w2/reports/RevQuality29.md	present	present	present		7715	2026-10-20T17:44:03.610
+.ufo/waves/round-20/w2/dispatch.json	54	RevQuality30	critic	.ufo/waves/round-20/w2/reports/RevQuality30.md	present	present	present		9128	2026-10-20T17:46:28.219
+.ufo/waves/round-20/w2/dispatch.json	55	RevCrit10Application	reviewer	.ufo/waves/round-20/w2/reports/RevCrit10Application.md	present	present	present		7270	2026-10-20T17:47:35.265
+.ufo/waves/round-20/w2/dispatch.json	56	RevSuiteEdits	critic	.ufo/waves/round-20/w2/reports/RevSuiteEdits.md	present	present	present		8675	2026-10-20T17:42:21.419
+.ufo/waves/round-20/w2/dispatch.json	57	RevToolDiffEval	reviewer	.ufo/waves/round-20/w2/reports/RevToolDiffEval.md	present	present	present		11509	2026-10-20T17:57:38.378
+.ufo/waves/round-20/w2/dispatch.json	58	RevToolDiffLeads	reviewer	.ufo/waves/round-20/w2/reports/RevToolDiffLeads.md	present	present	present		7447	2026-10-20T17:54:03.459
+.ufo/waves/round-20/w2/dispatch.json	59	RevToolDiffVcs	reviewer	.ufo/waves/round-20/w2/reports/RevToolDiffVcs.md	present	present	present		5668	2026-10-20T17:46:18.323
+.ufo/waves/round-20/w2/dispatch.json	60	RevReadme	reviewer	.ufo/waves/round-20/w2/reports/RevReadme.md	present	present	present		3691	2026-10-20T17:46:51.311
+.ufo/waves/round-20/w2/dispatch.json	61	RevLog	reviewer	.ufo/waves/round-20/w2/reports/RevLog.md	present	present	present		8372	2026-10-20T17:46:07.817
+.ufo/waves/round-20/w2/dispatch.json	62	CriticC1Final	critic	.ufo/waves/round-20/w2/reports/CriticC1Final.md	present	present	present		9498	2026-10-20T17:46:10.097
+.ufo/waves/round-20/w2/dispatch.json	63	CriticC2Final	critic	.ufo/waves/round-20/w2/reports/CriticC2Final.md	present	present	present		9804	2026-10-20T17:45:29.395
+.ufo/waves/round-20/w2/dispatch.json	64	CriticHonestyFinal	critic	.ufo/waves/round-20/w2/reports/CriticHonestyFinal.md	present	present	present		7629	2026-10-20T17:47:27.879
+.ufo/waves/round-20/w2/dispatch.json	65	CriticHarmAxes	critic	.ufo/waves/round-20/w2/reports/CriticHarmAxes.md	present	present	present		7903	2026-10-20T17:42:26.679
+.ufo/waves/round-20/w2/dispatch.json	66	SentinelPostWaveScan	sentinel	.ufo/waves/round-20/w2/reports/SentinelPostWaveScan.md	missing	missing	missing	absent		
+.ufo/waves/round-20/w2/dispatch.json	67	SentinelCommitSet	sentinel	.ufo/waves/round-20/w2/reports/SentinelCommitSet.md	present	present	present		5313	2026-10-20T17:41:04.264
+.ufo/waves/round-20/w2/dispatch.json	68	ScribeWaveAccounting	scribe	.ufo/waves/round-20/w2/reports/ScribeWaveAccounting.md	present	present	present		2371	2026-10-20T17:40:04.055
+.ufo/waves/round-20/w2/dispatch.json	69	ScribeW1Dispositions	scribe	.ufo/waves/round-20/w2/reports/ScribeW1Dispositions.md	present	present	present		10065	2026-10-20T17:47:56.747
+.ufo/waves/round-20/w2/dispatch.json	70	ScribeShonen	scribe	.ufo/waves/round-20/w2/reports/ScribeShonen.md	present	present	present		4802	2026-10-20T17:40:48.507
+.ufo/waves/round-20/w2/dispatch.json	71	ScribeTrendDraft	scribe	.ufo/waves/round-20/w2/reports/ScribeTrendDraft.md	present	present	present		5863	2026-10-20T17:43:33.812
+.ufo/waves/round-20/w2/dispatch.json	72	ConnConsumers	connector	.ufo/waves/round-20/w2/reports/ConnConsumers.md	missing	missing	missing	absent		
+.ufo/waves/round-20/w2/dispatch.json	73	ConnQueueClose	connector	.ufo/waves/round-20/w2/reports/ConnQueueClose.md	present	present	present		17940	2026-10-20T17:47:11.181
+.ufo/waves/round-20/w2/dispatch.json	74	RevengeEnvBug	revenger	.ufo/waves/round-20/w2/reports/RevengeEnvBug.md	present	present	present		5328	2026-10-20T17:42:12.301
+.ufo/waves/round-20/w2/dispatch.json	75	RevengeSuiteNegatives	revenger	.ufo/waves/round-20/w2/reports/RevengeSuiteNegatives.md	present	present	present		11427	2026-10-20T17:43:15.434
+.ufo/waves/round-20/w2/dispatch.json	76	SimplifyFinal	simplifier	.ufo/waves/round-20/w2/reports/SimplifyFinal.md	present	present	present		13949	2026-10-20T17:54:44.626
+.ufo/waves/round-20/w2/dispatch.json	77	SentinelHarnessNote	critic	.ufo/waves/round-20/w2/reports/SentinelHarnessNote.md	present	present	present		9899	2026-10-20T17:41:55.980
+.ufo/waves/round-21/w1-run.json	0	OraclePrintFunction	reviewer	.ufo/waves/round-21/w1/reports/OraclePrintFunction.md	present	present	present		1315	2026-10-21T05:10:13.789
+.ufo/waves/round-21/w1-run.json	1	OraclePrintLambda	reviewer	.ufo/waves/round-21/w1/reports/OraclePrintLambda.md	present	present	present		1340	2026-10-21T05:12:08.362
+.ufo/waves/round-21/w1-run.json	2	OracleIsinstance	reviewer	.ufo/waves/round-21/w1/reports/OracleIsinstance.md	present	present	present		1198	2026-10-21T05:15:32.507
+.ufo/waves/round-21/w1-run.json	3	OracleHasattr	reviewer	.ufo/waves/round-21/w1/reports/OracleHasattr.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w1-run.json	4	OracleAnnotation	reviewer	.ufo/waves/round-21/w1/reports/OracleAnnotation.md	present	present	present		994	2026-10-21T05:10:42.615
+.ufo/waves/round-21/w1-run.json	5	OracleSaveFunction	reviewer	.ufo/waves/round-21/w1/reports/OracleSaveFunction.md	present	present	present		2691	2026-10-21T05:17:00.391
+.ufo/waves/round-21/w1-run.json	6	OracleUnusedAdd	reviewer	.ufo/waves/round-21/w1/reports/OracleUnusedAdd.md	present	present	present		965	2026-10-21T05:12:02.632
+.ufo/waves/round-21/w1-run.json	7	OracleUnusedCall	reviewer	.ufo/waves/round-21/w1/reports/OracleUnusedCall.md	present	present	present		1044	2026-10-21T05:08:49.134
+.ufo/waves/round-21/w1-run.json	8	OracleReprFunction	reviewer	.ufo/waves/round-21/w1/reports/OracleReprFunction.md	present	present	present		1386	2026-10-21T05:16:12.623
+.ufo/waves/round-21/w1-run.json	9	OracleIdFunction	reviewer	.ufo/waves/round-21/w1/reports/OracleIdFunction.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w1-run.json	10	OracleCallableFunction	reviewer	.ufo/waves/round-21/w1/reports/OracleCallableFunction.md	present	present	present		1718	2026-10-21T05:13:05.837
+.ufo/waves/round-21/w1-run.json	11	OracleGetattrName	reviewer	.ufo/waves/round-21/w1/reports/OracleGetattrName.md	present	present	present		1441	2026-10-21T05:12:18.779
+.ufo/waves/round-21/w1-run.json	12	OracleTypingCast	reviewer	.ufo/waves/round-21/w1/reports/OracleTypingCast.md	present	present	present		2945	2026-10-21T05:16:06.479
+.ufo/waves/round-21/w1-run.json	13	OracleReturnAnnotation	reviewer	.ufo/waves/round-21/w1/reports/OracleReturnAnnotation.md	present	present	present		1251	2026-10-21T05:15:34.169
+.ufo/waves/round-21/w1-run.json	14	OracleClassAnnotation	reviewer	.ufo/waves/round-21/w1/reports/OracleClassAnnotation.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w1-run.json	15	OracleIssubclass	reviewer	.ufo/waves/round-21/w1/reports/OracleIssubclass.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w1-run.json	16	OracleReprClass	reviewer	.ufo/waves/round-21/w1/reports/OracleReprClass.md	present	present	present		4473	2026-10-21T05:17:28.657
+.ufo/waves/round-21/w1-run.json	17	OraclePartialDiscard	reviewer	.ufo/waves/round-21/w1/reports/OraclePartialDiscard.md	present	present	present		2840	2026-10-21T05:18:42.794
+.ufo/waves/round-21/w1-run.json	18	OraclePureFrozen	reviewer	.ufo/waves/round-21/w1/reports/OraclePureFrozen.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w1-run.json	19	OraclePureJson	reviewer	.ufo/waves/round-21/w1/reports/OraclePureJson.md	present	present	present		1044	2026-10-21T05:10:50.873
+.ufo/waves/round-21/w1-run.json	20	OraclePureShlex	reviewer	.ufo/waves/round-21/w1/reports/OraclePureShlex.md	present	present	present		3041	2026-10-21T05:17:21.471
+.ufo/waves/round-21/w1-run.json	21	OraclePureDeque	reviewer	.ufo/waves/round-21/w1/reports/OraclePureDeque.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w1-run.json	22	OracleClassTargetDormant	reviewer	.ufo/waves/round-21/w1/reports/OracleClassTargetDormant.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w1-run.json	23	OracleNeverReferenced	reviewer	.ufo/waves/round-21/w1/reports/OracleNeverReferenced.md	present	present	present		866	2026-10-21T05:13:40.357
+.ufo/waves/round-21/w1-run.json	24	OraclePartialMethod	reviewer	.ufo/waves/round-21/w1/reports/OraclePartialMethod.md	present	present	present		1142	2026-10-21T05:10:26.246
+.ufo/waves/round-21/w1-run.json	25	OracleRecursiveString	reviewer	.ufo/waves/round-21/w1/reports/OracleRecursiveString.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w1-run.json	26	OracleCallbackGlobal	reviewer	.ufo/waves/round-21/w1/reports/OracleCallbackGlobal.md	present	present	present		1349	2026-10-21T05:11:01.392
+.ufo/waves/round-21/w1-run.json	27	OracleNamespaceLeft	reviewer	.ufo/waves/round-21/w1/reports/OracleNamespaceLeft.md	present	present	present		1237	2026-10-21T05:15:42.659
+.ufo/waves/round-21/w1-run.json	28	OracleNamespaceRight	reviewer	.ufo/waves/round-21/w1/reports/OracleNamespaceRight.md	present	present	present		1739	2026-10-21T05:11:49.568
+.ufo/waves/round-21/w1-run.json	29	OracleImapStream	reviewer	.ufo/waves/round-21/w1/reports/OracleImapStream.md	present	present	present		2167	2026-10-21T05:18:59.236
+.ufo/waves/round-21/w1-run.json	30	OracleThreadInline	reviewer	.ufo/waves/round-21/w1/reports/OracleThreadInline.md	present	present	present		1378	2026-10-21T05:15:33.914
+.ufo/waves/round-21/w1-run.json	31	OracleCalledClosure	reviewer	.ufo/waves/round-21/w1/reports/OracleCalledClosure.md	present	present	present		1333	2026-10-21T05:14:24.880
+.ufo/waves/round-21/w1-run.json	32	OracleShadowPrint	reviewer	.ufo/waves/round-21/w1/reports/OracleShadowPrint.md	present	present	present		1127	2026-10-21T05:13:37.263
+.ufo/waves/round-21/w1-run.json	33	OracleReboundArg	reviewer	.ufo/waves/round-21/w1/reports/OracleReboundArg.md	present	present	present		1334	2026-10-21T05:12:41.037
+.ufo/waves/round-21/w1-run.json	34	OracleCrossCell	reviewer	.ufo/waves/round-21/w1/reports/OracleCrossCell.md	present	present	present		1640	2026-10-21T05:16:16.440
+.ufo/waves/round-21/w1-run.json	35	OracleResetBoundary	reviewer	.ufo/waves/round-21/w1/reports/OracleResetBoundary.md	present	present	present		1193	2026-10-21T05:11:22.527
+.ufo/waves/round-21/w1-run.json	36	OracleBashSuffix	reviewer	.ufo/waves/round-21/w1/reports/OracleBashSuffix.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w1-run.json	37	OracleCallbackBoundArgs	reviewer	.ufo/waves/round-21/w1/reports/OracleCallbackBoundArgs.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w1-run.json	38	OracleJjRemote	reviewer	.ufo/waves/round-21/w1/reports/OracleJjRemote.md	present	present	present		861	2026-10-21T05:09:34.078
+.ufo/waves/round-21/w1-run.json	39	OracleJjForget	reviewer	.ufo/waves/round-21/w1/reports/OracleJjForget.md	present	present	present		1257	2026-10-21T05:11:55.735
+.ufo/waves/round-21/w1-run.json	40	OracleJjWorkspace	reviewer	.ufo/waves/round-21/w1/reports/OracleJjWorkspace.md	present	present	present		996	2026-10-21T05:10:39.564
+.ufo/waves/round-21/w1-run.json	41	OracleGitAddNn	reviewer	.ufo/waves/round-21/w1/reports/OracleGitAddNn.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w1-run.json	42	OracleGitCommitZn	reviewer	.ufo/waves/round-21/w1/reports/OracleGitCommitZn.md	present	present	present		947	2026-10-21T05:14:58.231
+.ufo/waves/round-21/w1-run.json	43	OracleUvBareHelp	reviewer	.ufo/waves/round-21/w1/reports/OracleUvBareHelp.md	present	present	present		1780	2026-10-21T05:12:29.167
+.ufo/waves/round-21/w1-run.json	44	OracleUvPackageHelp	reviewer	.ufo/waves/round-21/w1/reports/OracleUvPackageHelp.md	present	present	present		1868	2026-10-21T05:14:09.473
+.ufo/waves/round-21/w1-run.json	45	OracleGitAddDry	reviewer	.ufo/waves/round-21/w1/reports/OracleGitAddDry.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w1-run.json	46	OracleJjReadIwc	reviewer	.ufo/waves/round-21/w1/reports/OracleJjReadIwc.md	present	present	present		2746	2026-10-21T05:21:40.360
+.ufo/waves/round-21/w1-run.json	47	OracleJjReadSnapshot	reviewer	.ufo/waves/round-21/w1/reports/OracleJjReadSnapshot.md	present	present	present		1644	2026-10-21T05:10:54.086
+.ufo/waves/round-21/w1-run.json	48	FixtureResource	executor	.ufo/waves/round-21/w1/reports/FixtureResource.md	present	present	present		4819	2026-10-21T05:12:11.761
+.ufo/waves/round-21/w1-run.json	49	FixtureAssessment	executor	.ufo/waves/round-21/w1/reports/FixtureAssessment.md	present	present	present		6590	2026-10-21T05:15:27.649
+.ufo/waves/round-21/w1-run.json	50	FreezeCorpus	executor	.ufo/waves/round-21/w1/reports/FreezeCorpus.md	present	present	present		3118	2026-10-21T05:08:41.533
+.ufo/waves/round-21/w1-run.json	51	SourcePartial	scout	.ufo/waves/round-21/w1/reports/SourcePartial.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w1-run.json	52	SourceImap	scout	.ufo/waves/round-21/w1/reports/SourceImap.md	present	present	present		2110	2026-10-21T05:11:09.187
+.ufo/waves/round-21/w1-run.json	53	SourceNamespace	scout	.ufo/waves/round-21/w1/reports/SourceNamespace.md	present	present	present		2557	2026-10-21T05:12:06.821
+.ufo/waves/round-21/w1-run.json	54	SourceGitAdd	scout	.ufo/waves/round-21/w1/reports/SourceGitAdd.md	present	present	present		3015	2026-10-21T05:15:49.060
+.ufo/waves/round-21/w1-run.json	55	SourceGitCommit	scout	.ufo/waves/round-21/w1/reports/SourceGitCommit.md	present	present	present		5465	2026-10-21T05:16:33.402
+.ufo/waves/round-21/w1-run.json	56	ConnIndependence	connector	.ufo/waves/round-21/w1/reports/ConnIndependence.md	present	present	present		6154	2026-10-21T05:15:00.908
+.ufo/waves/round-21/w1-run.json	57	ConnScope	connector	.ufo/waves/round-21/w1/reports/ConnScope.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w1-run.json	58	ConnWholeCorpus	connector	.ufo/waves/round-21/w1/reports/ConnWholeCorpus.md	present	present	present		4501	2026-10-21T05:15:51.709
+.ufo/waves/round-21/w1-run.json	59	CriticRegistration	critic	.ufo/waves/round-21/w1/reports/CriticRegistration.md	present	present	present		7918	2026-10-21T05:07:50.225
+.ufo/waves/round-21/w1-run.json	60	CriticResources	critic	.ufo/waves/round-21/w1/reports/CriticResources.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w1-run.json	61	ScribeKnowledge	scribe	.ufo/waves/round-21/w1/reports/ScribeKnowledge.md	present	present	present		18209	2026-10-21T05:07:41.168
+.ufo/waves/round-21/w1-run.json	62	ScribeShonen	scribe	.ufo/waves/round-21/w1/reports/ScribeShonen.md	present	present	present		14503	2026-10-21T05:07:42.032
+.ufo/waves/round-21/w1-run.json	63	ScoutOldSuite	scout	.ufo/waves/round-21/w1/reports/ScoutOldSuite.md	present	present	present		13556	2026-10-21T05:17:18.471
+.ufo/waves/round-21/w1-run.json	64	ScoutOldCorpus	scout	.ufo/waves/round-21/w1/reports/ScoutOldCorpus.md	present	present	present		8738	2026-10-21T05:13:58.105
+.ufo/waves/round-21/w2-run.json	0	AtkAnnotation	critic	.ufo/waves/round-21/w2/reports/AtkAnnotation.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	1	AtkBashSuffix	reviewer	.ufo/waves/round-21/w2/reports/AtkBashSuffix.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	2	AtkCallableFunction	reviewer	.ufo/waves/round-21/w2/reports/AtkCallableFunction.md	present	present	present		6625	2026-10-21T06:03:32.559
+.ufo/waves/round-21/w2-run.json	3	AtkCallbackBoundArgs	reviewer	.ufo/waves/round-21/w2/reports/AtkCallbackBoundArgs.md	present	present	present		5072	2026-10-21T06:03:39.706
+.ufo/waves/round-21/w2-run.json	4	AtkCallbackGlobal	reviewer	.ufo/waves/round-21/w2/reports/AtkCallbackGlobal.md	present	present	present		6495	2026-10-21T06:11:36.306
+.ufo/waves/round-21/w2-run.json	5	AtkCalledClosure	scout	.ufo/waves/round-21/w2/reports/AtkCalledClosure.md	present	present	present		4318	2026-10-21T06:01:27.220
+.ufo/waves/round-21/w2-run.json	6	AtkClassAnnotation	reviewer	.ufo/waves/round-21/w2/reports/AtkClassAnnotation.md	present	present	present		5695	2026-10-21T06:06:01.533
+.ufo/waves/round-21/w2-run.json	7	AtkClassTargetDormant	reviewer	.ufo/waves/round-21/w2/reports/AtkClassTargetDormant.md	present	present	present		4378	2026-10-21T06:03:29.880
+.ufo/waves/round-21/w2-run.json	8	AtkCrossCell	reviewer	.ufo/waves/round-21/w2/reports/AtkCrossCell.md	present	present	present		5829	2026-10-21T06:21:55.823
+.ufo/waves/round-21/w2-run.json	9	AtkGetattrName	critic	.ufo/waves/round-21/w2/reports/AtkGetattrName.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	10	AtkGitAddDry	scout	.ufo/waves/round-21/w2/reports/AtkGitAddDry.md	present	present	present		6528	2026-10-21T06:09:44.042
+.ufo/waves/round-21/w2-run.json	11	AtkGitAddNn	reviewer	.ufo/waves/round-21/w2/reports/AtkGitAddNn.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	12	AtkGitCommitZn	reviewer	.ufo/waves/round-21/w2/reports/AtkGitCommitZn.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	13	AtkHasattr	reviewer	.ufo/waves/round-21/w2/reports/AtkHasattr.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	14	AtkIdFunction	reviewer	.ufo/waves/round-21/w2/reports/AtkIdFunction.md	present	present	present		4272	2026-10-21T06:02:18.491
+.ufo/waves/round-21/w2-run.json	15	AtkImapStream	scout	.ufo/waves/round-21/w2/reports/AtkImapStream.md	present	present	present		4972	2026-10-21T06:04:45.184
+.ufo/waves/round-21/w2-run.json	16	AtkIsinstance	reviewer	.ufo/waves/round-21/w2/reports/AtkIsinstance.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	17	AtkIssubclass	reviewer	.ufo/waves/round-21/w2/reports/AtkIssubclass.md	present	present	present		4557	2026-10-21T06:02:26.597
+.ufo/waves/round-21/w2-run.json	18	AtkJjForget	critic	.ufo/waves/round-21/w2/reports/AtkJjForget.md	present	present	present		4247	2026-10-21T05:58:50.099
+.ufo/waves/round-21/w2-run.json	19	AtkJjReadSnapshot	reviewer	.ufo/waves/round-21/w2/reports/AtkJjReadSnapshot.md	present	present	present		5411	2026-10-21T06:04:38.156
+.ufo/waves/round-21/w2-run.json	20	AtkJjRemote	scout	.ufo/waves/round-21/w2/reports/AtkJjRemote.md	present	present	present		5834	2026-10-21T06:13:36.605
+.ufo/waves/round-21/w2-run.json	21	AtkJjWorkspace	reviewer	.ufo/waves/round-21/w2/reports/AtkJjWorkspace.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	22	AtkLoggingData	reviewer	.ufo/waves/round-21/w2/reports/AtkLoggingData.md	present	present	present		11120	2026-10-21T06:12:34.010
+.ufo/waves/round-21/w2-run.json	23	AtkLoggingFactory	reviewer	.ufo/waves/round-21/w2/reports/AtkLoggingFactory.md	present	present	present		5366	2026-10-21T06:03:12.772
+.ufo/waves/round-21/w2-run.json	24	AtkMethodcallerInvoke	reviewer	.ufo/waves/round-21/w2/reports/AtkMethodcallerInvoke.md	present	present	present		4890	2026-10-21T06:05:00.611
+.ufo/waves/round-21/w2-run.json	25	AtkMethodcallerStored	scout	.ufo/waves/round-21/w2/reports/AtkMethodcallerStored.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	26	AtkNamespaceLeft	reviewer	.ufo/waves/round-21/w2/reports/AtkNamespaceLeft.md	present	present	present		5569	2026-10-21T06:03:06.019
+.ufo/waves/round-21/w2-run.json	27	AtkNamespaceRight	critic	.ufo/waves/round-21/w2/reports/AtkNamespaceRight.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	28	AtkNeverReferenced	reviewer	.ufo/waves/round-21/w2/reports/AtkNeverReferenced.md	present	present	present		6739	2026-10-21T06:06:34.099
+.ufo/waves/round-21/w2-run.json	29	AtkPartialDiscard	reviewer	.ufo/waves/round-21/w2/reports/AtkPartialDiscard.md	present	present	present		5699	2026-10-21T06:00:59.708
+.ufo/waves/round-21/w2-run.json	30	AtkPartialMethod	scout	.ufo/waves/round-21/w2/reports/AtkPartialMethod.md	present	present	present		5474	2026-10-21T05:59:48.242
+.ufo/waves/round-21/w2-run.json	31	AtkPrintFunction	reviewer	.ufo/waves/round-21/w2/reports/AtkPrintFunction.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	32	AtkPrintLambda	reviewer	.ufo/waves/round-21/w2/reports/AtkPrintLambda.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	33	AtkPureDeque	reviewer	.ufo/waves/round-21/w2/reports/AtkPureDeque.md	present	present	present		5215	2026-10-21T06:04:03.794
+.ufo/waves/round-21/w2-run.json	34	AtkPureFrozen	reviewer	.ufo/waves/round-21/w2/reports/AtkPureFrozen.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	35	AtkPureJson	scout	.ufo/waves/round-21/w2/reports/AtkPureJson.md	present	present	present		5003	2026-10-21T06:09:30.273
+.ufo/waves/round-21/w2-run.json	36	AtkPureShlex	critic	.ufo/waves/round-21/w2/reports/AtkPureShlex.md	present	present	present		4171	2026-10-21T05:58:37.732
+.ufo/waves/round-21/w2-run.json	37	AtkReboundArg	reviewer	.ufo/waves/round-21/w2/reports/AtkReboundArg.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	38	AtkRecursiveString	reviewer	.ufo/waves/round-21/w2/reports/AtkRecursiveString.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	39	AtkReprClass	reviewer	.ufo/waves/round-21/w2/reports/AtkReprClass.md	present	present	present		5272	2026-10-21T06:03:07.884
+.ufo/waves/round-21/w2-run.json	40	AtkReprFunction	scout	.ufo/waves/round-21/w2/reports/AtkReprFunction.md	present	present	present		4893	2026-10-21T06:12:02.941
+.ufo/waves/round-21/w2-run.json	41	AtkResetBoundary	reviewer	.ufo/waves/round-21/w2/reports/AtkResetBoundary.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	42	AtkReturnAnnotation	reviewer	.ufo/waves/round-21/w2/reports/AtkReturnAnnotation.md	present	present	present		5459	2026-10-21T06:08:16.076
+.ufo/waves/round-21/w2-run.json	43	AtkSaveFunction	reviewer	.ufo/waves/round-21/w2/reports/AtkSaveFunction.md	present	present	present		5356	2026-10-21T06:09:39.056
+.ufo/waves/round-21/w2-run.json	44	AtkShadowPrint	reviewer	.ufo/waves/round-21/w2/reports/AtkShadowPrint.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	45	AtkThreadInline	critic	.ufo/waves/round-21/w2/reports/AtkThreadInline.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	46	AtkTypingCast	reviewer	.ufo/waves/round-21/w2/reports/AtkTypingCast.md	present	present	present		6089	2026-10-21T06:03:23.006
+.ufo/waves/round-21/w2-run.json	47	AtkUnusedAdd	reviewer	.ufo/waves/round-21/w2/reports/AtkUnusedAdd.md	present	present	present		5760	2026-10-21T06:06:03.439
+.ufo/waves/round-21/w2-run.json	48	AtkUnusedCall	reviewer	.ufo/waves/round-21/w2/reports/AtkUnusedCall.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	49	AtkUuidProcess	reviewer	.ufo/waves/round-21/w2/reports/AtkUuidProcess.md	present	present	present		4506	2026-10-21T06:08:21.234
+.ufo/waves/round-21/w2-run.json	50	AtkUvBareHelp	scout	.ufo/waves/round-21/w2/reports/AtkUvBareHelp.md	present	present	present		5094	2026-10-21T06:04:43.493
+.ufo/waves/round-21/w2-run.json	51	AtkUvPackageHelp	reviewer	.ufo/waves/round-21/w2/reports/AtkUvPackageHelp.md	present	present	present		4623	2026-10-21T06:02:21.939
+.ufo/waves/round-21/w2-run.json	52	GateBaselineValid	mutation-tester	.ufo/waves/round-21/w2/reports/GateBaselineValid.md	present	present	present		8556	2026-10-21T05:58:36.954
+.ufo/waves/round-21/w2-run.json	53	GateCase1LateRegistrationAf	reviewer	.ufo/waves/round-21/w2/reports/GateCase1LateRegistrationAf.md	present	present	present		5555	2026-10-21T06:04:25.969
+.ufo/waves/round-21/w2-run.json	54	GateCase2LateRegistrationAf	scout	.ufo/waves/round-21/w2/reports/GateCase2LateRegistrationAf.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	55	GatePopulationFileMutated	mutation-tester	.ufo/waves/round-21/w2/reports/GatePopulationFileMutated.md	present	present	present		10324	2026-10-21T05:59:28.905
+.ufo/waves/round-21/w2-run.json	56	GateMissingRegisteredInputSha256	scout	.ufo/waves/round-21/w2/reports/GateMissingRegisteredInputSha256.md	present	present	present		6172	2026-10-21T06:02:39.433
+.ufo/waves/round-21/w2-run.json	57	GateCase5OracleToolGenerate	reviewer	.ufo/waves/round-21/w2/reports/GateCase5OracleToolGenerate.md	present	present	present		4371	2026-10-21T06:03:44.349
+.ufo/waves/round-21/w2-run.json	58	GateExpectationDigestChanged	scout	.ufo/waves/round-21/w2/reports/GateExpectationDigestChanged.md	present	present	present		4359	2026-10-21T06:01:54.768
+.ufo/waves/round-21/w2-run.json	59	GateShonenMissingBox	reviewer	.ufo/waves/round-21/w2/reports/GateShonenMissingBox.md	present	present	present		5328	2026-10-21T06:02:20.570
+.ufo/waves/round-21/w2-run.json	60	GateShonenDuplicateBox	scout	.ufo/waves/round-21/w2/reports/GateShonenDuplicateBox.md	present	present	present		4554	2026-10-21T06:05:03.635
+.ufo/waves/round-21/w2-run.json	61	GateShonenXWithoutNonauthor	mutation-tester	.ufo/waves/round-21/w2/reports/GateShonenXWithoutNonauthor.md	present	present	present		9945	2026-10-21T05:59:17.323
+.ufo/waves/round-21/w2-run.json	62	GateShonenEmptyEvidence	scout	.ufo/waves/round-21/w2/reports/GateShonenEmptyEvidence.md	present	present	present		4494	2026-10-21T06:03:26.053
+.ufo/waves/round-21/w2-run.json	63	GateCase11HistorySuppressesO	reviewer	.ufo/waves/round-21/w2/reports/GateCase11HistorySuppressesO.md	present	present	present		5664	2026-10-21T06:09:49.745
+.ufo/waves/round-21/w2-run.json	64	GateHistoryRound20AdmittedTrue	scout	.ufo/waves/round-21/w2/reports/GateHistoryRound20AdmittedTrue.md	present	present	present		7432	2026-10-21T06:11:40.047
+.ufo/waves/round-21/w2-run.json	65	GateHistoryC2IndependentTrue	reviewer	.ufo/waves/round-21/w2/reports/GateHistoryC2IndependentTrue.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	66	GateMalformedTimestamp	scout	.ufo/waves/round-21/w2/reports/GateMalformedTimestamp.md	present	present	present		6730	2026-10-21T06:05:42.810
+.ufo/waves/round-21/w2-run.json	67	GatePopulationEmpty	reviewer	.ufo/waves/round-21/w2/reports/GatePopulationEmpty.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	68	GateOracleAuthorMissing	scout	.ufo/waves/round-21/w2/reports/GateOracleAuthorMissing.md	present	present	present		3916	2026-10-21T05:59:51.585
+.ufo/waves/round-21/w2-run.json	69	GateShonenXWithNamedNonauthor	reviewer	.ufo/waves/round-21/w2/reports/GateShonenXWithNamedNonauthor.md	present	present	present		4156	2026-10-21T06:01:43.763
+.ufo/waves/round-21/w2-run.json	70	GateRound20WrongTopicShonen	scout	.ufo/waves/round-21/w2/reports/GateRound20WrongTopicShonen.md	present	present	present		4441	2026-10-21T06:13:50.272
+.ufo/waves/round-21/w2-run.json	71	GateCase19Round20CanonicalSh	reviewer	.ufo/waves/round-21/w2/reports/GateCase19Round20CanonicalSh.md	present	present	present		4422	2026-10-21T06:05:10.267
+.ufo/waves/round-21/w2-run.json	72	ResourceMemory	reviewer	.ufo/waves/round-21/w2/reports/ResourceMemory.md	present	present	present		5361	2026-10-21T06:07:38.311
+.ufo/waves/round-21/w2-run.json	73	ResourceCli	critic	.ufo/waves/round-21/w2/reports/ResourceCli.md	present	present	present		4817	2026-10-21T05:59:19.442
+.ufo/waves/round-21/w2-run.json	74	CorpusRemoved	reviewer	.ufo/waves/round-21/w2/reports/CorpusRemoved.md	present	present	present		6688	2026-10-21T06:12:37.044
+.ufo/waves/round-21/w2-run.json	75	CorpusIndependence	connector	.ufo/waves/round-21/w2/reports/CorpusIndependence.md	present	present	present		9168	2026-10-21T06:16:42.267
+.ufo/waves/round-21/w2-run.json	76	SourcePartial	scout	.ufo/waves/round-21/w2/reports/SourcePartial.md	present	present	present		4725	2026-10-21T06:01:14.335
+.ufo/waves/round-21/w2-run.json	77	SourceImap	scout	.ufo/waves/round-21/w2/reports/SourceImap.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	78	SourceCommit	scout	.ufo/waves/round-21/w2/reports/SourceCommit.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	79	DocsRejection	critic	.ufo/waves/round-21/w2/reports/DocsRejection.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	80	ShonenSubjects	reviewer	.ufo/waves/round-21/w2/reports/ShonenSubjects.md	present	present	present		6744	2026-10-21T06:04:35.102
+.ufo/waves/round-21/w2-run.json	81	RecallDunders	critic	.ufo/waves/round-21/w2/reports/RecallDunders.md	missing	missing	missing	absent		
+.ufo/waves/round-21/w2-run.json	82	RecallDecorators	reviewer	.ufo/waves/round-21/w2/reports/RecallDecorators.md	present	present	present		4432	2026-10-21T06:03:38.620
+.ufo/waves/round-21/w2-run.json	83	NamespaceBinding	reviewer	.ufo/waves/round-21/w2/reports/NamespaceBinding.md	present	present	present		4609	2026-10-21T06:06:43.526

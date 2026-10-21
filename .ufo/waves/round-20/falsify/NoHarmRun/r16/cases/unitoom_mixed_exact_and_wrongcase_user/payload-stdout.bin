@@ -1,0 +1,3 @@
+{"__CURSOR":"s=r16u;i=9f;n=300;x=012c","_BOOT_ID":"0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c03","MESSAGE_ID":"d9b373ed55a64feb8242e02dbe79a49c","UNIT_RESULT":"oom-kill"}
+{"__CURSOR":"s=r16u;i=9f;n=301;x=012d","_BOOT_ID":"0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c03","MESSAGE_ID":"d9b373ed55a64feb8242e02dbe79a49c","UNIT_RESULT":"OOM-kill","USER_UNIT":"app.slice"}
+{"__CURSOR":"s=r16u;i=9f;n=302;x=012e","_BOOT_ID":"0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c03","MESSAGE_ID":"d9b373ed55a64feb8242e02dbe79a49c","UNIT_RESULT":"oom-kill","USER_UNIT":"kagi-shokunin.service"}

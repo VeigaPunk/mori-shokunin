@@ -1,0 +1,15 @@
+.ufo/waves/round-35/build-dispatch.json 95 {"blank": 0, "empty": 0, "misrooted": 0, "missing": 0, "present": 95, "stub": 0, "unparsed": 0, "unsafe": 0} settled missing=0 f2f3497e14ee reg_eq=True uniq=True multi_trailer=0 resume=0 compaction=False reg_count=95
+.ufo/waves/round-35/falsify-dispatch.json 75 {"blank": 0, "empty": 0, "misrooted": 0, "missing": 0, "present": 75, "stub": 0, "unparsed": 0, "unsafe": 0} settled missing=0 9b6e69330b23 reg_eq=True uniq=True multi_trailer=0 resume=0 compaction=False reg_count=75
+.ufo/waves/round-36/build-dispatch.json 96 {"blank": 0, "empty": 0, "misrooted": 0, "missing": 0, "present": 96, "stub": 0, "unparsed": 0, "unsafe": 0} settled missing=0 879128fd41e9 reg_eq=True uniq=True multi_trailer=0 resume=0 compaction=False reg_count=96
+.ufo/waves/round-37/falsify-dispatch.json 68 {"blank": 0, "empty": 0, "misrooted": 0, "missing": 0, "present": 68, "stub": 0, "unparsed": 0, "unsafe": 0} settled missing=0 894aac3a7986 reg_eq=True uniq=True multi_trailer=0 resume=0 compaction=False reg_count=68
+.ufo/waves/round-38/build-dispatch.json 90 {"blank": 0, "empty": 0, "misrooted": 0, "missing": 1, "present": 89, "stub": 0, "unparsed": 0, "unsafe": 0} partial missing=1 5b24206b841d reg_eq=True uniq=True multi_trailer=0 resume=0 compaction=False reg_count=90
+.ufo/waves/round-38/falsify-dispatch.json 88 {"blank": 0, "empty": 0, "misrooted": 0, "missing": 43, "present": 45, "stub": 0, "unparsed": 0, "unsafe": 0} partial missing=43 3140900b9a0b reg_eq=True uniq=True multi_trailer=0 resume=0 compaction=False reg_count=88
+links: []
+json_total=33 dispatch=6 non_dispatch=27 parse_fail=0 files_total=648
+dup_paths: {}
+late_members (mtime > GT snapshot): 0 []
+late_any (any file under waves, mtime > GT snapshot): 0 []
+unreferenced .md under waves: 12 ['.ufo/waves/round-35/build/ExecS8Fidelity.md', '.ufo/waves/round-35/build/ExecS8Fix.md', '.ufo/waves/round-36/STATE.md', '.ufo/waves/round-36/accounting.md', '.ufo/waves/round-36/claims.md', '.ufo/waves/round-36/falsify-plan.md', '.ufo/waves/round-37/repairs.md', '.ufo/waves/round-38/falsify/Check21-supplement.md', '.ufo/waves/round-38/falsify/Check49-supplement.md', '.ufo/waves/round-38/falsify/Check52-supplement.md']
+basename hits of missing names under waves: []
+kinds: lane_root=dir lane_waves=dir fleet_waves=dir fleet_round38=absent
+DIFFS: 0

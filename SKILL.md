@@ -474,27 +474,27 @@ Detection only. The settlement scan is read-only; the re-pin is an L1 ritual. Ne
 
 | Intent | Correct surface | Never | Expected output |
 |---|---|---|---|
-| When to run the settlement scan | `python3 tools/mori-wave-settlement.py scan --lane-root <lane> [--fleet-root <fleet>] [--out FILE]`, after the census `SURFACE waves` age shows no recent writes, and before any closure note that says a wave settled | running during active writes (premature settlement); copying or moving reports to flip a member to `present` | per-wave `state`, per-member counts, sorted `missing` names; `mori-wave-settlement-v1` JSON, byte-identical on re-run |
+| When to run the settlement scan | `python3 tools/mori-wave-settlement.py scan --lane-root <lane> [--fleet-root <fleet>] [--out FILE]` (the `--out` parent must exist), before any closure note that says a wave settled; select your wave in `waves[]` by `dispatch_path`, because the exit code is lane-wide | treating a lane-wide exit as one wave's verdict; copying or moving reports to flip a member to `present` | per-wave `state`, per-member counts, sorted not-present names; `mori-wave-settlement-v1` JSON, byte-identical on re-run of an unchanged tree; commit it with the scan time as the settlement receipt (`corpus/QUALITY.md` 64) — the JSON itself has no timestamp |
 | `settled` | every member `present` (regular, non-symlink, size > 0); exit 0 | reading it as "the work is correct" (it counts non-empty files only) | `missing=0` |
 | `no-spawn` | dispatch with `taskCall: null`; exit 0 | treating it as an unsettled wave | `members=0` |
 | `partial` | at least one `present`, at least one not; exit 1 | calling the missing seats dead, failed or killed; auto-re-dispatching | list `missing`; any re-dispatch decision belongs to kumitate |
-| `unsettled` | zero `present`, at least one member; exit 1 | inferring a crash from zero reports at dispatch time | re-scan after the stall threshold |
+| `unsettled` | zero `present`, at least one member; exit 1 | inferring a crash, or even a dispatch, from zero reports | re-scan later; check the lane's spawn/refusal records before calling it dispatched |
 | `unavailable` | no member had a parseable, safe report path; exit 1 | reading an unsafe path, following a symlink, or reporting zero | `unsafe` / `unparsed` counts |
 | `stub` | whole content is the seat start marker `STATUS: started` (≤16 bytes read, never emitted) | counting a marker as a delivered report | counts as not present (`corpus/QUALITY.md` 66) |
 | `empty` / `misrooted` | `empty` = size 0; `misrooted` = report exists only under `--fleet-root` at the same relative path | counting either as `present` | both count as not present; fix routing, not counts |
-| `unsafe` / `unparsed` | `unsafe` = absolute, `..`, or escapes the lane root; `unparsed` = no trailer line | reading an `unsafe` target | counts only |
+| `unsafe` / `unparsed` | `unsafe` = absolute, `..`, escapes the lane root, or crosses a symlinked parent; `unparsed` = no trailer line | reading an `unsafe` target | counts only |
 
-Exit map: 0 all discovered waves `settled` or `no-spawn`; 1 any other state; 2 usage error or unreadable lane root. Exit 1 means *not settled*, never *failed*. Exit 0 can coexist with `unreadable_json > 0`: always read it. A dispatch file is not dispatch evidence (`name_hint`, `duplicate_of` are shape only). Knowledge: `corpus/knowledge/wave-settlement-r20.md`.
+Exit map: 0 all discovered waves `settled` or `no-spawn`; 1 any other state (or an uncaught crash, e.g. a pathologically deep tree, which prints a traceback); 2 usage error, unreadable lane root or a `--fleet-root` that is not a directory. Exit 1 means *not settled*. **Exit 0 with `totals.waves` = 0 proves nothing** (missing or symlinked `.ufo/waves`, JSON-only discovery); exit 0 can also coexist with `unreadable_json > 0`: always read both. A dispatch file is not dispatch evidence (`name_hint`, `duplicate_of` are shape only). Knowledge: `corpus/knowledge/wave-settlement-r20.md`.
 
-**Never conclude dead, failed or killed.** The output must not contain those words (oracle `no_vocab`). A missing report only means no non-empty file sat at the trailer path at scan time. Closure evidence is the watchdog `complete`/`wrap` line or a committed report (silence grading, r2); this probe is neither.
+**Never conclude dead, failed or killed.** The tool's own keys and state words never use those words (oracle `no_vocab`); member names are echoed as dispatched and may contain them. A missing report only means no regular non-empty file sat at the trailer path at scan time. Closure evidence is the watchdog `complete`/`wrap` line or a committed report (silence grading, r2); this probe is neither.
 
 **Drift re-pin ritual (r20 C1; L1 only).** `corpus/evidence/baseline-r10-20261015T2231Z.json` stays byte-unchanged.
 
 1. Measure once at the measured commit: `bash tools/mori-census.sh --drift corpus/evidence/baseline-r10-20261015T2231Z.json > DRIFT` (census SHA must be `87b8d680…ab28`; about 2 min, heavy CPU).
-2. Count unclassified tokens with the `comm` recipe in the r20 contract against `corpus/evidence/drift-classification-r20.json`; it must be `0` before any pin.
+2. Count unclassified tokens against `corpus/evidence/drift-classification-r20.json` with `export LC_ALL=C` for the whole pipeline (the frozen r20 recipe set it on `comm` only and miscounts under `en_US.UTF-8`); pass only the `MORI_DRIFT:` line, never an `rc=` trailer, and remember `MORI_DRIFT: none` yields the token `none`. It must be `0` before any pin.
 3. Classify every token as exactly one of `census-schema-change | roster-change | live-state | census-regression`, each with an evidence pointer (commit, path:line or receipt) and a one-line reason.
 4. Any `census-regression` token: stop, report it verbatim, do not pin.
-5. Otherwise `bash tools/mori-census.sh --pin corpus/evidence/baseline-r20-<UTC>.json`, recording the reason.
-6. Re-run `--drift` against the new baseline; record rc and tokens whatever they are. A non-`none` result is the measured stability window: report it, never suppress it. A re-pinned baseline certifies sameness since the pin, never health (S067); the pin's own roll line keeps standing warnings visible. Knowledge: `corpus/knowledge/drift-repin-r20.md`.
+5. Otherwise `bash tools/mori-census.sh --pin corpus/evidence/baseline-r20-<UTC>.json` to a **new** path (`--pin` overwrites silently and has no reason field), and record the reason in the round record.
+6. Re-run `--drift` against the new baseline; record rc and tokens whatever they are. A non-`none` result is the measured stability window: report it, never suppress it. A re-pinned baseline certifies sameness since the pin, never health (lane application of S076); the pin's own roll line keeps standing warnings visible. Knowledge: `corpus/knowledge/drift-repin-r20.md`.
 
 Never edit `tools/mori-census.sh`. `--pin` writes only its path; `--drift` writes nothing.

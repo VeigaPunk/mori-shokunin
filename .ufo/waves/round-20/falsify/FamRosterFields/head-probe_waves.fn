@@ -1,0 +1,68 @@
+probe_waves() {
+  local cmd="find $WAVES_DIR -maxdepth 1 -mindepth 1 -type d"
+  local n_total=0 n_settled=0 n_unsettled=0 n_empty=0 n_aged=0 n_age_unread=0
+  local d base has_reg has_disp has_run has_settle newest age st
+
+  if [ ! -d "$WAVES_DIR" ]; then
+    emit_surface waves unavailable "cmd=$cmd; waves_dir=missing path=$WAVES_DIR; ts=$TS_UTC"
+    return 0
+  fi
+
+  st=ok
+  for d in "$WAVES_DIR"/*; do
+    [ -d "$d" ] || continue
+    base=$(basename -- "$d")
+    case "$base" in round-*|.*) continue ;; esac
+    n_total=$((n_total + 1))
+    has_reg=0 has_disp=0 has_run=0 has_settle=0
+    [ -f "$d/swarm-registry.json" ] && has_reg=1
+    [ -f "$d/dispatch.json" ] && has_disp=1
+    [ -f "$d/run.json" ] && has_run=1
+    # Settlement is a TYPED token, not just a filename: this host's wave dirs
+    # close out with `closeout.md` (markdown) and/or a registry carrying
+    # `"closed": true`, neither of which a results-file test sees. Measured
+    # 2026-10-15: w5..w11 are closed with ADMIT verdicts and no results file, so a
+    # filename-only test aged five settled waves into false WAVE_UNSETTLED_AGE.
+    if [ -f "$d/results.json" ] || [ -f "$d/closeout.json" ] || [ -f "$d/mission-result.json" ] || [ -f "$d/closeout.md" ]; then
+      has_settle=1
+    else
+      for cand in "$d/swarm-registry.json" "$d/dispatch.json" "$d/run.json" "$d/spec.json"; do
+        [ -f "$cand" ] || continue
+        if grep -qE '"(closed|settled)"[[:space:]]*:[[:space:]]*true|"status"[[:space:]]*:[[:space:]]*"closed"' "$cand" 2>/dev/null; then
+          has_settle=1; break
+        fi
+      done
+    fi
+
+    # r2: this age used to be read through a `find | sort | tail | cut` command
+    # substitution whose nonzero pipeline rc (pipefail) aborted the whole census
+    # under `set -e` when the walk hit an unreadable subtree — the same construct
+    # the silence probe carried at line 517 of the r1 file. The rc is graded now:
+    # an unreadable wave age is counted and disclosed, and never compared against
+    # a threshold the read cannot prove.
+    cap find "$d" -type f -printf '%T@\n'
+    newest=''
+    if [ "$CAP_RC" -eq 0 ]; then
+      newest=$(printf '%s\n' "$CAP_OUT" | sort -n | tail -1 | cut -d. -f1)
+    else
+      n_age_unread=$((n_age_unread + 1))
+    fi
+    age=0
+    if [ -n "${newest:-}" ]; then age=$((NOW_EPOCH - newest)); fi
+
+    if [ "$has_settle" -eq 1 ]; then
+      n_settled=$((n_settled + 1))
+    elif [ "$has_reg" -eq 1 ] || [ "$has_disp" -eq 1 ] || [ "$has_run" -eq 1 ]; then
+      n_unsettled=$((n_unsettled + 1))
+      if [ "$age" -gt "$WAVE_UNSETTLED_S" ]; then
+        n_aged=$((n_aged + 1))
+        emit_finding WAVE_UNSETTLED_AGE warn "wave=$base age_s=$age threshold_s=$WAVE_UNSETTLED_S reg=$has_reg disp=$has_disp run=$has_run settle=0"
+        st=drift
+      fi
+    else
+      n_empty=$((n_empty + 1))
+    fi
+  done
+
+  emit_surface waves "$st" "cmd=$cmd; total=$n_total settled=$n_settled unsettled=$n_unsettled aged_unsettled=$n_aged empty=$n_empty age_unreadable=$n_age_unread threshold_s=$WAVE_UNSETTLED_S; ts=$TS_UTC"
+}

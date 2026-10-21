@@ -6,8 +6,10 @@ sha256 `0993b235…0478`); register `corpus/evidence/drift-classification-r20.js
 `corpus/evidence/baseline-r20-20261021T1051Z.json` (sha256 `e528bc15…8433`, `pinned_ts=2026-10-21T10:53:07Z`).
 Sources: S066 (approval flow: examine every difference before updating the master), S067 (a
 characterization baseline records actual behavior, not desired behavior). Drafted from
-`.ufo/waves/round-20/build/DraftDriftNote.md`; classifications from the eleven `Tok*` seats and four
+`.ufo/waves/round-20/build/DraftDriftNote.md`; classifications from the twelve `Tok*` seats and four
 `Hist*` census-history reviewers under `.ufo/waves/round-20/build/`.
+verified-at: 2026-10-21, census sha256 87b8d680…ab28; pin 10:53:07Z; post-pin drift none 10:55:31Z
+recheck: `bash tools/mori-census.sh --drift corpus/evidence/baseline-r20-20261021T1051Z.json` and classify every token against `corpus/evidence/drift-classification-r20.json` with `.ufo/waves/round-20/build/RegisterCheck/check-register.py`
 
 ## 1. Why the r10 pin stayed red for nine rounds
 
@@ -25,16 +27,18 @@ disposition (QUALITY 65).
 `live-state` (census code unchanged, host/fleet state differs) · `census-regression` (unintended
 behavior change; blocks a re-pin). Classify by **cause**, with an evidence pointer per token.
 
-Result over the 50 entering tokens: census-schema-change 29, live-state 19, roster-change 2,
-census-regression 0. Corrections against round 13: `-FINDING:KILL_SIGNAL_JOURNAL` is the r13
+Result over the 50 entering tokens: census-schema-change 26, live-state 19, roster-change 5,
+census-regression 0 (wave-2 `falsify/FamRosterLanes.md` moved audio, game-dev-2d and game-dev-3d to
+roster-change: their conf rows were removed before the r10 pin). Corrections against round 13: `-FINDING:KILL_SIGNAL_JOURNAL` is the r13
 text-to-structured redefinition (schema), not live activity; `+SURFACE:lane.kotodama` and
 `+SURFACE:lane.souji` are lanes minted after the r10 pin (roster), not r12 schema.
 
 ## 3. Dissent and blind spots (recorded, not resolved by the author)
 
-- `-FINDING:WATCHDOG_STALE` and `-FINDING:WAVE_UNSETTLED_AGE`: VolatileContract (H2/H3), C1Critic and the
-  round-12 register argue census-regression, because the disappearance is false-clean (daemon still
-  absent; aggregator waves emptied by sweep e20f4fa, not settled). The L1 classes both live-state:
+- `-FINDING:WATCHDOG_STALE` and `-FINDING:WAVE_UNSETTLED_AGE`: VolatileContract (K2 for STALE, K3 for WAVE)
+  argues census-regression; C1Critic, the round-12 register and wave-2 AdjudicateWaves argue it for WAVE
+  only; wave-2 AdjudicateStale and FamWatchdog keep STALE live-state. The disappearance is false-clean
+  (daemon still absent; aggregator waves emptied by sweep e20f4fa, not settled). The L1 classes both live-state:
   the probes are byte-identical since r10 and the finding toggles with state. Measured: STALE was
   absent from the entering drift (log written by the inline driver at 07:18 -03) and **present again**
   in the 10:51Z pre-pin drift (log idle > 900 s), so the rule still fires when its input says so.
@@ -51,12 +55,14 @@ text-to-structured redefinition (schema), not live activity; `+SURFACE:lane.koto
 
 | step | time (UTC) | result |
 |---|---|---|
-| entering drift vs r10 | before 10:22Z | rc 1, 50 tokens, 8 unclassified (r13 register) → 0 (r20 register) |
+| entering drift vs r10 | receipt written 10:22:34Z (start not recorded) | rc 1, 50 tokens, 8 unclassified (r13 register) → 0 (r20 register) |
 | pre-pin drift vs r10 | 10:51:14Z | rc 1, 49 tokens (`-FINDING:WATCHDOG_STALE` gone: STALE firing again); 7 unclassified (r13) → 0 (r20) |
 | `--pin baseline-r20-20261021T1051Z.json` | 10:53:07Z | `MORI_PIN: ok`, census sha `87b8d680…`, roll line `MORI_CENSUS: DRIFT (…)` retained |
 | post-pin drift vs r20 | 10:55:31Z | `MORI_DRIFT: none` rc 0 |
 
-Receipts: `.ufo/waves/round-20/evidence/c1-drift-r10-prepin.txt`, `c1-drift-r20-postpin.txt`.
+Receipts: `.ufo/waves/round-20/evidence/c1-drift-r10-prepin.txt`, `c1-drift-r20-postpin.txt`, and the
+transcribed job stdout with the timestamps and `MORI_PIN: ok` line, `c1-repin-timeline.txt`. Count only
+line 1 of the pre-pin file (line 2 is an `rc=` trailer).
 The earlier scratch pin (10:22:12Z) drifted 65 s later with `+path +reason -subject_commits -window
 basis round`: mado's round-21 report commit at 10:22:39Z moved its lane row from row-A to row-6
 (`build/TokPinFlap.md`). Lane rows follow live launches and report commits, so the stability window
@@ -65,8 +71,8 @@ must be classified, not suppressed.
 
 ## 5. What the new baseline certifies
 
-Sameness of census behavior since 10:53:07Z on this host, nothing more (S067). Standing warnings at
+Sameness of census behavior since 10:53:07Z on this host, nothing more (lane application of S076: a characterization baseline records actual, not desired, behavior). Standing warnings at
 pin time (`WATCHDOG_ABSENT`, ten `WAVE_UNSETTLED_AGE`) are part of the reference; the census roll still
 reports them every run. `MORI_DRIFT: none` means "unchanged since pin", never "healthy" (S066's
 master is approved, not proven correct). The pin header records no environment and `CENSUS_RC` is not
-checked by `--pin` (VolatileContract M2/M3): the L1 ran it with no `MORI_*` variables set.
+checked by `--pin` (VolatileContract K10/K11): the L1 ran it with no `MORI_*` variables set.

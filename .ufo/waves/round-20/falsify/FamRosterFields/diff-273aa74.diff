@@ -1,0 +1,519 @@
+commit 273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7
+Author: mori-shokunin <mori@shokunin.local>
+Date:   Tue Oct 20 15:26:13 2026 -0300
+
+    round-17: terminal observation, branch provenance and blind-sweep calibration
+
+diff --git a/tools/mori-census.sh b/tools/mori-census.sh
+index b280bd3..2a847a0 100755
+--- a/tools/mori-census.sh
++++ b/tools/mori-census.sh
+@@ -31,7 +31,13 @@
+ #             since-boot write average per target device (/proc/diskstats)
+ #   silence   per-lane launch/closure/authorship grading (PROTOCOL.md:153-168;
+ #             contract corpus/knowledge/silence-grading-r2.md) — states silent |
+-#             progressing | progressing-weak | young | not-open | unavailable
++#             progressing | progressing-weak | young | not-open | unavailable.
++#             r17 C2: rows 6/9 read refs/heads/<branch> (resolved like
++#             jj-lane.sh detect_branch), never bare HEAD; a HEAD the branch does
++#             not contain is HEAD_BRANCH_MISMATCH and a lane-committed commit by
++#             a non-@shokunin.local author is LANE_AUTHOR_MISMATCH, both warn.
++#             Amendment A1: when no branch resolves the probes keep the entering
++#             HEAD anchor and emit neither finding.
+ #   tmux      optional session list; r7 classifies every session fleet-relevant
+ #             vs foreign by pane current path under the fleet root; r8 adds a
+ #             timeout-bounded per-session freshness probe for the relevant ones
+@@ -196,7 +202,7 @@
+ #                   (comment-only edits), while a change to the volatile list
+ #                   itself surfaces as drift on every affected field.
+ # Live mode writes nothing. --selftest writes only under
+-# /tmp/mori-census-selftest.XXXXXX and asserts the fixture tree is unchanged.
++# ${TMPDIR:-/tmp}/mori-census-selftest.XXXXXX and asserts the fixture tree is unchanged.
+ # --pin writes exactly the named baseline file; --drift writes nothing.
+ #
+ # Env overrides (selftest / operator pin); empty = live host defaults:
+@@ -391,7 +397,7 @@ usage: mori-census.sh [--selftest] [--pin <path>] [--drift <path>] [--help]
+                    'MORI_DRIFT: none' (exit 0) or the changed non-volatile
+                    fields (exit 1); missing/unreadable/malformed baseline 2
+   --selftest   hermetic fixture-tree proof (writes only under
+-               /tmp/mori-census-selftest.*); exit 0 pass, 1 fail
++               ${TMPDIR:-/tmp}/mori-census-selftest.*); exit 0 pass, 1 fail
+   --help       this text
+ 
+ Verdict: MORI_CENSUS: CLEAN|DRIFT (findings=N drift=M unavailable=U surfaces=S)
+@@ -2089,17 +2095,99 @@ ps_walk() { # <lane> <repo> -> PS_WALK_RC
+   PS_WALK_RC=$CAP_RC
+ }
+ 
+-# Row 6: report present at HEAD AND newest commit touching it in (launch, NOW].
+-# The report path is repo-relative to the fleet root for every lane
+-# (PROTOCOL.md:137; driver report_of()), and best-effort: an unreadable report
+-# repo does not make a lane unavailable (the lane's own repo is the primary
+-# evidence source).
+-ps_report_closed() { # <lane> <round> <launch_epoch> -> rc 0 = closed
+-  local lane=$1 round=$2 launch=$3
++# ---- r17 C2: branch-anchored lane probes ------------------------------------
++# A jj commit moves the working-copy parent (git HEAD) immediately and the
++# bookmark only in a later, separate command, so a bare `HEAD` observes commits
++# that are not on the lane branch and are not pushed (JjAuditMori F3). Every
++# row-6/row-9 git question is asked of refs/heads/<branch>; the branch is
++# resolved exactly like scripts/hyaku/jj-lane.sh detect_branch: an attached
++# HEAD, else origin/HEAD, else the single existing master/main branch.
++# Hardening is the row-1/row-9 form on every call: GIT_DIR/GIT_WORK_TREE/
++# GIT_INDEX_FILE are unset (an inherited value overrides `git -C`) and optional
++# locks are off.
++valid_branch() { [[ $1 =~ ^[a-zA-Z0-9][a-zA-Z0-9._/-]*$ ]] && [[ $1 != jj/* && $1 != *..* ]] ; }
++
++lane_branch_probe() { # <repo> -> BRANCH_OUT ; rc 0 = resolved
++  local repo=$1 b ref c=()
++  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
++    "$GIT_BIN" -C "$repo" symbolic-ref -q HEAD
++  b=${CAP_OUT%%$'\n'*}
++  b=${b//[[:space:]]/}
++  case "$b" in
++    refs/heads/*)
++      b=${b#refs/heads/}
++      if valid_branch "$b"; then BRANCH_OUT=$b; return 0; fi ;;
++  esac
++  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
++    "$GIT_BIN" -C "$repo" symbolic-ref -q refs/remotes/origin/HEAD
++  ref=${CAP_OUT%%$'\n'*}
++  ref=${ref//[[:space:]]/}
++  case "$ref" in
++    refs/remotes/origin/*)
++      b=${ref#refs/remotes/origin/}
++      if valid_branch "$b"; then BRANCH_OUT=$b; return 0; fi ;;
++  esac
++  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
++    "$GIT_BIN" -C "$repo" show-ref -q --verify refs/heads/master
++  [ "$CAP_RC" -eq 0 ] && c+=(master)
++  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
++    "$GIT_BIN" -C "$repo" show-ref -q --verify refs/heads/main
++  [ "$CAP_RC" -eq 0 ] && c+=(main)
++  [ ${#c[@]} -eq 1 ] && { BRANCH_OUT=${c[0]}; return 0; }
++  BRANCH_OUT=''
++  return 1
++}
++
++# head_branch_probe <repo> <branch> -> GL_HBM / GL_HEAD_SHORT / GL_BRANCH_TIP.
++# HEAD_BRANCH_MISMATCH is a FAILED ancestor invariant only: merge-base rc 0 =
++# consistent, rc 1 = HEAD is ahead of (or sideways from) the branch, any other
++# rc = probe error. A probe error emits nothing — it is never promoted to the
++# mismatch finding (S046), and the row text stays byte-identical (amendment A1:
++# r13/r14/r15 and the r10 pin must see the entering output). An empty HEAD
++# answer (no HEAD, or a repository with no commits) is silence, not a mismatch.
++head_branch_probe() { # <repo> <branch>
++  local repo=$1 branch=$2 h t
++  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
++    "$GIT_BIN" -C "$repo" rev-parse --verify -q HEAD
++  [ "$CAP_RC" -eq 0 ] || return 0
++  h=${CAP_OUT%%$'\n'*}
++  h=${h//[[:space:]]/}
++  [ -n "$h" ] || return 0
++  [[ $h =~ ^[0-9a-f]{40,64}$ ]] || return 0
++  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
++    "$GIT_BIN" -C "$repo" merge-base --is-ancestor HEAD "refs/heads/$branch"
++  case "$CAP_RC" in
++    0) ;;
++    1)
++      cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
++        "$GIT_BIN" -C "$repo" rev-parse --verify -q "refs/heads/$branch"
++      t=${CAP_OUT%%$'\n'*}
++      t=${t//[[:space:]]/}
++      [[ $t =~ ^[0-9a-f]{40,64}$ ]] || return 0
++      GL_HBM=1
++      GL_HEAD_SHORT=${h:0:12}
++      GL_BRANCH_TIP=${t:0:12}
++      ;;
++  esac
++  return 0
++}
++
++# Row 6: report present on the lane BRANCH AND newest commit touching it in
++# (launch, NOW]. The report path is repo-relative to the fleet root for every
++# lane (PROTOCOL.md:137; driver report_of()), and best-effort: an unreadable
++# report repo does not make a lane unavailable (the lane's own repo is the
++# primary evidence source). The revision is refs/heads/<branch>, never HEAD:
++# under jj, HEAD is the working-copy parent and can hold a commit the branch
++# does not (F3). Amendment A1: when no branch resolves the caller passes the
++# literal HEAD, which is the entering behavior byte-for-byte.
++ps_report_closed() { # <lane> <round> <launch> <rev> -> rc 0 = closed
++  local lane=$1 round=$2 launch=$3 rev=$4
+   local rpath=".ufo/reports/round-$round/$lane.md" ct
+-  cap env GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$ROOT" cat-file -e "HEAD:$rpath"
++  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
++    "$GIT_BIN" -C "$ROOT" cat-file -e "$rev:$rpath"
+   [ "$CAP_RC" -eq 0 ] || return 1
+-  cap env GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$ROOT" log -1 --format=%ct -- "$rpath"
++  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 \
++    "$GIT_BIN" -C "$ROOT" log -1 --format=%ct "$rev" -- "$rpath"
+   [ "$CAP_RC" -eq 0 ] || return 1
+   ct=${CAP_OUT%%$'\n'*}
+   ct=${ct//[[:space:]]/}
+@@ -2114,6 +2202,7 @@ grade_lane() {
+   local lane=$1 repo
+   repo=$(lane_repo "$lane")
+   GL_STATE=''; GL_ROUND='-'; GL_LAUNCH='-'; GL_AGE='-'; GL_BASIS=''; GL_EXTRA=''
++  GL_BRANCH=''; GL_HBM=0; GL_HEAD_SHORT=''; GL_BRANCH_TIP=''; GL_AMN=0
+ 
+   # -- row 1: unreadable inputs ------------------------------------------------
+   if [ ! -r "$TIMELINE_FILE" ]; then
+@@ -2139,6 +2228,14 @@ grade_lane() {
+     return 0
+   fi
+ 
++  # -- r17 C2 branch anchor ---------------------------------------------------
++  # Resolve the branch once, and measure the HEAD-vs-branch invariant HERE,
++  # before every early return, so a jj-drifted HEAD is reported for every lane
++  # this census can read — not only for lanes that happen to grade through rows
++  # A/B/C. Neither probe changes a row state; they only record.
++  if lane_branch_probe "$repo"; then GL_BRANCH=$BRANCH_OUT; fi
++  if [ -n "$GL_BRANCH" ]; then head_branch_probe "$repo" "$GL_BRANCH"; fi
++
+   # -- rows 2-8: launch anchor, closure, age ----------------------------------
+   ledger_anchor "$lane"
+   if [ "$LA_LINE" -eq 0 ]; then
+@@ -2174,6 +2271,9 @@ grade_lane() {
+   fi
+ 
+   # -- facts shared by rows 6 and 9 --------------------------------------------
++  # Every git fact below is read from refs/heads/<branch> when one resolves;
++  # amendment A1 keeps the entering HEAD anchor when none does (r13/r14/r15
++  # stubs answer empty/rc0 for symbolic-ref, and their output must not change).
+   # Safety (audit-r11 r13 advisory): `ls-files` can execute the repo's
+   # core.fsmonitor command, and an inherited GIT_DIR/GIT_WORK_TREE/GIT_INDEX_FILE
+   # overrides `git -C`. This gate is read-only and must query the named repo.
+@@ -2185,26 +2285,45 @@ grade_lane() {
+   fi
+   local lsm=$CAP_OUT
+ 
+-  if ps_report_closed "$lane" "$LA_ROUND" "$LA_EPOCH"; then
++  # Row 6 asks the REPORT repo ($ROOT) for its own branch: a child lane's repo
++  # and the fleet root can be different repositories. No branch there = the
++  # literal HEAD revision (entering behavior).
++  local root_rev="HEAD"
++  if [ "$repo" = "$ROOT" ]; then
++    [ -n "$GL_BRANCH" ] && root_rev="refs/heads/$GL_BRANCH"
++  elif lane_branch_probe "$ROOT"; then
++    root_rev="refs/heads/$BRANCH_OUT"
++  fi
++  if ps_report_closed "$lane" "$LA_ROUND" "$LA_EPOCH" "$root_rev"; then
+     GL_STATE=not-open; GL_BASIS='row-6'
+     GL_EXTRA="reason=committed-report round=$LA_ROUND path=.ufo/reports/round-$LA_ROUND/$lane.md"
+     return 0
+   fi
+ 
+   # -- row 9: authorship -------------------------------------------------------
++  # The revision is refs/heads/<branch> when one resolves (a jj commit can leave
++  # HEAD one commit ahead of the bookmark, and grading that commit as lane
++  # progress would credit work the branch does not carry). Amendment A1: with no
++  # resolved branch the revision is the literal HEAD — the entering anchor.
++  local rev="HEAD"
++  [ -n "$GL_BRANCH" ] && rev="refs/heads/$GL_BRANCH"
+   local has_head=0 subj=0 sib=0 sibn=0 n_rowb=0 example='' path mt inwin authors
+   local expected
+-  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" rev-parse --verify -q HEAD
++  cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" rev-parse --verify -q "$rev"
+   if [ "$CAP_RC" -eq 0 ]; then
+     has_head=1
++    # Rows A/C keep the entering author line format and parser: this call answers
++    # authorship only, so the amendment's no-change rule for rows A/C holds.
+     local lg_args=(--since="@$LA_EPOCH" --format='%ct %an <%ae>')
+-    # Rows A/C scan all post-launch commits (a subject commit hidden behind a
+-    # later sibling HEAD still counts). The pathspecs bind the main-repo lanes to
+-    # the root's own scope; a child lane's repo is the lane scope entire.
++    # Rows A/C scan all post-launch commits on the branch (a subject commit
++    # hidden behind a later sibling branch tip still counts). The pathspecs bind
++    # the main-repo lanes to the root's own scope; a child lane's repo is the
++    # lane scope entire. The revision MUST precede the `--` pathspec.
++    local lg_paths=()
+     if is_root_lane "$lane"; then
+-      lg_args+=(-- . ':(exclude).ufo' ':(exclude,glob)**/*-shokunin/**')
++      lg_paths+=(-- . ':(exclude).ufo' ':(exclude,glob)**/*-shokunin/**')
+     fi
+-    cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" log "${lg_args[@]}"
++    cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" log "${lg_args[@]}" "$rev" "${lg_paths[@]+"${lg_paths[@]}"}"
+     if [ "$CAP_RC" -ne 0 ]; then
+       GL_STATE=unavailable; GL_BASIS='row-1'
+       GL_EXTRA="reason=git-log-error rc=$CAP_RC repo=$repo"
+@@ -2234,6 +2353,24 @@ grade_lane() {
+         *) sib=1 ;;
+       esac
+     fi
++    # r17 C2 LANE_AUTHOR_MISMATCH: a SECOND pass answers committer identity in
++    # its own tab-separated fields, so the authorship parse above is untouched.
++    # The finding needs a resolved branch (A1: no branch = entering behavior).
++    # A lane-committed commit by a NON-@shokunin.local author is the jj defect
++    # (F4); a sibling lane's <lane2>@shokunin.local author is legitimate.
++    if [ -n "$GL_BRANCH" ]; then
++      cap env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" log --since="@$LA_EPOCH" --format='%ct%x09%cn <%ce>%x09%an <%ae>' "$rev" "${lg_paths[@]+"${lg_paths[@]}"}"
++      if [ "$CAP_RC" -eq 0 ]; then
++        expected="$lane-shokunin <$lane@shokunin.local>"
++        GL_AMN=$(awk -F '\t' -v lo="$LA_EPOCH" -v hi="$NOW_EPOCH" -v ident="$expected" '
++          NF == 3 && $1 ~ /^[0-9]+$/ && $1 + 0 > lo + 0 && $1 + 0 <= hi + 0 {
++            a = $3; ae = a
++            sub(/^.*</, "", ae); sub(/>.*$/, "", ae)
++            if ($2 == ident && a != ident && ae !~ /@shokunin\.local$/) n++
++          }
++          END { print n + 0 }' <<< "$CAP_OUT")
++      fi
++    fi
+   fi
+ 
+   if [ "$subj" -eq 1 ]; then
+@@ -2269,6 +2406,8 @@ grade_lane() {
+     return 0
+   fi
+   GL_STATE=silent; GL_BASIS='row-D'
++  # `has_head` keeps its output token (drift keys, drivers); it reports whether
++  # the row-9 anchor revision resolved (branch tip, else HEAD in A1 fallback).
+   GL_EXTRA="no_subject_commits=yes no_other_commits=yes no_fresh_files=yes has_head=$has_head"
+ }
+ 
+@@ -2296,6 +2435,16 @@ probe_silence() {
+       not-open) n_notopen=$((n_notopen + 1)) ;;
+       unavailable) n_unavail=$((n_unavail + 1)) ;;
+     esac
++    # r17 C2: both findings are observations ABOUT the branch anchor, never row
++    # grades — the row state was decided above and is left untouched. Amendment
++    # A1: severity `warn`, and the SURFACE text stays byte-identical, so only
++    # these FINDING lines can differ from the entering census.
++    if [ "$GL_HBM" -eq 1 ]; then
++      emit_finding HEAD_BRANCH_MISMATCH warn "lane=$lane head=$GL_HEAD_SHORT branch=$GL_BRANCH branch_tip=$GL_BRANCH_TIP basis=merge-base-not-ancestor"
++    fi
++    if [ "$GL_AMN" -gt 0 ]; then
++      emit_finding LANE_AUTHOR_MISMATCH warn "lane=$lane count=$GL_AMN committer=$lane-shokunin <$lane@shokunin.local> window=launch..NOW basis=committer-lane-author-foreign-email"
++    fi
+     # The per-lane row is the state the scenario driver reads; it is not counted
+     # as an extra surface (surfaces=N stays the surface list).
+     SURFACE_LINES+=("SURFACE lane.$lane: $GL_STATE (lane=$lane round=${GL_ROUND} launch_epoch=${GL_LAUNCH} age_s=${GL_AGE} basis=${GL_BASIS} ${GL_EXTRA}; ts=$TS_UTC)")
+@@ -2765,7 +2914,7 @@ run_selftest() {
+   # returns, when a local is out of scope, so `rm -rf -- "${work:-}"` expanded to
+   # `rm -rf -- ''` and every run leaked its temp dir (measured: 45 leftovers).
+   # A non-local holder keeps the path visible to the trap.
+-  MORI_SELFTEST_WORK=$(mktemp -d /tmp/mori-census-selftest.XXXXXX)
++  MORI_SELFTEST_WORK=$(mktemp -d "${TMPDIR:-/tmp}/mori-census-selftest.XXXXXX")
+   local work="$MORI_SELFTEST_WORK"
+   # chmod first: the unreadable-subtree cases (silence tree-unreadable, waves
+   # age-unreadable) leave mode-000 dirs behind, and `rm -rf` cannot descend into
+@@ -2847,11 +2996,37 @@ case "$name" in
+     verb=''
+     for a in "$@"; do
+       case "$a" in
+-        rev-parse) verb=rev-parse; break ;;
++        rev-parse)
++          # r17 C2: the census asks HEAD (the working-copy parent) and
++          # refs/heads/<branch> as separate questions, so the answer slots are
++          # separate too.
++          verb=rev-parse
++          for a in "$@"; do
++            case "$a" in refs/heads/*) verb=rev-parse-branch ;; esac
++          done
++          break ;;
++        symbolic-ref)
++          case " $* " in
++            *" refs/remotes/origin/HEAD "*) verb=symbolic-ref-origin ;;
++            *) verb=symbolic-ref ;;
++          esac
++          break ;;
++        show-ref)
++          # Per refs/heads/<name>, so "master exists, main does not" is drivable.
++          verb=show-ref
++          for a in "$@"; do
++            case "$a" in refs/heads/*) verb="show-ref-${a#refs/heads/}" ;; esac
++          done
++          break ;;
++        merge-base) verb=merge-base; break ;;
+         ls-files) verb=ls-files; break ;;
+         cat-file) verb=cat-file; break ;;
+         log)
+-          case " $* " in *" -1 "*) verb=log1 ;; *) verb=log ;; esac
++          case " $* " in
++            *" -1 "*) verb=log1 ;;
++            *"%cn"*) verb=log-committer ;;
++            *) verb=log ;;
++          esac
+           break ;;
+       esac
+     done
+@@ -2925,8 +3100,14 @@ STUB
+     # the dispatcher answers empty (the unparseable arm).
+     printf '1700000000\n' > "$d/stub/tmux-activity"; printf 0 > "$d/stub/tmux-activity.rc"
+     # git answers per verb via stub/git-<verb>[.rc] (see the dispatcher above):
+-    # rev-parse / ls-files / cat-file / log / log1. Absent fixture files answer
+-    # empty output with rc 0.
++    # rev-parse / rev-parse-branch / symbolic-ref / symbolic-ref-origin /
++    # show-ref-<branch> / merge-base / ls-files / cat-file / log /
++    # log-committer / log1. Absent fixture files answer empty output with rc 0.
++    # r17 C2: the fixture lane is an attached git lane on master unless a case
++    # says otherwise; the branch-anchor probes read this slot exactly as git
++    # answers `symbolic-ref -q HEAD`.
++    printf 'refs/heads/master\n' > "$d/stub/git-symbolic-ref"
++    printf 0 > "$d/stub/git-symbolic-ref.rc"
+     # lane file recent — touch in check with NOW
+     printf 'x\n' > "$d/lanes/kagi-shokunin/LOG.md"
+   }
+@@ -3742,8 +3923,9 @@ SKIP_FRESHEN=1
+ 
+   FX="$work/fx/sil-report-closed"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
+   printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
+-  # Report present at HEAD and its newest path commit is in (launch, NOW] =>
+-  # closed, so the subject commit below must NOT be graded: closure wins.
++  # Report present on the lane BRANCH and its newest path commit is in
++  # (launch, NOW] => closed, so the subject commit below must NOT be graded:
++  # closure wins.
+   printf 0 > "$FX/stub/git-cat-file.rc"
+   printf '%s\n' "1699998600" > "$FX/stub/git-log1"
+   printf '%s\n' "1699998700 kagi-shokunin <kagi@shokunin.local>" > "$FX/stub/git-log"
+@@ -3752,6 +3934,151 @@ SKIP_FRESHEN=1
+     '^SURFACE lane\.kagi: not-open ' \
+     'basis=row-6'
+ 
++  # --- r17 C2: branch anchor (jj colocation) ---------------------------------
++  # The census reads rows 6/9 from refs/heads/<branch>, never bare HEAD, and
++  # reports a HEAD the branch does not contain. These fixtures drive the same
++  # questions live git answers: symbolic-ref (HEAD and origin/HEAD), show-ref
++  # per master/main, rev-parse (HEAD vs refs/heads/<branch>), merge-base and a
++  # second log whose TAB-separated fields are committer and author. Amendment
++  # A1: both findings are severity warn; an unresolved branch keeps the entering
++  # HEAD anchor and emits neither finding.
++
++  FX="$work/fx/sil-head-ahead"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
++  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
++  # jj `commit` moves HEAD immediately and the bookmark only later, so HEAD can
++  # hold a commit the branch does not (audit F3). The row still grades from the
++  # branch; the divergence is its own warn finding.
++  printf 1 > "$FX/stub/git-cat-file.rc"
++  printf '%s\n' "1699998600 kagi-shokunin <kagi@shokunin.local>" > "$FX/stub/git-log"
++  printf '%s\n' "1111111111111111111111111111111111111111" > "$FX/stub/git-rev-parse"
++  printf '%s\n' "2222222222222222222222222222222222222222" > "$FX/stub/git-rev-parse-branch"
++  printf 1 > "$FX/stub/git-merge-base.rc"
++  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
++  check 'jj: HEAD ahead of branch -> HEAD_BRANCH_MISMATCH warn' 1 DRIFT \
++    'FINDING HEAD_BRANCH_MISMATCH severity=warn .*lane=kagi head=111111111111 .*branch=master branch_tip=222222222222' \
++    '^SURFACE lane\.kagi: progressing ' \
++    'basis=row-A'
++
++  FX="$work/fx/sil-author-mismatch"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
++  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
++  # Committer is the lane, the author is the ambient (non-shokunin) identity: jj
++  # kept the author (audit F4). Row C still grades it as another-authored commit;
++  # the committer/author split is its own warn finding. The authorship pass sees
++  # only the author line; the committer survey is a SECOND call.
++  printf 1 > "$FX/stub/git-cat-file.rc"
++  printf '%s\n' "1699998600 Joao Pedro <jp@example.invalid>" > "$FX/stub/git-log"
++  printf '1699998600\tkagi-shokunin <kagi@shokunin.local>\tJoao Pedro <jp@example.invalid>\n' > "$FX/stub/git-log-committer"
++  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
++  check 'jj: lane committer with foreign author -> LANE_AUTHOR_MISMATCH warn' 1 DRIFT \
++    'FINDING LANE_AUTHOR_MISMATCH severity=warn .*lane=kagi count=1 committer=kagi-shokunin <kagi@shokunin.local>' \
++    '^SURFACE lane\.kagi: progressing-weak ' \
++    'other_authored_commits=1'
++
++  FX="$work/fx/sil-author-sibling"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
++  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
++  # Amendment A1: a sibling fleet-lane author (email ends in @shokunin.local) is
++  # legitimate and must NOT be flagged, even when the committer is this lane.
++  printf 1 > "$FX/stub/git-cat-file.rc"
++  printf '%s\n' "1699998600 kengaku-shokunin <kengaku@shokunin.local>" > "$FX/stub/git-log"
++  printf '1699998600\tkagi-shokunin <kagi@shokunin.local>\tkengaku-shokunin <kengaku@shokunin.local>\n' > "$FX/stub/git-log-committer"
++  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
++  check 'jj: sibling-lane author is legitimate -> no LANE_AUTHOR_MISMATCH' 0 CLEAN \
++    '^SURFACE lane\.kagi: progressing-weak ' \
++    'other_authored_commits=1' \
++    '^MORI_CENSUS: CLEAN \(findings=[0-9]+ drift=0 '
++  if grep -qE '^FINDING LANE_AUTHOR_MISMATCH ' "$OUT_FILE"; then
++    bad 'jj: sibling-lane author was flagged'
++  else
++    ok 'jj: sibling-lane author was not flagged'
++  fi
++
++  FX="$work/fx/sil-detached-tip"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
++  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
++  # Detached HEAD exactly at the branch tip: no branch mismatch. Branch
++  # resolution falls to the single master ref — the same answer an attached HEAD
++  # gives — and the verdict must equal the attached case below.
++  printf 1 > "$FX/stub/git-cat-file.rc"
++  printf '%s\n' "1699998600 kagi-shokunin <kagi@shokunin.local>" > "$FX/stub/git-log"
++  : > "$FX/stub/git-symbolic-ref"; printf 1 > "$FX/stub/git-symbolic-ref.rc"
++  : > "$FX/stub/git-symbolic-ref-origin"; printf 1 > "$FX/stub/git-symbolic-ref-origin.rc"
++  printf 'refs/heads/master\n' > "$FX/stub/git-show-ref-master"
++  printf 0 > "$FX/stub/git-show-ref-master.rc"
++  printf 1 > "$FX/stub/git-show-ref-main.rc"
++  printf '%s\n' "3333333333333333333333333333333333333333" > "$FX/stub/git-rev-parse"
++  printf '%s\n' "3333333333333333333333333333333333333333" > "$FX/stub/git-rev-parse-branch"
++  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
++  check 'jj: detached HEAD at branch tip -> no finding, judgeable verdict' 0 CLEAN \
++    '^SURFACE lane\.kagi: progressing ' \
++    'basis=row-A' \
++    '^MORI_CENSUS: CLEAN \(findings=[0-9]+ drift=0 '
++  if grep -qE '^FINDING (HEAD_BRANCH_MISMATCH|LANE_AUTHOR_MISMATCH) ' "$OUT_FILE"; then
++    bad 'jj: detached-at-tip emitted a C2 finding'
++  else
++    ok 'jj: detached-at-tip emitted no C2 finding'
++  fi
++
++  FX="$work/fx/sil-attached-plain"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
++  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
++  # A plain attached git lane: identical facts to the detached case, identical
++  # verdict and no C2 finding — the branch anchor alone must not change grading.
++  printf 1 > "$FX/stub/git-cat-file.rc"
++  printf '%s\n' "1699998600 kagi-shokunin <kagi@shokunin.local>" > "$FX/stub/git-log"
++  printf '%s\n' "3333333333333333333333333333333333333333" > "$FX/stub/git-rev-parse"
++  printf '%s\n' "3333333333333333333333333333333333333333" > "$FX/stub/git-rev-parse-branch"
++  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
++  check 'git: attached branch lane -> no finding, same verdict as detached' 0 CLEAN \
++    '^SURFACE lane\.kagi: progressing ' \
++    'basis=row-A' \
++    '^MORI_CENSUS: CLEAN \(findings=[0-9]+ drift=0 '
++  if grep -qE '^FINDING (HEAD_BRANCH_MISMATCH|LANE_AUTHOR_MISMATCH) ' "$OUT_FILE"; then
++    bad 'git: attached lane emitted a C2 finding'
++  else
++    ok 'git: attached lane emitted no C2 finding'
++  fi
++
++  FX="$work/fx/sil-head-probe-error"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
++  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
++  # merge-base rc 2 is "not measured", not "not an ancestor": it emits nothing
++  # and must NEVER become the mismatch finding (S046). The row text is unchanged
++  # (amendment A1: no GL_EXTRA/SURFACE change).
++  printf 1 > "$FX/stub/git-cat-file.rc"
++  printf '%s\n' "1699998600 kagi-shokunin <kagi@shokunin.local>" > "$FX/stub/git-log"
++  printf '%s\n' "1111111111111111111111111111111111111111" > "$FX/stub/git-rev-parse"
++  printf '%s\n' "2222222222222222222222222222222222222222" > "$FX/stub/git-rev-parse-branch"
++  printf 2 > "$FX/stub/git-merge-base.rc"
++  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
++  check 'jj: merge-base probe error -> no finding, row text unchanged' 0 CLEAN \
++    '^SURFACE lane\.kagi: progressing ' \
++    '^MORI_CENSUS: CLEAN \(findings=[0-9]+ drift=0 '
++  if grep -qE '^FINDING HEAD_BRANCH_MISMATCH ' "$OUT_FILE"; then
++    bad 'jj: probe error was promoted to HEAD_BRANCH_MISMATCH'
++  else
++    ok 'jj: probe error was not promoted to HEAD_BRANCH_MISMATCH'
++  fi
++
++  FX="$work/fx/sil-no-branch-fallback"; mkdir -p "$FX"; fx_quiet "$FX"; mkdir -p "$FX/root/kagi-shokunin"
++  printf '%s launch kagi round=7 pid=4242\n' "$(ts_iso $((PIN_NOW - 2000)))" >> "$FX/ufo/watchdog.log"
++  # No attached HEAD, no origin/HEAD, neither master nor main: amendment A1 keeps
++  # the entering HEAD anchor here, so the lane still grades from HEAD and emits
++  # neither finding. The output must be identical to the attached case.
++  : > "$FX/stub/git-symbolic-ref"; printf 1 > "$FX/stub/git-symbolic-ref.rc"
++  : > "$FX/stub/git-symbolic-ref-origin"; printf 1 > "$FX/stub/git-symbolic-ref-origin.rc"
++  printf 1 > "$FX/stub/git-show-ref-master.rc"
++  printf 1 > "$FX/stub/git-show-ref-main.rc"
++  printf 1 > "$FX/stub/git-cat-file.rc"
++  printf '%s\n' "1699998600 kagi-shokunin <kagi@shokunin.local>" > "$FX/stub/git-log"
++  printf '%s\n' "3333333333333333333333333333333333333333" > "$FX/stub/git-rev-parse"
++  EXTRA_ENV=(MORI_LANE_SILENCE_S=900)
++  check 'jj: no resolvable branch -> entering HEAD anchor, no finding' 0 CLEAN \
++    '^SURFACE lane\.kagi: progressing ' \
++    'basis=row-A' \
++    '^MORI_CENSUS: CLEAN \(findings=[0-9]+ drift=0 '
++  if grep -qE '^FINDING (HEAD_BRANCH_MISMATCH|LANE_AUTHOR_MISMATCH) ' "$OUT_FILE"; then
++    bad 'jj: unresolved branch emitted a C2 finding'
++  else
++    ok 'jj: unresolved branch emitted no C2 finding'
++  fi
++
+   # --- r4: close tracking is per anchor round ---------------------------------
+   # r3 remembered only the LAST close line anywhere, so an r5 close after an r7
+   # close erased the r7 close and the closed r7 anchor graded silent (critic

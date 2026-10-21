@@ -1358,3 +1358,25 @@ The parent stand-down/reversal and scope breaches remain disclosed.
 New source rows63→65 (A54/B3/C6→A55/B3/C7), validator exits0 both ends.
 Main independently agreed the S064 admit and S065 reject. Trends are
 unchanged/unchanged/improved, with no scalar or promotion claim.
+
+## Round 20 (L1 MoriR20) — classified drift re-pin and per-seat wave settlement
+
+Motivation: the r10 behavioral baseline stayed red rounds 12–19 with an incomplete free-text
+register (8 of 50 entering tokens unclassified), and r19 wave 1's 48 missing seat reports were
+counted by hand (`corpus/lessons/round-20.md` M1/M2). Entering `2061780`; frozen contract and C2
+cases `e4d9384`; C2 tool `2eeae04`; register, re-pin and corpus `8f8c58e`; wave-2 integration in
+the final round-20 commit.
+
+- C1 freshness: `corpus/evidence/drift-classification-r20.json` classes all 50 tokens (schema 26,
+  live-state 19, roster 5, regression 0 after the wave-2 FamRosterLanes correction); unclassified 8 → 0 (entering) and 7 → 0 (pre-pin) by
+  `.ufo/waves/round-20/evidence/c1-count.json` (locale-corrected command). Pinned
+  `corpus/evidence/baseline-r20-20261021T1051Z.json` at 10:53:07Z; post-pin drift `none` at
+  10:55:31Z (L1) and 11:00:57–11:02:06Z (wave-2 PostPinWindow). r10 baseline byte-unchanged.
+  Dissent on `-FINDING:WATCHDOG_STALE` / `-FINDING:WAVE_UNSETTLED_AGE` recorded as `blind_spot`.
+- C2 coverage: `tools/mori-wave-settlement.py`; independent oracle capability_absent 14 → 0
+  (14/14); selftest 23/23 (14 frozen + 9 refinements); r19 W1 16/64 partial; fleet 21 lanes /
+  196 dispatch files (`.ufo/waves/round-20/evidence/c2-live-fleet.json`).
+- Re-verification: census selftest 134/134 and silence oracle 28/28 at unchanged census bytes
+  (L1, 10:59Z). Waves: W1 76 seats (76/76 reports, 0 dead), W2 67 seats (59 reports + 8 start-stubs still running at landing; no replacements); round total 143.
+- Sources S066–S076 (S073–S076 supersede S069/S071/S070/S067 after wave-2 re-openings); Main non-author
+  agreed S068 admit / S072 reject. QUALITY 64–68.

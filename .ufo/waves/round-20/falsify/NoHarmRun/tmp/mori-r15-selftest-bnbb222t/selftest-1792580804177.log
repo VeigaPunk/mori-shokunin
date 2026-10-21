@@ -1,0 +1,10 @@
+argv=['/usr/bin/python3', '/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round15-regressions.py', '--fixtures', '/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/NoHarmRun/tmp/mori-r15-selftest-bnbb222t/fixtures', '--expected', '/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/NoHarmRun/tmp/mori-r15-selftest-bnbb222t/expected.json', '--pin-fixtures', '/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/NoHarmRun/tmp/mori-r15-selftest-bnbb222t/expected.json']
+rc=0
+--- stdout ---
+PINNED /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/NoHarmRun/tmp/mori-r15-selftest-bnbb222t/expected.json
+PIN fixtures=1 cases=7 frozen_sha256=0e41cb83fce2e8c5c711171e1cde2e6fa2809dcfce630eccabe52bcbe41516d9
+PIN gate_sha256=6a55c33cc13e2cd862ebd44db66e8af635a35d7cd2a85168360569c886d62ffe r14_helper_sha256=533218a566030fdabf7ca6a1c78111ca10be3fb3cb0e4a7b22734959f847e4ef
+PIN red_relevant_cases=3
+
+--- stderr ---
+

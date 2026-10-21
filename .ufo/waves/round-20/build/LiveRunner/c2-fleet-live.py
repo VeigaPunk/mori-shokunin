@@ -15,7 +15,7 @@ import tempfile
 SCHEMA = "mori-r20-c2-fleet-live-v1"
 SETTLEMENT_SCHEMA = "mori-wave-settlement-v1"
 COUNT_FIELDS = (
-    "waves", "members", "present", "missing", "empty", "misrooted",
+    "waves", "members", "present", "stub", "missing", "empty", "misrooted",
     "unsafe", "unparsed", "unreadable_json",
 )
 FILENAME_MARKERS = re.compile(

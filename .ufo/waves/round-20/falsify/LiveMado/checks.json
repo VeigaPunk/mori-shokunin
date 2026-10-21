@@ -1,0 +1,219 @@
+{
+ "A_dirs_under_waves": 645,
+ "A_dispatch_exact_count": 16,
+ "A_dispatch_like_not_exact": [],
+ "A_json_files": 428,
+ "A_nonjson_files_containing_dispatch_schema_text": [
+  ".ufo/waves/round-17/w1/reports/RevEvidenceLabelsR15.md"
+ ],
+ "A_regular_files_under_waves": 5384,
+ "A_schema_census": {
+  "<non-object>": 12,
+  "None": 231,
+  "mado-action-plan-expected-cases-v1": 1,
+  "mado-action-plan-frozen-v1": 1,
+  "mado-action-plan-policy-v1": 2,
+  "mado-advdepth-fixtures-v1": 1,
+  "mado-advdepth-results-v1": 1,
+  "mado-advdepth-summary-v1": 1,
+  "mado-corpus-diff-independent-v1": 1,
+  "mado-corpus-diff-v1": 1,
+  "mado-corpus-diff-v2": 6,
+  "mado-globals-capture-v1": 1,
+  "mado-measure-mutants-v1": 1,
+  "mado-measure-r17-v1": 7,
+  "mado-r17-schema-variants-v1": 1,
+  "mado-r17-tripwire-oracle-compare-v1": 1,
+  "mado-r17v3-backfill-v1": 1,
+  "mado-r21-assessment-oracle-mutation-v1": 1,
+  "mado-r21-assessment-oracle-v1": 2,
+  "mado-r21-assessment-seal-v1": 1,
+  "mado-r21-authored-corpus-adjudication-v1": 1,
+  "mado-r21-c1-oracle-v1": 1,
+  "mado-r21-resource-workloads-v1": 1,
+  "mado-r21-wave-outcomes-v1": 1,
+  "mado-receipt-claims-v1": 2,
+  "mado-recut-summary-v1": 2,
+  "mado-retention-v1": 2,
+  "mado-session-index-v1": 2,
+  "mado-supersessions-r19-v1": 1,
+  "mado-tally-claims-v1": 1,
+  "mado-tripwire-frozen-provenance-v1": 2,
+  "mado-tripwire-frozen-v0": 1,
+  "mado-tripwire-frozen-v1": 39,
+  "mado-tripwire-selftest-v1": 19,
+  "mado-tripwire-verdict-v1": 3,
+  "mado-tw-precision-cases-v1": 15,
+  "mado-tw-precision-r20-v1": 9,
+  "mado-tw-precision-suite-v1": 2,
+  "mado-w2-advrecallshapes-v1": 1,
+  "mado.receipt-correction/v1": 1,
+  "oracle-r13-r14-v1": 1,
+  "oracle-r15-v1": 1,
+  "oracle-r16-v1": 1,
+  "ufo-swarm-registry-v1": 25,
+  "ufo-swarm-wave-dispatch-v1": 16,
+  "ufo-swarm-wave-v1": 2
+ },
+ "A_symlinks_under_waves": [
+  ".ufo/waves/round-17/tripwire/hardening/symlink-target.jsonl",
+  ".ufo/waves/round-18/tripwire/frozen/symlink-input/inputs/link.jsonl",
+  ".ufo/waves/round-18/tripwire/frozen/symlinked-frozen-dir",
+  ".ufo/waves/round-18/tripwire/frozen/symlinked-inputs-dir/inputs",
+  ".ufo/waves/round-19/tripwire/r19-frozen-f1f2/f2-ancestor-symlink",
+  ".ufo/waves/round-19/tripwire/r19-frozen-f1f2/f2-dotdot/link",
+  ".ufo/waves/round-19/tripwire/r19-frozen-f1f2/f2-outside/evil",
+  ".ufo/waves/round-19/tripwire/r19-frozen-f1f2/f2-symlink-dir-dot",
+  ".ufo/waves/round-19/tripwire/r19-frozen-f1f2/f2-symlink-dir-dot-slash",
+  ".ufo/waves/round-19/tripwire/r19-frozen-f1f2/f2-symlink-dir-inputs-dotdot",
+  ".ufo/waves/round-19/tripwire/r19-frozen-f1f2/f2-symlink-dir-plain"
+ ],
+ "A_unreadable_json": [
+  ".ufo/waves/round-18/tripwire/frozen/malformed-expected-json/expected.json",
+  ".ufo/waves/round-20/w2/AdvVcsForms/scan-all.json"
+ ],
+ "B_present_count": 914,
+ "B_present_le_64_bytes": [],
+ "B_present_starting_with_stub_text": [],
+ "B_present_zero_size": [],
+ "B_smallest_present": [
+  [
+   211,
+   ".ufo/waves/round-13/w1/reports/AttackMistake.md"
+  ],
+  [
+   861,
+   ".ufo/waves/round-21/w1/reports/OracleJjRemote.md"
+  ],
+  [
+   866,
+   ".ufo/waves/round-21/w1/reports/OracleNeverReferenced.md"
+  ],
+  [
+   947,
+   ".ufo/waves/round-21/w1/reports/OracleGitCommitZn.md"
+  ],
+  [
+   965,
+   ".ufo/waves/round-21/w1/reports/OracleUnusedAdd.md"
+  ],
+  [
+   994,
+   ".ufo/waves/round-21/w1/reports/OracleAnnotation.md"
+  ],
+  [
+   996,
+   ".ufo/waves/round-21/w1/reports/OracleJjWorkspace.md"
+  ],
+  [
+   1044,
+   ".ufo/waves/round-21/w1/reports/OraclePureJson.md"
+  ],
+  [
+   1044,
+   ".ufo/waves/round-21/w1/reports/OracleUnusedCall.md"
+  ],
+  [
+   1127,
+   ".ufo/waves/round-21/w1/reports/OracleShadowPrint.md"
+  ]
+ ],
+ "C_basename_hits_in_lane_other_path": [
+  [
+   ".ufo/waves/round-13/w1/reports/ProtocolRecon.md",
+   [
+    ".ufo/waves/round-13/w1/ProtocolRecon.md"
+   ],
+   []
+  ],
+  [
+   ".ufo/waves/round-18/w2/reports/CriticAdmission.md",
+   [
+    ".ufo/waves/round-17/w2/reports/CriticAdmission.md",
+    ".ufo/waves/round-19/w2/reports/CriticAdmission.md",
+    ".ufo/waves/round-20/a2/review/CriticAdmission.md"
+   ],
+   []
+  ],
+  [
+   ".ufo/waves/round-18/w2/reports/CriticHonestyW2.md",
+   [
+    ".ufo/waves/round-19/w2/reports/CriticHonestyW2.md"
+   ],
+   []
+  ],
+  [
+   ".ufo/waves/round-19/w1/reports/RevQualityOverlap.md",
+   [
+    ".ufo/waves/round-18/w1/reports/RevQualityOverlap.md"
+   ],
+   []
+  ],
+  [
+   ".ufo/waves/round-21/w1/reports/SourcePartial.md",
+   [
+    ".ufo/waves/round-21/w2/reports/SourcePartial.md"
+   ],
+   []
+  ],
+  [
+   ".ufo/waves/round-21/w2/reports/SourceImap.md",
+   [
+    ".ufo/waves/round-21/w1/reports/SourceImap.md"
+   ],
+   []
+  ]
+ ],
+ "C_exact_path_hits_fleet_or_sibling_lanes": [],
+ "C_missing_by_file_dir_exists": [
+  [
+   "fleet-round-1-interactive/dispatch-preview.json",
+   false,
+   32
+  ],
+  [
+   "round-13/w1/dispatch.json",
+   true,
+   1
+  ],
+  [
+   "round-17/w1/dispatch.json",
+   true,
+   1
+  ],
+  [
+   "round-18/w2/dispatch.json",
+   true,
+   14
+  ],
+  [
+   "round-19/w1/dispatch.json",
+   true,
+   25
+  ],
+  [
+   "round-20/w2/dispatch.json",
+   true,
+   2
+  ],
+  [
+   "round-21/w1-run.json",
+   true,
+   15
+  ],
+  [
+   "round-21/w2-run.json",
+   true,
+   26
+  ]
+ ],
+ "C_missing_count": 116,
+ "C_reportdir_status": {
+  "absent": 32,
+  "exists": 84
+ },
+ "D_duplicate_member_names": [],
+ "D_final_line_not_trailer": [],
+ "D_multi_trailer": [],
+ "D_tasks_with_trailer_line": 1030
+}

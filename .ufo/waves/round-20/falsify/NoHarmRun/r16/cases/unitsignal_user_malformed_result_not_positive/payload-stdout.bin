@@ -1,0 +1,4 @@
+{"__CURSOR":"anchor","_BOOT_ID":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","MESSAGE_ID":"d9b373ed55a64feb8242e02dbe79a49c","UNIT_RESULT":"signal","USER_UNIT":"kagi-shokunin.service"}
+{"__CURSOR":"s=6d6f7269;i=3001;b=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;m=4c4b400;t=63000000;x=04","_BOOT_ID":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","MESSAGE_ID":"d9b373ed55a64feb8242e02dbe79a49c","UNIT_RESULT":9,"USER_UNIT":"kagi-shokunin.service"}
+{"__CURSOR":"s=6d6f7269;i=3002;b=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;m=4c4b401;t=64000000;x=05","_BOOT_ID":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","MESSAGE_ID":"d9b373ed55a64feb8242e02dbe79a49c","UNIT_RESULT":["signal"],"USER_UNIT":"kagi-shokunin.service"}
+{"__CURSOR":"s=6d6f7269;i=3003;b=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;m=4c4b402;t=65000000;x=06","_BOOT_ID":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","MESSAGE_ID":"d9b373ed55a64feb8242e02dbe79a49c","USER_UNIT":"kagi-shokunin.service"}
