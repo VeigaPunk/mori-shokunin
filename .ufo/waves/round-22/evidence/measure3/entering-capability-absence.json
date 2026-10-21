@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "git",
+    "-C",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin",
+    "cat-file",
+    "-e",
+    "77a5bbe8a0b41dfbfd2546d024d36e294b814bd0:tools/mori-retention-reconcile.py"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "exit_code": 128,
+  "measured_revision": "da40bb20f81da125d798f73cd1653655be1255ca",
+  "name": "entering-capability-absence",
+  "recorded_utc": "2026-10-21T15:29:09.223647+00:00",
+  "schema": "mori-r22-command-receipt-v1",
+  "stderr": "fatal: path 'tools/mori-retention-reconcile.py' exists on disk, but not in '77a5bbe8a0b41dfbfd2546d024d36e294b814bd0'\n",
+  "stdout": ""
+}

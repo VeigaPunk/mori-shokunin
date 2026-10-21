@@ -1369,3 +1369,43 @@ Actual counting commands, measured commit and verdict follow integration.
 Sourced claim: S064 reopened only for commit-resolution semantics, with
 Gate quote and source change log in `corpus/lessons/round-22.md`.
 No frontier closure, promotion, privacy improvement or subsequent round.
+
+### Round22 exercised outcome — measured da40bb20f81da125d798f73cd1653655be1255ca
+
+Correction to the declaration above: `frozen/expected-real.json` was committed
+with the implementation (8cb4afb), not pre-build; only the contract, correction,
+v2 builder/oracle and requirements-v2 are freeze-bound (e2f549b, checked by the
+driver against that commit).
+
+| Claim | Axis / delta | Before→after | Verdict / boundary |
+|---|---|---|---|
+| C1 retention receipt reconciliation (capability, sourced S064) | calibration5→5 held | frozen24 capability_absent24→0, pass0→24 (same oracle, same inputs) | improved bounded calibration capability. Real r21 receipt reconciles exactly (exit0, receipt_match) as raw95 / policy non-author-excluded5 / scanner90 / unallowlisted4 (raw_not_allowlisted9), retention red, privacy_clearance=false; identity digests match, swapped twin rejected; contradictory entering receipt rejected (receipt_revision_conflict). |
+
+Counting command (lane root):
+
+```sh
+python3 .ufo/waves/round-22/measure-round22.py --revision <REV> --output <ABSENT_DIR>
+jq -c '[.before.capability_absent,.after.capability_absent,.after.pass,.all_claim_checks_pass]' <ABSENT_DIR>/summary.json
+# measure3 at da40bb2: [24,0,24,true]
+```
+
+Exercised at da40bb2 (`.ufo/waves/round-22/evidence/measure3/`): CLI selftest
+4/4; co-evolved refinement controls 52/52; 22 targeted mutants each killed on
+their named rows, unmutated frozen+refinement controls green; all-arm output
+safety true; current retention floor rc1, unallowlisted4, 0 new/0 missing,
+same inherited identities; carried inputs byte-unchanged (census, retention
+gate, evidence-loss tool, allowlist, loss accounting, r21 fixture runner and
+original control, r20 baseline). Frozen R13–R21 are exit-level only; their
+reasons rest on the co-evolved controls.
+
+| Name | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---:|
+| Retention receipt reconciliation | Recount a committed retention receipt's measured tree independently and report exact identity agreement, policy-membership exclusions and red state, never clearance | `.ufo/waves/round-22/evidence/measure3/summary.json`; `tools/mori-retention-reconcile.py --selftest` | 22 |
+
+Other axes coverage6/operability7/depth5/freshness5/adjacency6 unchanged.
+No score increase, privacy/history clearance, pin, disposition or promotion.
+Open debt carried: four unallowlisted retention hits (policy copy under
+round-20 falsify), original permission control RED11/12, two unknown
+historical dispositions with baseline acceptance blocked. Trends (author
+proposal; outside closure decides): expansion unchanged, quality improved,
+discernment improved. No subsequent round.

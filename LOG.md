@@ -1494,3 +1494,27 @@ byte-compared to its portable archive. This describes code, not unrun success.
 Retrospective entering-registry histogram is explicitly separate from the
 actual round-start census validation receipt. Wave2 has64 distinct concrete
 post-implementation attacks; L1 measures only after reviewers return.
+
+### Round22 final measured outcome (after L1 provider death and resume)
+
+The L1 died ~27m in on a Devin weekly-quota stream error; Main checkpointed
+uncommitted files as b095ecc (wip, parent-requested), and the same L1 resumed
+as sole owner and folded it. Seats AttackR22/ReviewErrors died with the L1.
+Wave1 64 seats: 56 reports, 8 deaths (3 executors + sentinel on Codex capacity,
+2 scribes on Anthropic 429, 2 lost with L1). Wave2 64 seats (payload validated
+at 3985b3d, first issued after resume): 41 reports, 23 deaths on Devin weekly
+quota / commandcode weekly limit / Devin rate limit. No replacements. Round
+total 128 seats. Evidence: dead-seats-wave1.json, dead-seats-wave2.json,
+settlement-final.json (wave1 56/64, wave2 41/64 partial).
+
+Measured da40bb20f81da125d798f73cd1653655be1255ca (`evidence/measure3/`):
+frozen24 capability_absent24→0, pass0→24; selftest4/4; refinements52/52;
+22/22 targeted mutants killed with green unmutated controls; real r21 receipt
+reconciled 95/5/90/4 (raw_not_allowlisted9), identities match, retention red,
+privacy_clearance=false; current retention floor 4 unallowlisted, 0 new.
+Main (non-author) agreed S064 admit / S065 reject. Sources76→76, validator
+rc0 both ends, S064 used-by extended (logged in round22 lesson). Misroot sweep:
+one candidate, souji's own round-22 report — another lane's file, untouched.
+No tool install, census run, pin, host mutation, promotion or subsequent round.
+Procedural disclosure: one S064 used-by cell edit was applied with a python
+string replacement instead of the edit tool; bytes verified by git diff.

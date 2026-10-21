@@ -1,0 +1,136 @@
+{
+  "counts": {
+    "capability_absent": 24,
+    "pass": 0,
+    "total": 24,
+    "unmet": 24
+  },
+  "fixture_builder_sha256": "1b3e16f74a032e066dd881c15affbc4401f2f44447d78efc650ee98a6d2d15d1",
+  "oracle_sha256": "dcd1c7c656ea8b2e266f88762bf5540e42e41c78078a4b8b11f41e23670d8adb",
+  "requirements_sha256": "48ea2369dad5958bd62922483438124b11597a61a5e1ddc02bbeb213c89d0bea",
+  "results": [
+    {
+      "id": "R01",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R02",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R03",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R04",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R05",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R06",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R07",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R08",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R09",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R10",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R11",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R12",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R13",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R14",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R15",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R16",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R17",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R18",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R19",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R20",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R21",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R22",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R23",
+      "pass": false,
+      "reason": "capability_absent"
+    },
+    {
+      "id": "R24",
+      "pass": false,
+      "reason": "capability_absent"
+    }
+  ],
+  "runs": [],
+  "schema": "mori-r22-finite-observations-v1",
+  "tool": "/home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/round22/measure3/entering-absent-tool.py"
+}
