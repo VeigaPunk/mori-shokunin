@@ -116,3 +116,10 @@ green. Main's exact ruling is retained in evidence/parent-strict-target-disposit
 Two generic declared fixture validations (nonempty population and exact path-record
 keys) gain co-evolved public-selftest arms. No frozen expectation changes, no
 special-case for escaped paths and no implicit Core/capability admission.
+
+The later public selftest's `escaped-mount-point` is a DIFFERENT, co-evolved arm
+from frozen CaseEscapedSpace. It accidentally combines mount259:2 with helper's
+default stat259:1, so an intended positive fixture becomes device_mismatch.
+Correct only its input to explicit259:2, retaining the same expected positive
+output and the red-before receipt. Never use that selftest correction to claim
+the independent frozen topology case was fixed or its expected value changed.

@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "python3",
+    "-I",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+    "--selftest"
+  ],
+  "measured_revision": "56ac3badb4d84ed5b0b117d6295fc832341e01f3",
+  "exit": 1,
+  "stdout": "{\"arms\":49,\"exit_code\":1,\"failures\":[\"arm escaped-mount-point: rc=2 want=1\",\"arm escaped-mount-point: finding_id='QUOTA_STATE_UNKNOWN' want='QUOTA_ENABLED'\",\"arm escaped-mount-point: primary paths[0].basis='device_mismatch' want='xfs_quota_option'\",\"arm escaped-mount-point: primary paths[0].enforcement='n/a' want='enforced'\",\"arm escaped-mount-point: primary paths[0].quota_state='unknown' want='enabled'\"],\"finding_id\":\"QUOTA_SELFTEST_FAIL\",\"schema\":\"mori-quota-surface-v1\"}\n",
+  "stderr": ""
+}

@@ -1534,7 +1534,7 @@ def selftest():
             "escaped-mount-point",
             fixture(
                 mount_line(77, "259:2", "/srv\\040data", "xfs", "/dev/sdc1", "rw,usrquota"),
-                [path_entry("/srv data")],
+                [path_entry("/srv data", st_dev="259:2")],
             ),
             RC_ENABLED,
             ENABLED,

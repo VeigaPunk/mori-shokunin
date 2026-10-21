@@ -1643,3 +1643,21 @@ sealed input/want or the red topology result. These internal tests are not new
 independent cases or criteria. C1 remains independent; the strict C2 target is
 not converted into a partial admission. Remaining work is the declared falsification
 and guards, not further interpreter/topology scope.
+
+### Round23 — delivered guards and a separate co-evolved selftest input correction
+
+At56ac3badb4d84ed5b0b117d6295fc832341e01f3, measure3 again records C1
+26/26 and all supplementary controls, C2 exactly29/30, and the same matching
+default real observation. The current retention gate remains red4 with95raw,
+86allowlisted/5non-author and zero new/missing unallowlisted identities compared
+with the retained r21 receipt (`retention-floor-delivered.json`, comparison).
+The old permission/loss/baseline authority is not cleared.
+
+The public quota selftest has49 arms but returns red on its OWN distinct
+`escaped-mount-point` arm: the mount is259:2 while path_entry silently defaults
+to259:1, so the correct device mismatch preempts its intended positive quota test.
+Only that co-evolved selftest INPUT now specifies st_dev259:2; its wanted output
+and the generic device check are unchanged. This is not the independent frozen
+CaseEscapedSpace, whose topology/expected/rule are untouched and still red.
+The original selftest receipt remains evidence; the corrected actual invocation
+follows at its new committed revision. No frozen instrument is edited.

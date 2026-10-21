@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-measure3/staged/after/mori-retention-reconcile.py",
+    "check",
+    "--repo",
+    "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-measure3/c1/after-fixtures/valid",
+    "--rev",
+    "dc27e6dfb53714c0b59a35223fc594a64b54d3fb",
+    "--receipt",
+    "receipt.json",
+    "--policy",
+    "policy.json",
+    "--allowlist",
+    "allowlist.json"
+  ],
+  "exit_code": 0,
+  "measured_revision": "56ac3badb4d84ed5b0b117d6295fc832341e01f3",
+  "name": "c1-replay-measured-00",
+  "recorded_utc": "2026-10-21T18:24:08.213847+00:00",
+  "schema": "mori-r23-command-receipt-v1",
+  "seal_revision": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+  "stderr": "",
+  "stdout": "{\"allowlisted\":3,\"argv\":[\"check\",\"--repo\",\"/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-measure3/c1/after-fixtures/valid\",\"--rev\",\"dc27e6dfb53714c0b59a35223fc594a64b54d3fb\",\"--receipt\",\"receipt.json\",\"--policy\",\"policy.json\",\"--allowlist\",\"allowlist.json\"],\"differences\":[],\"exclusion_basis\":\"non_author_paths_glob\",\"finding_id\":\"RETENTION_RECONCILED\",\"forbidden_allowlist\":0,\"input_revision\":\"dc27e6dfb53714c0b59a35223fc594a64b54d3fb\",\"inputs_sha256\":{\"allowlist\":\"255971e9598b4bf25f113a5be628e9d2c4dabf38774af04e7b17055443b89f84\",\"policy\":\"38ec02216438277b7d79ccd0d058b482ab7a75099f65861227d5eed4e9c743b6\",\"receipt\":\"ce091ad14f3b0491b339ab071cc27ee743e11fedd8d60fb8bab5ead8f44591db\"},\"measured_revision\":\"a8e8b5dfb9cc19c66ae3d13f16bee3fa86b36a34\",\"non_author\":1,\"policy_excluded\":1,\"policy_excluded_hits\":[{\"class\":\"R22\",\"line\":1,\"line_sha256\":\"b53ec2f9e3e7c31dee0e36ecbf72bc0bc4f05d10ea6bf40d79ae67db318d5c68\",\"path\":\"non-author.txt\"}],\"privacy_clearance\":false,\"raw_hits\":[{\"class\":\"R22\",\"line\":1,\"line_sha256\":\"32439be8272bf11ac1eabd9e6d22a26f8ab496d02840b02006a5856695487308\",\"path\":\"allowed.txt\"},{\"class\":\"R22\",\"line\":2,\"line_sha256\":\"32439be8272bf11ac1eabd9e6d22a26f8ab496d02840b02006a5856695487308\",\"path\":\"allowed.txt\"},{\"class\":\"R22\",\"line\":1,\"line_sha256\":\"b53ec2f9e3e7c31dee0e36ecbf72bc0bc4f05d10ea6bf40d79ae67db318d5c68\",\"path\":\"non-author.txt\"},{\"class\":\"R22\",\"line\":13,\"line_sha256\":\"ff4801919433523ae1470339b71390fba2dc2e4416b380f101a17f6c4f334438\",\"path\":\"policy.json\"},{\"class\":\"R22\",\"line\":1,\"line_sha256\":\"f748b07e5a6335a78e8ba0fe7d895c96f599c2563c6bd70335d96c1030e25aff\",\"path\":\"unallowed.txt\"}],\"raw_not_allowlisted\":2,\"raw_total\":5,\"receipt_authenticity\":\"unattested\",\"receipt_match\":true,\"retention_state\":\"red\",\"scanner_hits\":[{\"class\":\"R22\",\"line\":1,\"line_sha256\":\"32439be8272bf11ac1eabd9e6d22a26f8ab496d02840b02006a5856695487308\",\"path\":\"allowed.txt\"},{\"class\":\"R22\",\"line\":2,\"line_sha256\":\"32439be8272bf11ac1eabd9e6d22a26f8ab496d02840b02006a5856695487308\",\"path\":\"allowed.txt\"},{\"class\":\"R22\",\"line\":13,\"line_sha256\":\"ff4801919433523ae1470339b71390fba2dc2e4416b380f101a17f6c4f334438\",\"path\":\"policy.json\"},{\"class\":\"R22\",\"line\":1,\"line_sha256\":\"f748b07e5a6335a78e8ba0fe7d895c96f599c2563c6bd70335d96c1030e25aff\",\"path\":\"unallowed.txt\"}],\"scanner_total\":4,\"scanner_unallowlisted\":1,\"schema\":\"mori-retention-reconciliation-v2\",\"tool_sha256\":\"4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36\"}\n"
+}
