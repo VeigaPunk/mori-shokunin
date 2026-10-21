@@ -1476,3 +1476,17 @@ control fail after withdrawal. Current C2 buckets are30capability_absent/0pass a
 No current quota real invocation was made; f3's earlier direct real match stays
 historical. Source census exit0 at this revision; registry76→89, A62→75/B6/C8,
 mined42→55/queued25/rejected9, only old S065 used-by changed.
+
+Last retention-scanned evidence snapshot4994c0df54ee793c0c25c34d178729d42c045803:
+`python3 -I tools/mori-retention-gate.py scan --repo "$PWD" --rev 4994c0df54ee793c0c25c34d178729d42c045803 --policy .ufo/waves/round-18/frozen/c1-policy.json --allowlist corpus/evidence/retention-allowlist.json`
+actually exits1 RETENTION_FINDINGS, metric4, raw95/allowlisted86/non-author5.
+Raw and unallowlisted identity multisets equal56ac3bad, new0/missing0; no permission
+or unknown-loss control was rerun or cleared. Exact argv/streams are in
+evidence/retention-floor-final.json; comparison is separate JSON. Later receipt/
+forensic-packaging commits are not retroactively claimed scanned at this snapshot.
+
+Capture limitation: frozen driver real-control filenames overwrite their own raw
+command wrappers with parsed JSON. Semantic results/summary remain; exact original
+stdout/stderr wrappers are unavailable for those controls. C1's original/supplementary
+verdicts are not a claim of perfect evidence capture; see
+evidence/harness-receipt-overwrite.json. No frozen fix or new C2 rescue run.

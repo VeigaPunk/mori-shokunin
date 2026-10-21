@@ -265,3 +265,24 @@ stdout, stderr and statuses are in round23 evidence. The sealed driver hardcodes
 the original lane path for committed inputs, and the real wrapper binds that path:
 not a portable-host claim or self-authenticated historical provenance. C1 source/
 behavioral delta is bounded; weak inherited predicates are not a whole-tool proof.
+
+## M13 — a receipt filename is also an evidence contract
+
+The frozen driver record() writes a command wrapper including argv/exit/stdout/
+stderr, then its real-control paths overwrite `c1-real-control.json` and
+`c2-real-control.json` with decoded tool results. This loses exact original stream
+wrappers while preserving parsed output and summary checks. The earlier “complete
+capture” prose was too broad. Do not repair a frozen harness after seeing results
+or rerun a control to pretend its original bytes were recovered: disclose the
+loss, retain semantic evidence and the independent source/identity checks, and
+leave outside closure to assess its bounds. The standalone final retention-floor
+receipt does preserve its actual argv/exit/stdout/stderr separately.
+
+That floor at4994c0df is still RED95raw/86allowlisted/5non-author/4unallowlisted;
+exact multiset equality, zero new/missing, no clearance. New forensic packaging
+is explicitly outside that already-measured snapshot. Raw owned round23 scratch
+evidence is archived before cleanup; only VCS/bytecode and individually verified
+copies of published entering-tree files are omitted with full Git-blob references.
+This is lossless evidence deduplication, not exclusion of a failing case or
+selective erasure of an inconvenient observation. Original CaseEscapedSpace,
+all expectations/rules and29/30 remain unchanged.

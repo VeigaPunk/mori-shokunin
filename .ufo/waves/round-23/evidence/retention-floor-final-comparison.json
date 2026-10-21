@@ -1,0 +1,28 @@
+{
+  "before_revision": "56ac3badb4d84ed5b0b117d6295fc832341e01f3",
+  "after_revision": "4994c0df54ee793c0c25c34d178729d42c045803",
+  "prior_exit": 1,
+  "after_exit": 1,
+  "counts_before": {
+    "raw": 95,
+    "allowlisted": 86,
+    "non_author": 5,
+    "unallowlisted": 4,
+    "metric": 4
+  },
+  "counts_after": {
+    "raw": 95,
+    "allowlisted": 86,
+    "non_author": 5,
+    "unallowlisted": 4,
+    "metric": 4
+  },
+  "raw_identity_multiset_equal": true,
+  "unallowlisted_multiset_equal": true,
+  "new_raw": [],
+  "missing_raw": [],
+  "forbidden_allowlist": 0,
+  "finding_id": "RETENTION_FINDINGS",
+  "clearance": false,
+  "scope": "Actual frozen retention-policy population only; unchanged red debt is not privacy/health/baseline clearance"
+}

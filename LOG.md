@@ -1722,3 +1722,31 @@ rejected9. Every older non-used-by cell unchanged; S065 used-by gained lesson23.
 Late scribe live-source edits were restored to6eb's exact bytes before L1's sole
 integration; actual separate-checkout violation and earlier runtime/probe/resource
 deviations remain in evidence/protocol-deviations.json. No retroactive compliance.
+
+### Round23 — retention floor and forensic evidence, with capture erratum
+
+At landed4994c0df54ee793c0c25c34d178729d42c045803 the unchanged retention-gate scan
+actually exits1 RETENTION_FINDINGS:95raw/86allowlisted/5non-author/4unallowlisted.
+Exact raw and unallowlisted multisets equal the56ac3bad snapshot, new0/missing0,
+forbidden allowlist0. Full standalone stdout/stderr is retained in
+evidence/retention-floor-final.json; this is frozen-policy scope, not clearance.
+
+Correction to the earlier “complete command stdout/stderr” description: the frozen
+driver's record(c1-real-control/c2-real-control) wrappers are overwritten later by
+decoded result JSON at the SAME filenames (driver209–217,860/901–902,
+1069/1106–1107). Parsed outputs and summary verdicts remain, but exact original
+real-control stdout/stderr wrappers do not. This applies to the earlier delivered
+real controls and the post-withdrawal C1 real control; post-withdrawal C2 never runs.
+No re-run or frozen-harness edit can restore the lost original capture. The
+limitation is explicit in evidence/harness-receipt-overwrite.json; independent C1
+source/predicate/identity observations remain bounded evidence, not universal proof.
+
+All new owned round23 scratch source/downloads, raw red/advisory outputs, fixtures
+and detector drafts are retained in rejected/owned-round23-scratch-evidence.tar.gz
+(9127248bytes, SHA25681eeb8a9744c8241d42bfd152b64e140f00c05f61f5d0043685fed9efca1c6cf).
+Only VCS/bytecode plus31612 verified copies of already-published entering1bfe708a
+files in four full clones are omitted; complete per-copy Git-blob references are
+in inherited-clone-copies.json.gz. This deduplicates inherited archive/source
+copies, not new red evidence. Oversized redundant unlanded packs were discarded,
+with their hashes recorded; forensic packaging is not a supported tool or a
+privacy-scanned population. Owned scratch cleanup follows durable landing only.

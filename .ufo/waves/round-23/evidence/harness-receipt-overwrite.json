@@ -1,0 +1,15 @@
+{
+  "schema": "mori-r23-frozen-harness-receipt-limit-v1",
+  "driver_sha256": "5c12fdc056309966d3e716d25e3427a7908056595383f0353655b42282fdfbcd",
+  "evidence": [
+    "build/MeasureDriver/measure-round23-v2.py:209-217",
+    "build/MeasureDriver/measure-round23-v2.py:855-860",
+    "build/MeasureDriver/measure-round23-v2.py:901-902",
+    "build/MeasureDriver/measure-round23-v2.py:1066-1069",
+    "build/MeasureDriver/measure-round23-v2.py:1106-1107"
+  ],
+  "defect": "record(c1-real-control/c2-real-control) initially writes argv/exit/stdout/stderr wrappers; later code overwrites the same JSON filename with the decoded tool result. Parsed semantic output and summary statuses remain, not the original byte-level stdout/stderr wrapper.",
+  "affected": "Earlier delivered C1/C2 real controls; post-withdrawal C1 real control. C2 real is not run after withdrawal.",
+  "limits": "Do not assert complete raw subprocess capture for those real controls. No new run could restore the lost original wrapper. Other named command captures and the final standalone retention-floor receipt remain separate.",
+  "disposition": "Frozen driver unchanged; all original C1 predicates/source/identity observations preserved; global driver red and C2 unadmitted. Append explicit correction to earlier complete-capture prose."
+}
