@@ -1490,3 +1490,17 @@ command wrappers with parsed JSON. Semantic results/summary remain; exact origin
 stdout/stderr wrappers are unavailable for those controls. C1's original/supplementary
 verdicts are not a claim of perfect evidence capture; see
 evidence/harness-receipt-overwrite.json. No frozen fix or new C2 rescue run.
+
+## Round 24 declaration (attempt 2, L1 MoriR24) — routed repair and system pressure
+
+Entering tip `c725aa37aa3c9ec4f34e3c2abc8ca1b616c7c130` (round 23 closure: rejected,
+honest stop). Full contract: `.ufo/waves/round-24/contract.md`. Targets, not results.
+
+| Claim | Axis / score | Before | Declared after-value (one command over committed bytes) |
+|---|---|---|---|
+| C1 repair the four byte-checkable round-23 routed items | calibration 5 (lowest active, tied with depth and freshness) | no check exists; the new check at `c725aa37` is expected to report 3 of 4 held (no round-24 pre-call ledger) | `python3 -I tools/mori-routed-check.py --repo <lane> --rev <landed tip>` prints `"held": 4` of `"items": 4`, exit 0 |
+| C2 system CPU, IO and IRQ pressure capability (FR12, sourced) | coverage 6 | `tools/mori-pressure.py` absent; no mori tool reads system CPU, IO or IRQ pressure | `python3 -I tools/mori-pressure.py --selftest` prints `MORI_PRESSURE_SELFTEST: PASS 12/12`, exit 0, over cases landed before the tool |
+
+Held and observed: operability 7, depth 5, freshness 5, adjacency 6. Routed item 5 is an
+adjacency boundary without a byte predicate; it is reported, not counted. No retirement,
+waiver, exploratory claim or promotion.

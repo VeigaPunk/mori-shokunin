@@ -1762,3 +1762,17 @@ matches were found; the source scribe's generic helper was already deleted per
 its disclosure. `evidence/scratch-cleanup.json` binds archive landing and removals.
 All160 seats had completed, with no replacements/deaths; no later test, code fix,
 new quota experiment, frozen change, next-round claim or admission was performed.
+
+## 2026-10-22 — round 24 attempt 2: declaration (L1 MoriR24)
+
+Attempt 1 (a stale 2026-10-21 author) was failed at T0 and is not resumed; its private
+pre-registration trees are not continued. The round 23 closure rejected the round as an
+honest stop and routed five items (`corpus/lessons/round-23-verifier-spotcheck.md:60-66`).
+Motivating evidence for C1: the four byte-checkable routed items (quota capability absent,
+retention debt preserved, capture limitations preserved, dispatch bound before the call)
+had no check; the round 23 first wave was bound only after the call. Motivating evidence
+for C2: the census reads only the user slice's `memory.pressure`
+(`tools/mori-census.sh:1728-1740`), while this host exposes `/proc/pressure/cpu`, `io`,
+`irq` and `memory` (read 2026-10-22, kernel 7.2.11). Frontier FR12 names CPU and IRQ
+pressure as open. Contract: `.ufo/waves/round-24/contract.md`. Start source census:
+exit 0, six retained W04 duplicate-URL warnings.
