@@ -34,3 +34,46 @@ These notes supersede the conflicting round-18 author assessments without editin
 ## Gate
 
 New source decisions, located quotes, opened dates, re-opened rejected-row corrections, and independent non-author spot-check disposition are appended below. Lane-dispatched review seats remain author-side evidence; they are not the non-author closure.
+
+### New rows opened and decided this round
+
+| Row | URL | Access date | Decision / located quote (at most 25 words) |
+|---|---|---|---|
+| S064 | https://git-scm.com/docs/git-rev-parse | 2026-10-21 | Admit A, mined for C2 commit resolution only. “This will error out if $REV is empty or not a valid revision.” — EXAMPLES, after commit object name from REV. Type peeling and `--end-of-options` are in OPTIONS `--verify`; neither proves input bytes match that tree. |
+| S065 | https://docs.python.org/3/library/hashlib.html | 2026-10-21 | Reject C for C2 provenance support, not for API accuracy. “This module implements a common interface to many different hash algorithms.” — module introduction. Flip: admit A for narrow hash-call behavior, with separate revision-linkage evidence. |
+
+Both sources were opened by L1 this round. S064 supports C2's explicit commit
+resolution, not authority or authenticity; S065's rejection preserves the distinction
+between byte identity and evidence provenance. No existing immutable source-row
+field is rewritten; no old status/recheck/used-by cell changed at this step.
+
+### C2 refinement discovered by the first-wave critic
+
+`build/CriticProvenance.md:9–15` supplies the dirty/external-input counterexample:
+a separately hashed file is not necessarily a blob at the reported revision.
+Supplementary expectations landed in `frozen/provenance-refinement.json` at
+`7d949b4d394e3b12c56b6d04793c80bd43d53458`. They are **co-evolved refinements
+after dispatch**, not part of the original pre-build oracle. The original
+`frozen/expected.json` is unchanged. A bound invocation must compare exact loaded
+register/correction bytes with blobs at its explicit measured commit; uncommitted,
+external or differing input is could-not-evaluate. The executing-script digest
+remains a separate identity, never an assertion that the script is in that tree.
+The historical/prospective attribution is one plus three, not a four-defect claim.
+
+### Round18 rejected-row quote repairs (newly opened 2026-10-21)
+
+These append missing Gate evidence; the filed round18 lesson and immutable row
+fields remain unchanged. All four statuses remain rejected, recheck and used-by
+unchanged. There is no claim that the earlier Gate already contained the quotes.
+
+| Row | Opened URL | Located quote (at most 25 words) | Content decision |
+|---|---|---|---|
+| S055 | https://www.strac.io/blog/gdpr-data-minimization | “Strac automates discovery, redaction, and deletion across Salesforce, Zendesk, Slack, S3, and 50+ other systems to enforce minimization at scale.” — TL;DR, final bullet | Reject retained: vendor marketing is not primary retention authority; uncited enforcement ranges are not an admissible case study. |
+| S057 | https://api.crossref.org/works/10.1177/1745691612463078 (DOI https://doi.org/10.1177/1745691612463078) | “Other analyses can be carried out but these should be labeled ‘exploratory.’” — `message.abstract`, sentence before the replication example (quotation marks normalized) | Reject retained; **abstract only**, not a body review or verification of its stronger validity claim. This is explicit screening-only scope, not an unavailable-text invention. |
+| S059 | https://git-scm.com/docs/git-log | “The output is given in reverse chronological order by default.” — DESCRIPTION, first explanatory paragraph | Reject retained for this question: the admitted plumbing references already govern the freeze-order command; this default is not the explicit topology order used by the tool. |
+| S063 | https://docs.python.org/3/library/json.html | “If True, dictionaries will be outputted sorted by key.” — Basic Usage, `json.dump` `sort_keys` parameter (markup removed) | Reject retained as JCS authority; parameter documentation alone does not prove a canonical number/string/order domain. |
+
+S055 was opened directly; S057's CrossRef metadata was opened directly and the
+paper body was not opened by L1; S059/S063 were opened directly. No new source row
+is created for these re-openings, because their scoped rejection decisions do not
+change. New S064/S065 remain the only added rows at this step.

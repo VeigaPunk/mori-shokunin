@@ -2,7 +2,7 @@
 """Check whether frozen claim inputs predate their implementation commits."""
 
 import argparse
-import json
+import hashlib
 import os
 from pathlib import Path
 import re
@@ -58,11 +58,31 @@ def _valid_revision(rev):
             and ".." not in rev and "@{" not in rev)
 
 
-def _is_commit(repo, rev):
+def _resolve_commit(repo, rev):
     if not _valid_revision(rev):
-        return False
-    proc = _git(repo, "cat-file", "-e", rev + "^{commit}")
-    return proc.returncode == 0
+        return None
+    proc = _git(repo, "rev-parse", "--verify", "--quiet",
+                "--end-of-options", rev + "^{commit}")
+    if proc.returncode != 0:
+        return None
+    try:
+        oid = proc.stdout.decode("ascii").strip()
+    except UnicodeError:
+        raise GitError("invalid-resolved-revision") from None
+    if not re.fullmatch(r"(?:[0-9a-f]{40}|[0-9a-f]{64})", oid):
+        raise GitError("invalid-resolved-revision")
+    return oid
+
+
+def _repository_root(repo):
+    proc = _git(repo, "rev-parse", "--show-toplevel")
+    if proc.returncode != 0:
+        raise GitError("repository-root-failed")
+    try:
+        root = Path(os.fsdecode(proc.stdout.rstrip(b"\n"))).resolve(strict=True)
+    except (OSError, RuntimeError):
+        raise GitError("repository-root-failed") from None
+    return root
 
 
 def _path_exists(repo, rev, path):
@@ -102,15 +122,41 @@ def _reject_constant(_value):
     raise ValueError("invalid-number")
 
 
-def _read_json(path, label):
+def _read_json(path, label, repo=None, revision=None, repo_root=None):
+    input_path = Path(path)
+    relative_path = None
+    if revision is not None:
+        try:
+            resolved_path = input_path.resolve(strict=True)
+            relative_path = resolved_path.relative_to(repo_root).as_posix()
+            if not relative_path or not resolved_path.is_file():
+                raise ValueError("not-a-repository-file")
+            input_path = resolved_path
+        except (OSError, RuntimeError, ValueError):
+            raise InputError("input-revision-mismatch") from None
     try:
-        with open(path, "r", encoding="utf-8") as stream:
-            return json.load(
-                stream, object_pairs_hook=_strict_object,
-                parse_constant=_reject_constant,
-            )
-    except (OSError, UnicodeError, json.JSONDecodeError, ValueError):
+        raw = input_path.read_bytes()
+    except OSError:
+        error = ("input-revision-mismatch" if revision is not None
+                 else "unreadable-" + label)
+        raise InputError(error) from None
+    digest = hashlib.sha256(raw).hexdigest()
+    if revision is not None:
+        try:
+            proc = _git(repo, "show", revision + ":" + relative_path)
+        except GitError:
+            raise InputError("input-revision-mismatch") from None
+        if (proc.returncode != 0
+                or hashlib.sha256(proc.stdout).hexdigest() != digest):
+            raise InputError("input-revision-mismatch")
+    try:
+        data = json.loads(
+            raw.decode("utf-8"), object_pairs_hook=_strict_object,
+            parse_constant=_reject_constant,
+        )
+    except (UnicodeError, json.JSONDecodeError, ValueError):
         raise InputError("unreadable-" + label) from None
+    return data, digest
 
 
 def _valid_path(value):
@@ -121,8 +167,8 @@ def _valid_path(value):
     return value != "."
 
 
-def _load_register(path):
-    data = _read_json(path, "register")
+def _load_register(path, repo=None, revision=None, repo_root=None):
+    data, digest = _read_json(path, "register", repo, revision, repo_root)
     if (not isinstance(data, dict) or data.get("schema") != REGISTER_SCHEMA
             or not isinstance(data.get("claims"), list)):
         raise InputError("invalid-register")
@@ -151,13 +197,16 @@ def _load_register(path):
             raise InputError("invalid-register")
         seen.add(ident)
         claims.append(row)
-    return claims
+    return claims, digest
 
 
-def _load_corrections(path, claim_ids):
+def _load_corrections(path, claim_ids, repo=None, revision=None,
+                      repo_root=None):
     if path is None:
-        return {}
-    data = _read_json(path, "corrections")
+        return {}, None
+    data, digest = _read_json(
+        path, "corrections", repo, revision, repo_root,
+    )
     if isinstance(data, list):
         rows = data
     elif isinstance(data, dict):
@@ -181,7 +230,7 @@ def _load_corrections(path, claim_ids):
                 or not isinstance(label, str)):
             raise InputError("invalid-corrections")
         labels[ident] = label
-    return labels
+    return labels, digest
 
 
 def _tip_overrides(items, claim_ids):
@@ -199,7 +248,8 @@ def _tip_overrides(items, claim_ids):
 
 def _row_result(repo, claim, tip_override, effective_label):
     ident = claim["id"]
-    tip = tip_override if tip_override is not None else claim["tip"]
+
+[Showing lines 1-250 of 707. Use :251 to continue]    tip = tip_override if tip_override is not None else claim["tip"]
     result = {
         "id": ident,
         "verdict": "could-not-evaluate",
@@ -207,20 +257,26 @@ def _row_result(repo, claim, tip_override, effective_label):
         "effective_label": effective_label,
         "overclaim": None,
         "oracle_disagreement": None,
+        "base_revision": None,
+        "tip_revision": None,
     }
 
     if tip_override is None and tip.startswith("<") and tip.endswith(">"):
         result["reason"] = "placeholder-tip-requires-override"
         return result
-    if not _is_commit(repo, claim["base"]):
-        result["reason"] = "unknown-base-revision"
-        return result
-    if not _is_commit(repo, tip):
-        result["reason"] = "unknown-tip-revision"
-        return result
-
     try:
-        commits = _commits_between(repo, claim["base"], tip)
+        base_revision = _resolve_commit(repo, claim["base"])
+        if base_revision is None:
+            result["reason"] = "unknown-base-revision"
+            return result
+        result["base_revision"] = base_revision
+        tip_revision = _resolve_commit(repo, tip)
+        if tip_revision is None:
+            result["reason"] = "unknown-tip-revision"
+            return result
+        result["tip_revision"] = tip_revision
+
+        commits = _commits_between(repo, base_revision, tip_revision)
         frozen = set(claim["frozen"])
         impl = set(claim["impl"])
         first_impl = None
@@ -237,12 +293,13 @@ def _row_result(repo, claim, tip_override, effective_label):
             if hit_frozen and hit_impl:
                 co_committed = True
 
-        if any(not _path_exists(repo, tip, path) for path in claim["frozen"]):
+        if any(not _path_exists(repo, tip_revision, path)
+               for path in claim["frozen"]):
             verdict = "absent"
         elif first_impl is None:
             verdict = "no-implementation"
         elif last_frozen is None:
-            at_base = all(_path_exists(repo, claim["base"], path)
+            at_base = all(_path_exists(repo, base_revision, path)
                           for path in claim["frozen"])
             verdict = "pre-build" if at_base else "co-evolved"
         else:
@@ -263,7 +320,7 @@ def _row_result(repo, claim, tip_override, effective_label):
     return result
 
 
-def _evaluate(repo, claims, corrections, overrides):
+def _evaluate(repo, claims, corrections, overrides, provenance):
     results = []
     for claim in claims:
         label = corrections.get(claim["id"], claim["declared"])
@@ -278,7 +335,12 @@ def _evaluate(repo, claims, corrections, overrides):
         "could_not_evaluate": sum(
             row["verdict"] == "could-not-evaluate" for row in results),
     }
-    return {"schema": SCHEMA, "claims": results, "totals": totals}
+    return {
+        "schema": SCHEMA,
+        "claims": results,
+        "totals": totals,
+        "provenance": provenance,
+    }
 
 
 def _emit(data):
@@ -299,15 +361,49 @@ def _error_result(error):
 
 def _check(args):
     try:
-        claims = _load_register(args.register)
+        measured_revision = None
+        repo_root = None
+        if args.rev is not None:
+            measured_revision = _resolve_commit(args.repo, args.rev)
+            if measured_revision is None:
+                _emit(_error_result("unknown-measured-revision"))
+                return 2
+            try:
+                repo_root = _repository_root(args.repo)
+            except GitError:
+                _emit(_error_result("input-revision-mismatch"))
+                return 2
+        claims, register_sha256 = _load_register(
+            args.register, args.repo, measured_revision, repo_root,
+        )
         ids = {claim["id"] for claim in claims}
-        corrections = _load_corrections(args.corrections, ids)
+        corrections, corrections_sha256 = _load_corrections(
+            args.corrections, ids, args.repo, measured_revision, repo_root,
+        )
         overrides = _tip_overrides(args.tip_for, ids)
+        script_sha256 = hashlib.sha256(
+            Path(__file__).resolve().read_bytes()
+        ).hexdigest()
     except InputError as exc:
         _emit(_error_result(str(exc)))
         return 2
+    except GitError:
+        _emit(_error_result("revision-resolution-failed"))
+        return 2
+    except OSError:
+        _emit(_error_result("unreadable-script"))
+        return 2
 
-    data = _evaluate(args.repo, claims, corrections, overrides)
+    provenance = {
+        "status": "bound" if measured_revision is not None else "unbound",
+        "measured_revision": measured_revision,
+        "register_sha256": register_sha256,
+        "corrections_sha256": corrections_sha256,
+        "script_sha256": script_sha256,
+        "command_argv": args.command_argv,
+        "tip_overrides": list(args.tip_for),
+    }
+    data = _evaluate(args.repo, claims, corrections, overrides, provenance)
     _emit(data)
     totals = data["totals"]
     if totals["could_not_evaluate"]:
@@ -403,7 +499,8 @@ def _selftest():
     if not raw_tmp:
         print("SELFTEST freeze-order FAIL 0/11", file=sys.stderr)
         return 1
-    scratch = Path(raw_tmp).resolve()
+
+[Showing lines 251-500 of 707. Use :501 to continue]    scratch = Path(raw_tmp).resolve()
     forbidden = (Path("/tmp"), Path("/var/tmp"))
     if (not scratch.is_absolute()
             or any(scratch == path or path in scratch.parents
@@ -588,14 +685,17 @@ def _parser():
     check = sub.add_parser("check", help="evaluate the frozen claim register")
     check.add_argument("--repo", required=True, metavar="R")
     check.add_argument("--register", required=True, metavar="F")
+    check.add_argument("--rev", metavar="REV")
     check.add_argument("--corrections", metavar="C")
     check.add_argument("--tip-for", action="append", default=[], metavar="ID=REV")
     return parser
 
 
 def main(argv=None):
+    command_argv = [sys.argv[0], *(sys.argv[1:] if argv is None else argv)]
     parser = _parser()
     args = parser.parse_args(argv)
+    args.command_argv = command_argv
     if args.selftest:
         if args.command is not None:
             parser.error("--selftest takes no check arguments")
