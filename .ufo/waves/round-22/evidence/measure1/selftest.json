@@ -1,0 +1,15 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-retention-reconcile.py",
+    "--selftest"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "exit_code": 0,
+  "measured_revision": "4f7cfce0b07d6c339187f1f330e2ae8a3714414e",
+  "name": "selftest",
+  "recorded_utc": "2026-10-21T14:57:30.762608+00:00",
+  "schema": "mori-r22-command-receipt-v1",
+  "stderr": "",
+  "stdout": "{\"finding_id\":\"RECONCILE_SELFTEST_PASS\",\"passed\":4,\"privacy_clearance\":false,\"schema\":\"mori-retention-reconciliation-v1\",\"total\":4}\n"
+}
