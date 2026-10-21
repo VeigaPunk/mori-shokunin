@@ -38,6 +38,13 @@ def main():
             write(output/'summary.json',{'finding_id':'snapshot_tampered','path':path})
             print(json.dumps({'finding_id':'snapshot_tampered','path':path}))
             return 2
+    FREEZE='e2f549befaffa1c1301928191e1eecb6142c0dad'
+    for path in list(pinned)+['frozen/requirements-v2.json']:
+        cp=subprocess.run(['git','-C',str(LANE),'show',FREEZE+':.ufo/waves/round-22/'+path],capture_output=True)
+        if cp.returncode or cp.stdout!=(HERE/path).read_bytes():
+            write(output/'summary.json',{'finding_id':'freeze_binding_mismatch','path':path,'freeze':FREEZE})
+            print(json.dumps({'finding_id':'freeze_binding_mismatch','path':path}))
+            return 2
     scratch=LANE/'.scratch/round22'/output.name;scratch.mkdir(parents=True,exist_ok=False)
     env=dict(os.environ,TMPDIR=str(LANE/'.scratch'),PYTHONDONTWRITEBYTECODE='1')
     records=[]
@@ -74,30 +81,57 @@ def main():
     rr,_=run('refinements',[sys.executable,str(HERE/'refinement-reconcile.py'),'--tool',str(tool),'--output',str(refinements)])
     (output/'refinement-observed.json').write_bytes(refinements.read_bytes())
     source=tool.read_text()
+    # Each mutant names the exact rows (suite:id) that must go red; any-unmet is not credit.
     mutations=[
-        ('count-only',[("claimed[field]!=Counter(hit_key(h) for h in actual)","sum(claimed[field].values())!=len(actual)")]),
-        ('false-clearance',[("'privacy_clearance':False","'privacy_clearance':True")]),
-        ('wrong-population',[("excluded=[h for h in hits if is_non_author(h)]","excluded=[h for h in hits if h['path']==paths['policy']]"),("scanner=[h for h in hits if not is_non_author(h)]","scanner=[h for h in hits if h['path']!=paths['policy']]")]),
-        ('setup-leak',[("'error':str(exc)","'error':str(exc),'detail':'R22_SAMPLE retained-red'")]),
+        ('count-only',[("claimed[field]!=Counter(hit_key(h) for h in actual)","sum(claimed[field].values())!=len(actual)")],{'frozen:R07','frozen:R08','frozen:R09'}),
+        ('false-clearance',[("'privacy_clearance':False,'input_revision'","'privacy_clearance':True,'input_revision'")],{'frozen:R02'}),
+        ('wrong-population',[("excluded=[h for h in hits if is_non_author(h)]","excluded=[h for h in hits if h['path']==paths['policy']]"),("scanner=[h for h in hits if not is_non_author(h)]","scanner=[h for h in hits if h['path']!=paths['policy']]")],{'frozen:R04'}),
+        ('setup-leak',[("'error':str(exc)","'error':str(exc),'detail':'R22_SAMPLE retained-red'")],{'safety:all-arm-output'}),
+        ('output-sets',[("'scanner_hits':scanner,'policy_excluded_hits':excluded","'scanner_hits':[h for h in hits if h['path']!=paths['policy']],'policy_excluded_hits':[h for h in hits if h['path']==paths['policy']]")],{'frozen:R04','refine:valid-identities'}),
+        ('one-sided-hits',[("        if claimed[field]!=Counter(hit_key(h) for h in actual): differences.append(field)","        if (bool(Counter(hit_key(h) for h in actual)-claimed[field]) if field=='hits' else claimed[field]!=Counter(hit_key(h) for h in actual)): differences.append(field)")],{'frozen:R06','refine:inject-only'}),
+        ('line-blind-raw',[("        if claimed[field]!=Counter(hit_key(h) for h in actual): differences.append(field)","        if (Counter((k[0],k[2],k[3]) for k in claimed[field].elements())!=Counter((h['path'],h['class'],h['line_sha256']) for h in actual) if field=='hits' else claimed[field]!=Counter(hit_key(h) for h in actual)): differences.append(field)")],{'refine:line-raw-only'}),
+        ('metric-ignored',[("('metric',len(unallowed))","('metric',receipt['metric'] or len(unallowed))")],{'refine:metric-overstate'}),
+        ('non-author-unchecked',[("('non_author',len(excluded)),","")],{'refine:non-author-counter'}),
+        ('no-dotdot',[("p not in ('','..','.')","p not in ('','.')")],{'refine:unsafe-receipt','refine:unsafe-policy','refine:unsafe-allowlist'}),
+        ('no-byte-compare',[("require(committed(repo,measured,paths[key])==raw[key],key+'_changed')","pass")],{'refine:policy-change-digest-updated','refine:allowlist-canonical-two-step'}),
+        ('no-ancestor',[("require(git(repo,'merge-base','--is-ancestor',measured,revision,ok=(0,1)).returncode==0,'measured_not_ancestor')","pass")],{'refine:diverged-consistent','refine:cousin','refine:head-cousin'}),
+        ('bool-lax',[("return type(value) is int and value>=0","return isinstance(value,int) and value>=0")],{'refine:boolean-metric','refine:boolean-non-author','refine:boolean-line-colliding'}),
+        ('symlink-accepted',[("mode in (b'100644',b'100755')","mode in (b'100644',b'100755',b'120000')")],{'refine:symlink-identical'}),
+        ('argv-empty',[("'argv':sys.argv[1:]","'argv':[]")],{'refine:clean-control'}),
+        ('exit-unchecked',[("    if wrapper['exit_code']!=retention_code:differences.append('exit_code')","    pass")],{'refine:exit-code-lie'}),
+        ('finding-unchecked',[(",('finding_id',retention_finding)","")],{'refine:finding-lie'}),
+        ('routed-unchecked',[("('routed',routed),","")],{'refine:routed-lie'}),
+        ('aux-unchecked',[("    if cf!=Counter(forbidden):differences.append('forbidden_allowlist')","    pass")],{'refine:forbidden-laundered','refine:forbidden-as-stale'}),
+        ('forbidden-not-red',[("retention_code=int(bool(unallowed or forbidden))","retention_code=int(bool(unallowed))")],{'refine:forbidden-only'}),
+        ('policy-copy-excluded',[("scanner=[h for h in hits if not is_non_author(h)]","scanner=[h for h in hits if not is_non_author(h) and not h['path'].endswith(paths['policy'].rsplit('/',1)[-1])]")],{'refine:nested-policy-copy'}),
     ]
+    def red_rows(oracle_obs,refine_obs):
+        red={'frozen:'+r['id'] for r in oracle_obs['results'] if not r['pass']}
+        red|={'refine:'+r['id'] for r in refine_obs['cases'] if not r['pass']}
+        if not safe_outputs(oracle_obs) or not safe_outputs(refine_obs):red.add('safety:all-arm-output')
+        return red
     mutant_results=[]
-    for name,replacements in mutations:
+    for name,replacements,targets in mutations:
         changed=source
         for old,new_text in replacements:
-            if old not in changed:raise RuntimeError('mutation_not_constructible')
+            if changed.count(old)!=1:raise RuntimeError('mutation_not_constructible:'+name)
             changed=changed.replace(old,new_text)
         mutant=scratch/('mutant-'+name+'.py');mutant.write_text(changed)
-        result_path=scratch/('mutant-'+name+'.json')
-        rc,_=run('mutant-'+name,args+['--tool',str(mutant),'--output',str(result_path)])
-        observation=json.loads(result_path.read_bytes())
-        finite_killed=rc==1 and observation['counts']['unmet']>0 and observation['counts']['capability_absent']==0
-        killed=(rc==0 and not safe_outputs(observation)) if name=='setup-leak' else finite_killed
-        mutant_results.append({'id':name,'killed':killed,'kill_basis':'all-arm-output-safety' if name=='setup-leak' else 'frozen24-oracle','exit_code':rc,'unmet':observation['counts']['unmet'],'tool_sha256':sha(mutant.read_bytes())})
-        (output/('mutant-'+name+'-observed.json')).write_bytes(result_path.read_bytes())
-    restored_path=scratch/'restored.json'
+        frozen_path=scratch/('mutant-'+name+'.json');refine_path=scratch/('mutant-'+name+'-refine.json')
+        rc,_=run('mutant-'+name,args+['--tool',str(mutant),'--output',str(frozen_path)])
+        rrc,_=run('mutant-'+name+'-refine',[sys.executable,str(HERE/'refinement-reconcile.py'),'--tool',str(mutant),'--output',str(refine_path)])
+        fobs=json.loads(frozen_path.read_bytes());robs=json.loads(refine_path.read_bytes())
+        red=red_rows(fobs,robs)
+        mutant_results.append({'id':name,'targets':sorted(targets),'red_rows':sorted(red),'killed':targets<=red,'frozen_exit':rc,'refine_exit':rrc,'frozen_unmet':fobs['counts']['unmet'],'tool_sha256':sha(mutant.read_bytes())})
+        (output/('mutant-'+name+'-observed.json')).write_bytes(frozen_path.read_bytes())
+        (output/('mutant-'+name+'-refine-observed.json')).write_bytes(refine_path.read_bytes())
+    restored_path=scratch/'restored.json';restored_refine=scratch/'restored-refine.json'
     restored_rc,_=run('restored-control',args+['--tool',str(tool),'--output',str(restored_path)])
+    restored_rrc,_=run('restored-control-refine',[sys.executable,str(HERE/'refinement-reconcile.py'),'--tool',str(tool),'--output',str(restored_refine)])
     (output/'restored-observed.json').write_bytes(restored_path.read_bytes())
-    mutations_ok=all(x['killed'] for x in mutant_results) and restored_rc==0 and sha(tool.read_bytes())==sha(source.encode())
+    (output/'restored-refine-observed.json').write_bytes(restored_refine.read_bytes())
+    restored_red=red_rows(json.loads(restored_path.read_bytes()),json.loads(restored_refine.read_bytes()))
+    mutations_ok=all(x['killed'] for x in mutant_results) and restored_rc==0 and restored_rrc==0 and not restored_red and sha(tool.read_bytes())==sha(source.encode())
     expected=json.loads((HERE/'frozen/expected-real.json').read_bytes())
     paths=expected['paths']
     realcmd=[sys.executable,str(tool),'check','--repo',str(LANE),'--rev',expected['input_revision'],'--receipt',paths['receipt'],'--policy',paths['policy'],'--allowlist',paths['allowlist']]

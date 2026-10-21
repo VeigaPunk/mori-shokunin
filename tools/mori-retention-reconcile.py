@@ -50,18 +50,21 @@ def safe_path(path):
     require(isinstance(path,str) and path and not path.startswith('/') and all(p not in ('','..','.') for p in path.split('/')) and not any(ord(c)<32 or ord(c)==127 for c in path),'unsafe_input_path')
     return path
 
-def git(repo,*args):
+def git(repo,*args,ok=(0,)):
     env={k:v for k,v in os.environ.items() if not k.startswith('GIT_')}
     env.update(GIT_CONFIG_NOSYSTEM='1',GIT_CONFIG_GLOBAL='/dev/null',GIT_OPTIONAL_LOCKS='0',GIT_NO_LAZY_FETCH='1',GIT_LITERAL_PATHSPECS='1')
     try:
         cp=subprocess.run(['git','--no-replace-objects','-C',str(repo),*args],capture_output=True,env=env,timeout=60)
     except (OSError,subprocess.TimeoutExpired): raise Invalid('git_unavailable') from None
-    require(cp.returncode==0,'git_read_failed')
-    return cp.stdout
+    require(cp.returncode in ok,'git_read_failed')
+    return cp
+
+def git_out(repo,*args):
+    return git(repo,*args).stdout
 
 def resolve(repo,selector):
     require(isinstance(selector,str) and selector and not any(ord(c)<32 for c in selector),'invalid_revision')
-    value=git(repo,'rev-parse','--verify','--end-of-options',selector+'^{commit}').decode('ascii').strip()
+    value=git_out(repo,'rev-parse','--verify','--end-of-options',selector+'^{commit}').decode('ascii').strip()
     require(bool(OID.fullmatch(value)),'invalid_resolved_commit')
     return value
 
@@ -69,7 +72,7 @@ def tree(repo,revision,path=None):
     args=['ls-tree','-r','-z','--full-tree',revision]
     if path is not None: args+=['--',path]
     rows=[]
-    for row in git(repo,*args).split(b'\0'):
+    for row in git_out(repo,*args).split(b'\0'):
         if not row: continue
         try:
             meta,name=row.split(b'\t',1); mode,kind,oid=meta.split()
@@ -83,7 +86,7 @@ def committed(repo,revision,path):
     require(len(rows)==1 and rows[0][3]==path,'missing_input_blob')
     mode,kind,oid,_=rows[0]
     require(mode in (b'100644',b'100755') and kind==b'blob','input_not_regular')
-    return git(repo,'cat-file','blob',oid.decode('ascii'))
+    return git_out(repo,'cat-file','blob',oid.decode('ascii'))
 
 def policy_rules(obj):
     require(isinstance(obj,dict) and obj.get('schema')=='mori-retention-policy-v1','policy_schema')
@@ -94,7 +97,7 @@ def policy_rules(obj):
         cid,expression=row.get('id'),row.get('regex')
         require(isinstance(cid,str) and cid and cid not in seen and isinstance(expression,str),'policy_class')
         try: compiled=re.compile(expression)
-        except re.error: raise Invalid('policy_regex') from None
+        except (re.error,OverflowError,RecursionError): raise Invalid('policy_regex') from None
         seen.add(cid); classes.append((cid,compiled))
     must=obj.get('must_redact_paths'); nonauthor=obj.get('non_author_paths_glob')
     require(isinstance(must,list) and all(isinstance(x,str) and x for x in must),'policy_must_paths')
@@ -141,7 +144,7 @@ def scan(repo,revision,classes):
         if kind!=b'blob': continue
         # Identical blobs share parsing work while path remains part of every identity.
         if oid not in cache:
-            raw=git(repo,'cat-file','blob',oid.decode('ascii')); parsed=[]
+            raw=git_out(repo,'cat-file','blob',oid.decode('ascii')); parsed=[]
             if b'\0' not in raw:
                 for n,line in enumerate(raw.decode('utf8',errors='replace').split('\n'),1):
                     for cid,expression in classes:
@@ -158,9 +161,11 @@ def check(a):
     wrapper=parse(raw['receipt'])
     require(isinstance(wrapper,dict) and wrapper.get('schema')=='mori-r21-command-receipt-v1','receipt_schema')
     measured=wrapper.get('measured_revision')
-    require(isinstance(measured,str) and bool(OID.fullmatch(measured)) and resolve(repo,measured)==measured,'receipt_revision')
-    # --is-ancestor returns1 for divergence; any nonzero is unevaluable here.
-    git(repo,'merge-base','--is-ancestor',measured,revision)
+    require(isinstance(measured,str) and bool(OID.fullmatch(measured)),'receipt_revision')
+    peeled=git(repo,'rev-parse','--verify','--quiet','--end-of-options',measured+'^{commit}',ok=(0,1,128))
+    require(peeled.returncode==0 and peeled.stdout.decode('ascii','replace').strip()==measured,'receipt_revision')
+    # --is-ancestor: 0 ancestor, 1 divergence (distinct finding), other nonzero unevaluable.
+    require(git(repo,'merge-base','--is-ancestor',measured,revision,ok=(0,1)).returncode==0,'measured_not_ancestor')
     for key in ('policy','allowlist'):
         require(committed(repo,measured,paths[key])==raw[key],key+'_changed')
     classes,must,patterns=policy_rules(parse(raw['policy']))
@@ -262,8 +267,8 @@ def selftest():
 
 def main(argv=None):
     try:
-        parser=Parser(description=__doc__); parser.add_argument('--selftest',action='store_true'); sub=parser.add_subparsers(dest='command')
-        p=sub.add_parser('check'); p.add_argument('--repo',required=True);p.add_argument('--rev',required=True);p.add_argument('--receipt',required=True);p.add_argument('--policy',required=True);p.add_argument('--allowlist',required=True)
+        parser=Parser(description=__doc__,add_help=False); parser.add_argument('--selftest',action='store_true'); sub=parser.add_subparsers(dest='command')
+        p=sub.add_parser('check',add_help=False); p.add_argument('--repo',required=True);p.add_argument('--rev',required=True);p.add_argument('--receipt',required=True);p.add_argument('--policy',required=True);p.add_argument('--allowlist',required=True)
         args=parser.parse_args(argv)
         if args.selftest:
             require(args.command is None,'usage'); result,code=selftest()

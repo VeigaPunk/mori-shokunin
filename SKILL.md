@@ -552,3 +552,13 @@ control11/12 remains red; both historical dispositions remain unknown and
 baseline acceptance blocked. No earlier registry row is superseded.
 Ground: `corpus/knowledge/retention-reconciliation-r22.md`, S064 at its
 commit-resolution-only scope; `corpus/lessons/round-22.md`.
+
+Field caveats (wave2 FinalR02/NoHarm): `raw_unallowlisted` and
+`scanner_unallowlisted` are one existing gate metric reported twice (both
+exclude non-author hits); `policy_excluded` equals `non_author` by design.
+Membership evidence is the identity lists, not these aliases. Setup reasons are
+distinct tokens: `receipt_revision` (unresolvable/non-commit measured
+revision), `measured_not_ancestor`, `policy_changed`/`allowlist_changed`,
+`receipt_path_binding`, `input_not_regular`, `unsafe_input_path`, `usage`
+(including `-h`, which never exits 0). Output digests are unsalted provenance,
+not secrecy; argv echoes caller paths, so pass only lane-relative inputs.
