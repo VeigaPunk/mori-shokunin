@@ -1175,3 +1175,57 @@ round19 growth. Evidence: `corpus/lessons/round-18-verifier-spotcheck.md:39–18
 | Retained-context class gate | Scan every committed blob against frozen R1–R9 with explicit non-author/allowlist qualification; never emit matched text | `.ufo/waves/round-18/evidence/c1-after.json`, selftests in `evidence/final-selftests.txt`; independent closure C1 | 18 |
 | Freeze-order labels | Distinguish pre-build, co-evolved, absent and no-implementation from Git order, with appended effective-label corrections | `.ufo/waves/round-18/evidence/c2-after.json`; independent closure C2 | 18 |
 | Dispatch-attempt binding | Verify exact payload bytes/digests separately from whole-ledger sequencing and started-row requirements | `.ufo/waves/round-18/evidence/c3-after-wave1-attempts.json`, `c3-after-wave2-attempts.json`; refused-only residual failure retained | 18 |
+
+### Round19 measured claims — bounded capability, not privacy clearance
+
+Final same-instrument measurement:
+**11795ac0e0a44db6549534eb1239e26353446370**.
+The six-script final suite ran at
+`c0fe0b230769ffba7168955f87985ec3ce08f41d`; all six tested script blobs
+are byte-identical at the final measurement (`evidence/final-stability-coda.json`).
+The corrected harness was actually exercised in both modes at the final revision.
+
+| Claim | Axis / held score | Observed before→after | L1 verdict / qualification |
+|---|---|---|---|
+| C1 content-review coverage capability | adjacency6→6 | 10 absent-tool requirements→0 unmet; 10/10 matched after | improved, capability scope only. Actual194-path review fails closed: 43 content-reviewed,151 provenance-only,155 unresolved dispositions; exit1, not clearance. |
+| C2 intrinsic freeze receipt provenance, sourced S064 | calibration5→5 (lowest tie) | 10 missing metadata assertions→0; matched2/12→12/12, plus4/4 binding controls | improved. Before failures derive from actual CLI responses, not a mode assumption. Existing six historical verdicts remain equal. |
+
+Actual counting commands, lane root:
+
+```sh
+jq -s '[.[].c1.counts.capability_absent]' .ufo/waves/round-19/evidence/finite-before-observed.json .ufo/waves/round-19/evidence/finite-after-observed.json
+# [10,0]
+jq -s '[.[].c2.counts.capability_absent]' .ufo/waves/round-19/evidence/finite-before-observed.json .ufo/waves/round-19/evidence/finite-after-observed.json
+# [10,0]
+jq -s '[.[].c2.counts.pass]' .ufo/waves/round-19/evidence/finite-before-observed.json .ufo/waves/round-19/evidence/finite-after-observed.json
+# [2,12]
+```
+
+Receipts are `evidence/count-C1-command.json`, `count-C2-command.json`,
+`count-C2-matched-command.json`; every named round19 evidence path is beneath
+`.ufo/waves/round-19/`. A missing capability is not ten prior production bugs.
+The r18 replay's raw4→0 remains one historical correction plus three prospective
+labels, not a new round19 four-defect improvement. Intrinsic replay metadata and
+original semantic parity are in `evidence/c2-historical-binding-wrapper.json`.
+
+| Axis | Score held | Round19 verdict | Evidence / boundary |
+|---|---:|---|---|
+| adjacency | 6 | improved | C1 capability passes its finite requirements; actual unresolved review remains red; no history/privacy-completeness claim |
+| calibration | 5 | improved | C2 exact input/script/revision receipts and actual before counter; outside admit/reject sample agrees |
+| coverage | 6 | unchanged | retrospective index repair, no newly covered observability ground |
+| operability | 7 | unchanged | existing census134/134; new tools credited only to their declared axes |
+| depth | 5 | unchanged | bounded Git-resolution source support, no separate depth score |
+| freshness | 5 | unchanged | recorded r10 red retained, not re-pinned or re-evaluated as green |
+
+### capabilities: first demonstrated round19
+
+| Name | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---:|
+| Bounded content-review coverage gate | Bind every declared population blob to exact review evidence and reject missing, stale, unresolved or provenance-only clearance | `evidence/finite-after-observed.json` C1 10/10; `content-population-final-command.json` real194-path negative result | 19 |
+| Input-revision-bound freeze receipts | Match loaded register/correction bytes to an explicit commit, retain full resolved claim identities and executing-code provenance | `evidence/finite-after-observed.json` C2 12/12 plus4/4; `c2-{before,after}-replay.json` | 19 |
+
+Trends: expansion **unchanged**, quality **unchanged**, discernment **improved**.
+Repair/index/source-row volume is not new covered-ground knowledge. Main's
+non-author S064-admit/S065-reject agreement and lesson-backed criteria support
+discernment; author-side falsifiers do not replace that check.
+No subsequent round is initiated or claimed; this planned scope is round19 only.

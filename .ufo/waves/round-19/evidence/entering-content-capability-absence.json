@@ -1,0 +1,17 @@
+{
+  "measured_revision": "b3602869dadd4016675aeba8db2adf3fa1e1b531",
+  "argv": [
+    "git",
+    "--no-optional-locks",
+    "-c",
+    "core.fsmonitor=false",
+    "-C",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin",
+    "cat-file",
+    "-e",
+    "b3602869dadd4016675aeba8db2adf3fa1e1b531:tools/mori-content-review.py"
+  ],
+  "exit_code": 128,
+  "stderr": "fatal: path 'tools/mori-content-review.py' exists on disk, but not in 'b3602869dadd4016675aeba8db2adf3fa1e1b531'\n",
+  "meaning": "The content-review tool did not exist at the actual entering revision; ten unmet requirements are capability absence, not ten old production defects."
+}

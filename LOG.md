@@ -1313,3 +1313,48 @@ round17 privacy harm is cured only at the committed tip; history exposure remain
 operator/kagi-owned. The out-of-metric sweep at e2bfbd6 was not a final-tip sweep.
 Old receipt JSON stays filed unchanged; any wrapper names its actual old input.
 QUALITY57–60 learn these discrepancies (`corpus/lessons/round-19.md#Mistakes`).
+
+### Round19 exercised outcome and retained limits
+
+Code/instrument measurement `11795ac0e0a44db6549534eb1239e26353446370`.
+C1 unmet capability requirements10→0 (10/10 after); C2 missing metadata
+assertions10→0 (2/12→12/12 matched,4/4 extra binding controls).
+Counting commands and actual outputs are `round-19/evidence/count-*-command.json`;
+all round19 paths here are under `.ufo/waves/`.
+
+The first after-smoke failed: the new freeze checker lacked its required JSON
+import. `finite-after.json` retains the actual failure; commit
+`c0fe0b230769ffba7168955f87985ec3ce08f41d` fixes it. A later audit replaced
+the before counter's assumed absence with actual compatible/bound CLI calls;
+the final observed pair uses one identical harness and the unchanged original
+oracle. No failed run or expectation was erased.
+
+The six-script final suite passed once: content CLI selftest marker, freeze12,
+retention21, dispatch14, census134, context31 arms. Those tested script bytes
+are unchanged at the final measurement; only the repaired harness pair was
+re-exercised. Q13 transport-control faults9→0, with the malformed intermediate
+commit retained as the red control.
+
+Retention remains metric0/routed0 with the original policy and86-row allowlist
+byte-unchanged. The actual content-review gate is **red**, correctly:194 blobs
+bound,155 unresolved dispositions (151 unreviewed and4 reviewed unresolved).
+This capability demonstration is not whole-tree privacy clearance.
+The out-of-metric probe covers all163 retained round18 blobs plus six named
+round16 loci. Its remaining7 home-dotpath and8 document-path token lines are
+mandatory instruction/surface mentions or a generic negative example; session
+identity matches0. The six minimized loci each match0. Token counts are not
+semantic privacy proof; the final fleet report records the final-tip replay.
+
+Additional explicit minimization: r17 JjEnvFacts host environment paths and
+config-presence observations; r16 SourceChain runtime-location disclosure;
+r13 JSONAttack account/group observations; same-wave dead-seat alias/payload/time.
+SW1 content decisions are in the lesson, not justified by provenance alone.
+Original exposure remains in history, operator/kagi-owned; no rewrite.
+
+Waves64+70=134 actual returned IDs; no replacements. Wave1 retains16 reports,
+8 observed provider failures,1 cancellation and39 unreported unknown causes;
+wave2 retains48 reports and22 provider failures. Both slot grants released.
+The parent stand-down/reversal and scope breaches remain disclosed.
+New source rows63→65 (A54/B3/C6→A55/B3/C7), validator exits0 both ends.
+Main independently agreed the S064 admit and S065 reject. Trends are
+unchanged/unchanged/improved, with no scalar or promotion claim.

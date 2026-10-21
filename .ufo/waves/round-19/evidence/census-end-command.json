@@ -1,0 +1,14 @@
+{
+  "label": "census-end",
+  "measured_revision": "c0fe0b230769ffba7168955f87985ec3ce08f41d",
+  "argv": [
+    "/home/vgpnk/Projects/shokunin/scripts/sources-census.sh",
+    "validate",
+    "--root",
+    "/home/vgpnk/Projects/shokunin",
+    "mori"
+  ],
+  "exit_code": 0,
+  "stdout": "mori\tW04\tS035 duplicate url raw.githubusercontent.com/systemd/systemd/cf8ebfc6159cf0b3b99aa9a0164ccb07c4c9c5af/catalog/systemd.catalog.in across scopes\nmori\tW04\tS037 duplicate url www.freedesktop.org/software/systemd/man/latest/systemd.journal-fields.html across scopes\nmori\tok\t/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md\n",
+  "stderr": ""
+}

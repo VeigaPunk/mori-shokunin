@@ -210,3 +210,44 @@ labels or argv. Those are intentionally reported metadata from owned
 registers. Callers must not supply private values in metadata fields.
 Legacy/bound field parity and the checked canary cannot establish otherwise.
 The new provenance guarantee binds exact bytes; it does not sanitize them.
+
+### Actual integration failures and final measurements
+
+| ID | Class | Evidence | Captured-by | Fix shown able to fail |
+|---|---|---|---|---|
+| M8 | operability / attribution | First actual `finite-after.json`: C1 10/10 but C2 subprocesses exited1 without JSON; source lacked `import json` | Q31/Q39 required actual execution, not static approval | Import repair at c0fe0b2; corrected after smoke passes12/12 metadata and4/4 binding controls. After-mode malformed metadata is regression, not inferred absent capability. |
+| M9 | vacuous / number-drift | Initial before mode assigned missing metadata from its mode branch rather than observing the returned fields | Q20 should have caught the observation gap | Final harness actually invokes old compatible/bound/invalid variants, evaluates their returned fields and retains rc2/no-JSON unsupported-binding evidence. Same final harness in both modes yields observed10→0 without editing the original expected table. |
+
+Final same-instrument pair: `evidence/finite-{before,after}-observed.json`
+at **11795ac0e0a44db6549534eb1239e26353446370**. C1 requirements10→0
+unmet,10/10 matched after; C2 metadata10→0 missing,2/12→12/12 matched,
+plus4/4 binding controls. Six historical rows remain semantically identical
+to the filed r18 JSON; the old raw4→0 is historical1 plus prospective3.
+
+The final six-script suite passed at c0fe0b2 and those six script blobs are
+byte-identical at the final measurement. The corrected harness pair alone was
+re-exercised; all earlier failures remain retained. `final-stability-coda.json`
+binds these identities. The original expected SHA remains
+`c5c6c67f104ed1baa57a56bfb22728a2e871ca174a4915ff4005eb3485abe22a`.
+The supplementary binding checks and generated fixture-value oracle are
+co-evolved refinements, not falsely described as a fully pre-build outcome matrix.
+
+The actual194-path gate reads and binds all194 blobs but returns exit1 for
+155 unresolved dispositions:151 provenance-only/unreviewed and4 reviewed
+unresolved. Missing reviews were never replaced with fabricated successful
+workers or semantic clearance. This is a complete failure-capable capability
+demonstration with a real negative outcome, not an admitted privacy-clearance
+claim. The original all-blob retention metric remains0 with unchanged policy
+and allowlist bytes,86 allowlisted name-only rows and5 non-author hits.
+
+Precision to “no new short-line hashes” above: the new review/probe uses whole
+blob digests and generates no hashes of private source lines. The unchanged
+legacy retention gate still emits its existing policy-hit line provenance for
+retained name-only/non-author material. No secrecy claim follows from either.
+
+The full retained-round18 sweep is169 blobs including the six named r16 files.
+Remaining7 account-dotpath lines are mandatory shared RULES instruction paths;
+the8 document-path token lines are7 do-not-open surface instructions plus one
+generic negative example. All six named minimized loci match0; session-directory
+identity matches0. These are inspected token-family classifications, not an
+absence claim about every possible private value or the155 unresolved reviews.

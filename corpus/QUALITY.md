@@ -209,3 +209,18 @@ Source tiers: see corpus/SOURCES.md (contract v1); this file holds claim admissi
     never imply an unopened body was read. A capabilities table records the actual
     first-working round, not the later formatting-repair round.
     ← lessons/round-19.md#M4.
+61. A reader's transport presentation is not source bytes: never integrate
+    line anchors, elision text or continuation notices. Validate every changed
+    source/JSON path on its delivered bytes, retaining a malformed intermediate
+    control when repairing an accidental projection copy.
+    ← lessons/round-19.md#M5; round19 `evidence/q13-stable-paths.json` (9→0).
+62. A present delivered instrument that crashes or returns malformed metadata
+    is an after-mode regression, not proof that its capability is absent.
+    Missing-capability red is reserved for the explicitly measured before
+    boundary; source and receipt failure must remain distinguishable.
+    ← lessons/round-19.md#M8; first `finite-after.json` versus corrected run.
+63. A before counter derives failure or absence from the target's actual
+    returned fields and exit outcomes, not from a phase label that presupposes
+    the desired delta. Retain compatible and unsupported-binding observations;
+    use the same final counting instrument and unchanged expected requirements
+    for both sides. ← lessons/round-19.md#M9.

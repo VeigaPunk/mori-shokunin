@@ -1,0 +1,12 @@
+{
+  "label": "selftest-content",
+  "measured_revision": "c0fe0b230769ffba7168955f87985ec3ce08f41d",
+  "argv": [
+    "python3",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-content-review.py",
+    "--selftest"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"exit_code\":0,\"findings\":[{\"code\":\"CONTENT_REVIEW_SELFTEST_CLEAN\"}],\"schema\":\"mori-content-review-result-v1\",\"status\":\"clean\"}\n",
+  "stderr": ""
+}

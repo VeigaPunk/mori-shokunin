@@ -1,0 +1,18 @@
+{
+  "label": "dispatch-wave2",
+  "measured_revision": "c0fe0b230769ffba7168955f87985ec3ce08f41d",
+  "argv": [
+    "python3",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-dispatch-ledger.py",
+    "verify",
+    "--repo",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin",
+    "--rev",
+    "c0fe0b230769ffba7168955f87985ec3ce08f41d",
+    "--ledger",
+    ".ufo/waves/round-19/wave2-attempts.json"
+  ],
+  "exit_code": 0,
+  "stdout": "{\"finding_id\":\"LEDGER_CLEAN\",\"finding_ids\":[\"LEDGER_CLEAN\"],\"findings\":[],\"ledger_path\":\".ufo/waves/round-19/wave2-attempts.json\",\"mode\":\"verify\",\"rev\":\"c0fe0b230769ffba7168955f87985ec3ce08f41d\",\"rows\":[{\"attempt\":1,\"index\":1,\"reasons\":[],\"result\":\"started\",\"started_ids\":70,\"status\":\"bound\",\"tasks_count\":70}],\"schema\":\"mori-dispatch-ledger-v1\",\"status\":\"clean\",\"totals\":{\"bound\":1,\"ledger_findings\":0,\"rows\":1,\"unbound\":0}}\n",
+  "stderr": ""
+}

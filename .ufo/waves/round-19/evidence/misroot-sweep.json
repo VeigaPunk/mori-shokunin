@@ -1,0 +1,10 @@
+{
+  "schema": "mori-misroot-observation-v1",
+  "argv": ["git", "-c", "core.fsmonitor=false", "-C", "/home/vgpnk/Projects/shokunin", "status", "--porcelain=v1", "--untracked-files=all"],
+  "exit_code": 0,
+  "stdout": "",
+  "scope": "No pathspec; observed fleet-root metadata after all round19 workers settled, before filing the report.",
+  "own_candidates": 0,
+  "moves_or_deletions": 0,
+  "limit": "An empty observation at this instant is not a permanent fleet-state or runtime-prevention claim."
+}
