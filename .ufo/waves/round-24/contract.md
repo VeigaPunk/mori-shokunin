@@ -122,3 +122,14 @@ are held and observed. No retirement, waiver, exploratory claim or promotion.
 - System pressure is host-wide; a high reading is not evidence that the fleet caused it.
 - Scope wording: "no mori tool reads system CPU, IO or IRQ pressure" means by default; the
   census can be pinned by an operator to any PSI path (`tools/mori-census.sh:224,306-308`).
+
+## Amendment A3 (08:33Z, before any C2 tool or case landed; finding from wave-1 seat CriticIntervalBoundary)
+
+- `--interval` is an opt-in mode outside the one-shot Core statement; it adds about S seconds
+  and does not meet the census latency budget (`corpus/knowledge/surfaces-r8.md:47-48`).
+- System CPU `full` gets `total_delta_us: null` and `stall_ratio: null` (never a numeric zero).
+- A resource whose two snapshots differ in state reports the worse state (any non-ok state
+  of either read) with no delta; thresholds use the second read when both reads are ok.
+- `counter_regressed` counts toward `PRESSURE_PARTIAL` like `malformed`.
+- `stall_ratio` is nominal (divides by the requested S, may exceed 1); an additive
+  `elapsed_us` field (measured, null under the selftest's no-op sleep) may accompany it.
