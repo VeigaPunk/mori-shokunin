@@ -59,7 +59,7 @@ through the respective file in /proc/pressure/ -- cpu, memory, and io."
 The kernel creates a fourth: `proc_create("pressure/irq", 0666, NULL, &psi_irq_proc_ops)` under
 `#ifdef CONFIG_IRQ_TIME_ACCOUNTING` ([psi.c:1710-1721](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/sched/psi.c)).
 So on v7.2 the kernel can expose an IRQ file the documentation does not mention; the documentation is not an
-inventory of the file set. The build option's help text likewise names only cpu, memory and io (S093, `init/Kconfig:730-733`).
+inventory of the file set. The build option's help text likewise names only cpu, memory and io (S093, `init/Kconfig:730-731`).
 
 **F2 — the file shape.** Each documented file (cpu, memory, io) holds two lines of the form
 `some avg10=0.00 avg60=0.00 avg300=0.00 total=0` and

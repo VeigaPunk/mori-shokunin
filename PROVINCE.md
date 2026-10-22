@@ -283,3 +283,8 @@ baseline acceptance remain; no rank or subsequent-round authority is granted.
   system CPU `full` flagged undefined. The Core row above is **pending admission** by the
   non-author closure. No frontier row is closed, no other lane's surface is claimed, and no remediation
   is added.
+- **Adjacency (wave-2 finding CriticHarmAxes A1; wave-1 ConnectSiblingPsi):** tsukuroi's census reads the same
+  system `/proc/pressure/memory` file (`../tsukuroi-shokunin/tools/tsukuroi-census.sh:376,1100-1115`) for OS memory
+  triage and routes fleet correlation of host pressure to mori (`../tsukuroi-shokunin/PROVINCE.md:30-33`). Shared
+  evidence is not shared ownership: mori reports the reading as fleet resource runway; explaining a high IRQ or
+  memory reading as a device, driver or OS fault stays with tsukuroi.
