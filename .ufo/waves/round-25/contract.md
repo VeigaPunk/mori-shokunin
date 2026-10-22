@@ -93,3 +93,43 @@ Rules (binding for the tool and the frozen cases):
 
 Held and observed: operability 7, depth 5, freshness 5, adjacency 6. No retirement, waiver, exploratory
 claim or promotion.
+
+## Amendment A1 (10:12Z, before the C1 tool lands; wave-1 seats CriticC1Predicates and CriticSizing)
+
+Findings: D2 and D3 passed on paraphrase, heading renames, row deletion and spacing; D1 re-created only the
+round-24 output, needed the closure to run a registered gate, and passed on a red run; D4 is hygiene, not a
+lane self-assessment; neither after-value required committed evidence. C2 is unchanged except wording.
+
+**C1 counted items are now the three where a lane self-assessment contradicts committed bytes.**
+
+| Item | Self-assessment contradicted | Held at REV when (git object reads only; no code from REV is run) |
+|---|---|---|
+| D1 | `SCORECARD.md:1514` says the pressure selftest prints `PASS 12/12` then `MATCHER: rejected 48/48`; the committed evidence `c2-selftest-after.txt` lacks the second line and names no revision | `.ufo/waves/round-25/evidence/pressure-selftest.txt` exists with header lines, in order, `revision: <40 hex>` (a commit R that is REV or an ancestor of REV), `command: python3 -I -B tools/mori-pressure.py --selftest`, `tool_blob: <oid>` equal to the blob of `tools/mori-pressure.py` at R and at REV, `fixtures_tree: <oid>` equal to the tree `tools/fixtures/mori-pressure` at R and at REV, `exit: 0`; the body after the header contains the line `MORI_PRESSURE_SELFTEST: PASS 12/12` and a line starting `MATCHER: rejected 48/48`. Optional `--rerun` re-executes R's tool from a temporary extract and reports whether the body is byte-equal; it is reported, never needed for `held` |
+| D2 | the entry's own banner (`system-pressure-r24.md:11`, "this section wins") and the round-24 report say the six statements were corrected | over the entry text with `*`, `_` and backticks removed, case folded and all whitespace runs folded to one space: exactly one heading starting `## corrections`; headings `## facts` and `## decision table` both present; the decision table has at least as many data rows as at `28b79d3d`; outside the corrections section, 0 matches of `refreshed on (each|every) read`, `spike[^|.]{0,60}(is|are|can be|may be) invisible` and `null[^|.]{0,15}means[^|.]{0,15}undefined`; outside it, both `only when the next` (K5) and `not tracked` (P3) occur; inside it, a line contains `(k4)` and `total` |
+| D3 | `SCORECARD.md:1521` says the supplementary file passes `PASS 7/7`; `corpus/lessons/round-24.md:79-80` says S01–S06, `PASS 6/6` | with n = cases in `tools/fixtures/mori-pressure/supplementary-cases.json` at `4f05dd5a` (7): `corpus/lessons/round-24.md` at REV has one line containing `Correction`, `S07`, `PASS 7/7` not followed by a digit, and a 7–40 hex token naming a commit at which that file has n cases |
+
+**D4 is reported as a hygiene row, not counted:** held when `.gitignore` at REV has a line that is exactly one
+of `__pycache__/`, `__pycache__`, `**/__pycache__/`, `tools/__pycache__/`, `*.pyc`, `*.py[cod]`; no `.gitignore`
+in the REV tree has a `!` line mentioning `pycache` or `.py`; and no tracked path under `tools/` contains
+`__pycache__` or ends `.pyc`.
+
+Output: `schema: mori-routed-r24-v1`, `items: 3`, `held`, `mismatches`, per-item rows, `hygiene: {id: D4, held,
+reasons}`. Exit 0 only when `mismatches` is 0 and hygiene holds; 1 otherwise; 2 when the repo or revision
+cannot be read. The tool writes nothing outside a temporary directory it creates and removes (only `--rerun`
+uses one).
+
+- **Before (re-derived by wave-1 PlanDataWalk at `28b79d3d`):** all three counted items red, `mismatches: 3`;
+  D4 hygiene red.
+- **Declared after (replaces the original C1 after-value):** `python3 -I -B tools/mori-routed-r24.py --repo
+  <lane> --rev <landed tip>` prints `"mismatches": 0` with `"held": 3` of `"items": 3` and hygiene held, exit 0.
+
+**Committed evidence for both after-values (CriticSizing F1).** Each lands as a file under
+`.ufo/waves/round-25/evidence/` with header lines `revision:` (full hash), `command:`, `exit:`, then the full
+stdout: `routed-r24-after.txt` for C1 and `runway-selftest.txt` for C2, written after the last change to the
+measured tool. The C2 cases blob is pinned: `tools/fixtures/mori-job-runway/cases.json` =
+`48df844a` at `7634be75`. `pressure-selftest.txt` lands after the last change to the pressure tool and fixtures
+(CriticSizing F2).
+
+**Wording (F6).** C2's tool and selftest write nothing outside a fresh temporary directory they create and
+remove. The seat-gate ledger line in each attempt row is a copy of a mutable, uncommitted harness file; it is
+evidence of the grant time, not a pinned record.
