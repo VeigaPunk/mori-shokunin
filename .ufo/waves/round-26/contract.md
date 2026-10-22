@@ -123,3 +123,28 @@ invented process names only.
 operability 7, depth 5, calibration 5, adjacency 6. No retirement, waiver, exploratory claim or
 promotion. No-harm check: the lane retention scan (R8) is run at the entering tip and at every
 candidate tip; its value at the landed tip must not exceed the entering value.
+
+## Amendment A1 (2026-10-22, before any C1 after-measurement; after the C2 tool's first selftest result)
+
+Reason: wave-1 seat CriticLearningRules (`.ufo/waves/round-26/w1/CriticLearningRules.md`) showed the C1 command
+above reads the phrase list from the working tree (run from the fleet root it prints `stale_present=0` at the
+entering tip), counts a bad revision or a deleted file as fixed, does not fold whitespace (QUALITY 77), and cannot
+see the sourced-claim clause. The counters are now committed scripts that read committed bytes only.
+
+- **C1 counter:** `bash .ufo/waves/round-26/count-c1.sh <rev>` (phrase list read from `28b04940`; bad revision,
+  missing file or short list exit 2; whitespace folded, emphasis removed). Before at `248408f5`:
+  `stale_present=4`, `r26_entry=absent`, `r26_new_source_ids=0`, `r12_names_r26=0`. Declared after at the
+  landed tip: `stale_present=0`, `r26_entry=present`, `r26_new_source_ids` ≥ 1 (S ids above S113, the last row
+  at the entering tip, are rows opened in round 26), `r12_names_r26` ≥ 1.
+- **C2 counter:** `bash .ufo/waves/round-26/count-c2.sh <rev>` (runs the tool from a `git archive` of the
+  revision; checks the case file's first commit is a strict ancestor of the tool's first commit and that the case
+  file is unchanged since). Declared after: `freeze_order=ok`, `cases_changed_since_freeze=0`, `N=32`,
+  `MORI_OOM_KILLERS_SELFTEST: PASS 32/32`, `exit=0`. Before at `248408f5`: `absent`, exit 2. Also added to C2's
+  after-state: a `### capabilities: first demonstrated round 26` row in SCORECARD and the committed live-run
+  receipt `.ufo/waves/round-26/evidence/c2-live-run.txt`. Timing disclosed: the case count (32) and the tool's
+  PASS 32/32 were known when this amendment was written; the amendment fixes N to the frozen count and tightens,
+  never widens, the after-state.
+- Seat independence (cases by WriteOomKillersCases, tool by BuildOomKillersTool, built blind) is a process fact
+  with pointers to their wave-1 reports, not part of the counted value.
+- Uncounted correction rows (QUALITY 77 sweep, not on the frozen list): r12 line 14 `not-found` and line 18
+  "earlyoom's service unit is not found" are rewritten as dated records in the same change.

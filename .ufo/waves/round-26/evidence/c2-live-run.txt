@@ -1,0 +1,32 @@
+revision: c2fdd929c7473f8a325a95b3a3776cdd0efb8f76
+command: python3 -I -B tools/mori-oom-killers.py (live, no arguments)
+utc: 2026-10-22T13:20:10Z
+exit: 0
+{
+  "earlyoom": {
+    "actions": {
+      "escalations": 0,
+      "kill_failed": 0,
+      "low_memory_warnings": 0,
+      "sigkill": 0,
+      "sigterm": 0
+    },
+    "dryrun": false,
+    "grammar": "verified-1.9.0",
+    "scope_complete": true,
+    "state": "active",
+    "thresholds": {
+      "kill_mem_pct": 5.0,
+      "kill_swap_pct": 5.0,
+      "term_mem_pct": 10.0,
+      "term_swap_pct": 10.0
+    },
+    "version": "1.9.0"
+  },
+  "oomd": {
+    "notices_this_boot": 0,
+    "state": "inactive"
+  },
+  "schema": "mori-oom-killers-v1",
+  "verdict": "KILLERS_QUIET"
+}
