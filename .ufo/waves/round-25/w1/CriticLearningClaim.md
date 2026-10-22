@@ -71,8 +71,8 @@ The ownership boundary with kumitate is also unaddressed. The smallest safe corr
   `~/.local/state/shokunin-hyaku/wave-cap` = `85`, below the effective 100.
 - **The fleet holds a false belief, and nobody has recorded the mechanism.**
   `scripts/hyaku/lane-addendum.md:88-89` tells every lane that "the session's job and concurrency limits
-  are `async.maxJobs` and `task.maxConcurrency` in `~/.omp/agent/config.yml`". That file sets
-  `async.maxJobs: 200` (`~/.omp/agent/config.yml:244-245`), and the binary clamps the value to 100.
+  are `async.maxJobs` and `task.maxConcurrency` in the operator's OMP settings file". That file sets
+  `async.maxJobs: 200` (the operator's OMP settings file), and the binary clamps the value to 100.
   `scripts/hyaku/await-capacity.sh:3` says the setting is "read once at process start". The binary
   instead re-evaluates `maxRunningJobs` on every capacity check (`get #R()` at offset 160032730), and
   upstream says settings reads are "memoized per scope"
@@ -181,7 +181,7 @@ travel with C2.
 
 - Read-only throughout. The omp binary was read as bytes only, with `python3 -I -B` regex.
 - Upstream was read through `gh api` at tag `v18.12.6` (`45c35e40c46166dc726ccc52f5d27f40f2449f99`).
-- `~/.omp/agent/config.yml` was read only for its `async:` and `task:` lines. The seat-gate state file
+- the operator's OMP settings file was read only for its `async:` and `task:` lines. The seat-gate state file
   was read only.
 - No omp, jj or git writes, no transcripts opened, no subagents, no background jobs.
 - Tools used: gh 2.102.0, Python 3.14.8, rg 15.1.0, all pre-installed. No installs or updates.

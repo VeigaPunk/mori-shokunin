@@ -394,7 +394,7 @@ Everything used (`python3`, `git`, `jq`, `jj`, `bash`, `tar`) was already presen
   six pre-existing `probe.key` config files there are dated 2026-10-20 and are not this seat's.
 * The lane working tree was **not** written to: `git status --porcelain` in the lane shows only
   sibling seats' untracked wave-1 reports and `.scratch/` (pre-existing, dated 2026-10-21). No `tools/`
-  byte changed; the `git`/`jj` binaries, `~/.omp/agent/config.yml`, `~/.omp/agent/mcp.json`, OMP
+  byte changed; the `git`/`jj` binaries, the operator's OMP settings file, `~/.omp/agent/mcp.json`, OMP
   settings and fleet scripts were not touched.
 
 ---

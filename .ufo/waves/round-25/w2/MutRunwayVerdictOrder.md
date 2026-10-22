@@ -70,7 +70,7 @@ pre-existing failure.
 ```
 $ python3 -I -B tools/mori-job-runway.py
 { "schema": "mori-job-runway-v1",
-  "config_path": "/home/vgpnk/.omp/agent/config.yml",
+  "config_path": "the operator's OMP settings file",
   "binary_path": "/home/vgpnk/.local/bin/omp",
   "binary_sha256": "85d9daf3a05fc76e8cd425ae1904eb576af8d21cc85fcf4690742626e07ccfa4",
   "configured": {"state": "set", "value": 200},

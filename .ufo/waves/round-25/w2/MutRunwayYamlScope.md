@@ -30,7 +30,7 @@ Private clone only: `git clone --no-hardlinks /home/vgpnk/Projects/shokunin/mori
 /fast/scratch/hyaku/mori-r25/w2-MutRunwayYamlScope` (HEAD `e5e1b7b`). The lane checkout was
 **not** modified — the only file written in the lane is this report. No `jj`/`git` mutation was
 run in the lane or the fleet root; `omp` was never executed (its bytes were read only, and
-`~/.omp/agent/config.yml` was read read-only).
+the operator's OMP settings file was read read-only).
 
 Environment: Python 3.14.8, `python3 -I -B` throughout. **No tool was installed** (nothing to
 install: `python3` 3.14.8 and `bun` 1.4.3 were already present); `bun` was used read-only as the
@@ -128,7 +128,7 @@ string` and omp's own `Config overlay must be a YAML mapping`).
 | P6 `async:\n    # note\n  maxJobs: 50` | `{"async":{"maxJobs":50}}` | set 50 ✓ | set 50 | set 50 | absent | **absent** | **absent** |
 | P7 = P3 (alias) | `{"async":{"enabled":true},"task":{"maxJobs":300}}` | absent ✓ | absent | **set 300** | absent | absent | absent |
 
-Live host check (real `~/.omp/agent/config.yml` + real `~/.local/bin/omp`, read-only):
+Live host check (real the operator's OMP settings file + real `~/.local/bin/omp`, read-only):
 
 ```
 pristine : configured {set 200}  effective 100  RUNWAY_CLAMPED  exit 1

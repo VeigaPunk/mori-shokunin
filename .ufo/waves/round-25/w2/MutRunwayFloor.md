@@ -4,7 +4,9 @@ Seat: `MoriR25.MutRunwayFloor` (mutation tester, wave 2, leaf).
 Target: `tools/mori-job-runway.py` (claim C2) — the **effective formula** only, i.e. the
 `max(1, min(clamp, base))` term and the choice of `base` inside `_effective`
 (`tools/mori-job-runway.py:436-455`).
-Lane tip under test: `07a31ae8e22514bbc603afa13f2de7c8b2424cca`.
+Lane tip under test: `07a31ae8e22514bbc603afa13f2de7c8b2424cca` (this seat's clone tip). The lane HEAD
+moved during the session — sibling seats grew the supplementary corpus from 18 to 24 cases — but the
+**tool bytes under test did not change**: `5d90d7d43df0…` at both tips.
 Private copy: `/fast/scratch/hyaku/mori-r25/w2-MutRunwayFloor` (`git clone --no-hardlinks` of the
 lane; the tool bytes there are byte-identical to the lane's). The lane checkout was never modified
 except for this report file.
@@ -16,16 +18,19 @@ by the declared detector `--selftest` (frozen 21). The landed formula is faithfu
 harness: `max(1, min(clamp, base))` reproduces upstream exactly — the clamp number is read from the
 binary's bytes and the floor of 1 comes from the manager, not from a guess.
 
-**The supplementary 18: WEAKENED as a formula detector (coverage finding, not a defect).** Three of
-the six formula mutants (drop-floor, use-configured, hardcode-100) print `PASS 18/18` — that file
-has **almost no power over the numeric branch**: 16 of its 18 cases are abstentions (`effective:
-null`), and the two numeric ones (R03, R17) use `maxJobs: 50` under a clamp of 100, a point where
-the clamp term and the floor are both invisible.
+**The supplementary corpus: WEAKENED as a formula detector (coverage finding, not a defect).** Three
+of the six formula mutants (drop-floor, use-configured, hardcode-100) print `PASS 24/24` against the
+current file — it has **almost no power over the numeric branch**: 19 of its 24 cases are
+abstentions (`effective: null`), and the five numeric ones (R03, R17, R19, R20, R24) all sit at or
+below the clamp with `configured ≥ 40`, a point where the clamp term and the floor are both
+invisible. (The corpus grew from 18 to 24 cases while this seat was working — see "Corpus moved
+under this seat" below — and the verdict is the same on both versions.)
 
 **One formula mutant survives both declared detectors (coverage finding, not a defect).** Moving the
-floor inside the clamp (`min(max(1, base), clamp)`) still prints `PASS 21/21` and `PASS 18/18`. No
-shipped case pins the floor when the *clamp itself* is below 1. The mutant is wrong (upstream floors
-at 1), but the region is unreachable on omp 18.12.6, whose clamp is 100.
+floor inside the clamp (`min(max(1, base), clamp)`) still prints `PASS 21/21` and `PASS 18/18` (and
+`PASS 24/24` on the current corpus). No shipped case pins the floor when the *clamp itself* is below
+1. The mutant is wrong (upstream floors at 1), but the region is unreachable on omp 18.12.6, whose
+clamp is 100.
 
 Nothing here is a defect in the landed tool, and nothing in the landed code should change. The
 findings are about what the fixtures pin.
@@ -35,7 +40,10 @@ findings are about what the fixtures pin.
 * **D-A (declared after-value):** `python3 -I -B tools/mori-job-runway.py --selftest` must print
   exactly `MORI_JOB_RUNWAY_SELFTEST: PASS 21/21` and exit 0; `python3 -I -B tools/mori-job-runway.py
   --selftest --cases tools/fixtures/mori-job-runway/supplementary-cases.json` must print exactly
-  `MORI_JOB_RUNWAY_SELFTEST: PASS 18/18` and exit 0.
+  `MORI_JOB_RUNWAY_SELFTEST: PASS 18/18` and exit 0 — the supplementary corpus as it stood at this
+  seat's clone tip. The corpus grew to **24** cases while this seat was working (see "Corpus moved
+  under this seat"), so the matrix was re-run against the current file as well; the current
+  after-value is `PASS 24/24`.
 * **D-C (private probe, mine):** `--selftest --cases probe-cases.json` — two probe cases (P01, P02)
   that cover the two regions neither shipped corpus pins. Used only to name the killing input of a
   survivor; not a claim about the lane's after-value.
@@ -46,9 +54,10 @@ Baseline (pristine bytes, sha256 of `tools/mori-job-runway.py` =
 `5d90d7d43df0fc91f398f971c2e53419d1e8d100503f08193e968b5fe12c3411`, identical in lane and copy):
 
 ```
-frozen        : MORI_JOB_RUNWAY_SELFTEST: PASS 21/21   exit 0
-supplementary : MORI_JOB_RUNWAY_SELFTEST: PASS 18/18   exit 0
-private probe : MORI_JOB_RUNWAY_SELFTEST: PASS 2/2     exit 0
+frozen (21)                    : MORI_JOB_RUNWAY_SELFTEST: PASS 21/21   exit 0
+supplementary (18 at clone tip) : MORI_JOB_RUNWAY_SELFTEST: PASS 18/18   exit 0
+supplementary (24 at lane HEAD) : MORI_JOB_RUNWAY_SELFTEST: PASS 24/24   exit 0
+private probe (2)               : MORI_JOB_RUNWAY_SELFTEST: PASS 2/2     exit 0
 ```
 
 ## The formula under attack
@@ -74,14 +83,14 @@ private probe : MORI_JOB_RUNWAY_SELFTEST: PASS 2/2     exit 0
 Each mutant was applied alone to the private copy, both declared detectors were run, then the
 pristine bytes were restored and re-hashed (restoration column: all `true`, hashes below).
 
-| # | Mutant (one behaviour-bearing point) | Frozen 21 | Supplementary 18 | Private probe | Verdict | Failing case id |
+| # | Mutant (one behaviour-bearing point) | Frozen 21 | Supplementary (18 at clone tip / 24 at lane HEAD) | Private probe | Verdict | Failing case id |
 |---|---|---|---|---|---|---|
-| M1 | **drop `max(1, ..)`**: `return min(clamp_value, base)` | `FAIL 20/21` rc 2 | `PASS 18/18` rc 0 | `FAIL 1/2` rc 2 | **killed** (frozen + probe) | J12 (frozen), P01 (probe) |
-| M2 | **use configured instead of min**: `return max(1, configured_value if configured_state_name == "set" else min(clamp_value, base))` | `FAIL 16/21` rc 2 | `PASS 18/18` rc 0 | `FAIL 1/2` rc 2 | **killed** (frozen + probe) | J01, J11, J15, J17, J21 (frozen), P01 (probe) |
-| M3a | **use default when configured is set (strict)**: `base = default_value` unconditionally | `FAIL 17/21` rc 2 | `FAIL 16/18` rc 2 | `FAIL 1/2` rc 2 | **killed** (frozen + supplementary + probe) | J02, J12, J18, J21 (frozen), R03, R17 (supp.), P02 (probe) |
-| M3b | **use default when configured is set (lenient)**: `base = default_value if default_state_name == "found" else configured_value` | `FAIL 18/21` rc 2 | `FAIL 16/18` rc 2 | `FAIL 1/2` rc 2 | **killed** (frozen + supplementary + probe) | J02, J12, J18 (frozen), R03, R17 (supp.), P02 (probe) |
-| M4 | **floor moved inside the clamp**: `return min(max(1, base), clamp_value)` | `PASS 21/21` rc 0 | `PASS 18/18` rc 0 | `FAIL 1/2` rc 2 | **survived both declared detectors** | none (P01 kills it) |
-| M5 | **clamp additionally capped at 100**: `return max(1, min(clamp_value, base, 100))` | `FAIL 20/21` rc 2 | `PASS 18/18` rc 0 | `FAIL 1/2` rc 2 | **killed** (frozen + probe) | J18 (frozen), P02 (probe) |
+| M1 | **drop `max(1, ..)`**: `return min(clamp_value, base)` | `FAIL 20/21` rc 2 | `PASS 18/18` / `PASS 24/24` rc 0 | `FAIL 1/2` rc 2 | **killed** (frozen + probe) | J12 (frozen), P01 (probe) |
+| M2 | **use configured instead of min**: `return max(1, configured_value if configured_state_name == "set" else min(clamp_value, base))` | `FAIL 16/21` rc 2 | `PASS 18/18` / `PASS 24/24` rc 0 | `FAIL 1/2` rc 2 | **killed** (frozen + probe) | J01, J11, J15, J17, J21 (frozen), P01 (probe) |
+| M3a | **use default when configured is set (strict)**: `base = default_value` unconditionally | `FAIL 17/21` rc 2 | `FAIL 16/18` / `FAIL 20/24` rc 2 | `FAIL 1/2` rc 2 | **killed** (frozen + supplementary + probe) | J02, J12, J18, J21 (frozen), R03, R17 (18) / R03, R17, R20, R24 (24), P02 (probe) |
+| M3b | **use default when configured is set (lenient)**: `base = default_value if default_state_name == "found" else configured_value` | `FAIL 18/21` rc 2 | `FAIL 16/18` / `FAIL 20/24` rc 2 | `FAIL 1/2` rc 2 | **killed** (frozen + supplementary + probe) | J02, J12, J18 (frozen), R03, R17 (18) / R03, R17, R20, R24 (24), P02 (probe) |
+| M4 | **floor moved inside the clamp**: `return min(max(1, base), clamp_value)` | `PASS 21/21` rc 0 | `PASS 18/18` / `PASS 24/24` rc 0 | `FAIL 1/2` rc 2 | **survived both declared detectors** | none (P01 kills it) |
+| M5 | **clamp additionally capped at 100**: `return max(1, min(clamp_value, base, 100))` | `FAIL 20/21` rc 2 | `PASS 18/18` / `PASS 24/24` rc 0 | `FAIL 1/2` rc 2 | **killed** (frozen + probe) | J18 (frozen), P02 (probe) |
 
 M1–M3 are the three points the assignment named. M3 was probed in two readings of "use default when
 configured is set" (strict = the default always wins; lenient = the default wins whenever it is
@@ -134,6 +143,36 @@ frozen rc=2 MORI_JOB_RUNWAY_SELFTEST: FAIL 20/21
 supp   rc=0 MORI_JOB_RUNWAY_SELFTEST: PASS 18/18
 ```
 
+Re-run of the same six mutants against the **current** 24-case supplementary corpus
+(`tools/fixtures/mori-job-runway/supplementary-cases.json`, sha256 `6c5d5251946bc3335ff5a49312cb5062633bb7eeaa8e54255cd656e4459014a6`;
+frozen column identical in both runs, shown only once above):
+
+```
+BASELINE frozen: MORI_JOB_RUNWAY_SELFTEST: PASS 21/21 (rc=0)
+BASELINE supp:   MORI_JOB_RUNWAY_SELFTEST: PASS 24/24 (rc=0)
+
+=== M1-drop-floor ===
+supp   rc=0 MORI_JOB_RUNWAY_SELFTEST: PASS 24/24
+=== M2-use-configured ===
+supp   rc=0 MORI_JOB_RUNWAY_SELFTEST: PASS 24/24
+=== M3a-default-when-set-strict ===
+supp   rc=2 MORI_JOB_RUNWAY_SELFTEST: FAIL 20/24
+  SUPP-CASE R03: verdict: expected 'RUNWAY_AS_CONFIGURED', got 'RUNWAY_CLAMPED'; exit: expected 0, got 1; effective: expected 50, got 100
+  SUPP-CASE R17: verdict: expected 'RUNWAY_AS_CONFIGURED', got 'RUNWAY_CLAMPED'; exit: expected 0, got 1; effective: expected 50, got 100
+  SUPP-CASE R20: verdict: expected 'RUNWAY_AS_CONFIGURED', got 'RUNWAY_CLAMPED'; exit: expected 0, got 1; effective: expected 40, got 100
+  SUPP-CASE R24: verdict: expected 'RUNWAY_AS_CONFIGURED', got 'RUNWAY_CLAMPED'; exit: expected 0, got 1; effective: expected 50, got 100
+=== M3b-default-when-set-lenient ===
+supp   rc=2 MORI_JOB_RUNWAY_SELFTEST: FAIL 20/24
+  SUPP-CASE R03: ... effective: expected 50, got 100
+  SUPP-CASE R17: ... effective: expected 50, got 100
+  SUPP-CASE R20: ... effective: expected 40, got 100
+  SUPP-CASE R24: ... effective: expected 50, got 100
+=== M4-floor-after-min ===
+supp   rc=0 MORI_JOB_RUNWAY_SELFTEST: PASS 24/24
+=== M5-hardcode-100 ===
+supp   rc=0 MORI_JOB_RUNWAY_SELFTEST: PASS 24/24
+```
+
 Probe run (`--selftest --cases probe-cases.json`; pristine passes 2/2):
 
 ```
@@ -176,7 +215,7 @@ PRISTINE re-check: rc=0 MORI_JOB_RUNWAY_SELFTEST: PASS 2/2 ; tool sha256 5d90d7d
   function on the values it can represent: the config grammar only accepts integers
   (`INTEGER_RE = ^[+-]?[0-9]+$`, `tools/mori-job-runway.py:122`), so upstream's `Math.floor` is a
   no-op on them.
-* **This host** (`~/.omp/agent/config.yml`, read 2026-10-22): a column-0 `async:` block with
+* **This host** (the operator's OMP settings file, read 2026-10-22): a column-0 `async:` block with
   `maxJobs: 200`. Live run of the pristine tool in the private copy:
   `configured {set 200}`, `clamp {found 100, sites 1}`, `setting_default {found 100, sites 1}`,
   `effective 100`, `verdict RUNWAY_CLAMPED`, exit 1.
@@ -237,8 +276,8 @@ PRISTINE re-check: rc=0 MORI_JOB_RUNWAY_SELFTEST: PASS 2/2 ; tool sha256 5d90d7d
 
 ### M3a / M3b — default used when the setting is configured — killed by both corpora
 
-Both readings are killed by the frozen 21 **and** by the supplementary 18 (R03, R17), so they are not
-survivors. Recorded for completeness because they are the strongest evidence that the corpora pin
+Both readings are killed by the frozen 21 **and** by the supplementary corpus (R03, R17 on the 18-case
+version; R03, R17, R20, R24 on the current 24-case version), so they are not survivors. Recorded for completeness because they are the strongest evidence that the corpora pin
 the *base* choice and not only the arithmetic: with `maxJobs: 50` configured, upstream uses the
 configured 50 (`registry.ts:642` — the default is the fallback for an unset setting), so the real cap
 is 50; M3a/M3b would report 100. Note the one case that separates the two readings is **J21**
@@ -248,9 +287,10 @@ through the mutant.
 
 ## Coverage findings (fixtures, not the tool)
 
-1. **The supplementary 18 have almost no power over the effective formula.** M1, M2 and M5 all print
-   `PASS 18/18`. 16 of the 18 cases are abstentions (`effective: null`), and the two numeric ones
-   (R03, R17) sit at `maxJobs: 50` under a clamp of 100 — a point where the clamp term and the
+1. **The supplementary corpus has almost no power over the effective formula.** M1, M2 and M5 all
+   print `PASS 18/18` on the 18-case version and `PASS 24/24` on the current one. 19 of the 24
+   cases are abstentions (`effective: null`), and the five numeric ones (R03, R17, R19, R20, R24)
+   all sit at or below the clamp with `configured ≥ 40` — a point where the clamp term and the
    floor cannot show. The supplementary file's declared subject (YAML forms the line grammar cannot
    read) is not the formula's; it is a *co-evolved* corpus, not a second witness for the formula.
    Severity: **low** for the claim (the frozen 21 carries the load), **medium** for anyone who
@@ -306,18 +346,36 @@ declared after-value `PASS 21/21` untouched.
   binary's bytes.
 * Tooling: **no package was installed or upgraded** for this seat. The mutation harness is plain
   Python 3 standard library (`python3 -I -B`, version 3.14.8): `mutate_runway.py`, `probe_matrix.py`,
-  `probe-cases.json`, `mutation-results.json`, `mutation-log.txt`, `probe-log.txt`, plus the
-  re-fetched upstream files under `upstream/`. The private copy lives at
-  `/fast/scratch/hyaku/mori-r25/w2-MutRunwayFloor` and can be removed with
+  `probe-cases.json`, `mutation-results.json`, `mutation-log.txt` (18-case run),
+  `mutation-log-24.txt` (24-case run), `probe-log.txt`, plus the re-fetched upstream files under
+  `upstream/`. The private copy lives at
+  `/fast/scratch/hyaku/mori-r25/w2-MutRunwayFloor`; after the run it was trimmed from 358 MB to
+  2.6 MB (`.git`, `corpus/`, `considerthese/`, `.ufo/` removed — none of them is needed to re-run
+  the mutants) and the two declared detectors plus the private probe were re-run in the trimmed copy
+  as a last check: `PASS 21/21`, `PASS 24/24` (the current supplementary corpus), `PASS 2/2`, tool
+  sha256 `5d90d7d43df0…`. The copy can be removed with
   `rm -rf /fast/scratch/hyaku/mori-r25/w2-MutRunwayFloor`.
+
+## Corpus moved under this seat
+
+While this seat was working, sibling wave-2 seats extended
+`tools/fixtures/mori-job-runway/supplementary-cases.json` from 18 to **24** cases (R19–R24, from the
+YAML-scope, ambiguity and admission seats); the file at this seat's clone tip was the 18-case
+version (`8d09756d…`), the file at the lane's current HEAD is `6c5d5251…`. The whole mutation matrix
+was therefore run twice — once against the 18-case file the assignment named, once against the
+current 24-case file — and every verdict is unchanged: M1, M2, M4 and M5 still pass the supplementary
+detector; M3a and M3b are still killed by it (now by R03, R17, R20 and R24 instead of R03 and R17
+alone). The tool bytes under test did not change (`5d90d7d4…` in both runs), and the frozen 21 were
+untouched throughout (blob `48df844a`, frozen at `7634be75`). Nothing in this report depends on
+which version of the supplementary file is used.
 
 ## Summary table
 
-| Mutant | Frozen 21 (declared) | Supplementary 18 | Private probe | Verdict | Failing case id |
+| Mutant | Frozen 21 (declared) | Supplementary (18 / 24) | Private probe | Verdict | Failing case id |
 |---|---|---|---|---|---|
-| M1 drop `max(1, ..)` | killed (`FAIL 20/21`) | survived (`PASS 18/18`) | killed | **killed** | J12 (frozen), P01 |
-| M2 use configured instead of min | killed (`FAIL 16/21`) | survived (`PASS 18/18`) | killed | **killed** | J01, J11, J15, J17, J21 (frozen), P01 |
-| M3a use default when configured is set (strict) | killed (`FAIL 17/21`) | killed (`FAIL 16/18`) | killed | **killed** | J02, J12, J18, J21 / R03, R17 / P02 |
-| M3b use default when configured is set (lenient) | killed (`FAIL 18/21`) | killed (`FAIL 16/18`) | killed | **killed** | J02, J12, J18 / R03, R17 / P02 |
-| M4 floor inside the clamp | survived (`PASS 21/21`) | survived (`PASS 18/18`) | killed | **survivor of both declared detectors** | none (P01 kills it) |
-| M5 clamp additionally capped at 100 | killed (`FAIL 20/21`) | survived (`PASS 18/18`) | killed | **killed** | J18 (frozen), P02 |
+| M1 drop `max(1, ..)` | killed (`FAIL 20/21`) | survived (`PASS 18/18` / `PASS 24/24`) | killed | **killed** | J12 (frozen), P01 |
+| M2 use configured instead of min | killed (`FAIL 16/21`) | survived (`PASS 18/18` / `PASS 24/24`) | killed | **killed** | J01, J11, J15, J17, J21 (frozen), P01 |
+| M3a use default when configured is set (strict) | killed (`FAIL 17/21`) | killed (`FAIL 16/18` / `FAIL 20/24`) | killed | **killed** | J02, J12, J18, J21 / R03, R17 (, R20, R24) / P02 |
+| M3b use default when configured is set (lenient) | killed (`FAIL 18/21`) | killed (`FAIL 16/18` / `FAIL 20/24`) | killed | **killed** | J02, J12, J18 / R03, R17 (, R20, R24) / P02 |
+| M4 floor inside the clamp | survived (`PASS 21/21`) | survived (`PASS 18/18` / `PASS 24/24`) | killed | **survivor of both declared detectors** | none (P01 kills it) |
+| M5 clamp additionally capped at 100 | killed (`FAIL 20/21`) | survived (`PASS 18/18` / `PASS 24/24`) | killed | **killed** | J18 (frozen), P02 |

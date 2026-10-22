@@ -2,7 +2,7 @@
 
 Seat: `MoriR25.ConfigOverrideSurfaces` (scout). Claim C2, contract
 `.ufo/waves/round-25/contract.md`. Scope: places other than
-`~/.omp/agent/config.yml` that can set `async.maxJobs` for an omp session, with a
+the operator's OMP settings file that can set `async.maxJobs` for an omp session, with a
 located quote for each, plus whether `~/Projects/shokunin` or the lane carries a
 project-level settings file. Read-only: no config was edited, no `omp` was run.
 
@@ -36,7 +36,7 @@ From `docs/config-usage.md:174-188` (upstream tag), matching the code in
 2. Runtime overrides (in-memory, never persisted)
 3. Config overlays: `PI_CONFIG_FILES` then every `--config` file, later file wins
 4. Project settings (discovery capability: `settings.json` and `config.yml`)
-5. Global settings: first present of `~/.omp/agent/config.yml`, `~/.omp/agent/config.yaml`
+5. Global settings: first present of the operator's OMP settings file, `~/.omp/agent/config.yaml`
 6. Definition default (`100`)
 
 `#mergeOwnLayers`, verbatim from the tag:
@@ -72,7 +72,7 @@ Binary confirmation: `strings -a ~/.local/bin/omp | grep -n` →
 
 Current host: no `~/.omp/profiles` entries (`ls -a ~/.omp/profiles` → `.`, `..`),
 and `~/.omp/agent/config.yaml` does not exist, so the global layer is exactly
-`~/.omp/agent/config.yml:244-245`:
+the operator's OMP settings file:
 
 ```
 244:async:
@@ -368,7 +368,7 @@ should keep in the entry's wording:
 2. On this host the caveat is inert: no project settings file, no overlay, no
    profile, no relocated agent dir, no runtime override visible from outside, and the
    live run recorded in `w1/BuildJobRunwayTool.md` (`configured 200 / clamp 100 / effective 100`) matches
-   `~/.omp/agent/config.yml:245`. The RPC pin cannot change it (configured value wins),
+   the operator's OMP settings file. The RPC pin cannot change it (configured value wins),
    and no RPC command can write it.
 
 Remaining unknowns (frontier, not needed for the bound): whether any future launcher

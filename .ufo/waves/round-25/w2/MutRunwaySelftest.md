@@ -160,7 +160,7 @@ mutant M2a+defect: MORI_JOB_RUNWAY_SELFTEST: PASS 19/21  rc=0
 
 — the mutated harness is **blind to a real defect** that the pristine harness names. **Does omp's
 real behaviour make it matter? Yes**: the `async:` block missing (a host with no
-`~/.omp/agent/config.yml`, or a renamed key) is exactly the situation in which the runway falls back
+the operator's OMP settings file, or a renamed key) is exactly the situation in which the runway falls back
 to the compiled default, and rule 1's `absent` state is what the tool reports as `RUNWAY_DEFAULT`.
 Severity: **medium** (the count is load-bearing; the exit code is not).
 

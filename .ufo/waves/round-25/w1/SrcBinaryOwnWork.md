@@ -305,7 +305,7 @@ upstream source semantics, of a live run, or of the running-job count.
 - **Not the per-session scope of the cap.** "One job manager per root session, shared with
   subagents" is a code-path claim from the sibling seats' byte reads; this row carries two
   literals and their locations only.
-- **Not a claim about the config file.** `~/.omp/agent/config.yml` is a different artifact with a
+- **Not a claim about the config file.** the operator's OMP settings file is a different artifact with a
   different row (or no row); `async.maxJobs: 200` on this host is a config fact, not a binary
   fact. The row's `teaches` deliberately says "whatever `async.maxJobs` is set to" rather than
   naming 200.
@@ -403,7 +403,7 @@ commit.
   `90ed9b7`; see §2.3 — the landing is the L1's edit, not this seat's, and the landed row is
   byte-identical to this seat's draft.) `omp` was **never executed**: the binary was opened only as
   bytes via `mmap`, `sha256sum`, `stat`, `file`, `readlink`. No settings file was written or
-  edited (`~/.omp/agent/config.yml` was read at lines 244–245 only). No `~/.omp` session
+  edited (the operator's OMP settings file was read at lines 244–245 only). No `~/.omp` session
   transcript content was read; only file paths and public tool output appear here.
 - **Touched surfaces (writes):** this report file only —
   `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-25/w1/SrcBinaryOwnWork.md`.
@@ -411,7 +411,7 @@ commit.
   script, the fetched `SHA256SUMS.txt`) and outside the lane repo.
 - **Out of scope / not done:** no edit by this seat to `corpus/SOURCES.md`,
   `corpus/lessons/round-25.md` or any other lane file; no product-code edit; no
-  commit/push/publish/deploy; no execution of `omp`; no edit to `~/.omp/agent/config.yml`,
+  commit/push/publish/deploy; no execution of `omp`; no edit to the operator's OMP settings file,
   `~/.omp/agent/mcp.json` or any OMP setting; no upstream source row (S098–S101 belong to other
   seats); no judgment on the C2 tool's config-parsing half, the frozen cases, or the
   YAML-abstention amendment (A2) — all other seats' surfaces.

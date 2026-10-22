@@ -22,7 +22,7 @@ of 1 but states **no upper bound**, while the code clamps the value with `Math.m
 `packages/coding-agent/src/sdk.ts:2284`. A second docs page, `docs/tools/eval.md:258`, does state
 "default and maximum 100". That is the doc-vs-code disagreement: a user reading the settings
 reference alone and setting `maxJobs: 200` — exactly what this host's
-`~/.omp/agent/config.yml:244-245` does — would expect 200 running jobs; the binary caps it at 100.
+the operator's OMP settings file does — would expect 200 running jobs; the binary caps it at 100.
 `README.md` does not mention the setting at all (swept, negative claim below).
 
 ---
@@ -180,13 +180,13 @@ Contract: URL, access date, HTTP status, sha256, anchor, ≤25-word located quot
 3. **A second docs page states the ceiling.** `docs/tools/eval.md:258` says the cap is
    "default and maximum 100" — i.e. the two upstream docs pages do not agree with each other, and
    only the eval page matches the code.
-4. **This host is the live instance of the disagreement.** `~/.omp/agent/config.yml:244-245`
+4. **This host is the live instance of the disagreement.** the operator's OMP settings file
    contains
    ```
    async:
      maxJobs: 200
    ```
-   (read-only `grep -n "maxJobs" -B3 -A2 ~/.omp/agent/config.yml`; the file was not modified).
+   (read-only `grep -n "maxJobs" -B3 -A2 the operator's OMP settings file`; the file was not modified).
    The configured value is 200; the binary's cap is 100. [INFERENCE] The round-25 contract's
    reported behaviour — `task` refused while 100 or more background jobs run although the config
    says 200 — is exactly this clamp. The clamp site itself is another seat's surface
@@ -229,7 +229,7 @@ this setting:
   nonetheless panel-invisible.
 - Consequence: `packages/coding-agent/src/config/settings-ui.ts:60-61` skips any setting whose
   `ui?.tab` does not match, so `async.maxJobs` never appears in the settings panel; it is
-  config-file-only (`~/.omp/agent/config.yml`) or `omp config set`-only.
+  config-file-only (the operator's OMP settings file) or `omp config set`-only.
 - The installed binary agrees: reading `~/.local/bin/omp` as bytes, the string `Max Jobs` occurs
   0 times, `Maximum Jobs` 0 times, `Background Job Cap` 0 times, and the only `async.maxJobs`
   occurrences are the id string in the settings-id table and the compiled registration
@@ -280,7 +280,7 @@ about runtime job counts is implied.
   `corpus/SOURCES.md` was **not** edited (read-only: `grep`/`awk` census only).
 - **No `jj` command was run at the fleet root.** No `jj`/`git` write of any kind was run in the lane
   or anywhere (`git hash-object` and `git ls-remote --tags` only read objects / the remote).
-- `~/.omp/agent/config.yml` was **read** (`grep -n`) and never edited; no OMP setting, MCP file, or
+- the operator's OMP settings file was **read** (`grep -n`) and never edited; no OMP setting, MCP file, or
   fleet script was touched.
 - **Deviation, disclosed:** the round-25 contract bound says "never run omp itself; read the omp
   binary only as bytes". I ran `~/.local/bin/omp --version` once at the start of the seat (output:

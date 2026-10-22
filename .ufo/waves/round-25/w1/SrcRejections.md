@@ -18,7 +18,7 @@ The C2 claim decomposes into four separable facts, so a candidate can support on
 
 | Part | Fact a source must carry |
 |---|---|
-| A | the **configured** value comes from `async.maxJobs` in `~/.omp/agent/config.yml` |
+| A | the **configured** value comes from `async.maxJobs` in the operator's OMP settings file |
 | B | a **ceiling of 100** is applied to whatever is configured (`Math.min(100, …)`) |
 | C | the value is **floored at 1** and **queued/parked jobs hold no slot** |
 | D | the observable error text when the cap is hit (`Background job limit reached (N). …`) — **scoped**: the throw comes from `AsyncJobManager.register()`; two production consumers pre-check `atCapacity` and fall back to foreground execution instead of throwing (see §5.6) |
@@ -83,7 +83,7 @@ states an omp job limit" population that the search surfaced and that I screened
 - **Access date:** 2026-10-22 (page 10:06:30Z; raw 10:06:30Z). **HTTP status:** 200
   (HTML 183,727 B; raw 6,161 B, sha256 `9ae986fcae301544a8af80032ca7e3b40892503540002259fbc041bfcf9e0f3c`).
 - **What it does support:** a real-world `config.yml` for `omp` (Codex-main/Claude-fallback model
-  roles, `retry.fallbackChains`, `task.agentModelOverrides`, `task.isolation`, `worktree`, `lsp`).
+  [redacted in round 25: operator routing-table key names; retention gate class R8])
 - **What it does not support:** parts A–D. The file contains **no `async:` block at all**
   (`grep -c -E "maxJobs|maxRunningJobs|async"` → 0), so it neither states a configured cap nor a
   ceiling; its silence is evidence about *that user's* config only.
@@ -554,7 +554,7 @@ L1 as **S112** and **S113**:
 - The C2 tool `tools/mori-job-runway.py` and its frozen cases were not built, run or reviewed by this
   seat; `tools/fixtures/mori-job-runway/cases.json` was not inspected.
 - The knowledge entry `corpus/knowledge/harness-job-capacity-r25.md` was not drafted or edited.
-- `~/.omp/agent/config.yml` was **not** read or written by this seat (the job-limit claim does not
+- the operator's OMP settings file was **not** read or written by this seat (the job-limit claim does not
   need it; the config side belongs to the tool rows). No OMP setting, MCP file or fleet script was
   touched.
 - No `omp` process was run; the binary was only read as bytes (one regex probe, reported in §5.5).

@@ -38,13 +38,13 @@ killed by new supplementary cases or explained; that work is not counted toward 
 ## C2 — harness background-job runway capability (axis: coverage, active score 6; sourced)
 
 Live fact opened this round: this omp process refuses `task` calls while 100 or more background jobs run,
-although `~/.omp/agent/config.yml` sets `async.maxJobs: 200`, and background shell jobs count too. The
+although the operator's OMP settings file sets `async.maxJobs: 200`, and background shell jobs count too. The
 installed binary (`omp/18.12.6`, `~/.local/bin/omp`, 256,702,432 bytes) carries
 `maxRunningJobs: () => Math.min(100, XPe.get(R))` once and the setting `async.maxJobs` with
 `default: 100` once (L1 byte search, 2026-10-22). No mori tool reads this runway; it is new PROVINCE ground.
 
 New read-only tool `tools/mori-job-runway.py [--config PATH] [--binary PATH] [--selftest]`, Python 3
-standard library only, runs under `python3 -I -B`. Defaults: `--config ~/.omp/agent/config.yml`,
+standard library only, runs under `python3 -I -B`. Defaults: `--config the operator's OMP settings file`,
 `--binary` = the real path of `omp` found on PATH. It never runs omp, never writes, and never edits settings.
 
 Rules (binding for the tool and the frozen cases):

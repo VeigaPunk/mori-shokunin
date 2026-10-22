@@ -42,7 +42,7 @@ shipped session is `max(1, floor(min(100, base)))`:
 | module fallback `const DEFAULT_MAX_RUNNING_JOBS = 15;` (unreachable in a shipped session — the shipped construction always passes a function) | `job-manager.ts:43` | byte 160031518 (`var v = 15;`) |
 | setting `async.maxJobs`, `type: "number"`, `default: 100` | `packages/coding-agent/src/tools/settings.ts:941-946`; `docs/settings.md:623` | byte 155231590 |
 
-On this host `~/.omp/agent/config.yml:244-245` carries `async:` / `  maxJobs: 200`, so the effective
+On this host the operator's OMP settings file carries `async:` / `  maxJobs: 200`, so the effective
 cap is **100** and the text reads `(100)` — the configured 200 is clamped before the manager sees it.
 The lane's own committed live run agrees: `.ufo/waves/round-25/evidence/runway-live-run.json` →
 `configured 200`, `clamp {found, 100, sites 1}`, `effective 100`, `verdict RUNWAY_CLAMPED`, exit 1.
@@ -108,12 +108,12 @@ is upstream's own message from the async job manager's registration path
 
 | Condition | Report as | Never infer |
 |---|---|---|
-| the fixed sentence appears in a transcript or tool result | a harness **registration refusal** at the session's running-job cap; the number is the **effective** cap at that instant, `max(1, floor(min(100, async.maxJobs)))` — the clamp is compiled into the binary (`sdk.ts:2284`, byte 164406766), so `(100)` is the clamp, not the operator's configured value | that the operator configured 100 (this host's `~/.omp/agent/config.yml:244-245` says 200 and the clamp reduces it to 100); that the cap is still 100 now — it is re-read at every check (`job-manager.ts:331-335`); that the refused work ran — `register()` throws before the job exists (`task/index.ts:1210-1219`, `results: []` at `:1229`) |
+| the fixed sentence appears in a transcript or tool result | a harness **registration refusal** at the session's running-job cap; the number is the **effective** cap at that instant, `max(1, floor(min(100, async.maxJobs)))` — the clamp is compiled into the binary (`sdk.ts:2284`, byte 164406766), so `(100)` is the clamp, not the operator's configured value | that the operator configured 100 (this host's the operator's OMP settings file says 200 and the clamp reduces it to 100); that the cap is still 100 now — it is re-read at every check (`job-manager.ts:331-335`); that the refused work ran — `register()` throws before the job exists (`task/index.ts:1210-1219`, `results: []` at `:1229`) |
 | a bash or eval call was made while the cap was full | nothing — the auto-background branch checks `atCapacity` first and runs in the foreground instead (`tools/bash.ts:1220-1229`, `tools/eval.ts:536`) | that the cap was not reached; that the call was backgrounded |
 | a `task` spawn or an explicit `async: true` bash was refused | one refused registration; a batch can partially start, so refusals and starts coexist in one result | that the wave is dead — a refusal creates no job; that the count was this wave's own seats: the population is every **running, non-queued** job in the session tree — bash, task and eval alike (`job-manager.ts:343,367`, `:48`; `tools/bash.ts:882`) — and a parked (queued) task job counts only after `markRunning()` (`task/index.ts:1565,1490`) |
 | mori must state the cap | `python3 -I -B tools/mori-job-runway.py` → one JSON object (`schema: mori-job-runway-v1`) with `configured {state,value}`, `clamp {state,value,sites}`, `setting_default {state,value,sites}`, `effective`, and `verdict` ∈ `RUNWAY_CLAMPED` (exit 1) / `RUNWAY_AS_CONFIGURED` (exit 0) / `RUNWAY_DEFAULT` (exit 0) / `RUNWAY_UNKNOWN` (exit 2) | that the session was at capacity — the tool reports the **cap**, never a running-job count, and the live count is not readable from outside the session (`contract.md:83-84`); that an absent or unreadable clamp means "no clamp" (it is `RUNWAY_UNKNOWN`); that the file's `async.maxJobs` is the value the session resolved — the runtime settings stack has project and overlay layers the tool does not read (`corpus/knowledge/harness-job-capacity-r25.md` F13) |
 
-**mori never acts on this text.** It does not edit `~/.omp/agent/config.yml` or any other OMP
+**mori never acts on this text.** It does not edit the operator's OMP settings file or any other OMP
 setting, it does not cancel or kill a running job, and it does not split, shrink or re-dispatch a
 wave. mori is detection and report only (`SKILL.md:9`, `SKILL.md:139-147`, `PROVINCE.md:12-18`).
 Dispatch and wave shape are kumitate's (`PROVINCE.md:65`); writes under `~/.omp` are the operator's
@@ -156,7 +156,7 @@ it and report the conflict verbatim for the canonical judge.
   `earlyoom`, `memory.events`, and `MESSAGE_ID`; this is adjacent host diagnosis, not contested
   fleet ownership."
 
-**Conflict.** The file at issue is `~/.omp/agent/config.yml` — OMP **harness** configuration, which
+**Conflict.** The file at issue is the operator's OMP settings file — OMP **harness** configuration, which
 is none of tsukuroi's declared surfaces (host OS, packages, systemd units, drivers, firmware,
 boot). The harness's own contract — task batch, agent hub, agent discovery — is kumitate's
 (`kumitate-shokunin/PROVINCE.md:19`), and kumitate already treats that same file as the global OMP
@@ -239,7 +239,7 @@ L1 pastes §3 (or §3a) if the block is admitted.
 * No edit to `SKILL.md`, `PROVINCE.md`, the knowledge entry, `SOURCES.md` or the tool.
 * No lane commit, no jj command anywhere, no `git` write of any kind; the only git reads were
   `git log --oneline`, `git status --short`, `git diff --stat` inside the lane repo.
-* `omp` was never run; `~/.omp/agent/config.yml`, `~/.omp/agent/mcp.json` and OMP settings were
+* `omp` was never run; the operator's OMP settings file, `~/.omp/agent/mcp.json` and OMP settings were
   read only, never edited.
 * No tool installed or upgraded (no `pacman`, `uv tool`, `cargo` or `npm` transaction). Interpreter:
   system `python3`; upstream bytes fetched over HTTPS with `curl` from

@@ -15,7 +15,7 @@ binary only as bytes". This seat ran `~/.local/bin/omp --version` **once** at th
 (07:0x local, output `omp/18.12.6`) before re-reading the bound. That is a violation of the
 read-bytes-only rule, and it is recorded here rather than hidden. What it did and did not do:
 it printed the version string and exited; it was not run again; no `~/.omp` settings file was read or
-written by it (`~/.omp/agent/config.yml` was never opened by this seat — the C2 tool seat owns that
+written by it (the operator's OMP settings file was never opened by this seat — the C2 tool seat owns that
 read); no session was started, no job was registered, no job-cap state was touched. The version
 string it printed is independently corroborated by the byte-level facts below (the release asset
 `omp-linux-x64` digest equals the installed file's own sha256, and the upstream
@@ -633,6 +633,6 @@ wording satisfies the province boundary; the row's `teaches` cell claims only th
 and error behaviour, and it names its own exclusions.
 
 **Out of scope for this seat (not done here):** editing `corpus/SOURCES.md`; editing the lesson or the
-knowledge entry; building or running `tools/mori-job-runway.py`; touching `~/.omp/agent/config.yml`;
+knowledge entry; building or running `tools/mori-job-runway.py`; touching the operator's OMP settings file;
 running `omp` beyond the single `--version` invocation disclosed at the top of this report; any lane,
 sibling-lane or Git-index mutation; any pacman transaction.

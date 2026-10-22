@@ -26,7 +26,7 @@ Attack surface assigned: **duplicate handling** — a duplicate `maxJobs` as a d
   abstention is correct".
 - Severity: **medium as a coverage/calibration finding** (the counted after-value does not pin
   two of rule 1's duplicate clauses; one of them guards a false number), **low in operational
-  effect on this host** (the live `~/.omp/agent/config.yml` has exactly one `async:` key and one
+  effect on this host** (the live the operator's OMP settings file has exactly one `async:` key and one
   `maxJobs` child — verified read-only — so no duplicate shape is present here).
 - The survivors are **fixture gaps, not code bugs**. The smallest fix is three co-evolved
   supplementary cases (verified below) plus a disclosure that the frozen 21 cannot certify the
@@ -39,7 +39,7 @@ Private clone only: `git clone --no-hardlinks /home/vgpnk/Projects/shokunin/mori
 /fast/scratch/hyaku/mori-r25/w2-MutRunwayDuplicates` (HEAD `07a31ae8`). The lane checkout was
 **not** modified — the only file written in the lane is this report. No `jj`/`git` mutation was
 run in the lane or the fleet root; `omp` was never executed (its bytes were read only by the
-tool under test, and `~/.omp/agent/config.yml` was read read-only).
+tool under test, and the operator's OMP settings file was read read-only).
 
 Environment: Python 3.14.8, `python3 -I -B` throughout, `bun` 1.4.3 as the YAML-semantics
 oracle. **No tool was installed or upgraded** — nothing was missing; `bun` 1.4.3 was already on
@@ -182,7 +182,7 @@ Reading of that table:
 
 ### Live host check (read-only)
 
-`~/.omp/agent/config.yml` contains exactly one top-level `async:` key and one `maxJobs` child
+the operator's OMP settings file contains exactly one top-level `async:` key and one `maxJobs` child
 (`async:\n  maxJobs: 200`, lines 244-245; counted with a read-only scan: `async` keys 1,
 `maxJobs` occurrences 1). No duplicate shape is present on this host, so **none of the six
 mutants changes the live reading** — the tool reports `configured {set 200}`, clamp 100,
@@ -383,7 +383,7 @@ be cut. I am not changing the contract's wording and I did not touch the frozen 
   handling, quoting, tabs) were probed by the sibling seat
   `.ufo/waves/round-25/w2/MutRunwayYamlScope.md`; I did not duplicate that work.
 - Severity is judged against the shipped settings schema and this host's config. A deployment
-  with a hand-edited `~/.omp/agent/config.yml` carrying a duplicated key would hit M3/M6's
+  with a hand-edited the operator's OMP settings file carrying a duplicated key would hit M3/M6's
   wrong answers; nothing in the shipped tooling produces such a file.
 - Tooling: no package was installed or upgraded (nothing was missing); `python3` 3.14.8 and
   `bun` 1.4.3 were already on the host. No pacman transaction was run (all pacman transactions

@@ -22,7 +22,7 @@ reasoning, not a run.
   least 6144 MB (`wave-slot.sh:20-21`, `:48-53`, `:61-67`, `:79-80`). **[observed]**
 - The harness ceiling is **100 jobs per top-level session**, compiled into the binary as
   `maxRunningJobs: () => Math.min(100, XPe.get(R))`, so `async.maxJobs: 200` in
-  `~/.omp/agent/config.yml:245` cannot raise it. **[observed]**
+  the operator's OMP settings file cannot raise it. **[observed]**
 - A grant is a *forecast about agents*; admission is a *hard count of running, non-queued jobs* in
   the same process — including backgrounded `bash` jobs and async `eval` jobs, which create no
   transcript seat at all. That gap is why grants were refused in full on this host at 08:26Z
@@ -106,7 +106,7 @@ else dies. Current contents **[observed]**:
 
 ```
 $ cat ~/.local/state/shokunin-hyaku/live-session-dir
-/home/vgpnk/.omp/agent/sessions/-Projects-shokunin/2026-10-22T07-55-56-355Z_01a1629c-0c43-7754-9701-07270d148a3a
+[redacted in round 25: a live session-store path; retention gate classes R1/R2]
 ```
 
 That is Main's top-level session. The parent `-Projects-shokunin/` holds six top-level sessions; only
@@ -132,7 +132,7 @@ Rules that matter for the seat number **[observed]**:
   - assistant `stopReason` `stop` closes it **only** if a nonempty regular `.md` exists strictly
     newer than the message (`:119`, `:66-80`);
   - `custom`/`tool_execution_start` opens it (`:105`); any `custom_message` opens it (`:121`);
-  - bookkeeping types `model_usage, credential_pin, session, model_change, thinking_level_change,
+  - [redacted in round 25: list of session-record field names; retention gate class R9]
     compaction, branch_summary, session_info, label` are skipped (`:123-124`);
   - anything else, including malformed JSON, counts **active** (fail-closed).
 - A file that is appended to during inspection is counted active regardless of verdict (`:147-153`).
@@ -182,7 +182,7 @@ per the embedded `18.12.6` version string) **[observed]**:
    var XPe = h({ id: "async.maxJobs", protocolDefault: ["rpc"], type: "number", default: 100 });
    ```
 
-   and the config sets `async.maxJobs: 200` (`~/.omp/agent/config.yml:245`, file mtime
+   and the config sets `async.maxJobs: 200` (the operator's OMP settings file, file mtime
    `2026-10-22 05:01:04 -03:00`). Effective ceiling = `min(100, 200)` = **100**.
 
 3. Enforcement — class `Xm` (`packages/coding-agent/src/async/job-manager.ts` in the bytecode),

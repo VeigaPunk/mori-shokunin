@@ -31,7 +31,7 @@ named in contract A2) only to call `Bun.YAML.parse` on scratch files.
 - The bash and eval auto-background branches check the cap and register synchronously, with no `await` in between
   (`tools/bash.ts:1223-1235` → `#startManagedBashJob` → `register` at line 882; `tools/eval.ts:536-563`). The
   claim "degrades and raises nothing" holds.
-- The host facts match: `~/.omp/agent/config.yml:244-245` reads `async:` then `maxJobs: 200`; the state file
+- The host facts match: the operator's OMP settings file reads `async:` then `maxJobs: 200`; the state file
   `wave-cap` reads `85`; `wave1-attempts.json:10` shows `cap=85`; and there is no `~/.omp/agent/config.yaml`.
 - A live read-only run printed configured `set 200`, clamp `found 100 sites 1`, default `found 100 sites 1`,
   effective 100, `RUNWAY_CLAMPED`, exit 1. The selftest printed `MORI_JOB_RUNWAY_SELFTEST: PASS 21/21`.

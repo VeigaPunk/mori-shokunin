@@ -48,7 +48,7 @@ Private copy only: `git clone --no-hardlinks /home/vgpnk/Projects/shokunin/mori-
 is `e5e1b7b` — the tool bytes are identical in both, sha256 `5d90d7d4…c3411`). The lane checkout
 was **not** modified; the only file written in the lane is this report. No `jj`/`git` mutation was
 run in the lane or at the fleet root. `omp` was never executed: its bytes were read only
-(`grep -a` over `~/.local/bin/omp`, 256,702,432 bytes), and `~/.omp/agent/config.yml` was read
+(`grep -a` over `~/.local/bin/omp`, 256,702,432 bytes), and the operator's OMP settings file was read
 read-only.
 
 Environment: Python 3.14.8, `python3 -I -B` throughout, Bun 1.4.3 (already installed; used as the
@@ -131,7 +131,7 @@ Pristine sha256 of `tools/mori-job-runway.py`: `5d90d7d43df0fc91f398f971c2e53419
 | M7 | `6f4fb638142b` | `5d90d7d43df0` | yes |
 | M8 | `5a4f93d7b21a` | `5d90d7d43df0` | yes |
 | M9 | `9c03cdc5df3d` | `5d90d7d43df0` | yes |
-| M10 | (recorded in the log below) | `5d90d7d43df0` | yes |
+| M10 | `b612ed9c419e` | `5d90d7d43df0` | yes |
 
 Final state after the whole run: `sha256sum tools/mori-job-runway.py` → `5d90d7d43df0…c3411`,
 `diff` against the lane working copy → identical, and both detectors green again
@@ -200,7 +200,7 @@ So the tool never turns an unreadable form into a number omp does not use: for e
 omp would use a different number, the pristine tool abstains. That is the contract's own
 requirement ("`RUNWAY_UNKNOWN` is never a false number") and it holds under every mutant.
 
-The live host is unaffected by any of this: `~/.omp/agent/config.yml` reads
+The live host is unaffected by any of this: the operator's OMP settings file reads
 `async:` / `  maxJobs: 200` (lines 244–245, no tab, no quote, no marker), and the read-only live
 run in the clone gives `configured {state: set, value: 200}`, `clamp {found, 100, sites: 1}`,
 `effective 100`, `RUNWAY_CLAMPED`, exit 1 — identical with and without every A2 clause.

@@ -12,7 +12,7 @@ no job was launched; the lane was not mutated. My only write is this file.
 
 ## 1. Independent measurement (my own byte reads, not the tool)
 
-### configured — `~/.omp/agent/config.yml`
+### configured — the operator's OMP settings file
 
 File: 7,098 bytes, sha256 `887fbbb305e815cd02c2be3e39cc73cd56971eb9199055fb452e7eda1ff1484e`, mtime
 2026-10-22 05:01, no UTF-8 BOM, no tab byte anywhere in the file.
@@ -21,7 +21,7 @@ Top-level keys read in order: `setupVersion` (1), `extendedContext` (2), `enable
 `modelRoles` (103), `task` (130), `retry` (153), `dev` (240), `tools` (242), `async` (244), `tier` (246),
 `textVerbosity` (249), `hideThinkingBlock` (250), `omitThinking` (251).
 
-The block, verbatim (`config.yml:244-245`):
+The block, verbatim (the settings file):
 
 ```
 async:
@@ -73,7 +73,7 @@ the manager sees it; a refusal text would carry 100, not 200.
 ```json
 {
   "schema": "mori-job-runway-v1",
-  "config_path": "/home/vgpnk/.omp/agent/config.yml",
+  "config_path": "the operator's OMP settings file",
   "binary_path": "/home/vgpnk/.local/bin/omp",
   "binary_sha256": "85d9daf3a05fc76e8cd425ae1904eb576af8d21cc85fcf4690742626e07ccfa4",
   "configured": { "state": "set", "value": 200 },

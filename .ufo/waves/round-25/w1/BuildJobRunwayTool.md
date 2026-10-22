@@ -36,7 +36,7 @@ in the sandbox shows only the freeze commit `7634be7`.
   shutil, sys, tempfile`), `#!/usr/bin/env python3`, runs under `python3 -I -B`.
 * Read-only: reads one config file and one binary; never runs `omp`, never edits
   settings, never writes outside the `--selftest` temporary directories.
-  `~/.omp/agent/config.yml`, `~/.omp/agent/mcp.json` and OMP settings were only
+  the operator's OMP settings file, `~/.omp/agent/mcp.json` and OMP settings were only
   read, never edited.
 * Rule 1 `configured`: column-0 `async:` (optional trailing `# comment`) opens a
   block ending at the next non-blank, non-comment line at column 0; direct
@@ -84,7 +84,7 @@ EXIT=0
 $ python3 -I -B tools/mori-job-runway.py
 {
   "schema": "mori-job-runway-v1",
-  "config_path": "/home/vgpnk/.omp/agent/config.yml",
+  "config_path": "the operator's OMP settings file",
   "binary_path": "/home/vgpnk/.local/bin/omp",
   "binary_sha256": "85d9daf3a05fc76e8cd425ae1904eb576af8d21cc85fcf4690742626e07ccfa4",
   "configured": {
@@ -123,10 +123,10 @@ $ git status --short
 ### 4. Live facts the tool re-derives (independent byte read, same host)
 
 ```
-$ ls -la ~/.omp/agent/config.yml ~/.local/bin/omp
+$ ls -la the operator's OMP settings file ~/.local/bin/omp
 -rwxr-xr-x 1 vgpnk vgpnk 256702432 Oct 21 20:37 /home/vgpnk/.local/bin/omp
--rw------- 1 vgpnk vgpnk      7098 Oct 22 05:01 /home/vgpnk/.omp/agent/config.yml
-$ grep -n 'async:' -A1 ~/.omp/agent/config.yml
+-rw------- 1 vgpnk vgpnk      7098 Oct 22 05:01 the operator's OMP settings file
+$ grep -n 'async:' -A1 the operator's OMP settings file
 async:
   maxJobs: 200
 ```
@@ -314,7 +314,7 @@ EXIT=0
 $ python3 -I -B tools/mori-job-runway.py
 {
   "schema": "mori-job-runway-v1",
-  "config_path": "/home/vgpnk/.omp/agent/config.yml",
+  "config_path": "the operator's OMP settings file",
   "binary_path": "/home/vgpnk/.local/bin/omp",
   "binary_sha256": "85d9daf3a05fc76e8cd425ae1904eb576af8d21cc85fcf4690742626e07ccfa4",
   "configured": {

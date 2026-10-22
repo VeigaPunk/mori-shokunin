@@ -58,7 +58,7 @@ The named siblings, one by one:
 
 - Operator: the open L0 question marks raising the effective limit as operator-owned:
   `/home/vgpnk/Projects/shokunin/.ufo/l0-questions.md:96` ("operator-owned: why the process enforces 100, and whether a
-  restart or another key is needed"). The round bounds forbid editing `~/.omp/agent/config.yml` (round-25 contract
+  restart or another key is needed"). The round bounds forbid editing the operator's OMP settings file (round-25 contract
   assignment).
 - kumitate: analysis of OMP task/hub semantics. `kumitate-shokunin/PROVINCE.md:3` ("scopes OMP task/hub"), `:19`
   ("OMP harness contract … first entry `corpus/knowledge/omp-task-contract.md`" on its Frontier band). Its launcher
@@ -81,12 +81,12 @@ Binary facts behind the routing (byte reads only, `~/.local/bin/omp`, 256,702,43
 - The error template is ``Background job limit reached (${o}). Wait for running jobs to finish or cancel one.``.
 - `rg -a -o 'Math\.min\(\s*\d+\s*,\s*[\w$]+\.get\([\w$]+\)\s*\)'` returns exactly one site (the one above). The
   `task.maxConcurrency` setting (`var oB = h({ id: "task.maxConcurrency", … default: 32`) has no clamp of that shape.
-- Live config: `~/.omp/agent/config.yml:131` `maxConcurrency: 200` (under `task:` at `:130`) and `:245` `maxJobs: 200`
+- Live config: the operator's OMP settings file `maxConcurrency: 200` (under `task:` at `:130`) and `:245` `maxJobs: 200`
   (under `async:` at `:244`).
 
 **Route R1 → kumitate** (cross-lane, report, never edit): `kumitate-shokunin/corpus/knowledge/omp-task-contract.md` has no
 `async.maxJobs` entry and no job cap. Its `:197` says "the OMP session semaphore default (`task.maxConcurrency=32`) … The
-effective live OMP setting is UNKNOWN." On this host the configured semaphore is 200 (`config.yml:131`), and that setting
+effective live OMP setting is UNKNOWN." On this host the configured semaphore is 200 (the settings file), and that setting
 is not clamped by the binary's only setting-clamp site. Background task spawns, however, are refused once 100 jobs run
 (`Math.min(100, XPe.get(R))`, `XPe` = `async.maxJobs`). Its docs pin upstream `main` (`PROVINCE.md:19`), while mori's C2
 pins the 18.12.6 tag. [INFERENCE] The binding limit for async spawns is therefore the job cap of 100, not the semaphore,
@@ -154,7 +154,7 @@ missing job cap) and the two fleet-root items to the operator.
     excluded ([INFERENCE]).
 - **Verification for L1:**
   - `LC_ALL=C rg -a -o -c 'Math\.min\(\s*\d+\s*,\s*[\w$]+\.get\([\w$]+\)\s*\)' ~/.local/bin/omp` should return 1.
-  - `rg -n '^task:|maxConcurrency|^async:|maxJobs' ~/.omp/agent/config.yml` should show `:130,:131,:244,:245`.
+  - `rg -n '^task:|maxConcurrency|^async:|maxJobs' the operator's OMP settings file` should show `:130,:131,:244,:245`.
   - `cat ~/.local/state/shokunin-hyaku/wave-cap` should print 85.
   - Re-run the section 1 `rg` to confirm there is still no sibling `maxJobs` or job-manager knowledge.
 
@@ -164,7 +164,7 @@ missing job cap) and the two fleet-root items to the operator.
 - A read-only `find /home/vgpnk/Projects … -path '*/.omp/config.yml'` was auto-backgrounded by the shell wrapper after
   60 s. My `pkill -f` pattern did not match it. It ran to completion (wall time 244.75 s), and `pgrep` afterwards found
   nothing running. It found three project-level configs:
-  - `ufo-fsd-alpha/.omp/config.yml:3`: `maxConcurrency: 0`.
+  - `ufo-fsd-alpha/.omp/the settings file`: `maxConcurrency: 0`.
   - `gamez/dbzmon/.omp/config.yml`: no `async`, `maxJobs` or `maxConcurrency` lines.
   - `gamez/dbzmon/.tower/worktrees/dbzmon-refine2/dzr2-rigs-posa/.omp/config.yml`: no such lines either.
 

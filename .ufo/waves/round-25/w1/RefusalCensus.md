@@ -31,7 +31,7 @@ tree contains no file of mine other than this report.
   (`RULES.md`, `agent.db`, `config.yml`, `sessions`, …). It holds 45 workspace sub-directories and
   ~31.7k files (transcripts are `*.jsonl`; a session directory also holds agent-written artifacts:
   `*.md`, `*.log`, `*.json`).
-* Only the session directory was read; `~/.omp/agent/config.yml` was read once (line range only, see
+* Only the session directory was read; the operator's OMP settings file was read once (line range only, see
   below); nothing under `~/.omp` was edited, and `omp` was never run.
 
 ## Method
@@ -165,7 +165,7 @@ byte-dump strings ending `…(1` / `…(10`, and one agent-written byte-offset l
 
 ## Live-fact value for C2
 
-* `~/.omp/agent/config.yml:244-245` reads `async:` / `  maxJobs: 200` — the **configured** runway.
+* the operator's OMP settings file reads `async:` / `  maxJobs: 200` — the **configured** runway.
 * The installed binary's clamp (`maxRunningJobs: () => Math.min(100, XPe.get(R))`, byte search by
   the L1 on 2026-10-22) and this census agree on the **effective** value: every observed refusal
   message interpolates `100`, never `200` — 6,562 harness-side occurrences, zero exceptions, over

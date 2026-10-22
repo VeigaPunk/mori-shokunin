@@ -37,7 +37,7 @@ transaction. Tool installs and updates: **none**.
 
 | Fact | Anchor |
 |---|---|
-| `~/.omp/agent/config.yml:244-245` is a column-0 `async:` block whose direct child is `maxJobs: 200` | `grep -n "^async:\|maxJobs" ~/.omp/agent/config.yml` → `244:async:` / `245:  maxJobs: 200` |
+| the operator's OMP settings file is a column-0 `async:` block whose direct child is `maxJobs: 200` | `grep -n "^async:\|maxJobs" the operator's OMP settings file` → `244:async:` / `245:  maxJobs: 200` |
 | No project-layer `.omp/config.yml` exists for this fleet root or this lane | `ls -a /home/vgpnk/Projects/shokunin/.omp` → only `agents/`; `/home/vgpnk/Projects/shokunin/mori-shokunin/.omp` → absent |
 | The other settings layers that can carry the same key are real and unread by the tool: project layer (`<cwd>/.omp/`), `--config` / `PI_CONFIG_FILES` overlays, runtime overrides, plus agent-dir/profile relocation (`OMP_PROFILE`/`PI_PROFILE` → `~/.omp/profiles/<name>/agent`, `PI_CODING_AGENT_DIR`) | `.ufo/waves/round-25/w1/ConfigOverrideSurfaces.md:14,52,87,142,173`; upstream `packages/coding-agent/src/config/registry.ts:454-455` ("environment variable, runtime override, `--config` overlay, project, global, then the default") and `packages/utils/src/dirs.ts:120-134` |
 | The seat gate measures a different population under a different number (gate target 85 on this host, default 200; harness cap 100) | `.ufo/waves/round-25/w1/SeatGateRelation.md:16-18,68-72`; `corpus/knowledge/harness-job-capacity-r25.md:161` (F11) |
@@ -51,7 +51,7 @@ transaction. Tool installs and updates: **none**.
 ```json
 {
   "schema": "mori-job-runway-v1",
-  "config_path": "/home/vgpnk/.omp/agent/config.yml",
+  "config_path": "the operator's OMP settings file",
   "binary_path": "/home/vgpnk/.local/bin/omp",
   "binary_sha256": "85d9daf3a05fc76e8cd425ae1904eb576af8d21cc85fcf4690742626e07ccfa4",
   "configured": { "state": "set", "value": 200 },
@@ -108,7 +108,7 @@ Three independent reasons FR15 ≠ FR14:
 
 1. **Different subject.** FR14 observes *records about agent workloads* (transcripts, telemetry
    emitted by other lanes). FR15 observes *the harness's own compiled concurrency ceiling* — a
-   number derived from `~/.omp/agent/config.yml` and the bytes of `~/.local/bin/omp`. C2 reads no
+   number derived from the operator's OMP settings file and the bytes of `~/.local/bin/omp`. C2 reads no
    transcript, no telemetry and no lane-emitted record at all.
 2. **Different ownership posture.** FR14's boundary is exactly "mori is consume-only; telemetry
    emission belongs to the emitting lanes and orchestration" — i.e. FR14 is about *receiving*
@@ -159,7 +159,7 @@ Nothing above the append is touched: the Core bullet list (`PROVINCE.md:20-28`),
 - **Core, harness background-job capacity runway read (new FR15 advance, admission pending):**
   `tools/mori-job-runway.py` (round-25 build) reads two byte sources and reports one JSON object
   (`schema: mori-job-runway-v1`): the **configured** `async.maxJobs` from one settings file
-  (`--config`, default `~/.omp/agent/config.yml`), the **clamp** compiled into the installed
+  (`--config`, default the operator's OMP settings file), the **clamp** compiled into the installed
   harness binary (`--binary`, default the real path of `omp` on `PATH`) located by pattern over
   its bytes, and the **setting default** from the binary's own settings table. It then reports
   `effective = max(1, min(clamp, base))` — where `base` is the configured value, or the schema
@@ -234,7 +234,7 @@ live in `## Frontier`; the historical list above is unchanged") is not edited.
 
 | Ground | Entry | Bounded advance |
 |---|---|---|
-| Harness background-job capacity runway (new FR15) | `knowledge/harness-job-capacity-r25.md` | One JSON object (`schema: mori-job-runway-v1`) naming the **configured** `async.maxJobs` read from one settings file (default `~/.omp/agent/config.yml`), the **clamp** compiled into the installed harness binary (default the real path of `omp` on `PATH`), and the **setting default** from that binary's settings table, with `effective = max(1, min(clamp, base))` and the verdicts `RUNWAY_AS_CONFIGURED` / `RUNWAY_CLAMPED` / `RUNWAY_DEFAULT` / `RUNWAY_UNKNOWN` (exit 0 / 1 / 0 / 2). On this host: configured 200, clamp 100 at one site, default 100 at one site, effective 100, `RUNWAY_CLAMPED` — the configured value is clamped by the binary, not honoured. The read is a cap, never a count: no job list is read, and the live running-job count is not readable from outside a session. `RUNWAY_UNKNOWN` means this tool cannot derive a number from the bytes it was pointed at, never "unlimited" or "no clamp". Read-only: one file and one binary, no `omp` run, no settings write, no other configuration surface. Not a census surface: no `SURFACE` row, no finding id, no DRIFT verdict, no baseline re-pin. Sources S098–S103 and S112–S113 (`SOURCES.md:104-109,118-119`), all at oh-my-pi tag `v18.12.6`. |
+| Harness background-job capacity runway (new FR15) | `knowledge/harness-job-capacity-r25.md` | One JSON object (`schema: mori-job-runway-v1`) naming the **configured** `async.maxJobs` read from one settings file (default the operator's OMP settings file), the **clamp** compiled into the installed harness binary (default the real path of `omp` on `PATH`), and the **setting default** from that binary's settings table, with `effective = max(1, min(clamp, base))` and the verdicts `RUNWAY_AS_CONFIGURED` / `RUNWAY_CLAMPED` / `RUNWAY_DEFAULT` / `RUNWAY_UNKNOWN` (exit 0 / 1 / 0 / 2). On this host: configured 200, clamp 100 at one site, default 100 at one site, effective 100, `RUNWAY_CLAMPED` — the configured value is clamped by the binary, not honoured. The read is a cap, never a count: no job list is read, and the live running-job count is not readable from outside a session. `RUNWAY_UNKNOWN` means this tool cannot derive a number from the bytes it was pointed at, never "unlimited" or "no clamp". Read-only: one file and one binary, no `omp` run, no settings write, no other configuration surface. Not a census surface: no `SURFACE` row, no finding id, no DRIFT verdict, no baseline re-pin. Sources S098–S103 and S112–S113 (`SOURCES.md:104-109,118-119`), all at oh-my-pi tag `v18.12.6`. |
 
 ## Round-25 Frontier note — FR15 added, no existing row closed
 
@@ -334,7 +334,7 @@ table and the appended note do not drift, and keep the table's FR1–FR14 rows u
 | `corpus/knowledge/harness-job-capacity-r25.md` | none (read) |
 | `corpus/SOURCES.md` | none (read) |
 | `tools/mori-job-runway.py`, `tools/fixtures/mori-job-runway/*` | none (read; ran the landed tool read-only) |
-| `~/.omp/agent/config.yml`, `~/.local/bin/omp` | none (read only; no settings write, no `omp` run) |
+| the operator's OMP settings file, `~/.local/bin/omp` | none (read only; no settings write, no `omp` run) |
 | sibling lane repos, fleet root, `~/.omp` transcripts | none (read-only greps only) |
 
 ## 8. Out of scope for this seat

@@ -1798,7 +1798,7 @@ Motivating evidence. C1: the round-24 closure routed four defects (`corpus/lesso
 stale selftest evidence with no revision (D1), uncorrected K5/K4/P3 body lines in
 `corpus/knowledge/system-pressure-r24.md` (D2), a `PASS 6/6` lesson count where the file held 7 (D3), and an
 unignored `tools/__pycache__/` (D4). C2: this omp process refuses `task` calls while 100 or more background jobs
-run although `~/.omp/agent/config.yml` sets `async.maxJobs: 200`; the installed binary (omp/18.12.6) carries
+run although the operator's OMP settings file sets `async.maxJobs: 200`; the installed binary (omp/18.12.6) carries
 `maxRunningJobs: () => Math.min(100, XPe.get(R))` once and the `async.maxJobs` setting with `default: 100` once
 (L1 byte search, 2026-10-22). No mori tool reads this runway. Contract `.ufo/waves/round-25/contract.md`; the 21
 C2 cases were frozen with it, before any tool. Start source census: exit 0, the six retained W04 warnings.

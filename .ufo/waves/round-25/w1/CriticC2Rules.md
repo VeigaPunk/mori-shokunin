@@ -152,7 +152,7 @@ an anchor on the value, `async: *alias`, J08-style duplicates after a column-0 c
   - `override_env_vars=0` for `PI_CONFIG_FILES`, `OMP_PROFILE`, `PI_PROFILE` and `PI_CODING_AGENT_DIR` (names only were checked).
   - Its cwd is `/home/vgpnk/Projects/shokunin`, whose `.omp/` holds only `agents`: no `config.yml` and no `settings.json`.
   - `~/.omp/agent/config.yaml` does not exist, and `~/.omp/profiles/` is empty.
-  - The real `~/.omp/agent/config.yml` (250 lines, LF endings, no tabs, no BOM; first line `setupVersion: 2`) has
+  - The real the operator's OMP settings file (250 lines, LF endings, no tabs, no BOM; first line `setupVersion: 2`) has
     exactly one `^async` line, at 244, followed by `  maxJobs: 200` at 245. Rule 1 reads `set 200`, and Bun reads 200.
   - Conclusion: on this host, the tool's 100 / `RUNWAY_CLAMPED` equals the binary's cap for that session.
 
@@ -206,7 +206,7 @@ judged on their own bytes.
 J01's `binary` text is byte-identical to the real site and setting definition (binary offsets 164406766 and 155231595).
 
 ## Reproduction
-- Bun probe: `bun probe.mjs cases.json ~/.omp/agent/config.yml`. For each config text it runs `Bun.YAML.parse`;
+- Bun probe: `bun probe.mjs cases.json the operator's OMP settings file`. For each config text it runs `Bun.YAML.parse`;
   treats a null or undefined root as `{}`; marks a non-object or array root as invalid; looks up
   `raw = doc?.async?.maxJobs` as a plain nested get; sets `v = (typeof raw === "number" && Number.isFinite(raw)) ? raw : 100`;
   and reports `cap = Math.max(1, Math.floor(Math.min(100, v) ?? 15))`.

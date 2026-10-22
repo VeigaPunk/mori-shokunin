@@ -52,7 +52,7 @@ tools/fixtures/mori-job-runway/supplementary-cases.json` (18), **D3** = the scra
 to name the input that kills a survivor. D3 passes 4/4 on the pristine tool, so its expectations
 are contract-correct.
 
-Live reference run (pristine, this host): `configured set 200` (`~/.omp/agent/config.yml:244-245`,
+Live reference run (pristine, this host): `configured set 200` (the operator's OMP settings file,
 `async:` / `  maxJobs: 200`), `clamp found 100 sites 1`, `setting_default found 100 sites 1`,
 `effective 100`, `verdict RUNWAY_CLAMPED`, exit 1. Byte search of `~/.local/bin/omp`
 (256,702,432 bytes) with the tool's own two patterns: exactly **one** clamp site (`100`) and

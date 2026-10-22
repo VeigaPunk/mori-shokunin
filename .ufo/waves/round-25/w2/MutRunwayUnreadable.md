@@ -131,7 +131,7 @@ right and the *fixtures* are thin:
 - The mirror case (missing binary entirely) is moot for omp: with no binary there is no omp to ask.
   The `path is None` case (no `omp` on `PATH`) already returns `unreadable` in both pristine and
   M2a, so the mutant does not touch it.
-- The live after-value is unaffected: on this host `~/.omp/agent/config.yml` (mode 0600) and
+- The live after-value is unaffected: on this host the operator's OMP settings file (mode 0600) and
   `~/.local/bin/omp` (mode 0755) are both readable, so the live run is
   `configured set 200 / clamp found 100 / effective 100 / RUNWAY_CLAMPED`, exit 1 — identical under
   every mutant I applied.
@@ -147,7 +147,7 @@ oh-my-pi v18.12.6 (`45c35e40c46166dc726ccc52f5d27f40f2449f99`),
   So upstream itself separates *missing* from *unreadable*, exactly as the tool does; a directory
   config is `unreadable` upstream, not `missing`.
 - `:2354-2366` (`#unwrapYamlLoadResult`) — `missing` → `null` (defaults), `unreadable` → `throw new
-  Error("Failed to read settings config …")`. So with a directory at `~/.omp/agent/config.yml` omp
+  Error("Failed to read settings config …")`. So with a directory at the operator's OMP settings file omp
   **refuses to load settings and throws**; it does not fall back to the default cap.
 
 That makes M1 materially wrong, not merely contract-violating: the mutant would report

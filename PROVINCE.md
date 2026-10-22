@@ -294,7 +294,7 @@ baseline acceptance remain; no rank or subsequent-round authority is granted.
 - **Core, harness background-job capacity runway read (new FR15 advance, admission pending):**
   `tools/mori-job-runway.py` (round-25 build) reads two byte sources and reports one JSON object
   (`schema: mori-job-runway-v1`): the **configured** `async.maxJobs` from one settings file
-  (`--config`, default `~/.omp/agent/config.yml`), the **clamp** compiled into the installed
+  (`--config`, default the operator's OMP settings file), the **clamp** compiled into the installed
   harness binary (`--binary`, default the real path of `omp` on `PATH`) located by pattern over
   its bytes, and the **setting default** from the binary's own settings table. It then reports
   `effective = max(1, min(clamp, base))` — where `base` is the configured value, or the schema
