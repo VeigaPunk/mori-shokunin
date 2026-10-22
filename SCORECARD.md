@@ -1844,3 +1844,11 @@ promotion. Controls (do-nothing and shortcut) for both counters are scored and c
 
 - **C1 tip-receipt correction (append-only; the historical row above is retained):** the row at `SCORECARD.md:1820` records the earlier `ee61010d` measurement (`new_ids=5 new_id_rows=13 excerpts_ok=5/5`). The later tip receipt `.ufo/waves/round-30/evidence/tip-c1.txt:1-2,16-18` measures the counter at parent `926ac1460c0b9a542725257870f530f98e94e4b1` and reports `rows=13 rows_ok=13 new_ids=4 new_id_rows=12 excerpts_ok=4/4 skill_rows=4`, `C1=met`, exit 0. Use the receipt values when describing the round-30 tip outcome; the C1 verdict remains met.
 - **Frozen-contract consistency note (not a contract amendment):** condition 4's parenthetical at `.ufo/waves/round-30/contract.md:76-78` says the round-29 writer-wave check “reports 0.” Amendment A2 instead requires comparison with an exact expected set and exclusion of the 20 adjudicated false positives (`contract.md:170-172`). The gate documents nine expected `(file, rule)` reports (`check-blind-wave.sh:172-180`) and its self-test requires `scanned=8`, `blind_violations=9`, each expected pair exactly once, and none of the known false-hit paths (`check-blind-wave.sh:215-229`). The unqualified zero-report parenthetical is stale against that nine-report expectation; this note records the inconsistency without editing the frozen contract or claiming a gate rerun.
+
+Round-31 amendment A1 (before any entry or tool was scored; `.ufo/waves/round-31/contract.md` "Amendment A1"): wave-1
+critics showed cheap shortcuts meeting both frozen counters, so both predicates are tightened (conditions added, none
+removed) and judged as P-C1-A1 (`count-c1-a1.py`, adds a committed non-author row judge) and P-C2-A1 (`count-c2-a1.py`,
+adds 11 fixtures, bwrap isolation, randomized order and nonces). The original counters are reported beside them.
+Correction to the C2 before cell above: at `a12c68ae` the counter prints `fixtures absent at revision`, `C2=error`,
+exit 2 (`evidence/c2-before-base.txt`), not `tool=absent`, `C2=unmet`, exit 1; the tool-absent unmet state (exit 1) is
+first measurable at the freeze `2124cbcd` (`evidence/c2-controls.txt`). Lesson `corpus/lessons/round-31.md` M1.

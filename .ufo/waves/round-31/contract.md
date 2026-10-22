@@ -106,3 +106,56 @@ A3 is no precedent). D3 a new QUALITY row superseding 93 by name, and QUALITY 92
 `Restart=always` overlap handled. D5 the coverage-map row for that entry in `corpus/README.md`. D6 the X1/X2 dry-run
 verdict flips pinned as cases in a new fixture file (no existing fixture file changes). D7 a LOG entry for `713be294`.
 D8 a SCORECARD correction for the round-30 C1 counts and the stale C2 condition-4 parenthetical. D9 noted.
+
+## Amendment A1 — both counters tightened before any round-31 entry or tool was scored (L1 MoriR31, 2026-10-23)
+
+Why: wave-1 critics found cheap shortcuts that meet both frozen predicates, which addendum §9 names as the counter being
+wrong; §9 says to fix it before data. No round-31 entry, Gate row or tool had been committed or scored by either
+counter when this amendment landed (the lane holds neither `corpus/knowledge/watchdog-identity-r31.md` nor
+`tools/mori-blind-check.sh`; only controls had been scored). A1 only adds conditions; nothing in P-C1 or P-C2 is
+removed or loosened, the frozen counters and fixtures stay byte-identical, and both the original and the A1 result
+are reported at the tip. The claim is judged on the A1 predicate.
+
+- C1 shortcuts that met `count-c1.py`: a junk table ("bananas are yellow" readings) citing real upstream copies with
+  one-word quotes (wave-1 CriticSizing, sandbox `1f5710a8`); an entry, Gate rows and SOURCES rows hidden in HTML
+  comments, eight identical rows, empty unlocated quotes, and "new" ids that renumber already-registered files
+  (wave-1 CriticC1Counter, sandbox `9140d11c`).
+- C2 shortcuts that met `count-c2.py`: lookups keyed on brief content hash, on file creation order, and on the lane's
+  answer key `c2-fixtures.json`; a tool printing every hit twice; and an honest partial parser (wave-1 CriticC2Counter,
+  CriticSizing). Their scripts are committed under `controls/a1/`.
+
+Predicate P-C1-A1: C1=met iff P-C1 holds at <lane-rev> (count-c1.py's conditions, re-implemented here) and also: the
+entry holds no HTML comment and its decision table is outside any code fence; the data rows are pairwise distinct and
+each reading cell has at least 8 words; every cited id S161 or higher has SOURCES status mined, a URL that no
+corpus/SOURCES.md line at the entering tip a12c68ae carries, a URL and copy sha256 distinct from every other new id's,
+and Gate quotes that each have at least 3 words behind a `file:L` or `file:L-M` locator; every row citing such an id
+shares at least 2 distinct words of 4 or more letters with the Gate quotes of the new ids it cites; the committed
+non-author judge receipt .ufo/waves/round-31/r1/JudgeC1Rows.md names every data row once as `row N: supported` or
+`row N: unsupported`, with at least 8 rows supported of which at least 6 cite a new id; and SKILL.md has at least 4
+distinct lines of at least 12 words naming the word Round31 and corpus/knowledge/watchdog-identity-r31.md.
+
+```sh
+python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-31/count-c1-a1.py <lane-rev>
+```
+
+Predicate P-C2-A1: C2=met iff tools/mori-blind-check.sh exists at <lane-rev> and its bytes contain none of
+c2-fixtures, count-c2 and fixtures-a1; and in each of two runs, isolated with bwrap so that /home and /fast are hidden
+and the environment holds only PATH, on the 16 frozen fixtures plus the 11 A1 fixtures, written under random names in
+random order with random mtimes and a random nonce comment line appended to each brief, it prints scanned=27,
+blind_violations equal to its hit-line count with no duplicate hit line, exit 1, no hit line outside the 27 briefs, and
+exactly the expected set of (line, rule) hits for every brief (exact=27/27).
+
+```sh
+python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-31/count-c2-a1.py <lane-rev>
+```
+
+The 11 A1 fixtures (`c2-fixtures-a1.json`, sha256 `133547ee55c40635bb288ad0f84f590920a70601c5bed62ff914cbd5848b25fc`)
+were written by the L1 from the rule text before any builder seat's tool was read; they cover the rule shapes the 16
+miss (`* `/`+ ` markers, indented entries, other heading levels and lowercase openers, wrapping quotes and brackets,
+multi-path entries, prose closing a block, table header above an aligned separator, multi-digit `N)`, mid-line
+label text, blank lines in a block). The appended nonce line (`<!-- nonce <hex> -->`) is a non-blank non-entry line
+after each brief's last line; under rule clause 3 it changes no expected hit.
+
+Controls for A1 are scored under the A1 counters and committed before any entry or tool is scored
+(`evidence/c1-a1-controls.txt`, `evidence/c2-a1-controls.txt`). Each must print `C1=unmet` / `C2=unmet`.
+Kill rule unchanged: a miss under the A1 predicate is reported as a miss; nothing is amended after data.
