@@ -1,0 +1,4 @@
+corpus/knowledge/userspace-oom-killers-r12.md|On this host both services are inactive
+corpus/knowledge/userspace-oom-killers-r12.md|`systemctl is-active earlyoom.service` → `inactive`
+corpus/knowledge/userspace-oom-killers-r12.md|Both service units are inactive
+corpus/README.md|inactive on this host

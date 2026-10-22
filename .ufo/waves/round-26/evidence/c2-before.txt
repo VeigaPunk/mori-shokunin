@@ -1,0 +1,3 @@
+command: git cat-file -e 248408f5b6610a85bcbdebe7ac0b4fa7ed51422a:tools/mori-oom-killers.py
+fatal: path 'tools/mori-oom-killers.py' does not exist in '248408f5b6610a85bcbdebe7ac0b4fa7ed51422a'
+exit: 128
