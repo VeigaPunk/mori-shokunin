@@ -159,6 +159,9 @@ def _read_resource(name: str, root: str) -> Tuple[str, Optional[Dict[str, Any]],
     except OSError as exc:
         state, note = _state_for_oserror(exc)
         return state, None, None, [note]
+    except UnicodeDecodeError:
+        return STATE_MALFORMED, None, None, [
+            "file content is not UTF-8 text; resource malformed, never reported as zero"]
     except Exception as exc:  # belt-and-braces for a malformed hook
         return STATE_UNREADABLE, None, None, [
             "open/read failed with %s; resource unreadable, never reported as zero" % type(exc).__name__]
