@@ -32,6 +32,13 @@ Output: one JSON object on stdout, `schema: mori-routed-check-v1`, `items: 4`,
 `held: N`, per-item `{id, held, reasons[]}`. Exit 0 when held == 4, 1 when any item
 fails, 2 when the repo/rev/base cannot be read.
 
+**Amendment A1 (08:22Z, before any C1 tool landed; finding from wave-1 seat ScoutRoutedBytes):**
+the R2 added-line scan covers only the lane's self-assessment and knowledge surfaces —
+`SCORECARD.md`, `PROVINCE.md`, `SKILL.md`, `LOG.md`, `README.md` and `corpus/**` — not
+`.ufo/**` or `tools/**`, where wave reports and mutant descriptions quote the pattern
+(quotation, not assertion). At base the regex has 9 quoted hits under `.ufo/waves/`; none
+of them is an added line. The declared before and after values are unchanged.
+
 - **Before:** the same tool run at `--rev c725aa37aa3c9ec4f34e3c2abc8ca1b616c7c130` (R4 has
   no round-24 ledger) — expected `held: 3`. No tool checked these items before this round.
 - **After-value (one command):**
