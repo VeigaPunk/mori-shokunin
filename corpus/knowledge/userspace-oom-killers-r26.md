@@ -190,14 +190,15 @@ Observable → what it means → what it does **not** mean.
 | Observable | What acted | What it does NOT prove |
 |---|---|---|
 | a kernel-journal OOM summary (`oom-kill:constraint=`) or a kernel "Killed process" record, `_TRANSPORT=kernel` | the **kernel** OOM killer acted; the kernel's own OOM counters move at that path | that no userspace killer also acted in the same window — earlyoom's kills are invisible to those counters (F7) |
-| a `sending SIGTERM to process ` or `sending SIGKILL to process ` line inside the current invocation's scope (F6) | **earlyoom** signalled a victim it selected | that the victim died (a `kill failed: ` line says the opposite is possible), that the kernel counters moved (F7), or the victim's identity — the line body carries a uid, a name and a command line and must not be copied |
+| a `sending SIGTERM to process ` or `sending SIGKILL to process ` line inside the current invocation's scope (F6), in an invocation that did not log `dryrun mode enabled` | **earlyoom** signalled a victim it selected (under `-g`, a whole process group: one line, many processes) | that the victim died (a `kill failed: ` line says the opposite is possible), that the kernel counters moved (F7), or the victim's identity — the line body carries a uid, a name and a command line and must not be copied; in dry-run mode the same line is printed and no signal is sent (S118 `kill.c:271-273`) |
 | an `escalating to SIGKILL after ` line | earlyoom raised the signal on a pid it had already signalled — a **second signal on the same victim**, not a new victim, and **not** an action line | a new victim, or a SIGKILL-action count increase |
 | a systemd-oomd notice with `MESSAGE_ID=d989611b…` | **systemd-oomd** killed one or more processes in a unit | a process count (the notice says "one or more"), or that the kernel counters moved |
 | a `low memory! at or below SIG… limits` line with no action line after it | earlyoom saw the limits breached and, this time, did not kill | that a kill happened; on this host one such line in the previous boot was followed by "memory situation has recovered while selecting victim" |
 | `oom_kill=0` in `/proc/vmstat` or in a cgroup's `memory.events` | **no kernel OOM victim** in that counter's scope and window | that no memory-related kill happened: earlyoom's kills never touch those counters (F7), and systemd-oomd's kills are accounted in its own cgroup attributes (F8) |
 | the `user.oomd_ooms` / `user.oomd_kill` cgroup attributes | systemd-oomd's own accounting of its kill attempts and killed pids | a durable event history: the attributes live and die with the cgroup path |
 | no record of any kind, with earlyoom **active** | no **positive evidence** of a userspace-killer action in that scope and window | that nothing was killed; the counter surfaces and the journal are different populations, and a kill by any other actor is not visible here |
-| earlyoom **inactive**, **absent** or **unreadable** | the killer's state is **unavailable**, not zero | that zero kills happened — unavailable is never `0`, and never "healthy" |
+| earlyoom **inactive** or **absent** | no current invocation: its action counts are `null` (unavailable), never `0`; send lines earlier in the same boot are still positive evidence | that zero kills happened, or that the host is healthy on the memory plane |
+| earlyoom's journal **unreadable** | unknown: the counts are `null` and no verdict of quiet is possible | that zero kills happened |
 | a plain SIGKILL with none of the records above | an unclassified termination | that a userspace OOM killer acted; it may be a unit manager's action, an external signal, or a policy kill |
 
 ## Limits
@@ -210,8 +211,9 @@ Observable → what it means → what it does **not** mean.
   (commit `202d4db0d308ca6478f68de68b46cae34896ddaf`). Upstream master has moved since — it
   carries a kernel-OOM trigger option again, and its README documents message shapes the tag does
   not have. A different release may move the literals; re-read the sources at the new tag.
-- **A counting grammar, not a parser.** The eight classes are prefix-anchored. A line that does
-  not match a class is unclassified, and unclassified is not zero.
+- **A counting grammar, not a parser.** The classes in F5 are prefix-anchored (the round-26 tool also
+  matches the process-group and journald suppression lines). A line that does not match a class is
+  unclassified, and unclassified is not zero.
 - **Counts, never text.** The action line carries a uid, a process name and a command line; two
   startup lines carry the configured prefer/avoid expressions. Only counts, states, thresholds and
   version strings leave this note.
@@ -235,12 +237,16 @@ Observable → what it means → what it does **not** mean.
   earlyoom is `unavailable`, never `0`.
 - For the `oom_kill=0` error-pattern row, the label stays **kernel-OOM-only**, and the two
   userspace killers' own counters and records are named beside it.
-- The round-26 read tool `tools/mori-oom-killers.py` implements exactly the reading this note
-  describes — the eight-line grammar, the current-invocation scope, the thresholds from
-  earlyoom's own startup lines, the oomd notice count — and its live run on this host returns
-  `KILLERS_QUIET` with earlyoom `active`, `grammar: verified-1.9.0`, thresholds
-  10.00/10.00 and 5.00/5.00, all action counts `0`, and oomd `inactive` with 0 notices. A quiet
-  verdict here means "no positive evidence from the killers that are readable", not "zero kills".
+- The round-26 read tool `tools/mori-oom-killers.py` implements the earlyoom and oomd parts of this
+  reading for the **current boot only**: the F5 grammar plus process-group, dry-run and journald
+  suppression lines, the current-invocation scope, send lines of earlier invocations this boot, the
+  thresholds from earlyoom's own startup lines and the oomd notice count. It does not read previous
+  boots, kernel records, kernel counters or oomd's cgroup attributes. Its live run on 2026-10-22
+  returned `KILLERS_QUIET` with earlyoom `active`, `grammar: verified-1.9.0`, thresholds 10.00/10.00 and
+  5.00/5.00, zero action lines in the current invocation, and oomd `inactive` with 0 notices; the
+  previous boot, which the tool does not read, held 38 SIGTERM and 1 SIGKILL send lines
+  (`capture-boots.txt`). A quiet verdict means "no positive evidence from the killers that are
+  readable in this boot", not "zero kills".
 - For `corpus/README.md` and the FR10 row in `PROVINCE.md`, the "inactive on this host" summary
   is replaced by "earlyoom active and enabled, systemd-oomd inactive and disabled" with a date.
 - The r12 entry's kernel-delegation sentence is corrected rather than carried: see F7 and §4.2.

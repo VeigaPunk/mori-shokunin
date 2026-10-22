@@ -274,6 +274,7 @@ def read_inputs(inputs):
     # Only an active unit has a current invocation.
     scoped = []
     scope_known = False
+    unplaced = False
     if earlyoom_state == "active" and journal is not None:
         aetm = _monotonic_usec(earlyoom_props.get("ActiveEnterTimestampMonotonic"))
         if aetm is None or aetm == 0:
@@ -290,10 +291,11 @@ def read_inputs(inputs):
                 stamp = _entry_timestamp(entry)
                 if stamp is None:
                     # A record that cannot be placed in or out of the current
-                    # invocation is malformed input: abstain (contract rule 4)
-                    # rather than count a line that may belong to an earlier
-                    # invocation (round-26 wave-1 case c35, supplementary file).
-                    raise SetupError("journal record without a numeric __MONOTONIC_TIMESTAMP")
+                    # invocation is not counted, and the scope is incomplete,
+                    # so the result abstains unless other positive evidence
+                    # stands (wave-2 CriticA2Amendment D1; supplementary c35).
+                    unplaced = True
+                    continue
                 if stamp >= aetm:
                     scoped.append(entry)
 
@@ -386,7 +388,7 @@ def read_inputs(inputs):
 
     # A1b: a journald "Suppressed N messages from earlyoom.service" notice in
     # scope means lines were lost, so the scope is not complete.
-    scope_complete = scope_known and version is not None and not suppressed
+    scope_complete = scope_known and not unplaced and version is not None and not suppressed
     grammar = GRAMMAR_VERIFIED if version == VERIFIED_VERSION else GRAMMAR_UNVERIFIED
 
     thresholds = None

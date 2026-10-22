@@ -1702,3 +1702,15 @@ calibration 5 → 6 and operability unchanged 6, while the standing table holds 
 operability 7. Superseding statement: the standing table is the round-25 D5 rewrite of the
 closure-admitted round-24 scores; the round-1 pointer enumeration at `:622-623` is historical and no
 longer describes that table.
+
+### Round 26 wave-2 corrections to the capability row above (appended before the report)
+
+- The `PASS 32/32` counted value certifies the pre-freeze behaviour only. The amendment-A2 behaviour
+  (process-group, dry-run and earlier-invocation counts, suppressed lines, non-steady states, malformed timestamps,
+  the journal readability probe) is pinned by no committed case file; it is shown by the committed detector inputs
+  `.ufo/waves/round-26/evidence/a2-detectors/` and their outputs `a2-detectors.txt`.
+- `KILLERS_QUIET` means no positive evidence in the killers readable in this boot; it is not zero kills. The
+  committed live run shows the quiet path on one host only.
+- Further limits found in wave 2: an inactive or never-started earlyoom with no send lines reads quiet; a journald
+  suppression notice while earlyoom is stopped is not acted on; the unit-state and journal reads are not atomic;
+  PID 1 records about the unit are skipped by the grammar, not filtered by the query.

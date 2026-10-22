@@ -183,3 +183,8 @@ frozen case, and discloses the rest as limits. The counted value stays `PASS 32/
   evidence. Detector inputs and their outputs: `.ufo/waves/round-26/evidence/a2-detectors/` and
   `a2-detectors.txt` (invented inputs from wave-2 MutPostFreezeRules and CriticCapabilityRow). No committed case
   file pins these rules; the counted value stays `PASS 32/32` on the frozen file.
+- **Wave-2 fix (CriticA2Amendment D1):** a journal record without a numeric `__MONOTONIC_TIMESTAMP` is now left
+  uncounted and makes the scope incomplete, instead of a setup error; positive evidence elsewhere still stands. The
+  earlier setup-error rule (commit `278f02e4`, recorded in A2 at `825f988f`) is superseded. Commit order of the A2
+  bullets: suppressed, non-steady, process-group, dry-run, readability `825f988f`; unbounded invocation `93aa1b93`;
+  earlier invocations `738eec13`; wave-2 fixes `f1efb465` and this commit.

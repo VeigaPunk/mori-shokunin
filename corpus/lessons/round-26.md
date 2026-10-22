@@ -90,3 +90,36 @@ not monitored by systemd-oomd unless an ancestor is `kill`" → "systemd-oomd mo
 `kill`; a unit left at the default `auto` is never monitored itself and becomes a kill candidate only under a `kill`
 ancestor"; anchor gains `systemd-oomd.service.xml:48-52`. Reason: wave-1 seat SrcResourceControlV262 showed the
 ancestor exception applies to kill candidacy, not to monitoring.
+
+## Routed round-25 defects R1–R8: disposition
+
+| Item | Disposition | Pointer |
+|---|---|---|
+| R1 runway false numbers | named debt: needs code (rule 1 abstention on indented roots and escaped keys, probe corpus as fixtures, CLI exit paths); not taken this round so the round's claims stay on FR10 | `.ufo/waves/round-26/w1/ReviewHygieneDebt.md` |
+| R2 capability row overclaim | fixed (scoped correction appended) | `SCORECARD.md`, "Round 26 corrections (routed R2 and R4)" |
+| R3 SKILL round-25 rows 1–4 | named debt: exact old → new drafted but not landed before the freeze | `.ufo/waves/round-26/w1/DraftHygieneKnowledge.md` part (c) |
+| R4 SCORECARD residuals | fixed (Axes operability row in place; D5 note and round-12 paragraph corrected by appended text); routed check still `held` | `SCORECARD.md:11`; `tools/mori-routed-r24.py --rev 2a23fbdc` exit 0 |
+| R5 gate conformance | partly fixed: registry rows for both round-25 tools landed; the routed check's self-test and fail-open paths are named debt | `SKILL.md`, "Round26 registry additions" |
+| R6 lesson wording | fixed (correction block appended) | `corpus/lessons/round-25.md`, "Corrections appended in round 26" |
+| R7 knowledge corrections | named debt: exact old → new drafted (harness-job-capacity U1 and F10; system-pressure-r24 lines 143, 158 and the psi.c range) but not landed before the freeze | `.ufo/waves/round-26/w1/DraftHygieneKnowledge.md` parts (a), (b) |
+| R8 no-harm scan | fixed as process: the scan ran at the entering tip and after every evidence commit; it read 6 and 5 twice mid-round (M2) and 4 at each landed tip after repair; history disposition stays with the operator | `.ufo/waves/round-26/evidence/retention-scan-base.txt`; report |
+
+## Which case file is counted
+
+The counted file is the case seat's first commit `eaa13ef9`, landed in the lane as `5b10649d` before the tool's first
+commit `c2fdd929`. The seat later amended its sandbox copy twice (`4447597f`, `da9af118`) after the tool existed; those
+bytes are `tools/fixtures/mori-oom-killers/cases-supplementary.json` and are not counted. The seat's report calls
+`da9af118` the "freeze tip"; the lane's freeze is `5b10649d`.
+
+## Wave 2 (falsify) — what it changed
+
+- The tool kept `PASS 32/32` on the frozen file throughout. Wave-2 mutation seats showed which rules the frozen file
+  cannot see: a mem/swap threshold swap (only supplementary `c33` kills it), the error path, the selftest's own field
+  comparison, and every amendment-A2 rule (MutToolBatteryB, MutToolBatteryC, MutPostFreezeRules). Detector inputs for
+  the A2 rules are committed under `.ufo/waves/round-26/evidence/a2-detectors/`.
+- CriticCapabilityRow found three false-quiet paths (Y1, Y3, Y8); the tool was fixed for all three without touching a
+  frozen case.
+- CriticEntryOverclaim found that the entry claimed the tool implements its reading "exactly" and gave a quiet live run
+  without its time range; both were narrowed, and the decision-table rows for send lines and inactive or unreadable
+  earlyoom were corrected.
+- CriticC1Admission found three `systemd 261` present-tense lines in `journal-alarm-routing-r14.md`; they are dated now.
