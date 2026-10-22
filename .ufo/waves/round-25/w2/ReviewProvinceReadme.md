@@ -81,7 +81,7 @@ fallback, not semantic proof.
    is the operator's."). Nothing absorbed.
 5. **Quoted tool facts match the landed tool** (tools/mori-job-runway.py): schema
    mori-job-runway-v1 (:98), verdicts and exits 0/1/0/2 (:44-47, :101-103), `--config`
-   default `~/.omp/agent/config.yml` (:110, :631), `--binary` default the real path of `omp`
+   default the operator's OMP settings file (:110, :631), `--binary` default the real path of `omp`
    on PATH (:616-620, :636), `effective = max(1, min(clamp, base))` (:43), read-only /
    never-runs-omp (:14-15), selftest prefix (:99).
 6. **Host numbers corroborated**: configured 200, clamp 100 at one site, default 100 at one

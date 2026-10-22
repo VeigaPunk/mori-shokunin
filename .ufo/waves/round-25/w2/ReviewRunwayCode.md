@@ -210,7 +210,7 @@ Smallest fix (optional): chunked scan with overlap, or document the peak.
 - **Python version.** The 4300-digit limit (F4) was reproduced on the host's Python 3.14.8 only. Older Pythons may not reproduce it.
 - **Not run:** permission-denied and symlink-loop paths; character devices other than `/dev/zero`; sockets; re-deriving each of the 21 frozen expected values by hand (they pass); the pressure tool and other tools; any mutation tests (not assigned to this seat).
 - **Memory measurement caveat.** `ru_maxrss` read from child processes showed 537 MB, inherited from my harness process's own peak. I discarded it. Figures above are VmHWM read inside the child.
-- **Default config path.** `~/.omp/agent/config.yml` is the contract's default. I did not re-derive omp's config path from the binary (`config.yml` appears 29 times in the bytes; not resolved).
+- **Default config path.** the operator's OMP settings file is the contract's default. I did not re-derive omp's config path from the binary (`config.yml` appears 29 times in the bytes; not resolved).
 
 ## Tooling record
 
