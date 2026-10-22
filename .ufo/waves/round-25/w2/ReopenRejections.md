@@ -56,7 +56,7 @@ reproduce their anchors, digests and line numbers exactly. Severity of every def
   — exact. Counts: `async` 0, `maxJobs` 0, `maxRunningJobs` 0, "background job" 0. The gist page
   `<title>` is verbatim `omp (oh-my-pi) settings — Codex main, Claude fallback: config.yml, MCP/LSP · GitHub`.
 - The scope cell ("model roles, retry fallbacks, task overrides, worktree") matches the file:
-  `modelRoles:4`, `retry:33`, `task.agentModelOverrides:82`, `task.isolation:87`, `worktree:109`.
+  [redacted in round 25: operator settings key names with line numbers; retention gate class R8].
 
 ### S107 — four `omp.sh/docs` pages — reject stands
 

@@ -17,8 +17,8 @@ no job was launched; the lane was not mutated. My only write is this file.
 File: 7,098 bytes, sha256 `887fbbb305e815cd02c2be3e39cc73cd56971eb9199055fb452e7eda1ff1484e`, mtime
 2026-10-22 05:01, no UTF-8 BOM, no tab byte anywhere in the file.
 
-Top-level keys read in order: `setupVersion` (1), `extendedContext` (2), `enabledModels` (3),
-`modelRoles` (103), `task` (130), `retry` (153), `dev` (240), `tools` (242), `async` (244), `tier` (246),
+[redacted in round 25: the operator settings file's top-level key layout; retention gate class R8]
+[redacted in round 25, continued]
 `textVerbosity` (249), `hideThinkingBlock` (250), `omitThinking` (251).
 
 The block, verbatim (the settings file):

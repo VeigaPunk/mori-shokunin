@@ -603,6 +603,104 @@
    "line_sha256": "469c83039fa897c68dae0d9329873ce365e8f33c477841b3964731cac7b00948",
    "reason": "instruction, boundary, contract, policy or review text naming a surface or class without its contents (L1 ruling, round 18)",
    "rule": "a"
+  },
+  {
+   "path": ".ufo/waves/round-25/evidence/runway-live-run.txt",
+   "class": "R7",
+   "line_sha256": "69f1599d6f5b22ca00a9897c3ee1cf5dd705d75eebafeee9a744b49961e1e43f",
+   "reason": "instruction, boundary or tool-output text naming the operator settings file without its contents; dispatch payloads are hash-bound and stay byte-unchanged (L1 ruling, round 25 retention repair)",
+   "rule": "a"
+  },
+  {
+   "path": ".ufo/waves/round-25/wave1-run.json",
+   "class": "R7",
+   "line_sha256": "7b2f49db6debb395d50813bee2731e9c50777ba22895ef4c848540a45925dc6c",
+   "reason": "instruction, boundary or tool-output text naming the operator settings file without its contents; dispatch payloads are hash-bound and stay byte-unchanged (L1 ruling, round 25 retention repair)",
+   "rule": "a"
+  },
+  {
+   "path": ".ufo/waves/round-25/wave1-run.json",
+   "class": "R7",
+   "line_sha256": "865a1b02cdd2c15445681c4a71532d02c235151fdad59a0d39c42b2e35773551",
+   "reason": "instruction, boundary or tool-output text naming the operator settings file without its contents; dispatch payloads are hash-bound and stay byte-unchanged (L1 ruling, round 25 retention repair)",
+   "rule": "a"
+  },
+  {
+   "path": ".ufo/waves/round-25/wave1-run.json",
+   "class": "R7",
+   "line_sha256": "dd599b329cdf9c7befc97944bfb50922ca028d4713afe1a2c36656ad41596aef",
+   "reason": "instruction, boundary or tool-output text naming the operator settings file without its contents; dispatch payloads are hash-bound and stay byte-unchanged (L1 ruling, round 25 retention repair)",
+   "rule": "a"
+  },
+  {
+   "path": ".ufo/waves/round-25/wave1-spec.json",
+   "class": "R7",
+   "line_sha256": "df115672f0b13365f3f6ee0060881244c49fcde0b1a85c9d7340170475c0772b",
+   "reason": "instruction, boundary or tool-output text naming the operator settings file without its contents; dispatch payloads are hash-bound and stay byte-unchanged (L1 ruling, round 25 retention repair)",
+   "rule": "a"
+  },
+  {
+   "path": ".ufo/waves/round-25/wave1-spec.json",
+   "class": "R7",
+   "line_sha256": "5771bb4fe7d3546c238b25ef39b25ac55cff0bef831db0a9df127dcace27e93a",
+   "reason": "instruction, boundary or tool-output text naming the operator settings file without its contents; dispatch payloads are hash-bound and stay byte-unchanged (L1 ruling, round 25 retention repair)",
+   "rule": "a"
+  },
+  {
+   "path": ".ufo/waves/round-25/wave1-spec.json",
+   "class": "R7",
+   "line_sha256": "cdf5af6fe79a038ed0ae0dc305e12a42514e127338c429a519db38274a99bea1",
+   "reason": "instruction, boundary or tool-output text naming the operator settings file without its contents; dispatch payloads are hash-bound and stay byte-unchanged (L1 ruling, round 25 retention repair)",
+   "rule": "a"
+  },
+  {
+   "path": ".ufo/waves/round-25/wave2-run.json",
+   "class": "R7",
+   "line_sha256": "d0a217eb4fa3b5b4739e7c4dd521054159f3a793f960fee91e0a15796dfad0d2",
+   "reason": "instruction, boundary or tool-output text naming the operator settings file without its contents; dispatch payloads are hash-bound and stay byte-unchanged (L1 ruling, round 25 retention repair)",
+   "rule": "a"
+  },
+  {
+   "path": ".ufo/waves/round-25/wave2-run.json",
+   "class": "R7",
+   "line_sha256": "77602f00324c93ff707a655c0586a91b1487a5e595c5829b6dc239c67653f0c3",
+   "reason": "instruction, boundary or tool-output text naming the operator settings file without its contents; dispatch payloads are hash-bound and stay byte-unchanged (L1 ruling, round 25 retention repair)",
+   "rule": "a"
+  },
+  {
+   "path": ".ufo/waves/round-25/wave2-spec.json",
+   "class": "R7",
+   "line_sha256": "6d4ab45158d84c603f36d98ff3f9668bc59ee2cca9adba8d1a703daa3f094cf4",
+   "reason": "instruction, boundary or tool-output text naming the operator settings file without its contents; dispatch payloads are hash-bound and stay byte-unchanged (L1 ruling, round 25 retention repair)",
+   "rule": "a"
+  },
+  {
+   "path": ".ufo/waves/round-25/wave2-spec.json",
+   "class": "R7",
+   "line_sha256": "b2cb66d030a60d1de35f281033fa5b28fdd50577ff755435a11924902213e2e3",
+   "reason": "instruction, boundary or tool-output text naming the operator settings file without its contents; dispatch payloads are hash-bound and stay byte-unchanged (L1 ruling, round 25 retention repair)",
+   "rule": "a"
+  },
+  {
+   "path": "tools/mori-job-runway.py",
+   "class": "R7",
+   "line_sha256": "17ab5233c35b09be0c484c9a9eef2bbdd3a151c2c6f1d51bb4ac1a3d2326889e",
+   "reason": "field or default path name inside lane tool code, no value copied (L1 ruling, round 25 retention repair)",
+   "rule": "b"
+  },
+  {
+   "path": "tools/mori-job-runway.py",
+   "class": "R7",
+   "line_sha256": "77815807d7ed6f8538e9fabc1bfe5d8cb5adce5cc75a63ea8dcec9876db344d6",
+   "reason": "field or default path name inside lane tool code, no value copied (L1 ruling, round 25 retention repair)",
+   "rule": "b"
+  },
+  {
+   "path": "tools/mori-job-runway.py",
+   "class": "R7",
+   "line_sha256": "9dd2b7e7192708f43b238b39444c08f5595dd1711843f00d117c3a6e6374b97f",
+   "reason": "field or default path name inside lane tool code, no value copied (L1 ruling, round 25 retention repair)",
+   "rule": "b"
   }
  ]
 }
