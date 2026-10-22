@@ -1,7 +1,7 @@
-revision: 4dba9cc77d94e93297978a02fc20097e8ea560b4
-tool_blob: 44dac3fd6cb1320752a226a360f29d1805ce93f3
+revision: 950d8a567e634032eaf57e5495b09f15cf428d8d
+tool_blob: 3fb78bbc2612c38e463e04083bdb213954647568
 command: python3 -I -B tools/mori-oom-killers.py (live, no arguments)
-utc: 2026-10-22T14:15:30Z
+utc: 2026-10-22T14:39:08Z
 exit: 0
 {
   "earlyoom": {

@@ -1,4 +1,4 @@
-tool_blob_worktree: e89fb8a8c6d3437006723cf1c3eab9b40f728c06
+tool_blob: 3fb78bbc2612c38e463e04083bdb213954647568 at 950d8a567e634032eaf57e5495b09f15cf428d8d
 in-Y1-stopped-real-then-dryrun.json ["KILLER_ACTED","inactive",1,null,null,false]
 in-Y2-active-earlier-real-and-dryrun.json ["KILLERS_QUIET","active",1,0,0,true]
 in-Y3-stopped-null-journal.json ["KILLERS_UNKNOWN","inactive",null,null,null,false]
@@ -13,5 +13,5 @@ m2-nonsteady.json ["KILLERS_UNKNOWN","unavailable",0,null,null,false]
 m3-dryrun-send.json ["KILLERS_QUIET","active",0,1,0,true]
 m4-process-group.json ["KILLERS_QUIET","active",0,0,1,true]
 m5-earlier-invocation.json ["KILLER_ACTED","inactive",1,null,null,false]
-m6-malformed-timestamp.json ["KILLERS_UNKNOWN",null,null,null,null,null]
+m6-malformed-timestamp.json ["KILLERS_UNKNOWN","active",1,0,0,false]
 m7-aetm-zero.json ["KILLERS_UNKNOWN","active",0,0,0,false]
