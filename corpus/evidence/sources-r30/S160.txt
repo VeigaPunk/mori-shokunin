@@ -1,0 +1,45 @@
+id: S160
+url: https://raw.githubusercontent.com/systemd/systemd/v262/src/journal/journalctl.c
+sha256: 285b3d0c1217b9a3be90dca2ed4591eb8cf0192e2d3c75f303df3c5f18d5d0ab
+accessed: 2026-10-22T21:12:34Z
+lines: 509-547
+
+509	                        arg_boot_offset = 0;
+510	                        break;
+511	
+512	                OPTION_FULL(OPTION_OPTIONAL_ARG, 'b', "boot", "ID",
+513	                            "Show current boot or the specified boot"):
+514	                        arg_boot = true;
+515	                        arg_boot_filter = true;
+516	                        arg_boot_id = SD_ID128_NULL;
+517	                        arg_boot_offset = 0;
+518	
+519	                        if (opts.arg) {
+520	                                r = parse_id_descriptor(opts.arg, &arg_boot_id, &arg_boot_offset);
+521	                                if (r < 0)
+522	                                        return log_error_errno(r, "Failed to parse boot descriptor '%s'", opts.arg);
+523	
+524	                                arg_boot = r;
+525	                                arg_boot_filter = r > 0;
+526	
+527	                        } else {
+528	                                /* Hmm, no argument? Maybe the next word on the command line is supposed to
+529	                                 * be the argument? Let's see if there is one and is parsable as a boot
+530	                                 * descriptor… */
+531	                                char *peek = option_parser_peek_next_arg(&opts);
+532	                                if (peek) {
+533	                                        r = parse_id_descriptor(peek, &arg_boot_id, &arg_boot_offset);
+534	                                        if (r >= 0) {
+535	                                                arg_boot = r;
+536	                                                arg_boot_filter = r > 0;
+537	                                                (void) option_parser_consume_next_arg(&opts);
+538	                                        }
+539	                                }
+540	                        }
+541	                        break;
+542	
+543	                OPTION('u', "unit", "UNIT", "Show logs from the specified unit"):
+544	                        r = strv_extend(&arg_system_units, opts.arg);
+545	                        if (r < 0)
+546	                                return log_oom();
+547	                        break;

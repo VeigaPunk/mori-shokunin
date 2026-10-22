@@ -1,0 +1,79 @@
+id: S156
+url: https://raw.githubusercontent.com/systemd/systemd/v262/src/shared/bus-print-properties.c
+sha256: b56aa781be9c29b610156925030d3c4ab720c0ad73d57907d230ca3047302f2a
+accessed: 2026-10-22T21:12:07Z
+lines: 16-426
+
+16	#include "strv.h"
+17	#include "time-util.h"
+18	
+19	bool bus_property_is_timestamp(const char *name) {
+20	        assert(name);
+21	
+22	        /* Trust me, this naming convention is ironclad. Except for these three. Okay four. Well... */
+23	        return endswith(name, "Timestamp") ||
+24	                        STR_IN_SET(name, "NextElapseUSecRealtime", "LastTriggerUSec", "TimeUSec", "RTCTimeUSec");
+25	}
+26	
+27	int bus_print_property_value(const char *name, const char *expected_value, BusPrintPropertyFlags flags, const char *value) {
+28	        assert(name);
+106	                return 1;
+107	        }
+108	
+109	        case SD_BUS_TYPE_UINT64: {
+110	                uint64_t u;
+111	
+112	                r = sd_bus_message_read_basic(m, type, &u);
+113	                if (r < 0)
+114	                        return r;
+115	
+116	                if (bus_property_is_timestamp(name))
+117	                        /* RTCTimeUSec should always be displayed in UTC, consistent with timedatectl status */
+118	                        if (streq(name, "RTCTimeUSec"))
+119	                                bus_print_property_value(name, expected_value, flags, FORMAT_TIMESTAMP_STYLE(u, TIMESTAMP_UTC));
+120	                        else
+121	                                bus_print_property_value(name, expected_value, flags, FORMAT_TIMESTAMP(u));
+122	
+123	                /* Managed OOM pressure default implies "unset" and use the default set in oomd.conf. Without
+124	                 * this condition, we will print "infinity" which implies there is no limit on memory
+125	                 * pressure duration and is incorrect. */
+126	                else if (streq(name, "ManagedOOMMemoryPressureDurationUSec") && u == USEC_INFINITY)
+127	                        bus_print_property_value(name, expected_value, flags, "[not set]");
+128	
+129	                else if (strstr(name, "USec"))
+130	                        bus_print_property_value(name, expected_value, flags, FORMAT_TIMESPAN(u, 0));
+131	
+132	                else if (streq(name, "CoredumpFilter"))
+133	                        bus_print_property_valuef(name, expected_value, flags, "0x%"PRIx64, u);
+134	
+183	                                             "MemoryHigh", "MemoryMax",
+184	                                             "MemorySwapMax", "MemoryZSwapMax", "MemoryLimit") &&
+185	                          u == CGROUP_LIMIT_MAX) ||
+186	                         (endswith(name, "TasksMax") && u == UINT64_MAX) ||
+187	                         (startswith(name, "Limit") && u == UINT64_MAX) ||
+188	                         (startswith(name, "DefaultLimit") && u == UINT64_MAX))
+189	
+190	                        bus_print_property_value(name, expected_value, flags, "infinity");
+191	                else if (STR_IN_SET(name, "IPIngressBytes", "IPIngressPackets", "IPEgressBytes", "IPEgressPackets") && u == UINT64_MAX)
+192	                        bus_print_property_value(name, expected_value, flags, "[no data]");
+193	                else
+194	                        bus_print_property_valuef(name, expected_value, flags, "%"PRIu64, u);
+195	
+196	                return 1;
+197	        }
+411	                                return r;
+412	
+413	                        char value_type;
+414	                        const char *value_contents;
+415	                        r = sd_bus_message_peek_type(m, &value_type, &value_contents);
+416	                        if (r < 0)
+417	                                return r;
+418	
+419	                        if (func)
+420	                                r = func(name, expected_value, value_type, value_contents, m, flags);
+421	                        if (!func || r == 0)
+422	                                r = bus_print_property(name, expected_value, value_type, value_contents, m, flags);
+423	                        if (r < 0)
+424	                                return r;
+425	                        if (r == 0) {
+426	                                if (FLAGS_SET(flags, BUS_PRINT_PROPERTY_SHOW_EMPTY) && !expected_value)
