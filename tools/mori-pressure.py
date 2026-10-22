@@ -383,6 +383,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--interval", type=float, default=None,
                         help="read twice, about S seconds apart, and report delta/ratio (0 < S <= 10)")
     parser.add_argument("--selftest", action="store_true", help="run the frozen cases in cases.json")
+    parser.add_argument("--cases", default=None,
+                        help="with --selftest: run this case file instead of the frozen cases.json")
     return parser
 
 
@@ -493,9 +495,34 @@ def _case_failures(case: Dict[str, Any]) -> List[str]:
     return problems
 
 
-def _selftest() -> int:
+def _corrupted_expectations(case: Dict[str, Any]) -> List[Tuple[str, Dict[str, Any]]]:
+    """Copies of a case whose expectation is deliberately wrong (round-24 wave-2 finding:
+    a weakened matcher survived the frozen cases). The matcher must reject every copy."""
+    out: List[Tuple[str, Dict[str, Any]]] = []
+    expect = case.get("expect") or {}
+    other = {"PRESSURE_OK": "PRESSURE_HIGH", "PRESSURE_HIGH": "PRESSURE_OK",
+             "PRESSURE_PARTIAL": "PRESSURE_OK", "PRESSURE_UNAVAILABLE": "PRESSURE_OK"}
+    bad = json.loads(json.dumps(case))
+    bad["expect"]["verdict"] = other.get(expect.get("verdict"), "PRESSURE_OK")
+    out.append(("verdict", bad))
+    bad = json.loads(json.dumps(case))
+    bad["expect"]["exit"] = (expect.get("exit", 0) + 1) % 3
+    out.append(("exit", bad))
+    bad = json.loads(json.dumps(case))
+    bad["expect"]["findings_include"] = list(expect.get("findings_include") or []) + [["PRESSURE_HIGH", "absent-resource"]]
+    out.append(("finding", bad))
+    for rname, rexpect in sorted((expect.get("resources") or {}).items()):
+        if "state" in rexpect:
+            bad = json.loads(json.dumps(case))
+            bad["expect"]["resources"][rname]["state"] = "malformed" if rexpect["state"] != "malformed" else "ok"
+            out.append(("state", bad))
+            break
+    return out
+
+
+def _selftest(cases_override: Optional[str] = None) -> int:
     global _SELFTEST_RUNNING, _OPEN_HOOK, _SLEEP_HOOK
-    path = _cases_path()
+    path = cases_override if cases_override is not None else _cases_path()
     if path is None:
         print("%s: FAIL 0/0" % SELFTEST_PREFIX)
         print("ERROR: cases file not found near %s" % os.path.dirname(os.path.realpath(__file__)))
@@ -519,6 +546,9 @@ def _selftest() -> int:
         return RC_UNAVAILABLE
     passed = 0
     failures: List[Tuple[str, str]] = []
+    controls = 0
+    rejected = 0
+    accepted: List[str] = []
     prev_open, prev_sleep = _OPEN_HOOK, _SLEEP_HOOK
     _SELFTEST_RUNNING = True
     try:
@@ -527,8 +557,14 @@ def _selftest() -> int:
             pending = _case_failures(case)
             if pending:
                 failures.append((cid, "; ".join(pending)))
-            else:
-                passed += 1
+                continue
+            passed += 1
+            for label, bad in _corrupted_expectations(case):
+                controls += 1
+                if _case_failures(bad):
+                    rejected += 1
+                else:
+                    accepted.append("%s/%s" % (cid, label))
     finally:
         _OPEN_HOOK, _SLEEP_HOOK = prev_open, prev_sleep
         _SELFTEST_RUNNING = False
@@ -537,7 +573,13 @@ def _selftest() -> int:
         for cid, detail in failures:
             print("%s: %s" % (cid, detail))
         return 1
+    if accepted:
+        print("%s: FAIL %d/%d" % (SELFTEST_PREFIX, passed, total))
+        print("MATCHER: accepted %d of %d corrupted expectations: %s" % (
+            len(accepted), controls, ", ".join(accepted)))
+        return 1
     print("%s: PASS %d/%d" % (SELFTEST_PREFIX, passed, total))
+    print("MATCHER: rejected %d/%d corrupted expectations" % (rejected, controls))
     return 0
 
 
@@ -548,8 +590,11 @@ def main(argv: Optional[List[str]] = None) -> int:
     except _UsageError as exc:
         _emit_error(str(exc))
         return RC_UNAVAILABLE
+    if ns.cases is not None and not ns.selftest:
+        _emit_error("--cases is only valid with --selftest")
+        return RC_UNAVAILABLE
     if ns.selftest:
-        return _selftest()
+        return _selftest(ns.cases)
     if ns.interval is not None and not (0 < ns.interval <= MAX_INTERVAL_SECONDS):
         _emit_error("--interval must satisfy 0 < S <= 10")
         return RC_UNAVAILABLE
