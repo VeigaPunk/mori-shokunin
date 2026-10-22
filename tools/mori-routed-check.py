@@ -228,7 +228,10 @@ def _added_lines(repo: str, base: str, rev: str) -> list[tuple[str, str]]:
     out = _git(
         repo,
         [
+            "-c",
+            "core.attributesFile=/dev/null",
             "diff",
+            "--text",
             "--no-color",
             "--no-ext-diff",
             "--no-textconv",
@@ -408,13 +411,24 @@ def _check_r1(repo: str, rev: str, base: str) -> tuple[bool, list[str], dict]:
 
     hits: list[str] = []
     needle = HISTORICAL_CASE_NEEDLE.encode("utf-8")
-    for path in _list_paths(repo, rev, "tools/"):
+    # Read each blob by object id from a NUL-delimited listing, so a file name that is
+    # not UTF-8 cannot be skipped (wave-2 ReviewRoutedCode finding 2).
+    listing = _git(repo, ["ls-tree", "-r", "-z", rev, "--", "tools/"])
+    for record in listing.split(b"\0"):
+        if not record:
+            continue
+        meta, _, raw_path = record.partition(b"\t")
+        fields = meta.split()
+        if len(fields) != 3 or fields[1] != b"blob":
+            continue
+        shown = raw_path.decode("utf-8", "backslashreplace")
         try:
-            blob = _blob_bytes(repo, rev, path)
-        except GitUnavailable:
+            blob = _git(repo, ["cat-file", "blob", fields[2].decode("ascii")])
+        except GitError:
+            reasons.append("tools_blob_unreadable")
             continue
         if needle in blob:
-            hits.append(path)
+            hits.append(shown)
     detail["historical_case_hits"] = hits
     if hits:
         reasons.append("historical_case_named_in_tools")
