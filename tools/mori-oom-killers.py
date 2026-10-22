@@ -113,6 +113,12 @@ PREFIX_KILL_FAILED = "kill failed: "
 PREFIX_LOW_MEMORY_TERM = "low memory! at or below SIGTERM limits"
 PREFIX_LOW_MEMORY_KILL = "low memory! at or below SIGKILL limits"
 PREFIX_DRYRUN = "dryrun mode enabled"
+# Post-freeze rules (contract amendment A2, round-26 wave-1 CriticC2Width):
+# kill.c:282 at v1.9.0 — one send line under -g signals a whole process group.
+PREFIX_PROCESS_GROUP = "killing whole process group "
+# journald rate limiting (systemd v262 journald-manager.c:1294) — lines were lost.
+PREFIX_SUPPRESSED = "Suppressed "
+SUPPRESSED_MARK = " messages from " + "earlyoom.service"
 
 
 class SetupError(Exception):
@@ -198,7 +204,12 @@ def unit_state(text):
         return "unavailable"
     if props["ActiveState"] == "active":
         return "active"
-    return "inactive"
+    if props["ActiveState"] == "inactive":
+        return "inactive"
+    # failed, activating, deactivating, reloading, maintenance, refreshing:
+    # an earlier invocation may have acted and the current one is not
+    # running steadily, so the state is not readable as active or inactive.
+    return "unavailable"
 
 
 def _monotonic_usec(value):
@@ -294,6 +305,8 @@ def read_inputs(inputs):
         "low_memory_warnings": 0,
     }
     dryrun = False
+    process_group_lines = 0
+    suppressed = False
 
     for entry in scoped:
         text = _entry_text(entry).lstrip()
@@ -322,8 +335,23 @@ def read_inputs(inputs):
             counts["low_memory_warnings"] += 1
         elif text.startswith(PREFIX_DRYRUN):
             dryrun = True
+        elif text.startswith(PREFIX_PROCESS_GROUP):
+            process_group_lines += 1
+        elif text.startswith(PREFIX_SUPPRESSED) and SUPPRESSED_MARK in text:
+            suppressed = True
 
-    scope_complete = version is not None
+    # A6: in dry-run mode earlyoom still prints "sending SIG… to process"
+    # (kill.c:626-629) but sends nothing (kill.c:271-273); those lines are
+    # reported separately and are never positive evidence.
+    dryrun_send_lines = 0
+    if dryrun:
+        dryrun_send_lines = counts["sigterm"] + counts["sigkill"]
+        counts["sigterm"] = 0
+        counts["sigkill"] = 0
+
+    # A1b: a journald "Suppressed N messages from earlyoom.service" notice in
+    # scope means lines were lost, so the scope is not complete.
+    scope_complete = version is not None and not suppressed
     grammar = GRAMMAR_VERIFIED if version == VERIFIED_VERSION else GRAMMAR_UNVERIFIED
 
     thresholds = None
@@ -355,6 +383,9 @@ def read_inputs(inputs):
         dryrun = False
     else:
         actions = dict(counts)
+    if actions is None:
+        dryrun_send_lines = None
+        process_group_lines = None
 
     oomd = {
         "state": oomd_state,
@@ -403,6 +434,9 @@ def read_inputs(inputs):
             "scope_complete": scope_complete,
             "actions": actions,
             "dryrun": dryrun,
+            # Counts are earlyoom log lines, not processes signalled or killed.
+            "dryrun_send_lines": dryrun_send_lines,
+            "process_group_lines": process_group_lines,
         },
         "oomd": oomd,
         "verdict": verdict,
@@ -482,13 +516,21 @@ def _collect_oomd_notices():
     return sum(1 for line in out.splitlines() if line.strip())
 
 
+def _system_journal_readable():
+    """A1c: `journalctl -q` hides "inaccessible system journal" warnings, so an
+    empty answer can mean "not readable".  Require one PID 1 record this boot."""
+    out = _run(["journalctl", "-q", "-b", "-n", "1", "_PID=1", "-o", "json", "--output-fields=_PID"])
+    return out is not None and any(line.strip() for line in out.splitlines())
+
+
 def collect_live():
     """Collect the inputs object from this host (read-only)."""
+    readable = _system_journal_readable()
     return {
         "earlyoom_show": _run(["systemctl", "show", EARLYOOM_UNIT, "-p", SHOW_PROPERTIES]),
         "oomd_show": _run(["systemctl", "show", OOMD_UNIT, "-p", SHOW_PROPERTIES]),
-        "earlyoom_journal": _collect_journal(),
-        "oomd_notices": _collect_oomd_notices(),
+        "earlyoom_journal": _collect_journal() if readable else None,
+        "oomd_notices": _collect_oomd_notices() if readable else None,
     }
 
 

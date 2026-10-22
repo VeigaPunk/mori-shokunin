@@ -148,3 +148,25 @@ see the sourced-claim clause. The counters are now committed scripts that read c
   with pointers to their wave-1 reports, not part of the counted value.
 - Uncounted correction rows (QUALITY 77 sweep, not on the frozen list): r12 line 14 `not-found` and line 18
   "earlyoom's service unit is not found" are rewritten as dated records in the same change.
+
+## Amendment A2 (2026-10-22, after the tool landed; tool rules only, counted value unchanged)
+
+Reason: wave-1 seat CriticC2Width (`.ufo/waves/round-26/w1/CriticC2Width.md:40-155`) ran nine counterexamples
+X1–X9 against the tool. The frozen cases stay frozen; the L1 changed the tool where a rule does not contradict a
+frozen case, and discloses the rest as limits. The counted value stays `PASS 32/32` on the frozen file.
+
+- **A1b (adopted):** a journald `Suppressed N messages from earlyoom.service` line in scope sets
+  `scope_complete` false (X3 now `KILLERS_UNKNOWN`).
+- **A1c (adopted, live mode only):** journal reads count as `null` unless `journalctl -q -b -n 1 _PID=1` returns
+  a record (X9's unreadable-journal path in live mode).
+- **A2b (adopted):** an `ActiveState` other than `active` or `inactive` (failed, activating, deactivating,
+  reloading, maintenance) maps to state `unavailable` and `KILLERS_UNKNOWN` (X5, X6).
+- **A5 (adopted):** `killing whole process group ` lines are counted in `earlyoom.process_group_lines`; every count
+  is a count of earlyoom log lines, not of processes signalled or killed (X2).
+- **A6 (adopted):** when the invocation logged `dryrun mode enabled`, send lines go to
+  `earlyoom.dryrun_send_lines`, `sigterm`/`sigkill` stay 0 and they are never positive evidence (X1).
+- **Malformed timestamp (adopted, from the case seat's supplementary c35):** a journal record without a numeric
+  `__MONOTONIC_TIMESTAMP` is a setup error: `KILLERS_UNKNOWN`, exit 2.
+- **Not adopted (each contradicts a frozen case), disclosed as limits:** A1a (counts with an incomplete scope are
+  lower bounds printed as counts; frozen `c04`), A2a (lines of an earlier invocation in the same boot are not seen;
+  frozen `c02`, X4), A3 (no logger-heartbeat check; frozen `c19`, X7), X8 (head-truncated count is a lower bound).
