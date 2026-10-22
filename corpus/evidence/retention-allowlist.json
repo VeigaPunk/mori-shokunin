@@ -722,6 +722,13 @@
    "line_sha256": "6247d06bcc0c99c5322e837892297bd2ac755a692192c4387fa6333997c7e8be",
    "reason": "default path name of an operator-owned settings file in a gate-registry row, no value copied (L1 ruling, round 26)",
    "rule": "a"
+  },
+  {
+   "path": ".ufo/waves/round-26/w1/DraftSkillFr10.md",
+   "class": "R7",
+   "line_sha256": "6247d06bcc0c99c5322e837892297bd2ac755a692192c4387fa6333997c7e8be",
+   "reason": "draft gate-registry row naming an operator-owned settings file by default path only, no value copied (L1 ruling, round 26)",
+   "rule": "a"
   }
  ]
 }
