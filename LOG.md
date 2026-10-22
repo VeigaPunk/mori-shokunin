@@ -1882,3 +1882,5 @@ landed tip.
   `meminfo.c`, `sd-main.c`, `user@.service.in`), each sha256 prefix cited by a mori round-27 w1 report, copied
   byte-exact to the lane root (`cmp` ok) and the fleet copies deleted at 18:01Z; content-hash check
   `.ufo/waves/round-28/misroot-hash-check.sh 27` 7 hits → 0 (`evidence/misroot-before.txt`, `misroot-after.txt`).
+- C2 counter `.ufo/waves/round-28/count-c2.sh` (wave-1 BuildCountC2, sha256 a7536fc5…) committed before any case file;
+  before at `6ebd518f`: `a2_schema=absent a2_cases=0`, `C2=unmet`, exit 1 (`evidence/c2-before-r28.txt`).

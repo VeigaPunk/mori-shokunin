@@ -1,0 +1,20 @@
+# C2 before with the round-28 counter, measured 2026-10-22T18:50:44Z against 6ebd518f10e53057da926353d99442d51267ccaf
+$ bash .ufo/waves/round-28/count-c2.sh 6ebd518f
+rev=6ebd518f10e53057da926353d99442d51267ccaf
+tool_blob=3fb78bbc2612c38e463e04083bdb213954647568
+frozen_blob=match
+frozen32_selftest=PASS 32/32
+freeze_commit=none
+freeze_path=none
+freeze_adds=0
+freeze_adds_raw=0
+freeze_renames=0
+freeze_deletes=0
+freeze_edits=0
+freeze_blob_versions=0
+cases_changed_since_freeze=1
+a2_schema=absent
+a2_cases=0
+a2_selftest=absent
+C2=unmet
+exit=1
