@@ -45,7 +45,7 @@ value of `/etc/default/earlyoom` or of any `--prefer`/`--avoid`/`--ignore` expre
   notices only after choosing itself and then sleeps (`:587-592`).
 - **A victim that vanishes** before the signal produces one `kill failed:` line and no re-selection; the next attempt
   is the next poll (S118 `kill.c:640-657`).
-- **Defaults.** No prefer, avoid or ignore expression exists by default (S115 has none; upstream's `earlyoom.default` at v1.9.0 sets only `EARLYOOM_ARGS="-r 3600"`, S131 `earlyoom.default:5`). `-i` has been a no-op since
+- **Defaults.** Upstream's v1.9.0 bytes set no prefer, avoid or ignore expression (S115 has none; Arch's packaging appends an `--avoid` option to its packaged default, S126 `PKGBUILD:22`, wave-2 ReopenS131; upstream's `earlyoom.default` at v1.9.0 sets only `EARLYOOM_ARGS="-r 3600"`, S131 `earlyoom.default:5`). `-i` has been a no-op since
   v1.7 (S115 `MANPAGE.md:89-90`), but the long option `--ignore-root-user` still works and is missing from the 1.9.0
   manual (S119 `main.c:185,281`).
 - **earlyoom lowers its own kernel score through its unit; its scan does not exclude it, but it never signals itself (above):** the upstream unit sets `OOMScoreAdjust=-100` and

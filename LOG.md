@@ -1856,3 +1856,14 @@ SKILL.md PROVINCE.md | wc -l` → `0`. That is the FR10 remainder "fleet attribu
 round-26 closure routed D7: no committed case pins the ten rules the round-26 tool adopted after its case freeze.
 Contract `.ufo/waves/round-27/contract.md`, counters `count-c1.sh` and `count-c2.sh` committed with it. Start source
 census: exit 0, the six retained W04 warnings. Retention scan at the entering tip: 4 unallowlisted.
+
+## 2026-10-22 — round 27 attempt 1: outcome (L1 MoriR27)
+
+Two waves under policy v1. Wave 1 build, 34 seats (14 scout, 6 reviewer, 5 critic, 3 executor, 3 scribe, 2 connector,
+1 mutation-tester): 27 returned, 7 died at spawn with `Error: No model selected.` (all 3 scribes, 3 executors and the
+mutation-tester; 20.6% of the wave). Wave 2 falsify, 41 seats (32 reviewer, 7 critic, 1 scout, 1 connector): the
+seats that returned before the run budget are committed under `w2/`; the rest were cancelled at the budget. C1
+(depth): `corpus/knowledge/oom-victim-selection-r27.md` with rows S127–S132 and S142 and a SKILL.md `Round27` table;
+`count-c1.sh` C1=met. C2 withdrawn before data (amendment W1). Routed D1–D5, R3, R7 fixed; D6 explained; D7, R1,
+R5 debt; S124, S090, S093 restored with superseding rows S133, S143, S144; QUALITY 80–82; retention scan 4 at every
+landed tip.

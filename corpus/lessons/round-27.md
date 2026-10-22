@@ -114,3 +114,18 @@ for the v7.2 `cgroup-v2.rst` (already S092); a new row for the sibling file (alr
 | r25 R3 SKILL round-25 rows | fixed in place: rows 1–4 per the re-verified pairs (row 1 now names no settings value); three source rows S134–S136 | `w1/ReviewR3SkillRows.md` §4 |
 | r25 R5 routed-check self-test | named debt: needs code; no executor route this round | — |
 | r25 R7 knowledge corrections | fixed in place with logged correction blocks: `harness-job-capacity-r25.md` U1 (three later moves; the draft's "floor of 1 held" was false and was not carried) and F10 (full refusal set); `system-pressure-r24.md` `psi.c` anchors (two places), the cgroup pressure-file sentence and F11's first line; four source rows S138–S141 | `w1/ReviewR7Knowledge.md` §2–§4 |
+
+## Wave 2 (falsify) — what it changed, and what is carried
+
+- Applied: kernel tie rule (a tie goes to the task scanned later), earlyoom-versus-kernel event routing rows, the
+  `omp` process count (three `omp`-class processes at 17:12Z; task seats run in-process, S142), the earlyoom order
+  being unknown under the host's armed prefer and avoid expressions, the ceiling inference's conditions and its upper
+  bound of 27, sixteen overclaim wordings, the Arch packaged `--avoid`, adjacency lines, the hardened row-identity
+  check, S090 and S093 restored with superseding rows S143 and S144.
+- Carried as named debt (each needs a superseding row, because QUALITY 81 freezes first-published cells, or a
+  seat that did not return before the run budget): S127 scope/teaches F1–F5 (wave-2 ReopenS127), S128 teaches F1
+  (ReopenS128), S129 teaches M2 (ReopenS129), S131 tree URL without `?recursive=1` and teaches F2–F4 (ReopenS131);
+  S096, S097, S101 restores; the low finding in ReopenS140.
+- Pre-existing exposure noted, not added this round: a harness settings value in the header and three body lines of
+  `corpus/knowledge/harness-job-capacity-r25.md` was withheld this round; the same value pattern remains in
+  other older lane files (history disposition is the operator's, with the open L0 question).

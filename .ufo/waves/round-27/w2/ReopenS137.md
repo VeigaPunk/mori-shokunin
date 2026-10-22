@@ -24,10 +24,10 @@ Labels used below: **B** = raw `750a7c0d…/main.c`; **D** = raw `v1.9.0/main.c`
   1 is **wrong as written**: the commits URL the row names does not return the "first page of
   100" the anchor describes. 1 is **unsupported**: "merge dates" (scope cell), because the
   commit has one parent, no pull request and a committer date.
-- **Citing statements (7 hits, §6):** "merged 2026-02-17" is **unsupported** in four places
-  (entry:1, entry:139, entry:301, and the row scope). Entry:136 cites "(§3.3)", a section that
-  does not exist. round-27.md:107 "F7 cites both" is **ambiguous**. The Gate row (round-27.md:80)
-  holds. The F7 dates (entry:135), the line anchors (entry:139, entry:300-302) and the
+- **Citing statements (7 hits, §6):** "merged 2026-02-17" is **unsupported** at entry:1, entry:139
+  and entry:301; the row's scope says "merge dates" for the same claim (SOURCES.md:143). Entry:136
+  cites "(§3.3)", a section that does not exist. round-27.md:107 "F7 cites both" is **ambiguous**.
+  The Gate row (round-27.md:80) holds. The F7 dates (entry:135), the line anchors (entry:300-302) and the
   correction's account of the old line 1 hold.
 - **Teaches (§4):** holds except the arrival month "returned on master in February 2026",
   which the bytes do not fix (lower bound only).
@@ -117,7 +117,7 @@ Its only URLs are A and B. Its scope and teaches cite other rows' bytes: S114 (E
 | 16 | scope: S114 README.md:383 | E:380 `* v1.2, 2018-10-28`; E:383 `  * Remove option to use kernel oom-killer (`-k`, now ignored for compatibility)` | HOLDS. S114's anchor cell lists 383 (SOURCES.md:120). |
 | 17 | scope: S114 README.md:416 | E:416 `* v0.6: Add command-line options `-m`, `-s`, `-k`` | HOLDS in the bytes. S114's anchor cell does not list 416 (SOURCES.md:120 lists `65-67,383,289-293`). Gap G4. |
 | 18 | scope: "v1.9.0 main.c:245-246" | D:179 `const char* short_opt = "m:s:M:S:kingN:P:dvr:ph";`; D:245 `case 'k':`; D:246 `fprintf(stderr, "Option -k is ignored since earlyoom v1.2\n");` | HOLDS in the bytes. These are S119's bytes (D's hash is S119's). S137 names no v1.9.0 URL. S119's declared scope (SOURCES.md:125) does not name the message. Gap M3. |
-| 19 | scope: "the master re-introduction commit" | P's hash equals D's hash. P has 0 matches for `kernel-oom`; B has one (B:201). In A, no main.c commit sits between fbe2b6ba43 (committer 2025-09-13) and 750a7c0d (committer 2026-02-17). | HOLDS: 750a7c0d is the first main.c change that re-adds the option after v1.9.0. |
+| 19 | scope: "the master re-introduction commit" | P's hash equals D's hash. P has 0 matches for `kernel-oom`; B has two (B:201 and B:352, the help line). In A, no main.c commit sits between fbe2b6ba43 (committer 2025-09-13) and 750a7c0d (committer 2026-02-17). | HOLDS: 750a7c0d is the first main.c change that re-adds the option after v1.9.0. |
 | 20 | scope: "its author and merge dates" | Author date: row 4. "Merge": row 5 and M1. | **UNSUPPORTED** for "merge" (M1). |
 | 21 | scope: "not the option's runtime behaviour on any host, not the v1.7-v1.9.0 log grammar (S117)" | An exclusion. The S117 row (SOURCES.md:123) covers the grammar. | HOLDS |
 | 22 | scope: "the v0.6 introduction and v1.2 removal" | Composed from rows 16 and 17: E:416 adds `-k` in v0.6; E:383 names `-k` as the kernel oom-killer option removed in v1.2. | HOLDS as a composition |
@@ -148,9 +148,12 @@ bytes, which are one commit page and one file. The history is completed by S114 
 
 ## 5. Duplicate check
 
-- Tip grep (`git grep -n -E '750a7c0d|d24a26c9|commits\?path' 5f00fd04 -- corpus`): the only
-  corpus hits are the S137 row, the entry (lines 1, 135, 139, 296, 300) and round-27.md (80, 107).
-  No other SOURCES row names commit 750a7c0d, the file hash `d24a26c9`, or the commits query.
+- Tip grep (`git grep -n -E '750a7c0d|d24a26c9|commits\?path' 5f00fd04 -- corpus`) returns seven corpus
+  hits: the S137 row (SOURCES.md:143); entry lines 1, 139, 296 and 300; round-27.md:80; and
+  round-26-verifier-spotcheck.md:149. The last is a round-26 finding that quotes the old S117 line 1
+  (its commits query sits in the D2 description). It is neither a row, a Gate record nor an S137
+  citation. No SOURCES row other than S137 names commit 750a7c0d, the file hash `d24a26c9`, or the
+  commits query.
 - Rows whose URLs name a main.c file: S117 (v1.9.0, v1.8 and v1.7 main.c; SOURCES.md:123), S119
   (v1.9.0 main.c; :125), S137 (750a7c0d main.c; :143). None holds the `d24a26c9` file. S119's file
   (`08656b0b…`) is the parent's file, not S137's file.
@@ -184,8 +187,8 @@ binary's bytes (§3.3)."
   check: `kernel-oom` has 0 matches in D (552 lines). Fix K7.
 - "(§3.3)": **wrong pointer (medium, adjacent).** The entry has no §3. Its section headers sit at
   :8, :26, :186, :204, :232, :254, :269, :279 and :293. No committed file under
-  `.ufo/waves/round-26/capture/` contains "ignored since"; the tip grep lists only wave drafts,
-  wave reports and the S114/S137 rows and the entry. The installed-binary clause therefore has no
+  `.ufo/waves/round-26/capture/` contains "ignored since"; the tip grep lists only wave drafts and reports,
+  corpus/SOURCES.md and the entry. The installed-binary clause therefore has no
   surviving anchor. Fix K5.
 
 ### S-3 userspace-oom-killers-r26.md:139 (F7 limit)

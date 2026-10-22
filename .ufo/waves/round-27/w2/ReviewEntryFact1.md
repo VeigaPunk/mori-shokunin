@@ -85,7 +85,7 @@ Each entry gives the tip line range (E##), the claim, the verdict, the evidence 
 - Old: ``processes whose `stat` or `oom_score` it cannot read (`:377-381,396-401`)``
 - New: ``any process whose `stat` (`:377-381`), `oom_score` (`:396-401`) or `oom_score_adj` (`:470-474`) cannot be read; one whose `comm` cannot be read while a prefer/avoid/ignore option is set (`:405-409`); one whose uid cannot be read under `--ignore-root-user` (`:364-368`)``
 
-**V14 · E44-46 · "pid ≤ 2 (`kill.c:357-359`); kernel threads (`ppid == 2`, `:391-393`); uid 0 under `--ignore-root-user` (`:363-374`); `oom_score_adj == -1000`, checked after the comparison (`:467-478`)" · HOLDS.** `kill.c:357` tests `cur->pid <= 2`; `:391` tests `cur->stat.ppid == 2`; `:371` tests uid 0 inside `:363-374`; `:475` tests -1000 after the comparison at `:429-465`.
+**V14 · E44-46 · "pid ≤ 2 (`kill.c:357-359`); kernel threads (`ppid == 2`, `:391-393`); root-owned processes under `--ignore-root-user` (`:363-374`); `oom_score_adj == -1000`, checked after the comparison (`:467-478`)" · HOLDS.** `kill.c:357` tests `cur->pid <= 2`; `:391` tests `cur->stat.ppid == 2`; `:371` tests root ownership (`cur->uid == 0`) inside `:363-374`; `:475` tests -1000 after the comparison at `:429-465`.
 
 **V15 · E46-47 · "It does not skip itself during the scan; it notices only after choosing itself and then sleeps (`:587-592`)" · HOLDS, cite gap (low).** `kill.c:587` is the only `getpid()` in the file (checked); `is_larger` (`:355-480`) has no self test. The victim is zeroed at `:591`. The sleep is in `kill_process`: `:608-614`, with `sleep(1)` at `:613`. Add `:608-614` to the cite.
 
