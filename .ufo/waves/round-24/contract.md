@@ -133,3 +133,26 @@ are held and observed. No retirement, waiver, exploratory claim or promotion.
 - `counter_regressed` counts toward `PRESSURE_PARTIAL` like `malformed`.
 - `stall_ratio` is nominal (divides by the requested S, may exceed 1); an additive
   `elapsed_us` field (measured, null under the selftest's no-op sleep) may accompany it.
+
+## Amendment A4 (08:37Z, before any C1 tool landed; finding from wave-1 seat CriticC1Vacuity)
+
+The critic showed that the declared before-value (3 of 4 at `c725aa37`) was fixed by
+construction and that R1–R3 had nothing to repair. The predicates are strengthened; the
+declared after-value (`"held": 4` of `"items": 4` at the landed tip) is unchanged.
+
+- New argument `--round N` (default 24) names the round whose dispatch ledgers R4 checks.
+- **R4 (the repair):** every `.ufo/waves/round-N/*-attempts.json` and `*-ledger.json` at REV
+  (at least one) verifies clean with `tools/mori-dispatch-ledger.py verify`; for every row,
+  the committer time (UTC) of the commit that last changed its `dispatch_path` blob at or
+  before REV is at or before the row's `at` (UTC); and every `.ufo/waves/round-N/wave*-spec.json`
+  has a ledger whose last row is `started` or `partial`. Limit: both times are written by
+  the lane; this proves recorded ordering, not harness-observed ordering.
+- **Before, measured on the real defect:** `--rev c725aa37 --round 23` — the round-23 wave-1
+  ledger rows (`at` 17:03Z–17:24Z) precede the dispatch commit `22772c1` (18:10:59Z), so R4 is
+  expected red there. The `--round 24` run at `c725aa37` remains reported as well.
+- **R1–R3 are regression guards, not repairs:** R1 and R3 pin the whole
+  `.ufo/waves/round-23` tree OID to base (covering frozen, rejected and evidence, including
+  every case copy); R1 also requires that no path added under `tools/` or `corpus/knowledge/`
+  since base contains `quota` and that no file under `tools/` contains `CaseEscapedSpace`;
+  R2 also pins the blobs of `tools/mori-retention-gate.py` and
+  `tools/mori-retention-reconcile.py` to base.
