@@ -640,3 +640,34 @@ Sources: S090 (psi.rst), S091 (psi.c), S095 (psi_types.h), S096 (PSI_IRQ commit)
 |---|---|---|---|---|---|---|---|
 | system pressure (r24, C2) | gate (host-surface verdict; not a census or fleet-admission gate) | `python3 tools/mori-pressure.py [--root DIR] [--warn-avg10 X] [--interval S] [--selftest [--cases FILE]]` (the selftest also prints `MATCHER: rejected n/n corrupted expectations` and fails if the matcher accepts one) — `--root` defaults to `/proc/pressure`; reads `cpu`, `memory`, `io`, `irq` | 0 → clean (`PRESSURE_OK`; `PRESSURE_PARTIAL` also exits 0 and means at least one resource was unavailable, malformed or `counter_regressed`; a threshold finding anywhere outranks it) · 1 → failed (`PRESSURE_HIGH`) · 2 → could-not-evaluate (every resource unavailable, or usage error) | `python3 tools/mori-pressure.py --selftest` → `MORI_PRESSURE_SELFTEST: PASS 12/12` over `tools/fixtures/mori-pressure/cases.json` (P01–P12, landed in a strict-ancestor commit before the tool; the tool seat read the cases while building, so the order is shown, not independence); error injection (EOPNOTSUPP, EACCES) uses an in-process open hook, documented as such | `tools/fixtures/mori-pressure/cases.json` (schema `mori-pressure-cases-v1`; each case pins exit, verdict, per-resource state, `some`/`full` subsets and `findings_include` pairs); `--warn-avg10` default 10.0 is labeled local, not calibrated | none live — stdout only; reads `/proc/pressure/{cpu,memory,io,irq}` (or `--root`); no `/proc`, `/sys` or cgroup write, no PSI trigger registration, no service or package change; selftest is in-process over the frozen cases | mori |
 | routed round-23 items (r24, C1) | gate | `python3 -I tools/mori-routed-check.py --repo <repo> --rev <REV> [--round N]` (N defaults to 24) | 0 clean (`held` == `items` == 4) · 1 failed (any routed row red; R4 includes ledgers that are unclean, unbound, missing for a wave spec, or whose `at` precedes the commit that last changed the dispatch file) · 2 could-not-evaluate (repo, revision or base unreadable) | none built in; able-to-fail evidence is thirteen sandbox mutants in `.ufo/waves/round-24/w1/BuildRoutedCheck.md` | base `c725aa37aa3c9ec4f34e3c2abc8ca1b616c7c130` (fixed in the tool); `corpus/QUALITY.md` criteria 72-75 | read-only git object reads over the measured repo; runs `tools/mori-dispatch-ledger.py verify` as a subprocess | mori |
+
+## Round25 — harness background-job cap (C2)
+
+Grounded in `corpus/knowledge/harness-job-capacity-r25.md` (sources S098–S104, S112–S113). Upstream line
+anchors below are at oh-my-pi tag `v18.12.6`.
+
+### Harness background-job cap refusal (r25)
+
+The fixed text `Background job limit reached (100). Wait for running jobs to finish or cancel one.`
+is upstream's own message from the async job manager's registration path
+(`job-manager.ts:371-373` at v18.12.6; installed `omp` byte 160033342), wrapped by the task tool as
+`Failed to start background task job{s}: <agentId>: <message>` (`task/index.ts:1220-1230`).
+
+| Condition | Report as | Never infer |
+|---|---|---|
+| the fixed sentence appears in a transcript or tool result | a harness **registration refusal** at the session's running-job cap; the number is the **effective** cap at that instant, `max(1, floor(min(100, async.maxJobs)))` — the clamp is compiled into the binary (`sdk.ts:2284`, byte 164406766), so `(100)` is the clamp, not the operator's configured value | that the operator configured 100 (this host's `~/.omp/agent/config.yml:244-245` says 200 and the clamp reduces it to 100); that the cap is still 100 now — it is re-read at every check (`job-manager.ts:331-335`); that the refused work ran — `register()` throws before the job exists (`task/index.ts:1210-1219`, `results: []` at `:1229`) |
+| a bash or eval call was made while the cap was full | nothing — the auto-background branch checks `atCapacity` first and runs in the foreground instead (`tools/bash.ts:1220-1229`, `tools/eval.ts:536`) | that the cap was not reached; that the call was backgrounded |
+| a `task` spawn or an explicit `async: true` bash was refused | one refused registration; a batch can partially start, so refusals and starts coexist in one result | that the wave is dead — a refusal creates no job; that the count was this wave's own seats: the population is every **running, non-queued** job in the session tree — bash, task and eval alike (`job-manager.ts:343,367`, `:48`; `tools/bash.ts:882`) — and a parked (queued) task job counts only after `markRunning()` (`task/index.ts:1565,1490`) |
+| mori must state the cap | `python3 -I -B tools/mori-job-runway.py` → one JSON object (`schema: mori-job-runway-v1`) with `configured {state,value}`, `clamp {state,value,sites}`, `setting_default {state,value,sites}`, `effective`, and `verdict` ∈ `RUNWAY_CLAMPED` (exit 1) / `RUNWAY_AS_CONFIGURED` (exit 0) / `RUNWAY_DEFAULT` (exit 0) / `RUNWAY_UNKNOWN` (exit 2) | that the session was at capacity — the tool reports the **cap**, never a running-job count, and the live count is not readable from outside the session (`contract.md:83-84`); that an absent or unreadable clamp means "no clamp" (it is `RUNWAY_UNKNOWN`); that the file's `async.maxJobs` is the value the session resolved — the runtime settings stack has project and overlay layers the tool does not read (`corpus/knowledge/harness-job-capacity-r25.md` F13) |
+
+**mori never acts on this text.** It does not edit `~/.omp/agent/config.yml` or any other OMP
+setting, it does not cancel or kill a running job, and it does not split, shrink or re-dispatch a
+wave. mori is detection and report only (`SKILL.md:9`, `SKILL.md:139-147`, `PROVINCE.md:12-18`).
+Dispatch and wave shape are kumitate's (`PROVINCE.md:65`); writes under `~/.omp` are the operator's
+(`kama-shokunin/PROVINCE.md:45-47`); the harness-side remedy the message itself names — let running
+jobs finish, or cancel one — is the operator's, and mori reports the refusal as evidence, not as a
+work order.
+
+**A refusal is not repairable by raising the setting.** `async.maxJobs` above 100 cannot lift this
+cap: the clamp is compiled into the binary (`sdk.ts:2284`), so a configured 200 already means an
+effective 100. Only the operator can change the installed binary or the harness build.

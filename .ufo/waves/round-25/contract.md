@@ -179,7 +179,7 @@ from an unfixed one. The landed tool (`e54b644b`) gates on the phrase being abse
 and reports both counts. This is stricter than A3's letter, changes no before-value (D2 is red at `28b79d3d` on
 seven sub-reasons either way) and no declared after-value.
 
-## Amendment A5 (11:02Z, widens C1 before wave 2; Main's calibration reminder of 10:54Z)
+## Amendment A5 (about 10:53Z, widens C1 before wave 2, after Main's calibration reminder)
 
 The calibration rule asks for mismatches between the lane's self-assessment rows (SCORECARD/SHONEN) and observed
 state. D1 is anchored on `SCORECARD.md:1514` and D3 on `SCORECARD.md:1521`; D2 on the entry's own banner. To put
