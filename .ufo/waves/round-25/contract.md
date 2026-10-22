@@ -178,3 +178,19 @@ inside it (`system-pressure-r24.md:11`, heading at line 8), so the clause as wri
 from an unfixed one. The landed tool (`e54b644b`) gates on the phrase being absent from the whole normalized entry
 and reports both counts. This is stricter than A3's letter, changes no before-value (D2 is red at `28b79d3d` on
 seven sub-reasons either way) and no declared after-value.
+
+## Amendment A5 (11:02Z, widens C1 before wave 2; Main's calibration reminder of 10:54Z)
+
+The calibration rule asks for mismatches between the lane's self-assessment rows (SCORECARD/SHONEN) and observed
+state. D1 is anchored on `SCORECARD.md:1514` and D3 on `SCORECARD.md:1521`; D2 on the entry's own banner. To put
+the standing SCORECARD self-assessment itself under the count, C1 gains a fourth counted item:
+
+| Item | Self-assessment contradicted | Held at REV when |
+|---|---|---|
+| D5 | the `## Axes` table at the top of `SCORECARD.md` (every row "Last change: round 1") scores coverage 5, operability 6, depth 4, while the closure-admitted round-24 section records coverage 6, calibration 5 and holds operability 7, depth 5, freshness 5, adjacency 6 (`SCORECARD.md:1499-1506` at `28b79d3d`; closure `corpus/lessons/round-24-verifier-spotcheck.md:68,88,100-109`) | the `## Axes` table at REV has exactly one row per axis (coverage, operability, depth, freshness, calibration, adjacency) and each row's Score equals the score parsed from `SCORECARD.md` lines 1499–1506 at `28b79d3d` (the pinned observed state); no row's Last change reads `round 1` unless its score equals its round-1 value |
+
+- **Before (expected):** at `28b79d3d`, D1–D3 red and D5 red (3 of 6 rows differ: coverage, operability, depth),
+  `mismatches: 4` of `items: 4`.
+- **Declared after (widens, does not narrow, the A1 after-value):** `python3 -I -B tools/mori-routed-r24.py
+  --repo <lane> --rev <landed tip>` prints `"mismatches": 0` with `"held": 4` of `"items": 4` and hygiene held,
+  exit 0. The A1 measurement at `e54b644b` (3 of 3) stays in `evidence/routed-r24-after.txt` as history.
