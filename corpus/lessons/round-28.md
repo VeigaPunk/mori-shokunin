@@ -70,3 +70,56 @@ Each line is copied from the drafting seat's report (`.ufo/waves/round-28/w1/Sup
 | S150 | https://raw.githubusercontent.com/systemd/systemd/v262/man/systemd.exec.xml (with https://raw.githubusercontent.com/systemd/systemd/v262/man/systemd-system.conf.xml) | 2026-10-22T17:58:56Z | `44b89bffce737aff803966c207329e9fe2d28ad07709a4bb8e0edf6a4ec0d844` | `systemd.exec.xml:1299-1300` "If not specified, defaults to the OOM score adjustment level of the service manager itself, which is normally at 0." (20 words) | admit, A, mined (MoriR28.SupersedeS129) |
 | S151 | https://api.github.com/repos/rfjakob/earlyoom/git/trees/v1.9.0?recursive=1 ; https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/earlyoom.default (listing sha256 8b3c95cf88d0b8c58bbe973c1b6846c34063a258b7edfaeb57320f5dfbf3c145) | 2026-10-22T17:59:24Z | `8b3c95cf88d0b8c58bbe973c1b6846c34063a258b7edfaeb57320f5dfbf3c145` | `:535` `"truncated": false`; `:5` `EARLYOOM_ARGS="-r 3600"` | admit, A, mined (SupersedeS131) |
 | S152 | https://raw.githubusercontent.com/can1357/oh-my-pi/6962d5cd2ef157ebf9f415acd58b8744f66400d8/packages/coding-agent/src/async/job-manager.ts | 2026-10-22T17:59:30Z | `f8851470a8bd953f25ab659c0d0aac2ea8c34df9a433e154ec4127c7683b70bd` | `job-manager.ts:305` "return Math.max(1, Math.floor(value ?? DEFAULT_MAX_RUNNING_JOBS));" (5 words) | admit, A, mined (sha256 `f8851470a8bd953f25ab659c0d0aac2ea8c34df9a433e154ec4127c7683b70bd`) |
+
+### Row changes logged old → new (CORPUS Rules 2)
+
+- **S096 `teaches`, restored in place (QUALITY 81):** old (in-place edit `7c77fba`) "…so an absent irq file is never a
+  zero reading; it is consistent with no IRQ time accounting at build, PSI disabled at boot (the commit gates the file
+  under psi_enable), or a kernel older than 6.1." → new = first-published (`df4db54`) "…so an absent irq file is a
+  build-configuration fact and never a zero reading." The first-published wording is false; S145 carries the correction
+  and every live reader now cites S145.
+- **S097 `anchor` and `teaches`, restored in place:** old digest `80c3fe2ae1062abf` and flip "(S090, …; S001 is the
+  rendered page)" → new = first-published (`df4db54`) digest `80c3fe2ae1062abf5` and flip "(S001; …)". S146 carries the
+  correction (its source is the man-pages 6.20 tarball, re-opened this round; the 404 page is unchanged: wave-1
+  SupersedeS097).
+- **S101 `teaches`, restored in place:** old (in-place edit `d3b7af2`) "…states no maximum, so a reader of this page alone
+  would expect… The page omits the maximum; it does not contradict it." → new = first-published (`90ed9b7`) "…states no
+  upper bound… so docs and code disagree for values above 100." False; S147 carries the correction.
+- **New rows S145–S152** (`status` mined; `used-by` = the live readers that cite each new id plus this lesson). No
+  `status`, `recheck` or `used-by` cell of an older row changed this round; the old rows' `used-by` still name their
+  readers of record (carried: move them to history-only lessons, wave-1 CriticC1Design finding 2 step 3).
+- **Live readers repointed** (QUALITY 77; amendment A1): `SKILL.md:619,722`, `PROVINCE.md:257-258,377-378`,
+  `corpus/README.md:36`, `corpus/knowledge/system-pressure-r24.md:1,30,41,61,110,177,224`,
+  `corpus/knowledge/harness-job-capacity-r25.md:1,47,277,330`, `corpus/knowledge/oom-victim-selection-r27.md:1,37,48,55,63,66,72,78,84,89`.
+  `oom-victim-selection-r27.md:203` keeps `S127` because it names tsukuroi's row (wave-1 SupersedeS127).
+
+### Census (round start → round end)
+
+`/home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori`:
+start (18:00:45Z, working tree before any round-28 row) six W04 (S035, S037, S073–S076), `mori ok`, exit 0; end
+(after `6b695b02`) nine W04 — the six plus S148, S149, S150 ("duplicate url … across scopes": each superseding row
+keeps its old row's URL with a corrected scope) — `mori ok`, exit 0. Rows 144 → 152 (+8, all tier A, all mined).
+
+### Routed defects (round-27 closure) — disposition
+
+| Routed | Disposition | Evidence |
+|---|---|---|
+| 1 W1 future-dated | dated correction appended (committer-time bound); QUALITY 83 + check | `.ufo/waves/round-27/contract.md` tail; M1 |
+| 2 tip receipts | r27 tip receipts committed; QUALITY 84 + check; round-28 last batch carries its own | `evidence/r27-tip-*.txt`; M5 |
+| 3 QUALITY 81 at tip | S096, S097, S101 restored; `changed=0` | C1 counter, `row_identity=rows=152 changed=0` |
+| 4 carried row defects | S145–S152 superseding rows, readers repointed | C1 `superseding=8/8 readers_left=0` |
+| 5 C2 / r26 D7 | re-declared and frozen with ten blind writers; `PASS 30/30` | C2 counter at the freeze `d21b8bd3` |
+| 6 r25 R1, R5 | carried: wave-1 FixR1Runway and FixR5RoutedSelftest drafts exist in scratch only; no non-author check of a landed change fits the time box, so no tool change landed | wave-2 ReviewR1Patch, ReviewR5Patch |
+| operator: seven fleet-root files | mori r27 seat fetches; swept into the lane | M2 |
+
+### Seat notes
+
+- Wave-1 CaseA2r01 read part of `CriticC2Design.md` (which holds tool outputs) after finalising its cases, and says so;
+  its cases were already fixed in its scratch file. Disclosed for the C2 blindness judgment.
+- Wave-1 SupersedeS140 ended its first run before writing its report; the same identity was resumed by message
+  and wrote it (no replacement seat).
+- Wave-1 seats CriticC2Design and ReviewA2SpecVsTool read the tool; neither wrote cases.
+- Round-27 wave-2 reports not named in `round-27.md` (wave-1 ReviewQ80AtR27Tip: CriticC1Admission, ReopenS133–S137,
+  ReviewEntryFact1, ReviewHygieneD2, ReviewHygieneR7, ScoutMisroot): committed in round 27, their open findings are
+  carried as named debt for round 29 (not routed to this round's claims).
+- Inherited, untouched: `.scratch/` (dated 2026-10-21, pre-round, not round work).

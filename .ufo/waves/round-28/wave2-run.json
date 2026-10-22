@@ -1,0 +1,417 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r28-w2",
+  "policy": {
+    "source": "config",
+    "maxLanes": 64,
+    "minLanes": 16,
+    "waveMinLanes": 32,
+    "waveMaxLanes": 64,
+    "declaredMaxLanes": 64,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 34,
+    "resume": 0,
+    "total": 34
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-28/w2/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-28/w2",
+    "members": {
+      "ReopenS145": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReopenS146": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReopenS147": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReopenS148": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReopenS149": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReopenS150": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReopenS151": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReopenS152": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "JudgeA2r01": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "JudgeA2r02": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "JudgeA2r03": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "JudgeA2r04": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "JudgeA2r05": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "JudgeA2r06": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "JudgeA2r07": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "JudgeA2r08": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "JudgeA2r09": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "JudgeA2r10": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReRunCountC1": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReRunCountC2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "MutCountC1Amended": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutCountC2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "ReviewToolChange": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReviewR1Patch": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReviewR5Patch": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "MutHeadingCheck": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutTipReceiptCheck": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "ReviewReaderSweep": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReviewMisrootSweep": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "CriticLessonMistakes": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "RetentionAtTip": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "CriticC1Admission": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CriticC2Admission": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CensusAtTip": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "# mori round 28 (attempt 1) — wave 2: falsify what wave 1 produced\nLane repo: /home/vgpnk/Projects/shokunin/mori-shokunin. L1: agent MoriR28 is the only integration owner; you are a read-only attacker: you return findings, never lane commits. The only message target you may use is agent://MoriR28 (never agent://all).\nAttack target revision: lane commit f2de0eedcd60d2e354da75265ea6122bc3896073 (read committed bytes with `git -C /home/vgpnk/Projects/shokunin/mori-shokunin show f2de0eedcd60d2e354da75265ea6122bc3896073:<path>`; the working tree may move). Contract with amendments A1 and A2: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/contract.md. Lesson: /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-28.md. Wave-1 reports: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/w1/.\n- C1 (freshness): S096, S097, S101 restored to first-published cells; S145-S152 supersede S096, S097, S101, S127, S128, S129, S131, S140; live readers repointed. Counter: `bash /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/count-c1.sh <rev>`.\n- C2 (operability): blind cases tools/fixtures/mori-oom-killers/cases-a2.json frozen in its own commit; counter `bash /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/count-c2.sh <rev>`; selftest output at the freeze in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/evidence/. Mismatch rulings follow contract amendment A2 (judge = you, a non-author reviewer: `tool error` / `case error` / `unclear text`).\nBounds (binding on every seat):\n- Write ONLY your own Report file. Every `Report:` trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin — write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. Scratch and sandbox clones go under /fast/scratch/hyaku/mori-r28-w2/<your seat name>/ (git clone --no-hardlinks). Never write anywhere else in /home/vgpnk/Projects/shokunin/mori-shokunin, never at the fleet root /home/vgpnk/Projects/shokunin, never in sibling lane repos.\n- Never run any jj command at the fleet root. In the lane use read-only jj only with --ignore-working-copy. Never run git add/commit/stash/checkout/switch/reset/pull/push in /home/vgpnk/Projects/shokunin/mori-shokunin. Seats never push, commit or update refs in the lane, and never mutate the fleet repo, sibling lanes, lane jj state or the lane Git index.\n- Privacy (binding): never copy OMP settings values, session ids, session-store paths or session-record fields (\"the operator's harness settings file\" only). Never write a uid, pid, `user-<digits>.slice`, `user@<digits>.service`, journal MESSAGE text naming a command line, or values of /etc/default/earlyoom or any --prefer/--avoid/--ignore expression on this host. The lane retention scan must not rise.\n- Detection and report only: never edit harness settings, MCP files, systemd units, /etc or fleet scripts; never start/stop/restart units; never signal a process you did not start; never run omp.\n- Sources: curl or the read tool on public URLs only; record URL, access time (`date -u +%FT%TZ`), sha256, quotes <=25 words verbatim with line numbers.\n- Tooling: you and every seat may install or upgrade tools that help the task; read /home/vgpnk/.omp/agent/RULES.md first and record tool/version/channel/reason in your report. All pacman transactions are PAUSED host-wide: never run pacman -S/-Sy/-Syu/-U/-R, never downgrade, never restart a host service; use uv tool, npx or an official binary in ~/.local/bin instead, or report the need.\n- Leaf seat: no subagents, no background jobs.\n- Plain English. Cite every fact with path:line, URL with line, or command with output. Unrun checks are not passes; mark inference [INFERENCE]. Report under 150 lines; open with a one-line verdict (`holds` / `breaks` / `partial`) naming what you attacked. Finish within 15 minutes; a partial report with real evidence beats none.",
+    "tasks": [
+      {
+        "name": "ReopenS145",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAttack row S145 (supersedes S096) at f2de0eedcd60d2e354da75265ea6122bc3896073: re-open its source URL(s) by curl now; check the Gate line in corpus/lessons/round-28.md (quote verbatim at the stated line, <=25 words, sha256 equals your fetch or explain drift); check every cell of S145 against the bytes; check the defect the round-27 closure / wave-1 SupersedeS096 report named is actually fixed in S145 (not copied); check every used-by path cites S145 and that no live reader (SKILL.md PROVINCE.md corpus/README.md corpus/knowledge/) still states the defective wording (QUALITY 77). Verdict per check.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/ReopenS145.md"
+      },
+      {
+        "name": "ReopenS146",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAttack row S146 (supersedes S097) at f2de0eedcd60d2e354da75265ea6122bc3896073: re-open its source URL(s) by curl now; check the Gate line in corpus/lessons/round-28.md (quote verbatim at the stated line, <=25 words, sha256 equals your fetch or explain drift); check every cell of S146 against the bytes; check the defect the round-27 closure / wave-1 SupersedeS097 report named is actually fixed in S146 (not copied); check every used-by path cites S146 and that no live reader (SKILL.md PROVINCE.md corpus/README.md corpus/knowledge/) still states the defective wording (QUALITY 77). Verdict per check.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/ReopenS146.md"
+      },
+      {
+        "name": "ReopenS147",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAttack row S147 (supersedes S101) at f2de0eedcd60d2e354da75265ea6122bc3896073: re-open its source URL(s) by curl now; check the Gate line in corpus/lessons/round-28.md (quote verbatim at the stated line, <=25 words, sha256 equals your fetch or explain drift); check every cell of S147 against the bytes; check the defect the round-27 closure / wave-1 SupersedeS101 report named is actually fixed in S147 (not copied); check every used-by path cites S147 and that no live reader (SKILL.md PROVINCE.md corpus/README.md corpus/knowledge/) still states the defective wording (QUALITY 77). Verdict per check.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/ReopenS147.md"
+      },
+      {
+        "name": "ReopenS148",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAttack row S148 (supersedes S127) at f2de0eedcd60d2e354da75265ea6122bc3896073: re-open its source URL(s) by curl now; check the Gate line in corpus/lessons/round-28.md (quote verbatim at the stated line, <=25 words, sha256 equals your fetch or explain drift); check every cell of S148 against the bytes; check the defect the round-27 closure / wave-1 SupersedeS127 report named is actually fixed in S148 (not copied); check every used-by path cites S148 and that no live reader (SKILL.md PROVINCE.md corpus/README.md corpus/knowledge/) still states the defective wording (QUALITY 77). Verdict per check.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/ReopenS148.md"
+      },
+      {
+        "name": "ReopenS149",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAttack row S149 (supersedes S128) at f2de0eedcd60d2e354da75265ea6122bc3896073: re-open its source URL(s) by curl now; check the Gate line in corpus/lessons/round-28.md (quote verbatim at the stated line, <=25 words, sha256 equals your fetch or explain drift); check every cell of S149 against the bytes; check the defect the round-27 closure / wave-1 SupersedeS128 report named is actually fixed in S149 (not copied); check every used-by path cites S149 and that no live reader (SKILL.md PROVINCE.md corpus/README.md corpus/knowledge/) still states the defective wording (QUALITY 77). Verdict per check.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/ReopenS149.md"
+      },
+      {
+        "name": "ReopenS150",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAttack row S150 (supersedes S129) at f2de0eedcd60d2e354da75265ea6122bc3896073: re-open its source URL(s) by curl now; check the Gate line in corpus/lessons/round-28.md (quote verbatim at the stated line, <=25 words, sha256 equals your fetch or explain drift); check every cell of S150 against the bytes; check the defect the round-27 closure / wave-1 SupersedeS129 report named is actually fixed in S150 (not copied); check every used-by path cites S150 and that no live reader (SKILL.md PROVINCE.md corpus/README.md corpus/knowledge/) still states the defective wording (QUALITY 77). Verdict per check.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/ReopenS150.md"
+      },
+      {
+        "name": "ReopenS151",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAttack row S151 (supersedes S131) at f2de0eedcd60d2e354da75265ea6122bc3896073: re-open its source URL(s) by curl now; check the Gate line in corpus/lessons/round-28.md (quote verbatim at the stated line, <=25 words, sha256 equals your fetch or explain drift); check every cell of S151 against the bytes; check the defect the round-27 closure / wave-1 SupersedeS131 report named is actually fixed in S151 (not copied); check every used-by path cites S151 and that no live reader (SKILL.md PROVINCE.md corpus/README.md corpus/knowledge/) still states the defective wording (QUALITY 77). Verdict per check.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/ReopenS151.md"
+      },
+      {
+        "name": "ReopenS152",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAttack row S152 (supersedes S140) at f2de0eedcd60d2e354da75265ea6122bc3896073: re-open its source URL(s) by curl now; check the Gate line in corpus/lessons/round-28.md (quote verbatim at the stated line, <=25 words, sha256 equals your fetch or explain drift); check every cell of S152 against the bytes; check the defect the round-27 closure / wave-1 SupersedeS140 report named is actually fixed in S152 (not copied); check every used-by path cites S152 and that no live reader (SKILL.md PROVINCE.md corpus/README.md corpus/knowledge/) still states the defective wording (QUALITY 77). Verdict per check.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/ReopenS152.md"
+      },
+      {
+        "name": "JudgeA2r01",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAmendment-A2 judge for rule A2-01. Read ONLY: the rule text (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-27/contract.md:47-58 and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md, incl. :152-200), the A2-01 cases in tools/fixtures/mori-oom-killers/cases-a2.json at f2de0eedcd60d2e354da75265ea6122bc3896073, and the tool's selftest output at the freeze (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/evidence/c2-freeze-selftest.txt) plus, for a failing case, the tool's `--inputs` output on that case run from a temp extract of f2de0eedcd60d2e354da75265ea6122bc3896073 (never edit the lane). For each A2-01 case: does each pinned value follow from the rule text? For each failing case rule `tool error` / `case error` / `unclear text` with the deciding contract line. If the L1 changed the tool after the freeze, check the change against the rule text and that it turned no KILLER_ACTED into anything else on either case file.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/JudgeA2r01.md"
+      },
+      {
+        "name": "JudgeA2r02",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAmendment-A2 judge for rule A2-02. Read ONLY: the rule text (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-27/contract.md:47-58 and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md, incl. :152-200), the A2-02 cases in tools/fixtures/mori-oom-killers/cases-a2.json at f2de0eedcd60d2e354da75265ea6122bc3896073, and the tool's selftest output at the freeze (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/evidence/c2-freeze-selftest.txt) plus, for a failing case, the tool's `--inputs` output on that case run from a temp extract of f2de0eedcd60d2e354da75265ea6122bc3896073 (never edit the lane). For each A2-02 case: does each pinned value follow from the rule text? For each failing case rule `tool error` / `case error` / `unclear text` with the deciding contract line. If the L1 changed the tool after the freeze, check the change against the rule text and that it turned no KILLER_ACTED into anything else on either case file.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/JudgeA2r02.md"
+      },
+      {
+        "name": "JudgeA2r03",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAmendment-A2 judge for rule A2-03. Read ONLY: the rule text (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-27/contract.md:47-58 and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md, incl. :152-200), the A2-03 cases in tools/fixtures/mori-oom-killers/cases-a2.json at f2de0eedcd60d2e354da75265ea6122bc3896073, and the tool's selftest output at the freeze (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/evidence/c2-freeze-selftest.txt) plus, for a failing case, the tool's `--inputs` output on that case run from a temp extract of f2de0eedcd60d2e354da75265ea6122bc3896073 (never edit the lane). For each A2-03 case: does each pinned value follow from the rule text? For each failing case rule `tool error` / `case error` / `unclear text` with the deciding contract line. If the L1 changed the tool after the freeze, check the change against the rule text and that it turned no KILLER_ACTED into anything else on either case file.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/JudgeA2r03.md"
+      },
+      {
+        "name": "JudgeA2r04",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAmendment-A2 judge for rule A2-04. Read ONLY: the rule text (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-27/contract.md:47-58 and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md, incl. :152-200), the A2-04 cases in tools/fixtures/mori-oom-killers/cases-a2.json at f2de0eedcd60d2e354da75265ea6122bc3896073, and the tool's selftest output at the freeze (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/evidence/c2-freeze-selftest.txt) plus, for a failing case, the tool's `--inputs` output on that case run from a temp extract of f2de0eedcd60d2e354da75265ea6122bc3896073 (never edit the lane). For each A2-04 case: does each pinned value follow from the rule text? For each failing case rule `tool error` / `case error` / `unclear text` with the deciding contract line. If the L1 changed the tool after the freeze, check the change against the rule text and that it turned no KILLER_ACTED into anything else on either case file.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/JudgeA2r04.md"
+      },
+      {
+        "name": "JudgeA2r05",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAmendment-A2 judge for rule A2-05. Read ONLY: the rule text (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-27/contract.md:47-58 and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md, incl. :152-200), the A2-05 cases in tools/fixtures/mori-oom-killers/cases-a2.json at f2de0eedcd60d2e354da75265ea6122bc3896073, and the tool's selftest output at the freeze (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/evidence/c2-freeze-selftest.txt) plus, for a failing case, the tool's `--inputs` output on that case run from a temp extract of f2de0eedcd60d2e354da75265ea6122bc3896073 (never edit the lane). For each A2-05 case: does each pinned value follow from the rule text? For each failing case rule `tool error` / `case error` / `unclear text` with the deciding contract line. If the L1 changed the tool after the freeze, check the change against the rule text and that it turned no KILLER_ACTED into anything else on either case file.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/JudgeA2r05.md"
+      },
+      {
+        "name": "JudgeA2r06",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAmendment-A2 judge for rule A2-06. Read ONLY: the rule text (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-27/contract.md:47-58 and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md, incl. :152-200), the A2-06 cases in tools/fixtures/mori-oom-killers/cases-a2.json at f2de0eedcd60d2e354da75265ea6122bc3896073, and the tool's selftest output at the freeze (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/evidence/c2-freeze-selftest.txt) plus, for a failing case, the tool's `--inputs` output on that case run from a temp extract of f2de0eedcd60d2e354da75265ea6122bc3896073 (never edit the lane). For each A2-06 case: does each pinned value follow from the rule text? For each failing case rule `tool error` / `case error` / `unclear text` with the deciding contract line. If the L1 changed the tool after the freeze, check the change against the rule text and that it turned no KILLER_ACTED into anything else on either case file.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/JudgeA2r06.md"
+      },
+      {
+        "name": "JudgeA2r07",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAmendment-A2 judge for rule A2-07. Read ONLY: the rule text (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-27/contract.md:47-58 and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md, incl. :152-200), the A2-07 cases in tools/fixtures/mori-oom-killers/cases-a2.json at f2de0eedcd60d2e354da75265ea6122bc3896073, and the tool's selftest output at the freeze (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/evidence/c2-freeze-selftest.txt) plus, for a failing case, the tool's `--inputs` output on that case run from a temp extract of f2de0eedcd60d2e354da75265ea6122bc3896073 (never edit the lane). For each A2-07 case: does each pinned value follow from the rule text? For each failing case rule `tool error` / `case error` / `unclear text` with the deciding contract line. If the L1 changed the tool after the freeze, check the change against the rule text and that it turned no KILLER_ACTED into anything else on either case file.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/JudgeA2r07.md"
+      },
+      {
+        "name": "JudgeA2r08",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAmendment-A2 judge for rule A2-08. Read ONLY: the rule text (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-27/contract.md:47-58 and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md, incl. :152-200), the A2-08 cases in tools/fixtures/mori-oom-killers/cases-a2.json at f2de0eedcd60d2e354da75265ea6122bc3896073, and the tool's selftest output at the freeze (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/evidence/c2-freeze-selftest.txt) plus, for a failing case, the tool's `--inputs` output on that case run from a temp extract of f2de0eedcd60d2e354da75265ea6122bc3896073 (never edit the lane). For each A2-08 case: does each pinned value follow from the rule text? For each failing case rule `tool error` / `case error` / `unclear text` with the deciding contract line. If the L1 changed the tool after the freeze, check the change against the rule text and that it turned no KILLER_ACTED into anything else on either case file.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/JudgeA2r08.md"
+      },
+      {
+        "name": "JudgeA2r09",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAmendment-A2 judge for rule A2-09. Read ONLY: the rule text (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-27/contract.md:47-58 and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md, incl. :152-200), the A2-09 cases in tools/fixtures/mori-oom-killers/cases-a2.json at f2de0eedcd60d2e354da75265ea6122bc3896073, and the tool's selftest output at the freeze (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/evidence/c2-freeze-selftest.txt) plus, for a failing case, the tool's `--inputs` output on that case run from a temp extract of f2de0eedcd60d2e354da75265ea6122bc3896073 (never edit the lane). For each A2-09 case: does each pinned value follow from the rule text? For each failing case rule `tool error` / `case error` / `unclear text` with the deciding contract line. If the L1 changed the tool after the freeze, check the change against the rule text and that it turned no KILLER_ACTED into anything else on either case file.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/JudgeA2r09.md"
+      },
+      {
+        "name": "JudgeA2r10",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAmendment-A2 judge for rule A2-10. Read ONLY: the rule text (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-27/contract.md:47-58 and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md, incl. :152-200), the A2-10 cases in tools/fixtures/mori-oom-killers/cases-a2.json at f2de0eedcd60d2e354da75265ea6122bc3896073, and the tool's selftest output at the freeze (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/evidence/c2-freeze-selftest.txt) plus, for a failing case, the tool's `--inputs` output on that case run from a temp extract of f2de0eedcd60d2e354da75265ea6122bc3896073 (never edit the lane). For each A2-10 case: does each pinned value follow from the rule text? For each failing case rule `tool error` / `case error` / `unclear text` with the deciding contract line. If the L1 changed the tool after the freeze, check the change against the rule text and that it turned no KILLER_ACTED into anything else on either case file.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/JudgeA2r10.md"
+      },
+      {
+        "name": "ReRunCountC1",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nRe-run `bash /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/count-c1.sh 6ebd518f` and `... f2de0eedcd60d2e354da75265ea6122bc3896073` from /tmp; paste output and exit; compare with /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/evidence/c1-before-a1.txt and c1-after*.txt; hand-check 2 rows the counter cannot see (quote truth).\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/ReRunCountC1.md"
+      },
+      {
+        "name": "ReRunCountC2",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nRe-run `bash /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/count-c2.sh 6ebd518f` and `... f2de0eedcd60d2e354da75265ea6122bc3896073` from /tmp; paste output and exit; verify the freeze commit (first add of cases-a2.json, its blob unchanged at f2de0eedcd60d2e354da75265ea6122bc3896073); verify LOG.md records the freeze hash before any tool-run evidence commit; verify cases-a2.json equals the concatenation of the ten CaseA2rNN reports' arrays (no L1 edits).\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/ReRunCountC2.md"
+      },
+      {
+        "name": "MutCountC1Amended",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nMutation-test the A1-amended /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/count-c1.sh at f2de0eedcd60d2e354da75265ea6122bc3896073 in a sandbox clone: teaches copied from old row; used-by path not citing new id; Gate line without sha256; rejected status on a row superseding a mined row; a reader line re-citing an old id; a restored row differing in one cell. Each must read unmet. Report survivors with the smallest fix.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/MutCountC1Amended.md"
+      },
+      {
+        "name": "MutCountC2",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nMutation-test /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/count-c2.sh at f2de0eedcd60d2e354da75265ea6122bc3896073 in a sandbox clone: forged PASS id, tool exiting 1 with PASS line, weakened round-26 cases.json, rename/merge hiding an earlier add, duplicated inputs within a rule, missing required field for a rule, bool exit pin. Each must read unmet. Report survivors.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/MutCountC2.md"
+      },
+      {
+        "name": "ReviewToolChange",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nReview `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff 6ebd518f f2de0eedcd60d2e354da75265ea6122bc3896073 -- tools/mori-oom-killers.py` (empty diff is a valid finding): every change must be tied to a judged tool error, keep PASS 32/32 on the round-26 cases.json (run --selftest from a temp extract of f2de0eedcd60d2e354da75265ea6122bc3896073), and turn no KILLER_ACTED into another verdict. Also run the four other round-26 selftests named in SKILL.md registry rows for mori-pressure, mori-job-runway, mori-retention-gate, mori-routed-r24 from a temp extract at 6ebd518f and f2de0eedcd60d2e354da75265ea6122bc3896073 and compare tallies.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/ReviewToolChange.md"
+      },
+      {
+        "name": "ReviewR1Patch",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAttack the routed r25 R1 fix for tools/mori-job-runway.py: if `git diff 6ebd518f f2de0eedcd60d2e354da75265ea6122bc3896073 -- tools/mori-job-runway.py tools/fixtures/mori-job-runway` is non-empty, check each R1 item in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-25-verifier-spotcheck.md:174-182 against the change and run its selftests from a temp extract; if empty, review the wave-1 FixR1Runway draft (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/w1/FixR1Runway.md) and say whether carrying it was right.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/ReviewR1Patch.md"
+      },
+      {
+        "name": "ReviewR5Patch",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nSame for routed r25 R5 and tools/mori-routed-r24.py (lesson round-25-verifier-spotcheck.md:189-195; wave-1 draft /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/w1/FixR5RoutedSelftest.md).\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/ReviewR5Patch.md"
+      },
+      {
+        "name": "MutHeadingCheck",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nMutation-test /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/check-heading-time.py at f2de0eedcd60d2e354da75265ea6122bc3896073 (QUALITY 83): headings with date-only, zone-less, full instants; a line moved between commits; a heading added in a merge; run against round-27 W1 (must fail) and the round-28 contract (must pass or name the failing heading). Report survivors.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/MutHeadingCheck.md"
+      },
+      {
+        "name": "MutTipReceiptCheck",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nMutation-test /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/check-tip-receipts.sh at f2de0eedcd60d2e354da75265ea6122bc3896073 (QUALITY 84): receipt naming wrong parent, missing exit line, uncited receipt, a counter missing a receipt. Report survivors and whether it can pass on a round-28 last batch.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/MutTipReceiptCheck.md"
+      },
+      {
+        "name": "ReviewReaderSweep",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nQUALITY 77 sweep at f2de0eedcd60d2e354da75265ea6122bc3896073: `git grep -n -w -E 'S096|S097|S101|S127|S128|S129|S131|S140' f2de0eedcd60d2e354da75265ea6122bc3896073 -- SKILL.md PROVINCE.md corpus/README.md corpus/knowledge` and read each repointed line in `git diff 6ebd518f f2de0eedcd60d2e354da75265ea6122bc3896073`; does each sentence still hold with the new row's corrected teaching (e.g. S145 three causes, S147 omission-not-contradiction, S150 M2 inference)? List every line whose wording now contradicts its cited row.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/ReviewReaderSweep.md"
+      },
+      {
+        "name": "ReviewMisrootSweep",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nVerify the misroot sweep: the seven lane-root files at f2de0eedcd60d2e354da75265ea6122bc3896073 (base.c oom_kill.c MANPAGE.md main.c meminfo.c sd-main.c user@.service.in) equal their upstream bytes (curl + sha256), are absent from the fleet root, and `bash /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/misroot-hash-check.sh 27 f2de0eedcd60d2e354da75265ea6122bc3896073` exits 0; check the lesson M2 wording against the evidence files.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/ReviewMisrootSweep.md"
+      },
+      {
+        "name": "CriticLessonMistakes",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nAttack corpus/lessons/round-28.md `## Mistakes` at f2de0eedcd60d2e354da75265ea6122bc3896073: is each class right, each captured-by honest, each fix shown able to fail (run it)? Is any round-27/28 mistake missing (e.g. wave-1 CaseA2r01 reading CriticC2Design after finalising; SupersedeS140 stopping before its report)?\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/CriticLessonMistakes.md"
+      },
+      {
+        "name": "RetentionAtTip",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nNo-harm: run the lane retention scan at f2de0eedcd60d2e354da75265ea6122bc3896073 (`cd /home/vgpnk/Projects/shokunin/mori-shokunin && python3 -I -B tools/mori-retention-gate.py scan --repo /home/vgpnk/Projects/shokunin/mori-shokunin --rev f2de0eedcd60d2e354da75265ea6122bc3896073 --policy .ufo/waves/round-18/frozen/c1-policy.json --allowlist corpus/evidence/retention-allowlist.json`; the policy/allowlist resolve against cwd) and compare the unallowlisted metric with /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/evidence/base-retention.txt (4). Also lint every file added since 6ebd518f with the QUALITY 82 grep.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/RetentionAtTip.md"
+      },
+      {
+        "name": "CriticC1Admission",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nAttack C1 admission at f2de0eedcd60d2e354da75265ea6122bc3896073: is `C1=met` (if printed) substantive freshness — every row re-opened against live bytes this round with the old defect fixed — or bookkeeping? Any axis harmed (depth: knowledge statements now wrong; calibration)? Is S146's source switch (404 page -> man-pages 6.20 tarball) still a supersession of S097? Rule each.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/CriticC1Admission.md"
+      },
+      {
+        "name": "CriticC2Admission",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nAttack C2 admission at f2de0eedcd60d2e354da75265ea6122bc3896073: blindness evidence (each CaseA2rNN report's file list; CaseA2r01 read part of CriticC2Design.md after finalising), the freeze order (cases commit before any tool run; LOG), any post-freeze tool change, and whether `C2=met`/`unmet` follows amendment A2. Any axis harmed?\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/CriticC2Admission.md"
+      },
+      {
+        "name": "CensusAtTip",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\nRun `/home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori` (reads the working tree; also run it on a temp worktree-free extract if the script allows) and compare warnings with the round-start run (six W04: S035, S037, S073-S076); for every new W04/E line tied to S145-S152 say whether it is a real defect. Also run the QUALITY 82 grep over every file added or changed between 6ebd518f and f2de0eedcd60d2e354da75265ea6122bc3896073 (`git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff --name-only 6ebd518f f2de0eedcd60d2e354da75265ea6122bc3896073`) and report hits by path:line only (never copy the matched value).\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-28/w2/CensusAtTip.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}

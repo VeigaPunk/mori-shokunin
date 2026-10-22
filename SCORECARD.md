@@ -1763,3 +1763,13 @@ hardened (teaches must differ, real `used-by` readers citing the new id, a Gate 
 `rejected` accepted only for a row superseding a rejected row) and C1's scope widened to the live readers; the C2
 field map pins `earlyoom.earlier_invocation_send_lines > 0` for A2-07. Amended C1 before at `6ebd518f`:
 `superseding=0/8 readers_left=27`, `C1=unmet`, exit 1 (`evidence/c1-before-a1.txt`).
+
+### Round 28 measured outcome (L1 MoriR28; measured at `6b695b02a28b5f7342b2cdaaa643c176839bf7db`, before wave-2 results)
+
+| Claim | Before | After (one committed command over committed bytes) | Verdict proposed for the closure |
+|---|---|---|---|
+| C1 freshness, eight carried row defects superseded, three first-published rows restored, readers repointed (sourced S145–S152) | `count-c1.sh 6ebd518f` → `row_identity=rows=144 changed=3`, `superseding=0/8`, `readers_left=27`, `C1=unmet`, exit 1 (`evidence/c1-before-a1.txt`) | `count-c1.sh 6b695b02` → `row_identity=rows=152 changed=0 removed=0 bad=0`, `superseding=8/8`, `readers_left=0`, `C1=met`, exit 0 (`evidence/c1-after.txt`) | improved, pending closure: each new row re-opened against upstream bytes this round (Gate lines with sha256 in `corpus/lessons/round-28.md`); freshness 5 → 6 proposed |
+| C2 operability, ten amendment-A2 rules pinned by 30 frozen blind cases | `count-c2.sh 6ebd518f` → `a2_schema=absent a2_cases=0`, `C2=unmet`, exit 1 (`evidence/c2-before-r28.txt`) | `count-c2.sh 6b695b02` → `freeze_commit=d21b8bd3`, `a2_cases=30 a2_rules_covered=10/10`, `a2_selftest=PASS 30/30`, `frozen32_selftest=PASS 32/32`, `C2=met`, exit 0 (`evidence/c2-after.txt`); first tool run after the freeze `evidence/c2-freeze-selftest.txt`; tool unchanged | improved, pending closure; operability held at 7 (case pinning strengthens an existing capability) |
+
+Held: depth 5, calibration 5, coverage 6, adjacency 6. Retention scan at the landed tip in the last batch's receipts.
+No retirement, waiver, exploratory claim or promotion. r25 R1/R5 carried (no landed change).

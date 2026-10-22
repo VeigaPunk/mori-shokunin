@@ -1886,3 +1886,7 @@ landed tip.
   before at `6ebd518f`: `a2_schema=absent a2_cases=0`, `C2=unmet`, exit 1 (`evidence/c2-before-r28.txt`).
 - C2 freeze batch (committed 2026-10-22T18:50:55Z by the L1): `tools/fixtures/mori-oom-killers/cases-a2.json`, 30 cases (3 per rule)
   assembled without edits from the ten blind CaseA2rNN reports; no tool run on it exists before this commit.
+- Measured at `6b695b02`: C1 `superseding=8/8 readers_left=0 changed=0`, `C1=met` exit 0; C2 freeze `d21b8bd3`,
+  first tool run `PASS 30/30` (exit 0), `C2=met` exit 0, tool unchanged (`evidence/c1-after.txt`, `c2-after.txt`).
+  Freshness re-verification result: eight rows re-opened against upstream bytes (Gate sha256s in the round-28 lesson);
+  installed kernel 7.2.11, systemd 262-1, earlyoom 1.9.0-1, man-pages 6.19-1, omp 18.12.6 (wave-1 ScoutSurfaceRecon).
