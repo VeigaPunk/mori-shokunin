@@ -123,3 +123,9 @@ keeps its old row's URL with a corrected scope) — `mori ok`, exit 0. Rows 144 
   ReviewEntryFact1, ReviewHygieneD2, ReviewHygieneR7, ScoutMisroot): committed in round 27, their open findings are
   carried as named debt for round 29 (not routed to this round's claims).
 - Inherited, untouched: `.scratch/` (dated 2026-10-21, pre-round, not round work).
+- C2 blindness, qualified (wave-2 CriticC2Admission): CaseA2r03 read lines 1-45 of `w1/CriticC2Design.md` before
+  writing its cases; CaseA2r07 read the round-27 counter; CaseA2r04–r07 read the round-28 contract (A1 carries the
+  tool-derived A2-07 field fact). The freeze hash was missing from the freeze batch's LOG line; it is `d21b8bd3`,
+  case file sha256 `ec04a74a3eb65f856dedb3f0509122ee07fdfba7f49e90781d86ab2a393ea6aa`. The A2-07 and A2-10 breach shapes of wave-1 ReviewA2SpecVsTool are not covered by any
+  frozen case and stay open (round-29 candidate). Lesson: a writer-blind wave needs its critic's tool-reading report
+  kept out of the shared report directory until the freeze.

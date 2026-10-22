@@ -255,7 +255,7 @@ baseline acceptance remain; no rank or subsequent-round authority is granted.
   (lands with this round); sources opened this round are the Linux v7.2 PSI
   documentation, `kernel/sched/psi.c`, the cgroup-v2 pressure files, the PSI Kconfig and
   boot parameter, the resource enum and the commit that added IRQ pressure (S090–S095, S145);
-  `proc_pressure(5)` does not exist (S146, rejected).
+  `proc_pressure(5)` does not exist (S146: no such page in the man-pages 6.20 release; the man7 URL returns HTTP 404).
 - **Still FR12 frontier:** the resident, event-driven PSI trigger watcher and
   **cgroup-scoped** CPU/IO/IRQ pressure. A trigger watcher is a *write* of a threshold
   into `/proc/pressure/*` plus a polling process, not a one-shot read, and the

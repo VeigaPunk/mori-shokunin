@@ -1890,3 +1890,14 @@ landed tip.
   first tool run `PASS 30/30` (exit 0), `C2=met` exit 0, tool unchanged (`evidence/c1-after.txt`, `c2-after.txt`).
   Freshness re-verification result: eight rows re-opened against upstream bytes (Gate sha256s in the round-28 lesson);
   installed kernel 7.2.11, systemd 262-1, earlyoom 1.9.0-1, man-pages 6.19-1, omp 18.12.6 (wave-1 ScoutSurfaceRecon).
+- Wave-2 correction (CriticC2Admission, appended after the freeze; the case file and tool unchanged): freeze commit
+  `d21b8bd38b1bf72ec903a19ed543c615564e8278`, `cases-a2.json` sha256 `ec04a74a3eb65f856dedb3f0509122ee07fdfba7f49e90781d86ab2a393ea6aa` (the freeze batch's LOG line named
+  a time and a count but no hash). "Ten blind writers" is qualified: CaseA2r03 read lines 1-45 of
+  `w1/CriticC2Design.md` (tool output columns) before writing; CaseA2r01 read part of it after finalising; CaseA2r07
+  read the round-27 counter; CaseA2r04-r07 read the round-28 contract, which carries the tool-derived A2-07 field fact.
+  None of the 30 cases exercises the A2-07/A2-10 breach shapes found by wave-1 ReviewA2SpecVsTool; those stay open.
+- Wave-2 corrections (QUALITY 77, prose only): `harness-job-capacity-r25.md:282-286,332` floor wording now matches
+  S152 (CriticC1Admission F1, ReopenS152); `PROVINCE.md:258` and `system-pressure-r24.md:1,224` label S146 as the
+  man-pages 6.20 absence source, not "rejected" (CriticC1Admission F2); `oom-victim-selection-r27.md:200-202` "names no
+  manager type" per S150 (ReopenS150). S146 row-text defects F4/F5 (Gate pairs tarball sha256 with the 404 quote;
+  "stated no flip at all") are in first-published cells: carried to round 29 as a superseding row.

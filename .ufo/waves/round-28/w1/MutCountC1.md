@@ -64,6 +64,19 @@ Full log: `scratch/probe-results.txt`. Summary (verdict = did the counter read w
 | m12 | a **malformed row line** (S127 one cell short) | unmet | rows=151 changed=0 removed=1 **bad=1** | 8/8 | unmet | 1 | as expected |
 | m13 | a **duplicate id** (S145 twice) | unmet | rows=152 changed=0 removed=0 **bad=1** | 8/8 | unmet | 1 | as expected |
 | m14 | prefix `Supersedes` (capital S) | unmet | rows=152 changed=0 removed=0 bad=0 | 7/8 | unmet | 1 | as expected |
+| f12 | a malformed row (S090 one cell short) | unmet | rows=151 changed=0 removed=1 bad=1 | 8/8 | unmet | 1 | as expected |
+| f15 | a **corrupted registry row** (S090 `anchor` rewritten) | unmet | rows=152 **changed=1** removed=0 bad=0 | 8/8 | unmet | 1 | as expected (caught with full history; see F1) |
+| f01 | superseding rows placed **outside** the registry table | unmet | rows=152 changed=0 removed=0 bad=0 | 8/8 | **met** | **0** | **SURVIVED — fail-open (F3)** |
+| f14 | superseding rows inside a **fenced code block** | unmet | rows=152 changed=0 removed=0 bad=0 | 8/8 | **met** | **0** | **SURVIVED — fail-open (F3)** |
+| f03 | superseding row status `verified` | unmet | rows=152 changed=0 removed=0 bad=0 | 8/8 | **met** | **0** | **SURVIVED — fail-open (F5)** |
+| f04 | superseding row with empty source/anchor/opened/used-by | unmet | rows=152 changed=0 removed=0 bad=0 | 8/8 | **met** | **0** | **SURVIVED — fail-open (F6)** |
+| f13 | superseding row with empty source/anchor/opened, valid used-by | unmet | rows=152 changed=0 removed=0 bad=0 | 8/8 | **met** | **0** | **SURVIVED — fail-open (F6)** |
+| f08 | superseding row cites an **unrelated source** | unmet | rows=152 changed=0 removed=0 bad=0 | 8/8 | **met** | **0** | **SURVIVED — fail-open (F6)** |
+| f05 | superseding row's teaches **copied verbatim** from the old row | unmet | rows=152 changed=0 removed=0 bad=0 | 8/8 | **met** | **0** | **SURVIVED — fail-open (F7)** |
+| f06 | superseding rows carry ids **outside** the fixed map (S153…S160) | unmet | rows=152 changed=0 removed=0 bad=0 | 8/8 | **met** | **0** | **SURVIVED — fail-open (F4)** |
+| f10 | the fixed new-id map is **swapped** (S145→S097, S146→S096) | unmet | rows=152 changed=0 removed=0 bad=0 | 8/8 | **met** | **0** | **SURVIVED — fail-open (F4)** |
+| f11 | superseding row with a **zero-padded id** (`S0145`) | unmet | rows=152 changed=0 removed=0 bad=0 | 8/8 | **met** | **0** | **SURVIVED — fail-open (F4)** |
+| f02 | restored row differs only in a **mutable cell** (used-by) | unmet | rows=152 changed=0 removed=0 bad=0 | 8/8 | **met** | **0** | **SURVIVED — fail-open (F10)** |
 | zz | revision that does not resolve (`0000…`, `deadbeef…`) | exit 2 | — | — | — | 2 | `bad_rev`, exit 2 |
 | zz | usage error (no argument) | exit 2 | — | — | — | 2 | `usage: count-c1.sh <rev>`, exit 2 |
 | zz | rev resolves but `corpus/SOURCES.md` absent (root commit) | exit 2 | — | — | — | 2 | `sources_absent`, exit 2 |
@@ -71,7 +84,9 @@ Full log: `scratch/probe-results.txt`. Summary (verdict = did the counter read w
 | zz | `corpus/SOURCES.md` not valid UTF-8 | exit 2 | — | — | — | 2 | `row_identity=error`, exit 2 |
 
 Every scenario named in the task reads `C1=unmet` with exit 1 except the whitespace variants (m08, m08b,
-m08c), which read `C1=met` with exit 0, and the met case, which correctly reads `C1=met` exit 0.
+m08c), which read `C1=met` with exit 0, and the met case, which correctly reads `C1=met` exit 0. The
+`f01`–`f15` rows are the additional fail-open probes; each is a mutant the counter wrongly passes, and
+each is cross-referenced to its finding below.
 
 ## Fail-open paths
 
@@ -92,27 +107,46 @@ target but is the in-flight successor; I report it so the L1 knows which gaps A1
 | **F9** | **Live readers are never checked.** The contract says the live readers must move to the new rows. The landed counter never greps the readers, so 28 stale citations of the superseded ids remain and the counter still reads met. | **yes** | **no** — A1 adds `readers_left` and requires 0 | Already fixed by A1. |
 | **F10** | **A restored row may differ in a mutable cell.** The frozen check exempts `status`, `recheck`, `used-by` from the comparison (`check-row-identity.py:22`, applied at `:74`), so a "restored" S096 with a rewritten `used-by` reads changed=0 (f02). | **yes** | yes | This is CORPUS rule 2 (append-only) and is *correct* for a general registry check, but it conflicts with the contract's "restored byte-equal to their first-published cells". Smallest fix: the counter compares the three restored ids' full raw lines against their first-published raw lines, separately from the general check. |
 
-F1 is the one I would fix first: it is a defect in the counter's own testability, and it is the reason a
-reviewer who follows this task's own instructions (edit `LANE=` in a byte copy) silently measures half the
-claim against the real lane.
+F1 is the one I would fix first. It is the only fail-open that makes the counter report `C1=met` on a tree
+that is demonstrably wrong (a corrupted registry row), and it is the reason a reviewer who follows this
+task's own instructions — edit `LANE=` in a byte copy — silently measures half the claim against a
+different repository than the one under test.
+
+## F1 measured directly
+
+Three runs of the same counter byte-copy, differing only in which repository `$LANE` names and whether
+the frozen blob's `LANE` constant was rewritten:
+
+| run | `$LANE` | frozen blob's `LANE` | rev under test | output | exit |
+|---|---|---|---|---|---|
+| F1-a | sandbox (mutant commit) | real lane (unrewritten) | sandbox-only mutant SHA | `row_identity=error` / `C1=unmet` | 2 |
+| F1-b | sandbox (mutant commit) | sandbox (rewritten) | same SHA | `row_identity=rows=152 changed=0 removed=0 bad=0` / `superseding=8/8` / `C1=met` | 0 |
+| F1-c | one-commit-history repo holding the corrupted tree | same repo | its tip | `row_identity=rows=152 changed=0 removed=0 bad=0` / `superseding=8/8` / `C1=met` | 0 |
+
+F1-a shows the two halves disagreeing (the counter cannot even resolve the rev in the repository the
+check walks). F1-b is the same mutant measured consistently. F1-c is the fail-open: the tree holds a
+registry row (`S090`) whose `anchor` cell was rewritten to `CORRUPTED-ANCHOR-SHOULD-BE-CAUGHT`, and the
+counter still reads `C1=met`, because the frozen check's first-published baseline collapsed onto the
+current row. Against the full-history lane the same corrupted tree is caught:
+`changed S090 cells=anchor`, `rows=152 changed=1 removed=0 bad=0`, exit 1.
 
 ## Restoration evidence
 
-- The lane was never written to. `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff --cached --stat`
-  is empty (no staged changes); `git status --porcelain` shows only the working-tree changes made by
-  other seats (`contract.md`, `PROVINCE.md`, `SKILL.md`, `corpus/*`) plus untracked wave-1 files.
-- `git -C lane rev-parse HEAD` in the sandbox = `079a47c6` for every mutant commit's parent; the lane's
-  own HEAD moved to `1c4c186` during the probe because other seats landed work — not my doing
-  (`git log --oneline -1` at the sandbox clone still shows `079a47c` as its tip; my mutant commits are
-  unreachable, written with `commit-tree` and never referenced).
-- Byte hashes of the two files I read but did not write:
+- **The lane was never written to by me except this report file.** `git diff --cached --stat` is empty;
+  `git status --porcelain` shows only this report file as modified by me. Every other entry in
+  `git status` (`corpus/SOURCES.md`, `corpus/lessons/round-28.md`, `.ufo/waves/round-28/w1/SupersedeS128.md`)
+  is a sibling seat's work.
+- The lane's own HEAD moved during the probe (`079a47c6` → `1c4c186` → `84abe93`) because other seats
+  landed work, not my doing. My sandbox clone stayed pinned at `079a47c6`, and every mutant commit has
+  `079a47c6` as its parent. The mutants were written with `commit-tree` and are unreachable — no ref in
+  any repository points at them.
+- Byte hashes of the files I read but did not write:
   - `count-c1.sh` at `079a47c6` = `825dbcc3180aea58547a304bce6249fbfbb0c704f78ec6c75eb698d2f143077a`
-    (unchanged; the working-tree file is a **different, later** A1 amendment, sha256 `0d7a1be0…`, written
-    by another seat — I did not touch it).
-  - `corpus/SOURCES.md` working tree = `cc1a1d6b…`, `079a47c6` blob = `05953a16…` — differs because
-    sibling seats are landing the real superseding rows; not my edit.
+    — unchanged. The now-committed A1 blob (sha256 `0d7a1be0…`) was written by another seat.
+  - `corpus/SOURCES.md` at `079a47c6` = `05953a16…` — unchanged by me; sibling seats landed the real
+    superseding rows afterwards.
 - All my artefacts live under `/fast/scratch/hyaku/mori-r28/MutCountC1/`. The `git replace` ref exists
-  only in `scratch/lane/.git`, never in the real lane.
+  only in `scratch/lane/.git`, never in the real lane (`git -C <real lane> replace -l` is empty).
 - The sandbox `check-row-identity.py` copy differs from the frozen blob by exactly one line
   (`LANE = "…"` → the sandbox path); no other byte differs.
 
@@ -123,8 +157,15 @@ No packages installed, no system changes. Versions used: bash 5.3.20, git 2.56.0
 
 ## Scope note
 
-The counter has two versions in play: the landed `079a47c6` blob (my target, sha256 `825dbcc3…`) and a
-working-tree A1 amendment (sha256 `0d7a1be0…`) that is not yet committed. All primary results above are
-against the landed blob. A1 closes F4, F5, F7, F8, F9 and f04; it does **not** close F1, F2, F3, F6
-(for f08/f13) or F10 — so the same fix list still applies to the successor, minus the parts A1 already
-handles.
+The counter had two versions in play when this probe ran: the landed `079a47c6` blob (my target,
+sha256 `825dbcc3…`) and a working-tree A1 amendment (sha256 `0d7a1be0…`). All primary results above are
+against the landed blob. **A1 has since been committed** (lane tip `84abe93`, blob sha256 `0d7a1be0…`),
+and it still fetches the frozen check blob without redirecting its `LANE` constant
+(`count-c1.sh:25` at HEAD) — so F1 is still open there. A1 closes F4, F5, F7, F8, F9 and f04; it does
+**not** close F1, F2, F3, F6 (for f08/f13) or F10 — so the same fix list still applies to the committed
+counter, minus the parts A1 already handles.
+
+Two mutants in my table are worth restating against the committed A1 counter because they are not
+lane-specific: F2 (whitespace-only restore drift) and F3 (superseding rows outside the registry table)
+are properties of the frozen round-27 check and of the counter's whole-file row scan, and both survive
+A1 unchanged.

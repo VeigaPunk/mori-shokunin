@@ -197,8 +197,9 @@ chosen first: the kernel walks every task of the OOM domain once and keeps the h
 `adj * totalpages / 1000` pages, with a tie going to the later task (S003 `mm/oom_kill.c:228-234,340-348,358-376`).
 tsukuroi's conclusions at those lines still hold: event A's victim won on footprint inside a band of 120, and a
 kernel pick of the +100 manager in event B stays unlikely. Second, the `systemd.exec` default quoted at
-`kill-event-deep-r8.md:142` describes the system manager; an unprivileged user manager gives its children its own
-value plus 100 (Fact 3). Cited, not absorbed: neither event enters the earlyoom send counts above (wave-1
+`kill-event-deep-r8.md:142` names no manager type (S150; round-28 correction of "describes the system manager", wave-2
+ReopenS150); for an unprivileged user manager the children's default is its own value plus 100 (S130, Fact 3), so
+tsukuroi's quotation is correct and does not decide the user-unit value. Cited, not absorbed: neither event enters the earlyoom send counts above (wave-1
 ConnSiblingOverlap). Source ids are lane-local and every bare id here is mori's: tsukuroi S119 is the same v7.2
 `mm/oom_kill.c` bytes as mori S003 (sha256 `452f1348…6b4e`); tsukuroi S115, S118, S120 and S127 are `psi.rst`,
 `cgroup-v2.rst`, `oomd.conf.xml` and a row for mori's `system-pressure-r24.md`, not mori's rows of those numbers.

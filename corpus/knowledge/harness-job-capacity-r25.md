@@ -279,8 +279,10 @@ sources above forbid.
   `() => Math.min(100, cfgAsyncMaxJobs.get(settings) ?? 100)`, whose `?? 100` fallback was dropped the
   same day. The ceiling of 100 held to v18.12.6, where the clamp reads
   `maxRunningJobs: () => Math.min(100, cfgAsyncMaxJobs.get(settings))` (`sdk.ts:2284`, F2); the explicit
-  floor `Math.max(1, …)` did not survive that rewrite — neither the clamp expression nor the accessor
-  (`tools/settings.ts:941-946`) carries a floor at v18.12.6. The rationale for the number 100 is not in
+  floor `Math.max(1, …)` left the sdk clamp in that rewrite — neither the clamp expression nor the accessor
+  (`tools/settings.ts:941-946`) carries a floor at v18.12.6 — but the job manager's own cap getter still floors
+  the cap at 1 (S152, `job-manager.ts:305` at `6962d5cd`; round-28 correction, wave-2 CriticC1Admission F1).
+  The rationale for the number 100 is not in
   the sources opened.
 - **U2 — what filled the runway.** The count that reached the cap is session-global (F7) and is not
   recorded in a refusal. A refusal therefore cannot attribute the capacity to the wave that hit
@@ -327,5 +329,5 @@ sources above forbid.
 
 Applied in place on 2026-10-22 by MoriR27 (QUALITY 77); old → new:
 
-- U1: old "so the ceiling of 100 and the floor of 1 date from the feature's first commit and only the default moved (15 to 100)" → new: three later moves (default and fallback 15 → 100 on 2026-02-26, S138; the "(1-100)" description removed on 2026-05-03, S139; the clamp rewritten on 2026-09-24, S152, S141), the ceiling of 100 held to v18.12.6, and the explicit floor of 1 did not survive the rewrite. The round-26 draft's "floor of 1 held" was false (ReviewR7Knowledge H1) and was not carried.
+- U1: old "so the ceiling of 100 and the floor of 1 date from the feature's first commit and only the default moved (15 to 100)" → new: three later moves (default and fallback 15 → 100 on 2026-02-26, S138; the "(1-100)" description removed on 2026-05-03, S139; the clamp rewritten on 2026-09-24, S152, S141), the ceiling of 100 held to v18.12.6, and the explicit floor of 1 left the sdk clamp in the rewrite while the job manager's getter kept it (round-28 correction, S152). The round-26 draft's "floor of 1 held" was imprecise rather than false: the floor held in the job manager, not in the clamp (ReviewR7Knowledge H1; round-28 S152).
 - F10: old refusal list "(64, 66, 68, 88 in those records) exceeds 100 in some waves" → new: the full recorded set 64, 66, 68, 70, 71, 72, 78, 86, 88, 95, 100 with cites; no single-wave count exceeds 100; refusals accumulate across attempts (four attempts of 64 = 256 refused registrations).
