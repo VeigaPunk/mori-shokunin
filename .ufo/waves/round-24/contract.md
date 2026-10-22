@@ -106,3 +106,19 @@ counter_regressed.
 Detection and report only. No host writes, no PSI trigger registration, no cgroup writes,
 no service or package changes. Other axes (operability 7, depth 5, freshness 5, adjacency 6)
 are held and observed. No retirement, waiver, exploratory claim or promotion.
+
+## Amendment A2 (08:30Z, before any C2 tool or case landed; finding from wave-1 seat CriticC2Sizing)
+
+- Kernel v7.2 does not create `/proc/pressure` at all when PSI is disabled at boot, so a
+  disabled kernel shows every file `absent` (ENOENT), not EOPNOTSUPP. The `unsupported`
+  state stays for an EOPNOTSUPP error, but the tool and the knowledge entry infer no cause
+  from it (boot and kernel configuration diagnosis belongs to tsukuroi). P05 keeps its frozen
+  topic as a defensive case; it is labeled as a state v7.2 is not known to produce for all
+  four files. P02 likewise is defensive: v7.2 prints zeros for system CPU `full`.
+- The "live host run retained as evidence" gets a pass condition (a bracket check, not part
+  of the 12): read the raw files, run the tool, read again; every reported `total` lies
+  between the two raw totals, all four resources are `ok`, `irq` `some` is null, and system
+  CPU `full` total is 0. The declared after-value (`PASS 12/12`) is unchanged.
+- System pressure is host-wide; a high reading is not evidence that the fleet caused it.
+- Scope wording: "no mori tool reads system CPU, IO or IRQ pressure" means by default; the
+  census can be pinned by an operator to any PSI path (`tools/mori-census.sh:224,306-308`).
