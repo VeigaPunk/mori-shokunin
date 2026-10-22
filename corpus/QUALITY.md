@@ -308,25 +308,29 @@ This supersession does not assert those separate gates were repaired.
 ## Criteria added round 24 — round-23 routed items as checks (`tools/mori-routed-check.py`)
 
 Each line names the round-23 routed item it carries (`corpus/lessons/round-23-verifier-spotcheck.md:60-66`)
-and the check row that can fail it. Run: `python3 -I tools/mori-routed-check.py --repo <lane> --rev <rev> --round 24`.
-Able to fail: thirteen sandbox mutants in `.ufo/waves/round-24/w1/BuildRoutedCheck.md` turn the named row red.
+and states only what the check's predicate tests. Run: `python3 -I tools/mori-routed-check.py --repo <lane> --rev <rev> --round 24`.
+Able to fail: the twelve expected-red sandbox mutants in `.ufo/waves/round-24/w1/BuildRoutedCheck.md` (plus two
+green controls) and the wave-2 tamper probes in `.ufo/waves/round-24/w2/MutRouted*.md`; the scratch clones
+themselves are not committed.
 
-72. routed r23-R1 — The quota capability stays absent until a new sourced declaration,
-    an independently frozen oracle and a prospective proof exist: no path containing
-    `quota` is added under `tools/` or `corpus/knowledge/`, no tool names the case
-    CaseEscapedSpace, and the `.ufo/waves/round-23` tree is byte-identical to `c725aa37`.
-    Regression guard, not a repair. ← lessons/round-23-verifier-spotcheck.md:62.
-73. routed r23-R2 — The retention debt stays visible: the round-23 retention floor and
-    comparison receipts and both retention tools are byte-identical to `c725aa37`, and no
-    added line in the self-assessment or knowledge surfaces asserts privacy clearance.
-    An agreeing accounting run is agreement, never clearance. Regression guard.
-    ← lessons/round-23-verifier-spotcheck.md:63; contract amendment A1.
-74. routed r23-R3 — Missing transient-source and overwritten-wrapper limitations stay
-    recorded, not reconstructed: the `.ufo/waves/round-23` tree (evidence, rejected) is
-    byte-identical to `c725aa37`. Regression guard. ← lessons/round-23-verifier-spotcheck.md:64.
-75. routed r23-R4 — A wave's dispatch payload is committed before the call: every ledger of
-    the round verifies clean, each row's `at` is no earlier than the commit that last changed
-    its dispatch file, and every wave spec has a started ledger row. This is the repair; it
-    is red on round 23 (`--round 23` at `c725aa37`: eight wave-1 rows precede their dispatch
-    commit). Limit: both times are written by the lane, so this proves recorded ordering, not
-    harness-observed ordering. ← lessons/round-23-verifier-spotcheck.md:65; amendment A4.
+72. routed r23-R1 — Regression guard, not a repair. The check fails when a path containing `quota` is added
+    under `tools/` or `corpus/knowledge/`, when any blob under `tools/` contains the string CaseEscapedSpace, when
+    `tools/mori-quota-surface.py` or `corpus/knowledge/quota-surface-r23.md` exists, or when the
+    `.ufo/waves/round-23` tree differs from `c725aa37`. It does not detect quota logic added under another name
+    or inside an existing tool. ← lessons/round-23-verifier-spotcheck.md:62.
+73. routed r23-R2 — Regression guard. The check fails when the round-23 retention floor or comparison receipt,
+    or either retention tool, differs from `c725aa37`, or when a line added in the self-assessment or knowledge
+    surfaces matches the key-separator-true form of the privacy-clearance key (case-insensitive; amendment A1
+    scope). It scans additions only: deleting a debt row or asserting clearance in other words passes. An
+    agreeing accounting run is agreement, never clearance. ← lessons/round-23-verifier-spotcheck.md:63.
+74. routed r23-R3 — Regression guard. The check fails when the `.ufo/waves/round-23` tree (evidence, rejected)
+    differs from `c725aa37`; it does not read reconstruction claims written elsewhere.
+    ← lessons/round-23-verifier-spotcheck.md:64.
+75. routed r23-R4 — The repair, for the binding clause of routed item 4 only. The check fails unless every
+    `*-attempts.json` and `*-ledger.json` of the round verifies clean, each row's `at` is no earlier than the
+    commit that last changed its dispatch file, and every wave spec has a ledger whose last row is `started` or
+    `partial`. It is red on round 23 (`--round 23` at `c725aa37`: eight wave-1 rows precede their dispatch
+    commit) and green on both round-24 waves. Limits: both times are lane-written (a backdated commit passes);
+    `at` has no upper bound; ledgers are found by file name; the separate-worktree and accurate-invocation
+    clauses of item 4 are not checked. ← lessons/round-23-verifier-spotcheck.md:65; amendment A4; wave-2
+    CriticC1Admission.

@@ -1504,3 +1504,28 @@ honest stop). Full contract: `.ufo/waves/round-24/contract.md`. Targets, not res
 Held and observed: operability 7, depth 5, freshness 5, adjacency 6. Routed item 5 is an
 adjacency boundary without a byte predicate; it is reported, not counted. No retirement,
 waiver, exploratory claim or promotion.
+
+
+### Round 24 measured outcome (L1 MoriR24; measured at the landed tip named in the fleet report)
+
+| Claim | Before | After (one command over committed bytes) | Verdict proposed for the closure |
+|---|---|---|---|
+| C1 calibration, routed repair | `--round 23` at `c725aa37`: held 3 of 4, R4 red with 8 wave-1 ledger rows whose `at` precedes their dispatch commit (`evidence/c1-before-round23.json`); `--round 24` at `c725aa37`: held 3 of 4 (`no_round_ledger`) | `python3 -I tools/mori-routed-check.py --repo <lane> --rev <tip> --round 24` prints held 4 of items 4, exit 0 (compact JSON `"held":4`); timing mismatches 8 → 0 | improved, bounded: R4 repairs the binding clause of routed item 4 under lane-written times; R1–R3 are regression guards that held; calibration 5 → 5 |
+| C2 coverage, system pressure capability | `tools/mori-pressure.py` absent at `c725aa37` (exit 128) | `python3 -I tools/mori-pressure.py --selftest` prints `MORI_PRESSURE_SELFTEST: PASS 12/12`, exit 0, then `MATCHER: rejected 48/48 corrupted expectations` | improved: capability demonstrated; coverage 6 → 6 pending closure |
+
+Supporting C2 evidence: cases landed at `f6a29702` before the tool at `6ee62487` (`tools/mori-freeze-order.py`
+grades `pre-build`; the tool seat read the cases while building, so order is shown, not independence); live
+bracket check 5 of 5 (`evidence/bracket-check-run.json`) plus wave-2 seat runs; wave-2 mutants on the frozen
+cases: 10 killed, 6 survived (threshold edge, matcher, three grammar shapes, HIGH over PARTIAL); response landed
+after the measurement and not counted toward the 12: matcher negative controls and a co-evolved
+supplementary file (`PASS 7/7`). Sourced: S090–S096 opened this round; S097 rejected.
+Census no-harm: `tools/mori-census.sh` byte-identical to `c725aa37`, selftest `PASS (134 cases, 134 passed,
+0 failed)` before and after; all pre-existing `tools/*.py` blobs unchanged. Held: operability 7, depth 5,
+freshness 5, adjacency 6. No retirement, waiver, exploratory claim or promotion.
+
+### capabilities: first demonstrated round 24
+
+| Capability | What it can now do | Evidence | First-working round |
+|---|---|---|---|
+| one-shot system pressure read | read `/proc/pressure/{cpu,memory,io,irq}` once (or twice with `--interval`), report per-resource states, never zero for unavailable, system cpu `full` flagged undefined, irq `some` null, labeled-local threshold | `tools/mori-pressure.py --selftest` PASS 12/12; `.ufo/waves/round-24/evidence/bracket-check-run.json` 5/5; `.ufo/waves/round-24/w2/Mut*.md` | 24 |
+| round-23 routed-item check | report whether the round-23 routed carry-forward items hold at a revision, and whether a round's dispatch payloads were committed before their recorded call times | `tools/mori-routed-check.py`; `.ufo/waves/round-24/evidence/c1-*.json`; `.ufo/waves/round-24/w1/BuildRoutedCheck.md` | 24 |

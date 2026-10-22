@@ -1776,3 +1776,17 @@ for C2: the census reads only the user slice's `memory.pressure`
 `irq` and `memory` (read 2026-10-22, kernel 7.2.11). Frontier FR12 names CPU and IRQ
 pressure as open. Contract: `.ufo/waves/round-24/contract.md`. Start source census:
 exit 0, six retained W04 duplicate-URL warnings.
+
+
+## 2026-10-22 — round 24 attempt 2: outcome (L1 MoriR24)
+
+Two waves under policy v1: wave 1 build, 33 seats (12 scribe, 5 executor, 5 critic, 4 scout, 4 reviewer,
+2 connector, 1 mutation-tester); wave 2 falsify, 36 seats (16 mutation-tester, 14 reviewer, 4 critic, 2 scout);
+69 seats, none dead or replaced. Both payloads were committed and bound with `tools/mori-dispatch-ledger.py`
+before each task call. C1 landed `tools/mori-routed-check.py` and QUALITY criteria 72–75; wave 2 found three
+bypasses (`++ ` content lines, worktree attributes, non-UTF-8 tool names), all fixed and probed before the
+report. C2 landed `tools/mori-pressure.py`, twelve cases frozen first, knowledge entry
+`corpus/knowledge/system-pressure-r24.md`, sources S090–S097, SKILL decision table; wave 2 corrected six
+knowledge statements and two tool behaviours (non-UTF-8 now malformed; a regressed counter no longer hides a
+threshold breach). Census live run at the end of wave 2: DRIFT, 30 findings, including a stale watchdog log
+(last write 08:31:57Z) — host state, not a round-24 effect.

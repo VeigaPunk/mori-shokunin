@@ -57,7 +57,7 @@ Registry changes, old → new (all new rows; no older row changed):
 
 | ID | Class | Evidence pointer | Captured-by | Fix / able to fail |
 |---|---|---|---|---|
-| M1 | lexical boundary loss in the record (word and number fused: `exit0`, `operability7/depth5`, `original25/26→26/26`) | `git show c725aa37:SCORECARD.md`; seat MineMistake counted 256 fused tokens in the file and 53 in the round-23 section (`.ufo/waves/round-24/w1/MineMistake.md`) | none (QUALITY 19 covers the regex side of word boundaries, not the record side) | `.ufo/waves/round-24/evidence/prose-fused-check.py`: exit 1 with 53 hits on the round-23 section, exit 0 on the same text after mechanical separation, exit 1 on one injected `exit1`. Applied as a ratchet to this round's added lines (result in the round-24 SCORECARD section). Round-23 bytes are not rewritten. |
+| M1 | lexical boundary loss in the record (word and number fused: `exit0`, `operability7/depth5`, `original25/26→26/26`) | `git show c725aa37:SCORECARD.md`; seat MineMistake counted 256 fused tokens in the file and 53 in the round-23 section (`.ufo/waves/round-24/w1/MineMistake.md`) | none (QUALITY 19 covers the regex side of word boundaries, not the record side) | `.ufo/waves/round-24/evidence/prose-fused-check.py`: exit 1 with 53 hits on the round-23 section, exit 0 on the same text after mechanical separation, exit 1 on one injected `exit1`. Applied to this round's 502 added prose lines: exit 1, 28 hits, every one an identifier (seat names such as `MoriR24`, `sha256`, `avg10`, `cgroup2`), none a fused label and value (`.ufo/waves/round-24/evidence/prose-ratchet-r24-added.txt`). The check needs an identifier allowlist before it can gate; it is lesson evidence, not a gate. Round-23 bytes are not rewritten. |
 | M2 | a frozen register the instrument cannot read | `.ufo/waves/round-24/frozen/c2-freeze-register.json` landed with `"tip": null`; `tools/mori-freeze-order.py check` exited 2 `invalid-register` | none before the run; the tool's own validator caught it (`tools/mori-freeze-order.py:183-196`) | measurement copy `.ufo/waves/round-24/evidence/c2-freeze-check-register.json` with the tip set; the frozen bytes stay unchanged; check exits 0 `pre-build`. Able to fail: the original register itself produced exit 2. |
 | M3 | a pre-registration cited a source nobody had opened | contract C2 "Sourced" clause named proc_pressure(5); seat SrcProcPressureMan got HTTP 404 | SOURCES contract v1: a row is written only after its source is opened | rejection row S097; the knowledge entry cites S090–S096 for facts and names S097 only as the rejected candidate. |
 | M4 | a cause read into an error code | contract C2 said EOPNOTSUPP means PSI disabled; v7.2 removes `/proc/pressure` when PSI is boot-disabled (S091 1710-1721), and EOPNOTSUPP is a read-time return (S091 1257-1263) | none | amendment A2 before the tool landed: `unsupported` carries no cause; knowledge entry decision table row says so. |
@@ -83,3 +83,14 @@ C1 tool fix after wave-2 RerunC1Count finding 1: the R2 added-line parser read a
 file header, so an added line whose content began `++ ` escaped the scan. Probe in a sandbox clone
 (`/fast/scratch/hyaku/mori-r24-a2/r2probe`, one such line appended to LOG.md): the old tool held R2 (held 4), the
 fixed tool turns R2 red (held 3). Header detection now requires the header block and the preceding `--- ` line.
+
+## Wave-2 corrections to this lesson and the contract
+
+- Contract A5's "S097 is cited by nothing" is wrong: the knowledge entry names S097 as the rejected candidate.
+- M7 residue: wave-1 seats left `/tmp/cib`, `/tmp/mori-r24-src`, `/tmp/mori-src-kconfig`, `/tmp/mori-srcpsic-*`,
+  `/tmp/mori-psi-rst`, `/tmp/mori-r24-draft`, `/tmp/freeze-cases-check.py` and loose `/tmp` files
+  (wave-2 ScoutMisroot lists nine or more seats and sizes); the L1 removed only the directories its own seat
+  reports name. No fleet-root misroot from this round.
+- Routed-check fixes after wave 2, each probed in a sandbox clone (old tool held 4, fixed tool red): `++ `
+  content lines, a worktree `.gitattributes` marking LOG.md binary, and a non-UTF-8 file name under `tools/`.
+
