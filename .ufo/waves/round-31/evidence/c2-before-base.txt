@@ -1,0 +1,5 @@
+$ python3 .ufo/waves/round-31/count-c2.py a12c68ae
+rev=a12c68ae81257fb6f918bb165bcb39c73f82d212
+count-c2: fixtures absent at revision
+C2=error
+exit=2
