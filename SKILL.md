@@ -616,7 +616,7 @@ never writes to `/proc`, `/sys` or a cgroup, never registers a PSI trigger, and 
 service. The resident trigger watcher and cgroup-scoped CPU/IO/IRQ pressure stay Frontier
 (`PROVINCE.md:55`).
 
-Sources: S090 (psi.rst), S091 (psi.c), S095 (psi_types.h), S096 (PSI_IRQ commit); knowledge entry `corpus/knowledge/system-pressure-r24.md`. System pressure is host-wide: a high reading is not evidence that the fleet caused it.
+Sources: S090 (psi.rst), S091 (psi.c), S095 (psi_types.h), S145 (PSI_IRQ commit); knowledge entry `corpus/knowledge/system-pressure-r24.md`. System pressure is host-wide: a high reading is not evidence that the fleet caused it.
 
 ### Reading system pressure
 
@@ -719,7 +719,7 @@ reading rule.
 
 ## Round27 — OOM victim selection (oom-victim-selection-r27.md)
 
-Grounding for every row: `corpus/knowledge/oom-victim-selection-r27.md` (sources S003, S118, S127, S129, S130,
+Grounding for every row: `corpus/knowledge/oom-victim-selection-r27.md` (sources S003, S118, S148, S150, S130,
 S132). Detection and report only: no row advises changing a setting, an `oom_score_adj` or an earlyoom option.
 
 | Situation | What to conclude | What not to conclude | Grounding |

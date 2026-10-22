@@ -381,3 +381,32 @@ themselves are not committed.
     redacts every hit that is a value read from this host (a fixture or an upstream format string is not). A
     dispatch prompt never asks a seat to list unit names, pids or uids; it asks for depth, role and counts. ←
     lessons/round-27.md (M3).
+
+## Criteria added round 28 — round-27 routed defects 1 and 2
+
+83. A dated amendment or heading states a time read from the clock or from git, never a time typed from memory, and
+    that time is never later than the commit that ships the line. The check reads the contract and every commit time
+    from git objects at `<rev>`. The bound is the commit's committer time: in this jj-colocated lane the author time
+    is when the empty change was opened, not when its content was written, so an author-time bound false-fires on
+    honest text — the round-17 A1 heading states `2026-10-20 ~16:10` and ships in `273aa74` (author
+    15:26:13-03:00, committer 16:31:56-03:00). A heading that states only a date is compared by calendar day; a
+    zone-less local time by that minute in the commit's own offset; a full instant by the second. Check:
+    `python3 -I -B .ufo/waves/round-28/check-heading-time.py <rev> <file> [--heading <substring>]
+    [--bound cI|aI]` prints one line per dated heading with `verdict=ok|FUTURE-DATED` and exits 1 when any heading is
+    future-dated, 0 when none is, 2 on a bad revision, a missing file or a usage error. It FAILS on round-27 W1 at
+    `df886be1` (`stated=2026-10-22T15:55Z`, `added_by=dd4dbb20`, `cI=2026-10-22T12:50:10-03:00`,
+    `verdict=FUTURE-DATED`, exit 1) and passes on the appended correction heading at `079a47c` (day granularity,
+    exit 0). ← lessons/round-27-verifier-spotcheck.md:144-145; lessons/round-28.md (M1).
+
+84. A round's last lane batch carries tip receipts of every counter and of the retention scan, measured at the first
+    parent of that batch — a commit cannot hold a receipt of its own hash — and the round's report cites every receipt.
+    A receipt must live under `.ufo/waves/round-<N>/evidence/` in the tree at the batch, name the counter it ran (or
+    `mori-retention-gate.py` for the scan), name the measured revision as the full 40-hex first parent, carry an
+    `exit:` line and at least one line of stdout, and be cited by name in a report. Check:
+    `bash .ufo/waves/round-28/check-tip-receipts.sh <rev> <round> [--report-repo <dir> --report-rev <rev>]` reads
+    every input from committed bytes at named revisions (default reports: the lane's `LOG.md` and the round lesson;
+    with `--report-repo/--report-rev`, the fleet `.ufo/reports/round-<N>/mori.md` is also required to cite them).
+    Exit 0 when every counter and the retention scan have a cited receipt, 1 otherwise, 2 on a bad revision or usage
+    error. It FAILS on round-27 at `df886be1` (no receipt naming parent `9c2c7de9…`, exit 1); a synthetic round-28
+    tip batch measured at its parent passes (exit 0). ← lessons/round-27-verifier-spotcheck.md:146-147;
+    lessons/round-28.md (M5).

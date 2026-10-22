@@ -254,8 +254,8 @@ baseline acceptance remain; no rank or subsequent-round authority is granted.
   `memory.pressure` it already reads. Knowledge: `corpus/knowledge/system-pressure-r24.md`
   (lands with this round); sources opened this round are the Linux v7.2 PSI
   documentation, `kernel/sched/psi.c`, the cgroup-v2 pressure files, the PSI Kconfig and
-  boot parameter, the resource enum and the commit that added IRQ pressure (S090–S096);
-  `proc_pressure(5)` does not exist (S097, rejected).
+  boot parameter, the resource enum and the commit that added IRQ pressure (S090–S095, S145);
+  `proc_pressure(5)` does not exist (S146, rejected).
 - **Still FR12 frontier:** the resident, event-driven PSI trigger watcher and
   **cgroup-scoped** CPU/IO/IRQ pressure. A trigger watcher is a *write* of a threshold
   into `/proc/pressure/*` plus a polling process, not a one-shot read, and the
@@ -374,8 +374,8 @@ baseline acceptance remain; no rank or subsequent-round authority is granted.
 
 - **Core, knowledge (FR10 partial advance, admission pending):** how earlyoom 1.9.0 and the Linux 7.2 kernel choose
   an OOM victim, where the fleet's `oom_score_adj` 200 comes from (systemd's per-user manager, not the harness), and
-  what the fleet's records can and cannot attribute: `corpus/knowledge/oom-victim-selection-r27.md` (S127–S132,
-  S142), with the SKILL.md `Round27` decision table.
+  what the fleet's records can and cannot attribute: `corpus/knowledge/oom-victim-selection-r27.md` (S148, S149,
+  S150, S130, S151, S132, S142), with the SKILL.md `Round27` decision table.
 - **Still FR10 frontier:** which `omp` process an `omp`-class send hit (the send line's 15-byte name cannot tell the
   session process from a second session or the text-prediction daemon); whether a signalled session process exits
   on SIGTERM; the text of the host's prefer/avoid expressions (never read, by rule); seat-level attribution of any

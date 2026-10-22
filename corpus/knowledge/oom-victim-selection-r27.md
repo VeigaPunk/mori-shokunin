@@ -1,4 +1,4 @@
-source: S118 (earlyoom kill.c at tag v1.9.0 — https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/kill.c — victim selection, sha256 b32e0fad65e298235102f98aff37e02c94400b544d454cb57192ae697b100bf3); S119 (earlyoom main.c at v1.9.0 — option parsing and the -p self-protection); S115 (earlyoom MANPAGE.md at v1.9.0 — the documented selection options); S120 (earlyoom.service.in at v1.9.0 — the unit's own OOMScoreAdjust); S131 (earlyoom v1.9.0 tag tree and earlyoom.default — the shipped default arguments); S003 (Linux mm/oom_kill.c at v7.2 — oom_badness and the kernel's choice, sha256 452f1348e79c252ee89215d55fb104591412bbcea4a3ee965e873a401f756b4e); S127 (Linux fs/proc/base.c, include/uapi/linux/oom.h and kernel/fork.c at v7.2 — how /proc/<pid>/oom_score is derived, the oom_score_adj write rules and fork inheritance); S128 (man-pages 6.19 proc_pid_oom_score_adj(5) and proc_pid_oom_score(5) — the documented contract and where it differs from the code); S082 (Linux Documentation/filesystems/proc.rst at v7.2 — the documented badness range); S092 (Linux Documentation/admin-guide/cgroup-v2.rst at v7.2 — memory.oom.group); S129 (systemd v262 systemd.exec.xml and systemd-system.conf.xml — OOMScoreAdjust= and DefaultOOMScoreAdjust=); S130 (systemd v262 units/user@.service.in, src/core/main.c and commit ce7de0ba — the per-user manager at 100 and its children at 100 more); S132 (oh-my-pi v18.12.6 shell.rs and Bun bun-v1.4.3 spawn sources — the fleet's runtimes set no oom_score_adj); S142 (oh-my-pi task/executor.ts at v18.12.6 — task subagents run in-process on the session's main thread)
+source: S118 (earlyoom kill.c at tag v1.9.0 — https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/kill.c — victim selection, sha256 b32e0fad65e298235102f98aff37e02c94400b544d454cb57192ae697b100bf3); S119 (earlyoom main.c at v1.9.0 — option parsing and the -p self-protection); S115 (earlyoom MANPAGE.md at v1.9.0 — the documented selection options); S120 (earlyoom.service.in at v1.9.0 — the unit's own OOMScoreAdjust); S151 (earlyoom v1.9.0 tag tree and earlyoom.default — the shipped default arguments; supersedes the round-27 row, round 28); S003 (Linux mm/oom_kill.c at v7.2 — oom_badness and the kernel's choice, sha256 452f1348e79c252ee89215d55fb104591412bbcea4a3ee965e873a401f756b4e); S148 (Linux fs/proc/base.c, include/uapi/linux/oom.h and kernel/fork.c at v7.2 — how /proc/<pid>/oom_score is derived, the oom_score_adj write rules and fork inheritance; supersedes the round-27 row, round 28); S149 (man-pages 6.19 proc_pid_oom_score_adj(5) and proc_pid_oom_score(5) — the documented contract and where it differs from the code; supersedes the round-27 row, round 28); S082 (Linux Documentation/filesystems/proc.rst at v7.2 — the documented badness range); S092 (Linux Documentation/admin-guide/cgroup-v2.rst at v7.2 — memory.oom.group); S150 (systemd v262 systemd.exec.xml and systemd-system.conf.xml — OOMScoreAdjust= and DefaultOOMScoreAdjust=; supersedes the round-27 row, round 28); S130 (systemd v262 units/user@.service.in, src/core/main.c and commit ce7de0ba — the per-user manager at 100 and its children at 100 more); S132 (oh-my-pi v18.12.6 shell.rs and Bun bun-v1.4.3 spawn sources — the fleet's runtimes set no oom_score_adj); S142 (oh-my-pi task/executor.ts at v18.12.6 — task subagents run in-process on the session's main thread)
 verified-at: 2026-10-22 — upstream bytes opened at earlyoom tag v1.9.0 (commit 202d4db0d308ca6478f68de68b46cae34896ddaf), Linux tag v7.2 and systemd tag v262 (commit 8cc40e0c5e9234bf45084751ac53b1fbfe70b492); host read-only on 2026-10-22, except an `oom_score_adj` probe on processes the probe started, (kernel 7.2.11-arch1-1, systemd 262-1, earlyoom 1.9.0-1 active): process aggregates at 15:56:35Z (committed) and 15:46:40Z, earlyoom send-line aggregates over every retained boot (committed run 15:56Z), unit properties and an unprivileged oom_score_adj probe on processes the probe started (wave-1 seats HostUnitOomAdjust and CriticInheritProbe).
 recheck: on a kernel release re-open `fs/proc/base.c` `proc_oom_score` and `mm/oom_kill.c` `oom_badness` at the new tag; on an earlyoom release re-open `kill.c` `is_larger` and the send-line format; on a systemd release re-open `units/user@.service.in`, `src/core/main.c` `determine_default_oom_score_adjust`, `man/systemd.exec.xml` (`OOMScoreAdjust=`) and `man/systemd-system.conf.xml` (`DefaultOOMScoreAdjust=`); host: `python3 -I -B .ufo/waves/round-27/evidence/oom-score-classes.py` and `python3 -I -B .ufo/waves/round-27/evidence/boot-send-classes.py` (aggregates only), `systemctl show earlyoom.service user@$(id -u).service -p OOMScoreAdjust`, `systemctl --user show -p DefaultOOMScoreAdjust`
 author: MoriR27 (L1), from the wave-1 seat reports under `.ufo/waves/round-27/w1/` (the drafting scribe seat died at spawn; this text is the L1's).
@@ -34,7 +34,7 @@ value of `/etc/default/earlyoom` or of any `--prefer`/`--avoid`/`--ignore` expre
   (`kill.c:424-426`). Each option takes one regular expression; a repeated flag overwrites the earlier one (S119
   `main.c:289,292,302`).
 - **The +300 is larger than it looks.** The kernel exports its score scaled by 2/3 (Fact 2), so earlyoom's +300 on
-  the exported value weighs like an `oom_score_adj` of about +450 [INFERENCE: arithmetic over S127 `base.c:597` and
+  the exported value weighs like an `oom_score_adj` of about +450 [INFERENCE: arithmetic over S148 `base.c:597` and
   S118 `kill.c:24-25`, wave-1 CriticC1Novelty].
 - **The score in a send line is earlyoom's score, not the kernel's.** The send line prints the candidate's
   `oom_score` after the prefer/avoid adjustment (S118 `kill.c:627`, format `sending %s to process %d uid %d "%s":
@@ -45,14 +45,14 @@ value of `/etc/default/earlyoom` or of any `--prefer`/`--avoid`/`--ignore` expre
   notices only after choosing itself and then sleeps (`:587-592`).
 - **A victim that vanishes** before the signal produces one `kill failed:` line and no re-selection; the next attempt
   is the next poll (S118 `kill.c:640-657`).
-- **Defaults.** Upstream's v1.9.0 bytes set no prefer, avoid or ignore expression (S115 has none; Arch's packaging appends an `--avoid` option to its packaged default, S126 `PKGBUILD:22`, wave-2 ReopenS131; upstream's `earlyoom.default` at v1.9.0 sets only `EARLYOOM_ARGS="-r 3600"`, S131 `earlyoom.default:5`). `-i` has been a no-op since
+- **Defaults.** Upstream's v1.9.0 bytes set no prefer, avoid or ignore expression (S115 has none; Arch's packaging appends an `--avoid` option to its packaged default, S126 `PKGBUILD:22`, wave-2 ReopenS131; upstream's `earlyoom.default` at v1.9.0 sets only `EARLYOOM_ARGS="-r 3600"`, S151 `earlyoom.default:5`). `-i` has been a no-op since
   v1.7 (S115 `MANPAGE.md:89-90`), but the long option `--ignore-root-user` still works and is missing from the 1.9.0
   manual (S119 `main.c:185,281`).
 - **earlyoom lowers its own kernel score through its unit; its scan does not exclude it, but it never signals itself (above):** the upstream unit sets `OOMScoreAdjust=-100` and
   `Nice=-20` (S120 `earlyoom.service.in:12,14`); `-p` would do the same from inside (S119 `main.c:397,401`). -100
   lowers its score; only -1000 would exclude it.
 
-### 2. How the kernel scores a process (S003, S127, S092)
+### 2. How the kernel scores a process (S003, S148, S092)
 
 - **Points are pages.** `oom_badness` adds the resident set, swap entries and page tables in pages (S003
   `mm/oom_kill.c:228-229`), then shifts the sum by the adjustment scaled to memory size: `adj *= totalpages / 1000;
@@ -60,33 +60,33 @@ value of `/etc/default/earlyoom` or of any `--prefer`/`--avoid`/`--ignore` expre
 - **Who is never chosen:** init and kernel threads (`mm/oom_kill.c:160-167`) and any task at exactly -1000
   (`:216-222`). The kernel keeps the highest score; only a strictly lower score is skipped, so a tie goes to the last task scanned (`:340,343-348`).
 - **What `/proc/<pid>/oom_score` shows:** `(1000 + badness * 1000 / totalpages) * 2 / 3`, with `totalpages` = RAM +
-  swap, and 0 for an excluded task (S127 `fs/proc/base.c:583-599`). The range is 0 to 2000 while the footprint stays within `totalpages`; the code does not clamp it (S127 `base.c:596-599`). A process with no memory
+  swap, and 0 for an excluded task (S148 `fs/proc/base.c:583-599`). The range is 0 to 2000 while the footprint stays within `totalpages`; the code does not clamp it (S148 `base.c:596-599`). A process with no memory
   reads about 666 at adjustment 0 and about 800 at adjustment 200; each further percent of RAM plus swap it holds adds about
   6.7. This is how the host values below read: 600 for earlyoom at -100, 800 for idle processes at 200.
-- **The documentation and the code disagree in one place:** the man page's "root processes are given 3% extra memory" (S128 adj page `:86-88`) has no implementation in v7.2 `oom_badness` (S003 `mm/oom_kill.c:226-235`). Both documents define the badness as 0–1000 in proportion-of-allowed-memory units, in which "added" (S128 adj page `:102-103`) matches the code's scaling, and `proc.rst` itself gives the exported 0–2000 range (S082 `proc.rst:1811-1812`). An earlier draft of this entry counted three disagreements (wave-2 CriticEntryOverclaim).
+- **The documentation and the code disagree in one place:** the man page's "root processes are given 3% extra memory" (S149 adj page `:86-88`) has no implementation in v7.2 `oom_badness` (S003 `mm/oom_kill.c:226-235`). Both documents define the badness as 0–1000 in proportion-of-allowed-memory units, in which "added" (S149 adj page `:102-103`) matches the code's scaling, and `proc.rst` itself gives the exported 0–2000 range (S082 `proc.rst:1811-1812`). An earlier draft of this entry counted three disagreements (wave-2 CriticEntryOverclaim).
 - **`memory.oom.group`.** When it is 1 on a cgroup, a kernel OOM kill takes every task of that cgroup's subtree
   together, sparing only tasks at -1000 (S092 `cgroup-v2.rst:1450-1466`; S003 `mm/oom_kill.c:998-1006,1040-1053`).
   It is 0 at every level measured where the file exists on this host (the root has none) (wave-1 HostUnitOomAdjust: `user.slice` down to an app scope,
   `system.slice`, `earlyoom.service`). It does not affect earlyoom, which signals one process, or its process group under `-g` (S118 `kill.c:276-282`); `-g` is not in this host's argument list (wave-1 HostUnitOomAdjust).
 
-### 3. Where the fleet's adjustment comes from (S129, S130, S127)
+### 3. Where the fleet's adjustment comes from (S150, S130, S148)
 
 - **The per-user service manager runs at 100** (`OOMScoreAdjust=100`, S130 `units/user@.service.in:35`), added by
   systemd commit `ce7de0ba` ("units: run user service managers at OOM score adjustment 100").
 - **Its children run at 100 more.** An unprivileged manager sets its default for the processes it starts to its own
   value plus 100 (S130 `src/core/main.c:3045-3063`, `b = saturate_add(a, 100, OOM_SCORE_ADJ_MAX)` at `:3063`; the
-  manual sentence is S129 `systemd-system.conf.xml:305-306`). The `systemd.exec(5)` sentence "defaults to the OOM score adjustment level of the service manager itself, which is normally at 0" (S129 `systemd.exec.xml:1299-1300`) names no manager type; for a unit of this host's per-user manager the manager's own level is 100 and its default for children is 200 (S130, and the host read in wave-1 HostUnitOomAdjust), so "normally at 0" does not describe user units here (wording narrowed in wave 2, ReopenS129).
+  manual sentence is S150 `systemd-system.conf.xml:305-306`). The `systemd.exec(5)` sentence "defaults to the OOM score adjustment level of the service manager itself, which is normally at 0" (S150 `systemd.exec.xml:1299-1300`) names no manager type; for a unit of this host's per-user manager the manager's own level is 100 and its default for children is 200 (S130, and the host read in wave-1 HostUnitOomAdjust), so "normally at 0" does not describe user units here (wording narrowed in wave 2, ReopenS129).
 - **The fleet's runtimes do not set it.** At the installed versions, oh-my-pi v18.12.6 and Bun bun-v1.4.3 contain no
   `oom_score_adj` or `OOMScoreAdjust` anywhere in their source trees; an omp shell run takes only command, cwd, env,
   timeout, signal, filesystem and stream options, and Bun's only priority call is the nice-range `setpriority` (S132
   `shell.rs:134-152`, `c-bindings.cpp:58`, `node_os.bind.ts:74-75`; whole-tree search in wave-1 SrcOmpBunOomAdj).
   The fleet's 200 is inherited from the session's launch chain, not chosen by the harness.
-- **Inheritance.** `fork` copies both the value and its floor (S127 `kernel/fork.c:1768-1769,1949-1966`); nothing in
+- **Inheritance.** `fork` copies both the value and its floor (S148 `kernel/fork.c:1768-1769,1949-1966`); nothing in
   `execve` resets them [INFERENCE from absence: `fs/exec.c` at v7.2 writes neither field, wave-1 CriticInheritProbe].
   Every process a user unit starts, and everything those processes start, inherits 200 unless something writes a new
   value.
 - **The floor, not a ratchet.** A process may raise its own value and lower it again down to `oom_score_adj_min`;
-  only a writer with `CAP_SYS_RESOURCE` may go below that floor or move it (S127 `fs/proc/base.c:1131-1133,
+  only a writer with `CAP_SYS_RESOURCE` may go below that floor or move it (S148 `fs/proc/base.c:1131-1133,
   1156-1157`). The range is -1000 to 1000 (`base.c:1275-1279`). Here the floor is 100, because PID 1 wrote the user
   manager's 100 with privilege. The unprivileged probe on processes it started (wave-1 CriticInheritProbe) raised a
   process from 200 to 500, lowered it to 199 (accepted), and was refused at 99 and at 0 (`EACCES`), with 100 the

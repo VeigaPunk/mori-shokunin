@@ -1,4 +1,4 @@
-source: S090 (Linux v7.2 Documentation/accounting/psi.rst), S091 (Linux v7.2 kernel/sched/psi.c), S092 (Linux v7.2 cgroup-v2.rst pressure files), S093 (Linux v7.2 init/Kconfig PSI options), S094 (Linux v7.2 psi= boot parameter), S095 (Linux v7.2 include/linux/psi_types.h), S096 (upstream commit 52b1364ba0b1 adding PSI_IRQ, first released in Linux 6.1). Rejected candidate: S097 (proc_pressure(5) does not exist; HTTP 404). Supporting reads without registry rows: Linux v7.2 kernel/cgroup/cgroup.c and kernel/time/sched_clock.c (opened by wave-1 seat DraftKnowledgeEntry, round 24).
+source: S090 (Linux v7.2 Documentation/accounting/psi.rst), S091 (Linux v7.2 kernel/sched/psi.c), S092 (Linux v7.2 cgroup-v2.rst pressure files), S093 (Linux v7.2 init/Kconfig PSI options), S094 (Linux v7.2 psi= boot parameter), S095 (Linux v7.2 include/linux/psi_types.h), S145 (upstream commit 52b1364ba0b1 adding PSI_IRQ, first released in Linux 6.1; supersedes the round-24 row, round 28). Rejected candidate: S146 (proc_pressure(5) does not exist; HTTP 404; supersedes the round-24 row, round 28). Supporting reads without registry rows: Linux v7.2 kernel/cgroup/cgroup.c and kernel/time/sched_clock.c (opened by wave-1 seat DraftKnowledgeEntry, round 24).
 verified-at: 2026-10-22 — sources opened as raw text by round-24 wave-1 seats (digests in corpus/lessons/round-24.md Gate). Host observation (ScoutHostKernelConfig, LivePressureCapture; read-only): kernel 7.2.11-arch1-1 with CONFIG_PSI=y, CONFIG_PSI_DEFAULT_DISABLED not set, CONFIG_IRQ_TIME_ACCOUNTING=y, no psi= on the command line; all four /proc/pressure files present; irq carries one full line; system cpu full total 0.
 recheck: `python3 -I tools/mori-pressure.py --selftest` (frozen cases) and one live run of `python3 -I tools/mori-pressure.py`; on a kernel release, re-open S090 and S091.
 author: MoriR24 (L1) from the wave-1 scribe draft `.ufo/waves/round-24/w1/DraftKnowledgeEntry.md`; mapping to S-ids, U1 resolution and the EOPNOTSUPP wording were changed by the L1 per contract amendment A2.
@@ -27,7 +27,7 @@ that correction; in round 25 the K3, K4, K5, P3 and P4 body rows were corrected 
   (`init/main.c:1011,1047,1445`, no registry row). So at v7.2 the `psi_disabled` EOPNOTSUPP branch cannot be
   reached through a `/proc/pressure` read; the only reachable `/proc` EOPNOTSUPP is `irq` with IRQ time
   accounting off. A boot-disabled host **must** show cpu, memory and io `absent`.
-- **IRQ `some` (P3).** `some: null` for irq means "not tracked by the kernel" (S095; S096 rationale), not
+- **IRQ `some` (P3).** `some: null` for irq means "not tracked by the kernel" (S095; S145 rationale), not
   "undefined"; that word is psi.rst's for system CPU `full`. [UNKNOWN] No upstream document defines what IRQ
   `full` measures; the code charges IRQ time only to a non-idle current task (`psi.c:1017`).
 - **Decreasing total and missing files (P4).** The v7.2 code has no decrement path, so a decrease means the two
@@ -38,7 +38,7 @@ that correction; in round 25 the K3, K4, K5, P3 and P4 body rows were corrected 
   `kernel/time/sched_clock.c`, `kernel/sched/sched.h`, `include/linux/sched/clock.h`, `include/linux/psi.h`,
   `init/main.c`, `arch/x86/kernel/tsc.c` or `kernel/sched/clock.c` are pointers for the next round, not admitted
   facts: those files have no registry row this round. That covers F12, the cgroup-code half of F9, U1's branch
-  location and the mechanism half of U7. The admitted facts rest on S090–S096.
+  location and the mechanism half of U7. The admitted facts rest on S090–S095 and S145.
 - **Citations (minor).** F3's readers are `psi.c:1540,1545,1550` plus the irq reader at `psi.c:1686`; in F9 the
   cgroup files sit in separate sections of cgroup-v2.rst (1083, 1215, 1911, 2171); F11's "no threshold rule" is
   scoped to `psi.c` and `psi.rst`, the files read.
@@ -58,7 +58,7 @@ and its exit codes are the tool's own contract, not kernel vocabulary.
 
 ## Facts
 
-Every fact below carries its upstream pointer. URL to row: `psi.rst` → S090, `kernel/sched/psi.c` → S091, `cgroup-v2.rst` → S092, `init/Kconfig` → S093, `kernel-parameters.txt` → S094, `psi_types.h` → S095, commit `52b1364ba0b1` → S096.
+Every fact below carries its upstream pointer. URL to row: `psi.rst` → S090, `kernel/sched/psi.c` → S091, `cgroup-v2.rst` → S092, `init/Kconfig` → S093, `kernel-parameters.txt` → S094, `psi_types.h` → S095, commit `52b1364ba0b1` → S145.
 
 **F1 — the file set.** System PSI is exported through one file per resource under `/proc/pressure/`. The
 upstream documentation names exactly three of them: "Pressure information for each resource is exported
@@ -107,7 +107,7 @@ times that feed `total` ([psi.c:1268](https://raw.githubusercontent.com/torvalds
 path adds only to `PSI_IRQ_FULL` ([psi.c:1032-1042](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/sched/psi.c)),
 and a trigger request naming `some` for IRQ is refused with `-EINVAL`
 ([psi.c:1364-1367](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/sched/psi.c)).
-An IRQ file therefore carries one `full` line; a missing `some` line for IRQ is the kernel's shape, not a defect. The kernel's state enum has `PSI_IRQ_FULL` and no IRQ `some` state, both under `#ifdef CONFIG_IRQ_TIME_ACCOUNTING` (S095, `psi_types.h:41-49,57-70`); the full-only rule arrived with commit `52b1364ba0b1`, whose message says "we only use PSI_IRQ_FULL" and which first shipped in Linux 6.1 (S096).
+An IRQ file therefore carries one `full` line; a missing `some` line for IRQ is the kernel's shape, not a defect. The kernel's state enum has `PSI_IRQ_FULL` and no IRQ `some` state, both under `#ifdef CONFIG_IRQ_TIME_ACCOUNTING` (S095, `psi_types.h:41-49,57-70`); the full-only rule arrived with commit `52b1364ba0b1`, whose message says "we only use PSI_IRQ_FULL" and which first shipped in Linux 6.1 (S145).
 
 **F6 — the IRQ file is conditional, and a read of it can fail.** `pressure/irq` is created only under
 `CONFIG_IRQ_TIME_ACCOUNTING` ([psi.c:1717-1719](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/sched/psi.c)),
@@ -174,7 +174,7 @@ sources above forbid.
 | Observable file state | Tool state (C2) | Verdict / exit | What it does NOT prove |
 |---|---|---|---|
 | All four files present, kernel shape (F2), low values | each resource `ok` | `PRESSURE_OK`, exit 0 | That there was no stall: `avg10` is a decayed 10-second trend resampled every ~2 s (F4), so a short event between two reads is counted in `total` and decayed into the averages, but it may leave `avg10` under the threshold, and one read cannot say when it happened (round 25 correction, K4). That the host is healthy. That the reading covers per-cgroup pressure (F9). That the local threshold was meaningful (F11). That accounting was running: a root `cgroup.pressure` of 0 freezes the totals and decays the averages, so `PRESSURE_OK` can stand under real pressure (U7). |
-| IRQ file carries only a `full` line (F5) | `irq` = `ok`, `some: null` | unchanged by the resource itself | That IRQ "some" pressure is zero — the kernel never emits an IRQ `some` line (F5); `null` means *not tracked*, not *zero*: the kernel has no IRQ `some` state (S095; S096 rationale) (round 25 correction, P3). That IRQ pressure is low. That the IRQ file is complete for the host: it is created only under `CONFIG_IRQ_TIME_ACCOUNTING` (F6). What IRQ `full` measures is [UNKNOWN]: no upstream document defines it, and `psi.c:1017` charges IRQ time only to a non-idle current task. |
+| IRQ file carries only a `full` line (F5) | `irq` = `ok`, `some: null` | unchanged by the resource itself | That IRQ "some" pressure is zero — the kernel never emits an IRQ `some` line (F5); `null` means *not tracked*, not *zero*: the kernel has no IRQ `some` state (S095; S145 rationale) (round 25 correction, P3). That IRQ pressure is low. That the IRQ file is complete for the host: it is created only under `CONFIG_IRQ_TIME_ACCOUNTING` (F6). What IRQ `full` measures is [UNKNOWN]: no upstream document defines it, and `psi.c:1017` charges IRQ time only to a non-idle current task. |
 | System CPU `full` line present | `cpu` = `ok`, `full_system_undefined: true`; the `full` values are reported but never thresholded (contract C2) | unchanged by the resource itself | That the system had no full CPU stall: CPU `full` is undefined at the system level (F3) and must never be read as evidence of no stall. That a nonzero system CPU `full` value reports a stall — at v7.2 the kernel writes zeros there (F3), so on v7.2, a nonzero value means the file is not the kernel's system CPU pressure file, not that the system stalled (round 25 correction, K3: the zeroing arrived in 5.19 and kernels before 5.13 print no CPU `full` line). |
 | File missing (ENOENT) | `absent` — unavailable, never zero | `PRESSURE_PARTIAL`, exit 0 (if no other resource crosses the threshold; a threshold finding anywhere gives `PRESSURE_HIGH`, exit 1); `PRESSURE_UNAVAILABLE`, exit 2 if every resource is absent | That the resource was not under pressure. Which cause applies: on v7.2 a boot-disabled PSI removes every file (F7) and a kernel without IRQ time accounting has no irq file (F6), so a missing file is consistent with either, and also with a kernel without `CONFIG_PSI`, a kernel older than 6.1 (irq only) or a `--root` that points elsewhere (round 25 correction, P4); the tool records no cause. That any other resource is fine. |
 | Read fails `EOPNOTSUPP` | `unsupported` — unavailable, never zero | as above | That there was no pressure. That the threshold was met or missed. At v7.2 it is reachable through `/proc/pressure` only on `irq`, when IRQ time accounting is off (F6; on x86 `tsc=noirqtime` or a clock found unstable); the `psi_disabled` branch is not reachable while the files exist (corrections section). The tool records no cause; kernel and boot diagnosis belongs to tsukuroi. |
@@ -221,7 +221,7 @@ sources above forbid.
 - **U4 — boot ordering.** Resolved (corrections section); the `[INFERENCE]` label is withdrawn.
 - **U5 — version bounds.** Every kernel pointer here is the `v7.2` tag. Whether `pressure/irq` and cgroup
   `irq.pressure` exist in earlier or later kernels was not checked.
-- **U6 — the man page.** No `proc_pressure(5)` page exists (S097, rejected: HTTP 404; man-pages 6.20 has no such page). The kernel documentation (S090) is the format authority.
+- **U6 — the man page.** No `proc_pressure(5)` page exists (S146, rejected: HTTP 404). The kernel documentation (S090) is the format authority. [Round 28: "man-pages 6.20 has no such page" is an upstream statement; this host holds man-pages 6.19-1, which has no such page either (wave-1 ScoutSurfaceRecon).]
 - **U7 — root `cgroup.pressure` switch.** Writing 0 to the root cgroup's `cgroup.pressure` stops `psi_system` accounting: `psi_group_change` stops recording (S091 `psi.c:845-857`), so totals freeze and the averages decay toward zero over the following reads (`psi.c:551,1269-1270`); a one-shot read can then report `PRESSURE_OK` under real pressure, and for a few periods right after the switch it can still report the earlier high values. The flag is directly readable at `/sys/fs/cgroup/cgroup.pressure` (this host: `1`); `mori-pressure.py` does not read it. Only the root-to-system mapping (`include/linux/psi.h:39`) and the root file's presence (`kernel/cgroup/cgroup.c:5585-5589`) lack registry rows. Sources: wave-1 CriticC2Semantics, wave-2 CriticKnowledgeOverclaim.
 
 ## Not claimed

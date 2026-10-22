@@ -98,3 +98,17 @@ target, and no data existed when it was written.
   that batch's parent; the report cites both hashes (a commit cannot hold a receipt of itself).
 - **W1 bound.** The round-27 W1 correction's author-time bound is replaced by the committer-time bound (jj author time
   is when the change was opened); see `.ufo/waves/round-27/contract.md`.
+
+## Amendment A2 (round 28, before the case freeze; CriticC2Design F6)
+
+How a mismatch between a frozen blind case and the tool is judged, fixed before any tool run on the cases:
+
+- **Judge.** A non-author reviewer seat of the round's falsify wave (not the L1, not a case writer), reading only the
+  rule text (`.ufo/waves/round-27/contract.md:47-58`, `.ufo/waves/round-26/contract.md:152-200`), the case and the
+  tool's output for that case.
+- **Rulings.** `tool error` (the rule text decides the value and the tool disagrees): the L1 may change the tool,
+  never the case file; the change must keep `PASS 32/32` on the round-26 file and may not turn any `KILLER_ACTED`
+  into `KILLERS_QUIET` or `KILLERS_UNKNOWN` for any case of either file. `case error` (the case contradicts the rule
+  text) and `unclear text` (the rule text does not decide the pinned value): C2 is a miss, reported as one; the case
+  file is never edited.
+- A case is never dropped, renamed or re-tagged after the freeze commit.
