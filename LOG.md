@@ -1905,3 +1905,30 @@ landed tip.
   (ReviewReaderSweep F3: `SKILL.md:646`, `PROVINCE.md:318`, harness entry `:3,:232`), "opened this round" dating
   (F4), S146 teaches self-contradiction (ReopenS146 F1), count-c1 fail-opens F1/F2/F3/F6/F10 (MutCountC1), R1/R5.
   Last batch: tip receipts measured at its parent (`evidence/tip-count-c1.txt`, `tip-count-c2.txt`, `tip-retention.txt`).
+
+## Round 29 (attempt 1, L1 MoriR29) — declaration, C1 fix, C2 freeze
+
+- Entering tip `7118f320` (round-28 spot-check; round 28 admitted). Contract `.ufo/waves/round-29/contract.md`
+  (`8a45cefe`), amendments A1 `3a147138`, A2 `66125164`, A3 `69349c2a`, A4 `c3216969` — each before the data it
+  governs (A1 from CriticC1Design/CriticScorePolicy, A2–A4 from CriticRoutingCoverage/CriticC2Design).
+- Round-start census 19:50:48Z: ten W04, `mori ok`, exit 0 (`.ufo/waves/round-29/evidence/census-start.txt`).
+- Inherited untracked paths: `.scratch/` (pre-round, not round work, untouched); `round-28/wave1-run.err` (0 bytes,
+  committed as evidence `3a147138`); `round-28/w1/FixR1Runway.md` (withheld for privacy in round 28; disposed out of
+  the lane to `/fast/scratch/hyaku/mori-r29/L1/disposed/`, sha256 `da1e1bf4…b691`, 65 826 bytes);
+  `round-28/w2/MutCountC1Amended.md`, `MutHeadingCheck.md`, `MutTipReceiptCheck.md` (re-verified by wave-1 reviewers,
+  findings reproduced, no verdict impact; committed as evidence `e1c6bbe7`).
+- Wave 1: 35 seats (13 executor, 10 scribe, 4 reviewer, 4 critic, 3 scout, 1 connector), 0 dead.
+- C1 counter `.ufo/waves/round-29/count-c1.sh` (BuildCountC1 + L1 kind 2b / X→Y direction per A2) committed
+  `e1c6bbe7` before the table edit; before at `7118f320`: `mismatches=11`, `C1=unmet`, exit 1. Table rows rewritten
+  `420d05ad` (all six scores held); after at `420d05ad`: `mismatches=0`, `C1=met`, exit 0.
+- C2 counter `.ufo/waves/round-29/count-c2.sh` (BuildCountC2, sha256 `220eb991…`) committed `221cbd8f` before the
+  case file; before at `7118f320`: file absent, `C2=unmet`, exit 1.
+- Pre-freeze blind check at `221cbd8f`: `blind_violations=20`, exit 1
+  (`evidence/blind-check-prefreeze.txt`): 13 non-writer hits and 7 writer "missing files-opened list" hits; no hit
+  was adjudicated at freeze time. Under amendment A4 this is a C2 miss condition unless wave-2 adjudication finds the
+  instrument at fault; the instrument is not edited.
+- **C2 freeze:** `d6d5cb0a026f7cebe3f6d2094204b4b57eeef576`, `tools/fixtures/mori-oom-killers/cases-a2-r29.json`
+  sha256 `1c76ea1f10e08acedb82c001a875ea84a9f552acf931ca2837645d482bb9d252`, 24 cases (8 writers × 3), committed
+  20:28Z; no tool run on the file before this LOG line is committed.
+- Misroot: `CaseA207c` wrote its report at the fleet root (`.ufo/waves/round-29/w1/CaseA207c.md`, 20:00:53Z); copied
+  byte-exact into the lane (`cmp` ok, sha256 `0fe85d0b…a0a`), fleet copy deleted.
