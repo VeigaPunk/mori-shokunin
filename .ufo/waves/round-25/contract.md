@@ -170,3 +170,11 @@ runtime overrides; `RUNWAY_DEFAULT`/`RUNWAY_AS_CONFIGURED` describe that file on
 - Not counted, disclosed: the reviewer found decision-table rows (173, 176, 177 at `28b79d3d`) that also lag
   the corrections (K3 version scope, P4 causes). The round fixes them in the same edit; the predicate does not
   test them, and the sibling-file sweep of `corpus/README.md` and `SKILL.md` is reported, not counted.
+
+## Amendment A4 (records a deviation found while building; lands with the C1 tool, before the after-value is measured)
+
+A3's banner clause tests `this section wins` outside the corrections section, but at `28b79d3d` the banner sits
+inside it (`system-pressure-r24.md:11`, heading at line 8), so the clause as written could not tell a fixed entry
+from an unfixed one. The landed tool (`e54b644b`) gates on the phrase being absent from the whole normalized entry
+and reports both counts. This is stricter than A3's letter, changes no before-value (D2 is red at `28b79d3d` on
+seven sub-reasons either way) and no declared after-value.
