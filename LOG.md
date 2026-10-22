@@ -1932,3 +1932,19 @@ landed tip.
   20:28Z; no tool run on the file before this LOG line is committed.
 - Misroot: `CaseA207c` wrote its report at the fleet root (`.ufo/waves/round-29/w1/CaseA207c.md`, 20:00:53Z); copied
   byte-exact into the lane (`cmp` ok, sha256 `0fe85d0b…a0a`), fleet copy deleted.
+
+## Round 29 (attempt 1, L1 MoriR29) — outcome
+
+- **Correction to the entry above:** the clause "unless wave-2 adjudication finds the instrument at fault" is withdrawn;
+  amendment A4 has no such clause. At the freeze `d6d5cb0a` the blind gate prints `blind_violations=20`, exit 1, so C2
+  is a miss under A4 (wave-2 CriticC2Admission F2; lesson M5). The cases are writer-independent of the tool source and
+  tool output, not blind to prior expected values: five writers disclose reading them (lesson M9).
+- Wave 2: 36 seats (21 reviewer, 6 scout, 4 mutation-tester, 3 critic, 2 executor), 0 dead. Residual call: 3 seats
+  (2 reviewer, 1 critic) on the landed tool change. Round total 74 seats, 0 dead.
+- C2 judging: 13 mismatching cases, 13 judges; 12 `tool error`, Judge02 `mixed: tool error, unclear text`. Tool change
+  `cdfcf66d` for the judged tool errors except Judge11–13 (declined by the L1, dissent in the lesson): PASS 32/32,
+  32/32, 30/30 kept; round-29 file FAIL 21/24. **C2 = miss** (lesson "C2 judging outcome").
+- C1 corrections from wave 2 landed `07b9a4b9`; `count-c1.sh` at `07b9a4b9`: `mismatches=0`, `C1=met`, exit 0.
+- Misroots swept: CaseA207c (wave 1), a Judge06 draft at a misspelled fleet path and an empty fixtures skeleton
+  (wave 2) — lesson M10.
+- Retention metric 4 at `8809a3fe` (wave-2 RetentionAtTip), equal to base; census ten W04, `mori ok`, exit 0.

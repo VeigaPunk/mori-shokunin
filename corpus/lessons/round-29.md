@@ -18,7 +18,7 @@ Contract: `.ufo/waves/round-29/contract.md` (declared at `8a45cefe`; amendments 
   dry-run invocation's send lines record decisions, never deliveries; dry-run is set once per invocation at option
   parsing (S155 patch `:79-82`; S119 for the v1.9.0 line numbers).
 - **A journal entry's monotonic stamp is meaningful only within its boot** (S153) and is part of the entry object
-  header, rendered as bare unsigned decimal in export and JSON output (S154); a record without a numeric stamp cannot
+  header, printed as bare unsigned decimal by the export writers (S154; the JSON rendering is S122/S123's); a record without a numeric stamp cannot
   be placed in or out of an invocation.
 
 ## Mistakes
@@ -86,3 +86,90 @@ Each line is copied from the drafting seat's report (`.ufo/waves/round-29/w1/Sou
 | 4 tip receipts at parent | QUALITY 87, `make-tip-receipts.sh` | M4 |
 | 5 census count | appended correction in `round-28.md` | `3a147138` |
 | 6 carried debt | inventoried (wave-1 ScoutCarriedDebt): all items open at `7118f320`, carried by name | `w1/ScoutCarriedDebt.md` |
+
+## Wave-2 corrections to `## Mistakes` (CriticLessonMistakes, CriticC1Admission, CriticC2Admission, CriticC2Verdict; appended, the entries above stand as written)
+
+- **M1:** class reference-drift (CORPUS.md:173-175); captured-by `PROTOCOL.md:436`, `AXES.md:15` (no enforcing check);
+  red-before also at the fix parent `e1c6bbe7` (`mismatches=11`, exit 1); all six rows, not five, lacked the citation.
+  Residual hole (CriticC1Admission F1; MutCountC1 survivors 2/12): kind 2 accepts `round N (improved, score held)` for a
+  round that graded the axis `unchanged`, and negated closure prose passes; the counter stays frozen, carried.
+- **M2:** class scope; captured-by none; a synthetic clean control existed (`w1/BuildBlindCheck.md:30-35`) but no run
+  on the round's own reports before A4 bound the gate; the rule is not yet a QUALITY row; not shown able to fail. For
+  the seven writer reports the heading did not match, so the gate never scanned their files-opened lists; the
+  forbidden-path check for them rests on wave-2 AdjudicateBlindHits' manual read (no forbidden path found).
+- **M3:** class attribution; repeats round-28 M2; captured-by QUALITY 43 and `tools/mori-wave-settlement.py`, which
+  flags this misroot (settled 35/35 → partial, CaseA207c misrooted; CriticLessonMistakes sandbox) but was not run.
+- **M4:** class landing; repeats round-28 M5; captured-by QUALITY 84 (its check prints `tip_receipts=met` on
+  `1fc6bb0`); red receipt `w1/DraftQualityCriteria.md:26`.
+- **M5 (new) — an escape clause added after the data (class: scope).** `LOG.md` (`255b7051`) wrote "unless wave-2
+  adjudication finds the instrument at fault" beside A4, which has no such clause; at the freeze `d6d5cb0a` the gate
+  prints `blind_violations=20`, exit 1, so C2 is a miss under A4. The clause is withdrawn (LOG round-29 outcome).
+  Captured-by: wave-2 CriticC2Admission F2, CriticLessonMistakes F1.
+- **M6 (new) — QUALITY 86's check could not read this Gate (class: vacuous).** The reject rows used `—` ids, so the
+  awk printed `gate_reject_rows=0`, exit 1 (wave-2 ReviewQualityCriteria). Fixed in `cdfcf66d`: reject rows carry the
+  id of the row whose source work met them; the awk now prints `gate_reject_rows=8 malformed=0`.
+- **M7 (new; repeats round-26 M1) — C1 kind 4 vacuous at declaration (class: vacuous).** CriticC1Design F1; fixed by
+  A1 before data; the hardened kind 4 has no live positive case (all scores held).
+- **M8 (new; repeats round-28 M4) — contract C2 sentences false as declared (class: attribution).** "Wave 1 has no seat
+  that reads or runs the tool" and "the writers rest on S153+" (CriticRoutingCoverage F6, F7); corrected by A2.
+- **M9 (new) — "blind" overstated (class: attribution).** Five of eight writers (CaseA207a, 207b, 207d, 210a, 210d)
+  disclose reading expected values of the older case files, which the brief allowed only for schema and journal
+  shapes; 207b and 207d say they cannot certify blindness. The freeze commit message calls the cases blind. The cases
+  are writer-independent of the tool source and of tool output, not blind to prior expected values (CriticC2Admission F3).
+- **M10 (new) — two more misroots in wave 2 (class: attribution).** A Judge06 draft at
+  `/home/vgpnk/Projects/shokunin/mori-shokuhin/.ufo/waves/round-29/w2/Judge06.md` (2 998 B, sha256 `16432f46…4186`,
+  13 s older than the lane copy) was copied byte-exact to `.ufo/waves/round-29/misroot/Judge06-draft-from-fleet-mori-shokuhin.md`
+  (`cmp` ok; kept beside the round's wave files rather than under a `mori-shokuhin/` tree in the lane) and the fleet
+  copy and its empty directories deleted; an empty `tools/fixtures/mori-oom-killers/` skeleton at the fleet root (from a
+  short-lived `cases-a2-r29-renamed.json`, wave-2 ReviewMisrootSweep) was removed with `rmdir`. ReopenS153 moved its own
+  misrooted report into the lane. Captured-by: wave-2 ReviewMisrootSweep.
+
+## C2 judging outcome (amendment A2 of round 28, carried)
+
+First tool run on the frozen file (`d6d5cb0a`, tool unchanged): 13 of 24 cases mismatched (`evidence/c2-freeze-selftest.txt`).
+One non-author judge per mismatching case (`.ufo/waves/round-29/w2/Judge01.md` … `Judge13.md`):
+
+| Judge | case | ruling |
+|---|---|---|
+| 01 | r29-a2-07-dryrun-inside-scope | tool error |
+| 02 | r29-a2-07-dryrun-then-real-missing-enter | mixed: tool error, **unclear text** (`earlyoom.dryrun`) |
+| 03 | r29-a2-07-real-then-dryrun-zero-enter | tool error |
+| 04 | r29-a2-07-real-dryrun-real-missing-enter | tool error (incl. `earlyoom.dryrun`, the field Judge02 ruled unclear) |
+| 05–10 | the six A2-10 active-unit cases | tool error |
+| 11–13 | r29-a2-10-inactive-lone-missing-stamp, failed-stamped-positive, not-found-earlier-stamped-positive | tool error (version, grammar, null-vs-0 counters for non-active units) |
+
+Tool change landed `cdfcf66d` (`evidence/fix-landed.diff`): per-invocation dry-run inside the counted scope; an
+unbounded scope's current invocation starts at the last version line; stamp-less records uncounted in the unbounded
+scope and in the earlier bucket. Self-tests after it: `PASS 32/32` (cases.json), `PASS 32/32` (supplementary),
+`PASS 30/30` (cases-a2.json), `FAIL 21/24` (cases-a2-r29.json; all 24 verdicts and exits match, three non-active
+cases fail on fields) (`evidence/c2-fix-selftest.txt`). Differential over 134 inputs: 116 same, 18 changed; no
+`KILLER_ACTED` flip outside the round-29 file; five unpinned `earlier_invocation_send_lines` drops in older files
+(residual DiffLandedFix).
+
+**C2 is a miss**, for three independent reasons: (1) Judge02's `unclear text` ruling (contract: any `unclear text` is a
+miss; Judge04 ruled the same field `tool error` — a split, reported, not overridden); (2) the L1 chose not to land
+the Judge11–13 tool errors — a choice the contract allows ("may"), not one it forces (residual CriticC2Verdict F1
+shows a 54-line change passing all four files); the L1's dissent: round-26 contract `:102-104` gives non-active units
+`actions: null`, never zero counts, and `:78-79` ties version to the current invocation, which a stopped unit does not
+have (residual ReviewLandedFix F1 agrees: case error at best unclear); (3) A4's gate prints `blind_violations=20` at the
+freeze commit (all 20 adjudicated false positives, wave-2 AdjudicateBlindHits; A4 requires 0).
+
+**Disputed harm in the landed change (for the closure):** an active unit with `ActiveEnterTimestampMonotonic` missing
+or 0, a real send, then a plain restart moved from `KILLER_ACTED` to `KILLERS_UNKNOWN` (send kept in
+`earlier_invocation_send_lines`). CriticC2Verdict F4 calls it a harm against round-29 contract A2's "every stamped
+record" wording; ReviewLandedFix F2 calls it what A2-05/A2-06/A2-07 jointly decide, and Judge03's frozen case pins the
+same outcome. It never reads QUIET.
+
+## Carried to round 30 (named debt)
+
+- Rule-text amendments before any writers: a stopped unit's retained ActiveEnterTimestampMonotonic (bounded last
+  invocation or none); `null` vs `0` for the A2 counters when `actions` is `null`; `earlyoom.dryrun` meaning (current
+  invocation in both scope kinds); the unbounded-scope definition and the lost-evidence verdict.
+- The three CaseA210c cases stay frozen; they pass after a judged fix or stay named.
+- An A2-07 shape with a non-active unit (no case); ScoutShapeCoverage's uncovered shapes.
+- C1 counter hole (kind 2 named round must be R; negated prose); blind-gate heading grammar and bare `exit N`
+  false positives; `count-c2.sh` runs the gate at the passed rev, not at the freeze commit.
+- Round-28 carried debt (ScoutCarriedDebt): MutCountC1 F1/F2/F3/F6/F10, S146 `teaches`, reader-sweep ranges and dating,
+  old rows' `used-by`, r25 R1 residuals and R5; `MutHeadingCheck.md`'s `--follow` claim is false on git 2.56.0
+  (wave-1 ReviewLateMutHeadingCheck erratum).
+- Stale `## Planned` (`SCORECARD.md:27-30`) and `## Saturation` (`:594-596`) text (wave-2 ReviewAxisRowsProse).

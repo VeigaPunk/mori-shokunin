@@ -1,4 +1,3 @@
-# ReviewToolFix — wave-2 falsify: L1 draft tool change (rule A2-07 / A2-10)
 
 Reviewer: MoriR29.ReviewToolFix (leaf seat). Lane tip 8809a3fe1eaa87a0afa177a15263d174378e7462.
 Draft: `/fast/scratch/hyaku/mori-r29/L1/judge/fix.diff` (tool-base.py → tool-fix.py).
@@ -46,6 +45,10 @@ mismatches are repaired (`dryrun-inside-scope`, `dryrun-then-real-missing-enter`
 `real-dryrun-real-missing-enter`, `unbounded-missing-stamp-alone`,
 `inactive-lone-missing-stamp`), but `real-then-dryrun-zero-enter` — correct in the
 base at verdict level — is broken by the draft.
+Of the six residual FAIL cases, five have matching verdict/exit and differ only on
+fields (four of them on pre-existing null-vs-0 fields, plus the two `dryrun` leaks
+and the leftover `earlier_invocation_send_lines` counts); only F1's case is a
+verdict/exit regression.
 
 ## 3. Findings (ranked)
 

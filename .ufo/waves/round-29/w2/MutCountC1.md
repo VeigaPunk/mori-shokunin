@@ -1,0 +1,36 @@
+# C1 data-side mutation probe
+
+## Setup and baseline
+
+- Scratch clone: `/fast/scratch/hyaku/mori-r29/w2/MutCountC1/repo`, cloned at `8809a3fe1eaa87a0afa177a15263d174378e7462`. The original scorecard SHA-256 was `affd809c57ab9d207c6e4fdee313aec11958996151d48ed49ff183fa74cc7e0c`.
+- Detector: `MORI_C1_LANE_REPO=<clone> bash /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-29/count-c1.sh HEAD 63729047644f839fe4c8cc97abd0d8bf741a5787`, as specified. C1's closure predicates are in `contract.md:109-128`; the six mutated rows are `SCORECARD.md:10-15`.
+- Pristine run output: `axis=coverage score=6 basis=held R=26 kinds=none`; `axis=operability score=7 basis=held R=28 kinds=none`; `axis=depth score=5 basis=held R=12 kinds=none`; `axis=freshness score=5 basis=held R=28 kinds=none`; `axis=calibration score=5 basis=held R=25 kinds=none`; `axis=adjacency score=6 basis=held R=19 kinds=none`; `mismatches=0`; `C1=met`; exit 0.
+- Closure-source command: Python read-only summary of pinned `MANIFEST.json`, filtering mori rounds 12–28 for admitted per-axis `improved`; output: `coverage=round26 operability=round28 depth=round12 freshness=round28 calibration=round25 adjacency=round19`. The same command confirmed `round14 operability=unchanged overall=admitted`, `round26 calibration=unchanged overall=admitted`, and `round27 depth=improved overall=rejected-honest-stop` (MANIFEST query output; corroborating lane closure pointers: `round-18-verifier-spotcheck.md:122-129`, `round-25-verifier-spotcheck.md:120-129`, `round-26-verifier-spotcheck.md:128-137`, `round-28-verifier-spotcheck.md:88-97`).
+
+Each mutant below was one `SCORECARD.md` row edit and had its own sandbox commit. The recorded detector excerpt is the changed-axis line plus the actual summary and exit; all other axis lines matched the pristine output.
+
+| # | Single edit (mutant commit) | Expected detector result | Actual counter output | Verdict; mutant SHA-256 |
+|---|---|---|---|---|
+| 1 | Freshness score `5→6` (`d18e6eed`) | kind 4: no admitted closure basis for the new score | `axis=freshness score=6 basis=none R=28 kinds=4`; `mismatches=1`; `C1=unmet`; exit 1 | Killed; `26d22b74c415b9aa2af9b25d155d411720b0736a6b1643aa6d950a3561c7f3fb` |
+| 2 | Freshness citation changed from round 28 line 92 to existing round 25 line 129 (`b8fdebcf`) | kind 1: stale latest-closure citation | `axis=freshness score=5 basis=held R=28 kinds=1`; `mismatches=1`; `C1=unmet`; exit 1 | Killed; `5b452f7057352e6bbcfaadd7c9f2aaab5b2813e069527acf156720935b8f399e` |
+| 3 | Freshness Last change changed from round 28 to unadmitted round 27 (`40f63e66`) | kind 2: Last change round is unadmitted and earlier than R=28 | `axis=freshness score=5 basis=held R=28 kinds=2`; `mismatches=1`; `C1=unmet`; exit 1 | Killed; `79644e54993237a0854d8df2b670c7bff336b61f74e8624b6e519feb719e5189` |
+| 4 | Added dead depth pointer `corpus/lessons/no-such-depth-note.md:1` (`350aefa3`) | kind 3: missing file pointer | `axis=depth score=5 basis=held R=12 kinds=3`; `mismatches=1`; `C1=unmet`; exit 1 | Killed; `fb2a819a70f808da96e6aebc99a752f0c85386efdd4418e245a788d85c042b61` |
+| 5 | Calibration citation changed from round 25 line 124 to line 123 (`a09e3f90`) | kind 1: cited line is not the calibration verdict line | `axis=calibration score=5 basis=held R=25 kinds=1`; `mismatches=1`; `C1=unmet`; exit 1 | Killed; `e5d41732e05fa3f02149938a38561256cedeebfedfa700e1c72a9aa89560ab59` |
+| 6 | Operability Last change set to `round 14 (6 → 7)` although round 14 verdict is unchanged (`e9094ff6`) | kind 2: score arrow is on an unchanged round (and precedes R=28) | `axis=operability score=7 basis=held R=28 kinds=2`; `mismatches=1`; `C1=unmet`; exit 1 | Killed; `b04752adda303cf433b4364d9dfb02b3579049a5bfafb4c8fe5ed68985e32655` |
+| 7 | Coverage prose changed to say round 26 says coverage was “not improved,” retaining its valid line-133 cite (`2ee3af10`) | Expected a closure-disagreement mismatch: cited round-26 line says coverage improved | `axis=coverage score=6 basis=held R=26 kinds=none`; `mismatches=0`; `C1=met`; exit 0 | **Survived**; `58462362c46a1c111ce98f05b90e842ded05be463a2f5b79d7a66f53055585dc` |
+| 8 | Calibration score changed from 5 to 11 (`974d8add`) | kind 4: score outside 0–10 | `axis=calibration score=11 basis=none R=25 kinds=4`; `mismatches=1`; `C1=unmet`; exit 1 | Killed; `3467e07af236d59f0680d312b91c7e9ab143f8d9fcd7520934cbe65d7fd6af9d` |
+| 9 | Freshness citation changed from round 28 line 92 to line 93 (operability) (`19b14506`) | kind 1: wrong axis line | `axis=freshness score=5 basis=held R=28 kinds=1`; `mismatches=1`; `C1=unmet`; exit 1 | Killed; `89fd18ecc3c0679832e263fd96b8b730f94c63bb8bbae9a4848be8c15d94a3a8` |
+| 10 | Calibration Last change changed to `round 26 (improved, score held)`, but round 26 says calibration unchanged (`90d1d31e`) | Expected mismatch: the stated improvement disagrees with that round's closure | `axis=calibration score=5 basis=held R=25 kinds=none`; `mismatches=0`; `C1=met`; exit 0 | **Survived**; `022f09a9f4712971a349d8a26dc50722593a86743ddd1731c45383884cbba417` |
+| 11 | Adjacency's round-19 MANIFEST fallback replaced by the older round-18 spot-check line 124 (`3730a1ec`) | kind 1: stale cite; round 19 has no lane spot-check file and remains the required Cite(R) | `axis=adjacency score=6 basis=held R=19 kinds=1`; `mismatches=1`; `C1=unmet`; exit 1 | Killed; `1b7a200c5838f812140f2702561e88266d856bc0d070db23769bf6cf2f2646cd` |
+| 12 | Coverage score changed to `unprovable-but-better` without a reviewer/cited unprovable verdict (`9db663ba`) | kind 4: no admissible unprovable basis | `axis=coverage score=unprovable-but-better basis=none R=26 kinds=4`; `mismatches=1`; `C1=unmet`; exit 1 | Killed; `0a27e67c6f0702217e7216f6b35f33696637d1e5a73da8670843e66cb3789cb4` |
+
+## Counter gaps and smallest fixes
+
+1. Mutant 7: the counter validates the pointer and closure line but not the meaning of the row's surrounding evidence prose. Smallest targeted fix: when a row makes an explicit latest-closure verdict assertion, compare its asserted polarity/verdict with the cited per-axis closure line; preferably represent that assertion as a structured field rather than infer free prose.
+2. Mutant 10: the counter checks the Last change round is admitted and not before R, but does not check that a held-score cell's `(improved, score held)` claim matches that round's per-axis verdict. Smallest fix: validate the stated `improved` against `MANIFEST.verdicts.<axis>` for the Last change round (the current arrow case already has a round-verdict check).
+
+## Restoration
+
+- After each mutant, a separate sandbox restore commit returned `SCORECARD.md` to its pristine bytes. The repeated restored SHA-256 was `affd809c57ab9d207c6e4fdee313aec11958996151d48ed49ff183fa74cc7e0c`.
+- Final restored detector output matched pristine: all six axis lines had `kinds=none`, `mismatches=0`, `C1=met`, exit 0. `git diff --quiet 8809a3fe1eaa87a0afa177a15263d174378e7462 HEAD -- SCORECARD.md` returned success (`scorecard_diff_to_8809a3fe=none`); sandbox `git status --porcelain` was empty. Final `SCORECARD.md` SHA-256 is the same `affd809c57ab9d207c6e4fdee313aec11958996151d48ed49ff183fa74cc7e0c`.
+- Read `/home/vgpnk/.omp/agent/RULES.md:1-14`; no tools were installed or updated.

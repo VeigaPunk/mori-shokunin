@@ -1788,3 +1788,13 @@ withdrawn; a miss is reported as a miss.
 Held and observed: depth 5, freshness 5, coverage 6, adjacency 6. No retirement, waiver, exploratory claim or
 promotion. No-harm check: lane retention scan metric at the landed tip not above 4 (base at `7118f320`, wave-1
 RetentionBase).
+
+### Round 29 measured outcome (L1 MoriR29; measured at `07b9a4b9045d178e833a5bc22eb278e299496dc4` and the tip receipts)
+
+| Claim | Before | After (one committed command over committed bytes) | Verdict proposed for the closure |
+|---|---|---|---|
+| C1 calibration, Axes table vs closure record | `count-c1.sh 7118f320 63729047` → `mismatches=11`, `C1=unmet`, exit 1 (`evidence/c1-before.txt`) | `count-c1.sh 07b9a4b9 63729047` → `mismatches=0`, `C1=met`, exit 0 (tip receipt `evidence/tip-c1.txt`) | improved, bounded (counter holes carried: lesson M1); calibration held at 5 — no closure states 5 → 6 |
+| C2 operability, blind A2-07/A2-10 cases | `count-c2.sh 7118f320` → file absent, `C2=unmet`, exit 1 (`evidence/c2-before.txt`) | `count-c2.sh <tip parent>` → `blind_violations=20`, `a2_r29_selftest=FAIL(exit=1)`, `C2=unmet`, exit 1 (tip receipt `evidence/tip-c2.txt`) | **miss** (Judge02 `unclear text`; Judge11–13 tool errors declined; A4 gate 20); the landed tool change fixes 10 judged cases fully, harm disputed (lesson) |
+
+Held: depth 5, freshness 5, coverage 6, operability 7, adjacency 6, calibration 5. No retirement, waiver, exploratory
+claim or promotion. Retention metric 4 (base 4).
