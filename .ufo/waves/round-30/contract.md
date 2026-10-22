@@ -118,3 +118,38 @@ No-harm check: lane retention scan unallowlisted metric at the landed tip must n
 - R6 second half: the A2a limit for the disputed shape stated in the C1 entry and SKILL.
 - R7: PROVINCE stale statements and the unqualified `SKILL.md:661` citation fixed against observed repo state.
 - QUALITY rows for each routed defect, each with a check shown able to fail.
+
+## Amendment A1 (round 30, before the C1 counter lands, before any entry, row or excerpt is committed; wave-1 CriticC1Design F1–F18)
+
+Every change makes C1 harder to meet, removes a format ambiguity, or makes it separable from C2; nothing is narrowed.
+
+- **2a distinct (F2):** case ids pairwise distinct; `shape` cells non-empty and pairwise distinct; rows span at least
+  2 verdicts.
+- **2b scope content (F1):** every row's `fields` includes `earlyoom.scope_complete` or
+  `earlyoom.earlier_invocation_send_lines`; at least 4 rows cite a case whose `earlyoom_journal` holds at least two
+  version lines (MESSAGE, leading whitespace stripped, starting `earlyoom `).
+- **2c syntax (F13–F15):** the table is the first one whose header row contains the five cells; `fields` items are
+  backticked `` `path=<json>` `` separated by `, `; the verdict cell may be backticked; values compare typed (a bool
+  equals only a bool, numbers compare numerically, strings exactly). Example row:
+  `` | bounded scope, send at the stamp | `KILLER_ACTED` | `earlyoom.scope_complete=true`, `earlyoom.actions.sigterm=1` | `c03-…` | S156 | ``.
+- **3a separability (F10, F12):** the tool run uses `git show 58b61681:tools/mori-oom-killers.py` (the entering-tip
+  blob), not the tool at `<rev>`; the printed exit is compared with `expect.exit`. A case id may occur in more than
+  one eligible file only when every copy's `inputs` and `expect` are identical.
+- **4a novelty (F4):** each S156+ id's Gate/excerpt URL appears in no `corpus/SOURCES.md` row with id below S156, and
+  its excerpt `accessed:` is not earlier than the contract commit time (2026-10-22T21:08:28Z).
+- **4b binding (F8, F9):** the excerpt's URL and sha256 equal those of an `admit` line for that id under the lesson's
+  `## Gate` heading; the SOURCES row for the id contains that URL. One URL per S### id.
+- **4c quote grammar (F5–F7):** a located quote is `` `[file]:L` `` or `` `[file]:L-M` ``, with `(N words)` before or
+  after the double-quoted string; inside the string only `\"`, `\|` and `\\` are unescaped, everything else is literal;
+  `wc -w` of the quote is at most 25 and equals N; each counted id has at least one quote of 3 or more words found in
+  its excerpt.
+- **5a SKILL rows (F11, F16):** count table rows under a heading starting `## Round30` that contain
+  `earlyoom-invocation-scope-r30.md` and name a case id of the decision table; at least 3.
+- **1a header (F18):** `source:` names at least one S156+ id cited by the table.
+- **Provenance (F17):** the counter is run from its commit blob (`git show <counter-commit>:.ufo/waves/round-30/count-c1.sh`);
+  it reads only the lane repository and ignores any repo-path environment override; the counter commit is an ancestor
+  of the first commit that adds the entry or any `corpus/evidence/sources-r30/` excerpt.
+- **Separability:** C2 adds no SOURCES rows.
+- **Residual, uncounted (F3), read by wave 2 non-authors:** re-fetch every S156+ URL, recompute sha256 of the full
+  bytes and diff each excerpt line against the fetched line of the same number; any mismatch is reported as a C1
+  defect.
