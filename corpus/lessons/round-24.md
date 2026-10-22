@@ -47,7 +47,8 @@ Registry changes, old → new (all new rows; no older row changed):
 - New reading path "system pressure one-shot reading" in `## Paths`.
 - S093 anchor cell, old → new (wave-2 ReopenS092S093): `help-text file list:730-733` → `730-731`; the quote
   occupies lines 730-731. Same fix in the Gate row and the knowledge entry.
-- S090 anchor and teaches cells, old → new (same round, before closure; peer finding from
+- S090 anchor cell, old → new: `system CPU full undefined and zeroed since 5.13:57-58` → `system CPU full undefined, reported as zero since 5.13:57-58`.
+- S090 teaches cell, old → new (same round, before closure; peer finding from
   seats SrcPsiRst and ConnectSourceDuplicates): "each file is exactly two lines" → "each named
   file (cpu, memory, io) shows a some line and a full line"; the irq file shows one `full` line
   (S091). Knowledge entry F2 narrowed the same way.
@@ -78,3 +79,7 @@ matcher accepts any (`MATCHER: rejected 48/48`), and a co-evolved file
 `tools/fixtures/mori-pressure/supplementary-cases.json` (S01–S06) covers the threshold edge, the three grammar
 shapes, HIGH over PARTIAL and EPERM (`PASS 6/6`). Non-UTF-8 content is now `malformed`, not `unreadable`.
 
+C1 tool fix after wave-2 RerunC1Count finding 1: the R2 added-line parser read any diff line starting `+++ ` as a
+file header, so an added line whose content began `++ ` escaped the scan. Probe in a sandbox clone
+(`/fast/scratch/hyaku/mori-r24-a2/r2probe`, one such line appended to LOG.md): the old tool held R2 (held 4), the
+fixed tool turns R2 red (held 3). Header detection now requires the header block and the preceding `--- ` line.

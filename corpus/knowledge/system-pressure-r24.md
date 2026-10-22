@@ -31,6 +31,11 @@ several statements below. Where this section and a later line disagree, this sec
   samples are not comparable [INFERENCE]; it does not prove the absence of a kernel defect. A missing file is
   consistent with, among others: PSI boot-disabled, no IRQ time accounting (irq only), a kernel without
   `CONFIG_PSI`, a kernel older than 6.1 (irq only), or a `--root` that points elsewhere.
+- **Provenance (wave-2 ReviewSourcesShape H1).** Statements resting only on `kernel/cgroup/cgroup.c`,
+  `kernel/time/sched_clock.c`, `kernel/sched/sched.h`, `include/linux/sched/clock.h`, `include/linux/psi.h`,
+  `init/main.c`, `arch/x86/kernel/tsc.c` or `kernel/sched/clock.c` are pointers for the next round, not admitted
+  facts: those files have no registry row this round. That covers F12, the cgroup-code half of F9, U1's branch
+  location and the mechanism half of U7. The admitted facts rest on S090–S096.
 - **Citations (minor).** F3's readers are `psi.c:1540,1545,1550` plus the irq reader at `psi.c:1686`; in F9 the
   cgroup files sit in separate sections of cgroup-v2.rst (1083, 1215, 1911, 2171); F11's "no threshold rule" is
   scoped to `psi.c` and `psi.rst`, the files read.

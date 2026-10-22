@@ -242,11 +242,17 @@ def _added_lines(repo: str, base: str, rev: str) -> list[tuple[str, str]]:
     )
     added: list[tuple[str, str]] = []
     current: str | None = None
+    in_header = False
+    previous = ""
     for raw in out.decode("utf-8", "replace").splitlines():
         if raw.startswith("diff --git "):
             current = None
+            in_header = True
+            previous = raw
             continue
-        if raw.startswith("+++ "):
+        # A `+++ ` line is a file header only inside the header block, right after its
+        # `--- ` line; an added content line that itself begins with `++ ` is content.
+        if in_header and raw.startswith("+++ ") and previous.startswith("--- "):
             target = raw[4:].strip()
             if target == "/dev/null":
                 current = None
@@ -254,11 +260,18 @@ def _added_lines(repo: str, base: str, rev: str) -> list[tuple[str, str]]:
                 if target.startswith("b/"):
                     target = target[2:]
                 current = target
+            previous = raw
             continue
-        if raw.startswith("---") or raw.startswith("index ") or raw.startswith("@@"):
+        if raw.startswith("@@"):
+            in_header = False
+            previous = raw
+            continue
+        if in_header:
+            previous = raw
             continue
         if raw.startswith("+"):
             added.append((current or "", raw[1:]))
+        previous = raw
     return added
 
 
