@@ -1876,3 +1876,9 @@ landed tip.
   (`changed=3`, `superseding=0/8`), `evidence/c2-before.txt` (`a2_cases=0`).
 - Declared C1 (freshness) and C2 (operability): `.ufo/waves/round-28/contract.md`. W1 correction appended to
   `.ufo/waves/round-27/contract.md` (15:55Z heading vs `dd4dbb20` committed 15:50:10Z, authored 15:45:38Z).
+- Amendment A1 before data (critics CriticC1Design, CriticRoutingCoverage, CriticC2Design): C1 counter hardened,
+  C1 scope widened to live readers, A2-07 field map corrected; W1 correction re-bounded to committer time.
+- Misroot sweep: seven round-27 seat fetches at the fleet root (`base.c`, `oom_kill.c`, `MANPAGE.md`, `main.c`,
+  `meminfo.c`, `sd-main.c`, `user@.service.in`), each sha256 prefix cited by a mori round-27 w1 report, copied
+  byte-exact to the lane root (`cmp` ok) and the fleet copies deleted at 18:01Z; content-hash check
+  `.ufo/waves/round-28/misroot-hash-check.sh 27` 7 hits → 0 (`evidence/misroot-before.txt`, `misroot-after.txt`).

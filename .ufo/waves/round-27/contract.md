@@ -105,3 +105,8 @@ author time 12:45:38-03:00 (15:45:38Z), committer time 12:50:10-03:00 (15:50:10Z
 than 15:45:38Z; the 15:55Z heading is after the commit that carries it and is wrong (future-dated evidence, PROTOCOL
 §Evidence standard). Source of the error: the heading time was typed, not read from a clock or from git. Routed by
 `corpus/lessons/round-27-verifier-spotcheck.md` routed defect 1; lesson `corpus/lessons/round-28.md` M1.
+
+Correction to the correction above (round 28, wave-1 CriticRoutingCoverage): in this jj-colocated lane a commit's
+author time is the time its empty change was opened, not the time its content was written (`126e192d` author
+12:50:10-03:00 equals `dd4dbb20` committer time). So "existed no later than 15:45:38Z" is unproven; the proven bound is
+the committer time of `dd4dbb20`, 15:50:10Z. The 15:55Z heading is still after that bound and still wrong.

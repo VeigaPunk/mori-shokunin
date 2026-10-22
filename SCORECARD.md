@@ -1757,3 +1757,9 @@ claim is never withdrawn; a miss is reported as a miss.
 
 Held and observed: depth 5, calibration 5, coverage 6, adjacency 6. No retirement, waiver, exploratory claim or
 promotion. No-harm check: the lane retention scan at the landed tip must not exceed its value at `6ebd518f`.
+
+Round-28 amendment A1 (before any data; `.ufo/waves/round-28/contract.md` "Amendment A1"): the C1 counter was
+hardened (teaches must differ, real `used-by` readers citing the new id, a Gate line per row, `readers_left=0`;
+`rejected` accepted only for a row superseding a rejected row) and C1's scope widened to the live readers; the C2
+field map pins `earlyoom.earlier_invocation_send_lines > 0` for A2-07. Amended C1 before at `6ebd518f`:
+`superseding=0/8 readers_left=27`, `C1=unmet`, exit 1 (`evidence/c1-before-a1.txt`).

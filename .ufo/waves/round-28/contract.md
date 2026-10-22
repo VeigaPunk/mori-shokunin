@@ -73,3 +73,28 @@ non-author check passes; otherwise carried with the reason).
 ## Correction to round-27 amendment W1 (appended 2026-10-22, round 28; W1 itself is not rewritten)
 
 See `.ufo/waves/round-27/contract.md` "Correction to amendment W1 (round 28)".
+
+## Amendment A1 (round 28, before any superseding row or case exists; times are read from git at commit)
+
+Raised by wave-1 critics CriticC1Design (findings 1-3), CriticRoutingCoverage (gaps 1-3, 5) and CriticC2Design (F1).
+Every change below makes a claim harder to meet or corrects a status rule CORPUS.md already sets; none narrows a
+target, and no data existed when it was written.
+
+- **C1 scope.** "C1 touches `corpus/SOURCES.md` only" is replaced by: C1 touches `corpus/SOURCES.md`, the round-28
+  lesson `## Gate`, and the live readers (`SKILL.md`, `PROVINCE.md`, `corpus/README.md`, `corpus/knowledge/`) that
+  cite a superseded id; history files (LOG, SCORECARD, lessons, `.ufo/`) are untouched.
+- **C1 counter** (`count-c1.sh`, rewritten in this commit). A superseding row counts only when: its `teaches` after the
+  prefix differs from the superseded row's; its status is `mined` with a non-empty `used-by`, or `rejected` when the
+  row it supersedes is `rejected` (S097 is a 404 page; CORPUS keeps rejections as rows; `verified` is no CORPUS status
+  and is no longer accepted); every `used-by` path cites the new id as a word at `<rev>`; and the round-28 lesson
+  `## Gate` holds a line for the new id with an https URL, a 64-hex sha256 and a quoted span. New: `readers_left` (live
+  reader lines citing any of the eight superseded ids as a word, lines naming tsukuroi's own ids excluded) must be 0.
+  Before with the amended counter at `6ebd518f`: `superseding=0/8`, `readers_left=27`, `C1=unmet`, exit 1
+  (`evidence/c1-before-a1.txt`).
+- **C2 field map.** A2-07's required pinned field is `earlyoom.earlier_invocation_send_lines` with an integer value
+  above 0 (CriticC2Design F1: `actions.sigterm` does not decide A2-07); an `exit` pin must be an integer, not a bool.
+  The C2 before-value is re-run with the round-28 counter when it lands.
+- **Tip receipts.** "Receipts for the round-28 tip" means: the last lane batch adds only receipt files, measured at
+  that batch's parent; the report cites both hashes (a commit cannot hold a receipt of itself).
+- **W1 bound.** The round-27 W1 correction's author-time bound is replaced by the committer-time bound (jj author time
+  is when the change was opened); see `.ufo/waves/round-27/contract.md`.

@@ -1,0 +1,4 @@
+# misroot-hash-check after the sweep, 2026-10-22T18:01:48Z, lane rev 6ebd518f10e53057da926353d99442d51267ccaf
+$ bash .ufo/waves/round-28/misroot-hash-check.sh 27 6ebd518f
+misroot_hits=0
+exit=0
