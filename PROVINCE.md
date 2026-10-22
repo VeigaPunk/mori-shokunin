@@ -369,3 +369,16 @@ baseline acceptance remain; no rank or subsequent-round authority is granted.
 - **Adjacency unchanged:** diagnosing, configuring, enabling or tuning either killer, and the earlyoom and
   systemd-oomd unit state as host diagnosis, stay with tsukuroi and the operator; mori cites
   `tsukuroi-shokunin@157ee255:corpus/knowledge/memory-pressure-r25.md` and absorbs none of it.
+
+## Round 27 — FR10 victim selection (knowledge, no new tool)
+
+- **Core, knowledge (FR10 partial advance, admission pending):** how earlyoom 1.9.0 and the Linux 7.2 kernel choose
+  an OOM victim, where the fleet's `oom_score_adj` 200 comes from (systemd's per-user manager, not the harness), and
+  what the fleet's records can and cannot attribute: `corpus/knowledge/oom-victim-selection-r27.md` (S127–S132,
+  S142), with the SKILL.md `Round27` decision table.
+- **Still FR10 frontier:** which `omp` process an `omp`-class send hit (the send line's 15-byte name cannot tell the
+  session process from a second session or the text-prediction daemon); whether a signalled session process exits
+  on SIGTERM; the text of the host's prefer/avoid expressions (never read, by rule); seat-level attribution of any
+  victim.
+- **Adjacency unchanged:** the host's OOM configuration stays with tsukuroi and the operator; the entry cites
+  tsukuroi's kill-plane entries and corrects their "+200 band first" model without absorbing them.
