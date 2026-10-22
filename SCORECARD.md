@@ -1743,3 +1743,17 @@ are never replaced. The round has one counted claim, C1. Routed D7 is carried as
 
 Held: freshness 5, calibration 5, coverage 6, operability 7, adjacency 6. Retention scan 4 at every landed tip
 (pre-commit scans of each batch; base 4 at `fc09f96c`). No retirement, waiver, exploratory claim or promotion.
+
+## Round 28 declaration (attempt 1, L1 MoriR28) — carried row defects superseded and the A2 case freeze
+
+Entering tip `6ebd518f10e53057da926353d99442d51267ccaf` (round 27 closed `rejected-honest-stop`: C1 depth verified, C2
+withdrawn and so not verified). Full contract: `.ufo/waves/round-28/contract.md`. Targets, not results. A declared
+claim is never withdrawn; a miss is reported as a miss.
+
+| Claim | Axis / score | Before | Declared after-value (one command over committed bytes) |
+|---|---|---|---|
+| C1 restore S096, S097, S101 to their first-published cells and supersede the eight carried row defects (S096, S097, S101, S127, S128, S129, S131, S140) with rows re-opened this round (routed 3, 4; sourced) | freshness 5 (tied lowest active axis with depth and calibration) | `bash .ufo/waves/round-28/count-c1.sh 6ebd518f` prints `row_identity=rows=144 changed=3 removed=0 bad=0`, `superseding=0/8`, `C1=unmet`, exit 1 (`.ufo/waves/round-28/evidence/c1-before.txt`) | same command at the landed tip prints `C1=met`, exit 0 |
+| C2 pin the ten round-26 amendment-A2 rules of `tools/mori-oom-killers.py` with frozen blind cases (r26 D7, re-declared) | operability 7 | `bash .ufo/waves/round-27/count-c2.sh 6ebd518f` prints `a2_cases=0 a2_rules_covered=0/10`, `C2=unmet`, exit 1 (`evidence/c2-before.txt`) | `bash .ufo/waves/round-28/count-c2.sh <tip>` (hardened against r27 CriticC2Counter F1–F8, F11; committed before the cases) prints `C2=met`, exit 0 |
+
+Held and observed: depth 5, calibration 5, coverage 6, adjacency 6. No retirement, waiver, exploratory claim or
+promotion. No-harm check: the lane retention scan at the landed tip must not exceed its value at `6ebd518f`.

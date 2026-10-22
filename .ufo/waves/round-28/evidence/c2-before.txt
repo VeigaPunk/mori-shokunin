@@ -1,0 +1,5 @@
+# C2 before, measured 2026-10-22T17:55:46Z against 6ebd518f10e53057da926353d99442d51267ccaf (round-27 counter; the round-28 counter is not yet written)
+$ bash .ufo/waves/round-27/count-c2.sh 6ebd518f
+a2_cases=0 a2_rules_covered=0/10
+C2=unmet
+exit=1

@@ -1867,3 +1867,12 @@ seats that returned before the run budget are committed under `w2/`; the rest we
 `count-c1.sh` C1=met. C2 withdrawn before data (amendment W1). Routed D1–D5, R3, R7 fixed; D6 explained; D7, R1,
 R5 debt; S124, S090, S093 restored with superseding rows S133, S143, S144; QUALITY 80–82; retention scan 4 at every
 landed tip.
+
+## Round 28 (attempt 1, L1 MoriR28) — declaration
+
+- Motivating evidence: `corpus/lessons/round-27-verifier-spotcheck.md` routed defects 1–6 (W1 future-dated; tip
+  receipts missing; QUALITY 81 unmet at tip with S096, S097, S101 changed; carried row defects S127, S128, S129,
+  S131, S140; A2 cases unpinned, r26 D7; r25 R1, R5). Before values: `.ufo/waves/round-28/evidence/c1-before.txt`
+  (`changed=3`, `superseding=0/8`), `evidence/c2-before.txt` (`a2_cases=0`).
+- Declared C1 (freshness) and C2 (operability): `.ufo/waves/round-28/contract.md`. W1 correction appended to
+  `.ufo/waves/round-27/contract.md` (15:55Z heading vs `dd4dbb20` committed 15:50:10Z, authored 15:45:38Z).

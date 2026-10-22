@@ -97,3 +97,11 @@ Session rules forbid replacing or rerouting a dead seat, and an L1-written case 
 condition. C2 is therefore withdrawn before any case exists; `count-c2.sh` stays committed and unchanged, and its
 before-value stays the record. Routed D7 is carried as named debt with this reason. The round has one counted claim,
 C1. No other part of the contract changes.
+
+## Correction to amendment W1 (round 28, appended 2026-10-22; W1 above is not rewritten)
+
+Old: the W1 heading reads `2026-10-22T15:55Z`. New: W1 shipped in `dd4dbb20a601e47ab7f1f49f9585c869f4703e92`,
+author time 12:45:38-03:00 (15:45:38Z), committer time 12:50:10-03:00 (15:50:10Z), so the amendment existed no later
+than 15:45:38Z; the 15:55Z heading is after the commit that carries it and is wrong (future-dated evidence, PROTOCOL
+§Evidence standard). Source of the error: the heading time was typed, not read from a clock or from git. Routed by
+`corpus/lessons/round-27-verifier-spotcheck.md` routed defect 1; lesson `corpus/lessons/round-28.md` M1.

@@ -1,0 +1,6 @@
+# C1 before, measured 2026-10-22T17:55:46Z against 6ebd518f10e53057da926353d99442d51267ccaf
+$ bash .ufo/waves/round-28/count-c1.sh 6ebd518f
+row_identity=rows=144 changed=3 removed=0 bad=0
+superseding=0/8 ids=none
+C1=unmet
+exit=1
