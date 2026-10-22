@@ -203,3 +203,20 @@ narrowed. C1 parse clarifications (ReviewC1Reachability F3) close the list.
   then trim, applied to the quote and to excerpt lines L..M joined by one space; the Gate URL is the first `https?://`
   token of the source cell; the Gate sha256 is the 64-hex inside backticks in the sha256 cell; a Gate line is a table
   line under `## Gate` (until the next `## ` heading) whose first cell is `S###`.
+
+## Amendment A3 (round 30, before the C2 freeze and before the C2 counter lands; AFTER the L1 ran the A2 gate on the writer wave — disclosed)
+
+The A2 allowlist omitted the two host instruction files that every seat of this wave is directed to read: the godspeed
+skill `/home/vgpnk/.agents/skills/godspeed/SKILL.md` (injected by the task hook; every writer prompt leads with
+`/skill:godspeed`) and `/home/vgpnk/.omp/agent/RULES.md` (named by the wave context's tooling sentence). Run at
+`32e287ff`, the A2 gate prints `scanned=4`, `blind_violations=4`; each flagged line is the godspeed skill path, and
+CaseR30a also lists RULES.md (`evidence/gate-a2-prefreeze.txt`). Neither file is in the lane or the fleet repo, and
+neither carries rule text, tool source, tool output or expected values. The original contract (`a66751b1`, written
+before any writer report existed) forbade only lane files other than `rule-text.md`; A2 tightened that to an allowlist
+for tool copies outside the lane (CriticC2Design G3/G4), which these two files are not.
+
+Change: the gate allowlist admits exactly these two absolute paths; nothing else changes. This is a counter change made
+after the L1 saw data. It is disclosed as such, the A2-version receipt above stays committed, and the new version is
+attacked by independent wave-2 seats (a critic and a mutation tester) before the round lands; the closure judges
+whether C2.4 stands on the A3 version or misses on the A2 version. Lesson `## Mistakes` records the cause (the
+allowlist was bound before it ran on the round's own inputs — round-29 M2 repeated).

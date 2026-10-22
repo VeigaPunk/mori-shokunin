@@ -15,6 +15,9 @@ round30_path_allowed() {
     case $candidate in
         https://raw.githubusercontent.com/rfjakob/earlyoom/*|https://github.com/rfjakob/earlyoom/*|https://raw.githubusercontent.com/systemd/systemd/*|https://github.com/systemd/systemd/*|https://www.freedesktop.org/software/systemd/*) return 0 ;;
         file://*) candidate=${candidate#file://}; normalized=$candidate ;;
+        # Amendment A3: the two host instruction files every seat is directed to read (the godspeed skill the task
+        # hook injects; RULES.md named by the wave context). Outside lane and fleet; no rule text or expected values.
+        /home/vgpnk/.agents/skills/godspeed/SKILL.md|/home/vgpnk/.omp/agent/RULES.md) return 0 ;;
     esac
     while [[ $normalized == ./* ]]; do normalized=${normalized#./}; done
     [[ $normalized == "$rule_rel" || $normalized == "$rule_abs" || $normalized == "$own_scratch" || $normalized == "$own_scratch/"* || $normalized == "$own_scratch_alt" || $normalized == "$own_scratch_alt/"* ]]
