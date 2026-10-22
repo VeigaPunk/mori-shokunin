@@ -1901,3 +1901,7 @@ landed tip.
   man-pages 6.20 absence source, not "rejected" (CriticC1Admission F2); `oom-victim-selection-r27.md:200-202` "names no
   manager type" per S150 (ReopenS150). S146 row-text defects F4/F5 (Gate pairs tarball sha256 with the 404 quote;
   "stated no flip at all") are in first-published cells: carried to round 29 as a superseding row.
+- Wave 2 closed: 34 seats, 0 dead. Findings carried to round 29: range citations reaching superseded rows
+  (ReviewReaderSweep F3: `SKILL.md:646`, `PROVINCE.md:318`, harness entry `:3,:232`), "opened this round" dating
+  (F4), S146 teaches self-contradiction (ReopenS146 F1), count-c1 fail-opens F1/F2/F3/F6/F10 (MutCountC1), R1/R5.
+  Last batch: tip receipts measured at its parent (`evidence/tip-count-c1.txt`, `tip-count-c2.txt`, `tip-retention.txt`).
