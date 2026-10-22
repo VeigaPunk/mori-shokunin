@@ -584,12 +584,17 @@ def _selftest(cases_override: Optional[str] = None) -> int:
         observed = dict(payload)
         observed["exit"] = rc
         expect = case.get("expect") or {}
-        problems = _compare(expect, observed, "")
+        if not expect.get("verdict") or "exit" not in expect:
+            problems = ["expect must name at least verdict and exit"]
+        else:
+            problems = _compare(expect, observed, "")
         if problems:
             failures.append("%s: %s" % (case_id, "; ".join(problems)))
         else:
             passed += 1
 
+    if total == 0:
+        failures.append("?: no cases loaded")
     if failures:
         print("%s: FAIL %d/%d" % (SELFTEST_PREFIX, passed, total))
         for line in failures:
