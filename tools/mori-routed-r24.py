@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only check of the round-24 routed defect items D1..D4 against committed bytes.
+"""Read-only check of the round-24 routed defect items D1..D5 against committed bytes.
 
 One command re-derives the round-24 routed items named in
 ``corpus/lessons/round-24-verifier-spotcheck.md`` (the "Routed defects" list,
@@ -39,6 +39,17 @@ Counted items (C1/A1):
       ``S07``, ``PASS n/n`` not followed by a digit, and a 7-40 hex token naming
       a commit at which that file has n cases.
 
+Counted item added by A5:
+
+  D5  the `## Axes` table of `SCORECARD.md` against the closure-admitted
+      scores.  Held at REV when the table has exactly one row per axis
+      (coverage, operability, depth, freshness, calibration, adjacency); each
+      row's Score equals the score parsed from `SCORECARD.md` lines 1499-1506
+      at `28b79d3d` (the pinned observed state, parsed with a regex over that
+      line range; the parse fails closed when it does not yield all six
+      axes); and no row whose score differs from its round-1 value says
+      `round 1` in Last change.
+
 Hygiene row (reported, not counted):
 
   D4  ``.gitignore`` at REV has a line that is exactly one of
@@ -47,7 +58,7 @@ Hygiene row (reported, not counted):
       REV tree has a ``!`` line mentioning ``pycache`` or ``.py``; and no
       tracked path under ``tools/`` contains ``__pycache__`` or ends ``.pyc``.
 
-Output: one JSON object, ``schema: mori-routed-r24-v1``, ``items: 3``, ``held``,
+Output: one JSON object, ``schema: mori-routed-r24-v1``, ``items: 4``, ``held``,
 ``mismatches``, one row per counted item ``{id, held, reasons[], detail}`` and
 ``hygiene: {id: D4, held, reasons[]}``.  Exit 0 only when ``mismatches`` is 0
 and the hygiene row holds, 1 otherwise, and 2 when the repository or the
@@ -125,6 +136,33 @@ D4_IGNORE_LINES = (
 )
 D4_NEGATION_MARKERS = ("pycache", ".py")
 TOOLS_PREFIX = "tools/"
+
+# D5: the SCORECARD `## Axes` table against the closure-admitted scores.
+# The pinned observed state is parsed from the SCORECARD.md lines 1499-1506
+# at 28b79d3d (the round-24 tip); the round-1 values are the scores the same
+# table carried before any round moved them.
+SCORECARD_PATH = "SCORECARD.md"
+SCORECARD_BASE_REV = "28b79d3d1b76824f0c825aabe6cb6c5dc49961bf"
+SCORECARD_BASE_LINE_START = 1499
+SCORECARD_BASE_LINE_END = 1506
+D5_AXES_HEADING = "## Axes"
+D5_AXES = ("coverage", "operability", "depth", "freshness", "calibration", "adjacency")
+# The round-1 value of each axis, from the same `## Axes` table at 28b79d3d.
+D5_ROUND1_SCORES = {
+    "coverage": 5,
+    "operability": 6,
+    "depth": 4,
+    "freshness": 5,
+    "calibration": 5,
+    "adjacency": 6,
+}
+# The pinned observed score of each axis, parsed from the base lines.
+D5_PINNED_SCORE_RE = re.compile(
+    r"\b(%s)\s+(\d+)\b" % "|".join(D5_AXES),
+    re.IGNORECASE,
+)
+# "round 1" as a whole token: "round 12" and "round 13" must not match.
+D5_ROUND1_RE = re.compile(r"\bround\s+1\b", re.IGNORECASE)
 
 REVISION_LINE_RE = re.compile(r"^[0-9a-f]{40}$")
 TOOL_BLOB_LINE_RE = re.compile(r"^[0-9a-f]{40}$")
@@ -581,6 +619,129 @@ def _check_d2(repo: str, rev: str) -> tuple[bool, list[str], dict]:
     return not reasons, reasons, detail
 
 
+def _axes_section_lines(text: str) -> list[str] | None:
+    """Return the lines of the `## Axes` section of a SCORECARD.md body."""
+    lines = text.split("\n")
+    start = None
+    for index, line in enumerate(lines):
+        if line.strip() == D5_AXES_HEADING:
+            start = index + 1
+            break
+    if start is None:
+        return None
+    section: list[str] = []
+    for line in lines[start:]:
+        if line.startswith("#"):
+            break
+        section.append(line)
+    return section
+
+
+def _axes_rows(text: str) -> list[tuple[str, str, str]] | None:
+    """Return the (axis, score, last change) triples of the `## Axes` table.
+
+    A cell may itself contain a pipe, so the axis is the second field, the
+    score the third, and the last change the second-to-last: the row always
+    starts and ends with a pipe.  The header and the separator row are
+    skipped.
+    """
+    section = _axes_section_lines(text)
+    if section is None:
+        return None
+    rows: list[tuple[str, str, str]] = []
+    for line in section:
+        stripped = line.strip()
+        if not stripped.startswith("|"):
+            continue
+        parts = stripped.split("|")
+        if len(parts) < 4:
+            continue
+        cells = [cell.strip() for cell in parts[1:-1]]
+        if len(cells) < 3:
+            continue
+        if all(re.fullmatch(r":?-+:?", cell) for cell in cells):
+            continue
+        if cells[0].casefold() == "axis":
+            continue
+        rows.append((cells[0].casefold(), cells[1], cells[-1]))
+    return rows
+
+
+def _parse_pinned_scores(text: str) -> dict[str, int] | None:
+    """Parse the pinned observed scores from the base SCORECARD.md lines.
+
+    The lines are read as committed bytes at the pinned base revision.  The
+    parse fails closed: it returns None unless every axis carries exactly one
+    score.
+    """
+    lines = text.split("\n")
+    window = lines[SCORECARD_BASE_LINE_START - 1 : SCORECARD_BASE_LINE_END]
+    scores: dict[str, int] = {}
+    for match in D5_PINNED_SCORE_RE.finditer("\n".join(window)):
+        axis = match.group(1).casefold()
+        score = int(match.group(2))
+        if axis in scores and scores[axis] != score:
+            return None
+        scores[axis] = score
+    if set(scores) != set(D5_AXES):
+        return None
+    return scores
+
+
+def _check_d5(repo: str, rev: str) -> tuple[bool, list[str], dict]:
+    reasons: list[str] = []
+    detail: dict[str, object] = {}
+    detail["scorecard_path"] = SCORECARD_PATH
+    detail["scorecard_base_rev"] = SCORECARD_BASE_REV
+
+    # The pinned observed state is parsed from the committed base lines.
+    base_raw = _blob_bytes(repo, SCORECARD_BASE_REV, SCORECARD_PATH)
+    if base_raw is None:
+        reasons.append("base_scorecard_unreadable")
+        return False, reasons, detail
+    pinned = _parse_pinned_scores(base_raw.decode("utf-8", "replace"))
+    if pinned is None:
+        reasons.append("pinned_scores_unparseable")
+        return False, reasons, detail
+    detail["pinned_scores"] = pinned
+
+    # The `## Axes` table at REV must have exactly one row per axis.
+    raw = _blob_bytes(repo, rev, SCORECARD_PATH)
+    if raw is None:
+        reasons.append("scorecard_missing")
+        return False, reasons, detail
+    rows = _axes_rows(raw.decode("utf-8", "replace"))
+    if rows is None:
+        reasons.append("axes_section_missing")
+        return False, reasons, detail
+    seen: dict[str, list[tuple[str, str]]] = {}
+    for axis, score, last_change in rows:
+        seen.setdefault(axis, []).append((score, last_change))
+    detail["axes_rows"] = {axis: [score for score, _ in entries] for axis, entries in seen.items()}
+
+    for axis in D5_AXES:
+        entries = seen.get(axis)
+        if not entries:
+            reasons.append("axis_row_missing: " + axis)
+            continue
+        if len(entries) > 1:
+            reasons.append("axis_row_duplicated: " + axis)
+            continue
+        score_text, last_change = entries[0]
+        if not re.fullmatch(r"\d+", score_text):
+            reasons.append("axis_score_not_numeric: " + axis)
+            continue
+        score = int(score_text)
+        expected = pinned[axis]
+        if score != expected:
+            reasons.append("axis_score_mismatch: %s %d!=%d" % (axis, score, expected))
+            continue
+        round1 = D5_ROUND1_SCORES[axis]
+        if score != round1 and D5_ROUND1_RE.search(last_change):
+            reasons.append("axis_stale_round_1: " + axis)
+    return not reasons, reasons, detail
+
+
 def _count_cases(raw: bytes) -> int | None:
     try:
         document = json.loads(raw.decode("utf-8", "replace"))
@@ -717,7 +878,7 @@ def _cannot_evaluate(repo: str, rev: str, error: str) -> int:
             "error": error,
             "repo": repo,
             "rev": rev,
-            "items": 3,
+            "items": 4,
             "held": None,
             "mismatches": None,
             "rows": [],
@@ -729,7 +890,7 @@ def _cannot_evaluate(repo: str, rev: str, error: str) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Check the round-24 routed defect items D1..D4 against committed bytes.",
+        description="Check the round-24 routed defect items D1..D5 against committed bytes.",
         allow_abbrev=False,
     )
     parser.add_argument("--repo", required=True)
@@ -757,6 +918,7 @@ def main(argv: list[str] | None = None) -> int:
         d1_held, d1_reasons, d1_detail = _check_d1(repo, rev_commit, args.rerun)
         d2_held, d2_reasons, d2_detail = _check_d2(repo, rev_commit)
         d3_held, d3_reasons, d3_detail = _check_d3(repo, rev_commit)
+        d5_held, d5_reasons, d5_detail = _check_d5(repo, rev_commit)
         d4_held, d4_reasons, d4_detail = _check_d4(repo, rev_commit)
     except (GitUnavailable, GitError) as exc:
         return _cannot_evaluate(repo, rev, str(exc))
@@ -765,6 +927,7 @@ def main(argv: list[str] | None = None) -> int:
         {"id": "D1", "held": d1_held, "reasons": d1_reasons, "detail": d1_detail},
         {"id": "D2", "held": d2_held, "reasons": d2_reasons, "detail": d2_detail},
         {"id": "D3", "held": d3_held, "reasons": d3_reasons, "detail": d3_detail},
+        {"id": "D5", "held": d5_held, "reasons": d5_reasons, "detail": d5_detail},
     ]
     held = sum(1 for row in rows if row["held"])
     mismatches = len(rows) - held
