@@ -116,7 +116,11 @@ Condition 3 requires each row's case id to exist in exactly one of the three old
 pool: 36 ids — `c19-version-line-only`, `c24-nearmiss-kill-failed-without-colon`,
 `c28-oomd-active-quiet` (cases.json only); `c33-differing-thresholds-mem-and-swap`,
 `c34-escalation-only-incomplete-scope`, `c35-malformed-monotonic-timestamp` (supplementary
-only); all 30 `a2-*` ids. Messaged to DraftEntryC1.
+only); all 30 `a2-*` ids. Messaged to DraftEntryC1. Independently confirmed by DraftEntryC1
+(peer message, 2026-10-22): their own set comparison over the three case arrays reproduces the
+same 29-id duplicate set and 36-id eligible pool, and the entry draft's row candidates now use
+eligible ids only (its prose cites `c02`/`c03`/`c04` outside the table, which condition 3 does
+not reach — table rows are the counted surface).
 
 ### F5 — LOW: word-count label drift channel (R2/R3 class)
 
