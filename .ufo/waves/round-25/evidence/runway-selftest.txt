@@ -1,0 +1,6 @@
+revision: d3b7af2a287339c5d94655d741f83e5af07090cc
+command: python3 -I -B tools/mori-job-runway.py --selftest
+tool_blob: 239dd8ebe630400a2739151260e482ad83dea459
+fixtures_tree: eddd10fb27a4495abe1da5d4dd3e7fe4202aacff
+exit: 0
+MORI_JOB_RUNWAY_SELFTEST: PASS 21/21
