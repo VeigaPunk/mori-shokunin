@@ -7,12 +7,16 @@ here, the owned pair drives the round's axis-move.
 
 | Axis | Score | Evidence pointer | Last change |
 |---|---|---|---|
-| coverage | 5 | six surfaces censed by one gate; the per-surface notes are still owed (`corpus/README.md` Known gaps) | round 1 |
-| operability | 6 | `tools/mori-census.sh` runs live (exit 1 DRIFT on real findings) and `--selftest` passes 14/14 in a hermetic temp tree | round 1 |
-| depth | 4 | finding-id vocabulary + per-surface semantics in `knowledge/observability-census-r1.md`; thresholds are stated, two are proposals | round 1 |
-| freshness | 5 | the live receipt is dated and re-runnable; no drift pin yet | round 1 |
-| calibration | 5 | unavailable ≠ unhealthy is enforced and fixture-proved; `progressing-weak` is declared deferred rather than faked | round 1 |
-| adjacency | 6 | refuses dispatch (kumitate) and OS state (tsukuroi) in PROVINCE and in the gate | round 1 |
+| coverage | 6 | per-surface notes landed (`corpus/knowledge/observability-surfaces-r2.md`); silence roster over the declared lanes (round 12); one-shot system pressure read (round 24); round-24 closure "Score 6 → 6" (`corpus/lessons/round-24-verifier-spotcheck.md:88`) | round 12 (5 → 6; round 13's self-assessed 7 was not held) |
+| operability | 7 | census `--selftest` PASS (134 cases) before and after round 24 (`SCORECARD.md` round-24 measured outcome); held 7 in every round table since round 13 | round 13 (6 → 7) |
+| depth | 5 | source-linked knowledge entries with `source:`/`verified-at:`/`recheck:` lines (round 12 claim 1); held 5 since | round 12 (4 → 5) |
+| freshness | 5 | round-10 drift pin still red; the round-20 re-pin was rejected (`corpus/README.md` Round21 correction) | round 1 |
+| calibration | 5 | round 12's self-assessed 5 → 6 was not re-derived by the outside reviewer and held at 5; round-24 closure "Score 5 → 5" (`corpus/lessons/round-24-verifier-spotcheck.md:68`) | round 1 |
+| adjacency | 6 | refuses dispatch (kumitate), OS state (tsukuroi) and harness configuration (operator) in PROVINCE and in its tools | round 1 |
+
+Round-25 correction (C1 item D5): until round 25 this table still showed the round-1 scores (coverage 5,
+operability 6, depth 4) with "round 1" in every row, while the round tables below held 6, 7 and 5. The scores
+above are the ones the closure-admitted round-24 section records (`SCORECARD.md:1499-1506` at `28b79d3d`).
 
 ## Move log
 
