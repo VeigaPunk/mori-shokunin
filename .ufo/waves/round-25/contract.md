@@ -133,3 +133,29 @@ measured tool. The C2 cases blob is pinned: `tools/fixtures/mori-job-runway/case
 **Wording (F6).** C2's tool and selftest write nothing outside a fresh temporary directory they create and
 remove. The seat-gate ledger line in each attempt row is a copy of a mutable, uncommitted harness file; it is
 evidence of the grant time, not a pinned record.
+
+## Amendment A2 (10:22Z, before any change to the landed C2 tool `09f55b62`; wave-1 seat CriticC2Rules)
+
+Finding: none of the 21 frozen expected values is wrong under rules 1–7, but eleven YAML forms make the landed
+tool report a number omp does not use (exit 0) or `set` for a file omp refuses to load (tested by the seat
+against Bun 1.4.3, the parser the binary embeds). The tool must abstain on forms it cannot read the way omp
+does. Rule 1 gains these `malformed` conditions; none changes a frozen J case:
+
+- more than one top-level line whose key, after removing quotes and spaces before the colon, is `async`
+  (a second `async:` block, `"async":`, `async :`); a top-level `<<:` merge key or a `? ` complex key anywhere;
+- inside the async block, a direct child whose key, after removing quotes, is `maxJobs` but is not written
+  exactly `maxJobs:`, or a `<<:` / `? ` line;
+- a tab character in the indentation of any line of the async block; a `---` or `...` document marker line
+  anywhere in the file;
+- a `maxJobs` value with a `#` not preceded by whitespace, or a value opening a quote or a block scalar.
+
+A leading UTF-8 byte-order mark is removed before parsing. The selftest still loads only the frozen 21
+cases by default; these forms are tested by a co-evolved file `tools/fixtures/mori-job-runway/
+supplementary-cases.json` (loaded with `--cases PATH`), which is not counted toward the after-value. Values
+omp itself accepts but the tool abstains on (non-integers, `abc` falling back to 100, duplicates and flow
+mappings that Bun reads) stay abstentions: `RUNWAY_UNKNOWN` is never a false number.
+
+Scope wording (CriticC2Rules, CriticLearningClaim): the cap is per root omp session — one job manager is built
+when a session has no parent task prefix, and its subagents share it — not per host. The tool reads one file,
+not `config.yaml` fallbacks, project `.omp/config.yml`, `--config`/`PI_CONFIG_FILES` overlays, profiles or
+runtime overrides; `RUNWAY_DEFAULT`/`RUNWAY_AS_CONFIGURED` describe that file only.
