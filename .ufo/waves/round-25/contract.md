@@ -1,0 +1,95 @@
+# mori round 25 (attempt 1) — claim contract
+
+L1: MoriR25 (fresh in-session lane subagent, dispatched 2026-10-22T09:42:02Z). Entering lane tip
+`28b79d3d1b76824f0c825aabe6cb6c5dc49961bf` (round 24 admitted; spot-check
+`corpus/lessons/round-24-verifier-spotcheck.md`). No earlier attempt of round 25 left work in the lane.
+
+Two claims. Each declares one after-value that one command over committed bytes re-derives. A miss is
+an honest stop; the targets below are never narrowed after landing.
+
+## C1 — repair the round-24 routed defects D1–D4 (axis: calibration, active score 5, lowest tie)
+
+Source: `corpus/lessons/round-24-verifier-spotcheck.md:135-146`. Each routed defect is a place where a
+lane-written statement or record disagrees with the committed bytes. New read-only check
+`tools/mori-routed-r24.py --repo PATH --rev REV` reads git objects only (no working tree, no git
+writes) and reports one row per item:
+
+| Item | Routed defect | Held at REV when |
+|---|---|---|
+| D1 | `c2-selftest-after.txt` names no revision and predates the tool it shipped with | `.ufo/waves/round-25/evidence/pressure-selftest.txt` exists; its first line is `revision: <40 hex>` naming a commit R that is an ancestor of (or equal to) REV; the blob of `tools/mori-pressure.py` and the tree of `tools/fixtures/mori-pressure` are identical at R and at REV; its second line is `exit: <n>`; the remaining bytes equal the stdout of R's `tools/mori-pressure.py --selftest` run under `python3 -I -B` from a temporary extract of R (git object reads only), and `<n>` equals that run's exit code |
+| D2 | the knowledge entry still carries the corrected K5, K4 and P3 wording; no K4 row in its corrections section | in `corpus/knowledge/system-pressure-r24.md`, outside every section whose heading starts `## Corrections`, with line breaks folded to single spaces, 0 matches of each of `refreshed on each read`, `a shorter spike between two reads can be invisible` and `` `null` means *undefined* ``; and some `## Corrections` section contains the token `(K4)` |
+| D3 | the round-24 lesson says the supplementary file is S01–S06, `PASS 6/6`; it held 7 cases at the round-24 tip | let n = number of cases in `tools/fixtures/mori-pressure/supplementary-cases.json` at `4f05dd5a32055e85a9297eb8fc8dfec7dfc4625e` (7); `corpus/lessons/round-24.md` at REV has a line containing `Correction` and `PASS n/n` |
+| D4 | untracked `tools/__pycache__/` is not ignored | `.gitignore` at REV has a line that is exactly one of `__pycache__/`, `__pycache__`, `**/__pycache__/`, `tools/__pycache__/`, `*.pyc`, `*.py[cod]` |
+
+Output: one JSON object, `schema: mori-routed-r24-v1`, `items: 4`, `held: N`, `mismatches: 4 - N`,
+per-item `{id, held, reasons[]}`. Exit 0 when `mismatches` is 0, 1 otherwise, 2 when the repo or revision
+cannot be read.
+
+- **Before (expected):** at `28b79d3d`, `mismatches: 4` (no round-25 evidence file; three phrases
+  present and no K4 row; only `PASS 6/6`; `.gitignore` has no such line).
+- **Declared after:** `python3 -I -B tools/mori-routed-r24.py --repo <lane> --rev <landed tip>` prints
+  `"mismatches": 0` with `"held": 4` of `"items": 4`, exit 0.
+
+The carried bound (round-24 R4 trusts lane-written times) is answered, not counted: each round-25 attempt
+row records the seat gate's own ledger line (epoch seconds written by `wave-slot.sh`), a time the lane
+does not write. The six surviving round-24 pressure mutants are replayed against the tip tool and either
+killed by new supplementary cases or explained; that work is not counted toward C1.
+
+## C2 — harness background-job runway capability (axis: coverage, active score 6; sourced)
+
+Live fact opened this round: this omp process refuses `task` calls while 100 or more background jobs run,
+although `~/.omp/agent/config.yml` sets `async.maxJobs: 200`, and background shell jobs count too. The
+installed binary (`omp/18.12.6`, `~/.local/bin/omp`, 256,702,432 bytes) carries
+`maxRunningJobs: () => Math.min(100, XPe.get(R))` once and the setting `async.maxJobs` with
+`default: 100` once (L1 byte search, 2026-10-22). No mori tool reads this runway; it is new PROVINCE ground.
+
+New read-only tool `tools/mori-job-runway.py [--config PATH] [--binary PATH] [--selftest]`, Python 3
+standard library only, runs under `python3 -I -B`. Defaults: `--config ~/.omp/agent/config.yml`,
+`--binary` = the real path of `omp` found on PATH. It never runs omp, never writes, and never edits settings.
+
+Rules (binding for the tool and the frozen cases):
+
+1. **configured** — from the config text. Find a line exactly `async:` (column 0, optional trailing
+   `# comment`). Its block is the following lines up to the next non-blank, non-comment line at column 0.
+   Direct children sit at the indentation of the block's first non-blank, non-comment line; deeper lines
+   are ignored. A direct child `maxJobs: <value>` (optional trailing `# comment`) gives the value.
+   State `set` with the integer when the value is an unquoted decimal integer; `malformed` (value null) when
+   the value is anything else, when `maxJobs` appears twice as a direct child, or when `async:` carries an
+   inline value (for example `async: {maxJobs: 50}`); `absent` when the file does not exist, has no `async:`
+   line, or the block has no direct `maxJobs`; `unreadable` when the path exists but cannot be read as a
+   file (for example it is a directory). Keys under other top-level blocks never count.
+2. **clamp** — every match in the binary bytes of
+   `maxRunningJobs:\s*\(\)\s*=>\s*Math\.min\(\s*(\d+)\s*,\s*[\w$]+\.get\([\w$]+\)\s*\)`. State `found` with
+   the value when there is at least one match and all matches carry the same number (`sites` = match count);
+   `ambiguous` (value null) when the numbers differ; `absent` (value null) when there is no match;
+   `unreadable` when the binary cannot be read. An absent clamp is never read as "no clamp".
+3. **setting_default** — every match of `id:\s*"async\.maxJobs",[^}]{0,300}?default:\s*(\d+)`. Same states
+   as the clamp.
+4. **effective** — null unless the clamp is `found` and either configured is `set`, or configured is
+   `absent` and the default is `found`. Then base = configured value if `set`, else the default value, and
+   effective = max(1, min(clamp, base)) (the binary's `Math.max(1, Math.floor(...))` over `Math.min`).
+5. **verdict / exit** — effective null → `RUNWAY_UNKNOWN`, exit 2. Configured `set` and effective ≠
+   configured → `RUNWAY_CLAMPED`, exit 1. Configured `set` and equal → `RUNWAY_AS_CONFIGURED`, exit 0.
+   Configured `absent` → `RUNWAY_DEFAULT`, exit 0. Usage errors exit 2.
+6. **output** — one JSON object: `schema: mori-job-runway-v1`, `config_path`, `binary_path`,
+   `binary_sha256` (null when unreadable), `configured {state, value}`, `clamp {state, value, sites}`,
+   `setting_default {state, value, sites}`, `effective`, `verdict`.
+7. **selftest** — `--selftest` loads `tools/fixtures/mori-job-runway/cases.json` (resolved from the script's
+   own path), writes each case's `config` and `binary` into a fresh temporary directory (`config: null` →
+   no file; `config: {"dir": true}` → a directory at that path), runs the same evaluation, and compares the
+   case's `expect` fields. It prints `MORI_JOB_RUNWAY_SELFTEST: PASS n/N` (or `FAIL n/N` plus one line per
+   failing case) and exits 0 only when all pass.
+
+- **Scope bounds:** the tool reads one config file, not project-level or environment overrides; it reports
+  the per-session cap the binary computes, not how many jobs run now. The live running-job count is not
+  readable from outside the session and stays frontier.
+- **Before:** `git cat-file -e 28b79d3d:tools/mori-job-runway.py` exits 128.
+- **Declared after:** `python3 -I -B tools/mori-job-runway.py --selftest` prints
+  `MORI_JOB_RUNWAY_SELFTEST: PASS 21/21`, exit 0, over `tools/fixtures/mori-job-runway/cases.json`
+  committed before the tool (21 cases J01–J21, frozen with this contract).
+- **Sourced:** the knowledge entry `corpus/knowledge/harness-job-capacity-r25.md` cites `SOURCES.md` rows
+  opened this round (upstream oh-my-pi source at the tag matching 18.12.6, plus the installed binary as an
+  own-work row). A live run against this host is committed as evidence; it is not the after-value.
+
+Held and observed: operability 7, depth 5, freshness 5, adjacency 6. No retirement, waiver, exploratory
+claim or promotion.
