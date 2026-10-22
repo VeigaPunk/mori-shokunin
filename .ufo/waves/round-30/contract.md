@@ -220,3 +220,17 @@ after the L1 saw data. It is disclosed as such, the A2-version receipt above sta
 attacked by independent wave-2 seats (a critic and a mutation tester) before the round lands; the closure judges
 whether C2.4 stands on the A3 version or misses on the A2 version. Lesson `## Mistakes` records the cause (the
 allowlist was bound before it ran on the round's own inputs — round-29 M2 repeated).
+
+## Wave-2 disclosures (appended after wave 2; no counter or condition changed)
+
+- **A1 bullet 3a relaxed original condition 3** ("exactly one" eligible file) and swapped the tool revision; A1's
+  "nothing is narrowed" was false for those two parts (wave-2 CriticAmendments, CriticC1Admission F2). After wave 2
+  the entry's three rows that relied on duplicated ids (`c02`, `c03`, `c04`) were replaced with ids that sit in exactly
+  one eligible file (`a2-03-group-kill-one-with-sigterm-action`, `a2-01-suppressed-before-scope-start`,
+  `c34-escalation-only-incomplete-scope`), so the landed table meets the original "exactly one" rule as well; every row
+  also holds under the tip tool (CriticC1Admission F4).
+- **A3 disclosure was incomplete** (CriticAmendments, CriticC2Verdict): the original contract said writers "read only"
+  rule-text.md and upstream sources, so A3 loosened the original wording too, not only A2; CriticC2Design (in A2's own
+  commit) had already flagged the godspeed and RULES.md paths; and the gate reports only the first forbidden line per
+  report, which masked `CaseR30a.md:105` behind `:96`. The A3 gate was not re-run on the writer wave before the freeze.
+  C2 misses under both the A2 gate (4) and the A3 gate (1); A3 is not claimed as a precedent.

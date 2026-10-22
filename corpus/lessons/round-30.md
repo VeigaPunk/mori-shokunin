@@ -198,3 +198,27 @@ SrcUnitTimestampSet's URL and is merged into S157).
 
 The round's last lane batch adds only `.ufo/waves/round-30/evidence/tip-c1.txt`, `tip-c2.txt` and `tip-retention.txt`,
 each measured at that batch's parent.
+
+## Wave-2 corrections (appended; the entries above stand as written)
+
+- **M5 retitled** (CriticLessonMistakes): the A2 gate did run on the writer wave before the freeze; the mistake is that
+  A3 changed the gate after that run and the changed gate was frozen without being re-run (it already printed
+  `blind_violations=1` at `55f9a694`), plus the gate's first-forbidden-line-only reporting, which masked the second hit.
+- **M6 (new) — the writer brief contradicted the gate (class: scope).** The brief required a closing sentence directly
+  after `## Files opened` with nothing else under that heading, and told every seat to read RULES.md, which the A2
+  allowlist forbade (`wave1-spec.json` writer items and context). Captured-by: none. Fix: route R5 again — the gate must
+  end the files list at the first non-entry line, report every forbidden line, and its self-test must include a planted
+  report written exactly to the brief.
+- **M2 count:** five labels were wrong, not two (this lesson's own R3 correction; QUALITY 90 prints 5).
+- **R2 text:** `kill.h` holds three prototypes (`:40-42`), not one; the `poll_loop_args_t` struct spans `:10-38`
+  (wave-2 ReviewCorrectionsR2R3). The R3 closure pointer is `round-29-verifier-spotcheck.md:159`, not `:163`.
+- **QUALITY 93 cannot fail on its stated property** (CriticLessonMistakes: its literal check passes round 29 and a
+  sandbox with unadjudicated hits); carried as a named defect to round 31, not counted.
+- **Entry fixes after wave 2:** three rows re-pointed to single-file case ids; the a2-09 and a2-10 rows no longer cite
+  S160 (CriticC1Admission F5); §3 states that a non-active unit's last-invocation send is counted in no output field
+  (F3, routed to the tool); §4 states the disputed shape has no older frozen case (F7); the recheck line is runnable (F8).
+  SKILL `## Round30` rows 2–3 carry the same corrections.
+- **Residuals carried to round 31:** the gate parser (M6), QUALITY 93, the uncounted last-invocation send, the
+  retention policy's blindness to unit/pid/cmdline shapes (wave-2 SentinelPrivacy F1), the S159 row's overlap with S120
+  (`Restart=always` already anchored there; S159 adds the commit-message purpose only), `corpus/README.md:337` stale
+  `fleet-ledger` pointer (wave-2 ReviewProvinceFix).

@@ -1,6 +1,6 @@
 source: S157 (systemd v262 `src/core/unit.c:2773-2776` — the active-enter stamp is assigned only on a transition into active-or-reloading, and leaving that set stamps active-exit instead); S156 (systemd v262 `src/shared/bus-print-properties.c:19-24,194` — `ActiveEnterTimestampMonotonic` fails the `Timestamp`-suffix test, so `systemctl show` prints it as a bare decimal, `=0` when unset); S158 (systemd v262 `src/journal/journald-manager.c:1291-1295` — `Suppressed %i messages from %s`, emitted by journald, with the unit name); S159 (earlyoom commit `edd3d943` patch `:6-7`, `:34-36` — `Restart=always`, so a killed or crashed earlyoom starts again and prints a new version line); S160 (systemd v262 `src/journal/journalctl.c:512-517,543-546` — `-b` with no argument selects the current boot, `-u` adds the unit match); older rows re-used: S119 (earlyoom v1.9.0 `main.c:161` version line, `:295` dry-run line), S118 (`kill.c:627` send line, `:318` escalation), S122 (`org.freedesktop.systemd1.xml:2783-2790`: the stamps are 0 when the transition was not recorded this boot), S155 (dry-run is a send-site no-op), S154 (entry-object monotonic stamp)
-verified-at: 2026-10-22 — S156–S160 opened this round (access times and sha256 in `corpus/lessons/round-30.md` `## Gate`; excerpts in `corpus/evidence/sources-r30/`); every decision-table row re-derived by `.ufo/waves/round-30/count-c1.sh` with the entering-tip tool blob `58b61681:tools/mori-oom-killers.py`; no host unit, journal, setting or signal touched
-recheck: on an earlyoom release re-open `main.c` at the version and dry-run prints and the shipped unit's `Restart=`; on a systemd release re-open `unit.c` `unit_notify()`, `bus-print-properties.c` and `journald-manager.c` at the cited lines; after any change to `tools/mori-oom-killers.py` re-run `bash .ufo/waves/round-30/count-c1.sh <rev>` against the new blob by hand and the five `--selftest` case files
+verified-at: 2026-10-22 — S156–S160 opened this round (access times and sha256 in `corpus/lessons/round-30.md` `## Gate`; excerpts in `corpus/evidence/sources-r30/`; all five re-fetched byte-identical by wave-2 seats `w2/ReopenS156.md`…`ReopenS160.md`); every decision-table row copies its case's frozen `expect` values, which the entering-tip tool blob `58b61681:tools/mori-oom-killers.py` and the tip tool both print (`.ufo/waves/round-30/count-c1.sh`; wave-2 CriticC1Admission F4); no host unit, journal, setting or signal touched
+recheck: on an earlyoom release re-open `main.c` at the version and dry-run prints and the shipped unit's `Restart=`; on a systemd release re-open `unit.c` `unit_notify()`, `bus-print-properties.c` and `journald-manager.c` at the cited lines; after any change to `tools/mori-oom-killers.py` run its `--selftest --cases` on `cases.json`, `cases-supplementary.json`, `cases-a2.json` and `cases-a2-r30.json` and `--inputs` on each table row's case (the C1 counter pins the round-30 entering-tip blob and cannot test a new tool)
 author: MoriR30 (L1); prose drafted by wave-1 seat DraftEntryC1 (`.ufo/waves/round-30/w1/DraftEntryC1.md`); source ids and decision-table rows bound by the L1
 
 # Which earlyoom invocation a send line belongs to — scope, the restart split and the A2a limit (round 30)
@@ -53,6 +53,9 @@ The reader `tools/mori-oom-killers.py` answers `KILLER_ACTED` (exit 1), `KILLERS
   and a retained non-zero stamp (S157), the reader scopes the last invocation from that stamp, reports its version and
   its zero line counters, keeps `actions: null`, and treats a send inside that last invocation as positive evidence too
   (`.ufo/waves/round-30/evidence/fix-tool.diff`; differential `.ufo/waves/round-30/evidence/c2-differential.txt`).
+  Limit (wave-2 CriticC1Admission F3): such a last-invocation send is counted in no output field — the verdict is
+  `KILLER_ACTED` while `earlier_invocation_send_lines` excludes it and `actions` stays `null`, so a non-active
+  `KILLER_ACTED` can carry every count at 0. Routed to the tool as a named residual.
 - For an `active` earlyoom the earlier count is report-only: `a2-06-active-earlier-invocation-sends-quiet` pins
   `KILLERS_QUIET` with `earlier_invocation_send_lines: 2` — the disclosed A2a limit (`rule-text.md:79-80`).
 
@@ -69,6 +72,9 @@ The reader `tools/mori-oom-killers.py` answers `KILLER_ACTED` (exit 1), `KILLERS
   read only the rule text): all eight expect this answer and both the entering-tip and the changed tool print it.
   Disclosed: the rule text alone does not decide the shape uniquely — a literal reading of the scope line gives
   `KILLER_ACTED` (wave-1 `ReviewRuleTextShape` F1); the writers and the tool agree on the split reading.
+- No older frozen case has this shape, so it has no row in the decision table below. It is a robustness input: every
+  entry into active overwrites the stamp (S157), so an active unit that reads `0` or no stamp while its journal holds
+  two or more version lines needs a transition systemd did not record this boot [INFERENCE].
 
 ### 5. Dry-run is per invocation
 
@@ -92,9 +98,9 @@ case's inputs (`bash .ufo/waves/round-30/count-c1.sh <rev>`).
 
 | shape | verdict | fields | case | sources |
 |---|---|---|---|---|
-| bounded scope, send exactly at the active-enter stamp | `KILLER_ACTED` | `earlyoom.scope_complete=true`, `earlyoom.actions.sigterm=1` | `c03-scope-boundary-exactly-at` | S157, S160 |
-| bounded scope, send one microsecond before the stamp | `KILLERS_QUIET` | `earlyoom.scope_complete=true`, `earlyoom.actions.sigterm=0` | `c02-scope-boundary-one-microsecond-before` | S157 |
-| bounded scope, version line before the stamp, send after it | `KILLER_ACTED` | `earlyoom.scope_complete=false`, `earlyoom.actions.sigterm=1` | `c04-incomplete-scope-with-action` | S157, S119 |
+| bounded scope, an in-scope send with its process-group line | `KILLER_ACTED` | `earlyoom.scope_complete=true`, `earlyoom.actions.sigterm=1` | `a2-03-group-kill-one-with-sigterm-action` | S157 |
+| bounded scope, suppression notice one microsecond before the stamp | `KILLERS_QUIET` | `earlyoom.scope_complete=true` | `a2-01-suppressed-before-scope-start` | S158, S157 |
+| bounded scope, version line before the stamp, only an escalation after it | `KILLER_ACTED` | `earlyoom.scope_complete=false`, `earlyoom.actions.sigterm=0` | `c34-escalation-only-incomplete-scope` | S157, S118 |
 | active, stamp `0`, no send line | `KILLERS_UNKNOWN` | `earlyoom.scope_complete=false` | `a2-05-monotonic-zero-active-quiet` | S156, S122 |
 | inactive, stamp `0`, no send line | `KILLERS_QUIET` | `earlyoom.scope_complete=false`, `earlyoom.state="inactive"` | `a2-05-monotonic-zero-inactive-quiet` | S156, S157 |
 | active, sends only in an earlier invocation | `KILLERS_QUIET` | `earlyoom.earlier_invocation_send_lines=2`, `earlyoom.scope_complete=true` | `a2-06-active-earlier-invocation-sends-quiet` | S159, S119 |
@@ -102,9 +108,9 @@ case's inputs (`bash .ufo/waves/round-30/count-c1.sh <rev>`).
 | active, an earlier send and a current send | `KILLER_ACTED` | `earlyoom.earlier_invocation_send_lines=1`, `earlyoom.actions.sigkill=1` | `a2-06-active-earlier-and-current-send-acted` | S159 |
 | earlier real invocation, current dry-run invocation | `KILLERS_QUIET` | `earlyoom.earlier_invocation_send_lines=2`, `earlyoom.dryrun_send_lines=1` | `a2-07-earlier-real-then-current-dryrun` | S159, S155 |
 | three invocations, dry-run in the middle | `KILLER_ACTED` | `earlyoom.earlier_invocation_send_lines=2`, `earlyoom.actions.sigterm=1` | `a2-07-three-invocations-dryrun-in-the-middle` | S159, S155 |
-| removed unit, two invocations with sends | `KILLER_ACTED` | `earlyoom.scope_complete=false`, `earlyoom.state="absent"` | `a2-09-removed-unit-two-invocations-mixed-sends` | S160 |
+| removed unit, two invocations with sends | `KILLER_ACTED` | `earlyoom.scope_complete=false`, `earlyoom.state="absent"` | `a2-09-removed-unit-two-invocations-mixed-sends` | S159 |
 | journald suppression notice inside the scope | `KILLERS_UNKNOWN` | `earlyoom.scope_complete=false` | `a2-01-suppressed-in-scope-active-quiet` | S158 |
-| send record without a numeric monotonic stamp | `KILLERS_UNKNOWN` | `earlyoom.scope_complete=false`, `earlyoom.actions.sigterm=0` | `a2-10-malformed-action-line-uncounted` | S154, S160 |
+| send record without a numeric monotonic stamp | `KILLERS_UNKNOWN` | `earlyoom.scope_complete=false`, `earlyoom.actions.sigterm=0` | `a2-10-malformed-action-line-uncounted` | S154 |
 
 ## Limits
 
