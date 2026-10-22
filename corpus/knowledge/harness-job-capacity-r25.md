@@ -1,6 +1,6 @@
-source: S098 (oh-my-pi packages/coding-agent/src/async/job-manager.ts at tag v18.12.6 = commit 45c35e40c46166dc726ccc52f5d27f40f2449f99), S099 (oh-my-pi packages/coding-agent/src/sdk.ts at the same commit), S100 (oh-my-pi packages/coding-agent/src/tools/settings.ts at the same commit), S101 (oh-my-pi docs/settings.md at the same commit), S102 (installed binary ~/.local/bin/omp, own-work: 256,702,432 bytes, sha256 85d9daf3a05fc76e8cd425ae1904eb576af8d21cc85fcf4690742626e07ccfa4, byte-identical to release asset omp-linux-x64 of tag v18.12.6), S103 (oh-my-pi docs/tools/eval.md at the same commit: the session-wide cap documented as "default and maximum 100", shared with every background job in the session). S104 (oh-my-pi commit 476b858b3a4abe6f6c8a06c252c23961be41e912, 2026-02-22, "added async background job execution with configurable concurrency limits": the 100 ceiling shipped with the feature). Rows S098–S104 were opened and admitted in round 25; S105–S111 are this round's rejected candidates. Supporting reads without registry rows, opened by wave-1 seat KnowledgeDraftC2 (round 25) at the same commit: packages/coding-agent/src/task/index.ts, packages/coding-agent/src/tools/bash.ts, packages/coding-agent/src/task/speculative-launch.ts, packages/coding-agent/src/task/spawn-run.ts, packages/coding-agent/src/config/settings.ts; and the fleet script scripts/hyaku/wave-slot.sh (read-only, sha256 41b487ef51012c099ab704e8c226f3bb701e11c120f7c6973ab73cb1f3737a81).
-verified-at: 2026-10-22 — upstream sources opened as raw bytes at tag v18.12.6 (sha256 job-manager.ts 0f37afaaa822ef1de845b8eb21473a70210176ff61e2dcff5925f85ec0e544e7, sdk.ts c0228addd4cfe93cfd370c7248e9db29743f0fa802aea0e1d1adf4994dbe6957, tools/settings.ts 514974143d47db0c9765bc47e86dcb9a38bd6bc23113a4ffe557bff0d8e30507, docs/settings.md 0b2e1457021fa526f2c35015672f1d7ccbac95e7b9f217528ab8022c55ed5883, docs/tools/eval.md fb2fc4a139ba187f1cc062fab53bd72a48dd13b1f81f0c3318ec7a79d41e495c); the installed binary read as bytes only (never executed as a harness). Host observation, read-only: ~/.omp/agent/config.yml carries `async:` then `maxJobs: 200`; the live read-only run of the round-25 tool reports configured 200, clamp 100, effective 100, verdict RUNWAY_CLAMPED (exit 1) — `.ufo/waves/round-25/w1/BuildJobRunwayTool.md` §2.
-recheck: `python3 -I -B tools/mori-job-runway.py --selftest` (frozen cases) and one live run of `python3 -I -B tools/mori-job-runway.py`; on an omp release, re-open S098–S103 and re-read the installed binary's clamp site and setting default.
+source: S098 (oh-my-pi packages/coding-agent/src/async/job-manager.ts at tag v18.12.6 = commit 45c35e40c46166dc726ccc52f5d27f40f2449f99), S099 (oh-my-pi packages/coding-agent/src/sdk.ts at the same commit), S100 (oh-my-pi packages/coding-agent/src/tools/settings.ts at the same commit), S101 (oh-my-pi docs/settings.md at the same commit), S102 (installed binary ~/.local/bin/omp, own-work: 256,702,432 bytes, sha256 85d9daf3a05fc76e8cd425ae1904eb576af8d21cc85fcf4690742626e07ccfa4, byte-identical to release asset omp-linux-x64 of tag v18.12.6), S103 (oh-my-pi docs/tools/eval.md at the same commit: the session-wide cap documented as "default and maximum 100", shared with every background job in the session), S112 (oh-my-pi packages/coding-agent/src/tools/bash.ts at the same commit: the bash auto-background branch's `atCapacity` pre-check and its fall-through to direct foreground execution), S113 (oh-my-pi packages/coding-agent/src/tools/eval.ts at the same commit: the eval auto-background branch's `atCapacity` pre-check and its fall-through to direct foreground execution). S104 (oh-my-pi commit 476b858b3a4abe6f6c8a06c252c23961be41e912, 2026-02-22, "added async background job execution with configurable concurrency limits": the 100 ceiling shipped with the feature). Rows S098–S104 and S112–S113 were opened and admitted in round 25; S105–S111 are this round's rejected candidates. Supporting reads without registry rows, opened by wave-1 seat KnowledgeDraftC2 (round 25) at the same commit: packages/coding-agent/src/task/index.ts, packages/coding-agent/src/task/speculative-launch.ts, packages/coding-agent/src/task/spawn-run.ts, packages/coding-agent/src/config/settings.ts; and the fleet script scripts/hyaku/wave-slot.sh (read-only, sha256 41b487ef51012c099ab704e8c226f3bb701e11c120f7c6973ab73cb1f3737a81).
+verified-at: 2026-10-22 — upstream sources opened as raw bytes at tag v18.12.6 (sha256 job-manager.ts 0f37afaaa822ef1de845b8eb21473a70210176ff61e2dcff5925f85ec0e544e7, sdk.ts c0228addd4cfe93cfd370c7248e9db29743f0fa802aea0e1d1adf4994dbe6957, tools/settings.ts 514974143d47db0c9765bc47e86dcb9a38bd6bc23113a4ffe557bff0d8e30507, docs/settings.md 0b2e1457021fa526f2c35015672f1d7ccbac95e7b9f217528ab8022c55ed5883, docs/tools/eval.md fb2fc4a139ba187f1cc062fab53bd72a48dd13b1f81f0c3318ec7a79d41e495c, tools/bash.ts d985ef25639993e05fb4de8c8b6dc75dde76422f63d1a295b95eb575e8cc3ea2, tools/eval.ts 01e9c5c56af15d3e04cdeaf99d959afa90129f8cbb015d6908e02795351920e3); the installed binary read as bytes only (never executed as a harness). Host observation, read-only: ~/.omp/agent/config.yml carries `async:` then `maxJobs: 200`; the live read-only run of the round-25 tool reports configured 200, clamp 100, effective 100, verdict RUNWAY_CLAMPED (exit 1) — `.ufo/waves/round-25/w1/BuildJobRunwayTool.md` §2.
+recheck: `python3 -I -B tools/mori-job-runway.py --selftest` (frozen cases) and one live run of `python3 -I -B tools/mori-job-runway.py`; on an omp release, re-open S098–S103 and S112–S113 and re-read the installed binary's clamp site and setting default.
 author: MoriR25 (L1) from the wave-1 scribe draft `.ufo/waves/round-25/w1/KnowledgeDraftC2.md`.
 
 # Harness background-job runway — the effective cap, the count that reaches it, and what a refusal proves
@@ -95,8 +95,8 @@ executing"). A bash job registers without the flag (`tools/bash.ts:882`) and the
 registration. So a batch of task jobs that is admitted but not yet running does not consume the
 runway, and "registered" is not "running".
 
-**F6 — the exact refusal text, and what the number in it is.** When the count has reached the cap,
-`register()` throws:
+**F6 — the exact refusal text, and what the number in it is.** When the count has reached the cap and
+a caller goes through the registration path, `register()` throws:
 `Background job limit reached (${maxRunningJobs}). Wait for running jobs to finish or cancel one.`
 (S098, [job-manager.ts:371-373](https://raw.githubusercontent.com/can1357/oh-my-pi/45c35e40c46166dc726ccc52f5d27f40f2449f99/packages/coding-agent/src/async/job-manager.ts));
 the string occurs once in the source and the installed binary carries the same template (S102,
@@ -104,7 +104,8 @@ byte 160033359). The interpolated number is the **effective** cap at that instan
 configured value. The cap is re-read on every check — the option may be a function and "a function
 is re-read on every capacity check so a live setting resizes the cap" (`job-manager.ts:170-171`) —
 so the number in a refusal is a snapshot, and the same session may refuse with a different number
-later.
+later. The throw is reached only where a caller registers without pre-checking the cap; two
+production paths pre-check it and degrade instead of throwing (F9).
 
 **F7 — only a top-level session constructs the manager.** The guard is `!options.parentTaskPrefix`
 (`sdk.ts:2282`, F2). A child session does not build its own; it uses the manager handed to it:
@@ -130,7 +131,23 @@ speculative launch before the job is registered (`task/speculative-launch.ts:200
 catch path discards it, so "spawns nothing" is a statement about the refusal itself, not a proof
 that no process was ever pre-started.
 
-**F9 — the refusal as the fleet records it.** The lane's own round-20 ground-truth notes carry this
+**F9 — reaching the cap is not always an error: two production paths pre-check it and degrade to
+foreground.** The manager publishes `get atCapacity(): boolean` (S098, `job-manager.ts:337-346`), and
+exactly three places in the shipped source consult it: the getter itself and two consumers. The bash
+tool's auto-background branch tests `!autoBgManager.atCapacity` and, at the cap, falls through to
+direct foreground execution — "At the running-job cap, fall through to direct foreground execution
+instead of failing every bash call until a slot frees up" (S112, `tools/bash.ts:1224-1229`, sha256
+`d985ef25639993e05fb4de8c8b6dc75dde76422f63d1a295b95eb575e8cc3ea2`). The eval tool does the same —
+"At the running-job cap, fall through to direct foreground execution instead of failing every eval
+call until a slot frees up" (S113, `tools/eval.ts:535-538`, sha256
+`01e9c5c56af15d3e04cdeaf99d959afa90129f8cbb015d6908e02795351920e3`). An **explicit** `async: true`
+bash call does not pre-check: it goes straight to `#startManagedBashJob` (`tools/bash.ts:1187-1208`)
+and therefore to `manager.register` (`tools/bash.ts:882`), where it throws (F6). The task tool's
+spawn path does not pre-check either, so a wave of task spawns at the cap is refused with the error
+(F6, F10). The refusal text is therefore the signature of the **registration** paths only: at the
+cap, an auto-backgrounded bash or eval call degrades to a foreground run and raises nothing.
+
+**F10 — the refusal as the fleet records it.** The lane's own round-20 ground-truth notes carry this
 exact text, and their numbers are the effective cap: "Failed to start background task jobs:
 KasegiR23.FixMirror: Background job limit reached (100)" with all 64 names refused
 (`.ufo/waves/round-20/build/GtLaneKasegi.md:48`), and "seats 66, refused 66, spawned 0,
@@ -141,7 +158,7 @@ as proof of what filled the runway. [INFERENCE] The number of refused seats in o
 and every attempt fails once the count has reached the cap; the cap is a session-wide count, not a
 per-wave budget.
 
-**F10 — the hyaku seat gate measures a different population under a different number.**
+**F11 — the hyaku seat gate measures a different population under a different number.**
 `scripts/hyaku/wave-slot.sh` (read-only) resolves a target `CAP` from `HYAKU_WAVE_CAP` (environment),
 else from `$STATE/wave-cap` (state), else the default `200` (`configured_cap()`, lines 28-49), and
 grants a wave only while `live + pending + seats` fits under it (`fits_cap()`, lines 50-58;
@@ -156,13 +173,13 @@ dispatching full waves (~160 jobs at once overall) while Main's own spawns were 
 the harness: the gate cannot see the harness's count, the harness cannot see the gate's, and
 neither number is derived from the other. A grant therefore does not imply that the wave can spawn.
 
-**F11 — this host.** `~/.omp/agent/config.yml` carries a column-0 `async:` block whose direct child
+**F12 — this host.** `~/.omp/agent/config.yml` carries a column-0 `async:` block whose direct child
 is `maxJobs: 200` (read 2026-10-22). The installed binary's clamp is 100 (F2) and its setting
 default is 100 (F1), so the effective cap on this host is 100, and the round-25 tool's live run
 reports configured 200, clamp 100, effective 100, verdict `RUNWAY_CLAMPED`, exit 1
 (`.ufo/waves/round-25/w1/BuildJobRunwayTool.md` §2). This is one host on one day, not a fleet fact.
 
-**F12 — the tool reads one file, the runtime reads a stack.** The settings layer keeps a global
+**F13 — the tool reads one file, the runtime reads a stack.** The settings layer keeps a global
 layer (`config.yml`/`config.yaml` under the agent directory, here `~/.omp/agent/`), a project layer
 (`.claude/settings.yml`, `.omp/config.yml`, …) and further overlays and runtime overrides
 (`config/settings.ts:587-595,1561-1620`). The C2 tool reads exactly one file — the global one —
@@ -180,18 +197,19 @@ sources above forbid.
 
 | Observable | Tool state (C2) | Verdict / exit | What it does NOT prove |
 |---|---|---|---|
-| `async.maxJobs` present and set, e.g. 200 on this host (F11); binary carries the clamp (F2) | `configured {set, 200}`, `clamp {found, 100, sites 1}`, `effective 100` | `RUNWAY_CLAMPED`, exit 1 | That the session was at capacity: the tool reads no job count, and the live count is not readable from outside the session. That the configuration is wrong or ignored — 200 is read, then clamped. That the configured number is the number a refusal would show (F6). That a different layer did not override the file (F12). |
-| `async.maxJobs` set to a value ≤ 100 (e.g. 50) | `configured {set, 50}`, `effective 50` | `RUNWAY_AS_CONFIGURED`, exit 0 | That any job ran, that the runway was free, or that 50 is a safe or tested number. That the value survives the settings stack (F12). |
+| `async.maxJobs` present and set, e.g. 200 on this host (F12); binary carries the clamp (F2) | `configured {set, 200}`, `clamp {found, 100, sites 1}`, `effective 100` | `RUNWAY_CLAMPED`, exit 1 | That the session was at capacity: the tool reads no job count, and the live count is not readable from outside the session. That the configuration is wrong or ignored — 200 is read, then clamped. That the configured number is the number a refusal would show (F6). That a different layer did not override the file (F13). |
+| `async.maxJobs` set to a value ≤ 100 (e.g. 50) | `configured {set, 50}`, `effective 50` | `RUNWAY_AS_CONFIGURED`, exit 0 | That any job ran, that the runway was free, or that 50 is a safe or tested number. That the value survives the settings stack (F13). |
 | The settings page alone (`docs/settings.md:623`: type number, default 100, floored to at least 1, no maximum stated — F1) | (not a tool state — a documentation reading) | — | That a configured value above 100 takes effect: the page states no ceiling, the code clamps at 100 (F2, F3), and the upstream prose names the ceiling "default and maximum 100" (F1). That the manager's `DEFAULT_MAX_RUNNING_JOBS = 15` is the shipped cap: 15 is the fallback for a caller that passes no option (F3). |
-| No `async:` block, no `maxJobs` child, or no config file at all (F1, F3) | `configured {absent, null}`, `setting_default {found, 100}`, `effective 100` | `RUNWAY_DEFAULT`, exit 0 | That the operator never configured a cap — `absent` also covers "the file the tool was pointed at is not the file the session reads" (F12). That a clamp is absent: the clamp is in the binary's bytes, not in the config (F2). That 100 running jobs is a small number. |
+| No `async:` block, no `maxJobs` child, or no config file at all (F1, F3) | `configured {absent, null}`, `setting_default {found, 100}`, `effective 100` | `RUNWAY_DEFAULT`, exit 0 | That the operator never configured a cap — `absent` also covers "the file the tool was pointed at is not the file the session reads" (F13). That a clamp is absent: the clamp is in the binary's bytes, not in the config (F2). That 100 running jobs is a small number. |
 | `maxJobs` quoted, duplicated as a direct child, or `async:` carrying an inline value | `configured {malformed, null}` | effective null → `RUNWAY_UNKNOWN`, exit 2 | That the cap is zero, unlimited or absent. That the harness is unclamped. That the refusal text in a transcript can be re-derived; the tool knows only that it cannot derive the number. |
 | The binary's bytes carry no clamp match (a different build, or a re-minified one) | `clamp {absent, null}` | effective null → `RUNWAY_UNKNOWN`, exit 2 | That there is no clamp. An absent match is a failed lookup, never "unlimited" and never "zero". |
 | The binary cannot be read (missing path, a directory, unreadable file) | `clamp {unreadable, null}`, `setting_default {unreadable, null}`, `binary_sha256 null` | effective null → `RUNWAY_UNKNOWN`, exit 2 | That the cap is unknown-in-general; it is unknown-to-this-tool. Unavailable is not zero: no state here means "zero capacity" or "no limit". |
 | The binary carries two clamp sites with different numbers | `clamp {ambiguous, null, sites 2}` | effective null → `RUNWAY_UNKNOWN`, exit 2 | Which site is live. That the smaller number is the effective one. |
-| A refusal observed in a transcript: `Background job limit reached (100). Wait for running jobs to finish or cancel one.` (F6) | (not a tool state — an observation) | — | That the configured value was 100: the number is the effective cap (F3, F11). That the runway was full of *this* wave's work: the count is session-wide and shared by the whole root tree (F7). That the refused seats did anything: a refusal creates nothing (F8). That the cap is still 100 now: it is re-read at every check (F6). |
+| A refusal observed in a transcript: `Background job limit reached (100). Wait for running jobs to finish or cancel one.` (F6) | (not a tool state — an observation) | — | That the configured value was 100: the number is the effective cap (F3, F12). That the runway was full of *this* wave's work: the count is session-wide and shared by the whole root tree (F7). That the refused seats did anything: a refusal creates nothing (F8). That the cap is still 100 now: it is re-read at every check (F6). That every call at the cap would have errored: the auto-background paths degrade to foreground instead (F9). |
+| An auto-backgrounded bash or eval call at the cap: it runs in the foreground, with no error (F9) | (not a tool state — an observation) | — | That the cap was not reached: the branch is entered *because* the cap was reached. That the call was backgrounded: it was deliberately not. That the fleet's silence at the cap means the runway was free — a foreground run and a refusal are different observations of the same cap. |
 | A seat that was refused | (not a tool state) | — | That the seat ran, finished, or produced output: `register()` throws before the job exists and the tool returns `results: []` (F8). That the refusal consumed runway: it did not. |
 | A spawn record reporting many started agents | (not a tool state) | — | That those agents were running: a task job is registered `queued: true` and counts only after `markRunning()` (F5). That they held slots at any particular moment. |
-| The hyaku gate prints `granted lane=… seats=… cap=<target>` (85 on this host today, default 200; F10) | (not a tool state) | — | That the wave can spawn: the gate counts agents against its target and cannot see the harness's running-job count against 100 (F10). That the gate's live estimate is the harness's job count — they are different populations computed from different sources. That a refusal after a grant is a gate bug. |
+| The hyaku gate prints `granted lane=… seats=… cap=<target>` (85 on this host today, default 200; F11) | (not a tool state) | — | That the wave can spawn: the gate counts agents against its target and cannot see the harness's running-job count against 100 (F11). That the gate's live estimate is the harness's job count — they are different populations computed from different sources. That a refusal after a grant is a gate bug. |
 
 ## Limits
 
@@ -203,7 +221,7 @@ sources above forbid.
   pointed at. It does not read, and cannot read from outside the session, how many jobs are running
   now (contract C2 scope bound).
 - **One config file.** The tool reads one file. The runtime settings stack also has a project
-  layer, `--config` overlays and runtime overrides (F12), so `configured` is that file's value and
+  layer, `--config` overlays and runtime overrides (F13), so `configured` is that file's value and
   `effective` is the cap that would apply if it were the effective one.
 - **The binary read is a byte read.** The clamp and the setting default are located by pattern over
   the file's bytes. The pattern is the contract's; it is not a parse of the bundle, so a build that
@@ -213,10 +231,16 @@ sources above forbid.
   contracted inline-`async:` case are not modelled.
 - **The cap counts jobs, not seats, not agents, not waves.** One seat is one task job; a bash job
   counts the same; a queued task job does not (F4, F5). `wave-slot.sh`'s seats are agents it
-  estimates, which is a different unit again (F10).
+  estimates, which is a different unit again (F11).
 - **The refusal text is upstream's, but the sentence a lane reads is composed by the task tool**
   (`Failed to start background task job{s}: <agentId>: <message>`, `task/index.ts:1220-1230`). The
   fixed inner sentence is the upstream string; the wrapper is the tool's.
+- **The cap is a registration limit, not a global refusal switch.** Only callers that register
+  without pre-checking it raise the error (F9). The bash and eval auto-background branches check
+  `atCapacity` and fall back to direct foreground execution, so at the cap those calls still run —
+  silently, in the foreground. The task spawn path and an explicit `async: true` bash call do not
+  pre-check and do raise it. The number of `atCapacity` consumers in the shipped source is two
+  (`tools/bash.ts:1228`, `tools/eval.ts:536`); the getter is the third hit and is not a consumer.
 - **Transcripts are private.** Session transcripts under `~/.omp` may hold private text. Only
   counts, timestamps and the fixed error text may be reported from them; no message content.
 - **Detection and report only.** No omp run, no settings write, no gate change, no job started,
@@ -242,7 +266,7 @@ sources above forbid.
   from outside that session. The tool reports a cap, never a load.
 - **U4 — the effective settings value.** Whether a project layer, a `--config` overlay or a runtime
   override sets `async.maxJobs` in a given session was not established; only the global file was
-  read (F12). The tool cannot answer it either.
+  read (F13). The tool cannot answer it either.
 - **U5 — the queueing behaviour under load.** A task job registers queued and counts only once it
   starts (F5). How many registrations of a large wave succeed before the count reaches the cap was
   not measured; the upstream comment only states the intent (F4).
@@ -254,6 +278,11 @@ sources above forbid.
 - **U8 — the manager's fallback of 15.** [INFERENCE] The `DEFAULT_MAX_RUNNING_JOBS = 15` path is
   unreachable in a shipped 18.12.6 session (F3). It was not exercised on this host, and no
   upstream statement says it is intended to be dead.
+- **U9 — how much work degraded instead of erroring.** At the cap, auto-backgrounded bash and eval
+  calls run in the foreground with no error (F9), while task spawns are refused. How many calls in a
+  given session took the degraded path, and how long they blocked the caller, was not measured;
+  the tool reads no job count at all (U3). A fleet's observable refusals are therefore a lower
+  bound on the cap's pressure, not a measure of it.
 
 ## Not claimed
 
@@ -264,7 +293,9 @@ sources above forbid.
   should be changed.
 - No claim about how many jobs are running on this host or on any host.
 - No claim that changing the hyaku gate's target would prevent refusals, or that the gate is
-  defective; only that the two numbers and the two populations differ (F10).
+  defective; only that the two numbers and the two populations differ (F11).
 - No claim that a seat, an agent, a task and a job are the same unit.
+- No claim that a call which ran in the foreground proves the cap was not reached (F9).
+- No claim that every refused or degraded call in a session is visible in any one record.
 - No claim that a refused seat's work was completed, lost or harm-free; it was not run (F8).
 - No claim about any omp version other than 18.12.6.
