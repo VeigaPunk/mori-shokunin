@@ -58,3 +58,18 @@ Registry changes, old → new (all new rows; no older row changed):
 | M5 | a before-value fixed by construction | CriticC1Vacuity: at `c725aa37` R1–R3 compare objects with themselves and R4 fails only for lack of a round-24 directory | QUALITY 70 (population identity) in spirit; no criterion on predicate vacuity | amendment A4: R4 is measured on the real round-23 defect (`--round 23`), R1–R3 relabeled regression guards. |
 | M6 | a quoted pattern would have tripped its own predicate | ScoutRoutedBytes: 9 quoted hits of the privacy-clearance pattern under `.ufo/waves/` at base; wave reports quote it | none | amendment A1 limits R2 to self-assessment and knowledge surfaces. |
 | M7 | seat scratch outside the session scratch root | seats SrcKconfig, SrcKernelParams, SrcPsiC, SrcProcPressureMan, CriticIntervalBoundary and FreezePressureCases wrote under `/tmp`; the wave-1 context did not name `/fast/scratch/hyaku/` as the only scratch root | session Boundaries ("Scratch goes under /fast/scratch/hyaku/") | wave-2 context names the scratch root; the round's `/tmp` residue is listed in the report. |
+| M8 | an independence claim the bytes cannot carry | `.ufo/waves/round-24/w1/BuildPressureTool.md:228`: the tool seat read the frozen cases from the cases seat's clone while building; contract C2 and SKILL said the cases were frozen before the implementation | CriticCaseIndependence (wave 1) predicted it; no criterion | wording now says "landed in a strict-ancestor commit; order shown, not independence"; independent evidence comes from wave-2 mutants (kills and survivors below) and the committed live bracket check. Future waves: the case writer's clone path is withheld from the tool seat's prompt. |
+| M9 | knowledge stated beyond its version and architecture | wave-2 CriticKnowledgeOverclaim: six contradicted statements (root cgroup scope, x86 IRQ clock switch, v7.2-only rules stated generally, short events called invisible, averages refreshed per read, stale 500 ms window) | the entry's own U5 named version bounds as unchecked | `corpus/knowledge/system-pressure-r24.md` gains a corrections section and in-place fixes before closure; SKILL EOPNOTSUPP row narrowed. |
+
+## Wave-2 mutation results on the C2 selftest (frozen 12 cases, tool `852d1ea7`)
+
+Killed: system cpu full thresholded (P02); irq without some made malformed (P03 and nine more); counter_regressed
+removed (P12); cpu full delta numeric (P11); ratio divided by CPU count (P11); EOPNOTSUPP to absent (P05);
+EACCES to ok (P10); avg10/avg300 swap (P01 and four more); ENOENT reported as zero (P04); PARTIAL exiting 2.
+Survived: `>=` to `>` at the threshold; matcher ignoring findings_include; grammar accepting extra fields,
+duplicate kinds or a negative total; PARTIAL outranking HIGH. Response, landed after the measurement and not
+counted toward the 12: the selftest now runs four corrupted expectations per passing case and fails if the
+matcher accepts any (`MATCHER: rejected 48/48`), and a co-evolved file
+`tools/fixtures/mori-pressure/supplementary-cases.json` (S01–S06) covers the threshold edge, the three grammar
+shapes, HIGH over PARTIAL and EPERM (`PASS 6/6`). Non-UTF-8 content is now `malformed`, not `unreadable`.
+

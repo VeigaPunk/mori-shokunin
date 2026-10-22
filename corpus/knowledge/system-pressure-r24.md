@@ -5,6 +5,36 @@ author: MoriR24 (L1) from the wave-1 scribe draft `.ufo/waves/round-24/w1/DraftK
 
 # System pressure (PSI) for CPU, IO and IRQ — one-shot read, and what each file state does not prove
 
+## Corrections after wave-2 falsification (round 24, before closure)
+
+Wave-2 seat CriticKnowledgeOverclaim (`.ufo/waves/round-24/w2/CriticKnowledgeOverclaim.md`) contradicted or narrowed
+several statements below. Where this section and a later line disagree, this section wins.
+
+- **Version scope (K3).** The decision-table rules "a nonzero system CPU `full` value means the file is not the
+  kernel's" and "`malformed` means this is not a kernel PSI file" hold **on v7.2 only**: the zeroing of system CPU
+  `full` arrived in 5.19 (commit `890d550d7dba`), and kernels before 5.13 print no CPU `full` line at all, so a
+  genuine pre-5.13 cpu file reads `malformed` under the tool's required-kinds rule.
+- **Averages (K5).** Each read collects the totals; the averages are recomputed on a read only when the next
+  2-second update is due (`psi.c:1268-1270`), not on every read.
+- **Trigger window (K6).** psi.rst states 500 ms to 10 s; the v7.2 code enforces only 0 < window ≤ 10 s
+  (`psi.c:1372-1373`) and, for unprivileged writers, a multiple of 2 s (`psi.c:1379-1380`). The documentation's
+  lower bound is stale at v7.2.
+- **Boot disable and EOPNOTSUPP (P2).** The `[INFERENCE]` label in F7 and U4 is withdrawn: `psi_proc_init` tests
+  `psi_enable` directly (`psi.c:1712`), and `psi=` is parsed before `psi_init()` and the initcalls
+  (`init/main.c:1011,1047,1445`, no registry row). So at v7.2 the `psi_disabled` EOPNOTSUPP branch cannot be
+  reached through a `/proc/pressure` read; the only reachable `/proc` EOPNOTSUPP is `irq` with IRQ time
+  accounting off. A boot-disabled host **must** show cpu, memory and io `absent`.
+- **IRQ `some` (P3).** `some: null` for irq means "not tracked by the kernel" (S095; S096 rationale), not
+  "undefined"; that word is psi.rst's for system CPU `full`. [UNKNOWN] No upstream document defines what IRQ
+  `full` measures; the code charges IRQ time only to a non-idle current task (`psi.c:1017`).
+- **Decreasing total and missing files (P4).** The v7.2 code has no decrement path, so a decrease means the two
+  samples are not comparable [INFERENCE]; it does not prove the absence of a kernel defect. A missing file is
+  consistent with, among others: PSI boot-disabled, no IRQ time accounting (irq only), a kernel without
+  `CONFIG_PSI`, a kernel older than 6.1 (irq only), or a `--root` that points elsewhere.
+- **Citations (minor).** F3's readers are `psi.c:1540,1545,1550` plus the irq reader at `psi.c:1686`; in F9 the
+  cgroup files sit in separate sections of cgroup-v2.rst (1083, 1215, 1911, 2171); F11's "no threshold rule" is
+  scoped to `psi.c` and `psi.rst`, the files read.
+
 ## Scope
 
 System pressure stall information is exported by the kernel as text files under `/proc/pressure/`. This note
@@ -107,7 +137,7 @@ comment "show or hide {cpu,memory,io,irq}.pressure files"
 and the cgroup readers are different groups: the former pass `&psi_system`
 ([psi.c:1538-1550](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/sched/psi.c)), the latter pass
 `cgroup_psi(cgrp)` ([cgroup.c:3970-4091](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/cgroup/cgroup.c)).
-A system-scope read says nothing about any cgroup's pressure, and vice versa.
+A system-scope read says nothing about any **non-root** cgroup's pressure, and vice versa; the root cgroup's pressure files print the same `psi_system` group as `/proc/pressure` (`include/linux/psi.h:39`, no registry row; on this host the two were byte-identical in one read pass).
 
 **F10 — the kernel accumulates the total monotonically.** The running total is
 `group->total[aggregator][s] += div_u64(deltas[s], max(nonidle_total, 1UL));`
@@ -123,7 +153,7 @@ A tool threshold is therefore the tool's own, and must be labeled as local.
 **F12 — the IRQ clock itself is a boot parameter.** `static int irqtime = -1; core_param(irqtime, irqtime,
 int, 0400);` and `if (irqtime > 0 || (irqtime == -1 && rate >= 1000000)) enable_sched_clock_irqtime();`
 ([sched_clock.c:48-50, 242-243](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/time/sched_clock.c));
-the declarations live in `include/linux/sched/clock.h:112-116`. This is the switch behind the IRQ path of F6.
+the declarations live in `include/linux/sched/clock.h:112-116`. This applies only on architectures built with `CONFIG_GENERIC_SCHED_CLOCK` (`kernel/time/Makefile:23`); x86, this host, has no `irqtime=` parameter. On x86 the TSC code enables IRQ time accounting unless `tsc=noirqtime` (`arch/x86/kernel/tsc.c:327-328,1544-1545`), and `kernel/sched/clock.c:176,243` can disable it after boot when the clock is found unstable (wave-2 seat CriticKnowledgeOverclaim; these files have no registry row).
 
 ## Decision table
 
@@ -149,7 +179,8 @@ sources above forbid.
 
 - **One-shot only.** The tool reads a file and stops. It registers no trigger and does not poll, although the
   kernel supports exactly that ([F8]: write a threshold, poll the descriptor). An event that starts and ends
-  between two reads is invisible to a one-shot read, and `avg10` cannot recover it (F4).
+  between two reads is still counted in `total` and decayed into the averages (F4), but it may leave `avg10` under
+  the threshold, and a single read cannot say when it happened.
 - **No cgroup scope.** Only `/proc/pressure` is read, i.e. the system group (F9). Per-cgroup `cpu.pressure`,
   `memory.pressure`, `io.pressure` and (at v7.2) `irq.pressure` exist and are a different population (F9).
   The census's user-slice `memory.pressure` is likewise a different scope; the two are never summed or
@@ -183,7 +214,7 @@ sources above forbid.
 - **U5 — version bounds.** Every kernel pointer here is the `v7.2` tag. Whether `pressure/irq` and cgroup
   `irq.pressure` exist in earlier or later kernels was not checked.
 - **U6 — the man page.** No `proc_pressure(5)` page exists (S097, rejected: HTTP 404; man-pages 6.20 has no such page). The kernel documentation (S090) is the format authority.
-- **U7 — root `cgroup.pressure` switch.** Wave-1 seats CriticC2Semantics and ConnectSourceDuplicates report from `include/linux/psi.h` and `kernel/cgroup/cgroup.c` that writing 0 to the root cgroup's `cgroup.pressure` stops system accounting, so `/proc/pressure` would stay frozen and a one-shot read would report `PRESSURE_OK` under real pressure. Those two files have no registry row this round; this is a stated limit, not admitted knowledge. An interval read with an unchanged `total` is consistent with it but does not prove it.
+- **U7 — root `cgroup.pressure` switch.** Writing 0 to the root cgroup's `cgroup.pressure` stops `psi_system` accounting: `psi_group_change` stops recording (S091 `psi.c:845-857`), so totals freeze and the averages decay toward zero over the following reads (`psi.c:551,1269-1270`); a one-shot read can then report `PRESSURE_OK` under real pressure, and for a few periods right after the switch it can still report the earlier high values. The flag is directly readable at `/sys/fs/cgroup/cgroup.pressure` (this host: `1`); `mori-pressure.py` does not read it. Only the root-to-system mapping (`include/linux/psi.h:39`) and the root file's presence (`kernel/cgroup/cgroup.c:5585-5589`) lack registry rows. Sources: wave-1 CriticC2Semantics, wave-2 CriticKnowledgeOverclaim.
 
 ## Not claimed
 
