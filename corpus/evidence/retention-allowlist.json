@@ -701,6 +701,20 @@
    "line_sha256": "9dd2b7e7192708f43b238b39444c08f5595dd1711843f00d117c3a6e6374b97f",
    "reason": "field or default path name inside lane tool code, no value copied (L1 ruling, round 25 retention repair)",
    "rule": "b"
+  },
+  {
+   "path": ".ufo/waves/round-26/wave1-run.json",
+   "class": "R7",
+   "line_sha256": "ebffdafd816a6595d19a1fc1a2cf624dc904898eaa0e3f31ec0a8aeb72684f26",
+   "reason": "wave bounds text naming operator-owned surfaces by path only, no contents (L1 ruling, round 26)",
+   "rule": "a"
+  },
+  {
+   "path": ".ufo/waves/round-26/wave1-spec.json",
+   "class": "R7",
+   "line_sha256": "f2242d454ff84e23f17386f81ddec93e392558a9386e2c728f7a906d542a6fb5",
+   "reason": "wave bounds text naming operator-owned surfaces by path only, no contents (L1 ruling, round 26)",
+   "rule": "a"
   }
  ]
 }
