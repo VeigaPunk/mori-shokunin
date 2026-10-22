@@ -715,6 +715,13 @@
    "line_sha256": "f2242d454ff84e23f17386f81ddec93e392558a9386e2c728f7a906d542a6fb5",
    "reason": "wave bounds text naming operator-owned surfaces by path only, no contents (L1 ruling, round 26)",
    "rule": "a"
+  },
+  {
+   "path": "SKILL.md",
+   "class": "R7",
+   "line_sha256": "6247d06bcc0c99c5322e837892297bd2ac755a692192c4387fa6333997c7e8be",
+   "reason": "default path name of an operator-owned settings file in a gate-registry row, no value copied (L1 ruling, round 26)",
+   "rule": "a"
   }
  ]
 }
