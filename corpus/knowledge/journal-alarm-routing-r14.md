@@ -64,7 +64,7 @@ round-14 alarm/routing frame and its limits; it does not modify implemented sche
   exclusion, so a slice can still emit a notice when its cgroup empties. Because the slice
   counter is cumulative and the runtime's last-seen value starts at zero, a slice notice can
   reflect an earlier counter increase rather than a kill at that moment [INFERENCE]. Version
-  scope: this control flow is read at pinned main `cf8ebfc6`; host systemd 261 equivalence is not
+  scope: this control flow is read at pinned main `cf8ebfc6`; equivalence with the host systemd (261 when read in round 14; 262 on 2026-10-22) is not
   established. The host count-only observation in Observed is a read-only count consistent with
   this path, not a universal statement about every host or every notice.
 - The r12 measurement already separated the units: five kernel victim lines versus seven
@@ -287,7 +287,7 @@ These are required behaviors, not a claim that the current HEAD implements them.
 ## [UNKNOWN]
 
 - Per-notice victim cardinality and per-kill notice fan-out; whether the pinned main behavior
-  matches host systemd 261; whether `UNIT=`/`USER_UNIT=` is present on every relevant host record;
+  matches the host systemd (261 when read in round 14; 262 on 2026-10-22); whether `UNIT=`/`USER_UNIT=` is present on every relevant host record;
   whether every OOM event yields a `UNIT_RESULT=oom-kill` record under this host's OOMPolicy;
   retention/rate-limit completeness; partial journal access; cross-scope duplicate identity.
 - Whether any retained record on this host currently carries invalid or ambiguous subject
@@ -339,7 +339,7 @@ fleet causation remain frontier. The cgroup-local plane remains its own surface.
 
 ## Provenance limits
 
-- Anchors are pinned systemd main `cf8ebfc6…`; host systemd is 261. No version-equivalence claim.
+- Anchors are pinned systemd main `cf8ebfc6…`; host systemd was 261 in round 14 and is 262 on 2026-10-22 (`.ufo/waves/round-26/capture/capture.txt`). No version-equivalence claim.
 - Supplementary unregistered code anchors: `src/core/cgroup.c:3055-3105`, `src/core/service.c:4704-4752`,
   `src/core/unit.h:1133,1177`. They are flagged as supporting code, not registered SOURCES rows;
   this note does not invent S ids for them. S036 covers `src/core/unit.c` but its registered
