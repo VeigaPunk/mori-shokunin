@@ -230,3 +230,56 @@ cause or reclamation authority: tsukuroi/operator own configuration/diagnosis, s
 proposes eligible residue handling, and operator approval owns reclamation. Four
 retention hits, original permission11/12red, two unknown dispositions and blocked
 baseline acceptance remain; no rank or subsequent-round authority is granted.
+
+## Round-24 appended scope notes (2026-10-22)
+
+- **Core, one-shot system pressure reading (FR12 partial advance, admission pending):**
+  `tools/mori-pressure.py` (round-24 build) reads the four **system** pressure files
+  `/proc/pressure/{cpu,memory,io,irq}` once each and reports one JSON object
+  (`schema: mori-pressure-v1`): a per-resource `state` (`ok`, `absent`, `unsupported`,
+  `unreadable`, `malformed`, `counter_regressed`), the `some`/`full` averages and the
+  cumulative `total`, a `verdict` (`PRESSURE_OK` | `PRESSURE_HIGH` | `PRESSURE_PARTIAL` |
+  `PRESSURE_UNAVAILABLE`) and `findings[]` (`PRESSURE_HIGH` at or above `--warn-avg10`,
+  default 10.0, **labeled local, not calibrated**). System CPU `full` is reported with
+  `full_system_undefined: true` and is never a threshold input and never evidence of no
+  stall; the `irq` resource carries `full` only, so its absent `some` line is expected
+  (`some: null`) and never malformed. Unavailable is never zero: `absent`, `unsupported`
+  and `unreadable` are named states and **no cause is inferred** from them — kernel and
+  boot configuration diagnosis belongs to tsukuroi. The reading is host scope: a
+  system-wide `PRESSURE_HIGH` is evidence to correlate, never proof that a lane, a wave
+  or the fleet caused it. Read-only: the probe opens the PSI files read-only, registers
+  no PSI trigger, writes nothing to `/proc`, `/sys` or a cgroup, and changes no service
+  or package. It is not a census surface: no `SURFACE` row, no census finding id, no
+  DRIFT verdict, no baseline re-pin; the census keeps reading only the user-slice
+  `memory.pressure` it already reads. Knowledge: `corpus/knowledge/system-pressure-r24.md`
+  (lands with this round); sources opened this round are the Linux v7.2 PSI
+  documentation, `kernel/sched/psi.c`, the cgroup-v2 pressure files, the PSI Kconfig and
+  boot parameter, the resource enum and the commit that added IRQ pressure (S090–S096);
+  `proc_pressure(5)` does not exist (S097, rejected).
+- **Still FR12 frontier:** the resident, event-driven PSI trigger watcher and
+  **cgroup-scoped** CPU/IO/IRQ pressure. A trigger watcher is a *write* of a threshold
+  into `/proc/pressure/*` plus a polling process, not a one-shot read, and the
+  per-cgroup `*.pressure` files are a different scope; the one-shot system read above
+  observes neither. The opt-in `--interval S` two-sample mode is **outside** the one-shot
+  Core statement: its added cost is about S seconds and it fails the round-8 dwell rule
+  (`corpus/knowledge/surfaces-r8.md:47-48`), so a stall rate and its latency budget stay
+  with FR6/FR12. FR12 is narrowed here, not closed.
+- **Limits carried with the Core row:** a zero or non-advancing `total` is not evidence of
+  no stall — the root cgroup's `cgroup.pressure` switch can stop `psi_system` accounting
+  while `/proc/pressure/*` stays readable, and the probe does not detect that (wave-1
+  finding `CriticC2Semantics.md` F3; the upstream anchors are carried by the knowledge
+  note); the threshold is a local placeholder, so FR8 stays open; `avg10` is a decaying
+  average, not a ten-second window; and the `full` arm of memory and IO adds no verdict
+  information beyond their `some` arm at an equal threshold (`CriticC2Semantics.md` F4).
+- **Owns-scope extension (append-only; `PROVINCE.md:6-10` is left byte-unchanged):** the
+  Core row above extends the owned read-only probe list named at `PROVINCE.md:6-10`,
+  which today names memory pressure, to the one-shot system CPU/IO/IRQ/memory pressure
+  read. The header sentence itself is not rewritten by this round; the extension is
+  recorded here so no sibling line-range pointer into `PROVINCE.md:3-16` moves.
+- **Admission state (2026-10-22):** the tool and its twelve frozen cases are landed
+  (`tools/mori-pressure.py`, `tools/fixtures/mori-pressure/cases.json`); the declared
+  after-value command prints `MORI_PRESSURE_SELFTEST: PASS 12/12` (exit 0) and one live
+  host run returned `PRESSURE_OK` with all four resources `ok`, `irq` `some` null and
+  system CPU `full` flagged undefined. The Core row above is **pending admission** by the
+  non-author closure. No frontier row is closed, no other lane's surface is claimed, and no remediation
+  is added.

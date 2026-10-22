@@ -441,3 +441,42 @@ The Frontier table remains unchanged. Configuration/diagnosis route to tsukuroi/
 operator; reclamation approval is operator-owned, with souji proposing within its
 scope. Four inherited hits, permission11/12red, two unknown dispositions, blocked
 baseline acceptance and privacy_clearance=false remain.
+
+## Round-24 coverage additions — C2 one-shot system pressure (admission pending)
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| One-shot system pressure read (FR12 partial advance) | `knowledge/system-pressure-r24.md` | System `/proc/pressure/{cpu,memory,io,irq}` read once per resource with per-resource states (`ok`, `absent`, `unsupported`, `unreadable`, `malformed`, `counter_regressed`), a `PRESSURE_OK`/`PRESSURE_HIGH`/`PRESSURE_PARTIAL`/`PRESSURE_UNAVAILABLE` verdict and `PRESSURE_HIGH` findings against a labeled-local, uncalibrated `--warn-avg10` (default 10.0). System CPU `full` is reported undefined and is never evidence of no stall; `irq` carries `full` only, so its absent `some` is expected, not malformed; unavailable is never zero and no cause is inferred from it. Host scope: a system-wide high reading is not evidence that the fleet caused it. Read-only: no PSI trigger, no write to `/proc`, `/sys` or a cgroup, no service or package change. No census surface, no census finding id, no baseline re-pin. The resident PSI trigger watcher and cgroup-scoped CPU/IO/IRQ pressure stay frontier, as does the two-sample `--interval` stall rate (its added cost is about S seconds and it misses the round-8 dwell budget). |
+
+## Round-24 Frontier note — FR12 narrowed, not closed
+
+The FR12 row above (`corpus/README.md:343`) and its PROVINCE counterpart (`PROVINCE.md:55`)
+are byte-unchanged by this round. This appended note records what the round-24 C2 advance
+changes about FR12's scope:
+
+- **Advanced to Core (pending admission):** the one-shot read of the **system** pressure
+  files `/proc/pressure/{cpu,memory,io,irq}` (`tools/mori-pressure.py`). This is the
+  reading the frontier row always excluded from a *census* probe; it is a separate
+  read-only probe, not a census surface, and it adds no `SURFACE` row, no census finding
+  id, no DRIFT verdict and no baseline re-pin.
+- **Still frontier, unchanged:** the resident, event-driven PSI trigger watcher — a
+  threshold written into `/proc/pressure/*` plus a polling process — and the
+  **cgroup-scoped** CPU/IO/IRQ pressure files. Neither is observed by the new probe. The
+  two-sample `--interval` stall rate also stays frontier with FR6: its added cost is
+  about S seconds and it does not meet the round-8 dwell rule
+  (`corpus/knowledge/surfaces-r8.md:47-48`).
+- **Boundaries that travel with the Core row:** the system CPU `full` line stays
+  undefined (`full_system_undefined: true`) and is never read as evidence of no stall; a
+  missing, unsupported or unreadable file is an unavailable state and never a zero
+  reading, with no cause inferred from it (boot and kernel configuration diagnosis is
+  tsukuroi's); the threshold is a labeled-local placeholder, so FR8 stays open; the
+  reading is host scope, so a high value is evidence to correlate, never proof that a
+  lane, a wave or the fleet caused it.
+- **Open at the FR12 boundary:** the root-cgroup `cgroup.pressure` switch can stop
+  `psi_system` accounting while `/proc/pressure/*` stays readable, so a zero or
+  non-advancing `total` is not evidence of no stall and the probe does not detect that
+  case (wave-1 finding `CriticC2Semantics.md` F3; the upstream anchors belong to
+  `knowledge/system-pressure-r24.md`).
+
+No frontier row is closed by this round, and no quota, retention, wave-settlement or
+telemetry ground is touched.
