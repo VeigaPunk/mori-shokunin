@@ -1714,3 +1714,17 @@ longer describes that table.
 - Further limits found in wave 2: an inactive or never-started earlyoom with no send lines reads quiet; a journald
   suppression notice while earlyoom is stopped is not acted on; the unit-state and journal reads are not atomic;
   PID 1 records about the unit are skipped by the grammar, not filtered by the query.
+
+## Round 27 declaration (attempt 1, L1 MoriR27) — OOM victim selection knowledge and the A2 case freeze
+
+Entering tip `fc09f96c8036094bef06370dbb4b436edf96e6e3` (round 26 admitted, `MANIFEST.json` rounds[462]). Full
+contract: `.ufo/waves/round-27/contract.md`. Targets, not results. No new tool this round (drift watch: a new
+one-shot tool was the coverage claim in rounds 24–26).
+
+| Claim | Axis / score | Before | Declared after-value (one command over committed bytes) |
+|---|---|---|---|
+| C1 how earlyoom and the kernel pick an OOM victim on this host, and the fleet's exposure (FR10, sourced) | depth 5 (tied lowest active axis with freshness and calibration) | `bash .ufo/waves/round-27/count-c1.sh fc09f96c…` prints `entry=absent new_rows_cited=0 skill_rows=0`, `C1=unmet`, exit 1 (`.ufo/waves/round-27/evidence/c1-before.txt`) | same command at the landed tip prints `C1=met`, exit 0: entry `corpus/knowledge/oom-victim-selection-r27.md` citing ≥3 mined rows S127+, and ≥3 `Round27` SKILL.md table rows citing it |
+| C2 pin the ten round-26 amendment-A2 rules of `tools/mori-oom-killers.py` with frozen cases (routed D7) | operability 7 | `bash .ufo/waves/round-27/count-c2.sh fc09f96c…` prints `a2_cases=0 a2_rules_covered=0/10`, `C2=unmet`, exit 1 (`evidence/c2-before.txt`) | same command at the landed tip prints `C2=met`, exit 0: `cases-a2.json` (≥20 cases, all ten rule ids, written blind to the tool, unchanged since its freeze commit) `PASS N/N`, and the round-26 file still `PASS 32/32` |
+
+Held and observed: freshness 5, calibration 5, coverage 6, adjacency 6. No retirement, waiver, exploratory claim or
+promotion. No-harm check: lane retention scan 4 unallowlisted at `fc09f96c`; no landed tip may exceed 4.

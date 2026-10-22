@@ -1846,3 +1846,13 @@ run `KILLERS_QUIET` (current invocation; the previous boot held 38 SIGTERM and 1
 and wave 2 findings fixed in the tool after the freeze without touching a frozen case (amendment A2); entry overclaims
 narrowed; routed R2, R4, R6, R8 fixed, R5 partly, R1, R3, R7 named debt. The run budget ended the round while 21
 wave-2 seats were still running; they were cancelled and their reports are not integrated.
+
+## 2026-10-22 — round 27 attempt 1: declaration (L1 MoriR27)
+
+Motivating evidence. Round 26 learned that earlyoom 1.9.0 is active on this host and sent 38 SIGTERM and 1 SIGKILL
+lines in the previous boot (`corpus/lessons/round-26.md:22-25`), but mori holds no knowledge of how earlyoom or the
+kernel chooses which process to kill: `git grep -n -i -E 'oom_score|OOMScoreAdjust' fc09f96c -- corpus/knowledge
+SKILL.md PROVINCE.md | wc -l` → `0`. That is the FR10 remainder "fleet attribution of a victim". Separately, the
+round-26 closure routed D7: no committed case pins the ten rules the round-26 tool adopted after its case freeze.
+Contract `.ufo/waves/round-27/contract.md`, counters `count-c1.sh` and `count-c2.sh` committed with it. Start source
+census: exit 0, the six retained W04 warnings. Retention scan at the entering tip: 4 unallowlisted.
