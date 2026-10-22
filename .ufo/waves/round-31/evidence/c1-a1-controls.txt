@@ -1,0 +1,90 @@
+# C1 amendment-A1 controls, scored after the A1 commit 7973034b8d1c2eb855b0d1c33d19194301247e29 and before any round-31 entry was scored
+
+# do-nothing (A1 commit)
+$ python3 .ufo/waves/round-31/count-c1-a1.py 7973034b8d1c2eb855b0d1c33d19194301247e29 --repo /home/vgpnk/Projects/shokunin/mori-shokunin
+rev=7973034b8d1c2eb855b0d1c33d19194301247e29 repo=/home/vgpnk/Projects/shokunin/mori-shokunin
+entry=absent
+C1=unmet
+exit=1
+$ python3 .ufo/waves/round-31/count-c1.py 7973034b8d1c2eb855b0d1c33d19194301247e29 --repo /home/vgpnk/Projects/shokunin/mori-shokunin   # original, for comparison
+C1=unmet
+
+# shortcut a sourceless table
+$ python3 .ufo/waves/round-31/count-c1-a1.py eddaa8d51c044fbe1e0d9d178be79e41f7955beb --repo /fast/scratch/hyaku/mori-r31/c1-controls
+rev=eddaa8d51c044fbe1e0d9d178be79e41f7955beb repo=/fast/scratch/hyaku/mori-r31/c1-controls
+entry=present head_lines=yes html_comments=0
+tables=1 decision_tables=1
+rows=8 rows_ok=8 distinct_rows=8 short_readings=8
+new_id_rows=0 new_ids=0 ()
+gates_ok=0/0 copies_ok=0/0 fetch_ok=0/0 distinct_sources=yes
+rows_without_quote_overlap=0
+judge=absent
+skill_rows=0
+unmet_conditions=short_readings,new_ids,sources,judge,skill_rows
+C1=unmet
+exit=1
+$ python3 .ufo/waves/round-31/count-c1.py eddaa8d51c044fbe1e0d9d178be79e41f7955beb --repo /fast/scratch/hyaku/mori-r31/c1-controls   # original, for comparison
+C1=unmet
+
+# shortcut b fabricated consistent rows
+$ python3 .ufo/waves/round-31/count-c1-a1.py 9d91f9539a009f1a0be6823710d36c6ce02bc975 --repo /fast/scratch/hyaku/mori-r31/c1-controls
+rev=9d91f9539a009f1a0be6823710d36c6ce02bc975 repo=/fast/scratch/hyaku/mori-r31/c1-controls
+entry=present head_lines=yes html_comments=0
+tables=1 decision_tables=1
+rows=8 rows_ok=8 distinct_rows=8 short_readings=8
+new_id_rows=8 new_ids=4 (S161,S162,S163,S164)
+S161 gate=ok quotes=1 copy=ok fetch=bad url=https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/exec.c
+S162 gate=ok quotes=1 copy=ok fetch=bad url=https://raw.githubusercontent.com/torvalds/linux/v7.2/include/linux/sched.h
+S163 gate=ok quotes=1 copy=ok fetch=bad url=https://gitlab.com/procps-ng/procps/-/raw/v4.0.7/man/pgrep.1
+S164 gate=bad url_registered_at_entering_tip
+gates_ok=3/4 copies_ok=3/4 fetch_ok=0/4 distinct_sources=yes
+rows_without_quote_overlap=8 [1, 2, 3, 4, 5, 6, 7, 8]
+judge=absent
+skill_rows=0
+unmet_conditions=short_readings,sources,quote_overlap,judge,skill_rows
+C1=unmet
+exit=1
+$ python3 .ufo/waves/round-31/count-c1.py 9d91f9539a009f1a0be6823710d36c6ce02bc975 --repo /fast/scratch/hyaku/mori-r31/c1-controls   # original, for comparison
+C1=unmet
+
+# CriticSizing junk readings with real upstream copies (met count-c1.py)
+$ python3 .ufo/waves/round-31/count-c1-a1.py 1f5710a8 --repo /fast/scratch/hyaku/mori-r31/CriticSizing/junk
+rev=1f5710a84693aabfc8ef37dc07a07078fe9325ee repo=/fast/scratch/hyaku/mori-r31/CriticSizing/junk
+entry=present head_lines=yes html_comments=0
+tables=1 decision_tables=1
+rows=8 rows_ok=8 distinct_rows=8 short_readings=8
+new_id_rows=8 new_ids=4 (S161,S165,S169,S173)
+S161 gate=bad source_status_not_mined gate_fields
+S165 gate=bad source_status_not_mined gate_fields
+S169 gate=bad source_status_not_mined gate_fields
+S173 gate=bad source_status_not_mined gate_fields
+gates_ok=0/4 copies_ok=0/4 fetch_ok=0/4 distinct_sources=yes
+rows_without_quote_overlap=8 [1, 2, 3, 4, 5, 6, 7, 8]
+judge=absent
+skill_rows=0
+unmet_conditions=short_readings,sources,quote_overlap,judge,skill_rows
+C1=unmet
+exit=1
+$ python3 .ufo/waves/round-31/count-c1.py 1f5710a8 --repo /fast/scratch/hyaku/mori-r31/CriticSizing/junk   # original, for comparison
+C1=met
+
+# CriticC1Counter HTML-comment vacuous falsifier (met count-c1.py)
+$ python3 .ufo/waves/round-31/count-c1-a1.py 9140d11c --repo /fast/scratch/hyaku/mori-r31/CriticC1Counter/lane
+rev=9140d11c24ff3aad52c626c634d368bd50401d5a repo=/fast/scratch/hyaku/mori-r31/CriticC1Counter/lane
+entry=present head_lines=yes html_comments=1
+tables=1 decision_tables=1
+rows=8 rows_ok=8 distinct_rows=1 short_readings=8
+new_id_rows=8 new_ids=4 (S161,S162,S163,S164)
+S161 gate=bad source_status_not_mined gate_fields
+S162 gate=bad source_status_not_mined gate_fields
+S163 gate=bad source_status_not_mined gate_fields url_registered_at_entering_tip
+S164 gate=bad source_status_not_mined gate_fields url_registered_at_entering_tip
+gates_ok=0/4 copies_ok=0/4 fetch_ok=0/4 distinct_sources=yes
+rows_without_quote_overlap=8 [1, 2, 3, 4, 5, 6, 7, 8]
+judge=absent
+skill_rows=0
+unmet_conditions=html_comment,duplicate_rows,short_readings,sources,quote_overlap,judge,skill_rows
+C1=unmet
+exit=1
+$ python3 .ufo/waves/round-31/count-c1.py 9140d11c --repo /fast/scratch/hyaku/mori-r31/CriticC1Counter/lane   # original, for comparison
+C1=met
