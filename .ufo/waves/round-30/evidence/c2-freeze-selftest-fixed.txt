@@ -1,0 +1,16 @@
+# changed tool (FixToolResidual, sha256 9c88ef272dbe3e07eb87e40f10faaedb82584df0d9f21e78e3d8764400da0fe1) on the frozen r30 file and the four older files; working tree = the tool blob committed with this receipt; parent lane db1ec4694242a9c1acef03fef2852c7e943b1ed7; 2026-10-22T21:48:52Z
+$ python3 -I -B tools/mori-oom-killers.py --selftest --cases tools/fixtures/mori-oom-killers/cases-a2-r30.json
+MORI_OOM_KILLERS_SELFTEST: PASS 8/8
+exit: 0
+$ python3 -I -B tools/mori-oom-killers.py --selftest --cases tools/fixtures/mori-oom-killers/cases-a2-r29.json
+MORI_OOM_KILLERS_SELFTEST: PASS 24/24
+exit: 0
+$ python3 -I -B tools/mori-oom-killers.py --selftest --cases tools/fixtures/mori-oom-killers/cases.json
+MORI_OOM_KILLERS_SELFTEST: PASS 32/32
+exit: 0
+$ python3 -I -B tools/mori-oom-killers.py --selftest --cases tools/fixtures/mori-oom-killers/cases-supplementary.json
+MORI_OOM_KILLERS_SELFTEST: PASS 32/32
+exit: 0
+$ python3 -I -B tools/mori-oom-killers.py --selftest --cases tools/fixtures/mori-oom-killers/cases-a2.json
+MORI_OOM_KILLERS_SELFTEST: PASS 30/30
+exit: 0
