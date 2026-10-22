@@ -256,9 +256,11 @@ sources above forbid.
 ## [UNKNOWN]
 
 - **U1 — why the clamp is 100.** The upstream prose states the ceiling as a fact ("default and
-  maximum 100", F1) but gives no reason for it, and no upstream commit, PR or issue explaining the
-  `Math.min(100, …)` at the construction site was traced by this seat. The number is a shipped fact
-  (F2); its rationale is not in the sources opened.
+  maximum 100", F1) but gives no reason for it. Its history is known (S104): the feature commit
+  `476b858` of 2026-02-22 introduced `Math.min(100, Math.max(1, settings.get("async.maxJobs") ?? 15))`
+  and described the setting as "Maximum concurrent background jobs (1-100)", so the ceiling of 100 and
+  the floor of 1 date from the feature's first commit and only the default moved (15 to 100). The
+  rationale for the number 100 is not in the sources opened.
 - **U2 — what filled the runway.** The count that reached the cap is session-global (F7) and is not
   recorded in a refusal. A refusal therefore cannot attribute the capacity to the wave that hit
   it, to an earlier wave, or to background shell jobs.
