@@ -94,3 +94,7 @@ fixed tool turns R2 red (held 3). Header detection now requires the header block
 - Routed-check fixes after wave 2, each probed in a sandbox clone (old tool held 4, fixed tool red): `++ `
   content lines, a worktree `.gitattributes` marking LOG.md binary, and a non-UTF-8 file name under `tools/`.
 
+
+## Correction appended in round 25 (routed defect D3)
+
+**Correction (round 25, D3):** lines 79–80 above say the co-evolved file `tools/fixtures/mori-pressure/supplementary-cases.json` holds S01–S06 and passes `PASS 6/6`; at the round-24 tip `4f05dd5a` it holds seven cases S01–S07 (S07, a regressed counter must not hide a threshold breach, was added by `c484f6d` after those lines were written at `a536b18`), and `python3 -I -B tools/mori-pressure.py --selftest --cases tools/fixtures/mori-pressure/supplementary-cases.json` prints `MORI_PRESSURE_SELFTEST: PASS 7/7` then `MATCHER: rejected 28/28 corrupted expectations`, exit 0. `SCORECARD.md:1521` already said `PASS 7/7`; lines 79–80 stay as written and this line is the correction record (`corpus/lessons/round-24-verifier-spotcheck.md:144`).

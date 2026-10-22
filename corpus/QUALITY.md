@@ -334,3 +334,22 @@ themselves are not committed.
     `at` has no upper bound; ledgers are found by file name; the separate-worktree and accurate-invocation
     clauses of item 4 are not checked. ← lessons/round-23-verifier-spotcheck.md:65; amendment A4; wave-2
     CriticC1Admission.
+
+## Criteria added round 25 — round-24 routed defects D1 and D2 (`tools/mori-routed-r24.py`)
+
+76. A self-test evidence file names the measured full revision and carries the full stdout and the exit code
+    of the shipping tool. Its header names the full 40-hex commit the run was measured against, the command,
+    the tool blob and fixture tree, and the exit code of that same run; the rest is the complete stdout, not an
+    excerpt or a remembered tally. The tool blob and fixture tree must be identical at the named revision and at
+    the revision that carries the file. Evidence whose bytes differ from what the shipping tool prints at that
+    revision (a missing line, or the same line with a different count) is stale and reads red: a tally is never a
+    pass because its number looks right. Mechanism to watch: every stale file found in rounds 18–24 landed in a
+    commit that also edited the tool it reports on. ← lessons/round-24-verifier-spotcheck.md:137;
+    `.ufo/waves/round-25/w1/PatternStaleEvidence.md`.
+77. A correction sweeps every mention in place. When the lane corrects a stated fact, every place that states it
+    (body prose, decision-table rows, sibling files) carries the corrected wording at the commit that carries the
+    correction; the superseded wording is removed, not shadowed. A "this section wins" banner or a general
+    disclaimer is not a fix: a contradicted line left standing is a defect whether or not a corrections section
+    exists. The sweep runs over whitespace-folded text with emphasis removed, so a phrase split across a line
+    break or wrapped in asterisks still matches, and a statement a critic named explicitly gets its own named
+    correction row. ← lessons/round-24-verifier-spotcheck.md:138-143.
