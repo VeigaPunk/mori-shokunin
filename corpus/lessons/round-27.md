@@ -15,8 +15,7 @@ Contract: `.ufo/waves/round-27/contract.md` (declared at `761b4cdb`; amendment W
 - **The fleet's 200 comes from systemd, not the harness.** The per-user manager runs at 100 and gives its children
   100 more; oh-my-pi v18.12.6 and Bun 1.4.3 never set the value (Fact 3, S130, S132). The floor is 100, not a
   ratchet: an unprivileged process lowered itself from 500 to 199 (wave-1 CriticInheritProbe).
-- **One earlyoom send to `omp` is a fleet-wide event.** The in-session seats live inside one `omp` process, which held
-  the second-highest score on the host; in boot -1 earlyoom signalled one `omp`-class process, 27 `python`-class and
+- **An earlyoom send to the session's `omp` process is a fleet-wide event.** Every `task` seat runs inside the session's `omp` process (oh-my-pi `task/executor.ts:2-4`, S142), which held the second-highest score in the 15:56Z sample. An `omp`-class send line does not show which `omp` process was signalled (wave-2 CriticSingleOmpProcess); in boot -1 earlyoom signalled one `omp`-class process, 27 `python`-class and
   11 others, and 8 of its 39 send lines carry a score only a prefer match can produce (Facts 4–5).
 - **No fleet record can say a seat was OOM-killed.** Lane-dead lines carry no cause and are written at detection time,
   which after a reboot is minutes into the next boot (Fact 6, wave-1 ConnFleetSeatKillPath).
@@ -79,6 +78,7 @@ named wave-1 seat reports.
 | S136 | …/45c35e40…/packages/coding-agent/src/task/index.ts | 2026-10-22 | `:1191-1236` (per-spawn refusal inside one batch; ReviewR3SkillRows §3) | admit, A, mined (as S134) |
 | S137 | https://raw.githubusercontent.com/rfjakob/earlyoom/750a7c0d97bb01c1bdf126fd6bf5722da17e8998/main.c (with the `commits?path=main.c` query) | 2026-10-22 | `:352` "  --kernel-oom              use kernel OOM killer via /proc/sysrq-trigger\n" | admit, A, mined (ReviewS117, routed D2) |
 | S138–S141 | https://github.com/can1357/oh-my-pi/commit/944d7f8d8d44d889b77f1865f394afd1dfb48c86 ; …/e398f83163723b76283c2a05b08806ba37f0773f ; …/6962d5cd2ef157ebf9f415acd58b8744f66400d8 ; …/c4a2441d8f9195de810b3492be5bf5673cecf9c9 | 2026-10-22 | S140 `sdk.ts:1949` "maxRunningJobs: () => Math.min(100, cfgAsyncMaxJobs.get(settings) ?? 100)," | admit, A, mined (drafted round 26; re-opened and re-verified by ReviewR7Knowledge, routed R7) |
+| S142 | https://raw.githubusercontent.com/can1357/oh-my-pi/v18.12.6/packages/coding-agent/src/task/executor.ts | 2026-10-22T17:09:54Z | `:2` "In-process execution for subagents." | admit, A, mined (wave-2 CriticSingleOmpProcess) |
 
 Re-opened, no new row (each adds no row because a row already holds the same bytes): S003 `mm/oom_kill.c` (sha256
 `452f1348…6b4e`), S082 `proc.rst` (`e760f716…d126`), S092 `cgroup-v2.rst` (`a9433bb0…b7ad`), S114 README and S115
