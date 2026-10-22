@@ -494,7 +494,7 @@ The FR1–FR14 rows above (`corpus/README.md:332-345`) and their PROVINCE counte
 frontier row and records what it does and does not cover.
 
 - **FR15 — Harness background-job capacity runway.** First evidence:
-  `knowledge/harness-job-capacity-r25.md:28-213`; `SOURCES.md:104-110,118-119`. Boundary: the
+  `knowledge/harness-job-capacity-r25.md:36-221`; `SOURCES.md:104-110,118-119`. Boundary: the
   bounded Core advance above reads the cap the harness would compute from one settings file and
   the installed binary's bytes. **Still frontier:** the live running-job count in any session
   (not readable from outside that session); the scope of the counted population — one manager per

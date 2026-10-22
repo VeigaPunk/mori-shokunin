@@ -319,7 +319,7 @@ baseline acceptance remain; no rank or subsequent-round authority is granted.
   all at oh-my-pi tag `v18.12.6` (commit `45c35e40c46166dc726ccc52f5d27f40f2449f99`), plus the
   installed binary as an own-work row (S102).
 - **FR15 — Harness background-job capacity runway** (new row; FR1–FR14 are unchanged and FR14 is
-  **not** advanced). First evidence: `corpus/knowledge/harness-job-capacity-r25.md:28-213`;
+  **not** advanced). First evidence: `corpus/knowledge/harness-job-capacity-r25.md:36-221`;
   `corpus/SOURCES.md:104-110,118-119`. Boundary: the read reports the cap the harness would
   compute from the file and the binary it is pointed at. **Still frontier:** the live count of
   running non-queued jobs in any session (not readable from outside that session); the scope in
