@@ -1823,3 +1823,19 @@ promotion. No-harm check: lane retention scan metric at the landed tip not above
 Held: freshness 5, calibration 5, coverage 6, operability 7, adjacency 6, depth 5. No retirement, waiver, exploratory
 claim or promotion. Retention metric 4 at the C1 batch (base 4). Tip receipts: `.ufo/waves/round-30/evidence/tip-c1.txt`,
 `tip-c2.txt`, `tip-retention.txt` (receipts-only last batch).
+
+## Round 31 declaration (attempt 1, L1 MoriR31) — watchdog identity decision table and the fixed blindness gate
+
+Entering tip `a12c68ae81257fb6f918bb165bcb39c73f82d212` (round 30 closed `rejected-honest-stop`,
+`corpus/lessons/round-30-verifier-spotcheck.md`). Full contract: `.ufo/waves/round-31/contract.md`, committed with both
+counters, the C2 fixtures and the control scripts before any seat ran. Targets, not results. A declared claim is never
+withdrawn, narrowed or amended after data; a miss is reported as a miss.
+
+| Claim | Axis / score | Before | Declared after-value (one command over committed bytes) |
+|---|---|---|---|
+| C1 how a pid probe can and cannot establish that the fleet watchdog is alive: a sourced decision table on FR5 ground (sourced S161+) | depth 5 (tied lowest with freshness and calibration) | `python3 .ufo/waves/round-31/count-c1.py a12c68ae` → `entry=absent`, `C1=unmet`, exit 1 | same command at the landed tip → `C1=met`, exit 0 (predicate P-C1, contract) |
+| C2 the blindness gate parses the files-opened list and reports every forbidden entry: new lane tool `tools/mori-blind-check.sh` (routed D1) | operability 7 | `python3 .ufo/waves/round-31/count-c2.py a12c68ae` → `tool=absent`, `C2=unmet`, exit 1 | same command at the landed tip → `exact=16/16`, `C2=met`, exit 0 (predicate P-C2, contract) |
+
+Held and observed: freshness 5, calibration 5, coverage 6, adjacency 6. No retirement, waiver, exploratory claim or
+promotion. Controls (do-nothing and shortcut) for both counters are scored and committed before any seat runs:
+`.ufo/waves/round-31/evidence/c1-controls.txt`, `c2-controls.txt`.
