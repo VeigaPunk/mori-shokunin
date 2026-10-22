@@ -1798,3 +1798,17 @@ RetentionBase).
 
 Held: depth 5, freshness 5, coverage 6, operability 7, adjacency 6, calibration 5. No retirement, waiver, exploratory
 claim or promotion. Retention metric 4 (base 4).
+
+## Round 30 declaration (attempt 1, L1 MoriR30) — invocation-scope decision table, round-29 residual and the disputed shape
+
+Entering tip `58b61681a0e3f3b821a17d38a4e713ccd9921615` (round 29 closed `rejected-honest-stop`, MANIFEST
+`rounds[483]`). Full contract: `.ufo/waves/round-30/contract.md` (`a66751b1`). Targets, not results. A declared claim is
+never withdrawn; a miss is reported as a miss.
+
+| Claim | Axis / score | Before | Declared after-value (one command over committed bytes) |
+|---|---|---|---|
+| C1 how the oom-killers reader scopes an earlyoom invocation: a sourced decision table whose rows the tool reproduces (routed R6 knowledge half; sourced S156+) | depth 5 (tied lowest with freshness and calibration) | `bash .ufo/waves/round-30/count-c1.sh 58b61681` → entry absent, `C1=unmet`, exit 1 (`.ufo/waves/round-30/evidence/c1-before.txt`) | same command at the landed tip → `C1=met`, exit 0 |
+| C2 round-29 residual cases pass (R4), the disputed active-unit shape pinned by blind frozen cases (R6), the blindness gate fixed with a self-test (R5) | operability 7 | `bash .ufo/waves/round-30/count-c2.sh 58b61681` → r29 file `FAIL 21/24`, new file absent, `C2=unmet`, exit 1 (`evidence/c2-before.txt`) | same command at the landed tip → `C2=met`, exit 0 |
+
+Held and observed: freshness 5, calibration 5, coverage 6, adjacency 6. No retirement, waiver, exploratory claim or
+promotion. No-harm check: lane retention scan metric at the landed tip not above its value at `58b61681`.

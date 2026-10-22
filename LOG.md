@@ -1948,3 +1948,19 @@ landed tip.
 - Misroots swept: CaseA207c (wave 1), a Judge06 draft at a misspelled fleet path and an empty fixtures skeleton
   (wave 2) — lesson M10.
 - Retention metric 4 at `8809a3fe` (wave-2 RetentionAtTip), equal to base; census ten W04, `mori ok`, exit 0.
+
+## Round 30 (attempt 1, L1 MoriR30) — declaration
+
+- Entering tip `58b61681` (round-29 spot-check; round 29 closed `rejected-honest-stop`, MANIFEST `rounds[483]`:
+  C1 met, C2 miss). Contract `.ufo/waves/round-30/contract.md` landed `a66751b1` before any implementation, case
+  draft or source row; writer rule-text extract `.ufo/waves/round-30/rule-text.md` in the same commit.
+- Claims: C1 depth (5, tied lowest) — sourced decision-table entry `corpus/knowledge/earlyoom-invocation-scope-r30.md`,
+  counter `.ufo/waves/round-30/count-c1.sh`; C2 operability (7) — round-29 residual cases (R4) pass, the disputed
+  active-unit shape pinned by blind frozen cases (R6), the blindness gate fixed and self-tested (R5), counter
+  `.ufo/waves/round-30/count-c2.sh`. Both counters are written in wave 1 and committed before the data they read.
+- Round-start census 21:05Z at `58b61681`: ten W04, `mori ok`, exit 0 (`.ufo/waves/round-30/evidence/census-start.txt`).
+- Inherited untracked path: `.scratch/` only (pre-round, ruled not round work at r24 and r29; untouched).
+- Wave 1 dispatched 21:11Z: 35 seats (11 executor, 12 scribe, 4 scout, 4 critic, 3 reviewer, 1 connector); spec,
+  validator run and dispatch payload under `.ufo/waves/round-30/`. The L1 holds the planner seat.
+- Routed R1: this round's tip receipts will be `.ufo/waves/round-30/evidence/tip-c1.txt`, `tip-c2.txt` and
+  `tip-retention.txt`, named here and in the lesson before the receipts-only batch.
