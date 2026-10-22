@@ -222,3 +222,11 @@ each measured at that batch's parent.
   retention policy's blindness to unit/pid/cmdline shapes (wave-2 SentinelPrivacy F1), the S159 row's overlap with S120
   (`Restart=always` already anchored there; S159 adds the commit-message purpose only), `corpus/README.md:337` stale
   `fleet-ledger` pointer (wave-2 ReviewProvinceFix).
+
+- **Late wave-2 findings (appended before the receipts batch):** ReviewR30Cases rules `unclear text` on the `verdict`/`exit`
+  pins of all eight frozen r30 cases (the disclosed rule-text fork), a second C2 miss reason under the contract's judging
+  clause; ReviewQualityRows finds QUALITY 92 unmet at the tip (`limit_stated=no`: no `r30-disputed-*` id is named in
+  SKILL or knowledge) and QUALITY 89 vacuous on an absence-free lesson; ReviewC1Separability finds the gate's verdict
+  depends on the caller's checkout path (lane: 1 hit; clone: 4); ReviewSkillRound30 F1/F2 (SKILL `## Round30` row 4
+  over-claimed a dry-run verdict) fixed in the same batch; ReviewEntryProse LOW-1/LOW-2 (S120 also carries
+  `Restart=always`; "reports its version" holds only for a version line at or after the retained stamp) carried.
