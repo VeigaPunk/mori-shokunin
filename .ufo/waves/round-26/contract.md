@@ -177,3 +177,9 @@ frozen case, and discloses the rest as limits. The counted value stays `PASS 32/
   invocation. For an earlyoom that is not active, a non-zero count is positive evidence (`KILLER_ACTED`; a stop
   without restart no longer reads quiet). For an active earlyoom it is reported but does not change the verdict,
   because frozen `c02` pins `KILLERS_QUIET` for that shape; that limit stays disclosed (A2a above).
+- **Wave-2 fixes (CriticCapabilityRow Y1, Y3, Y8):** dry-run is now applied per earlier invocation (split at each
+  version line), so one dry-run invocation no longer zeroes the real sends of another; a `null` journal reads
+  `KILLERS_UNKNOWN` for any earlyoom state; send lines of a removed (`not-found`) unit this boot are positive
+  evidence. Detector inputs and their outputs: `.ufo/waves/round-26/evidence/a2-detectors/` and
+  `a2-detectors.txt` (invented inputs from wave-2 MutPostFreezeRules and CriticCapabilityRow). No committed case
+  file pins these rules; the counted value stays `PASS 32/32` on the frozen file.

@@ -1,0 +1,1 @@
+{"earlyoom_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=1000000\n", "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n", "earlyoom_journal": null, "oomd_notices": 0}

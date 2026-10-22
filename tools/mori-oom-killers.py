@@ -305,18 +305,29 @@ def read_inputs(inputs):
     # invocation, so a real send line is positive evidence (stop without
     # restart must not read as quiet).
     earlier_send_lines = None
-    if journal is not None and earlyoom_state != "absent":
+    if journal is not None:
         scoped_ids = set(id(e) for e in scoped)
         earlier = [e for e in journal if id(e) not in scoped_ids]
-        earlier_texts = [_entry_text(e).lstrip() for e in earlier]
-        if any(t.startswith(PREFIX_DRYRUN) for t in earlier_texts):
-            earlier_send_lines = 0
-        else:
-            earlier_send_lines = sum(
-                1
-                for t in earlier_texts
-                if RE_SIGTERM_ACTION.match(t) or RE_SIGKILL_ACTION.match(t) or t.startswith(PREFIX_ESCALATION)
-            )
+        # Dry-run is set once per invocation (main.c:294-296), so split the
+        # earlier lines at each version line and drop sends only inside an
+        # invocation that logged "dryrun mode enabled".  Lines before the
+        # first version line belong to an unknown invocation and count.
+        earlier_send_lines = 0
+        segment_sends = 0
+        segment_dryrun = False
+        for entry in earlier:
+            t = _entry_text(entry).lstrip()
+            if RE_VERSION.match(t):
+                if not segment_dryrun:
+                    earlier_send_lines += segment_sends
+                segment_sends = 0
+                segment_dryrun = False
+            elif t.startswith(PREFIX_DRYRUN):
+                segment_dryrun = True
+            elif RE_SIGTERM_ACTION.match(t) or RE_SIGKILL_ACTION.match(t) or t.startswith(PREFIX_ESCALATION):
+                segment_sends += 1
+        if not segment_dryrun:
+            earlier_send_lines += segment_sends
 
     version = None
     term_thresholds = None
@@ -429,7 +440,9 @@ def read_inputs(inputs):
             unknown = True
         if oomd_show is None:
             unknown = True
-        if earlyoom_state == "active" and journal is None:
+        if journal is None:
+            # Without the journal the earlier-invocation sends of a stopped
+            # earlyoom cannot be seen either (wave-2 CriticCapabilityRow Y3).
             unknown = True
         if oomd_state != "absent" and oomd_notices is None:
             unknown = True
