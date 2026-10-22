@@ -1834,3 +1834,15 @@ The declaration says earlyoom is "active and enabled since 04:55:44 -03". That t
 earlyoom invocation (`ActiveEnterTimestampMonotonic` 19964362 µs, about 20 s after boot), not its first activation:
 the package `earlyoom 1.9.0-1` was installed on 2026-10-20 and earlyoom ran in each of the last three boots
 (`.ufo/waves/round-26/capture/capture-boots.txt`). Mistake M3 in `corpus/lessons/round-26.md`.
+
+## 2026-10-22 — round 26 attempt 1: outcome (L1 MoriR26)
+
+Two waves under policy v1: wave 1 build, 35 seats (16 scribe, 6 reviewer, 3 executor, 3 scout, 3 critic,
+2 connector, 2 mutation-tester), all returned; wave 2 falsify, 34 seats (22 reviewer, 6 critic, 5 mutation-tester,
+1 scout). Round total 69, 44 attack seats. C1 (freshness): the four frozen stale FR10 phrases 4 → 0 with the superseding
+entry `corpus/knowledge/userspace-oom-killers-r26.md` citing S114–S126 (count-c1.sh). C2 (coverage): new
+`tools/mori-oom-killers.py`, built blind to 32 frozen cases written by another seat, PASS 32/32 (count-c2.sh); live
+run `KILLERS_QUIET` (current invocation; the previous boot held 38 SIGTERM and 1 SIGKILL earlyoom send lines). Wave 1
+and wave 2 findings fixed in the tool after the freeze without touching a frozen case (amendment A2); entry overclaims
+narrowed; routed R2, R4, R6, R8 fixed, R5 partly, R1, R3, R7 named debt. The run budget ended the round while 21
+wave-2 seats were still running; they were cancelled and their reports are not integrated.
