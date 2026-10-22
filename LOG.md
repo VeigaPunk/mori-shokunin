@@ -1816,3 +1816,14 @@ admitted, 7 rejected), SKILL error pattern, PROVINCE/README FR15 notes, QUALITY 
 11:43Z notice; wave-2 findings after the freeze (RUNWAY_DEFAULT false number on flow-mapping configs, untested
 CLI exit path, C1 tool has no selftest) are disclosed, not fixed. Some wave-2 seats had not returned when the
 report was filed; their reports land with no lane commit of this round.
+
+## 2026-10-22 — round 26 attempt 1: declaration (L1 MoriR26)
+
+Motivating evidence. The admitted entry `corpus/knowledge/userspace-oom-killers-r12.md` says in the present tense
+that both userspace OOM killers are inactive on this host (lines 6, 14, 18; also `corpus/README.md:34`). A read-only
+check on 2026-10-22 shows `earlyoom.service` active and enabled since 04:55:44 -03 (earlyoom 1.9.0, package
+`earlyoom 1.9.0-1`), and its own journal startup lines state its limits (SIGTERM when available memory and free swap
+are both at or below 10.00%, SIGKILL at 5.00%). systemd-oomd is inactive and disabled (systemd 262). No mori tool
+reads earlyoom's state or its kill lines. Contract `.ufo/waves/round-26/contract.md`; C1 phrase list frozen with it.
+Start source census: exit 0, the six retained W04 warnings. Retention scan at the entering tip: 4 unallowlisted.
+Wave 1 (build and first falsifiers): 35 seats dispatched in one task call after the seat gate granted 35.

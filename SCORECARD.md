@@ -1584,3 +1584,19 @@ Round-25 corrections from wave 2 (CriticC1Admission), appended before the report
   `28b79d3d`). D5 checks scores only, not evidence pointers or Last change text.
 - The round-25 declaration above says "D1–D4"; after A1 and A5 the counted items are D1, D2, D3 and D5, with D4 a
   hygiene row.
+
+## Round 26 declaration (attempt 1, L1 MoriR26) — FR10 userspace OOM killers
+
+Entering tip `248408f5b6610a85bcbdebe7ac0b4fa7ed51422a` (round 25 admitted, `MANIFEST.json` rounds[455]). Full
+contract: `.ufo/waves/round-26/contract.md` (landed `28b04940`). Targets, not results. Rounds 23–25 each counted a
+routed repair on calibration, so this round works a different frontier area (FR10, `PROVINCE.md:53`); the round-25
+routed defects R1–R8 are hygiene or named debt, never a counted claim.
+
+| Claim | Axis / score | Before | Declared after-value (one command over committed bytes) |
+|---|---|---|---|
+| C1 supersede the stale FR10 host-state statements | freshness 5 (tied lowest active axis with depth and calibration) | contract C1 command at `248408f5` prints `stale_present=4`, `r26_entry=absent` (`.ufo/waves/round-26/evidence/c1-before.txt`) | same command at the landed tip prints `stale_present=0`, `r26_entry=present`; the r26 entry's `source:` line cites a SOURCES row opened in round 26 |
+| C2 userspace OOM killer read capability (FR10, sourced) | coverage 6 | `git cat-file -e 248408f5:tools/mori-oom-killers.py` exits 128 (`evidence/c2-before.txt`) | `python3 -I -B tools/mori-oom-killers.py --selftest` prints `MORI_OOM_KILLERS_SELFTEST: PASS N/N`, exit 0, N = case count of `tools/fixtures/mori-oom-killers/cases.json` at its freeze commit, written by a seat other than the tool seat and committed before the tool |
+
+Held and observed: operability 7, depth 5, calibration 5, adjacency 6. No retirement, waiver, exploratory claim
+or promotion. No-harm check: lane retention scan 4 unallowlisted at `248408f5`
+(`evidence/retention-scan-base.txt`); the landed tip must not exceed 4.

@@ -1,0 +1,156 @@
+{
+ "dispatched_utc": "2026-10-22T13:13:50.291104Z",
+ "via": "one task tool call from the L1 eval kernel (tool.task) carrying taskCall.context and taskCall.tasks unchanged; one solutionSpace string added per task by role",
+ "solutionSpace_by_role": {
+  "scribe": "one source row: open and quote",
+  "executor": "one build to contract; design given",
+  "scout": "read-only reconnaissance; findings open",
+  "connector": "adjacency scan; findings open",
+  "critic": "attack claim; weaknesses open",
+  "reviewer": "verify against source; verdict open",
+  "mutation-tester": "mutants and kills; survivors open"
+ },
+ "gate": "granted lane=mori wave=w1 seats=35 live=27 pending=0 cap=85",
+ "tasks": [
+  {
+   "name": "SrcEarlyoomReadme",
+   "agent": "scribe"
+  },
+  {
+   "name": "SrcEarlyoomMainC",
+   "agent": "scribe"
+  },
+  {
+   "name": "SrcEarlyoomKillC",
+   "agent": "scribe"
+  },
+  {
+   "name": "SrcEarlyoomManpage",
+   "agent": "scribe"
+  },
+  {
+   "name": "SrcEarlyoomMeminfo",
+   "agent": "scribe"
+  },
+  {
+   "name": "SrcEarlyoomUnit",
+   "agent": "scribe"
+  },
+  {
+   "name": "SrcResourceControlV262",
+   "agent": "scribe"
+  },
+  {
+   "name": "SrcOomdUtilV262",
+   "agent": "scribe"
+  },
+  {
+   "name": "SrcSiblingTsukuroi",
+   "agent": "scribe"
+  },
+  {
+   "name": "SrcJournalJson",
+   "agent": "scribe"
+  },
+  {
+   "name": "SrcEarlyoomTagHistory",
+   "agent": "scribe"
+  },
+  {
+   "name": "DraftEntryR26",
+   "agent": "scribe"
+  },
+  {
+   "name": "DraftR12Corrections",
+   "agent": "scribe"
+  },
+  {
+   "name": "DraftSkillFr10",
+   "agent": "scribe"
+  },
+  {
+   "name": "DraftHygieneScorecard",
+   "agent": "scribe"
+  },
+  {
+   "name": "DraftHygieneKnowledge",
+   "agent": "scribe"
+  },
+  {
+   "name": "BuildOomKillersTool",
+   "agent": "executor"
+  },
+  {
+   "name": "WriteOomKillersCases",
+   "agent": "executor"
+  },
+  {
+   "name": "HostCapture",
+   "agent": "executor"
+  },
+  {
+   "name": "ScoutStaleSweep",
+   "agent": "scout"
+  },
+  {
+   "name": "ScoutHostJournal",
+   "agent": "scout"
+  },
+  {
+   "name": "ScoutPriorAdmissions",
+   "agent": "scout"
+  },
+  {
+   "name": "ConnSiblingOverlap",
+   "agent": "connector"
+  },
+  {
+   "name": "ConnFleetConsumers",
+   "agent": "connector"
+  },
+  {
+   "name": "CriticC1Width",
+   "agent": "critic"
+  },
+  {
+   "name": "CriticC2Width",
+   "agent": "critic"
+  },
+  {
+   "name": "ReviewContractGrammar",
+   "agent": "reviewer"
+  },
+  {
+   "name": "ReviewPrivacyDesign",
+   "agent": "reviewer"
+  },
+  {
+   "name": "ReviewScopeClock",
+   "agent": "reviewer"
+  },
+  {
+   "name": "MutC1Counter",
+   "agent": "mutation-tester"
+  },
+  {
+   "name": "ReviewRetentionBase",
+   "agent": "reviewer"
+  },
+  {
+   "name": "CriticLearningRules",
+   "agent": "critic"
+  },
+  {
+   "name": "ReviewOomdV262Facts",
+   "agent": "reviewer"
+  },
+  {
+   "name": "MutCaseDesign",
+   "agent": "mutation-tester"
+  },
+  {
+   "name": "ReviewHygieneDebt",
+   "agent": "reviewer"
+  }
+ ]
+}
