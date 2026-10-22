@@ -523,3 +523,16 @@ frontier row and records what it does and does not cover.
 
 No frontier row is closed by this round, and no quota, retention, wave-settlement or telemetry
 ground is touched.
+
+## Round-31 coverage additions
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| Watchdog daemon identity and degraded-`pgrep` visibility (FR5 partial advance) | `knowledge/watchdog-identity-r31.md` | A sourced decision table (S161–S165, S167, S169–S174) of what each pid-probe observation — `pgrep` with and without `-f`, `comm`, `cmdline`, `stat` state and start time, pid reuse, pgrep exit codes, `/proc/locks` on the watchdog's singleton lock — does and does not establish about the fleet watchdog, with host measurements on throwaway processes. It changes no probe and claims no host liveness. |
+
+## Round-31 Frontier note — FR5 narrowed, not closed
+
+The FR5 row above (`corpus/README.md:338`) is byte-unchanged. The entry narrows FR5 to a decision table; the census probe
+is unchanged (`tools/mori-census.sh:711-715` still counts `pgrep -af` lines), the watchdog writes no pid file, and the
+read-only `/proc/locks` anchor is knowledge, not a probe. D06 (`knowledge/audit-r11.md:201`) stays open and is shared
+with kumitate for ufo-fsd-alpha's own watchdogs.
