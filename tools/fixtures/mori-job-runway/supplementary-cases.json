@@ -434,6 +434,146 @@
     },
     "effective": null
    }
+  },
+  {
+   "id": "R19",
+   "what": "wave-2 MutRunwayYamlScope Y2a: the async block ends at the next column-0 key",
+   "config": "async:\n  enabled: true\ntask:\n  maxJobs: 300\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_DEFAULT",
+    "exit": 0,
+    "configured": {
+     "state": "absent",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": 100
+   }
+  },
+  {
+   "id": "R20",
+   "what": "wave-2 MutRunwayYamlScope Y4: a column-0 comment does not set the child indentation",
+   "config": "async:\n# note\n  maxJobs: 40\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_AS_CONFIGURED",
+    "exit": 0,
+    "configured": {
+     "state": "set",
+     "value": 40
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": 40
+   }
+  },
+  {
+   "id": "R21",
+   "what": "wave-2 MutRunwayAmbiguity M6: three clamp sites 100,100,64 are ambiguous",
+   "config": "async:\n  maxJobs: 200\n",
+   "binary": "x = { maxRunningJobs: () => Math.min(100, XPe.get(R)) };\nx = { maxRunningJobs: () => Math.min(100, XPe.get(R)) };\ny = { maxRunningJobs: () => Math.min(64, Abc.get(S)) };\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "set",
+     "value": 200
+    },
+    "clamp": {
+     "state": "ambiguous",
+     "value": null,
+     "sites": 3
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R22",
+   "what": "wave-2 MutRunwayAmbiguity M7: three clamp sites 64,100,100 are ambiguous",
+   "config": "async:\n  maxJobs: 200\n",
+   "binary": "y = { maxRunningJobs: () => Math.min(64, Abc.get(S)) };\nx = { maxRunningJobs: () => Math.min(100, XPe.get(R)) };\nx = { maxRunningJobs: () => Math.min(100, XPe.get(R)) };\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "set",
+     "value": 200
+    },
+    "clamp": {
+     "state": "ambiguous",
+     "value": null,
+     "sites": 3
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R23",
+   "what": "wave-2 MutRunwayAmbiguity M11: no config and an ambiguous default give no number",
+   "config": null,
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\nvar Q = h({\n  id: \"async.maxJobs\",\n  type: \"number\",\n  default: 50\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "absent",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100
+    },
+    "setting_default": {
+     "state": "ambiguous",
+     "value": null
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R24",
+   "what": "wave-2 CriticC2Admission: four-space indentation is a direct child",
+   "config": "async:\n    maxJobs: 50\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_AS_CONFIGURED",
+    "exit": 0,
+    "configured": {
+     "state": "set",
+     "value": 50
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": 50
+   }
   }
  ]
 }

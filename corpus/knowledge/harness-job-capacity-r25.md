@@ -25,6 +25,14 @@ Everything here is bound to one version, omp/oh-my-pi **18.12.6** (tag `v18.12.6
 `45c35e40c46166dc726ccc52f5d27f40f2449f99`). A different build may clamp elsewhere, and this note
 does not carry over.
 
+**Whose ground (wave-2 CriticC2Admission).** Mori's own ground here is the reading: what the settings
+file says, what the installed binary clamps it to, what the documentation does and does not state, and
+what the fleet's own records show (F1–F3, F10, F12–F13). The facts about how the job manager counts,
+refuses and is shared (F4–F9) are the OMP harness contract, which `PROVINCE.md` Adjacent assigns to
+kumitate, and F11 describes the fleet's seat gate, which is orchestration; this note cites them only to
+explain what a refusal means for an observer, and the round-25 report routes them to kumitate. Changing
+the cap is the operator's.
+
 ## Facts
 
 Every fact below carries its pointer. Upstream URLs are at commit
