@@ -1827,3 +1827,10 @@ are both at or below 10.00%, SIGKILL at 5.00%). systemd-oomd is inactive and dis
 reads earlyoom's state or its kill lines. Contract `.ufo/waves/round-26/contract.md`; C1 phrase list frozen with it.
 Start source census: exit 0, the six retained W04 warnings. Retention scan at the entering tip: 4 unallowlisted.
 Wave 1 (build and first falsifiers): 35 seats dispatched in one task call after the seat gate granted 35.
+
+## 2026-10-22 — round 26 attempt 1: correction to the declaration entry above (L1 MoriR26)
+
+The declaration says earlyoom is "active and enabled since 04:55:44 -03". That time is the start of the current
+earlyoom invocation (`ActiveEnterTimestampMonotonic` 19964362 µs, about 20 s after boot), not its first activation:
+the package `earlyoom 1.9.0-1` was installed on 2026-10-20 and earlyoom ran in each of the last three boots
+(`.ufo/waves/round-26/capture/capture-boots.txt`). Mistake M3 in `corpus/lessons/round-26.md`.

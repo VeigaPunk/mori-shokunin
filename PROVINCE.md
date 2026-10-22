@@ -353,3 +353,19 @@ baseline acceptance remain; no rank or subsequent-round authority is granted.
   run returned `RUNWAY_CLAMPED` with effective 100, exit 1. The Core bullet above is **pending
   admission** by the non-author closure. No frontier row is closed, no other lane's surface is
   claimed, and no remediation is added.
+
+## Round-26 appended scope notes (2026-10-22)
+
+- **Core, one-shot userspace OOM killer read (FR10 partial advance, admission pending):**
+  `tools/mori-oom-killers.py` reads `systemctl show` for `earlyoom.service` and
+  `systemd-oomd.service`, the earlyoom unit journal of the current boot (counts only, in memory) and the
+  count of systemd-oomd kill notices (`MESSAGE_ID=d989611b…`) this boot, and reports one JSON object
+  (`schema: mori-oom-killers-v1`) with a `KILLER_ACTED` / `KILLERS_UNKNOWN` / `KILLERS_QUIET` verdict.
+  Counts are earlyoom log lines, not processes killed. Knowledge: `corpus/knowledge/userspace-oom-killers-r26.md`.
+- **Still FR10 frontier:** send lines of an earlier invocation of an active earlyoom in the same boot (reported
+  in `earlier_invocation_send_lines`, not a verdict input); previous boots (the round-26 per-boot capture shows
+  38 SIGTERM and 1 SIGKILL send lines in the previous boot, none in the current one); oomd cgroup xattrs and
+  D-Bus `Killed` signals; fleet attribution of any victim.
+- **Adjacency unchanged:** diagnosing, configuring, enabling or tuning either killer, and the earlyoom and
+  systemd-oomd unit state as host diagnosis, stay with tsukuroi and the operator; mori cites
+  `tsukuroi-shokunin@157ee255:corpus/knowledge/memory-pressure-r25.md` and absorbs none of it.

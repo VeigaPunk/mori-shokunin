@@ -353,3 +353,12 @@ themselves are not committed.
     exists. The sweep runs over whitespace-folded text with emphasis removed, so a phrase split across a line
     break or wrapped in asterisks still matches, and a statement a critic named explicitly gets its own named
     correction row. ← lessons/round-24-verifier-spotcheck.md:138-143.
+78. A counting command reads every input from committed bytes at a named revision. It refuses a revision that
+    does not resolve to a commit, a missing counted file and a short input list with exit 2, and it never reads a
+    list, pattern or fixture from the working directory, so running it from another directory or at a bad revision
+    cannot print the after-value. The command is a committed script, not a pasted one-liner. ←
+    lessons/round-26.md (M1).
+79. A present-tense statement about how a host tool behaves names the release it holds for. When the evidence is
+    an upstream branch head or a newer tag than the installed package, the statement is scoped to that ref or it is
+    false of the host: check the installed version (package query, binary strings or the tool's own version line)
+    before carrying an upstream sentence into a host reading. ← lessons/round-26.md (M4).
