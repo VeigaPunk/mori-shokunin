@@ -153,3 +153,53 @@ Every change makes C1 harder to meet, removes a format ambiguity, or makes it se
 - **Residual, uncounted (F3), read by wave 2 non-authors:** re-fetch every S156+ URL, recompute sha256 of the full
   bytes and diff each excerpt line against the fetched line of the same number; any mismatch is reported as a C1
   defect.
+
+## Amendment A2 (round 30, before the C2 counter, the gate and the case file land, and before the L1 opens any writer report; wave-1 CriticC2Design, CriticSizing, CriticHarmScreen, ReviewRuleTextShape, ReviewC1Reachability)
+
+Every change makes C2 harder to meet, fixes a counter defect, or states a miss condition in advance; nothing is
+narrowed. C1 parse clarifications (ReviewC1Reachability F3) close the list.
+
+- **Gate is exercised by the counter, not trusted (CriticC2Design G1, G2):** besides the gate's own `--selftest`
+  printing `PASS`, the counter builds its own planted writer reports (one per leak class a–d of C2.4) in a temporary git
+  repository and requires the gate to exit 1 on each, and the gate run at the freeze commit must print
+  `scanned=<k>` with k equal to the number of distinct authors in `cases-a2-r30.json`, and `blind_violations=0`.
+- **Allowlist, not denylist (G3, G4):** a writer's files-opened entry passes only if it is the lane path of
+  `.ufo/waves/round-30/rule-text.md`, a path under the writer's own scratch dir, or an `https://` URL whose host and
+  path start with one of `raw.githubusercontent.com/rfjakob/earlyoom/`, `github.com/rfjakob/earlyoom/`,
+  `raw.githubusercontent.com/systemd/systemd/`, `github.com/systemd/systemd/`, `www.freedesktop.org/software/systemd/`;
+  anything else is a violation. On the round-29 writer wave (whose brief allowed contract and fixture reads) the gate's
+  self-test compares against an exact expected set of (file, rule) reports, documented in the gate, and none of the
+  20 adjudicated round-29 false positives may appear in it.
+- **Freeze identification (F1):** the freeze commit is the oldest commit (`git log --reverse --diff-filter=A`) adding
+  `cases-a2-r30.json`; the file must never be deleted or modified after it (`git log --format=%H <freeze>..<rev> --
+  <file>` empty).
+- **Tool run order (F2):** the first tool runs on the frozen file use the entering-tip tool blob, then the changed
+  tool; both receipts are committed (`evidence/c2-freeze-selftest-base.txt`, `evidence/c2-freeze-selftest-fixed.txt`).
+  No tool change may alter the verdict of any shape case of `cases-a2-r30.json` (the round-29 closure's ruling on the
+  disputed shape stands: CriticHarmScreen).
+- **Shape tightened (S1):** a shape case additionally holds no `dryrun mode enabled` line, every journal record has a
+  numeric `__MONOTONIC_TIMESTAMP`, timestamps are non-decreasing in list order, `LoadState=loaded`, and `oomd_notices`
+  is 0.
+- **Undecided pins (W1, D1):** a writer report stating that a mandatory pin (`earlyoom.actions.sigterm`,
+  `earlyoom.earlier_invocation_send_lines`) is not decided by the text counts as `unclear text` → C2 miss. A case
+  pinning the literal reading (`KILLER_ACTED` from the pre-restart sends) that the tool does not print is a C2 miss;
+  it is never answered by a tool change (that would reverse condition 1's round-29 pins).
+- **Judging (CriticSizing):** every mismatch gets two independent judge seats; a split counts as `unclear text`.
+- **Residual fix bound (ReviewJudgeRulings, CriticSizing):** the full-output differential of the changed tool against
+  the entering-tip tool over the 94 older cases may change output only for cases whose earlyoom show text is readable
+  and whose `ActiveState` is not `active`; any `KILLER_ACTED` → other verdict anywhere is a harm. Receipt:
+  `evidence/c2-differential.txt`.
+- **Authorship (CriticSizing A2):** a case's author is the writer report in which it is found; its `author` key must
+  name that seat (`CaseR30x` or `MoriR30.CaseR30x`).
+- **Counters from blobs (CriticSizing A3):** both counters and the gate are run from their committed blobs
+  (`bash <(git show <rev>:.ufo/waves/round-30/count-cN.sh) <rev>`); the gate at the freeze commit is the freeze commit's
+  blob.
+- **Disclosed, uncounted:** the rule text does not decide the disputed shape uniquely (ReviewRuleTextShape F1–F2: a
+  literal scope reading gives `KILLER_ACTED`); the counted after-value is agreement of four blind writers and the tool,
+  not a proof that the text decides the shape. Judge02's round-29 `unclear text` pin stays inside the `PASS 24/24`
+  tally and is named in the report.
+- **C1 parse clarifications:** excerpt body line = digits, TAB, text (split on the first tab); excerpts may be sparse,
+  but every line L..M of a counted quote must be present; whitespace collapse = runs of spaces and tabs to one space,
+  then trim, applied to the quote and to excerpt lines L..M joined by one space; the Gate URL is the first `https?://`
+  token of the source cell; the Gate sha256 is the 64-hex inside backticks in the sha256 cell; a Gate line is a table
+  line under `## Gate` (until the next `## ` heading) whose first cell is `S###`.
