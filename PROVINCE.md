@@ -22,7 +22,7 @@ endpoint and model-serving health (→ kama); credential material (→ kagi).
 - **Watchdog liveness** — census `SURFACE watchdog`: watchdog pid/start and log freshness, plus `.ufo/state/*.round` values against each lane's latest launch-ledger entry.
 - **Wave settlement** — `SURFACE waves`: registry/dispatch/results presence and per-wave age; report settled, unsettled, or empty without calling an aged wave failed.
 - **Kill/OOM classes** — structured, MESSAGE-free journal records carrying catalog IDs for kernel-OOM unit notices, oomd notices, coredumps, unit-process SIGKILL results and unit failures, plus a distinct numeric signal-11 coredump count; independently labeled user/system scopes, never summed. Positive OOM notices and observed `UNIT_RESULT=oom-kill` retain critical `OOM_KILL_JOURNAL`/DRIFT alarms. Failed-unit subject metadata preserves fleet-only `UNIT_FAILURE_JOURNAL` versus non-fleet `UNIT_FAILURE_OUT_OF_SCOPE` with tsukuroi triage routing; absent or unsafe subject metadata remains unknown. `SURFACE cgroup` retains selected-scope kernel memory-event counters, not a replacement for all journal alarms. Journal labels are client-set, not authenticated producer identity; records are not unique victims or fleet-cause attribution. Other structured signals are unimplemented; arbitrary signals without retained records remain unmeasured. See `corpus/knowledge/journal-alarm-routing-r14.md`.
-- **Same-boot journal window since anchor** — explicit read-only probe `tools/mori-journal-window.py --anchor PATH --scope user|system` (round-16 build; verification pending). Reads one journal scope from an operator-retained `mori-journal-anchor-v1` cursor using MESSAGE-free output fields. The first record must match the anchor cursor and boot exactly and is dropped; every later record must be a scalar-cursor object in that same boot. Reports `records_after_anchor` and four separate `positive_*` subset counts (kernel OOM, unit OOM, unit signal, process SIGKILL) using the r15 predicates; no total, victim, emitter or completeness claim. Missing or vacuumed anchor, boot mismatch, malformed, duplicate or truncated capture, nonzero rc, stderr, timeout and overflow return `MORI_JOURNAL_WINDOW_UNAVAILABLE` with no positive totals. Byte equality is conservative: libsystemd documents that one entry may carry several cursor strings, so a mismatch refuses without proving deletion and no dedup is claimed. The anchor is never advanced, stored or written by the probe.
+- **Same-boot journal window since anchor** — explicit read-only probe `tools/mori-journal-window.py --anchor PATH --scope user|system` (round-16 build; admitted round 16 — `corpus/lessons/round-16-verifier-spotcheck.md:11`). Reads one journal scope from an operator-retained `mori-journal-anchor-v1` cursor using MESSAGE-free output fields. The first record must match the anchor cursor and boot exactly and is dropped; every later record must be a scalar-cursor object in that same boot. Reports `records_after_anchor` and four separate `positive_*` subset counts (kernel OOM, unit OOM, unit signal, process SIGKILL) using the r15 predicates; no total, victim, emitter or completeness claim. Missing or vacuumed anchor, boot mismatch, malformed, duplicate or truncated capture, nonzero rc, stderr, timeout and overflow return `MORI_JOURNAL_WINDOW_UNAVAILABLE` with no positive totals. Byte equality is conservative: libsystemd documents that one entry may carry several cursor strings, so a mismatch refuses without proving deletion and no dedup is claimed. The anchor is never advanced, stored or written by the probe.
 - **Resource runway** — `SURFACE disk` and `SURFACE cgroup`: default `df -P` targets `$ROOT` and `/tmp`, since-boot device-write average, memory PSI/fill/avail, and scope high-watermark.
 - **tmux relevance** — `SURFACE tmux`: classify sessions by pane path; bound the freshness probe for each relevant session.
 - **Lane silence** — `SURFACE lane.<id>` rows: launch-anchored authorship grading as silent, progressing, progressing-weak, young, not-open, or unavailable.
@@ -44,7 +44,7 @@ Round-16 C1 advances FR11 only for the same-boot explicit window above, and only
 - **FR1 — Kernel OOM event-time attribution and fleet correlation** (state F1/F8 + art F2). First evidence: `corpus/knowledge/kernel-oom-line-attribution-r12.md:10-16`; `corpus/knowledge/audit-r11.md:203-204`. Round 13 advances structured system-journal notice records to Core; event-time kernel summary/victim token validation and fleet correlation remain frontier. No raw `MESSAGE` is emitted, and a host record alone does not prove a fleet-caused kill.
 - **FR2 — Quota/EDQUOT observability** (state F2). First evidence: `corpus/knowledge/audit-r11.md:218-222`. Boundary: `df` capacity percentages cannot detect quota exhaustion; observe and report only, never change quota state.
 - **FR3 — Authoritative wave settlement and emptied-by-hygiene versus never-written** (state F3). First evidence: `corpus/knowledge/audit-r11.md:202`; `../kumitate-shokunin/corpus/knowledge/swarm-wave-lifecycle.md:28-34,91-120`. Boundary: mori reports filesystem shape; kumitate owns orchestration/result semantics; `empty` alone does not prove never-written, and receipt review stays offline.
-- **FR4 — Driver-state versus MANIFEST versus lane-LOG round reconciliation** (state F4). First evidence: `../fleet-ledger/.ufo/waves/kaika-w1/mori-state.md:31,190`; `corpus/knowledge/observability-surfaces-r2.md:118-125`. Boundary: the census compares driver state with watchdog launch lines only; it does not establish MANIFEST admission or lane-LOG agreement.
+- **FR4 — Driver-state versus MANIFEST versus lane-LOG round reconciliation** (state F4). First evidence: `../.ufo/waves/kaika-w1/mori-state.md:31,190`; `corpus/knowledge/observability-surfaces-r2.md:118-125`. Boundary: the census compares driver state with watchdog launch lines only; it does not establish MANIFEST admission or lane-LOG agreement.
 - **FR5 — Watchdog daemon identity and degraded-pgrep visibility** (state F5). First evidence: `corpus/knowledge/audit-r11.md:200-201`. Boundary: an unavailable pid probe is not absence, and argv-substring matches do not establish daemon identity.
 - **FR6 — Instantaneous disk write-rate** (state F6). First evidence: `corpus/knowledge/surfaces-r8.md:75-89`. Boundary: retain the since-boot average as a different measure; a two-sample rate stays deferred until its added latency meets the stated budget.
 - **FR7 — Live tmux relevance/freshness arm** (state F7). First evidence: `corpus/knowledge/surfaces-r8.md:120-124`. Boundary: the host arm is fixture-proved only; do not create or steer sessions, and unavailable is not unhealthy.
@@ -63,9 +63,9 @@ Report shared evidence to its owner; do not absorb another lane's domain.
 | Sibling | Boundary | Evidence |
 |---|---|---|
 | kumitate | Owns OMP task/hub orchestration and wave plan/run/record/collect semantics; mori passively grades `.ufo/waves/*` filesystem settlement state. No conflicting settlement contract was found. | `../kumitate-shokunin/PROVINCE.md:3-6`; `../kumitate-shokunin/corpus/knowledge/swarm-wave-lifecycle.md:28-34,91-120`; `PROVINCE.md:6-10` |
-| tsukuroi | Owns host OS, package, systemd-unit, driver, firmware, and boot diagnosis. It was the only sibling hit in R12Connector's corpus search for `systemd-oomd`, `earlyoom`, `memory.events`, and `MESSAGE_ID`; this is adjacent host diagnosis, not contested fleet ownership. | `../tsukuroi-shokunin/PROVINCE.md:21-24,35-44`; `../tsukuroi-shokunin/corpus/knowledge/oom-event-plane.md:231-257,279-281,301,344-367`; `../tsukuroi-shokunin/corpus/knowledge/kill-event-deep-r8.md:30-37,97,120-135`; `PROVINCE.md:12-16` |
+| tsukuroi | Owns host OS, package, systemd-unit, driver, firmware, and boot diagnosis. It was the only sibling hit in R12Connector's corpus search for `systemd-oomd`, `earlyoom`, `memory.events`, and `MESSAGE_ID`; this is adjacent host diagnosis, not contested fleet ownership. | `../tsukuroi-shokunin/PROVINCE.md:8-14`; `../tsukuroi-shokunin/corpus/knowledge/oom-event-plane.md:231-257,279-281,301,344-367`; `../tsukuroi-shokunin/corpus/knowledge/kill-event-deep-r8.md:30-37,97,120-135`; `PROVINCE.md:12-16` |
 | kama | Owns local model-serving and endpoint health; mori does not infer serving health from host/resource signals. | `../kama-shokunin/PROVINCE.md:3-15,40-53` |
-| kagi | Owns secrets, vault operations, and credential-hygiene evidence; mori never reads or reports credential material. | `../kagi-shokunin/PROVINCE.md:3-6`; `SKILL.md:49` |
+| kagi | Owns secrets, vault operations, and credential-hygiene evidence; mori never reads or reports credential material. | `../kagi-shokunin/PROVINCE.md:3-6`; `SKILL.md:374-393` |
 | souji | Lists own-uid scratch residue and proposes removal for operator approval; routes liveness/resource findings to mori. Mori reports, never performs reclamation. | `souji-shokunin@fe7590b3010bed9b9b808b79c2bf2be1a18bce2a:PROVINCE.md:8-17,50-52`; the round21 citation erratum below retains the historical context. |
 
 - **Received packet TSUKUROI-F1-MEM-01 (ADJ-04):** `../tsukuroi-shokunin/corpus/knowledge/adjacency-handoffs-fleet-r1.md:74-112` records the 2026-10-15T04:53:46Z capture as `prepared`; boot identity/event window were not captured, and acknowledgement/acceptance/resolution are unobserved. Its request is to compare the timestamp with watchdog/wave evidence if retained, not to infer an OOM or cause.
@@ -87,11 +87,11 @@ Report shared evidence to its owner; do not absorb another lane's domain.
 
   No retained kernel OOM, `fe6faa94…` unit-kill notice, or `d989611b…` oomd notice overlaps this bounded query; [UNKNOWN] no independent pressure-series comparison is available for this packet. The single snapshot cannot establish fleet cause or wave settlement. Correlation is not causation.
 - **Souji's receipts distinguish only listed removals:** the approval list records hashed `aggregator-r10*` artifacts and the later sweep marks those exact paths `pushed`. For precisely those named paths, receipts support a `swept (pushed-receipt)` classification; for an empty path without a matching receipt, [UNKNOWN] history, so it is not evidence of “never written.” This is offline evidence reading, not a live census dependency.
-- **Source overlap:** R12Connector compared the S001–S030 URL set in `../fleet-ledger/.ufo/waves/kaika-w1/mori-art.md:91-124` with sibling `corpus/SOURCES.md` registries; its exact-URL sweep found no shared URL, so no source rows are merged here.
+- **Source overlap:** R12Connector compared the S001–S030 URL set in `../.ufo/waves/kaika-w1/mori-art.md:91-124` with sibling `corpus/SOURCES.md` registries; its exact-URL sweep found no shared URL, so no source rows are merged here.
 
 ## Corrections (round 12)
 
-- The existing phrase “scratch roots” does not resolve to a measured target: `/scratch` is absent (the path inspection returned `Path '/scratch' not found`; `../fleet-ledger/.ufo/waves/kaika-w1/mori-state.md:180` records `ls /scratch` → absent). The census documents `MORI_DISK_TARGETS` as defaulting to `$ROOT /tmp` (`tools/mori-census.sh:211-212,282`); `/scratch` is not a default disk target.
+- The existing phrase “scratch roots” does not resolve to a measured target: `/scratch` is absent (the path inspection returned `Path '/scratch' not found`; `../.ufo/waves/kaika-w1/mori-state.md:180` records `ls /scratch` → absent). The census documents `MORI_DISK_TARGETS` as defaulting to `$ROOT /tmp` (`tools/mori-census.sh:211-212,282`); `/scratch` is not a default disk target.
 
 ## Round-17 appended scope and closure notes (2026-10-20)
 
@@ -233,7 +233,7 @@ baseline acceptance remain; no rank or subsequent-round authority is granted.
 
 ## Round-24 appended scope notes (2026-10-22)
 
-- **Core, one-shot system pressure reading (FR12 partial advance, admission pending):**
+- **Core, one-shot system pressure reading (FR12 partial advance, admitted round 24):**
   `tools/mori-pressure.py` (round-24 build) reads the four **system** pressure files
   `/proc/pressure/{cpu,memory,io,irq}` once each and reports one JSON object
   (`schema: mori-pressure-v1`): a per-resource `state` (`ok`, `absent`, `unsupported`,
@@ -280,7 +280,7 @@ baseline acceptance remain; no rank or subsequent-round authority is granted.
   (`tools/mori-pressure.py`, `tools/fixtures/mori-pressure/cases.json`); the declared
   after-value command prints `MORI_PRESSURE_SELFTEST: PASS 12/12` (exit 0) and one live
   host run returned `PRESSURE_OK` with all four resources `ok`, `irq` `some` null and
-  system CPU `full` flagged undefined. The Core row above is **pending admission** by the
+  system CPU `full` flagged undefined. The Core row above was **admitted** by the round-24
   non-author closure. No frontier row is closed, no other lane's surface is claimed, and no remediation
   is added.
 - **Adjacency (wave-2 finding CriticHarmAxes A1; wave-1 ConnectSiblingPsi):** tsukuroi's census reads the same
@@ -291,7 +291,7 @@ baseline acceptance remain; no rank or subsequent-round authority is granted.
 
 ## Round-25 appended scope notes (2026-10-22)
 
-- **Core, harness background-job capacity runway read (new FR15 advance, admission pending):**
+- **Core, harness background-job capacity runway read (new FR15 advance, admitted round 25):**
   `tools/mori-job-runway.py` (round-25 build) reads two byte sources and reports one JSON object
   (`schema: mori-job-runway-v1`): the **configured** `async.maxJobs` from one settings file
   (`--config`, default the operator's OMP settings file), the **clamp** compiled into the installed
@@ -350,13 +350,13 @@ baseline acceptance remain; no rank or subsequent-round authority is granted.
 - **Admission state (2026-10-22):** the tool and its twenty-one frozen cases are landed
   (`tools/mori-job-runway.py`, `tools/fixtures/mori-job-runway/cases.json`); the declared
   after-value command prints `MORI_JOB_RUNWAY_SELFTEST: PASS 21/21` (exit 0) and one live host
-  run returned `RUNWAY_CLAMPED` with effective 100, exit 1. The Core bullet above is **pending
-  admission** by the non-author closure. No frontier row is closed, no other lane's surface is
+  run returned `RUNWAY_CLAMPED` with effective 100, exit 1. The Core bullet above was **admitted
+  by the round-25 non-author closure**. No frontier row is closed, no other lane's surface is
   claimed, and no remediation is added.
 
 ## Round-26 appended scope notes (2026-10-22)
 
-- **Core, one-shot userspace OOM killer read (FR10 partial advance, admission pending):**
+- **Core, one-shot userspace OOM killer read (FR10 partial advance, admitted round 26):**
   `tools/mori-oom-killers.py` reads `systemctl show` for `earlyoom.service` and
   `systemd-oomd.service`, the earlyoom unit journal of the current boot (counts only, in memory) and the
   count of systemd-oomd kill notices (`MESSAGE_ID=d989611b…`) this boot, and reports one JSON object
@@ -372,7 +372,7 @@ baseline acceptance remain; no rank or subsequent-round authority is granted.
 
 ## Round 27 — FR10 victim selection (knowledge, no new tool)
 
-- **Core, knowledge (FR10 partial advance, admission pending):** how earlyoom 1.9.0 and the Linux 7.2 kernel choose
+- **Core, knowledge (FR10 partial advance; round 27 closed `rejected-honest-stop`, so this advance is not admitted):** how earlyoom 1.9.0 and the Linux 7.2 kernel choose
   an OOM victim, where the fleet's `oom_score_adj` 200 comes from (systemd's per-user manager, not the harness), and
   what the fleet's records can and cannot attribute: `corpus/knowledge/oom-victim-selection-r27.md` (S148, S149,
   S150, S130, S151, S132, S142), with the SKILL.md `Round27` decision table.
@@ -382,3 +382,19 @@ baseline acceptance remain; no rank or subsequent-round authority is granted.
   victim.
 - **Adjacency unchanged:** the host's OOM configuration stays with tsukuroi and the operator; the entry cites
   tsukuroi's kill-plane entries and corrects their "+200 band first" model without absorbing them.
+
+## Round-30 correction — head lists and stale pointers (routed R7)
+
+Same-line substitutions this round (no line moved, so the lane's line citations into this file stay valid): `:25`
+round-16 build now reads admitted; `:236`, `:283`, `:294`, `:353-354`, `:359` read admitted (rounds 24, 25, 26,
+MANIFEST at fleet `63729047`); `:375` states round 27 closed `rejected-honest-stop`; `:47`, `:90`, `:94` point at the
+fleet-root `../.ufo/waves/kaika-w1/` files (the `../fleet-ledger/` prefix never existed); `:66` tsukuroi owns range is
+`PROVINCE.md:8-14`; `:68` the secret rule is `SKILL.md:374-393`. Evidence: `.ufo/waves/round-30/w1/DraftProvinceR7.md`,
+independent scout `.ufo/waves/round-30/w1/ScoutProvinceStale.md`.
+
+The `## Core` head (`:22-28`) lists seven bullets and does not repeat the Core additions appended per round: round 17
+`:103`, `:108`; round 18 `:125`, `:132`, `:134`; round 20 `:145`; round 24 `:236`; round 25 `:294`; round 26 `:359`;
+round 27 `:375`. The `## Frontier` head (`:44-57`) lists FR1–FR14; FR15 is the round-25 appended row at `:321`.
+Neither head is a completeness claim. Still open (named, not fixed this round): sixteen `tools/` files and six
+fixture directories are not named here (ScoutProvinceStale items 4–5); the census citation `tools/mori-census.sh:211-212,282`
+at `:94` has drifted (the default now sits near `:237`, `:321`; ScoutProvinceStale item 8).
