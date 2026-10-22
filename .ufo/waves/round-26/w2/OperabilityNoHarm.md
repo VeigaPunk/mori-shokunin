@@ -5,17 +5,17 @@ Read-only. No lane writes. No tool installed or upgraded.
 
 ## Verdict
 
-No harm to operability at the pin. All five assigned commands exit 0, and each tally equals its last recorded result. The tool blob and fixture tree behind each check are byte-identical to the blob or tree recorded in round 24 or round 25. Three low-severity documentation defects were found (F1 to F3). None changes a tool result.
+No harm to operability at the pin. All five assigned commands exit 0, and each tally equals its last recorded result. For each check, the tool and fixture bytes at the pin are the bytes behind the last recorded run (table, column 6). Three low-severity documentation defects were found (F1 to F3). None changes a tool result.
 
 ## Method
 
 1. Lane run of the five assigned commands from the lane root, as instructed (`-I -B` on the Python tools).
 2. Clean run: `git archive 16935e24… | tar -x` into `/fast/scratch/hyaku/mori-r26/OperabilityNoHarm/export` (no `.git`). The selftests were repeated there, so no result depends on the dirty working tree.
-3. Blob and tree identity: `git rev-parse 16935e24:<path>` and `git rev-parse <rev>:<path>` compared with the hashes in the round-25 evidence files.
+3. Blob and tree identity: `git rev-parse <rev>:<path>` compared with the hashes in the round-25 evidence files and with the round-24 and round-20 records.
 4. Routed tool: `--repo <lane> --rev 16935e24…`. It reads git objects only.
 5. Lane-write check: `git ls-files --others --exclude-standard -- tools` is empty. No file under `tools/` or `.ufo/waves/round-25/` changed in the last 35 minutes (`find -newermt`). `tools/__pycache__` (gitignored) dates from 2026-10-22 05:19 -03, before my runs. My runs wrote nothing into the lane.
 6. Working tree versus pin: `git diff --name-only 16935e24` lists `SCORECARD.md`, `corpus/lessons/round-25.md` and five round-26 wave files (other seats' in-flight edits). `git diff --stat 16935e24 -- tools/` is empty, so every tool and fixture is the pinned bytes.
-7. Tools: none installed or upgraded. Python 3.14.8 used as installed. `bash` and `jq` used as installed.
+7. Tools: none installed or upgraded. Python 3.14.8, `bash` and `jq` used as installed.
 
 ## Results: the five assigned commands
 
@@ -34,7 +34,7 @@ No harm to operability at the pin. All five assigned commands exit 0, and each t
 |---|---|---|---|---|---|
 | 6 | `python3 -I -B tools/mori-wave-settlement.py --selftest` | 0 | `MORI_WAVE_SETTLEMENT_SELFTEST: PASS (23 cases, 23 passed, 0 failed)` | `.ufo/waves/round-20/evidence/c2-final-selftest.txt`: 23/23, rc=0; `SCORECARD.md:1280` and `:1306` say 23/23; `SCORECARD.md:1269` still says 22/22 | holds; see F2 |
 | 7 | `python3 -I -B tools/mori-job-runway.py --selftest --cases tools/fixtures/mori-job-runway/supplementary-cases.json` | 0 | `PASS 24/24` | `round-25/evidence/runway-selftest-supplementary.txt`: exit 0, PASS 24/24 | holds |
-| 8 | `python3 -I -B tools/mori-pressure.py --selftest --cases tools/fixtures/mori-pressure/supplementary-cases.json` | 0 | `PASS 16/16`; `MATCHER: rejected 64/64` | `SCORECARD.md:1525` and `corpus/lessons/round-24.md:100` say 7/7 and 28/28 (7 cases at `4f05dd5a`) | holds; stale record, see F3 |
+| 8 | `python3 -I -B tools/mori-pressure.py --selftest --cases tools/fixtures/mori-pressure/supplementary-cases.json` | 0 | `PASS 16/16`; `MATCHER: rejected 64/64` | `SCORECARD.md:1525` says `PASS 7/7`; `corpus/lessons/round-24.md:100` says `PASS 7/7` and `MATCHER: rejected 28/28`; both for 7 cases at `4f05dd5a` | holds; stale record, see F3 |
 
 Rows 6 to 8 agree in exit code and in every tally that a record covers. Row 8 is not a regression: the file has more cases now, and every case passes.
 
@@ -51,18 +51,18 @@ Rows 6 to 8 agree in exit code and in every tally that a record covers. Row 8 is
 - Not a regression: the tool blob has not changed since round 20, and the stale cell is corrected by a later line, not removed.
 
 **F3. Defect (low, documentation). The supplementary pressure record is stale.**
-- Evidence: `SCORECARD.md:1525` and the correction at `corpus/lessons/round-24.md:100` say the supplementary file gives `PASS 7/7` and `MATCHER 28/28` (7 cases at `4f05dd5a`). The file gained cases S08 to S16 in commit `ec840f9` (round 25, subject "supplementary pressure cases S08-S16 from the survivor replay"). Today's run gives 16/16 and 64/64 (row 8). `grep` of SCORECARD.md for `PASS 16/16`, `64/64` and `16 cases` found no line.
-- Attacks: the recorded supplementary tally. The routed D3 check counts 7 at `4f05dd5a` (a historical pin, `routed-r24` D3 detail `supplementary_case_count: 7`) and stays held.
+- Evidence: `SCORECARD.md:1525` says `PASS 7/7`. `corpus/lessons/round-24.md:100` says `PASS 7/7` and `MATCHER: rejected 28/28`, both for 7 cases at `4f05dd5a`. The file gained cases S08 to S16 in commit `ec840f9` (round 25, subject "supplementary pressure cases S08-S16 from the survivor replay"). Today's run gives 16/16 and 64/64 (row 8). A `grep` of SCORECARD.md for `PASS 16/16`, `64/64` and `16 cases` found no line.
+- Attacks: the recorded supplementary tally. The routed D3 check counts 7 at `4f05dd5a` (a historical pin; `routed-r24` D3 detail `supplementary_case_count: 7`) and stays held.
 - Not a regression: the new cases all pass.
 
 **F4. Holds. No regression in any command.**
 - Each recorded run used the tool and fixture bytes that the pin still has (table, column 6).
-- The routed gate stays held at the pin although round 26 edited the SCORECARD rows it reads (the round-26 corrections section, R2 and R4a to R4c). Its D5 scores still match the pinned round-24 numbers (`axes_rows` in the row 4 detail).
+- The routed gate stays held at the pin although round 26 edited the standing Axes-table operability row (R4a, which D5 reads). Its D5 scores still match the pinned round-24 numbers (`axes_rows` in the row 4 detail).
 - Clean export and lane runs agree, so the dirty working tree did not change any result.
 
 ## Residual risk and verification gaps
 
-- **Not run:** the lane retention scan that the round-26 contract names as its no-harm item (the tip must not exceed 4 unallowlisted; `.ufo/waves/round-26/evidence/retention-scan-base.txt`). It is outside my command list. The RetentionTip seat owns it.
+- **Not run:** the lane retention scan that the round-26 contract names as its no-harm item (the tip must not exceed 4 unallowlisted; `.ufo/waves/round-26/evidence/retention-scan-base.txt`). It is outside my command list. A sibling seat, `MoriR26.RetentionTip`, is assigned to it (roster).
 - **Not run:** `tools/mori-routed-check.py` (present at the pin, not in my list; the round-24 record cites it), `tools/mori-oom-killers.py` (the C2 tool, covered by other seats) and the live, non-selftest census run.
 - **Limit of the selftests:** they test each tool on its own fixtures. They show the tool logic still works. They do not show the host's live operability. [INFERENCE: this check says nothing about live host behaviour.]
 - **Not re-derived:** the D5 scores and the SCORECARD Last-change text. I relied on the routed tool's own checks.
