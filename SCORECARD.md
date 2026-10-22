@@ -1547,3 +1547,40 @@ Entering tip `28b79d3d1b76824f0c825aabe6cb6c5dc49961bf` (round 24 admitted). Ful
 
 Held and observed: operability 7, depth 5, freshness 5, adjacency 6. No retirement, waiver,
 exploratory claim or promotion.
+
+### Round 25 measured outcome (L1 MoriR25; measured at the lane revisions named, before the report)
+
+| Claim | Before | After (one command over committed bytes) | Verdict proposed for the closure |
+|---|---|---|---|
+| C1 calibration, round-24 routed defects and the standing Axes table (A1–A5) | `python3 -I -B tools/mori-routed-r24.py --repo <lane> --rev 28b79d3d1b76824f0c825aabe6cb6c5dc49961bf` prints `"items":4,"held":0,"mismatches":4`, hygiene red, exit 1 (`.ufo/waves/round-25/evidence/routed-r24-before-a5.txt`) | same command at `e06d4a02` (and at every later tip) prints `"items":4,"held":4,"mismatches":0`, hygiene held, exit 0 (`evidence/routed-r24-after-a5.txt`) | improved: four lane self-assessments that contradicted committed bytes (SCORECARD:1514 selftest output, the entry's "this section wins" banner, the lesson's `PASS 6/6` against SCORECARD:1521, the round-1 Axes table) now agree; calibration 5 → 5 pending closure |
+| C2 coverage, harness background-job runway capability (sourced S098–S104, S112–S113) | `git cat-file -e 28b79d3d:tools/mori-job-runway.py` exits 128 | `python3 -I -B tools/mori-job-runway.py --selftest` prints `MORI_JOB_RUNWAY_SELFTEST: PASS 21/21`, exit 0, over the 21 cases frozen at `7634be75` (blob `48df844a`) before the tool landed at `09f55b62` (`evidence/runway-selftest.txt` at `d3b7af2a`) | improved, bounded: capability shown running; live host run `RUNWAY_CLAMPED` (configured 200, clamp 100, effective 100, exit 1; `evidence/runway-live-run.txt`); coverage 6 → 6 pending closure |
+
+Disclosed bounds on C2 (wave 2): the pre-A2 tool `09f55b62` also passes the frozen 21 while failing 14 of the
+A2 forms, so the counted value measures agreement with the L1's 21 examples, not omp's YAML reading in general;
+the A2 forms and the wave-2 mutant kills live in the co-evolved supplementary file (`PASS 24/24`, not counted).
+The clamp is 100 in every upstream release that has the feature (wave-2 CriticC2Admission). The cases were written
+by the L1 from the contract rules, not by a separate seat, and the tool seat read them while building.
+
+### capabilities: first demonstrated round 25
+
+| Capability | What it can now do | Evidence | First-working round |
+|---|---|---|---|
+| harness background-job runway read | report the configured `async.maxJobs` from one settings file, the clamp and setting default compiled into the installed omp binary, the effective cap `max(1, min(clamp, base))`, and a verdict that never turns an unreadable, ambiguous or unparseable input into a number | `tools/mori-job-runway.py --selftest` PASS 21/21 (frozen) and PASS 24/24 (supplementary); `.ufo/waves/round-25/evidence/runway-live-run.txt`; `corpus/knowledge/harness-job-capacity-r25.md` | 25 |
+| round-24 routed-defect and Axes-table check | report, from git objects only, whether the round-24 routed defects D1–D3 and the SCORECARD Axes table (D5) agree with committed bytes at a revision, plus a pycache hygiene row | `tools/mori-routed-r24.py`; `.ufo/waves/round-25/evidence/routed-r24-*-a5.txt`; `.ufo/waves/round-25/w1/BuildRoutedR24Tool.md` (41-case falsification battery) | 25 |
+
+Held: operability 7, depth 5, freshness 5, adjacency 6. No retirement, waiver, exploratory claim or promotion.
+
+Round-25 corrections from wave 2 (CriticC1Admission), appended before the report:
+- The C1 count is two parts, not one 4 → 0 measurement: the A1 item set D1–D3 went 3 → 0
+  (`evidence/routed-r24-before.txt`, `routed-r24-after.txt` at `e54b644b`), and D5, added by amendment A5 after that
+  result was committed, went 1 → 0 (`routed-r24-after-a5.txt` at `e06d4a02`). D1 and D5 compare a SCORECARD row with
+  repo state; D2 (a knowledge entry banner) and D3 (a lesson line; SCORECARD:1521 was already right) are lane
+  self-records outside SCORECARD/SHONEN. SHONEN is not read.
+- D5's pinned scores come from the lane's own round-24 declaration (`SCORECARD.md:1499-1506` at `28b79d3d`, "Targets,
+  not results"). The round-24 closure states numbers only for calibration (5) and coverage (6); for operability, depth,
+  freshness and adjacency it says "unchanged". The Axes-table note at lines 17–19 calls those lines
+  "closure-admitted"; read it as "declared by the lane, with calibration and coverage confirmed by the closure". The
+  round-1 table had also been declared historical in round 12 and round 17 (`SCORECARD.md:616-619`, `:1064-1077` at
+  `28b79d3d`). D5 checks scores only, not evidence pointers or Last change text.
+- The round-25 declaration above says "D1–D4"; after A1 and A5 the counted items are D1, D2, D3 and D5, with D4 a
+  hygiene row.

@@ -97,3 +97,14 @@ candidates (1 admitted as S103, 17 rejected; seven of the rejections are recorde
 - The SCORECARD Axes table at its top still shows round-1 scores (coverage 5, operability 6, depth 4), while
   every later round holds coverage 6, operability 7, depth 5 (`.ufo/waves/round-25/w1/ReviewLessonR24Counts.md`).
   That is a self-assessment mismatch a calibration claim could count.
+
+## Corrections appended before the report
+
+- The last bullet of "For round 26" (Axes table still showing round-1 scores) was true when written and is false
+  at the tip: amendment A5 added it to C1 as item D5 and `e68855d5` fixed the table. Round 26 should not count it again.
+- M4 — **late widening after a reminder (class: claim reshaping).** A5 widened C1 about ten minutes after the 3-of-3
+  result was committed, prompted by Main's calibration reminder and after this lesson had deferred the same item to
+  round 26. Captured-by: none. Fix: declare the self-assessment rows a calibration claim reads before any measurement;
+  report the parts separately (SCORECARD round-25 corrections).
+- Three-rounds sentinel: under the class reading (calibration as a repair of the previous closure's routed defects
+  in rounds 23, 24 and 25) it is tripped. Round 26's calibration claim, if any, must not be a routed repair.
