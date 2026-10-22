@@ -1,0 +1,237 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r25-w2",
+  "createdAt": "2026-10-22T11:13:59.558Z",
+  "updatedAt": "2026-10-22T11:36:12.628Z",
+  "reportDir": ".ufo/waves/round-25/w2",
+  "members": {
+    "RerunC1Count": {
+      "kind": "spawn",
+      "agentId": "MoriR25.RerunC1Count",
+      "role": "reviewer",
+      "item": null
+    },
+    "RerunC2Count": {
+      "kind": "spawn",
+      "agentId": "MoriR25.RerunC2Count",
+      "role": "reviewer",
+      "item": null
+    },
+    "RerunD1Evidence": {
+      "kind": "spawn",
+      "agentId": "MoriR25.RerunD1Evidence",
+      "role": "reviewer",
+      "item": null
+    },
+    "MutRunwayClampRegex": {
+      "kind": "spawn",
+      "agentId": "MoriR25.MutRunwayClampRegex",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutRunwayAmbiguity": {
+      "kind": "spawn",
+      "agentId": "MoriR25.MutRunwayAmbiguity",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutRunwayFloor": {
+      "kind": "spawn",
+      "agentId": "MoriR25.MutRunwayFloor",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutRunwayVerdictOrder": {
+      "kind": "spawn",
+      "agentId": "MoriR25.MutRunwayVerdictOrder",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutRunwayYamlScope": {
+      "kind": "spawn",
+      "agentId": "MoriR25.MutRunwayYamlScope",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutRunwayDuplicates": {
+      "kind": "spawn",
+      "agentId": "MoriR25.MutRunwayDuplicates",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutRunwayUnreadable": {
+      "kind": "spawn",
+      "agentId": "MoriR25.MutRunwayUnreadable",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutRunwayA2Forms": {
+      "kind": "spawn",
+      "agentId": "MoriR25.MutRunwayA2Forms",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutRunwaySelftest": {
+      "kind": "spawn",
+      "agentId": "MoriR25.MutRunwaySelftest",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutRoutedD1": {
+      "kind": "spawn",
+      "agentId": "MoriR25.MutRoutedD1",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutRoutedD2": {
+      "kind": "spawn",
+      "agentId": "MoriR25.MutRoutedD2",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutRoutedD3D5": {
+      "kind": "spawn",
+      "agentId": "MoriR25.MutRoutedD3D5",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutRoutedHygiene": {
+      "kind": "spawn",
+      "agentId": "MoriR25.MutRoutedHygiene",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "ReopenUpstreamCode": {
+      "kind": "spawn",
+      "agentId": "MoriR25.ReopenUpstreamCode",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReopenDocsAndCommit": {
+      "kind": "spawn",
+      "agentId": "MoriR25.ReopenDocsAndCommit",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReopenBinaryRow": {
+      "kind": "spawn",
+      "agentId": "MoriR25.ReopenBinaryRow",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReopenRejections": {
+      "kind": "spawn",
+      "agentId": "MoriR25.ReopenRejections",
+      "role": "scout",
+      "item": null
+    },
+    "ReviewHarnessFacts": {
+      "kind": "spawn",
+      "agentId": "MoriR25.ReviewHarnessFacts",
+      "role": "reviewer",
+      "item": null
+    },
+    "CriticHarnessOverclaim": {
+      "kind": "spawn",
+      "agentId": "MoriR25.CriticHarnessOverclaim",
+      "role": "critic",
+      "item": null
+    },
+    "ReviewD2Sweep": {
+      "kind": "spawn",
+      "agentId": "MoriR25.ReviewD2Sweep",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewQualityLesson": {
+      "kind": "spawn",
+      "agentId": "MoriR25.ReviewQualityLesson",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewProvinceReadme": {
+      "kind": "spawn",
+      "agentId": "MoriR25.ReviewProvinceReadme",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewRunwayCode": {
+      "kind": "spawn",
+      "agentId": "MoriR25.ReviewRunwayCode",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewRoutedCode": {
+      "kind": "spawn",
+      "agentId": "MoriR25.ReviewRoutedCode",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewAxesTable": {
+      "kind": "spawn",
+      "agentId": "MoriR25.ReviewAxesTable",
+      "role": "reviewer",
+      "item": null
+    },
+    "CriticC1Admission": {
+      "kind": "spawn",
+      "agentId": "MoriR25.CriticC1Admission",
+      "role": "critic",
+      "item": null
+    },
+    "CriticC2Admission": {
+      "kind": "spawn",
+      "agentId": "MoriR25.CriticC2Admission",
+      "role": "critic",
+      "item": null
+    },
+    "CriticHarmAxes": {
+      "kind": "spawn",
+      "agentId": "MoriR25.CriticHarmAxes",
+      "role": "critic",
+      "item": null
+    },
+    "CriticSourcesDiscernment": {
+      "kind": "spawn",
+      "agentId": "MoriR25.CriticSourcesDiscernment",
+      "role": "critic",
+      "item": null
+    },
+    "ScoutMisrootSweep": {
+      "kind": "spawn",
+      "agentId": "MoriR25.ScoutMisrootSweep",
+      "role": "scout",
+      "item": null
+    },
+    "ScoutLiveRunway": {
+      "kind": "spawn",
+      "agentId": "MoriR25.ScoutLiveRunway",
+      "role": "scout",
+      "item": null
+    },
+    "ReviewSkillPattern": {
+      "kind": "spawn",
+      "agentId": "MoriR25.ReviewSkillPattern",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewNoHarmCensus": {
+      "kind": "spawn",
+      "agentId": "MoriR25.ReviewNoHarmCensus",
+      "role": "reviewer",
+      "item": null
+    },
+    "CriticEvidenceStaleness": {
+      "kind": "spawn",
+      "agentId": "MoriR25.CriticEvidenceStaleness",
+      "role": "critic",
+      "item": null
+    },
+    "ScoutRefusalRecount": {
+      "kind": "spawn",
+      "agentId": "MoriR25.ScoutRefusalRecount",
+      "role": "scout",
+      "item": null
+    }
+  }
+}
