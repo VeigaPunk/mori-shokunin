@@ -159,3 +159,14 @@ Scope wording (CriticC2Rules, CriticLearningClaim): the cap is per root omp sess
 when a session has no parent task prefix, and its subagents share it — not per host. The tool reads one file,
 not `config.yaml` fallbacks, project `.omp/config.yml`, `--config`/`PI_CONFIG_FILES` overlays, profiles or
 runtime overrides; `RUNWAY_DEFAULT`/`RUNWAY_AS_CONFIGURED` describe that file only.
+
+## Amendment A3 (before the C1 tool lands; wave-1 seat ReviewContractAgainstSpotcheck H1, H2)
+
+- **D1 body is exact, not contained.** After the five header lines the body must be byte-equal to
+  `MORI_PRESSURE_SELFTEST: PASS 12/12\nMATCHER: rejected 48/48 corrupted expectations\n`, the two lines
+  `SCORECARD.md:1514` claims; any extra line (a FAIL, a traceback) leaves D1 unheld.
+- **D2 also requires the banner gone.** Outside the corrections section, 0 matches of `this section wins`
+  (normalized text); the routed fix is in place, so precedence by banner is no longer claimed.
+- Not counted, disclosed: the reviewer found decision-table rows (173, 176, 177 at `28b79d3d`) that also lag
+  the corrections (K3 version scope, P4 causes). The round fixes them in the same edit; the predicate does not
+  test them, and the sibling-file sweep of `corpus/README.md` and `SKILL.md` is reported, not counted.
