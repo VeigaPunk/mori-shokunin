@@ -144,6 +144,10 @@ lines; boot -1 holds all 39 (38 SIGTERM, 1 SIGKILL), to 39 distinct processes:
   watchdog log has no kill words; the seat gate keeps no history after `release`.
 - The boot -1 `omp` send left no fleet line within 3 h 16 min; seven lanes were marked dead at 2026-10-22T07:58:59Z,
   3 min 18 s into boot 0. That is when the death was detected, after the reboot, not when it happened.
+- Across the fleet's dead-seat records written during boot -1 (425 entries in 29 `dead*` list files and 288 entries
+  in 43 dead-seat files, overlapping), none names SIGTERM, SIGKILL, exit 143 or exit 137, and none falls within 60 s
+  of an earlyoom send; the smallest gap is 339.6 s (wave-1 ScoutDeadSeatCorrelation, file write times as a proxy).
+  The 20-send burst at 06:15:59–06:16:05Z fell in a stretch with no fleet record at all.
 - Only the system journal tells earlyoom kills from kernel kills, and it names a process class, never a seat or a
   lane. Joining a send to a lane is a time-window inference, never an attribution.
 

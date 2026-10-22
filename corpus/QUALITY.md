@@ -362,3 +362,22 @@ themselves are not committed.
     an upstream branch head or a newer tag than the installed package, the statement is scoped to that ref or it is
     false of the host: check the installed version (package query, binary strings or the tool's own version line)
     before carrying an upstream sentence into a host reading. ← lessons/round-26.md (M4).
+
+## Criteria added round 27 — round-26 routed defects D1 and D3, and a prompt-induced privacy leak
+
+80. Seat output is committed or disposed of before the round's last lane commit. Before the final commit,
+    `git -C <lane> status --porcelain --untracked-files=all -- .ufo/waves/round-<N>/` prints nothing, and every file a
+    seat wrote after that commit is named in the next round's lesson with its disposition (committed as a late
+    report, or withheld with the reason). A report statement may rest only on committed bytes. ←
+    lessons/round-27.md (M1).
+81. A SOURCES row keeps its first-published cells. After a row lands, only its `status`, `recheck` and `used-by`
+    cells change in place; any other correction is a new row whose `teaches` opens `supersedes S0NN —`, and the old →
+    new is logged in the lesson. Check: `python3 -I -B .ufo/waves/round-27/check-row-identity.py <rev>` reads every
+    row's first-published cells from committed history and must print `changed=0`, exit 0. ← lessons/round-27.md
+    (M2).
+82. A seat report or capture output is linted for host identifiers before its first commit. The retention scan
+    cannot see uid digits or pids, so before committing any seat report the L1 runs
+    `grep -nE 'user-[0-9]{3,}\.slice|user@[0-9]{3,}\.service|\bpid[ =:]*[0-9]{3,}|\buid[ =:]+[0-9]{3,}' <files>` and
+    redacts every hit that is a value read from this host (a fixture or an upstream format string is not). A
+    dispatch prompt never asks a seat to list unit names, pids or uids; it asks for depth, role and counts. ←
+    lessons/round-27.md (M3).
