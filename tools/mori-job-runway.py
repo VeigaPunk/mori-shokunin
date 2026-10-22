@@ -56,6 +56,23 @@ Scope (contract C2 rules 1-7):
   evaluation, and compares the case's ``expect`` fields (only the keys present
   in ``expect``).  It prints ``MORI_JOB_RUNWAY_SELFTEST: PASS n/N`` (or
   ``FAIL n/N`` plus one line per failing case) and exits 0 only when all pass.
+  ``--cases PATH`` runs a different cases file (for example the co-evolved
+  ``tools/fixtures/mori-job-runway/supplementary-cases.json``); without it the
+  frozen 21 cases are used.
+
+* Amendment A2 (contract ``6a92d5ee``) adds abstentions to rule 1.  The tool
+  reports ``malformed`` (value null, never a number) for the YAML forms it
+  cannot read the way omp reads them: more than one top-level key ``async``
+  once quotes and the spaces before the colon are removed; a top-level ``<<:``
+  merge key or a ``? `` complex key anywhere in the file; inside the async
+  block a direct child whose key, once quotes are removed, is ``maxJobs`` but
+  is not written exactly ``maxJobs:``, or a ``<<:`` / ``? `` line; a tab in the
+  indentation of any line of the async block; a ``---`` or ``...`` document
+  marker line anywhere in the file; a ``maxJobs`` value whose ``#`` is not
+  preceded by whitespace, or a value opening a quote or a block scalar; and a
+  quoted scalar that spans lines or never closes.  A leading UTF-8 byte-order
+  mark is removed before parsing.  ``RUNWAY_UNKNOWN`` is never a false number:
+  an abstention is always the safe direction.
 
 The live count of running background jobs is not readable from outside the
 session and stays frontier: this tool reports the cap the binary computes, not
@@ -101,21 +118,20 @@ DEFAULT_RE = re.compile(rb'id:\s*"async\.maxJobs",[^}]{0,300}?default:\s*(\d+)')
 
 # Rule 1: line grammar of the config file.
 ASYNC_PREFIX = "async:"
-MAXJOBS_RE = re.compile(r"^maxJobs[ \t]*:")
+MAXJOBS_RE = re.compile(r"^maxJobs:(?:[ \t].*)?$")
 INTEGER_RE = re.compile(r"^[+-]?[0-9]+$")
+# Amendment A2: forms the line grammar cannot read the way omp reads them.
+DOC_MARKER_RE = re.compile(r"^(---|\.\.\.)(\s*(#.*)?)$")
+COMPLEX_KEY_RE = re.compile(r"^\?(\s|$)")
+MERGE_KEY_RE = re.compile(r"^<<\s*:")
+BLOCK_SCALAR_RE = re.compile(r"^[|>][+-]?\d*\s*(#.*)?$")
+# Amendment A2: a leading UTF-8 byte-order mark is removed before parsing.
+BOM = chr(0xFEFF)
 
 
 # --------------------------------------------------------------------------
 # rule 1: configured
 # --------------------------------------------------------------------------
-
-
-def _strip_comment(text: str) -> str:
-    """Drop a trailing ``# comment`` and surrounding blanks."""
-    cut = text.find("#")
-    if cut >= 0:
-        text = text[:cut]
-    return text.strip()
 
 
 def _is_blank_or_comment(line: str) -> bool:
@@ -125,6 +141,81 @@ def _is_blank_or_comment(line: str) -> bool:
 
 def _indent_of(line: str) -> int:
     return len(line) - len(line.lstrip(" \t"))
+
+
+def _leading_whitespace(line: str) -> str:
+    return line[: len(line) - len(line.lstrip(" \t"))]
+
+
+def _unquote(key: str) -> str:
+    """Remove surrounding quotes and the spaces that may sit before the colon."""
+    key = key.strip()
+    if len(key) >= 2 and key[0] == key[-1] and key[0] in ("'", '"'):
+        key = key[1:-1]
+    return key.strip()
+
+
+def _normalized_key(text: str) -> Optional[str]:
+    """The key of a ``key: value`` line, with quotes and spaces removed."""
+    index = text.find(":")
+    if index < 0:
+        return None
+    return _unquote(text[:index])
+
+
+def _closes_quote(text: str, quote: str) -> bool:
+    """True when ``text`` contains the closing ``quote`` of a quoted scalar."""
+    index = 0
+    length = len(text)
+    while index < length:
+        char = text[index]
+        if quote == '"' and char == "\\":
+            index += 2
+            continue
+        if char == quote:
+            if quote == "'" and index + 1 < length and text[index + 1] == "'":
+                index += 2
+                continue
+            return True
+        index += 1
+    return False
+
+
+def _value_text(line: str) -> str:
+    """The value-ish text of a line: after the first ``:`` separator."""
+    stripped = line.strip()
+    if stripped.startswith("- "):
+        stripped = stripped[2:].strip()
+    index = stripped.find(":")
+    if index >= 0:
+        return stripped[index + 1:]
+    return stripped
+
+
+def _quoted_scalars(lines: List[str]) -> Tuple[set, bool]:
+    """Return ``(continuation_lines, unterminated)`` for quoted scalars.
+
+    A quoted scalar that opens on one line and closes on a later line makes
+    the lines in between part of the scalar, not keys.  Such a file is one the
+    tool cannot read the way omp reads it, so the caller abstains.
+    """
+    continuation = set()
+    quote: Optional[str] = None
+    for index, line in enumerate(lines):
+        stripped = line.strip()
+        if stripped == "" or stripped.startswith("#"):
+            continue
+        if quote is not None:
+            continuation.add(index)
+            if _closes_quote(stripped, quote):
+                quote = None
+            continue
+        value = _value_text(line).strip()
+        if value[:1] in ('"', "'"):
+            quote = value[0]
+            if _closes_quote(value[1:], quote):
+                quote = None
+    return continuation, quote is not None
 
 
 def _read_config_text(path: str) -> Tuple[str, Optional[str]]:
@@ -148,37 +239,88 @@ def _read_config_text(path: str) -> Tuple[str, Optional[str]]:
 
 
 def _parse_config(text: str) -> Tuple[str, Optional[int]]:
-    """Apply rule 1 to the config text; return ``(state, value)``."""
+    """Apply rule 1 (with amendment A2) to the config text.
+
+    Return ``(state, value)`` where state is ``set``, ``malformed`` or
+    ``absent``.  Every ``malformed`` return is an abstention: the file is one
+    the tool cannot read the way omp reads it, so it never yields a number.
+    """
+    if text.startswith(BOM):
+        # A leading UTF-8 byte-order mark is removed before parsing.
+        text = text[1:]
     lines = text.splitlines()
 
-    async_index: Optional[int] = None
-    inline_value = False
-    for index, line in enumerate(lines):
-        if not line.startswith(ASYNC_PREFIX):
-            continue
-        rest = line[len(ASYNC_PREFIX):].strip()
-        if rest == "" or rest.startswith("#"):
-            if async_index is None:
-                async_index = index
-        else:
-            # `async:` carries an inline value (for example `async: {maxJobs: 50}`).
-            inline_value = True
-
-    if inline_value:
+    # A quoted scalar that spans lines (or never closes) is a file the line
+    # grammar cannot read the way omp reads it.
+    continuation, unterminated = _quoted_scalars(lines)
+    if continuation or unterminated:
         return "malformed", None
-    if async_index is None:
+
+    for index, line in enumerate(lines):
+        if index in continuation:
+            continue
+        stripped = line.strip()
+        if stripped == "":
+            continue
+        # A document marker anywhere in the file.
+        if DOC_MARKER_RE.match(stripped):
+            return "malformed", None
+        # A `? ` complex key anywhere in the file.
+        if COMPLEX_KEY_RE.match(stripped):
+            return "malformed", None
+        # A `<<:` merge key.
+        if MERGE_KEY_RE.match(stripped):
+            return "malformed", None
+
+    # Top-level lines whose key is `async` once quotes and the spaces before
+    # the colon are removed.
+    async_lines: List[int] = []
+    for index, line in enumerate(lines):
+        if index in continuation:
+            continue
+        if line[:1] in (" ", "\t"):
+            continue
+        if _is_blank_or_comment(line):
+            continue
+        if _normalized_key(line) == "async":
+            async_lines.append(index)
+
+    if len(async_lines) > 1:
+        # More than one `async` key: the tool cannot know which one omp reads.
+        return "malformed", None
+    if not async_lines:
         return "absent", None
 
+    header = lines[async_lines[0]]
+    if not header.startswith(ASYNC_PREFIX):
+        # A quoted or spaced `async` key (`"async":`, `async :`).
+        return "malformed", None
+    rest = header[len(ASYNC_PREFIX):].strip()
+    if rest != "" and not rest.startswith("#"):
+        # `async:` carries an inline value (for example `async: {maxJobs: 50}`).
+        return "malformed", None
+
     # The block runs to the next non-blank, non-comment line at column 0.
-    block: List[str] = []
-    for line in lines[async_index + 1:]:
+    block: List[Tuple[int, str]] = []
+    for index in range(async_lines[0] + 1, len(lines)):
+        line = lines[index]
+        if index in continuation:
+            block.append((index, line))
+            continue
         if line[:1] not in ("", " ", "\t") and not _is_blank_or_comment(line):
             break
-        block.append(line)
+        block.append((index, line))
+
+    for index, line in block:
+        if index in continuation:
+            continue
+        if "\t" in _leading_whitespace(line):
+            # A tab in the indentation of a line of the async block.
+            return "malformed", None
 
     child_indent: Optional[int] = None
-    for line in block:
-        if _is_blank_or_comment(line):
+    for index, line in block:
+        if index in continuation or _is_blank_or_comment(line):
             continue
         child_indent = _indent_of(line)
         break
@@ -186,26 +328,42 @@ def _parse_config(text: str) -> Tuple[str, Optional[int]]:
         return "absent", None
 
     values: List[str] = []
-    for line in block:
-        if _is_blank_or_comment(line):
+    for index, line in block:
+        if index in continuation or _is_blank_or_comment(line):
             continue
         if _indent_of(line) != child_indent:
             # Deeper (or oddly indented) lines are not direct children.
             continue
         body = line.strip()
-        if not MAXJOBS_RE.match(body):
+        if MAXJOBS_RE.match(body):
+            values.append(body[len("maxJobs:"):])
             continue
-        values.append(body.split(":", 1)[1])
+        key = _normalized_key(body)
+        if key == "maxJobs":
+            # The key is `maxJobs` but it is not written exactly `maxJobs:`.
+            return "malformed", None
 
     if not values:
         return "absent", None
     if len(values) > 1:
         return "malformed", None
 
-    raw = _strip_comment(values[0])
-    if raw == "" or not INTEGER_RE.match(raw):
+    raw = values[0]
+    index = raw.find("#")
+    if index >= 0:
+        if index != 0 and raw[index - 1] not in " \t":
+            # A `#` that is not preceded by whitespace does not open a comment.
+            return "malformed", None
+        raw = raw[:index]
+    value = raw.strip()
+    if value == "":
         return "malformed", None
-    return "set", int(raw)
+    if value[:1] in ('"', "'") or BLOCK_SCALAR_RE.match(value):
+        # A value opening a quote or a block scalar.
+        return "malformed", None
+    if not INTEGER_RE.match(value):
+        return "malformed", None
+    return "set", int(value)
 
 
 def configured_state(path: str) -> Tuple[str, Optional[int]]:
@@ -345,6 +503,7 @@ def evaluate(config_path: str, binary_path: Optional[str]) -> Tuple[Dict[str, An
 
 
 def _cases_path() -> Optional[str]:
+    """The frozen cases, resolved from the script's own path."""
     script_dir = os.path.dirname(os.path.abspath(os.path.realpath(__file__)))
     for candidate in (
         os.path.join(script_dir, "fixtures", "mori-job-runway", "cases.json"),
@@ -353,6 +512,13 @@ def _cases_path() -> Optional[str]:
         if os.path.isfile(candidate):
             return candidate
     return None
+
+
+def _resolve_cases(cases_override: Optional[str]) -> Optional[str]:
+    """``--cases PATH`` when given, else the frozen cases next to the script."""
+    if cases_override:
+        return os.path.abspath(os.path.expanduser(cases_override))
+    return _cases_path()
 
 
 def _compare(expected: Any, actual: Any, path: str) -> List[str]:
@@ -392,8 +558,8 @@ def _materialize(case: Dict[str, Any], directory: str) -> Tuple[str, str]:
     return config_path, binary_path
 
 
-def _selftest() -> int:
-    path = _cases_path()
+def _selftest(cases_override: Optional[str] = None) -> int:
+    path = _resolve_cases(cases_override)
     if path is None:
         print("%s: FAIL 0/0" % SELFTEST_PREFIX)
         print("CASES: fixtures/mori-job-runway/cases.json not found next to the script")
@@ -469,6 +635,12 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="run the frozen cases and print MORI_JOB_RUNWAY_SELFTEST: PASS n/N",
     )
+    parser.add_argument(
+        "--cases",
+        default=None,
+        help="path of a cases file for --selftest (default: the frozen "
+        "tools/fixtures/mori-job-runway/cases.json next to the script)",
+    )
     return parser
 
 
@@ -494,7 +666,10 @@ def main(argv: Optional[List[str]] = None) -> int:
         _emit_error(str(exc))
         return RC_UNKNOWN
     if ns.selftest:
-        return _selftest()
+        return _selftest(ns.cases)
+    if ns.cases is not None:
+        _emit_error("--cases is only valid with --selftest")
+        return RC_UNKNOWN
 
     config_path = os.path.abspath(os.path.expanduser(ns.config))
     if ns.binary is None:
