@@ -164,3 +164,18 @@ Every change makes a claim harder to meet or corrects a misstatement; nothing is
 - **Shared directory (F3):** critic reports sit in the writers' `w1/` directory again; the blindness evidence is the
   `check-blind-wave.sh` receipt at the freeze commit (no non-writer report cites tool lines or tool output) plus each
   writer's files-opened list.
+
+## Amendment A4 (round 29, before the C2 counter lands and before the L1 opens any case draft; CriticC2Design residuals R1–R3)
+
+- **Decisive pins (R1):** a case counts toward `shape_a207` only if its `expect.fields` pins `earlyoom.actions.sigterm`
+  or `earlyoom.actions.sigkill` as an integer above 0; toward `shape_a210` only if it pins one of
+  `earlyoom.actions.sigterm`, `earlyoom.actions.sigkill`, `earlyoom.actions.escalations` or
+  `earlyoom.earlier_invocation_send_lines` as an integer (any value).
+- **Fixed writer set (R2):** the writer set is exactly CaseA207a–d and CaseA210a–d; `unselected` counts every case
+  of every one of those reports present at `<rev>`; a report absent at `<rev>` is printed as `writer_absent=<name>`
+  (a reported death, not a pass condition by itself).
+- **Blindness as a miss (R3):** the `check-blind-wave.sh` run at the freeze commit on `.ufo/waves/round-29/w1` with
+  writer regex `^CaseA2(07|10)[a-d]\.md$` must print `blind_violations=0`; otherwise C2 is a miss, reported as one.
+- Carried, not counted (R4): a full-output differential between the freeze-time tool and any changed tool on every
+  case input is produced as a wave-2 receipt and judged; an A2-07 shape with a non-active earlyoom has no blind
+  writer this round and stays named debt.
