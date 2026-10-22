@@ -1,6 +1,6 @@
-source: S098 (oh-my-pi packages/coding-agent/src/async/job-manager.ts at tag v18.12.6 = commit 45c35e40c46166dc726ccc52f5d27f40f2449f99), S099 (oh-my-pi packages/coding-agent/src/sdk.ts at the same commit), S100 (oh-my-pi packages/coding-agent/src/tools/settings.ts at the same commit), S101 (oh-my-pi docs/settings.md at the same commit), S102 (installed binary ~/.local/bin/omp, own-work: 256,702,432 bytes, sha256 85d9daf3a05fc76e8cd425ae1904eb576af8d21cc85fcf4690742626e07ccfa4, byte-identical to release asset omp-linux-x64 of tag v18.12.6), S103 (oh-my-pi docs/tools/eval.md at the same commit: the session-wide cap documented as "default and maximum 100", shared with every background job in the session), S112 (oh-my-pi packages/coding-agent/src/tools/bash.ts at the same commit: the bash auto-background branch's `atCapacity` pre-check and its fall-through to direct foreground execution), S113 (oh-my-pi packages/coding-agent/src/tools/eval.ts at the same commit: the eval auto-background branch's `atCapacity` pre-check and its fall-through to direct foreground execution). S104 (oh-my-pi commit 476b858b3a4abe6f6c8a06c252c23961be41e912, 2026-02-22, "added async background job execution with configurable concurrency limits": the 100 ceiling shipped with the feature). Rows S098–S104 and S112–S113 were opened and admitted in round 25; S105–S111 are this round's rejected candidates. Supporting reads without registry rows, opened by wave-1 seat KnowledgeDraftC2 (round 25) at the same commit: packages/coding-agent/src/task/index.ts, packages/coding-agent/src/task/speculative-launch.ts, packages/coding-agent/src/task/spawn-run.ts, packages/coding-agent/src/config/settings.ts; and the fleet script scripts/hyaku/wave-slot.sh (read-only, sha256 41b487ef51012c099ab704e8c226f3bb701e11c120f7c6973ab73cb1f3737a81).
+source: S098 (oh-my-pi packages/coding-agent/src/async/job-manager.ts at tag v18.12.6 = commit 45c35e40c46166dc726ccc52f5d27f40f2449f99), S099 (oh-my-pi packages/coding-agent/src/sdk.ts at the same commit), S100 (oh-my-pi packages/coding-agent/src/tools/settings.ts at the same commit), S101 (oh-my-pi docs/settings.md at the same commit), S102 (installed binary ~/.local/bin/omp, own-work: 256,702,432 bytes, sha256 85d9daf3a05fc76e8cd425ae1904eb576af8d21cc85fcf4690742626e07ccfa4, byte-identical to release asset omp-linux-x64 of tag v18.12.6), S103 (oh-my-pi docs/tools/eval.md at the same commit: the session-wide cap documented as "default and maximum 100", shared with every background job in the session), S112 (oh-my-pi packages/coding-agent/src/tools/bash.ts at the same commit: the bash auto-background branch's `atCapacity` pre-check and its fall-through to direct foreground execution), S113 (oh-my-pi packages/coding-agent/src/tools/eval.ts at the same commit: the eval auto-background branch's `atCapacity` pre-check and its fall-through to direct foreground execution). S104 (oh-my-pi commit 476b858b3a4abe6f6c8a06c252c23961be41e912, 2026-02-22, "added async background job execution with configurable concurrency limits": the 100 ceiling shipped with the feature). Rows S098–S104 and S112–S113 were opened and admitted in round 25; S105–S111 are this round's rejected candidates. Supporting reads without registry rows, opened by wave-1 seat KnowledgeDraftC2 (round 25) at the same commit: packages/coding-agent/src/task/index.ts, packages/coding-agent/src/task/speculative-launch.ts, packages/coding-agent/src/task/spawn-run.ts, packages/coding-agent/src/config/settings.ts; and the fleet script scripts/hyaku/wave-slot.sh (read-only, sha256 41b487ef51012c099ab704e8c226f3bb701e11c120f7c6973ab73cb1f3737a81).; S138, S139, S140, S141 (oh-my-pi commits 944d7f8d, e398f831, 6962d5cd, c4a2441d — the clamp history after the feature commit; added round 27, routed R7)
 verified-at: 2026-10-22 — upstream sources opened as raw bytes at tag v18.12.6 (sha256 job-manager.ts 0f37afaaa822ef1de845b8eb21473a70210176ff61e2dcff5925f85ec0e544e7, sdk.ts c0228addd4cfe93cfd370c7248e9db29743f0fa802aea0e1d1adf4994dbe6957, tools/settings.ts 514974143d47db0c9765bc47e86dcb9a38bd6bc23113a4ffe557bff0d8e30507, docs/settings.md 0b2e1457021fa526f2c35015672f1d7ccbac95e7b9f217528ab8022c55ed5883, docs/tools/eval.md fb2fc4a139ba187f1cc062fab53bd72a48dd13b1f81f0c3318ec7a79d41e495c, tools/bash.ts d985ef25639993e05fb4de8c8b6dc75dde76422f63d1a295b95eb575e8cc3ea2, tools/eval.ts 01e9c5c56af15d3e04cdeaf99d959afa90129f8cbb015d6908e02795351920e3); the installed binary read as bytes only (never executed as a harness). Host observation, read-only: the operator's OMP settings file carries `async:` then `maxJobs: 200`; the live read-only run of the round-25 tool reports configured 200, clamp 100, effective 100, verdict RUNWAY_CLAMPED (exit 1) — `.ufo/waves/round-25/w1/BuildJobRunwayTool.md` §2.
-recheck: `python3 -I -B tools/mori-job-runway.py --selftest` (frozen cases) and one live run of `python3 -I -B tools/mori-job-runway.py`; on an omp release, re-open S098–S103 and S112–S113 and re-read the installed binary's clamp site and setting default.
+recheck: `python3 -I -B tools/mori-job-runway.py --selftest` (frozen cases) and one live run of `python3 -I -B tools/mori-job-runway.py`; on an omp release, re-open S098–S103, S112–S113 and S138–S141 and re-read the installed binary's clamp site and setting default.
 author: MoriR25 (L1) from the wave-1 scribe draft `.ufo/waves/round-25/w1/KnowledgeDraftC2.md`.
 
 # Harness background-job runway — the effective cap, the count that reaches it, and what a refusal proves
@@ -161,10 +161,15 @@ KasegiR23.FixMirror: Background job limit reached (100)" with all 64 names refus
 (`.ufo/waves/round-20/build/GtLaneKasegi.md:48`), and "seats 66, refused 66, spawned 0,
 'Background job limit reached (100)'" (`.ufo/waves/round-20/build/GtLaneKama.md:72`). These are
 lane-written records, not upstream sources, and they are cited as observations of the message, not
-as proof of what filled the runway. [INFERENCE] The number of refused seats in one wave (64, 66, 68,
-88 in those records) exceeds 100 in some waves because each seat is a separate registration attempt
-and every attempt fails once the count has reached the cap; the cap is a session-wide count, not a
-per-wave budget.
+as proof of what filled the runway. [INFERENCE] Each refused seat is a separate registration attempt and every
+attempt fails once the count has reached the cap, so one wave's refusals accumulate across attempts: the four
+consecutive refused attempts of 64 names each (`.ufo/waves/round-20/build/GtLaneKasegi.md:48-49`) are 256 refused
+registrations against a cap of 100. No single-wave refusal count in the round-20/build records exceeds 100 — the
+counts recorded there are 64 (`GtLaneKasegi.md:48-49`; also `GtLaneKaidoku.md:84`, `GtLaneTsukuroi.md:72`,
+`GtMoriR17W2.md:122`), 66 (`GtLaneKama.md:72`), 68 (`GtLaneChousa.md:61`; also `GtLaneKaidoku.md:86`),
+70 (`GtMoriR17W1.md:109`), 71 (`GtLaneKaidoku.md:83`), 72 (`GtLaneKama.md:73`), 78 (`GtLaneKaidoku.md:80`),
+86 (`GtLaneKama.md:74-75`), 88 (`GtLaneKagi.md:58`), 95 (`GtLaneKama.md:68`), and the largest, 100
+(`GtLaneKaidoku.md:82`) — the cap is a session-wide count, not a per-wave budget.
 
 **F11 — the hyaku seat gate measures a different population under a different number.**
 `scripts/hyaku/wave-slot.sh` (read-only) resolves a target `CAP` from `HYAKU_WAVE_CAP` (environment),
@@ -267,8 +272,16 @@ sources above forbid.
   maximum 100", F1) but gives no reason for it. Its history is known (S104): the feature commit
   `476b858` of 2026-02-22 introduced `Math.min(100, Math.max(1, settings.get("async.maxJobs") ?? 15))`
   and described the setting as "Maximum concurrent background jobs (1-100)", so the ceiling of 100 and
-  the floor of 1 date from the feature's first commit and only the default moved (15 to 100). The
-  rationale for the number 100 is not in the sources opened.
+  the floor of 1 date from the feature's first commit. What moved afterwards is three things, not one:
+  the default and the sdk fallback moved 15 to 100 on 2026-02-26 (S138); the "(1-100)" description was
+  removed on 2026-05-03 (S139); and the clamp itself was rewritten on 2026-09-24 (S140, S141) from the
+  static `Math.min(100, Math.max(1, …))` computed once at session construction to the function
+  `() => Math.min(100, cfgAsyncMaxJobs.get(settings) ?? 100)`, whose `?? 100` fallback was dropped the
+  same day. The ceiling of 100 held to v18.12.6, where the clamp reads
+  `maxRunningJobs: () => Math.min(100, cfgAsyncMaxJobs.get(settings))` (`sdk.ts:2284`, F2); the explicit
+  floor `Math.max(1, …)` did not survive that rewrite — neither the clamp expression nor the accessor
+  (`tools/settings.ts:941-946`) carries a floor at v18.12.6. The rationale for the number 100 is not in
+  the sources opened.
 - **U2 — what filled the runway.** The count that reached the cap is session-global (F7) and is not
   recorded in a refusal. A refusal therefore cannot attribute the capacity to the wave that hit
   it, to an earlier wave, or to background shell jobs.
@@ -309,3 +322,10 @@ sources above forbid.
 - No claim that every refused or degraded call in a session is visible in any one record.
 - No claim that a refused seat's work was completed, lost or harm-free; it was not run (F8).
 - No claim about any omp version other than 18.12.6.
+
+## Round-27 corrections (routed R7; wave-1 seat ReviewR7Knowledge)
+
+Applied in place on 2026-10-22 by MoriR27 (QUALITY 77); old → new:
+
+- U1: old "so the ceiling of 100 and the floor of 1 date from the feature's first commit and only the default moved (15 to 100)" → new: three later moves (default and fallback 15 → 100 on 2026-02-26, S138; the "(1-100)" description removed on 2026-05-03, S139; the clamp rewritten on 2026-09-24, S140, S141), the ceiling of 100 held to v18.12.6, and the explicit floor of 1 did not survive the rewrite. The round-26 draft's "floor of 1 held" was false (ReviewR7Knowledge H1) and was not carried.
+- F10: old refusal list "(64, 66, 68, 88 in those records) exceeds 100 in some waves" → new: the full recorded set 64, 66, 68, 70, 71, 72, 78, 86, 88, 95, 100 with cites; no single-wave count exceeds 100; refusals accumulate across attempts (four attempts of 64 = 256 refused registrations).

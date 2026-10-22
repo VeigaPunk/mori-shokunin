@@ -86,7 +86,7 @@ system level, but has been reported since 5.13, so it is set to zero for backwar
 kernel implements it by skipping the read: `if (!(group == &psi_system && res == PSI_CPU && full))` leaves
 both the averages and the total at zero for that one line ([psi.c:1282-1288](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/sched/psi.c)).
 All four `/proc/pressure/*` readers pass the system group (`psi_show(m, &psi_system, …)`,
-([psi.c:1538-1550](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/sched/psi.c)), so the system CPU
+([psi.c:1540,1545,1550,1686](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/sched/psi.c)), so the system CPU
 `full` line is always zeros at v7.2.
 
 **F4 — units and windows.** The three averages are "ratios (in %) … tracked as recent trends over ten,
@@ -140,12 +140,12 @@ C2 tool use none of it: the tool reads and never writes.
 filesystem mounted, pressure stall information is also tracked for tasks grouped into cgroups. Each
 subdirectory in the cgroupfs mountpoint contains cpu.pressure, memory.pressure, and io.pressure files; the
 format is the same as the /proc/pressure/ files." ([psi.rst:178-187](https://raw.githubusercontent.com/torvalds/linux/v7.2/Documentation/accounting/psi.rst)).
-The cgroup v2 documentation lists `irq.pressure` beside `cpu`, `io` and `memory.pressure` and documents `cgroup.pressure` as a per-cgroup, non-hierarchical switch (S092, `cgroup-v2.rst:1066-1087`). The v7.2 kernel's cgroup file set also carries IRQ: `cgroup_irq_pressure_show`/`_write`
+The cgroup v2 documentation gives each controller its own pressure file in a separate section — `cgroup.pressure` at `cgroup-v2.rst:1066-1081`, `irq.pressure` at `:1083-1087`, `cpu.pressure` at `:1215-1221`, `memory.pressure` at `:1911-1915`, `io.pressure` at `:2171-2175` (S092) — and documents `cgroup.pressure` as a per-cgroup, non-hierarchical switch. The v7.2 kernel's cgroup file set also carries IRQ: `cgroup_irq_pressure_show`/`_write`
 ([cgroup.c:4077-4091](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/cgroup/cgroup.c)) and the
 comment "show or hide {cpu,memory,io,irq}.pressure files"
 ([cgroup.c:4127](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/cgroup/cgroup.c)). The system readers
 and the non-root cgroup readers are different groups: the former pass `&psi_system`
-([psi.c:1538-1550](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/sched/psi.c)), the latter pass
+([psi.c:1540,1545,1550,1686](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/sched/psi.c)), the latter pass
 `cgroup_psi(cgrp)` ([cgroup.c:3970-4091](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/cgroup/cgroup.c)).
 A system-scope read says nothing about any **non-root** cgroup's pressure, and vice versa; the root cgroup's pressure files print the same `psi_system` group as `/proc/pressure` (`include/linux/psi.h:39`, no registry row; on this host the two were byte-identical in one read pass).
 
@@ -155,7 +155,7 @@ A system-scope read says nothing about any **non-root** cgroup's pressure, and v
 *decreases* between two reads of the same file is therefore not a stall event; the v7.2 code has no decrement path, so [INFERENCE] the two
 samples are not comparable readings of the same counter.
 
-**F11 — no upstream threshold exists.** The kernel source defines no "warn at N %" rule. The only thresholds
+**F11 — no upstream threshold exists.** Neither `psi.c` nor `psi.rst` — the files read here — defines a "warn at N %" rule. The only thresholds
 in the documentation are the user's own trigger values, given as examples ("100ms of total stall time within
 any 500ms window", "some 150000 1000000") ([psi.rst:70-88](https://raw.githubusercontent.com/torvalds/linux/v7.2/Documentation/accounting/psi.rst)).
 A tool threshold is therefore the tool's own, and must be labeled as local.
@@ -233,3 +233,11 @@ sources above forbid.
   and cgroup scopes.
 - No claim that CPU `full` is zero because the system was idle; it is undefined at the system level (F3).
 - No claim that a missing or unreadable resource was unpressured; it was not observed.
+
+## Round-27 corrections (routed R7; wave-1 seat ReviewR7Knowledge)
+
+Applied in place on 2026-10-22 by MoriR27 (QUALITY 77); old → new:
+
+- `psi.c:1538-1550` (two places, F3 and the cgroup paragraph) → `psi.c:1540,1545,1550,1686`: the four `psi_show(m, &psi_system, …)` call sites; 1538-1550 holds two full readers and a signature, not four readers.
+- "The cgroup v2 documentation lists `irq.pressure` beside `cpu`, `io` and `memory.pressure` and documents `cgroup.pressure` as a per-cgroup, non-hierarchical switch (S092, `cgroup-v2.rst:1066-1087`)." → each controller's pressure file with its own section and line range (`cgroup-v2.rst:1066-1081`, `:1083-1087`, `:1215-1221`, `:1911-1915`, `:2171-2175`); the old "beside" was false.
+- F11 first line: "The kernel source defines no …" → "Neither `psi.c` nor `psi.rst` — the files read here — defines …" (the claim is scoped to the files read).

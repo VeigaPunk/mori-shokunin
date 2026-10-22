@@ -78,6 +78,7 @@ named wave-1 seat reports.
 | S135 | …/45c35e40…/packages/coding-agent/src/task/workpool.ts | 2026-10-22 | `:175,363` (pool and batch registration; ReviewR3SkillRows §3) | admit, A, mined (as S134) |
 | S136 | …/45c35e40…/packages/coding-agent/src/task/index.ts | 2026-10-22 | `:1191-1236` (per-spawn refusal inside one batch; ReviewR3SkillRows §3) | admit, A, mined (as S134) |
 | S137 | https://raw.githubusercontent.com/rfjakob/earlyoom/750a7c0d97bb01c1bdf126fd6bf5722da17e8998/main.c (with the `commits?path=main.c` query) | 2026-10-22 | `:352` "  --kernel-oom              use kernel OOM killer via /proc/sysrq-trigger\n" | admit, A, mined (ReviewS117, routed D2) |
+| S138–S141 | https://github.com/can1357/oh-my-pi/commit/944d7f8d8d44d889b77f1865f394afd1dfb48c86 ; …/e398f83163723b76283c2a05b08806ba37f0773f ; …/6962d5cd2ef157ebf9f415acd58b8744f66400d8 ; …/c4a2441d8f9195de810b3492be5bf5673cecf9c9 | 2026-10-22 | S140 `sdk.ts:1949` "maxRunningJobs: () => Math.min(100, cfgAsyncMaxJobs.get(settings) ?? 100)," | admit, A, mined (drafted round 26; re-opened and re-verified by ReviewR7Knowledge, routed R7) |
 
 Re-opened, no new row (each adds no row because a row already holds the same bytes): S003 `mm/oom_kill.c` (sha256
 `452f1348…6b4e`), S082 `proc.rst` (`e760f716…d126`), S092 `cgroup-v2.rst` (`a9433bb0…b7ad`), S114 README and S115
@@ -112,4 +113,4 @@ for the v7.2 `cgroup-v2.rst` (already S092); a new row for the sibling file (alr
 | r25 R1 runway false numbers | named debt: needs code in `tools/mori-job-runway.py`; no executor route this round | — |
 | r25 R3 SKILL round-25 rows | fixed in place: rows 1–4 per the re-verified pairs (row 1 now names no settings value); three source rows S134–S136 | `w1/ReviewR3SkillRows.md` §4 |
 | r25 R5 routed-check self-test | named debt: needs code; no executor route this round | — |
-| r25 R7 knowledge corrections | see the wave-1 ReviewR7Knowledge result below | `w1/ReviewR7Knowledge.md` |
+| r25 R7 knowledge corrections | fixed in place with logged correction blocks: `harness-job-capacity-r25.md` U1 (three later moves; the draft's "floor of 1 held" was false and was not carried) and F10 (full refusal set); `system-pressure-r24.md` `psi.c` anchors (two places), the cgroup pressure-file sentence and F11's first line; four source rows S138–S141 | `w1/ReviewR7Knowledge.md` §2–§4 |
