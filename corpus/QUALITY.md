@@ -410,3 +410,55 @@ themselves are not committed.
     error. It FAILS on round-27 at `df886be1` (no receipt naming parent `9c2c7de9…`, exit 1); a synthetic round-28
     tip batch measured at its parent passes (exit 0). ← lessons/round-27-verifier-spotcheck.md:146-147;
     lessons/round-28.md (M5).
+
+## Criteria added round 29 — round-28 routed defects
+
+85. At the freeze commit of a writer-blind wave, no report in the writers' wave directory written by a non-writer
+    cites a tool line or carries tool-run output, and every writer report lists the files it opened. A non-writer is
+    a committed report whose file name does not match the wave's declared writer-name regex. A citation is
+    `mori-oom-killers.py:<digits>`, `mori-oom-killers.py` followed by a line range, or a `Tool lines` table header;
+    tool-run output is a `MORI_OOM_KILLERS_SELFTEST:` line other than a PASS tally of an older case file, a
+    `KILLERS_QUIET exit` line, or an `--inputs` repro result. A files-opened list is a `Files opened` line or heading
+    followed by at least one path, and it names no forbidden path: the tool, any `w1/` or `w2/` report other than its
+    own, or `corpus/lessons/`. ← lessons/round-28-verifier-spotcheck.md:126-127; lessons/round-28.md:143-146 (M6),
+    :117-118, :121. Check: `bash .ufo/waves/round-29/check-blind-wave.sh <lane-rev> <wave-report-dir>
+    <writer-name-regex>` reads only committed bytes at `<lane-rev>`, prints `blind_violations=<n>` and one line per
+    violation naming the file and line number (never the matched text), and exits 0 when n=0, 1 otherwise, 2 on a bad
+    revision or a usage error. For the M6 fix it must exit 1 on the round-28 freeze `d21b8bd3` at
+    `.ufo/waves/round-28/w1` with `^CaseA2r`, and exit 0 on a synthetic clean directory; the round-29 build records
+    both runs. Until that script is committed the criterion is unenforced and no round may claim it. Red inputs: a
+    non-writer report containing `mori-oom-killers.py:305`; a `CaseA2r` report with no files-opened list; a writer
+    list naming `w1/CriticC2Design.md` (the M6 disclosure) or `corpus/lessons/round-28.md`.
+
+86. A round lesson's `## Gate` table records every reject decision its source work met as its own row, so a
+    non-author closure can sample a reject from the Gate. Each decision cell reads `admit, …` or `reject, <reason>`;
+    a reject row names the source it rejected (a URL, `own-work:` or `gist:`) and a non-empty located quote. A Gate
+    with no reject row carries `reject sample: none met` inside its own section; a closure that samples that
+    declaration states that it re-opened no reject. ←
+    lessons/round-28-verifier-spotcheck.md:128 (§6.3), :107, :109-110; lessons/round-28.md:63-72 (eight rows, all
+    admit, so the round's only reject sample came from the re-opened S097/S146). Check, over committed bytes:
+    `git -C <lane> cat-file -e <rev>:corpus/lessons/round-<N>.md || exit 2`
+    `git -C <lane> show <rev>:corpus/lessons/round-<N>.md | awk -F'|' '/^## Gate/{s=1;next} s&&/^## /{s=0} s&&/^\| *S[0-9]+ *\|/{d=$(NF-1);src=$3;q=$(NF-2);gsub(/^ +| +$/,"",d);gsub(/^ +| +$/,"",src);gsub(/^ +| +$/,"",q); if(d~/^reject, /){rej++; if(d!~/^reject, [^ ]/||src!~/^(https?:\/\/|own-work:|gist:)/||q=="")bad++} else if(d!~/^admit, /)bad++} s&&/^reject sample: none met/{none=1} END{printf "gate_reject_rows=%d none_declared=%d malformed=%d\n",rej+0,none+0,bad+0; exit ((bad==0&&(rej>=1||none==1))?0:1)}'`
+    prints `gate_reject_rows=<n> none_declared=<0|1> malformed=<n>` and exits 0 when no row is malformed and a
+    reject row or the declaration exists, 1 otherwise, 2 on a missing lesson. It FAILS on round 28 at `7118f320`
+    (`gate_reject_rows=0 none_declared=0`, exit 1) and PASSES on `round-25.md` (`gate_reject_rows=7`, exit 0). Red
+    inputs: a Gate of admit rows only with no declaration (round 28's state); a decision cell `reject` with no reason;
+    a reject row with an empty source or quote cell.
+
+87. A tip receipt measured at the first parent of the batch that lands it says so in its header, and that batch adds
+    only receipt files. Every file added at `<rev>` against `<rev>^` lives under `.ufo/waves/round-<N>/evidence/` and
+    opens with the exact line `# measured at parent <first-parent 40-hex>; the landed tip adds only receipt files
+    under .ufo/waves/round-<N>/evidence/`; the receipts keep QUALITY 84's shape. The report that cites them lies in an
+    earlier batch and names the receipt files it expects. ← lessons/round-28-verifier-spotcheck.md:129-130 (§6.4);
+    lessons/round-28.md:52-56 (M5), :108. Check: `bash -c 'lane=$1; rev=$2; round=$3; R=$(git -C "$lane" rev-parse "$rev^{commit}")||exit 2; P=$(git -C "$lane" rev-parse "$R^1")||exit 2; bash "$lane/.ufo/waves/round-28/check-tip-receipts.sh" "$R" "$round"||exit 1; a=$(git -C "$lane" diff --name-only "$P" "$R"); [ -n "$a" ]||{ echo no_added_files; exit 1; }; n=0; for f in $a; do case "$f" in ".ufo/waves/round-$round/evidence/"*) ;; *) echo "tip_adds_nonreceipt=$f"; exit 1;; esac; h=$(git -C "$lane" show "$R:$f"|sed -n 1p); w="# measured at parent $P; the landed tip adds only receipt files under .ufo/waves/round-$round/evidence/"; [ "$h" = "$w" ]||{ echo "header_not_parent=$f"; exit 1; }; n=$((n+1)); done; echo "tip_receipts=met receipts=$n only_receipts=yes"; exit 0' _ <lane> <rev> <round>` runs the QUALITY 84 checker
+    first, then the header and diff-scope assertions; it prints `tip_receipts=met receipts=<n> only_receipts=yes`,
+    exit 0, or names the first offending file, exit 1, 2 on a bad revision. It FAILS on the round-28 receipt batch
+    `1fc6bb0` (`header_not_parent=…/tip-count-c1.txt`, exit 1: line 1 is `revision: 5ef4e8db…`) and on a batch that
+    also edits `LOG.md` (`tip_adds_nonreceipt=LOG.md`); it PASSES on a synthetic two-commit repo whose tip adds one
+    receipt with the header (exit 0). Red inputs: a receipt whose header names the tip's own hash or a grandparent; a
+    tip batch that edits the lesson or `LOG.md`; a receipt without the `exit:` line.
+
+Round-29 note on 85 (appended by the L1, MoriR29): the first run on the round-29 writer wave (`221cbd8f`, before the
+case freeze) printed `blind_violations=20` (`.ufo/waves/round-29/evidence/blind-check-prefreeze.txt`); wave-2
+adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check was bound into a counted condition
+(round-29 amendment A4) before it had been run on a known-clean input: see the round-29 lesson `## Mistakes`.
