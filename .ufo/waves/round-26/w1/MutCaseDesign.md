@@ -115,18 +115,28 @@ file." So A2's eight adopted rules have **no case coverage**, with one exception
 | A1b | a `Suppressed N messages from earlyoom.service` line in scope sets `scope_complete` false | none | M46 |
 | A1c | live mode only: journal reads count as `null` unless `journalctl -q -b -n 1 _PID=1` returns a record | none, live only | M57 |
 | A2b | an `ActiveState` other than `active`/`inactive` maps to `unavailable` and `KILLERS_UNKNOWN` | none | M47 |
-| A5 | `killing whole process group ` lines counted in `earlyoom.process_group_lines`; counts are log lines, not processes signalled | none | M48, M49 |
-| A6 | under a dry-run invocation, send lines go to `earlyoom.dryrun_send_lines`, `sigterm`/`sigkill` stay 0, never positive evidence | none | M50, M51, M52, M07 |
+| A5 | `killing whole process group ` lines counted in `earlyoom.process_group_lines`; counts are log lines, not processes signalled | supplementary `c21` only (the group line itself) | M48, M49 |
+| A6 | under a dry-run invocation, send lines go to `earlyoom.dryrun_send_lines`, `sigterm`/`sigkill` stay 0, never positive evidence | none — no case has a dry-run invocation that also carries a send line | M50, M51, M52, M07 |
 | Malformed timestamp | a record without a numeric `__MONOTONIC_TIMESTAMP` is a setup error: `KILLERS_UNKNOWN`, exit 2 | supplementary `c35` only | M24, M53 |
-| Unbounded invocation | a missing or `0` anchor leaves the invocation unbounded, so `scope_complete` is false | none | M54 |
-| Earlier invocations | `earlyoom.earlier_invocation_send_lines` counts send and escalation lines outside the current invocation; for a non-active earlyoom a non-zero count is positive evidence | none | M55, M56 |
+| Unbounded invocation | a missing or `0` anchor leaves the invocation unbounded, so `scope_complete` is false | **reached but not discriminated**: `c06`, `c07`, `c29` carry `AETM=0` in both files, but earlyoom is inactive or absent there and none pins `scope_complete` | M54 |
+| Earlier invocations | `earlyoom.earlier_invocation_send_lines` counts send and escalation lines outside the current invocation; for a non-active earlyoom a non-zero count is positive evidence | **negative half only**: `c02` holds a send line at `19964361` against AETM `19964362` and pins the counters at 0; the positive half (an *inactive* earlyoom reading `KILLER_ACTED`) has no case in either file, and no case pins the field at all | M55, M56 |
 
-**Consequence.** The counted after-state `PASS 32/32` exercises none of these rules, so a defect
-in any of them cannot move the counted value. D1 cannot kill M46, M47, M50, M51, M54, M55 or M56 —
-they need ad-hoc inputs (D4); M49, M52 and M56 need the shape check (D9); M57 needs a live-mode
-probe (D10). This is a coverage statement about the artifact, not a defect of the tool, and it is
-the most consequential fact this battery carries. The dry-run question itself is settled by A6 and
-is no longer open for anyone.
+The statuses above were checked by this seat read-only over both lane blobs with the tool's own
+parsing rules (a timestamp is numeric when `int(str(value).strip())` succeeds, so the fixtures'
+string timestamps are numeric, not malformed): no case in either file carries a `Suppressed …`
+line, an `ActiveState` outside `active`/`inactive`, or a dry-run invocation that also carries a
+send line; the group line appears only in the supplementary `c21`, the malformed timestamp only in
+the supplementary `c35`.
+
+**Consequence.** The counted after-state `PASS 32/32` exercises none of these rules
+discriminatively, so a defect in any of them cannot move the counted value. D1 cannot kill M46,
+M47, M50, M51, M54, M55 or M56 — they need ad-hoc inputs (D4); M49, M52 and M56 need the shape
+check (D9); M57 needs a live-mode probe (D10). This is a coverage statement about the artifact,
+not a defect of the tool, and it is the most consequential fact this battery carries. The two
+exceptions where a case reaches the branch without pinning the discriminating field — `c06`/`c07`/
+`c29` for the unbounded invocation, `c02` for the negative half of the earlier-invocation rule —
+are recorded as *reached but not discriminated*, so the gap is not overstated in either direction.
+The dry-run question itself is settled by A6 and is no longer open for anyone.
 
 ## Mutant index (57)
 

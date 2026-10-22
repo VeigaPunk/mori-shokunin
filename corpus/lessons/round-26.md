@@ -84,3 +84,9 @@ its master-README scope is now named in the r12 entry line 6).
 Spot-check: to be recorded by the non-author closure (at least one admit and one reject; this round admitted
 13 rows and rejected none, so the closure may sample the round-25 rejects or an L1 non-admission — the per-boot
 capture was kept as own-work evidence, not a SOURCES row).
+
+Row change logged old → new (same round, before closure): S124 `teaches` "a unit left at the default `auto` is
+not monitored by systemd-oomd unless an ancestor is `kill`" → "systemd-oomd monitors only cgroups of units set to
+`kill`; a unit left at the default `auto` is never monitored itself and becomes a kill candidate only under a `kill`
+ancestor"; anchor gains `systemd-oomd.service.xml:48-52`. Reason: wave-1 seat SrcResourceControlV262 showed the
+ancestor exception applies to kill candidacy, not to monitoring.

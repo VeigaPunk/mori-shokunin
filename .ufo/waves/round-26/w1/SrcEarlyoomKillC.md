@@ -28,25 +28,16 @@ Scope of this seat: the kill-path log literals of earlyoom v1.9.0 (`kill.c`) and
    `process %d did not exit` (`kill.c:338`) is the timeout path. Both are per-attempt, not per-victim
    summaries, and neither is a kill action.
    **Counter semantics for the two counters the contract lists but does not rank** (raised by the
-   mutation seat): both `kill failed:` (`kill.c:654`) and `low memory!` (`main.c:519`, `main.c:523`)
-   are emitted *after* or *beside* an action, never instead of one, so neither can be the sole
-   evidence of a kill.
-   - `kill failed:` is printed at `kill.c:653-654`, inside `kill_process()`, which already printed
-     the action line at `kill.c:627` before calling `kill_wait()` at `kill.c:640`. A journal can
-     therefore contain `kill failed:` **only if** it also contains the matching
-     `sending SIG… to process ` line for the same attempt. `kill failed` is a weaker duplicate of
-     evidence the action line already carries, never independent evidence.
-   - `low memory! at or below SIGKILL/SIGTERM limits` (`main.c:519`, `main.c:523`) is printed in
-     `poll_loop()` **before** the victim is chosen and before the second memory check
-     (`main.c:526-539`). That check can print `memory situation has recovered while selecting victim`
-     (`main.c:537`) and skip `kill_process()` entirely, so a `low memory!` line can be present with
-     **no** action line at all. It is a threshold-crossing notice, not a kill record.
-   Consequence for the contract's verdict rule 1, which names action lines and escalation lines as
-   positive evidence and leaves `kill failed:` / `low memory!` unranked: the source supports the
-   contract's literal reading. A `low memory!` line alone is not evidence a killer acted, and a
-   `kill failed:` line is always accompanied by the action line that is already positive evidence.
-   Treating either as independent positive evidence would let a threshold crossing that recovered
-   (`main.c:536-537`) be reported as a kill.
+   mutation seat; detailed under Contradiction 4): `kill failed:` (`kill.c:654`) is printed inside
+   `kill_process()` after the action line at `kill.c:627`, so it never appears without the matching
+   `sending SIG… to process ` line for the same attempt — a weaker duplicate of evidence the action
+   line already carries, never independent evidence. `low memory!` (`main.c:519`, `main.c:523`) is
+   printed in `poll_loop()` **before** the victim is chosen and before the second memory check
+   (`main.c:526-539`); that check can print `memory situation has recovered while selecting victim`
+   (`main.c:537`) and skip `kill_process()` entirely, so a `low memory!` line can be present with
+   **no** action line at all. It is a threshold-crossing notice, not a kill record. The source
+   therefore supports the contract's literal reading of rule 1: neither counter is positive
+   evidence, and treating either as such would report a recovered threshold crossing as a kill.
 5. Dry-run has **two** distinct literals: the flag `dryrun mode enabled, will not kill anything`
    (`main.c:295`, printed via `warn()`), and the per-attempt `dryrun, not actually sending any signal`
    (`kill.c:272`, also via `warn()`). The contract grammar lists only the first.
@@ -209,12 +200,6 @@ Read-only commands only: `systemctl show earlyoom.service -p ...`, `systemctl ca
    written, a dry-run host reports a kill that never happened. The contract's output schema does
    carry a `dryrun` field, so the rule can be reconciled, but the rule text itself does not exempt
    dry-run scope. Flagged, not fixed here.
-   — Status after peer check: the tool seat confirms it follows the rule literally (an in-scope
-   action line yields `KILLER_ACTED`, exit 1) and surfaces `"dryrun": true` in the result so the
-   consumer can reconcile it; it reports no change and no re-commit. The open point is therefore
-   the **rule text**, owned by the L1: either the contract states that dry-run scope is exempt, or
-   the schema's `dryrun` field is named as the reconciliation. Not a tool defect; no further input
-   requested from this seat.
    — **Resolved by the L1.** Contract amendment A2 (`contract.md:152-167`), A6 adopted: "when the
    invocation logged `dryrun mode enabled`, send lines go to `earlyoom.dryrun_send_lines`,
    `sigterm`/`sigkill` stay 0 and they are never positive evidence (X1)". The tool implements it at
@@ -280,6 +265,44 @@ Read-only commands only: `systemctl show earlyoom.service -p ...`, `systemctl ca
 7. `main.c` anchors (`main.c:161`, `295`, `414`, `416`, `519`, `523`) were verified here only as
    cross-checks of the contract text; they belong to the `SrcEarlyoomMainC` row and were not
    absorbed into this seat's row.
+
+## A2 coverage, verified read-only over both frozen files
+
+The mutation seat reports that A2's adopted rules have no case coverage in the counted artifact.
+Independently confirmed by scanning both lane blobs with the tool's own parsing rules (timestamps
+parsed by `int(str(value).strip())`, so the fixtures' string timestamps are numeric, not
+malformed). In the counted `cases.json` (32 cases): A1b (suppressed line), A2b (ActiveState other
+than active/inactive), A5 (process-group line) and A6 (dry-run invocation carrying a send line)
+have **no** case; the malformed journal timestamp has no case. Two rules are reached but not
+discriminated, and should not be described as wholly uncovered:
+
+- **Unbounded invocation** (AETM missing or 0, `contract.md:173-174`): `c06`, `c07` and `c29` carry
+  `ActiveEnterTimestampMonotonic=0`, so they reach the branch, but earlyoom is inactive or absent in
+  all three and they pin `state` and `actions: null` without pinning `scope_complete`. A tool that
+  wrongly treated AETM=0 as a valid timestamp would still pass them.
+- **Earlier invocations** (`contract.md:175-179`): `c02` holds a send line one microsecond before
+  AETM and expects `sigterm` 0 and `KILLERS_QUIET` — the negative half of A2a. The positive half,
+  a non-zero `earlyoom.earlier_invocation_send_lines` making an inactive earlyoom read
+  `KILLER_ACTED`, has no case in either file.
+
+The supplementary `cases-supplementary.json` (32 cases) has the same picture plus `c21` carrying
+the A5 process-group line (the only A5 coverage anywhere) and `c35` covering the malformed
+timestamp. No case in either file pins any of the three fields A2 introduced —
+`earlyoom.earlier_invocation_send_lines`, `earlyoom.process_group_lines`,
+`earlyoom.dryrun_send_lines` (verified by scanning every `expect.fields` key in both files:
+**none**), and `c19` pins `scope_complete` true with an anchor present, so it does not
+discriminate the unbounded rule either. Net: the counted after-state `PASS 32/32` exercises none of
+A2's adopted rules discriminatively.
+
+Two source facts bound what A5 and A6 can mean, from the same v1.9.0 bytes: the group line is
+printed inside `kill_wait()` (`kill.c:282`, function starts at `kill.c:266`) and the action line is
+printed at `kill.c:627` before `kill_wait()` is called at `kill.c:640`, so on a live host the group
+line always follows the action line for the same attempt — the same structural fact as
+`kill failed:`, and the reason the count is of log lines, not of processes signalled. And the
+action line's gate is `if (sig != 0 || enable_debug)` (`kill.c:626`), so every real kill attempt
+emits one. Consequently `process_group_lines` cannot exceed the action count on any real host, and
+`dryrun_send_lines` equals the number of send lines the invocation emitted before they were zeroed
+(`tools/mori-oom-killers.py:369-374`).
 
 ## Touched surfaces
 

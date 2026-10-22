@@ -17,8 +17,7 @@ Upstream at tag `v1.9.0` ships **`earlyoom.service.in`** (a template, 1340 B), n
 2026-10-22). The generated `earlyoom.service` is produced by the Makefile rule
 `earlyoom.%: earlyoom.%.in` (Makefile:52-53), which substitutes `:TARGET:` → `$(BINDIR)`
 and `:SYSCONFDIR:` → `$(SYSCONFDIR)`. **Any SOURCES row for the upstream unit must cite
-`earlyoom.service.in`, not `earlyoom.service`** — a row citing the 404 URL would be an
-unopenable citation.
+`earlyoom.service.in`, not `earlyoom.service`** — the 404 URL is an unopenable citation.
 
 **C-2. The unit sets no `StandardError=` line at all, at any tag in reach.** Upstream
 `earlyoom.service.in` at `v1.9.0` contains **zero** occurrences of the string `Standard`
@@ -32,12 +31,12 @@ unopenable citation.
 This matters for the C2 grammar: earlyoom's messages reach the journal because the unit
 never redirects stderr, and systemd's default is `inherit` of a journal stdout. The upstream
 unit only *used* to say anything about stderr: at `7436b59684ff^` it carried
-`StandardOutput=null` + `StandardError=syslog`, and commit `7436b59684ff`
-(2018-07-18, "earlyoom.service: use \"-r 60\" instead of StandardOutput=null") removed both
-lines. The 2023 hardening commit `754495c6023b` is titled "earlyoom.service: redirect
-stderr and more handening" but its diff adds **no** `StandardError=` line either — every
-added line is a hardening directive, and the file at that commit also has zero
-occurrences of `Standard`. The subject line is not evidence of a stderr directive.
+`StandardOutput=null` + `StandardError=syslog`, and commit `7436b59684ff` (2018-07-18,
+"earlyoom.service: use \"-r 60\" instead of StandardOutput=null") removed both lines. The
+2023 hardening commit `754495c6023b` is titled "earlyoom.service: redirect stderr and more
+handening" but its diff adds **no** `StandardError=` line either — every added line is a
+hardening directive, and the file at that commit also has zero occurrences of `Standard`.
+The subject line is not evidence of a stderr directive.
 
 ## Facts the round can rest on (with line numbers)
 
@@ -61,8 +60,8 @@ $(DESTDIR)$(SYSCONFDIR)/default/earlyoom`), with `SYSCONFDIR ?= /etc` (Makefile:
 `c0770413a180e0731583f643fc4e84f4a0dac57efb8f575b74ee9a971df984a2`. Its first two lines
 say the file "is sourced by /bin/sh from /etc/init.d/earlyoom or by systemd from
 earlyoom.service" — but systemd does **not** source it with a shell; it reads it with the
-`EnvironmentFile=` parser. The C2 grammar does not depend on this, but a knowledge entry
-saying "systemd sources the file with /bin/sh" would be wrong.
+`EnvironmentFile=` parser. A knowledge entry saying "systemd sources the file with /bin/sh"
+would be wrong.
 
 **F-3. The rendered unit that ships on this host differs from upstream v1.9.0 by exactly
 one line, and Arch's packaging is what adds it.** `diff` of the Makefile-rendered template
@@ -71,12 +70,11 @@ against the installed `/usr/lib/systemd/system/earlyoom.service` shows one hunk:
 `SupplementaryGroups=proc`. `PKGBUILD:21` —
 `sed '/^DynamicUser=/a SupplementaryGroups=proc' -i earlyoom.service.in` — introduced by
 Arch commit `3eb122e4759` (2020-04-06, "Added directive SupplementaryGroups=proc to systemd
-service"). `PKGBUILD:20` also strips the `systemctl|chcon` lines from the Makefile
-(`sed "/systemctl|chcon/d" -ri Makefile`), so packaging does not run `systemctl enable
-earlyoom` at build time — the unit is enabled by the distribution's normal mechanisms. The
-installed file is owned by `earlyoom 1.9.0-1` (`pacman -Qo
-/usr/lib/systemd/system/earlyoom.service`), dated 2025-09-17, matching the Arch commit
-`704e05715e672b5de664d543e734aa3f757af9bb` ("upgpkg: 1.9.0-1", 2025-09-17).
+service"). `PKGBUILD:20` also strips the `systemctl|chcon` lines from the Makefile, so
+packaging does not run `systemctl enable earlyoom` at build time — the unit is enabled by
+the distribution's normal mechanisms. The installed file is owned by `earlyoom 1.9.0-1`
+(`pacman -Qo /usr/lib/systemd/system/earlyoom.service`), dated 2025-09-17, matching the
+Arch commit `704e05715e672b5de664d543e734aa3f757af9bb` ("upgpkg: 1.9.0-1", 2025-09-17).
 
 **F-4. Why `SupplementaryGroups=proc` matters for what earlyoom can read.** The daemon
 runs unprivileged (upstream `earlyoom.service.in:25` `DynamicUser=true`; systemd.exec.xml:
@@ -102,9 +100,8 @@ entries to pick a victim (earlyoom reads `/proc/<pid>/stat`, `oom_score`, `oom_s
 `earlyoom.service.in:22-48` sets, among others:
 - `ProtectSystem=strict` (:27) — the entire filesystem hierarchy is read-only **except**
   `/dev/`, `/proc/` and `/sys/` (systemd.exec.xml:1503-1506). The `/proc` carve-out is
-  what keeps earlyoom's job possible.
-- `ProtectHome=true` (:29) — `/home`, `/root`, `/run/user` inaccessible and empty
-  (systemd.exec.xml:1529-1531).
+  what keeps earlyoom's job possible. `ProtectHome=true` (:29) — `/home`, `/root`,
+  `/run/user` inaccessible and empty (systemd.exec.xml:1529-1531).
 - `ProtectKernelTunables=true` (:35) — `/proc/sys` and friends read-only; `/proc/kallsyms`
   and `/proc/kcore` inaccessible (systemd.exec.xml:2366-2370).
   `ProtectKernelLogs=true` (:33) — `/dev/kmsg` and `/proc/kmsg` inaccessible
@@ -126,17 +123,16 @@ entries to pick a victim (earlyoom reads `/proc/<pid>/stat`, `oom_score`, `oom_s
 
 **F-6. The hardening lines were moved by four upstream commits; cite the tag, not the
 history.** `754495c6023b` (2023-06-17) introduced the hardening block with
-`SystemCallFilter=~@resources @privileged` and `IPAddressDeny=true`;
-`b41ebb2275e5` (2024-04-18, "remove systemd resources syscall filter because it causes
-earlyoom to be terminated when launched with -p flag") dropped `~@resources`;
-`e6c797881341` (2024-04-19) changed `IPAddressDeny=true` → `any`; `c171b72ba217` (2024-04-21)
-added `process_mrelease` to the allowed set. The `v1.9.0` file already carries all four
-outcomes (lines 41, 47, 48).
+`SystemCallFilter=~@resources @privileged` and `IPAddressDeny=true`; `b41ebb2275e5`
+(2024-04-18, "remove systemd resources syscall filter because it causes earlyoom to be
+terminated when launched with -p flag") dropped `~@resources`; `e6c797881341` (2024-04-19)
+changed `IPAddressDeny=true` → `any`; `c171b72ba217` (2024-04-21) added `process_mrelease`
+to the allowed set. The `v1.9.0` file already carries all four outcomes (lines 41, 47, 48).
 
 **F-7. What the host's effective stderr destination is.** `systemctl show earlyoom.service
--p StandardOutput -p StandardError` → `StandardOutput=journal`, `StandardError=inherit`.
-That is the systemd default pair, not a unit directive — consistent with F-1/F-2 and with
-`grep -c Standard /usr/lib/systemd/system/earlyoom.service` → 0.
+-p StandardOutput -p StandardError` → `StandardOutput=journal`, `StandardError=inherit` —
+the systemd default pair, not a unit directive (consistent with F-1/F-2 and with
+`grep -c Standard /usr/lib/systemd/system/earlyoom.service` → 0).
 
 **F-8. The journal the C2 tool reads does contain earlyoom's messages, and its composition
 is known.** `journalctl -q -b -u earlyoom.service -o json --output-fields=MESSAGE` on this
@@ -145,9 +141,8 @@ version line, 1 `mem total:` line, 2 threshold lines (`sending SIGTERM when mem 
 10.00% and swap free <= 10.00%,` and `SIGKILL when mem avail <=  5.00% and swap free <=
 5.00%`), 1 `--prefer` echo, 1 `--avoid` echo, and 7 `mem avail:` report lines at a 3600 s
 cadence (measured deltas 3600344236, 3600266262, 3600259765, 3600273573, 3600263331,
-3600269746 µs). `journalctl` here emits both `MESSAGE` and `__MONOTONIC_TIMESTAMP` for
-that query, so the contract's scope rule is satisfiable. Two precision notes for the C2
-grammar, both verified against the real bytes:
+3600269746 µs). `journalctl` here emits both `MESSAGE` and `__MONOTONIC_TIMESTAMP` for that
+query, so the contract's scope rule is satisfiable. Two precision notes for the C2 grammar:
 - The `SIGKILL` threshold line is **indented by eight spaces** and carries a **double
   space** before `5.00%` (`PRIPCT` is `"%5.2lf%%"`, msg.h:10, so `5.00` is width-5
   right-aligned). A regex `mem avail <= (\S+)%` **fails** on that line and succeeds on the
@@ -171,12 +166,10 @@ adds a `--prefer`, which neither upstream nor the packaged default has). The opt
 expression values are withheld under the round's privacy bound; the packaged default's
 sha256 is reproducible by applying `PKGBUILD:22` to the upstream `earlyoom.default`.
 
-**F-10. The Arch repository is reachable by ordinary means and needed no challenge
-avoidance.** `https://gitlab.archlinux.org/archlinux/packaging/packages/earlyoom` served
-the API tree without a bot challenge; the raw file URL
-`…/-/raw/704e05715e672b5de664d543e734aa3f757af9bb/PKGBUILD` returned **HTTP 200**, 1179
-bytes, sha256 `f48dc3f99aee5d6a93f8cad4e4b6286dab014745aa6f85b1c3582c3db46dd4a2`, and the
-same bytes as the `main` branch. The package tree at that commit holds `LICENSES`,
+**F-10. The Arch repository was reachable by ordinary means and needed no challenge
+avoidance.** `https://gitlab.archlinux.org/archlinux/packaging/packages/earlyoom` served the
+API tree without a bot challenge, and the raw file URL returned **HTTP 200** with the same
+bytes as the `main` branch. The package tree at commit `704e0571` holds `LICENSES`,
 `.SRCINFO`, `.nvchecker.toml`, `LICENSE`, `PKGBUILD`, `REUSE.toml` — there is no separate
 `/etc/default/earlyoom` in the repository; the shipped default comes from the upstream
 tarball, rewritten by the `prepare()` sed.
@@ -198,24 +191,25 @@ one, both, or merge them.
 ```
 
 Tier reasoning: **A** for both. Each is a first-party artifact of the project or of the
-distribution that ships it, pinned to an immutable tag or commit, quoted by line number,
-and byte-hashed; the registry's tier A covers exactly this kind of primary material
-(e.g. S003, S011, S016 — upstream sources read the same way). Neither is second-hand, so
-neither is B or C. Status **mined**: both rows carry facts the round's C1 superseding entry
-and the C2 grammar rely on. `recheck` `on-release` matches how upstream-tag rows in the
-registry are marked (S003, S011, S016). `used-by` is set to
+distribution that ships it, pinned to an immutable tag or commit, quoted by line number, and
+byte-hashed; the registry's tier A covers exactly this kind of primary material (e.g. S003,
+S011, S016 — upstream sources read the same way). Neither is second-hand, so neither is B or
+C. Status **mined**: both rows carry facts the round's C1 superseding entry and the C2
+grammar rely on. `recheck` `on-release` matches how upstream-tag rows in the registry are
+marked (S003, S011, S016). `used-by` is set to
 `corpus/knowledge/userspace-oom-killers-r26.md`, the entry the contract's C1 requires.
 
 The `teaches` sentences state only what the cited lines show. Two guards were applied
 deliberately: the upstream row asserts the *absence* of a stderr directive (which the whole
-51-line file shows) rather than claiming the unit redirects stderr, and the Arch row
-asserts that packaging *adds a group* and *ships the file as a backup* without restating
-the `--avoid`/`--prefer` values, which the round's privacy bound withholds.
+51-line file shows) rather than claiming the unit redirects stderr, and the Arch row asserts
+that packaging *adds a group* and *ships the file as a backup* without restating the
+`--avoid`/`--prefer` values, which the round's privacy bound withholds.
 
 ## Gate
 
-Sources opened 2026-10-22 by ordinary `curl` (no browser; no bot challenge encountered — the
-GitLab API and raw endpoints served the repository directly).
+Sources opened 2026-10-22 by ordinary `curl` (no browser; no bot challenge — the GitLab API
+and raw endpoints served the repository directly). No source was rejected for content; the
+single rejection below is the 404 URL, rejected as a *citation target*, not as a source.
 
 | Source | URL | Fetch | sha256 | Located quote (≤25 words) | Decision |
 |---|---|---|---|---|---|
@@ -231,9 +225,6 @@ GitLab API and raw endpoints served the repository directly).
 | upstream wiki proc-hidepid | https://raw.githubusercontent.com/wiki/rfjakob/earlyoom/proc-hidepid.md | HTTP 200, 1,023 B | `dfed12c8bb40ee9ef5c8cdef9ea40464b884dc8b6cfb1a6e1b215525d290cab1` | `:12` "earlyoom running as a normal user can no longer see (hidepid=2) or look at the memory usage (hidepid=1) of running processes" | admit, A, mined |
 | **earlyoom.service at v1.9.0 (the URL in the assignment)** | https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/earlyoom.service | **HTTP 404**, 14 B | `d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed` | body "404: Not Found" | **reject — unopenable citation; upstream ships earlyoom.service.in** |
 | Linux v7.2 include/linux/proc_fs.h | https://raw.githubusercontent.com/torvalds/linux/v7.2/include/linux/proc_fs.h | HTTP 429 (rate-limited) | — | enum proc_hidepid { HIDEPID_OFF = 0, HIDEPID_NO_ACCESS = 1, HIDEPID_INVISIBLE = 2, HIDEPID_NOT_PTRACEABLE = 4 } | fetched via mirror cdn.jsdelivr.net/gh/torvalds/linux@v7.2 (HTTP 200, 9,616 B, sha256 `440d0e3c544a18444d8cccbfee0aecf5a4858a1337e5554ecb8e5c4d4dc5a602`); the enum values are corroborated by fs/proc/inode.c:161-171 |
-
-No source was rejected for content. The single rejection is the 404 URL, and it is rejected
-as a *citation target*, not as a source: the row must cite `earlyoom.service.in`.
 
 ## Facts that contradict or constrain the contract
 
@@ -272,8 +263,8 @@ both fields, and the `--output-fields=MESSAGE` form still carries
 `__MONOTONIC_TIMESTAMP`, `__REALTIME_TIMESTAMP`, `__SEQNUM`, `__SEQNUM_ID`). The
 contract's oomd-notice command shape also works:
 `journalctl -q -b MESSAGE_ID=d989611b15e44c9dbf31e3c81256e4ed -o json
---output-fields=MESSAGE_ID` exits 0 and prints 0 lines on this host (earlyoom's unit is
-the only one in scope; oomd is inactive and disabled).
+--output-fields=MESSAGE_ID` exits 0 and prints 0 lines (earlyoom's unit is the only one in
+scope; oomd is inactive and disabled).
 
 **X-5. The contract's scope rule ("≥ ActiveEnterTimestampMonotonic of the current
 earlyoom invocation") is satisfiable but depends on the invocation-scoped version line.**
@@ -289,9 +280,9 @@ on the boot start.
 
 No package was installed, upgraded or removed. `pacman` transactions are paused host-wide
 per the round's bound, and nothing this seat needed was missing: `curl 8.23.0`,
-`python3 3.14.8`, `git 2.56.0` and `jq`/`jaq 3.1.1` (`~/.local/bin/jq`) were already
-present and were used as-is. Per `/home/vgpnk/.omp/agent/RULES.md` nothing was fetched
-from an unverified remote script and no full-system upgrade was attempted.
+`python3 3.14.8`, `git 2.56.0` and `jq`/`jaq 3.1.1` were already present and used as-is.
+Per `/home/vgpnk/.omp/agent/RULES.md` nothing was fetched from an unverified remote script
+and no full-system upgrade was attempted.
 
 ## Scratch and privacy
 
