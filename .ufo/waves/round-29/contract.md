@@ -151,3 +151,16 @@ Every change makes a claim harder to meet or corrects a misstatement; nothing is
 - **Correction (F7):** the case writers fetch upstream sources themselves; rows S153 onward are opened in the same
   wave by source scribes, so the sourced claim rests on those rows through the lesson Gate and the case file's
   `sources` key, not through the writers' reading.
+
+## Amendment A3 (round 29, before the C2 counter lands; CriticC2Design F1–F3)
+
+- **Provenance (F2, counted):** every case of `cases-a2-r29.json` must equal (canonical JSON, keys sorted) a case in
+  the first fenced JSON array of its author's committed report `.ufo/waves/round-29/w1/<author>.md` at `<rev>`, and
+  every case of those eight reports whose author is listed must appear in the file (no selection). The counter prints
+  `provenance=<matched>/<cases> unselected=<n>`; `C2=met` needs all matched and `unselected=0`.
+- **Field map (F1):** the round-28 A1 map (A2-07 pins `earlier_invocation_send_lines > 0`) belongs to the round-28
+  file and is kept there by `PASS 30/30`. The round-29 map pins the in-scope fields because the routed A2-07 shape is
+  inside the counted scope; this is a different file, not a relaxed one.
+- **Shared directory (F3):** critic reports sit in the writers' `w1/` directory again; the blindness evidence is the
+  `check-blind-wave.sh` receipt at the freeze commit (no non-writer report cites tool lines or tool output) plus each
+  writer's files-opened list.
