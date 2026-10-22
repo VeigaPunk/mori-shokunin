@@ -1728,3 +1728,8 @@ one-shot tool was the coverage claim in rounds 24–26).
 
 Held and observed: freshness 5, calibration 5, coverage 6, adjacency 6. No retirement, waiver, exploratory claim or
 promotion. No-harm check: lane retention scan 4 unallowlisted at `fc09f96c`; no landed tip may exceed 4.
+
+Round-27 amendment W1 (before any C2 data): C2 is withdrawn, not narrowed. Its case-writer seat `WriteA2Cases` died at
+spawn (`Error: No model selected.`), and the claim's substance is that seat's independence from the tool; dead seats
+are never replaced. The round has one counted claim, C1. Routed D7 is carried as named debt
+(`.ufo/waves/round-27/contract.md` "Amendment W1").

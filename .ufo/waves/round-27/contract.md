@@ -87,3 +87,13 @@ landed tip may exceed 4. Operability no-harm: the five round-26 selftests keep t
 ## Routed defects (hygiene, never a counted claim)
 
 Round-26 D1–D6 and round-25 R1, R3, R5, R7 are fixed or explained in `corpus/lessons/round-27.md`; D7 is C2.
+
+## Amendment W1 (2026-10-22T15:55Z, before any C2 data exists): C2 withdrawn, not narrowed
+
+Seven of the 34 wave-1 seats died at spawn with `Error: No model selected.` (the scribe, executor and
+mutation-tester route was degraded; orchestrator route notice of 15:40Z). One of them was `WriteA2Cases`, the seat
+whose independence from the tool is the substance of C2 ("written by a seat that does not read the tool's source").
+Session rules forbid replacing or rerouting a dead seat, and an L1-written case file would not meet the stated
+condition. C2 is therefore withdrawn before any case exists; `count-c2.sh` stays committed and unchanged, and its
+before-value stays the record. Routed D7 is carried as named debt with this reason. The round has one counted claim,
+C1. No other part of the contract changes.
