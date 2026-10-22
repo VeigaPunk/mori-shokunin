@@ -478,13 +478,18 @@
   },
   {
    "id": "c21-nearmiss-midline-sigkill",
-   "why": "Adversarial near miss. The action text `sending SIGKILL to process ` of kill.c:627 appears inside the line, but not at the start of it. contract.md:80 matches the grammar prefix anchored after stripping leading whitespace, so a mid line occurrence is not an action line. The sigkill count stays 0 and, with no other positive evidence, the verdict is KILLERS_QUIET exit 0.",
+   "why": "Adversarial near miss, plus the real v1.9.0 lines that sit outside the contract grammar. The action text `sending SIGKILL to process ` of kill.c:627 appears inside the first line, but not at the start of it. contract.md:80 matches the grammar prefix anchored after stripping leading whitespace, so a mid line occurrence is not an action line. The five further lines exist at v1.9.0 and are not part of the grammar of contract.md:80-88: `dryrun, not actually sending any signal` (kill.c:272), `killing whole process group %d (-g flag is active)` (kill.c:282), `process %d exited after %.3f seconds` (kill.c:329), `process %d did not exit` (kill.c:338) and `Could not find a process to kill. Sleeping 1 second.` (kill.c:609). None of them is an action, an escalation, a kill failure or a low memory warning, so every counter stays 0 and the verdict is KILLERS_QUIET exit 0. The dry-run flag is not pinned by this case: it is taken only from the `dryrun mode enabled` line of main.c:295, which c18 pins.",
    "inputs": {
     "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=19964362\n",
     "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
     "earlyoom_journal": [
      {"MESSAGE": "earlyoom 1.9.0", "__MONOTONIC_TIMESTAMP": "19964362"},
-     {"MESSAGE": "earlyoom: sending SIGKILL to process 5150 \"imaginary-indexer\"", "__MONOTONIC_TIMESTAMP": "19970000"}
+     {"MESSAGE": "earlyoom: sending SIGKILL to process 5150 \"imaginary-indexer\"", "__MONOTONIC_TIMESTAMP": "19970000"},
+     {"MESSAGE": "dryrun, not actually sending any signal", "__MONOTONIC_TIMESTAMP": "19970001"},
+     {"MESSAGE": "killing whole process group 4242 (-g flag is active)", "__MONOTONIC_TIMESTAMP": "19970002"},
+     {"MESSAGE": "process 4242 exited after 0.500 seconds", "__MONOTONIC_TIMESTAMP": "19970003"},
+     {"MESSAGE": "process 4242 did not exit", "__MONOTONIC_TIMESTAMP": "19970004"},
+     {"MESSAGE": "Could not find a process to kill. Sleeping 1 second.", "__MONOTONIC_TIMESTAMP": "19970005"}
     ],
     "oomd_notices": 0
    },
