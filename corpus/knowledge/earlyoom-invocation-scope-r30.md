@@ -20,9 +20,10 @@ The reader `tools/mori-oom-killers.py` answers `KILLER_ACTED` (exit 1), `KILLERS
 
 - earlyoom prints `earlyoom <version>` once at startup (S119 `main.c:161`); each occurrence opens an invocation, and a
   line belongs to the segment opened by the latest version line before it (`.ufo/waves/round-30/rule-text.md:89-90`).
-- The shipped unit restarts earlyoom whenever it is killed or crashes (S159: "Have systemd restart us should we get
-  killed or crash for some reason", `Restart=always`), so one boot can hold several invocations, and a restart writes a
-  new version line: "send, restart" and "send, no restart" are different shapes.
+- The shipped unit restarts earlyoom whenever it is killed or crashes: S159 is the commit that introduced the line
+  ("Have systemd restart us should we get killed or crash for some reason", `Restart=always`) and S120 is the
+  `earlyoom.service.in` file at v1.9.0 that carries it (`:17`). So one boot can hold several invocations, and a restart
+  writes a new version line: "send, restart" and "send, no restart" are different shapes.
 - The journal the reader gets is the current boot of the earlyoom unit: `-b` with no argument enables the boot filter
   for the current boot and `-u` appends the unit match (S160 `journalctl.c:514-517,543-544`). Nothing before this boot
   is visible.
@@ -50,9 +51,11 @@ The reader `tools/mori-oom-killers.py` answers `KILLER_ACTED` (exit 1), `KILLERS
 - It changes the verdict only when earlyoom is not `active` (`inactive`, `absent` for `LoadState=not-found`, or a
   non-steady state mapped to `unavailable`): then a non-zero count is `KILLER_ACTED` while `actions` stays `null`.
 - Round-30 change (C2.1, the round-29 Judge11–13 `tool error` rulings): for a non-active unit with a readable show text
-  and a retained non-zero stamp (S157), the reader scopes the last invocation from that stamp, reports its version and
-  its zero line counters, keeps `actions: null`, and treats a send inside that last invocation as positive evidence too
-  (`.ufo/waves/round-30/evidence/fix-tool.diff`; differential `.ufo/waves/round-30/evidence/c2-differential.txt`).
+  and a retained non-zero stamp (S157), the reader scopes the last invocation from that stamp, reports the last version
+  line inside that retained scope (`earlyoom.version` is `null` when no version line is at or after the stamp; round-31
+  correction D4 below) and its zero line counters, keeps `actions: null`, and treats a send inside that last invocation
+  as positive evidence too (`.ufo/waves/round-30/evidence/fix-tool.diff`; differential
+  `.ufo/waves/round-30/evidence/c2-differential.txt`).
   Limit (wave-2 CriticC1Admission F3): such a last-invocation send is counted in no output field — the verdict is
   `KILLER_ACTED` while `earlier_invocation_send_lines` excludes it and `actions` stays `null`, so a non-active
   `KILLER_ACTED` can carry every count at 0. Routed to the tool as a named residual.
@@ -134,3 +137,17 @@ tool, unit or journal change.
 `corpus/knowledge/userspace-oom-killers-r26.md` owns the grammar and live counts;
 `corpus/knowledge/structured-journal-scopes-r13.md` owns the timestamp mechanics; the host's OOM configuration stays
 with tsukuroi (`.ufo/waves/round-30/w1/ConnectorSiblings.md`); this entry owns the invocation boundary.
+
+## Round-31 correction (routed D4; wave-1 FixEntryVersionD4; QUALITY 77: corrected in place above and recorded here)
+
+- Old text at `a12c68ae`, lines 52-55: "for a non-active unit with a readable show text and a retained non-zero stamp (S157),
+  the reader scopes the last invocation from that stamp, reports its version and its zero line counters, …". "Reports
+  its version" held only for a version line at or after the retained stamp (round-30 wave-2 ReviewEntryProse LOW-2,
+  `.ufo/waves/round-30/w2/ReviewEntryProse.md:27-43`; `corpus/lessons/round-30.md:231-232`). The tool sets
+  `version = None` (`tools/mori-oom-killers.py:360`), assigns it only while iterating version lines inside the retained
+  scope (`:389-396`, scope filter `stamp >= aetm` at `:305-322`) and emits it as `earlyoom.version` (`:518`), so it is
+  `null` when no version line is at or after the stamp and the last such line otherwise. Corrected in place at lines
+  53-58.
+- Old text at `a12c68ae`, lines 23-25, cited S159 alone for `Restart=always` (round-30 ReviewEntryProse LOW-1). S159 is
+  the commit that introduced the line (`corpus/SOURCES.md:165`); S120 is the `earlyoom.service.in` file at v1.9.0 that
+  carries it at `:17` (`corpus/SOURCES.md:126`). Corrected in place at lines 23-26 to name both; no SOURCES cell changes.

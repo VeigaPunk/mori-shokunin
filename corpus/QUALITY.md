@@ -661,3 +661,19 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     round-29 M2). Shown able to fail: round 30 — the A2 gate's first run on the round-30 writers (`32e287ff`,
     `.ufo/waves/round-30/evidence/gate-a2-prefreeze.txt`) printed 4 unadjudicated hits, and the gate blob at the freeze
     `db1ec469` printed 1 more (`evidence/c2-after.txt`); no adjudicated receipt of the freeze blob precedes the freeze.
+
+94. Supersedes criterion 93 (routed D3: criterion 93 cannot fail on its stated property — its check passes a
+    receipt whose hits are unadjudicated, `corpus/lessons/round-30.md:215`; criterion 93 stays as written). A gate
+    may carry a counted condition only when a receipt committed before the freeze records the exact frozen gate blob
+    run on the round's own writer inputs after the gate's last edit, keeps the complete hit list, and carries one
+    explicit non-author adjudication per hit; and the gate, replayed on a two-hit negative brief, prints two hit
+    lines. A changed gate, an omitted hit or an unadjudicated hit makes the gate ineligible for that condition.
+    Check: at freeze F, `git merge-base --is-ancestor <receipt commit> F`, the receipt's gate blob equals
+    `git rev-parse F:<gate>`, every receipt hit line has an adjudication line naming a non-author seat, and the gate
+    on a brief with two forbidden entries in one files-opened list prints two `writer-forbidden-opened-path` lines.
+    Lesson: `corpus/lessons/round-31.md` (routed D3; round-30 M5). Shown able to fail: the round-30 freeze `db1ec469`
+    fails it — no adjudicated receipt of the freeze gate blob precedes it (`corpus/lessons/round-30-verifier-spotcheck.md:176-183`),
+    and the round-30 parser prints one hit for two forbidden entries (fixture F02 under the do-nothing port,
+    `.ufo/waves/round-31/evidence/c2-controls.txt`, `F02 diff want=[(3, …), (4, …)] got=[(3, …)]`).
+    Criterion 92 is unmet at the round-30 tip (`limit_stated=no`: no `r30-disputed-*` id is named with a limit in
+    `SKILL.md` or `corpus/knowledge/`, `corpus/lessons/round-30.md:228-229`); recorded here, not repaired this round.

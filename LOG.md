@@ -1986,3 +1986,26 @@ landed tip.
   `ee61010d`; **C1 = met** at `ee61010d` (`evidence/c1-after.txt`).
 - Retention metric 4 at the C1 draft (sandbox commit of the same bytes), base 4. Census at the C1 batch: `mori ok`, exit 0.
 - Routed R1: tip receipts `tip-c1.txt`, `tip-c2.txt`, `tip-retention.txt` named here before the receipts-only batch.
+
+## Round 31 (attempt 1, L1 MoriR31) — declaration and freeze
+
+- Entering tip `a12c68ae` (round-30 spot-check; round 30 closed `rejected-honest-stop`: C1 verified, C2 miss).
+- Freeze before any seat ran: contract, both counters, the 16 C2 fixtures (sha256 `1442c14e…`), rule text and three
+  C2 control scripts landed `2124cbcd`, with the round-31 SCORECARD declaration. Claims: C1 depth (5, tied lowest) —
+  sourced decision table `corpus/knowledge/watchdog-identity-r31.md` on FR5 ground, counter
+  `.ufo/waves/round-31/count-c1.py`; C2 operability (7) — new lane tool `tools/mori-blind-check.sh` (routed D1),
+  counter `.ufo/waves/round-31/count-c2.py`.
+- Receipts before any seat ran, `8baccf4a`: `evidence/c1-before.txt` (`entry=absent`, `C1=unmet`, exit 1);
+  `evidence/c1-controls.txt` (do-nothing, sourceless table, fabricated consistent rows: all `C1=unmet`);
+  `evidence/c2-before-base.txt` (at `a12c68ae`: `fixtures absent at revision`, `C2=error`, exit 2 — the declaration's
+  before cell says exit 1; see lesson M1); `evidence/c2-controls.txt` (at the freeze `2124cbcd`: tool absent
+  `C2=unmet` exit 1; do-nothing round-30 gate port `exact=10/16`, grep shortcut `3/16`, canned-id shortcut `4/16`
+  with 14 stray lines: all `C2=unmet`).
+- Round-start census 23:41Z at `8baccf4a`: ten W04, `mori ok`, exit 0 (`evidence/census-start.txt`).
+- Inherited untracked path: `.scratch/` only (pre-round; not round work, untouched).
+- Wave 1 dispatched 23:43Z: 41 seats (18 scout, 7 executor, 7 scribe, 4 critic, 3 reviewer, 1 mutation-tester,
+  1 connector); spec, validator run and dispatch payload under `.ufo/waves/round-31/`. The L1 holds the planner seat.
+
+## Round 31 (attempt 1, L1 MoriR31) — appended correction to the round-30 log (routed D7; wave-1 DraftLogScorecardD7D8)
+
+- **D7, append-only correction:** round-30 wave-2 spec, validator run and dispatch payload landed in `713be294669272b8b29e9a8cd60c5313704a2ee1`; the commit subject records 36 seats (18 reviewer, 7 scout, 6 critic, 4 mutation-tester, 1 sentinel) and the wave-1 registry. `git show --stat 713be294` lists `.ufo/waves/round-30/w1/swarm-registry.json`, `.ufo/waves/round-30/wave2-dispatch.json`, `.ufo/waves/round-30/wave2-run.err`, `.ufo/waves/round-30/wave2-run.json` and `.ufo/waves/round-30/wave2-spec.json` (5 files changed, 1067 insertions). This records the later wave-2 artifact commit without changing the round-30 measured outcomes above.
