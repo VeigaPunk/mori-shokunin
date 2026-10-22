@@ -1529,3 +1529,17 @@ freshness 5, adjacency 6. No retirement, waiver, exploratory claim or promotion.
 |---|---|---|---|
 | one-shot system pressure read | read `/proc/pressure/{cpu,memory,io,irq}` once (or twice with `--interval`), report per-resource states, never zero for unavailable, system cpu `full` flagged undefined, irq `some` null, labeled-local threshold | `tools/mori-pressure.py --selftest` PASS 12/12; `.ufo/waves/round-24/evidence/bracket-check-run.json` 5/5; `.ufo/waves/round-24/w2/Mut*.md` | 24 |
 | round-23 routed-item check | report whether the round-23 routed carry-forward items hold at a revision, and whether a round's dispatch payloads were committed before their recorded call times | `tools/mori-routed-check.py`; `.ufo/waves/round-24/evidence/c1-*.json`; `.ufo/waves/round-24/w1/BuildRoutedCheck.md` | 24 |
+
+
+## Round 25 declaration (attempt 1, L1 MoriR25) — round-24 routed repair and harness job runway
+
+Entering tip `28b79d3d1b76824f0c825aabe6cb6c5dc49961bf` (round 24 admitted). Full contract:
+`.ufo/waves/round-25/contract.md` (landed `7634be75`). Targets, not results.
+
+| Claim | Axis / score | Before | Declared after-value (one command over committed bytes) |
+|---|---|---|---|
+| C1 repair round-24 routed defects D1–D4 | calibration 5 (lowest active, tied with depth and freshness) | `tools/mori-routed-r24.py` absent; expected `mismatches: 4` at `28b79d3d` | `python3 -I -B tools/mori-routed-r24.py --repo <lane> --rev <landed tip>` prints `"mismatches": 0` (`"held": 4` of `"items": 4`), exit 0 |
+| C2 harness background-job runway capability (new ground, sourced) | coverage 6 | `tools/mori-job-runway.py` absent at `28b79d3d` (exit 128) | `python3 -I -B tools/mori-job-runway.py --selftest` prints `MORI_JOB_RUNWAY_SELFTEST: PASS 21/21`, exit 0, over the 21 cases frozen at `7634be75` |
+
+Held and observed: operability 7, depth 5, freshness 5, adjacency 6. No retirement, waiver,
+exploratory claim or promotion.
