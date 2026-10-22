@@ -1600,3 +1600,24 @@ routed defects R1–R8 are hygiene or named debt, never a counted claim.
 Held and observed: operability 7, depth 5, calibration 5, adjacency 6. No retirement, waiver, exploratory claim
 or promotion. No-harm check: lane retention scan 4 unallowlisted at `248408f5`
 (`evidence/retention-scan-base.txt`); the landed tip must not exceed 4.
+
+### Round 26 measured outcome (L1 MoriR26; measured at `327fbcca`, before wave 2)
+
+| Claim | Before | After (one committed command over committed bytes) | Verdict proposed for the closure |
+|---|---|---|---|
+| C1 freshness, stale FR10 host-state statements | `bash .ufo/waves/round-26/count-c1.sh 248408f5b6610a85bcbdebe7ac0b4fa7ed51422a` prints `stale_present=4`, `r26_entry=absent`, `r26_new_source_ids=0`, `r12_names_r26=0` | same script at `327fbcca` prints `stale_present=0`, `r26_entry=present`, `r26_new_source_ids=13`, `r12_names_r26=4` | improved, bounded to the four frozen phrases plus the superseding entry; freshness 5 → 5 held pending closure |
+| C2 coverage, userspace OOM killer read (sourced S114–S126) | `bash .ufo/waves/round-26/count-c2.sh 248408f5…` prints `absent cases_commit=none tool_commit=none`, exit 2 | same script at `327fbcca` prints `freeze_order=ok`, `cases_changed_since_freeze=0`, `N=32`, `MORI_OOM_KILLERS_SELFTEST: PASS 32/32`, `exit=0` | improved, bounded: the count is agreement with 32 cases a separate seat wrote before the tool; coverage 6 → 6 held pending closure |
+
+Uncounted, same change: r12 line 3 (recheck output dated), line 6 (`--kernel-oom` scoped to the master README; absent
+from the installed 1.9.0), lines 14 and 18 (earlyoom unit state dated), README rows 34 and FR10. Not yet swept:
+three `systemd 261` present-tense lines in `corpus/knowledge/journal-alarm-routing-r14.md:67-68,290,342` (wave-1
+ScoutStaleSweep) — named debt.
+
+### capabilities: first demonstrated round 26
+
+| Capability | What it can now do | Evidence | First-working round |
+|---|---|---|---|
+| userspace OOM killer read (earlyoom 1.9.0, systemd-oomd), bounded | from `systemctl show` and this boot's journal, report each killer's unit state, the earlyoom version string and its four startup thresholds, counts of earlyoom send, escalation, failed-kill, low-memory, process-group and dry-run send log lines for the current invocation, send lines of earlier invocations this boot, and the number of systemd-oomd kill notices this boot, with a `KILLER_ACTED` / `KILLERS_UNKNOWN` / `KILLERS_QUIET` verdict as in contract C2 and amendment A2. Counts are log lines, not processes killed. Known limits: for a running earlyoom, sends of an earlier invocation in the same boot are reported but do not change the verdict; counts with an incomplete scope are lower bounds; no logger-heartbeat check; previous boots are not read | `tools/mori-oom-killers.py --selftest` PASS 32/32 (frozen at `5b10649d`) and PASS 32/32 on `cases-supplementary.json`; `.ufo/waves/round-26/evidence/c2-live-run.txt`; `corpus/knowledge/userspace-oom-killers-r26.md` | 26 |
+
+Held: operability 7, depth 5, calibration 5, adjacency 6 (retention scan 4 at `4dba9cc7`, equal to the entering
+value). No retirement, waiver, exploratory claim or promotion.

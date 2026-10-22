@@ -1,0 +1,219 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r26-w1",
+  "createdAt": "2026-10-22T13:13:14.679Z",
+  "updatedAt": "2026-10-22T13:13:14.679Z",
+  "reportDir": ".ufo/waves/round-26/w1",
+  "members": {
+    "SrcEarlyoomReadme": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "SrcEarlyoomMainC": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "SrcEarlyoomKillC": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "SrcEarlyoomManpage": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "SrcEarlyoomMeminfo": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "SrcEarlyoomUnit": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "SrcResourceControlV262": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "SrcOomdUtilV262": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "SrcSiblingTsukuroi": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "SrcJournalJson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "SrcEarlyoomTagHistory": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "DraftEntryR26": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "DraftR12Corrections": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "DraftSkillFr10": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "DraftHygieneScorecard": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "DraftHygieneKnowledge": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "BuildOomKillersTool": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "WriteOomKillersCases": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "HostCapture": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ScoutStaleSweep": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScoutHostJournal": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScoutPriorAdmissions": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ConnSiblingOverlap": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null
+    },
+    "ConnFleetConsumers": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null
+    },
+    "CriticC1Width": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "CriticC2Width": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "ReviewContractGrammar": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewPrivacyDesign": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewScopeClock": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "MutC1Counter": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "ReviewRetentionBase": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "CriticLearningRules": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "ReviewOomdV262Facts": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "MutCaseDesign": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "ReviewHygieneDebt": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    }
+  }
+}

@@ -1,6 +1,7 @@
-revision: c2fdd929c7473f8a325a95b3a3776cdd0efb8f76
+revision: 4dba9cc77d94e93297978a02fc20097e8ea560b4
+tool_blob: 44dac3fd6cb1320752a226a360f29d1805ce93f3
 command: python3 -I -B tools/mori-oom-killers.py (live, no arguments)
-utc: 2026-10-22T13:20:10Z
+utc: 2026-10-22T14:15:30Z
 exit: 0
 {
   "earlyoom": {
@@ -12,7 +13,10 @@ exit: 0
       "sigterm": 0
     },
     "dryrun": false,
+    "dryrun_send_lines": 0,
+    "earlier_invocation_send_lines": 0,
     "grammar": "verified-1.9.0",
+    "process_group_lines": 0,
     "scope_complete": true,
     "state": "active",
     "thresholds": {

@@ -1,7 +1,8 @@
-revision: c2fdd929c7473f8a325a95b3a3776cdd0efb8f76
+revision: 4dba9cc77d94e93297978a02fc20097e8ea560b4
 command: python3 -I -B tools/mori-oom-killers.py --selftest
-tool_blob: 0df359bcb6ec7373bab84a9b95c768e568113f93
+tool_blob: 44dac3fd6cb1320752a226a360f29d1805ce93f3
 cases_blob: 5b4dcee7b682c896c8e9f22ed1f8ac58d0176556
 cases_freeze_commit: 5b10649d30c90b34f0e41d27081ee7eade39f8d0 (tool first commit c2fdd929)
 exit: 0
 MORI_OOM_KILLERS_SELFTEST: PASS 32/32
+supplementary: MORI_OOM_KILLERS_SELFTEST: PASS 32/32
