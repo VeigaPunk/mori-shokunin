@@ -7,7 +7,7 @@ Contract: `.ufo/waves/round-29/contract.md` (declared at `8a45cefe`; amendments 
 ## What the round learned
 
 - **The standing Axes table had drifted from the closure record for four rounds.** The fleet MANIFEST carries a
-  per-axis `verdicts` map for every mori round; five of six rows did not cite the latest admitted `improved` closure
+  per-axis `verdicts` map for every mori round; none of the six rows cited the latest admitted `improved` closure
   and five Last change cells predated it (`count-c1.sh` at `7118f320`: `mismatches=11`). Lane spot-check files are
   missing for rounds 19–22 and round 12's has no per-axis table, so a lane-file-only counter would have passed a stale
   adjacency row (wave-1 CriticC1Design F3, ReviewAxesPointers F1).
