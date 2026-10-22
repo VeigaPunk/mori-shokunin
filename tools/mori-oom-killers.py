@@ -274,7 +274,13 @@ def read_inputs(inputs):
             scope_known = True
             for entry in journal:
                 stamp = _entry_timestamp(entry)
-                if stamp is None or stamp >= aetm:
+                if stamp is None:
+                    # A record that cannot be placed in or out of the current
+                    # invocation is malformed input: abstain (contract rule 4)
+                    # rather than count a line that may belong to an earlier
+                    # invocation (round-26 wave-1 case c35, supplementary file).
+                    raise SetupError("journal record without a numeric __MONOTONIC_TIMESTAMP")
+                if stamp >= aetm:
                     scoped.append(entry)
 
     version = None
@@ -597,8 +603,9 @@ def run_selftest(cases_path):
         try:
             result, code = read_inputs(inputs)
         except SetupError as exc:
-            failures.append((case_id, [str(exc)]))
-            continue
+            # Contract rule 4: a setup error is verdict KILLERS_UNKNOWN, exit 2,
+            # with an error field; the case's expectations still apply.
+            result, code = {"verdict": "KILLERS_UNKNOWN", "error": str(exc)}, 2
         if "verdict" in expect and result["verdict"] != expect["verdict"]:
             problems.append(
                 "verdict: got {0!r} expected {1!r}".format(result["verdict"], expect["verdict"])
