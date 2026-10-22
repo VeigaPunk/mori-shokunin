@@ -230,3 +230,8 @@ each measured at that batch's parent.
   depends on the caller's checkout path (lane: 1 hit; clone: 4); ReviewSkillRound30 F1/F2 (SKILL `## Round30` row 4
   over-claimed a dry-run verdict) fixed in the same batch; ReviewEntryProse LOW-1/LOW-2 (S120 also carries
   `Restart=always`; "reports its version" holds only for a version line at or after the retained stamp) carried.
+- **Retention redaction (L1, before the receipts batch):** the retention scan at `d03203c5` printed metric 6 (base 4):
+  two new hits, both in `.ufo/waves/round-30/w2/SentinelPrivacy.md` (`:41` class R6, `:115` class R2), where the seat
+  named the policy's own trigger patterns. The two tokens were replaced by class names in the lane copy; the original is
+  kept outside the lane at `/fast/scratch/hyaku/mori-r30/L1/disposed/SentinelPrivacy.original.md` (sha256
+  `757e82ee…2d9c`). The tip retention receipt measures the redacted state.

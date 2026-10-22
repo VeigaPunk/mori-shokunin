@@ -38,7 +38,7 @@ since round 20, `routed 0`. They are not a round-30 regression and this round di
 ## B. F1 (MEDIUM) — the metric is blind to round 30's entire exposed surface
 
 The frozen classes are R1–R9: session-name/UUID prefixes, session-store paths, numbered tool-output names, personal
-`Documents` paths, shell history, `sudoers`, operator config files/keys, routing-table key names, session-record
+`Documents` paths, shell history, the privileged-config file name [L1 redaction: retention class R6], operator config files/keys, routing-table key names, session-record
 field names (`.ufo/waves/round-18/frozen/c1-policy.json:7-15`). The policy says so itself: "Regex classes are a
 recall floor, not a privacy proof" (`:29`).
 
@@ -112,7 +112,7 @@ Pattern sweep over all 73 changed files (revision-pinned `git grep`):
 | `/etc/default/earlyoom` | 15 path mentions, **no values**; the only `EARLYOOM_ARGS` value in range is upstream's shipped default in the pre-existing S151 text (`corpus/SOURCES.md:137,157`) |
 | `sudo`, `/proc/*` reads | 0 |
 | host-observing commands (`systemctl`/`journalctl`/`ps`/`pgrep` as a run line in any report) | **0** — no seat ran one, consistent with "No host read" |
-| OMP: `.omp/agent/sessions/…`, config-file keys, routing keys, session-record fields | 0 new (gate set identical; added-line sweep clean) |
+| OMP: session-store paths [L1 redaction: retention class R2], config-file keys, routing keys, session-record fields | 0 new (gate set identical; added-line sweep clean) |
 | 10+-digit literals | 7, all accounted for: PRNG seeds in pre-existing `LOG.md:342-343` / `SCORECARD.md:264`, upstream commit times, and an oh-my-pi commit sha fragment in pre-existing S152 — **no boot id, no monotonic stamp, no epoch from this host** |
 
 Fixture: `tools/fixtures/mori-oom-killers/cases-a2-r30.json` — invented process ids, standard first-user uids,
