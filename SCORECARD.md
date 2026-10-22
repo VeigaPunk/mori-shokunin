@@ -1812,3 +1812,14 @@ never withdrawn; a miss is reported as a miss.
 
 Held and observed: freshness 5, calibration 5, coverage 6, adjacency 6. No retirement, waiver, exploratory claim or
 promotion. No-harm check: lane retention scan metric at the landed tip not above its value at `58b61681`.
+
+### Round 30 measured outcome (L1 MoriR30; measured before wave-2 results)
+
+| Claim | Before | After (one committed command over committed bytes) | Verdict proposed for the closure |
+|---|---|---|---|
+| C1 depth, invocation-scope decision table (sourced S156–S160) | `count-c1.sh 58b61681` → entry absent, `C1=unmet`, exit 1 (`.ufo/waves/round-30/evidence/c1-before.txt`) | `count-c1.sh ee61010d` (blob `6c47dd03`) → `rows=13 rows_ok=13 new_ids=5 new_id_rows=13 excerpts_ok=5/5 skill_rows=4`, `C1=met`, exit 0 (`evidence/c1-after.txt`) | improved, pending closure; depth held at 5 (no closure states a move) |
+| C2 operability, round-29 residual, disputed shape pinned blind, gate fixed | `count-c2.sh 58b61681` → r29 `FAIL 21/24`, file absent, `C2=unmet`, exit 1 (`evidence/c2-before.txt`) | `count-c2.sh 2ec25cc1` → r29 `PASS 24/24`, older `PASS 32/32 / 32/32 / 30/30`, `provenance=8/8 unselected=0`, `shape=8/4`, `r30_base_selftest=PASS 8/8`, `r30_selftest=PASS 8/8`, `gate_selftest=PASS`, `gate_mutants=4/4`, `scanned=4`, `blind_violations=1`, `C2=unmet`, exit 1 (`evidence/c2-after.txt`) | **miss**: the freeze gate flags `CaseR30a.md:105` (the brief's closing sentence parsed as a files-opened entry); the A2 version of the gate flagged the mandated godspeed skill path in all four writers (`evidence/gate-a2-prefreeze.txt`, amendment A3). Every other condition is met; lesson M5 |
+
+Held: freshness 5, calibration 5, coverage 6, operability 7, adjacency 6, depth 5. No retirement, waiver, exploratory
+claim or promotion. Retention metric 4 at the C1 batch (base 4). Tip receipts: `.ufo/waves/round-30/evidence/tip-c1.txt`,
+`tip-c2.txt`, `tip-retention.txt` (receipts-only last batch).

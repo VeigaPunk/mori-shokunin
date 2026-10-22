@@ -1964,3 +1964,25 @@ landed tip.
   validator run and dispatch payload under `.ufo/waves/round-30/`. The L1 holds the planner seat.
 - Routed R1: this round's tip receipts will be `.ufo/waves/round-30/evidence/tip-c1.txt`, `tip-c2.txt` and
   `tip-retention.txt`, named here and in the lesson before the receipts-only batch.
+
+## Round 30 (attempt 1, L1 MoriR30) — build, freeze and measurement
+
+- Wave 1: 35 seats, 0 dead, all settled 21:50Z (spec `.ufo/waves/round-30/wave1-spec.json`; reports `w1/`).
+- Amendments before the data each governs: A1 `05db57ed` (C1, CriticC1Design F1–F18), A2 `3767108e` (C2 gate,
+  freeze, shape and judging hardening; C1 parse rules). A3 `55f9a694` was made after the L1 ran the A2 gate on the
+  writer wave (4 hits, all the mandated godspeed skill path): disclosed in the contract, receipt
+  `evidence/gate-a2-prefreeze.txt`.
+- R7 hygiene `af42101d` (PROVINCE same-line fixes and correction block; `SKILL.md:661` citation qualified).
+- Gate `32e287ff` (self-test PASS); C2 counter `8ac9535e` with before-receipt (C2=unmet); writer reports committed
+  unread `b039dd4f`. **C2 freeze** `db1ec4694242a9c1acef03fef2852c7e943b1ed7`, `cases-a2-r30.json` sha256
+  `b68843e754977e78465039d196582f6d099f85ac7b17f7330fb8a8145f993735`, 8 cases (4 writers × 2); first tool run after it
+  with the entering-tip tool: `PASS 8/8` (`evidence/c2-freeze-selftest-base.txt`).
+- Judged tool fix `7aa77484` (round-29 Judge11–13): r30 `PASS 8/8`, r29 `PASS 24/24`, older `PASS 32/32`, `32/32`,
+  `30/30`; differential over 126 inputs: 5 changed, 2 older (both non-active, readable show), `KILLER_ACTED` lost 0
+  (`evidence/c2-differential.txt`, `2ec25cc1`).
+- **C2 = miss** (`evidence/c2-after.txt`, `0b828c27`): the freeze gate prints `blind_violations=1` on `CaseR30a.md:105`,
+  the brief's closing sentence; an uncounted after-data diagnostic gate prints 0 (`evidence/gate-a4-diagnostic.txt`).
+- C1 counter `6c47dd03` with before-receipt (C1=unmet); entry, S156–S160, excerpts, SKILL `## Round30`, lesson
+  `ee61010d`; **C1 = met** at `ee61010d` (`evidence/c1-after.txt`).
+- Retention metric 4 at the C1 draft (sandbox commit of the same bytes), base 4. Census at the C1 batch: `mori ok`, exit 0.
+- Routed R1: tip receipts `tip-c1.txt`, `tip-c2.txt`, `tip-retention.txt` named here before the receipts-only batch.
