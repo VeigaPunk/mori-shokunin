@@ -1802,3 +1802,17 @@ run although `~/.omp/agent/config.yml` sets `async.maxJobs: 200`; the installed 
 `maxRunningJobs: () => Math.min(100, XPe.get(R))` once and the `async.maxJobs` setting with `default: 100` once
 (L1 byte search, 2026-10-22). No mori tool reads this runway. Contract `.ufo/waves/round-25/contract.md`; the 21
 C2 cases were frozen with it, before any tool. Start source census: exit 0, the six retained W04 warnings.
+
+## 2026-10-22 — round 25 attempt 1: outcome (L1 MoriR25)
+
+Two waves under policy v1: wave 1 build, 34 seats (12 scribe, 6 scout, 5 reviewer, 4 executor, 4 critic,
+2 connector, 1 mutation-tester), all returned; wave 2 falsify, 38 seats (15 reviewer, 13 mutation-tester,
+6 critic, 4 scout). Round total 72. Both payloads were committed and bound with `tools/mori-dispatch-ledger.py`
+before each call; each attempt row copies the seat-gate ledger line. C1 landed `tools/mori-routed-r24.py`
+(mismatches 4 → 0 under A5; A1 part 3 → 0, D5 1 → 0), the D1 evidence, the D2 sweep, the D3 correction, the
+narrowed D4 rule and the Axes-table fix. C2 landed `tools/mori-job-runway.py` (frozen PASS 21/21, supplementary
+PASS 24/24, live `RUNWAY_CLAMPED` 200 → 100), knowledge `harness-job-capacity-r25.md`, sources S098–S113 (9
+admitted, 7 rejected), SKILL error pattern, PROVINCE/README FR15 notes, QUALITY 76–77. Scope frozen at Main's
+11:43Z notice; wave-2 findings after the freeze (RUNWAY_DEFAULT false number on flow-mapping configs, untested
+CLI exit path, C1 tool has no selftest) are disclosed, not fixed. Some wave-2 seats had not returned when the
+report was filed; their reports land with no lane commit of this round.
