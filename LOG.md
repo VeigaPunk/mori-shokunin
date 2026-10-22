@@ -1884,3 +1884,5 @@ landed tip.
   `.ufo/waves/round-28/misroot-hash-check.sh 27` 7 hits → 0 (`evidence/misroot-before.txt`, `misroot-after.txt`).
 - C2 counter `.ufo/waves/round-28/count-c2.sh` (wave-1 BuildCountC2, sha256 a7536fc5…) committed before any case file;
   before at `6ebd518f`: `a2_schema=absent a2_cases=0`, `C2=unmet`, exit 1 (`evidence/c2-before-r28.txt`).
+- C2 freeze batch (committed 2026-10-22T18:50:55Z by the L1): `tools/fixtures/mori-oom-killers/cases-a2.json`, 30 cases (3 per rule)
+  assembled without edits from the ten blind CaseA2rNN reports; no tool run on it exists before this commit.
