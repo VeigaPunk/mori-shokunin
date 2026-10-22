@@ -1,5 +1,5 @@
 source: S118 (earlyoom kill.c at tag v1.9.0 — https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/kill.c — victim selection, sha256 b32e0fad65e298235102f98aff37e02c94400b544d454cb57192ae697b100bf3); S119 (earlyoom main.c at v1.9.0 — option parsing and the -p self-protection); S115 (earlyoom MANPAGE.md at v1.9.0 — the documented selection options); S120 (earlyoom.service.in at v1.9.0 — the unit's own OOMScoreAdjust); S131 (earlyoom v1.9.0 tag tree and earlyoom.default — the shipped default arguments); S003 (Linux mm/oom_kill.c at v7.2 — oom_badness and the kernel's choice, sha256 452f1348e79c252ee89215d55fb104591412bbcea4a3ee965e873a401f756b4e); S127 (Linux fs/proc/base.c, include/uapi/linux/oom.h and kernel/fork.c at v7.2 — how /proc/<pid>/oom_score is derived, the oom_score_adj write rules and fork inheritance); S128 (man-pages 6.19 proc_pid_oom_score_adj(5) and proc_pid_oom_score(5) — the documented contract and where it differs from the code); S082 (Linux Documentation/filesystems/proc.rst at v7.2 — the documented badness range); S092 (Linux Documentation/admin-guide/cgroup-v2.rst at v7.2 — memory.oom.group); S129 (systemd v262 systemd.exec.xml and systemd-system.conf.xml — OOMScoreAdjust= and DefaultOOMScoreAdjust=); S130 (systemd v262 units/user@.service.in, src/core/main.c and commit ce7de0ba — the per-user manager at 100 and its children at 100 more); S132 (oh-my-pi v18.12.6 shell.rs and Bun bun-v1.4.3 spawn sources — the fleet's runtimes set no oom_score_adj); S142 (oh-my-pi task/executor.ts at v18.12.6 — task subagents run in-process on the session's main thread)
-verified-at: 2026-10-22 — upstream bytes opened at earlyoom tag v1.9.0 (commit 202d4db0d308ca6478f68de68b46cae34896ddaf), Linux tag v7.2 and systemd tag v262 (commit 8cc40e0c5e9234bf45084751ac53b1fbfe70b492); host read-only on 2026-10-22 (kernel 7.2.11-arch1-1, systemd 262-1, earlyoom 1.9.0-1 active): process aggregates at 15:56:35Z (committed) and 15:46:40Z, earlyoom send-line aggregates over every retained boot (committed run 15:56Z), unit properties and an unprivileged oom_score_adj probe on processes the probe started (wave-1 seats HostUnitOomAdjust and CriticInheritProbe).
+verified-at: 2026-10-22 — upstream bytes opened at earlyoom tag v1.9.0 (commit 202d4db0d308ca6478f68de68b46cae34896ddaf), Linux tag v7.2 and systemd tag v262 (commit 8cc40e0c5e9234bf45084751ac53b1fbfe70b492); host read-only on 2026-10-22, except an `oom_score_adj` probe on processes the probe started, (kernel 7.2.11-arch1-1, systemd 262-1, earlyoom 1.9.0-1 active): process aggregates at 15:56:35Z (committed) and 15:46:40Z, earlyoom send-line aggregates over every retained boot (committed run 15:56Z), unit properties and an unprivileged oom_score_adj probe on processes the probe started (wave-1 seats HostUnitOomAdjust and CriticInheritProbe).
 recheck: on a kernel release re-open `fs/proc/base.c` `proc_oom_score` and `mm/oom_kill.c` `oom_badness` at the new tag; on an earlyoom release re-open `kill.c` `is_larger` and the send-line format; on a systemd release re-open `units/user@.service.in` and `src/core/main.c` `determine_default_oom_score_adjust`; host: `python3 -I -B .ufo/waves/round-27/evidence/oom-score-classes.py` and `python3 -I -B .ufo/waves/round-27/evidence/boot-send-classes.py` (aggregates only), `systemctl show earlyoom.service user@$(id -u).service -p OOMScoreAdjust`, `systemctl --user show -p DefaultOOMScoreAdjust`
 author: MoriR27 (L1), from the wave-1 seat reports under `.ufo/waves/round-27/w1/` (the drafting scribe seat died at spawn; this text is the L1's).
 
@@ -13,8 +13,7 @@ rule; its lessons and source rows held only the one-line default "kill the proce
 (`corpus/lessons/round-26.md:67`, S118's scope) and earlyoom's own `OOMScoreAdjust=-100` (S120), and the sibling
 lane tsukuroi had measured the host's `oom_score_adj` bands on 2026-10-14 (`kill-event-deep-r8.md:136-144`, Adjacency below). This entry answers the next question,
 the FR10 remainder "fleet attribution of a victim": how earlyoom and the kernel choose the process to kill, what
-`oom_score_adj` the fleet's processes carry on this host and where that value comes from, and what share of those
-39 sends hit the fleet's own runtimes. It is a reading note: it changes no setting, writes no `oom_score_adj` of any
+`oom_score_adj` the fleet's processes carry on this host and where that value comes from, and what share of those 39 sends went to processes whose names fall in a fleet runtime's class. It is a reading note: it changes no setting, writes no `oom_score_adj` of any
 process it did not start, sends no signal, and copies no command line, pid, uid number, journal `MESSAGE` text, or
 value of `/etc/default/earlyoom` or of any `--prefer`/`--avoid`/`--ignore` expression.
 
@@ -47,11 +46,10 @@ value of `/etc/default/earlyoom` or of any `--prefer`/`--avoid`/`--ignore` expre
   notices only after choosing itself and then sleeps (`:587-592`).
 - **A victim that vanishes** before the signal produces one `kill failed:` line and no re-selection; the next attempt
   is the next poll (S118 `kill.c:640-657`).
-- **Defaults.** No prefer, avoid or ignore expression exists by default (S115 has none; the shipped
-  `earlyoom.default` sets only `EARLYOOM_ARGS="-r 3600"`, S131 `earlyoom.default:5`). `-i` has been a no-op since
+- **Defaults.** No prefer, avoid or ignore expression exists by default (S115 has none; upstream's `earlyoom.default` at v1.9.0 sets only `EARLYOOM_ARGS="-r 3600"`, S131 `earlyoom.default:5`). `-i` has been a no-op since
   v1.7 (S115 `MANPAGE.md:89-90`), but the long option `--ignore-root-user` still works and is missing from the 1.9.0
   manual (S119 `main.c:185,281`).
-- **earlyoom protects itself through its unit, not its scan:** the upstream unit sets `OOMScoreAdjust=-100` and
+- **earlyoom lowers its own kernel score through its unit; its scan does not exclude it, but it never signals itself (above):** the upstream unit sets `OOMScoreAdjust=-100` and
   `Nice=-20` (S120 `earlyoom.service.in:12,14`); `-p` would do the same from inside (S119 `main.c:397,401`). -100
   lowers its score; only -1000 would exclude it.
 
@@ -59,22 +57,18 @@ value of `/etc/default/earlyoom` or of any `--prefer`/`--avoid`/`--ignore` expre
 
 - **Points are pages.** `oom_badness` adds the resident set, swap entries and page tables in pages (S003
   `mm/oom_kill.c:228-229`), then shifts the sum by the adjustment scaled to memory size: `adj *= totalpages / 1000;
-  points += adj;` (`:232-234`). An `oom_score_adj` of 200 is therefore worth 20% of RAM plus swap, not 200 points.
+  points += adj;` (`:232-234`). An `oom_score_adj` of 200 is therefore worth 20% of the memory the OOM may allocate from, not 200 points: RAM plus swap in a system-wide OOM and in `/proc/<pid>/oom_score`, the cgroup's limit in a memory-cgroup OOM (`:257-263`).
 - **Who is never chosen:** init and kernel threads (`mm/oom_kill.c:160-167`) and any task at exactly -1000
   (`:216-222`). The kernel keeps the highest score; only a strictly lower score is skipped, so a tie goes to the last task scanned (`:340,343-348`).
 - **What `/proc/<pid>/oom_score` shows:** `(1000 + badness * 1000 / totalpages) * 2 / 3`, with `totalpages` = RAM +
-  swap, and 0 for an excluded task (S127 `fs/proc/base.c:583-599`). The range is 0 to 2000. A process with no memory
-  reads 666 at adjustment 0 and 800 at adjustment 200; each further percent of RAM plus swap it holds adds about
+  swap, and 0 for an excluded task (S127 `fs/proc/base.c:583-599`). The range is 0 to 2000 while the footprint stays within `totalpages`; the code does not clamp it (S127 `base.c:596-599`). A process with no memory
+  reads about 666 at adjustment 0 and about 800 at adjustment 200; each further percent of RAM plus swap it holds adds about
   6.7. This is how the host values below read: 600 for earlyoom at -100, 800 for idle processes at 200.
-- **The documentation and the code disagree in three places.** `proc.rst` calls the badness a 0–1000 value (S082
-  `proc.rst:1761-1763`) while the exported file is 0–2000; the man page says the adjustment is "added" (S128
-  `proc_pid_oom_score_adj(5)`, adj page `:102-103`) while the code scales it by memory size; and the man page's
-  "root processes are given 3% extra memory" has no implementation in v7.2 `oom_badness` (S128 adj page `:86-88`
-  against S003 `mm/oom_kill.c:226-235`). Read scores from the code, not the pages.
+- **The documentation and the code disagree in one place:** the man page's "root processes are given 3% extra memory" (S128 adj page `:86-88`) has no implementation in v7.2 `oom_badness` (S003 `mm/oom_kill.c:226-235`). Both documents define the badness as 0–1000 in proportion-of-allowed-memory units, in which "added" (S128 adj page `:102-103`) matches the code's scaling, and `proc.rst` itself gives the exported 0–2000 range (S082 `proc.rst:1811-1812`). An earlier draft of this entry counted three disagreements (wave-2 CriticEntryOverclaim).
 - **`memory.oom.group`.** When it is 1 on a cgroup, a kernel OOM kill takes every task of that cgroup's subtree
   together, sparing only tasks at -1000 (S092 `cgroup-v2.rst:1450-1466`; S003 `mm/oom_kill.c:998-1006,1040-1053`).
-  It is 0 at every level measured on this host (wave-1 HostUnitOomAdjust: `user.slice` down to an app scope,
-  `system.slice`, `earlyoom.service`). It does not affect earlyoom, which signals one process.
+  It is 0 at every level measured where the file exists on this host (the root has none) (wave-1 HostUnitOomAdjust: `user.slice` down to an app scope,
+  `system.slice`, `earlyoom.service`). It does not affect earlyoom, which signals one process, or its process group under `-g` (S118 `kill.c:276-282`); `-g` is not in this host's argument list (wave-1 HostUnitOomAdjust).
 
 ### 3. Where the fleet's adjustment comes from (S129, S130, S127)
 
@@ -103,8 +97,7 @@ value of `/etc/default/earlyoom` or of any `--prefer`/`--avoid`/`--ignore` expre
 ### 4. The fleet in the ranking on this host (L1 capture, committed sample 2026-10-22T15:56:35Z)
 
 `python3 -I -B .ufo/waves/round-27/evidence/oom-score-classes.py` (output `evidence/oom-score-classes.txt`) read 792
-processes in the committed sample (an earlier run at 15:46:40Z read 1213, most of the difference kernel threads,
-with the same ranking). By class:
+processes in the committed sample (an uncommitted earlier run at 15:46:40Z read 1213; it is not evidence). By class:
 
 | Class | Processes | `oom_score` min / median / max | `oom_score_adj` values (count) |
 |---|---|---|---|
@@ -134,24 +127,30 @@ lines; boot -1 holds all 39 (38 SIGTERM, 1 SIGKILL), to 39 distinct processes:
   `oom_score_adj` 200.
 - **Scores:** send-line `oom_score` 1079 / 1101 / 1619 (min / median / max); resident set 4 / 10,232 / 23,653 MiB.
 - **8 of the 39 send lines carry a score above the kernel's ceiling for their adjustment** (`(1000 + 200 + 1000) * 2
-  / 3 = 1466` for 200; `above_kernel_ceiling_for_adj=8` in the committed output). The ceiling assumes a process's
-  resident set, swap entries and page tables together stay within RAM plus swap [INFERENCE]. Only earlyoom's +300 `--prefer` adjustment can produce that (Fact 1), so the host's prefer
-  expression — present in earlyoom's argument list, value not read (wave-1 HostUnitOomAdjust) — matched at least 8
-  victims. This is a count of send lines, not of how the expression reads.
+  / 3 = 1466` for 200; `above_kernel_ceiling_for_adj=8` in the committed output). The ceiling holds while a
+  process's counted resident set, swap entries and page tables stay within RAM plus swap. Page tables live in RAM,
+  so only a page counted twice in the resident set or a `swapoff` in progress can break it [INFERENCE]. Read
+  without a +300, each of the 8 would need 4 to 13 GiB more than the 60.5 GiB of RAM plus swap. Boot -1 had no
+  swap change before its last send and ran the same kernel as boot 0 (wave-2 CriticCeilingInference). With
+  `--sort-by-rss` off, only earlyoom's +300 `--prefer` adjustment can produce that (Fact 1). Under `--sort-by-rss`
+  the +300 goes to the resident set instead (S118 `kill.c:410-416`). So the prefer expression of boot -1's one
+  earlyoom invocation, whose startup logged its prefer line once (S119 `main.c:379`; value not read), matched at
+  least 8 victims. At most 27 sends can be prefer-matched: 12 score less than 300 above what their resident set
+  alone gives (wave-2 CriticCeilingInference). This is a count of send lines, not of how the expression reads.
 - **Timing:** 20 of the 39 sends fell in the hour 2026-10-22T06Z; the rest are spread over 2026-10-20 and 2026-10-21.
   The one `omp` send was at 2026-10-22T06:16Z (wave-1 ConnFleetSeatKillPath).
 
 ### 6. What the fleet's records can and cannot attribute (wave-1 ConnFleetSeatKillPath)
 
-- No fleet record names a kill cause. `lane-dead-no-report` lines carry no signal, exit status or process id; the
+- None of the fleet records searched (watchdog log, hyaku events log, wave-slot ledger, dead-seat files) names a kill cause. `lane-dead-no-report` lines carry no signal, exit status or process id; the
   watchdog log has no kill words; the seat gate keeps no history after `release`.
-- The boot -1 `omp` send left no fleet line within 3 h 16 min; seven lanes were marked dead at 2026-10-22T07:58:59Z,
+- The last boot -1 fleet line came 3 h 16 min before the `omp` send, and no fleet line followed it in boot -1; seven lanes were marked dead at 2026-10-22T07:58:59Z,
   3 min 18 s into boot 0. That is when the death was detected, after the reboot, not when it happened.
 - Across the fleet's dead-seat records written during boot -1 (425 entries in 29 `dead*` list files and 288 entries
-  in 43 dead-seat files, overlapping), none names SIGTERM, SIGKILL, exit 143 or exit 137, and none falls within 60 s
+  in 43 dead-seat files, overlapping), none names SIGTERM, SIGKILL, exit 143 or exit 137, and none was written within 60 s
   of an earlyoom send; the smallest gap is 339.6 s (wave-1 ScoutDeadSeatCorrelation, file write times as a proxy).
   The 20-send burst at 06:15:59–06:16:05Z fell in a stretch with no fleet record at all.
-- Separate the event sources before attributing a death: earlyoom-unit send records establish earlyoom signalling;
+- Separate the event sources before attributing a death (the kernel-only `oom_kill` counters of `oom-kill-counter-kernel-only-r12.md` also separate them per scope and window, but not per event): earlyoom-unit send records establish earlyoom signalling;
   kernel OOM summary and killed-process records establish kernel OOM activity. Both occurred in retained boot -1:
   39 earlyoom sends and one separate kernel kill of an `other`-class process at 2026-10-22T06:54:59Z. The retained
   kernel OOM summary counts for boots -5, -4, -3, -2, -1 and 0 were 0, 0, 0, 0, 1 and 0 at the wave-2 read.
@@ -164,10 +163,10 @@ lines; boot -1 holds all 39 (38 SIGTERM, 1 SIGKILL), to 39 distinct processes:
 | Situation | What to conclude | What not to conclude |
 |---|---|---|
 | a seat or lane died and the killer is unknown | check both journal event sources in the relevant boot and window: earlyoom-unit sends versus kernel OOM summaries and killed-process records; report each source separately | that earlyoom activity excludes a kernel kill, that kernel activity proves an earlyoom send, or that either class label identifies a seat or lane |
-| earlyoom sent a signal; which fleet process was most at risk | the process with the highest `oom_score` as earlyoom computes it: kernel score (Fact 2) plus or minus 300 for a prefer/avoid name match (Fact 1); in the 15:56Z sample the session `omp` process ranked second (Fact 4) | that the largest process is chosen: the key is `oom_score` unless `--sort-by-rss` is set |
-| a send line's `oom_score` exceeds `(2000 + oom_score_adj) * 2 / 3` | a `--prefer` match added 300 to that victim | anything about the expression's text; it is never read |
-| a fleet process shows `oom_score_adj` 200 | it descends from a user unit of an unprivileged user manager (100 + 100) and is weighted as if it held 20% more of RAM plus swap | that someone configured it, or that it is pinned: it can be raised, and lowered down to the floor of 100 |
-| `memory.oom.group` is 1 on a cgroup | a kernel OOM kill there takes the whole subtree | that earlyoom does the same; it signals one process |
+| earlyoom sent a signal; which fleet process was most at risk | the process with the highest `oom_score` as earlyoom computes it: kernel score (Fact 2) plus or minus 300 for a prefer/avoid name match (Fact 1); in the 15:56:35Z sample one `omp` process held the second-highest kernel `oom_score` (Fact 4); its place in earlyoom's order is unknown, because the host arms a `--prefer` and an `--avoid` expression whose text is not read (wave-1 HostUnitOomAdjust), and at 17:12Z the same process ranked 16th by kernel score behind 15 `other`-class processes at adjustment 300 (wave-2 CriticSkillWrongTurn) | that the largest process is chosen: the key is `oom_score` unless `--sort-by-rss` is set |
+| a send line's `oom_score` exceeds `(2000 + oom_score_adj) * 2 / 3` | a `--prefer` match added 300 to that victim, if earlyoom runs without `--sort-by-rss` and no swapoff was in progress | anything about the expression's text; it is never read |
+| a fleet process shows `oom_score_adj` 200 | most likely it inherits the user manager's default for its units (100 + 100, Fact 3); the value alone does not prove it, because any process may raise its own value and is weighted as if it held 20% more of RAM plus swap (of the cgroup limit in a memory-cgroup OOM) | that someone configured it, or that it is pinned: it can be raised, and lowered down to the floor of 100 |
+| `memory.oom.group` is 1 on a cgroup | a kernel OOM kill there takes the whole subtree | that earlyoom does the same; it signals one process (its process group only under `-g`, absent here) |
 | an in-session seat died and earlyoom sent to an `omp` process in that window | the session process may have been the victim, which ends every seat of that session at once | that the victim was the session process: the `omp` class also holds other sessions and the text-prediction daemon worker; which seat or lane the kill was "for"; the journal names a class, not a seat |
 | a lane is marked dead early in a boot | detection after a reboot | the time of death |
 
@@ -178,14 +177,13 @@ lines; boot -1 holds all 39 (38 SIGTERM, 1 SIGKILL), to 39 distinct processes:
 - Class labels come from the 15-byte process name; a fleet helper named `python` and an unrelated `python` are the
   same class. The `other` class hides every non-fleet name on purpose.
 - Seats of one session share its `omp` process (S142 `task/executor.ts:2-4`; tree read 2026-10-22T17:12Z, wave-2 CriticSingleOmpProcess). The host runs more than one `omp`-class process, and a send line cannot say which one was signalled.
-- The prefer-match count is a lower bound: a prefer-matched victim whose kernel score plus 300 stays under the
-  ceiling is not counted.
+- The prefer-match count is a lower bound: a prefer-matched victim whose kernel score plus 300 stays under the ceiling is not counted. The upper bound is 27: a send whose score is less than 300 above its resident-set-only kernel score cannot be prefer-matched; 19 of the 27 sit exactly 300–301 above that floor, which fits a +300 with almost no swap but does not prove it (wave-2 CriticCeilingInference).
 - Arch's kernel build was not diffed against the v7.2 tag for `fs/proc/base.c` or `mm/oom_kill.c`.
 
 ## What it changes for mori
 
 Before this round mori could count earlyoom's sends but not explain them. It can now read a send line's score
-against the kernel formula, tell a prefer-adjusted victim from a plain one, explain the fleet's 200 band from
+against the kernel formula, flag a send line whose score only a prefer match explains (a lower bound), explain the fleet's 200 band from
 systemd's code rather than guess it, and distinguish earlyoom signalling from kernel OOM activity without treating
 process class as session identity or a send as proof of exit. The SKILL.md `Round27` decision table carries the routing.
 

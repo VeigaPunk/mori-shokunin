@@ -16,7 +16,7 @@ Contract: `.ufo/waves/round-27/contract.md` (declared at `761b4cdb`; amendment W
   100 more; oh-my-pi v18.12.6 and Bun 1.4.3 never set the value (Fact 3, S130, S132). The floor is 100, not a
   ratchet: an unprivileged process lowered itself from 500 to 199 (wave-1 CriticInheritProbe).
 - **An earlyoom send to the session's `omp` process is a fleet-wide event.** Every `task` seat runs inside the session's `omp` process (oh-my-pi `task/executor.ts:2-4`, S142), which held the second-highest score in the 15:56Z sample. An `omp`-class send line does not show which `omp` process was signalled (wave-2 CriticSingleOmpProcess); in boot -1 earlyoom signalled one `omp`-class process, 27 `python`-class and
-  11 others, and 8 of its 39 send lines carry a score only a prefer match can produce (Facts 4–5).
+  11 others, and 8 of its 39 send lines carry a score only a prefer match can produce while `--sort-by-rss` is off (Facts 4–5).
 - **No fleet record can say a seat was OOM-killed.** Lane-dead lines carry no cause and are written at detection time,
   which after a reboot is minutes into the next boot (Fact 6, wave-1 ConnFleetSeatKillPath).
 
