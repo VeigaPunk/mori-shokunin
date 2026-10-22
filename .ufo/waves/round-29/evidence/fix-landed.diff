@@ -1,0 +1,110 @@
+diff --git i/tools/mori-oom-killers.py w/tools/mori-oom-killers.py
+index 3fb78bb..69296b8 100755
+--- i/tools/mori-oom-killers.py
++++ w/tools/mori-oom-killers.py
+@@ -281,10 +281,25 @@ def read_inputs(inputs):
+             # 0 means no active-enter transition recorded this boot
+             # (org.freedesktop.systemd1(5)); like a missing value it cannot
+             # bound the invocation.
+-            # The invocation cannot be bounded; keep every line of the boot as
+-            # a candidate (evidence is never dropped) but the scope stays
+-            # incomplete.
+-            scoped = list(journal)
++            # The invocation cannot be bounded; keep every placeable line of
++            # the boot as a candidate (evidence is never dropped) but the
++            # scope stays incomplete.  A record without a numeric
++            # __MONOTONIC_TIMESTAMP is left uncounted here too (rule A2-10).
++            for entry in journal:
++                if _entry_timestamp(entry) is None:
++                    unplaced = True
++                    continue
++                scoped.append(entry)
++            # Without a bound the current invocation is the one that logged
++            # the last version line (A2-07: invocations are split at each
++            # version line); lines before it belong to earlier invocations and
++            # are counted there, not dropped.
++            last_version = None
++            for index, entry in enumerate(scoped):
++                if RE_VERSION.match(_entry_text(entry).lstrip()):
++                    last_version = index
++            if last_version is not None:
++                scoped = scoped[last_version:]
+         else:
+             scope_known = True
+             for entry in journal:
+@@ -309,7 +324,12 @@ def read_inputs(inputs):
+     earlier_send_lines = None
+     if journal is not None:
+         scoped_ids = set(id(e) for e in scoped)
+-        earlier = [e for e in journal if id(e) not in scoped_ids]
++        # A record without a numeric __MONOTONIC_TIMESTAMP belongs to no
++        # known invocation: it is left uncounted here as well (rule A2-10).
++        earlier = [
++            e for e in journal
++            if id(e) not in scoped_ids and _entry_timestamp(e) is not None
++        ]
+         # Dry-run is set once per invocation (main.c:294-296), so split the
+         # earlier lines at each version line and drop sends only inside an
+         # invocation that logged "dryrun mode enabled".  Lines before the
+@@ -344,12 +364,28 @@ def read_inputs(inputs):
+     dryrun = False
+     process_group_lines = 0
+     suppressed = False
++    # A2-07: dry-run is set once per invocation, so the scoped lines are split
++    # at each version line like the earlier lines above; a segment's send
++    # lines move to dryrun_send_lines only when that segment logged
++    # "dryrun mode enabled".
++    dryrun_send_lines = 0
++    segment = {"sigterm": 0, "sigkill": 0, "dryrun": False}
++
++    def close_segment():
++        nonlocal dryrun_send_lines
++        if segment["dryrun"]:
++            dryrun_send_lines += segment["sigterm"] + segment["sigkill"]
++        else:
++            counts["sigterm"] += segment["sigterm"]
++            counts["sigkill"] += segment["sigkill"]
++        segment.update(sigterm=0, sigkill=0, dryrun=False)
+ 
+     for entry in scoped:
+         text = _entry_text(entry).lstrip()
+         if not text:
+             continue
+         if RE_VERSION.match(text):
++            close_segment()
+             version = RE_VERSION.match(text).group(1)
+             continue
+         match = RE_TERM_THRESHOLDS.match(text)
+@@ -361,9 +397,9 @@ def read_inputs(inputs):
+             kill_thresholds = (float(match.group(1)), float(match.group(2)))
+             continue
+         if RE_SIGTERM_ACTION.match(text):
+-            counts["sigterm"] += 1
++            segment["sigterm"] += 1
+         elif RE_SIGKILL_ACTION.match(text):
+-            counts["sigkill"] += 1
++            segment["sigkill"] += 1
+         elif text.startswith(PREFIX_ESCALATION):
+             counts["escalations"] += 1
+         elif text.startswith(PREFIX_KILL_FAILED):
+@@ -372,6 +408,7 @@ def read_inputs(inputs):
+             counts["low_memory_warnings"] += 1
+         elif text.startswith(PREFIX_DRYRUN):
+             dryrun = True
++            segment["dryrun"] = True
+         elif text.startswith(PREFIX_PROCESS_GROUP):
+             process_group_lines += 1
+         elif text.startswith(PREFIX_SUPPRESSED) and SUPPRESSED_MARK in text:
+@@ -380,11 +417,7 @@ def read_inputs(inputs):
+     # A6: in dry-run mode earlyoom still prints "sending SIG… to process"
+     # (kill.c:626-629) but sends nothing (kill.c:271-273); those lines are
+     # reported separately and are never positive evidence.
+-    dryrun_send_lines = 0
+-    if dryrun:
+-        dryrun_send_lines = counts["sigterm"] + counts["sigkill"]
+-        counts["sigterm"] = 0
+-        counts["sigkill"] = 0
++    close_segment()
+ 
+     # A1b: a journald "Suppressed N messages from earlyoom.service" notice in
+     # scope means lines were lost, so the scope is not complete.

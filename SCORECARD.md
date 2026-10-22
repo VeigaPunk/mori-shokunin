@@ -1773,3 +1773,18 @@ field map pins `earlyoom.earlier_invocation_send_lines > 0` for A2-07. Amended C
 
 Held: depth 5, calibration 5, coverage 6, adjacency 6. Retention scan at the landed tip in the last batch's receipts.
 No retirement, waiver, exploratory claim or promotion. r25 R1/R5 carried (no landed change).
+
+## Round 29 declaration (attempt 1, L1 MoriR29) — standing Axes table vs the closure record, and blind A2-07/A2-10 cases
+
+Entering tip `7118f320a5ef18d20c1e361eff77db0e1a97b2d6` (round 28 admitted, MANIFEST `rounds[476]`). Full contract:
+`.ufo/waves/round-29/contract.md` (amendments A1–A4 before data). Targets, not results. A declared claim is never
+withdrawn; a miss is reported as a miss.
+
+| Claim | Axis / score | Before | Declared after-value (one command over committed bytes) |
+|---|---|---|---|
+| C1 the six `## Axes` rows agree with the admitted closure record (fleet MANIFEST `verdicts` at `63729047`) | calibration 5 (tied lowest with depth and freshness) | `bash .ufo/waves/round-29/count-c1.sh 7118f320 63729047` → `mismatches=11`, `C1=unmet`, exit 1 (`.ufo/waves/round-29/evidence/c1-before.txt`) | same command at the landed tip → `mismatches=0`, `C1=met`, exit 0 |
+| C2 the A2-07 in-scope dry-run and A2-10 stamp-less shapes pinned by 24 frozen blind cases (round-28 routed defect 2; sourced S153–S155) | operability 7 | `bash .ufo/waves/round-29/count-c2.sh 7118f320` → file absent, `C2=unmet`, exit 1 (`evidence/c2-before.txt`) | same command at the landed tip → `C2=met`, exit 0 |
+
+Held and observed: depth 5, freshness 5, coverage 6, adjacency 6. No retirement, waiver, exploratory claim or
+promotion. No-harm check: lane retention scan metric at the landed tip not above 4 (base at `7118f320`, wave-1
+RetentionBase).

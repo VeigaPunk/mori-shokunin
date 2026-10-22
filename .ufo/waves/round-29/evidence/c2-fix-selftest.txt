@@ -1,0 +1,26 @@
+# tool after the judged fix (working tree, before commit), 2026-10-22T20:35:47Z; sha256 41464957540fbe3f0855d0a23df4437d0c850a256a4d15f9e76f0b4057e749d7
+## cases.json
+MORI_OOM_KILLERS_SELFTEST: PASS 32/32
+exit: 0
+## cases-supplementary.json
+MORI_OOM_KILLERS_SELFTEST: PASS 32/32
+exit: 0
+## cases-a2.json
+MORI_OOM_KILLERS_SELFTEST: PASS 30/30
+exit: 0
+## cases-a2-r29.json
+MORI_OOM_KILLERS_SELFTEST: FAIL 21/24
+FAIL r29-a2-10-inactive-lone-missing-stamp: earlyoom.dryrun_send_lines: got null expected 0
+FAIL r29-a2-10-inactive-lone-missing-stamp: earlyoom.grammar: got "unverified" expected "verified-1.9.0"
+FAIL r29-a2-10-inactive-lone-missing-stamp: earlyoom.process_group_lines: got null expected 0
+FAIL r29-a2-10-inactive-lone-missing-stamp: earlyoom.version: got null expected "1.9.0"
+FAIL r29-a2-10-failed-stamped-positive: earlyoom.dryrun_send_lines: got null expected 0
+FAIL r29-a2-10-failed-stamped-positive: earlyoom.earlier_invocation_send_lines: got 1 expected 0
+FAIL r29-a2-10-failed-stamped-positive: earlyoom.grammar: got "unverified" expected "verified-1.9.0"
+FAIL r29-a2-10-failed-stamped-positive: earlyoom.process_group_lines: got null expected 0
+FAIL r29-a2-10-failed-stamped-positive: earlyoom.version: got null expected "1.9.0"
+FAIL r29-a2-10-not-found-earlier-stamped-positive: earlyoom.dryrun_send_lines: got null expected 0
+FAIL r29-a2-10-not-found-earlier-stamped-positive: earlyoom.grammar: got "unverified" expected "verified-1.9.0"
+FAIL r29-a2-10-not-found-earlier-stamped-positive: earlyoom.process_group_lines: got null expected 0
+FAIL r29-a2-10-not-found-earlier-stamped-positive: earlyoom.version: got null expected "1.9.0"
+exit: 1
