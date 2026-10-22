@@ -8,7 +8,7 @@ Seat: MoriR27.ReopenS136 (leaf reviewer, wave 2, round 27). Lane: /home/vgpnk/Pr
 - The teaches cell has one false clause (H1, high): "results: [] belongs to the all-refused shape only." It also has one over-general clause (M1, medium): "A wave's spawns are separate registrations."
 - The scope holds in substance. The "all-refused" label omits one condition (L1, low).
 - Not a duplicate. S136 is the only registry row that names `task/index.ts`. The row entered at commit 79ecf58 and no earlier row names that file.
-- Of the 9 lane lines that cite S136 at the tip: 2 are wrong (ReviewR7Knowledge.md:64 and :160), 1 clause is unsupported (SKILL.md:660, the vibe clause, reached through the grounding claim at SKILL.md:646), 3 are superseded history (ReviewR7Knowledge.md:25, :74, :75), and 2 hold (round-27.md:79 and :114). The S136 row itself (SOURCES.md:142) is split: see section 4.
+- Of the 9 lane lines that cite S136 at the tip: 2 are wrong (ReviewR7Knowledge.md:64 and :160); 3 are superseded history (ReviewR7Knowledge.md:25, :74, :75); 2 hold (round-27.md:79 and :114); SKILL.md:646 holds for its anchors, but its vibe clause (SKILL.md:660) is unsupported (M4); and the S136 row itself (SOURCES.md:142) is split (section 4).
 - The false "only" clause has an origin. It was proposed in round 25 (`.ufo/waves/round-25/w2/ReviewSkillPattern.md:45`), carried into the round-26 draft (`.ufo/waves/round-26/w1/DraftHygieneKnowledge.md:223`), and landed as SOURCES.md:142. The round-27 R3 review took the teaches text "as proposed" (`.ufo/waves/round-27/w1/ReviewR3SkillRows.md:173`) after checking anchors, byte sizes and hashes only (lines 172-173).
 
 ## 1. Method and commands (all read-only)
@@ -90,7 +90,7 @@ Reach: a seat count for the job cap would count blocking seats that never occupy
 - :64 `(S135, S136)` becomes `(S140, S141)`. At the tip S140 is 6962d5cd, the clamp rewrite, and S141 is c4a2441d, the removal (SOURCES.md:146-147).
 - :160 row id `S136` becomes `S141` (commit c4a2441d). At the tip S136 is task/index.ts (SOURCES.md:142).
 - :63 `(S133)` becomes `(S138)`; :64 `(S134)` becomes `(S139)`; the table at :157-:159 `S133`, `S134`, `S135` become `S138`, `S139`, `S140`.
-- A dated correction line is the lane's convention for in-file fixes (QUALITY.md:373 covers rows, not reviews; this is a judgement).
+- Recommended form: a dated correction block, as the lane logs its other in-place corrections (round-27.md:109 and :116).
 
 **M4 (medium). The vibe clause in SKILL.md:660 is unsourced.** Row 3's condition cell reads "a `task` spawn, an eval `agent()` or `workpool()` batch, a vibe subagent, or an explicit `async: true` bash." No SOURCES row mentions vibe (section 1, step 5). The row cell cites no vibe anchor. The clause came from the R3 NEW text (ReviewR3SkillRows.md:156). Upstream, `packages/coding-agent/src/vibe/runtime.ts:1370` does call `manager.register(` at 45c35e40 (http=200, 59,019 B, sha256 bbaa9c238342c7b0e29af6fb5fd54d48fcccdcc37796db2af0be9f0762ce14ed). That file is not in the lane, and I did not trace how its refusal surfaces. SKILL.md:646's "rows 2–3 also S134, S135, S136" holds for every other clause. Correction (owner's choice): add a row with an anchor for vibe/runtime.ts, or change the clause to "a `task` spawn, an eval `agent()` or `workpool()` batch, or an explicit `async: true` bash."
 
@@ -139,6 +139,6 @@ Related statements that repeat the false clause or lean on the same framing, wit
 
 ## 8. Tooling record
 
-- No installs or updates. The operator tooling rules were read first (`~/.omp/agent/RULES.md`); nothing needed installing.
+- No installs or updates. The operator tooling rules file was read first; nothing needed installing.
 - Used, all already present: curl 8.23.0 (fetches); sha256sum (`--version` reports 0.8.0); `jq` on PATH resolves to jaq 3.1.1 at /home/vgpnk/.local/bin/jq (JSON reads only); git 2.56.0, read-only subcommands only (grep, show, log, ls-tree, hash-object without -w); rg 15.1.0 present, not used.
 - No pacman transactions. No subagents or background jobs. Writes: this report, and the scratch directory /fast/scratch/hyaku/mori-r27/ReopenS136/.
