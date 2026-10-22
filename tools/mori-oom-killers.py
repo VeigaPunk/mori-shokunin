@@ -297,6 +297,27 @@ def read_inputs(inputs):
                 if stamp >= aetm:
                     scoped.append(entry)
 
+    # Send lines of this boot outside the current invocation (round-26 wave-1
+    # ReviewScopeClock S1/S2).  For an active unit they are the lines before
+    # ActiveEnterTimestampMonotonic: reported, but not a verdict input, because
+    # frozen case c02 pins KILLERS_QUIET for that shape (disclosed limit).  For
+    # an earlyoom that is not active, every boot line belongs to an earlier
+    # invocation, so a real send line is positive evidence (stop without
+    # restart must not read as quiet).
+    earlier_send_lines = None
+    if journal is not None and earlyoom_state != "absent":
+        scoped_ids = set(id(e) for e in scoped)
+        earlier = [e for e in journal if id(e) not in scoped_ids]
+        earlier_texts = [_entry_text(e).lstrip() for e in earlier]
+        if any(t.startswith(PREFIX_DRYRUN) for t in earlier_texts):
+            earlier_send_lines = 0
+        else:
+            earlier_send_lines = sum(
+                1
+                for t in earlier_texts
+                if RE_SIGTERM_ACTION.match(t) or RE_SIGKILL_ACTION.match(t) or t.startswith(PREFIX_ESCALATION)
+            )
+
     version = None
     term_thresholds = None
     kill_thresholds = None
@@ -398,6 +419,7 @@ def read_inputs(inputs):
     acted = (
         (actions is not None and (actions["sigterm"] or actions["sigkill"] or actions["escalations"]))
         or (oomd_notices is not None and oomd_notices > 0)
+        or (earlyoom_state != "active" and earlier_send_lines)
     )
 
     unknown = False
@@ -440,6 +462,7 @@ def read_inputs(inputs):
             # Counts are earlyoom log lines, not processes signalled or killed.
             "dryrun_send_lines": dryrun_send_lines,
             "process_group_lines": process_group_lines,
+            "earlier_invocation_send_lines": earlier_send_lines,
         },
         "oomd": oomd,
         "verdict": verdict,

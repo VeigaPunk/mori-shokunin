@@ -172,3 +172,8 @@ frozen case, and discloses the rest as limits. The counted value stays `PASS 32/
   frozen `c02`, X4), A3 (no logger-heartbeat check; frozen `c19`, X7), X8 (head-truncated count is a lower bound).
 - **Unbounded invocation (adopted, from wave-1 SrcJournalJson F2):** `ActiveEnterTimestampMonotonic` missing or `0`
   leaves the invocation unbounded, so `scope_complete` is false (before this, a version line alone set it true).
+- **Earlier invocations (partly adopted, from wave-1 ReviewScopeClock S1/S2):** a new field
+  `earlyoom.earlier_invocation_send_lines` counts send and escalation lines of this boot outside the current
+  invocation. For an earlyoom that is not active, a non-zero count is positive evidence (`KILLER_ACTED`; a stop
+  without restart no longer reads quiet). For an active earlyoom it is reported but does not change the verdict,
+  because frozen `c02` pins `KILLERS_QUIET` for that shape; that limit stays disclosed (A2a above).
