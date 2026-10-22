@@ -1,0 +1,5 @@
+revision: 0becc4216f97e61f41a472bb6c66d2d781b9d9bb
+command: bash .ufo/waves/round-27/count-c1.sh 0becc4216f97e61f41a472bb6c66d2d781b9d9bb
+entry=present new_rows_cited=6 skill_rows=10
+C1=met
+exit: 0

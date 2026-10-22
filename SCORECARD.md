@@ -1733,3 +1733,13 @@ Round-27 amendment W1 (before any C2 data): C2 is withdrawn, not narrowed. Its c
 spawn (`Error: No model selected.`), and the claim's substance is that seat's independence from the tool; dead seats
 are never replaced. The round has one counted claim, C1. Routed D7 is carried as named debt
 (`.ufo/waves/round-27/contract.md` "Amendment W1").
+
+### Round 27 measured outcome (L1 MoriR27; measured at `0becc421`, before wave 2)
+
+| Claim | Before | After (one committed command over committed bytes) | Verdict proposed for the closure |
+|---|---|---|---|
+| C1 depth, OOM victim selection on this host (FR10, sourced S127–S132) | `bash .ufo/waves/round-27/count-c1.sh fc09f96c…` prints `entry=absent new_rows_cited=0 skill_rows=0`, `C1=unmet`, exit 1 (`evidence/c1-before.txt`) | same command at `0becc4216f97e61f41a472bb6c66d2d781b9d9bb` prints `entry=present new_rows_cited=6 skill_rows=10`, `C1=met`, exit 0 (`evidence/c1-after.txt`) | improved, bounded: the counter checks shape only (wave-1 CriticC1Counter); the substance is the entry's six facts, each cited to a row opened this round or an existing row re-opened at identical bytes; depth 5 → 6 proposed, pending closure |
+| C2 operability, A2 case freeze | `C2=unmet`, exit 1 | withdrawn before any data (amendment W1: the case-writer seat died at spawn) | none: not a counted claim |
+
+Held: freshness 5, calibration 5, coverage 6, operability 7, adjacency 6. Retention scan 4 at every landed tip
+(pre-commit scans of each batch; base 4 at `fc09f96c`). No retirement, waiver, exploratory claim or promotion.
