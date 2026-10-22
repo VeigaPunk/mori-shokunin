@@ -119,13 +119,12 @@ plain `single_open` ([psi.c:1553-1566](https://raw.githubusercontent.com/torvald
 so the failure appears on **read**, not on open. Separately, the proc files themselves are created only when
 `psi_enable` is true ([psi.c:1711-1719](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/sched/psi.c)),
 The boot parameter is documented as `psi=` "Enable or disable pressure stall information tracking", format `<bool>` (S094, `kernel-parameters.txt:5505-5507`), and `CONFIG_PSI_DEFAULT_DISABLED` makes `psi=1` the opt-in (S093, `init/Kconfig:743-760`); so on v7.2 the boot-parameter path removes the files rather than leaving them to fail with `EOPNOTSUPP`
-[this is an [INFERENCE] from those two code paths; the boot ordering of `psi_init()` and `psi_proc_init()` was
-not measured].
+(a direct code reading: `psi=` is parsed before `psi_init()` and before the initcall that runs `psi_proc_init()`, `init/main.c:1011,1047,1445`, no registry row; so at v7.2 the `psi_disabled` EOPNOTSUPP branch is not reachable through a `/proc/pressure` read).
 
 **F8 — the event-driven interface exists and is not used here.** A user registers a trigger by writing
 `"<some|full> <stall amount in us> <time window in us>"` into the file and polling the same descriptor
 ([psi.rst:67-88](https://raw.githubusercontent.com/torvalds/linux/v7.2/Documentation/accounting/psi.rst)); the
-kernel accepts windows "ranging from 500ms to 10s" ([psi.rst:102-104](https://raw.githubusercontent.com/torvalds/linux/v7.2/Documentation/accounting/psi.rst),
+documentation states windows "ranging from 500ms to 10s" (the v7.2 code enforces only 0 < window ≤ 10 s, `psi.c:1372-1373`) ([psi.rst:102-104](https://raw.githubusercontent.com/torvalds/linux/v7.2/Documentation/accounting/psi.rst),
 `WINDOW_MAX_US 10000000` at [psi.c:167](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/sched/psi.c));
 a second trigger on the same descriptor fails with `EBUSY`
 ([psi.c:1596-1598](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/sched/psi.c)). This note and the
@@ -139,7 +138,7 @@ The cgroup v2 documentation lists `irq.pressure` beside `cpu`, `io` and `memory.
 ([cgroup.c:4077-4091](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/cgroup/cgroup.c)) and the
 comment "show or hide {cpu,memory,io,irq}.pressure files"
 ([cgroup.c:4127](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/cgroup/cgroup.c)). The system readers
-and the cgroup readers are different groups: the former pass `&psi_system`
+and the non-root cgroup readers are different groups: the former pass `&psi_system`
 ([psi.c:1538-1550](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/sched/psi.c)), the latter pass
 `cgroup_psi(cgrp)` ([cgroup.c:3970-4091](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/cgroup/cgroup.c)).
 A system-scope read says nothing about any **non-root** cgroup's pressure, and vice versa; the root cgroup's pressure files print the same `psi_system` group as `/proc/pressure` (`include/linux/psi.h:39`, no registry row; on this host the two were byte-identical in one read pass).
@@ -147,7 +146,7 @@ A system-scope read says nothing about any **non-root** cgroup's pressure, and v
 **F10 — the kernel accumulates the total monotonically.** The running total is
 `group->total[aggregator][s] += div_u64(deltas[s], max(nonidle_total, 1UL));`
 ([psi.c:408-410](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/sched/psi.c)). A `total` that
-*decreases* between two reads of the same file is therefore not a stall event and not a kernel fault: the two
+*decreases* between two reads of the same file is therefore not a stall event; the v7.2 code has no decrement path, so [INFERENCE] the two
 samples are not comparable readings of the same counter.
 
 **F11 — no upstream threshold exists.** The kernel source defines no "warn at N %" rule. The only thresholds
@@ -155,7 +154,7 @@ in the documentation are the user's own trigger values, given as examples ("100m
 any 500ms window", "some 150000 1000000") ([psi.rst:70-88](https://raw.githubusercontent.com/torvalds/linux/v7.2/Documentation/accounting/psi.rst)).
 A tool threshold is therefore the tool's own, and must be labeled as local.
 
-**F12 — the IRQ clock itself is a boot parameter.** `static int irqtime = -1; core_param(irqtime, irqtime,
+**F12 — on generic-sched-clock architectures (not x86) the IRQ clock is a boot parameter.** `static int irqtime = -1; core_param(irqtime, irqtime,
 int, 0400);` and `if (irqtime > 0 || (irqtime == -1 && rate >= 1000000)) enable_sched_clock_irqtime();`
 ([sched_clock.c:48-50, 242-243](https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/time/sched_clock.c));
 the declarations live in `include/linux/sched/clock.h:112-116`. This applies only on architectures built with `CONFIG_GENERIC_SCHED_CLOCK` (`kernel/time/Makefile:23`); x86, this host, has no `irqtime=` parameter. On x86 the TSC code enables IRQ time accounting unless `tsc=noirqtime` (`arch/x86/kernel/tsc.c:327-328,1544-1545`), and `kernel/sched/clock.c:176,243` can disable it after boot when the clock is found unstable (wave-2 seat CriticKnowledgeOverclaim; these files have no registry row).
@@ -168,13 +167,13 @@ sources above forbid.
 
 | Observable file state | Tool state (C2) | Verdict / exit | What it does NOT prove |
 |---|---|---|---|
-| All four files present, kernel shape (F2), low values | each resource `ok` | `PRESSURE_OK`, exit 0 | That there was no stall: `avg10` is a decayed 10-second trend resampled every ~2 s (F4), so a shorter spike between two reads can be invisible. That the host is healthy. That the reading covers per-cgroup pressure (F9). That the local threshold was meaningful (F11). |
+| All four files present, kernel shape (F2), low values | each resource `ok` | `PRESSURE_OK`, exit 0 | That there was no stall: `avg10` is a decayed 10-second trend resampled every ~2 s (F4), so a shorter spike between two reads can be invisible. That the host is healthy. That the reading covers per-cgroup pressure (F9). That the local threshold was meaningful (F11). That accounting was running: a root `cgroup.pressure` of 0 freezes the totals and decays the averages, so `PRESSURE_OK` can stand under real pressure (U7). |
 | IRQ file carries only a `full` line (F5) | `irq` = `ok`, `some: null` | unchanged by the resource itself | That IRQ "some" pressure is zero — the kernel never emits an IRQ `some` line (F5); `null` means *undefined*, not *zero*. That IRQ pressure is low. That the IRQ file is complete for the host: it is created only under `CONFIG_IRQ_TIME_ACCOUNTING` (F6). |
 | System CPU `full` line present | `cpu` = `ok`, `full_system_undefined: true`; the `full` values are reported but never thresholded (contract C2) | unchanged by the resource itself | That the system had no full CPU stall: CPU `full` is undefined at the system level (F3) and must never be read as evidence of no stall. That a nonzero system CPU `full` value reports a stall — at v7.2 the kernel writes zeros there (F3), so a nonzero value means the file is not the kernel's system CPU pressure file, not that the system stalled. |
-| File missing (ENOENT) | `absent` — unavailable, never zero | `PRESSURE_PARTIAL`, exit 0 (if others are `ok`); `PRESSURE_UNAVAILABLE`, exit 2 if every resource is absent | That the resource was not under pressure. Which cause applies: on v7.2 a boot-disabled PSI removes every file (F7) and a kernel without IRQ time accounting has no irq file (F6), so a missing file is consistent with either; the tool records no cause. That any other resource is fine. |
-| Read fails `EOPNOTSUPP` | `unsupported` — unavailable, never zero | as above | That there was no pressure. That the threshold was met or missed. Which cause applies: v7.2 returns it on the `psi_disabled` branch and, for IRQ, when IRQ time accounting is off at run time (F6, F7), but the error alone does not say which, and on v7.2 a boot-disabled PSI removes the files instead (F7). The tool records no cause; kernel and boot configuration diagnosis belongs to tsukuroi. |
+| File missing (ENOENT) | `absent` — unavailable, never zero | `PRESSURE_PARTIAL`, exit 0 (if no other resource crosses the threshold; a threshold finding anywhere gives `PRESSURE_HIGH`, exit 1); `PRESSURE_UNAVAILABLE`, exit 2 if every resource is absent | That the resource was not under pressure. Which cause applies: on v7.2 a boot-disabled PSI removes every file (F7) and a kernel without IRQ time accounting has no irq file (F6), so a missing file is consistent with either; the tool records no cause. That any other resource is fine. |
+| Read fails `EOPNOTSUPP` | `unsupported` — unavailable, never zero | as above | That there was no pressure. That the threshold was met or missed. At v7.2 it is reachable through `/proc/pressure` only on `irq`, when IRQ time accounting is off (F6; on x86 `tsc=noirqtime` or a clock found unstable); the `psi_disabled` branch is not reachable while the files exist (corrections section). The tool records no cause; kernel and boot diagnosis belongs to tsukuroi. |
 | Read fails `EACCES`/`EPERM` | `unreadable` — unavailable, never zero | as above | That the resource was idle or unpressured. That access is the *only* reason for the failure — `unreadable` records that this seat could not read, nothing about the resource's state. |
-| Line shape does not match, duplicate kind, or a required kind missing (`cpu`/`memory`/`io` need `some` **and** `full`) | `malformed` | `PRESSURE_PARTIAL`, exit 0 (if others are `ok`) | That the kernel misbehaved: the kernel's own emitter produces exactly the documented shape (F2), so `malformed` means *this file is not a kernel PSI file of this resource*, or that the two samples were inconsistent — it is a refusal, not a fault finding. That the missing kind is zero. That the pressure was low. |
+| Line shape does not match, duplicate kind, or a required kind missing (`cpu`/`memory`/`io` need `some` **and** `full`) | `malformed` | `PRESSURE_PARTIAL`, exit 0 (if no other resource crosses the threshold; a threshold finding anywhere gives `PRESSURE_HIGH`, exit 1) | That the kernel misbehaved: the kernel's own emitter produces exactly the documented shape (F2), so `malformed` means *this file is not a kernel PSI file of this resource*, or that the two samples were inconsistent — it is a refusal, not a fault finding. That the missing kind is zero. That the pressure was low. |
 | Interval mode: second `total` < first `total` | `counter_regressed` | `PRESSURE_PARTIAL`, exit 0 | That pressure dropped, that counts were lost, or that the counter is broken: the kernel accumulates totals monotonically (F10), so a decrease means the two samples are not comparable readings of the same counter. No rate is derived from it. |
 | `avg10` ≥ the tool's `--warn-avg10` on `some` of `cpu`/`io`/`memory` or `full` of `memory`/`io`/`irq` | finding `PRESSURE_HIGH` on that resource | `PRESSURE_HIGH`, exit 1 | That the threshold is calibrated: 10.0 is a labeled-local placeholder with no upstream basis (F11). That any specific workload was harmed. That CPU `full` (excluded by contract) or IRQ `some` (does not exist, F5) had no pressure. |
 | Any resource `absent`/`unsupported`/`unreadable`/`malformed` while the others are `ok` | as above | `PRESSURE_PARTIAL`, exit 0 | That the observed resources are the whole system, or that the missing resource was fine. That exit 0 means "no pressure anywhere". |
@@ -182,12 +181,12 @@ sources above forbid.
 
 ## Limits
 
-- **One-shot only.** The tool reads a file and stops. It registers no trigger and does not poll, although the
+- **One-shot only.** The tool reads each file once (twice with `--interval`) and stops. It registers no trigger and does not poll, although the
   kernel supports exactly that ([F8]: write a threshold, poll the descriptor). An event that starts and ends
   between two reads is still counted in `total` and decayed into the averages (F4), but it may leave `avg10` under
   the threshold, and a single read cannot say when it happened.
 - **No cgroup scope.** Only `/proc/pressure` is read, i.e. the system group (F9). Per-cgroup `cpu.pressure`,
-  `memory.pressure`, `io.pressure` and (at v7.2) `irq.pressure` exist and are a different population (F9).
+  `memory.pressure`, `io.pressure` and (at v7.2) `irq.pressure` exist and, except for the root cgroup (which prints `psi_system`), are a different population (F9).
   The census's user-slice `memory.pressure` is likewise a different scope; the two are never summed or
   compared as one number.
 - **Threshold local.** `--warn-avg10` (default 10.0) is a local placeholder. The kernel defines no such
@@ -211,11 +210,9 @@ sources above forbid.
 
 - **U1 — `irqtime_enabled()` (resolved by seat SrcPsiC).** Defined as a run-time static branch in `kernel/sched/sched.h:3492-3495` at v7.2, constant false when `CONFIG_IRQ_TIME_ACCOUNTING` is absent (`sched.h:3518-3521`); where the branch is switched on at run time was not located (F12 names the `irqtime=` parameter and `enable_sched_clock_irqtime()`). Who may read `/proc/pressure/irq` is not claimed beyond the created mode `0666`.
 - **U2 — host configuration (resolved for this host only).** Seat ScoutHostKernelConfig read `/proc/config.gz`: CONFIG_PSI=y, CONFIG_PSI_DEFAULT_DISABLED not set, CONFIG_IRQ_TIME_ACCOUNTING=y; `/proc/cmdline` carries no `psi=`. This is one host on 2026-10-22, not a fleet fact.
-- **U3 — live reachability of `EOPNOTSUPP`.** Because the located disable path removes the files (F7), a
-  real host may show `absent` rather than `EOPNOTSUPP`; this seat did not observe either. The claim that the
-  two are distinct observations is a code-path reading, not a measurement.
-- **U4 — boot ordering.** The relative order of `psi_init()` and `psi_proc_init()` was not verified, so the
-  "boot-parameter disable ⇒ absent files" statement in F7 is labeled [INFERENCE].
+- **U3 — live reachability of `EOPNOTSUPP`.** Resolved by code reading (corrections section): cpu, memory and io
+  show `absent` on a boot-disabled v7.2 host; EOPNOTSUPP is reachable only on `irq`. Neither was observed live.
+- **U4 — boot ordering.** Resolved (corrections section); the `[INFERENCE]` label is withdrawn.
 - **U5 — version bounds.** Every kernel pointer here is the `v7.2` tag. Whether `pressure/irq` and cgroup
   `irq.pressure` exist in earlier or later kernels was not checked.
 - **U6 — the man page.** No `proc_pressure(5)` page exists (S097, rejected: HTTP 404; man-pages 6.20 has no such page). The kernel documentation (S090) is the format authority.

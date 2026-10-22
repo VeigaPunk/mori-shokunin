@@ -176,6 +176,49 @@
     },
     "findings_include": []
    }
+  },
+  {
+   "id": "S07",
+   "topic": "wave-2 ReviewPressureCode F1: a regressed memory counter must not hide a threshold breach on the second read (A3)",
+   "args": [
+    "--interval",
+    "1"
+   ],
+   "snapshots": [
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=50.00 avg60=12.50 avg300=3.25 total=987654\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    },
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=50.00 avg60=12.50 avg300=3.25 total=887654\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    }
+   ],
+   "expect": {
+    "exit": 1,
+    "verdict": "PRESSURE_HIGH",
+    "resources": {
+     "memory": {
+      "state": "counter_regressed"
+     }
+    },
+    "findings_include": [
+     [
+      "PRESSURE_HIGH",
+      "memory"
+     ]
+    ]
+   }
   }
  ]
 }

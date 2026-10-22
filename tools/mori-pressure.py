@@ -287,7 +287,9 @@ def _findings(resources: Dict[str, Dict[str, Any]], warn_avg10: float) -> List[D
     findings: List[Dict[str, Any]] = []
     for name in RESOURCE_NAMES:
         res = resources[name]
-        if res["state"] != STATE_OK:
+        # A3: thresholds use the second read when both reads parsed; a regressed counter
+        # (both reads parsed, total decreased) still carries valid second-read averages.
+        if res["state"] not in (STATE_OK, STATE_REGRESSED):
             continue
         best: Optional[Tuple[str, float]] = None
         for kind in THRESHOLD_KINDS[name]:
