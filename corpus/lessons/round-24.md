@@ -42,6 +42,10 @@ Registry changes, old → new (all new rows; no older row changed):
   raw source of the same document with different line anchors, kept as a separate row
   because its URL and anchors differ (no duplicate-URL warning).
 - New reading path "system pressure one-shot reading" in `## Paths`.
+- S090 anchor and teaches cells, old → new (same round, before closure; peer finding from
+  seats SrcPsiRst and ConnectSourceDuplicates): "each file is exactly two lines" → "each named
+  file (cpu, memory, io) shows a some line and a full line"; the irq file shows one `full` line
+  (S091). Knowledge entry F2 narrowed the same way.
 
 ## Mistakes
 

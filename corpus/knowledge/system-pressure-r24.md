@@ -31,7 +31,7 @@ The kernel creates a fourth: `proc_create("pressure/irq", 0666, NULL, &psi_irq_p
 So on v7.2 the kernel can expose an IRQ file the documentation does not mention; the documentation is not an
 inventory of the file set. The build option's help text likewise names only cpu, memory and io (S093, `init/Kconfig:730-733`).
 
-**F2 — the file shape.** Each file holds two lines of the form
+**F2 — the file shape.** Each documented file (cpu, memory, io) holds two lines of the form
 `some avg10=0.00 avg60=0.00 avg300=0.00 total=0` and
 `full avg10=0.00 avg60=0.00 avg300=0.00 total=0`
 ([psi.rst:40-43](https://raw.githubusercontent.com/torvalds/linux/v7.2/Documentation/accounting/psi.rst)).

@@ -156,3 +156,13 @@ declared after-value (`"held": 4` of `"items": 4` at the landed tip) is unchange
   since base contains `quota` and that no file under `tools/` contains `CaseEscapedSpace`;
   R2 also pins the blobs of `tools/mori-retention-gate.py` and
   `tools/mori-retention-reconcile.py` to base.
+
+## Amendment A5 (08:55Z, corrections only; findings from wave-1 seats SrcProcPressureMan and ReviewDeclarationSizing)
+
+- The C2 "Sourced" list's `proc_pressure(5)` does not exist (HTTP 404); it is registered as the
+  rejected row S097 and cited by nothing. The sourced rows are S090–S096.
+- "No tool checked these items before this round" is too broad: `tools/mori-dispatch-ledger.py
+  verify` already checked ledger binding, and it passes the round-23 wave-1 ledger clean; what no
+  tool checked was the ordering between a row's `at` and its dispatch commit, plus the R1–R3 pins.
+- The live bracket check (A2) is a supporting observation reported beside the after-value, not a
+  second after-value. Declared targets are unchanged.
