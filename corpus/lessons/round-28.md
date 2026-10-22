@@ -64,7 +64,7 @@ Each line is copied from the drafting seat's report (`.ufo/waves/round-28/w1/Sup
 |---|---|---|---|---|---|
 | S145 | https://github.com/torvalds/linux/commit/52b1364ba0b105122d6de0e719b36db705011ac1.patch | 2026-10-22T17:59:57Z | `a255f4471b9388ba3d5bfdf64a093dec35a66cd8080473fb4bd2d4b49dce7cd6` | patch `:15-17` (25 words): "IRQ/SOFTIRQ always happen in the current task on the CPU, make nothing productive could run even if it were runnable, so we only use PSI_IRQ_FULL." | admit, A, mined |
 | S146 | https://www.kernel.org/pub/linux/docs/man-pages/man-pages-6.20.tar.xz (with https://man7.org/linux/man-pages/man5/proc_pressure.5.html, https://man7.org/linux/man-pages/dir_section_5.html, https://man7.org/linux/man-pages/man5/proc.5.html) | 2026-10-22T18:00:50Z | `180f0d16a2142dd9671760ac0afeadcc25e861f695eb420293e1206a87ca083f` | 404 body line 6 (man7 candidate page): "The requested URL was not found on this server." (9 words) | admit, A, mined |
-| S147 | https://raw.githubusercontent.com/can1357/oh-my-pi/45c35e40c46166dc726ccc52f5d27f40f2449f99/docs/settings.md | 2026-10-22T17:59:03Z | `0b2e1457021fa526f2c35015672f1d7ccbac95e7b9f217528ab8022c55ed5883` | `0b2e1457021fa526f2c35015672f1d7ccbac95e7b9f217528ab8022c55ed5883` | `:623` "`async.maxJobs` \| number \| `100` \| Running background-job cap, floored to at least 1" (11 words) | admit, A, mined (SupersedeS101) |
+| S147 | https://raw.githubusercontent.com/can1357/oh-my-pi/45c35e40c46166dc726ccc52f5d27f40f2449f99/docs/settings.md | 2026-10-22T17:59:03Z | `0b2e1457021fa526f2c35015672f1d7ccbac95e7b9f217528ab8022c55ed5883` | `:623` "`async.maxJobs` \| number \| `100` \| Running background-job cap, floored to at least 1" (11 words) | admit, A, mined (SupersedeS101; duplicated sha256 cell removed after wave-2 ReopenS147) |
 | S148 | https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/proc/base.c (with `include/uapi/linux/oom.h` and `kernel/fork.c` at v7.2) | 2026-10-22T17:58:57Z | `cef1a2cf3f34f683e69d623c4df563d5c0dc6bd71dcb3d42f40dadb0084915c6` | `base.c:1147` "if (mm_flags_test(MMF_MULTIPROCESS, p->mm)) {" | admit, A, mined; sha256 cef1a2cf3f34f683e69d623c4df563d5c0dc6bd71dcb3d42f40dadb0084915c6 |
 | S149 | https://man7.org/linux/man-pages/man5/proc_pid_oom_score_adj.5.html ; https://man7.org/linux/man-pages/man5/proc_pid_oom_score.5.html (sha256 769edf3b9c054934db07f16173297fc5fd63c3a4c807682355f08fa45cde80a9 ; 6169628d8a2cdc512795cfda74f3598d5b7a25e5b71921d4088c0539cf71b2bc) | 2026-10-22T17:59:01Z | `769edf3b9c054934db07f16173297fc5fd63c3a4c807682355f08fa45cde80a9` | adj page `:145-146` "The default value for this file is 0; a new process inherits its parent's oom_adj setting." (16 words) | admit, A, mined (SupersedeS128) |
 | S150 | https://raw.githubusercontent.com/systemd/systemd/v262/man/systemd.exec.xml (with https://raw.githubusercontent.com/systemd/systemd/v262/man/systemd-system.conf.xml) | 2026-10-22T17:58:56Z | `44b89bffce737aff803966c207329e9fe2d28ad07709a4bb8e0edf6a4ec0d844` | `systemd.exec.xml:1299-1300` "If not specified, defaults to the OOM score adjustment level of the service manager itself, which is normally at 0." (20 words) | admit, A, mined (MoriR28.SupersedeS129) |
@@ -129,3 +129,30 @@ keeps its old row's URL with a corrected scope) — `mori ok`, exit 0. Rows 144 
   case file sha256 `ec04a74a3eb65f856dedb3f0509122ee07fdfba7f49e90781d86ab2a393ea6aa`. The A2-07 and A2-10 breach shapes of wave-1 ReviewA2SpecVsTool are not covered by any
   frozen case and stay open (round-29 candidate). Lesson: a writer-blind wave needs its critic's tool-reading report
   kept out of the shared report directory until the freeze.
+
+### Wave-2 corrections to `## Mistakes` (CriticLessonMistakes, ReviewMisrootSweep; appended, the entries above stand as written)
+
+- **M1, M5 captured-by:** "none" is wrong for both; the round-27 closure caught them
+  (`round-27-verifier-spotcheck.md:34-37,144-147`). The checks (QUALITY 83, 84) are the first in-lane capture.
+- **M2:** the claim that `tools/mori-misroot-sweep.py --lane mori --round 27` read `MORI_MISROOT_CLEAN` rests on an
+  L1 run at about 18:00Z whose output was not saved; it is not committed evidence. The hash check is defeated by a
+  one-byte change to a fetched file and credits its own receipt when run against round 28 (CriticLessonMistakes).
+- **M3:** class corrected to *single point of failure in a declared claim* (one writer per rule); the fix is a contract
+  sentence and cannot fail, so it does not count as a fix shown able to fail.
+- **M4:** the counter's fixed map never examines S143/S144; that debt stays carried.
+- **M6 (new) — writer blindness broken by a shared report directory (class: independence leak).** Evidence: CaseA2r03
+  read lines 1-45 of `w1/CriticC2Design.md` before writing; disclosure above under "Seat notes" and in `LOG.md`.
+  Captured-by: wave-2 CriticC2Admission. Fix (not yet shown able to fail): a blind wave's critic reports that quote tool
+  output are written outside the writers' readable paths until the freeze.
+- **M7 (new) — a reader cited a row before the row existed (class: dangling citation).** Evidence:
+  `harness-job-capacity-r25.md:47` cited S147 from `1c4c186e` until S147 landed in `6b695b02`; the counter's
+  `readers_left` only looks for old ids. Captured-by: wave-2 CriticC1Admission F3. Fix: carried (a dangling-id check).
+- **Late seats:** SupersedeS101 delivered last (S147 landed in `6b695b02`, after the wave-2 attack revision
+  `f2de0eed`, so wave-2 re-runs at `f2de0eed` print `superseding=7/8`); SupersedeS140 was resumed once by message.
+  BuildCountC2's report landed in `84abe93e`, after its counter (`7b75f45a`). The case writers' brief allowed upstream
+  earlyoom sources beyond the contract's read list; no amendment recorded it.
+- **Withheld seat report:** wave-1 `FixR1Runway.md` (written after the scope freeze) quotes the live harness settings
+  value in two before/after lines, so it is not committed (privacy rule; QUALITY 80 disposition: withheld). Its patch
+  stays in scratch; r25 R1 and R5 are carried (wave-2 ReviewR1Patch: F1–F3 reproduced open; ReviewR5Patch: forged PASS
+  survives `--rerun`, missing baseline exits 1, sub-directory `--repo` flips the result). FixR5RoutedSelftest had not
+  returned at the round's last commit.
