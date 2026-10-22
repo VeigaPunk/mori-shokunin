@@ -128,3 +128,26 @@ mismatch kinds 1, 2 and 4, extends 3 and adds 5:
 The counter prints one line per row (axis, score, basis, R, kinds hit), then `mismatches=<n>` and `C1=met|unmet`.
 Score policy (C1 above): "or the admitted round's declaration proposed it" is deleted. Uncounted residual named in
 the lesson: the truth of each row's evidence prose beyond its pointers (a wave-2 non-author read).
+
+## Amendment A2 (round 29, before the C2 counter lands and before the L1 opens any case draft; CriticRoutingCoverage F1, F3, F4, F6, F7)
+
+Every change makes a claim harder to meet or corrects a misstatement; nothing is narrowed.
+
+- **C1 kind 2b:** when the Last change cell states `(X → Y)` for round N, the pinned MANIFEST `verdicts.a` of mori
+  round N must be `improved` (catches `round 14 (6 → 7)` against a round-14 `unchanged`).
+- **C2 shape lines (counted, rule-text terms):** the counter prints `shape_a207=<cases>/<authors>` = cases of rule
+  A2-07 whose counted scope (bounded: records stamped at or after a non-zero ActiveEnterTimestampMonotonic of an
+  active unit; unbounded: every stamped record of an active unit whose ActiveEnterTimestampMonotonic is missing or 0)
+  holds at least two version lines, one segment between version lines holding `dryrun mode enabled` and another
+  segment without it holding a send line; and `shape_a210=<cases>/<authors>` = cases of rule A2-10 holding a send
+  record without a numeric `__MONOTONIC_TIMESTAMP` while either the unit is active with ActiveEnterTimestampMonotonic
+  missing or 0, or the unit is not active. `C2=met` additionally requires each shape ≥ 2 cases from ≥ 2 authors.
+- **C2 statement, counted vs disclosed:** the counted after-value is the counter's `C2=met`. "Eight blind seats",
+  "read no tool source …" and "committed before the L1 runs the tool" are process conditions, each reported with its
+  evidence (writer files-opened lists, `check-blind-wave.sh` receipt at the freeze commit, commit order); a failed
+  condition is reported as a C2 defect, never dropped.
+- **Correction (F6):** "wave 1 has no seat that reads or runs the tool" is false as written: BuildCountC2 runs the
+  tool's `--selftest` on the two older case files (marker lines only). No wave-1 seat reads tool source.
+- **Correction (F7):** the case writers fetch upstream sources themselves; rows S153 onward are opened in the same
+  wave by source scribes, so the sourced claim rests on those rows through the lesson Gate and the case file's
+  `sources` key, not through the writers' reading.
