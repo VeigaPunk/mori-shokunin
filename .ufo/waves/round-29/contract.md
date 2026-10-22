@@ -98,3 +98,33 @@ round-26 and round-28 self-tests keep their tallies.
 5. Census count: corrected by an appended note in `corpus/lessons/round-28.md` (ten W04, four new: S147–S150).
 6. Carried debt (MutCountC1 F1/F2/F3/F6/F10, S146 teaches, reader-sweep citations, old `used-by`, r25 R1/R5):
    inventoried, carried by name unless a wave-1 item closes one.
+
+## Amendment A1 (round 29, before the C1 counter lands and before any Axes-table edit)
+
+Raised by wave-1 CriticC1Design F1–F6 (`w1/CriticC1Design.md:147-175`), CriticScorePolicy (kind 4 vacuous; freshness 6
+unprovable) and AxisCalibration/AxisDepth (rounds 19–22 have no lane spot-check file; round 12 has no per-axis table).
+Every change makes C1 harder to meet; all six rows stay counted; no data existed when it was written. It replaces
+mismatch kinds 1, 2 and 4, extends 3 and adds 5:
+
+- **Closure authority:** the pinned fleet MANIFEST. Imp(a) = { N in 12..28 : the mori round-N entry has verdict
+  `admitted` and `verdicts.a == "improved"` }; R(a) = max Imp(a). Cite(N) = the lane file
+  `corpus/lessons/round-N-verifier-spotcheck.md` when it exists at `<rev>`, else the literal token
+  `MANIFEST.json@63729047 mori round N`.
+1. **Stale closure:** if R(a) exists the row carries a backticked `Cite(R):L` token (lane file) or the literal token
+   (no lane file). When Cite(R) is a lane file with a per-axis table, line L must match `^| a | improved |`.
+2. **Last change:** the cell opens with `round N` (else mismatch); N is an admitted round, and N ≥ R(a) when R(a)
+   exists. If the cell carries `(X → Y)`, Y equals the score cell. A held score is written `round N (improved, score
+   held)`.
+3. **Dead pointer:** every backticked token containing `/` or ending in `.md`/`.json`/`.py`/`.sh` names a file that
+   exists at `<rev>`; `path:L`/`path:L-M` also need max(L, M) lines.
+4. **Score without basis:** the score cell is an integer 0..10, or `unprovable-but-better` with a named non-author
+   reviewer citing an admitted closure that records that verdict. A numeric score differs from its `7118f320` value
+   only if the row cites `Cite(N):L` for an admitted N whose line L states `X → Y` for that axis, X = the `7118f320`
+   score, Y = the new score; either direction. An `improved` verdict alone, or a number a declaration proposed, is
+   never a basis.
+5. **Closure disagreement:** for every N in 12..28 with a lane per-axis table, each `| a | <verdict> |` line equals
+   the MANIFEST `verdicts.a` for round N.
+
+The counter prints one line per row (axis, score, basis, R, kinds hit), then `mismatches=<n>` and `C1=met|unmet`.
+Score policy (C1 above): "or the admitted round's declaration proposed it" is deleted. Uncounted residual named in
+the lesson: the truth of each row's evidence prose beyond its pointers (a wave-2 non-author read).

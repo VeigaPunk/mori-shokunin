@@ -156,3 +156,11 @@ keeps its old row's URL with a corrected scope) — `mori ok`, exit 0. Rows 144 
   stays in scratch; r25 R1 and R5 are carried (wave-2 ReviewR1Patch: F1–F3 reproduced open; ReviewR5Patch: forged PASS
   survives `--rerun`, missing baseline exits 1, sub-directory `--repo` flips the result). FixR5RoutedSelftest had not
   returned at the round's last commit.
+
+### Correction (round 29, routed defect 5 of `round-28-verifier-spotcheck.md:131`; the entries above stand as written)
+
+- **Census at round end:** ten W04 lines, not nine: the six carried (S035, S037, S073–S076) plus four new — S147,
+  S148, S149, S150 — each a superseding row that keeps its old row's URL with a corrected scope ("duplicate url …
+  across scopes"). Re-run at round-29 start (19:50:48Z, tip `7118f320`): ten W04, `mori ok`, exit 0
+  (`.ufo/waves/round-29/evidence/census-start.txt`). The fleet round-28 report carries the same miscount; it is a
+  fleet file and is not rewritten.
