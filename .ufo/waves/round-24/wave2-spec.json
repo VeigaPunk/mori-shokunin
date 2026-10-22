@@ -1,0 +1,188 @@
+{
+ "wave": "mori-r24-w2",
+ "reportDir": ".ufo/waves/round-24/w2",
+ "maxLanes": 64,
+ "context": "# mori round 24 (attempt 2) — wave 2 falsify\nLane repo: /home/vgpnk/Projects/shokunin/mori-shokunin. L1: agent MoriR24 (planner seat and only integration owner). Measured lane tip for this wave: a730ecfefbdb5c31b1db13aca2c40eecd5e97abc (branch master). Claims and amendments A1–A4: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-24/contract.md. Wave-1 reports: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-24/w1/.\n- C1 (calibration): tools/mori-routed-check.py; declared after-value `\"held\": 4` of `\"items\": 4` at the landed tip with --round 24; the repair is R4 (red on round 23 at c725aa37 with --round 23); R1–R3 are regression guards. QUALITY criteria 72–75.\n- C2 (coverage, FR12 one-shot part): tools/mori-pressure.py; declared after-value `MORI_PRESSURE_SELFTEST: PASS 12/12` over tools/fixtures/mori-pressure/cases.json, frozen at f6a29702 before the tool landed at 6ee62487; knowledge entry corpus/knowledge/system-pressure-r24.md; sources S090–S097 in corpus/SOURCES.md; SKILL.md Round24 section; PROVINCE.md and corpus/README.md round-24 notes; lesson corpus/lessons/round-24.md.\nYour job is to falsify: find what is wrong, overclaimed or untested. A kill, a survivor and a confirmation are all useful results; report exactly what you ran.\n\n## Paths and write bounds (binding)\n- Every `Report:` trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin — write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. Your report is the only file you may create inside the lane repo. Use absolute paths; your tools start at the fleet root /home/vgpnk/Projects/shokunin.\n- Scratch goes ONLY under /fast/scratch/hyaku/mori-r24-a2/w2/<your seat name>/ (never /tmp). Mutants run only in a git clone you make there (git clone --no-hardlinks /home/vgpnk/Projects/shokunin/mori-shokunin <dir>; checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc). Never push.\n- Never mutate the fleet repo, sibling lanes, the lane's jj state or the lane's Git index: no git add/commit/stash/checkout/reset/pull/push and no mutating jj command in /home/vgpnk/Projects/shokunin/mori-shokunin. Read-only git is fine.\n- Detection and report only: never write /proc, /sys or cgroup files, never register PSI triggers, never restart services.\n- You are a leaf: no swarms, no subagents. Never message agent://all.\n- Tooling: the operator authorizes installs and upgrades that help the task — read /home/vgpnk/.omp/agent/RULES.md first and record tool, version, channel and reason in your report. pacman guard: all pacman transactions are PAUSED host-wide; install via uv tool, npx or an official binary in ~/.local/bin, or report the need. Never -Sy, -Syu, -U, -R, downgrade, or restart a host service.\n- Plain English, no run-together words (write `exit 0`, not `exit0`). Never write a line that sets a privacy-clearance key to true, even as an example. Cite evidence as path:line, command plus output, or commit hash. An unrun check has not passed.\n",
+ "items": [
+  {
+   "name": "MutPsiFieldSwap",
+   "role": "mutation-tester",
+   "prompt": "Attacks: C2 tools/mori-pressure.py selftest sensitivity — mutant: avg10 and avg300 (or avg and total) swapped in the parser. In a clone at /fast/scratch/hyaku/mori-r24-a2/w2/MutPsiFieldSwap/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) apply the single smallest code mutant to tools/mori-pressure.py implementing: avg10 and avg300 (or avg and total) swapped in the parser. Run `python3 -I tools/mori-pressure.py --selftest` on the unmutated and the mutated copy and report both outputs and whether the frozen cases kill the mutant. If it survives, name the missing case precisely (do not edit cases.json). Never touch the lane."
+  },
+  {
+   "name": "MutPsiIrqSome",
+   "role": "mutation-tester",
+   "prompt": "Attacks: C2 tools/mori-pressure.py selftest sensitivity — mutant: an irq file without a some line treated as malformed. In a clone at /fast/scratch/hyaku/mori-r24-a2/w2/MutPsiIrqSome/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) apply the single smallest code mutant to tools/mori-pressure.py implementing: an irq file without a some line treated as malformed. Run `python3 -I tools/mori-pressure.py --selftest` on the unmutated and the mutated copy and report both outputs and whether the frozen cases kill the mutant. If it survives, name the missing case precisely (do not edit cases.json). Never touch the lane."
+  },
+  {
+   "name": "MutPsiCpuFullThreshold",
+   "role": "mutation-tester",
+   "prompt": "Attacks: C2 tools/mori-pressure.py selftest sensitivity — mutant: system cpu full included in the threshold. In a clone at /fast/scratch/hyaku/mori-r24-a2/w2/MutPsiCpuFullThreshold/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) apply the single smallest code mutant to tools/mori-pressure.py implementing: system cpu full included in the threshold. Run `python3 -I tools/mori-pressure.py --selftest` on the unmutated and the mutated copy and report both outputs and whether the frozen cases kill the mutant. If it survives, name the missing case precisely (do not edit cases.json). Never touch the lane."
+  },
+  {
+   "name": "MutPsiErrnoMap",
+   "role": "mutation-tester",
+   "prompt": "Attacks: C2 tools/mori-pressure.py selftest sensitivity — mutant: EOPNOTSUPP mapped to absent, or EACCES mapped to ok. In a clone at /fast/scratch/hyaku/mori-r24-a2/w2/MutPsiErrnoMap/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) apply the single smallest code mutant to tools/mori-pressure.py implementing: EOPNOTSUPP mapped to absent, or EACCES mapped to ok. Run `python3 -I tools/mori-pressure.py --selftest` on the unmutated and the mutated copy and report both outputs and whether the frozen cases kill the mutant. If it survives, name the missing case precisely (do not edit cases.json). Never touch the lane."
+  },
+  {
+   "name": "MutPsiEnoentZero",
+   "role": "mutation-tester",
+   "prompt": "Attacks: C2 tools/mori-pressure.py selftest sensitivity — mutant: a missing file reported as ok with zero values. In a clone at /fast/scratch/hyaku/mori-r24-a2/w2/MutPsiEnoentZero/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) apply the single smallest code mutant to tools/mori-pressure.py implementing: a missing file reported as ok with zero values. Run `python3 -I tools/mori-pressure.py --selftest` on the unmutated and the mutated copy and report both outputs and whether the frozen cases kill the mutant. If it survives, name the missing case precisely (do not edit cases.json). Never touch the lane."
+  },
+  {
+   "name": "MutPsiRegressed",
+   "role": "mutation-tester",
+   "prompt": "Attacks: C2 tools/mori-pressure.py selftest sensitivity — mutant: counter_regressed never raised (absolute delta). In a clone at /fast/scratch/hyaku/mori-r24-a2/w2/MutPsiRegressed/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) apply the single smallest code mutant to tools/mori-pressure.py implementing: counter_regressed never raised (absolute delta). Run `python3 -I tools/mori-pressure.py --selftest` on the unmutated and the mutated copy and report both outputs and whether the frozen cases kill the mutant. If it survives, name the missing case precisely (do not edit cases.json). Never touch the lane."
+  },
+  {
+   "name": "MutPsiVerdictOrder",
+   "role": "mutation-tester",
+   "prompt": "Attacks: C2 tools/mori-pressure.py selftest sensitivity — mutant: verdict precedence: PARTIAL wins over HIGH, or PARTIAL exits 2. In a clone at /fast/scratch/hyaku/mori-r24-a2/w2/MutPsiVerdictOrder/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) apply the single smallest code mutant to tools/mori-pressure.py implementing: verdict precedence: PARTIAL wins over HIGH, or PARTIAL exits 2. Run `python3 -I tools/mori-pressure.py --selftest` on the unmutated and the mutated copy and report both outputs and whether the frozen cases kill the mutant. If it survives, name the missing case precisely (do not edit cases.json). Never touch the lane."
+  },
+  {
+   "name": "MutPsiMatcher",
+   "role": "mutation-tester",
+   "prompt": "Attacks: C2 tools/mori-pressure.py selftest sensitivity — mutant: the selftest matcher weakened (subset match always true, or findings_include ignored). In a clone at /fast/scratch/hyaku/mori-r24-a2/w2/MutPsiMatcher/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) apply the single smallest code mutant to tools/mori-pressure.py implementing: the selftest matcher weakened (subset match always true, or findings_include ignored). Run `python3 -I tools/mori-pressure.py --selftest` on the unmutated and the mutated copy and report both outputs and whether the frozen cases kill the mutant. If it survives, name the missing case precisely (do not edit cases.json). Never touch the lane."
+  },
+  {
+   "name": "MutPsiGrammar",
+   "role": "mutation-tester",
+   "prompt": "Attacks: C2 tools/mori-pressure.py selftest sensitivity — mutant: the line grammar loosened (extra fields, duplicate kinds or a negative total accepted). In a clone at /fast/scratch/hyaku/mori-r24-a2/w2/MutPsiGrammar/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) apply the single smallest code mutant to tools/mori-pressure.py implementing: the line grammar loosened (extra fields, duplicate kinds or a negative total accepted). Run `python3 -I tools/mori-pressure.py --selftest` on the unmutated and the mutated copy and report both outputs and whether the frozen cases kill the mutant. If it survives, name the missing case precisely (do not edit cases.json). Never touch the lane."
+  },
+  {
+   "name": "MutPsiRatio",
+   "role": "mutation-tester",
+   "prompt": "Attacks: C2 tools/mori-pressure.py selftest sensitivity — mutant: stall_ratio divided by elapsed time or by CPU count instead of the requested interval. In a clone at /fast/scratch/hyaku/mori-r24-a2/w2/MutPsiRatio/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) apply the single smallest code mutant to tools/mori-pressure.py implementing: stall_ratio divided by elapsed time or by CPU count instead of the requested interval. Run `python3 -I tools/mori-pressure.py --selftest` on the unmutated and the mutated copy and report both outputs and whether the frozen cases kill the mutant. If it survives, name the missing case precisely (do not edit cases.json). Never touch the lane."
+  },
+  {
+   "name": "MutPsiCpuFullDelta",
+   "role": "mutation-tester",
+   "prompt": "Attacks: C2 tools/mori-pressure.py selftest sensitivity — mutant: system cpu full delta and ratio numeric instead of null under --interval. In a clone at /fast/scratch/hyaku/mori-r24-a2/w2/MutPsiCpuFullDelta/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) apply the single smallest code mutant to tools/mori-pressure.py implementing: system cpu full delta and ratio numeric instead of null under --interval. Run `python3 -I tools/mori-pressure.py --selftest` on the unmutated and the mutated copy and report both outputs and whether the frozen cases kill the mutant. If it survives, name the missing case precisely (do not edit cases.json). Never touch the lane."
+  },
+  {
+   "name": "MutPsiThresholdEdge",
+   "role": "mutation-tester",
+   "prompt": "Attacks: C2 tools/mori-pressure.py selftest sensitivity — mutant: threshold comparison > instead of >=. In a clone at /fast/scratch/hyaku/mori-r24-a2/w2/MutPsiThresholdEdge/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) apply the single smallest code mutant to tools/mori-pressure.py implementing: threshold comparison > instead of >=. Run `python3 -I tools/mori-pressure.py --selftest` on the unmutated and the mutated copy and report both outputs and whether the frozen cases kill the mutant. If it survives, name the missing case precisely (do not edit cases.json). Never touch the lane."
+  },
+  {
+   "name": "MutRoutedTiming",
+   "role": "mutation-tester",
+   "prompt": "Attacks: C1 tools/mori-routed-check.py — mutant: R4 timing comparison inverted or removed; does --round 23 at c725aa37 still go red, and does the round-24 tip stay held. In a clone at /fast/scratch/hyaku/mori-r24-a2/w2/MutRoutedTiming/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) mutate tools/mori-routed-check.py: R4 timing comparison inverted or removed; does --round 23 at c725aa37 still go red, and does the round-24 tip stay held. Run the unmutated and mutated tool with `python3 -I tools/mori-routed-check.py --repo <clone> --rev <rev> --round N` on the relevant revisions (and on committed tamper commits you create in the clone), report outputs, and say whether the mutant is killed by an existing control. Never touch the lane."
+  },
+  {
+   "name": "MutRoutedScope",
+   "role": "mutation-tester",
+   "prompt": "Attacks: C1 tools/mori-routed-check.py — mutant: R2 scan widened to .ufo/** or made case-sensitive; does any committed round-24 byte trip it. In a clone at /fast/scratch/hyaku/mori-r24-a2/w2/MutRoutedScope/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) mutate tools/mori-routed-check.py: R2 scan widened to .ufo/** or made case-sensitive; does any committed round-24 byte trip it. Run the unmutated and mutated tool with `python3 -I tools/mori-routed-check.py --repo <clone> --rev <rev> --round N` on the relevant revisions (and on committed tamper commits you create in the clone), report outputs, and say whether the mutant is killed by an existing control. Never touch the lane."
+  },
+  {
+   "name": "MutRoutedTreePin",
+   "role": "mutation-tester",
+   "prompt": "Attacks: C1 tools/mori-routed-check.py — mutant: R1/R3 round-23 tree pin replaced by the two-blob check; which real tamper (for example a new file under .ufo/waves/round-23/evidence) now passes. In a clone at /fast/scratch/hyaku/mori-r24-a2/w2/MutRoutedTreePin/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) mutate tools/mori-routed-check.py: R1/R3 round-23 tree pin replaced by the two-blob check; which real tamper (for example a new file under .ufo/waves/round-23/evidence) now passes. Run the unmutated and mutated tool with `python3 -I tools/mori-routed-check.py --repo <clone> --rev <rev> --round N` on the relevant revisions (and on committed tamper commits you create in the clone), report outputs, and say whether the mutant is killed by an existing control. Never touch the lane."
+  },
+  {
+   "name": "MutRoutedSpecLedger",
+   "role": "mutation-tester",
+   "prompt": "Attacks: C1 tools/mori-routed-check.py — mutant: the every-wave-spec-has-a-started-ledger rule removed; construct a round with a spec and no ledger in your clone. In a clone at /fast/scratch/hyaku/mori-r24-a2/w2/MutRoutedSpecLedger/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) mutate tools/mori-routed-check.py: the every-wave-spec-has-a-started-ledger rule removed; construct a round with a spec and no ledger in your clone. Run the unmutated and mutated tool with `python3 -I tools/mori-routed-check.py --repo <clone> --rev <rev> --round N` on the relevant revisions (and on committed tamper commits you create in the clone), report outputs, and say whether the mutant is killed by an existing control. Never touch the lane."
+  },
+  {
+   "name": "ReviewPressureCode",
+   "role": "reviewer",
+   "prompt": "Attacks: C2 tools/mori-pressure.py code. Review /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pressure.py at a730ecfefbdb5c31b1db13aca2c40eecd5e97abc line by line against /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-24/contract.md C2 and A2/A3: grammar, errno mapping on open and read, interval combination, verdict and exit precedence, selftest hook isolation (hooks never active outside --selftest), no writes anywhere, behaviour under python3 -I, usage errors. Report defects with line numbers and a reproducing command."
+  },
+  {
+   "name": "ReviewRoutedCode",
+   "role": "reviewer",
+   "prompt": "Attacks: C1 tools/mori-routed-check.py code. Review /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-routed-check.py at a730ecfefbdb5c31b1db13aca2c40eecd5e97abc: git environment isolation, subprocess argument safety, revision validation, mapping of dispatch-ledger exit 2 to a red R4, timezone handling of `at`, last-changed commit lookup, R2 added-line scope per A1, exit codes 0/1/2. Report defects with line numbers and a reproducing command."
+  },
+  {
+   "name": "RerunC2Count",
+   "role": "reviewer",
+   "prompt": "Attacks: C2 counting command and freeze order. Independently re-run in a fresh clone at /fast/scratch/hyaku/mori-r24-a2/w2/RerunC2Count/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc): `python3 -I tools/mori-pressure.py --selftest`; `git cat-file -e c725aa37aa3c9ec4f34e3c2abc8ca1b616c7c130:tools/mori-pressure.py` (before); and `python3 -I tools/mori-freeze-order.py check --repo <clone> --rev 06a7686ed40f53a7455fe526dadf821757bea98a --register .ufo/waves/round-24/evidence/c2-freeze-check-register.json --tip-for r24-C2=6ee624872deafe2aab7001c0ba01bb2ef1f5cdce`. Confirm the cases blob at f6a29702 equals the blob at a730ecfefbdb5c31b1db13aca2c40eecd5e97abc. Report exact outputs and exit codes."
+  },
+  {
+   "name": "RerunC1Count",
+   "role": "reviewer",
+   "prompt": "Attacks: C1 counting commands. Independently re-run against /home/vgpnk/Projects/shokunin/mori-shokunin (read-only): `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-routed-check.py --repo /home/vgpnk/Projects/shokunin/mori-shokunin --rev c725aa37aa3c9ec4f34e3c2abc8ca1b616c7c130 --round 23`, the same with --round 24, and with --rev a730ecfefbdb5c31b1db13aca2c40eecd5e97abc --round 24. Report held/items, every R4 reason, exit codes, and whether the declared before and after values in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-24/contract.md (A4) and /home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md (Round 24 declaration) are reproduced."
+  },
+  {
+   "name": "LiveBracketCheck",
+   "role": "reviewer",
+   "prompt": "Attacks: C2 live bracket check (amendment A2). Run the A2 bracket check on this host three times: read the raw /proc/pressure files (cat), run `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pressure.py`, read the raw files again; check every reported total lies between the two raw totals, all four resources ok, irq some null, system cpu full total 0. Also run `--interval 1` once. Record UTC times, raw bytes and outputs. Read-only."
+  },
+  {
+   "name": "CensusNoHarmAfter",
+   "role": "reviewer",
+   "prompt": "Attacks: operability no-harm (census untouched). In a clone at /fast/scratch/hyaku/mori-r24-a2/w2/CensusNoHarmAfter/ (checkout a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) run `bash tools/mori-census.sh --selftest` with TMPDIR under your scratch dir; compare with the wave-1 baseline (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-24/w1/CensusNoHarmBaseline.md: PASS 134/134, census sha256 87b8d680…). Also confirm with read-only git that tools/mori-census.sh and every pre-existing tools/*.py blob is byte-identical between c725aa37 and a730ecfefbdb5c31b1db13aca2c40eecd5e97abc. Report."
+  },
+  {
+   "name": "ReviewKnowledgeFacts",
+   "role": "reviewer",
+   "prompt": "Attacks: C2 knowledge entry facts F1–F6. Re-open https://raw.githubusercontent.com/torvalds/linux/v7.2/Documentation/accounting/psi.rst and https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/sched/psi.c and check facts F1–F6 of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/system-pressure-r24.md: every quote exact, every line anchor correct, every inference labeled. Report each disagreement with the correct anchor."
+  },
+  {
+   "name": "ReviewKnowledgeTable",
+   "role": "reviewer",
+   "prompt": "Attacks: C2 knowledge entry facts F7–F12, decision table, limits. Check facts F7–F12, the decision table and the limits of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/system-pressure-r24.md against the v7.2 sources (re-open psi.c, cgroup-v2.rst, init/Kconfig, kernel-parameters.txt under https://raw.githubusercontent.com/torvalds/linux/v7.2/) and against tools/mori-pressure.py behaviour. Flag any row whose tool state disagrees with the tool, and any claim beyond its source."
+  },
+  {
+   "name": "ReopenS090S091",
+   "role": "reviewer",
+   "prompt": "Attacks: SOURCES rows S090 and S091. Re-open the URLs of S090 and S091 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md; verify SHA-256 prefix, anchors, the located quotes in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-24.md Gate (exact, at most 25 words), scope and teaches cells. Report per row: agree or disagree with reasons."
+  },
+  {
+   "name": "ReopenS092S093",
+   "role": "reviewer",
+   "prompt": "Attacks: SOURCES rows S092 and S093. Re-open the URLs of S092 and S093 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md; verify SHA-256 prefix, anchors, located quotes in the round-24 lesson Gate, scope and teaches cells. Report per row."
+  },
+  {
+   "name": "ReopenS094S097",
+   "role": "reviewer",
+   "prompt": "Attacks: SOURCES rows S094, S095, S096 and S097. Re-open the URLs of S094–S097 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md (S097 is a rejection: confirm the 404 and that man-pages has no proc_pressure page); verify anchors, located quotes in the round-24 lesson Gate, scope and teaches cells. Report per row."
+  },
+  {
+   "name": "ReviewSourcesShape",
+   "role": "reviewer",
+   "prompt": "Attacks: SOURCES contract conformance. Check rows S090–S097 and the new Paths line in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md against the contract in /home/vgpnk/Projects/shokunin/CORPUS.md section `SOURCES.md — where a shokunin learns` (cells, tiers, status, recheck, used-by, rejection reason and flip, old-to-new logging in the lesson). Run `/home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori` read-only and report."
+  },
+  {
+   "name": "ReviewQualityLesson",
+   "role": "reviewer",
+   "prompt": "Attacks: QUALITY criteria 72–75 and lesson Mistakes M1–M7. Review /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/QUALITY.md criteria 72–75 and /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-24.md `## Mistakes`: is each fix actually shown able to fail by a pointer you can follow; does each criterion match the tool's real predicate; run `.ufo/waves/round-24/evidence/prose-fused-check.py` from a clone on the round-24 added lines of SCORECARD.md, LOG.md and the lesson (diff c725aa37..a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) and report hits."
+  },
+  {
+   "name": "ReviewSkillProvince",
+   "role": "reviewer",
+   "prompt": "Attacks: SKILL.md Round24 section, PROVINCE.md and corpus/README.md round-24 notes. Review the Round24 section at the end of /home/vgpnk/Projects/shokunin/mori-shokunin/SKILL.md and the round-24 appended notes at the end of /home/vgpnk/Projects/shokunin/mori-shokunin/PROVINCE.md and /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/README.md against the tools' real behaviour and the knowledge entry: wrong states, wrong exit codes, overclaims (Core advance stated as admitted), missing limits. Report with line numbers."
+  },
+  {
+   "name": "CriticC1Admission",
+   "role": "critic",
+   "prompt": "Attacks: C1 admission. Attack whether C1 as landed (A4, tip a730ecfefbdb5c31b1db13aca2c40eecd5e97abc) is a real repair of corpus/lessons/round-23-verifier-spotcheck.md:60-66 item 4 and whether held 4 of 4 is honest: self-attested times, last-changed rule, round-24 wave 2 ledger (it will exist after this wave starts), R1–R3 as guards. Say what a non-author closure should accept and what not."
+  },
+  {
+   "name": "CriticC2Admission",
+   "role": "critic",
+   "prompt": "Attacks: C2 admission. Attack whether C2 as landed shows a capability: frozen cases before the tool (freeze order pre-build), PASS 12/12, the live bracket check, the mutation results this wave produces, and the sourced knowledge entry. Is the FR12 one-shot Core advance warranted; which wording overclaims; what must stay frontier."
+  },
+  {
+   "name": "CriticHarmAxes",
+   "role": "critic",
+   "prompt": "Attacks: no harm to held axes. Attack the claim that operability 7, depth 5, freshness 5 and adjacency 6 are not harmed: diff c725aa37..a730ecfefbdb5c31b1db13aca2c40eecd5e97abc (read-only) for any change to existing tools, census, pinned baselines, sibling-facing PROVINCE line ranges (PROVINCE.md:3-16 are pointed at by tsukuroi), or any rewrite of earlier rows. Report each harm with evidence or state none found with the command."
+  },
+  {
+   "name": "CriticKnowledgeOverclaim",
+   "role": "critic",
+   "prompt": "Attacks: C2 knowledge entry overclaim. Attack /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/system-pressure-r24.md for statements its sources do not support: cause claims from errors, host-specific facts stated as general, the root cgroup.pressure limit (U7) wording, the [INFERENCE] labels, and IRQ semantics the documentation does not state."
+  },
+  {
+   "name": "ScoutMisroot",
+   "role": "scout",
+   "prompt": "Attacks: round-24 write scope and misroots. Run `git -C /home/vgpnk/Projects/shokunin status --porcelain` and list any untracked file at the fleet root whose content names mori round 24 (do not touch it). List files under /tmp whose names or contents point to mori round 24 seats (for example /tmp/mori-src-kconfig, /tmp/mori-r24-src, /tmp/cib, /tmp/mori-srcpsic-*, /tmp/freeze-cases-check.py) with sizes. Read-only; report the list."
+  },
+  {
+   "name": "ScoutWaveSettlement",
+   "role": "scout",
+   "prompt": "Attacks: wave-1 settlement evidence. Check /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-24/wave1-spec.json, wave1-run.json, wave1-attempts.json, wave1-assignments.json and w1/swarm-registry.json at a730ecfefbdb5c31b1db13aca2c40eecd5e97abc: 33 members, every member has a report file in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-24/w1/, roles match, no dead or replaced seat is unreported, and `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-dispatch-ledger.py verify --repo /home/vgpnk/Projects/shokunin/mori-shokunin --rev a730ecfefbdb5c31b1db13aca2c40eecd5e97abc --ledger .ufo/waves/round-24/wave1-attempts.json` is clean. Report."
+  }
+ ]
+}
