@@ -8,7 +8,7 @@ here, the owned pair drives the round's axis-move.
 | Axis | Score | Evidence pointer | Last change |
 |---|---|---|---|
 | coverage | 6 | per-surface notes landed (`corpus/knowledge/observability-surfaces-r2.md`); silence roster over the declared lanes (round 12); one-shot system pressure read (round 24); round-24 closure "Score 6 → 6" (`corpus/lessons/round-24-verifier-spotcheck.md:88`) | round 12 (5 → 6; round 13's self-assessed 7 was not held) |
-| operability | 7 | census `--selftest` PASS (134 cases) before and after round 24 (`SCORECARD.md` round-24 measured outcome); held 7 in every round table since round 13 | round 13 (6 → 7) |
+| operability | 7 | census `--selftest` PASS (134 cases) before and after round 24 (`SCORECARD.md` round-24 measured outcome); held 7 in every round table since round 13, first admitted in round 14 (round 13 closed rejected-harmed) | round 14 (6 → 7; round 13's self-assessed 7 was not held) |
 | depth | 5 | source-linked knowledge entries with `source:`/`verified-at:`/`recheck:` lines (round 12 claim 1); held 5 since | round 12 (4 → 5) |
 | freshness | 5 | round-10 drift pin still red; the round-20 re-pin was rejected (`corpus/README.md` Round21 correction) | round 1 |
 | calibration | 5 | round 12's self-assessed 5 → 6 was not re-derived by the outside reviewer and held at 5; round-24 closure "Score 5 → 5" (`corpus/lessons/round-24-verifier-spotcheck.md:68`) | round 1 |
@@ -1621,3 +1621,84 @@ ScoutStaleSweep) — named debt.
 
 Held: operability 7, depth 5, calibration 5, adjacency 6 (retention scan 4 at `4dba9cc7`, equal to the entering
 value). No retirement, waiver, exploratory claim or promotion.
+
+## Round 26 corrections (routed R2 and R4 — hygiene, not a claim)
+
+Append-only: the round-25 sections above are left as filed, and each statement corrected here is
+named with its old text.
+
+### R2 — the round-25 runway capability row is scoped, not absolute
+
+Old text (`SCORECARD.md:1568`, round-25 capability row "harness background-job runway read", "What
+it can now do" cell): "report the configured `async.maxJobs` from one settings file, the clamp and
+setting default compiled into the installed omp binary, the effective cap `max(1, min(clamp,
+base))`, and a verdict that never turns an unreadable, ambiguous or unparseable input into a number"
+
+That clause is false as written and is withdrawn. What the tool does: it is a line grammar over ONE
+block-style settings file, and it abstains (`RUNWAY_UNKNOWN`, exit 2) only on the malformed forms it
+can name. On other spellings of the same setting it reports a number. Re-measured at the round-26
+entering tip `248408f5` with the tool blob `239dd8be…` and the round-25 wave-2 differential probe
+(307 generated configs, Bun 1.4.3 as the omp-side parser): 72 of 307 configs read a false 100
+(`RUNWAY_DEFAULT`, exit 0) where omp's parser reads 50 — 62 from unrecognised `async` header
+spellings (`&a async:` and `"\x61sync":`, 31 each) and 10 from child or root forms under plain
+headers (`{maxJobs: 50}`, `!!str maxJobs: 50`, `&a maxJobs: 50`, `"max\u004aobs": 50`, the flow root
+`{async: {maxJobs: 50}}` and the indented root); 12 more report a configured number omp's parser does
+not read as that number, and 36 (21 + 15) report a number or the default for files omp's parser
+rejects. The claim that holds: the tool reads a block-style single settings file — a column-0
+`async:` key with a direct `maxJobs:` child — and abstains on the forms it can name. The defect is
+routed (round-25 R1: make rule 1 abstain on any top-level form it cannot read the way omp does); the
+fleet record already carries the scoped form (`MANIFEST.json` rounds[455] `capabilities_added[0]`:
+"bounded to block-style configs (72 of 307 probe configs read a false 100, routed R1)"). Evidence:
+`.ufo/waves/round-25/w2/ReviewRunwayCode.md` F1–F2; the entry
+`corpus/knowledge/harness-job-capacity-r25.md` already marks the false number. The probe corpus and
+script are not committed to the lane (round-25 R1 asks for that); the 72 figure was re-derived by
+re-running the wave-2 seat's copy read-only against the tip tool blob.
+
+### R4 — three residuals of the round-25 D5 rewrite
+
+**R4a — the standing Axes table's operability row.** The row credited round 13 with the move to 7.
+Round 13 closed `rejected-harmed` (`MANIFEST.json` rounds[13]: `admitted false`), so its
+self-assessed 6 → 7 was never admitted, and 7 was first admitted in round 14 (rounds[14]:
+`admitted true`, `verdicts.operability "unchanged"`; `SCORECARD.md:793` reads "7 held"). The row is
+corrected in place (old and new text below).
+
+Old (`SCORECARD.md:11`):
+
+| operability | 7 | census `--selftest` PASS (134 cases) before and after round 24 (`SCORECARD.md` round-24 measured outcome); held 7 in every round table since round 13 | round 13 (6 → 7) |
+
+New:
+
+| operability | 7 | census `--selftest` PASS (134 cases) before and after round 24 (`SCORECARD.md` round-24 measured outcome); held 7 in every round table since round 13, first admitted in round 14 (round 13 closed rejected-harmed) | round 14 (6 → 7; round 13's self-assessed 7 was not held) |
+
+The score cell stays 7 (D5 pins it from `SCORECARD.md:1499-1506` at `28b79d3d`). The gate still
+holds on this row text (replayed against the gate's own parser and predicates; the falsifier, Last
+change `round 1`, turns D5 red with `axis_stale_round_1: operability`). If the standing table is
+preferred to read "7 first admitted" rather than a move, the equivalent Last change cell is
+"round 14 (7 first admitted; round 13's self-assessed 7 was not held)".
+
+**R4b — the D5 note.** Old text (`SCORECARD.md:1584`, last line of the round-25 wave-2 corrections
+bullet): "`28b79d3d`). D5 checks scores only, not evidence pointers or Last change text."
+
+That sentence is wrong about the Last change cell. D5 checks two cells: the Score cell against the
+pinned base scores, and the Last change cell for a stale `round 1` (round-25 contract A5: "no row's
+Last change reads `round 1` unless its score equals its round-1 value"; `tools/mori-routed-r24.py:739-741`
+implements it). It does not check the evidence-pointer cell. Corrected statement: "D5 checks the Score
+cell and the Last change cell (no row's Last change may read `round 1` unless its score equals its
+round-1 value); it does not check the evidence-pointer cell." This is why R4a lies inside the gate's
+scope.
+
+**R4c — the round-12 paragraph that describes the standing table.** Old text (`SCORECARD.md:620-621`,
+round-12 section): "Correction to the score table at the top of this file (frozen at round 1; 4 of 6
+pointers stale — STATE dossier §2): the table is left as filed; this section's scores supersede it.
+Stale pointers:" (the pointer list continues at `:622-623`).
+
+That paragraph is stale after the round-25 D5 rewrite (`e68855d5`), which replaced the standing
+table: the table's scores are now the closure-admitted round-24 scores (`SCORECARD.md:1499-1506` at
+`28b79d3d`; the note at `SCORECARD.md:17-19`), only three of the six Last change cells still read
+`round 1`, and none of the four pointer strings it names at `:622-623` ("per-surface notes still
+owed", "14/14", "no drift pin yet", "`progressing-weak` deferred") occurs in the standing table any
+more. The scores it defers to are superseded too: that section's table (`:612-618`) reads
+calibration 5 → 6 and operability unchanged 6, while the standing table holds calibration 5 and
+operability 7. Superseding statement: the standing table is the round-25 D5 rewrite of the
+closure-admitted round-24 scores; the round-1 pointer enumeration at `:622-623` is historical and no
+longer describes that table.

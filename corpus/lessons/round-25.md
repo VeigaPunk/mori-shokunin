@@ -108,3 +108,58 @@ candidates (1 admitted as S103, 17 rejected; seven of the rejections are recorde
   report the parts separately (SCORECARD round-25 corrections).
 - Three-rounds sentinel: under the class reading (calibration as a repair of the previous closure's routed defects
   in rounds 23, 24 and 25) it is tripped. Round 26's calibration claim, if any, must not be a routed repair.
+
+## Corrections appended in round 26 (routed defect R6)
+
+Append-only: the sentences above are left as filed; each one is named below with its correction.
+
+- **"The harness job cap is 100, whatever the config says."** (line 9, headline of the first learned
+  fact) is false below 100. Upstream clamps with `min(100, async.maxJobs)` and floors at 1:
+  `sdk.ts:2284` `maxRunningJobs: () => Math.min(100, cfgAsyncMaxJobs.get(settings)),` (v18.12.6,
+  sha256 `c0228add…`, S099) and `async/job-manager.ts:334`
+  `return Math.max(1, Math.floor(value ?? DEFAULT_MAX_RUNNING_JOBS));` with
+  `DEFAULT_MAX_RUNNING_JOBS = 15` at `:43` (sha256 `0f37afaa…`, S098). A configured value below 100
+  is honoured. The lesson's own body (line 12) is right that this host's configured value is above
+  100 and its effective cap is 100; only the headline is wrong. Corrected headline: "**The harness
+  job cap is `min(100, async.maxJobs)`, floored at 1 — 100 is the ceiling, not the value.**"
+- **"only registration paths (explicit async bash, task spawns) throw `Background job limit reached
+  (100)`"** (line 16, second learned fact) omits `agent()` and `workpool()`. The throw is inside
+  `register()` and fires for every caller: `async/job-manager.ts:370-373`. `eval/agent-bridge.ts:210`
+  calls `manager.register("task", …)` with no capacity pre-check, and `task/workpool.ts:175` and
+  `:363` also call `manager.register(`, with no `atCapacity` test in either file. Upstream's own
+  documentation says so: `docs/tools/eval.md:258` — "`agent()` fails with `Background job limit
+  reached` once that cap is full" (v18.12.6, sha256 `fb2fc4a1…`, S103). Corrected sentence: "every
+  `register()` call throws at the cap — explicit async bash, task spawns, eval `agent()` and
+  `workpool()`; only the auto-backgrounded bash and eval branches fall through to a foreground run
+  (S112, S113)."
+- **"amendments A1–A4 each landed before the code it governs"** (lines 4-5, header) is wrong for A4
+  and omits A5. Commit order and local times: A1 `51ddd01` 07:05:20, A3 `042d75b` 07:20:37, the C1
+  tool `e54b644` 07:44:02, A4 `9b1a2f1` 07:44:17, A5 `efaa157` 07:54:12, the D5 code `e06d4a0`
+  08:07:03. A1 and A3 landed before the tool; A4 landed 15 s after it and its own text describes
+  `e54b644b` as "the landed tool"; A5 landed before the D5 code and is not listed at all.
+  Corrected header clause: "amendments A1 and A3 landed before the C1 tool, A4 landed 15 s after it
+  and records the banner-gate deviation, and A5 — which widened C1 with item D5 — landed before the
+  D5 code".
+- **"Fix: amendments A1, A3 and A4 before the tool landed"** (line 48, inside M3) is false for A4 by
+  the same 15 s. Corrected clause: "amendments A1 and A3 before the tool landed; A4 landed after it
+  and records its deviation".
+- **"Refusals in this session's transcripts all name 100."** (line 18, third learned fact) is false
+  as scoped. The census (`RefusalCensus.md`) scanned the whole omp session-transcript store — files
+  with mtime in 2026-10-19..2026-10-22, 31,191 files in window, 3,424 transcripts, 45 workspaces
+  (`:70-73`) — not one session's transcripts. Its delivered-refusal tiers are all 100: `toolresult`
+  6,562 occurrences in 342 files, `harness` 5,313 in 150, `harness_error` 48 in 24 (`:89-105`); the
+  lesson's 48 and its 2026-10-20T13:55Z..2026-10-22T10:04Z window are the `harness_error` tier and
+  are right. The tiers that also count agent-authored prose contain exactly one occurrence naming
+  15 — `all` 100=20,322 and 15=1, `transcript` 100=8,973 and 15=1, `prose` 100=2,411 and 15=1, the
+  single one dated 2026-10-22T10:05:15Z (`:75-110`); upstream's fallback constant is 15
+  (`job-manager.ts:43`), the undefined-option fallback S110 records. Corrected sentence: "Every
+  delivered refusal names 100 — 48 as failed tool calls in 24 files from 2026-10-20T13:55Z to
+  2026-10-22T10:04Z; the wider counts that also include agent prose contain one occurrence naming
+  15, the undefined-option fallback."
+- **"The SCORECARD Axes table at its top still shows round-1 scores (coverage 5, operability 6,
+  depth 4)"** (lines 97-99, "For round 26") was true when written and is false at the round-25 tip:
+  `e68855d5` brought the table to the closure-admitted round-24 scores and `e06d4a0` counted the
+  check as item D5. The correction block at lines 101-104 already says so, but it shadows this
+  bullet instead of removing it, which QUALITY 77 calls a defect ("the superseded wording is
+  removed, not shadowed"). This bullet must be removed from the file rather than shadowed again;
+  that removal edits the filed round-25 lesson and is left to the integration owner.
