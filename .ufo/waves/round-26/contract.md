@@ -170,3 +170,5 @@ frozen case, and discloses the rest as limits. The counted value stays `PASS 32/
 - **Not adopted (each contradicts a frozen case), disclosed as limits:** A1a (counts with an incomplete scope are
   lower bounds printed as counts; frozen `c04`), A2a (lines of an earlier invocation in the same boot are not seen;
   frozen `c02`, X4), A3 (no logger-heartbeat check; frozen `c19`, X7), X8 (head-truncated count is a lower bound).
+- **Unbounded invocation (adopted, from wave-1 SrcJournalJson F2):** `ActiveEnterTimestampMonotonic` missing or `0`
+  leaves the invocation unbounded, so `scope_complete` is false (before this, a version line alone set it true).

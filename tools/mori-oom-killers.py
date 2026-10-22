@@ -276,7 +276,10 @@ def read_inputs(inputs):
     scope_known = False
     if earlyoom_state == "active" and journal is not None:
         aetm = _monotonic_usec(earlyoom_props.get("ActiveEnterTimestampMonotonic"))
-        if aetm is None:
+        if aetm is None or aetm == 0:
+            # 0 means no active-enter transition recorded this boot
+            # (org.freedesktop.systemd1(5)); like a missing value it cannot
+            # bound the invocation.
             # The invocation cannot be bounded; keep every line of the boot as
             # a candidate (evidence is never dropped) but the scope stays
             # incomplete.
@@ -351,7 +354,7 @@ def read_inputs(inputs):
 
     # A1b: a journald "Suppressed N messages from earlyoom.service" notice in
     # scope means lines were lost, so the scope is not complete.
-    scope_complete = version is not None and not suppressed
+    scope_complete = scope_known and version is not None and not suppressed
     grammar = GRAMMAR_VERIFIED if version == VERIFIED_VERSION else GRAMMAR_UNVERIFIED
 
     thresholds = None
