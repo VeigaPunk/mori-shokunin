@@ -480,3 +480,43 @@ changes about FR12's scope:
 
 No frontier row is closed by this round, and no quota, retention, wave-settlement or
 telemetry ground is touched.
+
+## Round-25 coverage additions — C2 harness background-job capacity runway (admission pending)
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| Harness background-job capacity runway (new FR15) | `knowledge/harness-job-capacity-r25.md` | One JSON object (`schema: mori-job-runway-v1`) naming the **configured** `async.maxJobs` read from one settings file (default `~/.omp/agent/config.yml`), the **clamp** compiled into the installed harness binary (default the real path of `omp` on `PATH`), and the **setting default** from that binary's settings table, with `effective = max(1, min(clamp, base))` and the verdicts `RUNWAY_AS_CONFIGURED` / `RUNWAY_CLAMPED` / `RUNWAY_DEFAULT` / `RUNWAY_UNKNOWN` (exit 0 / 1 / 0 / 2). On this host: configured 200, clamp 100 at one site, default 100 at one site, effective 100, `RUNWAY_CLAMPED` — the configured value is clamped by the binary, not honoured. The read is a cap, never a count: no job list is read, and the live running-job count is not readable from outside a session. `RUNWAY_UNKNOWN` means this tool cannot derive a number from the bytes it was pointed at, never "unlimited" or "no clamp". Read-only: one file and one binary, no `omp` run, no settings write, no other configuration surface. Not a census surface: no `SURFACE` row, no finding id, no DRIFT verdict, no baseline re-pin. Sources S098–S103 and S112–S113 (`SOURCES.md:104-110,118-119`), all at oh-my-pi tag `v18.12.6`. |
+
+## Round-25 Frontier note — FR15 added, no existing row closed
+
+The FR1–FR14 rows above (`corpus/README.md:332-345`) and their PROVINCE counterparts
+(`PROVINCE.md:44-57`) are byte-unchanged by this round. This appended note registers the new
+frontier row and records what it does and does not cover.
+
+- **FR15 — Harness background-job capacity runway.** First evidence:
+  `knowledge/harness-job-capacity-r25.md:28-213`; `SOURCES.md:104-110,118-119`. Boundary: the
+  bounded Core advance above reads the cap the harness would compute from one settings file and
+  the installed binary's bytes. **Still frontier:** the live running-job count in any session
+  (not readable from outside that session); the scope of the counted population — one manager per
+  root session tree, children borrowing their parent's, so the same number applies to every
+  manager while the population is per tree, and a refusal cannot be attributed to a session from
+  outside it; and every settings layer the tool does not read — the project layer (`<cwd>/.omp/`),
+  `--config` / `PI_CONFIG_FILES` overlays, runtime overrides, and agent-dir relocation by
+  `OMP_PROFILE`/`PI_PROFILE` or `PI_CODING_AGENT_DIR`. The tool reads one file while the runtime
+  resolves a stack, so `configured` is that file's value and `effective` is the cap that would
+  apply if it were the effective one. Also frontier: why the ceiling is 100, what filled a runway
+  when a refusal appeared, and any behaviour of other harness versions.
+- **FR15 is distinct from FR14.** FR14 is agent-workload telemetry: mori is consume-only and the
+  emission belongs to the emitting lanes and orchestration; its round-17 advance is a passive
+  transcript terminal-at-scan observation (`knowledge/seat-terminal-status-r17.md`). FR15 reads no
+  transcript, no telemetry and no lane-emitted record: it reads a settings file and a compiled
+  binary to state the harness's own concurrency ceiling, and its interesting content is the
+  mismatch between an operator's configured value and the binary's clamp. FR14 is not advanced,
+  narrowed or closed by C2, and no other FR1–FR14 row covers this ground.
+- **Adjacent, not absorbed:** the mechanism behind the clamp is kumitate's OMP task/hub ground;
+  writing harness configuration is operator-owned; mori reports the read and changes nothing.
+  The fleet seat gate counts a different population under a different number and is not judged
+  here.
+
+No frontier row is closed by this round, and no quota, retention, wave-settlement or telemetry
+ground is touched.

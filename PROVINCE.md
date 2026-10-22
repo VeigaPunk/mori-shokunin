@@ -288,3 +288,68 @@ baseline acceptance remain; no rank or subsequent-round authority is granted.
   triage and routes fleet correlation of host pressure to mori (`../tsukuroi-shokunin/PROVINCE.md:30-33`). Shared
   evidence is not shared ownership: mori reports the reading as fleet resource runway; explaining a high IRQ or
   memory reading as a device, driver or OS fault stays with tsukuroi.
+
+## Round-25 appended scope notes (2026-10-22)
+
+- **Core, harness background-job capacity runway read (new FR15 advance, admission pending):**
+  `tools/mori-job-runway.py` (round-25 build) reads two byte sources and reports one JSON object
+  (`schema: mori-job-runway-v1`): the **configured** `async.maxJobs` from one settings file
+  (`--config`, default `~/.omp/agent/config.yml`), the **clamp** compiled into the installed
+  harness binary (`--binary`, default the real path of `omp` on `PATH`) located by pattern over
+  its bytes, and the **setting default** from the binary's own settings table. It then reports
+  `effective = max(1, min(clamp, base))` — where `base` is the configured value, or the schema
+  default when the file does not carry the key — with the verdicts
+  `RUNWAY_AS_CONFIGURED | RUNWAY_CLAMPED | RUNWAY_DEFAULT | RUNWAY_UNKNOWN` (exit 0 / 1 / 0 / 2).
+  On this host the read is configured 200, clamp 100 (one site), setting default 100 (one site),
+  effective 100, verdict `RUNWAY_CLAMPED`, exit 1: the operator's configured value is **clamped
+  by the binary**, not honoured. The clamp lives at the manager's construction site
+  (`maxRunningJobs: () => Math.min(100, cfgAsyncMaxJobs.get(settings))`), so the ceiling is a
+  property of the shipped harness, not of the configuration file.
+  **The read is a cap, never a count.** The tool reads no job list and cannot read the number of
+  running jobs from outside a session; an effective value is not evidence that any job ran, that
+  the runway was free, or that a session is near its cap. `RUNWAY_UNKNOWN` (exit 2) means *this
+  tool cannot derive a number from the bytes it was pointed at* — a malformed value, a missing
+  clamp pattern, an unreadable binary, or two clamp sites with different numbers — and never
+  means "unlimited", "zero" or "no clamp": an absent match is a failed lookup.
+  Read-only: it opens one file and one binary for reading, never runs `omp`, never writes a
+  settings file and never touches another configuration surface. It is **not** a census surface:
+  no `SURFACE` row, no census finding id, no DRIFT verdict, no baseline re-pin.
+  Knowledge: `corpus/knowledge/harness-job-capacity-r25.md` (lands with this round); the upstream
+  sources opened this round are S098–S103 and S112–S113 (`corpus/SOURCES.md:104-110,118-119`),
+  all at oh-my-pi tag `v18.12.6` (commit `45c35e40c46166dc726ccc52f5d27f40f2449f99`), plus the
+  installed binary as an own-work row (S102).
+- **FR15 — Harness background-job capacity runway** (new row; FR1–FR14 are unchanged and FR14 is
+  **not** advanced). First evidence: `corpus/knowledge/harness-job-capacity-r25.md:28-213`;
+  `corpus/SOURCES.md:104-110,118-119`. Boundary: the read reports the cap the harness would
+  compute from the file and the binary it is pointed at. **Still frontier:** the live count of
+  running non-queued jobs in any session (not readable from outside that session); the scope in
+  which a counted population lives — one manager per root session tree, children borrowing their
+  parent's, so the same *number* applies to every manager while the *population* is per tree, and
+  a refusal cannot be attributed to a session from outside it; and every settings layer the tool
+  does not read — the project layer (`<cwd>/.omp/`), `--config` / `PI_CONFIG_FILES` overlays,
+  runtime overrides, and agent-dir relocation by `OMP_PROFILE`/`PI_PROFILE` or
+  `PI_CODING_AGENT_DIR`. The tool reads one file; the runtime resolves a stack, so `configured` is
+  that file's value and `effective` is the cap that *would* apply if it were the effective one.
+  Also frontier: why the ceiling is 100, what filled a runway when a refusal appeared, and any
+  behaviour of other harness versions.
+- **Adjacent (kumitate owns the harness mechanism; the operator owns the configuration):** the
+  semantics behind the clamp — what the job manager counts (`running` and not `queued`, every job
+  type, so a background shell job and a subagent task share one runway), the exact refusal text,
+  and the fact that only a top-level session builds the manager — are kumitate's OMP task/hub
+  ground (`../kumitate-shokunin/PROVINCE.md:3,19`; its OMP contract entry still has no
+  `async.maxJobs` row and still records the effective live OMP setting as UNKNOWN). Mori's part
+  is the bounded read and the report of it; it does not own the mechanism, proposes no change to
+  `async.maxJobs` or to any settings file, and does not judge the fleet seat gate, which counts a
+  different population under a different number (85 on this host, default 200; the harness cap is
+  100). Changing harness configuration is operator-owned.
+- **Owns-scope extension (append-only; `PROVINCE.md:6-10` is left byte-unchanged):** the Core
+  bullet above extends the owned read-only probe list named at `PROVINCE.md:6-10` with a fourth
+  resource class — the harness's own background-job concurrency ceiling. The header sentence
+  itself is not rewritten by this round; the extension is recorded here so no sibling line-range
+  pointer into `PROVINCE.md:3-16` moves.
+- **Admission state (2026-10-22):** the tool and its twenty-one frozen cases are landed
+  (`tools/mori-job-runway.py`, `tools/fixtures/mori-job-runway/cases.json`); the declared
+  after-value command prints `MORI_JOB_RUNWAY_SELFTEST: PASS 21/21` (exit 0) and one live host
+  run returned `RUNWAY_CLAMPED` with effective 100, exit 1. The Core bullet above is **pending
+  admission** by the non-author closure. No frontier row is closed, no other lane's surface is
+  claimed, and no remediation is added.
