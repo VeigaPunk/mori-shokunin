@@ -304,3 +304,29 @@ This supersession does not assert those separate gates were repaired.
     permission-loss receipt and source-bit distinction; production withdrawal
     rather than an unsealed repair. This is an admission rule, not a score or a
     new supported quota implementation.
+
+## Criteria added round 24 — round-23 routed items as checks (`tools/mori-routed-check.py`)
+
+Each line names the round-23 routed item it carries (`corpus/lessons/round-23-verifier-spotcheck.md:60-66`)
+and the check row that can fail it. Run: `python3 -I tools/mori-routed-check.py --repo <lane> --rev <rev> --round 24`.
+Able to fail: thirteen sandbox mutants in `.ufo/waves/round-24/w1/BuildRoutedCheck.md` turn the named row red.
+
+72. routed r23-R1 — The quota capability stays absent until a new sourced declaration,
+    an independently frozen oracle and a prospective proof exist: no path containing
+    `quota` is added under `tools/` or `corpus/knowledge/`, no tool names the case
+    CaseEscapedSpace, and the `.ufo/waves/round-23` tree is byte-identical to `c725aa37`.
+    Regression guard, not a repair. ← lessons/round-23-verifier-spotcheck.md:62.
+73. routed r23-R2 — The retention debt stays visible: the round-23 retention floor and
+    comparison receipts and both retention tools are byte-identical to `c725aa37`, and no
+    added line in the self-assessment or knowledge surfaces asserts privacy clearance.
+    An agreeing accounting run is agreement, never clearance. Regression guard.
+    ← lessons/round-23-verifier-spotcheck.md:63; contract amendment A1.
+74. routed r23-R3 — Missing transient-source and overwritten-wrapper limitations stay
+    recorded, not reconstructed: the `.ufo/waves/round-23` tree (evidence, rejected) is
+    byte-identical to `c725aa37`. Regression guard. ← lessons/round-23-verifier-spotcheck.md:64.
+75. routed r23-R4 — A wave's dispatch payload is committed before the call: every ledger of
+    the round verifies clean, each row's `at` is no earlier than the commit that last changed
+    its dispatch file, and every wave spec has a started ledger row. This is the repair; it
+    is red on round 23 (`--round 23` at `c725aa37`: eight wave-1 rows precede their dispatch
+    commit). Limit: both times are written by the lane, so this proves recorded ordering, not
+    harness-observed ordering. ← lessons/round-23-verifier-spotcheck.md:65; amendment A4.
