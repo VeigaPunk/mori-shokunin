@@ -1,0 +1,16 @@
+round-37 dispatch log (L1 MoriR37)
+2026-10-23T16:35Z  round start; census start `sources-census.sh validate mori` -> mori ok, EXIT=0 (evidence/census-start.txt)
+2026-10-23T16:43Z  live drift sweep at entry tip -> `MORI_SOURCE_DRIFT rows=220 fresh=49 excerpt=0 drifted=9 unavailable=0 no-copy=162`, EXIT=1 (evidence/drift-live-r37.txt)
+2026-10-23T16:52Z  before receipts: r36 count-c2 at bf0df77 with fixtures/memo-n1.py (seed 11) -> `C2=met` EXIT=0; with fixtures/summary-only.py (seed 12) -> `C2=met` EXIT=0 (evidence/c1-before-memo.txt, c1-before-summary.txt)
+2026-10-23T16:58Z  before receipt C2: count-c2-r37 at 842a320 -> `C2=unmet` EXIT=1 (evidence/c2-before.txt)
+2026-10-23T16:58Z  freeze: contract + count-c1 + count-c2 + three fixtures pinned by git blob hash (evidence/freeze-r37.txt)
+2026-10-23T16:59Z  landed e57c58b5 — freeze + data (drift entry, S221-S225, README/SCORECARD rows, r17-jj scoped assertion)
+2026-10-23T17:00Z  C1 measured at e57c58b5 -> blind 24/24, real pass, challenge pass, three negatives rejected, `C1=met` EXIT=0, seed 13985344346805549517 (evidence/c1-after.txt)
+2026-10-23T17:01Z  C2 measured at e57c58b5 -> 8/8 checks PASS, `C2=met` EXIT=0 (evidence/c2-after.txt)
+2026-10-23T17:02Z  r17-jj gate selftest (scoped assertion) -> EXIT=0 (evidence/r17-jj-selftest-r37.txt; pre-fix 9/204 red in round-36 w2/ExecCensusRegression.md)
+2026-10-23T17:02Z  census end -> mori ok EXIT=0 (evidence/census-end.txt)
+2026-10-23T17:03Z  wave validated: wave-slot not yet acquired; policy v2 (band 64-128), spawn 73, maxLanes 96, attack roles 21/73 = 28.8% (w1-plan.json)
+2026-10-23T17:05Z  landed bcf65505 — receipts, measured outcome, QUALITY 106/107, lesson round-37, LOG, wave spec/taskCall
+Handoff: one validated v2 wave (73 seats, `w1-taskcall.json`) returned to the orchestrator for inline dispatch; no dispatch from the L1 session (orchestrator-inline contract).
+Role mapping (validator SWARM_ROLES): the three bounded-probe items ride executor seats; the dedupe item rides a scribe seat; planner is the L1's canonical seat per the orchestrator ruling.
+Scratch discipline: every counter arm uses mkdtemp; the challenge arm's repo is created under .ufo/waves/round-37/scratch and removed in `finally`; no seed-derived shared directory (r36 debt g).
