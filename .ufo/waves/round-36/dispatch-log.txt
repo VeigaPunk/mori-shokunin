@@ -17,3 +17,10 @@ round-36 dispatch log (L1 MoriR36)
 12:1xZ  Main: the MutC1Novel/MutC2Novel failures were caused by a Main routing change (mutation-tester briefly routed to m_swe, rate-limited); back on m_sol. Recorded as dead seats; not resent.
 12:04Z  C0 settled 25/25 (CtlJ12 last); wave-slot release mori mori-r36-c0
 12:10Z  C1 declared exploratory before data (contract.md last section) after CritAxisFit 'C1 fails' + MineCopyFidelity (drifted real witnesses = annotated excerpts and a rebuild footer); counters and predicates unchanged; commit before any tool lands
+15:1xZ  attempt 2 (L1 MoriR36, same session identity): inherited attempt-1 state reused per addendum §5 —
+        kept: contract.md + frozen v2 counters + c0 re-score (25/25 unmet) + w1 reports (30/33; MutC1Novel,
+        MutC2Novel dead rate-limited; CritC1Counter, CritC2Counter provider cyber_policy hold) + exploratory
+        declaration (5842dc0) + built tools (mori-sources-appendonly.py, mori-index-clean.sh) + SOURCES S205-S220
+        + QUALITY 103-105 + SKILL Round36 rows + corpus/evidence/sources-r36/ + knowledge/source-drift-r36.md
+        discarded: none; rebuilt: tools/mori-source-drift.py was never built by attempt 1 — L1 built it to the
+        frozen interface; selftest PASS 4 cases; data commit next, then counters at the landed tip
