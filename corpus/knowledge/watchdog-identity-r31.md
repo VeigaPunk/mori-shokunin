@@ -31,7 +31,7 @@ the query named in the row.
 | a pid number recorded earlier is present again | PID allocation wraps back to a minimum value when the next pid reaches pid_max, so the same number is handed out again; a pid alone is never identity over time, only the pair pid plus start_time within one boot | not-identity | S173, S167 |
 | `pgrep` exits 1 | exit 1 means no processes matched; with the census `-f` pattern that means no command line on this host named the watchdog at that sample, an absence scoped to that one query | absent (that query only) | S161 |
 | `pgrep` exits 2 or 3, or the binary is missing | exit 2 is a syntax error and 3 a fatal error: neither says that no processes matched; the census already reports a missing binary as unavailable with liveness unknown (`tools/mori-census.sh:716-720`) | unavailable | S161 |
-| `/proc/locks` holds a FLOCK WRITE line whose device and inode are those of `.ufo/.watchdog.lock` | the watchdog takes a flock on that file at start (`scripts/shokunin-watchdog.sh:380-382`); `/proc/locks` lists the lock class, the PID of the process that owns the lock and the inode number of the locked file, read-only and without contending; a `flock -n` probe would contend and is never run | alive (strongest read-only anchor) | S174 |
+| `/proc/locks` holds a FLOCK WRITE line whose device and inode are those of `.ufo/.watchdog.lock` | the watchdog opens that file and takes its flock through the `flock` helper (`scripts/shokunin-watchdog.sh:380-382`); `/proc/locks` shows the lock class and the inode number of the locked file, but the PID of the process that owns the lock is the short-lived helper, not the watchdog, and a child that inherited the descriptor keeps the lock after the watchdog dies (round-31 residual CriticC1Tip reproduction) — read it without contending; a `flock -n` probe would contend and is never run | candidate (the watchdog or an orphaned child holds the lock) | S174 |
 
 ## Today on this host
 
@@ -43,9 +43,11 @@ the query named in the row.
 
 ## Limits
 
-- The `/proc/locks` row assumes the lock is held by the process that ran `flock`; a child that inherits the descriptor
-  shares the lock, and which pid the line shows then is not documented in S174. [INFERENCE] Compare the owning pid's
-  start time (field 22) and cmdline before treating it as the watchdog.
+- The `/proc/locks` row: the PID field names the `flock(1)` helper that took the lock and keeps showing it after the
+  helper exits, and an orphaned child that inherited the descriptor (the tick `sleep`) keeps the lock alive after a
+  SIGKILL of the watchdog (round-31 residual CriticC1Tip, a throwaway reproduction; the kernel side, `fs/locks.c`, was
+  not opened as a source this round). So a lock line is a candidate, never `alive`, and its PID is not the watchdog.
+  Round-31 correction: the first committed version (`5b728304`) gave this row `alive` and advised checking the PID.
 - `/proc/locks` is filtered to the reader's PID namespace (S174 `proc_locks.5:105-116`); a reader in another namespace
   sees nothing, which is `unavailable`, not absence.
 - Start times compare only within one boot; across boots pair them with the boot id (prior art in souji
