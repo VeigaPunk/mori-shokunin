@@ -1,0 +1,3 @@
+command: python3 tools/mori-sources-appendonly.py e37dcc6 --round-base f10a320d
+supersede_timing superseded_as_of=[S041,S044,S051,S062,S064,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] stale_supersede=[S069]
+EXIT=1

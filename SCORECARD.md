@@ -2144,15 +2144,15 @@ Freeze of record: `evidence/freeze-r37-v3.txt` (count-c1 `3e15f9fd…` at v2, co
 ## Round 38 declaration (attempt 1, L1 MoriR38) — the content half, instrument conformance, timed supersede
 
 Entering tip `e33bb561` (round 37 admitted). Frozen before data: `.ufo/waves/round-38/contract.md` +
-`count-c1.py` (v4) + `count-c4.py` + `conform.py` + fixtures, pins in `evidence/freeze-r38.txt`.
+`count-c1.py` (v4) + `count-c4.py` + `conform.py` + fixtures, pins in `evidence/freeze-r38.txt` (v1) and `evidence/freeze-r38-v3.txt` (final instrument bytes).
 Three claims, distinct axes; calibration and depth are the tied-lowest non-retired (5), so the
 lowest-axis obligation is met by C1 and C3.
 
 | # | claim (type) | axis | before → after (one value) | counting command | evidence |
 |---|---|---|---|---|---|
-| 1 | content-anchor discrimination: the drift-corpus binding must resolve, not just carry the r37 tokens (r37 M9) | calibration | fabricated binding `C2=met` (r37 counter) and `C4=unmet` → real binding `C4=met`, exit 0 | `python3 .ufo/waves/round-38/count-c4.py <rev>` | `evidence/c4-before.txt`, `evidence/c4-after.txt`, `evidence/v3-token-control.txt`, `evidence/c4-witness.txt` |
-| 2 | instrument conformance and replayability (r37 R1/R2/R4, SentTools MEDIUM/LOW, LabTimeoutBoundary) | operability | `CONFORM=unmet` (6/6 checks FAIL on the r37 counters) → `CONFORM=met` (6/6) with `CONFORM_SELFTEST pass=6 fail=0` | `python3 .ufo/waves/round-38/conform.py <rev> --counter …` and `--selftest` | `evidence/c5-before.txt`, `evidence/c5-after.txt`, `evidence/c5-after-selftest.txt` |
-| 3 | timed supersede semantics in the append-only gate; S069 disposed by a postdating row (r37 ExecGateRound D3) | depth | gate prints no timing field (0 occurrences) → `supersede_timing superseded_as_of=[S069,S182,S193] stale_supersede=[]` at the round-38 tip, `stale_supersede=[S069]` at `e37dcc6` | `python3 tools/mori-sources-appendonly.py <rev> --round-base f10a320d` | `evidence/gate-before.txt`, `evidence/gate-after.txt`, `evidence/gate-selftest-after.txt` |
+| 1 | content-anchor discrimination: the drift-corpus binding must resolve, not just carry the r37 tokens (r37 M9) | calibration | fabricated binding `C2=met` (r37 counter) and `C4=unmet` → real binding `C4=met`, exit 0 | `python3 .ufo/waves/round-38/count-c4.py <rev>` | `.ufo/waves/round-38/evidence/c4-before.txt`, `.ufo/waves/round-38/evidence/c4-after.txt`, `.ufo/waves/round-38/evidence/v3-token-control.txt`, `.ufo/waves/round-38/evidence/c4-witness.txt` |
+| 2 | instrument conformance and replayability (r37 R1/R2/R4, SentTools MEDIUM/LOW, LabTimeoutBoundary) | operability | `CONFORM=unmet` (6/6 checks FAIL on the r37 counters) → `CONFORM=met` (6/6) with `CONFORM_SELFTEST pass=6 fail=0` | `python3 .ufo/waves/round-38/conform.py <rev> --counter …` and `--selftest` | `.ufo/waves/round-38/evidence/c5-before.txt`, `.ufo/waves/round-38/evidence/c5-after.txt`, `.ufo/waves/round-38/evidence/c5-after-selftest.txt` |
+| 3 | timed supersede semantics in the append-only gate; S069 disposed by a postdating row (r37 ExecGateRound D3) | depth | gate prints no timing field (0 occurrences) → `supersede_timing superseded_as_of=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] stale_supersede=[]` at the round-38 tip, `stale_supersede=[S069]` at `e37dcc6` (corrected round 38, see note) | `python3 tools/mori-sources-appendonly.py <rev> --round-base f10a320d` | `.ufo/waves/round-38/evidence/gate-before.txt`, `.ufo/waves/round-38/evidence/gate-after.txt`, `.ufo/waves/round-38/evidence/gate-selftest-after.txt` |
 
 Kill rules: a do-nothing control cannot print `C4=met`, `CONFORM=met` or the timing line; the
 r37 counter scores the fabricated binding `C2=met`; a gate whose timing field is presence-based
@@ -2163,7 +2163,7 @@ lists S069 in `superseded_as_of` at `e37dcc6` and its own `stale_supersede` self
 | key | name | what it can now do | evidence | first working |
 |---|---|---|---|---|
 | round-38 C1 | content-anchor corpus check | Requires a corpus binding to resolve: named `anchor:` code strings in the probe's bytes, capability paths resolving from the repo root, one named drifted row per summary count, and a named-row selftest arm killed by its own mutation; rejects three fabricated token witnesses | `.ufo/waves/round-38/count-c4.py`; `.ufo/waves/round-38/evidence/c4-after.txt`; fixtures under `.ufo/waves/round-38/fixtures/` | 38 |
-| round-38 C2 | counter conformance checker | Audits an instrument's identity and bounds — predicate bytes, lane-tip pin, lane-relative tool resolution, bounded reads, timeout state, lane scratch — with six mutations each flipping exactly its own check | `.ufo/waves/round-38/conform.py`; `.ufo/waves/round-38/evidence/c5-after.txt`; `evidence/c5-after-selftest.txt` | 38 |
+| round-38 C2 | counter conformance checker | Audits an instrument's identity and bounds — predicate bytes, lane-tip pin, lane-relative tool resolution, bounded reads, timeout state, lane scratch — with six mutations each flipping exactly its own check | `.ufo/waves/round-38/conform.py`; `.ufo/waves/round-38/evidence/c5-after.txt`; `.ufo/waves/round-38/evidence/c5-after-selftest.txt` | 38 |
 | round-38 C3 | timed supersede reading | Separates a supersede disposition that postdates the edit from one that predates it, on the same commit walk the append-only gate already performs | `tools/mori-sources-appendonly.py` (`supersede_timing`); `.ufo/waves/round-38/evidence/gate-after.txt` | 38 |
 
 ### Round 38 axes-cell correction (append-only note; names the superseded text)
@@ -2175,3 +2175,14 @@ operability (round-38 axes-cell correction below) and round 38 claims no freshne
 `operability` cell gained the round-37 pointer. The `source-drift re-fetch probe` capability row's
 first-working cell moved 37 → 36 (the live run worked in round 36; round 37 added the named arms)
 and its two wave-directory paths became repo-relative.
+
+### Round 38 claim-3 cell correction (append-only note; names the superseded text)
+
+The round-38 claim-3 row's after cell read "`supersede_timing superseded_as_of=[S069,S182,S193]
+stale_supersede=[]` at the round-38 tip". That literal is superseded: the gate prints **every**
+superseded id whose latest superseder postdates its last immutable-cell edit — 18 ids at the tip
+(`[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193]`),
+as `evidence/gate-after.txt:21` records. The error was the L1's transcription of the r36 oracle's
+`superseded=[S069,S182,S193]` field for a different tool; the w2/RevScorecardClaims seat re-derived
+it. The cell now carries the observed line and this note. The claim's discriminator is unchanged:
+`stale_supersede=[S069]` at `e37dcc6` and `stale_supersede=[]` at the tip.

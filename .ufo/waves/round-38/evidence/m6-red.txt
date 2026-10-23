@@ -1,0 +1,4 @@
+reconstruction: M6 — the wave validator refuses a planner seat (round prompt: planner is a frozen-topology seat, never a swarm role)
+command: node ~/Projects/ufo-fsd-alpha/scripts/ufo-swarm-wave.mjs plan --spec .ufo/waves/round-38/scratch/red-receipts/m6-spec.json
+VALIDATOR_EXIT=1
+{"schema":"ufo-swarm-wave-error-v1","code":"unknown_role","message":"items[0].role \"planner\" is not a swarm role"}

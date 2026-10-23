@@ -63,7 +63,7 @@ PREDICATE = (
     "receipt with only the summary sentence), while the real bytes pass."
 )
 
-PATH_RE = re.compile(r"^[A-Za-z0-9_.-]+(/[A-Za-z0-9_.<>-]+)+$")
+PATH_RE = re.compile(r"^[A-Za-z0-9_.<>-]+(?:/[A-Za-z0-9_.<>-]+)*\.[A-Za-z0-9]+$")
 ROW_RE = re.compile(r"^S\d{3} (fresh|excerpt|drifted|unavailable|no-copy)$")
 LIVE_ROW_RE = re.compile(r"^(S\d{3}) drifted$")
 SUMMARY_RE = re.compile(
@@ -96,7 +96,16 @@ def run(cmd, cwd=None, timeout=SELFTEST_BUDGET_S, env=None):
                 os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
             except OSError:
                 pass
-            out, err = proc.communicate()
+            try:
+                out, err = proc.communicate(timeout=SELFTEST_GRACE_S)
+            except subprocess.TimeoutExpired:
+                # bounded: a setsid descendant can hold the pipe open (r38 RevC5Bounds)
+                out, err = "", ""
+                for stream in (proc.stdout, proc.stderr):
+                    try:
+                        stream.close()
+                    except OSError:
+                        pass
         raise ProbeTimeout("selftest exceeded %ds" % timeout)
     return subprocess.CompletedProcess(cmd, proc.returncode, out, err)
 
@@ -143,12 +152,14 @@ def anchors_from(entry_text):
     return out
 
 
+def capability_rows(scorecard_text):
+    return [line for line in (scorecard_text or "").splitlines()
+            if line.startswith("|") and CAPABILITY_KEY in line]
+
+
 def capability_row(scorecard_text):
-    row = None
-    for line in (scorecard_text or "").splitlines():
-        if line.startswith("|") and CAPABILITY_KEY in line:
-            row = line
-    return row
+    rows = capability_rows(scorecard_text)
+    return rows[-1] if len(rows) == 1 else None
 
 
 def paths_in(text):
@@ -169,8 +180,11 @@ def registry_ids(sources_text):
 def check_anchors(entry_text, tool_text):
     anchors = anchors_from(entry_text)
     missing = [a for a in anchors if a not in (tool_text or "")]
-    return (len(anchors) >= MIN_ANCHORS and not missing,
-            "anchors=%d missing=%s" % (len(anchors), missing))
+    empty = [a for a in anchors if not a.strip()]
+    unique = len(set(anchors)) == len(anchors)
+    return (len(anchors) >= MIN_ANCHORS and not missing and not empty and unique,
+            "anchors=%d missing=%s empty=%d unique=%s"
+            % (len(anchors), missing, len(empty), unique))
 
 
 def check_capability(scorecard_text):
@@ -193,8 +207,10 @@ def check_live_rows(live_text, ids):
         return False, "summary absent"
     drifted = int(summary.group(4))
     unknown = [sid for sid in named if sid not in ids]
-    return (drifted >= 1 and len(named) == drifted and not unknown,
-            "named=%d summary_drifted=%d unknown=%s" % (len(named), drifted, unknown))
+    unique = len(set(named)) == len(named)
+    return (drifted >= 1 and len(named) == drifted and not unknown and unique,
+            "named=%d summary_drifted=%d unknown=%s unique=%s"
+            % (len(named), drifted, unknown, unique))
 
 
 def selftest_arms(path):
@@ -278,8 +294,11 @@ def main(argv):
                     handle.write(tool_text.replace(DRIFT_MUTANT_FROM, DRIFT_MUTANT_TO))
                 kill_rc, kill_arms, kill_out = selftest_arms(mutant)
                 state = kill_arms.get("row_states", ("", ""))
-                check("drift_kill", kill_rc == 1 and state[0] == "FAIL"
-                      and "S103" in state[1],
+                detail = state[1]
+                flipped = ("('S103', 'drifted')" in detail
+                           and ("('S103', 'excerpt')" in detail
+                                or "('S103', 'fresh')" in detail))
+                check("drift_kill", kill_rc == 1 and state[0] == "FAIL" and flipped,
                       "exit=%s row_states=%s" % (kill_rc, state))
             else:
                 check("drift_kill", False, "mutation anchor absent")

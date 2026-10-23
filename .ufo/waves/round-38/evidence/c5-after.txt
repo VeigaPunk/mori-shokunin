@@ -1,10 +1,10 @@
-command: python3 .ufo/waves/round-38/conform.py daa1d4d2501e1671e7b7ff1fd60a069564f178b0 --counter .ufo/waves/round-38/count-c1.py --counter .ufo/waves/round-38/count-c4.py
+command: python3 .ufo/waves/round-38/conform.py f725f3076972e6e70595b5ac8279be524a111ff8 --counter .ufo/waves/round-38/count-c1.py --counter .ufo/waves/round-38/count-c4.py
 P-C5: at revision R, the round-38 C1 counter prints the contract's P-C1 bytes as its predicate, prints the lane tip it measured as `head_at_measurement=<40-hex>`, resolves a repo-relative `--tool` path against the lane, bounds every child and git read by a timeout and the committed-blob read by a byte cap, maps a tool that flushes then hangs to `tool_timeout` (never a pass and never a silent unmet), and creates every scratch directory with `tempfile.mkdtemp` under the lane's `.ufo/waves/round-38/scratch`; the conformance checker passes all six checks on those bytes and each of six mutations of them flips exactly its own check to FAIL.
 check predicate        PASS (exit=0 equal=True)
-check head_pin         PASS (pin=daa1d4d2501e1671e7b7ff1fd60a069564f178b0 tip=daa1d4d2501e1671e7b7ff1fd60a069564f178b0)
+check head_pin         PASS (pin=f725f3076972e6e70595b5ac8279be524a111ff8 tip=f725f3076972e6e70595b5ac8279be524a111ff8)
 check tool_resolve     PASS (exit=0 resolved=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/fixtures/summary-only.py)
-check bounded_reads    FAIL (count-c1.py: run=True popen=True cap=True mkdtemp=True scratch=True; count-c4.py: run=False popen=True cap=False mkdtemp=True scratch=True)
+check bounded_reads    PASS (count-c1.py: run=True popen=True cap=True mkdtemp=True scratch=True; count-c4.py: run=True popen=True cap=True mkdtemp=True scratch=True)
 check timeout_state    PASS (exit=1 timeout_reason=True pass=False)
 check scratch          PASS (count-c1.py: mkdtemp_dir=True root=True; count-c4.py: mkdtemp_dir=True root=True)
-CONFORM=unmet
-EXIT=1
+CONFORM=met
+EXIT=0

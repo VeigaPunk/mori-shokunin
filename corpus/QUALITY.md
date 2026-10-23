@@ -895,3 +895,10 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     `stale_supersede` although the presence-based `superseded=[...]` had listed it as superseded since round 35
     (`.ufo/waves/round-38/evidence/gate-after.txt`); a gate whose field is presence-based lists S069 as-of. Not covered:
     commit order in the path's history, not global ancestry.
+111. QUALITY 109's check command as printed (`conform.py --selftest`, no revision) exits 2 with `conformance setup
+    error`; the runnable form is `python3 .ufo/waves/round-38/conform.py <rev> --selftest --counter
+    .ufo/waves/round-38/count-c1.py` → `CONFORM_SELFTEST pass=6 fail=0`, exit 0. This row supersedes 109's check
+    cell only; 109's criterion stands. Lesson: `corpus/lessons/round-38.md` M10. Shown able to fail: the bare
+    `--selftest` invocation printed `conformance setup error: expected str, bytes or os.PathLike object, not
+    NoneType`, exit 2 (`conform.py:266-270` requires `rev`); the runnable form printed `pass=6 fail=0`, exit 0.
+    Not covered: the selftest mutates only the first `--counter`.

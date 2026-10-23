@@ -2209,3 +2209,30 @@ The round-37 entry above is a record; this entry names its superseded text and d
 - **ExecGateRound D3 (S069):** S069's in-place edit `62db24c` postdates its only superseder S073
   (`71abd41`). Round 38 lands S226 (opened this round) whose row opens `supersedes S069`, and the
   gate's timed reading prints `stale_supersede=[S069]` at `e37dcc6` and `[]` at the round-38 tip.
+
+## Round 38 (L1 MoriR38)
+
+Three claims, all measured at the round-38 tip (contract `.ufo/waves/round-38/contract.md`,
+instruments pinned in `evidence/freeze-r38-v3.txt`):
+
+- **C1 calibration (5)** — content-anchor discrimination for the drift-corpus binding
+  (r37 M9): `python3 .ufo/waves/round-38/count-c4.py <tip>` → `C4=met` exit 0; the three
+  fabricated token witnesses rejected; the r37 counter on the witness sandbox prints `C2=met`
+  (`.ufo/waves/round-38/evidence/c4-after.txt`, `v3-token-control.txt`, `c4-witness.txt`).
+- **C2 operability (7)** — instrument conformance and replayability (r37 R1/R2/R4, SentTools
+  MEDIUM/LOW, LabTimeoutBoundary): `python3 .ufo/waves/round-38/conform.py <tip> --counter …`
+  → `CONFORM=met` (6/6) and `--selftest` → `pass=6 fail=0`
+  (`.ufo/waves/round-38/evidence/c5-after.txt`, `c5-after-selftest.txt`).
+- **C3 depth (5)** — timed supersede semantics in the append-only gate + S226 (this round's
+  opened source, `supersedes S069`): `python3 tools/mori-sources-appendonly.py <tip> --round-base f10a320d`
+  prints `supersede_timing … stale_supersede=[]` at the tip and `stale_supersede=[S069]` at
+  `e37dcc6` (`.ufo/waves/round-38/evidence/gate-after.txt`, `gate-after-e37dcc6.txt`).
+
+Waves: wave 1 at 65 seats (13 reports), wave 2 at 43 seats (40 reports), residual re-check at
+8 seats; round total 116. Lesson `corpus/lessons/round-38.md` M1–M16 (M16 backfills the
+able-to-fail receipts for M1/M3/M4/M5/M6 after `w2/RevS226Row` found them missing; the S226
+Gate quote locator corrected to `S226.src:657-659`). Capability rows: content-anchor corpus
+check, counter conformance checker, timed supersede reading. Census exit 0 start and end
+(`evidence/census-start.txt`, `census-end.txt`). Routed to round 39: gate timing ancestry
+semantics (`w2/CritGateSemantics`, lesson M11) and the contract's stale `c1-before-rerun.txt`
+citation (`w2/SimpR38`). Debt (f) stays OPEN/operator-owned (L0 question).

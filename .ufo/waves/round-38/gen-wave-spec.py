@@ -10,7 +10,7 @@ import os
 LANE = "/home/vgpnk/Projects/shokunin/mori-shokunin"
 FLEET = "/home/vgpnk/Projects/shokunin"
 W = LANE + "/.ufo/waves/round-38"
-TIP = "daa1d4d2501e1671e7b7ff1fd60a069564f178b0"
+TIP = "f725f3076972e6e70595b5ac8279be524a111ff8"
 ENTER = "e33bb561712b32f46861362a3fa43762fa70ae4f"
 
 GODSPEED = """/skill:godspeed

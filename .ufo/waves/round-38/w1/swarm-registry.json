@@ -2,396 +2,396 @@
   "schema": "ufo-swarm-registry-v1",
   "wave": "mori-r38-w1",
   "createdAt": "2026-10-23T21:04:09.032Z",
-  "updatedAt": "2026-10-23T22:36:04.302Z",
+  "updatedAt": "2026-10-23T22:53:04.047Z",
   "reportDir": ".ufo/waves/round-38/w1",
   "members": {
     "RevC4Anchors": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevC4Anchors",
       "role": "reviewer",
       "item": null
     },
     "RevC4Capability": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevC4Capability",
       "role": "reviewer",
       "item": null
     },
     "RevC4Live": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevC4Live",
       "role": "reviewer",
       "item": null
     },
     "RevC4Kill": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevC4Kill",
       "role": "reviewer",
       "item": null
     },
     "RevC4Negatives": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevC4Negatives",
       "role": "reviewer",
       "item": null
     },
     "CritC4Gaming": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.CritC4Gaming",
       "role": "critic",
       "item": null
     },
     "MutC4Anchor": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.MutC4Anchor",
       "role": "mutation-tester",
       "item": null
     },
     "MutC4CapPath": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.MutC4CapPath",
       "role": "mutation-tester",
       "item": null
     },
     "MutC4Live": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.MutC4Live",
       "role": "mutation-tester",
       "item": null
     },
     "MutC4KillAlt": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.MutC4KillAlt",
       "role": "mutation-tester",
       "item": null
     },
     "ScoutC4Bounds": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ScoutC4Bounds",
       "role": "scout",
       "item": null
     },
     "RevC5Predicate": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevC5Predicate",
       "role": "reviewer",
       "item": null
     },
     "RevC5Pin": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevC5Pin",
       "role": "reviewer",
       "item": null
     },
     "RevC5Tool": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevC5Tool",
       "role": "reviewer",
       "item": null
     },
     "RevC5Bounds": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevC5Bounds",
       "role": "reviewer",
       "item": null
     },
     "RevC5Timeout": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevC5Timeout",
       "role": "reviewer",
       "item": null
     },
     "RevC5Scratch": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevC5Scratch",
       "role": "reviewer",
       "item": null
     },
     "MutC5Predicate": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.MutC5Predicate",
       "role": "mutation-tester",
       "item": null
     },
     "MutC5Pin": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.MutC5Pin",
       "role": "mutation-tester",
       "item": null
     },
     "MutC5Tool": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.MutC5Tool",
       "role": "mutation-tester",
       "item": null
     },
     "MutC5Bounds": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.MutC5Bounds",
       "role": "mutation-tester",
       "item": null
     },
     "MutC5Timeout": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.MutC5Timeout",
       "role": "mutation-tester",
       "item": null
     },
     "MutC5Scratch": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.MutC5Scratch",
       "role": "mutation-tester",
       "item": null
     },
     "CritC5Gaming": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.CritC5Gaming",
       "role": "critic",
       "item": null
     },
     "RevC1Negatives": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevC1Negatives",
       "role": "reviewer",
       "item": null
     },
     "RevC1SoundnessBound": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevC1SoundnessBound",
       "role": "revenger",
       "item": null
     },
     "RevGateTiming": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevGateTiming",
       "role": "reviewer",
       "item": null
     },
     "MutGateTiming": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.MutGateTiming",
       "role": "mutation-tester",
       "item": null
     },
     "RevGateS226": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevGateS226",
       "role": "reviewer",
       "item": null
     },
     "CritGateSemantics": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.CritGateSemantics",
       "role": "critic",
       "item": null
     },
     "RevGateCompat": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevGateCompat",
       "role": "reviewer",
       "item": null
     },
     "ScoutGateRank": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ScoutGateRank",
       "role": "scout",
       "item": null
     },
     "RevErratum": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevErratum",
       "role": "reviewer",
       "item": null
     },
     "RevLogAppend": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevLogAppend",
       "role": "reviewer",
       "item": null
     },
     "RevScorecardCells": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevScorecardCells",
       "role": "reviewer",
       "item": null
     },
     "RevSourcesAppend": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevSourcesAppend",
       "role": "reviewer",
       "item": null
     },
     "RevQualityCriteria": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevQualityCriteria",
       "role": "reviewer",
       "item": null
     },
     "RevSkillRows": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevSkillRows",
       "role": "reviewer",
       "item": null
     },
     "RevLessonMistakes": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevLessonMistakes",
       "role": "reviewer",
       "item": null
     },
     "RevFreezeV2": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevFreezeV2",
       "role": "reviewer",
       "item": null
     },
     "RevCensus": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevCensus",
       "role": "reviewer",
       "item": null
     },
     "RevReceipts": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevReceipts",
       "role": "reviewer",
       "item": null
     },
     "RevReportSections": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevReportSections",
       "role": "reviewer",
       "item": null
     },
     "ScoutMisroot": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ScoutMisroot",
       "role": "scout",
       "item": null
     },
     "ScoutPycache": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ScoutPycache",
       "role": "scout",
       "item": null
     },
     "ScoutPriorRound": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ScoutPriorRound",
       "role": "scout",
       "item": null
     },
     "ScoutFrontierRows": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ScoutFrontierRows",
       "role": "scout",
       "item": null
     },
     "ConnSibling": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ConnSibling",
       "role": "connector",
       "item": null
     },
     "ConnReceipts": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ConnReceipts",
       "role": "connector",
       "item": null
     },
     "RevDebtF": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevDebtF",
       "role": "revenger",
       "item": null
     },
     "SentCounters": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.SentCounters",
       "role": "sentinel",
       "item": null
     },
     "SentWitnessSandbox": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.SentWitnessSandbox",
       "role": "sentinel",
       "item": null
     },
     "SimpC1": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.SimpC1",
       "role": "simplifier",
       "item": null
     },
     "SimpC4": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.SimpC4",
       "role": "simplifier",
       "item": null
     },
     "ExecWitnessSandbox": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ExecWitnessSandbox",
       "role": "executor",
       "item": null
     },
     "ExecReplay": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ExecReplay",
       "role": "executor",
       "item": null
     },
     "ExecGateDeterminism": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ExecGateDeterminism",
       "role": "executor",
       "item": null
     },
     "ExecCensusEnd": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ExecCensusEnd",
       "role": "executor",
       "item": null
     },
     "ExecIndexCleanLog": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ExecIndexCleanLog",
       "role": "executor",
       "item": null
     },
     "ExecR17Battery": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ExecR17Battery",
       "role": "executor",
       "item": null
     },
     "ExecCensusSelftest": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ExecCensusSelftest",
       "role": "executor",
       "item": null
     },
     "ScribeReportBullets": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ScribeReportBullets",
       "role": "scribe",
       "item": null
     },
     "ScribeTrendVerdicts": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ScribeTrendVerdicts",
       "role": "scribe",
       "item": null
     },
     "ScribeSHONEN": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.ScribeSHONEN",
       "role": "scribe",
       "item": null
     },
     "RevAdmission": {
       "kind": "spawn",
-      "agentId": null,
+      "agentId": "MoriR38b.RevAdmission",
       "role": "critic",
       "item": null
     }

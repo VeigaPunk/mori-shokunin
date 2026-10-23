@@ -35,6 +35,7 @@ import sys
 import tempfile
 
 LANE = "/home/vgpnk/Projects/shokunin/mori-shokunin"
+SCRATCH_ROOT = os.path.join(LANE, ".ufo/waves/round-38/scratch")
 DEFAULT_COUNTERS = [os.path.join(LANE, ".ufo/waves/round-38/count-c1.py"),
                     os.path.join(LANE, ".ufo/waves/round-38/count-c4.py")]
 DEFAULT_CONTRACT = os.path.join(LANE, ".ufo/waves/round-38/contract.md")
@@ -99,6 +100,7 @@ def static_checks(source):
     except SyntaxError as exc:
         raise SetupError("counter does not parse: %s" % exc)
     run_ok = popen_ok = mkdtemp_ok = True
+    saw_communicate = False
     blob_cap = "MAX_BLOB_BYTES" in source and '"-s"' in source
     for node in ast.walk(tree):
         if not isinstance(node, ast.Call):
@@ -111,10 +113,15 @@ def static_checks(source):
             run_ok = run_ok and "timeout" in kw
         if name == "Popen":
             segment = ast.get_source_segment(source, node) or ""
-            popen_ok = (popen_ok and "start_new_session" in segment
-                        and "communicate(timeout=" in source)
+            popen_ok = popen_ok and "start_new_session" in segment
+        if name == "communicate":
+            # every drain must carry its own timeout (r38 RevC5Bounds: a setsid
+            # descendant can hold the pipe open past the kill)
+            saw_communicate = True
+            popen_ok = popen_ok and "timeout" in kw
         if name == "mkdtemp":
             mkdtemp_ok = mkdtemp_ok and "dir" in kw
+    popen_ok = popen_ok and saw_communicate
     scratch_root = False
     for node in ast.walk(tree):
         if isinstance(node, ast.Assign) and any(
@@ -228,7 +235,8 @@ def selftest(repo, rev, counter, contract_path):
          'SCRATCH_ROOT = "/tmp/mori-r38-scratch"', "scratch parent moved off-lane"),
     ]
     source = open(counter, encoding="utf-8").read()
-    work = tempfile.mkdtemp(prefix="mori-conform-selftest-")
+    os.makedirs(SCRATCH_ROOT, exist_ok=True)
+    work = tempfile.mkdtemp(prefix="mori-conform-selftest-", dir=SCRATCH_ROOT)
     passed = failed = 0
     try:
         for name, old, new, why in mutations:

@@ -126,7 +126,16 @@ def run(cmd, cwd=None, timeout=120, env=None):
                 os.killpg(os.getpgid(proc.pid), signal.SIGKILL)
             except OSError:
                 pass
-            out, err = proc.communicate()
+            try:
+                out, err = proc.communicate(timeout=TOOL_GRACE_S)
+            except subprocess.TimeoutExpired:
+                # bounded: a setsid descendant can hold the pipe open (r38 RevC5Bounds)
+                out, err = "", ""
+                for stream in (proc.stdout, proc.stderr):
+                    try:
+                        stream.close()
+                    except OSError:
+                        pass
         raise ToolTimeout("tool exceeded %ds (SIGTERM, then SIGKILL after %ds)"
                           % (timeout, TOOL_GRACE_S))
     return subprocess.CompletedProcess(cmd, proc.returncode, out, err)
@@ -896,19 +905,19 @@ def run_negative(tool, draws, repo, rng, published_line):
 # ------------------------------------------------------------------------- main
 
 def _scratch_parent():
-    """A writable scratch parent. Each arm then uses mkdtemp: unique per run, so a
-    replay of the same seed never collides with a concurrent seat (r36 ExecReC2B §5)."""
-    for candidate in (SCRATCH_ROOT, os.environ.get("TMPDIR") or "", "/tmp"):
-        if not candidate:
-            continue
-        try:
-            os.makedirs(candidate, exist_ok=True)
-            probe = tempfile.mkdtemp(prefix=".probe-", dir=candidate)
-            os.rmdir(probe)
-            return candidate
-        except OSError:
-            continue
-    raise RuntimeError("no writable scratch parent (tried %s)" % SCRATCH_ROOT)
+    """The lane's round-38 scratch root, the only place this counter writes (P-C5).
+    Fail closed when it is not writable: a fallback to TMPDIR or /tmp would create
+    directories outside the lane, which the conformance claim forbids (r38
+    w2/RevC5Scratch re-derived the escape on the v4.1 bytes). Each arm then uses
+    mkdtemp: unique per run, so a replay of the same seed never collides with a
+    concurrent seat (r36 ExecReC2B §5)."""
+    try:
+        os.makedirs(SCRATCH_ROOT, exist_ok=True)
+        probe = tempfile.mkdtemp(prefix=".probe-", dir=SCRATCH_ROOT)
+        os.rmdir(probe)
+        return SCRATCH_ROOT
+    except OSError as exc:
+        raise RuntimeError("lane scratch root is not writable: %s (%s)" % (SCRATCH_ROOT, exc))
 
 
 def resolve_tool(path, repo):

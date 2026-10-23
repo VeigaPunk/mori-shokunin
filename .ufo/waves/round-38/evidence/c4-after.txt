@@ -1,4 +1,4 @@
-command: python3 .ufo/waves/round-38/count-c4.py daa1d4d2501e1671e7b7ff1fd60a069564f178b0
+command: python3 .ufo/waves/round-38/count-c4.py f725f3076972e6e70595b5ac8279be524a111ff8
 P-C4: at revision R, the committed drift-corpus binding passes four content checks that the round-37 token checks cannot discriminate — every `anchor:` line in the round-38 knowledge entry resolves byte-exactly in tools/mori-source-drift.py at R, every path the SCORECARD capability row cites resolves at R, the live receipt names one drifted row by id per drifted row its summary counts, and the probe's selftest runs the named-row arm `row_states` whose own mutation kills it — and the same counter rejects three fabricated token-satisfying witnesses (an entry with the tokens but no resolvable anchor, a capability row citing a nonexistent path, a live receipt with only the summary sentence), while the real bytes pass.
 negative witness-token-entry        rejected
 negative witness-dangling-row       rejected
