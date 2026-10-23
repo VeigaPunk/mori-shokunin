@@ -103,7 +103,10 @@ $ python3 count-c2-mutcapkill.py cc8b2994bdb1dba7746a60154a9b287b919be0ca --repo
 check selftest       PASS (exit=0 arms=[('exit_code', 'PASS'), ('huge_cap', 'PASS'), ('missing_sources_exit2', 'PASS'), ('redirect_private_refused', 'PASS'), ('row_states', 'PASS'), ('summary', 'PASS')])
 check cap_kill       PASS (exit=1 huge_cap=PASS (MUTATION: cap_kill forced PASS))
 check redirect_kill  PASS (exit=1 redirect_private_refused=FAIL)
-…
+check knowledge      PASS (present=True rows=['S205', 'S221', 'S222', 'S223', 'S224', 'S225'] cited_commit=True)
+check capability     PASS (rows=1 names_tool=True)
+check readme         PASS (r36_row=True r37_row=True)
+check live           PASS (present=True sentence=True)
 C2=met
 EXIT=0
 ```
@@ -202,7 +205,7 @@ The lane was never written. Byte-identical before and after all measurements:
 $ sha256sum .ufo/waves/round-37/count-c2.py tools/mori-source-drift.py
 71c72929f9ac4dc8af0c079fb91220413064cb043391bf495f5ce32cadc3a7c1  .ufo/waves/round-37/count-c2.py
 453c5d8e260301df7a99daf62b4c16ea08e4a0b4f9e4f53821cdbce447011552  tools/mori-source-drift.py
-$ git rev-parse e57c58b…:tools/mori-source-drift.py e57c58b…:.ufo/waves/round-37/count-c2.py
+$ git rev-parse e57c58b57c025364e79d130fbdf764d2674d83d6:tools/mori-source-drift.py e57c58b57c025364e79d130fbdf764d2674d83d6:.ufo/waves/round-37/count-c2.py
 162ee87b5b0789c6815f967f3db93d277bab38d9
 6213cf9a5ada709da8cd867581782737b2f06c71
 ```
