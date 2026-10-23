@@ -86,3 +86,13 @@ argument list ends after `time_in_queue` (S197.src:1336-1351), while the v4.19 f
 fields and v4.19 prints 18. Row 8's parsing rule (accept 14, 18 or 20 fields; sectors written is field 10) and its
 "not exported, never zero" verdict stand; this correction does not re-check the 5.5+ flush boundary. Sources S197 and
 S198 were opened in round 34 (Gate: `corpus/lessons/round-34.md`).
+
+**Row 3r2 — round-34 attempt-3 revision of row 3r (append-only).** Re-judge ReJudgeRow3r found row 3r unsupported
+under R-J: it did not cite the lines that name `diskstats_show` and bind `stat` to each entry, no cited line states
+"so the whole disk has a line too", and no cited line says the sectors are "completed"
+(`.ufo/waves/round-34/wb/ReJudgeRow3r.md`). Row 3r stays as it was judged; row 3r2 supersedes it, citing those lines
+and dropping the two unstated phrases.
+
+| # | observation | reading | verdict | sources |
+|---|---|---|---|---|
+| 3r2 | `diskstats_show` (S182.src:1353) walks `gp->part_tbl` and skips a partition with zero sectors (S182.src:1370-1372); for each remaining entry it reads the statistics into `stat` (S182.src:1380) and prints `stat.sectors[STAT_WRITE]` (S182.src:1383,1391) | The disk's own `part0` is inserted into `part_tbl` (S182.src:1465,1471-1472). `part_stat_add` adds to the partition and, for a partition, adds the same amount to `bdev_whole(part)` (S183.src:58,61-64), which is the disk's `part0` (S186.src:84-85); `bdev_end_io_acct` adds its sectors through `part_stat_add` (S184.src:1100-1110) | When totalling, count a partition's contribution once: never add a disk's line to the lines of its own partitions | S182, S183, S184, S186 |
