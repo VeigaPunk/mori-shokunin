@@ -768,3 +768,12 @@ process, or changing the census probe.
 | `pgrep` exits 1, or exits 2 or 3, or the binary is missing | exit 1 is absence for that one query; exit 2 or 3 and a missing binary are `unavailable`, never absence | that a failed or blind probe proves the watchdog is gone | Round31 `corpus/knowledge/watchdog-identity-r31.md` rows 12–13; S161 |
 | a pid is seen again later, or its `/proc/<pid>/stat` start time changed | record pid plus start_time (field 22) as the identity pair within one boot; a changed start time is a different process under a reused pid | that a pid number alone names the same process over time | Round31 `corpus/knowledge/watchdog-identity-r31.md` rows 9–11; S167, S171, S173 |
 | `/proc/locks` shows a FLOCK on the inode of `.ufo/.watchdog.lock` | the strongest read-only anchor: it names the pid that owns the watchdog's singleton lock without contending; check that pid's start time and cmdline next | that a `flock -n` test is a safe probe (it contends for the lock) | Round31 `corpus/knowledge/watchdog-identity-r31.md` row 14; S174 |
+
+## Round31 — blind-writer gate (`tools/mori-blind-check.sh`)
+
+Run `bash tools/mori-blind-check.sh <lane-rev> <wave-report-dir> <writer-name-regex> <allow-file>` inside the lane to
+check committed writer briefs before a blind freeze: it prints `scanned=N`, `blind_violations=M` and one
+`path:line:rule` per hit (exit 0 none, 1 hits, 2 input error); `--selftest` prints `PASS`. The files-opened rule it
+implements is `.ufo/waves/round-31/rule-text.md`; every forbidden list entry is reported at its own line and prose after
+the list is never an entry (round-30 D1). Its two other detectors are the round-30 gate's, with the false positives and
+negatives named in `corpus/lessons/round-31.md` (Carried). Detection only: it judges no case.

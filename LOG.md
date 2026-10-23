@@ -2009,3 +2009,20 @@ landed tip.
 ## Round 31 (attempt 1, L1 MoriR31) — appended correction to the round-30 log (routed D7; wave-1 DraftLogScorecardD7D8)
 
 - **D7, append-only correction:** round-30 wave-2 spec, validator run and dispatch payload landed in `713be294669272b8b29e9a8cd60c5313704a2ee1`; the commit subject records 36 seats (18 reviewer, 7 scout, 6 critic, 4 mutation-tester, 1 sentinel) and the wave-1 registry. `git show --stat 713be294` lists `.ufo/waves/round-30/w1/swarm-registry.json`, `.ufo/waves/round-30/wave2-dispatch.json`, `.ufo/waves/round-30/wave2-run.err`, `.ufo/waves/round-30/wave2-run.json` and `.ufo/waves/round-30/wave2-spec.json` (5 files changed, 1067 insertions). This records the later wave-2 artifact commit without changing the round-30 measured outcomes above.
+
+## Round 31 (attempt 1, L1 MoriR31) — build, amendment and measurement
+
+- Wave 1: 41 seats, 0 dead; settled from 23:45Z (reports `.ufo/waves/round-31/w1/`).
+- Routed repairs `1d94055d`: D3 QUALITY 94 (supersedes 93; 92 recorded unmet), D4 entry corrected in place and
+  appended, D5 coverage-map row, D6 `cases-r31-dryrun-flips.json` (tip `PASS 2/2`, round-30 base `FAIL 0/2`,
+  `evidence/d6-dryrun-flips.txt`), D7 LOG, D8 SCORECARD corrections.
+- **Amendment A1** `7973034b` before any entry or tool was scored: wave-1 critics met both frozen counters with cheap
+  shortcuts (lesson M3); both predicates tightened (conditions added only), A1 fixtures `c2-fixtures-a1.json` written
+  by the L1 before any builder tool was read. A1 control receipts `3b92ccbb`: 11 C2 and 5 C1 controls, all unmet.
+- C1 bundle `5b72830467f26a9c6391c393e4803aa723e1089a`: entry `corpus/knowledge/watchdog-identity-r31.md` (14 rows),
+  SKILL `## Round31` rows, SOURCES S161–S174 (12 mined, S166/S168 rejected as duplicate URLs), lesson Gate, copies
+  `corpus/evidence/sources-r31/`, README FR5 rows.
+- C2 tool `tools/mori-blind-check.sh` from wave-1 BuildBlindTool (blob sha256 `79b774f7…`), first scored at
+  `5b728304` with `--tool-file`: A1 `exact=27/27` in both runs, original `exact=16/16`. `--selftest` PASS; on the
+  round-30 writer wave it prints the three missing-list hits wave-1 RealBriefsR30 derived by hand and no longer flags
+  `CaseR30a.md:105` (`evidence/c2-tool-selftest-and-r30.txt`).
