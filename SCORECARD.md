@@ -2130,3 +2130,13 @@ here; the frozen predicate bytes (P-C1, P-C2) and both measured receipts are unc
    accepted boundary; MEDIUM — `count-c2.py`'s `show()` git reads have no timeout or size bound, and
    LOW — relative `--tool` paths validate and execute from different directories (carried from r36
    w2/RevNgC2 §1). Both need a counter re-freeze, so they are routed to round 38 with the exact fixes.
+
+### Round 37 A1–A3 re-score (measured at `4bfa0490`, after the wave-1 amendments)
+
+| claim | after (command over committed bytes) | verdict |
+|---|---|---|
+| C1 (counter v2: run-time-drawn real arm; challenge title = the lane title) | `python3 .ufo/waves/round-37/count-c1.py 4bfa0490 --seed 20261024` → blind 24/24, real pass, **drawn arm pass** (rev `842a32074b`, base `3c2fe8c3eb`), challenge pass, three negatives rejected, `C1=met`, exit 0 (`evidence/c1-after-v2.txt`) | **verified (measured, v2)**: a memoizer keyed on the sandbox identity or the challenge's clothing can no longer print the published constant, because the drawn rev's answer is not published. Disclosed residual: a tool keyed on the real arm's published rev literal cannot be distinguished on that one arm (the drawn arm is where the discrimination lives). |
+| C2 (counter v3: tip live receipt + attribution check that the cited commit touches the tool) | `python3 .ufo/waves/round-37/count-c2.py 4bfa0490` → all eight checks PASS, `knowledge … cited_commit=True touches_tool=True`, `live PASS` (225-row sentence), `C2=met`, exit 0 (`evidence/c2-after-v3.txt`) | **verified (measured, v3)**: the v2/v1 receipts stand as history; v3 is the receipt of record. The content-half gap (w1/CritC2ContentFree) remains disclosed and is routed. |
+
+Freeze of record: `evidence/freeze-r37-v3.txt` (count-c1 `3e15f9fd…` at v2, count-c2 `39d06e20…` at v3, drift tool
+`162ee87b…`, contract `d2d61144…`).

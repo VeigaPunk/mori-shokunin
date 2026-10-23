@@ -2167,3 +2167,18 @@ discrimination) and 107 (per-id interface) added; lesson M1–M5 in `corpus/less
 Capability rows: `real-arm challenge counter`, `source-drift re-fetch probe` (SCORECARD Round-37 section).
 Held (self-assessment carried in SCORECARD, not measured by any r37 counter): coverage 6, operability 7,
 depth 5, calibration 5, freshness 5, adjacency 6 — no score move.
+
+Round-37 amendments A1–A3 (wave-1 corrections; measured at `4bfa0490`, receipts `evidence/c1-after-v2.txt`,
+`c2-after-v3.txt`, pins `evidence/freeze-r37-v3.txt`):
+- A1 (w1/RevC1Challenge, HIGH): the challenge's title now equals the lane's real title verbatim (it had
+  self-labelled "(challenge arm)"), and the counter runs a **run-time-drawn ancestor rev** whose expected
+  answer is not published — a memoizer keyed on identity/clothing cannot print a constant for it. C1 re-scored
+  `C1=met`, seed 20261024; disclosed residual: a tool keyed on the real arm's published rev literal is
+  indistinguishable on that one arm.
+- A2 (w1/ExecDriftLive): `drift-live-r37.txt` is now the 225-row tip sweep (`rows=225 fresh=53 … drifted=10 …`),
+  the 220-row entering sweep is `drift-live-r37-start.txt`, and the prose says ten drifted rows (S223's page
+  footer clock; S211 class).
+- A3 (w1/ExecKnowledgeCheck): the hardening commit is `1caa242`, not `8ff9bba`; every artifact corrected and
+  the counter now reconstructs the commit and requires it to touch the tool (`touches_tool=True`).
+C2 re-scored `C2=met` at `4bfa0490`. SKILL.md gained the two Round-37 registry rows; the dispatch log now
+records the index-clean check after each `landed` line (w1/ExecIndexClean, QUALITY 103).
