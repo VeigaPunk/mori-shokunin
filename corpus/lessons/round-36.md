@@ -63,3 +63,8 @@ the mid-flight directive; 36+ reports landed at integration time, the rest recor
 Round total 124 ≤ 128. Registry note (w2/RevWave1Audit F3): the w2 swarm-registry records null agentId/item
 for all seats — a side effect of the orchestrator-inline dispatch (the L1 never sees the task-call return ids);
 disk reports under `.ufo/waves/round-36/w2/` are the only return evidence.
+
+Revenger boundary note (w2/RevNgC1): the v2 anti-harness-key design is invocation-relative — with `--repo`
+under /fast/scratch or /tmp the K9 harness key re-arms (trusted_root polarity), but the documented protocol runs
+the real arm on the lane repo itself, and a --tool-only attacker does not control --repo; no defect under the
+documented invocation (K9 confirmed unmet at the clean tip).
