@@ -1,0 +1,6 @@
+round-36 dispatch log (L1 MoriR36)
+10:42Z  dispatched (orchestrator); freeze 12:42Z, hard stop 13:42Z; entering tip 6bd57097 (jj-lane state ahead=0 behind=0, untracked=1 `.scratch/` dated 2026-10-21, not this round's)
+10:4xZ  census start: sources-census.sh validate mori -> mori ok, EXIT=0 (evidence/census-start.txt)
+10:48Z  wave-slot acquire mori mori-r36-counters 2 -> granted (live=73); counter-build call, plain task call, 2 executor seats (ExecCounterC1, ExecCounterC2), pre-freeze; not a validator-band wave
+        contract.md amended before freeze (oracle 429 handling; real arm skipped when blind fails) and builder notified
+11:47Z  counters returned (C2 49m, C1 57m); contract re-probe rule documented; before receipts c1/c2 tool_absent unmet; freeze commit next
