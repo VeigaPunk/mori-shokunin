@@ -1976,3 +1976,22 @@ and Round 10 verdicts). Their evidence pointers resolve at `dd76eb79`.
 | `rounds[476].capabilities_added[1]` | amendment-A2 frozen cases | Pins ten round-26 amendment-A2 rules of the OOM killer read with 30 frozen cases (freeze d21b8bd3), PASS 30/30; fixture-only, not a live-host result. | `tools/fixtures/mori-oom-killers/cases-a2.json` | 28 |
 | `rounds[495].capabilities_added[0]` | blind-writer gate | Blind-writer gate with a passing --selftest; on the round-30 inputs it reports three missing-list hits and no longer flags CaseR30a.md:105; supersedes the round-30 wave gate (routed D1). | `tools/mori-blind-check.sh` | 31 |
 | `rounds[495].capabilities_added[1]` | watchdog identity decision table | A sourced FR5 table (S161-S174) on what pid probes can and cannot establish about watchdog liveness; measurements used throwaway processes and did not change the census probe. | `corpus/knowledge/watchdog-identity-r31.md` | 31 |
+
+## Round 35 declaration and measured outcome (attempt 1, L1 MoriR35) — capabilities register vs the closure record
+
+Entering tip `dd76eb79` (round 34 closed `rejected-honest-stop`, MANIFEST `rounds[524]`). Contract
+`.ufo/waves/round-35/contract.md` and `count-c1.py` frozen at `f2d28711` before any seat; pre-data control receipts
+(wave C0, 12 seats) at `913df22e`; register landed at `721040a9`. The declared cells copy the frozen contract.
+
+| Claim | Axis / score | Before | Declared after-value (one command over committed bytes) |
+|---|---|---|---|
+| C1 the last `## Capabilities` section binds each capability fleet MANIFEST@37b51a24 records under an admitted mori closure (18) to its key, round and a strong artifact, and holds no other row (P-C1); sourced S199, S200 | calibration 5 (tied lowest with depth and freshness) | `python3 .ufo/waves/round-35/count-c1.py dd76eb79` → `rows=5 matched=0 missing=18 bad=0 extra=5 mismatches=23 C1=unmet`, exit 1 (`evidence/c1-before.txt`) | the same command at the landed tip → `matched=18 missing=0 bad=0 extra=0 mismatches=0 C1=met`, exit 0 |
+
+| Claim | After (measured) | Verdict proposed for the closure |
+|---|---|---|
+| C1 | `count-c1.py cedb0ec4` → `rows=18 matched=18 missing=0 bad=0 extra=0 mismatches=0 C1=met`, exit 0 (`evidence/c1-after.txt`; ExecTipRerun reproduced it in two fresh clones) | **not verified (honest stop)**: before data, control 10c (empty capability and what cells) met P-C1 and the L1 ruled it a residual instead of re-designing, against QUALITY 98's content-free shape (lesson M1); after data, the word-bag control also meets P-C1 (`w2/CtlWordBag.md`). P-C1 checks the binding, not the self-assessment's content. CritC1Verdict agrees (`w2/CritC1Verdict.md`) |
+
+Held: calibration 5, coverage 6, operability 7, depth 5, freshness 5, adjacency 6. No retirement, waiver, exploratory
+claim or promotion. Not claims: the register's rows were judged one by one by non-author wave-2 reviewers (lesson,
+Judges); the Axes table's operability and depth `Last change` cells now name round 31 (`SCORECARD.md:11-12`); SOURCES
+198 → 204 rows (S199–S202 admitted, S203–S204 rejected); QUALITY 98 correction and 100–102.

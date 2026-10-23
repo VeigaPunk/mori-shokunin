@@ -796,13 +796,22 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     (`.ufo/waves/round-35/evidence/c1-controls.txt`, control 10c) rules CtlSkipDesign B a non-skip although its
     capability and what-it-can-now-do cells are empty (`.ufo/waves/round-35/c0/CtlSkipDesign.md`), so the ruling fails
     101; the register's prose is then held up only by non-author row judges, not by P-C1.
-102. A round that changes `corpus/SOURCES.md` passes the append-only check at its landed tip with no id it touched:
-    for every `S###` row, the cells other than status, recheck and used-by equal the cells the row had in the commit
-    that first held it, unless a later row's teaches opens `supersedes S###`. Check: `python3
-    .ufo/waves/round-35/check-sources-appendonly.py <tip>` (read-only git) prints `appendonly_violations=N ids=[...]`;
-    no id the round's own commits changed may be listed. Lesson: `corpus/lessons/round-35.md` M2 (round 34 edited S182
-    and S193 in place and its lesson said no existing row changed). Shown able to fail: at `dd76eb79` the check exits 1
-    with 17 ids, among them S182 (changed at `8d56809a`) and S193 (changed at `406d91a4`); with this round's
-    supersede rows S201 and S202 they are discharged and 15 ids remain, all edited in place before round 34
-    (`62db24c0`, `5126891f`, `ab8f4cfe`) and carried as routed debt. Not covered: deleted rows, and a later edit to a
-    row that is already superseded.
+102. A round that changes `corpus/SOURCES.md` lands no in-place change to an existing row: for every `S###` row, the
+    cells other than status, recheck and used-by equal the cells the row had in the commit that first held it. A
+    later row whose teaches opens `supersedes S###` is the correction's disposition; it does not erase the in-place
+    change, which stays listed. Check: `python3 .ufo/waves/round-35/check-sources-appendonly.py <tip> --round-base
+    <entering tip>` (read-only git) prints every changed id with its `superseded_by=` disposition,
+    `appendonly_violations=N ids=[...] superseded=[...]` and `round_changed=[...]`; the round passes only with
+    `round_changed=[]` (exit 0); exit 2 is an error. Lesson: `corpus/lessons/round-35.md` M2 (round 34 edited S182 and
+    S193 in place and its lesson said no existing row changed). Shown able to fail: `check-sources-appendonly.py
+    dd76eb79 --round-base f10a320d` prints `round_changed=[S182,S193]`, exit 1; at round 35's tip with `--round-base
+    dd76eb79` it prints `round_changed=[]`, exit 0, while 18 ids stay listed (S069, S182 and S193 superseded; 15 not),
+    all changed in place before round 35 and carried as routed debt. Not covered: deleted rows. (Revised in round 35
+    after CritNoHarm N3: the first text let a supersede row discharge the violation, a waiver QUALITY 81 does not
+    grant.)
+    Notes after round-35 wave 2 (append-only). 101 not covered: a met control whose fields are all filled but whose
+    evidence cell also carries an unparsed dangling path (round 35's 9d) passes 101's Check; MutQ101 kept that mutant
+    alive (`.ufo/waves/round-35/w2/MutQ101.md`), so evidence validity stays with the counter and the row judges.
+    MutQ102 (`.ufo/waves/round-35/w2/MutQ102.md`) showed the first 102 text let a junk `supersedes S041` row with no
+    source discharge S041 (mutant iii survived); the revised 102 above keeps every changed id listed, and a new row's
+    own validity is rule 1's Gate check (URL, access date, located quote).

@@ -2093,3 +2093,16 @@ landed tip.
   with nine E11), S193 teaches cell scoped after a gate reject (`406d91a4`), the FR6 frontier note with re-measured
   numbers (`699090c1`), QUALITY 99 (`7161a738`), entry row 3r2 (`5c3e2dde`), this lesson, the wave-B reports and the 31
   audited wave-A reports.
+
+## Round 35 (attempt 1, L1 MoriR35) — capabilities register vs the closure record; round-34 repairs
+
+- Froze C1 (calibration) with `count-c1.py` at `f2d28711`; control wave C0 (12 seats; 1 refused by the provider) scored
+  every skip control `C1=unmet` and receipts landed at `913df22e`. Two controls met P-C1 (10c empty prose, 9d
+  unbackticked prose) and the L1 ruled them residuals (mistake M1).
+- Wave 1 (v1, 32 seats) drafted the 18 register rows, opened S199–S204, drafted the repairs; register landed at `721040a9`;
+  sources, repairs, QUALITY 98 correction and 100–102, Axes fix and lesson at `cedb0ec4`.
+- **C1 = met** at `cedb0ec4` (`evidence/c1-after.txt`) but not verified: a word-bag control also meets P-C1 (wave 2).
+- Wave 2 (v1, 36 seats) judged every register row, re-opened every new source row, re-ran the counter and attacked the
+  repairs (`.ufo/waves/round-35/w2/`).
+- Re-verification result (freshness): S182 and S193 sources re-opened live; bytes equal the committed copies
+  (`corpus/lessons/round-35.md` Gate). The append-only check finds 15 older SOURCES ids edited in place (routed debt).

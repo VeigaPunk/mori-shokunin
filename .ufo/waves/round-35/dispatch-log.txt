@@ -8,3 +8,11 @@ round-35 dispatch log (L1 MoriR35)
         name/agent/task; the harness schema requires a `solutionSpace` per task, so a role-generic one-line value was
         added to each task (scribe "one drafting item; content set by the cited records", etc.); no model passed
         settle deadline 09:36Z
+09:06Z  wave-slot release mori mori-r35-w1 (31/32 settled; ReviewPredicateIdentity still running, read-only)
+09:06Z  L1 MISTAKE: ran `git add -N .` in the lane (intent-to-add entries for all untracked files, incl. .scratch/ and w2/*,
+        in the lane git index); no commit was made with them; left for the helper's next jj mutation to reset the index,
+        verified after the next landed commit (lesson M4)
+09:07Z  w2-spec.json (36 items) validated/rendered under policy v1 (run exit 0) -> w2-dispatch.json
+09:08Z  wave-slot acquire mori mori-r35-w2 37 -> granted after 106 s (live=61)
+09:10:14Z wave 2 dispatched as ONE task call (eval tool.task), 36 tasks unchanged in name/agent/task plus the
+        harness-required role-generic solutionSpace; settle deadline 09:55Z
