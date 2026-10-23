@@ -775,5 +775,8 @@ Run `bash tools/mori-blind-check.sh <lane-rev> <wave-report-dir> <writer-name-re
 check committed writer briefs before a blind freeze: it prints `scanned=N`, `blind_violations=M` and one
 `path:line:rule` per hit (exit 0 none, 1 hits, 2 input error); `--selftest` prints `PASS`. The files-opened rule it
 implements is `.ufo/waves/round-31/rule-text.md`; every forbidden list entry is reported at its own line and prose after
-the list is never an entry (round-30 D1). Its two other detectors are the round-30 gate's, with the false positives and
+the list is never an entry (round-30 D1). Known limits (round-31 residual CriticC2Tip): only `#` headings at
+column 0 open or close a block (setext or indented headings do not), CRLF line endings make allowed paths fail, a tab
+after `-` is not a list marker, allow globs are not path-normalized (`../` passes), and a `#` line inside a code fence still opens a block
+(residual ReviewC2Tool F1). Its two other detectors are the round-30 gate's, with the false positives and
 negatives named in `corpus/lessons/round-31.md` (Carried). Detection only: it judges no case.

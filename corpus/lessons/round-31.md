@@ -42,12 +42,29 @@ author: mori-shokunin L1 MoriR31 (round 31, attempt 1)
   (`corpus/lessons/round-30.md:134`); A1 now also requires a new id's URL to be absent at the entering tip. Fix shown
   able to fail: `count-c1-a1.py` on CriticC1Counter's renumbered falsifier reports `url_registered_at_entering_tip`.
 
+- **M5 — amendment A1 said nothing was loosened, but its C2 nonce line removed the end-of-file shape (class:
+  undisclosed relaxation inside a tightening; the round-30 D2 class repeated).** Evidence: `count-c2-a1.py:55` appends
+  `<!-- nonce … -->` after every brief, so no block reaches end of file; ten of the 16 frozen fixtures end on a list
+  entry. Residual CriticAmendmentA1 built a copy of the tip tool that drops a file's last line: `count-c2.py` → `7/16`,
+  `C2=unmet`; `count-c2-a1.py` → `27/27`, `C2=met` (`.ufo/waves/round-31/r1/CriticAmendmentA1.md`). The contract's A1
+  text ("A1 only adds conditions; nothing in P-C1 or P-C2 is removed or loosened") is therefore wrong for C2. Unlike
+  P-C1-A1, P-C2-A1 does not include "P-C2 holds". Captured-by: QUALITY 25 and this lesson's M2 rule; the A1 author
+  checked the nonce against expected hits only, not against tool failure modes it could hide. Effect on the verdict:
+  none — both counters print `C2=met` at the measured tip (`evidence/c2-after.txt`), and the report states C2 under
+  both. Fix: an amendment that perturbs inputs must state, per perturbation, which failure mode it can mask, and
+  must keep the original predicate as a conjunct; shown able to fail by the last-line-drop copy above.
+- **M3 addendum — thresholds set with candidate data in view.** When A1 was written, the wave-1 source drafts and the
+  entry draft existed in seat reports (none committed, none scored). A1's C1 conditions loosen nothing, but they were not
+  set blind to that data (residual CriticAmendmentA1 §1).
+
 ## Gate (rows opened 2026-10-22 in round 31)
 
 Fourteen candidates opened; twelve admitted, two rejected (duplicate URLs). Every admit row's bytes are committed
 unchanged at `corpus/evidence/sources-r31/S###.src` and re-fetched by `count-c1.py` / `count-c1-a1.py` at measurement.
 S161–S173 were opened by wave-1 seats (seat report `.ufo/waves/round-31/w1/<seat>.md`); S174 by the L1. The L1 dropped two located quotes shorter than 3 words from the seat drafts of S163
-(`sched.h:1181`, 2 words) and S164 (`fs/exec.c:1253`, 1 word) to meet A1; the remaining quotes are the seats' own.
+(`sched.h:1181`, 2 words) and S164 (`fs/exec.c:1253`, 1 word) to meet A1; the remaining quotes are the seats' own. The S174
+label `proc_locks.5:46-48` read `(12 words)` at `5b728304`; the quote has 13 words (residual ReviewGateSpot); corrected
+in place under QUALITY 90.
 
 | id | url | accessed | sha256 | located quotes | decision |
 |---|---|---|---|---|---|
@@ -64,7 +81,7 @@ S161–S173 were opened by wave-1 seats (seat report `.ufo/waves/round-31/w1/<se
 | S171 | https://git.kernel.org/pub/scm/docs/man-pages/man-pages.git/plain/man/man5/proc_pid_stat.5?h=man-pages-6.20 | 2026-10-22T23:43:07Z | `cba82e47c8c7917ec4f7c24d9c8779c53ecf478fdefe5c7835690989bb060bcd` | `man5/proc_pid_stat.5:43` (8 words): "One of the following characters, indicating process state:"; `man5/proc_pid_stat.5:228-229` (17 words): "The time the process started after system boot. Before Linux 2.6, this value was expressed in jiffies."; `man5/proc_pid_stat.5:39` (10 words): "(16) characters (including the terminating null byte) are silently truncated." | admit, A, mined |
 | S172 | https://git.kernel.org/pub/scm/docs/man-pages/man-pages.git/plain/man/man2const/PR_SET_NAME.2const?h=man-pages-6.20 | 2026-10-22T23:43:03Z | `f2ac57cc826943dcd5bc71feea9859099014bc59767b21eafad44a7325be558a` | `PR_SET_NAME.2const:26-29` (21 words): ".B PR_SET_NAME Set the name of the calling thread, using the value in the location pointed to by .IR name ."; `PR_SET_NAME.2const:34-35` (19 words): "If the length of the string, including the terminating null byte, exceeds 16 bytes, the string is silently truncated."; `PR_SET_NAME.2const:53-57` (11 words): ".SH ERRORS .TP .B EFAULT .I name is an invalid address." | admit, A, mined |
 | S173 | https://raw.githubusercontent.com/torvalds/linux/v7.2/Documentation/admin-guide/sysctl/kernel.rst | 2026-10-22T23:43:06Z | `e9baf759b3eac6b58d893638280e9924fec46a8814169b224bbf9ae7f7fd4a32` | `kernel.rst:1084-1085` (21 words): "PID allocation wrap value.  When the kernel's next PID value reaches this value, it wraps back to a minimum PID value."; `kernel.rst:1086` (9 words): "PIDs of value ``pid_max`` or larger are not allocated."; `kernel.rst:1092-1093` (17 words): "The last pid allocated in the current (the one task using this sysctl lives in) pid namespace." | admit, A, mined |
-| S174 | https://git.kernel.org/pub/scm/docs/man-pages/man-pages.git/plain/man/man5/proc_locks.5?h=man-pages-6.20 | 2026-10-22T23:48:04Z | `509fd95031ba3c9fb62c8d34b8e0c9f233ccf44d0d33d4b48b260a91de2d4905` | `proc_locks.5:46-48` (12 words): ".B FLOCK This is a BSD file lock created using .BR flock (2)."; `proc_locks.5:80` (9 words): "The PID of the process that owns the lock."; `proc_locks.5:93` (9 words): "followed by the inode number of the locked file." | admit, A, mined |
+| S174 | https://git.kernel.org/pub/scm/docs/man-pages/man-pages.git/plain/man/man5/proc_locks.5?h=man-pages-6.20 | 2026-10-22T23:48:04Z | `509fd95031ba3c9fb62c8d34b8e0c9f233ccf44d0d33d4b48b260a91de2d4905` | `proc_locks.5:46-48` (13 words): ".B FLOCK This is a BSD file lock created using .BR flock (2)."; `proc_locks.5:80` (9 words): "The PID of the process that owns the lock."; `proc_locks.5:93` (9 words): "followed by the inode number of the locked file." | admit, A, mined |
 
 Status changes this round: none to existing rows. New rows S161–S174 (S166, S168 `rejected`).
 
@@ -87,6 +104,9 @@ Status changes this round: none to existing rows. New rows S161–S174 (S166, S1
 - C2 rule ambiguities found by wave-1 RealBriefsR29: a heading with words between `files` and `opened`, lead-in prose
   before the first entry, and a sub-heading inside a block are read literally by rule clauses 1 and 3; on the round-29
   briefs the literal reading yields missing-list hits a looser reading would not. No fixture pins those shapes.
+- `tools/mori-blind-check.sh` edge cases outside the 27 fixtures (residual CriticC2Tip): setext and indented headings,
+  CRLF line endings, a tab after `-`, and `../` through an allow glob; a fenced `# files opened` line opens a block (residual
+  ReviewC2Tool F1); named in SKILL, not fixed under C2.
 - The two kept round-30 detectors have false positives and negatives (wave-1 ReviewGateR30Lines F1–F6); rule clause 6
   keeps them unchanged.
 - MutFixturePower: three mutants survive the 16 original fixtures (reverse opener, `+ ` marker, prose not closing);
