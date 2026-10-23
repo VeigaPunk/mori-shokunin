@@ -807,3 +807,17 @@ S175–S177). Tool for the counted check: `python3 .ufo/waves/round-32/count-c1.
 | `curl --fail` exits 22, or the server answers 403 with a challenge | the fetch failed for this method: record `unreachable` with the transcript | that the source changed or vanished, or that passing the challenge is an option | Round32 `corpus/evidence/recheck-r32/S056.fetch.txt`; S175 |
 | the population URL redirects (S041, S062 to `rfc-editor.org/info/…`) | `--location` saved the final page; the url cell stays the row's URL | that a redirect is drift | Round32 `corpus/evidence/recheck-r32/README.md`; S175 |
 | a row's anchor line numbers no longer index the live HTML (S002, S045) | the locator went stale while the passage stayed | that the fact drifted; line anchors into rendered pages are not stable identifiers | Round32 `.ufo/waves/round-32/w1/Recheck002.md`, `Recheck045.md` |
+
+## Round33 — disk write rate from /proc/diskstats (FR6; corpus/knowledge/disk-write-rate-r33.md)
+
+Detection and report only: these rules read counters and never touch a block device setting. Sources S180–S190.
+
+- Round33 rule: convert a sectors-written delta to bytes by multiplying by 512, never by a block size of the device, because the counter's sector is always 512 bytes (corpus/knowledge/disk-write-rate-r33.md rows 1 and 8).
+- Round33 rule: a rate needs two readings, and a counter lower in the newer reading marks that interval unavailable, because the counters reset at boot, on reattachment and on overflow (corpus/knowledge/disk-write-rate-r33.md rows 4, 13 and 14).
+- Round33 rule: total a host's writes over whole-disk lines or over partition lines but never both, because a partition's sectors are added to its disk as well (corpus/knowledge/disk-write-rate-r33.md row 3).
+- Round33 rule: report io_ticks as the share of time with I/O in progress and the in-flight value as a momentary queue depth, never as throughput (corpus/knowledge/disk-write-rate-r33.md rows 5, 6 and 7).
+- Round33 rule: a missing line, a missing discard or flush field, or an iostat zero is unavailable or unknown, never a zero write rate (corpus/knowledge/disk-write-rate-r33.md rows 8, 9, 10, 11 and 14).
+
+Round33 correction to the Round32 section above: under the round-32 frozen definition (one page, the whole teaches
+cell) five of the 33 `current` rows are not current on their population page alone (S058, S117, S128, S149, S137);
+the clause-level recheck is in `corpus/lessons/round-33.md` (Round-32 repair).

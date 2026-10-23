@@ -696,3 +696,16 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     opened in the round that added it" (`.ufo/waves/round-32/contract.md:17-18`, frozen at `29f7d043`), and the
     sweep at the base lists earlier `Reopen*` seats for S041, S043–S047, S068, S117, S128 and S137
     (`.ufo/waves/round-32/evidence/m1-reopen-sweep.txt`).
+
+## Criteria added round 33 — round-32 routed defect 2 (judge rule drift)
+
+97. Every judge dispatch and every judge receipt quotes the decision rule word for word from the frozen contract, and
+    the counter checks it at a stated comparison level (whitespace runs collapsed). A judge reason that concedes any
+    unsupported part records `unsupported` (or `disagree`), never an agreement with a caveat; a reading of the rule
+    that first appears in a receipt is not the claim's rule. Check: at revision R, the frozen rule sentence is a
+    substring of the collapsed text of both the committed dispatch and the committed receipt (round 33:
+    `.ufo/waves/round-33/count-c1-a1.py` prints `dispatch_rule=yes receipt_rule=yes`), and no receipt line pairs an
+    agreement with a conceded gap. Lesson: `corpus/lessons/round-33.md` (Round-32 repair §2, Mistakes M1). Shown able
+    to fail: the round-32 receipt does not contain its dispatch's rule sentence — `grep -F 'Reject (disagree) a row when'
+    .ufo/waves/round-32/judge/JudgeRecheck.md` prints nothing while `.ufo/waves/round-32/r1-dispatch.json` contains it,
+    and its S058/S117/S128/S149/S137 reasons concede unsupported parts beside `agree` (`JudgeRecheck.md:63,73-76`).

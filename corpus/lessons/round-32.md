@@ -161,3 +161,13 @@ fetches. The C0 control findings (`evidence/c1-controls.txt`) are unchanged.
   `AGENTS.md`, `bm.json`, `live_s228.html`, `nama.html`, `s395.txt`, `tf_bavelas.html`, `wb2.html` and a pycache file.
   None names mori round 32, and every mtime is before the attempt-2 dispatch at 01:01Z. None was moved.
 - Attempt 1 (`MoriR32`) left `.scratch/` only. Nothing from it was reused.
+
+## Correction (round 33, append-only; routed by `corpus/lessons/round-32-verifier-spotcheck.md` §8 items 1-2)
+
+- Lines 113-116 cite "`JudgeRecheck` finding 1". The receipt has no numbered findings; the looser reading of `current`
+  is in its per-row reasons at `.ufo/waves/round-32/judge/JudgeRecheck.md:63,73-76`, and the S058 shape was raised as
+  ReviewMultiSource Finding 1 (`.ufo/waves/round-32/r1/ReviewMultiSource.md:22`).
+- Under the frozen definition (contract `:25`, "the live page still supports the teaches cell": one page, the whole
+  cell), S058, S117, S128, S149 and S137 are not `current` on their population page alone; their `## Recheck` rows above
+  are kept as written. The clause-level re-check on each row's own pages is in `corpus/lessons/round-33.md`
+  (Round-32 repair §1). Round 32's C1 stays a miss.

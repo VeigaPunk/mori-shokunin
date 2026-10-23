@@ -1,0 +1,207 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r33-w1",
+  "createdAt": "2026-10-23T02:32:40.595Z",
+  "updatedAt": "2026-10-23T02:39:35.282Z",
+  "reportDir": ".ufo/waves/round-33/w1",
+  "members": {
+    "SrcStatRst": {
+      "kind": "spawn",
+      "agentId": "MoriR33.SrcStatRst",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcIostatsRst": {
+      "kind": "spawn",
+      "agentId": "MoriR33.SrcIostatsRst",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcGenhd": {
+      "kind": "spawn",
+      "agentId": "MoriR33.SrcGenhd",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcPartStat": {
+      "kind": "spawn",
+      "agentId": "MoriR33.SrcPartStat",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcBlkCore": {
+      "kind": "spawn",
+      "agentId": "MoriR33.SrcBlkCore",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcBlkMq": {
+      "kind": "spawn",
+      "agentId": "MoriR33.SrcBlkMq",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcSectorSize": {
+      "kind": "spawn",
+      "agentId": "MoriR33.SrcSectorSize",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcSysfsBlockAbi": {
+      "kind": "spawn",
+      "agentId": "MoriR33.SrcSysfsBlockAbi",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcDiscardCommit": {
+      "kind": "spawn",
+      "agentId": "MoriR33.SrcDiscardCommit",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcFlushCommit": {
+      "kind": "spawn",
+      "agentId": "MoriR33.SrcFlushCommit",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcSysstatIostat": {
+      "kind": "spawn",
+      "agentId": "MoriR33.SrcSysstatIostat",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcDmCore": {
+      "kind": "spawn",
+      "agentId": "MoriR33.SrcDmCore",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcLoopOrMd": {
+      "kind": "spawn",
+      "agentId": "MoriR33.SrcLoopOrMd",
+      "role": "scribe",
+      "item": null
+    },
+    "ScoutFR6Census": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ScoutFR6Census",
+      "role": "scout",
+      "item": null
+    },
+    "ConnectorSiblings": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ConnectorSiblings",
+      "role": "connector",
+      "item": null
+    },
+    "ExecSecondUrls": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ExecSecondUrls",
+      "role": "executor",
+      "item": null
+    },
+    "ExecHostDiskstats": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ExecHostDiskstats",
+      "role": "executor",
+      "item": null
+    },
+    "ExecItem6": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ExecItem6",
+      "role": "executor",
+      "item": null
+    },
+    "RepairS058": {
+      "kind": "spawn",
+      "agentId": "MoriR33.RepairS058",
+      "role": "scribe",
+      "item": null
+    },
+    "RepairS117": {
+      "kind": "spawn",
+      "agentId": "MoriR33.RepairS117",
+      "role": "scribe",
+      "item": null
+    },
+    "RepairS128": {
+      "kind": "spawn",
+      "agentId": "MoriR33.RepairS128",
+      "role": "scribe",
+      "item": null
+    },
+    "RepairS149": {
+      "kind": "spawn",
+      "agentId": "MoriR33.RepairS149",
+      "role": "scribe",
+      "item": null
+    },
+    "RepairS137": {
+      "kind": "spawn",
+      "agentId": "MoriR33.RepairS137",
+      "role": "scribe",
+      "item": null
+    },
+    "ScopeS041": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ScopeS041",
+      "role": "scribe",
+      "item": null
+    },
+    "ScopeS044": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ScopeS044",
+      "role": "scribe",
+      "item": null
+    },
+    "ScopeS051": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ScopeS051",
+      "role": "scribe",
+      "item": null
+    },
+    "ScopeS062": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ScopeS062",
+      "role": "scribe",
+      "item": null
+    },
+    "ScopeS064": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ScopeS064",
+      "role": "scribe",
+      "item": null
+    },
+    "ScopeS069": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ScopeS069",
+      "role": "scribe",
+      "item": null
+    },
+    "DraftJudgeRuleQuality": {
+      "kind": "spawn",
+      "agentId": "MoriR33.DraftJudgeRuleQuality",
+      "role": "scribe",
+      "item": null
+    },
+    "ScoutRoutedLedger": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ScoutRoutedLedger",
+      "role": "scout",
+      "item": null
+    },
+    "ReviewContractCounter": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ReviewContractCounter",
+      "role": "reviewer",
+      "item": null
+    },
+    "CriticClaimC1": {
+      "kind": "spawn",
+      "agentId": "MoriR33.CriticClaimC1",
+      "role": "critic",
+      "item": null
+    }
+  }
+}
