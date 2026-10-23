@@ -4,7 +4,7 @@ author: hyaku closure (non-author integrator, @m_opus)
 
 Lane-round mori 31 (L1 `MoriR31`). Base `a12c68ae81257fb6f918bb165bcb39c73f82d212`, landed tip
 `52435f2f425c2b4a5e7ba63d7abc1292b8736367`, fleet report `.ufo/reports/round-31/mori.md` (`58133def`). Closure run
-2026-10-23 (00:27Z–00:40Z) by a fresh hyaku closure session that did not author the round. Seven read-only seats
+2026-10-23 (from 00:27Z) by a fresh hyaku closure session that did not author the round. Seven read-only seats
 re-checked parts of the round (TimelineA1, A1Loosening, C1Remeasure, C2Evidence, HarmAxes, SpotGate, Conformance).
 The C2 verdict below rests on committed evidence; the closure did not run `tools/mori-blind-check.sh` itself. Two seats
 (A1Loosening, HarmAxes) did run `count-c2.py`/`count-c2-a1.py` (which execute the tool) inside the counters' own
@@ -20,7 +20,7 @@ Driver digest (copied from `.ufo/watchdog.log`):
 |---|---|---|---|
 | Report committed by the lane identity | `git log --format='%an %ae %H %ad' -- .ufo/reports/round-31/mori.md` | `mori-shokunin mori@shokunin.local 58133def… 21:26:29 -0300`, one commit. The lane tip `52435f2f` was committed at 21:25:33, before the report | pass |
 | `SHONEN` heading | report `:101-109`; `grep -cE '^- \[.\] ' SHONEN.md` | 4 lines, one per box, all `[~]`; `SHONEN.md` has 4 boxes | pass |
-| Cited hashes exist and are ancestors of `master` | `cat-file -t` + `merge-base --is-ancestor <h> master` for every hex token in the report | 14/14 commits (`a12c68ae 2124cbcd 8baccf4a 1d94055d 7973034b 3b92ccbb 5b728304 458ff1c3 a29f3e3f efcb7324 d0cac478 fde0b0b0 52435f2f`, plus full-length duplicates) are ancestors. `1442c14e…` is the C2 fixture sha256 prefix, not a commit, and the report labels it that way | pass |
+| Cited hashes exist and are ancestors of `master` | `cat-file -t` + `merge-base --is-ancestor <h> master` for every hex token in the report | 13/13 unique commits (`a12c68ae 2124cbcd 8baccf4a 1d94055d 7973034b 3b92ccbb 5b728304 458ff1c3 a29f3e3f efcb7324 d0cac478 fde0b0b0 52435f2f`; 15 spellings including full-length duplicates) are ancestors. `1442c14e…` is the C2 fixture sha256 prefix, not a commit, and the report labels it that way | pass |
 | Pushed, nothing ahead | `scripts/hyaku/jj-lane.sh state <lane>` | `branch=master local=remote=52435f2f… ahead=0 behind=0 head=detached tracked=0 untracked=1` | pass |
 | Uncommitted round work | `git status --porcelain`; `find .scratch -type f -newermt '2026-10-22 20:27:52' \| wc -l` | only `?? .scratch/`. The count is `0`; the newest mtime is 2026-10-21 12:30:50 (`round22/measure3/…`, 151 344 files). This is pre-round scratch, not round work, and the report names it | pass (named) |
 | Prompt carries the template contract | Conformance seat: rendered `kimi-shokunin/templates/round-prompt.md` vs prompt `:1-140`; substituted `lane-addendum.md` vs prompt `:141-365` | 1 hunk (`<mori-repo>` → `mori-shokunin`, the documented legacy fill); addendum is verbatim (diff exit 0), including §9 with the do-nothing-control and `(kumitate r42)` bullets. The prompt was committed `64550ad` at 20:27:51 | pass |
