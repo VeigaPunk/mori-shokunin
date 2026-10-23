@@ -852,3 +852,23 @@ and 4):
   `.ufo/waves/round-34/wb/ExecStackedRemeasure.md`). Round 35 opened seventeen files and none states it; S203 and
   S204 are kept as rejected rows (sweep: `corpus/lessons/round-35.md` Gate). Do not sum a stacked device with its
   slaves; why the backing line also moves stays FR6 frontier.
+
+## Round36 — source drift probe, SOURCES append-only gate, index check
+
+- To see whether a source row's committed copy still matches its URL, run `python3 tools/mori-source-drift.py --root .`
+  (network, read-only). Read `drifted` as "the copy is not reproducible from today's body", never as a changed
+  source: annotated excerpts (round 30, S156–S160) and rebuilt doc pages (S176, S177) classify `drifted` while the
+  source itself is unchanged. The action per state is in `corpus/knowledge/source-drift-r36.md`.
+- Before landing any `corpus/SOURCES.md` change, run `python3 tools/mori-sources-appendonly.py <tip> --round-base
+  <entering tip>` and land only with `round_changed=[]` (exit 0). It lists in-place edits (`ids`), deleted rows
+  (`deleted`) and superseders; a superseder is a disposition, not a discharge (QUALITY 102, 104). It replaces the
+  round-35 wave script `.ufo/waves/round-35/check-sources-appendonly.py` as the active check.
+- After every lane helper commit, run `bash tools/mori-index-clean.sh <lane>`: exit 1 means a staged path or an
+  intent-to-add entry (`git add -N`) is in the lane index (QUALITY 103). `git diff --cached` does not list
+  intent-to-add entries; the tool reads porcelain v1 and v2 and refuses a verdict when they disagree.
+
+| name | kind | entry | verdict map | self-test | pinned values | write scope | owner |
+|---|---|---|---|---|---|---|---|
+| source drift (r36) | probe | `python3 tools/mori-source-drift.py --root <repo>` | 0 `drifted=0` (rows may be `unavailable` or `no-copy`; not proof every URL was reachable) · 1 `drifted>0` · 2 could-not-evaluate (SOURCES.md missing or unreadable) | `python3 tools/mori-source-drift.py --selftest` (offline 127.0.0.1 fixture) | newest copy `corpus/evidence/sources-r<N>/<id>.<ext>` per row; live URL bodies | none (read-only; self-test temp dir removed) | mori |
+| SOURCES append-only (r36) | gate | `python3 tools/mori-sources-appendonly.py <rev> [--repo DIR] [--round-base REV] [--path P]` | with `--round-base`: 0 `round_changed=[]` · 1 non-empty; without: 0 no `ids` and no `deleted` · 1 otherwise; 2 git or parse error | `python3 tools/mori-sources-appendonly.py --selftest` (8 sandbox histories through the CLI) | git history of `corpus/SOURCES.md`; immutable = every column but status, recheck, used-by | none (read-only git; self-test temp dir removed) | mori |
+| index clean (r36) | gate | `bash tools/mori-index-clean.sh <repo>` | 0 `staged=0 intent_to_add=0` · 1 staged or intent-to-add entries (≤20 paths listed) · 2 usage, not a repo, git error, or porcelain v1/v2 disagreement | `bash tools/mori-index-clean.sh --selftest` (clean, `add -N`, `add`, not-a-repo) | the repo's git index | none (`--no-optional-locks`; self-test temp dir removed) | mori |

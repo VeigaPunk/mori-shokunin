@@ -816,3 +816,28 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     MutQ102 (`.ufo/waves/round-35/w2/MutQ102.md`) showed the first 102 text let a junk `supersedes S041` row with no
     source discharge S041 (mutant iii survived); the revised 102 above keeps every changed id listed, and a new row's
     own validity is rule 1's Gate check (URL, access date, located quote).
+
+## Criteria added round 36 — round-35 spot-check §6 items 3 and 4, round-36 mistakes
+
+103. After every lane helper commit, the lane git index holds no staged path and no intent-to-add entry, and the
+    round's dispatch log records the check after each `landed` line. Check: `bash tools/mori-index-clean.sh
+    /home/vgpnk/Projects/shokunin/mori-shokunin` prints `staged=0 intent_to_add=0`, exit 0. Lesson:
+    `corpus/lessons/round-35.md` M4; `corpus/lessons/round-35-verifier-spotcheck.md` §6 item 4. Shown able to fail: the
+    tool's self-test runs `git add -N newfile` in a sandbox repo and gets exit 1 (`intent_to_add=1`); `git diff
+    --cached --name-only` alone prints nothing there, so a check built on it passes the round-35 mistake. Not
+    covered: it detects index state after the fact; it does not prevent a forbidden git command.
+104. QUALITY 102's check runs the registered gate `tools/mori-sources-appendonly.py` (SKILL.md Round36 registry
+    row), not the round-35 wave script, which stays round-35 evidence. The gate also lists rows held earlier and
+    absent at `<rev>` (`deleted=[...]`) and counts them as violations, closing 102's "Not covered: deleted rows".
+    Check: `python3 tools/mori-sources-appendonly.py <tip> --round-base <entering tip>` exits 0 with
+    `round_changed=[]`; `--selftest` exits 0. Lesson: `corpus/lessons/round-35-verifier-spotcheck.md` §6 items 2-3.
+    Shown able to fail: the self-test's deletion history prints `deleted=[S###]` and exit 1; under count-c2.py the
+    round-35 script and a no-deletion variant score `C2=unmet` (`.ufo/waves/round-36/evidence/c0-rescore-v2.txt`, J2
+    and J5). Not covered: whether a superseding row's own content is right (rule 1's Gate check).
+105. A freshness or drift witness is checked for what changed before it is used as a target: for every real row a
+    counter counts as drifted, compare the source's full-document sha256 with the one recorded when the row was
+    opened (the copy header or the lesson Gate), and count the row as a source change only when they differ. Lesson:
+    `corpus/lessons/round-36.md` M1. Shown able to fail: round 36's frozen P-C1 required "at least one oracle-drifted
+    row", and all seven real drifted rows were representation differences (S156–S160 annotated excerpts whose
+    header sha256 equals the live body; S176/S177 build footers) (`.ufo/waves/round-36/w1/MineCopyFidelity.md`).
+    Not covered: semantic drift of a page whose bytes never change.
