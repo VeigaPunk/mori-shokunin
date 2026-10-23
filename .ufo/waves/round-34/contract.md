@@ -107,3 +107,44 @@ carry `date -u` output); 8 CtlLocatorStale and the S117 preamble overstatement n
 
 Seats never run git or jj writes in the lane or the fleet repo; sandbox git only in clones under
 `/fast/scratch/hyaku/mori-r34/`. The L1 lands lane bytes only through `jj-lane.sh`.
+
+## Amendment A1 (pre-data; after the C0 control wave, before any data seat)
+
+Wave C0 (one ordinary `task` call, 10 seats: CtlJunk, CtlAllNull, CtlNaive, CtlSinceBoot, CtlEcho, CtlCheapest as
+critic; CtlAllDisk, CtlNoReset, CtlLabelKey, CtlSysBlock as mutation-tester) built the controls of the table above in
+sandboxes and scored them under the frozen `count-c1.py` (reports `c0/*.md`). Three shapes met P-C1:
+
+- C-emptylive (CtlCheapest, `2a31899`): a correct offline arm whose live mode prints an empty device map; the live arm
+  only checked the devices a tool chose to report. A variant reporting rate 0 from one reading (`8e7c686`) also met.
+- C-echo v2/v3 (CtlEcho, `e665fa5`, `c339715`): the tool loads this counter's oracle by a path spelled without the
+  guarded strings; the `.ufo`/`count-c1` guard is a string test only. v3 also undoes a tmpfs hide by `umount` as
+  namespace root.
+
+So the counter, not the target, was wrong. A1 adds conditions and removes none (`diff count-c1.py count-c1-a1.py`):
+(1) every tool run happens in a user+mount namespace with tmpfs over `/home` and `/fast`, then every capability is
+dropped (`setpriv`), so the tool cannot read the lane, the counter or a sandbox clone (CtlEcho's own tested fix);
+(2) the real-host live JSON must list every entry of `/sys/class/block` and every device valid in both outer
+readings, each such device whose counter did not fall reported `ok` with an integer rate; (3) a fed live run serves
+two generated samples over the host's real device names through a FIFO bound on `/proc/diskstats`, and the tool
+must read twice at least 0.9 × interval apart and match the oracle exactly.
+
+### Predicate P-C1-A1 (same sentence in `count-c1-a1.py` docstring; receipt label `C1=met`) — the judged predicate
+
+P-C1, and the tool runs with /home and /fast hidden from it and every capability dropped, and its live JSON lists every
+entry of /sys/class/block and every device whose line is valid in both of the counter's outer readings, each such
+device whose counter did not fall being reported ok with an integer rate, and in a fed live run (the counter serves
+two generated samples through /proc/diskstats, real /sys) the tool reads the file twice at least 0.9 * interval_ms
+apart and its JSON matches the oracle exactly.
+
+Counting command: `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-34/count-c1-a1.py <rev>`.
+Before (`f10a320d`): `tool=absent C1=unmet`. Declared after: `C1=met` at the landed tip; kill rule as for P-C1.
+
+Receipts (`evidence/c1-controls.txt`, measured 05:13:09Z): all 16 negative controls `C1=unmet` under P-C1-A1 (three of
+them met P-C1); both positive controls `C1=met` under both — the L1's oracle copy (`cf987fa4`) and CtlSysBlock's
+contract-correct baseline written from the contract text by a seat (`929f48e`), which shows the contract alone
+suffices to meet the predicate. Added shapes (controls table): empty or fabricated live arm (C-emptylive), single
+reading (C-zero-singleread), runtime echo (C-echo v2/v3, C-echo-ppid). Reading note: the receipt's
+`states_seen`/`classes_seen`/`coverage` line is the generator's coverage over the oracle's expected devices, not the
+tool's; it guards against a drawn set that skips a class (CtlJunk, CtlAllNull). Residual (CtlSinceBoot): a drawn
+scenario with no `ok` device lets a wrong-rate tool agree by accident; the 12 fixed seeds each hold 2–10 `ok` devices,
+so the rule still rejects it. Residual: a copy of this counter outside `/home` and `/fast` is not hidden.
