@@ -10,7 +10,7 @@ Candidates this round (five, all opened 2026-10-23; copies under `corpus/evidenc
 | S222 — OWASP SSRF Prevention Cheat Sheet | **admitted** (mined, tier B: secondary) | `https://cheatsheetseries.owasp.org/cheatsheets/Server_Side_Request_Forgery_Prevention_Cheat_Sheet.html`, opened 2026-10-23; "Unsafe redirect" note at `S222.src:5031`: "Disable the support for the following of the redirection in your web client in order to prevent the bypass of the input validation" |
 | S223 — Python 3 `urllib.request` documentation | **admitted** (mined) | `https://docs.python.org/3/library/urllib.request.html`, opened 2026-10-23; `HTTPRedirectHandler.redirect_request` at `S223.src:1140-1142`: "does not strictly follow RFC 2616, which says that 301 and 302 responses to POST requests must not be automatically redirected without confirmation" |
 | S224 — Yama LSM documentation | **admitted** (mined) | `https://docs.kernel.org/admin-guide/LSM/Yama.html`, opened 2026-10-23; `ptrace_scope` level 1 at `S224.src:217-221`: "1 - restricted ptrace: a process must have a predefined relationship with the inferior it wants to call PTRACE_ATTACH on." |
-| S225 — Fetch Standard §4.5 | **admitted** (mined) | `https://fetch.spec.whatwg.org/`, opened 2026-10-23; "HTTP-redirect fetch" at `S225.src:8355`: "redirect count is 20, then return a network error" |
+| S225 — Fetch Standard §4.5 | **admitted** (mined) | `https://fetch.spec.whatwg.org/`, opened 2026-10-23; "HTTP-redirect fetch" at `S225.src:8355-8356`: "redirect count is 20, then return a network error" |
 
 Rejected: none new. S222's blanket "disable redirects" advice is admitted only for its countermeasure
 scope; the probe must follow redirects, so the entry records the final-destination-only gap as a
@@ -95,6 +95,17 @@ no file under the fleet root names this lane/round (see the report's Misroot lin
   itself, trust boundary is the caller's `--repo`/`--tool`), MEDIUM (`count-c2.py`'s `show()` git reads
   have no timeout/size bound), LOW (relative `--tool` validates and executes from different
   directories). MEDIUM and LOW need a counter re-freeze → routed to round 38 with the exact fixes.
+- **Dead seat**: `ExecR17JJBattery` completed without writing a report (its own background-job attempt hit
+  the 100-job limit; the delivery was a mid-work transcript snapshot). It stays dead in the evidence — the
+  r17-jj battery is covered by `w1/RevR17JJ.md` (PASS, with a mutant that turns exactly the nine
+  `jj_config_redirected` assertions red) and by `evidence/r17-jj-selftest-r37.txt`.
+- **RevR17JJ residual**: the workspace-positive conjunct (`tools/mori-round17-jj-regressions.py:1062-1063`)
+  is never exercised — every sandbox is git-only — so a r38 arm should add a jj-workspace sandbox.
+- **Scored-tip evidence reconciliation** (w1/ScribeReport): S225's copy landed at `52d636d5`, after the
+  scored tip `e57c58b5`, so at the scored tip S225 was `no-copy` — its copy is receipted in
+  `evidence/s225-copy.txt` and the row's `used-by` path resolves. The live sweep in
+  `evidence/drift-live-r37.txt` graded the 220-row entering registry (it ran before S221–S225 were
+  added); a second sweep at the 225-row registry is `evidence/drift-live-r37-tip.txt`.
 - **Inline-dispatch bookkeeping**: `w1-plan.json` records `agentId: null` for every member, the same
   side effect r36 saw; the seat reports under `.ufo/waves/round-37/w1/` are the return evidence.
 - **SHONEN box reconcile** (w1/ScoutReportContract): box 1's `[~]` names SKILL.md as untouched while the

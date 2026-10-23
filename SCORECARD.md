@@ -2106,7 +2106,19 @@ here; the frozen predicate bytes (P-C1, P-C2) and both measured receipts are unc
    content-discrimination gap**, and the tightening (a content-anchor arm: the hardened tool must detect a
    named row's drift under the two policies) is routed to round 38 as a new counter version — not applied
    post-data here. This is the same class as QUALITY 98 and is recorded as lesson M9.
-6. **Security review** (w1/SentTools, FAIL): HIGH — the counters execute the tool under test by design
+7. **Smaller bounded findings from wave 1** (all disclosed, none changes a verdict):
+   `w1/MutC2CapArm` — `cap_kill` passes vacuously on a rev whose tool already lost the 4 MiB anchor, but
+   the aggregate still reads `C2=unmet` via `selftest` (fail-closed); `w1/SimpC2` — four removable bytes
+   (a dead `body_at is not None` conjunct, the duplicate `cat-file -e` pre-check in `show()`, a discarded
+   return whose docstring promises `probe_timeout`, a mid-expression comment) and one wart are routed to
+   round 38, because editing them now would break the counter pins; `w1/ExecC1Seed41` +
+   `w1/RevC1Negatives` — the real arm does not compare the tool's exit code (latent: the blind and
+   challenge arms do, and P-C1 does not require it).
+8. **Probe-timeout wording**: `count-c2.py`'s docstring says a timeout "reports `probe_timeout`", but the
+   check prints `exit=None` in its detail. The timeout path itself (SIGTERM → 5 s → SIGKILL) is real; the
+   label is not. Corrected here rather than in the frozen bytes (r38: surface the detail or trim the
+   docstring).
+9. **Security review** (w1/SentTools, FAIL): HIGH — the counters execute the tool under test by design
    (that is the measurement; the trust boundary is the caller's `--repo`/`--tool`), documented as an
    accepted boundary; MEDIUM — `count-c2.py`'s `show()` git reads have no timeout or size bound, and
    LOW — relative `--tool` paths validate and execute from different directories (carried from r36
