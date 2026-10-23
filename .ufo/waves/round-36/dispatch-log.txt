@@ -57,3 +57,8 @@ NOTE on timestamps: attempt-1 entries (10:42Z-12:1xZ) are UTC. Attempt-2 afterno
         history correction, predicate sentences byte-identical (w2/ExecIndexClean risk 5)
 18:0xZ  wave-slot release mori mori-r36-w2 (66 seats granted; 45 reports on disk at close, 21 seats still
         running at the freeze deadline — partial settlement reported in the round report)
+19:0xZ  final: sentinel repairs landed 1caa242328d6aac37e06b4d66b6c63c48b36d0ce — drift tool read cap
+        (4MiB+1) + post-redirect public-destination policy, selftest arms, frozen-counter verification
+        C1=met (blind 40/40, real 58/49/9/0/0, seed 4886171876972216342); LOG Round-36 heading +
+        completion anchors; 62/66 w2 reports on disk (4 never returned); all 7 mutation-testers PASS;
+        SentData LOW (absolute paths in 4 evidence files) disclosed, fix-forward r37
