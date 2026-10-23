@@ -2031,3 +2031,29 @@ counter that fails content-free controls.
 Held: coverage 6, operability 7, depth 5, freshness 5, calibration 5, adjacency 6. No axis score moves this
 round; C2 moves the operability surface (new registered gate + capability), C1 moves coverage/technique ground
 (README Round-36 rows). No retirement.
+
+## Round 37 declaration (attempt 1, L1 MoriR37) — measurement discrimination (calibration) and the drift probe's hardening (freshness)
+
+Entering tip `842a32074b5c7972e9728f3f629d83eb92f127c2` (round 36 admitted; MANIFEST closure `rounds[54x]`,
+`corpus/lessons/round-36-verifier-spotcheck.md`). Contract and both counters are frozen before any data:
+`.ufo/waves/round-37/contract.md` (P-C1, P-C2, kill rules) with `count-c1.py` and `count-c2.py` pinned by git
+blob hash in `evidence/freeze-r37.txt`. The declared cells below copy the frozen contract; targets, not results.
+
+| Claim | Axis / score | Before (one command over committed bytes) | Declared after-value (one command over committed bytes) |
+|---|---|---|---|
+| C1 the C2 measurement discriminates a real-arm memoizer and enforces the per-id grammar: an extended counter with a run-time-drawn challenge arm in real-arm clothing and `deleted <id>` line parsing (r36 w2/RevNgC2 N1 class; w2/MutC2Deleted limit 3) | calibration 5 (tied lowest with depth and freshness) | `python3 .ufo/waves/round-36/count-c2.py bf0df77 --tool .ufo/waves/round-37/fixtures/memo-n1.py --seed 11` → `C2=met`, exit 0 (a tool that never computes the real-arm answer passes; `evidence/c1-before-memo.txt`); same counter with `fixtures/summary-only.py` → `C2=met`, exit 0 (`evidence/c1-before-summary.txt`) | `python3 .ufo/waves/round-37/count-c1.py <landed tip>` → blind 24/24, real pass, challenge pass, `negative memo-n1.py rejected`, `negative const.py rejected`, `negative summary-only.py rejected`, `C1=met`, exit 0 (`evidence/c1-after.txt`) |
+| C2 the drift probe's two fetch policies are named, mutation-killable and corpus-bound (r36 w2/SentCensus hardening at `8ff9bba`) | freshness 5 (tied lowest) | `python3 .ufo/waves/round-37/count-c2.py 842a320` → `selftest FAIL` (4 unnamed arms), `knowledge FAIL`, `capability FAIL`, `readme FAIL`, `live FAIL`, `C2=unmet`, exit 1 (`evidence/c2-before.txt`) | the same command at the landed tip → all checks PASS, `C2=met`, exit 0 (`evidence/c2-after.txt`) |
+
+Held and observed: coverage 6, operability 7, depth 5, calibration 5, freshness 5, adjacency 6. No retirement,
+waiver, exploratory claim or promotion. Controls: the before receipts are the r36 counter's own pass on the two
+negative fixtures (a do-nothing control cannot produce `C1=met`); the after counter must both accept the honest
+tool and reject all three fixtures, so a counter that only documents cannot meet it. Anti-loop: rounds 35
+(register binding) and 36 (C2 gate acquisition, drift technique) are not repeated; C1 is the measurement
+discrimination the r36 closure routed, C2 the hardening verification it left open.
+
+Capabilities register — rows demonstrated running this round (closure admits them; evidence is the receipts):
+
+| key | name | what it can now do | evidence | first working |
+|---|---|---|---|---|
+| round-37 C1 | real-arm challenge counter | Extends the C2 gate measurement with a run-time-drawn challenge history in real-arm clothing and per-id `deleted` line parsing, so a real-arm memoizer and a summary-only printer are both rejected while the honest gate passes | `.ufo/waves/round-37/count-c1.py`; `evidence/c1-after.txt`; fixtures under `.ufo/waves/round-37/fixtures/` | 37 |
+| round-37 C2 | source-drift re-fetch probe | Re-fetches every registry row with a committed copy and classifies the copy against today's body under a 4 MiB bounded read and a post-redirect public-destination policy; `--selftest` 6 cases with two named, mutation-killable arms | `tools/mori-source-drift.py`; `.ufo/waves/round-37/evidence/c2-after.txt`; `evidence/drift-live-r37.txt` | 37 |

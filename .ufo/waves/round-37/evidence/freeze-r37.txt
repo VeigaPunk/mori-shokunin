@@ -1,0 +1,15 @@
+round-37 freeze pins (git blob hashes over the frozen paths)
+generated: 2026-10-23T19:58:09Z  entry tip: 842a32074b5c7972e9728f3f629d83eb92f127c2
+61a768a37a00ea5b4a79fb6ec2dfece272c98b06  .ufo/waves/round-37/contract.md
+7518fef8f54afff69ee38a99f2acbf518006f5ad  .ufo/waves/round-37/count-c1.py
+6213cf9a5ada709da8cd867581782737b2f06c71  .ufo/waves/round-37/count-c2.py
+19324701f23a225e5ded21c4785c491e7530ac7c  .ufo/waves/round-37/fixtures/memo-n1.py
+2f3993a04906ce33033ab207a284d9ca7d7ff57a  .ufo/waves/round-37/fixtures/const.py
+2d62f742fbef39634a5ff04e25b399b87ce4c941  .ufo/waves/round-37/fixtures/summary-only.py
+162ee87b5b0789c6815f967f3db93d277bab38d9  tools/mori-source-drift.py
+dfb5040b159f7a0b4afedc90a633d997352908f0  tools/mori-sources-appendonly.py
+
+sha256:
+86699627c7627cc3eea3ba9ea952079d081db390f9ba2be1e1d4d685dd98cdae  .ufo/waves/round-37/count-c1.py
+71c72929f9ac4dc8af0c079fb91220413064cb043391bf495f5ce32cadc3a7c1  .ufo/waves/round-37/count-c2.py
+453c5d8e260301df7a99daf62b4c16ea08e4a0b4f9e4f53821cdbce447011552  tools/mori-source-drift.py

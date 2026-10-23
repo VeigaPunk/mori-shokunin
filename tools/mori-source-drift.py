@@ -394,6 +394,26 @@ def _selftest():
                           out, re.M)
             checks.append(("summary", bool(m) and m.groups() == ("10", "2", "1", "1", "4", "2"),
                            "summary=%s" % ((m.groups() if m else None),)))
+
+            # Round 37 named arms for the two w2/SentCensus hardening policies. Each
+            # policy is asserted directly, so a copy with that policy removed fails
+            # exactly its own arm (the round-37 counter mutates both anchors).
+            outcome_over, _ = fetch(base + "/huge")
+            cap_body = 4 * 1024 * 1024  # the frozen cap value, literal: a mutated cap must
+            routes["/big"] = (200, b"y" * cap_body)  # not resize this fixture
+            outcome_at, body_at = fetch(base + "/big")
+            checks.append((
+                "huge_cap",
+                outcome_over == "unavailable" and outcome_at == "body"
+                and body_at is not None and len(body_at) == cap_body,
+                "over_cap=%s at_cap=%s len=%s" % (
+                    outcome_over, outcome_at,
+                    None if body_at is None else len(body_at))))
+            outcome_redir, _ = fetch(base + "/redir")
+            checks.append((
+                "redirect_private_refused",
+                outcome_redir == "unavailable",
+                "redirect_to_loopback=%s" % outcome_redir))
         finally:
             srv.shutdown()
             srv.server_close()

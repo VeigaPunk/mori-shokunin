@@ -1038,12 +1038,34 @@ def evaluate(sb: dict, census_path: Path, expect: dict, refs_before: dict) -> di
         check(f"finding:{fid}:absent", fid not in by_id, f"findings={sorted(by_id)}")
 
     if "jj" in sb and sb["jj"]:
-        # The jj repo config is written under the redirected HOME, never under
-        # the operator's ~/.config/jj. This is the positive redirect evidence.
+        # Round 37 (r36 routed defect): jj 0.45.1 writes $XDG_CONFIG_HOME/jj/repos/<hash>/
+        # only inside a jj workspace (.jj/repo/config-id present). These sandboxes are
+        # git-only by design (the gate's own scratch guard refuses .ufo/ outside
+        # .ufo/waves/), so the positive jj-file evidence cannot fire here — the round-36
+        # selftest went 9/204 red on this assertion alone. The redirect property that IS
+        # testable in every sandbox: every config root the run can write is inside the
+        # case's redirected home, and the case home is neither the operator's home nor an
+        # ancestor of it. When the sandbox does carry a jj workspace, the positive file
+        # evidence is required in addition.
+        env = sb["census_env"]
+        sandbox_home = sb["home"].resolve()
+        operator_home = Path.home().resolve()
+        redirect_ok = (
+            Path(env["HOME"]).resolve() == sandbox_home
+            and Path(env["XDG_CONFIG_HOME"]).resolve() == (sandbox_home / ".config").resolve()
+            and Path(env["JJ_CONFIG"]).resolve() == (sandbox_home / "jjconfig.toml").resolve()
+            and sandbox_home != operator_home
+            and not _within(operator_home, sandbox_home)
+        )
+        workspace = ((sb["root"] / ".jj" / "repo" / "config-id").exists()
+                     or (sb["lane"] / ".jj" / "repo" / "config-id").exists())
+        if workspace:
+            redirect_ok = redirect_ok and (sandbox_home / ".config" / "jj").exists()
         check(
             "jj_config_redirected",
-            (sb["home"] / ".config" / "jj").exists(),
-            f"path={sb['home'] / '.config' / 'jj'}",
+            redirect_ok,
+            f"home={sandbox_home} xdg={env['XDG_CONFIG_HOME']} jj_config={env['JJ_CONFIG']} "
+            f"jj_workspace={workspace} operator_home_inside={_within(operator_home, sandbox_home)}",
         )
 
     failed = [c for c in checks if not c["ok"]]
