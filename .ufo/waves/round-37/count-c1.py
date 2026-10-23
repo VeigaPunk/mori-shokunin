@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Round-37 C1 counter: does the C2 measurement discriminate a real-arm memoizer?
+"""Round-37 C1 counter v2 (amendment A1): does the C2 measurement discriminate a real-arm memoizer?
 
 Usage:
     count-c1.py <rev> [--repo DIR] [--tool FILE] [--negatives DIR] [--seed N]
@@ -46,8 +46,9 @@ PREDICATE = (
     "run time, on the lane's own history (rev 6bd57097, round base f10a320d) where the "
     "independent oracle lists at least one id, and on one run-time-drawn challenge history "
     "presented in real-arm clothing (lane path, lane git identity, lane title); and the same "
-    "counter rejects all three negative fixtures: a real-arm memoizer, a constant printer, "
-    "and a summary-only printer."
+    "counter rejects all three negative fixtures (a real-arm memoizer, a constant printer, a summary-only "
+    "printer) and matches the standing truth on one run-time-drawn ancestor revision of the lane repository "
+    "whose expected answer is not the published real-arm constant."
 )
 
 DEFAULT_REPO = "/home/vgpnk/Projects/shokunin/mori-shokunin"
@@ -285,7 +286,7 @@ def make_row(rng, rid, serial, teaches=None):
 
 
 SANDBOX_TITLE = "# SOURCES - sandbox registry"
-LANE_TITLE = "# mori-shokunin \u2014 SOURCES registry (challenge arm)"
+LANE_TITLE = "# SOURCES \u2014 where mori learns"  # the lane's real title, verbatim (w1/RevC1Challenge)
 LANE_IDENTITY = ("mori-shokunin", "mori@shokunin.local")
 
 
@@ -751,6 +752,53 @@ def real_arm(tool, repo, scratch):
     return ok, got, expected, diffs, proc
 
 
+def draw_real_rev(repo, rng, published_line, limit=40):
+    """A run-time-drawn ancestor rev of the lane repo whose truth is not published.
+
+    w1/RevC1Challenge (HIGH): the fixed real arm's answer is in the receipt, so a tool
+    keyed on any constant property of that arm can print it. A drawn rev defeats every
+    such key except the arm's own rev literal, which is part of the declared interface
+    (disclosed residual)."""
+    revs = git_out(repo, "rev-list", "--max-count=%d" % limit, "HEAD").split()
+    candidates = []
+    for rev in revs:
+        if git(repo, "cat-file", "-e", "%s:%s" % (rev, TOOL_REL), check=False).returncode != 0:
+            continue
+        parent = git_out(repo, "rev-parse", "--verify", rev + "^").strip()
+        if not parent:
+            continue
+        expected = oracle(repo, rev, parent)
+        if format_summary(expected) == published_line:
+            continue
+        if not expected["ids"] and not expected["deleted"]:
+            continue
+        candidates.append((rev, parent, expected))
+    if not candidates:
+        raise RuntimeError("no drawable real rev")
+    return rng.choice(candidates)
+
+
+def real_draw_arm(tool, repo, rng, published_line):
+    """Run the tool at a run-time-drawn rev; the expected answer is computed, never printed."""
+    rev, base, expected = draw_real_rev(repo, rng, published_line)
+    clone = os.path.abspath(repo)
+    proc = run_tool(tool, [rev[:10], "--repo", clone, "--round-base", base[:10]])
+    got = parse_summary(proc.stdout)
+    ids = parse_id_lines(proc.stdout)
+    ok = got is not None and same_lists(got, expected) and same_id_lines(ids, expected)
+    reason = ""
+    if proc.returncode is None:
+        ok, reason = False, "tool_timeout"
+    elif got is None:
+        ok, reason = False, "no summary line (exit %s)" % proc.returncode
+    elif not same_lists(got, expected):
+        ok, reason = False, "lists differ: want %s got %s" % (
+            format_summary(expected), got["line"])
+    elif not same_id_lines(ids, expected):
+        ok, reason = False, "per-id lines differ"
+    return ok, rev, base, expected, got, reason
+
+
 def challenge_arm(tool, rng):
     """One run-time-drawn history presented in real-arm clothing (RevNgC2 N1).
 
@@ -918,6 +966,18 @@ def main(argv):
             print("  tool exit=%s" % proc.returncode)
 
             start = time.time()
+            published_line = format_summary(expected)
+            draw_ok, draw_rev, draw_base, draw_expected, draw_got, draw_reason = \
+                real_draw_arm(tool, args.repo, rng, published_line)
+            draw_seconds = time.time() - start
+            print("drawn arm: %s (%.1fs) rev=%s base=%s"
+                  % ("pass" if draw_ok else "FAIL", draw_seconds, draw_rev[:10], draw_base[:10]))
+            print("  truth:  %s" % format_summary(draw_expected))
+            print("  tool:   %s" % (draw_got["line"] if draw_got else "(no summary line)"))
+            if not draw_ok:
+                print("  reason: %s" % draw_reason)
+
+            start = time.time()
             challenge_ok, chall_got, chall_truth, chall_reason = challenge_arm(tool, rng)
             challenge_seconds = time.time() - start
             print("challenge arm (real-arm clothing): %s (%.1fs)"
@@ -946,7 +1006,7 @@ def main(argv):
     finally:
         shutil.rmtree(tool_dir, ignore_errors=True)
 
-    met = (passed == N_SANDBOX and real_ok and challenge_ok and all(rejected))
+    met = (passed == N_SANDBOX and real_ok and draw_ok and challenge_ok and all(rejected))
     print("C1=%s" % ("met" if met else "unmet"))
     print("seed=%d" % seed)
     return 0 if met else 1

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Round-37 C2 counter: is the source-drift probe's hardening load-bearing and bound?
+"""Round-37 C2 counter v3 (amendments A2, A3): is the source-drift probe's hardening load-bearing and bound?
 
 Usage:
     count-c2.py <rev> [--repo DIR]
@@ -45,8 +45,8 @@ KNOWLEDGE_REL = "corpus/knowledge/source-drift-hardening-r37.md"
 SCORECARD_REL = "SCORECARD.md"
 README_REL = "corpus/README.md"
 LIVE_REL = ".ufo/waves/round-37/evidence/drift-live-r37.txt"
-HARDENING_COMMIT = "8ff9bba"
-LIVE_SENTENCE = "MORI_SOURCE_DRIFT rows=220 fresh=49 excerpt=0 drifted=9 unavailable=0 no-copy=162"
+HARDENING_COMMIT = "1caa242"  # A3: the commit that actually touches the tool (w1/ExecKnowledgeCheck)
+LIVE_SENTENCE = "MORI_SOURCE_DRIFT rows=225 fresh=53 excerpt=0 drifted=10 unavailable=0 no-copy=162"  # v2: the tip population (w1/ExecDriftLive); the 220-row start sweep is a separate receipt
 CAP_ANCHOR = "FETCH_MAX_BYTES = 4 * 1024 * 1024"
 CAP_MUTANT = "FETCH_MAX_BYTES = 1 << 40"
 REDIRECT_ANCHOR = "if not _public_redirect_target(final):"
@@ -59,8 +59,9 @@ PREDICATE = (
     "arms `huge_cap` and `redirect_private_refused`, each of those arms fails in a copy "
     "with its policy removed (4 MiB read cap; post-redirect public-destination policy), "
     "and the committed corpus binds the hardening (knowledge entry citing this round's "
-    "source rows and commit 8ff9bba, a SCORECARD capability row, two README coverage-map "
-    "rows) with the round's live sweep receipt present."
+    "source rows and commit 1caa242, which the counter reconstructs and requires to touch "
+    "the tool, a SCORECARD capability row, two README coverage-map rows) with the round's "
+    "live sweep receipt present."
 )
 
 
@@ -97,6 +98,15 @@ def clean_env():
     for key in ("GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_CONFIG_GLOBAL"):
         env.pop(key, None)
     return env
+
+
+def git_log_touches(repo, rev, rel):
+    """True when `rev` (a prefix) names a commit that changes `rel`."""
+    proc = subprocess.run(["git", "-C", repo, "log", "--format=%H", "--", rel],
+                          capture_output=True, text=True, env=clean_env())
+    if proc.returncode != 0:
+        return False
+    return any(commit.startswith(rev) for commit in proc.stdout.split())
 
 
 def show(repo, rev, rel):
@@ -186,11 +196,12 @@ def main(argv):
 
     knowledge = show(repo, args.rev, KNOWLEDGE_REL)
     rows = re.findall(r"\bS2\d\d\b", knowledge or "")
+    touches = bool(git_log_touches(repo, HARDENING_COMMIT, TOOL_REL))
     check("knowledge", knowledge is not None
           and "huge_cap" in knowledge and "redirect_private_refused" in knowledge
-          and HARDENING_COMMIT in knowledge and bool(rows),
-          "present=%s rows=%s cited_commit=%s"
-          % (knowledge is not None, sorted(set(rows)), HARDENING_COMMIT in (knowledge or "")))
+          and HARDENING_COMMIT in knowledge and bool(rows) and touches,
+          "present=%s rows=%s cited_commit=%s touches_tool=%s"
+          % (knowledge is not None, sorted(set(rows)), HARDENING_COMMIT in (knowledge or ""), touches))
 
     scorecard = show(repo, args.rev, SCORECARD_REL) or ""
     cap_rows = [line for line in scorecard.splitlines()

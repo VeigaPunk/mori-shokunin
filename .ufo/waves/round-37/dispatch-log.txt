@@ -14,3 +14,6 @@ round-37 dispatch log (L1 MoriR37)
 Handoff: one validated v2 wave (73 seats, `w1-taskcall.json`) returned to the orchestrator for inline dispatch; no dispatch from the L1 session (orchestrator-inline contract).
 Role mapping (validator SWARM_ROLES): the three bounded-probe items ride executor seats; the dedupe item rides a scribe seat; planner is the L1's canonical seat per the orchestrator ruling.
 Scratch discipline: every counter arm uses mkdtemp; the challenge arm's repo is created under .ufo/waves/round-37/scratch and removed in `finally`; no seed-derived shared directory (r36 debt g).
+17:2xZ  index clean after e57c58b5: `bash tools/mori-index-clean.sh <lane>` -> MORI_INDEX_CLEAN staged=0 intent_to_add=0 EXIT=0 (QUALITY 103)
+17:2xZ  index clean after bcf65505: same command -> staged=0 intent_to_add=0 EXIT=0
+17:2xZ  index clean after 5dff52a1 and after 0a05f7e6/52d636d5/5631efa9/1ae1d6d6/30dfe70f: staged=0 intent_to_add=0 EXIT=0 (re-run at 30dfe70f by w1/ExecIndexClean: MORI_INDEX_CLEAN staged=0 intent_to_add=0 EXIT=0, six independent probes agree)

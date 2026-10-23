@@ -6,7 +6,7 @@ source: S221 — RFC 9110 §15.4 (3xx redirect semantics); S222 — OWASP SSRF P
 S225 — Fetch Standard §4.5 (redirect-fetch chain, twenty-hop limit). S205 — the corpus contract in
 fleet `CORPUS.md` (a row is a claim; append-only cells).
 verified-at: 2026-10-23 — the five sources were opened this round; the hardening code landed at
-lane commit `8ff9bba` (round 36, wave-2 Sentinel repairs) and the two named selftest arms landed
+lane commit `1caa242` (round 36, wave-2 Sentinel repairs) and the two named selftest arms landed
 this round with the round-37 freeze.
 recheck: on the next change to `tools/mori-source-drift.py`'s fetch path, and at the rows' own
 cadence (S221/S222/S223 180d, S225 90d, S224 on-release).
@@ -22,7 +22,7 @@ yield a 2xx body, or the body is over the cap, or a redirect landed on a non-pub
 error. It is a **byte-behavior** probe: `drifted` means the committed copy is not reproducible
 from today's body, never "the source changed" (QUALITY 105).
 
-## The two hardening policies (landed `8ff9bba`)
+## The two hardening policies (landed `1caa242`)
 
 1. **Bounded read — `FETCH_MAX_BYTES = 4 * 1024 * 1024`,** read as `FETCH_MAX_BYTES + 1`
    (`tools/mori-source-drift.py:54,163-166`). An untrusted source must not stream past the cap or
@@ -59,11 +59,15 @@ separate, checkable statements.
 
 ## Live demonstration (round 37)
 
-`python3 tools/mori-source-drift.py --root .` on 2026-10-23:
+Two runs on 2026-10-23. At round start, on the entering 220-row registry:
 `MORI_SOURCE_DRIFT rows=220 fresh=49 excerpt=0 drifted=9 unavailable=0 no-copy=162`, exit 1
-(`.ufo/waves/round-37/evidence/drift-live-r37.txt`). The nine drifted ids and their reader-action
-classes are the round-36 enumeration in `corpus/knowledge/source-drift-r36.md`; this run reproduces
-the same nine.
+(`.ufo/waves/round-37/evidence/drift-live-r37-start.txt`). At the scored tip, with this round's five
+rows and their copies committed: `MORI_SOURCE_DRIFT rows=225 fresh=53 excerpt=0 drifted=10
+unavailable=0 no-copy=162`, exit 1 (`evidence/drift-live-r37.txt`). The ten drifted ids are the nine
+round-36 rows (`corpus/knowledge/source-drift-r36.md`) plus **S223**, which drifted on one line between
+its copy and the tip run — the page's "Last updated" footer clock (S223.src:1953 vs the live line).
+S223 is therefore a byte-unstable page of the S211 class: it can never score `fresh`, and the drift is
+a representation difference, not a taught-claim change.
 
 ## Honest limits (disclosed, not remediated — detection and report only)
 

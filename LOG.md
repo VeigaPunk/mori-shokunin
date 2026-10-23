@@ -2126,7 +2126,7 @@ landed tip.
   W04 lines, S218/S220). Index clean after each helper commit (QUALITY 103).
   Completion anchors (w2/ScribeLog): freeze `da12b37` (v1) → C0 + v2 counter re-design `c1a026c` →
   exploratory declaration `5842dc0` → data `bf0df77` → integration `9ca8f2e` → close-out `6827d6e` →
-  wave-evidence `8ff9bba` → receipts `5a2fe05d` → post-close sweeps `b7874b19`, `7c6fbac5`. Pin records:
+  wave-evidence `1caa242` → receipts `5a2fe05d` → post-close sweeps `b7874b19`, `7c6fbac5`. Pin records:
   `evidence/freeze.txt` (v1), `evidence/freeze-v2.txt` (v2 counters), `evidence/freeze-v3.txt` (cited by
   SCORECARD); builder references `evidence/refs/ref-c1.py`, `ref-c2.py`; census receipts `census-start.txt`,
   `census-end.txt`; C1 final re-score `c1-after-final.txt` (second `C1=met`, seed 15951461284190234552, cited
@@ -2149,7 +2149,7 @@ Declared claims:
   `c1-before-summary.txt`). After, at `e57c58b5`: `count-c1.py e57c58b5` → blind 24/24, real pass,
   challenge pass, `negative memo-n1.py rejected (challenge: …)`, `const.py rejected`,
   `summary-only.py rejected`, `C1=met`, exit 0, seed 13985344346805549517 (`evidence/c1-after.txt`).
-- C2 (freshness 5, tied lowest) — the two fetch policies landed at `8ff9bba` (4 MiB bounded read;
+- C2 (freshness 5, tied lowest) — the two fetch policies landed at `1caa242` (4 MiB bounded read;
   post-redirect public-destination check) are named selftest arms, each killed by a mutation, and the
   corpus binds them. Before: `count-c2.py 842a320` → `selftest FAIL`, `knowledge FAIL`, `capability FAIL`,
   `readme FAIL`, `live FAIL`, `C2=unmet` exit 1 (`evidence/c2-before.txt`). After, at `e57c58b5`:

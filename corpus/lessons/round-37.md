@@ -47,6 +47,9 @@ interleaved sentence, quoted from "redirect count" to the end of the clause.
 | M9 | discrimination (a predicate whose content half is imitation-able) | w1/CritC2ContentFree: a token-satisfying entry without a located quote, a capability row pointing nowhere and a live receipt with only the summary sentence all pass P-C2; combined with a real tool the witness prints `C2=met` | the wave-2 critic; no criterion named the content half when the contract was frozen (QUALITY 98 names the general shape, not this counter) | C2 is reported as verified on P-C2 **with a disclosed content-discrimination gap**; the tightening (a content-anchor arm — the hardened tool must detect a named row's drift — as a new counter version) is routed to round 38. Shown able to fail: the critic's three fabricated witnesses and the combined `C2=met` at `count-c2.py:187-211` |
 
 
+| M10 | provenance (a commit attribution copied from the assignment instead of verified) | the orchestrator's session note said the drift hardening landed at `8ff9bba`; the entry, README, contract, SCORECARD, LOG and the counter's `HARDENING_COMMIT` all repeated it, but `git log -S "FETCH_MAX_BYTES = 4 * 1024 * 1024" -- tools/mori-source-drift.py` shows the policy landed at `1caa242` and `8ff9bba` touches no tool byte | w1/ExecKnowledgeCheck (PASS on its assigned ranges, adjacent finding); no criterion required a cited commit to touch its surface | attribution corrected to `1caa242` in every artifact, and the C2 counter v3 reconstructs the commit and requires it to touch `tools/mori-source-drift.py` (`git_log_touches`), so a string-grep misattribution can no longer pass. Shown able to fail: the pre-fix `git show --stat 8ff9bba` lists no `tools/` path, and the v3 check prints `touches_tool=True` only for `1caa242` |
+
+
 ## Round shape and debts
 
 Round shape (orchestrator-inline contract): one validated v2 wave prepared and returned to the
@@ -85,6 +88,9 @@ no file under the fleet root names this lane/round (see the report's Misroot lin
 - **Frozen-byte residuals still open** (w1/ScoutPriorRound): r36 `count-c1.py` docstring says v1; neither
   r36 counter detects a SOURCES delete+restore inside a round; the 429 oracle path stays unexercised.
   Frozen bytes; named, not edited.
+- **Attribution** (w1/ExecKnowledgeCheck, adjacent finding): the hardening commit is `1caa242`, not
+  `8ff9bba`; every artifact is corrected and the counter v3 requires the cited commit to touch the tool
+  (lesson M10).
 - **Content half** (w1/CritC2ContentFree, FAIL): P-C2's content checks are token checks; the claim is
   reported as verified on the frozen predicate with a disclosed content-discrimination gap, and the
   content-anchor arm is routed to round 38 as a new counter version (lesson M9).

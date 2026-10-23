@@ -1,4 +1,4 @@
-command: timeout 900 python3 tools/mori-source-drift.py --root .
+command: timeout 900 python3 tools/mori-source-drift.py --root .   # at the 225-row registry, all five r37 copies committed
 S001 no-copy
 S002 no-copy
 S003 no-copy
@@ -219,5 +219,10 @@ S217 fresh
 S218 fresh
 S219 fresh
 S220 fresh
-MORI_SOURCE_DRIFT rows=220 fresh=49 excerpt=0 drifted=9 unavailable=0 no-copy=162
+S221 fresh
+S222 fresh
+S223 drifted
+S224 fresh
+S225 fresh
+MORI_SOURCE_DRIFT rows=225 fresh=53 excerpt=0 drifted=10 unavailable=0 no-copy=162
 EXIT=1

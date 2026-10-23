@@ -110,6 +110,13 @@ The predicates above, the two counters and the three fixtures are unchanged by t
   `tool_timeout`; that is a disclosed trade, not the restructuring. Re-filed as operator-owned policy
   tradeoff (w1/CritDebtDisposition). The disclosure lives in the counter docstring and `run()`, not in
   the printed `PREDICATE` — the sentence "disclosed in C1's predicate output" above is wrong.
+- **Commit attribution (A3).** The hardening commit is `1caa242` (it touches `tools/mori-source-drift.py`),
+  not `8ff9bba` (which touches no tool byte). Every artifact is corrected; the C2 counter v3 reconstructs
+  the commit and requires it to touch the tool (w1/ExecKnowledgeCheck; lesson M10).
+- **A2 (drift receipt).** `evidence/drift-live-r37.txt` is the 225-row tip sweep
+  (`rows=225 fresh=53 excerpt=0 drifted=10 unavailable=0 no-copy=162`); the entering 220-row sweep is
+  `drift-live-r37-start.txt`. The ten drifted rows are the nine round-36 rows plus S223, whose page footer
+  clock changes between fetches (w1/ExecDriftLive; lesson M9-class byte-unstable page).
 - **Debt (e) erratum.** The absolute paths in four receipts are corrected in an erratum commit with a
   `redacted:` line per file; the measured output is unchanged (w1/SentData, w1/ScoutSentData).
 - **Frozen-byte residuals still open** (not closed by this round): round-36 `count-c1.py`'s docstring

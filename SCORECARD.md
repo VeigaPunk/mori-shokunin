@@ -2106,6 +2106,13 @@ here; the frozen predicate bytes (P-C1, P-C2) and both measured receipts are unc
    content-discrimination gap**, and the tightening (a content-anchor arm: the hardened tool must detect a
    named row's drift under the two policies) is routed to round 38 as a new counter version — not applied
    post-data here. This is the same class as QUALITY 98 and is recorded as lesson M9.
+- **Commit attribution (A3).** The hardening commit is `1caa242` (it touches `tools/mori-source-drift.py`),
+  not `8ff9bba` (which touches no tool byte). Every artifact is corrected; the C2 counter v3 reconstructs
+  the commit and requires it to touch the tool (w1/ExecKnowledgeCheck; lesson M10).
+- **A2 (drift receipt).** `evidence/drift-live-r37.txt` is the 225-row tip sweep
+  (`rows=225 fresh=53 excerpt=0 drifted=10 unavailable=0 no-copy=162`); the entering 220-row sweep is
+  `drift-live-r37-start.txt`. The ten drifted rows are the nine round-36 rows plus S223, whose page footer
+  clock changes between fetches (w1/ExecDriftLive; lesson M9-class byte-unstable page).
 7. **Smaller bounded findings from wave 1** (all disclosed, none changes a verdict):
    `w1/MutC2CapArm` — `cap_kill` passes vacuously on a rev whose tool already lost the 4 MiB anchor, but
    the aggregate still reads `C2=unmet` via `selftest` (fail-closed); `w1/SimpC2` — four removable bytes

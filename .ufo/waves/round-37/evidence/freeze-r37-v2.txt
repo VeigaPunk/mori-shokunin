@@ -1,0 +1,14 @@
+round-37 freeze pins v2 (amendment A1/A2; supersedes the count-c1/count-c2 pins in freeze-r37.txt)
+generated: 2026-10-23T20:20:54Z  measured tip: 30dfe70fadcf5c77f8b09718f3e6042958e4d735
+d2d6114466509cc9ea4a40bd58350a76b65def76  .ufo/waves/round-37/contract.md
+3e15f9fd35b6a926396732ddc970ff92ced8c113  .ufo/waves/round-37/count-c1.py
+39d06e2077767eb25192d20cbe5aa9a1bd24e2c5  .ufo/waves/round-37/count-c2.py
+162ee87b5b0789c6815f967f3db93d277bab38d9  tools/mori-source-drift.py
+
+sha256:
+5279ed9df3b487a5d16896f5883be9bed5952da3709ffd53208c8a604f768804  .ufo/waves/round-37/count-c1.py
+e0d9d1709b87626de2e3e50ff1ab02982585a05d8b301b0dd09ee8a7c0df5c5b  .ufo/waves/round-37/count-c2.py
+453c5d8e260301df7a99daf62b4c16ea08e4a0b4f9e4f53821cdbce447011552  tools/mori-source-drift.py
+
+A1 (w1/RevC1Challenge): challenge title = the lane title verbatim; new run-time-drawn real arm.
+A2 (w1/ExecDriftLive): LIVE_SENTENCE = the 225-row tip summary; 220-row sweep moved to drift-live-r37-start.txt.
