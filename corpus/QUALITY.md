@@ -677,3 +677,22 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     `.ufo/waves/round-31/evidence/c2-controls.txt`, `F02 diff want=[(3, …), (4, …)] got=[(3, …)]`).
     Criterion 92 is unmet at the round-30 tip (`limit_stated=no`: no `r30-disputed-*` id is named with a limit in
     `SKILL.md` or `corpus/knowledge/`, `corpus/lessons/round-30.md:228-229`); recorded here, not repaired this round.
+
+## Criteria added round 32 — round-31 routed defect 4 and round-32 mistake M1
+
+95. A judge receipt names the sha256 of the exact bytes it judged, and the counter recomputes the sha256 of the same
+    section at the measured revision and requires equality. Naming only a revision does not satisfy this. The judged
+    bytes can change after the receipt, as row 9 of the round-31 entry did (`corpus/lessons/round-31-verifier-spotcheck.md:219-220`).
+    Check: at revision R, the receipt's `judged-sha256` equals `count-c1.py --section-sha` of the file at R (round 32,
+    R4 in `.ufo/waves/round-32/count-c1.py`). Lesson: `corpus/lessons/round-32.md` (routed defect 4). Shown able to
+    fail: wave-C0 control (c), a receipt computed before one table cell was edited, scores `judge` on every row
+    (`.ufo/waves/round-32/c0/CtlForgedJudge.md:120-125`).
+
+96. A contract, declaration or lesson sentence that says a source row was never re-opened, or was last opened when
+    it was added, cites the sweep that found no re-open: the command over `corpus/lessons` and `.ufo/waves` at the
+    measured revision, and its output. Without the sweep the sentence is not written. Check: the sentence's line
+    carries a command and an output pointer, and re-running the command reproduces the output. Lesson:
+    `corpus/lessons/round-32.md` M1. Shown able to fail: the round-32 contract says every population row "was last
+    opened in the round that added it" (`.ufo/waves/round-32/contract.md:17-18`, frozen at `29f7d043`), and the
+    sweep at the base lists earlier `Reopen*` seats for S041, S043–S047, S068, S117, S128 and S137
+    (`.ufo/waves/round-32/evidence/m1-reopen-sweep.txt`).

@@ -4,8 +4,8 @@ author: mori-shokunin L1 MoriR32A2 (round 32, attempt 2)
 
 ## What the round learned
 
-- The lane's 34 `mined` source rows whose URL is not pinned to a tag or commit were opened live for the first time as
-  one population (frozen selector, `.ufo/waves/round-32/c1-population.json`). 33 served bytes and still carry the
+- The lane's 34 `mined` source rows whose URL is not pinned to a tag or commit were opened live together as one
+  population (many had been re-opened one by one in earlier rounds, M1) (frozen selector, `.ufo/waves/round-32/c1-population.json`). 33 served bytes and still carry the
   passages their `teaches` cells rest on, per the seats' verdicts and the judge receipt. One (S056, pnas.org) sits
   behind a bot challenge and is recorded `unreachable`. Seats proposed no `drifted` verdict.
 - What changed on the live pages is presentation, not substance: Python docs moved 3.15.0 → 3.15.1, docs.kernel.org
@@ -67,3 +67,77 @@ committed unchanged at `corpus/evidence/sources-r32/S###.src`. The L1 changed on
 
 Status changes this round: none to existing rows. New rows S175–S177, all `mined`, used by
 `corpus/evidence/recheck-r32/README.md`.
+
+## Mistakes
+
+- **M1 — a frozen contract said the population rows were never re-opened, and that was false (class: unverified
+  provenance assertion).** Evidence: `.ufo/waves/round-32/contract.md:17-18` (frozen at `29f7d043`) says every
+  population row "was last opened in the round that added it". Wave-1 CriticAxisFit F4 showed S014 and S015 re-opened
+  in rounds 13 and 14 (`.ufo/waves/round-32/w1/CriticAxisFit.md:60-66`). The L1's sweep at the base lists earlier
+  `Reopen*` seats for S041, S043–S047, S068, S117, S128 and S137, and more leads
+  (`.ufo/waves/round-32/evidence/m1-reopen-sweep.txt`). Effect on the claim: none on P-C1, which counts round-32 rows
+  and never reads the sentence. The axis framing is narrower than written: this round is the first recheck of the 34
+  rows as one population with committed copies and a bound judge, not the first re-open of each row.
+  Captured-by: none before the freeze; QUALITY 25 (state the scope measured) is nearest. Fix: QUALITY 96. Shown able to
+  fail: the sweep output above contradicts the frozen sentence. The contract is not edited.
+- **M2 — counter code was run on a real draft before the counter was final (class: premature use of mutable counter code on draft data).** Evidence: the round-31 timeline records SrcPidMax importing `count-c1.py` helpers on its own drafted S173 Gate row; this was a format check only, with no `main()` or predicate verdict (`corpus/lessons/round-31-verifier-spotcheck.md:41-53`). The closure routes the same defect and requires keeping counter code away from real drafts until final (`corpus/lessons/round-31-verifier-spotcheck.md:221-223`). Captured-by: the non-author verifier's timeline review (`corpus/lessons/round-31-verifier-spotcheck.md:3,41-53,221-223`). Fix: freeze the counter before any data seat, let seats run it only after the freeze commit, and make no later changes (`.ufo/waves/round-32/contract.md:78-79`); the C0 receipt records the frozen counter and control wave before data seats (`.ufo/waves/round-32/evidence/c1-controls.txt:1-3`). Shown able to fail: the round-31 timeline is the negative case—the 23:46–23:47 real-draft helper run preceded A1 at 23:52:48Z, while the closure says the counter was still open to amendment (`corpus/lessons/round-31-verifier-spotcheck.md:36,41-42,52,221-223`). A freeze-order check must reject that ordering; the current C0 receipt records control-wave runs, not an automated rejection of a pre-freeze real-draft run (`.ufo/waves/round-32/evidence/c1-controls.txt:1-3,8-23`).
+- **M3 — "the same sentence" held only after whitespace was normalised (class: parity claimed at the wrong
+  level).** Evidence: the P-C1 sentence wraps at different columns in `contract.md:32-34` and the `count-c1.py:7-9`
+  docstring. A byte diff differs, and a whitespace-normalised diff is equal (wave-1 ReviewCounterContract finding 1,
+  `.ufo/waves/round-32/w1/ReviewCounterContract.md`). The receipt label `.ufo/waves/round-32/evidence/c1-controls.txt:4-6`
+  is a third wrapping. Captured-by: the round-31 closure §8 item 3 asked for the same sentence, but no check names its
+  comparison level. Fix: later rounds state the predicate's parity check as
+  `diff <(tr -s ' \n' ' ' < A) <(tr -s ' \n' ' ' < B)` over the extracted sentence and paste its exit code. Shown able
+  to fail: a plain byte comparison of the two extracts differs.
+
+## Attacks on the data and how they were settled
+
+The judge (JudgeRecheck, reviewer, non-author) agreed on all 34 rows
+(`.ufo/waves/round-32/judge/JudgeRecheck.md`, judged section sha `251bf664…8407` at `837b2802`). Attack seats raised the
+findings below. None changes a row. Each finding is kept here as an open disagreement with the judge, not closed.
+
+| Finding | Seat | Judge's reading | Disposition |
+|---|---|---|---|
+| S128 Q3 and S149 Q2 end before ", although a process can always increase its own oom_adj", which drops the exception to the privilege rule | AttackQuoteBounds F1 | no dropped negation: all quote boundaries sit on spaces or punctuation | open; the quote is under the 25-word cap only because it is cut; a later recheck should quote the whole sentence |
+| S044 Q3 is from the non-colocated paragraph; S051 Q3 omits the litigation-hold clause; S062 Q1 stops before "code units" | AttackQuoteBounds F2–F4 | the other quotes in each row carry the teaches cell | open, low |
+| S058 is quoted on the rev-list half only; the diff-tree half rests on an uncommitted seat fetch | ReviewMultiSource 1, CriticAxisFit F1 | `current` on the part of the teaches cell the population URL carries, plus no contradiction | open: the frozen first-URL population cannot carry a second URL (README Limits) |
+| S117 quotes share no teaches-cell tokens; the tags listing carries none of the grammar claims | ReviewMultiSource 2, AttackQuoteBounds, CriticAxisFit F1 | the listing still maps the tags to the same commits, which pins the code the teaches cell rests on | open: re-certified through the tag-to-commit chain, not observed on the page |
+| S128/S149 kernel and score-page clauses are not on the quoted page | ReviewMultiSource 3 | same first-URL reading | open |
+| S071's mori clause is lane doctrine, not page text | AttackQuoteBounds, ReviewMultiSource 5 | honest: the row's own scope excludes it | agree with judge |
+| five rows' live bytes differ from the copies (per-request tokens, asset fingerprints); every quote is still in the live text | AttackCopies | — | expected; README Limits |
+
+The judge read one rule more loosely than the contract's wording: on the five multi-source rows, `current` means the
+part the population URL carries still holds and nothing contradicts the rest. The judge stated this
+(`JudgeRecheck` finding 1). The L1 did not change it. The closure may read "supports the teaches cell" strictly, and
+then S058, S117, S128, S149 and S137 fail R4 and C1 is a miss. Both readings are recorded here.
+
+## Counter review findings (frozen counter; none applied)
+
+ReviewCounterContract lists 25 divergences between the docstring and the code (`.ufo/waves/round-32/w1/ReviewCounterContract.md`). The ones that
+bear on this round's data: R5 skips non-`corpus/knowledge/` used-by paths, so a `drifted` S001 (used by a lesson only)
+would need no correction (no row is `drifted`, so this is unexercised). The accessed-time regex accepts invalid dates.
+Table parsing breaks on a blank line inside the table (the committed table has none). R3 accepts any one of three live
+fetches. The C0 control findings (`evidence/c1-controls.txt`) are unchanged.
+
+## Corrections to the contract's descriptive text (append-only; predicate unaffected)
+
+- `contract.md:17-18` "every one was last opened in the round that added it": false, see M1.
+- `contract.md:19-20` "their bytes cannot drift" (pinned rows): too strong. A git tag can be force-moved
+  (CriticAxisFit F3). Read it as: tag and commit URLs are treated as pinned, and tag movement is not measured.
+- `contract.md:10-12` anti-loop rationale: the campaign rule is the same axis and surface (or the same routed-defect
+  class) three rounds running (CriticAxisFit F5). Depth was worked twice, not three times. Freshness satisfies the rule
+  either way.
+- The population is "first URL, conventionally unpinned" (CriticAxisFit F3): S058's second URL, S117's tag-pinned code
+  files and the S060 in-toto `blob/main` files are outside it.
+
+## Routed defects (round-31 closure §8) — disposition
+
+| Defect | Disposition | Evidence |
+|---|---|---|
+| 1 M5 correction | appended to `corpus/lessons/round-31.md`: the masked set is the 9 fixtures F02, F06–F08, F10, F11, F13, F15, F16 across three rules; the ten that end on a list entry are a different set | wave-1 ExecM5Witness (`/fast/scratch` script output pasted in `.ufo/waves/round-32/w1/ExecM5Witness.md`; EOF-drop mutant `exact=7/16` vs `27/27`) |
+| 2 gate registry row and frozen baseline | SKILL.md `## Round32 — blind-writer gate registry row` with all eight fields; frozen run `.ufo/waves/round-32/frozen/blind-check/` with `expected.json` pinning every input digest; `verify.sh` → `frozen_run: match` exit 0, tampered input → `snapshot_tampered` exit 2, mutated tool → exit 1 | `.ufo/waves/round-32/evidence/blind-baseline/verify-{green,tampered,muttool,missing}.txt`; L1 re-run of `verify.sh` in round 32: `frozen_run: match`, exit 0 |
+| 3 `count-c2.py` docstring omits "no hit line outside the 16 briefs" | recorded in `.ufo/waves/round-32/contract.md` routed item 3; frozen round-31 file untouched | `git diff 641a6e86 HEAD -- .ufo/waves/round-31/count-c2.py` empty |
+| 4 judge-vs-tip drift | R4 binds `judged-sha256` to the measured tip section; QUALITY 95 | `.ufo/waves/round-32/evidence/c1-after.txt` (`section_sha256=251bf664…`, `judge_ok=True`) |
+| 5 counter code on real drafts | counter frozen at `29f7d043` (01:10:09Z) before C0 (dispatched after `f44e428e`, 01:11:44Z) and wave 1 (dispatched 01:30:57Z); M2 above | `git log 641a6e86..master` |
+| 6 carried C2 ambiguities and tool edge cases | pinned as 12 evidence fixtures, no tool change: setext and indented headings, CRLF, fenced `# files opened`, `-\t`, `../` through an allow glob, words inside the heading, lead-in prose, a sub-heading in the block, plus 3 controls; 4 diverge from the primary rule-text reading (E01, E02, E03, E06) | `.ufo/waves/round-32/fixtures/edge/fixtures/edge-r32.json` (sha `79b530f6…`); copy `edge/` to a scratch dir before running `run-edge-r32.py`, which builds a sandbox git repo beside itself |
+| 6 round-30 detector false positives/negatives, FR5 census probe | carried unchanged | — |

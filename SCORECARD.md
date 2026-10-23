@@ -1864,3 +1864,27 @@ Held: freshness 5, calibration 5, coverage 6, operability 7, adjacency 6, depth 
 or promotion. After the measured revision: entry row 9 marked [INFERENCE] (judged unsupported; still counted
 unsupported). Tip receipts: `.ufo/waves/round-31/evidence/c1-after.txt`, `c2-tip.txt`, `census-end.txt`,
 `tip-retention.txt`.
+
+## Round 32 declaration (attempt 2, L1 MoriR32A2) — live recheck of the mutable-URL source rows
+
+Entering tip `641a6e86ecc60634d215c0a47ab86c47661abf86` (round 31 admitted, MANIFEST rounds[495]). Attempt 1 landed
+nothing. Full contract: `.ufo/waves/round-32/contract.md`. It was committed with the population and the counter at
+`29f7d04355f17b5d45d6e00c40e2a5c3e5a2c9c4` (01:10:09Z), before any seat ran. This SCORECARD section is appended at round
+end. Its declared cells copy that frozen contract and add nothing to it. Targets, not results.
+
+| Claim | Axis / score | Before | Declared after-value (one command over committed bytes) |
+|---|---|---|---|
+| C1 the 34 `mined` SOURCES rows whose URL is not pinned to a tag or commit are re-opened live, each with a committed copy, located quotes, a verdict and a bound non-author judgment; method sourced S175+ | freshness 5 (tied lowest with depth and calibration) | `python3 .ufo/waves/round-32/count-c1.py 641a6e86` → `rows_ok=0/34`, `new_ok=0`, `C1=unmet exit=1` (`.ufo/waves/round-32/evidence/c1-before.txt`) | same command at the landed tip → `rows_ok=34/34`, `new_ok>=1`, `C1=met exit=0` (predicate P-C1, contract) |
+
+Held and observed: depth 5, calibration 5, coverage 6, operability 7, adjacency 6. No retirement, waiver, exploratory claim
+or promotion. Controls: 14 runs from 7 control seats, scored under the frozen counter before any data seat. No negative
+control printed `C1=met` (`.ufo/waves/round-32/evidence/c1-controls.txt`, committed `8ab61aff`).
+
+### Round 32 measured outcome (L1 MoriR32A2; measured at `7766732a98795467d0541630e9707a7acba518e1`)
+
+| Claim | Before | After (one committed command over committed bytes) | Verdict proposed for the closure |
+|---|---|---|---|
+| C1 freshness, live recheck of the 34 mutable-URL rows (sourced S175–S177) | `count-c1.py 641a6e86` → `rows_ok=0/34`, `new_ok=0`, `C1=unmet exit=1` | `count-c1.py 7766732a` → `recheck_rows=34 header_ok=True judge_ok=True judge_agree=34`, `rows_ok=34/34 verdicts={'current': 33, 'unreachable': 1}`, `new_ok=3`, `C1=met exit=0` (`.ufo/waves/round-32/evidence/c1-after.txt`) | improved, pending closure; freshness held at 5 (no closure states a move). Open: on the five multi-source rows the judge read `current` as "the part the population URL carries"; under a strict reading those rows fail R4 (`corpus/lessons/round-32.md`, Attacks) |
+
+Held: depth 5, calibration 5, coverage 6, operability 7, adjacency 6, freshness 5. Mistakes M1–M3 in
+`corpus/lessons/round-32.md`. M1: the contract's "last opened when added" sentence is false. The predicate does not read it.

@@ -2037,3 +2037,24 @@ landed tip.
 - After measurement: row 9 marked [INFERENCE]; two reported locator nits rejected after checking (lesson Gate note).
 - Round-end census `mori ok`, exit 0, 12 W04 (two new: S166/S168 rejected duplicates) (`evidence/census-end.txt`).
   Fleet-root misroot sweep: no untracked fleet file was written by a round-31 seat (none names mori round 31).
+
+## Round 32 (attempt 2, L1 MoriR32A2) — live recheck of the mutable-URL sources
+
+- Freeze `29f7d043` (01:10:09Z): contract, frozen population (34 ids, sha `4426b650…`), counter `count-c1.py`, before
+  receipt `rows_ok=0/34 C1=unmet exit=1`, census start `mori ok` exit 0.
+- Control wave C0 (ordinary task call, 7 seats: 4 critic, 3 mutation-tester; payload `f44e428e`; reports
+  `.ufo/waves/round-32/c0/`), 0 dead. 14 runs, no negative control met C1. All 10 counter mutants killed. Per-row false
+  accepts that only the judge can catch were found before data and named. No amendment (`evidence/c1-controls.txt`, `8ab61aff`).
+- Wave 1 (v1, 40 seats: 33 scout, 3 executor, 1 connector, 1 scribe, 1 reviewer, 1 critic; spec, validator run and
+  dispatch `8ab61aff`; reports `.ufo/waves/round-32/w1/`), 0 dead. 29 recheck seats opened the 29 URLs live
+  (01:31:22–01:31:35Z). 33 rows were `current` and 1 (S056, pnas.org bot challenge) `unreachable`. S175–S177 were opened
+  for the method. Data commit `837b2802`.
+- Re-verification result (freshness): of 34 mutable-URL source rows, 33 still carry their admitted passages on the
+  live page and 1 is unreachable by plain fetch. Presentation changes only: Python docs 3.15.0 → 3.15.1, docs.kernel.org
+  renders 7.3.0, two RFC URLs redirect to `rfc-editor.org/info/`, and line anchors are stale on S002 and S045.
+- Residual call R1 (4 seats: 2 reviewer, 1 critic, 1 mutation-tester; payload `a45850f0`; reports `.ufo/waves/round-32/r1/`,
+  `judge/`), 0 dead. JudgeRecheck agreed 34/34 on section sha `251bf664…`. The attack findings are kept open in the lesson.
+- **C1 = met** at `7766732a` (`evidence/c1-after.txt`).
+- Routed round-31 defects 1–6: M5 correction appended, blind-gate registry row and digest-pinned frozen run, the
+  docstring note kept in the contract, R4 sha binding (QUALITY 95), the counter frozen before data, and 12 edge fixtures.
+  QUALITY 96 for mistake M1.
