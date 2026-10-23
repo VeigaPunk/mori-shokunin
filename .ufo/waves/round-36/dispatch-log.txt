@@ -10,3 +10,10 @@ round-36 dispatch log (L1 MoriR36)
         L1 ruling to C2 control seats (asked about counter-owned temp writes and the >10 MB clone pack): counter-owned self-cleaning writes authorized; prescribed command unchanged
 12:0xZ  L1 re-scores all 25 controls plus the two builder reference tools under v2 (evidence/c0-rescore-v2.txt)
 12:03Z  v2 re-score: 25/25 controls unmet, refs met; freeze v2 commit next
+12:03Z  w1-spec re-rendered with v2 freeze c1a026cb (policy v1, run exit 0) -> w1-dispatch.json; wave 1 dispatched as ONE task call (eval tool.task), 33 tasks unchanged in name/agent/task plus the harness-required role-generic solutionSpace; settle deadline 12:50Z
+12:04Z  w1 dead seats: MutC1Novel and MutC2Novel (mutation-tester) failed after 6 s: "Devin stream error resource_exhausted: Reached free model rate limit. Please switch to a different model. Your limit will reset in 4 hours 56 minutes (at 17:01 UTC)." — dead, not replaced
+12:04Z  w1 hold: CritC1Counter (critic) refused by the provider after 14 s (code=cyber_policy, "This content was flagged for possible cybersecurity risk") — hold, not retried, rerouted or rephrased; findings none
+12:05Z  w1 hold: CritC2Counter (critic) refused by the provider after 29 s (code=cyber_policy) — hold, not retried
+12:1xZ  Main: the MutC1Novel/MutC2Novel failures were caused by a Main routing change (mutation-tester briefly routed to m_swe, rate-limited); back on m_sol. Recorded as dead seats; not resent.
+12:04Z  C0 settled 25/25 (CtlJ12 last); wave-slot release mori mori-r36-c0
+12:10Z  C1 declared exploratory before data (contract.md last section) after CritAxisFit 'C1 fails' + MineCopyFidelity (drifted real witnesses = annotated excerpts and a rebuild footer); counters and predicates unchanged; commit before any tool lands

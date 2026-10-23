@@ -110,3 +110,17 @@ indices and never wrote a decoy copy). By QUALITY 98 the counter was wrong; it i
 real arms run on the repository path itself, and decoys are written on 12 fresh/excerpt rows. The predicate
 sentences P-C1 and P-C2 are unchanged. Every C0 control is re-scored under v2 (`evidence/c0-rescore-v2.txt`) and the
 v2 freeze sha256 is in `evidence/freeze-v2.txt`.
+
+## C1 declared exploratory before data (12:10Z, after wave-1 CritAxisFit)
+
+Wave-1 critic CritAxisFit (`w1/CritAxisFit.md`, `VERDICT: C1 fails`) showed before any data seat that P-C1 cannot
+carry a freshness verdict: S156's pinned source is byte-identical to its round-30 recorded digest, yet the rules
+classify it `drifted`, because the committed copy is an annotated excerpt (header lines, line numbers); 5 of the 7
+oracle-drifted real rows are such excerpts and 2 differ only in a docs.python.org rebuild footer
+(`w1/MineCopyFidelity.md`). A byte classifier certifies representation differences, not stale skill claims. By the
+01:05Z rule (a claim whose counter cannot carry its axis is re-designed before data or declared exploratory, one per
+round), C1 is declared **exploratory** now, before any tool lands: it improves freshness technique (the lane's first
+programmatic re-fetch of every row with a committed copy, replacing per-round manual sha re-checks), and the prior
+state lacked any such probe. It verifies only as `unprovable-but-better` with a named non-author reviewer; otherwise
+it lands `unprovable`. P-C1 is still run and reported as evidence of the probe's byte behaviour, not as C1's verdict.
+P-C1, P-C2 and both counters are unchanged. C2 (operability) is the round's measured claim.
