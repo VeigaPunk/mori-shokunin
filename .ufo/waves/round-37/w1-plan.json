@@ -1,0 +1,848 @@
+{
+  "schema": "ufo-swarm-wave-v1",
+  "wave": "mori-r37-w1",
+  "context": "# mori round 37 — one v2 wave (build + attack), L1 MoriR37\n\nLane repo: /home/vgpnk/Projects/shokunin/mori-shokunin (jj-colocated; git is the backend). Fleet repo: /home/vgpnk/Projects/shokunin (read-only for you).\nScored tip under attack: e57c58b57c025364e79d130fbdf764d2674d83d6 (pushed). Entering tip: 842a32074b5c7972e9728f3f629d83eb92f127c2.\n\n## Claims under attack\n- C1 (calibration, measured): `python3 .ufo/waves/round-37/count-c1.py e57c58b57c025364e79d130fbdf764d2674d83d6` — the C2 gate\n  measurement must reject a real-arm memoizer and a summary-only printer while the honest gate\n  passes blind (24 run-time histories), real (lane history, rev 6bd57097 / base f10a320d) and\n  challenge (real-arm clothing) arms. Predicate P-C1 is verbatim in `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/contract.md`; receipts\n  `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/evidence/c1-before-memo.txt`, `c1-before-summary.txt`, `c1-after.txt`; counter blob pin in\n  `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/evidence/freeze-r37.txt`.\n- C2 (freshness, measured): `python3 .ufo/waves/round-37/count-c2.py e57c58b57c025364e79d130fbdf764d2674d83d6` — the drift probe's two\n  fetch policies (4 MiB bounded read; post-redirect public-destination check) are named, each killed\n  by its own mutation, and the corpus binds them. Receipts `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/evidence/c2-before.txt`,\n  `c2-after.txt`, `drift-live-r37.txt`; arms `tools/mori-source-drift.py --selftest` (6 cases).\n- Frontier step: SOURCES rows S221–S225 opened this round (copies `corpus/evidence/sources-r37/`),\n  knowledge entry `corpus/knowledge/source-drift-hardening-r37.md`, lesson\n  `corpus/lessons/round-37.md` (Gate + M1–M4), QUALITY 106/107.\n- Routed r36 debts: (d) `tools/mori-round17-jj-regressions.py` side-effect assertion scoped — see\n  `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/evidence/r17-jj-selftest-r37.txt`; (e) repo-relative paths in new evidence; (f) `tool_timeout`\n  boundary; (g) mkdtemp scratch; (h) nine-row drift prose.\n\n## Hard bounds (every seat)\n- Write EXACTLY ONE file: your report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/w1/<YourName>.md . The `Report:` trailer path is\n  relative to /home/vgpnk/Projects/shokunin/mori-shokunin — write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. Scratch code/outputs only under\n  /fast/scratch/hyaku/mori-r37/<YourName>/ or $TMPDIR.\n- The lane repo is READ-ONLY for you: never `git add/commit/push/fetch/reset/stash`, never any\n  mutating jj command, never edit lane files. Running the lane's read-only tools and counters is\n  fine; mutation-testers run COPIES under their own scratch — never edit the lane's real files.\n- Never touch: /home/vgpnk/Projects/shokunin/MANIFEST.json, /home/vgpnk/Projects/shokunin/.ufo/state/, /home/vgpnk/Projects/shokunin/.ufo/watchdog.log,\n  /home/vgpnk/Projects/shokunin/templates/, /home/vgpnk/Projects/shokunin/scripts/, sibling lane repos, ~/.omp/agent/config.yml,\n  ~/.omp/agent/mcp.json.\n- No remediation, no kills, no config edits — detection and report only (mori province).\n- Tooling authorization (operator, 2026-10-19): you may install/upgrade tools that help the task via\n  official channels (uv tool / npx / official binary into ~/.local/bin) and MUST record any\n  install — tool, version, channel, reason — in your report. pacman guard (orchestrator\n  2026-10-20): ALL pacman transactions are PAUSED host-wide; never run pacman. Never pass a model\n  parameter; never call the `ask` tool.\n- Every measurement in your report carries its command and observed output. End with `VERDICT: PASS`\n  (no defect found) or `FAIL` (defect, with path:line evidence). Name what your item attacks.\n",
+  "policy": {
+    "source": "config",
+    "maxLanes": 96,
+    "minLanes": 16,
+    "waveMinLanes": 64,
+    "waveMaxLanes": 128,
+    "declaredMaxLanes": 96,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 73,
+    "resume": 0,
+    "total": 73
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "dispatch": {
+    "calls": 1,
+    "kind": "task",
+    "note": "Issue exactly one batched task call carrying every spawn lane, plus one hub send per resume lane. Never split a wave into multiple task calls (one-swarm-per-wave)."
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-37/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-37/w1",
+    "members": {
+      "RevC1Predicate": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC1Challenge": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC1Negatives": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC2Arms": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC2Docs": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC2Binding": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevR17JJ": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevTimeout": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevScratch": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevSHONEN": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "CritC1Axis": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritC2Axis": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritClaimSizing": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritC2ContentFree": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritAdmission": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritDebtDisposition": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "MutC1ChallengeRemoved": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutC1IdGrammar": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutC2CapArm": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutC2RedirectArm": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutC2Knowledge": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "LabC1Concurrent": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "LabTimeoutBoundary": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "LabC2CapMemory": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecC1Seed41": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecC1Seed42": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecC1Seed43": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecC1ToolAbsent": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecC2Twice": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecCensusStart": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecDriftLive": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecR17JJBattery": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecCensusRegression": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecIndexClean": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecMisrootSweep": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecSourceCensus": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecFreezeVerify": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecKnowledgeCheck": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecReadmeRows": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecScorecardRows": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecLogAnchors": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecQuality106": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecQuality107": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecGateRegistry": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecLessonGate": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ScribeReport": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeScorecard": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeLog": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeLesson": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeSkill": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeQuality": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScoutCensusSurfaces": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScoutSentData": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScoutFreeze": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScoutClaimsVsBytes": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScoutWaveSpec": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScoutPriorRound": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScoutCorpusCensus": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScoutReportContract": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ConnSiblingOverlap": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null
+      },
+      "ConnKumitate": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null
+      },
+      "ConnChousa": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null
+      },
+      "ConnKama": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null
+      },
+      "RevNgC1Env": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "revenger",
+        "item": null
+      },
+      "RevNgC1Fixtures": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "revenger",
+        "item": null
+      },
+      "RevNgC2Anchors": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "revenger",
+        "item": null
+      },
+      "RevDebtR36": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "revenger",
+        "item": null
+      },
+      "SentTools": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "sentinel",
+        "item": null
+      },
+      "SentData": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "sentinel",
+        "item": null
+      },
+      "SentScope": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "sentinel",
+        "item": null
+      },
+      "SimpC1": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "simplifier",
+        "item": null
+      },
+      "SimpC2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "simplifier",
+        "item": null
+      },
+      "DistillFindings": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      }
+    }
+  },
+  "priorRegistries": [],
+  "tasks": [
+    {
+      "name": "RevC1Predicate",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRe-measure C1 with three fresh seeds and check the predicate bytes.\ncd /home/vgpnk/Projects/shokunin/mori-shokunin && for s in 41 42 43; do python3 .ufo/waves/round-37/count-c1.py e57c58b57c025364e79d130fbdf764d2674d83d6 --seed $s; echo EXIT=$?; done\n# Acceptance\nReport each run's blind/real/challenge/negative lines and exit code. Verify the first printed line is\nbyte-identical to the P-C1 sentence in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/contract.md (diff the strings; report any difference).\nVERDICT: PASS iff all three runs print C1=met, exit 0, and the sentence matches.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/RevC1Predicate.md"
+    },
+    {
+      "name": "RevC1Challenge",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAttack the challenge arm's clothing: is it genuinely distinguishable from the blind sandboxes by a tool\nthat inspects its environment? Read `challenge_arm` in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/count-c1.py. Then write a probe tool in your\nscratch that prints its repo path, `git config --local user.name`, the first line of corpus/SOURCES.md,\nand its parent cmdline; run the counter with `--tool` pointing at that probe on seed 11.\n# Acceptance\nReport what a tool can see about the challenge repo vs the blind repos. State whether any surviving\nsignal would let a memoizer tell the challenge from the blind arm. VERDICT: PASS iff the challenge repo\npath, identity and title match the real-arm clothing and the probe shows the blind arms differ on all three.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/RevC1Challenge.md"
+    },
+    {
+      "name": "RevC1Negatives",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRe-run each negative fixture alone against the counter and verify the rejection names the intended arm.\nfor f in memo-n1 const summary-only; do python3 .ufo/waves/round-37/count-c1.py e57c58b57c025364e79d130fbdf764d2674d83d6 --tool\n/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/fixtures/$f.py --seed 11; done\n# Acceptance\nReport each run. memo-n1 must be rejected by the CHALLENGE arm (its real and blind arms pass);\nsummary-only must be rejected by the per-id check on the blind arm; const must be rejected by the blind\narm. VERDICT: PASS iff each rejection detail names the arm you expect.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/RevC1Negatives.md"
+    },
+    {
+      "name": "RevC2Arms",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRe-run the drift selftest and both mutations by hand.\ncd /home/vgpnk/Projects/shokunin/mori-shokunin && python3 tools/mori-source-drift.py --selftest; echo EXIT=$?\nThen copy the tool to /fast/scratch/hyaku/mori-r37/RevC2Arms/ and apply each mutation\n(`FETCH_MAX_BYTES = 4 * 1024 * 1024` -> `1 << 40`; `if not _public_redirect_target(final):` -> `if False:`),\nrun `--selftest` on each copy.\n# Acceptance\nReport all three outputs. The unmutated copy must PASS 6 cases; each mutant must FAIL exactly its own\nnamed arm and exit 1. VERDICT: PASS iff all three hold.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/RevC2Arms.md"
+    },
+    {
+      "name": "RevC2Docs",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRe-open all five new source rows against their committed copies.\nFor each of S221..S225 in corpus/SOURCES.md, locate the quoted phrase in corpus/evidence/sources-r37/<id>.src\nat the row's anchor line range, and count the quote's words (<=25).\n# Acceptance\nReport row, anchor lines, whether the quote is contiguous at those lines, and the word count. Report any\nrow whose teaches sentence is not supported by the quote. VERDICT: PASS iff all five verify.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/RevC2Docs.md"
+    },
+    {
+      "name": "RevC2Binding",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify the C2 counter is not self-referential: it must check committed bytes at <rev>, not the working tree.\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/count-c2.py (`show`, `coverage_map`, `knowledge`, `capability`, `live` checks). Then run\n`python3 .ufo/waves/round-37/count-c2.py e57c58b5` and again after `git -C /home/vgpnk/Projects/shokunin/mori-shokunin show e57c58b5:corpus/README.md | head -2`\nto confirm what the counter reads. Also confirm a rev WITHOUT the entry (842a320) still fails.\n# Acceptance\nReport the commands and outputs. State whether the counter can pass on working-tree-only content.\nVERDICT: PASS iff both revs behave as the contract says and no check reads the working tree.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/RevC2Binding.md"
+    },
+    {
+      "name": "RevR17JJ",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify the scoped r17-jj assertion still has teeth.\ncd /home/vgpnk/Projects/shokunin/mori-shokunin && python3 tools/mori-round17-jj-regressions.py --selftest --scratch .ufo/waves/round-37/scratch-rev 2>&1 | tail -5\nThen read the `jj_config_redirected` block in tools/mori-round17-jj-regressions.py and construct (in your\nscratch, not the lane) a mutated copy whose census_env points XDG_CONFIG_HOME outside the case home; run\nits `--selftest` and report whether the assertion fails.\n# Acceptance\nReport the lane selftest exit code and the mutant's result. VERDICT: PASS iff the lane run exits 0 and the\nmutant fails the assertion (or the mutant cannot be built — say exactly why).\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/RevR17JJ.md"
+    },
+    {
+      "name": "RevTimeout",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAttack the timeout boundary of /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/count-c1.py. Write a fixture tool in your scratch that sleeps 300s,\nrun `python3 .ufo/waves/round-37/count-c1.py e57c58b57c025364e79d130fbdf764d2674d83d6 --tool <sleeping> --seed 11`, and time it.\n# Acceptance\nReport wall time, the arm detail line, whether the state reads `tool_timeout` (not a list mismatch), and\nwhether any process survived. VERDICT: PASS iff the run reports tool_timeout and terminates within the\nbudget+grace.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/RevTimeout.md"
+    },
+    {
+      "name": "RevScratch",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAttack scratch uniqueness and path discipline. Run two counters concurrently with the SAME seed\n(`--seed 11`) in the background and compare to a serial run; inspect `_scratch_parent` and the\n`mkdtemp` calls. Then check whether any lane-relative path is printed absolutely.\n# Acceptance\nReport both concurrent outputs, the scratch directories created, and any absolute lane path in the\noutput. VERDICT: PASS iff concurrent same-seed runs both complete (a collision yields exit 2, never a\nwrong verdict) and lane paths print repo-relative.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/RevScratch.md"
+    },
+    {
+      "name": "RevSHONEN",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nCheck the round's SHONEN boxes and every evidence pointer in the lane.\nRead SHONEN.md, then resolve each pointer the round report (once it exists at /home/vgpnk/Projects/shokunin/.ufo/reports/round-37/mori.md)\ncites: every `evidence/*.txt` path, every commit hash, every SCORECARD capability row.\n# Acceptance\nReport each pointer with resolves/absent. VERDICT: PASS iff every pointer resolves at the named rev.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/RevSHONEN.md"
+    },
+    {
+      "name": "CritC1Axis",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAttack the axis choice for C1. Is \"calibration\" the right axis for a counter-hardening claim, or is it\noperability? Read AXES.md definitions in /home/vgpnk/Projects/shokunin/AXES.md and /home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md's Axes table.\n# Acceptance\nArgue both sides with the definitions quoted, then rule. VERDICT: PASS iff you agree calibration is the\nsurface the round changes (the lane's self-assessment of what its measurement proves); FAIL with the\nbetter axis named otherwise.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/CritC1Axis.md"
+    },
+    {
+      "name": "CritC2Axis",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAttack the axis choice and sizing for C2: does verifying a hardening move freshness, or is it operability\n(a tool's policies) and therefore not allowed to claim freshness?\n# Acceptance\nName what the claim changes (a drift instrument's fetch policies and the corpus binding) and decide whether\n\"freshness\" is the surface or the number. VERDICT: PASS/FAIL with the reason.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/CritC2Axis.md"
+    },
+    {
+      "name": "CritClaimSizing",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nTry to build the cheapest control that meets P-C1 without doing the claimed work: a counter that adds only\nthe per-id check (no challenge arm), or only the challenge arm (no per-id check). You may write both in\nyour scratch by copying /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/count-c1.py and deleting one half; run each against the negative fixtures.\n# Acceptance\nReport each control's verdict at e57c58b57c025364e79d130fbdf764d2674d83d6. VERDICT: PASS iff each half-control prints C1=unmet.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/CritClaimSizing.md"
+    },
+    {
+      "name": "CritC2ContentFree",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nTry to meet P-C2 content-free: (a) a knowledge entry with the right strings but no located quote;\n(b) a capability row that names the tool but points nowhere; (c) a live receipt with the sentence but no\nrow lines. Build each in scratch and reason about which counter check catches it.\n# Acceptance\nFor each shape name the check that catches it, or state that P-C2 admits it (a defect). VERDICT: PASS iff\nevery content-free shape fails at least one check.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/CritC2ContentFree.md"
+    },
+    {
+      "name": "CritAdmission",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAttack the admission bar. Compute the SCORECARD diff from the entering tip to the scored tip\n(`git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff 842a320..e57c58b5 -- SCORECARD.md`) and check that no axis score was rewritten and\nthat the new rows are additive. Also check the claims are causally separable: can C1 verify with C2's\nchanges absent and vice versa?\n# Acceptance\nReport the diff hunks and the separability argument. VERDICT: PASS iff no axis is harmed and each claim's\ncounter runs without the other claim's artifacts.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/CritAdmission.md"
+    },
+    {
+      "name": "CritDebtDisposition",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAttack the r36 debt table in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/contract.md and in corpus/lessons/round-37.md: for each of (a)-(h) find\nthe artifact that closes it, or name it as not closed. Pay special attention to (f) the SIGKILL boundary\n(is a disclosure enough?) and (e) path hygiene (is any new file absolute-pathed?).\n# Acceptance\nOne line per debt: closed-artifact or open. VERDICT: PASS iff every debt is closed or honestly named open.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/CritDebtDisposition.md"
+    },
+    {
+      "name": "MutC1ChallengeRemoved",
+      "agent": "mutation-tester",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nMutate /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/count-c1.py in YOUR scratch: make `challenge_arm` return `(True, ...)` without running the tool.\nRun the mutant against `fixtures/memo-n1.py` and against the honest tool.\n# Acceptance\nReport both verdicts. The honest tool should still pass; the memoizer must now be ACCEPTED, proving the\nchallenge arm is load-bearing. VERDICT: PASS iff the mutation flips memo-n1 to accepted.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/MutC1ChallengeRemoved.md"
+    },
+    {
+      "name": "MutC1IdGrammar",
+      "agent": "mutation-tester",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nMutate a scratch copy of /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/count-c1.py: make `same_id_lines` always return True. Run it against\n`fixtures/summary-only.py`.\n# Acceptance\nReport the verdict. summary-only must now be accepted on the blind arm (or another arm), proving the per-id\ncheck is load-bearing. VERDICT: PASS iff the mutation flips summary-only to accepted.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/MutC1IdGrammar.md"
+    },
+    {
+      "name": "MutC2CapArm",
+      "agent": "mutation-tester",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nMutate a scratch copy of /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/count-c2.py: drop the `cap_kill` check (or make it always PASS). Run it at\ne57c58b57c025364e79d130fbdf764d2674d83d6. Also mutate the drift tool's cap anchor and confirm the arm FAILs when the real tool is mutated.\n# Acceptance\nReport both runs. The counter mutant must print C2=met while the tool mutant prints `selftest huge_cap FAIL`.\nVERDICT: PASS iff the check is load-bearing in both directions.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/MutC2CapArm.md"
+    },
+    {
+      "name": "MutC2RedirectArm",
+      "agent": "mutation-tester",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nSame as MutC2CapArm for the redirect policy: drop `redirect_kill` from a counter copy; mutate\n`if not _public_redirect_target(final):` in a tool copy.\n# Acceptance\nReport both runs. VERDICT: PASS iff the arm is load-bearing in both directions.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/MutC2RedirectArm.md"
+    },
+    {
+      "name": "MutC2Knowledge",
+      "agent": "mutation-tester",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nMutate a committed copy of the knowledge entry in your scratch (remove the `S2##` citations and the\n`8ff9bba` string), commit it in a throwaway clone of the lane, and run\n`python3 .ufo/waves/round-37/count-c2.py <that clone's rev>` with `--repo`.\n# Acceptance\nReport the clone path, rev, and counter output. VERDICT: PASS iff `knowledge FAIL` and `C2=unmet` there.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/MutC2Knowledge.md"
+    },
+    {
+      "name": "LabC1Concurrent",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nProbe one falsifiable hypothesis: two concurrent runs of count-c1 with the same seed never produce a wrong\nverdict (either both meet or a collision exits 2). Run two in parallel, three times.\n# Acceptance\nReport the six runs' exit codes and verdict lines. VERDICT: PASS iff no run prints a verdict other than\nC1=met/met or a setup error.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/LabC1Concurrent.md"
+    },
+    {
+      "name": "LabTimeoutBoundary",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nMeasure the timeout boundary precisely: a fixture that sleeps N seconds for N in {TOOL_TIMEOUT_S-5,\nTOOL_TIMEOUT_S+5}. Read TOOL_TIMEOUT_S and TOOL_GRACE_S from /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/count-c1.py.\n# Acceptance\nReport wall time and the state line for each N. VERDICT: PASS iff the below-budget run completes normally\nand the above-budget run reports tool_timeout within budget+grace.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/LabTimeoutBoundary.md"
+    },
+    {
+      "name": "LabC2CapMemory",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nMeasure the cap arm's cost: peak RSS of `tools/mori-source-drift.py --selftest` (e.g. /usr/bin/time -v)\nand the body sizes the arm serves. State the memory bound the 4 MiB cap actually enforces at the client.\n# Acceptance\nReport command, peak RSS, and the largest body served. VERDICT: PASS with the numbers; FAIL if the arm's\nown fixture allocates more than the cap allows times a small constant.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/LabC2CapMemory.md"
+    },
+    {
+      "name": "ExecC1Seed41",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\ncd /home/vgpnk/Projects/shokunin/mori-shokunin && python3 .ufo/waves/round-37/count-c1.py e57c58b57c025364e79d130fbdf764d2674d83d6 --seed 41; echo EXIT=$?\n# Acceptance\nPaste the full output and exit code. VERDICT: PASS iff C1=met and exit 0.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecC1Seed41.md"
+    },
+    {
+      "name": "ExecC1Seed42",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\ncd /home/vgpnk/Projects/shokunin/mori-shokunin && python3 .ufo/waves/round-37/count-c1.py e57c58b57c025364e79d130fbdf764d2674d83d6 --seed 42; echo EXIT=$?\n# Acceptance\nPaste the full output and exit code. VERDICT: PASS iff C1=met and exit 0.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecC1Seed42.md"
+    },
+    {
+      "name": "ExecC1Seed43",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\ncd /home/vgpnk/Projects/shokunin/mori-shokunin && python3 .ufo/waves/round-37/count-c1.py e57c58b57c025364e79d130fbdf764d2674d83d6 --seed 43; echo EXIT=$?\n# Acceptance\nPaste the full output and exit code. VERDICT: PASS iff C1=met and exit 0.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecC1Seed43.md"
+    },
+    {
+      "name": "ExecC1ToolAbsent",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nFind the oldest rev in the lane that lacks `tools/mori-sources-appendonly.py`\n(`git -C /home/vgpnk/Projects/shokunin/mori-shokunin log --diff-filter=A --format=%H -- tools/mori-sources-appendonly.py` then its parent) and run\n`python3 .ufo/waves/round-37/count-c1.py <that rev>`.\n# Acceptance\nPaste output and exit code. VERDICT: PASS iff the tool_absent path prints `C1=unmet` exit 1 (not a crash).\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecC1ToolAbsent.md"
+    },
+    {
+      "name": "ExecC2Twice",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRun the C2 counter twice at e57c58b57c025364e79d130fbdf764d2674d83d6 and diff the two outputs.\ncd /home/vgpnk/Projects/shokunin/mori-shokunin && python3 .ufo/waves/round-37/count-c2.py e57c58b57c025364e79d130fbdf764d2674d83d6 > /fast/scratch/hyaku/mori-r37/ExecC2Twice/a.txt 2>&1; echo $?\n(repeat into b.txt; diff a.txt b.txt)\n# Acceptance\nReport both exit codes and the diff. VERDICT: PASS iff both exit 0 and the diff is empty.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecC2Twice.md"
+    },
+    {
+      "name": "ExecCensusStart",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRun the frozen source census exactly as CORPUS.md specifies.\nbash /home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori; echo EXIT=$?\n# Acceptance\nPaste the last five lines and exit code; compare with /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/evidence/census-end.txt. VERDICT: PASS iff\nexit 0 and `mori ok`.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecCensusStart.md"
+    },
+    {
+      "name": "ExecDriftLive",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRe-run the live drift sweep and compare to the committed receipt.\ncd /home/vgpnk/Projects/shokunin/mori-shokunin && timeout 900 python3 tools/mori-source-drift.py --root . ; echo EXIT=$?\n# Acceptance\nReport the summary line and exit code; diff against /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/evidence/drift-live-r37.txt. VERDICT: PASS iff the\nsummary line matches and exit is 1 or 0 (a network-unavailable row changes the counts — report it).\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecDriftLive.md"
+    },
+    {
+      "name": "ExecR17JJBattery",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRun the r17-jj regression gate selftest from a scratch parent inside the allowed area.\ncd /home/vgpnk/Projects/shokunin/mori-shokunin && python3 tools/mori-round17-jj-regressions.py --selftest --scratch .ufo/waves/round-37/scratch-exec 2>&1 | tail -3; echo EXIT=$?\n# Acceptance\nPaste the tail and exit code; confirm `jj_config_redirected` appears in the ok list. VERDICT: PASS iff exit 0.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecR17JJBattery.md"
+    },
+    {
+      "name": "ExecCensusRegression",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRun the main census regression battery (read-only): `bash tools/mori-census.sh --selftest` and the oracle\nmode if the usage documents it, at /home/vgpnk/Projects/shokunin/mori-shokunin.\n# Acceptance\nPaste the tallies (expected selftest 134/134, oracle 28/28 on this host per r36). VERDICT: PASS iff both are\nfully green; FAIL with the failing assertions otherwise.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecCensusRegression.md"
+    },
+    {
+      "name": "ExecIndexClean",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\ncd /home/vgpnk/Projects/shokunin/mori-shokunin && bash tools/mori-index-clean.sh /home/vgpnk/Projects/shokunin/mori-shokunin; echo EXIT=$?\n# Acceptance\nPaste output. VERDICT: PASS iff `staged=0 intent_to_add=0` exit 0.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecIndexClean.md"
+    },
+    {
+      "name": "ExecMisrootSweep",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRun the misroot sweep: `git -C /home/vgpnk/Projects/shokunin status --porcelain` (no pathspec). For every untracked file whose\ncontent names mori or round-37, report its path and content head.\n# Acceptance\nList every candidate; state whether any is a mori round-37 seat file written to the fleet root. VERDICT:\nPASS iff no mori round-37 file is misrooted (or you name each one).\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecMisrootSweep.md"
+    },
+    {
+      "name": "ExecSourceCensus",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRun the four census commands from the CORPUS.md SOURCES contract over /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md: row count,\nmalformed rows (must be 0), duplicate ids (must print nothing), enum violations/tier inflation (must print\nnothing). Also print the status histogram.\n# Acceptance\nPaste all five outputs. VERDICT: PASS iff malformed=0, no duplicate ids, no enum violations.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecSourceCensus.md"
+    },
+    {
+      "name": "ExecFreezeVerify",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify every freeze pin: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin hash-object <path>` for the eight paths in\n/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/evidence/freeze-r37.txt, plus sha256 for the three files it lists.\n# Acceptance\nPaste a table path/pin/recomputed/match. VERDICT: PASS iff all match (a mismatch means the frozen artifact\nwas edited after the freeze — report it).\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecFreezeVerify.md"
+    },
+    {
+      "name": "ExecKnowledgeCheck",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nCheck the knowledge entry's code claims against the tool: line ranges cited in\ncorpus/knowledge/source-drift-hardening-r37.md (`:54,163-166`, `:113-136`, `:156-159`, `:103-108`) must\ncontain what the entry says. Read those ranges in tools/mori-source-drift.py at e57c58b57c025364e79d130fbdf764d2674d83d6.\n# Acceptance\nReport each range and whether the claim holds. VERDICT: PASS iff every range holds at the scored rev.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecKnowledgeCheck.md"
+    },
+    {
+      "name": "ExecReadmeRows",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nResolve both new coverage-map rows: every backticked path in the two `source-drift` rows of\n/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/README.md must exist at e57c58b57c025364e79d130fbdf764d2674d83d6; the cited receipt must contain the summary sentence.\n# Acceptance\nReport path -> exists. VERDICT: PASS iff all resolve.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecReadmeRows.md"
+    },
+    {
+      "name": "ExecScorecardRows",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nResolve the two new capability rows in SCORECARD.md: each evidence path must exist and each receipt must\nprint the verdict the row claims. Also check the row's key cell is unique in the register.\n# Acceptance\nReport each row and resolution. VERDICT: PASS iff both resolve and the keys are unique.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecScorecardRows.md"
+    },
+    {
+      "name": "ExecLogAnchors",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify the LOG.md round-37 entry's anchors: every hash, path and command named there resolves or reruns.\n# Acceptance\nReport each anchor. VERDICT: PASS iff all resolve; name any that do not.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecLogAnchors.md"
+    },
+    {
+      "name": "ExecQuality106",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nShow QUALITY 106's check able to fail: build a counter copy in your scratch with the memoizer negative\nremoved from the fixture list, run it at e57c58b57c025364e79d130fbdf764d2674d83d6, and report the verdict.\n# Acceptance\nReport the copy's path, diff summary, and output. VERDICT: PASS iff it prints C1=met (i.e. the criterion's\ncheck would not catch a counter that omits the negative) OR explain why the fixture list is not removable.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecQuality106.md"
+    },
+    {
+      "name": "ExecQuality107",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nShow QUALITY 107's check able to fail: run the round-36 counter against `fixtures/summary-only.py`\n(expect C2=met) and the round-37 counter against it (expect rejected). Report both.\n# Acceptance\nPaste both outputs. VERDICT: PASS iff the before/after pair reproduces.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecQuality107.md"
+    },
+    {
+      "name": "ExecGateRegistry",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nCheck the gate registry in /home/vgpnk/Projects/shokunin/mori-shokunin/SKILL.md: the round-37 capabilities need registry rows (source-drift probe\nhardening; the C1 counter's challenge arm). Read the Round-36 registry table format and report the exact\nrows that are missing, with the fields the table requires.\n# Acceptance\nA table of missing rows/fields. VERDICT: PASS iff you name every missing registry row precisely (do not edit).\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecGateRegistry.md"
+    },
+    {
+      "name": "ExecLessonGate",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify the lesson Gate line ranges against the committed copies: for S221..S225, check the quoted text\noccurs at the cited `S###.src` lines and count words.\n# Acceptance\nReport row/range/contiguous/word-count. VERDICT: PASS iff all five are contiguous at their cited lines and\n<=25 words.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ExecLessonGate.md"
+    },
+    {
+      "name": "ScribeReport",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nDraft the report's **Sources & frontier** and **Trend verdicts** sections into your own report file, from\nthe committed bytes only: SOURCES rows before (220) -> after (225), five added by tier/kind/status, none\nedited in place, and one verdict each for expansion/quality/discernment with a pointer per verdict.\n# Acceptance\nYour report holds the two drafted sections with the census command and its exit code. VERDICT: PASS iff the\nrow counts are re-derived by command and every verdict has a pointer.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ScribeReport.md"
+    },
+    {
+      "name": "ScribeScorecard",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAudit the Round-37 SCORECARD section against the receipts: each before/after cell must name a command that\nappears in the evidence file it cites.\n# Acceptance\nA table claim/cell/command-present. VERDICT: PASS iff every cell's command appears in its cited receipt.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ScribeScorecard.md"
+    },
+    {
+      "name": "ScribeLog",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAudit the LOG.md round-37 entry: every measured value in it must appear in the cited receipt.\n# Acceptance\nA table value/receipt/present. VERDICT: PASS iff every value matches.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ScribeLog.md"
+    },
+    {
+      "name": "ScribeLesson",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAudit corpus/lessons/round-37.md: the Gate table's five quotes against the copies, and each Mistakes row's\ncaptured-by and fix. Report any row whose \"shown able to fail\" evidence does not resolve.\n# Acceptance\nA table row/evidence-resolves. VERDICT: PASS iff all resolve.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ScribeLesson.md"
+    },
+    {
+      "name": "ScribeSkill",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nDraft the SKILL.md registry rows for round 37 (source-drift probe hardening; real-arm challenge counter)\nfollowing the Round-36 table's columns, into your own report file. Do not edit SKILL.md.\n# Acceptance\nThe drafted rows with every column filled from the receipts. VERDICT: PASS iff every cell cites a path or\ncommand that exists at e57c58b57c025364e79d130fbdf764d2674d83d6.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ScribeSkill.md"
+    },
+    {
+      "name": "ScribeQuality",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAudit QUALITY 106/107's wording against the measured behaviour: does each criterion's Check sentence name a\ncommand that actually prints the required line, and does its \"Shown able to fail\" cite a real receipt?\n# Acceptance\nA table criterion/check-command/output-match. VERDICT: PASS iff both hold.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ScribeQuality.md"
+    },
+    {
+      "name": "ScoutCensusSurfaces",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nConfirm no census surface changed this round: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff 842a320..e57c58b57c025364e79d130fbdf764d2674d83d6 --name-status` must list\nno `tools/mori-census.sh`, `tools/mori-silence-cases.sh`, oracle or baseline path.\n# Acceptance\nPaste the name-status list and the conclusion. VERDICT: PASS iff no census surface is in the diff.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ScoutCensusSurfaces.md"
+    },
+    {
+      "name": "ScoutSentData",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRe-run the r36 SentData sweep on THIS round's evidence: scan /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/evidence/ and corpus/evidence/sources-r37/\nfor absolute operator paths (`/home/vgpnk`), credentials, cursors. Report each hit with its line.\n# Acceptance\nA hit list. VERDICT: PASS iff no `/home/vgpnk` path and no credential material in new evidence (a hit is a\nFAIL naming the file:line).\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ScoutSentData.md"
+    },
+    {
+      "name": "ScoutFreeze",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nFind any edit to a frozen path after the freeze: compare `git -C /home/vgpnk/Projects/shokunin/mori-shokunin log --oneline 842a320..e57c58b57c025364e79d130fbdf764d2674d83d6 --`\nover the eight frozen paths, and check whether any commit touched them after the freeze pin commit.\n# Acceptance\nA commit list per path. VERDICT: PASS iff only the freeze commit touched them; FAIL with the commit and diff.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ScoutFreeze.md"
+    },
+    {
+      "name": "ScoutClaimsVsBytes",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nMap each claim to the bytes that carry it: for C1, the counter's challenge/id-grammar code; for C2, the\ntwo arms and the two policy lines. Report file:line for each.\n# Acceptance\nA map claim -> file:line. VERDICT: PASS iff every element resolves at e57c58b57c025364e79d130fbdf764d2674d83d6.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ScoutClaimsVsBytes.md"
+    },
+    {
+      "name": "ScoutWaveSpec",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAudit /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/w1-spec.json for distinctness and padding: every item must name distinct work, and no item may be\na renamed duplicate of another. Report duplicates or filler.\n# Acceptance\nA duplicate/filler list (or \"none\"). VERDICT: PASS iff no two items share a target and acceptance.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ScoutWaveSpec.md"
+    },
+    {
+      "name": "ScoutPriorRound",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-36-verifier-spotcheck.md and /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-36.md, and list\nevery routed defect with its r37 disposition as claimed in the round-37 contract/lesson.\n# Acceptance\nA table defect/r37-disposition/artifact. VERDICT: PASS iff every defect has a disposition.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ScoutPriorRound.md"
+    },
+    {
+      "name": "ScoutCorpusCensus",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nCensus the registry: total rows, status histogram, tier histogram, duplicate ids, and the five new rows'\n`used-by` paths resolving.\n# Acceptance\nPaste commands and outputs. VERDICT: PASS iff counts match 225 rows and no duplicate id.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ScoutCorpusCensus.md"
+    },
+    {
+      "name": "ScoutReportContract",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nCheck the round report's required sections against /home/vgpnk/Projects/shokunin/.ufo/prompts/mori-round-37.md section 4 (once\nthe report exists): Work performed, Landed changes, Before -> after measurements, Sources & frontier,\nTrend verdicts, SHONEN.\n# Acceptance\nA section-present table plus the marker-rule verdict. VERDICT: PASS iff all required sections are present\nwith evidence pointers.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ScoutReportContract.md"
+    },
+    {
+      "name": "ConnSiblingOverlap",
+      "agent": "connector",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nScan sibling lanes' recent lessons for work overlapping this round's claims: `ls /home/vgpnk/Projects/shokunin/*-shokunin/corpus/lessons/`\nand read the newest file per lane whose name mentions counters, gates or drift (do not edit).\n# Acceptance\nA table lane/overlap/none with the file read. VERDICT: PASS iff the scan is complete over the lanes that\nexist and each overlap is named.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ConnSiblingOverlap.md"
+    },
+    {
+      "name": "ConnKumitate",
+      "agent": "connector",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nKumitate r48 admitted a counter-rerun (run-agreement). Read its report under /home/vgpnk/Projects/shokunin/.ufo/reports/round-48/\n(if present) and compare its run-agreement technique with this round's challenge arm: does mori's C1\nduplicate or contradict it?\n# Acceptance\nA comparison with file:line pointers. VERDICT: PASS iff the relationship (none/duplicate/contradiction) is\nstated with evidence.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ConnKumitate.md"
+    },
+    {
+      "name": "ConnChousa",
+      "agent": "connector",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nChousa r34 admitted a dead-zone boundary. Read its report and state whether this round's drift probe touches\nchousa's research domain or stays inside mori's detection/report province.\n# Acceptance\nA verdict with pointers. VERDICT: PASS iff the boundary is stated with evidence.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ConnChousa.md"
+    },
+    {
+      "name": "ConnKama",
+      "agent": "connector",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nKama r29 calibrated writing revisions. Read its report and report whether any mori r37 artifact (lesson,\nentry, report prose) asserts a writing-revision claim that belongs to kama.\n# Acceptance\nA list of contested sentences (or none). VERDICT: PASS iff the scan is explicit.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/ConnKama.md"
+    },
+    {
+      "name": "RevNgC1Env",
+      "agent": "revenger",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nReverse-engineer the remaining arm-detection surface of /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/count-c1.py: env, cwd, parent cmdline, argv rev\nliteral, sandbox header, git identity. Build a fixture that detects the CHALLENGE arm specifically (without\nreading the history) and report whether it can pass all three arms by lying only on the challenge.\n# Acceptance\nA detection-key table and a demonstrated attempt (scratch only). VERDICT: PASS iff no detection key lets a\nliar pass the challenge (or the surviving key is named as a residual).\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/RevNgC1Env.md"
+    },
+    {
+      "name": "RevNgC1Fixtures",
+      "agent": "revenger",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAttack the realism of the three negative fixtures: are they weak stand-ins that a smarter memoinzer would\ndefeat? Write your own stronger memoizer in scratch (e.g. one that recomputes only when the history is\nshort) and run the counter on it.\n# Acceptance\nYour fixture's verdict plus the reason. VERDICT: PASS iff the counter rejects it or you name the bypass.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/RevNgC1Fixtures.md"
+    },
+    {
+      "name": "RevNgC2Anchors",
+      "agent": "revenger",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAttack the mutation anchors of /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/count-c2.py: can a tool keep each policy's effect while breaking the\nanchor (e.g. rename the constant, split the condition) and still pass? Report whether the anchor-based\nmutation is robust or brittle, and what a semantics-based check would cost.\n# Acceptance\nA concrete example of an anchor-breaking edit and its effect on the self-test. VERDICT: PASS iff the\nlimitation is named.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/RevNgC2Anchors.md"
+    },
+    {
+      "name": "RevDebtR36",
+      "agent": "revenger",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nReverse-engineer the r36 residuals in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-36.md (Collateral note + M4) and in\n/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/contract.md's debt table. Find any residual still open and name the artifact that would close it.\n# Acceptance\nA residual list with open/closed. VERDICT: PASS iff each is classified with evidence.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/RevDebtR36.md"
+    },
+    {
+      "name": "SentTools",
+      "agent": "sentinel",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nSecurity-review the new fixtures and counters (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/count-c1.py, count-c2.py, fixtures/*.py): subprocess use,\nshell=False, path injection via --repo/--tool, scratch cleanup, writes outside scratch, network use.\n# Acceptance\nA finding list with severity and file:line. VERDICT: PASS iff no high-severity defect; FAIL with the defect.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/SentTools.md"
+    },
+    {
+      "name": "SentData",
+      "agent": "sentinel",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nEvidence hygiene for the round's committed evidence: credential/cursor/private-data scan, absolute-path\nscan, and check that no evidence file contains a lane-external path.\n# Acceptance\nA scan table with patterns and hits. VERDICT: PASS iff no secrets and no absolute operator paths.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/SentData.md"
+    },
+    {
+      "name": "SentScope",
+      "agent": "sentinel",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify write scope: inspect the round's commits (`git -C /home/vgpnk/Projects/shokunin/mori-shokunin log --name-status 842a320..e57c58b57c025364e79d130fbdf764d2674d83d6`) and\nconfirm every path is inside the lane repo and none is a sibling, fleet, or operator config path.\n# Acceptance\nThe path list and conclusion. VERDICT: PASS iff every path is in scope.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/SentScope.md"
+    },
+    {
+      "name": "SimpC1",
+      "agent": "simplifier",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nFind removable weight in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/count-c1.py that does not change P-C1: dead code, duplicated helpers,\nover-general branches. Report a deletion plan with line ranges; do not edit.\n# Acceptance\nA ranked deletion list with the predicate-preservation argument. VERDICT: PASS iff every proposal is\nargument-checked.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/SimpC1.md"
+    },
+    {
+      "name": "SimpC2",
+      "agent": "simplifier",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nSame for tools/mori-source-drift.py's round-37 additions and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/count-c2.py.\n# Acceptance\nA ranked deletion list. VERDICT: PASS as above.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/SimpC2.md"
+    },
+    {
+      "name": "DistillFindings",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAfter the other seats land, read the wave reports under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/w1/ that exist and deduplicate their findings\ninto a ranked list: finding, seats that reported it, evidence pointer, severity.\n# Acceptance\nThe ranked list. VERDICT: PASS iff every finding names at least one seat and one path.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-37/w1/DistillFindings.md"
+    }
+  ]
+}

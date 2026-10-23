@@ -850,3 +850,19 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     committed copy's
     (`sha256sum corpus/evidence/sources-r36/<id>.src`: S210 64c60354…, S211 a4e104ec…); neither names a source change
     (w2/ExecDriftLive.md).
+106. A measurement's discrimination claim is checked against an arm-detector, not only against a constant: for every
+    counter with a published or fixed expected answer, a tool that behaves honestly on the hidden-truth arm and prints
+    the published answer elsewhere must be rejected, and the receipt must show that rejection. Lesson:
+    `corpus/lessons/round-37.md` M2 (r36 w2/RevNgC2 N1). Check: `python3 .ufo/waves/round-37/count-c1.py <tip>` runs
+    `fixtures/memo-n1.py` (honest under `user.name == "mori counter"`, published constant and its `changed` lines
+    elsewhere) and requires `negative memo-n1.py rejected`; `C1=met` only when it is. Shown able to fail: the round-36
+    counter scores that same fixture `C2=met`, exit 0 (`.ufo/waves/round-37/evidence/c1-before-memo.txt`), and a
+    counter with no challenge arm leaves the fixture's real and blind arms passing. Not covered: a tool that detects
+    the challenge's own parenthood or env (the challenge runs as a sibling child of the counter like the real arm).
+107. A tool interface that requires per-id lines is checked on those lines, not only on its summary: a program that
+    prints the correct summary lists and omits the per-id lines is rejected. Lesson: `corpus/lessons/round-37.md` M3
+    (r36 w2/MutC2Deleted limit 3). Check: `python3 .ufo/waves/round-37/count-c1.py <tip>` parses
+    `changed <id> superseded_by=<id|->` / `deleted <id>` against the hidden truth on every arm and requires
+    `negative summary-only.py rejected`. Shown able to fail: the round-36 counter scores the same fixture `C2=met`,
+    exit 0 (`.ufo/waves/round-37/evidence/c1-before-summary.txt`). Not covered: the `superseded_by` value itself is
+    not compared, only the id set.

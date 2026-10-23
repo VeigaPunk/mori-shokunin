@@ -2135,3 +2135,33 @@ landed tip.
   dispatch-log.txt:21-24, its scratch build cited there) + w2 66 (50 reports at final sweep); 19 w2 FAILs, all
   documentary, repaired or disclosed (lesson M1–M4). Out-of-round commit inside the range: `c081375`
   (considerthese 2026-10-23 daily reflection) — operator material, not round work.
+
+## Round 37 (attempt 1, 2026-10-23, L1 MoriR37) — measurement discrimination (C1, calibration) and drift-probe hardening verification (C2, freshness); routed round-36 debts
+
+Entering tip `842a3207` (round 36 admitted; closure `corpus/lessons/round-36-verifier-spotcheck.md`).
+Frozen before data: `.ufo/waves/round-37/contract.md` + `count-c1.py` + `count-c2.py` + three negative
+fixtures, pins in `evidence/freeze-r37.txt` (blob `7518fef8` / `6213cf9a`, sha256 `86699627` / `71c72929`).
+Declared claims:
+- C1 (calibration 5, tied lowest) — the C2 measurement must discriminate a real-arm memoizer (r36
+  w2/RevNgC2 N1) and enforce the per-id `changed`/`deleted` grammar (w2/MutC2Deleted limit 3).
+  Before, with the round-36 counter: `count-c2.py bf0df77 --tool fixtures/memo-n1.py --seed 11` → `C2=met`
+  exit 0; same with `fixtures/summary-only.py` → `C2=met` exit 0 (`evidence/c1-before-memo.txt`,
+  `c1-before-summary.txt`). After, at `e57c58b5`: `count-c1.py e57c58b5` → blind 24/24, real pass,
+  challenge pass, `negative memo-n1.py rejected (challenge: …)`, `const.py rejected`,
+  `summary-only.py rejected`, `C1=met`, exit 0, seed 13985344346805549517 (`evidence/c1-after.txt`).
+- C2 (freshness 5, tied lowest) — the two fetch policies landed at `8ff9bba` (4 MiB bounded read;
+  post-redirect public-destination check) are named selftest arms, each killed by a mutation, and the
+  corpus binds them. Before: `count-c2.py 842a320` → `selftest FAIL`, `knowledge FAIL`, `capability FAIL`,
+  `readme FAIL`, `live FAIL`, `C2=unmet` exit 1 (`evidence/c2-before.txt`). After, at `e57c58b5`:
+  all eight checks PASS, `C2=met`, exit 0 (`evidence/c2-after.txt`); the live sweep in the same round
+  gives `rows=220 fresh=49 drifted=9 unavailable=0 no-copy=162`, exit 1 (`evidence/drift-live-r37.txt`).
+Registry: five new rows S221–S225 (`mined`, cited by `corpus/knowledge/source-drift-hardening-r37.md`);
+no existing row edited. Census: `sources-census.sh validate mori` exit 0 at round start and round end
+(225 rows; benign W04 duplicate-URL lines only) — `evidence/census-start.txt`, `census-end.txt`.
+Routed round-36 debts: (a) C2, (b) C1, (c) C1 + QUALITY 107, (d) r17-jj assertion scoped — selftest
+exit 0 (pre-fix 9/204 red, round-36 Collateral note; `evidence/r17-jj-selftest-r37.txt`), (e) repo-relative
+paths in new evidence (`display_path`), (f) `tool_timeout` with SIGTERM→SIGKILL and the boundary in the
+contract, (g) `mkdtemp` scratch per arm, (h) nine-row drift prose re-verified. QUALITY 106 (arm-detector
+discrimination) and 107 (per-id interface) added; lesson M1–M4 in `corpus/lessons/round-37.md`.
+Capability rows: `real-arm challenge counter`, `source-drift re-fetch probe` (SCORECARD Round-37 section).
+Held: coverage 6, operability 7, depth 5, calibration 5, freshness 5, adjacency 6.
