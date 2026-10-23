@@ -1,0 +1,10 @@
+command: python3 .ufo/waves/round-38/conform.py e37dcc6 --counter .ufo/waves/round-37/count-c1.py --counter .ufo/waves/round-37/count-c2.py
+P-C5: at revision R, the round-38 C1 counter prints the contract's P-C1 bytes as its predicate, prints the lane tip it measured as `head_at_measurement=<40-hex>`, resolves a repo-relative `--tool` path against the lane, bounds every child and git read by a timeout and the committed-blob read by a byte cap, maps a tool that flushes then hangs to `tool_timeout` (never a pass and never a silent unmet), and creates every scratch directory with `tempfile.mkdtemp` under the lane's `.ufo/waves/round-38/scratch`; the conformance checker passes all six checks on those bytes and each of six mutations of them flips exactly its own check to FAIL.
+check predicate        FAIL (exit=2 equal=False)
+check head_pin         FAIL (pin=None tip=1f1e9968f4746dc7ed46804d4e7d02693dfd1497)
+check tool_resolve     FAIL (exit=2 resolved=)
+check bounded_reads    FAIL (count-c1.py: run=True popen=True cap=False mkdtemp=False scratch=False; count-c2.py: run=False popen=True cap=False mkdtemp=False scratch=False)
+check timeout_state    FAIL (exit=2 timeout_reason=False pass=False)
+check scratch          FAIL (count-c1.py: mkdtemp_dir=False root=False; count-c2.py: mkdtemp_dir=False root=False)
+CONFORM=unmet
+EXIT=1
