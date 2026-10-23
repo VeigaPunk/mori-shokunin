@@ -1,0 +1,9 @@
+measured 2026-10-23T04:53:14Z (L1 MoriR34, before any seat)
+positive control: sandbox clone /fast/scratch/hyaku/mori-r34/l1-posctl (commit cf987fa4), tools/mori-disk-rate.py = count-c1.py lines from 'DIGITS = re.compile' up to the scenario-generator banner, verbatim, plus a CLI that parses --a/--b/--sysfs/--interval-ms, reads /proc/diskstats twice around time.sleep(ms/1000) in live mode, and prints json.dumps(oracle(...)). Purpose: show P-C1 is satisfiable (residual (a)).
+measured_at=2026-10-23T04:53:14Z repo=/fast/scratch/hyaku/mori-r34/l1-posctl rev=cf987fa43070f34a1f239cb39584dd98f10b26e2
+tool=present guard=clean seed=11401934255746087815
+fixed_pass=12/12 random_pass=300/300
+states_seen=['absent', 'bad-line', 'gone', 'new', 'ok', 'reset'] classes_seen=['disk', 'partition', 'stacked', 'unknown', 'virtual'] coverage=ok
+live=ok
+C1=met
+exit=0
