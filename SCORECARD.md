@@ -8,9 +8,9 @@ here, the owned pair drives the round's axis-move.
 | Axis | Score | Evidence pointer | Last change |
 |---|---|---|---|
 | coverage | 6 | per-surface notes landed (`corpus/knowledge/observability-surfaces-r2.md`); silence roster over the declared lanes (round 12, score 5 → 6 then); one-shot system pressure read (round 24); round-24 closure "Score 6 → 6" (`corpus/lessons/round-24-verifier-spotcheck.md:88`); latest admitted closure grades coverage improved and states no new number (`corpus/lessons/round-26-verifier-spotcheck.md:133`) | round 26 (improved, score held) |
-| operability | 7 | census `--selftest` PASS (134 cases) before and after round 24 (`SCORECARD.md` round-24 measured outcome); 7 was first set in round 13's table (6 → 7), which closed rejected-harmed; first held in round 14's admitted table and kept since (round 14's closure grades operability unchanged and states the scores, `corpus/lessons/round-14-verifier-spotcheck.md:87`); round-28 closure grades operability improved (ten A2 rules pinned by 30 frozen cases) (`corpus/lessons/round-28-verifier-spotcheck.md:93`); latest admitted closure grades operability improved (blind-writer gate `tools/mori-blind-check.sh`, C2 verified) and states the score stays 7 (`corpus/lessons/round-31-verifier-spotcheck.md:155`); round-35 correction: this cell said round 28 | round 31 (improved, score held) |
+| operability | 7 | census `--selftest` PASS (134 cases) before and after round 24 (`SCORECARD.md` round-24 measured outcome); 7 was first set in round 13's table (6 → 7), which closed rejected-harmed; first held in round 14's admitted table and kept since (round 14's closure grades operability unchanged and states the scores, `corpus/lessons/round-14-verifier-spotcheck.md:87`); round-28 closure grades operability improved (ten A2 rules pinned by 30 frozen cases) (`corpus/lessons/round-28-verifier-spotcheck.md:93`); latest admitted closure grades operability improved (blind-writer gate `tools/mori-blind-check.sh`, C2 verified) and states the score stays 7 (`corpus/lessons/round-31-verifier-spotcheck.md:155`); round-35 correction: this cell said round 28; round-37 C2 verified the probe's hardening as named, mutation-killable arms and re-attributed that claim here (SCORECARD round-37 post-data correction; round-38 axes-cell correction) | round 31 (improved, score held); round-37 C2 re-attributed here (score held, 7) |
 | depth | 5 | source-linked knowledge entries with `source:`/`verified-at:`/`recheck:` lines (round 12 claim 1); the round-12 closure states the move (`corpus/lessons/round-12-verifier-spotcheck.md:17`); latest admitted closure grades depth improved (watchdog identity decision table, C1 re-measured) and states the score stays 5 (`corpus/lessons/round-31-verifier-spotcheck.md:154`); round 27's depth improvement was verified under a rejected-honest-stop closure and is not counted; round-35 correction: this cell said round 12 (4 → 5), the last score move | round 31 (improved, score held) |
-| freshness | 5 | round-10 drift pin still red; the round-20 re-pin was rejected (`corpus/README.md` Round21 correction); latest admitted closure grades freshness improved and states no new number (`corpus/lessons/round-28-verifier-spotcheck.md:92`); round 28's measured outcome proposed 5 → 6 (`SCORECARD.md:1771`), not adopted because no closure states it; the score itself is stated at `corpus/lessons/round-14-verifier-spotcheck.md:87` | round 28 (improved, score held); round-37 claim C2 verified the probe's hardening as named, mutation-killable arms and states no new number |
+| freshness | 5 | round-10 drift pin still red; the round-20 re-pin was rejected (`corpus/README.md` Round21 correction); latest admitted closure grades freshness improved and states no new number (`corpus/lessons/round-28-verifier-spotcheck.md:92`); round 28's measured outcome proposed 5 → 6 (`SCORECARD.md:1771`), not adopted because no closure states it; the score itself is stated at `corpus/lessons/round-14-verifier-spotcheck.md:87` | round 28 (improved, score held); round-37 C2 is re-attributed to operability (round-38 axes-cell correction below) and round 38 claims no freshness move |
 | calibration | 5 | round 12's self-assessed 5 → 6 was not re-derived by the outside reviewer and held at 5; round-24 closure "Score 5 → 5" (`corpus/lessons/round-24-verifier-spotcheck.md:68`); latest admitted closure grades calibration improved and states no new number (`corpus/lessons/round-25-verifier-spotcheck.md:124`) | round 25 (improved, score held); round-37 claim C1 closed the r36 measurement-discrimination defect and states no new number |
 | adjacency | 6 | refuses dispatch (kumitate), OS state (tsukuroi) and harness configuration (operator) in PROVINCE and in its tools; score stated at `corpus/lessons/round-14-verifier-spotcheck.md:87`; latest admitted closure grading adjacency improved has no lane spot-check file: MANIFEST.json@63729047 mori round 19 (fleet MANIFEST.json rounds[398], verdicts.adjacency improved) | round 19 (improved, score held) |
 
@@ -2055,8 +2055,8 @@ Capabilities register — rows demonstrated running this round (closure admits t
 
 | key | name | what it can now do | evidence | first working |
 |---|---|---|---|---|
-| round-37 C1 | real-arm challenge counter | Extends the C2 gate measurement with a run-time-drawn challenge history in real-arm clothing and per-id `deleted` line parsing, so a real-arm memoizer and a summary-only printer are both rejected while the honest gate passes | `.ufo/waves/round-37/count-c1.py`; `evidence/c1-after.txt`; fixtures under `.ufo/waves/round-37/fixtures/` | 37 |
-| round-37 C2 | source-drift re-fetch probe | Re-fetches every registry row with a committed copy and classifies the copy against today's body under a 4 MiB bounded read and a post-redirect public-destination policy; `--selftest` 6 cases with two named, mutation-killable arms | `tools/mori-source-drift.py`; `.ufo/waves/round-37/evidence/c2-after.txt`; `evidence/drift-live-r37.txt` | 37 |
+| round-37 C1 | real-arm challenge counter | Extends the C2 gate measurement with a run-time-drawn challenge history in real-arm clothing and per-id `deleted` line parsing, so a real-arm memoizer and a summary-only printer are both rejected while the honest gate passes | `.ufo/waves/round-37/count-c1.py`; `.ufo/waves/round-37/evidence/c1-after-v2.txt`; `.ufo/waves/round-37/fixtures/` | 37 |
+| round-37 C2 | source-drift re-fetch probe | Re-fetches every registry row with a committed copy and classifies the copy against today's body under a 4 MiB bounded read and a post-redirect public-destination policy; round 37 added `--selftest` 6 cases with two named, mutation-killable arms (the probe's live run first worked in round 36) | `tools/mori-source-drift.py`; `.ufo/waves/round-37/evidence/c2-after-v3.txt`; `.ufo/waves/round-37/evidence/drift-live-r37.txt` | 36 |
 
 ### Round 37 measured outcome (L1 MoriR37; measured at `e57c58b5`, before the wave returns)
 
@@ -2140,3 +2140,38 @@ here; the frozen predicate bytes (P-C1, P-C2) and both measured receipts are unc
 
 Freeze of record: `evidence/freeze-r37-v3.txt` (count-c1 `3e15f9fd…` at v2, count-c2 `39d06e20…` at v3, drift tool
 `162ee87b…`, contract `d2d61144…`).
+
+## Round 38 declaration (attempt 1, L1 MoriR38) — the content half, instrument conformance, timed supersede
+
+Entering tip `e33bb561` (round 37 admitted). Frozen before data: `.ufo/waves/round-38/contract.md` +
+`count-c1.py` (v4) + `count-c4.py` + `conform.py` + fixtures, pins in `evidence/freeze-r38.txt`.
+Three claims, distinct axes; calibration and depth are the tied-lowest non-retired (5), so the
+lowest-axis obligation is met by C1 and C3.
+
+| # | claim (type) | axis | before → after (one value) | counting command | evidence |
+|---|---|---|---|---|---|
+| 1 | content-anchor discrimination: the drift-corpus binding must resolve, not just carry the r37 tokens (r37 M9) | calibration | fabricated binding `C2=met` (r37 counter) and `C4=unmet` → real binding `C4=met`, exit 0 | `python3 .ufo/waves/round-38/count-c4.py <rev>` | `evidence/c4-before.txt`, `evidence/c4-after.txt`, `evidence/v3-token-control.txt`, `evidence/c4-witness.txt` |
+| 2 | instrument conformance and replayability (r37 R1/R2/R4, SentTools MEDIUM/LOW, LabTimeoutBoundary) | operability | `CONFORM=unmet` (6/6 checks FAIL on the r37 counters) → `CONFORM=met` (6/6) with `CONFORM_SELFTEST pass=6 fail=0` | `python3 .ufo/waves/round-38/conform.py <rev> --counter …` and `--selftest` | `evidence/c5-before.txt`, `evidence/c5-after.txt`, `evidence/c5-after-selftest.txt` |
+| 3 | timed supersede semantics in the append-only gate; S069 disposed by a postdating row (r37 ExecGateRound D3) | depth | gate prints no timing field (0 occurrences) → `supersede_timing superseded_as_of=[S069,S182,S193] stale_supersede=[]` at the round-38 tip, `stale_supersede=[S069]` at `e37dcc6` | `python3 tools/mori-sources-appendonly.py <rev> --round-base f10a320d` | `evidence/gate-before.txt`, `evidence/gate-after.txt`, `evidence/gate-selftest-after.txt` |
+
+Kill rules: a do-nothing control cannot print `C4=met`, `CONFORM=met` or the timing line; the
+r37 counter scores the fabricated binding `C2=met`; a gate whose timing field is presence-based
+lists S069 in `superseded_as_of` at `e37dcc6` and its own `stale_supersede` selftest fixture fails.
+
+### Round 38 capability rows (demonstrated running this round)
+
+| key | name | what it can now do | evidence | first working |
+|---|---|---|---|---|
+| round-38 C1 | content-anchor corpus check | Requires a corpus binding to resolve: named `anchor:` code strings in the probe's bytes, capability paths resolving from the repo root, one named drifted row per summary count, and a named-row selftest arm killed by its own mutation; rejects three fabricated token witnesses | `.ufo/waves/round-38/count-c4.py`; `.ufo/waves/round-38/evidence/c4-after.txt`; fixtures under `.ufo/waves/round-38/fixtures/` | 38 |
+| round-38 C2 | counter conformance checker | Audits an instrument's identity and bounds — predicate bytes, lane-tip pin, lane-relative tool resolution, bounded reads, timeout state, lane scratch — with six mutations each flipping exactly its own check | `.ufo/waves/round-38/conform.py`; `.ufo/waves/round-38/evidence/c5-after.txt`; `evidence/c5-after-selftest.txt` | 38 |
+| round-38 C3 | timed supersede reading | Separates a supersede disposition that postdates the edit from one that predates it, on the same commit walk the append-only gate already performs | `tools/mori-sources-appendonly.py` (`supersede_timing`); `.ufo/waves/round-38/evidence/gate-after.txt` | 38 |
+
+### Round 38 axes-cell correction (append-only note; names the superseded text)
+
+The `freshness` axes cell read "round-37 claim C2 verified the probe's hardening as named,
+mutation-killable arms and states no new number"; the round-37 closure re-attributed C2 to
+operability, so that clause is superseded. The cell now reads "round-37 C2 is re-attributed to
+operability (round-38 axes-cell correction below) and round 38 claims no freshness move"; the
+`operability` cell gained the round-37 pointer. The `source-drift re-fetch probe` capability row's
+first-working cell moved 37 → 36 (the live run worked in round 36; round 37 added the named arms)
+and its two wave-directory paths became repo-relative.

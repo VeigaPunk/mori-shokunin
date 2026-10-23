@@ -25,6 +25,13 @@ What the gate measures, at revision <rev>:
                  and then edited back inside the range is listed too: the
                  change is a fact of the round even when the endpoint matches.
 
+  superseded_as_of  ids in `superseded` whose latest superseding row's landing commit
+                 is a descendant of (strictly later than) the id's last immutable-cell
+                 edit commit.  Presence alone does not discharge: a superseder that
+                 landed before the edit leaves the id in `stale_supersede` (round 38,
+                 ExecGateRound D3).
+  stale_supersede  superseded ids whose latest superseder landed at or before the edit.
+
   appendonly_violations = len(ids) + len(deleted)
 
 Columns are taken by header position (id source kind tier scope anchor teaches
@@ -32,9 +39,10 @@ status opened recheck used-by); cells are compared stripped, so whitespace
 padding is not a change.  Rows are keyed by id.
 
 Output (stdout):
-    changed <id> superseded_by=<id or ->
+    changed <id> superseded_by=<latest superseding row id, or ->
     deleted <id>
     appendonly_violations=N ids=[...] deleted=[...] superseded=[...] round_changed=[...]
+    supersede_timing superseded_as_of=[...] stale_supersede=[...]
 
 Exit codes:
     0   no violation (with --round-base: nothing changed in the round)
@@ -62,6 +70,18 @@ SUPERSEDES_RE = re.compile(r"^supersedes\s+(S\d{3})\b")
 SUMMARY_RE = re.compile(
     r"^appendonly_violations=(\d+)\s+ids=\[([^\]]*)\]\s+deleted=\[([^\]]*)\]\s+"
     r"superseded=\[([^\]]*)\]\s+round_changed=\[([^\]]*)\]$")
+TIMING_RE = re.compile(
+    r"^supersede_timing superseded_as_of=\[([^\]]*)\] stale_supersede=\[([^\]]*)\]$")
+
+PREDICATE = (
+    "P-C6: at revision R, tools/mori-sources-appendonly.py reports, after its summary "
+    "line, `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; an id is "
+    "superseded-as-of only when its latest superseding row's landing commit is a "
+    "descendant of the id's last immutable-cell edit commit, and is listed in "
+    "stale_supersede otherwise; on the lane history S069 is stale before its round-38 "
+    "supersede row lands and no id is stale after, and the selftest carries a "
+    "supersede-before-edit fixture that lists the id in stale_supersede."
+)
 
 
 class GateError(Exception):
@@ -219,10 +239,19 @@ def analyze(repo, rev, path, round_base=None):
     changed_at = {}     # commit index -> ids whose immutable cells changed
     deleted_at = {}     # commit index -> ids that disappeared there
     last_seen = {}      # id -> cells it last held
+    supersede_rows = {}     # (superseded id, superseder id) -> first index it appears
+    supersede_landing = {}  # superseded id -> (latest landing index, that superseder id)
+    teaches_idx = (colmap or {}).get("teaches", COLUMNS.index("teaches"))
     prev_ids = set()
     for index, rows in enumerate(states):
         if rows is None:
             continue
+        for cells in rows:
+            if teaches_idx >= len(cells):
+                continue
+            m = SUPERSEDES_RE.match(cells[teaches_idx].strip())
+            if m:
+                supersede_rows.setdefault((m.group(1), cells[0].strip()), index)
         current = {cells[0]: cells for cells in rows}
         for cid, cells in current.items():
             if cid not in first:
@@ -240,8 +269,24 @@ def analyze(repo, rev, path, round_base=None):
                  if cid not in first
                  or imm_key(cells, imm_idx) != imm_key(first[cid], imm_idx))
     deleted = sorted(set(first) - set(tip))
-    sup_map = superseders(tip_rows, colmap)
+    for (target, by), index in supersede_rows.items():
+        previous = supersede_landing.get(target)
+        if previous is None or index > previous[0]:
+            supersede_landing[target] = (index, by)
+    sup_map = {target: by for target, (_, by) in supersede_landing.items()}
     superseded = sorted(cid for cid in ids if cid in sup_map)
+    last_edit = {}
+    for index, changed in changed_at.items():
+        for cid in changed:
+            last_edit[cid] = index
+    superseded_as_of = []
+    stale_supersede = []
+    for cid in superseded:
+        landing = supersede_landing[cid][0]
+        if cid in last_edit and landing > last_edit[cid]:
+            superseded_as_of.append(cid)
+        else:
+            stale_supersede.append(cid)
 
     round_changed = set()
     if round_base:
@@ -262,6 +307,8 @@ def analyze(repo, rev, path, round_base=None):
         "round_changed": sorted(round_changed),
         "violations": len(ids) + len(deleted),
         "superseded_by": sup_map,
+        "superseded_as_of": superseded_as_of,
+        "stale_supersede": stale_supersede,
         "commits": commits,
         "rows": len(tip),
     }
@@ -285,6 +332,9 @@ def report(result):
                     format_list(result["deleted"]),
                     format_list(result["superseded"]),
                     format_list(result["round_changed"])))
+    lines.append("supersede_timing superseded_as_of=[%s] stale_supersede=[%s]"
+                 % (format_list(result["superseded_as_of"]),
+                    format_list(result["stale_supersede"])))
     return lines
 
 
@@ -358,26 +408,46 @@ def _selftest_cases():
     superseding = _render([_row("S001", anchor="anchor a v2"),
                             _row("S002", source="https://example.invalid/b",
                                  anchor="anchor b", teaches="supersedes S001 — replacement")])
+    with_old_superseder = _render([_row("S001"),
+                                   _row("S002", source="https://example.invalid/b",
+                                        anchor="anchor b",
+                                        teaches="supersedes S001 — replacement")])
+    old_superseder_then_edit = _render([
+        _row("S001", anchor="anchor a v3"),
+        _row("S002", source="https://example.invalid/b", anchor="anchor b",
+             teaches="supersedes S001 — replacement")])
     reordered = _render([_row("S002", source="https://example.invalid/b",
                               anchor="anchor b", teaches="teaches b"), _row("S001")])
     return [
         ("clean history", [base, two_rows], 0,
-         {"ids": [], "deleted": [], "superseded": [], "round_changed": []}),
+         {"ids": [], "deleted": [], "superseded": [], "round_changed": [],
+          "superseded_as_of": [], "stale_supersede": []}),
         ("mutable-only edit", [base, mutable], 0,
-         {"ids": [], "deleted": [], "superseded": [], "round_changed": []}),
+         {"ids": [], "deleted": [], "superseded": [], "round_changed": [],
+          "superseded_as_of": [], "stale_supersede": []}),
         ("immutable edit", [base, edited], 1,
-         {"ids": ["S001"], "deleted": [], "superseded": [], "round_changed": ["S001"]}),
+         {"ids": ["S001"], "deleted": [], "superseded": [], "round_changed": ["S001"],
+          "superseded_as_of": [], "stale_supersede": []}),
         ("changed-back inside the round", [base, edited, reverted], 1,
-         {"ids": [], "deleted": [], "superseded": [], "round_changed": ["S001"]}),
+         {"ids": [], "deleted": [], "superseded": [], "round_changed": ["S001"],
+          "superseded_as_of": [], "stale_supersede": []}),
         ("deleted row", [two_rows, one_row], 1,
-         {"ids": [], "deleted": ["S002"], "superseded": [], "round_changed": ["S002"]}),
+         {"ids": [], "deleted": ["S002"], "superseded": [], "round_changed": ["S002"],
+          "superseded_as_of": [], "stale_supersede": []}),
         ("superseding row", [base, edited, superseding], 1,
          {"ids": ["S001"], "deleted": [], "superseded": ["S001"], "round_changed": ["S001"],
-          "superseded_by": {"S001": "S002"}}),
+          "superseded_by": {"S001": "S002"}, "superseded_as_of": ["S001"],
+          "stale_supersede": []}),
+        ("supersede before edit", [with_old_superseder, old_superseder_then_edit], 1,
+         {"ids": ["S001"], "deleted": [], "superseded": ["S001"],
+          "round_changed": ["S001"], "superseded_by": {"S001": "S002"},
+          "superseded_as_of": [], "stale_supersede": ["S001"]}),
         ("row reorder", [two_rows, reordered], 0,
-         {"ids": [], "deleted": [], "superseded": [], "round_changed": []}),
+         {"ids": [], "deleted": [], "superseded": [], "round_changed": [],
+          "superseded_as_of": [], "stale_supersede": []}),
         ("whitespace padding", [base, padded], 0,
-         {"ids": [], "deleted": [], "superseded": [], "round_changed": []}),
+         {"ids": [], "deleted": [], "superseded": [], "round_changed": [],
+          "superseded_as_of": [], "stale_supersede": []}),
     ]
 
 
@@ -408,7 +478,8 @@ def selftest():
                 base_sha = shas[0]
                 code, stdout = _run_cli(["HEAD", "--repo", repo,
                                          "--round-base", base_sha], env)
-                lines = [l for l in stdout.splitlines() if l.strip()]
+                lines = [l for l in stdout.splitlines()
+                         if l.strip() and l.strip() != PREDICATE]
                 summary_lines = [l for l in lines if SUMMARY_RE.match(l.strip())]
                 problems = []
                 if len(summary_lines) != 1:
@@ -432,7 +503,18 @@ def selftest():
                 else:
                     got["superseded"] = []
                     got["round_changed"] = []
-                for key in ("ids", "deleted", "superseded", "round_changed"):
+                timing_lines = [l for l in lines if TIMING_RE.match(l.strip())]
+                if len(timing_lines) != 1:
+                    problems.append("expected one supersede_timing line, got %d"
+                                    % len(timing_lines))
+                    got["superseded_as_of"] = []
+                    got["stale_supersede"] = []
+                else:
+                    tgroups = TIMING_RE.match(timing_lines[0].strip()).groups()
+                    got["superseded_as_of"] = [p for p in tgroups[0].split(",") if p]
+                    got["stale_supersede"] = [p for p in tgroups[1].split(",") if p]
+                for key in ("ids", "deleted", "superseded", "round_changed",
+                            "superseded_as_of", "stale_supersede"):
                     if got[key] != expected[key]:
                         problems.append("%s: want %s got %s"
                                         % (key, expected[key], got[key]))
@@ -445,7 +527,9 @@ def selftest():
                     if not match or not match[0].endswith("superseded_by=%s" % by):
                         problems.append("superseded_by[%s]: want %s got %r"
                                         % (cid, by, match[0] if match else None))
-                for line in lines[:-1]:
+                for line in lines:
+                    if SUMMARY_RE.match(line) or TIMING_RE.match(line):
+                        continue
                     if not (re.match(r"^changed S\d{3} superseded_by=(\S+)$", line)
                             or re.match(r"^deleted S\d{3}$", line)):
                         problems.append("per-id line malformed: %r" % line)
@@ -475,8 +559,13 @@ def main(argv):
     parser.add_argument("--path", default=DEFAULT_PATH, help="registry path")
     parser.add_argument("--selftest", action="store_true",
                         help="run the fixture self-test and exit")
+    parser.add_argument("--print-predicate", action="store_true",
+                        help="print the frozen P-C6 predicate and exit")
     args = parser.parse_args(argv)
 
+    if args.print_predicate:
+        print(PREDICATE)
+        return 0
     if args.selftest:
         return selftest()
     if not args.rev:
@@ -488,6 +577,7 @@ def main(argv):
     except GateError as exc:
         print("error: %s" % exc, file=sys.stderr)
         return 2
+    print(PREDICATE)
     for line in report(result):
         print(line)
     if args.round_base:

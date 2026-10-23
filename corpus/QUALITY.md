@@ -866,3 +866,32 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     `negative summary-only.py rejected`. Shown able to fail: the round-36 counter scores the same fixture `C2=met`,
     exit 0 (`.ufo/waves/round-37/evidence/c1-before-summary.txt`). Not covered: the `superseded_by` value itself is
     not compared, only the id set.
+
+## Criteria added round 38 — round-37 M9 and ExecGateRound, ExecC1Seed43, LabTimeoutBoundary, SentTools
+
+108. A corpus binding is checked for **resolvability**, not token presence: every `anchor:` line in the knowledge entry
+    occurs byte-exactly in the named file at R, every path the capability row cites resolves from the repository root at
+    R, and a live receipt's per-row lines enumerate exactly the rows its summary counts. Lesson: `corpus/lessons/round-37.md`
+    M9; `corpus/lessons/round-38.md` M1–M2. Check: `python3 .ufo/waves/round-38/count-c4.py <rev>` prints the four checks
+    and rejects the three witness fixtures under `.ufo/waves/round-38/fixtures/`. Shown able to fail: the round-37 counter
+    scores the fabricated binding `C2=met` (`.ufo/waves/round-38/evidence/v3-token-control.txt`) while `count-c4.py`
+    prints `C4=unmet` on the same sandbox (`evidence/c4-witness.txt`). Not covered: an anchor proves presence, not
+    semantics (the `drift_kill` mutation arm is the separate statement); the capability check reads the last row
+    containing the capability name.
+109. A drawn-arm measurement is replayable only with the tip it drew from: the counter prints
+    `head_at_measurement=<40-hex>` on every run, and a conformance check fails a counter that cannot print it, cannot
+    resolve a repo-relative `--tool`, ignores its timeout budget, or keeps an unbounded read. Lesson: ExecC1Seed43
+    R2/R4, LabTimeoutBoundary, SentTools MEDIUM/LOW; `corpus/lessons/round-38.md` M5. Check:
+    `python3 .ufo/waves/round-38/conform.py --selftest` → `CONFORM_SELFTEST pass=6 fail=0`. Shown able to fail: the
+    round-37 counters score `CONFORM=unmet` with all six checks FAIL (`.ufo/waves/round-38/evidence/c5-before.txt`);
+    a counter whose budget flag is ignored fails `timeout_state` with a flush-then-hang tool. Not covered: the pin is
+    HEAD, not the drawn rev (the receipt's `rev=`/`base=` name the drawn arm).
+110. A supersede disposition is **timed**, not just present: an id is superseded-as-of only when its latest superseding
+    row's landing commit postdates the id's last immutable-cell edit commit; presence alone leaves it in
+    `stale_supersede`. Lesson: ExecGateRound D3; `corpus/lessons/round-38.md` M3. Check:
+    `python3 tools/mori-sources-appendonly.py <rev> --round-base <base>` prints
+    `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; `--selftest` carries a supersede-before-edit
+    fixture that lists the id in `stale_supersede`. Shown able to fail: at `e37dcc6` the field lists S069 in
+    `stale_supersede` although the presence-based `superseded=[...]` had listed it as superseded since round 35
+    (`.ufo/waves/round-38/evidence/gate-after.txt`); a gate whose field is presence-based lists S069 as-of. Not covered:
+    commit order in the path's history, not global ancestry.

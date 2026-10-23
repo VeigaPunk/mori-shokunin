@@ -94,8 +94,10 @@ only, NOT a freshness admission (see w1/CritAxisFit.md)."""))
 items.append(item("ExecGateRound", "executor", f"""Round landing gate checks.
 cd {LANE} && python3 tools/mori-sources-appendonly.py {TIP} --round-base 6bd57097 (expect
 round_changed=[] exit 0) and without --round-base (expect 18 ids, exit 1). Paste both. Verify the
-ids list equals the 18 ids QUALITY 104 names and that every id has a `supersedes S0NN` row at the tip
-(`grep -c 'supersedes S0' corpus/SOURCES.md` and the exact list)."""))
+ids list is the gate's own `ids=[...]` line (count 18 per `evidence/c2-after.txt:6` and QUALITY
+102:809 — criterion 104 names no ids) and that every id has a `supersedes S<NNN> —` row at the tip
+(`grep -cE 'supersedes S[0-9]{3}' corpus/SOURCES.md` returns 35 lines / 37 occurrences, not 18; the
+carried-id subset is a different set from that count)."""))
 
 items.append(item("ExecIndexClean", "executor", f"""Index-clean gate live check.
 cd {LANE} && bash tools/mori-index-clean.sh {LANE} (expect staged=0 intent_to_add=0 exit 0) and
@@ -319,10 +321,12 @@ mined used-by path existence check expecting none missing). Paste every command 
 any nonzero where zero is required. Expect rows=220."""))
 
 items.append(item("RevAppendDebt", "reviewer", f"""Append-only debt closure count.
-Attack: QUALITY 102's debt. Run one command over committed bytes that lists the 18 ids the gate now
-reports (15 pre-round-34 ids + S069 + the r35-era S182/S193 pair per QUALITY 104's count) and verify
-each has exactly one superseding row at the tip whose teaches opens `supersedes S<id> —`. Verify no
-other id appears in the gate's ids list. FAIL on count mismatch."""))
+Attack: QUALITY 102's debt. Run one command over committed bytes that lists the ids the gate now
+reports (read the gate's own `ids=[...]` line; QUALITY 104 names no ids and the count is receipted in
+`evidence/c2-after.txt:6` — 18 at the scored tip) and verify each has a superseding row at the tip
+whose teaches opens `supersedes S<id> —`; use `grep -cE 'supersedes S[0-9]{3}'` for the occurrence
+count, never a bare `supersedes S0`. Verify no other id appears in the gate's ids list. FAIL on
+count mismatch."""))
 
 items.append(item("RevR13R16Gates", "reviewer", f"""Lane regression-gate battery (no-harm to operability).
 Attack: the pre-existing gates after the round changes. Run at {TIP}:
