@@ -2079,3 +2079,17 @@ landed tip.
   at `corpus/evidence/recheck-r33/`).
 - **C1 = met** at `a193627c` (`evidence/c1-after.txt`). QUALITY 97 for routed defect 2; round-32 lesson correction
   appended; six SOURCES cells declare `lane rule:` clauses; FR5/FR6 frontier rows updated; item 6 retired explicitly.
+
+## Round 34 (attempts 1–3, L1 MoriR34 / MoriR34A2 / MoriR34A3) — FR6 two-sample write-rate tool, QUALITY 98 and 99, round-33 repairs
+
+- Attempt 1 (died 05:25:25Z): froze contract and `count-c1.py` (`24603186`); control wave C0 (10 seats) met the first
+  counter with three shapes, so Amendment A1 was cut before data (`b9fb029e`).
+- Attempt 2 (died 06:19:06Z): landed the tool at `ba525e1a`, sources S191–S198 and the round-33 repairs at `8d56809a`,
+  and the wave-A spec (52 seats) at `fd252135`; its seat reports and integration stayed uncommitted (M7).
+- Attempt 3: wave B (41 seats, v1, four chunks) and a 3-seat residual call re-derived the attempt-2 integration.
+  C1 is `C1=met` at the tip but not verified: probe `ef936fb4`, which skips the claimed operation, also meets P-C1-A1
+  (L1 re-score 06:48:06Z). C2 (QUALITY 98) `unprovable-but-better` (ReviewC2Judge3).
+- Landed in attempt 3: SOURCES used-by cells to single paths (`ff334073`; the registry at `8d56809a` failed the census
+  with nine E11), S193 teaches cell scoped after a gate reject (`406d91a4`), the FR6 frontier note with re-measured
+  numbers (`699090c1`), QUALITY 99 (`7161a738`), entry row 3r2 (`5c3e2dde`), this lesson, the wave-B reports and the 31
+  audited wave-A reports.

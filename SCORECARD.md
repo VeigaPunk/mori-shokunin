@@ -1915,3 +1915,25 @@ Anti-loop: rounds 31 (FR5 depth, operability) and 32 (freshness of source rows) 
 Held: freshness 5, calibration 5, coverage 6, operability 7, adjacency 6, depth 5. Census end `mori ok`, exit 0, the
 same 12 W04 lines (`evidence/census-end.txt`). Retention metric 4 at `62db24c0` = 4 at base. Routed round-32 defects
 1–6 handled in `corpus/lessons/round-33.md` (Round-32 repair), with a non-author repair judge (JudgeRepairR32).
+
+## Round 34 declaration and measured outcome (attempts 1–3; L1 MoriR34 / MoriR34A2 / MoriR34A3) — FR6 two-sample disk write-rate tool, QUALITY 98
+
+Entering tip `f10a320d9056d19a6d007420df49d7b16a3bf857` (round 33 closed `rejected-honest-stop`). Contract
+`.ufo/waves/round-34/contract.md` and `count-c1.py` frozen at `24603186` before any seat; Amendment A1 (`count-c1-a1.py`,
+P-C1-A1) and the C0 control receipts at `b9fb029e`, before any data seat. Attempts 1 and 2 died with the orchestrator;
+this section is written in attempt 3 and copies the frozen declared cells.
+
+| Claim | Axis / score | Before | Declared after-value (one command over committed bytes) |
+|---|---|---|---|
+| C1 FR6's two-sample write-rate arm as the tool operation `tools/mori-disk-rate.py` (P-C1-A1) | coverage 6 | `python3 .ufo/waves/round-34/count-c1-a1.py f10a320d` → `tool=absent C1=unmet`, exit 1 (`evidence/c1-before.txt`) | the same command at the landed tip → `C1=met`, exit 0 |
+| C2 (exploratory) QUALITY criterion 98, the pre-data shortcut battery | calibration 5 (tied lowest) | round 33's nine pre-data controls had no no-decision control | no counting command; `unprovable-but-better` only with a named non-author reviewer |
+
+| Claim | After (measured) | Verdict proposed for the closure |
+|---|---|---|
+| C1 | `count-c1-a1.py <tip>` → `fixed_pass=12/12 random_pass=300/300 coverage=ok live=ok C1=met`, exit 0 (L1, 06:47:48Z, `evidence/c1-tip-a3.txt`; tool byte-identical to `ba525e1a`); ExecCloneRerun 4/4 `C1=met` | **not verified (honest stop, §9)**: the post-data probe `ef936fb4`, which skips the real two-sample read and rule R3, also prints `C1=met` (`evidence/ctl-postdata-shortcut/rescore-a3.txt`, `wb/CritShortcutRescore.md`); CritQ99Gap built two more skip programs that meet it |
+| C2 | QUALITY 98 (`corpus/QUALITY.md`, landed `8d56809a`) | `unprovable-but-better`, reviewer ReviewC2Judge3 (`.ufo/waves/round-34/wb/ReviewC2Judge3.md`); against: §8 item 1's second clause unanswered, D1/D2/D4, and the after-data shortcut (M2) |
+
+Held: coverage 6, operability 7, depth 5, freshness 5, calibration 5, adjacency 6. No score change, retirement or
+waiver. Routed round-33 defects 2–8 landed and re-judged in attempt 3 (`corpus/lessons/round-34.md`): row 3r failed and
+was superseded by 3r2 (supported); items 7 and 8 carry one wrong detail each, corrected in the lesson. QUALITY 99 for
+mistake M2. SOURCES 190 → 198 rows.
