@@ -1888,3 +1888,20 @@ control printed `C1=met` (`.ufo/waves/round-32/evidence/c1-controls.txt`, commit
 
 Held: depth 5, calibration 5, coverage 6, operability 7, adjacency 6, freshness 5. Mistakes M1–M3 in
 `corpus/lessons/round-32.md`. M1: the contract's "last opened when added" sentence is false. The predicate does not read it.
+
+## Round 33 declaration (attempt 1, L1 MoriR33) — reading /proc/diskstats as a disk write rate (FR6)
+
+Entering tip `7d382043016e8854e3be2ee523a095b409c3d8a1` (round 32 closed `rejected-honest-stop`, MANIFEST rounds[498],
+`corpus/lessons/round-32-verifier-spotcheck.md`). Full contract: `.ufo/waves/round-33/contract.md`, committed with the
+counter at `27969134d51ea15982db4f36c77e2decd2a22b07` before any seat ran; Amendment A1 (code made to match the frozen
+sentence and tightened after the C0 control wave, before any data seat) at `fdf4371fb6d5f7c4e8b1f29f4735afaead5d45c9`.
+This section is appended at round end; its declared cells copy the frozen contract. Targets, not results.
+
+| Claim | Axis / score | Before | Declared after-value (one command over committed bytes) |
+|---|---|---|---|
+| C1 how to turn /proc/diskstats into a disk write rate: a sourced decision table on FR6 ground (sourced S180+), judged under the frozen rule R-J | depth 5 (tied lowest with freshness and calibration) | `python3 .ufo/waves/round-33/count-c1.py 7d382043` → `entry=absent`, `C1=unmet`, exit 1 (`.ufo/waves/round-33/evidence/c1-before.txt`) | `python3 .ufo/waves/round-33/count-c1-a1.py <landed tip>` → `C1=met`, exit 0 (predicate P-C1-A1) |
+
+Held and observed: freshness 5, calibration 5, coverage 6, operability 7, adjacency 6. No retirement, waiver, exploratory
+claim or promotion. Controls: wave C0 (5 seats) scored under the frozen counter before data; four negative controls met
+it, so A1 was cut before data and every C0 control commit was re-scored under A1 (`.ufo/waves/round-33/evidence/c1-controls.txt`).
+Anti-loop: rounds 31 (FR5 depth, operability) and 32 (freshness of source rows) are not repeated; FR6 is new ground.

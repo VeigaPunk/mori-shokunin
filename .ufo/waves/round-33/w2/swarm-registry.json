@@ -1,0 +1,261 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r33-w2",
+  "createdAt": "2026-10-23T02:56:46.992Z",
+  "updatedAt": "2026-10-23T02:57:00.251Z",
+  "reportDir": ".ufo/waves/round-33/w2",
+  "members": {
+    "AttackSrc180": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackSrc180",
+      "role": "scout",
+      "item": null
+    },
+    "AttackSrc181": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackSrc181",
+      "role": "scout",
+      "item": null
+    },
+    "AttackSrc182": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackSrc182",
+      "role": "scout",
+      "item": null
+    },
+    "AttackSrc183": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackSrc183",
+      "role": "scout",
+      "item": null
+    },
+    "AttackSrc184": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackSrc184",
+      "role": "scout",
+      "item": null
+    },
+    "AttackSrc185": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackSrc185",
+      "role": "scout",
+      "item": null
+    },
+    "AttackSrc186": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackSrc186",
+      "role": "scout",
+      "item": null
+    },
+    "AttackSrc187": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackSrc187",
+      "role": "scout",
+      "item": null
+    },
+    "AttackSrc188": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackSrc188",
+      "role": "scout",
+      "item": null
+    },
+    "AttackSrc189": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackSrc189",
+      "role": "scout",
+      "item": null
+    },
+    "AttackSrc190": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackSrc190",
+      "role": "scout",
+      "item": null
+    },
+    "AttackRow01": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRow01",
+      "role": "critic",
+      "item": null
+    },
+    "AttackRow02": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRow02",
+      "role": "critic",
+      "item": null
+    },
+    "AttackRow03": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRow03",
+      "role": "critic",
+      "item": null
+    },
+    "AttackRow04": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRow04",
+      "role": "critic",
+      "item": null
+    },
+    "AttackRow05": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRow05",
+      "role": "critic",
+      "item": null
+    },
+    "AttackRow06": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRow06",
+      "role": "critic",
+      "item": null
+    },
+    "AttackRow07": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRow07",
+      "role": "critic",
+      "item": null
+    },
+    "AttackRow08": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRow08",
+      "role": "critic",
+      "item": null
+    },
+    "AttackRow09": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRow09",
+      "role": "critic",
+      "item": null
+    },
+    "AttackRow10": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRow10",
+      "role": "critic",
+      "item": null
+    },
+    "AttackRow11": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRow11",
+      "role": "critic",
+      "item": null
+    },
+    "AttackRow12": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRow12",
+      "role": "critic",
+      "item": null
+    },
+    "AttackRow13": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRow13",
+      "role": "critic",
+      "item": null
+    },
+    "AttackRow14": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRow14",
+      "role": "critic",
+      "item": null
+    },
+    "AttackRepairS058": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRepairS058",
+      "role": "reviewer",
+      "item": null
+    },
+    "AttackRepairS117": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRepairS117",
+      "role": "reviewer",
+      "item": null
+    },
+    "AttackRepairS128": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRepairS128",
+      "role": "reviewer",
+      "item": null
+    },
+    "AttackRepairS149": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRepairS149",
+      "role": "reviewer",
+      "item": null
+    },
+    "AttackRepairS137": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackRepairS137",
+      "role": "reviewer",
+      "item": null
+    },
+    "AttackScopeEdits": {
+      "kind": "spawn",
+      "agentId": "MoriR33.AttackScopeEdits",
+      "role": "critic",
+      "item": null
+    },
+    "MutQuality97": {
+      "kind": "spawn",
+      "agentId": "MoriR33.MutQuality97",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "ReviewCounterData": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ReviewCounterData",
+      "role": "reviewer",
+      "item": null
+    },
+    "CtlGlossaryA1": {
+      "kind": "spawn",
+      "agentId": "MoriR33.CtlGlossaryA1",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "CtlLocatorStale": {
+      "kind": "spawn",
+      "agentId": "MoriR33.CtlLocatorStale",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "ReviewSkillRound33": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ReviewSkillRound33",
+      "role": "reviewer",
+      "item": null
+    },
+    "CriticItem6Retire": {
+      "kind": "spawn",
+      "agentId": "MoriR33.CriticItem6Retire",
+      "role": "critic",
+      "item": null
+    },
+    "ScoutCensusMisroot": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ScoutCensusMisroot",
+      "role": "scout",
+      "item": null
+    },
+    "ReviewSecondUrls": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ReviewSecondUrls",
+      "role": "reviewer",
+      "item": null
+    },
+    "ExecRetentionData": {
+      "kind": "spawn",
+      "agentId": "MoriR33.ExecRetentionData",
+      "role": "executor",
+      "item": null
+    },
+    "CriticEntryProse": {
+      "kind": "spawn",
+      "agentId": "MoriR33.CriticEntryProse",
+      "role": "critic",
+      "item": null
+    },
+    "CriticAxisNoHarm": {
+      "kind": "spawn",
+      "agentId": "MoriR33.CriticAxisNoHarm",
+      "role": "critic",
+      "item": null
+    }
+  }
+}
