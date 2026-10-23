@@ -8,7 +8,28 @@ Candidates this round:
 |---|---|---|
 | C2 — SOURCES append-only gate capability (`tools/mori-sources-appendonly.py`, promoted from the round-35 wave script with new deleted-row detection) | **admitted** (measured) | frozen counter `count-c2.py` at clean tip `bf0df77`: blind arm 24/24 sandbox histories match the run-time-hidden truth; real arm == independent oracle at rev 6bd57097 (base f10a320d), 18 ids; `C2=met`, seed 15440749816798970567 (`.ufo/waves/round-36/evidence/c2-after.txt`); re-scored clean across 7 fresh draws (w2/ExecReC2A.md) and fixed seeds 42/7; independently re-derived without the counter's code by w2/RevC2Oracle.md (byte-identical oracle) |
 | C1 — source-drift byte probe (`tools/mori-source-drift.py`) | **admitted as technique; claim lands `unprovable`** | declared exploratory before data (attempt-1 ruling, commit 5842dc0): the frozen byte predicate cannot carry a freshness verdict (w1/CritAxisFit.md — unchanged source classifies `drifted` when the committed copy is an annotated excerpt). Byte behavior verified: blind 40/40 mismatches=0, real arm fetched=58 fresh=49 drifted=9 mismatches=0, seed 7388485190103051243 (evidence/c1-after.txt). No named non-author reviewer exists inside the round — the hyaku closure session is the reviewer of record; without its judgment the claim is `unprovable`, reported as such. |
-| SOURCES rows S205–S220 (16 rows; S211 a rejection) | **admitted** | each row opened this round; located quotes verified contiguous ≤25 words by w1 SupS* and w2 RevSupS* seats (all PASS; S210 copy drift = post-copy asset rebuild, taught prose intact; S211 is byte-unstable by construction — rejected row, never `fresh`) |
+| SOURCES rows S205–S220 (16 rows; S211 a rejection) | **admitted** | each row opened this round; located quotes verified contiguous ≤25 words by w1 SupS* and w2 RevSupS* seats (all PASS on copies/anchors; S210 copy drift = post-copy asset rebuild, taught prose intact; S211 is byte-unstable by construction — rejected row, never `fresh`). Per-row Gate artifacts (rule 1: URL, access date, located quote — quote = the row's teaches sentence, verified contiguous at its anchor cell by the two seat waves; do NOT transcribe the draft word-count labels in w1/SupS183.md:29, which are wrong — use the landed round-33 labels, w2/RevSupS214S217 F3): |
+
+Per-row Gate lines (all accessed 2026-10-23; URLs are the first URL of each row's source cell in `corpus/SOURCES.md`; quote locations are each row's anchor cell):
+
+| row | URL (host/path) | quote (teaches, at anchor) |
+|---|---|---|
+| S205 | raw.githubusercontent.com/VeigaPunk/shokunin/6a1dd8ce…/CORPUS.md | "Only status, recheck and used-by change in place" (:116; verified w2/RevSupS205) |
+| S206 | rfc-editor.org/rfc/rfc6585 | 429 = "too many requests in a given amount of time" (§4; w2/RevSupS206S207) |
+| S207 | docs.jj-vcs.dev/latest/git-compatibility | "will usually put the Git repo in a detached HEAD state" (detached-HEAD row; w2/RevSupS206S207) |
+| S208 | nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-122.pdf | "minimize the use, collection, and retention of PII" (ES-2; w2/RevSupS208S209) |
+| S209 | rfc-editor.org/rfc/rfc8785 | "a 'hashable' representation of JSON data" (§1; w2/RevSupS208S209) |
+| S210 | git-scm.com/docs/git-rev-parse | --verify/--end-of-options resolution language (options anchor; w2/RevSupS210) |
+| S211 | pmc.ncbi.nlm.nih.gov/articles/PMC5856500 | rejection row — duplicate of S056's URL (no quote; w2/RevSupS211) |
+| S212 | raw.githubusercontent.com/torvalds/linux/v7.2/Documentation/block/stat.rst | "one line of 17 … values", 512-byte sectors (:2-5,21-22; w2/RevSupS212S213) |
+| S213 | raw.githubusercontent.com/torvalds/linux/v7.2/Documentation/admin-guide/iostats.rst | fields cumulative, reset at boot/reattach/overflow (:22,33-36; w2/RevSupS212S213) |
+| S214 | raw.githubusercontent.com/torvalds/linux/v7.2/include/linux/part_stat.h | partition add also adds to `bdev_whole(part)` (:60-63; w2/RevSupS214S217) |
+| S215 | raw.githubusercontent.com/torvalds/linux/v7.2/block/blk-core.c | completed sectors via `part_stat_add`; io_ticks on end/in-flight (:1100,1108-1110; w2/RevSupS214S217) |
+| S216 | raw.githubusercontent.com/torvalds/linux/v7.2/block/blk-mq.c | `part_stat_add(req->part, sectors[sgrp], bytes >> 9)` under RQF_IO_STAT (:856-862; w2/RevSupS214S217) |
+| S217 | raw.githubusercontent.com/torvalds/linux/v7.2/include/linux/blk_types.h | sector = 512 = 2**9, SECTOR_SHIFT 9 (:25-31; w2/RevSupS214S217; 27-token teaches noted, not a Gate-quote defect) |
+| S218 | github.com/torvalds/linux/commit/b6866318….patch | fields 16-17 flush semantics (patch hunk :68-75; w2/RevSupS218S219) |
+| S219 | github.com/torvalds/linux/commit/bdca3c87….patch | discard's own four statistics (commit message :7-17; w2/RevSupS218S219) |
+| S220 | raw.githubusercontent.com/sysstat/sysstat/v12.8.0/iostat.c | extended-stat path labels current/previous samples (:1444-1464; w2/RevSupS220) |
 | README coverage-map rows (source-drift probe; append-only gate) | **admitted** | `corpus/README.md` Round-36 section |
 
 Rejected: none new this round (S211's rejection is recorded as a row, per the rejection-is-evidence rule).
@@ -17,7 +38,13 @@ Spot-check result: **left for the outside closure** (every seat above is lane-di
 
 Registry changes logged (rule 2 old→new): S205 `used-by` `tools/mori-source-drift.py` →
 `corpus/knowledge/source-drift-r36.md` (mined used-by must cite the entry that cites the row;
-w2/RevKnowledgeDrift F2). Status/recheck unchanged.
+w2/RevKnowledgeDrift F2). Status/recheck unchanged. Second batch (w2/RevSupS214S217 F1): S206–S209, S212–S219
+`used-by` → `corpus/lessons/round-36.md`. Old values: S206 `corpus/knowledge/seat-terminal-status-r17.md`,
+S207 `corpus/knowledge/jj-branch-anchor-r17.md`, S208 `corpus/knowledge/evidence-minimization-r18.md`,
+S209 `corpus/knowledge/dispatch-ledger-r18.md`, S212–S219 `corpus/knowledge/disk-write-rate-r33.md` — each names
+a note citing the superseded predecessor id (S041/S044/S051/S062/S180/S181/S183–S186/S188/S189), never the new
+row; the Gate table above now cites each new row by id, making the lesson a true citing path. S205/S210/S211/S220
+already had citing used-by paths and are unchanged.
 
 ## Mistakes
 

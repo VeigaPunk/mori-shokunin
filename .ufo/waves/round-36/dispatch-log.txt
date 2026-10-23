@@ -47,3 +47,5 @@ round-36 dispatch log (L1 MoriR36)
 17:4xZ  close-out: w2 critic corrections (contract :4-5 history, README/novelty + disposition wording,
         note novelty bound); wave-2 outstanding seats still landing in w2/ (registry null ids — inline
         dispatch side effect); final receipts + census end next
+NOTE on timestamps: attempt-1 entries (10:42Z-12:1xZ) are UTC. Attempt-2 afternoon entries labeled
+15:1xZ-17:4xZ are LOCAL wall time (-03); UTC = local + 3 h (w2/RevDispatchLog F3 annotation).
