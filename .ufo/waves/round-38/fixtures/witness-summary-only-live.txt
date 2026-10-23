@@ -1,0 +1,2 @@
+MORI_SOURCE_DRIFT rows=225 fresh=53 excerpt=0 drifted=10 unavailable=0 no-copy=162
+EXIT=1

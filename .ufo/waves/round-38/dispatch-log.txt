@@ -1,0 +1,4 @@
+mori round 38 — dispatch log (QUALITY 103 second clause: the index-clean check after every landed line)
+
+landed 3501d4c21f70e2ec2659c37c3f960b55f60cfea6 (round-37 erratum + LOG amendment + inherited reports)
+  bash tools/mori-index-clean.sh /home/vgpnk/Projects/shokunin/mori-shokunin -> staged=0 intent_to_add=0 (exit 0)
