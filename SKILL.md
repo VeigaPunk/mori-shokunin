@@ -780,3 +780,30 @@ column 0 open or close a block (setext or indented headings do not), CRLF line e
 after `-` is not a list marker, allow globs are not path-normalized (`../` passes), and a `#` line inside a code fence still opens a block
 (residual ReviewC2Tool F1). Its two other detectors are the round-30 gate's, with the false positives and
 negatives named in `corpus/lessons/round-31.md` (Carried). Detection only: it judges no case.
+
+## Round32 — blind-writer gate registry row and frozen run (round-31 routed defect 2)
+
+The round-31 section above describes the gate in prose. This row gives it every PROTOCOL §Gate standard field. The
+frozen-run arm runs the pinned tool bytes over the round-30 writer briefs and the allow file. Their digests are pinned
+in `expected.json`, and a changed input is `snapshot_tampered` (exit 2) before any run. The arm runs the pinned copy,
+not `tools/mori-blind-check.sh`, so a later tool edit shows only as a digest difference against `expected.json`
+(exit 1). Receipts: `.ufo/waves/round-32/evidence/blind-baseline/`.
+
+| name | kind | entry | verdict map | self-test | pinned values | write scope | owner |
+|---|---|---|---|---|---|---|---|
+| blind-writer gate (r31) | gate | `bash tools/mori-blind-check.sh <lane-rev> <wave-report-dir> <writer-name-regex> <allow-file>` inside the lane; frozen-run arm `bash .ufo/waves/round-32/frozen/blind-check/verify.sh` | 0 clean (`scanned=N`, `blind_violations=0`) · 1 failed (`blind_violations>0`, one `path:line:rule` per hit; frozen arm: `frozen_run: differ`, also when the pinned tool bytes changed) · 2 could-not-evaluate (usage, invalid lane revision, report directory absent at that revision, unreadable allow file; frozen arm: `snapshot_tampered`) | `bash tools/mori-blind-check.sh --selftest` → prints `PASS`, exit 0; spelling is `--selftest` (no `--self-test` alias); 14 synthetic briefs, expected `scanned=14`/`blind_violations=13` plus 13 exact hit lines pinned in `selftest()` | `.ufo/waves/round-32/frozen/blind-check/expected.json` — sha256 of the 4 round-30 briefs and the round-30 allow file, gate blob sha256 `79b774f7…` (`3c26ef69…`), expected stdout and exit 1 | read-only over the lane tree at the named revision; frozen arm writes only a throwaway git repo under `$TMPDIR`, removed on exit; `--selftest` uses its own `mktemp` tree; never writes the lane | mori |
+
+## Round32 — live recheck of mutable-URL sources (freshness)
+
+Before relying on a `SOURCES.md` row whose URL is not pinned to a tag or commit (a `latest` man page, a docs site, an
+API listing), re-open it live and check that the passage it was admitted for is still on the page. Round 32 did this
+for the 34 such `mined` rows. 33 still carry their passages and S056 (pnas.org) is behind a bot challenge
+(`corpus/lessons/round-32.md` `## Recheck`; method and limits in `corpus/evidence/recheck-r32/README.md`, sources
+S175–S177). Tool for the counted check: `python3 .ufo/waves/round-32/count-c1.py <rev>`.
+
+| Situation | What to conclude | What not to conclude | Grounding |
+|---|---|---|---|
+| a recheck quote is found on the live page and shares words with the row's teaches cell | a candidate only, until a non-author reader confirms the quote supports the teaches cell | that the source still supports the fact: an on-topic sentence or a quote cut inside a word (`protected` out of `unprotected`) passes a token test | Round32 `.ufo/waves/round-32/evidence/c1-controls.txt`; S176, S177 |
+| `curl --fail` exits 22, or the server answers 403 with a challenge | the fetch failed for this method: record `unreachable` with the transcript | that the source changed or vanished, or that passing the challenge is an option | Round32 `corpus/evidence/recheck-r32/S056.fetch.txt`; S175 |
+| the population URL redirects (S041, S062 to `rfc-editor.org/info/…`) | `--location` saved the final page; the url cell stays the row's URL | that a redirect is drift | Round32 `corpus/evidence/recheck-r32/README.md`; S175 |
+| a row's anchor line numbers no longer index the live HTML (S002, S045) | the locator went stale while the passage stayed | that the fact drifted; line anchors into rendered pages are not stable identifiers | Round32 `.ufo/waves/round-32/w1/Recheck002.md`, `Recheck045.md` |

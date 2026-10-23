@@ -1,0 +1,4 @@
+$ cp -a frozen/blind-check copy-tamper  # then: byte 100 of snapshot/.ufo/waves/round-30/w1/CaseR30c.md  0x52 -> 0x58
+snapshot_tampered
+verify: digest mismatch: snapshot/.ufo/waves/round-30/w1/CaseR30c.md (expected 71591db6636d8d19f24f85addc9e22706975f5383df42b398d88faddcb17e4ef, got b71afddd060af4f6958dec8aafc7dd87aa8b7577fa1b958344fdd11831e34b88)
+exit=2

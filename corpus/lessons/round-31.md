@@ -125,3 +125,30 @@ Status changes this round: none to existing rows. New rows S161–S174 (S166, S1
 - Fleet-root misroot sweep (`git -C /home/vgpnk/Projects/shokunin status --porcelain`): untracked `AGENTS.md`,
   `bm.json`, `live_s228.html`, `nama.html`, `s395.txt`, `tf_bavelas.html`, `wb2.html`, `write`; none names mori round
   31 and all predate the wave-1 dispatch, so none was moved.
+
+## Appended corrections to round-31 records (round 32, wave 1; the M5 entry above stands as written)
+
+- **M5 correction — the masked set is the 9 fixtures whose *expected hit* is on their last line, not the "ten [that] end
+  on a list entry".** Old wording, quoted from `corpus/lessons/round-31.md:46-48` (M5): "`count-c2-a1.py:55` appends
+  `<!-- nonce … -->` after every brief, so no block reaches end of file; ten of the 16 frozen fixtures end on a list
+  entry." Correction: the ten frozen fixtures that end on a list entry are F02, F06, F07, F08, F09, F10, F11, F12, F13 and
+  F14; the set the nonce actually masks is the 9 whose **expected hit falls on the fixture's last line** — F02, F06–F08,
+  F10, F11, F13, F15 and F16 — and the two sets are not the same. F09, F12 and F14 end on a list entry but carry no
+  expected hit on that line (F09 and F14 expect no hits at all; F12's hit is on line 3 of 4); F15 and F16 carry their
+  expected hit on the last line but end on prose, not on a list entry. The masked set spans every rule the tool
+  implements, not only `writer-forbidden-opened-path`: F02, F06–F08, F10, F11 and F13 are
+  `writer-forbidden-opened-path`, F15 is `writer-tool-source-citation` and F16 is `writer-tool-run-output`. Mechanism
+  (unchanged): `count-c2-a1.py:55` writes each brief as `lines + "\n<!-- nonce … -->\n"`, so the fixture's last body
+  line is never the file's last line, while `count-c2.py:87` writes `lines + "\n"`, so it is; a tool that drops a file's
+  last line therefore keeps every expected hit under A1 and loses the last-line hits under P-C2. Evidence: the frozen
+  fixtures (`.ufo/waves/round-31/c2-fixtures.json`, sha256
+  `1442c14e963bf77df34774015dff7ee73a9738d49b3911d26b4e3b96f48e0b31`) recomputed by id and by the tool's own entry
+  rules (`tools/mori-blind-check.sh:143-151`), and the EOF-drop mutant of the tip tool (bytes sha256
+  `03fdaa2abed72e140af751b76f4a6aeb8cd12e4d8b1b1ffaa5be37348c42698c`, differing from the tip tool only at lines 113 and
+  203) scored against both counters: `count-c2.py 52435f2f --tool-file <mutant>` → `exact=7/16`, `C2=unmet`, differing
+  on exactly those 9 ids; `count-c2-a1.py 52435f2f --tool-file <mutant>` → `exact=27/27` in both runs, `runs_met=2/2`,
+  `C2=met`. The same 7/16 vs 27/27 split was recorded in round 31 at
+  `.ufo/waves/round-31/r1/CriticAmendmentA1.md`. Effect on the verdict: none — the tip tool scores `16/16` under
+  `count-c2.py` and `27/27` under `count-c2-a1.py` — so this correction changes no score and closes only the wording of
+  M5. The M5 fix rule stands unchanged: an amendment that perturbs the inputs must state, per perturbation, which
+  failure mode it can mask, and must keep the original predicate as an explicit conjunct in the counter.

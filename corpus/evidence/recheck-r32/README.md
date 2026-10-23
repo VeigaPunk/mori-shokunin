@@ -37,3 +37,12 @@ fetched by a round-32 wave-1 seat between 2026-10-23T01:31:22Z and 01:31:35Z. Th
 - Tag URLs were excluded from the population as pinned. A force-moved tag is not measured here.
 - Some pages change bytes on every fetch (S067 carries per-request tokens). For those, R3 checks that the quotes are
   still present, not that the bytes are equal.
+
+## Sibling prior art (wave-1 ConnectorSiblings, `.ufo/waves/round-32/w1/ConnectorSiblings.md`)
+
+Eight of the 29 URLs are also rows in seven sibling lanes. tabi round 18 already rechecked two of them (S047's and
+S064's pages) with the same shape: one normaliser, one receipt per row, and `held | drift | unreachable` verdicts. Its
+rule "dynamic full-page hashes are fetch identities, not semantic drift" (`tabi-shokunin/corpus/lessons/round-12.md:35`)
+holds here too. Our S047 and S064 copies differ in raw bytes from tabi's 2026-10-20 bodies, only in an asset
+fingerprint in the page head, and their normalised text is byte-identical. So a raw digest comparison would have
+reported a false `drifted`. No sibling verdict sets a mori verdict; each row here is judged on its own copy.
