@@ -1,0 +1,12 @@
+# QUALITY 106/107 wording audit
+
+Scope: compare each Check command and required output with the counter's output code and retained C1 receipt; assess the cited failure receipt. Read-only audit; no commands were re-run.
+
+| Criterion | Check command and required output (QUALITY.md) | Output match? | “Shown able to fail” receipt real and supporting? |
+|---|---|---|---|
+| 106 | `python3 .ufo/waves/round-37/count-c1.py <tip>`; requires `negative memo-n1.py rejected` (`corpus/QUALITY.md:856-859`). | **No, literally.** The command loops over the negative names and formats each with `%-14s` before `rejected` (`.ufo/waves/round-37/count-c1.py:937-943`). The scored-tip receipt actually prints `negative memo-n1.py     rejected (...)` (`evidence/c1-after-tip.txt:11`), with padding between the fixture name and state; it does not print the quoted contiguous text. It does report the intended rejection semantically, and the command's final `C1=met` is recorded at lines 14 and 16, but the quoted required line is not an exact output match. | **Yes.** `evidence/c1-before-memo.txt:2-10` identifies the memo fixture, records its blind and real arms passing, and records `C2=met` / `EXIT=0` under the prior measurement. It is a real retained receipt supporting the failure claim. |
+| 107 | `python3 .ufo/waves/round-37/count-c1.py <tip>`; parses per-id lines on every arm and requires `negative summary-only.py rejected` (`corpus/QUALITY.md:864-867`). | **Yes.** The scored-tip receipt prints `negative summary-only.py rejected (...)` (`evidence/c1-after-tip.txt:13`); the command's per-id check is present in `count-c1.py:544-573,676-717`. | **Yes.** `evidence/c1-before-summary.txt:2-10` identifies the summary-only fixture, records blind and real arms passing, and records `C2=met` / `EXIT=0` under the prior measurement. It is a real retained receipt supporting the failure claim. |
+
+The counter's output formatter and the scored-tip receipt agree about the actual 106 output; the discrepancy is between that output and QUALITY 106's backticked required phrase. The two failure receipts are present and support the respective historical `C2=met` claims. No installation or new measurement was made. Touched surface: this report only. Out of scope: product code, counter, criteria, and receipts.
+
+VERDICT: FAIL — criterion 106's quoted required line is not printed literally; evidence: `corpus/QUALITY.md:856-859`, `.ufo/waves/round-37/count-c1.py:941-942`, and `.ufo/waves/round-37/evidence/c1-after-tip.txt:11.

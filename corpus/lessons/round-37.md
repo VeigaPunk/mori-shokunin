@@ -40,6 +40,13 @@ interleaved sentence, quoted from "redirect count" to the end of the clause.
 | M6 | hygiene (build bytecode committed as wave evidence) | the freeze commit `e57c58b5` carries `.ufo/waves/round-37/__pycache__/count-c1.cpython-314.pyc` and `count-c2.cpython-314.pyc` (an import of the counters made them; the helper commits a named directory like `git add <dir>`), removed again at `bcf65505` | w1/SentScope and w1/ScoutCensusSurfaces, whose name-status sweeps list both `.pyc` paths; no criterion named it before | `.gitignore` now ignores `__pycache__/` and `*.pyc` lane-wide (was `tools/__pycache__/` only); `git check-ignore -v .ufo/waves/round-37/__pycache__/x.pyc` exits 0, and the byte paths are absent from `git ls-tree <tip> .ufo/waves/round-37/__pycache__` |
 
 
+| M7 | wave design (three seats on one loop body) | `ExecC1Seed41/42/43` in `w1-spec.json` share one target and one acceptance; normalized, the three prompts differ only in the `--seed` integer, and `RevC1Predicate` already runs seeds 41–43 plus the P-C1 byte check they drop | w1/ScoutWaveSpec (FAIL) | recorded here and in the report; one loop body = one seat for the next wave (the three seed values stay as independent receipts) |
+| M8 | evidence hygiene (the r36 (e) debt reproduced in the new receipts) | `evidence/c1-before-memo.txt:2`, `c1-before-summary.txt:2`, `census-start.txt:16`, `census-end.txt:16` carried absolute operator paths although `contract.md:88` claimed (e) closed | w1/SentData, w1/ScoutSentData (FAIL), w1/CritDebtDisposition (FAIL) | one erratum commit re-emits all eleven receipts with a `command:` line, `redacted:` where applicable and repo-relative lane paths; `grep -rc '/home/vgpnk' .ufo/waves/round-37/evidence/*.txt` now prints no non-zero count. Shown able to fail: the pre-erratum bytes at the cited lines, and the counters' `display_path` was the right rule that the captured r36/census output bypassed |
+
+
+| M9 | discrimination (a predicate whose content half is imitation-able) | w1/CritC2ContentFree: a token-satisfying entry without a located quote, a capability row pointing nowhere and a live receipt with only the summary sentence all pass P-C2; combined with a real tool the witness prints `C2=met` | the wave-2 critic; no criterion named the content half when the contract was frozen (QUALITY 98 names the general shape, not this counter) | C2 is reported as verified on P-C2 **with a disclosed content-discrimination gap**; the tightening (a content-anchor arm — the hardened tool must detect a named row's drift — as a new counter version) is routed to round 38. Shown able to fail: the critic's three fabricated witnesses and the combined `C2=met` at `count-c2.py:187-211` |
+
+
 ## Round shape and debts
 
 Round shape (orchestrator-inline contract): one validated v2 wave prepared and returned to the
@@ -58,3 +65,38 @@ Round-36 section. Frozen-byte residuals from round 36 remain frozen evidence and
 
 Misroot sweep: `git -C /home/vgpnk/Projects/shokunin status --porcelain` was run before the report;
 no file under the fleet root names this lane/round (see the report's Misroot line).
+
+## Wave-1 corrections (37 seat reports, appended before the report lands)
+
+- **C2 axis re-attributed to operability** (w1/CritC2Axis, FAIL): the measured change is a runnable
+  instrument's verification, not a re-verified claim against a live surface. Freshness is not claimed
+  as moved; C1 still carries the lowest-axis obligation (calibration 5).
+- **Debt (f) is OPEN** (w1/CritDebtDisposition, FAIL): SIGTERM → grace → SIGKILL is a disclosed trade,
+  not the "avoid SIGKILL" restructuring round 36 asked for; re-filed as an operator-owned policy
+  tradeoff. The claim that the boundary sits "in the predicate output" is corrected — it is in the
+  counter docstring and `run()`.
+- **Debt (e) closed by the erratum**, not by the original commits (M8).
+- **r36 closure routed defect 1 (freeze pointer)**: the round-36 report's `c7edaacf…` is a sha256 pin
+  recorded in `freeze-v2.txt:4`, not in `freeze-v3.txt` (which pins git blobs). Addendum here as the
+  r36 closure instructed; the r36 report itself is not edited.
+- **r36 wave's never-returned seat**: `ExecGateRound` did not return; its subject (a registry row for
+  the round-36 append-only gate) is covered by the `SKILL.md` Round36 registry row verified in r36 by
+  RevCapabilityRow, so it is superseded rather than open.
+- **Frozen-byte residuals still open** (w1/ScoutPriorRound): r36 `count-c1.py` docstring says v1; neither
+  r36 counter detects a SOURCES delete+restore inside a round; the 429 oracle path stays unexercised.
+  Frozen bytes; named, not edited.
+- **Content half** (w1/CritC2ContentFree, FAIL): P-C2's content checks are token checks; the claim is
+  reported as verified on the frozen predicate with a disclosed content-discrimination gap, and the
+  content-anchor arm is routed to round 38 as a new counter version (lesson M9).
+- **Receipt timing** (w1/ScribeSkill, w1/RevC2Arms): `evidence/c2-after.txt` and `c1-after*.txt` land in
+  the integration commit `bcf65505`, not at the scored tip `e57c58b5`; the measured-outcome table names
+  the commit each receipt belongs to.
+- **Security review** (w1/SentTools, FAIL): HIGH (counters execute the tool under test — the measurement
+  itself, trust boundary is the caller's `--repo`/`--tool`), MEDIUM (`count-c2.py`'s `show()` git reads
+  have no timeout/size bound), LOW (relative `--tool` validates and executes from different
+  directories). MEDIUM and LOW need a counter re-freeze → routed to round 38 with the exact fixes.
+- **Inline-dispatch bookkeeping**: `w1-plan.json` records `agentId: null` for every member, the same
+  side effect r36 saw; the seat reports under `.ufo/waves/round-37/w1/` are the return evidence.
+- **SHONEN box reconcile** (w1/ScoutReportContract): box 1's `[~]` names SKILL.md as untouched while the
+  registry rows are drafted in `w1/ScribeSkill.md` only; box 4's connector scans are now returned
+  (`w1/ConnSiblingOverlap.md` et al. as they land) and the round edits no sibling file.

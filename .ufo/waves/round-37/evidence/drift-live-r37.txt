@@ -1,3 +1,4 @@
+command: timeout 900 python3 tools/mori-source-drift.py --root .
 S001 no-copy
 S002 no-copy
 S003 no-copy

@@ -2157,11 +2157,13 @@ Declared claims:
   gives `rows=220 fresh=49 drifted=9 unavailable=0 no-copy=162`, exit 1 (`evidence/drift-live-r37.txt`).
 Registry: five new rows S221–S225 (`mined`, cited by `corpus/knowledge/source-drift-hardening-r37.md`);
 no existing row edited. Census: `sources-census.sh validate mori` exit 0 at round start and round end
-(225 rows; benign W04 duplicate-URL lines only) — `evidence/census-start.txt`, `census-end.txt`.
+(benign W04 duplicate-URL lines only) — `evidence/census-start.txt`, `census-end.txt`; the row total
+220 → 225 is receipted by `evidence/census-rows.txt` (the census script prints no total).
 Routed round-36 debts: (a) C2, (b) C1, (c) C1 + QUALITY 107, (d) r17-jj assertion scoped — selftest
-exit 0 (pre-fix 9/204 red, round-36 Collateral note; `evidence/r17-jj-selftest-r37.txt`), (e) repo-relative
+exit 0 (`evidence/r17-jj-selftest-r37.txt`, whose `pre_fix:` line cites the r36 9/204 red receipt), (e) repo-relative
 paths in new evidence (`display_path`), (f) `tool_timeout` with SIGTERM→SIGKILL and the boundary in the
 contract, (g) `mkdtemp` scratch per arm, (h) nine-row drift prose re-verified. QUALITY 106 (arm-detector
-discrimination) and 107 (per-id interface) added; lesson M1–M5 in `corpus/lessons/round-37.md` (M5: the 1.9 MiB S225 copy was skipped by the directory-form commit and landed by naming it explicitly at `52d636d5`).
+discrimination) and 107 (per-id interface) added; lesson M1–M5 in `corpus/lessons/round-37.md` (M5: the 1.9 MiB S225 copy was skipped by the directory-form commit and landed by naming it explicitly at `52d636d5`; size and blob receipted in `evidence/s225-copy.txt`).
 Capability rows: `real-arm challenge counter`, `source-drift re-fetch probe` (SCORECARD Round-37 section).
-Held: coverage 6, operability 7, depth 5, calibration 5, freshness 5, adjacency 6.
+Held (self-assessment carried in SCORECARD, not measured by any r37 counter): coverage 6, operability 7,
+depth 5, calibration 5, freshness 5, adjacency 6 — no score move.

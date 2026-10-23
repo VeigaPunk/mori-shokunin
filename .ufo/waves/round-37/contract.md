@@ -96,3 +96,23 @@ unchanged) fails `selftest`/`cap_kill`; a tool-only control (arms added, no corp
 `evidence/c2-before.txt`, `evidence/c2-after.txt`, `evidence/drift-live-r37.txt`,
 `evidence/r17-jj-selftest-r37.txt`, `evidence/census-start.txt`, `evidence/census-end.txt`,
 `evidence/freeze-r37.txt`.
+
+## Post-data corrections (appended after the freeze; P-C1/P-C2 bytes unchanged)
+
+The predicates above, the two counters and the three fixtures are unchanged by this section.
+
+- **C2 axis attribution.** P-C2's measured surface is the instrument's operability (named arms with
+  mutation kills; corpus binding), not a freshness move. w1/CritC2Axis (FAIL) is the review of record;
+  the measured outcome in `SCORECARD.md` re-attributes the claim to operability (7, held) and claims no
+  freshness move. C1 remains on calibration (5, tied lowest).
+- **Debt (f) status.** The obligation was "restructure the timeout path to avoid SIGKILL of the sandbox
+  child". This round replaces the immediate kill with SIGTERM → 5 s grace → SIGKILL and reports
+  `tool_timeout`; that is a disclosed trade, not the restructuring. Re-filed as operator-owned policy
+  tradeoff (w1/CritDebtDisposition). The disclosure lives in the counter docstring and `run()`, not in
+  the printed `PREDICATE` — the sentence "disclosed in C1's predicate output" above is wrong.
+- **Debt (e) erratum.** The absolute paths in four receipts are corrected in an erratum commit with a
+  `redacted:` line per file; the measured output is unchanged (w1/SentData, w1/ScoutSentData).
+- **Frozen-byte residuals still open** (not closed by this round): round-36 `count-c1.py`'s docstring
+  says v1; neither r36 counter detects a SOURCES.md delete+restore inside a round; the 429 oracle path
+  is still unexercised (`oracle_excluded=0`). They are frozen r36 bytes and are named here rather than
+  edited (w1/ScoutPriorRound).

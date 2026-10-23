@@ -855,7 +855,7 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     the published answer elsewhere must be rejected, and the receipt must show that rejection. Lesson:
     `corpus/lessons/round-37.md` M2 (r36 w2/RevNgC2 N1). Check: `python3 .ufo/waves/round-37/count-c1.py <tip>` runs
     `fixtures/memo-n1.py` (honest under `user.name == "mori counter"`, published constant and its `changed` lines
-    elsewhere) and requires `negative memo-n1.py rejected`; `C1=met` only when it is. Shown able to fail: the round-36
+    elsewhere) and requires the `negative memo-n1.py` line to read `rejected` (the receipt prints it column-aligned: `negative memo-n1.py     rejected`); `C1=met` only when it does. Shown able to fail: the round-36
     counter scores that same fixture `C2=met`, exit 0 (`.ufo/waves/round-37/evidence/c1-before-memo.txt`), and a
     counter with no challenge arm leaves the fixture's real and blind arms passing. Not covered: a tool that detects
     the challenge's own parenthood or env (the challenge runs as a sibling child of the counter like the real arm).

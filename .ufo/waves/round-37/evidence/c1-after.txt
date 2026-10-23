@@ -1,3 +1,4 @@
+command: python3 .ufo/waves/round-37/count-c1.py e57c58b5
 P-C1: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed, and exactly the truth's per-id `changed`/`deleted` lines, on each of 24 sandbox SOURCES.md histories drawn at run time, on the lane's own history (rev 6bd57097, round base f10a320d) where the independent oracle lists at least one id, and on one run-time-drawn challenge history presented in real-arm clothing (lane path, lane git identity, lane title); and the same counter rejects all three negative fixtures: a real-arm memoizer, a constant printer, and a summary-only printer.
 tool: /tmp/mori-c1-tool-exj399_h/mori-sources-appendonly.py
 blind arm: 24/24 sandbox histories matched the hidden truth (1.8s; coverage: deletions=19 changed-back=17 superseded=10)

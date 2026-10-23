@@ -1,3 +1,4 @@
+command: python3 .ufo/waves/round-37/count-c2.py 842a320
 P-C2: at revision R, tools/mori-source-drift.py passes its selftest with the named arms `huge_cap` and `redirect_private_refused`, each of those arms fails in a copy with its policy removed (4 MiB read cap; post-redirect public-destination policy), and the committed corpus binds the hardening (knowledge entry citing this round's source rows and commit 8ff9bba, a SCORECARD capability row, two README coverage-map rows) with the round's live sweep receipt present.
 check tool_present   PASS (path=tools/mori-source-drift.py)
 check selftest       FAIL (exit=0 arms=[('exit_code', 'PASS'), ('missing_sources_exit2', 'PASS'), ('row_states', 'PASS'), ('summary', 'PASS')])

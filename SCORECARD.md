@@ -2072,3 +2072,42 @@ claim or promotion. Census end `mori ok`, exit 0 (`evidence/census-end.txt`). Ca
 running in the receipts named above. Routed round-36 debts (a)–(h): (a)–(c) are claims C2/C1, (d) fixed and
 re-run green (`evidence/r17-jj-selftest-r37.txt`), (e)–(g) are properties of the new counters, (h)
 re-verified in the round-36 note. Frozen round-36 bytes are untouched.
+
+### Round 37 post-data corrections (wave 1, appended before the report lands)
+
+Wave 1 returned 37 seat reports. Four document/attribution defects and one open obligation are corrected
+here; the frozen predicate bytes (P-C1, P-C2) and both measured receipts are unchanged.
+
+1. **C2's axis is operability, not freshness** (w1/CritC2Axis, FAIL). The round changes a runnable
+   instrument's verification — two named arms, each killed by its own mutation, plus the corpus binding —
+   not a re-verified claim against a live surface. The declared cell above stays as declared (the contract
+   is frozen); this correction re-attributes the claim: **C2 = operability (7), held**, and freshness is
+   **not claimed as moved** this round. C1 remains calibration (5, tied lowest), so the lowest-axis
+   obligation is still met.
+2. **Debt (f) is OPEN, not closed** (w1/CritDebtDisposition). Round 36's obligation was "restructure the
+   timeout path to avoid SIGKILL of the sandbox child". Round 37 replaces the immediate SIGKILL with
+   SIGTERM → 5 s grace → SIGKILL and reports `tool_timeout` as a distinct state, which is a disclosed
+   trade, not the requested restructuring. Re-filed as **operator-owned policy tradeoff**: a probe that
+   must not kill its own child cannot bound a hung tool at all; the canonical judge decides whether the
+   grace-period kill stands. The claim that the boundary is "in the predicate output" was wrong — it is in
+   the counter docstring (`count-c1.py:27-29`) and `run()` (`:92-114`), not the printed `PREDICATE`.
+3. **Evidence path erratum** (w1/SentData, w1/ScoutSentData, w1/CritDebtDisposition): four receipts
+   (`c1-before-memo.txt`, `c1-before-summary.txt`, `census-start.txt`, `census-end.txt`) carried absolute
+   operator paths. Re-emitted with repo-relative paths and a `redacted:` line (same command, same measured
+   output); debt (e) is closed by that erratum commit, not by the original commit it claimed.
+4. **Wave-spec redundancy** (w1/ScoutWaveSpec, FAIL): `ExecC1Seed41/42/43` were the loop body
+   `RevC1Predicate` already ran — three seats on one loop. Recorded as lesson M7; the seed values stay as
+   the seats' independent receipts.
+5. **Content-free bypass of P-C2's content half** (w1/CritC2ContentFree, FAIL): all three fabricated
+   shapes — a token-satisfying entry with no located quote, a capability row pointing nowhere, and a live
+   receipt carrying the summary sentence alone — meet the predicate, and their combination with a real
+   tool passes `C2=met`. P-C2's content checks are token/genus checks; they do not prove the corpus work.
+   The measured claim (P-C2 as frozen) stands, but it is reported as **verified on P-C2 with a disclosed
+   content-discrimination gap**, and the tightening (a content-anchor arm: the hardened tool must detect a
+   named row's drift under the two policies) is routed to round 38 as a new counter version — not applied
+   post-data here. This is the same class as QUALITY 98 and is recorded as lesson M9.
+6. **Security review** (w1/SentTools, FAIL): HIGH — the counters execute the tool under test by design
+   (that is the measurement; the trust boundary is the caller's `--repo`/`--tool`), documented as an
+   accepted boundary; MEDIUM — `count-c2.py`'s `show()` git reads have no timeout or size bound, and
+   LOW — relative `--tool` paths validate and execute from different directories (carried from r36
+   w2/RevNgC2 §1). Both need a counter re-freeze, so they are routed to round 38 with the exact fixes.
