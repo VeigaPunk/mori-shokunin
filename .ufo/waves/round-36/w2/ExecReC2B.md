@@ -489,6 +489,48 @@ artifact that infers freshness admission from `C1=met`.
 
 ---
 
+## 7b. Lane advanced mid-seat — C2 verdict holds at the new HEAD too
+
+While this seat was running, the lane advanced past the data tip:
+
+```
+$ git log --oneline -1
+6827d6e round-36: close-out — critic corrections (contract history, novelty bound, disposition wording), post-land check records
+$ git merge-base --is-ancestor bf0df77... HEAD && echo "bf0df77 IS an ancestor of HEAD"
+bf0df77 IS an ancestor of HEAD
+```
+
+The counter bytes are **unchanged** by that advance (re-checked after it):
+
+```
+$ sha256sum .ufo/waves/round-36/count-c1.py .ufo/waves/round-36/count-c2.py
+86dd3b7ab2d2563bbc811e83717b35dfea3d69717dab4d41d454f8b87c8764c0  .ufo/waves/round-36/count-c1.py
+c7edaacfff029c2055bee6ddda42ff6f5c040dad7fbac81e9d169602edcbac34  .ufo/waves/round-36/count-c2.py
+```
+
+Re-running C2 at the new HEAD reproduces the same verdict and the same
+seed-stable behaviour:
+
+```
+$ python3 .ufo/waves/round-36/count-c2.py 6827d6e --seed 42
+blind arm: 24/24 sandbox histories matched the hidden truth (3.8s; coverage: deletions=23 changed-back=16 superseded=10)
+real arm: pass (0.4s)
+C2=met
+seed=42
+
+$ python3 .ufo/waves/round-36/count-c2.py 6827d6e --seed 7
+blind arm: 24/24 sandbox histories matched the hidden truth (2.5s; coverage: deletions=22 changed-back=17 superseded=9)
+real arm: pass (0.4s)
+C2=met
+seed=7
+```
+
+So the C2 verdict is stable across **both** revisions and both seeds; the
+counter's real arm is pinned to the frozen window (`6bd57097` / `f10a320d`) and
+is therefore unaffected by later lane commits.
+
+---
+
 ## 8. Routed round-35 repairs re-verified (arithmetic, read-only)
 
 The task lists "SOURCES supersede rows S205–S220 (18 in-place-edited ids
@@ -537,8 +579,11 @@ happened after the counter's pinned window.
   read-only by those scripts (`importlib.util.spec_from_file_location`), which
   is what wrote a `__pycache__` entry into the lane; I removed exactly my own
   artifact (`.ufo/waves/round-36/__pycache__/count-c2.cpython-314.pyc`) and left
-  the pre-existing `count-c1.cpython-314.pyc` (not mine) alone. The lane index
-  remains clean: `git diff --cached --name-only | wc -l` → `0`.
+  the pre-existing `count-c1.cpython-314.pyc` (not mine) alone at that moment.
+  That whole `__pycache__` directory was subsequently removed by another party
+  during this seat's run (verified gone at the end), so no `__pycache__` residue
+  from this seat remains in the lane. The lane index remains clean:
+  `git diff --cached --name-only | wc -l` → `0`.
 - No remediation, no kills, no config edits, no host-state changes. Detection and
   report only (mori province).
 - No tooling was installed or upgraded for this item; the host's `git 2.56.0`
@@ -563,6 +608,7 @@ happened after the counter's pinned window.
 | seed-dependent verdict found | **none** | §1, §2, §4 |
 | defect found | scratch-path collision → `exit 2` (no verdict), never a wrong verdict | §5 |
 | C1 freshness admission inferred anywhere | no | §7 |
+| verdict stable after the lane advanced to `6827d6e` | yes — `C2=met` at seeds 42 and 7 on the new HEAD | §7b |
 
 **VERDICT: PASS** — no seed-dependent verdict. The C2 verdict is stable at
 `C2=met` across 476 distinct seeds; the real-arm lists are byte-identical
