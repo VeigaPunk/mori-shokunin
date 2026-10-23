@@ -857,8 +857,10 @@ and 4):
 
 - To see whether a source row's committed copy still matches its URL, run `python3 tools/mori-source-drift.py --root .`
   (network, read-only). Read `drifted` as "the copy is not reproducible from today's body", never as a changed
-  source: annotated excerpts (round 30, S156–S160) and rebuilt doc pages (S176, S177) classify `drifted` while the
-  source itself is unchanged. The action per state is in `corpus/knowledge/source-drift-r36.md`.
+  source: annotated excerpts (round 30, S156–S160), rebuilt doc pages (S176, S177), post-copy line changes that miss
+  the taught passage (S210, stylesheet/script-integrity line), and fetch-varying pages (S211, csrf meta — never
+  `fresh`) all classify `drifted` with the source's taught claim unchanged; the dated nine-row enumeration with
+  commands and open-time shas is in `corpus/knowledge/source-drift-r36.md`. The action per state is there.
 - Before landing any `corpus/SOURCES.md` change, run `python3 tools/mori-sources-appendonly.py <tip> --round-base
   <entering tip>` and land only with `round_changed=[]` (exit 0). It lists in-place edits (`ids`), deleted rows
   (`deleted`) and superseders; a superseder is a disposition, not a discharge (QUALITY 102, 104). It replaces the

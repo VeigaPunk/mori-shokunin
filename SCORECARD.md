@@ -1995,3 +1995,39 @@ Held: calibration 5, coverage 6, operability 7, depth 5, freshness 5, adjacency 
 claim or promotion. Not claims: the register's rows were judged one by one by non-author wave-2 reviewers (lesson,
 Judges); the Axes table's operability and depth `Last change` cells now name round 31 (`SCORECARD.md:11-12`); SOURCES
 198 → 204 rows (S199–S202 admitted, S203–S204 rejected); QUALITY 98 correction and 100–102.
+
+## Round 36 declaration and measured outcome (attempt 2, L1 MoriR36) — SOURCES append-only gate (C2, measured) and source-drift byte probe (C1, exploratory)
+
+Entering tip `6bd57097` (round 35 closed `rejected-honest-stop`, MANIFEST `rounds[531]`). Contract
+`.ufo/waves/round-36/contract.md` and both counters frozen before any data seat (v1 `da12b37`; v2 re-design after
+C0 met-controls `c1a026cb`; pin record `evidence/freeze-v3.txt`). Attempt 1 died with the phase-4 orchestrator
+(~09:30 -03) after committing the freeze, C0 receipts and wave-1 reports; attempt 2 inherited per addendum §5
+(lesson M3), built the never-delivered C1 tool, landed the data commit `bf0df77`, scored both claims at that clean
+tip, and dispatched wave 2 (66 seats, orchestrator-inline) whose documentary findings were repaired in the
+integration commit.
+
+| Claim | Axis / surface | Before (one command over committed bytes) | After (one command over committed bytes) |
+|---|---|---|---|
+| C2 — SOURCES append-only gate with deleted-row detection (capability acquisition) | operability — new registered gate `tools/mori-sources-appendonly.py` + fixture self-test | `python3 .ufo/waves/round-36/count-c2.py 6bd57097` → `tool_absent C2=unmet`, exit 1 (`evidence/c2-before.txt`) | `python3 .ufo/waves/round-36/count-c2.py bf0df77` → blind 24/24, real arm pass (18 ids), `C2=met`, exit 0, seed 15440749816798970567 (`evidence/c2-after.txt`); re-scored clean on 7 fresh draws (`w2/ExecReC2A.md`) and independently re-derived without the counter (`w2/RevC2Oracle.md`) |
+| C1 — source-drift byte probe (exploratory, declared before data at `5842dc0`) | freshness technique (no freshness verdict admitted) — new probe `tools/mori-source-drift.py` | `python3 .ufo/waves/round-36/count-c1.py 6bd57097` → `tool_absent C1=unmet`, exit 1 (`evidence/c1-before.txt`) | `python3 .ufo/waves/round-36/count-c1.py bf0df77` → blind 40/40 mismatches=0, real arm fetched=58 fresh=49 drifted=9 excluded=0 mismatches=0, `C1=met` as byte-behavior evidence, exit 0, seed 7388485190103051243 (`evidence/c1-after.txt`) |
+
+| Claim | Measured verdict |
+|---|---|
+| C2 | **verified (measured)**: the frozen counter fails all 25 v2 controls and 3+ substitute programs (c0 + w2 falsification), passes the gate at two fixed seeds and seven fresh draws, and its real-arm oracle was re-derived byte-identical by a seat that never read the counter. Gate registered with self-test (r35 spotcheck §6 items 2–3 discharged; 18 in-place ids superseded by S205–S220, `round_changed=[]`). |
+| C1 | **unprovable** (as declared before data): the byte predicate cannot carry a freshness verdict (w1 `CritAxisFit.md`; QUALITY 105). No named non-author reviewer exists inside the round; the hyaku closure session is the reviewer of record — its `unprovable-but-better` judgment would admit the technique, otherwise the honest `unprovable` stands. The probe, its byte evidence, the nine-row dated enumeration and the S210/S211 reader-action classes land regardless. |
+
+Capabilities register — row added this round (demonstrated running above):
+
+| key | name | what it can now do | evidence | first working |
+|---|---|---|---|---|
+| round-36 C2 | sources append-only gate | Reports in-place immutable-cell edits, deleted rows, superseders and per-round changed ids of `corpus/SOURCES.md`; `python3 tools/mori-sources-appendonly.py <tip> --round-base <entering tip>` exits 0 iff the round changed no immutable cell | `tools/mori-sources-appendonly.py`; `evidence/c2-after.txt`; `--selftest` 8/8 | 36 |
+
+Planned round 37: (1) r37 debt from the disclosed residuals — restructure the frozen counters' timeout path to
+avoid SIGKILL of the sandbox child (requires a counter re-freeze, so a new claim), and a C2 re-score with a fixture
+exercising `oracle_excluded>0`; (2) the C1 follow-on the critic named: compare like representations and bind the
+witness to the taught claim; (3) one claim on the lane's remaining lowest axes (depth or calibration) with a
+counter that fails content-free controls.
+
+Held: coverage 6, operability 7, depth 5, freshness 5, calibration 5, adjacency 6. No axis score moves this
+round; C2 moves the operability surface (new registered gate + capability), C1 moves coverage/technique ground
+(README Round-36 rows). No retirement.

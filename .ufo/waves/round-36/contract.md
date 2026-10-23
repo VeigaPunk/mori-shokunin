@@ -10,7 +10,7 @@ real-input arm on the lane's own bytes with a known witness.
 
 | id | axis (surface changed) | capability | before | after (target) |
 |---|---|---|---|---|
-| C1 | freshness (lowest-scoring non-retired axis, tied at 5 with depth and calibration) — surface: a new lane tool `tools/mori-source-drift.py`, a new operation (re-fetch each SOURCES row that has a committed copy and classify it against that copy) | flags stale source rows: `fresh`, `excerpt`, `drifted`, `unavailable`, `no-copy` per row | `count-c1.py 6bd57097` → `C1=unmet` (tool absent) | `count-c1.py <landed tip>` → `C1=met` |
+| C1 | freshness technique (exploratory claim — see the declaration at the end of this contract; no freshness verdict is admitted from it) — surface: a new lane tool `tools/mori-source-drift.py`, a new operation (re-fetch each SOURCES row that has a committed copy and classify it against that copy) | classifies copies byte-wise per row (`fresh`, `excerpt`, `drifted`, `unavailable`, `no-copy`); `drifted` is a representation mismatch, not a stale-source verdict (w1/CritAxisFit.md) | `count-c1.py 6bd57097` → `C1=unmet` (tool absent) | `count-c1.py <landed tip>` → `C1=met` as byte-behavior evidence only; the claim verifies only as `unprovable-but-better` with a named non-author reviewer, else lands `unprovable` |
 | C2 | operability — surface: a new registered lane gate `tools/mori-sources-appendonly.py` (promoted from the round-35 wave script) with a new operation (deleted-row detection) and a fixture self-test | reports in-place edits, deleted rows, superseders and round-changed ids of `corpus/SOURCES.md` | `count-c2.py 6bd57097` → `C2=unmet` (tool absent) | `count-c2.py <landed tip>` → `C2=met` |
 
 Both claims rest on one SOURCES row opened this round: the fleet `CORPUS.md` section *SOURCES.md — where a shokunin
@@ -51,8 +51,12 @@ replacement from S001–S299, random paths and file extensions, copies in random
 older decoy copy (different bytes) in a lower-numbered directory for some rows, served from memory by a local HTTP
 server; `drifted` bodies include same-length byte flips; `unavailable` rows return 404 or 500. Truth stays in counter
 memory. Real arm: the tool run with `--root` the repository itself (v2), whose `corpus/` must equal R (no diff, no untracked file under `corpus/`, else unmet); the counter's own oracle fetches each row with a copy
-(up to five tries, sequential, honoring `Retry-After` on HTTP 429, backoff 5/10/20/30 s otherwise); rows the oracle
-could not fetch are excluded; every other row must match. A tool `unavailable` on an oracle-fetched row is re-probed
+(up to five tries, sequential: a definitive 4xx other than 429 on a try is final `unavailable`; HTTP 429 marks the row
+throttled and is retried honoring `Retry-After` capped at 120 s with 5/10/20/30 s backoff otherwise; 5xx and
+connection errors/timeouts are retried with the same backoff and, when they persist through the last try, grade
+`unavailable`; a row that answered 429 at any point, or whose connection failed or timed out on every try, is excluded
+even when a later try succeeded — the fetch is not a reliable witness); rows the oracle could not fetch are excluded;
+every other row must match. A tool `unavailable` on an oracle-fetched row is re-probed
 once by the oracle: it is a mismatch when the re-probe fetches the row, and the row is excluded (printed
 `real_excluded_throttled`) when it does not. When the blind arm fails the verdict is already `C1=unmet` and the real
 arm is skipped (printed `real_arm=skipped`), to spare the rate-limited hosts.

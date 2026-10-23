@@ -557,3 +557,25 @@ the counter.
   each moved by the same 219728 write sectors), so a write through dm-0 appears once in the whole-disk total and three
   times in a sum over every line (twice if partition lines are left out); no admitted source states it, so the tool's
   host total excludes stacked devices by class, not by a sourced rule.
+
+## Round-36 coverage additions
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| Source-row drift re-fetch (freshness technique; previously only per-round manual sha re-checks, `w1/ReviewDebtList.md`) | `knowledge/source-drift-r36.md`; `tools/mori-source-drift.py` (probe, `SKILL.md` Round36 registry row) | The lane's first programmatic re-fetch of every `corpus/SOURCES.md` row with a committed copy, classifying `fresh` / `excerpt` / `drifted` / `unavailable` / `no-copy` against `corpus/evidence/sources-r<N>/<id>.<ext>` (newest N). Byte classification only: `drifted` means the copy is not reproducible from today's body. On
+2026-10-23 the nine drifted rows were (`python3 tools/mori-source-drift.py --root .` →
+`.ufo/waves/round-36/evidence/drift-live-r36.txt`, exit 1): five annotated excerpts
+(S156–S160) and two docs.python.org build-footer rebuilds (S176, S177) — representation differences,
+sources unchanged — plus S210 (git-scm.com asset-bundle redeploy with dropped integrity attributes;
+post-copy change that misses the taught passage) and S211 (PMC page varying per fetch, csrf/ncbi_phid
+tokens; a rejected row; never `fresh`). None names a source change to a taught claim; the dated
+enumeration with open-time shas is in `corpus/knowledge/source-drift-r36.md`.
+Self-test `python3 tools/mori-source-drift.py --selftest` — PASS 4 cases at `bf0df77`. |
+| SOURCES append-only enforcement with deleted-row detection (operability; r35 spotcheck §6 items 2–3 routed debt) | `tools/mori-sources-appendonly.py` (gate, `SKILL.md` Round36 registry row; QUALITY 104); capability row enters `SCORECARD.md` this round | One command reports in-place immutable-cell edits, deleted rows, superseders and per-round changed ids of `corpus/SOURCES.md`: `python3 tools/mori-sources-appendonly.py <tip> --round-base <entering tip>` exits 0 with `round_changed=[]`. At `bf0df77` it discharges the 18 in-place-edited ids (15 pre-round-34 + S069 + S182/S193) via the S205–S220 supersede rows. Self-test PASS 8 cases. |
+
+The production census, silence oracle and all pre-existing gates are byte-unchanged by this round
+(`w2/SentCensus` finding; `git diff 6bd57097..bf0df77 --name-status` lists no `tools/mori-census.sh`,
+`tools/mori-silence-cases.sh` or prior `tools/mori-round*` path). Neither new tool is a census
+surface: no `SURFACE` row, no DRIFT verdict, no threshold. The C1 row above is exploratory —
+it moves coverage ground and technique, and its probe's byte predicate passed
+(`evidence/c1-after.txt`), but no freshness verdict is claimed from it (w1 `CritAxisFit.md`).

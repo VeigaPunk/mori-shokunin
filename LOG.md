@@ -2106,3 +2106,19 @@ landed tip.
   repairs (`.ufo/waves/round-35/w2/`).
 - Re-verification result (freshness): S182 and S193 sources re-opened live; bytes equal the committed copies
   (`corpus/lessons/round-35.md` Gate). The append-only check finds 15 older SOURCES ids edited in place (routed debt).
+- Round 36 (attempt 2, 2026-10-23, L1 MoriR36): repair-first round per the r35 rejection. C2 (measured,
+  operability): the SOURCES append-only gate `tools/mori-sources-appendonly.py` with deleted-row detection —
+  frozen counter `count-c2.py` met at clean tip `bf0df77` (blind 24/24, real arm 18 ids, seed
+  15440749816798970567, `evidence/c2-after.txt`); capability row entered SCORECARD. C1 (exploratory,
+  declared before data at `5842dc0`): source-drift byte probe `tools/mori-source-drift.py` — byte predicate
+  met at `bf0df77` (blind 40/40, real arm 58/49/9/0/0, seed 7388485190103051243, `evidence/c1-after.txt`);
+  claim lands `unprovable` absent a named non-author reviewer (closure of record). Routed r35 repairs:
+  18 in-place SOURCES ids superseded by S205–S220; gate registered (SKILL Round36 rows); QUALITY 103–105;
+  index-clean gate; README Round-36 coverage rows; lesson `corpus/lessons/round-36.md` (M1–M4).
+  Waves: c0 25 + w1 33 (attempt 1) + w2 66 (orchestrator-inline, 36+ reports at integration). Round total 124.
+- Re-verification result (freshness): the drift probe's nine drifted rows re-derived by five independent w2
+  seats — five annotated excerpts (header sha256 == live body), two docs.python.org build-footer rebuilds, S210
+  asset-bundle rebuild (taught prose byte-identical), S211 fetch-varying page (never fresh); no taught claim
+  found changed (`.ufo/waves/round-36/evidence/drift-live-r36.txt`, w2/RevQuality105.md, w2/ExecManualOracleSample.md).
+  Census: 204 → 220 rows; `sources-census.sh validate mori` exit 0 at round start and round end (2 new benign
+  W04 lines, S218/S220). Index clean after each helper commit (QUALITY 103).

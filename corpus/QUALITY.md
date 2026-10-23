@@ -841,3 +841,12 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     row", and all seven real drifted rows were representation differences (S156–S160 annotated excerpts whose
     header sha256 equals the live body; S176/S177 build footers) (`.ufo/waves/round-36/w1/MineCopyFidelity.md`).
     Not covered: semantic drift of a page whose bytes never change.
+105-addendum (measured 2026-10-23T16:2x-03: `python3 tools/mori-source-drift.py --root .` →
+    `.ufo/waves/round-36/evidence/drift-live-r36.txt`): the drifted set is now nine rows — the criterion's seven plus
+    S210 (post-copy stylesheet/script-integrity line; taught passage unchanged) and S211 (fetch-varying PMC page,
+    rejected row; never `fresh`, so 105's sha comparison can never succeed for it — treat as a variance witness per
+    the knowledge note). 105's "Not covered" clause names only semantic drift of a never-changing page; it also does
+    not cover byte-unstable pages (the S211 class). For both, the recorded open-time sha256 105 requires is the
+    committed copy's
+    (`sha256sum corpus/evidence/sources-r36/<id>.src`: S210 64c60354…, S211 a4e104ec…); neither names a source change
+    (w2/ExecDriftLive.md).

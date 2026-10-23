@@ -18,9 +18,25 @@ round-36 dispatch log (L1 MoriR36)
 12:04Z  C0 settled 25/25 (CtlJ12 last); wave-slot release mori mori-r36-c0
 12:10Z  C1 declared exploratory before data (contract.md last section) after CritAxisFit 'C1 fails' + MineCopyFidelity (drifted real witnesses = annotated excerpts and a rebuild footer); counters and predicates unchanged; commit before any tool lands
 15:1xZ  attempt 2 (L1 MoriR36, same session identity): inherited attempt-1 state reused per addendum §5 —
-        kept: contract.md + frozen v2 counters + c0 re-score (25/25 unmet) + w1 reports (30/33; MutC1Novel,
+        kept: contract.md + frozen v2 counters + c0 re-score (25/25 unmet) + w1 reports (28/33 on disk;
+        BuildDriftTool never returned — its scratch build survived but was never delivered to the lane;
+        MutC1Novel,
         MutC2Novel dead rate-limited; CritC1Counter, CritC2Counter provider cyber_policy hold) + exploratory
         declaration (5842dc0) + built tools (mori-sources-appendonly.py, mori-index-clean.sh) + SOURCES S205-S220
         + QUALITY 103-105 + SKILL Round36 rows + corpus/evidence/sources-r36/ + knowledge/source-drift-r36.md
-        discarded: none; rebuilt: tools/mori-source-drift.py was never built by attempt 1 — L1 built it to the
+        discarded: none; rebuilt: tools/mori-source-drift.py — attempt-1's BuildDriftTool seat built a
+        version in scratch but never delivered it (w2/RevWave1Audit F2), so L1 built the landed tool to the
         frozen interface; selftest PASS 4 cases; data commit next, then counters at the landed tip
+15:4xZ  data commit landed bf0df77fee4b6ef54a90aea09335c7617f125151 (helper push verified)
+15:5xZ  counters scored at bf0df77: count-c2.py -> evidence/c2-after.txt C2=met (blind 24/24,
+        real arm pass, oracle ids 18, seed 15440749816798970567); count-c1.py -> evidence/c1-after.txt
+        C1 byte-evidence met (blind 40/40 mismatches=0; real 220 rows, oracle_fetched=58,
+        fresh=49 drifted=9 excluded=0, tool mismatches=0, seed 7388485190103051243)
+        round append-only gate: round_changed=[] exit 0; index clean staged=0 intent_to_add=0
+        orchestrator directive (mid-flight): no seat dispatched from L1 session — wave 2 goes
+        through Main as one batched task call; L1 parks after returning the validated taskCall
+17:1xZ  integration batch: w2 documentary FAIL repairs (contract :13 reconciliation + oracle-prose amendment,
+        knowledge-note nine-row enumeration with open-time shas + exit-2 contract, SKILL drift bullet, QUALITY
+        105-addendum, README Round-36 rows, S205 used-by -> corpus/knowledge/source-drift-r36.md), freeze-v3
+        pin record, lesson (M1-M4), SCORECARD round-36 section + capability row, LOG entry, wave-2 spec +
+        dispatch payload + taskCall + validator log, c1/c2/drift receipts; integration commit next

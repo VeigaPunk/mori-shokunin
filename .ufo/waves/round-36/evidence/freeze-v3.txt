@@ -1,0 +1,23 @@
+round-36 freeze v3 (L1 MoriR36, 2026-10-23T~17:15-03); supersedes evidence/freeze-v2.txt as the pin record for the
+claims. v2 -> v3 delta on contract.md ONLY: (a) 5842dc0 appended the pre-data C1 exploratory declaration
+(wave-1 CritAxisFit axis-fit defect; predicate sentences untouched); (b) this integration commit reconciles the
+C1 claims-table row (:13) with that declaration and amends the real-arm oracle prose (:53-58) to match the frozen
+counter's actual 429/4xx/5xx handling (found by w2 RevOracle429; code untouched — counters are frozen).
+P-C1 (contract.md:21) and P-C2 (contract.md:23) predicate sentences and both counter files are byte-identical to
+the v2 pins (verified by w2 ExecReC2A, RevPredIdentity, RevC1Receipt).
+blob pins at this commit (git hash-object):
+f68a06c2329e878e468d49031ac04560c5b70485  contract.md
+b5888afe0c494c45e3a8abe06e6e60e849c101f0  count-c1.py
+d8c41d96616eb7caed5ad12cf4e8a2b93c2237dc  count-c2.py
+tool pins (not frozen; for repair diffs):
+103965ac82df721d5d6edf17c7f917e5175579d9  tools/mori-source-drift.py
+dfb5040b159f7a0b4afedc90a633d997352908f0  tools/mori-sources-appendonly.py
+d171da39f667e5d3af6f2b76f0481a7f0c3a8a4  tools/mori-index-clean.sh
+Data receipts of the claims (scored at clean tip bf0df77, committed here):
+- evidence/c2-after.txt  C2=met  seed=15440749816798970567  (blind 24/24, real arm pass, 18 ids)
+- evidence/c1-after.txt  C1 byte-evidence met  seed=7388485190103051243  (blind 40/40 mismatches=0;
+  real arm fetched=58 fresh=49 drifted=9 excluded=0 mismatches=0)
+- evidence/drift-live-r36.txt  full-tool live run (rows=220 fresh=49 excerpt=0 drifted=9 unavailable=0 no-copy=162)
+Disclosed residuals (report §): count-c2.py:70-82 killpg on its own timed-out sandbox child (frozen bytes; r37 debt
+to restructure); count-c1.py module docstring still says v1 (cosmetic; bytes frozen); C1 exploratory has no named
+non-author reviewer inside the round — the hyaku closure session is the named reviewer of record.
