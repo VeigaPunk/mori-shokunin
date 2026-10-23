@@ -62,6 +62,10 @@ End-to-end, the counter's own printed line (blind arm, `N_SANDBOX=1`):
 $ FIX_SLEEP=115 python3 e2e_c1.py e57c58b57c025364e79d130fbdf764d2674d83d6 --tool $PWD/fixture_sleep.py --seed 4242
 tool: /fast/scratch/hyaku/mori-r37/LabTimeoutBoundary/fixture_sleep.py
 blind arm: 1/1 sandbox histories matched the hidden truth (115.1s; coverage: deletions=1 changed-back=0 superseded=1)
+real arm: pass (115.3s)
+  tool:   appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  tool exit=1
 ```
 
 **Result:** completes normally — wall **115.25 s** (< 120 s budget), exit 1 (the genuine tool's own
@@ -97,7 +101,27 @@ End-to-end, the counter's own printed line:
 $ FIX_SLEEP=125 python3 e2e_c1.py e57c58b57c025364e79d130fbdf764d2674d83d6 --tool $PWD/fixture_sleep.py --seed 4242
 blind arm: 0/1 sandbox histories matched the hidden truth (120.0s; coverage: deletions=1 changed-back=0 superseded=1)
   repo00 FAIL: no summary line (exit 124):
+real arm: FAIL (120.1s)
+  tool:   (no summary line)
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  diff: no summary line (exit 124)
+  diff: per-id lines: want changed=['S041', ..., 'S193'] deleted=[] got changed=[] deleted=[] (malformed=0)
+  tool exit=124
+challenge arm (real-arm clothing): FAIL (120.0s)
+  truth:  appendonly_violations=3 ids=[S235] deleted=[S073,S127] superseded=[S235] round_changed=[S073,S127,S235]
+  tool:   (no summary line)
+  reason: no summary line (exit 124)
+negative memo-n1.py     rejected (challenge: lists differ: ...)
+negative const.py       rejected (blind 4/4 (repo200: lists differ))
+negative summary-only.py rejected (blind 2/4 (repo200: per-id lines differ (malformed=0)))
+C1=unmet
+seed=4242
 ```
+
+All three arms report the expiry as `no summary line (exit 124)` — distinct from a list mismatch
+(the contract's "never a list mismatch" holds), but not the `tool_timeout` token. For contrast, the
+same scratch copy with N=115 finished all three arms green (`real arm: pass (115.3s)`,
+`challenge arm (real-arm clothing): pass (115.1s)`, `C1=met`).
 
 **Result:** wall **120.00–120.13 s** (within budget+grace = 125 s ✓), **exit 124**, state line
 **`no summary line (exit 124)`** — **not** `tool_timeout`.
@@ -178,9 +202,21 @@ TOOL_EXIT     124
 ARM_DIFF      (none)
 ```
 
-The tool was killed by the boundary (exit 124) yet the real arm reports "pass" with no diff. Blind
-and challenge arms do check the exit code, so they would catch this fixture; the real arm alone
-cannot distinguish "completed" from "killed after flushing output".
+The tool was killed by the boundary (exit 124) yet the real arm reports "pass" with no diff. The
+blind arm on the *same fixture under the same conditions* does catch it (exit-code check at
+`:708-711`):
+
+```
+$ FIX_SLEEP=200 python3 arm_probe.py $PWD/fixture_tail_hang.py 200 blind
+WALL_S        120.00
+ARM_VERDICT   FAIL
+TOOL_EXIT     124
+ARM_REASON    exit 124, expected 1 (round_changed=['S036', 'S218', 'S260'])
+```
+
+`real_arm` has no `expected_exit` token at all (verified: `'expected_exit' in real_arm` → `False`,
+vs `True` for `check_blind` and `challenge_arm`), so the real arm alone cannot distinguish
+"completed" from "killed after flushing output".
 
 ## 8. Measurement integrity
 
@@ -196,8 +232,11 @@ HEAD       lines=1020 TOOL_TIMEOUT_S=120 TOOL_GRACE_S=5 run=f2a9cd5e8aaedfdb run
 ```
 
 (`counter_frozen.py` hash-object = `7518fef...` = the freeze pin; `counter_live.py` = `3e15f9f...`.)
-The findings therefore apply to both counter versions. No lane file was written or edited; the
-end-to-end runs used a scratch copy differing only in `N_SANDBOX = 1` and the blind coverage gate.
+The findings therefore apply to both counter versions. No lane file other than **this report** was
+written or edited; the end-to-end runs used a scratch copy differing only in `N_SANDBOX = 1` and the
+blind coverage gate. The end-to-end runs do exercise the counter's own `challenge_arm`, which per
+the frozen contract creates `tempfile.mkdtemp` under `<lane>/.ufo/waves/round-37/scratch/` and
+removes it in a `finally` — that is the counter's own behaviour, not a write by this seat.
 
 ## 9. Summary table
 

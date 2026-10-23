@@ -2182,3 +2182,30 @@ Round-37 amendments A1–A3 (wave-1 corrections; measured at `4bfa0490`, receipt
   the counter now reconstructs the commit and requires it to touch the tool (`touches_tool=True`).
 C2 re-scored `C2=met` at `4bfa0490`. SKILL.md gained the two Round-37 registry rows; the dispatch log now
 records the index-clean check after each `landed` line (w1/ExecIndexClean, QUALITY 103).
+
+## Round 37 correction (appended round 38 — append-only amendment)
+
+The round-37 entry above is a record; this entry names its superseded text and does not rewrite it
+(the round-37 `5631efa` in-place rewrite is the breach this form corrects; round-38 lesson M2).
+- `C2=met` at `e57c58b5` holds for the **v1 counter bytes only**; the v3 counter at the same revision
+  prints `C2=unmet` (the `1caa242` correction and the 225-row live sentence). Cite the counter
+  version and its blob pin beside every `C2=met`.
+- The 220-row sweep (`rows=220 fresh=49 … drifted=9 …`) belongs to
+  `evidence/drift-live-r37-start.txt`; `evidence/drift-live-r37.txt` is the 225-row tip sweep
+  (`rows=225 fresh=53 … drifted=10 …`), S223 the tenth.
+- The before-arm command printed with a relative `--tool` is **not runnable as printed** (the r36
+  counter executes it from `cwd="/"`); the runnable form is `<lane>/…`, and the round-38 re-emitted
+  before-receipts carry a `command:` line (`.ufo/waves/round-38/evidence/`).
+- The "M1–M5" label: the lesson carries M1–M10 (M6 pycache, M7 wave design, M8 evidence hygiene,
+  M9 content-free predicate, M10 attribution).
+- **Attribution:** the hardening commit is `1caa242`, not `8ff9bba` (corrected in-lane at `4bfa0490`);
+  the filed fleet report's sentence is superseded by `corpus/lessons/round-37-erratum.md` E1.
+- **Debt (f)** SIGTERM → 5 s grace → SIGKILL is **OPEN and operator-owned**; round 38 files it as an
+  L0 question and does not decide it.
+- **Capability:** the `source-drift re-fetch probe` first worked in round 36; round 37 added the two
+  named, mutation-killable arms. The SCORECARD row is corrected (first-working 36 + r37 narrowing).
+- **Axes cells:** `freshness` no longer claims round-37 C2; `operability` carries the round-37
+  pointer (round-38 axes-cell correction note in SCORECARD).
+- **ExecGateRound D3 (S069):** S069's in-place edit `62db24c` postdates its only superseder S073
+  (`71abd41`). Round 38 lands S226 (opened this round) whose row opens `supersedes S069`, and the
+  gate's timed reading prints `stale_supersede=[S069]` at `e37dcc6` and `[]` at the round-38 tip.
