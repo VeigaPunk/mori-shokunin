@@ -68,3 +68,13 @@ Revenger boundary note (w2/RevNgC1): the v2 anti-harness-key design is invocatio
 under /fast/scratch or /tmp the K9 harness key re-arms (trusted_root polarity), but the documented protocol runs
 the real arm on the lane repo itself, and a --tool-only attacker does not control --repo; no defect under the
 documented invocation (K9 confirmed unmet at the clean tip).
+
+Collateral note (w2/ExecCensusRegression, carried-not-caused): `tools/mori-round17-jj-regressions.py --selftest`
+is red in this host environment (9/204 assertions, all the single `jj_config_redirected` side-effect assertion;
+195 substantive green; byte-identical red on a pristine round-base archive). Root cause: jj 0.45.1 writes
+`$XDG_CONFIG_HOME/jj/repos/<hash>/metadata.binpb` only inside a jj workspace (`.jj/repo/config-id` present), but
+the gate's own guard refuses `.ufo/` scratch outside `.ufo/waves/` (`tools/mori-round17-jj-regressions.py:1173-6`),
+so a compliant scratch lands outside any jj workspace and the side-effect assertion cannot fire. The r17 receipt
+recorded green when scratch ran inside the lane's jj workspace. R37 disposition: pin that gate's scratch inside a
+jj workspace, or scope the assertion. The main census regression battery itself is clean at both tips
+(selftest 134/134, oracle 28/28, 16/16 green over 8 repeats).
