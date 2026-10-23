@@ -729,3 +729,37 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     controls, at `b9fb029e`) maps each shape, and its receipt `evidence/c1-controls.txt` scores 16 negative controls
     `C1=unmet` under P-C1-A1 before any data seat. Not covered: a control set that discharges every shape can still
     miss a rule-order defect (round-34 Mistakes M1).
+
+## Criteria added round 34 — round-34 mistake M2 (a post-data shortcut met the A1 counter)
+
+99. Before any data seat, a measured claim whose counter runs the deliverable in a harness also scores, under the
+    frozen counter, two shortcut controls: (i) a label-keyed control whose judged outputs are a function only of the
+    labels the counter's generator emits (device names, fixture ids, seed-shaped values), with one label family per
+    class or state the generator draws; a control keyed on the fixed-seed input bytes does not discharge (i); and
+    (ii) a harness-keyed control that detects the counter's own harness (a FIFO, a namespace, a tmpfs, a fixed
+    interval or seed) and does the claimed work only there, doing nothing or returning a constant on the real input.
+    The frozen counter checks each arm the claim names (for example a live arm) on the real input with a bound in
+    both directions, so a constant such as zero cannot meet it on an active device; an idle device's correct rate may
+    be zero, so the lower bound comes from a witness with known activity. Check: (a) the contract's control table
+    names both controls, and the row of (i) lists the generator's label families; (b) each of the two controls has a
+    receipt line `unmet` under the frozen counter in a revision that is an ancestor of the first data commit; (c) for
+    each named arm, on one real-input witness with known activity, a passing baseline and two mutants that change
+    only that arm's numeric output — one below the arm's lower bound, one above its upper bound — each score `unmet`,
+    and the receipt names that arm's bound as the failure. Lesson: `corpus/lessons/round-34.md` M2.
+    Shown able to fail: round 34's control table (`.ufo/waves/round-34/contract.md` at `b9fb029e`) has C-labelkey,
+    which keys only on the 12 fixed-seed input bytes, and no harness-keyed control, so (a) fails; the real-live arm
+    of `count-c1-a1.py` rejects only a negative rate or one above the outer readings' delta
+    (`.ufo/waves/round-34/count-c1-a1.py:275-278`), so it accepts zero on an active device and (c) fails; a program
+    correct offline and on the fed arm can keep that shortcut and meet C1, as the post-data probe `ef936fb4` (class
+    from device-name patterns; one real read with every rate 0; two reads only when `/proc/diskstats` is a FIFO) did
+    under P-C1-A1 (`.ufo/waves/round-34/evidence/ctl-postdata-shortcut/receipt.txt`, re-scored `rescore-a3.txt`). The
+    first draft of this criterion had one Check sentence; mutation seat MutQ99 found it accepted a fixed-seed label
+    key and an upper-only bound (`.ufo/waves/round-34/wb/MutQ99.md`, variants 3 and 4 survived), reviewer ReviewQ99
+    asked for the bound sentence to get a subject and a check (`wb/ReviewQ99.md`, D1, D2), and critic CritQ99Revised
+    found the revised (a)-(c) reject both variants and asked that (c) name the arm and an active witness
+    (`wb/residual/CritQ99Revised.md`); this text carries those fixes, applied after that review and not re-judged.
+    Correction to 98 (append-only): its last sentence's "round-34 Mistakes M1" is round-34 Mistakes M3 (rule order).
+    Not covered: 99's controls are not a certificate that the counter discriminates every rule. Critic CritQ99Gap
+    built two more programs that skip part of the claimed operation and met P-C1-A1 (`wb/CritQ99Gap.md`: one drops
+    the sysfs-only devices that are not partitions from rule R4's union, one replaces unsigned-decimal validation
+    with a blacklist of the generator's corruption characters); rule-level skips are round-34 Mistakes M3.
