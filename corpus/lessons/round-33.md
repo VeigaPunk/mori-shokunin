@@ -164,3 +164,48 @@ as a further unpinned set.
   committed copy and their locators computed, not typed (`/fast/scratch/hyaku/mori-r33/L1/build_sources.py`, quoted in
   the Gate note). Shown able to fail: the seat's quote is not a substring of the collapsed copy (`norm(q) in norm(copy)`
   is False).
+
+## Attacks on the data and how they were settled (wave 2, 42 seats, before the judges)
+
+Fixed before the judge read the entry (data revision `ab8f4cfe`): row 2 gained the `RQF_IO_STAT` guard and its quote
+(AttackRow02, AttackSrc185); row 3's verdict narrowed to "never add a disk's line to its own partitions" and cites
+`bdev_whole` = `part0` (AttackRow03, AttackSrc183, CriticAxisNoHarm); row 4 limited to sectors written (AttackRow04);
+row 5 drops "queue depth" and the per-read link is quoted through `proc_create_seq("diskstats", …)` (AttackRow05,
+AttackSrc182); row 6 drops the field-10 identity and calls the busy share approximate (AttackRow06, AttackSrc181,
+CriticAxisNoHarm); row 7 "can climb", no "tick" wording (AttackRow07, AttackSrc180); row 8 no "whitespace-separated",
+20 made explicit (AttackSrc187); row 11 separates request count from duration and quotes the combine sentence
+(AttackRow11, AttackSrc188); row 13 no longer equates uptime with counter lifetime (AttackRow13, CriticEntryProse);
+row 14 narrowed to iostat's extended-statistics display — the default report computes its rate unclamped
+(AttackSrc190 blocker, AttackRow14); entry prose corrected (CriticEntryProse); SKILL rules carry every verdict
+(ReviewSkillRound33); S184/S189 quotes widened, S181/S186/S188/S190 cells and anchors tightened (AttackSrc18x).
+
+Recorded, not fixed (open findings for the closure):
+- AttackRow08: the ABI file's "Kernel 4.18+" discard boundary is contradicted by v4.18 code (v4.19 first emits 18); row
+  8 now attributes the boundary to the ABI file and its verdict does not depend on it.
+- CtlGlossaryA1: an 11-row definition-only glossary with honest self-judgments prints `C1=met` under P-C1-A1
+  (sandbox `04c02ae`). The predicate certifies sourced rows and a judge, not that each row carries a write-rate
+  decision; every real row carries one (the same report, row by row). Reported against the claim's discrimination.
+- CtlLocatorStale: a false `file:L` locator survives the counter (exit 0); a stale copy and an uncited span are caught.
+- ReviewCounterData: at `62db24c0` every condition but `judge` was met; rows 9 and 14 meet the overlap check with
+  generic words only.
+- Repair rows: S117's releases feed was never committed (unchecked on that page); S128 gained the omitted "different
+  contracts" clause; S149's row now separates its two named pages from rows S127/S003; S137's `-k` vs `--kernel-oom`
+  identity (AttackRepairS137 F1) stays as a note. MutQuality97: criterion 97's concession half needs a human reader.
+- No-harm: retention metric 4 at `62db24c0` = 4 at base (ExecRetentionData); census validate `mori ok`, no new W04
+  (ScoutCensusMisroot); fleet-root sweep found no mori round-33 file (two seats briefly wrote reports at the fleet root
+  by a relative path and moved them into the lane themselves: AttackSrc180, AttackSrc184).
+
+## Judges (residual call J, 2 reviewer seats, dispatch committed `7a0234c2` before they ran)
+
+- JudgeC1Rows (entry sha `eaeb1100…c764` at `ab8f4cfe`, R-J quoted): 10 supported, 4 unsupported — row 3 (the
+  disk line printing `part0` is in S182, not cited), row 6 ("approximate" needs S181:78-80, not cited), row 7 (the
+  procfs/sysfs identity is S181:22, not cited), row 13 (the census formula is a tool fact, not a source fact). The entry
+  is left as judged: an edit would change the judged bytes. The four rows stand marked unsupported in the receipt and
+  are the next round's repair (cite S182/S181 or narrow the cells).
+- JudgeRepairR32 (lesson sha `470b6e3b…` at `ab8f4cfe`, R-R quoted): not-current 5/5 agree; support pointers 13
+  agree, 1 disagree (S137: `main.c:260` does not tie `-k` to the kernel-OOM option, so "v1.2 removal" is unsupported on
+  S137's own pages); unsupported clauses 23/23 agree; omitted clauses: S137 "returned on master in February 2026",
+  "current master", "(S016 documents it…)"; S149 "the two files are different contracts"; S058 the combined "--reverse
+  --topo-order lists ancestors first" (inference from two quotes). Correction (append-only, per the judge): those six
+  clauses are unsupported under R-R and belong in the last column of §1; S137's first pointer moves there too. The
+  judge's residual reading (a row id in a source cell does not name that row's pages) is stated in its receipt.
