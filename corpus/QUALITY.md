@@ -763,3 +763,46 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     built two more programs that skip part of the claimed operation and met P-C1-A1 (`wb/CritQ99Gap.md`: one drops
     the sysfs-only devices that are not partitions from rule R4's union, one replaces unsigned-decimal validation
     with a blacklist of the generator's corruption characters); rule-level skips are round-34 Mistakes M3.
+
+## Criteria added round 35 — round-34 spot-check §6 items 1 and 5, round-35 mistake M1
+
+98 correction (round 35, append-only; round-34 spot-check §6 item 5). 98's worked example breaks its own rules three
+    ways. D1: 98 lists "a rule changed, or rows deleted, after data" as a shape, but round 34's control table
+    (`.ufo/waves/round-34/contract.md:65-81`) has no row for a rule changed after data; its inapplicability entry
+    covers only rows deleted after judgment. D2: round 34's server-echo row reads `unmet (guard)`
+    (`contract.md:77-78`) and the C-echo-v1 receipt shows the guard trip (`evidence/c1-controls.txt:26-28`); by 98's
+    own sentence a guard trip discharges only the skip-work and content-free shapes, so server echo was not
+    discharged. D4: the contract says three of its 16 negative controls met P-C1 (`contract.md:142-143`); four runs
+    met (`c1-controls.txt:29-34,38-43`: C-echo-v2-base64, C-echo-v3-umount, C-emptylive, C-zero-singleread), in three
+    shape groups. Round 35's own contract (`.ufo/waves/round-35/contract.md`, Controls) also fails 98(a): it names no
+    server-echo, observed-column-copy, no-decision or rule-changed control (round-35 lesson M1).
+100. In a depth claim's decision table, every verdict cell names a reader action: an imperative verb and an object
+    that resolves (a command, a path or a field), so the reader knows what to run, read or report next. Check: select
+    the verdict cells by table position and judge each cell's own text, without its column header or its neighbours;
+    a cell that reads as an action only through its header (a bare label such as `candidate`) fails. Lesson:
+    `corpus/lessons/round-33-verifier-spotcheck.md:226-228` and `corpus/lessons/round-34-verifier-spotcheck.md:196-197`.
+    Shown able to fail: `corpus/knowledge/watchdog-identity-r31.md:21` has the verdict cell `candidate`, which fails;
+    `corpus/knowledge/disk-write-rate-r33.md:20` has `Convert a sector delta to bytes by multiplying by 512, and never
+    by the device's logical or physical block size`, which passes. Not covered: whether the action is correct or
+    sourced, and whether the claim's counter rejects a no-decision control (98).
+101. A pre-data control receipt may rule that a control which met the frozen counter "does the claimed work" only if
+    the control fills every field of the deliverable's declared shape with content that is not empty, does not deny
+    the claim, and is about the claimed object. A met control with an empty field is 98's content-free shape; one
+    whose field denies or contradicts the claim, or is a bag of words, is the denial shape (kaidoku round 32,
+    `kaidoku-shokunin/corpus/lessons/round-32-verifier-spotcheck.md` routed defect 4). Either forces a re-design before
+    data or an exploratory claim, never a "residual" note. Check: for each `C1=met` line in the receipt, list the
+    deliverable's fields and the control's content in each; any empty, denying or off-topic field makes a "not a
+    skip" ruling fail. Lesson: `corpus/lessons/round-35.md` M1. Shown able to fail: round 35's receipt
+    (`.ufo/waves/round-35/evidence/c1-controls.txt`, control 10c) rules CtlSkipDesign B a non-skip although its
+    capability and what-it-can-now-do cells are empty (`.ufo/waves/round-35/c0/CtlSkipDesign.md`), so the ruling fails
+    101; the register's prose is then held up only by non-author row judges, not by P-C1.
+102. A round that changes `corpus/SOURCES.md` passes the append-only check at its landed tip with no id it touched:
+    for every `S###` row, the cells other than status, recheck and used-by equal the cells the row had in the commit
+    that first held it, unless a later row's teaches opens `supersedes S###`. Check: `python3
+    .ufo/waves/round-35/check-sources-appendonly.py <tip>` (read-only git) prints `appendonly_violations=N ids=[...]`;
+    no id the round's own commits changed may be listed. Lesson: `corpus/lessons/round-35.md` M2 (round 34 edited S182
+    and S193 in place and its lesson said no existing row changed). Shown able to fail: at `dd76eb79` the check exits 1
+    with 17 ids, among them S182 (changed at `8d56809a`) and S193 (changed at `406d91a4`); with this round's
+    supersede rows S201 and S202 they are discharged and 15 ids remain, all edited in place before round 34
+    (`62db24c0`, `5126891f`, `ab8f4cfe`) and carried as routed debt. Not covered: deleted rows, and a later edit to a
+    row that is already superseded.

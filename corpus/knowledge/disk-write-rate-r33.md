@@ -96,3 +96,13 @@ and dropping the two unstated phrases.
 | # | observation | reading | verdict | sources |
 |---|---|---|---|---|
 | 3r2 | `diskstats_show` (S182.src:1353) walks `gp->part_tbl` and skips a partition with zero sectors (S182.src:1370-1372); for each remaining entry it reads the statistics into `stat` (S182.src:1380) and prints `stat.sectors[STAT_WRITE]` (S182.src:1383,1391) | The disk's own `part0` is inserted into `part_tbl` (S182.src:1465,1471-1472). `part_stat_add` adds to the partition and, for a partition, adds the same amount to `bdev_whole(part)` (S183.src:58,61-64), which is the disk's `part0` (S186.src:84-85); `bdev_end_io_acct` adds its sectors through `part_stat_add` (S184.src:1100-1110) | When totalling, count a partition's contribution once: never add a disk's line to the lines of its own partitions | S182, S183, S184, S186 |
+
+## Round-35 correction (append-only; `corpus/lessons/round-34-verifier-spotcheck.md` §6 item 3)
+
+The Round-34 revision header above says rows 3r, 6r, 7r and 13r were drafted by attempt-1 seats in
+`.ufo/waves/round-34/w1/`. That directory was never committed, so the pointer does not resolve. The committed judgments of
+those rows are the attempt-2 wave-A judges `.ufo/waves/round-34/wa/JudgeRow3r.md`, `JudgeRow6r.md`, `JudgeRow7r.md` and
+`JudgeRow13r.md`, and the attempt-3 wave-B re-judges `.ufo/waves/round-34/wb/ReJudgeRow3r.md`, `ReJudgeRow6r.md`,
+`ReJudgeRow7r.md` and `ReJudgeRow13r.md`. Wave A judged row 3r supported (`wa/JudgeRow3r.md:33`); wave B judged it
+unsupported (`wb/ReJudgeRow3r.md:36`), and row 3r2 supersedes it (`wb/residual/MoriR34A3.JudgeRow3r2.md:95`, supported).
+Rows 6r, 7r and 13r were judged supported by both waves. Drafting seats' own outputs are not evidence.

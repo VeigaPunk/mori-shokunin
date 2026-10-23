@@ -840,3 +840,15 @@ that cite rows 3, 6, 7 and 13 rest on the revised rows 3r, 6r, 7r and 13r (`corp
 iostat prints 0.0 when the newer sectors-written count is below the older one; read the raw counters before reading
 that 0.0 as anything. An idle device also shows 0.0 [INFERENCE, closure §8 item 4], so 0.0 alone is neither a zero
 rate nor an unavailable one.
+
+Round35 corrections to the Round34 section above (append-only; `corpus/lessons/round-34-verifier-spotcheck.md` §6 items 2
+and 4):
+- Round35 correction: the class rule's `device` entry (S193) now rests on S202, which supersedes S193 append-only: on add
+  and on delete the link exists only for a device with a parent that is not a partition, and a reparent moves it with no
+  partition check. The `__add_disk` lines round 34 added to S182 in place now rest on S201, which supersedes S182.
+- Round35 correction: the host-total clause "a stacked device maps onto devices already counted (S192)" is miscited.
+  S192 supplies only the `slaves` classification. The clause is observed on this host, not sourced: a dm-0 write-sector
+  delta equalled its slave partition's and its disk's (219728 sectors over 30 s,
+  `.ufo/waves/round-34/wb/ExecStackedRemeasure.md`). Round 35 opened twelve candidate files and none states it; S203 and
+  S204 are kept as rejected rows (sweep: `corpus/lessons/round-35.md` Gate). Do not sum a stacked device with its
+  slaves; why the backing line also moves stays FR6 frontier.
