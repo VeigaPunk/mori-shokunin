@@ -4,3 +4,9 @@ round-36 dispatch log (L1 MoriR36)
 10:48Z  wave-slot acquire mori mori-r36-counters 2 -> granted (live=73); counter-build call, plain task call, 2 executor seats (ExecCounterC1, ExecCounterC2), pre-freeze; not a validator-band wave
         contract.md amended before freeze (oracle 429 handling; real arm skipped when blind fails) and builder notified
 11:47Z  counters returned (C2 49m, C1 57m); contract re-probe rule documented; before receipts c1/c2 tool_absent unmet; freeze commit next
+11:48Z  wave-slot acquire mori mori-r36-c0 25 -> granted (live=74); control wave C0 dispatched as ONE plain task call (eval tool.task), 25 mutation-tester seats (CtlK1-K11,K13; CtlJ1-J13), payload c0-dispatch.json; settle deadline 12:33Z
+11:59Z  wave-slot acquire mori mori-r36-w1 33 -> granted after 642 s (live=67); w1 validated under policy v1 (run exit 0) -> w1-dispatch.json (33 tasks); NOT yet dispatched: held for the counter re-design below
+~12:00Z C0 results: K9 met, J11 met (harness-keyed; v1 real arms ran on a temp extraction / clone under /fast/scratch), K13 met (v1 decoys never written: indices vs ids). QUALITY 98: counter wrong -> re-design before data (no data seat had run; no tool exists in the lane). L1 edited count-c1.py (decoys on 12 fresh/excerpt ids; real arm --root the repo itself, corpus must equal R) and count-c2.py (real arm on the repo itself, no clone). Predicate sentences unchanged. Seats CtlJ7, CtlJ9, CtlJ12 saw the hash change mid-run and were told it is an L1 edit; their receipts are under v1.
+        L1 ruling to C2 control seats (asked about counter-owned temp writes and the >10 MB clone pack): counter-owned self-cleaning writes authorized; prescribed command unchanged
+12:0xZ  L1 re-scores all 25 controls plus the two builder reference tools under v2 (evidence/c0-rescore-v2.txt)
+12:03Z  v2 re-score: 25/25 controls unmet, refs met; freeze v2 commit next

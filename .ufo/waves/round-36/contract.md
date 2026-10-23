@@ -50,7 +50,7 @@ Blind arm (counter): a fresh temp root under `/fast/scratch/hyaku/mori-r36/`, 40
 replacement from S001–S299, random paths and file extensions, copies in random `sources-r<N>` directories with an
 older decoy copy (different bytes) in a lower-numbered directory for some rows, served from memory by a local HTTP
 server; `drifted` bodies include same-length byte flips; `unavailable` rows return 404 or 500. Truth stays in counter
-memory. Real arm: the tool run with `--root` a checkout of R; the counter's own oracle fetches each row with a copy
+memory. Real arm: the tool run with `--root` the repository itself (v2), whose `corpus/` must equal R (no diff, no untracked file under `corpus/`, else unmet); the counter's own oracle fetches each row with a copy
 (up to five tries, sequential, honoring `Retry-After` on HTTP 429, backoff 5/10/20/30 s otherwise); rows the oracle
 could not fetch are excluded; every other row must match. A tool `unavailable` on an oracle-fetched row is re-probed
 once by the oracle: it is a mismatch when the re-probe fetches the row, and the row is excluded (printed
@@ -80,7 +80,7 @@ Blind arm (counter): 24 sandbox git repos under `/fast/scratch/hyaku/mori-r36/`,
 commits with neutral messages, ops drawn per commit: append row, edit a mutable cell, edit an immutable cell,
 revert an earlier immutable edit, delete a row, append a superseding row for an edited id, reorder rows. At least 12
 histories carry a deletion and at least 12 a changed-back id; the round base is a random commit. Truth is computed
-from the op log, not from git. Real arm: a clone of the lane; the counter's oracle walks `git log` of the path itself.
+from the op log, not from git. Real arm: the lane repository itself, read-only git (v2; no clone); the counter's oracle walks `git log` of the path itself.
 
 ## Controls (QUALITY 98, 99, 101 and the anti-loop five; scored under the frozen counters before any data seat)
 
@@ -100,3 +100,13 @@ exploratory declaration, never a residual ruling.
 | server echo | K10 length-only comparison (Content-Length or body length vs copy size) | inapplicable: no server; the oracle is the truth, never printed |
 | rule-level skips | K3 sha-only (no excerpt, no unavailable logic); K13 reads the oldest copy, not the newest | J2 the round-35 checker as committed at 6bd57097; J4 endpoint-only round_changed; J5 no deleted arm; J6 rows keyed by line position; J7 a superseder removes the id from ids |
 | rule changed after data | inapplicable as a program: the counters' sha256 are pinned in `evidence/freeze.txt` | same |
+
+## v2 re-design before data (round-36 C0 receipts, QUALITY 98)
+
+Under the v1 counters (sha256 `ed3f0e5e…4145`, `302f9aa0…affb`, frozen at `da12b378`) three controls met before any
+data seat: K9 and J11 (harness-keyed: the v1 real arms ran on a temp `git archive` extraction and a clone under
+`/fast/scratch`, which the controls detected by path) and K13 (oldest copy: the v1 blind arm held decoy rows as list
+indices and never wrote a decoy copy). By QUALITY 98 the counter was wrong; it is re-designed before data: both
+real arms run on the repository path itself, and decoys are written on 12 fresh/excerpt rows. The predicate
+sentences P-C1 and P-C2 are unchanged. Every C0 control is re-scored under v2 (`evidence/c0-rescore-v2.txt`) and the
+v2 freeze sha256 is in `evidence/freeze-v2.txt`.

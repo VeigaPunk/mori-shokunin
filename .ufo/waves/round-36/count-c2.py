@@ -622,8 +622,10 @@ def blind_arm(tool, root, rng):
 
 
 def real_arm(tool, repo, scratch):
-    clone = os.path.join(scratch, "lane-clone")
-    git(repo, "clone", "--no-local", "--quiet", repo, clone, timeout=900)
+    # v2 (round-36 C0: J11 met because the v1 real arm ran on a clone under
+    # /fast/scratch, which a harness-keyed program could detect): the tool and the
+    # oracle read the repository itself, read-only git only; no clone.
+    clone = os.path.abspath(repo)
     proc = run_tool(tool, [REAL_REV, "--repo", clone, "--round-base", REAL_BASE])
     got = parse_summary(proc.stdout)
     expected = oracle(clone, REAL_REV, REAL_BASE)

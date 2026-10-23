@@ -392,7 +392,9 @@ def build_fixture(rng, root, port):
     rng.shuffle(kinds)
 
     # the rows that also carry an older decoy copy in a lower-numbered directory
-    with_copy = [i for i, k in enumerate(kinds) if k != "no-copy"]
+    # (v2: ids, not indices, and only fresh/excerpt rows, so that reading the decoy
+    # instead of the newest copy changes the row's state)
+    with_copy = [ids[i] for i, k in enumerate(kinds) if k in ("fresh", "excerpt")]
     rng.shuffle(with_copy)
     decoy_rows = set(with_copy[:12])
 
@@ -563,16 +565,19 @@ def blind_arm(tool, rng):
 
 
 def real_arm(tool, repo, rev):
-    """The real arm.  Returns (passed, detail_lines)."""
-    root = tempfile.mkdtemp(prefix="mori-r36-c1-real-", dir=scratch_dir())
-    try:
-        proc = subprocess.Popen(["git", "-C", repo, "archive", "--format=tar", rev, "corpus"],
-                                stdout=subprocess.PIPE)
-        with tarfile.open(fileobj=proc.stdout, mode="r|") as tf:
-            tf.extractall(root, filter="data")
-        proc.wait()
-        if proc.returncode != 0:
-            return False, ["real=unmet git_archive_failed=%s" % proc.returncode]
+    """The real arm.  Returns (passed, detail_lines).
+
+    v2 (round-36 C0: K9 met because the v1 root was a temp extraction a harness-keyed
+    program could detect): the tool runs with --root the repository itself, whose
+    corpus/ must equal <rev> (no diff, no untracked file under corpus/)."""
+    root = os.path.abspath(repo)
+    if True:
+        diff = subprocess.run(["git", "-C", root, "diff", "--quiet", rev, "--", "corpus"],
+                              capture_output=True)
+        extra = subprocess.run(["git", "-C", root, "ls-files", "--others", "--exclude-standard",
+                                "--", "corpus"], capture_output=True, text=True)
+        if diff.returncode != 0 or extra.returncode != 0 or extra.stdout.strip():
+            return False, ["real=unmet worktree_corpus_differs_from_rev"]
         sources = os.path.join(root, "corpus", "SOURCES.md")
         if not os.path.isfile(sources):
             return False, ["real=unmet no_SOURCES.md_at_rev"]
@@ -633,8 +638,6 @@ def real_arm(tool, repo, rev):
         if rc not in (0, 1):
             detail.append("real_tool_exit=%s stderr=%s" % (rc, err.strip()[:200]))
         return passed, detail
-    finally:
-        shutil.rmtree(root, ignore_errors=True)
 
 
 # ----------------------------------------------------------------- main
