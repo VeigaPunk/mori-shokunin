@@ -55,8 +55,9 @@ author: mori-shokunin L1 MoriR32A2 (round 32, attempt 2)
 
 ## Gate (rows opened 2026-10-23 in round 32)
 
-Three candidates opened by wave-1 seats (SrcCurlMan, SrcUnicodedata, SrcHtmlUnescape), three admitted; each copy is
-committed unchanged at `corpus/evidence/sources-r32/S###.src`. The L1 changed one seat-drafted SOURCES cell: S176's
+Five candidates opened by wave-1 seats. Three were admitted (SrcCurlMan, SrcUnicodedata, SrcHtmlUnescape), and each copy is
+committed unchanged at `corpus/evidence/sources-r32/S###.src`. Two were rejected, S178 and S179, both opened by recheck
+seats while they checked a row's second source. The L1 changed one seat-drafted SOURCES cell: S176's
 `opened` value `2026-10-23T01:31:32Z` became `2026-10-23`, because the census rejects a timestamp there (E08).
 
 | id | url | accessed | sha256 | quotes | decision |
@@ -64,9 +65,12 @@ committed unchanged at `corpus/evidence/sources-r32/S###.src`. The L1 changed on
 | S175 | https://curl.se/docs/manpage.html | 2026-10-23T01:31:33Z | `9d2b36d00af7240f77480e911ce28346113419dd3eb5ebca1d8cc50284cfe5ca` | Options > -f, --fail (24 words): "Fail with error code 22 and with no response body output at all for HTTP transfers returning HTTP response codes at 400 or greater."; Options > -L, --location (11 words): "this option makes curl redo the request to the new place."; Options > -m, --max-time (13 words): "Set the maximum time in seconds that you allow each transfer to take."; Exit codes > 28 (12 words): "Operation timeout. The specified time-out period was reached according to the conditions." | admit, A, mined |
 | S176 | https://docs.python.org/3/library/unicodedata.html | 2026-10-23T01:31:32Z | d3d261bcde4906ce9685d8e362a7bbb0dc4b254b1fc12f70ec46a9db65e77375 | unicodedata.normalize entry, valid form values, S176.src:516-517 (10 words): "Valid values for form are 'NFC', 'NFKC', 'NFD', and 'NFKD'."; NFKC definition, S176.src:534-536 (15 words): "The normal form KC (NFKC) first applies the compatibility decomposition, followed by the canonical composition."; NFKD definition, S176.src:533-534 (19 words): "The normal form KD (NFKD) will apply the compatibility decomposition, that is, replace all compatibility characters with their equivalents." | admit, A, mined |
 | S177 | https://docs.python.org/3/library/html.html | 2026-10-23T01:31:26Z | 650c53ac7695b816427335a6fbdf3852c41c01d7458f3b502c2af4e916441bb0 | html.unescape(s) entry, first sentence (7 words): "Convert all named and numeric character references"; html.unescape(s) entry, first sentence (9 words): "in the string s to the corresponding Unicode characters"; html.unescape(s) entry, second sentence (18 words): "This function uses the rules defined by the HTML 5 standard for both valid and invalid character references" | admit, A, mined |
+| S178 | https://git-scm.com/docs/git-diff-tree | 2026-10-23T01:31:59Z | `72cce59764c2ea86f06904bf1805564a3fa7047f2f424ce24620f296bc811523` | OPTIONS `-m` (13 words): "-m By default, git diff-tree --stdin does not show differences for merge commits." | reject, duplicate URL: the page is already the second URL of S058's source cell (`corpus/SOURCES.md:64`); opened by wave-1 Recheck058 to check S058's diff-tree half, copy kept at `corpus/evidence/recheck-r32/S058-difftree.src` as uncounted evidence |
+| S179 | https://pmc.ncbi.nlm.nih.gov/articles/PMC5856500/ | 2026-10-23T01:31:43Z | `ccc65da58d4f56b6c91fa13a87dc9a2f34af7eab9c0cee6be83a3d3aa166201b` | article body (19 words): "In prediction, the problem of forking paths is avoided because the analytic pipeline is specified before observing the data" | reject, same work as S056 (Nosek et al. 2018, PNAS 115(11):2600-2606): a mirror row would duplicate S056's teaches cell and would not recheck S056's URL; opened by wave-1 Recheck056 (accessed time is the copy's file mtime), copy kept at `corpus/evidence/recheck-r32/S056-pmc-mirror.html` as uncounted evidence that the article text is unchanged |
 
-Status changes this round: none to existing rows. New rows S175–S177, all `mined`, used by
-`corpus/evidence/recheck-r32/README.md`.
+Status changes this round: none to existing rows. New rows S175–S177 are `mined` and used by
+`corpus/evidence/recheck-r32/README.md`. New rows S178 and S179 are `rejected`. The counter's new-source check lists both
+under `new_failures` (status not `mined`), which is expected.
 
 ## Mistakes
 
