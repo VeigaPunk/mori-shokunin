@@ -2162,6 +2162,6 @@ Routed round-36 debts: (a) C2, (b) C1, (c) C1 + QUALITY 107, (d) r17-jj assertio
 exit 0 (pre-fix 9/204 red, round-36 Collateral note; `evidence/r17-jj-selftest-r37.txt`), (e) repo-relative
 paths in new evidence (`display_path`), (f) `tool_timeout` with SIGTERM→SIGKILL and the boundary in the
 contract, (g) `mkdtemp` scratch per arm, (h) nine-row drift prose re-verified. QUALITY 106 (arm-detector
-discrimination) and 107 (per-id interface) added; lesson M1–M4 in `corpus/lessons/round-37.md`.
+discrimination) and 107 (per-id interface) added; lesson M1–M5 in `corpus/lessons/round-37.md` (M5: the 1.9 MiB S225 copy was skipped by the directory-form commit and landed by naming it explicitly at `52d636d5`).
 Capability rows: `real-arm challenge counter`, `source-drift re-fetch probe` (SCORECARD Round-37 section).
 Held: coverage 6, operability 7, depth 5, calibration 5, freshness 5, adjacency 6.
