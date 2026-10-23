@@ -1937,3 +1937,42 @@ Held: coverage 6, operability 7, depth 5, freshness 5, calibration 5, adjacency 
 waiver. Routed round-33 defects 2–8 landed and re-judged in attempt 3 (`corpus/lessons/round-34.md`): row 3r failed and
 was superseded by 3r2 (supported); items 7 and 8 carry one wrong detail each, corrected in the lesson. QUALITY 99 for
 mistake M2. SOURCES 190 → 198 rows.
+
+## Capabilities
+
+Round 35 (claim C1, calibration). This is the lane's current capabilities register, the `capabilities` field of the
+AXES.md SCORECARD contract (S199). It holds one row per capability that a non-author closure admitted, as fleet
+`MANIFEST.json` at fleet commit `37b51a24` records it (S200). The key is that closure's `rounds[i].capabilities_added[j]`;
+the first-working round is the closure's round; the evidence is the artifact that round landed and the closure names.
+Rows enter only through a round that demonstrates the capability running (S199), so the three capabilities of round 17,
+a rejected round, are not rows. As the current self-assessment this register supersedes the `— none yet —` table in the
+first `## Capabilities` section (left as filed at `d677cf3`) and the per-round capability tables, none of which listed
+the admitted set. Check: `python3 .ufo/waves/round-35/count-c1.py <rev>` (predicate P-C1,
+`.ufo/waves/round-35/contract.md`).
+
+Rows that predate MANIFEST are not register rows: live census and census self-test (round 1), silence oracle (round 2)
+and drift pin (round 10), in `## Capabilities (round 12 demonstrations)` above. They were admitted before MANIFEST
+carried any mori `capabilities_added` key (its first keyed mori entry is `rounds[313]`, round 12): round 1 by the fleet
+closure `rounds[140]`, rounds 2 and 10 by goal-wave verdicts with no named non-author verifier (this file's Round 2
+and Round 10 verdicts). Their evidence pointers resolve at `dd76eb79`.
+
+| key | capability | what it can now do | evidence | first-working round |
+|---|---|---|---|---|
+| `rounds[313].capabilities_added[0]` | source registry | Curates where mori learns: opened, tiered, anchored source rows with a search log; 34 rows with a clean contract-v1 census at the round-12 closure (the registry has grown since). | `corpus/SOURCES.md` | 12 |
+| `rounds[339].capabilities_added[0]` | typed journal alarm and subject triage | Classifies structured failed-unit subjects as fleet, tsukuroi-routed or unresolved and raises one critical OOM journal alarm; the six named fixture failures went 6 to 0; no live-positive or exhaustive coverage proof. | `tools/mori-round14-regressions.py` | 14 |
+| `rounds[345].capabilities_added[0]` | partial positive journal alarms | On finite committed fixtures, keeps individually qualified current-boot OOM and user-signal alarms beside invalid aggregate records, whose raw totals stay unavailable; no live positive load is claimed. | `tools/mori-round15-regressions.py` | 15 |
+| `rounds[353].capabilities_added[0]` | exact-start journal record window | Reads one user or system journal scope after a byte-equal retained anchor cursor on the anchor's boot, MESSAGE-free, refusing unsafe captures as unavailable without advancing cursor state; 64/64 fixtures; live runs were anchor-only. | `tools/mori-journal-window.py` | 16 |
+| `rounds[386].capabilities_added[0]` | retention gate | Scans lane revisions under the retention policy and reports metric and routed counts; selftest 21/21; after-metric 0 and routed 0 at 3127c3a. | `tools/mori-retention-gate.py` | 18 |
+| `rounds[386].capabilities_added[1]` | freeze-order check | Checks frozen claim inputs against implementation history and counts overclaims; selftest 12/12; overclaims 4 to 0 at 3127c3a. | `tools/mori-freeze-order.py` | 18 |
+| `rounds[386].capabilities_added[2]` | dispatch-attempt ledger verify | Verifies that dispatch attempts bind their payloads: round-18 wave 1 1/1 and wave 2 2/2 bound clean, residual 7/7 bound with STARTED_MISSING; selftest 14/14. | `tools/mori-dispatch-ledger.py` | 18 |
+| `rounds[398].capabilities_added[0]` | blob-bound content-review coverage gate | Passes 10/10 frozen finite requirements; on the actual 194-path population it exits 1 with 155 unresolved dispositions, so it is not privacy clearance. | `tools/mori-content-review.py` | 19 |
+| `rounds[427].capabilities_added[0]` | retention receipt reconciliation | Independently recounts the measured tree of a committed retention receipt and reports identity agreement and policy exclusions; accounting agreement only, privacy clearance always false. | `tools/mori-retention-reconcile.py` | 22 |
+| `rounds[443].capabilities_added[0]` | one-shot system pressure read | Reads /proc/pressure cpu, memory, io and irq once per resource; unavailable is never zero, system cpu full is flagged undefined and irq some is null; frozen selftest PASS 12/12, six wave-2 survivors disclosed. | `tools/mori-pressure.py` | 24 |
+| `rounds[443].capabilities_added[1]` | round-23 routed-item check | Checks the R1-R3 regression pins and R4 dispatch-before-call ordering over lane-written times; held 3 to 4; round-23 wave-1 timing mismatches 8, round-24 0 of 2. | `tools/mori-routed-check.py` | 24 |
+| `rounds[455].capabilities_added[0]` | harness background-job runway read | Reads the configured async.maxJobs from one settings file plus the binary clamp and default, and reports the effective cap and a verdict (not a live job count); frozen selftest PASS 21/21; bounded to block-style configs. | `tools/mori-job-runway.py` | 25 |
+| `rounds[455].capabilities_added[1]` | round-24 routed-defect and Axes-table check | Checks round-24 defects D1-D3 and D5 from git objects plus D4 hygiene; 4 to 0, re-measured by the closure with plain git reads; no registry row or selftest. | `tools/mori-routed-r24.py` | 25 |
+| `rounds[462].capabilities_added[0]` | userspace OOM killer one-shot read | Reads earlyoom and systemd-oomd unit state, earlyoom startup thresholds, counts of earlyoom send, escalation, failed-kill and low-memory lines this invocation and oomd kill notices this boot; KILLER_ACTED, KILLERS_UNKNOWN or KILLERS_QUIET; counts are log lines, not processes. | `tools/mori-oom-killers.py` | 26 |
+| `rounds[476].capabilities_added[0]` | SOURCES freshness repair | Superseded eight carried SOURCES row defects with re-opened rows S145-S152, restored S096, S097 and S101 to their first-published cells, and repointed the live readers. | `corpus/SOURCES.md`, `corpus/knowledge/oom-victim-selection-r27.md` | 28 |
+| `rounds[476].capabilities_added[1]` | amendment-A2 frozen cases | Pins ten round-26 amendment-A2 rules of the OOM killer read with 30 frozen cases (freeze d21b8bd3), PASS 30/30; fixture-only, not a live-host result. | `tools/fixtures/mori-oom-killers/cases-a2.json` | 28 |
+| `rounds[495].capabilities_added[0]` | blind-writer gate | Blind-writer gate with a passing --selftest; on the round-30 inputs it reports three missing-list hits and no longer flags CaseR30a.md:105; supersedes the round-30 wave gate (routed D1). | `tools/mori-blind-check.sh` | 31 |
+| `rounds[495].capabilities_added[1]` | watchdog identity decision table | A sourced FR5 table (S161-S174) on what pid probes can and cannot establish about watchdog liveness; measurements used throwaway processes and did not change the census probe. | `corpus/knowledge/watchdog-identity-r31.md` | 31 |
