@@ -2106,6 +2106,8 @@ landed tip.
   repairs (`.ufo/waves/round-35/w2/`).
 - Re-verification result (freshness): S182 and S193 sources re-opened live; bytes equal the committed copies
   (`corpus/lessons/round-35.md` Gate). The append-only check finds 15 older SOURCES ids edited in place (routed debt).
+## Round 36 (attempt 2, 2026-10-23, L1 MoriR36) — SOURCES append-only gate (C2, measured) and source-drift byte probe (C1, exploratory); routed round-35 repairs
+
 - Round 36 (attempt 2, 2026-10-23, L1 MoriR36): repair-first round per the r35 rejection. C2 (measured,
   operability): the SOURCES append-only gate `tools/mori-sources-appendonly.py` with deleted-row detection —
   frozen counter `count-c2.py` met at clean tip `bf0df77` (blind 24/24, real arm 18 ids, seed
@@ -2122,3 +2124,14 @@ landed tip.
   found changed (`.ufo/waves/round-36/evidence/drift-live-r36.txt`, w2/RevQuality105.md, w2/ExecManualOracleSample.md).
   Census: 204 → 220 rows; `sources-census.sh validate mori` exit 0 at round start and round end (2 new benign
   W04 lines, S218/S220). Index clean after each helper commit (QUALITY 103).
+  Completion anchors (w2/ScribeLog): freeze `da12b37` (v1) → C0 + v2 counter re-design `c1a026c` →
+  exploratory declaration `5842dc0` → data `bf0df77` → integration `9ca8f2e` → close-out `6827d6e` →
+  wave-evidence `8ff9bba` → receipts `5a2fe05d` → post-close sweeps `b7874b19`, `7c6fbac5`. Pin records:
+  `evidence/freeze.txt` (v1), `evidence/freeze-v2.txt` (v2 counters), `evidence/freeze-v3.txt` (cited by
+  SCORECARD); builder references `evidence/refs/ref-c1.py`, `ref-c2.py`; census receipts `census-start.txt`,
+  `census-end.txt`; C1 final re-score `c1-after-final.txt` (second `C1=met`, seed 15951461284190234552, cited
+  in the round report as re-verification — the claim receipt remains `c1-after.txt` seed 7388485190103051243).
+  Wave accounting: c0 25 + w1 33 (28 reports; BuildDriftTool never returned — reconciled at
+  dispatch-log.txt:21-24, its scratch build cited there) + w2 66 (50 reports at final sweep); 19 w2 FAILs, all
+  documentary, repaired or disclosed (lesson M1–M4). Out-of-round commit inside the range: `c081375`
+  (considerthese 2026-10-23 daily reflection) — operator material, not round work.

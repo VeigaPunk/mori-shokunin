@@ -30,6 +30,7 @@ changed (see corpus/knowledge/source-drift-r36.md).
 
 import hashlib
 import http.server
+import ipaddress
 import os
 import re
 import shutil
@@ -39,6 +40,7 @@ import tempfile
 import threading
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 
 ROW_RE = re.compile(r"^\| S\d{3} ")
@@ -49,6 +51,7 @@ STATES = ("fresh", "excerpt", "drifted", "unavailable", "no-copy")
 
 FETCH_TIMEOUT_S = 30
 FETCH_TRIES = 3
+FETCH_MAX_BYTES = 4 * 1024 * 1024  # bodies larger than this cannot be classified; read is capped at +1
 UA = "mori-source-drift/1.0"
 
 
@@ -96,20 +99,71 @@ def find_copy(root, sid):
     return best[1] if best else None
 
 
+def _fetchable_initial(url):
+    """Initial-request policy: http/https with a host. Loopback and private literals stay
+    fetchable — the registry is lane-curated and append-only, and the frozen counter's blind
+    fixture legitimately serves on 127.0.0.1 (w2/SentCensus scoping)."""
+    try:
+        parts = urllib.parse.urlsplit(url)
+        return parts.scheme in ("http", "https") and bool(parts.hostname)
+    except ValueError:
+        return False
+
+
+def _public_redirect_target(url):
+    """Post-redirect policy (w2/SentCensus): a server-driven redirect must land on a public
+    http/https destination — loopback, link-local, private literals and localhost names are
+    refused (conditional-request CSRF class). Residual, disclosed: DNS-resolved private
+    addresses of public names are not re-checked (urllib resolves internally)."""
+    try:
+        parts = urllib.parse.urlsplit(url)
+        if parts.scheme not in ("http", "https"):
+            return False
+        host = parts.hostname
+        if not host:
+            return False
+        try:
+            addr = ipaddress.ip_address(host)
+            return addr.is_global
+        except ValueError:
+            pass
+        low = host.lower().rstrip(".")
+        if low == "localhost" or low.endswith(".localhost") or low.endswith(".local"):
+            return False
+        return True
+    except ValueError:
+        return False
+
+
 # --------------------------------------------------------------------- fetching
 
 def fetch(url):
     """GET url. Returns (outcome, body):
     ("body", bytes)        a 2xx response was received
-    ("unavailable", None)  connection error, timeout, or a non-2xx final status
+    ("unavailable", None)  connection error, timeout, a non-2xx final status, an over-cap
+                           body, or a non-public destination (initial or post-redirect)
     Limited retries: on 429 the Retry-After header is honoured (capped); on other
     5xx and on connection errors a short fixed backoff is used."""
+    if not _fetchable_initial(url):
+        return "unavailable", None
     last_wait = 0.0
     for attempt in range(FETCH_TRIES):
         req = urllib.request.Request(url, headers={"User-Agent": UA})
         try:
             with urllib.request.urlopen(req, timeout=FETCH_TIMEOUT_S) as resp:
-                return "body", resp.read()
+                final = resp.geturl()
+                if final != url:
+                    # a redirect actually happened: the new authority must be public
+                    # (loopback/private targets are refused; w2/SentCensus)
+                    if not _public_redirect_target(final):
+                        return "unavailable", None
+                # bounded read: an untrusted source must not stream past the cap or stall
+                # between bytes past the socket timeout (w2/SentTools) — an over-cap or
+                # truncated body is not classifiable and grades unavailable.
+                body = resp.read(FETCH_MAX_BYTES + 1)
+                if len(body) > FETCH_MAX_BYTES:
+                    return "unavailable", None
+                return "body", body
         except urllib.error.HTTPError as exc:
             code = exc.code
             try:
@@ -220,6 +274,12 @@ class _Handler(http.server.BaseHTTPRequestHandler):
             self.connection.shutdown(socket.SHUT_RDWR)
             self.connection.close()
             return
+        if status == "redir":
+            self.send_response(302)
+            self.send_header("Location", body % {"port": self.server.server_address[1]})
+            self.send_header("Content-Length", "0")
+            self.end_headers()
+            return
         self.send_response(status)
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
@@ -259,6 +319,8 @@ def _selftest():
             routes["/boom"] = (500, b"server error\n")
             routes["/close"] = ("close", b"")
             routes["/trail"] = (200, body_fresh)
+            routes["/huge"] = (200, b"x" * (4 * 1024 * 1024 + 64))
+            routes["/redir"] = ("redir", "/fresh")
 
             def w(reldir, name, data):
                 d = os.path.join(evidence, reldir)
@@ -274,6 +336,8 @@ def _selftest():
             w("sources-r40", "S105.src", body_fresh)            # close
             w("sources-r40", "S106.src", body_fresh)            # URL but no route? no:
             w("sources-r40", "S108.html", body_fresh)           # trailing punctuation URL
+            w("sources-r40", "S109.src", b"x" * 100)            # over-cap body -> unavailable
+            w("sources-r40", "S110.src", body_fresh)            # 302 -> loopback -> refused
 
             registry = "\n".join([
                 "# SOURCES — selftest fixture",
@@ -290,6 +354,8 @@ def _selftest():
                 "| S106 | Doc has-url-no-copy — %s/fresh | docs | A | selftest | anchor | teaches | mined | 2026-10-23 | on-release | — |" % base,
                 "| S107 | Doc no-url — internal note, no fetchable source | docs | A | selftest | anchor | teaches | mined | 2026-10-23 | on-release | — |",
                 "| S108 | Doc trail — %s/trail). | docs | A | selftest | anchor | teaches | mined | 2026-10-23 | on-release | — |" % base,
+                "| S109 | Doc huge — %s/huge | docs | A | selftest | anchor | teaches | mined | 2026-10-23 | on-release | — |" % base,
+                "| S110 | Doc redir — %s/redir | docs | A | selftest | anchor | teaches | mined | 2026-10-23 | on-release | — |" % base,
                 "",
             ])
             with open(os.path.join(corpus, "SOURCES.md"), "w", encoding="utf-8") as fh:
@@ -303,6 +369,7 @@ def _selftest():
                 ("S101", "fresh"), ("S102", "excerpt"), ("S103", "drifted"),
                 ("S104", "unavailable"), ("S105", "unavailable"),
                 ("S106", "no-copy"), ("S107", "no-copy"), ("S108", "fresh"),
+                ("S109", "unavailable"), ("S110", "unavailable"),
             ]
             from io import StringIO
             buf = StringIO()
@@ -325,7 +392,7 @@ def _selftest():
             m = re.search(r"^MORI_SOURCE_DRIFT rows=(\d+) fresh=(\d+) excerpt=(\d+) "
                           r"drifted=(\d+) unavailable=(\d+) no-copy=(\d+)$",
                           out, re.M)
-            checks.append(("summary", bool(m) and m.groups() == ("8", "2", "1", "1", "2", "2"),
+            checks.append(("summary", bool(m) and m.groups() == ("10", "2", "1", "1", "4", "2"),
                            "summary=%s" % ((m.groups() if m else None),)))
         finally:
             srv.shutdown()
