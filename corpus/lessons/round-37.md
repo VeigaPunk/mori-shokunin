@@ -37,6 +37,9 @@ interleaved sentence, quoted from "redirect count" to the end of the clause.
 | M5 | packaging (a large new file inside a named commit directory is skipped) | `corpus/evidence/sources-r37/S225.src` (1,854,393 bytes) exists on disk and is cited by row S225 and the entry, but `git status --porcelain` after the first two helper commits still showed `?? corpus/evidence/sources-r37/S225.src`: the helper commits a named directory like `git add <dir>` and skips new files over 1 MiB | the post-commit `git status` sweep (no criterion named it before); the helper's own warning was not surfaced to the L1 | the file is committed by naming it explicitly (`52d636d5`); `git ls-tree 52d636d5 corpus/evidence/sources-r37/` now lists all five copies. Shown able to fail: the pre-fix `git status` line above, and the post-fix `ls-tree` listing |
 
 
+| M6 | hygiene (build bytecode committed as wave evidence) | the freeze commit `e57c58b5` carries `.ufo/waves/round-37/__pycache__/count-c1.cpython-314.pyc` and `count-c2.cpython-314.pyc` (an import of the counters made them; the helper commits a named directory like `git add <dir>`), removed again at `bcf65505` | w1/SentScope and w1/ScoutCensusSurfaces, whose name-status sweeps list both `.pyc` paths; no criterion named it before | `.gitignore` now ignores `__pycache__/` and `*.pyc` lane-wide (was `tools/__pycache__/` only); `git check-ignore -v .ufo/waves/round-37/__pycache__/x.pyc` exits 0, and the byte paths are absent from `git ls-tree <tip> .ufo/waves/round-37/__pycache__` |
+
+
 ## Round shape and debts
 
 Round shape (orchestrator-inline contract): one validated v2 wave prepared and returned to the
