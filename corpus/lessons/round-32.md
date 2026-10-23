@@ -141,3 +141,19 @@ fetches. The C0 control findings (`evidence/c1-controls.txt`) are unchanged.
 | 5 counter code on real drafts | counter frozen at `29f7d043` (01:10:09Z) before C0 (dispatched after `f44e428e`, 01:11:44Z) and wave 1 (dispatched 01:30:57Z); M2 above | `git log 641a6e86..master` |
 | 6 carried C2 ambiguities and tool edge cases | pinned as 12 evidence fixtures, no tool change: setext and indented headings, CRLF, fenced `# files opened`, `-\t`, `../` through an allow glob, words inside the heading, lead-in prose, a sub-heading in the block, plus 3 controls; 4 diverge from the primary rule-text reading (E01, E02, E03, E06) | `.ufo/waves/round-32/fixtures/edge/fixtures/edge-r32.json` (sha `79b530f6…`); copy `edge/` to a scratch dir before running `run-edge-r32.py`, which builds a sandbox git repo beside itself |
 | 6 round-30 detector false positives/negatives, FR5 census probe | carried unchanged | — |
+
+## Census and sweep
+
+- Round start (`29f7d043`): `sources-census.sh validate … mori` → `mori ok`, exit 0, twelve W04
+  (`.ufo/waves/round-32/evidence/census-start.txt`).
+- Round end (after S175–S177): `mori ok`, exit 0, twelve W04 lines, the same pre-existing duplicate-URL notices
+  (`.ufo/waves/round-32/evidence/census-end.txt`). One E08 during integration (S176 `opened` held a timestamp) was fixed
+  before the data commit (Gate note).
+- No-harm retention scan: metric 4 at `8abb90a3` and 4 at the base `641a6e86`
+  (`.ufo/waves/round-32/evidence/tip-retention.txt`).
+- Tip receipt: `count-c1.py 8abb90a3` → `rows_ok=34/34`, `new_ok=3`, `C1=met exit=0`
+  (`.ufo/waves/round-32/evidence/tip-c1.txt`). The section sha is unchanged since the judged revision (`251bf664…`).
+- Fleet-root misroot sweep (`git -C /home/vgpnk/Projects/shokunin status --porcelain`): untracked `.omp/mcp.json`,
+  `AGENTS.md`, `bm.json`, `live_s228.html`, `nama.html`, `s395.txt`, `tf_bavelas.html`, `wb2.html` and a pycache file.
+  None names mori round 32, and every mtime is before the attempt-2 dispatch at 01:01Z. None was moved.
+- Attempt 1 (`MoriR32`) left `.scratch/` only. Nothing from it was reused.
