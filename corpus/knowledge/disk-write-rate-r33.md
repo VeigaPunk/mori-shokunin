@@ -61,3 +61,28 @@ and 14 apply to a future two-sample arm, which stays deferred under the latency 
   row); small mismatches between a disk and its partitions are possible, and no row relies on exact equality.
 - A current rate is a difference of two readings over an elapsed time; the since-boot average (row 13) is a
   different quantity. This entry sets no sampling interval and no threshold.
+
+## Round-34 revision (append-only; routed by `corpus/lessons/round-33-verifier-spotcheck.md` §8 items 2 and 3)
+
+The round-33 closure re-judged rows 3, 6, 7 and 13 unsupported under R-J because each needs a line from a source the
+row does not cite (spot-check §3.1). The rows above stay as they were judged; the rows below supersede them. Each `r`
+row cites every source its cells rely on, with the located lines in the committed copies
+(`corpus/evidence/sources-r33/S###.src`). Drafted by round-34 attempt-1 seats RepairRow03, RepairRow06, RepairRow07
+and RepairRow13 (`.ufo/waves/round-34/w1/`), integrated by the L1 (attempt 2) and judged by a non-author seat in
+round 34 wave A (`.ufo/waves/round-34/wa/`).
+
+| # | observation | reading | verdict | sources |
+|---|---|---|---|---|
+| 3r | `diskstats_show` walks `gp->part_tbl`, skips a partition with zero sectors and prints each remaining entry's `STAT_WRITE` sector count (S182.src:1370-1372,1383,1391) | The disk's own `part0` is inserted into `part_tbl` (S182.src:1465,1471-1472), so the whole disk has a line too. `part_stat_add` adds to the partition and, for a partition, adds the same amount to `bdev_whole(part)` (S183.src:58,61-64), which is the disk's `part0` (S186.src:84-85); `bdev_end_io_acct` adds completed sectors through `part_stat_add` (S184.src:1100-1110) | When totalling, count a partition's contribution once: never add a disk's line to the lines of its own partitions | S182, S183, S184, S186 |
+| 6r | The `io_ticks` value printed in `/proc/diskstats` | When `now` is later than `stamp` and either the I/O is ending or `bdev_count_inflight(part)` is nonzero, the kernel adds `now - stamp` to `io_ticks` (S184.src:1065-1068), and `diskstats_show` prints it through `jiffies_to_msecs` (S182.src:1353,1395). The field is milliseconds spent doing I/Os and grows while field 9 is nonzero (S181.src:75-76); since 5.0 it counts jiffies when at least one request was started or completed, and a request running more than 2 jiffies may leave some I/O time unaccounted when requests are concurrent (S181.src:78-80) | Report the `io_ticks` delta over elapsed milliseconds only as an approximate busy share of the window, never as an exact share and never as throughput | S184, S182, S181 |
+| 7r | Field 11 of a `/proc/diskstats` line, time spent writing in milliseconds (S187.src:20) | `/proc/diskstats` and the sysfs stat file carry the same 17 statistics, the procfs line prefixed by major, minor and name (S181.src:22-25); the matching statistic is the total wait time for write requests (S181.src:67-68; S180.src:33-36), and when several requests wait at once these values grow faster than 1000 per second (S180.src:75-80) | Never present the delta of time spent writing divided by elapsed time as a percentage of time | S187, S181, S180 |
+| 13r | Lane fact: `tools/mori-census.sh:1869-1871,1879-1894,1907-1908` labels its value an average since boot and computes field 10 (sectors written) × 512 / uptime seconds | Sectors written is a cumulative counter (S181.src:33-34,64-65); counters other than field 9 reset at boot, on device reattachment or reinitialisation, or when the underlying counter overflows, and readers should detect and handle resets when comparing snapshots (S181.src:34-37) | Call the census value a since-boot average only if none of those resets happened after boot, and never report it as the current write rate | S181; lane fact `tools/mori-census.sh` |
+
+**Row 8 correction — discard release boundary (append-only; spot-check §8 item 3).** Row 8 repeats the ABI file's
+"Kernel 4.18+ appends four more fields for discard tracking putting the total at 18" (S187.src:26-27), but the
+tag-pinned printer code contradicts the 4.18 boundary: the v4.18 `diskstats_show` format has 14 conversions and its
+argument list ends after `time_in_queue` (S197.src:1336-1351), while the v4.19 format has 18 conversions with four
+`STAT_DISCARD` values last (S198.src:1336-1358). Read the ABI file's "4.18+" as a documentation error: v4.18 prints 14
+fields and v4.19 prints 18. Row 8's parsing rule (accept 14, 18 or 20 fields; sectors written is field 10) and its
+"not exported, never zero" verdict stand; this correction does not re-check the 5.5+ flush boundary. Sources S197 and
+S198 were opened in round 34 (Gate: `corpus/lessons/round-34.md`).

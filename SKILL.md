@@ -822,3 +822,21 @@ Detection and report only: these rules read counters and never touch a block dev
 Round33 correction to the Round32 section above: under the round-32 frozen definition (one page, the whole teaches
 cell) five of the 33 `current` rows are not current on their population page alone (S058, S117, S128, S149, S137);
 the clause-level recheck is in `corpus/lessons/round-33.md` (Round-32 repair).
+
+## Round34 — two-sample disk write rate tool (FR6; tools/mori-disk-rate.py)
+
+Detection and report only: the tool reads two `/proc/diskstats` samples and `/sys/class/block`, and writes nothing.
+Sources S180–S198; the frozen rules R1–R7 are in `.ufo/waves/round-34/contract.md` §C1.
+
+- Round34 rule: for a current write rate run `python3 tools/mori-disk-rate.py --interval-ms N` (live: read, wait N ms, read again) or add `--a FILE --b FILE` for two saved samples; never report the census's since-boot average as that rate (corpus/knowledge/disk-write-rate-r33.md row 13r).
+- Round34 rule: classify a device from `/sys/class/block/<name>` in this order: no directory → unknown; a `partition` entry → partition (S191); a non-empty `slaves` directory → stacked (S192); a `device` entry → disk (S193); otherwise virtual, as a zram disk registered without a parent (S194; sysstat also calls a device without a `device` link virtual, S195).
+- Round34 rule: a device's state is bad-line, absent, gone, new, reset or ok, in that precedence; only an ok device has a rate, `(B − A) × 512 × 1000 // interval_ms` bytes per second, and every other state reports null, never zero (corpus/knowledge/disk-write-rate-r33.md rows 4 and 9).
+- Round34 rule: the host total sums the disk class only and is null unless every disk is ok; partitions are already inside their disk (row 3r) and a stacked device maps onto devices already counted (S192).
+
+Round34 correction to the Round33 section above (append-only; round-33 spot-check §8 items 2 and 4): the Round33 rules
+that cite rows 3, 6, 7 and 13 rest on the revised rows 3r, 6r, 7r and 13r (`corpus/knowledge/disk-write-rate-r33.md`
+§Round-34 revision), which cite every source they need. The iostat clause of the last Round33 rule is narrowed to row
+14: an iostat extended-statistics write-sector value of 0.0 does not by itself show an unchanged counter, because
+iostat prints 0.0 when the newer sectors-written count is below the older one; read the raw counters before reading
+that 0.0 as anything. An idle device also shows 0.0 [INFERENCE, closure §8 item 4], so 0.0 alone is neither a zero
+rate nor an unavailable one.

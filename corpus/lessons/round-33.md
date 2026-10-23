@@ -209,3 +209,53 @@ Recorded, not fixed (open findings for the closure):
   --topo-order lists ancestors first" (inference from two quotes). Correction (append-only, per the judge): those six
   clauses are unsupported under R-R and belong in the last column of §1; S137's first pointer moves there too. The
   judge's residual reading (a row id in a source cell does not name that row's pages) is stated in its receipt.
+
+
+## Round-34 corrections (routed by `round-33-verifier-spotcheck.md` §8 items 5–8; append-only, L1 MoriR34 / MoriR34A2)
+
+Drafted by round-34 attempt-1 wave-1 seats RepairLessonSec1, RepairWordEdits, RepairTimeLabels and RepairLocatorS117
+(those seats died with the attempt-1 orchestrator; their drafts were never committed), integrated by the L1, and
+judged item by item by non-author seats of round-34 wave A (`.ufo/waves/round-34/wa/`). Nothing above this heading is changed; each block below supersedes
+only the cells or sentences it names. The fleet report `.ufo/reports/round-33/mori.md` is landed and is not edited; its
+`:52-53` summary is corrected here.
+
+### Item 5 — §1 last column vs `## Judges`
+
+#### Correction to §1's last column
+
+| row | corrected unsupported on every page the row names |
+|---|---|
+| S058 | A merge *requires* the explicit first-parent form `<commit>^1 <commit>`; a root commit *needs* `--root` (both lane procedure, undeclared); the combined `--reverse --topo-order lists ancestors first` conclusion is a two-quote inference and unsupported under R-R. See “Count and pointer correction” below. |
+| S149 | On the two man pages the source cell gives as URLs: fork copy and floor; unprivileged-write floor; `totalpages/1000`; read-only `[0,2000]`; absence of the 3% root term in v7.2; the “supersedes S128” history; the “only there” / “documentation gap” assessments; and “the two files are different contracts” (lane assessment). The source cell also refers to S127 and S003 by id; wave-2 AttackRepairS149 found lane-root copies `base.c` and `oom_kill.c` state the scaling, read-only export and write floor, but they are other rows' pages, so under R-R they do not make S149 current. See “Count and pointer correction” below. |
+| S137 | That a v1.9.0 binary prints that output (the page is commit `750a7c0d`, not v1.9.0); the `S137-main-750a.src:260` pointer is misfiled as support for “v1.2 removal” because it does not tie `-k` to `--kernel-oom`; “returned on master in February 2026”; “current master”; “(S016 documents it…)”; “delegation claims must name the build” (lane rule, undeclared). The `:260` pointer belongs in this unsupported column, not the supported column. See “Count and pointer correction” below. |
+
+#### Count and pointer correction
+
+The `## Judges` phrase “those six clauses” counts six defects, not six omitted clauses: five omitted teaches-cell clauses (S137 ×3, S149 ×1, S058 ×1) plus one misfiled S137 support pointer (`.ufo/waves/round-33/judge/JudgeRepairR32.md:76-77`). The `S137-main-750a.src:260` pointer is not support for the kernel-OOM option identity; the spotcheck describes the bare `case 'k'` and the separate option (`corpus/lessons/round-33-verifier-spotcheck.md:152-155`). This corrects the count and pointer placement stated at `corpus/lessons/round-33.md:209-210` without changing the five not-current verdicts (`corpus/lessons/round-33.md:56-64`).
+
+### Item 6 — the six-cell summary at :79 (and report :52-53)
+
+#### Correction to §3's six-row change summary (append-only)
+
+The sentence at §3 line 79, “no other word changed”, is incorrect. All six rows gained `lane rule:` labels, but S062 and S064 also changed wording or attribution. S062 changed “no whitespace” to “no whitespace between JSON tokens” (as already noted at :85-88). S064 changed its teaches wording from “Resolve a selector once … retain the full object id …” to “Resolve a selector …; lane rule: do it once, retain the full object id …”, moving “once” and the procedure into the lane-rule clause; its scope likewise labels “not remote publication …” as a lane rule (:89-93). S041, S044, S051 and S069 only gained the label in the clauses shown at :82-84 and :94. The diff `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff 7d382043 89791013 -- corpus/SOURCES.md` confirms the S062 and S064 edits (SOURCES.md lines 68 and 70). The fleet report's :52-53 summary is abbreviated: it records the label additions and unchanged status/recheck/used-by fields but does not enumerate these two text edits.
+
+### Item 7 — receipt time labels
+
+#### Receipt-time correction (append-only)
+
+§8 item 7 correctly flags two inaccurate receipt labels. The header of `evidence/c1-controls.txt:1` says the C0 dispatch was `2026-10-23T02:38Z`; the closure records the actual dispatch as `2026-10-23T02:30:05.953Z` (`round-33-verifier-spotcheck.md` §2, lines 50-53). The receipt is carried by commit `fdf4371f`, whose committer time is `2026-10-23T02:39:02Z`; that commit time is not the dispatch time.
+
+The header of `evidence/parity-freeze.txt:1` says `2026-10-23T02:3xZ`; the closure identifies the actual run as `2026-10-23T02:28:27Z` (`round-33-verifier-spotcheck.md` §1, lines 41-43). Commit `27969134` carries the original receipt at committer time `2026-10-23T02:28:27Z`, matching the closure's run time; the closure also records that the content landed at that committer time (`round-33-verifier-spotcheck.md` §2, lines 37-39). Commit time is corroboration, not a substitute for an execution timestamp. Preserve both receipt files unchanged; document the corrections here.
+
+Round 34 carries the fix forward: every round-34 receipt's first line is `date -u` output taken when it was measured
+or written (`.ufo/waves/round-34/evidence/*.txt`, `.ufo/waves/round-34/c0/*.md`, and the wave-A seat reports).
+
+### Item 8 — CtlLocatorStale and the S117 preamble
+
+#### Locator-address control (append-only)
+
+`CtlLocatorStale` found that the round-33 counter does not validate the line address in a Gate locator. In its synthetic M1 control, `S180.src:21-22` was changed to `S180.src:999999`; the quote remained in the committed copy, and the counter still returned `C1=met` (exit 0). The counter checks quote presence in the whole copy, not within the located line range (`count-c1-a1.py:59,239-242`; `.ufo/waves/round-33/w2/CtlLocatorStale.md:55-82`). Thus a passing counter does not establish that a `file:L` locator addresses the quote. This is a counter residual demonstrated with synthetic data, not evidence that a live lane locator is false.
+
+#### S117 recheck-scope clarification (append-only)
+
+Clarification to the §1 preamble at lines 50-53: it must not be read to say that every page named by every repaired row was committed and checked. For S117, the committed `corpus/evidence/recheck-r33/` tree at `89791013` contains copies of nine of the row's ten pages, but no copy of the GitHub releases feed/API page. The release-local literals listed in the S117 table were checked against the committed copies; the cross-release clauses remain unsupported on those copies and unchecked against the missing feed (`round-33.md:59`). S117 remains `not current`.

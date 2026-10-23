@@ -709,3 +709,23 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     to fail: the round-32 receipt does not contain its dispatch's rule sentence — `grep -F 'Reject (disagree) a row when'
     .ufo/waves/round-32/judge/JudgeRecheck.md` prints nothing while `.ufo/waves/round-32/r1-dispatch.json` contains it,
     and its S058/S117/S128/S149/S137 reasons concede unsupported parts beside `agree` (`JudgeRecheck.md:63,73-76`).
+
+## Criteria added round 34 — round-33 routed defect 1 (a counter a no-decision control meets)
+
+98. Before any data seat, a measured claim's contract maps each leg-rejection shape — generic rows or copying the
+    observed column; server echo; label- or id-keyed answers; skip-work or do-nothing; content-free output;
+    no-decision content; a rule changed, or rows deleted, after data — to a named control or to a stated
+    inapplicability with its reason. A control discharges a shape only when it is the claim's deliverable with that
+    shape's defect injected (the claimed deliverable minus the claimed work); a control that fails by generic absence
+    (deliverable absent, guard tripped) discharges only the skip-work and content-free shapes. Each control is scored
+    under the frozen counter and its receipt is committed in a revision that is an ancestor of the first data commit.
+    A control the counter scores as met means the counter or the target is wrong: re-design before data, or declare
+    the claim exploratory. Check: (a) the contract's control table names every shape above once; (b) each named
+    control has a receipt line under the frozen counter; (c) `git merge-base --is-ancestor <receipt commit> <first
+    data commit>` holds. Lesson: `corpus/lessons/round-33-verifier-spotcheck.md` §3.2 item 4 and §8 item 1;
+    `corpus/lessons/round-34.md`. Shown able to fail: round 33's nine pre-data controls (`.ufo/waves/round-33/contract.md`
+    at `fdf4371f`, controls list) name no no-decision control, so (a) fails, and the post-data no-decision control
+    CtlGlossaryA1 met P-C1-A1 (spot-check §3.2). Round 34's table (`.ufo/waves/round-34/contract.md`, Pre-data
+    controls, at `b9fb029e`) maps each shape, and its receipt `evidence/c1-controls.txt` scores 16 negative controls
+    `C1=unmet` under P-C1-A1 before any data seat. Not covered: a control set that discharges every shape can still
+    miss a rule-order defect (round-34 Mistakes M1).
