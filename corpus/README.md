@@ -536,3 +536,24 @@ The FR5 row above (`corpus/README.md:338`) is byte-unchanged. The entry narrows 
 is unchanged (`tools/mori-census.sh:711-715` still counts `pgrep -af` lines), the watchdog writes no pid file, and the
 read-only `/proc/locks` anchor is knowledge, not a probe. D06 (`knowledge/audit-r11.md:201`) stays open and is shared
 with kumitate for ufo-fsd-alpha's own watchdogs.
+
+## Round-34 Frontier note — FR6 narrowed, not closed
+
+The FR6 row above is byte-unchanged by this round. Round 34 lands the two-sample write-rate operation as a separate
+read-only tool, `tools/mori-disk-rate.py` (two `/proc/diskstats` readings, `/sys/class/block` classes, per-device
+states and rates, a whole-disk host total; rules R1–R7 in `.ufo/waves/round-34/contract.md`, sources S180–S198). It is
+an operator-run probe, not a census surface: `tools/mori-census.sh` does not call it and keeps its since-boot average.
+Its claim did not verify: a post-data shortcut met the frozen counter (`lessons/round-34.md` M2), and rule-order
+mutants survive that counter (M3), so the tool's correctness rests on the seat attacks recorded in the lesson, not on
+the counter.
+
+- **Still frontier:** a two-sample census arm. Re-measured in round 34 (`.ufo/waves/round-34/wb/ExecLatencyRemeasure.md`,
+  20 runs per interval, load 15–27 on 32 CPUs): the tool's median wall time is about 129 ms at a 100 ms interval and
+  about 232 ms at 200 ms, against the round-8 bar of 50 ms (`knowledge/surfaces-r8.md:47-48`); only intervals of
+  10 ms or less fit, and at 10 ms most readings are zero while a few catch a load burst (6 of 40 nonzero), so a
+  fitting interval does not give a usable rate.
+- **Still unsourced:** the device-mapper double count. Round 34 observed it again on this host
+  (`.ufo/waves/round-34/wb/ExecStackedRemeasure.md`: over 30 s, dm-0, its slave partition and that partition's disk
+  each moved by the same 219728 write sectors), so a write through dm-0 appears once in the whole-disk total and three
+  times in a sum over every line (twice if partition lines are left out); no admitted source states it, so the tool's
+  host total excludes stacked devices by class, not by a sourced rule.
