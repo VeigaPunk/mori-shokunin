@@ -1905,3 +1905,13 @@ Held and observed: freshness 5, calibration 5, coverage 6, operability 7, adjace
 claim or promotion. Controls: wave C0 (5 seats) scored under the frozen counter before data; four negative controls met
 it, so A1 was cut before data and every C0 control commit was re-scored under A1 (`.ufo/waves/round-33/evidence/c1-controls.txt`).
 Anti-loop: rounds 31 (FR5 depth, operability) and 32 (freshness of source rows) are not repeated; FR6 is new ground.
+
+### Round 33 measured outcome (L1 MoriR33; measured at `a193627c0a89e6aaca54b4b750f7f82e7249912a`)
+
+| Claim | Before | After (one committed command over committed bytes) | Verdict proposed for the closure |
+|---|---|---|---|
+| C1 depth, FR6 disk write-rate decision table (sourced S180–S190) | `count-c1.py 7d382043` → `entry=absent`, `C1=unmet`, exit 1 | `count-c1-a1.py a193627c` → `rows=14`, `new_ids=11`, `gates_ok=11/11 copies_ok=11/11 fetch_ok=11/11`, judge `supported=10 supported_new=10 unsupported=[3, 6, 7, 13]`, `skill_rows=6`, `C1=met`, exit 0; frozen `count-c1.py` also `C1=met` (`.ufo/waves/round-33/evidence/c1-after.txt`) | improved, pending closure; depth held at 5. Met exactly at the floor (10 supported); post-data control CtlGlossaryA1 shows a definition-only glossary can also meet P-C1-A1 with an honest self-judge (lesson, Attacks) |
+
+Held: freshness 5, calibration 5, coverage 6, operability 7, adjacency 6, depth 5. Census end `mori ok`, exit 0, the
+same 12 W04 lines (`evidence/census-end.txt`). Retention metric 4 at `62db24c0` = 4 at base. Routed round-32 defects
+1–6 handled in `corpus/lessons/round-33.md` (Round-32 repair), with a non-author repair judge (JudgeRepairR32).

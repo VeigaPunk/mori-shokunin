@@ -2058,3 +2058,24 @@ landed tip.
 - Routed round-31 defects 1–6: M5 correction appended, blind-gate registry row and digest-pinned frozen run, the
   docstring note kept in the contract, R4 sha binding (QUALITY 95), the counter frozen before data, and 12 edge fixtures.
   QUALITY 96 for mistake M1.
+
+## Round 33 (attempt 1, L1 MoriR33) — FR6 disk write-rate decision table and the round-32 repair
+
+- Freeze `27969134`: contract, counter `count-c1.py` (P-C1, judge rule R-J, repair rule R-R), before receipt
+  `entry=absent C1=unmet exit=1`, census start `mori ok` exit 0.
+- Control wave C0 (5 seats: 3 critic, 2 mutation-tester; `.ufo/waves/round-33/c0/`), 0 dead: four negative controls met
+  the frozen counter (bad spans counted out instead of failing; readings copying Gate quotes; punctuation-distinct
+  rows). Amendment A1 `count-c1-a1.py` landed `fdf4371f` before any data seat; all 62 control commits re-scored
+  (`evidence/c1-controls.txt`). Forged-receipt residual declared in the contract.
+- Wave 1 (v1, 33 seats: 25 scribe, 3 executor, 2 scout, 1 connector, 1 reviewer, 1 critic), 0 dead: 13 sources opened
+  (11 admitted S180–S190, 3 opened-not-registered), five repair rows, six scope rows, second URLs, item 6, host
+  diskstats evidence. Data `62db24c0`.
+- Wave 2 (v1, 42 seats: 18 critic, 12 scout, 8 reviewer, 3 mutation-tester, 1 executor), 0 dead: attacks fixed rows
+  2–9, 11, 13, 14, the prose and SKILL lines before judging (`ab8f4cfe`); open findings in the lesson.
+- Residual call J (2 reviewer judges, dispatch `7a0234c2`): JudgeC1Rows 10/14 supported (3, 6, 7, 13 unsupported);
+  JudgeRepairR32 agrees all five rows are not current, 1 pointer disagreement, 6 omitted clauses (lesson).
+- Re-verification result (freshness, routed repair): S058, S117, S128, S149, S137 are not `current` on their population
+  page alone under the round-32 definition; their clauses were re-checked on the rows' own pages (11 copies committed
+  at `corpus/evidence/recheck-r33/`).
+- **C1 = met** at `a193627c` (`evidence/c1-after.txt`). QUALITY 97 for routed defect 2; round-32 lesson correction
+  appended; six SOURCES cells declare `lane rule:` clauses; FR5/FR6 frontier rows updated; item 6 retired explicitly.
