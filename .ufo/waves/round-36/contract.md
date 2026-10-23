@@ -1,10 +1,11 @@
 # mori round 36 — claim contract (frozen before any data seat)
 
 L1 `MoriR36`, entering tip `6bd57097f7ab2b471b4593ed2019c980b1368c68` (round 35 rejected-honest-stop, MANIFEST
-`rounds[531]`). Round shape and anti-loop ruling: no calibration claim this round (four straight calibration counters
-could not tell real content from junk, r32–r35). Both claims are capability acquisitions: a program whose output is
-checked against a truth the counter generates at run time and never writes where the program can read it, plus a
-real-input arm on the lane's own bytes with a known witness.
+`rounds[531]`). Round shape and anti-loop ruling: no calibration claim this round. (History correction, recorded outside the
+frozen predicate bytes: the failed counters were r32 freshness, r33 depth, r34 coverage plus an exploratory
+calibration claim, and r35 calibration — not four calibration counters.) Both claims are capability acquisitions: a
+program whose output is checked against a truth the counter generates at run time and never writes where the
+program can read it, plus a real-input arm on the lane's own bytes with a known witness.
 
 ## Claims
 

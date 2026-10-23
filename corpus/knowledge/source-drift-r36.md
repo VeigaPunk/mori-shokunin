@@ -4,6 +4,11 @@ recheck: on-release
 
 # Re-fetching source rows against their committed copies (round 36, C1 — exploratory)
 
+The first reusable whole-registry sweep over the committed copies: every `corpus/SOURCES.md` row with a
+`corpus/evidence/sources-r<N>/<id>.<ext>` copy is re-fetched and classified per state. (Round 32 re-fetched
+specific row URLs once for its live-recheck claim — narrower scope, fresh-only; w2/CritC1Axis bounds the novelty
+claim.)
+
 `python3 tools/mori-source-drift.py --root DIR` reads `DIR/corpus/SOURCES.md`, takes each registry row's first
 `http(s)://` URL in the `source` cell and the copy `DIR/corpus/evidence/sources-r<N>/<id>.<ext>` with the highest `N`,
 fetches the URL (redirects followed, retries on 429/5xx) and prints `<id> <state>` per row, then
