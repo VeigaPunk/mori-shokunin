@@ -11,7 +11,8 @@ For every `| S###` row of corpus/SOURCES.md at <rev>, find the first commit in
 opens `supersedes S###` is reported as the id's disposition (superseded_by=);
 it does not remove the id from the violations. Each flag names every ancestry
 commit that changed a compared cell. With --round-base REV, also list the ids
-changed by commits in REV..<rev> (round_changed=) and exit on that list only.
+changed by commits in REV..<rev> (round_changed=, including an id changed back
+to its first cells) and exit on that list only.
 exit: 0 no violation (or, with --round-base, none changed in the round),
 1 violation(s), 2 error.  Read-only git only.
 (Round-35 revision after CritNoHarm N2/N3: error exits are 2, and supersession
@@ -116,7 +117,8 @@ def main():
     print("appendonly_violations=%d ids=[%s] superseded=[%s]"
           % (len(violations), ",".join(violations), ",".join(sup)))
     if a.round_base:
-        rc = [i for i in violations if set(changes[i]) & in_round]
+        # every id a round commit changed, including one changed back to its first cells
+        rc = sorted(i for i in changes if set(changes[i]) & in_round)
         print("round_changed=[%s]" % ",".join(rc))
         return 1 if rc else 0
     return 1 if violations else 0

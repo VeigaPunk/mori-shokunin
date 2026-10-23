@@ -16,3 +16,4 @@ round-35 dispatch log (L1 MoriR35)
 09:08Z  wave-slot acquire mori mori-r35-w2 37 -> granted after 106 s (live=61)
 09:10:14Z wave 2 dispatched as ONE task call (eval tool.task), 36 tasks unchanged in name/agent/task plus the
         harness-required role-generic solutionSpace; settle deadline 09:55Z
+09:35Z residual call: 3 seats (1 critic, 2 reviewer), gate mori-r35-residual granted 3, all returned; released

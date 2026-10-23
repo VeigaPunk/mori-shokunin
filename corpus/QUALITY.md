@@ -801,7 +801,8 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     later row whose teaches opens `supersedes S###` is the correction's disposition; it does not erase the in-place
     change, which stays listed. Check: `python3 .ufo/waves/round-35/check-sources-appendonly.py <tip> --round-base
     <entering tip>` (read-only git) prints every changed id with its `superseded_by=` disposition,
-    `appendonly_violations=N ids=[...] superseded=[...]` and `round_changed=[...]`; the round passes only with
+    `appendonly_violations=N ids=[...] superseded=[...]` and `round_changed=[...]` (every id a round commit changed,
+    also one changed back to its first cells; ResNoHarmFixes); the round passes only with
     `round_changed=[]` (exit 0); exit 2 is an error. Lesson: `corpus/lessons/round-35.md` M2 (round 34 edited S182 and
     S193 in place and its lesson said no existing row changed). Shown able to fail: `check-sources-appendonly.py
     dd76eb79 --round-base f10a320d` prints `round_changed=[S182,S193]`, exit 1; at round 35's tip with `--round-base
