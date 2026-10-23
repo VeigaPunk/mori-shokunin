@@ -866,11 +866,16 @@ def challenge_arm(tool, rng):
         shutil.rmtree(root, ignore_errors=True)
 
 
-def run_negative(tool, draws, repo, rng):
-    """Judge one fixture tool. Rejected when any of the three arms fails."""
+def run_negative(tool, draws, repo, rng, published_line):
+    """Judge one fixture tool; rejected when any of the four arms fails.
+
+    v4.1 (w1/RevNgC1Fixtures): the run-time-drawn ancestor arm is judged here too —
+    a memoizer keyed on a short history previously passed the negative slot because
+    only blind/real/challenge ran."""
     blind, _ = check_blind(tool, draws)
     blind_fail = [r for r in blind if not r["ok"]]
     real_ok, _, _, _, _ = real_arm(tool, repo, None)
+    draw_ok, draw_rev, _, _, _, draw_reason = real_draw_arm(tool, repo, rng, published_line)
     challenge_ok, _, _, challenge_reason = challenge_arm(tool, rng)
     if blind_fail:
         detail = "blind %d/%d (repo%02d: %s)" % (
@@ -878,11 +883,14 @@ def run_negative(tool, draws, repo, rng):
             blind_fail[0]["reason"].splitlines()[0])
     elif not real_ok:
         detail = "real arm fails"
+    elif not draw_ok:
+        detail = "drawn arm fails (rev=%s: %s)" % (draw_rev[:10], draw_reason)
     elif not challenge_ok:
         detail = "challenge: %s" % challenge_reason
     else:
-        detail = "all three arms pass"
-    return (bool(blind_fail) or (not real_ok) or (not challenge_ok)), detail
+        detail = "all four arms pass"
+    return (bool(blind_fail) or (not real_ok) or (not draw_ok)
+            or (not challenge_ok)), detail
 
 
 # ------------------------------------------------------------------------- main
@@ -1089,10 +1097,23 @@ def main(argv):
             for i, (name, path) in enumerate(fixtures):
                 ok_rejected, detail = run_negative(
                     path, neg_draws, args.repo,
-                    random.Random((seed * 1000003) ^ (i + 7)))
+                    random.Random((seed * 1000003) ^ (i + 7)), published_line)
                 print("negative %-14s %s (%s)"
                       % (name, "rejected" if ok_rejected else "ACCEPTED", detail))
                 rejected.append(ok_rejected)
+            bound = os.path.join(args.negatives, "memo-sha.py")
+            if os.path.isfile(bound):
+                bound_rejected, bound_detail = run_negative(
+                    bound, neg_draws, args.repo, random.Random(seed ^ 0x50A),
+                    published_line)
+                print("negative %-14s %s (%s)"
+                      % ("memo-sha.py",
+                         "rejected" if bound_rejected else "ACCEPTED (disclosed content-keyed bound)",
+                         bound_detail))
+            else:
+                print("counter setup error: missing bound fixture %s" % bound,
+                      file=sys.stderr)
+                return 2
         finally:
             shutil.rmtree(neg_root, ignore_errors=True)
     finally:

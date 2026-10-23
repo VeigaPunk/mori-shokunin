@@ -47,6 +47,7 @@ CAPABILITY_KEY = "source-drift re-fetch probe"
 DRIFT_MUTANT_FROM = 'return "drifted"'
 DRIFT_MUTANT_TO = 'return "excerpt"'
 MIN_ANCHORS = 3
+MAX_BLOB_BYTES = 8 * 1024 * 1024
 SELFTEST_BUDGET_S = 120
 SELFTEST_GRACE_S = 5
 
@@ -71,6 +72,10 @@ SUMMARY_RE = re.compile(
 
 
 class ProbeTimeout(Exception):
+    pass
+
+
+class BlobTooLarge(Exception):
     pass
 
 
@@ -109,6 +114,13 @@ def show(repo, rev, rel):
                           capture_output=True, env=clean_env(), timeout=120)
     if proc.returncode != 0:
         return None
+    size = subprocess.run(["git", "-C", repo, "cat-file", "-s", "%s:%s" % (rev, rel)],
+                          capture_output=True, text=True, env=clean_env(), timeout=120)
+    if size.returncode != 0 or not size.stdout.strip().isdigit():
+        return None
+    if int(size.stdout.strip()) > MAX_BLOB_BYTES:
+        raise BlobTooLarge("%s:%s is %s bytes, cap %d"
+                           % (rev, rel, size.stdout.strip(), MAX_BLOB_BYTES))
     proc = subprocess.run(["git", "-C", repo, "show", "%s:%s" % (rev, rel)],
                           capture_output=True, text=True, env=clean_env(), timeout=120)
     if proc.returncode != 0:
@@ -188,7 +200,7 @@ def check_live_rows(live_text, ids):
 def selftest_arms(path):
     try:
         proc = run([sys.executable, path, "--selftest"], cwd=os.path.dirname(path),
-                   env=clean_env())
+                   timeout=SELFTEST_BUDGET_S, env=clean_env())
     except ProbeTimeout as exc:
         return None, {}, str(exc)
     arms = {}
@@ -220,11 +232,15 @@ def main(argv):
               file=sys.stderr)
         return 2
 
-    tool_text = show(repo, rev, TOOL_REL)
-    entry_text = show(repo, rev, ENTRY_REL)
-    scorecard_text = show(repo, rev, SCORECARD_REL) or ""
-    live_text = show(repo, rev, LIVE_REL)
-    sources_text = show(repo, rev, SOURCES_REL) or ""
+    try:
+        tool_text = show(repo, rev, TOOL_REL)
+        entry_text = show(repo, rev, ENTRY_REL)
+        scorecard_text = show(repo, rev, SCORECARD_REL) or ""
+        live_text = show(repo, rev, LIVE_REL)
+        sources_text = show(repo, rev, SOURCES_REL) or ""
+    except BlobTooLarge as exc:
+        print("counter setup error: %s" % exc, file=sys.stderr)
+        return 2
     ids = registry_ids(sources_text)
 
     real_anchor, real_anchor_detail = check_anchors(entry_text, tool_text)
