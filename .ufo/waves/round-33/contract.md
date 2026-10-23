@@ -99,3 +99,36 @@ supports the teaches cell)", and applies it per clause:
 5. Unchecked second URLs of the 34 population rows: named and counted by a committed script.
 6. Round-30 detector false positives/negatives and the FR5 census probe (`WATCHDOG_ABSENT`), carried three times:
    acted on or retired explicitly with a reason.
+
+## Amendment A1 — counter code made to match P-C1 and tightened after the C0 control wave, before any data seat (L1 MoriR33, 2026-10-23)
+
+Why: the C0 control wave (`c0/*.md`, dispatch `c0-dispatch.json`) found three negative controls that print `C1=met`
+under the frozen `count-c1.py`, which addendum §9 names as the counter being wrong; §9 says to fix it before data. No
+round-33 entry, Gate row, SOURCES row or judge receipt existed in the lane when this amendment landed, and no data seat
+had been dispatched (wave 1 is dispatched after this commit). A1 only adds conditions; nothing in P-C1 or R-J is removed
+or loosened; `count-c1.py` stays byte-identical and both results are reported at the tip. The claim is judged on the A1
+predicate.
+
+- Supported rows with a bad span were left out of the count instead of failing the predicate: one 5-word span and
+  one span located only in an uncited copy each still printed `C1=met` (CtlJudgeShapes, sandbox commits `24aea096`,
+  `c126ffcd`). The P-C1 sentence already requires every supported row to carry a valid span; the code was looser.
+- A table whose reading cells copy whole Gate quotes met the counter with an honest judge (CtlShortcutIds `fad276ef`):
+  copied quotes are not a decision table's reading.
+- Ten rows differing only by trailing punctuation passed the distinct-row check (CtlShortcutIds `76d5c229`).
+
+Predicate P-C1-A1: C1=met iff P-C1 holds at <lane-rev> and also: no two data rows are equal and no two observation
+cells are equal once lowercased and reduced to their runs of letters, digits and underscores; no reading cell of a row
+citing a new id contains a run of 6 consecutive such words that also occurs in a Gate quote of a new id that row cites;
+and every row the judge receipt names supported carries a valid span, so a supported row with a missing, short or
+misplaced span fails the predicate instead of being left out of the count.
+
+```sh
+python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-33/count-c1-a1.py <lane-rev>
+```
+
+A1 controls: every C0 control commit was re-scored under `count-c1-a1.py` (`evidence/c1-controls.txt`, part B): all
+negative controls print `C1=unmet`. The one `C1=met` is CtlJunkOffTopic `5ae82bab`, the forged-receipt state: junk
+rows with a receipt the control seat wrote to mark every row supported. That is the contract's declared uncounted
+residual (a counter cannot tell an honest receipt from a fabricated one of the same shape); it also serves as the
+positive control showing the A1 predicate is reachable. With an honest judge the same junk state prints `C1=unmet`
+(`be0bad2a`, `judge`). Kill rule unchanged: a miss under P-C1-A1 is reported as a miss; nothing is amended after data.

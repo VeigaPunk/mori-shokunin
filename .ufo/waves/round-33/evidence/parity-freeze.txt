@@ -2,3 +2,6 @@ parity check (whitespace runs collapsed) run 2026-10-23T02:3xZ by L1 MoriR33 at 
 P-C1 parity True (contract vs count-c1.py docstring)
 R-J parity True (contract blockquote vs count-c1.py RULE)
 R-J docstring parity True
+A1 parity check (whitespace runs collapsed), L1 MoriR33 before wave 1:
+P-C1-A1 parity True (contract Amendment A1 vs count-c1-a1.py docstring)
+P-C1 parity in A1 file True
