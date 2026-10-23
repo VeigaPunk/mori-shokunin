@@ -49,3 +49,11 @@ round-36 dispatch log (L1 MoriR36)
         dispatch side effect); final receipts + census end next
 NOTE on timestamps: attempt-1 entries (10:42Z-12:1xZ) are UTC. Attempt-2 afternoon entries labeled
 15:1xZ-17:4xZ are LOCAL wall time (-03); UTC = local + 3 h (w2/RevDispatchLog F3 annotation).
+18:0xZ  post-land checks at 8ff9bba1574fcaa41714036e8f1c9c0c248f237b: index clean staged=0 intent_to_add=0
+        exit 0; round gate --round-base 6bd57097 -> round_changed=[] exit 0; sources-census validate mori
+        exit 0 (evidence/census-end.txt; W04 lines only, S218/S220-class, benign); C2 re-score -> C2=met
+        (seed 13468019365462637710); C1 re-score -> C1 byte-evidence met (seed 15951461284190234552,
+        evidence/c1-after-final.txt); freeze-v3 contract-pin annotation: tip blob f505594b… after the :4-5
+        history correction, predicate sentences byte-identical (w2/ExecIndexClean risk 5)
+18:0xZ  wave-slot release mori mori-r36-w2 (66 seats granted; 45 reports on disk at close, 21 seats still
+        running at the freeze deadline — partial settlement reported in the round report)
