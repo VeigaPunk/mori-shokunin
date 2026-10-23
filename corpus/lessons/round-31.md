@@ -64,7 +64,8 @@ unchanged at `corpus/evidence/sources-r31/S###.src` and re-fetched by `count-c1.
 S161–S173 were opened by wave-1 seats (seat report `.ufo/waves/round-31/w1/<seat>.md`); S174 by the L1. The L1 dropped two located quotes shorter than 3 words from the seat drafts of S163
 (`sched.h:1181`, 2 words) and S164 (`fs/exec.c:1253`, 1 word) to meet A1; the remaining quotes are the seats' own. The S174
 label `proc_locks.5:46-48` read `(12 words)` at `5b728304`; the quote has 13 words (residual ReviewGateSpot); corrected
-in place under QUALITY 90.
+in place under QUALITY 90. Residual JudgeC1Rows reported two locators one line off (S172 `:34-35`, S173 `:1092-1093`); rejected after
+checking: `sed -n 34,35p` of `S172.src` and `sed -n 1092,1093p` of `S173.src` print the quoted lines, so both stand.
 
 | id | url | accessed | sha256 | located quotes | decision |
 |---|---|---|---|---|---|
@@ -115,3 +116,12 @@ Status changes this round: none to existing rows. New rows S161–S174 (S166, S1
 - Unrouted round-30 carries named by ScoutCarriedDebt: the uncounted last-invocation send, retention blindness to
   unit/pid/cmdline shapes, the stale `fleet-ledger` pointer at `corpus/README.md:337`, QUALITY 89 vacuous on an
   absence-free lesson.
+
+## Census and sweep
+
+- Round start (23:41Z, `8baccf4a`): ten W04, `mori ok`, exit 0 (`.ufo/waves/round-31/evidence/census-start.txt`).
+- Round end (`.ufo/waves/round-31/evidence/census-end.txt`): twelve W04 — the ten pre-existing plus S166 and S168, both
+  `rejected` rows naming the rows that already carry their URLs — `mori ok`, exit 0.
+- Fleet-root misroot sweep (`git -C /home/vgpnk/Projects/shokunin status --porcelain`): untracked `AGENTS.md`,
+  `bm.json`, `live_s228.html`, `nama.html`, `s395.txt`, `tf_bavelas.html`, `wb2.html`, `write`; none names mori round
+  31 and all predate the wave-1 dispatch, so none was moved.

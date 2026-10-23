@@ -1852,3 +1852,15 @@ adds 11 fixtures, bwrap isolation, randomized order and nonces). The original co
 Correction to the C2 before cell above: at `a12c68ae` the counter prints `fixtures absent at revision`, `C2=error`,
 exit 2 (`evidence/c2-before-base.txt`), not `tool=absent`, `C2=unmet`, exit 1; the tool-absent unmet state (exit 1) is
 first measurable at the freeze `2124cbcd` (`evidence/c2-controls.txt`). Lesson `corpus/lessons/round-31.md` M1.
+
+### Round 31 measured outcome (L1 MoriR31; measured at `d0cac478ecafa1eae4e155fa79343ab29a7bd086`)
+
+| Claim | Before | After (one committed command over committed bytes) | Verdict proposed for the closure |
+|---|---|---|---|
+| C1 depth, watchdog identity decision table (FR5; sourced S161–S165, S167, S169–S174) | `count-c1.py a12c68ae` → `entry=absent`, `C1=unmet`, exit 1 (`evidence/c1-before.txt`); A1 controls all unmet (`evidence/c1-a1-controls.txt`) | `count-c1-a1.py d0cac478` → `rows=14`, `new_ids=12`, `gates_ok=12/12 copies_ok=12/12 fetch_ok=12/12`, judge `supported=13 supported_new=13 unsupported=[9]`, `skill_rows=6`, `C1=met`, exit 0; original `count-c1.py` also `C1=met` (`evidence/c1-after.txt`) | improved, pending closure; depth held at 5 (no closure states a move) |
+| C2 operability, `tools/mori-blind-check.sh` (routed D1) | `count-c2.py 2124cbcd` (fixtures frozen, tool absent) → `exact=0/16`, `C2=unmet`, exit 1 (`evidence/c2-controls.txt`); at `a12c68ae` the counter exits 2 (lesson M1) | `count-c2-a1.py d0cac478` → `exact=27/27` in both bwrap runs, `answer_key_strings=none`, `C2=met`, exit 0; original `count-c2.py` → `exact=16/16`, `C2=met`, exit 0 (`evidence/c2-tip.txt`) | improved, pending closure; operability held at 7; C2 met under both predicates (lesson M5: P-C2-A1 alone would not catch a last-line-dropping tool) |
+
+Held: freshness 5, calibration 5, coverage 6, operability 7, adjacency 6, depth 5. No retirement, waiver, exploratory claim
+or promotion. After the measured revision: entry row 9 marked [INFERENCE] (judged unsupported; still counted
+unsupported). Tip receipts: `.ufo/waves/round-31/evidence/c1-after.txt`, `c2-tip.txt`, `census-end.txt`,
+`tip-retention.txt`.

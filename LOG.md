@@ -2026,3 +2026,14 @@ landed tip.
   `5b728304` with `--tool-file`: A1 `exact=27/27` in both runs, original `exact=16/16`. `--selftest` PASS; on the
   round-30 writer wave it prints the three missing-list hits wave-1 RealBriefsR30 derived by hand and no longer flags
   `CaseR30a.md:105` (`evidence/c2-tool-selftest-and-r30.txt`).
+- Residual non-author call (one task call, 8 seats: 4 reviewer, 4 critic; reports `.ufo/waves/round-31/r1/`), 0 dead.
+  CriticC1Tip found entry row 14 wrong (`/proc/locks` PID is the `flock` helper): corrected at `efcb7324` before the row
+  judge read it. JudgeC1Rows judged `efcb7324`: 13 of 14 rows supported, row 9 unsupported. CriticAmendmentA1: A1 is a
+  before-data amendment for C1 but loosens C2's end-of-file case (lesson M5). ReviewGateSpot agreed 7/7 Gate decisions.
+  ReviewRepairs: D1–D9 closed. CriticNoHarm: no axis harmed, retention 4.
+- **C1 = met** (`evidence/c1-after.txt`, measured at `d0cac478`, entry bytes equal to the judged revision); **C2 = met**
+  under P-C2-A1 and P-C2 (`evidence/c2-tip.txt`). Independent second implementation BuildBlindToolAlt also `27/27`
+  (`evidence/c2-alt-implementation.txt`, uncounted).
+- After measurement: row 9 marked [INFERENCE]; two reported locator nits rejected after checking (lesson Gate note).
+- Round-end census `mori ok`, exit 0, 12 W04 (two new: S166/S168 rejected duplicates) (`evidence/census-end.txt`).
+  Fleet-root misroot sweep: no untracked fleet file was written by a round-31 seat (none names mori round 31).
