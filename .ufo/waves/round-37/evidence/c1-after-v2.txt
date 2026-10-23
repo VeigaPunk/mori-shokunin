@@ -17,3 +17,4 @@ negative summary-only.py rejected (blind 4/4 (repo200: per-id lines differ (malf
 C1=met
 seed=20261024
 EXIT=0
+head_at_measurement: 4bfa0490264c342db8f5304bac059a32ac2cb20b (lane tip; the drawn arm draws from `git rev-list HEAD`, so a replay must pin this tip — w1/ExecC1Seed43 R2)

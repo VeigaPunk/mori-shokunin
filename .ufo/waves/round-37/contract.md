@@ -123,3 +123,14 @@ The predicates above, the two counters and the three fixtures are unchanged by t
   says v1; neither r36 counter detects a SOURCES.md delete+restore inside a round; the 429 oracle path
   is still unexercised (`oracle_excluded=0`). They are frozen r36 bytes and are named here rather than
   edited (w1/ScoutPriorRound).
+
+### A1 predicate of record (supersedes the P-C1 blockquote above; counter v2, `4bfa0490`)
+
+The v1 blockquote stays as the declared-before-data text. Amendment A1 (w1/RevC1Challenge) changes the
+challenge's clothing and adds a run-time-drawn real arm; the counter's printed predicate is now:
+
+> P-C1: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed, and exactly the truth's per-id `changed`/`deleted` lines, on each of 24 sandbox SOURCES.md histories drawn at run time, on the lane's own history (rev 6bd57097, round base f10a320d) where the independent oracle lists at least one id, and on one run-time-drawn challenge history presented in real-arm clothing (lane path, lane git identity, lane title); and the same counter rejects all three negative fixtures (a real-arm memoizer, a constant printer, a summary-only printer) and matches the standing truth on one run-time-drawn ancestor revision of the lane repository whose expected answer is not the published real-arm constant.
+
+`count-c1.py` blob `3e15f9fd…` (sha256 `5279ed9d…`); the C1 receipt of record is `evidence/c1-after-v2.txt`
+at `4bfa0490`. Replay limit: the drawn arm picks a rev from `git rev-list HEAD`, so a receipt must name the
+lane tip it was measured at (w1/ExecC1Seed43 R2); this contract names it.
