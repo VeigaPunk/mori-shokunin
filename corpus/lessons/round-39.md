@@ -74,3 +74,10 @@ SIGTERM → grace → SIGKILL trade).
    `c7-after.txt` records the command rev f920eaf7 (data commit) rather than the scored tip 13bfba23 —
    inputs byte-identical and the tip run reproduces the receipt body, so the measurement stands; receipt
    discipline (name the scored rev) is the takeaway.
+10. (w1/RevFreeze, MEDIUM) the contract's C3 before-cell cites `fixtures/make-ancestry-dags.py`, a path that
+    exists in no commit — the real builders are the pinned `run-c9-dags.py` plus the gate's embedded DAG
+    selftest cases. Integration fix next attempt: correct the citation (append-only note). RevFreeze
+    otherwise PASS: 13/13 pins match, round-38 instruments byte-identical, selftests 12/9 reproduced from
+    pinned bytes. RevC9Compat PASS (r37 C1 counter C1=met on v2 output, malformed=0/27); ConnSibling PASS
+    (no sibling collision; do not import kotoba's `--no-merges` into the v2 walk — it would re-open
+    fixture C).
