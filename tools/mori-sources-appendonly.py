@@ -74,17 +74,21 @@ TIMING_RE = re.compile(
     r"^supersede_timing superseded_as_of=\[([^\]]*)\] stale_supersede=\[([^\]]*)\]$")
 
 PREDICATE = (
-    "P-C9: at revision R, tools/mori-sources-appendonly.py reports, after its "
+    "P-C11: at revision R, tools/mori-sources-appendonly.py reports, after its "
     "summary line, `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; "
-    "an id is superseded-as-of only when its latest superseding row's landing commit "
-    "is a descendant, by `git merge-base --is-ancestor`, of the commit of the id's "
-    "last immutable-cell edit, where an edit at a commit is a change against its "
-    "first parent's state (not the previous walk record), the path walk uses "
-    "`--full-history`, and the lane-history verdicts are unchanged — S069 is stale "
-    "at `e37dcc6` and no id is stale at the round-39 tip — and the selftest carries "
-    "committed fixtures for a side-branch superseder (stale, not as-of) and a merge "
-    "that must not fabricate an edit (round-38 gate bytes print as-of and a "
-    "fabricated edit there; the round-39 gate prints stale and no edit)."
+    "the timing line's eligible set is every superseded id present at R — a "
+    "never-edited superseded id's last immutable-cell edit is its first-sighting "
+    "commit, so it reaches the as-of/stale test — and an edit at a commit is a "
+    "change against its first parent's state only: when the first parent lacks "
+    "the path the commit contributes no edits (a delete-then-re-add contributes "
+    "no changed event; ids still compare tip cells against first-sighting "
+    "cells), never a fall-through to another parent's state; the lane-history "
+    "verdicts are unchanged except the eligible-set extension — S226 joins "
+    "superseded_as_of (19 ids) at the landed tip, no id is stale at the tip, "
+    "S069 is stale at e37dcc6 — and the selftest carries committed fixtures for "
+    "a never-edited superseded row (as-of), a merge whose first parent lacks "
+    "the path (no fabricated edit), and a linear delete-then-re-add (no changed "
+    "event)."
 )
 
 
@@ -157,18 +161,6 @@ def is_ancestor(repo, older, newer):
         return False
     raise GateError("git merge-base --is-ancestor %s %s failed: %s"
                     % (older, newer, proc.stderr.decode("utf-8", "replace").strip()))
-
-
-def nearest_path_commit(repo, commit, path):
-    """Newest commit at-or-before <commit> whose tree carries <path>, or None.
-
-    A commit's graph parent often does not touch the registry (spot-check and
-    verifier commits land between registry commits), so the walk's reference
-    state for a commit is its nearest path-carrying ancestor, resolved per
-    parent.
-    """
-    out = git(repo, "log", "--format=%H", "-1", commit, "--", path).strip()
-    return out or None
 
 
 # --------------------------------------------------------------- registry io
@@ -244,12 +236,19 @@ def superseders(rows, colmap):
 def analyze(repo, rev, path, round_base=None):
     """Walk the path's history and return the four lists plus the verdict.
 
-    Version 2 (round 39, r38 lesson F1/F2): the walk carries parent hashes and
-    uses --full-history; an edit at a commit is a change against that commit's
-    first parent that carries the path (not the previous walk record); the
-    supersede-as-of test is `git merge-base --is-ancestor` between the id's last
-    edit commit and the superseding row's landing commit (not walk index order).
-    On linear histories v1 and v2 agree byte-for-byte on the printed lines.
+    Version 3 (round 40, r39 w1 findings 2/5): the supersede_timing eligible
+    set is every superseded id present at R — a never-edited superseded id's
+    last immutable-cell edit is its first-sighting commit — and an edit at a
+    commit is a change against its first parent's state only, read from the
+    first parent's own tree: when the first parent lacks the path (or the
+    row) the commit contributes no edits and never falls through to another
+    parent's or ancestor's state, so a delete-then-re-add contributes no
+    changed event (persistent drift still surfaces in `ids`, which compares
+    tip cells against first-sighting cells). Version 2 semantics (round 39,
+    r38 lesson F1/F2) are retained for everything else: the walk carries
+    parent hashes and uses `--full-history`; the supersede-as-of test is
+    `git merge-base --is-ancestor` between the id's last edit commit and the
+    superseding row's landing commit (not walk index order).
     """
     rev_full = git(repo, "rev-parse", "--verify", rev + "^{commit}").strip()
     tip_text = git_blob(repo, "%s:%s" % (rev_full, path))
@@ -284,6 +283,7 @@ def analyze(repo, rev, path, round_base=None):
     imm_idx = immutable_indices(colmap)
 
     first = {}          # id -> cells in the first commit that carried it
+    first_commit = {}   # id -> commit of its first sighting in the walk
     changed_at = {}     # commit index -> ids whose immutable cells changed
     deleted_at = {}     # commit index -> ids that disappeared there
     supersede_rows = {}     # (superseded id, superseder id) -> first index it appears
@@ -301,31 +301,39 @@ def analyze(repo, rev, path, round_base=None):
                 supersede_rows.setdefault((m.group(1), cells[0].strip()), index)
         current = {cells[0]: cells for cells in rows}
         ref = None
-        for parent in parents_of.get(commit, []):
-            ref_commit = parent if parent in by_hash else \
-                nearest_path_commit(repo, parent, path)
-            if ref_commit is None:
-                continue
-            pidx = by_hash.get(ref_commit)
-            if pidx is not None and states[pidx] is not None:
+        parents = parents_of.get(commit, [])
+        if parents:
+            # P-C11: an edit is a change against the FIRST parent's state
+            # only, read from the first parent's own tree — never resolved
+            # through ancestors (a delete-then-re-add's parent genuinely
+            # lacks the row/path) and never a fall-through to another
+            # parent's state (r39 w1 findings 5a/5b).
+            head = parents[0]
+            pidx = by_hash.get(head)
+            if pidx is not None:
                 ref = states[pidx]
-                break
+            else:
+                head_text = git_blob(repo, "%s:%s" % (head, path))
+                if head_text is not None:
+                    ref = parse_registry(head_text)[0]
         if ref is None:
             for cid, cells in current.items():
-                first.setdefault(cid, cells)
+                if cid not in first:
+                    first[cid] = cells
+                    first_commit[cid] = commit
             continue
         ref_cells = {cells[0]: cells for cells in ref}
-        is_merge = len(parents_of.get(commit, [])) > 1
         for cid, cells in current.items():
             if cid not in first:
                 first[cid] = cells
+                first_commit[cid] = commit
             elif cid in ref_cells:
                 if imm_key(cells, imm_idx) != imm_key(ref_cells[cid], imm_idx):
                     changed_at.setdefault(index, set()).add(cid)
-            elif not is_merge:
-                # present again after an absence on a linear history: a re-add
-                # is a round event even when the cells match the first sighting
-                changed_at.setdefault(index, set()).add(cid)
+            # P-C11: no `elif not is_merge` re-add branch — a row whose first
+            # parent lacks it is an addition, not an edit; persistent drift
+            # still surfaces through the ids tip-vs-first-sighting comparison
+            # (r39 w1 finding 5a).
         gone = set(ref_cells) - set(current)
         if gone:
             deleted_at.setdefault(index, set()).update(gone)
@@ -340,7 +348,10 @@ def analyze(repo, rev, path, round_base=None):
         if previous is None or index > previous[0]:
             supersede_landing[target] = (index, by)
     sup_map = {target: by for target, (_, by) in supersede_landing.items()}
-    superseded = sorted(cid for cid in ids if cid in sup_map)
+    # P-C11: the timing line's eligible set is every superseded id present at
+    # R, not only the edit-bounded `ids` list — a never-edited superseded id
+    # still reaches the as-of/stale test (r39 w1 finding 2).
+    superseded = sorted(cid for cid in tip if cid in sup_map)
     last_edit = {}
     for index, changed in changed_at.items():
         for cid in changed:
@@ -349,7 +360,9 @@ def analyze(repo, rev, path, round_base=None):
     stale_supersede = []
     for cid in superseded:
         landing_index = supersede_landing[cid][0]
-        edit_commit = last_edit.get(cid)
+        # a never-edited id's last immutable-cell edit is its first-sighting
+        # commit (P-C11's plain words; the round-39 gate never reached it)
+        edit_commit = last_edit.get(cid) or first_commit.get(cid)
         if edit_commit is not None and is_ancestor(
                 repo, edit_commit, commits[landing_index]):
             superseded_as_of.append(cid)
@@ -546,6 +559,39 @@ def _selftest_dag_cases():
         _row("S001", anchor="anchor a v2"), buffer,
         _row("S002", source="https://example.invalid/b", anchor="anchor b",
              teaches="supersedes S001 — replacement")])
+    # dag-n (P-C11 eligible set): a superseding row lands without any edit to
+    # the superseded row — the never-edited id's last immutable-cell edit is
+    # its first-sighting commit, so it must still reach the as-of/stale test
+    supersede_only = _render([
+        _row("S001"), buffer,
+        _row("S002", source="https://example.invalid/b", anchor="anchor b",
+             teaches="supersedes S001 — replacement")])
+    # dag-p (P-C11 first-parent reference): main deletes the registry, the
+    # side branch edits S001 and lands the supersede row, and the merge
+    # resolves to a third content — the merge's first parent lacks the path,
+    # so the merge contributes no edits (v2 falls through to the side
+    # parent's state and fabricates a changed event plus a stale verdict)
+    edited_and_superseding = _render([
+        _row("S001", anchor="anchor a v2"), buffer,
+        _row("S002", source="https://example.invalid/b", anchor="anchor b",
+             teaches="supersedes S001 — replacement")])
+    merge_resolved = _render([
+        _row("S001", anchor="anchor a v3"), buffer,
+        _row("S002", source="https://example.invalid/b", anchor="anchor b",
+             teaches="supersedes S001 — replacement")])
+    # dag-r (P-C11 re-add): S008 is superseded, then deleted, then re-added
+    # with identical cells on a linear history — the re-add is an addition
+    # against a parent that lacks the row, not an edit, so the never-edited
+    # id's last edit stays its first-sighting commit (as-of, not stale). The
+    # round-39 gate re-flags the re-add as the last edit and prints stale.
+    supersede_s008 = _render([
+        _row("S001"), buffer,
+        _row("S009", source="https://example.invalid/f", anchor="anchor f",
+             teaches="supersedes S008 — replacement")])
+    without_s008 = _render([
+        _row("S001"),
+        _row("S009", source="https://example.invalid/f", anchor="anchor f",
+             teaches="supersedes S008 — replacement")])
     return [
         ("side-branch superseder is stale", "dag-a", 1,
          {"ids": ["S001"], "deleted": [], "superseded": ["S001"],
@@ -559,14 +605,30 @@ def _selftest_dag_cases():
          {"ids": ["S001"], "deleted": [], "superseded": ["S001"],
           "round_changed": ["S001"], "superseded_by": {"S001": "S002"},
           "superseded_as_of": ["S001"], "stale_supersede": []}, "b0"),
+        ("never-edited superseded row is as-of", "dag-n", 0,
+         {"ids": [], "deleted": [], "superseded": ["S001"],
+          "round_changed": [],
+          "superseded_as_of": ["S001"], "stale_supersede": []}, "b0"),
+        ("first-parent-lacks-path merge contributes no edits", "dag-p", 1,
+         {"ids": ["S001"], "deleted": [], "superseded": ["S001"],
+          "round_changed": ["S001"], "superseded_by": {"S001": "S002"},
+          "superseded_as_of": ["S001"], "stale_supersede": []}, "b0"),
+        ("linear delete-then-re-add is not an edit", "dag-r", 1,
+         {"ids": [], "deleted": [], "superseded": ["S008"],
+          "round_changed": ["S008"],
+          "superseded_as_of": ["S008"], "stale_supersede": []}, "b0"),
     ], (base, edited, side_superseding, side_plain, merged_superseding,
-        side_edit_superseding, merged_both_edited)
+        side_edit_superseding, merged_both_edited, supersede_only,
+        edited_and_superseding, merge_resolved, supersede_s008,
+        without_s008)
 
 
 def _make_dag_repo(path, kind, bodies, env):
-    """Build fixture DAG A, C or D; returns {name: sha}."""
+    """Build fixture DAG A, C, D, N, P or R; returns {name: sha}."""
     (base, edited, side_superseding, side_plain, merged_superseding,
-     side_edit_superseding, merged_both_edited) = bodies
+     side_edit_superseding, merged_both_edited, supersede_only,
+     edited_and_superseding, merge_resolved, supersede_s008,
+     without_s008) = bodies
     _dag_init(path, env)
     shas = {}
     if kind == "dag-a":
@@ -596,6 +658,45 @@ def _make_dag_repo(path, kind, bodies, env):
         shas["t"] = _dag_commit(path, merged_superseding, "t",
                                 "2026-01-01T04:00:00Z", env)
         shas["c1"] = shas["c1"]
+    elif kind == "dag-n":
+        shas["b0"] = _dag_commit(path, base, "b0", "2026-01-01T00:00:00Z", env)
+        shas["n1"] = _dag_commit(path, supersede_only, "n1",
+                                 "2026-01-01T01:00:00Z", env)
+    elif kind == "dag-p":
+        shas["b0"] = _dag_commit(path, base, "b0", "2026-01-01T00:00:00Z", env)
+        _git_in(path, "checkout", "-q", "-b", "side", shas["b0"], env=env)
+        shas["s1"] = _dag_commit(path, edited_and_superseding, "s1",
+                                 "2026-01-01T01:00:00Z", env)
+        _git_in(path, "checkout", "-q", "main", env=env)
+        _git_in(path, "rm", "-q", "corpus/SOURCES.md", env=env)
+        dated = dict(env, GIT_AUTHOR_DATE="2026-01-01T02:00:00Z",
+                     GIT_COMMITTER_DATE="2026-01-01T02:00:00Z")
+        _git_in(path, "commit", "-q", "-m", "d1", env=dated)
+        shas["d1"] = _git_in(path, "rev-parse", "HEAD", env=env).strip()
+        # modify/delete conflict: resolve to the third content and commit the
+        # merge — the merge's first parent (d1) lacks the path
+        dated = dict(env, GIT_AUTHOR_DATE="2026-01-01T03:00:00Z",
+                     GIT_COMMITTER_DATE="2026-01-01T03:00:00Z")
+        proc = subprocess.run(["git", "-C", path, "merge", "--no-edit",
+                               "-m", "m", "side"],
+                              capture_output=True, text=True, timeout=120,
+                              env=dated)
+        if proc.returncode == 0:
+            raise GateError("selftest dag-p merge unexpectedly clean")
+        target = os.path.join(path, "corpus", "SOURCES.md")
+        with open(target, "w", encoding="utf-8") as handle:
+            handle.write(merge_resolved)
+        _git_in(path, "add", "corpus/SOURCES.md", env=env)
+        _git_in(path, "commit", "-q", "-m", "m", "--no-edit", env=dated)
+        shas["m"] = _git_in(path, "rev-parse", "HEAD", env=env).strip()
+    elif kind == "dag-r":
+        shas["b0"] = _dag_commit(path, base, "b0", "2026-01-01T00:00:00Z", env)
+        shas["s1"] = _dag_commit(path, supersede_s008, "s1",
+                                 "2026-01-01T01:00:00Z", env)
+        shas["r1"] = _dag_commit(path, without_s008, "r1",
+                                 "2026-01-01T02:00:00Z", env)
+        shas["r2"] = _dag_commit(path, supersede_s008, "r2",
+                                 "2026-01-01T03:00:00Z", env)
     else:
         raise GateError("unknown dag kind %r" % kind)
     return shas
@@ -789,7 +890,7 @@ def main(argv):
     parser.add_argument("--selftest", action="store_true",
                         help="run the fixture self-test and exit")
     parser.add_argument("--print-predicate", action="store_true",
-                        help="print the frozen P-C9 predicate and exit")
+                        help="print the frozen P-C11 predicate and exit")
     args = parser.parse_args(argv)
 
     if args.print_predicate:
