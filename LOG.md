@@ -2236,3 +2236,39 @@ check, counter conformance checker, timed supersede reading. Census exit 0 start
 (`evidence/census-start.txt`, `census-end.txt`). Routed to round 39: gate timing ancestry
 semantics (`w2/CritGateSemantics`, lesson M11) and the contract's stale `c1-before-rerun.txt`
 citation (`w2/SimpR38`). Debt (f) stays OPEN/operator-owned (L0 question).
+
+## Round 39 (L1 mori-r39)
+
+Three claims, measured per claim (contract `.ufo/waves/round-39/contract.md`,
+instruments pinned in `evidence/freeze-r39.txt`; the round-38 instruments stay
+byte-frozen at their commits):
+
+- **C1 calibration (5)** — fabricated-content discrimination v2 for the
+  drift-corpus binding (r38 M18): `python3 .ufo/waves/round-39/count-c7.py <tip>`
+  → `C7=met` (five v2 checks, four witnesses rejected;
+  `evidence/c7-after.txt`); the r38 counter accepts all four bypass classes
+  (`evidence/c7-red-one-char.txt`, `c7-red-comment.txt`, `c7-red-classifier.txt`)
+  and a fabricated self-consistent clone that v2 rejects on the committed-copy
+  rule (`evidence/c7-red-clone.txt`). Routed-defect fix: S228 supersedes S226
+  with the corrected `:657-659` located quote (QUALITY 113).
+- **C2 operability (7)** — counter conformance v2, timeout name-and-value and
+  drain shape (r38 M19): `python3 .ufo/waves/round-39/conform.py <tip>` →
+  `CONFORM=met` (9 checks; `evidence/c8-after.txt`) and `--selftest` →
+  `CONFORM_SELFTEST pass=9 fail=0` (`evidence/c8-after-selftest.txt`); both r38
+  bypass fixtures print `CONFORM=met` under the r38 checker
+  (`evidence/c8-red-none.txt`, `c8-red-wait.txt`) and `CONFORM=unmet` under the
+  round-39 checker (`evidence/c8-after-none.txt`, `c8-after-wait.txt`).
+- **C3 depth (5)** — ancestry-based timed supersede in the append-only gate
+  (r38 F1/F2; sourced S227): `python3 tools/mori-sources-appendonly.py --selftest`
+  → `pass=12 fail=0` (`evidence/gate-selftest-after.txt`); the r38 gate bytes
+  fabricate `round_changed=[S001]` on fixture C and print `stale` on fixture D
+  (`evidence/c9-red-a.txt`); the v2 gate prints the predicate-word verdicts and
+  byte-identical lane-history lines at the tip and `e37dcc6`
+  (`evidence/c9-after-lane.txt` — the S069 receipt value sits at
+  `gate-after-e37dcc6.txt:22`, correcting the round-38 report's `:2` cite; the
+  report itself is committed fleet history).
+
+Waves: wave 1 (build/attack) 32 seats, wave 2 (falsify) 32 seats, v1 shape.
+Lesson `corpus/lessons/round-39.md` (Gate: S227, S228; M20–M22). Census exit 0
+start and end. Capability rows: fabricated-content discriminator v2, counter
+conformance v2, ancestry supersede reading. Debt (f) OPEN/operator-owned.

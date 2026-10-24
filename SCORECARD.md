@@ -2186,3 +2186,29 @@ as `evidence/gate-after.txt:22` records. The error was the L1's transcription of
 `superseded=[S069,S182,S193]` field for a different tool; the w2/RevScorecardClaims seat re-derived
 it. The cell now carries the observed line and this note. The claim's discriminator is unchanged:
 `stale_supersede=[S069]` at `e37dcc6` and `stale_supersede=[]` at the tip.
+
+## Round 39 declaration (attempt 1, L1 mori-r39) — fabricated-content discrimination v2 (C1, calibration), conformance timeout name-and-value (C2, operability), ancestry-based timed supersede (C3, depth)
+
+Entering tip `13f3db7e` (round 38 admitted). Contract `.ufo/waves/round-39/contract.md` and all
+instrument bytes frozen at `97b826a9` (pins `evidence/freeze-r39.txt`) before any data seat.
+Lowest non-retired axes calibration 5 and depth 5 (tied) — C1 works calibration, C3 depth.
+
+| Claim | Axis / score | Before (one command over committed bytes) | Declared after-value (one command over committed bytes) |
+|---|---|---|---|
+| C1 the drift-corpus binding's checks discriminate fabricated content: code-position anchors ≥8 chars, file-not-directory capability paths, committed copies for named drifted rows, and a structural got-vs-want drift kill with a run-time-drawn post-state (r38 M18) | calibration 5 | the r38 counter accepts every bypass: `evidence/c7-red-one-char.txt`, `c7-red-comment.txt`, `c7-red-classifier.txt`, `c7-red-clone.txt` each end "RED (bypass accepted)"; the clone receipt shows `C4=met` exit 0 on a fabricated binding | `python3 .ufo/waves/round-39/count-c7.py <landed tip>` → five checks PASS, four negatives rejected, `C7=met`, exit 0 (`evidence/c7-after.txt`); the same command on the fabricated clone prints `live_rows_v2 FAIL ... no_copy=['S103']`, `C7=unmet` (clone receipt's round-39 block) |
+| C2 the conformance checker reads timeout values (folded constants) and drain shape, and its selftest exercises the communicate-timeout conjunct (r38 M19) | operability 7 | `python3 .ufo/waves/round-38/conform.py 13f3db7e --counter fixtures-derived/bypass-none.py` → `CONFORM=met` exit 0 (`evidence/c8-red-none.txt`); bypass-wait likewise (`evidence/c8-red-wait.txt`); the r38 selftest never mutates a communicate timeout (`evidence/m19-selftest-gap.txt`) | `python3 .ufo/waves/round-39/conform.py <landed tip>` → `CONFORM=met` exit 0 (`evidence/c8-after.txt`); `--selftest` → `CONFORM_SELFTEST pass=9 fail=0` (`evidence/c8-after-selftest.txt`); both bypass fixtures → `CONFORM=unmet` with `timeout_value`/`drain_shape` FAIL (`evidence/c8-after-none.txt`, `c8-after-wait.txt`) |
+| C3 the append-only gate's timed supersede is ancestry: `merge-base --is-ancestor` between the last first-parent-derived edit and the landing, on a parent-carrying `--full-history` walk (r38 F1/F2; sourced S227) | depth 5 | the r38 gate bytes fabricate `round_changed=[S001]` on fixture C (exit 1) and print `stale_supersede=[S001]` on fixture D where the predicate's words read as-of (`evidence/c9-red-a.txt`); the lane walk under default simplification drops `6531ac60` (53 vs 52 commits) | `python3 tools/mori-sources-appendonly.py --selftest` → `pass=12 fail=0` (`evidence/gate-selftest-after.txt`); `run-c9-dags.py` with the v2 gate prints `stale_supersede=[S001]` on A, `round_changed=[]` exit 0 on C, `superseded_as_of=[S001]` on D (`evidence/c9-after-fixture-a.txt`, `c9-after-fixture-c.txt`); lane receipts byte-identical to round 38 at the tip and `e37dcc6` (`evidence/c9-after-lane.txt`) |
+
+Capability rows (demonstrated running this round; closure admits them):
+
+| key | name | what it can now do | evidence | first working |
+|---|---|---|---|---|
+| round-39 C1 | fabricated-content discriminator v2 | Scores the drift-corpus binding with code-position anchors, file-only capability paths, committed-copy live rows, and a drawn-state structural drift kill; rejects the three round-38 witnesses plus a comment-parked entry, and rejects a fabricated clone via the copy rule | `.ufo/waves/round-39/count-c7.py`; `evidence/c7-after.txt`; `evidence/c7-red-*.txt` | 39 |
+| round-39 C2 | counter conformance v2 | Nine checks (the r38 six plus timeout_value, drain_shape, selftest_conjunct) with a constant-folding resolver and a nine-mutation selftest, each mutation flipping exactly its own check; rejects both r38-M19 bypass fixtures | `.ufo/waves/round-39/conform.py`; `evidence/c8-after.txt`; `evidence/c8-after-selftest.txt` | 39 |
+| round-39 C3 | ancestry supersede reading | Separates as-of from stale by reachability (`merge-base --is-ancestor`) on a parent-carrying full-history walk with first-parent edit detection; lane verdicts unchanged, fixture verdicts now match the predicate's words | `tools/mori-sources-appendonly.py` (`supersede_timing`, P-C9); `evidence/c9-after-lane.txt`; `evidence/c9-after-fixture-a.txt` | 39 |
+
+Held: coverage 6, operability 7, depth 5, calibration 5, freshness 5, adjacency 6 — no scalar score moves
+this round; C1 moves the calibration surface (new counter + receipts), C2 the operability surface
+(new checker version), C3 the depth surface (gate semantics + S227). Sourced claim: C3 rests on
+S227 (opened this round; `corpus/knowledge/gate-ancestry-r39.md`). No retirement, waiver, exploratory
+claim or promotion. Frontier: S227, S228 rows; census 226 → 228.

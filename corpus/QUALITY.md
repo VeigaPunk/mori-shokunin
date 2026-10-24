@@ -902,3 +902,25 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     `--selftest` invocation printed `conformance setup error: expected str, bytes or os.PathLike object, not
     NoneType`, exit 2 (`conform.py:266-270` requires `rev`); the runnable form printed `pass=6 fail=0`, exit 0.
     Not covered: the selftest mutates only the first `--counter`.
+112. QUALITY 110's "Not covered" line is discharged by the round-39 gate: "postdates" and "descends from" are now the
+    reachability relation (`git merge-base --is-ancestor` between the id's last edit commit and the superseding row's
+    landing commit), the walk carries parent hashes with `--full-history`, and an edit is a change against the first
+    parent's state, not the previous walk record. Lesson: `corpus/lessons/round-38.md` F1/F2 (resid/ResidGateTiming);
+    source: S227. Check: `python3 tools/mori-sources-appendonly.py --selftest` → `pass=12 fail=0`;
+    `python3 .ufo/waves/round-39/fixtures/run-c9-dags.py tools/mori-sources-appendonly.py <lane> <out>` prints
+    `stale_supersede=[S001]` on fixture A, `round_changed=[]` exit 0 on fixture C, `superseded_as_of=[S001]` on
+    fixture D. Shown able to fail: the round-38 gate bytes print `round_changed=[S001]` exit 1 on fixture C and
+    `stale_supersede=[S001]` on fixture D where the predicate's words read as-of
+    (`.ufo/waves/round-39/evidence/c9-red-a.txt`); the lane-history receipts are byte-identical to round 38
+    (`evidence/c9-after-lane.txt`). Not covered: "latest superseding row" on two incomparable branches is still
+    walk-order (r38 ResidGateTiming residual 2), and the last-edit attribution is walk-order when two incomparable
+    commits edit the same id.
+113. A registry row's located-quote correction rides a superseding row, never an in-place `anchor` edit: S228
+    (`supersedes S226`) carries the corrected `:657-659` suffix the round-38 closure routed, because the gate's
+    `anchor` cell is immutable. Lesson: `corpus/lessons/round-39.md` M20; routed defect r38 spotcheck §Routed 1.
+    Check: `python3 tools/mori-sources-appendonly.py <r39-tip> --round-base <entering-tip>` lists S226 in
+    `superseded_as_of` (S228's landing descends from S226's) and the census stays `ok` exit 0. Shown able to fail: an
+    in-place anchor edit would appear in the gate's `ids=[...]` changed list with `appendonly_violations` ≥ 1; the
+    pre-fix S226 row at the entering tip still prints the `:657-658` suffix (`corpus/SOURCES.md` at `13f3db7e`).
+    Not covered: the round-38 fleet report's `:2` cite (fleet history, outside lane write scope; recorded in the
+    round-39 report).
