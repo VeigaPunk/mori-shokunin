@@ -1,0 +1,11 @@
+mode=control-c1-v4 revision=9de7323de482699743619cfa2ee444e7418421e3
+command form: python3 <checker> 9de7323de482699743619cfa2ee444e7418421e3 --repo <sandbox> --contract .ufo/waves/round-39/contract.md --counter fixtures/c1/count-c8.py --selftest
+
+== v4-pristine selftest ==
+PASS timeout_state      budget flag ignored -> only timeout_state failed
+PASS scratch            scratch parent moved off-lane -> only scratch failed
+PASS selftest_conjunct  communicate timeout keyword stripped -> only selftest_conjunct failed
+CONFORM_SELFTEST pass=14 fail=0
+EXIT=0
+
+== v4-mut-walrus-branch selftest ==
