@@ -63,3 +63,9 @@ SIGTERM → grace → SIGKILL trade).
 7. (w1/RevC9Live + RevCensus, notes) contract prose `pass=11` is stale (selftest prints 12); the
    "18 ids + S226" prose overclaims (eligible set is edit-bounded — see finding 2 above). Receipts
    themselves are honest.
+8. (w1/RevC8Drain, HIGH) drain_shape never binds a communicate to a Popen: any used communicate in a
+   function drains every Popen in it, so the r38 M19-B shape (wait+read on the tool child) passes with a
+   decoy `out, err = dummy.communicate(timeout=…)` in the same function; `_ = proc.communicate(...)` and
+   tuple-wrapped results also pass as "used"; the rule is per-function, not per-Popen. C2's frozen claim is
+   untouched (the routed fixture has no decoy); the drain_shape clause is not what P-C8's words claim.
+   Routed to round 40 with the seat's variants under `w1/RevC8Drain.md`.
