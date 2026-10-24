@@ -26,3 +26,21 @@ r38 routed items: M18 residuals → claim C1 (+ lesson M20–M22); M19 residuals
 S226 quote suffix → S228 (QUALITY 113); r38 report `:2` cite → recorded, fleet history (round-39 report). Debt (f)
 stays OPEN/operator-owned (L0 question from round 37; the round-39 counters freeze the same disclosed
 SIGTERM → grace → SIGKILL trade).
+
+## Wave-1 findings for integration (attempt 2 / closure)
+
+1. (w1/ScoutC7Bounds, FAIL) P-C7's words "a structural per-row state difference between the honest and
+   mutated runs" exceed the code: drift_kill_v2 compares the mutant run's got table against its want table
+   (the fixture expectation, equal to the honest table only because named_row_drift gates the honest PASS).
+   Semantically equivalent on a passing honest run; the prose should say "against the arm's expected
+   table" or the code should parse both runs. Routed with the frozen-pins note (a wording fix needs no
+   re-freeze of the predicate; a code fix is a new counter version).
+2. (w1/RevCensus, MEDIUM) The gate's `superseded` eligible set is edit-bounded (`superseded = cid for cid
+   in ids if cid in sup_map`, ids = changed rows), so a never-edited superseded row (S226) never reaches
+   `supersede_timing` even though P-C9's plain words cover it (last edit = its landing commit; the
+   superseder descends from it). The receipt (18 ids) is honest; the contract/SCORECARD prose "18 ids +
+   S226 once S228 lands" overclaims — the same words-vs-code class C3 closed for F1/F2, re-entering via
+   the eligible-set definition. Routed: either narrow the prose or extend the eligible set (new gate
+   version + pin change), next attempt.
+3. (w1/MutC8NoneVal, note) timeout_value's violation message says "non-numeric constant" where the value
+   is a name resolving to None; naming the symbol would aid audits. Cosmetic; routed forward.
