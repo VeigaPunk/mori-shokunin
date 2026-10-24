@@ -1,4 +1,0 @@
-command: python3 .ufo/waves/round-39/fixtures/run-c7-reds.py (section: one-char anchors)
-r38 check_anchors on a fabricated entry whose anchors are `#`, `:`, `==`:
-  accepted=True (anchors=3 missing=[] empty=0 unique=True)
-verdict: RED (bypass accepted)

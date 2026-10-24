@@ -1,8 +1,0 @@
-wave B dispatch log (L1 MoriR34A3)
-06:46Z  wave-slot acquire mori mori-r34-wb 41 -> waited (live ~75 + reservations vs cap 100); job terminated at 07:38:48Z, exit 143, never granted
-07:39:57Z granted mori-r34-wb-c1 12 -> task call 1 (validated wb-dispatch.json tasks 1-12, unchanged)
-07:43:28Z granted mori-r34-wb-c2 12 -> task call 2 (tasks 13-24)
-07:44:15Z granted mori-r34-wb-c3 12 -> task call 3 (tasks 25-36)
-07:45:03Z granted mori-r34-wb-c4 5  -> task call 4 (tasks 37-41)
-Basis: Main ruling 05:43Z / 07:10Z (resend the same seats unchanged in consecutive chunks of <=12); the validated 41-seat wave (wb-spec.json, wb-dispatch.json at 5216d78d) was not altered.
-07:57:14Z granted mori-r34-residual 3 -> residual task call (wb-residual-dispatch.json; 2 reviewer + 1 critic)

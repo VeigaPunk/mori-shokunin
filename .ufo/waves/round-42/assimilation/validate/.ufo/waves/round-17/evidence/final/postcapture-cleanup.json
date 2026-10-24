@@ -1,8 +1,0 @@
-{
-  "removed_transient_case_copies": [
-    ".ufo/waves/round-17/evidence/final/seat-before/cases",
-    ".ufo/waves/round-17/evidence/final/seat-after/cases",
-    ".ufo/waves/round-17/evidence/final/seat-initial-red/cases"
-  ],
-  "retained": "Source fixtures/expected pins, run manifests and exact stdout/stderr streams; copied FIFO/chmod/root-symlink session trees are reconstructed on replay."
-}

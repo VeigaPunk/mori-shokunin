@@ -1,9 +1,0 @@
-{
-  "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=19964362\n",
-  "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
-  "earlyoom_journal": [
-    {"MESSAGE": "earlyoom 1.9.0", "__MONOTONIC_TIMESTAMP": "19964362"},
-    {"MESSAGE": "sending SIGTERM to process 4242 \"imaginary-keeper\"", "__MONOTONIC_TIMESTAMP": "not-a-microsecond-count"}
-  ],
-  "oomd_notices": 0
-}

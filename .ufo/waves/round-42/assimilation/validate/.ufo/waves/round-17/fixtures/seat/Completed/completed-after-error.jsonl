@@ -1,4 +1,0 @@
-{"type":"session","version":3}
-{"message":{"content":"synthetic prompt","role":"user"},"type":"message"}
-{"message":{"completedAt":1760998000000,"errorMessage":"429 rate_limit","errorStatus":429,"model":"glm-4.6","provider":"zai","role":"assistant","stopReason":"error"},"type":"message"}
-{"message":{"content":"synthetic answer","role":"assistant","stopReason":"stop","usage":{"input_tokens":1}},"type":"message"}

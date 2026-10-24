@@ -1,7 +1,0 @@
-command: python3 .ufo/waves/round-39/fixtures/run-c7-reds.py (section: cheat probe)
-cheat: row_states detail always appends ('S103', 'drifted') and
-('S103', 'excerpt') regardless of the classification (r38 M18 shape).
-honest run: exit=0 row_states=('PASS', '')
-mutated run: exit=1 row_states=('FAIL', "got=[('S101', 'fresh'), ('S102', 'excerpt'), ('S103', 'excerpt'), ('S104', 'unavailable'), ('S105', 'unavailable'), ('S106', 'no-copy'), ('S107', 'no-copy'), ('S108', 'fresh'), ('S109', 'unavailable'), ('S110', 'unavailable')] want=[('S101', 'fresh'), ('S102', 'excerpt'), ('S103', 'drifted'), ('S104', 'unavailable'), ('S105', 'unavailable'), ('S106', 'no-copy'), ('S107', 'no-copy'), ('S108', 'fresh'), ('S109', 'unavailable'), ('S110', 'unavailable')] ('S103', 'drifted') ('S103', 'excerpt')")
-r38 drift_kill accepted=True
-verdict: RED (bypass accepted)

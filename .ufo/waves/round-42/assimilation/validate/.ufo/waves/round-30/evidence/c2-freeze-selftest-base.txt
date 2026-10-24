@@ -1,4 +1,0 @@
-# first tool run on the frozen file: entering-tip tool blob (58b61681) on cases-a2-r30.json at freeze db1ec4694242a9c1acef03fef2852c7e943b1ed7; 2026-10-22T21:48:29Z
-$ python3 -I -B <(git show 58b61681:tools/mori-oom-killers.py) --selftest --cases <(git show db1ec469:tools/fixtures/mori-oom-killers/cases-a2-r30.json)
-MORI_OOM_KILLERS_SELFTEST: PASS 8/8
-exit: 0

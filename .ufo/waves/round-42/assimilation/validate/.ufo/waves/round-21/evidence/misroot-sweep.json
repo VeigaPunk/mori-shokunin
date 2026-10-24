@@ -1,8 +1,0 @@
-{
-  "schema": "mori-r21-misroot-sweep-v1",
-  "command": "git -C /home/vgpnk/Projects/shokunin status --porcelain",
-  "untracked_entries": 0,
-  "own_misroots_found": 0,
-  "observed": "Only pre-existing/concurrent .ufo/l0-questions.md, state/* report-baseline and watchdog.log modifications. All left untouched.",
-  "ownership": "No untracked root file to copy/move/delete."
-}

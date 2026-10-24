@@ -1,4 +1,0 @@
-HARNESS waves_dir=/tmp/mori-r20-c2-before.HbNnfp/waves-seq wave_unsettled_s=7200 now_epoch=1700000000 census_sha256=87b8d680b9b2572e89977a10ff9b91630fbaf689f23f4892e06be427b977ab28
-SURFACE waves: ok (cmd=find /tmp/mori-r20-c2-before.HbNnfp/waves-seq -maxdepth 1 -mindepth 1 -type d; total=1 settled=0 unsettled=1 aged_unsettled=0 empty=0 age_unreadable=0 threshold_s=7200; ts=2023-11-14T22:13:20Z)
-
-HARNESS roll=CLEAN findings=0 drift=0 unavailable=0 surfaces=1

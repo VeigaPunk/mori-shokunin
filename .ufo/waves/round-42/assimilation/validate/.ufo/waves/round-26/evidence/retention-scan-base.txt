@@ -1,4 +1,0 @@
-revision: 248408f5b6610a85bcbdebe7ac0b4fa7ed51422a
-command: python3 -I -B tools/mori-retention-gate.py scan --repo <lane> --rev 248408f5b6610a85bcbdebe7ac0b4fa7ed51422a --policy .ufo/waves/round-18/frozen/c1-policy.json --allowlist corpus/evidence/retention-allowlist.json
-exit: 1
-unallowlisted_hits: 4 (metric 4); hits 109; allowlisted 100

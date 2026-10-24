@@ -1,2 +1,0 @@
-{"type":"session","version":3}
-{"message":{"errorMessage":"429 rate_limit","errorStatus":429,"model":"glm-4.6","provider":"zai","role":"assistant","stopReason":"error","timestamp":1760999950000},"type":"message"}

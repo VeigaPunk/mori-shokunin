@@ -1,4 +1,0 @@
-{"type":"session","version":3}
-{"message":{"role":"assistant","stopReason":"stop"},"type":"message"}
-{"type":"message","message":{"role":"assistant","stopReason":"error","errorMessage":"bad\qescape"}}
-{"type":"message","message":{"role":"assistant","stopReason":"error","completedAt":01}}

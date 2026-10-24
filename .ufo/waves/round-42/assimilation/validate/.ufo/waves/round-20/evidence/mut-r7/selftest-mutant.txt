@@ -1,2 +1,0 @@
-MORI_WAVE_SETTLEMENT_SELFTEST: FAIL (22 cases, 21 passed, 1 failed)
-rc=1

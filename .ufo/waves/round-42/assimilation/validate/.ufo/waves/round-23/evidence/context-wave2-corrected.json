@@ -1,5 +1,0 @@
-{
-  "exit": 0,
-  "stdout": "{\"claims_runtime_prevention\": false, \"clause_ids\": [\"no_broadcast_exact_id\", \"lane_report_resolution\", \"no_verification_permission\", \"pacman_pause\", \"credential_prohibition\", \"write_scope\", \"no_live_journal_queries\", \"no_tmp_probe_outputs\", \"no_fleet_root_writes\", \"no_background_jobs\", \"no_vcs_mutation\", \"transcript_fields_only\"], \"clauses_checked\": 12, \"contexts\": 1, \"finding_id\": \"CONTEXT_OK\", \"spec_sha256\": \"f06944eee88c48cf4e8743daa821e2592bfe8654a515977eeb64502c4d86a5d2\", \"static_only\": true}\n",
-  "stderr": ""
-}

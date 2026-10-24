@@ -1,4 +1,0 @@
-# selftest of the frozen A2 cases at d21b8bd38b1bf72ec903a19ed543c615564e8278 (freeze commit), first tool run, 2026-10-22T18:51:02Z, temp extract
-$ python3 -I -B tools/mori-oom-killers.py --selftest --cases tools/fixtures/mori-oom-killers/cases-a2.json
-MORI_OOM_KILLERS_SELFTEST: PASS 30/30
-exit=0

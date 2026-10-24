@@ -1,5 +1,0 @@
-revision: fc09f96c8036094bef06370dbb4b436edf96e6e3
-command: bash .ufo/waves/round-27/count-c1.sh fc09f96c8036094bef06370dbb4b436edf96e6e3
-entry=absent new_rows_cited=0 skill_rows=0
-C1=unmet
-exit: 1

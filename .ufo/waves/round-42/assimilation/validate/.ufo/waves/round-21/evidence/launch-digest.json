@@ -1,9 +1,0 @@
-{
-  "schema": "mori-r21-launch-digest-v1",
-  "source": ".ufo/watchdog.log",
-  "observed_line": 593,
-  "text": "2026-10-21T09:32:28-03:00 launch mori round=21 pgid=1342153 driver=hyaku-inline attempt=1",
-  "sha256": "2f5b797f17cd070f6fef10fffc238bb972c8e30c56841fa27344ab0b7f90db35",
-  "lifecycle": "current steered round21; prior round20 landed report closes prior in-flight status; no separate lane mission opened here",
-  "activity": "progressing beyond two driver ticks: own-lane pushed commits3b792db,b9b8b44,a8442a0,8fed329,ce413b9,2afee13"
-}

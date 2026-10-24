@@ -1,9 +1,0 @@
-# C2 full-output differential, entering-tip tool vs tool at 7aa774845ede230901fda8066a808bf4456c0861, every case input of the five files at 7aa774845ede230901fda8066a808bf4456c0861; 2026-10-22T21:49:23Z
-$ python3 -I -B /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-30/c2-differential.py 7aa774845ede230901fda8066a808bf4456c0861
-changed cases-a2.json a2-02-earlyoom-activestate-deactivating ActiveState=deactivating exit 2->2 earlyoom.dryrun_send_lines: null -> 0; earlyoom.grammar: "unverified" -> "verified-1.9.0"; earlyoom.process_group_lines: null -> 0; earlyoom.version: null -> "1.9.0"
-changed cases-a2.json a2-06-inactive-earlier-invocation-sends-acted ActiveState=inactive exit 1->1 earlyoom.dryrun_send_lines: null -> 0; earlyoom.grammar: "unverified" -> "verified-1.9.0"; earlyoom.process_group_lines: null -> 0; earlyoom.version: null -> "1.9.0"
-changed cases-a2-r29.json r29-a2-10-inactive-lone-missing-stamp ActiveState=inactive exit 0->0 earlyoom.dryrun_send_lines: null -> 0; earlyoom.grammar: "unverified" -> "verified-1.9.0"; earlyoom.process_group_lines: null -> 0; earlyoom.version: null -> "1.9.0"
-changed cases-a2-r29.json r29-a2-10-failed-stamped-positive ActiveState=failed exit 1->1 earlyoom.dryrun_send_lines: null -> 0; earlyoom.earlier_invocation_send_lines: 1 -> 0; earlyoom.grammar: "unverified" -> "verified-1.9.0"; earlyoom.process_group_lines: null -> 0; earlyoom.version: null -> "1.9.0"
-changed cases-a2-r29.json r29-a2-10-not-found-earlier-stamped-positive ActiveState=inactive exit 1->1 earlyoom.dryrun_send_lines: null -> 0; earlyoom.grammar: "unverified" -> "verified-1.9.0"; earlyoom.process_group_lines: null -> 0; earlyoom.version: null -> "1.9.0"
-inputs=126 changed=5 older_changed=2 older_disallowed=0 acted_lost=0
-exit: 0

@@ -1,8 +1,0 @@
-argv=['/usr/bin/python3', '/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round15-regressions.py', '--fixtures', '/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/NoHarmRun/tmp/mori-r15-selftest-bnbb222t/fixtures', '--expected', '/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/NoHarmRun/tmp/mori-r15-selftest-bnbb222t/expected-tampered.json', '--census', '/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/NoHarmRun/tmp/mori-r15-selftest-bnbb222t/wrappers/green.sh', '--output', '/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/NoHarmRun/tmp/mori-r15-selftest-bnbb222t/out-expected-tamper']
-rc=2
---- stdout ---
-PIN ERROR: fixture pack Selftest.json changed since pin (expected=0000000000000000000000000000000000000000000000000000000000000000 current=57ec90a1e5e4fa2badea3e49ba502c553f0604cd904e7664f7afa5657b10fff4)
-GATE ERROR exit=2
-
---- stderr ---
-

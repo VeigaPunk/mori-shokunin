@@ -1,9 +1,0 @@
-# normalize_hits audit
-
-**Result: bounded no-finding.** Scope was `normalize_hits` and its direct callers in the current `tools/mori-retention-reconcile.py`, against the effective correction and `frozen/requirements-v2.json`.
-
-- `normalize_hits` (lines 119–126) requires a list of objects with exactly `HIT_FIELDS` (line 22), validates nonempty string path/class, an exact positive integer line (`integer` at lines 33–34 rejects booleans), and a lowercase 64-hex SHA-256. `hit_key` (lines 116–117) uses the specified full identity `(path, line, class, line_sha256)`. Repeated full identities raise `Invalid('duplicate_receipt_hit')`; valid entries are returned as a `Counter` of those identities.
-- The direct callers use that contract consistently: `scan` builds those four fields and normalizes the recomputed list (lines 138–152); `check` normalizes each of the three receipt hit lists (line 189) and compares full-identity Counters against recomputed partitions (lines 211–218). Missing/wrong-shaped hit lists fail via `Invalid` and map to setup exit 2 (lines 272–275); altered but well-formed hit identities remain disagreement/mismatch, consistent with frozen R05–R09. I found no concrete counterexample in this scope.
-- No material allocation/repeated-work issue found: the normalizer builds a `seen` set and a `Counter`, but each serves duplicate rejection and its caller’s multiset comparison, respectively; `scan` discards the returned Counter, though the observed real denominator is only 95 hits and this is not material here.
-
-**LSP:** no LSP device is mounted (`read xd://lsp` returned “No such tool”); references/callers were located with literal search and inspected at source lines above. No semantic-LSP claim is made. No code, tests, or builds were run.

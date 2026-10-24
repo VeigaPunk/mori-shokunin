@@ -1,6 +1,0 @@
-{
-  "schema": "mori-evidence-loss-rule-v1",
-  "evidence_loss_blocks": false,
-  "interpretation": "Explicit model of QUALITY67 universal cause-only permission; criterion had no executable gate.",
-  "source": "e9f340c:corpus/QUALITY.md:245-250"
-}

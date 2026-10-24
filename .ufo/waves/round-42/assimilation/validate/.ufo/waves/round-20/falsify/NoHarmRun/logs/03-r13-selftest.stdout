@@ -1,3 +1,0 @@
-SELFTEST: case isolated-stub-target-red ok ok
-SELFTEST: case isolated-frozen-manifest-tamper ok ok
-SELFTEST: pass checks=33 cases=2

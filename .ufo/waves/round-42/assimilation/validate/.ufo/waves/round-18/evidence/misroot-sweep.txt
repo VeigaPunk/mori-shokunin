@@ -1,3 +1,0 @@
-?? .ufo/waves/round-25/
-?? .ufo/waves/round-37/
-exit=0 (lines: 2; command: git -C /home/vgpnk/Projects/shokunin status --porcelain, excluding driver .ufo/state)

@@ -1,5 +1,0 @@
-command: python3 .ufo/waves/round-39/fixtures/run-c7-reds.py (section: comment-parked anchors)
-r38 check_anchors on witness-comment-anchors.md (phrases that occur in the
-tool only inside `#` comment lines):
-  accepted=True (anchors=3 missing=[] empty=0 unique=True)
-verdict: RED (bypass accepted)

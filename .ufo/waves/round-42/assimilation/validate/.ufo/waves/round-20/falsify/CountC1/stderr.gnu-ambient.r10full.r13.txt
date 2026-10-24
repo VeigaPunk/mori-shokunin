@@ -1,2 +1,0 @@
-comm: file 1 is not in sorted order
-comm: input is not in sorted order

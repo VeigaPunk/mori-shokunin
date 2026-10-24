@@ -1,4 +1,0 @@
-{"__CURSOR":"s=r16u;i=9f;n=200;x=00c8","_BOOT_ID":"0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c02","MESSAGE_ID":"d9b373ed55a64feb8242e02dbe79a49c","UNIT_RESULT":"oom-kill"}
-{"__CURSOR":"s=r16u;i=9f;n=201;x=00c9","_BOOT_ID":"0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c02","MESSAGE_ID":"d9b373ed55a64feb8242e02dbe79a49c","UNIT_RESULT":"OOM-KILL","UNIT":"rsyslog.service"}
-{"__CURSOR":"s=r16u;i=9f;n=202;x=00ca","_BOOT_ID":"0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c02","MESSAGE_ID":"d9b373ed55a64feb8242e02dbe79a49c","UNIT_RESULT":"Oom-Kill","UNIT":"sshd.service"}
-{"__CURSOR":"s=r16u;i=9f;n=203;x=00cb","_BOOT_ID":"0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c02","MESSAGE_ID":"d9b373ed55a64feb8242e02dbe79a49c","UNIT_RESULT":"oom-KILL","UNIT":"cron.service"}

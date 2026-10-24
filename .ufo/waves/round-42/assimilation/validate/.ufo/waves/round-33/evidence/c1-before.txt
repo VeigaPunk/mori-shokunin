@@ -1,4 +1,0 @@
-rev=7d382043016e8854e3be2ee523a095b409c3d8a1 repo=/home/vgpnk/Projects/shokunin/mori-shokunin
-entry=absent
-C1=unmet
-exit=1

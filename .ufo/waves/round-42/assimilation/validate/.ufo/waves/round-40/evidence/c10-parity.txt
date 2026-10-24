@@ -1,5 +1,0 @@
-command: parity count-c7-r39 (disk == bb1f2457 bytes) vs count-c8 on rev bb1f2457, seed 20261024
-count-c7 sha256: b92c65f224a6268a901aa6bc5ad66b499048eaca82b493356eb8e1f324ef0520 (extract b92c65f224a6268a901aa6bc5ad66b499048eaca82b493356eb8e1f324ef0520)
-c7_exit=0
-c8_exit=0
-PARITY: receipts byte-identical

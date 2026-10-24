@@ -1,4 +1,0 @@
-command: python3 .ufo/waves/round-40/fixtures/extracted/conform-v2-r39.py bb1f2457 --counter .ufo/waves/round-40/fixtures/generated/survivor-divzero.py
-P-C8: at revision R, the round-39 conformance checker passes all nine checks on the round-39 counter bytes — the round-38 six (predicate, head_pin, tool_resolve, bounded_reads, timeout_state, scratch) plus `timeout_value` (every `timeout=` keyword in every counter resolves through module-level assignments to a positive numeric literal, so `timeout=NAME` with `NAME = None` fails), `drain_shape` (every `Popen(` in the first counter is drained in its own function by a `communicate(` carrying its own timeout, so a `wait(timeout=…)` plus `stdout.read()` drain fails), and `selftest_conjunct` (the shipped `--selftest`'s bounded_reads mutation exercises the communicate-timeout conjunct) — and each of nine textual mutations flips exactly its own check to FAIL.
-conformance setup error: division by zero
-EXIT=2

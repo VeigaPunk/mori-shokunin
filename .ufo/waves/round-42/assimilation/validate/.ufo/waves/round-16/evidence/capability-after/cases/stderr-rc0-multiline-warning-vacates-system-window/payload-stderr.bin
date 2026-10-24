@@ -1,2 +1,0 @@
-journalctl: warning: journal has been rotated since boot, output may be incomplete
-journalctl: warning: unrecognized field 'MESSAGE' in --output-fields

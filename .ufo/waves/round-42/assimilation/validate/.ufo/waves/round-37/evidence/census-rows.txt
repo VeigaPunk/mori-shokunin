@@ -1,5 +1,0 @@
-command: grep -cE '^\|[[:space:]]*S[0-9]{3,}[[:space:]]*\|' <(git show <rev>:corpus/SOURCES.md)
-842a320: 220
-5dff52a1: 225
-HEAD: 225
-note: HEAD is the detached lane tip named in the round report; the census receipts themselves print only per-row warnings and the ok line, not a total

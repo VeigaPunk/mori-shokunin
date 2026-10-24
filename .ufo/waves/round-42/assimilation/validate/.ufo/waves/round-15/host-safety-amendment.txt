@@ -1,2 +1,0 @@
-Host safety effective now: sync DB ~413 packages ahead. Before any pacman -S run pacman -Sp --print-format '%n %v' <pkgs>; proceed ONLY if EVERY listed package not installed (pacman -Q name fails). Otherwise uv/npx/official binary or L0. Never -Sy/-Syu/-U/-R, downgrade, or restart services. Record installations. This supersedes earlier installation permission.
-Sent to all 64 exact dispatch ids.

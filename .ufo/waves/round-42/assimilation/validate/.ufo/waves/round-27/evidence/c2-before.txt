@@ -1,5 +1,0 @@
-revision: fc09f96c8036094bef06370dbb4b436edf96e6e3
-command: bash .ufo/waves/round-27/count-c2.sh fc09f96c8036094bef06370dbb4b436edf96e6e3
-a2_cases=0 a2_rules_covered=0/10
-C2=unmet
-exit: 1

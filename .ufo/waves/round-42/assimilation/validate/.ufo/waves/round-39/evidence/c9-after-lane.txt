@@ -1,8 +1,0 @@
-command: gate v2 bytes at f920eaf7 vs the round-38 gate receipts, --round-base f10a320d
-diff tip (v2 f920eaf7 vs r38 gate-after.txt): identical, exit 0
-diff e37dcc6 (v2 vs r38 gate-after-e37dcc6.txt): identical, exit 0
-v2 walk commits (full-history) at the entering tip 13f3db7e: 53
-v1 walk commits (default simplification): 52
-6531ac60 present: v2=1 v1=0  (history simplification was dropping a commit on the lane)
-amendment (w1/RevC9Walk): counts 53/52 were measured at the entering tip; at the landed tip 13bfba23 they
-are 54/53 — the +1 is this round's own linear data commit f920eaf7, not a simplification artifact.

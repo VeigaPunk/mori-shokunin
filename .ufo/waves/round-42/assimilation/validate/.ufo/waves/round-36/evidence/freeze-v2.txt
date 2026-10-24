@@ -1,5 +1,0 @@
-round-36 freeze v2 (L1 MoriR36), 2026-10-23T12:03:04Z; supersedes the v1 counter bytes of evidence/freeze.txt for the claims (v1 receipts stay as C0 history)
-dbd3f6d793239a2f729f89778847eb47b901167fa7a98f57269621f4273c4127  contract.md
-86dd3b7ab2d2563bbc811e83717b35dfea3d69717dab4d41d454f8b87c8764c0  count-c1.py
-c7edaacfff029c2055bee6ddda42ff6f5c040dad7fbac81e9d169602edcbac34  count-c2.py
-C0 under v2: 25 controls unmet, 0 met (evidence/c0-rescore-v2.txt); REF1 C1=met, REF2 C2=met

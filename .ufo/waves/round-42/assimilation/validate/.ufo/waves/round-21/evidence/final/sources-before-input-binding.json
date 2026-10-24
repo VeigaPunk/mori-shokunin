@@ -1,9 +1,0 @@
-{
-  "schema": "mori-r21-source-count-binding-v1",
-  "revision": "e9f340ce986f82a60baad1b8e5ead655ab818a1c",
-  "path": "corpus/SOURCES.md",
-  "sha256": "d77bfde54be2c5398e62b2d8b25520bd843b5b1bd086bf7a87740fde0804a34f",
-  "counted_clone_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/round21/OracleLoss/corpus/SOURCES.md",
-  "byte_equal": true,
-  "reproduction": "Read the named committed blob into a private temporary file, then use sources-census.sh census --file FILE. The clone is disposable; the committed source remains authoritative."
-}

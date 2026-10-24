@@ -1,4 +1,0 @@
-# measured at parent 926ac1460c0b9a542725257870f530f98e94e4b1; the landed tip adds only receipt files under .ufo/waves/round-30/evidence/
-command: python3 -I -B tools/mori-retention-gate.py scan --repo /home/vgpnk/Projects/shokunin/mori-shokunin --rev 926ac1460c0b9a542725257870f530f98e94e4b1 --policy .ufo/waves/round-18/frozen/c1-policy.json --allowlist corpus/evidence/retention-allowlist.json  (JSON summarised)
-metric=4 unallowlisted=4 routed=0 commit=926ac1460c0b9a542725257870f530f98e94e4b1
-exit: 1   # exit 1 is structural: the same 4 inherited unallowlisted hits exist at base 58b61681

@@ -1,7 +1,0 @@
-revision: ec840f9df9999bb6f5796c07128db0fec26e7c7e
-command: python3 -I -B tools/mori-pressure.py --selftest
-tool_blob: 5785c5b23233a5ed1d2116ab610f9aa0cf3b12ec
-fixtures_tree: c28ccfdf6233ecc04c5b7f827cc3c66c3d8da9c8
-exit: 0
-MORI_PRESSURE_SELFTEST: PASS 12/12
-MATCHER: rejected 48/48 corrupted expectations

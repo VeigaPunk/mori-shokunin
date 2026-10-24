@@ -1,5 +1,0 @@
-$ cd frozen/blind-check && bash ./verify.sh
-tool_sha256=79b774f7736cc9074fa786ad360553987d92096a3864b07212f7a3127924beb8
-tool_exit=1 (expected 1)
-frozen_run: match
-exit=0

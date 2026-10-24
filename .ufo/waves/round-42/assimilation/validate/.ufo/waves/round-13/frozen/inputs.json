@@ -1,7 +1,0 @@
-{
-  "base_commit": "6531ac6029e200a6392bb76673b6a17d3c895c96",
-  "sha256": {
-    "mori-census.sh": "3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164",
-    "mori-silence-cases.sh": "448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5"
-  }
-}

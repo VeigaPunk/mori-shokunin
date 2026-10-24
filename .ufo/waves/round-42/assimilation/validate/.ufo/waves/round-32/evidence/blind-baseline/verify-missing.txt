@@ -1,4 +1,0 @@
-$ cp -a frozen/blind-check copy-missing  # then: rm snapshot/.ufo/waves/round-30/w1/CaseR30b.md
-snapshot_tampered
-verify: missing pinned snapshot input: snapshot/.ufo/waves/round-30/w1/CaseR30b.md
-exit=2

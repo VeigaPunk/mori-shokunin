@@ -1,1 +1,0 @@
-{"schema":"ufo-swarm-wave-error-v1","code":"unknown_role","message":"items[0].role \"planner\" is not a swarm role"}

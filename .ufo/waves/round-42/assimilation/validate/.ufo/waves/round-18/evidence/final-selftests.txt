@@ -1,8 +1,0 @@
-SELFTEST retention-gate PASS 21/21
-retention-gate rc=0
-SELFTEST freeze-order PASS 12/12
-freeze-order rc=0
-SELFTEST mori-dispatch-ledger PASS 14/14
-dispatch-ledger rc=0
-MORI_CENSUS_SELFTEST: PASS (134 cases, 134 passed, 0 failed)
-{"arms": 31, "claims_runtime_prevention": false, "clauses_checked": 12, "finding_id": "SELFTEST_OK", "static_only": true}

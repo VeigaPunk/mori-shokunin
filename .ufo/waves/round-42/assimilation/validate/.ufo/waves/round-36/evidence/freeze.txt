@@ -1,5 +1,0 @@
-round-36 freeze (L1 MoriR36), 2026-10-23T11:47:16Z, entering tip 6bd57097f7ab2b471b4593ed2019c980b1368c68
-d903c67950a081c3e25d19a208f79c84ab6e34f99680acea31d3f8590eaa431a  contract.md
-ed3f0e5e779e7a034fe916b74307971a4ae847491c4f8d70e3de40c2b3ac4145  count-c1.py
-302f9aa05b5435bc4894edcd7e4ceb682f51830e62732273f49c60e9c29aaffb  count-c2.py
-builders: ExecCounterC1 (executor), ExecCounterC2 (executor); before receipts evidence/c1-before.txt, evidence/c2-before.txt (both tool_absent, unmet, exit 1)

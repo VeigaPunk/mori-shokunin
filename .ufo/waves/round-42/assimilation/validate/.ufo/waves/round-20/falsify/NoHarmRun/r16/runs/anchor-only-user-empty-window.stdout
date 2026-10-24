@@ -1,1 +1,0 @@
-{"anchor_sha256":"a5755cba7ec88a99e7def63fd6610dd38b4fe00d261ce41ae6d1357a5c068b7b","cursor_semantics":"byte-equality-acceptance-only","end_cursor_sha256":null,"evidence_basis":"validated-record-subsets","finding_id":"MORI_JOURNAL_WINDOW_OK","positive_kernel_oom":0,"positive_process_sigkill":0,"positive_unit_oom":0,"positive_unit_signal":0,"records_after_anchor":0,"scope":"user"}

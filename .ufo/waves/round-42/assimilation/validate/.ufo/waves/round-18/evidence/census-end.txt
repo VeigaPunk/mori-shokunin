@@ -1,4 +1,0 @@
-mori	W04	S035 duplicate url raw.githubusercontent.com/systemd/systemd/cf8ebfc6159cf0b3b99aa9a0164ccb07c4c9c5af/catalog/systemd.catalog.in across scopes
-mori	W04	S037 duplicate url www.freedesktop.org/software/systemd/man/latest/systemd.journal-fields.html across scopes
-mori	ok	/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md
-exit=0

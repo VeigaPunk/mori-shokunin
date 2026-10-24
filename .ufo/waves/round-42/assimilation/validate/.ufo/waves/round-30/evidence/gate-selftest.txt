@@ -1,4 +1,0 @@
-# gate self-test at commit time; file sha256 b415bc1191d011a968b5065e2b4d057d43b3c21b7ee339a372c22d9b545edd79; FixBlindGate blob 99e7ec03… plus one L1 change before any writer report was read: the writer's own scratch dir is accepted under both seat-name forms (CaseR30x and MoriR30.CaseR30x), Amendment A2 'own scratch dir'
-$ bash .ufo/waves/round-30/check-blind-wave.sh --selftest
-PASS
-exit: 0

@@ -1,8 +1,0 @@
-$ cp -a frozen/blind-check copy-muttool  # then: append MUT to the rule label in tool/mori-blind-check.sh
-verify: pinned tool bytes differ (expected 79b774f7736cc9074fa786ad360553987d92096a3864b07212f7a3127924beb8, got c378acd2047648ac17f7752bd0c5deeb0d048cb588c6e8d40fe390918f835741)
-verify: stdout differs: line 3 differs: expected '.ufo/waves/round-30/w1/CaseR30a.md:1:writer-missing-files-opened-list', got '.ufo/waves/round-30/w1/CaseR30a.md:1:writer-missing-files-opened-listMUT'
-verify: pinned tool bytes changed; the frozen verdict was not reproduced under the pinned tool
-tool_sha256=c378acd2047648ac17f7752bd0c5deeb0d048cb588c6e8d40fe390918f835741
-tool_exit=1 (expected 1)
-frozen_run: differ
-exit=1
