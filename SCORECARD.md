@@ -2306,4 +2306,12 @@ or promotion. Frontier: S230, S231 rows; census 229 → 231 (exit 0 both ends,
 `evidence/census-start.txt`/`census-end.txt`). Round shape: ONE v2 wave, 64 seats
 (31 attack = 48.4%), prepared+validated by attempt 1 under policy v2
 (`evidence/wave-plan.json` exit 0, `w1-spec.json`); dispatch status recorded in the
-round report.
+round report. Attempt 3 (2026-10-24): wave dispatched by attempt 2 (64 spawned;
+19/64 seat reports returned, committed under `.ufo/waves/round-41/w1/`); all 19
+freeze pins re-verified at `7450722e` (`evidence/freeze-verify-attempt3.txt`);
+C1/C2/C3 counters re-run live at `7450722e` with frozen-target results; census
+229 → 231 exit 0 both ends (`evidence/census-start.txt`, `census-end.txt` — end
+receipt repaired with header + `ROWS=231`); `calibration-after.txt` re-issued
+with measured-revision header; lesson M27/M28 appended with wave-draft M-id
+adjudication + S230 quote erratum; fleet report
+`/home/vgpnk/Projects/shokunin/.ufo/reports/round-41/mori.md`.

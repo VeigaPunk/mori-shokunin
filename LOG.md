@@ -2360,6 +2360,22 @@ under this round for durability. Wave: one v2 wave prepared by attempt 1
 (`w1-spec.json`, 64 seats, 31 attack = 48.4%, plan exit 0 at
 `evidence/wave-plan.json`).
 
+Attempt 3 (2026-10-24, this report): attempt 2 dispatched the wave (64 seats
+spawned, `evidence/wave-run.json`) and landed all three claims' evidence before
+dying pre-report; 19/64 seat reports returned and are committed under
+`.ufo/waves/round-41/w1/`. Attempt 3 re-verified every inherited byte: 19/19
+freeze pins at `7450722e` (`evidence/freeze-verify-attempt3.txt`), all three
+counters re-run live at `7450722e` in a disposable sandbox with frozen-target
+results (C1 honest `CONFORM=met` + 3 survivors `CONFORM=unmet` only-`timeout_scope`
++ selftest 14/0; C2 selftest 22/0, lane line 36 as-of stale=[], `e37dcc6`
+stale=[S069]; C3 `mismatches=0`). Repaired receipts: `census-end.txt` regained
+its header + manual row-count (`ROWS=231`, exit 0), `calibration-after.txt`
+re-issued with the measured-revision header (w1 findings F2/F3). Lesson
+appended (never rewritten): M27 count-universe conflation + M28 silent-survivor
+with the wave-draft M-id adjudication, and the S230 located-quote erratum
+(34 tokens measured; corrected 20-word quote). Dispatch record + seat reports
+committed. Fleet report: `/home/vgpnk/Projects/shokunin/.ufo/reports/round-41/mori.md`.
+
 Round-41 calibration correction: observed_as_of=35; extension_rows=17.
 (single-line record for the frozen counter; the round-41 entry above records the
 same values — the frozen r40 gate derives 35 as-of ids / 17 extension rows at T1.)

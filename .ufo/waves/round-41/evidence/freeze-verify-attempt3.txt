@@ -1,0 +1,23 @@
+freeze-r41 pin re-verification — attempt 3 (L1 mori-r41), at lane tip 7450722e5f3b4fc6df3d719386ed643af59630e3
+method: sha256 of each pinned path extracted via `git show 7450722e5f3b4fc6df3d719386ed643af59630e3:<path>`, compared to freeze-r41.txt
+context: attempt 2 advanced the tip from d72ac16 to aa161e99 (claim/evidence commits) and then to 7450722e (after-measurement receipts, SCORECARD declaration, lesson fix); w1 finding F6 asked for the 19 pins re-hashed at the new tip. Attempt 3 ran this verification live on 2026-10-24 before filing the round report.
+OK  .ufo/waves/round-41/contract.md
+OK  .ufo/waves/round-41/conform.py
+OK  tools/mori-sources-appendonly.py
+OK  tools/mori-round41-calibration.py
+OK  .ufo/waves/round-41/fixtures/run-r41-controls.py
+OK  .ufo/waves/round-41/fixtures/c2/build-dags-r40.py
+OK  .ufo/waves/round-41/fixtures/extracted/conform-v3-r40.py
+OK  .ufo/waves/round-41/fixtures/extracted/gate-v3-r40.py
+OK  .ufo/waves/round-41/fixtures/c1/count-c8.py
+OK  .ufo/waves/round-41/fixtures/c1/survivor-walrus-none.py
+OK  .ufo/waves/round-41/fixtures/c1/survivor-tupleunpack-none.py
+OK  .ufo/waves/round-41/fixtures/c1/survivor-deadloop-rebind.py
+OK  .ufo/waves/round-41/w1-spec.json
+OK  .ufo/waves/round-41/evidence/control-before.txt
+OK  .ufo/waves/round-41/evidence/census-start.txt
+OK  .ufo/waves/round-41/evidence/wave-plan.json
+OK  .ufo/waves/round-40/evidence/freeze-r40.txt
+OK  corpus/knowledge/conform-bindings-r41.md
+OK  corpus/README.md
+verified=19 mismatches=0
