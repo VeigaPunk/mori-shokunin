@@ -1,0 +1,393 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r42-v2",
+  "createdAt": "2026-10-24T23:29:20.412Z",
+  "updatedAt": "2026-10-24T23:29:20.412Z",
+  "reportDir": ".ufo/waves/round-42/w1",
+  "members": {
+    "RevC1V5": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "RevC1Routed": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "RevC2Errata": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "RevC3Manifest": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "RevAssimRows": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "RevAssimEntries": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "RevS347": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "RevLesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "RevRefusal": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "RevQuality114": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "RevManifestProv": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "RevCounterC2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "CritC1Counter": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "CritC2Counter": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "CritC3Counter": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "CritV5Arms": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "CritSweep": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "CritAssimTier": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "CritS262Scope": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "CritManifestExtras": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "CritCollision": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "CritRecordsAppend": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "CritQuarantine": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "MutC1Walrus2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutC1Tuple2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutC1Sort2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutC2Record": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutC3Manifest": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutS347Quote": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutV5NoHarm": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutGate22": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "ScS232": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScS233": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScS234": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScS235": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScS241": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScS262": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScS347": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScPkgTheme": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScConsider": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScSweepStale": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScFreezePins": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScCensusEnd": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScrLogWave": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "ScrScoreOutcome": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "ScrTrends": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "ScrShonen": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "ScrFrontier": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "ScrCapability": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "ScrRefusalFlip": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "ScrRegistryNarr": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "ScrL0": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "ScrMistakeD2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "ExecC1Rerun": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ExecC2C3Rerun": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ExecV4Control": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ExecMutantBytes": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ExecRetention": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ExecGateLane": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ExecCensusRows": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ExecFreezeOrder": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ConnSiblingOOM": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null
+    },
+    "SimpV5": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "simplifier",
+      "item": null
+    },
+    "RvgStaleClaims": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "revenger",
+      "item": null
+    }
+  }
+}

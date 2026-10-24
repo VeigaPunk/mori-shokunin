@@ -90,3 +90,14 @@ lane on 2026-10-24 in the publisher-deposited OpenAlex record (abstract
 inverted index); the full text remains paywalled from this host, so the
 entry's abstract-only scope stands. Gate quote in
 `corpus/lessons/round-42.md`.
+
+### Round-42 erratum (wave-1 CritS262Scope; append-only)
+
+The source line's "Abstract and TLDR as recorded by the publisher's
+Semantic Scholar record" leg is dead as of 2026-10-24: Semantic Scholar
+answers `{"error":"s2: DOI not in Semantic Scholar"}` for this DOI. No claim
+sentence in this entry depends on the TLDR; every claim rests on the
+publisher-deposited abstract, located byte-for-byte in the OpenAlex record
+(`corpus/evidence/sources-r42/S262.oa.json`, recheck green). The entry is
+admitted with this erratum naming the superseded provenance leg
+(`.ufo/waves/round-42/w1/CritS262Scope.md`).

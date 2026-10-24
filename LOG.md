@@ -2461,3 +2461,23 @@ are reused as this round's freeze; nothing was discarded.
   the closure to rule on.
 - **C2 — met** (`evidence/c2-after.txt`, exit 0).
 - **C3 — met** (`evidence/c3-after.txt`, exit 0).
+
+### Round-42 wave record (L1)
+
+One v2 wave, 64 seats (attack 31 = 48.4%: reviewer 12, critic 11,
+mutation-tester 8; build 33: scout 12, scribe 10, executor 8, connector 1,
+simplifier 1, revenger 1), validated under policy v2
+(`evidence/wave-plan.json` exit 0) and dispatched as ONE batched task call
+(`evidence/wave-dispatch.json` taskCall 64 tasks; omp parent transcript
+`evidence/wave-parent-out.txt`). 18/64 seat reports returned under
+`.ufo/waves/round-42/w1/` before the parent completed (returned mix:
+reviewer 6, critic 6, mutation-tester 5, scout 1); 46 seats returned no
+report — recorded as dead seats (registry absence), not replaced. The
+parent's name→agent-id mapping did not reach stdout, so `record
+--assignments` could not complete; registry agentIds remain null (recorded
+shortfall). Material wave findings folded: CritS262Scope erratum appended to
+the admitted S262 entry; RevRefusal found the refused entry's flip
+condition fired (VOR PDF fetchable via the stampPDF endpoint, sha256
+d42b2fbf…) — the refusal stands as made on the evidence gathered, and the
+re-gate routes to round 43. No seat wrote outside its report; misroot sweep
+clean (no mori-r42 seat file at the fleet root).
