@@ -18,25 +18,24 @@ What the gate measures, at revision <rev>:
                  identity is the id, never the line position.
   deleted        ids carried by some ancestry commit of <rev> and absent at
                  <rev> (the round-35 gap: a deleted row is not a rewrite).
-  superseded     ids in `ids` for which a row present at <rev> has a `teaches`
-                 cell opening `supersedes S###`.
+  superseded     target ids present at <rev> with at least one `supersedes S###`
+                 pair whose superseding row is also present at <rev>.
   round_changed  ids whose immutable cells changed, or which were deleted, in
-                 any commit of REV..<rev> that touches the path.  An id edited
+                 any commit of REV..<rev> that touches the path. An id edited
                  and then edited back inside the range is listed too: the
                  change is a fact of the round even when the endpoint matches.
 
-  superseded_as_of  ids in `superseded` whose latest superseding row's landing commit
-                 is a descendant of (strictly later than) the id's last immutable-cell
-                 edit commit.  Presence alone does not discharge: a superseder that
-                 landed before the edit leaves the id in `stale_supersede` (round 38,
-                 ExecGateRound D3).
-  stale_supersede  superseded ids whose latest superseder landed at or before the edit.
+  superseded_as_of  eligible ids whose selected superseder landing is a
+                 descendant of or equal to the id's last immutable-cell edit
+                 commit. A never-edited id uses its first-sighting commit.
+  stale_supersede  eligible ids whose selected superseder landing is not a
+                 descendant of or equal to the edit.
 
   appendonly_violations = len(ids) + len(deleted)
 
-Columns are taken by header position (id source kind tier scope anchor teaches
-status opened recheck used-by); cells are compared stripped, so whitespace
-padding is not a change.  Rows are keyed by id.
+Immutable cells and `teaches` are read by header name from each commit's own
+registry header; immutable keys compare in canonical column order. Rows are
+keyed by the id column and cell text is stripped before comparison.
 
 Output (stdout):
     changed <id> superseded_by=<latest superseding row id, or ->
@@ -74,21 +73,24 @@ TIMING_RE = re.compile(
     r"^supersede_timing superseded_as_of=\[([^\]]*)\] stale_supersede=\[([^\]]*)\]$")
 
 PREDICATE = (
-    "P-C11: at revision R, tools/mori-sources-appendonly.py reports, after its "
-    "summary line, `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; "
-    "the timing line's eligible set is every superseded id present at R — a "
-    "never-edited superseded id's last immutable-cell edit is its first-sighting "
-    "commit, so it reaches the as-of/stale test — and an edit at a commit is a "
-    "change against its first parent's state only: when the first parent lacks "
-    "the path the commit contributes no edits (a delete-then-re-add contributes "
-    "no changed event; ids still compare tip cells against first-sighting "
-    "cells), never a fall-through to another parent's state; the lane-history "
-    "verdicts are unchanged except the eligible-set extension — S226 joins "
-    "superseded_as_of (19 ids) at the landed tip, no id is stale at the tip, "
-    "S069 is stale at e37dcc6 — and the selftest carries committed fixtures for "
-    "a never-edited superseded row (as-of), a merge whose first parent lacks "
-    "the path (no fabricated edit), and a linear delete-then-re-add (no changed "
-    "event)."
+    "P-C12: at revision R, tools/mori-sources-appendonly.py reports the timing "
+    "line `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; an "
+    "eligible pair requires both the superseded id and its superseding row to "
+    "be present at R. Immutable cells and `teaches` use each commit's own "
+    "header map, while edits remain first-parent comparisons only. A landing "
+    "is a commit where the pair is absent from every direct parent tree; a "
+    "delete/re-add therefore creates another landing. For each target, select "
+    "a candidate landing that is not a strict ancestor of another eligible "
+    "landing; incomparable maximal candidates tie-break by superseder id, "
+    "then full landing hash. The selected landing decides `superseded_by` "
+    "and timing. A never-edited id uses its first-sighting commit; the edit "
+    "is as-of only when it is an ancestor of or equal to the selected landing. "
+    "The landed tip target is 36 as-of ids and no stale ids, including S229 "
+    "superseded by r41 correction row S231; S069 is stale at e37dcc6. Multiple "
+    "incomparable edits to one id remain a named walk-order residual. Selftest "
+    "covers the r40 never-edited, first-parent-lacks-path and delete/re-add "
+    "cases, plus header permutations, superseder rows absent at R, both date "
+    "orders of dag-2l, and a superseder deleted and re-added after an edit."
 )
 
 
@@ -206,7 +208,7 @@ def parse_registry(text):
 
 
 def immutable_indices(colmap):
-    """Cell indices of the immutable columns, by header position."""
+    """Immutable cell indices in canonical column order, located by header name."""
     if not colmap:
         colmap = {name: index for index, name in enumerate(COLUMNS)}
     return [colmap[name] for name in COLUMNS
@@ -218,38 +220,10 @@ def imm_key(cells, imm_idx):
     return tuple(cells[i].strip() for i in imm_idx)
 
 
-def superseders(rows, colmap):
-    """superseded id -> id of the row that supersedes it (first one wins)."""
-    teaches_idx = (colmap or {}).get("teaches", COLUMNS.index("teaches"))
-    out = {}
-    for cells in rows:
-        if teaches_idx >= len(cells):
-            continue
-        match = SUPERSEDES_RE.match(cells[teaches_idx].strip())
-        if match:
-            out.setdefault(match.group(1), cells[0].strip())
-    return out
-
-
 # ------------------------------------------------------------------- analysis
 
 def analyze(repo, rev, path, round_base=None):
-    """Walk the path's history and return the four lists plus the verdict.
-
-    Version 3 (round 40, r39 w1 findings 2/5): the supersede_timing eligible
-    set is every superseded id present at R — a never-edited superseded id's
-    last immutable-cell edit is its first-sighting commit — and an edit at a
-    commit is a change against its first parent's state only, read from the
-    first parent's own tree: when the first parent lacks the path (or the
-    row) the commit contributes no edits and never falls through to another
-    parent's or ancestor's state, so a delete-then-re-add contributes no
-    changed event (persistent drift still surfaces in `ids`, which compares
-    tip cells against first-sighting cells). Version 2 semantics (round 39,
-    r38 lesson F1/F2) are retained for everything else: the walk carries
-    parent hashes and uses `--full-history`; the supersede-as-of test is
-    `git merge-base --is-ancestor` between the id's last edit commit and the
-    superseding row's landing commit (not walk index order).
-    """
+    """Walk the path history and return append-only and P-C12 verdicts."""
     rev_full = git(repo, "rev-parse", "--verify", rev + "^{commit}").strip()
     tip_text = git_blob(repo, "%s:%s" % (rev_full, path))
     if tip_text is None:
@@ -267,91 +241,151 @@ def analyze(repo, rev, path, round_base=None):
     parents_of = dict(walk)
     by_hash = {commit: index for index, commit in enumerate(commits)}
 
+    def supersede_pairs(rows, colmap):
+        if rows is None:
+            return set()
+        colmap = colmap or tip_colmap
+        teaches_idx = colmap.get("teaches", COLUMNS.index("teaches"))
+        pairs = set()
+        for cells in rows:
+            if teaches_idx < len(cells):
+                match = SUPERSEDES_RE.match(cells[teaches_idx].strip())
+                if match:
+                    pairs.add((match.group(1), cells[0].strip()))
+        return pairs
+
     states = []
-    colmap = None
+    colmaps = []
+    pair_sets = []
     for commit in commits:
         text = git_blob(repo, "%s:%s" % (commit, path))
         if text is None:
-            states.append(None)          # path absent at that commit
+            states.append(None)
+            colmaps.append(None)
+            pair_sets.append(set())
             continue
         rows, commit_colmap = parse_registry(text)
-        if commit_colmap is not None and colmap is None:
-            colmap = commit_colmap
         states.append(rows)
-    if colmap is None:
-        colmap = tip_colmap
-    imm_idx = immutable_indices(colmap)
+        colmaps.append(commit_colmap)
+        pair_sets.append(supersede_pairs(rows, commit_colmap))
 
-    first = {}          # id -> cells in the first commit that carried it
-    first_commit = {}   # id -> commit of its first sighting in the walk
-    changed_at = {}     # commit index -> ids whose immutable cells changed
-    deleted_at = {}     # commit index -> ids that disappeared there
-    supersede_rows = {}     # (superseded id, superseder id) -> first index it appears
-    supersede_landing = {}  # superseded id -> (latest landing index, that superseder id)
-    teaches_idx = (colmap or {}).get("teaches", COLUMNS.index("teaches"))
+    # A landing is a commit where the pair is absent from every direct parent
+    # tree. Re-adding a deleted superseder creates a new ancestry candidate.
+    external_pair_sets = {}
+
+    def parent_pairs(parent):
+        pidx = by_hash.get(parent)
+        if pidx is not None:
+            return pair_sets[pidx]
+        if parent not in external_pair_sets:
+            parent_text = git_blob(repo, "%s:%s" % (parent, path))
+            if parent_text is None:
+                external_pair_sets[parent] = set()
+            else:
+                rows, parent_colmap = parse_registry(parent_text)
+                external_pair_sets[parent] = supersede_pairs(rows, parent_colmap)
+        return external_pair_sets[parent]
+
+    landing_commits = {}
+    for index, commit in enumerate(commits):
+        pairs = pair_sets[index]
+        if not pairs:
+            continue
+        inherited = set()
+        for parent in parents_of.get(commit, []):
+            inherited.update(parent_pairs(parent))
+        for pair in pairs - inherited:
+            landing_commits.setdefault(pair, []).append(commit)
+
+    first = {}
+    first_commit = {}
+    first_colmap = {}
+    changed_at = {}
+    deleted_at = {}
     for index, commit in enumerate(commits):
         rows = states[index]
         if rows is None:
             continue
-        for cells in rows:
-            if teaches_idx >= len(cells):
-                continue
-            m = SUPERSEDES_RE.match(cells[teaches_idx].strip())
-            if m:
-                supersede_rows.setdefault((m.group(1), cells[0].strip()), index)
+        commit_colmap = colmaps[index] or tip_colmap
         current = {cells[0]: cells for cells in rows}
         ref = None
+        ref_colmap = None
         parents = parents_of.get(commit, [])
         if parents:
-            # P-C11: an edit is a change against the FIRST parent's state
-            # only, read from the first parent's own tree — never resolved
-            # through ancestors (a delete-then-re-add's parent genuinely
-            # lacks the row/path) and never a fall-through to another
-            # parent's state (r39 w1 findings 5a/5b).
-            head = parents[0]
-            pidx = by_hash.get(head)
+            # Edits compare against the first parent's own tree only. A missing
+            # path or row never falls through to another parent or ancestor.
+            parent = parents[0]
+            pidx = by_hash.get(parent)
             if pidx is not None:
                 ref = states[pidx]
+                ref_colmap = colmaps[pidx]
             else:
-                head_text = git_blob(repo, "%s:%s" % (head, path))
-                if head_text is not None:
-                    ref = parse_registry(head_text)[0]
+                parent_text = git_blob(repo, "%s:%s" % (parent, path))
+                if parent_text is not None:
+                    ref, ref_colmap = parse_registry(parent_text)
         if ref is None:
             for cid, cells in current.items():
                 if cid not in first:
                     first[cid] = cells
                     first_commit[cid] = commit
+                    first_colmap[cid] = commit_colmap
             continue
+
+        ref_colmap = ref_colmap or tip_colmap
+        ref_imm_idx = immutable_indices(ref_colmap)
+        commit_imm_idx = immutable_indices(commit_colmap)
         ref_cells = {cells[0]: cells for cells in ref}
         for cid, cells in current.items():
             if cid not in first:
                 first[cid] = cells
                 first_commit[cid] = commit
+                first_colmap[cid] = commit_colmap
             elif cid in ref_cells:
-                if imm_key(cells, imm_idx) != imm_key(ref_cells[cid], imm_idx):
+                if imm_key(cells, commit_imm_idx) != \
+                        imm_key(ref_cells[cid], ref_imm_idx):
                     changed_at.setdefault(index, set()).add(cid)
-            # P-C11: no `elif not is_merge` re-add branch — a row whose first
-            # parent lacks it is an addition, not an edit; persistent drift
-            # still surfaces through the ids tip-vs-first-sighting comparison
-            # (r39 w1 finding 5a).
         gone = set(ref_cells) - set(current)
         if gone:
             deleted_at.setdefault(index, set()).update(gone)
 
     tip = {cells[0]: cells for cells in tip_rows}
+    tip_imm_idx = immutable_indices(tip_colmap)
     ids = sorted(cid for cid, cells in tip.items()
                  if cid not in first
-                 or imm_key(cells, imm_idx) != imm_key(first[cid], imm_idx))
+                 or imm_key(cells, tip_imm_idx) !=
+                 imm_key(first[cid], immutable_indices(first_colmap[cid])))
     deleted = sorted(set(first) - set(tip))
-    for (target, by), index in supersede_rows.items():
-        previous = supersede_landing.get(target)
-        if previous is None or index > previous[0]:
-            supersede_landing[target] = (index, by)
-    sup_map = {target: by for target, (_, by) in supersede_landing.items()}
-    # P-C11: the timing line's eligible set is every superseded id present at
-    # R, not only the edit-bounded `ids` list — a never-edited superseded id
-    # still reaches the as-of/stale test (r39 w1 finding 2).
-    superseded = sorted(cid for cid in tip if cid in sup_map)
+
+    # Only pairs whose target and superseder both survive at R are eligible.
+    eligible = {}
+    for (target, by), landings in landing_commits.items():
+        if target in tip and by in tip:
+            eligible.setdefault(target, []).extend((landing, by)
+                                                   for landing in landings)
+    ancestry_cache = {}
+
+    def ancestor(older, newer):
+        key = (older, newer)
+        if key not in ancestry_cache:
+            ancestry_cache[key] = is_ancestor(repo, older, newer)
+        return ancestry_cache[key]
+
+    supersede_landing = {}
+    sup_map = {}
+    for target, candidates in eligible.items():
+        maximal = []
+        for landing, by in candidates:
+            has_descendant = any(
+                landing != other_landing and ancestor(landing, other_landing)
+                for other_landing, _ in candidates)
+            if not has_descendant:
+                maximal.append((landing, by))
+        landing, by = min(maximal, key=lambda candidate:
+                          (candidate[1], candidate[0]))
+        supersede_landing[target] = landing
+        sup_map[target] = by
+
+    superseded = sorted(sup_map)
     last_edit = {}
     for index, changed in changed_at.items():
         for cid in changed:
@@ -359,12 +393,9 @@ def analyze(repo, rev, path, round_base=None):
     superseded_as_of = []
     stale_supersede = []
     for cid in superseded:
-        landing_index = supersede_landing[cid][0]
-        # a never-edited id's last immutable-cell edit is its first-sighting
-        # commit (P-C11's plain words; the round-39 gate never reached it)
+        landing = supersede_landing[cid]
         edit_commit = last_edit.get(cid) or first_commit.get(cid)
-        if edit_commit is not None and is_ancestor(
-                repo, edit_commit, commits[landing_index]):
+        if edit_commit is not None and ancestor(edit_commit, landing):
             superseded_as_of.append(cid)
         else:
             stale_supersede.append(cid)
@@ -702,6 +733,161 @@ def _make_dag_repo(path, kind, bodies, env):
     return shas
 
 
+def _r41_render_permuted(rows, swap=(1, 6)):
+    columns = list(COLUMNS)
+    left, right = swap
+    columns[left], columns[right] = columns[right], columns[left]
+    out = ["# SOURCES — selftest registry", "", "## Registry", "",
+           "| " + " | ".join(columns) + " |",
+           "|" + "|".join(["---"] * len(columns)) + "|"]
+    for cells in rows:
+        permuted = list(cells)
+        permuted[left], permuted[right] = permuted[right], permuted[left]
+        out.append("| " + " | ".join(permuted) + " |")
+    return "\n".join(out) + "\n"
+
+
+def _r41_merge_resolved(path, side, body, msg, when, env):
+    dated = dict(env, GIT_AUTHOR_DATE=when, GIT_COMMITTER_DATE=when)
+    proc = subprocess.run(
+        ["git", "-C", path, "merge", "--no-commit", "--no-ff", "--no-edit",
+         "-m", msg, side],
+        capture_output=True, text=True, timeout=120, env=dated)
+    if proc.returncode not in (0, 1):
+        raise GateError("selftest r41 merge %s failed: %s"
+                        % (msg, proc.stderr.strip()))
+    target = os.path.join(path, "corpus", "SOURCES.md")
+    with open(target, "w", encoding="utf-8") as handle:
+        handle.write(body)
+    _git_in(path, "add", "corpus/SOURCES.md", env=env)
+    proc = subprocess.run(["git", "-C", path, "commit", "-q", "-m", msg],
+                          capture_output=True, text=True, timeout=120, env=dated)
+    if proc.returncode != 0:
+        raise GateError("selftest r41 merge commit %s failed: %s"
+                        % (msg, proc.stderr.strip()))
+    return _git_in(path, "rev-parse", "HEAD", env=env).strip()
+
+
+def _make_r41_dag_repo(path, kind, env):
+    _dag_init(path, env)
+    shas = {}
+    s001 = _row("S001")
+    s001_v2 = _row("S001", anchor="anchor a v2")
+    s008 = _row("S008", source="https://example.invalid/e",
+                anchor="anchor e", teaches="teaches e")
+    s002 = _row("S002", source="https://example.invalid/b",
+                anchor="anchor b", teaches="supersedes S001 — replacement")
+    s003 = _row("S003", source="https://example.invalid/c",
+                anchor="anchor c", teaches="supersedes S001 — replacement")
+    s005 = _row("S005", source="https://example.invalid/g",
+                anchor="anchor g", teaches="teaches g")
+
+    if kind == "r41-dag-h":
+        shas["b0"] = _dag_commit(
+            path, _render([s001, s008, s002]), "b0", "2026-01-01T00:00:00Z", env)
+        _git_in(path, "checkout", "-q", "-b", "side", shas["b0"], env=env)
+        _dag_commit(path, _render([s001, s008, s002, s003]), "s1",
+                    "2026-01-01T01:00:00Z", env)
+        _git_in(path, "checkout", "-q", "main", env=env)
+        _dag_commit(path, _r41_render_permuted([s001, s008, s002]), "h1",
+                    "2026-01-01T02:00:00Z", env)
+        shas["tip"] = _r41_merge_resolved(
+            path, "side", _r41_render_permuted([s001, s008, s002, s003]),
+            "m", "2026-01-01T03:00:00Z", env)
+    elif kind == "r41-dag-h2":
+        shas["b0"] = _dag_commit(
+            path, _render([s001, s008]), "b0", "2026-01-01T00:00:00Z", env)
+        _dag_commit(path, _r41_render_permuted([s001, s008]), "h1",
+                    "2026-01-01T01:00:00Z", env)
+        shas["tip"] = _dag_commit(
+            path, _r41_render_permuted([s001, s008, s002]), "s2",
+            "2026-01-01T02:00:00Z", env)
+    elif kind in ("r41-dag-z", "r41-dag-z2"):
+        shas["b0"] = _dag_commit(
+            path, _render([s001]), "b0", "2026-01-01T00:00:00Z", env)
+        _git_in(path, "checkout", "-q", "-b", "side", shas["b0"], env=env)
+        side_rows = ([s001, s002] if kind == "r41-dag-z"
+                     else [s001_v2, s002])
+        _dag_commit(path, _render(side_rows), "s1",
+                    "2026-01-01T01:00:00Z", env)
+        _git_in(path, "checkout", "-q", "main", env=env)
+        _dag_commit(path, _render([s001, s005]), "c1",
+                    "2026-01-01T02:00:00Z", env)
+        shas["tip"] = _r41_merge_resolved(
+            path, "side", _render([s001, s005]), "m",
+            "2026-01-01T03:00:00Z", env)
+    elif kind in ("r41-dag-2l-early", "r41-dag-2l-late"):
+        shas["b0"] = _dag_commit(
+            path, _render([s001]), "b0", "2026-01-01T00:00:00Z", env)
+        _git_in(path, "checkout", "-q", "-b", "side", shas["b0"], env=env)
+        side_date = ("2026-01-01T01:00:00Z" if kind == "r41-dag-2l-early"
+                     else "2026-01-01T03:30:00Z")
+        _dag_commit(path, _render([s001, s002]), "s1", side_date, env)
+        _git_in(path, "checkout", "-q", "main", env=env)
+        _dag_commit(path, _render([s001_v2]), "c1",
+                    "2026-01-01T02:00:00Z", env)
+        _dag_commit(path, _render([s001_v2, s003]), "c2",
+                    "2026-01-01T03:00:00Z", env)
+        shas["tip"] = _r41_merge_resolved(
+            path, "side", _render([s001_v2, s002, s003]), "m",
+            "2026-01-01T04:00:00Z", env)
+    elif kind == "r41-dag-x":
+        shas["b0"] = _dag_commit(
+            path, _render([s001]), "b0", "2026-01-01T00:00:00Z", env)
+        shas["s1"] = _dag_commit(
+            path, _render([s001, s002]), "s1", "2026-01-01T01:00:00Z", env)
+        _dag_commit(path, _render([s001]), "d1", "2026-01-01T02:00:00Z", env)
+        _dag_commit(path, _render([s001_v2]), "e1",
+                    "2026-01-01T03:00:00Z", env)
+        shas["tip"] = _dag_commit(
+            path, _render([s001_v2, s002]), "r2",
+            "2026-01-01T04:00:00Z", env)
+    else:
+        raise GateError("unknown r41 selftest dag %r" % kind)
+    return shas
+
+
+def _selftest_r41_dag_cases():
+    return [
+        ("per-commit header map prevents fabricated changes",
+         "r41-dag-h", 0,
+         {"ids": [], "deleted": [], "superseded": ["S001"],
+          "round_changed": [], "superseded_as_of": ["S001"],
+          "stale_supersede": []}, "b0"),
+        ("per-commit teaches map retains permuted superseder",
+         "r41-dag-h2", 0,
+         {"ids": [], "deleted": [], "superseded": ["S001"],
+          "round_changed": [], "superseded_as_of": ["S001"],
+          "stale_supersede": []}, "b0"),
+        ("discarded superseder is ineligible at R",
+         "r41-dag-z", 0,
+         {"ids": [], "deleted": ["S002"], "superseded": [],
+          "round_changed": [], "superseded_as_of": [],
+          "stale_supersede": []}, "b0"),
+        ("discarded edit and superseder do not decide timing",
+         "r41-dag-z2", 1,
+         {"ids": [], "deleted": ["S002"], "superseded": [],
+          "round_changed": ["S001"], "superseded_as_of": [],
+          "stale_supersede": []}, "b0"),
+        ("incomparable superseders resolve independently of early date",
+         "r41-dag-2l-early", 1,
+         {"ids": ["S001"], "deleted": [], "superseded": ["S001"],
+          "round_changed": ["S001"], "superseded_by": {"S001": "S002"},
+          "superseded_as_of": [], "stale_supersede": ["S001"]}, "b0"),
+        ("incomparable superseders resolve independently of late date",
+         "r41-dag-2l-late", 1,
+         {"ids": ["S001"], "deleted": [], "superseded": ["S001"],
+          "round_changed": ["S001"], "superseded_by": {"S001": "S002"},
+          "superseded_as_of": [], "stale_supersede": ["S001"]}, "b0"),
+        ("deleted/re-added superseder uses the later ancestry landing",
+         "r41-dag-x", 1,
+         {"ids": ["S001"], "deleted": [], "superseded": ["S001"],
+          "round_changed": ["S001", "S002"],
+          "superseded_by": {"S001": "S002"},
+          "superseded_as_of": ["S001"], "stale_supersede": []}, "b0"),
+    ]
+
+
 def _selftest_cases():
     """(name, snapshots, expected dict) triples; expected holds the four lists."""
     base = _render([_row("S001")])
@@ -871,6 +1057,15 @@ def selftest():
             except Exception as exc:             # noqa: BLE001 - selftest reports
                 failed += 1
                 print("FAIL %s: %s" % (name, exc))
+        for offset, (name, kind, expected_exit, expected, base_name) in enumerate(
+                _selftest_r41_dag_cases()):
+            repo = os.path.join(root, "r41dag%02d" % offset)
+            try:
+                shas = _make_r41_dag_repo(repo, kind, env)
+                check_one(name, repo, shas[base_name], expected_exit, expected)
+            except Exception as exc:             # noqa: BLE001 - selftest reports
+                failed += 1
+                print("FAIL %s: %s" % (name, exc))
     finally:
         shutil.rmtree(root, ignore_errors=True)
     print("MORI_SOURCES_APPENDONLY_SELFTEST pass=%d fail=%d" % (passed, failed))
@@ -890,7 +1085,7 @@ def main(argv):
     parser.add_argument("--selftest", action="store_true",
                         help="run the fixture self-test and exit")
     parser.add_argument("--print-predicate", action="store_true",
-                        help="print the frozen P-C11 predicate and exit")
+                        help="print the frozen P-C12 predicate and exit")
     args = parser.parse_args(argv)
 
     if args.print_predicate:

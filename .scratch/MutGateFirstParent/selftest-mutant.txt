@@ -1,0 +1,2 @@
+FAIL first-parent-lacks-path merge contributes no edits: superseded_as_of: want ['S001'] got []; stale_supersede: want [] got ['S001']
+MORI_SOURCES_APPENDONLY_SELFTEST pass=14 fail=1

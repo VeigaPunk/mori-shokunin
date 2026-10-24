@@ -46,6 +46,7 @@
 | `knowledge/source-drift-hardening-r37.md` | the probe's two hardening policies — a 4 MiB bounded read and a post-redirect public-destination check — with their named selftest arms, mutation kills, live run and disclosed limits | S221–S225; `tools/mori-source-drift.py`; `.ufo/waves/round-37/count-c2.py` |
 | `knowledge/source-drift-content-anchor-r38.md` | the content half of the drift-corpus binding: named `anchor:` code strings that must resolve in the probe's bytes, capability paths that must resolve from the repo root, one named drifted row per summary count, and a named-row selftest arm killed by its own mutation; three fabricated token witnesses rejected | S205; S221–S226; `.ufo/waves/round-38/count-c4.py`; `.ufo/waves/round-38/evidence/c4-after.txt` |
 | `knowledge/containment-timed-supersede-r38.md` | containment decided on the resolved canonical path (S226), and the timed supersede reading: a disposition postdates the edit or the gate lists it in `stale_supersede`; S069's disposition at the round-38 tip | S226; S069; `tools/mori-sources-appendonly.py`; `.ufo/waves/round-38/evidence/gate-after.txt` |
+| `knowledge/conform-bindings-r41.md` | source-ordered timeout binding inventory for `Assign`/`AnnAssign`, `NamedExpr`, tuple/list targets, and loop/with targets; multiple or unsupported bindings fail closed within a named static subset | S230/S231; `.ufo/waves/round-41/conform.py`; `.ufo/waves/round-41/evidence/control-before.txt` |
 
 ## Known gaps
 

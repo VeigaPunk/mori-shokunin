@@ -1,0 +1,10 @@
+ARM_EVALUATED predicate
+ARM_EVALUATED head_pin
+ARM_EVALUATED tool_resolve
+ARM_EVALUATED bounded_reads
+ARM_EVALUATED timeout_scope
+ARM_EVALUATED timeout_scope_shadow
+ARM_EVALUATED drain_bind
+ARM_EVALUATED drain_bind_decoy
+ARM_EVALUATED timeout_state
+ARM_EVALUATED scratch

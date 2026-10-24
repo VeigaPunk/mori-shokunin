@@ -1,0 +1,51 @@
+--- .scratch/MutGateFirstParent/gate-v3-pristine.py	2026-10-24 03:03:04.018670773 -0300
++++ .scratch/MutGateFirstParent/gate-v3-mutant.py	2026-10-24 03:03:11.428683611 -0300
+@@ -145,6 +145,18 @@
+     return proc.stdout
+ 
+ 
++def nearest_path_commit(repo, commit, path):
++    """Newest commit at-or-before <commit> whose tree carries <path>, or None.
++
++    A commit's graph parent often does not touch the registry (spot-check and
++    verifier commits land between registry commits), so the walk's reference
++    state for a commit is its nearest path-carrying ancestor, resolved per
++    parent.
++    """
++    out = git(repo, "log", "--format=%H", "-1", commit, "--", path).strip()
++    return out or None
++
++
+ def is_ancestor(repo, older, newer):
+     """True when <older> is an ancestor of (or equal to) <newer>."""
+     try:
+@@ -301,21 +313,15 @@
+                 supersede_rows.setdefault((m.group(1), cells[0].strip()), index)
+         current = {cells[0]: cells for cells in rows}
+         ref = None
+-        parents = parents_of.get(commit, [])
+-        if parents:
+-            # P-C11: an edit is a change against the FIRST parent's state
+-            # only, read from the first parent's own tree — never resolved
+-            # through ancestors (a delete-then-re-add's parent genuinely
+-            # lacks the row/path) and never a fall-through to another
+-            # parent's state (r39 w1 findings 5a/5b).
+-            head = parents[0]
+-            pidx = by_hash.get(head)
+-            if pidx is not None:
++        for parent in parents_of.get(commit, []):
++            ref_commit = parent if parent in by_hash else \
++                nearest_path_commit(repo, parent, path)
++            if ref_commit is None:
++                continue
++            pidx = by_hash.get(ref_commit)
++            if pidx is not None and states[pidx] is not None:
+                 ref = states[pidx]
+-            else:
+-                head_text = git_blob(repo, "%s:%s" % (head, path))
+-                if head_text is not None:
+-                    ref = parse_registry(head_text)[0]
++                break
+         if ref is None:
+             for cid, cells in current.items():
+                 if cid not in first:

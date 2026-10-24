@@ -1,0 +1,11 @@
+--- tools/mori-sources-appendonly.py	2026-10-24 02:42:28.086151564 -0300
++++ .scratch/mutgate-eligible/gate-mutant.py	2026-10-24 03:03:37.165729117 -0300
+@@ -351,7 +351,7 @@
+     # P-C11: the timing line's eligible set is every superseded id present at
+     # R, not only the edit-bounded `ids` list — a never-edited superseded id
+     # still reaches the as-of/stale test (r39 w1 finding 2).
+-    superseded = sorted(cid for cid in tip if cid in sup_map)
++    superseded = sorted(cid for cid in ids if cid in sup_map)
+     last_edit = {}
+     for index, changed in changed_at.items():
+         for cid in changed:

@@ -1,0 +1,12 @@
+FAIL predicate          predicate token changed -> failing=['predicate', 'selftest_conjunct'] (want [predicate])
+FAIL head_pin           pin label renamed -> failing=['head_pin', 'selftest_conjunct'] (want [head_pin])
+FAIL tool_resolve       relative resolution removed -> failing=['selftest_conjunct', 'tool_resolve'] (want [tool_resolve])
+FAIL bounded_reads      git helper run timeout removed -> failing=['bounded_reads', 'selftest_conjunct'] (want [bounded_reads])
+FAIL timeout_scope      timeout value replaced with None -> failing=['selftest_conjunct', 'timeout_scope'] (want [timeout_scope])
+FAIL timeout_scope_shadow function-local None shadow inserted -> failing=['selftest_conjunct', 'timeout_scope'] (want [timeout_scope])
+FAIL drain_bind         communicate drains replaced by wait+read -> failing=['drain_bind', 'selftest_conjunct'] (want [drain_bind])
+FAIL drain_bind_decoy   decoy used communicate beside a wait+read drain -> failing=['drain_bind', 'selftest_conjunct'] (want [drain_bind])
+FAIL timeout_state      budget flag ignored -> failing=['selftest_conjunct', 'timeout_state'] (want [timeout_state])
+FAIL scratch            scratch parent moved off-lane -> failing=['scratch', 'selftest_conjunct'] (want [scratch])
+PASS selftest_conjunct  communicate timeout keyword stripped -> only selftest_conjunct failed
+CONFORM_SELFTEST pass=1 fail=10

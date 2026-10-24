@@ -1,0 +1,4 @@
+FAIL never-edited superseded row is as-of: superseded: want ['S001'] got []; superseded_as_of: want ['S001'] got []
+FAIL linear delete-then-re-add is not an edit: superseded: want ['S008'] got []; superseded_as_of: want ['S008'] got []
+MORI_SOURCES_APPENDONLY_SELFTEST pass=13 fail=2
+EXIT=1

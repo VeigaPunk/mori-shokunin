@@ -1,0 +1,178 @@
+## dag-h shas={'b0': '5bdfc4efb5', 's1': '1bc6fad4b0', 'h1': '1f6082f84a', 'm': '5e1dcd3ed6'}
+walk:
+5bdfc4efb595a9b6f2846b902a6673174098f4b9 
+1bc6fad4b004dc0a8c8bbddb2f14a554d32536a8 5bdfc4efb595a9b6f2846b902a6673174098f4b9
+1f6082f84a81c8affad7e708901663af0bbf82b2 5bdfc4efb595a9b6f2846b902a6673174098f4b9
+5e1dcd3ed6f891e33366ed92d3927f257a91484b 1f6082f84a81c8affad7e708901663af0bbf82b2 1bc6fad4b004dc0a8c8bbddb2f14a554d32536a8
+-- dag-h gate=v3 exit=1
+   changed S001 superseded_by=S002
+   changed S002 superseded_by=-
+   changed S003 superseded_by=-
+   changed S008 superseded_by=-
+   appendonly_violations=4 ids=[S001,S002,S003,S008] deleted=[] superseded=[S001] round_changed=[S001,S002,S008]
+   supersede_timing superseded_as_of=[] stale_supersede=[S001]
+-- dag-h gate=v2 exit=1
+   changed S001 superseded_by=S002
+   changed S002 superseded_by=-
+   changed S003 superseded_by=-
+   changed S008 superseded_by=-
+   appendonly_violations=4 ids=[S001,S002,S003,S008] deleted=[] superseded=[S001] round_changed=[S001,S002,S008]
+   supersede_timing superseded_as_of=[] stale_supersede=[S001]
+
+## dag-o shas={'b0': '2e4c5972e5', 'e1': '2363550562', 'a1': 'b63549834b', 'b1': 'f3c171aef0', 'm': 'c7f238e507'}
+walk:
+2e4c5972e5673e6f67095f270e4a8ed18c94831c 
+236355056250d81252124b16c491cf4a8f5966d5 2e4c5972e5673e6f67095f270e4a8ed18c94831c
+b63549834b828d56b44e6bd4385f2dafd8ffe4c6 2e4c5972e5673e6f67095f270e4a8ed18c94831c
+f3c171aef04c93a2e615136463aabc7463f415ac 2e4c5972e5673e6f67095f270e4a8ed18c94831c
+c7f238e50776a948d6b6a98a1e8523c5a22cbeb4 236355056250d81252124b16c491cf4a8f5966d5 b63549834b828d56b44e6bd4385f2dafd8ffe4c6 f3c171aef04c93a2e615136463aabc7463f415ac
+-- dag-o gate=v3 exit=1
+   changed S001 superseded_by=S002
+   appendonly_violations=1 ids=[S001] deleted=[] superseded=[S001,S004] round_changed=[S001]
+   supersede_timing superseded_as_of=[S004] stale_supersede=[S001]
+-- dag-o gate=v2 exit=1
+   changed S001 superseded_by=S002
+   appendonly_violations=1 ids=[S001] deleted=[] superseded=[S001] round_changed=[S001]
+   supersede_timing superseded_as_of=[] stale_supersede=[S001]
+
+## dag-rm shas={'b0': '07be6c7f17', 's1': '7cb1c6525f', 'r1': '175577fb6b', 'r2': '0e86578c98'}
+walk:
+07be6c7f176584f32d5091ad9f911bec7b6e135e 
+7cb1c6525fbeedbb6100b731bc8d36fba6353bdd 07be6c7f176584f32d5091ad9f911bec7b6e135e
+175577fb6b3350d53bcbaa54ae980625a93498f5 7cb1c6525fbeedbb6100b731bc8d36fba6353bdd
+0e86578c981e8af07bd152931360d86fe6c23e77 175577fb6b3350d53bcbaa54ae980625a93498f5
+-- dag-rm gate=v3 exit=1
+   changed S008 superseded_by=S009
+   appendonly_violations=1 ids=[S008] deleted=[] superseded=[S008] round_changed=[S008]
+   supersede_timing superseded_as_of=[S008] stale_supersede=[]
+-- dag-rm gate=v2 exit=1
+   changed S008 superseded_by=S009
+   appendonly_violations=1 ids=[S008] deleted=[] superseded=[S008] round_changed=[S008]
+   supersede_timing superseded_as_of=[] stale_supersede=[S008]
+
+## dag-wr shas={'b0': '3e5442dae5', 's1': '615a64668f', 'm': '47eaa0afa0'}
+walk:
+3e5442dae5f58b0715a81863768025f0dad6b156 
+615a64668fbfab0e58a6097f3a7756b9012aa3fe 3e5442dae5f58b0715a81863768025f0dad6b156
+f24dde1315ed2012c371324b1c396f078f3011cd 3e5442dae5f58b0715a81863768025f0dad6b156 615a64668fbfab0e58a6097f3a7756b9012aa3fe
+47eaa0afa0f9d509d979343fc6586f55d26f74cc f24dde1315ed2012c371324b1c396f078f3011cd
+-- dag-wr gate=v3 exit=1
+   changed S001 superseded_by=S002
+   appendonly_violations=1 ids=[S001] deleted=[] superseded=[S001] round_changed=[S001]
+   supersede_timing superseded_as_of=[] stale_supersede=[S001]
+-- dag-wr gate=v2 exit=1
+   changed S001 superseded_by=S002
+   appendonly_violations=1 ids=[S001] deleted=[] superseded=[S001] round_changed=[S001]
+   supersede_timing superseded_as_of=[] stale_supersede=[S001]
+
+## dag-t shas={'b0': '3e5442dae5', 's1': '615a64668f', 'c1': 'f29c20f3eb', 'm': '40874f097b'}
+walk:
+3e5442dae5f58b0715a81863768025f0dad6b156 
+615a64668fbfab0e58a6097f3a7756b9012aa3fe 3e5442dae5f58b0715a81863768025f0dad6b156
+f29c20f3eb112f8e4770a6b759a8a03907664c59 3e5442dae5f58b0715a81863768025f0dad6b156
+40874f097bccf504f2b31d2767ec7b78b885a2cb f29c20f3eb112f8e4770a6b759a8a03907664c59 615a64668fbfab0e58a6097f3a7756b9012aa3fe
+-- dag-t gate=v3 exit=1
+   changed S001 superseded_by=S002
+   deleted S005
+   appendonly_violations=2 ids=[S001] deleted=[S005] superseded=[S001] round_changed=[S001,S005]
+   supersede_timing superseded_as_of=[] stale_supersede=[S001]
+-- dag-t gate=v2 exit=1
+   changed S001 superseded_by=S002
+   deleted S005
+   appendonly_violations=2 ids=[S001] deleted=[S005] superseded=[S001] round_changed=[S001,S005]
+   supersede_timing superseded_as_of=[] stale_supersede=[S001]
+
+## dag-h2 shas={'b0': '07be6c7f17', 'h1': 'c49756eacc', 's2': '90d3d07332'}
+walk:
+07be6c7f176584f32d5091ad9f911bec7b6e135e 
+c49756eaccd0f4c5be9bd26be06f39a087120daa 07be6c7f176584f32d5091ad9f911bec7b6e135e
+90d3d07332f8246fd3d80257ed5fb8e4a7d29f2d c49756eaccd0f4c5be9bd26be06f39a087120daa
+-- dag-h2 gate=v3 exit=1
+   changed S001 superseded_by=-
+   changed S008 superseded_by=-
+   appendonly_violations=2 ids=[S001,S008] deleted=[] superseded=[] round_changed=[S001,S008]
+   supersede_timing superseded_as_of=[] stale_supersede=[]
+-- dag-h2 gate=v2 exit=1
+   changed S001 superseded_by=-
+   changed S008 superseded_by=-
+   appendonly_violations=2 ids=[S001,S008] deleted=[] superseded=[] round_changed=[S001,S008]
+   supersede_timing superseded_as_of=[] stale_supersede=[]
+
+## dag-z shas={'b0': '3e5442dae5', 's1': '024f6d7f3d', 'c1': 'f29c20f3eb', 'm': '01e6c56846'}
+walk:
+3e5442dae5f58b0715a81863768025f0dad6b156 
+024f6d7f3dea51dc9605e885fb7f62a8109d0ce6 3e5442dae5f58b0715a81863768025f0dad6b156
+f29c20f3eb112f8e4770a6b759a8a03907664c59 3e5442dae5f58b0715a81863768025f0dad6b156
+01e6c5684606262b7198fe0cbd310e27af40822b f29c20f3eb112f8e4770a6b759a8a03907664c59 024f6d7f3dea51dc9605e885fb7f62a8109d0ce6
+-- dag-z gate=v3 exit=0
+   deleted S002
+   appendonly_violations=1 ids=[] deleted=[S002] superseded=[S001] round_changed=[]
+   supersede_timing superseded_as_of=[S001] stale_supersede=[]
+-- dag-z gate=v2 exit=0
+   deleted S002
+   appendonly_violations=1 ids=[] deleted=[S002] superseded=[] round_changed=[]
+   supersede_timing superseded_as_of=[] stale_supersede=[]
+
+## dag-z2 shas={'b0': '3e5442dae5', 's1': '615a64668f', 'c1': 'f29c20f3eb', 'm': 'cda3c1f4cb'}
+walk:
+3e5442dae5f58b0715a81863768025f0dad6b156 
+615a64668fbfab0e58a6097f3a7756b9012aa3fe 3e5442dae5f58b0715a81863768025f0dad6b156
+f29c20f3eb112f8e4770a6b759a8a03907664c59 3e5442dae5f58b0715a81863768025f0dad6b156
+cda3c1f4cb8dc5f641b32a9cb8ac1cbbad18ce15 f29c20f3eb112f8e4770a6b759a8a03907664c59 615a64668fbfab0e58a6097f3a7756b9012aa3fe
+-- dag-z2 gate=v3 exit=1
+   deleted S002
+   appendonly_violations=1 ids=[] deleted=[S002] superseded=[S001] round_changed=[S001]
+   supersede_timing superseded_as_of=[S001] stale_supersede=[]
+-- dag-z2 gate=v2 exit=1
+   deleted S002
+   appendonly_violations=1 ids=[] deleted=[S002] superseded=[] round_changed=[S001]
+   supersede_timing superseded_as_of=[] stale_supersede=[]
+
+## dag-x shas={'b0': '3e5442dae5', 's1': '024f6d7f3d', 'd1': '9960f53ebe', 'e1': 'ac8aa1f3ca', 'r2': '0c972eb41e'}
+walk:
+3e5442dae5f58b0715a81863768025f0dad6b156 
+024f6d7f3dea51dc9605e885fb7f62a8109d0ce6 3e5442dae5f58b0715a81863768025f0dad6b156
+9960f53ebe6c03e8b4a61da81ca37b7fe055264b 024f6d7f3dea51dc9605e885fb7f62a8109d0ce6
+ac8aa1f3cace7ab6e8e18935c5c2338461f47349 9960f53ebe6c03e8b4a61da81ca37b7fe055264b
+0c972eb41e287444ce0843f7164eda7b931928a8 ac8aa1f3cace7ab6e8e18935c5c2338461f47349
+-- dag-x gate=v3 exit=1
+   changed S001 superseded_by=S002
+   appendonly_violations=1 ids=[S001] deleted=[] superseded=[S001] round_changed=[S001,S002]
+   supersede_timing superseded_as_of=[] stale_supersede=[S001]
+-- dag-x gate=v2 exit=1
+   changed S001 superseded_by=S002
+   appendonly_violations=1 ids=[S001] deleted=[] superseded=[S001] round_changed=[S001,S002]
+   supersede_timing superseded_as_of=[] stale_supersede=[S001]
+
+## dag-2l-early shas={'b0': '3e5442dae5', 's1': '024f6d7f3d', 'c1': '25ff69f83b', 'c2': 'e3bf2735bd', 'm': '050883e5d0'}
+walk:
+3e5442dae5f58b0715a81863768025f0dad6b156 
+024f6d7f3dea51dc9605e885fb7f62a8109d0ce6 3e5442dae5f58b0715a81863768025f0dad6b156
+25ff69f83b86505e6c372b34e17c6d9409ba04ed 3e5442dae5f58b0715a81863768025f0dad6b156
+e3bf2735bdf132df282af1c97999517658443e95 25ff69f83b86505e6c372b34e17c6d9409ba04ed
+050883e5d051a3ef77d7c2a53f0dbf54d279ed2b e3bf2735bdf132df282af1c97999517658443e95 024f6d7f3dea51dc9605e885fb7f62a8109d0ce6
+-- dag-2l-early gate=v3 exit=1
+   changed S001 superseded_by=S003
+   appendonly_violations=1 ids=[S001] deleted=[] superseded=[S001] round_changed=[S001]
+   supersede_timing superseded_as_of=[S001] stale_supersede=[]
+-- dag-2l-early gate=v2 exit=1
+   changed S001 superseded_by=S003
+   appendonly_violations=1 ids=[S001] deleted=[] superseded=[S001] round_changed=[S001]
+   supersede_timing superseded_as_of=[S001] stale_supersede=[]
+
+## dag-2l-late shas={'b0': '3e5442dae5', 's1': '4704030c69', 'c1': '25ff69f83b', 'c2': 'e3bf2735bd', 'm': 'a26f088aa2'}
+walk:
+3e5442dae5f58b0715a81863768025f0dad6b156 
+25ff69f83b86505e6c372b34e17c6d9409ba04ed 3e5442dae5f58b0715a81863768025f0dad6b156
+e3bf2735bdf132df282af1c97999517658443e95 25ff69f83b86505e6c372b34e17c6d9409ba04ed
+4704030c69b696a35d2e1e06e91eb17fa763706a 3e5442dae5f58b0715a81863768025f0dad6b156
+a26f088aa24063ffde42e208aca60b6c3596da6a e3bf2735bdf132df282af1c97999517658443e95 4704030c69b696a35d2e1e06e91eb17fa763706a
+-- dag-2l-late gate=v3 exit=1
+   changed S001 superseded_by=S002
+   appendonly_violations=1 ids=[S001] deleted=[] superseded=[S001] round_changed=[S001]
+   supersede_timing superseded_as_of=[] stale_supersede=[S001]
+-- dag-2l-late gate=v2 exit=1
+   changed S001 superseded_by=S002
+   appendonly_violations=1 ids=[S001] deleted=[] superseded=[S001] round_changed=[S001]
+   supersede_timing superseded_as_of=[] stale_supersede=[S001]
+
