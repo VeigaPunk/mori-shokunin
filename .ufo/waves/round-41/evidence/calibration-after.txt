@@ -1,0 +1,4 @@
+SCORECARD.md recorded_as_of=35 observed_as_of=35 recorded_extension=17 observed_extension=17
+LOG.md recorded_as_of=35 observed_as_of=35 recorded_extension=17 observed_extension=17
+corpus/lessons/round-40.md recorded_as_of=35 observed_as_of=35 recorded_extension=17 observed_extension=17
+MORI_R41_CALIBRATION mismatches=0 observed_as_of=35 extension_rows=17

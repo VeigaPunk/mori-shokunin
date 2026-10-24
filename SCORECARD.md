@@ -2271,3 +2271,39 @@ original text stands unmodified above.
 Round-41 calibration correction: observed_as_of=35; extension_rows=17.
 (single-line record for the frozen counter `tools/mori-round41-calibration.py`;
 the wrapped paragraph above states the same values).
+
+## Round 41 declaration (L1 mori-r41, attempt 2 — inherits attempt-1 freeze at d72ac16, re-verified byte-exact)
+
+Entering tip `62a207f7521fa2e2fcd2e8b0260f047ccfce8862` (round 40 closed REJECTED
+rejected-honest-stop; closure `corpus/lessons/round-40-verifier-spotcheck.md`).
+Lowest non-retired axes depth 5, calibration 5, freshness 5 (tied) — C2 works
+depth, C3 works calibration; C1 works operability (routed defect 1 class).
+Contract `.ufo/waves/round-41/contract.md`; pins `.ufo/waves/round-41/evidence/freeze-r41.txt`
+(19/19 re-verified at attempt 2, `evidence/freeze-verify.txt`); frozen no-op
+control `evidence/control-before.txt` (v3 checker `CONFORM=met` on all three
+routed survivors; v3 gate wrong on all five routed DAG classes; calibration
+mismatches=6).
+
+| Claim | Axis / score | Before (one command over committed bytes) | After (measured) |
+|---|---|---|---|
+| C1 conformance binding model v4 (P-C10 r41): source-ordered function-local inventory — `Assign`/`AnnAssign`, `NamedExpr`, tuple/list destructuring, for/with targets; unresolved targets, unsupported stores, `global`/`nonlocal` rebinding and disagreeing multi-bindings fail closed (routed defect 1; sourced S230) | operability 7 | extracted r40 v3 bytes `fixtures/extracted/conform-v3-r40.py` print `CONFORM=met` exit 0 on each routed survivor (walrus, tuple-unpack, dead-loop; `evidence/control-before.txt` §C1) | `python3 .ufo/waves/round-41/conform.py aa161e998…` → honest counter `CONFORM=met`; each survivor `CONFORM=unmet` with only `timeout_scope` FAIL; `--selftest` `pass=14 fail=0`; early-continue mutant fails `selftest_conjunct` (`evidence/control-after.txt`) |
+| C2 gate P-C12: eligible pair = both rows present at R; per-commit header maps; ancestry-grounded landing selection (maximal candidates, superseder-id then hash tie-break); delete/re-add = new landing; never-edited edit = first-sighting commit (routed defects 2a–c) | depth 5 | v3 gate bytes `fixtures/extracted/gate-v3-r40.py` fabricate dag-h changes, miss dag-h2's pair, time dag-z/z2's absent superseder, flip dag-2l on commit date, miss dag-x's re-add landing (`control-before.txt` §C2) | `python3 tools/mori-sources-appendonly.py --selftest` → `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0`; lane line at aa161e998 lists **36 as-of ids** (S229 via S231) stale=[]; at `e37dcc6` stale=[S069]; all seven routed DAG fixtures print the P-C12 verdicts (`control-after.txt` §C2) |
+| C3 calibration records: append-only corrections reconcile the r40 34/16 self-assessment to the frozen r40 gate's 35/17 (routed defect 3) | calibration 5 | `python3 tools/mori-round41-calibration.py 62a207f… --repo . --reference-rev 62a207f…` → `MORI_R41_CALIBRATION mismatches=6` (`control-before.txt` §C3) | same counter at `c5326c61…` → `mismatches=0` exit 0 (`evidence/calibration-after.txt`) |
+
+Capability rows (demonstrated running this round; closure admits them):
+
+| key | name | what it can now do | evidence | first working |
+|---|---|---|---|---|
+| round-41 C1 | counter conformance binding inventory v4 | Rejects timeout reads whose function-local bindings are walrus/tuple-unpack/loop-with targets, unsupported stores, `global`/`nonlocal` rebinds, or disagreeing multi-bindings — the routed v3 survivor class — while keeping the nine-check honest-counter pass and a 14-arm selftest whose conjunct applies each arm | `.ufo/waves/round-41/conform.py`; `evidence/control-after.txt` §C1 | 41 |
+| round-41 C2 | ancestry supersede reading P-C12 | Reports `supersede_timing` over pairs present at R only, per-commit header maps, ancestry-selected landings with deterministic tie-break, re-add landings, first-sighting edits; lane-history verdicts preserved (36 as-of; S069 stale at e37dcc6) | `tools/mori-sources-appendonly.py`; `evidence/control-after.txt` §C2 | 41 |
+| round-41 C3 | correction-record reconciliation | A frozen counter (`tools/mori-round41-calibration.py`, reference `62a207f…`) reads single-line `Round-41 calibration correction:` records in the three r40 record files and reports mismatches=0 | `evidence/calibration-after.txt` | 41 |
+
+Held: coverage 6, operability 7, depth 5, calibration 5, freshness 5, adjacency 6 —
+no scalar moves; the claims repair routed falsifications, their receipts are the
+improvement. Sourced claims: C1 rests on S230 (+S231 locator correction), C3 on the
+frozen r40 gate bytes (own-work evidence). No retirement, waiver, exploratory claim
+or promotion. Frontier: S230, S231 rows; census 229 → 231 (exit 0 both ends,
+`evidence/census-start.txt`/`census-end.txt`). Round shape: ONE v2 wave, 64 seats
+(31 attack = 48.4%), prepared+validated by attempt 1 under policy v2
+(`evidence/wave-plan.json` exit 0, `w1-spec.json`); dispatch status recorded in the
+round report.

@@ -36,7 +36,11 @@ independently where dispatched.
 Attempt-1 inheritance note: this attempt re-verified every inherited byte
 before reuse — all 19 `freeze-r41.txt` pins hash-match the committed tip
 (`evidence/freeze-verify.txt`); the frozen `control-before.txt` semantics were
-re-derived (`evidence/control-after.txt` before-state columns agree);
-`.scratch/round22/` (lane-authored 2026-10-21 fixtures, untracked) committed
-for durability; the r40 stray `265a955` was already gone and the three
-worktree-modified c10 receipts were already committed by attempt 1.
+re-derived (`evidence/control-after.txt` before-state columns agree). The
+inherited untracked `.scratch/round22/` (lane-authored 2026-10-21) was
+resolved: its JSON/Python measurement records (154 files) are committed under
+this round; its `*-fixtures/` trees (~120 nested-git sandbox clones, ~646 MB)
+were deleted as transient scratch — regenerable from the committed builder
+`.ufo/waves/round-22/frozen/fixture-builder-v2.py` and the committed
+`measure-round22.py` driver. The r40 stray `265a955` was already gone and the
+three worktree-modified c10 receipts were already committed by attempt 1.
