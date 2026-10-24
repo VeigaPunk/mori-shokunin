@@ -81,3 +81,15 @@ SIGTERM → grace → SIGKILL trade).
     pinned bytes. RevC9Compat PASS (r37 C1 counter C1=met on v2 output, malformed=0/27); ConnSibling PASS
     (no sibling collision; do not import kotoba's `--no-merges` into the v2 walk — it would re-open
     fixture C).
+11. (w1/RevReceipts, HIGH) C2's drain-shape before-control is not reproducible as recorded: the committed
+    `c8-red-wait.txt` was regenerated with the final pure wait+read fixture, which the r38 checker rejects
+    for lacking any communicate at all (`saw_communicate`) — the "r38 printed CONFORM=met" claim for
+    bypass-wait was true only of the intermediate fixture (primary wait+read drain, grace communicates
+    kept), and that intermediate form passes the round-39 checker too, so no single fixture is met-by-r38
+    and unmet-by-r39 via drain_shape. C2's timeout_value half (bypass-none: r38 met on keyword presence,
+    r39 unmet on the None value, both committed and re-run) stands; the drain_shape half must be
+    re-claimed with a redesigned control next attempt or reported honest-stop by the closure. Process
+    defects recorded with it: the c8 red receipts were committed with the after set (post-data) though
+    their inputs are entering-tip bytes; `head_pin` pins live HEAD (r38-carried, tautological); the
+    contract's evidence-path list does not match the disk set; `c7-after.txt` names the data rev in its
+    command line (inputs byte-identical to the tip; reproduced).
