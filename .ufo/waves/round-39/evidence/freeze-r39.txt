@@ -1,0 +1,13 @@
+fc36841bff00e46bf3d2ba662c9e4e13e36577da1d1f2fec41d0bea91f8ebcd3  .ufo/waves/round-39/contract.md
+b92c65f224a6268a901aa6bc5ad66b499048eaca82b493356eb8e1f324ef0520  .ufo/waves/round-39/count-c7.py
+fe0be179aba9df7150f0b6cdb50a5f9bbdb411efb1263b46ffa6b21d46ef7987  .ufo/waves/round-39/conform.py
+061a8cf4f02e5095b0805da1a6cf6ab594bdcb9b99205620937277f4afa37002  .ufo/waves/round-39/fixtures/run-c7-reds.py
+5ecaef10967ae7a698d021c7b8cd7a3e327ce41e279f1920575837ed0cecc65e  .ufo/waves/round-39/fixtures/run-c8-receipts.py
+d75d774092aac06da9690310782a4e95c83975c7e59282264dc71d04791e59b8  .ufo/waves/round-39/fixtures/run-c9-dags.py
+79a2ee9b089c50932e231ec881ee78fe58c2cb81c38d715579d6cf65168b49c5  .ufo/waves/round-39/fixtures/make-m19-bypass.py
+fc95dc69153f47c2f934a0e9be069764a9da7b606dc0274ffd0f5672f3bd4623  .ufo/waves/round-39/fixtures/witness-comment-anchors.md
+ce4dac65d1dd0ee55f71de1ee5937d474fdfecf32ea599ea3a204395178194f2  .ufo/waves/round-39/fixtures/witness-token-entry.md
+bc62b0b3db38fbf6086eb5dbdff50a90e5901046ab012abb23e89d9c50357ff2  .ufo/waves/round-39/fixtures/witness-dangling-row.md
+8ac9e82bae369a2e41f4a4377016c3e82d58c8c6de484722f1d85b0bbf7cb4af  .ufo/waves/round-39/fixtures/witness-summary-only-live.txt
+647410536bcc6b9ead5456af96056617b78b7945aaacc2c5d3635b1b017a87ca  .ufo/waves/round-39/fixtures/hang-after-flush.py
+62cd4132dbe141538371f79723c3caff66670fab9076494cd9cf65efccfc01e7  tools/mori-sources-appendonly.py

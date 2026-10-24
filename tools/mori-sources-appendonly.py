@@ -49,8 +49,8 @@ Exit codes:
     1   violation(s); with --round-base: the round changed the registry
     2   error (git failure, unparsable registry)
 
-Read-only: the only git commands used are `rev-parse`, `log` and `show`.
-No writes, no network, no clone.
+Read-only: the only git commands used are `rev-parse`, `log`, `show` and
+`merge-base --is-ancestor`. No writes, no network, no clone.
 """
 import argparse
 import os
@@ -74,13 +74,17 @@ TIMING_RE = re.compile(
     r"^supersede_timing superseded_as_of=\[([^\]]*)\] stale_supersede=\[([^\]]*)\]$")
 
 PREDICATE = (
-    "P-C6: at revision R, tools/mori-sources-appendonly.py reports, after its summary "
-    "line, `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; an id is "
-    "superseded-as-of only when its latest superseding row's landing commit is a "
-    "descendant of the id's last immutable-cell edit commit, and is listed in "
-    "stale_supersede otherwise; on the lane history S069 is stale before its round-38 "
-    "supersede row lands and no id is stale after, and the selftest carries a "
-    "supersede-before-edit fixture that lists the id in stale_supersede."
+    "P-C9: at revision R, tools/mori-sources-appendonly.py reports, after its "
+    "summary line, `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; "
+    "an id is superseded-as-of only when its latest superseding row's landing commit "
+    "is a descendant, by `git merge-base --is-ancestor`, of the commit of the id's "
+    "last immutable-cell edit, where an edit at a commit is a change against its "
+    "first parent's state (not the previous walk record), the path walk uses "
+    "`--full-history`, and the lane-history verdicts are unchanged — S069 is stale "
+    "at `e37dcc6` and no id is stale at the round-39 tip — and the selftest carries "
+    "committed fixtures for a side-branch superseder (stale, not as-of) and a merge "
+    "that must not fabricate an edit (round-38 gate bytes print as-of and a "
+    "fabricated edit there; the round-39 gate prints stale and no edit)."
 )
 
 
@@ -135,6 +139,36 @@ def git_blob(repo, spec):
     if proc.returncode != 0:
         return None
     return proc.stdout
+
+
+def is_ancestor(repo, older, newer):
+    """True when <older> is an ancestor of (or equal to) <newer>."""
+    try:
+        proc = subprocess.run(["git", "-C", repo, "merge-base", "--is-ancestor",
+                               older, newer],
+                              capture_output=True, timeout=120, env=_clean_env())
+    except subprocess.TimeoutExpired:
+        raise GateError("git merge-base --is-ancestor timed out")
+    except OSError as exc:
+        raise GateError("git merge-base failed to start: %s" % exc)
+    if proc.returncode == 0:
+        return True
+    if proc.returncode == 1:
+        return False
+    raise GateError("git merge-base --is-ancestor %s %s failed: %s"
+                    % (older, newer, proc.stderr.decode("utf-8", "replace").strip()))
+
+
+def nearest_path_commit(repo, commit, path):
+    """Newest commit at-or-before <commit> whose tree carries <path>, or None.
+
+    A commit's graph parent often does not touch the registry (spot-check and
+    verifier commits land between registry commits), so the walk's reference
+    state for a commit is its nearest path-carrying ancestor, resolved per
+    parent.
+    """
+    out = git(repo, "log", "--format=%H", "-1", commit, "--", path).strip()
+    return out or None
 
 
 # --------------------------------------------------------------- registry io
@@ -208,7 +242,15 @@ def superseders(rows, colmap):
 # ------------------------------------------------------------------- analysis
 
 def analyze(repo, rev, path, round_base=None):
-    """Walk the path's history and return the four lists plus the verdict."""
+    """Walk the path's history and return the four lists plus the verdict.
+
+    Version 2 (round 39, r38 lesson F1/F2): the walk carries parent hashes and
+    uses --full-history; an edit at a commit is a change against that commit's
+    first parent that carries the path (not the previous walk record); the
+    supersede-as-of test is `git merge-base --is-ancestor` between the id's last
+    edit commit and the superseding row's landing commit (not walk index order).
+    On linear histories v1 and v2 agree byte-for-byte on the printed lines.
+    """
     rev_full = git(repo, "rev-parse", "--verify", rev + "^{commit}").strip()
     tip_text = git_blob(repo, "%s:%s" % (rev_full, path))
     if tip_text is None:
@@ -217,8 +259,14 @@ def analyze(repo, rev, path, round_base=None):
     if tip_colmap is None:
         raise GateError("no registry header in %s at %s" % (path, rev_full))
 
-    commits = git(repo, "log", "--format=%H", "--reverse", rev_full, "--",
-                  path).split()
+    walk = []
+    for line in git(repo, "log", "--format=%H%x09%P", "--reverse",
+                    "--full-history", rev_full, "--", path).splitlines():
+        commit, _, parents = line.partition("\t")
+        walk.append((commit, parents.split() if parents else []))
+    commits = [commit for commit, _ in walk]
+    parents_of = dict(walk)
+    by_hash = {commit: index for index, commit in enumerate(commits)}
 
     states = []
     colmap = None
@@ -238,12 +286,11 @@ def analyze(repo, rev, path, round_base=None):
     first = {}          # id -> cells in the first commit that carried it
     changed_at = {}     # commit index -> ids whose immutable cells changed
     deleted_at = {}     # commit index -> ids that disappeared there
-    last_seen = {}      # id -> cells it last held
     supersede_rows = {}     # (superseded id, superseder id) -> first index it appears
     supersede_landing = {}  # superseded id -> (latest landing index, that superseder id)
     teaches_idx = (colmap or {}).get("teaches", COLUMNS.index("teaches"))
-    prev_ids = set()
-    for index, rows in enumerate(states):
+    for index, commit in enumerate(commits):
+        rows = states[index]
         if rows is None:
             continue
         for cells in rows:
@@ -253,16 +300,35 @@ def analyze(repo, rev, path, round_base=None):
             if m:
                 supersede_rows.setdefault((m.group(1), cells[0].strip()), index)
         current = {cells[0]: cells for cells in rows}
+        ref = None
+        for parent in parents_of.get(commit, []):
+            ref_commit = parent if parent in by_hash else \
+                nearest_path_commit(repo, parent, path)
+            if ref_commit is None:
+                continue
+            pidx = by_hash.get(ref_commit)
+            if pidx is not None and states[pidx] is not None:
+                ref = states[pidx]
+                break
+        if ref is None:
+            for cid, cells in current.items():
+                first.setdefault(cid, cells)
+            continue
+        ref_cells = {cells[0]: cells for cells in ref}
+        is_merge = len(parents_of.get(commit, [])) > 1
         for cid, cells in current.items():
             if cid not in first:
                 first[cid] = cells
-            elif cid in last_seen and imm_key(cells, imm_idx) != imm_key(last_seen[cid], imm_idx):
+            elif cid in ref_cells:
+                if imm_key(cells, imm_idx) != imm_key(ref_cells[cid], imm_idx):
+                    changed_at.setdefault(index, set()).add(cid)
+            elif not is_merge:
+                # present again after an absence on a linear history: a re-add
+                # is a round event even when the cells match the first sighting
                 changed_at.setdefault(index, set()).add(cid)
-            last_seen[cid] = cells
-        gone = prev_ids - set(current)
+        gone = set(ref_cells) - set(current)
         if gone:
             deleted_at.setdefault(index, set()).update(gone)
-        prev_ids = set(current)
 
     tip = {cells[0]: cells for cells in tip_rows}
     ids = sorted(cid for cid, cells in tip.items()
@@ -278,12 +344,14 @@ def analyze(repo, rev, path, round_base=None):
     last_edit = {}
     for index, changed in changed_at.items():
         for cid in changed:
-            last_edit[cid] = index
+            last_edit[cid] = commits[index]
     superseded_as_of = []
     stale_supersede = []
     for cid in superseded:
-        landing = supersede_landing[cid][0]
-        if cid in last_edit and landing > last_edit[cid]:
+        landing_index = supersede_landing[cid][0]
+        edit_commit = last_edit.get(cid)
+        if edit_commit is not None and is_ancestor(
+                repo, edit_commit, commits[landing_index]):
             superseded_as_of.append(cid)
         else:
             stale_supersede.append(cid)
@@ -395,6 +463,144 @@ def _make_repo(path, snapshots, env):
     return shas
 
 
+def _dag_commit(path, body, msg, when, env):
+    """One commit on the current branch with pinned author/committer dates."""
+    os.makedirs(os.path.join(path, "corpus"), exist_ok=True)
+    target = os.path.join(path, "corpus", "SOURCES.md")
+    with open(target, "w", encoding="utf-8") as handle:
+        handle.write(body)
+    _git_in(path, "add", "corpus/SOURCES.md", env=env)
+    dated = dict(env, GIT_AUTHOR_DATE=when, GIT_COMMITTER_DATE=when)
+    proc = subprocess.run(["git", "-C", path, "commit", "-q", "-m", msg],
+                          capture_output=True, text=True, timeout=120, env=dated)
+    if proc.returncode != 0:
+        raise GateError("selftest dag commit %s failed: %s"
+                        % (msg, proc.stderr.strip()))
+    return _git_in(path, "rev-parse", "HEAD", env=env).strip()
+
+
+def _dag_init(path, env):
+    os.makedirs(path, exist_ok=True)
+    _git_in(path, "init", "-q", "-b", "main", env=env)
+    _git_in(path, "config", "user.name", "mori selftest", env=env)
+    _git_in(path, "config", "user.email", "selftest@example.invalid", env=env)
+    _git_in(path, "config", "commit.gpgsign", "false", env=env)
+
+
+def _dag_merge(path, side, msg, when, env):
+    dated = dict(env, GIT_AUTHOR_DATE=when, GIT_COMMITTER_DATE=when)
+    proc = subprocess.run(["git", "-C", path, "merge", "-q", "--no-edit",
+                           "-m", msg, side],
+                          capture_output=True, text=True, timeout=120, env=dated)
+    if proc.returncode != 0:
+        raise GateError("selftest dag merge %s failed: %s"
+                        % (msg, proc.stderr.strip()))
+    return _git_in(path, "rev-parse", "HEAD", env=env).strip()
+
+
+def _selftest_dag_cases():
+    """Round-39 ancestry fixtures (r38 F1/F2, resid/ResidGateTiming A and C).
+
+    Returns (name, kind, expected_exit, expected, round_base_name) tuples; the
+    repo is built by _make_dag_repo with the named shas the expectations rely
+    on. Dates pin the default-order walk so the round-38 index-order gate
+    demonstrably misclassifies both fixtures (red receipts in round-39
+    evidence), while the ancestry gate classifies them as written here.
+    """
+    # the buffer row keeps the side branch's append off the edited line's merge
+    # hunk (git conflicts when an append is adjacent to a modified line), so
+    # the fixture merge is clean — a conflict would test git, not the gate
+    buffer = _row("S008", source="https://example.invalid/e", anchor="anchor e",
+                  teaches="teaches e")
+    base = _render([_row("S001"), buffer])
+    edited = _render([_row("S001", anchor="anchor a v2"), buffer])
+    side_superseding = _render([
+        _row("S001"), buffer,
+        _row("S009", source="https://example.invalid/f", anchor="anchor f",
+             teaches="teaches f"),
+        _row("S002", source="https://example.invalid/b", anchor="anchor b",
+             teaches="supersedes S001 — replacement")])
+    side_plain = _render([
+        _row("S001"), buffer,
+        _row("S009", source="https://example.invalid/f", anchor="anchor f",
+             teaches="teaches f"),
+        _row("S002", source="https://example.invalid/b", anchor="anchor b",
+             teaches="teaches b")])
+    merged_superseding = _render([
+        _row("S001", anchor="anchor a v2"), buffer,
+        _row("S009", source="https://example.invalid/f", anchor="anchor f",
+             teaches="teaches f"),
+        _row("S002", source="https://example.invalid/b", anchor="anchor b",
+             teaches="teaches b"),
+        _row("S003", source="https://example.invalid/c", anchor="anchor c",
+             teaches="supersedes S001 — replacement")])
+    # dag-d: both branches make the same S001 edit independently; the
+    # supersede row rides the side branch, so the row's landing commit IS
+    # the id's last edit commit (ancestry: as-of). The round-38 walk-order
+    # gate prints stale there; the predicate's plain words read as-of.
+    side_edit_superseding = _render([
+        _row("S001", anchor="anchor a v2"), buffer,
+        _row("S002", source="https://example.invalid/b", anchor="anchor b",
+             teaches="supersedes S001 — replacement")])
+    merged_both_edited = _render([
+        _row("S001", anchor="anchor a v2"), buffer,
+        _row("S002", source="https://example.invalid/b", anchor="anchor b",
+             teaches="supersedes S001 — replacement")])
+    return [
+        ("side-branch superseder is stale", "dag-a", 1,
+         {"ids": ["S001"], "deleted": [], "superseded": ["S001"],
+          "round_changed": ["S001"], "superseded_by": {"S001": "S002"},
+          "superseded_as_of": [], "stale_supersede": ["S001"]}, "b0"),
+        ("merge does not fabricate an edit", "dag-c", 0,
+         {"ids": ["S001"], "deleted": [], "superseded": ["S001"],
+          "round_changed": [], "superseded_by": {"S001": "S003"},
+          "superseded_as_of": ["S001"], "stale_supersede": []}, "c1"),
+        ("landing is the last edit commit", "dag-d", 1,
+         {"ids": ["S001"], "deleted": [], "superseded": ["S001"],
+          "round_changed": ["S001"], "superseded_by": {"S001": "S002"},
+          "superseded_as_of": ["S001"], "stale_supersede": []}, "b0"),
+    ], (base, edited, side_superseding, side_plain, merged_superseding,
+        side_edit_superseding, merged_both_edited)
+
+
+def _make_dag_repo(path, kind, bodies, env):
+    """Build fixture DAG A, C or D; returns {name: sha}."""
+    (base, edited, side_superseding, side_plain, merged_superseding,
+     side_edit_superseding, merged_both_edited) = bodies
+    _dag_init(path, env)
+    shas = {}
+    if kind == "dag-a":
+        shas["b0"] = _dag_commit(path, base, "b0", "2026-01-01T00:00:00Z", env)
+        shas["e1"] = _dag_commit(path, edited, "e1", "2026-01-01T01:00:00Z", env)
+        _git_in(path, "checkout", "-q", "-b", "side", shas["b0"], env=env)
+        shas["s1"] = _dag_commit(path, side_superseding, "s1",
+                                 "2026-01-01T02:00:00Z", env)
+        _git_in(path, "checkout", "-q", "main", env=env)
+        shas["m"] = _dag_merge(path, "side", "m", "2026-01-01T03:00:00Z", env)
+    elif kind == "dag-d":
+        shas["b0"] = _dag_commit(path, base, "b0", "2026-01-01T00:00:00Z", env)
+        shas["e1"] = _dag_commit(path, edited, "e1", "2026-01-01T01:00:00Z", env)
+        _git_in(path, "checkout", "-q", "-b", "side", shas["b0"], env=env)
+        shas["s1"] = _dag_commit(path, side_edit_superseding, "s1",
+                                 "2026-01-01T02:00:00Z", env)
+        _git_in(path, "checkout", "-q", "main", env=env)
+        shas["m"] = _dag_merge(path, "side", "m", "2026-01-01T03:00:00Z", env)
+    elif kind == "dag-c":
+        shas["b0"] = _dag_commit(path, base, "b0", "2026-01-01T00:00:00Z", env)
+        shas["c1"] = _dag_commit(path, edited, "c1", "2026-01-01T01:00:00Z", env)
+        _git_in(path, "checkout", "-q", "-b", "side", shas["b0"], env=env)
+        shas["c2"] = _dag_commit(path, side_plain, "c2",
+                                 "2026-01-01T02:00:00Z", env)
+        _git_in(path, "checkout", "-q", "main", env=env)
+        shas["m"] = _dag_merge(path, "side", "m", "2026-01-01T03:00:00Z", env)
+        shas["t"] = _dag_commit(path, merged_superseding, "t",
+                                "2026-01-01T04:00:00Z", env)
+        shas["c1"] = shas["c1"]
+    else:
+        raise GateError("unknown dag kind %r" % kind)
+    return shas
+
+
 def _selftest_cases():
     """(name, snapshots, expected dict) triples; expected holds the four lists."""
     base = _render([_row("S001")])
@@ -470,75 +676,98 @@ def selftest():
     root = tempfile.mkdtemp(prefix="mori-sources-appendonly-selftest-")
     passed = 0
     failed = 0
+
+    def check_one(name, repo, base_sha, expected_exit, expected):
+        nonlocal passed, failed
+        try:
+            code, stdout = _run_cli(["HEAD", "--repo", repo,
+                                     "--round-base", base_sha], env)
+            lines = [l for l in stdout.splitlines()
+                     if l.strip() and l.strip() != PREDICATE]
+            summary_lines = [l for l in lines if SUMMARY_RE.match(l.strip())]
+            problems = []
+            if len(summary_lines) != 1:
+                problems.append("expected one summary line, got %d"
+                                % len(summary_lines))
+                summary = lines[-1] if lines else ""
+            else:
+                summary = summary_lines[0].strip()
+            got = {
+                "ids": [l.split()[1] for l in lines if l.startswith("changed ")],
+                "deleted": [l.split()[1] for l in lines if l.startswith("deleted ")],
+            }
+            if summary_lines:
+                groups = SUMMARY_RE.match(summary).groups()
+                got["superseded"] = [p for p in groups[3].split(",") if p]
+                got["round_changed"] = [p for p in groups[4].split(",") if p]
+                violations = int(groups[0])
+                if violations != len(got["ids"]) + len(got["deleted"]):
+                    problems.append("violations %d != len(ids)+len(deleted)"
+                                    % violations)
+            else:
+                got["superseded"] = []
+                got["round_changed"] = []
+            timing_lines = [l for l in lines if TIMING_RE.match(l.strip())]
+            if len(timing_lines) != 1:
+                problems.append("expected one supersede_timing line, got %d"
+                                % len(timing_lines))
+                got["superseded_as_of"] = []
+                got["stale_supersede"] = []
+            else:
+                tgroups = TIMING_RE.match(timing_lines[0].strip()).groups()
+                got["superseded_as_of"] = [p for p in tgroups[0].split(",") if p]
+                got["stale_supersede"] = [p for p in tgroups[1].split(",") if p]
+            for key in ("ids", "deleted", "superseded", "round_changed",
+                        "superseded_as_of", "stale_supersede"):
+                if got[key] != expected[key]:
+                    problems.append("%s: want %s got %s"
+                                    % (key, expected[key], got[key]))
+            if code != expected_exit:
+                problems.append("exit: want %d got %d" % (expected_exit, code))
+            want_by = expected.get("superseded_by", {})
+            for cid, by in want_by.items():
+                match = [l for l in lines
+                         if l.startswith("changed %s " % cid)]
+                if not match or not match[0].endswith("superseded_by=%s" % by):
+                    problems.append("superseded_by[%s]: want %s got %r"
+                                    % (cid, by, match[0] if match else None))
+            for line in lines:
+                if SUMMARY_RE.match(line) or TIMING_RE.match(line):
+                    continue
+                if not (re.match(r"^changed S\d{3} superseded_by=(\S+)$", line)
+                        or re.match(r"^deleted S\d{3}$", line)):
+                    problems.append("per-id line malformed: %r" % line)
+            if problems:
+                failed += 1
+                print("FAIL %s: %s" % (name, "; ".join(problems)))
+            else:
+                passed += 1
+        except Exception as exc:                 # noqa: BLE001 - selftest reports
+            nonlocal_failed_append(name, exc)
+
+    def nonlocal_failed_append(name, exc):
+        nonlocal failed
+        failed += 1
+        print("FAIL %s: %s" % (name, exc))
+
     try:
-        for index, (name, snapshots, expected_exit, expected) in enumerate(_selftest_cases()):
+        for index, (name, snapshots, expected_exit, expected) in enumerate(
+                _selftest_cases()):
             repo = os.path.join(root, "case%02d" % index)
             try:
                 shas = _make_repo(repo, snapshots, env)
-                base_sha = shas[0]
-                code, stdout = _run_cli(["HEAD", "--repo", repo,
-                                         "--round-base", base_sha], env)
-                lines = [l for l in stdout.splitlines()
-                         if l.strip() and l.strip() != PREDICATE]
-                summary_lines = [l for l in lines if SUMMARY_RE.match(l.strip())]
-                problems = []
-                if len(summary_lines) != 1:
-                    problems.append("expected one summary line, got %d"
-                                    % len(summary_lines))
-                    summary = lines[-1] if lines else ""
-                else:
-                    summary = summary_lines[0].strip()
-                got = {
-                    "ids": [l.split()[1] for l in lines if l.startswith("changed ")],
-                    "deleted": [l.split()[1] for l in lines if l.startswith("deleted ")],
-                }
-                if summary_lines:
-                    groups = SUMMARY_RE.match(summary).groups()
-                    got["superseded"] = [p for p in groups[3].split(",") if p]
-                    got["round_changed"] = [p for p in groups[4].split(",") if p]
-                    violations = int(groups[0])
-                    if violations != len(got["ids"]) + len(got["deleted"]):
-                        problems.append("violations %d != len(ids)+len(deleted)"
-                                        % violations)
-                else:
-                    got["superseded"] = []
-                    got["round_changed"] = []
-                timing_lines = [l for l in lines if TIMING_RE.match(l.strip())]
-                if len(timing_lines) != 1:
-                    problems.append("expected one supersede_timing line, got %d"
-                                    % len(timing_lines))
-                    got["superseded_as_of"] = []
-                    got["stale_supersede"] = []
-                else:
-                    tgroups = TIMING_RE.match(timing_lines[0].strip()).groups()
-                    got["superseded_as_of"] = [p for p in tgroups[0].split(",") if p]
-                    got["stale_supersede"] = [p for p in tgroups[1].split(",") if p]
-                for key in ("ids", "deleted", "superseded", "round_changed",
-                            "superseded_as_of", "stale_supersede"):
-                    if got[key] != expected[key]:
-                        problems.append("%s: want %s got %s"
-                                        % (key, expected[key], got[key]))
-                if code != expected_exit:
-                    problems.append("exit: want %d got %d" % (expected_exit, code))
-                want_by = expected.get("superseded_by", {})
-                for cid, by in want_by.items():
-                    match = [l for l in lines
-                             if l.startswith("changed %s " % cid)]
-                    if not match or not match[0].endswith("superseded_by=%s" % by):
-                        problems.append("superseded_by[%s]: want %s got %r"
-                                        % (cid, by, match[0] if match else None))
-                for line in lines:
-                    if SUMMARY_RE.match(line) or TIMING_RE.match(line):
-                        continue
-                    if not (re.match(r"^changed S\d{3} superseded_by=(\S+)$", line)
-                            or re.match(r"^deleted S\d{3}$", line)):
-                        problems.append("per-id line malformed: %r" % line)
-                if problems:
-                    failed += 1
-                    print("FAIL %s: %s" % (name, "; ".join(problems)))
-                else:
-                    passed += 1
-            except Exception as exc:                 # noqa: BLE001 - selftest reports
+                check_one(name, repo, shas[0], expected_exit, expected)
+            except Exception as exc:             # noqa: BLE001 - selftest reports
+                failed += 1
+                print("FAIL %s: %s" % (name, exc))
+        dag_cases, dag_bodies = _selftest_dag_cases()
+        for offset, (name, kind, expected_exit, expected, base_name) in enumerate(
+                dag_cases):
+            repo = os.path.join(root, "dag%02d" % offset)
+            try:
+                shas = _make_dag_repo(repo, kind, dag_bodies, env)
+                check_one(name, repo, shas[base_name], expected_exit, expected)
+            except Exception as exc:             # noqa: BLE001 - selftest reports
                 failed += 1
                 print("FAIL %s: %s" % (name, exc))
     finally:
@@ -560,7 +789,7 @@ def main(argv):
     parser.add_argument("--selftest", action="store_true",
                         help="run the fixture self-test and exit")
     parser.add_argument("--print-predicate", action="store_true",
-                        help="print the frozen P-C6 predicate and exit")
+                        help="print the frozen P-C9 predicate and exit")
     args = parser.parse_args(argv)
 
     if args.print_predicate:
