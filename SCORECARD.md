@@ -2344,3 +2344,17 @@ Held: coverage 6, freshness 5, adjacency 6. No retirement, waiver,
 exploratory claim or promotion. Frontier: registry 231 → 238 (S232–S235,
 S241, S262 admitted with the two assimilation entries; S347 mine); refused
 entry and flip condition under `.ufo/waves/round-42/assimilation/`.
+
+### Round 42 measured outcome (L1 Kimi fresh mori-r42, tip 34b9267)
+
+| Claim | After (measured) | Verdict proposed for the closure |
+|---|---|---|
+| C1 | `count-c1.py 34b9267…` → 28 checks PASS then `TypeError … cwd` at its final no-harm check, rc 1, no `C1=` line (`evidence/c1-after.txt`) | **not verified (honest stop)**: the frozen counter's own defect; v5 substance (17/0 selftest, three mutants killed on exactly their arms, routed four unchanged) verified by the counter's 28 prior checks and the no-harm clause re-derived by hand (`evidence/c1-noharm-manual.txt`); the counter is pinned and not amended after data (fleet lesson, kumitate r42) |
+| C2 | `count-c2.py 34b9267…` → `C2=met` exit 0 (`evidence/c2-after.txt`) | verified (measured) |
+| C3 | `count-c3.py 34b9267…` → `C3=met` exit 0 (`evidence/c3-after.txt`) | verified (measured) |
+
+Held: coverage 6, operability 7, depth 5, calibration 5, freshness 5,
+adjacency 6 — no score move (C1's miss bars a move on operability; C2/C3
+repair routed defects at held scores, the lane's established pattern).
+Mistake M4 added to the lesson (counter never executed end-to-end
+pre-freeze).

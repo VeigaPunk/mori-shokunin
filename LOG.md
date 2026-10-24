@@ -2441,3 +2441,23 @@ The earlier same-round launch left `.ufo/waves/round-42/` untracked
 census-start). All bytes were inspected and re-verified (counters re-run at
 the entering tip: C2/C3 `unmet` controls reproduced; pins hash-match) and
 are reused as this round's freeze; nothing was discarded.
+
+### Round-42 measured outcome (L1, at tip 34b9267)
+
+- **C1 — not verified (honest stop).** The frozen counter
+  `python3 .ufo/waves/round-42/count-c1.py 34b9267…` crashes at its final
+  no-harm check with `TypeError: run() got an unexpected keyword argument
+  'cwd'` (receipt `evidence/c1-after.txt:30-41`, rc 1, no `C1=` line) — a
+  defect in the inherited frozen counter, never executed end-to-end before
+  the freeze because v5 did not exist yet. Its 28 prior checks all PASS
+  (pins 19/19; v4 control pass=14 + all three v4-mutants surviving; v5
+  selftest pass=17 fail=0; all three v5 mutants byte-derived, committed and
+  killed on exactly their own arms; routed four unchanged), and the crashed
+  check's substance holds by L1 hand-run (`evidence/c1-noharm-manual.txt`:
+  gate selftest pass=22 fail=0, round_changed=[], stale_supersede=[], as-of
+  set unchanged) — but the declared after-value was the counter's own
+  `C1=met` exit 0, and a counter is not amended after data. The v5 checker
+  and its arms are landed work; the claim verdict is a miss, reported for
+  the closure to rule on.
+- **C2 — met** (`evidence/c2-after.txt`, exit 0).
+- **C3 — met** (`evidence/c3-after.txt`, exit 0).

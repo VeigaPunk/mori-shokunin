@@ -1,0 +1,15 @@
+check d72_ancestor           PASS (merge-base rc=0)
+check d72_enumerated         PASS (paths=165)
+check freeze_set_size        PASS (named-freeze paths=20 want 20)
+check inherited_set_size     PASS (inherited paths=145 want 145)
+check set_seat_reports       PASS (67 want 67)
+check set_r40_evidence_scratch PASS (7 want 7)
+check set_scratch            PASS (71 want 71)
+check manifest_present       PASS (145 candidate path lines)
+check manifest_covers_all    PASS (missing=0 [])
+check manifest_no_extras     PASS (extras=0 [])
+check manifest_seat_reports_rows PASS (listed=67 want 67)
+check manifest_r40_evidence_scratch_rows PASS (listed=7 want 7)
+check manifest_scratch_rows  PASS (listed=71 want 71)
+C3=met
+c3 rc=0

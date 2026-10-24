@@ -1,0 +1,42 @@
+check pins_present               PASS (19 pins)
+check pins_match                 PASS (mismatch=[])
+check v4_present                 PASS (v4 sha=e1f2e11e7556)
+check v5_present                 PASS (.ufo/waves/round-42/conform.py)
+check v5_differs_from_v4         PASS (same bytes as v4)
+check v5_regions_intact          PASS (v4 mutation regions byte-persist in v5)
+check v5_new_arms_named          PASS (three new arm names present)
+check sandbox_clone              PASS (at 34b926730c30e0251e1aec531863d8355dc491f1)
+check v4_control_selftest        PASS (pass=14 fail=0 rc=0)
+check v4_mutant_pin_walrus-branch PASS (derived sha=630d43cb5409)
+check v4_mutant_survives_walrus-branch PASS (pass=14 fail=0 (survival: no arm can see it))
+check v4_mutant_pin_tuple-extract PASS (derived sha=1483a1f8249c)
+check v4_mutant_survives_tuple-extract PASS (pass=14 fail=0 (survival: no arm can see it))
+check v4_mutant_pin_sort-deletion PASS (derived sha=b0d81b962eff)
+check v4_mutant_survives_sort-deletion PASS (pass=14 fail=0 (survival: no arm can see it))
+check v5_selftest_17             PASS (pass=17 fail=0 rc=0)
+check v5_region_walrus-branch    PASS (anchor count=1)
+check v5_mutant_committed_walrus-branch PASS (.ufo/waves/round-42/fixtures/mutants/conform-mut-walrus-branch.py)
+check v5_mutant_derived_walrus-branch PASS (derived=1fc61948425c committed=1fc61948425c)
+check v5_mutant_kill_walrus-branch PASS (pass=16 fail=1 fails=['timeout_scope_walrus_positive'] (want [timeout_scope_walrus_positive]))
+check v5_region_tuple-extract    PASS (anchor count=1)
+check v5_mutant_committed_tuple-extract PASS (.ufo/waves/round-42/fixtures/mutants/conform-mut-tuple-extract.py)
+check v5_mutant_derived_tuple-extract PASS (derived=496ecda0d846 committed=496ecda0d846)
+check v5_mutant_kill_tuple-extract PASS (pass=16 fail=1 fails=['timeout_scope_tupleunpack_positive'] (want [timeout_scope_tupleunpack_positive]))
+check v5_region_sort-deletion    PASS (anchor count=1)
+check v5_mutant_committed_sort-deletion PASS (.ufo/waves/round-42/fixtures/mutants/conform-mut-sort-deletion.py)
+check v5_mutant_derived_sort-deletion PASS (derived=9b94181b8a39 committed=9b94181b8a39)
+check v5_mutant_kill_sort-deletion PASS (pass=16 fail=1 fails=['timeout_scope_source_order'] (want [timeout_scope_source_order]))
+check v5_routed_four             PASS (got=[('met', []), ('unmet', ['timeout_scope']), ('unmet', ['timeout_scope']), ('unmet', ['timeout_scope'])])
+Traceback (most recent call last):
+  File "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-42/count-c1.py", line 258, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-42/count-c1.py", line 244, in main
+    rc, out, _e = run([sys.executable,
+                  ~~~^^^^^^^^^^^^^^^^^
+                       os.path.join(clone, "tools/mori-sources-appendonly.py"),
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                       "--selftest"], cwd=clone)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: run() got an unexpected keyword argument 'cwd'
+rc=1

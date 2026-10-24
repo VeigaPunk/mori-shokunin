@@ -1,0 +1,749 @@
+{
+  "schema": "ufo-swarm-wave-v1",
+  "wave": "mori-r42-v2",
+  "context": "# mori round 42 — one v2 wave (build + attack), L1 Kimi fresh mori-r42\n\nLane repo: /home/vgpnk/Projects/shokunin/mori-shokunin. Fleet repo /home/vgpnk/Projects/shokunin is read-only; never write fleet files, sibling repos, the lane Git index, lane jj state, .ufo/state or .ufo/watchdog.log. The shokuknow tree /home/vgpnk/Projects/shokuknow is read-only source; never run a campaign tool inside it.\n\nThis is one 64-member v2 wave under policy v2 (64-128 band); 31/64 seats are attack roles (12 reviewer + 11 critic + 8 mutation-tester = 48.4%). The L1 holds the canonical planner seat; the validator rejects a planner role. A bounded planning data-walk rides scout/connector items.\n\nEvery seat path is absolute under /home/vgpnk/Projects/shokunin/mori-shokunin; tools start at the fleet root, and a relative path lands in the FLEET repo. Every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. Each member is a leaf with no delegation. Items are read-only: run code only in disposable sandboxes under /tmp, edit no production file, and write only your own report file. Never mutate lane Git/jj or the lane index. Never read secrets or credential material.\n\nLanded data under attack (tip 34b926730c30e0251e1aec531863d8355dc491f1): conform v5 .ufo/waves/round-42/conform.py (17-arm selftest, three committed mutants under fixtures/mutants/), counters .ufo/waves/round-42/count-c{1,2,3}.py, inheritance manifest corpus/knowledge/inheritance-d72ac16-r42.md, registry rows S232-S235/S241/S262/S347 in corpus/SOURCES.md, admitted entries corpus/knowledge/{oom-evidence-loss-r38,oom-victim-context-r41,conform-source-order-r42}.md, refusal .ufo/waves/round-42/assimilation/refused-oom-tracing.md, errata in LOG.md/SCORECARD.md round-42 sections, lesson corpus/lessons/round-42.md, QUALITY 114.\n\nRole routing is the operator-owned host table at /home/vgpnk/.omp/agent/config.yml; roles select routes; never pass or hardcode a model. Tooling authorization: agents may install or update tools that help the task through official channels (uv tool / npx / official binary in ~/.local/bin) and must record tool/version/channel/reason in their report; pacman transactions are PAUSED host-wide - never run pacman. No secrets or credential-store reads.",
+  "policy": {
+    "source": "config",
+    "maxLanes": 64,
+    "minLanes": 16,
+    "waveMinLanes": 64,
+    "waveMaxLanes": 128,
+    "declaredMaxLanes": 64,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "dispatch": {
+    "calls": 1,
+    "kind": "task",
+    "note": "Issue exactly one batched task call carrying every spawn lane, plus one hub send per resume lane. Never split a wave into multiple task calls (one-swarm-per-wave)."
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-42/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-42/w1",
+    "members": {
+      "RevC1V5": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC1Routed": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC2Errata": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC3Manifest": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevAssimRows": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevAssimEntries": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevS347": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevLesson": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevRefusal": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevQuality114": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevManifestProv": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevCounterC2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "CritC1Counter": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritC2Counter": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritC3Counter": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritV5Arms": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritSweep": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritAssimTier": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritS262Scope": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritManifestExtras": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritCollision": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritRecordsAppend": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritQuarantine": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "MutC1Walrus2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutC1Tuple2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutC1Sort2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutC2Record": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutC3Manifest": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutS347Quote": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutV5NoHarm": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutGate22": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "ScS232": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScS233": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScS234": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScS235": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScS241": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScS262": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScS347": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScPkgTheme": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScConsider": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScSweepStale": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScFreezePins": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScCensusEnd": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScrLogWave": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScrScoreOutcome": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScrTrends": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScrShonen": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScrFrontier": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScrCapability": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScrRefusalFlip": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScrRegistryNarr": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScrL0": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScrMistakeD2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ExecC1Rerun": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecC2C3Rerun": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecV4Control": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecMutantBytes": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecRetention": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecGateLane": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecCensusRows": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecFreezeOrder": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ConnSiblingOOM": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null
+      },
+      "SimpV5": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "simplifier",
+        "item": null
+      },
+      "RvgStaleClaims": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "revenger",
+        "item": null
+      }
+    }
+  },
+  "priorRegistries": [],
+  "tasks": [
+    {
+      "name": "RevC1V5",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: RevC1V5 (role reviewer)\n\nReview .ufo/waves/round-42/conform.py (v5) against the frozen P-C1 sentence in .ufo/waves/round-42/contract.md: nine static checks keep r41 semantics; three fixture arms named timeout_scope_walrus_positive/timeout_scope_tupleunpack_positive/timeout_scope_source_order; verify by reading the code and running the honest selftest in a /tmp sandbox clone at 34b926730c30e0251e1aec531863d8355dc491f1. Attack whether any arm could pass vacuously.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/RevC1V5.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/RevC1V5.md"
+    },
+    {
+      "name": "RevC1Routed",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: RevC1Routed (role reviewer)\n\nRe-derive the routed-four verdicts under v5 at landed tip 34b926730c30e0251e1aec531863d8355dc491f1 in a /tmp clone (honest counter CONFORM=met; the three r41 survivors CONFORM=unmet with only timeout_scope failing), per contract no-harm clause. Name any verdict that moved.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/RevC1Routed.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/RevC1Routed.md"
+    },
+    {
+      "name": "RevC2Errata",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: RevC2Errata (role reviewer)\n\nVerify the round-42 LOG.md and SCORECARD.md errata against the r41 closure's routed defects 1-3 (corpus/lessons/round-41-verifier-spotcheck.md): (a) 8/8 mutants superseded by 5/8 with the three SURVIVED reports named; (b) 34 attack seats (53%) superseded by 31/64 48.4% with the spec-definition; (c) 2 scouts, 4 scribes superseded by 1 scout, 5 scribes, total 19 unchanged. Check the superseded text is named and no lane-owned r42 record re-asserts it uncontradicted.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/RevC2Errata.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/RevC2Errata.md"
+    },
+    {
+      "name": "RevC3Manifest",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: RevC3Manifest (role reviewer)\n\nIndependently enumerate git -C <lane> diff-tree --no-renames --no-commit-id --name-only -r d72ac167535229d737b9fa844513431d9a12f5ea and diff it against corpus/knowledge/inheritance-d72ac16-r42.md: every one of the 145 inherited paths named, category counts 67/7/71, no path named that d72ac16 did not add, the 20-path freeze set excluded.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/RevC3Manifest.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/RevC3Manifest.md"
+    },
+    {
+      "name": "RevAssimRows",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: RevAssimRows (role reviewer)\n\nAudit the seven new registry rows S232-S235, S241, S262, S347 in corpus/SOURCES.md against the CORPUS.md SOURCES contract v1: 11 columns, scoped tiers (community never A; is tier A defensible for S234/S235/S262/S347 as scoped?), anchor cells locate a section not a homepage, recheck cells valid ISO/cadence, used-by paths exist and cite the rows.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/RevAssimRows.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/RevAssimRows.md"
+    },
+    {
+      "name": "RevAssimEntries",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: RevAssimEntries (role reviewer)\n\nGate-check the two admitted entries corpus/knowledge/oom-evidence-loss-r38.md and oom-victim-context-r41.md against corpus/QUALITY.md: provenance trio present, claims falsifiable or marked opinion, boundaries named, detection/report-only province respected (no remediation proposed), FR1/FR13 coverage-map ground real.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/RevAssimEntries.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/RevAssimEntries.md"
+    },
+    {
+      "name": "RevS347",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: RevS347 (role reviewer)\n\nVerify S347 (docs.python.org ast.walk) and its entry corpus/knowledge/conform-source-order-r42.md: the quote 'in no specified order' is locatable in corpus/evidence/sources-r42/S347.html, the entry's claim matches what the checker's sort line does, and the boundaries do not claim execution order.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/RevS347.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/RevS347.md"
+    },
+    {
+      "name": "RevLesson",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: RevLesson (role reviewer)\n\nReview corpus/lessons/round-42.md: every Gate row's URL/access-date/quote matches the committed copy under corpus/evidence/sources-r42/, the refusal carries reason and flip, the Mistakes rows have class/evidence/captured-by/fix, and no row overclaims.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/RevLesson.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/RevLesson.md"
+    },
+    {
+      "name": "RevRefusal",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: RevRefusal (role reviewer)\n\nAdjudicate the refusal .ufo/waves/round-42/assimilation/refused-oom-tracing.md: re-attempt the S268 fetch yourself (doi.org, ieeexplore, OpenAlex any_repository_has_fulltext), and judge whether refusing the entry (rather than admitting on the campaign's say-so) is the correct gate decision.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/RevRefusal.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/RevRefusal.md"
+    },
+    {
+      "name": "RevQuality114",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: RevQuality114 (role reviewer)\n\nCheck QUALITY 114 in corpus/QUALITY.md: it must cite the lesson/considerthese source (considerthese/2026-10-24.md survivor-ledger proposal), carry a runnable check command, and a shown-able-to-fail witness (the v4 control receipt). Judge whether the criterion is grounded or decorative.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/RevQuality114.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/RevQuality114.md"
+    },
+    {
+      "name": "RevManifestProv",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: RevManifestProv (role reviewer)\n\nCheck the provenance prose of corpus/knowledge/inheritance-d72ac16-r42.md against the actual bytes: sample 10 paths from each fenced category, confirm each file exists at landed tip 34b926730c30e0251e1aec531863d8355dc491f1 and its content matches the claimed provenance (r40 wave seat reports, r40 evidence/scratch, r40-era .scratch fixtures).\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/RevManifestProv.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/RevManifestProv.md"
+    },
+    {
+      "name": "RevCounterC2",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: RevCounterC2 (role reviewer)\n\nReview .ufo/waves/round-42/count-c2.py logic: its evidence basis re-derivation (19 reports, Scr=5/Scout=1, spec role counts attack=31/64) and its sweep patterns; judge whether any real erratum defect could still pass C2=met (e.g. corrections recorded but factually wrong elsewhere).\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/RevCounterC2.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/RevCounterC2.md"
+    },
+    {
+      "name": "CritC1Counter",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: CritC1Counter (role critic)\n\nFalsify .ufo/waves/round-42/count-c1.py: construct the cheapest lane-side shortcut that prints C1=met without the real v5 work (e.g. stub selftest outputs) and test whether the counter catches it; attack its sandbox clone, pin verification, and mutant byte-comparison for holes.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/CritC1Counter.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/CritC1Counter.md"
+    },
+    {
+      "name": "CritC2Counter",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: CritC2Counter (role critic)\n\nFalsify count-c2.py: can a LOG/SCORECARD record satisfy every predicate while leaving a superseded value standing somewhere the sweep does not read (other lane-owned files, lesson, README)? Test with scratch mutants; report concrete bypass or clear.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/CritC2Counter.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/CritC2Counter.md"
+    },
+    {
+      "name": "CritC3Counter",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: CritC3Counter (role critic)\n\nFalsify count-c3.py: can a manifest with wrong category assignments, duplicate path lines, or paths named outside the d72ac16 set still print C3=met? Test the fenced-block parser with scratch manifests; report holes with receipts.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/CritC3Counter.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/CritC3Counter.md"
+    },
+    {
+      "name": "CritV5Arms",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: CritV5Arms (role critic)\n\nAttack the three v5 fixture arms themselves: is any arm killable by a checker mutation it does not name (i.e., does an arm fail under the WRONG mutant)? Apply cross-mutations in a /tmp sandbox (walrus-branch deletion vs the tupleunpack arm etc.) and report the discrimination matrix.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/CritV5Arms.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/CritV5Arms.md"
+    },
+    {
+      "name": "CritSweep",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: CritSweep (role critic)\n\nAttack the errata sweep: grep the whole lane for the three false r41 phrasings ('8/8 mutants killed', '34 attack seats (53%)', '2 scouts, 4 scribes') at landed tip 34b926730c30e0251e1aec531863d8355dc491f1 and judge whether any occurrence outside LOG/SCORECARD round-42 records needs its own correction.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/CritSweep.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/CritSweep.md"
+    },
+    {
+      "name": "CritAssimTier",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: CritAssimTier (role critic)\n\nAttack the tier calls: S262 tier A grounded only on OpenAlex metadata (publisher-deposited abstract), S234/S235 tier A as vendor/runtime sources. Argue each tier against CORPUS.md tier definitions and name which, if any, should be B; a downgrade argument must quote the contract text.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/CritAssimTier.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/CritAssimTier.md"
+    },
+    {
+      "name": "CritS262Scope",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: CritS262Scope (role critic)\n\nAttack the admitted entry oom-victim-context-r41.md: does any sentence exceed its abstract-only evidence (e.g. the 6.9s/92.6% figures trace to S268's full text, not the abstract)? List every sentence whose citation basis is not the located abstract quote and judge admit vs refuse under QUALITY.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/CritS262Scope.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/CritS262Scope.md"
+    },
+    {
+      "name": "CritManifestExtras",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: CritManifestExtras (role critic)\n\nAttack the manifest from the other side: verify no extra path sneaks in via the prose (the counter only reads fences) and that the freeze fence really is empty; also check the manifest's own recheck command runs and returns 165.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/CritManifestExtras.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/CritManifestExtras.md"
+    },
+    {
+      "name": "CritCollision",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: CritCollision (role critic)\n\nAttack the collision check: re-derive reg-ids and staged-ids yourself, confirm 0 collisions, and ask what happens NEXT round when more staged rows (S236-S346) are adopted - does any id this round adopted (S232-S262, S347) create a future collision? Prove with the comm command.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/CritCollision.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/CritCollision.md"
+    },
+    {
+      "name": "CritRecordsAppend",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: CritRecordsAppend (role critic)\n\nVerify append-only discipline of this round's record edits: git -C <lane> diff 9de7323..34b92673 -- LOG.md SCORECARD.md corpus/SOURCES.md must show zero deletions of prior bytes (insertions only). Report the diff stat.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/CritRecordsAppend.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/CritRecordsAppend.md"
+    },
+    {
+      "name": "CritQuarantine",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: CritQuarantine (role critic)\n\nAdjudicate the register slice rows (S244, S262, S268) in /home/vgpnk/Projects/shokuknow/.ufo/waves/corpus-expansion-1/absent-defect-register.md (read-only): the lane adopted S262 (present via OpenAlex), refused S268 (absent), and did not attempt S244. Judge whether leaving S244 unattempted is conformant with the item-10 hand-check duty for rows an admitted entry cites (none cite S244).\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/CritQuarantine.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/CritQuarantine.md"
+    },
+    {
+      "name": "MutC1Walrus2",
+      "agent": "mutation-tester",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: MutC1Walrus2 (role mutation-tester)\n\nIndependently re-derive the walrus-branch mutant from v5 bytes using the frozen transform in count-c1.py, byte-compare against fixtures/mutants/conform-mut-walrus-branch.py, run its selftest at landed tip 34b926730c30e0251e1aec531863d8355dc491f1 in a /tmp clone, and confirm pass=16 fail=1 failing exactly timeout_scope_walrus_positive.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/MutC1Walrus2.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/MutC1Walrus2.md"
+    },
+    {
+      "name": "MutC1Tuple2",
+      "agent": "mutation-tester",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: MutC1Tuple2 (role mutation-tester)\n\nSame for the tuple-extract mutant (pass=16 fail=1 on timeout_scope_tupleunpack_positive); also verify the v4-era mutant (conform-v4-mut-tuple-extract.py) still SURVIVES under v4 bytes, pinning the before-state.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/MutC1Tuple2.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/MutC1Tuple2.md"
+    },
+    {
+      "name": "MutC1Sort2",
+      "agent": "mutation-tester",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: MutC1Sort2 (role mutation-tester)\n\nSame for the sort-deletion mutant (pass=16 fail=1 on timeout_scope_source_order); additionally confirm the honest v5 reports the comprehension-target reason first and the mutant reports 'non-numeric constant' first.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/MutC1Sort2.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/MutC1Sort2.md"
+    },
+    {
+      "name": "MutC2Record",
+      "agent": "mutation-tester",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: MutC2Record (role mutation-tester)\n\nMutation-test count-c2.py: in a /tmp clone, flip one corrected value back (e.g. make the LOG entry say 8/8 again without superseded nearby, or remove the 48.4% string) and confirm the counter prints C2=unmet exit 1; red-before witness required.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/MutC2Record.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/MutC2Record.md"
+    },
+    {
+      "name": "MutC3Manifest",
+      "agent": "mutation-tester",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: MutC3Manifest (role mutation-tester)\n\nMutation-test count-c3.py: in a /tmp clone, delete one path from a manifest fence and add one path d72ac16 did not add; confirm C3=unmet with the right failing checks; red-before witness required.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/MutC3Manifest.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/MutC3Manifest.md"
+    },
+    {
+      "name": "MutS347Quote",
+      "agent": "mutation-tester",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: MutS347Quote (role mutation-tester)\n\nMutation-test the S347 grounding: alter one word of the located quote in a scratch copy of corpus/knowledge/conform-source-order-r42.md and show the copy corpus/evidence/sources-r42/S347.html no longer contains it (quote-to-copy binding fails); red-before witness required.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/MutS347Quote.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/MutS347Quote.md"
+    },
+    {
+      "name": "MutV5NoHarm",
+      "agent": "mutation-tester",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: MutV5NoHarm (role mutation-tester)\n\nMutation-test v5's no-harm clause: in a /tmp clone, mutate one static check in v5 (e.g. scratch root round-39 to round-40) and confirm the honest counter verdict flips (CONFORM=unmet) - i.e. the routed-four pass is load-bearing, not accidental.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/MutV5NoHarm.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/MutV5NoHarm.md"
+    },
+    {
+      "name": "MutGate22",
+      "agent": "mutation-tester",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: MutGate22 (role mutation-tester)\n\nRe-run tools/mori-sources-appendonly.py --selftest at landed tip 34b926730c30e0251e1aec531863d8355dc491f1 (expect pass=22 fail=0) and its lane line (expect the r41 as-of set unchanged by the 7 new rows); if the new rows changed any supersede verdict, report it - that would be a no-harm breach.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/MutGate22.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/MutGate22.md"
+    },
+    {
+      "name": "ScS232",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScS232 (role scout)\n\nRe-open https://gihyo.jp/article/2026/03/linux_containers-0061 (read-only fetch) and verify the S232 row: POLLPRI count 4, the located quote in the round-42 lesson appears verbatim, tier B defensible for the scoped claim; report agree/disagree with reasons.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScS232.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScS232.md"
+    },
+    {
+      "name": "ScS233",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScS233 (role scout)\n\nRe-open https://gihyo.jp/article/2024/08/linux_containers-0056 and verify the S233 anchor: the memory.high 128MB worked example with the 256MB stressor and no OOM record, plus the OOM-dmesg example; judge whether the teaches cell's 'never calls' claim is grounded by the worked example or needs S002 support.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScS233.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScS233.md"
+    },
+    {
+      "name": "ScS234",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScS234 (role scout)\n\nRe-open the iSulad supervisor.c at commit 5a79e5e2f46296d8d994f38fa32b429774f33b61 (raw.githubusercontent.com) and verify the S234 anchors: the three named functions at the named lines and the ENABLE_OOM_MONITOR epoll registration; confirm the committed copy matches today's fetch.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScS234.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScS234.md"
+    },
+    {
+      "name": "ScS235",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScS235 (role scout)\n\nRe-open the openEuler 24.03 LTS whitepaper PDF, sha256 it against the pin 9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30dca99359e6df057ad8020, and re-locate 无法成功捕捉容器 (count 1); report any drift.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScS235.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScS235.md"
+    },
+    {
+      "name": "ScS241",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScS241 (role scout)\n\nRe-open the MS Learn JA page and verify S241: the 診断 section's diagnosis-at-detection-time statement, ms.translationtype MT, updated_at 2026-10-14; confirm the committed copy matches today's fetch.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScS241.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScS241.md"
+    },
+    {
+      "name": "ScS262",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScS262 (role scout)\n\nRe-fetch the OpenAlex record for doi 10.1109/tsc.2026.3698682 and re-locate the abstract quote 'lack sufficient container context when selecting victim processes'; also re-confirm ieeexplore 202/0-bytes and Semantic Scholar DOI-absence; report the abstract-only scope as still accurate or not.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScS262.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScS262.md"
+    },
+    {
+      "name": "ScS347",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScS347 (role scout)\n\nRe-fetch https://docs.python.org/3/library/ast.html and re-locate 'no specified order' in the ast.walk section; confirm the committed copy and the S347 quote; note any docs revision markers.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScS347.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScS347.md"
+    },
+    {
+      "name": "ScPkgTheme",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScPkgTheme (role scout)\n\nScan /home/vgpnk/Projects/shokuknow/merge/mori/ (read-only) for OTHER entries on the OOM-evidence-chain theme beyond the three considered this round; confirm the round's 1-3-entry cap was applied to a real theme set and name what a later round could adopt (no writes).\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScPkgTheme.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScPkgTheme.md"
+    },
+    {
+      "name": "ScConsider",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScConsider (role scout)\n\nVerify considerthese/2026-10-24.md is byte-unedited this round (git status/diff at landed tip 34b926730c30e0251e1aec531863d8355dc491f1 ) and that the mined proposal (survivor ledger) was genuinely unimplemented before round 42; report which other proposals remain unimplemented for later rounds.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScConsider.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScConsider.md"
+    },
+    {
+      "name": "ScSweepStale",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScSweepStale (role scout)\n\nSweep lane records at landed tip 34b926730c30e0251e1aec531863d8355dc491f1 for stale self-assessments introduced this round: any claim of pass=17 or C1=met printed outside the committed receipts, any 'census ROWS=' mismatch vs the registry, any r42 record claiming a score move (scores must be held); report findings only.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScSweepStale.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScSweepStale.md"
+    },
+    {
+      "name": "ScFreezePins",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScFreezePins (role scout)\n\nRe-verify every pin in .ufo/waves/round-42/evidence/freeze-r42.txt against landed tip 34b926730c30e0251e1aec531863d8355dc491f1 (hash each pinned path with sha256sum via git show); 19/19 must match; report the tally.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScFreezePins.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScFreezePins.md"
+    },
+    {
+      "name": "ScCensusEnd",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScCensusEnd (role scout)\n\nRun bash /home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori from the lane root at landed tip 34b926730c30e0251e1aec531863d8355dc491f1 and record the full output and exit code (expect ok, 238 rows, W04 warnings only).\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScCensusEnd.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScCensusEnd.md"
+    },
+    {
+      "name": "ScrLogWave",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScrLogWave (role scribe)\n\nDraft (in your report only) the LOG.md round-42 wave-record paragraph: shape, seats, roles, attack share, dead seats placeholder, dispatch record pointer - to be appended by the L1, not by you.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScrLogWave.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScrLogWave.md"
+    },
+    {
+      "name": "ScrScoreOutcome",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScrScoreOutcome (role scribe)\n\nDraft (report only) the SCORECARD round-42 measured-outcome table cells for C1/C2/C3 with the counting commands and receipt paths from .ufo/waves/round-42/evidence/.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScrScoreOutcome.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScrScoreOutcome.md"
+    },
+    {
+      "name": "ScrTrends",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScrTrends (role scribe)\n\nDraft (report only) the three Trend verdicts with evidence pointers: expansion (2 admitted entries on uncovered FR1/FR13 ground + S347), quality (v5 arms kill named survivors; errata repairs), discernment (lane-side gate decisions; non-author closure pending).\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScrTrends.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScrTrends.md"
+    },
+    {
+      "name": "ScrShonen",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScrShonen (role scribe)\n\nDraft (report only) the SHONEN section: four boxes, all [ ] or [~] with pointers; no box may be [x] without a named non-author verifier.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScrShonen.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScrShonen.md"
+    },
+    {
+      "name": "ScrFrontier",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScrFrontier (role scribe)\n\nDraft (report only) the Sources & frontier section: rows 231 -> 238 by tier (A/B/C), rows added by tier, rows touched old->new (none), frontier rows advanced (FR1/FR13 knowledge anchors), assimilation admits/rejects.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScrFrontier.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScrFrontier.md"
+    },
+    {
+      "name": "ScrCapability",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScrCapability (role scribe)\n\nDraft (report only) three capability rows for the round-42 register: conformance fixture-arm checker v5, d72ac16 inheritance manifest counter-check, report-accuracy erratum counter - name, what it does, evidence pointer, first-working round 42.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScrCapability.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScrCapability.md"
+    },
+    {
+      "name": "ScrRefusalFlip",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScrRefusalFlip (role scribe)\n\nDraft (report only) the one-paragraph refusal story for the fleet report: S268 unreachable evidence (202/0 bytes, no repository fulltext), unreachable-not-fabrication class, flip condition.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScrRefusalFlip.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScrRefusalFlip.md"
+    },
+    {
+      "name": "ScrRegistryNarr",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScrRegistryNarr (role scribe)\n\nDraft (report only) the registry narrative: S232-S235+S241 from the package (5 rows), S262 quarantined-then-hand-checked-present (1 row), S347 lane-opened for C1 (1 row); staged ids S236-S240 etc. deliberately NOT appended (no admitted entry cites them - rule 4).\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScrRegistryNarr.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScrRegistryNarr.md"
+    },
+    {
+      "name": "ScrL0",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScrL0 (role scribe)\n\nDraft (report only) any L0 questions this round warrants (e.g. whether tier A on publisher-deposited metadata via OpenAlex is acceptable fleet-wide; whether the S268 VOR PDF can be fetched operator-side) - the L1 decides whether to file them.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScrL0.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScrL0.md"
+    },
+    {
+      "name": "ScrMistakeD2",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ScrMistakeD2 (role scribe)\n\nDraft (report only) the round-42 Mistakes table polish: verify M1-M3 in corpus/lessons/round-42.md name their evidence correctly and the M2 false-E11 witness is retained in the wave tree; propose any missing mistake with evidence.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ScrMistakeD2.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ScrMistakeD2.md"
+    },
+    {
+      "name": "ExecC1Rerun",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ExecC1Rerun (role executor)\n\nIn a fresh /tmp clone at landed tip 34b926730c30e0251e1aec531863d8355dc491f1 run python3 .ufo/waves/round-42/count-c1.py 34b926730c30e0251e1aec531863d8355dc491f1 end-to-end and record the full output + exit code; expected C1=met exit 0. Sandbox only; do not write the lane.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ExecC1Rerun.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ExecC1Rerun.md"
+    },
+    {
+      "name": "ExecC2C3Rerun",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ExecC2C3Rerun (role executor)\n\nIn a fresh /tmp clone at landed tip 34b926730c30e0251e1aec531863d8355dc491f1 run count-c2.py and count-c3.py at the tip and record outputs + exit codes; expected C2=met and C3=met, exit 0.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ExecC2C3Rerun.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ExecC2C3Rerun.md"
+    },
+    {
+      "name": "ExecV4Control",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ExecV4Control (role executor)\n\nRe-run the v4 do-nothing control in a /tmp sandbox (v4 selftest pass=14 fail=0 and the three v4-mutants surviving), reproducing evidence/control-c1-v4.txt; record fresh receipts.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ExecV4Control.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ExecV4Control.md"
+    },
+    {
+      "name": "ExecMutantBytes",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ExecMutantBytes (role executor)\n\nByte-verify at landed tip 34b926730c30e0251e1aec531863d8355dc491f1 that each fixtures/mutants/conform-mut-*.py equals the v5 bytes with exactly its frozen transform applied once (python compare via git show); record sha256s.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ExecMutantBytes.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ExecMutantBytes.md"
+    },
+    {
+      "name": "ExecRetention",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ExecRetention (role executor)\n\nRun python3 tools/mori-retention-gate.py scan --repo <lane> --rev 34b926730c30e0251e1aec531863d8355dc491f1 --policy .ufo/waves/round-18/frozen/c1-policy.json --allowlist corpus/evidence/retention-allowlist.json in a /tmp sandbox and confirm the metric does not exceed the r41 baseline 4; record the receipt.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ExecRetention.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ExecRetention.md"
+    },
+    {
+      "name": "ExecGateLane",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ExecGateLane (role executor)\n\nRun python3 tools/mori-sources-appendonly.py 34b926730c30e0251e1aec531863d8355dc491f1 --round-base 9de7323de482699743619cfa2ee444e7418421e3 at the lane and record the supersede_timing line: the round-changed set must be exactly the 7 appended rows' insertions with no immutable-cell change (append-only proof).\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ExecGateLane.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ExecGateLane.md"
+    },
+    {
+      "name": "ExecCensusRows",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ExecCensusRows (role executor)\n\nCount registry rows at landed tip 34b926730c30e0251e1aec531863d8355dc491f1 with the frozen census awk (expect 238) and run scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori; record output + rc.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ExecCensusRows.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ExecCensusRows.md"
+    },
+    {
+      "name": "ExecFreezeOrder",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ExecFreezeOrder (role executor)\n\nRun python3 tools/mori-freeze-order.py check --repo <lane> --register .ufo/waves/round-18/frozen/c2-register.json --corrections corpus/evidence/freeze-register.json --tip-for r42-C1=34b926730c30e0251e1aec531863d8355dc491f1 (and C2/C3 same tip) in a sandbox; record output; overclaims must be 0 (contract+counters landed at 249c7e7/316f3dc before the data tip).\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ExecFreezeOrder.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ExecFreezeOrder.md"
+    },
+    {
+      "name": "ConnSiblingOOM",
+      "agent": "connector",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: ConnSiblingOOM (role connector)\n\nRead-only sibling-overlap scan: do the two admitted OOM-chain entries step on tsukuroi (OS/host diagnosis), kumitate (orchestration), or kama (serving health) ground? Check ../tsukuroi-shokunin/PROVINCE.md, ../kumitate-shokunin/PROVINCE.md, ../kama-shokunin/PROVINCE.md at the fleet root (READ-ONLY) and report overlaps or clear; detection/report-only boundary statements are mori's side of the fence.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/ConnSiblingOOM.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/ConnSiblingOOM.md"
+    },
+    {
+      "name": "SimpV5",
+      "agent": "simplifier",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: SimpV5 (role simplifier)\n\nRead .ufo/waves/round-42/conform.py and list removable bytes/complexity (dead conjuncts, duplicated walks) WITHOUT editing anything - the counter pins the bytes, so findings route to round 43; report a prioritized list with line pointers.\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/SimpV5.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/SimpV5.md"
+    },
+    {
+      "name": "RvgStaleClaims",
+      "agent": "revenger",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap and in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nAbsolute lane root: /home/vgpnk/Projects/shokunin/mori-shokunin. Use absolute paths under this root for every source, fixture, tool and evidence file; do not resolve paths from the fleet root.\n\nItem: RvgStaleClaims (role revenger)\n\nHunt for OTHER uncorrected false claims in the r41 fleet report (.ufo/reports/round-41/mori.md, fleet repo READ-ONLY) beyond the three routed defects: re-derive its quoted numbers against committed lane bytes at 46275ca4 and report any mismatch with evidence (revenge on behalf of the closure).\n\nBounds: read-only except your own report; absolute paths under /home/vgpnk/Projects/shokunin/mori-shokunin; never write the fleet repo, sibling repos, lane jj state or the Git index; no secrets.\nReport: .ufo/waves/round-42/w1/RvgStaleClaims.md\n(every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin - write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>)\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-42/w1/RvgStaleClaims.md"
+    }
+  ]
+}

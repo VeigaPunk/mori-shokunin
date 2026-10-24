@@ -1,0 +1,9 @@
+mode=manual-noharm date=2026-10-24T00:31Z rev=34b926730c30e0251e1aec531863d8355dc491f1
+L1 hand-run of the no-harm clause the frozen counter crashed before reaching
+count-c1.py line 244 run(..., cwd=clone): TypeError (counter defect, receipt c1-after.txt lines 30-41).
+gate selftest: MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0 (exit 0)
+lane line: round_changed=[] stale_supersede=[] superseded_as_of=36 ids (unchanged from round 41)
+changed S190 superseded_by=S220
+changed S193 superseded_by=S202
+appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S041,S044,S051,S062,S064,S067,S069,S070,S071,S083,S084,S090,S093,S096,S097,S101,S124,S127,S128,S129,S131,S140,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193,S226,S229] round_changed=[]
+supersede_timing superseded_as_of=[S041,S044,S051,S062,S064,S067,S069,S070,S071,S083,S084,S090,S093,S096,S097,S101,S124,S127,S128,S129,S131,S140,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193,S226,S229] stale_supersede=[]
