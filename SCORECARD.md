@@ -2267,3 +2267,7 @@ earlier); the round-40 after-cell above recorded 34 and 16. Round-41
 calibration correction: observed_as_of=35; extension_rows=17. This appended
 line supersedes the round-40 "34 as-of ids"/"16 never-edited" figures; the
 original text stands unmodified above.
+
+Round-41 calibration correction: observed_as_of=35; extension_rows=17.
+(single-line record for the frozen counter `tools/mori-round41-calibration.py`;
+the wrapped paragraph above states the same values).

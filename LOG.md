@@ -2359,3 +2359,7 @@ knowledge entry `corpus/knowledge/conform-bindings-r41.md` grounds C1; lesson
 under this round for durability. Wave: one v2 wave prepared by attempt 1
 (`w1-spec.json`, 64 seats, 31 attack = 48.4%, plan exit 0 at
 `evidence/wave-plan.json`).
+
+Round-41 calibration correction: observed_as_of=35; extension_rows=17.
+(single-line record for the frozen counter; the round-41 entry above records the
+same values — the frozen r40 gate derives 35 as-of ids / 17 extension rows at T1.)

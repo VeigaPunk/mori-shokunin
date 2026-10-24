@@ -67,3 +67,8 @@ T1 and the never-edited extension admits **17** rows (S226 plus 16 earlier), not
 the 34/16 M24 recorded. Round-41 calibration correction: observed_as_of=35;
 extension_rows=17. This appended line supersedes M24's "**34**" and "(16 rows:
 S226 plus 15 earlier)" values; the wrong figures remain above for history.
+
+Round-41 calibration correction: observed_as_of=35; extension_rows=17.
+(single-line record for the frozen counter `tools/mori-round41-calibration.py`;
+supersedes the wrapped paragraph above, which the counter's one-line regex
+cannot match.)
