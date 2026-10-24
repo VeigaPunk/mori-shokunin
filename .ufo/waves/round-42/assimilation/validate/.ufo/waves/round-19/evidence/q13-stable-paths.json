@@ -1,0 +1,165 @@
+{
+  "schema": "mori-stable-paths-v1",
+  "measured_revision": "c0fe0b230769ffba7168955f87985ec3ce08f41d",
+  "transport_control": {
+    "before_bad": 9,
+    "after_bad": 0
+  },
+  "rows": [
+    {
+      "revision": "367927c56eb1a00613e1fed65e5c47245fd570b9",
+      "path": "tools/mori-content-review.py",
+      "sha256": "c512c091c7f13c72301e0f4d3414f5e0db8cd27403789bb448fd8028b7d82aa8",
+      "parse_clean": false,
+      "error_class": "IndentationError"
+    },
+    {
+      "revision": "367927c56eb1a00613e1fed65e5c47245fd570b9",
+      "path": "tools/mori-freeze-order.py",
+      "sha256": "69662e0d8df7787b54762140dd6c962795b3e61e929b5ca491fafbc2db02e03b",
+      "parse_clean": false,
+      "error_class": "SyntaxError"
+    },
+    {
+      "revision": "367927c56eb1a00613e1fed65e5c47245fd570b9",
+      "path": "tools/mori-round19-regressions.py",
+      "sha256": "4a4d85786e733f4cfb7c8f520c6ab760b8de5f25fd29306170202a0b2f1e368e",
+      "parse_clean": false,
+      "error_class": "SyntaxError"
+    },
+    {
+      "revision": "367927c56eb1a00613e1fed65e5c47245fd570b9",
+      "path": ".ufo/waves/round-16/build/ReviewCounts.md",
+      "sha256": "26f87a86dcc82220b32a83c664849c4ffa6ffba68a12630a26240eef94d9c082",
+      "parse_clean": false,
+      "error_class": "ValueError"
+    },
+    {
+      "revision": "367927c56eb1a00613e1fed65e5c47245fd570b9",
+      "path": ".ufo/waves/round-16/frozen/round15-spec.json",
+      "sha256": "07f0917c46c0f00378059dc44dfb38ca7d26ac3c161cdc2827cee4895ecd3b0f",
+      "parse_clean": false,
+      "error_class": "JSONDecodeError"
+    },
+    {
+      "revision": "367927c56eb1a00613e1fed65e5c47245fd570b9",
+      "path": ".ufo/waves/round-16/wave1-context-corrected-not-dispatched.json",
+      "sha256": "e33afb92c7bb67523acf46694597da0586952f4e2a014aed64371ed0badff123",
+      "parse_clean": false,
+      "error_class": "JSONDecodeError"
+    },
+    {
+      "revision": "367927c56eb1a00613e1fed65e5c47245fd570b9",
+      "path": ".ufo/waves/round-16/wave1-dispatch.json",
+      "sha256": "b29f5c8fc1e8adfe30f40148521903e791d4eddd30c0ced0d272cf2551cb97f7",
+      "parse_clean": false,
+      "error_class": "JSONDecodeError"
+    },
+    {
+      "revision": "367927c56eb1a00613e1fed65e5c47245fd570b9",
+      "path": ".ufo/waves/round-16/wave1-spec.json",
+      "sha256": "db2304087fac3d10a2aa70c18b492e36448719922af13f4fa16f22500df58fc7",
+      "parse_clean": false,
+      "error_class": "JSONDecodeError"
+    },
+    {
+      "revision": "367927c56eb1a00613e1fed65e5c47245fd570b9",
+      "path": ".ufo/waves/round-16/wave2-spec.json",
+      "sha256": "67b19e13ca2cd170ca893d8a910ee386a93e52778eb15c05cc96d4d6622cdf62",
+      "parse_clean": false,
+      "error_class": "JSONDecodeError"
+    },
+    {
+      "revision": "c0fe0b230769ffba7168955f87985ec3ce08f41d",
+      "path": "tools/mori-content-review.py",
+      "sha256": "fa88a6b034d1cdb955fc9db1c0aa38efd44bcc9495d6086873b3ebd6476b29cc",
+      "parse_clean": true,
+      "error_class": null
+    },
+    {
+      "revision": "c0fe0b230769ffba7168955f87985ec3ce08f41d",
+      "path": "tools/mori-freeze-order.py",
+      "sha256": "ec1be305d9fbf81d8169554cdb8f681a819f97ee89bb1362f08c4de0b427b547",
+      "parse_clean": true,
+      "error_class": null
+    },
+    {
+      "revision": "c0fe0b230769ffba7168955f87985ec3ce08f41d",
+      "path": "tools/mori-round19-regressions.py",
+      "sha256": "a725f0c3b5584d4f0d2ed73ebe5603b3928c83098930d1f6171bd7ea397178b5",
+      "parse_clean": true,
+      "error_class": null
+    },
+    {
+      "revision": "c0fe0b230769ffba7168955f87985ec3ce08f41d",
+      "path": ".ufo/waves/round-16/build/ReviewCounts.md",
+      "sha256": "811f35623d7fc45d13549e8d2abcb242ee07b06c6caafd7fcda00d2e105cba10",
+      "parse_clean": true,
+      "error_class": null
+    },
+    {
+      "revision": "c0fe0b230769ffba7168955f87985ec3ce08f41d",
+      "path": ".ufo/waves/round-16/frozen/round15-spec.json",
+      "sha256": "4cc8aaefe189efe8de32cd8b0be0a976e5b5c7d54af6eb35c7fdd9a035ea07e2",
+      "parse_clean": true,
+      "error_class": null
+    },
+    {
+      "revision": "c0fe0b230769ffba7168955f87985ec3ce08f41d",
+      "path": ".ufo/waves/round-16/wave1-context-corrected-not-dispatched.json",
+      "sha256": "0720459e0df396f003c78e0d649cbbfda3a89ce53d1df56413818cda205ff891",
+      "parse_clean": true,
+      "error_class": null
+    },
+    {
+      "revision": "c0fe0b230769ffba7168955f87985ec3ce08f41d",
+      "path": ".ufo/waves/round-16/wave1-dispatch.json",
+      "sha256": "1b7f92ca89b814b39a83e2bdc94b49a8927eac81d3709cb4026ce671024e1ff2",
+      "parse_clean": true,
+      "error_class": null
+    },
+    {
+      "revision": "c0fe0b230769ffba7168955f87985ec3ce08f41d",
+      "path": ".ufo/waves/round-16/wave1-spec.json",
+      "sha256": "b3c6d0667ed85dcc3006b9c3c2f880e23a1b76e5a7dafca35b14705b001207bf",
+      "parse_clean": true,
+      "error_class": null
+    },
+    {
+      "revision": "c0fe0b230769ffba7168955f87985ec3ce08f41d",
+      "path": ".ufo/waves/round-16/wave2-spec.json",
+      "sha256": "1b1394f39690dc68caee5726092337a3ca287c257c360a6dff0d047043d20d3f",
+      "parse_clean": true,
+      "error_class": null
+    }
+  ],
+  "stable_inputs": [
+    {
+      "path": "tools/mori-content-review.py",
+      "sha256": "fa88a6b034d1cdb955fc9db1c0aa38efd44bcc9495d6086873b3ebd6476b29cc",
+      "working_bytes_match": true
+    },
+    {
+      "path": "tools/mori-freeze-order.py",
+      "sha256": "ec1be305d9fbf81d8169554cdb8f681a819f97ee89bb1362f08c4de0b427b547",
+      "working_bytes_match": true
+    },
+    {
+      "path": "tools/mori-round19-regressions.py",
+      "sha256": "a725f0c3b5584d4f0d2ed73ebe5603b3928c83098930d1f6171bd7ea397178b5",
+      "working_bytes_match": true
+    },
+    {
+      "path": ".ufo/waves/round-19/frozen/expected.json",
+      "sha256": "c5c6c67f104ed1baa57a56bfb22728a2e871ca174a4915ff4005eb3485abe22a",
+      "working_bytes_match": true
+    },
+    {
+      "path": ".ufo/waves/round-19/frozen/content-population.json",
+      "sha256": "4a50e77a1f436d349a62100cbac59f4dd337c3f48e63b5a31519d1d2231d581b",
+      "working_bytes_match": true
+    }
+  ],
+  "old_retention_policy_and_allowlist_unchanged": true,
+  "method": "git show exact blob bytes; ast.parse for Python, json.loads for JSON, exact transport-footer exclusion for named Markdown; source hashes versus working bytes."
+}

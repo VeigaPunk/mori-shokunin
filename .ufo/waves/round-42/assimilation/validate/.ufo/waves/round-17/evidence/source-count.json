@@ -1,0 +1,20 @@
+{
+  "label": "source-count",
+  "started_at": "2026-10-20T16:35:56.787993-03:00",
+  "ended_at": "2026-10-20T16:35:56.805290-03:00",
+  "argv": [
+    "python3",
+    "-c",
+    "import subprocess,json,collections; r='/home/vgpnk/Projects/shokunin/mori-shokunin'; out=[]\nfor rev in ['24526ea','273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7']:\n text=subprocess.check_output(['git','--no-optional-locks','-C',r,'show',rev+':corpus/SOURCES.md'],text=True); rows=[[x.strip() for x in l.split('|')[1:-1]] for l in text.splitlines() if __import__('re').match(r'^\\|\\s*S[0-9]{3,}\\s*\\|',l)]; out.append({'revision':rev,'rows':len(rows),'tiers':dict(collections.Counter(x[3] for x in rows)),'statuses':dict(collections.Counter(x[7] for x in rows))})\nprint(json.dumps(out,sort_keys=True))"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "branch_ref": "refs/heads/master",
+  "measured_commit": "273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7",
+  "branch_tip_after": "273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7",
+  "rc": 0,
+  "duration_s": 0.01723668699924019,
+  "stdout": "[{\"revision\": \"24526ea\", \"rows\": 40, \"statuses\": {\"mined\": 19, \"queued\": 20, \"rejected\": 1}, \"tiers\": {\"A\": 37, \"B\": 2, \"C\": 1}}, {\"revision\": \"273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7\", \"rows\": 48, \"statuses\": {\"mined\": 25, \"queued\": 22, \"rejected\": 1}, \"tiers\": {\"A\": 45, \"B\": 2, \"C\": 1}}]\n",
+  "stderr": "",
+  "stdout_sha256": "faf0eb7578961aa7eb7f53c4263b2f193958151789237eac681a224ceb1d2dea",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

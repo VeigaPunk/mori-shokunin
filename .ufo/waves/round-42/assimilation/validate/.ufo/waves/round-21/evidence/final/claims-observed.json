@@ -1,0 +1,322 @@
+{
+  "executing_sha256": "3563c381adf1208b6d93a101a4a7368a020df81914013f8911f082b70bccb722",
+  "inputs": {
+    "after_accounting": "e650c7ff04bcff61d17150ba5bbcfdad4fe5130817b307e9ec9f7764fa5b2736",
+    "after_rule": "8bf6cd9f20fb1fefc25e7b3381deda0220dbe8fd5012b4a6baa9b37f0646bc95",
+    "before_accounting": "a8938c0ee29776915b915abc5f7cb96ee357def4a67cd80befc8aba8c6bd6d14",
+    "before_rule": "e616b229d97cd2e7068aadeb053f622d2af6e72bd31b1eb1e86c98d78f0fa39a",
+    "cases": "10603c9e2a506f0aab9e03036e76b9149621a875e762616acbbbfa9a52e66878",
+    "required": "0385848e7b051d618ad71f69855974ca105382ae94e3e312e2236a04c0c837e9",
+    "tool": "de189084a5d197c43e6f04846b8a10c6ad2bcc488d178490aef949db03738eb6"
+  },
+  "instrument_issues": [],
+  "measured_revision": "9fb1f911cfdd6061005c300795f44b1b45523897",
+  "rows": [
+    {
+      "audit": {
+        "argv": [
+          "/usr/bin/python3",
+          "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-evidence-loss.py",
+          "audit",
+          "--root",
+          "/home/vgpnk/Projects/shokunin/mori-shokunin",
+          "--required",
+          "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/frozen/required.json",
+          "--accounting",
+          "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/frozen/before-accounting.json"
+        ],
+        "exit_code": 1,
+        "observed": {
+          "disposed": 0,
+          "disposed_ids": [],
+          "invalid": 0,
+          "invalid_ids": [],
+          "issues": [
+            {
+              "field": "accounting",
+              "finding_id": "mori-evidence-loss:audit:aggregator-r10:accounting:omitted",
+              "id": "aggregator-r10",
+              "reason": "omitted"
+            },
+            {
+              "field": "accounting",
+              "finding_id": "mori-evidence-loss:audit:aggregator-r10-resume:accounting:omitted",
+              "id": "aggregator-r10-resume",
+              "reason": "omitted"
+            }
+          ],
+          "omitted": 2,
+          "omitted_ids": [
+            {
+              "finding_id": "mori-evidence-loss:audit:aggregator-r10:omitted",
+              "id": "aggregator-r10"
+            },
+            {
+              "finding_id": "mori-evidence-loss:audit:aggregator-r10-resume:omitted",
+              "id": "aggregator-r10-resume"
+            }
+          ],
+          "pin_allowed": false,
+          "retained": 0,
+          "retained_ids": [],
+          "schema": "mori-evidence-loss-audit-v1",
+          "trust_basis": "declared-record-not-authenticated",
+          "unresolved": 0,
+          "unresolved_ids": []
+        },
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "435141e0dda57692cd0e823b7c9c2f34bec4e75012aebdb726aaefaad04ffc54"
+      },
+      "classification": {
+        "argv": [
+          "/usr/bin/python3",
+          "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-evidence-loss.py",
+          "classify",
+          "--rule",
+          "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/frozen/before-rule.json",
+          "--cases",
+          "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/frozen/cases.json"
+        ],
+        "exit_code": 1,
+        "observed": {
+          "cases": [
+            {
+              "expected_class": "census-regression",
+              "expected_pin_allowed": false,
+              "finding_id": "mori-evidence-loss:classify:loss-cleanup-only",
+              "id": "loss-cleanup-only",
+              "matched": false,
+              "observed_class": "live-state",
+              "observed_pin_allowed": true
+            },
+            {
+              "expected_class": "live-state",
+              "expected_pin_allowed": true,
+              "finding_id": "mori-evidence-loss:classify:loss-independent-cleanup",
+              "id": "loss-independent-cleanup",
+              "matched": true,
+              "observed_class": "live-state",
+              "observed_pin_allowed": true
+            },
+            {
+              "expected_class": "live-state",
+              "expected_pin_allowed": true,
+              "finding_id": "mori-evidence-loss:classify:loss-independent-settlement",
+              "id": "loss-independent-settlement",
+              "matched": true,
+              "observed_class": "live-state",
+              "observed_pin_allowed": true
+            },
+            {
+              "expected_class": "census-regression",
+              "expected_pin_allowed": false,
+              "finding_id": "mori-evidence-loss:classify:loss-unknown",
+              "id": "loss-unknown",
+              "matched": false,
+              "observed_class": "live-state",
+              "observed_pin_allowed": true
+            },
+            {
+              "expected_class": "live-state",
+              "expected_pin_allowed": true,
+              "finding_id": "mori-evidence-loss:classify:ordinary-aging",
+              "id": "ordinary-aging",
+              "matched": true,
+              "observed_class": "live-state",
+              "observed_pin_allowed": true
+            },
+            {
+              "expected_class": "live-state",
+              "expected_pin_allowed": true,
+              "finding_id": "mori-evidence-loss:classify:ordinary-state",
+              "id": "ordinary-state",
+              "matched": true,
+              "observed_class": "live-state",
+              "observed_pin_allowed": true
+            }
+          ],
+          "decision_scope": "synthetic policy comparison only; not pin authorization or lifecycle acceptance",
+          "finding_id": "mori-evidence-loss:classify:result",
+          "matched": false,
+          "mismatched": 2,
+          "rule": {
+            "evidence_loss_blocks": false
+          },
+          "rule_source": "e9f340c:corpus/QUALITY.md:245-250",
+          "schema": "mori-evidence-loss-classification-v1",
+          "trust_basis": "caller-declared-synthetic-case"
+        },
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "3d60a9f6e6755576fbaf2d8f06fbe7412633483d3dcc0117c86e7871bc7c0953"
+      },
+      "independent_mismatch_ids": [
+        "loss-unknown",
+        "loss-cleanup-only"
+      ],
+      "independent_mismatched": 2,
+      "independent_omitted": 2,
+      "phase": "before"
+    },
+    {
+      "audit": {
+        "argv": [
+          "/usr/bin/python3",
+          "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-evidence-loss.py",
+          "audit",
+          "--root",
+          "/home/vgpnk/Projects/shokunin/mori-shokunin",
+          "--required",
+          "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/frozen/required.json",
+          "--accounting",
+          "/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/loss-accounting-r21.json"
+        ],
+        "exit_code": 1,
+        "observed": {
+          "disposed": 0,
+          "disposed_ids": [],
+          "invalid": 0,
+          "invalid_ids": [],
+          "issues": [
+            {
+              "field": "disposition",
+              "finding_id": "mori-evidence-loss:audit:aggregator-r10:disposition:unresolved",
+              "id": "aggregator-r10",
+              "reason": "unresolved"
+            },
+            {
+              "field": "disposition",
+              "finding_id": "mori-evidence-loss:audit:aggregator-r10-resume:disposition:unresolved",
+              "id": "aggregator-r10-resume",
+              "reason": "unresolved"
+            }
+          ],
+          "omitted": 0,
+          "omitted_ids": [],
+          "pin_allowed": false,
+          "retained": 2,
+          "retained_ids": [
+            {
+              "finding_id": "mori-evidence-loss:audit:aggregator-r10:retained",
+              "id": "aggregator-r10",
+              "state": "unresolved"
+            },
+            {
+              "finding_id": "mori-evidence-loss:audit:aggregator-r10-resume:retained",
+              "id": "aggregator-r10-resume",
+              "state": "unresolved"
+            }
+          ],
+          "schema": "mori-evidence-loss-audit-v1",
+          "trust_basis": "declared-record-not-authenticated",
+          "unresolved": 2,
+          "unresolved_ids": [
+            {
+              "finding_id": "mori-evidence-loss:audit:aggregator-r10:unresolved",
+              "id": "aggregator-r10",
+              "reason": "unresolved"
+            },
+            {
+              "finding_id": "mori-evidence-loss:audit:aggregator-r10-resume:unresolved",
+              "id": "aggregator-r10-resume",
+              "reason": "unresolved"
+            }
+          ]
+        },
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "b56961e0292f446e56b73899196ee360f9916624e0adc3df5bcb3ea6729f05c8"
+      },
+      "classification": {
+        "argv": [
+          "/usr/bin/python3",
+          "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-evidence-loss.py",
+          "classify",
+          "--rule",
+          "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/frozen/after-rule.json",
+          "--cases",
+          "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/frozen/cases.json"
+        ],
+        "exit_code": 0,
+        "observed": {
+          "cases": [
+            {
+              "expected_class": "census-regression",
+              "expected_pin_allowed": false,
+              "finding_id": "mori-evidence-loss:classify:loss-cleanup-only",
+              "id": "loss-cleanup-only",
+              "matched": true,
+              "observed_class": "census-regression",
+              "observed_pin_allowed": false
+            },
+            {
+              "expected_class": "live-state",
+              "expected_pin_allowed": true,
+              "finding_id": "mori-evidence-loss:classify:loss-independent-cleanup",
+              "id": "loss-independent-cleanup",
+              "matched": true,
+              "observed_class": "live-state",
+              "observed_pin_allowed": true
+            },
+            {
+              "expected_class": "live-state",
+              "expected_pin_allowed": true,
+              "finding_id": "mori-evidence-loss:classify:loss-independent-settlement",
+              "id": "loss-independent-settlement",
+              "matched": true,
+              "observed_class": "live-state",
+              "observed_pin_allowed": true
+            },
+            {
+              "expected_class": "census-regression",
+              "expected_pin_allowed": false,
+              "finding_id": "mori-evidence-loss:classify:loss-unknown",
+              "id": "loss-unknown",
+              "matched": true,
+              "observed_class": "census-regression",
+              "observed_pin_allowed": false
+            },
+            {
+              "expected_class": "live-state",
+              "expected_pin_allowed": true,
+              "finding_id": "mori-evidence-loss:classify:ordinary-aging",
+              "id": "ordinary-aging",
+              "matched": true,
+              "observed_class": "live-state",
+              "observed_pin_allowed": true
+            },
+            {
+              "expected_class": "live-state",
+              "expected_pin_allowed": true,
+              "finding_id": "mori-evidence-loss:classify:ordinary-state",
+              "id": "ordinary-state",
+              "matched": true,
+              "observed_class": "live-state",
+              "observed_pin_allowed": true
+            }
+          ],
+          "decision_scope": "synthetic policy comparison only; not pin authorization or lifecycle acceptance",
+          "finding_id": "mori-evidence-loss:classify:result",
+          "matched": true,
+          "mismatched": 0,
+          "rule": {
+            "evidence_loss_blocks": true
+          },
+          "rule_source": "round21 supersession of QUALITY67",
+          "schema": "mori-evidence-loss-classification-v1",
+          "trust_basis": "caller-declared-synthetic-case"
+        },
+        "stderr_bytes": 0,
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_sha256": "5116589c1977687c4530ca5fecd5baed4a6ef56260073084c28258ce873c70d6"
+      },
+      "independent_mismatch_ids": [],
+      "independent_mismatched": 0,
+      "independent_omitted": 0,
+      "phase": "after"
+    }
+  ],
+  "schema": "mori-r21-oracle-v1",
+  "tool_sha256": "de189084a5d197c43e6f04846b8a10c6ad2bcc488d178490aef949db03738eb6"
+}

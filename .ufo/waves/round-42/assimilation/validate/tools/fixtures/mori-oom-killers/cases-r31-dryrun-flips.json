@@ -1,0 +1,85 @@
+{
+ "schema": "mori-oom-killers-cases-v1",
+ "frozen_with": ".ufo/waves/round-30/w2/CriticHarmAxes.md (axis 2, unpinned shapes X1 and X2; base 58b61681 vs tip ad0f0474)",
+ "note": "Written by the round-31 PinX1X2D6 seat from the round-30 CriticHarmAxes counterexample report, pinning the two unpinned shapes at the round-30 tip verdict and fields. Both shapes are unreachable from stock earlyoom 1.9.0 (see each case's note). Compare expect.verdict, expect.exit and only the dotted paths present in expect.fields. Every process name and value is invented.",
+ "cases": [
+  {
+   "id": "r31-x1-stopped-dryrun-escalation-acted",
+   "rule": "A2-06",
+   "why": "A2-06 (round-27 contract.md:54) on an earlyoom that is not active: a stopped unit can still act, so a non-zero acted count is positive evidence and the verdict is KILLER_ACTED exit 1. This case is the round-30 CriticHarmAxes X1 shape, built from the a2-06 template (inactive unit, retained ActiveEnterTimestampMonotonic stamp): a dry-run invocation whose version line, \"dryrun mode enabled\" line, one send line and one \"escalating to SIGKILL after\" line all sit at or after the retained stamp. At base 58b61681 every line of a stopped unit goes through the earlier-line path, where a dry-run segment drops both sends and escalations, so the same input reads KILLERS_QUIET; at the round-30 tip the post-stamp lines go through the scoped path, where escalations are counted outside the per-segment dry-run split, so the input reads KILLER_ACTED. The verdict is pinned at the tip.",
+   "note": "Round-30 CriticHarmAxes axis 2 X1 finding (stopped unit, all lines at/after the retained stamp): base 58b61681 KILLERS_QUIET -> tip ad0f0474 KILLER_ACTED, the flip frozen here at the tip. Not producible by stock earlyoom 1.9.0: in dry-run mode kill_wait returns at kill.c:271-273 before the escalation message at kill.c:318, so no dry-run invocation can emit both \"dryrun mode enabled\" and \"escalating to SIGKILL after\", which this shape requires.",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=1000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "2000"
+     },
+     {
+      "MESSAGE": "dryrun mode enabled",
+      "__MONOTONIC_TIMESTAMP": "2000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 90003 \"imaginary-sifter\"",
+      "__MONOTONIC_TIMESTAMP": "2000"
+     },
+     {
+      "MESSAGE": "escalating to SIGKILL after 10s",
+      "__MONOTONIC_TIMESTAMP": "2000"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLER_ACTED",
+    "exit": 1,
+    "fields": {
+     "earlyoom.state": "inactive",
+     "earlyoom.actions": null,
+     "earlyoom.earlier_invocation_send_lines": 0,
+     "earlyoom.dryrun_send_lines": 1,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "r31-x2-stopped-prestamp-dryrun-send-acted",
+   "rule": "A2-06",
+   "why": "A2-06 (round-27 contract.md:54) on an earlyoom that is not active: a stopped unit can still act, so a real send is positive evidence and the verdict is KILLER_ACTED exit 1. This case is the round-30 CriticHarmAxes X2 shape, built from the a2-06 template (inactive unit, retained ActiveEnterTimestampMonotonic stamp): the version line and \"dryrun mode enabled\" line sit before the retained stamp, and the send line sits after it. At base 58b61681 the send is still processed in the earlier-line path inside the dry-run segment opened before the stamp, so it is dropped and the input reads KILLERS_QUIET; at the round-30 tip the post-stamp send is scoped to the last invocation, where the segment opened before the stamp is lost, so the send counts and the input reads KILLER_ACTED. The verdict is pinned at the tip.",
+   "note": "Round-30 CriticHarmAxes axis 2 X2 finding (stopped unit, version and dryrun before the retained stamp, send after it): base 58b61681 KILLERS_QUIET -> tip ad0f0474 KILLER_ACTED, the flip frozen here at the tip. Not producible by stock earlyoom 1.9.0: the shipped earlyoom.service.in sets no Type=, so [INFERENCE] the unit is Type=simple and each invocation's active-enter stamp precedes its first log line; a stopped unit's last invocation therefore always opens with a post-stamp version line, and the shape pinned here (pre-stamp dryrun, post-stamp send, no post-stamp version line) cannot arise from a real earlyoom 1.9.0 boot. Completed with the post-stamp version line, the shape reads KILLER_ACTED at both revisions (frozen c04 pins it for an active unit), so the flip is unreachable.",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=1000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "500"
+     },
+     {
+      "MESSAGE": "dryrun mode enabled",
+      "__MONOTONIC_TIMESTAMP": "500"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 90004 \"imaginary-ploughman\"",
+      "__MONOTONIC_TIMESTAMP": "1500"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLER_ACTED",
+    "exit": 1,
+    "fields": {
+     "earlyoom.state": "inactive",
+     "earlyoom.actions": null,
+     "earlyoom.earlier_invocation_send_lines": 0,
+     "earlyoom.dryrun_send_lines": 0,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  }
+ ]
+}

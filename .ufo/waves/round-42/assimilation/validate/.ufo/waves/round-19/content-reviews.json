@@ -1,0 +1,1364 @@
+{
+  "schema": "mori-content-reviews-v1",
+  "scope": "Frozen194 paths. Provenance-only/unresolved rows explicitly retain coverage gaps; no whole-tree or automatic privacy claim.",
+  "rows": [
+    {
+      "path": ".ufo/waves/round-16/build/AttackBound.md",
+      "blob_sha256": "e048be992e59cfeb8ead8e0c37022dc53d722a0b63733c08a3c224a6432b9a20",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/AttackClaims.md",
+      "blob_sha256": "8f342058ac14b3a36d6b6c82e6aaa5cec43d7e7a44b670e3f0b539a119f68f2b",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/AttackMissingCursor.md",
+      "blob_sha256": "9fca21dbb13c280ce9cfd00a7d422979accb4dfae35e2f935cab9de00602b531",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Public systemd source excerpts, generic API behavior, synthetic fixture summaries, and aggregate review metadata; no private source, identity, or configuration values remain."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/AttackMixedBoot.md",
+      "blob_sha256": "1ceefb3b2d5b65581c46585836004317e034f08b0b5c044ae3bb8adad3f6377c",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/AttackOutputLeak.md",
+      "blob_sha256": "100bcbdeeab31e8136966d15c471d3930d824d489407a5e55edbfede29dbd16f",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/AttackPermission.md",
+      "blob_sha256": "25f5c92179381c691fd43ccee96e24886e5308278151059910ab18cff41cacf4",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/AttackPreservation.md",
+      "blob_sha256": "4b9b9c843fd12891b31868b3347d2c7037d3a0de321b67d4c284c57aeda6d8f8",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/AttackVacuity.md",
+      "blob_sha256": "6b18c0c025481e50de8b015e11575ffe832593a4f828897d174ffa3036bdad6b",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/BootContinuity.md",
+      "blob_sha256": "2a0760c699d734b66cc676bd35b00dc9c3a8bb842adeb9854b94c347a86333ef",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/BudgetPricing.md",
+      "blob_sha256": "e170441074653294240fae08c77e0e9b4a462c5d0c52d6ccbf04f65378e8951e",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/ClaimRubric.md",
+      "blob_sha256": "29909beb1d1d37cd0d2e789cf8a05be0666354c1673bb692c248981fff7735c6",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/ContextGuard.md",
+      "blob_sha256": "896d4189a1295a92dde879321f190922bcbca6200cfa2d7c47fb2767f3ee2cd6",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/CursorDocs.md",
+      "blob_sha256": "06717924a21ceb30f1ae7b4b519be93bdf148ac2a43518ad81d9b838e30da080",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/DriftDebt.md",
+      "blob_sha256": "8ada6f2597545516721e63e3fcbd4474a2ecb9774c06493e839eb697eed3c91e",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/ExistingPredicates.md",
+      "blob_sha256": "eaf2eb685e38ee25413046743ffd381cdab1b07cf34922c7a9b19a24a51cfdc1",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/FieldDocs.md",
+      "blob_sha256": "e451a53aced2c5ba0951f56b92ba4ec689854eb0318e924753922a60edf76778",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/FrontierIndex.md",
+      "blob_sha256": "92a8efb659388ca43cc0f0ecef82290d782df7ffc7fe8e28ec6ddad55d9ded18",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/GatePatterns.md",
+      "blob_sha256": "affdc1bec3d6f38738e56893f0e1ed40b42cfacbcf1ec80554709ad4971a644f",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/HistoricalCorrections.md",
+      "blob_sha256": "71effebaf80e7fc75aff9e9b8b8759476af44c6ddfbe3c6661518d195cb9bd4f",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Prior-round closure mapping report built from repo-relative paths, line references, commit identifiers, statuses, byte counts, and public-source presence counts; temporary fixture path literals are lane-created surface names carrying no values; no private values found on full read including long lines."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/HostSafety.md",
+      "blob_sha256": "5da828546af546d9775b56c1b3aa3f3ef13474952b0d6deccb1f5ee3e3760471",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/Knowledge.md",
+      "blob_sha256": "9ed894ecedaaf5de3ce053d2853856e56399e360e76cd99e92f19e60cbb69095",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/Lesson.md",
+      "blob_sha256": "c4d1688b05b9c13491e752ecef155b914bff482dab96853bd41abe0da3a91a87",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/LiveSurfaceRecipe.md",
+      "blob_sha256": "2188bc015831471e323d74c9e3ec6ef55a146e3042b62eed7939cb9b35ec9149",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/PackAnchorValidation.md",
+      "blob_sha256": "66f10d06de4e1609684b2d04e4e1b48ffc3425361128410aadc529624bad2105",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Scoped fixture-analysis report uses public catalog identifiers and an explicitly fabricated control; no private, credential, authentication, or configuration values appear."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/PackBootBoundary.md",
+      "blob_sha256": "282e235b41ffef9bb651c76f939a88f07415a9082a6346b9e499feeaf98c0c25",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Synthetic journal-window cases, schema names, and public catalog identifiers are fixture-level technical content; no captured host journal record or private value is reproduced."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/PackBounds.md",
+      "blob_sha256": "577b52d1771f5b77e69552f9de344b556a0325ee6be64ecab067db60aa1e0f50",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/PackCursorShape.md",
+      "blob_sha256": "d58ca32ad91829103e06008662c4282dead88483a47677a759db5301c6bb0e37",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Contains synthetic cursor-shape cases, stable journal identifiers, and bounded fixture counts; no private-value content observed."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/PackExactAnchor.md",
+      "blob_sha256": "6a4cdcfd9d5508b2598ac5a7d42ea7078f53e17122e59edb831179fded4dfa90",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Synthetic anchor-window cases and public catalog constants, no captured host record values."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/PackKernelSystem.md",
+      "blob_sha256": "02dbdf039d1451fe9d4c18b9812c3bd23cf1baee2ec144f08ac92a9568240258",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/PackKernelUser.md",
+      "blob_sha256": "552bb41ed12369e5f76dfc0ffac77bc7b092eb9d58fbd06353b6b5c5483d8b52",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/PackMalformedCapture.md",
+      "blob_sha256": "09e015750033296c8c91c3b37cf8c79d5003e697edcc3c3e96c2b0b2e3bc97fe",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/PackMissingAnchor.md",
+      "blob_sha256": "873cda0d1a6b38d169569c740619e2f469e73f6a312212df62aaf63437a317f5",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/PackProcessSignal.md",
+      "blob_sha256": "07505a52e2d14b40ca6197a76964a48b179bc4f42a7c66a32116d7e79ef4d3dc",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/PackProducerFailure.md",
+      "blob_sha256": "3f3ede5ea82da0fd16cb9bad721fb338e421768fe3fcf90e65804630367eabd9",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Synthetic producer-exit fixture cases with public catalog identifiers and explicit unexecuted status."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/PackRecordShape.md",
+      "blob_sha256": "46f9233c75cccfc36272255ab5c67a788656548464a4670cde86f948794662d8",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/PackStderr.md",
+      "blob_sha256": "aca564fa08a813d3c292bd6e3d512f72140347ae17a3286fda31eee3bc20ba33",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/PackTypedFields.md",
+      "blob_sha256": "9e074bb4a403f76f7344228c8a464f421e5f28ac637f2ec8951bb98315c7f4a1",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/PackUnitOom.md",
+      "blob_sha256": "f1f134576432f0ca8e8da6442dafbc0e64546f5fd946f7a2e133915bb810a329",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/PackUnitSignal.md",
+      "blob_sha256": "79568ad7c11a6df04e9517bb6b4a00cd8b24f40bb142bb8a2bf9d35efde9c986",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Synthetic unit-signal cases, fixed journal identifiers, predicate names, counts, and author-lane disclosure; no private source, identity, or configuration values remain."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/Province.md",
+      "blob_sha256": "88a07e69c8eaf575f1b6ea138d6a6ea9a7068474526c06a8be19f18349067c76",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/Quality.md",
+      "blob_sha256": "8c6e90c51c64d0a6e65b1c352b09e5ea1680dbb9f6050472aba6f20655690853",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/ReceiptCapture.md",
+      "blob_sha256": "072fd7ed25346889cac5ae498283008db8a4c01baf261d709c74689ee8c779fe",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/Registry.md",
+      "blob_sha256": "2d8aacd4eb823710d5c15a73d3fa4f89161fae413ca6a9460874190824c57bda",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/ReviewAnchor.md",
+      "blob_sha256": "fa0ddd1e84376595970d07705061027e70f757c54dc395da1d9d8fe290ee27d6",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/ReviewCLI.md",
+      "blob_sha256": "ef00c997b535dedfb9457325d64e52adc68cebeec00ee1ceabe8bccf9cb0dd5b",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/ReviewCapture.md",
+      "blob_sha256": "03cce9ae8b6842890e18d000618ed2bf2afc3434cda622ce916dccfad9d80eaf",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/ReviewCorpus.md",
+      "blob_sha256": "be449fa644f946cbc26563c0340801f5584c61cc5e56aa9dd18f0222c329f88a",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/ReviewCounts.md",
+      "blob_sha256": "811f35623d7fc45d13549e8d2abcb242ee07b06c6caafd7fcda00d2e105cba10",
+      "decision": "minimized",
+      "content_basis": "content-reviewed",
+      "reason": "Account-qualified executable path minimized to home-relative notation; static predicate reasoning and procedural disclosure preserved."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/ReviewFixtures.md",
+      "blob_sha256": "25600ac7b78550e02066d58f5879d9317543412f5c905ced1fd2e10ebab6844e",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/ReviewHarness.md",
+      "blob_sha256": "bb6c112d4d025184d4c9f6c12162a24a363930bd401e28360a5d8b64dcbdb0ac",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/ReviewLesson.md",
+      "blob_sha256": "e6eaf7540592317e380914c3db11b61f82efd76f853d189f086fda5585fd679c",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/ReviewNoHarm.md",
+      "blob_sha256": "f371a51aec8ab18e44156c9f6c42e7d6dea2bd8d8f7cf239c6518c0349d793fa",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/ReviewRegistry.md",
+      "blob_sha256": "dc0523551d996e1faa72c17461a747af707a8accea5545c0ba9d9f2769b106f3",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/RoutedDebt.md",
+      "blob_sha256": "78aa7c12d685fdc99b221228f41b13b491c42f25c0dd320d11a0d5e601abaf27",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/SecretSafety.md",
+      "blob_sha256": "62eb63af620aef8b3c062369e43ecde275bdde227121db86a4cf60db1048de2c",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Security review report; the home-config path is a bracketed placeholder with no real component; the token-shaped literal is self-declared synthetic and does not match real token formats; the catalog hex identifier is a synthetic fixture id; remaining hex strings are whole-file digests; surface names of untouched credential locations are literal names only; no private values found on full read."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/SeekDocs.md",
+      "blob_sha256": "fd52a9f75d6c67c6220624164d4235754d11f3a1bafc2a5b1d5929206fe99458",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/SiblingScope.md",
+      "blob_sha256": "62da2448815d5f748575898e6bd17fdff307fc230ccc1417ea1fe9addde1ea8b",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/SkillRegistry.md",
+      "blob_sha256": "5a34eacbaced7d8b8a319ed274403dbd1850becff537b7487bc69545c630de30",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/SourceCensus.md",
+      "blob_sha256": "d06e7039a44c68898456317b74d05c87b6a62c5d01a0207939935bc4c32769f0",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/SourceChain.md",
+      "blob_sha256": "a9c6ee1df1787f88c26bccd099b25f59a58be7df162298eaced557f67b9f5b8a",
+      "decision": "minimized",
+      "content_basis": "content-reviewed",
+      "reason": "User-runtime location and temporary names withheld while public-source content and out-of-scope-write disclosure remain."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/SourcePlan.md",
+      "blob_sha256": "270ed4f6c541d6a449ea188b97cabff135c7d842aa6ac01221c632e9685cb9d1",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "The document contains public-source references and quotations, interface names, capability boundaries, and technical version metadata; no account, credential, personal identity, or journal-value payload appears."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/WindowAlarmBoundary.md",
+      "blob_sha256": "0c7f2bb5de79a42d63d5fef1e621322df2fba244d2ca989485482cfc46ecd8bb",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/WindowHarness.md",
+      "blob_sha256": "bbf4dd315529bb1c7e3b2fe8005b5b3b4ed18f4af71e40e1b45ec7574d2f63e0",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Describes harness behavior, input/output contracts, and run boundaries without host-specific values or private records."
+    },
+    {
+      "path": ".ufo/waves/round-16/build/WindowTool.md",
+      "blob_sha256": "e014a3f52d335cb7441df1229a080ad49cff3b4b7c61757c1ce1354a40ddd6f7",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Owned implementation design, typed output contracts and clearly unexecuted selftest planning."
+    },
+    {
+      "path": ".ufo/waves/round-17/build/FrontierLinkage.md",
+      "blob_sha256": "1a7ed8983c1ac5cf003f49cea7227488244e526cea6462ea467c2b98709a919a",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Attributed public API/source wording and bounded technical source linkage, not observed private routing values."
+    },
+    {
+      "path": ".ufo/waves/round-17/build/HelperFailureWindows.md",
+      "blob_sha256": "4af9ca0b10f75e98c14dfd6cbc01c160945add3f56ab293ed0908496767eb4c4",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Owned repository refs, lane attribution metadata, public helper-source analysis and explicit inference limits."
+    },
+    {
+      "path": ".ufo/waves/round-17/build/JjEnvFacts.md",
+      "blob_sha256": "fc35259d380ee0afa6585c15a7aae7850c6c930dc1a43c30474a7e4e787a9810",
+      "decision": "minimized",
+      "content_basis": "content-reviewed",
+      "reason": "Concrete host HOME/XDG paths and user-config existence observations withheld; public source-derived sandbox-isolation mechanics preserved."
+    },
+    {
+      "path": ".ufo/waves/round-17/build/JjGate.md",
+      "blob_sha256": "76a05de8dc1c248f28cee37e65e3069922c5551657f2f8fe4c9b27d1c7e5c1e1",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Synthetic gate construction, owned source identities, predicted assertions and own-conduct disclosure; no private source payload."
+    },
+    {
+      "path": ".ufo/waves/round-17/build/KnowledgeJjBranch.md",
+      "blob_sha256": "4d0b6b66c6126c85fb311303b209d9275c21f52e2ca6fed4b887387569e5e396",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Public source paths, owned revision/file identities, qualified branch semantics and sandbox observations."
+    },
+    {
+      "path": ".ufo/waves/round-17/build/ReviewJjAuditRouting.md",
+      "blob_sha256": "d31038bd8decdb7cb2a8026830712e7ca0d300af2a5ad3b40b7378708de0d2ea",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Owned lane VCS configuration and helper-analysis metadata, not operator authentication or routing configuration contents."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/AdjConformanceAudit.md",
+      "blob_sha256": "f1469968d0f65dcd7fc468760da2006a7e8c4291e6bfd03cae0d138737da87dc",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/AdjCriticC1.md",
+      "blob_sha256": "34aab45fd60a872e811d48e4eba13bb39e574f5e72c31fc5fbf6a15875ce28dc",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/AdjDocumentRefs.md",
+      "blob_sha256": "60fdfb0778f475de275a52a7fd21be830332144f5ee71bb3651f6f12f968f5af",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/AdjLesson17.md",
+      "blob_sha256": "e4ebc379e580590f3c6ed9bf3778574059fa01a13d921159d953681ce40a600f",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/AdjR16AttackPermission.md",
+      "blob_sha256": "59aeb225173540b21b2cbc757b873dc58879b7f2e15abec1e8499a7881bc9726",
+      "decision": "unresolved",
+      "content_basis": "content-reviewed",
+      "reason": "An absolute host-home workspace path retains a host account identifier; the file also retains per-line digests associated with private-derived text, though not the source text itself."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/AdjReviewC1Schema.md",
+      "blob_sha256": "8a574b2577a7f8da5d7c9fffb2e7da897142d2e7bac36567e9a48e3f19f2de7a",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/AdjRound2Evidence.md",
+      "blob_sha256": "b044f67d8f90713fe0a8cca7ba5c9c82c53e09aae45966bd4a93e5a90adfa9c8",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/AdjSentinelTranscripts.md",
+      "blob_sha256": "ca7ef7ca73f2bc0118863fd9a9e4692feff86ef5b9be307eea598b9116b6b260",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/AdjTranscriptShapes.md",
+      "blob_sha256": "f0f07ad1aa3171436d64c080b82a3bb0cee573b12e2fe121374cba7ba0fb72b1",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/ConnectFleetPrivacyRulings.md",
+      "blob_sha256": "56ed6aeb1c674646e9bcf6217cadbbd507d221280765491ad5f4da3d865ca299",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/ConnectKagiExposure.md",
+      "blob_sha256": "ed58033730880ce55c0beb4fdfe82223038d705adf13545fc5eebc51e5ca544d",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/ConnectKumitateDispatch.md",
+      "blob_sha256": "852384bd5eecfea91cf942081da50e947d17e108a974e035160ee353e28f3969",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/CriticC1Metric.md",
+      "blob_sha256": "1f367e48fdd5cfc8c90ba8ecf3592f4e4ffc17d861a95fce3439bf18bd33330d",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/CriticC2Calibration.md",
+      "blob_sha256": "8140be56a256af1374385990ebe1ae9e2d4c049fd3643dc09781f22226e68dc2",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/CriticC3Operability.md",
+      "blob_sha256": "3aa547f42aba1ddae081c25115f47cac75f72e9fbe7e7c668c4d15c06c383b14",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/CriticSeparability.md",
+      "blob_sha256": "6c1dc69fcc746d98ad04c7c5370063d2c9f0253d98355fe79eed4eb67be6f765",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/DispatchLedger.md",
+      "blob_sha256": "67b2257161b008363b3e941c73e1652cef0f8a6a8f33c5dfb968e0108e8aa68c",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/FreezeOrder.md",
+      "blob_sha256": "5944208496661f950cdbf3cdb26d9e55ad4421da138848b70582371349276e30",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/RedactOmpRetryConfig.md",
+      "blob_sha256": "7e9c064808ddd40bf1e52666c69060bd54979772df0c43458d5ec8017accf645",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/RedactPacmanActorTrace.md",
+      "blob_sha256": "d931ef0ab2fc5d3e93aa42dd427d9e31ea711713b9747c1f2c1a1ee2e0458c11",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/RedactSessionExitCorrelation.md",
+      "blob_sha256": "0d65e7bfb7062a67eeda636db3876bc447cf62858927b64802b092b2703f2960",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Redaction report carries only class counts of the superseded original, whole-blob digests, aggregate seat ratios, and commit identifiers; the embedded draft body was removed in a later minimization pass and is absent from these bytes; no private values remain on full read."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/RetentionGate.md",
+      "blob_sha256": "c1526c02041226b8464b8427c087ffbc5e0ac0bf81179abd1663ca2332023eee",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/RevFreezeR17C1.md",
+      "blob_sha256": "fdc34580761a22da12efc8cf3bc4f9f15ed2687c0af9a4d0027c1a3644196d99",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/RevFreezeR17C2.md",
+      "blob_sha256": "bf5823475aac2301320444305fb535fead912811c6954c4dbeeeb6a851c548d6",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/RevFreezeR17C3.md",
+      "blob_sha256": "25428c58d7258832fe9ee72756b031b740b37bc006807190d7e8c570ba12b78e",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/ReviewRegisterOracle.md",
+      "blob_sha256": "10ac64218d4d1b61c02b5548cbb1ddd6a4ce283150053847e000cccb3317ee12",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "The report contains scoped chronology and correction analysis with repository references; no personal, session, credential, authentication, or configuration values appear."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/ReviewRoutedDefects.md",
+      "blob_sha256": "ac42de2c8c7b58ecd671d27a61c9679ba14820846a259e1bd776d9bc80a1fccd",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "The disposition map uses repository-relative evidence paths, scope statements, classifications, and role handoffs without reproducing private source text or values."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/ScoutFreezeLabels.md",
+      "blob_sha256": "e0867446d5f79d5747f9965c087bc6f7f299b3208775288e690b518c8957856d",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/ScoutProvinceRegistry.md",
+      "blob_sha256": "b2db17a1f45acc54731fddfa93dcb136eddca3ff7bc39f0a7ee8624ec7adfdc7",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Contains source-review findings and proposed registry entries with generic placeholders and scope boundaries; no private values observed."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/ScribeKnowledgeMinimization.md",
+      "blob_sha256": "fb64187a1c9b66f2900c39ffc8d5e51fcc0003e87fadeb8980579de83f367733",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Historical proposed policy/draft and count-only class analysis, with source-opening and implementation limits stated."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/ScribeLessonDraft.md",
+      "blob_sha256": "0d97dedebfe3e39fd1ea558e9a1e2e93dc9721a8775be73b9c79e666865615f5",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SentinelContextAudit.md",
+      "blob_sha256": "0b5717eeb2dc516bfb8fbc2146737c929eeee015dbdb6ba59bd0fd01b6e53c0c",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SentinelPrivacyDesign.md",
+      "blob_sha256": "71389d00ada619f875c3d296ef409026cf14c83e590ce22508f1af7d75231dbe",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SrcGdprArt5.md",
+      "blob_sha256": "74e8481e46e1ea8b25a025b15f81fc80730f7eb9a6e82169db51a4233a8727d1",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SrcGitRevList.md",
+      "blob_sha256": "d5c51d88da92240d8bed562e34dc901aff7619f7b4d4c3c98cb804ea95c8a572",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SrcNist800122.md",
+      "blob_sha256": "83cd2dfff56176f0c03f99cdd8734300ad125c6f309a8e6cf27cc752752ac80d",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Public NIST/GDPR excerpts, scoped source decisions and source access metadata."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SrcNosekPrereg.md",
+      "blob_sha256": "062952e4ee734e5594fecad4dfd1edd526dcfdb30add0b9a6b8826880132534f",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SrcOtelSensitiveData.md",
+      "blob_sha256": "88777b5688ef099aa9577cd042ed5f3bbafbdf32a5768d9a2d8d12fc9eeb4742",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SrcOwaspLogging.md",
+      "blob_sha256": "ead1dcf29914a846cc390486085b4f74846c94f6900f04f4fbedfbca2f799571",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SrcRfc8785.md",
+      "blob_sha256": "6d685447f873a133b0ffb3595090a0c21cdf814c90a1fcf865ddb02e6d4e356b",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SrcSlsaProvenance.md",
+      "blob_sha256": "63747f61db60c6d187603058a962e406098e32b0f016bded6dd3acf70ded9ec7",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Public specifications plus owned frozen payload serialization; project-local recipe is not a private operator/session value."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SweepR15Md2.md",
+      "blob_sha256": "bb95ec6f24b34aa925b9805af758bf43d9e74c35618ab585d26e69e96fe78bfa",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SweepR16Md2.md",
+      "blob_sha256": "9a8ae032047781e99929612731394118c3bfdbc84b2c7d3124ab502558ca45eb",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SweepR17Build2.md",
+      "blob_sha256": "d632427d6858cacbb13e5667ea66081279d6639b85535f31562c57f09912a998",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SweepR17Build3.md",
+      "blob_sha256": "d07b367e878aaad7b877b06e9c6b5f0ee4f1a76ce36a421542ba24c34855d2ae",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SweepR17Build4.md",
+      "blob_sha256": "b479f60b0252150292dccd4eade4a48bc6d2de33036c67a0ff933406b70970ae",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SweepR17Build5.md",
+      "blob_sha256": "9bcabbf072862247fecff63f8343d7398ad07e71d83582267aefad95251cd0f5",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SweepR17Build6.md",
+      "blob_sha256": "5a96a07a56daf4ce9a284d9db1d9689388226e34ac5fb5cc706ca53ec86df5da",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SweepR17Build7.md",
+      "blob_sha256": "c45db3d113e94c5062c388c4d828cabeccdfa5991d215c7eefbd7deef92243f4",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SweepR17CorpusText.md",
+      "blob_sha256": "9d7761ae01eec804737f29b8bae811d9d560c029278b539de660cfc23a31776a",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SweepR17EvidenceJson.md",
+      "blob_sha256": "fb26a7a8b2b6589d704578b6e52ea06299781b12a7e98a396461a1cb06f2c076",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SweepR17Falsify2.md",
+      "blob_sha256": "df5b85ac63aedacb3951a827c64025335f573dcf1866f9e0ebd3927a7599b798",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/build/SweepR17Falsify4.md",
+      "blob_sha256": "47d52312ab8433948c91bd0e46cad7070b844bd22e7fe896a26e942759e83216",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/contract.md",
+      "blob_sha256": "6986c9338b4c38f8b66831526d4427c04c589226adc43e0240ff34ce08fcf11b",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/draft-verdicts.md",
+      "blob_sha256": "c83dc17160b108cec68526dcf817ff78ffabf8859c3f39b6ab11936101c22ff6",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/evidence/wave1-dead-seats.json",
+      "blob_sha256": "83e92c90bc590f6fbc3967e751793a102cfe9a51b40bf923bc67ccad2c11621d",
+      "decision": "minimized",
+      "content_basis": "content-reviewed",
+      "reason": "Exact answering alias, raw error payload and resume timestamp withheld; seat failures, capacity class and whole-blob provenance retained."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackMinOmpRetryConfig.md",
+      "blob_sha256": "4eac4d9cc0b775fa55643d623d038bf1d3318225c1b9c24ade97efccf11dadfa",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Falsification report discloses coarse semantic remnants of the audited replacement strictly at class and line-pointer level with whole-blob digests; no model identifiers, route aliases, configuration paths, session identities, or literal values appear in these bytes; no private values found on full read including long lines."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackMinPacmanActorTrace.md",
+      "blob_sha256": "77b027cdd2c4914d75f9adacfd725e0413ff0a44964a48cdd289efb4ad9e13d6",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackMinSessionExit.md",
+      "blob_sha256": "2c83c94aacd1a2a134fae2a24d1d614a725fe99490c2af9650b48c2ba3b12e1c",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackTokConformanceAudit.md",
+      "blob_sha256": "d65e41f80b92a8b8ac516f3e3eb8ab471fcd5b87c2c02d8510b1853a4590bf1f",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackTokCriticC1.md",
+      "blob_sha256": "ccaa1dd9aaeb55c7f207e06271aa9e8fb36dcccae205d59db0f2dcb95987e373",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackTokDeadSeatCrossCheck.md",
+      "blob_sha256": "a488868ba5d322b3f2205210b16326d4dc624177278d834e840f83a3f843ee0d",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "The report describes privacy risks in a separate target without reproducing the underlying session or per-seat values; remaining content is scoped surface and technical analysis."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackTokIdentityEdits.md",
+      "blob_sha256": "904700de74b61342cf95ba1eaa2d10f3d667576f5a9715a7a8792c4828d239fb",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Owned repository path locators in disclosed Git commands are evidence references, not copied private account/configuration observations."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackTokOmpRetryDocs.md",
+      "blob_sha256": "c4b696a3c45ae9f369fa39f5bedf0a6aaad06dffd1196dc8b3c48d55da2ad83a",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackTokPackageRefs.md",
+      "blob_sha256": "c27d52fdd8498c8f5f0add42f3d190c12dc7ea1ac71a416e642803d03f60310a",
+      "decision": "unresolved",
+      "content_basis": "content-reviewed",
+      "reason": "Review recommends minimization; no post-edit content review has established a completed change. Reports redaction scope using counts and categories but retains short-line digests tied to private-context lines; no underlying private values are reproduced."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackTokR16AttackPermission.md",
+      "blob_sha256": "6c8896a8a7014b89b647ef3cddc580a4b1f0dde309d2d856e081229bd6c7b093",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Historical token-redaction analysis uses classes/counts/locators; old line-digest provenance retains stated guessability risk."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackTokR17Wave1Spec.md",
+      "blob_sha256": "4e66d6bfccbdf76193e8f86cb4a82189a9f93780536f217939d697840b821414",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackTokRetryRecoveryShape.md",
+      "blob_sha256": "460e06cb3062a486b60af817c3948383c3f57664f2cb7f4d026c5b20bc45274c",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackTokReviewC1Schema.md",
+      "blob_sha256": "b9970fdb66c67daa6cdb1269123577462dc391a83876973c5bf4e36bc6ad40ce",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackTokRound2Json.md",
+      "blob_sha256": "917f17dc0fdfb221e10e47a2ef95611e7c356b97bbb50bfb771a698826d5ab35",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackTokSeatBreachDetect.md",
+      "blob_sha256": "d511a520e53b15d25b755ed6260cbb287fea449356effb52a922e97b648bf10c",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackTokSeatLive.md",
+      "blob_sha256": "5f1431d7d8b8014487eeefc761e768509ae89e08191a9573014f02370d769e32",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Counts and class-level critique of earlier projection, not underlying per-record values; old line hashes carry known provenance-only risk."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackTokSeatNaming.md",
+      "blob_sha256": "26e8830e48a5d5b3391b9654151c9484b6ae28a06e49ff8c9b5f2bf7c0e5e415",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackTokTailBounds.md",
+      "blob_sha256": "48c264d47a4f4da2ca0e0747eb19d7e1df7a518ec770fc0121ed3d2fbc5c3cff",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AttackTokTranscriptShapes.md",
+      "blob_sha256": "3838d50b0614e1a5f78558f1aa1c0b3e212f619225ae3d16f6fd6ffb75cca25a",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AuditDeadSeats.md",
+      "blob_sha256": "02c6816cde3f4396ae1afe10436616b8e67cdc680df093fa3f32d5b7cecaa334",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/AuditMisrootsScratch.md",
+      "blob_sha256": "067445aceabb5a87804eff7b3198a148ad4087aad3a5294f50d0c891c502b028",
+      "decision": "unresolved",
+      "content_basis": "content-reviewed",
+      "reason": "Repeated absolute host-home workspace paths retain a host account identifier; the remaining details are repository-path, count, and status metadata rather than configuration contents."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ConformanceAuditR18.md",
+      "blob_sha256": "4383362bb3171c0988b6f3192e02e2d6274fd773b9acb95343a89e899ba2682f",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ConnectTsukuroiPackage.md",
+      "blob_sha256": "5dc1e8079dff3830f041cc3616e8134bf4cf91edac542e6740bf9b4dff217ab2",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/CriticC1Admission.md",
+      "blob_sha256": "b8d5890019a8adb325a549ff6d14afba32368fcb1fb089e884ff4f4e741885d4",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/CriticC3Scoring.md",
+      "blob_sha256": "8743b8cd2d5a45d1a494271cc7f116b794e6ae1ea9679d4680ec6c41fc977ebb",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/CriticCorrectionRow.md",
+      "blob_sha256": "3ecd982dc5b70715e636372318d74d656921053ee4e976a72e231580084e91cb",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/CriticLowestAxis.md",
+      "blob_sha256": "0a1857e0aa074860f96b9c7f638e90e23f71547252447fded986ae6b72895d82",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/CriticSeparabilityW2.md",
+      "blob_sha256": "4063d45742da5d408012a3e99aedcc3af644ce20f8a8a2bac49bb9acdf7fb9f9",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/CriticTrendVerdicts.md",
+      "blob_sha256": "efc66991dbea90728b2c2da3c5fa6cdc707d0d6b875ac93ba12c1adf87d74324",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/CriticTriageRule.md",
+      "blob_sha256": "81130c4c6f71c9df8732f64206e348c02e522846b4b5b136b561212e37fbf07f",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/MutDispatchLedger.md",
+      "blob_sha256": "219215a05a60e202fa7d6852b89826efeb774b5247b4f7e5483b43b07392759a",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/MutFreezeOrder.md",
+      "blob_sha256": "99645af47fb4181cc0aae81a9d217adf99dced5ffafcf8a2d56d92cc3a0dbd23",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/MutRetentionGate.md",
+      "blob_sha256": "87ed16f16da2384024efb0188f76258c08f5e00b8f354e1d687dcab57e42d45d",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/PreservationCheck.md",
+      "blob_sha256": "665be028790694734d0cadb3e012ce2038e0dccecf8cdad2e26a3a5922e23052",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/RecomputePayloadDigest.md",
+      "blob_sha256": "509b724b41eb7d54ed60dbdf06b4cffb6c22a74e7ea7fb3c794c8d50d46b9fc7",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/RecountPopulation.md",
+      "blob_sha256": "77975dd2ded32c54b1d82d676ff0361b09a1f3e03bbbb5f294ac255c505178e4",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReopenGdprStrac.md",
+      "blob_sha256": "3a4fae3cd3d2a1e6d7146bd43bc47e8dfa959acbb942ccc7e44eb0c315614720",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Source-reopening review of public legal texts; content is public registry URLs, verbatim public-law quotes within the lane word limit, repo-internal file and row pointers, and tier/scope/status adjudications; no private values found on full read including long lines."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReopenGitDocs.md",
+      "blob_sha256": "3d61bc019426dd501b16c4691c87bbc86e30abdb548f4b32ee81ee813477e12f",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReopenNist.md",
+      "blob_sha256": "9818a8d586f81cb8d5a2c9ad5cdf7d207634b93d51c6d69597f41cac9517338d",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReopenNosekWagenmakers.md",
+      "blob_sha256": "6c70758540784fd41d598e2fc758ec6fcbf414935acd2f75da9ae79cf6929220",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReopenOtel.md",
+      "blob_sha256": "2ec6e7846dcc2b9564869d811a52100d16cb21a2cf8c2e6a56c134c48dea0119",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReopenOwaspAsvs.md",
+      "blob_sha256": "76f1ed727cd93e7236e46e52b3690367293e1b03dd67eee0dd019b6aef245e7e",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "The source review contains public-source quotations, scoped citation judgments, and aggregate limitations; no actual private, credential, authentication, or configuration values appear."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReopenRfc8785PyJson.md",
+      "blob_sha256": "99ee02ee18d80ac2f63d753ef24468ee9fb4a944986816ea0cb077d236100f39",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "The review contains public URLs, source quotations, and source-accuracy assessments; no private values, credentials, identity data, or host-derived payload appears."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReopenSlsaProGit.md",
+      "blob_sha256": "f29fad97662165477cec3d57f8928a59d8deda24e1fe0e24c0f7c3e2a8e654d9",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ResweepCorpusRoot.md",
+      "blob_sha256": "6d63f64be9fb24aea7ec20b8c589753da5f4191c56d45fa9edc1498949f16155",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Records privacy categories, paths, counts, and full-blob provenance digests without reproducing private values; its findings are scoped and its aggregates are sanitized."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ResweepR13.md",
+      "blob_sha256": "587ba5b3466bdb566c38cc02008166f5c9786a88902f4c1e4337e588dba95dd6",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Whole-blob digests, classes and locations describe earlier findings without reproducing private values; newly found r13 observations minimized separately."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ResweepR14.md",
+      "blob_sha256": "5226ff3e5a49cd9edc95069e3daf2fc526c02242771e7b8354a6f6335dc804d2",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ResweepR15.md",
+      "blob_sha256": "6d98e7cf43d36501ce0d72aed63502d5be002ae223c3bf4dbebfdc448d2d13b0",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ResweepR16.md",
+      "blob_sha256": "569fc9c9533c8b544f0ae65454af1856b385a304d6a9f680c49547f2fb482a70",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ResweepR17.md",
+      "blob_sha256": "96cdc79c5b6fbdbb3c2d84ab5061ab0a303524ac8da433287a6796fd42d13817",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ResweepRound18.md",
+      "blob_sha256": "07bc330e45c2e5b56d0416e348f068ab4fba5ac06eb8c0540497304e2206d36b",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/RevFreezeR18.md",
+      "blob_sha256": "b019990561505d3a3b3a3ffdb15d05536f3686bb748da3c4011f2116fc982c3e",
+      "decision": "retain",
+      "content_basis": "content-reviewed",
+      "reason": "Owned commit-order reconstruction and frozen-rule contradiction analysis, with historical acceptance limits stated."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReviewDispatchLedgerCode.md",
+      "blob_sha256": "b92ef9fef06e874855581f2ca8afe55da581512ada946c8da54027adb2b233af",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReviewFreezeOrderCode.md",
+      "blob_sha256": "d6eae41ea463b04dfcc837eea75339ae2f969c71012d5d39e87bb0d05575623e",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReviewKnowDispatchLedger.md",
+      "blob_sha256": "35153c6f7379e0287c8ca5663b7443731b0e15fac7d0469bc9b433bb4b99bda5",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReviewKnowFreezeOrder.md",
+      "blob_sha256": "cf98b42f2fb290f6c1e37c54d373b639e30bb3cd1c645a7cbaa99abe1c2d7e92",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReviewKnowMinimization.md",
+      "blob_sha256": "c6ea1ae58866ad62fb89582a66ca307dddf3f589b28f78b67f42568ae201fa10",
+      "decision": "unresolved",
+      "content_basis": "content-reviewed",
+      "reason": "The retained command transcripts contain repeated absolute host-home workspace paths with a host account identifier; no private source quotations or configuration values were observed."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReviewOutOfMetricRegister.md",
+      "blob_sha256": "f98b2b3bdc507972ea5b1bfcb27bd6b3319891e4f1a45a3aa7fff78d58b412ab",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReviewProvinceNotes.md",
+      "blob_sha256": "739a6ee087d836f8bda7bfb90e2f76817d1e9de84cf2c666e164c7c1d5ea9838",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReviewQuality51to55.md",
+      "blob_sha256": "b20f7d5698b95774aec7daa9b1476c6e03e43df6721b46d740dd23e9d21e6aef",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReviewRegistryRows.md",
+      "blob_sha256": "64d53a85be21790418d9e8bb57cb2d35f1be981652e0c48b78ec9955fa48be80",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReviewRetentionGateCode.md",
+      "blob_sha256": "1e3f542083a59e083f3f2c1a91e77a3da3d7df6caf98f26fd35eea9327bc692a",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReviewRoutedDisposition.md",
+      "blob_sha256": "a19f89e2ca15d6f536ed7a6c5173c28847c89488bd3e76d258521aa82bd2709d",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/ReviewSourcesRows.md",
+      "blob_sha256": "0ca0d2e9497af07903237462f01d4eccd34a19cf127fa31df22b5830d5800c44",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/SentinelContextWave2.md",
+      "blob_sha256": "3d4002fdf2caac088ed5bf7ef1a7c79001b0b324499070c0c3c37406912af749",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/SentinelHashRisk.md",
+      "blob_sha256": "246b944f7e7610fe97c0babd2acf1c6aa037d267dbe8ce30a4837b06cb165b57",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/falsify/SentinelLedgerPrivacy.md",
+      "blob_sha256": "0222878e7b89492b2cda94791e28f8544d07d00f61367f4083113ff80b02c07f",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    },
+    {
+      "path": ".ufo/waves/round-18/out-of-metric-triage.md",
+      "blob_sha256": "3d722909b6903ae229dcae90f359e388a9b7d0e85653644903c641ba84446e29",
+      "decision": "unresolved",
+      "content_basis": "provenance-only",
+      "reason": "No completed content-review decision was retained for this path; byte identity is not semantic clearance."
+    }
+  ]
+}

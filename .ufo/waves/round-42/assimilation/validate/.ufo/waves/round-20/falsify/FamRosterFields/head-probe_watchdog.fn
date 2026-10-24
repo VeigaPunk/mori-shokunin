@@ -1,0 +1,151 @@
+probe_watchdog() {
+  local detail pids pid_n log_state age= stale=0 cmd_bits=''
+  cmd_bits="pgrep -af shokunin-watchdog; stat $WATCHDOG_LOG; ls $STATE_DIR"
+
+  pid_n=0
+  pids=''
+  if have "$PGREP_BIN" || [ -x "$PGREP_BIN" ]; then
+    cap "$PGREP_BIN" -af shokunin-watchdog
+    # Filter the pgrep line itself and empty
+    pids=$(printf '%s\n' "$CAP_OUT" | grep -E 'shokunin-watchdog' | grep -vF 'pgrep' || true)
+    if [ -n "$pids" ]; then
+      pid_n=$(printf '%s\n' "$pids" | grep -c . || true)
+    fi
+  else
+    emit_surface watchdog unavailable "cmd=$cmd_bits; pgrep=missing; ts=$TS_UTC"
+    emit_finding WATCHDOG_PROBE_UNAVAILABLE info "pgrep unavailable — daemon liveness UNKNOWN, not absent"
+    return 0
+    emit_finding WATCHDOG_LOG_UNAVAILABLE info "pgrep binary missing — cannot assess pid"
+    # still try log
+  fi
+
+  if [ ! -e "$WATCHDOG_LOG" ]; then
+    log_state=missing
+    emit_finding WATCHDOG_LOG_UNAVAILABLE info "watchdog.log absent path=$WATCHDOG_LOG"
+  elif [ ! -r "$WATCHDOG_LOG" ]; then
+    log_state=unreadable
+    emit_finding WATCHDOG_LOG_UNAVAILABLE info "watchdog.log unreadable path=$WATCHDOG_LOG"
+  else
+    log_state=ok
+    age=$((NOW_EPOCH - $(epoch_mtime "$WATCHDOG_LOG")))
+    if [ "$age" -gt "$WATCHDOG_STALE_S" ]; then
+      stale=1
+      emit_finding WATCHDOG_STALE warn "watchdog.log mtime_age_s=$age threshold_s=$WATCHDOG_STALE_S path=$WATCHDOG_LOG"
+    fi
+  fi
+
+  # r4: this used to be a bare `find | wc -l | tr` pipeline — under `set -euo
+  # pipefail` an unreadable `.ufo/state` failed the whole pipeline and killed the
+  # census before any verdict (rc 1, header only; canary B in
+  # corpus/lessons/2026-10-15-errexit-pipefail-silent-crash.md, re-measured at
+  # fe22a14f). The walk is rc-gated now, like the wave-age read at `:296-302`:
+  # an unreadable state dir renders the count `unavailable` with a disclosure
+  # field and every other surface still reports. A missing or empty dir cannot
+  # fail the walk, so it keeps the plain provable count.
+  #
+  # r7: the count alone could not see a FROZEN round counter (r2 note §1 Gaps).
+  # The VALUES are read now, the maximum is reported, and each value is compared
+  # with the watchdog's own record of that lane's last launch round — the
+  # ledger's last `launch <lane> round=N` line, which the driver writes in the
+  # same tick right after the state file (scripts/shokunin-watchdog.sh:80-81).
+  # A value below that round is WATCHDOG_STATE_LAG, above it is
+  # WATCHDOG_STATE_AHEAD; both INFO. An inconsistent state file is evidence a
+  # reader must see, not proof the fleet is unhealthy, so neither flips the
+  # roll: the gap closed here is invisibility, not severity.
+  local state_n=0 state_read=ok state_field='' state_max=0 state_lag=0 state_ahead=0
+  local state_unread_vals=0 state_cmp=0 sf lane_id v lr state_list=''
+  local state_unread_sym=0 state_unread_dir=0 state_unread_other=0
+  LEDGER=''; LEDGER_RC=1
+  if [ -d "$STATE_DIR" ]; then
+    # r8: the walk no longer filters on `-type f`. A symlink or a directory named
+    # `*.round` was INVISIBLE to the r7 walk (the residual named in
+    # surfaces-r7.md §4): not counted, not read, not compared, not disclosed. The
+    # entry list now carries every `*.round` entry and each entry is CLASSIFIED
+    # before any read, so a non-regular entry is counted as an unreadable value
+    # WITH its reason instead of vanishing. Symlinks are never followed: a link
+    # points outside the walk's contract (its target is arbitrary bytes, and
+    # reading it would let a foreign file's integer enter the rows). `state_rounds`
+    # keeps its r7 meaning — regular files — so an existing state dir reads
+    # exactly as before; `state_val_unread_reasons` discloses the rest.
+    cap find "$STATE_DIR" -maxdepth 1 -name '*.round'
+    if [ "$CAP_RC" -eq 0 ]; then
+      # The walk output is copied BEFORE load_ledger runs: load_ledger (like
+      # every cap caller) overwrites CAP_OUT, and reading the state list out of
+      # CAP_OUT after that call iterates the ledger instead of the state files
+      # (measured live: 402 unreadable "values" = the ledger's line count).
+      # Sorted, so the row's reason counts and the finding ORDER cannot depend on
+      # the filesystem's directory order; `|| true` keeps an empty list from
+      # tripping pipefail (the r3 lesson class).
+      state_list=$(printf '%s\n' "$CAP_OUT" | LC_ALL=C sort || true)
+      load_ledger
+      while IFS= read -r sf; do
+        [ -n "$sf" ] || continue
+        if [ -L "$sf" ]; then
+          state_unread_sym=$((state_unread_sym + 1))
+          emit_finding WATCHDOG_STATE_ENTRY_UNREADABLE info "reason=symlink-not-followed entry=$(basename -- "$sf") path=$sf"
+          continue
+        fi
+        if [ -d "$sf" ]; then
+          state_unread_dir=$((state_unread_dir + 1))
+          emit_finding WATCHDOG_STATE_ENTRY_UNREADABLE info "reason=is-directory entry=$(basename -- "$sf") path=$sf"
+          continue
+        fi
+        if [ ! -f "$sf" ]; then
+          state_unread_other=$((state_unread_other + 1))
+          emit_finding WATCHDOG_STATE_ENTRY_UNREADABLE info "reason=non-regular entry=$(basename -- "$sf") path=$sf"
+          continue
+        fi
+        state_n=$((state_n + 1))
+        # read_file is [ -r ]-gated; a mode-000 file yields empty, counted as an
+        # unreadable VALUE rather than silently as a zero.
+        v=$(read_file "$sf")
+        v=${v//[[:space:]]/}
+        lane_id=$(basename -- "$sf"); lane_id=${lane_id%.round}
+        if ! is_int "$v"; then
+          state_unread_vals=$((state_unread_vals + 1))
+          continue
+        fi
+        if [ "$v" -gt "$state_max" ]; then state_max=$v; fi
+        [ "$LEDGER_RC" -eq 0 ] || continue
+        lr=$(ledger_last_launch_round "$lane_id")
+        is_int "$lr" || continue
+        state_cmp=$((state_cmp + 1))
+        if [ "$v" -lt "$lr" ]; then
+          state_lag=$((state_lag + 1))
+          emit_finding WATCHDOG_STATE_LAG info "lane=$lane_id state_round=$v ledger_round=$lr path=$sf"
+        elif [ "$v" -gt "$lr" ]; then
+          state_ahead=$((state_ahead + 1))
+          emit_finding WATCHDOG_STATE_AHEAD info "lane=$lane_id state_round=$v ledger_round=$lr path=$sf"
+        fi
+      done <<< "$state_list"
+    else
+      state_read=unreadable
+    fi
+  fi
+
+  if [ "$pid_n" -eq 0 ]; then
+    emit_finding WATCHDOG_ABSENT warn "no shokunin-watchdog process matched by pgrep -af"
+  fi
+
+  local st=ok
+  if [ "$pid_n" -eq 0 ] || [ "$stale" -eq 1 ]; then st=drift; fi
+  if [ "$log_state" = missing ] || [ "$log_state" = unreadable ]; then
+    # log missing alone is unavailable if we also lack pids assessment path
+    if [ "$pid_n" -eq 0 ] && [ "$log_state" != ok ]; then st=drift; fi
+  fi
+
+  # The disclosure only appears when the walk failed; a readable dir keeps the
+  # r2 fields (`state_rounds=<n>`) with the r7 value fields appended. r8 adds the
+  # non-regular reasons: state_val_unreadable is the TOTAL of every entry that
+  # could not contribute a value (unreadable regular value, symlink, directory,
+  # other non-regular), and the reasons field splits it by class so an operator
+  # can tell a permission problem from a stray symlink.
+  state_field="state_rounds=$state_n state_rounds_max=$state_max state_lag=$state_lag state_ahead=$state_ahead state_cmp=$state_cmp state_val_unreadable=$((state_unread_vals + state_unread_sym + state_unread_dir + state_unread_other)) state_val_unread_reasons=file:$state_unread_vals symlink:$state_unread_sym dir:$state_unread_dir other:$state_unread_other"
+  if [ "$state_read" = unreadable ]; then
+    state_field='state_rounds=unavailable state_unreadable=1'
+  elif [ "$LEDGER_RC" -ne 0 ]; then
+    state_field="$state_field state_ledger=unreadable"
+  fi
+  detail="cmd=$cmd_bits; pids=$pid_n; log=$log_state; age_s=${age:-?}; stale_threshold_s=$WATCHDOG_STALE_S; $state_field; ts=$TS_UTC"
+  emit_surface watchdog "$st" "$detail"
+}

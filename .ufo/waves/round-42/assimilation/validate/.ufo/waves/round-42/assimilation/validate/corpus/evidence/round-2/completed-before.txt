@@ -1,0 +1,16 @@
+Measured commit: 0715198ed683445768944cec2db75bce12a1d202
+Scenario: completed kagi round=2, launch age 1800s, completed 30s after launch, no new lane files; threshold 900s.
+Clock: 1792036800
+Exit: 1
+
+mori-census census-r1 — ts=2026-10-15T04:00:00Z — mode=live — read-only
+SURFACE watchdog: ok (cmd=pgrep -af shokunin-watchdog; stat /tmp/mori-r2-baseline-cfhcxw53/completed-repro/fleet/.ufo/watchdog.log; ls /tmp/mori-r2-baseline-cfhcxw53/completed-repro/fleet/.ufo/state; pids=1; log=ok; age_s=0; stale_threshold_s=900; state_rounds=1; ts=2026-10-15T04:00:00Z)
+SURFACE waves: ok (cmd=find /tmp/mori-r2-baseline-cfhcxw53/completed-repro/fleet/.ufo/waves -maxdepth 1 -mindepth 1 -type d; total=0 settled=0 unsettled=0 aged_unsettled=0 empty=0 threshold_s=7200; ts=2026-10-15T04:00:00Z)
+SURFACE journal: ok (cmd=/tmp/mori-r2-baseline-cfhcxw53/completed-repro/bin/journalctl --user -b --no-pager; oom_kill=0 kill_signal=0 segfault=0 unit_failure=0 rc=0; ts=2026-10-15T04:00:00Z)
+SURFACE cgroup: unavailable (cmd=cat /tmp/mori-r2-baseline-cfhcxw53/completed-repro/missing.events; cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.current; events=unreadable path=/tmp/mori-r2-baseline-cfhcxw53/completed-repro/missing.events; ts=2026-10-15T04:00:00Z)
+SURFACE disk: ok (cmd=/tmp/mori-r2-baseline-cfhcxw53/completed-repro/bin/df -P; targets=/tmp/mori-r2-baseline-cfhcxw53/completed-repro/fleet; warn_pct=85 crit_pct=95; ts=2026-10-15T04:00:00Z)
+SURFACE silence: drift (cmd=git -C <repo> log -1 --format=%ct; find <repo> -newermt @window; silent=1 progressing=0 progressing_weak=0 skipped=0 window_s=900; ts=2026-10-15T04:00:00Z)
+SURFACE tmux: ok (cmd=/tmp/mori-r2-baseline-cfhcxw53/completed-repro/bin/tmux ls; sessions=1; ts=2026-10-15T04:00:00Z)
+FINDING CGROUP_UNAVAILABLE severity=info obs=memory.events unreadable path=/tmp/mori-r2-baseline-cfhcxw53/completed-repro/missing.events ts=2026-10-15T04:00:00Z script_sha256=e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2
+FINDING LANE_SILENT severity=warn obs=lane=kagi head_epoch=0 newest_epoch=1792029600 window_s=900 ts=2026-10-15T04:00:00Z script_sha256=e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2
+MORI_CENSUS: DRIFT (findings=2 drift=1 unavailable=1 surfaces=7)

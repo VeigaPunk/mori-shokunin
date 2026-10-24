@@ -1,0 +1,24 @@
+# check-blind-wave.sh (sha256 b0573035ca4f16b8df48d97a074483bcffe1ff92746a3c7046418af29a5d6e0f) at lane 221cbd8faa88e07ad20445d5a87bbc1a3039d73e (all wave-1 reports committed; case file not yet added)
+# command: bash .ufo/waves/round-29/check-blind-wave.sh 221cbd8faa88e07ad20445d5a87bbc1a3039d73e .ufo/waves/round-29/w1 '^CaseA2(07|10)[a-d]\.md$'
+blind_violations=20
+.ufo/waves/round-29/w1/AxisOperability.md:19:nonwriter-tool-run-output
+.ufo/waves/round-29/w1/BuildTipReceipts.md:5:nonwriter-tool-run-output
+.ufo/waves/round-29/w1/BuildTipReceipts.md:135:nonwriter-tool-run-output
+.ufo/waves/round-29/w1/BuildTipReceipts.md:136:nonwriter-tool-run-output
+.ufo/waves/round-29/w1/BuildTipReceipts.md:137:nonwriter-tool-run-output
+.ufo/waves/round-29/w1/BuildTipReceipts.md:140:nonwriter-tool-run-output
+.ufo/waves/round-29/w1/CaseA207a.md:1:writer-missing-files-opened-list
+.ufo/waves/round-29/w1/CaseA207b.md:1:writer-missing-files-opened-list
+.ufo/waves/round-29/w1/CaseA207c.md:1:writer-missing-files-opened-list
+.ufo/waves/round-29/w1/CaseA207d.md:1:writer-missing-files-opened-list
+.ufo/waves/round-29/w1/CaseA210a.md:1:writer-missing-files-opened-list
+.ufo/waves/round-29/w1/CaseA210b.md:1:writer-missing-files-opened-list
+.ufo/waves/round-29/w1/CaseA210d.md:1:writer-missing-files-opened-list
+.ufo/waves/round-29/w1/DraftQualityCriteria.md:75:nonwriter-tool-citation
+.ufo/waves/round-29/w1/DraftQualityCriteria.md:76:nonwriter-tool-run-output
+.ufo/waves/round-29/w1/DraftQualityCriteria.md:77:nonwriter-tool-run-output
+.ufo/waves/round-29/w1/DraftQualityCriteria.md:86:nonwriter-tool-citation
+.ufo/waves/round-29/w1/ReviewLateMutCountC1Amended.md:78:nonwriter-tool-run-output
+.ufo/waves/round-29/w1/ReviewLateMutHeadingCheck.md:37:nonwriter-tool-run-output
+.ufo/waves/round-29/w1/ReviewLateMutHeadingCheck.md:39:nonwriter-tool-run-output
+exit: 1

@@ -1,0 +1,32 @@
+{
+  "schema": "mori-r17-c3-final-setup-v1",
+  "observed_at": "2026-10-20T17:53:24.092325-03:00",
+  "measured_commit": "91940fa339e38006f8db5bd7d78bb6f037f4d016",
+  "expected_path": ".ufo/waves/round-17/frozen/c3-tree",
+  "expected_sha256": "13079e038718ea3d660da8dd10a08d7618364d20661e4c8435946e7413976c0b",
+  "sandbox": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/FinalVerificationMetadata/.scratch/c3-final-fleet",
+  "inputs": {
+    "TrackedMoriR16.Lesson": {
+      "bytes": 74,
+      "sha256": "6a95bc386b0f6a501d69c7755a43db7b88ed5de339ccb99525fde5534d6dadaf"
+    },
+    "TabiR16.Lesson": {
+      "bytes": 29,
+      "sha256": "b1d6711066ac26df3d58d106844ef13b34e44f09fc35b597859c050c5b02ede2"
+    },
+    "seed": {
+      "bytes": 5,
+      "sha256": "4a6689419b00b11700c9b6246bcfa8936c8f5e1e824db3a7e57030e2d1c1a684"
+    },
+    "MoriR16.Lesson": {
+      "bytes": 847,
+      "sha256": "15f9f82d707d5c79b11643eed1ab4754b6959d2bede5887e07364442ada5510e"
+    }
+  },
+  "tracked_files": [
+    "TrackedMoriR16.Lesson",
+    "seed"
+  ],
+  "status_porcelain": "?? MoriR16.Lesson\n?? TabiR16.Lesson\n",
+  "fixture_commit": "853413b47cc11d2fa5f171a2b863a5c433d2c489"
+}

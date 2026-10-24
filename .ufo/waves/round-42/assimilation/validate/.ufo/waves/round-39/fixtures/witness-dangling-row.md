@@ -1,0 +1,1 @@
+| round-37 C2 | source-drift re-fetch probe | fabricated capability row with the r37 tokens `huge_cap`/`redirect_private_refused` and the tool path `tools/mori-source-drift.py`, plus a receipt that does not exist: `evidence/no-such-receipt.txt` | 37 |

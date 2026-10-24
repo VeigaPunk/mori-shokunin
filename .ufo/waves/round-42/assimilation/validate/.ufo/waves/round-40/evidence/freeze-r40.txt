@@ -1,0 +1,22 @@
+freeze-r40: sha256 over the round-40 frozen instrument paths
+pinned: 2026-10-24T05:46:06Z by L1 mori-r40 attempt 1 (resumed)
+note: the prior launch died before persisting this receipt; before-receipts
+      run committed bytes extracted via 'git show bb1f2457:<path>' (see
+      fixtures/extracted/), so before-controls are measured at entering bytes.
+
+6514914885e6a1249ed7903931b9734a55e828275121353c2727348eae504a8d  .ufo/waves/round-40/contract.md
+4e4d50eb1e96d947f0e9d2ab25a13b2b8c33963f216f3be43060a3348702f6da  .ufo/waves/round-40/count-c8.py
+5025b9664632d01063c11b4f5dadd4f9a063db66d73315d7ed25db8d90b83aaf  .ufo/waves/round-40/conform.py
+bde5a9a34c7eb3bcbee39d669b8d187caeb51807ad1bdcd85a05c1bcd06777ec  tools/mori-sources-appendonly.py
+8ff91db744c684f7b9b5c1d84e63538602635c52214a2b802afc520e4933acea  .ufo/waves/round-40/fixtures/make-survivor-fixtures.py
+0cd7f1d23c88db501288cad7ac4381a44d855aaf79f16dd1be1cda6d71f156da  .ufo/waves/round-40/fixtures/run-c11-dags.py
+
+extracted before-instrument bytes (git show bb1f2457:...):
+fe0be179aba9df7150f0b6cdb50a5f9bbdb411efb1263b46ffa6b21d46ef7987  .ufo/waves/round-40/fixtures/extracted/conform-v2-r39.py
+b92c65f224a6268a901aa6bc5ad66b499048eaca82b493356eb8e1f324ef0520  .ufo/waves/round-40/fixtures/extracted/count-c7-r39.py
+62cd4132dbe141538371f79723c3caff66670fab9076494cd9cf65efccfc01e7  .ufo/waves/round-40/fixtures/extracted/gate-v2-bb1f2457.py
+
+P-C10 contract==checker PREDICATE: True
+round-41 closure pin additions (r40 routed defect 5; original freeze set preserved):
+20e324228735d39ad6bb293aac9dfd4b3a27a009a0f2ecf222731771bd2aaabf  .ufo/waves/round-40/fixtures/generated/conform-v3-conjunct-gutted.py (36374 bytes)
+c9f01206e2f3d5d8191ee830af8bd0720567016b46f0d0afdaf2f4f9caf375b9  .ufo/waves/round-40/fixtures/generated/conform-r39-conjunct-gutted.py (24533 bytes)

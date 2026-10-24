@@ -1,0 +1,60 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseExt4Usrquota",
+  "scenario": "An ext4 mount at /srv/data carries the usrquota quota option in its super options; the requested path /srv/data/projects/app resolves to that ext4 mount, the mount major:minor equals the path st_dev, so the device check matches and the ext quota-option row classifies the path as enabled with unknown enforcement.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "25 0 8:1 / / rw,relatime shared:1 - ext4 /dev/nvme0n1p2 rw,errors=remount-ro\n26 25 0:21 / /proc rw,nosuid,nodev,noexec,relatime shared:11 - proc proc rw\n27 25 0:22 / /sys rw,nosuid,nodev,noexec,relatime shared:7 - sysfs sysfs rw,nosuid,nodev,noexec\n28 25 0:23 / /dev rw,nosuid shared:2 - devtmpfs devtmpfs rw,size=4028624k,nr_inodes=1007631,mode=755\n29 25 259:3 / /home rw,relatime shared:4 - btrfs /dev/mapper/root rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=257,subvol=/@home\n30 25 0:41 / /srv rw,nosuid,nodev,noexec,relatime shared:9 - tmpfs tmpfs rw,nosuid,nodev,noexec,relatime,size=163840k,inode64\n31 30 8:2 / /srv/data rw,relatime shared:13 - ext4 /dev/nvme0n1p4 rw,usrquota\n",
+    "paths": [
+      {
+        "path": "/srv/data",
+        "realpath": "/srv/data",
+        "st_dev": "8:2"
+      },
+      {
+        "path": "/srv/data/projects/app",
+        "realpath": "/srv/data/projects/app",
+        "st_dev": "8:2"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0"
+    },
+    "btrfs_sysfs": {
+      "1d02a454-c549-4a35-b567-89d60902af8e": {
+        "devices": [
+          "dm-0"
+        ],
+        "qgroups": false,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 1,
+    "finding_id": "QUOTA_ENABLED",
+    "paths": [
+      {
+        "path": "/srv/data",
+        "fstype": "ext4",
+        "mount_point": "/srv/data",
+        "quota_state": "enabled",
+        "enforcement": "unknown",
+        "basis": "ext_quota_option"
+      },
+      {
+        "path": "/srv/data/projects/app",
+        "fstype": "ext4",
+        "mount_point": "/srv/data",
+        "quota_state": "enabled",
+        "enforcement": "unknown",
+        "basis": "ext_quota_option"
+      }
+    ]
+  },
+  "rationale": "Contract section C2 mount resolution: mountinfo is parsed per proc.rst section 3.5 (S082, Documentation/filesystems/proc.rst:1965-1990), i.e. fields 1-6 are mount ID, parent ID, major:minor, root, mount point and per-mount options, optional 'tag[:value]' fields follow until the '-' separator, then filesystem type, mount source and super options. Candidate mounts for realpath /srv/data are those whose mount point equals the realpath, is '/', or is a prefix at a '/' boundary: '/' (the ext4 root at 8:1), '/srv' (tmpfs at 0:41) and '/srv/data' (ext4 at 8:2). The longest mount point wins, so '/srv/data' (9 characters) is chosen over '/srv' (4) and '/' (1); the same mount covers realpath /srv/data/projects/app by the prefix rule, and both paths therefore report mount_point '/srv/data'. Contract section C2 device rule: the chosen fstype is ext4 (not btrfs) and its major:minor 8:2 equals the path st_dev 8:2, so the device check matches and classification proceeds. Contract section C2 quota-classification table, row 'ext2/ext3/ext4 | any of quota,usrquota,grpquota,prjquota,usrjquota,grpjquota | enabled | unknown | ext_quota_option': the super options of the chosen line are the last mountinfo field 'rw,usrquota', whose comma-split key 'usrquota' is one of the listed quota keys, so quota_state is enabled, enforcement is unknown (the ext quota feature state in the superblock is not observable from mountinfo alone, per the contract's stated limits), and the basis is ext_quota_option. The option name is the one documented for ext4 in Documentation/admin-guide/ext4.rst:261-265 (S083), which lists 'quota, noquota, grpquota, usrquota' as the ext quota mount options; the same document at :267-271 lists the journaled-quota forms usrjquota=<file> and grpjquota=<file>, which the contract's key-before-'=' rule reduces to the keys usrjquota and grpjquota. Contract section C2 verdict precedence: no setup error, and a path is enabled, so the run exits 1 with finding_id QUOTA_ENABLED (a runway-reporting finding, not a failure claim).",
+  "sources": [
+    "S082",
+    "S083"
+  ]
+}

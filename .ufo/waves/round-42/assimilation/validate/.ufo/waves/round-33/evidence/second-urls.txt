@@ -1,0 +1,18 @@
+# population: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-32/c1-population.json (34 rows, base 641a6e86ecc60634d215c0a47ab86c47661abf86)
+# sources: 7d382043:corpus/SOURCES.md blob=39813897608eeb272ba9e24ee2eab1a524d08ca5 sha256=5cc930974e81fce78eb6d1abca5ec5d6b3173634f3fdaf6ebd92537109b66432
+# note S056: token 'https://pmc.ncbi.nlm.nih.gov/articles/PMC5856500/;' trimmed of prose ';'
+S056	https://pmc.ncbi.nlm.nih.gov/articles/PMC5856500/	unpinned
+S058	https://git-scm.com/docs/git-diff-tree	unpinned
+S117	https://api.github.com/repos/rfjakob/earlyoom/releases	unpinned
+S117	https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/main.c	pinned
+S117	https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/kill.c	pinned
+S117	https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/msg.h	pinned
+S117	https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/README.md	pinned
+S117	https://raw.githubusercontent.com/rfjakob/earlyoom/v1.8/main.c	pinned
+S117	https://raw.githubusercontent.com/rfjakob/earlyoom/v1.8/kill.c	pinned
+S117	https://raw.githubusercontent.com/rfjakob/earlyoom/v1.7/main.c	pinned
+S117	https://raw.githubusercontent.com/rfjakob/earlyoom/v1.7/kill.c	pinned
+S128	https://man7.org/linux/man-pages/man5/proc_pid_oom_score.5.html	unpinned
+S137	https://raw.githubusercontent.com/rfjakob/earlyoom/750a7c0d97bb01c1bdf126fd6bf5722da17e8998/main.c	pinned
+S149	https://man7.org/linux/man-pages/man5/proc_pid_oom_score.5.html	unpinned
+rows=34 multi_url_rows=6 other_urls=14 pinned=9 unpinned=5

@@ -1,0 +1,967 @@
+{
+  "actual": {
+    "df_covers_quota": false,
+    "exit_code": 0,
+    "finding_id": "QUOTA_DISABLED",
+    "limits_bytes": 611,
+    "limits_is_string": true,
+    "output_keys": [
+      "df_covers_quota",
+      "exit_code",
+      "finding_id",
+      "limits",
+      "paths",
+      "schema"
+    ],
+    "paths": [
+      {
+        "basis": "btrfs_qgroups_dir_absent",
+        "btrfs_qgroups_mode": null,
+        "device_check": "btrfs_subvolume_skipped",
+        "enforcement": "n/a",
+        "fstype": "btrfs",
+        "mount_point": "/home",
+        "path": "/home/vgpnk/Projects/shokunin",
+        "quota_option_keys": [],
+        "quota_state": "disabled"
+      },
+      {
+        "basis": "xfs_noquota_option",
+        "btrfs_qgroups_mode": null,
+        "device_check": "match",
+        "enforcement": "n/a",
+        "fstype": "xfs",
+        "mount_point": "/tmp",
+        "path": "/tmp",
+        "quota_option_keys": [
+          "noquota"
+        ],
+        "quota_state": "disabled"
+      }
+    ],
+    "schema": "mori-quota-surface-v1"
+  },
+  "argv": [
+    "/usr/bin/timeout",
+    "15",
+    "/usr/bin/prlimit",
+    "--as=402653184",
+    "/usr/bin/python3",
+    "-I",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+    "--fixture",
+    "/fast/scratch/hyaku/mori-r23/QHostLike/fixture.json"
+  ],
+  "argv_given": "python3 -I TOOL --fixture ABS_FIXTURE (wrapped in timeout 15 + prlimit --as=402653184)",
+  "canonical_runtime_note": "exactly one production path tools/mori-quota-surface.py; wave-1 candidate copies live only under .ufo/waves/round-23/build/ImplQuota/ and are not the measured runtime",
+  "case_bytes_unchanged_vs_author_corrected": true,
+  "case_bytes_unchanged_vs_seal": true,
+  "case_id": "CaseHostLike",
+  "case_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseHostLike.json",
+  "case_schema": "mori-quota-case-v1",
+  "case_sha256": "f4580093a6aa93eab53bef9c9f61667a2a0aa2224096b60568140904b148a63c",
+  "case_sha256_at_seal_commit": "f4580093a6aa93eab53bef9c9f61667a2a0aa2224096b60568140904b148a63c",
+  "comparison": {
+    "actual_primary_tuples": [
+      [
+        "/home/vgpnk/Projects/shokunin",
+        "btrfs",
+        "/home",
+        "disabled",
+        "n/a",
+        "btrfs_qgroups_dir_absent"
+      ],
+      [
+        "/tmp",
+        "xfs",
+        "/tmp",
+        "disabled",
+        "n/a",
+        "xfs_noquota_option"
+      ]
+    ],
+    "exit_match": true,
+    "expected_primary_tuples": [
+      [
+        "/home/vgpnk/Projects/shokunin",
+        "btrfs",
+        "/home",
+        "disabled",
+        "n/a",
+        "btrfs_qgroups_dir_absent"
+      ],
+      [
+        "/tmp",
+        "xfs",
+        "/tmp",
+        "disabled",
+        "n/a",
+        "xfs_noquota_option"
+      ]
+    ],
+    "extra_actual_paths": 0,
+    "finding_id_match": true,
+    "missing_actual_paths": 0,
+    "per_path": [
+      {
+        "actual_tuple": [
+          "/home/vgpnk/Projects/shokunin",
+          "btrfs",
+          "/home",
+          "disabled",
+          "n/a",
+          "btrfs_qgroups_dir_absent"
+        ],
+        "expected_tuple": [
+          "/home/vgpnk/Projects/shokunin",
+          "btrfs",
+          "/home",
+          "disabled",
+          "n/a",
+          "btrfs_qgroups_dir_absent"
+        ],
+        "field_mismatches": {},
+        "index": 0,
+        "match": true,
+        "present": true,
+        "supplementary_actual": {
+          "btrfs_qgroups_mode": null,
+          "device_check": "btrfs_subvolume_skipped",
+          "quota_option_keys": []
+        },
+        "supplementary_expected_in_case": null,
+        "supplementary_matches_rationale": true,
+        "supplementary_stated_in_rationale": {
+          "btrfs_qgroups_mode": null,
+          "device_check": "btrfs_subvolume_skipped",
+          "quota_option_keys": []
+        }
+      },
+      {
+        "actual_tuple": [
+          "/tmp",
+          "xfs",
+          "/tmp",
+          "disabled",
+          "n/a",
+          "xfs_noquota_option"
+        ],
+        "expected_tuple": [
+          "/tmp",
+          "xfs",
+          "/tmp",
+          "disabled",
+          "n/a",
+          "xfs_noquota_option"
+        ],
+        "field_mismatches": {},
+        "index": 1,
+        "match": true,
+        "present": true,
+        "supplementary_actual": {
+          "btrfs_qgroups_mode": null,
+          "device_check": "match",
+          "quota_option_keys": [
+            "noquota"
+          ]
+        },
+        "supplementary_expected_in_case": null,
+        "supplementary_matches_rationale": true,
+        "supplementary_stated_in_rationale": {
+          "btrfs_qgroups_mode": null,
+          "device_check": "match",
+          "quota_option_keys": [
+            "noquota"
+          ]
+        }
+      }
+    ],
+    "primary_fields": [
+      "path",
+      "fstype",
+      "mount_point",
+      "quota_state",
+      "enforcement",
+      "basis"
+    ],
+    "primary_tuple_match": true,
+    "supplementary_expected_declared_in_case": false,
+    "supplementary_fields": [
+      "device_check",
+      "quota_option_keys",
+      "btrfs_qgroups_mode"
+    ],
+    "supplementary_matches_rationale_prose": true,
+    "supplementary_separate_from_primary": true
+  },
+  "cwd": "/fast/scratch/hyaku/mori-r23/QHostLike",
+  "determinism_repeat_sha256_equal": true,
+  "env_overrides": {
+    "TMPDIR": "/fast/scratch/hyaku/mori-r23/QHostLike",
+    "note": "python3 -I ignores PYTHON* env vars; in fixture mode the tool opens only the fixture file (strace-verified)"
+  },
+  "exit_code": 0,
+  "expected_bytes_edited": false,
+  "fixture_content_equal_to_case_fixture": true,
+  "fixture_copied_from": "case[\"fixture\"] verbatim (json.dumps indent=2 sort_keys=True + newline)",
+  "fixture_path": "/fast/scratch/hyaku/mori-r23/QHostLike/fixture.json",
+  "fixture_sha256": "b07ec77d0b40dae50f2f1ece1359e695e23a1a7c8b2b4a696c61f58c3aa0caee",
+  "given": {
+    "exit": 0,
+    "finding_id": "QUOTA_DISABLED",
+    "paths": [
+      {
+        "basis": "btrfs_qgroups_dir_absent",
+        "enforcement": "n/a",
+        "fstype": "btrfs",
+        "mount_point": "/home",
+        "path": "/home/vgpnk/Projects/shokunin",
+        "quota_state": "disabled"
+      },
+      {
+        "basis": "xfs_noquota_option",
+        "enforcement": "n/a",
+        "fstype": "xfs",
+        "mount_point": "/tmp",
+        "path": "/tmp",
+        "quota_state": "disabled"
+      }
+    ]
+  },
+  "invocations": 1,
+  "leakage_scan": {
+    "canaries_checked": [
+      "uuid b3f1c2d4-5a6b-4c7d-8e9f-0a1b2c3d4e5f",
+      "mount_source /dev/mapper/root",
+      "mount_source /dev/sda2",
+      "option_token subvolid=256",
+      "option_token subvol=/@",
+      "option_token subvol=/@home",
+      "option_token logbufs=8",
+      "option_token logbsize=32k",
+      "device_basename dm-0"
+    ],
+    "hits": []
+  },
+  "limits_applied": {
+    "address_space_bytes": 402653184,
+    "children": 1,
+    "one_child_at_a_time": true,
+    "timeout_seconds": 15,
+    "timeout_signal": "TERM(default) then KILL"
+  },
+  "mismatches": [],
+  "mode": "fixture (--fixture only; real mode never invoked; no host quota read)",
+  "mutation_probes_fixture_only": {
+    "mut_G1_empty_paths": {
+      "error": "fixture_paths",
+      "exit_code": 2,
+      "finding_id": "QUOTA_SETUP",
+      "paths": []
+    },
+    "mut_G2_extra_path_key": {
+      "error": "fixture_path_entry",
+      "exit_code": 2,
+      "finding_id": "QUOTA_SETUP",
+      "paths": []
+    },
+    "mut_G3_missing_realpath": {
+      "error": "fixture_path_entry",
+      "exit_code": 2,
+      "finding_id": "QUOTA_SETUP",
+      "paths": []
+    },
+    "mut_G4_bad_mountinfo_line": {
+      "error": "mountinfo_line_unparseable",
+      "exit_code": 2,
+      "finding_id": "QUOTA_SETUP",
+      "paths": []
+    },
+    "mut_N1_absent_dir_enabled_true": {
+      "error": "fixture_btrfs_qgroups_pairing",
+      "exit_code": 2,
+      "finding_id": "QUOTA_SETUP",
+      "paths": []
+    },
+    "mut_N2_disabled_with_mode": {
+      "error": "fixture_btrfs_mode_pairing",
+      "exit_code": 2,
+      "finding_id": "QUOTA_SETUP",
+      "paths": []
+    },
+    "mut_N3_enabled_squota": {
+      "error": null,
+      "exit_code": 1,
+      "finding_id": "QUOTA_ENABLED",
+      "paths": [
+        {
+          "basis": "btrfs_qgroups_enabled",
+          "btrfs_qgroups_mode": "squota",
+          "device_check": "btrfs_subvolume_skipped",
+          "enforcement": "unknown",
+          "fstype": "btrfs",
+          "mount_point": "/home",
+          "path": "/home/vgpnk/Projects/shokunin",
+          "quota_option_keys": [],
+          "quota_state": "enabled"
+        },
+        {
+          "basis": "xfs_noquota_option",
+          "btrfs_qgroups_mode": null,
+          "device_check": "match",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp",
+          "quota_option_keys": [
+            "noquota"
+          ],
+          "quota_state": "disabled"
+        }
+      ]
+    },
+    "mut_N4_two_uuids": {
+      "error": null,
+      "exit_code": 2,
+      "finding_id": "QUOTA_STATE_UNKNOWN",
+      "paths": [
+        {
+          "basis": "btrfs_device_unmapped",
+          "btrfs_qgroups_mode": null,
+          "device_check": "btrfs_subvolume_skipped",
+          "enforcement": "n/a",
+          "fstype": "btrfs",
+          "mount_point": "/home",
+          "path": "/home/vgpnk/Projects/shokunin",
+          "quota_option_keys": [],
+          "quota_state": "unknown"
+        },
+        {
+          "basis": "xfs_noquota_option",
+          "btrfs_qgroups_mode": null,
+          "device_check": "match",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp",
+          "quota_option_keys": [
+            "noquota"
+          ],
+          "quota_state": "disabled"
+        }
+      ]
+    },
+    "mut_O1_reversed_order": {
+      "error": null,
+      "exit_code": 0,
+      "finding_id": "QUOTA_DISABLED",
+      "paths": [
+        {
+          "basis": "btrfs_qgroups_dir_absent",
+          "btrfs_qgroups_mode": null,
+          "device_check": "btrfs_subvolume_skipped",
+          "enforcement": "n/a",
+          "fstype": "btrfs",
+          "mount_point": "/home",
+          "path": "/home/vgpnk/Projects/shokunin",
+          "quota_option_keys": [],
+          "quota_state": "disabled"
+        },
+        {
+          "basis": "xfs_noquota_option",
+          "btrfs_qgroups_mode": null,
+          "device_check": "match",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp",
+          "quota_option_keys": [
+            "noquota"
+          ],
+          "quota_state": "disabled"
+        }
+      ]
+    },
+    "mut_O2_octal_space": {
+      "error": null,
+      "exit_code": 0,
+      "finding_id": "QUOTA_DISABLED",
+      "paths": [
+        {
+          "basis": "btrfs_qgroups_dir_absent",
+          "btrfs_qgroups_mode": null,
+          "device_check": "btrfs_subvolume_skipped",
+          "enforcement": "n/a",
+          "fstype": "btrfs",
+          "mount_point": "/srv data",
+          "path": "/srv data",
+          "quota_option_keys": [],
+          "quota_state": "disabled"
+        },
+        {
+          "basis": "xfs_noquota_option",
+          "btrfs_qgroups_mode": null,
+          "device_check": "match",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp",
+          "quota_option_keys": [
+            "noquota"
+          ],
+          "quota_state": "disabled"
+        }
+      ]
+    },
+    "mut_O3_bad_escape": {
+      "error": "mountinfo_escape_invalid",
+      "exit_code": 2,
+      "finding_id": "QUOTA_SETUP",
+      "paths": []
+    },
+    "mut_O4_trailing_blank": {
+      "error": null,
+      "exit_code": 0,
+      "finding_id": "QUOTA_DISABLED",
+      "paths": [
+        {
+          "basis": "btrfs_qgroups_dir_absent",
+          "btrfs_qgroups_mode": null,
+          "device_check": "btrfs_subvolume_skipped",
+          "enforcement": "n/a",
+          "fstype": "btrfs",
+          "mount_point": "/home",
+          "path": "/home/vgpnk/Projects/shokunin",
+          "quota_option_keys": [],
+          "quota_state": "disabled"
+        },
+        {
+          "basis": "xfs_noquota_option",
+          "btrfs_qgroups_mode": null,
+          "device_check": "match",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp",
+          "quota_option_keys": [
+            "noquota"
+          ],
+          "quota_state": "disabled"
+        }
+      ]
+    },
+    "mut_P10_parentid_mismatch": {
+      "error": null,
+      "exit_code": 0,
+      "finding_id": "QUOTA_DISABLED",
+      "paths": [
+        {
+          "basis": "btrfs_qgroups_dir_absent",
+          "btrfs_qgroups_mode": null,
+          "device_check": "btrfs_subvolume_skipped",
+          "enforcement": "n/a",
+          "fstype": "btrfs",
+          "mount_point": "/home",
+          "path": "/home/vgpnk/Projects/shokunin",
+          "quota_option_keys": [],
+          "quota_state": "disabled"
+        },
+        {
+          "basis": "xfs_noquota_option",
+          "btrfs_qgroups_mode": null,
+          "device_check": "match",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp",
+          "quota_option_keys": [
+            "noquota"
+          ],
+          "quota_state": "disabled"
+        }
+      ]
+    },
+    "mut_P11_parentid_absent": {
+      "error": null,
+      "exit_code": 0,
+      "finding_id": "QUOTA_DISABLED",
+      "paths": [
+        {
+          "basis": "btrfs_qgroups_dir_absent",
+          "btrfs_qgroups_mode": null,
+          "device_check": "btrfs_subvolume_skipped",
+          "enforcement": "n/a",
+          "fstype": "btrfs",
+          "mount_point": "/home",
+          "path": "/home/vgpnk/Projects/shokunin",
+          "quota_option_keys": [],
+          "quota_state": "disabled"
+        },
+        {
+          "basis": "xfs_noquota_option",
+          "btrfs_qgroups_mode": null,
+          "device_check": "match",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp",
+          "quota_option_keys": [
+            "noquota"
+          ],
+          "quota_state": "disabled"
+        }
+      ]
+    },
+    "mut_P12": {
+      "error": null,
+      "exit_code": 2,
+      "finding_id": "QUOTA_STATE_UNKNOWN",
+      "paths": [
+        {
+          "basis": "ambiguous_overmount",
+          "btrfs_qgroups_mode": null,
+          "device_check": "not_checked",
+          "enforcement": "n/a",
+          "fstype": null,
+          "mount_point": null,
+          "path": "/home/vgpnk/Projects/shokunin",
+          "quota_option_keys": [],
+          "quota_state": "unknown"
+        },
+        {
+          "basis": "xfs_noquota_option",
+          "btrfs_qgroups_mode": null,
+          "device_check": "match",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp",
+          "quota_option_keys": [
+            "noquota"
+          ],
+          "quota_state": "disabled"
+        }
+      ]
+    },
+    "mut_P1_tmp_dev_mismatch": {
+      "error": null,
+      "exit_code": 2,
+      "finding_id": "QUOTA_STATE_UNKNOWN",
+      "paths": [
+        {
+          "basis": "btrfs_qgroups_dir_absent",
+          "btrfs_qgroups_mode": null,
+          "device_check": "btrfs_subvolume_skipped",
+          "enforcement": "n/a",
+          "fstype": "btrfs",
+          "mount_point": "/home",
+          "path": "/home/vgpnk/Projects/shokunin",
+          "quota_option_keys": [],
+          "quota_state": "disabled"
+        },
+        {
+          "basis": "device_mismatch",
+          "btrfs_qgroups_mode": null,
+          "device_check": "mismatch",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp",
+          "quota_option_keys": [],
+          "quota_state": "unknown"
+        }
+      ]
+    },
+    "mut_P2_qgroups_enabled": {
+      "error": null,
+      "exit_code": 1,
+      "finding_id": "QUOTA_ENABLED",
+      "paths": [
+        {
+          "basis": "btrfs_qgroups_enabled",
+          "btrfs_qgroups_mode": "squota",
+          "device_check": "btrfs_subvolume_skipped",
+          "enforcement": "unknown",
+          "fstype": "btrfs",
+          "mount_point": "/home",
+          "path": "/home/vgpnk/Projects/shokunin",
+          "quota_option_keys": [],
+          "quota_state": "enabled"
+        },
+        {
+          "basis": "xfs_noquota_option",
+          "btrfs_qgroups_mode": null,
+          "device_check": "match",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp",
+          "quota_option_keys": [
+            "noquota"
+          ],
+          "quota_state": "disabled"
+        }
+      ]
+    },
+    "mut_P3_qgroups_enabled_null": {
+      "error": null,
+      "exit_code": 2,
+      "finding_id": "QUOTA_STATE_UNKNOWN",
+      "paths": [
+        {
+          "basis": "btrfs_qgroups_enabled_unavailable",
+          "btrfs_qgroups_mode": null,
+          "device_check": "btrfs_subvolume_skipped",
+          "enforcement": "n/a",
+          "fstype": "btrfs",
+          "mount_point": "/home",
+          "path": "/home/vgpnk/Projects/shokunin",
+          "quota_option_keys": [],
+          "quota_state": "unknown"
+        },
+        {
+          "basis": "xfs_noquota_option",
+          "btrfs_qgroups_mode": null,
+          "device_check": "match",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp",
+          "quota_option_keys": [
+            "noquota"
+          ],
+          "quota_state": "disabled"
+        }
+      ]
+    },
+    "mut_P4_xfs_no_noquota": {
+      "error": null,
+      "exit_code": 2,
+      "finding_id": "QUOTA_STATE_UNKNOWN",
+      "paths": [
+        {
+          "basis": "btrfs_qgroups_dir_absent",
+          "btrfs_qgroups_mode": null,
+          "device_check": "btrfs_subvolume_skipped",
+          "enforcement": "n/a",
+          "fstype": "btrfs",
+          "mount_point": "/home",
+          "path": "/home/vgpnk/Projects/shokunin",
+          "quota_option_keys": [],
+          "quota_state": "disabled"
+        },
+        {
+          "basis": "xfs_quota_options_absent",
+          "btrfs_qgroups_mode": null,
+          "device_check": "match",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp",
+          "quota_option_keys": [],
+          "quota_state": "unknown"
+        }
+      ]
+    },
+    "mut_P5_dup_overmount": {
+      "error": null,
+      "exit_code": 2,
+      "finding_id": "QUOTA_STATE_UNKNOWN",
+      "paths": [
+        {
+          "basis": "ambiguous_overmount",
+          "btrfs_qgroups_mode": null,
+          "device_check": "not_checked",
+          "enforcement": "n/a",
+          "fstype": null,
+          "mount_point": null,
+          "path": "/home/vgpnk/Projects/shokunin",
+          "quota_option_keys": [],
+          "quota_state": "unknown"
+        },
+        {
+          "basis": "xfs_noquota_option",
+          "btrfs_qgroups_mode": null,
+          "device_check": "match",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp",
+          "quota_option_keys": [
+            "noquota"
+          ],
+          "quota_state": "disabled"
+        }
+      ]
+    },
+    "mut_P6_btrfs_nonzero_mismatch": {
+      "error": null,
+      "exit_code": 2,
+      "finding_id": "QUOTA_STATE_UNKNOWN",
+      "paths": [
+        {
+          "basis": "device_mismatch",
+          "btrfs_qgroups_mode": null,
+          "device_check": "mismatch",
+          "enforcement": "n/a",
+          "fstype": "btrfs",
+          "mount_point": "/home",
+          "path": "/home/vgpnk/Projects/shokunin",
+          "quota_option_keys": [],
+          "quota_state": "unknown"
+        },
+        {
+          "basis": "xfs_noquota_option",
+          "btrfs_qgroups_mode": null,
+          "device_check": "match",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp",
+          "quota_option_keys": [
+            "noquota"
+          ],
+          "quota_state": "disabled"
+        }
+      ]
+    },
+    "mut_P7_device_unmapped": {
+      "error": null,
+      "exit_code": 2,
+      "finding_id": "QUOTA_STATE_UNKNOWN",
+      "paths": [
+        {
+          "basis": "btrfs_device_unmapped",
+          "btrfs_qgroups_mode": null,
+          "device_check": "btrfs_subvolume_skipped",
+          "enforcement": "n/a",
+          "fstype": "btrfs",
+          "mount_point": "/home",
+          "path": "/home/vgpnk/Projects/shokunin",
+          "quota_option_keys": [],
+          "quota_state": "unknown"
+        },
+        {
+          "basis": "xfs_noquota_option",
+          "btrfs_qgroups_mode": null,
+          "device_check": "match",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp",
+          "quota_option_keys": [
+            "noquota"
+          ],
+          "quota_state": "disabled"
+        }
+      ]
+    },
+    "mut_P8_qgroups_null": {
+      "error": "fixture_btrfs_qgroups",
+      "exit_code": 2,
+      "finding_id": "QUOTA_SETUP",
+      "paths": []
+    },
+    "mut_P9_qgroups_disabled": {
+      "error": null,
+      "exit_code": 0,
+      "finding_id": "QUOTA_DISABLED",
+      "paths": [
+        {
+          "basis": "btrfs_qgroups_disabled",
+          "btrfs_qgroups_mode": null,
+          "device_check": "btrfs_subvolume_skipped",
+          "enforcement": "n/a",
+          "fstype": "btrfs",
+          "mount_point": "/home",
+          "path": "/home/vgpnk/Projects/shokunin",
+          "quota_option_keys": [],
+          "quota_state": "disabled"
+        },
+        {
+          "basis": "xfs_noquota_option",
+          "btrfs_qgroups_mode": null,
+          "device_check": "match",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp",
+          "quota_option_keys": [
+            "noquota"
+          ],
+          "quota_state": "disabled"
+        }
+      ]
+    }
+  },
+  "original_proposal_expected_block_identical_to_frozen": true,
+  "original_proposal_retained_sha256": "e83132fc329dc28dcd1e6ebdc51c645c78b9f8a15b5ffe701f7c75de793c9d93",
+  "probe_note": "all probes are synthetic fixtures under the seat scratch dir; no production/frozen/oracle byte modified; no real-mode invocation; no host quota read",
+  "production_pin": "f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c",
+  "residual_risks": [
+    "Scope is one fixture-mode case. CaseHostLike carries no supplementary_expected block, so the sealed oracle scores no per-path device_check/quota_option_keys/btrfs_qgroups_mode assertions for it; those three values were checked here only against the case rationale prose (they agree).",
+    "The fixture xfs line uses 8:2 while the frozen real control observed 259:1; the fixture is a synthetic analogue of the host-like pair, not a capture of the live host.",
+    "The pre-amendment wave-1 candidate tools/mori-quota-surface.py at .ufo/waves/round-23/build/ImplQuota/ differs from production (empty-path-list and exact-path-key guards); production is the stricter, measured runtime.",
+    "CaseEscapedSpace strict red (frozen contradiction) is owned by another seat; no claim is made here about it.",
+    "QUOTA_DISABLED is a mechanism observation, not a capacity or health verdict; no baseline acceptance, privacy clearance or admission is implied."
+  ],
+  "schema": "mori-r23-falsification-receipt-v1",
+  "seal_commit": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+  "seal_is_ancestor_of_production_pin": true,
+  "sealed_oracle_single_case_rerun": {
+    "case_status": "pass",
+    "cases_dir": "/fast/scratch/hyaku/mori-r23/QHostLike/case1",
+    "counts": {
+      "capability_absent": 0,
+      "pass": 1,
+      "total": 1,
+      "unmet": 0
+    },
+    "exit_code": 0,
+    "headline": {
+      "exit_match": true,
+      "finding_match": true,
+      "paths_match": true
+    },
+    "note": "independent re-run of the committed sealed oracle v3 restricted to this one case directory; not the wave driver; wave denominator untouched",
+    "oracle": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/oracle-quota.py",
+    "oracle_sha256": "f1f4a027728180436fc5161171b0f6ad4ca4176229b5240aabb33e3f2af36bec",
+    "output": "/fast/scratch/hyaku/mori-r23/QHostLike/oracle-single.json",
+    "output_sha256": "5ecebaec40ddffff2feb6b8617c54bdc053d2046c74f8f28a22996e53292d3ec",
+    "supplementary_checks": [
+      {
+        "check": "schema",
+        "detail": "mori-quota-surface-v1",
+        "status": "pass"
+      },
+      {
+        "check": "exit_consistency",
+        "detail": 0,
+        "status": "pass"
+      },
+      {
+        "check": "output_keys_allowed",
+        "detail": [
+          "df_covers_quota",
+          "exit_code",
+          "finding_id",
+          "limits",
+          "paths",
+          "schema"
+        ],
+        "status": "pass"
+      },
+      {
+        "check": "output_key_set",
+        "detail": [
+          "df_covers_quota",
+          "exit_code",
+          "finding_id",
+          "limits",
+          "paths",
+          "schema"
+        ],
+        "status": "pass"
+      },
+      {
+        "check": "error_token",
+        "detail": null,
+        "status": "pass"
+      },
+      {
+        "check": "path_key_set",
+        "detail": [
+          [
+            "basis",
+            "btrfs_qgroups_mode",
+            "device_check",
+            "enforcement",
+            "fstype",
+            "mount_point",
+            "path",
+            "quota_option_keys",
+            "quota_state"
+          ],
+          [
+            "basis",
+            "btrfs_qgroups_mode",
+            "device_check",
+            "enforcement",
+            "fstype",
+            "mount_point",
+            "path",
+            "quota_option_keys",
+            "quota_state"
+          ]
+        ],
+        "status": "pass"
+      },
+      {
+        "check": "df_covers_quota",
+        "detail": false,
+        "status": "pass"
+      },
+      {
+        "check": "limits_text",
+        "detail": "str",
+        "status": "pass"
+      },
+      {
+        "check": "no_leakage",
+        "detail": [],
+        "status": "pass"
+      }
+    ],
+    "supplementary_counts": {
+      "pass": 9,
+      "total": 9,
+      "unmet": 0
+    }
+  },
+  "seat": "QHostLike",
+  "stderr": "",
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout": "{\"df_covers_quota\":false,\"exit_code\":0,\"finding_id\":\"QUOTA_DISABLED\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[{\"basis\":\"btrfs_qgroups_dir_absent\",\"btrfs_qgroups_mode\":null,\"device_check\":\"btrfs_subvolume_skipped\",\"enforcement\":\"n/a\",\"fstype\":\"btrfs\",\"mount_point\":\"/home\",\"path\":\"/home/vgpnk/Projects/shokunin\",\"quota_option_keys\":[],\"quota_state\":\"disabled\"},{\"basis\":\"xfs_noquota_option\",\"btrfs_qgroups_mode\":null,\"device_check\":\"match\",\"enforcement\":\"n/a\",\"fstype\":\"xfs\",\"mount_point\":\"/tmp\",\"path\":\"/tmp\",\"quota_option_keys\":[\"noquota\"],\"quota_state\":\"disabled\"}],\"schema\":\"mori-quota-surface-v1\"}\n",
+  "stdout_bytes": 1193,
+  "stdout_sha256": "e8ad07bf9a873b43e1663ba392a83c394c3fa3cf025865a8a707579b2f6b0a17",
+  "syscall_evidence": {
+    "fixture_open": "/fast/scratch/hyaku/mori-r23/QHostLike/fixture.json",
+    "mountinfo_opened": false,
+    "only_other_opens": [
+      "/proc/self/maps (CPython startup)",
+      "/proc/sys/vm/overcommit_memory (CPython startup)",
+      "/etc/localtime (CPython startup)",
+      "the tool source itself"
+    ],
+    "quotactl_or_ioctl": false,
+    "sysfs_btrfs_opened": false,
+    "trace": "strace -f -e trace=openat,open,stat,statx,newfstatat,readlink,getdents64,ioctl"
+  },
+  "tool_argv": [
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+    "--fixture",
+    "/fast/scratch/hyaku/mori-r23/QHostLike/fixture.json"
+  ],
+  "tool_git_blob_at_head_6eb889c": "439ff4c1a68fc4f98182c6b855b3b4c790286851",
+  "tool_git_blob_at_pin_f3dc07c": "439ff4c1a68fc4f98182c6b855b3b4c790286851",
+  "tool_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+  "tool_sha256": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+  "tool_sha256_matches_pin_blob": true,
+  "verdict": "MATCH",
+  "wave_measure4_crosscheck": {
+    "note": "the single unmet wave row is the frozen CaseEscapedSpace strict red owned by another seat; CaseHostLike is one of the 29 passing rows",
+    "row_headline": {
+      "exit_match": true,
+      "finding_match": true,
+      "paths_match": true
+    },
+    "row_status": "pass",
+    "source": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/evidence/measure4/c2-after-observed.json",
+    "wave_counts": {
+      "pass": 29,
+      "total": 30,
+      "unmet": 1
+    }
+  }
+}

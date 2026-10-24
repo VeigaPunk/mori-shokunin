@@ -1,0 +1,12 @@
+PASS predicate          predicate token changed -> only predicate failed
+PASS head_pin           pin label renamed -> only head_pin failed
+PASS tool_resolve       relative resolution removed -> only tool_resolve failed
+PASS bounded_reads      git helper run timeout removed -> only bounded_reads failed
+PASS timeout_scope      timeout value replaced with None -> only timeout_scope failed
+FAIL timeout_scope_shadow function-local None shadow inserted -> failing=['timeout_scope']
+PASS drain_bind         communicate drains replaced by wait+read -> only drain_bind failed
+FAIL drain_bind_decoy   decoy used communicate beside a wait+read drain -> failing=[]
+PASS timeout_state      budget flag ignored -> only timeout_state failed
+PASS scratch            scratch parent moved off-lane -> only scratch failed
+PASS selftest_conjunct  communicate timeout keyword stripped -> only selftest_conjunct failed
+CONFORM_SELFTEST pass=9 fail=2

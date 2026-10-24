@@ -1,0 +1,24 @@
+{
+  "measured_commit": "8d22d18fb4a4124becb35123ca839c93cbae0028",
+  "captured_utc": "2026-10-20T06:40:47.047289+00:00",
+  "argv": [
+    "python3",
+    "tools/mori-round14-regressions.py",
+    "--census",
+    ".ufo/waves/round-14/frozen/mori-census.sh",
+    "--output",
+    ".ufo/waves/round-14/evidence/red-before"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "expected_exit": 1,
+  "exit": 1,
+  "elapsed_s": 0.038829,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round14-regressions.py\", line 2470, in <module>\n    sys.exit(main())\n             ~~~~^^\n  File \"/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round14-regressions.py\", line 2443, in main\n    code = harness.run()\n  File \"/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round14-regressions.py\", line 2147, in run\n    result = self.run_case(sut, case)\n  File \"/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round14-regressions.py\", line 2080, in run_case\n    build_fixture(fixture, case)\n    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^\n  File \"/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round14-regressions.py\", line 1660, in build_fixture\n    build_common(base)\n    ~~~~~~~~~~~~^^^^^^\n  File \"/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round14-regressions.py\", line 631, in build_common\n    \"#!/usr/bin/env bash\\n\"\n    ~~~~~~~~~~~~~~~~~~~~~~~\n    \"printf '%s\\\\n' \\\"$*\\\" >> %r\\n\"\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    \"exit 96\\n\" % str(base / \"journal\" / \"tripwire.log\"),\n    ~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nTypeError: not enough arguments for format string\n",
+  "sha256": {
+    "tools/mori-census.sh": "0e41cb83fce2e8c5c711171e1cde2e6fa2809dcfce630eccabe52bcbe41516d9",
+    "tools/mori-round13-regressions.py": "304cb22336da40c6d465b55f135ec9bb9bf53fdea4656c63c24c37963b6718f2",
+    "tools/mori-round14-regressions.py": "7af94b4ce8651b8ee75b2a334098cb0a52909c2da2aec56d457e24f4a3ca58ac",
+    "tools/mori-silence-cases.sh": "34cd5770889ec6e7521b477aa9976cece7a64e07b83774c12ce2aea73161abfa"
+  }
+}

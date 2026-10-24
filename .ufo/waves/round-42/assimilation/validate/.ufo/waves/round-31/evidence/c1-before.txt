@@ -1,0 +1,5 @@
+$ python3 .ufo/waves/round-31/count-c1.py a12c68ae
+rev=a12c68ae81257fb6f918bb165bcb39c73f82d212
+entry=absent
+C1=unmet
+exit=1

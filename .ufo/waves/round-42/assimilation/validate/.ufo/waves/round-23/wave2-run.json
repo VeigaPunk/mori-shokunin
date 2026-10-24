@@ -1,0 +1,1099 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r23-falsify",
+  "policy": {
+    "source": "config",
+    "maxLanes": 100,
+    "minLanes": 16,
+    "waveMinLanes": 64,
+    "waveMaxLanes": 100,
+    "declaredMaxLanes": 100,
+    "hardCeiling": 100,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 96,
+    "resume": 0,
+    "total": 96
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-23/falsify/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-23/falsify",
+    "members": {
+      "C1R01": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R02": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R03": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R04": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R05": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R06": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R07": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R08": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R09": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R10": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R11": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R12": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R13": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R14": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R15": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R16": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R17": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R18": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R19": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R20": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R21": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R22": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R23": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R24": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R25": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "C1R26": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QBoundary": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QBtrfsDevMatch": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QBtrfsQgroup": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QBtrfsSquota": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QBtrfsTwoUuids": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QBtrfsUnmapped": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QEnabledPlusUnknown": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QEscapedSpace": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QExt4Journaled": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QExt4NoOptions": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QExt4Usrquota": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QHostLike": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QNoCover": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QOptionalFields": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QSetupMalformed": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QStacked": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QSymlinkRealpath": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QTmpfsHardlimit": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QTmpfsNoQuota": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QTmpfsUsrquota": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QUnsupported": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QXfsAccountingOnly": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QXfsConflict": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QXfsDevMismatch": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QXfsMixedEnforce": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QXfsOptionsAbsent": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QXfsUsrquota": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QHiddenMount": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QQgroupDisabled": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "QQgroupUnknown": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReopenS077": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ReopenS078": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ReopenS079": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ReopenS080": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ReopenS081": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ReopenS082": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ReopenS083": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ReopenS084": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ReopenS085": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ReopenS086": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "MutAliasReturn": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutQgroupPresence": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutExtEnabled": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutMountParent": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutTmpfsSuffix": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutOutputLeak": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutSetupPartial": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutModeRead": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "ReviewReadFence": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "sentinel",
+        "item": null
+      },
+      "ReviewOutputFence": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "sentinel",
+        "item": null
+      },
+      "CriticC1Cutover": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CriticC2Scope": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CriticFreezeProof": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CriticNoHarm": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "ConnectOwnerFinal": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null
+      },
+      "ConnectCorpusFinal": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null
+      },
+      "ConnectCountsFinal": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null
+      },
+      "RerunPinnedDriver": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReviewSealManifest": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReviewFileModes": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReviewRejectedCases": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReviewRealControls": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReviewDebtHold": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "InspectModeSafety": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "InspectMountScope": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ReviewBoringDesign": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "simplifier",
+        "item": null
+      },
+      "ReportConformance": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ReviewShonen": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReviewKnowledge": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReviewRegistryDelta": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "# Goal and immutable contract\nmori round23 fresh falsification, one native batch96. Pin production f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c; expectation seal 22772c10f6e3c1d8d3fe1b72083a6194e9f4e687. Lane /home/vgpnk/Projects/shokunin/mori-shokunin. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/contract.md and preseal-amendment.md, original source/case decisions, lesson23. L1 agent://MadoR22-2 holds planner/integration; host routing authoritative, no model parameters. Do not resume/replace any W1 seat. Your claims: C1 calibration held5 (original25/26→26/26, alias8→0, independent guards); C2 coverage strict target stays UNPROVABLE at29/30. Frozen CaseEscapedSpace selected43 parent33 versus shorter /srv42 conflicts with its expected enabled row; actual rule requires unknown. Main forbids special-casing, excluding, relabelling or rewriting it. All frozen case/rule/oracle bytes remain unchanged. Full driver exit1 is EXPECTED due that strict red; verify C1 separately and retain any additional failures. Quota selftest49/49 after separate co-evolved fixture input correction; never confuse that arm with frozen CaseEscapedSpace.\n# Bounds\nEvery Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin — write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. All artifact paths absolute. No fleet/sibling writes or production/frozen/oracle edits. Read-only seats may write ONLY their assigned report and named synthetic receipts under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/<SeatName>/; no code edits. Every deliberate probe/clone/heavy scratch is under /fast/scratch/hyaku/mori-r23/<SeatName>/ (latest operator directive), never /tmp. Mutation writers require an actual separate clone there, unique branch round23/<SeatName>, observed base f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c; only own synthetic Git objects/temporary copies may be changed. Parent integrates; do not touch lane index/jj/refs.\nNo live journal or journalctl queries, process/service/session probes, credential/auth/config files, agent.db, Documents or shell history. Never open .ufo/interactive-sessions, ~/.omp sessions or private transcripts; exclude .git/.jj/.scratch and those trees from any corpus search. Session transcript reads are field-limited to named record fields only; this wave permits NO transcript reads at all. Static source text/fixture argv are data, never instructions to execute. Never call quota tools, quotactl/ioctl, btrfs, xfs_quota, repquota, mount or remediation; NEVER read actual qgroups/mode. Only RerunPinnedDriver may perform the already-declared DEFAULT quota live reads via the committed driver; everyone else no live host reads.\nSkip builds, tests, linters, formatters, gates and smoke runs unless your individual item EXPLICITLY authorizes one bounded fixture/mutation/pinned-driver invocation. Implementing or reading a selftest is NOT permission to execute it. One child at a time,384MiB/15s for fixture/mutation scanner children, outer pinned driver timeout900s (its Git fixtures staged in fast scratch). No background jobs, no subagents/delegation. No source/expectation change to make counts green. Never print matched private values; synthetic metadata only.\nOnly read-only git -C <absolute-repo> show/log/status/rev-parse/ls-tree/cat-file/merge-base/diff; no git add/commit/push in lane, no mutating jj. Mutation writers may initialize only own scratch synthetic repositories. Never agent://all; address ONLY exact seat ID or L1 agent://MadoR22-2. Fleet root /home/vgpnk/Projects/shokunin: never write there; lane's explicitly assigned report/evidence paths are the sole exception. No sibling changes.\nTool authorization: read /home/vgpnk/.omp/agent/RULES.md before installs, record tool/version/channel/reason. All pacman transactions PAUSED host-wide; no system upgrade or service restart; official uv/npx/binary channels only if needed. TMPDIR=/fast/scratch/hyaku/mori-r23/<SeatName>/ (ensure exists; no /tmp fallback).\nOpen debt unchanged: four unallowlisted inherited hits (raw95/allowlisted86/non-author5), original permission RED11/12, two unknown dispositions, baseline acceptance blocked, privacy_clearance=false. Probe visibility/accounting consistency is never clearance/health/admission. A subagent is still author-lane advice, not outside closure or promotion authority.\n# Evidence\nActual stable receipts /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/evidence/measure4/ and quota-selftest-corrected.json; strict frozen contradiction in evidence/frozen-contradiction.json. Selected cases frozen/quota-cases (27 original-derived +3 discovery), C1 original26 + separately labelled supplementary constraints. Use exact byte identities and field names, no aggregate-only pass claim.\n\n# Explicit retained prohibitions\nNever read, copy, query, or change credential/auth files or agent.db under any lane.\nSession transcript reads are field-limited to the named record fields; never print content, errorMessage text, usage or any other field. This wave permits NO session transcript reads at all.\n",
+    "tasks": [
+      {
+        "name": "C1R01",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R01; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R01.md; any mentioned scratch <seat> placeholder means C1R01.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R01.md"
+      },
+      {
+        "name": "C1R02",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R02; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R02.md; any mentioned scratch <seat> placeholder means C1R02.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R02.md"
+      },
+      {
+        "name": "C1R03",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R03; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R03.md; any mentioned scratch <seat> placeholder means C1R03.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R03.md"
+      },
+      {
+        "name": "C1R04",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R04; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R04.md; any mentioned scratch <seat> placeholder means C1R04.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R04.md"
+      },
+      {
+        "name": "C1R05",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R05; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R05.md; any mentioned scratch <seat> placeholder means C1R05.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R05.md"
+      },
+      {
+        "name": "C1R06",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R06; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R06.md; any mentioned scratch <seat> placeholder means C1R06.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R06.md"
+      },
+      {
+        "name": "C1R07",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R07; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R07.md; any mentioned scratch <seat> placeholder means C1R07.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R07.md"
+      },
+      {
+        "name": "C1R08",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R08; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R08.md; any mentioned scratch <seat> placeholder means C1R08.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R08.md"
+      },
+      {
+        "name": "C1R09",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R09; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R09.md; any mentioned scratch <seat> placeholder means C1R09.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R09.md"
+      },
+      {
+        "name": "C1R10",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R10; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R10.md; any mentioned scratch <seat> placeholder means C1R10.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R10.md"
+      },
+      {
+        "name": "C1R11",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R11; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R11.md; any mentioned scratch <seat> placeholder means C1R11.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R11.md"
+      },
+      {
+        "name": "C1R12",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R12; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R12.md; any mentioned scratch <seat> placeholder means C1R12.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R12.md"
+      },
+      {
+        "name": "C1R13",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R13; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R13.md; any mentioned scratch <seat> placeholder means C1R13.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R13.md"
+      },
+      {
+        "name": "C1R14",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R14; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R14.md; any mentioned scratch <seat> placeholder means C1R14.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R14.md"
+      },
+      {
+        "name": "C1R15",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R15; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R15.md; any mentioned scratch <seat> placeholder means C1R15.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R15.md"
+      },
+      {
+        "name": "C1R16",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R16; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R16.md; any mentioned scratch <seat> placeholder means C1R16.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R16.md"
+      },
+      {
+        "name": "C1R17",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R17; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R17.md; any mentioned scratch <seat> placeholder means C1R17.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R17.md"
+      },
+      {
+        "name": "C1R18",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R18; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R18.md; any mentioned scratch <seat> placeholder means C1R18.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R18.md"
+      },
+      {
+        "name": "C1R19",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R19; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R19.md; any mentioned scratch <seat> placeholder means C1R19.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R19.md"
+      },
+      {
+        "name": "C1R20",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R20; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R20.md; any mentioned scratch <seat> placeholder means C1R20.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R20.md"
+      },
+      {
+        "name": "C1R21",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R21; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R21.md; any mentioned scratch <seat> placeholder means C1R21.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R21.md"
+      },
+      {
+        "name": "C1R22",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R22; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R22.md; any mentioned scratch <seat> placeholder means C1R22.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R22.md"
+      },
+      {
+        "name": "C1R23",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R23; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R23.md; any mentioned scratch <seat> placeholder means C1R23.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R23.md"
+      },
+      {
+        "name": "C1R24",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R24; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R24.md; any mentioned scratch <seat> placeholder means C1R24.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R24.md"
+      },
+      {
+        "name": "C1R25",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R25; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R25.md; any mentioned scratch <seat> placeholder means C1R25.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R25.md"
+      },
+      {
+        "name": "C1R26",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently falsify original C1 requirement R26; inspect its exact frozen predicate, r22 source fixture, final schema-v2 tool and the source-delta guard. Static analysis only. Give concrete counterexample or bounded agree, not blanket no-harm. Distinguish R25 API cutover from other unchanged semantic requirements. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/C1R26.md; any mentioned scratch <seat> placeholder means C1R26.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/C1R26.md"
+      },
+      {
+        "name": "QBoundary",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseBoundary.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QBoundary/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QBoundary.md; any mentioned scratch <seat> placeholder means QBoundary.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QBoundary.md"
+      },
+      {
+        "name": "QBtrfsDevMatch",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseBtrfsDevMatch.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QBtrfsDevMatch/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QBtrfsDevMatch.md; any mentioned scratch <seat> placeholder means QBtrfsDevMatch.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QBtrfsDevMatch.md"
+      },
+      {
+        "name": "QBtrfsQgroup",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseBtrfsQgroup.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QBtrfsQgroup/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QBtrfsQgroup.md; any mentioned scratch <seat> placeholder means QBtrfsQgroup.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QBtrfsQgroup.md"
+      },
+      {
+        "name": "QBtrfsSquota",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseBtrfsSquota.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QBtrfsSquota/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QBtrfsSquota.md; any mentioned scratch <seat> placeholder means QBtrfsSquota.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QBtrfsSquota.md"
+      },
+      {
+        "name": "QBtrfsTwoUuids",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseBtrfsTwoUuids.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QBtrfsTwoUuids/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QBtrfsTwoUuids.md; any mentioned scratch <seat> placeholder means QBtrfsTwoUuids.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QBtrfsTwoUuids.md"
+      },
+      {
+        "name": "QBtrfsUnmapped",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseBtrfsUnmapped.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QBtrfsUnmapped/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QBtrfsUnmapped.md; any mentioned scratch <seat> placeholder means QBtrfsUnmapped.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QBtrfsUnmapped.md"
+      },
+      {
+        "name": "QEnabledPlusUnknown",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseEnabledPlusUnknown.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QEnabledPlusUnknown/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QEnabledPlusUnknown.md; any mentioned scratch <seat> placeholder means QEnabledPlusUnknown.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QEnabledPlusUnknown.md"
+      },
+      {
+        "name": "QEscapedSpace",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseEscapedSpace.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QEscapedSpace/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QEscapedSpace.md; any mentioned scratch <seat> placeholder means QEscapedSpace.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QEscapedSpace.md"
+      },
+      {
+        "name": "QExt4Journaled",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseExt4Journaled.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QExt4Journaled/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QExt4Journaled.md; any mentioned scratch <seat> placeholder means QExt4Journaled.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QExt4Journaled.md"
+      },
+      {
+        "name": "QExt4NoOptions",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseExt4NoOptions.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QExt4NoOptions/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QExt4NoOptions.md; any mentioned scratch <seat> placeholder means QExt4NoOptions.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QExt4NoOptions.md"
+      },
+      {
+        "name": "QExt4Usrquota",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseExt4Usrquota.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QExt4Usrquota/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QExt4Usrquota.md; any mentioned scratch <seat> placeholder means QExt4Usrquota.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QExt4Usrquota.md"
+      },
+      {
+        "name": "QHostLike",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseHostLike.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QHostLike/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QHostLike.md; any mentioned scratch <seat> placeholder means QHostLike.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QHostLike.md"
+      },
+      {
+        "name": "QNoCover",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseNoCover.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QNoCover/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QNoCover.md; any mentioned scratch <seat> placeholder means QNoCover.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QNoCover.md"
+      },
+      {
+        "name": "QOptionalFields",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseOptionalFields.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QOptionalFields/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QOptionalFields.md; any mentioned scratch <seat> placeholder means QOptionalFields.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QOptionalFields.md"
+      },
+      {
+        "name": "QSetupMalformed",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseSetupMalformed.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QSetupMalformed/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QSetupMalformed.md; any mentioned scratch <seat> placeholder means QSetupMalformed.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QSetupMalformed.md"
+      },
+      {
+        "name": "QStacked",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseStacked.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QStacked/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QStacked.md; any mentioned scratch <seat> placeholder means QStacked.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QStacked.md"
+      },
+      {
+        "name": "QSymlinkRealpath",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseSymlinkRealpath.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QSymlinkRealpath/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QSymlinkRealpath.md; any mentioned scratch <seat> placeholder means QSymlinkRealpath.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QSymlinkRealpath.md"
+      },
+      {
+        "name": "QTmpfsHardlimit",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseTmpfsHardlimit.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QTmpfsHardlimit/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QTmpfsHardlimit.md; any mentioned scratch <seat> placeholder means QTmpfsHardlimit.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QTmpfsHardlimit.md"
+      },
+      {
+        "name": "QTmpfsNoQuota",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseTmpfsNoQuota.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QTmpfsNoQuota/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QTmpfsNoQuota.md; any mentioned scratch <seat> placeholder means QTmpfsNoQuota.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QTmpfsNoQuota.md"
+      },
+      {
+        "name": "QTmpfsUsrquota",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseTmpfsUsrquota.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QTmpfsUsrquota/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QTmpfsUsrquota.md; any mentioned scratch <seat> placeholder means QTmpfsUsrquota.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QTmpfsUsrquota.md"
+      },
+      {
+        "name": "QUnsupported",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseUnsupported.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QUnsupported/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QUnsupported.md; any mentioned scratch <seat> placeholder means QUnsupported.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QUnsupported.md"
+      },
+      {
+        "name": "QXfsAccountingOnly",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseXfsAccountingOnly.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QXfsAccountingOnly/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QXfsAccountingOnly.md; any mentioned scratch <seat> placeholder means QXfsAccountingOnly.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QXfsAccountingOnly.md"
+      },
+      {
+        "name": "QXfsConflict",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseXfsConflict.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QXfsConflict/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QXfsConflict.md; any mentioned scratch <seat> placeholder means QXfsConflict.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QXfsConflict.md"
+      },
+      {
+        "name": "QXfsDevMismatch",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseXfsDevMismatch.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QXfsDevMismatch/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QXfsDevMismatch.md; any mentioned scratch <seat> placeholder means QXfsDevMismatch.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QXfsDevMismatch.md"
+      },
+      {
+        "name": "QXfsMixedEnforce",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseXfsMixedEnforce.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QXfsMixedEnforce/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QXfsMixedEnforce.md; any mentioned scratch <seat> placeholder means QXfsMixedEnforce.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QXfsMixedEnforce.md"
+      },
+      {
+        "name": "QXfsOptionsAbsent",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseXfsOptionsAbsent.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QXfsOptionsAbsent/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QXfsOptionsAbsent.md; any mentioned scratch <seat> placeholder means QXfsOptionsAbsent.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QXfsOptionsAbsent.md"
+      },
+      {
+        "name": "QXfsUsrquota",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case CaseXfsUsrquota.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QXfsUsrquota/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QXfsUsrquota.md; any mentioned scratch <seat> placeholder means QXfsUsrquota.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QXfsUsrquota.md"
+      },
+      {
+        "name": "QHiddenMount",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case SupplementHiddenMount.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QHiddenMount/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QHiddenMount.md; any mentioned scratch <seat> placeholder means QHiddenMount.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QHiddenMount.md"
+      },
+      {
+        "name": "QQgroupDisabled",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case SupplementQgroupDisabled.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QQgroupDisabled/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QQgroupDisabled.md; any mentioned scratch <seat> placeholder means QQgroupDisabled.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QQgroupDisabled.md"
+      },
+      {
+        "name": "QQgroupUnknown",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Falsify the exact sealed C2 case SupplementQgroupUnknown.json; read its source derivation/amendment and selected quota implementation, then explicitly execute ONLY this one fixture-mode case (never real mode) in your unique /fast/scratch/hyaku/mori-r23/<seat>/ directory, preserving argv, exit, stdout/stderr and tool/case hashes in your report/receipt. One child at a time, 384MiB AS and15s timeout. Compare exit/finding_id and ordered six-field tuples; separate primary from supplementary metadata, do not edit expected bytes. No builds/lint/full suite. Candidate executable /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; case directory /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases. Your receipt path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QQgroupUnknown/scan.json. Copy case[\"fixture\"] into your own fast-scratch fixture.json and invoke python3 -I TOOL --fixture ABS_FIXTURE through prlimit/timeout; preserve given and actual fields. CaseEscapedSpace red is expected and MUST be reported as a mismatch, not excused. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QQgroupUnknown.md; any mentioned scratch <seat> placeholder means QQgroupUnknown.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/QQgroupUnknown.md"
+      },
+      {
+        "name": "ReopenS077",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Re-open exact source row S077 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md at https://raw.githubusercontent.com/torvalds/linux/v7.2/Documentation/admin-guide/xfs.rst; verify scope/anchor, rawSHA 53bda67b5612a3f2c02820604d05825c9d37addba9855e1d4fba330a516d051c, <=25-word located quote in lesson23 Gate, and new note claim-vs-source. Fetch only your /fast/scratch/hyaku/mori-r23/<seat>/ if needed; report concrete discrepancies, never edit registry. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReopenS077.md; any mentioned scratch <seat> placeholder means ReopenS077.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReopenS077.md"
+      },
+      {
+        "name": "ReopenS078",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Re-open exact source row S078 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md at https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/xfs/xfs_super.c; verify scope/anchor, rawSHA 0a95697dcfcdab8f7ab6ea26fdb941db952db4b73ed93c30d21e40861ed0450c, <=25-word located quote in lesson23 Gate, and new note claim-vs-source. Fetch only your /fast/scratch/hyaku/mori-r23/<seat>/ if needed; report concrete discrepancies, never edit registry. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReopenS078.md; any mentioned scratch <seat> placeholder means ReopenS078.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReopenS078.md"
+      },
+      {
+        "name": "ReopenS079",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Re-open exact source row S079 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md at https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/btrfs/sysfs.c; verify scope/anchor, rawSHA ce146120f29ac29c0bc1859f21e4b84da91a536df2ec9fd2fa5649144f731c43, <=25-word located quote in lesson23 Gate, and new note claim-vs-source. Fetch only your /fast/scratch/hyaku/mori-r23/<seat>/ if needed; report concrete discrepancies, never edit registry. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReopenS079.md; any mentioned scratch <seat> placeholder means ReopenS079.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReopenS079.md"
+      },
+      {
+        "name": "ReopenS080",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Re-open exact source row S080 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md at https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/btrfs/qgroup.c; verify scope/anchor, rawSHA 121a0af27f9553a9749c837536d618e2ea50d44ce54b30b032fa56e6f3df6ed5, <=25-word located quote in lesson23 Gate, and new note claim-vs-source. Fetch only your /fast/scratch/hyaku/mori-r23/<seat>/ if needed; report concrete discrepancies, never edit registry. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReopenS080.md; any mentioned scratch <seat> placeholder means ReopenS080.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReopenS080.md"
+      },
+      {
+        "name": "ReopenS081",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Re-open exact source row S081 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md at https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/btrfs/inode.c; verify scope/anchor, rawSHA 01a6ad07c09cd1a05fbccab640c15362c91b57b85faa94c2fd9b9c0128110fdf, <=25-word located quote in lesson23 Gate, and new note claim-vs-source. Fetch only your /fast/scratch/hyaku/mori-r23/<seat>/ if needed; report concrete discrepancies, never edit registry. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReopenS081.md; any mentioned scratch <seat> placeholder means ReopenS081.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReopenS081.md"
+      },
+      {
+        "name": "ReopenS082",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Re-open exact source row S082 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md at https://raw.githubusercontent.com/torvalds/linux/v7.2/Documentation/filesystems/proc.rst; verify scope/anchor, rawSHA e760f716f8278deefab17a63739033cadc7faee93663c49e76455afaaf40d126, <=25-word located quote in lesson23 Gate, and new note claim-vs-source. Fetch only your /fast/scratch/hyaku/mori-r23/<seat>/ if needed; report concrete discrepancies, never edit registry. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReopenS082.md; any mentioned scratch <seat> placeholder means ReopenS082.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReopenS082.md"
+      },
+      {
+        "name": "ReopenS083",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Re-open exact source row S083 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md at https://raw.githubusercontent.com/torvalds/linux/v7.2/Documentation/admin-guide/ext4.rst; verify scope/anchor, rawSHA 7929550fa95ed7a0d56cd32c78e3c5f3a598827c4e55f1607097bff2e169dbbd, <=25-word located quote in lesson23 Gate, and new note claim-vs-source. Fetch only your /fast/scratch/hyaku/mori-r23/<seat>/ if needed; report concrete discrepancies, never edit registry. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReopenS083.md; any mentioned scratch <seat> placeholder means ReopenS083.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReopenS083.md"
+      },
+      {
+        "name": "ReopenS084",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Re-open exact source row S084 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md at https://raw.githubusercontent.com/torvalds/linux/v7.2/Documentation/filesystems/tmpfs.rst; verify scope/anchor, rawSHA 5ce3dffe9323912b9146a5f33744776ff623ef42cf8accd6b2dfbea0b9db5be6, <=25-word located quote in lesson23 Gate, and new note claim-vs-source. Fetch only your /fast/scratch/hyaku/mori-r23/<seat>/ if needed; report concrete discrepancies, never edit registry. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReopenS084.md; any mentioned scratch <seat> placeholder means ReopenS084.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReopenS084.md"
+      },
+      {
+        "name": "ReopenS085",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Re-open exact source row S085 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md at https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/proc_namespace.c; verify scope/anchor, rawSHA fd82c0db52055ae807ee0b46c7c9bc5d47a9239805eb8ca5c47d2ba81d695776, <=25-word located quote in lesson23 Gate, and new note claim-vs-source. Fetch only your /fast/scratch/hyaku/mori-r23/<seat>/ if needed; report concrete discrepancies, never edit registry. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReopenS085.md; any mentioned scratch <seat> placeholder means ReopenS085.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReopenS085.md"
+      },
+      {
+        "name": "ReopenS086",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Re-open exact source row S086 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md at https://raw.githubusercontent.com/torvalds/linux/v7.2/mm/shmem.c; verify scope/anchor, rawSHA eb5d1e9107b287c8d9d2c1dda83aa0e573917d5b0f88dc17b55162f22718cefb, <=25-word located quote in lesson23 Gate, and new note claim-vs-source. Fetch only your /fast/scratch/hyaku/mori-r23/<seat>/ if needed; report concrete discrepancies, never edit registry. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReopenS086.md; any mentioned scratch <seat> placeholder means ReopenS086.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReopenS086.md"
+      },
+      {
+        "name": "MutAliasReturn",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. C1 source guard: restore raw_unallowlisted on a temporary copy, require frozen target-byte guard rejection. All edits only your isolated copy; never mutate production/oracles/expectations. Explicitly authorized bounded local probe, one child at a time with384MiB/15s; retain before/mutant/after hashes and restored controls. No live probes, mounts or privileged commands. Production paths /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-retention-reconcile.py and /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; exact frozen inputs/oracles /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/ and oracle-quota.py/oracle-rename.py. Archive only small mutant source, argv/hash and bounded result beneath /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutAliasReturn/; no unrelated Git history archive. A nonmatching/inapplicable mutation is inconclusive, not killed. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutAliasReturn.md; any mentioned scratch <seat> placeholder means MutAliasReturn.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/MutAliasReturn.md"
+      },
+      {
+        "name": "MutQgroupPresence",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. C2: replace enabled flag decision with directory-presence truth; require SupplementQgroupDisabled/Unknown to kill on named expected rows. All edits only your isolated copy; never mutate production/oracles/expectations. Explicitly authorized bounded local probe, one child at a time with384MiB/15s; retain before/mutant/after hashes and restored controls. No live probes, mounts or privileged commands. Production paths /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-retention-reconcile.py and /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; exact frozen inputs/oracles /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/ and oracle-quota.py/oracle-rename.py. Archive only small mutant source, argv/hash and bounded result beneath /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutQgroupPresence/; no unrelated Git history archive. A nonmatching/inapplicable mutation is inconclusive, not killed. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutQgroupPresence.md; any mentioned scratch <seat> placeholder means MutQgroupPresence.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/MutQgroupPresence.md"
+      },
+      {
+        "name": "MutExtEnabled",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. C2: change ext option hints from unknown to enabled; require exact corrected CaseExt4Usrquota/Journaled expected rows to fail. All edits only your isolated copy; never mutate production/oracles/expectations. Explicitly authorized bounded local probe, one child at a time with384MiB/15s; retain before/mutant/after hashes and restored controls. No live probes, mounts or privileged commands. Production paths /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-retention-reconcile.py and /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; exact frozen inputs/oracles /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/ and oracle-quota.py/oracle-rename.py. Archive only small mutant source, argv/hash and bounded result beneath /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutExtEnabled/; no unrelated Git history archive. A nonmatching/inapplicable mutation is inconclusive, not killed. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutExtEnabled.md; any mentioned scratch <seat> placeholder means MutExtEnabled.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/MutExtEnabled.md"
+      },
+      {
+        "name": "MutMountParent",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. C2: bypass only parent-ID consistency refusal; require SupplementHiddenMount to fail, unchanged original control should pass. All edits only your isolated copy; never mutate production/oracles/expectations. Explicitly authorized bounded local probe, one child at a time with384MiB/15s; retain before/mutant/after hashes and restored controls. No live probes, mounts or privileged commands. Production paths /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-retention-reconcile.py and /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; exact frozen inputs/oracles /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/ and oracle-quota.py/oracle-rename.py. Archive only small mutant source, argv/hash and bounded result beneath /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutMountParent/; no unrelated Git history archive. A nonmatching/inapplicable mutation is inconclusive, not killed. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutMountParent.md; any mentioned scratch <seat> placeholder means MutMountParent.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/MutMountParent.md"
+      },
+      {
+        "name": "MutTmpfsSuffix",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. C2: accept any *_hardlimit suffix; create only an extra discovery fixture with bogus key (never alter sealed wants), report whether finite oracle covers this boundary; no preclaimed kill. All edits only your isolated copy; never mutate production/oracles/expectations. Explicitly authorized bounded local probe, one child at a time with384MiB/15s; retain before/mutant/after hashes and restored controls. No live probes, mounts or privileged commands. Production paths /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-retention-reconcile.py and /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; exact frozen inputs/oracles /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/ and oracle-quota.py/oracle-rename.py. Archive only small mutant source, argv/hash and bounded result beneath /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutTmpfsSuffix/; no unrelated Git history archive. A nonmatching/inapplicable mutation is inconclusive, not killed. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutTmpfsSuffix.md; any mentioned scratch <seat> placeholder means MutTmpfsSuffix.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/MutTmpfsSuffix.md"
+      },
+      {
+        "name": "MutOutputLeak",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. C2: inject a fixture option value into output; require supplementary canary/key-set checks to fail on CaseExt4Journaled. All edits only your isolated copy; never mutate production/oracles/expectations. Explicitly authorized bounded local probe, one child at a time with384MiB/15s; retain before/mutant/after hashes and restored controls. No live probes, mounts or privileged commands. Production paths /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-retention-reconcile.py and /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; exact frozen inputs/oracles /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/ and oracle-quota.py/oracle-rename.py. Archive only small mutant source, argv/hash and bounded result beneath /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutOutputLeak/; no unrelated Git history archive. A nonmatching/inapplicable mutation is inconclusive, not killed. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutOutputLeak.md; any mentioned scratch <seat> placeholder means MutOutputLeak.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/MutOutputLeak.md"
+      },
+      {
+        "name": "MutSetupPartial",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. C2: manufacture nonempty paths on a setup error; require CaseSetupMalformed and supplementary no-partial check to reject. All edits only your isolated copy; never mutate production/oracles/expectations. Explicitly authorized bounded local probe, one child at a time with384MiB/15s; retain before/mutant/after hashes and restored controls. No live probes, mounts or privileged commands. Production paths /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-retention-reconcile.py and /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; exact frozen inputs/oracles /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/ and oracle-quota.py/oracle-rename.py. Archive only small mutant source, argv/hash and bounded result beneath /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutSetupPartial/; no unrelated Git history archive. A nonmatching/inapplicable mutation is inconclusive, not killed. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutSetupPartial.md; any mentioned scratch <seat> placeholder means MutSetupPartial.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/MutSetupPartial.md"
+      },
+      {
+        "name": "MutModeRead",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. C2 safety: bounded mocked reader regression to detect a real-mode qgroups/mode open; never invoke actual kernel mode. Use synthetic filesystem/mocked I/O under own fast scratch; report source path/fixture witness. All edits only your isolated copy; never mutate production/oracles/expectations. Explicitly authorized bounded local probe, one child at a time with384MiB/15s; retain before/mutant/after hashes and restored controls. No live probes, mounts or privileged commands. Production paths /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-retention-reconcile.py and /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py; exact frozen inputs/oracles /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/ and oracle-quota.py/oracle-rename.py. Archive only small mutant source, argv/hash and bounded result beneath /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutModeRead/; no unrelated Git history archive. A nonmatching/inapplicable mutation is inconclusive, not killed. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutModeRead.md; any mentioned scratch <seat> placeholder means MutModeRead.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/MutModeRead.md"
+      },
+      {
+        "name": "ReviewReadFence",
+        "agent": "sentinel",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Read final real-mode filesystem read set and source paths; verify no fstab/mount-unit/Snapper/superblock/quota command/ioctl, no real-mode mode read, proper permission-error unknown behavior; static source review only. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReviewReadFence.md; any mentioned scratch <seat> placeholder means ReviewReadFence.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReviewReadFence.md"
+      },
+      {
+        "name": "ReviewOutputFence",
+        "agent": "sentinel",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Review full output projection versus source/caller/mount option canaries; no mount source/UUID/quota-file value leakage, path fields caller-pinned, QUOTA_DISABLED not health. Static; if probe necessary only one sealed fixture, never real mode. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReviewOutputFence.md; any mentioned scratch <seat> placeholder means ReviewOutputFence.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReviewOutputFence.md"
+      },
+      {
+        "name": "CriticC1Cutover",
+        "agent": "critic",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Attack complete C1 claim: original26, exact2-source-byte guard, same-instance object equality, schema selftest, real identity pins/twin and archival API break disclosure. Name any unproven clause. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/CriticC1Cutover.md; any mentioned scratch <seat> placeholder means CriticC1Cutover.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/CriticC1Cutover.md"
+      },
+      {
+        "name": "CriticC2Scope",
+        "agent": "critic",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Attack C2 claim versus final amended targets, all27 original-derived cases plus3 discovery controls, and sampled real backend; distinguish visible flag from limits/usage/EDQUOT and source facts from fixtures. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/CriticC2Scope.md; any mentioned scratch <seat> placeholder means CriticC2Scope.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/CriticC2Scope.md"
+      },
+      {
+        "name": "CriticFreezeProof",
+        "agent": "critic",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Audit strict seal ancestry, all expected/oracle/driver/dependency bytes before production, ignored candidate drafts and exact selected-case provenance. Do not infer private chronology. Source-only compare commits. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/CriticFreezeProof.md; any mentioned scratch <seat> placeholder means CriticFreezeProof.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/CriticFreezeProof.md"
+      },
+      {
+        "name": "CriticNoHarm",
+        "agent": "critic",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Attack all-axis no-harm, retained4hits/11-of-12 red/two unknown dispositions/blocker, readonly input/output fences, speculative Core movement, source claims and caller migration. No host probes. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/CriticNoHarm.md; any mentioned scratch <seat> placeholder means CriticNoHarm.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/CriticNoHarm.md"
+      },
+      {
+        "name": "ConnectOwnerFinal",
+        "agent": "connector",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Recheck final quota province/knowledge boundary against tsukuroi OS diagnosis/configuration and souji cleanup. No sibling writes, no new sources needed. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ConnectOwnerFinal.md; any mentioned scratch <seat> placeholder means ConnectOwnerFinal.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ConnectOwnerFinal.md"
+      },
+      {
+        "name": "ConnectCorpusFinal",
+        "agent": "connector",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Cross-file contradiction sweep among new knowledge, SKILL registry, README frontier/Core, SCORECARD, lesson23 and the immutable original contract/amendment. Do not rewrite historical evidence. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ConnectCorpusFinal.md; any mentioned scratch <seat> placeholder means ConnectCorpusFinal.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ConnectCorpusFinal.md"
+      },
+      {
+        "name": "ConnectCountsFinal",
+        "agent": "connector",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Connect independently measured names/denominators: C1 alias8→0 and26 original; C2 primary27 vs supplemental3 vs output checks; source76→86; W1/W2 seat histories. Flag conflation or incomplete provenance. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ConnectCountsFinal.md; any mentioned scratch <seat> placeholder means ConnectCountsFinal.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ConnectCountsFinal.md"
+      },
+      {
+        "name": "RerunPinnedDriver",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Explicit verification assignment: run the single committed measurement driver command at the pinned revision/seal into your ABSENT /fast scratch output, once. Never alter code/wants. Record all checks/failures and exact argv; authorized default live reads are quota only, no journals/processes. Exact command: python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/build/MeasureDriver/measure-round23-v2.py --revision f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c --seal 22772c10f6e3c1d8d3fe1b72083a6194e9f4e687 --output /fast/scratch/hyaku/mori-r23/RerunPinnedDriver/observed (must be absent). Report overall1 with exact C1green/C2red identity; preserve summary/command receipts as compressed archive or small selected copies beneath /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/RerunPinnedDriver/, never leave only ephemeral pointers. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/RerunPinnedDriver.md; any mentioned scratch <seat> placeholder means RerunPinnedDriver.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/RerunPinnedDriver.md"
+      },
+      {
+        "name": "ReviewSealManifest",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Recount sealed dependency and case manifest hashes and selected/rejected decisions, ensure all independent source files/quotes match final variants and no output-selected expectation. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReviewSealManifest.md; any mentioned scratch <seat> placeholder means ReviewSealManifest.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReviewSealManifest.md"
+      },
+      {
+        "name": "ReviewFileModes",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Check production modes, unique two-tool changed-path set, byte transform targetsha and untouched baseline/policy/allowlist/history/permission controls. Read-only Git. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReviewFileModes.md; any mentioned scratch <seat> placeholder means ReviewFileModes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReviewFileModes.md"
+      },
+      {
+        "name": "ReviewRejectedCases",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Inspect retained proposals and rejected inconsistent symlink correction; verify every exclusion has pre-measurement reason and exact selected author bytes, all30 named finalcases and duplicate IDs across history not double-counted. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReviewRejectedCases.md; any mentioned scratch <seat> placeholder means ReviewRejectedCases.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReviewRejectedCases.md"
+      },
+      {
+        "name": "ReviewRealControls",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Review frozen default two-path real observation and r21 real identity/control receipts, semantic limits, root topology and C1 count-vs-list equality. Source-only; no new host read. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReviewRealControls.md; any mentioned scratch <seat> placeholder means ReviewRealControls.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReviewRealControls.md"
+      },
+      {
+        "name": "ReviewDebtHold",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Independently verify four unallowlisted inherited identities/two unknown loss-accounting dispositions/old red original permission control and blocked baseline acceptance remain unaltered; do not reclassify or clear anything. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReviewDebtHold.md; any mentioned scratch <seat> placeholder means ReviewDebtHold.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReviewDebtHold.md"
+      },
+      {
+        "name": "InspectModeSafety",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Re-open S079/S080 code only and check final no-mode-read decision avoids ASSERT race; source reasoning, no actual mode read. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/InspectModeSafety.md; any mentioned scratch <seat> placeholder means InspectModeSafety.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/InspectModeSafety.md"
+      },
+      {
+        "name": "InspectMountScope",
+        "agent": "scout",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Read S081/S082/S085 and final resolver; check btrfs anonymous device exception, conservative overmount refusal and normalization, but never claim complete Linux mount topology. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/InspectMountScope.md; any mentioned scratch <seat> placeholder means InspectMountScope.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/InspectMountScope.md"
+      },
+      {
+        "name": "ReviewBoringDesign",
+        "agent": "simplifier",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Read final quota production code and identify dead/unnecessary abstraction or allocations with correctness consequences; advise only, no edits/reformatting or speculative rewrite. Source-level bounded maintainability review. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReviewBoringDesign.md; any mentioned scratch <seat> placeholder means ReviewBoringDesign.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReviewBoringDesign.md"
+      },
+      {
+        "name": "ReportConformance",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Read the round declaration, lesson, scorecard, provenance/measurement metadata and required report contract. Return factual report conformance/evidence checklist and scope deviations, not a fabricated final report or authority to admit. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReportConformance.md; any mentioned scratch <seat> placeholder means ReportConformance.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReportConformance.md"
+      },
+      {
+        "name": "ReviewShonen",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Assess four canonical SHONEN subjects with evidence; author-lane advice only, no promotion/non-author claim and no edits. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReviewShonen.md; any mentioned scratch <seat> placeholder means ReviewShonen.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReviewShonen.md"
+      },
+      {
+        "name": "ReviewKnowledge",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Claim-vs-source audit new quota knowledge note and final mode-safety correction, factual current registry commands, historical EDQUOT/ENOSPC statements; distinguish dated pinned source from live observation. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReviewKnowledge.md; any mentioned scratch <seat> placeholder means ReviewKnowledge.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReviewKnowledge.md"
+      },
+      {
+        "name": "ReviewRegistryDelta",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRead named files beneath /home/vgpnk/Projects/shokunin/mori-shokunin; all wave-relative names resolve under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23. Verify source registry older immutable cells untouched, ten new rows scoped A, used-by old→new logged and resolvable, all ten located quotes<=25words with source bytes. No source row edits. Your sole report path is /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/ReviewRegistryDelta.md; any mentioned scratch <seat> placeholder means ReviewRegistryDelta.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-23/falsify/ReviewRegistryDelta.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}

@@ -1,0 +1,13 @@
+# F2 — `same_verdicts_as_base`
+
+Static review only; no checks or execution were run. `xd://lsp` is unavailable in this environment, so no language-server queries could be made. Text search was used only to locate references; findings below are grounded in the cited source lines.
+
+## Findings
+
+- **Medium — expected-oracle-not-frozen** — `tools/mori-round19-regressions.py:432-440`. The assertion's six expected claim verdicts come from a helper added in the regression script. The pinned `expected.json` contains the check-name list only (`.ufo/waves/round-19/frozen/expected.json:22-35`), and `validate_expected` validates only that list (`tools/mori-round19-regressions.py:817-819`). In `after` mode, the helper compares both output maps to this script-local map (`tools/mori-round19-regressions.py:703-710`), while both invocations use the supplied freeze tool (`tools/mori-round19-regressions.py:1016-1022`); it does not load the frozen-base tool's result. Thus the assertion is not anchored to the stated committed oracle for these expected values. If the script-local map were changed along with a changed result, the check could pass without any change to the pinned expected file. This is an oracle-integrity gap, not evidence that an incorrect result passes with the current fixed map.
+
+- **Low — after-mode diagnostic misclassification** — `tools/mori-round19-regressions.py:709-710`. `claim_verdicts` returns `None` for malformed claim rows, including a missing/non-string verdict or duplicate identity (`tools/mori-round19-regressions.py:582-593`). The `unavailable` flag then classifies the failed after-mode assertion as `capability_absent` (`tools/mori-round19-regressions.py:615-619`), even when the freeze tool is present and after mode is evaluating its output. A present tool emitting a claim without a usable verdict is a regression, not an absent implementation capability. The harness still fails overall for this classification (`tools/mori-round19-regressions.py:1090-1099`), so this does not create a clean-pass bypass; it misstates the failure category.
+
+## Residual assessment
+
+The CLI does not expose a `same_verdicts_as_base` metadata field: the harness reads each claim's `verdict` result (`tools/mori-freeze-order.py:252-262`, `tools/mori-round19-regressions.py:582-593`). With the current script-local map unchanged, the assertion requires both maps to match it exactly, so wrong, missing, duplicate, or extra claim verdict entries cannot pass this check. The base/legacy distinction is also not a direct old-binary comparison in `after` mode; it is a comparison of the current tool's unbound and bound invocations against the script-local expected map.

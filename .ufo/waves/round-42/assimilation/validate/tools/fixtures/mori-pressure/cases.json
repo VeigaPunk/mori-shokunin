@@ -1,0 +1,391 @@
+{
+  "schema": "mori-pressure-cases-v1",
+  "cases": [
+    {
+      "id": "P01",
+      "topic": "four normal low pressure files (cpu, memory, io, irq) parse clean; every avg10, avg60, avg300 and total is pairwise distinct so a field swap cannot survive, and no value reaches the local avg10 threshold",
+      "args": [],
+      "snapshots": [
+        {
+          "files": {
+            "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+            "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+            "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+            "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+          },
+          "errors": {}
+        }
+      ],
+      "expect": {
+        "exit": 0,
+        "verdict": "PRESSURE_OK",
+        "resources": {
+          "cpu": {
+            "state": "ok",
+            "full_system_undefined": true,
+            "some": {"avg10": 1.23, "avg60": 0.45, "avg300": 0.12, "total": 98765},
+            "full": {"avg10": 0.0, "avg60": 0.0, "avg300": 0.0, "total": 0}
+          },
+          "memory": {
+            "state": "ok",
+            "some": {"avg10": 2.34, "avg60": 1.56, "avg300": 0.78, "total": 456789},
+            "full": {"avg10": 1.11, "avg60": 0.66, "avg300": 0.22, "total": 334455}
+          },
+          "io": {
+            "state": "ok",
+            "some": {"avg10": 3.21, "avg60": 2.43, "avg300": 1.09, "total": 654321},
+            "full": {"avg10": 0.98, "avg60": 0.87, "avg300": 0.54, "total": 223344}
+          },
+          "irq": {
+            "state": "ok",
+            "full": {"avg10": 0.31, "avg60": 0.29, "avg300": 0.27, "total": 111222}
+          }
+        },
+        "findings_include": []
+      }
+    },
+    {
+      "id": "P02",
+      "topic": "system cpu full carries a nonzero value; it is reported but labelled full_system_undefined and is never used for a threshold, so the verdict stays PRESSURE_OK",
+      "args": [],
+      "snapshots": [
+        {
+          "files": {
+            "cpu": "some avg10=0.53 avg60=0.47 avg300=0.41 total=778899\nfull avg10=40.00 avg60=12.00 avg300=3.00 total=987654\n",
+            "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+            "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+            "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+          },
+          "errors": {}
+        }
+      ],
+      "expect": {
+        "exit": 0,
+        "verdict": "PRESSURE_OK",
+        "resources": {
+          "cpu": {
+            "state": "ok",
+            "full_system_undefined": true,
+            "some": {"avg10": 0.53, "avg60": 0.47, "avg300": 0.41, "total": 778899},
+            "full": {"avg10": 40.0, "avg60": 12.0, "avg300": 3.0, "total": 987654}
+          },
+          "memory": {"state": "ok"},
+          "io": {"state": "ok"},
+          "irq": {"state": "ok"}
+        },
+        "findings_include": []
+      }
+    },
+    {
+      "id": "P03",
+      "topic": "irq carries only a full line; irq is not malformed for the missing some line, some stays null",
+      "args": [],
+      "snapshots": [
+        {
+          "files": {
+            "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+            "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+            "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+            "irq": "full avg10=0.05 avg60=0.02 avg300=0.01 total=1234\n"
+          },
+          "errors": {}
+        }
+      ],
+      "expect": {
+        "exit": 0,
+        "verdict": "PRESSURE_OK",
+        "resources": {
+          "cpu": {"state": "ok"},
+          "memory": {"state": "ok"},
+          "io": {"state": "ok"},
+          "irq": {
+            "state": "ok",
+            "some": null,
+            "full": {"avg10": 0.05, "avg60": 0.02, "avg300": 0.01, "total": 1234}
+          }
+        },
+        "findings_include": []
+      }
+    },
+    {
+      "id": "P04",
+      "topic": "irq file is absent (ENOENT); irq is absent, never zero, and one unavailable resource leaves the verdict PRESSURE_PARTIAL with exit 0",
+      "args": [],
+      "snapshots": [
+        {
+          "files": {
+            "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+            "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+            "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n"
+          },
+          "errors": {}
+        }
+      ],
+      "expect": {
+        "exit": 0,
+        "verdict": "PRESSURE_PARTIAL",
+        "resources": {
+          "cpu": {"state": "ok"},
+          "memory": {"state": "ok"},
+          "io": {"state": "ok"},
+          "irq": {"state": "absent", "some": null, "full": null}
+        },
+        "findings_include": []
+      }
+    },
+    {
+      "id": "P05",
+      "topic": "every resource open fails with EOPNOTSUPP (PSI disabled); all four are unsupported, the verdict is PRESSURE_UNAVAILABLE and the exit is 2",
+      "args": [],
+      "snapshots": [
+        {
+          "files": {},
+          "errors": {
+            "cpu": "EOPNOTSUPP",
+            "memory": "EOPNOTSUPP",
+            "io": "EOPNOTSUPP",
+            "irq": "EOPNOTSUPP"
+          }
+        }
+      ],
+      "expect": {
+        "exit": 2,
+        "verdict": "PRESSURE_UNAVAILABLE",
+        "resources": {
+          "cpu": {"state": "unsupported", "some": null, "full": null},
+          "memory": {"state": "unsupported", "some": null, "full": null},
+          "io": {"state": "unsupported", "some": null, "full": null},
+          "irq": {"state": "unsupported", "some": null, "full": null}
+        },
+        "findings_include": []
+      }
+    },
+    {
+      "id": "P06",
+      "topic": "memory some avg10 is 25.00, at or above the local default threshold 10.0; PRESSURE_HIGH on memory and exit 1",
+      "args": [],
+      "snapshots": [
+        {
+          "files": {
+            "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+            "memory": "some avg10=25.00 avg60=12.50 avg300=3.25 total=987654\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+            "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+            "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+          },
+          "errors": {}
+        }
+      ],
+      "expect": {
+        "exit": 1,
+        "verdict": "PRESSURE_HIGH",
+        "resources": {
+          "cpu": {"state": "ok"},
+          "memory": {
+            "state": "ok",
+            "some": {"avg10": 25.0, "avg60": 12.5, "avg300": 3.25, "total": 987654},
+            "full": {"avg10": 1.11, "avg60": 0.66, "avg300": 0.22, "total": 334455}
+          },
+          "io": {"state": "ok"},
+          "irq": {"state": "ok"}
+        },
+        "findings_include": [["PRESSURE_HIGH", "memory"]]
+      }
+    },
+    {
+      "id": "P07",
+      "topic": "irq full avg10 is 15.00, at or above the local default threshold 10.0; PRESSURE_HIGH on irq and exit 1",
+      "args": [],
+      "snapshots": [
+        {
+          "files": {
+            "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+            "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+            "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+            "irq": "full avg10=15.00 avg60=5.00 avg300=1.00 total=12345\n"
+          },
+          "errors": {}
+        }
+      ],
+      "expect": {
+        "exit": 1,
+        "verdict": "PRESSURE_HIGH",
+        "resources": {
+          "cpu": {"state": "ok"},
+          "memory": {"state": "ok"},
+          "io": {"state": "ok"},
+          "irq": {
+            "state": "ok",
+            "some": null,
+            "full": {"avg10": 15.0, "avg60": 5.0, "avg300": 1.0, "total": 12345}
+          }
+        },
+        "findings_include": [["PRESSURE_HIGH", "irq"]]
+      }
+    },
+    {
+      "id": "P08",
+      "topic": "io some carries a non-decimal avg10; io is malformed, the verdict is PRESSURE_PARTIAL and the exit is 0",
+      "args": [],
+      "snapshots": [
+        {
+          "files": {
+            "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+            "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+            "io": "some avg10=abc avg60=0.00 avg300=0.00 total=0\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+            "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+          },
+          "errors": {}
+        }
+      ],
+      "expect": {
+        "exit": 0,
+        "verdict": "PRESSURE_PARTIAL",
+        "resources": {
+          "cpu": {"state": "ok"},
+          "memory": {"state": "ok"},
+          "io": {"state": "malformed"},
+          "irq": {"state": "ok"}
+        },
+        "findings_include": []
+      }
+    },
+    {
+      "id": "P09",
+      "topic": "memory carries only a some line; the required full kind is missing, so memory is malformed, the verdict is PRESSURE_PARTIAL and the exit is 0",
+      "args": [],
+      "snapshots": [
+        {
+          "files": {
+            "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+            "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\n",
+            "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+            "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+          },
+          "errors": {}
+        }
+      ],
+      "expect": {
+        "exit": 0,
+        "verdict": "PRESSURE_PARTIAL",
+        "resources": {
+          "cpu": {"state": "ok"},
+          "memory": {"state": "malformed"},
+          "io": {"state": "ok"},
+          "irq": {"state": "ok"}
+        },
+        "findings_include": []
+      }
+    },
+    {
+      "id": "P10",
+      "topic": "io open fails with EACCES; io is unreadable and never zero, the verdict is PRESSURE_PARTIAL and the exit is 0",
+      "args": [],
+      "snapshots": [
+        {
+          "files": {
+            "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+            "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+            "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+          },
+          "errors": {"io": "EACCES"}
+        }
+      ],
+      "expect": {
+        "exit": 0,
+        "verdict": "PRESSURE_PARTIAL",
+        "resources": {
+          "cpu": {"state": "ok"},
+          "memory": {"state": "ok"},
+          "io": {"state": "unreadable", "some": null, "full": null},
+          "irq": {"state": "ok"}
+        },
+        "findings_include": []
+      }
+    },
+    {
+      "id": "P11",
+      "topic": "interval run over two snapshots: cpu some total rises by 125000 us, memory some total by 100000 us and io some total by 40000 us over 1 s, giving total_delta_us and stall_ratio per kind",
+      "args": ["--interval", "1"],
+      "snapshots": [
+        {
+          "files": {
+            "cpu": "some avg10=1.00 avg60=0.50 avg300=0.25 total=100000\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+            "memory": "some avg10=0.60 avg60=0.30 avg300=0.15 total=500000\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+            "io": "some avg10=0.20 avg60=0.10 avg300=0.05 total=70000\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+            "irq": "full avg10=0.03 avg60=0.02 avg300=0.01 total=9000\n"
+          },
+          "errors": {}
+        },
+        {
+          "files": {
+            "cpu": "some avg10=2.00 avg60=1.00 avg300=0.50 total=225000\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+            "memory": "some avg10=0.90 avg60=0.45 avg300=0.22 total=600000\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+            "io": "some avg10=0.40 avg60=0.20 avg300=0.10 total=110000\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+            "irq": "full avg10=0.06 avg60=0.04 avg300=0.02 total=15000\n"
+          },
+          "errors": {}
+        }
+      ],
+      "expect": {
+        "exit": 0,
+        "verdict": "PRESSURE_OK",
+        "resources": {
+          "cpu": {
+            "state": "ok",
+            "some": {"total_delta_us": 125000, "stall_ratio": 0.125},
+            "full": {"total_delta_us": null, "stall_ratio": null}
+          },
+          "memory": {
+            "state": "ok",
+            "some": {"total_delta_us": 100000, "stall_ratio": 0.1}
+          },
+          "io": {
+            "state": "ok",
+            "some": {"total_delta_us": 40000, "stall_ratio": 0.04}
+          },
+          "irq": {
+            "state": "ok",
+            "full": {"total_delta_us": 6000, "stall_ratio": 0.006}
+          }
+        },
+        "findings_include": []
+      }
+    },
+    {
+      "id": "P12",
+      "topic": "interval run whose cpu some total falls from 200000 us to 100000 us; the counter regressed, so cpu is counter_regressed and the verdict is PRESSURE_PARTIAL with exit 0",
+      "args": ["--interval", "1"],
+      "snapshots": [
+        {
+          "files": {
+            "cpu": "some avg10=2.00 avg60=1.00 avg300=0.50 total=200000\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+            "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+            "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+            "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+          },
+          "errors": {}
+        },
+        {
+          "files": {
+            "cpu": "some avg10=1.00 avg60=0.50 avg300=0.25 total=100000\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+            "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+            "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+            "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+          },
+          "errors": {}
+        }
+      ],
+      "expect": {
+        "exit": 0,
+        "verdict": "PRESSURE_PARTIAL",
+        "resources": {
+          "cpu": {"state": "counter_regressed"},
+          "memory": {"state": "ok"},
+          "io": {"state": "ok"},
+          "irq": {"state": "ok"}
+        },
+        "findings_include": []
+      }
+    }
+  ]
+}

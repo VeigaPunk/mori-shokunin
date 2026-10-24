@@ -1,0 +1,10 @@
+# Decision18 — SourcePlan content-review falsification
+
+**Decision: KEEP.** The retain rationale is materially true at content level; clarify that the artifact also contains local repository/host observation metadata, not only public-source material.
+
+- **Blob binding:** full-file SHA-256 of `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-16/build/SourcePlan.md` matched the full-blob digest bound to its retain row in `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-19/build/Content25.md:15-20` and `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-19/content-reviews-before.json:62-67` [blob binding]. Digest omitted.
+- **Content claim:** the reviewed document has no private journal-record payload, account/credential payload, or personal identity [content-level]. It does contain source/interface material and explicit local repository-state and host-version observations: `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-16/build/SourcePlan.md:17-23,41-71,383-392` [repository/host observation]. The decision's no-payload claim stands, but its rationale should not imply all technical metadata is public-source-owned.
+- **Minimization:** no evidence that this document itself was redacted or minimized. It recommends restrictions for a future implementation/output and records no live journal query: `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-16/build/SourcePlan.md:182-208,342-355,383-390` [recommendation, not performed minimization]. This does not expose a private journal value in the retained document.
+- **Ownership:** public primary-source material is identified separately from local repository observations and host-version metadata: `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-16/build/SourcePlan.md:17-23,41-71,383-392` [provenance distinguished]. The review reason could state that distinction more explicitly.
+
+Semantic LSP was unavailable: no `lsp` device was mounted (the device response listed only `ast_edit` and `debug`). This was a static content review; no checks were run.

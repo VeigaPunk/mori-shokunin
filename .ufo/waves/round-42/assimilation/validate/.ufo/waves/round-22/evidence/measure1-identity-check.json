@@ -1,0 +1,16 @@
+{
+  "schema": "mori-r22-identity-check-v1",
+  "source": "measure1/real-reconciliation.json stdout",
+  "expected": {
+    "raw_hits": "c275d2c2ea7600f45160dea966cb107377650df03656eafecb44fe7f78d9bedf",
+    "scanner_hits": "9690b3a9cf4a7daaefacb1d0d69126a81afa441c288249fc2346aa6bc65d4970",
+    "policy_excluded_hits": "17c348f0a05e4b7827de754fd7b5d57c75f94203377b86155bfe51b8b3a9c5f7"
+  },
+  "observed": {
+    "raw_hits": "c275d2c2ea7600f45160dea966cb107377650df03656eafecb44fe7f78d9bedf",
+    "scanner_hits": "9690b3a9cf4a7daaefacb1d0d69126a81afa441c288249fc2346aa6bc65d4970",
+    "policy_excluded_hits": "17c348f0a05e4b7827de754fd7b5d57c75f94203377b86155bfe51b8b3a9c5f7"
+  },
+  "match": true,
+  "qualification": "L1 post-run comparison against co-evolved committed identity expectations (4f7cfce); not part of measure-round22.py all_claim_checks_pass"
+}

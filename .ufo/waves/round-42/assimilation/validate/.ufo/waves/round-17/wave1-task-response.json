@@ -1,0 +1,28 @@
+{
+  "first_attempt_at": "2026-10-20T15:38:18.213707-03:00",
+  "spawned_at": "2026-10-20T15:52:53.313126-03:00",
+  "attempts": [
+    {
+      "at": "2026-10-20T15:38:18.213707-03:00",
+      "result": "refused",
+      "refused": 70
+    },
+    {
+      "at": "2026-10-20T15:42:20.456790-03:00",
+      "refused": 70
+    },
+    {
+      "at": "2026-10-20T15:45:20.650894-03:00",
+      "refused": 70
+    },
+    {
+      "at": "2026-10-20T15:49:14.878397-03:00",
+      "refused": 70
+    },
+    {
+      "at": "2026-10-20T15:52:53.313126-03:00",
+      "refused": 0
+    }
+  ],
+  "response_text": "Spawned 70 background agents using executor, scout, scribe, connector, reviewer, critic, sentinel, revenger.\n- `MoriR17.SeatTool-5` (job `MoriR17.SeatTool-5`)\n- `MoriR17.SeatFixtures-5` (job `MoriR17.SeatFixtures-5`)\n- `MoriR17.SeatGate-5` (job `MoriR17.SeatGate-5`)\n- `MoriR17.CensusJj-5` (job `MoriR17.CensusJj-5`)\n- `MoriR17.JjGate-5` (job `MoriR17.JjGate-5`)\n- `MoriR17.MisrootSweep-5` (job `MoriR17.MisrootSweep-5`)\n- `MoriR17.ContextCheck17-5` (job `MoriR17.ContextCheck17-5`)\n- `MoriR17.TranscriptShapes-5` (job `MoriR17.TranscriptShapes-5`)\n- `MoriR17.RetryRecoveryShape-5` (job `MoriR17.RetryRecoveryShape-5`)\n- `MoriR17.SeatNaming-5` (job `MoriR17.SeatNaming-5`)\n- `MoriR17.DeadSeatCrossCheck-5` (job `MoriR17.DeadSeatCrossCheck-5`)\n- `MoriR17.WaveRegistryVsReports-5` (job `MoriR17.WaveRegistryVsReports-5`)\n- `MoriR17.OmpRetryConfig-5` (job `MoriR17.OmpRetryConfig-5`)\n- `MoriR17.OmpRetryDocs-5` (job `MoriR17.OmpRetryDocs-5`)\n- `MoriR17.CensusGitSites-5` (job `MoriR17.CensusGitSites-5`)\n- `MoriR17.HelperFailureWindows-5` (job `MoriR17.HelperFailureWindows-5`)\n- `MoriR17.LiveLaneHeadVsBranch-5` (job `MoriR17.LiveLaneHeadVsBranch-5`)\n- `MoriR17.CensusConsumers-5` (job `MoriR17.CensusConsumers-5`)\n- `MoriR17.PacmanTxnToday-5` (job `MoriR17.PacmanTxnToday-5`)\n- `MoriR17.PacmanActorTrace-5` (job `MoriR17.PacmanActorTrace-5`)\n- `MoriR17.ProvinceFrontier-5` (job `MoriR17.ProvinceFrontier-5`)\n- `MoriR17.R16LessonM7-5` (job `MoriR17.R16LessonM7-5`)\n- `MoriR17.MisrootR16Facts-5` (job `MoriR17.MisrootR16Facts-5`)\n- `MoriR17.FleetRootUntracked-5` (job `MoriR17.FleetRootUntracked-5`)\n- `MoriR17.SkillRegistry-5` (job `MoriR17.SkillRegistry-5`)\n- `MoriR17.ScorecardAxisCheck-5` (job `MoriR17.ScorecardAxisCheck-5`)\n- `MoriR17.SiblingSeatDeathTools-5` (job `MoriR17.SiblingSeatDeathTools-5`)\n- `MoriR17.JjEnvFacts-5` (job `MoriR17.JjEnvFacts-5`)\n- `MoriR17.TranscriptTailBounds-5` (job `MoriR17.TranscriptTailBounds-5`)\n- `MoriR17.SessionExitCorrelation-5` (job `MoriR17.SessionExitCorrelation-5`)\n- `MoriR17.SrcRfc6585-5` (job `MoriR17.SrcRfc6585-5`)\n- `MoriR17.SrcRfc9110-5` (job `MoriR17.SrcRfc9110-5`)\n- `MoriR17.SrcZaiErrorCodes-5` (job `MoriR17.SrcZaiErrorCodes-5`)\n- `MoriR17.SrcJjGitCompat-5` (job `MoriR17.SrcJjGitCompat-5`)\n- `MoriR17.SrcJjMetaedit-5` (job `MoriR17.SrcJjMetaedit-5`)\n- `MoriR17.SrcGitMergeBase-5` (job `MoriR17.SrcGitMergeBase-5`)\n- `MoriR17.SrcGitSymbolicRef-5` (job `MoriR17.SrcGitSymbolicRef-5`)\n- `MoriR17.SrcPacmanLog-5` (job `MoriR17.SrcPacmanLog-5`)\n- `MoriR17.KnowledgeSeatTerminal-5` (job `MoriR17.KnowledgeSeatTerminal-5`)\n- `MoriR17.KnowledgeJjBranch-5` (job `MoriR17.KnowledgeJjBranch-5`)\n- `MoriR17.LessonMistakesDraft-5` (job `MoriR17.LessonMistakesDraft-5`)\n- `MoriR17.QualityCriteriaDraft-5` (job `MoriR17.QualityCriteriaDraft-5`)\n- `MoriR17.ProvinceNotesDraft-5` (job `MoriR17.ProvinceNotesDraft-5`)\n- `MoriR17.OverlapTsukuroi-5` (job `MoriR17.OverlapTsukuroi-5`)\n- `MoriR17.OverlapKumitate-5` (job `MoriR17.OverlapKumitate-5`)\n- `MoriR17.OverlapAuditLanes-5` (job `MoriR17.OverlapAuditLanes-5`)\n- `MoriR17.OverlapJjSiblings-5` (job `MoriR17.OverlapJjSiblings-5`)\n- `MoriR17.ClaimSeparability-5` (job `MoriR17.ClaimSeparability-5`)\n- `MoriR17.FrontierLinkage-5` (job `MoriR17.FrontierLinkage-5`)\n- `MoriR17.ReviewC1Contract-5` (job `MoriR17.ReviewC1Contract-5`)\n- `MoriR17.ReviewC2Contract-5` (job `MoriR17.ReviewC2Contract-5`)\n- `MoriR17.ReviewC1Metric-5` (job `MoriR17.ReviewC1Metric-5`)\n- `MoriR17.ReviewC2Metric-5` (job `MoriR17.ReviewC2Metric-5`)\n- `MoriR17.ReviewCarryForward-5` (job `MoriR17.ReviewCarryForward-5`)\n- `MoriR17.ReviewSpotcheckRouting-5` (job `MoriR17.ReviewSpotcheckRouting-5`)\n- `MoriR17.ReviewJjAuditRouting-5` (job `MoriR17.ReviewJjAuditRouting-5`)\n- `MoriR17.ReviewSeatBreachDetect-5` (job `MoriR17.ReviewSeatBreachDetect-5`)\n- `MoriR17.ReviewSchemaDrift-5` (job `MoriR17.ReviewSchemaDrift-5`)\n- `MoriR17.ReviewExitSemantics-5` (job `MoriR17.ReviewExitSemantics-5`)\n- `MoriR17.ReviewSkillRows-5` (job `MoriR17.ReviewSkillRows-5`)\n- `MoriR17.ReviewScorecardRubric-5` (job `MoriR17.ReviewScorecardRubric-5`)\n- `MoriR17.CriticC1-5` (job `MoriR17.CriticC1-5`)\n- `MoriR17.CriticC2-5` (job `MoriR17.CriticC2-5`)\n- `MoriR17.CriticFrontier-5` (job `MoriR17.CriticFrontier-5`)\n- `MoriR17.CriticHarm-5` (job `MoriR17.CriticHarm-5`)\n- `MoriR17.SentinelTranscripts-5` (job `MoriR17.SentinelTranscripts-5`)\n- `MoriR17.SentinelJjSandbox-5` (job `MoriR17.SentinelJjSandbox-5`)\n- `MoriR17.RevengerCensusHead-5` (job `MoriR17.RevengerCensusHead-5`)\n- `MoriR17.RevengerContextChecker-5` (job `MoriR17.RevengerContextChecker-5`)\n- `MoriR17.RevengerOmpTerminal-5` (job `MoriR17.RevengerOmpTerminal-5`)\n\nCoordinate: 70 siblings are running together. If their work overlaps, have them message each other via `write agent://<id>` (`agent://all` broadcasts) before editing shared files. `read proc://` shows running jobs and agents."
+}

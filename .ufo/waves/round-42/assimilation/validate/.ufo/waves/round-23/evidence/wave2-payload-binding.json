@@ -1,0 +1,30 @@
+{
+  "argv": [
+    "python3",
+    "-I",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-dispatch-ledger.py",
+    "bind",
+    "--repo",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin",
+    "--rev",
+    "6eb889c037163e4886eaa61501258910d6a529b9",
+    "--dispatch",
+    ".ufo/waves/round-23/wave2-run.json"
+  ],
+  "exit": 0,
+  "binding": {
+    "dispatch_path": ".ufo/waves/round-23/wave2-run.json",
+    "finding_id": "PAYLOAD_BOUND",
+    "finding_ids": [
+      "PAYLOAD_BOUND"
+    ],
+    "mode": "bind",
+    "payload_bytes": 159710,
+    "payload_sha256": "d28cc9f2dbf120831d85277e0fa47f0c10b658c4bafc0a36b4099ac069103efd",
+    "rev": "6eb889c037163e4886eaa61501258910d6a529b9",
+    "schema": "mori-dispatch-ledger-v1",
+    "status": "bound",
+    "tasks_count": 96
+  },
+  "stderr": ""
+}

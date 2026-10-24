@@ -1,0 +1,20 @@
+{
+  "label": "seat-gate-selftest",
+  "started_at": "2026-10-20T16:32:33.748883-03:00",
+  "ended_at": "2026-10-20T16:32:34.694439-03:00",
+  "argv": [
+    "python3",
+    "tools/mori-round17-seat-regressions.py",
+    "--selftest"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "branch_ref": "refs/heads/master",
+  "measured_commit": "273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7",
+  "branch_tip_after": "273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7",
+  "rc": 0,
+  "duration_s": 0.945643798000674,
+  "stdout": "SELFTEST ok: green_rc0_and_manifest,capability_absent_rc1,mismatch_rc1,forbidden_key_rc1,seats_map_projection_rc0,a1_main_sessions_rc0,generated_fifo_rc0,pinned_snapshot_tamper_rc2,prefix_filter_rc0,files_scanned_falsifier_rc1,unreadable_fixture_rc0,fixture_drift_rc2,output_guard_rc2,nonempty_output_rc2\n",
+  "stderr": "",
+  "stdout_sha256": "7ada0ae97603c4e6c1aaad8020fccfdca61857d61d2e87ff0ef25a5011e0828f",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

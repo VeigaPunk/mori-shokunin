@@ -1,0 +1,4 @@
+revision: 248408f5b6610a85bcbdebe7ac0b4fa7ed51422a
+command: see contract.md C1 counting command
+stale_present=4
+r26_entry=absent

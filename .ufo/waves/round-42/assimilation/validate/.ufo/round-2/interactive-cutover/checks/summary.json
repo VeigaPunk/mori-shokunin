@@ -1,0 +1,32 @@
+{
+  "measuredRevision": "0715198ed683445768944cec2db75bce12a1d202",
+  "productionScriptSha256": "e3073a2b5e89bf717c1955e7a3d7bd995bf1096d61b6887af98b4517ee92f3f2",
+  "scriptChanged": false,
+  "checks": [
+    {
+      "label": "baseline census selftest",
+      "exitCode": 0,
+      "verdictLines": [
+        "MORI_CENSUS_SELFTEST: PASS (14 cases, 14 passed, 0 failed)"
+      ],
+      "evidence": "checks/selftest.json"
+    },
+    {
+      "label": "inherited round-two scenario admission",
+      "exitCode": 1,
+      "verdictLines": [],
+      "evidence": "checks/silence-cases.json"
+    },
+    {
+      "label": "actual live census mori-only silence scope",
+      "exitCode": 1,
+      "verdictLines": [
+        "MORI_CENSUS: DRIFT (findings=14 drift=11 unavailable=0 surfaces=7)"
+      ],
+      "evidence": "checks/live-census.json"
+    }
+  ],
+  "scenarioInterpretation": "Inherited driver exited during fixture setup before any PASS/FAIL case or MORI_SILENCE_CASES line. No behavioral pass count claimed.",
+  "localAcceptance": "baseline selftest exercised; proposed round-two behavior not admitted",
+  "runtimeJudgment": "not run; previously reported Phase-0 failures not repeated"
+}

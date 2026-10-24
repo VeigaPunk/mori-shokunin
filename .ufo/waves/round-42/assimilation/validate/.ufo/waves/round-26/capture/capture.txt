@@ -1,0 +1,72 @@
+ts=2026-10-22T10:27:17-03:00 # mori round-26 FR10 host capture (userspace OOM killers)
+ts=2026-10-22T10:27:17-03:00 capture_script=.ufo/waves/round-26/capture/capture.sh
+ts=2026-10-22T10:27:17-03:00 capture_started=2026-10-22T10:27:17-03:00
+ts=2026-10-22T10:27:17-03:00 capture_scope=current boot; earlyoom.service and systemd-oomd.service
+ts=2026-10-22T10:27:17-03:00 uname_release=7.2.11-arch1-1 uname_rc=0
+ts=2026-10-22T10:27:17-03:00 systemd_version_line=systemd 262 (262-1-arch) systemd_version_rc=0
+ts=2026-10-22T10:27:18-03:00 pacman_query_rc=0
+ts=2026-10-22T10:27:18-03:00 package_earlyoom=1.9.0-1
+ts=2026-10-22T10:27:18-03:00 package_systemd=262-1
+ts=2026-10-22T10:27:18-03:00 unit_earlyoom.service_is_active=active unit_earlyoom.service_is_active_rc=0
+ts=2026-10-22T10:27:18-03:00 unit_earlyoom.service_is_enabled=enabled unit_earlyoom.service_is_enabled_rc=0
+ts=2026-10-22T10:27:18-03:00 unit_systemd-oomd.service_is_active=inactive unit_systemd-oomd.service_is_active_rc=3
+ts=2026-10-22T10:27:18-03:00 unit_systemd-oomd.service_is_enabled=disabled unit_systemd-oomd.service_is_enabled_rc=1
+ts=2026-10-22T10:27:18-03:00 unit_show_rc=0
+ts=2026-10-22T10:27:18-03:00 unit_show_Id=earlyoom.service
+ts=2026-10-22T10:27:18-03:00 unit_show_LoadState=loaded
+ts=2026-10-22T10:27:18-03:00 unit_show_ActiveState=active
+ts=2026-10-22T10:27:18-03:00 unit_show_UnitFileState=enabled
+ts=2026-10-22T10:27:18-03:00 unit_show_ActiveEnterTimestampMonotonic=19964362
+ts=2026-10-22T10:27:18-03:00 unit_show_Id=systemd-oomd.service
+ts=2026-10-22T10:27:18-03:00 unit_show_LoadState=loaded
+ts=2026-10-22T10:27:18-03:00 unit_show_ActiveState=inactive
+ts=2026-10-22T10:27:18-03:00 unit_show_UnitFileState=disabled
+ts=2026-10-22T10:27:18-03:00 unit_show_ActiveEnterTimestampMonotonic=0
+ts=2026-10-22T10:27:18-03:00 managed_oom_show_rc=0 managed_oom_show_units=user@1000.service,user-1000.slice,user.slice,-.slice
+ts=2026-10-22T10:27:18-03:00 managed_oom_user@1000.service_ManagedOOMSwap=auto
+ts=2026-10-22T10:27:18-03:00 managed_oom_user@1000.service_ManagedOOMMemoryPressure=auto
+ts=2026-10-22T10:27:18-03:00 managed_oom_user-1000.slice_ManagedOOMSwap=auto
+ts=2026-10-22T10:27:18-03:00 managed_oom_user-1000.slice_ManagedOOMMemoryPressure=auto
+ts=2026-10-22T10:27:18-03:00 managed_oom_user.slice_ManagedOOMSwap=auto
+ts=2026-10-22T10:27:18-03:00 managed_oom_user.slice_ManagedOOMMemoryPressure=auto
+ts=2026-10-22T10:27:18-03:00 managed_oom_-.slice_ManagedOOMSwap=auto
+ts=2026-10-22T10:27:18-03:00 managed_oom_-.slice_ManagedOOMMemoryPressure=auto
+ts=2026-10-22T10:27:18-03:00 managed_oom_blocks=4 managed_oom_units_listed=4
+ts=2026-10-22T10:27:18-03:00 earlyoom_scope_start_monotonic=19964362 earlyoom_scope_start_rc=0
+ts=2026-10-22T10:27:18-03:00 journal_entries_total=13
+ts=2026-10-22T10:27:18-03:00 journal_entries_without_timestamp=0
+ts=2026-10-22T10:27:18-03:00 journal_entries_in_scope=13
+ts=2026-10-22T10:27:18-03:00 journal_scope_start_monotonic=19964362
+ts=2026-10-22T10:27:18-03:00 journal_count_boot_sending_sigterm_to_process=0
+ts=2026-10-22T10:27:18-03:00 journal_count_scope_sending_sigterm_to_process=0
+ts=2026-10-22T10:27:18-03:00 journal_count_boot_sending_sigkill_to_process=0
+ts=2026-10-22T10:27:18-03:00 journal_count_scope_sending_sigkill_to_process=0
+ts=2026-10-22T10:27:18-03:00 journal_count_boot_escalating=0
+ts=2026-10-22T10:27:18-03:00 journal_count_scope_escalating=0
+ts=2026-10-22T10:27:18-03:00 journal_count_boot_kill_failed=0
+ts=2026-10-22T10:27:18-03:00 journal_count_scope_kill_failed=0
+ts=2026-10-22T10:27:18-03:00 journal_count_boot_low_memory_sigterm=0
+ts=2026-10-22T10:27:18-03:00 journal_count_scope_low_memory_sigterm=0
+ts=2026-10-22T10:27:18-03:00 journal_count_boot_low_memory_sigkill=0
+ts=2026-10-22T10:27:18-03:00 journal_count_scope_low_memory_sigkill=0
+ts=2026-10-22T10:27:18-03:00 journal_count_boot_mem_avail_report=6
+ts=2026-10-22T10:27:18-03:00 journal_count_scope_mem_avail_report=6
+ts=2026-10-22T10:27:18-03:00 journal_count_boot_dryrun_enabled=0
+ts=2026-10-22T10:27:18-03:00 journal_count_scope_dryrun_enabled=0
+ts=2026-10-22T10:27:18-03:00 journal_count_boot_process_group_lines=0
+ts=2026-10-22T10:27:18-03:00 journal_count_scope_process_group_lines=0
+ts=2026-10-22T10:27:18-03:00 journal_count_boot_suppressed_messages=0
+ts=2026-10-22T10:27:18-03:00 journal_count_scope_suppressed_messages=0
+ts=2026-10-22T10:27:18-03:00 journal_version_line_source=scope
+ts=2026-10-22T10:27:18-03:00 journal_scope_complete=1
+ts=2026-10-22T10:27:18-03:00 journal_version_line_text=earlyoom 1.9.0
+ts=2026-10-22T10:27:18-03:00 journal_version=1.9.0
+ts=2026-10-22T10:27:18-03:00 journal_threshold_term_line_text=sending SIGTERM when mem avail <= 10.00% and swap free <= 10.00%,
+ts=2026-10-22T10:27:18-03:00 journal_threshold_term_mem_pct=10.00
+ts=2026-10-22T10:27:18-03:00 journal_threshold_term_swap_pct=10.00
+ts=2026-10-22T10:27:18-03:00 journal_threshold_kill_line_text=SIGKILL when mem avail <=  5.00% and swap free <=  5.00%
+ts=2026-10-22T10:27:18-03:00 journal_threshold_kill_mem_pct=5.00
+ts=2026-10-22T10:27:18-03:00 journal_threshold_kill_swap_pct=5.00
+ts=2026-10-22T10:27:18-03:00 earlyoom_journal_journalctl_rc=0 earlyoom_journal_reader_rc=0
+ts=2026-10-22T10:27:18-03:00 oomd_notice_message_id=d989611b15e44c9dbf31e3c81256e4ed oomd_notice_count=0 oomd_notice_rc=0
+ts=2026-10-22T10:27:18-03:00 capture_finished=2026-10-22T10:27:18-03:00

@@ -1,0 +1,53 @@
+==== mori-shokunin round-7 receipt — surfaces-r7-20261015T1948Z-oracle ====
+CAPTURED_UTC=2026-10-15T19:49:13Z .. 2026-10-15T19:49:39Z
+COMMAND=bash tools/mori-silence-cases.sh  ; then env MORI_SHUFFLE_SEED=796022666 bash tools/mori-silence-cases.sh
+EXIT_CODE_run1=0 EXIT_CODE_run2=0
+CENSUS_SHA256_BEFORE=c7c3569b842ab3911cbfdf415eb7023766c950c60f354af95f6a4f020b5671af
+CENSUS_SHA256_AFTER=c7c3569b842ab3911cbfdf415eb7023766c950c60f354af95f6a4f020b5671af
+ORACLE_SHA256_BEFORE=448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5
+ORACLE_SHA256_AFTER=448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5
+RUN1_SEED=796022666
+RUN1_last_case_line=28 RUN1_first_header_line=29 (header must follow ALL case lines)
+ORDER_IDENTICAL_WHEN_SEED_PINNED=yes
+RUN1_TALLY=MORI_SILENCE_CASES: matched=28 total=28 (exit 0)
+RUN2_TALLY=MORI_SILENCE_CASES: matched=28 total=28 (exit 0)
+---- run 1 output (verbatim, stdout+stderr merged) ----
+PASS main-repo-noise-silent (state=silent via lane finding=1 rc=1 nonce=1)
+PASS readonly-no-mutation
+PASS young-under-gate (state=young via lane finding=0 rc=0 nonce=1)
+PASS old-report-before-relaunch-silent (state=silent via lane finding=1 rc=1 nonce=1)
+PASS substring-name-mismatch-weak (state=progressing-weak via lane finding=0 rc=0 nonce=1)
+PASS author-subject-committer-sibling-progress (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS report-eq-launch-no-close (state=silent via lane finding=1 rc=1 nonce=1)
+PASS repo-missing-unavailable (state=unavailable via lane finding=0 rc=0 nonce=1)
+PASS young-future-launch (state=young via lane finding=0 rc=0 nonce=1)
+PASS untracked-recent-progress (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS author-sibling-committer-subject-weak (state=progressing-weak via lane finding=0 rc=0 nonce=1)
+PASS completed-not-open (state=not-open via lane finding=0 rc=0 nonce=1)
+PASS shape-invariance
+PASS unreadable-git-unavailable (state=unavailable via lane finding=0 rc=0 nonce=1)
+PASS ledger-missing-not-silent (state=unavailable via lane finding=0 rc=0 nonce=1)
+PASS sibling-clean-checkout-weak (state=progressing-weak via lane finding=0 rc=0 nonce=1)
+PASS subject-hidden-behind-sibling-head (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS young-age-equals-gate (state=young via lane finding=0 rc=0 nonce=1)
+PASS legacy-steer-open-silent (state=silent via lane finding=1 rc=1 nonce=1)
+PASS silent-open (state=silent via lane finding=1 rc=1 nonce=1)
+PASS report-future-no-close (state=silent via lane finding=1 rc=1 nonce=1)
+PASS same-round-relaunch-silent (state=silent via lane finding=1 rc=1 nonce=1)
+PASS nolane-launch-not-open (state=not-open via lane finding=0 rc=0 nonce=1)
+PASS dirty-same-path-as-sibling-progress (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS untracked-report-progress (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS substring-email-mismatch-weak (state=progressing-weak via lane finding=0 rc=0 nonce=1)
+PASS committed-report-closes (state=not-open via lane finding=0 rc=0 nonce=1)
+PASS subject-postlaunch-progressing (state=progressing via lane finding=0 rc=0 nonce=1)
+SHUFFLE_SEED=796022666
+RUN_NONCE=375656089
+CASE_ORDER=main-repo-noise-silent readonly-no-mutation young-under-gate old-report-before-relaunch-silent substring-name-mismatch-weak author-subject-committer-sibling-progress report-eq-launch-no-close repo-missing-unavailable young-future-launch untracked-recent-progress author-sibling-committer-subject-weak completed-not-open shape-invariance unreadable-git-unavailable ledger-missing-not-silent sibling-clean-checkout-weak subject-hidden-behind-sibling-head young-age-equals-gate legacy-steer-open-silent silent-open report-future-no-close same-round-relaunch-silent nolane-launch-not-open dirty-same-path-as-sibling-progress untracked-report-progress substring-email-mismatch-weak committed-report-closes subject-postlaunch-progressing
+MORI_SILENCE_CASES: matched=28 total=28
+---- end of run 1 output ----
+---- run 2 (seed-pinned) summary lines ----
+SHUFFLE_SEED=796022666
+RUN_NONCE=2209701161
+CASE_ORDER=main-repo-noise-silent readonly-no-mutation young-under-gate old-report-before-relaunch-silent substring-name-mismatch-weak author-subject-committer-sibling-progress report-eq-launch-no-close repo-missing-unavailable young-future-launch untracked-recent-progress author-sibling-committer-subject-weak completed-not-open shape-invariance unreadable-git-unavailable ledger-missing-not-silent sibling-clean-checkout-weak subject-hidden-behind-sibling-head young-age-equals-gate legacy-steer-open-silent silent-open report-future-no-close same-round-relaunch-silent nolane-launch-not-open dirty-same-path-as-sibling-progress untracked-report-progress substring-email-mismatch-weak committed-report-closes subject-postlaunch-progressing
+MORI_SILENCE_CASES: matched=28 total=28
+---- end ----

@@ -1,0 +1,29 @@
+{
+  "checkouts": [
+    {
+      "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/FinalVerification",
+      "expected_input_commit": "2be82940828424ef4a2d623173d7e603b8a18f93",
+      "observed_branch_ref": "refs/heads/master",
+      "observed_at": "2026-10-20T18:00:02.027732-03:00",
+      "observed_commit": "2be82940828424ef4a2d623173d7e603b8a18f93",
+      "match": true
+    },
+    {
+      "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/FinalVerificationFixed",
+      "expected_input_commit": "fe9fa9083db998ead1554459d656568c4173f288",
+      "observed_branch_ref": "refs/heads/master",
+      "observed_at": "2026-10-20T18:00:02.028333-03:00",
+      "observed_commit": "fe9fa9083db998ead1554459d656568c4173f288",
+      "match": true
+    },
+    {
+      "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/FinalVerificationMetadata",
+      "expected_input_commit": "91940fa339e38006f8db5bd7d78bb6f037f4d016",
+      "observed_branch_ref": "refs/heads/master",
+      "observed_at": "2026-10-20T18:00:02.028870-03:00",
+      "observed_commit": "91940fa339e38006f8db5bd7d78bb6f037f4d016",
+      "match": true
+    }
+  ],
+  "scope": "End-of-run direct branch observations, not backdated measurements. Per-run verification_checkout_commit values are input pins; source hashes independently match their committed declarations."
+}

@@ -1,0 +1,9 @@
+command: python3 tools/mori-round41-calibration.py 7450722e5f3b4fc6df3d719386ed643af59630e3 --repo . --reference-rev 62a207f7521fa2e2fcd2e8b0260f047ccfce8862
+measured-revision: 7450722e5f3b4fc6df3d719386ed643af59630e3 (lane tip; sandbox clone whose HEAD equals the measured revision)
+exit: 0
+stdout:
+SCORECARD.md recorded_as_of=35 observed_as_of=35 recorded_extension=17 observed_extension=17
+LOG.md recorded_as_of=35 observed_as_of=35 recorded_extension=17 observed_extension=17
+corpus/lessons/round-40.md recorded_as_of=35 observed_as_of=35 recorded_extension=17 observed_extension=17
+MORI_R41_CALIBRATION mismatches=0 observed_as_of=35 extension_rows=17
+re-issued by attempt 3 (2026-10-24): adds the measured-revision header the attempt-2 receipt lacked (w1 finding F3); counter output byte-identical in values to the attempt-2 receipt.

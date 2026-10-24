@@ -1,0 +1,160 @@
+mode=before revision=62a207f7521fa2e2fcd2e8b0260f047ccfce8862
+sandbox=disposable git clone at detached target revision
+## C1 before honest counter
+command: /usr/bin/python3 /tmp/mori-r41-sandbox-w740ta69/repo/.ufo/waves/round-41/fixtures/extracted/conform-v3-r40.py 62a207f7521fa2e2fcd2e8b0260f047ccfce8862 --repo /tmp/mori-r41-sandbox-w740ta69/repo --contract /tmp/mori-r41-sandbox-w740ta69/repo/.ufo/waves/round-39/contract.md --counter /tmp/mori-r41-sandbox-w740ta69/repo/.ufo/waves/round-40/count-c8.py
+EXIT=0
+P-C10: at revision R, the round-40 conformance checker passes all nine checks on the round-40 counter bytes — the round-39 nine with three made sound — `timeout_scope` (every `timeout=` keyword in every counter resolves in the scope of its read site: a binding inside the enclosing function shadows the module map, a `global` rebinding is read at module scope, a module-level binding nested in `if`/`try`/`for`/`while` makes the name conditionally rebound and fails closed, and the value must be a finite positive number, so `1e400` fails and a fold raising `ZeroDivisionError` or `RecursionError` fails as a violation, not a setup error), `drain_bind` (every `Popen(` in every counter is drained in its own function by a `communicate(` bound to the same name, carrying its own timeout, with the result consumed — assigned to other than `_`, or returned — so a `wait(timeout=…)` plus `stdout.read()` drain fails even beside a decoy used communicate, an undrained second `Popen(` fails, and a tuple-wrapped or `_`-assigned communicate does not qualify), and `selftest_conjunct` (per counter: the counter's communicates all carry timeouts, stripping each communicate timeout one at a time is detected by that same rule, and the checker's own textual-mutation table carries a live `selftest_conjunct` entry whose anchor occurs in the counter — comm_violations are computed and reported per counter, not for the first counter only) — and the checker's `--selftest` applies eleven textual mutations to the counter of record, each flipping exactly its own check to FAIL.
+check predicate          PASS (exit=0 equal=True)
+check head_pin           PASS (pin=62a207f7521fa2e2fcd2e8b0260f047ccfce8862 tip=62a207f7521fa2e2fcd2e8b0260f047ccfce8862)
+check tool_resolve       PASS (exit=0 resolved=/tmp/mori-r41-sandbox-w740ta69/repo/.ufo/waves/round-39/fixtures/witness-summary-only-live.txt)
+check bounded_reads      PASS (count-c8.py: bounded=[] value=[])
+check timeout_scope      PASS (count-c8.py: bounded=[] value=[])
+check drain_bind         PASS (count-c8.py: violations=[])
+check timeout_state      PASS (exit=1 timeout_reason=True pass=False)
+check scratch            PASS (count-c8.py: mkdtemp_dir=True root=True)
+check selftest_conjunct  PASS (count-c8.py: honest_comm=[] strips=6 detected=6 anchor=True entry_live=True)
+CONFORM=met
+
+## C1 before survivor walrus
+command: /usr/bin/python3 /tmp/mori-r41-sandbox-w740ta69/repo/.ufo/waves/round-41/fixtures/extracted/conform-v3-r40.py 62a207f7521fa2e2fcd2e8b0260f047ccfce8862 --repo /tmp/mori-r41-sandbox-w740ta69/repo --contract /tmp/mori-r41-sandbox-w740ta69/repo/.ufo/waves/round-39/contract.md --counter /tmp/mori-r41-sandbox-w740ta69/repo/.ufo/waves/round-41/fixtures/c1/survivor-walrus-none.py
+EXIT=0
+P-C10: at revision R, the round-40 conformance checker passes all nine checks on the round-40 counter bytes — the round-39 nine with three made sound — `timeout_scope` (every `timeout=` keyword in every counter resolves in the scope of its read site: a binding inside the enclosing function shadows the module map, a `global` rebinding is read at module scope, a module-level binding nested in `if`/`try`/`for`/`while` makes the name conditionally rebound and fails closed, and the value must be a finite positive number, so `1e400` fails and a fold raising `ZeroDivisionError` or `RecursionError` fails as a violation, not a setup error), `drain_bind` (every `Popen(` in every counter is drained in its own function by a `communicate(` bound to the same name, carrying its own timeout, with the result consumed — assigned to other than `_`, or returned — so a `wait(timeout=…)` plus `stdout.read()` drain fails even beside a decoy used communicate, an undrained second `Popen(` fails, and a tuple-wrapped or `_`-assigned communicate does not qualify), and `selftest_conjunct` (per counter: the counter's communicates all carry timeouts, stripping each communicate timeout one at a time is detected by that same rule, and the checker's own textual-mutation table carries a live `selftest_conjunct` entry whose anchor occurs in the counter — comm_violations are computed and reported per counter, not for the first counter only) — and the checker's `--selftest` applies eleven textual mutations to the counter of record, each flipping exactly its own check to FAIL.
+check predicate          PASS (exit=0 equal=True)
+check head_pin           PASS (pin=62a207f7521fa2e2fcd2e8b0260f047ccfce8862 tip=62a207f7521fa2e2fcd2e8b0260f047ccfce8862)
+check tool_resolve       PASS (exit=0 resolved=/tmp/mori-r41-sandbox-w740ta69/repo/.ufo/waves/round-39/fixtures/witness-summary-only-live.txt)
+check bounded_reads      PASS (survivor-walrus-none.py: bounded=[] value=[])
+check timeout_scope      PASS (survivor-walrus-none.py: bounded=[] value=[])
+check drain_bind         PASS (survivor-walrus-none.py: violations=[])
+check timeout_state      PASS (exit=1 timeout_reason=True pass=False)
+check scratch            PASS (survivor-walrus-none.py: mkdtemp_dir=True root=True)
+check selftest_conjunct  PASS (survivor-walrus-none.py: honest_comm=[] strips=6 detected=6 anchor=True entry_live=True)
+CONFORM=met
+
+## C1 before survivor tupleunpack
+command: /usr/bin/python3 /tmp/mori-r41-sandbox-w740ta69/repo/.ufo/waves/round-41/fixtures/extracted/conform-v3-r40.py 62a207f7521fa2e2fcd2e8b0260f047ccfce8862 --repo /tmp/mori-r41-sandbox-w740ta69/repo --contract /tmp/mori-r41-sandbox-w740ta69/repo/.ufo/waves/round-39/contract.md --counter /tmp/mori-r41-sandbox-w740ta69/repo/.ufo/waves/round-41/fixtures/c1/survivor-tupleunpack-none.py
+EXIT=0
+P-C10: at revision R, the round-40 conformance checker passes all nine checks on the round-40 counter bytes — the round-39 nine with three made sound — `timeout_scope` (every `timeout=` keyword in every counter resolves in the scope of its read site: a binding inside the enclosing function shadows the module map, a `global` rebinding is read at module scope, a module-level binding nested in `if`/`try`/`for`/`while` makes the name conditionally rebound and fails closed, and the value must be a finite positive number, so `1e400` fails and a fold raising `ZeroDivisionError` or `RecursionError` fails as a violation, not a setup error), `drain_bind` (every `Popen(` in every counter is drained in its own function by a `communicate(` bound to the same name, carrying its own timeout, with the result consumed — assigned to other than `_`, or returned — so a `wait(timeout=…)` plus `stdout.read()` drain fails even beside a decoy used communicate, an undrained second `Popen(` fails, and a tuple-wrapped or `_`-assigned communicate does not qualify), and `selftest_conjunct` (per counter: the counter's communicates all carry timeouts, stripping each communicate timeout one at a time is detected by that same rule, and the checker's own textual-mutation table carries a live `selftest_conjunct` entry whose anchor occurs in the counter — comm_violations are computed and reported per counter, not for the first counter only) — and the checker's `--selftest` applies eleven textual mutations to the counter of record, each flipping exactly its own check to FAIL.
+check predicate          PASS (exit=0 equal=True)
+check head_pin           PASS (pin=62a207f7521fa2e2fcd2e8b0260f047ccfce8862 tip=62a207f7521fa2e2fcd2e8b0260f047ccfce8862)
+check tool_resolve       PASS (exit=0 resolved=/tmp/mori-r41-sandbox-w740ta69/repo/.ufo/waves/round-39/fixtures/witness-summary-only-live.txt)
+check bounded_reads      PASS (survivor-tupleunpack-none.py: bounded=[] value=[])
+check timeout_scope      PASS (survivor-tupleunpack-none.py: bounded=[] value=[])
+check drain_bind         PASS (survivor-tupleunpack-none.py: violations=[])
+check timeout_state      PASS (exit=1 timeout_reason=True pass=False)
+check scratch            PASS (survivor-tupleunpack-none.py: mkdtemp_dir=True root=True)
+check selftest_conjunct  PASS (survivor-tupleunpack-none.py: honest_comm=[] strips=6 detected=6 anchor=True entry_live=True)
+CONFORM=met
+
+## C1 before survivor deadloop
+command: /usr/bin/python3 /tmp/mori-r41-sandbox-w740ta69/repo/.ufo/waves/round-41/fixtures/extracted/conform-v3-r40.py 62a207f7521fa2e2fcd2e8b0260f047ccfce8862 --repo /tmp/mori-r41-sandbox-w740ta69/repo --contract /tmp/mori-r41-sandbox-w740ta69/repo/.ufo/waves/round-39/contract.md --counter /tmp/mori-r41-sandbox-w740ta69/repo/.ufo/waves/round-41/fixtures/c1/survivor-deadloop-rebind.py
+EXIT=0
+P-C10: at revision R, the round-40 conformance checker passes all nine checks on the round-40 counter bytes — the round-39 nine with three made sound — `timeout_scope` (every `timeout=` keyword in every counter resolves in the scope of its read site: a binding inside the enclosing function shadows the module map, a `global` rebinding is read at module scope, a module-level binding nested in `if`/`try`/`for`/`while` makes the name conditionally rebound and fails closed, and the value must be a finite positive number, so `1e400` fails and a fold raising `ZeroDivisionError` or `RecursionError` fails as a violation, not a setup error), `drain_bind` (every `Popen(` in every counter is drained in its own function by a `communicate(` bound to the same name, carrying its own timeout, with the result consumed — assigned to other than `_`, or returned — so a `wait(timeout=…)` plus `stdout.read()` drain fails even beside a decoy used communicate, an undrained second `Popen(` fails, and a tuple-wrapped or `_`-assigned communicate does not qualify), and `selftest_conjunct` (per counter: the counter's communicates all carry timeouts, stripping each communicate timeout one at a time is detected by that same rule, and the checker's own textual-mutation table carries a live `selftest_conjunct` entry whose anchor occurs in the counter — comm_violations are computed and reported per counter, not for the first counter only) — and the checker's `--selftest` applies eleven textual mutations to the counter of record, each flipping exactly its own check to FAIL.
+check predicate          PASS (exit=0 equal=True)
+check head_pin           PASS (pin=62a207f7521fa2e2fcd2e8b0260f047ccfce8862 tip=62a207f7521fa2e2fcd2e8b0260f047ccfce8862)
+check tool_resolve       PASS (exit=0 resolved=/tmp/mori-r41-sandbox-w740ta69/repo/.ufo/waves/round-39/fixtures/witness-summary-only-live.txt)
+check bounded_reads      PASS (survivor-deadloop-rebind.py: bounded=[] value=[])
+check timeout_scope      PASS (survivor-deadloop-rebind.py: bounded=[] value=[])
+check drain_bind         PASS (survivor-deadloop-rebind.py: violations=[])
+check timeout_state      PASS (exit=1 timeout_reason=True pass=False)
+check scratch            PASS (survivor-deadloop-rebind.py: mkdtemp_dir=True root=True)
+check selftest_conjunct  PASS (survivor-deadloop-rebind.py: honest_comm=[] strips=6 detected=6 anchor=True entry_live=True)
+CONFORM=met
+
+## C2 before selftest
+command: /usr/bin/python3 /tmp/mori-r41-sandbox-w740ta69/repo/tools/mori-sources-appendonly.py --selftest
+EXIT=0
+MORI_SOURCES_APPENDONLY_SELFTEST pass=15 fail=0
+
+## C2 before lane line
+command: /usr/bin/python3 /tmp/mori-r41-sandbox-w740ta69/repo/tools/mori-sources-appendonly.py 62a207f7521fa2e2fcd2e8b0260f047ccfce8862 --repo /tmp/mori-r41-sandbox-w740ta69/repo
+EXIT=1
+P-C11: at revision R, tools/mori-sources-appendonly.py reports, after its summary line, `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; the timing line's eligible set is every superseded id present at R — a never-edited superseded id's last immutable-cell edit is its first-sighting commit, so it reaches the as-of/stale test — and an edit at a commit is a change against its first parent's state only: when the first parent lacks the path the commit contributes no edits (a delete-then-re-add contributes no changed event; ids still compare tip cells against first-sighting cells), never a fall-through to another parent's state; the lane-history verdicts are unchanged except the eligible-set extension — S226 joins superseded_as_of (19 ids) at the landed tip, no id is stale at the tip, S069 is stale at e37dcc6 — and the selftest carries committed fixtures for a never-edited superseded row (as-of), a merge whose first parent lacks the path (no fabricated edit), and a linear delete-then-re-add (no changed event).
+changed S041 superseded_by=S206
+changed S044 superseded_by=S207
+changed S051 superseded_by=S208
+changed S062 superseded_by=S209
+changed S064 superseded_by=S210
+changed S069 superseded_by=S226
+changed S179 superseded_by=S211
+changed S180 superseded_by=S212
+changed S181 superseded_by=S213
+changed S182 superseded_by=S201
+changed S183 superseded_by=S214
+changed S184 superseded_by=S215
+changed S185 superseded_by=S216
+changed S186 superseded_by=S217
+changed S188 superseded_by=S218
+changed S189 superseded_by=S219
+changed S190 superseded_by=S220
+changed S193 superseded_by=S202
+appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S041,S044,S051,S062,S064,S067,S069,S070,S071,S083,S084,S090,S093,S096,S097,S101,S124,S127,S128,S129,S131,S140,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193,S226] round_changed=[]
+supersede_timing superseded_as_of=[S041,S044,S051,S062,S064,S067,S069,S070,S071,S083,S084,S090,S093,S096,S097,S101,S124,S127,S128,S129,S131,S140,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193,S226] stale_supersede=[]
+
+## C2 before dag-h
+command: /usr/bin/python3 /tmp/mori-r41-sandbox-w740ta69/repo/tools/mori-sources-appendonly.py 5e1dcd3ed6f891e33366ed92d3927f257a91484b --repo /tmp/mori-r41-sandbox-w740ta69/repo/.scratch-r41/fixture-dag-h --round-base 5bdfc4efb595a9b6f2846b902a6673174098f4b9
+EXIT=1
+P-C11: at revision R, tools/mori-sources-appendonly.py reports, after its summary line, `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; the timing line's eligible set is every superseded id present at R — a never-edited superseded id's last immutable-cell edit is its first-sighting commit, so it reaches the as-of/stale test — and an edit at a commit is a change against its first parent's state only: when the first parent lacks the path the commit contributes no edits (a delete-then-re-add contributes no changed event; ids still compare tip cells against first-sighting cells), never a fall-through to another parent's state; the lane-history verdicts are unchanged except the eligible-set extension — S226 joins superseded_as_of (19 ids) at the landed tip, no id is stale at the tip, S069 is stale at e37dcc6 — and the selftest carries committed fixtures for a never-edited superseded row (as-of), a merge whose first parent lacks the path (no fabricated edit), and a linear delete-then-re-add (no changed event).
+changed S001 superseded_by=S002
+changed S002 superseded_by=-
+changed S003 superseded_by=-
+changed S008 superseded_by=-
+appendonly_violations=4 ids=[S001,S002,S003,S008] deleted=[] superseded=[S001] round_changed=[S001,S002,S008]
+supersede_timing superseded_as_of=[] stale_supersede=[S001]
+
+## C2 before dag-h2
+command: /usr/bin/python3 /tmp/mori-r41-sandbox-w740ta69/repo/tools/mori-sources-appendonly.py 90d3d07332f8246fd3d80257ed5fb8e4a7d29f2d --repo /tmp/mori-r41-sandbox-w740ta69/repo/.scratch-r41/fixture-dag-h2 --round-base 07be6c7f176584f32d5091ad9f911bec7b6e135e
+EXIT=1
+P-C11: at revision R, tools/mori-sources-appendonly.py reports, after its summary line, `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; the timing line's eligible set is every superseded id present at R — a never-edited superseded id's last immutable-cell edit is its first-sighting commit, so it reaches the as-of/stale test — and an edit at a commit is a change against its first parent's state only: when the first parent lacks the path the commit contributes no edits (a delete-then-re-add contributes no changed event; ids still compare tip cells against first-sighting cells), never a fall-through to another parent's state; the lane-history verdicts are unchanged except the eligible-set extension — S226 joins superseded_as_of (19 ids) at the landed tip, no id is stale at the tip, S069 is stale at e37dcc6 — and the selftest carries committed fixtures for a never-edited superseded row (as-of), a merge whose first parent lacks the path (no fabricated edit), and a linear delete-then-re-add (no changed event).
+changed S001 superseded_by=-
+changed S008 superseded_by=-
+appendonly_violations=2 ids=[S001,S008] deleted=[] superseded=[] round_changed=[S001,S008]
+supersede_timing superseded_as_of=[] stale_supersede=[]
+
+## C2 before dag-z
+command: /usr/bin/python3 /tmp/mori-r41-sandbox-w740ta69/repo/tools/mori-sources-appendonly.py 01e6c5684606262b7198fe0cbd310e27af40822b --repo /tmp/mori-r41-sandbox-w740ta69/repo/.scratch-r41/fixture-dag-z --round-base 3e5442dae5f58b0715a81863768025f0dad6b156
+EXIT=0
+P-C11: at revision R, tools/mori-sources-appendonly.py reports, after its summary line, `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; the timing line's eligible set is every superseded id present at R — a never-edited superseded id's last immutable-cell edit is its first-sighting commit, so it reaches the as-of/stale test — and an edit at a commit is a change against its first parent's state only: when the first parent lacks the path the commit contributes no edits (a delete-then-re-add contributes no changed event; ids still compare tip cells against first-sighting cells), never a fall-through to another parent's state; the lane-history verdicts are unchanged except the eligible-set extension — S226 joins superseded_as_of (19 ids) at the landed tip, no id is stale at the tip, S069 is stale at e37dcc6 — and the selftest carries committed fixtures for a never-edited superseded row (as-of), a merge whose first parent lacks the path (no fabricated edit), and a linear delete-then-re-add (no changed event).
+deleted S002
+appendonly_violations=1 ids=[] deleted=[S002] superseded=[S001] round_changed=[]
+supersede_timing superseded_as_of=[S001] stale_supersede=[]
+
+## C2 before dag-z2
+command: /usr/bin/python3 /tmp/mori-r41-sandbox-w740ta69/repo/tools/mori-sources-appendonly.py cda3c1f4cb8dc5f641b32a9cb8ac1cbbad18ce15 --repo /tmp/mori-r41-sandbox-w740ta69/repo/.scratch-r41/fixture-dag-z2 --round-base 3e5442dae5f58b0715a81863768025f0dad6b156
+EXIT=1
+P-C11: at revision R, tools/mori-sources-appendonly.py reports, after its summary line, `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; the timing line's eligible set is every superseded id present at R — a never-edited superseded id's last immutable-cell edit is its first-sighting commit, so it reaches the as-of/stale test — and an edit at a commit is a change against its first parent's state only: when the first parent lacks the path the commit contributes no edits (a delete-then-re-add contributes no changed event; ids still compare tip cells against first-sighting cells), never a fall-through to another parent's state; the lane-history verdicts are unchanged except the eligible-set extension — S226 joins superseded_as_of (19 ids) at the landed tip, no id is stale at the tip, S069 is stale at e37dcc6 — and the selftest carries committed fixtures for a never-edited superseded row (as-of), a merge whose first parent lacks the path (no fabricated edit), and a linear delete-then-re-add (no changed event).
+deleted S002
+appendonly_violations=1 ids=[] deleted=[S002] superseded=[S001] round_changed=[S001]
+supersede_timing superseded_as_of=[S001] stale_supersede=[]
+
+## C2 before dag-2l-early
+command: /usr/bin/python3 /tmp/mori-r41-sandbox-w740ta69/repo/tools/mori-sources-appendonly.py 050883e5d051a3ef77d7c2a53f0dbf54d279ed2b --repo /tmp/mori-r41-sandbox-w740ta69/repo/.scratch-r41/fixture-dag-2l-early --round-base 3e5442dae5f58b0715a81863768025f0dad6b156
+EXIT=1
+P-C11: at revision R, tools/mori-sources-appendonly.py reports, after its summary line, `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; the timing line's eligible set is every superseded id present at R — a never-edited superseded id's last immutable-cell edit is its first-sighting commit, so it reaches the as-of/stale test — and an edit at a commit is a change against its first parent's state only: when the first parent lacks the path the commit contributes no edits (a delete-then-re-add contributes no changed event; ids still compare tip cells against first-sighting cells), never a fall-through to another parent's state; the lane-history verdicts are unchanged except the eligible-set extension — S226 joins superseded_as_of (19 ids) at the landed tip, no id is stale at the tip, S069 is stale at e37dcc6 — and the selftest carries committed fixtures for a never-edited superseded row (as-of), a merge whose first parent lacks the path (no fabricated edit), and a linear delete-then-re-add (no changed event).
+changed S001 superseded_by=S003
+appendonly_violations=1 ids=[S001] deleted=[] superseded=[S001] round_changed=[S001]
+supersede_timing superseded_as_of=[S001] stale_supersede=[]
+
+## C2 before dag-2l-late
+command: /usr/bin/python3 /tmp/mori-r41-sandbox-w740ta69/repo/tools/mori-sources-appendonly.py a26f088aa24063ffde42e208aca60b6c3596da6a --repo /tmp/mori-r41-sandbox-w740ta69/repo/.scratch-r41/fixture-dag-2l-late --round-base 3e5442dae5f58b0715a81863768025f0dad6b156
+EXIT=1
+P-C11: at revision R, tools/mori-sources-appendonly.py reports, after its summary line, `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; the timing line's eligible set is every superseded id present at R — a never-edited superseded id's last immutable-cell edit is its first-sighting commit, so it reaches the as-of/stale test — and an edit at a commit is a change against its first parent's state only: when the first parent lacks the path the commit contributes no edits (a delete-then-re-add contributes no changed event; ids still compare tip cells against first-sighting cells), never a fall-through to another parent's state; the lane-history verdicts are unchanged except the eligible-set extension — S226 joins superseded_as_of (19 ids) at the landed tip, no id is stale at the tip, S069 is stale at e37dcc6 — and the selftest carries committed fixtures for a never-edited superseded row (as-of), a merge whose first parent lacks the path (no fabricated edit), and a linear delete-then-re-add (no changed event).
+changed S001 superseded_by=S002
+appendonly_violations=1 ids=[S001] deleted=[] superseded=[S001] round_changed=[S001]
+supersede_timing superseded_as_of=[] stale_supersede=[S001]
+
+## C2 before dag-x
+command: /usr/bin/python3 /tmp/mori-r41-sandbox-w740ta69/repo/tools/mori-sources-appendonly.py 0c972eb41e287444ce0843f7164eda7b931928a8 --repo /tmp/mori-r41-sandbox-w740ta69/repo/.scratch-r41/fixture-dag-x --round-base 3e5442dae5f58b0715a81863768025f0dad6b156
+EXIT=1
+P-C11: at revision R, tools/mori-sources-appendonly.py reports, after its summary line, `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; the timing line's eligible set is every superseded id present at R — a never-edited superseded id's last immutable-cell edit is its first-sighting commit, so it reaches the as-of/stale test — and an edit at a commit is a change against its first parent's state only: when the first parent lacks the path the commit contributes no edits (a delete-then-re-add contributes no changed event; ids still compare tip cells against first-sighting cells), never a fall-through to another parent's state; the lane-history verdicts are unchanged except the eligible-set extension — S226 joins superseded_as_of (19 ids) at the landed tip, no id is stale at the tip, S069 is stale at e37dcc6 — and the selftest carries committed fixtures for a never-edited superseded row (as-of), a merge whose first parent lacks the path (no fabricated edit), and a linear delete-then-re-add (no changed event).
+changed S001 superseded_by=S002
+appendonly_violations=1 ids=[S001] deleted=[] superseded=[S001] round_changed=[S001,S002]
+supersede_timing superseded_as_of=[] stale_supersede=[S001]
+
+## C3 before calibration
+command: /usr/bin/python3 /tmp/mori-r41-sandbox-w740ta69/repo/tools/mori-round41-calibration.py 62a207f7521fa2e2fcd2e8b0260f047ccfce8862 --repo /tmp/mori-r41-sandbox-w740ta69/repo --reference-rev 62a207f7521fa2e2fcd2e8b0260f047ccfce8862
+EXIT=1
+SCORECARD.md recorded_as_of=34 observed_as_of=35 recorded_extension=MISSING observed_extension=17
+LOG.md recorded_as_of=34 observed_as_of=35 recorded_extension=MISSING observed_extension=17
+corpus/lessons/round-40.md recorded_as_of=34 observed_as_of=35 recorded_extension=16 observed_extension=17
+MORI_R41_CALIBRATION mismatches=6 observed_as_of=35 extension_rows=17
+

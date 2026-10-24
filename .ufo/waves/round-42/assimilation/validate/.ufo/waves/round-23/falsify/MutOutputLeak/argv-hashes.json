@@ -1,0 +1,88 @@
+{
+  "argv": [
+    "/usr/bin/python",
+    "/fast/scratch/hyaku/mori-r23/MutOutputLeak/clone/tools/mori-quota-surface.py",
+    "--fixture",
+    "/fast/scratch/hyaku/mori-r23/MutOutputLeak/CaseExt4Journaled.fixture.json"
+  ],
+  "artifacts": {
+    "argv_hashes": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutOutputLeak/argv-hashes.json",
+    "bounded_result": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutOutputLeak/bounded-result.json",
+    "mutant_source": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/MutOutputLeak/mori-quota-surface.mutant.py"
+  },
+  "bindings": {
+    ".ufo/waves/round-23/frozen/quota-cases/CaseExt4Journaled.json": {
+      "authority_revision": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+      "clone_matches_authority": true,
+      "sha256": "d317ccb1141271ed0cda2d2b2209fcfb965b57016e6dfc4e0efcf34560c9fb40"
+    },
+    ".ufo/waves/round-23/oracle-quota.py": {
+      "authority_revision": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+      "clone_matches_authority": true,
+      "sha256": "f1f4a027728180436fc5161171b0f6ad4ca4176229b5240aabb33e3f2af36bec"
+    },
+    "tools/mori-quota-surface.py": {
+      "authority_revision": "f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c",
+      "clone_matches_authority": true,
+      "sha256": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92"
+    }
+  },
+  "bounds": {
+    "address_space_bytes": 402653184,
+    "core_bytes": 0,
+    "cpu_seconds": 15,
+    "one_child_at_a_time": true,
+    "retained_stdout_or_stderr_max_bytes": 32768,
+    "wall_timeout_seconds": 15
+  },
+  "branch": "round23/MutOutputLeak",
+  "case_path": "/fast/scratch/hyaku/mori-r23/MutOutputLeak/clone/.ufo/waves/round-23/frozen/quota-cases/CaseExt4Journaled.json",
+  "clone_method": "git clone --shared --no-checkout --no-tags --single-branch; sparse checkout of only quota tool, oracle and assigned case",
+  "cwd": "/fast/scratch/hyaku/mori-r23/MutOutputLeak",
+  "detector_sha256": "fb46649a3a2421c5e4fb0860a477c7e5992fb59162aca68808c6858a52291e07",
+  "detector_source": "def run_detector(phase):\n    assert sha256(oracle_path.read_bytes()) == binding[oracle_rel][\"sha256\"]\n    assert sha256(case_path.read_bytes()) == binding[case_rel][\"sha256\"]\n    assert sha256(fixture_path.read_bytes()) == fixture_digest\n    started = time.monotonic()\n    result = {\"phase\": phase, \"argv\": list(argv), \"source_sha256\": sha256(source.read_bytes()), \"oracle_sha256\": sha256(oracle_path.read_bytes()), \"case_sha256\": sha256(case_path.read_bytes()), \"fixture_sha256\": fixture_digest, \"memory_limit_bytes\": 384 * 1024 * 1024, \"wall_timeout_seconds\": 15}\n    try:\n        child = subprocess.run(argv, capture_output=True, text=True, timeout=15, env=child_env, preexec_fn=child_limits, cwd=str(seat_root))\n        result.update({\"exit_code\": child.returncode, \"stdout\": child.stdout, \"stderr\": child.stderr, \"timeout\": False})\n        assert len(child.stdout.encode()) <= 32768 and len(child.stderr.encode()) <= 32768\n        parsed = json.loads(child.stdout)\n        ok, headline, checks, reason = oracle.evaluate_case(case_obj, parsed, child.returncode, child.stdout)\n        result.update({\"primary_pass\": ok, \"headline\": headline, \"supplementary\": checks, \"reason\": reason, \"overall_pass\": bool(ok and all(check[\"status\"] == \"pass\" for check in checks) and child.stderr == \"\")})\n    except Exception as exc:\n        result.update({\"detector_error\": type(exc).__name__, \"overall_pass\": False})\n    result[\"elapsed_seconds\"] = round(time.monotonic() - started, 6)\n    return result\n",
+  "environment_overrides": {
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "TMPDIR": "/fast/scratch/hyaku/mori-r23/MutOutputLeak"
+  },
+  "expectation_seal": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+  "fixture_object_equals_sealed_case_fixture": true,
+  "fixture_path": "/fast/scratch/hyaku/mori-r23/MutOutputLeak/CaseExt4Journaled.fixture.json",
+  "fixture_sha256": "52b9d2336b9300b6ebe9c9143d3f7c12d1e8adaa6a62b407f50c232320d5746c",
+  "isolated_clone": "/fast/scratch/hyaku/mori-r23/MutOutputLeak/clone",
+  "mutation": {
+    "added_line": "    result[\"option_values\"] = [part.split(\"=\", 1)[1] for part in mount.super_options.split(\",\") if \"=\" in part]",
+    "applied_exactly_once": true,
+    "exercised_on_assigned_case": true,
+    "function": "evaluate",
+    "insert_after_original_line": 549
+  },
+  "production_revision": "f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c",
+  "production_static_after": {
+    ".ufo/waves/round-23/frozen/quota-cases/CaseExt4Journaled.json": {
+      "equals_bound_bytes": true,
+      "sha256": "d317ccb1141271ed0cda2d2b2209fcfb965b57016e6dfc4e0efcf34560c9fb40"
+    },
+    ".ufo/waves/round-23/oracle-quota.py": {
+      "equals_bound_bytes": true,
+      "sha256": "f1f4a027728180436fc5161171b0f6ad4ca4176229b5240aabb33e3f2af36bec"
+    },
+    "tools/mori-quota-surface.py": {
+      "equals_bound_bytes": true,
+      "sha256": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92"
+    }
+  },
+  "runtime": {
+    "installs_or_updates": [],
+    "python_executable": "/usr/bin/python",
+    "python_version": "3.14.8"
+  },
+  "schema": "mori-r23-mutation-argv-hashes-v1",
+  "seat": "MutOutputLeak",
+  "source_sha256": {
+    "mutated": "729669d080e247e55b65faf8369d57da972328a043731bbe9841b9570504e1d8",
+    "pristine": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+    "restored": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-observed/wave-tree/.ufo/waves/round-23/oracle-rename.py",
+    "--tool",
+    "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-observed/staged/before/mori-retention-reconcile.py",
+    "--requirements",
+    "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-observed/wave-tree/.ufo/waves/round-23/frozen/c1-requirements.json",
+    "--output",
+    "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-observed/c1/before.json"
+  ],
+  "exit_code": 1,
+  "measured_revision": "f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c",
+  "name": "c1-oracle-before",
+  "recorded_utc": "2026-10-21T18:32:08.925687+00:00",
+  "schema": "mori-r23-command-receipt-v1",
+  "seal_revision": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+  "stderr": "",
+  "stdout": "{\"counts\": {\"capability_absent\": 0, \"misleading_alias_runs\": 8, \"pass\": 25, \"total\": 26, \"unmet\": 1}, \"finding_id\": \"R23_C1_REQUIREMENTS_UNMET\", \"output\": \"/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-observed/c1/before.json\"}\n"
+}

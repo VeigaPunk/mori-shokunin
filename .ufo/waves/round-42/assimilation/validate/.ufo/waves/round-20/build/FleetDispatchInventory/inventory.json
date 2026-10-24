@@ -1,0 +1,5842 @@
+{
+ "schema": "mori-fleet-dispatch-inventory-v1",
+ "seat": "MoriR20.FleetDispatchInventory",
+ "generated_utc": "2026-10-21T10:36:16Z",
+ "fleet_root": "/home/vgpnk/Projects/shokunin",
+ "dispatch_schema": "ufo-swarm-wave-dispatch-v1",
+ "snapshot_note": "Point-in-time read of live lane trees; live seats may add or change files after generated_utc. Re-run scan.py to refresh.",
+ "method": {
+  "lane_set": "directories matching *-shokunin directly under the fleet root (not symlinks, not dot-prefixed); tameshi-shokukin reported separately as outside_lane_glob",
+  "walk": "os.walk(<lane>/.ufo/waves, followlinks=False); symlinks recorded and not followed; only regular files named *.json are candidates",
+  "membership": "top-level JSON object with schema == ufo-swarm-wave-dispatch-v1; other parseable JSON -> ignored_json; unparseable -> unreadable_json",
+  "wave": "top-level wave (null when absent or JSON null)",
+  "task_count": "len(taskCall.tasks); 0 when taskCall is JSON null (no-spawn); null when the taskCall key is missing or malformed",
+  "resume_count": "top-level counts.resume as declared",
+  "resume_sends": "len(resumeSends) (actual entries); null when the key is missing",
+  "checks": "consistency flags; names are self-describing (see field checks per dispatch)",
+  "sha256": "over the raw bytes read during the scan"
+ },
+ "lanes": [
+  {
+   "lane": "audio-shokunin",
+   "waves_dir": "audio-shokunin/.ufo/waves",
+   "waves_present": false,
+   "waves_is_symlink": false,
+   "json_files": 0,
+   "dispatch_files": 0,
+   "dispatch_distinct_content": 0,
+   "ignored_json": 0,
+   "unreadable_json": 0,
+   "task_total": 0,
+   "task_total_distinct_content": 0,
+   "task_min": null,
+   "task_max": null,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 0,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 0,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "chousa-shokunin",
+   "waves_dir": "chousa-shokunin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 13,
+   "dispatch_files": 2,
+   "dispatch_distinct_content": 2,
+   "ignored_json": 11,
+   "unreadable_json": 0,
+   "task_total": 136,
+   "task_total_distinct_content": 136,
+   "task_min": 68,
+   "task_max": 68,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 0,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 2,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "game-dev-2d-shokunin",
+   "waves_dir": "game-dev-2d-shokunin/.ufo/waves",
+   "waves_present": false,
+   "waves_is_symlink": false,
+   "json_files": 0,
+   "dispatch_files": 0,
+   "dispatch_distinct_content": 0,
+   "ignored_json": 0,
+   "unreadable_json": 0,
+   "task_total": 0,
+   "task_total_distinct_content": 0,
+   "task_min": null,
+   "task_max": null,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 0,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 0,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "game-dev-3d-shokunin",
+   "waves_dir": "game-dev-3d-shokunin/.ufo/waves",
+   "waves_present": false,
+   "waves_is_symlink": false,
+   "json_files": 0,
+   "dispatch_files": 0,
+   "dispatch_distinct_content": 0,
+   "ignored_json": 0,
+   "unreadable_json": 0,
+   "task_total": 0,
+   "task_total_distinct_content": 0,
+   "task_min": null,
+   "task_max": null,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 0,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 0,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "kagi-shokunin",
+   "waves_dir": "kagi-shokunin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 103,
+   "dispatch_files": 7,
+   "dispatch_distinct_content": 7,
+   "ignored_json": 96,
+   "unreadable_json": 0,
+   "task_total": 479,
+   "task_total_distinct_content": 479,
+   "task_min": 64,
+   "task_max": 88,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 0,
+   "json_mentions_nontop": 1,
+   "case_variant_json": 0,
+   "distinct_wave_values": 7,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "kaidoku-shokunin",
+   "waves_dir": "kaidoku-shokunin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 3411,
+   "dispatch_files": 14,
+   "dispatch_distinct_content": 14,
+   "ignored_json": 3358,
+   "unreadable_json": 39,
+   "task_total": 959,
+   "task_total_distinct_content": 959,
+   "task_min": 32,
+   "task_max": 100,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 11,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 1,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 14,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "kake-shokunin",
+   "waves_dir": "kake-shokunin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 177,
+   "dispatch_files": 5,
+   "dispatch_distinct_content": 5,
+   "ignored_json": 172,
+   "unreadable_json": 0,
+   "task_total": 325,
+   "task_total_distinct_content": 325,
+   "task_min": 64,
+   "task_max": 69,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 0,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 5,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "kama-shokunin",
+   "waves_dir": "kama-shokunin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 296,
+   "dispatch_files": 19,
+   "dispatch_distinct_content": 19,
+   "ignored_json": 276,
+   "unreadable_json": 1,
+   "task_total": 1198,
+   "task_total_distinct_content": 1198,
+   "task_min": 32,
+   "task_max": 95,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 16,
+   "flagged_dispatch_files": 16,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 5,
+   "json_mentions_nontop": 3,
+   "case_variant_json": 0,
+   "distinct_wave_values": 3,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "kasegi-shokunin",
+   "waves_dir": "kasegi-shokunin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 13,
+   "dispatch_files": 1,
+   "dispatch_distinct_content": 1,
+   "ignored_json": 12,
+   "unreadable_json": 0,
+   "task_total": 64,
+   "task_total_distinct_content": 64,
+   "task_min": 64,
+   "task_max": 64,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 0,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 1,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "kengaku-shokunin",
+   "waves_dir": "kengaku-shokunin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 17,
+   "dispatch_files": 5,
+   "dispatch_distinct_content": 4,
+   "ignored_json": 12,
+   "unreadable_json": 0,
+   "task_total": 387,
+   "task_total_distinct_content": 315,
+   "task_min": 64,
+   "task_max": 92,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 0,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 4,
+   "wave_value_collisions": {
+    "kengaku-r26-build": [
+     "kengaku-shokunin/.ufo/waves/round-26/build-dispatch.json",
+     "kengaku-shokunin/.ufo/waves/round-26/build-registry-rebuild.json"
+    ]
+   }
+  },
+  {
+   "lane": "kotoba-shokunin",
+   "waves_dir": "kotoba-shokunin/.ufo/waves",
+   "waves_present": false,
+   "waves_is_symlink": false,
+   "json_files": 0,
+   "dispatch_files": 0,
+   "dispatch_distinct_content": 0,
+   "ignored_json": 0,
+   "unreadable_json": 0,
+   "task_total": 0,
+   "task_total_distinct_content": 0,
+   "task_min": null,
+   "task_max": null,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 0,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 0,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "kotodama-shokunin",
+   "waves_dir": "kotodama-shokunin/.ufo/waves",
+   "waves_present": false,
+   "waves_is_symlink": false,
+   "json_files": 0,
+   "dispatch_files": 0,
+   "dispatch_distinct_content": 0,
+   "ignored_json": 0,
+   "unreadable_json": 0,
+   "task_total": 0,
+   "task_total_distinct_content": 0,
+   "task_min": null,
+   "task_max": null,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 0,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 0,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "kumitate-shokunin",
+   "waves_dir": "kumitate-shokunin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 33,
+   "dispatch_files": 6,
+   "dispatch_distinct_content": 6,
+   "ignored_json": 27,
+   "unreadable_json": 0,
+   "task_total": 512,
+   "task_total_distinct_content": 512,
+   "task_min": 68,
+   "task_max": 96,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 1,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 6,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "lore-shokunin",
+   "waves_dir": "lore-shokunin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 1102,
+   "dispatch_files": 0,
+   "dispatch_distinct_content": 0,
+   "ignored_json": 1101,
+   "unreadable_json": 1,
+   "task_total": 0,
+   "task_total_distinct_content": 0,
+   "task_min": null,
+   "task_max": null,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 0,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 0,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "mado-shokunin",
+   "waves_dir": "mado-shokunin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 428,
+   "dispatch_files": 16,
+   "dispatch_distinct_content": 16,
+   "ignored_json": 410,
+   "unreadable_json": 2,
+   "task_total": 1030,
+   "task_total_distinct_content": 1030,
+   "task_min": 32,
+   "task_max": 88,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 11,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 1,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 16,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "mori-shokunin",
+   "waves_dir": "mori-shokunin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 480,
+   "dispatch_files": 11,
+   "dispatch_distinct_content": 11,
+   "ignored_json": 467,
+   "unreadable_json": 2,
+   "task_total": 671,
+   "task_total_distinct_content": 671,
+   "task_min": 32,
+   "task_max": 76,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 4,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 34,
+   "json_mentions_nontop": 3,
+   "case_variant_json": 0,
+   "distinct_wave_values": 11,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "revenger-shokunin",
+   "waves_dir": "revenger-shokunin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 9,
+   "dispatch_files": 1,
+   "dispatch_distinct_content": 1,
+   "ignored_json": 8,
+   "unreadable_json": 0,
+   "task_total": 32,
+   "task_total_distinct_content": 32,
+   "task_min": 32,
+   "task_max": 32,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 0,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 1,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "souji-shokunin",
+   "waves_dir": "souji-shokunin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 55,
+   "dispatch_files": 12,
+   "dispatch_distinct_content": 12,
+   "ignored_json": 43,
+   "unreadable_json": 0,
+   "task_total": 783,
+   "task_total_distinct_content": 783,
+   "task_min": 32,
+   "task_max": 91,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 0,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 12,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "tabi-shokunin",
+   "waves_dir": "tabi-shokunin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 5160,
+   "dispatch_files": 67,
+   "dispatch_distinct_content": 17,
+   "ignored_json": 5093,
+   "unreadable_json": 0,
+   "task_total": 3932,
+   "task_total_distinct_content": 967,
+   "task_min": 32,
+   "task_max": 86,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 3,
+   "flagged_dispatch_files": 3,
+   "json_symlinks": 3,
+   "other_symlinks": 3,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 4,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 16,
+   "wave_value_collisions": {
+    "tabi-round-12-w1": [
+     "tabi-shokunin/.ufo/waves/round-12/w1/dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-12/w1/dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-12/w1/dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-12/w1/dispatch.json"
+    ],
+    "tabi-round-13-w1": [
+     "tabi-shokunin/.ufo/waves/round-13/w1/dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-13/w1/dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-13/w1/dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-13/w1/dispatch.json"
+    ],
+    "tabi-round-14-w1": [
+     "tabi-shokunin/.ufo/waves/round-14/w1/dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-14/w1/dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-14/w1/dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-14/w1/dispatch.json"
+    ],
+    "tabi-round-15-w1": [
+     "tabi-shokunin/.ufo/waves/round-15/w1/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-15/w1/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-15/w1/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-15/w1/validation.json"
+    ],
+    "tabi-round-15-w2": [
+     "tabi-shokunin/.ufo/waves/round-15/w2/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-15/w2/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-15/w2/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-15/w2/validation.json"
+    ],
+    "tabi-round-16-w1": [
+     "tabi-shokunin/.ufo/waves/round-16/w1/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-16/w1/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-16/w1/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-16/w1/validation.json"
+    ],
+    "tabi-round-16-w2": [
+     "tabi-shokunin/.ufo/waves/round-16/w2/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-16/w2/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-16/w2/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-16/w2/validation.json"
+    ],
+    "tabi-round-17-w1": [
+     "tabi-shokunin/.ufo/waves/round-17/w1/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-17/w1/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-17/w1/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-17/w1/validation.json"
+    ],
+    "tabi-round-17-w2": [
+     "tabi-shokunin/.ufo/waves/round-17/w2/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-17/w2/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-17/w2/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-17/w2/validation.json"
+    ],
+    "tabi-round-18-w1": [
+     "tabi-shokunin/.ufo/waves/round-18/w1/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-18/w1/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-18/w1/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-18/w1/validation.json"
+    ],
+    "tabi-round-18-w2": [
+     "tabi-shokunin/.ufo/waves/round-18/w2/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-18/w2/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-18/w2/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-18/w2/validation.json"
+    ],
+    "tabi-round-19-w1": [
+     "tabi-shokunin/.ufo/waves/round-19/w1/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w1/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w1/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w1/validation.json"
+    ],
+    "tabi-round-19-w2": [
+     "tabi-shokunin/.ufo/waves/round-19/w2/dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-19/w2/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/validation.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/validation.json"
+    ],
+    "tabi-fleet-r1-interactive-20261015": [
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/rounds/fleet-round-1-interactive-20261015/wave.dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/rounds/fleet-round-1-interactive-20261015/wave.dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/rounds/fleet-round-1-interactive-20261015/wave.dispatch.json"
+    ],
+    "tabi-round-20-w1": [
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-20/w1/dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-20/w1/dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-20/w1/dispatch.json",
+     "tabi-shokunin/.ufo/waves/round-20/w1/dispatch.json"
+    ]
+   }
+  },
+  {
+   "lane": "tameshi-shokunin",
+   "waves_dir": "tameshi-shokunin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 106,
+   "dispatch_files": 16,
+   "dispatch_distinct_content": 15,
+   "ignored_json": 90,
+   "unreadable_json": 0,
+   "task_total": 965,
+   "task_total_distinct_content": 893,
+   "task_min": 32,
+   "task_max": 99,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 0,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 15,
+   "wave_value_collisions": {
+    "tameshi-r20-w1": [
+     "tameshi-shokunin/.ufo/waves/round-20/run1.json",
+     "tameshi-shokunin/.ufo/waves/round-20/validation-current.json"
+    ]
+   }
+  },
+  {
+   "lane": "tsukuroi-shokunin",
+   "waves_dir": "tsukuroi-shokunin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 227,
+   "dispatch_files": 14,
+   "dispatch_distinct_content": 14,
+   "ignored_json": 213,
+   "unreadable_json": 0,
+   "task_total": 834,
+   "task_total_distinct_content": 834,
+   "task_min": 32,
+   "task_max": 81,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 0,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 14,
+   "wave_value_collisions": {}
+  }
+ ],
+ "totals": {
+  "json_files": 11630,
+  "dispatch_files": 196,
+  "dispatch_distinct_content": 144,
+  "ignored_json": 11389,
+  "unreadable_json": 45,
+  "task_total": 12307,
+  "task_total_distinct_content": 9198,
+  "resume_total": 0,
+  "resume_unknown": 0,
+  "resume_sends_total": 0,
+  "no_spawn_waves": 0,
+  "wave_null": 19,
+  "flagged_dispatch_files": 19,
+  "json_symlinks": 3,
+  "other_symlinks": 29,
+  "special_files": 0,
+  "io_errors": 0,
+  "nonjson_schema_mentions": 46,
+  "json_mentions_nontop": 7,
+  "case_variant_json": 0,
+  "lanes_scanned": 21,
+  "lanes_with_waves_dir": 16,
+  "lanes_with_dispatch": 15,
+  "distinct_dispatch_content_fleet_wide": 144,
+  "dispatch_files_fleet_wide": 196
+ },
+ "outside_lane_glob": [
+  {
+   "lane": "tameshi-shokukin",
+   "waves_dir": "tameshi-shokukin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 0,
+   "dispatch_files": 0,
+   "dispatch_distinct_content": 0,
+   "ignored_json": 0,
+   "unreadable_json": 0,
+   "task_total": 0,
+   "task_total_distinct_content": 0,
+   "task_min": null,
+   "task_max": null,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 0,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 0,
+   "wave_value_collisions": {}
+  },
+  {
+   "lane": "tameshi-shokukin/tameshi-shokunin",
+   "waves_dir": "tameshi-shokukin/tameshi-shokunin/.ufo/waves",
+   "waves_present": true,
+   "waves_is_symlink": false,
+   "json_files": 0,
+   "dispatch_files": 0,
+   "dispatch_distinct_content": 0,
+   "ignored_json": 0,
+   "unreadable_json": 0,
+   "task_total": 0,
+   "task_total_distinct_content": 0,
+   "task_min": null,
+   "task_max": null,
+   "resume_total": 0,
+   "resume_unknown": 0,
+   "resume_sends_total": 0,
+   "no_spawn_waves": 0,
+   "wave_null": 0,
+   "flagged_dispatch_files": 0,
+   "json_symlinks": 0,
+   "other_symlinks": 0,
+   "special_files": 0,
+   "io_errors": 0,
+   "nonjson_schema_mentions": 0,
+   "json_mentions_nontop": 0,
+   "case_variant_json": 0,
+   "distinct_wave_values": 0,
+   "wave_value_collisions": {}
+  }
+ ],
+ "dispatches": [
+  {
+   "lane": "chousa-shokunin",
+   "path": "chousa-shokunin/.ufo/waves/round-25/build-dispatch.json",
+   "lane_path": ".ufo/waves/round-25/build-dispatch.json",
+   "sha256": "218d4c6ad2a8e7d5a1886b509f1d835bbc94eb539becfa06980193df784c44dc",
+   "bytes": 137320,
+   "wave": "chousa-r25-build",
+   "task_count": 68,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 68,
+    "resume": 0,
+    "total": 68
+   },
+   "registry_report_dir": ".ufo/waves/round-25/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "chousa-shokunin",
+   "path": "chousa-shokunin/.ufo/waves/round-25/falsify-run.json",
+   "lane_path": ".ufo/waves/round-25/falsify-run.json",
+   "sha256": "b43ec1555eb4a4c72c0dfb4d556a217dd0d1781bcf3c99371107ee56cf3677d7",
+   "bytes": 122017,
+   "wave": "chousa-r25-falsify",
+   "task_count": 68,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 68,
+    "resume": 0,
+    "total": 68
+   },
+   "registry_report_dir": ".ufo/waves/round-25/falsify",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kagi-shokunin",
+   "path": "kagi-shokunin/.ufo/waves/round-22/build-dispatch.json",
+   "lane_path": ".ufo/waves/round-22/build-dispatch.json",
+   "sha256": "ff48aa025c9a6ad04b7d05aee3849a3719c28ecd2655809cdb340d156770fcf2",
+   "bytes": 99572,
+   "wave": "kagi-r22-build",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-22/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kagi-shokunin",
+   "path": "kagi-shokunin/.ufo/waves/round-22/falsify-dispatch.json",
+   "lane_path": ".ufo/waves/round-22/falsify-dispatch.json",
+   "sha256": "1f03b7ad0e4638044c8abc0f5c3527979aa0f5bf52dfa0a3dee698b7c27006e8",
+   "bytes": 117484,
+   "wave": "kagi-r22-falsify",
+   "task_count": 66,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 66,
+    "resume": 0,
+    "total": 66
+   },
+   "registry_report_dir": ".ufo/waves/round-22/falsify",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kagi-shokunin",
+   "path": "kagi-shokunin/.ufo/waves/round-23/falsify-dispatch.json",
+   "lane_path": ".ufo/waves/round-23/falsify-dispatch.json",
+   "sha256": "2cb45d998a91a825c47b3fed960311e62654c176cbf36ba65f85fb1600b51069",
+   "bytes": 92545,
+   "wave": "kagi-r23-falsify",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-23/falsify",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kagi-shokunin",
+   "path": "kagi-shokunin/.ufo/waves/round-23/parent-build-dispatch.json",
+   "lane_path": ".ufo/waves/round-23/parent-build-dispatch.json",
+   "sha256": "16f413a03612aaf00ccd09232905b87ad9ab7f2e3780e6f6358b61a957f5fe42",
+   "bytes": 113243,
+   "wave": "kagi-r23-parent-build",
+   "task_count": 66,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 66,
+    "resume": 0,
+    "total": 66
+   },
+   "registry_report_dir": ".ufo/waves/round-23/parent-build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kagi-shokunin",
+   "path": "kagi-shokunin/.ufo/waves/round-24/build-dispatch.json",
+   "lane_path": ".ufo/waves/round-24/build-dispatch.json",
+   "sha256": "37542ef720e56cf06e63698eb53c7fde044b619a6537eb28a6804c5efc004f2a",
+   "bytes": 108524,
+   "wave": "kagi-r24-build",
+   "task_count": 67,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 67,
+    "resume": 0,
+    "total": 67
+   },
+   "registry_report_dir": ".ufo/waves/round-24/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kagi-shokunin",
+   "path": "kagi-shokunin/.ufo/waves/round-24/falsify-dispatch.json",
+   "lane_path": ".ufo/waves/round-24/falsify-dispatch.json",
+   "sha256": "a0bd3f20141a8445b47f0a3ed3b210cdf9107e29a67dc4823de2490ada52677f",
+   "bytes": 125745,
+   "wave": "kagi-r24-falsify-recovery",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-24/falsify",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kagi-shokunin",
+   "path": "kagi-shokunin/.ufo/waves/round-25/build-dispatch.json",
+   "lane_path": ".ufo/waves/round-25/build-dispatch.json",
+   "sha256": "2fe68f5c2e0ca56a940233a0e1af935567ead213165e2cf8c6bc64f37e7e3532",
+   "bytes": 215072,
+   "wave": "kagi-r25-build",
+   "task_count": 88,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 88,
+    "resume": 0,
+    "total": 88
+   },
+   "registry_report_dir": ".ufo/waves/round-25/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kaidoku-shokunin",
+   "path": "kaidoku-shokunin/.ufo/waves/round-14/dispatch.json",
+   "lane_path": ".ufo/waves/round-14/dispatch.json",
+   "sha256": "3078211acf516ce38e1cdfc9d383f2d344d7ce610451a112688ed2046c7fe9d7",
+   "bytes": 50274,
+   "wave": "kaidoku-r14-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-14/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kaidoku-shokunin",
+   "path": "kaidoku-shokunin/.ufo/waves/round-15/dispatch.json",
+   "lane_path": ".ufo/waves/round-15/dispatch.json",
+   "sha256": "6a5fc800af2331bd891cdf0b144f1edb65f15a4c550c51111b2df3457dadcb83",
+   "bytes": 51381,
+   "wave": "kaidoku-r15-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-15/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kaidoku-shokunin",
+   "path": "kaidoku-shokunin/.ufo/waves/round-16/wave1-dispatch.json",
+   "lane_path": ".ufo/waves/round-16/wave1-dispatch.json",
+   "sha256": "3b3cebeff3d445637ad8de6699cbcd253131e749cef678598ed70d6b892e2936",
+   "bytes": 99564,
+   "wave": "kaidoku-r16-w1",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-16/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kaidoku-shokunin",
+   "path": "kaidoku-shokunin/.ufo/waves/round-16/wave2-dispatch.json",
+   "lane_path": ".ufo/waves/round-16/wave2-dispatch.json",
+   "sha256": "e6e0ae6819abbcd18c8f5f81a156c7ec0212004b59b8673a328ef5d860531cf6",
+   "bytes": 65399,
+   "wave": "kaidoku-r16-w2",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-16/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kaidoku-shokunin",
+   "path": "kaidoku-shokunin/.ufo/waves/round-17/wave1-dispatch.json",
+   "lane_path": ".ufo/waves/round-17/wave1-dispatch.json",
+   "sha256": "18591b469065f3ef3088b5a38eda08d7ede223b3b1189d08cdd7c357fccc8091",
+   "bytes": 119548,
+   "wave": "kaidoku-r17-w1",
+   "task_count": 78,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 78,
+    "resume": 0,
+    "total": 78
+   },
+   "registry_report_dir": ".ufo/waves/round-17/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kaidoku-shokunin",
+   "path": "kaidoku-shokunin/.ufo/waves/round-17/wave2-dispatch.json",
+   "lane_path": ".ufo/waves/round-17/wave2-dispatch.json",
+   "sha256": "564b75c72e774148409046b2ded37bfcb54899afa7e150e27ed8ded3a8580760",
+   "bytes": 132913,
+   "wave": "kaidoku-r17-w2",
+   "task_count": 69,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 69,
+    "resume": 0,
+    "total": 69
+   },
+   "registry_report_dir": ".ufo/waves/round-17/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kaidoku-shokunin",
+   "path": "kaidoku-shokunin/.ufo/waves/round-18/wave1-dispatch.json",
+   "lane_path": ".ufo/waves/round-18/wave1-dispatch.json",
+   "sha256": "1d5be2267205628d27a92ef8f9e3f277dbfdd77f6f0b6ab87bb311b26900a3ff",
+   "bytes": 155637,
+   "wave": "kaidoku-r18-w1",
+   "task_count": 89,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 89,
+    "resume": 0,
+    "total": 89
+   },
+   "registry_report_dir": ".ufo/waves/round-18/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kaidoku-shokunin",
+   "path": "kaidoku-shokunin/.ufo/waves/round-18/wave2-dispatch.json",
+   "lane_path": ".ufo/waves/round-18/wave2-dispatch.json",
+   "sha256": "74f00018d4f332e53192e733fa9c5d1720728ce5428ba3a0c88b46ffabf26c38",
+   "bytes": 172204,
+   "wave": "kaidoku-r18-w2",
+   "task_count": 98,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 98,
+    "resume": 0,
+    "total": 98
+   },
+   "registry_report_dir": ".ufo/waves/round-18/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kaidoku-shokunin",
+   "path": "kaidoku-shokunin/.ufo/waves/round-19/wave1-dispatch.json",
+   "lane_path": ".ufo/waves/round-19/wave1-dispatch.json",
+   "sha256": "ffc40160c3b6c9994fd552c92b9dc6b61d68bbb10e197b02f8afa97b8940fc35",
+   "bytes": 148409,
+   "wave": "kaidoku-r19-w1",
+   "task_count": 90,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 90,
+    "resume": 0,
+    "total": 90
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kaidoku-shokunin",
+   "path": "kaidoku-shokunin/.ufo/waves/round-19/wave2-dispatch.json",
+   "lane_path": ".ufo/waves/round-19/wave2-dispatch.json",
+   "sha256": "17e94524266a585908340c9da3780cb3dfa022f2d4e1ca95c06293902ec3c874",
+   "bytes": 128246,
+   "wave": "kaidoku-r19-w2",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kaidoku-shokunin",
+   "path": "kaidoku-shokunin/.ufo/waves/round-20/wave1-dispatch.json",
+   "lane_path": ".ufo/waves/round-20/wave1-dispatch.json",
+   "sha256": "31bb1ccfc0f92f53bfcb6a2cd1e71ebb2d510fb88df8f84b43e51472d8e596d0",
+   "bytes": 181849,
+   "wave": "kaidoku-r20-w1",
+   "task_count": 100,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 100,
+    "resume": 0,
+    "total": 100
+   },
+   "registry_report_dir": ".ufo/waves/round-20/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kaidoku-shokunin",
+   "path": "kaidoku-shokunin/.ufo/waves/round-20/wave2-dispatch.json",
+   "lane_path": ".ufo/waves/round-20/wave2-dispatch.json",
+   "sha256": "0eb95ec0b86a0ad82930ddee6450c7b11386b4e027f4073af8e5464056da743f",
+   "bytes": 140923,
+   "wave": "kaidoku-r20-w2",
+   "task_count": 71,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 71,
+    "resume": 0,
+    "total": 71
+   },
+   "registry_report_dir": ".ufo/waves/round-20/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kaidoku-shokunin",
+   "path": "kaidoku-shokunin/.ufo/waves/round-21/wave1-dispatch.json",
+   "lane_path": ".ufo/waves/round-21/wave1-dispatch.json",
+   "sha256": "0e0d0aa857c7cd58c33d717efc4628dcca25fa238582dd8712e47729275b5d5e",
+   "bytes": 101207,
+   "wave": "kaidoku-r21-w1",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-21/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kaidoku-shokunin",
+   "path": "kaidoku-shokunin/.ufo/waves/round-21/wave2-dispatch.json",
+   "lane_path": ".ufo/waves/round-21/wave2-dispatch.json",
+   "sha256": "495f21dd5846aade39859f105a36ae451412c2338338ece1c4c8146b1ee4e266",
+   "bytes": 121988,
+   "wave": "kaidoku-r21-w2",
+   "task_count": 68,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 68,
+    "resume": 0,
+    "total": 68
+   },
+   "registry_report_dir": ".ufo/waves/round-21/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kake-shokunin",
+   "path": "kake-shokunin/.ufo/waves/round-21/wave1-validation.json",
+   "lane_path": ".ufo/waves/round-21/wave1-validation.json",
+   "sha256": "57b0437981c9822c62cdc23308f78fc44cd43eaba78734ebb1b7a13990ac3c7a",
+   "bytes": 97782,
+   "wave": "kake-r21-build",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-21/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kake-shokunin",
+   "path": "kake-shokunin/.ufo/waves/round-22/w1-dispatch.json",
+   "lane_path": ".ufo/waves/round-22/w1-dispatch.json",
+   "sha256": "517d3821b3d3462b59d0cbe9a9d9842f419de1449b180475a1c80835968c1de8",
+   "bytes": 84891,
+   "wave": "kake-r22-w1",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-22/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kake-shokunin",
+   "path": "kake-shokunin/.ufo/waves/round-22/w2-dispatch.json",
+   "lane_path": ".ufo/waves/round-22/w2-dispatch.json",
+   "sha256": "17a7236d28719363a2a85e16a17079a80db3e5ec41dc3eaa042041ce813c742c",
+   "bytes": 100663,
+   "wave": "kake-r22-w2",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-22/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kake-shokunin",
+   "path": "kake-shokunin/.ufo/waves/round-23/w1-dispatch.json",
+   "lane_path": ".ufo/waves/round-23/w1-dispatch.json",
+   "sha256": "a8d68851a7cf3561b8d828ef2f0571fc19d106b20dd390c60106d2e5447ce2a7",
+   "bytes": 85226,
+   "wave": "kake-r23-w1",
+   "task_count": 69,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 69,
+    "resume": 0,
+    "total": 69
+   },
+   "registry_report_dir": ".ufo/waves/round-23/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kake-shokunin",
+   "path": "kake-shokunin/.ufo/waves/round-23/w2-dispatch.json",
+   "lane_path": ".ufo/waves/round-23/w2-dispatch.json",
+   "sha256": "780e6481108ead0884cd9d5fc54320975c90638ade1da5807beada3a1769284e",
+   "bytes": 73517,
+   "wave": "kake-r23-w2",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-23/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-11/dispatch.json",
+   "lane_path": ".ufo/waves/round-11/dispatch.json",
+   "sha256": "618e5d7bd022b576e4467e0dd5bc2a6ce6f41b45492339221821afcd220af492",
+   "bytes": 50876,
+   "wave": "kama-round-11",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-11/advice",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-11/verification-dispatch.json",
+   "lane_path": ".ufo/waves/round-11/verification-dispatch.json",
+   "sha256": "f34da406475d4e59f83448ce529375814896d6e64a37f327e4a6c9f581edae5b",
+   "bytes": 40257,
+   "wave": "kama-round-11-verification",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-11/verification",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-12/dispatch.json",
+   "lane_path": ".ufo/waves/round-12/dispatch.json",
+   "sha256": "bc476e62c212c0499740708fc90ab447cdfbad9d9ab37203a5dc6ff4d589358d",
+   "bytes": 47765,
+   "wave": null,
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-12/advice",
+   "duplicate_of": [],
+   "checks": [
+    "wave_null_or_not_string"
+   ]
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-13/dispatch.json",
+   "lane_path": ".ufo/waves/round-13/dispatch.json",
+   "sha256": "3ca00d54a13bcd3322d19e5ddc1b30b489fcd7ee58a6554e4ce7ceb9b1558ef9",
+   "bytes": 46428,
+   "wave": null,
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-13/advice",
+   "duplicate_of": [],
+   "checks": [
+    "wave_null_or_not_string"
+   ]
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-14/dispatch.json",
+   "lane_path": ".ufo/waves/round-14/dispatch.json",
+   "sha256": "07fbdcb4e7d8ca625221192e2f8e2854dd2aa00011b68637472b98661352fc47",
+   "bytes": 44915,
+   "wave": null,
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-14/advice",
+   "duplicate_of": [],
+   "checks": [
+    "wave_null_or_not_string"
+   ]
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-15/build/dispatch.json",
+   "lane_path": ".ufo/waves/round-15/build/dispatch.json",
+   "sha256": "3b8d9da217518a2861d72f025def30608a55b09d6f46094e81c98add33784457",
+   "bytes": 91441,
+   "wave": null,
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-15/build/advice",
+   "duplicate_of": [],
+   "checks": [
+    "wave_null_or_not_string"
+   ]
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-15/falsify/dispatch.json",
+   "lane_path": ".ufo/waves/round-15/falsify/dispatch.json",
+   "sha256": "e318064fc6a895ccabb06a31ae629b508a0c2249dcd9eb77c4516d3aaa6876e3",
+   "bytes": 39532,
+   "wave": null,
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-15/falsify/advice",
+   "duplicate_of": [],
+   "checks": [
+    "wave_null_or_not_string"
+   ]
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-16/build/dispatch.json",
+   "lane_path": ".ufo/waves/round-16/build/dispatch.json",
+   "sha256": "c9484afc86504d75211d6060c8e214048184634f5ec3be9eb43dc5aedda3cdae",
+   "bytes": 132812,
+   "wave": null,
+   "task_count": 81,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 81,
+    "resume": 0,
+    "total": 81
+   },
+   "registry_report_dir": ".ufo/waves/round-16/build/advice",
+   "duplicate_of": [],
+   "checks": [
+    "wave_null_or_not_string"
+   ]
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-16/falsify/dispatch.json",
+   "lane_path": ".ufo/waves/round-16/falsify/dispatch.json",
+   "sha256": "0ef929dc4df003ee14578c8f834ba3e28e932f5da397445e2e003c7182b2d0c0",
+   "bytes": 109521,
+   "wave": null,
+   "task_count": 79,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 79,
+    "resume": 0,
+    "total": 79
+   },
+   "registry_report_dir": ".ufo/waves/round-16/falsify/advice",
+   "duplicate_of": [],
+   "checks": [
+    "wave_null_or_not_string"
+   ]
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-17/build/dispatch.json",
+   "lane_path": ".ufo/waves/round-17/build/dispatch.json",
+   "sha256": "7c80f4c8bf6bdbd65d9367cc66fb1cfa156b1ff1d0e50f8a47710bd8428daf6a",
+   "bytes": 148800,
+   "wave": null,
+   "task_count": 82,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 82,
+    "resume": 0,
+    "total": 82
+   },
+   "registry_report_dir": ".ufo/waves/round-17/build/advice",
+   "duplicate_of": [],
+   "checks": [
+    "wave_null_or_not_string"
+   ]
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-17/falsify/dispatch.json",
+   "lane_path": ".ufo/waves/round-17/falsify/dispatch.json",
+   "sha256": "61c2fadfe6f2b7b5ebe6b702d944053a22663996415c38b147867c3c2c0385c4",
+   "bytes": 110612,
+   "wave": null,
+   "task_count": 80,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 80,
+    "resume": 0,
+    "total": 80
+   },
+   "registry_report_dir": ".ufo/waves/round-17/falsify/advice",
+   "duplicate_of": [],
+   "checks": [
+    "wave_null_or_not_string"
+   ]
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-18/build/dispatch-95.json",
+   "lane_path": ".ufo/waves/round-18/build/dispatch-95.json",
+   "sha256": "59ec84c1fa30c392f8de8b27277550dcad15d006585b4462086e479b92b36744",
+   "bytes": 171837,
+   "wave": null,
+   "task_count": 95,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 95,
+    "resume": 0,
+    "total": 95
+   },
+   "registry_report_dir": ".ufo/waves/round-18/build/advice",
+   "duplicate_of": [],
+   "checks": [
+    "wave_null_or_not_string"
+   ]
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-18/build/dispatch.json",
+   "lane_path": ".ufo/waves/round-18/build/dispatch.json",
+   "sha256": "470ae3ad6fd13e6142cf45143a34c9d99581ea339c606aa23756513c857434e4",
+   "bytes": 142296,
+   "wave": null,
+   "task_count": 75,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 75,
+    "resume": 0,
+    "total": 75
+   },
+   "registry_report_dir": ".ufo/waves/round-18/build/advice",
+   "duplicate_of": [],
+   "checks": [
+    "wave_null_or_not_string"
+   ]
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-18/falsify/dispatch.json",
+   "lane_path": ".ufo/waves/round-18/falsify/dispatch.json",
+   "sha256": "e41f27bff52806312aa85323fecc3d637481eedbb47fe202eca4d2803606b249",
+   "bytes": 87937,
+   "wave": null,
+   "task_count": 76,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 76,
+    "resume": 0,
+    "total": 76
+   },
+   "registry_report_dir": ".ufo/waves/round-18/falsify/advice",
+   "duplicate_of": [],
+   "checks": [
+    "wave_null_or_not_string"
+   ]
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-19/build/dispatch.json",
+   "lane_path": ".ufo/waves/round-19/build/dispatch.json",
+   "sha256": "de806ed858ec94c32a886fde9e8a478ef6b6eb7d7ae881d667454a488cddcead",
+   "bytes": 100979,
+   "wave": null,
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-19/build/advice",
+   "duplicate_of": [],
+   "checks": [
+    "wave_null_or_not_string"
+   ]
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-19/falsify/dispatch.json",
+   "lane_path": ".ufo/waves/round-19/falsify/dispatch.json",
+   "sha256": "59112a66b5a1c77d20d0ac5c058a407e01504a63774b276579bb0d006608e59c",
+   "bytes": 85559,
+   "wave": null,
+   "task_count": 66,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 66,
+    "resume": 0,
+    "total": 66
+   },
+   "registry_report_dir": ".ufo/waves/round-19/falsify/advice",
+   "duplicate_of": [],
+   "checks": [
+    "wave_null_or_not_string"
+   ]
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-20/build/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/build/dispatch.json",
+   "sha256": "20d28bd4227e8b7408809d310c98f6380320f7eba4ad9c6bca69fc83cfca3408",
+   "bytes": 116016,
+   "wave": null,
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-20/build/advice",
+   "duplicate_of": [],
+   "checks": [
+    "wave_null_or_not_string"
+   ]
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-20/falsify/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/falsify/dispatch.json",
+   "sha256": "fadfb7fed49a3d91b4302dac1f53799e2099c1212754bc64d7c03186e6e8e7eb",
+   "bytes": 116075,
+   "wave": "falsify",
+   "task_count": 86,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 86,
+    "resume": 0,
+    "total": 86
+   },
+   "registry_report_dir": ".ufo/waves/round-20/falsify/advice",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kama-shokunin",
+   "path": "kama-shokunin/.ufo/waves/round-21/build/dispatch.json",
+   "lane_path": ".ufo/waves/round-21/build/dispatch.json",
+   "sha256": "801484e0e7f849a8668d44974111d00ad8a427678bdaf4e5878fc74f789ed29a",
+   "bytes": 151687,
+   "wave": null,
+   "task_count": 86,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 86,
+    "resume": 0,
+    "total": 86
+   },
+   "registry_report_dir": ".ufo/waves/round-21/build/advice",
+   "duplicate_of": [],
+   "checks": [
+    "wave_null_or_not_string"
+   ]
+  },
+  {
+   "lane": "kasegi-shokunin",
+   "path": "kasegi-shokunin/.ufo/waves/round-23/build-dispatch.json",
+   "lane_path": ".ufo/waves/round-23/build-dispatch.json",
+   "sha256": "7ced1f2585dd7df5ff819d23d85a69f071028bdcb4aec7f6ed7ab2379e8efa9d",
+   "bytes": 101498,
+   "wave": "kasegi-r23-build",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-23/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kengaku-shokunin",
+   "path": "kengaku-shokunin/.ufo/waves/round-25/build-dispatch.json",
+   "lane_path": ".ufo/waves/round-25/build-dispatch.json",
+   "sha256": "a6646dd5705182dbeca17114a35e703383b9a5c660d0d5740b84cd9061d422f5",
+   "bytes": 161788,
+   "wave": "kengaku-r25-build",
+   "task_count": 92,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 92,
+    "resume": 0,
+    "total": 92
+   },
+   "registry_report_dir": ".ufo/waves/round-25/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kengaku-shokunin",
+   "path": "kengaku-shokunin/.ufo/waves/round-25/falsify-dispatch.json",
+   "lane_path": ".ufo/waves/round-25/falsify-dispatch.json",
+   "sha256": "bab25784d6ff7b9941247b2c4dc9ecb767a0c52ee3b9c14d8d0d5ebdb7043484",
+   "bytes": 126698,
+   "wave": "kengaku-r25-falsify",
+   "task_count": 87,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 87,
+    "resume": 0,
+    "total": 87
+   },
+   "registry_report_dir": ".ufo/waves/round-25/falsify",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kengaku-shokunin",
+   "path": "kengaku-shokunin/.ufo/waves/round-26/build-dispatch.json",
+   "lane_path": ".ufo/waves/round-26/build-dispatch.json",
+   "sha256": "425b46136aca371c8a49349cb0e70c174c0567a65ef59aefa4d11aa99f1d1835",
+   "bytes": 117238,
+   "wave": "kengaku-r26-build",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-26/build",
+   "duplicate_of": [
+    "kengaku-shokunin/.ufo/waves/round-26/build-registry-rebuild.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "kengaku-shokunin",
+   "path": "kengaku-shokunin/.ufo/waves/round-26/build-registry-rebuild.json",
+   "lane_path": ".ufo/waves/round-26/build-registry-rebuild.json",
+   "sha256": "425b46136aca371c8a49349cb0e70c174c0567a65ef59aefa4d11aa99f1d1835",
+   "bytes": 117238,
+   "wave": "kengaku-r26-build",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-26/build",
+   "duplicate_of": [
+    "kengaku-shokunin/.ufo/waves/round-26/build-dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "kengaku-shokunin",
+   "path": "kengaku-shokunin/.ufo/waves/round-26/falsify-dispatch.json",
+   "lane_path": ".ufo/waves/round-26/falsify-dispatch.json",
+   "sha256": "480a374fe03579f78a673698ee5063e2effcc1be206090bdc61252e751553434",
+   "bytes": 103229,
+   "wave": "kengaku-r26-falsify",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-26/falsify",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kumitate-shokunin",
+   "path": "kumitate-shokunin/.ufo/waves/round-35/build-dispatch.json",
+   "lane_path": ".ufo/waves/round-35/build-dispatch.json",
+   "sha256": "f2f3497e14ee467323cf62dff7103f548ded4a9c9b730041127f2dc18c275aa4",
+   "bytes": 235722,
+   "wave": "kumitate-r35-build",
+   "task_count": 95,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 95,
+    "resume": 0,
+    "total": 95
+   },
+   "registry_report_dir": ".ufo/waves/round-35/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kumitate-shokunin",
+   "path": "kumitate-shokunin/.ufo/waves/round-35/falsify-dispatch.json",
+   "lane_path": ".ufo/waves/round-35/falsify-dispatch.json",
+   "sha256": "9b6e69330b23a66ce016b125a42b935f500b4f11494cd83d6fa81fb78dc5cbb2",
+   "bytes": 141884,
+   "wave": "kumitate-r35-falsify",
+   "task_count": 75,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 75,
+    "resume": 0,
+    "total": 75
+   },
+   "registry_report_dir": ".ufo/waves/round-35/falsify",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kumitate-shokunin",
+   "path": "kumitate-shokunin/.ufo/waves/round-36/build-dispatch.json",
+   "lane_path": ".ufo/waves/round-36/build-dispatch.json",
+   "sha256": "879128fd41e9cc78eb72881eeb145eee75d16fe3b8f4069d69bd735fd5eac191",
+   "bytes": 182181,
+   "wave": "kumitate-r36-build",
+   "task_count": 96,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 96,
+    "resume": 0,
+    "total": 96
+   },
+   "registry_report_dir": ".ufo/waves/round-36/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kumitate-shokunin",
+   "path": "kumitate-shokunin/.ufo/waves/round-37/falsify-dispatch.json",
+   "lane_path": ".ufo/waves/round-37/falsify-dispatch.json",
+   "sha256": "894aac3a7986085e394f1d25ffa69f56f990dce6ffa8e03e6f68c832764ffaa1",
+   "bytes": 118343,
+   "wave": "kumitate-r37-falsify",
+   "task_count": 68,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 68,
+    "resume": 0,
+    "total": 68
+   },
+   "registry_report_dir": ".ufo/waves/round-37/falsify",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kumitate-shokunin",
+   "path": "kumitate-shokunin/.ufo/waves/round-38/build-dispatch.json",
+   "lane_path": ".ufo/waves/round-38/build-dispatch.json",
+   "sha256": "5b24206b841d33f27f62de34edf95e62779093cce0c41dccd274cf09c70e07c5",
+   "bytes": 308591,
+   "wave": "kumitate-r38-build",
+   "task_count": 90,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 90,
+    "resume": 0,
+    "total": 90
+   },
+   "registry_report_dir": ".ufo/waves/round-38/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "kumitate-shokunin",
+   "path": "kumitate-shokunin/.ufo/waves/round-38/falsify-dispatch.json",
+   "lane_path": ".ufo/waves/round-38/falsify-dispatch.json",
+   "sha256": "3140900b9a0be5161be8a1c2c91f2f96dd804a98042bca6cf97faedb14e33c10",
+   "bytes": 254178,
+   "wave": "kumitate-r38-falsify",
+   "task_count": 88,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 88,
+    "resume": 0,
+    "total": 88
+   },
+   "registry_report_dir": ".ufo/waves/round-38/falsify",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mado-shokunin",
+   "path": "mado-shokunin/.ufo/waves/fleet-round-1-interactive/dispatch-preview.json",
+   "lane_path": ".ufo/waves/fleet-round-1-interactive/dispatch-preview.json",
+   "sha256": "74b3aa02b924f67a425e5fb981d672a656581625c85ab0a11a8fd00b2b08a200",
+   "bytes": 40320,
+   "wave": "mado-fleet-1-interactive",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/fleet-round-1-interactive/reports",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mado-shokunin",
+   "path": "mado-shokunin/.ufo/waves/round-13/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-13/w1/dispatch.json",
+   "sha256": "4db77c0cab5c8a4ca785311b3b051dbd33867298f0ab273d25cb70018634ecd7",
+   "bytes": 54379,
+   "wave": "mado-r13-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-13/w1/reports",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mado-shokunin",
+   "path": "mado-shokunin/.ufo/waves/round-14/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-14/w1/dispatch.json",
+   "sha256": "00bb95c7778c01538536c030649cc13a43f6efa25337f02b600dbf35f3891999",
+   "bytes": 58856,
+   "wave": "mado-r14-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-14/w1/reports",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mado-shokunin",
+   "path": "mado-shokunin/.ufo/waves/round-15/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-15/w1/dispatch.json",
+   "sha256": "fed17a70b168602c67e8194a082682472092b68ca263d4126d04fc706ccfa6ec",
+   "bytes": 117264,
+   "wave": "mado-r15-w1",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-15/w1/reports",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mado-shokunin",
+   "path": "mado-shokunin/.ufo/waves/round-16/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-16/w1/dispatch.json",
+   "sha256": "14fb2ece785a280a8e90156396213ee5690eab84533ee235fe4827f852fa2ebe",
+   "bytes": 65036,
+   "wave": "mado-r16-w1",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-16/w1/reports",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mado-shokunin",
+   "path": "mado-shokunin/.ufo/waves/round-16/w2/dispatch.json",
+   "lane_path": ".ufo/waves/round-16/w2/dispatch.json",
+   "sha256": "84a37fe231ea4c5bd600fc35e5b8cd92ff56c6df176106cd762e9babc7ddf5ab",
+   "bytes": 35870,
+   "wave": "mado-r16-w2",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-16/w2/reports",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mado-shokunin",
+   "path": "mado-shokunin/.ufo/waves/round-17/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-17/w1/dispatch.json",
+   "sha256": "abed46c1efe2b127381b20c170f274c991c919429217450af8926887a01184b5",
+   "bytes": 108884,
+   "wave": "mado-r17-w1",
+   "task_count": 70,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 70,
+    "resume": 0,
+    "total": 70
+   },
+   "registry_report_dir": ".ufo/waves/round-17/w1/reports",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mado-shokunin",
+   "path": "mado-shokunin/.ufo/waves/round-17/w2/dispatch.json",
+   "lane_path": ".ufo/waves/round-17/w2/dispatch.json",
+   "sha256": "f83afbbc328be393ce4e15f16d2275ac3958ade3fe0688d62b3317009a9231e4",
+   "bytes": 110929,
+   "wave": "mado-r17-w2",
+   "task_count": 78,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 78,
+    "resume": 0,
+    "total": 78
+   },
+   "registry_report_dir": ".ufo/waves/round-17/w2/reports",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mado-shokunin",
+   "path": "mado-shokunin/.ufo/waves/round-18/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-18/w1/dispatch.json",
+   "sha256": "38b7402d5a2f5999b455dc6b473ac5a580e3660edbc823ff33fe2b414b49674f",
+   "bytes": 142670,
+   "wave": "mado-r18-w1",
+   "task_count": 88,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 88,
+    "resume": 0,
+    "total": 88
+   },
+   "registry_report_dir": ".ufo/waves/round-18/w1/reports",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mado-shokunin",
+   "path": "mado-shokunin/.ufo/waves/round-18/w2/dispatch.json",
+   "lane_path": ".ufo/waves/round-18/w2/dispatch.json",
+   "sha256": "a65f2ddb178528f8874d5fb4a13122f93a8ed96e70dcdd39d46cf392e494a1f3",
+   "bytes": 146809,
+   "wave": "mado-r18-w2",
+   "task_count": 73,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 73,
+    "resume": 0,
+    "total": 73
+   },
+   "registry_report_dir": ".ufo/waves/round-18/w2/reports",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mado-shokunin",
+   "path": "mado-shokunin/.ufo/waves/round-19/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-19/w1/dispatch.json",
+   "sha256": "274efd078ca1a1ecaf68e46eab174360b42fbe1997a4115def5d8f6fb0d25632",
+   "bytes": 160683,
+   "wave": "mado-r19-w1",
+   "task_count": 86,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 86,
+    "resume": 0,
+    "total": 86
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w1/reports",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mado-shokunin",
+   "path": "mado-shokunin/.ufo/waves/round-19/w2/dispatch.json",
+   "lane_path": ".ufo/waves/round-19/w2/dispatch.json",
+   "sha256": "800771c390e7741976c53e72a477920632aa765ba8f460b437175a3d7b6a6291",
+   "bytes": 104649,
+   "wave": "mado-r19-w2",
+   "task_count": 67,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 67,
+    "resume": 0,
+    "total": 67
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w2/reports",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mado-shokunin",
+   "path": "mado-shokunin/.ufo/waves/round-20/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/w1/dispatch.json",
+   "sha256": "8f26ea67dd4f98afdcc724886132b0139cb9f2a6371057ca38f43fab231eb689",
+   "bytes": 143524,
+   "wave": "mado-r20-w1",
+   "task_count": 85,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 85,
+    "resume": 0,
+    "total": 85
+   },
+   "registry_report_dir": ".ufo/waves/round-20/w1/reports",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mado-shokunin",
+   "path": "mado-shokunin/.ufo/waves/round-20/w2/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/w2/dispatch.json",
+   "sha256": "ad04b331e88811e8d7e526ece350e312a1230ce8180b34a161ee81e5ae517649",
+   "bytes": 113679,
+   "wave": "mado-r20-w2",
+   "task_count": 78,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 78,
+    "resume": 0,
+    "total": 78
+   },
+   "registry_report_dir": ".ufo/waves/round-20/w2/reports",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mado-shokunin",
+   "path": "mado-shokunin/.ufo/waves/round-21/w1-run.json",
+   "lane_path": ".ufo/waves/round-21/w1-run.json",
+   "sha256": "aff8be0645b2782ca6f581a2c7219fbabbcc569d460459a62468b4b351b7d54b",
+   "bytes": 104317,
+   "wave": "mado-r21-w1",
+   "task_count": 65,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 65,
+    "resume": 0,
+    "total": 65
+   },
+   "registry_report_dir": ".ufo/waves/round-21/w1/reports",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mado-shokunin",
+   "path": "mado-shokunin/.ufo/waves/round-21/w2-run.json",
+   "lane_path": ".ufo/waves/round-21/w2-run.json",
+   "sha256": "45e3bf170649ab7ebd35572ef2211b84c1084bb2b887f58214dc5bd3b1e96792",
+   "bytes": 162534,
+   "wave": "mado-r21-w2",
+   "task_count": 84,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 84,
+    "resume": 0,
+    "total": 84
+   },
+   "registry_report_dir": ".ufo/waves/round-21/w2/reports",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mori-shokunin",
+   "path": "mori-shokunin/.ufo/waves/round-13/dispatch.json",
+   "lane_path": ".ufo/waves/round-13/dispatch.json",
+   "sha256": "d6f22b2c8f39877eaf0edbbd51b8a74b363b875a0ac2371cb18627d18592c760",
+   "bytes": 52667,
+   "wave": "mori-r13-build",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-13/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mori-shokunin",
+   "path": "mori-shokunin/.ufo/waves/round-14/dispatch.json",
+   "lane_path": ".ufo/waves/round-14/dispatch.json",
+   "sha256": "a076a30062a691bed2302c5eff083d6051c6b88c7b63cd294802bc4de659c3dd",
+   "bytes": 51551,
+   "wave": "mori-r14-repair",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-14/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mori-shokunin",
+   "path": "mori-shokunin/.ufo/waves/round-15/dispatch.json",
+   "lane_path": ".ufo/waves/round-15/dispatch.json",
+   "sha256": "bd6a40ba59c7f884baba21af5fa192defdb92c8f4c8947e17fe31e3b07708376",
+   "bytes": 104068,
+   "wave": "mori-r15-positive",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-15/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mori-shokunin",
+   "path": "mori-shokunin/.ufo/waves/round-16/wave1-dispatch.json",
+   "lane_path": ".ufo/waves/round-16/wave1-dispatch.json",
+   "sha256": "1b7f92ca89b814b39a83e2bdc94b49a8927eac81d3709cb4026ce671024e1ff2",
+   "bytes": 81144,
+   "wave": "mori-r16-window-build",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-16/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mori-shokunin",
+   "path": "mori-shokunin/.ufo/waves/round-17/wave1-dispatch.json",
+   "lane_path": ".ufo/waves/round-17/wave1-dispatch.json",
+   "sha256": "3f79283e1b740de24834ffe8fd0e051cbb78226ca531739f7e6fff42954f6c86",
+   "bytes": 88970,
+   "wave": "mori-r17-w1-build",
+   "task_count": 70,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 70,
+    "resume": 0,
+    "total": 70
+   },
+   "registry_report_dir": ".ufo/waves/round-17/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mori-shokunin",
+   "path": "mori-shokunin/.ufo/waves/round-17/wave2-dispatch.json",
+   "lane_path": ".ufo/waves/round-17/wave2-dispatch.json",
+   "sha256": "6b8d937196c32730a50b50ae41b9f3547ae8e2477f3d7c1e4072da9977f5c6d1",
+   "bytes": 92356,
+   "wave": "mori-r17-w2-falsify",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-17/falsify",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mori-shokunin",
+   "path": "mori-shokunin/.ufo/waves/round-18/wave1-dispatch.json",
+   "lane_path": ".ufo/waves/round-18/wave1-dispatch.json",
+   "sha256": "84bfb3dd29a23ec5c8715478d316ab89df6aba4e96fb6f81b7ad81ba51ac0d7e",
+   "bytes": 135847,
+   "wave": "mori-r18-w1-build",
+   "task_count": 68,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 68,
+    "resume": 0,
+    "total": 68
+   },
+   "registry_report_dir": ".ufo/waves/round-18/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mori-shokunin",
+   "path": "mori-shokunin/.ufo/waves/round-18/wave2-dispatch.json",
+   "lane_path": ".ufo/waves/round-18/wave2-dispatch.json",
+   "sha256": "6a4099c08d5694bf36180921816d656854245b0471c20fcf4fba0b6456b2fdd7",
+   "bytes": 110471,
+   "wave": "mori-r18-w2-falsify",
+   "task_count": 67,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 67,
+    "resume": 0,
+    "total": 67
+   },
+   "registry_report_dir": ".ufo/waves/round-18/falsify",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mori-shokunin",
+   "path": "mori-shokunin/.ufo/waves/round-19/wave1-run.json",
+   "lane_path": ".ufo/waves/round-19/wave1-run.json",
+   "sha256": "3dd334db8ae5848a71b67b4b37c6d4052dd696ba4a4e37b36314847c1e4db1ea",
+   "bytes": 131251,
+   "wave": "mori-r19-attempt2-build",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-19/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mori-shokunin",
+   "path": "mori-shokunin/.ufo/waves/round-19/wave2-run.json",
+   "lane_path": ".ufo/waves/round-19/wave2-run.json",
+   "sha256": "fc9fc93fce51c5ab4773801b485003e005d610bfe9e1270d0d616b86592ce84b",
+   "bytes": 111167,
+   "wave": "mori-r19-attempt2-falsify",
+   "task_count": 70,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 70,
+    "resume": 0,
+    "total": 70
+   },
+   "registry_report_dir": ".ufo/waves/round-19/falsify",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "mori-shokunin",
+   "path": "mori-shokunin/.ufo/waves/round-20/wave1-run.json",
+   "lane_path": ".ufo/waves/round-20/wave1-run.json",
+   "sha256": "98487ee16e4c02454a624fe5245a11949305d3a4415d450783191d44acab51a0",
+   "bytes": 81203,
+   "wave": "mori-r20-build",
+   "task_count": 76,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 76,
+    "resume": 0,
+    "total": 76
+   },
+   "registry_report_dir": ".ufo/waves/round-20/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "revenger-shokunin",
+   "path": "revenger-shokunin/.ufo/waves/fleet-round-1-interactive/rendered-undispatched.json",
+   "lane_path": ".ufo/waves/fleet-round-1-interactive/rendered-undispatched.json",
+   "sha256": "ec7a98e109ac919efabfcb55ca1274af4ad8aeea5382f33ebf75fd6a72917d9f",
+   "bytes": 35955,
+   "wave": "revenger-r1-interactive-audit",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/fleet-round-1-interactive/reviews",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "souji-shokunin",
+   "path": "souji-shokunin/.ufo/waves/round-13/w1-dispatch.json",
+   "lane_path": ".ufo/waves/round-13/w1-dispatch.json",
+   "sha256": "b1857daf36940c319b28154019b40b25c58f17f870dc65e15347bcc93753216c",
+   "bytes": 51661,
+   "wave": "souji-r13-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-13/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "souji-shokunin",
+   "path": "souji-shokunin/.ufo/waves/round-14/w1-dispatch.json",
+   "lane_path": ".ufo/waves/round-14/w1-dispatch.json",
+   "sha256": "b82394b3fb1c1ce2d35407c26fcd6ffbaa5e03d18a1197af6069e6257e6a8b03",
+   "bytes": 50560,
+   "wave": "souji-r14-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-14/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "souji-shokunin",
+   "path": "souji-shokunin/.ufo/waves/round-15/w1-dispatch.json",
+   "lane_path": ".ufo/waves/round-15/w1-dispatch.json",
+   "sha256": "74fd66fb7cf3faf2f6e531ae74dda0ce5e9ff54ec5aeabf444790ae07e2b22e4",
+   "bytes": 92383,
+   "wave": "souji-r15-w1",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-15/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "souji-shokunin",
+   "path": "souji-shokunin/.ufo/waves/round-16/w1-dispatch.json",
+   "lane_path": ".ufo/waves/round-16/w1-dispatch.json",
+   "sha256": "ab55e919c52c7c04cd3c20512e5581d4027f1fac50eea4be004a3bd6b23ec7d9",
+   "bytes": 103252,
+   "wave": "souji-r16-w1",
+   "task_count": 65,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 65,
+    "resume": 0,
+    "total": 65
+   },
+   "registry_report_dir": ".ufo/waves/round-16/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "souji-shokunin",
+   "path": "souji-shokunin/.ufo/waves/round-16/w2-dispatch.json",
+   "lane_path": ".ufo/waves/round-16/w2-dispatch.json",
+   "sha256": "8307e26a9cebc3ca73b76ae661f0d03b98cceca252ed3dbd769549443de8362b",
+   "bytes": 104427,
+   "wave": "souji-r16-w2",
+   "task_count": 79,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 79,
+    "resume": 0,
+    "total": 79
+   },
+   "registry_report_dir": ".ufo/waves/round-16/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "souji-shokunin",
+   "path": "souji-shokunin/.ufo/waves/round-17/w1-dispatch.json",
+   "lane_path": ".ufo/waves/round-17/w1-dispatch.json",
+   "sha256": "f78fef4c66f27365830ede1acc59a8869d1300d7e83e44a17b8a784d7421e633",
+   "bytes": 141021,
+   "wave": "souji-r17-w1",
+   "task_count": 78,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 78,
+    "resume": 0,
+    "total": 78
+   },
+   "registry_report_dir": ".ufo/waves/round-17/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "souji-shokunin",
+   "path": "souji-shokunin/.ufo/waves/round-17/w2-dispatch.json",
+   "lane_path": ".ufo/waves/round-17/w2-dispatch.json",
+   "sha256": "feb2ef4f61d1afe0f9a10332f9ba8c22930daa10d13fff9f42c3fafac9528bc8",
+   "bytes": 109671,
+   "wave": "souji-r17-w2",
+   "task_count": 71,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 71,
+    "resume": 0,
+    "total": 71
+   },
+   "registry_report_dir": ".ufo/waves/round-17/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "souji-shokunin",
+   "path": "souji-shokunin/.ufo/waves/round-18/w1-dispatch.json",
+   "lane_path": ".ufo/waves/round-18/w1-dispatch.json",
+   "sha256": "c43e9218aae782a20b6b123f98725eea5165dd11736932d92849b4eb808744b6",
+   "bytes": 155836,
+   "wave": "souji-r18-w1",
+   "task_count": 91,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 91,
+    "resume": 0,
+    "total": 91
+   },
+   "registry_report_dir": ".ufo/waves/round-18/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "souji-shokunin",
+   "path": "souji-shokunin/.ufo/waves/round-18/w2-dispatch.json",
+   "lane_path": ".ufo/waves/round-18/w2-dispatch.json",
+   "sha256": "55e5ca4e768e9fae106af1338c6ffb204814e1a5bed582e8ee04075f39d2abfd",
+   "bytes": 108526,
+   "wave": "souji-r18-w2",
+   "task_count": 79,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 79,
+    "resume": 0,
+    "total": 79
+   },
+   "registry_report_dir": ".ufo/waves/round-18/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "souji-shokunin",
+   "path": "souji-shokunin/.ufo/waves/round-20/final-dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-dispatch.json",
+   "sha256": "864a3cb6d8c0781c1c25cf2681e8c69e01086c79b9cad3a22dcab4dfd038be73",
+   "bytes": 121468,
+   "wave": "souji-r20-final",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-20/final",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "souji-shokunin",
+   "path": "souji-shokunin/.ufo/waves/round-20/recovery-dispatch.json",
+   "lane_path": ".ufo/waves/round-20/recovery-dispatch.json",
+   "sha256": "6b0c2d305304f135d016aa668fe32168e61e6f783e2cad954207e9ea09851164",
+   "bytes": 134047,
+   "wave": "souji-r20-recovery",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-20/recovery",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "souji-shokunin",
+   "path": "souji-shokunin/.ufo/waves/round-20/w1-dispatch.json",
+   "lane_path": ".ufo/waves/round-20/w1-dispatch.json",
+   "sha256": "cf14027517927b7539d63cd7095ddc91aaf456d64fb0f4aa431e2b4b2e026f95",
+   "bytes": 50938,
+   "wave": "souji-r20-w1",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-20/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-12/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-12/w1/dispatch.json",
+   "sha256": "e1f648d038b99f0c341a7e38f5eb42c87169a395d46e4b1ea0ddbc76872b7a0e",
+   "bytes": 46147,
+   "wave": "tabi-round-12-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-12/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-12/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-12/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-12/w1/dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-13/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-13/w1/dispatch.json",
+   "sha256": "029cdfeb699a28816a5ccc20a5555191117938983d320be077baee1df48d53e3",
+   "bytes": 46509,
+   "wave": "tabi-round-13-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-13/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-13/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-13/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-13/w1/dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-14/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-14/w1/dispatch.json",
+   "sha256": "a19a21f4fb625a50b0adce57b350b0ffd874ca4065a402f425a6557415e52359",
+   "bytes": 46158,
+   "wave": "tabi-round-14-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-14/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-14/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-14/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-14/w1/dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-15/w1/validation.json",
+   "lane_path": ".ufo/waves/round-15/w1/validation.json",
+   "sha256": "d6a922f3b8f409d8811ecbecaa099cbf24fc166d704b5eca03376792bd5354f3",
+   "bytes": 97211,
+   "wave": "tabi-round-15-w1",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-15/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-15/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-15/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-15/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-15/w2/validation.json",
+   "lane_path": ".ufo/waves/round-15/w2/validation.json",
+   "sha256": "3d8def8ac78497aa09ff356053ddbbf3ac241da1f0bd641851c023c970bb68b8",
+   "bytes": 67843,
+   "wave": "tabi-round-15-w2",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-15/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-15/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-15/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-15/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-16/w1/validation.json",
+   "lane_path": ".ufo/waves/round-16/w1/validation.json",
+   "sha256": "021f6a05b8b36530d85040fbfba56b541fe5dd8383d7eafbc3c6bddd4f73e11f",
+   "bytes": 122283,
+   "wave": "tabi-round-16-w1",
+   "task_count": 84,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 84,
+    "resume": 0,
+    "total": 84
+   },
+   "registry_report_dir": ".ufo/waves/round-16/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-16/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-16/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-16/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-16/w2/validation.json",
+   "lane_path": ".ufo/waves/round-16/w2/validation.json",
+   "sha256": "4968c1479f27de85b12308c237ca242064ab26c5faec532ca6f6ebc7e3424d32",
+   "bytes": 105355,
+   "wave": "tabi-round-16-w2",
+   "task_count": 73,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 73,
+    "resume": 0,
+    "total": 73
+   },
+   "registry_report_dir": ".ufo/waves/round-16/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-16/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-16/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-16/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-17/w1/validation.json",
+   "lane_path": ".ufo/waves/round-17/w1/validation.json",
+   "sha256": "398a21b3859ede272de3907efa25774c0aa925c61c6ab26ebea3dd9b97ebe934",
+   "bytes": 147246,
+   "wave": "tabi-round-17-w1",
+   "task_count": 86,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 86,
+    "resume": 0,
+    "total": 86
+   },
+   "registry_report_dir": ".ufo/waves/round-17/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-17/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-17/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-17/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-17/w2/validation.json",
+   "lane_path": ".ufo/waves/round-17/w2/validation.json",
+   "sha256": "245486c9805fafaaa04999cbafd70fa4f09ed3f6cb03c00ddd97e6132910dfa4",
+   "bytes": 108300,
+   "wave": "tabi-round-17-w2",
+   "task_count": 78,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 78,
+    "resume": 0,
+    "total": 78
+   },
+   "registry_report_dir": ".ufo/waves/round-17/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-17/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-17/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-17/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-18/w1/validation.json",
+   "lane_path": ".ufo/waves/round-18/w1/validation.json",
+   "sha256": "7550823dd3e3bd062792e960ad033d79ec008dcb279ce455a9188d64b7849cf2",
+   "bytes": 194942,
+   "wave": "tabi-round-18-w1",
+   "task_count": 70,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 70,
+    "resume": 0,
+    "total": 70
+   },
+   "registry_report_dir": ".ufo/waves/round-18/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-18/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-18/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-18/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-18/w2/validation.json",
+   "lane_path": ".ufo/waves/round-18/w2/validation.json",
+   "sha256": "6955b005327751a788822592ab3979188c133f7320cd74994366411a32b02cfd",
+   "bytes": 141930,
+   "wave": "tabi-round-18-w2",
+   "task_count": 80,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 80,
+    "resume": 0,
+    "total": 80
+   },
+   "registry_report_dir": ".ufo/waves/round-18/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-18/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-18/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-18/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-19/w1/validation.json",
+   "lane_path": ".ufo/waves/round-19/w1/validation.json",
+   "sha256": "53a1390882988f969f31cc343423f4d93ee617021dfa864f1fb32c51c1d6cca1",
+   "bytes": 132632,
+   "wave": "tabi-round-19-w1",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-19/w2/dispatch.json",
+   "lane_path": ".ufo/waves/round-19/w2/dispatch.json",
+   "sha256": "db90fa7cbcce5422c349e4d9a3b404390878d40677fb6f8bf98beecd02814b6f",
+   "bytes": 122274,
+   "wave": "tabi-round-19-w2",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-19/w2/validation.json",
+   "lane_path": ".ufo/waves/round-19/w2/validation.json",
+   "sha256": "db90fa7cbcce5422c349e4d9a3b404390878d40677fb6f8bf98beecd02814b6f",
+   "bytes": 122274,
+   "wave": "tabi-round-19-w2",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/rounds/fleet-round-1-interactive-20261015/wave-validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecCounter/.ufo/rounds/fleet-round-1-interactive-20261015/wave-validation.json",
+   "sha256": "b0a14d47fa600a09fa23d350ff8fd91c6dc1912a7942d646127c379d937a89a1",
+   "bytes": 2245,
+   "wave": null,
+   "task_count": null,
+   "task_call": "missing",
+   "resume_count": 0,
+   "resume_sends": null,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": null,
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/rounds/fleet-round-1-interactive-20261015/wave-validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/rounds/fleet-round-1-interactive-20261015/wave-validation.json"
+   ],
+   "checks": [
+    "wave_null_or_not_string",
+    "taskCall_key_missing",
+    "resumeSends_key_missing",
+    "registry_key_missing"
+   ]
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/rounds/fleet-round-1-interactive-20261015/wave.dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecCounter/.ufo/rounds/fleet-round-1-interactive-20261015/wave.dispatch.json",
+   "sha256": "4562e0f096e84cdcf2566f960ba1b6eb9c8c10312ad0bd1b78c67a190c6363db",
+   "bytes": 49094,
+   "wave": "tabi-fleet-r1-interactive-20261015",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/rounds/fleet-round-1-interactive-20261015/seats",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/rounds/fleet-round-1-interactive-20261015/wave.dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/rounds/fleet-round-1-interactive-20261015/wave.dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-12/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-12/w1/dispatch.json",
+   "sha256": "e1f648d038b99f0c341a7e38f5eb42c87169a395d46e4b1ea0ddbc76872b7a0e",
+   "bytes": 46147,
+   "wave": "tabi-round-12-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-12/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-12/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-12/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-12/w1/dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-13/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-13/w1/dispatch.json",
+   "sha256": "029cdfeb699a28816a5ccc20a5555191117938983d320be077baee1df48d53e3",
+   "bytes": 46509,
+   "wave": "tabi-round-13-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-13/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-13/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-13/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-13/w1/dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-14/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-14/w1/dispatch.json",
+   "sha256": "a19a21f4fb625a50b0adce57b350b0ffd874ca4065a402f425a6557415e52359",
+   "bytes": 46158,
+   "wave": "tabi-round-14-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-14/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-14/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-14/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-14/w1/dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-15/w1/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-15/w1/validation.json",
+   "sha256": "d6a922f3b8f409d8811ecbecaa099cbf24fc166d704b5eca03376792bd5354f3",
+   "bytes": 97211,
+   "wave": "tabi-round-15-w1",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-15/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-15/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-15/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-15/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-15/w2/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-15/w2/validation.json",
+   "sha256": "3d8def8ac78497aa09ff356053ddbbf3ac241da1f0bd641851c023c970bb68b8",
+   "bytes": 67843,
+   "wave": "tabi-round-15-w2",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-15/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-15/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-15/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-15/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-16/w1/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-16/w1/validation.json",
+   "sha256": "021f6a05b8b36530d85040fbfba56b541fe5dd8383d7eafbc3c6bddd4f73e11f",
+   "bytes": 122283,
+   "wave": "tabi-round-16-w1",
+   "task_count": 84,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 84,
+    "resume": 0,
+    "total": 84
+   },
+   "registry_report_dir": ".ufo/waves/round-16/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-16/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-16/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-16/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-16/w2/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-16/w2/validation.json",
+   "sha256": "4968c1479f27de85b12308c237ca242064ab26c5faec532ca6f6ebc7e3424d32",
+   "bytes": 105355,
+   "wave": "tabi-round-16-w2",
+   "task_count": 73,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 73,
+    "resume": 0,
+    "total": 73
+   },
+   "registry_report_dir": ".ufo/waves/round-16/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-16/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-16/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-16/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-17/w1/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-17/w1/validation.json",
+   "sha256": "398a21b3859ede272de3907efa25774c0aa925c61c6ab26ebea3dd9b97ebe934",
+   "bytes": 147246,
+   "wave": "tabi-round-17-w1",
+   "task_count": 86,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 86,
+    "resume": 0,
+    "total": 86
+   },
+   "registry_report_dir": ".ufo/waves/round-17/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-17/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-17/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-17/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-17/w2/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-17/w2/validation.json",
+   "sha256": "245486c9805fafaaa04999cbafd70fa4f09ed3f6cb03c00ddd97e6132910dfa4",
+   "bytes": 108300,
+   "wave": "tabi-round-17-w2",
+   "task_count": 78,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 78,
+    "resume": 0,
+    "total": 78
+   },
+   "registry_report_dir": ".ufo/waves/round-17/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-17/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-17/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-17/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-18/w1/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-18/w1/validation.json",
+   "sha256": "7550823dd3e3bd062792e960ad033d79ec008dcb279ce455a9188d64b7849cf2",
+   "bytes": 194942,
+   "wave": "tabi-round-18-w1",
+   "task_count": 70,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 70,
+    "resume": 0,
+    "total": 70
+   },
+   "registry_report_dir": ".ufo/waves/round-18/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-18/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-18/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-18/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-18/w2/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-18/w2/validation.json",
+   "sha256": "6955b005327751a788822592ab3979188c133f7320cd74994366411a32b02cfd",
+   "bytes": 141930,
+   "wave": "tabi-round-18-w2",
+   "task_count": 80,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 80,
+    "resume": 0,
+    "total": 80
+   },
+   "registry_report_dir": ".ufo/waves/round-18/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-18/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-18/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-18/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w1/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w1/validation.json",
+   "sha256": "53a1390882988f969f31cc343423f4d93ee617021dfa864f1fb32c51c1d6cca1",
+   "bytes": 132632,
+   "wave": "tabi-round-19-w1",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-19/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/dispatch.json",
+   "sha256": "db90fa7cbcce5422c349e4d9a3b404390878d40677fb6f8bf98beecd02814b6f",
+   "bytes": 122274,
+   "wave": "tabi-round-19-w2",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/validation.json",
+   "sha256": "db90fa7cbcce5422c349e4d9a3b404390878d40677fb6f8bf98beecd02814b6f",
+   "bytes": 122274,
+   "wave": "tabi-round-19-w2",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-20/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-20/w1/dispatch.json",
+   "sha256": "36a43610a4dfec761e01c5742fab3489e3ef6fb46d01d022d9d5f43b0c1f00a8",
+   "bytes": 84995,
+   "wave": "tabi-round-20-w1",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-20/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-20/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-20/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/w1/dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/rounds/fleet-round-1-interactive-20261015/wave-validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFixtures/.ufo/rounds/fleet-round-1-interactive-20261015/wave-validation.json",
+   "sha256": "b0a14d47fa600a09fa23d350ff8fd91c6dc1912a7942d646127c379d937a89a1",
+   "bytes": 2245,
+   "wave": null,
+   "task_count": null,
+   "task_call": "missing",
+   "resume_count": 0,
+   "resume_sends": null,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": null,
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/rounds/fleet-round-1-interactive-20261015/wave-validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/rounds/fleet-round-1-interactive-20261015/wave-validation.json"
+   ],
+   "checks": [
+    "wave_null_or_not_string",
+    "taskCall_key_missing",
+    "resumeSends_key_missing",
+    "registry_key_missing"
+   ]
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/rounds/fleet-round-1-interactive-20261015/wave.dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFixtures/.ufo/rounds/fleet-round-1-interactive-20261015/wave.dispatch.json",
+   "sha256": "4562e0f096e84cdcf2566f960ba1b6eb9c8c10312ad0bd1b78c67a190c6363db",
+   "bytes": 49094,
+   "wave": "tabi-fleet-r1-interactive-20261015",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/rounds/fleet-round-1-interactive-20261015/seats",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/rounds/fleet-round-1-interactive-20261015/wave.dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/rounds/fleet-round-1-interactive-20261015/wave.dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-12/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-12/w1/dispatch.json",
+   "sha256": "e1f648d038b99f0c341a7e38f5eb42c87169a395d46e4b1ea0ddbc76872b7a0e",
+   "bytes": 46147,
+   "wave": "tabi-round-12-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-12/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-12/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-12/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-12/w1/dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-13/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-13/w1/dispatch.json",
+   "sha256": "029cdfeb699a28816a5ccc20a5555191117938983d320be077baee1df48d53e3",
+   "bytes": 46509,
+   "wave": "tabi-round-13-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-13/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-13/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-13/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-13/w1/dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-14/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-14/w1/dispatch.json",
+   "sha256": "a19a21f4fb625a50b0adce57b350b0ffd874ca4065a402f425a6557415e52359",
+   "bytes": 46158,
+   "wave": "tabi-round-14-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-14/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-14/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-14/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-14/w1/dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-15/w1/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-15/w1/validation.json",
+   "sha256": "d6a922f3b8f409d8811ecbecaa099cbf24fc166d704b5eca03376792bd5354f3",
+   "bytes": 97211,
+   "wave": "tabi-round-15-w1",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-15/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-15/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-15/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-15/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-15/w2/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-15/w2/validation.json",
+   "sha256": "3d8def8ac78497aa09ff356053ddbbf3ac241da1f0bd641851c023c970bb68b8",
+   "bytes": 67843,
+   "wave": "tabi-round-15-w2",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-15/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-15/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-15/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-15/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-16/w1/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-16/w1/validation.json",
+   "sha256": "021f6a05b8b36530d85040fbfba56b541fe5dd8383d7eafbc3c6bddd4f73e11f",
+   "bytes": 122283,
+   "wave": "tabi-round-16-w1",
+   "task_count": 84,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 84,
+    "resume": 0,
+    "total": 84
+   },
+   "registry_report_dir": ".ufo/waves/round-16/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-16/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-16/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-16/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-16/w2/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-16/w2/validation.json",
+   "sha256": "4968c1479f27de85b12308c237ca242064ab26c5faec532ca6f6ebc7e3424d32",
+   "bytes": 105355,
+   "wave": "tabi-round-16-w2",
+   "task_count": 73,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 73,
+    "resume": 0,
+    "total": 73
+   },
+   "registry_report_dir": ".ufo/waves/round-16/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-16/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-16/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-16/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-17/w1/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-17/w1/validation.json",
+   "sha256": "398a21b3859ede272de3907efa25774c0aa925c61c6ab26ebea3dd9b97ebe934",
+   "bytes": 147246,
+   "wave": "tabi-round-17-w1",
+   "task_count": 86,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 86,
+    "resume": 0,
+    "total": 86
+   },
+   "registry_report_dir": ".ufo/waves/round-17/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-17/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-17/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-17/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-17/w2/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-17/w2/validation.json",
+   "sha256": "245486c9805fafaaa04999cbafd70fa4f09ed3f6cb03c00ddd97e6132910dfa4",
+   "bytes": 108300,
+   "wave": "tabi-round-17-w2",
+   "task_count": 78,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 78,
+    "resume": 0,
+    "total": 78
+   },
+   "registry_report_dir": ".ufo/waves/round-17/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-17/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-17/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-17/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-18/w1/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-18/w1/validation.json",
+   "sha256": "7550823dd3e3bd062792e960ad033d79ec008dcb279ce455a9188d64b7849cf2",
+   "bytes": 194942,
+   "wave": "tabi-round-18-w1",
+   "task_count": 70,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 70,
+    "resume": 0,
+    "total": 70
+   },
+   "registry_report_dir": ".ufo/waves/round-18/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-18/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-18/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-18/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-18/w2/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-18/w2/validation.json",
+   "sha256": "6955b005327751a788822592ab3979188c133f7320cd74994366411a32b02cfd",
+   "bytes": 141930,
+   "wave": "tabi-round-18-w2",
+   "task_count": 80,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 80,
+    "resume": 0,
+    "total": 80
+   },
+   "registry_report_dir": ".ufo/waves/round-18/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-18/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-18/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-18/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w1/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w1/validation.json",
+   "sha256": "53a1390882988f969f31cc343423f4d93ee617021dfa864f1fb32c51c1d6cca1",
+   "bytes": 132632,
+   "wave": "tabi-round-19-w1",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-19/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/dispatch.json",
+   "sha256": "db90fa7cbcce5422c349e4d9a3b404390878d40677fb6f8bf98beecd02814b6f",
+   "bytes": 122274,
+   "wave": "tabi-round-19-w2",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/validation.json",
+   "sha256": "db90fa7cbcce5422c349e4d9a3b404390878d40677fb6f8bf98beecd02814b6f",
+   "bytes": 122274,
+   "wave": "tabi-round-19-w2",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-20/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-20/w1/dispatch.json",
+   "sha256": "36a43610a4dfec761e01c5742fab3489e3ef6fb46d01d022d9d5f43b0c1f00a8",
+   "bytes": 84995,
+   "wave": "tabi-round-20-w1",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-20/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-20/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-20/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/w1/dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/rounds/fleet-round-1-interactive-20261015/wave-validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFrozen/.ufo/rounds/fleet-round-1-interactive-20261015/wave-validation.json",
+   "sha256": "b0a14d47fa600a09fa23d350ff8fd91c6dc1912a7942d646127c379d937a89a1",
+   "bytes": 2245,
+   "wave": null,
+   "task_count": null,
+   "task_call": "missing",
+   "resume_count": 0,
+   "resume_sends": null,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": null,
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/rounds/fleet-round-1-interactive-20261015/wave-validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/rounds/fleet-round-1-interactive-20261015/wave-validation.json"
+   ],
+   "checks": [
+    "wave_null_or_not_string",
+    "taskCall_key_missing",
+    "resumeSends_key_missing",
+    "registry_key_missing"
+   ]
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/rounds/fleet-round-1-interactive-20261015/wave.dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFrozen/.ufo/rounds/fleet-round-1-interactive-20261015/wave.dispatch.json",
+   "sha256": "4562e0f096e84cdcf2566f960ba1b6eb9c8c10312ad0bd1b78c67a190c6363db",
+   "bytes": 49094,
+   "wave": "tabi-fleet-r1-interactive-20261015",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/rounds/fleet-round-1-interactive-20261015/seats",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/rounds/fleet-round-1-interactive-20261015/wave.dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/rounds/fleet-round-1-interactive-20261015/wave.dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-12/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-12/w1/dispatch.json",
+   "sha256": "e1f648d038b99f0c341a7e38f5eb42c87169a395d46e4b1ea0ddbc76872b7a0e",
+   "bytes": 46147,
+   "wave": "tabi-round-12-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-12/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-12/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-12/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-12/w1/dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-13/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-13/w1/dispatch.json",
+   "sha256": "029cdfeb699a28816a5ccc20a5555191117938983d320be077baee1df48d53e3",
+   "bytes": 46509,
+   "wave": "tabi-round-13-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-13/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-13/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-13/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-13/w1/dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-14/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-14/w1/dispatch.json",
+   "sha256": "a19a21f4fb625a50b0adce57b350b0ffd874ca4065a402f425a6557415e52359",
+   "bytes": 46158,
+   "wave": "tabi-round-14-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-14/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-14/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-14/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-14/w1/dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-15/w1/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-15/w1/validation.json",
+   "sha256": "d6a922f3b8f409d8811ecbecaa099cbf24fc166d704b5eca03376792bd5354f3",
+   "bytes": 97211,
+   "wave": "tabi-round-15-w1",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-15/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-15/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-15/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-15/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-15/w2/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-15/w2/validation.json",
+   "sha256": "3d8def8ac78497aa09ff356053ddbbf3ac241da1f0bd641851c023c970bb68b8",
+   "bytes": 67843,
+   "wave": "tabi-round-15-w2",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-15/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-15/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-15/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-15/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-16/w1/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-16/w1/validation.json",
+   "sha256": "021f6a05b8b36530d85040fbfba56b541fe5dd8383d7eafbc3c6bddd4f73e11f",
+   "bytes": 122283,
+   "wave": "tabi-round-16-w1",
+   "task_count": 84,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 84,
+    "resume": 0,
+    "total": 84
+   },
+   "registry_report_dir": ".ufo/waves/round-16/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-16/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-16/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-16/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-16/w2/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-16/w2/validation.json",
+   "sha256": "4968c1479f27de85b12308c237ca242064ab26c5faec532ca6f6ebc7e3424d32",
+   "bytes": 105355,
+   "wave": "tabi-round-16-w2",
+   "task_count": 73,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 73,
+    "resume": 0,
+    "total": 73
+   },
+   "registry_report_dir": ".ufo/waves/round-16/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-16/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-16/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-16/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-17/w1/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-17/w1/validation.json",
+   "sha256": "398a21b3859ede272de3907efa25774c0aa925c61c6ab26ebea3dd9b97ebe934",
+   "bytes": 147246,
+   "wave": "tabi-round-17-w1",
+   "task_count": 86,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 86,
+    "resume": 0,
+    "total": 86
+   },
+   "registry_report_dir": ".ufo/waves/round-17/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-17/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-17/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-17/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-17/w2/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-17/w2/validation.json",
+   "sha256": "245486c9805fafaaa04999cbafd70fa4f09ed3f6cb03c00ddd97e6132910dfa4",
+   "bytes": 108300,
+   "wave": "tabi-round-17-w2",
+   "task_count": 78,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 78,
+    "resume": 0,
+    "total": 78
+   },
+   "registry_report_dir": ".ufo/waves/round-17/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-17/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-17/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-17/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-18/w1/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-18/w1/validation.json",
+   "sha256": "7550823dd3e3bd062792e960ad033d79ec008dcb279ce455a9188d64b7849cf2",
+   "bytes": 194942,
+   "wave": "tabi-round-18-w1",
+   "task_count": 70,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 70,
+    "resume": 0,
+    "total": 70
+   },
+   "registry_report_dir": ".ufo/waves/round-18/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-18/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-18/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-18/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-18/w2/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-18/w2/validation.json",
+   "sha256": "6955b005327751a788822592ab3979188c133f7320cd74994366411a32b02cfd",
+   "bytes": 141930,
+   "wave": "tabi-round-18-w2",
+   "task_count": 80,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 80,
+    "resume": 0,
+    "total": 80
+   },
+   "registry_report_dir": ".ufo/waves/round-18/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-18/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-18/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-18/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w1/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w1/validation.json",
+   "sha256": "53a1390882988f969f31cc343423f4d93ee617021dfa864f1fb32c51c1d6cca1",
+   "bytes": 132632,
+   "wave": "tabi-round-19-w1",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-19/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w1/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w1/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/dispatch.json",
+   "sha256": "db90fa7cbcce5422c349e4d9a3b404390878d40677fb6f8bf98beecd02814b6f",
+   "bytes": 122274,
+   "wave": "tabi-round-19-w2",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/validation.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/validation.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/validation.json",
+   "sha256": "db90fa7cbcce5422c349e4d9a3b404390878d40677fb6f8bf98beecd02814b6f",
+   "bytes": 122274,
+   "wave": "tabi-round-19-w2",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w2",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-19/w2/validation.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-19/w2/dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-20/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-20/w1/dispatch.json",
+   "sha256": "36a43610a4dfec761e01c5742fab3489e3ef6fb46d01d022d9d5f43b0c1f00a8",
+   "bytes": 84995,
+   "wave": "tabi-round-20-w1",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-20/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-20/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-20/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/w1/dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/w1/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/w1/dispatch.json",
+   "sha256": "36a43610a4dfec761e01c5742fab3489e3ef6fb46d01d022d9d5f43b0c1f00a8",
+   "bytes": 84995,
+   "wave": "tabi-round-20-w1",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-20/w1",
+   "duplicate_of": [
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-20/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-20/w1/dispatch.json",
+    "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-20/w1/dispatch.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tabi-shokunin",
+   "path": "tabi-shokunin/.ufo/waves/round-20/w2/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/w2/dispatch.json",
+   "sha256": "bbad319c6679a84240985c5711d880c95666d5000d4e95c9354d948432ff0a70",
+   "bytes": 101482,
+   "wave": "tabi-round-20-w2",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-20/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tameshi-shokunin",
+   "path": "tameshi-shokunin/.ufo/waves/round-12/dispatch-w2.json",
+   "lane_path": ".ufo/waves/round-12/dispatch-w2.json",
+   "sha256": "95965f19025e03426e9927fa96ddae48991fcf5872bfcde782d8fde966fad2bd",
+   "bytes": 39141,
+   "wave": "tameshi-r12-w2",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-12/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tameshi-shokunin",
+   "path": "tameshi-shokunin/.ufo/waves/round-12/dispatch.json",
+   "lane_path": ".ufo/waves/round-12/dispatch.json",
+   "sha256": "18d3626dffb5087a960f3ea8bc97f6e636b2340a06bfabe7c85f45d1dbd82b7e",
+   "bytes": 41634,
+   "wave": "tameshi-r12-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-12/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tameshi-shokunin",
+   "path": "tameshi-shokunin/.ufo/waves/round-13/dispatch.json",
+   "lane_path": ".ufo/waves/round-13/dispatch.json",
+   "sha256": "28936cde8e18767ac295a5805a665e5e499556d56a06b0e561f9715b788254b2",
+   "bytes": 50445,
+   "wave": "tameshi-r13-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-13/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tameshi-shokunin",
+   "path": "tameshi-shokunin/.ufo/waves/round-14/dispatch.json",
+   "lane_path": ".ufo/waves/round-14/dispatch.json",
+   "sha256": "8b07ced9fb7bbdeb8db4bd46936c8d0205c222dd03c0f3f195d0602b069e29fb",
+   "bytes": 48975,
+   "wave": "tameshi-r14-w1",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-14/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tameshi-shokunin",
+   "path": "tameshi-shokunin/.ufo/waves/round-15/dispatch1.json",
+   "lane_path": ".ufo/waves/round-15/dispatch1.json",
+   "sha256": "4de33b21fdcefc8d156210e9955aa8ed0d38f7d87d6ca0879712e7a87229ed11",
+   "bytes": 94085,
+   "wave": "tameshi-r15-w1",
+   "task_count": 66,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 66,
+    "resume": 0,
+    "total": 66
+   },
+   "registry_report_dir": ".ufo/waves/round-15/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tameshi-shokunin",
+   "path": "tameshi-shokunin/.ufo/waves/round-15/dispatch2.json",
+   "lane_path": ".ufo/waves/round-15/dispatch2.json",
+   "sha256": "b88e0b8520ceff488f7ae750a3106f176ee8d5475e2383f33cea54ee8598afc7",
+   "bytes": 50577,
+   "wave": "tameshi-r15-w2",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-15/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tameshi-shokunin",
+   "path": "tameshi-shokunin/.ufo/waves/round-16/dispatch1.json",
+   "lane_path": ".ufo/waves/round-16/dispatch1.json",
+   "sha256": "f3e6c936bdcaa080da01753a709e67fd07b33e340ffd6d12463ef8eba4d29254",
+   "bytes": 134092,
+   "wave": "tameshi-r16-w1",
+   "task_count": 68,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 68,
+    "resume": 0,
+    "total": 68
+   },
+   "registry_report_dir": ".ufo/waves/round-16/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tameshi-shokunin",
+   "path": "tameshi-shokunin/.ufo/waves/round-16/dispatch2.json",
+   "lane_path": ".ufo/waves/round-16/dispatch2.json",
+   "sha256": "39e0047e3f9b4e91c342b76ece95759b76ef52f3c0abd54ee4afead95196ca5c",
+   "bytes": 108034,
+   "wave": "tameshi-r16-w2",
+   "task_count": 67,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 67,
+    "resume": 0,
+    "total": 67
+   },
+   "registry_report_dir": ".ufo/waves/round-16/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tameshi-shokunin",
+   "path": "tameshi-shokunin/.ufo/waves/round-17/dispatch1.json",
+   "lane_path": ".ufo/waves/round-17/dispatch1.json",
+   "sha256": "4289b6deffb2171a0e4df12f5af07adca493eec201ea3c6f4eb497a5664aa06a",
+   "bytes": 115869,
+   "wave": "tameshi-r17-w1",
+   "task_count": 67,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 67,
+    "resume": 0,
+    "total": 67
+   },
+   "registry_report_dir": ".ufo/waves/round-17/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tameshi-shokunin",
+   "path": "tameshi-shokunin/.ufo/waves/round-17/dispatch2.json",
+   "lane_path": ".ufo/waves/round-17/dispatch2.json",
+   "sha256": "1ebd1e9edd3af6173d70e8e2b6d9978e6e25f4d7e28dac82446f8efd41ef224d",
+   "bytes": 162690,
+   "wave": "tameshi-r17-w2",
+   "task_count": 99,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 99,
+    "resume": 0,
+    "total": 99
+   },
+   "registry_report_dir": ".ufo/waves/round-17/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tameshi-shokunin",
+   "path": "tameshi-shokunin/.ufo/waves/round-18/dispatch1.json",
+   "lane_path": ".ufo/waves/round-18/dispatch1.json",
+   "sha256": "c1e888e3cd051a30a5060990f2b33aafaa1affb2a08154ffb06f79990d11144d",
+   "bytes": 141424,
+   "wave": "tameshi-r18-w1",
+   "task_count": 73,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 73,
+    "resume": 0,
+    "total": 73
+   },
+   "registry_report_dir": ".ufo/waves/round-18/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tameshi-shokunin",
+   "path": "tameshi-shokunin/.ufo/waves/round-18/dispatch2.json",
+   "lane_path": ".ufo/waves/round-18/dispatch2.json",
+   "sha256": "31ab6bb211e202ec6f8a1df2d319303f8fce184d97084d7cedde5e8bf4595e3d",
+   "bytes": 161003,
+   "wave": "tameshi-r18-w2",
+   "task_count": 93,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 93,
+    "resume": 0,
+    "total": 93
+   },
+   "registry_report_dir": ".ufo/waves/round-18/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tameshi-shokunin",
+   "path": "tameshi-shokunin/.ufo/waves/round-19/run1.json",
+   "lane_path": ".ufo/waves/round-19/run1.json",
+   "sha256": "6ceb32c2ed221b6e1fc31e88713c759ec0e80cbd4377f0cd826ab074e342a2d1",
+   "bytes": 92205,
+   "wave": "tameshi-r19-w1",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w1",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tameshi-shokunin",
+   "path": "tameshi-shokunin/.ufo/waves/round-19/run2.json",
+   "lane_path": ".ufo/waves/round-19/run2.json",
+   "sha256": "8b115dfeda1fc10d071a95b69f2f765b8dabccbb98447f0ffb13dd179a8c9c03",
+   "bytes": 156402,
+   "wave": "tameshi-r19-w2",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-19/w2",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tameshi-shokunin",
+   "path": "tameshi-shokunin/.ufo/waves/round-20/run1.json",
+   "lane_path": ".ufo/waves/round-20/run1.json",
+   "sha256": "e44c144664ad2c78d84b3bf3b8584b97a33f68eb78b65267d299f6b5a7271b12",
+   "bytes": 114468,
+   "wave": "tameshi-r20-w1",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-20/w1",
+   "duplicate_of": [
+    "tameshi-shokunin/.ufo/waves/round-20/validation-current.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tameshi-shokunin",
+   "path": "tameshi-shokunin/.ufo/waves/round-20/validation-current.json",
+   "lane_path": ".ufo/waves/round-20/validation-current.json",
+   "sha256": "e44c144664ad2c78d84b3bf3b8584b97a33f68eb78b65267d299f6b5a7271b12",
+   "bytes": 114468,
+   "wave": "tameshi-r20-w1",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-20/w1",
+   "duplicate_of": [
+    "tameshi-shokunin/.ufo/waves/round-20/run1.json"
+   ],
+   "checks": []
+  },
+  {
+   "lane": "tsukuroi-shokunin",
+   "path": "tsukuroi-shokunin/.ufo/waves/round-12/dispatch.json",
+   "lane_path": ".ufo/waves/round-12/dispatch.json",
+   "sha256": "63977110c11bf71310bf3ec685e852f43843bf7ae33bcd4475c4cfdd0e96a0f9",
+   "bytes": 54254,
+   "wave": "tsukuroi-round12",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-12",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tsukuroi-shokunin",
+   "path": "tsukuroi-shokunin/.ufo/waves/round-12/resumed/dispatch.json",
+   "lane_path": ".ufo/waves/round-12/resumed/dispatch.json",
+   "sha256": "04ecb7a7806d788dea1fe64ec0eae175b0b3c8b31545c1e274a237f8f9cced53",
+   "bytes": 70404,
+   "wave": "tsukuroi-round12-resumed",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-12/resumed",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tsukuroi-shokunin",
+   "path": "tsukuroi-shokunin/.ufo/waves/round-13/correction/dispatch.json",
+   "lane_path": ".ufo/waves/round-13/correction/dispatch.json",
+   "sha256": "ca6ece8e0c8b3ff188b0a1e3718a968c5d6bcc5e47d0adfc0c7452a770b87f8a",
+   "bytes": 46103,
+   "wave": "tsukuroi-r13-correction",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-13/correction",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tsukuroi-shokunin",
+   "path": "tsukuroi-shokunin/.ufo/waves/round-14/repair/dispatch.json",
+   "lane_path": ".ufo/waves/round-14/repair/dispatch.json",
+   "sha256": "4ab9d20d2e9abd1ff85882f24d6cfab503840e1e98015ef793864660daff802a",
+   "bytes": 55411,
+   "wave": "tsukuroi-r14-repair",
+   "task_count": 32,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+   },
+   "registry_report_dir": ".ufo/waves/round-14/repair",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tsukuroi-shokunin",
+   "path": "tsukuroi-shokunin/.ufo/waves/round-15/build/dispatch.json",
+   "lane_path": ".ufo/waves/round-15/build/dispatch.json",
+   "sha256": "793e42bab577c7d736e06c42b5a1042a48acb79b09cda50b89ca4ef42d9062d0",
+   "bytes": 93177,
+   "wave": "tsukuroi-r15-build",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-15/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tsukuroi-shokunin",
+   "path": "tsukuroi-shokunin/.ufo/waves/round-16/build/dispatch.json",
+   "lane_path": ".ufo/waves/round-16/build/dispatch.json",
+   "sha256": "d9628bc62cb7dc49ad5ffbbb1a86966887cec4fb6823c673e909d6126a803fb3",
+   "bytes": 42217,
+   "wave": "tsukuroi-r16-build",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-16/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tsukuroi-shokunin",
+   "path": "tsukuroi-shokunin/.ufo/waves/round-17/build/dispatch.json",
+   "lane_path": ".ufo/waves/round-17/build/dispatch.json",
+   "sha256": "9cb6a87f156c78a79fe5caf239aeccde7244cbe7462287373b3caaed236ea090",
+   "bytes": 114635,
+   "wave": "tsukuroi-r17-build",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-17/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tsukuroi-shokunin",
+   "path": "tsukuroi-shokunin/.ufo/waves/round-17/falsify/dispatch.json",
+   "lane_path": ".ufo/waves/round-17/falsify/dispatch.json",
+   "sha256": "e796f194370926ce9846546155db85716c4d5d569626158fd0642dbc9573cce2",
+   "bytes": 103490,
+   "wave": "tsukuroi-r17-falsify",
+   "task_count": 81,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 81,
+    "resume": 0,
+    "total": 81
+   },
+   "registry_report_dir": ".ufo/waves/round-17/falsify",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tsukuroi-shokunin",
+   "path": "tsukuroi-shokunin/.ufo/waves/round-18/build/dispatch.json",
+   "lane_path": ".ufo/waves/round-18/build/dispatch.json",
+   "sha256": "a6d557c8540f7602eeb76cf0ce5a06e617637c70e537aa7efc75ccf647c89391",
+   "bytes": 117530,
+   "wave": "tsukuroi-r18-build",
+   "task_count": 81,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 81,
+    "resume": 0,
+    "total": 81
+   },
+   "registry_report_dir": ".ufo/waves/round-18/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tsukuroi-shokunin",
+   "path": "tsukuroi-shokunin/.ufo/waves/round-18/falsify/dispatch.json",
+   "lane_path": ".ufo/waves/round-18/falsify/dispatch.json",
+   "sha256": "b94eda83d4ef791a3fa24b1cfa9f27576000e45fe5056efee64e178021055700",
+   "bytes": 94745,
+   "wave": "tsukuroi-r18-falsify",
+   "task_count": 76,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 76,
+    "resume": 0,
+    "total": 76
+   },
+   "registry_report_dir": ".ufo/waves/round-18/falsify",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tsukuroi-shokunin",
+   "path": "tsukuroi-shokunin/.ufo/waves/round-19/build/dispatch.json",
+   "lane_path": ".ufo/waves/round-19/build/dispatch.json",
+   "sha256": "4f930539ff136158969fd3fe877bc2e98fa8c1f3d994f78409d00624e8ad2188",
+   "bytes": 145727,
+   "wave": "tsukuroi-r19-build",
+   "task_count": 68,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 68,
+    "resume": 0,
+    "total": 68
+   },
+   "registry_report_dir": ".ufo/waves/round-19/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tsukuroi-shokunin",
+   "path": "tsukuroi-shokunin/.ufo/waves/round-19/falsify/dispatch.json",
+   "lane_path": ".ufo/waves/round-19/falsify/dispatch.json",
+   "sha256": "c053d139a3a0ce1d0ffc5b46889feedd00e881bb040aa936db7521eb5474f316",
+   "bytes": 161315,
+   "wave": "tsukuroi-r19-falsify",
+   "task_count": 72,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 72,
+    "resume": 0,
+    "total": 72
+   },
+   "registry_report_dir": ".ufo/waves/round-19/falsify",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tsukuroi-shokunin",
+   "path": "tsukuroi-shokunin/.ufo/waves/round-20/build/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/build/dispatch.json",
+   "sha256": "e18e4d1e42b1452c7704049949ce3e91f4a4ecf99537133246696ec42588093c",
+   "bytes": 92384,
+   "wave": "tsukuroi-r20-build",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-20/build",
+   "duplicate_of": [],
+   "checks": []
+  },
+  {
+   "lane": "tsukuroi-shokunin",
+   "path": "tsukuroi-shokunin/.ufo/waves/round-20/falsify/dispatch.json",
+   "lane_path": ".ufo/waves/round-20/falsify/dispatch.json",
+   "sha256": "3da6aed562463537df3151de4b20f288fcdb8e00ee6a685dfbe41631c81ab833",
+   "bytes": 45816,
+   "wave": "tsukuroi-r20-falsify",
+   "task_count": 64,
+   "task_call": "ok",
+   "resume_count": 0,
+   "resume_sends": 0,
+   "counts": {
+    "spawn": 64,
+    "resume": 0,
+    "total": 64
+   },
+   "registry_report_dir": ".ufo/waves/round-20/falsify",
+   "duplicate_of": [],
+   "checks": []
+  }
+ ],
+ "edge_cases": {
+  "json_symlinks": [
+   {
+    "lane": "tabi-shokunin",
+    "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/corpus/evidence/round-19/validation/selftest-hardening/case-symlink/cases/alias.json",
+    "target": "../target.json"
+   },
+   {
+    "lane": "tabi-shokunin",
+    "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/corpus/evidence/round-19/validation/selftest-hardening/case-symlink/cases/alias.json",
+    "target": "../target.json"
+   },
+   {
+    "lane": "tabi-shokunin",
+    "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/corpus/evidence/round-19/validation/selftest-hardening/case-symlink/cases/alias.json",
+    "target": "../target.json"
+   }
+  ],
+  "other_symlinks": [
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round1/tools/solc-prefix/node_modules/.bin/semver",
+    "target": "../semver/bin/semver",
+    "kind": "file"
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round1/tools/solc-prefix/node_modules/.bin/solcjs",
+    "target": "../solc/solc.js",
+    "kind": "file"
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round4/claims/c3/EX-25/fixtures/scratch/alias-1.conf",
+    "target": "/var/tmp/ex25-r4/fixtures/scratch/aliased-real.conf",
+    "kind": "file"
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round4/claims/c3/EX-25/fixtures/scratch/alias-2.conf",
+    "target": "/var/tmp/ex25-r4/fixtures/scratch/aliased-real.conf",
+    "kind": "file"
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round4/tools/vyper-venv/lib64",
+    "target": "lib",
+    "kind": "dir"
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round4/tools/vyper-venv/bin/python3",
+    "target": "/usr/bin/python3",
+    "kind": "file"
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round4/tools/vyper-venv/bin/python",
+    "target": "python3",
+    "kind": "file"
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round4/tools/vyper-venv/bin/python3.14",
+    "target": "python3",
+    "kind": "file"
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round4/tools/vyper-venv/bin/\ud835\udf0bthon",
+    "target": "python3",
+    "kind": "file"
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/round-18/verify/scratch-custody/custody-pair-selftest-24ggjm_a/symlink-loop",
+    "target": "/home/vgpnk/Projects/shokunin/kaidoku-shokunin/.ufo/waves/round-18/verify/scratch-custody/custody-pair-selftest-24ggjm_a/symlink-loop",
+    "kind": "file"
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/round-19/verify/scratch-custody/custody-pair-selftest-k_zd4w5n/symlink-loop",
+    "target": "/home/vgpnk/Projects/shokunin/kaidoku-shokunin/.ufo/waves/round-19/verify/scratch-custody/custody-pair-selftest-k_zd4w5n/symlink-loop",
+    "kind": "file"
+   },
+   {
+    "lane": "mado-shokunin",
+    "path": "mado-shokunin/.ufo/waves/round-17/tripwire/hardening/symlink-target.jsonl",
+    "target": "/etc/hostname",
+    "kind": "file"
+   },
+   {
+    "lane": "mado-shokunin",
+    "path": "mado-shokunin/.ufo/waves/round-18/tripwire/frozen/symlinked-frozen-dir",
+    "target": "symlinked-frozen-dir-target",
+    "kind": "dir"
+   },
+   {
+    "lane": "mado-shokunin",
+    "path": "mado-shokunin/.ufo/waves/round-18/tripwire/frozen/symlink-input/inputs/link.jsonl",
+    "target": "payload.txt",
+    "kind": "file"
+   },
+   {
+    "lane": "mado-shokunin",
+    "path": "mado-shokunin/.ufo/waves/round-18/tripwire/frozen/symlinked-inputs-dir/inputs",
+    "target": "inputs-real",
+    "kind": "dir"
+   },
+   {
+    "lane": "mado-shokunin",
+    "path": "mado-shokunin/.ufo/waves/round-19/tripwire/r19-frozen-f1f2/f2-symlink-dir-dot",
+    "target": "f2-target",
+    "kind": "dir"
+   },
+   {
+    "lane": "mado-shokunin",
+    "path": "mado-shokunin/.ufo/waves/round-19/tripwire/r19-frozen-f1f2/f2-symlink-dir-dot-slash",
+    "target": "f2-target",
+    "kind": "dir"
+   },
+   {
+    "lane": "mado-shokunin",
+    "path": "mado-shokunin/.ufo/waves/round-19/tripwire/r19-frozen-f1f2/f2-symlink-dir-inputs-dotdot",
+    "target": "f2-target",
+    "kind": "dir"
+   },
+   {
+    "lane": "mado-shokunin",
+    "path": "mado-shokunin/.ufo/waves/round-19/tripwire/r19-frozen-f1f2/f2-symlink-dir-plain",
+    "target": "f2-target",
+    "kind": "dir"
+   },
+   {
+    "lane": "mado-shokunin",
+    "path": "mado-shokunin/.ufo/waves/round-19/tripwire/r19-frozen-f1f2/f2-ancestor-symlink",
+    "target": ".",
+    "kind": "dir"
+   },
+   {
+    "lane": "mado-shokunin",
+    "path": "mado-shokunin/.ufo/waves/round-19/tripwire/r19-frozen-f1f2/f2-dotdot/link",
+    "target": "../f2-outside/deep",
+    "kind": "dir"
+   },
+   {
+    "lane": "mado-shokunin",
+    "path": "mado-shokunin/.ufo/waves/round-19/tripwire/r19-frozen-f1f2/f2-outside/evil",
+    "target": "../f2-target",
+    "kind": "dir"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-17/fixtures/seat/SymlinkIgnore/linked-dir",
+    "target": "real-dir",
+    "kind": "dir"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-17/fixtures/seat/SymlinkIgnore/Dangling.jsonl",
+    "target": "missing-target.txt",
+    "kind": "file"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-17/fixtures/seat/SymlinkIgnore/Link.jsonl",
+    "target": "trap.txt",
+    "kind": "file"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-17/fixtures/seat/SecurityRootSymlink/root-link",
+    "target": "target",
+    "kind": "dir"
+   },
+   {
+    "lane": "tabi-shokunin",
+    "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/corpus/evidence/round-19/validation/selftest-hardening/fixture-symlink/fixtures/fixture-symlink.html",
+    "target": "target.html",
+    "kind": "file"
+   },
+   {
+    "lane": "tabi-shokunin",
+    "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/corpus/evidence/round-19/validation/selftest-hardening/fixture-symlink/fixtures/fixture-symlink.html",
+    "target": "target.html",
+    "kind": "file"
+   },
+   {
+    "lane": "tabi-shokunin",
+    "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/corpus/evidence/round-19/validation/selftest-hardening/fixture-symlink/fixtures/fixture-symlink.html",
+    "target": "target.html",
+    "kind": "file"
+   }
+  ],
+  "unreadable_json": [
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc2-loop1-round6/receipts/big-leg-refusal-envelope.json",
+    "error": "JSONDecodeError",
+    "bytes": 16692,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc2-loop1-round7/receipts/r7-pe-envelope.json",
+    "error": "JSONDecodeError",
+    "bytes": 5204,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc2-loop1-round8/receipts/r8-ctl-envelope.json",
+    "error": "JSONDecodeError",
+    "bytes": 20294,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc2-loop1-round10/receipts/r10-big-rerun-envelope.json",
+    "error": "JSONDecodeError",
+    "bytes": 5204,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc2-loop1-round10/receipts/r10-mid-kill-envelope.json",
+    "error": "JSONDecodeError",
+    "bytes": 315462,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round1/claims/c2/EX-25/scratch/table-notjson.json",
+    "error": "JSONDecodeError",
+    "bytes": 10,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round1/claims/c2/RV-6/table-trunc.json",
+    "error": "JSONDecodeError",
+    "bytes": 22,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round1/claims/c2/RV-6/table-at-frozen-rev.json",
+    "error": "JSONDecodeError",
+    "bytes": 129,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c3/EX-33/receipts/custody-live.v2.json",
+    "error": "JSONDecodeError",
+    "bytes": 3243,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c3/EX-33/receipts/custody-live-2.v2.json",
+    "error": "JSONDecodeError",
+    "bytes": 3239,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c3/EX-33/receipts/real/A/a.v2.json",
+    "error": "JSONDecodeError",
+    "bytes": 1316,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c3/EX-33/receipts/real/B/b.v2.json",
+    "error": "JSONDecodeError",
+    "bytes": 1316,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c3/EX-33/receipts/real/B2/b2.v2.json",
+    "error": "JSONDecodeError",
+    "bytes": 1319,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c3/EX-33/receipts/real/C/c.v2.json",
+    "error": "JSONDecodeError",
+    "bytes": 1316,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c3/EX-33/receipts/real/C2/c2.v2.json",
+    "error": "JSONDecodeError",
+    "bytes": 1319,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c3/EX-33/receipts/real/E/e.v2.json",
+    "error": "JSONDecodeError",
+    "bytes": 1316,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c3/EX-33/receipts/real/G/g.v2.json",
+    "error": "JSONDecodeError",
+    "bytes": 1316,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c3/EX-33/receipts/real/H/h-pre.v2.json",
+    "error": "JSONDecodeError",
+    "bytes": 1320,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c3/EX-33/receipts/real/H/h-post.v2.json",
+    "error": "JSONDecodeError",
+    "bytes": 1321,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c3/EX-33/receipts/real/I/i.v2.json",
+    "error": "JSONDecodeError",
+    "bytes": 1316,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c3/EX-33/receipts/real/D/d-pre.v2.json",
+    "error": "JSONDecodeError",
+    "bytes": 1320,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c3/EX-33/receipts/real/J/j.v2.json",
+    "error": "JSONDecodeError",
+    "bytes": 1291,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c3/EX-33/receipts/real/K/k.v2.json",
+    "error": "JSONDecodeError",
+    "bytes": 1291,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c2/CR-2/evidence/landed3__live-repo.json",
+    "error": "JSONDecodeError",
+    "bytes": 7226,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c2/EX-16/receipts/after/ordinary-at-head.json",
+    "error": "JSONDecodeError",
+    "bytes": 7204,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c2/VZ-2/final/t0-baseline.json",
+    "error": "JSONDecodeError",
+    "bytes": 7204,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c2/RV-5/receipts/T0-ordinary-v10.json",
+    "error": "JSONDecodeError",
+    "bytes": 7034,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c2/EX-23/receipts/landed/E-missing.json",
+    "error": "JSONDecodeError",
+    "bytes": 6643,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round2/claims/c2/EX-26/receipts/after-c95a5cf3-head.json",
+    "error": "JSONDecodeError",
+    "bytes": 7226,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round3/claims/c1/EX-14/evidence/attacks.json",
+    "error": "JSONDecodeError",
+    "bytes": 1763,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round3/claims/c1/EX-12/std-output.json",
+    "error": "JSONDecodeError",
+    "bytes": 5815,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round3/claims/c3/EX-46/baseline/census.json",
+    "error": "JSONDecodeError",
+    "bytes": 7209,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round3/claims/c3/EX-46/post/census-post.json",
+    "error": "JSONDecodeError",
+    "bytes": 7209,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round4/claims/c1/EX-06/probe/CarrierV-hex-6.4.0-default.json",
+    "error": "JSONDecodeError",
+    "bytes": 8296,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round4/claims/c1/CR-1/out/D2.abi.json",
+    "error": "JSONDecodeError",
+    "bytes": 26,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round6/claims/c2/CR-4/evidence/compile-rerun.json",
+    "error": "JSONDecodeError",
+    "bytes": 1281,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round6/claims/c3/EX-15/cmdA-before.json",
+    "error": "JSONDecodeError",
+    "bytes": 374,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round6/claims/c3/SC-1/commandA-before.json",
+    "error": "JSONDecodeError",
+    "bytes": 374,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/arc3-loop1-round6/claims/verdicts/VZ-3/c2/walk-out.json",
+    "error": "JSONDecodeError",
+    "bytes": 4334,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "kama-shokunin",
+    "path": "kama-shokunin/.ufo/waves/round-20/build/out/RegReceiptSixPin/nonjson.json",
+    "error": "JSONDecodeError",
+    "bytes": 8,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "lore-shokunin",
+    "path": "lore-shokunin/.ufo/waves/round-96/seats/V30-operability.scratch/df/malformed/r94-paired-crossing/timeline.json",
+    "error": "JSONDecodeError",
+    "bytes": 9,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "mado-shokunin",
+    "path": "mado-shokunin/.ufo/waves/round-18/tripwire/frozen/malformed-expected-json/expected.json",
+    "error": "JSONDecodeError",
+    "bytes": 50,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "mado-shokunin",
+    "path": "mado-shokunin/.ufo/waves/round-20/w2/AdvVcsForms/scan-all.json",
+    "error": "JSONDecodeError",
+    "bytes": 29232,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-17/fixtures/seat/NonJsonlIgnored/other.json",
+    "error": "JSONDecodeError",
+    "bytes": 215,
+    "schema_bytes_present": false
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/evidence/c1-pin-probe-scratch.json",
+    "error": "JSONDecodeError",
+    "bytes": 16159,
+    "schema_bytes_present": false
+   }
+  ],
+  "nonjson_schema_mentions": [
+   {
+    "lane": "kaidoku-shokunin",
+    "path": "kaidoku-shokunin/.ufo/waves/round-20/w1/ScoutInheritedState.md"
+   },
+   {
+    "lane": "kama-shokunin",
+    "path": "kama-shokunin/.ufo/waves/round-16/build/advice/ProvenanceLedger.md"
+   },
+   {
+    "lane": "kama-shokunin",
+    "path": "kama-shokunin/.ufo/waves/round-17/build/advice/ConnectKumitate.md"
+   },
+   {
+    "lane": "kama-shokunin",
+    "path": "kama-shokunin/.ufo/waves/round-17/falsify/advice/ConnectKumitate.md"
+   },
+   {
+    "lane": "kama-shokunin",
+    "path": "kama-shokunin/.ufo/waves/round-18/falsify/advice/ConnectKumitate.md"
+   },
+   {
+    "lane": "kama-shokunin",
+    "path": "kama-shokunin/.ufo/waves/round-20/falsify/advice/CitationR18Dispatch95.md"
+   },
+   {
+    "lane": "kumitate-shokunin",
+    "path": "kumitate-shokunin/.ufo/waves/round-35/build/FidUfoSwarmWave.md"
+   },
+   {
+    "lane": "mado-shokunin",
+    "path": "mado-shokunin/.ufo/waves/round-17/w1/reports/RevEvidenceLabelsR15.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-13/build/SiblingOverlap.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/contract.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/gen-wave1.py"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/DraftProvince.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/DraftLesson.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/ConnValidatorSchema.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/C2Critic.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/ConnKumitate.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/ConnFleetScripts.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/GtLaneSouji.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/GtMoriR19W2.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/GtLaneKengaku.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/GtMoriR15.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/GtLaneKama.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/GtLaneKumitate.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/GtLaneRevenger.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/GtLaneKasegi.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/GtLaneTameshi.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/GtMoriR17W2.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/DraftLesson/round-20-mistakes.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/DraftProvince/province-r20.md"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/OracleHarness/c2-oracle.py"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/ImplSettlementAlt/tools/mori-wave-settlement.py"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/TrailerVariants/extract.jq"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/TrailerVariants/schema-inventory.tsv"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/TrailerVariants/tail.jq"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/TrailerVariants/snapshotA/schema-inventory.tsv"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/ImplSettlement/tools/mori-wave-settlement.py"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/ImplSettlement/tools/__pycache__/mori-wave-settlement.cpython-314.pyc"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/CensusWavesSurface/link-fixture.sh"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/CensusWavesSurface/checks.sh"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/CensusWavesSurface/checks-dispatch-discovery.txt"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/FleetDispatchInventory/scan.py"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/DraftSettlementNote/wave-settlement-r20.md"
+   },
+   {
+    "lane": "tabi-shokunin",
+    "path": "tabi-shokunin/.ufo/waves/round-15/w1/PriorRouting.md"
+   },
+   {
+    "lane": "tabi-shokunin",
+    "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFrozen/.ufo/waves/round-15/w1/PriorRouting.md"
+   },
+   {
+    "lane": "tabi-shokunin",
+    "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecFixtures/.ufo/waves/round-15/w1/PriorRouting.md"
+   },
+   {
+    "lane": "tabi-shokunin",
+    "path": "tabi-shokunin/.ufo/waves/round-20/final-clones/ExecCounter/.ufo/waves/round-15/w1/PriorRouting.md"
+   }
+  ],
+  "json_mentions_nontop_schema": [
+   {
+    "lane": "kagi-shokunin",
+    "path": "kagi-shokunin/.ufo/waves/round-22/registry-correction-render.json"
+   },
+   {
+    "lane": "kama-shokunin",
+    "path": "kama-shokunin/.ufo/waves/round-15/build/validation.json"
+   },
+   {
+    "lane": "kama-shokunin",
+    "path": "kama-shokunin/.ufo/waves/round-15/falsify/validation.json"
+   },
+   {
+    "lane": "kama-shokunin",
+    "path": "kama-shokunin/.ufo/waves/round-15/falsify/validation-final.json"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/wave1-spec.json"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/frozen/c2-expected.json"
+   },
+   {
+    "lane": "mori-shokunin",
+    "path": "mori-shokunin/.ufo/waves/round-20/build/FleetDispatchInventory/inventory.json"
+   }
+  ],
+  "special_files": [],
+  "io_errors": [],
+  "case_variant_json": []
+ }
+}

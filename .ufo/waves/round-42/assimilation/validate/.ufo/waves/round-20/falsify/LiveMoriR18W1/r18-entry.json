@@ -1,0 +1,377 @@
+{
+  "counts": {
+    "empty": 0,
+    "misrooted": 0,
+    "missing": 15,
+    "present": 53,
+    "stub": 0,
+    "unparsed": 0,
+    "unsafe": 0
+  },
+  "dispatch_path": ".ufo/waves/round-18/wave1-dispatch.json",
+  "dispatch_sha256": "84bfb3dd29a23ec5c8715478d316ab89df6aba4e96fb6f81b7ad81ba51ac0d7e",
+  "duplicate_of": null,
+  "duplicate_report_paths": 0,
+  "members": [
+    {
+      "agent": "executor",
+      "name": "RetentionGate",
+      "status": "present"
+    },
+    {
+      "agent": "executor",
+      "name": "FreezeOrder",
+      "status": "present"
+    },
+    {
+      "agent": "executor",
+      "name": "DispatchLedger",
+      "status": "present"
+    },
+    {
+      "agent": "reviewer",
+      "name": "AdjRound2Evidence",
+      "status": "present"
+    },
+    {
+      "agent": "reviewer",
+      "name": "AdjR16AttackPermission",
+      "status": "present"
+    },
+    {
+      "agent": "reviewer",
+      "name": "AdjCriticC1",
+      "status": "present"
+    },
+    {
+      "agent": "reviewer",
+      "name": "AdjDeadSeatCrossCheck",
+      "status": "missing"
+    },
+    {
+      "agent": "reviewer",
+      "name": "AdjOmpRetryDocs",
+      "status": "missing"
+    },
+    {
+      "agent": "reviewer",
+      "name": "AdjDocumentRefs",
+      "status": "present"
+    },
+    {
+      "agent": "reviewer",
+      "name": "AdjRetryRecoveryShape",
+      "status": "missing"
+    },
+    {
+      "agent": "reviewer",
+      "name": "AdjReviewC1Schema",
+      "status": "present"
+    },
+    {
+      "agent": "reviewer",
+      "name": "AdjSeatBreachDetect",
+      "status": "missing"
+    },
+    {
+      "agent": "reviewer",
+      "name": "AdjSeatNaming",
+      "status": "missing"
+    },
+    {
+      "agent": "reviewer",
+      "name": "AdjSentinelTranscripts",
+      "status": "present"
+    },
+    {
+      "agent": "reviewer",
+      "name": "AdjTranscriptShapes",
+      "status": "present"
+    },
+    {
+      "agent": "reviewer",
+      "name": "AdjTranscriptTailBounds",
+      "status": "missing"
+    },
+    {
+      "agent": "reviewer",
+      "name": "AdjSeatLiveEvidence",
+      "status": "missing"
+    },
+    {
+      "agent": "reviewer",
+      "name": "AdjConformanceAudit",
+      "status": "present"
+    },
+    {
+      "agent": "reviewer",
+      "name": "AdjWave1SpecDispatch",
+      "status": "missing"
+    },
+    {
+      "agent": "reviewer",
+      "name": "AdjLesson17",
+      "status": "present"
+    },
+    {
+      "agent": "scribe",
+      "name": "RedactPacmanActorTrace",
+      "status": "present"
+    },
+    {
+      "agent": "scribe",
+      "name": "RedactOmpRetryConfig",
+      "status": "present"
+    },
+    {
+      "agent": "scribe",
+      "name": "RedactSessionExitCorrelation",
+      "status": "present"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR17Build1",
+      "status": "missing"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR17Build2",
+      "status": "present"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR17Build3",
+      "status": "present"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR17Build4",
+      "status": "present"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR17Build5",
+      "status": "present"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR17Build6",
+      "status": "present"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR17Build7",
+      "status": "present"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR17Falsify1",
+      "status": "missing"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR17Falsify2",
+      "status": "present"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR17Falsify3",
+      "status": "missing"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR17Falsify4",
+      "status": "present"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR16Md1",
+      "status": "missing"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR16Md2",
+      "status": "present"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR15Md1",
+      "status": "missing"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR15Md2",
+      "status": "present"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR1314Md",
+      "status": "missing"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR17EvidenceJson",
+      "status": "present"
+    },
+    {
+      "agent": "scout",
+      "name": "SweepR17CorpusText",
+      "status": "present"
+    },
+    {
+      "agent": "scribe",
+      "name": "SrcOwaspLogging",
+      "status": "present"
+    },
+    {
+      "agent": "scribe",
+      "name": "SrcNist800122",
+      "status": "present"
+    },
+    {
+      "agent": "scribe",
+      "name": "SrcOtelSensitiveData",
+      "status": "present"
+    },
+    {
+      "agent": "scribe",
+      "name": "SrcGdprArt5",
+      "status": "present"
+    },
+    {
+      "agent": "scribe",
+      "name": "SrcNosekPrereg",
+      "status": "present"
+    },
+    {
+      "agent": "scribe",
+      "name": "SrcGitRevList",
+      "status": "present"
+    },
+    {
+      "agent": "scribe",
+      "name": "SrcSlsaProvenance",
+      "status": "present"
+    },
+    {
+      "agent": "scribe",
+      "name": "SrcRfc8785",
+      "status": "present"
+    },
+    {
+      "agent": "revenger",
+      "name": "RevFreezeR17C1",
+      "status": "present"
+    },
+    {
+      "agent": "revenger",
+      "name": "RevFreezeR17C2",
+      "status": "present"
+    },
+    {
+      "agent": "revenger",
+      "name": "RevFreezeR17C3",
+      "status": "present"
+    },
+    {
+      "agent": "scout",
+      "name": "ScoutFreezeLabels",
+      "status": "present"
+    },
+    {
+      "agent": "reviewer",
+      "name": "ReviewRegisterOracle",
+      "status": "present"
+    },
+    {
+      "agent": "scout",
+      "name": "ScoutAttemptReceipts",
+      "status": "missing"
+    },
+    {
+      "agent": "critic",
+      "name": "CriticC1Metric",
+      "status": "present"
+    },
+    {
+      "agent": "critic",
+      "name": "CriticC2Calibration",
+      "status": "present"
+    },
+    {
+      "agent": "critic",
+      "name": "CriticC3Operability",
+      "status": "present"
+    },
+    {
+      "agent": "critic",
+      "name": "CriticSeparability",
+      "status": "present"
+    },
+    {
+      "agent": "sentinel",
+      "name": "SentinelPrivacyDesign",
+      "status": "present"
+    },
+    {
+      "agent": "sentinel",
+      "name": "SentinelContextAudit",
+      "status": "present"
+    },
+    {
+      "agent": "connector",
+      "name": "ConnectKagiExposure",
+      "status": "present"
+    },
+    {
+      "agent": "connector",
+      "name": "ConnectKumitateDispatch",
+      "status": "present"
+    },
+    {
+      "agent": "connector",
+      "name": "ConnectFleetPrivacyRulings",
+      "status": "present"
+    },
+    {
+      "agent": "scribe",
+      "name": "ScribeLessonDraft",
+      "status": "present"
+    },
+    {
+      "agent": "scribe",
+      "name": "ScribeKnowledgeMinimization",
+      "status": "present"
+    },
+    {
+      "agent": "reviewer",
+      "name": "ReviewRoutedDefects",
+      "status": "present"
+    },
+    {
+      "agent": "scout",
+      "name": "ScoutProvinceRegistry",
+      "status": "present"
+    }
+  ],
+  "missing": [
+    "AdjDeadSeatCrossCheck",
+    "AdjOmpRetryDocs",
+    "AdjRetryRecoveryShape",
+    "AdjSeatBreachDetect",
+    "AdjSeatLiveEvidence",
+    "AdjSeatNaming",
+    "AdjTranscriptTailBounds",
+    "AdjWave1SpecDispatch",
+    "ScoutAttemptReceipts",
+    "SweepR1314Md",
+    "SweepR15Md1",
+    "SweepR16Md1",
+    "SweepR17Build1",
+    "SweepR17Falsify1",
+    "SweepR17Falsify3"
+  ],
+  "name_hint": null,
+  "state": "partial",
+  "wave": "mori-r18-w1-build"
+}

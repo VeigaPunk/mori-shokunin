@@ -1,0 +1,72 @@
+[
+  {
+    "id": "S077",
+    "quote": "Forcibly turns off all quota accounting and enforcement within the filesystem.",
+    "word_count": 11,
+    "found_in_whitespace_normalized_source": true,
+    "source_sha256": "53bda67b5612a3f2c02820604d05825c9d37addba9855e1d4fba330a516d051c"
+  },
+  {
+    "id": "S078",
+    "quote": "if (!(mp->m_qflags & XFS_ALL_QUOTA_ACCT)) seq_puts(m, \",noquota\");",
+    "word_count": 6,
+    "found_in_whitespace_normalized_source": true,
+    "source_sha256": "0a95697dcfcdab8f7ab6ea26fdb941db952db4b73ed93c30d21e40861ed0450c"
+  },
+  {
+    "id": "S079",
+    "quote": "enabled = fs_info->qgroup_flags & BTRFS_QGROUP_STATUS_FLAG_ON;",
+    "word_count": 5,
+    "found_in_whitespace_normalized_source": true,
+    "source_sha256": "ce146120f29ac29c0bc1859f21e4b84da91a536df2ec9fd2fa5649144f731c43"
+  },
+  {
+    "id": "S080",
+    "quote": "default this to quota off, in case no status key is found",
+    "word_count": 12,
+    "found_in_whitespace_normalized_source": true,
+    "source_sha256": "121a0af27f9553a9749c837536d618e2ea50d44ce54b30b032fa56e6f3df6ed5"
+  },
+  {
+    "id": "S081",
+    "quote": "stat->dev = BTRFS_I(inode)->root->anon_dev;",
+    "word_count": 3,
+    "found_in_whitespace_normalized_source": true,
+    "source_sha256": "01a6ad07c09cd1a05fbccab640c15362c91b57b85faa94c2fd9b9c0128110fdf"
+  },
+  {
+    "id": "S082",
+    "quote": "Parsers should ignore all unrecognised optional fields.",
+    "word_count": 7,
+    "found_in_whitespace_normalized_source": true,
+    "source_sha256": "e760f716f8278deefab17a63739033cadc7faee93663c49e76455afaaf40d126"
+  },
+  {
+    "id": "S083",
+    "quote": "These options are ignored by the filesystem.",
+    "word_count": 7,
+    "found_in_whitespace_normalized_source": true,
+    "source_sha256": "7929550fa95ed7a0d56cd32c78e3c5f3a598827c4e55f1607097bff2e169dbbd"
+  },
+  {
+    "id": "S084",
+    "quote": "User and group quota accounting and enforcement is enabled on the mount.",
+    "word_count": 12,
+    "found_in_whitespace_normalized_source": true,
+    "source_sha256": "5ce3dffe9323912b9146a5f33744776ff623ef42cf8accd6b2dfbea0b9db5be6"
+  },
+  {
+    "id": "S085",
+    "quote": "seq_puts(m, \" - \");",
+    "word_count": 4,
+    "found_in_whitespace_normalized_source": true,
+    "source_sha256": "fd82c0db52055ae807ee0b46c7c9bc5d47a9239805eb8ca5c47d2ba81d695776"
+  },
+  {
+    "id": "S086",
+    "quote": "if (sb_has_quota_active(root->d_sb, USRQUOTA)) seq_printf(seq, \",usrquota\");",
+    "word_count": 5,
+    "found_in_whitespace_normalized_source": true,
+    "source_sha256": "eb5d1e9107b287c8d9d2c1dda83aa0e573917d5b0f88dc17b55162f22718cefb"
+  }
+]

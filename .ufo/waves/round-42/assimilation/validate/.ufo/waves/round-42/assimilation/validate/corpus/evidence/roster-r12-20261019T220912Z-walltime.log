@@ -1,0 +1,9 @@
+# wall time, census live, MORI_SHOKUNIN_ROOT=/home/vgpnk/Projects/shokunin, interleaved 3+3 runs; utc=2026-10-19T22:38:15Z; runner=lane L1
+after 4345ms
+before 1884ms
+after 4339ms
+before 1830ms
+after 4278ms
+before 1930ms
+before = base 20e2255 sha d7710981… (9 lanes); after = sha 3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164 (23 lanes)
+cmd: s=$(date +%s%N); MORI_SHOKUNIN_ROOT=<root> bash <census> >/dev/null; e=$(date +%s%N); echo $(( (e-s)/1000000 ))ms

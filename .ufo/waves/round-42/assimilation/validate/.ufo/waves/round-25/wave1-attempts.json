@@ -1,0 +1,18 @@
+[
+ {
+  "attempt": 1,
+  "at": "2026-10-22T06:58:08.490866-03:00",
+  "wave": "mori-r25-w1",
+  "dispatch_path": ".ufo/waves/round-25/wave1-run.json",
+  "payload_sha256": "fd6911afca25ce77443af4aba0751a2486a63857bc413157af40af36404aa265",
+  "payload_bytes": 34632,
+  "tasks_count": 34,
+  "slot_grant": "granted lane=mori wave=r25-w1 seats=34 live=50 pending=0 cap=85",
+  "slot_ledger_line": "1792663083 34 mori r25-w1",
+  "slot_ledger_path": "~/.local/state/shokunin-hyaku/wave-slots (written by wave-slot.sh, not by the lane)",
+  "dispatch_method": "one task call from the L1 eval kernel (tool.task) carrying taskCall.context and taskCall.tasks loaded unchanged from wave1-run.json",
+  "result": "started",
+  "refused_text": null,
+  "started_ids": 34
+ }
+]

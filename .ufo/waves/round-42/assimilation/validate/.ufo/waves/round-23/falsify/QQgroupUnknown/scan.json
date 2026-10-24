@@ -1,0 +1,267 @@
+{
+  "agent": "MadoR22-2.QQgroupUnknown",
+  "cross_check": {
+    "driver_case_sha256": "22f77b779845660b131dc0b19f3e02ddf203165734dfda040c52f08a06755f56",
+    "driver_counts": {
+      "pass": 29,
+      "supplementary_pass": 274,
+      "supplementary_total": 274,
+      "total": 30,
+      "unmet": 1
+    },
+    "driver_fixture_sha256": "482e9eebf1b8fee82e6f5fb5050c3c502e9c6c8ecd152ae01c2184863696c3b9",
+    "driver_headline": {
+      "exit_match": true,
+      "finding_match": true,
+      "paths_match": true
+    },
+    "driver_receipt": ".ufo/waves/round-23/evidence/measure4/c2-oracle-after.json",
+    "driver_strict_red_case": "CaseEscapedSpace (out of this seat's scope; not excused here, not modified)"
+  },
+  "edits": {
+    "expected_bytes_modified": false,
+    "frozen_case_bytes_modified": false,
+    "tool_bytes_modified": false,
+    "writes_confined_to": [
+      "/fast/scratch/hyaku/mori-r23/QQgroupUnknown/ (scratch)",
+      "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QQgroupUnknown/scan.json",
+      "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/falsify/QQgroupUnknown.md"
+    ]
+  },
+  "environment": {
+    "python": "3.14.8",
+    "util_linux": "2.42.4 (prlimit, timeout)"
+  },
+  "headline": {
+    "case_pass": true,
+    "exit_match": true,
+    "finding_match": true,
+    "paths_match": true
+  },
+  "host_read_evidence": {
+    "host_state_marker_hits": {
+      "/sys/fs/btrfs": 0,
+      "mountinfo": 0,
+      "qgroups": 0,
+      "quotactl": 0,
+      "repquota": 0,
+      "xfs_quota": 0
+    },
+    "method": "strace -f -e trace=openat,open,getdents64,readlink,statx,newfstatat",
+    "non_stdlib_opened_paths": [
+      "/etc/ld.so.cache",
+      "/etc/localtime",
+      "/fast/scratch/hyaku/mori-r23/QQgroupUnknown/fixture.json",
+      "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+      "/proc/self/maps",
+      "/usr/bin/pybuilddir.txt",
+      "/usr/bin/python3.14._pth",
+      "/usr/bin/python3._pth",
+      "/usr/bin/pyvenv.cfg",
+      "/usr/pyvenv.cfg"
+    ],
+    "note": "/proc/self/maps is CPython interpreter startup (PIE base), not a quota read. getdents64 calls target only CPython stdlib directories. No /proc/self/mountinfo, no /sys/fs/btrfs, no quotactl/ioctl, no quota command.",
+    "trace_file": "/fast/scratch/hyaku/mori-r23/QQgroupUnknown/trace.txt"
+  },
+  "identities": {
+    "case_bytes": 5589,
+    "case_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/SupplementQgroupUnknown.json",
+    "case_sha256": "22f77b779845660b131dc0b19f3e02ddf203165734dfda040c52f08a06755f56",
+    "case_sha256_matches_case_decisions_selected_sha256": true,
+    "case_sha256_matches_seal_manifest": true,
+    "fixture_bytes": 919,
+    "fixture_path": "/fast/scratch/hyaku/mori-r23/QQgroupUnknown/fixture.json",
+    "fixture_sha256": "482e9eebf1b8fee82e6f5fb5050c3c502e9c6c8ecd152ae01c2184863696c3b9",
+    "fixture_source": "case['fixture'] copied verbatim (json.dumps sort_keys=True indent=2 + newline); frozen case unmodified",
+    "pinned_production_revision": "f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c",
+    "seal_revision": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+    "tool_bytes": 66644,
+    "tool_bytes_equal_to_pinned_production": true,
+    "tool_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+    "tool_sha256": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+    "tool_sha256_at_pin_f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92"
+  },
+  "invocation": {
+    "address_space_limit_bytes": 402653184,
+    "argv": [
+      "python3",
+      "-I",
+      "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+      "--fixture",
+      "/fast/scratch/hyaku/mori-r23/QQgroupUnknown/fixture.json"
+    ],
+    "cwd": "/fast/scratch/hyaku/mori-r23/QQgroupUnknown",
+    "host_reads_by_tool": "none (see host_read_evidence)",
+    "timeout_seconds": 15,
+    "tmpdir": "/fast/scratch/hyaku/mori-r23/QQgroupUnknown",
+    "wrapper": "timeout -k 2 15 prlimit --as=402653184 --"
+  },
+  "leakage_scan": {
+    "canaries": [
+      [
+        "uuid",
+        "5b1d7e04-9a36-4f82-8c05-3e7f2b9d6a15"
+      ],
+      [
+        "mount_source",
+        "/dev/mapper/root"
+      ],
+      [
+        "option_token",
+        "subvolid=257"
+      ],
+      [
+        "option_token",
+        "subvol=/"
+      ],
+      [
+        "mount_source",
+        "/dev/mapper/root"
+      ],
+      [
+        "option_token",
+        "subvolid=256"
+      ],
+      [
+        "option_token",
+        "subvol=/@home"
+      ],
+      [
+        "option_value",
+        "/@home"
+      ],
+      [
+        "mount_source",
+        "/dev/mapper/data"
+      ],
+      [
+        "device_basename",
+        "dm-0"
+      ],
+      [
+        "device_basename",
+        "dm-0"
+      ]
+    ],
+    "hits": []
+  },
+  "output_shape": {
+    "df_covers_quota": false,
+    "error_token_present": false,
+    "exit_code_consistent": true,
+    "exit_code_field": 2,
+    "finding_id": "QUOTA_STATE_UNKNOWN",
+    "limits_nonempty": true,
+    "not_setup_error": true,
+    "path_row_key_set_ok": true,
+    "path_row_key_sets": [
+      [
+        "basis",
+        "btrfs_qgroups_mode",
+        "device_check",
+        "enforcement",
+        "fstype",
+        "mount_point",
+        "path",
+        "quota_option_keys",
+        "quota_state"
+      ]
+    ],
+    "schema": "mori-quota-surface-v1",
+    "schema_match": true,
+    "top_level_key_set_allowed": true,
+    "top_level_key_set_exact": true,
+    "top_level_keys": [
+      "df_covers_quota",
+      "exit_code",
+      "finding_id",
+      "limits",
+      "paths",
+      "schema"
+    ]
+  },
+  "primary_six_field_tuples": {
+    "expected": [
+      [
+        "/home/quota/unknown",
+        "btrfs",
+        "/home",
+        "unknown",
+        "n/a",
+        "btrfs_qgroups_enabled_unavailable"
+      ]
+    ],
+    "match": true,
+    "observed": [
+      [
+        "/home/quota/unknown",
+        "btrfs",
+        "/home",
+        "unknown",
+        "n/a",
+        "btrfs_qgroups_enabled_unavailable"
+      ]
+    ]
+  },
+  "recorded_utc": "2026-10-21T18:35:21Z",
+  "reproducibility": {
+    "invocations_of_this_case": 3,
+    "note": "Same single case each time: 2 plain runs plus 1 strace run for the host-read trace. No other case, no selftest, no driver, no real mode.",
+    "second_plain_invocation_exit_code": 2,
+    "second_plain_invocation_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "second_plain_invocation_stdout_sha256": "79c2dc8c352ecfe10829b2814e952191924c8045f5d9c2f35863bd8252a2d302",
+    "stdout_byte_identical_across_runs": true,
+    "stdout_byte_identical_under_strace": true,
+    "traced_invocation_stdout_sha256": "79c2dc8c352ecfe10829b2814e952191924c8045f5d9c2f35863bd8252a2d302"
+  },
+  "result": {
+    "exit_code": 2,
+    "stderr": "",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "{\"df_covers_quota\":false,\"exit_code\":2,\"finding_id\":\"QUOTA_STATE_UNKNOWN\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[{\"basis\":\"btrfs_qgroups_enabled_unavailable\",\"btrfs_qgroups_mode\":null,\"device_check\":\"btrfs_subvolume_skipped\",\"enforcement\":\"n/a\",\"fstype\":\"btrfs\",\"mount_point\":\"/home\",\"path\":\"/home/quota/unknown\",\"quota_option_keys\":[],\"quota_state\":\"unknown\"}],\"schema\":\"mori-quota-surface-v1\"}\n",
+    "stdout_bytes": 989,
+    "stdout_sha256": "79c2dc8c352ecfe10829b2814e952191924c8045f5d9c2f35863bd8252a2d302"
+  },
+  "role": "reviewer",
+  "schema": "mori-r23-falsify-seat-receipt-v1",
+  "scope": {
+    "case_id": "SupplementQgroupUnknown",
+    "case_kind": "sealed C2 quota case, non-primary (source-review supplement)",
+    "mode": "fixture only; no real-mode invocation, no host quota read",
+    "single_case_only": true
+  },
+  "seat": "QQgroupUnknown",
+  "supplementary_metadata_asserted_by_case": false,
+  "supplementary_metadata_check_status": [
+    {
+      "check": "device_check[0]",
+      "detail": "btrfs_subvolume_skipped",
+      "status": "pass"
+    },
+    {
+      "check": "quota_option_keys[0]",
+      "detail": [],
+      "status": "pass"
+    },
+    {
+      "check": "btrfs_qgroups_mode[0]",
+      "detail": null,
+      "status": "pass"
+    }
+  ],
+  "supplementary_metadata_observed": [
+    {
+      "btrfs_qgroups_mode": null,
+      "device_check": "btrfs_subvolume_skipped",
+      "index": 0,
+      "path": "/home/quota/unknown",
+      "quota_option_keys": []
+    }
+  ],
+  "verdict": {
+    "basis": "exit_code, finding_id and the ordered six-field tuple match the sealed expectation exactly; no expected byte was edited",
+    "case_result": "PASS",
+    "mismatches": []
+  }
+}

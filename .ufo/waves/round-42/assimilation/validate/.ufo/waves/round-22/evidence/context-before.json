@@ -1,0 +1,14 @@
+{
+  "finding_id": "CONTEXT_MISSING",
+  "missing": [
+    "no_broadcast_exact_id",
+    "no_verification_permission",
+    "credential_prohibition",
+    "no_tmp_probe_outputs",
+    "no_fleet_root_writes",
+    "no_vcs_mutation",
+    "transcript_fields_only"
+  ],
+  "spec_sha256": "aab3287249cf6de16077db57b6c1c6f713671870064c1a6df2202e8cc841fb73",
+  "exit_code": 1
+}

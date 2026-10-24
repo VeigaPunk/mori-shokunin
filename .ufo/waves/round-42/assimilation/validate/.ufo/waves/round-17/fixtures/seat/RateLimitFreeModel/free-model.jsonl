@@ -1,0 +1,2 @@
+{"type":"session","version":3}
+{"message":{"completedAt":1760998000000,"errorMessage":"resource_exhausted: Reached free model rate limit","model":"devin-2","provider":"devin","role":"assistant","stopReason":"error"},"type":"message"}

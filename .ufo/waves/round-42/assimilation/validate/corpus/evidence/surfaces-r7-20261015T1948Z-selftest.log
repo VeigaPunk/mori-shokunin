@@ -1,0 +1,74 @@
+==== mori-shokunin round-7 receipt — surfaces-r7-20261015T1948Z-selftest (new census --selftest) ====
+CAPTURED_UTC=2026-10-15T19:48:31Z .. 2026-10-15T19:48:47Z
+DURATION_S=16
+COMMAND=bash tools/mori-census.sh --selftest 
+CWD=/home/vgpnk/Projects/shokunin/mori-shokunin
+EXIT_CODE=0
+CENSUS_SHA256_BEFORE=c7c3569b842ab3911cbfdf415eb7023766c950c60f354af95f6a4f020b5671af
+CENSUS_SHA256_AFTER=c7c3569b842ab3911cbfdf415eb7023766c950c60f354af95f6a4f020b5671af
+ORACLE_SHA256_BEFORE=448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5
+ORACLE_SHA256_AFTER=448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5
+---- output (verbatim, stdout+stderr merged) ----
+PASS clean: all quiet (exit 0 CLEAN)
+PASS drift: WATCHDOG_ABSENT (exit 1 DRIFT)
+PASS drift: WATCHDOG_STALE (exit 1 DRIFT)
+PASS watchdog: unreadable state dir -> unavailable-disclosed, no crash (exit 0 CLEAN)
+PASS watchdog: missing state dir -> provable 0, no crash (exit 0 CLEAN)
+PASS watchdog: empty state dir -> provable 0, no crash (exit 0 CLEAN)
+PASS drift: WAVE_UNSETTLED_AGE (exit 1 DRIFT)
+PASS clean: unsettled young wave does not fire (exit 0 CLEAN)
+PASS drift: OOM_KILL_JOURNAL (exit 1 DRIFT)
+PASS drift: CGROUP_OOM_KILL (exit 1 DRIFT)
+PASS drift: DISK_CRITICAL (exit 1 DRIFT)
+PASS clean: disk under warn (exit 0 CLEAN)
+PASS drift: LANE_SILENT (exit 1 DRIFT)
+PASS silence: subject commit post-launch -> progressing (exit 0 CLEAN)
+PASS silence: pre-launch commit only -> silent (exit 1 DRIFT)
+PASS silence: commit at ct==launch is not post-launch -> silent (exit 1 DRIFT)
+PASS silence: other-authored commit only -> progressing-weak (exit 0 CLEAN)
+PASS silence: strict age gate (age == gate) -> young (exit 0 CLEAN)
+PASS silence: synthetic ts= ledger anchor (exit 0 CLEAN)
+PASS silence: unparseable launch ts -> unavailable (exit 0 CLEAN)
+PASS silence: committed report in window -> not-open (exit 0 CLEAN)
+PASS silence: close r7 then close r5 -> r7 anchor stays closed (exit 0 CLEAN)
+PASS silence: close for another round does not close the anchor (exit 1 DRIFT)
+PASS silence: git rc!=0 -> unavailable, never silent (exit 0 CLEAN)
+PASS silence: unreadable subtree -> unavailable verdict, no crash (exit 0 CLEAN)
+PASS waves: unreadable wave age -> no crash, no false finding (exit 0 CLEAN)
+PASS clean: CGROUP_UNAVAILABLE is not DRIFT (exit 0 CLEAN)
+PASS clean: empty journal (exit 0 CLEAN)
+PASS tmux: fleet vs foreign pane classification (exit 0 CLEAN)
+PASS tmux: no pane data -> relevance unavailable, count intact (exit 0 CLEAN)
+PASS tmux: pane probe rc!=0 -> relevance unavailable (exit 0 CLEAN)
+PASS drift: MEM_PRESSURE_HIGH at local PSI threshold (exit 1 DRIFT)
+PASS clean: PSI just under the local threshold does not fire (exit 0 CLEAN)
+PASS drift: MEM_FILL_HIGH vs numeric cgroup limit (exit 1 DRIFT)
+PASS clean: cgroup fill under threshold does not fire (exit 0 CLEAN)
+PASS drift: MEM_AVAIL_LOW at unlimited-slice host scope (exit 1 DRIFT)
+PASS disk: since-boot write average from diskstats (exit 0 CLEAN)
+PASS disk: device missing from diskstats -> unmeasured disclosed (exit 0 CLEAN)
+PASS disk: missing uptime -> rate unavailable, not zero (exit 0 CLEAN)
+PASS watchdog: state value below ledger launch -> LAG info (exit 0 CLEAN)
+PASS watchdog: state value above ledger launch -> AHEAD info (exit 0 CLEAN)
+PASS clean: matching state and ledger compare, no mismatch finding (exit 0 CLEAN)
+PASS watchdog: unreadable round value counted, no crash (exit 0 CLEAN)
+PASS cli: unknown arg exit 2 (exit 2)
+PASS cli: --help exit 0 (exit 0)
+MORI_CENSUS_SELFTEST: PASS (45 cases, 45 passed, 0 failed)
+---- end of output ----
+
+---- gap-related selftest cases (verbatim lines) ----
+r7 gap cases among the 45 (grep -n 'tmux:|MEM_|since-boot|state value|round value|matching state'):
+40:PASS tmux: fleet vs foreign pane classification (exit 0 CLEAN)
+41:PASS tmux: no pane data -> relevance unavailable, count intact (exit 0 CLEAN)
+42:PASS tmux: pane probe rc!=0 -> relevance unavailable (exit 0 CLEAN)
+43:PASS drift: MEM_PRESSURE_HIGH at local PSI threshold (exit 1 DRIFT)
+45:PASS drift: MEM_FILL_HIGH vs numeric cgroup limit (exit 1 DRIFT)
+47:PASS drift: MEM_AVAIL_LOW at unlimited-slice host scope (exit 1 DRIFT)
+48:PASS disk: since-boot write average from diskstats (exit 0 CLEAN)
+49:PASS disk: device missing from diskstats -> unmeasured disclosed (exit 0 CLEAN)
+50:PASS disk: missing uptime -> rate unavailable, not zero (exit 0 CLEAN)
+51:PASS watchdog: state value below ledger launch -> LAG info (exit 0 CLEAN)
+52:PASS watchdog: state value above ledger launch -> AHEAD info (exit 0 CLEAN)
+53:PASS clean: matching state and ledger compare, no mismatch finding (exit 0 CLEAN)
+54:PASS watchdog: unreadable round value counted, no crash (exit 0 CLEAN)

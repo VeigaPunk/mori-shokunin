@@ -1,0 +1,45 @@
+{
+  "expected_exit": 0,
+  "expected_finding_id": "QUOTA_DISABLED",
+  "expected_paths": [
+    {
+      "basis": "btrfs_qgroups_dir_absent",
+      "device_check": "btrfs_subvolume_skipped",
+      "enforcement": "n/a",
+      "fstype": "btrfs",
+      "mount_point": "/home",
+      "path": "/home/vgpnk/Projects/shokunin",
+      "quota_state": "disabled"
+    },
+    {
+      "basis": "xfs_noquota_option",
+      "device_check": "match",
+      "enforcement": "n/a",
+      "fstype": "xfs",
+      "mount_point": "/tmp",
+      "path": "/tmp",
+      "quota_state": "disabled"
+    }
+  ],
+  "note": "Host state may change (remount, quota enable); a later differing run is a drift observation, not an oracle rewrite. /dev/shm (tmpfs usrquota) is observed but outside the default paths.",
+  "observation_commands": [
+    "awk '$5==\"/home\" || $5==\"/tmp\" || $5==\"/\"' /proc/self/mountinfo",
+    "stat of fleet root and /tmp st_dev (python os.stat)",
+    "ls -d /sys/fs/btrfs/*/qgroups (absent: No such file)",
+    "ls -l /sys/fs/btrfs/1d02a454-c549-4a35-b567-89d60902af8e/devices/ (dm-0)",
+    "readlink -f /dev/mapper/root (/dev/dm-0)"
+  ],
+  "observed": {
+    "fleet_root": {
+      "mountinfo_line_fields": "65 33 0:30 /@home /home ... - btrfs /dev/mapper/root rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=257,subvol=/@home",
+      "st_dev": "0:57",
+      "sysfs": "one uuid lists dm-0; no qgroups dir"
+    },
+    "tmp": {
+      "mountinfo_line_fields": "244 33 259:1 / /tmp ... - xfs /dev/nvme0n1p1 rw,inode64,logbufs=8,logbsize=256k,noquota",
+      "st_dev": "259:1"
+    }
+  },
+  "observed_utc": "2026-10-21",
+  "schema": "mori-r23-c2-real-expected-v1"
+}

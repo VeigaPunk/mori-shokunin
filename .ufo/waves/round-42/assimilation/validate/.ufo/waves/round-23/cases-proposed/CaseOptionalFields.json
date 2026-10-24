@@ -1,0 +1,34 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseOptionalFields",
+  "scenario": "One mountinfo line carries four optional fields (shared:1 master:2 propagate_from:3 unbindable) before the separator and describes an xfs mount at /srv/data whose super options are rw,noquota,attr2,inode64; the two reported paths (/srv/data, and the nested /srv/data/reports) both resolve to that mount, and a further tmpfs line follows it so the xfs super options are not the last field of the mountinfo text.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "21 25 0:19 / /proc rw,nosuid,nodev,noexec,relatime - proc proc rw\n22 25 0:20 / /sys rw,nosuid,nodev,noexec,relatime - sysfs sysfs rw\n23 25 0:21 / /dev rw,nosuid,relatime - tmpfs devtmpfs rw,size=4096k,mode=755\n27 1 0:24 / / rw,relatime - btrfs /dev/mapper/root rw,space_cache=v1,subvolid=5,subvol=/\n29 21 0:26 / /srv rw,relatime - tmpfs tmpfs rw,size=16384k\n31 29 0:25 / /srv/data rw,relatime shared:1 master:2 propagate_from:3 unbindable - xfs /dev/mapper/data rw,noquota,attr2,inode64\n32 21 0:27 / /run rw,nosuid,nodev,relatime,size=1638404k - tmpfs tmpfs rw,mode=755\n",
+    "paths": [
+      {"path": "/srv/data", "realpath": "/srv/data", "st_dev": "0:25"},
+      {"path": "/srv/data/reports", "realpath": "/srv/data/reports", "st_dev": "0:25"}
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0",
+      "/dev/mapper/data": "dm-1"
+    },
+    "btrfs_sysfs": {
+      "2f0a1c6e-9b34-4a7d-8e51-7c3d9ab40f28": {
+        "devices": ["dm-0"],
+        "qgroups": false,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 0,
+    "finding_id": "QUOTA_DISABLED",
+    "paths": [
+      {"path": "/srv/data", "fstype": "xfs", "mount_point": "/srv/data", "quota_state": "disabled", "enforcement": "n/a", "basis": "xfs_noquota_option"},
+      {"path": "/srv/data/reports", "fstype": "xfs", "mount_point": "/srv/data", "quota_state": "disabled", "enforcement": "n/a", "basis": "xfs_noquota_option"}
+    ]
+  },
+  "rationale": "Contract section C2, mount resolution: 'parse mountinfo per proc.rst section 3.5 (fields 1-6, optional fields until `-`, then fstype, source, super options)'; 'Candidate mounts: mount point equals realpath, or is `/`, or realpath starts with mount point + `/`. Choose the longest mount point; among equal mount points the last line wins.' Source anchor S082 (Documentation/filesystems/proc.rst v7.2, section 3.5 at lines 1965-2002): fields 1-6 at 1973-1978 (3 major:minor 'value of st_dev for files on filesystem' at 1975, 5 mount point at 1977, 6 mount options at 1978), '(n...m) optional fields: zero or more fields of the form \"tag[:value]\"' at 1979, '(m+1) separator: marks the end of the optional fields' at 1980, '(m+2) filesystem type' 1981, '(m+3) mount source' 1982, '(m+4) super options: per super block options' 1983, and the optional-field tag table at 1988-1993 listing exactly shared:X, master:X, propagate_from:X and unbindable. Therefore the optional block of the /srv/data line ends at the '-' token and the fields after it are fstype 'xfs', mount source '/dev/mapper/data' and super options 'rw,noquota,attr2,inode64' (the super options are the last field of THAT line, not the last field of the mountinfo text, which is the /run tmpfs line 'rw,mode=755'). Mount selection for both reported paths: '/srv/data' equals the first path's realpath and is a prefix segment ('/srv/data/') of the second path's realpath; candidate '/srv' and '/' are shorter, so the longest mount point '/srv/data' wins and no equal-mount-point tie-break is needed. Contract section C2 quota classification table, xfs row 1: 'xfs | `noquota` and no quota key | disabled | n/a | `xfs_noquota_option' -- the super options contain the key 'noquota' and none of usrquota,uquota,quota,grpquota,gquota,prjquota,pquota, so this row applies and not the 'xfs_conflicting_quota_options' row (which needs noquota together with a quota key) nor the 'xfs_quota_options_absent' row (which needs no quota key at all). Source anchor S077 (Documentation/admin-guide/xfs.rst v7.2, lines 171-173): 'noquota  Forcibly turns off all quota accounting and enforcement within the filesystem'; the same file's 175-185 names the user, group and project quota option families (uquota/usrquota/uqnoenforce/quota, gquota/grpquota/gqnoenforce, pquota/prjquota/pqnoenforce) that are absent here. Source anchor S078 (fs/xfs/xfs_super.c v7.2, xfs_fs_show_options quota emission at 238-254): the kernel's own super-option string emits ',usrquota'/',uqnoenforce' (239-241), ',prjquota'/',pqnoenforce' (244-246) and ',grpquota'/',gqnoenforce' (249-251) as at most one name per quota scope, and emits ',noquota' under the guard 'if (!(mp->m_qflags & XFS_ALL_QUOTA_ACCT))' (253-254); the fixture's super-option string 'rw,noquota,attr2,inode64' is therefore a kernel-shaped string in which the single quota key is 'noquota'. Device check: the chosen mount's major:minor is 0:25 and both reported paths carry st_dev '0:25', so device_check is 'match' (not part of the compared field set, recorded here for completeness). The btrfs root line and the '/srv' tmpfs line are decoys: neither is the longest covering mount point for the reported paths, and the btrfs uuid in btrfs_sysfs is never consulted. Contract section C2 verdict precedence: no path is 'enabled' and no path is 'unknown', so exit 0 with finding_id 'QUOTA_DISABLED'.",
+  "sources": ["S077", "S078", "S082"]
+}

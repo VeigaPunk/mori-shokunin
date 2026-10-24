@@ -1,0 +1,570 @@
+{
+  "after": {
+    "capability_absent": 0,
+    "pass": 24,
+    "total": 24,
+    "unmet": 0
+  },
+  "all_arm_output_safety": true,
+  "all_claim_checks_pass": true,
+  "before": {
+    "capability_absent": 24,
+    "pass": 0,
+    "total": 24,
+    "unmet": 24
+  },
+  "contradictory_entering_rejected": true,
+  "executing_input_bindings": {
+    ".ufo/waves/round-22/frozen/expected-real.json": {
+      "committed_sha256": "66e2a77a49d1a2bc8f999f2d097ac9416081cfc98894bdd46791e235b4a6052b",
+      "loaded_sha256": "66e2a77a49d1a2bc8f999f2d097ac9416081cfc98894bdd46791e235b4a6052b",
+      "matches": true
+    },
+    ".ufo/waves/round-22/frozen/fixture-builder-v2.py": {
+      "committed_sha256": "1b3e16f74a032e066dd881c15affbc4401f2f44447d78efc650ee98a6d2d15d1",
+      "loaded_sha256": "1b3e16f74a032e066dd881c15affbc4401f2f44447d78efc650ee98a6d2d15d1",
+      "matches": true
+    },
+    ".ufo/waves/round-22/frozen/requirements-v2.json": {
+      "committed_sha256": "48ea2369dad5958bd62922483438124b11597a61a5e1ddc02bbeb213c89d0bea",
+      "loaded_sha256": "48ea2369dad5958bd62922483438124b11597a61a5e1ddc02bbeb213c89d0bea",
+      "matches": true
+    },
+    ".ufo/waves/round-22/measure-round22.py": {
+      "committed_sha256": "90ce7ff4c19817072d71663eebbe4c2b9e3903146e97cc3d91fa6d655f17267f",
+      "loaded_sha256": "90ce7ff4c19817072d71663eebbe4c2b9e3903146e97cc3d91fa6d655f17267f",
+      "matches": true
+    },
+    ".ufo/waves/round-22/oracle-reconcile-v2.py": {
+      "committed_sha256": "dcd1c7c656ea8b2e266f88762bf5540e42e41c78078a4b8b11f41e23670d8adb",
+      "loaded_sha256": "dcd1c7c656ea8b2e266f88762bf5540e42e41c78078a4b8b11f41e23670d8adb",
+      "matches": true
+    },
+    ".ufo/waves/round-22/refinement-reconcile.py": {
+      "committed_sha256": "4f5e266dfd1c9b5503792faf031899f89ccc68c712439cf8df04cca4768222df",
+      "loaded_sha256": "4f5e266dfd1c9b5503792faf031899f89ccc68c712439cf8df04cca4768222df",
+      "matches": true
+    },
+    "tools/mori-retention-reconcile.py": {
+      "committed_sha256": "08dc3c5104ff891c1a2edbaa21aea84bd71acdadbd5f30d45c93558068126987",
+      "loaded_sha256": "08dc3c5104ff891c1a2edbaa21aea84bd71acdadbd5f30d45c93558068126987",
+      "matches": true
+    }
+  },
+  "historical_dispositions": "two unknown; baseline blocked",
+  "measured_revision": "50b6f754e7188e8c6352fc8df7b7b5195e697fa8",
+  "mutations": {
+    "all_killed_and_restored": true,
+    "cases": [
+      {
+        "frozen_exit": 1,
+        "frozen_unmet": 3,
+        "id": "count-only",
+        "killed": true,
+        "red_rows": [
+          "frozen:R07",
+          "frozen:R08",
+          "frozen:R09",
+          "refine:allowed-list-only",
+          "refine:line-raw-only",
+          "refine:non-author-swap",
+          "refine:path-only",
+          "refine:unallowed-list-only"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "frozen:R07",
+          "frozen:R08",
+          "frozen:R09"
+        ],
+        "tool_sha256": "2bbc7cbe36ce8b130cd5987a374688574c332f60136c68b6ca7a567bd619a505"
+      },
+      {
+        "frozen_exit": 1,
+        "frozen_unmet": 3,
+        "id": "false-clearance",
+        "killed": true,
+        "red_rows": [
+          "frozen:R02",
+          "frozen:R11",
+          "frozen:R23",
+          "refine:allowed-list-only",
+          "refine:clean-control",
+          "refine:control-path-twin",
+          "refine:dirty-worktree",
+          "refine:exit-code-lie",
+          "refine:finding-lie",
+          "refine:forbidden-as-stale",
+          "refine:forbidden-laundered",
+          "refine:forbidden-only",
+          "refine:forged-clean",
+          "refine:inject-only",
+          "refine:line-raw-only",
+          "refine:metric-overstate",
+          "refine:nested-policy-copy",
+          "refine:non-author-counter",
+          "refine:non-author-overlap",
+          "refine:non-author-swap",
+          "refine:path-only",
+          "refine:routed-lie",
+          "refine:symbolic-input",
+          "refine:unallowed-list-only",
+          "refine:valid-identities",
+          "safety:all-arm-output"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "frozen:R02"
+        ],
+        "tool_sha256": "44b91b3e304eb2f24af6c37d4c9e42095b1736f345dc3946e989de4aff550af7"
+      },
+      {
+        "frozen_exit": 1,
+        "frozen_unmet": 9,
+        "id": "wrong-population",
+        "killed": true,
+        "red_rows": [
+          "frozen:R01",
+          "frozen:R02",
+          "frozen:R03",
+          "frozen:R04",
+          "frozen:R11",
+          "frozen:R12",
+          "frozen:R22",
+          "frozen:R23",
+          "frozen:R24",
+          "refine:allowed-list-only",
+          "refine:clean-control",
+          "refine:control-path-twin",
+          "refine:dirty-worktree",
+          "refine:exit-code-lie",
+          "refine:finding-lie",
+          "refine:forbidden-as-stale",
+          "refine:forbidden-laundered",
+          "refine:forbidden-only",
+          "refine:forged-clean",
+          "refine:inject-only",
+          "refine:line-raw-only",
+          "refine:metric-overstate",
+          "refine:nested-policy-copy",
+          "refine:non-author-counter",
+          "refine:non-author-swap",
+          "refine:path-only",
+          "refine:routed-lie",
+          "refine:symbolic-input",
+          "refine:unallowed-list-only",
+          "refine:valid-identities"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "frozen:R04"
+        ],
+        "tool_sha256": "013872a5849c048c49cf237032e7d44ea438ce03653f62875d8fcbf4b595ebe0"
+      },
+      {
+        "frozen_exit": 0,
+        "frozen_unmet": 0,
+        "id": "setup-leak",
+        "killed": true,
+        "red_rows": [
+          "refine:allowlist-canonical-two-step",
+          "refine:allowlist-change",
+          "refine:allowlist-path-substitution",
+          "refine:boolean-exit",
+          "refine:boolean-line-colliding",
+          "refine:boolean-metric",
+          "refine:boolean-non-author",
+          "refine:boolean-routed",
+          "refine:control-path",
+          "refine:cousin",
+          "refine:diverged-consistent",
+          "refine:head-cousin",
+          "refine:help-flag",
+          "refine:inner-commit-split",
+          "refine:malformed-stdout",
+          "refine:measured-tag",
+          "refine:policy-change",
+          "refine:policy-change-digest-updated",
+          "refine:policy-path-substitution",
+          "refine:symlink-identical",
+          "refine:unresolvable-consistent",
+          "refine:unsafe-allowlist",
+          "refine:unsafe-policy",
+          "refine:unsafe-receipt",
+          "refine:wrong-command-revision",
+          "refine:wrong-policy-digest",
+          "safety:all-arm-output"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "safety:all-arm-output"
+        ],
+        "tool_sha256": "fd04a4dcd4f5210d885f8405801f5da04c024c8633ea53c2f868df2f69569adb"
+      },
+      {
+        "frozen_exit": 1,
+        "frozen_unmet": 1,
+        "id": "output-sets",
+        "killed": true,
+        "red_rows": [
+          "frozen:R04",
+          "refine:valid-identities"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "frozen:R04",
+          "refine:valid-identities"
+        ],
+        "tool_sha256": "142ed9f0a1e1a181aa195307da6111d78daaec4b57e291fbaa356088efeb64c8"
+      },
+      {
+        "frozen_exit": 1,
+        "frozen_unmet": 1,
+        "id": "one-sided-hits",
+        "killed": true,
+        "red_rows": [
+          "frozen:R06",
+          "refine:inject-only"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "frozen:R06",
+          "refine:inject-only"
+        ],
+        "tool_sha256": "e44b2b937dadc1ba85e3a53107fc6e321b4d2014c922105fe66b75d4d6b11132"
+      },
+      {
+        "frozen_exit": 0,
+        "frozen_unmet": 0,
+        "id": "line-blind-raw",
+        "killed": true,
+        "red_rows": [
+          "refine:line-raw-only"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "refine:line-raw-only"
+        ],
+        "tool_sha256": "055c3d8814291706645f51d0392791f2da4a9d18e2ff8590ef909b468f8e3253"
+      },
+      {
+        "frozen_exit": 0,
+        "frozen_unmet": 0,
+        "id": "metric-ignored",
+        "killed": true,
+        "red_rows": [
+          "refine:metric-overstate"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "refine:metric-overstate"
+        ],
+        "tool_sha256": "cb31c0f4a63cb7ac88ebc1c51e1d044cb7dc95414a85e37bac0ef9eec1493a93"
+      },
+      {
+        "frozen_exit": 0,
+        "frozen_unmet": 0,
+        "id": "non-author-unchecked",
+        "killed": true,
+        "red_rows": [
+          "refine:non-author-counter"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "refine:non-author-counter"
+        ],
+        "tool_sha256": "bd3894b75a942fb51fff517b1325705e4767a3e593d3cd8983218b8880051afc"
+      },
+      {
+        "frozen_exit": 0,
+        "frozen_unmet": 0,
+        "id": "no-dotdot",
+        "killed": true,
+        "red_rows": [
+          "refine:unsafe-allowlist",
+          "refine:unsafe-policy",
+          "refine:unsafe-receipt"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "refine:unsafe-allowlist",
+          "refine:unsafe-policy",
+          "refine:unsafe-receipt"
+        ],
+        "tool_sha256": "a7278c66a97db03abfdf3be2b80242654f02d0987246204c720428f238327dc5"
+      },
+      {
+        "frozen_exit": 1,
+        "frozen_unmet": 1,
+        "id": "no-byte-compare",
+        "killed": true,
+        "red_rows": [
+          "frozen:R16",
+          "refine:allowlist-canonical-two-step",
+          "refine:allowlist-change",
+          "refine:policy-change",
+          "refine:policy-change-digest-updated"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "refine:allowlist-canonical-two-step",
+          "refine:policy-change-digest-updated"
+        ],
+        "tool_sha256": "7f8f0c8d7c04203fa6bd262a6658783726a5c1af0ddcdfe093893ae7d3f60444"
+      },
+      {
+        "frozen_exit": 0,
+        "frozen_unmet": 0,
+        "id": "no-ancestor",
+        "killed": true,
+        "red_rows": [
+          "refine:cousin",
+          "refine:diverged-consistent",
+          "refine:head-cousin"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "refine:cousin",
+          "refine:diverged-consistent",
+          "refine:head-cousin"
+        ],
+        "tool_sha256": "29aed16045e0a7d0f384636bb6734a6c5220425272732d7113e8ecc67f470536"
+      },
+      {
+        "frozen_exit": 1,
+        "frozen_unmet": 1,
+        "id": "bool-lax",
+        "killed": true,
+        "red_rows": [
+          "frozen:R18",
+          "refine:boolean-exit",
+          "refine:boolean-line-colliding",
+          "refine:boolean-metric",
+          "refine:boolean-non-author",
+          "refine:boolean-routed"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "refine:boolean-line-colliding",
+          "refine:boolean-metric",
+          "refine:boolean-non-author"
+        ],
+        "tool_sha256": "6e845f618202c82d4aea874820c4496f450872303141046cec23900ea435c231"
+      },
+      {
+        "frozen_exit": 0,
+        "frozen_unmet": 0,
+        "id": "symlink-accepted",
+        "killed": true,
+        "red_rows": [
+          "refine:symlink-identical"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "refine:symlink-identical"
+        ],
+        "tool_sha256": "e58db69bd48cc366aa141bdc398cc8fe6113635be50382ad8a7d325e72c0246d"
+      },
+      {
+        "frozen_exit": 0,
+        "frozen_unmet": 0,
+        "id": "argv-empty",
+        "killed": true,
+        "red_rows": [
+          "refine:allowed-list-only",
+          "refine:clean-control",
+          "refine:control-path-twin",
+          "refine:dirty-worktree",
+          "refine:exit-code-lie",
+          "refine:finding-lie",
+          "refine:forbidden-as-stale",
+          "refine:forbidden-laundered",
+          "refine:forbidden-only",
+          "refine:forged-clean",
+          "refine:inject-only",
+          "refine:line-raw-only",
+          "refine:metric-overstate",
+          "refine:nested-policy-copy",
+          "refine:non-author-counter",
+          "refine:non-author-overlap",
+          "refine:non-author-swap",
+          "refine:path-only",
+          "refine:routed-lie",
+          "refine:symbolic-input",
+          "refine:unallowed-list-only",
+          "refine:valid-identities"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "refine:clean-control"
+        ],
+        "tool_sha256": "df7de2d88d829853186242c42386303f24713b84c24073b7fbd970ff522e1670"
+      },
+      {
+        "frozen_exit": 0,
+        "frozen_unmet": 0,
+        "id": "exit-unchecked",
+        "killed": true,
+        "red_rows": [
+          "refine:exit-code-lie",
+          "refine:forged-clean"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "refine:exit-code-lie"
+        ],
+        "tool_sha256": "1dd874e6341adc422fd804a996ca6aae27a08fdc6409da1e4f5e5ba32a109e64"
+      },
+      {
+        "frozen_exit": 0,
+        "frozen_unmet": 0,
+        "id": "finding-unchecked",
+        "killed": true,
+        "red_rows": [
+          "refine:finding-lie",
+          "refine:forbidden-as-stale",
+          "refine:forbidden-laundered",
+          "refine:forged-clean"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "refine:finding-lie"
+        ],
+        "tool_sha256": "c8be02b72656b4e6c6af0b1981c29508635e13a547c20c81c506c89a7b801146"
+      },
+      {
+        "frozen_exit": 0,
+        "frozen_unmet": 0,
+        "id": "routed-unchecked",
+        "killed": true,
+        "red_rows": [
+          "refine:routed-lie"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "refine:routed-lie"
+        ],
+        "tool_sha256": "07e13ef85b81f884c55efd32f63e8e387df94b02bddc0c16c861c4c30442f16e"
+      },
+      {
+        "frozen_exit": 0,
+        "frozen_unmet": 0,
+        "id": "aux-unchecked",
+        "killed": true,
+        "red_rows": [
+          "refine:forbidden-as-stale",
+          "refine:forbidden-laundered"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "refine:forbidden-as-stale",
+          "refine:forbidden-laundered"
+        ],
+        "tool_sha256": "3e17072b391278593e15dda8c7fcaa8695157e5786781df1b21638ac069301f2"
+      },
+      {
+        "frozen_exit": 0,
+        "frozen_unmet": 0,
+        "id": "forbidden-not-red",
+        "killed": true,
+        "red_rows": [
+          "refine:forbidden-only"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "refine:forbidden-only"
+        ],
+        "tool_sha256": "0512465fc9f603ebb44d7d1f6d4156fa3c19c23f81d5eca05e7ed69f9688257c"
+      },
+      {
+        "frozen_exit": 1,
+        "frozen_unmet": 2,
+        "id": "policy-copy-excluded",
+        "killed": true,
+        "red_rows": [
+          "frozen:R03",
+          "frozen:R04",
+          "refine:nested-policy-copy",
+          "refine:valid-identities"
+        ],
+        "refine_exit": 1,
+        "targets": [
+          "refine:nested-policy-copy"
+        ],
+        "tool_sha256": "4c6819ce8283f26c1844c2868504c3cc188086aae2853355f3fca57e1a967525"
+      }
+    ],
+    "restored_exit": 0
+  },
+  "original_permission_control": "RED11/12 retained byte-unchanged, not rerun",
+  "privacy_clearance": false,
+  "raw_recount_authenticates_historical_execution": false,
+  "real_matches_frozen_expected": true,
+  "refinement_exit": 0,
+  "retention_floor": {
+    "exit_code": 1,
+    "missing_unallowlisted": 0,
+    "new_unallowlisted": 0,
+    "privacy_clearance": false,
+    "same_inherited_identities": true,
+    "unallowlisted": 4
+  },
+  "schema": "mori-r22-measurements-v1",
+  "selftest": {
+    "finding_id": "RECONCILE_SELFTEST_PASS",
+    "passed": 4,
+    "privacy_clearance": false,
+    "schema": "mori-retention-reconciliation-v1",
+    "total": 4
+  },
+  "selftest_exit": 0,
+  "tool_sha256": "08dc3c5104ff891c1a2edbaa21aea84bd71acdadbd5f30d45c93558068126987",
+  "unchanged_carried_inputs": {
+    ".ufo/waves/round-21/evidence/final/fixture-original-control.json": {
+      "current_sha256": "f0be2df7326e087395534aeccb9ac303c08279e88dfc9ded2bd250ab33b53eae",
+      "entering_sha256": "f0be2df7326e087395534aeccb9ac303c08279e88dfc9ded2bd250ab33b53eae",
+      "unchanged": true
+    },
+    ".ufo/waves/round-21/fixture-loss.py": {
+      "current_sha256": "502c793a330bbab6dedc7e4fbbc6571c6d33a9f57615771776250013c16662ef",
+      "entering_sha256": "502c793a330bbab6dedc7e4fbbc6571c6d33a9f57615771776250013c16662ef",
+      "unchanged": true
+    },
+    "corpus/evidence/baseline-r20-20261021T1051Z.json": {
+      "current_sha256": "e528bc1549fd3f44abe01450db8146d596245fd85c94f98e6d450e84d3be8433",
+      "entering_sha256": "e528bc1549fd3f44abe01450db8146d596245fd85c94f98e6d450e84d3be8433",
+      "unchanged": true
+    },
+    "corpus/evidence/loss-accounting-r21.json": {
+      "current_sha256": "e650c7ff04bcff61d17150ba5bbcfdad4fe5130817b307e9ec9f7764fa5b2736",
+      "entering_sha256": "e650c7ff04bcff61d17150ba5bbcfdad4fe5130817b307e9ec9f7764fa5b2736",
+      "unchanged": true
+    },
+    "corpus/evidence/retention-allowlist.json": {
+      "current_sha256": "f46c78ecad4c6d31fa9ac0ba0cfd6c72eb9137ab6b58ab4baf4239d11ea0c63b",
+      "entering_sha256": "f46c78ecad4c6d31fa9ac0ba0cfd6c72eb9137ab6b58ab4baf4239d11ea0c63b",
+      "unchanged": true
+    },
+    "tools/mori-census.sh": {
+      "current_sha256": "87b8d680b9b2572e89977a10ff9b91630fbaf689f23f4892e06be427b977ab28",
+      "entering_sha256": "87b8d680b9b2572e89977a10ff9b91630fbaf689f23f4892e06be427b977ab28",
+      "unchanged": true
+    },
+    "tools/mori-evidence-loss.py": {
+      "current_sha256": "de189084a5d197c43e6f04846b8a10c6ad2bcc488d178490aef949db03738eb6",
+      "entering_sha256": "de189084a5d197c43e6f04846b8a10c6ad2bcc488d178490aef949db03738eb6",
+      "unchanged": true
+    },
+    "tools/mori-retention-gate.py": {
+      "current_sha256": "cf0896a2ea36f169c9e900c58eefe7e2a900a4c9d67f849f753f4631d8ab829e",
+      "entering_sha256": "cf0896a2ea36f169c9e900c58eefe7e2a900a4c9d67f849f753f4631d8ab829e",
+      "unchanged": true
+    }
+  },
+  "workspace_archive": {
+    "every_file_byte_compared": true,
+    "path": "synthetic-workspaces.tar.gz",
+    "scratch_retained": "/home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/round22/measure2",
+    "sha256": "213c0b9a76e3910d1b6c201c27e027c8da1a61dc34566f248a05fb2d40fb11d0"
+  }
+}

@@ -1,0 +1,424 @@
+{
+  "mutation_error": null,
+  "restoration": {
+    "byte_count_before": 66644,
+    "byte_count_restored": 66644,
+    "exact_bytes_equal": true,
+    "mutant_sha256": "376de48986531f5f1de63e54b50a782bd7bc25d3c21a7a788310a329b2c55f1c",
+    "pristine_sha256": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+    "restoration_in_finally": true,
+    "restored_sha256": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+    "source_path": "/fast/scratch/hyaku/mori-r23/MutSetupPartial/clone/tools/mori-quota-surface.py"
+  },
+  "runs": [
+    {
+      "address_space_bytes": 402653184,
+      "argv": [
+        "/usr/bin/prlimit",
+        "--as=402653184",
+        "--cpu=15",
+        "--",
+        "/usr/bin/python3",
+        "-B",
+        "/fast/scratch/hyaku/mori-r23/MutSetupPartial/clone/tools/mori-quota-surface.py",
+        "--fixture",
+        "/fast/scratch/hyaku/mori-r23/MutSetupPartial/CaseSetupMalformed.fixture.json"
+      ],
+      "case_sha256": "833cd8a536b33770ef11291ddc4e05ecd9cbf18ff7dcfa9abfe566021b916fe7",
+      "cpu_seconds": 15,
+      "cwd": "/fast/scratch/hyaku/mori-r23/MutSetupPartial/clone",
+      "detector_exit": 0,
+      "elapsed_seconds": 0.044558,
+      "env_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/fast/scratch/hyaku/mori-r23/MutSetupPartial"
+      },
+      "fixture_sha256": "760e9dad34359da61f5ea532aacbb0e38625dd093f2ad8fe872ac42d3dd8db18",
+      "headline": {
+        "exit_match": true,
+        "finding_match": true,
+        "paths_match": true
+      },
+      "oracle_sha256": "f1f4a027728180436fc5161171b0f6ad4ca4176229b5240aabb33e3f2af36bec",
+      "parsed": {
+        "df_covers_quota": false,
+        "error": "fixture_key_set",
+        "exit_code": 2,
+        "finding_id": "QUOTA_SETUP",
+        "limits": "no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.",
+        "paths": [],
+        "schema": "mori-quota-surface-v1"
+      },
+      "phase": "pristine",
+      "primary_pass": true,
+      "reason": null,
+      "source_sha256": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+      "status": "pass",
+      "stderr": "",
+      "stderr_truncated": false,
+      "stdout": "{\"df_covers_quota\":false,\"error\":\"fixture_key_set\",\"exit_code\":2,\"finding_id\":\"QUOTA_SETUP\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[],\"schema\":\"mori-quota-surface-v1\"}\n",
+      "stdout_truncated": false,
+      "supplementary": [
+        {
+          "check": "schema",
+          "detail": "mori-quota-surface-v1",
+          "status": "pass"
+        },
+        {
+          "check": "exit_consistency",
+          "detail": 2,
+          "status": "pass"
+        },
+        {
+          "check": "output_keys_allowed",
+          "detail": [
+            "df_covers_quota",
+            "error",
+            "exit_code",
+            "finding_id",
+            "limits",
+            "paths",
+            "schema"
+          ],
+          "status": "pass"
+        },
+        {
+          "check": "output_key_set",
+          "detail": [
+            "df_covers_quota",
+            "error",
+            "exit_code",
+            "finding_id",
+            "limits",
+            "paths",
+            "schema"
+          ],
+          "status": "pass"
+        },
+        {
+          "check": "error_token",
+          "detail": "fixture_key_set",
+          "status": "pass"
+        },
+        {
+          "check": "path_key_set",
+          "detail": [],
+          "status": "pass"
+        },
+        {
+          "check": "df_covers_quota",
+          "detail": false,
+          "status": "pass"
+        },
+        {
+          "check": "setup_no_partial_verdict",
+          "detail": {
+            "df_covers_quota": false,
+            "paths": []
+          },
+          "status": "pass"
+        },
+        {
+          "check": "limits_text",
+          "detail": "str",
+          "status": "pass"
+        },
+        {
+          "check": "no_leakage",
+          "detail": [],
+          "status": "pass"
+        }
+      ],
+      "supplementary_pass": true,
+      "timeout": false,
+      "tool_exit": 2,
+      "wall_timeout_seconds": 15
+    },
+    {
+      "address_space_bytes": 402653184,
+      "argv": [
+        "/usr/bin/prlimit",
+        "--as=402653184",
+        "--cpu=15",
+        "--",
+        "/usr/bin/python3",
+        "-B",
+        "/fast/scratch/hyaku/mori-r23/MutSetupPartial/clone/tools/mori-quota-surface.py",
+        "--fixture",
+        "/fast/scratch/hyaku/mori-r23/MutSetupPartial/CaseSetupMalformed.fixture.json"
+      ],
+      "case_sha256": "833cd8a536b33770ef11291ddc4e05ecd9cbf18ff7dcfa9abfe566021b916fe7",
+      "cpu_seconds": 15,
+      "cwd": "/fast/scratch/hyaku/mori-r23/MutSetupPartial/clone",
+      "detector_exit": 1,
+      "elapsed_seconds": 0.043257,
+      "env_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/fast/scratch/hyaku/mori-r23/MutSetupPartial"
+      },
+      "fixture_sha256": "760e9dad34359da61f5ea532aacbb0e38625dd093f2ad8fe872ac42d3dd8db18",
+      "headline": {
+        "exit_match": true,
+        "finding_match": true,
+        "paths_match": false
+      },
+      "oracle_sha256": "f1f4a027728180436fc5161171b0f6ad4ca4176229b5240aabb33e3f2af36bec",
+      "parsed": {
+        "df_covers_quota": false,
+        "error": "fixture_key_set",
+        "exit_code": 2,
+        "finding_id": "QUOTA_SETUP",
+        "limits": "no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.",
+        "paths": [
+          {
+            "basis": "no_covering_mount",
+            "btrfs_qgroups_mode": null,
+            "device_check": "not_checked",
+            "enforcement": "n/a",
+            "fstype": null,
+            "mount_point": null,
+            "path": "/home/vgpnk/Projects/shokunin",
+            "quota_option_keys": [],
+            "quota_state": "unknown"
+          }
+        ],
+        "schema": "mori-quota-surface-v1"
+      },
+      "phase": "mutated",
+      "primary_pass": false,
+      "reason": null,
+      "source_sha256": "376de48986531f5f1de63e54b50a782bd7bc25d3c21a7a788310a329b2c55f1c",
+      "status": "reject",
+      "stderr": "",
+      "stderr_truncated": false,
+      "stdout": "{\"df_covers_quota\":false,\"error\":\"fixture_key_set\",\"exit_code\":2,\"finding_id\":\"QUOTA_SETUP\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[{\"basis\":\"no_covering_mount\",\"btrfs_qgroups_mode\":null,\"device_check\":\"not_checked\",\"enforcement\":\"n/a\",\"fstype\":null,\"mount_point\":null,\"path\":\"/home/vgpnk/Projects/shokunin\",\"quota_option_keys\":[],\"quota_state\":\"unknown\"}],\"schema\":\"mori-quota-surface-v1\"}\n",
+      "stdout_truncated": false,
+      "supplementary": [
+        {
+          "check": "schema",
+          "detail": "mori-quota-surface-v1",
+          "status": "pass"
+        },
+        {
+          "check": "exit_consistency",
+          "detail": 2,
+          "status": "pass"
+        },
+        {
+          "check": "output_keys_allowed",
+          "detail": [
+            "df_covers_quota",
+            "error",
+            "exit_code",
+            "finding_id",
+            "limits",
+            "paths",
+            "schema"
+          ],
+          "status": "pass"
+        },
+        {
+          "check": "output_key_set",
+          "detail": [
+            "df_covers_quota",
+            "error",
+            "exit_code",
+            "finding_id",
+            "limits",
+            "paths",
+            "schema"
+          ],
+          "status": "pass"
+        },
+        {
+          "check": "error_token",
+          "detail": "fixture_key_set",
+          "status": "pass"
+        },
+        {
+          "check": "path_key_set",
+          "detail": [
+            [
+              "basis",
+              "btrfs_qgroups_mode",
+              "device_check",
+              "enforcement",
+              "fstype",
+              "mount_point",
+              "path",
+              "quota_option_keys",
+              "quota_state"
+            ]
+          ],
+          "status": "pass"
+        },
+        {
+          "check": "df_covers_quota",
+          "detail": false,
+          "status": "pass"
+        },
+        {
+          "check": "setup_no_partial_verdict",
+          "detail": {
+            "df_covers_quota": false,
+            "paths": [
+              {
+                "basis": "no_covering_mount",
+                "btrfs_qgroups_mode": null,
+                "device_check": "not_checked",
+                "enforcement": "n/a",
+                "fstype": null,
+                "mount_point": null,
+                "path": "/home/vgpnk/Projects/shokunin",
+                "quota_option_keys": [],
+                "quota_state": "unknown"
+              }
+            ]
+          },
+          "status": "unmet"
+        },
+        {
+          "check": "limits_text",
+          "detail": "str",
+          "status": "pass"
+        },
+        {
+          "check": "no_leakage",
+          "detail": [],
+          "status": "pass"
+        }
+      ],
+      "supplementary_pass": false,
+      "timeout": false,
+      "tool_exit": 2,
+      "wall_timeout_seconds": 15
+    },
+    {
+      "address_space_bytes": 402653184,
+      "argv": [
+        "/usr/bin/prlimit",
+        "--as=402653184",
+        "--cpu=15",
+        "--",
+        "/usr/bin/python3",
+        "-B",
+        "/fast/scratch/hyaku/mori-r23/MutSetupPartial/clone/tools/mori-quota-surface.py",
+        "--fixture",
+        "/fast/scratch/hyaku/mori-r23/MutSetupPartial/CaseSetupMalformed.fixture.json"
+      ],
+      "case_sha256": "833cd8a536b33770ef11291ddc4e05ecd9cbf18ff7dcfa9abfe566021b916fe7",
+      "cpu_seconds": 15,
+      "cwd": "/fast/scratch/hyaku/mori-r23/MutSetupPartial/clone",
+      "detector_exit": 0,
+      "elapsed_seconds": 0.038843,
+      "env_overrides": {
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "TMPDIR": "/fast/scratch/hyaku/mori-r23/MutSetupPartial"
+      },
+      "fixture_sha256": "760e9dad34359da61f5ea532aacbb0e38625dd093f2ad8fe872ac42d3dd8db18",
+      "headline": {
+        "exit_match": true,
+        "finding_match": true,
+        "paths_match": true
+      },
+      "oracle_sha256": "f1f4a027728180436fc5161171b0f6ad4ca4176229b5240aabb33e3f2af36bec",
+      "parsed": {
+        "df_covers_quota": false,
+        "error": "fixture_key_set",
+        "exit_code": 2,
+        "finding_id": "QUOTA_SETUP",
+        "limits": "no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.",
+        "paths": [],
+        "schema": "mori-quota-surface-v1"
+      },
+      "phase": "restored",
+      "primary_pass": true,
+      "reason": null,
+      "source_sha256": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+      "status": "pass",
+      "stderr": "",
+      "stderr_truncated": false,
+      "stdout": "{\"df_covers_quota\":false,\"error\":\"fixture_key_set\",\"exit_code\":2,\"finding_id\":\"QUOTA_SETUP\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[],\"schema\":\"mori-quota-surface-v1\"}\n",
+      "stdout_truncated": false,
+      "supplementary": [
+        {
+          "check": "schema",
+          "detail": "mori-quota-surface-v1",
+          "status": "pass"
+        },
+        {
+          "check": "exit_consistency",
+          "detail": 2,
+          "status": "pass"
+        },
+        {
+          "check": "output_keys_allowed",
+          "detail": [
+            "df_covers_quota",
+            "error",
+            "exit_code",
+            "finding_id",
+            "limits",
+            "paths",
+            "schema"
+          ],
+          "status": "pass"
+        },
+        {
+          "check": "output_key_set",
+          "detail": [
+            "df_covers_quota",
+            "error",
+            "exit_code",
+            "finding_id",
+            "limits",
+            "paths",
+            "schema"
+          ],
+          "status": "pass"
+        },
+        {
+          "check": "error_token",
+          "detail": "fixture_key_set",
+          "status": "pass"
+        },
+        {
+          "check": "path_key_set",
+          "detail": [],
+          "status": "pass"
+        },
+        {
+          "check": "df_covers_quota",
+          "detail": false,
+          "status": "pass"
+        },
+        {
+          "check": "setup_no_partial_verdict",
+          "detail": {
+            "df_covers_quota": false,
+            "paths": []
+          },
+          "status": "pass"
+        },
+        {
+          "check": "limits_text",
+          "detail": "str",
+          "status": "pass"
+        },
+        {
+          "check": "no_leakage",
+          "detail": [],
+          "status": "pass"
+        }
+      ],
+      "supplementary_pass": true,
+      "timeout": false,
+      "tool_exit": 2,
+      "wall_timeout_seconds": 15
+    }
+  ],
+  "schema": "mori-r23-mutation-probe-v1",
+  "scope": "CaseSetupMalformed primary and sealed supplementary checks only; no full driver, selftest, real mode, C1 oracle, or live quota inputs",
+  "seat": "MutSetupPartial",
+  "verdict": "killed"
+}

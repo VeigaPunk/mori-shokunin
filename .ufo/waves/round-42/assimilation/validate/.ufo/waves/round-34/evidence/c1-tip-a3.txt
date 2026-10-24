@@ -1,0 +1,9 @@
+measured 2026-10-23T06:47:48Z by L1 MoriR34A3 at lane tip 5216d78dd1bc4ce57356555b509c9135a9702088 (tool byte-identical to ba525e1a: yes; counter byte-identical to committed: yes)
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-34/count-c1-a1.py 5216d78dd1bc4ce57356555b509c9135a9702088
+measured_at=2026-10-23T06:47:48Z repo=/home/vgpnk/Projects/shokunin/mori-shokunin rev=5216d78dd1bc4ce57356555b509c9135a9702088
+tool=present guard=clean seed=12567786753972410826
+fixed_pass=12/12 random_pass=300/300
+states_seen=['absent', 'bad-line', 'gone', 'new', 'ok', 'reset'] classes_seen=['disk', 'partition', 'stacked', 'unknown', 'virtual'] coverage=ok
+live=ok
+C1=met
+exit=0

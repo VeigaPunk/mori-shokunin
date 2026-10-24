@@ -1,0 +1,45 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseExt4Journaled",
+  "scenario": "ext4 mount at /srv/journal whose super options carry usrjquota=aquota.user and jqfmt=vfsv0 (journal quota): the contract's ext4 quota-key row applies, so quota_state enabled / enforcement unknown / basis ext_quota_option, and the quota file name in the option value must never be echoed.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "1 0 0:31 / / rw,relatime shared:1 - btrfs /dev/mapper/root rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=257,subvol=/@root\n29 1 0:22 / /proc rw,nosuid,nodev,noexec,relatime shared:2 - proc proc rw\n30 1 0:23 / /sys rw,nosuid,nodev,noexec,relatime shared:3 - sysfs sysfs rw\n31 1 0:5 / /dev rw,nosuid,relatime shared:4 - devtmpfs devtmpfs rw,size=4028112k,nr_inodes=1007057,mode=755\n244 1 259:1 / /tmp rw,relatime - xfs /dev/nvme0n1p1 rw,inode64,logbufs=8,logbsize=256k,noquota\n36 1 8:2 / /srv/journal rw,relatime shared:7 - ext4 /dev/sda2 rw,user_xattr,acl,jqfmt=vfsv0,usrjquota=aquota.user\n",
+    "paths": [
+      {
+        "path": "/srv/journal/data",
+        "realpath": "/srv/journal/data",
+        "st_dev": "8:2"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0"
+    },
+    "btrfs_sysfs": {
+      "1d02a454-c549-4a35-b567-89d60902af8e": {
+        "devices": ["dm-0"],
+        "qgroups": false,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 1,
+    "finding_id": "QUOTA_ENABLED",
+    "paths": [
+      {
+        "path": "/srv/journal/data",
+        "fstype": "ext4",
+        "mount_point": "/srv/journal",
+        "quota_state": "enabled",
+        "enforcement": "unknown",
+        "basis": "ext_quota_option"
+      }
+    ]
+  },
+  "rationale": "Contract C2 quota-classification table, ext2/ext3/ext4 row 'any of quota,usrquota,grpquota,prjquota,usrjquota,grpjquota | enabled | unknown | ext_quota_option' (contract.md:118). Derived from contract.md (frozen at lane commit 4dc80c1be48308075e83af17f15fbfe7e95e6cb8) and the named kernel sources only; no implementation was read (neither .ufo/waves/round-23/build/ImplQuota/ nor .scratch/round23/ImplQuota, and no sibling case file was used to derive the expectation). (1) Mount resolution: the probed path is /srv/journal/data with realpath /srv/journal/data. Contract C2 'Mount resolution' (contract.md:95-104) admits a mount whose mount point equals the realpath, is '/', or is followed by '/' in the realpath; the fixture's btrfs root line ('/') and its ext4 line ('/srv/journal') are therefore both candidates, and the longest mount point wins, so the chosen mount is '/srv/journal' with fstype 'ext4'. Field layout per proc.rst section 3.5 (S082): six fixed fields, then optional fields until the '-' separator, then filesystem type, mount source and super options as the last field (proc.rst:1970-1983; 'Parsers should ignore all unrecognised optional fields', proc.rst:1985) - so the ext4 line's super options are 'rw,user_xattr,acl,jqfmt=vfsv0,usrjquota=aquota.user' even though the line also carries the optional field 'shared:7'. (2) Device check: the chosen fstype is ext4 (not btrfs), and the mountinfo major:minor '8:2' equals the path's st_dev '8:2', so the contract's 'unknown / device_mismatch' branch is not taken; proc.rst:1975 defines field (3) major:minor as the 'value of st_dev for files on filesystem' (S082), so equality is the ordinary case for ext4 and the btrfs per-subvolume exemption (S081) is irrelevant here. (3) Classification: contract.md:105 parses the super options as a comma-split list whose key is the text before '=', giving keys rw, user_xattr, acl, jqfmt, usrjquota. 'usrjquota' is one of the contract's ext4 quota keys (quota, usrquota, grpquota, prjquota, usrjquota, grpjquota), so the enabled row applies: quota_state 'enabled', enforcement 'unknown' (this row's enforcement token; the ext4 filesystem itself ignores these options, which are used only by quota tools - ext4.rst:261-265 'These options are ignored by the filesystem', S083), basis 'ext_quota_option'. 'jqfmt' is not a member of the contract's ext4 key list, but the row is an 'any of' test, so jqfmt neither adds nor removes the verdict. (4) Verdict precedence: exactly one path is probed, it is enabled, and none is unknown, so exit 1 with finding_id QUOTA_ENABLED (contract.md:132-135); QUOTA_ENABLED is a runway-reporting finding, not a failure claim. (5) File-name non-disclosure: 'usrjquota=aquota.user' carries a quota file name in the option value (ext4.rst:267 'jqfmt=<quota type>, usrjquota=<file>, grpjquota=<file>', S083). The contract requires the probe to expose option keys only and never file names from option values (contract.md:124-130), so 'aquota.user' must not appear in the output; note that the sealed per-path comparison tuple for this case (path, fstype, mount_point, quota_state, enforcement, basis) cannot by itself detect such a leak, so that property needs an independent check - see the report for the ambiguity list and this coverage gap. Fixture realism: 'vfsv0' is the kernel's journal-quota format token (fs/ext4/super.c ext4_param_jqfmt maps 'vfsv0' to QFMT_VFS_V0, and ext4_show_quota_options prints ',jqfmt=%s' and then seq_show_option 'usrjquota' with the quota file name), so the super-options string 'rw,user_xattr,acl,jqfmt=vfsv0,usrjquota=aquota.user' has the shape and order the kernel itself emits; that kernel file is corroboration beyond the registered S077-S084 rows and is therefore not listed in 'sources'.",
+  "sources": [
+    "S082",
+    "S083"
+  ]
+}

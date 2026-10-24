@@ -1,0 +1,21 @@
+# C1 after receipt 2026-10-23T09:09:56Z (L1 MoriR35); command: python3 .ufo/waves/round-35/count-c1.py cedb0ec4; counter sha256 27b82d71f2f591df1833c8de793201475d8f01735b5ed4edd7b74e389ee18167
+row rounds[313].capabilities_added[0] matched 
+row rounds[339].capabilities_added[0] matched 
+row rounds[345].capabilities_added[0] matched 
+row rounds[353].capabilities_added[0] matched 
+row rounds[386].capabilities_added[0] matched 
+row rounds[386].capabilities_added[1] matched 
+row rounds[386].capabilities_added[2] matched 
+row rounds[398].capabilities_added[0] matched 
+row rounds[427].capabilities_added[0] matched 
+row rounds[443].capabilities_added[0] matched 
+row rounds[443].capabilities_added[1] matched 
+row rounds[455].capabilities_added[0] matched 
+row rounds[455].capabilities_added[1] matched 
+row rounds[462].capabilities_added[0] matched 
+row rounds[476].capabilities_added[0] matched 
+row rounds[476].capabilities_added[1] matched 
+row rounds[495].capabilities_added[0] matched 
+row rounds[495].capabilities_added[1] matched 
+label=P-C1 rev=cedb0ec4f3a4f672804deac388b7191258f01fcd manifest_rev=37b51a243302 register='## Capabilities' oracle=18 rows=18 matched=18 missing=0 bad=0 extra=0 mismatches=0 C1=met
+exit=0

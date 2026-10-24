@@ -1,0 +1,393 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r19-attempt2-build",
+  "createdAt": "2026-10-21T08:05:28.867Z",
+  "updatedAt": "2026-10-21T08:18:42.065Z",
+  "reportDir": ".ufo/waves/round-19/build",
+  "members": {
+    "ContentGate": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.ContentGate",
+      "role": "executor",
+      "item": null
+    },
+    "FreezeMetadata": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.FreezeMetadata",
+      "role": "executor",
+      "item": null
+    },
+    "RegressionHarness": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.RegressionHarness",
+      "role": "executor",
+      "item": null
+    },
+    "Content01": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content01",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content02": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content02",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content03": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content03",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content04": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content04",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content05": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content05",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content06": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content06",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content07": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content07",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content08": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content08",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content09": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content09",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content10": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content10",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content11": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content11",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content12": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content12",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content13": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content13",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content14": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content14",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content15": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content15",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content16": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content16",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content17": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content17",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content18": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content18",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content19": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content19",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content20": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content20",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content21": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content21",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content22": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content22",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content23": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content23",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content24": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content24",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content25": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content25",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content26": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content26",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content27": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content27",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content28": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content28",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content29": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content29",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content30": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content30",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content31": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content31",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content32": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content32",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content33": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content33",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content34": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content34",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content35": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content35",
+      "role": "reviewer",
+      "item": null
+    },
+    "Content36": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.Content36",
+      "role": "reviewer",
+      "item": null
+    },
+    "QuoteS055": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.QuoteS055",
+      "role": "scout",
+      "item": null
+    },
+    "QuoteS057": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.QuoteS057",
+      "role": "scout",
+      "item": null
+    },
+    "QuoteS059": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.QuoteS059",
+      "role": "scout",
+      "item": null
+    },
+    "QuoteS063": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.QuoteS063",
+      "role": "scout",
+      "item": null
+    },
+    "SrcGitRevision": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.SrcGitRevision",
+      "role": "scout",
+      "item": null
+    },
+    "SrcHashlibReject": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.SrcHashlibReject",
+      "role": "scout",
+      "item": null
+    },
+    "GateCoverage": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.GateCoverage",
+      "role": "reviewer",
+      "item": null
+    },
+    "GatePrivacy": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.GatePrivacy",
+      "role": "reviewer",
+      "item": null
+    },
+    "GateDigests": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.GateDigests",
+      "role": "reviewer",
+      "item": null
+    },
+    "MetaInput": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.MetaInput",
+      "role": "reviewer",
+      "item": null
+    },
+    "MetaTopology": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.MetaTopology",
+      "role": "reviewer",
+      "item": null
+    },
+    "MetaErrors": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.MetaErrors",
+      "role": "reviewer",
+      "item": null
+    },
+    "HarnessC1": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.HarnessC1",
+      "role": "reviewer",
+      "item": null
+    },
+    "HarnessC2": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.HarnessC2",
+      "role": "reviewer",
+      "item": null
+    },
+    "CriticScope": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.CriticScope",
+      "role": "critic",
+      "item": null
+    },
+    "CriticProvenance": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.CriticProvenance",
+      "role": "critic",
+      "item": null
+    },
+    "CriticTrends": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.CriticTrends",
+      "role": "critic",
+      "item": null
+    },
+    "ConnectPrivacy": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.ConnectPrivacy",
+      "role": "connector",
+      "item": null
+    },
+    "ConnectObserve": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.ConnectObserve",
+      "role": "connector",
+      "item": null
+    },
+    "ConnectOracle": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.ConnectOracle",
+      "role": "connector",
+      "item": null
+    },
+    "DraftLesson": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.DraftLesson",
+      "role": "scribe",
+      "item": null
+    },
+    "DraftCapabilities": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.DraftCapabilities",
+      "role": "scribe",
+      "item": null
+    },
+    "DraftCorrections": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.DraftCorrections",
+      "role": "scribe",
+      "item": null
+    },
+    "FindHomeResiduals": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.FindHomeResiduals",
+      "role": "scout",
+      "item": null
+    },
+    "FindSW1Content": {
+      "kind": "spawn",
+      "agentId": "MoriR19Recovery.FindSW1Content",
+      "role": "scout",
+      "item": null
+    }
+  }
+}

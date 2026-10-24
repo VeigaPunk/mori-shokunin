@@ -1,0 +1,1309 @@
+{
+  "schema": "mori-round13-regressions-v2",
+  "generated_utc": "2026-10-20T06:41:23Z",
+  "revision": {
+    "head": "8d22d18fb4a4124becb35123ca839c93cbae0028",
+    "dirty": true,
+    "source": "MORI_EVIDENCE_REVISION"
+  },
+  "mode": "mutation",
+  "targets": {
+    "census": {
+      "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh",
+      "sha256": "0e41cb83fce2e8c5c711171e1cde2e6fa2809dcfce630eccabe52bcbe41516d9"
+    },
+    "oracle": {
+      "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-silence-cases.sh",
+      "sha256": "34cd5770889ec6e7521b477aa9976cece7a64e07b83774c12ce2aea73161abfa"
+    },
+    "shonen": {
+      "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/SHONEN.md",
+      "sha256": "508d5b46c1d661ec6f0c279dc2fd44af5d0cab4224231a10fdc8ab6e4bf70009"
+    },
+    "frozen": {
+      "mori-census.sh": {
+        "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-13/frozen/mori-census.sh",
+        "sha256": "3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164"
+      },
+      "mori-silence-cases.sh": {
+        "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-13/frozen/mori-silence-cases.sh",
+        "sha256": "448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5"
+      }
+    },
+    "frozen_inputs": {
+      "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-13/frozen/inputs.json",
+      "sha256": "d91690dc0417aecd9bffd507b53cd4e2a32fc6614753c82ccbc0c5b590cfdc3f"
+    },
+    "frozen_pins": {
+      "state": "verified",
+      "expected": {
+        "mori-census.sh": "3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164",
+        "mori-silence-cases.sh": "448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5",
+        "inputs.json": "d91690dc0417aecd9bffd507b53cd4e2a32fc6614753c82ccbc0c5b590cfdc3f"
+      },
+      "base_commit": "6531ac6029e200a6392bb76673b6a17d3c895c96"
+    }
+  },
+  "entropy": {
+    "shuffle_seed": 1313,
+    "run_nonce": 1313
+  },
+  "expectations": {
+    "counts": {
+      "system": {
+        "kernel": 2,
+        "oomd": 1,
+        "coredump": 3,
+        "segfault": 3,
+        "sigkill": 0,
+        "unit_failure": 0
+      },
+      "user": {
+        "kernel": 3,
+        "oomd": 0,
+        "coredump": 1,
+        "segfault": 1,
+        "sigkill": 0,
+        "unit_failure": 0
+      },
+      "notice_only": {
+        "kernel": 0,
+        "oomd": 1,
+        "coredump": 2,
+        "segfault": 2,
+        "sigkill": 0,
+        "unit_failure": 0
+      }
+    },
+    "severity": {
+      "OOM_KILL_JOURNAL": "crit",
+      "UNIT_FAILURE_JOURNAL": "info",
+      "UNIT_FAILURE_JOURNAL_SYSTEM": "info",
+      "UNIT_FAILURE_OUT_OF_SCOPE": "info",
+      "UNIT_FAILURE_OUT_OF_SCOPE_SYSTEM": "info",
+      "UNIT_FAILURE_UNATTRIBUTED_JOURNAL": "info",
+      "KILL_SIGNAL_JOURNAL": "warn",
+      "KILL_SIGNAL_JOURNAL_SYSTEM": "info"
+    },
+    "oom_counters": [
+      "user_notice",
+      "system_notice",
+      "user_unit_oom",
+      "system_unit_oom",
+      "user_unit_oom_result_unknown",
+      "system_unit_oom_result_unknown"
+    ],
+    "fleet_predicate": "shokunin|ufo-sighting|tmux-spawn|the-tick|fleet",
+    "selftest_cases": [
+      "isolated-stub-target-red",
+      "isolated-frozen-manifest-tamper"
+    ]
+  },
+  "claims": [
+    {
+      "id": "R13_SHONEN_INDENT_WITNESS",
+      "axis": "operability",
+      "status": "pass",
+      "details": "indented witness digest=ac3a436eedc41220 canonical=508d5b46c1d661ec rejected=yes",
+      "runs": []
+    },
+    {
+      "id": "R13_SHONEN_CANONICAL_BYTES",
+      "axis": "operability",
+      "status": "pass",
+      "details": "bytes match canonical seed sha=508d5b46c1d661ec bytes=361",
+      "runs": []
+    },
+    {
+      "id": "R13_C1_SYSTEM_NOTICE_COUNTS",
+      "axis": "coverage",
+      "status": "pass",
+      "details": "expected [kernel_oom_notice=2 oomd_notice=1 coredump_notice=3 segfault_signal11=3 unit_sigkill_record=0 unit_failure_record=0]; observed [kernel_oom_notice=2 oomd_notice=1 coredump_notice=3 segfault_signal11=3 unit_sigkill_record=0 unit_failure_record=0 unit_fleet=0 unit_nonfleet=0 unit_missing=0 unit_ambiguous=0 unit_malformed=0 unit_oom=0 unit_oom_fleet=0 unit_oom_nonfleet=0 unit_oom_subject_unknown=0 unit_oom_result_unknown=0 unit_signal=0]; state=ok rc=1 verdict=DRIFT/ok",
+      "runs": [
+        "c1.primary"
+      ]
+    },
+    {
+      "id": "R13_C1_USER_SCOPE_INDEPENDENT",
+      "axis": "coverage",
+      "status": "pass",
+      "details": "observed [kernel_oom_notice=0 oomd_notice=0 coredump_notice=0 segfault_signal11=0 unit_sigkill_record=0 unit_failure_record=0 unit_fleet=0 unit_nonfleet=0 unit_missing=0 unit_ambiguous=0 unit_malformed=0 unit_oom=0 unit_oom_fleet=0 unit_oom_nonfleet=0 unit_oom_subject_unknown=0 unit_oom_result_unknown=0 unit_signal=0] state=ok boot=0123456789abcdef0123456789abcdef scope_token=user",
+      "runs": [
+        "c1.primary"
+      ]
+    },
+    {
+      "id": "R13_C1_USER_SCOPE_NONZERO",
+      "axis": "coverage",
+      "status": "pass",
+      "details": "fixture user={'kernel': 3, 'oomd': 0, 'coredump': 1, 'segfault': 1, 'sigkill': 0, 'unit_failure': 0}; user=[kernel_oom_notice=3 oomd_notice=0 coredump_notice=1 segfault_signal11=1 unit_sigkill_record=0 unit_failure_record=0 unit_fleet=0 unit_nonfleet=0 unit_missing=0 unit_ambiguous=0 unit_malformed=0 unit_oom=0 unit_oom_fleet=0 unit_oom_nonfleet=0 unit_oom_subject_unknown=0 unit_oom_result_unknown=0 unit_signal=0] state=ok; system=[kernel_oom_notice=0 oomd_notice=0 coredump_notice=0 segfault_signal11=0 unit_sigkill_record=0 unit_failure_record=0 unit_fleet=0 unit_nonfleet=0 unit_missing=0 u...",
+      "runs": [
+        "c1.user"
+      ]
+    },
+    {
+      "id": "R13_C1_NO_MESSAGE_TEXT",
+      "axis": "coverage",
+      "status": "pass",
+      "details": "message-text absent=yes leak_counts=yes notes=none",
+      "runs": [
+        "c1.primary",
+        "c1.leak"
+      ]
+    },
+    {
+      "id": "R13_C1_OOM_ALARM_DRIFT",
+      "axis": "coverage",
+      "status": "pass",
+      "details": "verdict=DRIFT/ok rc=1 oom=system_notice=2 user_notice=0",
+      "runs": [
+        "c1.primary"
+      ]
+    },
+    {
+      "id": "R13_C1_NOTICE_CLEAN_CONTROL",
+      "axis": "coverage",
+      "status": "pass",
+      "details": "verdict=CLEAN/ok rc=0 system=[kernel_oom_notice=0 oomd_notice=1 coredump_notice=2 segfault_signal11=2 unit_sigkill_record=0 unit_failure_record=0 unit_fleet=0 unit_nonfleet=0 unit_missing=0 unit_ambiguous=0 unit_malformed=0 unit_oom=0 unit_oom_fleet=0 unit_oom_nonfleet=0 unit_oom_subject_unknown=0 unit_oom_result_unknown=0 unit_signal=0] user=[kernel_oom_notice=0 oomd_notice=0 coredump_notice=0 segfault_signal11=0 unit_sigkill_record=0 unit_failure_record=0 unit_fleet=0 unit_nonfleet=0 unit_missing=0 unit_ambiguous=0 unit_malformed=0 unit_oom=0 unit_oom_fleet=0 unit_oom_nonfleet=0 unit_oom_...",
+      "runs": [
+        "c1.notice"
+      ]
+    },
+    {
+      "id": "R13_C1_EMPTY_CLEAN_CONTROL",
+      "axis": "coverage",
+      "status": "pass",
+      "details": "verdict=CLEAN/ok rc=0 system=[kernel_oom_notice=0 oomd_notice=0 coredump_notice=0 segfault_signal11=0 unit_sigkill_record=0 unit_failure_record=0 unit_fleet=0 unit_nonfleet=0 unit_missing=0 unit_ambiguous=0 unit_malformed=0 unit_oom=0 unit_oom_fleet=0 unit_oom_nonfleet=0 unit_oom_subject_unknown=0 unit_oom_result_unknown=0 unit_signal=0] user=[kernel_oom_notice=0 oomd_notice=0 coredump_notice=0 segfault_signal11=0 unit_sigkill_record=0 unit_failure_record=0 unit_fleet=0 unit_nonfleet=0 unit_missing=0 unit_ambiguous=0 unit_malformed=0 unit_oom=0 unit_oom_fleet=0 unit_oom_nonfleet=0 unit_oom_...",
+      "runs": [
+        "c1.empty"
+      ]
+    },
+    {
+      "id": "R13_C1_UNIT_OOM_KILL_ALARM",
+      "axis": "coverage",
+      "status": "pass",
+      "details": "verdict=DRIFT/ok rc=1 system=[kernel_oom_notice=0 oomd_notice=0 coredump_notice=0 segfault_signal11=0 unit_sigkill_record=0 unit_failure_record=3 unit_fleet=2 unit_nonfleet=0 unit_missing=1 unit_ambiguous=0 unit_malformed=0 unit_oom=2 unit_oom_fleet=1 unit_oom_nonfleet=0 unit_oom_subject_unknown=1 unit_oom_result_unknown=1 unit_signal=0] user=[kernel_oom_notice=0 oomd_notice=0 coredump_notice=0 segfault_signal11=0 unit_sigkill_record=0 unit_failure_record=0 unit_fleet=0 unit_nonfleet=0 unit_missing=0 unit_ambiguous=0 unit_malformed=0 unit_oom=0 unit_oom_fleet=0 unit_oom_nonfleet=0 unit_oom_...",
+      "runs": [
+        "c1.unit-oom"
+      ]
+    },
+    {
+      "id": "R13_C1_UNIT_FAILURE_ROUTING",
+      "axis": "coverage",
+      "status": "pass",
+      "details": "verdict=CLEAN/ok rc=0 system=[kernel_oom_notice=0 oomd_notice=0 coredump_notice=0 segfault_signal11=0 unit_sigkill_record=0 unit_failure_record=4 unit_fleet=2 unit_nonfleet=0 unit_missing=1 unit_ambiguous=1 unit_malformed=0 unit_oom=0 unit_oom_fleet=0 unit_oom_nonfleet=0 unit_oom_subject_unknown=0 unit_oom_result_unknown=0 unit_signal=0] user=[kernel_oom_notice=0 oomd_notice=0 coredump_notice=0 segfault_signal11=0 unit_sigkill_record=0 unit_failure_record=1 unit_fleet=0 unit_nonfleet=1 unit_missing=0 unit_ambiguous=0 unit_malformed=0 unit_oom=0 unit_oom_fleet=0 unit_oom_nonfleet=0 unit_oom_...",
+      "runs": [
+        "c1.routing"
+      ]
+    },
+    {
+      "id": "R13_C1_SIGKILL_WARN_PRESERVED",
+      "axis": "coverage",
+      "status": "pass",
+      "details": "verdict=DRIFT/ok rc=1 system=[kernel_oom_notice=0 oomd_notice=0 coredump_notice=0 segfault_signal11=0 unit_sigkill_record=0 unit_failure_record=0 unit_fleet=0 unit_nonfleet=0 unit_missing=0 unit_ambiguous=0 unit_malformed=0 unit_oom=0 unit_oom_fleet=0 unit_oom_nonfleet=0 unit_oom_subject_unknown=0 unit_oom_result_unknown=0 unit_signal=0] user=[kernel_oom_notice=0 oomd_notice=0 coredump_notice=0 segfault_signal11=0 unit_sigkill_record=1 unit_failure_record=0 unit_fleet=0 unit_nonfleet=0 unit_missing=0 unit_ambiguous=0 unit_malformed=0 unit_oom=0 unit_oom_fleet=0 unit_oom_nonfleet=0 unit_oom_...",
+      "runs": [
+        "c1.sigkill"
+      ]
+    },
+    {
+      "id": "R13_F01_EXACT_AUTHOR_LONG_HISTORY",
+      "axis": "operability",
+      "status": "pass",
+      "details": "state=progressing basis=row-A subject_commits=yes other_authored_commits=None verdict=CLEAN/ok rc=0; expected post-fix state=progressing basis=row-A subject_commits=yes",
+      "runs": [
+        "f01.subject"
+      ]
+    },
+    {
+      "id": "R13_F01_SIBLING_CONTROL_LONG_HISTORY",
+      "axis": "operability",
+      "status": "pass",
+      "details": "state=progressing-weak basis=row-C other_authored_commits=12000 verdict=CLEAN/ok rc=0; expected progressing-weak row-C with 12000 siblings",
+      "runs": [
+        "f01.sibling"
+      ]
+    },
+    {
+      "id": "R13_F02_HONEST_28_OF_28",
+      "axis": "operability",
+      "status": "pass",
+      "details": "matched=28 total=28 rc=0 verdict_reasons=none; expected matched=28 total=28 rc=0",
+      "runs": [
+        "oracle.honest"
+      ]
+    },
+    {
+      "id": "R13_F02_REJECT_BANANA",
+      "axis": "operability",
+      "status": "pass",
+      "details": "matched=0 total=28 rc=1 verdict_reasons=contract,malformed; expected 0/28 rc=1 reason=malformed",
+      "runs": [
+        "oracle.banana"
+      ]
+    },
+    {
+      "id": "R13_F02_REJECT_DUPLICATE_VERDICT",
+      "axis": "operability",
+      "status": "pass",
+      "details": "matched=0 total=28 rc=1 verdict_reasons=contract,duplicate; expected 0/28 rc=1 reason=duplicate",
+      "runs": [
+        "oracle.duplicate"
+      ]
+    },
+    {
+      "id": "R13_F02_REJECT_MISSING_VERDICT",
+      "axis": "operability",
+      "status": "pass",
+      "details": "matched=0 total=28 rc=1 verdict_reasons=contract,missing; expected 0/28 rc=1 reason=missing",
+      "runs": [
+        "oracle.missing"
+      ]
+    },
+    {
+      "id": "R13_F02_REJECT_NOT_FINAL_VERDICT",
+      "axis": "operability",
+      "status": "pass",
+      "details": "matched=0 total=28 rc=1 verdict_reasons=contract,not-final; expected 0/28 rc=1 reason=not-final",
+      "runs": [
+        "oracle.not-final"
+      ]
+    },
+    {
+      "id": "R13_F02_REJECT_VERDICT_FIRST",
+      "axis": "operability",
+      "status": "pass",
+      "details": "matched=0 total=28 rc=1 verdict_reasons=contract,not-final; expected 0/28 rc=1 with a verdict rejection",
+      "runs": [
+        "oracle.verdict-first"
+      ]
+    },
+    {
+      "id": "R13_F02_REJECT_CLEAN_DRIFT9",
+      "axis": "operability",
+      "status": "pass",
+      "details": "matched=7 total=28 rc=1 verdict_reasons=contract,inconsistent; expected only DRIFT fixtures pass (6 or 7/28) rc=1 inconsistent PASS_set=['legacy-steer-open-silent', 'main-repo-noise-silent', 'old-report-before-relaunch-silent', 'report-eq-launch-no-close', 'same-round-relaunch-silent', 'silent-open'] auto=silent",
+      "runs": [
+        "oracle.clean-drift9"
+      ]
+    },
+    {
+      "id": "R13_F02_REJECT_DRIFT_DRIFT0",
+      "axis": "operability",
+      "status": "pass",
+      "details": "matched=21 total=28 rc=1 verdict_reasons=inconsistent; expected only CLEAN fixtures pass (21 or 22/28) rc=1 inconsistent PASS_set=['author-sibling-committer-subject-weak', 'author-subject-committer-sibling-progress', 'committed-report-closes', 'completed-not-open', 'dirty-same-path-as-sibling-progress', 'ledger-missing-not-silent', 'nolane-launch-not-open', 'readonly-no-mutation', 'repo-missing-unavailable', 'shape-invariance', 'sibling-clean-checkout-weak', 'subject-hidden-behind-sibling-head', 'subject-postlaunch-progressing', 'substring-email-mismatch-weak', 'substring-name-mismatch-weak...",
+      "runs": [
+        "oracle.drift-drift0"
+      ]
+    },
+    {
+      "id": "R13_F02_REJECT_CLEAN_RC1",
+      "axis": "operability",
+      "status": "pass",
+      "details": "matched=7 total=28 rc=1 verdict_reasons=contract,inconsistent; expected only silent fixtures pass (6 or 7/28) rc=1 inconsistent PASS_set=['legacy-steer-open-silent', 'main-repo-noise-silent', 'old-report-before-relaunch-silent', 'report-eq-launch-no-close', 'same-round-relaunch-silent', 'silent-open'] auto=silent",
+      "runs": [
+        "oracle.clean-rc1"
+      ]
+    },
+    {
+      "id": "R13_F02_REJECT_DRIFT_RC0",
+      "axis": "operability",
+      "status": "pass",
+      "details": "matched=21 total=28 rc=1 verdict_reasons=inconsistent; expected only CLEAN fixtures pass (21 or 22/28) rc=1 inconsistent PASS_set=['author-sibling-committer-subject-weak', 'author-subject-committer-sibling-progress', 'committed-report-closes', 'completed-not-open', 'dirty-same-path-as-sibling-progress', 'ledger-missing-not-silent', 'nolane-launch-not-open', 'readonly-no-mutation', 'repo-missing-unavailable', 'shape-invariance', 'sibling-clean-checkout-weak', 'subject-hidden-behind-sibling-head', 'subject-postlaunch-progressing', 'substring-email-mismatch-weak', 'substring-name-mismatch-weak...",
+      "runs": [
+        "oracle.drift-rc0"
+      ]
+    },
+    {
+      "id": "R13_MUTATION_F01_RED_BEFORE",
+      "axis": "operability",
+      "status": "mutation-red",
+      "details": "transplanted whole frozen grade_lane (not a byte-exact one-line revert; includes its env-hardening/fsmonitor deltas): state=progressing-weak basis=row-C other=12001 verdict=CLEAN/ok rc=0; expected pre-fix progressing-weak row-C",
+      "runs": [
+        "mutation.f01.subject"
+      ]
+    },
+    {
+      "id": "R13_MUTATION_F02_RED_BEFORE",
+      "axis": "operability",
+      "status": "mutation-red",
+      "details": "reconstructed prefix-presence shim replaced verdict_grade (frozen_source=null; not original bytes): matched=28 total=28 rc=0; expected pre-fix BANANA accepted 28/28",
+      "runs": [
+        "mutation.f02.banana"
+      ]
+    }
+  ],
+  "runs": [
+    {
+      "id": "c1.empty",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e",
+      "rc": 0,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 96,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/c1.empty.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/c1.empty.stderr",
+      "stdout_sha256": "a1961d4c39e5b4ac6d9769bdf348e5f5c24a15cebcd3c0708c82dd11082dbc9a",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 6907,
+      "stderr_bytes": 0,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/home",
+        "MORI_BOOT_ID": "0123456789abcdef0123456789abcdef",
+        "MORI_CGROUP_CURRENT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/cg/memory.current",
+        "MORI_CGROUP_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/cg/memory.events",
+        "MORI_CGROUP_LOCAL_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/cg/memory.events",
+        "MORI_CGROUP_MAX": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/cg/memory.max",
+        "MORI_CGROUP_PEAK": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/cg/memory.peak",
+        "MORI_CGROUP_PRESSURE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/cg/memory.pressure",
+        "MORI_CGROUP_SERVICE_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/cg/memory.events",
+        "MORI_DF_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/bin/df",
+        "MORI_DISKSTATS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/diskstats",
+        "MORI_DISK_CRIT_PCT": "95",
+        "MORI_DISK_TARGETS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/disk-target",
+        "MORI_DISK_WARN_PCT": "85",
+        "MORI_GIT_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/bin/git",
+        "MORI_JOURNALCTL_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/bin/journalctl",
+        "MORI_LANE_SILENCE_S": "900",
+        "MORI_MEMINFO": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/meminfo",
+        "MORI_NOW_EPOCH": "1700000000",
+        "MORI_PGREP_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/bin/pgrep",
+        "MORI_ROSTER_LANES": "kagi",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHOKUNIN_ROOT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/root",
+        "MORI_STATE_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/root/.ufo/state",
+        "MORI_TIMELINE_FILE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/root/.ufo/watchdog.log",
+        "MORI_TMUX_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/bin/tmux",
+        "MORI_UFO_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/root/.ufo",
+        "MORI_UPTIME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/uptime",
+        "MORI_WATCHDOG_LOG": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/root/.ufo/watchdog.log",
+        "MORI_WATCHDOG_STALE_S": "900",
+        "MORI_WAVES_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/root/.ufo/waves",
+        "MORI_WAVE_UNSETTLED_S": "7200",
+        "PATH": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-e/bin:/usr/bin:/bin"
+      }
+    },
+    {
+      "id": "c1.leak",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b",
+      "rc": 1,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 106,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/c1.leak.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/c1.leak.stderr",
+      "stdout_sha256": "805ca9978521269b7a2bd1f2687a5128a2aaeda580757a4cbb12ebd6dabe8cbe",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 8589,
+      "stderr_bytes": 0,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/home",
+        "MORI_BOOT_ID": "0123456789abcdef0123456789abcdef",
+        "MORI_CGROUP_CURRENT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/cg/memory.current",
+        "MORI_CGROUP_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/cg/memory.events",
+        "MORI_CGROUP_LOCAL_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/cg/memory.events",
+        "MORI_CGROUP_MAX": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/cg/memory.max",
+        "MORI_CGROUP_PEAK": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/cg/memory.peak",
+        "MORI_CGROUP_PRESSURE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/cg/memory.pressure",
+        "MORI_CGROUP_SERVICE_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/cg/memory.events",
+        "MORI_DF_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/bin/df",
+        "MORI_DISKSTATS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/diskstats",
+        "MORI_DISK_CRIT_PCT": "95",
+        "MORI_DISK_TARGETS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/disk-target",
+        "MORI_DISK_WARN_PCT": "85",
+        "MORI_GIT_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/bin/git",
+        "MORI_JOURNALCTL_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/bin/journalctl",
+        "MORI_LANE_SILENCE_S": "900",
+        "MORI_MEMINFO": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/meminfo",
+        "MORI_NOW_EPOCH": "1700000000",
+        "MORI_PGREP_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/bin/pgrep",
+        "MORI_ROSTER_LANES": "kagi",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHOKUNIN_ROOT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/root",
+        "MORI_STATE_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/root/.ufo/state",
+        "MORI_TIMELINE_FILE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/root/.ufo/watchdog.log",
+        "MORI_TMUX_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/bin/tmux",
+        "MORI_UFO_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/root/.ufo",
+        "MORI_UPTIME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/uptime",
+        "MORI_WATCHDOG_LOG": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/root/.ufo/watchdog.log",
+        "MORI_WATCHDOG_STALE_S": "900",
+        "MORI_WAVES_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/root/.ufo/waves",
+        "MORI_WAVE_UNSETTLED_S": "7200",
+        "PATH": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-b/bin:/usr/bin:/bin"
+      }
+    },
+    {
+      "id": "c1.notice",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d",
+      "rc": 0,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 102,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/c1.notice.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/c1.notice.stderr",
+      "stdout_sha256": "2c6c5dcbd3e5d45217892e094e811043a4ff6e5117d51a2e9ad3728de1e179b3",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 7910,
+      "stderr_bytes": 0,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/home",
+        "MORI_BOOT_ID": "0123456789abcdef0123456789abcdef",
+        "MORI_CGROUP_CURRENT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/cg/memory.current",
+        "MORI_CGROUP_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/cg/memory.events",
+        "MORI_CGROUP_LOCAL_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/cg/memory.events",
+        "MORI_CGROUP_MAX": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/cg/memory.max",
+        "MORI_CGROUP_PEAK": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/cg/memory.peak",
+        "MORI_CGROUP_PRESSURE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/cg/memory.pressure",
+        "MORI_CGROUP_SERVICE_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/cg/memory.events",
+        "MORI_DF_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/bin/df",
+        "MORI_DISKSTATS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/diskstats",
+        "MORI_DISK_CRIT_PCT": "95",
+        "MORI_DISK_TARGETS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/disk-target",
+        "MORI_DISK_WARN_PCT": "85",
+        "MORI_GIT_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/bin/git",
+        "MORI_JOURNALCTL_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/bin/journalctl",
+        "MORI_LANE_SILENCE_S": "900",
+        "MORI_MEMINFO": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/meminfo",
+        "MORI_NOW_EPOCH": "1700000000",
+        "MORI_PGREP_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/bin/pgrep",
+        "MORI_ROSTER_LANES": "kagi",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHOKUNIN_ROOT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/root",
+        "MORI_STATE_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/root/.ufo/state",
+        "MORI_TIMELINE_FILE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/root/.ufo/watchdog.log",
+        "MORI_TMUX_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/bin/tmux",
+        "MORI_UFO_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/root/.ufo",
+        "MORI_UPTIME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/uptime",
+        "MORI_WATCHDOG_LOG": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/root/.ufo/watchdog.log",
+        "MORI_WATCHDOG_STALE_S": "900",
+        "MORI_WAVES_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/root/.ufo/waves",
+        "MORI_WAVE_UNSETTLED_S": "7200",
+        "PATH": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-d/bin:/usr/bin:/bin"
+      }
+    },
+    {
+      "id": "c1.primary",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a",
+      "rc": 1,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 109,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/c1.primary.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/c1.primary.stderr",
+      "stdout_sha256": "a2827746abaf2df42fe77aa8903e7609cc99e73079e73a65ed1e2eb7483d731b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 8589,
+      "stderr_bytes": 0,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/home",
+        "MORI_BOOT_ID": "0123456789abcdef0123456789abcdef",
+        "MORI_CGROUP_CURRENT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/cg/memory.current",
+        "MORI_CGROUP_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/cg/memory.events",
+        "MORI_CGROUP_LOCAL_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/cg/memory.events",
+        "MORI_CGROUP_MAX": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/cg/memory.max",
+        "MORI_CGROUP_PEAK": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/cg/memory.peak",
+        "MORI_CGROUP_PRESSURE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/cg/memory.pressure",
+        "MORI_CGROUP_SERVICE_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/cg/memory.events",
+        "MORI_DF_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/bin/df",
+        "MORI_DISKSTATS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/diskstats",
+        "MORI_DISK_CRIT_PCT": "95",
+        "MORI_DISK_TARGETS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/disk-target",
+        "MORI_DISK_WARN_PCT": "85",
+        "MORI_GIT_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/bin/git",
+        "MORI_JOURNALCTL_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/bin/journalctl",
+        "MORI_LANE_SILENCE_S": "900",
+        "MORI_MEMINFO": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/meminfo",
+        "MORI_NOW_EPOCH": "1700000000",
+        "MORI_PGREP_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/bin/pgrep",
+        "MORI_ROSTER_LANES": "kagi",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHOKUNIN_ROOT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/root",
+        "MORI_STATE_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/root/.ufo/state",
+        "MORI_TIMELINE_FILE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/root/.ufo/watchdog.log",
+        "MORI_TMUX_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/bin/tmux",
+        "MORI_UFO_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/root/.ufo",
+        "MORI_UPTIME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/uptime",
+        "MORI_WATCHDOG_LOG": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/root/.ufo/watchdog.log",
+        "MORI_WATCHDOG_STALE_S": "900",
+        "MORI_WAVES_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/root/.ufo/waves",
+        "MORI_WAVE_UNSETTLED_S": "7200",
+        "PATH": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-a/bin:/usr/bin:/bin"
+      }
+    },
+    {
+      "id": "c1.routing",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f",
+      "rc": 0,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 103,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/c1.routing.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/c1.routing.stderr",
+      "stdout_sha256": "17dde506d21bc61f6afbc29493d2fc254c1665aaa5baf8f71511e8bd9bb95d04",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 8488,
+      "stderr_bytes": 0,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/home",
+        "MORI_BOOT_ID": "0123456789abcdef0123456789abcdef",
+        "MORI_CGROUP_CURRENT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/cg/memory.current",
+        "MORI_CGROUP_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/cg/memory.events",
+        "MORI_CGROUP_LOCAL_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/cg/memory.events",
+        "MORI_CGROUP_MAX": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/cg/memory.max",
+        "MORI_CGROUP_PEAK": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/cg/memory.peak",
+        "MORI_CGROUP_PRESSURE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/cg/memory.pressure",
+        "MORI_CGROUP_SERVICE_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/cg/memory.events",
+        "MORI_DF_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/bin/df",
+        "MORI_DISKSTATS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/diskstats",
+        "MORI_DISK_CRIT_PCT": "95",
+        "MORI_DISK_TARGETS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/disk-target",
+        "MORI_DISK_WARN_PCT": "85",
+        "MORI_GIT_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/bin/git",
+        "MORI_JOURNALCTL_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/bin/journalctl",
+        "MORI_LANE_SILENCE_S": "900",
+        "MORI_MEMINFO": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/meminfo",
+        "MORI_NOW_EPOCH": "1700000000",
+        "MORI_PGREP_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/bin/pgrep",
+        "MORI_ROSTER_LANES": "kagi",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHOKUNIN_ROOT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/root",
+        "MORI_STATE_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/root/.ufo/state",
+        "MORI_TIMELINE_FILE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/root/.ufo/watchdog.log",
+        "MORI_TMUX_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/bin/tmux",
+        "MORI_UFO_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/root/.ufo",
+        "MORI_UPTIME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/uptime",
+        "MORI_WATCHDOG_LOG": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/root/.ufo/watchdog.log",
+        "MORI_WATCHDOG_STALE_S": "900",
+        "MORI_WAVES_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/root/.ufo/waves",
+        "MORI_WAVE_UNSETTLED_S": "7200",
+        "PATH": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-f/bin:/usr/bin:/bin"
+      }
+    },
+    {
+      "id": "c1.sigkill",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h",
+      "rc": 1,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 97,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/c1.sigkill.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/c1.sigkill.stderr",
+      "stdout_sha256": "166abcde60c4aa849292bd6ee0a07be73f017578c59faad7d82790da1302dff2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 7402,
+      "stderr_bytes": 0,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/home",
+        "MORI_BOOT_ID": "0123456789abcdef0123456789abcdef",
+        "MORI_CGROUP_CURRENT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/cg/memory.current",
+        "MORI_CGROUP_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/cg/memory.events",
+        "MORI_CGROUP_LOCAL_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/cg/memory.events",
+        "MORI_CGROUP_MAX": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/cg/memory.max",
+        "MORI_CGROUP_PEAK": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/cg/memory.peak",
+        "MORI_CGROUP_PRESSURE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/cg/memory.pressure",
+        "MORI_CGROUP_SERVICE_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/cg/memory.events",
+        "MORI_DF_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/bin/df",
+        "MORI_DISKSTATS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/diskstats",
+        "MORI_DISK_CRIT_PCT": "95",
+        "MORI_DISK_TARGETS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/disk-target",
+        "MORI_DISK_WARN_PCT": "85",
+        "MORI_GIT_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/bin/git",
+        "MORI_JOURNALCTL_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/bin/journalctl",
+        "MORI_LANE_SILENCE_S": "900",
+        "MORI_MEMINFO": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/meminfo",
+        "MORI_NOW_EPOCH": "1700000000",
+        "MORI_PGREP_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/bin/pgrep",
+        "MORI_ROSTER_LANES": "kagi",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHOKUNIN_ROOT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/root",
+        "MORI_STATE_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/root/.ufo/state",
+        "MORI_TIMELINE_FILE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/root/.ufo/watchdog.log",
+        "MORI_TMUX_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/bin/tmux",
+        "MORI_UFO_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/root/.ufo",
+        "MORI_UPTIME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/uptime",
+        "MORI_WATCHDOG_LOG": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/root/.ufo/watchdog.log",
+        "MORI_WATCHDOG_STALE_S": "900",
+        "MORI_WAVES_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/root/.ufo/waves",
+        "MORI_WAVE_UNSETTLED_S": "7200",
+        "PATH": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-h/bin:/usr/bin:/bin"
+      }
+    },
+    {
+      "id": "c1.unit-oom",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g",
+      "rc": 1,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 100,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/c1.unit-oom.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/c1.unit-oom.stderr",
+      "stdout_sha256": "80d867babbbc8ac6fe9122150cca1e40db114e1cda7a8c18dc069c08f29dce91",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 8687,
+      "stderr_bytes": 0,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/home",
+        "MORI_BOOT_ID": "0123456789abcdef0123456789abcdef",
+        "MORI_CGROUP_CURRENT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/cg/memory.current",
+        "MORI_CGROUP_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/cg/memory.events",
+        "MORI_CGROUP_LOCAL_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/cg/memory.events",
+        "MORI_CGROUP_MAX": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/cg/memory.max",
+        "MORI_CGROUP_PEAK": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/cg/memory.peak",
+        "MORI_CGROUP_PRESSURE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/cg/memory.pressure",
+        "MORI_CGROUP_SERVICE_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/cg/memory.events",
+        "MORI_DF_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/bin/df",
+        "MORI_DISKSTATS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/diskstats",
+        "MORI_DISK_CRIT_PCT": "95",
+        "MORI_DISK_TARGETS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/disk-target",
+        "MORI_DISK_WARN_PCT": "85",
+        "MORI_GIT_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/bin/git",
+        "MORI_JOURNALCTL_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/bin/journalctl",
+        "MORI_LANE_SILENCE_S": "900",
+        "MORI_MEMINFO": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/meminfo",
+        "MORI_NOW_EPOCH": "1700000000",
+        "MORI_PGREP_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/bin/pgrep",
+        "MORI_ROSTER_LANES": "kagi",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHOKUNIN_ROOT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/root",
+        "MORI_STATE_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/root/.ufo/state",
+        "MORI_TIMELINE_FILE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/root/.ufo/watchdog.log",
+        "MORI_TMUX_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/bin/tmux",
+        "MORI_UFO_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/root/.ufo",
+        "MORI_UPTIME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/uptime",
+        "MORI_WATCHDOG_LOG": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/root/.ufo/watchdog.log",
+        "MORI_WATCHDOG_STALE_S": "900",
+        "MORI_WAVES_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/root/.ufo/waves",
+        "MORI_WAVE_UNSETTLED_S": "7200",
+        "PATH": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-g/bin:/usr/bin:/bin"
+      }
+    },
+    {
+      "id": "c1.user",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c",
+      "rc": 1,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 102,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/c1.user.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/c1.user.stderr",
+      "stdout_sha256": "26a8fbad286cac565987d9cadaaa2d1a2443f909a2faf74923b4759f33af3761",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 8244,
+      "stderr_bytes": 0,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/home",
+        "MORI_BOOT_ID": "0123456789abcdef0123456789abcdef",
+        "MORI_CGROUP_CURRENT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/cg/memory.current",
+        "MORI_CGROUP_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/cg/memory.events",
+        "MORI_CGROUP_LOCAL_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/cg/memory.events",
+        "MORI_CGROUP_MAX": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/cg/memory.max",
+        "MORI_CGROUP_PEAK": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/cg/memory.peak",
+        "MORI_CGROUP_PRESSURE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/cg/memory.pressure",
+        "MORI_CGROUP_SERVICE_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/cg/memory.events",
+        "MORI_DF_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/bin/df",
+        "MORI_DISKSTATS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/diskstats",
+        "MORI_DISK_CRIT_PCT": "95",
+        "MORI_DISK_TARGETS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/disk-target",
+        "MORI_DISK_WARN_PCT": "85",
+        "MORI_GIT_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/bin/git",
+        "MORI_JOURNALCTL_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/bin/journalctl",
+        "MORI_LANE_SILENCE_S": "900",
+        "MORI_MEMINFO": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/meminfo",
+        "MORI_NOW_EPOCH": "1700000000",
+        "MORI_PGREP_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/bin/pgrep",
+        "MORI_ROSTER_LANES": "kagi",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHOKUNIN_ROOT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/root",
+        "MORI_STATE_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/root/.ufo/state",
+        "MORI_TIMELINE_FILE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/root/.ufo/watchdog.log",
+        "MORI_TMUX_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/bin/tmux",
+        "MORI_UFO_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/root/.ufo",
+        "MORI_UPTIME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/uptime",
+        "MORI_WATCHDOG_LOG": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/root/.ufo/watchdog.log",
+        "MORI_WATCHDOG_STALE_S": "900",
+        "MORI_WAVES_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/root/.ufo/waves",
+        "MORI_WAVE_UNSETTLED_S": "7200",
+        "PATH": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-c/bin:/usr/bin:/bin"
+      }
+    },
+    {
+      "id": "f01.sibling",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j",
+      "rc": 0,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 136,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/f01.sibling.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/f01.sibling.stderr",
+      "stdout_sha256": "49e17af9d61a48434d82e5f4cfdab216f44a639192698b44ae538a1d328d8eb1",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 6902,
+      "stderr_bytes": 0,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/home",
+        "MORI_BOOT_ID": "0123456789abcdef0123456789abcdef",
+        "MORI_CGROUP_CURRENT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/cg/memory.current",
+        "MORI_CGROUP_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/cg/memory.events",
+        "MORI_CGROUP_LOCAL_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/cg/memory.events",
+        "MORI_CGROUP_MAX": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/cg/memory.max",
+        "MORI_CGROUP_PEAK": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/cg/memory.peak",
+        "MORI_CGROUP_PRESSURE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/cg/memory.pressure",
+        "MORI_CGROUP_SERVICE_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/cg/memory.events",
+        "MORI_DF_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/bin/df",
+        "MORI_DISKSTATS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/diskstats",
+        "MORI_DISK_CRIT_PCT": "95",
+        "MORI_DISK_TARGETS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/disk-target",
+        "MORI_DISK_WARN_PCT": "85",
+        "MORI_GIT_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/bin/git",
+        "MORI_JOURNALCTL_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/bin/journalctl",
+        "MORI_LANE_SILENCE_S": "900",
+        "MORI_MEMINFO": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/meminfo",
+        "MORI_NOW_EPOCH": "1700000000",
+        "MORI_PGREP_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/bin/pgrep",
+        "MORI_ROSTER_LANES": "kagi",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHOKUNIN_ROOT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/root",
+        "MORI_STATE_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/root/.ufo/state",
+        "MORI_TIMELINE_FILE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/root/.ufo/watchdog.log",
+        "MORI_TMUX_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/bin/tmux",
+        "MORI_UFO_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/root/.ufo",
+        "MORI_UPTIME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/uptime",
+        "MORI_WATCHDOG_LOG": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/root/.ufo/watchdog.log",
+        "MORI_WATCHDOG_STALE_S": "900",
+        "MORI_WAVES_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/root/.ufo/waves",
+        "MORI_WAVE_UNSETTLED_S": "7200",
+        "PATH": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-j/bin:/usr/bin:/bin"
+      }
+    },
+    {
+      "id": "f01.subject",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i",
+      "rc": 0,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 136,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/f01.subject.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/f01.subject.stderr",
+      "stdout_sha256": "8c1ad0219788c1f20bc645bb0b1f360093d6bb4d9231ad6a4bf1606d72c93fcb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 6907,
+      "stderr_bytes": 0,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/home",
+        "MORI_BOOT_ID": "0123456789abcdef0123456789abcdef",
+        "MORI_CGROUP_CURRENT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/cg/memory.current",
+        "MORI_CGROUP_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/cg/memory.events",
+        "MORI_CGROUP_LOCAL_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/cg/memory.events",
+        "MORI_CGROUP_MAX": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/cg/memory.max",
+        "MORI_CGROUP_PEAK": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/cg/memory.peak",
+        "MORI_CGROUP_PRESSURE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/cg/memory.pressure",
+        "MORI_CGROUP_SERVICE_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/cg/memory.events",
+        "MORI_DF_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/bin/df",
+        "MORI_DISKSTATS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/diskstats",
+        "MORI_DISK_CRIT_PCT": "95",
+        "MORI_DISK_TARGETS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/disk-target",
+        "MORI_DISK_WARN_PCT": "85",
+        "MORI_GIT_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/bin/git",
+        "MORI_JOURNALCTL_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/bin/journalctl",
+        "MORI_LANE_SILENCE_S": "900",
+        "MORI_MEMINFO": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/meminfo",
+        "MORI_NOW_EPOCH": "1700000000",
+        "MORI_PGREP_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/bin/pgrep",
+        "MORI_ROSTER_LANES": "kagi",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHOKUNIN_ROOT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/root",
+        "MORI_STATE_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/root/.ufo/state",
+        "MORI_TIMELINE_FILE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/root/.ufo/watchdog.log",
+        "MORI_TMUX_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/bin/tmux",
+        "MORI_UFO_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/root/.ufo",
+        "MORI_UPTIME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/uptime",
+        "MORI_WATCHDOG_LOG": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/root/.ufo/watchdog.log",
+        "MORI_WATCHDOG_STALE_S": "900",
+        "MORI_WAVES_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/root/.ufo/waves",
+        "MORI_WAVE_UNSETTLED_S": "7200",
+        "PATH": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-i/bin:/usr/bin:/bin"
+      }
+    },
+    {
+      "id": "mutation.f01.subject",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/mutants/f01-mori-census.sh.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k",
+      "rc": 0,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 129,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/mutation.f01.subject.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/mutation.f01.subject.stderr",
+      "stdout_sha256": "43e1151314fa570f8a8d16da23cfe03d49b6ccdd550ef3995f989e07b494a433",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 6902,
+      "stderr_bytes": 0,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/home",
+        "MORI_BOOT_ID": "0123456789abcdef0123456789abcdef",
+        "MORI_CGROUP_CURRENT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/cg/memory.current",
+        "MORI_CGROUP_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/cg/memory.events",
+        "MORI_CGROUP_LOCAL_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/cg/memory.events",
+        "MORI_CGROUP_MAX": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/cg/memory.max",
+        "MORI_CGROUP_PEAK": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/cg/memory.peak",
+        "MORI_CGROUP_PRESSURE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/cg/memory.pressure",
+        "MORI_CGROUP_SERVICE_EVENTS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/cg/memory.events",
+        "MORI_DF_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/bin/df",
+        "MORI_DISKSTATS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/diskstats",
+        "MORI_DISK_CRIT_PCT": "95",
+        "MORI_DISK_TARGETS": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/disk-target",
+        "MORI_DISK_WARN_PCT": "85",
+        "MORI_GIT_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/bin/git",
+        "MORI_JOURNALCTL_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/bin/journalctl",
+        "MORI_LANE_SILENCE_S": "900",
+        "MORI_MEMINFO": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/meminfo",
+        "MORI_NOW_EPOCH": "1700000000",
+        "MORI_PGREP_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/bin/pgrep",
+        "MORI_ROSTER_LANES": "kagi",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHOKUNIN_ROOT": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/root",
+        "MORI_STATE_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/root/.ufo/state",
+        "MORI_TIMELINE_FILE": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/root/.ufo/watchdog.log",
+        "MORI_TMUX_BIN": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/bin/tmux",
+        "MORI_UFO_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/root/.ufo",
+        "MORI_UPTIME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/uptime",
+        "MORI_WATCHDOG_LOG": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/root/.ufo/watchdog.log",
+        "MORI_WATCHDOG_STALE_S": "900",
+        "MORI_WAVES_DIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/root/.ufo/waves",
+        "MORI_WAVE_UNSETTLED_S": "7200",
+        "PATH": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/fx-k/bin:/usr/bin:/bin"
+      }
+    },
+    {
+      "id": "mutation.f02.banana",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/mutants/f02-mori-silence-cases.sh.sh",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/wrappers/census-banana-mutant.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+      "rc": 0,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 3086,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/mutation.f02.banana.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/mutation.f02.banana.stderr",
+      "stdout_sha256": "3af47d12f1a052e19f20172569786b07e12f7a90723228c487a214eb13dc9b4a",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 2998,
+      "stderr_bytes": 0,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-mutation.f02.banana/home",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHUFFLE_SEED": "1313",
+        "PATH": "/usr/bin:/bin",
+        "TMPDIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-mutation.f02.banana/tmp"
+      }
+    },
+    {
+      "id": "oracle.banana",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-silence-cases.sh",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/wrappers/census-banana.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+      "rc": 1,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 3185,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.banana.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.banana.stderr",
+      "stdout_sha256": "0d74baffcca8089624580e24ef533903be961198f0066bc242d737612fba245b",
+      "stderr_sha256": "7108bc94497ea484e63a726a073146c4c8d25a1088dc559d7bcc8e3fdaa4531b",
+      "stdout_bytes": 10647,
+      "stderr_bytes": 760,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.banana/home",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHUFFLE_SEED": "1313",
+        "PATH": "/usr/bin:/bin",
+        "TMPDIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.banana/tmp"
+      }
+    },
+    {
+      "id": "oracle.clean-drift9",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-silence-cases.sh",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/wrappers/census-clean-drift9.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+      "rc": 1,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 3191,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.clean-drift9.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.clean-drift9.stderr",
+      "stdout_sha256": "9c6ea9bcfc0caf00d94774fe2acd71f9f1431d4c47817489d05819fca77f88dd",
+      "stderr_sha256": "75f2a9e7c8759f4617716c0a6ba017ed7d09a81a3df257c096cb47d77d78a930",
+      "stdout_bytes": 7508,
+      "stderr_bytes": 590,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.clean-drift9/home",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHUFFLE_SEED": "1313",
+        "PATH": "/usr/bin:/bin",
+        "TMPDIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.clean-drift9/tmp"
+      }
+    },
+    {
+      "id": "oracle.clean-rc1",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-silence-cases.sh",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/wrappers/census-clean-rc1.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+      "rc": 1,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 3195,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.clean-rc1.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.clean-rc1.stderr",
+      "stdout_sha256": "bcf19dd13c754f74c66f93f533cf3c8204aa5e396cd425df1fe6cb0c36a3a834",
+      "stderr_sha256": "75f2a9e7c8759f4617716c0a6ba017ed7d09a81a3df257c096cb47d77d78a930",
+      "stdout_bytes": 7552,
+      "stderr_bytes": 590,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.clean-rc1/home",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHUFFLE_SEED": "1313",
+        "PATH": "/usr/bin:/bin",
+        "TMPDIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.clean-rc1/tmp"
+      }
+    },
+    {
+      "id": "oracle.drift-drift0",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-silence-cases.sh",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/wrappers/census-drift-drift0.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+      "rc": 1,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 3234,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.drift-drift0.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.drift-drift0.stderr",
+      "stdout_sha256": "fa117e8f1cb8f0787fe40d6289dffc362b327dc68b5d259c4cb1576c034786a6",
+      "stderr_sha256": "bb661770d3dcf8a2e7a15908d297028449fc301449c5ef52d3bc5bd43e6dd089",
+      "stdout_bytes": 4517,
+      "stderr_bytes": 198,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.drift-drift0/home",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHUFFLE_SEED": "1313",
+        "PATH": "/usr/bin:/bin",
+        "TMPDIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.drift-drift0/tmp"
+      }
+    },
+    {
+      "id": "oracle.drift-rc0",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-silence-cases.sh",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/wrappers/census-drift-rc0.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+      "rc": 1,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 3175,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.drift-rc0.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.drift-rc0.stderr",
+      "stdout_sha256": "5614bd2f63edbea7310514c36cdd801bf23c31084dd93332a519c976bc29cef0",
+      "stderr_sha256": "bb661770d3dcf8a2e7a15908d297028449fc301449c5ef52d3bc5bd43e6dd089",
+      "stdout_bytes": 4531,
+      "stderr_bytes": 198,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.drift-rc0/home",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHUFFLE_SEED": "1313",
+        "PATH": "/usr/bin:/bin",
+        "TMPDIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.drift-rc0/tmp"
+      }
+    },
+    {
+      "id": "oracle.duplicate",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-silence-cases.sh",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/wrappers/census-duplicate.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+      "rc": 1,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 3191,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.duplicate.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.duplicate.stderr",
+      "stdout_sha256": "a208172a3b5ba5df732778042e2ab9e50d13e0820aaf585cbdea187d035578ca",
+      "stderr_sha256": "7108bc94497ea484e63a726a073146c4c8d25a1088dc559d7bcc8e3fdaa4531b",
+      "stdout_bytes": 8766,
+      "stderr_bytes": 760,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.duplicate/home",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHUFFLE_SEED": "1313",
+        "PATH": "/usr/bin:/bin",
+        "TMPDIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.duplicate/tmp"
+      }
+    },
+    {
+      "id": "oracle.honest",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-silence-cases.sh",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/wrappers/census-honest.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+      "rc": 0,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 3179,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.honest.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.honest.stderr",
+      "stdout_sha256": "3af47d12f1a052e19f20172569786b07e12f7a90723228c487a214eb13dc9b4a",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 2998,
+      "stderr_bytes": 0,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.honest/home",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHUFFLE_SEED": "1313",
+        "PATH": "/usr/bin:/bin",
+        "TMPDIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.honest/tmp"
+      }
+    },
+    {
+      "id": "oracle.missing",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-silence-cases.sh",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/wrappers/census-missing.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+      "rc": 1,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 3199,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.missing.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.missing.stderr",
+      "stdout_sha256": "a5cbff97384ca1483a9b6d483afcd216886610c664108ae3b83f27a809b321ca",
+      "stderr_sha256": "7108bc94497ea484e63a726a073146c4c8d25a1088dc559d7bcc8e3fdaa4531b",
+      "stdout_bytes": 12684,
+      "stderr_bytes": 760,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.missing/home",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHUFFLE_SEED": "1313",
+        "PATH": "/usr/bin:/bin",
+        "TMPDIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.missing/tmp"
+      }
+    },
+    {
+      "id": "oracle.not-final",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-silence-cases.sh",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/wrappers/census-not-final.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+      "rc": 1,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 3170,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.not-final.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.not-final.stderr",
+      "stdout_sha256": "b1cf01bcf75edbaf255a76b8adb2c6dd818f4972df4b2163a49dd4bfd2727e59",
+      "stderr_sha256": "7108bc94497ea484e63a726a073146c4c8d25a1088dc559d7bcc8e3fdaa4531b",
+      "stdout_bytes": 8264,
+      "stderr_bytes": 760,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.not-final/home",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHUFFLE_SEED": "1313",
+        "PATH": "/usr/bin:/bin",
+        "TMPDIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.not-final/tmp"
+      }
+    },
+    {
+      "id": "oracle.verdict-first",
+      "argv": [
+        "bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-silence-cases.sh",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/wrappers/census-verdict-first.sh"
+      ],
+      "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+      "rc": 1,
+      "timed_out": false,
+      "canary_present": false,
+      "error": null,
+      "duration_ms": 3266,
+      "timeout_s": 120,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.verdict-first.stdout",
+      "stderr_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/runs/oracle.verdict-first.stderr",
+      "stdout_sha256": "f4ce47919d9f61c40831c86502a59e7e02e3b52d814f9599e2f316b71743c834",
+      "stderr_sha256": "7108bc94497ea484e63a726a073146c4c8d25a1088dc559d7bcc8e3fdaa4531b",
+      "stdout_bytes": 15752,
+      "stderr_bytes": 760,
+      "env": {
+        "HOME": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.verdict-first/home",
+        "MORI_RUN_NONCE": "1313",
+        "MORI_SHUFFLE_SEED": "1313",
+        "PATH": "/usr/bin:/bin",
+        "TMPDIR": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/r13-fixtures-7zqg6l7r/oracle-oracle.verdict-first/tmp"
+      }
+    }
+  ],
+  "mutations": [
+    {
+      "kind": "f01",
+      "function": "grade_lane",
+      "target": "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh",
+      "target_sha256": "0e41cb83fce2e8c5c711171e1cde2e6fa2809dcfce630eccabe52bcbe41516d9",
+      "mutant": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/mutants/f01-mori-census.sh.sh",
+      "mutant_sha256": "a7fde03804e660de71e7869314c6619a8b1ebb1b94ad5a93a20411b81f537728",
+      "transplanted_chars": 5502,
+      "attribution": "whole frozen grade_lane function transplanted; not a membership-lines-only or byte-exact single-line revert; the frozen body also carries its older environment-hardening/fsmonitor behavior",
+      "frozen_source": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-13/frozen/mori-census.sh",
+      "frozen_sha256": "3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164",
+      "observed": {
+        "state": "progressing-weak",
+        "basis": "row-C",
+        "rc": 0,
+        "reproduced": true
+      }
+    },
+    {
+      "kind": "f02",
+      "function": "verdict_grade",
+      "target": "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-silence-cases.sh",
+      "target_sha256": "34cd5770889ec6e7521b477aa9976cece7a64e07b83774c12ce2aea73161abfa",
+      "mutant": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/evidence/r13-preserved/mutants/f02-mori-silence-cases.sh.sh",
+      "mutant_sha256": "a65b0d485116f076b481bcb396d66cb5efb7c4f392218bad7a4045e1d0a68922",
+      "transplanted_chars": 192,
+      "attribution": "reconstructed prefix-presence verdict_grade shim; the pre-fix oracle had no such function body, so this proves single-locus sufficiency, not original-byte restoration",
+      "frozen_source": null,
+      "frozen_sha256": null,
+      "reverted_by": "pre_fix_prefix_presence_shim",
+      "shim_sha256": "43a19460e1684e6446c6d4db7a6478e67f2f9346310192da9810fb5657202adb",
+      "observed": {
+        "matched": 28,
+        "total": 28,
+        "rc": 0,
+        "accepted": true
+      }
+    }
+  ],
+  "summary": {
+    "claims": 26,
+    "counts": {
+      "pass": 24,
+      "mutation-red": 2
+    },
+    "exit": 0,
+    "gate": {
+      "name": "r13 regressions",
+      "status": "registered",
+      "registry": "/home/vgpnk/Projects/shokunin/mori-shokunin/SKILL.md",
+      "row": "| r13 regressions | gate | `python3 tools/mori-round13-regressions.py --output <dir>` (`--census`/`--oracle` default to the repo `tools/*.sh`; `--frozen-dir` default `.ufo/waves/round-13/frozen`) | 0 clean \u00b7 1 failed (claim mismatch) \u00b7 2...",
+      "exit_map": {
+        "0": "clean",
+        "1": "failed",
+        "2": "could-not-evaluate"
+      }
+    }
+  }
+}

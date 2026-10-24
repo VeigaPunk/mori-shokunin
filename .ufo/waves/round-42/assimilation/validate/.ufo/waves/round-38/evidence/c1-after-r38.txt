@@ -1,0 +1,22 @@
+command: python3 .ufo/waves/round-38/count-c1.py b6993744171a05efc627b5e0664489c31aa5214e
+P-C1: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed, and exactly the truth's per-id `changed`/`deleted` lines, on each of 24 sandbox SOURCES.md histories drawn at run time, on the lane's own history (rev 6bd57097, round base f10a320d) where the independent oracle lists at least one id, and on one run-time-drawn challenge history presented in real-arm clothing (lane path, lane git identity, lane title); and the same counter rejects all three negative fixtures (a real-arm memoizer, a constant printer, a summary-only printer) and matches the standing truth on one run-time-drawn ancestor revision of the lane repository whose expected answer is not the published real-arm constant, and prints the lane tip it measured as head_at_measurement=<40-hex>.
+tool: .ufo/waves/round-38/scratch/mori-c1-tool-2y_7_l26/mori-sources-appendonly.py
+blind arm: 24/24 sandbox histories matched the hidden truth (1.7s; coverage: deletions=20 changed-back=15 superseded=8)
+real arm: pass (0.3s)
+  tool:   appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  tool exit=1
+drawn arm: pass (5.8s) rev=afc55a7634 base=e37dcc6dff
+  truth:  appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] round_changed=[]
+  tool:   appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] round_changed=[]
+challenge arm (real-arm clothing): pass (0.1s)
+  truth:  appendonly_violations=4 ids=[S135] deleted=[S167,S243,S283] superseded=[S135] round_changed=[S243]
+  tool:   appendonly_violations=4 ids=[S135] deleted=[S167,S243,S283] superseded=[S135] round_changed=[S243]
+negative memo-n1.py     rejected (drawn arm fails (rev=842a32074b: lists differ: want appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] round_changed=[] got appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]))
+negative const.py       rejected (blind 4/4 (repo200: lists differ))
+negative summary-only.py rejected (blind 3/4 (repo200: per-id lines differ (malformed=0)))
+negative memo-sha.py    ACCEPTED (disclosed content-keyed bound) (all four arms pass)
+C1=met
+seed=5002876013799972501
+head_at_measurement=b6993744171a05efc627b5e0664489c31aa5214e
+EXIT=0

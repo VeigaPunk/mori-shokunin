@@ -1,0 +1,287 @@
+{
+ "version": 1,
+ "wave_dir": ".ufo/waves/round-31/fx",
+ "writer_regex": "^Case[A-Za-z0-9]+\\.md$",
+ "allow": [
+  ".ufo/waves/round-31/rule-text.md",
+  "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-31/rule-text.md",
+  "/fast/scratch/hyaku/mori-r31/{report}",
+  "/fast/scratch/hyaku/mori-r31/{report}/*",
+  "https://raw.githubusercontent.com/torvalds/linux/*",
+  "/home/vgpnk/.agents/skills/godspeed/SKILL.md"
+ ],
+ "placeholder": "@REPORT@",
+ "fixtures": [
+  {
+   "id": "F01",
+   "why": "prose after the list is not an entry (round-30 CaseR30a.md:105 shape)",
+   "lines": [
+    "# Case brief",
+    "",
+    "## Files opened",
+    "",
+    "- .ufo/waves/round-31/rule-text.md",
+    "- /fast/scratch/hyaku/mori-r31/@REPORT@/case.json",
+    "",
+    "The scratch JSON passed python3 json.load; I opened no lane source."
+   ],
+   "expect": []
+  },
+  {
+   "id": "F02",
+   "why": "every forbidden entry is reported at its own line",
+   "lines": [
+    "## Files opened",
+    "- .ufo/waves/round-31/rule-text.md",
+    "- tools/mori-census.sh",
+    "- corpus/SOURCES.md:12"
+   ],
+   "expect": [
+    [
+     3,
+     "writer-forbidden-opened-path"
+    ],
+    [
+     4,
+     "writer-forbidden-opened-path"
+    ]
+   ]
+  },
+  {
+   "id": "F03",
+   "why": "a label-form list counts as a files-opened list (round-29 CaseA210c shape)",
+   "lines": [
+    "# Case brief",
+    "",
+    "Files opened:",
+    "- .ufo/waves/round-31/rule-text.md",
+    "",
+    "## Cases",
+    "The rule text was enough."
+   ],
+   "expect": []
+  },
+  {
+   "id": "F04",
+   "why": "no files-opened block at all",
+   "lines": [
+    "# Case brief",
+    "## Cases",
+    "Some prose naming nothing."
+   ],
+   "expect": [
+    [
+     1,
+     "writer-missing-files-opened-list"
+    ]
+   ]
+  },
+  {
+   "id": "F05",
+   "why": "a files-opened heading with prose and no entry",
+   "lines": [
+    "## Files opened",
+    "",
+    "I read only the rule text."
+   ],
+   "expect": [
+    [
+     1,
+     "writer-missing-files-opened-list"
+    ]
+   ]
+  },
+  {
+   "id": "F06",
+   "why": "table form: header and separator rows are not entries",
+   "lines": [
+    "## Files opened",
+    "",
+    "| path | why |",
+    "|---|---|",
+    "| .ufo/waves/round-31/rule-text.md | rule |",
+    "| PROVINCE.md | scope |"
+   ],
+   "expect": [
+    [
+     6,
+     "writer-forbidden-opened-path"
+    ]
+   ]
+  },
+  {
+   "id": "F07",
+   "why": "numbered entries with N. and N) markers",
+   "lines": [
+    "## Files opened",
+    "1. .ufo/waves/round-31/rule-text.md",
+    "2) LOG.md"
+   ],
+   "expect": [
+    [
+     3,
+     "writer-forbidden-opened-path"
+    ]
+   ]
+  },
+  {
+   "id": "F08",
+   "why": "an entry with no path-like token is unverifiable and is a hit",
+   "lines": [
+    "## Files opened",
+    "- .ufo/waves/round-31/rule-text.md",
+    "- the brief template"
+   ],
+   "expect": [
+    [
+     3,
+     "writer-forbidden-opened-path"
+    ]
+   ]
+  },
+  {
+   "id": "F09",
+   "why": "any heading closes the block, including a deeper one",
+   "lines": [
+    "## Files opened",
+    "- .ufo/waves/round-31/rule-text.md",
+    "### Notes",
+    "- tools/mori-census.sh was not opened"
+   ],
+   "expect": []
+  },
+  {
+   "id": "F10",
+   "why": "two blocks in one brief are both parsed",
+   "lines": [
+    "## Files opened",
+    "- tools/mori-pressure.py",
+    "",
+    "## Later",
+    "Files opened:",
+    "- SKILL.md"
+   ],
+   "expect": [
+    [
+     2,
+     "writer-forbidden-opened-path"
+    ],
+    [
+     6,
+     "writer-forbidden-opened-path"
+    ]
+   ]
+  },
+  {
+   "id": "F11",
+   "why": "own scratch passes, another report's scratch does not",
+   "lines": [
+    "## Files opened",
+    "- /fast/scratch/hyaku/mori-r31/@REPORT@/in.json",
+    "- /fast/scratch/hyaku/mori-r31/CaseOther/in.json"
+   ],
+   "expect": [
+    [
+     3,
+     "writer-forbidden-opened-path"
+    ]
+   ]
+  },
+  {
+   "id": "F12",
+   "why": "URL and file:// entries are checked against the allowlist",
+   "lines": [
+    "## Files opened",
+    "- https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/exec.c",
+    "- https://example.com/notes.txt",
+    "- file:///fast/scratch/hyaku/mori-r31/@REPORT@/x.json"
+   ],
+   "expect": [
+    [
+     3,
+     "writer-forbidden-opened-path"
+    ]
+   ]
+  },
+  {
+   "id": "F13",
+   "why": "backticks, line suffixes and trailing punctuation are stripped before matching",
+   "lines": [
+    "## Files opened",
+    "- `.ufo/waves/round-31/rule-text.md:3-9` (rule)",
+    "- `tools/fixtures/mori-oom-killers/cases.json`."
+   ],
+   "expect": [
+    [
+     3,
+     "writer-forbidden-opened-path"
+    ]
+   ]
+  },
+  {
+   "id": "F14",
+   "why": "a list under a heading that is not files-opened is never parsed as entries",
+   "lines": [
+    "## Files opened",
+    "- .ufo/waves/round-31/rule-text.md",
+    "",
+    "## Sources I did not open",
+    "- tools/mori-census.sh",
+    "- corpus/SOURCES.md"
+   ],
+   "expect": []
+  },
+  {
+   "id": "F15",
+   "why": "the source-citation detector is unchanged",
+   "lines": [
+    "## Files opened",
+    "- .ufo/waves/round-31/rule-text.md",
+    "",
+    "## Note",
+    "See tools/mori-oom-killers.py:42 for the parser."
+   ],
+   "expect": [
+    [
+     5,
+     "writer-tool-source-citation"
+    ]
+   ]
+  },
+  {
+   "id": "F16",
+   "why": "the tool-run-output detector is unchanged",
+   "lines": [
+    "## Files opened",
+    "- .ufo/waves/round-31/rule-text.md",
+    "",
+    "## Run note",
+    "Tool run output:",
+    "KILLERS_QUIET",
+    "exit 0"
+   ],
+   "expect": [
+    [
+     7,
+     "writer-tool-run-output"
+    ]
+   ]
+  }
+ ],
+ "unscanned": [
+  {
+   "name": "NotesBrief.md",
+   "lines": [
+    "## Files opened",
+    "- tools/mori-census.sh"
+   ]
+  },
+  {
+   "name": "sub/CaseNested.md",
+   "lines": [
+    "## Files opened",
+    "- tools/mori-census.sh"
+   ]
+  }
+ ]
+}

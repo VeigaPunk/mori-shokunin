@@ -1,0 +1,12 @@
+# measured at parent 67779aa8f761ac4e1f1620f67c2746076d8f31d3; the landed tip adds only receipt files under .ufo/waves/round-29/evidence/
+command: bash .ufo/waves/round-29/count-c1.sh 67779aa8f761ac4e1f1620f67c2746076d8f31d3 63729047644f839fe4c8cc97abd0d8bf741a5787
+axis=coverage score=6 basis=held R=26 kinds=none
+axis=operability score=7 basis=held R=28 kinds=none
+axis=depth score=5 basis=held R=12 kinds=none
+axis=freshness score=5 basis=held R=28 kinds=none
+axis=calibration score=5 basis=held R=25 kinds=none
+axis=adjacency score=6 basis=held R=19 kinds=none
+mismatches=0
+C1=met
+
+exit: 0

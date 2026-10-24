@@ -1,0 +1,649 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r15-positive",
+  "createdAt": "2026-10-20T07:28:52.423Z",
+  "updatedAt": "2026-10-20T07:29:34.596Z",
+  "reportDir": ".ufo/waves/round-15/build",
+  "members": {
+    "CensusPositive": {
+      "kind": "spawn",
+      "agentId": "MoriR15.CensusPositive",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "HarnessBuild": {
+      "kind": "spawn",
+      "agentId": "MoriR15.HarnessBuild",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ProvenanceCapture": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ProvenanceCapture",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "SkillInterface": {
+      "kind": "spawn",
+      "agentId": "MoriR15.SkillInterface",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "KnowledgePositive": {
+      "kind": "spawn",
+      "agentId": "MoriR15.KnowledgePositive",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "IndexPositive": {
+      "kind": "spawn",
+      "agentId": "MoriR15.IndexPositive",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "QualityDebt": {
+      "kind": "spawn",
+      "agentId": "MoriR15.QualityDebt",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "RegistryFrontier": {
+      "kind": "spawn",
+      "agentId": "MoriR15.RegistryFrontier",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "PackKernelUser": {
+      "kind": "spawn",
+      "agentId": "MoriR15.PackKernelUser",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "PackKernelSystem": {
+      "kind": "spawn",
+      "agentId": "MoriR15.PackKernelSystem",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "PackUnitUser": {
+      "kind": "spawn",
+      "agentId": "MoriR15.PackUnitUser",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "PackUnitSystem": {
+      "kind": "spawn",
+      "agentId": "MoriR15.PackUnitSystem",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "PackSignalUser": {
+      "kind": "spawn",
+      "agentId": "MoriR15.PackSignalUser",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "PackProcessUser": {
+      "kind": "spawn",
+      "agentId": "MoriR15.PackProcessUser",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "PackForeignBoot": {
+      "kind": "spawn",
+      "agentId": "MoriR15.PackForeignBoot",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "PackBootArray": {
+      "kind": "spawn",
+      "agentId": "MoriR15.PackBootArray",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "PackNegativeInvalid": {
+      "kind": "spawn",
+      "agentId": "MoriR15.PackNegativeInvalid",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "PackNegativeResults": {
+      "kind": "spawn",
+      "agentId": "MoriR15.PackNegativeResults",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "PackNegativeStatus": {
+      "kind": "spawn",
+      "agentId": "MoriR15.PackNegativeStatus",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "PackCrossScope": {
+      "kind": "spawn",
+      "agentId": "MoriR15.PackCrossScope",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "PackSubjectUnknown": {
+      "kind": "spawn",
+      "agentId": "MoriR15.PackSubjectUnknown",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "PackFanoutPositive": {
+      "kind": "spawn",
+      "agentId": "MoriR15.PackFanoutPositive",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "PackOrderMixed": {
+      "kind": "spawn",
+      "agentId": "MoriR15.PackOrderMixed",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "PackCleanControls": {
+      "kind": "spawn",
+      "agentId": "MoriR15.PackCleanControls",
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ReconFieldTypes": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ReconFieldTypes",
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ReconBootScope": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ReconBootScope",
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ReconResultEmitter": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ReconResultEmitter",
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ReconParserContracts": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ReconParserContracts",
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ReconQueryBounds": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ReconQueryBounds",
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ReconLegacySignal": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ReconLegacySignal",
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ReconDirtyRevision": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ReconDirtyRevision",
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ReconProtectedTeaching": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ReconProtectedTeaching",
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ConnectPlannerWalk": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ConnectPlannerWalk",
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ConnectSiblingOverlap": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ConnectSiblingOverlap",
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ConnectFrontier": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ConnectFrontier",
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ConnectNoHarmAxes": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ConnectNoHarmAxes",
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ConnectSourceChain": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ConnectSourceChain",
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ConnectReceipts": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ConnectReceipts",
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ReviewKernelPredicate": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ReviewKernelPredicate",
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ReviewUnitPredicate": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ReviewUnitPredicate",
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ReviewProcessPredicate": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ReviewProcessPredicate",
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ReviewRawTotals": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ReviewRawTotals",
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ReviewRouting": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ReviewRouting",
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ReviewHarnessPacks": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ReviewHarnessPacks",
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ReviewHarnessGate": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ReviewHarnessGate",
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ReviewDocumentation": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ReviewDocumentation",
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ScribeSourceCensus": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ScribeSourceCensus",
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ScribeRoutedDebt": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ScribeRoutedDebt",
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ScribeNoHarmLedger": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ScribeNoHarmLedger",
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ScribeGateDecisions": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ScribeGateDecisions",
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ScribeReportContract": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ScribeReportContract",
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "ScribeFixtureInventory": {
+      "kind": "spawn",
+      "agentId": "MoriR15.ScribeFixtureInventory",
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "AttackFalsePositive": {
+      "kind": "spawn",
+      "agentId": "MoriR15.AttackFalsePositive",
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "AttackSuppression": {
+      "kind": "spawn",
+      "agentId": "MoriR15.AttackSuppression",
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "AttackSignalConfusion": {
+      "kind": "spawn",
+      "agentId": "MoriR15.AttackSignalConfusion",
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "AttackCountVacuity": {
+      "kind": "spawn",
+      "agentId": "MoriR15.AttackCountVacuity",
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "AttackFixtureOracle": {
+      "kind": "spawn",
+      "agentId": "MoriR15.AttackFixtureOracle",
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "AttackNoHarm": {
+      "kind": "spawn",
+      "agentId": "MoriR15.AttackNoHarm",
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "AttackProvenance": {
+      "kind": "spawn",
+      "agentId": "MoriR15.AttackProvenance",
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "AttackSourceOverreach": {
+      "kind": "spawn",
+      "agentId": "MoriR15.AttackSourceOverreach",
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "SecurityPrivacy": {
+      "kind": "spawn",
+      "agentId": "MoriR15.SecurityPrivacy",
+      "role": "sentinel",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "SecurityTrust": {
+      "kind": "spawn",
+      "agentId": "MoriR15.SecurityTrust",
+      "role": "sentinel",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "HistoryOriginalIntent": {
+      "kind": "spawn",
+      "agentId": "MoriR15.HistoryOriginalIntent",
+      "role": "revenger",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    },
+    "HistoryDirtyHistory": {
+      "kind": "spawn",
+      "agentId": "MoriR15.HistoryDirtyHistory",
+      "role": "revenger",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "retain validated positives without fabricated totals"
+    }
+  }
+}

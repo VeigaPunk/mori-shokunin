@@ -1,0 +1,5 @@
+command: sandbox clone of ebc61f47 with S226 anchor cell edited in place (:657-659 -> :657-660), gate at HEAD --round-base ebc61f47
+changed S228 superseded_by=-
+appendonly_violations=19 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193,S228] deleted=[] superseded=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] round_changed=[S228]
+supersede_timing superseded_as_of=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] stale_supersede=[]
+EXIT=0

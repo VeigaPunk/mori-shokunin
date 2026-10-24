@@ -1,0 +1,12 @@
+$ python3 -I -B <a12c68ae:tools/mori-oom-killers.py copy> --selftest --cases tools/fixtures/mori-oom-killers/cases-r31-dryrun-flips.json
+MORI_OOM_KILLERS_SELFTEST: PASS 2/2
+exit=0
+$ same with the 58b61681 tool (round-30 base)
+MORI_OOM_KILLERS_SELFTEST: FAIL 0/2
+FAIL r31-x1-stopped-dryrun-escalation-acted: verdict: got 'KILLERS_QUIET' expected 'KILLER_ACTED'
+FAIL r31-x1-stopped-dryrun-escalation-acted: exit: got 0 expected 1
+FAIL r31-x1-stopped-dryrun-escalation-acted: earlyoom.dryrun_send_lines: got null expected 1
+FAIL r31-x2-stopped-prestamp-dryrun-send-acted: verdict: got 'KILLERS_QUIET' expected 'KILLER_ACTED'
+FAIL r31-x2-stopped-prestamp-dryrun-send-acted: exit: got 0 expected 1
+FAIL r31-x2-stopped-prestamp-dryrun-send-acted: earlyoom.dryrun_send_lines: got null expected 0
+exit=1

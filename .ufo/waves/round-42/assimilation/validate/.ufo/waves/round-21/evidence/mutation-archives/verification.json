@@ -1,0 +1,34 @@
+{
+  "schema": "mori-r21-archive-verification-v1",
+  "verified": [
+    {
+      "archive": ".ufo/waves/round-21/evidence/mutation-archives/old-permission.tar.gz",
+      "sha256": "70be803c19330cf74a5b6e193fb666070efd3bcd8d5d26e201daf2ce1c3b40f5",
+      "all_members_equal": true,
+      "regular_files": 17,
+      "symlinks": 0
+    },
+    {
+      "archive": ".ufo/waves/round-21/evidence/mutation-archives/lost-identity.tar.gz",
+      "sha256": "aec71132b7a00b3015d60b8a577ea10b728c9bf36534965dfc0821c029a3f37a",
+      "all_members_equal": true,
+      "regular_files": 10,
+      "symlinks": 0
+    },
+    {
+      "archive": ".ufo/waves/round-21/evidence/mutation-archives/cleanup-actor.tar.gz",
+      "sha256": "711cbcccb2784041a66bd69f8ccb6682304a3ee10058a3e7072bff5bb84c8dd8",
+      "all_members_equal": true,
+      "regular_files": 36,
+      "symlinks": 0
+    },
+    {
+      "archive": ".ufo/waves/round-21/evidence/mutation-archives/digest-symlink.tar.gz",
+      "sha256": "23abbe337564a67950df08b8440f71b7cff80ff4ccca9b69ed478a18e6556608",
+      "all_members_equal": true,
+      "regular_files": 50,
+      "symlinks": 0
+    }
+  ],
+  "method": "Compare every regular archive member byte-for-byte and every symbolic link target against the generated workspace, before deletion."
+}

@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Michael Feathers - Characterization Testing</title>
+<meta name="description" content="Characterization Testing - Writing tests to describe and fix existing code">
+<meta name="author" content="Michael Feathers">
+<meta name="keywords" content="blog, blog platform, self-hosted, self-hosted blogging, simple blog platform, minimalist blog, minimalist blogging platform, simple blog platform, easy blogging, uncluttered blogging, web developer blog, programmer blog platform, coder blog, programmer blogs">
+
+  <!-- Do a conditional here to test for the theme selected in settings.-->
+  <link rel="stylesheet" media="all" href="/assets/classic_theme-c2dc8311b564c23e39b1ce837f685b93f8a4057dcd9a904adea61c094343c1d1.css" />
+
+<script src="/assets/application-7ce23f029c89a31f5fe654b5cd05eb69830846cf70f2db0958deae29ac65b312.js"></script>
+
+    <script type="text/javascript" src="//use.typekit.net/cqm7mbn.js"></script>
+
+
+  <script type="text/javascript">
+      var _gaq = _gaq || [];
+      //handles all back end tracking, and silvrback home tracking
+
+      <!--      pushes stats to user account, with either custom domain or subdomain. One or the other, not both. If custom domain is set, then silvrback subdomain tracking won't show for user.-->
+      <!--      _gaq.push(['user._setAccount', '']);-->
+      <!--      _gaq.push(['user._setDomainName', '']);-->
+      <!--      _gaq.push(['user._setDomainName', 'silvrback.com']);-->
+      <!--      _gaq.push(['user._setAllowLinker', true]);-->
+      <!--      _gaq.push(['user._trackPageview']);-->
+       // By Nazrul
+      //Send tracking data to 3rd profile. Tracks all front end user domain data (custom domains and subdomains)
+      _gaq.push(['custom._setAccount', 'UA-47156337-1']);
+      _gaq.push(['custom._setDomainName', 'silvrback.com']);
+      _gaq.push(['custom._setAllowLinker', true]);
+      _gaq.push(['custom._trackPageview']);
+      (function () {
+          var ga = document.createElement('script');
+          ga.type = 'text/javascript';
+          ga.async = true;
+          ga.src = 'https://ssl.google-analytics.com/ga.js';
+
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(ga, s);
+      })();
+
+  </script>
+
+
+<!--user defined color variables-->
+<style>
+  .social i:hover, .mobile_social i:hover {
+    color:#b11029 !important;
+  }
+/*  .sidr a:hover {
+    color:#efefef !important;
+    text-shadow: 0 0 0.4em #b11029
+  }*/
+  .open-order-and-tag > .article_entry:hover {
+    background-color:#b11029 !important;
+  }
+  .full_blog_btn:hover {
+    background-color:#b11029 !important;
+  }
+  .read_more_btn:hover {
+    text-decoration: none !important;
+    background-color:#b11029 !important;
+  }
+  .load_more_articles a:hover {
+    text-decoration: none !important;
+    background-color:#b11029 !important;
+  }
+</style>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+  <script type="text/javascript">var _sf_startpt = (new Date()).getTime()</script>
+  <script type="text/javascript">try {
+      Typekit.load();
+  } catch (e) {
+  }</script>
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+  <![endif]-->
+  <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="AOsbFft7WBn7oBnf1zTj7ffSOMC83hxzZ50wMpMfsjMaxREH2UmwgcWHq+frmRzMmM4mUZ487MM2L6Rc9XFcWg==" />
+    <meta property="og:url" content="https://michaelfeathers.silvrback.com/characterization-testing">
+  <meta name="twitter:url" content="https://michaelfeathers.silvrback.com/characterization-testing">
+  <meta property="og:title" content="Michael Feathers - Characterization Testing">
+  <meta name="twitter:title" content="Michael Feathers - Characterization Testing">
+  <meta property="og:description" content="Characterization Testing - Writing tests to describe and fix existing code">
+  <meta name="twitter:description" content="Characterization Testing - Writing tests to describe and fix existing code">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="michaelfeathers.silvrback.com">
+  <meta name="twitter:creator" content="@mfeathers">
+  <meta property="og:image:width" content="450"/>
+
+  <meta property="og:image:height" content="298"/>
+  <style>
+    .hll { background-color: #49483e }
+.c { color: #75715e } /* Comment */
+.err { color: #960050; background-color: #1e0010 } /* Error */
+.k { color: #66d9ef } /* Keyword */
+.l { color: #ae81ff } /* Literal */
+.n { color: #f8f8f2 } /* Name */
+.o { color: #f92672 } /* Operator */
+.p { color: #f8f8f2 } /* Punctuation */
+.ch { color: #75715e } /* Comment.Hashbang */
+.cm { color: #75715e } /* Comment.Multiline */
+.cp { color: #75715e } /* Comment.Preproc */
+.cpf { color: #75715e } /* Comment.PreprocFile */
+.c1 { color: #75715e } /* Comment.Single */
+.cs { color: #75715e } /* Comment.Special */
+.gd { color: #f92672 } /* Generic.Deleted */
+.ge { font-style: italic } /* Generic.Emph */
+.gi { color: #a6e22e } /* Generic.Inserted */
+.gs { font-weight: bold } /* Generic.Strong */
+.gu { color: #75715e } /* Generic.Subheading */
+.kc { color: #66d9ef } /* Keyword.Constant */
+.kd { color: #66d9ef } /* Keyword.Declaration */
+.kn { color: #f92672 } /* Keyword.Namespace */
+.kp { color: #66d9ef } /* Keyword.Pseudo */
+.kr { color: #66d9ef } /* Keyword.Reserved */
+.kt { color: #66d9ef } /* Keyword.Type */
+.ld { color: #e6db74 } /* Literal.Date */
+.m { color: #ae81ff } /* Literal.Number */
+.s { color: #e6db74 } /* Literal.String */
+.na { color: #a6e22e } /* Name.Attribute */
+.nb { color: #f8f8f2 } /* Name.Builtin */
+.nc { color: #a6e22e } /* Name.Class */
+.no { color: #66d9ef } /* Name.Constant */
+.nd { color: #a6e22e } /* Name.Decorator */
+.ni { color: #f8f8f2 } /* Name.Entity */
+.ne { color: #a6e22e } /* Name.Exception */
+.nf { color: #a6e22e } /* Name.Function */
+.nl { color: #f8f8f2 } /* Name.Label */
+.nn { color: #f8f8f2 } /* Name.Namespace */
+.nx { color: #a6e22e } /* Name.Other */
+.py { color: #f8f8f2 } /* Name.Property */
+.nt { color: #f92672 } /* Name.Tag */
+.nv { color: #f8f8f2 } /* Name.Variable */
+.ow { color: #f92672 } /* Operator.Word */
+.w { color: #f8f8f2 } /* Text.Whitespace */
+.mb { color: #ae81ff } /* Literal.Number.Bin */
+.mf { color: #ae81ff } /* Literal.Number.Float */
+.mh { color: #ae81ff } /* Literal.Number.Hex */
+.mi { color: #ae81ff } /* Literal.Number.Integer */
+.mo { color: #ae81ff } /* Literal.Number.Oct */
+.sa { color: #e6db74 } /* Literal.String.Affix */
+.sb { color: #e6db74 } /* Literal.String.Backtick */
+.sc { color: #e6db74 } /* Literal.String.Char */
+.dl { color: #e6db74 } /* Literal.String.Delimiter */
+.sd { color: #e6db74 } /* Literal.String.Doc */
+.s2 { color: #e6db74 } /* Literal.String.Double */
+.se { color: #ae81ff } /* Literal.String.Escape */
+.sh { color: #e6db74 } /* Literal.String.Heredoc */
+.si { color: #e6db74 } /* Literal.String.Interpol */
+.sx { color: #e6db74 } /* Literal.String.Other */
+.sr { color: #e6db74 } /* Literal.String.Regex */
+.s1 { color: #e6db74 } /* Literal.String.Single */
+.ss { color: #e6db74 } /* Literal.String.Symbol */
+.bp { color: #f8f8f2 } /* Name.Builtin.Pseudo */
+.fm { color: #a6e22e } /* Name.Function.Magic */
+.vc { color: #f8f8f2 } /* Name.Variable.Class */
+.vg { color: #f8f8f2 } /* Name.Variable.Global */
+.vi { color: #f8f8f2 } /* Name.Variable.Instance */
+.vm { color: #f8f8f2 } /* Name.Variable.Magic */
+.il { color: #ae81ff } /* Literal.Number.Integer.Long */
+      .highlight {
+        background-color: #111;
+      }
+  </style>
+
+  <link rel="alternate" type="application/atom+xml" title="ATOM" href="/feed" />
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.rss" />
+  <!-- Facebook Pixel Code -->
+  <script>
+      !function (f, b, e, v, n, t, s) {
+          if (f.fbq) return;
+          n = f.fbq = function () {
+              n.callMethod ?
+                  n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+          };
+          if (!f._fbq) f._fbq = n;
+          n.push = n;
+          n.loaded = !0;
+          n.version = '2.0';
+          n.queue = [];
+          t = b.createElement(e);
+          t.async = !0;
+          t.src = v;
+          s = b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t, s)
+      }(window, document, 'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '601823960692369');
+      fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1"
+         src="https://www.facebook.com/tr?id=601823960692369&ev=PageView
+&noscript=1"/>
+  </noscript>
+  <!-- End Facebook Pixel Code -->
+</head>
+<body class="home show">
+<!-- conditional here for the theme body -->
+<div class="top_stripe" style="background-color:#b11029"><br/></div>
+    <div class="mobile_brand sb-slide">
+      
+              <a href='#side_menu' class='sb-toggle-left'>
+                <img class="silvrback_menu" src="https://silvrback.s3.amazonaws.com/uploads/047606bc-8bcd-4a2a-867e-238f2d273081/r7k_red_large.png" />
+              </a>
+    </div>
+
+
+<div class="sidebar3 sb-slide">
+  <div class='logo_bar' data-tip='Menu'>
+              <a href='#side_menu' class='sb-toggle-left'>
+                <img class="silvrback_menu" src="https://silvrback.s3.amazonaws.com/uploads/047606bc-8bcd-4a2a-867e-238f2d273081/r7k_red_large.png" />
+              </a>
+            </div>
+</div>
+
+<!--logged out user sidebar-->
+
+
+
+
+    <div id="side_menu" class="menu sb-slidebar sb-left sb-width-custom" data-sb-width="200px">
+      <ul>
+        <p>Navigation</p>
+            <a href="/">
+              <li><i class="fa fa-home"></i> Blog Home</li>
+            </a>
+        <a href="/archive">
+          <li><i class="fa fa-sort-amount-desc"></i> Archive</li>
+        </a>
+                <a href="/bio">
+                  <li><i class="fa fa-heart"></i> Bio</li>
+                </a>
+        <a href="/feed">
+          <li><i class="fa fa-rss"></i>RSS</li>
+        </a>
+
+
+        <a href="/home" class="silvrback_branded_menu"><img style="width:40px;" src="/assets/gorilla-white-94520d1798dddcc0033e3be804ccee50745f2898955cf7fca49b6db98608ad04.svg" />
+          <span class="dock_white_footer_brand_text">Silvrback</span></a>
+        <li class="classic-search">
+          <div class="classic-search-wrapper">
+  <form id="classic-search-form" target="_blank" action="/search" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="++3g1z9ZZvl1KigQsPObUVF8ufMcvlmmV4UlIrzna2vXgEmxVWDaBbU5dWUD5QXdBosD6d3+eDRbVgnT7Cm7Kg==" />
+      <div class="search-form">
+        <span class="search-submit">
+         <i class="fa fa-search"></i>
+        </span>
+        <input type="text" name="term" id="term" class="search-input" placeholder="Search" />
+        <input type="hidden" name="user_id" id="user_id" value="578" />
+      </div>
+</form></div>
+<script type="text/javascript">
+    $(function () {
+        $('.classic-search-wrapper .search-submit').click(function (e) {
+            search(e, $('#classic-search-form .search-input'));
+        });
+
+        $('.classic-search-wrapper .search-input').keypress(function (e) {
+            if (e.keyCode == 13) {
+                search(e, $(this));
+            }
+        });
+
+        var search = function (event, input) {
+            event.preventDefault();
+            search_text = input.val();
+            if (search_text != '' && search_text.length >= 3) {
+                $('#classic-search-form').submit();
+            }
+            else {
+                $('#classic-search-form').find('.search-input').focus();
+            }
+        };
+
+        $('.search-input').focusin(function () {
+            $('.search-form').addClass('search-active');
+        }).focusout(function () {
+            $('.search-form').removeClass('search-active');
+        });
+    });
+</script>
+        </li>
+      </ul>
+    </div>
+
+
+<div id="sb-site">
+  <article class="page2">
+
+    <div class="blog_post2">
+      <div style="direction: ltr">
+        <h1 class="blog_title">Characterization Testing</h1>
+          <h3 class="blog_subtitle"><i>Writing tests to describe and fix existing code</i></h3>
+      </div>
+      <span class="top_author_data">
+          <a href="https://michaelfeathers.silvrback.com/bio">Michael Feathers</a>
+    
+</span>
+
+        <div class="blog_date">
+          August 08, 2016
+        </div>
+
+      <div class="blog_post_body">
+          <div class="all_external_links" style="direction: ltr">
+            <p>I think that the most confusing thing about testing is the word <em>testing</em>. We use it for many things, from exploratory testing and manual testing to unit testing and other forms of automation. The core issue is that we need to know that our code works, and we’ve lumped together a variety of practices and put them under this banner. We can look for some common strands between them but they are hard to find.</p>
+
+<p>Most types of testing have the quality of being about correctness.  We <em>test</em> our code to see that it is doing what we want it to do. This assumes that we know what it is supposed to do - that we have some sort of specification in our heads or elsewhere that tells us what we’re aiming for.</p>
+
+<p>What if we don’t? </p>
+
+<p>Unfortunately, this is exactly where we are with a lot of software. We need to make changes to it but we don’t know enough about what it does.</p>
+
+<p>Let’s look at a small example.</p>
+<div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">formatText</span><span class="o">(</span><span class="n">String</span> <span class="n">text</span><span class="o">)</span> 
+<span class="o">{</span>
+  <span class="n">StringBuffer</span> <span class="n">result</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StringBuffer</span><span class="o">();</span>
+  <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="n">text</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="o">++</span><span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">n</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">==</span> <span class="sc">&#39;&lt;&#39;</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">while</span><span class="o">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="n">text</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">text</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">n</span><span class="o">)</span> <span class="o">!=</span> <span class="sc">&#39;/&#39;</span> <span class="o">&amp;&amp;</span> <span class="n">text</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">n</span><span class="o">)</span> <span class="o">!=</span> <span class="sc">&#39;&gt;&#39;</span><span class="o">)</span>
+        <span class="n">n</span><span class="o">++;</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="n">text</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&amp;&amp;</span> <span class="n">text</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">n</span><span class="o">)</span> <span class="o">==</span> <span class="sc">&#39;/&#39;</span><span class="o">)</span>
+        <span class="n">n</span><span class="o">+=</span><span class="mi">4</span><span class="o">;</span>
+      <span class="k">else</span>
+        <span class="n">n</span><span class="o">++;</span>
+    <span class="o">}</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">n</span> <span class="o">&lt;</span> <span class="n">text</span><span class="o">.</span><span class="na">length</span><span class="o">())</span>
+      <span class="n">result</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">text</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">n</span><span class="o">));</span>
+  <span class="o">}</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
+<span class="o">}</span>
+</pre></div>
+<p>What does this code do? It seems to be stripping HTML-ish tags out of text, but the logic is ad-hoc and likely broken.</p>
+
+<p>Even though this is a tiny example, it shows just how hard it can be to read badly written code. Nearly everyone has spent minutes up to hours staring at pieces of convoluted logic, trying to understand enough about them to be able to change them. It’s one of the universal experiences of development.  The nice thing is that we can use testing to help us out. It’s testing with a different focus. Instead of trying to figure out what whether code is correct or not, we can try to characterize its behavior to understand what it actually does.</p>
+
+<p>Let’s start with a simple test.</p>
+<div class="highlight"><pre><span></span>    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">formatsPlainText</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">assertEquals</span><span class="o">(</span><span class="s">&quot;plain text&quot;</span><span class="o">,</span> <span class="n">Pattern</span><span class="o">.</span><span class="na">formatText</span><span class="o">(</span><span class="s">&quot;plain text&quot;</span><span class="o">));</span>
+    <span class="o">}</span>
+</pre></div>
+<p>This test is based on a hypothesis. We’re guessing that if we format text that doesn’t have any tags, we end up with the same text. Sure enough, when we run the test it passes. We made a good guess, but why are we guessing at all?</p>
+
+<p>Let’s back up and do it over again.</p>
+
+<p>I’m going to write a test and give it the name ‘x.’ I’m calling it ‘x’ because I don’t know what the formatText function is going to do. I won’t even put in a real expected value either because, at this point, we don’t know what the behavior will be.</p>
+<div class="highlight"><pre><span></span>    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">x</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">assertEquals</span><span class="o">(</span><span class="kc">null</span><span class="o">,</span> <span class="n">Pattern</span><span class="o">.</span><span class="na">formatText</span><span class="o">(</span><span class="s">&quot;plain text&quot;</span><span class="o">));</span>
+    <span class="o">}</span>
+</pre></div>
+<p>When we run the test, we get a failure. But more importantly, we discover what the function actually produces. </p>
+<div class="highlight"><pre><span></span>    java.lang.AssertionError: expected:&lt;null&gt; but was:&lt;plain text&gt;
+            at org.junit.Assert.fail(Assert.java:88)
+            ...
+</pre></div>
+<p>Now we can take that text and paste it into the test to make it pass. And, we can give the test a better name - one that reflects our understanding of what the code does.</p>
+<div class="highlight"><pre><span></span>    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doesNotChangeUntaggedText</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">assertEquals</span><span class="o">(</span><span class="s">&quot;plain text&quot;</span><span class="o">,</span> <span class="n">Pattern</span><span class="o">.</span><span class="na">formatText</span><span class="o">(</span><span class="s">&quot;plain text&quot;</span><span class="o">));</span>
+    <span class="o">}</span>
+</pre></div>
+<p>It’s hard not to think that this is cheating in some way. It’s too easy. We’ve bypassed thinking about expectations entirely and we’re writing tests. What possible value can they have? </p>
+
+<p>It turns out that they have a lot of value. When we write characterization tests we build up our knowledge of what the code actually does. This is particularly useful when we want to refactor or rewrite. We can run our tests and find out immediately whether we’ve changed behavior. More subtly, we start to see our tests in a different way.</p>
+
+<p>Here’s a test for another aspect of that function’s behavior. It passes. Does it show a bug in the code?</p>
+<div class="highlight"><pre><span></span>    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">removesTextBetweenAngleBracketPairs</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">assertEquals</span><span class="o">(</span><span class="s">&quot;&quot;</span><span class="o">,</span> <span class="n">Pattern</span><span class="o">.</span><span class="na">formatText</span><span class="o">(</span><span class="s">&quot;&lt;&gt;&quot;</span><span class="o">));</span> 
+    <span class="o">}</span>
+</pre></div>
+<p>It’s a trick question. The context determines whether this is or isn’t correct behavior. When you write characterization tests, you often discover behavior you weren’t aware of. This leads to more questions. You can write more tests to answer these questions, or you can do more investigation, look at scenarios, or talk to users. However, if you haven’t determined that the behavior you&#39;ve uncovered is a bug, it’s often a good idea to leave the test in place. This highlights the key difference between characterization testing and other forms of testing. The purpose of characterization testing is to document your system’s actual behavior, not check for the behavior you wish your system had.</p>
+
+<p>Once, when I first started programming, I was asked to fix a bug. After I had, users complained. It turned out that that they depended upon the behavior I&#39;d removed. They didn’t think it was a bug, they thought it was a feature. Many people I talk to  have had that same experience. I don’t think it’s a fluke. It points to something rather sublime. </p>
+
+<p><em>When a system goes into production, in a way, it becomes its own specification. We need to know when we are changing existing behavior regardless of whether we think it’s right or not.</em></p>
+
+<p>Once we adopt this perspective, we have a different frame for understanding automated tests in general. We can see them as descriptions of what we have rather than statements of correctness. We can revisit our tests periodically to tighten up their conditions as we decide what the behavior should be at each level of our systems.</p>
+
+<p>Characterization testing is a simple process. The hardest part is breaking dependencies around a piece of code well enough to be able to exercise it in a test harness. Once you have, it&#39;s just a matter of being curious about what code will do under particular conditions, supplying a dummy expectation value, and then running the test to find the the actual value. I find that as I do this, I end up revisiting the names of my tests often as I build up understanding of the code I&#39;m exercising.</p>
+
+<p>Start with a test named &#39;x&#39;.</p>
+
+          </div>
+        <div style="clear:both"></div>
+
+        
+
+        
+
+        <div class="article_bio">
+    
+
+  
+  
+</div>
+
+
+        
+
+        <div class="share_this">
+
+          <div class="bottom-subscription bottom-subscription-wrapper">
+            <div style="text-align: center;">
+                <a class="open_ajax_popup sub-button" style="padding-top: 6px; padding-bottom: 4px;" href="/email_subscriptions/new">
+                  Subscribe to this blog
+                </a>
+
+              <div class="search-wrapper">
+  <form id="search-form" target="_blank" action="/search" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="i/Sp8fQdTCFOJk8YctNjzkfvikdCU5neUYNsjURVoKmnmQCXniTw3Y41Em3Bxf1CEBgwXYMTuExdUEB8FJtw6A==" />
+      <div class="search-form">
+        <input type="text" name="term" id="term" class="search-input" placeholder="Search" />
+        <input type="hidden" name="user_id" id="user_id" value="578" />
+        <span class="search-submit">
+         <i class="fa fa-search"></i>
+        </span>
+      </div>
+</form></div>
+<script type="text/javascript">
+    $(function () {
+        var searchInput = $('#search-form .search-input');
+        $('#search-form .search-submit').click(function (e) {
+            search(e, searchInput);
+        });
+
+        searchInput.keypress(function (e) {
+            if (e.keyCode == 13) {
+                search(e, $(this));
+            }
+        });
+
+        var search = function (event, input) {
+            event.preventDefault();
+            search_text = input.val();
+            if (search_text != '' && search_text.length >= 3) {
+                $('#search-form').submit();
+            }
+            else {
+                $('#search-form').find('.search-input').focus();
+            }
+        };
+
+        searchInput.focusin(function () {
+            $('.search-form').addClass('search-active');
+        }).focusout(function () {
+            $('.search-form').removeClass('search-active');
+        });
+    });
+</script>
+            </div>
+          </div>
+
+          <div class="article-bottom-classic-social-share">
+            <span class="social-share-text"> Share </span>
+
+            <a class="share-email-link" href="/articles/26509/shares/new">
+              <i class="fa fa-envelope"></i>
+</a>
+            <a href="http://www.twitter.com/share?url=https://michaelfeathers.silvrback.com/characterization-testing&text=Characterization Testing
+            by @mfeathers
+            " title="Share this post on Twitter" data-lang="en" onclick="return !window.open(this.href, 'Twitter', 'width=640,height=300')">
+              <svg xmlns="http://www.w3.org/2000/svg" height="13" width="16" viewBox="0 0 512 512" fill="currentColor"><path d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
+            </a>
+
+            <a target="_blank" onclick="return !window.open(this.href, 'Facebook', 'width=640,height=300')" href="http://www.facebook.com/sharer/sharer.php?u=https://michaelfeathers.silvrback.com/characterization-testing" title="Share this post on Facebook"><i class="fa fa-facebook-square"></i></a>
+
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://michaelfeathers.silvrback.com/characterization-testing" onclick="return !window.open(this.href, 'LinkedIn', 'width=640,height=300')" target="_blank" title="Share this post on LinkedIn">
+              <i class="last_link fa fa-linkedin"></i>
+            </a>
+          </div>
+
+          <script>!function (d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (!d.getElementById(id)) {
+                  js = d.createElement(s);
+                  js.id = id;
+                  js.src = "https://platform.twitter.com/widgets.js";
+                  fjs.parentNode.insertBefore(js, fjs);
+              }
+          }(document, "script", "twitter-wjs");</script>
+        </div>
+
+        <div class="home_article_divider">
+          <div class="more_article_btns align_center line_spacer">
+            <span class="read_next_btn"></span>
+          </div>
+        </div>
+      </div>
+
+      
+    </div>
+
+    <footer class="footer ui_elements">
+  &copy; 2026 Michael Feathers
+</footer>
+  </article>
+</div>
+<div id="email_share_popup" class="white-popup mfp-with-anim mfp-hide">
+  <div class="modal-header">
+    <h1 class="header-title"> Share this article with friends </h1>
+  </div>
+  <div class="modal-body">
+
+  </div>
+</div>
+<div class="social">
+  <ul>
+
+
+
+
+
+
+
+
+
+
+    <li>
+      <a href="javascript:void(0)" id="reader_to_user_email_link" class="reader_to_user_email_link" title="Get in Touch"><i class="fa fa-comments"></i></a>
+    </li>
+
+
+</ul>
+
+</div>
+
+<div id="reader_to_user_email" class="white-popup mfp-with-anim mfp-hide">
+  <div class="modal-body">
+    <form id="reader-to-user-mail-form" action="/reader_to_author_email" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="&#x2713;" />
+      <div class="share-form">
+        <div id="email_error"></div>
+        <div class="input-field">
+          <label> From </label>
+          <input type="email" name="from" id="from" placeholder="" />
+        </div>
+        <div class="input-field">
+          <label> Subject </label>
+          <input type="text" name="subject" id="subject" value="" class="text-like-input" />
+        </div>
+        <div class="input-field">
+          <textarea name="body" id="body" placeholder="Message..." class="input-full">
+</textarea>
+        </div>
+      </div>
+      <input type="hidden" name="author_mail" id="author_mail" value="michael.feathers@gmail.com" />
+      <div class="email-share-recaptcha">
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<div data-sitekey="6Ld_5TYUAAAAAP58EQXxxmKDRIWtZo5OZbZccyKM" class="g-recaptcha "></div>
+          <noscript>
+            <div>
+              <div style="width: 302px; height: 422px; position: relative;">
+                <div style="width: 302px; height: 422px; position: absolute;">
+                  <iframe
+                    src="https://www.google.com/recaptcha/api/fallback?k=6Ld_5TYUAAAAAP58EQXxxmKDRIWtZo5OZbZccyKM"
+                    scrolling="no" name="ReCAPTCHA"
+                    style="width: 302px; height: 422px; border-style: none; border: 0;">
+                  </iframe>
+                </div>
+              </div>
+              <div style="width: 300px; height: 60px; border-style: none;
+                bottom: 12px; left: 25px; margin: 0px; padding: 0px; right: 25px;
+                background: #f9f9f9; border: 1px solid #c1c1c1; border-radius: 3px;">
+                <textarea id="g-recaptcha-response" name="g-recaptcha-response"
+                  class="g-recaptcha-response"
+                  style="width: 250px; height: 40px; border: 1px solid #c1c1c1;
+                  margin: 10px 25px; padding: 0px; resize: none;">
+                </textarea>
+              </div>
+            </div>
+          </noscript>
+
+      </div>
+      <div class="share-action text-center">
+        <img class="loader" style="display: none;" src="/assets/ajax-loader-f6ecff617ec2ba7f559e6f535cad9b70a3f91120737535dab4d4548a6c83576c.gif" />
+        <input type="submit" name="commit" value="Send" class="publish_btn silvrback_btn email-share-submit" data-disable-with="Send" />
+      </div>
+</form>  </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+
+        $('#reader-to-user-mail-form').submit(function (e) {
+            e.preventDefault();
+            var form = $(this);
+            email = $('#from').val();
+            subject = $('#subject').val();
+            if (email == null || invalid_email(email)) {
+                var error_html = "<label style='width: 100% !important; color: red;'> Valid email address required.. </label>";
+                $('#email_error').addClass('input-field').html(error_html);
+                return false;
+            }
+
+            if (subject == null || subject.length < 1) {
+                var error_html = "<label style='width: 100% !important; color: red;'> Subject required.. </label>";
+                $('#email_error').addClass('input-field').html(error_html);
+                return false;
+            }
+
+            if (grecaptcha.getResponse() == "") {
+                var error_html = "<label style='width: 100% !important; color: red;'> Please check the recaptcha!!!.. </label>";
+                $('#email_error').addClass('input-field').html(error_html);
+                return false;
+            }
+
+            $.ajax({
+                url: form.attr('action'),
+                type: 'post',
+                data: form.serialize(),
+                beforeSend: function () {
+                    $('.loader').show();
+                },
+                success: function () {
+                    $('.loader').hide();
+                },
+                error: function () {
+                    var error_html = "<label style='width: 100% !important; color: red;'> There is an error. Try again... </label>";
+                    $('#email_error').addClass('input-field').html(error_html);
+                    $('.loader').hide();
+                }
+            })
+            return false;
+        });
+
+        $('#from').change(function () {
+            if (!invalid_email($(this).val())) {
+                $('#email_error').removeClass('input-field').html('')
+            }
+        });
+
+        function invalid_email(email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(email) ? false : true;
+        }
+    });
+</script>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('.reader_to_user_email_link').click(function () {
+            open_modal('#reader_to_user_email');
+        });
+    });
+</script>
+<script type="text/javascript">
+    $(function () {
+        if ($("a[data-widget-id]").length > 0) {
+            !function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                if (!d.getElementById(id)) {
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = p + "://platform.twitter.com/widgets.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }
+            }(document, "script", "twitter-wjs");
+        }
+    });
+</script>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script src="https://embed.bsky.app/static/embed.js" charset="utf-8"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+//        $('.email_popup').click(function() {
+//            alert( "Handler for .click() called." );
+//        });
+
+        //need to fetch the read next btn via js to avoid the cache
+        $.getScript("/home/read_next?date=2016-08-08 13:13:15 UTC&article_id=26509");
+        $('.all_external_links').find('a[href^="http://"], a[href^="https://"]').attr('target', '_blank');
+
+    });
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('.share-email-link').click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: $(this).attr('href'),
+                type: 'get',
+                dataType: 'script'
+            })
+        });
+    });
+</script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".tab_open a").attr("target", "_blank");
+    })
+</script>
+<div class="new-feature-popup-box">
+  <p>
+    This update link alerts you to new Silvrback admin blog posts. A green bubble beside the link indicates a new post.
+    Click the link to the admin blog and the bubble disappears.
+  </p>
+  <div style="text-align: center; text-decoration: underline;">
+    <a style="color: #0B84B0;" class="got-it-new-feature-link" data-remote="true" href="/close-notification?notification_type=new_feature">Got It!</a>
+  </div>
+</div>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX", "output/HTML-CSS"],
+    tex2jax: {
+      inlineMath: [["\\(","\\)"]],
+      displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+      processEscapes: true
+    },
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+</body>
+</html>

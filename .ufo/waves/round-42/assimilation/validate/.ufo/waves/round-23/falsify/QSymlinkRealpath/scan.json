@@ -1,0 +1,404 @@
+{
+  "case": {
+    "bytes": 8615,
+    "id": "CaseSymlinkRealpath",
+    "key_set": [
+      "expected",
+      "fixture",
+      "id",
+      "rationale",
+      "scenario",
+      "schema",
+      "sources"
+    ],
+    "key_set_gate": "exact CASE_KEYS|OPTIONAL_CASE_KEYS",
+    "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseSymlinkRealpath.json",
+    "sha256": "275c360585a93e2f1bc7e2ded0f4cd42b07d5b0eeb16b9790d1980f456b0d07e"
+  },
+  "claim": "C2",
+  "fixture": {
+    "bytes": 1355,
+    "path": "/fast/scratch/hyaku/mori-r23/QSymlinkRealpath/fixture.json",
+    "serialization": "json.dumps(fixture, indent=2, sort_keys=True) + \\n (oracle-compatible)",
+    "sha256": "ba1491651f1f3936df2143996344ab559a8a7f75daa31136e8153891d5ee0617",
+    "source": "case[\"fixture\"] copied verbatim from the sealed frozen case"
+  },
+  "generated_at": "2026-10-21T15:35:21-03:00",
+  "invocation": {
+    "address_space_bytes": 402653184,
+    "address_space_mib": 384,
+    "argv": [
+      "/usr/bin/python3",
+      "-I",
+      "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+      "--fixture",
+      "/fast/scratch/hyaku/mori-r23/QSymlinkRealpath/fixture.json"
+    ],
+    "cwd": "/fast/scratch/hyaku/mori-r23/QSymlinkRealpath",
+    "env": {
+      "TMPDIR": "/fast/scratch/hyaku/mori-r23/QSymlinkRealpath"
+    },
+    "exit": 0,
+    "kill_after_s": 2,
+    "mode": "fixture-only (no real mode, no host read)",
+    "signal": null,
+    "stderr": "",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout": "{\"df_covers_quota\":false,\"exit_code\":0,\"finding_id\":\"QUOTA_DISABLED\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[{\"basis\":\"xfs_noquota_option\",\"btrfs_qgroups_mode\":null,\"device_check\":\"match\",\"enforcement\":\"n/a\",\"fstype\":\"xfs\",\"mount_point\":\"/tmp\",\"path\":\"/home/vgpnk/Projects/shokunin/link-to-tmp\",\"quota_option_keys\":[\"noquota\"],\"quota_state\":\"disabled\"},{\"basis\":\"xfs_noquota_option\",\"btrfs_qgroups_mode\":null,\"device_check\":\"match\",\"enforcement\":\"n/a\",\"fstype\":\"xfs\",\"mount_point\":\"/tmp\",\"path\":\"/tmp/mori-quota-target\",\"quota_option_keys\":[\"noquota\"],\"quota_state\":\"disabled\"}],\"schema\":\"mori-quota-surface-v1\"}\n",
+    "stdout_bytes": 1205,
+    "stdout_ends_with_newline": true,
+    "stdout_raw_sha256": "55808286de04cf7e09b30b99fc7aa29010b00d4c610ca7bc2bbd686b9d636a0d",
+    "stdout_rstripped": "{\"df_covers_quota\":false,\"exit_code\":0,\"finding_id\":\"QUOTA_DISABLED\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[{\"basis\":\"xfs_noquota_option\",\"btrfs_qgroups_mode\":null,\"device_check\":\"match\",\"enforcement\":\"n/a\",\"fstype\":\"xfs\",\"mount_point\":\"/tmp\",\"path\":\"/home/vgpnk/Projects/shokunin/link-to-tmp\",\"quota_option_keys\":[\"noquota\"],\"quota_state\":\"disabled\"},{\"basis\":\"xfs_noquota_option\",\"btrfs_qgroups_mode\":null,\"device_check\":\"match\",\"enforcement\":\"n/a\",\"fstype\":\"xfs\",\"mount_point\":\"/tmp\",\"path\":\"/tmp/mori-quota-target\",\"quota_option_keys\":[\"noquota\"],\"quota_state\":\"disabled\"}],\"schema\":\"mori-quota-surface-v1\"}",
+    "stdout_sha256": "55808286de04cf7e09b30b99fc7aa29010b00d4c610ca7bc2bbd686b9d636a0d",
+    "timed_out": false,
+    "timeout_s": 15,
+    "wrapper": "prlimit --as=402653184 -- timeout -k 2 15 <argv>"
+  },
+  "leakage": {
+    "canaries": [
+      {
+        "kind": "uuid",
+        "present": false,
+        "value": "3f6a1c02-9b4d-4e57-8a31-0d5e7c9b2a48"
+      },
+      {
+        "kind": "option_token",
+        "present": false,
+        "value": "size=4023424k"
+      },
+      {
+        "kind": "option_token",
+        "present": false,
+        "value": "nr_inodes=1005856"
+      },
+      {
+        "kind": "option_token",
+        "present": false,
+        "value": "mode=755"
+      },
+      {
+        "kind": "mount_source",
+        "present": false,
+        "value": "/dev/mapper/root"
+      },
+      {
+        "kind": "option_token",
+        "present": false,
+        "value": "compress=zstd:3"
+      },
+      {
+        "kind": "option_value",
+        "present": false,
+        "value": "zstd:3"
+      },
+      {
+        "kind": "option_token",
+        "present": false,
+        "value": "discard=async"
+      },
+      {
+        "kind": "option_token",
+        "present": false,
+        "value": "space_cache=v2"
+      },
+      {
+        "kind": "option_token",
+        "present": false,
+        "value": "subvolid=5"
+      },
+      {
+        "kind": "option_token",
+        "present": false,
+        "value": "subvol=/"
+      },
+      {
+        "kind": "mount_source",
+        "present": false,
+        "value": "/dev/mapper/root"
+      },
+      {
+        "kind": "option_token",
+        "present": false,
+        "value": "compress=zstd:3"
+      },
+      {
+        "kind": "option_value",
+        "present": false,
+        "value": "zstd:3"
+      },
+      {
+        "kind": "option_token",
+        "present": false,
+        "value": "discard=async"
+      },
+      {
+        "kind": "option_token",
+        "present": false,
+        "value": "space_cache=v2"
+      },
+      {
+        "kind": "option_token",
+        "present": false,
+        "value": "subvolid=257"
+      },
+      {
+        "kind": "option_token",
+        "present": false,
+        "value": "subvol=/@home"
+      },
+      {
+        "kind": "option_value",
+        "present": false,
+        "value": "/@home"
+      },
+      {
+        "kind": "mount_source",
+        "present": false,
+        "value": "/dev/nvme0n1p1"
+      },
+      {
+        "kind": "option_token",
+        "present": false,
+        "value": "logbufs=8"
+      },
+      {
+        "kind": "option_token",
+        "present": false,
+        "value": "logbsize=256k"
+      },
+      {
+        "kind": "device_basename",
+        "present": false,
+        "value": "dm-0"
+      },
+      {
+        "kind": "device_basename",
+        "present": false,
+        "value": "dm-0"
+      }
+    ],
+    "canary_count": 24,
+    "hits": []
+  },
+  "output_shape": {
+    "df_covers_quota": false,
+    "error_token_present": false,
+    "exit_code_field": 0,
+    "exit_field_consistent": true,
+    "per_path_key_sets": [
+      [
+        "basis",
+        "btrfs_qgroups_mode",
+        "device_check",
+        "enforcement",
+        "fstype",
+        "mount_point",
+        "path",
+        "quota_option_keys",
+        "quota_state"
+      ],
+      [
+        "basis",
+        "btrfs_qgroups_mode",
+        "device_check",
+        "enforcement",
+        "fstype",
+        "mount_point",
+        "path",
+        "quota_option_keys",
+        "quota_state"
+      ]
+    ],
+    "per_path_keys_exact": true,
+    "schema": "mori-quota-surface-v1",
+    "schema_expected": "mori-quota-surface-v1",
+    "top_level_keys": [
+      "df_covers_quota",
+      "exit_code",
+      "finding_id",
+      "limits",
+      "paths",
+      "schema"
+    ],
+    "top_level_keys_allowed": [
+      "df_covers_quota",
+      "exit_code",
+      "finding_id",
+      "limits",
+      "paths",
+      "schema"
+    ],
+    "top_level_keys_exact": true
+  },
+  "primary_comparison": {
+    "all_primary_match": true,
+    "denominator": "exit code + finding_id + ordered six-field tuples (path, fstype, mount_point, quota_state, enforcement, basis)",
+    "exit": {
+      "actual": 0,
+      "given": 0,
+      "match": true
+    },
+    "finding_id": {
+      "actual": "QUOTA_DISABLED",
+      "given": "QUOTA_DISABLED",
+      "match": true
+    },
+    "paths": {
+      "actual": [
+        {
+          "basis": "xfs_noquota_option",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/home/vgpnk/Projects/shokunin/link-to-tmp",
+          "quota_state": "disabled"
+        },
+        {
+          "basis": "xfs_noquota_option",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp/mori-quota-target",
+          "quota_state": "disabled"
+        }
+      ],
+      "given": [
+        {
+          "basis": "xfs_noquota_option",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/home/vgpnk/Projects/shokunin/link-to-tmp",
+          "quota_state": "disabled"
+        },
+        {
+          "basis": "xfs_noquota_option",
+          "enforcement": "n/a",
+          "fstype": "xfs",
+          "mount_point": "/tmp",
+          "path": "/tmp/mori-quota-target",
+          "quota_state": "disabled"
+        }
+      ],
+      "ordered_match": true,
+      "row_count_actual": 2,
+      "row_count_given": 2,
+      "rows": [
+        {
+          "actual": {
+            "basis": "xfs_noquota_option",
+            "enforcement": "n/a",
+            "fstype": "xfs",
+            "mount_point": "/tmp",
+            "path": "/home/vgpnk/Projects/shokunin/link-to-tmp",
+            "quota_state": "disabled"
+          },
+          "field_match": {
+            "basis": true,
+            "enforcement": true,
+            "fstype": true,
+            "mount_point": true,
+            "path": true,
+            "quota_state": true
+          },
+          "given": {
+            "basis": "xfs_noquota_option",
+            "enforcement": "n/a",
+            "fstype": "xfs",
+            "mount_point": "/tmp",
+            "path": "/home/vgpnk/Projects/shokunin/link-to-tmp",
+            "quota_state": "disabled"
+          },
+          "index": 0,
+          "row_match": true
+        },
+        {
+          "actual": {
+            "basis": "xfs_noquota_option",
+            "enforcement": "n/a",
+            "fstype": "xfs",
+            "mount_point": "/tmp",
+            "path": "/tmp/mori-quota-target",
+            "quota_state": "disabled"
+          },
+          "field_match": {
+            "basis": true,
+            "enforcement": true,
+            "fstype": true,
+            "mount_point": true,
+            "path": true,
+            "quota_state": true
+          },
+          "given": {
+            "basis": "xfs_noquota_option",
+            "enforcement": "n/a",
+            "fstype": "xfs",
+            "mount_point": "/tmp",
+            "path": "/tmp/mori-quota-target",
+            "quota_state": "disabled"
+          },
+          "index": 1,
+          "row_match": true
+        }
+      ]
+    }
+  },
+  "production": {
+    "pin_ancestor_of_head": true,
+    "pinned_revision": "f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c",
+    "tool_bytes_identical_to_pin": true,
+    "tool_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+    "tool_sha256_at_pinned_revision": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+    "tool_sha256_working_tree": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92"
+  },
+  "schema": "mori-r23-falsify-seat-receipt-v1",
+  "scope_notes": [
+    "Fixture mode only. No real mode, no /proc/self/mountinfo read, no stat/realpath on the host, no quotactl/btrfs qgroup/xfs_quota/repquota/mount call.",
+    "No production, frozen, oracle or expected bytes were edited. Only the seat report and this receipt were written.",
+    "Scratch, fixture copy and captured output live under /fast/scratch/hyaku/mori-r23/QSymlinkRealpath/."
+  ],
+  "seat": "QSymlinkRealpath",
+  "supplementary_observed": {
+    "actual": [
+      {
+        "btrfs_qgroups_mode": null,
+        "device_check": "match",
+        "path": "/home/vgpnk/Projects/shokunin/link-to-tmp",
+        "quota_option_keys": [
+          "noquota"
+        ]
+      },
+      {
+        "btrfs_qgroups_mode": null,
+        "device_check": "match",
+        "path": "/tmp/mori-quota-target",
+        "quota_option_keys": [
+          "noquota"
+        ]
+      }
+    ],
+    "expected_per_case_rationale": {
+      "btrfs_qgroups_mode": [
+        null,
+        null
+      ],
+      "device_check": [
+        "match",
+        "match"
+      ],
+      "quota_option_keys": [
+        [
+          "noquota"
+        ],
+        [
+          "noquota"
+        ]
+      ]
+    },
+    "match": true,
+    "note": "NOT asserted in the case file; the case rationale records them in the case report only. Separate denominator from the primary six-field comparison."
+  },
+  "verdict": "MATCH \u2014 exit, finding_id and both ordered six-field tuples equal the sealed expectation; supplementary observations equal the rationale-stated values; zero leakage hits.",
+  "wave": "round-23"
+}

@@ -1,0 +1,73 @@
+[
+  {
+    "id": "kernuser_wrong_oomd_id_retains_valid_oom",
+    "user": [
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "fe6faa94e7774663a0da52717891d8ef"
+      },
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "d989611b15e44c9dbf31e3c81256e4ed"
+      }
+    ],
+    "system": [],
+    "want_oom": true,
+    "want_signal": false,
+    "invalid_class": "kernel_oom_notice"
+  },
+  {
+    "id": "kernuser_two_valid_coredump_id_single_oom",
+    "user": [
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "fe6faa94e7774663a0da52717891d8ef"
+      },
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "fc2e22bc6ee647b6b90729ab34a250b1"
+      },
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "fe6faa94e7774663a0da52717891d8ef"
+      }
+    ],
+    "system": [],
+    "want_oom": true,
+    "want_signal": false,
+    "invalid_class": "kernel_oom_notice"
+  },
+  {
+    "id": "kernuser_sigkill_id_without_status_retains_valid_oom",
+    "user": [
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "98e322203f7a4ed290d09fe03c09fe15"
+      },
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "fe6faa94e7774663a0da52717891d8ef"
+      }
+    ],
+    "system": [],
+    "want_oom": true,
+    "want_signal": false,
+    "invalid_class": "kernel_oom_notice"
+  },
+  {
+    "id": "kernuser_missing_message_id_retains_valid_oom",
+    "user": [
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "fe6faa94e7774663a0da52717891d8ef"
+      },
+      {
+        "_BOOT_ID": "11111111111111111111111111111111"
+      }
+    ],
+    "system": [],
+    "want_oom": true,
+    "want_signal": false,
+    "invalid_class": "kernel_oom_notice"
+  }
+]

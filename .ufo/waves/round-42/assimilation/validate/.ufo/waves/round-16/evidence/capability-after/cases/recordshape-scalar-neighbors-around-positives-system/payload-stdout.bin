@@ -1,0 +1,5 @@
+{"__CURSOR":"s=r16rs-d;c=1","_BOOT_ID":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+9
+{"__CURSOR":"s=r16rs-d;c=2","_BOOT_ID":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","MESSAGE_ID":"d9b373ed55a64feb8242e02dbe79a49c","UNIT_RESULT":"oom-kill"}
+true
+{"__CURSOR":"s=r16rs-d;c=3","_BOOT_ID":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","MESSAGE_ID":"98e322203f7a4ed290d09fe03c09fe15","EXIT_CODE":"killed","EXIT_STATUS":"9"}

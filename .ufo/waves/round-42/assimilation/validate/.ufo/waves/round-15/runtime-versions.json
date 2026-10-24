@@ -1,0 +1,9 @@
+{
+  "bash": "5.3.15(1)-release",
+  "python": "3.14.7",
+  "node": "24.21.0",
+  "git": "2.55.0",
+  "default_jq": "jaq 3.1.1",
+  "system_jq": "jq-1.8.2",
+  "installed_by_L1": []
+}

@@ -1,0 +1,10 @@
+# count-c1.sh at lane 420d05ad7945e865ac6560289e5470f09409a9a1, fleet 63729047644f839fe4c8cc97abd0d8bf741a5787
+axis=coverage score=6 basis=held R=26 kinds=none
+axis=operability score=7 basis=held R=28 kinds=none
+axis=depth score=5 basis=held R=12 kinds=none
+axis=freshness score=5 basis=held R=28 kinds=none
+axis=calibration score=5 basis=held R=25 kinds=none
+axis=adjacency score=6 basis=held R=19 kinds=none
+mismatches=0
+C1=met
+exit: 0

@@ -1,0 +1,147 @@
+grade_lane() {
+  local lane=$1 repo
+  repo=$(lane_repo "$lane")
+  GL_STATE=''; GL_ROUND='-'; GL_LAUNCH='-'; GL_AGE='-'; GL_BASIS=''; GL_EXTRA=''
+
+  # -- row 1: unreadable inputs ------------------------------------------------
+  if [ ! -r "$TIMELINE_FILE" ]; then
+    GL_STATE=unavailable; GL_BASIS='row-1'
+    GL_EXTRA="reason=ledger-unreadable path=$TIMELINE_FILE"
+    return 0
+  fi
+  if [ ! -d "$repo" ]; then
+    GL_STATE=unavailable; GL_BASIS='row-1'
+    GL_EXTRA="reason=repo-absent repo=$repo"
+    return 0
+  fi
+  cap env GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" rev-parse --git-dir
+  if [ "$CAP_RC" -ne 0 ]; then
+    GL_STATE=unavailable; GL_BASIS='row-1'
+    GL_EXTRA="reason=git-unreadable rc=$CAP_RC repo=$repo"
+    return 0
+  fi
+  ps_walk "$lane" "$repo"
+  if [ "$PS_WALK_RC" -ne 0 ]; then
+    GL_STATE=unavailable; GL_BASIS='row-1'
+    GL_EXTRA="reason=tree-unreadable rc=$PS_WALK_RC repo=$repo"
+    return 0
+  fi
+
+  # -- rows 2-8: launch anchor, closure, age ----------------------------------
+  ledger_anchor "$lane"
+  if [ "$LA_LINE" -eq 0 ]; then
+    GL_STATE=not-open; GL_BASIS='row-2'; GL_EXTRA='reason=no-launch-line'
+    return 0
+  fi
+  if ! is_int "$LA_EPOCH"; then
+    GL_STATE=unavailable; GL_BASIS='row-1'; GL_EXTRA='reason=launch-ts-unparseable'
+    return 0
+  fi
+  GL_ROUND=$LA_ROUND; GL_LAUNCH=$LA_EPOCH
+  if [ "$LA_EPOCH" -gt "$NOW_EPOCH" ]; then
+    GL_STATE=young; GL_BASIS='row-3'; GL_EXTRA='reason=launch-in-future'
+    return 0
+  fi
+  if [ "$LA_CLOSED" -eq 1 ]; then
+    GL_STATE=not-open; GL_BASIS='row-4'
+    GL_EXTRA="reason=ledger-close round=$LA_ROUND"
+    return 0
+  fi
+  local round_state
+  round_state=$(read_file "$STATE_DIR/$lane.round")
+  if is_int "$round_state" && is_int "$LA_ROUND" && [ "$round_state" -gt "$LA_ROUND" ]; then
+    GL_STATE=not-open; GL_BASIS='row-7'
+    GL_EXTRA="reason=round-advanced state_round=$round_state anchor_round=$LA_ROUND"
+    return 0
+  fi
+  local age=$((NOW_EPOCH - LA_EPOCH))
+  GL_AGE=$age
+  if [ "$age" -le "$LANE_SILENCE_S" ]; then
+    GL_STATE=young; GL_BASIS='row-8'; GL_EXTRA="reason=age_le_gate gate_s=$LANE_SILENCE_S"
+    return 0
+  fi
+
+  # -- facts shared by rows 6 and 9 --------------------------------------------
+  cap env GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -c core.quotePath=false -C "$repo" ls-files -mo --exclude-standard
+  if [ "$CAP_RC" -ne 0 ]; then
+    GL_STATE=unavailable; GL_BASIS='row-1'
+    GL_EXTRA="reason=git-ls-files-error rc=$CAP_RC repo=$repo"
+    return 0
+  fi
+  local lsm=$CAP_OUT
+
+  if ps_report_closed "$lane" "$LA_ROUND" "$LA_EPOCH"; then
+    GL_STATE=not-open; GL_BASIS='row-6'
+    GL_EXTRA="reason=committed-report round=$LA_ROUND path=.ufo/reports/round-$LA_ROUND/$lane.md"
+    return 0
+  fi
+
+  # -- row 9: authorship -------------------------------------------------------
+  local has_head=0 subj=0 sib=0 sibn=0 n_rowb=0 example='' path mt inwin
+  cap env GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" rev-parse --verify -q HEAD
+  if [ "$CAP_RC" -eq 0 ]; then
+    has_head=1
+    local lg_args=(--since="@$LA_EPOCH" --format='%ct %an <%ae>')
+    # Rows A/C scan all post-launch commits (a subject commit hidden behind a
+    # later sibling HEAD still counts). The pathspecs bind the main-repo lanes to
+    # the root's own scope; a child lane's repo is the lane scope entire.
+    if is_root_lane "$lane"; then
+      lg_args+=(-- . ':(exclude).ufo' ':(exclude,glob)**/*-shokunin/**')
+    fi
+    cap env GIT_OPTIONAL_LOCKS=0 "$GIT_BIN" -C "$repo" log "${lg_args[@]}"
+    if [ "$CAP_RC" -ne 0 ]; then
+      GL_STATE=unavailable; GL_BASIS='row-1'
+      GL_EXTRA="reason=git-log-error rc=$CAP_RC repo=$repo"
+      return 0
+    fi
+    # --since is committer-date based and inclusive at equality (measured on git
+    # 2.55.0), so the strict window (launch, NOW] is applied by an explicit %ct
+    # comparison here — that is what keeps a commit at ct == launch out of both
+    # attribution and closure.
+    inwin=$(printf '%s\n' "$CAP_OUT" | awk -v lo="$LA_EPOCH" -v hi="$NOW_EPOCH" \
+      '$1 ~ /^[0-9]+$/ && $1+0 > lo+0 && $1+0 <= hi+0 { print }')
+    if [ -n "$inwin" ]; then
+      sibn=$(printf '%s\n' "$inwin" | awk 'END { print NR }')
+      if printf '%s\n' "$inwin" | sed -E 's/^[0-9]+ //' | grep -Fxq -- "$lane-shokunin <$lane@shokunin.local>"; then
+        subj=1
+      else
+        sib=1
+      fi
+    fi
+  fi
+
+  if [ "$subj" -eq 1 ]; then
+    GL_STATE=progressing; GL_BASIS='row-A'
+    GL_EXTRA='subject_commits=yes window=launch..NOW'
+    return 0
+  fi
+
+  # Row B: untracked or dirty files newer than the anchor. Only paths git already
+  # flags are examined, so a clean tracked file can never be promoted (the
+  # spec's named falsifier); ignored trees never enter (`--exclude-standard`).
+  if [ -n "$lsm" ]; then
+    while IFS= read -r path; do
+      [ -n "$path" ] || continue
+      in_lane_scope "$lane" "$path" || continue
+      mt=$(epoch_mtime "$repo/$path")
+      is_int "$mt" || continue
+      if [ "$mt" -gt "$LA_EPOCH" ]; then
+        n_rowb=$((n_rowb + 1))
+        [ -n "$example" ] || example=$path
+      fi
+    done <<< "$lsm"
+  fi
+  if [ "$n_rowb" -gt 0 ]; then
+    GL_STATE=progressing; GL_BASIS='row-B'
+    GL_EXTRA="rowb_files=$n_rowb attribution=inference example=$example"
+    return 0
+  fi
+
+  if [ "$sib" -eq 1 ]; then
+    GL_STATE=progressing-weak; GL_BASIS='row-C'
+    GL_EXTRA="other_authored_commits=$sibn"
+    return 0
+  fi
+  GL_STATE=silent; GL_BASIS='row-D'
+  GL_EXTRA="no_subject_commits=yes no_other_commits=yes no_fresh_files=yes has_head=$has_head"
+}

@@ -1,0 +1,64 @@
+RECEIPT   mori-shokunin round-3 cutover — frozen-oracle counterfactual
+SEAT      receipts-writer (round-3 flash wave)
+CAPTURED_UTC  2026-10-15T16:58:24Z
+CENSUS_SHA256 fe22a14f0bb6d90ffed14506abfcd76153ebf31cf3cb769b97e7eec61cc2f3c9
+FROZEN_ORACLE_SHA256_BEFORE 505a7504811401b13fd96f8925605e744fbb54970c8ac65ac331b053d647e580
+FROZEN_ORACLE_SHA256_AFTER  505a7504811401b13fd96f8925605e744fbb54970c8ac65ac331b053d647e580   # unchanged: the frozen file was NOT edited
+COUNTERFACTUAL_SHA256 ae95b601b8c49cfeff275d223e37e68cf0a3602280bad70efeb9911fc07182fe   # scratch copy /tmp/mori-receipts-r3/oracle-cf.sh (not in the lane tree)
+
+PURPOSE   Two frozen-oracle cases can never pass and the registered end-goal
+          N=M is unattainable with this oracle. Cause: assert_case matches with
+          'case "$obs" in $want)' and bash treats a '|' introduced by parameter
+          expansion as a LITERAL character, not alternation. The affected calls:
+          tools/mori-silence-cases.sh:455  assert_case ledger-missing-not-silent 'not-open|unavailable' 0 0
+          tools/mori-silence-cases.sh:613  assert_case report-future-no-close 'progressing-weak|silent' auto auto
+          Counterfactual: byte-identical copy with ONLY the matcher block replaced
+          by '[[ "$obs" =~ ^($want)$ ]]' — the intended alternation semantics.
+
+---- bash semantics probe (this host) ----
+GNU bash, version 5.3.15(1)-release (x86_64-pc-linux-gnu)
+  expansion probe: LITERAL-no-match
+  literal probe:    MATCH-literal-string
+  => alternation must be SYNTACTIC in the case pattern or a regex test; an
+     expanded '|' matches nothing but a literal '|'.
+
+---- patch (unified diff: frozen -> counterfactual) ----
+--- tools/mori-silence-cases.sh	2026-10-15 12:40:11.230655493 -0300
++++ /tmp/mori-receipts-r3/oracle-cf.sh	2026-10-15 13:55:28.053952169 -0300
+@@ -359,10 +359,8 @@
+   fi
+ 
+   local ok=1 why=''
+-  case "$obs" in
+-    $want) : ;;
+-    *) ok=0; why="state want [$want] got [$obs] via $api";;
+-  esac
++  if [[ "$obs" =~ ^($want)$ ]]; then :;
++  else ok=0; why="state want [$want] got [$obs] via $api"; fi
+   local wff=$wf
+   [ "$wf" = auto ] && { [ "$obs" = silent ] && wff=1 || wff=0; }
+   if [ "$fobs" -ne "$wff" ]; then
+---- end patch ----
+
+---- FROZEN RUN: bash tools/mori-silence-cases.sh ----
+EXIT_CODE 1
+FAIL lines:
+FAIL ledger-missing-not-silent: state want [not-open|unavailable] got [unavailable] via lane
+FAIL report-future-no-close: state want [progressing-weak|silent] got [silent] via lane
+MORI_SILENCE_CASES: matched=25 total=27
+
+---- COUNTERFACTUAL RUN: bash /tmp/mori-receipts-r3/oracle-cf.sh /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh ----
+EXIT_CODE 0
+MORI_SILENCE_CASES: matched=27 total=27
+
+CONCLUSION  At census sha fe22a14f0bb6d90ffed14506abfcd76153ebf31cf3cb769b97e7eec61cc2f3c9 all 27 cases satisfy their intended want-sets
+            (state, LANE_SILENT presence/absence and rc consistency); the 2
+            frozen-oracle FAILs are the matcher defect above, not census behavior.
+            Witness: identical census bytes, one-block scratch matcher fix,
+            27/27 exit 0. Mid-run census sha check: fe22a14f0bb6d90ffed14506abfcd76153ebf31cf3cb769b97e7eec61cc2f3c9.
+
+RE-RUN RECIPE (/tmp only; frozen file untouched)
+  cd /home/vgpnk/Projects/shokunin/mori-shokunin
+  cp tools/mori-silence-cases.sh /tmp/mori-receipts-r3/oracle-cf.sh   # then apply the matcher block per the patch above
+  bash tools/mori-silence-cases.sh                 # expect matched=25 total=27, exit 1
+  bash /tmp/mori-receipts-r3/oracle-cf.sh /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-census.sh               # expect matched=27 total=27, exit 0

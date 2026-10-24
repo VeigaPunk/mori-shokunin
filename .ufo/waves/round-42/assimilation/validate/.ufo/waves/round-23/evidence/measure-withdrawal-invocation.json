@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/usr/bin/python",
+    "-I",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/build/MeasureDriver/measure-round23-v2.py",
+    "--revision",
+    "0d8f2d50eb85e0d4349b1045f01c04e57318cc1b",
+    "--seal",
+    "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+    "--output",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/evidence/measure-withdrawal"
+  ],
+  "measured_revision": "0d8f2d50eb85e0d4349b1045f01c04e57318cc1b",
+  "seal": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+  "returncode": 1,
+  "stdout": "{\"after\": {\"c1_original_26\": {\"capability_absent\": 0, \"misleading_alias_runs\": 0, \"pass\": 26, \"total\": 26, \"unmet\": 0}, \"c2\": {\"capability_absent\": 30, \"pass\": 0, \"total\": 30, \"unmet\": 0}}, \"all_claim_checks_pass\": false, \"before\": {\"c1_original_26\": {\"capability_absent\": 0, \"misleading_alias_runs\": 8, \"pass\": 25, \"total\": 26, \"unmet\": 1}, \"c2\": {\"capability_absent\": 30, \"pass\": 0, \"total\": 30, \"unmet\": 0}}, \"measured_revision\": \"0d8f2d50eb85e0d4349b1045f01c04e57318cc1b\", \"seal_revision\": \"22772c10f6e3c1d8d3fe1b72083a6194e9f4e687\"}\n",
+  "stderr": "",
+  "TMPDIR": "/fast/scratch/hyaku/mori-r23",
+  "interpretation": "A nonzero aggregate is expected: original C2 target failed and supported capability is now absent. C1 is assessed independently, not via aggregate driver exit."
+}

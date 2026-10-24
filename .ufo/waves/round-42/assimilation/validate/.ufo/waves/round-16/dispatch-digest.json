@@ -1,0 +1,7 @@
+{
+  "source": "fleet .ufo/watchdog.log (mutable source; copied exact line)",
+  "observed_at": "2026-10-20T08:55:39.169432+00:00",
+  "launch": "2026-10-20T05:44:37-03:00 launch mori round=16 pgid=3034733 driver=hyaku-inline attempt=1",
+  "inherited_lane_state": "clean before wave artifacts were created",
+  "context_erratum": "wave1-context-corrected-not-dispatched.json is a STATIC comparison fixture, never a dispatched wave; original payload preserved"
+}

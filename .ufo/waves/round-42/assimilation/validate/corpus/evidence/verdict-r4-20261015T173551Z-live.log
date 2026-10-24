@@ -1,0 +1,97 @@
+RECEIPT   mori-shokunin round-4 verdict machine — live census verdict (+ reverify spot)
+SEAT      receipts-writer (round-4 flash wave)
+CAPTURED_UTC  2026-10-15T17:36:07Z (start; end 2026-10-15T17:36:08Z)
+COMMAND   bash tools/mori-census.sh   # live, default env; cwd=mori-shokunin lane root
+CENSUS_SHA256_BEFORE af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+CENSUS_SHA256_AFTER  af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+ORACLE_SHA256_BEFORE be0e28b8bf3cc34e2a35e6cea7c05bffff376111b42d985b6bec7f0e21f59456
+ORACLE_SHA256_AFTER  be0e28b8bf3cc34e2a35e6cea7c05bffff376111b42d985b6bec7f0e21f59456
+EXIT_CODE 1
+DURATION_S 1
+LANE_HEAD bbcc1adcefd95f212dcab5dc8b2c39e41b111e63   FLEET_HEAD 90ce10bf2098b082755c484b63c05ac299857d22
+METHOD    mori-census has no watch mode; this receipt is one live spot plus a
+          second reverify spot ~25 s later (finding-id set and exit compared).
+NOTE      Census-r3 live verdict is honest: 9/9 roster lanes `progressing`
+          (8 x basis=row-A; aggregator basis=row-B attribution=inference),
+          `SURFACE silence: ok` with zero LANE_SILENT findings, DRIFT driven by
+          watchdog/waves/journal, and the single `unavailable` surface is tmux
+          (rc=1) — counted, never DRIFT. findings=15 = 11x WAVE_UNSETTLED_AGE
+          + WATCHDOG_STALE + WATCHDOG_ABSENT + KILL_SIGNAL_JOURNAL (warn)
+          + SEGFAULT_JOURNAL (info); drift=14 excludes the info finding.
+---- live census output (verbatim) ----
+mori-census census-r3 — ts=2026-10-15T17:36:07Z — mode=live — read-only
+SURFACE watchdog: drift (cmd=pgrep -af shokunin-watchdog; stat /home/vgpnk/Projects/shokunin/.ufo/watchdog.log; ls /home/vgpnk/Projects/shokunin/.ufo/state; pids=0; log=ok; age_s=45460; stale_threshold_s=900; state_rounds=21; ts=2026-10-15T17:36:07Z)
+SURFACE waves: drift (cmd=find /home/vgpnk/Projects/shokunin/.ufo/waves -maxdepth 1 -mindepth 1 -type d; total=38 settled=13 unsettled=11 aged_unsettled=11 empty=14 age_unreadable=0 threshold_s=7200; ts=2026-10-15T17:36:07Z)
+SURFACE journal: drift (cmd=journalctl --user -b --no-pager; oom_kill=0 kill_signal=1 segfault=14 unit_failure=0 rc=0; ts=2026-10-15T17:36:07Z)
+SURFACE cgroup: ok (cmd=cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.events; cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.current; oom_kill=0 oom=0 high=0 max=0 current=25815719936; ts=2026-10-15T17:36:07Z)
+SURFACE disk: ok (cmd=df -P; targets=/home/vgpnk/Projects/shokunin /tmp; warn_pct=85 crit_pct=95; ts=2026-10-15T17:36:07Z)
+SURFACE lane.protocol: progressing (lane=protocol round=14 launch_epoch=1792039857 age_s=45910 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T17:36:07Z)
+SURFACE lane.aggregator: progressing (lane=aggregator round=10 launch_epoch=1792039857 age_s=45910 basis=row-B rowb_files=2 attribution=inference example=research/round-18-kimi-model-routing/battery/scripts/__pycache__/probes.cpython-314.pyc; ts=2026-10-15T17:36:07Z)
+SURFACE lane.kasegi: progressing (lane=kasegi round=17 launch_epoch=1792039857 age_s=45910 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T17:36:07Z)
+SURFACE lane.kengaku: progressing (lane=kengaku round=13 launch_epoch=1792039857 age_s=45910 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T17:36:07Z)
+SURFACE lane.kake: progressing (lane=kake round=16 launch_epoch=1792039857 age_s=45910 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T17:36:07Z)
+SURFACE lane.kumitate: progressing (lane=kumitate round=18 launch_epoch=1792039857 age_s=45910 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T17:36:07Z)
+SURFACE lane.kotoba: progressing (lane=kotoba round=16 launch_epoch=1792039857 age_s=45910 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T17:36:07Z)
+SURFACE lane.kagi: progressing (lane=kagi round=16 launch_epoch=1792039857 age_s=45910 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T17:36:07Z)
+SURFACE lane.kama: progressing (lane=kama round=1 launch_epoch=1792039857 age_s=45910 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T17:36:07Z)
+SURFACE silence: ok (cmd=git -C <repo> log --since=@<launch> --format='%ct %an <%ae>'; git -C <repo> ls-files -mo; git -C <root> cat-file -e HEAD:.ufo/reports/round-<N>/<lane>.md; silent=0 progressing=9 progressing_weak=0 young=0 not_open=0 unavailable=0 skipped=0 window_s=7200; ts=2026-10-15T17:36:07Z)
+SURFACE tmux: unavailable (cmd=tmux ls; rc=1; ts=2026-10-15T17:36:07Z)
+FINDING WATCHDOG_STALE severity=warn obs=watchdog.log mtime_age_s=45460 threshold_s=900 path=/home/vgpnk/Projects/shokunin/.ufo/watchdog.log ts=2026-10-15T17:36:07Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WATCHDOG_ABSENT severity=warn obs=no shokunin-watchdog process matched by pgrep -af ts=2026-10-15T17:36:07Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=aggregator-r10 age_s=45933 threshold_s=7200 reg=0 disp=1 run=0 settle=0 ts=2026-10-15T17:36:07Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=aggregator-r10-resume age_s=45204 threshold_s=7200 reg=0 disp=1 run=0 settle=0 ts=2026-10-15T17:36:07Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p1-audit age_s=61110 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-15T17:36:07Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p2-kumitate age_s=60790 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-15T17:36:07Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p3-kengaku age_s=62371 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-15T17:36:07Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p4-mori-r1 age_s=60005 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-15T17:36:07Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p5-chousa-r1 age_s=59092 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-15T17:36:07Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013 age_s=156694 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-15T17:36:07Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013-w2 age_s=150915 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-15T17:36:07Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013-w3 age_s=145745 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-15T17:36:07Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013-w4 age_s=142883 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-15T17:36:07Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING KILL_SIGNAL_JOURNAL severity=warn obs=class=kill_signal count=1 boot=current scope=user ts=2026-10-15T17:36:07Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING SEGFAULT_JOURNAL severity=info obs=class=segfault count=14 boot=current scope=user ts=2026-10-15T17:36:07Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+MORI_CENSUS: DRIFT (findings=15 drift=14 unavailable=1 surfaces=7)
+---- end output ----
+
+---- reverify (second spot; read-only) ----
+CAPTURED_UTC  2026-10-15T17:36:32Z (start; end 2026-10-15T17:36:33Z)
+EXIT_CODE 1   CENSUS_SHA256_BEFORE af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7   CENSUS_SHA256_AFTER af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING_ID_SET_1 FINDING KILL_SIGNAL_JOURNAL FINDING SEGFAULT_JOURNAL FINDING WATCHDOG_ABSENT FINDING WATCHDOG_STALE FINDING WAVE_UNSETTLED_AGE
+FINDING_ID_SET_2 FINDING KILL_SIGNAL_JOURNAL FINDING SEGFAULT_JOURNAL FINDING WATCHDOG_ABSENT FINDING WATCHDOG_STALE FINDING WAVE_UNSETTLED_AGE
+REVERIFY exit_match=yes (rc1=1 rc2=1); finding-id set: identical
+---- reverify output (verbatim) ----
+mori-census census-r3 — ts=2026-10-15T17:36:33Z — mode=live — read-only
+SURFACE watchdog: drift (cmd=pgrep -af shokunin-watchdog; stat /home/vgpnk/Projects/shokunin/.ufo/watchdog.log; ls /home/vgpnk/Projects/shokunin/.ufo/state; pids=0; log=ok; age_s=45486; stale_threshold_s=900; state_rounds=21; ts=2026-10-15T17:36:33Z)
+SURFACE waves: drift (cmd=find /home/vgpnk/Projects/shokunin/.ufo/waves -maxdepth 1 -mindepth 1 -type d; total=38 settled=13 unsettled=11 aged_unsettled=11 empty=14 age_unreadable=0 threshold_s=7200; ts=2026-10-15T17:36:33Z)
+SURFACE journal: drift (cmd=journalctl --user -b --no-pager; oom_kill=0 kill_signal=1 segfault=14 unit_failure=0 rc=0; ts=2026-10-15T17:36:33Z)
+SURFACE cgroup: ok (cmd=cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.events; cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.current; oom_kill=0 oom=0 high=0 max=0 current=25835429888; ts=2026-10-15T17:36:33Z)
+SURFACE disk: ok (cmd=df -P; targets=/home/vgpnk/Projects/shokunin /tmp; warn_pct=85 crit_pct=95; ts=2026-10-15T17:36:33Z)
+SURFACE lane.protocol: progressing (lane=protocol round=14 launch_epoch=1792039857 age_s=45936 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T17:36:33Z)
+SURFACE lane.aggregator: progressing (lane=aggregator round=10 launch_epoch=1792039857 age_s=45936 basis=row-B rowb_files=2 attribution=inference example=research/round-18-kimi-model-routing/battery/scripts/__pycache__/probes.cpython-314.pyc; ts=2026-10-15T17:36:33Z)
+SURFACE lane.kasegi: progressing (lane=kasegi round=17 launch_epoch=1792039857 age_s=45936 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T17:36:33Z)
+SURFACE lane.kengaku: progressing (lane=kengaku round=13 launch_epoch=1792039857 age_s=45936 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T17:36:33Z)
+SURFACE lane.kake: progressing (lane=kake round=16 launch_epoch=1792039857 age_s=45936 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T17:36:33Z)
+SURFACE lane.kumitate: progressing (lane=kumitate round=18 launch_epoch=1792039857 age_s=45936 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T17:36:33Z)
+SURFACE lane.kotoba: progressing (lane=kotoba round=16 launch_epoch=1792039857 age_s=45936 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T17:36:33Z)
+SURFACE lane.kagi: progressing (lane=kagi round=16 launch_epoch=1792039857 age_s=45936 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T17:36:33Z)
+SURFACE lane.kama: progressing (lane=kama round=1 launch_epoch=1792039857 age_s=45936 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T17:36:33Z)
+SURFACE silence: ok (cmd=git -C <repo> log --since=@<launch> --format='%ct %an <%ae>'; git -C <repo> ls-files -mo; git -C <root> cat-file -e HEAD:.ufo/reports/round-<N>/<lane>.md; silent=0 progressing=9 progressing_weak=0 young=0 not_open=0 unavailable=0 skipped=0 window_s=7200; ts=2026-10-15T17:36:33Z)
+SURFACE tmux: unavailable (cmd=tmux ls; rc=1; ts=2026-10-15T17:36:33Z)
+FINDING WATCHDOG_STALE severity=warn obs=watchdog.log mtime_age_s=45486 threshold_s=900 path=/home/vgpnk/Projects/shokunin/.ufo/watchdog.log ts=2026-10-15T17:36:33Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WATCHDOG_ABSENT severity=warn obs=no shokunin-watchdog process matched by pgrep -af ts=2026-10-15T17:36:33Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=aggregator-r10 age_s=45959 threshold_s=7200 reg=0 disp=1 run=0 settle=0 ts=2026-10-15T17:36:33Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=aggregator-r10-resume age_s=45230 threshold_s=7200 reg=0 disp=1 run=0 settle=0 ts=2026-10-15T17:36:33Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p1-audit age_s=61136 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-15T17:36:33Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p2-kumitate age_s=60816 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-15T17:36:33Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p3-kengaku age_s=62397 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-15T17:36:33Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p4-mori-r1 age_s=60031 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-15T17:36:33Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin12h-20261014-p5-chousa-r1 age_s=59118 threshold_s=7200 reg=0 disp=0 run=1 settle=0 ts=2026-10-15T17:36:33Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013 age_s=156720 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-15T17:36:33Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013-w2 age_s=150941 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-15T17:36:33Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013-w3 age_s=145771 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-15T17:36:33Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING WAVE_UNSETTLED_AGE severity=warn obs=wave=shokunin-train-20261013-w4 age_s=142909 threshold_s=7200 reg=1 disp=1 run=0 settle=0 ts=2026-10-15T17:36:33Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING KILL_SIGNAL_JOURNAL severity=warn obs=class=kill_signal count=1 boot=current scope=user ts=2026-10-15T17:36:33Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+FINDING SEGFAULT_JOURNAL severity=info obs=class=segfault count=14 boot=current scope=user ts=2026-10-15T17:36:33Z script_sha256=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+MORI_CENSUS: DRIFT (findings=15 drift=14 unavailable=1 surfaces=7)
+---- end reverify output ----

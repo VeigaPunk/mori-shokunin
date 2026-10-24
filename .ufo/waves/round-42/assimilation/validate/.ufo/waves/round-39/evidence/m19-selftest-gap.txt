@@ -1,0 +1,10 @@
+command: r38 conform.py selftest bounded_reads mutation target
+the r38 selftest's bounded_reads mutation (conform.py):
+CHECK_NAMES = ("predicate", "head_pin", "tool_resolve", "bounded_reads",
+results["bounded_reads"] = (source_ok, "; ".join(detail))
+("bounded_reads", "proc = run([\"git\", \"-C\", repo] + list(args), timeout=timeout, env=clean_env())",
+"git helper run timeout removed"),
+no communicate(timeout=...) mutation exists in the r38 selftest;
+the communicate-timeout conjunct M13 hardened is never exercised.
+first communicate(timeout=...) call sites in the r38 checker body (for contrast):
+`Popen(` is followed by `communicate(timeout=`, and the first counter

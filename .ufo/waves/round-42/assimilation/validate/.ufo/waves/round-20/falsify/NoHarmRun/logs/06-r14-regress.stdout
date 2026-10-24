@@ -1,0 +1,133 @@
+FINDING R14_BASELINE_EMPTY status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_OOM_ALARM_USER status=pass axis=coverage observed="rc=1 verdict=DRIFT drift=1; all expectations matched"
+FINDING R14_OOM_ALARM_SYSTEM status=pass axis=coverage observed="rc=1 verdict=DRIFT drift=1; all expectations matched"
+FINDING R14_UNIT_OOM_KILL status=pass axis=coverage observed="rc=1 verdict=DRIFT drift=1; all expectations matched"
+FINDING R14_UNIT_OOM_NONFLEET status=pass axis=coverage observed="rc=1 verdict=DRIFT drift=1; all expectations matched"
+FINDING R14_UNIT_OOM_SYSTEM status=pass axis=coverage observed="rc=1 verdict=DRIFT drift=1; all expectations matched"
+FINDING R14_UNIT_OOM_BOTH_SCOPES status=pass axis=coverage observed="rc=1 verdict=DRIFT drift=1; all expectations matched"
+FINDING R14_UNIT_OOM_MISSING_SUBJECT status=pass axis=coverage observed="rc=1 verdict=DRIFT drift=1; all expectations matched"
+FINDING R14_UNIT_OOM_SUBJECT_ARRAY status=pass axis=coverage observed="rc=1 verdict=DRIFT drift=1; all expectations matched"
+FINDING R14_UNIT_FAILED_FLEET status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_UNIT_FAILED_NONFLEET status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_UNIT_FAILED_UNKNOWN status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_UNIT_VALID_ESCAPE_KNOWN status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_UNIT_INVALID_ESCAPE_UNKNOWN status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_UNIT_SUBJECT_NULL_UNKNOWN status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_USER_UNIT_IN_SYSTEM status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_SUBJECT_AMBIGUOUS status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_UNIT_RESULT_MISSING status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_UNIT_RESULT_ARRAY_UNKNOWN status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_UNIT_RESULT_NOT_OOM_STRINGS status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_UNIT_PARTITION status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_SIGKILL_WARN status=pass axis=coverage observed="rc=1 verdict=DRIFT drift=1; all expectations matched"
+FINDING R14_UNIT_SIGNAL_WARN status=pass axis=coverage observed="rc=1 verdict=DRIFT drift=1; all expectations matched"
+FINDING R14_UNIT_SIGNAL_SYSTEM_INFO status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_FANOUT_ONE_SIGNAL_PER_KIND status=pass axis=coverage observed="rc=1 verdict=DRIFT drift=2; all expectations matched"
+FINDING R14_SCOPED_PARITY status=pass axis=coverage observed="rc=1 verdict=DRIFT drift=2; all expectations matched"
+FINDING R14_SCOPE_NOT_SUMMED status=pass axis=coverage observed="rc=1 verdict=DRIFT drift=1; all expectations matched"
+FINDING R14_NOTICE_INFO_CLEAN status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_OOMD_ONLY_INFO status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_QUERY_ERROR_UNAVAILABLE status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_PARTIAL_ERROR_SYSTEM_ALARMS status=pass axis=coverage observed="rc=1 verdict=DRIFT drift=1; all expectations matched"
+FINDING R14_UNIT_QUERY_ERROR_KERNEL_ALARM status=pass axis=coverage observed="rc=1 verdict=DRIFT drift=1; all expectations matched"
+FINDING R14_STDERR_UNAVAILABLE status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_MALFORMED_UNAVAILABLE status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_WRONG_BOOT_UNAVAILABLE status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_MULTI_BOOT_UNAVAILABLE status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_IGNORE_FILTERS_INVALID status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_SEC_DUP_MSGID_MIXED status=pass axis=coverage observed="rc=1 verdict=DRIFT drift=1; all expectations matched"
+FINDING R14_SEC_UNIT_CANARY status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_SEC_VALID_UNIT_CANARY status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_MESSAGE_CANARY status=pass axis=coverage observed="rc=1 verdict=DRIFT drift=1; all expectations matched"
+FINDING R14_TEXT_ONLY_NOT_ADMITTED status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_TIMEOUT_UNAVAILABLE status=pass axis=coverage observed="rc=0 verdict=CLEAN drift=0; all expectations matched"
+FINDING R14_FROZEN_CONTROL status=pass axis=coverage observed="red_cases=43 required=29 missing=none"
+RUN frozen.R14_BASELINE_EMPTY rc=0 timeout=false duration_ms=226
+RUN frozen.R14_FANOUT_ONE_SIGNAL_PER_KIND rc=1 timeout=false duration_ms=221
+RUN frozen.R14_IGNORE_FILTERS_INVALID rc=0 timeout=false duration_ms=219
+RUN frozen.R14_MALFORMED_UNAVAILABLE rc=0 timeout=false duration_ms=215
+RUN frozen.R14_MESSAGE_CANARY rc=0 timeout=false duration_ms=217
+RUN frozen.R14_MULTI_BOOT_UNAVAILABLE rc=0 timeout=false duration_ms=220
+RUN frozen.R14_NOTICE_INFO_CLEAN rc=0 timeout=false duration_ms=223
+RUN frozen.R14_OOMD_ONLY_INFO rc=0 timeout=false duration_ms=221
+RUN frozen.R14_OOM_ALARM_SYSTEM rc=0 timeout=false duration_ms=226
+RUN frozen.R14_OOM_ALARM_USER rc=0 timeout=false duration_ms=227
+RUN frozen.R14_PARTIAL_ERROR_SYSTEM_ALARMS rc=0 timeout=false duration_ms=207
+RUN frozen.R14_QUERY_ERROR_UNAVAILABLE rc=0 timeout=false duration_ms=213
+RUN frozen.R14_SCOPED_PARITY rc=1 timeout=false duration_ms=229
+RUN frozen.R14_SCOPE_NOT_SUMMED rc=0 timeout=false duration_ms=222
+RUN frozen.R14_SEC_DUP_MSGID_MIXED rc=0 timeout=false duration_ms=219
+RUN frozen.R14_SEC_UNIT_CANARY rc=0 timeout=false duration_ms=219
+RUN frozen.R14_SEC_VALID_UNIT_CANARY rc=0 timeout=false duration_ms=223
+RUN frozen.R14_SIGKILL_WARN rc=1 timeout=false duration_ms=223
+RUN frozen.R14_STDERR_UNAVAILABLE rc=0 timeout=false duration_ms=209
+RUN frozen.R14_SUBJECT_AMBIGUOUS rc=0 timeout=false duration_ms=223
+RUN frozen.R14_TEXT_ONLY_NOT_ADMITTED rc=0 timeout=false duration_ms=221
+RUN frozen.R14_TIMEOUT_UNAVAILABLE rc=0 timeout=false duration_ms=12070
+RUN frozen.R14_UNIT_FAILED_FLEET rc=0 timeout=false duration_ms=225
+RUN frozen.R14_UNIT_FAILED_NONFLEET rc=0 timeout=false duration_ms=225
+RUN frozen.R14_UNIT_FAILED_UNKNOWN rc=0 timeout=false duration_ms=225
+RUN frozen.R14_UNIT_INVALID_ESCAPE_UNKNOWN rc=0 timeout=false duration_ms=229
+RUN frozen.R14_UNIT_OOM_BOTH_SCOPES rc=0 timeout=false duration_ms=224
+RUN frozen.R14_UNIT_OOM_KILL rc=0 timeout=false duration_ms=227
+RUN frozen.R14_UNIT_OOM_MISSING_SUBJECT rc=0 timeout=false duration_ms=225
+RUN frozen.R14_UNIT_OOM_NONFLEET rc=0 timeout=false duration_ms=223
+RUN frozen.R14_UNIT_OOM_SUBJECT_ARRAY rc=0 timeout=false duration_ms=228
+RUN frozen.R14_UNIT_OOM_SYSTEM rc=0 timeout=false duration_ms=224
+RUN frozen.R14_UNIT_PARTITION rc=0 timeout=false duration_ms=220
+RUN frozen.R14_UNIT_QUERY_ERROR_KERNEL_ALARM rc=0 timeout=false duration_ms=222
+RUN frozen.R14_UNIT_RESULT_ARRAY_UNKNOWN rc=0 timeout=false duration_ms=217
+RUN frozen.R14_UNIT_RESULT_MISSING rc=0 timeout=false duration_ms=219
+RUN frozen.R14_UNIT_RESULT_NOT_OOM_STRINGS rc=0 timeout=false duration_ms=219
+RUN frozen.R14_UNIT_SIGNAL_SYSTEM_INFO rc=0 timeout=false duration_ms=215
+RUN frozen.R14_UNIT_SIGNAL_WARN rc=0 timeout=false duration_ms=230
+RUN frozen.R14_UNIT_SUBJECT_NULL_UNKNOWN rc=0 timeout=false duration_ms=229
+RUN frozen.R14_UNIT_VALID_ESCAPE_KNOWN rc=0 timeout=false duration_ms=224
+RUN frozen.R14_USER_UNIT_IN_SYSTEM rc=0 timeout=false duration_ms=226
+RUN frozen.R14_WRONG_BOOT_UNAVAILABLE rc=0 timeout=false duration_ms=220
+RUN sut.R14_BASELINE_EMPTY rc=0 timeout=false duration_ms=247
+RUN sut.R14_FANOUT_ONE_SIGNAL_PER_KIND rc=1 timeout=false duration_ms=248
+RUN sut.R14_IGNORE_FILTERS_INVALID rc=0 timeout=false duration_ms=249
+RUN sut.R14_MALFORMED_UNAVAILABLE rc=0 timeout=false duration_ms=244
+RUN sut.R14_MESSAGE_CANARY rc=1 timeout=false duration_ms=245
+RUN sut.R14_MULTI_BOOT_UNAVAILABLE rc=0 timeout=false duration_ms=248
+RUN sut.R14_NOTICE_INFO_CLEAN rc=0 timeout=false duration_ms=249
+RUN sut.R14_OOMD_ONLY_INFO rc=0 timeout=false duration_ms=240
+RUN sut.R14_OOM_ALARM_SYSTEM rc=1 timeout=false duration_ms=244
+RUN sut.R14_OOM_ALARM_USER rc=1 timeout=false duration_ms=244
+RUN sut.R14_PARTIAL_ERROR_SYSTEM_ALARMS rc=1 timeout=false duration_ms=230
+RUN sut.R14_QUERY_ERROR_UNAVAILABLE rc=0 timeout=false duration_ms=235
+RUN sut.R14_SCOPED_PARITY rc=1 timeout=false duration_ms=247
+RUN sut.R14_SCOPE_NOT_SUMMED rc=1 timeout=false duration_ms=247
+RUN sut.R14_SEC_DUP_MSGID_MIXED rc=1 timeout=false duration_ms=249
+RUN sut.R14_SEC_UNIT_CANARY rc=0 timeout=false duration_ms=248
+RUN sut.R14_SEC_VALID_UNIT_CANARY rc=0 timeout=false duration_ms=247
+RUN sut.R14_SIGKILL_WARN rc=1 timeout=false duration_ms=247
+RUN sut.R14_STDERR_UNAVAILABLE rc=0 timeout=false duration_ms=237
+RUN sut.R14_SUBJECT_AMBIGUOUS rc=0 timeout=false duration_ms=248
+RUN sut.R14_TEXT_ONLY_NOT_ADMITTED rc=0 timeout=false duration_ms=246
+RUN sut.R14_TIMEOUT_UNAVAILABLE rc=0 timeout=false duration_ms=12092
+RUN sut.R14_UNIT_FAILED_FLEET rc=0 timeout=false duration_ms=251
+RUN sut.R14_UNIT_FAILED_NONFLEET rc=0 timeout=false duration_ms=252
+RUN sut.R14_UNIT_FAILED_UNKNOWN rc=0 timeout=false duration_ms=252
+RUN sut.R14_UNIT_INVALID_ESCAPE_UNKNOWN rc=0 timeout=false duration_ms=252
+RUN sut.R14_UNIT_OOM_BOTH_SCOPES rc=1 timeout=false duration_ms=247
+RUN sut.R14_UNIT_OOM_KILL rc=1 timeout=false duration_ms=245
+RUN sut.R14_UNIT_OOM_MISSING_SUBJECT rc=1 timeout=false duration_ms=243
+RUN sut.R14_UNIT_OOM_NONFLEET rc=1 timeout=false duration_ms=254
+RUN sut.R14_UNIT_OOM_SUBJECT_ARRAY rc=1 timeout=false duration_ms=245
+RUN sut.R14_UNIT_OOM_SYSTEM rc=1 timeout=false duration_ms=252
+RUN sut.R14_UNIT_PARTITION rc=0 timeout=false duration_ms=252
+RUN sut.R14_UNIT_QUERY_ERROR_KERNEL_ALARM rc=1 timeout=false duration_ms=243
+RUN sut.R14_UNIT_RESULT_ARRAY_UNKNOWN rc=0 timeout=false duration_ms=250
+RUN sut.R14_UNIT_RESULT_MISSING rc=0 timeout=false duration_ms=247
+RUN sut.R14_UNIT_RESULT_NOT_OOM_STRINGS rc=0 timeout=false duration_ms=256
+RUN sut.R14_UNIT_SIGNAL_SYSTEM_INFO rc=0 timeout=false duration_ms=248
+RUN sut.R14_UNIT_SIGNAL_WARN rc=1 timeout=false duration_ms=248
+RUN sut.R14_UNIT_SUBJECT_NULL_UNKNOWN rc=0 timeout=false duration_ms=253
+RUN sut.R14_UNIT_VALID_ESCAPE_KNOWN rc=0 timeout=false duration_ms=248
+RUN sut.R14_USER_UNIT_IN_SYSTEM rc=0 timeout=false duration_ms=252
+RUN sut.R14_WRONG_BOOT_UNAVAILABLE rc=0 timeout=false duration_ms=249
+MORI_R14_REGRESSIONS: claims=44 pass=44 exit=0
+EVIDENCE /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/NoHarmRun/r14/evidence.json
+GATE mori-round14-regressions (pinned frozen control)

@@ -1,0 +1,13 @@
+round-37 freeze pins v3 (A1 counter v2 drawn arm; A3 attribution check; supersedes v1/v2 counter pins)
+generated: 2026-10-23T20:26:02Z  measured tip: 4bfa0490264c342db8f5304bac059a32ac2cb20b
+b68737e030f8702145c0a57400e2a0fc7662c0cd  .ufo/waves/round-37/contract.md
+3e15f9fd35b6a926396732ddc970ff92ced8c113  .ufo/waves/round-37/count-c1.py
+0eb8ff47f9d00340d6fb6ab891d8d03e75dd36b6  .ufo/waves/round-37/count-c2.py
+19324701f23a225e5ded21c4785c491e7530ac7c  .ufo/waves/round-37/fixtures/memo-n1.py
+2f3993a04906ce33033ab207a284d9ca7d7ff57a  .ufo/waves/round-37/fixtures/const.py
+2d62f742fbef39634a5ff04e25b399b87ce4c941  .ufo/waves/round-37/fixtures/summary-only.py
+162ee87b5b0789c6815f967f3db93d277bab38d9  tools/mori-source-drift.py
+
+5279ed9df3b487a5d16896f5883be9bed5952da3709ffd53208c8a604f768804  .ufo/waves/round-37/count-c1.py
+f173a642ac671c2b47f6c11ec1b76a3874e7d12fd1810e25875f0ee3dd7f447e  .ufo/waves/round-37/count-c2.py
+453c5d8e260301df7a99daf62b4c16ea08e4a0b4f9e4f53821cdbce447011552  tools/mori-source-drift.py

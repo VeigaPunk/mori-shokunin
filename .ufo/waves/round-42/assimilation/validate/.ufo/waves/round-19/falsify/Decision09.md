@@ -1,0 +1,8 @@
+Decision: REJECT the delivered reason as written. Its “only” content description is false; this does not establish that a concrete private value remains.
+
+- `.ufo/waves/round-18/build/RedactSessionExitCorrelation.md:7,24,34-43,45-52` — `content-scope-overclaim`: the report also contains process/method narrative, qualitative summaries of observed source material, retained aggregate findings, residual-risk and ownership statements, and command evidence. These are not just class counts, digests, aggregate ratios, and commit identifiers. Full read found no concrete private source value; descriptive private-derived context remains.
+- `.ufo/waves/round-18/build/RedactSessionExitCorrelation.md:56-62` — `minimization-performed`: the embedded body is absent in current bytes and the report records its removal/integration. The integrated target at the reviewed revision has a different whole-blob digest from the scanned draft; whether the target is further minimized cannot be established from hashes alone.
+- `.ufo/waves/round-19/content-reviews-before.json:84-88` — `whole-blob-binding`: the claimed digest matches the current report bytes and the frozen-revision blob.
+- `.ufo/waves/round-18/build/RedactSessionExitCorrelation.md:7,29,34-36,41-43`; `corpus/lessons/round-17-verifier-spotcheck.md:339-350,390-397` — `ownership-distinction`: public policy/routing references are identified separately from private-source observations; already-pushed-history exposure is assigned to operator/Kagi.
+
+No checks run; only source reading and permitted whole-blob hashing.

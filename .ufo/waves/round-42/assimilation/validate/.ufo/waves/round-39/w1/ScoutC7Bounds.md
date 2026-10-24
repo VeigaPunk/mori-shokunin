@@ -1,0 +1,37 @@
+# ScoutC7Bounds — five-check source bounds
+
+**Contract/code alignment: FAIL. Confidence: high (source control flow).** In particular, the counter does not compare an honest row-state table with a mutated one, although the contract says it does.
+
+Axes: contract fidelity; precise evidence; read-only scope. This is a source audit, not a canonical round verdict or a counter rerun.
+
+Paths below are relative to the lane root. `C` = `.ufo/waves/round-39/count-c7.py`; `K` = `.ufo/waves/round-39/contract.md`; `T` = `tools/mori-source-drift.py`. Scope is the normal `<rev>` invocation: the separate `--arms selftest` mode can print `C7=met` after only an exit-zero/PASS check (`C:428-451`).
+
+## Bounds table
+
+| Check | What PASS proves | What it does not prove |
+|---|---|---|
+| `anchors_v2` | At least three distinct, stripped values from lines beginning `anchor:`; each is at least eight characters and has a matching occurrence in the loaded tool text. An occurrence counts only if its line does not strip to a leading `#` and its start precedes that line's first `#` (`C:66-67,236-267,291-298`; caller `471`). | No Python syntax or executable-code analysis: string literals/docstrings and dead code can qualify. The test checks the occurrence's **start**, not that the entire anchor precedes an inline comment. It does not establish that an anchor implements the claimed policy, executes, or binds substantive knowledge. The comment boundary is a lexical heuristic, not a parser (`C:245-267`). |
+| `capability_v2` | Exactly one pipe-prefixed line contains the capability key. At least one recognized path token exists, and every recognized token resolves at R to a Git `blob` (`C:63,93,209-213,270-284,301-310`; caller `472`). | Not every syntactically possible cited path is inspected: extraction covers only backtick tokens matching `PATH_RE`, skips tokens starting `http`, and requires a filename extension. Extensionless, space-containing, non-backticked or otherwise nonmatching paths are invisible. No file content, relevant implementation, receipt truth, executable behavior, or ordinary-file-versus-symlink check is performed (`C:93,276-284,307-310`). |
+| `live_rows_v2` | The **last** matching summary has drifted count at least one. There are exactly that many distinct exact `S### drifted` lines; each ID occurs in the regex-derived registry-ID set and has a matching committed evidence-tree path. Copy discovery retains the highest numeric `sources-r<N>` for each ID (`C:94-99,216-233,287-288,313-330`; caller/data flow `463-473`). | No fresh probe execution: it reads the committed round-37 receipt (`C:61,463`). No verification of other summary counts, their sum, total registry coverage, receipt provenance, or whether named rows actually drift. Copy lookup checks names/membership, not copy contents, integrity, correspondence to a URL, or even object type (`C:216-233,323-328`). |
+| `named_row_drift` | Running the extracted committed tool with `--selftest` returns zero and its last matching `row_states` arm says `PASS` (`C:372-383,479-485`). | No independent computation of row states, mandatory table, specified row IDs, or enforcement of other named arms beyond the process exit status. This is trust in the tool's self-report. The actual tool computes a ten-row expected list, but emits its got/want detail only on failure; PASS supplies no honest table to the counter (`T:368-391,439-447`). |
+| `drift_kill_v2` | A literal `return "drifted"` exists; all such substrings are replaced with a state selected from four options. The mutated process exits 1 and reports `row_states FAIL` with parseable got/want pairs. After conversion to dictionaries, their key sets match, want contains at least one drifted row, every such got state equals the draw, and all other states equal want (`C:64-65,343-369,486-513`). | **No honest table is parsed or compared.** Both got and want come from the mutant's own failure detail. Row IDs/state vocabularies are not validated; duplicate keys collapse and order is discarded. The mutation is global text substitution, not a verified classifier AST change, and only one drawn state is exercised per invocation (`C:359-365,483-506`). It proves the accepted output relationship, not that the intended real classifier or live fetch performed the work. |
+
+## Contract claims stronger than the implementation
+
+1. **Honest-versus-mutated structural comparison — FAIL.** `K:44,51-54` and `C:32-35` say the two runs' tables are parsed/compared and exactly the honest drifted rows flip. Observed implementation: honest data is used only for exit-zero/PASS (`C:483-485`); comparison uses only the mutant's got/want (`C:493-506`). **[INFERENCE]** An unrelated mutant-supplied table can satisfy this relationship; the checker has no independently captured honest-table baseline against which to reject it. This is a source-derived countermodel, not an executed forgery.
+
+2. **Cannot know the expected flip string in advance — unsupported guarantee.** `K:54-56` and `C:14-16` make this claim. `--seed` is caller-controlled (`C:390`), and `random.Random(args.seed).choice(...)` determines the state (`C:486-487`). **[INFERENCE]** A public fixed seed, including the assignment's `20261024`, makes that state reproducible before tool execution; even without a known seed there are only four outcomes (`C:65`). Drawing at run time does not prove advance unpredictability.
+
+3. **Every cited capability path — broader than extraction.** `K:44,48-49` says every cited path; `C:276-284` checks only its restricted token grammar. **[INFERENCE]** Adding an unrecognized path alongside one valid committed-blob token does not make that extra path fail the check. This is a coverage bound, not a finding that the current capability row contains such an invalid citation.
+
+## Disclosed verbatim-clone bound
+
+The contract explicitly discloses that copying the real knowledge entry, capability row and receipt verbatim is statically indistinguishable from real work (`K:61-65`). The static functions inspect only the listed text/tree properties, not provenance (`C:291-330`). Their PASS therefore cannot establish authorship, independent discovery, or genuine creation of the receipt. The runtime arm adds the observed mutation/output relationship above; it does not remove the missing honest-table binding.
+
+The four negatives are fixed projections through **only the three static checks** (`C:536-549`), not a general forgery or arbitrary-clone test. The comment witness is an entry naming strings already in tool comments (`.ufo/waves/round-39/fixtures/witness-comment-anchors.md:3-11`), substituted against the same tool text (`C:548-549`). Final success requires all five checks and all four rejections (`C:551-560`).
+
+## Evidence method and remaining unknowns
+
+- Searched symbols first, then manually traced helper definitions and their callers in the source sections cited above. LSP navigation was unavailable: reading `xd://lsp` returned `No such tool: xd://lsp. Mounted devices: ast_edit, debug.` This was device absence, not an empty cold/indexing result. Literal search was used for location, not presented as semantic-reference proof.
+- No counter, selftest, mutation fixture, build, or verification command was run. Whether the scored-tip invocation actually passes remains unverified by this seat; the report establishes source bounds, not a reproduced bypass or commit/worktree byte-equivalence claim.
+- No tools installed or updated. Only this report was written; no lane source was changed.

@@ -1,0 +1,33 @@
+==== mori-shokunin round-8 receipt — residuals-r8-20261015T2040Z-roundfiles (residual 3: *.round symlink/dir reasons) ====
+CAPTURED_UTC=2026-10-15T20:44:18Z
+COMMANDS: census against a mixed state dir (regular + locked + symlink + dangling + dir + fifo) and a regular-only control
+CENSUS_SHA256_BEFORE=390ab9cd2db17b9d71508639f4f61cc61646ae090b61bf48243cda3e7211cae1
+---- arm mixed: root=/tmp/mori-r8-receipts/fx/root-mixed ----
+d drwxr-xr-x .
+d drwxr-xr-x ./altdir.round
+f ---------- ./locked.round
+f -rw-r--r-- ./kagi.round
+l lrwxrwxrwx ./altsym.round
+l lrwxrwxrwx ./dangling.round
+p prw-r--r-- ./fifo.round
+(ledger: 2 lines; launch kagi round=7)
+rc=1 stderr_bytes=0
+SURFACE watchdog: drift (cmd=pgrep -af shokunin-watchdog; stat /tmp/mori-r8-receipts/fx/root-mixed/.ufo/watchdog.log; ls /tmp/mori-r8-receipts/fx/root-mixed/.ufo/state; pids=0; log=ok; age_s=-92097058; stale_threshold_s=900; state_rounds=2 state_rounds_max=3 state_lag=1 state_ahead=0 state_cmp=1 state_val_unreadable=5 state_val_unread_reasons=file:1 symlink:2 dir:1 other:1; ts=2023-11-14T22:13:20Z)
+FINDING WATCHDOG_STATE_ENTRY_UNREADABLE severity=info obs=reason=is-directory entry=altdir.round path=/tmp/mori-r8-receipts/fx/root-mixed/.ufo/state/altdir.round ts=2023-11-14T22:13:20Z script_sha256=390ab9cd2db17b9d71508639f4f61cc61646ae090b61bf48243cda3e7211cae1
+FINDING WATCHDOG_STATE_ENTRY_UNREADABLE severity=info obs=reason=symlink-not-followed entry=altsym.round path=/tmp/mori-r8-receipts/fx/root-mixed/.ufo/state/altsym.round ts=2023-11-14T22:13:20Z script_sha256=390ab9cd2db17b9d71508639f4f61cc61646ae090b61bf48243cda3e7211cae1
+FINDING WATCHDOG_STATE_ENTRY_UNREADABLE severity=info obs=reason=symlink-not-followed entry=dangling.round path=/tmp/mori-r8-receipts/fx/root-mixed/.ufo/state/dangling.round ts=2023-11-14T22:13:20Z script_sha256=390ab9cd2db17b9d71508639f4f61cc61646ae090b61bf48243cda3e7211cae1
+FINDING WATCHDOG_STATE_ENTRY_UNREADABLE severity=info obs=reason=non-regular entry=fifo.round path=/tmp/mori-r8-receipts/fx/root-mixed/.ufo/state/fifo.round ts=2023-11-14T22:13:20Z script_sha256=390ab9cd2db17b9d71508639f4f61cc61646ae090b61bf48243cda3e7211cae1
+FINDING WATCHDOG_STATE_LAG severity=info obs=lane=kagi state_round=3 ledger_round=7 path=/tmp/mori-r8-receipts/fx/root-mixed/.ufo/state/kagi.round ts=2023-11-14T22:13:20Z script_sha256=390ab9cd2db17b9d71508639f4f61cc61646ae090b61bf48243cda3e7211cae1
+symlink target bytes echoed? (must be only the path, never '3' as a value):
+0
+---- arm control: root=/tmp/mori-r8-receipts/fx/root-control ----
+d drwxr-xr-x .
+f -rw-r--r-- ./kagi.round
+(ledger: 2 lines; launch kagi round=7)
+rc=1 stderr_bytes=0
+SURFACE watchdog: drift (cmd=pgrep -af shokunin-watchdog; stat /tmp/mori-r8-receipts/fx/root-control/.ufo/watchdog.log; ls /tmp/mori-r8-receipts/fx/root-control/.ufo/state; pids=0; log=ok; age_s=-92097058; stale_threshold_s=900; state_rounds=1 state_rounds_max=3 state_lag=1 state_ahead=0 state_cmp=1 state_val_unreadable=0 state_val_unread_reasons=file:0 symlink:0 dir:0 other:0; ts=2023-11-14T22:13:20Z)
+FINDING WATCHDOG_STATE_LAG severity=info obs=lane=kagi state_round=3 ledger_round=7 path=/tmp/mori-r8-receipts/fx/root-control/.ufo/state/kagi.round ts=2023-11-14T22:13:20Z script_sha256=390ab9cd2db17b9d71508639f4f61cc61646ae090b61bf48243cda3e7211cae1
+symlink target bytes echoed? (must be only the path, never '3' as a value):
+0
+---- end ----
+SET_CLOSE_CHECK=2026-10-15T20:48:18Z census=390ab9cd2db17b9d71508639f4f61cc61646ae090b61bf48243cda3e7211cae1 oracle=448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5 (set opened 2026-10-15T20:39:32Z at census=390ab9cd2db17b9d71508639f4f61cc61646ae090b61bf48243cda3e7211cae1 oracle=448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5)

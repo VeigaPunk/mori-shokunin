@@ -1,0 +1,11 @@
+SURFACE lane.protocol: progressing (lane=protocol round=14 launch_epoch=1792039857 age_s=63332 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T22:26:29Z)
+SURFACE lane.aggregator: progressing-weak (lane=aggregator round=10 launch_epoch=1792039857 age_s=63332 basis=row-C other_authored_commits=28; ts=2026-10-15T22:26:29Z)
+SURFACE lane.kasegi: progressing (lane=kasegi round=17 launch_epoch=1792039857 age_s=63332 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T22:26:29Z)
+SURFACE lane.kengaku: progressing (lane=kengaku round=13 launch_epoch=1792039857 age_s=63332 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T22:26:29Z)
+SURFACE lane.kake: progressing (lane=kake round=16 launch_epoch=1792039857 age_s=63332 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T22:26:29Z)
+SURFACE lane.kumitate: progressing (lane=kumitate round=18 launch_epoch=1792039857 age_s=63332 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T22:26:29Z)
+SURFACE lane.kotoba: progressing (lane=kotoba round=16 launch_epoch=1792039857 age_s=63332 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T22:26:29Z)
+SURFACE lane.kagi: progressing (lane=kagi round=16 launch_epoch=1792039857 age_s=63332 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T22:26:29Z)
+SURFACE lane.kama: progressing (lane=kama round=1 launch_epoch=1792039857 age_s=63332 basis=row-A subject_commits=yes window=launch..NOW; ts=2026-10-15T22:26:29Z)
+SURFACE silence: ok (cmd=git -C <repo> log --since=@<launch> --format='%ct %an <%ae>'; git -C <repo> ls-files -mo; git -C <root> cat-file -e HEAD:.ufo/reports/round-<N>/<lane>.md; silent=0 progressing=8 progressing_weak=1 young=0 not_open=0 unavailable=0 skipped=0 window_s=7200; ts=2026-10-15T22:26:29Z)
+E2 rc=0

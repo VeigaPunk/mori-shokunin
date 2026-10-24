@@ -1,0 +1,13 @@
+{
+  "label": "inherited round-two scenario admission",
+  "argv": [
+    "bash",
+    "tools/mori-silence-cases.sh"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "startedAt": "2026-10-15T05:08:17.794Z",
+  "finishedAt": "2026-10-15T05:08:17.809Z",
+  "exitCode": 1,
+  "stdout": "On branch main\nUntracked files:\n  (use \"git add <file>...\" to include in what will be committed)\n\tLOG.md\n\nnothing added to commit but untracked files present (use \"git add\" to track)\n",
+  "stderr": ""
+}

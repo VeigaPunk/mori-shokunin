@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "/usr/bin/python",
+    "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-measure-withdrawal/staged/after/mori-retention-reconcile.py",
+    "check",
+    "--repo",
+    "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-measure-withdrawal/c1/after-fixtures/bool-metric",
+    "--rev",
+    "f13eab46a147d01b70ccb1d698f00b24e9ee3c59",
+    "--receipt",
+    "receipt.json",
+    "--policy",
+    "policy.json",
+    "--allowlist",
+    "allowlist.json"
+  ],
+  "exit_code": 2,
+  "measured_revision": "0d8f2d50eb85e0d4349b1045f01c04e57318cc1b",
+  "name": "c1-replay-measured-15",
+  "recorded_utc": "2026-10-21T19:50:22.150120+00:00",
+  "schema": "mori-r23-command-receipt-v1",
+  "seal_revision": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+  "stderr": "",
+  "stdout": "{\"error\":\"receipt_counter_type\",\"finding_id\":\"RETENTION_RECONCILIATION_SETUP\",\"privacy_clearance\":false,\"receipt_match\":false,\"schema\":\"mori-retention-reconciliation-v2\"}\n"
+}

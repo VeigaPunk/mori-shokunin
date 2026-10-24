@@ -1,0 +1,23 @@
+id: S157
+url: https://raw.githubusercontent.com/systemd/systemd/v262/src/core/unit.c
+sha256: 47e98d394462e05bf4bc0be2d1105fa8c21044cc9f5ebf00464f1742a92efcb7
+accessed: 2026-10-22T21:12:02Z
+lines: 2763-2779
+
+2763	
+2764	        /* Update timestamps for state changes */
+2765	        if (!MANAGER_IS_RELOADING(m)) {
+2766	                dual_timestamp_now(&u->state_change_timestamp);
+2767	
+2768	                if (UNIT_IS_INACTIVE_OR_FAILED(os) && !UNIT_IS_INACTIVE_OR_FAILED(ns))
+2769	                        u->inactive_exit_timestamp = u->state_change_timestamp;
+2770	                else if (!UNIT_IS_INACTIVE_OR_FAILED(os) && UNIT_IS_INACTIVE_OR_FAILED(ns))
+2771	                        u->inactive_enter_timestamp = u->state_change_timestamp;
+2772	
+2773	                if (!UNIT_IS_ACTIVE_OR_RELOADING(os) && UNIT_IS_ACTIVE_OR_RELOADING(ns))
+2774	                        u->active_enter_timestamp = u->state_change_timestamp;
+2775	                else if (UNIT_IS_ACTIVE_OR_RELOADING(os) && !UNIT_IS_ACTIVE_OR_RELOADING(ns))
+2776	                        u->active_exit_timestamp = u->state_change_timestamp;
+2777	        }
+2778	
+2779	        /* Keep track of failed units */

@@ -1,0 +1,36 @@
+commit e20f4fa3fd3fc9550641af38da3eddcf3d35f528
+Author:     souji-shokunin <souji@shokunin.local>
+AuthorDate: Sun Oct 18 23:58:39 2026 -0300
+Commit:     souji-shokunin <souji@shokunin.local>
+CommitDate: Sun Oct 18 23:58:39 2026 -0300
+
+    souji: remove 96 pushed-receipt checkpoint artifacts (operator sweep 2026-10-18)
+    
+    Receipt: pushed. 96/96 SAFE re-derived by tools/souji-verify.sh at decision
+    time (intro commits ancestors of refs/remotes/origin/master, zero unpushed
+    commits touching, clean). Second check: quarantine copies hash-equal to
+    origin/master blobs (2 copies restored from origin after the quarantine
+    tool hit its 20-min timeout mid-flow; hashes verified post-restore);
+    origin tip d6ac1b64 unchanged (ls-remote). Operator approval:
+    census/round-3/operator-approval-list.tsv (96 rows) + operator directive
+    'clear stale artifacts and stale cache' 2026-10-18. Recovery: all blobs
+    reachable from refs/remotes/origin/master.
+
+D	.ufo/waves/aggregator-r10-resume/CONTEXT.md
+D	.ufo/waves/aggregator-r10-resume/before.json
+D	.ufo/waves/aggregator-r10-resume/critic.md
+D	.ufo/waves/aggregator-r10-resume/dispatch.json
+D	.ufo/waves/aggregator-r10-resume/evidence.md
+D	.ufo/waves/aggregator-r10-resume/measure-corpus.mjs
+D	.ufo/waves/aggregator-r10-resume/plan.md
+D	.ufo/waves/aggregator-r10-resume/preservation-pins.json
+D	.ufo/waves/aggregator-r10-resume/selection.md
+D	.ufo/waves/aggregator-r10-resume/surfaces.md
+D	.ufo/waves/aggregator-r10/before-summaries.log
+D	.ufo/waves/aggregator-r10/before.json
+D	.ufo/waves/aggregator-r10/count-before.log
+D	.ufo/waves/aggregator-r10/dispatch.json
+D	.ufo/waves/aggregator-r10/seats/critic.md
+D	.ufo/waves/aggregator-r10/seats/plan.md
+D	.ufo/waves/aggregator-r10/seats/scout.md
+D	.ufo/waves/aggregator-r10/seats/scribe.md

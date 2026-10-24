@@ -1,0 +1,303 @@
+{
+ "schema": "mori-r24-bracket-check",
+ "uname": "7.2.11-arch1-1",
+ "runs": 5,
+ "passed": 5,
+ "results": [
+  {
+   "at": "2026-10-22T09:03:27.397896+00:00",
+   "tool_exit": 0,
+   "verdict": "PRESSURE_OK",
+   "raw_before": {
+    "cpu": {
+     "some": 11921811,
+     "full": 0
+    },
+    "memory": {
+     "some": 22045389,
+     "full": 21775753
+    },
+    "io": {
+     "some": 140502551,
+     "full": 134962039
+    },
+    "irq": {
+     "full": 24275711
+    }
+   },
+   "raw_after": {
+    "cpu": {
+     "some": 11921851,
+     "full": 0
+    },
+    "memory": {
+     "some": 22045389,
+     "full": 21775753
+    },
+    "io": {
+     "some": 140509572,
+     "full": 134969058
+    },
+    "irq": {
+     "full": 24276172
+    }
+   },
+   "reported": {
+    "cpu": {
+     "some": 11921844,
+     "full": 0
+    },
+    "memory": {
+     "some": 22045389,
+     "full": 21775753
+    },
+    "io": {
+     "some": 140508498,
+     "full": 134967984
+    },
+    "irq": {
+     "some": null,
+     "full": 24276091
+    }
+   },
+   "problems": [],
+   "pass": true
+  },
+  {
+   "at": "2026-10-22T09:03:27.423641+00:00",
+   "tool_exit": 0,
+   "verdict": "PRESSURE_OK",
+   "raw_before": {
+    "cpu": {
+     "some": 11921851,
+     "full": 0
+    },
+    "memory": {
+     "some": 22045389,
+     "full": 21775753
+    },
+    "io": {
+     "some": 140509572,
+     "full": 134969058
+    },
+    "irq": {
+     "full": 24276172
+    }
+   },
+   "raw_after": {
+    "cpu": {
+     "some": 11921873,
+     "full": 0
+    },
+    "memory": {
+     "some": 22045389,
+     "full": 21775753
+    },
+    "io": {
+     "some": 140514541,
+     "full": 134973978
+    },
+    "irq": {
+     "full": 24276472
+    }
+   },
+   "reported": {
+    "cpu": {
+     "some": 11921870,
+     "full": 0
+    },
+    "memory": {
+     "some": 22045389,
+     "full": 21775753
+    },
+    "io": {
+     "some": 140513565,
+     "full": 134973022
+    },
+    "irq": {
+     "some": null,
+     "full": 24276421
+    }
+   },
+   "problems": [],
+   "pass": true
+  },
+  {
+   "at": "2026-10-22T09:03:27.450120+00:00",
+   "tool_exit": 0,
+   "verdict": "PRESSURE_OK",
+   "raw_before": {
+    "cpu": {
+     "some": 11921873,
+     "full": 0
+    },
+    "memory": {
+     "some": 22045389,
+     "full": 21775753
+    },
+    "io": {
+     "some": 140514541,
+     "full": 134973978
+    },
+    "irq": {
+     "full": 24276472
+    }
+   },
+   "raw_after": {
+    "cpu": {
+     "some": 11921909,
+     "full": 0
+    },
+    "memory": {
+     "some": 22045389,
+     "full": 21775753
+    },
+    "io": {
+     "some": 140518593,
+     "full": 134977994
+    },
+    "irq": {
+     "full": 24276831
+    }
+   },
+   "reported": {
+    "cpu": {
+     "some": 11921903,
+     "full": 0
+    },
+    "memory": {
+     "some": 22045389,
+     "full": 21775753
+    },
+    "io": {
+     "some": 140517754,
+     "full": 134977156
+    },
+    "irq": {
+     "some": null,
+     "full": 24276780
+    }
+   },
+   "problems": [],
+   "pass": true
+  },
+  {
+   "at": "2026-10-22T09:03:27.478078+00:00",
+   "tool_exit": 0,
+   "verdict": "PRESSURE_OK",
+   "raw_before": {
+    "cpu": {
+     "some": 11921909,
+     "full": 0
+    },
+    "memory": {
+     "some": 22045389,
+     "full": 21775753
+    },
+    "io": {
+     "some": 140518593,
+     "full": 134977994
+    },
+    "irq": {
+     "full": 24276831
+    }
+   },
+   "raw_after": {
+    "cpu": {
+     "some": 11921945,
+     "full": 0
+    },
+    "memory": {
+     "some": 22045389,
+     "full": 21775753
+    },
+    "io": {
+     "some": 140524003,
+     "full": 134983357
+    },
+    "irq": {
+     "full": 24277174
+    }
+   },
+   "reported": {
+    "cpu": {
+     "some": 11921940,
+     "full": 0
+    },
+    "memory": {
+     "some": 22045389,
+     "full": 21775753
+    },
+    "io": {
+     "some": 140523157,
+     "full": 134982512
+    },
+    "irq": {
+     "some": null,
+     "full": 24277121
+    }
+   },
+   "problems": [],
+   "pass": true
+  },
+  {
+   "at": "2026-10-22T09:03:27.505765+00:00",
+   "tool_exit": 0,
+   "verdict": "PRESSURE_OK",
+   "raw_before": {
+    "cpu": {
+     "some": 11921945,
+     "full": 0
+    },
+    "memory": {
+     "some": 22045389,
+     "full": 21775753
+    },
+    "io": {
+     "some": 140524003,
+     "full": 134983357
+    },
+    "irq": {
+     "full": 24277174
+    }
+   },
+   "raw_after": {
+    "cpu": {
+     "some": 11922009,
+     "full": 0
+    },
+    "memory": {
+     "some": 22045389,
+     "full": 21775753
+    },
+    "io": {
+     "some": 140526981,
+     "full": 134986290
+    },
+    "irq": {
+     "full": 24277471
+    }
+   },
+   "reported": {
+    "cpu": {
+     "some": 11921968,
+     "full": 0
+    },
+    "memory": {
+     "some": 22045389,
+     "full": 21775753
+    },
+    "io": {
+     "some": 140526430,
+     "full": 134985753
+    },
+    "irq": {
+     "some": null,
+     "full": 24277419
+    }
+   },
+   "problems": [],
+   "pass": true
+  }
+ ]
+}

@@ -1,0 +1,14 @@
+{
+  "label": "baseline census selftest",
+  "argv": [
+    "bash",
+    "tools/mori-census.sh",
+    "--selftest"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "startedAt": "2026-10-15T05:08:17.794Z",
+  "finishedAt": "2026-10-15T05:08:18.286Z",
+  "exitCode": 0,
+  "stdout": "PASS clean: all quiet (exit 0 CLEAN)\nPASS drift: WATCHDOG_ABSENT (exit 1 DRIFT)\nPASS drift: WATCHDOG_STALE (exit 1 DRIFT)\nPASS drift: WAVE_UNSETTLED_AGE (exit 1 DRIFT)\nPASS clean: unsettled young wave does not fire (exit 0 CLEAN)\nPASS drift: OOM_KILL_JOURNAL (exit 1 DRIFT)\nPASS drift: CGROUP_OOM_KILL (exit 1 DRIFT)\nPASS drift: DISK_CRITICAL (exit 1 DRIFT)\nPASS clean: disk under warn (exit 0 CLEAN)\nPASS drift: LANE_SILENT (exit 1 DRIFT)\nPASS clean: CGROUP_UNAVAILABLE is not DRIFT (exit 0 CLEAN)\nPASS clean: empty journal (exit 0 CLEAN)\nPASS cli: unknown arg exit 2 (exit 2)\nPASS cli: --help exit 0 (exit 0)\nMORI_CENSUS_SELFTEST: PASS (14 cases, 14 passed, 0 failed)\n",
+  "stderr": ""
+}

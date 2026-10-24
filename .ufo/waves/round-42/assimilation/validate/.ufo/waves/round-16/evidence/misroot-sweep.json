@@ -1,0 +1,25 @@
+{
+  "command": "git -C /home/vgpnk/Projects/shokunin status --porcelain -- .ufo/waves .ufo/reports",
+  "observed_stdout": "?? .ufo/waves/hyaku/\n?? .ufo/waves/round-16/build/\n",
+  "exit_code": 0,
+  "own_misroots": [
+    {
+      "name": "FieldDocs.md",
+      "lane_sha256": "e451a53aced2c5ba0951f56b92ba4ec689854eb0318e924753922a60edf76778",
+      "attribution": "report Seat header MoriR16 and target mori-shokunin",
+      "copied_byte_exact": true,
+      "cmp_exit_code": 0,
+      "fleet_copy_deleted": true
+    },
+    {
+      "name": "ReviewLesson.md",
+      "lane_sha256": "e6eaf7540592317e380914c3db11b61f82efd76f853d189f086fda5585fd679c",
+      "attribution": "report Seat header MoriR16 and target mori-shokunin",
+      "copied_byte_exact": true,
+      "cmp_exit_code": 0,
+      "fleet_copy_deleted": true
+    }
+  ],
+  "foreign": "hyaku directory not opened or modified",
+  "scope": "Only two attributed mori report files copied, cmp-verified and removed from fleet root under prompt exception"
+}

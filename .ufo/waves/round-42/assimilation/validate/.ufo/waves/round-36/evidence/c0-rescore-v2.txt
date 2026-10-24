@@ -1,0 +1,1172 @@
+round-36 C0 re-score under v2 counters (L1 MoriR36, 2026-10-23T12:03:04Z); positive controls REF1/REF2 = builder reference tools in scratch (ExecCounterC1/ref.py, ExecCounterC2/ref.py); J runs re-done with absolute --tool paths after the first pass failed on a relative path (count-c2.py does not abspath --tool; first-pass J outputs discarded)
+== J1 control=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J1.py sha256=da68bfbacefaa5d986c68f12b71ffe1ce9bf9515016a4f425119191505e5363f counter=count-c2.py sha256=c7edaacfff029c2055bee6ddda42ff6f5c040dad7fbac81e9d169602edcbac34
+P-C2: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed on each of 24 sandbox SOURCES.md histories drawn at run time, and on the lane's own history (rev 6bd57097, round base f10a320d) it prints exactly the counter's independent oracle, which lists at least one id.
+tool: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J1.py
+blind arm: 1/24 sandbox histories matched the hidden truth (2.3s; coverage: deletions=22 changed-back=16 superseded=9)
+  repo00 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S157] deleted=[S083,S235] superseded=[S157] round_changed=[S083,S235]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo01 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S162] deleted=[S135] superseded=[S162] round_changed=[]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo02 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S134] deleted=[S097,S195,S208] superseded=[S134] round_changed=[S047,S097,S134,S208]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo03 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S060,S237] superseded=[] round_changed=[]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo04 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S226,S250] deleted=[S214] superseded=[S250] round_changed=[S214,S226,S250]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo05 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S155,S252] deleted=[S133] superseded=[S252] round_changed=[S062,S133,S155,S252]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo06 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S239] deleted=[S006,S231] superseded=[] round_changed=[S006,S239]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo07 FAIL: lists differ
+      want: appendonly_violations=1 ids=[] deleted=[S145] superseded=[] round_changed=[S067,S145]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo08 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S028] deleted=[S047,S290] superseded=[S028] round_changed=[S047]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo09 FAIL: lists differ
+      want: appendonly_violations=1 ids=[] deleted=[S076] superseded=[] round_changed=[S076,S190]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo10 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S181] deleted=[S116,S140,S212] superseded=[] round_changed=[]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo11 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S034] deleted=[S201,S242] superseded=[] round_changed=[S026,S034,S089,S201,S242]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo12 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S140,S264] deleted=[S118,S158] superseded=[S264] round_changed=[S118,S140,S158,S264]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo13 FAIL: lists differ
+      want: appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[S072]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo14 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S070,S074] superseded=[] round_changed=[S184]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo15 FAIL: lists differ
+      want: appendonly_violations=7 ids=[S059,S194] deleted=[S091,S131,S146,S169,S265] superseded=[] round_changed=[S059,S091,S131,S146,S169,S194,S267]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo16 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S282] deleted=[S114] superseded=[S282] round_changed=[]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo17 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S117] deleted=[S222] superseded=[] round_changed=[S117]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo18 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S225] deleted=[S202,S209] superseded=[] round_changed=[S225]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo19 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S266] deleted=[S194] superseded=[] round_changed=[S266]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo20 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S064] deleted=[S022,S225] superseded=[S064] round_changed=[S022,S225]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo22 FAIL: lists differ
+      want: appendonly_violations=3 ids=[] deleted=[S036,S054,S127] superseded=[] round_changed=[S036,S070,S127]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo23 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S179,S228] deleted=[S010,S106,S160] superseded=[] round_changed=[S179,S228]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+real arm: FAIL (0.3s)
+  tool:   appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  diff: ids: want=['S041', 'S044', 'S051', 'S062', 'S064', 'S069', 'S179', 'S180', 'S181', 'S182', 'S183', 'S184', 'S185', 'S186', 'S188', 'S189', 'S190', 'S193'] got=[]
+  diff: superseded: want=['S069', 'S182', 'S193'] got=[]
+  diff: round_changed: want=['S182', 'S193'] got=[]
+  diff: violations: want=18 got=0
+  tool exit=0
+C2=unmet
+seed=14043932168276761486
+EXIT=1
+
+== J10 control=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J10.py sha256=fe92f448805384651189415415c81af249c4ff8f8418a1798beadac71199cbbc counter=count-c2.py sha256=c7edaacfff029c2055bee6ddda42ff6f5c040dad7fbac81e9d169602edcbac34
+P-C2: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed on each of 24 sandbox SOURCES.md histories drawn at run time, and on the lane's own history (rev 6bd57097, round base f10a320d) it prints exactly the counter's independent oracle, which lists at least one id.
+tool: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J10.py
+blind arm: 0/24 sandbox histories matched the hidden truth (3.0s; coverage: deletions=22 changed-back=14 superseded=10)
+  repo00 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S001,S264] deleted=[S037,S198] superseded=[S001,S264] round_changed=[S001,S037]
+      got:  appendonly_violations=5 ids=[S162,S258,S264,S273] deleted=[S273] superseded=[] round_changed=[S001,S041,S062,S118,S131,S162,S208,S257,S258,S264,S273]
+  repo01 FAIL: lists differ
+      want: appendonly_violations=1 ids=[] deleted=[S218] superseded=[] round_changed=[S165]
+      got:  appendonly_violations=5 ids=[S129,S165,S183,S222,S261] deleted=[] superseded=[S165] round_changed=[S010,S106,S129,S130,S143,S149,S165,S167,S183,S185,S222,S229,S253,S261]
+  repo02 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S123] deleted=[S106,S277] superseded=[] round_changed=[S106,S123,S277]
+      got:  appendonly_violations=3 ids=[S123,S213] deleted=[S014] superseded=[] round_changed=[S014,S123,S211,S213,S253]
+  repo03 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S126,S175] superseded=[] round_changed=[S027]
+      got:  appendonly_violations=10 ids=[S027,S174,S189,S204] deleted=[S077,S091,S126,S140,S175,S189] superseded=[] round_changed=[]
+  repo04 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S055] deleted=[S017,S128] superseded=[S055] round_changed=[S017]
+      got:  appendonly_violations=4 ids=[S036,S240,S297] deleted=[S203] superseded=[S240] round_changed=[S036,S055,S163,S203,S240,S297]
+  repo05 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S117,S181] superseded=[] round_changed=[]
+      got:  appendonly_violations=6 ids=[S090,S144,S180,S234,S291] deleted=[S238] superseded=[S090,S180] round_changed=[S031,S090,S144,S170,S180,S184,S227,S234,S238,S274,S278,S291]
+  repo06 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S096,S108,S169,S243] deleted=[S139] superseded=[S096,S108] round_changed=[S096,S108,S139,S169,S243]
+      got:  appendonly_violations=5 ids=[S012,S096,S108,S243] deleted=[S119] superseded=[] round_changed=[S012,S025,S096,S108,S119,S136,S139,S155,S158,S169,S243,S272]
+  repo07 FAIL: lists differ
+      want: appendonly_violations=3 ids=[] deleted=[S091,S220,S243] superseded=[] round_changed=[S091,S160,S204,S220,S243]
+      got:  appendonly_violations=4 ids=[S093,S120,S204] deleted=[S091] superseded=[S120] round_changed=[S020,S044,S076,S091,S093,S120,S158,S160,S204,S243]
+  repo08 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S062] deleted=[S240,S287] superseded=[S062] round_changed=[S240,S287]
+      got:  appendonly_violations=4 ids=[S006,S114,S258] deleted=[S287] superseded=[] round_changed=[S006,S062,S076,S114,S143,S169,S240,S251,S258]
+  repo09 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S193] deleted=[S015,S240] superseded=[S193] round_changed=[S015,S140,S193,S240]
+      got:  appendonly_violations=3 ids=[S120,S246] deleted=[S140] superseded=[S120] round_changed=[S120,S140,S148,S193,S240,S246,S250,S272]
+  repo10 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S092,S262] deleted=[S135,S281] superseded=[S262] round_changed=[S092,S135,S152]
+      got:  appendonly_violations=3 ids=[S006,S018,S255] deleted=[] superseded=[S255] round_changed=[S006,S017,S018,S064,S092,S113,S151,S152,S200,S205,S230,S255,S262]
+  repo11 FAIL: lists differ
+      want: appendonly_violations=1 ids=[] deleted=[S171] superseded=[] round_changed=[S037,S153,S171]
+      got:  appendonly_violations=3 ids=[S069,S153,S240] deleted=[] superseded=[S240] round_changed=[S022,S037,S069,S085,S097,S103,S153,S230,S240,S268]
+  repo12 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S183] deleted=[S043,S229] superseded=[S183] round_changed=[S043,S183,S229]
+      got:  appendonly_violations=6 ids=[S042,S129,S183,S207] deleted=[S042,S112] superseded=[] round_changed=[S042,S112,S129,S183,S207,S229]
+  repo13 FAIL: lists differ
+      want: appendonly_violations=1 ids=[S169] deleted=[] superseded=[] round_changed=[S024]
+      got:  appendonly_violations=5 ids=[S015,S024,S096,S120] deleted=[S049] superseded=[S015,S120] round_changed=[]
+  repo14 FAIL: lists differ
+      want: appendonly_violations=6 ids=[S228] deleted=[S068,S165,S212,S275,S287] superseded=[S228] round_changed=[S068]
+      got:  appendonly_violations=4 ids=[S111,S228] deleted=[S049,S287] superseded=[] round_changed=[S011,S047,S049,S111,S166,S228,S253]
+  repo15 FAIL: lists differ
+      want: appendonly_violations=4 ids=[] deleted=[S082,S172,S207,S217] superseded=[] round_changed=[S082]
+      got:  appendonly_violations=4 ids=[S012,S078,S183] deleted=[S217] superseded=[] round_changed=[]
+  repo16 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S155,S199,S299] deleted=[S183] superseded=[S155] round_changed=[S155,S183,S199,S299]
+      got:  appendonly_violations=1 ids=[] deleted=[S259] superseded=[] round_changed=[S076,S155,S199,S232,S236,S259,S299]
+  repo17 FAIL: lists differ
+      want: appendonly_violations=1 ids=[S034] deleted=[] superseded=[] round_changed=[S236]
+      got:  appendonly_violations=2 ids=[S162] deleted=[S182] superseded=[] round_changed=[]
+  repo18 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S190,S266] superseded=[] round_changed=[S190,S266]
+      got:  appendonly_violations=7 ids=[S057,S075,S093,S273,S288] deleted=[S266,S273] superseded=[S075] round_changed=[S050,S057,S061,S075,S093,S122,S134,S146,S190,S266,S273,S288,S293]
+  repo19 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S075] deleted=[S046] superseded=[] round_changed=[S046,S210]
+      got:  appendonly_violations=6 ids=[S075,S120,S156,S165,S210] deleted=[S210] superseded=[S075,S120,S165,S210] round_changed=[S011,S032,S046,S071,S075,S120,S156,S165,S210,S241]
+  repo20 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S028] deleted=[S046,S106] superseded=[S028] round_changed=[S046,S106]
+      got:  appendonly_violations=3 ids=[S039,S075] deleted=[S028] superseded=[S075] round_changed=[S028,S039,S061,S075,S076,S083,S148,S232,S290]
+  repo21 FAIL: lists differ
+      want: appendonly_violations=4 ids=[] deleted=[S039,S137,S169,S202] superseded=[] round_changed=[S039,S112,S137]
+      got:  appendonly_violations=6 ids=[S006,S030,S063] deleted=[S063,S091,S112] superseded=[S030] round_changed=[S006,S030,S037,S063,S091,S104,S112,S166,S199,S233,S236,S268]
+  repo22 FAIL: lists differ
+      want: appendonly_violations=5 ids=[] deleted=[S057,S059,S095,S103,S245] superseded=[] round_changed=[S057]
+      got:  appendonly_violations=3 ids=[S189] deleted=[S189,S245] superseded=[] round_changed=[S124,S189]
+  repo23 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S287] deleted=[S296] superseded=[] round_changed=[S113,S287,S296]
+      got:  appendonly_violations=4 ids=[S057,S153,S216] deleted=[S287] superseded=[] round_changed=[S050,S057,S113,S153,S216,S223,S244,S286,S287,S296]
+real arm: FAIL (0.5s)
+  tool:   appendonly_violations=97 ids=[S003,S006,S009,S012,S015,S018,S021,S024,S027,S030,S033,S036,S039,S042,S045,S048,S051,S054,S057,S060,S063,S066,S069,S072,S075,S078,S081,S084,S087,S090,S093,S096,S099,S102,S105,S108,S111,S114,S117,S120,S123,S126,S129,S132,S135,S138,S141,S144,S147,S150,S153,S156,S159,S162,S165,S168,S171,S174,S177,S180,S183,S186,S189,S192,S195,S198,S201,S204] deleted=[S007,S014,S021,S028,S035,S042,S049,S056,S063,S070,S077,S084,S091,S098,S105,S112,S119,S126,S133,S140,S147,S154,S161,S168,S175,S182,S189,S196,S203] superseded=[S015,S030,S045,S060,S075,S090,S105,S120,S135,S150,S165,S180,S195] round_changed=[S001,S002,S003,S004,S005,S006,S007,S008,S009,S010,S011,S012,S013,S014,S015,S016,S017,S018,S019,S020,S021,S022,S023,S024,S025,S026,S027,S028,S029,S030,S031,S032,S033,S034,S035,S036,S037,S038,S039,S040,S041,S042,S043,S044,S045,S046,S047,S048,S049,S050,S051,S052,S053,S054,S055,S056,S057,S058,S059,S060,S061,S062,S063,S064,S065,S066,S067,S068,S069,S070,S071,S072,S073,S074,S075,S076,S077,S078,S079,S080,S081,S082,S083,S084,S085,S086,S087,S088,S089,S090,S091,S092,S093,S094,S095,S096,S097,S098,S099,S100,S101,S102,S103,S104,S105,S106,S107,S108,S109,S110,S111,S112,S113,S114,S115,S116,S117,S118,S119,S120,S121,S122,S123,S124,S125,S126,S127,S128,S129,S130,S131,S132,S133,S134,S135,S136,S137,S138,S139,S140,S141,S142,S143,S144,S145,S146,S147,S148,S149,S150,S151,S152,S153,S154,S155,S156,S157,S158,S159,S160,S161,S162,S163,S164,S165,S166,S167,S168,S169,S170,S171,S172,S173,S174,S175,S176,S177,S178,S179,S180,S181,S182,S183,S184,S185,S186,S187,S188,S189,S190,S191,S192,S193,S194,S195,S196,S197,S198,S199,S200,S201,S202,S203,S204]
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  diff: ids: want=['S041', 'S044', 'S051', 'S062', 'S064', 'S069', 'S179', 'S180', 'S181', 'S182', 'S183', 'S184', 'S185', 'S186', 'S188', 'S189', 'S190', 'S193'] got=['S003', 'S006', 'S009', 'S012', 'S015', 'S018', 'S021', 'S024', 'S027', 'S030', 'S033', 'S036', 'S039', 'S042', 'S045', 'S048', 'S051', 'S054', 'S057', 'S060', 'S063', 'S066', 'S069', 'S072', 'S075', 'S078', 'S081', 'S084', 'S087', 'S090', 'S093', 'S096', 'S099', 'S102', 'S105', 'S108', 'S111', 'S114', 'S117', 'S120', 'S123', 'S126', 'S129', 'S132', 'S135', 'S138', 'S141', 'S144', 'S147', 'S150', 'S153', 'S156', 'S159', 'S162', 'S165', 'S168', 'S171', 'S174', 'S177', 'S180', 'S183', 'S186', 'S189', 'S192', 'S195', 'S198', 'S201', 'S204']
+  diff: deleted: want=[] got=['S007', 'S014', 'S021', 'S028', 'S035', 'S042', 'S049', 'S056', 'S063', 'S070', 'S077', 'S084', 'S091', 'S098', 'S105', 'S112', 'S119', 'S126', 'S133', 'S140', 'S147', 'S154', 'S161', 'S168', 'S175', 'S182', 'S189', 'S196', 'S203']
+  diff: superseded: want=['S069', 'S182', 'S193'] got=['S015', 'S030', 'S045', 'S060', 'S075', 'S090', 'S105', 'S120', 'S135', 'S150', 'S165', 'S180', 'S195']
+  diff: round_changed: want=['S182', 'S193'] got=['S001', 'S002', 'S003', 'S004', 'S005', 'S006', 'S007', 'S008', 'S009', 'S010', 'S011', 'S012', 'S013', 'S014', 'S015', 'S016', 'S017', 'S018', 'S019', 'S020', 'S021', 'S022', 'S023', 'S024', 'S025', 'S026', 'S027', 'S028', 'S029', 'S030', 'S031', 'S032', 'S033', 'S034', 'S035', 'S036', 'S037', 'S038', 'S039', 'S040', 'S041', 'S042', 'S043', 'S044', 'S045', 'S046', 'S047', 'S048', 'S049', 'S050', 'S051', 'S052', 'S053', 'S054', 'S055', 'S056', 'S057', 'S058', 'S059', 'S060', 'S061', 'S062', 'S063', 'S064', 'S065', 'S066', 'S067', 'S068', 'S069', 'S070', 'S071', 'S072', 'S073', 'S074', 'S075', 'S076', 'S077', 'S078', 'S079', 'S080', 'S081', 'S082', 'S083', 'S084', 'S085', 'S086', 'S087', 'S088', 'S089', 'S090', 'S091', 'S092', 'S093', 'S094', 'S095', 'S096', 'S097', 'S098', 'S099', 'S100', 'S101', 'S102', 'S103', 'S104', 'S105', 'S106', 'S107', 'S108', 'S109', 'S110', 'S111', 'S112', 'S113', 'S114', 'S115', 'S116', 'S117', 'S118', 'S119', 'S120', 'S121', 'S122', 'S123', 'S124', 'S125', 'S126', 'S127', 'S128', 'S129', 'S130', 'S131', 'S132', 'S133', 'S134', 'S135', 'S136', 'S137', 'S138', 'S139', 'S140', 'S141', 'S142', 'S143', 'S144', 'S145', 'S146', 'S147', 'S148', 'S149', 'S150', 'S151', 'S152', 'S153', 'S154', 'S155', 'S156', 'S157', 'S158', 'S159', 'S160', 'S161', 'S162', 'S163', 'S164', 'S165', 'S166', 'S167', 'S168', 'S169', 'S170', 'S171', 'S172', 'S173', 'S174', 'S175', 'S176', 'S177', 'S178', 'S179', 'S180', 'S181', 'S182', 'S183', 'S184', 'S185', 'S186', 'S187', 'S188', 'S189', 'S190', 'S191', 'S192', 'S193', 'S194', 'S195', 'S196', 'S197', 'S198', 'S199', 'S200', 'S201', 'S202', 'S203', 'S204']
+  diff: violations: want=18 got=97
+  tool exit=1
+C2=unmet
+seed=919919095742287396
+EXIT=1
+
+== J11 control=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J11.py sha256=ede4cfdcf9d5f2d4aae5bc35fbe7996914069fb6f2da0e6355aa55560f13a3b5 counter=count-c2.py sha256=c7edaacfff029c2055bee6ddda42ff6f5c040dad7fbac81e9d169602edcbac34
+P-C2: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed on each of 24 sandbox SOURCES.md histories drawn at run time, and on the lane's own history (rev 6bd57097, round base f10a320d) it prints exactly the counter's independent oracle, which lists at least one id.
+tool: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J11.py
+blind arm: 24/24 sandbox histories matched the hidden truth (3.6s; coverage: deletions=23 changed-back=18 superseded=8)
+real arm: FAIL (0.3s)
+  tool:   appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  diff: ids: want=['S041', 'S044', 'S051', 'S062', 'S064', 'S069', 'S179', 'S180', 'S181', 'S182', 'S183', 'S184', 'S185', 'S186', 'S188', 'S189', 'S190', 'S193'] got=[]
+  diff: superseded: want=['S069', 'S182', 'S193'] got=[]
+  diff: round_changed: want=['S182', 'S193'] got=[]
+  diff: violations: want=18 got=0
+  tool exit=0
+C2=unmet
+seed=13938463740828882736
+EXIT=1
+
+== J12 control=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J12.py sha256=9d34bfe11b4b4c8671cd64e6659d3c235d860106866f44ffb48c1a08802e44da counter=count-c2.py sha256=c7edaacfff029c2055bee6ddda42ff6f5c040dad7fbac81e9d169602edcbac34
+P-C2: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed on each of 24 sandbox SOURCES.md histories drawn at run time, and on the lane's own history (rev 6bd57097, round base f10a320d) it prints exactly the counter's independent oracle, which lists at least one id.
+tool: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J12.py
+blind arm: 0/24 sandbox histories matched the hidden truth (3.3s; coverage: deletions=22 changed-back=20 superseded=7)
+  repo00 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S160] deleted=[S017,S197] superseded=[S160] round_changed=[S197]
+      got:  appendonly_violations=2 ids=[] deleted=[S017,S197] superseded=[] round_changed=[S197]
+  repo01 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S219] deleted=[S099,S271] superseded=[] round_changed=[S099,S219,S229,S271]
+      got:  appendonly_violations=4 ids=[S093,S101] deleted=[S099,S271] superseded=[] round_changed=[S093,S099,S271]
+  repo02 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S150] deleted=[S135,S197] superseded=[] round_changed=[S135,S150]
+      got:  appendonly_violations=4 ids=[S150,S238] deleted=[S135,S197] superseded=[] round_changed=[S135,S238]
+  repo03 FAIL: lists differ
+      want: appendonly_violations=1 ids=[] deleted=[S241] superseded=[] round_changed=[S229,S241]
+      got:  appendonly_violations=3 ids=[S053,S152] deleted=[S241] superseded=[] round_changed=[S053,S152,S241]
+  repo04 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S022] deleted=[S021,S078] superseded=[S022] round_changed=[S021]
+      got:  appendonly_violations=4 ids=[S002,S136] deleted=[S021,S078] superseded=[] round_changed=[S002,S021]
+  repo05 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S267,S270] deleted=[S011,S160] superseded=[] round_changed=[S011,S160,S267,S270,S297]
+      got:  appendonly_violations=4 ids=[S227,S270] deleted=[S011,S160] superseded=[] round_changed=[S011,S160,S227]
+  repo06 FAIL: lists differ
+      want: appendonly_violations=3 ids=[] deleted=[S011,S088,S152] superseded=[] round_changed=[S011,S088,S102,S152]
+      got:  appendonly_violations=4 ids=[S132] deleted=[S011,S088,S152] superseded=[] round_changed=[S011,S088,S132,S152]
+  repo07 FAIL: lists differ
+      want: appendonly_violations=1 ids=[S177] deleted=[] superseded=[] round_changed=[S168,S177]
+      got:  appendonly_violations=1 ids=[S166] deleted=[] superseded=[] round_changed=[S166]
+  repo08 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S030,S042] deleted=[S137] superseded=[S030] round_changed=[]
+      got:  appendonly_violations=3 ids=[S030,S181] deleted=[S137] superseded=[S030] round_changed=[S181]
+  repo09 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S142,S297] superseded=[] round_changed=[S142,S297]
+      got:  appendonly_violations=6 ids=[S017,S083,S096,S234] deleted=[S142,S297] superseded=[] round_changed=[S096,S142,S297]
+  repo10 FAIL: lists differ
+      want: appendonly_violations=3 ids=[] deleted=[S141,S145,S163] superseded=[] round_changed=[S141,S145,S163,S220,S260]
+      got:  appendonly_violations=4 ids=[S218] deleted=[S141,S145,S163] superseded=[] round_changed=[S141,S145,S163]
+  repo11 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S090] deleted=[S133] superseded=[] round_changed=[S090,S133,S253]
+      got:  appendonly_violations=1 ids=[] deleted=[S133] superseded=[] round_changed=[S133]
+  repo12 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S176] deleted=[S289] superseded=[S176] round_changed=[S175,S289]
+      got:  appendonly_violations=1 ids=[] deleted=[S289] superseded=[] round_changed=[S289]
+  repo13 FAIL: lists differ
+      want: appendonly_violations=1 ids=[] deleted=[S060] superseded=[] round_changed=[S177]
+      got:  appendonly_violations=1 ids=[] deleted=[S060] superseded=[] round_changed=[]
+  repo14 FAIL: lists differ
+      want: appendonly_violations=5 ids=[] deleted=[S109,S158,S169,S196,S277] superseded=[] round_changed=[S109,S157,S158,S169,S196,S277]
+      got:  appendonly_violations=6 ids=[S120] deleted=[S109,S158,S169,S196,S277] superseded=[] round_changed=[S109,S120,S158,S169,S196,S277]
+  repo15 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S035,S148] superseded=[] round_changed=[S035,S122,S148]
+      got:  appendonly_violations=2 ids=[] deleted=[S035,S148] superseded=[] round_changed=[S035,S148]
+  repo16 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S081] deleted=[S004,S236] superseded=[S081] round_changed=[S004,S081,S236]
+      got:  appendonly_violations=2 ids=[] deleted=[S004,S236] superseded=[] round_changed=[S004,S236]
+  repo17 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S065] deleted=[S189] superseded=[] round_changed=[S065,S141]
+      got:  appendonly_violations=5 ids=[S094,S141,S143,S231] deleted=[S189] superseded=[] round_changed=[S094]
+  repo18 FAIL: lists differ
+      want: appendonly_violations=4 ids=[] deleted=[S026,S083,S140,S176] superseded=[] round_changed=[S140]
+      got:  appendonly_violations=5 ids=[S296] deleted=[S026,S083,S140,S176] superseded=[] round_changed=[S140]
+  repo19 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S016,S088] deleted=[] superseded=[S088] round_changed=[S016,S040,S088]
+      got:  appendonly_violations=2 ids=[S096,S110] deleted=[] superseded=[] round_changed=[S096,S110]
+  repo20 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S074] deleted=[S033] superseded=[S074] round_changed=[S033,S088]
+      got:  appendonly_violations=1 ids=[] deleted=[S033] superseded=[] round_changed=[S033]
+  repo21 FAIL: lists differ
+      want: appendonly_violations=1 ids=[] deleted=[S182] superseded=[] round_changed=[S023]
+      got:  appendonly_violations=1 ids=[] deleted=[S182] superseded=[] round_changed=[]
+  repo22 FAIL: lists differ
+      want: appendonly_violations=3 ids=[] deleted=[S012,S157,S240] superseded=[] round_changed=[S172,S240]
+      got:  appendonly_violations=3 ids=[] deleted=[S012,S157,S240] superseded=[] round_changed=[S240]
+  repo23 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S146,S270] superseded=[] round_changed=[S005,S033,S146,S270]
+      got:  appendonly_violations=4 ids=[S005,S214] deleted=[S146,S270] superseded=[] round_changed=[S005,S146,S214,S270]
+real arm: FAIL (0.5s)
+  tool:   appendonly_violations=44 ids=[S002,S003,S013,S014,S015,S031,S035,S036,S037,S038,S064,S065,S066,S067,S068,S071,S077,S078,S079,S080,S081,S082,S083,S084,S085,S086,S092,S097,S114,S115,S118,S119,S120,S145,S146,S151,S191,S192,S193,S194,S195,S196,S197,S198] deleted=[] superseded=[S067,S071,S083,S084,S097,S193] round_changed=[S182,S191,S192,S193,S194,S195,S196,S197,S198]
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  diff: ids: want=['S041', 'S044', 'S051', 'S062', 'S064', 'S069', 'S179', 'S180', 'S181', 'S182', 'S183', 'S184', 'S185', 'S186', 'S188', 'S189', 'S190', 'S193'] got=['S002', 'S003', 'S013', 'S014', 'S015', 'S031', 'S035', 'S036', 'S037', 'S038', 'S064', 'S065', 'S066', 'S067', 'S068', 'S071', 'S077', 'S078', 'S079', 'S080', 'S081', 'S082', 'S083', 'S084', 'S085', 'S086', 'S092', 'S097', 'S114', 'S115', 'S118', 'S119', 'S120', 'S145', 'S146', 'S151', 'S191', 'S192', 'S193', 'S194', 'S195', 'S196', 'S197', 'S198']
+  diff: superseded: want=['S069', 'S182', 'S193'] got=['S067', 'S071', 'S083', 'S084', 'S097', 'S193']
+  diff: round_changed: want=['S182', 'S193'] got=['S182', 'S191', 'S192', 'S193', 'S194', 'S195', 'S196', 'S197', 'S198']
+  diff: violations: want=18 got=44
+  tool exit=1
+C2=unmet
+seed=8023068761076099268
+EXIT=1
+
+== J13 control=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J13.py sha256=4e05a96c11d2df817d91506d2e55fed36a80a98f27c51bd759f355c7e76df20f counter=count-c2.py sha256=c7edaacfff029c2055bee6ddda42ff6f5c040dad7fbac81e9d169602edcbac34
+P-C2: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed on each of 24 sandbox SOURCES.md histories drawn at run time, and on the lane's own history (rev 6bd57097, round base f10a320d) it prints exactly the counter's independent oracle, which lists at least one id.
+tool: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J13.py
+blind arm: 0/24 sandbox histories matched the hidden truth (3.6s; coverage: deletions=22 changed-back=15 superseded=11)
+  repo00 FAIL: no summary line (exit 1): appendonly_violations=7
+  repo01 FAIL: no summary line (exit 1): appendonly_violations=2
+  repo02 FAIL: no summary line (exit 0): appendonly_violations=5
+  repo03 FAIL: no summary line (exit 1): appendonly_violations=3
+  repo04 FAIL: no summary line (exit 1): appendonly_violations=3
+  repo05 FAIL: no summary line (exit 1): appendonly_violations=2
+  repo06 FAIL: no summary line (exit 1): appendonly_violations=3
+  repo07 FAIL: no summary line (exit 1): appendonly_violations=2
+  repo08 FAIL: no summary line (exit 1): appendonly_violations=2
+  repo09 FAIL: no summary line (exit 1): appendonly_violations=1
+  repo10 FAIL: no summary line (exit 1): appendonly_violations=4
+  repo11 FAIL: no summary line (exit 0): appendonly_violations=0
+  repo12 FAIL: no summary line (exit 0): appendonly_violations=4
+  repo13 FAIL: no summary line (exit 1): appendonly_violations=1
+  repo14 FAIL: no summary line (exit 1): appendonly_violations=1
+  repo15 FAIL: no summary line (exit 1): appendonly_violations=3
+  repo16 FAIL: no summary line (exit 1): appendonly_violations=8
+  repo17 FAIL: no summary line (exit 1): appendonly_violations=4
+  repo18 FAIL: no summary line (exit 1): appendonly_violations=6
+  repo19 FAIL: no summary line (exit 1): appendonly_violations=4
+  repo20 FAIL: no summary line (exit 1): appendonly_violations=5
+  repo21 FAIL: no summary line (exit 1): appendonly_violations=4
+  repo22 FAIL: no summary line (exit 1): appendonly_violations=2
+  repo23 FAIL: no summary line (exit 0): appendonly_violations=1
+real arm: FAIL (0.5s)
+  tool:   (no summary line)
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  diff: no summary line (exit 1)
+  tool exit=1
+C2=unmet
+seed=3910011427348708763
+EXIT=1
+
+== J2 control=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J2.py sha256=f34cdbdee5b4b1fa8d2c28d5a4b2b9ac621e3d4b97b38d07ef880424de3914c6 counter=count-c2.py sha256=c7edaacfff029c2055bee6ddda42ff6f5c040dad7fbac81e9d169602edcbac34
+P-C2: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed on each of 24 sandbox SOURCES.md histories drawn at run time, and on the lane's own history (rev 6bd57097, round base f10a320d) it prints exactly the counter's independent oracle, which lists at least one id.
+tool: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J2.py
+blind arm: 0/24 sandbox histories matched the hidden truth (3.2s; coverage: deletions=24 changed-back=18 superseded=13)
+  repo00 FAIL: no summary line (exit 1): round_changed=[S059]
+  repo01 FAIL: no summary line (exit 1): round_changed=[S157,S248]
+  repo02 FAIL: no summary line (exit 1): round_changed=[S165]
+  repo03 FAIL: no summary line (exit 1): round_changed=[S036]
+  repo04 FAIL: no summary line (exit 1): round_changed=[S276]
+  repo05 FAIL: no summary line (exit 1): round_changed=[S211,S270]
+  repo06 FAIL: no summary line (exit 1): round_changed=[S012,S028]
+  repo07 FAIL: no summary line (exit 1): round_changed=[S027]
+  repo08 FAIL: no summary line (exit 1): round_changed=[S136]
+  repo09 FAIL: no summary line (exit 1): round_changed=[S260,S294]
+  repo10 FAIL: no summary line (exit 0): round_changed=[]
+  repo11 FAIL: no summary line (exit 0): round_changed=[]
+  repo12 FAIL: no summary line (exit 0): round_changed=[]
+  repo13 FAIL: no summary line (exit 0): round_changed=[]
+  repo14 FAIL: no summary line (exit 1): round_changed=[S019,S036,S243]
+  repo15 FAIL: no summary line (exit 1): round_changed=[S160]
+  repo16 FAIL: no summary line (exit 1): round_changed=[S220]
+  repo17 FAIL: no summary line (exit 1): round_changed=[S034,S159]
+  repo18 FAIL: no summary line (exit 1): round_changed=[S262]
+  repo19 FAIL: no summary line (exit 1): round_changed=[S112,S241]
+  repo20 FAIL: no summary line (exit 1): round_changed=[S186]
+  repo21 FAIL: no summary line (exit 1): round_changed=[S166,S187]
+  repo22 FAIL: no summary line (exit 1): round_changed=[S084,S287]
+  repo23 FAIL: no summary line (exit 1): round_changed=[S284]
+real arm: FAIL (0.5s)
+  tool:   (no summary line)
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  diff: no summary line (exit 1)
+  tool exit=1
+C2=unmet
+seed=12934825225992353089
+EXIT=1
+
+== J3 control=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J3.py sha256=d639aa1f90c48e712a4c259047b0c1632b8d86a1dbfe770d34b7fdde96008467 counter=count-c2.py sha256=c7edaacfff029c2055bee6ddda42ff6f5c040dad7fbac81e9d169602edcbac34
+P-C2: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed on each of 24 sandbox SOURCES.md histories drawn at run time, and on the lane's own history (rev 6bd57097, round base f10a320d) it prints exactly the counter's independent oracle, which lists at least one id.
+tool: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J3.py
+blind arm: 0/24 sandbox histories matched the hidden truth (2.5s; coverage: deletions=22 changed-back=15 superseded=7)
+  repo00 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S243] deleted=[S094,S176,S188] superseded=[S243] round_changed=[S094,S176,S188]
+      got:  appendonly_violations=5 ids=[S141,S163,S195,S233,S243] deleted=[] superseded=[S141,S163,S195,S233,S243] round_changed=[S141,S163,S195,S233,S243]
+  repo01 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S044,S216] superseded=[] round_changed=[S020,S044,S216,S247]
+      got:  appendonly_violations=10 ids=[S020,S035,S091,S093,S108,S113,S247,S248,S281,S292] deleted=[] superseded=[S020,S035,S091,S093,S108,S113,S247,S248,S281,S292] round_changed=[S020,S035,S091,S093,S108,S113,S247,S248,S281,S292]
+  repo02 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S067,S115] superseded=[] round_changed=[S067,S115]
+      got:  appendonly_violations=7 ids=[S024,S040,S062,S073,S157,S250,S283] deleted=[] superseded=[S024,S040,S062,S073,S157,S250,S283] round_changed=[S024,S040,S062,S073,S157,S250,S283]
+  repo03 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S050] deleted=[S073] superseded=[] round_changed=[S050,S073]
+      got:  appendonly_violations=13 ids=[S033,S043,S050,S062,S067,S083,S113,S128,S137,S180,S229,S244,S273] deleted=[] superseded=[S033,S043,S050,S062,S067,S083,S113,S128,S137,S180,S229,S244,S273] round_changed=[S033,S043,S050,S062,S067,S083,S113,S128,S137,S180,S229,S244,S273]
+  repo04 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S026] deleted=[S236,S290] superseded=[S026] round_changed=[]
+      got:  appendonly_violations=13 ids=[S007,S008,S022,S026,S069,S079,S086,S176,S181,S226,S230,S282,S293] deleted=[] superseded=[S007,S008,S022,S026,S069,S079,S086,S176,S181,S226,S230,S282,S293] round_changed=[S007,S008,S022,S026,S069,S079,S086,S176,S181,S226,S230,S282,S293]
+  repo05 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S233] deleted=[S115] superseded=[] round_changed=[S048,S115,S233]
+      got:  appendonly_violations=10 ids=[S004,S030,S048,S099,S129,S153,S165,S233,S270,S296] deleted=[] superseded=[S004,S030,S048,S099,S129,S153,S165,S233,S270,S296] round_changed=[S004,S030,S048,S099,S129,S153,S165,S233,S270,S296]
+  repo06 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S177,S212] deleted=[S051,S073] superseded=[] round_changed=[S051,S177,S212]
+      got:  appendonly_violations=10 ids=[S045,S118,S158,S177,S193,S212,S241,S247,S294,S299] deleted=[] superseded=[S045,S118,S158,S177,S193,S212,S241,S247,S294,S299] round_changed=[S045,S118,S158,S177,S193,S212,S241,S247,S294,S299]
+  repo07 FAIL: lists differ
+      want: appendonly_violations=1 ids=[] deleted=[S130] superseded=[] round_changed=[S013,S130]
+      got:  appendonly_violations=10 ids=[S002,S013,S022,S025,S058,S097,S139,S147,S149,S165] deleted=[] superseded=[S002,S013,S022,S025,S058,S097,S139,S147,S149,S165] round_changed=[S002,S013,S022,S025,S058,S097,S139,S147,S149,S165]
+  repo08 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S041,S048,S182] deleted=[S011,S236] superseded=[S041,S182] round_changed=[S236]
+      got:  appendonly_violations=14 ids=[S031,S041,S045,S048,S073,S082,S088,S105,S153,S182,S226,S260,S266,S285] deleted=[] superseded=[S031,S041,S045,S048,S073,S082,S088,S105,S153,S182,S226,S260,S266,S285] round_changed=[S031,S041,S045,S048,S073,S082,S088,S105,S153,S182,S226,S260,S266,S285]
+  repo09 FAIL: lists differ
+      want: appendonly_violations=1 ids=[] deleted=[S148] superseded=[] round_changed=[S148,S277]
+      got:  appendonly_violations=8 ids=[S048,S080,S194,S217,S218,S253,S277,S291] deleted=[] superseded=[S048,S080,S194,S217,S218,S253,S277,S291] round_changed=[S048,S080,S194,S217,S218,S253,S277,S291]
+  repo10 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S287] deleted=[S125,S184,S221] superseded=[] round_changed=[S287]
+      got:  appendonly_violations=10 ids=[S012,S018,S041,S083,S092,S124,S151,S228,S235,S287] deleted=[] superseded=[S012,S018,S041,S083,S092,S124,S151,S228,S235,S287] round_changed=[S012,S018,S041,S083,S092,S124,S151,S228,S235,S287]
+  repo11 FAIL: lists differ
+      want: appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[S141]
+      got:  appendonly_violations=9 ids=[S038,S073,S119,S141,S162,S207,S224,S258,S263] deleted=[] superseded=[S038,S073,S119,S141,S162,S207,S224,S258,S263] round_changed=[S038,S073,S119,S141,S162,S207,S224,S258,S263]
+  repo12 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S072,S162] deleted=[S091] superseded=[S072] round_changed=[S162]
+      got:  appendonly_violations=10 ids=[S022,S072,S079,S144,S162,S189,S230,S250,S274,S299] deleted=[] superseded=[S022,S072,S079,S144,S162,S189,S230,S250,S274,S299] round_changed=[S022,S072,S079,S144,S162,S189,S230,S250,S274,S299]
+  repo13 FAIL: lists differ
+      want: appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[S042]
+      got:  appendonly_violations=14 ids=[S022,S040,S042,S060,S096,S149,S152,S171,S201,S233,S244,S268,S274,S285] deleted=[] superseded=[S022,S040,S042,S060,S096,S149,S152,S171,S201,S233,S244,S268,S274,S285] round_changed=[S022,S040,S042,S060,S096,S149,S152,S171,S201,S233,S244,S268,S274,S285]
+  repo14 FAIL: lists differ
+      want: appendonly_violations=3 ids=[] deleted=[S019,S133,S138] superseded=[] round_changed=[S083,S133]
+      got:  appendonly_violations=12 ids=[S065,S068,S083,S115,S168,S194,S196,S225,S229,S248,S270,S281] deleted=[] superseded=[S065,S068,S083,S115,S168,S194,S196,S225,S229,S248,S270,S281] round_changed=[S065,S068,S083,S115,S168,S194,S196,S225,S229,S248,S270,S281]
+  repo15 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S097,S101,S235] deleted=[S047,S050] superseded=[] round_changed=[S101]
+      got:  appendonly_violations=10 ids=[S029,S097,S101,S132,S210,S235,S248,S256,S287,S293] deleted=[] superseded=[S029,S097,S101,S132,S210,S235,S248,S256,S287,S293] round_changed=[S029,S097,S101,S132,S210,S235,S248,S256,S287,S293]
+  repo16 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S064,S121] deleted=[S015] superseded=[S064,S121] round_changed=[S015,S064,S121]
+      got:  appendonly_violations=8 ids=[S035,S039,S064,S121,S154,S220,S249,S286] deleted=[] superseded=[S035,S039,S064,S121,S154,S220,S249,S286] round_changed=[S035,S039,S064,S121,S154,S220,S249,S286]
+  repo17 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S280] deleted=[S004,S034] superseded=[] round_changed=[S004,S034,S222,S280]
+      got:  appendonly_violations=12 ids=[S001,S020,S024,S139,S171,S196,S203,S222,S271,S280,S288,S291] deleted=[] superseded=[S001,S020,S024,S139,S171,S196,S203,S222,S271,S280,S288,S291] round_changed=[S001,S020,S024,S139,S171,S196,S203,S222,S271,S280,S288,S291]
+  repo18 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S117,S286] superseded=[] round_changed=[S117]
+      got:  appendonly_violations=7 ids=[S011,S090,S149,S155,S216,S266,S293] deleted=[] superseded=[S011,S090,S149,S155,S216,S266,S293] round_changed=[S011,S090,S149,S155,S216,S266,S293]
+  repo19 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S207,S243] superseded=[] round_changed=[S243,S244]
+      got:  appendonly_violations=8 ids=[S053,S061,S082,S118,S177,S244,S258,S278] deleted=[] superseded=[S053,S061,S082,S118,S177,S244,S258,S278] round_changed=[S053,S061,S082,S118,S177,S244,S258,S278]
+  repo20 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S264] deleted=[S045,S134,S246] superseded=[S264] round_changed=[S134]
+      got:  appendonly_violations=7 ids=[S006,S010,S073,S074,S221,S264,S289] deleted=[] superseded=[S006,S010,S073,S074,S221,S264,S289] round_changed=[S006,S010,S073,S074,S221,S264,S289]
+  repo21 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S256] deleted=[S047,S158] superseded=[] round_changed=[S047,S225,S256]
+      got:  appendonly_violations=9 ids=[S097,S108,S110,S137,S178,S191,S225,S256,S289] deleted=[] superseded=[S097,S108,S110,S137,S178,S191,S225,S256,S289] round_changed=[S097,S108,S110,S137,S178,S191,S225,S256,S289]
+  repo22 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S060] deleted=[S105,S184,S268] superseded=[S060] round_changed=[S120,S184,S268]
+      got:  appendonly_violations=12 ids=[S024,S027,S060,S089,S120,S125,S135,S151,S251,S269,S278,S298] deleted=[] superseded=[S024,S027,S060,S089,S120,S125,S135,S151,S251,S269,S278,S298] round_changed=[S024,S027,S060,S089,S120,S125,S135,S151,S251,S269,S278,S298]
+  repo23 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S240] deleted=[S193] superseded=[] round_changed=[S193,S240]
+      got:  appendonly_violations=10 ids=[S065,S114,S131,S187,S217,S224,S231,S240,S243,S290] deleted=[] superseded=[S065,S114,S131,S187,S217,S224,S231,S240,S243,S290] round_changed=[S065,S114,S131,S187,S217,S224,S231,S240,S243,S290]
+real arm: FAIL (0.3s)
+  tool:   appendonly_violations=204 ids=[S001,S002,S003,S004,S005,S006,S007,S008,S009,S010,S011,S012,S013,S014,S015,S016,S017,S018,S019,S020,S021,S022,S023,S024,S025,S026,S027,S028,S029,S030,S031,S032,S033,S034,S035,S036,S037,S038,S039,S040,S041,S042,S043,S044,S045,S046,S047,S048,S049,S050,S051,S052,S053,S054,S055,S056,S057,S058,S059,S060,S061,S062,S063,S064,S065,S066,S067,S068,S069,S070,S071,S072,S073,S074,S075,S076,S077,S078,S079,S080,S081,S082,S083,S084,S085,S086,S087,S088,S089,S090,S091,S092,S093,S094,S095,S096,S097,S098,S099,S100,S101,S102,S103,S104,S105,S106,S107,S108,S109,S110,S111,S112,S113,S114,S115,S116,S117,S118,S119,S120,S121,S122,S123,S124,S125,S126,S127,S128,S129,S130,S131,S132,S133,S134,S135,S136,S137,S138,S139,S140,S141,S142,S143,S144,S145,S146,S147,S148,S149,S150,S151,S152,S153,S154,S155,S156,S157,S158,S159,S160,S161,S162,S163,S164,S165,S166,S167,S168,S169,S170,S171,S172,S173,S174,S175,S176,S177,S178,S179,S180,S181,S182,S183,S184,S185,S186,S187,S188,S189,S190,S191,S192,S193,S194,S195,S196,S197,S198,S199,S200,S201,S202,S203,S204] deleted=[] superseded=[S001,S002,S003,S004,S005,S006,S007,S008,S009,S010,S011,S012,S013,S014,S015,S016,S017,S018,S019,S020,S021,S022,S023,S024,S025,S026,S027,S028,S029,S030,S031,S032,S033,S034,S035,S036,S037,S038,S039,S040,S041,S042,S043,S044,S045,S046,S047,S048,S049,S050,S051,S052,S053,S054,S055,S056,S057,S058,S059,S060,S061,S062,S063,S064,S065,S066,S067,S068,S069,S070,S071,S072,S073,S074,S075,S076,S077,S078,S079,S080,S081,S082,S083,S084,S085,S086,S087,S088,S089,S090,S091,S092,S093,S094,S095,S096,S097,S098,S099,S100,S101,S102,S103,S104,S105,S106,S107,S108,S109,S110,S111,S112,S113,S114,S115,S116,S117,S118,S119,S120,S121,S122,S123,S124,S125,S126,S127,S128,S129,S130,S131,S132,S133,S134,S135,S136,S137,S138,S139,S140,S141,S142,S143,S144,S145,S146,S147,S148,S149,S150,S151,S152,S153,S154,S155,S156,S157,S158,S159,S160,S161,S162,S163,S164,S165,S166,S167,S168,S169,S170,S171,S172,S173,S174,S175,S176,S177,S178,S179,S180,S181,S182,S183,S184,S185,S186,S187,S188,S189,S190,S191,S192,S193,S194,S195,S196,S197,S198,S199,S200,S201,S202,S203,S204] round_changed=[S001,S002,S003,S004,S005,S006,S007,S008,S009,S010,S011,S012,S013,S014,S015,S016,S017,S018,S019,S020,S021,S022,S023,S024,S025,S026,S027,S028,S029,S030,S031,S032,S033,S034,S035,S036,S037,S038,S039,S040,S041,S042,S043,S044,S045,S046,S047,S048,S049,S050,S051,S052,S053,S054,S055,S056,S057,S058,S059,S060,S061,S062,S063,S064,S065,S066,S067,S068,S069,S070,S071,S072,S073,S074,S075,S076,S077,S078,S079,S080,S081,S082,S083,S084,S085,S086,S087,S088,S089,S090,S091,S092,S093,S094,S095,S096,S097,S098,S099,S100,S101,S102,S103,S104,S105,S106,S107,S108,S109,S110,S111,S112,S113,S114,S115,S116,S117,S118,S119,S120,S121,S122,S123,S124,S125,S126,S127,S128,S129,S130,S131,S132,S133,S134,S135,S136,S137,S138,S139,S140,S141,S142,S143,S144,S145,S146,S147,S148,S149,S150,S151,S152,S153,S154,S155,S156,S157,S158,S159,S160,S161,S162,S163,S164,S165,S166,S167,S168,S169,S170,S171,S172,S173,S174,S175,S176,S177,S178,S179,S180,S181,S182,S183,S184,S185,S186,S187,S188,S189,S190,S191,S192,S193,S194,S195,S196,S197,S198,S199,S200,S201,S202,S203,S204]
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  diff: ids: want=['S041', 'S044', 'S051', 'S062', 'S064', 'S069', 'S179', 'S180', 'S181', 'S182', 'S183', 'S184', 'S185', 'S186', 'S188', 'S189', 'S190', 'S193'] got=['S001', 'S002', 'S003', 'S004', 'S005', 'S006', 'S007', 'S008', 'S009', 'S010', 'S011', 'S012', 'S013', 'S014', 'S015', 'S016', 'S017', 'S018', 'S019', 'S020', 'S021', 'S022', 'S023', 'S024', 'S025', 'S026', 'S027', 'S028', 'S029', 'S030', 'S031', 'S032', 'S033', 'S034', 'S035', 'S036', 'S037', 'S038', 'S039', 'S040', 'S041', 'S042', 'S043', 'S044', 'S045', 'S046', 'S047', 'S048', 'S049', 'S050', 'S051', 'S052', 'S053', 'S054', 'S055', 'S056', 'S057', 'S058', 'S059', 'S060', 'S061', 'S062', 'S063', 'S064', 'S065', 'S066', 'S067', 'S068', 'S069', 'S070', 'S071', 'S072', 'S073', 'S074', 'S075', 'S076', 'S077', 'S078', 'S079', 'S080', 'S081', 'S082', 'S083', 'S084', 'S085', 'S086', 'S087', 'S088', 'S089', 'S090', 'S091', 'S092', 'S093', 'S094', 'S095', 'S096', 'S097', 'S098', 'S099', 'S100', 'S101', 'S102', 'S103', 'S104', 'S105', 'S106', 'S107', 'S108', 'S109', 'S110', 'S111', 'S112', 'S113', 'S114', 'S115', 'S116', 'S117', 'S118', 'S119', 'S120', 'S121', 'S122', 'S123', 'S124', 'S125', 'S126', 'S127', 'S128', 'S129', 'S130', 'S131', 'S132', 'S133', 'S134', 'S135', 'S136', 'S137', 'S138', 'S139', 'S140', 'S141', 'S142', 'S143', 'S144', 'S145', 'S146', 'S147', 'S148', 'S149', 'S150', 'S151', 'S152', 'S153', 'S154', 'S155', 'S156', 'S157', 'S158', 'S159', 'S160', 'S161', 'S162', 'S163', 'S164', 'S165', 'S166', 'S167', 'S168', 'S169', 'S170', 'S171', 'S172', 'S173', 'S174', 'S175', 'S176', 'S177', 'S178', 'S179', 'S180', 'S181', 'S182', 'S183', 'S184', 'S185', 'S186', 'S187', 'S188', 'S189', 'S190', 'S191', 'S192', 'S193', 'S194', 'S195', 'S196', 'S197', 'S198', 'S199', 'S200', 'S201', 'S202', 'S203', 'S204']
+  diff: superseded: want=['S069', 'S182', 'S193'] got=['S001', 'S002', 'S003', 'S004', 'S005', 'S006', 'S007', 'S008', 'S009', 'S010', 'S011', 'S012', 'S013', 'S014', 'S015', 'S016', 'S017', 'S018', 'S019', 'S020', 'S021', 'S022', 'S023', 'S024', 'S025', 'S026', 'S027', 'S028', 'S029', 'S030', 'S031', 'S032', 'S033', 'S034', 'S035', 'S036', 'S037', 'S038', 'S039', 'S040', 'S041', 'S042', 'S043', 'S044', 'S045', 'S046', 'S047', 'S048', 'S049', 'S050', 'S051', 'S052', 'S053', 'S054', 'S055', 'S056', 'S057', 'S058', 'S059', 'S060', 'S061', 'S062', 'S063', 'S064', 'S065', 'S066', 'S067', 'S068', 'S069', 'S070', 'S071', 'S072', 'S073', 'S074', 'S075', 'S076', 'S077', 'S078', 'S079', 'S080', 'S081', 'S082', 'S083', 'S084', 'S085', 'S086', 'S087', 'S088', 'S089', 'S090', 'S091', 'S092', 'S093', 'S094', 'S095', 'S096', 'S097', 'S098', 'S099', 'S100', 'S101', 'S102', 'S103', 'S104', 'S105', 'S106', 'S107', 'S108', 'S109', 'S110', 'S111', 'S112', 'S113', 'S114', 'S115', 'S116', 'S117', 'S118', 'S119', 'S120', 'S121', 'S122', 'S123', 'S124', 'S125', 'S126', 'S127', 'S128', 'S129', 'S130', 'S131', 'S132', 'S133', 'S134', 'S135', 'S136', 'S137', 'S138', 'S139', 'S140', 'S141', 'S142', 'S143', 'S144', 'S145', 'S146', 'S147', 'S148', 'S149', 'S150', 'S151', 'S152', 'S153', 'S154', 'S155', 'S156', 'S157', 'S158', 'S159', 'S160', 'S161', 'S162', 'S163', 'S164', 'S165', 'S166', 'S167', 'S168', 'S169', 'S170', 'S171', 'S172', 'S173', 'S174', 'S175', 'S176', 'S177', 'S178', 'S179', 'S180', 'S181', 'S182', 'S183', 'S184', 'S185', 'S186', 'S187', 'S188', 'S189', 'S190', 'S191', 'S192', 'S193', 'S194', 'S195', 'S196', 'S197', 'S198', 'S199', 'S200', 'S201', 'S202', 'S203', 'S204']
+  diff: round_changed: want=['S182', 'S193'] got=['S001', 'S002', 'S003', 'S004', 'S005', 'S006', 'S007', 'S008', 'S009', 'S010', 'S011', 'S012', 'S013', 'S014', 'S015', 'S016', 'S017', 'S018', 'S019', 'S020', 'S021', 'S022', 'S023', 'S024', 'S025', 'S026', 'S027', 'S028', 'S029', 'S030', 'S031', 'S032', 'S033', 'S034', 'S035', 'S036', 'S037', 'S038', 'S039', 'S040', 'S041', 'S042', 'S043', 'S044', 'S045', 'S046', 'S047', 'S048', 'S049', 'S050', 'S051', 'S052', 'S053', 'S054', 'S055', 'S056', 'S057', 'S058', 'S059', 'S060', 'S061', 'S062', 'S063', 'S064', 'S065', 'S066', 'S067', 'S068', 'S069', 'S070', 'S071', 'S072', 'S073', 'S074', 'S075', 'S076', 'S077', 'S078', 'S079', 'S080', 'S081', 'S082', 'S083', 'S084', 'S085', 'S086', 'S087', 'S088', 'S089', 'S090', 'S091', 'S092', 'S093', 'S094', 'S095', 'S096', 'S097', 'S098', 'S099', 'S100', 'S101', 'S102', 'S103', 'S104', 'S105', 'S106', 'S107', 'S108', 'S109', 'S110', 'S111', 'S112', 'S113', 'S114', 'S115', 'S116', 'S117', 'S118', 'S119', 'S120', 'S121', 'S122', 'S123', 'S124', 'S125', 'S126', 'S127', 'S128', 'S129', 'S130', 'S131', 'S132', 'S133', 'S134', 'S135', 'S136', 'S137', 'S138', 'S139', 'S140', 'S141', 'S142', 'S143', 'S144', 'S145', 'S146', 'S147', 'S148', 'S149', 'S150', 'S151', 'S152', 'S153', 'S154', 'S155', 'S156', 'S157', 'S158', 'S159', 'S160', 'S161', 'S162', 'S163', 'S164', 'S165', 'S166', 'S167', 'S168', 'S169', 'S170', 'S171', 'S172', 'S173', 'S174', 'S175', 'S176', 'S177', 'S178', 'S179', 'S180', 'S181', 'S182', 'S183', 'S184', 'S185', 'S186', 'S187', 'S188', 'S189', 'S190', 'S191', 'S192', 'S193', 'S194', 'S195', 'S196', 'S197', 'S198', 'S199', 'S200', 'S201', 'S202', 'S203', 'S204']
+  diff: violations: want=18 got=204
+  tool exit=1
+C2=unmet
+seed=13161941131024218871
+EXIT=1
+
+== J4 control=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J4.py sha256=d7e45111051b156f962b8cac319fdf67342ac69de272919fa76e2a0e2aaed39d counter=count-c2.py sha256=c7edaacfff029c2055bee6ddda42ff6f5c040dad7fbac81e9d169602edcbac34
+P-C2: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed on each of 24 sandbox SOURCES.md histories drawn at run time, and on the lane's own history (rev 6bd57097, round base f10a320d) it prints exactly the counter's independent oracle, which lists at least one id.
+tool: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J4.py
+blind arm: 17/24 sandbox histories matched the hidden truth (3.4s; coverage: deletions=23 changed-back=19 superseded=9)
+  repo00 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S216,S269] deleted=[S229,S236] superseded=[S216] round_changed=[S229,S269]
+      got:  appendonly_violations=4 ids=[S216,S269] deleted=[S229,S236] superseded=[S216] round_changed=[S229]
+  repo02 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S065,S174] deleted=[S196] superseded=[S065] round_changed=[S065,S174,S196]
+      got:  appendonly_violations=3 ids=[S065,S174] deleted=[S196] superseded=[S065] round_changed=[S065,S196]
+  repo05 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S041,S060] deleted=[S033,S219,S266] superseded=[] round_changed=[S033,S041,S060,S113,S219,S266]
+      got:  appendonly_violations=5 ids=[S041,S060] deleted=[S033,S219,S266] superseded=[] round_changed=[S033,S041,S113,S219,S266]
+  repo07 FAIL: lists differ
+      want: appendonly_violations=4 ids=[] deleted=[S022,S059,S144,S299] superseded=[] round_changed=[S022,S059,S131,S144,S299]
+      got:  appendonly_violations=4 ids=[] deleted=[S022,S059,S144,S299] superseded=[] round_changed=[S022,S059,S144,S299]
+  repo19 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S146,S188] superseded=[] round_changed=[S158,S164,S188]
+      got:  appendonly_violations=2 ids=[] deleted=[S146,S188] superseded=[] round_changed=[S158,S188]
+  repo20 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S020] deleted=[S075,S089,S239,S282] superseded=[S020] round_changed=[S020,S048,S075,S089,S239,S282]
+      got:  appendonly_violations=5 ids=[S020] deleted=[S075,S089,S239,S282] superseded=[S020] round_changed=[S020,S075,S089,S239,S282]
+  repo21 FAIL: lists differ
+      want: appendonly_violations=1 ids=[] deleted=[S168] superseded=[] round_changed=[S168,S187,S249]
+      got:  appendonly_violations=1 ids=[] deleted=[S168] superseded=[] round_changed=[S168]
+real arm: FAIL (0.5s)
+  tool:   appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182]
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  diff: round_changed: want=['S182', 'S193'] got=['S182']
+  tool exit=1
+C2=unmet
+seed=11575414435583937142
+EXIT=1
+
+== J5 control=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J5.py sha256=276b6b19b0c67770f1dccff50fd6ae016b335794c302f37b0bdc832b7a8f56e7 counter=count-c2.py sha256=c7edaacfff029c2055bee6ddda42ff6f5c040dad7fbac81e9d169602edcbac34
+P-C2: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed on each of 24 sandbox SOURCES.md histories drawn at run time, and on the lane's own history (rev 6bd57097, round base f10a320d) it prints exactly the counter's independent oracle, which lists at least one id.
+tool: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J5.py
+blind arm: 0/24 sandbox histories matched the hidden truth (3.5s; coverage: deletions=24 changed-back=13 superseded=12)
+  repo00 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S136,S230] deleted=[S014,S206] superseded=[S136,S230] round_changed=[]
+      got:  appendonly_violations=2 ids=[S136,S230] deleted=[] superseded=[S136,S230] round_changed=[]
+  repo01 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S009] deleted=[S293] superseded=[S009] round_changed=[S009]
+      got:  appendonly_violations=1 ids=[S009] deleted=[] superseded=[S009] round_changed=[S009]
+  repo02 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S110,S168] deleted=[S050,S092,S137] superseded=[S168] round_changed=[S050,S110,S137,S168]
+      got:  appendonly_violations=2 ids=[S110,S168] deleted=[] superseded=[S168] round_changed=[S110,S168]
+  repo03 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S156] deleted=[S083,S236,S245,S255] superseded=[] round_changed=[S083,S156,S245,S255]
+      got:  appendonly_violations=1 ids=[S156] deleted=[] superseded=[] round_changed=[S156]
+  repo04 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S096,S285] deleted=[S139,S145] superseded=[S096] round_changed=[S139,S145,S285]
+      got:  appendonly_violations=2 ids=[S096,S285] deleted=[] superseded=[S096] round_changed=[S285]
+  repo05 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S094] deleted=[S046] superseded=[S094] round_changed=[S046,S094,S112]
+      got:  appendonly_violations=1 ids=[S094] deleted=[] superseded=[S094] round_changed=[S094,S112]
+  repo06 FAIL: lists differ
+      want: appendonly_violations=6 ids=[S218] deleted=[S018,S117,S124,S157,S234] superseded=[S218] round_changed=[S018]
+      got:  appendonly_violations=1 ids=[S218] deleted=[] superseded=[S218] round_changed=[]
+  repo07 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S112] deleted=[S095,S215] superseded=[] round_changed=[]
+      got:  appendonly_violations=1 ids=[S112] deleted=[] superseded=[] round_changed=[]
+  repo08 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S064] deleted=[S088,S147] superseded=[S064] round_changed=[]
+      got:  appendonly_violations=1 ids=[S064] deleted=[] superseded=[S064] round_changed=[]
+  repo09 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S060] deleted=[S019,S265,S294] superseded=[] round_changed=[S019,S060,S265]
+      got:  appendonly_violations=1 ids=[S060] deleted=[] superseded=[] round_changed=[S060]
+  repo10 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S174] deleted=[S105,S179,S266] superseded=[] round_changed=[S105,S174,S179,S266]
+      got:  appendonly_violations=1 ids=[S174] deleted=[] superseded=[] round_changed=[S174,S266]
+  repo11 FAIL: lists differ
+      want: appendonly_violations=3 ids=[] deleted=[S001,S117,S188] superseded=[] round_changed=[S055,S188]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[S055]
+  repo12 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S015,S116] deleted=[S146] superseded=[S015,S116] round_changed=[S015,S146]
+      got:  appendonly_violations=2 ids=[S015,S116] deleted=[] superseded=[S015,S116] round_changed=[S015]
+  repo13 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S288] deleted=[S084,S131,S183] superseded=[] round_changed=[S183,S288]
+      got:  appendonly_violations=1 ids=[S288] deleted=[] superseded=[] round_changed=[S288]
+  repo14 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S128,S138] superseded=[] round_changed=[]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[]
+  repo15 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S080,S090] superseded=[] round_changed=[S080,S090,S287]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[S287]
+  repo16 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S223,S256] deleted=[S063] superseded=[S223] round_changed=[S063,S256]
+      got:  appendonly_violations=2 ids=[S223,S256] deleted=[] superseded=[S223] round_changed=[S256]
+  repo17 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S072] deleted=[S219] superseded=[] round_changed=[S011,S072,S219]
+      got:  appendonly_violations=1 ids=[S072] deleted=[] superseded=[] round_changed=[S011,S072]
+  repo18 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S138,S139,S198] deleted=[S031,S051] superseded=[S138] round_changed=[S031,S198]
+      got:  appendonly_violations=3 ids=[S138,S139,S198] deleted=[] superseded=[S138] round_changed=[S198]
+  repo19 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S263] deleted=[S011,S119,S129] superseded=[] round_changed=[S119,S129,S263,S297]
+      got:  appendonly_violations=1 ids=[S263] deleted=[] superseded=[] round_changed=[S263,S297]
+  repo20 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S158] deleted=[S058] superseded=[S158] round_changed=[S058]
+      got:  appendonly_violations=1 ids=[S158] deleted=[] superseded=[S158] round_changed=[]
+  repo21 FAIL: lists differ
+      want: appendonly_violations=1 ids=[] deleted=[S082] superseded=[] round_changed=[S193]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[S193]
+  repo22 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S209] deleted=[S295] superseded=[S209] round_changed=[]
+      got:  appendonly_violations=1 ids=[S209] deleted=[] superseded=[S209] round_changed=[]
+  repo23 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S039] deleted=[S062] superseded=[] round_changed=[S013,S039]
+      got:  appendonly_violations=1 ids=[S039] deleted=[] superseded=[] round_changed=[S013,S039]
+real arm: pass (0.5s)
+  tool:   appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  tool exit=1
+C2=unmet
+seed=17118268610459849644
+EXIT=1
+
+== J6 control=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J6.py sha256=6c8d4be47891c27fee95c7bedaf1f813d540aa1b7c894bc1b278c1eedd69a640 counter=count-c2.py sha256=c7edaacfff029c2055bee6ddda42ff6f5c040dad7fbac81e9d169602edcbac34
+P-C2: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed on each of 24 sandbox SOURCES.md histories drawn at run time, and on the lane's own history (rev 6bd57097, round base f10a320d) it prints exactly the counter's independent oracle, which lists at least one id.
+tool: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J6.py
+blind arm: 1/24 sandbox histories matched the hidden truth (3.9s; coverage: deletions=22 changed-back=16 superseded=8)
+  repo00 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S133] deleted=[S237,S254,S277] superseded=[S133] round_changed=[S171,S237]
+      got:  appendonly_violations=12 ids=[S025,S058,S083,S120,S127,S133,S171,S184,S239,S258,S278] deleted=[S120] superseded=[S133,S171] round_changed=[S025,S058,S083,S120,S127,S133,S171,S184,S239,S258,S278]
+  repo01 FAIL: lists differ
+      want: appendonly_violations=3 ids=[] deleted=[S013,S057,S113] superseded=[] round_changed=[S013,S113,S158]
+      got:  appendonly_violations=5 ids=[S005,S146,S165,S264] deleted=[S165] superseded=[] round_changed=[S005,S013,S146,S158,S165,S264]
+  repo02 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S115] deleted=[S201] superseded=[] round_changed=[S115,S201]
+      got:  appendonly_violations=5 ids=[S086,S115,S142,S199,S235] deleted=[] superseded=[] round_changed=[S011,S086,S115,S142,S181,S199,S235]
+  repo03 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S067,S246] deleted=[S134,S163,S200] superseded=[] round_changed=[S067,S134,S156,S200,S246]
+      got:  appendonly_violations=10 ids=[S009,S032,S053,S067,S112,S148,S156,S231,S246,S255] deleted=[] superseded=[] round_changed=[S009,S032,S053,S067,S112,S134,S148,S156,S200,S231,S246,S255]
+  repo04 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S230,S274] deleted=[S093,S237] superseded=[S230] round_changed=[S274]
+      got:  appendonly_violations=10 ids=[S063,S076,S081,S126,S166,S230,S252,S274,S277,S285] deleted=[] superseded=[S230] round_changed=[S166,S274]
+  repo05 FAIL: lists differ
+      want: appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[S292]
+      got:  appendonly_violations=9 ids=[S078,S112,S143,S163,S187,S196,S226,S240,S292] deleted=[] superseded=[] round_changed=[S078,S112,S143,S163,S187,S196,S226,S240,S292]
+  repo06 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S275] deleted=[S117,S145] superseded=[] round_changed=[S150,S275]
+      got:  appendonly_violations=8 ids=[S150,S189,S216,S231,S245,S260,S275] deleted=[S145] superseded=[S260] round_changed=[S150,S189,S216,S231,S245,S275]
+  repo07 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S022] deleted=[S040,S044] superseded=[S022] round_changed=[S022,S040,S044,S128]
+      got:  appendonly_violations=11 ids=[S001,S022,S058,S070,S125,S128,S154,S204,S241,S249,S295] deleted=[] superseded=[S022] round_changed=[S001,S022,S039,S040,S058,S070,S125,S128,S154,S204,S241,S249,S295]
+  repo08 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S023] deleted=[S140,S194] superseded=[S023] round_changed=[S023,S140,S194]
+      got:  appendonly_violations=12 ids=[S023,S030,S052,S173,S179,S188,S198,S203,S214,S249] deleted=[S173,S203] superseded=[S023] round_changed=[S023,S030,S052,S140,S173,S179,S188,S194,S198,S203,S214,S249]
+  repo09 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S210] deleted=[S070] superseded=[S210] round_changed=[S210,S249]
+      got:  appendonly_violations=5 ids=[S034,S108,S210,S214,S232] deleted=[] superseded=[S210] round_changed=[S034,S108,S210,S232,S249]
+  repo10 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S215,S237] superseded=[] round_changed=[S215,S237]
+      got:  appendonly_violations=9 ids=[S010,S059,S073,S085,S181,S202,S265] deleted=[S215,S265] superseded=[] round_changed=[S010,S059,S073,S085,S181,S202,S215,S235,S265]
+  repo12 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S140,S253] deleted=[S056,S082,S221] superseded=[S140] round_changed=[S056,S221,S253]
+      got:  appendonly_violations=12 ids=[S035,S041,S086,S088,S131,S136,S140,S173,S226,S239,S253] deleted=[S136] superseded=[S140] round_changed=[S035,S041,S056,S086,S088,S131,S136,S140,S173,S226,S239,S253]
+  repo13 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S172,S230] superseded=[] round_changed=[]
+      got:  appendonly_violations=6 ids=[S055,S185,S223,S226,S261,S282] deleted=[] superseded=[] round_changed=[]
+  repo14 FAIL: lists differ
+      want: appendonly_violations=3 ids=[] deleted=[S024,S228,S262] superseded=[] round_changed=[S024,S228,S279]
+      got:  appendonly_violations=11 ids=[S051,S052,S112,S118,S122,S180,S215,S271,S273,S288,S290] deleted=[] superseded=[] round_changed=[S051,S052,S112,S118,S122,S180,S215,S228,S271,S273,S279,S288,S290]
+  repo15 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S092] deleted=[S128] superseded=[] round_changed=[S092]
+      got:  appendonly_violations=8 ids=[S027,S062,S092,S153,S171,S202,S224,S256] deleted=[] superseded=[S153] round_changed=[S092]
+  repo16 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S121,S131] deleted=[S021,S096] superseded=[S121,S131] round_changed=[]
+      got:  appendonly_violations=10 ids=[S024,S031,S064,S074,S103,S121,S130,S131,S183,S188] deleted=[] superseded=[S121,S131] round_changed=[S024,S031,S064,S074,S103,S130,S131,S183,S188]
+  repo17 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S113] deleted=[S020] superseded=[] round_changed=[S014,S020,S113]
+      got:  appendonly_violations=8 ids=[S014,S048,S051,S113,S139,S195,S236,S292] deleted=[] superseded=[] round_changed=[S014,S020,S048,S050,S051,S113,S139,S146,S195,S236,S292]
+  repo18 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S015,S091] superseded=[] round_changed=[S091]
+      got:  appendonly_violations=9 ids=[S083,S129,S142,S152,S154,S204,S220] deleted=[S152,S154] superseded=[] round_changed=[S083,S129,S142,S152,S154,S204,S220]
+  repo19 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S121,S201] deleted=[S189,S288] superseded=[] round_changed=[S037,S121,S201,S288]
+      got:  appendonly_violations=10 ids=[S036,S069,S121,S126,S149,S169,S201,S256,S285] deleted=[S069] superseded=[] round_changed=[S036,S037,S069,S121,S126,S149,S169,S201,S256,S285]
+  repo20 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S170] deleted=[S072,S083,S260] superseded=[S170] round_changed=[S072,S083,S170,S260]
+      got:  appendonly_violations=12 ids=[S023,S033,S037,S051,S077,S170,S180,S201,S206,S224,S251] deleted=[S201] superseded=[S170] round_changed=[S023,S033,S037,S051,S072,S077,S170,S180,S201,S206,S224,S251,S260]
+  repo21 FAIL: lists differ
+      want: appendonly_violations=3 ids=[] deleted=[S020,S082,S189] superseded=[] round_changed=[S189]
+      got:  appendonly_violations=11 ids=[S015,S022,S067,S072,S083,S087,S088,S120,S223,S260] deleted=[S087] superseded=[S223] round_changed=[S015,S022,S067,S072,S083,S087,S088,S120,S223,S260]
+  repo22 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S022,S163] deleted=[S010] superseded=[] round_changed=[S010,S022,S227]
+      got:  appendonly_violations=10 ids=[S022,S094,S146,S150,S163,S218,S227,S228,S236] deleted=[S146] superseded=[S227] round_changed=[S022,S094,S146,S150,S163,S218,S227,S228,S236]
+  repo23 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S137] deleted=[S036,S281] superseded=[] round_changed=[S091,S137,S281]
+      got:  appendonly_violations=11 ids=[S066,S091,S103,S123,S137,S152,S163,S249,S253,S285] deleted=[S253] superseded=[] round_changed=[S039,S091,S103,S123,S137,S152,S163,S249,S253,S285]
+real arm: FAIL (0.6s)
+  tool:   appendonly_violations=23 ids=[S041,S044,S051,S062,S064,S069,S147,S148,S149,S150,S151,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  diff: ids: want=['S041', 'S044', 'S051', 'S062', 'S064', 'S069', 'S179', 'S180', 'S181', 'S182', 'S183', 'S184', 'S185', 'S186', 'S188', 'S189', 'S190', 'S193'] got=['S041', 'S044', 'S051', 'S062', 'S064', 'S069', 'S147', 'S148', 'S149', 'S150', 'S151', 'S179', 'S180', 'S181', 'S182', 'S183', 'S184', 'S185', 'S186', 'S188', 'S189', 'S190', 'S193']
+  diff: violations: want=18 got=23
+  tool exit=1
+C2=unmet
+seed=4898169787034878142
+EXIT=1
+
+== J7 control=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J7.py sha256=4d919ac6b9e5f11470106890118767ba61c363e6aa62772cf8804ec8dd0f4302 counter=count-c2.py sha256=c7edaacfff029c2055bee6ddda42ff6f5c040dad7fbac81e9d169602edcbac34
+P-C2: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed on each of 24 sandbox SOURCES.md histories drawn at run time, and on the lane's own history (rev 6bd57097, round base f10a320d) it prints exactly the counter's independent oracle, which lists at least one id.
+tool: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J7.py
+blind arm: 16/24 sandbox histories matched the hidden truth (3.5s; coverage: deletions=21 changed-back=16 superseded=8)
+  repo00 FAIL: lists differ
+      want: appendonly_violations=8 ids=[S069,S172,S197,S244,S294] deleted=[S063,S216,S230] superseded=[S197,S244] round_changed=[S063,S069,S172,S216,S230,S244,S294]
+      got:  appendonly_violations=6 ids=[S069,S172,S294] deleted=[S063,S216,S230] superseded=[S197,S244] round_changed=[S063,S069,S172,S216,S230,S244,S294]
+  repo04 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S246] deleted=[S223,S281] superseded=[S246] round_changed=[S223,S246,S281]
+      got:  appendonly_violations=2 ids=[] deleted=[S223,S281] superseded=[S246] round_changed=[S223,S246,S281]
+  repo05 FAIL: lists differ
+      want: appendonly_violations=1 ids=[S229] deleted=[] superseded=[S229] round_changed=[S211]
+      got:  appendonly_violations=0 ids=[] deleted=[] superseded=[S229] round_changed=[S211]
+  repo08 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S072,S287] deleted=[S129,S223,S233] superseded=[S287] round_changed=[S072,S223,S233]
+      got:  appendonly_violations=4 ids=[S072] deleted=[S129,S223,S233] superseded=[S287] round_changed=[S072,S223,S233]
+  repo12 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S142] deleted=[S059,S166,S244] superseded=[S142] round_changed=[S059]
+      got:  appendonly_violations=3 ids=[] deleted=[S059,S166,S244] superseded=[S142] round_changed=[S059]
+  repo16 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S148] deleted=[S032,S206] superseded=[S148] round_changed=[S032,S147]
+      got:  appendonly_violations=2 ids=[] deleted=[S032,S206] superseded=[S148] round_changed=[S032,S147]
+  repo20 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S256] deleted=[S031,S135] superseded=[S256] round_changed=[S031,S135]
+      got:  appendonly_violations=2 ids=[] deleted=[S031,S135] superseded=[S256] round_changed=[S031,S135]
+  repo21 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S070] deleted=[S219] superseded=[S070] round_changed=[S070,S276]
+      got:  appendonly_violations=1 ids=[] deleted=[S219] superseded=[S070] round_changed=[S070,S276]
+real arm: FAIL (0.5s)
+  tool:   appendonly_violations=15 ids=[S041,S044,S051,S062,S064,S179,S180,S181,S183,S184,S185,S186,S188,S189,S190] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  diff: ids: want=['S041', 'S044', 'S051', 'S062', 'S064', 'S069', 'S179', 'S180', 'S181', 'S182', 'S183', 'S184', 'S185', 'S186', 'S188', 'S189', 'S190', 'S193'] got=['S041', 'S044', 'S051', 'S062', 'S064', 'S179', 'S180', 'S181', 'S183', 'S184', 'S185', 'S186', 'S188', 'S189', 'S190']
+  diff: violations: want=18 got=15
+  tool exit=1
+C2=unmet
+seed=7041699550776310889
+EXIT=1
+
+== J8 control=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J8.py sha256=3332b68e76bf52f7ddd37fd818cc37991399de9e0e888162c3076e389a92476b counter=count-c2.py sha256=c7edaacfff029c2055bee6ddda42ff6f5c040dad7fbac81e9d169602edcbac34
+P-C2: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed on each of 24 sandbox SOURCES.md histories drawn at run time, and on the lane's own history (rev 6bd57097, round base f10a320d) it prints exactly the counter's independent oracle, which lists at least one id.
+tool: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J8.py
+blind arm: 0/24 sandbox histories matched the hidden truth (3.4s; coverage: deletions=22 changed-back=14 superseded=10)
+  repo00 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S026] deleted=[S098] superseded=[S026] round_changed=[S026,S098]
+      got:  appendonly_violations=8 ids=[S012,S021,S067,S083,S106,S145,S292] deleted=[S098] superseded=[] round_changed=[S012,S021,S067,S083,S106,S145,S292]
+  repo01 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S241,S287] deleted=[] superseded=[] round_changed=[S095,S241,S287]
+      got:  appendonly_violations=6 ids=[S026,S094,S095,S234,S236,S242] deleted=[] superseded=[] round_changed=[S026,S094,S234,S236,S242]
+  repo02 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S269] deleted=[S118] superseded=[] round_changed=[S269]
+      got:  appendonly_violations=12 ids=[S117,S123,S162,S170,S183,S186,S250,S251,S259,S262,S284] deleted=[S118] superseded=[] round_changed=[S117,S123,S162,S170,S183,S186,S250,S251,S259,S262,S284]
+  repo03 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S110] deleted=[S126,S221] superseded=[S110] round_changed=[S110,S126,S221,S260]
+      got:  appendonly_violations=12 ids=[S019,S033,S059,S061,S129,S176,S179,S218,S240,S260] deleted=[S126,S221] superseded=[] round_changed=[S019,S033,S059,S061,S129,S176,S179,S218,S240]
+  repo04 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S042,S155] deleted=[S003,S004,S163] superseded=[S155] round_changed=[S003,S004,S042,S155,S163]
+      got:  appendonly_violations=7 ids=[S023,S095,S122,S170] deleted=[S003,S004,S163] superseded=[] round_changed=[S023,S095,S122,S170]
+  repo05 FAIL: lists differ
+      want: appendonly_violations=1 ids=[S177] deleted=[] superseded=[] round_changed=[S044,S177,S271]
+      got:  appendonly_violations=10 ids=[S022,S044,S090,S120,S122,S179,S200,S237,S271,S290] deleted=[] superseded=[] round_changed=[S022,S090,S120,S122,S179,S200,S237,S290]
+  repo06 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S178] deleted=[S071,S272] superseded=[] round_changed=[S071,S128,S178]
+      got:  appendonly_violations=5 ids=[S032,S034,S128] deleted=[S071,S272] superseded=[] round_changed=[S032,S034]
+  repo07 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S163] deleted=[S106] superseded=[] round_changed=[S001,S106,S163,S239]
+      got:  appendonly_violations=10 ids=[S001,S085,S147,S203,S217,S227,S239,S249,S259] deleted=[S106] superseded=[S239] round_changed=[S085,S147,S203,S217,S227,S249,S259]
+  repo08 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S056] deleted=[S009] superseded=[S056] round_changed=[S009]
+      got:  appendonly_violations=9 ids=[S019,S024,S042,S178,S201,S249,S278,S291] deleted=[S009] superseded=[] round_changed=[S019,S024,S042,S056,S178,S201,S249,S278,S291]
+  repo09 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S202] deleted=[S132] superseded=[] round_changed=[S132]
+      got:  appendonly_violations=14 ids=[S026,S065,S066,S079,S083,S138,S170,S176,S193,S206,S220,S257,S273] deleted=[S132] superseded=[] round_changed=[S026,S065,S066,S079,S083,S138,S170,S176,S193,S202,S206,S220,S257,S273]
+  repo10 FAIL: lists differ
+      want: appendonly_violations=6 ids=[S037,S127] deleted=[S051,S204,S263,S293] superseded=[S037] round_changed=[S037,S051,S127,S204,S263,S293]
+      got:  appendonly_violations=8 ids=[S008,S035,S187,S220] deleted=[S051,S204,S263,S293] superseded=[] round_changed=[S008,S035,S187,S220]
+  repo11 FAIL: lists differ
+      want: appendonly_violations=1 ids=[] deleted=[S208] superseded=[] round_changed=[S208]
+      got:  appendonly_violations=10 ids=[S032,S039,S127,S174,S230,S252,S253,S269,S292] deleted=[S208] superseded=[] round_changed=[S032,S039,S127,S174,S230,S252,S253,S269,S292]
+  repo12 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S034,S127,S243,S293] deleted=[S129] superseded=[S293] round_changed=[S034,S127,S129,S243]
+      got:  appendonly_violations=6 ids=[S002,S041,S043,S044,S235] deleted=[S129] superseded=[] round_changed=[S002,S041,S043,S044,S235,S293]
+  repo13 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S035] deleted=[S044] superseded=[] round_changed=[]
+      got:  appendonly_violations=11 ids=[S080,S103,S128,S145,S180,S194,S206,S209,S213,S265] deleted=[S044] superseded=[] round_changed=[S035,S080,S103,S128,S145,S180,S194,S206,S209,S213,S265]
+  repo14 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S006,S264] superseded=[] round_changed=[S264]
+      got:  appendonly_violations=12 ids=[S027,S045,S076,S077,S100,S127,S227,S282,S285,S292] deleted=[S006,S264] superseded=[] round_changed=[S027,S045,S076,S077,S100,S127,S227,S282,S285,S292]
+  repo15 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S078] deleted=[S233] superseded=[S078] round_changed=[S001,S078,S233]
+      got:  appendonly_violations=13 ids=[S001,S029,S038,S045,S130,S151,S189,S192,S207,S213,S244,S296] deleted=[S233] superseded=[] round_changed=[S029,S038,S045,S130,S151,S189,S192,S207,S213,S244,S296]
+  repo16 FAIL: lists differ
+      want: appendonly_violations=6 ids=[S004] deleted=[S037,S231,S269,S283,S298] superseded=[S004] round_changed=[S269]
+      got:  appendonly_violations=6 ids=[S053] deleted=[S037,S231,S269,S283,S298] superseded=[] round_changed=[S004,S053]
+  repo17 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S152,S179] superseded=[] round_changed=[S152,S179]
+      got:  appendonly_violations=7 ids=[S022,S083,S093,S257,S274] deleted=[S152,S179] superseded=[] round_changed=[S022,S083,S093,S257,S274]
+  repo18 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S282] deleted=[S130,S248,S268] superseded=[] round_changed=[S130,S268,S282]
+      got:  appendonly_violations=11 ids=[S005,S016,S045,S111,S158,S252,S254,S299] deleted=[S130,S248,S268] superseded=[] round_changed=[S005,S016,S045,S111,S158,S252,S254,S299]
+  repo19 FAIL: lists differ
+      want: appendonly_violations=3 ids=[] deleted=[S117,S135,S201] superseded=[] round_changed=[]
+      got:  appendonly_violations=12 ids=[S068,S089,S092,S136,S164,S196,S220,S232,S250] deleted=[S117,S135,S201] superseded=[] round_changed=[S068,S089,S092,S136,S164,S196,S220,S232,S250]
+  repo20 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S112,S155] deleted=[S132] superseded=[S155] round_changed=[S112,S132]
+      got:  appendonly_violations=6 ids=[S023,S037,S074,S083,S207] deleted=[S132] superseded=[] round_changed=[S023,S037,S074,S083,S155,S207]
+  repo21 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S046,S101] deleted=[S037,S249] superseded=[S101] round_changed=[]
+      got:  appendonly_violations=11 ids=[S013,S034,S043,S102,S149,S198,S254,S264,S272] deleted=[S037,S249] superseded=[] round_changed=[S013,S034,S043,S046,S101,S102,S149,S198,S254,S264,S272]
+  repo22 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S125] deleted=[S116,S179,S274] superseded=[] round_changed=[S125,S179,S274]
+      got:  appendonly_violations=13 ids=[S009,S030,S061,S093,S129,S182,S201,S248,S270,S296] deleted=[S116,S179,S274] superseded=[] round_changed=[S009,S030,S061,S093,S129,S182,S201,S248,S270,S296]
+  repo23 FAIL: lists differ
+      want: appendonly_violations=1 ids=[] deleted=[S115] superseded=[] round_changed=[S024,S046,S115,S134]
+      got:  appendonly_violations=12 ids=[S024,S046,S053,S098,S134,S158,S210,S231,S257,S264,S266] deleted=[S115] superseded=[S024,S134] round_changed=[S053,S098,S158,S210,S231,S257,S264,S266]
+real arm: FAIL (0.5s)
+  tool:   appendonly_violations=186 ids=[S001,S002,S003,S004,S005,S006,S007,S008,S009,S010,S011,S012,S013,S014,S015,S016,S017,S018,S019,S020,S021,S022,S023,S024,S025,S026,S027,S028,S029,S030,S031,S032,S033,S034,S035,S036,S037,S038,S039,S040,S042,S043,S045,S046,S047,S048,S049,S050,S052,S053,S054,S055,S056,S057,S058,S059,S060,S061,S063,S065,S066,S067,S068,S070,S071,S072,S073,S074,S075,S076,S077,S078,S079,S080,S081,S082,S083,S084,S085,S086,S087,S088,S089,S090,S091,S092,S093,S094,S095,S096,S097,S098,S099,S100,S101,S102,S103,S104,S105,S106,S107,S108,S109,S110,S111,S112,S113,S114,S115,S116,S117,S118,S119,S120,S121,S122,S123,S124,S125,S126,S127,S128,S129,S130,S131,S132,S133,S134,S135,S136,S137,S138,S139,S140,S141,S142,S143,S144,S145,S146,S147,S148,S149,S150,S151,S152,S153,S154,S155,S156,S157,S158,S159,S160,S161,S162,S163,S164,S165,S166,S167,S168,S169,S170,S171,S172,S173,S174,S175,S176,S177,S178,S187,S191,S192,S194,S195,S196,S197,S198,S199,S200,S201,S202,S203,S204] deleted=[] superseded=[S067,S070,S071,S083,S084,S090,S093,S096,S097,S101,S124,S127,S128,S129,S131,S140] round_changed=[S001,S002,S003,S004,S005,S006,S007,S008,S009,S010,S011,S012,S013,S014,S015,S016,S017,S018,S019,S020,S021,S022,S023,S024,S025,S026,S027,S028,S029,S030,S031,S032,S033,S034,S035,S036,S037,S038,S039,S040,S041,S042,S043,S044,S045,S046,S047,S048,S049,S050,S051,S052,S053,S054,S055,S056,S057,S058,S059,S060,S061,S062,S063,S064,S065,S066,S067,S068,S069,S070,S071,S072,S073,S074,S075,S076,S077,S078,S079,S080,S081,S082,S083,S084,S085,S086,S087,S088,S089,S090,S091,S092,S093,S094,S095,S096,S097,S098,S099,S100,S101,S102,S103,S104,S105,S106,S107,S108,S109,S110,S111,S112,S113,S114,S115,S116,S117,S118,S119,S120,S121,S122,S123,S124,S125,S126,S127,S128,S129,S130,S131,S132,S133,S134,S135,S136,S137,S138,S139,S140,S141,S142,S143,S144,S145,S146,S147,S148,S149,S150,S151,S152,S153,S154,S155,S156,S157,S158,S159,S160,S161,S162,S163,S164,S165,S166,S167,S168,S169,S170,S171,S172,S173,S174,S175,S176,S177,S178,S179,S180,S181,S183,S184,S185,S186,S187,S188,S189,S190,S191,S192,S194,S195,S196,S197,S198,S199,S200,S201,S202,S203,S204]
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  diff: ids: want=['S041', 'S044', 'S051', 'S062', 'S064', 'S069', 'S179', 'S180', 'S181', 'S182', 'S183', 'S184', 'S185', 'S186', 'S188', 'S189', 'S190', 'S193'] got=['S001', 'S002', 'S003', 'S004', 'S005', 'S006', 'S007', 'S008', 'S009', 'S010', 'S011', 'S012', 'S013', 'S014', 'S015', 'S016', 'S017', 'S018', 'S019', 'S020', 'S021', 'S022', 'S023', 'S024', 'S025', 'S026', 'S027', 'S028', 'S029', 'S030', 'S031', 'S032', 'S033', 'S034', 'S035', 'S036', 'S037', 'S038', 'S039', 'S040', 'S042', 'S043', 'S045', 'S046', 'S047', 'S048', 'S049', 'S050', 'S052', 'S053', 'S054', 'S055', 'S056', 'S057', 'S058', 'S059', 'S060', 'S061', 'S063', 'S065', 'S066', 'S067', 'S068', 'S070', 'S071', 'S072', 'S073', 'S074', 'S075', 'S076', 'S077', 'S078', 'S079', 'S080', 'S081', 'S082', 'S083', 'S084', 'S085', 'S086', 'S087', 'S088', 'S089', 'S090', 'S091', 'S092', 'S093', 'S094', 'S095', 'S096', 'S097', 'S098', 'S099', 'S100', 'S101', 'S102', 'S103', 'S104', 'S105', 'S106', 'S107', 'S108', 'S109', 'S110', 'S111', 'S112', 'S113', 'S114', 'S115', 'S116', 'S117', 'S118', 'S119', 'S120', 'S121', 'S122', 'S123', 'S124', 'S125', 'S126', 'S127', 'S128', 'S129', 'S130', 'S131', 'S132', 'S133', 'S134', 'S135', 'S136', 'S137', 'S138', 'S139', 'S140', 'S141', 'S142', 'S143', 'S144', 'S145', 'S146', 'S147', 'S148', 'S149', 'S150', 'S151', 'S152', 'S153', 'S154', 'S155', 'S156', 'S157', 'S158', 'S159', 'S160', 'S161', 'S162', 'S163', 'S164', 'S165', 'S166', 'S167', 'S168', 'S169', 'S170', 'S171', 'S172', 'S173', 'S174', 'S175', 'S176', 'S177', 'S178', 'S187', 'S191', 'S192', 'S194', 'S195', 'S196', 'S197', 'S198', 'S199', 'S200', 'S201', 'S202', 'S203', 'S204']
+  diff: superseded: want=['S069', 'S182', 'S193'] got=['S067', 'S070', 'S071', 'S083', 'S084', 'S090', 'S093', 'S096', 'S097', 'S101', 'S124', 'S127', 'S128', 'S129', 'S131', 'S140']
+  diff: round_changed: want=['S182', 'S193'] got=['S001', 'S002', 'S003', 'S004', 'S005', 'S006', 'S007', 'S008', 'S009', 'S010', 'S011', 'S012', 'S013', 'S014', 'S015', 'S016', 'S017', 'S018', 'S019', 'S020', 'S021', 'S022', 'S023', 'S024', 'S025', 'S026', 'S027', 'S028', 'S029', 'S030', 'S031', 'S032', 'S033', 'S034', 'S035', 'S036', 'S037', 'S038', 'S039', 'S040', 'S041', 'S042', 'S043', 'S044', 'S045', 'S046', 'S047', 'S048', 'S049', 'S050', 'S051', 'S052', 'S053', 'S054', 'S055', 'S056', 'S057', 'S058', 'S059', 'S060', 'S061', 'S062', 'S063', 'S064', 'S065', 'S066', 'S067', 'S068', 'S069', 'S070', 'S071', 'S072', 'S073', 'S074', 'S075', 'S076', 'S077', 'S078', 'S079', 'S080', 'S081', 'S082', 'S083', 'S084', 'S085', 'S086', 'S087', 'S088', 'S089', 'S090', 'S091', 'S092', 'S093', 'S094', 'S095', 'S096', 'S097', 'S098', 'S099', 'S100', 'S101', 'S102', 'S103', 'S104', 'S105', 'S106', 'S107', 'S108', 'S109', 'S110', 'S111', 'S112', 'S113', 'S114', 'S115', 'S116', 'S117', 'S118', 'S119', 'S120', 'S121', 'S122', 'S123', 'S124', 'S125', 'S126', 'S127', 'S128', 'S129', 'S130', 'S131', 'S132', 'S133', 'S134', 'S135', 'S136', 'S137', 'S138', 'S139', 'S140', 'S141', 'S142', 'S143', 'S144', 'S145', 'S146', 'S147', 'S148', 'S149', 'S150', 'S151', 'S152', 'S153', 'S154', 'S155', 'S156', 'S157', 'S158', 'S159', 'S160', 'S161', 'S162', 'S163', 'S164', 'S165', 'S166', 'S167', 'S168', 'S169', 'S170', 'S171', 'S172', 'S173', 'S174', 'S175', 'S176', 'S177', 'S178', 'S179', 'S180', 'S181', 'S183', 'S184', 'S185', 'S186', 'S187', 'S188', 'S189', 'S190', 'S191', 'S192', 'S194', 'S195', 'S196', 'S197', 'S198', 'S199', 'S200', 'S201', 'S202', 'S203', 'S204']
+  diff: violations: want=18 got=186
+  tool exit=1
+C2=unmet
+seed=16410989564024834250
+EXIT=1
+
+== J9 control=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J9.py sha256=75849ce2c6ef03d781412608217686bda10ae00a492dfacbec8d6b704b60e6b1 counter=count-c2.py sha256=c7edaacfff029c2055bee6ddda42ff6f5c040dad7fbac81e9d169602edcbac34
+P-C2: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed on each of 24 sandbox SOURCES.md histories drawn at run time, and on the lane's own history (rev 6bd57097, round base f10a320d) it prints exactly the counter's independent oracle, which lists at least one id.
+tool: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-36/c0/controls/J9.py
+blind arm: 0/24 sandbox histories matched the hidden truth (2.6s; coverage: deletions=22 changed-back=17 superseded=9)
+  repo00 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S242] deleted=[S125,S192,S218,S285] superseded=[S242] round_changed=[S192]
+      got:  appendonly_violations=3 ids=[S018,S245] deleted=[S245] superseded=[S018,S293] round_changed=[S245,S293]
+  repo01 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S292] deleted=[S181,S217] superseded=[] round_changed=[S036,S135,S217,S292]
+      got:  appendonly_violations=6 ids=[S135,S218,S279] deleted=[S120,S279,S292] superseded=[S036,S120,S135,S218] round_changed=[S120,S279,S292]
+  repo02 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S267] deleted=[S095,S206] superseded=[] round_changed=[S095,S206,S267]
+      got:  appendonly_violations=11 ids=[S001,S168,S182,S269,S289] deleted=[S001,S033,S182,S238,S266,S267] superseded=[S001,S033,S172,S182,S238,S267,S269,S289] round_changed=[S033,S266,S267,S289]
+  repo03 FAIL: lists differ
+      want: appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[S150,S194]
+      got:  appendonly_violations=16 ids=[S079,S130,S133,S226,S257,S259] deleted=[S009,S014,S058,S075,S130,S150,S194,S226,S257,S259] superseded=[S058,S130,S133,S226,S257] round_changed=[S075,S079,S133,S194,S222,S226,S257,S259]
+  repo04 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S182] deleted=[S064] superseded=[S182] round_changed=[S064,S168]
+      got:  appendonly_violations=21 ids=[S002,S066,S074,S079,S101,S163,S168,S174,S182,S269,S274] deleted=[S077,S079,S084,S163,S168,S174,S182,S262,S269,S274] superseded=[S002,S066,S077,S101,S163,S174,S182,S184] round_changed=[S002,S074,S077,S079,S084,S101,S174]
+  repo05 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S183,S253] deleted=[S219] superseded=[] round_changed=[S183,S219,S243,S253]
+      got:  appendonly_violations=11 ids=[S023,S183,S237,S243,S268,S279] deleted=[S009,S023,S183,S237,S268] superseded=[S023,S183,S243,S279] round_changed=[S023,S183,S243,S268]
+  repo06 FAIL: lists differ
+      want: appendonly_violations=3 ids=[] deleted=[S039,S120,S166] superseded=[] round_changed=[]
+      got:  appendonly_violations=7 ids=[S002,S296] deleted=[S002,S047,S062,S232,S264] superseded=[S062,S232,S264] round_changed=[S047,S062,S232,S296]
+  repo07 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S001] deleted=[S197,S283] superseded=[] round_changed=[S001,S192,S197,S283]
+      got:  appendonly_violations=8 ids=[S001,S036,S118,S259] deleted=[S001,S110,S202,S259] superseded=[S118,S192,S259] round_changed=[S036,S110,S118,S125,S202,S259]
+  repo08 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S116] deleted=[S162] superseded=[S116] round_changed=[S162,S215]
+      got:  appendonly_violations=7 ids=[S174,S188,S215] deleted=[S116,S137,S146,S231] superseded=[S089,S174,S231,S282] round_changed=[S116,S215,S231,S282]
+  repo09 FAIL: lists differ
+      want: appendonly_violations=3 ids=[] deleted=[S007,S109,S179] superseded=[] round_changed=[S007,S109,S144,S179,S283]
+      got:  appendonly_violations=5 ids=[S173,S283] deleted=[S144,S146,S173] superseded=[S146,S283] round_changed=[S146,S173,S283]
+  repo10 FAIL: lists differ
+      want: appendonly_violations=4 ids=[S226] deleted=[S028,S108,S259] superseded=[] round_changed=[S028,S226,S259]
+      got:  appendonly_violations=6 ids=[S021,S113,S226] deleted=[S010,S113,S135] superseded=[S021,S135,S217,S226] round_changed=[S010,S020,S021,S113,S135,S226]
+  repo11 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S104] deleted=[S175] superseded=[S104] round_changed=[S175]
+      got:  appendonly_violations=9 ids=[S104,S124,S126,S132] deleted=[S062,S104,S122,S124,S132] superseded=[S062,S124,S141,S275] round_changed=[S104,S124,S126,S141,S182]
+  repo12 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S159,S165,S262] deleted=[S065,S294] superseded=[S159,S262] round_changed=[S065,S159,S165,S262,S294]
+      got:  appendonly_violations=10 ids=[S074,S149,S152,S159,S165,S233,S262] deleted=[S030,S149,S159] superseded=[S149,S165,S193,S267] round_changed=[S046,S074,S149,S159,S165,S233]
+  repo13 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S062,S165] deleted=[] superseded=[S062] round_changed=[S050,S062,S165]
+      got:  appendonly_violations=12 ids=[S128,S190,S227,S245] deleted=[S050,S103,S128,S165,S227,S245,S266,S293] superseded=[S034,S050,S103,S190,S227,S245,S293] round_changed=[S034,S050,S165,S227,S245,S293]
+  repo14 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S081] deleted=[S180] superseded=[] round_changed=[S081,S180]
+      got:  appendonly_violations=7 ids=[S066,S073,S081,S125,S249] deleted=[S081,S162] superseded=[S066,S081,S162,S249] round_changed=[S073,S081,S125]
+  repo15 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S075,S122] superseded=[] round_changed=[S075]
+      got:  appendonly_violations=12 ids=[S026,S030,S083,S107,S114] deleted=[S026,S083,S103,S108,S133,S187,S188] superseded=[S026,S103,S107,S114,S133,S187] round_changed=[S030,S114,S133]
+  repo16 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S118] deleted=[S016] superseded=[S118] round_changed=[]
+      got:  appendonly_violations=7 ids=[S014,S099,S118,S297] deleted=[S009,S118,S173] superseded=[S014,S057,S118,S128,S297] round_changed=[S009,S014,S118,S128,S215]
+  repo17 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S040,S291] deleted=[S232] superseded=[S040] round_changed=[S040]
+      got:  appendonly_violations=7 ids=[S040,S041,S121,S187,S266] deleted=[S041,S291] superseded=[S021,S040,S041,S068,S187,S266,S291] round_changed=[S040,S041,S187,S212]
+  repo18 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S125,S138,S235] deleted=[S118,S128] superseded=[] round_changed=[S035,S118,S125,S138,S235]
+      got:  appendonly_violations=7 ids=[S055,S078,S125,S235] deleted=[S035,S125,S138] superseded=[S035,S078,S125,S138,S227] round_changed=[S035,S055,S078,S096,S110,S125,S235]
+  repo19 FAIL: lists differ
+      want: appendonly_violations=2 ids=[] deleted=[S173,S227] superseded=[] round_changed=[S173,S227,S241]
+      got:  appendonly_violations=7 ids=[S162,S223,S244] deleted=[S129,S214,S241,S244] superseded=[S050,S129,S162,S214] round_changed=[S050,S086,S129,S214,S223,S241,S244]
+  repo20 FAIL: lists differ
+      want: appendonly_violations=5 ids=[S252,S254] deleted=[S022,S283,S292] superseded=[S252] round_changed=[S254,S283,S292]
+      got:  appendonly_violations=6 ids=[S095] deleted=[S052,S065,S095,S252,S254] superseded=[S065,S079,S095,S133,S254] round_changed=[S052,S079,S095,S133,S254]
+  repo21 FAIL: lists differ
+      want: appendonly_violations=1 ids=[] deleted=[S172] superseded=[] round_changed=[S172,S192]
+      got:  appendonly_violations=7 ids=[S192,S215,S252] deleted=[S019,S110,S166,S252] superseded=[S019,S166,S192,S252] round_changed=[S019,S166,S192,S252,S265]
+  repo22 FAIL: lists differ
+      want: appendonly_violations=2 ids=[S072] deleted=[S169] superseded=[] round_changed=[S072]
+      got:  appendonly_violations=9 ids=[S022,S066,S072,S140] deleted=[S022,S053,S103,S107,S206] superseded=[S022,S050,S072,S086,S140] round_changed=[S050,S107,S140,S165,S206,S212]
+  repo23 FAIL: lists differ
+      want: appendonly_violations=3 ids=[S025] deleted=[S190,S293] superseded=[] round_changed=[S025,S114,S190,S293]
+      got:  appendonly_violations=8 ids=[S138,S229,S251] deleted=[S021,S138,S229,S251,S276] superseded=[S021,S229,S251,S276] round_changed=[S114,S138,S251,S276]
+real arm: FAIL (0.3s)
+  tool:   appendonly_violations=182 ids=[S001,S006,S008,S010,S011,S012,S015,S018,S019,S021,S025,S029,S030,S033,S034,S039,S041,S042,S043,S045,S047,S048,S049,S050,S051,S055,S056,S058,S059,S061,S064,S065,S069,S073,S074,S075,S077,S080,S081,S082,S085,S088,S089,S090,S091,S093,S094,S095,S096,S101,S105,S109,S112,S113,S116,S120,S124,S125,S126,S130,S133,S135,S136,S137,S138,S139,S143,S146,S150,S153,S155,S157,S161,S162,S163,S164,S168,S170,S171,S172,S173,S177,S180,S181,S188,S189,S191,S193,S199,S200,S201,S203] deleted=[S007,S011,S012,S014,S020,S021,S028,S031,S032,S033,S036,S037,S039,S040,S043,S047,S051,S052,S054,S055,S056,S058,S062,S064,S065,S066,S067,S068,S069,S075,S076,S078,S080,S084,S087,S089,S095,S096,S097,S102,S107,S109,S110,S112,S113,S115,S118,S119,S121,S122,S123,S124,S130,S131,S133,S136,S137,S141,S142,S146,S148,S149,S153,S154,S156,S157,S158,S159,S161,S162,S164,S165,S166,S171,S175,S176,S183,S186,S187,S188,S189,S190,S191,S194,S196,S197,S198,S200,S203,S204] superseded=[S001,S004,S007,S009,S011,S018,S023,S025,S026,S027,S028,S035,S036,S037,S038,S039,S041,S042,S043,S044,S046,S047,S049,S051,S054,S055,S060,S061,S062,S064,S066,S068,S069,S081,S082,S084,S085,S087,S091,S096,S097,S102,S105,S106,S107,S109,S112,S113,S114,S115,S116,S118,S119,S120,S122,S123,S124,S126,S127,S131,S132,S136,S137,S138,S141,S147,S151,S152,S155,S159,S160,S163,S164,S169,S171,S174,S179,S180,S186,S188,S190,S191,S192,S193,S194,S195,S197,S198,S200,S202,S204] round_changed=[S002,S005,S008,S010,S011,S012,S013,S014,S015,S018,S019,S020,S021,S024,S026,S027,S030,S032,S034,S037,S039,S041,S042,S046,S050,S053,S054,S058,S060,S061,S065,S068,S070,S071,S073,S074,S077,S078,S080,S081,S082,S084,S085,S087,S088,S090,S092,S093,S096,S097,S099,S102,S103,S107,S109,S111,S113,S114,S116,S117,S118,S121,S122,S124,S125,S128,S132,S133,S135,S136,S137,S139,S140,S145,S146,S148,S150,S153,S162,S163,S164,S166,S168,S169,S170,S172,S175,S177,S179,S180,S181,S182,S184,S185,S186,S191,S192,S194,S199,S200,S204]
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  diff: ids: want=['S041', 'S044', 'S051', 'S062', 'S064', 'S069', 'S179', 'S180', 'S181', 'S182', 'S183', 'S184', 'S185', 'S186', 'S188', 'S189', 'S190', 'S193'] got=['S001', 'S006', 'S008', 'S010', 'S011', 'S012', 'S015', 'S018', 'S019', 'S021', 'S025', 'S029', 'S030', 'S033', 'S034', 'S039', 'S041', 'S042', 'S043', 'S045', 'S047', 'S048', 'S049', 'S050', 'S051', 'S055', 'S056', 'S058', 'S059', 'S061', 'S064', 'S065', 'S069', 'S073', 'S074', 'S075', 'S077', 'S080', 'S081', 'S082', 'S085', 'S088', 'S089', 'S090', 'S091', 'S093', 'S094', 'S095', 'S096', 'S101', 'S105', 'S109', 'S112', 'S113', 'S116', 'S120', 'S124', 'S125', 'S126', 'S130', 'S133', 'S135', 'S136', 'S137', 'S138', 'S139', 'S143', 'S146', 'S150', 'S153', 'S155', 'S157', 'S161', 'S162', 'S163', 'S164', 'S168', 'S170', 'S171', 'S172', 'S173', 'S177', 'S180', 'S181', 'S188', 'S189', 'S191', 'S193', 'S199', 'S200', 'S201', 'S203']
+  diff: deleted: want=[] got=['S007', 'S011', 'S012', 'S014', 'S020', 'S021', 'S028', 'S031', 'S032', 'S033', 'S036', 'S037', 'S039', 'S040', 'S043', 'S047', 'S051', 'S052', 'S054', 'S055', 'S056', 'S058', 'S062', 'S064', 'S065', 'S066', 'S067', 'S068', 'S069', 'S075', 'S076', 'S078', 'S080', 'S084', 'S087', 'S089', 'S095', 'S096', 'S097', 'S102', 'S107', 'S109', 'S110', 'S112', 'S113', 'S115', 'S118', 'S119', 'S121', 'S122', 'S123', 'S124', 'S130', 'S131', 'S133', 'S136', 'S137', 'S141', 'S142', 'S146', 'S148', 'S149', 'S153', 'S154', 'S156', 'S157', 'S158', 'S159', 'S161', 'S162', 'S164', 'S165', 'S166', 'S171', 'S175', 'S176', 'S183', 'S186', 'S187', 'S188', 'S189', 'S190', 'S191', 'S194', 'S196', 'S197', 'S198', 'S200', 'S203', 'S204']
+  diff: superseded: want=['S069', 'S182', 'S193'] got=['S001', 'S004', 'S007', 'S009', 'S011', 'S018', 'S023', 'S025', 'S026', 'S027', 'S028', 'S035', 'S036', 'S037', 'S038', 'S039', 'S041', 'S042', 'S043', 'S044', 'S046', 'S047', 'S049', 'S051', 'S054', 'S055', 'S060', 'S061', 'S062', 'S064', 'S066', 'S068', 'S069', 'S081', 'S082', 'S084', 'S085', 'S087', 'S091', 'S096', 'S097', 'S102', 'S105', 'S106', 'S107', 'S109', 'S112', 'S113', 'S114', 'S115', 'S116', 'S118', 'S119', 'S120', 'S122', 'S123', 'S124', 'S126', 'S127', 'S131', 'S132', 'S136', 'S137', 'S138', 'S141', 'S147', 'S151', 'S152', 'S155', 'S159', 'S160', 'S163', 'S164', 'S169', 'S171', 'S174', 'S179', 'S180', 'S186', 'S188', 'S190', 'S191', 'S192', 'S193', 'S194', 'S195', 'S197', 'S198', 'S200', 'S202', 'S204']
+  diff: round_changed: want=['S182', 'S193'] got=['S002', 'S005', 'S008', 'S010', 'S011', 'S012', 'S013', 'S014', 'S015', 'S018', 'S019', 'S020', 'S021', 'S024', 'S026', 'S027', 'S030', 'S032', 'S034', 'S037', 'S039', 'S041', 'S042', 'S046', 'S050', 'S053', 'S054', 'S058', 'S060', 'S061', 'S065', 'S068', 'S070', 'S071', 'S073', 'S074', 'S077', 'S078', 'S080', 'S081', 'S082', 'S084', 'S085', 'S087', 'S088', 'S090', 'S092', 'S093', 'S096', 'S097', 'S099', 'S102', 'S103', 'S107', 'S109', 'S111', 'S113', 'S114', 'S116', 'S117', 'S118', 'S121', 'S122', 'S124', 'S125', 'S128', 'S132', 'S133', 'S135', 'S136', 'S137', 'S139', 'S140', 'S145', 'S146', 'S148', 'S150', 'S153', 'S162', 'S163', 'S164', 'S166', 'S168', 'S169', 'S170', 'S172', 'S175', 'S177', 'S179', 'S180', 'S181', 'S182', 'S184', 'S185', 'S186', 'S191', 'S192', 'S194', 'S199', 'S200', 'S204']
+  diff: violations: want=18 got=182
+  tool exit=1
+C2=unmet
+seed=10560388061329108176
+EXIT=1
+
+== K1 control=c0/controls/K1.py sha256=648ade0ec5ef86eae13caad129bf800da9a3fefe436de952c6e081f886b36300 counter=count-c1.py sha256=86dd3b7ab2d2563bbc811e83717b35dfea3d69717dab4d41d454f8b87c8764c0
+P-C1: at revision R, tools/mori-source-drift.py classifies every row of a 40-row blind fixture drawn at run time exactly as the counter's hidden truth, and on the lane's own corpus/SOURCES.md at R it agrees with the counter's independent live oracle on every row the oracle classified, with at least 10 oracle-fetched rows including at least one oracle-fresh and one oracle-drifted row.
+blind_rows=40 tool_exit=0 tool_rows=0 mismatches=40
+blind_mismatch S004 tool=<absent> truth=unavailable
+blind_mismatch S036 tool=<absent> truth=drifted
+blind_mismatch S044 tool=<absent> truth=fresh
+blind_mismatch S053 tool=<absent> truth=excerpt
+blind_mismatch S054 tool=<absent> truth=drifted
+blind_mismatch S058 tool=<absent> truth=fresh
+blind_mismatch S071 tool=<absent> truth=drifted
+blind_mismatch S078 tool=<absent> truth=fresh
+blind_mismatch S080 tool=<absent> truth=fresh
+blind_mismatch S083 tool=<absent> truth=excerpt
+blind_mismatch S088 tool=<absent> truth=unavailable
+blind_mismatch S091 tool=<absent> truth=no-copy
+blind_mismatch S093 tool=<absent> truth=excerpt
+blind_mismatch S098 tool=<absent> truth=no-copy
+blind_mismatch S105 tool=<absent> truth=excerpt
+blind_mismatch S113 tool=<absent> truth=excerpt
+blind_mismatch S117 tool=<absent> truth=unavailable
+blind_mismatch S120 tool=<absent> truth=unavailable
+blind_mismatch S135 tool=<absent> truth=no-copy
+blind_mismatch S137 tool=<absent> truth=unavailable
+real_arm=skipped
+C1=unmet
+seed=6057915075899298955
+EXIT=1
+
+== K10 control=c0/controls/K10.py sha256=755b63929ce3cabf52036ca2e0db9fbc49d2e538857d1af789345e5aaddeb720 counter=count-c1.py sha256=86dd3b7ab2d2563bbc811e83717b35dfea3d69717dab4d41d454f8b87c8764c0
+P-C1: at revision R, tools/mori-source-drift.py classifies every row of a 40-row blind fixture drawn at run time exactly as the counter's hidden truth, and on the lane's own corpus/SOURCES.md at R it agrees with the counter's independent live oracle on every row the oracle classified, with at least 10 oracle-fetched rows including at least one oracle-fresh and one oracle-drifted row.
+blind_rows=40 tool_exit=0 tool_rows=40 mismatches=8
+blind_mismatch S017 tool=fresh truth=drifted
+blind_mismatch S029 tool=fresh truth=drifted
+blind_mismatch S057 tool=fresh truth=drifted
+blind_mismatch S067 tool=fresh truth=drifted
+blind_mismatch S191 tool=excerpt truth=drifted
+blind_mismatch S193 tool=excerpt truth=drifted
+blind_mismatch S201 tool=fresh truth=drifted
+blind_mismatch S229 tool=fresh truth=drifted
+real_arm=skipped
+C1=unmet
+seed=1015934030906759561
+EXIT=1
+
+== K11 control=c0/controls/K11.py sha256=1039f3a7e1f2c0502e4a6f38fc5d5b3b98699932baf87f1df7fc5f00b2d1dec9 counter=count-c1.py sha256=86dd3b7ab2d2563bbc811e83717b35dfea3d69717dab4d41d454f8b87c8764c0
+P-C1: at revision R, tools/mori-source-drift.py classifies every row of a 40-row blind fixture drawn at run time exactly as the counter's hidden truth, and on the lane's own corpus/SOURCES.md at R it agrees with the counter's independent live oracle on every row the oracle classified, with at least 10 oracle-fetched rows including at least one oracle-fresh and one oracle-drifted row.
+blind_rows=40 tool_exit=0 tool_rows=0 mismatches=40
+blind_mismatch S019 tool=<absent> truth=excerpt
+blind_mismatch S022 tool=<absent> truth=no-copy
+blind_mismatch S037 tool=<absent> truth=fresh
+blind_mismatch S048 tool=<absent> truth=fresh
+blind_mismatch S068 tool=<absent> truth=no-copy
+blind_mismatch S070 tool=<absent> truth=excerpt
+blind_mismatch S071 tool=<absent> truth=drifted
+blind_mismatch S078 tool=<absent> truth=fresh
+blind_mismatch S085 tool=<absent> truth=excerpt
+blind_mismatch S089 tool=<absent> truth=drifted
+blind_mismatch S090 tool=<absent> truth=drifted
+blind_mismatch S096 tool=<absent> truth=no-copy
+blind_mismatch S098 tool=<absent> truth=drifted
+blind_mismatch S101 tool=<absent> truth=excerpt
+blind_mismatch S103 tool=<absent> truth=drifted
+blind_mismatch S104 tool=<absent> truth=excerpt
+blind_mismatch S109 tool=<absent> truth=drifted
+blind_mismatch S123 tool=<absent> truth=drifted
+blind_mismatch S128 tool=<absent> truth=unavailable
+blind_mismatch S129 tool=<absent> truth=unavailable
+real_arm=skipped
+C1=unmet
+seed=2775774084467106005
+EXIT=1
+
+== K13 control=c0/controls/K13.py sha256=6ed1fa01223f07ed3a980c8dce291d8a38ec1e367b2a1853116ae14730cbeeb7 counter=count-c1.py sha256=86dd3b7ab2d2563bbc811e83717b35dfea3d69717dab4d41d454f8b87c8764c0
+P-C1: at revision R, tools/mori-source-drift.py classifies every row of a 40-row blind fixture drawn at run time exactly as the counter's hidden truth, and on the lane's own corpus/SOURCES.md at R it agrees with the counter's independent live oracle on every row the oracle classified, with at least 10 oracle-fetched rows including at least one oracle-fresh and one oracle-drifted row.
+blind_rows=40 tool_exit=1 tool_rows=40 mismatches=12
+blind_mismatch S047 tool=drifted truth=fresh
+blind_mismatch S113 tool=drifted truth=excerpt
+blind_mismatch S157 tool=drifted truth=fresh
+blind_mismatch S172 tool=drifted truth=fresh
+blind_mismatch S187 tool=drifted truth=fresh
+blind_mismatch S195 tool=drifted truth=excerpt
+blind_mismatch S211 tool=drifted truth=fresh
+blind_mismatch S218 tool=drifted truth=fresh
+blind_mismatch S220 tool=drifted truth=fresh
+blind_mismatch S225 tool=drifted truth=excerpt
+blind_mismatch S238 tool=drifted truth=excerpt
+blind_mismatch S291 tool=drifted truth=excerpt
+real_arm=skipped
+C1=unmet
+seed=17865005637646902825
+EXIT=1
+
+== K2 control=c0/controls/K2.py sha256=0a08726cf6b2c496d38ba55047208e49a21f47a8dd50cefdf6e213c859704709 counter=count-c1.py sha256=86dd3b7ab2d2563bbc811e83717b35dfea3d69717dab4d41d454f8b87c8764c0
+P-C1: at revision R, tools/mori-source-drift.py classifies every row of a 40-row blind fixture drawn at run time exactly as the counter's hidden truth, and on the lane's own corpus/SOURCES.md at R it agrees with the counter's independent live oracle on every row the oracle classified, with at least 10 oracle-fetched rows including at least one oracle-fresh and one oracle-drifted row.
+blind_rows=40 tool_exit=0 tool_rows=40 mismatches=32
+blind_mismatch S012 tool=fresh truth=excerpt
+blind_mismatch S024 tool=fresh truth=unavailable
+blind_mismatch S031 tool=fresh truth=drifted
+blind_mismatch S034 tool=fresh truth=no-copy
+blind_mismatch S045 tool=fresh truth=no-copy
+blind_mismatch S052 tool=fresh truth=drifted
+blind_mismatch S060 tool=fresh truth=unavailable
+blind_mismatch S079 tool=fresh truth=no-copy
+blind_mismatch S094 tool=fresh truth=no-copy
+blind_mismatch S099 tool=fresh truth=drifted
+blind_mismatch S107 tool=fresh truth=no-copy
+blind_mismatch S118 tool=fresh truth=drifted
+blind_mismatch S120 tool=fresh truth=excerpt
+blind_mismatch S122 tool=fresh truth=drifted
+blind_mismatch S128 tool=fresh truth=unavailable
+blind_mismatch S131 tool=fresh truth=unavailable
+blind_mismatch S140 tool=fresh truth=unavailable
+blind_mismatch S153 tool=fresh truth=no-copy
+blind_mismatch S167 tool=fresh truth=excerpt
+blind_mismatch S189 tool=fresh truth=drifted
+real_arm=skipped
+C1=unmet
+seed=3679844394164738265
+EXIT=1
+
+== K3 control=c0/controls/K3.py sha256=c1af37d976e3c21bda8933422bc50ddc045460b31f8291fb12c2c39cd2a79f29 counter=count-c1.py sha256=86dd3b7ab2d2563bbc811e83717b35dfea3d69717dab4d41d454f8b87c8764c0
+P-C1: at revision R, tools/mori-source-drift.py classifies every row of a 40-row blind fixture drawn at run time exactly as the counter's hidden truth, and on the lane's own corpus/SOURCES.md at R it agrees with the counter's independent live oracle on every row the oracle classified, with at least 10 oracle-fetched rows including at least one oracle-fresh and one oracle-drifted row.
+blind_rows=40 tool_exit=1 tool_rows=40 mismatches=16
+blind_mismatch S013 tool=drifted truth=unavailable
+blind_mismatch S017 tool=drifted truth=excerpt
+blind_mismatch S018 tool=drifted truth=excerpt
+blind_mismatch S031 tool=drifted truth=unavailable
+blind_mismatch S075 tool=drifted truth=excerpt
+blind_mismatch S089 tool=drifted truth=unavailable
+blind_mismatch S100 tool=drifted truth=unavailable
+blind_mismatch S118 tool=drifted truth=excerpt
+blind_mismatch S119 tool=drifted truth=unavailable
+blind_mismatch S160 tool=drifted truth=excerpt
+blind_mismatch S166 tool=drifted truth=unavailable
+blind_mismatch S231 tool=drifted truth=excerpt
+blind_mismatch S242 tool=drifted truth=unavailable
+blind_mismatch S272 tool=drifted truth=unavailable
+blind_mismatch S289 tool=drifted truth=excerpt
+blind_mismatch S291 tool=drifted truth=excerpt
+real_arm=skipped
+C1=unmet
+seed=5822558909125431243
+EXIT=1
+
+== K4 control=c0/controls/K4.py sha256=07c40adeafbd5a22b9cf74bbef60b706f8eee44264ec5362b9f6b25f2bd51bdb counter=count-c1.py sha256=86dd3b7ab2d2563bbc811e83717b35dfea3d69717dab4d41d454f8b87c8764c0
+P-C1: at revision R, tools/mori-source-drift.py classifies every row of a 40-row blind fixture drawn at run time exactly as the counter's hidden truth, and on the lane's own corpus/SOURCES.md at R it agrees with the counter's independent live oracle on every row the oracle classified, with at least 10 oracle-fetched rows including at least one oracle-fresh and one oracle-drifted row.
+blind_rows=40 tool_exit=0 tool_rows=40 mismatches=16
+blind_mismatch S087 tool=fresh truth=drifted
+blind_mismatch S116 tool=fresh truth=excerpt
+blind_mismatch S125 tool=fresh truth=excerpt
+blind_mismatch S144 tool=fresh truth=drifted
+blind_mismatch S157 tool=fresh truth=excerpt
+blind_mismatch S176 tool=fresh truth=excerpt
+blind_mismatch S178 tool=fresh truth=drifted
+blind_mismatch S208 tool=fresh truth=excerpt
+blind_mismatch S236 tool=fresh truth=drifted
+blind_mismatch S244 tool=fresh truth=drifted
+blind_mismatch S245 tool=fresh truth=drifted
+blind_mismatch S264 tool=fresh truth=drifted
+blind_mismatch S275 tool=fresh truth=excerpt
+blind_mismatch S277 tool=fresh truth=drifted
+blind_mismatch S280 tool=fresh truth=excerpt
+blind_mismatch S298 tool=fresh truth=excerpt
+real_arm=skipped
+C1=unmet
+seed=12443257052938702449
+EXIT=1
+
+== K5 control=c0/controls/K5.py sha256=e24689da7e1ae48d8cc1a0fe9cfda63bd45ae7b1cc77ec6b08667a2d7ebf0e3a counter=count-c1.py sha256=86dd3b7ab2d2563bbc811e83717b35dfea3d69717dab4d41d454f8b87c8764c0
+P-C1: at revision R, tools/mori-source-drift.py classifies every row of a 40-row blind fixture drawn at run time exactly as the counter's hidden truth, and on the lane's own corpus/SOURCES.md at R it agrees with the counter's independent live oracle on every row the oracle classified, with at least 10 oracle-fetched rows including at least one oracle-fresh and one oracle-drifted row.
+blind_rows=40 tool_exit=1 tool_rows=40 mismatches=24
+blind_mismatch S004 tool=drifted truth=fresh
+blind_mismatch S005 tool=drifted truth=excerpt
+blind_mismatch S014 tool=fresh truth=drifted
+blind_mismatch S038 tool=drifted truth=fresh
+blind_mismatch S045 tool=fresh truth=drifted
+blind_mismatch S064 tool=fresh truth=drifted
+blind_mismatch S078 tool=fresh truth=drifted
+blind_mismatch S102 tool=drifted truth=excerpt
+blind_mismatch S103 tool=drifted truth=excerpt
+blind_mismatch S133 tool=drifted truth=excerpt
+blind_mismatch S142 tool=drifted truth=excerpt
+blind_mismatch S189 tool=drifted truth=fresh
+blind_mismatch S216 tool=drifted truth=fresh
+blind_mismatch S219 tool=fresh truth=drifted
+blind_mismatch S220 tool=drifted truth=excerpt
+blind_mismatch S230 tool=drifted truth=excerpt
+blind_mismatch S231 tool=fresh truth=drifted
+blind_mismatch S254 tool=drifted truth=fresh
+blind_mismatch S268 tool=fresh truth=drifted
+blind_mismatch S269 tool=drifted truth=fresh
+real_arm=skipped
+C1=unmet
+seed=5654702452224900786
+EXIT=1
+
+== K6 control=c0/controls/K6.py sha256=33e2e39f23cc62ea72c2b014ca77812e3a6f250046d7c3ff7b3d01f25bb07c71 counter=count-c1.py sha256=86dd3b7ab2d2563bbc811e83717b35dfea3d69717dab4d41d454f8b87c8764c0
+P-C1: at revision R, tools/mori-source-drift.py classifies every row of a 40-row blind fixture drawn at run time exactly as the counter's hidden truth, and on the lane's own corpus/SOURCES.md at R it agrees with the counter's independent live oracle on every row the oracle classified, with at least 10 oracle-fetched rows including at least one oracle-fresh and one oracle-drifted row.
+blind_rows=40 tool_exit=1 tool_rows=40 mismatches=37
+blind_mismatch S003 tool=excerpt truth=unavailable
+blind_mismatch S007 tool=drifted truth=fresh
+blind_mismatch S011 tool=no-copy truth=excerpt
+blind_mismatch S012 tool=unavailable truth=fresh
+blind_mismatch S019 tool=drifted truth=excerpt
+blind_mismatch S036 tool=unavailable truth=no-copy
+blind_mismatch S039 tool=no-copy truth=unavailable
+blind_mismatch S041 tool=unavailable truth=drifted
+blind_mismatch S054 tool=excerpt truth=unavailable
+blind_mismatch S064 tool=unavailable truth=fresh
+blind_mismatch S075 tool=excerpt truth=fresh
+blind_mismatch S091 tool=fresh truth=no-copy
+blind_mismatch S109 tool=no-copy truth=excerpt
+blind_mismatch S114 tool=no-copy truth=drifted
+blind_mismatch S131 tool=no-copy truth=drifted
+blind_mismatch S133 tool=no-copy truth=unavailable
+blind_mismatch S145 tool=drifted truth=unavailable
+blind_mismatch S154 tool=drifted truth=excerpt
+blind_mismatch S163 tool=no-copy truth=unavailable
+blind_mismatch S174 tool=unavailable truth=drifted
+real_arm=skipped
+C1=unmet
+seed=14817924303916305945
+EXIT=1
+
+== K7 control=c0/controls/K7.py sha256=9c7933bc6b21b1c554595e933953945c319e34828538158eda2d003c01f0fa14 counter=count-c1.py sha256=86dd3b7ab2d2563bbc811e83717b35dfea3d69717dab4d41d454f8b87c8764c0
+P-C1: at revision R, tools/mori-source-drift.py classifies every row of a 40-row blind fixture drawn at run time exactly as the counter's hidden truth, and on the lane's own corpus/SOURCES.md at R it agrees with the counter's independent live oracle on every row the oracle classified, with at least 10 oracle-fetched rows including at least one oracle-fresh and one oracle-drifted row.
+blind_rows=40 tool_exit=0 tool_rows=40 mismatches=32
+blind_mismatch S010 tool=fresh truth=drifted
+blind_mismatch S018 tool=fresh truth=unavailable
+blind_mismatch S033 tool=fresh truth=unavailable
+blind_mismatch S039 tool=fresh truth=no-copy
+blind_mismatch S047 tool=fresh truth=excerpt
+blind_mismatch S054 tool=fresh truth=unavailable
+blind_mismatch S096 tool=fresh truth=unavailable
+blind_mismatch S098 tool=fresh truth=no-copy
+blind_mismatch S103 tool=fresh truth=excerpt
+blind_mismatch S106 tool=fresh truth=excerpt
+blind_mismatch S109 tool=fresh truth=unavailable
+blind_mismatch S113 tool=fresh truth=excerpt
+blind_mismatch S128 tool=fresh truth=no-copy
+blind_mismatch S155 tool=fresh truth=no-copy
+blind_mismatch S157 tool=fresh truth=no-copy
+blind_mismatch S173 tool=fresh truth=excerpt
+blind_mismatch S186 tool=fresh truth=drifted
+blind_mismatch S189 tool=fresh truth=unavailable
+blind_mismatch S192 tool=fresh truth=excerpt
+blind_mismatch S196 tool=fresh truth=drifted
+real_arm=skipped
+C1=unmet
+seed=11936376166058599461
+EXIT=1
+
+== K8 control=c0/controls/K8.py sha256=6c3dc0ee89c6c56dbeb84d3f9d4ac06b09faae75daab44cd35508e9b6a93c02f counter=count-c1.py sha256=86dd3b7ab2d2563bbc811e83717b35dfea3d69717dab4d41d454f8b87c8764c0
+P-C1: at revision R, tools/mori-source-drift.py classifies every row of a 40-row blind fixture drawn at run time exactly as the counter's hidden truth, and on the lane's own corpus/SOURCES.md at R it agrees with the counter's independent live oracle on every row the oracle classified, with at least 10 oracle-fetched rows including at least one oracle-fresh and one oracle-drifted row.
+blind_rows=40 tool_exit=1 tool_rows=40 mismatches=26
+blind_mismatch S016 tool=drifted truth=excerpt
+blind_mismatch S017 tool=excerpt truth=fresh
+blind_mismatch S030 tool=drifted truth=excerpt
+blind_mismatch S054 tool=no-copy truth=fresh
+blind_mismatch S062 tool=unavailable truth=fresh
+blind_mismatch S064 tool=drifted truth=no-copy
+blind_mismatch S070 tool=no-copy truth=fresh
+blind_mismatch S081 tool=excerpt truth=drifted
+blind_mismatch S113 tool=fresh truth=drifted
+blind_mismatch S131 tool=no-copy truth=unavailable
+blind_mismatch S135 tool=excerpt truth=no-copy
+blind_mismatch S146 tool=fresh truth=drifted
+blind_mismatch S155 tool=fresh truth=excerpt
+blind_mismatch S182 tool=no-copy truth=fresh
+blind_mismatch S186 tool=fresh truth=unavailable
+blind_mismatch S191 tool=excerpt truth=drifted
+blind_mismatch S200 tool=fresh truth=no-copy
+blind_mismatch S204 tool=drifted truth=excerpt
+blind_mismatch S206 tool=no-copy truth=drifted
+blind_mismatch S210 tool=drifted truth=excerpt
+real_arm=skipped
+C1=unmet
+seed=12399814473774994131
+EXIT=1
+
+== K9 control=c0/controls/K9.py sha256=231ec3ea67bf808550cdd13a20f185c5e41a01db30edfb3bae064e416c30b1a4 counter=count-c1.py sha256=86dd3b7ab2d2563bbc811e83717b35dfea3d69717dab4d41d454f8b87c8764c0
+P-C1: at revision R, tools/mori-source-drift.py classifies every row of a 40-row blind fixture drawn at run time exactly as the counter's hidden truth, and on the lane's own corpus/SOURCES.md at R it agrees with the counter's independent live oracle on every row the oracle classified, with at least 10 oracle-fetched rows including at least one oracle-fresh and one oracle-drifted row.
+blind_rows=40 tool_exit=1 tool_rows=40 mismatches=0
+real_rows=204 oracle_fetched=42 oracle_fresh=35 oracle_drifted=7 oracle_excluded=0 tool_exit=0 tool_rows=204 mismatches=7
+real_mismatch S156 tool=fresh oracle=drifted
+real_mismatch S157 tool=fresh oracle=drifted
+real_mismatch S158 tool=fresh oracle=drifted
+real_mismatch S159 tool=fresh oracle=drifted
+real_mismatch S160 tool=fresh oracle=drifted
+real_mismatch S176 tool=fresh oracle=drifted
+real_mismatch S177 tool=fresh oracle=drifted
+C1=unmet
+seed=6469733924643966362
+EXIT=1
+
+== REF1 control=/fast/scratch/hyaku/mori-r36/ExecCounterC1/ref.py sha256=0d9c808b9b22431f745885d334ce94dc5ca83ffc74d9885390490e96365422b1 counter=count-c1.py sha256=86dd3b7ab2d2563bbc811e83717b35dfea3d69717dab4d41d454f8b87c8764c0
+P-C1: at revision R, tools/mori-source-drift.py classifies every row of a 40-row blind fixture drawn at run time exactly as the counter's hidden truth, and on the lane's own corpus/SOURCES.md at R it agrees with the counter's independent live oracle on every row the oracle classified, with at least 10 oracle-fetched rows including at least one oracle-fresh and one oracle-drifted row.
+blind_rows=40 tool_exit=1 tool_rows=40 mismatches=0
+real_rows=204 oracle_fetched=42 oracle_fresh=35 oracle_drifted=7 oracle_excluded=0 tool_exit=1 tool_rows=204 mismatches=0
+C1=met
+seed=2722688706849222025
+EXIT=0
+
+== REF2 control=/fast/scratch/hyaku/mori-r36/ExecCounterC2/ref.py sha256=08874f8f5bdf98d7580644bbeba4c0d2896f033d4b927859d3e72ccd953ca8ca counter=count-c2.py sha256=c7edaacfff029c2055bee6ddda42ff6f5c040dad7fbac81e9d169602edcbac34
+P-C2: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed on each of 24 sandbox SOURCES.md histories drawn at run time, and on the lane's own history (rev 6bd57097, round base f10a320d) it prints exactly the counter's independent oracle, which lists at least one id.
+tool: /fast/scratch/hyaku/mori-r36/ExecCounterC2/ref.py
+blind arm: 24/24 sandbox histories matched the hidden truth (2.3s; coverage: deletions=23 changed-back=15 superseded=10)
+real arm: pass (0.3s)
+  tool:   appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  tool exit=1
+C2=met
+seed=16833162105749194650
+EXIT=0
+

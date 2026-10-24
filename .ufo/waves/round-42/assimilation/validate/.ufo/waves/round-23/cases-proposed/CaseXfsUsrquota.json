@@ -1,0 +1,61 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseXfsUsrquota",
+  "scenario": "An xfs mount whose mountinfo super options carry the kernel-emitted token usrquota (accounting plus enforcement on) and no noquota, probed at the mount point itself and at a nested directory below it.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "29 25 0:30 /@root / rw,relatime shared:1 - btrfs /dev/mapper/root rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=257,subvol=/@root\n31 29 259:2 / /srv/xfsquota rw,relatime shared:7 - xfs /dev/nvme0n1p2 rw,attr2,inode64,logbufs=8,logbsize=32k,usrquota\n",
+    "paths": [
+      {
+        "path": "/srv/xfsquota",
+        "realpath": "/srv/xfsquota",
+        "st_dev": "259:2"
+      },
+      {
+        "path": "/srv/xfsquota/projects/data",
+        "realpath": "/srv/xfsquota/projects/data",
+        "st_dev": "259:2"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0"
+    },
+    "btrfs_sysfs": {
+      "8f3c1a2e-5b47-4d19-9c08-7e6b2a4d9f13": {
+        "devices": [
+          "dm-0"
+        ],
+        "qgroups": false,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 1,
+    "finding_id": "QUOTA_ENABLED",
+    "paths": [
+      {
+        "path": "/srv/xfsquota",
+        "fstype": "xfs",
+        "mount_point": "/srv/xfsquota",
+        "quota_state": "enabled",
+        "enforcement": "enforced",
+        "basis": "xfs_quota_option"
+      },
+      {
+        "path": "/srv/xfsquota/projects/data",
+        "fstype": "xfs",
+        "mount_point": "/srv/xfsquota",
+        "quota_state": "enabled",
+        "enforcement": "enforced",
+        "basis": "xfs_quota_option"
+      }
+    ]
+  },
+  "rationale": "Contract section C2, quota-classification table, xfs row 2: 'xfs | any of usrquota,uquota,quota,grpquota,gquota,prjquota,pquota and no noquota | enabled | enforced | xfs_quota_option'. The fixture's chosen xfs super-option string is 'rw,attr2,inode64,logbufs=8,logbsize=32k,usrquota': split on commas with the key taken as the text before '=' it yields rw, attr2, inode64, logbufs, logbsize, usrquota, so the quota key usrquota is present and noquota is absent; the other keys are non-quota super options and do not enter the table. The kernel-emitted meaning of the token is anchored in S078 (fs/xfs/xfs_super.c v7.2, xfs_fs_show_options lines 238-241: 'if (mp->m_qflags & XFS_UQUOTA_ENFD) seq_puts(m, \",usrquota\"); else if (mp->m_qflags & XFS_UQUOTA_ACCT) seq_puts(m, \",uqnoenforce\");'): usrquota is printed exactly when the user-quota enforcement flag is set, and the same function prints noquota only when no quota accounting flag is set (lines 253-254), so a kernel-emitted usrquota token implies enforcement on, which is what the enforced cell records. S077 (Documentation/admin-guide/xfs.rst v7.2, lines 171-185) supplies the option vocabulary: noquota at 171-173, the user family uquota/usrquota/uqnoenforce/quota at 175-177, group at 179-181, project at 183-185. No other xfs row can pre-empt this one: the accounting-only row requires only *noenforce keys, the conflict row requires noquota together with a quota key, and the absent row requires neither, so row 2 is the only matching row and its basis token is xfs_quota_option with enforcement enforced and quota_state enabled. Mount resolution per contract section C2 'Mount resolution (per path)': the mountinfo text is parsed per proc.rst section 3.5 (S082, lines 1973-1983: fields 1-6, optional tag[:value] fields terminated by the separator, then filesystem type, mount source, super options), so the line '31 29 259:2 / /srv/xfsquota rw,relatime shared:7 - xfs /dev/nvme0n1p2 rw,...,usrquota' gives mount point /srv/xfsquota, fstype xfs and major:minor 259:2. For realpath /srv/xfsquota the mount point equals the realpath (candidate rule clause 'mount point equals realpath'); for realpath /srv/xfsquota/projects/data the mount point is a prefix followed by '/' (clause 'realpath starts with mount point + /'). In both cases the longest mount point wins over the root line 29 25 0:30 /@root / (mount point '/'), so the covering mount is the xfs line and fstype is xfs for both paths. Device check: fstype xfs is not btrfs and the chosen mount's major:minor 259:2 equals the paths' st_dev 259:2, so the device_mismatch precondition does not fire and the xfs table is reached (the btrfs exemption for per-subvolume anonymous st_dev, contract section C2 citing S081 fs/btrfs/inode.c line 8246, is irrelevant here). The root line is btrfs with source /dev/mapper/root, which device_links maps to dm-0 and which the single sysfs uuid lists under devices, but it is not selected because /srv/xfsquota is the longer mount point, so the btrfs rows are never reached for either probed path. Verdict precedence per contract section C2: no setup error, and at least one path is enabled, therefore exit 1 with finding_id QUOTA_ENABLED; positive evidence is not hidden by the fact that the other path is enabled as well. The expected per-path tuples are listed in the fixture path order, matching the ordered output paths the contract's output schema describes. Ambiguity recorded for L1 rather than resolved here: the contract's token 'enforced' is evidenced by the XFS_UQUOTA_ENFD flag being set (S078), which is mount-time enforcement state, not the presence of any per-user or per-group limit or of an armed EDQUOT; the contract's own limits text concedes that no per-user/group/project limit or usage reading is performed, and S077's wording 'limits (optionally) enforced' shows the option names do not by themselves say that a limit exists. The contract's xfs row also lists quota, uquota, gquota and pquota as quota keys, but S078 shows the kernel never emits those aliases (they are mount-time aliases only), so this case exercises only the observable token usrquota and the wider key set remains untested by it.",
+  "sources": [
+    "S077",
+    "S078",
+    "S082"
+  ]
+}

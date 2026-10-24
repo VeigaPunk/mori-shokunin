@@ -1,0 +1,278 @@
+{
+ "base": "641a6e86ecc60634d215c0a47ab86c47661abf86",
+ "selector": "status == mined and the first URL of the source cell matches none of: /v<digit>\u2026 tag path, 40-hex, /<7-39 hex>/, ?h=, /tag(s)/, refs/tags, -N.N(.N).tar",
+ "population": [
+  {
+   "id": "S001",
+   "url": "https://docs.kernel.org/accounting/psi.html",
+   "scope": "Linux PSI counters, totals, thresholds and per-cgroup files",
+   "anchor": "Pressure interface:74-77; Monitoring for pressure thresholds:104-119; Cgroup2 interface; kernel documentation date 2018-04, current page opened 2026-10-19",
+   "teaches": "Keep avg10 trends distinct from absolute stall microseconds; PSI trigger lifetime follows its file descriptor.",
+   "used_by": "corpus/lessons/2026-10-15-free-lunch-measurements-counter-baselines.md"
+  },
+  {
+   "id": "S002",
+   "url": "https://docs.kernel.org/admin-guide/cgroup-v2.html",
+   "scope": "cgroup-v2 memory events, memory.peak and local versus hierarchical scope",
+   "anchor": "memory.events:1448-1509; memory.peak:1418-1426; kernel documentation date 2015-10, current page opened 2026-10-19",
+   "teaches": "Distinguish hierarchical memory.events from memory.events.local; the documented oom_kill count includes processes killed by any kind of OOM killer.",
+   "used_by": "corpus/knowledge/oom-kill-counter-kernel-only-r12.md, corpus/knowledge/userspace-oom-killers-r12.md, corpus/knowledge/journal-alarm-routing-r14.md"
+  },
+  {
+   "id": "S007",
+   "url": "https://www.freedesktop.org/software/systemd/man/latest/systemd-oomd.service.html",
+   "scope": "systemd-oomd PSI monitoring, kill selection and service behavior",
+   "anchor": "Description; System requirements and configuration; Options --dry-run; Signals SIGHUP; systemd 262 man page opened 2026-10-19",
+   "teaches": "oomd selects eligible descendant cgroups and sends SIGKILL to all processes in the selected cgroup.",
+   "used_by": "corpus/knowledge/oom-kill-counter-kernel-only-r12.md, corpus/knowledge/userspace-oom-killers-r12.md"
+  },
+  {
+   "id": "S012",
+   "url": "https://github.com/systemd/systemd/security/advisories/GHSA-652q-wxr6-h5j6",
+   "scope": "systemd-oomd varlink arbitrary-SIGKILL vulnerability and affected versions",
+   "anchor": "Impact and Patches; published 2026-08-10",
+   "teaches": "The maintainer advisory bounds which oomd versions contain the path-validation flaw and its fixes.",
+   "used_by": "corpus/knowledge/userspace-oom-killers-r12.md"
+  },
+  {
+   "id": "S014",
+   "url": "https://www.freedesktop.org/software/systemd/man/latest/journalctl.html",
+   "scope": "journal source selection, cursor pagination and field-limited JSON output",
+   "anchor": "Source Options; Filtering Options --after-cursor:187-190; Output Options --output-fields:489-492; systemd 262 man page opened 2026-10-19",
+   "teaches": "Select journal scope and cursor bounds, and request only structured fields for count-only queries.",
+   "used_by": "corpus/knowledge/kill-classes-by-message-id-r12.md, corpus/knowledge/kernel-oom-line-attribution-r12.md, corpus/knowledge/structured-journal-scopes-r13.md, corpus/knowledge/journal-positive-evidence-r15.md, corpus/knowledge/journal-cursor-window-r16.md"
+  },
+  {
+   "id": "S015",
+   "url": "https://www.freedesktop.org/software/systemd/man/latest/systemd.journal-fields.html",
+   "scope": "journal MESSAGE, MESSAGE_ID and trusted metadata fields",
+   "anchor": "User Journal Fields > MESSAGE=:32-39 and MESSAGE_ID=:41-44; Trusted Journal Fields > _TRANSPORT=:204; systemd 262 man page opened 2026-10-19",
+   "teaches": "MESSAGE is display text rather than metadata; MESSAGE_ID is the typed key and underscore-prefixed fields are trusted.",
+   "used_by": "corpus/knowledge/kill-classes-by-message-id-r12.md, corpus/knowledge/kernel-oom-line-attribution-r12.md, corpus/knowledge/structured-journal-scopes-r13.md, corpus/knowledge/journal-alarm-routing-r14.md, corpus/knowledge/journal-positive-evidence-r15.md, corpus/knowledge/journal-cursor-window-r16.md"
+  },
+  {
+   "id": "S031",
+   "url": "https://man7.org/linux/man-pages/man7/pipe.7.html",
+   "scope": "pipe write behavior when readers close and SIGPIPE generation",
+   "anchor": "I/O on pipes and FIFOs; man-pages 6.19, fetched 2026-09-09",
+   "teaches": "When all pipe read ends close, a write generates SIGPIPE; that pipe behavior explains a producer failure after an early-exiting consumer.",
+   "used_by": "corpus/knowledge/verdict-contract-r13.md"
+  },
+  {
+   "id": "S037",
+   "url": "https://www.freedesktop.org/software/systemd/man/latest/systemd.journal-fields.html",
+   "scope": "subject UNIT/USER_UNIT versus emitting-process _SYSTEMD_UNIT metadata",
+   "anchor": "User Journal Fields > UNIT=, USER_UNIT= (added version 251); Trusted Journal Fields > _SYSTEMD_CGROUP= and _SYSTEMD_UNIT=; systemd 262 page opened 2026-10-20",
+   "teaches": "UNIT/USER_UNIT identify units a manager logs about; trusted _SYSTEMD_UNIT fields describe the emitting process, not necessarily the failed subject.",
+   "used_by": "corpus/knowledge/journal-alarm-routing-r14.md, corpus/knowledge/journal-positive-evidence-r15.md"
+  },
+  {
+   "id": "S039",
+   "url": "https://www.freedesktop.org/software/systemd/man/latest/sd_journal_seek_cursor.html",
+   "scope": "journal seek to a cursor position and next-closest fallback",
+   "anchor": "sd_journal_seek_cursor page, Description: \"If no entry matching the specified cursor is found the call will seek to the next closest entry (in terms of time) instead.\"; systemd 262 page accessed 2026-10-20",
+   "teaches": "A seek to an absent cursor lands on the next closest entry in time, and seeking does not by itself make that entry current.",
+   "used_by": "corpus/knowledge/journal-cursor-window-r16.md"
+  },
+  {
+   "id": "S040",
+   "url": "https://www.freedesktop.org/software/systemd/man/latest/sd_journal_test_cursor.html",
+   "scope": "journal entry-identity test after a seek, distinct from cursor-string comparison",
+   "anchor": "sd_journal_test_cursor page, Description: \"the same entry might be referred to by multiple different cursor strings\"; systemd 262 page accessed 2026-10-20",
+   "teaches": "Cursor strings do not uniquely identify an entry, so string comparison is not an identity test; sd_journal_test_cursor verifies the sought entry after a seek. No deduplication or completeness is implied.",
+   "used_by": "corpus/knowledge/journal-cursor-window-r16.md"
+  },
+  {
+   "id": "S041",
+   "url": "https://www.rfc-editor.org/rfc/rfc6585",
+   "scope": "HTTP 429 Too Many Requests status meaning",
+   "anchor": "\u00a74, plain-text lines 132\u2013135; Standards Track, April 2012; opened 2026-10-20",
+   "teaches": "HTTP 429 denotes too many requests in a time window; it does not identify a vendor business error or establish permanent seat death.",
+   "used_by": "corpus/knowledge/seat-terminal-status-r17.md"
+  },
+  {
+   "id": "S043",
+   "url": "https://docs.z.ai/api-reference/api-code",
+   "scope": "Z.AI HTTP 429 business-code distinctions",
+   "anchor": "Error table, api-code.md lines 16/31/33, codes 1113/1302/1308; opened 2026-10-20",
+   "teaches": "Code 1302 means request rate limit; 1113 and 1308 usage/balance causes also use HTTP 429, so status alone cannot distinguish rate limit from quota.",
+   "used_by": "corpus/knowledge/seat-terminal-status-r17.md"
+  },
+  {
+   "id": "S044",
+   "url": "https://docs.jj-vcs.dev/latest/git-compatibility/",
+   "scope": "colocated jj/Git HEAD state",
+   "anchor": "Detached HEAD feature row and Colocated Jujutsu/Git workspaces; opened 2026-10-20",
+   "teaches": "jj commands usually put Git in detached HEAD state; a commit-id read is not a branch-identity proof.",
+   "used_by": "corpus/knowledge/jj-branch-anchor-r17.md"
+  },
+  {
+   "id": "S045",
+   "url": "https://docs.jj-vcs.dev/latest/cli-reference/",
+   "scope": "metaedit author-rewrite flag",
+   "anchor": "metaedit section, author options lines 2220\u20132238; jj 0.45.1 local help cross-check; opened 2026-10-20",
+   "teaches": "metaedit --update-author sets author name/email from configured user without changing author timestamp; the CLI reference does not specify universal commit-author behavior.",
+   "used_by": "corpus/knowledge/jj-branch-anchor-r17.md"
+  },
+  {
+   "id": "S046",
+   "url": "https://git-scm.com/docs/git-merge-base",
+   "scope": "ancestry-check exit status",
+   "anchor": "OPERATION MODES, --is-ancestor; last updated 2.43.0, no changes listed through 2.56.0; opened 2026-10-20",
+   "teaches": "Exit 0 means ancestor, 1 means not ancestor, and another nonzero status means error; a probe must not report every nonzero status as divergence.",
+   "used_by": "corpus/knowledge/jj-branch-anchor-r17.md"
+  },
+  {
+   "id": "S047",
+   "url": "https://git-scm.com/docs/git-symbolic-ref",
+   "scope": "quiet detached-HEAD detection",
+   "anchor": "OPTIONS -q and NOTES exit status; no changes listed 2.48.1 through 2.56.0; opened 2026-10-20",
+   "teaches": "Detached HEAD is a silent nonzero under -q; NOTES distinguishes status 1 from other errors such as 128.",
+   "used_by": "corpus/knowledge/jj-branch-anchor-r17.md"
+  },
+  {
+   "id": "S049",
+   "url": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+   "scope": "application log data-class treatment (exclude, remove, mask, sanitize, hash, encrypt) before log handoff",
+   "anchor": "\"Data to exclude\" heading:198; intro sentence:204 (quote: \"should usually not be recorded directly in the logs, but instead should be removed, masked, sanitized, hashed, or encrypted\"); bullets:206-217; no revision date shown, mkdocs-material 9.7.7 build; opened 2026-10-21",
+   "teaches": "Map each log data class to one treatment; hash session identifiers when correlation is needed; replace the malformed field rather than drop the whole event; paths and internal names get documented handling, not blanket exclusion.",
+   "used_by": "corpus/knowledge/evidence-minimization-r18.md"
+  },
+  {
+   "id": "S051",
+   "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-122.pdf",
+   "scope": "PII minimum-necessary collection, use and retention; federal-agency guidance with voluntary non-federal use (\u00a71.1)",
+   "anchor": "ES-2 heading \"Organizations should minimize the use, collection, and retention of PII\"; \u00a74.2.1 printed pp. 4-3 to 4-4; April 2010 final, document history 04/06/10; landing page https://csrc.nist.gov/pubs/sp/800/122/final opened 2026-10-21",
+   "teaches": "Retention needs a current-business-purpose test per item: PII with no current purpose \"should no longer be used or collected\"; holdings need periodic review and disposal under schedules. A class-hit gate does not by itself establish necessity.",
+   "used_by": "corpus/knowledge/evidence-minimization-r18.md"
+  },
+  {
+   "id": "S052",
+   "url": "https://opentelemetry.io/docs/security/handling-sensitive-data/",
+   "scope": "telemetry data minimization, attribute deletion, hashing and truncation guidance for OTel pipelines, scope limited to OTel-project recommendations rather than legal compliance",
+   "anchor": "Data minimization bullets 1-4; Protecting sensitive data; Deleting and hashing user information; Replacing user.id with user.hash callout \"Risk and limitations of hashing for anonymization\"; Truncating IP addresses; page metadata article:modified_time 2026-01-14T14:37:39-05:00; opened 2026-10-21",
+   "teaches": "Collect the attribute only when an observability purpose needs it; hashing a small or predictable identifier is reversible in practice, so prefer drop or truncation and do not claim anonymization.",
+   "used_by": "corpus/knowledge/evidence-minimization-r18.md"
+  },
+  {
+   "id": "S056",
+   "url": "https://www.pnas.org/doi/10.1073/pnas.1708274114",
+   "scope": "prediction versus postdiction distinction; preregistration as a plan committed before outcomes are observed; disclosure of deviations; definitional scope only, not empirical proof of reproducibility gains",
+   "anchor": "Abstract; \"Standard Tools of Statistical Inference Assume Prediction\" (quote: \"In prediction, the problem of forking paths is avoided because the analytic pipeline is specified before observing the data\"); \"Preregistration Distinguishes Prediction and Postdiction\" (\"there is not yet sufficient experimental evidence establishing its superiority for reproducibility\"); \"Challenge 1: Changes to Procedure During Study Administration\"; PNAS 115(11):2600-2606, issue 2018 Mar 13; PMC5856500 full text; PDF not opened",
+   "teaches": "Freezing the analysis plan before observing outcomes is what makes a claim a prediction; a freeze taken after observation is postdiction, and later changes must be disclosed as deviations. Mori's C2 pre-build label certifies commit order before the outcome-bearing implementation, not absence of prior knowledge.",
+   "used_by": "corpus/knowledge/freeze-order-r18.md"
+  },
+  {
+   "id": "S058",
+   "url": "https://git-scm.com/docs/git-rev-list",
+   "scope": "C2 freeze-order verdict: rev-list ordering of base..tip (--reverse, --topo-order, --first-parent) and per-commit diff-tree changed-path listing against the first parent, with -r, --root and --name-status",
+   "anchor": "git-rev-list: DESCRIPTION short-hand; Commit Limiting --first-parent; Commit Ordering --topo-order and --reverse (reader lines 286-287, 464-467, 1179, 1191-1215); git-diff-tree: DESCRIPTION, OPTIONS -r, --root, --stdin, --name-only, --name-status, --no-commit-id (reader lines 272-273, 502-509, 1114-1125, 1155-1156, 1276-1279); git 2.56.0 docs dated 2026-09-28; opened 2026-10-21",
+   "teaches": "Commit ordering: --topo-order shows no parent before its children and --reverse flips the output, so rev-list --reverse --topo-order base..tip lists ancestors first; the default is only reverse chronological. Diff-tree: -r recurses subtrees; merges need an explicit <commit>^1 <commit> two-tree form because the doc states merge diffs are not shown by default under --stdin; a root commit needs --root; --name-status is the status-bearing listing.",
+   "used_by": "corpus/knowledge/freeze-order-r18.md"
+  },
+  {
+   "id": "S062",
+   "url": "https://www.rfc-editor.org/rfc/rfc8785",
+   "scope": "JCS canonical JSON serialization for hashing: whitespace, string escapes, ECMAScript number serialization, UTF-16 property-name sort and UTF-8 output; normative for JCS conformance, Informational independent submission (June 2020)",
+   "anchor": "\u00a73.1 I-JSON input constraints; \u00a73.2.1 Whitespace; \u00a73.2.2.2 Serialization of Strings; \u00a73.2.2.3 Serialization of Numbers and NaN/Infinity note; \u00a73.2.3 Sorting of Object Properties and test data; \u00a73.2.4 UTF-8 Generation; errata record for Section 5 (-0, verified 2024-05-15); rendering not line-pinned; opened 2026-10-21",
+   "teaches": "A canonical form for hashing needs UTF-16 code-unit key order, ECMAScript number text, no whitespace, error on NaN/Infinity, no duplicate names; -0 is a parser SHOULD-error per the verified errata; a Python json.dumps identity matches JCS only inside a restricted domain.",
+   "used_by": "corpus/knowledge/dispatch-ledger-r18.md"
+  },
+  {
+   "id": "S064",
+   "url": "https://git-scm.com/docs/git-rev-parse",
+   "scope": "C2 resolving an explicit selector to an existing commit object; not remote publication, source authenticity or input-tree equality",
+   "anchor": "OPTIONS --verify, --end-of-options and commit type peeling; EXAMPLES commit object name from REV; page last updated 2.56.0, 2026-09-28; opened 2026-10-21",
+   "teaches": "Resolve a selector once with --verify --end-of-options and commit peeling, retain the full object id, then separately bind the actual loaded register/correction bytes to blobs at that commit; a hash printer alone does not prove the latter.",
+   "used_by": "corpus/lessons/round-19.md, corpus/lessons/round-22.md, corpus/knowledge/freeze-order-r18.md, corpus/knowledge/retention-reconciliation-r22.md"
+  },
+  {
+   "id": "S067",
+   "url": "https://michaelfeathers.silvrback.com/characterization-testing",
+   "scope": "coiner's essay on what a characterization (golden-master) test records; informal, not a normative spec",
+   "anchor": "section Characterization Testing, paragraph beginning It's a trick question, final sentence; opened 2026-10-21",
+   "teaches": "A behavioral baseline documents actual behavior, not desired behavior: a re-pinned census baseline certifies sameness since the pin, never health.",
+   "used_by": "corpus/knowledge/drift-repin-r20.md, corpus/lessons/round-20.md"
+  },
+  {
+   "id": "S068",
+   "url": "https://docs.python.org/3/library/os.html",
+   "scope": "os.stat versus os.lstat symlink following (final path component)",
+   "anchor": "os.stat entry and os.lstat entry; follow_symlinks section; Python 3.15.0 docs opened 2026-10-21",
+   "teaches": "A report-presence check must lstat the final component: os.stat follows a symlink by default, lstat inspects the link itself.",
+   "used_by": "corpus/knowledge/wave-settlement-r20.md, corpus/lessons/round-20.md"
+  },
+  {
+   "id": "S069",
+   "url": "https://docs.python.org/3/library/pathlib.html",
+   "scope": "lexical versus resolved path containment and the symlink caveat",
+   "anchor": "PurePath.relative_to, walk_up paragraph; PurePath section on foo/../bar; Python 3.15.0 docs opened 2026-10-21",
+   "teaches": "String-only containment cannot see symlinks: reject absolute and .. lexically before any filesystem call, and test symlinks separately.",
+   "used_by": "corpus/knowledge/wave-settlement-r20.md"
+  },
+  {
+   "id": "S071",
+   "url": "https://kubernetes.io/docs/concepts/architecture/controller/",
+   "scope": "desired-versus-current-state vocabulary only; the page describes acting controllers, not observe-only ones",
+   "anchor": "Controller pattern section, third sentence; Desired versus current state section; page modified 2024-09-01; opened 2026-10-21",
+   "teaches": "Name the declared set (dispatch members) and the observed set (reports) separately; mori observes the gap and never acts to close it.",
+   "used_by": "corpus/knowledge/wave-settlement-r20.md, corpus/lessons/round-20.md"
+  },
+  {
+   "id": "S073",
+   "url": "https://docs.python.org/3/library/pathlib.html",
+   "scope": "symlink caveat of lexical containment only (narrowed from S069)",
+   "anchor": "PurePath.relative_to, the Warning that names walk_up; Python 3.15.0 docs re-opened 2026-10-21",
+   "teaches": "supersedes S069 \u2014 string-only containment (relative_to with walk_up) assumes no symlinks; resolve() first if needed. Rejecting .. and absolute trailer paths before any stat is mori's own tool rule, not taught by this page.",
+   "used_by": "corpus/knowledge/wave-settlement-r20.md, corpus/lessons/round-20.md"
+  },
+  {
+   "id": "S074",
+   "url": "https://kubernetes.io/docs/concepts/architecture/controller/",
+   "scope": "desired-versus-current-state vocabulary of the Kubernetes controller pattern (official project docs)",
+   "anchor": "Controller pattern section, third sentence; Desired versus current state section; page modified 2024-09-01; re-opened 2026-10-21",
+   "teaches": "supersedes S071 \u2014 name the declared state and the observed current state separately; the page describes controllers that act on the gap, so mori's observe-only stance is the lane's own boundary, not taught here.",
+   "used_by": "corpus/knowledge/wave-settlement-r20.md, corpus/lessons/round-20.md"
+  },
+  {
+   "id": "S076",
+   "url": "https://michaelfeathers.silvrback.com/characterization-testing",
+   "scope": "what a characterization test records; informal essay by the term's coiner, not a normative spec",
+   "anchor": "section Characterization Testing, final sentence of the paragraph beginning It's a trick question; re-opened 2026-10-21",
+   "teaches": "supersedes S067 \u2014 a characterization test documents actual behavior, not desired behavior. Reading a re-pinned census baseline as sameness-since-pin rather than health is the lane's own application, not taught here.",
+   "used_by": "corpus/knowledge/drift-repin-r20.md, corpus/lessons/round-20.md, SKILL.md"
+  },
+  {
+   "id": "S117",
+   "url": "https://api.github.com/repos/rfjakob/earlyoom/tags",
+   "scope": "which upstream tag carries 1.9.0 and its date, and whether the earlyoom log-message prefixes `sending SIGTERM when mem avail`, `sending %s to process` and `escalating to SIGKILL after` are stable across tags v1.7, v1.8 and v1.9.0; the version line, the two threshold lines, the action line, the escalation line, the kill-failure line, the two low-memory warnings, the dry-run flag and the percentage format at those tags; not kill-selection logic, not the host's unit state, not kill history",
+   "anchor": "tags API: `v1.9.0` \u2192 commit `202d4db0d308ca6478f68de68b46cae34896ddaf` (annotated tag `66d78843fd675859a09a52d3f17b1c408a827a34`, tagger date 2025-09-16T19:09:33Z); releases API: `v1.9.0` published 2025-09-16T19:11:03Z; README.md:283 (changelog head); main.c:161 (version), :414 and :416 (thresholds), :295 (dryrun), :519 and :523 (low memory); kill.c:318 (escalation), :627 (action), :654 (kill failed); msg.h:10 (PRIPCT); v1.8 main.c:382 and :384, kill.c:230 and :539; v1.7 main.c:326 and :328, kill.c:167 and :377; sha256 v1.9.0 main.c `08656b0b\u2026f9d0e4`, kill.c `b32e0fad\u202600bf3`, msg.h `e3660498\u2026de56c`, README.md `23411dbf\u202674dd`, msg.c `a771c915\u20265197`; opened 2026-10-22",
+   "teaches": "The `mem avail` threshold wording was introduced in v1.8 and is unchanged in v1.9.0, so a v1.7-era invocation prints `mem <=` and never the contract's threshold line; the action and escalation prefixes are stable across v1.7\u2013v1.9.0 while their trailing fields change, so the version line, not the action line, identifies the grammar; percentages are printed through a width-5 field, so a single-digit threshold is space-padded.",
+   "used_by": "corpus/knowledge/userspace-oom-killers-r26.md"
+  },
+  {
+   "id": "S128",
+   "url": "https://man7.org/linux/man-pages/man5/proc_pid_oom_score_adj.5.html",
+   "scope": "the documented contract of the two proc files as served from man-pages 6.19, compared with the v7.2 kernel code that enforces it (that code is row S127): the -1000..+1000 range, the -1000 reading, the added-versus-scaled adjustment wording, the 3% root clause, the oom_adj legacy scaling, the owner-only write mode, and the fact that inheritance and the CAP_SYS_RESOURCE rule are documented only inside the oom_adj paragraph; not kill-time victim ordering, not OOM_SCORE_ADJ_MIN exclusion, not this host's oom_score_adj values, not earlyoom's own selection logic",
+   "anchor": "adj page:72 (since 2.6.36), :86-88 (3% root), :102-103 (adjustment \"added\"), :104-110 (range and -1000), :122-127 (oom_adj scaling), :145-149 (oom_adj inheritance and privilege), :175 (footer \"Linux man-pages 6.19 2026-02-08\"); score page:72-80 (since 2.6.11, factors), :97-98 (reflects the adjustment), :120 (footer); compared with S127 base.c:583-601 (proc_oom_score, totalpages :586, formula :596-597, [0, 2000] comment :591-594), :1089-1101 and :1213-1231 (oom_adj scaling), :1131-1133 (CAP_SYS_RESOURCE floor gate, -EACCES), :1156-1157 (:1175-1176 shared-mm copy of oom_score_adj_min), :1242-1256 (oom_score_adj read), :1275-1279 (range check, -EINVAL), :3351-3353 (S_IRUGO / S_IRUGO plus S_IWUSR); HTTP 200 on 2026-10-22T15:46:37Z\u201315:46:38Z, 11,680 B sha256 769edf3b9c054934db07f16173297fc5fd63c3a4c807682355f08fa45cde80a9, 7,955 B sha256 6169628d8a2cdc512795cfda74f3598d5b7a25e5b71921d4088c0539cf71b2bc, base.c 98,196 B sha256 cef1a2cf3f34f683e69d623c4df563d5c0dc6bd71dcb3d42f40dadb0084915c6; Linux tag v7.2; man-pages 6.20 sources carry the same four statement blocks (adj 6.20:25-26,46-47,53,101-105)",
+   "teaches": "The two files are different contracts: oom_score_adj is the writable -1000..+1000 preference whose value the kernel scales by totalpages/1000, oom_score is a read-only [0, 2000] export folding that preference in, and the page's inheritance and privilege sentences belong to the legacy oom_adj file, not to oom_score_adj.",
+   "used_by": "corpus/knowledge/oom-victim-selection-r27.md"
+  },
+  {
+   "id": "S137",
+   "url": "https://api.github.com/repos/rfjakob/earlyoom/commits?path=main.c",
+   "scope": "when earlyoom removed and re-introduced the option to delegate kills to the kernel OOM killer: the v0.6 introduction and v1.2 removal with compatibility-ignore (S114 README.md:416,383; v1.9.0 main.c:245-246), and the master re-introduction commit with its author and merge dates; not the option's runtime behaviour on any host, not the v1.7-v1.9.0 log grammar (S117)",
+   "anchor": "commits query: 750a7c0d97bb01c1bdf126fd6bf5722da17e8998, author date 2026-02-02T05:00:04Z, committer date 2026-02-17T20:30:10Z, subject \"kill: option for triggering kernel oom killer\" (first page of 100, 2018-07-16 to 2026-10-15); main.c at that commit: 201 (longopts \"kernel-oom\"), 315-317 (case; flag; \"Using kernel OOM killer (requires Linux v5.17+)\"), 352 (help \"use kernel OOM killer via /proc/sysrq-trigger\"), 437-438 (threshold line variant), 553-554 (poll-loop trigger); main.c@750a7c0d sha256 d24a26c97744458706a870ee3eb1ddcd5e5f05dda11fe22a71d6a4952028df3e, 585 lines; opened 2026-10-22",
+   "teaches": "The kernel-OOM delegation option left earlyoom in v1.2 and returned on master in February 2026, so a 1.9.0 binary prints \"Option -k is ignored since earlyoom v1.2\" while current master grows a --kernel-oom long option (S016 documents it from the master README); delegation claims must name the build they hold for.",
+   "used_by": "corpus/knowledge/userspace-oom-killers-r26.md"
+  },
+  {
+   "id": "S149",
+   "url": "https://man7.org/linux/man-pages/man5/proc_pid_oom_score_adj.5.html",
+   "scope": "the documented contract of the two proc files as served from man-pages 6.19, compared with the v7.2 kernel code that enforces it (the /proc read and write path is fs/proc/base.c, row S127; the kill-time score and its totalpages scaling are in mm/oom_kill.c, row S003): the -1000..+1000 range, the -1000 reading, the added-versus-scaled adjustment wording, the 3% root clause, the oom_adj legacy scaling, the owner-only write mode, and the fact that the pages state inheritance and the CAP_SYS_RESOURCE rule only inside the oom_adj paragraph; not kill-time victim ordering, not OOM_SCORE_ADJ_MIN exclusion, not this host's oom_score_adj values, not earlyoom's own selection logic",
+   "anchor": "adj page:72 (since 2.6.36), :77-78 (badness 0 to 1000), :86-88 (3% root), :102-103 (adjustment \"added\"), :104-110 (range and -1000), :122-127 (oom_adj scaling), :145-149 (oom_adj inheritance and privilege), :175 (footer \"Linux man-pages 6.19 2026-02-08\"); score page:72-80 (since 2.6.11, factors), :97-98 (reflects the adjustment), :120 (footer); compared with S127 base.c:583-602 (proc_oom_score, totalpages :586, formula :596-597, [0, 2000] comment :591-595), :1089-1101 and :1213-1231 (oom_adj scaling), :1131-1133 (CAP_SYS_RESOURCE floor gate, -EACCES), :1156-1157 (:1175-1176 shared-mm copy of oom_score_adj_min), :1242-1256 (oom_score_adj read), :1275-1279 (range check, -EINVAL), :3351-3353 (S_IRUGO / S_IRUGO plus S_IWUSR), and kernel/fork.c:1721-1775 (copy_signal), :1768-1769, :1949-1966 (copy_oom_score_adj), called at :2558; and with S003 mm/oom_kill.c:199-237 (oom_badness; OOM_SCORE_ADJ_MIN exclusion :216-222, adj scaling :232-234 `adj *= totalpages / 1000; points += adj;`, no capability term in the function); man-pages 6.20 carries the same four statement blocks (adj 6.20:25-26,46-47,53,101-105; score 6.20:28) at https://git.kernel.org/pub/scm/docs/man-pages/man-pages.git/plain/man/man5/proc_pid_oom_score_adj.5?id=man-pages-6.20 (4,212 B, sha256 16a0d4b50deca2828d840350262d936f70934272a276b96c750af050f31161f3) and the same path for proc_pid_oom_score.5?id=man-pages-6.20 (1,899 B, sha256 95c707bd3b4f2d8615085ac5a1bdacbeb5d975cfb94371dcfd4bf33e239f50ea); HTTP 200 on 2026-10-22T17:59:01Z-2026-10-22T18:02:32Z, adj 11,680 B sha256 769edf3b9c054934db07f16173297fc5fd63c3a4c807682355f08fa45cde80a9, score 7,955 B sha256 6169628d8a2cdc512795cfda74f3598d5b7a25e5b71921d4088c0539cf71b2bc, base.c 98,196 B sha256 cef1a2cf3f34f683e69d623c4df563d5c0dc6bd71dcb3d42f40dadb0084915c6, fork.c 85,725 B sha256 359882ea981b58f5289293e5644f7c0085a8350e4f1937f39dcb94ae1cd0dd1d, oom_kill.c 34,311 B sha256 452f1348e79c252ee89215d55fb104591412bbcea4a3ee965e873a401f756b4e; Linux tag v7.2",
+   "teaches": "supersedes S128 \u2014 the old row said the pages' inheritance and privilege sentences belong to the legacy oom_adj file and not to oom_score_adj; the pages do place them only inside the oom_adj paragraph (adj:145-149), but that placement is a documentation gap, not an absent kernel rule, because the kernel still copies oom_score_adj and its floor at fork (kernel/fork.c:1768-1769,1949-1966) and refuses an unprivileged write below oom_score_adj_min (fs/proc/base.c:1131-1133). The two files are different contracts: oom_score_adj is the writable -1000..+1000 preference whose value the kernel scales by totalpages/1000 (mm/oom_kill.c:232-234), oom_score is a read-only [0, 2000] export folding that preference in (fs/proc/base.c:596-597), and the pages' 3% root clause (adj:86-88) has no implementation in v7.2 oom_badness (mm/oom_kill.c:199-237).",
+   "used_by": "corpus/knowledge/oom-victim-selection-r27.md, PROVINCE.md, corpus/README.md, corpus/lessons/round-28.md"
+  }
+ ]
+}

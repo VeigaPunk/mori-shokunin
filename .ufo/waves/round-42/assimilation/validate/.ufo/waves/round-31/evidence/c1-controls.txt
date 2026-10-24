@@ -1,0 +1,35 @@
+# do-nothing: the entering tip
+$ python3 .ufo/waves/round-31/count-c1.py 2124cbcddd676102b3d59f0765cb42e8f05090ee --repo /home/vgpnk/Projects/shokunin/mori-shokunin
+rev=2124cbcddd676102b3d59f0765cb42e8f05090ee
+entry=absent
+C1=unmet
+exit=1
+
+# shortcut a: sourceless table citing only S027 (sandbox clone /fast/scratch/hyaku/mori-r31/c1-controls)
+$ python3 .ufo/waves/round-31/count-c1.py eddaa8d51c044fbe1e0d9d178be79e41f7955beb --repo /fast/scratch/hyaku/mori-r31/c1-controls
+rev=eddaa8d51c044fbe1e0d9d178be79e41f7955beb
+entry=present head_lines=yes
+tables=1 decision_tables=1
+rows=8 rows_ok=8 new_id_rows=0 new_ids=0 ()
+gates_ok=0/0 copies_ok=0/0 fetch_ok=0/0
+skill_rows=4
+unmet_conditions=new_ids,sources
+C1=unmet
+exit=1
+
+# shortcut b: four fabricated S161-S164 rows, consistent Gate/SOURCES/copies, copies not upstream (sandbox clone /fast/scratch/hyaku/mori-r31/c1-controls)
+$ python3 .ufo/waves/round-31/count-c1.py 9d91f9539a009f1a0be6823710d36c6ce02bc975 --repo /fast/scratch/hyaku/mori-r31/c1-controls
+rev=9d91f9539a009f1a0be6823710d36c6ce02bc975
+entry=present head_lines=yes
+tables=1 decision_tables=1
+rows=8 rows_ok=8 new_id_rows=8 new_ids=4 (S161,S162,S163,S164)
+S161 gate=ok quotes=1 copy=ok fetch=bad url=https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/exec.c
+S162 gate=ok quotes=1 copy=ok fetch=bad url=https://raw.githubusercontent.com/torvalds/linux/v7.2/include/linux/sched.h
+S163 gate=ok quotes=1 copy=ok fetch=bad url=https://gitlab.com/procps-ng/procps/-/raw/v4.0.7/man/pgrep.1
+S164 gate=ok quotes=1 copy=ok fetch=bad url=https://raw.githubusercontent.com/torvalds/linux/v7.2/fs/proc/base.c
+gates_ok=4/4 copies_ok=4/4 fetch_ok=0/4
+skill_rows=4
+unmet_conditions=sources
+C1=unmet
+exit=1
+

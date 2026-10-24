@@ -1,0 +1,141 @@
+{
+  "additional_probe_failures": [],
+  "expected_detector": "C21.c1_source_byte_guard",
+  "mutant": "restore_raw_unallowlisted_alias",
+  "not_exercised": [
+    "original C1 oracle26",
+    "full pinned driver",
+    "C2 fixtures",
+    "quota selftest",
+    "live host quota reads"
+  ],
+  "outputs": [
+    {
+      "argv": [
+        "/usr/bin/python",
+        "-I",
+        "-B",
+        "/fast/scratch/hyaku/mori-r23/MutAliasReturn/detect-source-guard.py",
+        "--candidate",
+        "/fast/scratch/hyaku/mori-r23/MutAliasReturn/repo/tools/mori-retention-reconcile.py",
+        "--baseline",
+        "/fast/scratch/hyaku/mori-r23/MutAliasReturn/entering-reconciler.py",
+        "--driver",
+        "/fast/scratch/hyaku/mori-r23/MutAliasReturn/repo/.ufo/waves/round-23/build/MeasureDriver/measure-round23-v2.py",
+        "--delta",
+        "/fast/scratch/hyaku/mori-r23/MutAliasReturn/repo/.ufo/waves/round-23/frozen/c1-source-delta.json"
+      ],
+      "elapsed_seconds": 0.070966,
+      "exit_code": 0,
+      "phase": "pristine",
+      "stderr": "",
+      "stdout": "{\"delta_sha256\":\"df425412405c9358caec31c2fd7c6cc303d1f395b648a169b19c982bd3567318\",\"detector\":\"C21.c1_source_byte_guard\",\"driver_sha256\":\"5c12fdc056309966d3e716d25e3427a7908056595383f0353655b42282fdfbcd\",\"guard\":{\"baseline\":{\"mode\":\"100755\",\"path\":\"tools/mori-retention-reconcile.py\",\"pinned_sha256\":\"0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32\",\"revision\":\"1bfe708a170c877db3319060d0ab38771efe03ac\",\"sha256\":\"0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32\"},\"frozen_source_delta\":{\"fields\":{\"entering_revision\":{\"driver\":\"1bfe708a170c877db3319060d0ab38771efe03ac\",\"frozen\":\"1bfe708a170c877db3319060d0ab38771efe03ac\",\"matches\":true},\"entering_sha256\":{\"driver\":\"0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32\",\"frozen\":\"0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32\",\"matches\":true},\"mode\":{\"driver\":\"100755\",\"frozen\":\"100755\",\"matches\":true},\"output_pair_normalization\":{\"driver\":[\"schema\",\"raw_unallowlisted\",\"tool_sha256\"],\"frozen\":[\"schema\",\"raw_unallowlisted\",\"tool_sha256\"],\"matches\":true},\"replacements\":{\"driver\":[[\"SCHEMA='mori-retention-reconciliation-v1'\",\"SCHEMA='mori-retention-reconciliation-v2'\"],[\"'raw_unallowlisted':len(unallowed),\",\"\"]],\"frozen\":[[\"SCHEMA='mori-retention-reconciliation-v1'\",\"SCHEMA='mori-retention-reconciliation-v2'\"],[\"'raw_unallowlisted':len(unallowed),\",\"\"]],\"matches\":true},\"same_fixture_required\":{\"driver\":true,\"frozen\":true,\"matches\":true},\"transformed_sha256\":{\"driver\":\"4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36\",\"frozen\":\"4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36\",\"matches\":true}},\"matches\":true,\"present\":true},\"matches\":true,\"observed_sha256\":\"4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36\",\"target\":{\"mode\":\"100755\",\"mode_frozen_in_driver\":\"100755\",\"observed_alias_fragment_count\":0,\"observed_v1_literal_count\":0,\"observed_v2_literal_count\":1,\"sha256_computed\":\"4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36\",\"sha256_frozen_in_driver\":\"4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36\"},\"transform_reason\":null,\"transformations\":[{\"from\":\"SCHEMA='mori-retention-reconciliation-v1'\",\"kind\":\"substitution\",\"occurrences_in_baseline\":1,\"to\":\"SCHEMA='mori-retention-reconciliation-v2'\"},{\"fragment\":\"'raw_unallowlisted':len(unallowed),\",\"kind\":\"deletion\",\"occurrences_in_baseline\":1}]},\"guard_block_lines\":[610,694],\"guard_block_source_sha256\":\"ffff52b7d6f1272c1ff4ad26709b4a229b8f008f4c2854b41fcfe0ebfa0fdc48\",\"live_reads\":false,\"mode_input_adapter\":\"staged immutable entering file and temporary candidate stat modes; no Git/host probe\",\"pass\":true}\n",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "/usr/bin/python",
+        "-I",
+        "-B",
+        "/fast/scratch/hyaku/mori-r23/MutAliasReturn/detect-source-guard.py",
+        "--candidate",
+        "/fast/scratch/hyaku/mori-r23/MutAliasReturn/repo/tools/mori-retention-reconcile.py",
+        "--baseline",
+        "/fast/scratch/hyaku/mori-r23/MutAliasReturn/entering-reconciler.py",
+        "--driver",
+        "/fast/scratch/hyaku/mori-r23/MutAliasReturn/repo/.ufo/waves/round-23/build/MeasureDriver/measure-round23-v2.py",
+        "--delta",
+        "/fast/scratch/hyaku/mori-r23/MutAliasReturn/repo/.ufo/waves/round-23/frozen/c1-source-delta.json"
+      ],
+      "elapsed_seconds": 0.056113,
+      "exit_code": 1,
+      "phase": "mutated",
+      "stderr": "",
+      "stdout": "{\"delta_sha256\":\"df425412405c9358caec31c2fd7c6cc303d1f395b648a169b19c982bd3567318\",\"detector\":\"C21.c1_source_byte_guard\",\"driver_sha256\":\"5c12fdc056309966d3e716d25e3427a7908056595383f0353655b42282fdfbcd\",\"guard\":{\"baseline\":{\"mode\":\"100755\",\"path\":\"tools/mori-retention-reconcile.py\",\"pinned_sha256\":\"0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32\",\"revision\":\"1bfe708a170c877db3319060d0ab38771efe03ac\",\"sha256\":\"0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32\"},\"frozen_source_delta\":{\"fields\":{\"entering_revision\":{\"driver\":\"1bfe708a170c877db3319060d0ab38771efe03ac\",\"frozen\":\"1bfe708a170c877db3319060d0ab38771efe03ac\",\"matches\":true},\"entering_sha256\":{\"driver\":\"0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32\",\"frozen\":\"0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32\",\"matches\":true},\"mode\":{\"driver\":\"100755\",\"frozen\":\"100755\",\"matches\":true},\"output_pair_normalization\":{\"driver\":[\"schema\",\"raw_unallowlisted\",\"tool_sha256\"],\"frozen\":[\"schema\",\"raw_unallowlisted\",\"tool_sha256\"],\"matches\":true},\"replacements\":{\"driver\":[[\"SCHEMA='mori-retention-reconciliation-v1'\",\"SCHEMA='mori-retention-reconciliation-v2'\"],[\"'raw_unallowlisted':len(unallowed),\",\"\"]],\"frozen\":[[\"SCHEMA='mori-retention-reconciliation-v1'\",\"SCHEMA='mori-retention-reconciliation-v2'\"],[\"'raw_unallowlisted':len(unallowed),\",\"\"]],\"matches\":true},\"same_fixture_required\":{\"driver\":true,\"frozen\":true,\"matches\":true},\"transformed_sha256\":{\"driver\":\"4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36\",\"frozen\":\"4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36\",\"matches\":true}},\"matches\":true,\"present\":true},\"matches\":false,\"observed_sha256\":\"e7248958afdf6899886416e89eae43fde4fad717a01394e3bb45e681b4b8af42\",\"target\":{\"mode\":\"100755\",\"mode_frozen_in_driver\":\"100755\",\"observed_alias_fragment_count\":1,\"observed_v1_literal_count\":0,\"observed_v2_literal_count\":1,\"sha256_computed\":\"4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36\",\"sha256_frozen_in_driver\":\"4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36\"},\"transform_reason\":null,\"transformations\":[{\"from\":\"SCHEMA='mori-retention-reconciliation-v1'\",\"kind\":\"substitution\",\"occurrences_in_baseline\":1,\"to\":\"SCHEMA='mori-retention-reconciliation-v2'\"},{\"fragment\":\"'raw_unallowlisted':len(unallowed),\",\"kind\":\"deletion\",\"occurrences_in_baseline\":1}]},\"guard_block_lines\":[610,694],\"guard_block_source_sha256\":\"ffff52b7d6f1272c1ff4ad26709b4a229b8f008f4c2854b41fcfe0ebfa0fdc48\",\"live_reads\":false,\"mode_input_adapter\":\"staged immutable entering file and temporary candidate stat modes; no Git/host probe\",\"pass\":false}\n",
+      "timed_out": false
+    },
+    {
+      "argv": [
+        "/usr/bin/python",
+        "-I",
+        "-B",
+        "/fast/scratch/hyaku/mori-r23/MutAliasReturn/detect-source-guard.py",
+        "--candidate",
+        "/fast/scratch/hyaku/mori-r23/MutAliasReturn/repo/tools/mori-retention-reconcile.py",
+        "--baseline",
+        "/fast/scratch/hyaku/mori-r23/MutAliasReturn/entering-reconciler.py",
+        "--driver",
+        "/fast/scratch/hyaku/mori-r23/MutAliasReturn/repo/.ufo/waves/round-23/build/MeasureDriver/measure-round23-v2.py",
+        "--delta",
+        "/fast/scratch/hyaku/mori-r23/MutAliasReturn/repo/.ufo/waves/round-23/frozen/c1-source-delta.json"
+      ],
+      "elapsed_seconds": 0.047739,
+      "exit_code": 0,
+      "phase": "restored",
+      "stderr": "",
+      "stdout": "{\"delta_sha256\":\"df425412405c9358caec31c2fd7c6cc303d1f395b648a169b19c982bd3567318\",\"detector\":\"C21.c1_source_byte_guard\",\"driver_sha256\":\"5c12fdc056309966d3e716d25e3427a7908056595383f0353655b42282fdfbcd\",\"guard\":{\"baseline\":{\"mode\":\"100755\",\"path\":\"tools/mori-retention-reconcile.py\",\"pinned_sha256\":\"0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32\",\"revision\":\"1bfe708a170c877db3319060d0ab38771efe03ac\",\"sha256\":\"0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32\"},\"frozen_source_delta\":{\"fields\":{\"entering_revision\":{\"driver\":\"1bfe708a170c877db3319060d0ab38771efe03ac\",\"frozen\":\"1bfe708a170c877db3319060d0ab38771efe03ac\",\"matches\":true},\"entering_sha256\":{\"driver\":\"0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32\",\"frozen\":\"0795bac9367c33e534b79599114c1635d83c4b0e4a57fbbe235644858a59de32\",\"matches\":true},\"mode\":{\"driver\":\"100755\",\"frozen\":\"100755\",\"matches\":true},\"output_pair_normalization\":{\"driver\":[\"schema\",\"raw_unallowlisted\",\"tool_sha256\"],\"frozen\":[\"schema\",\"raw_unallowlisted\",\"tool_sha256\"],\"matches\":true},\"replacements\":{\"driver\":[[\"SCHEMA='mori-retention-reconciliation-v1'\",\"SCHEMA='mori-retention-reconciliation-v2'\"],[\"'raw_unallowlisted':len(unallowed),\",\"\"]],\"frozen\":[[\"SCHEMA='mori-retention-reconciliation-v1'\",\"SCHEMA='mori-retention-reconciliation-v2'\"],[\"'raw_unallowlisted':len(unallowed),\",\"\"]],\"matches\":true},\"same_fixture_required\":{\"driver\":true,\"frozen\":true,\"matches\":true},\"transformed_sha256\":{\"driver\":\"4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36\",\"frozen\":\"4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36\",\"matches\":true}},\"matches\":true,\"present\":true},\"matches\":true,\"observed_sha256\":\"4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36\",\"target\":{\"mode\":\"100755\",\"mode_frozen_in_driver\":\"100755\",\"observed_alias_fragment_count\":0,\"observed_v1_literal_count\":0,\"observed_v2_literal_count\":1,\"sha256_computed\":\"4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36\",\"sha256_frozen_in_driver\":\"4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36\"},\"transform_reason\":null,\"transformations\":[{\"from\":\"SCHEMA='mori-retention-reconciliation-v1'\",\"kind\":\"substitution\",\"occurrences_in_baseline\":1,\"to\":\"SCHEMA='mori-retention-reconciliation-v2'\"},{\"fragment\":\"'raw_unallowlisted':len(unallowed),\",\"kind\":\"deletion\",\"occurrences_in_baseline\":1}]},\"guard_block_lines\":[610,694],\"guard_block_source_sha256\":\"ffff52b7d6f1272c1ff4ad26709b4a229b8f008f4c2854b41fcfe0ebfa0fdc48\",\"live_reads\":false,\"mode_input_adapter\":\"staged immutable entering file and temporary candidate stat modes; no Git/host probe\",\"pass\":true}\n",
+      "timed_out": false
+    }
+  ],
+  "restoration": {
+    "exact_bytes": true,
+    "mode": "100755",
+    "performed_in_finally": true,
+    "restored_control_exit_code": 0,
+    "restored_control_pass": true,
+    "same_detector_and_argv": true
+  },
+  "schema": "mori-round23-source-mutation-result-v1",
+  "scope": "isolated frozen source-byte predicate; not a full-driver or reconciler output run",
+  "seat": "MutAliasReturn",
+  "summary": [
+    {
+      "alias_fragment_count": 0,
+      "elapsed_seconds": 0.070966,
+      "exit_code": 0,
+      "frozen_delta_matches": true,
+      "mode": "100755",
+      "observed_sha256": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+      "pass": true,
+      "phase": "pristine",
+      "stderr": "",
+      "timed_out": false,
+      "v2_literal_count": 1
+    },
+    {
+      "alias_fragment_count": 1,
+      "elapsed_seconds": 0.056113,
+      "exit_code": 1,
+      "frozen_delta_matches": true,
+      "mode": "100755",
+      "observed_sha256": "e7248958afdf6899886416e89eae43fde4fad717a01394e3bb45e681b4b8af42",
+      "pass": false,
+      "phase": "mutated",
+      "stderr": "",
+      "timed_out": false,
+      "v2_literal_count": 1
+    },
+    {
+      "alias_fragment_count": 0,
+      "elapsed_seconds": 0.047739,
+      "exit_code": 0,
+      "frozen_delta_matches": true,
+      "mode": "100755",
+      "observed_sha256": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36",
+      "pass": true,
+      "phase": "restored",
+      "stderr": "",
+      "timed_out": false,
+      "v2_literal_count": 1
+    }
+  ],
+  "unchanged_boundaries": {
+    "frozen_case_rule_oracle_expectation_edits": false,
+    "lane_index_or_ref_edits": false,
+    "privacy_clearance": false,
+    "production_edits": false,
+    "sibling_writes": false,
+    "strict_C2_target": "UNPROVABLE; retained existing29/30 CaseEscapedSpace contradiction, not rerun"
+  },
+  "verdict": "killed"
+}

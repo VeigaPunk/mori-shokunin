@@ -1,0 +1,36 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseBtrfsQgroup",
+  "scenario": "btrfs subvolume mount at /home whose single listed uuid has qgroups enabled (qgroups_mode \"qgroup\")",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "25 30 0:30 / / rw,relatime shared:1 - btrfs /dev/mapper/root rw,space_cache,subvolid=257,subvol=/\n26 25 0:30 /@home /home rw,relatime shared:1 - btrfs /dev/mapper/root rw,space_cache,subvolid=256,subvol=/@home\n27 25 0:31 / /proc rw,nosuid,nodev,noexec,relatime shared:5 - proc proc rw\n28 25 0:32 / /sys rw,nosuid,nodev,noexec,relatime shared:6 - sysfs sysfs rw\n29 25 0:33 / /tmp rw,nosuid,nodev,noexec,relatime shared:8 - xfs /dev/mapper/data rw,attr2,inode64,noquota\n",
+    "paths": [
+      {"path": "/home/quota/data", "realpath": "/home/quota/data", "st_dev": "0:57"}
+    ],
+    "device_links": {"/dev/mapper/root": "dm-0"},
+    "btrfs_sysfs": {
+      "7e764e88d285609904089ade096888407eee028fe10b7df43dbe1d954c153d19": {
+        "devices": ["dm-0"],
+        "qgroups": true,
+        "qgroups_mode": "qgroup"
+      }
+    }
+  },
+  "expected": {
+    "exit": 1,
+    "finding_id": "QUOTA_ENABLED",
+    "paths": [
+      {
+        "path": "/home/quota/data",
+        "fstype": "btrfs",
+        "mount_point": "/home",
+        "quota_state": "enabled",
+        "enforcement": "unknown",
+        "basis": "btrfs_qgroups_dir_present"
+      }
+    ]
+  },
+  "rationale": "contract.md §C2 mount resolution (lines 96-100): the fixture mountinfo is parsed per proc.rst §3.5 (fields 1-6, optional fields up to the '-' separator, then filesystem type, mount source, super options) [S082]; for realpath /home/quota/data the candidate mounts are the root mount point '/' and the mount point '/home', and the longest mount point wins, so the covering mount is the btrfs line '26 25 0:30 /@home /home rw,relatime shared:1 - btrfs /dev/mapper/root rw,space_cache,subvolid=256,subvol=/@home'. Its fstype is btrfs and its mount point is /home, so expected fstype='btrfs' and mount_point='/home'. Contract §C2 lines 100-103: the mount major:minor 0:30 differs from the path st_dev 0:57, but for btrfs a mismatch is expected (per-subvolume anonymous st_dev, S081 = fs/btrfs/inode.c, 'stat->dev = BTRFS_I(inode)->root->anon_dev', inode.c:8246) and is only recorded as device_check 'btrfs_subvolume_skipped', so the quota classification still runs; device_check is not one of the six compared expected keys. Contract §C2 quota-classification table row 'btrfs | source basename maps to exactly one uuid whose qgroups is true | enabled | unknown | btrfs_qgroups_dir_present' (line 115): the mount source /dev/mapper/root resolves via the fixture device_links to device basename 'dm-0', the only listed uuid '7e764e88d285609904089ade096888407eee028fe10b7df43dbe1d954c153d19' lists exactly that device, its qgroups flag is true, so quota_state='enabled' and enforcement='unknown'. The qgroups true flag and the mode text 'qgroup' are the sysfs facts /sys/fs/btrfs/<uuid>/qgroups/enabled and /sys/fs/btrfs/<uuid>/qgroups/mode [S079 = fs/btrfs/sysfs.c, qgroup_enabled_show/qgroup_mode_show, 'qgroup' is the BTRFS_QGROUP_MODE_FULL text], and the presence of that qgroups directory is exactly what btrfs_sysfs_add_qgroups creates when qgroup support is turned on [S080 = fs/btrfs/qgroup.c, btrfs_sysfs_add_qgroups call sites qgroup.c:441, :1032]. Contract §C2 verdict precedence (lines 132-135): with the single path enabled and no unknown sibling, the run yields exit 1 and finding_id 'QUOTA_ENABLED'.",
+  "sources": ["S079", "S080", "S081", "S082"]
+}

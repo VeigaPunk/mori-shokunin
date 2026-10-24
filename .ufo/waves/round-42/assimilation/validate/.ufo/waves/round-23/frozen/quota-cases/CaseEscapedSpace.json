@@ -1,0 +1,58 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseEscapedSpace",
+  "scenario": "mount point with a space encoded as \\040 in mountinfo (/srv/my\\040data) must be decoded to /srv/my data so a path under it resolves to that xfs mount (usrquota -> enabled/enforced) instead of the shorter /srv mount (noquota -> disabled).",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "26 33 0:24 / /proc rw,nosuid,nodev,noexec,relatime shared:5 - proc proc rw\n33 2 0:30 /@ / rw,noatime shared:1 - btrfs /dev/mapper/root rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=256,subvol=/@\n42 33 0:44 / /srv rw,relatime shared:12 - xfs /dev/mapper/srv rw,inode64,logbufs=8,logbsize=256k,noquota\n43 33 0:45 / /srv/my\\040data rw,relatime shared:13 - xfs /dev/mapper/data rw,inode64,usrquota,attr2\n",
+    "paths": [
+      {
+        "path": "/srv/my data/sub dir",
+        "realpath": "/srv/my data/sub dir",
+        "st_dev": "0:45"
+      },
+      {
+        "path": "/srv/plain",
+        "realpath": "/srv/plain",
+        "st_dev": "0:44"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0",
+      "/dev/mapper/srv": "dm-1",
+      "/dev/mapper/data": "dm-2"
+    },
+    "btrfs_sysfs": {
+      "8f3c1d2e-5b6a-4c7d-9e0f-1a2b3c4d5e6f": {
+        "devices": ["dm-0"],
+        "qgroups": false,
+        "qgroups_enabled": null,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 1,
+    "finding_id": "QUOTA_ENABLED",
+    "paths": [
+      {
+        "path": "/srv/my data/sub dir",
+        "fstype": "xfs",
+        "mount_point": "/srv/my data",
+        "quota_state": "enabled",
+        "enforcement": "enforced",
+        "basis": "xfs_quota_option"
+      },
+      {
+        "path": "/srv/plain",
+        "fstype": "xfs",
+        "mount_point": "/srv",
+        "quota_state": "disabled",
+        "enforcement": "n/a",
+        "basis": "xfs_noquota_option"
+      }
+    ]
+  },
+  "rationale": "Amendment delta for this case: the btrfs_sysfs UUID record gains the required 'qgroups_enabled' member (false -> null, mode null), and the enabled-btrfs basis rename to 'btrfs_qgroups_enabled' does not touch this case because no btrfs mount is ever selected (the btrfs line is a decoy that loses the longest-match). The ext2/ext3/ext4 -> unknown/n/a/ext_quota_option_unverified change does not touch this case (no ext path). The duplicated-covering-mountpoint -> unknown/null fstype+mount_point/ambiguous_overmount change does not touch this case: each covering mountpoint ('/', '/srv', '/srv/my data') occurs exactly once in the mountinfo, so no overmount refusal is triggered. Unrelated fixture and expectation content is preserved byte-for-byte from the original proposal (the original file in cases-proposed/ remains untouched and unaltered). Derivation under the pre-seal amendment, step by step. (1) Mountinfo parsing: 'Parse separator and the last THREE fields of EACH chosen line, never file-wide. Octal-decode root, mountpoint and source with exactly 040/011/012/134; reject other backslash escapes as QUOTA_SETUP' (preseal-amendment.md, C2 mount resolution). Each fixture line follows the proc.rst section 3.5 layout (S082, field table 1970-1983: field 3 major:minor, optional fields after field 6, the '-' separator, then filesystem type, mount source, super options). Field 5 of the fourth line is written '/srv/my\\040data'; decoding the \\040 escape yields the mount point '/srv/my data'. The fixture contains no other backslash escape, so no line is rejected as QUOTA_SETUP; the trailing empty line after the final newline is ignored per 'ignore empty trailing lines'. (2) Mount resolution: 'Longest component-prefix selection remains. However if ANY covering mountpoint occurs more than once, refuse classification as unknown/n/a/ambiguous_overmount, fstype=null, mount_point=null, device_check=not_checked.' For realpath '/srv/my data/sub dir' the covering mountpoints are '/' (line 2), '/srv' (line 3) and '/srv/my data' (line 4, decoded); each occurs exactly once, so no overmount refusal; the longest component-prefix wins -> mount_point '/srv/my data', fstype xfs, source '/dev/mapper/data', super options 'rw,inode64,usrquota,attr2'. For realpath '/srv/plain' the covering mountpoints are '/' and '/srv' only ('/srv/my data' is not a component prefix of '/srv/plain'), each occurring once -> mount_point '/srv', fstype xfs, super options 'rw,inode64,logbufs=8,logbsize=256k,noquota'. (3) Device check: 'Device mismatch PREEMPTS the filesystem table: unknown/n/a/device_mismatch; device_check=mismatch ... Equal -> match.' The chosen fstype for both paths is xfs (not btrfs) and the mount major:minor equals the path st_dev (0:45 == 0:45 for the first path, 0:44 == 0:44 for the second), so no mismatch branch is entered and the filesystem table applies. (4) Quota classification, XFS precedence 'conflict(noquota with ANY quota/enforcement or noenforce key), then noquota, then any enforced key, then any accounting-only key, else absent' (preseal-amendment.md, C2 XFS precedence): the first path's super options contain the enforced key 'usrquota' and no 'noquota' -> enabled / enforced / xfs_quota_option; the second path's super options contain 'noquota' and no quota key -> disabled / n/a / xfs_noquota_option. The kernel-emission basis for both option strings is S078 (fs/xfs/xfs_super.c, xfs_fs_show_options quota emission 238-254: ',usrquota' on XFS_UQUOTA_ENFD, ',uqnoenforce' on XFS_UQUOTA_ACCT, ',noquota' only when no accounting flag is set), and the option semantics are S077 (Documentation/admin-guide/xfs.rst, noquota 171-173 'Forcibly turns off all quota accounting and enforcement within the filesystem'; uquota/usrquota/uqnoenforce/quota 175-177). (5) Verdict precedence: 'else any enabled -> 1 QUOTA_ENABLED (positive evidence is never hidden by an unknown sibling)' (contract.md C2 verdict precedence) -> exit 1, finding_id QUOTA_ENABLED, even though the sibling path is disabled. (6) Fixture shape conformance under the amendment's metadata rules: both paths are nonempty, unique, normalized absolute paths without dot/dotdot components; st_dev values are canonical decimal MAJ:MIN; the single btrfs_sysfs key is a canonical UUID whose devices list and the device_links values are plain nonempty basenames; the qgroups record carries exactly devices, qgroups (bool false), qgroups_enabled (null) and qgroups_mode (null), matching 'qgroups false must pair with enabled=null/mode=null'.",
+  "sources": ["S077", "S078", "S082"]
+}

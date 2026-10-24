@@ -1,0 +1,11 @@
+{
+  "id": "S065",
+  "url": "https://docs.python.org/3/library/hashlib.html",
+  "accessed": "2026-10-21",
+  "page_version": "Python3.15.1 (immutable registry anchor3.15.0 retained)",
+  "location": "Hash algorithms, first paragraph",
+  "quote": "At any point you can ask it for the digest of the concatenation of the data fed to it so far",
+  "word_count": 21,
+  "decision": "re-rejected as sole measured-revision/authentication authority; authoritative for hash API only",
+  "reason": "A byte digest does not identify which repository supplied bytes or authenticate a receipt."
+}

@@ -1,0 +1,18 @@
+{"cases":[
+{"id":"recordshape-leading-string-primitive-user","scope":"user",
+ "anchor":{"schema":"mori-journal-anchor-v1","scope":"user","boot_id":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","cursor":"s=r16rs-a;c=1"},
+ "stdout":"\"stray-entry\"\n{\"__CURSOR\":\"s=r16rs-a;c=1\",\"_BOOT_ID\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}\n{\"__CURSOR\":\"s=r16rs-a;c=2\",\"_BOOT_ID\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"MESSAGE_ID\":\"fe6faa94e7774663a0da52717891d8ef\"}\n",
+ "stderr":"","returncode":0,"want_rc":2,"want_id":"MORI_JOURNAL_WINDOW_UNAVAILABLE"},
+{"id":"recordshape-null-neighbor-system","scope":"system",
+ "anchor":{"schema":"mori-journal-anchor-v1","scope":"system","boot_id":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","cursor":"s=r16rs-b;c=1"},
+ "stdout":"{\"__CURSOR\":\"s=r16rs-b;c=1\",\"_BOOT_ID\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}\nnull\n{\"__CURSOR\":\"s=r16rs-b;c=2\",\"_BOOT_ID\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"MESSAGE_ID\":\"fe6faa94e7774663a0da52717891d8ef\"}\n",
+ "stderr":"","returncode":0,"want_rc":2,"want_id":"MORI_JOURNAL_WINDOW_UNAVAILABLE"},
+{"id":"recordshape-array-neighbor-positive-decoy-user","scope":"user",
+ "anchor":{"schema":"mori-journal-anchor-v1","scope":"user","boot_id":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","cursor":"s=r16rs-c;c=1"},
+ "stdout":"{\"__CURSOR\":\"s=r16rs-c;c=1\",\"_BOOT_ID\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}\n[{\"__CURSOR\":\"s=r16rs-c;c=9\",\"_BOOT_ID\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"MESSAGE_ID\":\"fe6faa94e7774663a0da52717891d8ef\"}]\n{\"__CURSOR\":\"s=r16rs-c;c=2\",\"_BOOT_ID\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"MESSAGE_ID\":\"98e322203f7a4ed290d09fe03c09fe15\",\"EXIT_CODE\":\"killed\",\"EXIT_STATUS\":\"9\"}\n",
+ "stderr":"","returncode":0,"want_rc":2,"want_id":"MORI_JOURNAL_WINDOW_UNAVAILABLE"},
+{"id":"recordshape-scalar-neighbors-around-positives-system","scope":"system",
+ "anchor":{"schema":"mori-journal-anchor-v1","scope":"system","boot_id":"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","cursor":"s=r16rs-d;c=1"},
+ "stdout":"{\"__CURSOR\":\"s=r16rs-d;c=1\",\"_BOOT_ID\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"}\n9\n{\"__CURSOR\":\"s=r16rs-d;c=2\",\"_BOOT_ID\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"MESSAGE_ID\":\"d9b373ed55a64feb8242e02dbe79a49c\",\"UNIT_RESULT\":\"oom-kill\"}\ntrue\n{\"__CURSOR\":\"s=r16rs-d;c=3\",\"_BOOT_ID\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"MESSAGE_ID\":\"98e322203f7a4ed290d09fe03c09fe15\",\"EXIT_CODE\":\"killed\",\"EXIT_STATUS\":\"9\"}\n",
+ "stderr":"","returncode":0,"want_rc":2,"want_id":"MORI_JOURNAL_WINDOW_UNAVAILABLE"}
+]}

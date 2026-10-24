@@ -1,0 +1,8 @@
+$ python3 -I -B tools/mori-retention-gate.py scan --repo <sandbox clone> --rev 8abb90a3f751f6984bb359ae64b4f6a216f6a595 --policy .ufo/waves/round-18/frozen/c1-policy.json --allowlist corpus/evidence/retention-allowlist.json   # --no-hardlinks clone
+{'commit': '8abb90a3f751f6984bb359ae64b4f6a216f6a595', 'finding_id': 'RETENTION_FINDINGS', 'metric': 4, 'non_author': 5, 'policy_sha256': 'db06e9810bbfd243fb0a753a46960573df39083ea90174ce463cf2a0ab523128', 'routed': 0} {'allowlisted_hits': 104, 'forbidden_allowlist': 0, 'hits': 113, 'unallowlisted_hits': 4, 'warnings': 0}
+exit=1
+
+$ python3 -I -B tools/mori-retention-gate.py scan --repo <sandbox clone> --rev 641a6e86ecc60634d215c0a47ab86c47661abf86 --policy .ufo/waves/round-18/frozen/c1-policy.json --allowlist corpus/evidence/retention-allowlist.json   # --no-hardlinks clone
+{'commit': '641a6e86ecc60634d215c0a47ab86c47661abf86', 'finding_id': 'RETENTION_FINDINGS', 'metric': 4, 'non_author': 5, 'policy_sha256': 'db06e9810bbfd243fb0a753a46960573df39083ea90174ce463cf2a0ab523128', 'routed': 0} {'allowlisted_hits': 104, 'forbidden_allowlist': 0, 'hits': 113, 'unallowlisted_hits': 4, 'warnings': 0}
+exit=1
+

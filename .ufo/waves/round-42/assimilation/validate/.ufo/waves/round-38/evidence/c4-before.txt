@@ -1,0 +1,12 @@
+command: python3 .ufo/waves/round-38/count-c4.py e37dcc6   # run from the lane root
+P-C4: at revision R, the committed drift-corpus binding passes four content checks that the round-37 token checks cannot discriminate — every `anchor:` line in the round-38 knowledge entry resolves byte-exactly in tools/mori-source-drift.py at R, every path the SCORECARD capability row cites resolves at R, the live receipt names one drifted row by id per drifted row its summary counts, and the probe's selftest runs the named-row arm `row_states` whose own mutation kills it — and the same counter rejects three fabricated token-satisfying witnesses (an entry with the tokens but no resolvable anchor, a capability row citing a nonexistent path, a live receipt with only the summary sentence), while the real bytes pass.
+negative witness-token-entry        rejected
+negative witness-dangling-row       rejected
+negative witness-summary-only-live  rejected
+check anchors          FAIL (anchors=0 missing=[])
+check capability       FAIL (paths=['tools/mori-source-drift.py', '.ufo/waves/round-37/evidence/c2-after.txt', 'evidence/drift-live-r37.txt'] missing=['evidence/drift-live-r37.txt'])
+check live_rows        PASS (named=10 summary_drifted=10 unknown=[])
+check named_row_drift  PASS (exit=0 row_states=('PASS', ''))
+check drift_kill       PASS (exit=1 row_states=('FAIL', "got=[('S101', 'fresh'), ('S102', 'excerpt'), ('S103', 'excerpt'), ('S104', 'unavailable'), ('S105', 'unavailable'), ('S106', 'no-copy'), ('S107', 'no-copy'), ('S108', 'fresh'), ('S109', 'unavailable'), ('S110', 'unavailable')] want=[('S101', 'fresh'), ('S102', 'excerpt'), ('S103', 'drifted'), ('S104', 'unavailable'), ('S105', 'unavailable'), ('S106', 'no-copy'), ('S107', 'no-copy'), ('S108', 'fresh'), ('S109', 'unavailable'), ('S110', 'unavailable')]"))
+C4=unmet
+EXIT=1

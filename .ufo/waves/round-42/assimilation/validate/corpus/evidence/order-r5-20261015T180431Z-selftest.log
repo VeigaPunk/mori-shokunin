@@ -1,0 +1,49 @@
+RECEIPT   mori-shokunin round-5 — census selftest (census FROZEN this round)
+SEAT      receipts-writer (round-5 flash wave)
+CAPTURED_UTC  2026-10-15T18:04:37Z (start; end 2026-10-15T18:04:38Z)
+COMMAND   bash tools/mori-census.sh --selftest   # hermetic; cwd=mori-shokunin lane root
+CENSUS_SHA256_BEFORE af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+CENSUS_SHA256_AFTER  af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+ORACLE_SHA256_BEFORE 7143ccc2a14221713334c33ade56e24ca711fbd0d3d17f31d33e151be544f017
+ORACLE_SHA256_AFTER  7143ccc2a14221713334c33ade56e24ca711fbd0d3d17f31d33e151be544f017
+EXIT_CODE 0
+DURATION_S 1
+LANE_HEAD 7a3629a83c2e81774ebeb65b4b92a07b65830add   FLEET_HEAD 90ce10bf2098b082755c484b63c05ac299857d22
+NOTE      The census did not change this round (round-5 claim edits only
+          tools/mori-silence-cases.sh). Selftest is re-run to pin the frozen
+          revision: PASS (30 cases, 30 passed, 0 failed), same as round 4.
+OUTPUT_SHA256 82ccb309e1a79cdce9598149c7e4c4e1ca14fe6321e7acac7ab9414ef2e8508d
+
+---- selftest output (verbatim) ----
+PASS clean: all quiet (exit 0 CLEAN)
+PASS drift: WATCHDOG_ABSENT (exit 1 DRIFT)
+PASS drift: WATCHDOG_STALE (exit 1 DRIFT)
+PASS watchdog: unreadable state dir -> unavailable-disclosed, no crash (exit 0 CLEAN)
+PASS watchdog: missing state dir -> provable 0, no crash (exit 0 CLEAN)
+PASS watchdog: empty state dir -> provable 0, no crash (exit 0 CLEAN)
+PASS drift: WAVE_UNSETTLED_AGE (exit 1 DRIFT)
+PASS clean: unsettled young wave does not fire (exit 0 CLEAN)
+PASS drift: OOM_KILL_JOURNAL (exit 1 DRIFT)
+PASS drift: CGROUP_OOM_KILL (exit 1 DRIFT)
+PASS drift: DISK_CRITICAL (exit 1 DRIFT)
+PASS clean: disk under warn (exit 0 CLEAN)
+PASS drift: LANE_SILENT (exit 1 DRIFT)
+PASS silence: subject commit post-launch -> progressing (exit 0 CLEAN)
+PASS silence: pre-launch commit only -> silent (exit 1 DRIFT)
+PASS silence: commit at ct==launch is not post-launch -> silent (exit 1 DRIFT)
+PASS silence: other-authored commit only -> progressing-weak (exit 0 CLEAN)
+PASS silence: strict age gate (age == gate) -> young (exit 0 CLEAN)
+PASS silence: synthetic ts= ledger anchor (exit 0 CLEAN)
+PASS silence: unparseable launch ts -> unavailable (exit 0 CLEAN)
+PASS silence: committed report in window -> not-open (exit 0 CLEAN)
+PASS silence: close r7 then close r5 -> r7 anchor stays closed (exit 0 CLEAN)
+PASS silence: close for another round does not close the anchor (exit 1 DRIFT)
+PASS silence: git rc!=0 -> unavailable, never silent (exit 0 CLEAN)
+PASS silence: unreadable subtree -> unavailable verdict, no crash (exit 0 CLEAN)
+PASS waves: unreadable wave age -> no crash, no false finding (exit 0 CLEAN)
+PASS clean: CGROUP_UNAVAILABLE is not DRIFT (exit 0 CLEAN)
+PASS clean: empty journal (exit 0 CLEAN)
+PASS cli: unknown arg exit 2 (exit 2)
+PASS cli: --help exit 0 (exit 0)
+MORI_CENSUS_SELFTEST: PASS (30 cases, 30 passed, 0 failed)
+---- end output ----

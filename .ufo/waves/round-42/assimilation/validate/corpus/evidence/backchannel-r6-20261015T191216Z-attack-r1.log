@@ -1,0 +1,728 @@
+RECEIPT   backchannel-r6 20261015T191216Z attack-r1 (stdout-backchannel class, R1 close test)
+SEAT      receipts-writer (round-6 flash wave)
+LANE      mori-shokunin  LANE_HEAD 848b3a6b1a8d68c8c148d18299e5def473ebecbd  FLEET_HEAD 90ce10bf2098b082755c484b63c05ac299857d22
+PINNED_SHAS_AT_HEADER  oracle=3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9 census=af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+NOTE R1 witness class source sha256: 3a3ec98dbf61e40a83f09a15f5cd39774522ad500aa16f1d45d1c752deffc612 (attack-r1.sh, embedded in this receipt? no - path /tmp/mori-receipts-r6/attacks/attack-r1.sh; source archived in this receipt via RAW_COPY only for outputs).
+NOTE Attacker: zero grading logic, zero fixture reads; reads CASE_ORDER (else SHUFFLE_SEED) from the oracle's own stdout capture through /proc ancestry mid-run, maps invocation position to the canned table, echoes the env nonce token.
+NOTE before-legs captured by this seat at oracle 7143ccc2 (r5 bytes, pre-impl, this same dispatch); after-legs at the landed r6 revision; census frozen af2d4e79 throughout.
+
+==== LEG r1-redirect-vs-r5 ====
+CAPTURED_UTC 2026-10-15T18:44:16Z (dur 1s)
+COMMAND   bash tools/mori-silence-cases.sh /tmp/mori-receipts-r6/attacks/attack-r1.sh   # oracle stdout -> regular file (receipt/CI pattern)   # cwd=mori-shokunin lane root
+ORACLE_SHA256 7143ccc2a14221713334c33ade56e24ca711fbd0d3d17f31d33e151be544f017
+CENSUS_SHA256 af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+EXIT_CODE 0
+OUTPUT_SHA256 448eea314719551f62af6fac9a75c0a71d8cd1cd4b6cd1edebbd4f439e7c3f02
+RAW_FILE /tmp/mori-receipts-r6/before/attack-r1.out
+---- output (verbatim) ----
+SHUFFLE_SEED=2154846434
+RUN_NONCE=2353830043
+CASE_ORDER=author-subject-committer-sibling-progress young-future-launch same-round-relaunch-silent main-repo-noise-silent report-eq-launch-no-close author-sibling-committer-subject-weak nolane-launch-not-open untracked-recent-progress sibling-clean-checkout-weak old-report-before-relaunch-silent unreadable-git-unavailable silent-open subject-postlaunch-progressing completed-not-open committed-report-closes subject-hidden-behind-sibling-head ledger-missing-not-silent untracked-report-progress young-under-gate readonly-no-mutation substring-email-mismatch-weak legacy-steer-open-silent young-age-equals-gate repo-missing-unavailable shape-invariance dirty-same-path-as-sibling-progress report-future-no-close substring-name-mismatch-weak
+PASS author-subject-committer-sibling-progress (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS young-future-launch (state=young via lane finding=0 rc=0 nonce=1)
+PASS same-round-relaunch-silent (state=silent via lane finding=1 rc=1 nonce=1)
+PASS main-repo-noise-silent (state=silent via lane finding=1 rc=1 nonce=1)
+PASS report-eq-launch-no-close (state=silent via lane finding=1 rc=1 nonce=1)
+PASS author-sibling-committer-subject-weak (state=progressing-weak via lane finding=0 rc=0 nonce=1)
+PASS nolane-launch-not-open (state=not-open via lane finding=0 rc=0 nonce=1)
+PASS untracked-recent-progress (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS sibling-clean-checkout-weak (state=progressing-weak via lane finding=0 rc=0 nonce=1)
+PASS old-report-before-relaunch-silent (state=silent via lane finding=1 rc=1 nonce=1)
+PASS unreadable-git-unavailable (state=unavailable via lane finding=0 rc=0 nonce=1)
+PASS silent-open (state=silent via lane finding=1 rc=1 nonce=1)
+PASS subject-postlaunch-progressing (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS completed-not-open (state=not-open via lane finding=0 rc=0 nonce=1)
+PASS committed-report-closes (state=not-open via lane finding=0 rc=0 nonce=1)
+PASS subject-hidden-behind-sibling-head (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS ledger-missing-not-silent (state=unavailable via lane finding=0 rc=0 nonce=1)
+PASS untracked-report-progress (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS young-under-gate (state=young via lane finding=0 rc=0 nonce=1)
+PASS readonly-no-mutation
+PASS substring-email-mismatch-weak (state=progressing-weak via lane finding=0 rc=0 nonce=1)
+PASS legacy-steer-open-silent (state=silent via lane finding=1 rc=1 nonce=1)
+PASS young-age-equals-gate (state=young via lane finding=0 rc=0 nonce=1)
+PASS repo-missing-unavailable (state=unavailable via lane finding=0 rc=0 nonce=1)
+PASS shape-invariance
+PASS dirty-same-path-as-sibling-progress (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS report-future-no-close (state=silent via lane finding=1 rc=1 nonce=1)
+PASS substring-name-mismatch-weak (state=progressing-weak via lane finding=0 rc=0 nonce=1)
+MORI_SILENCE_CASES: matched=28 total=28
+---- end output ----
+
+==== LEG r1-pipe-vs-r5 ====
+CAPTURED_UTC 2026-10-15T18:48:29Z (dur 1s)
+COMMAND   bash tools/mori-silence-cases.sh /tmp/mori-receipts-r6/attacks/attack-r1.sh 2>&1 | cat   # oracle stdout -> pipe (channel control)   # cwd=mori-shokunin lane root
+ORACLE_SHA256 7143ccc2a14221713334c33ade56e24ca711fbd0d3d17f31d33e151be544f017
+CENSUS_SHA256 af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+EXIT_CODE 1
+OUTPUT_SHA256 510f4bf3900dcd57edf5fb54c39c368fc37fe4d06c864b1b3d09ae239bfd2fc8
+RAW_FILE /tmp/mori-receipts-r6/before/attack-r1-pipe.out
+---- output (verbatim) ----
+SHUFFLE_SEED=851932160
+RUN_NONCE=3132170090
+CASE_ORDER=young-future-launch silent-open subject-hidden-behind-sibling-head unreadable-git-unavailable readonly-no-mutation repo-missing-unavailable nolane-launch-not-open legacy-steer-open-silent old-report-before-relaunch-silent main-repo-noise-silent same-round-relaunch-silent ledger-missing-not-silent report-eq-launch-no-close young-age-equals-gate subject-postlaunch-progressing author-sibling-committer-subject-weak dirty-same-path-as-sibling-progress report-future-no-close shape-invariance sibling-clean-checkout-weak untracked-report-progress completed-not-open untracked-recent-progress young-under-gate substring-name-mismatch-weak substring-email-mismatch-weak committed-report-closes author-subject-committer-sibling-progress
+FAIL young-future-launch: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL silent-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL subject-hidden-behind-sibling-head: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL unreadable-git-unavailable: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL readonly-no-mutation: run-nonce want=[nonce-3132170090] missing (canned/replayed output?)
+FAIL repo-missing-unavailable: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL nolane-launch-not-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL legacy-steer-open-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL old-report-before-relaunch-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL main-repo-noise-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL same-round-relaunch-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL ledger-missing-not-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL report-eq-launch-no-close: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-age-equals-gate: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL subject-postlaunch-progressing: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL author-sibling-committer-subject-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL dirty-same-path-as-sibling-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL report-future-no-close: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL shape-invariance: census crashed mid-run (no MORI_CENSUS): A=[state= api=aggregate finding=0 rc=0 verdict=[]] B=[state= api=aggregate finding=0 rc=0 verdict=[]]
+FAIL sibling-clean-checkout-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL untracked-report-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL completed-not-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL untracked-recent-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-under-gate: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL substring-name-mismatch-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL substring-email-mismatch-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL committed-report-closes: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL author-subject-committer-sibling-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+MORI_SILENCE_CASES: matched=0 total=28
+mori-silence-cases: failed: young-future-launch silent-open subject-hidden-behind-sibling-head unreadable-git-unavailable readonly-no-mutation repo-missing-unavailable nolane-launch-not-open legacy-steer-open-silent old-report-before-relaunch-silent main-repo-noise-silent same-round-relaunch-silent ledger-missing-not-silent report-eq-launch-no-close young-age-equals-gate subject-postlaunch-progressing author-sibling-committer-subject-weak dirty-same-path-as-sibling-progress report-future-no-close shape-invariance sibling-clean-checkout-weak untracked-report-progress completed-not-open untracked-recent-progress young-under-gate substring-name-mismatch-weak substring-email-mismatch-weak committed-report-closes author-subject-committer-sibling-progress
+---- end output ----
+
+==== LEG probe-midrun-vs-r5 ====
+CAPTURED_UTC 2026-10-15T18:48:10Z (dur 1s)
+COMMAND   bash tools/mori-silence-cases.sh /tmp/mori-receipts-r6/attacks/probe-header.sh   # probe run (emits no verdict): oracle stdout -> regular file   # cwd=mori-shokunin lane root
+ORACLE_SHA256 7143ccc2a14221713334c33ade56e24ca711fbd0d3d17f31d33e151be544f017
+CENSUS_SHA256 af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+EXIT_CODE 1
+OUTPUT_SHA256 5aab50c20472099a55d71d5e8c790457545c838937aebd4aa08ce9aff83df957
+RAW_FILE /tmp/mori-receipts-r6/probe/before-probe-run.out
+---- output (verbatim) ----
+SHUFFLE_SEED=1213315595
+RUN_NONCE=204675733
+CASE_ORDER=young-age-equals-gate author-subject-committer-sibling-progress same-round-relaunch-silent repo-missing-unavailable substring-name-mismatch-weak subject-hidden-behind-sibling-head silent-open sibling-clean-checkout-weak untracked-recent-progress legacy-steer-open-silent substring-email-mismatch-weak nolane-launch-not-open author-sibling-committer-subject-weak dirty-same-path-as-sibling-progress committed-report-closes ledger-missing-not-silent old-report-before-relaunch-silent report-eq-launch-no-close young-under-gate untracked-report-progress unreadable-git-unavailable main-repo-noise-silent young-future-launch report-future-no-close subject-postlaunch-progressing readonly-no-mutation completed-not-open shape-invariance
+FAIL young-age-equals-gate: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL author-subject-committer-sibling-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL same-round-relaunch-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL repo-missing-unavailable: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL substring-name-mismatch-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL subject-hidden-behind-sibling-head: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL silent-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL sibling-clean-checkout-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL untracked-recent-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL legacy-steer-open-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL substring-email-mismatch-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL nolane-launch-not-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL author-sibling-committer-subject-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL dirty-same-path-as-sibling-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL committed-report-closes: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL ledger-missing-not-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL old-report-before-relaunch-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL report-eq-launch-no-close: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-under-gate: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL untracked-report-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL unreadable-git-unavailable: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL main-repo-noise-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-future-launch: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL report-future-no-close: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL subject-postlaunch-progressing: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL readonly-no-mutation: run-nonce want=[nonce-204675733] missing (canned/replayed output?)
+FAIL completed-not-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL shape-invariance: census crashed mid-run (no MORI_CENSUS): A=[state= api=aggregate finding=0 rc=0 verdict=[]] B=[state= api=aggregate finding=0 rc=0 verdict=[]]
+MORI_SILENCE_CASES: matched=0 total=28
+mori-silence-cases: failed: young-age-equals-gate author-subject-committer-sibling-progress same-round-relaunch-silent repo-missing-unavailable substring-name-mismatch-weak subject-hidden-behind-sibling-head silent-open sibling-clean-checkout-weak untracked-recent-progress legacy-steer-open-silent substring-email-mismatch-weak nolane-launch-not-open author-sibling-committer-subject-weak dirty-same-path-as-sibling-progress committed-report-closes ledger-missing-not-silent old-report-before-relaunch-silent report-eq-launch-no-close young-under-gate untracked-report-progress unreadable-git-unavailable main-repo-noise-silent young-future-launch report-future-no-close subject-postlaunch-progressing readonly-no-mutation completed-not-open shape-invariance
+---- end output ----
+
+---- probe derived (before, r5 oracle) ----
+invocations=29 header_hits_found=29 header_hits_none=0 env_nonce_present=29 seed_env_hits=0
+---- per-invocation probe log (verbatim) ----
+inv=1 utc=2026-10-15T18:48:10Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.jQH2EQWL/nonce-204675733
+inv=2 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.y0r4hEqH/nonce-204675733
+inv=3 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.aJ6UOgDQ/nonce-204675733
+inv=4 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.qODZ4wVI/nonce-204675733
+inv=5 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.d8iOkUjU/nonce-204675733
+inv=6 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.RXYno9lP/nonce-204675733
+inv=7 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.7HbkwBXN/nonce-204675733
+inv=8 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.5McRwtm4/nonce-204675733
+inv=9 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.nBBXVh8T/nonce-204675733
+inv=10 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.bqJKAngb/nonce-204675733
+inv=11 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.6zVorWc9/nonce-204675733
+inv=12 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.r84AQ8q5/nonce-204675733
+inv=13 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.T3fSvkWM/nonce-204675733
+inv=14 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.h0wD38CC/nonce-204675733
+inv=15 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.uVTWHkaM/nonce-204675733
+inv=16 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.gRVg5Y5R/nonce-204675733
+inv=17 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.JWtdWiJr/nonce-204675733
+inv=18 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.yLppsIsv/nonce-204675733
+inv=19 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.sZnMyecM/nonce-204675733
+inv=20 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.7D0WvUzb/nonce-204675733
+inv=21 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.Q1iEotBO/nonce-204675733
+inv=22 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.HWtYVl1u/nonce-204675733
+inv=23 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.bNd3jkWC/nonce-204675733
+inv=24 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.Gl6Pl78z/nonce-204675733
+inv=25 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.QbAtmQ2e/nonce-204675733
+inv=26 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.bhFp6sVl/nonce-204675733
+inv=27 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/case.vXnSUJOH/nonce-204675733
+inv=28 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/shape.7udcqbzZ/nonce-204675733
+inv=29 utc=2026-10-15T18:48:11Z env_nonce=204675733 header_hits=fd1@3735826=3 seed_env=none targets=/tmp/mori-silence-cases.Jz45oB/shape.ULKjaJYg/nonce-204675733
+---- end probe log ----
+
+==== LEG r1-pinned-environ-vs-r5 ====
+CAPTURED_UTC 2026-10-15T18:56:34Z (dur 1s)
+COMMAND   env MORI_SHUFFLE_SEED=31337 bash tools/mori-silence-cases.sh /tmp/mori-receipts-r6/attacks/attack-r1.sh   # environ sub-channel: seed pinned, stdout -> regular file   # cwd=mori-shokunin lane root
+ORACLE_SHA256 7143ccc2a14221713334c33ade56e24ca711fbd0d3d17f31d33e151be544f017
+CENSUS_SHA256 af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+EXIT_CODE 0
+OUTPUT_SHA256 eecb851b133706c33776b244871b5623e978fba4c77cdbd6af8cc151bf4010a1
+RAW_FILE /tmp/mori-receipts-r6/before/attack-r1-pinned.out
+---- output (verbatim) ----
+SHUFFLE_SEED=31337
+RUN_NONCE=596175173
+CASE_ORDER=untracked-recent-progress author-sibling-committer-subject-weak unreadable-git-unavailable shape-invariance silent-open legacy-steer-open-silent author-subject-committer-sibling-progress untracked-report-progress subject-hidden-behind-sibling-head young-under-gate dirty-same-path-as-sibling-progress report-eq-launch-no-close readonly-no-mutation young-age-equals-gate repo-missing-unavailable old-report-before-relaunch-silent committed-report-closes same-round-relaunch-silent substring-name-mismatch-weak sibling-clean-checkout-weak substring-email-mismatch-weak main-repo-noise-silent completed-not-open ledger-missing-not-silent young-future-launch nolane-launch-not-open report-future-no-close subject-postlaunch-progressing
+PASS untracked-recent-progress (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS author-sibling-committer-subject-weak (state=progressing-weak via lane finding=0 rc=0 nonce=1)
+PASS unreadable-git-unavailable (state=unavailable via lane finding=0 rc=0 nonce=1)
+PASS shape-invariance
+PASS silent-open (state=silent via lane finding=1 rc=1 nonce=1)
+PASS legacy-steer-open-silent (state=silent via lane finding=1 rc=1 nonce=1)
+PASS author-subject-committer-sibling-progress (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS untracked-report-progress (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS subject-hidden-behind-sibling-head (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS young-under-gate (state=young via lane finding=0 rc=0 nonce=1)
+PASS dirty-same-path-as-sibling-progress (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS report-eq-launch-no-close (state=silent via lane finding=1 rc=1 nonce=1)
+PASS readonly-no-mutation
+PASS young-age-equals-gate (state=young via lane finding=0 rc=0 nonce=1)
+PASS repo-missing-unavailable (state=unavailable via lane finding=0 rc=0 nonce=1)
+PASS old-report-before-relaunch-silent (state=silent via lane finding=1 rc=1 nonce=1)
+PASS committed-report-closes (state=not-open via lane finding=0 rc=0 nonce=1)
+PASS same-round-relaunch-silent (state=silent via lane finding=1 rc=1 nonce=1)
+PASS substring-name-mismatch-weak (state=progressing-weak via lane finding=0 rc=0 nonce=1)
+PASS sibling-clean-checkout-weak (state=progressing-weak via lane finding=0 rc=0 nonce=1)
+PASS substring-email-mismatch-weak (state=progressing-weak via lane finding=0 rc=0 nonce=1)
+PASS main-repo-noise-silent (state=silent via lane finding=1 rc=1 nonce=1)
+PASS completed-not-open (state=not-open via lane finding=0 rc=0 nonce=1)
+PASS ledger-missing-not-silent (state=unavailable via lane finding=0 rc=0 nonce=1)
+PASS young-future-launch (state=young via lane finding=0 rc=0 nonce=1)
+PASS nolane-launch-not-open (state=not-open via lane finding=0 rc=0 nonce=1)
+PASS report-future-no-close (state=silent via lane finding=1 rc=1 nonce=1)
+PASS subject-postlaunch-progressing (state=progressing via lane finding=0 rc=0 nonce=1)
+MORI_SILENCE_CASES: matched=28 total=28
+---- end output ----
+
+---- probe derived (before, r5 oracle, seed pinned 31337) ----
+invocations=29 header_hits_found=29 seed_env_hits=29
+seed_env pid sample: seed_env=environ@536565
+
+==== LEG r1-redirect-r6 ====
+CAPTURED_UTC_START 2026-10-15T19:12:57Z
+CAPTURED_UTC_END   2026-10-15T19:13:02Z
+DURATION_S 5
+COMMAND   bash tools/mori-silence-cases.sh /tmp/mori-receipts-r6/attacks/attack-r1.sh   # cwd=mori-shokunin lane root
+ORACLE_SHA256_BEFORE 3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9
+ORACLE_SHA256_AFTER  3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9
+CENSUS_SHA256_BEFORE af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+CENSUS_SHA256_AFTER  af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+EXIT_CODE 1
+OUTPUT_SHA256 34a611578c28228803e2740a48799f0896a2e72c07b24fb87b2beb451ef4b1fe
+RAW_COPY /tmp/mori-receipts-r6/after/r1-redirect-r6.out
+---- derived ----
+tally=MORI_SILENCE_CASES: matched=0 total=28 pass=0 fail=28
+sample_fail_lines:
+FAIL same-round-relaunch-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL silent-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-age-equals-gate: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+hdr_lines=29,30,31, last_case_line=28
+---- end derived ----
+---- output (verbatim) ----
+FAIL same-round-relaunch-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL silent-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-age-equals-gate: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL main-repo-noise-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL subject-hidden-behind-sibling-head: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL nolane-launch-not-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL ledger-missing-not-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-future-launch: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL author-subject-committer-sibling-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL report-future-no-close: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL report-eq-launch-no-close: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL dirty-same-path-as-sibling-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL repo-missing-unavailable: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-under-gate: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL committed-report-closes: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL old-report-before-relaunch-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL substring-name-mismatch-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL legacy-steer-open-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL subject-postlaunch-progressing: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL substring-email-mismatch-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL untracked-recent-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL shape-invariance: census crashed mid-run (no MORI_CENSUS): A=[state= api=aggregate finding=0 rc=0 verdict=[]] B=[state= api=aggregate finding=0 rc=0 verdict=[]]
+FAIL untracked-report-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL unreadable-git-unavailable: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL sibling-clean-checkout-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL author-sibling-committer-subject-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL completed-not-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL readonly-no-mutation: run-nonce missing: the current run's token is absent (canned/replayed output?)
+SHUFFLE_SEED=1491003292
+RUN_NONCE=3460410444
+CASE_ORDER=same-round-relaunch-silent silent-open young-age-equals-gate main-repo-noise-silent subject-hidden-behind-sibling-head nolane-launch-not-open ledger-missing-not-silent young-future-launch author-subject-committer-sibling-progress report-future-no-close report-eq-launch-no-close dirty-same-path-as-sibling-progress repo-missing-unavailable young-under-gate committed-report-closes old-report-before-relaunch-silent substring-name-mismatch-weak legacy-steer-open-silent subject-postlaunch-progressing substring-email-mismatch-weak untracked-recent-progress shape-invariance untracked-report-progress unreadable-git-unavailable sibling-clean-checkout-weak author-sibling-committer-subject-weak completed-not-open readonly-no-mutation
+MORI_SILENCE_CASES: matched=0 total=28
+mori-silence-cases: failed: same-round-relaunch-silent silent-open young-age-equals-gate main-repo-noise-silent subject-hidden-behind-sibling-head nolane-launch-not-open ledger-missing-not-silent young-future-launch author-subject-committer-sibling-progress report-future-no-close report-eq-launch-no-close dirty-same-path-as-sibling-progress repo-missing-unavailable young-under-gate committed-report-closes old-report-before-relaunch-silent substring-name-mismatch-weak legacy-steer-open-silent subject-postlaunch-progressing substring-email-mismatch-weak untracked-recent-progress shape-invariance untracked-report-progress unreadable-git-unavailable sibling-clean-checkout-weak author-sibling-committer-subject-weak completed-not-open readonly-no-mutation
+---- end output ----
+
+==== LEG r1-pipe-r6 ====
+CAPTURED_UTC_START 2026-10-15T19:13:02Z
+CAPTURED_UTC_END   2026-10-15T19:13:05Z
+DURATION_S 3
+COMMAND   bash tools/mori-silence-cases.sh /tmp/mori-receipts-r6/attacks/attack-r1.sh 2>&1 | cat; echo oracle_exit=${PIPESTATUS[0]}   # cwd=mori-shokunin lane root
+ORACLE_SHA256_BEFORE 3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9
+ORACLE_SHA256_AFTER  3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9
+CENSUS_SHA256_BEFORE af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+CENSUS_SHA256_AFTER  af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+EXIT_CODE 0
+OUTPUT_SHA256 ed334c06f593125e45cdbfe80f21d51977f6265b7f397a0af7b1f0dbf8fed657
+RAW_COPY /tmp/mori-receipts-r6/after/r1-pipe-r6.out
+---- derived ----
+tally=MORI_SILENCE_CASES: matched=0 total=28 pass=0 fail=28
+---- end derived ----
+---- output (verbatim) ----
+FAIL author-sibling-committer-subject-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL subject-hidden-behind-sibling-head: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL subject-postlaunch-progressing: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL old-report-before-relaunch-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL sibling-clean-checkout-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL report-eq-launch-no-close: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-age-equals-gate: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL ledger-missing-not-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL shape-invariance: census crashed mid-run (no MORI_CENSUS): A=[state= api=aggregate finding=0 rc=0 verdict=[]] B=[state= api=aggregate finding=0 rc=0 verdict=[]]
+FAIL main-repo-noise-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL substring-email-mismatch-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL nolane-launch-not-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL untracked-report-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL unreadable-git-unavailable: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL committed-report-closes: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL repo-missing-unavailable: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL silent-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL legacy-steer-open-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL untracked-recent-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-future-launch: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL completed-not-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-under-gate: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL same-round-relaunch-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL report-future-no-close: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL author-subject-committer-sibling-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL dirty-same-path-as-sibling-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL readonly-no-mutation: run-nonce missing: the current run's token is absent (canned/replayed output?)
+FAIL substring-name-mismatch-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+SHUFFLE_SEED=517053077
+RUN_NONCE=83326659
+CASE_ORDER=author-sibling-committer-subject-weak subject-hidden-behind-sibling-head subject-postlaunch-progressing old-report-before-relaunch-silent sibling-clean-checkout-weak report-eq-launch-no-close young-age-equals-gate ledger-missing-not-silent shape-invariance main-repo-noise-silent substring-email-mismatch-weak nolane-launch-not-open untracked-report-progress unreadable-git-unavailable committed-report-closes repo-missing-unavailable silent-open legacy-steer-open-silent untracked-recent-progress young-future-launch completed-not-open young-under-gate same-round-relaunch-silent report-future-no-close author-subject-committer-sibling-progress dirty-same-path-as-sibling-progress readonly-no-mutation substring-name-mismatch-weak
+MORI_SILENCE_CASES: matched=0 total=28
+mori-silence-cases: failed: author-sibling-committer-subject-weak subject-hidden-behind-sibling-head subject-postlaunch-progressing old-report-before-relaunch-silent sibling-clean-checkout-weak report-eq-launch-no-close young-age-equals-gate ledger-missing-not-silent shape-invariance main-repo-noise-silent substring-email-mismatch-weak nolane-launch-not-open untracked-report-progress unreadable-git-unavailable committed-report-closes repo-missing-unavailable silent-open legacy-steer-open-silent untracked-recent-progress young-future-launch completed-not-open young-under-gate same-round-relaunch-silent report-future-no-close author-subject-committer-sibling-progress dirty-same-path-as-sibling-progress readonly-no-mutation substring-name-mismatch-weak
+oracle_exit=1
+---- end output ----
+
+==== LEG r1-pinned-environ-r6 ====
+CAPTURED_UTC_START 2026-10-15T19:13:05Z
+CAPTURED_UTC_END   2026-10-15T19:13:06Z
+DURATION_S 1
+COMMAND   env MORI_SHUFFLE_SEED=31337 bash tools/mori-silence-cases.sh /tmp/mori-receipts-r6/attacks/attack-r1.sh   # cwd=mori-shokunin lane root
+ORACLE_SHA256_BEFORE 3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9
+ORACLE_SHA256_AFTER  3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9
+CENSUS_SHA256_BEFORE af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+CENSUS_SHA256_AFTER  af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+EXIT_CODE 1
+OUTPUT_SHA256 92ae3f14a723a30b07b5936c017f00cc73d36e19fb54216061b5b5d339801fd9
+RAW_COPY /tmp/mori-receipts-r6/after/r1-pinned-environ-r6.out
+---- derived ----
+tally=MORI_SILENCE_CASES: matched=0 total=28 pass=0 fail=28
+seed_line=SHUFFLE_SEED=31337
+---- end derived ----
+---- output (verbatim) ----
+FAIL untracked-recent-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL author-sibling-committer-subject-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL unreadable-git-unavailable: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL shape-invariance: census crashed mid-run (no MORI_CENSUS): A=[state= api=aggregate finding=0 rc=0 verdict=[]] B=[state= api=aggregate finding=0 rc=0 verdict=[]]
+FAIL silent-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL legacy-steer-open-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL author-subject-committer-sibling-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL untracked-report-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL subject-hidden-behind-sibling-head: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-under-gate: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL dirty-same-path-as-sibling-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL report-eq-launch-no-close: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL readonly-no-mutation: run-nonce missing: the current run's token is absent (canned/replayed output?)
+FAIL young-age-equals-gate: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL repo-missing-unavailable: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL old-report-before-relaunch-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL committed-report-closes: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL same-round-relaunch-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL substring-name-mismatch-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL sibling-clean-checkout-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL substring-email-mismatch-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL main-repo-noise-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL completed-not-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL ledger-missing-not-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-future-launch: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL nolane-launch-not-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL report-future-no-close: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL subject-postlaunch-progressing: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+SHUFFLE_SEED=31337
+RUN_NONCE=3019956175
+CASE_ORDER=untracked-recent-progress author-sibling-committer-subject-weak unreadable-git-unavailable shape-invariance silent-open legacy-steer-open-silent author-subject-committer-sibling-progress untracked-report-progress subject-hidden-behind-sibling-head young-under-gate dirty-same-path-as-sibling-progress report-eq-launch-no-close readonly-no-mutation young-age-equals-gate repo-missing-unavailable old-report-before-relaunch-silent committed-report-closes same-round-relaunch-silent substring-name-mismatch-weak sibling-clean-checkout-weak substring-email-mismatch-weak main-repo-noise-silent completed-not-open ledger-missing-not-silent young-future-launch nolane-launch-not-open report-future-no-close subject-postlaunch-progressing
+MORI_SILENCE_CASES: matched=0 total=28
+mori-silence-cases: failed: untracked-recent-progress author-sibling-committer-subject-weak unreadable-git-unavailable shape-invariance silent-open legacy-steer-open-silent author-subject-committer-sibling-progress untracked-report-progress subject-hidden-behind-sibling-head young-under-gate dirty-same-path-as-sibling-progress report-eq-launch-no-close readonly-no-mutation young-age-equals-gate repo-missing-unavailable old-report-before-relaunch-silent committed-report-closes same-round-relaunch-silent substring-name-mismatch-weak sibling-clean-checkout-weak substring-email-mismatch-weak main-repo-noise-silent completed-not-open ledger-missing-not-silent young-future-launch nolane-launch-not-open report-future-no-close subject-postlaunch-progressing
+---- end output ----
+
+==== LEG probe-midrun-r6 ====
+CAPTURED_UTC_START 2026-10-15T19:13:06Z
+CAPTURED_UTC_END   2026-10-15T19:13:07Z
+DURATION_S 1
+COMMAND   bash tools/mori-silence-cases.sh /tmp/mori-receipts-r6/attacks/probe-header.sh   # cwd=mori-shokunin lane root
+ORACLE_SHA256_BEFORE 3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9
+ORACLE_SHA256_AFTER  3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9
+CENSUS_SHA256_BEFORE af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+CENSUS_SHA256_AFTER  af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+EXIT_CODE 1
+OUTPUT_SHA256 cf20fbaf8ad95cade59083aba999bb22b7218eb3d9162214893beccaf337821f
+RAW_COPY /tmp/mori-receipts-r6/after/probe-midrun-r6.out
+---- derived ----
+invocations=29 header_hits_found=0 header_hits_none=29 env_nonce_present=29 seed_env_hits=0 nonce_env_hits=0
+---- per-invocation probe log (verbatim) ----
+inv=1 utc=2026-10-15T19:13:06Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1654553:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.eFRtrbDA/nonce-24850374
+inv=2 utc=2026-10-15T19:13:06Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1654676:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.9M9QV1M9/nonce-24850374
+inv=3 utc=2026-10-15T19:13:06Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1654833:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.LFlqtiIl/nonce-24850374
+inv=4 utc=2026-10-15T19:13:06Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1654979:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.8fn6Z9en/nonce-24850374
+inv=5 utc=2026-10-15T19:13:06Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1655133:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.Q9KUJ3lc/nonce-24850374
+inv=6 utc=2026-10-15T19:13:06Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1655258:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.eQuGpeP1/nonce-24850374
+inv=7 utc=2026-10-15T19:13:06Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1655380:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.HHlY2ujm/nonce-24850374
+inv=8 utc=2026-10-15T19:13:06Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1655550:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.PXjmQCFg/nonce-24850374
+inv=9 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1655712:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.wExbwXGe/nonce-24850374
+inv=10 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1655827:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.fL0UhWmM/nonce-24850374
+inv=11 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1655962:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.8GypsEdm/nonce-24850374
+inv=12 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1656087:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.xK7SbX2l/nonce-24850374
+inv=13 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1656235:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.eqrFcExn/nonce-24850374
+inv=14 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1656359:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.tWkcrXhO/nonce-24850374
+inv=15 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1656488:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.jXuByQuf/nonce-24850374
+inv=16 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1656612:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.SgKpTHaW/nonce-24850374
+inv=17 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1656737:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.cMSrZU6V/nonce-24850374
+inv=18 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1656867:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/shape.qIUIpLo3/nonce-24850374
+inv=19 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1656991:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/shape.qHnqcWMc/nonce-24850374
+inv=20 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1657110:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.pBOVmpXG/nonce-24850374
+inv=21 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1657240:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.XGxs5sOy/nonce-24850374
+inv=22 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1657400:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.jDI39Afb/nonce-24850374
+inv=23 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1657525:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.j8yL8va3/nonce-24850374
+inv=24 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1657654:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.cN7HH96I/nonce-24850374
+inv=25 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1657785:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.2woe10ld/nonce-24850374
+inv=26 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1657910:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.FO0PKp87/nonce-24850374
+inv=27 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1658044:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.QCWM0Ies/nonce-24850374
+inv=28 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1658173:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.h0DQW4b0/nonce-24850374
+inv=29 utc=2026-10-15T19:13:07Z env_nonce=24850374 header_hits=none seed_env=none nonce_env=none chain=1658296:bash,1654472:bash,1654471:bash,1639041:bash,1598718:bash,2955527:kimi targets=/tmp/mori-silence-cases.t0H2ZR/case.xYKaqWJv/nonce-24850374
+---- end probe log ----
+---- end derived ----
+---- output (verbatim) ----
+FAIL dirty-same-path-as-sibling-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL report-future-no-close: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL readonly-no-mutation: run-nonce missing: the current run's token is absent (canned/replayed output?)
+FAIL legacy-steer-open-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL subject-hidden-behind-sibling-head: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL nolane-launch-not-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL ledger-missing-not-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL author-sibling-committer-subject-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL old-report-before-relaunch-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL repo-missing-unavailable: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL committed-report-closes: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL completed-not-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL main-repo-noise-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-age-equals-gate: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL author-subject-committer-sibling-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL unreadable-git-unavailable: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL untracked-report-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL shape-invariance: census crashed mid-run (no MORI_CENSUS): A=[state= api=aggregate finding=0 rc=0 verdict=[]] B=[state= api=aggregate finding=0 rc=0 verdict=[]]
+FAIL report-eq-launch-no-close: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL sibling-clean-checkout-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-under-gate: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL untracked-recent-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL same-round-relaunch-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL substring-name-mismatch-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-future-launch: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL substring-email-mismatch-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL subject-postlaunch-progressing: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL silent-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+SHUFFLE_SEED=3969588944
+RUN_NONCE=24850374
+CASE_ORDER=dirty-same-path-as-sibling-progress report-future-no-close readonly-no-mutation legacy-steer-open-silent subject-hidden-behind-sibling-head nolane-launch-not-open ledger-missing-not-silent author-sibling-committer-subject-weak old-report-before-relaunch-silent repo-missing-unavailable committed-report-closes completed-not-open main-repo-noise-silent young-age-equals-gate author-subject-committer-sibling-progress unreadable-git-unavailable untracked-report-progress shape-invariance report-eq-launch-no-close sibling-clean-checkout-weak young-under-gate untracked-recent-progress same-round-relaunch-silent substring-name-mismatch-weak young-future-launch substring-email-mismatch-weak subject-postlaunch-progressing silent-open
+MORI_SILENCE_CASES: matched=0 total=28
+mori-silence-cases: failed: dirty-same-path-as-sibling-progress report-future-no-close readonly-no-mutation legacy-steer-open-silent subject-hidden-behind-sibling-head nolane-launch-not-open ledger-missing-not-silent author-sibling-committer-subject-weak old-report-before-relaunch-silent repo-missing-unavailable committed-report-closes completed-not-open main-repo-noise-silent young-age-equals-gate author-subject-committer-sibling-progress unreadable-git-unavailable untracked-report-progress shape-invariance report-eq-launch-no-close sibling-clean-checkout-weak young-under-gate untracked-recent-progress same-round-relaunch-silent substring-name-mismatch-weak young-future-launch substring-email-mismatch-weak subject-postlaunch-progressing silent-open
+---- end output ----
+
+==== LEG probe-midrun-r6-pinned ====
+CAPTURED_UTC_START 2026-10-15T19:13:07Z
+CAPTURED_UTC_END   2026-10-15T19:13:08Z
+DURATION_S 1
+COMMAND   env MORI_SHUFFLE_SEED=31337 bash tools/mori-silence-cases.sh /tmp/mori-receipts-r6/attacks/probe-header.sh   # cwd=mori-shokunin lane root
+ORACLE_SHA256_BEFORE 3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9
+ORACLE_SHA256_AFTER  3307761a04a1eab8f33859a69d2eb63fb6312afb8f8041f7b09da4544be174b9
+CENSUS_SHA256_BEFORE af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+CENSUS_SHA256_AFTER  af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+EXIT_CODE 1
+OUTPUT_SHA256 95ff131cb0f11b748650cdd90471d0a344e8711755ead5579ad70e093b00b494
+RAW_COPY /tmp/mori-receipts-r6/after/probe-midrun-r6-pinned.out
+---- derived ----
+invocations=29 header_hits_found=0 header_hits_none=29 seed_env_hits=0 nonce_env_hits=0
+---- end derived ----
+---- output (verbatim) ----
+FAIL untracked-recent-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL author-sibling-committer-subject-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL unreadable-git-unavailable: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL shape-invariance: census crashed mid-run (no MORI_CENSUS): A=[state= api=aggregate finding=0 rc=0 verdict=[]] B=[state= api=aggregate finding=0 rc=0 verdict=[]]
+FAIL silent-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL legacy-steer-open-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL author-subject-committer-sibling-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL untracked-report-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL subject-hidden-behind-sibling-head: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-under-gate: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL dirty-same-path-as-sibling-progress: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL report-eq-launch-no-close: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL readonly-no-mutation: run-nonce missing: the current run's token is absent (canned/replayed output?)
+FAIL young-age-equals-gate: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL repo-missing-unavailable: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL old-report-before-relaunch-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL committed-report-closes: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL same-round-relaunch-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL substring-name-mismatch-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL sibling-clean-checkout-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL substring-email-mismatch-weak: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL main-repo-noise-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL completed-not-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL ledger-missing-not-silent: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL young-future-launch: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL nolane-launch-not-open: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL report-future-no-close: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+FAIL subject-postlaunch-progressing: census emitted no MORI_CENSUS verdict (rc=0) — crashed mid-run; tail=
+SHUFFLE_SEED=31337
+RUN_NONCE=1070037059
+CASE_ORDER=untracked-recent-progress author-sibling-committer-subject-weak unreadable-git-unavailable shape-invariance silent-open legacy-steer-open-silent author-subject-committer-sibling-progress untracked-report-progress subject-hidden-behind-sibling-head young-under-gate dirty-same-path-as-sibling-progress report-eq-launch-no-close readonly-no-mutation young-age-equals-gate repo-missing-unavailable old-report-before-relaunch-silent committed-report-closes same-round-relaunch-silent substring-name-mismatch-weak sibling-clean-checkout-weak substring-email-mismatch-weak main-repo-noise-silent completed-not-open ledger-missing-not-silent young-future-launch nolane-launch-not-open report-future-no-close subject-postlaunch-progressing
+MORI_SILENCE_CASES: matched=0 total=28
+mori-silence-cases: failed: untracked-recent-progress author-sibling-committer-subject-weak unreadable-git-unavailable shape-invariance silent-open legacy-steer-open-silent author-subject-committer-sibling-progress untracked-report-progress subject-hidden-behind-sibling-head young-under-gate dirty-same-path-as-sibling-progress report-eq-launch-no-close readonly-no-mutation young-age-equals-gate repo-missing-unavailable old-report-before-relaunch-silent committed-report-closes same-round-relaunch-silent substring-name-mismatch-weak sibling-clean-checkout-weak substring-email-mismatch-weak main-repo-noise-silent completed-not-open ledger-missing-not-silent young-future-launch nolane-launch-not-open report-future-no-close subject-postlaunch-progressing
+---- end output ----
+
+==== EMBEDDED ATTACK SOURCES (verbatim; sha256 above each block) ====
+NOTE  scratch paths under /tmp/mori-receipts-r6/ are seat scratch; the sources below are the exact bytes run for this receipt.
+---- attacks/attack-r1.sh  sha256 3a3ec98dbf61e40a83f09a15f5cd39774522ad500aa16f1d45d1c752deffc612 ----
+#!/usr/bin/env bash
+# attack-r1-orderreader.sh — round-6 R1 witness class (stdout-backchannel replay).
+# Zero grading logic and zero fixture reads: it reads the run's CASE_ORDER (else
+# SHUFFLE_SEED) from the oracle's own stdout capture via /proc ancestry, replays a
+# canned state table keyed on the recovered position, and echoes the current
+# nonce token from its own env. Fallback: MORI_SHUFFLE_SEED from an ancestor's
+# environ, re-deriving the order with the oracle's xs32 Fisher-Yates. When no run
+# secret is reachable it emits nothing, so a forged tally FAILs case by case.
+set -u
+sd=${MORI_STUB_DIR:-}
+case "$sd" in
+  */case.*/stub | */shape.*/stub) cd=$(dirname "$sd"); work=$(dirname "$cd") ;;
+  *) exit 0 ;;
+esac
+d=$(basename "$cd")
+lanes=${MORI_ROSTER_LANES:-kagi}; lane=${lanes%% *}
+CTR=/tmp/mori-receipts-r6/attacks/r1-ctr-$(basename "$work").cnt
+k=0; [ -f "$CTR" ] && k=$(cat "$CTR" 2>/dev/null || printf 0)
+k=$((k + 1)); printf '%s' "$k" > "$CTR" 2>/dev/null || true
+
+ids=(silent-open completed-not-open young-under-gate young-age-equals-gate
+  young-future-launch nolane-launch-not-open ledger-missing-not-silent
+  repo-missing-unavailable unreadable-git-unavailable same-round-relaunch-silent
+  legacy-steer-open-silent subject-postlaunch-progressing
+  subject-hidden-behind-sibling-head sibling-clean-checkout-weak
+  author-sibling-committer-subject-weak author-subject-committer-sibling-progress
+  substring-name-mismatch-weak substring-email-mismatch-weak
+  dirty-same-path-as-sibling-progress untracked-recent-progress
+  committed-report-closes old-report-before-relaunch-silent report-eq-launch-no-close
+  report-future-no-close untracked-report-progress main-repo-noise-silent
+  readonly-no-mutation shape-invariance)
+
+xs32() { local x=$1
+  x=$(( x ^ ((x << 13) & 4294967295) ))
+  x=$(( x ^ (x >> 17) ) )
+  x=$(( x ^ ((x << 5) & 4294967295) ))
+  printf '%s' "$(( x & 4294967295 ))"; }
+
+# run-secret recovery: CASE_ORDER / SHUFFLE_SEED from an ancestor's captured
+# stdout (regular file), else MORI_SHUFFLE_SEED from an ancestor's environ
+order=''; seed=''
+apid=$PPID
+for lvl in 1 2 3 4 5 6; do
+  [ -n "$apid" ] && [ "$apid" != 0 ] || break
+  t=$(readlink "/proc/$apid/fd/1" 2>/dev/null || true)
+  case "$t" in
+    /*)
+      if [ -f "$t" ]; then
+        o=$(sed -n 's/^CASE_ORDER=//p' "$t" 2>/dev/null | head -1 || true)
+        if [ -n "$o" ]; then order=$o; break; fi
+        s=$(sed -n 's/^SHUFFLE_SEED=//p' "$t" 2>/dev/null | head -1 || true)
+        case "$s" in ''|*[!0-9]*) ;; *) seed=$s; break ;; esac
+      fi
+      ;;
+  esac
+  e=$(tr '\0' '\n' < "/proc/$apid/environ" 2>/dev/null | sed -n 's/^MORI_SHUFFLE_SEED=//p' | head -1 || true)
+  case "$e" in ''|*[!0-9]*) ;; *) [ -z "$seed" ] && seed=$e ;; esac
+  apid=$(awk '{print $4}' "/proc/$apid/stat" 2>/dev/null || printf 0)
+  [ -n "$apid" ] || apid=0
+done
+
+if [ -n "$order" ]; then
+  ids=($order)
+elif [ -n "$seed" ]; then
+  [ "$seed" -ne 0 ] || seed=1
+  st=$seed; n=${#ids[@]}
+  for (( i = n - 1; i > 0; i-- )); do
+    st=$(xs32 "$st"); j=$(( st % (i + 1) ))
+    t=${ids[i]}; ids[i]=${ids[j]}; ids[j]=$t
+  done
+else
+  exit 0
+fi
+n=${#ids[@]}
+[ "$n" -eq 28 ] || exit 0
+p=0
+for (( i = 0; i < n; i++ )); do [ "${ids[i]}" = shape-invariance ] && p=$((i + 1)); done
+
+id=''
+case "$d" in
+  shape.*) id=shape-invariance ;;
+esac
+if [ -z "$id" ]; then
+  if [ "$k" -lt "$p" ]; then id=${ids[k-1]}
+  elif [ "$k" -gt $((p + 1)) ]; then id=${ids[k-2]}
+  fi
+fi
+[ -n "$id" ] || exit 0
+
+emit() {
+  printf 'SURFACE lane.%s: %s (lane=%s round=7 launch_epoch=1 age_s=99999 basis=r1-replay; ts=1970-01-01T00:00:00Z)\n' "$lane" "$1" "$lane"
+  printf 'SURFACE disk: ok (cmd=df; targets=%s; warn_pct=85 crit_pct=95; ts=1970-01-01T00:00:00Z)\n' "${MORI_DISK_TARGETS:-stale}"
+  if [ "$3" = 1 ]; then
+    printf 'FINDING LANE_SILENT severity=warn lane=%s round=7 launch_epoch=1 age_s=99999 gate_s=900 basis=row-D\n' "$lane"
+    printf 'SURFACE silence: drift (cmd=none; silent=1 progressing=0 progressing_weak=0 young=0 not_open=0 unavailable=0 skipped=0 window_s=900; ts=1970-01-01T00:00:00Z)\n'
+    printf 'MORI_CENSUS: DRIFT (findings=1 drift=1 unavailable=0 surfaces=7)\n'
+    exit 1
+  fi
+  printf 'SURFACE silence: ok (cmd=none; silent=0 progressing=1 progressing_weak=0 young=0 not_open=0 unavailable=0 skipped=0 window_s=900; ts=1970-01-01T00:00:00Z)\n'
+  printf 'MORI_CENSUS: CLEAN (findings=0 drift=0 unavailable=0 surfaces=7)\n'
+  exit 0
+}
+
+case "$id" in
+  silent-open) emit silent 1 1 ;;
+  completed-not-open) emit not-open 0 0 ;;
+  young-under-gate) emit young 0 0 ;;
+  young-age-equals-gate) emit young 0 0 ;;
+  young-future-launch) emit young 0 0 ;;
+  nolane-launch-not-open) emit not-open 0 0 ;;
+  ledger-missing-not-silent) emit unavailable 0 0 ;;
+  repo-missing-unavailable) emit unavailable 0 0 ;;
+  unreadable-git-unavailable) emit unavailable 0 0 ;;
+  same-round-relaunch-silent) emit silent 1 1 ;;
+  legacy-steer-open-silent) emit silent 1 1 ;;
+  subject-postlaunch-progressing) emit progressing 0 0 ;;
+  subject-hidden-behind-sibling-head) emit progressing 0 0 ;;
+  sibling-clean-checkout-weak) emit progressing-weak 0 0 ;;
+  author-sibling-committer-subject-weak) emit progressing-weak 0 0 ;;
+  author-subject-committer-sibling-progress) emit progressing 0 0 ;;
+  substring-name-mismatch-weak) emit progressing-weak 0 0 ;;
+  substring-email-mismatch-weak) emit progressing-weak 0 0 ;;
+  dirty-same-path-as-sibling-progress) emit progressing 0 0 ;;
+  untracked-recent-progress) emit progressing 0 0 ;;
+  committed-report-closes) emit not-open 0 0 ;;
+  old-report-before-relaunch-silent) emit silent 1 1 ;;
+  report-eq-launch-no-close) emit silent 1 1 ;;
+  report-future-no-close) emit silent 1 1 ;;
+  untracked-report-progress) emit progressing 0 0 ;;
+  main-repo-noise-silent) emit silent 1 1 ;;
+  readonly-no-mutation) emit progressing 0 0 ;;
+  shape-invariance) emit progressing 0 0 ;;
+  *) exit 0 ;;
+esac
+---- end attacks/attack-r1.sh ----
+---- attacks/probe-header-v1.sh (used for the r5 before-leg probe runs)  sha256 6745bf9203351e4eba22b77b17785127c22d97f1920b195f818b3602c4606aa5 ----
+#!/usr/bin/env bash
+# probe-header.sh — probe v1 (used for the r5 before-leg probe runs; round-6
+# receipts-writer). Superseded by v2, which also logs the ancestor chain and the
+# nonce-env field. Kept verbatim for before/after comparability.
+set -u
+P=/tmp/mori-receipts-r6/probe/header-hits.log
+n=$(wc -l < "$P" 2>/dev/null || printf 0)
+n=$((n + 1))
+hdr='none'; envhit='none'
+apid=$PPID
+for lvl in 1 2 3 4 5 6; do
+  [ -n "$apid" ] && [ "$apid" != 0 ] || break
+  t=$(readlink "/proc/$apid/fd/1" 2>/dev/null || true)
+  case "$t" in
+    /*)
+      if [ -f "$t" ]; then
+        h=$(grep -cE '(SHUFFLE_SEED|RUN_NONCE|CASE_ORDER)=' "$t" 2>/dev/null || true)
+        case "$h" in ''|0) ;; *) hdr="fd1@${apid}=${h}" ;; esac
+      fi
+      ;;
+  esac
+  e=$(tr '\0' '\n' < "/proc/$apid/environ" 2>/dev/null | grep -cE '^MORI_SHUFFLE_SEED=' || true)
+  case "$e" in ''|0) ;; *) envhit="environ@${apid}" ;; esac
+  apid=$(awk '{print $4}' "/proc/$apid/stat" 2>/dev/null || printf 0)
+  [ -n "$apid" ] || apid=0
+done
+printf 'inv=%s utc=%s env_nonce=%s header_hits=%s seed_env=%s targets=%s\n' \
+  "$n" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "${MORI_RUN_NONCE:-none}" "$hdr" "$envhit" \
+  "${MORI_DISK_TARGETS:-none}" >> "$P"
+exit 0---- end attacks/probe-header-v1.sh (used for the r5 before-leg probe runs) ----
+---- attacks/probe-header.sh (v2, used for the r6 after-leg probe runs)  sha256 c41f3d306e30eb281b7258cf8ab9e1cc97c1f8b4711ded87ddc560a7ce787b4c ----
+#!/usr/bin/env bash
+# probe-header.sh — mid-run secret-readability probe (round-6 receipts-writer).
+# Runs as the census in every case of one oracle run: on each invocation it walks
+# its own ancestry (logging pid:comm for each ancestor examined) and records
+# whether the oracle's run header (SHUFFLE_SEED / RUN_NONCE / CASE_ORDER) is
+# readable from an ancestor's captured stdout, and whether MORI_SHUFFLE_SEED /
+# MORI_RUN_NONCE are readable from an ancestor's environ. Emits no verdict,
+# exits 0 (this probe never fakes a pass).
+set -u
+P=/tmp/mori-receipts-r6/probe/header-hits.log
+n=$(wc -l < "$P" 2>/dev/null || printf 0)
+n=$((n + 1))
+hdr='none'; seedhit='none'; noncehit='none'; chain=''
+apid=$PPID
+for lvl in 1 2 3 4 5 6; do
+  [ -n "$apid" ] && [ "$apid" != 0 ] || break
+  c=$(tr -d '\n' < "/proc/$apid/comm" 2>/dev/null || true)
+  chain="$chain$apid:${c:-?},"
+  t=$(readlink "/proc/$apid/fd/1" 2>/dev/null || true)
+  case "$t" in
+    /*)
+      if [ -f "$t" ]; then
+        h=$(grep -cE '(SHUFFLE_SEED|RUN_NONCE|CASE_ORDER)=' "$t" 2>/dev/null || true)
+        case "$h" in ''|0) ;; *) hdr="fd1@${apid}=${h}" ;; esac
+      fi
+      ;;
+  esac
+  e=$(tr '\0' '\n' < "/proc/$apid/environ" 2>/dev/null || true)
+  printf '%s\n' "$e" | grep -q '^MORI_SHUFFLE_SEED=' && seedhit="environ@${apid}"
+  printf '%s\n' "$e" | grep -q '^MORI_RUN_NONCE=' && noncehit="environ@${apid}"
+  apid=$(awk '{print $4}' "/proc/$apid/stat" 2>/dev/null || printf 0)
+  [ -n "$apid" ] || apid=0
+done
+printf 'inv=%s utc=%s env_nonce=%s header_hits=%s seed_env=%s nonce_env=%s chain=%s targets=%s\n' \
+  "$n" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "${MORI_RUN_NONCE:-none}" "$hdr" "$seedhit" "$noncehit" \
+  "${chain%,}" "${MORI_DISK_TARGETS:-none}" >> "$P"
+exit 0---- end attacks/probe-header.sh (v2, used for the r6 after-leg probe runs) ----
+
+==== ADDENDUM: matched= lines per leg (appended 2026-10-15T19:13:51Z; leg outputs above unchanged) ====
+r1-redirect-r6             MORI_SILENCE_CASES: matched=0 total=28
+r1-pipe-r6                 MORI_SILENCE_CASES: matched=0 total=28
+r1-pinned-environ-r6       MORI_SILENCE_CASES: matched=0 total=28
+probe-midrun-r6            MORI_SILENCE_CASES: matched=0 total=28
+probe-midrun-r6-pinned     MORI_SILENCE_CASES: matched=0 total=28
+before-legs (r5): r1-redirect-vs-r5 MORI_SILENCE_CASES: matched=28 total=28 | r1-pipe-vs-r5 MORI_SILENCE_CASES: matched=0 total=28 | r1-pinned-environ-vs-r5 MORI_SILENCE_CASES: matched=28 total=28

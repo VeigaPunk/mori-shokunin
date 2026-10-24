@@ -1,0 +1,65 @@
+{
+  "schema": "mori-r15-claim-measurement-v1",
+  "claim": "C1 coverage",
+  "measured_commit": "1822145d95682709069bbc8f4e1b947ddbe20078",
+  "entering_commit": "0fa5e0de194bcc270a927a166664113e6821442b",
+  "counting_command": "/usr/bin/jq -s '[.[].summary.sut_behavior_fail]' .ufo/waves/round-15/evidence/red-before-final/run-manifest.json .ufo/waves/round-15/evidence/green-after-final/run-manifest.json",
+  "behavior_failures": [
+    34,
+    0
+  ],
+  "schema_failures": [
+    63,
+    0
+  ],
+  "strict_exit": [
+    1,
+    0
+  ],
+  "core_cases": 63,
+  "boundary_cases": 7,
+  "frozen_red_required": 34,
+  "frozen_red_confirmed": 34,
+  "frozen_inconclusive": [],
+  "parser": "/usr/bin/jq jq-1.8.2",
+  "source_counts_before": {
+    "rows": 38,
+    "tiers": {
+      "A": 35,
+      "B": 2,
+      "C": 1
+    },
+    "statuses": {
+      "mined": 17,
+      "queued": 20,
+      "rejected": 1
+    }
+  },
+  "source_counts_after": {
+    "rows": 38,
+    "tiers": {
+      "A": 35,
+      "B": 2,
+      "C": 1
+    },
+    "statuses": {
+      "mined": 17,
+      "queued": 20,
+      "rejected": 1
+    }
+  },
+  "wave_roles": {
+    "executor": 24,
+    "scout": 8,
+    "connector": 6,
+    "reviewer": 8,
+    "scribe": 6,
+    "critic": 8,
+    "sentinel": 2,
+    "revenger": 2
+  },
+  "seats": 64,
+  "missing_reports": [],
+  "declared_score": "coverage6 held; no points for case volume",
+  "scope": "finite fixture behavior, not positive-load live, all-event completeness, unique victims, or authenticated metadata"
+}

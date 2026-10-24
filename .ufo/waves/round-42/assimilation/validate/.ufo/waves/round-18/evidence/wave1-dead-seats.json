@@ -1,0 +1,24 @@
+{
+ "first_failure": "15 seats failed after the then-configured retry budget; provider-capacity error class turn_rate_limit_exceeded. Exact provider/model alias, error payload and observation time withheld by round19 content minimization.",
+ "resume_attempt": "one same-identity resume message each (no respawn); every wake turn failed with the same capacity class",
+ "resumed_at": "withheld",
+ "pre_minimization_blob_sha256": "0c7c2da40bfd69ff30a028b842d4683f313d3f0038e6aa29a615e64a8dc88f5f",
+ "seats": [
+  "SweepR17Build1",
+  "AdjSeatNaming",
+  "AdjSeatBreachDetect",
+  "AdjSeatLiveEvidence",
+  "SweepR17Falsify3",
+  "SweepR15Md1",
+  "AdjRetryRecoveryShape",
+  "AdjDeadSeatCrossCheck",
+  "ScoutAttemptReceipts",
+  "SweepR1314Md",
+  "SweepR17Falsify1",
+  "SweepR16Md1",
+  "AdjOmpRetryDocs",
+  "AdjTranscriptTailBounds",
+  "AdjWave1SpecDispatch"
+ ],
+ "disposition": "dead; not replaced; their items covered by L1 integration (adjudication via the gate) and wave-2 attack items over the redacted tree"
+}

@@ -1,0 +1,16 @@
+{
+  "schema": "mori-r21-command-receipt-v1",
+  "measured_revision": "9fb1f911cfdd6061005c300795f44b1b45523897",
+  "argv": [
+    "python3",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/build/MutCleanupDisposition/probe_cleanup_disposition.py",
+    "--auditor",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-evidence-loss.py"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "started_utc": "2026-10-21T13:30:47.292812+00:00",
+  "elapsed_seconds": 0.193,
+  "exit_code": 0,
+  "stdout": "{\"result\": \"/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/build/MutCleanupDisposition/probe-zggwjpd4/result.json\", \"verdict\": \"killed\"}\n",
+  "stderr": ""
+}

@@ -1,0 +1,154 @@
+{
+  "schema": "mori-r23-falsify-scan-v1",
+  "seat": "QBtrfsSquota",
+  "wave": "round-23",
+  "claim": "C2",
+  "mode": "fixture",
+  "scope": {
+    "cases_executed": 1,
+    "case_ids": ["CaseBtrfsSquota"],
+    "real_mode_invoked": false,
+    "driver_invoked": false,
+    "selftest_invoked": false,
+    "other_cases_touched": 0,
+    "note": "Exactly one sealed C2 fixture-mode case was executed. No real-mode probe, no quota live reads, no full driver, no builds/lints/tests."
+  },
+  "case": {
+    "id": "CaseBtrfsSquota",
+    "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseBtrfsSquota.json",
+    "sha256": "b3a641541e536ce1f313b521ae25a33cd8296e2e2d8daf647bf24c168254240a",
+    "bytes": 4590,
+    "sha256_at_seal_commit_22772c10f6e3c1d8d3fe1b72083a6194e9f4e687": "b3a641541e536ce1f313b521ae25a33cd8296e2e2d8daf647bf24c168254240a",
+    "sha256_at_pinned_production_f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c": "b3a641541e536ce1f313b521ae25a33cd8296e2e2d8daf647bf24c168254240a",
+    "sha256_in_worktree": "b3a641541e536ce1f313b521ae25a33cd8296e2e2d8daf647bf24c168254240a",
+    "worktree_git_status_for_path": "clean",
+    "only_commit_touching_case": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687 round-23: seal all oracle inputs before production implementation",
+    "decision": {
+      "original": "cases-proposed/CaseBtrfsSquota.json",
+      "original_sha256": "db77e8b64ca57feaa00019de1bc20c4c280b9495f11e6abe4158359bdc376308",
+      "selected": "cases-corrected/CaseBtrfsSquota.json",
+      "selected_sha256": "b3a641541e536ce1f313b521ae25a33cd8296e2e2d8daf647bf24c168254240a",
+      "primary": true,
+      "reason": "Independent source-derived pre-measurement correction; exact author bytes, no L1 expectation edits",
+      "delta": "pre-seal: basis token btrfs_qgroups_dir_present -> btrfs_qgroups_enabled (amendment btrfs clause: qgroups dir presence = INITIALIZED, not enabled) and required fixture member qgroups_enabled added to the btrfs_sysfs uuid record; mountinfo and path bytes unchanged"
+    }
+  },
+  "tool": {
+    "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+    "sha256": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+    "sha256_at_pinned_production_f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+    "sha256_at_head_6eb889c037163e4886eaa61501258910d6a529b9": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+    "production_path_present_at_seal_commit": false,
+    "note": "The working-copy tool is byte-identical to the pinned production revision, so this run measured the pinned production bytes."
+  },
+  "fixture": {
+    "source": "case[\"fixture\"] copied verbatim into seat scratch",
+    "path": "/fast/scratch/hyaku/mori-r23/QBtrfsSquota/fixture.json",
+    "sha256": "0e8897256d1ee545af6a585043e166df8f5a576d576a6e1383a8cbf721945539",
+    "bytes": 817,
+    "top_level_keys": ["btrfs_sysfs", "device_links", "mountinfo", "paths", "schema"],
+    "edited": false
+  },
+  "invocation": {
+    "argv": ["python3", "-I", "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py", "--fixture", "/fast/scratch/hyaku/mori-r23/QBtrfsSquota/fixture.json"],
+    "wrapper": "timeout -k 1 15 prlimit --as=402653184 -- <argv>",
+    "address_space_limit_bytes": 402653184,
+    "wall_timeout_seconds": 15,
+    "cwd": "/fast/scratch/hyaku/mori-r23/QBtrfsSquota",
+    "TMPDIR": "/fast/scratch/hyaku/mori-r23/QBtrfsSquota",
+    "python": "3.14.8 (main, Oct 2 2026, 10:23:31) [GCC 16.2.1 20260810]",
+    "prlimit": "util-linux 2.42.4",
+    "children_run": 1,
+    "exit_code": 1,
+    "stdout_path": "/fast/scratch/hyaku/mori-r23/QBtrfsSquota/stdout.json",
+    "stdout_sha256": "8671e2584b8f6ed4e5fbaaedc807b8e5a42515e13c6d327c70f142bd0840ebff",
+    "stdout_bytes": 968,
+    "stderr_path": "/fast/scratch/hyaku/mori-r23/QBtrfsSquota/stderr.txt",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_bytes": 0
+  },
+  "result": {
+    "schema": "mori-quota-surface-v1",
+    "finding_id": "QUOTA_ENABLED",
+    "exit_code": 1,
+    "df_covers_quota": false,
+    "top_level_keys": ["df_covers_quota", "exit_code", "finding_id", "limits", "paths", "schema"],
+    "primary_six_field_rows": [
+      {
+        "path": "/srv/data",
+        "fstype": "btrfs",
+        "mount_point": "/srv",
+        "quota_state": "enabled",
+        "enforcement": "unknown",
+        "basis": "btrfs_qgroups_enabled"
+      }
+    ],
+    "supplementary_metadata": [
+      {
+        "path": "/srv/data",
+        "device_check": "btrfs_subvolume_skipped",
+        "quota_option_keys": [],
+        "btrfs_qgroups_mode": "squota"
+      }
+    ]
+  },
+  "comparison": {
+    "exit": {"actual": 1, "expected": 1, "match": true},
+    "finding_id": {"actual": "QUOTA_ENABLED", "expected": "QUOTA_ENABLED", "match": true},
+    "path_row_count": {"actual": 1, "expected": 1, "match": true},
+    "ordered_six_field_tuples": {
+      "actual": [["/srv/data", "btrfs", "/srv", "enabled", "unknown", "btrfs_qgroups_enabled"]],
+      "expected": [["/srv/data", "btrfs", "/srv", "enabled", "unknown", "btrfs_qgroups_enabled"]],
+      "match": true
+    },
+    "primary_denominator_for_this_seat": "1/1 rows matched, 0 mismatches",
+    "primary_six_field_match": true,
+    "supplementary_separate_from_primary": true,
+    "leak_check": {
+      "mount_source_/dev/mapper/srv": "absent",
+      "device_basename_dm-3": "absent",
+      "uuid_6f0c9e42": "absent",
+      "super_option_values_compress_zstd": "absent",
+      "st_dev_0:57": "absent",
+      "other_mount_source_/dev/sda1": "absent",
+      "note": "the only 'subvol' substring in stdout is inside the fixed token 'btrfs_subvolume_skipped'"
+    },
+    "verdict": "PASS"
+  },
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "none",
+      "title": "CaseBtrfsSquota matches the sealed expectation on exit, finding_id and all ordered six-field tuples",
+      "status": "pass"
+    },
+    {
+      "id": "O1",
+      "severity": "observation",
+      "title": "contract.md C2 btrfs row still names btrfs_qgroups_dir_present / btrfs_qgroups_dir_absent; the pre-seal amendment supersedes them with btrfs_qgroups_enabled / btrfs_qgroups_disabled / btrfs_qgroups_enabled_unavailable",
+      "status": "open-documentation-drift"
+    },
+    {
+      "id": "O2",
+      "severity": "observation",
+      "title": "Co-evolution proximity: the implementation's own selftest arm btrfs-qgroups-enabled exercises the same btrfs-enabled branch with the same tuple family, so this sealed case cannot by itself discriminate a general classifier from a hard-coded btrfs-enabled branch",
+      "status": "open-discrimination-limit"
+    },
+    {
+      "id": "O3",
+      "severity": "observation",
+      "title": "The superseded original proposal fixture (uuid record without qgroups_enabled) is rejected by the strict record-key check and would be exit 2 QUOTA_SETUP, matching the amendment's intent",
+      "status": "inference-from-source-not-executed"
+    },
+    {
+      "id": "O4",
+      "severity": "observation",
+      "title": "The shipped probe's module docstring labels the file mori-quota-surface-v3.py while the artifact is tools/mori-quota-surface.py and SCHEMA is mori-quota-surface-v1",
+      "status": "cosmetic"
+    }
+  ],
+  "out_of_scope_for_this_seat": [
+    "CaseEscapedSpace strict red: not executed here; it is a genuine expected-output mismatch for the driver seat and is not excused, and it is not the same artifact as the separately corrected co-evolved selftest arm (49/49).",
+    "The other 26 primary C2 cases, the 3 supplemental C2 cases, the real-mode control and the quota selftest (49/49) were not executed by this seat."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=19964362\n",
+  "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+  "earlyoom_journal": [
+    {"MESSAGE": "earlyoom 1.9.0", "__MONOTONIC_TIMESTAMP": "19964362"},
+    {"MESSAGE": "sending SIGTERM when mem avail <= 10.00% and swap free <= 10.00%", "__MONOTONIC_TIMESTAMP": "19964362"},
+    {"MESSAGE": "SIGKILL when mem avail <= 5.00% and swap free <= 5.00%", "__MONOTONIC_TIMESTAMP": "19964362"},
+    {"MESSAGE": "Suppressed 12 messages from earlyoom.service", "__MONOTONIC_TIMESTAMP": "19970000"}
+  ],
+  "oomd_notices": 0
+}

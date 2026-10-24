@@ -1,0 +1,168 @@
+{
+  "wave": "mori-r16-window-falsify",
+  "context": "# Goal\nMori round16 C1 coverage (lowest owned6 versus operability7): acquire bounded, MESSAGE-free, same-boot new-since-anchor journal observation. FR11 advances only for exact retained cursor continuity; missing/vacuumed anchor, boot boundary, failed/truncated capture stay unavailable. No census cutover, no cursor state mutation, no authenticated emitter/unique victim/completeness claim. L1 MoriR16 holds canonical planner. Source S014/S015 and cursor API primary documents must be opened this round. Previous non-author round15 feedback must become append-only corrections and active registry fix; old drift pin remains red, no re-pin.\n# Contract\nAll writes ONLY /home/vgpnk/Projects/shokunin/mori-shokunin in your exact assigned file plus your absolute report path. every `Report:` trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin \u2014 write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. Never write fleet files or another lane, never use /tmp for deliberate probes/downloads; isolated selftest temp trees are permitted only when L1 later executes selftest. Never agent://all; message ONLY exact seat id or L1 agent://MoriR16, never orchestrator/Main. Every seat is leaf; skip ALL builds/tests/lint/formatters/gates/smoke runs; implementing a selftest is NOT permission to execute it. L1 verifies once after all seats settle. Never commit. Never read/copy/query/change ~/.omp/agent/agent.db* or any credential/auth file; never launch omp CLI. Helpful official tools allowed after reading ~/.omp/agent/RULES.md; record tool/version/channel/reason. ALL pacman transactions PAUSED host-wide; use uv tool/npx/official binary in ~/.local/bin or report L0 need; no downgrade/restart/host changes.\n# Interface\nProduction tools/mori-journal-window.py CLI --anchor PATH --scope user|system [--journalctl PATH] [--timeout SECONDS] [--max-bytes N], stdout one JSON object, no file writes; --selftest isolates actual CLI subprocess tests, asserts rc+stable finding id, no network/live reads. Anchor exactly schema mori-journal-anchor-v1, scope, boot_id(32 lowercase hex), cursor(opaque printable scalar <=4096, no controls). Query one scope with --cursor=<anchor> --no-tail --quiet --output=json --output-fields=__CURSOR,_BOOT_ID,MESSAGE_ID,UNIT_RESULT,EXIT_CODE,EXIT_STATUS; never MESSAGE, never --after-cursor without proving anchor. First parsed record must have EXACT anchor cursor+boot; drop it. Every later record must be object, same boot and unique valid scalar cursor. Malformed/empty capture, missing/mismatched/duplicate cursor, foreign boot, nonzero rc, stderr, timeout, overflow -> rc2 unavailable, no numeric positive totals. Successful window returns rc0 with finding_id=MORI_JOURNAL_WINDOW_OK, scope, records_after_anchor, four separate positive_kernel_oom/positive_unit_oom/positive_unit_signal/positive_process_sigkill counts using r15 predicates, evidence_basis=validated-record-subsets, no alarm/severity override or victim count. Any unavailable returns rc2, finding_id=MORI_JOURNAL_WINDOW_UNAVAILABLE, reason stable; setup invalid anchor/args -> rc2 MORI_JOURNAL_WINDOW_SETUP. Anchor never advanced automatically. End cursor optional reported but not written. stdout MUST NOT echo raw cursor or records; safe anchor SHA256 allowed.\n# Fixture and harness contract\nEach pack is JSON {\"cases\":[{\"id\":\"unique\",\"scope\":\"user\",\"anchor\":{\"schema\":\"mori-journal-anchor-v1\",\"scope\":\"user\",\"boot_id\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"cursor\":\"anchor\"},\"stdout\":\"JSONL escaped string\",\"stderr\":\"\",\"returncode\":0,\"want_rc\":0,\"want_id\":\"MORI_JOURNAL_WINDOW_OK\",\"want\":{\"records_after_anchor\":0}}]}. Optional timeout:true / overflow:true instruct wrapper to delay or overflow, with expected rc2. Use literal JSONL strings. Every pack includes at least one success or refusal specific to its topic. Harness tools/mori-round16-regressions.py --tool PATH --fixtures DIR --output DIR; pin expected input digests via --pin-fixtures PATH then normal --expected PATH (must validate every pack digest and tool digest before runs); missing tool at entering baseline records capability_absent, expected finite cases fail (not production bug). Runs actual CLI subprocess using per-case executable journalctl wrappers; writes all raw streams and manifest with input hashes start/end, actual git HEAD, exact porcelain; refuses moving inputs. --selftest actual isolated CLI arms rc+id. Never execute now. No shared writes to another owner; reports are advisory author-lane evidence, never outside verification.\n# Wave2 falsification\nWave1 has settled. This wave is READ-ONLY except each absolute scoped report under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-16/falsify. Attack actual delivered claims/artifacts, not absent-at-start reports. Static counts and source reopening permitted; NO tests/builds/gates/smoke execution or mutations. Send concrete defects exact-id to MoriR16, never author a shared fix. Prior wave reports are author-lane and often predate implementation, not final evidence. Every `Report:` trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin \u2014 write it there. L1 performs all acceptance only after this wave settles.\nExplicit prohibitions: NO LIVE journalctl queries or journal reads; NO measurement/probe loops or synthetic behavior tests; NO background jobs; NO /tmp or /run/user staging/download/probe outputs. --version/--help and static local man reads are allowed only without outside-lane redirection. All report writes remain absolute under the lane root. Do not touch any sibling-owned lesson or shared file. Each seat writes ONLY its own report.",
+  "reportDir": ".ufo/waves/round-16/falsify",
+  "maxLanes": 32,
+  "items": [
+    {
+      "name": "FalsifyExactSeek",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack first-record exact cursor proof: missing cursor, nearest fallback, anchor exclusion. Inspect actual code and MissingAnchor pack, not design promises. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "FalsifyAliases",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack alias false-negative wording and byte uniqueness being renamed dedup; reopen official sd_journal_test_cursor source. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "FalsifyBoot",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack same-boot anchor versus later foreign boot and no-b --cursor query. Find a concrete accept/overclaim path. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "FalsifyCapture",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack nonzero rc, stderr, malformed JSON or timeout positive-looking bytes reaching success counts. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "FalsifyBounds",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack BOTH stream byte caps, deadline, inherited-pipe handling, finite child reap and allocations; static control flow only. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "FalsifyHarness",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack actual CLI invocation, missing-before capability semantics, no-op fake green, tool/pack digest validation. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "FalsifySourceScope",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack source authority and scope: latest docs versus installed journalctl; approximate seek versus tested CLI claim. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "FalsifyNoHarm",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nAttack any claim new window green means census/drift clean, complete events or authentication; identify active assertions. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "SecurityStdout",
+      "role": "sentinel",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nInspect stdout diagnostics for raw cursor, stderr, MESSAGE, boot-record payload or exception string leakage. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "SecurityArgv",
+      "role": "sentinel",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nInspect anchor/binary argument construction for shell execution or option injection, authorized journal child kill scope. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "SecurityPaths",
+      "role": "sentinel",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nInspect tool and gate file opens/writes for outside-lane changes, output overlap, credential access or symlink overwrite. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "SecurityFixtures",
+      "role": "sentinel",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nInspect packs/wrappers and context for secret material, MESSAGE canaries leaking, host commands or pacman/service mutation. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "CountFixtureUniverse",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRecount actual pack cases/unique ids/want_rc/want_id and per-topic coverage with a static counting command; no gate/test runs. Report raw counts, duplicates. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "ReviewActualWindow",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nReview delivered window tool end-to-end against shared interface. Identify missing arm or unintended extra feature; static only. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "ReviewActualHarness",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nReview delivered regression harness pins, run-manifest revision/digest scope and outer 0/1/2 exit handling. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "ReviewWindowSelftest",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nReview selftest source actual isolated CLI subprocess assertions of rc+stable id, positive and fail cases; never execute it. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "ReviewHarnessSelftest",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nReview harness selftest real CLI subprocess checks, tamper/refusal proofs and predicted tally wording; do not run. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "ReviewContextSelftest",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nReview context gate red/green and missing-rule selftest arms; prevention claim only static. Compare round15 absent tokens to round16 explicit tokens. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "ReviewSourceTransitions",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nRecount source row ids/tier/status/mutable transitions relative entering b83edc6 with static committed-byte reads; compare lesson old\u2192new records, source quotes. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "ReviewRoutedQueue",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nTrace all five previous nonauthor routed items to new correction+active bytes; historical report/lesson must remain unchanged. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "ReviewFiniteClaim",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nJudge whether stated C1 capability finite metric is actually supported by artifact shape; no future pass predictions or scalar credit. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "ReviewRegistrations",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nReview SKILL registry probe/gates complete owner/entry/verdict/selftest/pins/scope fields and stale hidden flags removed. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "ConnectScopeAfter",
+      "role": "connector",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nConnect final PROVINCE core/FR11/README/knowledge to tool behavior; mismatch/alias means unavailable not deleted, window not complete historical journal. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "ConnectPricingAfter",
+      "role": "connector",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nConnect implemented timeout/byte caps to documented four-price/drop-set and finite configured vs actual measured limits. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "ConnectLearningAfter",
+      "role": "connector",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nConnect SOURCES\u2192new note\u2192coverage map\u2192lesson Gate\u2192QUALITY; gate candidate vs outside review labels must align. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "ConnectPreservationAfter",
+      "role": "connector",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nCompare entering production census/oracle/r13/r14/r15 gate/r10 baseline SHA256 with current file bytes using static hashes only; report exact unchanged list. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "OpenCursorDocsAgain",
+      "role": "scout",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nIndependently reopen official sd_journal_seek_cursor and sd_journal_test_cursor pages; compare located <=25word lesson quotes to exact text, no downloads outside lane. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "OpenJournalDocsAgain",
+      "role": "scout",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nIndependently reopen S014/S015; verify --no-tail, --cursor, output-fields auto metadata and quiet partial-access warning limits appear in final note. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "InspectTypedCases",
+      "role": "scout",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nTrace fixture known catalog ids/results against unchanged census source; inspect bool/array/missing guards and 4 token want fields. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "InspectCaptureCases",
+      "role": "scout",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nTrace timeout/overflow/stderr/nonzero/malformed/boot/duplicate cursor fixture expected results to actual tool code, no execution. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "FalsifyReportRubric",
+      "role": "scribe",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nWrite only own report giving C1 acceptance/admission boundaries and per-axis no-harm evidence needed; do not edit main lane documents or predict pass. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    },
+    {
+      "name": "FalsifyLessonPrecision",
+      "role": "scribe",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n\nWrite only own report attacking prior procedural correction rationale and new Mistakes/Gate sourcing; require untested prevention remain untested, outside closure pending. Target root /home/vgpnk/Projects/shokunin/mori-shokunin; your sole write is your absolute report path under that root."
+    }
+  ]
+}

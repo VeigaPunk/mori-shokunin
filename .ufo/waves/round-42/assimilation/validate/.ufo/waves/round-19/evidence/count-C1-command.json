@@ -1,0 +1,14 @@
+{
+  "label": "count-C1",
+  "measured_revision": "11795ac0e0a44db6549534eb1239e26353446370",
+  "argv": [
+    "jq",
+    "-s",
+    "[.[].c1.counts.capability_absent]",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-19/evidence/finite-before-observed.json",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-19/evidence/finite-after-observed.json"
+  ],
+  "exit_code": 0,
+  "stdout": "[\n  10,\n  0\n]\n",
+  "stderr": ""
+}

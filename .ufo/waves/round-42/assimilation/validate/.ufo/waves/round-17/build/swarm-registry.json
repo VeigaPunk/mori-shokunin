@@ -1,0 +1,429 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r17-w1-build",
+  "createdAt": "2026-10-20T18:38:06.435Z",
+  "updatedAt": "2026-10-20T18:54:21.269Z",
+  "reportDir": ".ufo/waves/round-17/build",
+  "members": {
+    "SeatTool": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SeatTool-5",
+      "role": "executor",
+      "item": null
+    },
+    "SeatFixtures": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SeatFixtures-5",
+      "role": "executor",
+      "item": null
+    },
+    "SeatGate": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SeatGate-5",
+      "role": "executor",
+      "item": null
+    },
+    "CensusJj": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CensusJj-5",
+      "role": "executor",
+      "item": null
+    },
+    "JjGate": {
+      "kind": "spawn",
+      "agentId": "MoriR17.JjGate-5",
+      "role": "executor",
+      "item": null
+    },
+    "MisrootSweep": {
+      "kind": "spawn",
+      "agentId": "MoriR17.MisrootSweep-5",
+      "role": "executor",
+      "item": null
+    },
+    "ContextCheck17": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ContextCheck17-5",
+      "role": "executor",
+      "item": null
+    },
+    "TranscriptShapes": {
+      "kind": "spawn",
+      "agentId": "MoriR17.TranscriptShapes-5",
+      "role": "scout",
+      "item": null
+    },
+    "RetryRecoveryShape": {
+      "kind": "spawn",
+      "agentId": "MoriR17.RetryRecoveryShape-5",
+      "role": "scout",
+      "item": null
+    },
+    "SeatNaming": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SeatNaming-5",
+      "role": "scout",
+      "item": null
+    },
+    "DeadSeatCrossCheck": {
+      "kind": "spawn",
+      "agentId": "MoriR17.DeadSeatCrossCheck-5",
+      "role": "scout",
+      "item": null
+    },
+    "WaveRegistryVsReports": {
+      "kind": "spawn",
+      "agentId": "MoriR17.WaveRegistryVsReports-5",
+      "role": "scout",
+      "item": null
+    },
+    "OmpRetryConfig": {
+      "kind": "spawn",
+      "agentId": "MoriR17.OmpRetryConfig-5",
+      "role": "scout",
+      "item": null
+    },
+    "OmpRetryDocs": {
+      "kind": "spawn",
+      "agentId": "MoriR17.OmpRetryDocs-5",
+      "role": "scout",
+      "item": null
+    },
+    "CensusGitSites": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CensusGitSites-5",
+      "role": "scout",
+      "item": null
+    },
+    "HelperFailureWindows": {
+      "kind": "spawn",
+      "agentId": "MoriR17.HelperFailureWindows-5",
+      "role": "scout",
+      "item": null
+    },
+    "LiveLaneHeadVsBranch": {
+      "kind": "spawn",
+      "agentId": "MoriR17.LiveLaneHeadVsBranch-5",
+      "role": "scout",
+      "item": null
+    },
+    "CensusConsumers": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CensusConsumers-5",
+      "role": "scout",
+      "item": null
+    },
+    "PacmanTxnToday": {
+      "kind": "spawn",
+      "agentId": "MoriR17.PacmanTxnToday-5",
+      "role": "scout",
+      "item": null
+    },
+    "PacmanActorTrace": {
+      "kind": "spawn",
+      "agentId": "MoriR17.PacmanActorTrace-5",
+      "role": "scout",
+      "item": null
+    },
+    "ProvinceFrontier": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ProvinceFrontier-5",
+      "role": "scout",
+      "item": null
+    },
+    "R16LessonM7": {
+      "kind": "spawn",
+      "agentId": "MoriR17.R16LessonM7-5",
+      "role": "scout",
+      "item": null
+    },
+    "MisrootR16Facts": {
+      "kind": "spawn",
+      "agentId": "MoriR17.MisrootR16Facts-5",
+      "role": "scout",
+      "item": null
+    },
+    "FleetRootUntracked": {
+      "kind": "spawn",
+      "agentId": "MoriR17.FleetRootUntracked-5",
+      "role": "scout",
+      "item": null
+    },
+    "SkillRegistry": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SkillRegistry-5",
+      "role": "scout",
+      "item": null
+    },
+    "ScorecardAxisCheck": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ScorecardAxisCheck-5",
+      "role": "scout",
+      "item": null
+    },
+    "SiblingSeatDeathTools": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SiblingSeatDeathTools-5",
+      "role": "scout",
+      "item": null
+    },
+    "JjEnvFacts": {
+      "kind": "spawn",
+      "agentId": "MoriR17.JjEnvFacts-5",
+      "role": "scout",
+      "item": null
+    },
+    "TranscriptTailBounds": {
+      "kind": "spawn",
+      "agentId": "MoriR17.TranscriptTailBounds-5",
+      "role": "scout",
+      "item": null
+    },
+    "SessionExitCorrelation": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SessionExitCorrelation-5",
+      "role": "scout",
+      "item": null
+    },
+    "SrcRfc6585": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SrcRfc6585-5",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcRfc9110": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SrcRfc9110-5",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcZaiErrorCodes": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SrcZaiErrorCodes-5",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcJjGitCompat": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SrcJjGitCompat-5",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcJjMetaedit": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SrcJjMetaedit-5",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcGitMergeBase": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SrcGitMergeBase-5",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcGitSymbolicRef": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SrcGitSymbolicRef-5",
+      "role": "scribe",
+      "item": null
+    },
+    "SrcPacmanLog": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SrcPacmanLog-5",
+      "role": "scribe",
+      "item": null
+    },
+    "KnowledgeSeatTerminal": {
+      "kind": "spawn",
+      "agentId": "MoriR17.KnowledgeSeatTerminal-5",
+      "role": "scribe",
+      "item": null
+    },
+    "KnowledgeJjBranch": {
+      "kind": "spawn",
+      "agentId": "MoriR17.KnowledgeJjBranch-5",
+      "role": "scribe",
+      "item": null
+    },
+    "LessonMistakesDraft": {
+      "kind": "spawn",
+      "agentId": "MoriR17.LessonMistakesDraft-5",
+      "role": "scribe",
+      "item": null
+    },
+    "QualityCriteriaDraft": {
+      "kind": "spawn",
+      "agentId": "MoriR17.QualityCriteriaDraft-5",
+      "role": "scribe",
+      "item": null
+    },
+    "ProvinceNotesDraft": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ProvinceNotesDraft-5",
+      "role": "scribe",
+      "item": null
+    },
+    "OverlapTsukuroi": {
+      "kind": "spawn",
+      "agentId": "MoriR17.OverlapTsukuroi-5",
+      "role": "connector",
+      "item": null
+    },
+    "OverlapKumitate": {
+      "kind": "spawn",
+      "agentId": "MoriR17.OverlapKumitate-5",
+      "role": "connector",
+      "item": null
+    },
+    "OverlapAuditLanes": {
+      "kind": "spawn",
+      "agentId": "MoriR17.OverlapAuditLanes-5",
+      "role": "connector",
+      "item": null
+    },
+    "OverlapJjSiblings": {
+      "kind": "spawn",
+      "agentId": "MoriR17.OverlapJjSiblings-5",
+      "role": "connector",
+      "item": null
+    },
+    "ClaimSeparability": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ClaimSeparability-5",
+      "role": "connector",
+      "item": null
+    },
+    "FrontierLinkage": {
+      "kind": "spawn",
+      "agentId": "MoriR17.FrontierLinkage-5",
+      "role": "connector",
+      "item": null
+    },
+    "ReviewC1Contract": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReviewC1Contract-5",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewC2Contract": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReviewC2Contract-5",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewC1Metric": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReviewC1Metric-5",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewC2Metric": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReviewC2Metric-5",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewCarryForward": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReviewCarryForward-5",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewSpotcheckRouting": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReviewSpotcheckRouting-5",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewJjAuditRouting": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReviewJjAuditRouting-5",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewSeatBreachDetect": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReviewSeatBreachDetect-5",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewSchemaDrift": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReviewSchemaDrift-5",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewExitSemantics": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReviewExitSemantics-5",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewSkillRows": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReviewSkillRows-5",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewScorecardRubric": {
+      "kind": "spawn",
+      "agentId": "MoriR17.ReviewScorecardRubric-5",
+      "role": "reviewer",
+      "item": null
+    },
+    "CriticC1": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CriticC1-5",
+      "role": "critic",
+      "item": null
+    },
+    "CriticC2": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CriticC2-5",
+      "role": "critic",
+      "item": null
+    },
+    "CriticFrontier": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CriticFrontier-5",
+      "role": "critic",
+      "item": null
+    },
+    "CriticHarm": {
+      "kind": "spawn",
+      "agentId": "MoriR17.CriticHarm-5",
+      "role": "critic",
+      "item": null
+    },
+    "SentinelTranscripts": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SentinelTranscripts-5",
+      "role": "sentinel",
+      "item": null
+    },
+    "SentinelJjSandbox": {
+      "kind": "spawn",
+      "agentId": "MoriR17.SentinelJjSandbox-5",
+      "role": "sentinel",
+      "item": null
+    },
+    "RevengerCensusHead": {
+      "kind": "spawn",
+      "agentId": "MoriR17.RevengerCensusHead-5",
+      "role": "revenger",
+      "item": null
+    },
+    "RevengerContextChecker": {
+      "kind": "spawn",
+      "agentId": "MoriR17.RevengerContextChecker-5",
+      "role": "revenger",
+      "item": null
+    },
+    "RevengerOmpTerminal": {
+      "kind": "spawn",
+      "agentId": "MoriR17.RevengerOmpTerminal-5",
+      "role": "revenger",
+      "item": null
+    }
+  }
+}

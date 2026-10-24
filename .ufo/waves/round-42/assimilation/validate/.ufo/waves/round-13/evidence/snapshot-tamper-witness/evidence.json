@@ -1,0 +1,36 @@
+{
+  "schema": "mori-round13-regressions-v1",
+  "generated_utc": "2026-10-20T04:36:38Z",
+  "mode": "setup",
+  "finding": "snapshot_tampered",
+  "observed": "snapshot_digest_mismatch file=mori-census.sh expected=3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164 actual=978b6acdd7800c2c7382c417a4826ada1ae38c06256575e8a0be177270830934 inputs=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-13/evidence/tamper-fixture-pgls_gtq/inputs.json base_commit=6531ac6029e200a6392bb76673b6a17d3c895c96",
+  "targets": {
+    "census": {
+      "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-13/evidence/tamper-fixture-pgls_gtq/mori-census.sh",
+      "sha256": "978b6acdd7800c2c7382c417a4826ada1ae38c06256575e8a0be177270830934"
+    },
+    "oracle": {
+      "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-13/evidence/tamper-fixture-pgls_gtq/mori-silence-cases.sh",
+      "sha256": "448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5"
+    }
+  },
+  "frozen_inputs": {
+    "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-13/evidence/tamper-fixture-pgls_gtq/inputs.json",
+    "sha256": "d91690dc0417aecd9bffd507b53cd4e2a32fc6614753c82ccbc0c5b590cfdc3f",
+    "declared": {
+      "base_commit": "6531ac6029e200a6392bb76673b6a17d3c895c96",
+      "sha256": {
+        "mori-census.sh": "3da5b098dc23aeb3e1c31ce82664b24a22c2847a168308a755525593881b3164",
+        "mori-silence-cases.sh": "448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5"
+      }
+    }
+  },
+  "summary": {
+    "claims": 1,
+    "counts": {
+      "fail": 1
+    },
+    "exit": 2,
+    "gate": "not-registered (evidence harness)"
+  }
+}

@@ -1,0 +1,106 @@
+# C2 amendment-A1 controls, scored at the A1 commit 7973034b8d1c2eb855b0d1c33d19194301247e29 before any round-31 tool was scored
+$ python3 .ufo/waves/round-31/count-c2-a1.py 7973034b8d1c2eb855b0d1c33d19194301247e29   # tool absent
+tool=absent
+fixtures=27 exact=0/27
+C2=unmet
+exit=1
+
+$ python3 .ufo/waves/round-31/count-c2-a1.py 7973034b8d1c2eb855b0d1c33d19194301247e29 --tool-file .ufo/waves/round-31/controls/do-nothing-r30-gate-port.sh
+answer_key_strings=none
+run1 tool_exit=1 scanned=27 scanned_ok=yes blind_violations=27 hit_lines=27 duplicate_hit_lines=0 count_ok=yes exit_ok=yes stray=0
+run1 fixtures=27 exact=15/27
+run2 tool_exit=1 scanned=27 scanned_ok=yes blind_violations=27 hit_lines=27 duplicate_hit_lines=0 count_ok=yes exit_ok=yes stray=0
+run2 fixtures=27 exact=15/27
+runs_met=0/2
+C2=unmet
+exit=1
+
+$ python3 .ufo/waves/round-31/count-c2-a1.py 7973034b8d1c2eb855b0d1c33d19194301247e29 --tool-file .ufo/waves/round-31/controls/shortcut1-grep-list-lines.sh
+answer_key_strings=none
+run1 tool_exit=1 scanned=27 scanned_ok=yes blind_violations=38 hit_lines=38 duplicate_hit_lines=0 count_ok=yes exit_ok=yes stray=0
+run1 fixtures=27 exact=6/27
+run2 tool_exit=1 scanned=27 scanned_ok=yes blind_violations=38 hit_lines=38 duplicate_hit_lines=0 count_ok=yes exit_ok=yes stray=0
+run2 fixtures=27 exact=6/27
+runs_met=0/2
+C2=unmet
+exit=1
+
+$ python3 .ufo/waves/round-31/count-c2-a1.py 7973034b8d1c2eb855b0d1c33d19194301247e29 --tool-file .ufo/waves/round-31/controls/shortcut2-canned-ids.sh
+answer_key_strings=none
+run1 tool_exit=1 scanned=16 scanned_ok=no blind_violations=14 hit_lines=14 duplicate_hit_lines=0 count_ok=yes exit_ok=yes stray=14
+run1 fixtures=27 exact=6/27
+run2 tool_exit=1 scanned=16 scanned_ok=no blind_violations=14 hit_lines=14 duplicate_hit_lines=0 count_ok=yes exit_ok=yes stray=14
+run2 fixtures=27 exact=6/27
+runs_met=0/2
+C2=unmet
+exit=1
+
+$ python3 .ufo/waves/round-31/count-c2-a1.py 7973034b8d1c2eb855b0d1c33d19194301247e29 --tool-file .ufo/waves/round-31/controls/a1/c2-falsifier-a-content-hash.sh
+answer_key_strings=none
+run1 tool_exit=0 scanned=27 scanned_ok=yes blind_violations=0 hit_lines=0 duplicate_hit_lines=0 count_ok=yes exit_ok=no stray=0
+run1 fixtures=27 exact=6/27
+run2 tool_exit=0 scanned=27 scanned_ok=yes blind_violations=0 hit_lines=0 duplicate_hit_lines=0 count_ok=yes exit_ok=no stray=0
+run2 fixtures=27 exact=6/27
+runs_met=0/2
+C2=unmet
+exit=1
+
+$ python3 .ufo/waves/round-31/count-c2-a1.py 7973034b8d1c2eb855b0d1c33d19194301247e29 --tool-file .ufo/waves/round-31/controls/a1/c2-falsifier-b-answer-key.sh
+answer_key_strings=c2-fixtures,count-c2
+run1 tool_exit=127 scanned=None scanned_ok=no blind_violations=None hit_lines=0 duplicate_hit_lines=0 count_ok=no exit_ok=no stray=0
+run1 fixtures=27 exact=6/27
+run2 tool_exit=127 scanned=None scanned_ok=no blind_violations=None hit_lines=0 duplicate_hit_lines=0 count_ok=no exit_ok=no stray=0
+run2 fixtures=27 exact=6/27
+runs_met=0/2
+C2=unmet
+exit=1
+
+$ python3 .ufo/waves/round-31/count-c2-a1.py 7973034b8d1c2eb855b0d1c33d19194301247e29 --tool-file .ufo/waves/round-31/controls/a1/c2-falsifier-c-creation-order.sh
+answer_key_strings=none
+run1 tool_exit=1 scanned=None scanned_ok=no blind_violations=None hit_lines=0 duplicate_hit_lines=0 count_ok=no exit_ok=yes stray=0
+run1 fixtures=27 exact=6/27
+run2 tool_exit=1 scanned=None scanned_ok=no blind_violations=None hit_lines=0 duplicate_hit_lines=0 count_ok=no exit_ok=yes stray=0
+run2 fixtures=27 exact=6/27
+runs_met=0/2
+C2=unmet
+exit=1
+
+$ python3 .ufo/waves/round-31/count-c2-a1.py 7973034b8d1c2eb855b0d1c33d19194301247e29 --tool-file .ufo/waves/round-31/controls/a1/c2-falsifier-e-duplicates.sh
+answer_key_strings=none
+run1 tool_exit=0 scanned=27 scanned_ok=yes blind_violations=0 hit_lines=0 duplicate_hit_lines=0 count_ok=yes exit_ok=no stray=2
+run1 fixtures=27 exact=6/27
+run2 tool_exit=0 scanned=27 scanned_ok=yes blind_violations=0 hit_lines=0 duplicate_hit_lines=0 count_ok=yes exit_ok=no stray=2
+run2 fixtures=27 exact=6/27
+runs_met=0/2
+C2=unmet
+exit=1
+
+$ python3 .ufo/waves/round-31/count-c2-a1.py 7973034b8d1c2eb855b0d1c33d19194301247e29 --tool-file .ufo/waves/round-31/controls/a1/c2-falsifier-p-partial-rule.sh
+answer_key_strings=none
+run1 tool_exit=1 scanned=27 scanned_ok=yes blind_violations=25 hit_lines=25 duplicate_hit_lines=0 count_ok=yes exit_ok=yes stray=0
+run1 fixtures=27 exact=20/27
+run2 tool_exit=1 scanned=27 scanned_ok=yes blind_violations=25 hit_lines=25 duplicate_hit_lines=0 count_ok=yes exit_ok=yes stray=0
+run2 fixtures=27 exact=20/27
+runs_met=0/2
+C2=unmet
+exit=1
+
+$ python3 .ufo/waves/round-31/count-c2-a1.py 7973034b8d1c2eb855b0d1c33d19194301247e29 --tool-file .ufo/waves/round-31/controls/a1/c2-oracle-answer-key-CriticSizing.sh
+answer_key_strings=c2-fixtures
+run1 tool_exit=1 scanned=None scanned_ok=no blind_violations=None hit_lines=0 duplicate_hit_lines=0 count_ok=no exit_ok=yes stray=0
+run1 fixtures=27 exact=6/27
+run2 tool_exit=1 scanned=None scanned_ok=no blind_violations=None hit_lines=0 duplicate_hit_lines=0 count_ok=no exit_ok=yes stray=0
+run2 fixtures=27 exact=6/27
+runs_met=0/2
+C2=unmet
+exit=1
+
+$ python3 .ufo/waves/round-31/count-c2-a1.py 7973034b8d1c2eb855b0d1c33d19194301247e29 --tool-file .ufo/waves/round-31/controls/a1/c2-oracle-answer-key-obfuscated.sh
+answer_key_strings=none
+run1 tool_exit=1 scanned=None scanned_ok=no blind_violations=None hit_lines=0 duplicate_hit_lines=0 count_ok=no exit_ok=yes stray=0
+run1 fixtures=27 exact=6/27
+run2 tool_exit=1 scanned=None scanned_ok=no blind_violations=None hit_lines=0 duplicate_hit_lines=0 count_ok=no exit_ok=yes stray=0
+run2 fixtures=27 exact=6/27
+runs_met=0/2
+C2=unmet
+exit=1

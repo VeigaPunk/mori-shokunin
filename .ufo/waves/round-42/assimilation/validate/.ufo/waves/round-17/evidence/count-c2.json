@@ -1,0 +1,22 @@
+{
+  "label": "count-c2",
+  "started_at": "2026-10-20T16:35:15.315988-03:00",
+  "ended_at": "2026-10-20T16:35:15.318012-03:00",
+  "argv": [
+    "jq",
+    "-s",
+    "[.[].totals.failed_assertions]",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/evidence/jj-before/run-manifest.json",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/evidence/jj-after/run-manifest.json"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "branch_ref": "refs/heads/master",
+  "measured_commit": "273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7",
+  "branch_tip_after": "273aa74ab73701f41fea38ec7bd1c47b4b2bfbc7",
+  "rc": 0,
+  "duration_s": 0.001940919002663577,
+  "stdout": "[\n  21,\n  0\n]\n",
+  "stderr": "",
+  "stdout_sha256": "49fa16b56a842b82ceb517e33066046a618e9531e84c87bd66b6aa6fc92e7085",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

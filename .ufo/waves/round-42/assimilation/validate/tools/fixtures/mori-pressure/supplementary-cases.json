@@ -1,0 +1,490 @@
+{
+ "schema": "mori-pressure-cases-v1",
+ "note": "Supplementary cases written by the L1 after wave-2 mutation testing (survivors: threshold edge, grammar looseness, verdict precedence, EPERM), then extended in round-25 wave 1 by the SurvivorReplay seat (S08-S16: grammar whitespace/fractional-total/empty-total/unknown-kind/required-kind shapes, the --warn-avg10 value, a regressed counter with no finding, and system cpu full never thresholded). Co-evolved with the tool, not frozen before it; they do not change the declared 12-case after-value.",
+ "cases": [
+  {
+   "id": "S01",
+   "topic": "threshold edge: memory some avg10 exactly 10.00 is at the threshold, so PRESSURE_HIGH (>=)",
+   "args": [],
+   "snapshots": [
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=10.00 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    }
+   ],
+   "expect": {
+    "exit": 1,
+    "verdict": "PRESSURE_HIGH",
+    "resources": {
+     "memory": {
+      "state": "ok"
+     }
+    },
+    "findings_include": [
+     [
+      "PRESSURE_HIGH",
+      "memory"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "S02",
+   "topic": "trailing extra field after total makes io malformed",
+   "args": [],
+   "snapshots": [
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321 junk=1\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    }
+   ],
+   "expect": {
+    "exit": 0,
+    "verdict": "PRESSURE_PARTIAL",
+    "resources": {
+     "io": {
+      "state": "malformed"
+     }
+    },
+    "findings_include": []
+   }
+  },
+  {
+   "id": "S03",
+   "topic": "duplicate some line makes memory malformed",
+   "args": [],
+   "snapshots": [
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nsome avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    }
+   ],
+   "expect": {
+    "exit": 0,
+    "verdict": "PRESSURE_PARTIAL",
+    "resources": {
+     "memory": {
+      "state": "malformed"
+     }
+    },
+    "findings_include": []
+   }
+  },
+  {
+   "id": "S04",
+   "topic": "negative total makes cpu malformed",
+   "args": [],
+   "snapshots": [
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=-5\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    }
+   ],
+   "expect": {
+    "exit": 0,
+    "verdict": "PRESSURE_PARTIAL",
+    "resources": {
+     "cpu": {
+      "state": "malformed"
+     }
+    },
+    "findings_include": []
+   }
+  },
+  {
+   "id": "S05",
+   "topic": "a threshold finding outranks an absent resource: memory some 25.00 with irq absent is PRESSURE_HIGH, exit 1",
+   "args": [],
+   "snapshots": [
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=25.00 avg60=12.50 avg300=3.25 total=987654\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n"
+     },
+     "errors": {
+      "irq": "ENOENT"
+     }
+    }
+   ],
+   "expect": {
+    "exit": 1,
+    "verdict": "PRESSURE_HIGH",
+    "resources": {
+     "irq": {
+      "state": "absent",
+      "some": null,
+      "full": null
+     },
+     "memory": {
+      "state": "ok"
+     }
+    },
+    "findings_include": [
+     [
+      "PRESSURE_HIGH",
+      "memory"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "S06",
+   "topic": "EPERM on io is unreadable, never zero",
+   "args": [],
+   "snapshots": [
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {
+      "io": "EPERM"
+     }
+    }
+   ],
+   "expect": {
+    "exit": 0,
+    "verdict": "PRESSURE_PARTIAL",
+    "resources": {
+     "io": {
+      "state": "unreadable",
+      "some": null,
+      "full": null
+     }
+    },
+    "findings_include": []
+   }
+  },
+  {
+   "id": "S07",
+   "topic": "wave-2 ReviewPressureCode F1: a regressed memory counter must not hide a threshold breach on the second read (A3)",
+   "args": [
+    "--interval",
+    "1"
+   ],
+   "snapshots": [
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=50.00 avg60=12.50 avg300=3.25 total=987654\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    },
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=50.00 avg60=12.50 avg300=3.25 total=887654\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    }
+   ],
+   "expect": {
+    "exit": 1,
+    "verdict": "PRESSURE_HIGH",
+    "resources": {
+     "memory": {
+      "state": "counter_regressed"
+     }
+    },
+    "findings_include": [
+     [
+      "PRESSURE_HIGH",
+      "memory"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "S08",
+   "topic": "grammar: a trailing space after total is not the PSI grammar, so io is malformed",
+   "args": [],
+   "snapshots": [
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321 \nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    }
+   ],
+   "expect": {
+    "exit": 0,
+    "verdict": "PRESSURE_PARTIAL",
+    "resources": {
+     "io": {
+      "state": "malformed",
+      "some": null,
+      "full": null
+     }
+    },
+    "findings_include": []
+   }
+  },
+  {
+   "id": "S09",
+   "topic": "grammar: a leading space before the kind is not the PSI grammar, so memory is malformed",
+   "args": [],
+   "snapshots": [
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": " some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    }
+   ],
+   "expect": {
+    "exit": 0,
+    "verdict": "PRESSURE_PARTIAL",
+    "resources": {
+     "memory": {
+      "state": "malformed",
+      "some": null,
+      "full": null
+     }
+    },
+    "findings_include": []
+   }
+  },
+  {
+   "id": "S10",
+   "topic": "grammar: a fractional total is not a non-negative integer counter, so io is malformed",
+   "args": [],
+   "snapshots": [
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321.5\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    }
+   ],
+   "expect": {
+    "exit": 0,
+    "verdict": "PRESSURE_PARTIAL",
+    "resources": {
+     "io": {
+      "state": "malformed",
+      "some": null,
+      "full": null
+     }
+    },
+    "findings_include": []
+   }
+  },
+  {
+   "id": "S11",
+   "topic": "grammar: an empty total is not a non-negative integer counter, so memory is malformed",
+   "args": [],
+   "snapshots": [
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    }
+   ],
+   "expect": {
+    "exit": 0,
+    "verdict": "PRESSURE_PARTIAL",
+    "resources": {
+     "memory": {
+      "state": "malformed",
+      "some": null,
+      "full": null
+     }
+    },
+    "findings_include": []
+   }
+  },
+  {
+   "id": "S12",
+   "topic": "grammar: only some and full are kinds, so a stall line makes io malformed",
+   "args": [],
+   "snapshots": [
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\nstall avg10=1.00 avg60=1.00 avg300=1.00 total=1\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    }
+   ],
+   "expect": {
+    "exit": 0,
+    "verdict": "PRESSURE_PARTIAL",
+    "resources": {
+     "io": {
+      "state": "malformed",
+      "some": null,
+      "full": null
+     }
+    },
+    "findings_include": []
+   }
+  },
+  {
+   "id": "S13",
+   "topic": "threshold: --warn-avg10 5.0 is honoured, so memory some avg10 7.00 is PRESSURE_HIGH",
+   "args": [
+    "--warn-avg10",
+    "5.0"
+   ],
+   "snapshots": [
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=7.00 avg60=3.50 avg300=1.75 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    }
+   ],
+   "expect": {
+    "exit": 1,
+    "verdict": "PRESSURE_HIGH",
+    "resources": {
+     "memory": {
+      "state": "ok"
+     }
+    },
+    "findings_include": [
+     [
+      "PRESSURE_HIGH",
+      "memory"
+     ]
+    ]
+   }
+  },
+  {
+   "id": "S14",
+   "topic": "grammar: a file missing its required kind is malformed, so io (some only) is malformed",
+   "args": [],
+   "snapshots": [
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    }
+   ],
+   "expect": {
+    "exit": 0,
+    "verdict": "PRESSURE_PARTIAL",
+    "resources": {
+     "io": {
+      "state": "malformed",
+      "some": null,
+      "full": null
+     }
+    },
+    "findings_include": []
+   }
+  },
+  {
+   "id": "S15",
+   "topic": "verdict precedence: a regressed counter with no threshold finding is PRESSURE_PARTIAL, exit 0",
+   "args": [
+    "--interval",
+    "1"
+   ],
+   "snapshots": [
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=200000\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    },
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=100000\nfull avg10=0.00 avg60=0.00 avg300=0.00 total=0\n",
+      "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    }
+   ],
+   "expect": {
+    "exit": 0,
+    "verdict": "PRESSURE_PARTIAL",
+    "resources": {
+     "cpu": {
+      "state": "counter_regressed"
+     }
+    },
+    "findings_include": []
+   }
+  },
+  {
+   "id": "S16",
+   "topic": "threshold: system cpu full is never used for a threshold, so cpu full avg10 40.00 stays PRESSURE_OK",
+   "args": [],
+   "snapshots": [
+    {
+     "files": {
+      "cpu": "some avg10=1.23 avg60=0.45 avg300=0.12 total=98765\nfull avg10=40.00 avg60=40.00 avg300=40.00 total=0\n",
+      "memory": "some avg10=2.34 avg60=1.56 avg300=0.78 total=456789\nfull avg10=1.11 avg60=0.66 avg300=0.22 total=334455\n",
+      "io": "some avg10=3.21 avg60=2.43 avg300=1.09 total=654321\nfull avg10=0.98 avg60=0.87 avg300=0.54 total=223344\n",
+      "irq": "full avg10=0.31 avg60=0.29 avg300=0.27 total=111222\n"
+     },
+     "errors": {}
+    }
+   ],
+   "expect": {
+    "exit": 0,
+    "verdict": "PRESSURE_OK",
+    "resources": {
+     "cpu": {
+      "state": "ok"
+     }
+    },
+    "findings_include": []
+   }
+  }
+ ]
+}

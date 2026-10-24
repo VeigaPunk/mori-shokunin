@@ -1,0 +1,37 @@
+# Round 20 admission-frame critique — SeparationCritic
+
+## Findings
+
+### 1. Lowest-axis choice: defensible tie-break, not a unique minimum
+
+**Evidence.** The active round-19 register is coverage 6, operability 7, depth/freshness/calibration 5, adjacency 6 (`SCORECARD.md:1211-1218`). It records depth as unchanged with “no separate depth score,” and freshness as unchanged with the r10 red pin still carried. Calibration was selected in rounds 17, 18, and 19 (`SCORECARD.md:1015-1020, 1064-1073, 1143-1148, 1157-1161`). Round 10 established the drift pin/freshness capability (`SCORECARD.md:480-511`), and the contract says its re-pin has remained planned since round 12 (`contract.md:4-8`).
+
+**Counterexample / assessment.** Depth is equally low at 5, so freshness is not *the* uniquely lowest axis. But round 20 explicitly says it is choosing within a three-way tie, and its rationale—freshness debt repeatedly carried while calibration was addressed in three consecutive rounds—is supported by the active scorecard. The “lowest non-retired” requirement is met if one member of the tied minimum is sufficient; the scorecard’s round-17 record likewise treats calibration 5 as satisfying that obligation (`SCORECARD.md:1015-1020`). I find no score-selection defect requiring rejection. The only residual ambiguity is that the contract does not explicitly say why the equally-low depth axis is deferred.
+
+**Impacted axes:** freshness, depth, calibration. **Smallest correction:** one sentence in the contract noting depth was considered, remains tied at 5, and has no separately registered claim/debt selected this round. Do not describe freshness as uniquely lowest.
+
+### 2. C1/C2 separation: separable by design; demonstrate the counterfactuals
+
+**Evidence.** C1 is drift classification and conditional baseline work; C2 is a separate read-only Python tool. The contract expressly says C1 does not need C2, C2 needs no baseline/census change, and each is verifiable with the other reverted (`contract.md:22-34, 56-109`). It also freezes the census script SHA (`contract.md:43-47`). The existing census wave probe inspects top-level wave directories and skips `round-*`; it is not the new report-path inventory (`tools/mori-census.sh:865-879`).
+
+**Counterexample / assessment.** The claims share the integration commit and `.ufo/waves/` evidence tree, but their stated verdict-producing inputs and instruments do not depend on each other. That is a credible causal split, not proof by assertion: a combined acceptance run alone would not establish it. **Impacted axes:** freshness and coverage; operability should remain observed, not credited to C2 (consistent with `SCORECARD.md:1215-1218`). **Smallest correction:** retain the promised isolated C1-with-C2-reverted and C2-with-C1-reverted measurements, with pinned inputs and outputs. No further coupling is evident from the contract.
+
+### 3. Operability: no direct census change; C1 still has a baseline-masking risk
+
+**Evidence.** The contract forbids census edits, requires its exact SHA, keeps r10 byte-unchanged, blocks re-pin when any token is classed `census-regression`, and requires recording the post-pin drift result rather than suppressing non-`none` output (`contract.md:22-47`). C2 is explicitly read-only and separate from census/baseline work (`contract.md:56-57, 108-109`). Round 19 left operability unchanged and credited new tools only to declared axes (`SCORECARD.md:1215-1218`).
+
+The risk is not a demonstrated census-code regression; it is the **operational effect of changing the drift baseline**. The entering evidence has 50 drift tokens and 8 unclassified, including new positive finding tokens (`+FINDING:COREDUMP_NOTICE_JOURNAL_USER`, `+FINDING:SEGFAULT_SIGNAL11_JOURNAL_USER`, `+FINDING:UNIT_FAILURE_OUT_OF_SCOPE`) and a removed finding (`-FINDING:WATCHDOG_STALE`) (`.ufo/waves/round-20/evidence/c1-drift-entering.json:10-18,64-74`). The prior register describes several live-state assignments as `[INFERENCE]` and expressly says they were not a regression-free proof or a re-pin (`.ufo/waves/round-13/evidence/drift-classification.json:8,27-47,50`). A forced but weak classification of a genuine regression as `live-state` would satisfy the proposed closed-set check and let a new baseline absorb it. **[INFERENCE]** This could reduce future `--drift` sensitivity even though the census script bytes stay unchanged.
+
+**Impacted axes:** operability and calibration (freshness is the target, but classification correctness governs whether the detector remains useful). **Smallest safe correction:** make ambiguity fail closed—an unresolved token blocks re-pin (or is conservatively treated as `census-regression`)—and require source-backed, independently checked evidence for any ambiguous classification. The contract’s census-SHA condition is necessary but does not by itself protect the changed baseline input.
+
+### 4. Adjacency: passive filesystem observation is in-province; `settled` overstates its authority
+
+**Evidence.** Mori’s province permits passive wave filesystem settlement reporting but reserves authoritative settlement and “emptied-by-hygiene versus never-written” for FR3; kumitate owns orchestration/result semantics (`PROVINCE.md:22-23,46,65`). Kumitate’s lifecycle contract joins every dispatch member to exactly one results row and maps outcomes (`../kumitate-shokunin/corpus/knowledge/swarm-wave-lifecycle.md:114-129`). Round 19’s own settlement record distinguishes report presence from known provider failures/cancellation and unknown terminal cause (`.ufo/waves/round-19/wave1-settlement.json:6-37,78-84`).
+
+C2 reads task/member names and report trailers, then defines `state=settled` solely as every report file being present (`contract.md:64-81`). **Counterexample:** a file from an earlier attempt at the same path, or a nonempty report written before the task’s final outcome, can make every path “present” without proving that this dispatch completed or that kumitate collected successful results. **[INFERENCE]** No such stale/early report was observed in the inspected evidence; the contract simply does not bind report presence to terminal outcome. Its explicit “missing report is NOT a dead seat” rule is a useful boundary, but the positive `settled` label still risks communicating an authoritative wave verdict.
+
+**Impacted axes:** adjacency and calibration; coverage remains a valid goal if framed as filesystem report-presence capability. **Smallest safe correction:** label the output as `all-reports-present` (and similarly qualify null-task-call/unsettled states), and state that it is a snapshot of expected report-path presence—not task completion, successful result, collection, or authoritative settlement. Keep orchestration adjudication with kumitate. This is a fixable wording/schema boundary, not evidence that the read-only probe itself performs orchestration or harms operability.
+
+## Overall disposition
+
+No lowest-axis or causal-separability blocker is evident. The two correctable admission risks are (1) a baseline re-pin whose safety depends on conservative classification of the eight previously unclassified tokens, and (2) C2’s `settled` label implying more than file presence. The contract’s no-census-edit requirement is clear; actual SHA preservation and the promised reverted-claim measurements remain acceptance evidence to be collected, not facts established by this review. No builds, tests, or tool invocations were run.

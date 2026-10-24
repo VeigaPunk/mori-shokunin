@@ -1,0 +1,44 @@
+# measured at parent 67779aa8f761ac4e1f1620f67c2746076d8f31d3; the landed tip adds only receipt files under .ufo/waves/round-29/evidence/
+command: bash .ufo/waves/round-29/count-c2.sh 67779aa8f761ac4e1f1620f67c2746076d8f31d3
+rev=67779aa8f761ac4e1f1620f67c2746076d8f31d3
+tool_blob=69296b89973eaa47e2f659a909d9debfeb046b9f
+cases_blob=5b4dcee7b682c896c8e9f22ed1f8ac58d0176556
+cases_baseline_blob=5b4dcee7b682c896c8e9f22ed1f8ac58d0176556
+cases_blob_state=match
+cases_a2_blob=7ba553d45e3b00d507e57132cc3c28fb140f83fd
+cases_a2_baseline_blob=7ba553d45e3b00d507e57132cc3c28fb140f83fd
+cases_a2_blob_state=match
+cases_a2_r29_blob=cc309d8e30cabc9767d0e1ac5d28d402cee261ee
+cases_selftest=PASS 32/32
+cases_a2_selftest=PASS 30/30
+freeze_commit=d6d5cb0a026f7cebe3f6d2094204b4b57eeef576
+freeze_path=tools/fixtures/mori-oom-killers/cases-a2-r29.json
+freeze_adds=1
+freeze_adds_raw=1
+freeze_renames=0
+freeze_deletes=0
+freeze_edits=0
+freeze_blob_versions=1
+cases_changed_since_freeze=0
+tool_blob_at_freeze=3fb78bbc2612c38e463e04083bdb213954647568
+blind_exit=1
+blind_violations=20
+provenance=24/24 unselected=0
+provenance_errors=0
+a2_r29_A2-07=cases=12 distinct=12 authors=4 unpinned=0
+a2_r29_A2-10=cases=12 distinct=12 authors=4 unpinned=0
+a2_r29_schema=ok
+a2_r29_cases=24
+a2_r29_ids=unique_printable
+a2_r29_rules_covered=2/2
+a2_r29_distinct_inputs=24/24
+a2_r29_legacy_input_overlaps=0
+shape_a207=3/2
+shape_a210=6/2
+a2_r29_rule_checks=ok
+a2_r29_shape_checks=ok
+a2_r29_input_checks=ok
+a2_r29_selftest=FAIL(exit=1)
+C2=unmet
+
+exit: 1

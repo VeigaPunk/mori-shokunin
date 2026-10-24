@@ -1,0 +1,83 @@
+[
+  {
+    "id": "signal_user_valid_only",
+    "user": [
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "USER_UNIT": "kagi-shokunin.service",
+        "UNIT_RESULT": "signal"
+      }
+    ],
+    "system": [],
+    "want_oom": false,
+    "want_signal": true,
+    "invalid_class": null
+  },
+  {
+    "id": "signal_user_valid_plus_array_multivalue",
+    "user": [
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "USER_UNIT": "kagi-shokunin.service",
+        "UNIT_RESULT": "signal"
+      },
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": [
+          "d9b373ed55a64feb8242e02dbe79a49c",
+          "d989611b15e44c9dbf31e3c81256e4ed"
+        ],
+        "USER_UNIT": "kagi-shokunin.service",
+        "UNIT_RESULT": "signal"
+      }
+    ],
+    "system": [],
+    "want_oom": false,
+    "want_signal": true,
+    "invalid_class": "unit_failure_record"
+  },
+  {
+    "id": "signal_user_valid_plus_array_oom_claim",
+    "user": [
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "USER_UNIT": "kagi-shokunin.service",
+        "UNIT_RESULT": "signal"
+      },
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": [
+          "d9b373ed55a64feb8242e02dbe79a49c",
+          "fc2e22bc6ee647b6b90729ab34a250b1"
+        ],
+        "USER_UNIT": "kagi-shokunin.service",
+        "UNIT_RESULT": "oom-kill"
+      }
+    ],
+    "system": [],
+    "want_oom": false,
+    "want_signal": true,
+    "invalid_class": "unit_failure_record"
+  },
+  {
+    "id": "signal_user_array_only_not_positive",
+    "user": [
+      {
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "MESSAGE_ID": [
+          "d9b373ed55a64feb8242e02dbe79a49c",
+          "98e322203f7a4ed290d09fe03c09fe15"
+        ],
+        "USER_UNIT": "kagi-shokunin.service",
+        "UNIT_RESULT": "signal"
+      }
+    ],
+    "system": [],
+    "want_oom": false,
+    "want_signal": false,
+    "invalid_class": "unit_failure_record"
+  }
+]

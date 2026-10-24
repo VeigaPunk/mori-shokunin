@@ -1,0 +1,20 @@
+{
+  "schema": "mori-r21-l1-safety-review-v1",
+  "reviewer": "MoriR21 L1 (author-side; not independent sentinel clearance)",
+  "reason": "Residual ReviewSafety died on Codex capacity, never replaced.",
+  "scope": ["tools/mori-evidence-loss.py", "round21 historical metadata copies", "round21 measurement and fixture scripts"],
+  "observed": [
+    "Production audit reads explicit JSON inputs and no-follow regular evidence under its supplied root; output carries counters, ids, digests/labels, never evidence bodies.",
+    "Production Git operations are rev-parse, cat-file and ls-tree with fixed safe environment, global/system config disabled, replacement objects disabled, stderr discarded; no remote, index, bookmark, service or census action.",
+    "Git writes in selftest/fixture runner target newly created isolated synthetic temporary roots, not the lane Git index.",
+    "Retained historical copies contain public Git removal metadata and only the eighteen public artifact receipt paths; source/projection digests remain separate.",
+    "Native provider errors are retained in minimized death records without Haiku request id. No private transcript content was retained or used in these artifacts."
+  ],
+  "limitations": [
+    "This is static bounded author review, not outside security certification.",
+    "The existing unresolved historical content-review population remains unresolved; no privacy/history clearance is claimed.",
+    "L1 initially searched the broad fleet .ufo tree with gitignore=false for closure terms; that search could traverse retained interactive-session files. Returned evidence pointers were public reports/waves, and no private content was used. This is a scope disclosure, not a claim that the path bound was enforced.",
+    "The audit does not authenticate actors, authorize lifecycle actions, intercept raw --pin, or accept submitted disposition declarations."
+  ],
+  "verification": "Final retention-floor result is recorded separately; not presumed by this review."
+}

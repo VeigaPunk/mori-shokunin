@@ -1,0 +1,4 @@
+measured 2026-10-23T04:53:14Z (L1 MoriR34, before any seat)
+measured_at=2026-10-23T04:53:14Z repo=/home/vgpnk/Projects/shokunin/mori-shokunin rev=f10a320d9056d19a6d007420df49d7b16a3bf857
+tool=absent C1=unmet
+exit=1

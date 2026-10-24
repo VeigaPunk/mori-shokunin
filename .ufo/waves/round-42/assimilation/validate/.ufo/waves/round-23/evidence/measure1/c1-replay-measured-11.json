@@ -1,0 +1,25 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-measure1/staged/after/mori-retention-reconcile.py",
+    "check",
+    "--repo",
+    "/fast/scratch/hyaku/mori-r23/MeasureDriver/measure-measure1/c1/after-fixtures/allowlist-changed",
+    "--rev",
+    "96e82f5bd64028921fadd88bb757aa8cdfd9aef2",
+    "--receipt",
+    "receipt.json",
+    "--policy",
+    "policy.json",
+    "--allowlist",
+    "allowlist.json"
+  ],
+  "exit_code": 2,
+  "measured_revision": "1979a9de4ef09eccad8cbbd24fd5c79404d9f8be",
+  "name": "c1-replay-measured-11",
+  "recorded_utc": "2026-10-21T18:15:45.282712+00:00",
+  "schema": "mori-r23-command-receipt-v1",
+  "seal_revision": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+  "stderr": "",
+  "stdout": "{\"error\":\"allowlist_changed\",\"finding_id\":\"RETENTION_RECONCILIATION_SETUP\",\"privacy_clearance\":false,\"receipt_match\":false,\"schema\":\"mori-retention-reconciliation-v2\"}\n"
+}

@@ -1,0 +1,6 @@
+# C1 freeze receipt 2026-10-23T08:34:42Z (L1 MoriR35, before any seat)
+27b82d71f2f591df1833c8de793201475d8f01735b5ed4edd7b74e389ee18167  count-c1.py
+94b7f90a352c96a0b8be17cef62f95647aad06fa84c83d4540751d888d65ba40  contract.md
+predicate_identity: docstring == contract.md P-C1 sentence (whitespace-normalized): True
+manifest_rev=37b51a243302e8009c7067431e8a47f9a722fd14
+0b414b8a926f44b54f11fedbbc4f9a00ef2075659dcf1e52db5ff57395ae9952  MANIFEST.json@37b51a24

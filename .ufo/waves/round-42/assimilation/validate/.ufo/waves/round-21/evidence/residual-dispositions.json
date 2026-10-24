@@ -1,0 +1,26 @@
+{
+  "schema": "mori-r21-residual-dispositions-v1",
+  "scope": "Eight genuine remaining integrated attack surfaces; ordinary residual batch, not a padded second swarm. Original wave64 plus residual8 =72 unique seats.",
+  "changes": [
+    "ReviewTrust/ReviewAudit: oracle now checks retained/unresolved/disposed/invalid counts, exact unknown reasons and identities, not omitted count alone.",
+    "ReviewFixtures/ReviewAudit: fixture disposition bodies carry the five required identity fields; cleanup actor is explicit; malformed duplicate IDs expect rc2 and a literal setup finding.",
+    "The original positive-disposition permission remains the default fixture control. An explicit --trust-refinement mode records the superseded expectation and requires external-review-blocked status; neither expectation is silently rewritten.",
+    "ReviewAudit: contextual disposition metadata is permitted but cannot alter identity fields or grant acceptance; a new selftest pins the external-review blocker.",
+    "ReviewAudit: selftest requires TMPDIR and creates only isolated fixtures there; no lane-root scratch fallback.",
+    "Unreachable pin-authorizing conjunction removed. Audit is explicitly a negative-only observation probe, not an actor authenticator; classifier remains a finite synthetic comparison gate, not actual pin authority.",
+    "ReviewFixtures: same-actor mutation's structurally valid control now expects external-review-required rc1; symlink mutant expects unsafe_symlink, not unsafe_path.",
+    "Scorecard distinguishes declaration/case freeze3b792db from required/accounting inputs first committed8fed329. Province says declared-independent, pending outside review."
+  ],
+  "limitations": [
+    "Audit accepts any named committed blob; it does not assert ancestry, remote publication or actor authenticity. Actual source revisions are separately grounded by the retained history and outside closure.",
+    "Six frozen policy cases prove implementation consistency. Separate real-event labels come from CloseMori20's non-author ruling, not from author-side fixtures.",
+    "Old probe/fixture bytes remain available in committed wave evidence; changes above are co-evolved refinements, not pre-build frozen requirements."
+  ],
+  "procedural_disclosures": [
+    "Whole-wave attempts2-4 reused the unchanged validated payload after job-cap refusals but did not reacquire a fresh wave-slot grant; only the initial grant is evidenced. Residual8 acquired a fresh grant and both reservations were released. No capacity protection claim.",
+    "RuleNoModePreset ran3 and TrendClaims2 read-only classify receipts despite their no-test items; ReviewAudit also reported read-only audit runs. Their observations do not certify item compliance; final L1 executions are separate.",
+    "ReviewDocs used read-only Git after cd rather than git -C absolute, and disclosed no Git writes.",
+    "Initial broad L1 .ufo search scope and author-side safety qualification are recorded in l1-safety-review.json. No whole-transcript compliance or privacy clearance is claimed."
+  ],
+  "verification": "Executable final receipts are separate. This file describes applied integration, not an unrun PASS."
+}

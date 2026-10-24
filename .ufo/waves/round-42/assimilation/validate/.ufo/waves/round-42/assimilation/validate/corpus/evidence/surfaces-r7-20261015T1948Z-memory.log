@@ -1,0 +1,62 @@
+==== mori-shokunin round-7 receipt — surfaces-r7-20261015T1948Z-memory (gap 2: memory pressure) ====
+CAPTURED_UTC=2026-10-15T19:51:45Z .. 2026-10-15T19:52:03Z
+COMMANDS: bash tools/mori-census.sh (live) ; MORI_CGROUP_PRESSURE=<fx high|under> ; MORI_CGROUP_MAX=<fx under|over> (limits sized from the live memory.current read at capture: current=17291030528, under=69164122112 (4x), over=19212256142 (=current/0.9 -> 90% fill))
+EXIT_CODES=live=1 psi_high=1 psi_under=1 fill_under=1 fill_over=1
+CENSUS_SHA256_BEFORE=c7c3569b842ab3911cbfdf415eb7023766c950c60f354af95f6a4f020b5671af
+CENSUS_SHA256_AFTER=c7c3569b842ab3911cbfdf415eb7023766c950c60f354af95f6a4f020b5671af
+---- live cgroup reads (verbatim) ----
+$ cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 10699
+$ cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.events.local
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 0
+$ cat /sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+sock_throttled 10699
+$ head -1 /sys/fs/cgroup/user.slice/user-1000.slice/memory.current
+17228623872
+$ cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.pressure
+some avg10=0.00 avg60=0.00 avg300=0.00 total=5893148
+full avg10=0.00 avg60=0.00 avg300=0.00 total=5193698
+$ cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.max
+max
+$ grep -E 'MemTotal|MemAvailable' /proc/meminfo
+MemTotal:       31721796 kB
+MemAvailable:   23224596 kB
+---- live census cgroup row + findings ----
+SURFACE cgroup: ok (cmd=cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.events; cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.current; cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.pressure; cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.max; oom_kill=0 oom=0 high=0 max=0 current=17276076032; local_oom_kill=0 psi_some_avg10=0.00 psi_full_avg10=0.00 psi_source=ok psi_warn_avg10=10 mem_fill_pct=unavailable mem_fill_scope=host-ram host_mem_avail_pct=74; ts=2026-10-15T19:51:45Z)
+---- arm A: psi_some_avg10=99.00 (>= local warn 10) ----
+SURFACE cgroup: drift (cmd=cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.events; cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.current; cat /tmp/mori-r7-rw/fx/pressure-high; cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.max; oom_kill=0 oom=0 high=0 max=0 current=17410338816; local_oom_kill=0 psi_some_avg10=99.00 psi_full_avg10=90.00 psi_source=ok psi_warn_avg10=10 mem_fill_pct=unavailable mem_fill_scope=host-ram host_mem_avail_pct=73; ts=2026-10-15T19:51:49Z)
+FINDING MEM_PRESSURE_HIGH severity=warn obs=psi_some_avg10=99.00 threshold_avg10=10 threshold_label=local path=/tmp/mori-r7-rw/fx/pressure-high ts=2026-10-15T19:51:49Z 
+---- arm B (control): psi_some_avg10=9.99 (< 10) ----
+SURFACE cgroup: ok (cmd=cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.events; cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.current; cat /tmp/mori-r7-rw/fx/pressure-under; cat /sys/fs/cgroup/user.slice/user-1000.slice/memory.max; oom_kill=0 oom=0 high=0 max=0 current=17354141696; local_oom_kill=0 psi_some_avg10=9.99 psi_full_avg10=1.00 psi_source=ok psi_warn_avg10=10 mem_fill_pct=unavailable mem_fill_scope=host-ram host_mem_avail_pct=73; ts=2026-10-15T19:51:52Z)
+---- arm C (control): numeric limit 4x current -> fill well under 85% ----
+SURFACE cgroup: ok (oom_kill=0 oom=0 high=0 max=0 current=18083438592; local_oom_kill=0 psi_some_avg10=0.00 psi_full_avg10=0.00 psi_source=ok psi_warn_avg10=10 mem_fill_pct=26 mem_fill_scope=cgroup; ts=2026-10-15T19:51:56Z)
+---- arm D: numeric limit sized for 90% fill -> MEM_FILL_HIGH ----
+SURFACE cgroup: drift (oom_kill=0 oom=0 high=0 max=0 current=17354731520; local_oom_kill=0 psi_some_avg10=0.00 psi_full_avg10=0.00 psi_source=ok psi_warn_avg10=10 mem_fill_pct=90 mem_fill_scope=cgroup; ts=2026-10-15T19:51:59Z)
+FINDING MEM_FILL_HIGH severity=warn obs=scope=cgroup mem_fill_pct=90 threshold_pct=85 threshold_label=local current=17318776832 limit=19212256142 ts=2026-10-15T19:51:59Z script_sha256=c7c3569b842ab3911cbfdf415eb7023766c950c60f354af95f6a4f020b5671af
+---- end ----
+ORACLE_SHA256_AT_CAPTURE=448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5 (not exercised by this receipt; sha re-verified unchanged at set close 2026-10-15T19:54:52Z)
+SET_CLOSE_CHECK=2026-10-15T19:54:52Z census=c7c3569b842ab3911cbfdf415eb7023766c950c60f354af95f6a4f020b5671af oracle=448f77238c73a5c929a898dad0f0c495fd2a66cc4b90a00ae84ede69a86beeb5 (both still at the SHAs pinned across this whole receipt set)
+---- arm verdict lines (verbatim) ----
+live:      MORI_CENSUS: DRIFT (findings=15 drift=14 unavailable=1 surfaces=7)
+psi high:  MORI_CENSUS: DRIFT (findings=16 drift=15 unavailable=1 surfaces=7)
+psi under: MORI_CENSUS: DRIFT (findings=15 drift=14 unavailable=1 surfaces=7)
+fill under:MORI_CENSUS: DRIFT (findings=15 drift=14 unavailable=1 surfaces=7)
+fill over: MORI_CENSUS: DRIFT (findings=16 drift=15 unavailable=1 surfaces=7)

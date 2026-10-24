@@ -1,0 +1,54 @@
+# RevDebtR36 — r36 residuals: reconstructed contract, evidence, divergences
+
+Date: 2026-10-23 · Seat: mori-r37-w1-RevDebtR36 · Scored tip attacked: `e57c58b57c025364e79d130fbdf764d2674d83d6` (confirmed `git cat-file -t` → commit; ancestor of HEAD). Lane tip moved during the session (jj snapshots): `e57c58b` → `bcf6550` → … → integration commits; all state below is cited at the commit that carries it.
+
+## What this item attacks
+
+The completeness and honesty of the r36 residual dispositions: the `corpus/lessons/round-36.md` Collateral note (`tools/mori-round17-jj-regressions.py --selftest` environment red) and M4's disclosed residual (`count-c2.py` SIGKILLs only its own timed-out sandbox child, "registered as r37 debt"), plus the `.ufo/waves/round-37/contract.md` debt table rows (a)–(h). For each: is it still open, and what artifact closes it?
+
+## Measurements (commands + observed output)
+
+- `python3 .ufo/waves/round-37/count-c1.py e57c58b57c025364e79d130fbdf764d2674d83d6` (working-tree v2 counter; saved `/fast/scratch/hyaku/mori-r37/RevDebtR36/c1-rerun.txt`) → blind 24/24, real pass, drawn arm pass, challenge pass, `negative memo-n1.py rejected (challenge: lists differ …)`, `const.py` and `summary-only.py` rejected, **`C1=met`, seed 11943522160299584394, EXIT=0**.
+- `python3 .ufo/waves/round-37/count-c2.py e57c58b57c025364e79d130fbdf764d2674d83d6` (working-tree v3 counter; `c2-rerun.txt`) → selftest/cap_kill/redirect_kill/capability/readme PASS; `knowledge FAIL (cited_commit=False touches_tool=True)`, `live FAIL (sentence=False)`, **`C2=unmet`, EXIT=1**. Expected: the scored tip's frozen counter is v2 (blob `6213cf9a…`, `freeze-r37.txt:5`) measuring `8ff9bba`/the 220-row sweep — `evidence/c2-after.txt` shows that configuration `C2=met`, `EXIT=0`; v3 (`freeze-r37-v3.txt`, counter blob `0eb8ff47…`) pins corrected commit `1caa242` + `git_log_touches` and the 225-row `live` sentence, and `evidence/c2-after-v3.txt` records `C2=met`, `EXIT=0` at the measured tip `4bfa0490`.
+- `python3 tools/mori-round17-jj-regressions.py --selftest --scratch /fast/scratch/hyaku/mori-r37/RevDebtR36/r17scratch` → **`SELFTEST ok: …` EXIT=0** (5.5 s) — independent reproduction of `evidence/r17-jj-selftest-r37.txt` (`SELFTEST ok`, `EXIT=0`).
+- `git show e57c58b:.ufo/waves/round-37/evidence/c1-before-memo.txt` → line 2 `tool: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/fixtures/memo-n1.py` — absolute operator path **at the scored tip**; same for `c1-before-summary.txt:2`, `census-start.txt:16` (`mori\tok\t/home/vgpnk/…/corpus/SOURCES.md`).
+- `grep -l '/home/vgpnk' .ufo/waves/round-37/evidence/*.txt` (working tree, post-erratum HEAD) → **no output, exit 1** — erratum commit `5631efa` re-emitted the receipts repo-relative with a `redacted:` line per file (verified: `census-start.txt:1-2`, `census-end.txt:1-2`, `c1-before-memo.txt:1-2` now carry `command:`/`redacted:` headers).
+- `git ls-tree e57c58b` vs `evidence/freeze-r37.txt` → all eight pinned blob hashes match (`contract.md 61a768a…`, `count-c1.py 7518fef8…`, `count-c2.py 6213cf9a…`, fixtures, both tools); `tools/mori-round17-jj-regressions.py` at tip = blob `4324104f…` = working-tree `git hash-object` — the scoped-assertion bytes are the tip bytes.
+- Origin bytes for M4's residual: r36 `.ufo/waves/round-36/count-c2.py:76-81` — on timeout a single `os.killpg(os.getpgid(proc.pid), signal.SIGKILL)`, no grace, `raise` bare (the arm then couldn't even name a distinct state); r37 `count-c1.py:100-114` — SIGTERM to the group, 5 s `TOOL_GRACE_S`, then SIGKILL; timeout surfaces as `tool_timeout` (`count-c1.py:737,776`), contract §C1 "Timeout boundary".
+
+## Residual list — open/closed
+
+| residual | status | evidence | artifact that closes it |
+|---|---|---|---|
+| Collateral note (r36): r17-jj selftest env-red = routed debt (d) | **CLOSED** | Scoped assertion `tools/mori-round17-jj-regressions.py:1041-1069` (tip blob `4324104f…`): tests the redirect property (all config roots inside case home; case home not operator's/an ancestor) and requires the positive jj-file only when `.jj/repo/config-id` exists; receipt `evidence/r17-jj-selftest-r37.txt` `EXIT=0`; independent rerun `EXIT=0`; teeth proven by `w1/RevR17JJ.md` M3 — a one-line XDG mutant turns exactly the nine `jj_config_redirected` assertions red, `SELFTEST FAIL` exit 1 | The scoped assertion bytes + green receipt (both landed `e57c58b`/`bcf6550`) |
+| r36 M4 residual → routed debt (f): counter SIGKILLs only its own sandbox child on tool timeout | **OPEN** (disclosed honestly, not discharged) | `SCORECARD.md:2025-2026` routed "restructure the timeout path to **avoid** SIGKILL"; `count-c1.py:102-109`/`count-c2.py:79-86` still issue SIGKILL after grace — a disclosed trade, not the restructuring; contract post-data section: "**Debt (f) status.** … re-filed as operator-owned policy tradeoff (w1/CritDebtDisposition)"; `corpus/lessons/round-37.md:77-80`: "**Debt (f) is OPEN**"; also contract corrects itself: "disclosed in C1's predicate output" was wrong — disclosure is in `run()` docstring + contract text, not the printed `PREDICATE` (`count-c1.py:42-51` carries no boundary) | An operator/canonical-judge ruling accepting the SIGTERM→grace→SIGKILL tradeoff, **or** a new counter version whose timeout path avoids SIGKILL (per `w1/CritDebtDisposition.md` "Smallest safe correction" — neither established) |
+| (a) drift hardening verify + knowledge entry | **CLOSED** | `corpus/knowledge/source-drift-hardening-r37.md` (tip) cites S221–S225 + S205; `SCORECARD.md:2059` capability row; README coverage-map rows `:46` and `:589`; `evidence/c2-after.txt` all 8 checks PASS, `C2=met`; post-tip v3 adds `git_log_touches` (`count-c2.py:103,199`) after the `8ff9bba`→`1caa242` attribution correction (M10) — note: running v3 **at the scored tip** yields `C2=unmet` because the tip predates the correction; the scored configuration (frozen v2 counter) is the `C2=met` receipt | Claim C2 artifacts (entry + counter + receipts) — landed |
+| (b) count-c2 memoization hardening (N1 class) | **CLOSED** | Challenge arm `count-c1.py:754-791` (run-time-drawn history in lane clothing under `<lane>/.ufo/waves/round-37/scratch/`, truth from op log); `fixtures/memo-n1.py` reproduces w2/RevNgC2 N1 (honest on `user.name=="mori counter"`, constant + 18 changed lines elsewhere); `evidence/c1-after.txt:11` + my rerun: memoizer rejected on the challenge arm specifically | `count-c1.py` challenge arm + three negative fixtures (frozen blobs) |
+| (c) per-id `deleted <id>` line checks | **CLOSED** | `count-c1.py:540-572` per-id grammar + `same_id_lines`; `evidence/c1-after.txt:13` and my rerun: `summary-only.py` rejected on blind per-id mismatch; `c1-before-summary.txt` shows the r36 counter scoring the same fixture `C2=met` (discrimination proven) | `count-c1.py` per-id checks + QUALITY 107 |
+| (d) r17-jj environment red | **CLOSED** — identical to the Collateral row above (same artifact) | | |
+| (e) SentData path-redaction hygiene | **CLOSED at the landing tip; was OPEN at the scored tip** — the disposition text was wrong when frozen | Scored-tip counterexample: `evidence/c1-before-memo.txt:2`, `c1-before-summary.txt:2`, `census-start.txt:16` (and `census-end.txt:16` added at `bcf6550`) carried `/home/vgpnk/…` — contradicting contract.md:88 "no new evidence file carries an absolute operator path" (`w1/CritDebtDisposition` E1, `w1/SentData`, `w1/ScoutSentData` all FAIL). Post-tip erratum `5631efa` re-emitted all eleven receipts with `command:`/`redacted:` lines; my `grep -l '/home/vgpnk' evidence/*.txt` → none; `corpus/lessons/round-37.md:44` records it as M8 ("closed by the erratum, not by the original commits") | Erratum commit `5631efa` (repo-relative re-emitted receipts); the counters' `display_path` (`count-c1.py:831-838`) — right rule, bypassed by verbatim r36-counter/census captures |
+| (f) sandbox SIGKILL boundary | **OPEN** — same obligation as the M4-residual row above | | |
+| (g) seed-collision scratch paths | **CLOSED** | `tempfile.mkdtemp` per arm — `count-c1.py:763` (challenge, under lane `scratch/`), `:872` (tool dir), `:892` (arm scratch), `:932` (negatives); no seed-derived dirs; my concurrent rerun collided with nothing | mkdtemp-per-arm bytes (frozen counter) |
+| (h) 9-vs-7 drifted prose | **CLOSED** | `corpus/knowledge/source-drift-r36.md:23-37` — dated nine-row enumeration with open-time sha256s, S210/S211 reader-action classes; `corpus/README.md:568-574` repeats the nine with the same names | Inherited corrected prose (already landed in r36 fix-forward; re-verified here) |
+
+## Adjacent residuals this round disclosed but did not claim to close (named for the record)
+
+- Frozen r36-counter bytes (`w1/ScoutPriorRound`, contract post-data): r36 `count-c1.py`'s docstring still says v1; neither r36 counter detects a SOURCES.md delete+restore inside a round; the 429 oracle path is unexercised (`oracle_excluded=0`). Frozen evidence — **open by design**, closed only by out-of-band r38 work.
+- r17 `jj_config_redirected` workspace-positive conjunct (`:1062-1063`) is **never exercised** — every selftest sandbox is git-only (`w1/RevR17JJ` residual); closing artifact: an r38 selftest arm adding a jj-workspace sandbox.
+- r36 Revenger boundary (K9 harness-key re-arming under foreign `--repo`) — **open by construction**, disclosed; not a debt-table row.
+- r36 registry null-agentId bookkeeping — **open** tooling side effect, documented; the `w*/` disk reports are the return evidence.
+
+## Divergences from the frozen contract's claims
+
+1. Debt (e): contract.md:88's "no new evidence file carries an absolute operator path" was **false at the scored tip** (four receipts); true only after erratum `5631efa`. The lesson's M8 records this honestly.
+2. Debt (f): contract.md's table framed (f) as discharged-by-disclosure ("disclosed in C1's predicate output"); the obligation routed by `SCORECARD.md:2025-2026` is avoid-SIGKILL restructuring, and the counter still SIGKILLs. The post-data contract section and lesson correct both the status (OPEN, operator-owned) and the mislaid disclosure claim.
+3. Hardening commit `8ff9bba` in the frozen predicate/table → corrected to `1caa242` (touches the tool); counter v3 enforces the correction via `git_log_touches`. My v3-at-tip run demonstrates the new version bites exactly on this (`knowledge FAIL cited_commit=False`, `live FAIL`).
+
+## Containment
+
+Wrote only this report; scratch outputs under `/fast/scratch/hyaku/mori-r37/RevDebtR36/` (c1-rerun.txt, c2-rerun.txt, r17-rerun.txt, r17scratch/). Counters/selftest run against the lane read-only; the C1 challenge arm created and removed a `challenge-*` mkdtemp under `.ufo/waves/round-37/scratch/` (per the counter's documented protocol; `rmtree` in `finally`). No installs, no lane edits, no kills.
+
+Tool installs/updates: none.
+
+Report: .ufo/waves/round-37/w1/RevDebtR36.md
+VERDICT: PASS

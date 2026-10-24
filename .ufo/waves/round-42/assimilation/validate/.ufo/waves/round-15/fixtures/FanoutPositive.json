@@ -1,0 +1,173 @@
+[
+  {
+    "id": "fanout-positive-msgid-array-kernel",
+    "user": [
+      {
+        "__CURSOR": "s=r15-fanout-msgid-array-1",
+        "__REALTIME_TIMESTAMP": "1700000000000001",
+        "__MONOTONIC_TIMESTAMP": "1001",
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "fe6faa94e7774663a0da52717891d8ef"
+      },
+      {
+        "__CURSOR": "s=r15-fanout-msgid-array-2",
+        "__REALTIME_TIMESTAMP": "1700000000000002",
+        "__MONOTONIC_TIMESTAMP": "1002",
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "fe6faa94e7774663a0da52717891d8ef"
+      },
+      {
+        "__CURSOR": "s=r15-fanout-msgid-array-3",
+        "__REALTIME_TIMESTAMP": "1700000000000003",
+        "__MONOTONIC_TIMESTAMP": "1003",
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": [
+          "fe6faa94e7774663a0da52717891d8ef"
+        ]
+      },
+      {
+        "__CURSOR": "s=r15-fanout-msgid-array-4",
+        "__REALTIME_TIMESTAMP": "1700000000000004",
+        "__MONOTONIC_TIMESTAMP": "1004",
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "USER_UNIT": "shokunin-worker.service",
+        "UNIT_RESULT": "signal"
+      },
+      {
+        "__CURSOR": "s=r15-fanout-msgid-array-5",
+        "__REALTIME_TIMESTAMP": "1700000000000005",
+        "__MONOTONIC_TIMESTAMP": "1005",
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "98e322203f7a4ed290d09fe03c09fe15",
+        "EXIT_CODE": "killed",
+        "EXIT_STATUS": "9"
+      }
+    ],
+    "system": [
+      {
+        "__CURSOR": "s=r15-fanout-msgid-array-6",
+        "__REALTIME_TIMESTAMP": "1700000000000006",
+        "__MONOTONIC_TIMESTAMP": "1006",
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "fe6faa94e7774663a0da52717891d8ef"
+      }
+    ],
+    "want_oom": true,
+    "want_signal": true,
+    "invalid_class": "kernel_oom_notice"
+  },
+  {
+    "id": "fanout-positive-unit-boot-array",
+    "user": [
+      {
+        "__CURSOR": "s=r15-fanout-unit-boot-1",
+        "__REALTIME_TIMESTAMP": "1700000000000011",
+        "__MONOTONIC_TIMESTAMP": "1011",
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "USER_UNIT": "shokunin-worker.service",
+        "UNIT_RESULT": "oom-kill"
+      },
+      {
+        "__CURSOR": "s=r15-fanout-unit-boot-2",
+        "__REALTIME_TIMESTAMP": "1700000000000012",
+        "__MONOTONIC_TIMESTAMP": "1012",
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "USER_UNIT": "shokunin-worker.service",
+        "UNIT_RESULT": "signal"
+      },
+      {
+        "__CURSOR": "s=r15-fanout-unit-boot-3",
+        "__REALTIME_TIMESTAMP": "1700000000000013",
+        "__MONOTONIC_TIMESTAMP": "1013",
+        "_BOOT_ID": [
+          "11111111111111111111111111111111"
+        ],
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "USER_UNIT": "shokunin-worker.service",
+        "UNIT_RESULT": "resources"
+      },
+      {
+        "__CURSOR": "s=r15-fanout-unit-boot-4",
+        "__REALTIME_TIMESTAMP": "1700000000000014",
+        "__MONOTONIC_TIMESTAMP": "1014",
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "98e322203f7a4ed290d09fe03c09fe15",
+        "EXIT_CODE": "killed",
+        "EXIT_STATUS": "9"
+      }
+    ],
+    "system": [],
+    "want_oom": true,
+    "want_signal": true,
+    "invalid_class": "unit_failure_record"
+  },
+  {
+    "id": "fanout-positive-process-boot-missing",
+    "user": [
+      {
+        "__CURSOR": "s=r15-fanout-process-boot-1",
+        "__REALTIME_TIMESTAMP": "1700000000000021",
+        "__MONOTONIC_TIMESTAMP": "1021",
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "98e322203f7a4ed290d09fe03c09fe15",
+        "EXIT_CODE": "killed",
+        "EXIT_STATUS": "9"
+      },
+      {
+        "__CURSOR": "s=r15-fanout-process-boot-2",
+        "__REALTIME_TIMESTAMP": "1700000000000022",
+        "__MONOTONIC_TIMESTAMP": "1022",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "98e322203f7a4ed290d09fe03c09fe15",
+        "EXIT_CODE": "killed",
+        "EXIT_STATUS": "9"
+      },
+      {
+        "__CURSOR": "s=r15-fanout-process-boot-3",
+        "__REALTIME_TIMESTAMP": "1700000000000023",
+        "__MONOTONIC_TIMESTAMP": "1023",
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "USER_UNIT": "shokunin-worker.service",
+        "UNIT_RESULT": "signal"
+      },
+      {
+        "__CURSOR": "s=r15-fanout-process-boot-4",
+        "__REALTIME_TIMESTAMP": "1700000000000024",
+        "__MONOTONIC_TIMESTAMP": "1024",
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "d9b373ed55a64feb8242e02dbe79a49c",
+        "USER_UNIT": "shokunin-worker.service",
+        "UNIT_RESULT": "oom-kill"
+      },
+      {
+        "__CURSOR": "s=r15-fanout-process-boot-5",
+        "__REALTIME_TIMESTAMP": "1700000000000025",
+        "__MONOTONIC_TIMESTAMP": "1025",
+        "_BOOT_ID": "11111111111111111111111111111111",
+        "_TRANSPORT": "journal",
+        "MESSAGE_ID": "fe6faa94e7774663a0da52717891d8ef"
+      }
+    ],
+    "system": [],
+    "want_oom": true,
+    "want_signal": true,
+    "invalid_class": "unit_sigkill_record"
+  }
+]

@@ -1,0 +1,586 @@
+{
+  "schema": "mori-r23-report-presence-v1",
+  "dispatch_payload_sha256": "cd8a5fa64e69ce55c0dec70d02d8bf77a3d1fbd27bd3fcf61660a63d3d3cc628",
+  "counts": {
+    "present": 64
+  },
+  "members": [
+    {
+      "name": "CaseBoundary",
+      "agent_id": "MadoR22-2.CaseBoundary-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseBoundary.md",
+      "status": "present",
+      "bytes": 26141,
+      "sha256": "530329a98b685b478e2ee265a1e46dd1d13cccb5f36555f916ca3a719fda67cf"
+    },
+    {
+      "name": "CaseBtrfsDevMatch",
+      "agent_id": "MadoR22-2.CaseBtrfsDevMatch-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseBtrfsDevMatch.md",
+      "status": "present",
+      "bytes": 22467,
+      "sha256": "016405cd0333ad5e4f2d394b78b787075af9acde86cc8abde423e20d15e25ed3"
+    },
+    {
+      "name": "CaseBtrfsQgroup",
+      "agent_id": "MadoR22-2.CaseBtrfsQgroup-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseBtrfsQgroup.md",
+      "status": "present",
+      "bytes": 25276,
+      "sha256": "744f27d08857a05c166b6a8e1696e1a197214a278be23652ab83e188ead44720"
+    },
+    {
+      "name": "CaseBtrfsSquota",
+      "agent_id": "MadoR22-2.CaseBtrfsSquota-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseBtrfsSquota.md",
+      "status": "present",
+      "bytes": 18540,
+      "sha256": "827f59900cb8c2d609fb09f97c92a2e872e305cf1c70043a0259b19849c4dd3e"
+    },
+    {
+      "name": "CaseBtrfsTwoUuids",
+      "agent_id": "MadoR22-2.CaseBtrfsTwoUuids-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseBtrfsTwoUuids.md",
+      "status": "present",
+      "bytes": 25758,
+      "sha256": "456d8134079c4a55c1bdf1b1a519db4e065f5d85612efffeab4dfcd041727093"
+    },
+    {
+      "name": "CaseBtrfsUnmapped",
+      "agent_id": "MadoR22-2.CaseBtrfsUnmapped-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseBtrfsUnmapped.md",
+      "status": "present",
+      "bytes": 19060,
+      "sha256": "165e8c50e69496cdf2aab27fcc9a4ba962ef5fb1c08eac3253435288cc215ade"
+    },
+    {
+      "name": "CaseEnabledPlusUnknown",
+      "agent_id": "MadoR22-2.CaseEnabledPlusUnknown-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseEnabledPlusUnknown.md",
+      "status": "present",
+      "bytes": 21332,
+      "sha256": "81fa12d4d8571ae38e0675352d9086be20652bc5b0012843a2e87cd8c71f2d67"
+    },
+    {
+      "name": "CaseEscapedSpace",
+      "agent_id": "MadoR22-2.CaseEscapedSpace-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseEscapedSpace.md",
+      "status": "present",
+      "bytes": 17907,
+      "sha256": "748dd6ef0f35f5caa77fae200d3457de33062e292423e5c537eaa865aeb1f966"
+    },
+    {
+      "name": "CaseExt4Journaled",
+      "agent_id": "MadoR22-2.CaseExt4Journaled-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseExt4Journaled.md",
+      "status": "present",
+      "bytes": 21807,
+      "sha256": "c444d56b4d8eff3c39d3326b42b9b8133e2b359b30b88cd5c8599dd33fb05b66"
+    },
+    {
+      "name": "CaseExt4NoOptions",
+      "agent_id": "MadoR22-2.CaseExt4NoOptions-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseExt4NoOptions.md",
+      "status": "present",
+      "bytes": 19021,
+      "sha256": "5203f75c2ee8906bf1e95b6656513219aab0e300c400c95481b17b0476d96ddb"
+    },
+    {
+      "name": "CaseExt4Usrquota",
+      "agent_id": "MadoR22-2.CaseExt4Usrquota-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseExt4Usrquota.md",
+      "status": "present",
+      "bytes": 17494,
+      "sha256": "45b74f86e2bceee05b63114df61b822f155a9f6cd80814da37dad3072b6d810c"
+    },
+    {
+      "name": "CaseHostLike",
+      "agent_id": "MadoR22-2.CaseHostLike-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseHostLike.md",
+      "status": "present",
+      "bytes": 18255,
+      "sha256": "e161959a534160b5ecc0ae4545ea16dd8e6ea08208a47c3e274bd67d4d9cd4b4"
+    },
+    {
+      "name": "CaseNoCover",
+      "agent_id": "MadoR22-2.CaseNoCover-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseNoCover.md",
+      "status": "present",
+      "bytes": 18419,
+      "sha256": "2c7d31dd9c7da32208264e03d066c137ca720d548a413c41e05963bd4dad19f5"
+    },
+    {
+      "name": "CaseOptionalFields",
+      "agent_id": "MadoR22-2.CaseOptionalFields-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseOptionalFields.md",
+      "status": "present",
+      "bytes": 25270,
+      "sha256": "e01cecd35976db8c6a9e666ab5d02469ca06b7fc129ea3c4c639be4fff5ba282"
+    },
+    {
+      "name": "CaseSetupMalformed",
+      "agent_id": "MadoR22-2.CaseSetupMalformed-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseSetupMalformed.md",
+      "status": "present",
+      "bytes": 23921,
+      "sha256": "c072a781eb54bbc64b2e8974daf4d0f37d70b5d9b996f98ef064c7bbd00a92a8"
+    },
+    {
+      "name": "CaseStacked",
+      "agent_id": "MadoR22-2.CaseStacked-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseStacked.md",
+      "status": "present",
+      "bytes": 30169,
+      "sha256": "b6a92865ec6c7342cc5f911b250befb487253982eb66f36c24169dc818012c65"
+    },
+    {
+      "name": "CaseSymlinkRealpath",
+      "agent_id": "MadoR22-2.CaseSymlinkRealpath-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseSymlinkRealpath.md",
+      "status": "present",
+      "bytes": 33509,
+      "sha256": "08e7ffd1892cf43d378e2c7442b0d5d01032c515c7c04385e3c87bde8270a39d"
+    },
+    {
+      "name": "CaseTmpfsHardlimit",
+      "agent_id": "MadoR22-2.CaseTmpfsHardlimit-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseTmpfsHardlimit.md",
+      "status": "present",
+      "bytes": 16847,
+      "sha256": "62710e5a05a6675663e6fbb54a64b4c5f469fcd50913ecfc7c02cf1c9b617501"
+    },
+    {
+      "name": "CaseTmpfsNoQuota",
+      "agent_id": "MadoR22-2.CaseTmpfsNoQuota-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseTmpfsNoQuota.md",
+      "status": "present",
+      "bytes": 8726,
+      "sha256": "2bcce0781c080cc10eb4cd89797900818a2c9e04116aab30a99dae2d678abda1"
+    },
+    {
+      "name": "CaseTmpfsUsrquota",
+      "agent_id": "MadoR22-2.CaseTmpfsUsrquota-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseTmpfsUsrquota.md",
+      "status": "present",
+      "bytes": 20016,
+      "sha256": "2f92558338ffbb166a084dba9780a4efe35bdad905a5d43e0562eb0f4f4147bc"
+    },
+    {
+      "name": "CaseUnsupported",
+      "agent_id": "MadoR22-2.CaseUnsupported-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseUnsupported.md",
+      "status": "present",
+      "bytes": 17826,
+      "sha256": "9f6423815153718fd6f195f468b50d691bb5c1215e54f3b74d9f25d442e5b6e0"
+    },
+    {
+      "name": "CaseXfsAccountingOnly",
+      "agent_id": "MadoR22-2.CaseXfsAccountingOnly-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseXfsAccountingOnly.md",
+      "status": "present",
+      "bytes": 29908,
+      "sha256": "58a1a733ba46669e552c912ded8c2a1a6be6808877898b9828e40624c53e406a"
+    },
+    {
+      "name": "CaseXfsConflict",
+      "agent_id": "MadoR22-2.CaseXfsConflict-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseXfsConflict.md",
+      "status": "present",
+      "bytes": 19775,
+      "sha256": "fb0a0c16746f891c581d7902851c01bd776d1b75312eab80fa521ba3db0f8216"
+    },
+    {
+      "name": "CaseXfsDevMismatch",
+      "agent_id": "MadoR22-2.CaseXfsDevMismatch-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseXfsDevMismatch.md",
+      "status": "present",
+      "bytes": 14042,
+      "sha256": "b31b12893ce64f927af8c668b16cad59d2423e386cf5701db0772f0be23e034d"
+    },
+    {
+      "name": "CaseXfsMixedEnforce",
+      "agent_id": "MadoR22-2.CaseXfsMixedEnforce-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseXfsMixedEnforce.md",
+      "status": "present",
+      "bytes": 22009,
+      "sha256": "8341fb685ae783bf08ddfb2dc50ddfc45f7e9be3051977b91d004a0fa1411512"
+    },
+    {
+      "name": "CaseXfsOptionsAbsent",
+      "agent_id": "MadoR22-2.CaseXfsOptionsAbsent-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseXfsOptionsAbsent.md",
+      "status": "present",
+      "bytes": 21211,
+      "sha256": "20cadcd5e890de9bdac5a36a514fde229dfa8222ef87a7a0c2ca1987e59bda3c"
+    },
+    {
+      "name": "CaseXfsUsrquota",
+      "agent_id": "MadoR22-2.CaseXfsUsrquota-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/CaseXfsUsrquota.md",
+      "status": "present",
+      "bytes": 14322,
+      "sha256": "807cdc263bb7ab90618297a65974bca8b7429e76269e25a819a9780bb1a6f967"
+    },
+    {
+      "name": "ConnMoriCorpus",
+      "agent_id": "MadoR22-2.ConnMoriCorpus-8",
+      "role": "connector",
+      "path": ".ufo/waves/round-23/build/ConnMoriCorpus.md",
+      "status": "present",
+      "bytes": 21653,
+      "sha256": "97fb4882f8583f456960dc108988593772c84b6c658466c49a6d3ad0daa76f63"
+    },
+    {
+      "name": "ConnSoujiKama",
+      "agent_id": "MadoR22-2.ConnSoujiKama-8",
+      "role": "connector",
+      "path": ".ufo/waves/round-23/build/ConnSoujiKama.md",
+      "status": "present",
+      "bytes": 15511,
+      "sha256": "619e93a5ef6b5feec7c518dcab23e7753ce6d1f5f6f3b1c89cab0858814b63b1"
+    },
+    {
+      "name": "ConnTsukuroi",
+      "agent_id": "MadoR22-2.ConnTsukuroi-8",
+      "role": "connector",
+      "path": ".ufo/waves/round-23/build/ConnTsukuroi.md",
+      "status": "present",
+      "bytes": 12753,
+      "sha256": "a6c3c70d5ae734d066da817984fa151bb748fb3bb4096768f48b2f79999aa92b"
+    },
+    {
+      "name": "CriticContractC2",
+      "agent_id": "MadoR22-2.CriticContractC2-8",
+      "role": "critic",
+      "path": ".ufo/waves/round-23/build/CriticContractC2.md",
+      "status": "present",
+      "bytes": 18891,
+      "sha256": "44724792fd09a15b86989774cac16eb5cf291ab0907bbec9dcc73b0ed74757a3"
+    },
+    {
+      "name": "CriticFreezeOrder",
+      "agent_id": "MadoR22-2.CriticFreezeOrder-8",
+      "role": "critic",
+      "path": ".ufo/waves/round-23/build/CriticFreezeOrder.md",
+      "status": "present",
+      "bytes": 19486,
+      "sha256": "2c7d9c5bdd0853be7b1548e45df28bf29b66104be0ef6752cd717255c2a42ef8"
+    },
+    {
+      "name": "CriticRenameHarm",
+      "agent_id": "MadoR22-2.CriticRenameHarm-8",
+      "role": "critic",
+      "path": ".ufo/waves/round-23/build/CriticRenameHarm.md",
+      "status": "present",
+      "bytes": 9966,
+      "sha256": "74b3c876eee991433fc5b57afaafeb0300884a5ccca3fdb8710f5415eb0cbc9f"
+    },
+    {
+      "name": "CriticScopeProvince",
+      "agent_id": "MadoR22-2.CriticScopeProvince-8",
+      "role": "critic",
+      "path": ".ufo/waves/round-23/build/CriticScopeProvince.md",
+      "status": "present",
+      "bytes": 12346,
+      "sha256": "944493cd8667fe8f9bc7925129aa597cd31477454a2fb9c6097519755118c898"
+    },
+    {
+      "name": "DraftKnowledge",
+      "agent_id": "MadoR22-2.DraftKnowledge-8",
+      "role": "scribe",
+      "path": ".ufo/waves/round-23/build/DraftKnowledge.md",
+      "status": "present",
+      "bytes": 12286,
+      "sha256": "b72d269a8444bd072d119caecd13c839980ddcef799408a545e8be7a6eb35dc1"
+    },
+    {
+      "name": "DraftLesson",
+      "agent_id": "MadoR22-2.DraftLesson-8",
+      "role": "scribe",
+      "path": ".ufo/waves/round-23/build/DraftLesson.md",
+      "status": "present",
+      "bytes": 11053,
+      "sha256": "4ded42ab760365dfed970f97435de10840dd8004c8f802770a7a54627463a3d5"
+    },
+    {
+      "name": "DraftProvince",
+      "agent_id": "MadoR22-2.DraftProvince-8",
+      "role": "scribe",
+      "path": ".ufo/waves/round-23/build/DraftProvince.md",
+      "status": "present",
+      "bytes": 10940,
+      "sha256": "618770a6081ae49125e0b2337207f229972680a7a7b853e35c2068e8ea0c59a3"
+    },
+    {
+      "name": "DraftRenameDocs",
+      "agent_id": "MadoR22-2.DraftRenameDocs-8",
+      "role": "scribe",
+      "path": ".ufo/waves/round-23/build/DraftRenameDocs.md",
+      "status": "present",
+      "bytes": 8303,
+      "sha256": "3f91d31930de6cdf4deca3e1860ba27b746958de42055a5df7375d1c906c7f53"
+    },
+    {
+      "name": "DraftSkillRows",
+      "agent_id": "MadoR22-2.DraftSkillRows-8",
+      "role": "scribe",
+      "path": ".ufo/waves/round-23/build/DraftSkillRows.md",
+      "status": "present",
+      "bytes": 10216,
+      "sha256": "0538f672f319c45f6bcb75a0145676b4d9dab3213a5c25ff76db1a36556ba3d0"
+    },
+    {
+      "name": "DraftSourceRows",
+      "agent_id": "MadoR22-2.DraftSourceRows-8",
+      "role": "scribe",
+      "path": ".ufo/waves/round-23/build/DraftSourceRows.md",
+      "status": "present",
+      "bytes": 19540,
+      "sha256": "4cec433847579c6b865e8fd45ec689c1003257c26039804c4b7e6e53c9de9aac"
+    },
+    {
+      "name": "FixtureLint",
+      "agent_id": "MadoR22-2.FixtureLint-8",
+      "role": "executor",
+      "path": ".ufo/waves/round-23/build/FixtureLint.md",
+      "status": "present",
+      "bytes": 9694,
+      "sha256": "a25ea485e5e724e909e1d59b6e537c3d5c937f0965337966e97599df96120839"
+    },
+    {
+      "name": "ImplQuota",
+      "agent_id": "MadoR22-2.ImplQuota-8",
+      "role": "executor",
+      "path": ".ufo/waves/round-23/build/ImplQuota.md",
+      "status": "present",
+      "bytes": 35656,
+      "sha256": "5311e9b68962738c8ada867c8e9caaf159dc66196ec0d70684228a4202286fef"
+    },
+    {
+      "name": "MeasureDriver",
+      "agent_id": "MadoR22-2.MeasureDriver-8",
+      "role": "executor",
+      "path": ".ufo/waves/round-23/build/MeasureDriver.md",
+      "status": "present",
+      "bytes": 22971,
+      "sha256": "ebeec68eadd83afdcb049fd2af4ef9ea58e26769e7a611ec0121ce97898cd0e9"
+    },
+    {
+      "name": "OracleQuota",
+      "agent_id": "MadoR22-2.OracleQuota-8",
+      "role": "executor",
+      "path": ".ufo/waves/round-23/build/OracleQuota.md",
+      "status": "present",
+      "bytes": 34064,
+      "sha256": "de25f6a58aee7ad886863c229193b0e419d54fa21085f88df298d0cdc2c861e6"
+    },
+    {
+      "name": "RevengeStDev",
+      "agent_id": "MadoR22-2.RevengeStDev-8",
+      "role": "revenger",
+      "path": ".ufo/waves/round-23/build/RevengeStDev.md",
+      "status": "present",
+      "bytes": 17945,
+      "sha256": "26aafd67b31acd1f8932a0931485e16c60043b9f95a676ef16daa3aa4bfca55b"
+    },
+    {
+      "name": "RevengeTmpfsQuota",
+      "agent_id": "MadoR22-2.RevengeTmpfsQuota-8",
+      "role": "revenger",
+      "path": ".ufo/waves/round-23/build/RevengeTmpfsQuota.md",
+      "status": "present",
+      "bytes": 8441,
+      "sha256": "bb1722f4aa5b063ab9ffcc6ad0201d5cbc6020f27ef705a60f3eff6348208e4c"
+    },
+    {
+      "name": "RevengeXfsHistory",
+      "agent_id": "MadoR22-2.RevengeXfsHistory-8",
+      "role": "revenger",
+      "path": ".ufo/waves/round-23/build/RevengeXfsHistory.md",
+      "status": "present",
+      "bytes": 9958,
+      "sha256": "fa71ef85f9a502a24090c268fd4bf4fb7a4c8fbea48d1c36b09ddbc74a6dcda2"
+    },
+    {
+      "name": "ReviewOracleRename",
+      "agent_id": "MadoR22-2.ReviewOracleRename-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/ReviewOracleRename.md",
+      "status": "present",
+      "bytes": 23460,
+      "sha256": "7369dae48084ea5490eb901c34137f85e7e779bddf8e146d22d3086c126a4d25"
+    },
+    {
+      "name": "ReviewRealC1",
+      "agent_id": "MadoR22-2.ReviewRealC1-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/ReviewRealC1.md",
+      "status": "present",
+      "bytes": 19395,
+      "sha256": "c1670ca02303f018090ecd6996a9f156240cc4e4e06fb43a40d680421d5ac965"
+    },
+    {
+      "name": "ReviewRealC2",
+      "agent_id": "MadoR22-2.ReviewRealC2-8",
+      "role": "reviewer",
+      "path": ".ufo/waves/round-23/build/ReviewRealC2.md",
+      "status": "present",
+      "bytes": 18320,
+      "sha256": "4abc79578b301ef3324d5b8ced4f21b3dccfd6b3362a44e2c9b016790b630d74"
+    },
+    {
+      "name": "ScoutCensusDisk",
+      "agent_id": "MadoR22-2.ScoutCensusDisk-8",
+      "role": "scout",
+      "path": ".ufo/waves/round-23/build/ScoutCensusDisk.md",
+      "status": "present",
+      "bytes": 13773,
+      "sha256": "5dfe26fe571c8b9eb570a2c9b24577a71684b12d413f1061672ca1131b0029a4"
+    },
+    {
+      "name": "ScoutPriorQuota",
+      "agent_id": "MadoR22-2.ScoutPriorQuota-8",
+      "role": "scout",
+      "path": ".ufo/waves/round-23/build/ScoutPriorQuota.md",
+      "status": "present",
+      "bytes": 16571,
+      "sha256": "c95e55ba26de3e97a200dc1f2febec73fdef7a3397c956bbd7ee34b76a262732"
+    },
+    {
+      "name": "ScoutRenameRefs",
+      "agent_id": "MadoR22-2.ScoutRenameRefs-8",
+      "role": "scout",
+      "path": ".ufo/waves/round-23/build/ScoutRenameRefs.md",
+      "status": "present",
+      "bytes": 25058,
+      "sha256": "6ff7713c137aa9d507606690cbb82525850c12743d9d5bc97f9fa7c4a5b9aa2e"
+    },
+    {
+      "name": "SentinelOutput",
+      "agent_id": "MadoR22-2.SentinelOutput-8",
+      "role": "sentinel",
+      "path": ".ufo/waves/round-23/build/SentinelOutput.md",
+      "status": "present",
+      "bytes": 5136,
+      "sha256": "0dbb25b01daeec1095e3cbde280be496e56b5c1c30655f23e5fca60cc5a87d3e"
+    },
+    {
+      "name": "SentinelProbe",
+      "agent_id": "MadoR22-2.SentinelProbe-8",
+      "role": "sentinel",
+      "path": ".ufo/waves/round-23/build/SentinelProbe.md",
+      "status": "present",
+      "bytes": 8940,
+      "sha256": "a4577b297c1a0d2e26aca475e1f141e54e3c5f03edcfbcd44f5f1b315cf18c7c"
+    },
+    {
+      "name": "SimplifyRules",
+      "agent_id": "MadoR22-2.SimplifyRules-8",
+      "role": "simplifier",
+      "path": ".ufo/waves/round-23/build/SimplifyRules.md",
+      "status": "present",
+      "bytes": 7604,
+      "sha256": "2e32eeadd67271888a89495361700f7d75ea6a5fad9ba04c67f06c250f6b7f81"
+    },
+    {
+      "name": "SrcBtrfsGetattr",
+      "agent_id": "MadoR22-2.SrcBtrfsGetattr-8",
+      "role": "scout",
+      "path": ".ufo/waves/round-23/build/SrcBtrfsGetattr.md",
+      "status": "present",
+      "bytes": 8221,
+      "sha256": "a65a5f46ab31f347d296198bc291f38350a6c6ae3ac9f49474855ba19818f3ef"
+    },
+    {
+      "name": "SrcBtrfsQgroup",
+      "agent_id": "MadoR22-2.SrcBtrfsQgroup-8",
+      "role": "scout",
+      "path": ".ufo/waves/round-23/build/SrcBtrfsQgroup.md",
+      "status": "present",
+      "bytes": 15037,
+      "sha256": "9c9358ebeb7bd62483dad750fe180cdb8687156492f6a61d71baddae0ff8694d"
+    },
+    {
+      "name": "SrcBtrfsSysfs",
+      "agent_id": "MadoR22-2.SrcBtrfsSysfs-8",
+      "role": "scout",
+      "path": ".ufo/waves/round-23/build/SrcBtrfsSysfs.md",
+      "status": "present",
+      "bytes": 15050,
+      "sha256": "723b7b12562d9ea3ba96f2d7c05825672c38f95d1faf8841ed91c371381263ee"
+    },
+    {
+      "name": "SrcExt4Doc",
+      "agent_id": "MadoR22-2.SrcExt4Doc-8",
+      "role": "scout",
+      "path": ".ufo/waves/round-23/build/SrcExt4Doc.md",
+      "status": "present",
+      "bytes": 8451,
+      "sha256": "d616a8615fc15ea75b4a47aa15c13e8db3155be71771d049d97dd9209376491b"
+    },
+    {
+      "name": "SrcProcMountinfo",
+      "agent_id": "MadoR22-2.SrcProcMountinfo-8",
+      "role": "scout",
+      "path": ".ufo/waves/round-23/build/SrcProcMountinfo.md",
+      "status": "present",
+      "bytes": 7949,
+      "sha256": "4ad71baf6d64a6f3dd09942dc41eeea60141fb1fbf4c1cb8ddf60747c85e8e8f"
+    },
+    {
+      "name": "SrcTmpfsDoc",
+      "agent_id": "MadoR22-2.SrcTmpfsDoc-8",
+      "role": "scout",
+      "path": ".ufo/waves/round-23/build/SrcTmpfsDoc.md",
+      "status": "present",
+      "bytes": 6805,
+      "sha256": "4ae71daa9b70d478bd421abb25b18b9bbdb3b1ca75f052af4a3f5cc10de9f3ec"
+    },
+    {
+      "name": "SrcXfsDoc",
+      "agent_id": "MadoR22-2.SrcXfsDoc-8",
+      "role": "scout",
+      "path": ".ufo/waves/round-23/build/SrcXfsDoc.md",
+      "status": "present",
+      "bytes": 9179,
+      "sha256": "0f531175c79f3f8af96bf3bfa4f6b9337b56efe53aec3c628ec0c0392b3738e8"
+    },
+    {
+      "name": "SrcXfsShowargs",
+      "agent_id": "MadoR22-2.SrcXfsShowargs-8",
+      "role": "scout",
+      "path": ".ufo/waves/round-23/build/SrcXfsShowargs.md",
+      "status": "present",
+      "bytes": 9801,
+      "sha256": "cd22e9c54dbf6e396dcfb732c62b3b694f7ff85b51cb7ac064cd0106d6821ee5"
+    }
+  ],
+  "limits": "Report presence/sha at this snapshot, not orchestration or permanent lifecycle authority. All original64 completion results received; followups preserve identities."
+}

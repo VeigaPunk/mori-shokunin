@@ -1,0 +1,3 @@
+#!/bin/sh
+printf 'bare-journalctl-invoked\n' >> /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-16/evidence/capability-after/tripwire-hit
+exit 0

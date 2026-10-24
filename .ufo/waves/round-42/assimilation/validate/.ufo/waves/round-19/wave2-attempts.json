@@ -1,0 +1,15 @@
+[
+  {
+    "attempt": 1,
+    "at": "2026-10-21T05:49:29.759864-03:00",
+    "wave": "mori-r19-attempt2-falsify",
+    "dispatch_path": ".ufo/waves/round-19/wave2-run.json",
+    "payload_sha256": "bcf63ef6afee5b2090189257247bcd9f6a680756d457c0819d094e6ca2322f16",
+    "payload_bytes": 97684,
+    "tasks_count": 70,
+    "slot_grant": "granted lane=mori wave=round-19-attempt2-wave2 seats=70 live=47 pending=0 cap=240",
+    "result": "started",
+    "refused_text": null,
+    "started_ids": 70
+  }
+]

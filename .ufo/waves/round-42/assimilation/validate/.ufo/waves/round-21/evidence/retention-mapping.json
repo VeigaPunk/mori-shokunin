@@ -1,0 +1,56 @@
+{
+  "schema": "mori-r21-retention-mapping-v1",
+  "mappings": [
+    {
+      "path": ".ufo/waves/round-21/evidence/removal-metadata.txt",
+      "entering_revision": "e9f340ce986f82a60baad1b8e5ead655ab818a1c",
+      "entering_digest": null,
+      "entering_state": "absent-new-round21-copy",
+      "present_digest": "4276625be64ab1943bb5781dab7a3d9e8c912bdb48ea562870f20b70b753263e",
+      "historically_bound": false,
+      "current_copy_bound": true,
+      "copy_commit": "a8442a018aa9c51b21b92c3ce3b17736317375b1",
+      "source_provenance": ".ufo/waves/round-21/evidence/historical-provenance.json",
+      "note": "Public Git metadata/path-only projection; source and projection digests distinct; no historical pin moved."
+    },
+    {
+      "path": ".ufo/waves/round-21/evidence/cleanup-receipts.tsv",
+      "entering_revision": "e9f340ce986f82a60baad1b8e5ead655ab818a1c",
+      "entering_digest": null,
+      "entering_state": "absent-new-round21-copy",
+      "present_digest": "46f84c3a60ac701ec7d0c16523e5bbfa999be3999cb61029be8fba50785970a7",
+      "historically_bound": false,
+      "current_copy_bound": true,
+      "copy_commit": "a8442a018aa9c51b21b92c3ce3b17736317375b1",
+      "source_provenance": ".ufo/waves/round-21/evidence/historical-provenance.json",
+      "note": "Public Git metadata/path-only projection; source and projection digests distinct; no historical pin moved."
+    },
+    {
+      "path": "corpus/evidence/baseline-r10-20261015T2231Z.json",
+      "entering_revision": "e9f340ce986f82a60baad1b8e5ead655ab818a1c",
+      "entering_digest": "0993b23505deab2aeb05b2309bdf7dd6eaad2b82f27852491352511aa9670478",
+      "present_digest": "0993b23505deab2aeb05b2309bdf7dd6eaad2b82f27852491352511aa9670478",
+      "historically_bound": true,
+      "current_copy_bound": true,
+      "note": "Byte-unchanged historical artifact; r20 baseline invalid for acceptance, not deleted/relabelled."
+    },
+    {
+      "path": "corpus/evidence/baseline-r20-20261021T1051Z.json",
+      "entering_revision": "e9f340ce986f82a60baad1b8e5ead655ab818a1c",
+      "entering_digest": "e528bc1549fd3f44abe01450db8146d596245fd85c94f98e6d450e84d3be8433",
+      "present_digest": "e528bc1549fd3f44abe01450db8146d596245fd85c94f98e6d450e84d3be8433",
+      "historically_bound": true,
+      "current_copy_bound": true,
+      "note": "Byte-unchanged historical artifact; r20 baseline invalid for acceptance, not deleted/relabelled."
+    },
+    {
+      "path": "corpus/evidence/drift-classification-r20.json",
+      "entering_revision": "e9f340ce986f82a60baad1b8e5ead655ab818a1c",
+      "entering_digest": "e244d5b14f6d0d507e40c2209e2a6088a4fba1051a8e80135a9eaab23b082854",
+      "present_digest": "e244d5b14f6d0d507e40c2209e2a6088a4fba1051a8e80135a9eaab23b082854",
+      "historically_bound": true,
+      "current_copy_bound": true,
+      "note": "Byte-unchanged historical artifact; r20 baseline invalid for acceptance, not deleted/relabelled."
+    }
+  ]
+}

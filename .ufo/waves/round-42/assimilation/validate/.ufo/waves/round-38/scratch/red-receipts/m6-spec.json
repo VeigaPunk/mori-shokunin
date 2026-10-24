@@ -1,0 +1,1 @@
+{"wave":"mori-r38-m6-planner-receipt","maxLanes":64,"reportDir":".ufo/waves/round-38/scratch/red-receipts/m6","context":"receipt only; no dispatch","items":[{"name":"M6PlannerProbe","role":"planner","prompt":"probe: the validator must refuse this seat"}]}

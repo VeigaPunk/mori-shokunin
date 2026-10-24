@@ -1,0 +1,428 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r26-w1",
+  "policy": {
+    "source": "config",
+    "maxLanes": 64,
+    "minLanes": 16,
+    "waveMinLanes": 32,
+    "waveMaxLanes": 64,
+    "declaredMaxLanes": 64,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 35,
+    "resume": 0,
+    "total": 35
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-26/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-26/w1",
+    "members": {
+      "SrcEarlyoomReadme": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "SrcEarlyoomMainC": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "SrcEarlyoomKillC": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "SrcEarlyoomManpage": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "SrcEarlyoomMeminfo": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "SrcEarlyoomUnit": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "SrcResourceControlV262": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "SrcOomdUtilV262": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "SrcSiblingTsukuroi": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "SrcJournalJson": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "SrcEarlyoomTagHistory": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "DraftEntryR26": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "DraftR12Corrections": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "DraftSkillFr10": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "DraftHygieneScorecard": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "DraftHygieneKnowledge": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "BuildOomKillersTool": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "WriteOomKillersCases": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "HostCapture": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ScoutStaleSweep": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScoutHostJournal": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScoutPriorAdmissions": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ConnSiblingOverlap": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null
+      },
+      "ConnFleetConsumers": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null
+      },
+      "CriticC1Width": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CriticC2Width": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "ReviewContractGrammar": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReviewPrivacyDesign": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ReviewScopeClock": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "MutC1Counter": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "ReviewRetentionBase": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "CriticLearningRules": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "ReviewOomdV262Facts": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "MutCaseDesign": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "ReviewHygieneDebt": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "# mori round 26 (attempt 1) — wave 1: build and first falsifiers\nLane repo: /home/vgpnk/Projects/shokunin/mori-shokunin. L1: agent MoriR26 holds the planner seat and is the only integration owner; you return findings, drafts or sandbox code, never lane commits.\nClaim contract (read it first): /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md, landed at 28b0494004fe1f064544224eca56dd42605db384 (entering tip 248408f5). Frontier area: FR10 userspace OOM killers (/home/vgpnk/Projects/shokunin/mori-shokunin/PROVINCE.md:53).\n- C1 (freshness): four frozen present-tense statements that this host's userspace killers are inactive (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/c1-phrases.txt) are stale (earlyoom 1.9.0 is active and enabled on this host since 2026-10-22 04:55:44 -03; systemd-oomd inactive and disabled; systemd 262). Before stale_present=4, after 0 plus a superseding entry corpus/knowledge/userspace-oom-killers-r26.md citing SOURCES rows opened this round.\n- C2 (coverage, capability): new read-only tool tools/mori-oom-killers.py (earlyoom state, thresholds, action counts from its journal lines; systemd-oomd state and notice count). After: `python3 -I -B tools/mori-oom-killers.py --selftest` prints MORI_OOM_KILLERS_SELFTEST: PASS N/N over tools/fixtures/mori-oom-killers/cases.json, written by a seat other than the tool seat and committed before the tool.\nPrimary upstream: earlyoom tag v1.9.0, https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/<file> (main.c, kill.c, meminfo.c, README.md, MANPAGE.md); systemd tag v262, https://raw.githubusercontent.com/systemd/systemd/v262/<path>. Local copies of the earlyoom files fetched by the L1 are in /fast/scratch/hyaku/mori-r26/ (read-only for you; re-fetch to quote). Sibling entry (adjacency, cite never absorb): tsukuroi-shokunin/corpus/knowledge/memory-pressure-r25.md at commit 157ee255 (read with `git -C /home/vgpnk/Projects/shokunin/tsukuroi-shokunin show 157ee255:corpus/knowledge/memory-pressure-r25.md`).\nBounds (binding on every seat):\n- Write ONLY your own Report file and, for executors, your own sandbox clone named in your item. Every `Report:` trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin — write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. Never write anywhere else in /home/vgpnk/Projects/shokunin/mori-shokunin, never at the fleet root /home/vgpnk/Projects/shokunin, never in sibling lane repos. Scratch goes under /fast/scratch/hyaku/mori-r26/<your seat name>/.\n- Never run any jj command at the fleet root /home/vgpnk/Projects/shokunin. In the lane use read-only jj only with --ignore-working-copy. Never run git add/commit/stash/checkout/switch/reset/pull/push in /home/vgpnk/Projects/shokunin/mori-shokunin; read-only git (log, show, diff, cat-file, ls-tree, grep) is fine. Seats never push, commit or update refs in the lane, and never mutate the fleet repo, sibling lanes, lane jj state or the lane Git index.\n- Privacy (binding): never copy OMP settings values, session ids, session-store paths or session-record fields into anything you write; cite path and key name only. Never copy journal MESSAGE text that names a process, a command line or a uid, and never copy the values of earlyoom --avoid/--prefer expressions or of /etc/default/earlyoom; report counts, states, thresholds and version strings only. Invented process names only in fixtures.\n- Never edit ~/.omp/agent/config.yml, ~/.omp/agent/mcp.json, OMP settings, systemd units or fleet scripts; never start, stop, enable or restart any unit; never run omp itself.\n- Sources are opened by ordinary means only (curl or the read tool on the public URL). Never use a headless browser or any tool to pass a bot challenge, captcha or access control. Record URL, access date (2026-10-22), sha256 of the bytes fetched, and each quote (at most 25 words, verbatim) with its line number.\n- Tooling: you and every seat may install or upgrade tools that help the task; read /home/vgpnk/.omp/agent/RULES.md first and record tool/version/channel/reason in your report. All pacman transactions are PAUSED host-wide: never run pacman -S/-Sy/-Syu/-U/-R, never downgrade, never restart a host service; use uv tool, npx or an official binary in ~/.local/bin instead, or report the need.\n- Never message agent://all. Leaf seat: no subagents, no background jobs (an executor may spawn one read-only labrat probe at most).\n- Plain English, no run-together words. Cite every fact with a path:line, a URL with line number, or a command with its output. Unrun checks are not passes; mark inference [INFERENCE]. Keep your report under 300 lines; put ready-to-paste text in fenced blocks.\n",
+    "tasks": [
+      {
+        "name": "SrcEarlyoomReadme",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nFrontier step, SOURCES row draft (supports C1 entry and C2 grammar). Open https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/README.md (earlyoom 1.9.0 README): the act rule (memory AND swap both below limits), SIGTERM then SIGKILL stages, where actions are logged, the `journalctl -u earlyoom | grep sending` advice, --kernel-oom presence or absence in 1.9.0, and the Changelog entries for 1.9.0 and the version that introduced the current `sending SIGTERM to process ... cmdline` wording. Return: one ready-to-paste corpus/SOURCES.md row in the existing column shape of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md (read its header and the last rows S098-S127 first; leave the S### id as `S???`), tier (A/B/C) with reason, status (`mined` or `rejected` with reason and flip), the Gate line (URL, access date 2026-10-22, sha256 of fetched bytes, 1-3 verbatim quotes of at most 25 words each with line numbers), and the facts the round can rest on, each with its line number. Flag anything that contradicts the contract /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/SrcEarlyoomReadme.md"
+      },
+      {
+        "name": "SrcEarlyoomMainC",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nFrontier step, SOURCES row draft (supports C1 entry and C2 grammar). Open https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/main.c: the startup lines (version line :161, threshold lines :412-416), the low-memory warnings (:515-543), dry-run (:295), and the poll loop; confirm whether the threshold lines print the effective percentages after -M/-S conversion. Return: one ready-to-paste corpus/SOURCES.md row in the existing column shape of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md (read its header and the last rows S098-S127 first; leave the S### id as `S???`), tier (A/B/C) with reason, status (`mined` or `rejected` with reason and flip), the Gate line (URL, access date 2026-10-22, sha256 of fetched bytes, 1-3 verbatim quotes of at most 25 words each with line numbers), and the facts the round can rest on, each with its line number. Flag anything that contradicts the contract /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/SrcEarlyoomMainC.md"
+      },
+      {
+        "name": "SrcEarlyoomKillC",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nFrontier step, SOURCES row draft (supports C1 entry and C2 grammar). Open https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/kill.c: the kill action line (:627), escalation (:318), `process %d exited` (:329), `did not exit` (:338), `kill failed` (:654), dryrun (:272), the -g process-group line (:282), `Could not find a process to kill` (:609); and which stream (stderr or syslog) warn() writes to (msg.c). Return: one ready-to-paste corpus/SOURCES.md row in the existing column shape of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md (read its header and the last rows S098-S127 first; leave the S### id as `S???`), tier (A/B/C) with reason, status (`mined` or `rejected` with reason and flip), the Gate line (URL, access date 2026-10-22, sha256 of fetched bytes, 1-3 verbatim quotes of at most 25 words each with line numbers), and the facts the round can rest on, each with its line number. Flag anything that contradicts the contract /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/SrcEarlyoomKillC.md"
+      },
+      {
+        "name": "SrcEarlyoomManpage",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nFrontier step, SOURCES row draft (supports C1 entry and C2 grammar). Open https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/MANPAGE.md: -m/-s/-M/-S semantics and defaults, -r report interval, --syslog, --dryrun, and the EXIT STATUS table. Return: one ready-to-paste corpus/SOURCES.md row in the existing column shape of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md (read its header and the last rows S098-S127 first; leave the S### id as `S???`), tier (A/B/C) with reason, status (`mined` or `rejected` with reason and flip), the Gate line (URL, access date 2026-10-22, sha256 of fetched bytes, 1-3 verbatim quotes of at most 25 words each with line numbers), and the facts the round can rest on, each with its line number. Flag anything that contradicts the contract /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/SrcEarlyoomManpage.md"
+      },
+      {
+        "name": "SrcEarlyoomMeminfo",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nFrontier step, SOURCES row draft (supports C1 entry and C2 grammar). Open https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/meminfo.c and meminfo.h: how `mem avail` and `swap free` percentages are computed (MemAvailable or a fallback), what `user mem total` is, and the fatal exit codes 102-104. Return: one ready-to-paste corpus/SOURCES.md row in the existing column shape of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md (read its header and the last rows S098-S127 first; leave the S### id as `S???`), tier (A/B/C) with reason, status (`mined` or `rejected` with reason and flip), the Gate line (URL, access date 2026-10-22, sha256 of fetched bytes, 1-3 verbatim quotes of at most 25 words each with line numbers), and the facts the round can rest on, each with its line number. Flag anything that contradicts the contract /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/SrcEarlyoomMeminfo.md"
+      },
+      {
+        "name": "SrcEarlyoomUnit",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nFrontier step, SOURCES row draft (supports C1 entry and C2 grammar). Open the upstream unit https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/earlyoom.service and the Arch Linux package source for earlyoom 1.9.0-1 (https://gitlab.archlinux.org/archlinux/packaging/packages/earlyoom, its PKGBUILD and the default /etc/default/earlyoom it ships, read through the GitLab raw or repository-file URL by ordinary means; if the site shows a bot challenge, stop and record it as unopenable). Facts wanted: EnvironmentFile/EARLYOOM_ARGS mechanism, that stderr reaches the journal (StandardError default), hardening lines that change what earlyoom can read. Do not copy the host's own /etc/default/earlyoom values. Return: one ready-to-paste corpus/SOURCES.md row in the existing column shape of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md (read its header and the last rows S098-S127 first; leave the S### id as `S???`), tier (A/B/C) with reason, status (`mined` or `rejected` with reason and flip), the Gate line (URL, access date 2026-10-22, sha256 of fetched bytes, 1-3 verbatim quotes of at most 25 words each with line numbers), and the facts the round can rest on, each with its line number. Flag anything that contradicts the contract /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/SrcEarlyoomUnit.md"
+      },
+      {
+        "name": "SrcResourceControlV262",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nFrontier step, SOURCES row draft (supports C1 entry and C2 grammar). Open https://raw.githubusercontent.com/systemd/systemd/v262/man/systemd.resource-control.xml: ManagedOOMSwap= and ManagedOOMMemoryPressure= (`auto` default, `kill` makes a unit a monitoring candidate); also check https://raw.githubusercontent.com/systemd/systemd/v262/man/systemd-oomd.service.xml for which cgroups oomd monitors. Return: one ready-to-paste corpus/SOURCES.md row in the existing column shape of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md (read its header and the last rows S098-S127 first; leave the S### id as `S???`), tier (A/B/C) with reason, status (`mined` or `rejected` with reason and flip), the Gate line (URL, access date 2026-10-22, sha256 of fetched bytes, 1-3 verbatim quotes of at most 25 words each with line numbers), and the facts the round can rest on, each with its line number. Flag anything that contradicts the contract /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/SrcResourceControlV262.md"
+      },
+      {
+        "name": "SrcOomdUtilV262",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nFrontier step, SOURCES row draft (supports C1 entry and C2 grammar). Open https://raw.githubusercontent.com/systemd/systemd/v262/src/oom/oomd-util.c and https://raw.githubusercontent.com/systemd/systemd/v262/catalog/systemd.catalog.in: re-verify at v262 the round-12 facts held at v261 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/userspace-oom-killers-r12.md:6,11-12 (xattrs user.oomd_ooms and user.oomd_kill, the D-Bus Killed signal, catalog id d989611b15e44c9dbf31e3c81256e4ed). Report for each fact: still true at v262 with the new line numbers, moved, or changed. Return: one ready-to-paste corpus/SOURCES.md row in the existing column shape of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md (read its header and the last rows S098-S127 first; leave the S### id as `S???`), tier (A/B/C) with reason, status (`mined` or `rejected` with reason and flip), the Gate line (URL, access date 2026-10-22, sha256 of fetched bytes, 1-3 verbatim quotes of at most 25 words each with line numbers), and the facts the round can rest on, each with its line number. Flag anything that contradicts the contract /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/SrcOomdUtilV262.md"
+      },
+      {
+        "name": "SrcSiblingTsukuroi",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nFrontier step, SOURCES row draft (supports C1 entry and C2 grammar). Open the sibling entry tsukuroi-shokunin/corpus/knowledge/memory-pressure-r25.md at commit 157ee255 (`git -C /home/vgpnk/Projects/shokunin/tsukuroi-shokunin show 157ee255:corpus/knowledge/memory-pressure-r25.md`; also confirm 157ee255 is on its pushed branch with `git -C ... branch -r --contains 157ee255`). Draft it as a sibling-tier row (see how earlier sibling rows are written in SOURCES.md, for example S127 or other rows naming a sibling lane). Facts wanted: MP4 (`auto` is the default and not monitored; the captured units are all `auto`; oomd inactive and disabled) and its earlyoom note (active and enabled). Mark which facts are tsukuroi-owned host diagnosis that mori must cite and not absorb. Return: one ready-to-paste corpus/SOURCES.md row in the existing column shape of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md (read its header and the last rows S098-S127 first; leave the S### id as `S???`), tier (A/B/C) with reason, status (`mined` or `rejected` with reason and flip), the Gate line (URL, access date 2026-10-22, sha256 of fetched bytes, 1-3 verbatim quotes of at most 25 words each with line numbers), and the facts the round can rest on, each with its line number. Flag anything that contradicts the contract /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/SrcSiblingTsukuroi.md"
+      },
+      {
+        "name": "SrcJournalJson",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nFrontier step, SOURCES row draft (supports C1 entry and C2 grammar). Open https://raw.githubusercontent.com/systemd/systemd/v262/docs/JOURNAL_EXPORT_FORMATS.md and https://raw.githubusercontent.com/systemd/systemd/v262/man/journalctl.xml: how `-o json` encodes a field that is not valid UTF-8 or holds control characters (byte array), what `--output-fields=` keeps (are __MONOTONIC_TIMESTAMP and __REALTIME_TIMESTAMP always present?), and what `-u UNIT` matches (_SYSTEMD_UNIT plus messages about the unit). Also https://raw.githubusercontent.com/systemd/systemd/v262/man/systemd.unit.xml or systemd.exec.xml for the meaning of ActiveEnterTimestampMonotonic vs the journal's monotonic clock (same boot, same clock?). Return: one ready-to-paste corpus/SOURCES.md row in the existing column shape of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md (read its header and the last rows S098-S127 first; leave the S### id as `S???`), tier (A/B/C) with reason, status (`mined` or `rejected` with reason and flip), the Gate line (URL, access date 2026-10-22, sha256 of fetched bytes, 1-3 verbatim quotes of at most 25 words each with line numbers), and the facts the round can rest on, each with its line number. Flag anything that contradicts the contract /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/SrcJournalJson.md"
+      },
+      {
+        "name": "SrcEarlyoomTagHistory",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nFrontier step, SOURCES row draft (supports C1 entry and C2 grammar). Open the earlyoom release history (https://github.com/rfjakob/earlyoom/releases or https://api.github.com/repos/rfjakob/earlyoom/tags, and the README Changelog section at tag v1.9.0): which tag carries 1.9.0, its date, and whether the strings `sending SIGTERM when mem avail`, `sending %s to process`, `escalating to SIGKILL after` changed between 1.7, 1.8 and 1.9.0 (compare main.c/kill.c at tags v1.7, v1.8 and v1.9.0 with raw URLs). The answer decides the tool's grammar version gate. Return: one ready-to-paste corpus/SOURCES.md row in the existing column shape of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md (read its header and the last rows S098-S127 first; leave the S### id as `S???`), tier (A/B/C) with reason, status (`mined` or `rejected` with reason and flip), the Gate line (URL, access date 2026-10-22, sha256 of fetched bytes, 1-3 verbatim quotes of at most 25 words each with line numbers), and the facts the round can rest on, each with its line number. Flag anything that contradicts the contract /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/SrcEarlyoomTagHistory.md"
+      },
+      {
+        "name": "DraftEntryR26",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nClaim C1 (and the learning claim). Draft the full text of the new knowledge entry corpus/knowledge/userspace-oom-killers-r26.md that supersedes the host-state and earlyoom parts of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/userspace-oom-killers-r12.md. Follow the entry shape used by /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/harness-job-capacity-r25.md and system-pressure-r24.md (first lines `source:`, `verified-at:`, `recheck:`; then facts with sources, a decision table, limits, what it changes for mori, adjacency). Open the primary sources yourself (earlyoom v1.9.0 README/main.c/kill.c/MANPAGE.md/meminfo.c; systemd v262 resource-control and oomd pages; the tsukuroi sibling entry). Read host state read-only (`systemctl is-active/is-enabled earlyoom.service systemd-oomd.service`, `pacman -Q earlyoom systemd` is a read and allowed, `journalctl -q -b -u earlyoom.service -o json --output-fields=MESSAGE` processed in memory to counts and the threshold numbers only). Required content: earlyoom 1.9.0 active and enabled here; its act rule (memory AND swap both below; SIGTERM at the first limit, SIGKILL at the second; defaults 10% and half); how its actions appear in the journal and which lines are stable enough to count; why its kills do not move kernel oom_kill counters (cite the existing /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/oom-kill-counter-kernel-only-r12.md); systemd-oomd inactive and every captured unit `auto` (cite the sibling, do not absorb); a decision table 'which killer acted?' (kernel OOM line vs earlyoom `sending` line vs oomd notice vs plain SIGKILL); limits. Use `S???` placeholders for SOURCES ids with the URL beside each. Do not copy --avoid/--prefer values, process names or command lines. Mark every statement verified / scoped / [INFERENCE]\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/DraftEntryR26.md"
+      },
+      {
+        "name": "DraftR12Corrections",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nClaim C1. Draft the exact replacement text for the four frozen stale statements in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/c1-phrases.txt: lines 6, 14 and 18 of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/userspace-oom-killers-r12.md and the row at /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/README.md:34; and the FR10 row at /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/README.md:341 and /home/vgpnk/Projects/shokunin/mori-shokunin/PROVINCE.md:53 if they need a pointer. Each replacement must be a dated past-tense record (\"On 2026-10-19 ...\") that names the superseding entry corpus/knowledge/userspace-oom-killers-r26.md and states the 2026-10-22 reading (earlyoom active and enabled; systemd-oomd inactive and disabled); it must not leave the old present-tense sentence standing anywhere (QUALITY 77, /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/QUALITY.md tail). Also draft a one-line `superseded-in-part-by:` header line for the r12 entry if the corpus uses such headers (grep /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge for 'supersed'). Return old line → new line pairs in fenced blocks, byte-exact for the old line\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/DraftR12Corrections.md"
+      },
+      {
+        "name": "DraftSkillFr10",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nClaims C1/C2 (learning claim: SKILL.md decision table grounded in admitted entries). Draft a SKILL.md section for /home/vgpnk/Projects/shokunin/mori-shokunin/SKILL.md (read its ## Decision table, ## Error patterns and the round-24/25 registry rows near :637-673 first): (a) decision rows 'Did a userspace killer act?' covering earlyoom active/inactive, its journal `sending SIG… to process` lines, oomd notices, kernel OOM lines, and the unavailable-not-zero rule; (b) error patterns (e.g. reading earlyoom thresholds from the config file instead of its own startup lines; treating `oom_kill=0` as no kills while earlyoom is active; counting earlyoom lines from a previous invocation); (c) gate-registry rows in the existing registry format for three tools: tools/mori-oom-killers.py (new, per /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md), tools/mori-routed-r24.py and tools/mori-job-runway.py (round 25, routed defect R5 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-25-verifier-spotcheck.md:189). For the two round-25 tools read their --help and code to state inputs, verdicts and exits truthfully, including the known R1 false-number limit of mori-job-runway.py. Cite every row to a source line or entry path\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/DraftSkillFr10.md"
+      },
+      {
+        "name": "DraftHygieneScorecard",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nHygiene (not a claim): routed defects R2 and R4 and R6 from /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-25-verifier-spotcheck.md:180-196. Draft append-only correction text: (R2) a scoped correction for the round-25 capability row at /home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md:1568 ('never turns an unreadable … input into a number' is false for the 72 forms; the read holds for block-style single settings files); (R4) corrections for the Axes operability row (7 first admitted in round 14, round 13 was rejected-harmed — check /home/vgpnk/Projects/shokunin/MANIFEST.json with jq for mori rounds 13 and 14), the D5 note at SCORECARD.md:1584, and the stale round-12 line at :620-621; (R6) an appended correction block for /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-25.md naming each wrong sentence and its correction. Give exact old text and the appended text; never propose rewriting filed history except the Axes table row itself\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/DraftHygieneScorecard.md"
+      },
+      {
+        "name": "DraftHygieneKnowledge",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nHygiene (not a claim): routed defect R7 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-25-verifier-spotcheck.md:197-199 and R3 at :182-185. Draft byte-exact old → new corrections for (a) /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/harness-job-capacity-r25.md U1 ('only the default moved'; the '(1-100)' description was removed 2026-05-03 and the clamp rewritten 2026-09-24 — verify in the oh-my-pi history by ordinary means, https://github.com/can1357/oh-my-pi) and the mis-cited F10 parenthetical; (b) /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/system-pressure-r24.md lines 143 and 158 and the psi.c:1538-1550 range (re-open https://raw.githubusercontent.com/torvalds/linux/v7.2/kernel/sched/psi.c); (c) the SKILL.md round-25 block rows 1-4 at /home/vgpnk/Projects/shokunin/mori-shokunin/SKILL.md:644-673 per R3 (row 2 holds only for auto-backgrounded calls; eval agent(), workpool() and explicit async bash refuse). Never copy OMP settings values\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/DraftHygieneKnowledge.md"
+      },
+      {
+        "name": "BuildOomKillersTool",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nClaim C2. In the sandbox clone /fast/scratch/hyaku/mori-r26/wt-tool (branch r26-wt-tool, base 28b0494004fe1f064544224eca56dd42605db384) implement tools/mori-oom-killers.py exactly per contract section C2 (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md): Python 3 standard library only, `#!/usr/bin/env python3`, runs under `python3 -I -B`, read-only, JSON on stdout, exits 0/1/2 as contracted, the modes --inputs FILE, --selftest [--cases FILE], live (no args) and --dump-inputs. The frozen cases file tools/fixtures/mori-oom-killers/cases.json is being written blind by another seat right now: do NOT write or look for it; build against the contract text only and test with your own throwaway inputs under /fast/scratch/hyaku/mori-r26/BuildOomKillersTool/. --selftest must load tools/fixtures/mori-oom-killers/cases.json resolved from the script path, print `MORI_OOM_KILLERS_SELFTEST: PASS n/N` (or FAIL with the failing ids) and exit 0 only when n == N > 0. Privacy: never print MESSAGE text. --dump-inputs must redact every MESSAGE that does not match a contract grammar line used for thresholds or version (replace with the class name), so a receipt can never carry a process name. Run one live read on this host and paste its JSON (it holds no private text by design). Commit nothing in the lane; you may commit in your clone. Return the file path, its sha256, your own test list, and the live output\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/BuildOomKillersTool.md"
+      },
+      {
+        "name": "WriteOomKillersCases",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nClaim C2, frozen cases. In the sandbox clone /fast/scratch/hyaku/mori-r26/wt-cases (branch r26-wt-cases, base 28b0494004fe1f064544224eca56dd42605db384) write tools/fixtures/mori-oom-killers/cases.json per the 'Case file' section of /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md (schema mori-oom-killers-cases-v1), 24 to 32 cases, each with id, why, inputs, expect {verdict, exit, fields}. Derive every MESSAGE string from the earlyoom v1.9.0 source format strings (fetch https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/main.c and kill.c; cite the source line in each case's `why`) and the show texts from real `systemctl show` property syntax (you may read this host's `systemctl show earlyoom.service -p LoadState,ActiveState,UnitFileState,ActiveEnterTimestampMonotonic` for syntax only). Cover every item the contract lists (each verdict rule; each grammar line; scope boundary one microsecond before and exactly at ActiveEnterTimestampMonotonic; incomplete scope with and without actions; inactive and absent earlyoom; null journal; unverified version; oomd notices; a byte-array MESSAGE; the host-shaped quiet case 10.00/10.00/5.00/5.00) plus at least four adversarial near-miss strings (for example `sending SIGTERM when` must not count as an action, a mid-line `sending SIGKILL to process`, leading whitespace). Use invented process names only. No tool exists and you must not write one: validate only that the JSON parses and every case has the required keys (python3 -c). Return the file, its sha256, the case count and a table id → rule covered\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/WriteOomKillersCases.md"
+      },
+      {
+        "name": "HostCapture",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nClaims C1/C2 evidence. In the sandbox clone /fast/scratch/hyaku/mori-r26/wt-capture write .ufo/waves/round-26/capture/capture.sh: a read-only bash script (set -u, no pipefail traps that hide errors, writes only the output file named in $1) that records with timestamps: uname -r; `systemctl --version | head -1`; `pacman -Q earlyoom systemd` (query only); `systemctl is-active` and `is-enabled` for earlyoom.service and systemd-oomd.service; `systemctl show earlyoom.service systemd-oomd.service -p Id,LoadState,ActiveState,UnitFileState,ActiveEnterTimestampMonotonic`; `systemctl show -p ManagedOOMSwap,ManagedOOMMemoryPressure` for user@1000.service, user-1000.slice, user.slice, -.slice; and for the current boot's earlyoom journal ONLY derived lines: the version line text, the two threshold lines text, and per-class counts (sending SIGTERM to process, sending SIGKILL to process, escalating, kill failed, low memory SIGTERM, low memory SIGKILL, mem avail report lines) computed with journalctl -o json --output-fields=MESSAGE piped to python3 in memory; and the d989611b oomd notice count (system journal, current boot). It must never write a MESSAGE line other than those three fixed-format lines, never the --avoid/--prefer lines, never ExecStart, never /etc/default/earlyoom contents. Run it once to /fast/scratch/hyaku/mori-r26/wt-capture/.ufo/waves/round-26/capture/capture.txt, then verify with grep that the output contains no 'avoid', 'prefer', 'cmdline', 'uid' or 'EARLYOOM_ARGS' text. Return both files' sha256 and the capture text\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/HostCapture.md"
+      },
+      {
+        "name": "ScoutStaleSweep",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\nAttack on C1 completeness (not counted, reported as debt or fixed as hygiene). Sweep /home/vgpnk/Projects/shokunin/mori-shokunin (corpus/knowledge, corpus/README.md, SKILL.md, PROVINCE.md, SCORECARD.md current sections; skip .ufo/ and corpus/evidence/ dated receipts) for any other present-tense statement about this host's userspace killers, systemd-oomd, earlyoom, the systemd version (261 vs installed 262) or the kernel version that the 2026-10-22 host contradicts. For each: path:line, the text (short), the contradicting read-only command and output, and whether it is a dated record (fine) or a present-tense claim (stale). Report the total\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/ScoutStaleSweep.md"
+      },
+      {
+        "name": "ScoutHostJournal",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\nC2 live-data reconnaissance, read-only, counts only. On this host: (1) list retained boots (`journalctl --list-boots | wc -l` and the first/last dates); (2) for each retained boot count earlyoom journal lines per contract grammar class (journalctl -q -b <idx> -u earlyoom.service -o json --output-fields=MESSAGE, classified in memory with python3; print counts only); (3) compare earlyoom.service ActiveEnterTimestampMonotonic with the __MONOTONIC_TIMESTAMP of the first earlyoom line of the current invocation (same clock? gap in microseconds); (4) whether the user can read the system journal without sudo (id -nG shows the group names; report only whether systemd-journal or wheel is present); (5) d989611b notice counts per boot. Never print MESSAGE text beyond the three fixed-format startup lines. Report what this means for the tool's scope rule and for 'quiet' versus 'unknown'\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/ScoutHostJournal.md"
+      },
+      {
+        "name": "ScoutPriorAdmissions",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\nPlanning data-walk for the L1 (planner seat mapping). Read /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-24-verifier-spotcheck.md and round-25-verifier-spotcheck.md and /home/vgpnk/Projects/shokunin/MANIFEST.json entries for mori rounds 20-25 (jq over .rounds[] where the lane is mori). Extract: what made capability and knowledge claims admit or fail, every width ruling, the evidence each closure re-derived and how (git reads, no lane tools run), and the specific pitfalls round 26 must avoid for a frozen-case capability claim and a stale-statement freshness claim. Return a numbered checklist of at most 15 items, each with its source line\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/ScoutPriorAdmissions.md"
+      },
+      {
+        "name": "ConnSiblingOverlap",
+        "agent": "connector",
+        "task": "/skill:godspeed\n\nAdjacency scan for FR10. Search sibling lane corpora under /home/vgpnk/Projects/shokunin/*-shokunin (read-only; git grep -i in each repo for earlyoom, systemd-oomd, oomd, ManagedOOM) and report: which lanes hold earlyoom or oomd knowledge (path:line), who owns host diagnosis of the earlyoom unit (tsukuroi per /home/vgpnk/Projects/shokunin/mori-shokunin/PROVINCE.md Adjacent rows), any sibling statement that contradicts the 2026-10-22 host reading (earlyoom active and enabled, oomd inactive), and the exact adjacency sentence mori's new entry should carry. Report contested scope; never propose editing a sibling\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/ConnSiblingOverlap.md"
+      },
+      {
+        "name": "ConnFleetConsumers",
+        "agent": "connector",
+        "task": "/skill:godspeed\n\nWho would consume the C2 verdict? Read-only: search /home/vgpnk/Projects/shokunin/scripts/hyaku/ (wave-slot.sh and friends), /home/vgpnk/Projects/shokunin/.ufo/waves/hyaku/PHASE3.md (last 200 lines) and the kumitate and tsukuroi corpora for memory-pressure or OOM gates the fleet already runs (for example wave-slot memory checks). Report how earlyoom's thresholds (SIGTERM at mem avail and swap free both at or below 10%) relate to any fleet memory gate threshold, whether a fleet run could be killed by earlyoom before the fleet gate trips, and what one line of the new entry should say about that. Detection and report only; never propose changing a fleet script\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/ConnFleetConsumers.md"
+      },
+      {
+        "name": "CriticC1Width",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nAttack C1 as declared in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/c1-phrases.txt. Is the statement wider than its counter? Can the counter reach 0 without the knowledge actually being corrected (deleting the sentences; paraphrasing them; moving them)? Does `git grep -F` behave as assumed with the multibyte arrow and backticks in phrase F2 (test it at 248408f5 in a read-only way)? Is freshness the right axis (AXES.md: freshness = skill claims re-verified against live surfaces; stale items flagged or fixed)? Does the claim satisfy the learning-claim rule (superseding entry) and the sourced-claim rule? Propose the tightest wording that the counter supports, and any second predicate the closure could re-derive\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/CriticC1Width.md"
+      },
+      {
+        "name": "CriticC2Width",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nAttack C2 as declared in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md. Is 'PASS N/N on frozen cases written by another seat before the tool' enough for a capability row, given the round-25 width ruling (/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-25-verifier-spotcheck.md:84-88)? Find contract rules that would let the tool print a number it cannot know (quiet when the journal is truncated; quiet when earlyoom restarted mid-boot; quiet when earlyoom logs to syslog instead of stderr; a version other than 1.9.0; the -g flag; --dryrun lines counted as kills). For each, say whether the contract already abstains and, if not, the one-line rule to add before the cases freeze. Draft the exact SCORECARD capability row wording that does not overclaim\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/CriticC2Width.md"
+      },
+      {
+        "name": "ReviewContractGrammar",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nReview the contract's message grammar in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md against earlyoom v1.9.0 source (fetch main.c, kill.c, msg.c at https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/). For every grammar line: does the format string match byte-for-byte after the prefix anchor, is the cited line number right, and can the line be emitted with a prefix (warn() may prepend a level or color? check msg.c) or split over two journal entries (the threshold message spans two fprintf calls and two lines — does journald store them as two entries?). List any action-relevant message the contract misses (e.g. `process %d exited`, `did not exit`, the -g line, `Could not find a process to kill`, `memory situation has recovered`). Verdict per line: correct / wrong (with the fix)\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/ReviewContractGrammar.md"
+      },
+      {
+        "name": "ReviewPrivacyDesign",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nPrivacy review of the round-26 design before anything lands. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md and the round-25 retention harm (/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-25-verifier-spotcheck.md:90-118). Identify every path by which private text could enter the lane this round: journal MESSAGE lines (kill lines carry process names and command lines), --dump-inputs receipts, the HostCapture script output, /etc/default/earlyoom values (--avoid/--prefer), ExecStart, OMP settings paths and values, session ids. For each, say what the contract or the wave bounds already prevent and the concrete check the L1 should run before each commit (for example a grep list). Also read the lane retention gate policy classes (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-18/frozen/c1-policy.json) and say whether a new earlyoom class is needed or the scan already covers it\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/ReviewPrivacyDesign.md"
+      },
+      {
+        "name": "ReviewScopeClock",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nReview the contract's scope rule in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md: earlyoom lines with __MONOTONIC_TIMESTAMP ≥ ActiveEnterTimestampMonotonic of the current invocation, current boot. Check against systemd v262 documentation (systemd.unit / org.freedesktop.systemd1 D-Bus docs for ActiveEnterTimestampMonotonic; journal fields doc for __MONOTONIC_TIMESTAMP, which is per boot) and the live host (read both values; compare with the first earlyoom line of this boot). Are the clocks comparable? What happens across a service restart in the same boot, a reload, a unit that never started (value 0)? Give a verdict and any rule change\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/ReviewScopeClock.md"
+      },
+      {
+        "name": "MutC1Counter",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nMutation-test the C1 counting command in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md. Work in the sandbox clone /fast/scratch/hyaku/mori-r26/wt-mutc1 (branch r26-wt-mutc1; you may commit there). Apply at least eight mutants to the four stale sites (paraphrase, re-case, move to another file, split the line, wrap in emphasis, insert a zero-width space, delete only the r26 entry, add a banner without fixing) and run the counter at each mutant commit. Report which mutants the counter kills and which survive, and for each survivor whether it matters for the claim (a survivor that keeps a stale statement alive matters). Propose a stronger counter only if it stays one command over committed bytes\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/MutC1Counter.md"
+      },
+      {
+        "name": "ReviewRetentionBase",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nNo-harm baseline (routed R8). Independently re-run the lane retention scan at the entering tip: `cd /home/vgpnk/Projects/shokunin/mori-shokunin && python3 -I -B tools/mori-retention-gate.py scan --repo /home/vgpnk/Projects/shokunin/mori-shokunin --rev 248408f5b6610a85bcbdebe7ac0b4fa7ed51422a --policy .ufo/waves/round-18/frozen/c1-policy.json --allowlist corpus/evidence/retention-allowlist.json > /fast/scratch/hyaku/mori-r26/ReviewRetentionBase/base.json` (it reads git objects only; create the directory first) and also at 28b0494004fe1f064544224eca56dd42605db384. Report unallowlisted_hits for both (the L1 measured 4 at 248408f5, receipt /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/evidence/retention-scan-base.txt) and the paths and classes of those hits (counts only, no text). Then say exactly how the L1 should run the scan on an uncommitted candidate before each commit (does the tool scan only commits? propose a temporary-clone method)\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/ReviewRetentionBase.md"
+      },
+      {
+        "name": "CriticLearningRules",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nAttack the round's conformance to the session rules before work lands: read /home/vgpnk/Projects/shokunin/.scratch/goal-20261022-hyaku-12h.md sections 'Quality bar' and 'Drift sentinels', the prompt /home/vgpnk/Projects/shokunin/.ufo/prompts/mori-round-26.md §2, §2b and §6.9, and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md. Check: lowest-axis rule (freshness 5 is tied lowest with depth and calibration; is that met?), learning claim, sourced claim, drift rule (different frontier area from routed repair), claim sizing (universal words, one command over committed bytes), causal separability of C1 and C2, ≥25% attack seats. List each rule with pass / risk / fail and the fix\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/CriticLearningRules.md"
+      },
+      {
+        "name": "ReviewOomdV262Facts",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nFreshness attack on the round-12 oomd facts kept by C1. The r12 entry (/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/userspace-oom-killers-r12.md:6,11-12,21) states systemd-oomd v261 facts. Host runs systemd 262. Open https://raw.githubusercontent.com/systemd/systemd/v262/src/oom/oomd-util.c, oomd-manager.c and catalog/systemd.catalog.in and check each fact (xattr names user.oomd_ooms / user.oomd_kill and when they are written, D-Bus Killed(path, reason), catalog d989611b…, SIGKILL to all processes). Verdict per fact: holds at v262 (new line), changed, or unverifiable. This decides whether the r26 entry may restate them\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/ReviewOomdV262Facts.md"
+      },
+      {
+        "name": "MutCaseDesign",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nPrepare the mutation battery for C2 (it runs in wave 2 against the landed tool and frozen cases). From /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-26/contract.md alone, write /fast/scratch/hyaku/mori-r26/MutCaseDesign/mutants.md: at least 12 mutants of a correct implementation (each one sentence plus the minimal code change it represents, for example: scope uses > instead of ≥; counts `sending SIGTERM when` as an action; returns QUIET when the journal is null; ignores grammar version; prints zero actions for inactive earlyoom; exits 1 on an uncaught exception; drops the oomd notice rule; reads thresholds from the wrong line). For each mutant, name the contract rule it violates and the input that should kill it. Do not read or write any cases file or tool; you are designing blind\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/MutCaseDesign.md"
+      },
+      {
+        "name": "ReviewHygieneDebt",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nRouted-defect triage (hygiene, not claims): for each of R1-R8 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-25-verifier-spotcheck.md:172-202, read the cited lane bytes at 248408f5 and classify: (a) can be fixed this round by prose only, with the exact place; (b) needs code (estimate lines) and its risk to operability; (c) operator-owned (R8 history disposition). Recommend which to fix now and which to carry as named debt with a one-line reason. Also check whether the L0 question about history in the public remote has an answer in /home/vgpnk/Projects/shokunin/.ufo/l0-questions.md (report only whether an `L0 ANSWER` line exists for it, quote nothing private)\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-26/w1/ReviewHygieneDebt.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}

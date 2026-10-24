@@ -1,0 +1,24 @@
+{
+  "entering_commit": "b83edc6ee3db6822382ab673d7e6e984e420f22f",
+  "observed_at": "2026-10-20T08:49:58.582141+00:00",
+  "command": [
+    "git",
+    "-C",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin",
+    "cat-file",
+    "-e",
+    "b83edc6ee3db6822382ab673d7e6e984e420f22f:tools/mori-journal-window.py"
+  ],
+  "exit_code": 128,
+  "stderr": "fatal: path 'tools/mori-journal-window.py' does not exist in 'b83edc6ee3db6822382ab673d7e6e984e420f22f'\n",
+  "capability_present": false,
+  "old_context_spec_sha256": "5f91c4fdea9e60425f1cc042b13a2003f7cd853ca450b79dda1c91efb2540e77",
+  "production_pins": {
+    "tools/mori-census.sh": "f1f8d1b62bb617bbcc4664057ab807d3fed8c275b7aabbdf7b373323c5501ff7",
+    "tools/mori-silence-cases.sh": "34cd5770889ec6e7521b477aa9976cece7a64e07b83774c12ce2aea73161abfa",
+    "tools/mori-round13-regressions.py": "23b753c1b0f742ddf7ea4e1e1ff3df6aa16a89dc8742b50c135a9d356db9f53b",
+    "tools/mori-round14-regressions.py": "533218a566030fdabf7ca6a1c78111ca10be3fb3cb0e4a7b22734959f847e4ef",
+    "tools/mori-round15-regressions.py": "6a55c33cc13e2cd862ebd44db66e8af635a35d7cd2a85168360569c886d62ffe",
+    "corpus/evidence/baseline-r10-20261015T2231Z.json": "0993b23505deab2aeb05b2309bdf7dd6eaad2b82f27852491352511aa9670478"
+  }
+}

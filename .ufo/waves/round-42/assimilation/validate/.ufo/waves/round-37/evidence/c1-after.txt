@@ -1,0 +1,17 @@
+command: python3 .ufo/waves/round-37/count-c1.py e57c58b5
+P-C1: at revision R, tools/mori-sources-appendonly.py prints exactly the counter's hidden truth for ids, deleted, superseded and round_changed, and exactly the truth's per-id `changed`/`deleted` lines, on each of 24 sandbox SOURCES.md histories drawn at run time, on the lane's own history (rev 6bd57097, round base f10a320d) where the independent oracle lists at least one id, and on one run-time-drawn challenge history presented in real-arm clothing (lane path, lane git identity, lane title); and the same counter rejects all three negative fixtures: a real-arm memoizer, a constant printer, and a summary-only printer.
+tool: /tmp/mori-c1-tool-exj399_h/mori-sources-appendonly.py
+blind arm: 24/24 sandbox histories matched the hidden truth (1.8s; coverage: deletions=19 changed-back=17 superseded=10)
+real arm: pass (0.3s)
+  tool:   appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  oracle: appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193]
+  tool exit=1
+challenge arm (real-arm clothing): pass (0.1s)
+  truth:  appendonly_violations=3 ids=[] deleted=[S031,S056,S058] superseded=[] round_changed=[S031,S056,S058]
+  tool:   appendonly_violations=3 ids=[] deleted=[S031,S056,S058] superseded=[] round_changed=[S031,S056,S058]
+negative memo-n1.py     rejected (challenge: lists differ: want appendonly_violations=4 ids=[S146,S174] deleted=[S083,S277] superseded=[] round_changed=[S083,S146,S174,S277] got appendonly_violations=18 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193] deleted=[] superseded=[S069,S182,S193] round_changed=[S182,S193])
+negative const.py       rejected (blind 4/4 (repo200: lists differ))
+negative summary-only.py rejected (blind 3/4 (repo200: per-id lines differ (malformed=0)))
+C1=met
+seed=13985344346805549517
+EXIT=0

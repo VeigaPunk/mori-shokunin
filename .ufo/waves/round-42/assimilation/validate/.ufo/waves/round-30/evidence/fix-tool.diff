@@ -1,0 +1,83 @@
+--- tools/mori-oom-killers.py	2026-10-22 17:35:47.397347664 -0300
++++ /fast/scratch/hyaku/mori-r30/FixToolResidual/lane/tools/mori-oom-killers.py	2026-10-22 18:16:38.012961547 -0300
+@@ -269,15 +269,16 @@
+ 
+     earlyoom_props = parse_show(earlyoom_show) if earlyoom_show is not None else {}
+ 
+-    # Scope: lines of the current earlyoom invocation, i.e. lines whose
+-    # monotonic timestamp is at or after ActiveEnterTimestampMonotonic.
+-    # Only an active unit has a current invocation.
++    # Active units are scoped to the current invocation. A retained nonzero
++    # boundary on a non-active unit still scopes diagnostic fields to the last
++    # invocation; its actions remain unavailable.
+     scoped = []
+     scope_known = False
++    scope_bounded = False
+     unplaced = False
+-    if earlyoom_state == "active" and journal is not None:
++    if journal is not None:
+         aetm = _monotonic_usec(earlyoom_props.get("ActiveEnterTimestampMonotonic"))
+-        if aetm is None or aetm == 0:
++        if earlyoom_state == "active" and (aetm is None or aetm == 0):
+             # 0 means no active-enter transition recorded this boot
+             # (org.freedesktop.systemd1(5)); like a missing value it cannot
+             # bound the invocation.
+@@ -300,8 +301,13 @@
+                     last_version = index
+             if last_version is not None:
+                 scoped = scoped[last_version:]
+-        else:
+-            scope_known = True
++        elif (
++            aetm is not None
++            and aetm != 0
++            and earlyoom_props.get("ActiveState") is not None
++        ):
++            scope_bounded = True
++            scope_known = earlyoom_state == "active"
+             for entry in journal:
+                 stamp = _entry_timestamp(entry)
+                 if stamp is None:
+@@ -434,11 +440,9 @@
+         }
+ 
+     if earlyoom_state != "active":
+-        # No current invocation: no version, no thresholds, no action counts.
+-        # An inactive or absent killer reports actions: null (unavailable),
+-        # never zero counts.
+-        version = None
+-        grammar = GRAMMAR_UNVERIFIED
++        # The actions object is unavailable, but a retained log boundary can
++        # still supply the version and independent line counters.
++        # Inactive or absent killers report actions: null, never zero counts.
+         thresholds = None
+         scope_complete = False
+         actions = None
+@@ -453,7 +457,9 @@
+         dryrun = False
+     else:
+         actions = dict(counts)
+-    if actions is None:
++    if actions is None and (
++        journal is None or earlyoom_show is None or not scope_bounded
++    ):
+         dryrun_send_lines = None
+         process_group_lines = None
+ 
+@@ -465,7 +471,15 @@
+     acted = (
+         (actions is not None and (actions["sigterm"] or actions["sigkill"] or actions["escalations"]))
+         or (oomd_notices is not None and oomd_notices > 0)
+-        or (earlyoom_state != "active" and earlier_send_lines)
++        or (
++            earlyoom_state != "active"
++            and (
++                earlier_send_lines
++                or counts["sigterm"]
++                or counts["sigkill"]
++                or counts["escalations"]
++            )
++        )
+     )
+ 
+     unknown = False

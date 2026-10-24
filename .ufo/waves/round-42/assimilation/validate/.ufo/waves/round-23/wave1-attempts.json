@@ -1,0 +1,49 @@
+[
+ {
+  "attempt": 1,
+  "utc": "2026-10-21T17:03:11.644975Z",
+  "result": "{\"text\": \"Failed to start background task jobs: MadoR22-2.CaseHostLike: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MadoR22-2.CaseBtrfsQgroup: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MadoR22-2.CaseBtrfsSquota: Backgr"
+ },
+ {
+  "attempt": 2,
+  "utc": "2026-10-21T17:06:13.093456Z",
+  "grant": "granted lane=mori wave=r23-w1 seats=64 live=168 pending=0 cap=320",
+  "result": "{\"text\": \"Failed to start background task jobs: MadoR22-2.CaseHostLike-2: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MadoR22-2.CaseBtrfsQgroup-2: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MadoR22-2.CaseBtrfsSquota-2: "
+ },
+ {
+  "attempt": 3,
+  "utc": "2026-10-21T17:09:13.217738Z",
+  "grant": "granted lane=mori wave=r23-w1 seats=64 live=153 pending=0 cap=320",
+  "result": "{\"text\": \"Failed to start background task jobs: MadoR22-2.CaseHostLike-3: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MadoR22-2.CaseBtrfsQgroup-3: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MadoR22-2.CaseBtrfsSquota-3: "
+ },
+ {
+  "attempt": 4,
+  "utc": "2026-10-21T17:12:13.327620Z",
+  "grant": "granted lane=mori wave=r23-w1 seats=64 live=122 pending=0 cap=320",
+  "result": "{\"text\": \"Failed to start background task jobs: MadoR22-2.CaseHostLike-4: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MadoR22-2.CaseBtrfsQgroup-4: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MadoR22-2.CaseBtrfsSquota-4: "
+ },
+ {
+  "attempt": 5,
+  "utc": "2026-10-21T17:15:13.664133Z",
+  "grant": "granted lane=mori wave=r23-w1 seats=64 live=165 pending=0 cap=320",
+  "result": "{\"text\": \"Failed to start background task jobs: MadoR22-2.CaseHostLike-5: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MadoR22-2.CaseBtrfsQgroup-5: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MadoR22-2.CaseBtrfsSquota-5: "
+ },
+ {
+  "attempt": 6,
+  "utc": "2026-10-21T17:18:14.221726Z",
+  "grant": "granted lane=mori wave=r23-w1 seats=64 live=146 pending=0 cap=320",
+  "result": "{\"text\": \"Failed to start background task jobs: MadoR22-2.CaseHostLike-6: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MadoR22-2.CaseBtrfsQgroup-6: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MadoR22-2.CaseBtrfsSquota-6: "
+ },
+ {
+  "attempt": 7,
+  "utc": "2026-10-21T17:21:14.398094Z",
+  "grant": "granted lane=mori wave=r23-w1 seats=64 live=117 pending=0 cap=320",
+  "result": "{\"text\": \"Failed to start background task jobs: MadoR22-2.CaseHostLike-7: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MadoR22-2.CaseBtrfsQgroup-7: Background job limit reached (100). Wait for running jobs to finish or cancel one.; MadoR22-2.CaseBtrfsSquota-7: "
+ },
+ {
+  "attempt": 8,
+  "utc": "2026-10-21T17:24:14.626546Z",
+  "grant": "granted lane=mori wave=r23-w1 seats=64 live=92 pending=0 cap=320",
+  "result": "{\"text\": \"Spawned 64 background agents using reviewer, scout, critic, connector, sentinel, revenger, scribe, simplifier, executor.\\n- `MadoR22-2.CaseHostLike-8` (job `MadoR22-2.CaseHostLike-8`)\\n- `MadoR22-2.CaseBtrfsQgroup-8` (job `MadoR22-2.CaseBtrfsQgroup-8`)\\n- `MadoR22-2.CaseBtrfsSquota-8` (job"
+ }
+]

@@ -1,0 +1,10 @@
+{
+  "id": "regression-selftest",
+  "measured_commit": "18d7d55",
+  "command": "python3 tools/mori-round13-regressions.py --selftest",
+  "started_utc": "2026-10-20T04:27:35.462026+00:00",
+  "elapsed_s": 0.039,
+  "exit": 0,
+  "stdout": "SELFTEST: pass checks=23\n",
+  "stderr": ""
+}

@@ -1,0 +1,1790 @@
+{
+  "base_commit": "0fa5e0de194bcc270a927a166664113e6821442b",
+  "fixtures": [
+    {
+      "cases": [
+        {
+          "capture": null,
+          "id": "bootarray-user-kernel-oom-boot-array-current",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "BootArray.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "bootarray-user-kernel-oom-boot-null",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "BootArray.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "bootarray-system-kernel-oom-boot-array-multi",
+          "invalid": {
+            "system": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "BootArray.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "bootarray-user-unit-signal-boot-null",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "BootArray.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 1
+            }
+          },
+          "red_relevant": true,
+          "want_oom": false,
+          "want_signal": true
+        }
+      ],
+      "name": "BootArray.json",
+      "sha256": "a746fa2b6d5bb5ea5b8df450c3b6e114577eca030aab3bcbcc6ba9812f7931ed"
+    },
+    {
+      "cases": [
+        {
+          "capture": null,
+          "id": "clean-empty-user-and-system",
+          "invalid": {},
+          "invalid_class": null,
+          "mode": "honor",
+          "pack": "CleanControls.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "clean-user-kernel-oom-homogeneous-three",
+          "invalid": {},
+          "invalid_class": null,
+          "mode": "honor",
+          "pack": "CleanControls.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 3,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "clean-user-unit-signal-single",
+          "invalid": {},
+          "invalid_class": null,
+          "mode": "honor",
+          "pack": "CleanControls.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 1
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": true
+        },
+        {
+          "capture": null,
+          "id": "clean-user-process-sigkill-single",
+          "invalid": {},
+          "invalid_class": null,
+          "mode": "honor",
+          "pack": "CleanControls.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 1,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": true
+        }
+      ],
+      "name": "CleanControls.json",
+      "sha256": "3e2e4df9bc599552f0a9198c65accd83f8334aa6d88383b32a8ec041be0e93bc"
+    },
+    {
+      "cases": [
+        {
+          "capture": null,
+          "id": "crossscope_system_unit_signal_no_user_warn",
+          "invalid": {},
+          "invalid_class": null,
+          "mode": "honor",
+          "pack": "CrossScope.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 1
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "crossscope_system_signal_positives_user_foreign_sigkill_no_warn",
+          "invalid": {
+            "system": "record-invalid",
+            "user": "boot-mismatch"
+          },
+          "invalid_class": "unit_sigkill_record",
+          "mode": "ignore-filters",
+          "pack": "CrossScope.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 1,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 1
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "crossscope_user_boot_array_kernel_negative_vs_system_kernel_oom",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "CrossScope.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "crossscope_user_foreign_unit_negative_vs_system_unit_oom",
+          "invalid": {
+            "user": "boot-mismatch"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "CrossScope.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": true,
+          "want_signal": false
+        }
+      ],
+      "name": "CrossScope.json",
+      "sha256": "31bf81c0ae64e5c245a19da08d6771286ca317dda6b8a3f75f3f91e05ad776b7"
+    },
+    {
+      "cases": [
+        {
+          "capture": null,
+          "id": "fanout-positive-msgid-array-kernel",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "FanoutPositive.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 2,
+              "positive_process_sigkill": 1,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 1
+            }
+          },
+          "red_relevant": false,
+          "want_oom": true,
+          "want_signal": true
+        },
+        {
+          "capture": null,
+          "id": "fanout-positive-unit-boot-array",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "FanoutPositive.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 1,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 1
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": true
+        },
+        {
+          "capture": null,
+          "id": "fanout-positive-process-boot-missing",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_sigkill_record",
+          "mode": "ignore-filters",
+          "pack": "FanoutPositive.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 1,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 1
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": true
+        }
+      ],
+      "name": "FanoutPositive.json",
+      "sha256": "9678c9f6b20bafa4e9f5ec990ef75f7cbc6c73c9cfe2f1621ae5bdb7a2339427"
+    },
+    {
+      "cases": [
+        {
+          "capture": null,
+          "id": "foreignboot_user_kernel_mixed",
+          "invalid": {
+            "user": "multi-boot"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "ForeignBoot.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "foreignboot_system_unit_oom_mixed",
+          "invalid": {
+            "system": "multi-boot"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "ForeignBoot.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "foreignboot_user_unit_signal_mixed",
+          "invalid": {
+            "user": "multi-boot"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "ForeignBoot.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 1
+            }
+          },
+          "red_relevant": true,
+          "want_oom": false,
+          "want_signal": true
+        },
+        {
+          "capture": null,
+          "id": "foreignboot_user_unit_oom_with_foreign_process_sigkill",
+          "invalid": {
+            "user": "multi-boot"
+          },
+          "invalid_class": "unit_sigkill_record",
+          "mode": "ignore-filters",
+          "pack": "ForeignBoot.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        }
+      ],
+      "name": "ForeignBoot.json",
+      "sha256": "d7e44c7c1d4c8d6a5c333a447c3c7a20f886e14000b885164ca7b6c7bed19d88"
+    },
+    {
+      "cases": [
+        {
+          "capture": null,
+          "id": "kernsys_array_same_id_retains_valid_oom",
+          "invalid": {
+            "system": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "KernelSystem.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "kernsys_array_only_never_positive",
+          "invalid": {
+            "system": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "KernelSystem.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "kernsys_empty_array_retains_valid_oom",
+          "invalid": {
+            "system": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "KernelSystem.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "kernsys_multi_array_ordered_retains_valid_oom",
+          "invalid": {
+            "system": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "KernelSystem.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        }
+      ],
+      "name": "KernelSystem.json",
+      "sha256": "9c60778498e62a47f6dc16cb80ac52be4548a37b4fa7887485e96e8da6edcc3b"
+    },
+    {
+      "cases": [
+        {
+          "capture": null,
+          "id": "kernuser_wrong_oomd_id_retains_valid_oom",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "KernelUser.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "kernuser_two_valid_coredump_id_single_oom",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "KernelUser.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 2,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "kernuser_sigkill_id_without_status_retains_valid_oom",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "KernelUser.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "kernuser_missing_message_id_retains_valid_oom",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "KernelUser.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        }
+      ],
+      "name": "KernelUser.json",
+      "sha256": "3819be9e0d7c00ca2f65e78fbd80e9a84a0c9f0602186081120554d14e01ee90"
+    },
+    {
+      "cases": [
+        {
+          "capture": null,
+          "id": "NEG_INVALID_KERNEL_MSGID_ARRAY_USER",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "NegativeInvalid.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "NEG_INVALID_UNIT_MSGID_ARRAY_USER",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "NegativeInvalid.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "NEG_INVALID_SIGKILL_BOOT_ARRAY_SYSTEM",
+          "invalid": {
+            "system": "record-invalid"
+          },
+          "invalid_class": "unit_sigkill_record",
+          "mode": "ignore-filters",
+          "pack": "NegativeInvalid.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "NEG_INVALID_KERNEL_BOOT_MISSING_SYSTEM",
+          "invalid": {
+            "system": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "NegativeInvalid.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": false
+        }
+      ],
+      "name": "NegativeInvalid.json",
+      "sha256": "a25b39f14f838a70af8e6d0c694f729cb1d6bc3ec89b61b076c1b1e6c386902a"
+    },
+    {
+      "cases": [
+        {
+          "capture": null,
+          "id": "neg-results-user-array-oom-only",
+          "invalid": {},
+          "invalid_class": null,
+          "mode": "honor",
+          "pack": "NegativeResults.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "neg-results-system-null-with-valid-oom",
+          "invalid": {},
+          "invalid_class": null,
+          "mode": "honor",
+          "pack": "NegativeResults.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "neg-results-user-missing-with-valid-signal",
+          "invalid": {},
+          "invalid_class": null,
+          "mode": "honor",
+          "pack": "NegativeResults.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 1
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": true
+        },
+        {
+          "capture": null,
+          "id": "neg-results-user-wrong-case-only",
+          "invalid": {},
+          "invalid_class": null,
+          "mode": "honor",
+          "pack": "NegativeResults.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": false
+        }
+      ],
+      "name": "NegativeResults.json",
+      "sha256": "0cf958fd6cde2f18bba1c9ee258f449df9d5ce8c146c5d9763d83c60664dcf82"
+    },
+    {
+      "cases": [
+        {
+          "capture": null,
+          "id": "negative-status-code-array-killed",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_sigkill_record",
+          "mode": "ignore-filters",
+          "pack": "NegativeStatus.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "negative-status-status-array-string9",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_sigkill_record",
+          "mode": "ignore-filters",
+          "pack": "NegativeStatus.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "negative-status-status-null",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_sigkill_record",
+          "mode": "ignore-filters",
+          "pack": "NegativeStatus.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "negative-status-wrong-code-exited-adjacent-kernel-oom",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_sigkill_record",
+          "mode": "ignore-filters",
+          "pack": "NegativeStatus.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        }
+      ],
+      "name": "NegativeStatus.json",
+      "sha256": "e8b91ad11ef0975388b5c927f7584d6fcd3e8b3aad087b99f30add5ab981fbe4"
+    },
+    {
+      "cases": [
+        {
+          "capture": null,
+          "id": "order-kernel-forward-unit-oom-mixed",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "OrderMixed.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "order-kernel-reversed-unit-oom-mixed",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "OrderMixed.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 1,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "order-unit-signal-duplicated-array-poison",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "OrderMixed.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 2
+            }
+          },
+          "red_relevant": true,
+          "want_oom": false,
+          "want_signal": true
+        },
+        {
+          "capture": null,
+          "id": "order-process-sigkill-duplicated-status-array-poison",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_sigkill_record",
+          "mode": "ignore-filters",
+          "pack": "OrderMixed.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 2,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": false,
+          "want_signal": true
+        }
+      ],
+      "name": "OrderMixed.json",
+      "sha256": "5a054dc6b1056ee1fef838a6ee63d5e61a057a36636d5472b352116c1c432d4e"
+    },
+    {
+      "cases": [
+        {
+          "capture": null,
+          "id": "process-user-valid-string9-plus-status-array",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_sigkill_record",
+          "mode": "ignore-filters",
+          "pack": "ProcessUser.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 1,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": false,
+          "want_signal": true
+        },
+        {
+          "capture": null,
+          "id": "process-user-valid-numeric9-plus-status-null",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_sigkill_record",
+          "mode": "ignore-filters",
+          "pack": "ProcessUser.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 1,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": false,
+          "want_signal": true
+        },
+        {
+          "capture": null,
+          "id": "process-user-status-array-only-no-positive",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_sigkill_record",
+          "mode": "ignore-filters",
+          "pack": "ProcessUser.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "process-user-valid-string9-plus-wrong-scalar-137",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_sigkill_record",
+          "mode": "ignore-filters",
+          "pack": "ProcessUser.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 1,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": false,
+          "want_signal": true
+        }
+      ],
+      "name": "ProcessUser.json",
+      "sha256": "0e7c89c52f552bbc800612b67cefb149087d8d4dcb3dc78154bb92f31a0ed077"
+    },
+    {
+      "cases": [
+        {
+          "capture": null,
+          "id": "signal_user_valid_only",
+          "invalid": {},
+          "invalid_class": null,
+          "mode": "honor",
+          "pack": "SignalUser.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 1
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": true
+        },
+        {
+          "capture": null,
+          "id": "signal_user_valid_plus_array_multivalue",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "SignalUser.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 1
+            }
+          },
+          "red_relevant": true,
+          "want_oom": false,
+          "want_signal": true
+        },
+        {
+          "capture": null,
+          "id": "signal_user_valid_plus_array_oom_claim",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "SignalUser.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 1
+            }
+          },
+          "red_relevant": true,
+          "want_oom": false,
+          "want_signal": true
+        },
+        {
+          "capture": null,
+          "id": "signal_user_array_only_not_positive",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "SignalUser.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": false
+        }
+      ],
+      "name": "SignalUser.json",
+      "sha256": "5a1c6ce96d6b12d771a618a2d87b7f0cb8bfcf49fec7202c4bc82b1bed8867ad"
+    },
+    {
+      "cases": [
+        {
+          "capture": null,
+          "id": "psu_system_missing_subject_foreign_boot",
+          "invalid": {
+            "system": "multi-boot"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "SubjectUnknown.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "psu_array_subject_msgid_array",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "SubjectUnknown.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "psu_ambiguous_subject_kernel_msgid_array",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "SubjectUnknown.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "psu_array_subject_sigkill_foreign_boot",
+          "invalid": {
+            "user": "multi-boot"
+          },
+          "invalid_class": "unit_sigkill_record",
+          "mode": "ignore-filters",
+          "pack": "SubjectUnknown.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 1,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": true
+        }
+      ],
+      "name": "SubjectUnknown.json",
+      "sha256": "16402ca406853b579b07b78e430541456dcc7dd0114d53c413afc73d595de7cc"
+    },
+    {
+      "cases": [
+        {
+          "capture": null,
+          "id": "unitsys_system_oom_valid_plus_unit_missing_boot",
+          "invalid": {
+            "system": "record-invalid"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "UnitSystem.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "unitsys_system_oom_valid_plus_kernel_missing_boot",
+          "invalid": {
+            "system": "record-invalid"
+          },
+          "invalid_class": "kernel_oom_notice",
+          "mode": "dup-kernel",
+          "pack": "UnitSystem.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "unitsys_system_oom_valid_plus_process_missing_boot",
+          "invalid": {
+            "system": "record-invalid"
+          },
+          "invalid_class": "unit_sigkill_record",
+          "mode": "ignore-filters",
+          "pack": "UnitSystem.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "unitsys_system_oom_missing_boot_only",
+          "invalid": {
+            "system": "record-invalid"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "UnitSystem.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": false,
+          "want_oom": false,
+          "want_signal": false
+        }
+      ],
+      "name": "UnitSystem.json",
+      "sha256": "b2a8550cd82bab1080cbc1af08ae89d3d0d2df50e37ceea388fc5798582d978f"
+    },
+    {
+      "cases": [
+        {
+          "capture": null,
+          "id": "unituser_msgid_array_retains_valid_oom",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "UnitUser.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "unituser_msgid_missing_retains_valid_oom",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "UnitUser.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "unituser_msgid_object_retains_valid_oom",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "UnitUser.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        },
+        {
+          "capture": null,
+          "id": "unituser_malformed_signal_sibling_no_warn",
+          "invalid": {
+            "user": "record-invalid"
+          },
+          "invalid_class": "unit_failure_record",
+          "mode": "ignore-filters",
+          "pack": "UnitUser.json",
+          "positives": {
+            "system": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 0,
+              "positive_unit_signal": 0
+            },
+            "user": {
+              "positive_kernel_oom": 0,
+              "positive_process_sigkill": 0,
+              "positive_unit_oom": 1,
+              "positive_unit_signal": 0
+            }
+          },
+          "red_relevant": true,
+          "want_oom": true,
+          "want_signal": false
+        }
+      ],
+      "name": "UnitUser.json",
+      "sha256": "f7468bdd83dcac92f97478cb9d49591e538cc9c2c83ea41e4e183684fd3377a3"
+    }
+  ],
+  "frozen_sha256": "0e41cb83fce2e8c5c711171e1cde2e6fa2809dcfce630eccabe52bcbe41516d9",
+  "frozen_source": "git:0fa5e0de194bcc270a927a166664113e6821442b:tools/mori-census.sh",
+  "gate_sha256": "31e8e17a51684c738110078639418d97acd90867f51d017af9e45c21f2d03d27",
+  "pinned_frozen_sha256": "0e41cb83fce2e8c5c711171e1cde2e6fa2809dcfce630eccabe52bcbe41516d9",
+  "r14_helper": "tools/mori-round14-regressions.py",
+  "r14_helper_sha256": "533218a566030fdabf7ca6a1c78111ca10be3fb3cb0e4a7b22734959f847e4ef",
+  "schema": "mori-round15-regressions-expected-v1"
+}

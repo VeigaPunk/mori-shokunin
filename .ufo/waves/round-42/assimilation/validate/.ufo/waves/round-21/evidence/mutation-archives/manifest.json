@@ -1,0 +1,35 @@
+{
+  "schema": "mori-r21-mutation-archives-v1",
+  "measured_revision": "9fb1f911cfdd6061005c300795f44b1b45523897",
+  "archives": [
+    {
+      "name": "old-permission",
+      "original_workspace": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/build/MutOldPermission/probe-ojxbmd66",
+      "archive": ".ufo/waves/round-21/evidence/mutation-archives/old-permission.tar.gz",
+      "sha256": "70be803c19330cf74a5b6e193fb666070efd3bcd8d5d26e201daf2ce1c3b40f5",
+      "bytes": 13609
+    },
+    {
+      "name": "lost-identity",
+      "original_workspace": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/build/MutLostIdentity/omission-5q2k6jqz",
+      "archive": ".ufo/waves/round-21/evidence/mutation-archives/lost-identity.tar.gz",
+      "sha256": "aec71132b7a00b3015d60b8a577ea10b728c9bf36534965dfc0821c029a3f37a",
+      "bytes": 13475
+    },
+    {
+      "name": "cleanup-actor",
+      "original_workspace": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/build/MutCleanupDisposition/probe-zggwjpd4",
+      "archive": ".ufo/waves/round-21/evidence/mutation-archives/cleanup-actor.tar.gz",
+      "sha256": "711cbcccb2784041a66bd69f8ccb6682304a3ee10058a3e7072bff5bb84c8dd8",
+      "bytes": 17781
+    },
+    {
+      "name": "digest-symlink",
+      "original_workspace": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-21/build/MutDigestTrust/probe-arusgzr3",
+      "archive": ".ufo/waves/round-21/evidence/mutation-archives/digest-symlink.tar.gz",
+      "sha256": "23abbe337564a67950df08b8440f71b7cff80ff4ccca9b69ed478a18e6556608",
+      "bytes": 21663
+    }
+  ],
+  "note": "Complete generated synthetic workspaces including fixture Git objects retained before cleanup; no real deleted aggregator bodies or private session material."
+}

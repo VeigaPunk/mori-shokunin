@@ -1,0 +1,498 @@
+{
+  "pristine": [
+    {
+      "id": "rate_limit_beats_quota_by_status_and_token",
+      "status": "match",
+      "reasons": [],
+      "tool_argv": [
+        "/usr/bin/python3",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-tool/mori-seat-terminal.py",
+        "--sessions-dir",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/pristine/cases/rate_limit_beats_quota_by_status_and_token/sessions",
+        "--now-ms",
+        "1761000000000"
+      ],
+      "rc": 1,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/pristine/runs/rate_limit_beats_quota_by_status_and_token.stdout",
+      "stdout_sha256": "33c96d58ac5a9ff3b0786a59c8ca491e44e7689cbc81980f0a9c28a9a5b36c9f",
+      "stderr_bytes": 0,
+      "stdout_excerpt": {
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "aborted": 0,
+          "completed": 0,
+          "dead_error_other": 0,
+          "dead_quota": 2,
+          "dead_rate_limit": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": [
+          {
+            "seat": "status-beats-quota",
+            "class": "dead_quota",
+            "error_status": 429,
+            "error_code": null
+          },
+          {
+            "seat": "token-beats-quota",
+            "class": "dead_quota",
+            "error_status": null,
+            "error_code": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_quota_1113_beats_429",
+      "status": "match",
+      "reasons": [],
+      "tool_argv": [
+        "/usr/bin/python3",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-tool/mori-seat-terminal.py",
+        "--sessions-dir",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/pristine/cases/code_quota_1113_beats_429/sessions",
+        "--now-ms",
+        "1761000000000"
+      ],
+      "rc": 1,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/pristine/runs/code_quota_1113_beats_429.stdout",
+      "stdout_sha256": "67a5219df7ecd4f2cb4633457b3157bc0c48c099574b789459f8aa51fce71fb6",
+      "stderr_bytes": 0,
+      "stdout_excerpt": {
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "aborted": 0,
+          "completed": 0,
+          "dead_error_other": 0,
+          "dead_quota": 1,
+          "dead_rate_limit": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": [
+          {
+            "seat": "code-1113",
+            "class": "dead_quota",
+            "error_status": 429,
+            "error_code": "1113"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_quota_1308_beats_429",
+      "status": "match",
+      "reasons": [],
+      "tool_argv": [
+        "/usr/bin/python3",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-tool/mori-seat-terminal.py",
+        "--sessions-dir",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/pristine/cases/code_quota_1308_beats_429/sessions",
+        "--now-ms",
+        "1761000000000"
+      ],
+      "rc": 1,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/pristine/runs/code_quota_1308_beats_429.stdout",
+      "stdout_sha256": "ce24b62b5b0d88a5d7239078282df4c1f992b60cb97f3e043b224cd5c0f38559",
+      "stderr_bytes": 0,
+      "stdout_excerpt": {
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "aborted": 0,
+          "completed": 0,
+          "dead_error_other": 0,
+          "dead_quota": 1,
+          "dead_rate_limit": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": [
+          {
+            "seat": "code-1308",
+            "class": "dead_quota",
+            "error_status": 429,
+            "error_code": "1308"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_rate_1302_beats_quota_token",
+      "status": "match",
+      "reasons": [],
+      "tool_argv": [
+        "/usr/bin/python3",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-tool/mori-seat-terminal.py",
+        "--sessions-dir",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/pristine/cases/code_rate_1302_beats_quota_token/sessions",
+        "--now-ms",
+        "1761000000000"
+      ],
+      "rc": 1,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/pristine/runs/code_rate_1302_beats_quota_token.stdout",
+      "stdout_sha256": "8579bb8cc5b07e0519e017bb071f043fe178adf6bf0215778487c0cc9bdc9cf3",
+      "stderr_bytes": 0,
+      "stdout_excerpt": {
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "aborted": 0,
+          "completed": 0,
+          "dead_error_other": 0,
+          "dead_quota": 0,
+          "dead_rate_limit": 1,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": [
+          {
+            "seat": "code-1302-quota",
+            "class": "dead_rate_limit",
+            "error_status": 429,
+            "error_code": "1302"
+          }
+        ]
+      }
+    }
+  ],
+  "mutated": [
+    {
+      "id": "rate_limit_beats_quota_by_status_and_token",
+      "status": "mismatch",
+      "reasons": [
+        "want.totals.dead_rate_limit=2",
+        "want.totals.dead_quota=0",
+        "want.seat_class:status-beats-quota",
+        "want.seat_class:token-beats-quota",
+        "unexpected_seat:status-beats-quota"
+      ],
+      "tool_argv": [
+        "/usr/bin/python3",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-tool/mori-seat-terminal.py",
+        "--sessions-dir",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/mutated/cases/rate_limit_beats_quota_by_status_and_token/sessions",
+        "--now-ms",
+        "1761000000000"
+      ],
+      "rc": 1,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/mutated/runs/rate_limit_beats_quota_by_status_and_token.stdout",
+      "stdout_sha256": "1f3e2babf2c105197a95bdef7d943f236795d3ebb1bfc93e1d54cab393c03a5e",
+      "stderr_bytes": 0,
+      "stdout_excerpt": {
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "aborted": 0,
+          "completed": 0,
+          "dead_error_other": 0,
+          "dead_quota": 0,
+          "dead_rate_limit": 2,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": [
+          {
+            "seat": "status-beats-quota",
+            "class": "dead_rate_limit",
+            "error_status": 429,
+            "error_code": null
+          },
+          {
+            "seat": "token-beats-quota",
+            "class": "dead_rate_limit",
+            "error_status": null,
+            "error_code": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_quota_1113_beats_429",
+      "status": "mismatch",
+      "reasons": [
+        "want.totals.dead_rate_limit=1",
+        "want.totals.dead_quota=0",
+        "want.seat_class:code-1113",
+        "unexpected_seat:code-1113"
+      ],
+      "tool_argv": [
+        "/usr/bin/python3",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-tool/mori-seat-terminal.py",
+        "--sessions-dir",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/mutated/cases/code_quota_1113_beats_429/sessions",
+        "--now-ms",
+        "1761000000000"
+      ],
+      "rc": 1,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/mutated/runs/code_quota_1113_beats_429.stdout",
+      "stdout_sha256": "2ef37ff20a09fd5faa27c4cf38e72e377da1a3b5e14d9324011f18f71f006430",
+      "stderr_bytes": 0,
+      "stdout_excerpt": {
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "aborted": 0,
+          "completed": 0,
+          "dead_error_other": 0,
+          "dead_quota": 0,
+          "dead_rate_limit": 1,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": [
+          {
+            "seat": "code-1113",
+            "class": "dead_rate_limit",
+            "error_status": 429,
+            "error_code": "1113"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_quota_1308_beats_429",
+      "status": "mismatch",
+      "reasons": [
+        "want.totals.dead_rate_limit=1",
+        "want.totals.dead_quota=0",
+        "want.seat_class:code-1308",
+        "unexpected_seat:code-1308"
+      ],
+      "tool_argv": [
+        "/usr/bin/python3",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-tool/mori-seat-terminal.py",
+        "--sessions-dir",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/mutated/cases/code_quota_1308_beats_429/sessions",
+        "--now-ms",
+        "1761000000000"
+      ],
+      "rc": 1,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/mutated/runs/code_quota_1308_beats_429.stdout",
+      "stdout_sha256": "ea9e28a8ca07175cc8a7ac34e49e48d620af49916c0759169d46be79e44717ac",
+      "stderr_bytes": 0,
+      "stdout_excerpt": {
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "aborted": 0,
+          "completed": 0,
+          "dead_error_other": 0,
+          "dead_quota": 0,
+          "dead_rate_limit": 1,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": [
+          {
+            "seat": "code-1308",
+            "class": "dead_rate_limit",
+            "error_status": 429,
+            "error_code": "1308"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_rate_1302_beats_quota_token",
+      "status": "match",
+      "reasons": [],
+      "tool_argv": [
+        "/usr/bin/python3",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-tool/mori-seat-terminal.py",
+        "--sessions-dir",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/mutated/cases/code_rate_1302_beats_quota_token/sessions",
+        "--now-ms",
+        "1761000000000"
+      ],
+      "rc": 1,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/mutated/runs/code_rate_1302_beats_quota_token.stdout",
+      "stdout_sha256": "f6d0f7b67bed2b85a36f4f80e7ddd01c5cc8e0c75f8ec3813bd1a7b391289ef5",
+      "stderr_bytes": 0,
+      "stdout_excerpt": {
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "aborted": 0,
+          "completed": 0,
+          "dead_error_other": 0,
+          "dead_quota": 0,
+          "dead_rate_limit": 1,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": [
+          {
+            "seat": "code-1302-quota",
+            "class": "dead_rate_limit",
+            "error_status": 429,
+            "error_code": "1302"
+          }
+        ]
+      }
+    }
+  ],
+  "restored": [
+    {
+      "id": "rate_limit_beats_quota_by_status_and_token",
+      "status": "match",
+      "reasons": [],
+      "tool_argv": [
+        "/usr/bin/python3",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-tool/mori-seat-terminal.py",
+        "--sessions-dir",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/restored/cases/rate_limit_beats_quota_by_status_and_token/sessions",
+        "--now-ms",
+        "1761000000000"
+      ],
+      "rc": 1,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/restored/runs/rate_limit_beats_quota_by_status_and_token.stdout",
+      "stdout_sha256": "0a80e1741a0b44ecb1ad0b66029506bc8bb0753ca0457ead88406254d03fbd78",
+      "stderr_bytes": 0,
+      "stdout_excerpt": {
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "aborted": 0,
+          "completed": 0,
+          "dead_error_other": 0,
+          "dead_quota": 2,
+          "dead_rate_limit": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": [
+          {
+            "seat": "status-beats-quota",
+            "class": "dead_quota",
+            "error_status": 429,
+            "error_code": null
+          },
+          {
+            "seat": "token-beats-quota",
+            "class": "dead_quota",
+            "error_status": null,
+            "error_code": null
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_quota_1113_beats_429",
+      "status": "match",
+      "reasons": [],
+      "tool_argv": [
+        "/usr/bin/python3",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-tool/mori-seat-terminal.py",
+        "--sessions-dir",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/restored/cases/code_quota_1113_beats_429/sessions",
+        "--now-ms",
+        "1761000000000"
+      ],
+      "rc": 1,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/restored/runs/code_quota_1113_beats_429.stdout",
+      "stdout_sha256": "b89c2fc4a4259899a57e3e0d0288ff31deebdfe4d25325b6125d774a39d1d48c",
+      "stderr_bytes": 0,
+      "stdout_excerpt": {
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "aborted": 0,
+          "completed": 0,
+          "dead_error_other": 0,
+          "dead_quota": 1,
+          "dead_rate_limit": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": [
+          {
+            "seat": "code-1113",
+            "class": "dead_quota",
+            "error_status": 429,
+            "error_code": "1113"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_quota_1308_beats_429",
+      "status": "match",
+      "reasons": [],
+      "tool_argv": [
+        "/usr/bin/python3",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-tool/mori-seat-terminal.py",
+        "--sessions-dir",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/restored/cases/code_quota_1308_beats_429/sessions",
+        "--now-ms",
+        "1761000000000"
+      ],
+      "rc": 1,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/restored/runs/code_quota_1308_beats_429.stdout",
+      "stdout_sha256": "cd7a763d4ff2ddcc45e95c6d1abaf24536cb2082d29544d9904d5d1f5e41deb9",
+      "stderr_bytes": 0,
+      "stdout_excerpt": {
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "aborted": 0,
+          "completed": 0,
+          "dead_error_other": 0,
+          "dead_quota": 1,
+          "dead_rate_limit": 0,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": [
+          {
+            "seat": "code-1308",
+            "class": "dead_quota",
+            "error_status": 429,
+            "error_code": "1308"
+          }
+        ]
+      }
+    },
+    {
+      "id": "code_rate_1302_beats_quota_token",
+      "status": "match",
+      "reasons": [],
+      "tool_argv": [
+        "/usr/bin/python3",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-tool/mori-seat-terminal.py",
+        "--sessions-dir",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/restored/cases/code_rate_1302_beats_quota_token/sessions",
+        "--now-ms",
+        "1761000000000"
+      ],
+      "rc": 1,
+      "stdout_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MutQuota/.scratch/quota-probe/restored/runs/code_rate_1302_beats_quota_token.stdout",
+      "stdout_sha256": "23895fe235994d8bf13e1eb6a94d2e685466c5b2e7032f0466c155c15f6aa082",
+      "stderr_bytes": 0,
+      "stdout_excerpt": {
+        "finding_id": "MORI_SEAT_TERMINAL_DEAD",
+        "totals": {
+          "aborted": 0,
+          "completed": 0,
+          "dead_error_other": 0,
+          "dead_quota": 0,
+          "dead_rate_limit": 1,
+          "error_unsettled": 0,
+          "incomplete": 0,
+          "unavailable": 0
+        },
+        "seats": [
+          {
+            "seat": "code-1302-quota",
+            "class": "dead_rate_limit",
+            "error_status": 429,
+            "error_code": "1302"
+          }
+        ]
+      }
+    }
+  ]
+}

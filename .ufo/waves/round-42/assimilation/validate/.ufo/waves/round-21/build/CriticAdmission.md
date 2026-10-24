@@ -1,0 +1,31 @@
+# CriticAdmission — round 21
+
+**Disposition: do not accept the claims yet.** The target axes are C1 freshness and C2 calibration. The adjacent no-harm boundary is kumitate's lifecycle/result-acceptance authority; coverage is not being claimed as changed.
+
+## Acceptance blockers
+
+### 1. A self-asserted `independent` field can still authorize the very exception the rule is meant to prevent
+
+**Counterexample.** A cleanup author writes a new disposition copy with `independent: true`, a different actor-name string, a wave ID, and `settlement` (or `cleanup-accounted`), then supplies its path/revision/hash. The contract's disposed-row checks do not specify an independently authored/reviewed attestation or an authenticated source for the actor. The frozen classifier cases accept `independent_disposition: true` as sufficient to produce `live-state` and `pin_allowed: true` for both lost-evidence cases. A hash binds submitted bytes; it does not authenticate who made the assertion.
+
+**Evidence.** `.ufo/waves/round-21/contract.md:14-15` defines the disposed exception using `independent:true`, a distinct actor, and a boolean `independent_disposition` classifier input, without an independent-review/authorship requirement. `.ufo/waves/round-21/frozen/cases.json:20-34` maps that boolean directly to allowed pin decisions. This conflicts with `corpus/lessons/round-21.md:31` (“Reject … forged independent boolean as authenticated authorship”); the active province clarification itself acknowledges that actor fields are “not authenticated by mori's hash checker” (`PROVINCE.md:177-181`). **[INFERENCE]** Under the currently specified validator, the counterexample can become `disposed` and clear `pin_allowed`; no implementation was available to test this behavior.
+
+The current historical evidence does **not** supply such a disposition: `historical-provenance.json:19-40` records Souji as both removal and cleanup actor, `independent_wave_disposition: null`, and settlement `unknown`; `corpus/evidence/loss-accounting-r21.json:5-44` keeps both identities unresolved with null dispositions. This is a capability repair and retention of unknowns, not historical settlement or independent closure.
+
+**Impacted axes:** C1 freshness (could unblock acceptance while disposition remains unknown); C2 calibration (recreates cause-only permission through an unverified exception); boundary/no-harm (must not turn a Mori row into kumitate lifecycle settlement).
+
+**Smallest safe correction:** require a separate, per-wave non-cleanup/non-Mori reviewer disposition bound to the exact evidence digest/revision, and make an outside identity/independence adjudication a required acceptance input. Until that review is present and accepted, keep the row unresolved and `pin_allowed: false`. Keep boolean-only classifier cases synthetic, or derive their disposition input from the validated audit result rather than caller-supplied booleans. Explicitly document the `cleanup.actor` source/schema: current `loss-accounting-r21.json:17-21` adds it inside a provenance object while the contract names `{path,revision,sha256}`; the contract must say how that actor is evidenced, not just compared.
+
+### 2. The pin blocker and the before/after measurements are not yet evidenced end to end
+
+**Counterexample.** The specified audit returns `pin_allowed: false`, but the existing census has a separate `--pin` path that writes a baseline. The contract does not require that path or the acceptance procedure to consume the audit result. If the audit is advisory, a direct `mori-census.sh --pin <path>` bypasses the claimed operational block. The r20 receipt shows the separate pin operation returned `MORI_PIN: ok` (`.ufo/waves/round-20/evidence/c1-repin-timeline.txt:5-10`); round21 says the existing census and baselines remain unchanged (`corpus/lessons/round-21.md:35`).
+
+**Evidence.** `tools/mori-census.sh:397-404` documents `--pin` as writing a normalized baseline, and `:2925-2937` writes it and returns success; round21's contract only describes an audit result field (`.ufo/waves/round-21/contract.md:14`). The scorecard explicitly labels the r21 table “planned” and says target expectations are not measured verdicts (`SCORECARD.md:1291-1303`). At this review point, `tools/mori-evidence-loss.py` was not present, and there was no round21 `measurements/` directory or before/after audit receipt. Thus the required same-evaluator counts and operational block are not yet demonstrated; this is a pending acceptance condition, not evidence that an unfinished task is a dead seat.
+
+**Impacted axes:** C1 freshness and C2 calibration; any unconditional “held”/admitted result would overstate evidence. The source/frontier boundary also depends on keeping a pin blocked, not merely displaying a warning.
+
+**Smallest safe correction:** retain the scorecard's planned status until committed receipts show the same evaluator against before/after snapshots (omitted `2→0`, unresolved `2`, `pin_allowed:false`) and against both rule objects/same frozen cases (old rule mismatches `2`, new rule `0`). Make baseline acceptance require this result and demonstrate there is no `--pin`/acceptance bypass; either wire the guard into the pin path or define and evidence a mandatory acceptance gate. Do not run a pin while disposition is unknown.
+
+## Source/frontier boundary
+
+The source claim is correctly limited: the r21 lesson says S066 is project golden-master semantics only, “Not authority for mori's loss policy” (`corpus/lessons/round-21.md:26`), and the independent spotcheck agrees on that narrow basis (`.ufo/waves/round-21/evidence/source-spotcheck.json:4-10`). The historical frontier remains unknown, not settled: `PROVINCE.md:168-190` keeps settlement/disposition outside Mori's authority and says Mori cannot author itself out of the blocker. These are the correct limits; neither S066 nor same-identity cleanup receipts justify disposition. The two blockers above concern whether the implementation can preserve those limits operationally.

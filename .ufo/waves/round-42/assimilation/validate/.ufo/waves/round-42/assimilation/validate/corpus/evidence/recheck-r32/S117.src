@@ -1,0 +1,292 @@
+[
+  {
+    "name": "v1.9.0",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v1.9.0",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v1.9.0",
+    "commit": {
+      "sha": "202d4db0d308ca6478f68de68b46cae34896ddaf",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/202d4db0d308ca6478f68de68b46cae34896ddaf"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YxLjkuMA=="
+  },
+  {
+    "name": "v1.8.2",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v1.8.2",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v1.8.2",
+    "commit": {
+      "sha": "d5791d300aafa77b8f6a3d3d97f481a4ef904a38",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/d5791d300aafa77b8f6a3d3d97f481a4ef904a38"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YxLjguMg=="
+  },
+  {
+    "name": "v1.8.1",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v1.8.1",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v1.8.1",
+    "commit": {
+      "sha": "4965c8315a3a5479b6241ac2ac96e674218df8fd",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/4965c8315a3a5479b6241ac2ac96e674218df8fd"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YxLjguMQ=="
+  },
+  {
+    "name": "v1.8",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v1.8",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v1.8",
+    "commit": {
+      "sha": "62625072ce8671f497a5cea5fc3db63226469093",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/62625072ce8671f497a5cea5fc3db63226469093"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YxLjg="
+  },
+  {
+    "name": "v1.7",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v1.7",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v1.7",
+    "commit": {
+      "sha": "ebaea9526bcee14889b00d83a9dd3d038315cee2",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/ebaea9526bcee14889b00d83a9dd3d038315cee2"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YxLjc="
+  },
+  {
+    "name": "v1.6.2",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v1.6.2",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v1.6.2",
+    "commit": {
+      "sha": "445bda11fc98f233a4fe87a033e2350f4d93f610",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/445bda11fc98f233a4fe87a033e2350f4d93f610"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YxLjYuMg=="
+  },
+  {
+    "name": "v1.6.1",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v1.6.1",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v1.6.1",
+    "commit": {
+      "sha": "d6978fc997def8c20b20a7f9d60fda3b34275ecf",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/d6978fc997def8c20b20a7f9d60fda3b34275ecf"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YxLjYuMQ=="
+  },
+  {
+    "name": "v1.6",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v1.6",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v1.6",
+    "commit": {
+      "sha": "924f7b2f88dcfaca6d7403ec84890ef104da0e02",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/924f7b2f88dcfaca6d7403ec84890ef104da0e02"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YxLjY="
+  },
+  {
+    "name": "v1.5",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v1.5",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v1.5",
+    "commit": {
+      "sha": "245e46708a7ed74658cae19f2c4a88599284a97a",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/245e46708a7ed74658cae19f2c4a88599284a97a"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YxLjU="
+  },
+  {
+    "name": "v1.4",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v1.4",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v1.4",
+    "commit": {
+      "sha": "8f4eaf7079cb69108ca7e7cfd0c6e6d052b1e473",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/8f4eaf7079cb69108ca7e7cfd0c6e6d052b1e473"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YxLjQ="
+  },
+  {
+    "name": "v1.3.1",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v1.3.1",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v1.3.1",
+    "commit": {
+      "sha": "3648b351e88331f3f2e46af4ae0ddd19e27bc7c2",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/3648b351e88331f3f2e46af4ae0ddd19e27bc7c2"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YxLjMuMQ=="
+  },
+  {
+    "name": "v1.3",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v1.3",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v1.3",
+    "commit": {
+      "sha": "b785b32c6722e249386283eb6dc27ca714e0d6b1",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/b785b32c6722e249386283eb6dc27ca714e0d6b1"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YxLjM="
+  },
+  {
+    "name": "v1.3-rc1",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v1.3-rc1",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v1.3-rc1",
+    "commit": {
+      "sha": "61ef7c0ad35fd397b993a3555ffff42dda1a0b78",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/61ef7c0ad35fd397b993a3555ffff42dda1a0b78"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YxLjMtcmMx"
+  },
+  {
+    "name": "v1.2",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v1.2",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v1.2",
+    "commit": {
+      "sha": "fe16f8ad8dd4f098713771bc12a11359a6fde090",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/fe16f8ad8dd4f098713771bc12a11359a6fde090"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YxLjI="
+  },
+  {
+    "name": "v1.1",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v1.1",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v1.1",
+    "commit": {
+      "sha": "20442a9784d34262f5b599e068858ec1bbcad3b0",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/20442a9784d34262f5b599e068858ec1bbcad3b0"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YxLjE="
+  },
+  {
+    "name": "v1.0",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v1.0",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v1.0",
+    "commit": {
+      "sha": "6e990606e9f4bf89e911ebcb8772057cfd959555",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/6e990606e9f4bf89e911ebcb8772057cfd959555"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YxLjA="
+  },
+  {
+    "name": "v0.12",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v0.12",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v0.12",
+    "commit": {
+      "sha": "e3d21e145ab4a7b4ac7e2e9a2e16db4efc580c67",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/e3d21e145ab4a7b4ac7e2e9a2e16db4efc580c67"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YwLjEy"
+  },
+  {
+    "name": "v0.11",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v0.11",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v0.11",
+    "commit": {
+      "sha": "08b7ed8e72feed2eec2e558ba2cfacbf6d469594",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/08b7ed8e72feed2eec2e558ba2cfacbf6d469594"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YwLjEx"
+  },
+  {
+    "name": "v0.10",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v0.10",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v0.10",
+    "commit": {
+      "sha": "ef48928ac8079c5d715f2fba7e70d994dad9c337",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/ef48928ac8079c5d715f2fba7e70d994dad9c337"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YwLjEw"
+  },
+  {
+    "name": "v0.9",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v0.9",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v0.9",
+    "commit": {
+      "sha": "582985d5b7f491426f267ae1a215b6999834a403",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/582985d5b7f491426f267ae1a215b6999834a403"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YwLjk="
+  },
+  {
+    "name": "v0.8",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v0.8",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v0.8",
+    "commit": {
+      "sha": "82e2ce7083c261e374e82f4950f0003ade53a780",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/82e2ce7083c261e374e82f4950f0003ade53a780"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YwLjg="
+  },
+  {
+    "name": "v0.7",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v0.7",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v0.7",
+    "commit": {
+      "sha": "10730a4d4807aca37884b08b8e38365b796f1f2c",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/10730a4d4807aca37884b08b8e38365b796f1f2c"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YwLjc="
+  },
+  {
+    "name": "v0.6",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v0.6",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v0.6",
+    "commit": {
+      "sha": "63292129b3d43f4bf688ddc94023adfb7e6b31b9",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/63292129b3d43f4bf688ddc94023adfb7e6b31b9"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YwLjY="
+  },
+  {
+    "name": "v0.5",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v0.5",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v0.5",
+    "commit": {
+      "sha": "b84f1504b30196dd7dc9e7eb923af0e0651d4d11",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/b84f1504b30196dd7dc9e7eb923af0e0651d4d11"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YwLjU="
+  },
+  {
+    "name": "v0.4.1",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v0.4.1",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v0.4.1",
+    "commit": {
+      "sha": "54094d3e2b7d4a0e65359e9f304c90c89fb1f96c",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/54094d3e2b7d4a0e65359e9f304c90c89fb1f96c"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YwLjQuMQ=="
+  },
+  {
+    "name": "v0.4",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v0.4",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v0.4",
+    "commit": {
+      "sha": "7b10c57b8de13e9640cfdcb1e8bf92bd87459018",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/7b10c57b8de13e9640cfdcb1e8bf92bd87459018"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YwLjQ="
+  },
+  {
+    "name": "v0.3",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v0.3",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v0.3",
+    "commit": {
+      "sha": "62017dce15bf30665e690f8d8e7fca6815954174",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/62017dce15bf30665e690f8d8e7fca6815954174"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YwLjM="
+  },
+  {
+    "name": "v0.2",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v0.2",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v0.2",
+    "commit": {
+      "sha": "698cdf9c369869687f3aa25e9ffdeb2df31ce1e6",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/698cdf9c369869687f3aa25e9ffdeb2df31ce1e6"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YwLjI="
+  },
+  {
+    "name": "v0.1",
+    "zipball_url": "https://api.github.com/repos/rfjakob/earlyoom/zipball/refs/tags/v0.1",
+    "tarball_url": "https://api.github.com/repos/rfjakob/earlyoom/tarball/refs/tags/v0.1",
+    "commit": {
+      "sha": "9220990b0da644bfb7c4c60cfa2d6cdbc55bd8a8",
+      "url": "https://api.github.com/repos/rfjakob/earlyoom/commits/9220990b0da644bfb7c4c60cfa2d6cdbc55bd8a8"
+    },
+    "node_id": "MDM6UmVmMTU4NTA3ODQ6cmVmcy90YWdzL3YwLjE="
+  }
+]

@@ -1,0 +1,90 @@
+{
+  "schema": "mori-r23-count-lineage-v1",
+  "production_pin": "f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c",
+  "seal": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+  "C1": {
+    "requirements": 26,
+    "ids": "R01-R26",
+    "oracle_invocations_per_arm": 18,
+    "check_shaped": 8,
+    "setup_shaped": 10,
+    "alias_before": 8,
+    "alias_after": 0,
+    "alias_count_basis": "key-bearing check outputs among18 parsed runs, not8of26 requirements",
+    "only_flipped_requirement": "R25",
+    "original24_semantics": "R01-R24 preserved, R02/R11/R12 field substitution only",
+    "R26": "new frozen predicate, preexisting raw-complement behavior green before/after",
+    "supplementary_control_groups": 5,
+    "C22_note": "in-memory source-string comparisons, not an independent guard CLI mutant run",
+    "actual_guard_mutant": "falsify/MutAliasReturn independently executes source-guard predicate pristine/mutated/restored"
+  },
+  "C2": {
+    "frozen_cases": 30,
+    "original_derived": 27,
+    "source_review_discovery": 3,
+    "original_match": 29,
+    "original_mismatch": [
+      "CaseEscapedSpace.json"
+    ],
+    "strict_target_met": false,
+    "supplementary_output_checks": 274,
+    "real_inclusive_denominator": 31,
+    "real_inclusive_match": 30,
+    "direct_real_control": "match; C30 false inherits case-set red, not second real mismatch",
+    "co_evolved_selftest": {
+      "arms": 49,
+      "exit": 0,
+      "not_frozen_case_count": true
+    },
+    "disposition": "withdraw production/admitted capability after96reader settlement, not rescue/admit"
+  },
+  "sources_at_pin": {
+    "rows": 86,
+    "initial_rows": 76,
+    "new_rows": 10
+  },
+  "post_falsification": {
+    "new_sources_opened_not_yet_registered": [
+      "S087",
+      "S088",
+      "S089"
+    ],
+    "existing_rejection_reopened": "S065"
+  },
+  "debt": {
+    "raw": 95,
+    "allowlisted": 86,
+    "non_author": 5,
+    "in_scope_unallowlisted": 4,
+    "raw_not_allowlisted": 9,
+    "new_or_missing_unallowlisted_at56ac": 0,
+    "permission_original": "retained RED11/12, not rerun",
+    "unknown_dispositions": 2,
+    "baseline_acceptance": "blocked",
+    "privacy_clearance": false
+  },
+  "waves": {
+    "W1": 64,
+    "W1_refusals": 7,
+    "W1_attempt_started": 8,
+    "W1_chronology": "retrospectively bound, not precall-logged",
+    "W2": 96,
+    "W2_attempt_started": 1,
+    "unique_initial_native_seats": 160,
+    "same_identity_followups_not_replacements": true
+  },
+  "payload_canonicalization": "json.dumps({context,tasks},ensure_ascii=False,sort_keys=True,separators=(',',':')).encode('utf-8'); NOT outer validator file bytes",
+  "payloads": {
+    "W1": {
+      "bytes": 88738,
+      "sha256": "cd8a5fa64e69ce55c0dec70d02d8bf77a3d1fbd27bd3fcf61660a63d3d3cc628"
+    },
+    "W2": {
+      "bytes": 159710,
+      "sha256": "d28cc9f2dbf120831d85277e0fa47f0c10b658c4bafc0a36b4099ac069103efd",
+      "committed_payload_revision": "6eb889c037163e4886eaa61501258910d6a529b9",
+      "assignments": "wave2-assignments.json",
+      "registry": "wave2-record.json"
+    }
+  }
+}

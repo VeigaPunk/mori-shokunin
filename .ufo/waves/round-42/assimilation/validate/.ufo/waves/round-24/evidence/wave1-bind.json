@@ -1,0 +1,1 @@
+{"dispatch_path":".ufo/waves/round-24/wave1-run.json","finding_id":"PAYLOAD_BOUND","finding_ids":["PAYLOAD_BOUND"],"mode":"bind","payload_bytes":36222,"payload_sha256":"f3770ceff4a97719923f9c0c5c69a56ba2649a638aea9c62c2602cb386c129a2","rev":"06d4f4d26311eb6fa425ee471496816ddf1d8966","schema":"mori-dispatch-ledger-v1","status":"bound","tasks_count":33}

@@ -1,0 +1,3 @@
+{"type":"session","version":3}
+{"message":{"role":"assistant","stopReason":"stop"},"type":"message"}
+{"message":{"content":"synthetic tool output","role":"toolResult"},"type":"message"}

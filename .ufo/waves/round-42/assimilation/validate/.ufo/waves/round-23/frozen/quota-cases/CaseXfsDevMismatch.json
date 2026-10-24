@@ -1,0 +1,50 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseXfsDevMismatch",
+  "scenario": "An xfs mount at /mnt/xfsproj carries super options rw,attr2,inode64,noquota, but the mount major:minor 259:2 differs from the probed path /mnt/xfsproj/work st_dev 8:16; the device identity check must preempt the xfs quota-option verdict and report unknown with basis device_mismatch.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "1 0 259:3 / / rw,relatime shared:1 - xfs /dev/nvme0n1p3 rw,attr2,inode64,noquota\n25 30 0:22 / /proc rw,nosuid,nodev,noexec,relatime shared:12 - proc proc rw\n29 25 0:30 /@home /home rw,relatime shared:1 - btrfs /dev/mapper/root rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=257,subvol=/@home\n244 33 259:2 / /mnt/xfsproj rw,relatime - xfs /dev/nvme0n1p2 rw,attr2,inode64,noquota\n",
+    "paths": [
+      {
+        "path": "/mnt/xfsproj/work",
+        "realpath": "/mnt/xfsproj/work",
+        "st_dev": "8:16"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0"
+    },
+    "btrfs_sysfs": {
+      "1d02a454-c549-4a35-b567-89d60902af8e": {
+        "devices": [
+          "dm-0"
+        ],
+        "qgroups": false,
+        "qgroups_enabled": null,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 2,
+    "finding_id": "QUOTA_STATE_UNKNOWN",
+    "paths": [
+      {
+        "path": "/mnt/xfsproj/work",
+        "fstype": "xfs",
+        "mount_point": "/mnt/xfsproj",
+        "quota_state": "unknown",
+        "enforcement": "n/a",
+        "basis": "device_mismatch"
+      }
+    ]
+  },
+  "rationale": "Pre-seal amendment (round-23) section 'C2 final rules superseding only erroneous/ambiguous original clauses', device mismatch clause: 'Device mismatch PREEMPTS the filesystem table: unknown/n/a/device_mismatch; device_check=mismatch'. This is the branch the case exercises. The chosen mount's fstype is xfs, not btrfs, so the btrfs exemption does not apply (the amendment narrows it to a zero stat major; this path's st_dev major is 8), and the mount major:minor 259:2 differs from the path st_dev 8:16, so the preemption fires: quota_state unknown, enforcement n/a, basis device_mismatch, supplementary device_check mismatch. The xfs rows that would otherwise have applied are enumerated in the amendment's XFS precedence clause (conflict first, then noquota, then any enforced key, then any accounting-only key, else absent) and, for the super options 'rw,attr2,inode64,noquota', would have selected xfs_noquota_option; the device identity check is exactly what suppresses that verdict, because the mount options then describe a filesystem the probed path is not on (proc.rst section 3.5 line 1949: field (3) major:minor is the value of st_dev for files on that filesystem; xfs.rst (S077) lines 170-184 and xfs_super.c (S078) xfs_showargs lines 238-254 are the option vocabulary that the preemption overrides). Mount resolution (amendment, mount resolution clause; original contract section C2): mountinfo is parsed per proc.rst section 3.5 (S082, Documentation/filesystems/proc.rst:1947-1957), fields 1-6 are mount ID, parent ID, major:minor, root, mount point and per-mount options, optional 'tag[:value]' fields follow until the '-' separator, then filesystem type, mount source and super options, and the separator plus the last three fields are taken from each chosen line rather than file-wide; the fixture's trailing empty line is ignored, and no backslash escape appears in root, mount point or source, so no QUOTA_SETUP rejection is triggered. For realpath /mnt/xfsproj/work the covering mount points are '/' (xfs at 259:3) and '/mnt/xfsproj' (xfs at 259:2); longest component-prefix selection keeps '/mnt/xfsproj' (13 characters) over '/' (1), so the reported mount_point is '/mnt/xfsproj' and fstype 'xfs'. No covering mount point occurs more than once in this fixture, so the amendment's ambiguous_overmount refusal (unknown/n/a with fstype null, mount_point null, device_check not_checked) does not apply, and no parent-ID graph is needed or fabricated. Fixture source resolution (amendment): the raw decoded source of the chosen line is /dev/nvme0n1p2, which is absent from device_links, so basename(source) 'nvme0n1p2' would be compared against the UUID devices lists; this is inert because the chosen fstype is not btrfs, and the btrfs_sysfs record is a decoy whose qgroups false pairs with qgroups_enabled null and qgroups_mode null as the amendment requires for every record including decoys. btrfs contrast (S081, fs/btrfs/inode.c:8242, stat->dev = BTRFS_I(inode)->root->anon_dev): a btrfs subvolume reports a per-subvolume anonymous st_dev that legitimately differs from the mountinfo major:minor, which is why the contract and the amendment exempt btrfs (device_check btrfs_subvolume_skipped); the xfs side of that pair is this case, where such a difference is real evidence that the path is not on the chosen filesystem. Fixture validity (amendment, paths and sysfs clauses): the single path is nonempty, unique, normalized and absolute with no dot or dotdot component in path or realpath, and st_dev '8:16' is canonical decimal MAJ:MIN with no sign and no leading zeros; the UUID key is canonical and the devices value 'dm-0' is a plain nonempty basename. Verdict precedence (original contract section C2): no setup error and no enabled path, at least one unknown path, so the run exits 2 with finding_id QUOTA_STATE_UNKNOWN. Deliberately not asserted by this case: the amendment fixes device_check='mismatch' for this branch but does not say whether the preemption also suppresses the supplementary quota_option_keys for the xfs super options (['noquota'] if option extraction still runs, [] if it is suppressed together with the table); the case asserts only the six scored fields (path, fstype, mount_point, quota_state, enforcement, basis), so neither reading can fail it.",
+  "sources": [
+    "S077",
+    "S078",
+    "S081",
+    "S082"
+  ]
+}

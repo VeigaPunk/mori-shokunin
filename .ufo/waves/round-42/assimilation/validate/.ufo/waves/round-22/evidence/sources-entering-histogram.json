@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "/home/vgpnk/Projects/shokunin/scripts/sources-census.sh",
+    "census",
+    "--root",
+    "/home/vgpnk/Projects/shokunin",
+    "--file",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/frozen/SOURCES-entering.txt"
+  ],
+  "exit_code": 0,
+  "stdout": "file\trows\t76\nfile\ttier.A\t62\nfile\ttier.B\t6\nfile\ttier.C\t8\nfile\tstatus.mined\t42\nfile\tstatus.queued\t25\nfile\tstatus.rejected\t9\nFLEET\trows\t76\nFLEET\ttier.A\t62\nFLEET\ttier.B\t6\nFLEET\ttier.C\t8\nFLEET\ttier.invalid\t0\nFLEET\tstatus.queued\t25\nFLEET\tstatus.mined\t42\nFLEET\tstatus.rejected\t9\nFLEET\tstatus.invalid\t0\nFLEET\tmissing\t0\n",
+  "stderr": "",
+  "qualification": "Retrospective histogram over byte-exact entering Git blob; start validation was exercised separately at round start."
+}

@@ -1,0 +1,403 @@
+{
+  "bounds": {
+    "address_space_bytes": 402653184,
+    "cpu_seconds": 15,
+    "max_concurrent_fixture_children": 1,
+    "wall_seconds_per_child": 15
+  },
+  "cases": [
+    {
+      "argv": [
+        "/usr/bin/prlimit",
+        "--as=402653184",
+        "--cpu=15",
+        "--",
+        "/usr/bin/python3",
+        "-B",
+        "/fast/scratch/hyaku/mori-r23/MutExtEnabled/clone/tools/mori-quota-surface.py",
+        "--fixture",
+        "/fast/scratch/hyaku/mori-r23/MutExtEnabled/fixtures/CaseExt4Usrquota.fixture.json"
+      ],
+      "case_path": "/fast/scratch/hyaku/mori-r23/MutExtEnabled/clone/.ufo/waves/round-23/frozen/quota-cases/CaseExt4Usrquota.json",
+      "case_sha256": "4db2fcd87bb1a2efcfadaff13311426eb8a6fc129663cfa486190a93ac959cda",
+      "elapsed_seconds": 0.033957,
+      "exit": 1,
+      "expected": {
+        "exit": 2,
+        "finding_id": "QUOTA_STATE_UNKNOWN",
+        "paths": [
+          {
+            "basis": "ext_quota_option_unverified",
+            "enforcement": "n/a",
+            "fstype": "ext4",
+            "mount_point": "/srv/data",
+            "path": "/srv/data",
+            "quota_state": "unknown"
+          },
+          {
+            "basis": "ext_quota_option_unverified",
+            "enforcement": "n/a",
+            "fstype": "ext4",
+            "mount_point": "/srv/data",
+            "path": "/srv/data/projects/app",
+            "quota_state": "unknown"
+          }
+        ]
+      },
+      "fixture_path": "/fast/scratch/hyaku/mori-r23/MutExtEnabled/fixtures/CaseExt4Usrquota.fixture.json",
+      "fixture_sha256": "8c2259a846eff1ba97e407f5ced28888a8a5f7841e3be52f2cd7bce8557314c8",
+      "headline": {
+        "exit_match": false,
+        "finding_match": false,
+        "paths_match": false
+      },
+      "id": "CaseExt4Usrquota",
+      "observed": {
+        "df_covers_quota": false,
+        "exit_code": 1,
+        "finding_id": "QUOTA_ENABLED",
+        "limits": "no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.",
+        "paths": [
+          {
+            "basis": "ext_quota_option_unverified",
+            "btrfs_qgroups_mode": null,
+            "device_check": "match",
+            "enforcement": "n/a",
+            "fstype": "ext4",
+            "mount_point": "/srv/data",
+            "path": "/srv/data",
+            "quota_option_keys": [
+              "usrquota"
+            ],
+            "quota_state": "enabled"
+          },
+          {
+            "basis": "ext_quota_option_unverified",
+            "btrfs_qgroups_mode": null,
+            "device_check": "match",
+            "enforcement": "n/a",
+            "fstype": "ext4",
+            "mount_point": "/srv/data",
+            "path": "/srv/data/projects/app",
+            "quota_option_keys": [
+              "usrquota"
+            ],
+            "quota_state": "enabled"
+          }
+        ],
+        "schema": "mori-quota-surface-v1"
+      },
+      "reason": null,
+      "status": "unmet",
+      "stderr": "",
+      "stdout": "{\"df_covers_quota\":false,\"exit_code\":1,\"finding_id\":\"QUOTA_ENABLED\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[{\"basis\":\"ext_quota_option_unverified\",\"btrfs_qgroups_mode\":null,\"device_check\":\"match\",\"enforcement\":\"n/a\",\"fstype\":\"ext4\",\"mount_point\":\"/srv/data\",\"path\":\"/srv/data\",\"quota_option_keys\":[\"usrquota\"],\"quota_state\":\"enabled\"},{\"basis\":\"ext_quota_option_unverified\",\"btrfs_qgroups_mode\":null,\"device_check\":\"match\",\"enforcement\":\"n/a\",\"fstype\":\"ext4\",\"mount_point\":\"/srv/data\",\"path\":\"/srv/data/projects/app\",\"quota_option_keys\":[\"usrquota\"],\"quota_state\":\"enabled\"}],\"schema\":\"mori-quota-surface-v1\"}\n",
+      "supplementary": [
+        {
+          "check": "schema",
+          "detail": "mori-quota-surface-v1",
+          "status": "pass"
+        },
+        {
+          "check": "exit_consistency",
+          "detail": 1,
+          "status": "pass"
+        },
+        {
+          "check": "output_keys_allowed",
+          "detail": [
+            "df_covers_quota",
+            "exit_code",
+            "finding_id",
+            "limits",
+            "paths",
+            "schema"
+          ],
+          "status": "pass"
+        },
+        {
+          "check": "output_key_set",
+          "detail": [
+            "df_covers_quota",
+            "exit_code",
+            "finding_id",
+            "limits",
+            "paths",
+            "schema"
+          ],
+          "status": "pass"
+        },
+        {
+          "check": "error_token",
+          "detail": null,
+          "status": "pass"
+        },
+        {
+          "check": "path_key_set",
+          "detail": [
+            [
+              "basis",
+              "btrfs_qgroups_mode",
+              "device_check",
+              "enforcement",
+              "fstype",
+              "mount_point",
+              "path",
+              "quota_option_keys",
+              "quota_state"
+            ],
+            [
+              "basis",
+              "btrfs_qgroups_mode",
+              "device_check",
+              "enforcement",
+              "fstype",
+              "mount_point",
+              "path",
+              "quota_option_keys",
+              "quota_state"
+            ]
+          ],
+          "status": "pass"
+        },
+        {
+          "check": "df_covers_quota",
+          "detail": false,
+          "status": "pass"
+        },
+        {
+          "check": "limits_text",
+          "detail": "str",
+          "status": "pass"
+        },
+        {
+          "check": "no_leakage",
+          "detail": [],
+          "status": "pass"
+        }
+      ],
+      "timeout": false
+    },
+    {
+      "argv": [
+        "/usr/bin/prlimit",
+        "--as=402653184",
+        "--cpu=15",
+        "--",
+        "/usr/bin/python3",
+        "-B",
+        "/fast/scratch/hyaku/mori-r23/MutExtEnabled/clone/tools/mori-quota-surface.py",
+        "--fixture",
+        "/fast/scratch/hyaku/mori-r23/MutExtEnabled/fixtures/CaseExt4Journaled.fixture.json"
+      ],
+      "case_path": "/fast/scratch/hyaku/mori-r23/MutExtEnabled/clone/.ufo/waves/round-23/frozen/quota-cases/CaseExt4Journaled.json",
+      "case_sha256": "d317ccb1141271ed0cda2d2b2209fcfb965b57016e6dfc4e0efcf34560c9fb40",
+      "elapsed_seconds": 0.036468,
+      "exit": 1,
+      "expected": {
+        "exit": 2,
+        "finding_id": "QUOTA_STATE_UNKNOWN",
+        "paths": [
+          {
+            "basis": "ext_quota_option_unverified",
+            "enforcement": "n/a",
+            "fstype": "ext4",
+            "mount_point": "/srv/journal",
+            "path": "/srv/journal/data",
+            "quota_state": "unknown"
+          }
+        ]
+      },
+      "fixture_path": "/fast/scratch/hyaku/mori-r23/MutExtEnabled/fixtures/CaseExt4Journaled.fixture.json",
+      "fixture_sha256": "52b9d2336b9300b6ebe9c9143d3f7c12d1e8adaa6a62b407f50c232320d5746c",
+      "headline": {
+        "exit_match": false,
+        "finding_match": false,
+        "paths_match": false
+      },
+      "id": "CaseExt4Journaled",
+      "observed": {
+        "df_covers_quota": false,
+        "exit_code": 1,
+        "finding_id": "QUOTA_ENABLED",
+        "limits": "no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.",
+        "paths": [
+          {
+            "basis": "ext_quota_option_unverified",
+            "btrfs_qgroups_mode": null,
+            "device_check": "match",
+            "enforcement": "n/a",
+            "fstype": "ext4",
+            "mount_point": "/srv/journal",
+            "path": "/srv/journal/data",
+            "quota_option_keys": [
+              "jqfmt",
+              "usrjquota"
+            ],
+            "quota_state": "enabled"
+          }
+        ],
+        "schema": "mori-quota-surface-v1"
+      },
+      "reason": null,
+      "status": "unmet",
+      "stderr": "",
+      "stdout": "{\"df_covers_quota\":false,\"exit_code\":1,\"finding_id\":\"QUOTA_ENABLED\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[{\"basis\":\"ext_quota_option_unverified\",\"btrfs_qgroups_mode\":null,\"device_check\":\"match\",\"enforcement\":\"n/a\",\"fstype\":\"ext4\",\"mount_point\":\"/srv/journal\",\"path\":\"/srv/journal/data\",\"quota_option_keys\":[\"jqfmt\",\"usrjquota\"],\"quota_state\":\"enabled\"}],\"schema\":\"mori-quota-surface-v1\"}\n",
+      "supplementary": [
+        {
+          "check": "schema",
+          "detail": "mori-quota-surface-v1",
+          "status": "pass"
+        },
+        {
+          "check": "exit_consistency",
+          "detail": 1,
+          "status": "pass"
+        },
+        {
+          "check": "output_keys_allowed",
+          "detail": [
+            "df_covers_quota",
+            "exit_code",
+            "finding_id",
+            "limits",
+            "paths",
+            "schema"
+          ],
+          "status": "pass"
+        },
+        {
+          "check": "output_key_set",
+          "detail": [
+            "df_covers_quota",
+            "exit_code",
+            "finding_id",
+            "limits",
+            "paths",
+            "schema"
+          ],
+          "status": "pass"
+        },
+        {
+          "check": "error_token",
+          "detail": null,
+          "status": "pass"
+        },
+        {
+          "check": "path_key_set",
+          "detail": [
+            [
+              "basis",
+              "btrfs_qgroups_mode",
+              "device_check",
+              "enforcement",
+              "fstype",
+              "mount_point",
+              "path",
+              "quota_option_keys",
+              "quota_state"
+            ]
+          ],
+          "status": "pass"
+        },
+        {
+          "check": "df_covers_quota",
+          "detail": false,
+          "status": "pass"
+        },
+        {
+          "check": "limits_text",
+          "detail": "str",
+          "status": "pass"
+        },
+        {
+          "check": "no_leakage",
+          "detail": [],
+          "status": "pass"
+        }
+      ],
+      "timeout": false
+    }
+  ],
+  "counts": {
+    "inconclusive": 0,
+    "pass": 0,
+    "unmet": 2
+  },
+  "detector_argv": [
+    "/fast/scratch/hyaku/mori-r23/MutExtEnabled/detector.py",
+    "mutant"
+  ],
+  "detector_path": "/fast/scratch/hyaku/mori-r23/MutExtEnabled/detector.py",
+  "detector_sha256": "30caaf66c5137453fa3aed3a99770bb7313485cb770a810e2b81519e3072af08",
+  "oracle": {
+    "function": "evaluate_case",
+    "headline_fields": [
+      "path",
+      "fstype",
+      "mount_point",
+      "quota_state",
+      "enforcement",
+      "basis"
+    ],
+    "path": "/fast/scratch/hyaku/mori-r23/MutExtEnabled/clone/.ufo/waves/round-23/oracle-quota.py",
+    "sha256": "f1f4a027728180436fc5161171b0f6ad4ca4176229b5240aabb33e3f2af36bec"
+  },
+  "phase": "mutant",
+  "pin": "f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c",
+  "protected_hashes": {
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/contract.md": "2bb35aefb08d3fafc467260f859453c0f096effe18b2446503f2b2ee87fe69e7",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/c1-expected-real-identities.json": "e81c21b93c7cfa2d18cb3d97cd75ecb63748a130e1f0bd1bb097837dc40027b8",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/c1-expected-real.json": "f8e111a5c4d1e8ca00a32b8e96db7986798def8b76d2c8b5275b0feb7fa41bba",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/c1-requirements.json": "88e1b912df1a8d5f3ad3da6a9fd3fec751cab7776919c77a8aa83365f84f3184",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/c1-source-delta.json": "df425412405c9358caec31c2fd7c6cc303d1f395b648a169b19c982bd3567318",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/c2-expected-real.json": "9cbb69c03d284c4aa240d5cc9c627cef37e85306bf13a92ea2284fbd65087398",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/case-decisions.json": "b05a007262b52ab0266bd2e7b6a55d8fa05aab8fc518243036e84638960bc60a",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseBoundary.json": "2e2ef692060105f054f2561091cb7603e77b1328b7954f63046ff57e7bea5d52",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseBtrfsDevMatch.json": "a74da5db52f71ec3f4a92018b2f2cd35fb43e349773e17ccce8a8235bbbd43bc",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseBtrfsQgroup.json": "38a7d5b94f8b08ddee9c7080cca8786db0cc6aa8423dcef75d8250c58d462188",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseBtrfsSquota.json": "b3a641541e536ce1f313b521ae25a33cd8296e2e2d8daf647bf24c168254240a",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseBtrfsTwoUuids.json": "6bdcea63cf12d1d63e82e6cbaca827c3e00729dfd016f28331d260d6f0e7328c",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseBtrfsUnmapped.json": "1986ade4a150637c62102316fcec8c55523919d35c377759a5908d1e682e59b1",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseEnabledPlusUnknown.json": "77440e32054aef813df90b9a22d9e03b526496a3b103940df0ff601bec775828",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseEscapedSpace.json": "8340738a509e474a94a815637e66b407dfb60c6449511e52db55296d844abeea",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseExt4Journaled.json": "d317ccb1141271ed0cda2d2b2209fcfb965b57016e6dfc4e0efcf34560c9fb40",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseExt4NoOptions.json": "816a5d9d321c6188eddfa373c50b51c1e70a1784fe0db3a6fbd104768c542ee9",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseExt4Usrquota.json": "4db2fcd87bb1a2efcfadaff13311426eb8a6fc129663cfa486190a93ac959cda",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseHostLike.json": "f4580093a6aa93eab53bef9c9f61667a2a0aa2224096b60568140904b148a63c",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseNoCover.json": "334c7cfdddbf9b9f650e62dab94aeba656047044402de166d5b094ed1d210215",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseOptionalFields.json": "9e73da479ea14cc4b7ddfccf08816c7716842eb71325d7c8bd06541779c1daf0",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseSetupMalformed.json": "833cd8a536b33770ef11291ddc4e05ecd9cbf18ff7dcfa9abfe566021b916fe7",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseStacked.json": "b45f3485c170a88f75abcf8746315caf031331c4cf92b4943847f7433bf980d0",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseSymlinkRealpath.json": "275c360585a93e2f1bc7e2ded0f4cd42b07d5b0eeb16b9790d1980f456b0d07e",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseTmpfsHardlimit.json": "b3226093395d0753138f4761dcd91881e56ff350de213ae4b12f03a57ceb5771",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseTmpfsNoQuota.json": "7afd98c191a799e52bb9ac01b896b23eaa855b9e02ef1bc3f901aa13a03a49b5",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseTmpfsUsrquota.json": "7ecc3503a5fd3aa4b6a1bb635ae34965f7a6f97466c4ff273e9bb836517ac800",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseUnsupported.json": "28f3080b116cf3e09e3ee77f3e8b53daff826fdfb4387a21d3c58850878b22b7",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseXfsAccountingOnly.json": "e03c414b1625518c5bb88171e53e5584c72ea1d5f7e54e2bed5873600f3ba135",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseXfsConflict.json": "84dfae8db5f4803e58e82be92d2ac07d321c98214f1a29fee9f844e9d3c56680",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseXfsDevMismatch.json": "e5db2d1181e0b6ab2062447e2181307a9da4ba64760ce98a0d76f55ccb492097",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseXfsMixedEnforce.json": "ed13abb0eabfbbb8dd8c3391d6cc665a939d8b30b60338f08a9b840e14cd44da",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseXfsOptionsAbsent.json": "d54cba9914cf85c4c4036b250b2e8c6dd3401f770e3929f5072c980797e16a58",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseXfsUsrquota.json": "3e1620f745d7a1cc6fa497b1f61f991539809cd1bde67f86b73860baaaa4244b",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/SupplementHiddenMount.json": "d1a3a4c66008fcdefec47839d9393f1c971ebc6630d96b94c399038378187824",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/SupplementQgroupDisabled.json": "f117bcb0b411cb2dd50910c62222481d8d283eeb49ff2169b40788b24dd09567",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/SupplementQgroupUnknown.json": "22f77b779845660b131dc0b19f3e02ddf203165734dfda040c52f08a06755f56",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/seal-manifest.json": "8ff351f2dec6509d09865e827ffadb8341e522076ad88699ae433be07321c082",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/oracle-quota.py": "f1f4a027728180436fc5161171b0f6ad4ca4176229b5240aabb33e3f2af36bec",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/oracle-rename.py": "a55b2b50d3e7447a1d5312c8b066a13137a6a6895f0343b3240ebf081d97c5f2",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/preseal-amendment.md": "16aab68bde6f4c07cd8199a2b36cf96bb16013b2ef282876a924eb726c6db196",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-retention-reconcile.py": "4599ee1aff95f21714e320a87fd31260f0435aa9c7a9884ac60ab952fe099a36"
+  },
+  "schema": "mori-r23-mut-ext-enabled-detector-v1",
+  "seal": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+  "supplementary_counts": {
+    "total": 18,
+    "unmet": 0
+  },
+  "supplementary_failures": [],
+  "tool": {
+    "path": "/fast/scratch/hyaku/mori-r23/MutExtEnabled/clone/tools/mori-quota-surface.py",
+    "sha256": "b270d9799b608d6b85ced0cd90bad7d00d3a5a9dcb9724eb40957445315d2437"
+  }
+}

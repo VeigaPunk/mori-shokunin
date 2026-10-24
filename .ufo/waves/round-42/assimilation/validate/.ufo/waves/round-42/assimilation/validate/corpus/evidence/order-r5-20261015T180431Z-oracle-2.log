@@ -1,0 +1,72 @@
+RECEIPT   mori-shokunin round-5 run-order close — honest oracle run 2/3 (fresh default seed+nonce; different order)
+SEAT      receipts-writer (round-5 flash wave)
+CAPTURED_UTC  2026-10-15T18:04:33Z (start; end 2026-10-15T18:04:35Z)
+COMMAND   bash tools/mori-silence-cases.sh   # cwd=mori-shokunin lane root
+ORACLE_SHA256_BEFORE 7143ccc2a14221713334c33ade56e24ca711fbd0d3d17f31d33e151be544f017
+ORACLE_SHA256_AFTER  7143ccc2a14221713334c33ade56e24ca711fbd0d3d17f31d33e151be544f017
+CENSUS_SHA256_BEFORE af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+CENSUS_SHA256_AFTER  af2d4e79e69b70bb0b5aecd6acc9608fc7c16b0716766d4a60310e0689d350d7
+EXIT_CODE 0
+DURATION_S 1
+LANE_HEAD 7a3629a83c2e81774ebeb65b4b92a07b65830add   FLEET_HEAD 90ce10bf2098b082755c484b63c05ac299857d22
+SHUFFLE_SEED 1323201475
+RUN_NONCE    1731872407
+CASE_ORDER   young-age-equals-gate subject-postlaunch-progressing untracked-recent-progress nolane-launch-not-open sibling-clean-checkout-weak same-round-relaunch-silent young-under-gate ledger-missing-not-silent silent-open author-subject-committer-sibling-progress legacy-steer-open-silent old-report-before-relaunch-silent report-eq-launch-no-close committed-report-closes unreadable-git-unavailable report-future-no-close completed-not-open repo-missing-unavailable subject-hidden-behind-sibling-head substring-name-mismatch-weak readonly-no-mutation shape-invariance dirty-same-path-as-sibling-progress substring-email-mismatch-weak author-sibling-committer-subject-weak main-repo-noise-silent young-future-launch untracked-report-progress
+TALLY     MORI_SILENCE_CASES: matched=28 total=28
+RUN_HEADER_LINES (mechanics, landed oracle): SHUFFLE_SEED seeds a
+          Fisher-Yates over the 28 CASE_IDS (xorshift32) executed by a
+          shuffled runner; RUN_NONCE is generated independently of the
+          seed and is required in every case's census output
+          (fixture disk-target token nonce-<N>; tools/mori-silence-cases.sh:124-167,
+          :944-960, nonce check :422-427/:490-494).
+DETERMINISM order differs from oracle-1 (fresh random seed); the case tuples do not.
+OUTPUT_SHA256 404c8153c2e5b4cd767cfdb1af3c36f7b840bfac4d522281c2ab86ef9bed5cb2
+
+---- cross-run comparison (honest oracle runs 1-3) ----
+seeds:      oracle-1 1612512038  oracle-2 1323201475  oracle-3 1612512038 (pinned = oracle-1's)
+orders:     oracle-1 vs oracle-3 -> identical; oracle-1 vs oracle-2 -> differ
+tuples:     per-case grade tuples (PASS/FAIL lines sorted by case id) are
+            byte-identical across all three runs; sorted-tuple sha256
+            a70af583bb01b8362a49f07aa8f2b66814fac22b119a22f9b273c5024573c752
+full diff:  `diff oracle-1.out oracle-3.out` -> 2c2
+< RUN_NONCE=483626538
+---
+> RUN_NONCE=3123669063
+            i.e. under the pinned seed the entire output is identical except
+            the RUN_NONCE header line: same seed => same order, and the nonce
+            is independent of the seed.
+
+---- oracle output (verbatim) ----
+SHUFFLE_SEED=1323201475
+RUN_NONCE=1731872407
+CASE_ORDER=young-age-equals-gate subject-postlaunch-progressing untracked-recent-progress nolane-launch-not-open sibling-clean-checkout-weak same-round-relaunch-silent young-under-gate ledger-missing-not-silent silent-open author-subject-committer-sibling-progress legacy-steer-open-silent old-report-before-relaunch-silent report-eq-launch-no-close committed-report-closes unreadable-git-unavailable report-future-no-close completed-not-open repo-missing-unavailable subject-hidden-behind-sibling-head substring-name-mismatch-weak readonly-no-mutation shape-invariance dirty-same-path-as-sibling-progress substring-email-mismatch-weak author-sibling-committer-subject-weak main-repo-noise-silent young-future-launch untracked-report-progress
+PASS young-age-equals-gate (state=young via lane finding=0 rc=0 nonce=1)
+PASS subject-postlaunch-progressing (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS untracked-recent-progress (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS nolane-launch-not-open (state=not-open via lane finding=0 rc=0 nonce=1)
+PASS sibling-clean-checkout-weak (state=progressing-weak via lane finding=0 rc=0 nonce=1)
+PASS same-round-relaunch-silent (state=silent via lane finding=1 rc=1 nonce=1)
+PASS young-under-gate (state=young via lane finding=0 rc=0 nonce=1)
+PASS ledger-missing-not-silent (state=unavailable via lane finding=0 rc=0 nonce=1)
+PASS silent-open (state=silent via lane finding=1 rc=1 nonce=1)
+PASS author-subject-committer-sibling-progress (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS legacy-steer-open-silent (state=silent via lane finding=1 rc=1 nonce=1)
+PASS old-report-before-relaunch-silent (state=silent via lane finding=1 rc=1 nonce=1)
+PASS report-eq-launch-no-close (state=silent via lane finding=1 rc=1 nonce=1)
+PASS committed-report-closes (state=not-open via lane finding=0 rc=0 nonce=1)
+PASS unreadable-git-unavailable (state=unavailable via lane finding=0 rc=0 nonce=1)
+PASS report-future-no-close (state=silent via lane finding=1 rc=1 nonce=1)
+PASS completed-not-open (state=not-open via lane finding=0 rc=0 nonce=1)
+PASS repo-missing-unavailable (state=unavailable via lane finding=0 rc=0 nonce=1)
+PASS subject-hidden-behind-sibling-head (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS substring-name-mismatch-weak (state=progressing-weak via lane finding=0 rc=0 nonce=1)
+PASS readonly-no-mutation
+PASS shape-invariance
+PASS dirty-same-path-as-sibling-progress (state=progressing via lane finding=0 rc=0 nonce=1)
+PASS substring-email-mismatch-weak (state=progressing-weak via lane finding=0 rc=0 nonce=1)
+PASS author-sibling-committer-subject-weak (state=progressing-weak via lane finding=0 rc=0 nonce=1)
+PASS main-repo-noise-silent (state=silent via lane finding=1 rc=1 nonce=1)
+PASS young-future-launch (state=young via lane finding=0 rc=0 nonce=1)
+PASS untracked-report-progress (state=progressing via lane finding=0 rc=0 nonce=1)
+MORI_SILENCE_CASES: matched=28 total=28
+---- end output ----

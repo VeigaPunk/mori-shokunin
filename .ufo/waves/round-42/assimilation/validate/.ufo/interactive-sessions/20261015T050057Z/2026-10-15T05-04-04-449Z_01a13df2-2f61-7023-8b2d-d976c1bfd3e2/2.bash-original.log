@@ -1,0 +1,22 @@
+diff --git i/SKILL.md w/SKILL.md
+index 6e181f5..9277a4a 100644
+--- i/SKILL.md
++++ w/SKILL.md
+@@ -14,7 +14,7 @@ reporting it. **Detection and report only. This lane never remediates.**
+ |---|---|---|---|
+ | Is the shokunin fleet alive? | watchdog pid + log freshness + lane counters | restarting a daemon; killing a pid | `liveness` rows: pid, start time, last tick, state |
+ | Did a wave settle? | `.ufo/waves/*/swarm-registry.json` + dispatch/results pair | assuming an unsettled wave is a failed one | per-wave settled/unsettled with age |
+-| Did something get killed? | `journalctl --user -b` OOM/kill lines + cgroup `memory.events` | remediating, renicing, killing | classified kill events with cgroup + timestamp |
++| Did something get killed? | `journalctl --user -b` OOM/kill lines + cgroup event counters | remediating, renicing, killing | journal class counts; cgroup count with selected source path/scope and observation time, not an event timestamp |
+ | Is there resource runway? | `df` on the fleet + scratch roots; memory pressure counters | deleting files; resizing | runway rows with the measured value |
+ | Was a lane silent? | lane HEAD vs last report mtime | declaring failure from commit sparsity | silent / progressing / progressing-weak |
+ 
+@@ -24,7 +24,7 @@ reporting it. **Detection and report only. This lane never remediates.**
+ |---|---|
+ | watchdog pid gone, no `complete` line | daemon death — a fleet-liveness finding, not a lane failure |
+ | wave registry present, no results | wave dispatched but never settled — age it, do not call it failed |
+-| `oom_kill` in `memory.events` | a real kill event: record cgroup, timestamp, and the killed pid |
++| Positive cgroup `oom_kill` | cumulative counter for the named source; counters alone identify neither the killed PID, event time nor fleet membership |
+ | process alive, last tick stale | wedged, not dead — report the age |
+ 
+ ## Boundaries (hard)

@@ -1,0 +1,6 @@
+{
+  "boot_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "cursor": "s=dead0000beef0000;i=99;b=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;m=1000;t=5f0e000000000001;x=00000001",
+  "schema": "mori-journal-anchor-v1",
+  "scope": "user"
+}

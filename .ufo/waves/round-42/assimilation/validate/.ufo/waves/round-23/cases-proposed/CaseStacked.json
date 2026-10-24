@@ -1,0 +1,49 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseStacked",
+  "scenario": "Two mountinfo lines share the mount point /data: an earlier xfs line whose super options end in noquota, and a later tmpfs line whose super options carry usrquota; the later line wins, so the path resolves to tmpfs with visible user-quota enforcement.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "1 23 0:21 / /proc rw,nosuid,nodev,noexec,relatime shared:12 - proc proc rw\n7 23 0:6 / /dev rw,nosuid,relatime shared:2 - devtmpfs udev rw,size=4021252k,nr_inodes=1005313,mode=755\n23 23 259:3 / / rw,relatime shared:1 - ext4 /dev/nvme0n1p3 rw,errors=remount-ro\n31 23 259:2 / /data rw,relatime shared:1 - xfs /dev/nvme0n1p2 rw,inode64,logbufs=8,logbsize=256k,noquota\n44 31 0:58 / /data rw,nosuid,nodev,noexec,relatime shared:1 - tmpfs tmpfs rw,size=4194304k,inode64,usrquota\n",
+    "paths": [
+      {
+        "path": "/data",
+        "realpath": "/data",
+        "st_dev": "0:58"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0"
+    },
+    "btrfs_sysfs": {
+      "1d02a454-c549-4a35-b567-89d60902af8e": {
+        "devices": [
+          "dm-0"
+        ],
+        "qgroups": false,
+        "qgroups_mode": null
+      }
+    }
+  },
+  "expected": {
+    "exit": 1,
+    "finding_id": "QUOTA_ENABLED",
+    "paths": [
+      {
+        "path": "/data",
+        "fstype": "tmpfs",
+        "mount_point": "/data",
+        "quota_state": "enabled",
+        "enforcement": "enforced",
+        "basis": "tmpfs_quota_option"
+      }
+    ]
+  },
+  "rationale": "Resolution: contract.md:96-99 says candidate mounts are those whose mount point equals the path realpath, is '/', or is a prefix of the realpath; the longest mount point wins and, among equal mount points, the LAST line wins. Both fixture lines carry mount point /data (mountinfo field 5, proc.rst:1977), so the tie is equal-length and the later tmpfs line (mount ID 44) is chosen over the earlier xfs line (mount ID 31); the '/' root line (mount ID 23) and the '/proc' and '/dev' lines are shorter candidates and lose. The later line is later both in file order and by mount ID, so the case is insensitive to that reading of 'last'. The chosen fstype is tmpfs, so the btrfs device-mismatch exemption (contract.md:100-103) does not apply; the tmpfs line's major:minor 0:58 equals the fixture path st_dev 0:58, so no device_mismatch basis arises. Classification: contract.md:120 tmpfs row - super options are the last mountinfo field (proc.rst:1983, field m+4), comma-split with key = text before '=' (contract.md:105-106); the tmpfs super options 'rw,size=4194304k,inode64,usrquota' contain the exact key 'usrquota', one of the tmpfs quota keys, giving quota_state=enabled, enforcement=enforced, basis=tmpfs_quota_option. Rejected variant: choosing the earlier xfs line yields fstype=xfs, mount_point=/data, and because xfs is not btrfs and its major:minor 259:2 differs from the path st_dev 0:58, contract.md:100-101 gives quota_state=unknown, enforcement=n/a, basis=device_mismatch, so the run would end in exit 2 QUOTA_STATE_UNKNOWN instead of exit 1 QUOTA_ENABLED. That second discriminator (basis and exit code, not only fstype) makes the case fail loudly under a wrong tie-break. Verdict: contract.md:132-134 - any enabled path gives exit 1 and finding_id QUOTA_ENABLED. Grounding: S082 (Documentation/filesystems/proc.rst 3.5 - heading 1965, example line 1970, field table 1973-1983 with mount point 1977, separator 1980, filesystem type 1981, mount source 1982, super options 1983; 'Parsers should ignore all unrecognised optional fields.' 1985) for the mountinfo text and the field roles; S084 (Documentation/filesystems/tmpfs.rst - table header 129, 'usrquota' row 135 'User quota accounting and enforcement is enabled on the mount.', 'grpquota' 137, the four *_hardlimit rows 139-142) for the tmpfs quota key semantics and for enforcement; S077 (Documentation/admin-guide/xfs.rst - 'noquota' 171-173 'Forcibly turns off all quota accounting and enforcement within the filesystem.', 'uquota/usrquota/uqnoenforce/quota' 175-177, 'gquota/grpquota/gqnoenforce' 179-181, 'pquota/prjquota/pqnoenforce' 183-185) for the losing xfs line's option vocabulary; S078 (fs/xfs/xfs_super.c xfs_fs_show_options 186-190, emitted quota options usrquota 239, uqnoenforce 241, prjquota 244, pqnoenforce 246, grpquota 249, gqnoenforce 251, noquota 254) for the exact super-option string of the losing line, which matches the frozen real observation 'rw,inode64,logbufs=8,logbsize=256k,noquota' in frozen/c2-expected-real.json. Additional non-registry anchors used only for realism of the fixture text: mm/shmem.c:4877-4892 shmem_show_options prints ',usrquota' when USRQUOTA is active and ',grpquota' when GRPQUOTA is active (the kernel never prints a bare 'quota' for tmpfs); fs/proc_namespace.c:170-189 shows that the last mountinfo field is the superblock options string and that nosuid,nodev,noexec,relatime belong to mount-options field 6. Expected keys are exactly the six the contract lists for a case path (path, fstype, mount_point, quota_state, enforcement, basis); device_check, quota_option_keys and btrfs_qgroups_mode are output fields the contract does not include in a case expectation, so they are not asserted here (device_check would be 'match').",
+  "sources": [
+    "S077",
+    "S078",
+    "S082",
+    "S084"
+  ]
+}

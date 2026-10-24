@@ -1,0 +1,211 @@
+{
+  "case_bytes": 9883,
+  "case_id": "CaseSetupMalformed",
+  "case_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseSetupMalformed.json",
+  "case_sha256": "833cd8a536b33770ef11291ddc4e05ecd9cbf18ff7dcfa9abfe566021b916fe7",
+  "case_sha256_matches_frozen_decision": "833cd8a536b33770ef11291ddc4e05ecd9cbf18ff7dcfa9abfe566021b916fe7",
+  "comparison": {
+    "exit_match": true,
+    "expected_tuples": [],
+    "finding_match": true,
+    "headline_match": true,
+    "leakage_hits": [],
+    "mismatches": [],
+    "observed_tuples": [],
+    "oracle_reason": null,
+    "paths_match": true,
+    "primary_denominator": "six scored fields per path row; primary and supplementary metadata reported separately",
+    "primary_field_order": [
+      "path",
+      "fstype",
+      "mount_point",
+      "quota_state",
+      "enforcement",
+      "basis"
+    ],
+    "supplementary_checks": [
+      {
+        "check": "schema",
+        "detail": "mori-quota-surface-v1",
+        "status": "pass"
+      },
+      {
+        "check": "exit_consistency",
+        "detail": 2,
+        "status": "pass"
+      },
+      {
+        "check": "output_keys_allowed",
+        "detail": [
+          "df_covers_quota",
+          "error",
+          "exit_code",
+          "finding_id",
+          "limits",
+          "paths",
+          "schema"
+        ],
+        "status": "pass"
+      },
+      {
+        "check": "output_key_set",
+        "detail": [
+          "df_covers_quota",
+          "error",
+          "exit_code",
+          "finding_id",
+          "limits",
+          "paths",
+          "schema"
+        ],
+        "status": "pass"
+      },
+      {
+        "check": "error_token",
+        "detail": "fixture_key_set",
+        "status": "pass"
+      },
+      {
+        "check": "path_key_set",
+        "detail": [],
+        "status": "pass"
+      },
+      {
+        "check": "df_covers_quota",
+        "detail": false,
+        "status": "pass"
+      },
+      {
+        "check": "setup_no_partial_verdict",
+        "detail": {
+          "df_covers_quota": false,
+          "paths": []
+        },
+        "status": "pass"
+      },
+      {
+        "check": "limits_text",
+        "detail": "str",
+        "status": "pass"
+      },
+      {
+        "check": "no_leakage",
+        "detail": [],
+        "status": "pass"
+      }
+    ],
+    "supplementary_counts": {
+      "pass": 10,
+      "total": 10,
+      "unmet": 0
+    },
+    "tuples_match": true
+  },
+  "expectation_seal_revision": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+  "expected": {
+    "exit": 2,
+    "finding_id": "QUOTA_SETUP",
+    "paths": []
+  },
+  "expected_bytes_unmodified": true,
+  "expected_untouched_note": "expected bytes read only; no write to the frozen case, the fixture copy, the tool or any oracle",
+  "fixture": {
+    "canonical_sha256": "95a9ebf2de82516f1be5cdac9be2b703c8879fd7c9f071c7e0c9daa8d6125101",
+    "copied_to": "/fast/scratch/hyaku/mori-r23/QSetupMalformed/fixture.json",
+    "copy_bytes": 1155,
+    "copy_canonical_sha256_equals_case_fixture_canonical_sha256": true,
+    "copy_serialization": "re-serialized with json.dumps(sort_keys=True, indent=2); the file bytes differ from any verbatim slice of the case file, the parsed JSON content is identical (canonical sha256 equal)",
+    "copy_sha256": "760e9dad34359da61f5ea532aacbb0e38625dd093f2ad8fe872ac42d3dd8db18",
+    "given_missing_keys": [
+      "device_links"
+    ],
+    "given_top_level_keys": [
+      "btrfs_sysfs",
+      "mountinfo",
+      "paths",
+      "schema"
+    ],
+    "note": "case[\"fixture\"] copied into the seat scratch as JSON with identical parsed content; the only defect is the absent device_links top-level key"
+  },
+  "invocation": {
+    "argv": [
+      "timeout",
+      "-k",
+      "2",
+      "15",
+      "prlimit",
+      "--as=402653184",
+      "--nofile=256",
+      "python3",
+      "-I",
+      "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+      "--fixture",
+      "/fast/scratch/hyaku/mori-r23/QSetupMalformed/fixture.json"
+    ],
+    "children": "one child at a time; single invocation",
+    "cwd": "/fast/scratch/hyaku/mori-r23/QSetupMalformed",
+    "env": {
+      "TMPDIR": "/fast/scratch/hyaku/mori-r23/QSetupMalformed"
+    },
+    "limits": {
+      "address_space_bytes": 402653184,
+      "address_space_mib": 384,
+      "timeout_kill_seconds": 2,
+      "timeout_seconds": 15
+    }
+  },
+  "measured_revision": "f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c",
+  "mode": "fixture",
+  "observation": {
+    "df_covers_quota": false,
+    "error_token": "fixture_key_set",
+    "exit": 2,
+    "exit_code_field": 2,
+    "finding_id": "QUOTA_SETUP",
+    "output_keys": [
+      "df_covers_quota",
+      "error",
+      "exit_code",
+      "finding_id",
+      "limits",
+      "paths",
+      "schema"
+    ],
+    "parsed": {
+      "df_covers_quota": false,
+      "error": "fixture_key_set",
+      "exit_code": 2,
+      "finding_id": "QUOTA_SETUP",
+      "limits": "no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.",
+      "paths": [],
+      "schema": "mori-quota-surface-v1"
+    },
+    "paths_count": 0,
+    "schema": "mori-quota-surface-v1",
+    "stderr": "",
+    "stdout": "{\"df_covers_quota\":false,\"error\":\"fixture_key_set\",\"exit_code\":2,\"finding_id\":\"QUOTA_SETUP\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[],\"schema\":\"mori-quota-surface-v1\"}\n",
+    "timeout": false
+  },
+  "oracle_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/oracle-quota.py",
+  "oracle_sha256": "f1f4a027728180436fc5161171b0f6ad4ca4176229b5240aabb33e3f2af36bec",
+  "real_mode_invoked": false,
+  "recorded_utc": "2026-10-21T18:33:53.776716+00:00",
+  "schema": "mori-r23-falsify-scan-v1",
+  "scope": {
+    "cases_executed": [
+      "CaseSetupMalformed"
+    ],
+    "cases_not_executed": "every other sealed case (including CaseEscapedSpace) was out of this seat's scope and was not executed",
+    "host_reads": "none; fixture mode only; no quotactl, btrfs, xfs_quota, repquota, mount or privileged call",
+    "quota_selftest_note": "the 49/49 selftest arm is a separate co-evolved input correction and is not this case",
+    "wave_note": "the wave-level strict C2 target remains UNPROVABLE at 29/30 owing to the frozen CaseEscapedSpace contradiction; this seat neither confirms nor excuses that red and does not change it"
+  },
+  "seat": "QSetupMalformed",
+  "tool_bytes": 66644,
+  "tool_path": "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+  "tool_sha256": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+  "tool_sha256_at_pin": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+  "verdict": "MATCH",
+  "verdict_detail": "exit 2, finding_id QUOTA_SETUP and empty ordered six-field tuple list all equal the sealed expectation; no mismatch found for this case",
+  "wave": "round-23"
+}

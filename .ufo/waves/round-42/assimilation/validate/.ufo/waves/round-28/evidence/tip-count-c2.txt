@@ -1,0 +1,36 @@
+revision: 5ef4e8db397b57299616258cb2e1c045c46564e7
+command: bash /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-28/count-c2.sh 5ef4e8db397b57299616258cb2e1c045c46564e7
+measured_at: 2026-10-22T19:11:55Z
+rev=5ef4e8db397b57299616258cb2e1c045c46564e7
+tool_blob=3fb78bbc2612c38e463e04083bdb213954647568
+frozen_blob=match
+frozen32_selftest=PASS 32/32
+freeze_commit=d21b8bd38b1bf72ec903a19ed543c615564e8278
+freeze_path=tools/fixtures/mori-oom-killers/cases-a2.json
+freeze_adds=1
+freeze_adds_raw=1
+freeze_renames=0
+freeze_deletes=0
+freeze_edits=0
+freeze_blob_versions=1
+cases_changed_since_freeze=0
+tool_blob_at_freeze=3fb78bbc2612c38e463e04083bdb213954647568
+a2_schema=ok
+a2_cases=30
+a2_ids=unique
+a2_distinct_inputs=30
+a2_rules_covered=10/10
+a2_A2-01=cases=3 distinct=3 field=3 nonactive=0
+a2_A2-02=cases=3 distinct=3 field=3 nonactive=0
+a2_A2-03=cases=3 distinct=3 field=3 nonactive=0
+a2_A2-04=cases=3 distinct=3 field=3 nonactive=0
+a2_A2-05=cases=3 distinct=3 field=3 nonactive=0
+a2_A2-06=cases=3 distinct=3 field=3 nonactive=0
+a2_A2-07=cases=3 distinct=3 field=2 nonactive=0
+a2_A2-08=cases=3 distinct=3 field=3 nonactive=2
+a2_A2-09=cases=3 distinct=3 field=3 nonactive=0
+a2_A2-10=cases=3 distinct=3 field=3 nonactive=0
+a2_rule_checks=ok
+a2_selftest=PASS 30/30
+C2=met
+exit: 0

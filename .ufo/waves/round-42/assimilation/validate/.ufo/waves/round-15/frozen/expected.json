@@ -1,0 +1,8 @@
+{
+  "schema": "mori-r15-frozen-v1",
+  "revision": "0fa5e0de194bcc270a927a166664113e6821442b",
+  "sha256": {
+    "mori-census.sh": "0e41cb83fce2e8c5c711171e1cde2e6fa2809dcfce630eccabe52bcbe41516d9"
+  },
+  "expect": "mixed-valid-positive cases fail before r15, homogeneous and negative controls pass; strict run exit1, never accepted as clean"
+}

@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/oracle-reconcile-v2.py",
+    "--requirements",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-22/frozen/requirements-v2.json",
+    "--tool",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-retention-reconcile.py",
+    "--output",
+    "/home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/round22/measure1/restored.json"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "exit_code": 0,
+  "measured_revision": "4f7cfce0b07d6c339187f1f330e2ae8a3714414e",
+  "name": "restored-control",
+  "recorded_utc": "2026-10-21T14:57:37.181804+00:00",
+  "schema": "mori-r22-command-receipt-v1",
+  "stderr": "",
+  "stdout": "{\"counts\": {\"capability_absent\": 0, \"pass\": 24, \"total\": 24, \"unmet\": 0}, \"finding_id\": \"R22_REQUIREMENTS_MATCH\", \"output\": \"/home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/round22/measure1/restored.json\"}\n"
+}

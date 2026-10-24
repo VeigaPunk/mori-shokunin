@@ -1,0 +1,41 @@
+{
+  "schema": "mori-r22-original-provider-deaths-v1",
+  "seats": [
+    {
+      "id": "MoriR22.ImplReconcile",
+      "role": "executor",
+      "error": "Codex error event: Codex is at capacity, please try again later (code=turn_rate_limit_exceeded)",
+      "replaced": false
+    },
+    {
+      "id": "MoriR22.OracleReconcile",
+      "role": "executor",
+      "error": "Codex error event: Codex is at capacity, please try again later (code=turn_rate_limit_exceeded)",
+      "replaced": false
+    },
+    {
+      "id": "MoriR22.FixtureReconcile",
+      "role": "executor",
+      "error": "Codex error event: Codex is at capacity, please try again later (code=turn_rate_limit_exceeded)",
+      "replaced": false
+    },
+    {
+      "id": "MoriR22.SafetyReview",
+      "role": "sentinel",
+      "error": "Codex error event: Codex is at capacity, please try again later (code=turn_rate_limit_exceeded)",
+      "replaced": false
+    },
+    {
+      "id": "MoriR22.LessonDraft",
+      "role": "scribe",
+      "error": "429 rate_limit_error: This request would exceed your account's rate limit. Please try again later. retry-after-ms=3433000",
+      "replaced": false
+    },
+    {
+      "id": "MoriR22.KnowledgeDraft",
+      "role": "scribe",
+      "error": "429 rate_limit_error: This request would exceed your account's rate limit. Please try again later. retry-after-ms=3433000",
+      "replaced": false
+    }
+  ]
+}

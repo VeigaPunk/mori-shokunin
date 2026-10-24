@@ -1,0 +1,21 @@
+{
+  "measured_commit": "8d22d18fb4a4124becb35123ca839c93cbae0028",
+  "captured_utc": "2026-10-20T06:40:46.892521+00:00",
+  "argv": [
+    "python3",
+    "tools/mori-round13-regressions.py",
+    "--selftest"
+  ],
+  "cwd": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "expected_exit": 0,
+  "exit": 0,
+  "elapsed_s": 0.147132,
+  "stdout": "SELFTEST: case isolated-stub-target-red ok ok\nSELFTEST: case isolated-frozen-manifest-tamper ok ok\nSELFTEST: pass checks=33 cases=2\n",
+  "stderr": "",
+  "sha256": {
+    "tools/mori-census.sh": "0e41cb83fce2e8c5c711171e1cde2e6fa2809dcfce630eccabe52bcbe41516d9",
+    "tools/mori-round13-regressions.py": "304cb22336da40c6d465b55f135ec9bb9bf53fdea4656c63c24c37963b6718f2",
+    "tools/mori-round14-regressions.py": "7af94b4ce8651b8ee75b2a334098cb0a52909c2da2aec56d457e24f4a3ca58ac",
+    "tools/mori-silence-cases.sh": "34cd5770889ec6e7521b477aa9976cece7a64e07b83774c12ce2aea73161abfa"
+  }
+}

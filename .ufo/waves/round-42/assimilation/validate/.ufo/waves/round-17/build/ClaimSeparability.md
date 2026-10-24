@@ -1,0 +1,28 @@
+# Claim separability — round 17
+
+## Finding and axes
+
+**[INFERENCE] The contract defines C1 and C2 as causally separable at the production-artifact and measurement levels.** C1 is coverage/capability acquisition: read-only, field-limited seat terminal-status observation. C2 is operability: jj-colocation correctness in census Git probes. They are expressly assigned different axes in `contract.md:9-22`; the lane scorecard independently names the owned axes `coverage` and `operability` (`SCORECARD.md:3-15`). These are distinct dimensions, not one shared scalar. The scorecard's current numeric scores (coverage 5, operability 6; lines 10-11) are scores, not evidence that either round-17 claim has moved; no score change is asserted here.
+
+The direct feature paths do not overlap:
+
+- C1: new `tools/mori-seat-terminal.py` (`contract.md:24-67`), synthetic fixtures under `.ufo/waves/round-17/fixtures/seat/`, and `tools/mori-round17-seat-regressions.py` (`contract.md:69-78`). Its gate runs each fixture as a subprocess and reports per-case match/mismatch/capability-absent.
+- C2: `tools/mori-census.sh`, specifically branch resolution, report-closure and authorship probes (`contract.md:80-90`), plus the separate `tools/mori-round17-jj-regressions.py` sandbox gate (`contract.md:91-94`). The gate measures case-assertion failures against both the entering and delivered census.
+
+The wave task ownership corroborates this split: SeatTool/SeatFixtures/SeatGate have their own assigned paths, distinct from CensusJj/JjGate (`wave1-spec.json:8-30`). C1 consumes bounded transcript records and emits classifications; C2 consumes Git refs/history and changes census findings. Their production inputs, implementations, and falsifiable gates are independent. C1's terminal classifications are explicitly “last observed,” not proof of permanent non-resumption, and its counts are seats rather than incidents (`contract.md:39-67`); it must not be sold as a worker-recovery or routing improvement. C2's intended change is probe correctness and finding behavior, not a seat-status capability.
+
+## Coupling and non-claims
+
+1. **Shared output directory is an avoidable verification coupling.** Both gates take an `--output DIR`; the C1 contract names `run-manifest.json` (`contract.md:75-78`), and the JjGate task calls for a per-case `run-manifest.json` (`wave1-spec.json:28-30`, task prompt). If both are directed to the same directory, one measurement may overwrite the other's receipt. Use separate claim-specific output directories and retain the two manifests separately.
+2. **Context checker is wave conformance, not either feature.** The R17 assignment adds static clauses for fleet-root writes, background jobs, VCS mutation, and transcript-field limits (`wave1-spec.json:38-40`). The inherited R16 checker is explicitly a static phrase-based gate over shared context, and cannot verify that a rule was followed (`.ufo/waves/round-16/build/ContextGuard.md:8-11,107-115`). Its pass/fail may govern safe dispatch for the whole wave, so it is a procedural prerequisite, not C1 coverage or C2 operability evidence. If it blocks dispatch, report that as wave conformance; do not merge its result into either claim's gate.
+3. **Misroot sweep is also conformance-only.** The R17 assignment is a detection-only, no-pathspec fleet-root status sweep for candidate misplaced files; it does not implement either feature (`wave1-spec.json:32-35`). A candidate may involve a C1 or C2 artifact and therefore require fixing the delivery boundary, but sweep success is not a behavioral measurement of either capability. Keep its result as a separate process-integrity finding.
+4. **Shared integration documents can blur attribution.** [INFERENCE] If L1 updates the shared scorecard, PROVINCE, or registry for both claims, keep separate C1/C2 rows/evidence pointers. A combined documentation change or wave-level “all green” must not replace each claim's own gate result.
+5. **C2 sandbox isolation matters within C2.** The contract requires real colocated jj sandboxes and an entering-versus-delivered comparison (`contract.md:91-94`). The JjGate prompt further requires stubbing census surfaces unrelated to Git/jj and stopping if any cannot be safely stubbed (`wave1-spec.json:28-30`). Without that isolation, changing census I/O could confound the C2 operability result; it still would not couple C2 to C1.
+
+## One bounded move
+
+Keep a claim-separation ledger at integration: one C1 evidence row with its fixture manifest and optional bounded live tally; one C2 row with separate entering/delivered sandbox manifests and failed-assertion counts; two unique output directories. Record context-check and misroot-sweep receipts in a **separate conformance section**, not either claim row. This preserves independent attribution without changing either feature or expanding its runtime scope.
+
+## Verification and limits
+
+Static review only: read `contract.md`, `wave1-spec.json`, `SCORECARD.md`, the existing ContextGuard report, and the census source. No shell commands, tests, selftests, gate runs, or installs were performed; no delivered implementation or measured pass is claimed. The contractual measures are sufficient to test each claim alone: C1's fixture gate can be run with the tool absent versus delivered; C2's gate can run the entering census versus delivered census in its jj sandboxes. Verify them independently, save outputs under distinct directories, and keep any context-check/misroot results separate. No URLs were used.

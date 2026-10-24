@@ -1,0 +1,56 @@
+{
+  "measured_commit": "91940fa339e38006f8db5bd7d78bb6f037f4d016",
+  "expected_manifest_sha256": "13079e038718ea3d660da8dd10a08d7618364d20661e4c8435946e7413976c0b",
+  "witness_and_controls": {
+    "TrackedMoriR16.Lesson": {
+      "bytes": 74,
+      "sha256": "6a95bc386b0f6a501d69c7755a43db7b88ed5de339ccb99525fde5534d6dadaf"
+    },
+    "TabiR16.Lesson": {
+      "bytes": 29,
+      "sha256": "b1d6711066ac26df3d58d106844ef13b34e44f09fc35b597859c050c5b02ede2"
+    },
+    "seed": {
+      "bytes": 5,
+      "sha256": "4a6689419b00b11700c9b6246bcfa8936c8f5e1e824db3a7e57030e2d1c1a684"
+    },
+    "MoriR16.Lesson": {
+      "bytes": 847,
+      "sha256": "15f9f82d707d5c79b11643eed1ab4754b6959d2bede5887e07364442ada5510e"
+    }
+  },
+  "assertions": [
+    {
+      "mode": "before",
+      "candidate_paths": [],
+      "rc": 0,
+      "expected_rc": 0,
+      "expected_paths": [],
+      "match": true
+    },
+    {
+      "mode": "after",
+      "candidate_paths": [
+        "MoriR16.Lesson"
+      ],
+      "rc": 1,
+      "expected_rc": 1,
+      "expected_paths": [
+        "MoriR16.Lesson"
+      ],
+      "match": true
+    }
+  ],
+  "missed_unexpected": [
+    {
+      "missed": 1,
+      "unexpected": 0
+    },
+    {
+      "missed": 0,
+      "unexpected": 0
+    }
+  ],
+  "tracked_control_confirmed": true,
+  "all_match": true
+}

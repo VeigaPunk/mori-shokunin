@@ -1,0 +1,48 @@
+{
+  "schema": "mori-quota-case-v1",
+  "id": "CaseBtrfsUnmapped",
+  "scenario": "A btrfs mount whose source resolves to a device basename that no uuid under /sys/fs/btrfs lists, so the filesystem-to-device mapping fails and the quota state is unknown rather than enabled or disabled.",
+  "fixture": {
+    "schema": "mori-quota-fixture-v1",
+    "mountinfo": "23 28 0:21 / /proc rw,nosuid,nodev,noexec,relatime shared:12 - proc proc rw\n28 1 0:30 /@root / rw,relatime shared:1 - btrfs /dev/mapper/root rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=256,subvol=/@root\n30 28 259:1 / /tmp rw,relatime shared:1 - xfs /dev/nvme0n1p1 rw,inode64,logbufs=8,logbsize=256k,noquota\n36 28 0:44 /@vault /srv/data rw,relatime shared:1 - btrfs /dev/mapper/vault rw,compress=zstd:3,ssd,discard=async,space_cache=v2,subvolid=256,subvol=/@vault\n",
+    "paths": [
+      {
+        "path": "/srv/data/store",
+        "realpath": "/srv/data/store",
+        "st_dev": "0:57"
+      }
+    ],
+    "device_links": {
+      "/dev/mapper/root": "dm-0",
+      "/dev/mapper/vault": "dm-9"
+    },
+    "btrfs_sysfs": {
+      "1d02a454-c549-4a35-b567-89d60902af8e": {
+        "devices": ["dm-0"],
+        "qgroups": false,
+        "qgroups_mode": null
+      },
+      "b3f1c7d2-5a08-4e93-9c64-7d2e1f0a8b55": {
+        "devices": ["dm-1"],
+        "qgroups": true,
+        "qgroups_mode": "squota"
+      }
+    }
+  },
+  "expected": {
+    "exit": 2,
+    "finding_id": "QUOTA_STATE_UNKNOWN",
+    "paths": [
+      {
+        "path": "/srv/data/store",
+        "fstype": "btrfs",
+        "mount_point": "/srv/data",
+        "quota_state": "unknown",
+        "enforcement": "n/a",
+        "basis": "btrfs_device_unmapped"
+      }
+    ]
+  },
+  "rationale": "Contract table row: 'btrfs | zero or several uuids list the device | unknown | n/a | btrfs_device_unmapped'. The covering mount for /srv/data/store has source /dev/mapper/vault, which device_links resolves to the device basename dm-9; btrfs_sysfs contains two uuids, one listing dm-0 and one listing dm-1, so zero uuids list dm-9 -> quota_state unknown, enforcement n/a, basis btrfs_device_unmapped. Mount resolution rule: candidate mounts are those whose mount point equals the path realpath, is '/', or is the realpath prefix followed by '/'; the longest mount point wins, so /srv/data is chosen and the btrfs /dev/mapper/root line mounted at '/' is not chosen for this path. Device-check rule: for btrfs a major:minor mismatch is expected (per-subvolume anonymous st_dev, S081) and is recorded as device_check btrfs_subvolume_skipped instead of device_mismatch, so the btrfs quota row still applies; this is corroborated by the frozen real control frozen/c2-expected-real.json, where the btrfs fleet root (mount 0:30, st_dev 0:57) carries basis btrfs_qgroups_dir_absent rather than device_mismatch. Verdict precedence: no path is enabled and one path is unknown -> exit 2, finding_id QUOTA_STATE_UNKNOWN. The second uuid carries qgroups true with mode 'squota' and a device that is not dm-9: neither the qgroups state nor the mode of an unrelated uuid may leak into this path, whose btrfs_qgroups_mode is null because no uuid maps to dm-9. The xfs /tmp line (noquota) and the /proc line are inert realism and are not relied upon; they exist so a parser that ignores the covering mount or scans all lines cannot pass by accident. Mountinfo lines are parsed per proc.rst 3.5 (S082): fields 1-6, optional fields up to the '-' separator, then filesystem type, mount source and super options; 'shared:N' optional fields appear on three lines, so a parser assuming a fixed field count is caught. The mountinfo text ends with a newline because a real /proc/self/mountinfo does; a trailing newline is not an unparseable line.",
+  "sources": ["S079", "S080", "S081", "S082"]
+}

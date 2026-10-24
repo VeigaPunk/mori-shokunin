@@ -1,0 +1,30 @@
+round-32 lesson M1 sweep — earlier re-opens of the 34 population ids, at the base 641a6e86 (run 2026-10-23T01:58Z by the L1)
+command (per id from .ufo/waves/round-32/c1-population.json):
+  git grep -l -i -E "(reopen|re-open|reopened).{0,80}\b$id\b|\b$id\b.{0,80}(reopen|re-open|reopened)" 641a6e86 -- corpus/lessons .ufo/waves
+output: id, matching file count, first two files (a match is a lead, not proof of a re-open; the named Reopen*.md seats are re-opens)
+S001 1 .ufo/waves/round-24/w1/SrcPsiTypes.md
+S002 1 .ufo/waves/round-27/w2/ReopenS127.md
+S014 20 .ufo/waves/round-13/build/EvidenceScribe.md .ufo/waves/round-13/build/ReviewSources.md
+S015 23 .ufo/waves/round-13/build/EvidenceScribe.md .ufo/waves/round-13/build/ReviewSources.md
+S031 2 .ufo/waves/round-13/build/EvidenceScribe.md .ufo/waves/round-14/build/SourcesScribe.md
+S037 11 .ufo/waves/round-15/build/ConnectFrontier.md .ufo/waves/round-15/build/IndexPositive.md
+S041 1 .ufo/waves/round-17/falsify/ReopenRfc6585.md
+S043 2 .ufo/waves/round-17/falsify/CriticC1Final.md .ufo/waves/round-17/falsify/ReopenZai.md
+S044 1 .ufo/waves/round-17/falsify/ReopenJjCompat.md
+S045 1 .ufo/waves/round-17/falsify/ReopenJjAuthor.md
+S046 1 .ufo/waves/round-17/falsify/ReopenGitAncestor.md
+S047 1 .ufo/waves/round-17/falsify/ReopenGitSymbolic.md
+S049 6 .ufo/waves/round-18/falsify/ReopenGitDocs.md .ufo/waves/round-18/falsify/ReopenNist.md
+S064 12 .ufo/waves/round-19/wave2-plan.json .ufo/waves/round-19/wave2-run.json
+S067 13 .ufo/waves/round-20/falsify/NoHarmRun/r13/evidence.json .ufo/waves/round-20/falsify/NoHarmRun/r15/run-manifest.json
+S068 11 .ufo/waves/round-20/falsify/ReopenS068.md .ufo/waves/round-20/wave2-run.json
+S069 7 .ufo/waves/round-20/falsify/ReopenS068.md .ufo/waves/round-20/wave2-run.json
+S071 8 .ufo/waves/round-20/falsify/ReopenS068.md .ufo/waves/round-20/falsify/SourcesCensus.md
+S073 2 .ufo/waves/round-20/falsify/SourcesCensus.md .ufo/waves/round-22/frozen/SOURCES-entering.txt
+S074 2 .ufo/waves/round-20/falsify/SourcesCensus.md .ufo/waves/round-22/frozen/SOURCES-entering.txt
+S076 1 .ufo/waves/round-22/frozen/SOURCES-entering.txt
+S117 9 .ufo/waves/round-26/w2/ReopenS116S117.md .ufo/waves/round-26/wave2-run.json
+S128 15 .ufo/waves/round-27/w2/ReopenS128.md .ufo/waves/round-27/wave2-dispatch.json
+S137 6 .ufo/waves/round-27/w2/ReopenS137.md .ufo/waves/round-27/wave2-dispatch.json
+S149 9 .ufo/waves/round-28/w1/CriticC1Design.md .ufo/waves/round-28/w1/SupersedeS128.md
+(ids not listed had no match: S007 S012 S039 S040 S051 S052 S056 S058 S062)

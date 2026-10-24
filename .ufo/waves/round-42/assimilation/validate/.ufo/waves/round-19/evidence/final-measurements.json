@@ -1,0 +1,114 @@
+{
+  "schema": "mori-round19-final-measurements-v1",
+  "entering_revision": "b3602869dadd4016675aeba8db2adf3fa1e1b531",
+  "first_smoke_revision": "a4f79dd4dd8fedb6ab062bf53a0f4bebaa6cf42e",
+  "measured_revision": "11795ac0e0a44db6549534eb1239e26353446370",
+  "C1": {
+    "claim": "adjacency bounded content-review capability",
+    "before_unmet_capability_requirements": 10,
+    "after_unmet_capability_requirements": 0,
+    "after_matched": 10,
+    "actual_population": 194,
+    "content_reviewed": 43,
+    "provenance_only": 151,
+    "unresolved": 155,
+    "actual_gate_exit": 1,
+    "actual_gate_meaning": "Correctly fails closed; not privacy clearance."
+  },
+  "C2": {
+    "claim": "calibration revision-bound freeze receipts",
+    "before_missing_metadata_assertions": 10,
+    "before_total_assertions": 12,
+    "after_matched_metadata_assertions": 12,
+    "after_missing_metadata_assertions": 0,
+    "supplemental_binding_checks_matched": 4,
+    "historical_semantic_parity": {
+      "before": true,
+      "after": true
+    },
+    "historical_corrected": 1,
+    "prospective_verified": 3
+  },
+  "first_smoke_failure": {
+    "C1_matched": 10,
+    "C2_target_processes_failed": true,
+    "cause": "missing json import in new freeze checker; actual failing artifacts retained",
+    "corrected_smoke_exit": 0
+  },
+  "retention": {
+    "metric": 0,
+    "routed": 0,
+    "allowlisted": 86,
+    "non_author": 5,
+    "policy_and_allowlist_bytes_unchanged": true
+  },
+  "selftests": {
+    "content_CLI": "CONTENT_REVIEW_SELFTEST_CLEAN",
+    "freeze": 12,
+    "retention": 21,
+    "dispatch": 14,
+    "census": 134,
+    "context": 31
+  },
+  "q13_transport_control": {
+    "before_bad": 9,
+    "after_bad": 0
+  },
+  "wave_seats": [
+    64,
+    70
+  ],
+  "round_total_seats": 134,
+  "wave1_known_provider_failures": 8,
+  "wave1_cancelled": 1,
+  "wave1_unreported_unknown_cause": 39,
+  "wave2_provider_failures": 22,
+  "source_rows_before_after": [
+    63,
+    65
+  ],
+  "source_hist_before_after": {
+    "before": {
+      "rows": 63,
+      "tier": {
+        "A": 54,
+        "B": 3,
+        "C": 6
+      },
+      "status": {
+        "mined": 33,
+        "queued": 23,
+        "rejected": 7
+      }
+    },
+    "after": {
+      "rows": 65,
+      "tier": {
+        "A": 55,
+        "B": 3,
+        "C": 7
+      },
+      "status": {
+        "mined": 34,
+        "queued": 23,
+        "rejected": 8
+      }
+    }
+  },
+  "trends": {
+    "expansion": "unchanged",
+    "quality": "unchanged",
+    "discernment": "improved"
+  },
+  "outside_source_sample": "Main non-author agreed S064 admit-A / S065 reject-C; lesson Gate records method and limits.",
+  "final_counting_artifacts": [
+    "finite-before-observed.json",
+    "finite-after-observed.json"
+  ],
+  "before_counter_correction": "Initial before mode assumed absent metadata. Corrected before mode actually invokes compatible and bound CLI variants, evaluates returned fields, and retains rc2/no-JSON evidence for unsupported binding; counts remain10 but are now observed.",
+  "verification_revision_split": {
+    "six_selftests_and_original_replays": "c0fe0b230769ffba7168955f87985ec3ce08f41d",
+    "corrected_same_instrument_smoke": "11795ac0e0a44db6549534eb1239e26353446370",
+    "tested_scripts_byte_identical_between_revisions": true
+  }
+}

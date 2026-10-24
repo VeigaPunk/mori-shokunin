@@ -1,0 +1,1237 @@
+{
+  "schema": "mori-round17-jj-regressions-v1",
+  "generated_at": "2026-10-20T19:32:55Z",
+  "gate": {
+    "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-round17-jj-regressions.py",
+    "sha256": "1067e4ae97ba8a60c55f1cc65bfaf042a6c6384ae1064a644919cdfd409ee0e3"
+  },
+  "census": {
+    "path": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/frozen/mori-census.sh",
+    "present": true,
+    "sha256": "f1f8d1b62bb617bbcc4664057ab807d3fed8c275b7aabbdf7b373323c5501ff7"
+  },
+  "tools": {
+    "git": {
+      "path": "/usr/bin/git",
+      "version": "git version 2.56.0"
+    },
+    "jj": {
+      "path": "/home/vgpnk/.local/bin/jj",
+      "version": "jj 0.45.1-7c41cdeb16b6b321c64e789a966b6adf723816a5"
+    },
+    "bash": {
+      "path": "/usr/bin/bash"
+    },
+    "jq": "/home/vgpnk/.local/bin/jq",
+    "timeout": "/usr/bin/timeout"
+  },
+  "scratch_run": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-before/run-20261020T193255Z-2030686",
+  "environment": {
+    "HOME": "redirected per case into <case>/home",
+    "XDG_CONFIG_HOME": "redirected per case into <case>/home/.config",
+    "JJ_CONFIG": "redirected per case into <case>/home/jjconfig.toml",
+    "GIT_CONFIG_GLOBAL": "redirected per case into <case>/home/gitconfig",
+    "census": "run with the census override environment; morphic stubs answer pgrep, df, journalctl and tmux; MORI_CGROUP_CURRENT is outside /sys/fs/cgroup and is refused unread"
+  },
+  "cases": [
+    {
+      "id": "git-plain-progress",
+      "description": "plain git lane: lane-authored commit on the branch",
+      "status": "match",
+      "assertions": [
+        {
+          "id": "census_exit",
+          "ok": true,
+          "detail": "rc=0 expected=0"
+        },
+        {
+          "id": "verdict_present",
+          "ok": true,
+          "detail": "verdict=CLEAN"
+        },
+        {
+          "id": "verdict_unique",
+          "ok": true,
+          "detail": "verdict_lines=1"
+        },
+        {
+          "id": "verdict_roll",
+          "ok": true,
+          "detail": "roll=CLEAN expected=CLEAN"
+        },
+        {
+          "id": "lane_surface_unique",
+          "ok": true,
+          "detail": "lane_surface_rows=1"
+        },
+        {
+          "id": "lane_state",
+          "ok": true,
+          "detail": "state=progressing expected=progressing"
+        },
+        {
+          "id": "lane_basis",
+          "ok": true,
+          "detail": "basis=row-A expected=row-A"
+        },
+        {
+          "id": "refs_unchanged",
+          "ok": true,
+          "detail": "before={\"lane\": {\"branch\": \"898bbb97ad2eed72660428b2ce1edf269c5e2c6d\", \"head\": \"898bbb97ad2eed72660428b2ce1edf269c5e2c6d\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}} after={\"lane\": {\"branch\": \"898bbb97ad2eed72660428b2ce1edf269c5e2c6d\", \"head\": \"898bbb97ad2eed72660428b2ce1edf269c5e2c6d\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}}"
+        },
+        {
+          "id": "finding:HEAD_BRANCH_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        },
+        {
+          "id": "finding:LANE_AUTHOR_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        }
+      ],
+      "failed_assertions": 0,
+      "observed": {
+        "state": "progressing",
+        "basis": "row-A",
+        "roll": "CLEAN",
+        "rc": 0,
+        "findings": [
+          {
+            "id": "JOURNAL_CLASSES_UNMEASURED",
+            "severity": "info"
+          },
+          {
+            "id": "TMUX_RELEVANCE_UNAVAILABLE",
+            "severity": "info"
+          }
+        ],
+        "verdict_fields": {
+          "findings": 2,
+          "drift": 0,
+          "unavailable": 0,
+          "surfaces": 8
+        },
+        "refs": {
+          "root": {
+            "head": "3e81e5397fd2e8ef914fa338e88b4254b29a3376",
+            "branch": "3e81e5397fd2e8ef914fa338e88b4254b29a3376"
+          },
+          "lane": {
+            "head": "898bbb97ad2eed72660428b2ce1edf269c5e2c6d",
+            "branch": "898bbb97ad2eed72660428b2ce1edf269c5e2c6d"
+          }
+        }
+      },
+      "sandbox": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-before/run-20261020T193255Z-2030686/git-plain-progress",
+      "census_command": [
+        "/usr/bin/bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/frozen/mori-census.sh"
+      ],
+      "census_stdout_sha256": "5aae9c5ccdaab51ffde6aff6e073e6303d730ea73c2311ae3ca5109f876c28f2",
+      "output_file": "cases/git-plain-progress.out"
+    },
+    {
+      "id": "git-detached-at-tip",
+      "description": "detached HEAD exactly at the branch tip is not a mismatch",
+      "status": "match",
+      "assertions": [
+        {
+          "id": "census_exit",
+          "ok": true,
+          "detail": "rc=0 expected=0"
+        },
+        {
+          "id": "verdict_present",
+          "ok": true,
+          "detail": "verdict=CLEAN"
+        },
+        {
+          "id": "verdict_unique",
+          "ok": true,
+          "detail": "verdict_lines=1"
+        },
+        {
+          "id": "verdict_roll",
+          "ok": true,
+          "detail": "roll=CLEAN expected=CLEAN"
+        },
+        {
+          "id": "lane_surface_unique",
+          "ok": true,
+          "detail": "lane_surface_rows=1"
+        },
+        {
+          "id": "lane_state",
+          "ok": true,
+          "detail": "state=progressing expected=progressing"
+        },
+        {
+          "id": "lane_basis",
+          "ok": true,
+          "detail": "basis=row-A expected=row-A"
+        },
+        {
+          "id": "refs_unchanged",
+          "ok": true,
+          "detail": "before={\"lane\": {\"branch\": \"898bbb97ad2eed72660428b2ce1edf269c5e2c6d\", \"head\": \"898bbb97ad2eed72660428b2ce1edf269c5e2c6d\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}} after={\"lane\": {\"branch\": \"898bbb97ad2eed72660428b2ce1edf269c5e2c6d\", \"head\": \"898bbb97ad2eed72660428b2ce1edf269c5e2c6d\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}}"
+        },
+        {
+          "id": "finding:HEAD_BRANCH_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        },
+        {
+          "id": "finding:LANE_AUTHOR_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        }
+      ],
+      "failed_assertions": 0,
+      "observed": {
+        "state": "progressing",
+        "basis": "row-A",
+        "roll": "CLEAN",
+        "rc": 0,
+        "findings": [
+          {
+            "id": "JOURNAL_CLASSES_UNMEASURED",
+            "severity": "info"
+          },
+          {
+            "id": "TMUX_RELEVANCE_UNAVAILABLE",
+            "severity": "info"
+          }
+        ],
+        "verdict_fields": {
+          "findings": 2,
+          "drift": 0,
+          "unavailable": 0,
+          "surfaces": 8
+        },
+        "refs": {
+          "root": {
+            "head": "3e81e5397fd2e8ef914fa338e88b4254b29a3376",
+            "branch": "3e81e5397fd2e8ef914fa338e88b4254b29a3376"
+          },
+          "lane": {
+            "head": "898bbb97ad2eed72660428b2ce1edf269c5e2c6d",
+            "branch": "898bbb97ad2eed72660428b2ce1edf269c5e2c6d"
+          }
+        }
+      },
+      "sandbox": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-before/run-20261020T193255Z-2030686/git-detached-at-tip",
+      "census_command": [
+        "/usr/bin/bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/frozen/mori-census.sh"
+      ],
+      "census_stdout_sha256": "6a15619d8e38310258ee3388e8d959c35806909ed8df1454007313b65121d41f",
+      "output_file": "cases/git-detached-at-tip.out"
+    },
+    {
+      "id": "git-detached-commit",
+      "description": "plain git commit on a detached HEAD: HEAD ahead -> mismatch, no progress",
+      "status": "mismatch",
+      "assertions": [
+        {
+          "id": "census_exit",
+          "ok": false,
+          "detail": "rc=0 expected=1"
+        },
+        {
+          "id": "verdict_present",
+          "ok": true,
+          "detail": "verdict=CLEAN"
+        },
+        {
+          "id": "verdict_unique",
+          "ok": true,
+          "detail": "verdict_lines=1"
+        },
+        {
+          "id": "verdict_roll",
+          "ok": false,
+          "detail": "roll=CLEAN expected=DRIFT"
+        },
+        {
+          "id": "lane_surface_unique",
+          "ok": true,
+          "detail": "lane_surface_rows=1"
+        },
+        {
+          "id": "lane_state",
+          "ok": false,
+          "detail": "state=progressing expected=silent"
+        },
+        {
+          "id": "lane_basis",
+          "ok": false,
+          "detail": "basis=row-A expected=row-D"
+        },
+        {
+          "id": "refs_unchanged",
+          "ok": true,
+          "detail": "before={\"lane\": {\"branch\": \"f1bed7efdfb96e591cb9786b423819b0bf56c201\", \"head\": \"80cf50dd6c2927ab2ed119e906a8cbf85eca3ff7\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}} after={\"lane\": {\"branch\": \"f1bed7efdfb96e591cb9786b423819b0bf56c201\", \"head\": \"80cf50dd6c2927ab2ed119e906a8cbf85eca3ff7\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}}"
+        },
+        {
+          "id": "finding:HEAD_BRANCH_MISMATCH:present",
+          "ok": false,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        },
+        {
+          "id": "finding:LANE_AUTHOR_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        }
+      ],
+      "failed_assertions": 5,
+      "observed": {
+        "state": "progressing",
+        "basis": "row-A",
+        "roll": "CLEAN",
+        "rc": 0,
+        "findings": [
+          {
+            "id": "JOURNAL_CLASSES_UNMEASURED",
+            "severity": "info"
+          },
+          {
+            "id": "TMUX_RELEVANCE_UNAVAILABLE",
+            "severity": "info"
+          }
+        ],
+        "verdict_fields": {
+          "findings": 2,
+          "drift": 0,
+          "unavailable": 0,
+          "surfaces": 8
+        },
+        "refs": {
+          "root": {
+            "head": "3e81e5397fd2e8ef914fa338e88b4254b29a3376",
+            "branch": "3e81e5397fd2e8ef914fa338e88b4254b29a3376"
+          },
+          "lane": {
+            "head": "80cf50dd6c2927ab2ed119e906a8cbf85eca3ff7",
+            "branch": "f1bed7efdfb96e591cb9786b423819b0bf56c201"
+          }
+        }
+      },
+      "sandbox": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-before/run-20261020T193255Z-2030686/git-detached-commit",
+      "census_command": [
+        "/usr/bin/bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/frozen/mori-census.sh"
+      ],
+      "census_stdout_sha256": "721405aa6d37760aa12e257027fe8337525e8640980e8ff2b0c2a4a138f6589c",
+      "output_file": "cases/git-detached-commit.out"
+    },
+    {
+      "id": "git-detached-behind",
+      "description": "detached HEAD behind the branch: ancestor holds, no mismatch",
+      "status": "mismatch",
+      "assertions": [
+        {
+          "id": "census_exit",
+          "ok": false,
+          "detail": "rc=1 expected=0"
+        },
+        {
+          "id": "verdict_present",
+          "ok": true,
+          "detail": "verdict=DRIFT"
+        },
+        {
+          "id": "verdict_unique",
+          "ok": true,
+          "detail": "verdict_lines=1"
+        },
+        {
+          "id": "verdict_roll",
+          "ok": false,
+          "detail": "roll=DRIFT expected=CLEAN"
+        },
+        {
+          "id": "lane_surface_unique",
+          "ok": true,
+          "detail": "lane_surface_rows=1"
+        },
+        {
+          "id": "lane_state",
+          "ok": false,
+          "detail": "state=silent expected=progressing"
+        },
+        {
+          "id": "lane_basis",
+          "ok": false,
+          "detail": "basis=row-D expected=row-A"
+        },
+        {
+          "id": "refs_unchanged",
+          "ok": true,
+          "detail": "before={\"lane\": {\"branch\": \"bb510ed5687c30b908bf03c9e8e00ff8eaebfcbc\", \"head\": \"f1bed7efdfb96e591cb9786b423819b0bf56c201\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}} after={\"lane\": {\"branch\": \"bb510ed5687c30b908bf03c9e8e00ff8eaebfcbc\", \"head\": \"f1bed7efdfb96e591cb9786b423819b0bf56c201\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}}"
+        },
+        {
+          "id": "finding:HEAD_BRANCH_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'LANE_SILENT', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        },
+        {
+          "id": "finding:LANE_AUTHOR_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'LANE_SILENT', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        }
+      ],
+      "failed_assertions": 4,
+      "observed": {
+        "state": "silent",
+        "basis": "row-D",
+        "roll": "DRIFT",
+        "rc": 1,
+        "findings": [
+          {
+            "id": "JOURNAL_CLASSES_UNMEASURED",
+            "severity": "info"
+          },
+          {
+            "id": "LANE_SILENT",
+            "severity": "warn"
+          },
+          {
+            "id": "TMUX_RELEVANCE_UNAVAILABLE",
+            "severity": "info"
+          }
+        ],
+        "verdict_fields": {
+          "findings": 3,
+          "drift": 1,
+          "unavailable": 0,
+          "surfaces": 8
+        },
+        "refs": {
+          "root": {
+            "head": "3e81e5397fd2e8ef914fa338e88b4254b29a3376",
+            "branch": "3e81e5397fd2e8ef914fa338e88b4254b29a3376"
+          },
+          "lane": {
+            "head": "f1bed7efdfb96e591cb9786b423819b0bf56c201",
+            "branch": "bb510ed5687c30b908bf03c9e8e00ff8eaebfcbc"
+          }
+        }
+      },
+      "sandbox": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-before/run-20261020T193255Z-2030686/git-detached-behind",
+      "census_command": [
+        "/usr/bin/bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/frozen/mori-census.sh"
+      ],
+      "census_stdout_sha256": "11de968b0107ad48f0aaa6903f44e073ba3a8e569315de85ce504158a601ec4e",
+      "output_file": "cases/git-detached-behind.out"
+    },
+    {
+      "id": "git-report-on-branch",
+      "description": "report committed on the branch closes the lane (row 6)",
+      "status": "match",
+      "assertions": [
+        {
+          "id": "census_exit",
+          "ok": true,
+          "detail": "rc=0 expected=0"
+        },
+        {
+          "id": "verdict_present",
+          "ok": true,
+          "detail": "verdict=CLEAN"
+        },
+        {
+          "id": "verdict_unique",
+          "ok": true,
+          "detail": "verdict_lines=1"
+        },
+        {
+          "id": "verdict_roll",
+          "ok": true,
+          "detail": "roll=CLEAN expected=CLEAN"
+        },
+        {
+          "id": "lane_surface_unique",
+          "ok": true,
+          "detail": "lane_surface_rows=1"
+        },
+        {
+          "id": "lane_state",
+          "ok": true,
+          "detail": "state=not-open expected=not-open"
+        },
+        {
+          "id": "lane_basis",
+          "ok": true,
+          "detail": "basis=row-6 expected=row-6"
+        },
+        {
+          "id": "refs_unchanged",
+          "ok": true,
+          "detail": "before={\"lane\": {\"branch\": \"f1bed7efdfb96e591cb9786b423819b0bf56c201\", \"head\": \"f1bed7efdfb96e591cb9786b423819b0bf56c201\"}, \"root\": {\"branch\": \"583f0a40afa882a8285df4643c7ebe6f9fc242d9\", \"head\": \"583f0a40afa882a8285df4643c7ebe6f9fc242d9\"}} after={\"lane\": {\"branch\": \"f1bed7efdfb96e591cb9786b423819b0bf56c201\", \"head\": \"f1bed7efdfb96e591cb9786b423819b0bf56c201\"}, \"root\": {\"branch\": \"583f0a40afa882a8285df4643c7ebe6f9fc242d9\", \"head\": \"583f0a40afa882a8285df4643c7ebe6f9fc242d9\"}}"
+        },
+        {
+          "id": "finding:HEAD_BRANCH_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        },
+        {
+          "id": "finding:LANE_AUTHOR_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        }
+      ],
+      "failed_assertions": 0,
+      "observed": {
+        "state": "not-open",
+        "basis": "row-6",
+        "roll": "CLEAN",
+        "rc": 0,
+        "findings": [
+          {
+            "id": "JOURNAL_CLASSES_UNMEASURED",
+            "severity": "info"
+          },
+          {
+            "id": "TMUX_RELEVANCE_UNAVAILABLE",
+            "severity": "info"
+          }
+        ],
+        "verdict_fields": {
+          "findings": 2,
+          "drift": 0,
+          "unavailable": 0,
+          "surfaces": 8
+        },
+        "refs": {
+          "root": {
+            "head": "583f0a40afa882a8285df4643c7ebe6f9fc242d9",
+            "branch": "583f0a40afa882a8285df4643c7ebe6f9fc242d9"
+          },
+          "lane": {
+            "head": "f1bed7efdfb96e591cb9786b423819b0bf56c201",
+            "branch": "f1bed7efdfb96e591cb9786b423819b0bf56c201"
+          }
+        }
+      },
+      "sandbox": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-before/run-20261020T193255Z-2030686/git-report-on-branch",
+      "census_command": [
+        "/usr/bin/bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/frozen/mori-census.sh"
+      ],
+      "census_stdout_sha256": "dddef89a6e6053202788a822c9aba486f3a9d9b61defb4129963677368be10d6",
+      "output_file": "cases/git-report-on-branch.out"
+    },
+    {
+      "id": "git-report-off-branch",
+      "description": "report only on a detached HEAD does not close the lane",
+      "status": "mismatch",
+      "assertions": [
+        {
+          "id": "census_exit",
+          "ok": false,
+          "detail": "rc=0 expected=1"
+        },
+        {
+          "id": "verdict_present",
+          "ok": true,
+          "detail": "verdict=CLEAN"
+        },
+        {
+          "id": "verdict_unique",
+          "ok": true,
+          "detail": "verdict_lines=1"
+        },
+        {
+          "id": "verdict_roll",
+          "ok": false,
+          "detail": "roll=CLEAN expected=DRIFT"
+        },
+        {
+          "id": "lane_surface_unique",
+          "ok": true,
+          "detail": "lane_surface_rows=1"
+        },
+        {
+          "id": "lane_state",
+          "ok": false,
+          "detail": "state=not-open expected=silent"
+        },
+        {
+          "id": "lane_basis",
+          "ok": false,
+          "detail": "basis=row-6 expected=row-D"
+        },
+        {
+          "id": "refs_unchanged",
+          "ok": true,
+          "detail": "before={\"lane\": {\"branch\": \"f1bed7efdfb96e591cb9786b423819b0bf56c201\", \"head\": \"f1bed7efdfb96e591cb9786b423819b0bf56c201\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"e295674d91f052e5decb34b8ea4e71566d236b1e\"}} after={\"lane\": {\"branch\": \"f1bed7efdfb96e591cb9786b423819b0bf56c201\", \"head\": \"f1bed7efdfb96e591cb9786b423819b0bf56c201\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"e295674d91f052e5decb34b8ea4e71566d236b1e\"}}"
+        },
+        {
+          "id": "finding:HEAD_BRANCH_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        },
+        {
+          "id": "finding:LANE_AUTHOR_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        }
+      ],
+      "failed_assertions": 4,
+      "observed": {
+        "state": "not-open",
+        "basis": "row-6",
+        "roll": "CLEAN",
+        "rc": 0,
+        "findings": [
+          {
+            "id": "JOURNAL_CLASSES_UNMEASURED",
+            "severity": "info"
+          },
+          {
+            "id": "TMUX_RELEVANCE_UNAVAILABLE",
+            "severity": "info"
+          }
+        ],
+        "verdict_fields": {
+          "findings": 2,
+          "drift": 0,
+          "unavailable": 0,
+          "surfaces": 8
+        },
+        "refs": {
+          "root": {
+            "head": "e295674d91f052e5decb34b8ea4e71566d236b1e",
+            "branch": "3e81e5397fd2e8ef914fa338e88b4254b29a3376"
+          },
+          "lane": {
+            "head": "f1bed7efdfb96e591cb9786b423819b0bf56c201",
+            "branch": "f1bed7efdfb96e591cb9786b423819b0bf56c201"
+          }
+        }
+      },
+      "sandbox": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-before/run-20261020T193255Z-2030686/git-report-off-branch",
+      "census_command": [
+        "/usr/bin/bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/frozen/mori-census.sh"
+      ],
+      "census_stdout_sha256": "8e89fd83901b1a124c4b635162e4d27259fbe8d81684cc009df5f99da9182128",
+      "output_file": "cases/git-report-off-branch.out"
+    },
+    {
+      "id": "git-foreign-author",
+      "description": "foreign author+committer on the branch is progressing-weak, not LANE_AUTHOR_MISMATCH",
+      "status": "match",
+      "assertions": [
+        {
+          "id": "census_exit",
+          "ok": true,
+          "detail": "rc=0 expected=0"
+        },
+        {
+          "id": "verdict_present",
+          "ok": true,
+          "detail": "verdict=CLEAN"
+        },
+        {
+          "id": "verdict_unique",
+          "ok": true,
+          "detail": "verdict_lines=1"
+        },
+        {
+          "id": "verdict_roll",
+          "ok": true,
+          "detail": "roll=CLEAN expected=CLEAN"
+        },
+        {
+          "id": "lane_surface_unique",
+          "ok": true,
+          "detail": "lane_surface_rows=1"
+        },
+        {
+          "id": "lane_state",
+          "ok": true,
+          "detail": "state=progressing-weak expected=progressing-weak"
+        },
+        {
+          "id": "lane_basis",
+          "ok": true,
+          "detail": "basis=row-C expected=row-C"
+        },
+        {
+          "id": "refs_unchanged",
+          "ok": true,
+          "detail": "before={\"lane\": {\"branch\": \"3bc26be7da7d3466fdc07a5e1d74bf03eb41c3d5\", \"head\": \"3bc26be7da7d3466fdc07a5e1d74bf03eb41c3d5\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}} after={\"lane\": {\"branch\": \"3bc26be7da7d3466fdc07a5e1d74bf03eb41c3d5\", \"head\": \"3bc26be7da7d3466fdc07a5e1d74bf03eb41c3d5\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}}"
+        },
+        {
+          "id": "finding:HEAD_BRANCH_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        },
+        {
+          "id": "finding:LANE_AUTHOR_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        }
+      ],
+      "failed_assertions": 0,
+      "observed": {
+        "state": "progressing-weak",
+        "basis": "row-C",
+        "roll": "CLEAN",
+        "rc": 0,
+        "findings": [
+          {
+            "id": "JOURNAL_CLASSES_UNMEASURED",
+            "severity": "info"
+          },
+          {
+            "id": "TMUX_RELEVANCE_UNAVAILABLE",
+            "severity": "info"
+          }
+        ],
+        "verdict_fields": {
+          "findings": 2,
+          "drift": 0,
+          "unavailable": 0,
+          "surfaces": 8
+        },
+        "refs": {
+          "root": {
+            "head": "3e81e5397fd2e8ef914fa338e88b4254b29a3376",
+            "branch": "3e81e5397fd2e8ef914fa338e88b4254b29a3376"
+          },
+          "lane": {
+            "head": "3bc26be7da7d3466fdc07a5e1d74bf03eb41c3d5",
+            "branch": "3bc26be7da7d3466fdc07a5e1d74bf03eb41c3d5"
+          }
+        }
+      },
+      "sandbox": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-before/run-20261020T193255Z-2030686/git-foreign-author",
+      "census_command": [
+        "/usr/bin/bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/frozen/mori-census.sh"
+      ],
+      "census_stdout_sha256": "6c63568a871b4bc674a5a8f66ad5a4f94fdefeeffb9196a2953270a049e89b89",
+      "output_file": "cases/git-foreign-author.out"
+    },
+    {
+      "id": "jj-helper-commit",
+      "description": "helper-shaped jj commit (metaedit, commit, bookmark set) is progressing",
+      "status": "match",
+      "assertions": [
+        {
+          "id": "census_exit",
+          "ok": true,
+          "detail": "rc=0 expected=0"
+        },
+        {
+          "id": "verdict_present",
+          "ok": true,
+          "detail": "verdict=CLEAN"
+        },
+        {
+          "id": "verdict_unique",
+          "ok": true,
+          "detail": "verdict_lines=1"
+        },
+        {
+          "id": "verdict_roll",
+          "ok": true,
+          "detail": "roll=CLEAN expected=CLEAN"
+        },
+        {
+          "id": "lane_surface_unique",
+          "ok": true,
+          "detail": "lane_surface_rows=1"
+        },
+        {
+          "id": "lane_state",
+          "ok": true,
+          "detail": "state=progressing expected=progressing"
+        },
+        {
+          "id": "lane_basis",
+          "ok": true,
+          "detail": "basis=row-A expected=row-A"
+        },
+        {
+          "id": "refs_unchanged",
+          "ok": true,
+          "detail": "before={\"lane\": {\"branch\": \"195fcac3393a4e0833c4ac925e50c1a76b2cc555\", \"head\": \"195fcac3393a4e0833c4ac925e50c1a76b2cc555\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}} after={\"lane\": {\"branch\": \"195fcac3393a4e0833c4ac925e50c1a76b2cc555\", \"head\": \"195fcac3393a4e0833c4ac925e50c1a76b2cc555\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}}"
+        },
+        {
+          "id": "finding:HEAD_BRANCH_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        },
+        {
+          "id": "finding:LANE_AUTHOR_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        },
+        {
+          "id": "jj_config_redirected",
+          "ok": true,
+          "detail": "path=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-before/run-20261020T193255Z-2030686/jj-helper-commit/home/.config/jj"
+        }
+      ],
+      "failed_assertions": 0,
+      "observed": {
+        "state": "progressing",
+        "basis": "row-A",
+        "roll": "CLEAN",
+        "rc": 0,
+        "findings": [
+          {
+            "id": "JOURNAL_CLASSES_UNMEASURED",
+            "severity": "info"
+          },
+          {
+            "id": "TMUX_RELEVANCE_UNAVAILABLE",
+            "severity": "info"
+          }
+        ],
+        "verdict_fields": {
+          "findings": 2,
+          "drift": 0,
+          "unavailable": 0,
+          "surfaces": 8
+        },
+        "refs": {
+          "root": {
+            "head": "3e81e5397fd2e8ef914fa338e88b4254b29a3376",
+            "branch": "3e81e5397fd2e8ef914fa338e88b4254b29a3376"
+          },
+          "lane": {
+            "head": "195fcac3393a4e0833c4ac925e50c1a76b2cc555",
+            "branch": "195fcac3393a4e0833c4ac925e50c1a76b2cc555"
+          }
+        }
+      },
+      "sandbox": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-before/run-20261020T193255Z-2030686/jj-helper-commit",
+      "census_command": [
+        "/usr/bin/bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/frozen/mori-census.sh"
+      ],
+      "census_stdout_sha256": "a9b1e7abd3f99120b24cddd42799c193722a688882b2679e4017da6375ff672b",
+      "output_file": "cases/jj-helper-commit.out"
+    },
+    {
+      "id": "jj-commit-no-bookmark",
+      "description": "jj commit without bookmark move: mismatch + no progress credit",
+      "status": "mismatch",
+      "assertions": [
+        {
+          "id": "census_exit",
+          "ok": false,
+          "detail": "rc=0 expected=1"
+        },
+        {
+          "id": "verdict_present",
+          "ok": true,
+          "detail": "verdict=CLEAN"
+        },
+        {
+          "id": "verdict_unique",
+          "ok": true,
+          "detail": "verdict_lines=1"
+        },
+        {
+          "id": "verdict_roll",
+          "ok": false,
+          "detail": "roll=CLEAN expected=DRIFT"
+        },
+        {
+          "id": "lane_surface_unique",
+          "ok": true,
+          "detail": "lane_surface_rows=1"
+        },
+        {
+          "id": "lane_state",
+          "ok": false,
+          "detail": "state=progressing-weak expected=silent"
+        },
+        {
+          "id": "lane_basis",
+          "ok": false,
+          "detail": "basis=row-C expected=row-D"
+        },
+        {
+          "id": "refs_unchanged",
+          "ok": true,
+          "detail": "before={\"lane\": {\"branch\": \"f1bed7efdfb96e591cb9786b423819b0bf56c201\", \"head\": \"81a4485d9968163cc1c63d7ab91a3c633414a402\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}} after={\"lane\": {\"branch\": \"f1bed7efdfb96e591cb9786b423819b0bf56c201\", \"head\": \"81a4485d9968163cc1c63d7ab91a3c633414a402\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}}"
+        },
+        {
+          "id": "finding:HEAD_BRANCH_MISMATCH:present",
+          "ok": false,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        },
+        {
+          "id": "finding:LANE_AUTHOR_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        },
+        {
+          "id": "jj_config_redirected",
+          "ok": true,
+          "detail": "path=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-before/run-20261020T193255Z-2030686/jj-commit-no-bookmark/home/.config/jj"
+        }
+      ],
+      "failed_assertions": 5,
+      "observed": {
+        "state": "progressing-weak",
+        "basis": "row-C",
+        "roll": "CLEAN",
+        "rc": 0,
+        "findings": [
+          {
+            "id": "JOURNAL_CLASSES_UNMEASURED",
+            "severity": "info"
+          },
+          {
+            "id": "TMUX_RELEVANCE_UNAVAILABLE",
+            "severity": "info"
+          }
+        ],
+        "verdict_fields": {
+          "findings": 2,
+          "drift": 0,
+          "unavailable": 0,
+          "surfaces": 8
+        },
+        "refs": {
+          "root": {
+            "head": "3e81e5397fd2e8ef914fa338e88b4254b29a3376",
+            "branch": "3e81e5397fd2e8ef914fa338e88b4254b29a3376"
+          },
+          "lane": {
+            "head": "81a4485d9968163cc1c63d7ab91a3c633414a402",
+            "branch": "f1bed7efdfb96e591cb9786b423819b0bf56c201"
+          }
+        }
+      },
+      "sandbox": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-before/run-20261020T193255Z-2030686/jj-commit-no-bookmark",
+      "census_command": [
+        "/usr/bin/bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/frozen/mori-census.sh"
+      ],
+      "census_stdout_sha256": "367ebcbe0664f255f45adabd3132bfc553479347f93f9edef75886a21deee0f1",
+      "output_file": "cases/jj-commit-no-bookmark.out"
+    },
+    {
+      "id": "jj-ambient-author",
+      "description": "ambient author + lane committer on the branch -> LANE_AUTHOR_MISMATCH",
+      "status": "mismatch",
+      "assertions": [
+        {
+          "id": "census_exit",
+          "ok": false,
+          "detail": "rc=0 expected=1"
+        },
+        {
+          "id": "verdict_present",
+          "ok": true,
+          "detail": "verdict=CLEAN"
+        },
+        {
+          "id": "verdict_unique",
+          "ok": true,
+          "detail": "verdict_lines=1"
+        },
+        {
+          "id": "verdict_roll",
+          "ok": false,
+          "detail": "roll=CLEAN expected=DRIFT"
+        },
+        {
+          "id": "lane_surface_unique",
+          "ok": true,
+          "detail": "lane_surface_rows=1"
+        },
+        {
+          "id": "lane_state",
+          "ok": true,
+          "detail": "state=progressing-weak expected=progressing-weak"
+        },
+        {
+          "id": "lane_basis",
+          "ok": true,
+          "detail": "basis=row-C expected=row-C"
+        },
+        {
+          "id": "refs_unchanged",
+          "ok": true,
+          "detail": "before={\"lane\": {\"branch\": \"c2107ad49a3f3faad74c93ee04f398240e445529\", \"head\": \"c2107ad49a3f3faad74c93ee04f398240e445529\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}} after={\"lane\": {\"branch\": \"c2107ad49a3f3faad74c93ee04f398240e445529\", \"head\": \"c2107ad49a3f3faad74c93ee04f398240e445529\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}}"
+        },
+        {
+          "id": "finding:LANE_AUTHOR_MISMATCH:present",
+          "ok": false,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        },
+        {
+          "id": "finding:HEAD_BRANCH_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        },
+        {
+          "id": "jj_config_redirected",
+          "ok": true,
+          "detail": "path=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-before/run-20261020T193255Z-2030686/jj-ambient-author/home/.config/jj"
+        }
+      ],
+      "failed_assertions": 3,
+      "observed": {
+        "state": "progressing-weak",
+        "basis": "row-C",
+        "roll": "CLEAN",
+        "rc": 0,
+        "findings": [
+          {
+            "id": "JOURNAL_CLASSES_UNMEASURED",
+            "severity": "info"
+          },
+          {
+            "id": "TMUX_RELEVANCE_UNAVAILABLE",
+            "severity": "info"
+          }
+        ],
+        "verdict_fields": {
+          "findings": 2,
+          "drift": 0,
+          "unavailable": 0,
+          "surfaces": 8
+        },
+        "refs": {
+          "root": {
+            "head": "3e81e5397fd2e8ef914fa338e88b4254b29a3376",
+            "branch": "3e81e5397fd2e8ef914fa338e88b4254b29a3376"
+          },
+          "lane": {
+            "head": "c2107ad49a3f3faad74c93ee04f398240e445529",
+            "branch": "c2107ad49a3f3faad74c93ee04f398240e445529"
+          }
+        }
+      },
+      "sandbox": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-before/run-20261020T193255Z-2030686/jj-ambient-author",
+      "census_command": [
+        "/usr/bin/bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/frozen/mori-census.sh"
+      ],
+      "census_stdout_sha256": "47bb6673d94bd8c81ef6a400adae08ef11e47d1312264b92eadc858f68f6a908",
+      "output_file": "cases/jj-ambient-author.out"
+    },
+    {
+      "id": "jj-sibling-author",
+      "description": "sibling-shokunin author + lane committer -> no LANE_AUTHOR_MISMATCH (negative control)",
+      "status": "match",
+      "assertions": [
+        {
+          "id": "census_exit",
+          "ok": true,
+          "detail": "rc=0 expected=0"
+        },
+        {
+          "id": "verdict_present",
+          "ok": true,
+          "detail": "verdict=CLEAN"
+        },
+        {
+          "id": "verdict_unique",
+          "ok": true,
+          "detail": "verdict_lines=1"
+        },
+        {
+          "id": "verdict_roll",
+          "ok": true,
+          "detail": "roll=CLEAN expected=CLEAN"
+        },
+        {
+          "id": "lane_surface_unique",
+          "ok": true,
+          "detail": "lane_surface_rows=1"
+        },
+        {
+          "id": "lane_state",
+          "ok": true,
+          "detail": "state=progressing-weak expected=progressing-weak"
+        },
+        {
+          "id": "lane_basis",
+          "ok": true,
+          "detail": "basis=row-C expected=row-C"
+        },
+        {
+          "id": "refs_unchanged",
+          "ok": true,
+          "detail": "before={\"lane\": {\"branch\": \"e6f243798087cb24ab7d5244fd1b2943498f0ac6\", \"head\": \"e6f243798087cb24ab7d5244fd1b2943498f0ac6\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}} after={\"lane\": {\"branch\": \"e6f243798087cb24ab7d5244fd1b2943498f0ac6\", \"head\": \"e6f243798087cb24ab7d5244fd1b2943498f0ac6\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}}"
+        },
+        {
+          "id": "finding:HEAD_BRANCH_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        },
+        {
+          "id": "finding:LANE_AUTHOR_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        },
+        {
+          "id": "jj_config_redirected",
+          "ok": true,
+          "detail": "path=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-before/run-20261020T193255Z-2030686/jj-sibling-author/home/.config/jj"
+        }
+      ],
+      "failed_assertions": 0,
+      "observed": {
+        "state": "progressing-weak",
+        "basis": "row-C",
+        "roll": "CLEAN",
+        "rc": 0,
+        "findings": [
+          {
+            "id": "JOURNAL_CLASSES_UNMEASURED",
+            "severity": "info"
+          },
+          {
+            "id": "TMUX_RELEVANCE_UNAVAILABLE",
+            "severity": "info"
+          }
+        ],
+        "verdict_fields": {
+          "findings": 2,
+          "drift": 0,
+          "unavailable": 0,
+          "surfaces": 8
+        },
+        "refs": {
+          "root": {
+            "head": "3e81e5397fd2e8ef914fa338e88b4254b29a3376",
+            "branch": "3e81e5397fd2e8ef914fa338e88b4254b29a3376"
+          },
+          "lane": {
+            "head": "e6f243798087cb24ab7d5244fd1b2943498f0ac6",
+            "branch": "e6f243798087cb24ab7d5244fd1b2943498f0ac6"
+          }
+        }
+      },
+      "sandbox": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-before/run-20261020T193255Z-2030686/jj-sibling-author",
+      "census_command": [
+        "/usr/bin/bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/frozen/mori-census.sh"
+      ],
+      "census_stdout_sha256": "83318ab21910ee28ff269d77b1eb6a82ac234a6f26197ec8a2ad4dc6809599b9",
+      "output_file": "cases/jj-sibling-author.out"
+    },
+    {
+      "id": "git-fallback-head",
+      "description": "no resolver input (branch trunk, detached) -> unchanged HEAD grading",
+      "status": "match",
+      "assertions": [
+        {
+          "id": "census_exit",
+          "ok": true,
+          "detail": "rc=0 expected=0"
+        },
+        {
+          "id": "verdict_present",
+          "ok": true,
+          "detail": "verdict=CLEAN"
+        },
+        {
+          "id": "verdict_unique",
+          "ok": true,
+          "detail": "verdict_lines=1"
+        },
+        {
+          "id": "verdict_roll",
+          "ok": true,
+          "detail": "roll=CLEAN expected=CLEAN"
+        },
+        {
+          "id": "lane_surface_unique",
+          "ok": true,
+          "detail": "lane_surface_rows=1"
+        },
+        {
+          "id": "lane_state",
+          "ok": true,
+          "detail": "state=progressing expected=progressing"
+        },
+        {
+          "id": "lane_basis",
+          "ok": true,
+          "detail": "basis=row-A expected=row-A"
+        },
+        {
+          "id": "refs_unchanged",
+          "ok": true,
+          "detail": "before={\"lane\": {\"branch\": \"\", \"head\": \"72be56bf674ea7d5c8168d55c8bcd9e6eb18c4e7\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}} after={\"lane\": {\"branch\": \"\", \"head\": \"72be56bf674ea7d5c8168d55c8bcd9e6eb18c4e7\"}, \"root\": {\"branch\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\", \"head\": \"3e81e5397fd2e8ef914fa338e88b4254b29a3376\"}}"
+        },
+        {
+          "id": "finding:HEAD_BRANCH_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        },
+        {
+          "id": "finding:LANE_AUTHOR_MISMATCH:absent",
+          "ok": true,
+          "detail": "findings=['JOURNAL_CLASSES_UNMEASURED', 'TMUX_RELEVANCE_UNAVAILABLE']"
+        }
+      ],
+      "failed_assertions": 0,
+      "observed": {
+        "state": "progressing",
+        "basis": "row-A",
+        "roll": "CLEAN",
+        "rc": 0,
+        "findings": [
+          {
+            "id": "JOURNAL_CLASSES_UNMEASURED",
+            "severity": "info"
+          },
+          {
+            "id": "TMUX_RELEVANCE_UNAVAILABLE",
+            "severity": "info"
+          }
+        ],
+        "verdict_fields": {
+          "findings": 2,
+          "drift": 0,
+          "unavailable": 0,
+          "surfaces": 8
+        },
+        "refs": {
+          "root": {
+            "head": "3e81e5397fd2e8ef914fa338e88b4254b29a3376",
+            "branch": "3e81e5397fd2e8ef914fa338e88b4254b29a3376"
+          },
+          "lane": {
+            "head": "72be56bf674ea7d5c8168d55c8bcd9e6eb18c4e7",
+            "branch": ""
+          }
+        }
+      },
+      "sandbox": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/worktrees/round-17/MainChecks/jj-before/run-20261020T193255Z-2030686/git-fallback-head",
+      "census_command": [
+        "/usr/bin/bash",
+        "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/frozen/mori-census.sh"
+      ],
+      "census_stdout_sha256": "7968868fb961c94589dba75f5b5a730f9af5f3a77cc11634bb5571f2c1da8f77",
+      "output_file": "cases/git-fallback-head.out"
+    }
+  ],
+  "totals": {
+    "cases": 12,
+    "match": 7,
+    "mismatch": 5,
+    "capability_absent": 0,
+    "setup_failed": 0,
+    "assertions": 124,
+    "failed_assertions": 21,
+    "failed_cases": 5
+  },
+  "failed": 21
+}

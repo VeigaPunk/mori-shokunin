@@ -1,0 +1,27 @@
+{
+  "measured_revision": "11795ac0e0a44db6549534eb1239e26353446370",
+  "actual_smoke_artifacts": [
+    "finite-before-observed.json",
+    "finite-after-observed.json"
+  ],
+  "script_sha256": {
+    "tools/mori-content-review.py": "fa88a6b034d1cdb955fc9db1c0aa38efd44bcc9495d6086873b3ebd6476b29cc",
+    "tools/mori-freeze-order.py": "ec1be305d9fbf81d8169554cdb8f681a819f97ee89bb1362f08c4de0b427b547",
+    "tools/mori-round19-regressions.py": "0ccd17307c9ff21e26ac38c5e2734735a34c09bffb1499eb57bcb1bde993c652"
+  },
+  "same_instrument_for_observed_before_after": true,
+  "original_oracle_sha256": "c5c6c67f104ed1baa57a56bfb22728a2e871ca174a4915ff4005eb3485abe22a",
+  "original_oracle_unchanged": true,
+  "legacy_instrument_matches_entering_commit": true,
+  "selftest_revision": "c0fe0b230769ffba7168955f87985ec3ce08f41d",
+  "all_six_selftested_scripts_byte_identical_at_measured_revision": true,
+  "selftested_paths": [
+    "tools/mori-content-review.py",
+    "tools/mori-freeze-order.py",
+    "tools/mori-retention-gate.py",
+    "tools/mori-dispatch-ledger.py",
+    "tools/mori-census.sh",
+    "tools/mori-round17-context-check.py"
+  ],
+  "harness_changed_after_suite": "Only the before-observation logic and process receipt coverage changed; the corrected harness was actually re-exercised in both modes. No six-script selftest was rerun."
+}

@@ -1,0 +1,14 @@
+{
+  "command": "/home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori",
+  "exit_code": 0,
+  "rows": 76,
+  "warnings": [
+    "S035",
+    "S037",
+    "S073",
+    "S074",
+    "S075",
+    "S076"
+  ],
+  "observation": "round start tool output: mori ok; W04 duplicate URL across scopes"
+}

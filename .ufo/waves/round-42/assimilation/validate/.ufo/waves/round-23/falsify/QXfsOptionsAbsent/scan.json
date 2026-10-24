@@ -1,0 +1,243 @@
+{
+  "case_id": "CaseXfsOptionsAbsent",
+  "corrections":   [
+    {
+      "affects_verdict": false,
+      "appended": "after L1 request; no prior receipt field was removed or rewritten",
+      "id": "C1-unit-error-prlimit-as-is-bytes",
+      "not_established": "The inherited-VmSize causality offered in invocation.harness_note was NOT established: no controlled measurement separated the unit error from a possible inherited-address-space effect. The same shell's later probes at 1048576-8388608 bytes failed with 'failed to map segment from shared object' while the exec-then-prlimit chain at 402653184 bytes succeeded, which is consistent with an inherited-address-space effect but does not prove one. Claim withdrawn as a finding; retained only as an unverified hypothesis.",
+      "qualifies": "runs[2].note and invocation.harness_note",
+      "statement": "prlimit --as takes BYTES. The red startup probe recorded in runs[2] used --as=393216, i.e. 393216 bytes = 384 KiB, NOT 384 MiB. A 384 KiB address-space cap is unattainable for any dynamically linked binary (the libc mapping alone exceeds it), so the SIGSEGV (exit 139, empty stdout/stderr) of '/bin/echo hi' and of 'python3 -I -c print' under that value is explained by the unit error in that probe alone."
+    },
+    {
+      "affects_verdict": false,
+      "appended": "after L1 request; no prior receipt field was removed or rewritten",
+      "disclosure": "Two successful SUT runs exist and produced byte-identical stdout/stderr (exit 2 each), plus the red startup probe above. No single-invocation compliance is claimed; the receipt lists all three runs separately.",
+      "id": "C2-both-successful-runs-were-384MiB",
+      "statement": "The canonical run's cap was --as=402653184 bytes = 384 MiB exactly (correct unit), and the corroborating run used 'ulimit -v 393216' KiB = 384 MiB. In both cases the child interpreter reported RLIMIT_AS = (402653184, 402653184) bytes, i.e. the 384 MiB address-space bound was genuinely in force, with a 15 s timeout."
+    },
+    {
+      "affects_verdict": false,
+      "appended": "after L1 request",
+      "id": "C3-no-frozen-or-production-change",
+      "statement": "This correction changes no frozen case, expected byte, rule, oracle byte, tool byte or receipt comparison result: the case sha256 d54cba9914cf85c4c4036b250b2e8c6dd3401f770e3929f5072c980797e16a58 and the tool sha256 e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92 are unchanged. Historical pin f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c and the frozen results are unchanged; final C2 production is withdrawn after all 96 pinned seats settle, which does not alter this seat's primary 1/1 measurement or its MATCH verdict for CaseXfsOptionsAbsent."
+    }
+  ],
+  "identities": {
+    "case_bytes_unchanged_vs_seal": true,
+    "case_file": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-23/frozen/quota-cases/CaseXfsOptionsAbsent.json",
+    "case_sha256_at_seal_commit": "d54cba9914cf85c4c4036b250b2e8c6dd3401f770e3929f5072c980797e16a58",
+    "case_sha256_working_tree": "d54cba9914cf85c4c4036b250b2e8c6dd3401f770e3929f5072c980797e16a58",
+    "fixture_copy": "/fast/scratch/hyaku/mori-r23/QXfsOptionsAbsent/fixture.json",
+    "fixture_equals_case_fixture_object": true,
+    "fixture_provenance": "case['fixture'] serialized verbatim (json.dumps sort_keys, separators=(',',':')); no case byte edited",
+    "fixture_sha256": "5f5b298a8c29308db22edabd52a166016cf10a24ac8adeb7c8a03f06da10eef7",
+    "production_pin": "f3dc07c0bf423cc1947d0ffa91afa9ce236fbe3c",
+    "seal_commit": "22772c10f6e3c1d8d3fe1b72083a6194e9f4e687",
+    "seal_is_ancestor_of_production_pin": true,
+    "tool": "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+    "tool_bytes_identical_to_pin": true,
+    "tool_git_blob_at_pin": "439ff4c1a68fc4f98182c6b855b3b4c790286851",
+    "tool_sha256_at_pin": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+    "tool_sha256_working_tree": "e485741334d2e72a0f007481f1d2bc5b38658f54c04232965e4bbf552b8f7e92",
+    "tracked_changes_on_lane": "",
+    "tracked_changes_on_lane_clean": true
+  },
+  "integrity": {
+    "allowed_keys_ok": true,
+    "allowed_output_path_keys": [
+      "basis",
+      "btrfs_qgroups_mode",
+      "device_check",
+      "enforcement",
+      "fstype",
+      "mount_point",
+      "path",
+      "quota_option_keys",
+      "quota_state"
+    ],
+    "case_bytes_unchanged_after_run": true,
+    "leak_terms_probed": [
+      "/dev/mapper/data",
+      "dm-3",
+      "/dev/mapper/root",
+      "dm-0",
+      "/dev/nvme0n1p2",
+      "d1e4f2a0-8c3b-4f5e-9a71-2c6d0b8e5f13",
+      "attr2",
+      "inode64",
+      "logbufs",
+      "logbsize",
+      "noalign",
+      "space_cache",
+      "subvolid",
+      "subvol=",
+      "errors=",
+      "relatime",
+      "shared:"
+    ],
+    "leaked_terms": [],
+    "no_source_option_value_uuid_leak": true,
+    "observed_output_path_keys": [
+      [
+        "basis",
+        "btrfs_qgroups_mode",
+        "device_check",
+        "enforcement",
+        "fstype",
+        "mount_point",
+        "path",
+        "quota_option_keys",
+        "quota_state"
+      ]
+    ],
+    "observed_top_level_keys": [
+      "df_covers_quota",
+      "exit_code",
+      "finding_id",
+      "limits",
+      "paths",
+      "schema"
+    ],
+    "tool_bytes_unchanged_after_run": true
+  },
+  "invocation": {
+    "TMPDIR": "/fast/scratch/hyaku/mori-r23/QXfsOptionsAbsent",
+    "address_space_bytes": 402653184,
+    "address_space_human": "384 MiB",
+    "argv_actual": [
+      "/usr/bin/timeout",
+      "15",
+      "/usr/bin/prlimit",
+      "--as=402653184",
+      "--",
+      "/usr/bin/python3",
+      "-I",
+      "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-quota-surface.py",
+      "--fixture",
+      "/fast/scratch/hyaku/mori-r23/QXfsOptionsAbsent/fixture.json"
+    ],
+    "argv_given": "python3 -I TOOL --fixture ABS_FIXTURE",
+    "children": 1,
+    "cwd": "/fast/scratch/hyaku/mori-r23/QXfsOptionsAbsent",
+    "harness_note": "prlimit invoked directly from the session shell segfaults its child (exit 139, empty stdout/stderr) because that shell's VmSize is ~19 GiB, so the forked child inherits an address space already far above RLIMIT_AS and dies on exec. '/bin/echo hi' reproduces it identically under prlimit --as=402653184, and bare 'python3 -I -c print' does too, so the failure is a harness artifact independent of the tool and the case. exec'ing a small binary first (exec /usr/bin/timeout ...) shrinks the inherited address space and makes prlimit behave as specified; the equivalent ulimit -v 393216 run produced byte-identical stdout/stderr.",
+    "host_quota_reads": "none (fixture mode: load_fixture() opens the fixture file only)",
+    "no_tmp_fallback_used": true,
+    "one_child_at_a_time": true,
+    "real_mode_never_invoked": true,
+    "rlimit_as_confirmed_in_child": [
+      402653184,
+      402653184
+    ],
+    "timeout_seconds": 15
+  },
+  "mode": "fixture_only",
+  "primary_expectation": {
+    "actual_exit": 2,
+    "actual_finding_id": "QUOTA_STATE_UNKNOWN",
+    "denominator": "original_six_field_primary",
+    "exit_match": true,
+    "expected_bytes_edited": false,
+    "expected_exit": 2,
+    "expected_finding_id": "QUOTA_STATE_UNKNOWN",
+    "field_order": [
+      "path",
+      "fstype",
+      "mount_point",
+      "quota_state",
+      "enforcement",
+      "basis"
+    ],
+    "finding_id_match": true,
+    "primary_pass": 1,
+    "primary_total": 1,
+    "rows": [
+      {
+        "actual_six_tuple": [
+          "/srv/data",
+          "xfs",
+          "/srv/data",
+          "unknown",
+          "n/a",
+          "xfs_quota_options_absent"
+        ],
+        "expected_six_tuple": [
+          "/srv/data",
+          "xfs",
+          "/srv/data",
+          "unknown",
+          "n/a",
+          "xfs_quota_options_absent"
+        ],
+        "index": 0,
+        "match": true,
+        "path": "/srv/data"
+      }
+    ]
+  },
+  "runs": [
+    {
+      "chain": "timeout 15 -> prlimit --as=402653184 -> python3 -I TOOL --fixture FIXTURE",
+      "exit": 2,
+      "label": "canonical_prlimit_timeout",
+      "stderr": "",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "{\"df_covers_quota\":false,\"exit_code\":2,\"finding_id\":\"QUOTA_STATE_UNKNOWN\",\"limits\":\"no per-user, per-group or per-project limit or usage is read. no NFS or server-side quota and no overlay or fuse quota is covered. a visible btrfs qgroups directory does not imply that any limit is set. an ext2/ext3/ext4 quota feature in the superblock is unobservable without privileged tools. sysfs and mountinfo races during quota enable, disable or remount are not excluded. df capacity percentages never cover quota exhaustion (FR2 / EDQUOT). QUOTA_DISABLED is not a capacity or health verdict; ENOSPC can coexist. the btrfs qgroups mode attribute is never read, so btrfs_qgroups_mode is null in real mode.\",\"paths\":[{\"basis\":\"xfs_quota_options_absent\",\"btrfs_qgroups_mode\":null,\"device_check\":\"match\",\"enforcement\":\"n/a\",\"fstype\":\"xfs\",\"mount_point\":\"/srv/data\",\"path\":\"/srv/data\",\"quota_option_keys\":[],\"quota_state\":\"unknown\"}],\"schema\":\"mori-quota-surface-v1\"}\n",
+      "stdout_bytes": 954,
+      "stdout_sha256": "fdbb22a30e9226099378559d25523f9ede99f400ff9eea9af2a00ea5cfbda08a"
+    },
+    {
+      "byte_identical_to_canonical": true,
+      "chain": "bash -c 'ulimit -v 393216; exec timeout -s KILL 15 python3 -I TOOL --fixture FIXTURE'",
+      "exit": 2,
+      "label": "corroborating_ulimit_run",
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 954,
+      "stdout_sha256": "fdbb22a30e9226099378559d25523f9ede99f400ff9eea9af2a00ea5cfbda08a"
+    },
+    {
+      "chain": "prlimit --as=393216 --cpu=15 timeout -s KILL 15 python3 -I TOOL --fixture FIXTURE",
+      "exit": 139,
+      "label": "harness_artifact_probe_prlimit_from_session_shell",
+      "note": "Interpreter never started; the same 139 reproduces for 'prlimit --as=393216 -- /bin/true' and for 'prlimit --as=393216 python3 -I -c print'. Not a tool or case defect.",
+      "signal": "SIGSEGV",
+      "stderr_bytes": 0,
+      "stdout_bytes": 0
+    }
+  ],
+  "schema": "mori-r23-quota-case-falsify-scan-v1",
+  "seat": "QXfsOptionsAbsent",
+  "supplementary": {
+    "case_implied_from_rationale": [
+      {
+        "btrfs_qgroups_mode": null,
+        "btrfs_qgroups_mode_basis": "xfs path; mode is never projected for a non-btrfs row",
+        "device_check": "match",
+        "device_check_basis": "fixture st_dev '253:2' equals the chosen mount's field 3 '253:2'",
+        "path": "/srv/data",
+        "quota_option_keys": [],
+        "quota_option_keys_basis": "super options rw,attr2,inode64,logbufs,logbsize,noalign contain no xfs quota/noquota/noenforce key"
+      }
+    ],
+    "denominator": "supplementary_only__not_part_of_the_primary_six_field_denominator",
+    "df_covers_quota": false,
+    "exit_code_field": 2,
+    "exit_code_field_consistent_with_process_exit": true,
+    "limits_present": true,
+    "observed_matches_case_implied": true,
+    "observed_path_metadata": [
+      {
+        "btrfs_qgroups_mode": null,
+        "device_check": "match",
+        "path": "/srv/data",
+        "quota_option_keys": []
+      }
+    ],
+    "schema": "mori-quota-surface-v1",
+    "schema_expected": "mori-quota-surface-v1"
+  },
+  "verdict": "MATCH__case_not_falsified",
+  "wave": "round-23"
+}

@@ -1,0 +1,5 @@
+# C1 counter before-measurement at the entering tip; counter = the blob committed with this receipt; run from the fleet root; 2026-10-22T21:52:08Z
+$ bash /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-30/count-c1.sh 58b61681a0e3f3b821a17d38a4e713ccd9921615
+rows=0 rows_ok=0 new_ids=0 new_id_rows=0 excerpts_ok=0/0 skill_rows=0
+C1=unmet
+exit: 1

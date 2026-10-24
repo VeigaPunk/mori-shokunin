@@ -1,0 +1,333 @@
+{
+ "wave": "mori-r38-w1",
+ "reportDir": ".ufo/waves/round-38/w1",
+ "maxLanes": 72,
+ "context": "# mori round 38 \u2014 one v2 wave (build + attack), L1 MoriR38\n\nLane repo: /home/vgpnk/Projects/shokunin/mori-shokunin (jj-colocated; git is the backend). Fleet repo: /home/vgpnk/Projects/shokunin (read-only for you).\nScored tip under attack: f725f3076972e6e70595b5ac8279be524a111ff8 (pushed). Entering tip: e33bb561712b32f46861362a3fa43762fa70ae4f.\n\n## Claims under attack\n- C1 (calibration, measured): `python3 .ufo/waves/round-38/count-c4.py f725f3076972e6e70595b5ac8279be524a111ff8` \u2014 the drift-corpus\n  binding must pass four content checks (entry `anchor:` lines resolve in the probe's bytes; every\n  capability-row path resolves from the repo root; the live receipt names one drifted row per summary\n  count; the `row_states` arm is killed by its own mutation) and reject three fabricated token\n  witnesses. P-C4 is in `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/contract.md`; receipts `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/evidence/c4-before.txt`, `c4-after.txt`,\n  `v3-token-control.txt`, `c4-witness.txt`; fixtures `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/fixtures/`.\n- C2 (operability, measured): `python3 .ufo/waves/round-38/conform.py f725f3076972e6e70595b5ac8279be524a111ff8 --counter .ufo/waves/round-38/count-c1.py --counter .ufo/waves/round-38/count-c4.py`\n  \u2014 six conformance checks (predicate bytes, lane-tip pin, repo-relative tool, bounded reads,\n  timeout state, lane scratch) and six mutations each flipping its own check. P-C5 is in the\n  contract; receipts `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/evidence/c5-before.txt`, `c5-after.txt`, `c5-after-selftest.txt`;\n  the C1 counter is v4.1 (freeze v2 pin `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/evidence/freeze-r38-v2.txt`).\n- C3 (depth, measured): `python3 tools/mori-sources-appendonly.py f725f3076972e6e70595b5ac8279be524a111ff8 --round-base f10a320d` \u2014\n  the gate reports `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; S069 is stale\n  at e33bb561712b32f46861362a3fa43762fa70ae4f and as-of after S226 lands. Receipts `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/evidence/gate-before.txt`, `gate-after.txt`,\n  `gate-selftest-after.txt`; `corpus/knowledge/containment-timed-supersede-r38.md`.\n- Frontier: S226 opened this round (copy `corpus/evidence/sources-r38/S226.src`), lesson\n  `corpus/lessons/round-38.md` (Gate + M1\u2013M6), QUALITY 108\u2013110, erratum\n  `corpus/lessons/round-37-erratum.md`, LOG amendment.\n\n## Hard bounds (every seat)\n- Write EXACTLY ONE file: your report. The validator renders `Report: .ufo/waves/round-38/w1/<Name>.md`;\n  that path is RELATIVE TO /home/vgpnk/Projects/shokunin/mori-shokunin \u2014 write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. Scratch code/outputs only under\n  `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/scratch/<YourName>/` or `$TMPDIR`.\n- The lane repo is READ-ONLY for you: never `git add/commit/push/fetch/reset/stash`, never any\n  mutating jj command, never edit lane files. Running the lane's read-only tools and counters is\n  fine; mutation-testers run COPIES under their own scratch \u2014 never edit the lane's real files.\n- Never touch: /home/vgpnk/Projects/shokunin/MANIFEST.json, /home/vgpnk/Projects/shokunin/.ufo/state/, /home/vgpnk/Projects/shokunin/.ufo/watchdog.log,\n  /home/vgpnk/Projects/shokunin/templates/, /home/vgpnk/Projects/shokunin/scripts/, sibling lane repos, ~/.omp/agent/config.yml,\n  ~/.omp/agent/mcp.json.\n- Detection and report only \u2014 no remediation, no kills, no config edits (mori province).\n- Tooling directive (operator, 2026-10-19): you may install or upgrade tools that help your task \u2014\n  read `~/.omp/agent/RULES.md` first (official channels only; never pipe a remote script into a\n  shell; record tool/version/channel/reason in your report). **pacman transactions are PAUSED\n  host-wide**: install via `uv tool`/`npx`/an official binary in `~/.local/bin`, or file an L0\n  question. Never `pacman -Sy`, `-Syu`, `-U`, `-R`, downgrade, or restart a host service.\n- Never use `agent://all`; your result is the report. Cite path:line or a command output for every\n  claim; an unrun check has not passed.\n",
+ "items": [
+  {
+   "name": "RevC4Anchors",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nIndependently verify P-C4's anchor check. Read `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/contract.md` P-C4, list every `anchor:` line in `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/source-drift-content-anchor-r38.md`, and resolve each string with `grep -F` in `tools/mori-source-drift.py` at `f725f3076972e6e70595b5ac8279be524a111ff8` (`git show f725f3076972e6e70595b5ac8279be524a111ff8:tools/mori-source-drift.py`). Then run `python3 .ufo/waves/round-38/count-c4.py f725f3076972e6e70595b5ac8279be524a111ff8` and compare its `check anchors` detail with your own resolution.\n\n# Acceptance\nReport each anchor's resolution (file:line in the tool) and whether the counter's detail agrees; FAIL on any anchor that does not resolve or a counter verdict that hides one.\n"
+  },
+  {
+   "name": "RevC4Capability",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nIndependently resolve every path the SCORECARD capability row `source-drift re-fetch probe` cites at `f725f3076972e6e70595b5ac8279be524a111ff8`: `git cat-file -e f725f3076972e6e70595b5ac8279be524a111ff8:<path>` for each backticked path. Compare with the counter's `check capability` detail.\n\n# Acceptance\nReport the resolved/missing table; FAIL if any cited path fails to resolve at the tip or the counter misses one.\n"
+  },
+  {
+   "name": "RevC4Live",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify the `live_rows` content check: parse `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/evidence/drift-live-r37.txt` at `f725f3076972e6e70595b5ac8279be524a111ff8`, count `<S###> drifted` lines and the summary's `drifted=` value, and check every named id is a registry row at `f725f3076972e6e70595b5ac8279be524a111ff8` (`grep -E '^\\| S[0-9]{3} '`). Compare with the counter's `check live_rows`.\n\n# Acceptance\nReport the counts and the id membership; FAIL on a mismatch or an id outside the registry.\n"
+  },
+  {
+   "name": "RevC4Kill",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRe-derive the `drift_kill` check: extract `tools/mori-source-drift.py` at `f725f3076972e6e70595b5ac8279be524a111ff8`, replace `return \"drifted\"` with `return \"excerpt\"` in a scratch copy, run `--selftest`, and confirm `selftest row_states FAIL` names S103. Run the unmutated selftest too.\n\n# Acceptance\nReport both selftest outputs' row_states lines and the exit codes; FAIL if the mutation does not flip row_states or does not name S103.\n"
+  },
+  {
+   "name": "RevC4Negatives",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nProject each of `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/fixtures/witness-token-entry.md`, `witness-dangling-row.md`, `witness-summary-only-live.txt` onto the real other bytes and name which of the four content checks each one fails. Run `python3 .ufo/waves/round-38/count-c4.py f725f3076972e6e70595b5ac8279be524a111ff8` for the receipt.\n\n# Acceptance\nReport a witness\u2192failed-check table and the counter's three negative lines; FAIL if any witness passes all four checks or the counter's rejection reason differs from yours.\n"
+  },
+  {
+   "name": "CritC4Gaming",
+   "role": "critic",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nBuild a fabricated binding that satisfies all four P-C4 checks without doing the claimed work (e.g. anchor strings that exist but are dead code, a live receipt whose per-row lines are copied from another round, a capability path that resolves to a stub). Run the counter's checks mentally or in scratch against `f725f3076972e6e70595b5ac8279be524a111ff8` bytes.\n\n# Acceptance\nReport the strongest gaming construction and whether the counter accepts it; if accepted, name the exact check that must be tightened and why the current P-C4 bound permits it.\n"
+  },
+  {
+   "name": "MutC4Anchor",
+   "role": "mutation-tester",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nMutate a copy of `corpus/knowledge/source-drift-content-anchor-r38.md` (scratch only) by changing one `anchor:` string by one byte; run `count-c4.py` against a sandbox revision carrying the mutant (clone `/home/vgpnk/Projects/shokunin/mori-shokunin` at `f725f3076972e6e70595b5ac8279be524a111ff8`, commit the mutant, run with `--repo`).\n\n# Acceptance\nReport the mutant's `check anchors` line and `C4=` verdict; PASS only if the mutant flips anchors to FAIL.\n"
+  },
+  {
+   "name": "MutC4CapPath",
+   "role": "mutation-tester",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nMutate a copy of `SCORECARD.md` (scratch) so the `source-drift re-fetch probe` row cites `evidence/no-such-file.txt`; build the sandbox as in MutC4Anchor and run `count-c4.py`.\n\n# Acceptance\nReport the mutant's `check capability` line and `C4=` verdict; PASS only if the mutant flips capability to FAIL.\n"
+  },
+  {
+   "name": "MutC4Live",
+   "role": "mutation-tester",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nMutate a copy of `.ufo/waves/round-37/evidence/drift-live-r37.txt` to keep the summary and drop the per-row lines; sandbox and run `count-c4.py`.\n\n# Acceptance\nReport the mutant's `check live_rows` line and `C4=` verdict; PASS only if the mutant flips live_rows to FAIL.\n"
+  },
+  {
+   "name": "MutC4KillAlt",
+   "role": "mutation-tester",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nIn a scratch copy of the probe at `f725f3076972e6e70595b5ac8279be524a111ff8`, replace `return \"drifted\"` with `return \"fresh\"` and run `--selftest`; then run the counter's `drift_kill` logic against a sandbox carrying that tool.\n\n# Acceptance\nReport whether row_states fails and whether S103 is named; PASS if the kill check rejects a different mutation of the same branch.\n"
+  },
+  {
+   "name": "ScoutC4Bounds",
+   "role": "scout",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRead `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/count-c4.py` and enumerate exactly what each of its four checks proves and what it cannot prove, with line references. Include the capability 'last row wins' rule and the `anchor:` substring rule.\n\n# Acceptance\nReport a bounds table (check \u2192 proves \u2192 does not prove) with line numbers; FAIL if any claim in the contract's P-C4 is stronger than the code.\n"
+  },
+  {
+   "name": "RevC5Predicate",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nIndependently compare the contract's P-C1 blockquote (`/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/contract.md`, the 'P-C1 of record' section) with `python3 .ufo/waves/round-38/count-c1.py --print-predicate` after whitespace normalisation. Also diff the r37 contract's first P-C1 blockquote to show the defect the check closes.\n\n# Acceptance\nReport both normalised lengths and the equality booleans; FAIL if they differ or the r37 comparison is not reproduced.\n"
+  },
+  {
+   "name": "RevC5Pin",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify the pin: `python3 .ufo/waves/round-38/count-c1.py --pin-only --repo /home/vgpnk/Projects/shokunin/mori-shokunin` against `git -C /home/vgpnk/Projects/shokunin/mori-shokunin rev-parse HEAD`, and confirm the full-run receipt `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/evidence/c1-after-r38.txt` carries the same `head_at_measurement=`.\n\n# Acceptance\nReport all three values; FAIL if the receipt's pin differs from the tip it names or the flag output.\n"
+  },
+  {
+   "name": "RevC5Tool",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nTest repo-relative `--tool` resolution including an escape attempt: run `count-c1.py f725f3076972e6e70595b5ac8279be524a111ff8 --tool .ufo/waves/round-38/fixtures/summary-only.py --print-tool` and `--print-tool ../outside.py`; inspect `resolve_tool`'s body.\n\n# Acceptance\nReport the resolved paths and exit codes; FAIL if a repo-relative path resolves outside the lane or the flag executes a missing file.\n"
+  },
+  {
+   "name": "RevC5Bounds",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAudit every child process and git read in `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/count-c1.py` and `count-c4.py` for a timeout and the committed-blob read for a byte cap; list each call site with line numbers.\n\n# Acceptance\nReport the audit table; FAIL on any read without a bound or a cap that cannot be reached.\n"
+  },
+  {
+   "name": "RevC5Timeout",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRun `python3 .ufo/waves/round-38/count-c1.py f725f3076972e6e70595b5ac8279be524a111ff8 --tool /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/fixtures/hang-after-flush.py --tool-timeout 3 --arms real --seed 7` and time it. Then check the printed reason and exit code.\n\n# Acceptance\nReport the wall time, the `real arm` line, the diff line, `C1=` and exit; FAIL if the tool scores a pass, if the reason is not `tool_timeout`, or if wall time exceeds timeout+grace by more than 2 s.\n"
+  },
+  {
+   "name": "RevC5Scratch",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify the scratch property: inspect every `tempfile.mkdtemp(` in both round-38 counters and run two concurrent `count-c1.py f725f3076972e6e70595b5ac8279be524a111ff8 --arms real --seed 11` processes; list the directories created under `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/scratch/`.\n\n# Acceptance\nReport the mkdtemp call sites and the observed directories; FAIL on a shared or seed-derived path.\n"
+  },
+  {
+   "name": "MutC5Predicate",
+   "role": "mutation-tester",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nApply conform's `predicate` mutation to a scratch copy of `count-c1.py` and run `conform.py --selftest --counter <mutant>`.\n\n# Acceptance\nReport the mutation line and whether only `predicate` failed; PASS only if exactly that check flips.\n"
+  },
+  {
+   "name": "MutC5Pin",
+   "role": "mutation-tester",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nApply conform's `head_pin` mutation to a scratch copy and run the checker's evaluate path for that mutant (via `--selftest --counter <mutant>` or by calling `evaluate` in a scratch harness).\n\n# Acceptance\nReport whether only `head_pin` failed; PASS only on exactly that flip.\n"
+  },
+  {
+   "name": "MutC5Tool",
+   "role": "mutation-tester",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nApply conform's `tool_resolve` mutation (`return path` instead of the absolute join) to a scratch copy and run the checker.\n\n# Acceptance\nReport whether only `tool_resolve` failed; PASS only on exactly that flip.\n"
+  },
+  {
+   "name": "MutC5Bounds",
+   "role": "mutation-tester",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nApply conform's `bounded_reads` mutation (drop `timeout=timeout` from the git helper's `run(` call) to a scratch copy and run the checker.\n\n# Acceptance\nReport whether only `bounded_reads` failed; PASS only on exactly that flip.\n"
+  },
+  {
+   "name": "MutC5Timeout",
+   "role": "mutation-tester",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nApply conform's `timeout_state` mutation (`_TOOL_BUDGET[0] = TOOL_TIMEOUT_S`) to a scratch copy and run the checker.\n\n# Acceptance\nReport whether only `timeout_state` failed; PASS only on exactly that flip.\n"
+  },
+  {
+   "name": "MutC5Scratch",
+   "role": "mutation-tester",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nApply conform's `scratch` mutation (`SCRATCH_ROOT = \"/tmp/mori-r38-scratch\"`) to a scratch copy and run the checker.\n\n# Acceptance\nReport whether only `scratch` failed; PASS only on exactly that flip.\n"
+  },
+  {
+   "name": "CritC5Gaming",
+   "role": "critic",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAttack the conformance checker itself: can a counter pass all six checks while being unreplayable or unbounded (e.g. `--pin-only` printing a constant equal to HEAD, `--print-tool` echoing without executing, a timeout path that never runs)? Read `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/conform.py`.\n\n# Acceptance\nReport the strongest bypass and whether the checker or its selftest catches it; name the missing mutation if any.\n"
+  },
+  {
+   "name": "RevC1Negatives",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRe-derive the C1 counter's negative judgement at `f725f3076972e6e70595b5ac8279be524a111ff8`: run `python3 .ufo/waves/round-38/count-c1.py f725f3076972e6e70595b5ac8279be524a111ff8 --seed 20261023` and inspect the four `negative` lines. Verify memo-n1's rejection now names the drawn arm and memo-sha's state is disclosed.\n\n# Acceptance\nReport each negative line and the `C1=` verdict; FAIL if memo-n1 is rejected only by the challenge arm or memo-sha is unmentioned.\n"
+  },
+  {
+   "name": "RevC1SoundnessBound",
+   "role": "revenger",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nReproduce the r37 RevNgC1Fixtures class against the v4.1 counter: build a short-history memoizer and a content-keyed delegator in scratch, score them on `count-c1.py f725f3076972e6e70595b5ac8279be524a111ff8`, and state which are rejected and which pass.\n\n# Acceptance\nReport each specimen's verdict with the rejecting arm; name the remaining black-box bound (honest delegation) in one sentence.\n"
+  },
+  {
+   "name": "RevGateTiming",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRe-derive the timing field: run `python3 tools/mori-sources-appendonly.py e33bb561712b32f46861362a3fa43762fa70ae4f` and `f725f3076972e6e70595b5ac8279be524a111ff8` (both `--round-base f10a320d`) and parse `supersede_timing`. For S069 verify `git merge-base --is-ancestor 71abd41 62db24c` (superseder before edit) and that S226's landing commit descends from 62db24c.\n\n# Acceptance\nReport both timing lines and the ancestry results; FAIL if S069's stale/as-of state contradicts the commits.\n"
+  },
+  {
+   "name": "MutGateTiming",
+   "role": "mutation-tester",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nMutate a scratch copy of the gate so `stale_supersede` is derived from presence (always empty); run its `--selftest`.\n\n# Acceptance\nReport the selftest verdict; PASS only if the supersede-before-edit fixture fails the mutant.\n"
+  },
+  {
+   "name": "RevGateS226",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify S226: the row opens `supersedes S069`, its source copy `corpus/evidence/sources-r38/S226.src:657-658` carries the quoted paragraph, its landing commit is a descendant of 62db24c, and `used-by` resolves.\n\n# Acceptance\nReport the row, quote, ancestry and path resolution; FAIL on any mismatch.\n"
+  },
+  {
+   "name": "CritGateSemantics",
+   "role": "critic",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAttack the timed semantics: construct two histories in a scratch git repo \u2014 (i) a superseder that lands after the edit but whose row is itself later deleted, (ii) a superseder on an unrelated branch. Run the gate and report what `supersede_timing` says.\n\n# Acceptance\nReport both constructions and the gate's verdicts; name which of the contract's P-C6 sentences is too strong, if any.\n"
+  },
+  {
+   "name": "RevGateCompat",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nCheck that the r37 C1 counter still parses the new gate output: run `python3 .ufo/waves/round-37/count-c1.py f725f3076972e6e70595b5ac8279be524a111ff8 --seed 41` and inspect the blind/real arms (the gate prints a predicate line and a timing line now).\n\n# Acceptance\nReport `C1=` and any malformed-line counts; FAIL if the extra lines break the parser or change a list.\n"
+  },
+  {
+   "name": "ScoutGateRank",
+   "role": "scout",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nWalk `tools/mori-sources-appendonly.py`'s supersede code and report the exact index basis (first landing per superseder, max across superseders) with line numbers; state what a merge-heavy history would do.\n\n# Acceptance\nReport the line-referenced mechanism and the merge caveat; FAIL if the code differs from the contract's 'latest superseding row's landing commit'.\n"
+  },
+  {
+   "name": "RevErratum",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify every sentence of `corpus/lessons/round-37-erratum.md` E1\u2013E8 against git: the 8ff9bba/1caa242 content check, the 225/10 sweep, the before-arm command form, the M1\u2013M10 label, the 5631efa diff, the capability first-working, the axes cells.\n\n# Acceptance\nReport a sentence\u2192evidence table; FAIL on any sentence the repository contradicts.\n"
+  },
+  {
+   "name": "RevLogAppend",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify the LOG amendment is append-only: `git diff 3501d4c2^ 3501d4c2 -- LOG.md` must be additions only, and the appended entry must name the superseded text. Also verify the Round-37 entry is unchanged in that commit.\n\n# Acceptance\nReport the numstat and the first/last added lines; FAIL on any deletion or an unnamed superseded sentence.\n"
+  },
+  {
+   "name": "RevScorecardCells",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify the axes-cell correction and capability rows at `f725f3076972e6e70595b5ac8279be524a111ff8`: the `freshness` cell no longer cites round-37 C2, the `operability` cell carries the round-37 pointer, the `round-37 C2` row's first-working is 36, and every path in both round-37 capability rows resolves from the repo root.\n\n# Acceptance\nReport each cell/row check with the resolution commands; FAIL on any superseded clause left in place or a non-resolving path.\n"
+  },
+  {
+   "name": "RevSourcesAppend",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify the round's SOURCES change is append-only: `python3 tools/mori-sources-appendonly.py f725f3076972e6e70595b5ac8279be524a111ff8 --round-base f10a320d` and `git diff e33bb561712b32f46861362a3fa43762fa70ae4f f725f3076972e6e70595b5ac8279be524a111ff8 -- corpus/SOURCES.md` must add S226 and one search-log note only.\n\n# Acceptance\nReport the gate line, the diffstat, and the added lines; FAIL on any in-place cell edit (the gate's `round_changed`).\n"
+  },
+  {
+   "name": "RevQualityCriteria",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify QUALITY 108\u2013110 are checkable: run each criterion's named check at `f725f3076972e6e70595b5ac8279be524a111ff8` and confirm the 'Shown able to fail' pointer resolves.\n\n# Acceptance\nReport criterion\u2192command\u2192output; FAIL if any check cannot be run or its fail-evidence is absent.\n"
+  },
+  {
+   "name": "RevSkillRows",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify the three new SKILL registry rows: each command's exit map matches the tool's behavior, the pinned values resolve at `f725f3076972e6e70595b5ac8279be524a111ff8`, and the r36 gate row's selftest count is 9.\n\n# Acceptance\nReport row\u2192command\u2192observed; FAIL on an exit-map mismatch or an unresolved pin.\n"
+  },
+  {
+   "name": "RevLessonMistakes",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify each round-38 lesson M row: the quoted pre-fix evidence exists (in receipts or git) and the fix is shown able to fail by a named command.\n\n# Acceptance\nReport M\u2192evidence\u2192fix command; FAIL on a row whose 'shown able to fail' is not re-runnable.\n"
+  },
+  {
+   "name": "RevFreezeV2",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify the freeze: `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/evidence/freeze-r38.txt` pins the frozen v1 paths, `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/evidence/freeze-r38-v2.txt` pins the v4.1 counter and fixtures, and the committed bytes at `f725f3076972e6e70595b5ac8279be524a111ff8` hash to the v2 pins. Name the version change (run_negative drawn arm + memo-sha bound).\n\n# Acceptance\nReport the hash comparison; FAIL on any drift not named in the v2 pin file.\n"
+  },
+  {
+   "name": "RevCensus",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRe-run `bash /home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori` and compare with `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/evidence/census-start.txt`; count rows at `e33bb561712b32f46861362a3fa43762fa70ae4f` and `f725f3076972e6e70595b5ac8279be524a111ff8`.\n\n# Acceptance\nReport exit codes, W/E lines and row counts; FAIL on a new error line or a row count other than +1.\n"
+  },
+  {
+   "name": "RevReceipts",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAudit every receipt under `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/evidence/`: each carries its `command:` line, no absolute operator path other than the lane root, and its printed verdict matches the claim it supports.\n\n# Acceptance\nReport a receipt\u2192verdict table and any path-hygiene defect; FAIL on a receipt whose command does not reproduce its output.\n"
+  },
+  {
+   "name": "RevReportSections",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nDraft-check the report contract for round 38: required sections in order (Work performed, Landed changes, Before \u2192 after measurements, Sources & frontier, Trend verdicts, SHONEN), marker rules, and the cites each section needs from `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38`.\n\n# Acceptance\nReport a section\u2192required-evidence table; FAIL on a missing section or a verdict written without a receipt.\n"
+  },
+  {
+   "name": "ScoutMisroot",
+   "role": "scout",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRun `git -C /home/vgpnk/Projects/shokunin status --porcelain` (no pathspec) and for every untracked file decide whether a mori seat wrote it (content names this lane/round). Do not delete anything; list candidates with byte sizes.\n\n# Acceptance\nReport the status output and a candidate table; FAIL if an untracked file naming this lane/round is omitted.\n"
+  },
+  {
+   "name": "ScoutPycache",
+   "role": "scout",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nCheck for committed bytecode at `f725f3076972e6e70595b5ac8279be524a111ff8` (`git ls-tree -r f725f3076972e6e70595b5ac8279be524a111ff8 | grep -c __pycache__`), the `.gitignore` rule, and whether `tools/mori-index-clean.sh` watches `__pycache__`. Report the r37 RevScratch residual status.\n\n# Acceptance\nReport the counts and the index-clean watch list; FAIL if a tracked `__pycache__` path exists at the tip.\n"
+  },
+  {
+   "name": "ScoutPriorRound",
+   "role": "scout",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify the r37 residual dispositions named in `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/contract.md`'s debt table against the repository: predicate equality, pin, tool resolution, bounded reads, timeout state, scratch, capability first-working, debt (f), QUALITY 103 log.\n\n# Acceptance\nReport debt\u2192evidence\u2192status; FAIL on a row marked done without its artifact.\n"
+  },
+  {
+   "name": "ScoutFrontierRows",
+   "role": "scout",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nCheck the corpus README's Frontier table and coverage map for the two new r38 entries (`knowledge/source-drift-content-anchor-r38.md`, `knowledge/containment-timed-supersede-r38.md`); verify the rows exist in the map and in the Round-38 section.\n\n# Acceptance\nReport the rows and line numbers; FAIL if an entry is missing from the map or the section.\n"
+  },
+  {
+   "name": "ConnSibling",
+   "role": "connector",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nScan sibling lanes' recent commits/corpus for overlap with this round's surfaces (drift probe, append-only gate, counter conformance). Name any sibling artifact that already does this work or that this round's changes could break.\n\n# Acceptance\nReport a sibling-overlap table with paths and verdicts; FAIL if an overlapping sibling artifact is omitted.\n"
+  },
+  {
+   "name": "ConnReceipts",
+   "role": "connector",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nCompare this round's receipt style (command: line, EXIT, repo-relative paths) with the fleet's evidence conventions in `/home/vgpnk/Projects/shokunin/CORPUS.md` and adjacent lanes' recent receipts; name any divergence.\n\n# Acceptance\nReport the convention comparison; FAIL on an uncited divergence.\n"
+  },
+  {
+   "name": "RevDebtF",
+   "role": "revenger",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify debt (f) is named, not decided: check the L0 question in `/home/vgpnk/Projects/shokunin/.ufo/l0-questions.md`, the lesson row, and the counters' SIGTERM\u2192grace\u2192SIGKILL behavior (`run()` in both round-38 counters).\n\n# Acceptance\nReport the L0 line, lesson line and the measured signal path; FAIL if the round claims the tradeoff closed or edited a counter to hide it.\n"
+  },
+  {
+   "name": "SentCounters",
+   "role": "sentinel",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nSecurity-review `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/count-c1.py` and `count-c4.py`: executing the tool under test, path handling (`--tool`, `--repo`), symlink behavior, temp-file permissions, and the hang fixture's process group.\n\n# Acceptance\nReport each finding with severity and line; FAIL if a HIGH finding is omitted or a MEDIUM/LOW is claimed fixed without a check.\n"
+  },
+  {
+   "name": "SentWitnessSandbox",
+   "role": "sentinel",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nReview `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/fixtures/make-witness-sandbox.py`: clone source, identity, substitution paths, and whether the sandbox can be confused with the lane (path/identity/title). Run it once in scratch.\n\n# Acceptance\nReport the sandbox properties and verdict; FAIL if the sandbox can pass as the lane repo or if it writes outside scratch.\n"
+  },
+  {
+   "name": "SimpC1",
+   "role": "simplifier",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRead `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/count-c1.py` v4.1 and list dead code, unused flags, or duplicated logic that can be deleted without changing behavior; do not edit the lane file.\n\n# Acceptance\nReport a deletion list with line ranges and the behavior-preserving argument; FAIL on a proposal that changes a predicate or a check.\n"
+  },
+  {
+   "name": "SimpC4",
+   "role": "simplifier",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRead `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/count-c4.py` and list dead code or duplicated logic (e.g. the unused `anchors`/`named` recomputation in main) that can be deleted without behavior change.\n\n# Acceptance\nReport a deletion list with line ranges; FAIL on a proposal that changes a check's meaning.\n"
+  },
+  {
+   "name": "ExecWitnessSandbox",
+   "role": "executor",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRebuild the fabricated-binding control from scratch: run `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/fixtures/make-witness-sandbox.py f725f3076972e6e70595b5ac8279be524a111ff8` in scratch, then score the sandbox with the r37 counter and with `count-c4.py`.\n\n# Acceptance\nReport the sandbox sha, both verdicts, and the exact commands; FAIL if the r37 counter is not `C2=met` or count-c4 is not `C4=unmet`.\n"
+  },
+  {
+   "name": "ExecReplay",
+   "role": "executor",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nReplay the C1 counter at two seeds (`--seed 20261023` and `--seed 3737`) at `f725f3076972e6e70595b5ac8279be524a111ff8` and compare the drawn-arm revs, the challenge results and the negative lines.\n\n# Acceptance\nReport both runs' key lines and seeds; FAIL if a run's verdict differs from `C1=met` or the receipts' seed differs unexplained.\n"
+  },
+  {
+   "name": "ExecGateDeterminism",
+   "role": "executor",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRun `python3 tools/mori-sources-appendonly.py --selftest` three times and the gate at `f725f3076972e6e70595b5ac8279be524a111ff8` twice; compare outputs byte-for-byte.\n\n# Acceptance\nReport the selftest lines and diff results; FAIL on any nondeterminism.\n"
+  },
+  {
+   "name": "ExecCensusEnd",
+   "role": "executor",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRun the source census end command and store its output in your report; compare with `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/evidence/census-start.txt`.\n\n# Acceptance\nReport the exact command, exit code and verdict lines; FAIL on a new error (E-class) line.\n"
+  },
+  {
+   "name": "ExecIndexCleanLog",
+   "role": "executor",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/dispatch-log.txt` records `staged=0 intent_to_add=0` after every `landed` line: list the lane's commits since `e33bb561712b32f46861362a3fa43762fa70ae4f` (`git log --format='%h %s' e33bb561712b32f46861362a3fa43762fa70ae4f..f725f3076972e6e70595b5ac8279be524a111ff8`) and compare with the log's entries.\n\n# Acceptance\nReport commit\u2192log-entry table; FAIL on a landed commit without its index-clean record.\n"
+  },
+  {
+   "name": "ExecR17Battery",
+   "role": "executor",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRun the r17-jj regression battery at `f725f3076972e6e70595b5ac8279be524a111ff8` (`python3 tools/mori-round17-jj-regressions.py --selftest`) in scratch and report the assertion count.\n\n# Acceptance\nReport exit code and pass/fail counts; FAIL on a red assertion not disclosed.\n"
+  },
+  {
+   "name": "ExecCensusSelftest",
+   "role": "executor",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRun `bash tools/mori-census.sh --selftest` and `bash tools/mori-silence-cases.sh` at `f725f3076972e6e70595b5ac8279be524a111ff8` in scratch; report the tallies.\n\n# Acceptance\nReport both tallies and exits; FAIL on a regression against the last recorded counts.\n"
+  },
+  {
+   "name": "ScribeReportBullets",
+   "role": "scribe",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nDraft the report's **Work performed** bullets for C1\u2013C3 and the routed items from `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/evidence/` receipts and the SCORECARD declaration; one bullet per item with a path:line or command pointer.\n\n# Acceptance\nReport the drafted bullets; FAIL on a bullet without a resolvable pointer.\n"
+  },
+  {
+   "name": "ScribeTrendVerdicts",
+   "role": "scribe",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nDraft the report's **Trend verdicts** (expansion, quality, discernment) with evidence pointers from this round's receipts, lesson M1\u2013M6, the erratum and the QUALITY additions.\n\n# Acceptance\nReport the three verdict lines and their evidence; FAIL on a verdict without a receipt or a scalar score.\n"
+  },
+  {
+   "name": "ScribeSHONEN",
+   "role": "scribe",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nDraft the SHONEN checklist lines (four boxes) for the report, each `[~]` with a resolvable pointer or `[ ]`; never `[x]` without a named non-author verifier.\n\n# Acceptance\nReport the four lines and the pointers; FAIL on a `[x]` without a named verifier.\n"
+  },
+  {
+   "name": "RevAdmission",
+   "role": "critic",
+   "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nJudge the round for admission: each claim's after-state re-derived from a receipt, no universal clauses, no axis harmed (compare SCORECARD scores before/after). Read `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-38/contract.md` and the SCORECARD Round-38 section.\n\n# Acceptance\nReport claim\u2192verdict\u2192evidence and the no-harm table; FAIL on an admitted claim without a re-derivable value or a harmed axis left unnamed.\n"
+  }
+ ]
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "mori-r22-real-expected-v1",
+  "input_revision": "77a5bbe8a0b41dfbfd2546d024d36e294b814bd0",
+  "measured_revision": "9fb1f911cfdd6061005c300795f44b1b45523897",
+  "paths": {
+    "receipt": ".ufo/waves/round-21/evidence/final/retention-floor.json",
+    "policy": ".ufo/waves/round-18/frozen/c1-policy.json",
+    "allowlist": "corpus/evidence/retention-allowlist.json"
+  },
+  "inputs_sha256": {
+    "receipt": "4001e2d94afcc652b710d5d0afe63bffce2185256f120d5a5f7d33de6be8c840",
+    "policy": "db06e9810bbfd243fb0a753a46960573df39083ea90174ce463cf2a0ab523128",
+    "allowlist": "f46c78ecad4c6d31fa9ac0ba0cfd6c72eb9137ab6b58ab4baf4239d11ea0c63b"
+  },
+  "expected": {
+    "finding_id": "RETENTION_RECONCILED",
+    "receipt_match": true,
+    "raw_total": 95,
+    "policy_excluded": 5,
+    "scanner_total": 90,
+    "raw_unallowlisted": 4,
+    "scanner_unallowlisted": 4,
+    "non_author": 5,
+    "allowlisted": 86,
+    "forbidden_allowlist": 0,
+    "retention_state": "red",
+    "privacy_clearance": false,
+    "exclusion_basis": "non_author_paths_glob"
+  }
+}

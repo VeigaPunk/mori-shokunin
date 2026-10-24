@@ -1,0 +1,18 @@
+{
+  "before_revision": "1bfe708a170c877db3319060d0ab38771efe03ac",
+  "before_rows": 76,
+  "after_rows": 86,
+  "new_ids": [
+    "S077",
+    "S078",
+    "S079",
+    "S080",
+    "S081",
+    "S082",
+    "S083",
+    "S084",
+    "S085",
+    "S086"
+  ],
+  "notes": "Source count only, no frontier/capability admission implied"
+}

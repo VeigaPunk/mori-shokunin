@@ -1,0 +1,411 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r20-falsify",
+  "createdAt": "2026-10-21T10:59:14.518Z",
+  "updatedAt": "2026-10-21T10:59:31.942Z",
+  "reportDir": ".ufo/waves/round-20/falsify",
+  "members": {
+    "MutTrailerLastLine": {
+      "kind": "spawn",
+      "agentId": "MoriR20.MutTrailerLastLine",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutStubCounted": {
+      "kind": "spawn",
+      "agentId": "MoriR20.MutStubCounted",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutSymlinkFollow": {
+      "kind": "spawn",
+      "agentId": "MoriR20.MutSymlinkFollow",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutTraversalAllowed": {
+      "kind": "spawn",
+      "agentId": "MoriR20.MutTraversalAllowed",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "LiveChousa": {
+      "kind": "spawn",
+      "agentId": "MoriR20.LiveChousa",
+      "role": "reviewer",
+      "item": null
+    },
+    "LiveKagi": {
+      "kind": "spawn",
+      "agentId": "MoriR20.LiveKagi",
+      "role": "reviewer",
+      "item": null
+    },
+    "LiveKaidoku": {
+      "kind": "spawn",
+      "agentId": "MoriR20.LiveKaidoku",
+      "role": "reviewer",
+      "item": null
+    },
+    "LiveKake": {
+      "kind": "spawn",
+      "agentId": "MoriR20.LiveKake",
+      "role": "reviewer",
+      "item": null
+    },
+    "LiveKama": {
+      "kind": "spawn",
+      "agentId": "MoriR20.LiveKama",
+      "role": "reviewer",
+      "item": null
+    },
+    "LiveKasegi": {
+      "kind": "spawn",
+      "agentId": "MoriR20.LiveKasegi",
+      "role": "reviewer",
+      "item": null
+    },
+    "LiveKengaku": {
+      "kind": "spawn",
+      "agentId": "MoriR20.LiveKengaku",
+      "role": "reviewer",
+      "item": null
+    },
+    "LiveKumitate": {
+      "kind": "spawn",
+      "agentId": "MoriR20.LiveKumitate",
+      "role": "reviewer",
+      "item": null
+    },
+    "LiveMado": {
+      "kind": "spawn",
+      "agentId": "MoriR20.LiveMado",
+      "role": "reviewer",
+      "item": null
+    },
+    "LiveRevenger": {
+      "kind": "spawn",
+      "agentId": "MoriR20.LiveRevenger",
+      "role": "reviewer",
+      "item": null
+    },
+    "LiveSouji": {
+      "kind": "spawn",
+      "agentId": "MoriR20.LiveSouji",
+      "role": "reviewer",
+      "item": null
+    },
+    "LiveTabi": {
+      "kind": "spawn",
+      "agentId": "MoriR20.LiveTabi",
+      "role": "reviewer",
+      "item": null
+    },
+    "LiveTameshi": {
+      "kind": "spawn",
+      "agentId": "MoriR20.LiveTameshi",
+      "role": "reviewer",
+      "item": null
+    },
+    "LiveTsukuroi": {
+      "kind": "spawn",
+      "agentId": "MoriR20.LiveTsukuroi",
+      "role": "reviewer",
+      "item": null
+    },
+    "LiveMoriR18W1": {
+      "kind": "spawn",
+      "agentId": "MoriR20.LiveMoriR18W1",
+      "role": "reviewer",
+      "item": null
+    },
+    "LiveMoriR19W1": {
+      "kind": "spawn",
+      "agentId": "MoriR20.LiveMoriR19W1",
+      "role": "reviewer",
+      "item": null
+    },
+    "LiveMoriR19W2": {
+      "kind": "spawn",
+      "agentId": "MoriR20.LiveMoriR19W2",
+      "role": "reviewer",
+      "item": null
+    },
+    "CountC2": {
+      "kind": "spawn",
+      "agentId": "MoriR20.CountC2",
+      "role": "reviewer",
+      "item": null
+    },
+    "SelftestC2": {
+      "kind": "spawn",
+      "agentId": "MoriR20.SelftestC2",
+      "role": "reviewer",
+      "item": null
+    },
+    "SentinelTool": {
+      "kind": "spawn",
+      "agentId": "MoriR20.SentinelTool",
+      "role": "sentinel",
+      "item": null
+    },
+    "CriticC2Claim": {
+      "kind": "spawn",
+      "agentId": "MoriR20.CriticC2Claim",
+      "role": "critic",
+      "item": null
+    },
+    "VocabFleet": {
+      "kind": "spawn",
+      "agentId": "MoriR20.VocabFleet",
+      "role": "reviewer",
+      "item": null
+    },
+    "TabiTxtReports": {
+      "kind": "spawn",
+      "agentId": "MoriR20.TabiTxtReports",
+      "role": "scout",
+      "item": null
+    },
+    "KakeSuccessors": {
+      "kind": "spawn",
+      "agentId": "MoriR20.KakeSuccessors",
+      "role": "scout",
+      "item": null
+    },
+    "DeclaredVsDispatched": {
+      "kind": "spawn",
+      "agentId": "MoriR20.DeclaredVsDispatched",
+      "role": "revenger",
+      "item": null
+    },
+    "ConnKumitateRoute": {
+      "kind": "spawn",
+      "agentId": "MoriR20.ConnKumitateRoute",
+      "role": "connector",
+      "item": null
+    },
+    "DiffAltImpl": {
+      "kind": "spawn",
+      "agentId": "MoriR20.DiffAltImpl",
+      "role": "reviewer",
+      "item": null
+    },
+    "CriticStubProtocol": {
+      "kind": "spawn",
+      "agentId": "MoriR20.CriticStubProtocol",
+      "role": "critic",
+      "item": null
+    },
+    "FamJournal": {
+      "kind": "spawn",
+      "agentId": "MoriR20.FamJournal",
+      "role": "reviewer",
+      "item": null
+    },
+    "FamUnitOOS": {
+      "kind": "spawn",
+      "agentId": "MoriR20.FamUnitOOS",
+      "role": "reviewer",
+      "item": null
+    },
+    "FamRosterLanes": {
+      "kind": "spawn",
+      "agentId": "MoriR20.FamRosterLanes",
+      "role": "reviewer",
+      "item": null
+    },
+    "FamRosterFields": {
+      "kind": "spawn",
+      "agentId": "MoriR20.FamRosterFields",
+      "role": "reviewer",
+      "item": null
+    },
+    "FamWatchdog": {
+      "kind": "spawn",
+      "agentId": "MoriR20.FamWatchdog",
+      "role": "reviewer",
+      "item": null
+    },
+    "FamLaneRowsA": {
+      "kind": "spawn",
+      "agentId": "MoriR20.FamLaneRowsA",
+      "role": "reviewer",
+      "item": null
+    },
+    "FamLaneRowsB": {
+      "kind": "spawn",
+      "agentId": "MoriR20.FamLaneRowsB",
+      "role": "reviewer",
+      "item": null
+    },
+    "FamWavesIo": {
+      "kind": "spawn",
+      "agentId": "MoriR20.FamWavesIo",
+      "role": "reviewer",
+      "item": null
+    },
+    "AdjudicateStale": {
+      "kind": "spawn",
+      "agentId": "MoriR20.AdjudicateStale",
+      "role": "critic",
+      "item": null
+    },
+    "AdjudicateWaves": {
+      "kind": "spawn",
+      "agentId": "MoriR20.AdjudicateWaves",
+      "role": "critic",
+      "item": null
+    },
+    "CriticC1Claim": {
+      "kind": "spawn",
+      "agentId": "MoriR20.CriticC1Claim",
+      "role": "critic",
+      "item": null
+    },
+    "CountC1": {
+      "kind": "spawn",
+      "agentId": "MoriR20.CountC1",
+      "role": "reviewer",
+      "item": null
+    },
+    "PinIntegrity": {
+      "kind": "spawn",
+      "agentId": "MoriR20.PinIntegrity",
+      "role": "reviewer",
+      "item": null
+    },
+    "PostPinWindow": {
+      "kind": "spawn",
+      "agentId": "MoriR20.PostPinWindow",
+      "role": "scout",
+      "item": null
+    },
+    "ReopenS066": {
+      "kind": "spawn",
+      "agentId": "MoriR20.ReopenS066",
+      "role": "scout",
+      "item": null
+    },
+    "ReopenS067": {
+      "kind": "spawn",
+      "agentId": "MoriR20.ReopenS067",
+      "role": "scout",
+      "item": null
+    },
+    "ReopenS068": {
+      "kind": "spawn",
+      "agentId": "MoriR20.ReopenS068",
+      "role": "scout",
+      "item": null
+    },
+    "ReopenS069": {
+      "kind": "spawn",
+      "agentId": "MoriR20.ReopenS069",
+      "role": "scout",
+      "item": null
+    },
+    "ReopenS070": {
+      "kind": "spawn",
+      "agentId": "MoriR20.ReopenS070",
+      "role": "scout",
+      "item": null
+    },
+    "ReopenS071": {
+      "kind": "spawn",
+      "agentId": "MoriR20.ReopenS071",
+      "role": "scout",
+      "item": null
+    },
+    "ReopenS072": {
+      "kind": "spawn",
+      "agentId": "MoriR20.ReopenS072",
+      "role": "scout",
+      "item": null
+    },
+    "SourcesCensus": {
+      "kind": "spawn",
+      "agentId": "MoriR20.SourcesCensus",
+      "role": "scout",
+      "item": null
+    },
+    "ReviewKnowDrift": {
+      "kind": "spawn",
+      "agentId": "MoriR20.ReviewKnowDrift",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewKnowSettlement": {
+      "kind": "spawn",
+      "agentId": "MoriR20.ReviewKnowSettlement",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewSkill": {
+      "kind": "spawn",
+      "agentId": "MoriR20.ReviewSkill",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewProvince": {
+      "kind": "spawn",
+      "agentId": "MoriR20.ReviewProvince",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewQuality": {
+      "kind": "spawn",
+      "agentId": "MoriR20.ReviewQuality",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewLesson": {
+      "kind": "spawn",
+      "agentId": "MoriR20.ReviewLesson",
+      "role": "reviewer",
+      "item": null
+    },
+    "ReviewGate": {
+      "kind": "spawn",
+      "agentId": "MoriR20.ReviewGate",
+      "role": "reviewer",
+      "item": null
+    },
+    "CriticTrends": {
+      "kind": "spawn",
+      "agentId": "MoriR20.CriticTrends",
+      "role": "critic",
+      "item": null
+    },
+    "NoHarmRun": {
+      "kind": "spawn",
+      "agentId": "MoriR20.NoHarmRun",
+      "role": "reviewer",
+      "item": null
+    },
+    "SeparationCheck": {
+      "kind": "spawn",
+      "agentId": "MoriR20.SeparationCheck",
+      "role": "reviewer",
+      "item": null
+    },
+    "FleetMisrootEnd": {
+      "kind": "spawn",
+      "agentId": "MoriR20.FleetMisrootEnd",
+      "role": "scout",
+      "item": null
+    },
+    "DraftLog": {
+      "kind": "spawn",
+      "agentId": "MoriR20.DraftLog",
+      "role": "scribe",
+      "item": null
+    },
+    "DraftScorecard": {
+      "kind": "spawn",
+      "agentId": "MoriR20.DraftScorecard",
+      "role": "scribe",
+      "item": null
+    }
+  }
+}

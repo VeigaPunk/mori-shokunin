@@ -1,0 +1,1287 @@
+{
+ "schema": "mori-oom-killers-cases-v1",
+ "frozen_with": ".ufo/waves/round-28/contract.md (C2; rule list .ufo/waves/round-27/contract.md:47-58)",
+ "note": "Assembled by the L1 MoriR28 without edits from the ten blind case-writer reports .ufo/waves/round-28/w1/CaseA2r01.md ... CaseA2r10.md (first fenced JSON array of each, in rule order). The writers did not read tools/mori-oom-killers.py. Compare expect.verdict, expect.exit and only the dotted paths present in expect.fields. Every process name and value is invented.",
+ "cases": [
+  {
+   "id": "a2-01-suppressed-in-scope-active-quiet",
+   "rule": "A2-01",
+   "why": "Core A2-01 firing: an in-scope suppressed line makes the scope incomplete and, with no positive evidence, an active earlyoom then reads KILLERS_UNKNOWN exit 2. Rule A2-01 (round-27/contract.md:49) says a journald `Suppressed N messages from earlyoom.service` line in scope sets scope_complete false; the rule was adopted as A1b in round-26/contract.md:158-159. Journal record 1 is the invocation's version line `earlyoom 1.9.0` at 42000000, exactly ActiveEnterTimestampMonotonic=42000000, so it is inside the scope (round-26/contract.md:78-79: scope is the current invocation's lines in the current boot whose __MONOTONIC_TIMESTAMP is >= ActiveEnterTimestampMonotonic; the version line is main.c:161 `fprintf(stderr, \"earlyoom \" VERSION \"\\n\")` at earlyoom v1.9.0). Journal record 2, `Suppressed 42 messages from earlyoom.service` at 42001234, is also inside the scope, so scope_complete is false (round-26/contract.md:92-93 defines scope_complete as true only when the version line of the current invocation is inside the scope; A2-01 adds the in-scope suppressed line as a second disqualifier). No `sending SIG... to process` line and no escalation line is in scope and oomd_notices is 0, so there is no positive evidence (round-26/contract.md:97-98); an active earlyoom with scope_complete false is KILLERS_UNKNOWN exit 2 (round-26/contract.md:99-101). earlyoom.state is active because the show text carries ActiveState=active (round-26/contract.md:91; the same mapping frozen in cases.json c01/c04/c13). earlyoom.version is 1.9.0 because the version line is in scope (round-26/contract.md:82 with :78-79). earlyoom.dryrun is false because no `dryrun mode enabled` line is in scope and the output spec gives dryrun no null alternative (round-26/contract.md:89 and :94; frozen cases.json c01/c19). oomd.state inactive and oomd.notices_this_boot 0 follow the oomd show text and the oomd_notices input (round-26/contract.md:95; frozen cases.json c01/c06). Deliberately not pinned: earlyoom.grammar, because round-26/contract.md:91 lists the two grammar values but states no condition for choosing between them, and the two readings that fit the frozen set (verified when the in-scope version line reads 1.9.0, versus verified only for a complete scope) disagree exactly for this input; earlyoom.actions, because frozen case c05 declines to pin the counts of an active reader whose scope is incomplete; earlyoom.thresholds, because round-26/contract.md:92 gives thresholds a null alternative and frozen case c04, also an incomplete scope, leaves thresholds unpinned; earlyoom.earlier_invocation_send_lines, because the contract does not decide its value for a boot with no earlier invocation.",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=42000000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "42000000"
+     },
+     {
+      "MESSAGE": "Suppressed 42 messages from earlyoom.service",
+      "__MONOTONIC_TIMESTAMP": "42001234"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLERS_UNKNOWN",
+    "exit": 2,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.version": "1.9.0",
+     "earlyoom.scope_complete": false,
+     "earlyoom.dryrun": false,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-01-suppressed-before-scope-start",
+   "rule": "A2-01",
+   "why": "A2-01 carries the qualifier 'in scope', so a suppressed line from before the current invocation starts must not fire the rule. The journal holds `Suppressed 17 messages from earlyoom.service` at 73499999, one microsecond before ActiveEnterTimestampMonotonic=73500000, and the version line `earlyoom 1.9.0` at 73500000 (main.c:161 at earlyoom v1.9.0). Scope is the current invocation's lines in the current boot whose __MONOTONIC_TIMESTAMP is >= ActiveEnterTimestampMonotonic (round-26/contract.md:78-79), so the suppressed line at 73499999 is outside the scope; rule A2-01 (round-27/contract.md:49; round-26/contract.md:158-159) fires only on a suppressed line in scope, so the version line of the current invocation, which is inside the scope, leaves scope_complete true (round-26/contract.md:92-93). Every other field pinned here is the same pairing that frozen case c19 pins for a version-line-only journal: version 1.9.0 and the verified 1.9.0 grammar (round-26/contract.md:82 and :91), thresholds null and the dry-run flag unset because no threshold line and no `dryrun mode enabled` line is in scope (round-26/contract.md:89 and :92). With no action line in scope and oomd_notices 0 there is no positive evidence (round-26/contract.md:97-98) and nothing forces the unknown verdict (round-26/contract.md:99-101), so the verdict is KILLERS_QUIET exit 0 (round-26/contract.md:102-104). oomd.state inactive and oomd.notices_this_boot 0 follow the oomd show text and the oomd_notices input (round-26/contract.md:95; frozen cases.json c19). Deliberately not pinned: earlyoom.actions, because round-26/contract.md:102 reserves actions null for an inactive or absent killer and frozen case c19 also leaves the counts of an action-free journal unpinned; earlyoom.earlier_invocation_send_lines, because the contract does not decide its value for a boot with no earlier invocation, and a suppressed line is neither a send line nor an escalation line (round-26/contract.md:176).",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=73500000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "Suppressed 17 messages from earlyoom.service",
+      "__MONOTONIC_TIMESTAMP": "73499999"
+     },
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "73500000"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLERS_QUIET",
+    "exit": 0,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.version": "1.9.0",
+     "earlyoom.grammar": "verified-1.9.0",
+     "earlyoom.thresholds": null,
+     "earlyoom.scope_complete": true,
+     "earlyoom.dryrun": false,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-01-suppressed-in-scope-with-action",
+   "rule": "A2-01",
+   "why": "A2-01 next to positive evidence: the in-scope suppressed line still makes the scope incomplete, but the positive evidence stands and the verdict does not fall back to unknown. The version line `earlyoom 1.9.0` is at 88000000, exactly ActiveEnterTimestampMonotonic=88000000, and `Suppressed 3 messages from earlyoom.service` at 88000050 is later, so both are inside the scope (round-26/contract.md:78-79); rule A2-01 (round-27/contract.md:49; round-26/contract.md:158-159) then sets scope_complete false (round-26/contract.md:92-93). The third record, `sending SIGTERM to process 5151 \"imaginary-burrower\"` at 88000100, is the kill.c:627 form `sending %s to process %d ...` with only the invented process name kept and no uid and no command line, so it is one in-scope SIGTERM action (round-26/contract.md:85) and it is positive evidence that stands even when the scope is incomplete (round-26/contract.md:97-98); hence KILLER_ACTED exit 1 and not the unknown verdict of round-26/contract.md:99-101. The action counts are printed as counts even for an incomplete scope (round-26/contract.md:93-94; the same pairing frozen in cases.json c04, which pins actions.sigterm 1 and actions.sigkill 0 with scope_complete false), so sigterm is 1 and sigkill is 0. earlyoom.state is active because the show text carries ActiveState=active (round-26/contract.md:91). earlyoom.version is 1.9.0 because the version line is in scope (round-26/contract.md:82 with :78-79). earlyoom.dryrun is false because no `dryrun mode enabled` line is in scope and the output spec gives dryrun no null alternative (round-26/contract.md:89 and :94). oomd is active but reports no notice this boot, so oomd.state is active and oomd.notices_this_boot is 0 (round-26/contract.md:95; frozen cases.json c10/c28), and oomd contributes no positive evidence, so the verdict rests on the earlyoom action line alone. Deliberately not pinned: earlyoom.grammar, because round-26/contract.md:91 states no condition for choosing between verified-1.9.0 and unverified and the readings that fit the frozen set disagree for an incomplete scope; earlyoom.thresholds, because round-26/contract.md:92 gives thresholds a null alternative and frozen case c04 leaves thresholds unpinned; earlyoom.earlier_invocation_send_lines, because the contract does not decide its value for a boot with no earlier invocation.",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=88000000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=active\nUnitFileState=static\nActiveEnterTimestampMonotonic=12345678\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "88000000"
+     },
+     {
+      "MESSAGE": "Suppressed 3 messages from earlyoom.service",
+      "__MONOTONIC_TIMESTAMP": "88000050"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 5151 \"imaginary-burrower\"",
+      "__MONOTONIC_TIMESTAMP": "88000100"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLER_ACTED",
+    "exit": 1,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.version": "1.9.0",
+     "earlyoom.scope_complete": false,
+     "earlyoom.actions.sigterm": 1,
+     "earlyoom.actions.sigkill": 0,
+     "earlyoom.dryrun": false,
+     "oomd.state": "active",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-02-earlyoom-activestate-failed",
+   "rule": "A2-02",
+   "why": "Rule A2-02 decides the earlyoom state and the verdict; the other pinned fields are decided by the base contract for this input. State: round-26/contract.md:162-163 (Amendment A2, rule A2b adopted) says 'an ActiveState other than active or inactive (failed, activating, deactivating, reloading, maintenance) maps to state unavailable and KILLERS_UNKNOWN', and the same rule is row A2-02 of the frozen table at round-27/contract.md:50. The show text here carries ActiveState=failed, so earlyoom.state is unavailable; 'unavailable' is one of the four legal states at round-26/contract.md:90. Verdict and exit: round-26/contract.md:99 gives 'KILLERS_UNKNOWN, exit 2'. No positive evidence exists, so the KILLER_ACTED clause of round-26/contract.md:97 (an in-scope 'sending SIG... to process' line, an escalation line, or oomd_notices > 0) cannot fire: the journal holds no such line and oomd_notices is 0. scope_complete: ActiveEnterTimestampMonotonic=0 leaves the invocation unbounded, so scope_complete is false (round-26/contract.md:173-174, the same rule as round-27/contract.md:53). The oomd side is readable and steady (ActiveState=inactive), so oomd.state is inactive and the notice count is 0 (round-26/contract.md:95 lists oomd.state and oomd.notices_this_boot; the frozen case c06 in tools/fixtures/mori-oom-killers/cases.json pins this exact mapping and count for this show shape). Journal shapes are upstream earlyoom v1.9.0: 'Started Early OOM Daemon.' is a systemd unit line outside the grammar (round-26/contract.md:80-89; the same line appears in the frozen case c01), the version line is main.c:161, the threshold line is main.c:414 with PRIPCT '%5.2lf%%' (msg.h:10) and the failed-kill line is kill.c:654 ('kill failed: ' plus strerror). The kill failed line is not positive evidence under round-26/contract.md:97, which counts only send and escalation lines, so the verdict stays KILLERS_UNKNOWN; the frozen case c16 pins the same shape as non-positive evidence. Not pinned because the contract does not decide them for a non-active earlyoom: earlyoom.version, earlyoom.grammar, earlyoom.thresholds, earlyoom.actions (round-26/contract.md:102 fixes actions null for an inactive or absent killer only, and the frozen unavailable-state case c25 pins none), earlyoom.dryrun.",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=failed\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=0\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "Started Early OOM Daemon.",
+      "__MONOTONIC_TIMESTAMP": "77000001"
+     },
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "77000002"
+     },
+     {
+      "MESSAGE": "sending SIGTERM when mem avail <= 12.00% and swap free <= 12.00%,",
+      "__MONOTONIC_TIMESTAMP": "77000003"
+     },
+     {
+      "MESSAGE": "kill failed: Operation not permitted",
+      "__MONOTONIC_TIMESTAMP": "77000004"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLERS_UNKNOWN",
+    "exit": 2,
+    "fields": {
+     "earlyoom.state": "unavailable",
+     "earlyoom.scope_complete": false,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-02-earlyoom-activestate-deactivating",
+   "rule": "A2-02",
+   "why": "A second non-steady state, this time with a bounded invocation and a readable active oomd. State: round-26/contract.md:162-163 maps every ActiveState other than active or inactive to state unavailable and KILLERS_UNKNOWN, and round-27/contract.md:50 is the same rule as A2-02; ActiveState=deactivating is one of the states it names. The show read succeeded, so the state comes from the mapping and not from a failed read (the null read path is the frozen case c25). Verdict and exit: round-26/contract.md:99 gives 'KILLERS_UNKNOWN, exit 2'; no positive evidence exists under round-26/contract.md:97, because the journal holds no send line, no escalation line and no other positive line, and oomd_notices is 0. The oomd unit is readable and active, so oomd.state is active and its notice count is 0 (round-26/contract.md:95; the frozen cases c28 and c29 pin the same oomd show shape, the same oomd.state and the same count). Journal shapes are upstream earlyoom v1.9.0: the version line is main.c:161, the term threshold line is main.c:414 and the kill threshold line is main.c:416 (eight leading spaces in the format string, PRIPCT '%5.2lf%%' at msg.h:10, so the one digit kill percent renders with its pad space); the mem avail line is outside the grammar (round-26/contract.md:80-89; the same line shape appears in the frozen cases c01 and c05). The version line sits exactly on ActiveEnterTimestampMonotonic, which the scope rule keeps (round-26/contract.md:78-79). Not pinned because the contract does not decide them for a non-active earlyoom: earlyoom.scope_complete (the only rules that fix it are the boundary rule of round-26/contract.md:92-93 and the unbounded rule of round-26/contract.md:173-174, and for a unit that is not active the contract never says which invocation the version line belongs to; the frozen boundary cases c02 and c03 pin scope_complete only for an active unit), earlyoom.version, earlyoom.grammar, earlyoom.thresholds, earlyoom.actions (round-26/contract.md:102 fixes actions null for an inactive or absent killer only) and earlyoom.dryrun.",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=deactivating\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=41880003\n",
+    "oomd_show": "LoadState=loaded\nActiveState=active\nUnitFileState=static\nActiveEnterTimestampMonotonic=53716002\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "41880003"
+     },
+     {
+      "MESSAGE": "sending SIGTERM when mem avail <= 12.00% and swap free <= 12.00%,",
+      "__MONOTONIC_TIMESTAMP": "41880004"
+     },
+     {
+      "MESSAGE": "        SIGKILL when mem avail <=  6.00% and swap free <=  6.00%",
+      "__MONOTONIC_TIMESTAMP": "41880005"
+     },
+     {
+      "MESSAGE": "mem avail: 9000 of 19000 MiB (47.37%), swap free: 7000 of 8192 MiB (85.45%)",
+      "__MONOTONIC_TIMESTAMP": "41880006"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLERS_UNKNOWN",
+    "exit": 2,
+    "fields": {
+     "earlyoom.state": "unavailable",
+     "oomd.state": "active",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-02-earlyoom-activestate-activating-empty-journal",
+   "rule": "A2-02",
+   "why": "The quietest shape of the same rule: a transitional earlyoom state with nothing logged this boot, so the state mapping alone decides the outcome. State: ActiveState=activating is named in the rule at round-26/contract.md:162-163 and round-27/contract.md:50, so earlyoom.state is unavailable even though the unit is loaded and enabled and the show read succeeded. The journal is an empty list, not null: null means the read failed (round-26/contract.md:73; the frozen null journal case c08), while an empty list is a successful read with no record, so this case is neither the null read path nor the frozen inactive case c06. Verdict and exit: no positive evidence exists under round-26/contract.md:97 (no send line, no escalation line, oomd_notices 0), so round-26/contract.md:99 gives KILLERS_UNKNOWN with exit 2. scope_complete: ActiveEnterTimestampMonotonic=0 leaves the invocation unbounded, so scope_complete is false (round-26/contract.md:173-174, the same rule as round-27/contract.md:53). The oomd unit is readable and inactive, so oomd.state is inactive and the notice count is 0 (round-26/contract.md:95; the frozen case c06 pins the same mapping and count for this shape). Not pinned because the contract does not decide them for a non-active earlyoom: earlyoom.version, earlyoom.grammar, earlyoom.thresholds, earlyoom.actions (round-26/contract.md:102 fixes actions null for an inactive or absent killer only), earlyoom.dryrun; and with an empty journal there is no version line to decide a version or a grammar from (round-26/contract.md:82).",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=activating\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=0\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLERS_UNKNOWN",
+    "exit": 2,
+    "fields": {
+     "earlyoom.state": "unavailable",
+     "earlyoom.scope_complete": false,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-03-group-kill-one-with-sigterm-action",
+   "rule": "A2-03",
+   "why": "Rule A2-03 (round-27 contract.md:51; round-26 contract.md:164-165): `killing whole process group ` lines are counted in earlyoom.process_group_lines, and every count is a count of earlyoom log lines, not of processes signalled or killed. The group line here is the upstream rendering of kill.c:282, `warn(\"killing whole process group %d (-g flag is active)\\n\", res)`, with the invented group id 5507; the group id is invented and no uid, name or command line is carried. The line sits one microsecond after the SIGTERM send line of kill.c:627 and both are inside the scope, because round-26 contract.md:78 scopes earlyoom lines to a timestamp at or after ActiveEnterTimestampMonotonic=20500000, so process_group_lines is 1. The send line is an action line and the group line is not, so the action counts follow only the two action prefixes of round-26 contract.md:85: sigterm 1, sigkill 0; no escalation, kill failed or low memory line is present either (round-26 contract.md:86-88). The version line of main.c:161 is at exactly 20500000, inside the scope, so scope_complete is true and the version parses to 1.9.0, so grammar is verified-1.9.0 (round-26 contract.md:90, :82). The threshold lines of main.c:414 and main.c:416 are inside the scope and PRIPCT (msg.h:10) renders 20.00 and 10.00 without a pad space, so the thresholds are 20.0, 20.0, 10.0 and 10.0 (round-26 contract.md:83-84). No `dryrun mode enabled` line (main.c:295) is present, so dryrun is false (round-26 contract.md:89). The in scope send line is positive evidence, so the verdict is KILLER_ACTED exit 1 (round-26 contract.md:97). The oomd side is inactive with 0 notices, so it contributes no evidence (round-26 contract.md:95, :97).",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=20500000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "20500000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM when mem avail <= 20.00% and swap free <= 20.00%,",
+      "__MONOTONIC_TIMESTAMP": "20500000"
+     },
+     {
+      "MESSAGE": "        SIGKILL when mem avail <= 10.00% and swap free <= 10.00%",
+      "__MONOTONIC_TIMESTAMP": "20500000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 5507 \"imaginary-lantern\"",
+      "__MONOTONIC_TIMESTAMP": "20510000"
+     },
+     {
+      "MESSAGE": "killing whole process group 5507 (-g flag is active)",
+      "__MONOTONIC_TIMESTAMP": "20510001"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLER_ACTED",
+    "exit": 1,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.version": "1.9.0",
+     "earlyoom.grammar": "verified-1.9.0",
+     "earlyoom.thresholds.term_mem_pct": 20.0,
+     "earlyoom.thresholds.term_swap_pct": 20.0,
+     "earlyoom.thresholds.kill_mem_pct": 10.0,
+     "earlyoom.thresholds.kill_swap_pct": 10.0,
+     "earlyoom.scope_complete": true,
+     "earlyoom.actions.sigterm": 1,
+     "earlyoom.actions.sigkill": 0,
+     "earlyoom.actions.escalations": 0,
+     "earlyoom.actions.kill_failed": 0,
+     "earlyoom.actions.low_memory_warnings": 0,
+     "earlyoom.process_group_lines": 1,
+     "earlyoom.dryrun": false,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-03-group-kill-two-no-action-oomd-notices",
+   "rule": "A2-03",
+   "why": "Rule A2-03 (round-27 contract.md:51; round-26 contract.md:164-165) against the action counters. Two `killing whole process group ` lines are in scope, rendered as upstream kill.c:282 does it, `warn(\"killing whole process group %d (-g flag is active)\\n\", res)`, with the invented group ids 6111 and 6112; no uid, name or command line is carried. The fixture deliberately omits a `sending SIG... to process ` line so that the two counters cannot alias: the group lines are counted in earlyoom.process_group_lines, whose value is 2, a count of two earlyoom log lines and not of the processes in those groups (round-26 contract.md:164-165), while the action counts stay at 0 because round-26 contract.md:85 makes only the two send prefixes action lines; a group line names no signal, so it cannot be counted as a sigterm or a sigkill. No escalation, kill failed or low memory line is present either (round-26 contract.md:86-88). All three journal lines are at or after ActiveEnterTimestampMonotonic=41000000 and the version line of main.c:161 is at exactly 41000000, so the scope is complete and the version parses to 1.9.0, so grammar is verified-1.9.0 (round-26 contract.md:78, :90, :82). No threshold line of main.c:414 or main.c:416 is present, so the thresholds are unknown and the thresholds block is null (round-26 contract.md:92). No `dryrun mode enabled` line (main.c:295), so dryrun is false (round-26 contract.md:89). The verdict does not come from the earlyoom side: the only positive evidence is the oomd notice count of 4, which round-26 contract.md:97 makes positive evidence on its own, so the verdict is KILLER_ACTED exit 1; the oomd state is active because the show text carries ActiveState=active, and the notice count is the one given in the inputs (round-26 contract.md:95).",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=41000000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=active\nUnitFileState=static\nActiveEnterTimestampMonotonic=30000000\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "41000000"
+     },
+     {
+      "MESSAGE": "killing whole process group 6111 (-g flag is active)",
+      "__MONOTONIC_TIMESTAMP": "41000050"
+     },
+     {
+      "MESSAGE": "killing whole process group 6112 (-g flag is active)",
+      "__MONOTONIC_TIMESTAMP": "41000100"
+     }
+    ],
+    "oomd_notices": 4
+   },
+   "expect": {
+    "verdict": "KILLER_ACTED",
+    "exit": 1,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.version": "1.9.0",
+     "earlyoom.grammar": "verified-1.9.0",
+     "earlyoom.thresholds": null,
+     "earlyoom.scope_complete": true,
+     "earlyoom.actions.sigterm": 0,
+     "earlyoom.actions.sigkill": 0,
+     "earlyoom.actions.escalations": 0,
+     "earlyoom.actions.kill_failed": 0,
+     "earlyoom.actions.low_memory_warnings": 0,
+     "earlyoom.process_group_lines": 2,
+     "earlyoom.dryrun": false,
+     "oomd.state": "active",
+     "oomd.notices_this_boot": 4
+    }
+   }
+  },
+  {
+   "id": "a2-03-group-kill-three-after-earlier-invocation",
+   "rule": "A2-03",
+   "why": "Rule A2-03 (round-27 contract.md:51; round-26 contract.md:164-165) across an invocation boundary, with a higher count. The journal holds two version lines: an earlier invocation's version line of main.c:161 at 19960000, which is before ActiveEnterTimestampMonotonic=62000000 and therefore outside the current invocation (round-26 contract.md:78), and the current invocation's version line at exactly 62000000, which is inside the scope, so scope_complete is true and the version parses to 1.9.0, so grammar is verified-1.9.0 (round-26 contract.md:90, :82). Three `killing whole process group ` lines follow the current version line, at 62000000, 62000051 and 62000052, all rendered as upstream kill.c:282 does it, `warn(\"killing whole process group %d (-g flag is active)\\n\", res)`, with the invented group ids 6223, 6224 and 6225; no uid, name or command line is carried. The first of them is stamped exactly at ActiveEnterTimestampMonotonic, and round-26 contract.md:78 scopes earlyoom lines to a timestamp at or after that value, so the boundary line is inside the scope by the same rule the frozen case c03 pins for an action line; it also follows the current invocation's version line in the journal, so it belongs to that invocation. The other two group lines are plainly inside the scope, so process_group_lines is 3, a count of three earlyoom log lines and not of the processes in those groups (round-26 contract.md:164-165). The out of scope version line at 19960000 is the version line of an earlier invocation and not of the current one, so it neither sets the version nor makes the scope incomplete (round-26 contract.md:93). The only send line is the SIGKILL form of kill.c:627, so the sigkill count is 1 and the sigterm count is 0 (round-26 contract.md:85); there is no escalation, kill failed or low memory line (round-26 contract.md:86-88). No threshold line of main.c:414 or main.c:416 is present, so the thresholds block is null (round-26 contract.md:92), and no `dryrun mode enabled` line (main.c:295) is present, so dryrun is false (round-26 contract.md:89). The in scope SIGKILL send line is positive evidence, so the verdict is KILLER_ACTED exit 1 (round-26 contract.md:97). The oomd side is inactive with 0 notices and contributes no evidence (round-26 contract.md:95, :97).",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=62000000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "19960000"
+     },
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "62000000"
+     },
+     {
+      "MESSAGE": "killing whole process group 6223 (-g flag is active)",
+      "__MONOTONIC_TIMESTAMP": "62000000"
+     },
+     {
+      "MESSAGE": "sending SIGKILL to process 6224 \"imaginary-lantern\"",
+      "__MONOTONIC_TIMESTAMP": "62000050"
+     },
+     {
+      "MESSAGE": "killing whole process group 6224 (-g flag is active)",
+      "__MONOTONIC_TIMESTAMP": "62000051"
+     },
+     {
+      "MESSAGE": "killing whole process group 6225 (-g flag is active)",
+      "__MONOTONIC_TIMESTAMP": "62000052"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLER_ACTED",
+    "exit": 1,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.version": "1.9.0",
+     "earlyoom.grammar": "verified-1.9.0",
+     "earlyoom.thresholds": null,
+     "earlyoom.scope_complete": true,
+     "earlyoom.actions.sigterm": 0,
+     "earlyoom.actions.sigkill": 1,
+     "earlyoom.actions.escalations": 0,
+     "earlyoom.actions.kill_failed": 0,
+     "earlyoom.actions.low_memory_warnings": 0,
+     "earlyoom.process_group_lines": 3,
+     "earlyoom.dryrun": false,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-04-dryrun-sigterm-send-not-positive",
+   "rule": "A2-04",
+   "why": "Rule A2-04 (.ufo/waves/round-27/contract.md:52) in its adopted form A6 (.ufo/waves/round-26/contract.md:166-167): when the invocation logged `dryrun mode enabled`, send lines go to earlyoom.dryrun_send_lines, earlyoom.actions.sigterm and earlyoom.actions.sigkill stay 0, and they are never positive evidence. Shape: one invocation, one send line. The version line `earlyoom 1.9.0` (main.c:161, .ufo/waves/round-26/contract.md:82) is stamped 20000100, exactly ActiveEnterTimestampMonotonic, so it is inside the scope (.ufo/waves/round-26/contract.md:78-79) and scope_complete is true (.ufo/waves/round-26/contract.md:92-93); earlyoom.version is 1.9.0 and earlyoom.grammar is verified-1.9.0 (.ufo/waves/round-26/contract.md:82, 91). The flag line `dryrun mode enabled, will not kill anything` (main.c:295, .ufo/waves/round-26/contract.md:89) at 20000120 sets earlyoom.dryrun true (.ufo/waves/round-26/contract.md:94). The only send line of this invocation, `sending SIGTERM to process 7301 \"imaginary-lantern\"` (kill.c:627 form, .ufo/waves/round-26/contract.md:85), is stamped 20000300, after the flag, so it is counted in earlyoom.dryrun_send_lines (1) and not in earlyoom.actions.sigterm (0) or earlyoom.actions.sigkill (0) (.ufo/waves/round-26/contract.md:166-167); the pid and the invented process name are placeholders and no uid or cmdline is carried into the fixture (.ufo/waves/round-26/contract.md:107). Because a dry-run send line is never positive evidence and no other positive evidence exists (.ufo/waves/round-26/contract.md:97 lists only in-scope send or escalation lines and oomd notices above zero), the verdict is KILLERS_QUIET exit 0 (.ufo/waves/round-26/contract.md:102-104). No escalation, kill failed or low memory line is in scope, so those counts are 0 (.ufo/waves/round-26/contract.md:86-88, 94). No threshold line (main.c:414, main.c:416) is present, so earlyoom.thresholds is null (.ufo/waves/round-26/contract.md:91-92). `mem total: ...` (main.c:412) and `dryrun, not actually sending any signal` (kill.c:272) are outside the closed message grammar (.ufo/waves/round-26/contract.md:80-89), so they change no count. earlyoom.state is active, oomd.state is inactive and oomd.notices_this_boot is 0 (.ufo/waves/round-26/contract.md:90-95).",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=20000100\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "20000100"
+     },
+     {
+      "MESSAGE": "dryrun mode enabled, will not kill anything",
+      "__MONOTONIC_TIMESTAMP": "20000120"
+     },
+     {
+      "MESSAGE": "mem total: 16384 MiB, user mem total: 15000 MiB, swap total: 8192 MiB",
+      "__MONOTONIC_TIMESTAMP": "20000140"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 7301 \"imaginary-lantern\"",
+      "__MONOTONIC_TIMESTAMP": "20000300"
+     },
+     {
+      "MESSAGE": "dryrun, not actually sending any signal",
+      "__MONOTONIC_TIMESTAMP": "20000310"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLERS_QUIET",
+    "exit": 0,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.version": "1.9.0",
+     "earlyoom.grammar": "verified-1.9.0",
+     "earlyoom.thresholds": null,
+     "earlyoom.scope_complete": true,
+     "earlyoom.dryrun": true,
+     "earlyoom.dryrun_send_lines": 1,
+     "earlyoom.actions.sigterm": 0,
+     "earlyoom.actions.sigkill": 0,
+     "earlyoom.actions.escalations": 0,
+     "earlyoom.actions.kill_failed": 0,
+     "earlyoom.actions.low_memory_warnings": 0,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-04-dryrun-two-sigterm-sends-counted",
+   "rule": "A2-04",
+   "why": "Rule A2-04 (.ufo/waves/round-27/contract.md:52, adopted as A6 at .ufo/waves/round-26/contract.md:166-167) with a different count, a different invocation boundary and threshold lines in scope. The version line `earlyoom 1.9.0` (main.c:161) is stamped 30015100, after ActiveEnterTimestampMonotonic 30015000, so it is inside the scope (.ufo/waves/round-26/contract.md:78-79) and scope_complete is true (.ufo/waves/round-26/contract.md:92-93), with earlyoom.version 1.9.0 and earlyoom.grammar verified-1.9.0 (.ufo/waves/round-26/contract.md:82, 91). The flag line `dryrun mode enabled, will not kill anything` (main.c:295) at 30015200 sets earlyoom.dryrun true (.ufo/waves/round-26/contract.md:89, 94). Two send lines of that same dry-run invocation follow, `sending SIGTERM to process 7302 \"imaginary-marmot\"` at 30016000 and `sending SIGTERM to process 7303 \"imaginary-quill\"` at 30016500 (kill.c:627 form, .ufo/waves/round-26/contract.md:85), so earlyoom.dryrun_send_lines is 2 while earlyoom.actions.sigterm and earlyoom.actions.sigkill stay 0 (.ufo/waves/round-26/contract.md:166-167); the pids and the invented process names are placeholders and no uid or cmdline is carried into the fixture (.ufo/waves/round-26/contract.md:107). The threshold lines of main.c:414 and main.c:416 are in scope and are not send lines, so they set earlyoom.thresholds to 20.00/20.00/12.00/12.00 percent (.ufo/waves/round-26/contract.md:83-84, 91-92; PRIPCT at msg.h:10 is a five character field, and both values here are five characters wide, so no pad space is rendered) and they add no action count (.ufo/waves/round-26/contract.md:85). No escalation, kill failed or low memory line is in scope, so those counts are 0 (.ufo/waves/round-26/contract.md:86-88, 94). The dry-run send lines are never positive evidence and oomd notices are 0, so no positive evidence exists (.ufo/waves/round-26/contract.md:97) and the verdict is KILLERS_QUIET exit 0 (.ufo/waves/round-26/contract.md:102-104). earlyoom.state is active, oomd.state is inactive and oomd.notices_this_boot is 0 (.ufo/waves/round-26/contract.md:90-95).",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=30015000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "30015100"
+     },
+     {
+      "MESSAGE": "dryrun mode enabled, will not kill anything",
+      "__MONOTONIC_TIMESTAMP": "30015200"
+     },
+     {
+      "MESSAGE": "sending SIGTERM when mem avail <= 20.00% and swap free <= 20.00%,",
+      "__MONOTONIC_TIMESTAMP": "30015300"
+     },
+     {
+      "MESSAGE": "        SIGKILL when mem avail <= 12.00% and swap free <= 12.00%",
+      "__MONOTONIC_TIMESTAMP": "30015300"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 7302 \"imaginary-marmot\"",
+      "__MONOTONIC_TIMESTAMP": "30016000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 7303 \"imaginary-quill\"",
+      "__MONOTONIC_TIMESTAMP": "30016500"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLERS_QUIET",
+    "exit": 0,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.version": "1.9.0",
+     "earlyoom.grammar": "verified-1.9.0",
+     "earlyoom.thresholds.term_mem_pct": 20.0,
+     "earlyoom.thresholds.term_swap_pct": 20.0,
+     "earlyoom.thresholds.kill_mem_pct": 12.0,
+     "earlyoom.thresholds.kill_swap_pct": 12.0,
+     "earlyoom.scope_complete": true,
+     "earlyoom.dryrun": true,
+     "earlyoom.dryrun_send_lines": 2,
+     "earlyoom.actions.sigterm": 0,
+     "earlyoom.actions.sigkill": 0,
+     "earlyoom.actions.escalations": 0,
+     "earlyoom.actions.kill_failed": 0,
+     "earlyoom.actions.low_memory_warnings": 0,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-04-dryrun-send-with-oomd-notices",
+   "rule": "A2-04",
+   "why": "Rule A2-04 (.ufo/waves/round-27/contract.md:52, adopted as A6 at .ufo/waves/round-26/contract.md:166-167) with a SIGKILL send line and a non-zero oomd notice count, so the verdict is carried by a different killer and the dry-run send line is shown not to be its source. The version line `earlyoom 1.9.0` (main.c:161) at 40020000 equals ActiveEnterTimestampMonotonic 40020000, so it is inside the scope (.ufo/waves/round-26/contract.md:78-79), scope_complete is true, earlyoom.version is 1.9.0 and earlyoom.grammar is verified-1.9.0 (.ufo/waves/round-26/contract.md:82, 91-93). The flag line `dryrun mode enabled, will not kill anything` (main.c:295) at 40020100 sets earlyoom.dryrun true (.ufo/waves/round-26/contract.md:89, 94). The send line `sending SIGKILL to process 7304 \"imaginary-sable\"` (kill.c:627 form with sig_name set to SIGKILL, .ufo/waves/round-26/contract.md:85) at 40020200 belongs to that dry-run invocation, so it is counted in earlyoom.dryrun_send_lines (1) and never in earlyoom.actions.sigterm or earlyoom.actions.sigkill, which stay 0 (.ufo/waves/round-26/contract.md:166-167); the pid and the invented process name are placeholders and no uid or cmdline is carried into the fixture (.ufo/waves/round-26/contract.md:107). oomd_notices is 2, which is positive evidence on its own, so the verdict is KILLER_ACTED exit 1 (.ufo/waves/round-26/contract.md:97-98), and oomd.state is active with oomd.notices_this_boot 2 (.ufo/waves/round-26/contract.md:90-95). No escalation, kill failed or low memory line is in scope, so those counts are 0 (.ufo/waves/round-26/contract.md:86-88, 94); no threshold line is present, so earlyoom.thresholds is null (.ufo/waves/round-26/contract.md:91-92). earlyoom.state is active (.ufo/waves/round-26/contract.md:90). The contract does not say what a dry-run invocation does to the warning and escalation counters, so no value for earlyoom.actions.low_memory_warnings is pinned here beyond the absence of such a line, which fixes it at 0 (.ufo/waves/round-26/contract.md:88, 94).",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=40020000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=active\nUnitFileState=static\nActiveEnterTimestampMonotonic=40015000\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "40020000"
+     },
+     {
+      "MESSAGE": "dryrun mode enabled, will not kill anything",
+      "__MONOTONIC_TIMESTAMP": "40020100"
+     },
+     {
+      "MESSAGE": "sending SIGKILL to process 7304 \"imaginary-sable\"",
+      "__MONOTONIC_TIMESTAMP": "40020200"
+     }
+    ],
+    "oomd_notices": 2
+   },
+   "expect": {
+    "verdict": "KILLER_ACTED",
+    "exit": 1,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.version": "1.9.0",
+     "earlyoom.grammar": "verified-1.9.0",
+     "earlyoom.thresholds": null,
+     "earlyoom.scope_complete": true,
+     "earlyoom.dryrun": true,
+     "earlyoom.dryrun_send_lines": 1,
+     "earlyoom.actions.sigterm": 0,
+     "earlyoom.actions.sigkill": 0,
+     "earlyoom.actions.escalations": 0,
+     "earlyoom.actions.kill_failed": 0,
+     "earlyoom.actions.low_memory_warnings": 0,
+     "oomd.state": "active",
+     "oomd.notices_this_boot": 2
+    }
+   }
+  },
+  {
+   "id": "a2-05-monotonic-zero-active-quiet",
+   "rule": "A2-05",
+   "why": "A2-05 unbounded invocation, active unit, quiet boot. The show text carries ActiveEnterTimestampMonotonic=0, and round-26 contract.md:173-174 (Amendment A2, unbounded invocation, adopted) states that a missing or 0 ActiveEnterTimestampMonotonic leaves the invocation unbounded so scope_complete is false; round-27 contract.md:53 states the same rule id A2-05. earlyoom.scope_complete is therefore false here even though the journal holds a version line (main.c:161 form 'earlyoom 1.9.0', grammar rule contract.md:82), because A2-05 overrides the former 'a version line alone set it true' behaviour. earlyoom.state is 'active' because the show text has ActiveState=active and the state vocabulary is contract.md:90-91. No positive evidence exists: the journal carries no 'sending SIGTERM to process ' or 'sending SIGKILL to process ' line (contract.md:85) and no 'escalating to SIGKILL after ' line (contract.md:86), and oomd_notices is 0, so contract.md:97-98 finds no positive evidence. No read is null and the show text has ActiveState, but the earlyoom is active with scope_complete false, so contract.md:99-101 makes the verdict KILLERS_UNKNOWN with exit 2. oomd.state is 'inactive' (the oomd show text has ActiveState=inactive, output spec contract.md:95) and oomd.notices_this_boot is 0 (the input count). earlyoom.dryrun is false because the journal contains no 'dryrun mode enabled' line (contract.md:89). Not pinned, because contract.md:78-79 scopes lines by the ActiveEnterTimestampMonotonic lower bound that contract.md:173-174 leaves unknown here, so the contract does not decide earlyoom.version, earlyoom.grammar, earlyoom.thresholds.* or earlyoom.actions.* for this input (the frozen c05 pins none of them either).",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=0\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "55821000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM when mem avail <=  8.00% and swap free <= 12.00%,",
+      "__MONOTONIC_TIMESTAMP": "55821005"
+     },
+     {
+      "MESSAGE": "        SIGKILL when mem avail <=  4.00% and swap free <=  6.00%",
+      "__MONOTONIC_TIMESTAMP": "55821005"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLERS_UNKNOWN",
+    "exit": 2,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.scope_complete": false,
+     "earlyoom.dryrun": false,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-05-monotonic-missing-active-oomd-notices",
+   "rule": "A2-05",
+   "why": "A2-05 unbounded invocation caused by a missing property, with positive evidence that stands anyway. The show text has no ActiveEnterTimestampMonotonic line at all, which round-26 contract.md:173-174 puts under the same rule as the value 0 ('missing or 0 leaves the invocation unbounded'), so earlyoom.scope_complete is false (round-27 contract.md:53 names the same rule id A2-05). earlyoom.state is 'active' because the show text has ActiveState=active (contract.md:90-91). The oomd show text has ActiveState=active, so oomd.state is 'active', and oomd_notices is 3; contract.md:97-98 counts oomd_notices > 0 as positive evidence and states that positive evidence stands even when the scope is incomplete, so the verdict is KILLER_ACTED with exit 1. earlyoom.dryrun is false because the journal contains no 'dryrun mode enabled' line (contract.md:89). Not pinned: the journal's 'escalating to SIGKILL after 5.000 seconds' line (kill.c:318 form, grammar rule contract.md:86) would be counted as an action only if it lies in scope, and contract.md:78-79 with :173-174 do not fix the scope when the invocation start is unknown, so earlyoom.actions.escalations, earlyoom.actions.sigterm, earlyoom.actions.sigkill, earlyoom.version, earlyoom.grammar and earlyoom.thresholds.* are not decided for this input; the verdict above does not depend on that choice because the oomd notice count alone is positive evidence.",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\n",
+    "oomd_show": "LoadState=loaded\nActiveState=active\nUnitFileState=static\nActiveEnterTimestampMonotonic=12345678\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "48200100"
+     },
+     {
+      "MESSAGE": "escalating to SIGKILL after 5.000 seconds",
+      "__MONOTONIC_TIMESTAMP": "48200900"
+     }
+    ],
+    "oomd_notices": 3
+   },
+   "expect": {
+    "verdict": "KILLER_ACTED",
+    "exit": 1,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.scope_complete": false,
+     "earlyoom.dryrun": false,
+     "oomd.state": "active",
+     "oomd.notices_this_boot": 3
+    }
+   }
+  },
+  {
+   "id": "a2-05-monotonic-zero-inactive-quiet",
+   "rule": "A2-05",
+   "why": "A2-05 unbounded invocation on a unit that is not active. The show text carries ActiveEnterTimestampMonotonic=0, which round-26 contract.md:173-174 (Amendment A2, unbounded invocation) puts under the A2-05 rule (round-27 contract.md:53): the invocation has no known start, so scope_complete is false (contract.md:92-93 defines scope_complete as true only when the version line of the current invocation is inside the scope, and an inactive unit has no current invocation; AETM=0 also fails the rule outright). ActiveState=inactive makes earlyoom.state 'inactive' (contract.md:90-91), and contract.md:102-103 reserves actions null for an inactive or absent killer ('An inactive or absent killer reports actions: null'), so earlyoom.actions is null and no zero counts are printed. The journal holds only the version line of the boot's earlier run (main.c:161 form, contract.md:82) and no 'sending SIGTERM to process ' or 'sending SIGKILL to process ' line (contract.md:85) and no 'escalating to SIGKILL after ' line (contract.md:86), and oomd_notices is 0, so contract.md:97-98 finds no positive evidence. None of the contract.md:99-101 KILLERS_UNKNOWN triggers applies: no read is null, the show text has ActiveState, and the earlyoom is not active, so contract.md:102-104 gives KILLERS_QUIET with exit 0. oomd.state is 'inactive' (the oomd show text has ActiveState=inactive, contract.md:95) and oomd.notices_this_boot is 0 (the input count). Not pinned: contract.md:78-79 with :173-174 do not fix which boot lines lie in scope for an unbounded invocation, so earlyoom.version, earlyoom.grammar, earlyoom.thresholds.*, earlyoom.earlier_invocation_send_lines and earlyoom.dryrun are not decided for this input (the frozen c06 pins none of them either).",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "31600400"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLERS_QUIET",
+    "exit": 0,
+    "fields": {
+     "earlyoom.state": "inactive",
+     "earlyoom.scope_complete": false,
+     "earlyoom.actions": null,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-06-active-earlier-invocation-sends-quiet",
+   "rule": "A2-06",
+   "why": "A2-06 (round-27 contract.md:54; adopted form round-26 contract.md:175-179) on an active earlyoom: send lines of this boot outside the current invocation go to earlyoom.earlier_invocation_send_lines and are reported without a verdict change. The scope of the current invocation is __MONOTONIC_TIMESTAMP >= ActiveEnterTimestampMonotonic = 64000000 (round-26 contract.md:78-79), so the SIGTERM send at 12100000 and the SIGKILL send at 12200000, both belonging to the earlier invocation that opened with its version line at 12000000, are outside it and the count is 2. Being out of scope they are not positive evidence under the enumeration of round-26 contract.md:97, so the verdict stays KILLERS_QUIET exit 0, which is the shape frozen by c02 and named as the disclosed limit at round-26 contract.md:171-172 and round-26 contract.md:178-179. The current invocation opens with its version line at 64000000, exactly at ActiveEnterTimestampMonotonic, which is inside the scope (round-26 contract.md:78, and the boundary frozen by c03), so scope_complete is true (round-26 contract.md:92-93). Both version lines read earlyoom 1.9.0 (main.c:161), so earlyoom.version is 1.9.0 and earlyoom.grammar is verified-1.9.0 whichever version line the reader takes. The threshold lines are the main.c:414 and main.c:416 forms with PRIPCT \"%5.2lf%%\" (msg.h:10), so 12.50 renders as 12.50% and 6.25 as \" 6.25%\"; both invocations print the same pair, so the four thresholds of round-26 contract.md:91-92 are 12.5/12.5/6.25/6.25 whichever invocation is read. No send, escalation, kill-failed or low-memory line is in scope, so the five action counts of round-26 contract.md:94 are 0, and no dryrun line (round-26 contract.md:89) leaves earlyoom.dryrun false.",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=64000000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "12000000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM when mem avail <= 12.50% and swap free <= 12.50%,",
+      "__MONOTONIC_TIMESTAMP": "12000100"
+     },
+     {
+      "MESSAGE": "        SIGKILL when mem avail <=  6.25% and swap free <=  6.25%",
+      "__MONOTONIC_TIMESTAMP": "12000100"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 90001 \"imaginary-bellows\"",
+      "__MONOTONIC_TIMESTAMP": "12100000"
+     },
+     {
+      "MESSAGE": "sending SIGKILL to process 90002 \"imaginary-lathe\"",
+      "__MONOTONIC_TIMESTAMP": "12200000"
+     },
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "64000000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM when mem avail <= 12.50% and swap free <= 12.50%,",
+      "__MONOTONIC_TIMESTAMP": "64000000"
+     },
+     {
+      "MESSAGE": "        SIGKILL when mem avail <=  6.25% and swap free <=  6.25%",
+      "__MONOTONIC_TIMESTAMP": "64000000"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLERS_QUIET",
+    "exit": 0,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.version": "1.9.0",
+     "earlyoom.grammar": "verified-1.9.0",
+     "earlyoom.thresholds.term_mem_pct": 12.5,
+     "earlyoom.thresholds.term_swap_pct": 12.5,
+     "earlyoom.thresholds.kill_mem_pct": 6.25,
+     "earlyoom.thresholds.kill_swap_pct": 6.25,
+     "earlyoom.scope_complete": true,
+     "earlyoom.actions.sigterm": 0,
+     "earlyoom.actions.sigkill": 0,
+     "earlyoom.actions.escalations": 0,
+     "earlyoom.actions.kill_failed": 0,
+     "earlyoom.actions.low_memory_warnings": 0,
+     "earlyoom.dryrun": false,
+     "earlyoom.earlier_invocation_send_lines": 2,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-06-inactive-earlier-invocation-sends-acted",
+   "rule": "A2-06",
+   "why": "A2-06 (round-27 contract.md:54; adopted form round-26 contract.md:175-179) on an earlyoom that is not active: a non-zero earlyoom.earlier_invocation_send_lines is positive evidence, so the verdict is KILLER_ACTED exit 1, and round-26 contract.md:177-178 names this shape as the case where a stop without restart no longer reads quiet. The unit is loaded but not running (ActiveState=inactive), so earlyoom.state is inactive (round-26 contract.md:90-91) and the actions block is null, never zero counts (round-26 contract.md:102-103, the shape frozen by c06). The three send lines of this boot are stamped 40100000, 40200000 and 40300000, all before ActiveEnterTimestampMonotonic = 70000000 and all in the invocation that opened with the version line at 40000000, so they are outside the current invocation and the count is 3; the version line at 70000000 opens the current invocation, at exactly ActiveEnterTimestampMonotonic as in frozen c02 and c03. oomd is inactive with zero notices, so the oomd fields are the ones round-26 contract.md:95 and round-26 contract.md:102 decide. Not pinned: earlyoom.version, earlyoom.grammar, earlyoom.thresholds, earlyoom.scope_complete and earlyoom.dryrun, because with an inactive unit the contract text does not decide them (round-26 contract.md:90-95 fixes only the field names, and the frozen inactive case c06 pins none of them).",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=70000000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "40000000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM when mem avail <=  9.00% and swap free <=  9.00%,",
+      "__MONOTONIC_TIMESTAMP": "40000000"
+     },
+     {
+      "MESSAGE": "        SIGKILL when mem avail <=  4.50% and swap free <=  4.50%",
+      "__MONOTONIC_TIMESTAMP": "40000000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 90003 \"imaginary-sifter\"",
+      "__MONOTONIC_TIMESTAMP": "40100000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 90004 \"imaginary-ploughman\"",
+      "__MONOTONIC_TIMESTAMP": "40200000"
+     },
+     {
+      "MESSAGE": "sending SIGKILL to process 90005 \"imaginary-mason\"",
+      "__MONOTONIC_TIMESTAMP": "40300000"
+     },
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "70000000"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLER_ACTED",
+    "exit": 1,
+    "fields": {
+     "earlyoom.state": "inactive",
+     "earlyoom.actions": null,
+     "earlyoom.earlier_invocation_send_lines": 3,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-06-active-earlier-and-current-send-acted",
+   "rule": "A2-06",
+   "why": "A2-06 with an in-scope action as well, so the two counters are separated. The earlier invocation opened with its version line at 3000000 and sent SIGTERM at 3050000, which is outside the current invocation because the scope starts at ActiveEnterTimestampMonotonic = 8000000 (round-26 contract.md:78-79), so earlyoom.earlier_invocation_send_lines is 1. The SIGKILL at 8100000 is inside the scope and is one action of the kind `sending SIGKILL to process ` (round-26 contract.md:85, kill.c:627), so it is the in-scope positive evidence of round-26 contract.md:97 and the verdict is KILLER_ACTED exit 1; the earlier count is reported alongside it without changing the verdict, as A2-06 requires for an active earlyoom (round-26 contract.md:178-179). The out-of-scope send line is not counted into the actions block, so earlyoom.actions.sigterm is 0 while earlyoom.actions.sigkill is 1 (round-26 contract.md:94, the boundary frozen by c02). The current invocation opens with its version line at 8000000, exactly at ActiveEnterTimestampMonotonic, which is inside the scope (round-26 contract.md:78, the boundary frozen by c03), so scope_complete is true (round-26 contract.md:92-93), and both version lines read earlyoom 1.9.0 (main.c:161), so earlyoom.version is 1.9.0 and earlyoom.grammar is verified-1.9.0. The threshold lines are the main.c:414 and main.c:416 forms with PRIPCT \"%5.2lf%%\" (msg.h:10), so 20.00 and 15.00 render unpadded and 9.00 as \" 9.00%\"; both invocations print the same pair, so the four thresholds of round-26 contract.md:91-92 are 20.0/15.0/9.0/9.0 whichever invocation is read. No escalation, kill-failed or low-memory line is in scope, so those counts are 0 (round-26 contract.md:86-88, round-26 contract.md:94), and no dryrun line (round-26 contract.md:89) leaves earlyoom.dryrun false.",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=8000000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "3000000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM when mem avail <= 20.00% and swap free <= 15.00%,",
+      "__MONOTONIC_TIMESTAMP": "3000000"
+     },
+     {
+      "MESSAGE": "        SIGKILL when mem avail <=  9.00% and swap free <=  9.00%",
+      "__MONOTONIC_TIMESTAMP": "3000000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 90006 \"imaginary-baker\"",
+      "__MONOTONIC_TIMESTAMP": "3050000"
+     },
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "8000000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM when mem avail <= 20.00% and swap free <= 15.00%,",
+      "__MONOTONIC_TIMESTAMP": "8000000"
+     },
+     {
+      "MESSAGE": "        SIGKILL when mem avail <=  9.00% and swap free <=  9.00%",
+      "__MONOTONIC_TIMESTAMP": "8000000"
+     },
+     {
+      "MESSAGE": "sending SIGKILL to process 90007 \"imaginary-compost\"",
+      "__MONOTONIC_TIMESTAMP": "8100000"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLER_ACTED",
+    "exit": 1,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.version": "1.9.0",
+     "earlyoom.grammar": "verified-1.9.0",
+     "earlyoom.thresholds.term_mem_pct": 20.0,
+     "earlyoom.thresholds.term_swap_pct": 15.0,
+     "earlyoom.thresholds.kill_mem_pct": 9.0,
+     "earlyoom.thresholds.kill_swap_pct": 9.0,
+     "earlyoom.scope_complete": true,
+     "earlyoom.actions.sigterm": 0,
+     "earlyoom.actions.sigkill": 1,
+     "earlyoom.actions.escalations": 0,
+     "earlyoom.actions.kill_failed": 0,
+     "earlyoom.actions.low_memory_warnings": 0,
+     "earlyoom.dryrun": false,
+     "earlyoom.earlier_invocation_send_lines": 1,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-07-earlier-real-then-current-dryrun",
+   "rule": "A2-07",
+   "why": "A2-07 (round-27/contract.md:55): dry-run applies per invocation, split at each version line, so one dry-run invocation does not zero another invocation's real sends. This journal holds two invocations of earlyoom in the same boot: an earlier real one and the current dry-run one. The version line 'earlyoom 1.9.0' (main.c:161) is the first line of an invocation (round-26/contract.md:82), so the split falls at the two version lines. ActiveEnterTimestampMonotonic is 42000000 and the current version line is stamped exactly 42000000, so the current invocation's version line is inside the scope (round-26/contract.md:78, '>=' is inclusive; frozen case c03 pins the same inclusive boundary), while the earlier invocation lies entirely outside it. The earlier invocation is real: it logged no 'dryrun mode enabled' line, so by the per-invocation split of round-26/contract.md:180-182 its two 'sending ... to process' lines are real sends that the dry-run invocation does not zero. They are sends of this boot outside the current invocation, so they are counted by round-26/contract.md:175-179 as earlier_invocation_send_lines, which is 2 (send and escalation lines; here two send lines). The current invocation logged 'dryrun mode enabled' (main.c:295, round-26/contract.md:89), so its own send line goes to dryrun_send_lines, sigterm and sigkill stay 0, and it is never positive evidence (round-26/contract.md:166-167, round-27/contract.md:52): dryrun_send_lines is 1. The following line 'dryrun, not actually sending any signal' (kill.c:272) matches none of the grammar forms of round-26/contract.md:80-89 and is not counted. The verdict is KILLERS_QUIET exit 0: a dry-run send is never positive evidence (round-26/contract.md:166-167) and oomd notices are 0 (round-26/contract.md:97); the non-zero earlier_invocation_send_lines is reported but does not change the verdict for an active earlyoom (round-26/contract.md:178-179, round-27/contract.md:54, the same limit frozen case c02 pins). scope_complete is true because the current invocation's version line is in scope (round-26/contract.md:92-93) and the grammar is verified (round-26/contract.md:91; frozen cases c01 and c09). The process names are invented and no uid or command line is carried in the fixture. Not pinned: the count fields that would be zero here, because the contract text does not decide between a zero count and a null count for a field with no hits, and the output field earlyoom.dryrun, whose single value the contract does not fix for a boot that holds more than one invocation.",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=42000000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "30000000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 61001 \"imaginary-kestrel\"",
+      "__MONOTONIC_TIMESTAMP": "30005000"
+     },
+     {
+      "MESSAGE": "sending SIGKILL to process 61002 \"imaginary-lantern\"",
+      "__MONOTONIC_TIMESTAMP": "30010000"
+     },
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "42000000"
+     },
+     {
+      "MESSAGE": "dryrun mode enabled, will not kill anything",
+      "__MONOTONIC_TIMESTAMP": "42000001"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 61003 \"imaginary-mistral\"",
+      "__MONOTONIC_TIMESTAMP": "42010000"
+     },
+     {
+      "MESSAGE": "dryrun, not actually sending any signal",
+      "__MONOTONIC_TIMESTAMP": "42010001"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLERS_QUIET",
+    "exit": 0,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.version": "1.9.0",
+     "earlyoom.grammar": "verified-1.9.0",
+     "earlyoom.thresholds": null,
+     "earlyoom.scope_complete": true,
+     "earlyoom.actions.sigterm": 0,
+     "earlyoom.actions.sigkill": 0,
+     "earlyoom.actions.escalations": 0,
+     "earlyoom.actions.kill_failed": 0,
+     "earlyoom.actions.low_memory_warnings": 0,
+     "earlyoom.dryrun": true,
+     "earlyoom.dryrun_send_lines": 1,
+     "earlyoom.earlier_invocation_send_lines": 2,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-07-earlier-dryrun-then-current-real",
+   "rule": "A2-07",
+   "why": "A2-07 (round-27/contract.md:55) read from the other side: a dry-run invocation earlier in the boot must not zero the real sends of the invocation in scope. The journal holds two invocations: the earlier one logged 'dryrun mode enabled' (main.c:295, round-26/contract.md:89) and never reached the memory limits, so it logged no send line at all; the current invocation logged 'earlyoom 1.9.0' (main.c:161) and then sent a real signal. ActiveEnterTimestampMonotonic is 52000000 and the current version line is stamped exactly 52000000, so the current invocation's version line is inside the scope (round-26/contract.md:78, inclusive; frozen case c03) and the earlier invocation lies entirely outside it. Because the dry-run flag belongs to the earlier invocation alone (round-26/contract.md:180-182), the current invocation's 'sending SIGTERM to process ' line is a real action: one action each (round-26/contract.md:85) and positive evidence, so the verdict is KILLER_ACTED exit 1 (round-26/contract.md:97). The escalation line 'escalating to SIGKILL after ' (kill.c:318, round-26/contract.md:86) is in scope, so it counts as one escalation and is positive evidence (round-26/contract.md:97). scope_complete is true because the current invocation's version line is in scope (round-26/contract.md:92-93) and the grammar is verified (round-26/contract.md:91; frozen cases c01 and c09). The oomd side is active and silent: oomd notices of 0 are not positive evidence (round-26/contract.md:97). Not pinned: the count fields that would be zero here, because the contract text does not decide between a zero count and a null count for a field with no hits; and the output field earlyoom.dryrun, because round-27/contract.md:55 fixes how the dry-run flag applies per invocation to send lines but does not say which invocation the single boolean field reports, and the two readings differ here since only an earlier invocation logged the dry-run line. Process names are invented and no uid or command line is carried.",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=52000000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=active\nUnitFileState=static\nActiveEnterTimestampMonotonic=12345678\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "40000000"
+     },
+     {
+      "MESSAGE": "dryrun mode enabled, will not kill anything",
+      "__MONOTONIC_TIMESTAMP": "40000001"
+     },
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "52000000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 62011 \"imaginary-tessellate\"",
+      "__MONOTONIC_TIMESTAMP": "52010000"
+     },
+     {
+      "MESSAGE": "escalating to SIGKILL after 3.250 seconds",
+      "__MONOTONIC_TIMESTAMP": "52015000"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLER_ACTED",
+    "exit": 1,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.version": "1.9.0",
+     "earlyoom.grammar": "verified-1.9.0",
+     "earlyoom.thresholds": null,
+     "earlyoom.scope_complete": true,
+     "earlyoom.actions.sigterm": 1,
+     "earlyoom.actions.sigkill": 0,
+     "earlyoom.actions.escalations": 1,
+     "earlyoom.actions.kill_failed": 0,
+     "earlyoom.actions.low_memory_warnings": 0,
+     "oomd.state": "active",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-07-three-invocations-dryrun-in-the-middle",
+   "rule": "A2-07",
+   "why": "A2-07 (round-27/contract.md:55) with three invocations in one boot, so the split at each version line has to be made twice: the earliest invocation is real, the middle invocation is a dry-run that logged no send line, and the current invocation is real. The three version lines 'earlyoom 1.9.0' (main.c:161, round-26/contract.md:82) are the invocation boundaries. ActiveEnterTimestampMonotonic is 63000000 and the current version line is stamped exactly 63000000, so the current invocation's version line is inside the scope (round-26/contract.md:78, inclusive; frozen case c03) and both earlier invocations lie outside it. The earliest invocation is real, so its two 'sending ... to process' lines are real sends of this boot outside the current invocation and are counted by round-26/contract.md:175-179 as earlier_invocation_send_lines, which is 2: the dry-run flag of the middle invocation must not zero them (round-26/contract.md:180-182, round-27/contract.md:55). The current invocation is not a dry-run invocation, so its two send lines are real actions (round-26/contract.md:85), one SIGTERM and one SIGKILL. The current invocation's send lines are in scope, so they are positive evidence and the verdict is KILLER_ACTED exit 1 (round-26/contract.md:97). Every invocation printed the two limit lines (main.c:414 and main.c:416, round-26/contract.md:83-84) with the same values, so the thresholds block is the same whichever invocation the reader takes them from: term 10.0 and 10.0, kill 5.0 and 5.0 (round-26/contract.md:91-92; frozen case c01 pins the same numbers for the same texts, PRIPCT is '%5.2lf%%' at msg.h:10, so 5.00 renders with a pad space). scope_complete is true because the current invocation's version line is in scope (round-26/contract.md:92-93) and the grammar is verified (round-26/contract.md:91; frozen cases c01 and c09). No escalation, kill failed or low memory line is present, so those counts are 0 (round-26/contract.md:86-88), and the oomd side is inactive with no notices, which is not positive evidence (round-26/contract.md:97). Not pinned: the count fields that would be zero here, because the contract text does not decide between a zero count and a null count for a field with no hits; and the output field earlyoom.dryrun, because round-27/contract.md:55 fixes the per-invocation application of the dry-run flag to send lines but does not say which invocation the single boolean field reports, and here the dry-run invocation is not the current one. Process names are invented and no uid or command line is carried.",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=63000000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "50000000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM when mem avail <= 10.00% and swap free <= 10.00%,",
+      "__MONOTONIC_TIMESTAMP": "50000000"
+     },
+     {
+      "MESSAGE": "        SIGKILL when mem avail <=  5.00% and swap free <=  5.00%",
+      "__MONOTONIC_TIMESTAMP": "50000000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 63021 \"imaginary-pumice\"",
+      "__MONOTONIC_TIMESTAMP": "50005000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 63022 \"imaginary-pumice\"",
+      "__MONOTONIC_TIMESTAMP": "50010000"
+     },
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "55000000"
+     },
+     {
+      "MESSAGE": "dryrun mode enabled, will not kill anything",
+      "__MONOTONIC_TIMESTAMP": "55000001"
+     },
+     {
+      "MESSAGE": "sending SIGTERM when mem avail <= 10.00% and swap free <= 10.00%,",
+      "__MONOTONIC_TIMESTAMP": "55000000"
+     },
+     {
+      "MESSAGE": "        SIGKILL when mem avail <=  5.00% and swap free <=  5.00%",
+      "__MONOTONIC_TIMESTAMP": "55000000"
+     },
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "63000000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM when mem avail <= 10.00% and swap free <= 10.00%,",
+      "__MONOTONIC_TIMESTAMP": "63000000"
+     },
+     {
+      "MESSAGE": "        SIGKILL when mem avail <=  5.00% and swap free <=  5.00%",
+      "__MONOTONIC_TIMESTAMP": "63000000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 63023 \"imaginary-quartzite\"",
+      "__MONOTONIC_TIMESTAMP": "63010000"
+     },
+     {
+      "MESSAGE": "sending SIGKILL to process 63024 \"imaginary-quartzite\"",
+      "__MONOTONIC_TIMESTAMP": "63015000"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLER_ACTED",
+    "exit": 1,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.version": "1.9.0",
+     "earlyoom.grammar": "verified-1.9.0",
+     "earlyoom.thresholds.term_mem_pct": 10.0,
+     "earlyoom.thresholds.term_swap_pct": 10.0,
+     "earlyoom.thresholds.kill_mem_pct": 5.0,
+     "earlyoom.thresholds.kill_swap_pct": 5.0,
+     "earlyoom.scope_complete": true,
+     "earlyoom.actions.sigterm": 1,
+     "earlyoom.actions.sigkill": 1,
+     "earlyoom.actions.escalations": 0,
+     "earlyoom.actions.kill_failed": 0,
+     "earlyoom.actions.low_memory_warnings": 0,
+     "earlyoom.earlier_invocation_send_lines": 2,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-08-null-journal-inactive-earlyoom",
+   "rule": "A2-08",
+   "why": "Null earlyoom journal with an inactive earlyoom. The journal read failed, so `earlyoom_journal` is null (round-26/contract.md:73, '`null` means the read failed'). Rule A2-08 (round-27/contract.md:56, adopted at round-26/contract.md:181-182) reads a null earlyoom journal as `KILLERS_UNKNOWN` for any earlyoom state, so the inactive state does not excuse the failed read. The verdict is `KILLERS_UNKNOWN` exit 2 (round-26/contract.md:99-101: a needed read that is null). No positive evidence overrides it: the journal holds no line at all and `oomd_notices` is 0, so round-26/contract.md:97 (an in scope send or escalation line, or oomd notices above zero) is not met. The state is `inactive` because the show text reads LoadState=loaded with ActiveState=inactive, one of the four states of round-26/contract.md:90-91; the frozen round-26 case c06 pins that same show text to `inactive` at tools/fixtures/mori-oom-killers/cases.json:157. The actions block is null because an inactive killer reports actions null and never zero counts (round-26/contract.md:102). The oomd state is `inactive` from its own show text and the notice count is the input value 0 (round-26/contract.md:95). Not pinned: earlyoom.version, earlyoom.grammar, earlyoom.thresholds, earlyoom.scope_complete, earlyoom.dryrun. With a null journal no MESSAGE line exists (the grammar of round-26/contract.md:80-89), so the contract fixes no value for them.",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=28741905\n",
+    "earlyoom_journal": null,
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLERS_UNKNOWN",
+    "exit": 2,
+    "fields": {
+     "earlyoom.state": "inactive",
+     "earlyoom.actions": null,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-08-null-journal-absent-earlyoom",
+   "rule": "A2-08",
+   "why": "Null earlyoom journal with an absent earlyoom. `earlyoom_journal` is null because the read failed (round-26/contract.md:73). Rule A2-08 (round-27/contract.md:56, adopted at round-26/contract.md:181-182) reads a null earlyoom journal as `KILLERS_UNKNOWN` for any earlyoom state, and `absent` is one of the states of round-26/contract.md:90-91. The verdict is `KILLERS_UNKNOWN` exit 2 (round-26/contract.md:99-101). No positive evidence stands: the journal is null, so there is no in scope send or escalation line, and `oomd_notices` is 0, so round-26/contract.md:97 is not met. The state is `absent` because the show text of a unit that does not exist reads LoadState=not-found, the removed unit that round-26/contract.md:182 (rule A2-09) and round-27/contract.md:57 treat apart from an inactive unit; the frozen round-26 case c07 pins that same show text to `absent` at tools/fixtures/mori-oom-killers/cases.json:177. The actions block is null because an absent killer reports actions null and never zero counts (round-26/contract.md:102). The oomd side is readable and quiet: its show text gives ActiveState=active and `oomd_notices` is 0, which is not positive evidence (round-26/contract.md:97), so the oomd state is `active` and the notice count is 0 (round-26/contract.md:95). Not pinned: earlyoom.version, earlyoom.grammar, earlyoom.thresholds, earlyoom.scope_complete, earlyoom.dryrun, because a null journal yields no MESSAGE line for the grammar of round-26/contract.md:80-89 to decide.",
+   "inputs": {
+    "earlyoom_show": "LoadState=not-found\nActiveState=inactive\nUnitFileState=\nActiveEnterTimestampMonotonic=0\n",
+    "oomd_show": "LoadState=loaded\nActiveState=active\nUnitFileState=static\nActiveEnterTimestampMonotonic=44120983\n",
+    "earlyoom_journal": null,
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLERS_UNKNOWN",
+    "exit": 2,
+    "fields": {
+     "earlyoom.state": "absent",
+     "earlyoom.actions": null,
+     "oomd.state": "active",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-08-null-journal-active-earlyoom-readable-oomd",
+   "rule": "A2-08",
+   "why": "Null earlyoom journal with an active earlyoom and a readable, active oomd. `earlyoom_journal` is null because the read failed (round-26/contract.md:73). Rule A2-08 (round-27/contract.md:56, adopted at round-26/contract.md:181-182) reads a null earlyoom journal as `KILLERS_UNKNOWN` for any earlyoom state, so the active state does not change the outcome: the verdict is `KILLERS_UNKNOWN` exit 2 (round-26/contract.md:99-101, a needed read that is null). A readable and active oomd with `oomd_notices` 0 carries no positive evidence (round-26/contract.md:97), so it cannot pull the verdict to quiet. The earlyoom state is `active` because the show text reads LoadState=loaded with ActiveState=active (round-26/contract.md:90-91); the frozen round-26 case c08 pins that same show text to `active` with a null journal at tools/fixtures/mori-oom-killers/cases.json:197. This case differs from c08 in the oomd side: c08 has an inactive oomd with notices 0, this one has a readable active oomd, which still carries no positive evidence at `oomd_notices` 0 (round-26/contract.md:97). The actions block is null, not zero counts: the journal read failed, so no count of send, escalation, failed kill or low memory line exists (round-26/contract.md:93-94 lists actions as a count block or null), and the frozen round-26 case c08 pins `earlyoom.actions` null for an active earlyoom with a null journal at tools/fixtures/mori-oom-killers/cases.json:198. The oomd state is `active` from its show text and the notice count is the input value 0 (round-26/contract.md:95). Not pinned: earlyoom.version, earlyoom.grammar, earlyoom.thresholds, earlyoom.scope_complete, earlyoom.dryrun, because a null journal yields no MESSAGE line for the grammar of round-26/contract.md:80-89 to decide.",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=33002571\n",
+    "oomd_show": "LoadState=loaded\nActiveState=active\nUnitFileState=static\nActiveEnterTimestampMonotonic=55211476\n",
+    "earlyoom_journal": null,
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLERS_UNKNOWN",
+    "exit": 2,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.actions": null,
+     "oomd.state": "active",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-09-removed-unit-single-sigterm-send",
+   "rule": "A2-09",
+   "why": "Removed unit with one send line. The show text is what `systemctl show` prints for a unit whose unit file is gone: a read-only probe of a nonexistent unit on this host on 2026-10-22 returned LoadState=not-found, ActiveState=inactive, an empty UnitFileState and ActiveEnterTimestampMonotonic=0. A not-found unit is absent rather than inactive (round-26/contract.md:90 lists `absent` among the states; frozen case c07 pins this same show text to state `absent`). A2-09 (round-27/contract.md:57, adopted at round-26/contract.md:182) makes the send lines of a removed (not-found) unit this boot positive evidence, and the journal holds one `sending SIGTERM to process ` line (kill.c:627) whose pid and process name are invented, so the verdict is KILLER_ACTED exit 1 (round-26/contract.md:97-98). The scope is not complete: ActiveEnterTimestampMonotonic is 0, which leaves the invocation unbounded and scope_complete false (round-26/contract.md:173-174; A2-05 at round-27/contract.md:53), and positive evidence stands even when the scope is incomplete (round-26/contract.md:98). oomd_notices is 0, so no part of the evidence comes from oomd (round-26/contract.md:97); the oomd show text is the frozen inactive shape, so oomd.state is inactive and oomd.notices_this_boot is the 0 given in the inputs (round-26/contract.md:95). The action counts are deliberately not pinned: round-26/contract.md:102 puts actions null for an inactive or absent killer inside the quiet branch, while A2-09 puts this input in the acted branch, so the contract text does not say where the removed unit's send count is exposed.",
+   "inputs": {
+    "earlyoom_show": "LoadState=not-found\nActiveState=inactive\nUnitFileState=\nActiveEnterTimestampMonotonic=0\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "sending SIGTERM to process 7311 \"fictional-compactor\"",
+      "__MONOTONIC_TIMESTAMP": "19970000"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLER_ACTED",
+    "exit": 1,
+    "fields": {
+     "earlyoom.state": "absent",
+     "earlyoom.scope_complete": false,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-09-removed-unit-two-invocations-mixed-sends",
+   "rule": "A2-09",
+   "why": "Removed unit, two invocations this boot, sends in both. The unit file is gone, so the show text is the not-found shape (LoadState=not-found, ActiveState=inactive, empty UnitFileState, ActiveEnterTimestampMonotonic=0) and the state is absent (round-26/contract.md:90; frozen case c07). The journal holds two version lines (`earlyoom <version>`, main.c:161), so the boot is split into two invocations (round-26/contract.md:182, dry-run is applied per invocation split at each version line), and it holds one `sending SIGTERM to process ` line (kill.c:627), one `sending SIGKILL to process ` line (kill.c:627) and one `escalating to SIGKILL after ` line (kill.c:318). Every one of those three lines is a send or escalation line of the removed unit this boot, so A2-09 (round-27/contract.md:57) makes them positive evidence and the verdict is KILLER_ACTED exit 1 (round-26/contract.md:97-98). The scope is not complete because ActiveEnterTimestampMonotonic is 0, so the invocation is unbounded and scope_complete is false (round-26/contract.md:173-174; A2-05 at round-27/contract.md:53); the positive evidence still stands (round-26/contract.md:98). The counts of those three lines are not pinned, because round-26/contract.md:102 assigns actions null to an absent killer in the quiet branch and A2-09 moves this input to the acted branch, so the contract does not name the field that carries them. The two version lines do not make the state active, inactive or unavailable: only ActiveState decides that (round-26/contract.md:162-163 for the non-steady states). oomd_notices is 0 and the oomd show text is the frozen inactive shape, so oomd.state is inactive and oomd.notices_this_boot is 0 (round-26/contract.md:95, :97).",
+   "inputs": {
+    "earlyoom_show": "LoadState=not-found\nActiveState=inactive\nUnitFileState=\nActiveEnterTimestampMonotonic=0\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "20481100"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 5120 \"fictional-archiver\"",
+      "__MONOTONIC_TIMESTAMP": "20495000"
+     },
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "20610300"
+     },
+     {
+      "MESSAGE": "sending SIGKILL to process 5121 \"fictional-archiver\"",
+      "__MONOTONIC_TIMESTAMP": "20624500"
+     },
+     {
+      "MESSAGE": "escalating to SIGKILL after 6.500 seconds",
+      "__MONOTONIC_TIMESTAMP": "20624600"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLER_ACTED",
+    "exit": 1,
+    "fields": {
+     "earlyoom.state": "absent",
+     "earlyoom.scope_complete": false,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-09-removed-unit-three-sends-oomd-active",
+   "rule": "A2-09",
+   "why": "Removed unit, three send lines, oomd active but silent. The earlyoom show text is the not-found shape (LoadState=not-found, ActiveState=inactive, empty UnitFileState, ActiveEnterTimestampMonotonic=0), so the earlyoom state is absent (round-26/contract.md:90; frozen case c07). The journal holds one version line (`earlyoom <version>`, main.c:161) and three send lines: two `sending SIGTERM to process ` lines (kill.c:627) and one `sending SIGKILL to process ` line (kill.c:627), all with invented pids and process names. Those send lines belong to the removed unit this boot, so A2-09 (round-27/contract.md:57, round-26/contract.md:182) makes them positive evidence and the verdict is KILLER_ACTED exit 1 (round-26/contract.md:97-98). scope_complete is false because ActiveEnterTimestampMonotonic is 0, which leaves the invocation unbounded (round-26/contract.md:173-174; A2-05 at round-27/contract.md:53), and the positive evidence stands anyway (round-26/contract.md:98). The three send lines are not pinned as counts, because round-26/contract.md:102 gives an absent killer actions null in the quiet branch and A2-09 puts this input in the acted branch, so the contract does not name the field that would carry the counts. The oomd unit is active here, so oomd.state is active (round-26/contract.md:95; frozen case c10 pins this same oomd show text to state `active`), but oomd_notices is 0, so the oomd contributes no evidence of its own and oomd.notices_this_boot is 0 (round-26/contract.md:95, :97): the verdict comes from the removed earlyoom unit alone.",
+   "inputs": {
+    "earlyoom_show": "LoadState=not-found\nActiveState=inactive\nUnitFileState=\nActiveEnterTimestampMonotonic=0\n",
+    "oomd_show": "LoadState=loaded\nActiveState=active\nUnitFileState=static\nActiveEnterTimestampMonotonic=12345678\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "31880500"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 9042 \"fictional-ledger\"",
+      "__MONOTONIC_TIMESTAMP": "31894000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 9043 \"fictional-ledger\"",
+      "__MONOTONIC_TIMESTAMP": "31894100"
+     },
+     {
+      "MESSAGE": "sending SIGKILL to process 9044 \"fictional-ledger\"",
+      "__MONOTONIC_TIMESTAMP": "31910500"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLER_ACTED",
+    "exit": 1,
+    "fields": {
+     "earlyoom.state": "absent",
+     "earlyoom.scope_complete": false,
+     "oomd.state": "active",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-10-malformed-action-line-uncounted",
+   "rule": "A2-10",
+   "why": "Malformed timestamp: the record is left uncounted and the scope is incomplete. The journal holds the version line at 20441000 (in scope: 20441000 is not below ActiveEnterTimestampMonotonic 20441000, contract.md:78) and one record whose __MONOTONIC_TIMESTAMP is the non numeric string 'not-a-number'; that record carries an action line in the kill.c:627 shape 'sending SIGTERM to process 7301 \"imaginary-harvester\"' (invented pid and invented process name only; the uid and cmdline parts are dropped, as the frozen cases do at cases.json c02, c03, c13). round-27/contract.md:58 (rule A2-10, adopted by the wave-2 fix at round-26/contract.md:186-188, which supersedes the setup-error rule of round-26/contract.md:168-169) says such a record is left uncounted and makes the scope incomplete, so earlyoom.scope_complete is false even though the version line is inside the scope (contract.md:78, :92-93). Left uncounted, the record is not a line in scope (contract.md:78 needs a numeric timestamp to compare with ActiveEnterTimestampMonotonic) and therefore not positive evidence (contract.md:97): earlyoom.actions.sigterm is 0, not 1, and the other counts are 0 because no other counted line exists (contract.md:85-88; the frozen host shaped case pins the same five counts at 0, cases.json c01). Counts with an incomplete scope are printed as counts (round-26/contract.md:170, A1a, frozen c04), so the zero counts are pinned here. With no positive evidence and an active earlyoom whose scope is incomplete, the verdict is KILLERS_UNKNOWN exit 2 (contract.md:99-100). The version line 'earlyoom 1.9.0' (main.c:161) is in scope, so earlyoom.version is 1.9.0 (contract.md:82; cases.json c19). No threshold line (main.c:414, main.c:416) is present, so earlyoom.thresholds is null (contract.md:91-92; cases.json c19). No 'dryrun mode enabled' line (main.c:295) is present, so earlyoom.dryrun is false (contract.md:89, :94). The show text says ActiveState=active, so earlyoom.state is active (contract.md:90). The oomd show text says ActiveState=inactive and the notice count is 0, so oomd.state is inactive and oomd.notices_this_boot is 0 (contract.md:95). earlyoom.grammar is not pinned: the contract fixes the two grammar values (contract.md:91) but not whether an in scope version line still verifies the grammar when the scope is incomplete for another reason; the frozen cases pin 'verified-1.9.0' only for a complete scope (cases.json c19) and 'unverified' only when no version line is in scope (cases.json c04, c05).",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=20441000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "20441000"
+     },
+     {
+      "MESSAGE": "sending SIGTERM to process 7301 \"imaginary-harvester\"",
+      "__MONOTONIC_TIMESTAMP": "not-a-number"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLERS_UNKNOWN",
+    "exit": 2,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.version": "1.9.0",
+     "earlyoom.thresholds": null,
+     "earlyoom.scope_complete": false,
+     "earlyoom.actions.sigterm": 0,
+     "earlyoom.actions.sigkill": 0,
+     "earlyoom.actions.escalations": 0,
+     "earlyoom.actions.kill_failed": 0,
+     "earlyoom.actions.low_memory_warnings": 0,
+     "earlyoom.dryrun": false,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-10-positive-evidence-elsewhere-stands",
+   "rule": "A2-10",
+   "why": "Malformed timestamp with positive evidence elsewhere: the record is left uncounted, the scope is incomplete, and the positive evidence still stands. The journal holds the version line at 31007000 (in scope: 31007000 is not below ActiveEnterTimestampMonotonic 31007000, contract.md:78), one record whose __MONOTONIC_TIMESTAMP is the non numeric string 'not-a-timestamp' carrying an escalation line, and one well formed escalation line at 31007500. The malformed record is left uncounted and makes the scope incomplete (round-27/contract.md:58; round-26/contract.md:186-188), so earlyoom.scope_complete is false and only the well formed line is counted: earlyoom.actions.escalations is 1, not 2 (contract.md:86; the escalation shape is kill.c:318 'escalating to SIGKILL after %.3f seconds', cases.json c15). The counted escalation line is in scope and is positive evidence, and positive evidence stands even when the scope is incomplete (contract.md:97-98), so the verdict is KILLER_ACTED exit 1 and not KILLERS_UNKNOWN. This case discriminates the rule from the superseded setup-error rule (round-26/contract.md:168-169, a setup error gives KILLERS_UNKNOWN exit 2 under contract.md:105), which the same inputs would meet. The earlyoom side holds no action line, so the sigterm and sigkill counts stay 0 (contract.md:85; cases.json c04 pins zero counts next to a nonzero one). The version line 'earlyoom 1.9.0' (main.c:161) is in scope, so earlyoom.version is 1.9.0 (contract.md:82; cases.json c19). No threshold line (main.c:414, main.c:416) is present, so earlyoom.thresholds is null (contract.md:91-92; cases.json c19). No 'dryrun mode enabled' line (main.c:295) is present, so earlyoom.dryrun is false (contract.md:89, :94). The show text says ActiveState=active, so earlyoom.state is active (contract.md:90). The oomd show text says ActiveState=inactive and the notice count is 0, so oomd.state is inactive and oomd.notices_this_boot is 0 (contract.md:95). earlyoom.grammar is not pinned: the contract fixes the two grammar values (contract.md:91) but not whether an in scope version line still verifies the grammar when the scope is incomplete for another reason.",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=31007000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=inactive\nUnitFileState=disabled\nActiveEnterTimestampMonotonic=0\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "31007000"
+     },
+     {
+      "MESSAGE": "escalating to SIGKILL after 5.000 seconds",
+      "__MONOTONIC_TIMESTAMP": "not-a-timestamp"
+     },
+     {
+      "MESSAGE": "escalating to SIGKILL after 9.500 seconds",
+      "__MONOTONIC_TIMESTAMP": "31007500"
+     }
+    ],
+    "oomd_notices": 0
+   },
+   "expect": {
+    "verdict": "KILLER_ACTED",
+    "exit": 1,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.version": "1.9.0",
+     "earlyoom.thresholds": null,
+     "earlyoom.scope_complete": false,
+     "earlyoom.actions.sigterm": 0,
+     "earlyoom.actions.sigkill": 0,
+     "earlyoom.actions.escalations": 1,
+     "earlyoom.actions.kill_failed": 0,
+     "earlyoom.actions.low_memory_warnings": 0,
+     "earlyoom.dryrun": false,
+     "oomd.state": "inactive",
+     "oomd.notices_this_boot": 0
+    }
+   }
+  },
+  {
+   "id": "a2-10-oomd-notices-positive-malformed-records",
+   "rule": "A2-10",
+   "why": "Malformed timestamps with positive evidence from the other killer: the records are left uncounted, the scope is incomplete, and the positive evidence still stands. Two journal records carry non numeric timestamps ('not-a-number' and 'abc') and both carry an escalation line in the kill.c:318 shape 'escalating to SIGKILL after %.3f seconds'; the well formed version line at 41852500 is in scope (it is above ActiveEnterTimestampMonotonic 41852000, contract.md:78). round-27/contract.md:58 (round-26/contract.md:186-188) leaves such records uncounted and makes the scope incomplete, so earlyoom.scope_complete is false and earlyoom.actions.escalations is 0, not 2: both escalation shaped records are left uncounted and only counted lines reach the counts (contract.md:86; cases.json c15 pins one escalation for one counted line). Counts with an incomplete scope are printed as counts (round-26/contract.md:170, A1a, frozen c04). The earlyoom side therefore holds no positive evidence (contract.md:97), but oomd_notices is 2, a notice count greater than zero, which is positive evidence on its own; positive evidence stands even when the scope is incomplete (contract.md:97-98), so the verdict is KILLER_ACTED exit 1 and not KILLERS_UNKNOWN (cases.json c30 pins the same precedence for the oomd side). The version line 'earlyoom 1.9.0' (main.c:161) is in scope, so earlyoom.version is 1.9.0 (contract.md:82; cases.json c19). No threshold line (main.c:414, main.c:416) is present, so earlyoom.thresholds is null (contract.md:91-92; cases.json c19). No 'dryrun mode enabled' line (main.c:295) is present, so earlyoom.dryrun is false (contract.md:89, :94). The earlyoom show text says ActiveState=active, so earlyoom.state is active (contract.md:90). The oomd show text says ActiveState=active, so oomd.state is active, and the notice count is 2, so oomd.notices_this_boot is 2 (contract.md:95). earlyoom.grammar is not pinned: the contract fixes the two grammar values (contract.md:91) but not whether an in scope version line still verifies the grammar when the scope is incomplete for another reason.",
+   "inputs": {
+    "earlyoom_show": "LoadState=loaded\nActiveState=active\nUnitFileState=enabled\nActiveEnterTimestampMonotonic=41852000\n",
+    "oomd_show": "LoadState=loaded\nActiveState=active\nUnitFileState=static\nActiveEnterTimestampMonotonic=13000000\n",
+    "earlyoom_journal": [
+     {
+      "MESSAGE": "earlyoom 1.9.0",
+      "__MONOTONIC_TIMESTAMP": "41852500"
+     },
+     {
+      "MESSAGE": "escalating to SIGKILL after 2.500 seconds",
+      "__MONOTONIC_TIMESTAMP": "not-a-number"
+     },
+     {
+      "MESSAGE": "escalating to SIGKILL after 7.250 seconds",
+      "__MONOTONIC_TIMESTAMP": "abc"
+     }
+    ],
+    "oomd_notices": 2
+   },
+   "expect": {
+    "verdict": "KILLER_ACTED",
+    "exit": 1,
+    "fields": {
+     "earlyoom.state": "active",
+     "earlyoom.version": "1.9.0",
+     "earlyoom.thresholds": null,
+     "earlyoom.scope_complete": false,
+     "earlyoom.actions.sigterm": 0,
+     "earlyoom.actions.sigkill": 0,
+     "earlyoom.actions.escalations": 0,
+     "earlyoom.actions.kill_failed": 0,
+     "earlyoom.actions.low_memory_warnings": 0,
+     "earlyoom.dryrun": false,
+     "oomd.state": "active",
+     "oomd.notices_this_boot": 2
+    }
+   }
+  }
+ ]
+}

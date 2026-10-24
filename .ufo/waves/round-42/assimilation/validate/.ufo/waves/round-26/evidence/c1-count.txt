@@ -1,0 +1,21 @@
+== bash .ufo/waves/round-26/count-c1.sh 248408f5b6610a85bcbdebe7ac0b4fa7ed51422a
+stale_present=4
+r26_entry=absent
+r26_new_source_ids=0
+r12_names_r26=0
+exit: 0
+== bash .ufo/waves/round-26/count-c1.sh 327fbcca022ce363205d6b460a02f7836cf76990
+stale_present=0
+r26_entry=present
+r26_new_source_ids=13
+r12_names_r26=4
+exit: 0
+== bash .ufo/waves/round-26/count-c1.sh 950d8a567e634032eaf57e5495b09f15cf428d8d
+stale_present=0
+r26_entry=present
+r26_new_source_ids=13
+r12_names_r26=4
+exit: 0
+== bash .ufo/waves/round-26/count-c1.sh deadbeef
+bad_rev
+exit: 2

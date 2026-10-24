@@ -1,0 +1,612 @@
+{
+ "version": 1,
+ "round": 32,
+ "defect": "routed defect 6 of corpus/lessons/round-31-verifier-spotcheck.md §8 (tool edge cases)",
+ "tool": "/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-blind-check.sh",
+ "tool_sha256": "79b774f7736cc9074fa786ad360553987d92096a3864b07212f7a3127924beb8",
+ "rule_text": "/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-31/rule-text.md",
+ "rule_text_sha256": "79ea24c8c0ab1ec9c8e90d543171e41412849232e073fd993fc65764f040698b",
+ "runner": "/fast/scratch/hyaku/mori-r32/ExecEdgeFixtures/run-edge-r32.py",
+ "generator": "/fast/scratch/hyaku/mori-r32/ExecEdgeFixtures/make-edge-r32.py",
+ "sandbox": "/fast/scratch/hyaku/mori-r32/ExecEdgeFixtures/sandbox/repo",
+ "how_to_reproduce": "python3 run-edge-r32.py   -> rebuilds a fresh sandbox git repo under this seat's scratch dir, reruns the lane tool over every case exactly as its usage says (cwd = sandbox repo, lane-rev = sandbox commit) and compares the stored `actual` column; --update rewrites that column.",
+ "expected_semantics": "`expected` is the report required by the primary reading of the quoted rule-text clauses (`rule_text_reading.basis` says which reading and why). `alt_reading` records the competing reading where the clause is ambiguous, with the report that reading requires. `agree` compares actual against `expected`; `agree_alt` compares actual against `alt_reading` (null when there is none).",
+ "cases": [
+  {
+   "id": "E01",
+   "kind": "edge-case",
+   "title": "setext heading (Files opened / ---) opens the files-opened block",
+   "wave_dir": ".ufo/waves/round-32/fx/e01",
+   "brief_name": "CaseE01.md",
+   "writer_regex": "^CaseE[0-9]+[a-z]?\\.md$",
+   "allow_lines": [
+    ".ufo/waves/round-31/rule-text.md"
+   ],
+   "brief_text": "Files opened\n------------\n- .ufo/waves/round-31/rule-text.md\n",
+   "brief_base64": "RmlsZXMgb3BlbmVkCi0tLS0tLS0tLS0tLQotIC51Zm8vd2F2ZXMvcm91bmQtMzEvcnVsZS10ZXh0Lm1kCg==",
+   "brief_sha256": "ea1a59e4dc27e64b257cc8b8cff0679542ed8dad269561a109611548659cc118",
+   "brief_len": 61,
+   "rule_text_reading": {
+    "basis": "markdown-semantics",
+    "clauses": [
+     "1. A block opens at a Markdown heading (any level) whose text contains `files opened` or `opened files` (case-insensitive), or at a line whose trimmed text starts with `Files opened:` or `Opened files:` (case-insensitive).",
+     "2. Entries are the following lines that start (after optional indentation) with `- `, `* `, `+ `, `N. ` or `N) `, or with `|` (a table row); a table's separator row (only `|`, `-`, `:` and spaces) and the row directly above it are not entries. Blank lines inside the block are skipped.",
+     "4. An entry's candidates are its tokens, stripped of wrapping backticks, quotes and brackets, trailing `,;.` and a `:L` / `:L-M` suffix, that contain `://`, `/` or `.` or equal `LOG.md`, `SCORECARD.md`, `SKILL.md` or `PROVINCE.md`. An entry with no candidate, or with a candidate no allow line matches, is one `writer-forbidden-opened-path` hit at its own line."
+    ],
+    "reading": "Clause 1 opens a block at \"a Markdown heading (any level)\". A setext heading is a Markdown heading (level 1 with `===`, level 2 with `---`); its text is the line above the underline, here `Files opened`, which contains `files opened`. So the block opens at line 1, the `- ` line is an entry (clause 2) and its candidate `.ufo/waves/round-31/rule-text.md` matches an allow line (clause 4): no hit."
+   },
+   "expected": {
+    "hits": [],
+    "exit": 0,
+    "scanned": 1
+   },
+   "alt_reading": {
+    "basis": "atx-only",
+    "description": "Block opener must be an ATX `#` heading at column 0, so the setext heading opens nothing and the brief has no entry in any block (clause 5).",
+    "hits": [
+     ".ufo/waves/round-32/fx/e01/CaseE01.md:1:writer-missing-files-opened-list"
+    ],
+    "exit": 1
+   },
+   "actual": {
+    "exit": 1,
+    "stdout": [
+     "scanned=1",
+     "blind_violations=1",
+     ".ufo/waves/round-32/fx/e01/CaseE01.md:1:writer-missing-files-opened-list"
+    ],
+    "hits": [
+     ".ufo/waves/round-32/fx/e01/CaseE01.md:1:writer-missing-files-opened-list"
+    ]
+   },
+   "agree": "no",
+   "agree_alt": "yes"
+  },
+  {
+   "id": "E02",
+   "kind": "edge-case",
+   "title": "indented `#` heading (2 spaces) opens the files-opened block",
+   "wave_dir": ".ufo/waves/round-32/fx/e02",
+   "brief_name": "CaseE02.md",
+   "writer_regex": "^CaseE[0-9]+[a-z]?\\.md$",
+   "allow_lines": [
+    ".ufo/waves/round-31/rule-text.md"
+   ],
+   "brief_text": "  ## Files opened\n  - .ufo/waves/round-31/rule-text.md\n",
+   "brief_base64": "ICAjIyBGaWxlcyBvcGVuZWQKICAtIC51Zm8vd2F2ZXMvcm91bmQtMzEvcnVsZS10ZXh0Lm1kCg==",
+   "brief_sha256": "5be64a4ee19cd826eac41fff5363cdd9b829be57ed91c6b34f74c4ebba887c66",
+   "brief_len": 55,
+   "rule_text_reading": {
+    "basis": "markdown-semantics",
+    "clauses": [
+     "1. A block opens at a Markdown heading (any level) whose text contains `files opened` or `opened files` (case-insensitive), or at a line whose trimmed text starts with `Files opened:` or `Opened files:` (case-insensitive).",
+     "2. Entries are the following lines that start (after optional indentation) with `- `, `* `, `+ `, `N. ` or `N) `, or with `|` (a table row); a table's separator row (only `|`, `-`, `:` and spaces) and the row directly above it are not entries. Blank lines inside the block are skipped.",
+     "4. An entry's candidates are its tokens, stripped of wrapping backticks, quotes and brackets, trailing `,;.` and a `:L` / `:L-M` suffix, that contain `://`, `/` or `.` or equal `LOG.md`, `SCORECARD.md`, `SKILL.md` or `PROVINCE.md`. An entry with no candidate, or with a candidate no allow line matches, is one `writer-forbidden-opened-path` hit at its own line."
+    ],
+    "reading": "Clause 1 says \"a Markdown heading (any level)\" with no column-0 qualifier. In CommonMark an ATX heading may be indented by up to three spaces and is still a heading, so the heading text `Files opened` contains `files opened` and the block opens. Clause 2 allows optional indentation before the `- ` marker, so the second line is an entry; clause 4: its candidate matches an allow line. No hit."
+   },
+   "expected": {
+    "hits": [],
+    "exit": 0,
+    "scanned": 1
+   },
+   "alt_reading": {
+    "basis": "atx-column-0-only",
+    "description": "Only `#` headings at column 0 open a block, so the 2-space indented heading is not seen and the brief has no entry (clause 5).",
+    "hits": [
+     ".ufo/waves/round-32/fx/e02/CaseE02.md:1:writer-missing-files-opened-list"
+    ],
+    "exit": 1
+   },
+   "actual": {
+    "exit": 1,
+    "stdout": [
+     "scanned=1",
+     "blind_violations=1",
+     ".ufo/waves/round-32/fx/e02/CaseE02.md:1:writer-missing-files-opened-list"
+    ],
+    "hits": [
+     ".ufo/waves/round-32/fx/e02/CaseE02.md:1:writer-missing-files-opened-list"
+    ]
+   },
+   "agree": "no",
+   "agree_alt": "yes"
+  },
+  {
+   "id": "E02b",
+   "kind": "control",
+   "title": "CONTROL: `#` heading indented 4 spaces is an indented code block, not a heading",
+   "wave_dir": ".ufo/waves/round-32/fx/e02b",
+   "brief_name": "CaseE02b.md",
+   "writer_regex": "^CaseE[0-9]+[a-z]?\\.md$",
+   "allow_lines": [
+    ".ufo/waves/round-31/rule-text.md"
+   ],
+   "brief_text": "    ## Files opened\n    - .ufo/waves/round-31/rule-text.md\n",
+   "brief_base64": "ICAgICMjIEZpbGVzIG9wZW5lZAogICAgLSAudWZvL3dhdmVzL3JvdW5kLTMxL3J1bGUtdGV4dC5tZAo=",
+   "brief_sha256": "b681bf9217186a8c8f23cc6bd2bf9e4974790691e46044572c5c1f25026085a7",
+   "brief_len": 59,
+   "rule_text_reading": {
+    "basis": "markdown-semantics",
+    "clauses": [
+     "1. A block opens at a Markdown heading (any level) whose text contains `files opened` or `opened files` (case-insensitive), or at a line whose trimmed text starts with `Files opened:` or `Opened files:` (case-insensitive).",
+     "2. Entries are the following lines that start (after optional indentation) with `- `, `* `, `+ `, `N. ` or `N) `, or with `|` (a table row); a table's separator row (only `|`, `-`, `:` and spaces) and the row directly above it are not entries. Blank lines inside the block are skipped.",
+     "5. A brief with no entry in any block is one `writer-missing-files-opened-list` hit at line 1."
+    ],
+    "reading": "Four spaces of indentation makes the line an indented code block in CommonMark, so it is not a heading under any reading and clause 1 opens no block. The brief has no entry in any block, so clause 5 gives one `writer-missing-files-opened-list` hit at line 1. Both the markdown reading and the column-0 reading agree here: this control shows the tool reacts to indentation depth, not to indentation as such."
+   },
+   "expected": {
+    "hits": [
+     ".ufo/waves/round-32/fx/e02b/CaseE02b.md:1:writer-missing-files-opened-list"
+    ],
+    "exit": 1,
+    "scanned": 1
+   },
+   "alt_reading": null,
+   "actual": {
+    "exit": 1,
+    "stdout": [
+     "scanned=1",
+     "blind_violations=1",
+     ".ufo/waves/round-32/fx/e02b/CaseE02b.md:1:writer-missing-files-opened-list"
+    ],
+    "hits": [
+     ".ufo/waves/round-32/fx/e02b/CaseE02b.md:1:writer-missing-files-opened-list"
+    ]
+   },
+   "agree": "yes",
+   "agree_alt": null
+  },
+  {
+   "id": "E03",
+   "kind": "edge-case",
+   "title": "CRLF line endings do not change the path token",
+   "wave_dir": ".ufo/waves/round-32/fx/e03",
+   "brief_name": "CaseE03.md",
+   "writer_regex": "^CaseE[0-9]+[a-z]?\\.md$",
+   "allow_lines": [
+    ".ufo/waves/round-31/rule-text.md"
+   ],
+   "brief_text": "## Files opened\r\n- .ufo/waves/round-31/rule-text.md\r\n",
+   "brief_base64": "IyMgRmlsZXMgb3BlbmVkDQotIC51Zm8vd2F2ZXMvcm91bmQtMzEvcnVsZS10ZXh0Lm1kDQo=",
+   "brief_sha256": "c0e7c01d2f7fe9513118a190607aca1fafd15345be452d0e15cfb6d718e23af4",
+   "brief_len": 53,
+   "rule_text_reading": {
+    "basis": "line-terminator-semantics",
+    "clauses": [
+     "1. A block opens at a Markdown heading (any level) whose text contains `files opened` or `opened files` (case-insensitive), or at a line whose trimmed text starts with `Files opened:` or `Opened files:` (case-insensitive).",
+     "2. Entries are the following lines that start (after optional indentation) with `- `, `* `, `+ `, `N. ` or `N) `, or with `|` (a table row); a table's separator row (only `|`, `-`, `:` and spaces) and the row directly above it are not entries. Blank lines inside the block are skipped.",
+     "4. An entry's candidates are its tokens, stripped of wrapping backticks, quotes and brackets, trailing `,;.` and a `:L` / `:L-M` suffix, that contain `://`, `/` or `.` or equal `LOG.md`, `SCORECARD.md`, `SKILL.md` or `PROVINCE.md`. An entry with no candidate, or with a candidate no allow line matches, is one `writer-forbidden-opened-path` hit at its own line."
+    ],
+    "reading": "No clause of the rule mentions line terminators, and CRLF is a line terminator, so the brief reads as `## Files opened` / `- .ufo/waves/round-31/rule-text.md`. The heading contains `files opened` (clause 1), the `- ` line is an entry (clause 2) and its candidate token is `.ufo/waves/round-31/rule-text.md`, which matches an allow line (clause 4). No hit."
+   },
+   "expected": {
+    "hits": [],
+    "exit": 0,
+    "scanned": 1
+   },
+   "alt_reading": {
+    "basis": "byte-literal",
+    "description": "The carriage return stays inside the path token, so the candidate no longer matches the allow line and becomes forbidden.",
+    "hits": [
+     ".ufo/waves/round-32/fx/e03/CaseE03.md:2:writer-forbidden-opened-path"
+    ],
+    "exit": 1
+   },
+   "actual": {
+    "exit": 1,
+    "stdout": [
+     "scanned=1",
+     "blind_violations=1",
+     ".ufo/waves/round-32/fx/e03/CaseE03.md:2:writer-forbidden-opened-path"
+    ],
+    "hits": [
+     ".ufo/waves/round-32/fx/e03/CaseE03.md:2:writer-forbidden-opened-path"
+    ]
+   },
+   "agree": "no",
+   "agree_alt": "yes"
+  },
+  {
+   "id": "E04",
+   "kind": "edge-case",
+   "title": "tab directly after `-` is not a list marker",
+   "wave_dir": ".ufo/waves/round-32/fx/e04",
+   "brief_name": "CaseE04.md",
+   "writer_regex": "^CaseE[0-9]+[a-z]?\\.md$",
+   "allow_lines": [
+    ".ufo/waves/round-31/rule-text.md"
+   ],
+   "brief_text": "## Files opened\n-\t/etc/passwd\n",
+   "brief_base64": "IyMgRmlsZXMgb3BlbmVkCi0JL2V0Yy9wYXNzd2QK",
+   "brief_sha256": "91e47cf71eeddcae4e68c11a9ecb291423637c035239560d588e315688d9581d",
+   "brief_len": 30,
+   "rule_text_reading": {
+    "basis": "clause-literal",
+    "clauses": [
+     "1. A block opens at a Markdown heading (any level) whose text contains `files opened` or `opened files` (case-insensitive), or at a line whose trimmed text starts with `Files opened:` or `Opened files:` (case-insensitive).",
+     "2. Entries are the following lines that start (after optional indentation) with `- `, `* `, `+ `, `N. ` or `N) `, or with `|` (a table row); a table's separator row (only `|`, `-`, `:` and spaces) and the row directly above it are not entries. Blank lines inside the block are skipped.",
+     "3. The block closes at the first heading or at the first other non-blank line.",
+     "5. A brief with no entry in any block is one `writer-missing-files-opened-list` hit at line 1."
+    ],
+    "reading": "Clause 2 enumerates the entry markers as `- `, `* `, `+ `, `N. `, `N) ` and `|`: the dash is followed by a space, so `-\\t/etc/passwd` is not an entry marker and the line is not an entry. Clause 3 then closes the block at that first other non-blank line, so the brief has no entry in any block and clause 5 gives one `writer-missing-files-opened-list` hit at line 1. The path on that line is never inspected as a candidate."
+   },
+   "expected": {
+    "hits": [
+     ".ufo/waves/round-32/fx/e04/CaseE04.md:1:writer-missing-files-opened-list"
+    ],
+    "exit": 1,
+    "scanned": 1
+   },
+   "alt_reading": {
+    "basis": "commonmark-list-item",
+    "description": "A tab is a valid list-item separator in CommonMark, so `-\\t/etc/passwd` is a list item and its path is an entry candidate that no allow line matches.",
+    "hits": [
+     ".ufo/waves/round-32/fx/e04/CaseE04.md:2:writer-forbidden-opened-path"
+    ],
+    "exit": 1
+   },
+   "actual": {
+    "exit": 1,
+    "stdout": [
+     "scanned=1",
+     "blind_violations=1",
+     ".ufo/waves/round-32/fx/e04/CaseE04.md:1:writer-missing-files-opened-list"
+    ],
+    "hits": [
+     ".ufo/waves/round-32/fx/e04/CaseE04.md:1:writer-missing-files-opened-list"
+    ]
+   },
+   "agree": "yes",
+   "agree_alt": "no",
+   "note": "Both readings exit 1 but with different rules; the literal reading is the one the clause text supports, SKILL.md names the tab behaviour a known limit."
+  },
+  {
+   "id": "E05",
+   "kind": "edge-case",
+   "title": "a `../` path passes an allow glob",
+   "wave_dir": ".ufo/waves/round-32/fx/e05",
+   "brief_name": "CaseE05.md",
+   "writer_regex": "^CaseE[0-9]+[a-z]?\\.md$",
+   "allow_lines": [
+    ".ufo/waves/round-31/rule-text.md",
+    "/fast/scratch/hyaku/mori-r32/ExecEdgeFixtures/allowed/*"
+   ],
+   "brief_text": "## Files opened\n- /fast/scratch/hyaku/mori-r32/ExecEdgeFixtures/allowed/../../secret.txt\n",
+   "brief_base64": "IyMgRmlsZXMgb3BlbmVkCi0gL2Zhc3Qvc2NyYXRjaC9oeWFrdS9tb3JpLXIzMi9FeGVjRWRnZUZpeHR1cmVzL2FsbG93ZWQvLi4vLi4vc2VjcmV0LnR4dAo=",
+   "brief_sha256": "1ba28ba87594a8a72439d8c4c718e9a147b066bc8c78f2c41c4365c6dbfb0e93",
+   "brief_len": 89,
+   "rule_text_reading": {
+    "basis": "clause-literal",
+    "clauses": [
+     "1. A block opens at a Markdown heading (any level) whose text contains `files opened` or `opened files` (case-insensitive), or at a line whose trimmed text starts with `Files opened:` or `Opened files:` (case-insensitive).",
+     "2. Entries are the following lines that start (after optional indentation) with `- `, `* `, `+ `, `N. ` or `N) `, or with `|` (a table row); a table's separator row (only `|`, `-`, `:` and spaces) and the row directly above it are not entries. Blank lines inside the block are skipped.",
+     "4. An entry's candidates are its tokens, stripped of wrapping backticks, quotes and brackets, trailing `,;.` and a `:L` / `:L-M` suffix, that contain `://`, `/` or `.` or equal `LOG.md`, `SCORECARD.md`, `SKILL.md` or `PROVINCE.md`. An entry with no candidate, or with a candidate no allow line matches, is one `writer-forbidden-opened-path` hit at its own line."
+    ],
+    "reading": "Clause 4 says a candidate is forbidden when \"no allow line matches\" it, and the allow file holds one bash glob per line. The candidate token is the whole `/fast/scratch/hyaku/mori-r32/ExecEdgeFixtures/allowed/../../secret.txt`; the allow line `/fast/scratch/hyaku/mori-r32/ExecEdgeFixtures/allowed/*` matches it (in bash pattern matching `*` also spans `/`). No clause of the rule normalises `..`, so the entry is allowed: no hit."
+   },
+   "expected": {
+    "hits": [],
+    "exit": 0,
+    "scanned": 1
+   },
+   "alt_reading": {
+    "basis": "path-normalisation",
+    "description": "`..` segments are resolved before matching, so the candidate leaves the allowed directory and matches no allow line.",
+    "hits": [
+     ".ufo/waves/round-32/fx/e05/CaseE05.md:2:writer-forbidden-opened-path"
+    ],
+    "exit": 1
+   },
+   "actual": {
+    "exit": 0,
+    "stdout": [
+     "scanned=1",
+     "blind_violations=0"
+    ],
+    "hits": []
+   },
+   "agree": "yes",
+   "agree_alt": "no",
+   "note": "Normalised, the candidate is /fast/scratch/hyaku/mori-r32/ExecEdgeFixtures/secret.txt, one level above the allowed/ subtree. SKILL.md names the un-normalised matching a known limit."
+  },
+  {
+   "id": "E06",
+   "kind": "edge-case",
+   "title": "a `# files opened` line inside a code fence does not open a block",
+   "wave_dir": ".ufo/waves/round-32/fx/e06",
+   "brief_name": "CaseE06.md",
+   "writer_regex": "^CaseE[0-9]+[a-z]?\\.md$",
+   "allow_lines": [
+    ".ufo/waves/round-31/rule-text.md"
+   ],
+   "brief_text": "## Cases\n\n```text\n# files opened\n- /etc/passwd\n```\n\n## Files opened\n- .ufo/waves/round-31/rule-text.md\n",
+   "brief_base64": "IyMgQ2FzZXMKCmBgYHRleHQKIyBmaWxlcyBvcGVuZWQKLSAvZXRjL3Bhc3N3ZApgYGAKCiMjIEZpbGVzIG9wZW5lZAotIC51Zm8vd2F2ZXMvcm91bmQtMzEvcnVsZS10ZXh0Lm1kCg==",
+   "brief_sha256": "014196c352c1c5b73ba512dacdf8b76d44bbf5e5df11889fce1499b4624c9f85",
+   "brief_len": 103,
+   "rule_text_reading": {
+    "basis": "markdown-semantics",
+    "clauses": [
+     "1. A block opens at a Markdown heading (any level) whose text contains `files opened` or `opened files` (case-insensitive), or at a line whose trimmed text starts with `Files opened:` or `Opened files:` (case-insensitive).",
+     "2. Entries are the following lines that start (after optional indentation) with `- `, `* `, `+ `, `N. ` or `N) `, or with `|` (a table row); a table's separator row (only `|`, `-`, `:` and spaces) and the row directly above it are not entries. Blank lines inside the block are skipped.",
+     "4. An entry's candidates are its tokens, stripped of wrapping backticks, quotes and brackets, trailing `,;.` and a `:L` / `:L-M` suffix, that contain `://`, `/` or `.` or equal `LOG.md`, `SCORECARD.md`, `SKILL.md` or `PROVINCE.md`. An entry with no candidate, or with a candidate no allow line matches, is one `writer-forbidden-opened-path` hit at its own line."
+    ],
+    "reading": "Clause 1 opens a block at \"a Markdown heading\". Inside a fenced code block the line `# files opened` is code content, not a heading, so it opens nothing; the fenced `- /etc/passwd` line is code content too and is not an entry (clause 2). The real `## Files opened` heading opens the block and its single entry matches an allow line (clause 4). No hit."
+   },
+   "expected": {
+    "hits": [],
+    "exit": 0,
+    "scanned": 1
+   },
+   "alt_reading": {
+    "basis": "fence-blind",
+    "description": "The fenced `# files opened` line is read as a heading, so it opens a block and the fenced `- /etc/passwd` line becomes an entry with no matching allow line.",
+    "hits": [
+     ".ufo/waves/round-32/fx/e06/CaseE06.md:5:writer-forbidden-opened-path"
+    ],
+    "exit": 1
+   },
+   "actual": {
+    "exit": 1,
+    "stdout": [
+     "scanned=1",
+     "blind_violations=1",
+     ".ufo/waves/round-32/fx/e06/CaseE06.md:5:writer-forbidden-opened-path"
+    ],
+    "hits": [
+     ".ufo/waves/round-32/fx/e06/CaseE06.md:5:writer-forbidden-opened-path"
+    ]
+   },
+   "agree": "no",
+   "agree_alt": "yes"
+  },
+  {
+   "id": "E06b",
+   "kind": "control",
+   "title": "CONTROL: the tool's json-fence protection does not cover the files-opened rule",
+   "wave_dir": ".ufo/waves/round-32/fx/e06b",
+   "brief_name": "CaseE06b.md",
+   "writer_regex": "^CaseE[0-9]+[a-z]?\\.md$",
+   "allow_lines": [
+    ".ufo/waves/round-31/rule-text.md"
+   ],
+   "brief_text": "## Cases\n\n```json\n# files opened\n- /etc/passwd\n```\n\n## Files opened\n- .ufo/waves/round-31/rule-text.md\n",
+   "brief_base64": "IyMgQ2FzZXMKCmBgYGpzb24KIyBmaWxlcyBvcGVuZWQKLSAvZXRjL3Bhc3N3ZApgYGAKCiMjIEZpbGVzIG9wZW5lZAotIC51Zm8vd2F2ZXMvcm91bmQtMzEvcnVsZS10ZXh0Lm1kCg==",
+   "brief_sha256": "8c8630f28a6c44251fabbaa65634d69f2a24356f718ad30ca8ee330bfafcf955",
+   "brief_len": 103,
+   "rule_text_reading": {
+    "basis": "tool-faithful",
+    "clauses": [
+     "1. A block opens at a Markdown heading (any level) whose text contains `files opened` or `opened files` (case-insensitive), or at a line whose trimmed text starts with `Files opened:` or `Opened files:` (case-insensitive).",
+     "2. Entries are the following lines that start (after optional indentation) with `- `, `* `, `+ `, `N. ` or `N) `, or with `|` (a table row); a table's separator row (only `|`, `-`, `:` and spaces) and the row directly above it are not entries. Blank lines inside the block are skipped.",
+     "4. An entry's candidates are its tokens, stripped of wrapping backticks, quotes and brackets, trailing `,;.` and a `:L` / `:L-M` suffix, that contain `://`, `/` or `.` or equal `LOG.md`, `SCORECARD.md`, `SKILL.md` or `PROVINCE.md`. An entry with no candidate, or with a candidate no allow line matches, is one `writer-forbidden-opened-path` hit at its own line."
+    ],
+    "reading": "A `json` fence inside a `## Cases` section is the shape the tool protects from the two round-30 detectors, but that protection is scoped to the detectors: the files-opened parser still reads the fenced `# files opened` line as a heading, so the fenced `- /etc/passwd` line is an entry with no matching allow line and gives one `writer-forbidden-opened-path` hit at line 5. This control separates \"fence-blind\" from \"json-fence-protected\": only the former is what E06 measures."
+   },
+   "expected": {
+    "hits": [
+     ".ufo/waves/round-32/fx/e06b/CaseE06b.md:5:writer-forbidden-opened-path"
+    ],
+    "exit": 1,
+    "scanned": 1
+   },
+   "alt_reading": null,
+   "actual": {
+    "exit": 1,
+    "stdout": [
+     "scanned=1",
+     "blind_violations=1",
+     ".ufo/waves/round-32/fx/e06b/CaseE06b.md:5:writer-forbidden-opened-path"
+    ],
+    "hits": [
+     ".ufo/waves/round-32/fx/e06b/CaseE06b.md:5:writer-forbidden-opened-path"
+    ]
+   },
+   "agree": "yes",
+   "agree_alt": null,
+   "note": "The expected column here is the tool-faithful reading, so agree=yes here is expected by design."
+  },
+  {
+   "id": "E07",
+   "kind": "edge-case",
+   "title": "a heading with words between `files` and `opened` does not open a block",
+   "wave_dir": ".ufo/waves/round-32/fx/e07",
+   "brief_name": "CaseE07.md",
+   "writer_regex": "^CaseE[0-9]+[a-z]?\\.md$",
+   "allow_lines": [
+    ".ufo/waves/round-31/rule-text.md"
+   ],
+   "brief_text": "## Files I opened\n- .ufo/waves/round-31/rule-text.md\n",
+   "brief_base64": "IyMgRmlsZXMgSSBvcGVuZWQKLSAudWZvL3dhdmVzL3JvdW5kLTMxL3J1bGUtdGV4dC5tZAo=",
+   "brief_sha256": "208e9633325117e1a11ab99840bc70e4053dd999b85b13d2e8e764138ab699ce",
+   "brief_len": 53,
+   "rule_text_reading": {
+    "basis": "clause-literal",
+    "clauses": [
+     "1. A block opens at a Markdown heading (any level) whose text contains `files opened` or `opened files` (case-insensitive), or at a line whose trimmed text starts with `Files opened:` or `Opened files:` (case-insensitive).",
+     "2. Entries are the following lines that start (after optional indentation) with `- `, `* `, `+ `, `N. ` or `N) `, or with `|` (a table row); a table's separator row (only `|`, `-`, `:` and spaces) and the row directly above it are not entries. Blank lines inside the block are skipped.",
+     "4. An entry's candidates are its tokens, stripped of wrapping backticks, quotes and brackets, trailing `,;.` and a `:L` / `:L-M` suffix, that contain `://`, `/` or `.` or equal `LOG.md`, `SCORECARD.md`, `SKILL.md` or `PROVINCE.md`. An entry with no candidate, or with a candidate no allow line matches, is one `writer-forbidden-opened-path` hit at its own line.",
+     "5. A brief with no entry in any block is one `writer-missing-files-opened-list` hit at line 1."
+    ],
+    "reading": "Clause 1 opens a block at a heading whose text \"contains `files opened` or `opened files`\". The heading text `Files I opened` contains neither substring, so no block opens; the `- ` line is therefore not inside a block and is not an entry. The brief has no entry in any block, so clause 5 gives one `writer-missing-files-opened-list` hit at line 1."
+   },
+   "expected": {
+    "hits": [
+     ".ufo/waves/round-32/fx/e07/CaseE07.md:1:writer-missing-files-opened-list"
+    ],
+    "exit": 1,
+    "scanned": 1
+   },
+   "alt_reading": {
+    "basis": "loose-mention",
+    "description": "A heading that mentions files and opened opens the block, so the entry counts and the brief is clean.",
+    "hits": [],
+    "exit": 0
+   },
+   "actual": {
+    "exit": 1,
+    "stdout": [
+     "scanned=1",
+     "blind_violations=1",
+     ".ufo/waves/round-32/fx/e07/CaseE07.md:1:writer-missing-files-opened-list"
+    ],
+    "hits": [
+     ".ufo/waves/round-32/fx/e07/CaseE07.md:1:writer-missing-files-opened-list"
+    ]
+   },
+   "agree": "yes",
+   "agree_alt": "no"
+  },
+  {
+   "id": "E08",
+   "kind": "edge-case",
+   "title": "lead-in prose before the first entry closes the block",
+   "wave_dir": ".ufo/waves/round-32/fx/e08",
+   "brief_name": "CaseE08.md",
+   "writer_regex": "^CaseE[0-9]+[a-z]?\\.md$",
+   "allow_lines": [
+    ".ufo/waves/round-31/rule-text.md"
+   ],
+   "brief_text": "## Files opened\nI read the rule text before listing the entries.\n- .ufo/waves/round-31/rule-text.md\n",
+   "brief_base64": "IyMgRmlsZXMgb3BlbmVkCkkgcmVhZCB0aGUgcnVsZSB0ZXh0IGJlZm9yZSBsaXN0aW5nIHRoZSBlbnRyaWVzLgotIC51Zm8vd2F2ZXMvcm91bmQtMzEvcnVsZS10ZXh0Lm1kCg==",
+   "brief_sha256": "6de804ef23fb5b00d9146f3d2c998d379da763664d735971db28a7f64ab39524",
+   "brief_len": 100,
+   "rule_text_reading": {
+    "basis": "clause-literal",
+    "clauses": [
+     "1. A block opens at a Markdown heading (any level) whose text contains `files opened` or `opened files` (case-insensitive), or at a line whose trimmed text starts with `Files opened:` or `Opened files:` (case-insensitive).",
+     "2. Entries are the following lines that start (after optional indentation) with `- `, `* `, `+ `, `N. ` or `N) `, or with `|` (a table row); a table's separator row (only `|`, `-`, `:` and spaces) and the row directly above it are not entries. Blank lines inside the block are skipped.",
+     "3. The block closes at the first heading or at the first other non-blank line.",
+     "5. A brief with no entry in any block is one `writer-missing-files-opened-list` hit at line 1."
+    ],
+    "reading": "Clause 3: \"The block closes at the first heading or at the first other non-blank line.\" The prose line is the first other non-blank line, so the block closes there and the following `- ` line is not an entry. The brief has no entry in any block, so clause 5 gives one `writer-missing-files-opened-list` hit at line 1."
+   },
+   "expected": {
+    "hits": [
+     ".ufo/waves/round-32/fx/e08/CaseE08.md:1:writer-missing-files-opened-list"
+    ],
+    "exit": 1,
+    "scanned": 1
+   },
+   "alt_reading": {
+    "basis": "loose-lead-in",
+    "description": "Prose directly under the heading is a lead-in and the list still counts, so the brief is clean.",
+    "hits": [],
+    "exit": 0
+   },
+   "actual": {
+    "exit": 1,
+    "stdout": [
+     "scanned=1",
+     "blind_violations=1",
+     ".ufo/waves/round-32/fx/e08/CaseE08.md:1:writer-missing-files-opened-list"
+    ],
+    "hits": [
+     ".ufo/waves/round-32/fx/e08/CaseE08.md:1:writer-missing-files-opened-list"
+    ]
+   },
+   "agree": "yes",
+   "agree_alt": "no"
+  },
+  {
+   "id": "E09",
+   "kind": "edge-case",
+   "title": "a sub-heading inside the block closes the block",
+   "wave_dir": ".ufo/waves/round-32/fx/e09",
+   "brief_name": "CaseE09.md",
+   "writer_regex": "^CaseE[0-9]+[a-z]?\\.md$",
+   "allow_lines": [
+    ".ufo/waves/round-31/rule-text.md"
+   ],
+   "brief_text": "## Files opened\n- .ufo/waves/round-31/rule-text.md\n### Notes\n- /etc/passwd\n",
+   "brief_base64": "IyMgRmlsZXMgb3BlbmVkCi0gLnVmby93YXZlcy9yb3VuZC0zMS9ydWxlLXRleHQubWQKIyMjIE5vdGVzCi0gL2V0Yy9wYXNzd2QK",
+   "brief_sha256": "b487719a8d5c2c8132620a4aa747e039b1e722b95bbfef59b18bf27ab191d5bc",
+   "brief_len": 75,
+   "rule_text_reading": {
+    "basis": "clause-literal",
+    "clauses": [
+     "1. A block opens at a Markdown heading (any level) whose text contains `files opened` or `opened files` (case-insensitive), or at a line whose trimmed text starts with `Files opened:` or `Opened files:` (case-insensitive).",
+     "2. Entries are the following lines that start (after optional indentation) with `- `, `* `, `+ `, `N. ` or `N) `, or with `|` (a table row); a table's separator row (only `|`, `-`, `:` and spaces) and the row directly above it are not entries. Blank lines inside the block are skipped.",
+     "3. The block closes at the first heading or at the first other non-blank line.",
+     "4. An entry's candidates are its tokens, stripped of wrapping backticks, quotes and brackets, trailing `,;.` and a `:L` / `:L-M` suffix, that contain `://`, `/` or `.` or equal `LOG.md`, `SCORECARD.md`, `SKILL.md` or `PROVINCE.md`. An entry with no candidate, or with a candidate no allow line matches, is one `writer-forbidden-opened-path` hit at its own line."
+    ],
+    "reading": "Clause 3 closes the block \"at the first heading\"; the rule states no depth rule, so the `### Notes` heading closes the block and the `- /etc/passwd` line after it is not an entry (clause 2 needs an open block). The only entry is the first `- ` line, whose candidate matches an allow line (clause 4). No hit."
+   },
+   "expected": {
+    "hits": [],
+    "exit": 0,
+    "scanned": 1
+   },
+   "alt_reading": {
+    "basis": "markdown-section",
+    "description": "A deeper heading does not end the enclosing Markdown section, so `- /etc/passwd` is still an entry and its path is forbidden.",
+    "hits": [
+     ".ufo/waves/round-32/fx/e09/CaseE09.md:4:writer-forbidden-opened-path"
+    ],
+    "exit": 1
+   },
+   "actual": {
+    "exit": 0,
+    "stdout": [
+     "scanned=1",
+     "blind_violations=0"
+    ],
+    "hits": []
+   },
+   "agree": "yes",
+   "agree_alt": "no"
+  },
+  {
+   "id": "E09b",
+   "kind": "control",
+   "title": "CONTROL: a sub-heading with all entries below it leaves the brief with no entry",
+   "wave_dir": ".ufo/waves/round-32/fx/e09b",
+   "brief_name": "CaseE09b.md",
+   "writer_regex": "^CaseE[0-9]+[a-z]?\\.md$",
+   "allow_lines": [
+    ".ufo/waves/round-31/rule-text.md"
+   ],
+   "brief_text": "## Files opened\n### Notes\n- .ufo/waves/round-31/rule-text.md\n",
+   "brief_base64": "IyMgRmlsZXMgb3BlbmVkCiMjIyBOb3RlcwotIC51Zm8vd2F2ZXMvcm91bmQtMzEvcnVsZS10ZXh0Lm1kCg==",
+   "brief_sha256": "d504e57009c720a788a3edd3ce833d854307493c6955ff0af15c915933659ead",
+   "brief_len": 61,
+   "rule_text_reading": {
+    "basis": "clause-literal",
+    "clauses": [
+     "1. A block opens at a Markdown heading (any level) whose text contains `files opened` or `opened files` (case-insensitive), or at a line whose trimmed text starts with `Files opened:` or `Opened files:` (case-insensitive).",
+     "2. Entries are the following lines that start (after optional indentation) with `- `, `* `, `+ `, `N. ` or `N) `, or with `|` (a table row); a table's separator row (only `|`, `-`, `:` and spaces) and the row directly above it are not entries. Blank lines inside the block are skipped.",
+     "3. The block closes at the first heading or at the first other non-blank line.",
+     "5. A brief with no entry in any block is one `writer-missing-files-opened-list` hit at line 1."
+    ],
+    "reading": "Clause 3 closes the block at the first heading, so the `### Notes` heading closes the block opened by `## Files opened`; the `- ` line below it is not inside any open block and is not an entry. The brief has no entry in any block, so clause 5 gives one `writer-missing-files-opened-list` hit at line 1. This is the shape the round-31 lesson describes for the round-29 briefs (literal reading yields a missing-list hit)."
+   },
+   "expected": {
+    "hits": [
+     ".ufo/waves/round-32/fx/e09b/CaseE09b.md:1:writer-missing-files-opened-list"
+    ],
+    "exit": 1,
+    "scanned": 1
+   },
+   "alt_reading": null,
+   "actual": {
+    "exit": 1,
+    "stdout": [
+     "scanned=1",
+     "blind_violations=1",
+     ".ufo/waves/round-32/fx/e09b/CaseE09b.md:1:writer-missing-files-opened-list"
+    ],
+    "hits": [
+     ".ufo/waves/round-32/fx/e09b/CaseE09b.md:1:writer-missing-files-opened-list"
+    ]
+   },
+   "agree": "yes",
+   "agree_alt": null
+  }
+ ],
+ "actual_run": {
+  "sandbox_rev": "70c1699d4a19f59bc37242176c8aef14950893a3",
+  "tool_sha256": "79b774f7736cc9074fa786ad360553987d92096a3864b07212f7a3127924beb8",
+  "sandbox": "/fast/scratch/hyaku/mori-r32/ExecEdgeFixtures/sandbox/repo",
+  "runner": "/fast/scratch/hyaku/mori-r32/ExecEdgeFixtures/run-edge-r32.py"
+ }
+}

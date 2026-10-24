@@ -1,0 +1,579 @@
+{
+ "schema": "mori-job-runway-cases-v1",
+ "frozen_with": ".ufo/waves/round-25/contract.md",
+ "note": "Supplementary cases for contract amendment A2 (contract commit 6a92d5ee), co-evolved with the tool and written by the BuildJobRunwayTool seat. They cover the YAML forms omp reads differently from the line grammar of rule 1 (the forms listed in .ufo/waves/round-25/w1/CriticC2Rules.md, F4). Every form the tool cannot read the way omp reads it is an abstention: `malformed` / `RUNWAY_UNKNOWN` / exit 2, never a number. The BOM case expects the normal value because A2 strips a leading byte-order mark. These cases are loaded with `--cases tools/fixtures/mori-job-runway/supplementary-cases.json`; the frozen 21 cases stay the declared after-value and this file is not counted toward it.",
+ "cases": [
+  {
+   "id": "R01",
+   "what": "quoted top-level async key: the tool cannot read it the way omp reads it",
+   "config": "\"async\":\n  maxJobs: 50\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "malformed",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R02",
+   "what": "space before the colon in the async key",
+   "config": "async :\n  maxJobs: 50\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "malformed",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R03",
+   "what": "a leading UTF-8 byte-order mark is stripped, so the file is read normally",
+   "config": "﻿async:\n  maxJobs: 50\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_AS_CONFIGURED",
+    "exit": 0,
+    "configured": {
+     "state": "set",
+     "value": 50
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": 50
+   }
+  },
+  {
+   "id": "R04",
+   "what": "quoted direct child key: maxJobs after quotes, but not written exactly maxJobs:",
+   "config": "async:\n  \"maxJobs\": 50\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "malformed",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R05",
+   "what": "merge key inside the async block",
+   "config": "defaults: &d\n  maxJobs: 50\nasync:\n  <<: *d\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "malformed",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R06",
+   "what": "explicit (complex) key inside the async block",
+   "config": "async:\n  ? maxJobs\n  : 50\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "malformed",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R07",
+   "what": "two async blocks: the tool cannot know which one omp reads",
+   "config": "async:\n  maxJobs: 50\nasync:\n  maxJobs: 60\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "malformed",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R08",
+   "what": "a # that is not preceded by whitespace does not open a comment",
+   "config": "async:\n  maxJobs: 50#x\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "malformed",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R09",
+   "what": "a document marker line anywhere in the file",
+   "config": "async:\n  maxJobs: 50\n---\nasync:\n  maxJobs: 70\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "malformed",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R10",
+   "what": "a tab in the indentation of a line of the async block",
+   "config": "async:\n\tmaxJobs: 50\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "malformed",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R11",
+   "what": "a quoted scalar spanning lines hides a maxJobs line",
+   "config": "async:\n  note: \"x\n  maxJobs: 9\n  \"",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "malformed",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R12",
+   "what": "an end-of-document marker line",
+   "config": "async:\n  maxJobs: 50\n...\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "malformed",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R13",
+   "what": "a top-level merge key",
+   "config": "<<: *defaults\nasync:\n  maxJobs: 50\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "malformed",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R14",
+   "what": "a top-level complex key",
+   "config": "? async\n: 50\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "malformed",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R15",
+   "what": "a maxJobs value opening a quote",
+   "config": "async:\n  maxJobs: \"50\"\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "malformed",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R16",
+   "what": "a maxJobs value opening a block scalar",
+   "config": "async:\n  maxJobs: |\n    50\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "malformed",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R17",
+   "what": "guard: a # preceded by whitespace still opens a comment, so the value is read",
+   "config": "async:\n  maxJobs: 50 # raised\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_AS_CONFIGURED",
+    "exit": 0,
+    "configured": {
+     "state": "set",
+     "value": 50
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": 50
+   }
+  },
+  {
+   "id": "R18",
+   "what": "guard: an inline async mapping is still malformed",
+   "config": "async: {maxJobs: 50}\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "malformed",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100,
+     "sites": 1
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R19",
+   "what": "wave-2 MutRunwayYamlScope Y2a: the async block ends at the next column-0 key",
+   "config": "async:\n  enabled: true\ntask:\n  maxJobs: 300\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_DEFAULT",
+    "exit": 0,
+    "configured": {
+     "state": "absent",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": 100
+   }
+  },
+  {
+   "id": "R20",
+   "what": "wave-2 MutRunwayYamlScope Y4: a column-0 comment does not set the child indentation",
+   "config": "async:\n# note\n  maxJobs: 40\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_AS_CONFIGURED",
+    "exit": 0,
+    "configured": {
+     "state": "set",
+     "value": 40
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": 40
+   }
+  },
+  {
+   "id": "R21",
+   "what": "wave-2 MutRunwayAmbiguity M6: three clamp sites 100,100,64 are ambiguous",
+   "config": "async:\n  maxJobs: 200\n",
+   "binary": "x = { maxRunningJobs: () => Math.min(100, XPe.get(R)) };\nx = { maxRunningJobs: () => Math.min(100, XPe.get(R)) };\ny = { maxRunningJobs: () => Math.min(64, Abc.get(S)) };\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "set",
+     "value": 200
+    },
+    "clamp": {
+     "state": "ambiguous",
+     "value": null,
+     "sites": 3
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R22",
+   "what": "wave-2 MutRunwayAmbiguity M7: three clamp sites 64,100,100 are ambiguous",
+   "config": "async:\n  maxJobs: 200\n",
+   "binary": "y = { maxRunningJobs: () => Math.min(64, Abc.get(S)) };\nx = { maxRunningJobs: () => Math.min(100, XPe.get(R)) };\nx = { maxRunningJobs: () => Math.min(100, XPe.get(R)) };\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "set",
+     "value": 200
+    },
+    "clamp": {
+     "state": "ambiguous",
+     "value": null,
+     "sites": 3
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R23",
+   "what": "wave-2 MutRunwayAmbiguity M11: no config and an ambiguous default give no number",
+   "config": null,
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\nvar Q = h({\n  id: \"async.maxJobs\",\n  type: \"number\",\n  default: 50\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_UNKNOWN",
+    "exit": 2,
+    "configured": {
+     "state": "absent",
+     "value": null
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100
+    },
+    "setting_default": {
+     "state": "ambiguous",
+     "value": null
+    },
+    "effective": null
+   }
+  },
+  {
+   "id": "R24",
+   "what": "wave-2 CriticC2Admission: four-space indentation is a direct child",
+   "config": "async:\n    maxJobs: 50\n",
+   "binary": "const Ui = !u.parentTaskPrefix ? new Xm({\n    maxRunningJobs: () => Math.min(100, XPe.get(R))\n  }) : undefined;\nvar XPe = h({\n  id: \"async.maxJobs\",\n  protocolDefault: [\"rpc\"],\n  type: \"number\",\n  default: 100\n});\n",
+   "expect": {
+    "verdict": "RUNWAY_AS_CONFIGURED",
+    "exit": 0,
+    "configured": {
+     "state": "set",
+     "value": 50
+    },
+    "clamp": {
+     "state": "found",
+     "value": 100
+    },
+    "setting_default": {
+     "state": "found",
+     "value": 100
+    },
+    "effective": 50
+   }
+  }
+ ]
+}
