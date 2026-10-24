@@ -57,3 +57,13 @@ their exact bytes are unrecoverable; only their class recipes remain committed
 bytes). This round neither needed nor regenerated them (C1's controls use the
 round-39 checker bytes and the new survivor set); the loss is recorded here as the
 honest disposition.
+
+## Round-41 appended correction (2026-10-24, L1 mori-r41)
+
+M24 itself was wrong once: the round-40 v3 gate (`tools/mori-sources-appendonly.py`
+bytes at `62a207f7521fa2e2fcd2e8b0260f047ccfce8862`, re-derived by the r41
+calibration counter `tools/mori-round41-calibration.py`) lists **35** as-of ids at
+T1 and the never-edited extension admits **17** rows (S226 plus 16 earlier), not
+the 34/16 M24 recorded. Round-41 calibration correction: observed_as_of=35;
+extension_rows=17. This appended line supersedes M24's "**34**" and "(16 rows:
+S226 plus 15 earlier)" values; the wrong figures remain above for history.

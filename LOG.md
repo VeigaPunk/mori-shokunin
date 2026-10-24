@@ -2313,3 +2313,49 @@ mined in `corpus/lessons/round-40.md`. Instruments at
 Wave: one v2 wave, 66 seats (32 attack), validated `evidence/wave-plan.txt`,
 prepared-but-undispatched (accepted host mapping). SHONEN: no named non-author
 verifier in-round; boxes stay `[~]`/`[ ]` per evidence pointers.
+
+## Round 41 (L1 mori-r41, attempt 2 — attempt 1 died post-freeze, pre-report; inherited freeze re-verified byte-exact)
+
+Three claims, measured per claim (contract `.ufo/waves/round-41/contract.md`,
+pins `evidence/freeze-r41.txt` — all 19 re-verified byte-exact against the
+committed tip before any new measurement; the r40 instruments stay byte-frozen
+at their commits and the before-controls run the extracted v3 bytes):
+
+- **C1 operability (7)** — conformance binding model v4, P-C10 (r41): source-ordered
+  function-local binding inventory covering `Assign`/`AnnAssign`, `NamedExpr`,
+  tuple/list destructuring and for/with targets; unresolved targets, unsupported
+  stores, in-function `global`/`nonlocal` rebinding and multi-binding disagreements
+  fail closed (closure routed defect 1; sourced S230):
+  `python3 .ufo/waves/round-41/conform.py <tip>` → `CONFORM=met` on the honest
+  counter and `CONFORM=unmet` with only `timeout_scope` FAIL on each of the three
+  routed survivors (walrus, tuple-unpack, dead-loop rebind);
+  `--selftest` → `CONFORM_SELFTEST pass=14 fail=0`; an early-continue mutant
+  fails `selftest_conjunct` (`evidence/control-after.txt`).
+- **C2 depth (5, tied lowest)** — gate P-C12: eligible pair requires both rows
+  present at R; per-commit header maps; ancestry-grounded landing arbitration
+  (no walk-index/date sensitivity); delete/re-add creates a new landing; the
+  never-edited edit is the first-sighting commit (closure routed defects 2a–c):
+  `python3 tools/mori-sources-appendonly.py --selftest` →
+  `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0`; lane line at the landed tip
+  lists **36** as-of ids incl. S229 (superseded by S231), none stale; at
+  `e37dcc6` → `stale_supersede=[S069]`; dag-h/h2 fabricate nothing, dag-z/z2
+  report no timing for the absent superseder, dag-2l verdicts are date-stable,
+  dag-x sees the later re-add landing (`evidence/control-after.txt`).
+- **C3 calibration (5, tied lowest)** — append-only corrections reconcile the
+  r40 self-assessment to the frozen r40 gate (closure routed defect 3):
+  `python3 tools/mori-round41-calibration.py <tip> --repo . --reference-rev
+  62a207f7521fa2e2fcd2e8b0260f047ccfce8862` → `MORI_R41_CALIBRATION
+  mismatches=0` (`evidence/calibration-after.txt`). The r40 records said 34
+  as-of/16 extension; the r40 gate derives 35/17. Round-41 calibration
+  correction: observed_as_of=35; extension_rows=17.
+
+Frontier: S230 (Python 3.13 §7.2 assignment statements; copy
+`corpus/evidence/sources-r41/S230.src`), S231 (Python 3.15.1 §4.2.2 located-quote
+correction superseding S229; copy `corpus/evidence/sources-r41/S231.src`);
+knowledge entry `corpus/knowledge/conform-bindings-r41.md` grounds C1; lesson
+`corpus/lessons/round-41.md` (Gate: S230, S231; Mistakes M25–M26); census
+`evidence/census-start.txt`/`census-end.txt`. Inherited attempt-1 strays:
+`.scratch/round22/` (untracked lane-authored fixtures from 2026-10-21) committed
+under this round for durability. Wave: one v2 wave prepared by attempt 1
+(`w1-spec.json`, 64 seats, 31 attack = 48.4%, plan exit 0 at
+`evidence/wave-plan.json`).

@@ -2258,3 +2258,12 @@ or promotion. Frontier: S229 row; census 228 → 229 (exit 0 both ends).
 Round shape: ONE v2 wave, 66 seats (32 attack = 48.5%), validated under policy v2
 (`evidence/wave-plan.txt`, `w1-spec.json`) — prepared-but-undispatched under the
 accepted host mapping (orchestrator dispatches prepared waves between rounds).
+
+## Round-41 calibration correction (2026-10-24, L1 mori-r41)
+
+The round-40 v3 gate at `62a207f7521fa2e2fcd2e8b0260f047ccfce8862` derives
+**35 as-of ids** at T1 and a **17-row** never-edited extension (S226 plus 16
+earlier); the round-40 after-cell above recorded 34 and 16. Round-41
+calibration correction: observed_as_of=35; extension_rows=17. This appended
+line supersedes the round-40 "34 as-of ids"/"16 never-edited" figures; the
+original text stands unmodified above.
