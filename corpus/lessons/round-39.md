@@ -105,3 +105,12 @@ SIGTERM → grace → SIGKILL trade).
    (exactly {S103: drawn} changes; non-vacuity controls reject), and `--arms selftest` has a latent spacing
    bug (`parse_rowstates` requires one space; the probe prints via `%-20s`) — unreachable from the scored
    path and from `timeout_state` (hang-first), routed to round 40 with `ROWSTATES_RE` dead-code cleanup.
+    Corroboration (w1/RevScorecard, FAIL on the before side only): every after-side literal re-derives at
+    the scored tip (C7=met + clone unmet, CONFORM=met + selftest 9/9 + both bypasses unmet, selftest 12/12
+    + fixture verdicts + lane byte-parity); the before-side fails are the bypass-wait red (F1), a quoted
+    verdict string absent from the clone receipt (F2), the clone receipt's `drift_kill_v2` line emitted by
+    a pre-freeze build (F3 — corroborates the M22 history gap), a placeholder `--counter` path (F4), the
+    contract's fixture-A/C swap + pass=11 prose (F5), uncited evidence paths (F6), and the distributive
+    timeout_value/drain_shape phrasing (F8). (w1/RevC7Negatives, PASS): all four witnesses rejected by
+    exactly one check each, with the counter lines agreeing; only the comment-parked witness flips
+    accepted→rejected vs r38, as the red receipts claim.
