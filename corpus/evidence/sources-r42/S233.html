@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>第56回　Linuxカーネルのコンテナ機能 ーcgroup v2から使うメモリコントローラ（1） | gihyo.jp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="今回からはまたLinuxカーネルの機能紹介に戻りましょう。第53回、第54回で紹介したCPUコントローラの話に続いて、メモリコントローラのお話をします。">
+  <meta name="keywords" content="技術評論社,gihyo.jp,LXC,Linux,コンテナ,cgroup">
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@gihyojp">
+  <meta property="og:type" content="article">
+  <meta id="mdTitle" property="og:title" itemprop="headline" content="第56回　Linuxカーネルのコンテナ機能 ーcgroup v2から使うメモリコントローラ（1） | gihyo.jp">
+  <meta id="mdDescription" property="og:description" itemprop="description" content="今回からはまたLinuxカーネルの機能紹介に戻りましょう。第53回、第54回で紹介したCPUコントローラの話に続いて、メモリコントローラのお話をします。">
+  <meta id="mdImage" property="og:image" itemprop="image" content="https://gihyo.jp/assets/images/ICON/2022/1998_linux_container2022.png">
+  <meta id="mdPublished" property="article:published_time" itemprop="datePublished" content="2024-08-16T09:00:00+09:00">
+  <meta property="og:url" content="https://gihyo.jp/article/2024/08/linux_containers-0056">
+  <meta property="og:site_name" content="gihyo.jp">
+  <meta property="fb:app_id" content="185201618169441">
+
+  <link rel="canonical" href="https://gihyo.jp/article/2024/08/linux_containers-0056">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.svg" size="any" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="me" href="https://www.threads.net/@gihyojp">
+
+  <link rel="preconnect" href="https://adservice.google.co.jp">
+  <link rel="preconnect" href="https://adservice.google.com">
+  <link rel="preconnect" href="https://securepubads.g.doubleclick.net">
+  <link rel="preconnect" href="https://tpc.googlesyndication.com">
+  <link rel="preconnect" href="https://www.google-analytics.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+
+  <link rel="alternate" type="application/rss+xml" title="gihyo.jp RSS1.0" href="/feed/rss1">
+  <link rel="alternate" type="application/rss+xml" title="gihyo.jp RSS2.0" href="/feed/rss2">
+  <link rel="alternate" type="application/atom+xml" title="gihyo.jp Atom" href="/feed/atom">
+
+  <link rel="stylesheet" href="/assets/templates/gihyojp2022/css/destyle.css">
+  <link rel="stylesheet" href="/assets/templates/gihyojp2022/css/style.css?0303">
+  <script src="/assets/templates/gihyojp2022/js/frame.js?0318" defer></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DL906V3TN7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-DL906V3TN7');
+  </script>
+  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+  <script defer>
+    window.googletag = window.googletag || {cmd: []};
+    googletag.cmd.push(function() {
+      googletag.defineSlot('/33530947/gihyojp2022/gihyojp2022-rectangle', [[300, 300], [336, 280], [300, 250]], 'div-gpt-ad-1655366419081-0').addService(googletag.pubads());
+      googletag.defineSlot('/33530947/gihyojp2022/gihyojp2022-list-top', [760, 118], 'div-gpt-ad-1655365898161-0').addService(googletag.pubads());
+      googletag.defineSlot('/33530947/gihyojp2022/gihyojp2022-list-top2', [760, 118], 'div-gpt-ad-1655784111273-0').addService(googletag.pubads());
+      googletag.defineSlot('/33530947/gihyojp2022/gihyojp2022-list-top3', [760, 118], 'div-gpt-ad-1655899234505-0').addService(googletag.pubads());
+      googletag.defineSlot('/33530947/gihyojp2022/gihyojp2022-list-top4', [760, 118], 'div-gpt-ad-1655899273937-0').addService(googletag.pubads());
+      googletag.defineSlot('/33530947/gihyojp2022/gihyojp2022-recommend1', [760, 280], 'div-gpt-ad-1655797225182-0').addService(googletag.pubads());
+      googletag.defineSlot('/33530947/gihyojp2022/gihyojp2022-recommend2', [760, 280], 'div-gpt-ad-1655797258948-0').addService(googletag.pubads());
+      googletag.defineSlot('/33530947/gihyojp2022/gihyojp2022-skyscraper', [[120, 600], [300, 600], [160, 600]], 'div-gpt-ad-1655944026899-0').addService(googletag.pubads());
+      googletag.pubads().enableSingleRequest();
+      googletag.pubads().collapseEmptyDivs();
+      googletag.pubads().setTargeting('target', 'article');
+      googletag.enableServices();
+    });
+  </script>
+</head>
+
+<body>
+
+<header class="l-header">
+  <div class="l-header__wrapper">
+    <h1 class="l-header__site-logo"><a href="/">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 473 100"><g><title>gihyo.jp</title><desc>サイトのロゴ</desc></g><path class="m-logo-color--k" d="M182.3,6.35C182.3,2.56,185.07,0,188.65,0c3.79,0,6.25,2.66,6.25,6.35s-2.66,6.25-6.25,6.25-6.35-2.66-6.35-6.25Z"/><rect class="m-logo-color--k" x="184" y="22.04" width="9.2" height="51.08"/><polygon class="m-logo-color--k" points="261.03 99.59 278.06 67.74 257 22.04 267.12 22.04 282.92 57.92 300.16 22.04 310.38 22.04 270.94 99.59 261.03 99.59"/><path class="m-logo-color--k" d="M337.86,20.89c-15.38,0-27.36,11.79-27.36,26.89s11.98,26.78,27.26,26.78,27.15-12,27.15-26.78-11.77-26.89-27.05-26.89Zm-.31,46.12c-9.19,0-17.55-7.96-17.55-18.92s7.33-19.44,17.76-19.44c9.5,0,17.55,7.96,17.55,19.13s-7.23,19.23-17.76,19.23Z"/><path class="m-logo-color--k" d="M374.98,74.56c-3.51,0-6.4-3.1-6.4-6.31,0-3.62,2.89-6.52,6.4-6.52s6.4,2.9,6.4,6.52c0,3.21-2.79,6.31-6.4,6.31Z"/><path class="m-logo-color--k" d="M393.32,6.36C393.32,2.57,396.08,0,399.67,0c3.79,0,6.25,2.67,6.25,6.36s-2.66,6.26-6.25,6.26-6.35-2.67-6.35-6.26Z"/><path class="m-logo-color--k" d="M388.57,99.96l2.02-.96c13.59-6.46,13.59-12.26,13.59-33.86V22.04h-9.1v43.72c0,20.96-.08,21.2-8.41,25.19l-2.09,1,4,8.01Z"/><path class="m-logo-color--k" d="M157.99,22.23v2.22c-3.95-2.25-8.55-3.57-13.54-3.57-15.43,0-27.45,11.79-27.45,26.89s12.01,26.78,27.34,26.78c5.03,0,9.66-1.32,13.65-3.58v5.14c0,13.24-7.87,16.23-14.91,16.23s-13.98-2.69-17.71-5.27l-4.04,6.82c4.97,3.31,12.53,6.1,21.75,6.1,11.39,0,23.92-5.69,23.92-24.92V22.23h-9.01Zm-13.85,44.78c-9.22,0-17.61-7.96-17.61-18.92s7.35-19.44,17.81-19.44c5.43,0,10.39,2.59,13.65,6.89v24.98c-3.15,4.09-7.99,6.49-13.85,6.49Z"/><path class="m-logo-color--k" d="M421.17,99.81V22.25h9.17v3.61c4.52-3.06,9.93-4.71,15.65-4.71,15.14,0,27.01,11.7,27.01,26.63s-11.91,26.53-27.11,26.53c-5.68,0-11.04-1.63-15.54-4.66v30.16h-9.17Zm9.17-42.01c3.23,5.49,8.92,8.75,15.33,8.75,11.03,0,18.15-7.37,18.15-18.77,0-10.64-7.71-18.67-17.94-18.67-6.79,0-12.42,3.1-15.54,8.53v20.15Z"/><path class="m-logo-color--k" d="M242.4,26.95l-2.18-4.73-20.93,9.71V0h-9.09V73.11h9.09V40.6l15.9-7.37,18.38,39.89s9.98-.13,10.11,0l-21.28-46.17Z"/><polygon class="m-logo-color--b" points="74.56 75.44 55.78 56.67 45.85 66.6 33.73 54.48 54.15 34.06 85.08 64.93 100 50 50 0 0 50 50 100 74.56 75.44"/></svg>
+    </a></h1>
+    <nav class="l-header__site-nav">
+      <label for="topburger" class="topmenu__label-text">メニュー</label><button id="topburger" class="topmenu__label" title="メニュー"><i class="m-burger"></i></button>
+      <div class="topmenu__wrapper">
+        <div class="topmenu__container">
+
+          <div class="topmenu__search">
+            <h2>検索</h2>
+            <div class="list-wrapper">
+              <div class="searchbox">
+                <input type="search" name="query" placeholder="検索する用語を入力" aria-label="search-box">
+                <button class="topmenu__search-button" aria-label="search-button"><i class="m-magnifier"></i></button>
+              </div>
+              <div class="searchbox--result"></div>
+            </div>
+          </div>
+
+          <div class="topmenu__list">
+            <h2>カテゴリー</h2>
+            <div class="list-wrapper">
+              <ul class="category-list">
+                <li><a href="/list/category/OS・デスクトップ">OS・デスクトップ</a></li>
+                <li><a href="/list/category/フロントエンド開発">フロントエンド開発</a></li>
+                <li><a href="/list/category/バックエンド開発">バックエンド開発</a></li>
+                <li><a href="/list/category/プログラミング一般">プログラミング一般</a></li>
+                <li><a href="/list/category/機械学習・AI">機械学習・AI</a></li>
+                <li><a href="/list/category/デバイス・IoT">デバイス・IoT</a></li>
+                <li><a href="/list/category/科学・数学">科学・数学</a></li>
+                <li><a href="/list/category/デザイン・イラスト">デザイン・イラスト</a></li>
+                <li><a href="/list/category/ビジネススキル">ビジネススキル</a></li>
+                <li><a href="/list/category/趣味・ネットサービス">趣味・ネットサービス</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="topmenu__list">
+            <h2>サイトについて</h2>
+            <div class="list-wrapper">
+              <ul class="siteinfo-list">
+                <li><a href="/about/site">このサイトについて</a></li>
+                <li><a href="/about/privacy">プライバシーポリシー</a></li>
+                <li><a href="/about/ad">広告掲載のご案内</a></li>
+                <li><a href="/about/inquiry">お問い合わせ</a></li>
+                <li class="list--punctuation"></li>
+                <li><a href="/about/information#mailmagazine">メールマガジン</a></li>
+                <li><a href="/about/information#feeds">RSSフィード</a></li>
+                <li><a href="/about/information#social">SNS</a></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="l-content article">
+  <div class="l-content__header"></div>
+  <script src="/assets/templates/gihyojp2022/js/article.js?0411" defer></script>
+
+  <div class="l-article" itemscope itemtype="https://schema.org/Article" itemref="mdTitle mdDescription mdImage mdPublished">
+
+    <header class="l-article-header">
+
+      <div class="l-cover-image">
+        <div class="cover-image__wrapper">
+
+        </div>
+      </div>
+
+      <div class="l-article-top">
+        <div class="article-title">
+          <p class="group"><a href="/list/group/LXC%E3%81%A7%E5%AD%A6%E3%81%B6%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E5%85%A5%E9%96%80-%E8%BB%BD%E9%87%8F%E4%BB%AE%E6%83%B3%E5%8C%96%E7%92%B0%E5%A2%83%E3%82%92%E5%AE%9F%E7%8F%BE%E3%81%99%E3%82%8B%E6%8A%80%E8%A1%93">LXCで学ぶコンテナ入門 －軽量仮想化環境を実現する技術</a></p>
+          <h1 class="main-title" itemprop="name"><span class="subtitle">第56回</span><wbr>Linuxカーネルの<wbr>コンテナ機能 ーcgroup v2から<wbr>使う<wbr>メモリコントローラ<wbr>（1）</h1>
+        </div>
+        <div class="article-information-wrapper">
+          <div class="article-information">
+            <ul class="author">
+                <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span class="author__image"><img src="/assets/images/author/2014/Y_Kato_manage_blue.png" width="128" height="128" alt="" decoding="async" itemprop="image"></span>
+                  <span class="author__text">
+                    <span class="author__header"></span>
+                    <a rel="author" itemprop="url" href="/author/%E5%8A%A0%E8%97%A4%E6%B3%B0%E6%96%87"><span itemprop="name">加藤泰文</span><span class="ruby">（かとうやすふみ）</span></a>
+                    <span class="author__footer"></span>
+                  </span>
+                </li>
+            </ul>
+            <div class="article-status">
+              <p class="tag"></p>
+              <p class="date">2024-08-16</p>
+              <button class="like" title="なるほど"><i class="m-light"><span class="m-light--plug"></span></i></button>
+              <div class="share-wrapper"><i class="m-share"></i> シェア
+                <div class="m-share--social">
+                  <span class="twitter"><a href="https://x.com/intent/post?url=https%3A%2F%2Fgihyo.jp%2Farticle%2F2024%2F08%2Flinux_containers-0056&text=%E7%AC%AC56%E5%9B%9E%E3%80%80Linux%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB%E3%81%AE%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E6%A9%9F%E8%83%BD%20%E3%83%BCcgroup%20v2%E3%81%8B%E3%82%89%E4%BD%BF%E3%81%86%E3%83%A1%E3%83%A2%E3%83%AA%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%A9%EF%BC%881%EF%BC%89&hashtags=gihyojp" title="Xでシェアする" target="_blank"><img src="/assets/templates/gihyojp2022/images/x.svg" width="150" height="150" alt="" decoding="async" loading="lazy"></a></span>
+                  <span class="facebook"><a href="https://www.facebook.com/share.php?u=https%3A%2F%2Fgihyo.jp%2Farticle%2F2024%2F08%2Flinux_containers-0056" title="Facebookでシェアする" target="_blank"><img src="/assets/templates/gihyojp2022/images/facebook.svg" width="150" height="150" alt="" decoding="async" loading="lazy"></a></span>
+                  <span class="hatena"><a href="https://b.hatena.ne.jp/add?url=https%3A%2F%2Fgihyo.jp%2Farticle%2F2024%2F08%2Flinux_containers-0056&title=%E7%AC%AC56%E5%9B%9E%E3%80%80Linux%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB%E3%81%AE%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E6%A9%9F%E8%83%BD%20%E3%83%BCcgroup%20v2%E3%81%8B%E3%82%89%E4%BD%BF%E3%81%86%E3%83%A1%E3%83%A2%E3%83%AA%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%A9%EF%BC%881%EF%BC%89" title="はてブに登録する" target="_blank"><img src="/assets/templates/gihyojp2022/images/hatena.svg" width="150" height="150" alt="" decoding="async" loading="lazy"></a></span>
+                  <span class="copy"><button class="m-clipboard" title="クリップボードにコピーする" data-url="https://gihyo.jp/article/2024/08/linux_containers-0056" data-title="第56回　Linuxカーネルのコンテナ機能 ーcgroup v2から使うメモリコントローラ（1）"></button></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="l-rectangle">
+            <!-- /33530947/gihyojp2022/gihyojp2022-rectangle -->
+            <div id='div-gpt-ad-1655366419081-0' style='min-width: 300px; min-height: 250px;'>
+              <script>
+                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1655366419081-0'); });
+              </script>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <aside class="l-article-contents">
+      <p class="contents__header">
+        <span class="contents__title">記事の内容</span>
+        <span class="article-readingtime" title="読了の目安"><i class="m-stopwatch" data-time="10"><b class="m-stopwatch--hand"></b></i> 10分</span>
+      </p>
+      <ul class="contents__list"><li><a href="#gh3z4yh6_R">メモリ回収処理とメモリ負荷</a></li>
+<li><a href="#gh7qdcQIUo">コントロールの対象</a></li>
+<li><a href="#gh6n1FeGSd">cgroup v1との違い</a>
+<ul>
+<li><a href="#ghbrRbSLSI">メモリ保護</a></li>
+<li><a href="#gh1J6NGaoy">カーネルメモリの制限ファイル</a></li>
+<li><a href="#ghdFyfwHY5">OOM処理の充実</a></li>
+</ul></li>
+<li><a href="#ghdqIDCYFf">インターフェースファイル</a></li>
+<li><a href="#gh3RHQ_2BR">メモリ使用の制限値</a>
+<ul>
+<li><a href="#gh8z0QoV3s">memory.<wbr>max</a></li>
+<li><a href="#gh36wRIVG9">memory.<wbr>swap.<wbr>max</a></li>
+<li><a href="#gh6ULeQqgw">memory.<wbr>high</a></li>
+</ul></li>
+<li><a href="#gh54nPtpeO">まとめ</a></li></ul>
+    </aside>
+
+    <article class="l-article-main">
+
+
+
+<p id="gh2YJkGchK"><a href="https://gihyo.jp/article/2024/01/linux_containers-0055">前回</a>は、カーネルのお話から一度離れて、<a href="https://linuxcontainers.org/">LinuxContainersプロジェクト</a>から発表された<a href="https://linuxcontainers.org/incus/">Incus</a>というプロダクトを紹介しました。</p>
+
+<p id="gh4EPg2SZe">少し間が空いてしまいましたが、今回からはまたLinuxカーネルの機能紹介に戻りましょう。<a href="https://gihyo.jp/article/2023/07/linux_containers-0053">第53回</a>、<a href="https://gihyo.jp/article/2023/11/linux_containers-0054">第54回</a>で紹介したCPUコントローラの話に続いて、メモリコントローラのお話をします。</p>
+
+<p id="gh3RTr2uWT">メモリコントローラについては、以前、<a href="https://gihyo.jp/admin/serial/01/linux_containers/0005">第5回</a>で簡単に説明しています。このときの説明はcgroup v1のメモリコントローラを説明しました。今回は、cgroup v2のメモリコントローラを紹介します。</p>
+
+<h2 id="gh3z4yh6_R">メモリ回収処理とメモリ負荷</h2>
+
+<p id="gh9JqEi_aB">コントローラを説明する前に、メモリコントローラを説明する前提となる、メモリの回収処理とメモリ負荷について簡単に紹介します。さらに詳しい情報については、Linuxカーネルの解説文書などをご参照ください<a href="#fn1" id="fn-ref1" class="fn-noteref" role="doc-noteref">[1]</a>。</p>
+
+<aside id="fn1" class="fn" role="doc-footnote">
+<p id="ghpO70ONTQ"><a href="#fn-ref1" class="fn-backlink" role="doc-backlink">[1]</a> Linuxカーネルの理解を深めるには、<wbr><span style="font-feature-settings:'palt'">「</span>&#8288;<a href="https://gihyo.jp/book/2022/978-4-297-13148-7"><wbr>［試して理解］<wbr>Linuxのしくみ</a>」<wbr>がおすすめです。</p>
+</aside>
+
+<p id="gh3CwKhs7q">OS実行中には、色々とメモリを使う要素が存在します。もちろん、起動するプログラムがメモリを消費します。</p>
+
+<p id="ghekcz_iGK">また、ファイルを毎回直接ディスクから読み出していては処理が遅くなるので、一時的にメモリ上にファイルのデータをキャッシュします。このようなファイルのキャッシュを、ページキャッシュと呼びます。ページキャッシュの処理については<a href="https://gihyo.jp/article/2023/03/linux_containers-0052#gh3RTr2uWT">第52回</a>で説明していますのでご参照ください。</p>
+
+<p id="ghbdj9_SxQ">それ以外にもネットワーク通信のためのバッファーや、カーネルがさまざまな処理を行うためにメモリを使います。</p>
+
+<p id="ghPHNVBJZD">メモリに余裕がある間は、空いているメモリを新たに割り当てていけます。しかし、システムの負荷が高くなり、メモリがたくさん使われるようになると、メモリが不足するようになります。そうなると、カーネルがすでに利用されているメモリを回収して解放し、新たに必要とされているところに割り当てます。このような処理を<strong>メモリの回収処理</strong>といいます。</p>
+
+<p id="gh3AwdTGu4"><b class="p-fignum">図1</b>のように、解放できるメモリ領域を回収して解放し、空きメモリを増やし、新たに必要なところに割り当てます。</p>
+
+<figure class="f-img" id="gh6XUpRzap">
+<figcaption><span class="f-img-label label-has-num">図1</span> メモリの回収処理</figcaption>
+<img src="/assets/images/article/2024/08/linux_containers-0056/001.png" alt="メモリの回収処理" decoding="async" loading="lazy" width="700" height="550">
+</figure>
+
+<p id="gh5pqwl497">この回収処理は、たとえばページキャッシュや、あまり使われていないプログラムのデータから回収されます。ページキャッシュの場合は、ファイルから読み込まれて変更されていないのであればそのまま解放できます。変更されていればディスクへ書き戻したあと、解放できます。プログラムのデータの場合であれば、スワップへの書き出しが行われます。</p>
+
+<p id="gh3TXCfUQ7">このメモリが足りない状況が発生し、メモリを回収して新たに必要としているところに割り当てる動きや状態を<strong>メモリ負荷<wbr>（Memory pressure）<wbr></strong>といいます<a href="#fn2" id="fn-ref2" class="fn-noteref" role="doc-noteref">[2]</a>。つまり、たくさんのメモリ回収の要求がある状態を"pressure"と表現しているのでしょう。</p>
+
+<aside id="fn2" class="fn" role="doc-footnote">
+<p id="gh5GvCE7LD"><a href="#fn-ref2" class="fn-backlink" role="doc-backlink">[2]</a> "Memory Pressure"という言葉は一般的に使われる言葉ですが、その訳として<wbr>「メモリ負荷」<wbr>がどの程度一般的なのかは筆者は知りません。今回の説明するにあたって一番わかりやすいと思ったので選びました。</p>
+</aside>
+
+<p id="gh9cBNeN3k">メモリの回収処理を行っても必要なメモリが確保できない場合は、メモリコントローラとも密接に関係するOOM Killerという機能が発動し、システム上のプロセスを強制終了させ、空きメモリを作ります。cgroupに設定したメモリ制限に達した場合で、メモリが回収できない場合も、OOM Killerが、cgroup内のプロセスを強制終了します。</p>
+
+<h2 id="gh7qdcQIUo">コントロールの対象</h2>
+
+<p id="ghd7AWAtwX">cgroup v2のメモリコントローラは、cgroupに属するタスクが消費しているメモリを追跡し、コントロールします。次のようなメモリ消費を追跡します。</p>
+
+<ul id="ghemSpqYvj">
+<li id="gh8rmj6dq6">カーネル以外のユーザ空間のメモリ消費。つまりユーザ空間のプログラムが使用するメモリ</li>
+<li id="ghdkCg1sLS">カーネルデータ構造のメモリ消費<wbr>（dentryやinodeなど&#8288;<span style="font-feature-settings:'palt'">）</span>&#8288;。cgroup内のタスクが動作することで消費される、カーネル空間のメモリ</li>
+<li id="gh1wWGqT4F">TCPソケットバッファ</li>
+</ul>
+
+<h2 id="gh6n1FeGSd">cgroup v1との違い</h2>
+
+<p id="gh6GhtjJ8d">cgroup v2のメモリコントローラでは、全体的にインターフェースファイルや機能が整理され、わかりやすくなりました。具体的な変化としては次のような項目があげられるでしょう。</p>
+
+<h3 id="ghbrRbSLSI">メモリ保護</h3>
+
+<p id="gh5FvtD0fc">v1では、システムを安定して運用するために、特定のタスクがメモリを消費しすぎないように、メモリ消費の上限を設定できました。v2でも、この機能に変化はありません。</p>
+
+<p id="ghdn9KQBYe">v2では、メモリ負荷が高まったときでも、cgroup内のタスクが動作しつづけられるよう、必要以上にメモリが回収されないように、メモリ保護が設定できるようになりました。<a href="https://gihyo.jp/admin/serial/01/linux_containers/0049">第49回</a>で説明したリソース分配の方法のうち、<wbr><span style="font-feature-settings:'palt'">「</span>&#8288;<a href="https://gihyo.jp/admin/serial/01/linux_containers/0049#sec2_h3">保護<wbr>（Protections）<wbr></a>」<wbr>にあたります。</p>
+
+<p id="gh1fIs4jjw">第49回で書いたように、保護はツリー構造をたどったすべての祖先cgroupが保護レベル以下にある場合のみ保護されます。つまり、ツリーをルート方向にたどったときの最小値が保護の値となります。末端のcgroupに、そのcgroupより上位のcgroupで設定されているより大きな値を設定しても意味がありません。</p>
+
+<p id="gheaw5TBPD">メモリコントローラでは、保護のうち、強い保護とベストエフォートの保護の両方が実装されています。</p>
+
+<p id="gh9VjaNReZ">メモリ保護については、次回説明します。</p>
+
+<h3 id="gh1J6NGaoy">カーネルメモリの制限ファイル</h3>
+
+<p id="gh4XGYZPUu">cgroup v1のメモリコントローラでは、<code>memory.<wbr>kmem.*</code>というようなファイルが存在しました。このファイルを使い、cgroup内のタスクの動作することで消費される、カーネルが使用するメモリが制限できるとされていました。</p>
+
+<p id="ghdJa0ym3a">先に説明した通り、cgroup v2のメモリコントローラでは、カーネルが使用するメモリ消費についても同時にカウントされますので、カーネルが使用メモリだけを制限するためのファイルは存在しません<a href="#fn3" id="fn-ref3" class="fn-noteref" role="doc-noteref">[3]</a>。</p>
+
+<aside id="fn3" class="fn" role="doc-footnote">
+<p id="gh2Xq8vaNb"><a href="#fn-ref3" class="fn-backlink" role="doc-backlink">[3]</a> cgroup v1でも<code>memory.<wbr>kmem.<wbr>limit_<wbr>in_<wbr>bytes</code>は現在サポートされていません。</p>
+</aside>
+
+<h3 id="ghdFyfwHY5">OOM処理の充実</h3>
+
+<p id="gh7iaq5CSJ">cgroup v1では、cgroup内のタスクが使用するメモリが制限値を超えた場合、OOM Killerを発動するかしないかを設定できました。</p>
+
+<p id="gh24Pj8hHu">cgroup v2では、cgroup内のファイルでOOM Killerが発動するかしないかは設定しません。代わりに、絶対的な制限として<code>memory.<wbr>max</code>を使うか、制限を超えた場合に可能な限りメモリを回収しようとするものの、OOM Killerは発動させない<code>memory.<wbr>high</code>を使うかで、OOM Killerの発動をコントロールできます。</p>
+
+<p id="ghbzLfIiOP"><code>memory.<wbr>max</code>と<code>memory.<wbr>high</code>の動きについては、このあと説明します。</p>
+
+<p id="ghc4UgsnXe">また、OOM Killerが発動する際に、cgroup内で動作している一部のタスクだけがkillされてしまうと、cgroup内のタスク全体が不安定になる可能性があります。</p>
+
+<p id="gh3KtdEIBU">このように、cgroup内のタスクが不安定になることを防ぐために、cgroupのメモリ消費が上限を超過した場合、cgroup内のタスクすべてを強制終了できるようになりました。</p>
+
+<p id="gh5C8mZkog">cgroupは通常はコンテナ単位で作成されますので、コンテナ内の一部のタスクのみがkillされて、コンテナ全体が不安定にならないように、コンテナ全体のタスクをkillできるようになりました。</p>
+
+<h2 id="ghdqIDCYFf">インターフェースファイル</h2>
+
+<p id="gh3rYeiZl5">メモリコントローラを有効にした際に現れる主なインターフェースは<b class="p-fignum">表1</b>のとおりです。</p>
+
+<figure class="f-table" id="ghcXKCgyRI">
+<figcaption><span class="f-table-label label-has-num">表1</span> cgroup v2のメモリコントローラで使用するファイル</figcaption>
+<div class="table-wrapper" id="ghv_m8TJx6">
+<table>
+<thead>
+<tr>
+<th scope="col" nowrap>ファイル名</th>
+<th scope="col">機能</th>
+<th scope="col">操作</th>
+<th scope="col" nowrap>デフォルト値</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>memory.<wbr>current</code></td>
+<td>cgroupとその子孫のcgroupが現在使っているメモリの総量</td>
+<td nowrap>読み取り</td>
+<td>ー</td>
+</tr>
+<tr>
+<td><code>memory.<wbr>min</code></td>
+<td>cgroupとその子孫のcgroupのメモリ消費が設定した値より少ない場合、cgroup内のタスクのメモリは回収されない。回収可能なメモリがない場合はOOM Killerが呼ばれる</td>
+<td>読み書き</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>memory.<wbr>low</code></td>
+<td>cgroupとその子孫cgroupのメモリ消費が設定した値より少ない場合、回収可能なメモリがない場合をのぞいては、cgroupのメモリは回収されない</td>
+<td>読み書き</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>memory.<wbr>high</code></td>
+<td>cgroupとその子孫のcgroupのメモリ消費が設定値を超えた場合、メモリ回収の圧力がかかる。OOM Killerが呼ばれることはない</td>
+<td>読み書き</td>
+<td><code>max</code></td>
+</tr>
+<tr>
+<td><code>memory.<wbr>max</code></td>
+<td>cgroupとその子孫のcgroupのメモリ消費が設定値を超えた場合で、減らせない場合はcgroupに対してOOM Killerが呼ばれる。デフォルト値はmax</td>
+<td>読み書き</td>
+<td><code>max</code></td>
+</tr>
+<tr>
+<td><code>memory.<wbr>swap.<wbr>max</code></td>
+<td>スワップ使用量の制限値。cgroupとその子孫のcgroupのスワップ使用量が設定値を超えた場合、それ以上はスワップアウトしない</td>
+<td>読み書き</td>
+<td><code>max</code></td>
+</tr>
+<tr>
+<td><code>memory.<wbr>swap.<wbr>high</code></td>
+<td>スワップ使用を絞る制限値。cgroupとその子孫のcgroupのスワップ使用量が設定値を超えた場合、スワップアウトを可能な限り絞る</td>
+<td>読み書き</td>
+<td><code>max</code></td>
+</tr>
+<tr>
+<td><code>memory.<wbr>reclaim</code></td>
+<td>この書き込んだバイト数分、メモリを回収する</td>
+<td>書き込み</td>
+<td>ー</td>
+</tr>
+<tr>
+<td><code>memory.<wbr>peak</code></td>
+<td>cgroup作成以降の自身とその子孫が使った最大のメモリ使用量</td>
+<td>読み取り</td>
+<td>ー</td>
+</tr>
+<tr>
+<td><code>memory.<wbr>oom.<wbr>group</code></td>
+<td>OOM Killerが呼ばれるとき、cgroup内と子孫のタスクをまとめて扱うか、扱わないか</td>
+<td>読み書き</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td><code>memory.<wbr>events</code></td>
+<td>cgroupとその子孫のcgroupで起こったイベント数</td>
+<td>読み取り</td>
+<td>ー</td>
+</tr>
+<tr>
+<td><code>memory.<wbr>stat</code></td>
+<td>現在のメモリ使用の状況をメモリタイプごとに表示</td>
+<td>読み取り</td>
+<td>ー</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+
+<p id="ghFBJyOlvK">ここにあげたファイルのうち、<code>memory.<wbr>stat</code>と<code>memory.<wbr>reclaim</code>はroot cgroupに存在します。それ以外はroot以外のcgroupにのみ存在します。</p>
+
+<p id="gh9jo2Ti8J">いずれのファイルの値も、階層構造が考慮されます。つまり、設定値や使用量は子孫のcgroupが使用する量まで含めた値です。</p>
+
+<p id="ghdrdT1R1x">例えば、下位のcgroupで設定した制限値が、上位のcgroupで設定された制限値より大きな場合、下位で設定した制限値は上位に設定した制限値で制限されるため、設定する意味がありません。</p>
+
+<h2 id="gh3RHQ_2BR">メモリ使用の制限値</h2>
+
+<p id="ghcRg707JP">メモリコントローラで制限値を設定した場合の動きは、目に見える形では、cgroup v1のときと変わりません。cgroup内のタスクは、設定した制限値以上にメモリを使用できません。</p>
+
+<p id="ghdJ5nqSdH">制限値を設定する方法は、<code>memory.<wbr>high</code>と<code>memory.<wbr>max</code>の2種類あります。この2つの違いを説明しておきましょう。</p>
+
+<p id="gh7_n3SWz3"><a href="https://gihyo.jp/admin/serial/01/linux_containers/0049#sec2_h2">第49回</a>で説明したとおり、この両方の設定値が<wbr>「制限<wbr>（Limits&#8288;<span style="font-feature-settings:'palt'">）</span>&#8288;」を行うための設定です。そして、第49回で説明したとおり、<code>max</code>はハードリミットとしての絶対的な制限値で、<code>high</code>はソフトリミットとしてのベストエフォートの制限値です。</p>
+
+<p id="ghauY_8Ra0">これだけでは具体的な違いがわかりづらいですね。</p>
+
+<p id="gh1auyXWZR">まず、<code>memory.<wbr>max</code>は、ここで設定した以上にメモリを使用させないため、設定した制限値に達し、メモリを減らせない場合は、OOM Killerが呼ばれ、強制的にメモリ消費を抑えます。一時的に制限値を超える可能性はありますが、絶対的な制限値として働きます。</p>
+
+<p id="ghco9T3BrD">一方、<code>memory.<wbr>high</code>は、設定した値を超えると、cgroup内のタスクに厳しいメモリ回収の圧力がかかります。厳しくメモリ回収を行い、メモリ消費を制限値以下に抑えようという動きになります。しかし、OOM Killerは発動しません。強制的にタスクを終了してメモリ消費を抑えることはありません。</p>
+
+<p id="gh4gg8TLmd"><code>memory.<wbr>swap.<wbr>max</code>と<code>memory.<wbr>swap.<wbr>high</code>の違いも同様です。</p>
+
+<p id="gh6HCwSbzj">つまり、<code>memory.<wbr>high</code>では、絶対にメモリ消費が制限値内に抑えられる保証はありません。このとき、制限値に沿った運用をおこなうためには、管理ソフトウェアなどでモニタリングを行い、他のcgroupに所属するタスクを含め、ホスト全体で動作しているタスクのメモリ消費を調整したり、ホスト全体が不安定にならないように設定値を調整することが求められます。カーネル付属ドキュメントにも、<wbr><span style="font-feature-settings:'palt'">「</span>&#8288;外部プロセスが制限されたcgroupをモニタし、厳しいメモリ回収圧力を軽減するようなシナリオで使用すべき」<wbr>と書かれています。</p>
+
+<p id="gh9ILAwmxz">このような調整を行わないまま、<code>memory.<wbr>high</code>を使用し、制限値を超えた状態でメモリ圧力が高い状態が継続するような場合、回収できるメモリがなく、サービス自体が不安定になることにもつながりかねません。</p>
+
+<p id="gh8yOfVui9"><code>memory.<wbr>stat</code>、<code>memory.<wbr>current</code>、<code>memory.<wbr>events</code>などのような統計値を表示するファイルなどを使ったり、<a href="https://docs.kernel.org/accounting/psi.html">PSI機能</a>を使ったりして、メモリ消費状況を監視しながらメモリ消費を調整する必要があるでしょう。</p>
+
+<hr>
+
+<p id="ghbIbbbLK5">それでは、実際に制限値を設定したときの動きを見ていきましょう。</p>
+
+<p id="gh2hqLQS3C">以降の実行例では、次のように、メモリが2GB、スワップを2GB確保したホスト上で試しています。</p>
+
+<pre id="gh1UKMlGaX"><samp>$ free -m
+               total        used        free      shared  buff/cache   available<span class="lineend-spacer"></span>
+Mem:            1963         179        1506           1         277        1631<span class="lineend-spacer"></span>
+Swap:           2168           0        2168<span class="lineend-spacer"></span>
+</samp></pre>
+
+<h3 id="gh8z0QoV3s">memory.<wbr>max</h3>
+
+<p id="gh6OTptWuG">まずは、<code>memory.<wbr>max</code>で絶対的な制限値を設定してみましょう。</p>
+
+<p id="ghdG0ZX20T">まず、<code>test01</code>という名前でcgroupを作成し、シェルのPIDを<code>test01</code> cgroupに登録します。そして、<code>test01</code> cgroupの<code>memory.<wbr>max</code>を128MBに設定します。</p>
+
+<pre id="ghahAdfJgU"><samp>$ sudo mkdir /sys/fs/cgroup/test01 （cgroupの作成）<span class="lineend-spacer"></span>
+$ echo $$ | sudo tee /sys/fs/cgroup/test01/cgroup.procs （プロセスをtest01に追加）<span class="lineend-spacer"></span>
+985
+$ echo 128M | sudo tee /sys/fs/cgroup/test01/memory.max （memory.maxを128MBに設定）<span class="lineend-spacer"></span>
+128M
+$ cat /sys/fs/cgroup/test01/cgroup.procs （cgroupに登録されたプロセスの確認）<span class="lineend-spacer"></span>
+985
+1029 （←これはcatコマンドのPID）
+$ cat /sys/fs/cgroup/test01/memory.max （制限値の確認）<span class="lineend-spacer"></span>
+134217728
+</samp></pre>
+
+<p id="gh3fqsbDiM">シェルから、メモリを256MB確保する設定で<code>stress-ng</code>コマンドを実行します。</p>
+
+<pre id="ghcivhkweb"><samp>$ stress-ng --vm 1 --vm-bytes 256M --vm-hang 0 -v<span class="lineend-spacer"></span>
+  :（略）
+stress-ng: debug: [3384] starting stressors<span class="lineend-spacer"></span>
+stress-ng: debug: [3384] 1 stressor started<span class="lineend-spacer"></span>
+stress-ng: debug: [3385] stress-ng-vm: started [3385] (instance 0)<span class="lineend-spacer"></span>
+stress-ng: debug: [3385] stress-ng-vm using method 'all'<span class="lineend-spacer"></span>
+  :（略）
+</samp></pre>
+
+<p id="gh7yYeM_Sn">別のシェルを起動し、<code>test01</code> cgroupの<code>memory.<wbr>current</code>の値を監視します。<code>watch -n1 cat /sys/<wbr>fs/<wbr>cgroup/<wbr>test01/<wbr>memory.<wbr>current</code>のように監視しても良いでしょう。</p>
+
+<pre id="gh17S4zmML"><samp>$ while :; do sleep 1; cat /sys/fs/cgroup/test01/memory.current ; done<span class="lineend-spacer"></span>
+274432
+274432
+134184960
+134184960
+  :（略）
+134115328
+134172672
+134168576
+134103040
+  :（略）
+</samp></pre>
+<p id="ghbF1U_r_N">このように、メモリ使用量は大体128MBに設定した制限値を超えません。しかし、<code>stress-ng</code>コマンドに対してOOM Killerは発動せず、実行は続きます。</p>
+
+<p id="gha3dLYHNS">これは、スワップが確保されているためです。</p>
+
+<pre id="gh8kXvnEvX"><samp>$ free -m
+               total        used        free      shared  buff/cache   available<span class="lineend-spacer"></span>
+Mem:            1963         315        1364           1         283        1495<span class="lineend-spacer"></span>
+Swap:           2168         165        2003<span class="lineend-spacer"></span>
+</samp></pre>
+
+<p id="gh8YrKyGkh">このように、スワップの使用量が増えており、<code>memory.<wbr>max</code>の設定を超えた分はスワップを使用していることがわかります。</p>
+
+<p id="gh8VurQS0J">では、スワップがない状態で試してみましょう。次のようにスワップをオフにします。</p>
+
+<pre id="ghaRLhdnJf"><samp>$ sudo swapoff -a （スワップをオフにする）
+$ free -m
+               total        used        free      shared  buff/cache   available<span class="lineend-spacer"></span>
+Mem:            1963         177        1502           1         283        1634<span class="lineend-spacer"></span>
+Swap:              0           0           0<span class="lineend-spacer"></span>
+</samp></pre>
+
+<p id="ghbeDuAVtn">さきほどと同様に、メモリを256MB消費する設定で<code>stress-ng</code>コマンドを実行します。</p>
+
+<pre id="gh7UwEjO8T"><samp>$ stress-ng --vm 1 --vm-bytes 256M --vm-hang 0 -v<span class="lineend-spacer"></span>
+  :（略）
+stress-ng: debug: [4796] stress-ng-vm: child died: signal 9 'SIGKILL' (instance 0)<span class="lineend-spacer"></span>
+stress-ng: debug: [4796] stress-ng-vm: assuming killed by OOM killer, restarting again (instance 0)<span class="lineend-spacer"></span>
+stress-ng: debug: [4796] stress-ng-vm: child died: signal 9 'SIGKILL' (instance 0)<span class="lineend-spacer"></span>
+stress-ng: debug: [4796] stress-ng-vm: assuming killed by OOM killer, restarting again (instance 0)<span class="lineend-spacer"></span>
+  :（略）
+</samp></pre>
+
+<p id="gh4k69slxt">すると<code>stress-ng</code>が、OOM Killerが原因で、子プロセスが<code>SIGKILL</code>を受け取ってkillされたことを出力しています。</p>
+
+<p id="gh7ooFa0Y0"><code>memory.<wbr>current</code>を監視すると、メモリを256MB確保しようとして、徐々にメモリ使用量が増えています。しかし、制限値付近に達すると、ふたたび消費量が少なくなっていることがわかります。プロセスがkillされたため、メモリが解放されたためです。</p>
+
+<pre id="gh7GOrvKRS"><samp>$ while :; do sleep 1; cat /sys/fs/cgroup/test01/memory.current ; done<span class="lineend-spacer"></span>
+  :（略）
+91172864
+110833664
+134217728
+5279744
+5648384
+23281664
+37236736
+53387264
+74612736
+95354880
+121896960
+15044608
+5513216
+  :（略）
+</samp></pre>
+
+<p id="gh9P5du50E">OOM Killerが発動したことは、カーネルが出力するログを確認しても出力されているはずです。</p>
+
+<pre id="ghegsNNbl1"><samp>$ sudo dmesg
+  :（略）
+[ 1845.108346] oom-kill:constraint=CONSTRAINT_MEMCG,nodemask=(null),cpuset=test01,mems_allowed=0,oom_memcg=/test01,task_memcg=/test01,task=stress-ng,pid=4797,uid=1000<span class="lineend-spacer"></span>
+[ 1845.108353] Memory cgroup out of memory: Killed process 4797 (stress-ng) total-vm:318184kB, anon-rss:127224kB, file-rss:268kB, shmem-rss:60kB, UID:1000 pgtables:600kB oom_score_adj:1000<span class="lineend-spacer"></span>
+[ 1845.213445] stress-ng invoked oom-killer: gfp_mask=0x1100cca(GFP_HIGHUSER_MOVABLE), order=0, oom_score_adj=1000<span class="lineend-spacer"></span>
+  :（略）
+</samp></pre>
+
+<h3 id="gh36wRIVG9">memory.<wbr>swap.<wbr>max</h3>
+
+<p id="ghcoNwwK6r">先の実行例で、スワップがある場合は、プロセスが確保したメモリの一部はスワップを使用しましたので、OOM Killerが発動しませんでした。</p>
+
+<p id="ghbQ2fgfUE">ここで、スワップにも制限値を設定し、様子を観察してみましょう。</p>
+
+<pre id="gh57Vt8Y7M"><samp>$ sudo mkdir /sys/fs/cgroup/test01
+$ echo $$ | sudo tee /sys/fs/cgroup/test01/cgroup.procs <span class="lineend-spacer"></span>
+988
+$ echo 128M | sudo tee /sys/fs/cgroup/test01/memory.max<span class="lineend-spacer"></span>
+128M
+$ echo 64M | sudo tee /sys/fs/cgroup/test01/memory.swap.max<span class="lineend-spacer"></span>
+64M
+$ cat /sys/fs/cgroup/test01/memory.swap.max<span class="lineend-spacer"></span>
+67108864
+</samp></pre>
+
+<p id="gh7QTRlDxM"><code>memory.<wbr>max</code>を設定するところまでは、先の実行例と同じです。その後、<code>memory.<wbr>swap.<wbr>max</code>に制限値64MBを設定しました。</p>
+
+<p id="ghbb9kxZAZ">この状態で、<code>stress-ng</code>コマンドを実行します。</p>
+
+<pre id="gh9MtN6a0y"><samp>$ stress-ng --vm 1 --vm-bytes 256M --vm-hang 0 -v<span class="lineend-spacer"></span>
+  :（略）
+stress-ng: debug: [1170] stress-ng-vm: child died: signal 9 'SIGKILL' (instance 0)<span class="lineend-spacer"></span>
+stress-ng: debug: [1170] stress-ng-vm: assuming killed by OOM killer, restarting again (instance 0)<span class="lineend-spacer"></span>
+stress-ng: debug: [1170] stress-ng-vm: child died: signal 9 'SIGKILL' (instance 0)<span class="lineend-spacer"></span>
+stress-ng: debug: [1170] stress-ng-vm: assuming killed by OOM killer, restarting again (instance 0)<span class="lineend-spacer"></span>
+</samp></pre>
+
+<p id="gh5TvhVoRJ">スワップにも制限がかかっているため、OOM Killerが発動し、プロセスがkillされていることがわかります。</p>
+
+<p id="ghcXRx1wfC">別のシェルで<code>memory.<wbr>current</code>を監視すると、次のようになっていました。</p>
+
+<pre id="gh79ZfPJHm"><samp>$ while :; do sleep 1; cat /sys/fs/cgroup/test01/memory.current ; done<span class="lineend-spacer"></span>
+  :（略）
+65323008
+65323008
+134180864
+134184960
+2064384
+43810816
+105848832
+74170368
+  :（略）
+</samp></pre>
+
+<p id="ghba_6j7Ip"><code>memory.<wbr>max</code>の制限値付近までメモリが確保されたあとは、OOM Killerによってプロセスがkillされたため、メモリ消費量が減っています。</p>
+
+<p id="gh7ZLck84W">さらに、<code>memory.<wbr>swap.<wbr>current</code>を監視すると、次のようになっていました。</p>
+
+<pre id="ghjz_HdERE"><samp>$ while : ; do sleep 1; cat /sys/fs/cgroup/test01/memory.swap.current ; done<span class="lineend-spacer"></span>
+  :（略）
+63832064
+63832064
+3678208
+6983680
+  :（略）
+</samp></pre>
+
+<p id="gh8ayWxRNC">こちらも、OOM Killerによりプロセスがkillされたため、スワップの使用量が減っています。</p>
+
+<h3 id="gh6ULeQqgw">memory.<wbr>high</h3>
+
+<p id="ghPRMZaVNF">ここまでで、<code>memory.<wbr>max</code>を設定すると、メモリの消費が制限できることを確認しました。ここからは<code>memory.<wbr>high</code>の動きを見てみましょう。</p>
+
+<p id="gh6aAtTdtz"><code>memory.<wbr>high</code>は、先に述べたように、制限値に達してもメモリの割り当てが厳しく制限されるだけで、OOM Killerは呼ばれません。それを確かめるために、スワップを無効にして試してみましょう。<code>memory.<wbr>max</code>のときは、OOM Killerが呼ばれてプロセスがkillされていました。</p>
+
+<pre id="gh5ZiLEt_q"><samp>$ sudo swapoff -a （スワップの無効化）
+$ sudo mkdir /sys/fs/cgroup/test01 （cgroupの作成）<span class="lineend-spacer"></span>
+$ echo $$ | sudo tee /sys/fs/cgroup/test01/cgroup.procs （プロセスをcgroupに追加）<span class="lineend-spacer"></span>
+991
+$ echo 128M | sudo tee /sys/fs/cgroup/test01/memory.high （memory.highに制限値128MBを追加）<span class="lineend-spacer"></span>
+128M
+$ stress-ng --vm 1 --vm-bytes 256M --vm-hang 0 -v （メモリ256MBを確保するようにコマンドを実行）<span class="lineend-spacer"></span>
+  :（略）
+stress-ng: debug: [1044] starting stressors<span class="lineend-spacer"></span>
+stress-ng: debug: [1044] 1 stressor started<span class="lineend-spacer"></span>
+stress-ng: debug: [1045] stress-ng-vm: started [1045] (instance 0)<span class="lineend-spacer"></span>
+  :（略）
+</samp></pre>
+
+<p id="ghbl6K7M_v">このとき、<code>memory.<wbr>current</code>ファイルを定期的に監視すると、次のように制限値近くまでメモリを確保したあとは、メモリ使用量は増加しません。</p>
+
+<pre id="ghRKY657FL"><samp>$ while :; do sleep 1; cat /sys/fs/cgroup/test01/memory.current ; done<span class="lineend-spacer"></span>
+81920
+81920
+136110080
+135995392
+136081408
+136085504
+136130560
+136093696
+136056832
+136163328
+  :（略）
+</samp></pre>
+
+<p id="gh8Rs_sFsh">また、このとき、実際に<code>stress-ng</code>コマンドから起動される、メモリに負荷をかけるための子プロセスの状態を<code>ps</code>コマンドで確認すると、実行するタイミングにもよりますが、プロセス状態を示す列<wbr>（<code>STAT</code>列）<wbr>が"<code>D</code>"となっています。</p>
+
+<pre id="ghec8Qar4l"><samp>$ ps auxf | grep stress-ng
+karma       1044  1.2  0.3  56040  6216 pts/1    DL+  13:25   0:00                      |   \_ stress-ng --vm 1 --vm-bytes 256M --vm-hang 0 -v<span class="lineend-spacer"></span>
+karma       1045  1.2  0.0  56044   876 pts/1    D+   13:25   0:00                      |       \_ stress-ng-vm [run]<span class="lineend-spacer"></span>
+karma       1046 35.8  6.4 318188 129504 pts/1   D+   13:25   0:10                      |           \_ stress-ng-vm [run]<span class="lineend-spacer"></span>
+</samp></pre>
+
+<p id="ghelTx0AWx"><code>man ps</code>で状態<code>D</code>を調べると、"uninterruptible sleep (usually IO)"という状態であると書かれています。ここではIOが原因ではありませんが、プロセスは起動はしているものの、動作はしていないことがわかります。</p>
+
+<p id="ghaD9QbsH8">カーネルのメッセージを確認しても、OOM Killerが発動したログは出力されていません。</p>
+
+<p id="gh1N1Ra4bU">このように、<code>memory.<wbr>high</code>ではOOM Killerは呼び出されないものの、cgroupは強いメモリ回収圧力にさらされます。新たにメモリが割当たるかどうかもわかりません。cgroup内のタスクのメモリ消費が<code>memory.<wbr>high</code>の設定値を超えた場合でも、プロセス自体はkillされませんが、プロセスが正常にタスクを実行し続けられるかどうかはわかりません。</p>
+
+<p id="ghQWZqRspj">このように、<code>memory.<wbr>high</code>を超過し、メモリ回収ができないような場合、cgroup内のタスクが正常にタスクを実行しつづけられない可能性が高くなります。このため、先に述べたように<code>memory.<wbr>high</code>を設定する場合、cgroup内のタスクが消費するメモリをモニタリングし、なんらかの方法で回収圧力を軽減しなければならないでしょう。</p>
+
+<h2 id="gh54nPtpeO">まとめ</h2>
+
+<p id="gh6YkAKAPC">今回は、cgroupがv1からv2になり、メモリコントローラがどのように変わったのかについて説明しました。そして、メモリ制限を設定したときの動作について説明しました。</p>
+
+<p id="gheYA25wHs">コンテナを運用する際には、コンテナエンジンやオーケストレータを通してメモリに関する設定することが多いでしょうから、<code>memory.<wbr>max</code>や<code>memory.<wbr>high</code>という制限値や、次回説明する予定であるメモリ保証値を、直接設定することはないかもしれません。しかし、コンテナエンジンやオーケストレータで設定した値が、実際にcgroupでどのように設定され、動作するかを知っていると、実際に設定する値を決定する際や、トラブルが起きた際のトラブルシューティングに役立つでしょう。</p>
+
+<p id="gheg_2GLsZ">もし、手動でメモリコントローラを設定する場合は、実際のワークロードと各種設定値について十分に理解した上で設定しないと、タスクの実行に影響が出る可能性があります。</p>
+
+<p id="gh2BhYULXX">次回は、今回に説明できなかったメモリ保証に関する設定を説明し、その動きを追う予定です。また、メモリ保証以外の設定や、cgroup v2のその他の機能についても説明する予定です。</p>
+
+
+    </article>
+
+    <aside class="l-article-status">
+      <ul class="article-category">
+<li class="m-category"><a href="/list/category/OS%E3%83%BB%E3%83%87%E3%82%B9%E3%82%AF%E3%83%88%E3%83%83%E3%83%97#rt:/article/2024/08/linux_containers-0056">OS・デスクトップ</a></li>
+
+      </ul>
+    <p class="article-bottom-group"><a href="/list/group/LXC%E3%81%A7%E5%AD%A6%E3%81%B6%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E5%85%A5%E9%96%80-%E8%BB%BD%E9%87%8F%E4%BB%AE%E6%83%B3%E5%8C%96%E7%92%B0%E5%A2%83%E3%82%92%E5%AE%9F%E7%8F%BE%E3%81%99%E3%82%8B%E6%8A%80%E8%A1%93">同じ記事グループをもっと見る</a></p>
+    </aside>
+  </div>
+
+  <div class="l-article-sidecontents"></div>
+
+  <div class="l-article-subcontents">
+    <div class="l-relcontents">
+      <p class="l-relcontents__title">おすすめ記事</p>
+      <ul class="m-listitem m-listitem--card-style">
+        <li class="m-listitem--ad">
+          <!-- /33530947/gihyojp2022/gihyojp2022-recommend1 -->
+          <div id='div-gpt-ad-1655797225182-0' style='min-width: 242px; min-height: 280px;'>
+            <script>
+              googletag.cmd.push(function() { googletag.display('div-gpt-ad-1655797225182-0'); });
+            </script>
+          </div>
+        </li>
+
+        <li class="m-listitem--ad">
+          <!-- /33530947/gihyojp2022/gihyojp2022-recommend2 -->
+          <div id='div-gpt-ad-1655797258948-0' style='min-width: 242px; min-height: 280px;'>
+            <script>
+              googletag.cmd.push(function() { googletag.display('div-gpt-ad-1655797258948-0'); });
+            </script>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="l-article-footer">
+    <div class="l-contents-list">
+      <p class="l-contents-list__title">記事・ニュース一覧</p>
+      <ul class="m-listitem">
+      </ul>
+    </div>
+
+    <div class="l-skyscraper">
+      <!-- /33530947/gihyojp2022/gihyojp2022-skyscraper -->
+      <div id='div-gpt-ad-1655944026899-0' style='min-width: 120px; min-height: 600px;'>
+        <script>
+          googletag.cmd.push(function() { googletag.display('div-gpt-ad-1655944026899-0'); });
+        </script>
+      </div>
+    </div>
+  </div>
+
+</div>
+<footer class="l-footer">
+<div class="l-footer__wrapper">
+  <a href="/book">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 139.3 22.05" class="footer__logo"><g><title>技術評論社</title><desc>運営元のロゴ</desc></g><polyline class="m-logo-color--k" points="115.89 4.26 113.09 4.26 111 2.45 107.5 2.45 105.64 4.32 102.84 4.32 106.62 .1 112.02 .11 115.89 4.26"/><path class="m-logo-color--k" d="M94.63,21.79v-6.88l1.23-1.17h6.06v8.05h-7.29Zm4.84-2.46v-3.03h-2.33v3.03h2.33Z"/><path class="m-logo-color--k" d="M113.55,10.83h-1.16v2.79h1.16v-2.79Zm-4.77-.01v2.79h1.16v-2.79h-1.16Zm-2.46,2.81v-2.79h-1.16v2.79h1.16Zm-1.22,2.45v5.58h-2.39V8.25h13.24v12.01c0,2.08-4.24,1.19-5.78,1.39v-5.56c-.39-.05-.98,.01-1.45-.02v5.65h-2.28v-5.62l-1.34-.02Zm8.44,.1h-1.16v3.03h1.16v-3.03Z"/><rect class="m-logo-color--k" x="95.27" y="10.37" width="5.83" height="2.21"/><rect class="m-logo-color--k" x="95.27" y="6.99" width="5.83" height="2.34"/><rect class="m-logo-color--k" x="103.43" y="5.13" width="11.89" height="2.34"/><rect class="m-logo-color--k" x="94.57" y="3.49" width="7.35" height="2.34"/><rect class="m-logo-color--k" x="95.27" y=".12" width="5.83" height="2.45"/><path class="m-logo-color--k" d="M80.03,21.79h-8.67v-6.64c.17-1.05,.59-1.23,1.56-1.4h7.11v8.04Zm-2.68-5.59h-3.62v3.03h3.62v-3.03Z"/><rect class="m-logo-color--k" x="71.98" y="10.37" width="7.22" height="2.21"/><rect class="m-logo-color--k" x="71.98" y="6.99" width="7.22" height="2.34"/><path class="m-logo-color--k" d="M92.01,11.18h-2.44c.23-2.58,.43-5.17,.81-7.69h2.32l-.69,7.69"/><path class="m-logo-color--k" d="M83.28,3.5c.28,2.61,.38,5.28,.82,7.8h-2.34c-.1-2.67-.71-5.12-.81-7.8h2.33"/><rect class="m-logo-color--k" x="71.29" y="3.49" width="8.74" height="2.46"/><path class="m-logo-color--k" d="M92.72,2.45h-4.79c0,3.24,.05,6.59,.01,9.84h4.77v2.5h-4.71v7h-2.26v-6.99h-4.9v-2.45h4.87c0-3.12-.12-6.69-.04-9.9h-4.83V0h11.87V2.45"/><rect class="m-logo-color--k" x="71.98" width="7.22" height="2.45"/><path class="m-logo-color--k" d="M56.38,9.44c.21,3.28-.27,6.27-.94,9.2h-2.45c.7-2.93,1.05-5.99,1.05-9.2h2.34"/><path class="m-logo-color--k" d="M63.84,9.78c.65,2.66,.62,5.6,.92,8.39h-2.33c-.37-3.03-.1-6.34-1.17-9.09,.86,.25,2.7-.45,2.58,.7"/><path class="m-logo-color--k" d="M54.51,.12c-.38,2.76-3.01,5.47-5.59,6.4h-.94v-2.32c1.8-.44,3.38-2.4,3.96-4.07h2.57"/><path class="m-logo-color--k" d="M62.78,2.57h-2.55c0,.59,.02,1.22,0,1.81h9.2v2.38h-1.16v13.86c-.92,1.78-3.24,.95-4.9,1.17v-2.46h2.5V6.82h-5.59v14.97h-2.5V6.82h-2.92l-2.79,2.17v12.81h-2.45c-.04-3.89-.03-8-.03-11.83-.43,.2-1.11,.26-1.61,.3v-2.35c2.17-.54,4.17-1.46,5.71-3.49h4.02V0h5.06V2.57"/><rect class="m-logo-color--k" x="63.84" width="5.59" height="2.45"/><path class="m-logo-color--k" d="M46.13,6.46c.22,4.63-1.23,8.66-4.7,11.66,1.62,1.32,2.92,1.73,4.84,1.92v1.62c-2.61,.17-4.69-1.02-6.78-2.09-1.8,1.49-4.11,1.78-6.4,2.09v-2.21c1.62-.12,3.09-.59,4.42-1.39-2.31-2.39-3.83-5.12-4.31-8.28l-3.32,3.27v7.69c-1.07,1.67-3.51,1.11-5.18,1.14v-2.2c1.02-.12,2.31,.17,3.03-.23-.04-1.35,.06-2.91,0-4.27l-3.03,3.11v-3.38l3.03-3.03V4.49h-2.9V2.11h2.84V.12h2.4v1.92c1.34,0,2.66-.02,3.96-.02,1.46,0,2.93,0,4.38,.02V.12h2.26v1.92h5.47v2.39h-5.3v2.03h5.29Zm-15.95-1.92v4.66l2.79-2.79h5.48v-1.87h-8.27Zm5.35,4.44c.37,2.93,1.74,5.45,4.08,7.57,2.46-2.07,3.83-4.59,4.07-7.57h-8.15Z"/><path class="m-logo-color--k" d="M118.23,13.78c2.87-1.45,5.22-4.79,5.7-7.7h-6.05V3.69h3.14c.04-1.09-.04-2.15,0-3.26h2.23V3.7c2.61,0,5.08,0,7.61,0V.32h2.39V3.63h5.01v2.4h-4.95v13.6h5.99v2.34h-14.66v-2.33h6.32c-.04-4.49,0-9.07-.04-13.61-1.44,0-2.98-.01-4.54-.01-.43,2.04-1,3.99-2.34,5.7l-.3,.33c.64,.68,1.78,1.39,2.74,1.65v2.68c-1.08-.38-2.08-1.08-3.09-1.64v7.22h-2.5c.08-2.44-.02-4.93,0-7.28-.86,.75-1.98,1.44-3.05,1.7,.01-.73-.04-1.48,0-2.45l.39-.15"/><rect class="m-logo-color--k" y="2" width="20.06" height="20.06"/><rect class="m-logo-color--white-background" x=".25" y="2.25" width="19.56" height="19.56"/><path class="m-logo-color--black" d="M5.27,16.34v.47l-.12,.69c.12,.38,.05,.67,.06,1v.31l.5,.06,.56-.38,.44,.06,.5-.13c-.04-.4-.46-.79-.13-1.19-.11-.68,.17-1.2,.25-1.81-.15-.62,.19-1.2,.26-1.81h.56c.26,.21,.25,.64,.63,.69,.43,.33,.13,1.03,.31,1.39,.06,1.48,.41,2.92,.18,4.43H2.4c.1-.75-.47-1.45,0-2.12l-.06-.82c.27-.62-.02-1.49,.25-2.13-.27-.24-.26-.58-.25-.93,.09-.62,0-1.19,.19-1.78l.25-.34,.82-.19-.95-.19c-.25-.27-.72-.4-.75-.82l.06-.24,.19-.7c2.05-.87,4.76-.42,7.13-.63,.36,.27,.96-.01,1.32,.26,.07-.5,.04-1.15,.49-1.38,.46,.03,.9,.13,1.19,.57-.12,.55,.39,.53,.47,.99l-.03,.2c.25,.42,.65-.01,.96-.12,1.25,.16,2.14,.02,3.17,.47l.57,.45c.35,.67,.5,1.33,.55,2.07-.24,.27-.52,.2-.72,.63l.17,.49c-.03,1.16-.1,2.39,.18,3.37,.05,.75-.04,1.13,.12,1.75,.09,.38-.09,.57,0,1.19h-2.43c.1-.93-.19-1.77-.06-2.63-.2-1.31-.18-2.86,.13-4.12-.2-.4,.28-.72,.56-.94l-.56-.31c-.87,.28-2.32-.39-2.57-.18l-.13,.12,.31,.13c.45,.5-.11,3.96,.25,5.88,.5,.45,.23,1.36,.44,2h-3.25c-.46-1.86-.45-4.08-.25-6.06l.18-2.13,.26-.25c-.53-.49-1.13,.14-1.7-.06-.74,.11-1.79,.04-2.57,.06l-1.06-.06-.62,.25c.11,.37,.71,.57,.69,1.06-.24,.88,.3,1.71-.13,2.63l.06,.78h0Z"/></svg>
+  </a>
+  <p class="footer__copyright">Copyright © 2007-2026 All Rights Reserved by Gijutsu-Hyoron Co., Ltd.<br>ページ内容の全部あるいは一部を無断で利用することを禁止します&#8288;<span style="font-feature-settings:'fwid'">。</span>個別にライセンスが設定されている記事等はそのライセンスに従います。</p>
+</div>
+</footer>
+
+<script>
+const policy_url = '/site/policy';
+</script>
+<script src="/assets/js/cookie_banner.js"></script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "df4d6a05925249639a53a1b952902493"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

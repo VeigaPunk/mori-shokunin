@@ -2315,3 +2315,32 @@ receipt repaired with header + `ROWS=231`); `calibration-after.txt` re-issued
 with measured-revision header; lesson M27/M28 appended with wave-draft M-id
 adjudication + S230 quote erratum; fleet report
 `/home/vgpnk/Projects/shokunin/.ufo/reports/round-41/mori.md`.
+
+## Round 42 declaration (L1 Kimi fresh mori-r42) — routed repairs + checker v5
+
+Entering tip `9de7323de482699743619cfa2ee444e7418421e3` (round 41 admitted).
+Lowest non-retired axes depth 5, calibration 5, freshness 5 (tied): C2 works
+calibration, C3 depth; C1 works operability (routed defect 1/5 class).
+Freeze `.ufo/waves/round-42/contract.md` + counters + controls, pins
+`evidence/freeze-r42.txt`, committed before any seat ran (inherited
+same-round attempt tree, re-verified byte-exact, reused).
+
+| # | claim | axis / score | before | after (measured at the landed tip) |
+|---|---|---|---|---|
+| C1 | conform v5 closes the three surviving r41 checker-mutation lanes with three fixture arms (`timeout_scope_walrus_positive`, `timeout_scope_tupleunpack_positive`, `timeout_scope_source_order`), each killed by exactly its own frozen checker mutation; sourced S347 (opened this round) + S230 | operability 7 | v4 bytes selftest `pass=14 fail=0` and the three v4-derived mutants survive (`evidence/control-c1-v4.txt`) | `python3 .ufo/waves/round-42/count-c1.py <tip>` → `C1=met` exit 0 (`evidence/c1-after.txt`) |
+| C2 | report-accuracy errata in append-only lane records | calibration 5 | `count-c2.py 9de7323d` → `C2=unmet` exit 1 (`evidence/control-c2-before.txt`) | same counter at the landed tip → `C2=met` exit 0 (`evidence/c2-after.txt`) |
+| C3 | the 145 unnamed inherited `d72ac16` files named by category and provenance | depth 5 | `count-c3.py 9de7323d` → `C3=unmet` exit 1 (`evidence/control-c3-before.txt`) | same counter at the landed tip → `C3=met` exit 0 (`evidence/c3-after.txt`) |
+
+Round-41 report errata recorded here (claim C2, same three corrections as
+the round-42 LOG entry): "8/8 mutants killed" is **superseded by 5/8 killed,
+3 SURVIVED** (MutC1Walrus/MutC1Tuple/MutC1DropSort); "34 attack seats
+(53%)" is **superseded by 31 attack seats of 64 (48.4%)** (12 reviewer + 11
+critic + 8 mutation-tester; executors are not attack roles); "2 scouts,
+4 scribes" is **superseded by 1 scout, 5 scribes**, returned total 19
+unchanged. These corrections are recorded so no lane-owned round-42 record
+re-asserts a superseded value uncontradicted.
+
+Held: coverage 6, freshness 5, adjacency 6. No retirement, waiver,
+exploratory claim or promotion. Frontier: registry 231 → 238 (S232–S235,
+S241, S262 admitted with the two assimilation entries; S347 mine); refused
+entry and flip condition under `.ufo/waves/round-42/assimilation/`.

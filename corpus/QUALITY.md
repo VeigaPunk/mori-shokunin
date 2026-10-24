@@ -924,3 +924,14 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     pre-fix S226 row at the entering tip still prints the `:657-658` suffix (`corpus/SOURCES.md` at `13f3db7e`).
     Not covered: the round-38 fleet report's `:2` cite (fleet history, outside lane write scope; recorded in the
     round-39 report).
+114. Every named checker-selftest survivor (a mutation a wave seat or closure report says survived, or a committed
+    survivor fixture) enters a committed fixture under the round's wave tree, and the next checker version's selftest
+    must kill it via an arm named for the survivor class; a cumulative ledger re-runs every committed survivor fixture
+    against the newest conformance checker and reports any that still pass. Rationale: rounds r32–r41 each left a
+    survivor for the next round to chase (considerthese/2026-10-24.md, "Keep a cumulative survivor ledger" proposal —
+    operator-authored reflection, mined round 42; the r41 closure independently routed the same class as defect 1).
+    Check: `python3 .ufo/waves/round-42/conform.py <rev> --repo <lane> --contract .ufo/waves/round-39/contract.md
+    --counter .ufo/waves/round-41/fixtures/c1/count-c8.py --selftest` → `CONFORM_SELFTEST pass=17 fail=0`, with the
+    three survivor arms (walrus-positive, tupleunpack-positive, source-order) each failing under exactly its own
+    committed checker mutant. Shown able to fail: the v4 checker bytes print `pass=14 fail=0` with all three
+    r41 mutants surviving (`evidence/control-c1-v4.txt`). Not covered: survivor classes no fixture names yet.

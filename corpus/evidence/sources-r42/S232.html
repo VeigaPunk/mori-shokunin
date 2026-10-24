@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>第61回　Linuxカーネルのコンテナ機能 - cgroup v2から使うメモリコントローラ（6） | gihyo.jp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="description" content="今回は、メモリコントローラ関係のイベントを監視する際に使えるファイルについて説明します。">
+  <meta name="keywords" content="技術評論社,gihyo.jp,Linux,LXC,cgroup">
+  <meta http-equiv="Content-Script-Type" content="text/javascript">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@gihyojp">
+  <meta property="og:type" content="article">
+  <meta id="mdTitle" property="og:title" itemprop="headline" content="第61回　Linuxカーネルのコンテナ機能 - cgroup v2から使うメモリコントローラ（6） | gihyo.jp">
+  <meta id="mdDescription" property="og:description" itemprop="description" content="今回は、メモリコントローラ関係のイベントを監視する際に使えるファイルについて説明します。">
+  <meta id="mdImage" property="og:image" itemprop="image" content="https://gihyo.jp/assets/images/ICON/2022/1998_linux_container2022.png">
+  <meta id="mdPublished" property="article:published_time" itemprop="datePublished" content="2026-03-10T09:15:00+09:00">
+  <meta property="og:url" content="https://gihyo.jp/article/2026/03/linux_containers-0061">
+  <meta property="og:site_name" content="gihyo.jp">
+  <meta property="fb:app_id" content="185201618169441">
+
+  <link rel="canonical" href="https://gihyo.jp/article/2026/03/linux_containers-0061">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.svg" size="any" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="me" href="https://www.threads.net/@gihyojp">
+
+  <link rel="preconnect" href="https://adservice.google.co.jp">
+  <link rel="preconnect" href="https://adservice.google.com">
+  <link rel="preconnect" href="https://securepubads.g.doubleclick.net">
+  <link rel="preconnect" href="https://tpc.googlesyndication.com">
+  <link rel="preconnect" href="https://www.google-analytics.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+
+  <link rel="alternate" type="application/rss+xml" title="gihyo.jp RSS1.0" href="/feed/rss1">
+  <link rel="alternate" type="application/rss+xml" title="gihyo.jp RSS2.0" href="/feed/rss2">
+  <link rel="alternate" type="application/atom+xml" title="gihyo.jp Atom" href="/feed/atom">
+
+  <link rel="stylesheet" href="/assets/templates/gihyojp2022/css/destyle.css">
+  <link rel="stylesheet" href="/assets/templates/gihyojp2022/css/style.css?0303">
+  <script src="/assets/templates/gihyojp2022/js/frame.js?0318" defer></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DL906V3TN7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-DL906V3TN7');
+  </script>
+  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+  <script defer>
+    window.googletag = window.googletag || {cmd: []};
+    googletag.cmd.push(function() {
+      googletag.defineSlot('/33530947/gihyojp2022/gihyojp2022-rectangle', [[300, 300], [336, 280], [300, 250]], 'div-gpt-ad-1655366419081-0').addService(googletag.pubads());
+      googletag.defineSlot('/33530947/gihyojp2022/gihyojp2022-list-top', [760, 118], 'div-gpt-ad-1655365898161-0').addService(googletag.pubads());
+      googletag.defineSlot('/33530947/gihyojp2022/gihyojp2022-list-top2', [760, 118], 'div-gpt-ad-1655784111273-0').addService(googletag.pubads());
+      googletag.defineSlot('/33530947/gihyojp2022/gihyojp2022-list-top3', [760, 118], 'div-gpt-ad-1655899234505-0').addService(googletag.pubads());
+      googletag.defineSlot('/33530947/gihyojp2022/gihyojp2022-list-top4', [760, 118], 'div-gpt-ad-1655899273937-0').addService(googletag.pubads());
+      googletag.defineSlot('/33530947/gihyojp2022/gihyojp2022-recommend1', [760, 280], 'div-gpt-ad-1655797225182-0').addService(googletag.pubads());
+      googletag.defineSlot('/33530947/gihyojp2022/gihyojp2022-recommend2', [760, 280], 'div-gpt-ad-1655797258948-0').addService(googletag.pubads());
+      googletag.defineSlot('/33530947/gihyojp2022/gihyojp2022-skyscraper', [[120, 600], [300, 600], [160, 600]], 'div-gpt-ad-1655944026899-0').addService(googletag.pubads());
+      googletag.pubads().enableSingleRequest();
+      googletag.pubads().collapseEmptyDivs();
+      googletag.pubads().setTargeting('target', 'article');
+      googletag.enableServices();
+    });
+  </script>
+</head>
+
+<body>
+
+<header class="l-header">
+  <div class="l-header__wrapper">
+    <h1 class="l-header__site-logo"><a href="/">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 473 100"><g><title>gihyo.jp</title><desc>サイトのロゴ</desc></g><path class="m-logo-color--k" d="M182.3,6.35C182.3,2.56,185.07,0,188.65,0c3.79,0,6.25,2.66,6.25,6.35s-2.66,6.25-6.25,6.25-6.35-2.66-6.35-6.25Z"/><rect class="m-logo-color--k" x="184" y="22.04" width="9.2" height="51.08"/><polygon class="m-logo-color--k" points="261.03 99.59 278.06 67.74 257 22.04 267.12 22.04 282.92 57.92 300.16 22.04 310.38 22.04 270.94 99.59 261.03 99.59"/><path class="m-logo-color--k" d="M337.86,20.89c-15.38,0-27.36,11.79-27.36,26.89s11.98,26.78,27.26,26.78,27.15-12,27.15-26.78-11.77-26.89-27.05-26.89Zm-.31,46.12c-9.19,0-17.55-7.96-17.55-18.92s7.33-19.44,17.76-19.44c9.5,0,17.55,7.96,17.55,19.13s-7.23,19.23-17.76,19.23Z"/><path class="m-logo-color--k" d="M374.98,74.56c-3.51,0-6.4-3.1-6.4-6.31,0-3.62,2.89-6.52,6.4-6.52s6.4,2.9,6.4,6.52c0,3.21-2.79,6.31-6.4,6.31Z"/><path class="m-logo-color--k" d="M393.32,6.36C393.32,2.57,396.08,0,399.67,0c3.79,0,6.25,2.67,6.25,6.36s-2.66,6.26-6.25,6.26-6.35-2.67-6.35-6.26Z"/><path class="m-logo-color--k" d="M388.57,99.96l2.02-.96c13.59-6.46,13.59-12.26,13.59-33.86V22.04h-9.1v43.72c0,20.96-.08,21.2-8.41,25.19l-2.09,1,4,8.01Z"/><path class="m-logo-color--k" d="M157.99,22.23v2.22c-3.95-2.25-8.55-3.57-13.54-3.57-15.43,0-27.45,11.79-27.45,26.89s12.01,26.78,27.34,26.78c5.03,0,9.66-1.32,13.65-3.58v5.14c0,13.24-7.87,16.23-14.91,16.23s-13.98-2.69-17.71-5.27l-4.04,6.82c4.97,3.31,12.53,6.1,21.75,6.1,11.39,0,23.92-5.69,23.92-24.92V22.23h-9.01Zm-13.85,44.78c-9.22,0-17.61-7.96-17.61-18.92s7.35-19.44,17.81-19.44c5.43,0,10.39,2.59,13.65,6.89v24.98c-3.15,4.09-7.99,6.49-13.85,6.49Z"/><path class="m-logo-color--k" d="M421.17,99.81V22.25h9.17v3.61c4.52-3.06,9.93-4.71,15.65-4.71,15.14,0,27.01,11.7,27.01,26.63s-11.91,26.53-27.11,26.53c-5.68,0-11.04-1.63-15.54-4.66v30.16h-9.17Zm9.17-42.01c3.23,5.49,8.92,8.75,15.33,8.75,11.03,0,18.15-7.37,18.15-18.77,0-10.64-7.71-18.67-17.94-18.67-6.79,0-12.42,3.1-15.54,8.53v20.15Z"/><path class="m-logo-color--k" d="M242.4,26.95l-2.18-4.73-20.93,9.71V0h-9.09V73.11h9.09V40.6l15.9-7.37,18.38,39.89s9.98-.13,10.11,0l-21.28-46.17Z"/><polygon class="m-logo-color--b" points="74.56 75.44 55.78 56.67 45.85 66.6 33.73 54.48 54.15 34.06 85.08 64.93 100 50 50 0 0 50 50 100 74.56 75.44"/></svg>
+    </a></h1>
+    <nav class="l-header__site-nav">
+      <label for="topburger" class="topmenu__label-text">メニュー</label><button id="topburger" class="topmenu__label" title="メニュー"><i class="m-burger"></i></button>
+      <div class="topmenu__wrapper">
+        <div class="topmenu__container">
+
+          <div class="topmenu__search">
+            <h2>検索</h2>
+            <div class="list-wrapper">
+              <div class="searchbox">
+                <input type="search" name="query" placeholder="検索する用語を入力" aria-label="search-box">
+                <button class="topmenu__search-button" aria-label="search-button"><i class="m-magnifier"></i></button>
+              </div>
+              <div class="searchbox--result"></div>
+            </div>
+          </div>
+
+          <div class="topmenu__list">
+            <h2>カテゴリー</h2>
+            <div class="list-wrapper">
+              <ul class="category-list">
+                <li><a href="/list/category/OS・デスクトップ">OS・デスクトップ</a></li>
+                <li><a href="/list/category/フロントエンド開発">フロントエンド開発</a></li>
+                <li><a href="/list/category/バックエンド開発">バックエンド開発</a></li>
+                <li><a href="/list/category/プログラミング一般">プログラミング一般</a></li>
+                <li><a href="/list/category/機械学習・AI">機械学習・AI</a></li>
+                <li><a href="/list/category/デバイス・IoT">デバイス・IoT</a></li>
+                <li><a href="/list/category/科学・数学">科学・数学</a></li>
+                <li><a href="/list/category/デザイン・イラスト">デザイン・イラスト</a></li>
+                <li><a href="/list/category/ビジネススキル">ビジネススキル</a></li>
+                <li><a href="/list/category/趣味・ネットサービス">趣味・ネットサービス</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="topmenu__list">
+            <h2>サイトについて</h2>
+            <div class="list-wrapper">
+              <ul class="siteinfo-list">
+                <li><a href="/about/site">このサイトについて</a></li>
+                <li><a href="/about/privacy">プライバシーポリシー</a></li>
+                <li><a href="/about/ad">広告掲載のご案内</a></li>
+                <li><a href="/about/inquiry">お問い合わせ</a></li>
+                <li class="list--punctuation"></li>
+                <li><a href="/about/information#mailmagazine">メールマガジン</a></li>
+                <li><a href="/about/information#feeds">RSSフィード</a></li>
+                <li><a href="/about/information#social">SNS</a></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<div class="l-content article">
+  <div class="l-content__header"></div>
+  <script src="/assets/templates/gihyojp2022/js/article.js?0411" defer></script>
+
+  <div class="l-article" itemscope itemtype="https://schema.org/Article" itemref="mdTitle mdDescription mdImage mdPublished">
+
+    <header class="l-article-header">
+
+      <div class="l-cover-image">
+        <div class="cover-image__wrapper">
+
+        </div>
+      </div>
+
+      <div class="l-article-top">
+        <div class="article-title">
+          <p class="group"><a href="/list/group/LXC%E3%81%A7%E5%AD%A6%E3%81%B6%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E5%85%A5%E9%96%80-%E8%BB%BD%E9%87%8F%E4%BB%AE%E6%83%B3%E5%8C%96%E7%92%B0%E5%A2%83%E3%82%92%E5%AE%9F%E7%8F%BE%E3%81%99%E3%82%8B%E6%8A%80%E8%A1%93">LXCで学ぶコンテナ入門 －軽量仮想化環境を実現する技術</a></p>
+          <h1 class="main-title" itemprop="name"><span class="subtitle">第61回</span><wbr>Linuxカーネルの<wbr>コンテナ機能 - cgroup v2から<wbr>使う<wbr>メモリコントローラ<wbr>（6）</h1>
+        </div>
+        <div class="article-information-wrapper">
+          <div class="article-information">
+            <ul class="author">
+                <li itemprop="author" itemscope itemtype="http://schema.org/Person">
+                  <span class="author__image"><img src="/assets/images/author/2014/Y_Kato_manage_blue.png" width="128" height="128" alt="" decoding="async" itemprop="image"></span>
+                  <span class="author__text">
+                    <span class="author__header"></span>
+                    <a rel="author" itemprop="url" href="/author/%E5%8A%A0%E8%97%A4%E6%B3%B0%E6%96%87"><span itemprop="name">加藤泰文</span><span class="ruby">（かとうやすふみ）</span></a>
+                    <span class="author__footer"></span>
+                  </span>
+                </li>
+            </ul>
+            <div class="article-status">
+              <p class="tag"></p>
+              <p class="date">2026-03-10</p>
+              <button class="like" title="なるほど"><i class="m-light"><span class="m-light--plug"></span></i></button>
+              <div class="share-wrapper"><i class="m-share"></i> シェア
+                <div class="m-share--social">
+                  <span class="twitter"><a href="https://x.com/intent/post?url=https%3A%2F%2Fgihyo.jp%2Farticle%2F2026%2F03%2Flinux_containers-0061&text=%E7%AC%AC61%E5%9B%9E%E3%80%80Linux%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB%E3%81%AE%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E6%A9%9F%E8%83%BD%20-%20cgroup%20v2%E3%81%8B%E3%82%89%E4%BD%BF%E3%81%86%E3%83%A1%E3%83%A2%E3%83%AA%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%A9%EF%BC%886%EF%BC%89&hashtags=gihyojp" title="Xでシェアする" target="_blank"><img src="/assets/templates/gihyojp2022/images/x.svg" width="150" height="150" alt="" decoding="async" loading="lazy"></a></span>
+                  <span class="facebook"><a href="https://www.facebook.com/share.php?u=https%3A%2F%2Fgihyo.jp%2Farticle%2F2026%2F03%2Flinux_containers-0061" title="Facebookでシェアする" target="_blank"><img src="/assets/templates/gihyojp2022/images/facebook.svg" width="150" height="150" alt="" decoding="async" loading="lazy"></a></span>
+                  <span class="hatena"><a href="https://b.hatena.ne.jp/add?url=https%3A%2F%2Fgihyo.jp%2Farticle%2F2026%2F03%2Flinux_containers-0061&title=%E7%AC%AC61%E5%9B%9E%E3%80%80Linux%E3%82%AB%E3%83%BC%E3%83%8D%E3%83%AB%E3%81%AE%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E6%A9%9F%E8%83%BD%20-%20cgroup%20v2%E3%81%8B%E3%82%89%E4%BD%BF%E3%81%86%E3%83%A1%E3%83%A2%E3%83%AA%E3%82%B3%E3%83%B3%E3%83%88%E3%83%AD%E3%83%BC%E3%83%A9%EF%BC%886%EF%BC%89" title="はてブに登録する" target="_blank"><img src="/assets/templates/gihyojp2022/images/hatena.svg" width="150" height="150" alt="" decoding="async" loading="lazy"></a></span>
+                  <span class="copy"><button class="m-clipboard" title="クリップボードにコピーする" data-url="https://gihyo.jp/article/2026/03/linux_containers-0061" data-title="第61回　Linuxカーネルのコンテナ機能 - cgroup v2から使うメモリコントローラ（6）"></button></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="l-rectangle">
+            <!-- /33530947/gihyojp2022/gihyojp2022-rectangle -->
+            <div id='div-gpt-ad-1655366419081-0' style='min-width: 300px; min-height: 250px;'>
+              <script>
+                googletag.cmd.push(function() { googletag.display('div-gpt-ad-1655366419081-0'); });
+              </script>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <aside class="l-article-contents">
+      <p class="contents__header">
+        <span class="contents__title">記事の内容</span>
+        <span class="article-readingtime" title="読了の目安"><i class="m-stopwatch" data-time="8"><b class="m-stopwatch--hand"></b></i> 8分</span>
+      </p>
+      <ul class="contents__list"><li><a href="#gh3z4yh6_R">memory.<wbr>eventsファイル</a></li>
+<li><a href="#ghdn9KQBYe">memory.<wbr>oom.<wbr>groupファイルとmemory.<wbr>eventsファイル</a></li>
+<li><a href="#gh5C8mZkog">メモリコントローラの状態通知</a></li>
+<li><a href="#ghdG0ZX20T">memory_<wbr>localeventsオプション</a></li>
+<li><a href="#gh7QTRlDxM">まとめ</a></li></ul>
+    </aside>
+
+    <article class="l-article-main">
+
+
+
+<p id="gh2YJkGchK"><a href="https://gihyo.jp/article/2024/08/linux_containers-0056">第56回</a>から<a href="https://gihyo.jp/article/2026/01/linux_containers-0060">第60回</a>までで、メモリコントローラを使ってメモリの使用量やOOM Killerの動作を制御する方法を説明しました。</p>
+
+<p id="gh4EPg2SZe">メモリコントローラを設定することで、制限値を上回ったり、保証値を下回ったりした場合、すべてcgroupに処理を任せておいてよいわけではなく、イベントの発生を監視して対処しなければならない場合もあるでしょう。</p>
+
+<p id="gh3RTr2uWT">今回は、メモリコントローラ関係のイベントを監視する際に使えるファイルについて説明します。</p>
+
+<h2 id="gh3z4yh6_R">memory.<wbr>eventsファイル</h2>
+
+<p id="gh9JqEi_aB">メモリコントローラが有効になったcgroupには、<strong>表1</strong>のとおり、<code>memory.<wbr>events</code>と<code>memory.<wbr>events.<wbr>local</code>というファイルがあります。これらのファイルから、cgroupで起こったメモリコントローラ関係のイベント回数がわかります。</p>
+
+<figure class="f-table" id="ghpO70ONTQ">
+<figcaption><span class="f-table-label label-has-num">表1</span> cgroupのメモリ関連イベントの回数を表示するファイル</figcaption>
+<div class="table-wrapper" id="gh3CwKhs7q">
+<table>
+<thead>
+<tr>
+<th scope="col">ファイル名</th>
+<th scope="col">機能</th>
+<th scope="col">操作</th>
+<th scope="col">実装されたバージョン</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>memory.<wbr>events</code></td>
+<td>cgroupとその子孫のcgroupで起こったイベント数</td>
+<td nowrap>読み取り</td>
+<td>4.<wbr>5</td>
+</tr>
+<tr>
+<td><code>memory.<wbr>events.<wbr>local</code></td>
+<td><code>memory.<wbr>events</code>と内容は同じだが、ファイルが存在するcgroup内のイベント数のみを表示する</td>
+<td>読み取り</td>
+<td>5.<wbr>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+<p id="ghekcz_iGK">これら2つのファイルの中身は同じで、イベント名とそのイベントが発生した回数がスペース区切りで1行に書かれています。メモリコントローラで発生するイベントは<strong>表2</strong>のとおりです。</p>
+<figure class="f-table" id="ghbdj9_SxQ">
+<figcaption><span class="f-table-label label-has-num">表2</span> メモリコントローラで発生するイベント</figcaption>
+<div class="table-wrapper" id="ghPHNVBJZD">
+<table>
+<thead>
+<tr>
+<th scope="col">イベント名</th>
+<th scope="col">イベントの説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>low</code></td>
+<td>タスクのメモリ使用量が<code>memory.<wbr>low</code>で指定した値を下回っているにも関わらず、高いメモリ圧力によりメモリが回収された。このイベントが発生しているということはメモリ保護の設定がオーバーコミットされていることを示す</td>
+</tr>
+<tr>
+<td><code>high</code></td>
+<td>タスクのメモリ使用量が<code>memory.<wbr>high</code>の値を超過したためにメモリ回収が実行された</td>
+</tr>
+<tr>
+<td><code>max</code></td>
+<td>タスクのメモリ使用量が<code>memory.<wbr>max</code>を超えようとした</td>
+</tr>
+<tr>
+<td><code>oom</code></td>
+<td>タスクのメモリ使用量が制限に達して割り当てが失敗しそうになった</td>
+</tr>
+<tr>
+<td><code>oom_<wbr>kill</code></td>
+<td>OOM Killerによってタスクが強制終了させられた</td>
+</tr>
+<tr>
+<td nowrap><code>oom_<wbr>group_<wbr>kill</code></td>
+<td>cgroup単位のOOMが発生した。<code>memory.<wbr>oom.<wbr>group</code>が<code>1</code>に設定されている場合にcgroup全体のタスクがOOMによってkillされた</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+
+<p id="gh3AwdTGu4">2つのファイルの違いは、<code>memory.<wbr>events</code>はファイルが存在するcgroupとその子孫のcgroupで起こったイベントの回数を表示し、<code>memory.<wbr>events.<wbr>local</code>はファイルが存在するcgroup内のローカルイベントの回数のみを表示することです。</p>
+
+<p id="gh6XUpRzap">実際に動作を見る前に、cgroup v2のマウントオプションを確認しておきます。</p>
+
+<pre id="gh5pqwl497"><samp>$ grep cgroup2 /proc/self/mounts
+cgroup2 /sys/fs/cgroup cgroup2 rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot 0 0
+</samp></pre>
+
+<p id="gh3TXCfUQ7">マウントオプションの中に<code>memory_<wbr>localevents</code>が含まれないことを確認してください。通常は<code>memory_<wbr>localevents</code>オプションは指定されていないはずです。<code>memory_<wbr>localevents</code>オプションについては、あとで説明します。</p>
+
+<p id="gh5GvCE7LD">マウントオプションが確認できたところで、実際の<code>memory.<wbr>events</code>と<code>memory.<wbr>events.<wbr>local</code>ファイルの動作を確認していきましょう。</p>
+
+<p id="gh9cBNeN3k"><code>memory.<wbr>events</code>ファイルと<code>memory.<wbr>events.<wbr>local</code>ファイルの動作を確認するために、<code>test01</code> cgroupと、その子である<code>test011</code> cgroupを作成して、プロセスは<code>test011</code> cgroupに所属させ、<code>memory.<wbr>max</code>を超えるメモリを消費させてOOM Killerを発動させてみます。</p>
+
+<p id="gh7qdcQIUo">これまでのように、設定した<code>memory.<wbr>max</code>を超える値を指定して<code>stress-ng</code>コマンドを実行します。コマンド実行前には、OOM Killerを発動させるために、スワップをオフにします。</p>
+
+<pre id="ghd7AWAtwX"><samp>$ sudo mkdir -p /sys/fs/cgroup/test01/test011 （test01とその子のtest011を作成）
+$ echo $$ | sudo tee /sys/fs/cgroup/test01/test011/cgroup.procs
+（シェルをtest011に所属させる）
+1008
+$ echo "+memory" | sudo tee /sys/fs/cgroup/cgroup.subtree_control
+（test01でmemoryコントローラを使えるようにする）
++memory
+$ echo "+memory" | sudo tee /sys/fs/cgroup/test01/cgroup.subtree_control
+（test011でmemoryコントローラを使えるようにする）
++memory
+$ echo 192M | sudo tee /sys/fs/cgroup/test01/test011/memory.max
+（test011でメモリ上限を192MBに設定）
+192M
+$ sudo swapoff -a
+（スワップをオフ）
+$ stress-ng --vm 1 --vm-bytes 256M --vm-hang 0 -v
+（256MBメモリを消費する設定でコマンドを起動）
+  :（略）
+stress-ng: debug: [1112] vm: child died: signal 9 'SIGKILL' (instance 0)
+stress-ng: debug: [1112] vm: assuming killed by OOM killer, restarting again (instance 0)
+</samp></pre>
+
+<p id="ghemSpqYvj">192MBに上限を設定したcgroupで、メモリを256MB消費するようにコマンドを実行したので、OOM Killerが発動し、プロセスがkillされています。</p>
+
+<p id="gh8rmj6dq6">それでは、各cgroupの<code>memory.<wbr>events</code>と<code>memory.<wbr>events.<wbr>local</code>ファイルを確認してみましょう。</p>
+
+<p id="ghdkCg1sLS">まずは、プロセスが所属した<code>test011</code> cgroupです。</p>
+
+<pre id="gh1wWGqT4F"><samp>$ cat /sys/fs/cgroup/test01/test011/memory.events
+low 0
+high 0
+max 771
+oom 7
+oom_kill 7
+oom_group_kill 0
+$ cat /sys/fs/cgroup/test01/test011/memory.events.local 
+low 0
+high 0
+max 771
+oom 7
+oom_kill 7
+oom_group_kill 0
+</samp></pre>
+
+<p id="gh6n1FeGSd"><code>memory.<wbr>max</code>を超えようとした回数を示す<code>max</code>行が0ではなく、<code>memory.<wbr>max</code>を超えたことがわかります。そして、OOM Killerが発動していますので、<code>oom</code>、<code>oom_<wbr>kill</code>に<code>7</code>という数字が入っています。</p>
+
+<p id="gh6GhtjJ8d">次に、<code>test011</code> cgroupの親cgroupである<code>test01</code> cgroupで両方のファイルを確認してみましょう。</p>
+
+<pre id="ghbrRbSLSI"><samp>$ cat /sys/fs/cgroup/test01/memory.events
+low 0
+high 0
+max 771
+oom 7
+oom_kill 7
+oom_group_kill 0
+$ cat /sys/fs/cgroup/test01/memory.events.local 
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+</samp></pre>
+
+<p id="gh5FvtD0fc">このように、<code>memory.<wbr>events</code>ファイルには子孫である<code>test011</code> cgroupで発生したイベントがカウントされています。一方で、<code>test01</code> cgroupではイベントが起こっていませんので、<code>memory.<wbr>events.<wbr>local</code>ファイルはすべての値が0のままです。</p>
+
+<h2 id="ghdn9KQBYe">memory.<wbr>oom.<wbr>groupファイルとmemory.<wbr>eventsファイル</h2>
+
+<p id="gh1fIs4jjw">ここまでの実行例は、<a href="https://gihyo.jp/article/2026/01/linux_containers-0060">第60回</a>で紹介した<code>memory.<wbr>oom.<wbr>group</code>が0に設定された状態で実行していました。</p>
+
+<p id="gheaw5TBPD">5.<wbr>16カーネルまでは、<code>oom_<wbr>group_<wbr>kill</code>というイベントは定義されておらず、<code>memory.<wbr>oom.<wbr>group</code>ファイルが1に設定された状態でOOM Killerが発動したときも、<code>oom_<wbr>kill</code>イベントだけが発生していました。</p>
+
+<p id="gh9VjaNReZ"><code>oom_<wbr>kill</code>イベントだけでも、<code>memory.<wbr>events</code>、<code>memory.<wbr>events.<wbr>local</code>ファイルと<code>memory.<wbr>oom.<wbr>group</code>の設定を見れば、単独のプロセスがkillされたのか、cgroupに所属するプロセスがまとめてkillされたのかはわかることが多いでしょう。</p>
+
+<p id="gh1J6NGaoy">しかし、子孫のcgroupを持つツリーの中間に存在するcgroupで<code>oom_<wbr>kill</code>イベントが発生しても、killされたプロセスが単独のプロセスなのか、cgroup内のプロセスすべてなのか、また、イベントが発生したのが自身なのか、子孫なのかなどが明確にわかりません。</p>
+
+<p id="gh4XGYZPUu">そこで、5.<wbr>17カーネルで<code>oom_<wbr>group_<wbr>kill</code>イベントが定義され、<code>memory.<wbr>oom.<wbr>group</code>を1に設定したことによるOOM Kill発動が明確にわかるようになりました<a href="#fn1" id="fn-ref1" class="fn-noteref" role="doc-noteref">[1]</a>。</p>
+
+<aside id="fn1" class="fn" role="doc-footnote">
+<p id="ghdJa0ym3a"><a href="#fn-ref1" class="fn-backlink" role="doc-backlink">[1]</a> <a href="https://github.com/torvalds/linux/commit/b6bf9abb0aa44e53ffe9c1e6e1d32568f5b25e4a">mm/<wbr>memcg: add oom_<wbr>group_<wbr>kill memory event</a></p>
+</aside>
+
+<p id="gh2Xq8vaNb"><code>oom_<wbr>group_<wbr>kill</code>の値がカウントされることを、実際に試して確認しておきましょう。</p>
+
+<pre id="ghdFyfwHY5"><samp>$ sudo mkdir -p /sys/fs/cgroup/test01/test011
+$ echo $$ | sudo tee /sys/fs/cgroup/test01/test011/cgroup.procs
+1459
+$ echo "+memory" | sudo tee /sys/fs/cgroup/cgroup.subtree_control
++memory
+$ echo "+memory" | sudo tee /sys/fs/cgroup/test01/cgroup.subtree_control
++memory
+$ echo 192M | sudo tee /sys/fs/cgroup/test01/test011/memory.max
+192M
+$ echo 1 | sudo tee /sys/fs/cgroup/test01/test011/memory.oom.group 
+1
+$ sudo swapoff -a
+$ stress-ng --vm 1 --vm-bytes 256M --vm-hang 0 -v
+</samp></pre>
+
+<p id="gh7iaq5CSJ"><code>stress-ng</code>コマンドでメモリを256MB使用するように指定して実行すると、<code>test011</code> cgroup内のプロセスがすべてkillされますので、起動していたシェル自体もkillされてしまいます。別のシェルから、<code>test011</code> cgroupの<code>memory.<wbr>events</code>と<code>memory.<wbr>events.<wbr>local</code>ファイルを確認してみます。</p>
+
+<pre id="gh24Pj8hHu"><samp>$ grep oom_group_kill /sys/fs/cgroup/test01/test011/memory.events
+oom_group_kill 1
+$ grep oom_group_kill /sys/fs/cgroup/test01/test011/memory.events.local 
+oom_group_kill 1
+</samp></pre>
+
+<p id="ghbzLfIiOP">このように<code>test011</code> cgroupでは、両方のファイルで<code>oom_<wbr>group_<wbr>kill</code>が1となっており、cgroup内のプロセスがまとめてkillされるイベントが発生したことがわかります。</p>
+
+<p id="ghc4UgsnXe">このとき親cgroupである<code>test01</code> cgroupでは、<code>memory.<wbr>events</code>ファイルの<code>oom_<wbr>group_<wbr>kill</code>は<code>1</code>になっています。一方で、自身のcgroup内のイベントだけをカウントする<code>memory.<wbr>events.<wbr>local</code>ファイルの<code>oom_<wbr>group_<wbr>kill</code>は<code>0</code>のままであることも確認できます。</p>
+
+<pre id="gh3KtdEIBU"><samp>$ grep oom_group_kill /sys/fs/cgroup/test01/memory.events
+oom_group_kill 1
+$ grep oom_group_kill /sys/fs/cgroup/test01/memory.events.local 
+oom_group_kill 0
+</samp></pre>
+
+<h2 id="gh5C8mZkog">メモリコントローラの状態通知</h2>
+
+<p id="ghdqIDCYFf">ここまでで説明したように、<code>memory.<wbr>events</code>ファイルや<code>memory.<wbr>events.<wbr>local</code>ファイルの中を見ると、メモリコントローラに関係するイベントの発生回数を知ることができます。</p>
+
+<p id="gh3rYeiZl5">cgroupを使って、メモリの消費状況を監視する場合、メモリコントローラでイベントが発生したことを知ることができると便利です。メモリコントローラでは、<a href="https://gihyo.jp/admin/serial/01/linux_containers/0039#sec4">第39回</a>で紹介した<code>cgroup.<wbr>events</code>ファイルと同様に、<code>memory.<wbr>events</code>ファイルと<code>memory.<wbr>events.<wbr>local</code>ファイルの中身が変化したときに通知を受け取れます。</p>
+
+<p id="ghcXKCgyRI"><a href="https://docs.kernel.org/admin-guide/cgroup-v2.html">カーネル付属ドキュメント</a>の<code>memory.<wbr>events</code>の項には、"the file modified event can be generated"とだけ書かれています。<code>memory.<wbr>events</code>ファイルと<code>memory.<wbr>events.<wbr>local</code>ファイルでも、<code>cgroup.<wbr>events</code>ファイルと同様に<a href="https://man7.org/linux/man-pages/man7/inotify.7.html"><code>inotify(7)</code></a>や、<a href="https://man7.org/linux/man-pages/man2/poll.2.html"><code>poll(2)</code></a>を使ってイベントを受け取れます。</p>
+
+<p id="ghv_m8TJx6"><a href="https://man7.org/linux/man-pages/man7/cgroups.7.html"><code>cgroup(7)</code></a>を見ると、</p>
+
+<blockquote>
+<p id="ghFBJyOlvK">The cgroup.<wbr>events file can be monitored, in order to receive notification when the value of one of its keys changes. Such monitoring can be done using inotify(7), which notifies changes as IN_<wbr>MODIFY events, or poll(2), which notifies changes by returning the POLLPRI and POLLERR bits in the revents field.</p>
+</blockquote>
+
+<p id="gh9jo2Ti8J">と書かれています。</p>
+
+<p id="ghdrdT1R1x">inotifyの場合は<code>IN_<wbr>MODIFY</code>イベントを受け取ることにより、pollの場合は<code>revents</code>にセットされる<code>POLLPRI</code>や<code>POLLERR</code>ビットをチェックすることでメモリに関するイベントが受け取れます。</p>
+
+<p id="gh3RHQ_2BR"><a href="https://man7.org/linux/man-pages/man2/poll.2.html"><code>poll(2)</code></a>の<code>POLLPRI</code>の項目には、</p>
+
+<blockquote>
+<p id="ghcRg707JP">A cgroup.<wbr>events file has been modified (see cgroups(7)).</p>
+</blockquote>
+
+<p id="ghdJ5nqSdH">と書かれており、cgroup関連のファイル変更では<code>POLLPRI</code>が設定されることが明記されています。</p>
+
+<p id="gh7_n3SWz3"><code>memory.<wbr>events</code>ファイルや<code>memory.<wbr>events.<wbr>local</code>ファイルで、これらの通知が受け取れるかを、これまでと同様の実行例で確認してみます。</p>
+
+<pre id="ghauY_8Ra0"><samp>$ sudo mkdir -p /sys/fs/cgroup/test01/test011
+$ echo $$ | sudo tee /sys/fs/cgroup/test01/test011/cgroup.procs
+1127
+$ echo "+memory" | sudo tee /sys/fs/cgroup/cgroup.subtree_control
++memory
+$ echo "+memory" | sudo tee /sys/fs/cgroup/test01/cgroup.subtree_control
++memory
+$ echo 192M | sudo tee /sys/fs/cgroup/test01/test011/memory.max
+192M
+</samp></pre>
+
+<p id="gh1auyXWZR">ここで、別のシェルを起動し、<code>inotifywait</code>コマンドで<code>test01</code> cgroupと<code>test011</code> cgroupの<code>memory.<wbr>events</code>ファイルを監視します。</p>
+
+<p id="ghco9T3BrD">そして、<code>stress-ng</code>コマンドで<code>memory.<wbr>max</code>の制限値を超えるメモリを指定して実行すると、OOM Killerが発動します。</p>
+
+<pre id="gh4gg8TLmd"><samp>$ sudo swapoff -a
+$ stress-ng --vm 1 --vm-bytes 256M --vm-hang 0 -v
+  :（略）
+</samp></pre>
+
+<p id="gh6HCwSbzj">このとき、<code>test011</code> cgroupの<code>memory.<wbr>events</code>ファイルと<code>memory.<wbr>events.<wbr>local</code>ファイルを指定した<code>inotifywait</code>コマンドでは、次のような出力が受け取れました。</p>
+
+<pre id="gh9ILAwmxz"><samp>$ inotifywait /sys/fs/cgroup/test01/test011/memory.events
+（test011のmemory.eventsを監視）
+Setting up watches.
+Watches established.
+/sys/fs/cgroup/test01/test011/memory.events MODIFY
+</samp></pre>
+
+<pre id="gh8yOfVui9"><samp>$ inotifywait /sys/fs/cgroup/test01/test011/memory.events.local
+（test011のmemory.events.localを監視）
+Setting up watches.
+Watches established.
+/sys/fs/cgroup/test01/test011/memory.events.local MODIFY
+</samp></pre>
+
+<p id="ghbIbbbLK5">また、その親である<code>test01</code> cgroupでも、次のように同様にイベントが受け取れました。</p>
+
+<pre id="gh2hqLQS3C"><samp>$ inotifywait /sys/fs/cgroup/test01/memory.events
+（test01のmemory.eventsを監視）
+Setting up watches.
+Watches established.
+/sys/fs/cgroup/test01/memory.events MODIFY
+</samp></pre>
+
+<p id="gh1UKMlGaX"><code>test01</code> cgroupの<code>memory.<wbr>events.<wbr>local</code>ファイルでは、自身で発生したOOM Killerではないので、イベントは発生していません。</p>
+
+<pre id="gh8z0QoV3s"><samp>$ inotifywait /sys/fs/cgroup/test01/memory.events.local
+（test01のmemory.events.localを監視）
+Setting up watches.
+Watches established.
+（待受状態のまま）
+</samp></pre>
+
+<p id="gh6OTptWuG">このように、<code>memory.<wbr>events</code>ファイルと<code>memory.<wbr>events.<wbr>local</code>ファイルを監視することで、メモリコントローラで発生したイベントを監視できることが確認できました。</p>
+
+<h2 id="ghdG0ZX20T">memory_<wbr>localeventsオプション</h2>
+
+<p id="ghahAdfJgU">ここまでの説明で、<code>memory.<wbr>events</code>は階層構造の子孫で発生したイベントを扱い、<code>memory.<wbr>events.<wbr>local</code>では自身のcgroupで発生したイベントのみを扱うことを説明しました。</p>
+
+<p id="gh3fqsbDiM">しかし、実はcgroup v2が導入された当初は<code>memory.<wbr>events</code>ファイルは、現在の<code>memory.<wbr>events.<wbr>local</code>ファイルのように動作していました。つまり、子孫のイベントは考慮していませんでした。</p>
+
+<p id="ghcivhkweb">cgroup v2全体としては、たとえば<code>memory.<wbr>stat</code>ファイルなどは階層構造を考慮し、子孫の統計情報を含んで表示しているのに、<code>memory.<wbr>events</code>は子孫のイベントを考慮しないで表示することは、混乱の原因となります。</p>
+
+<p id="gh7yYeM_Sn">そこで、5.<wbr>2カーネルで<code>memory.<wbr>events</code>は子孫で発生したイベントを扱うように変更されました<a href="#fn2" id="fn-ref2" class="fn-noteref" role="doc-noteref">[2]</a>。</p>
+
+<aside id="fn2" class="fn" role="doc-footnote">
+<p id="gh17S4zmML"><a href="#fn-ref2" class="fn-backlink" role="doc-backlink">[2]</a> <a href="https://github.com/torvalds/linux/commit/9852ae3fe5293264f01c49f2571ef7688f7823ce">mm, memcg: consider subtrees in memory.<wbr>events</a></p>
+</aside>
+
+<p id="ghbF1U_r_N">この変更は、本来あるべき姿への変更ですが、従来の動作との互換性は保たれません。そこで、従来どおりの動作を期待するユーザのために、cgroup v2をマウントする際のオプションとして、<code>memory_<wbr>localevents</code>オプションが追加されました。</p>
+
+<p id="gha3dLYHNS"><code>memory_<wbr>localevents</code>オプションを指定してcgroup v2をマウントすると、<code>memory.<wbr>events</code>ファイルは自身のcgroup内で発生したイベントのみを扱います。</p>
+
+<p id="gh8kXvnEvX">試してみましょう。</p>
+
+<p id="gh8YrKyGkh">まず、<code>memory_<wbr>localevents</code>オプションを指定して、cgroup v2を再マウントします。</p>
+
+<pre id="gh8VurQS0J"><samp>$ sudo mount -t cgroup2 -o remount,rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot,memory_localevents cgroup2 /sys/fs/cgroup/
+（再マウントのためのremountとmemory_localeventsを指定してcgroup v2を再マウント）
+$ grep cgroup2 /proc/self/mounts
+cgroup2 /sys/fs/cgroup cgroup2 rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_localevents,memory_recursiveprot 0 0
+（memory_localeventsが指定されている）
+</samp></pre>
+
+<p id="ghaRLhdnJf">もし、cgroup v2がマウントされていない環境で試す場合は、<code>memory_<wbr>localevents</code>オプションを指定してcgroup v2をマウントします。</p>
+
+<pre id="ghbeDuAVtn"><samp>$ sudo mount -t cgroup2 -o memory_localevents cgroup2 /sys/fs/cgroup/
+</samp></pre>
+
+<p id="gh7UwEjO8T">これまでの実行例と同様に<code>test01</code> cgroupを作成し、その子cgroupとして<code>test011</code> cgroupを作成し、<code>test011</code> cgroup内でOOM Killerを発動させます。</p>
+
+<pre id="gh4k69slxt"><samp>$ sudo mkdir -p /sys/fs/cgroup/test01/test011
+  :（これまでの実行例と同じなので省略）
+$ stress-ng --vm 1 --vm-bytes 256M --vm-hang 0 -v
+  :（略）
+</samp></pre>
+
+<p id="gh7ooFa0Y0">OOM Killerが発動され、<code>stress-ng</code>プロセスがkillされていることを確認したら、<code>test01</code>と<code>test011</code> cgroupの<code>memory.<wbr>events</code>を確認します。</p>
+
+<pre id="gh7GOrvKRS"><samp>$ cat /sys/fs/cgroup/test01/test011/memory.events
+low 0
+high 0
+max 2339
+oom 16
+oom_kill 16
+oom_group_kill 0
+（test011 cgroupではイベントがカウントされている）
+$ cat /sys/fs/cgroup/test01/memory.events
+low 0
+high 0
+max 0
+oom 0
+oom_kill 0
+oom_group_kill 0
+（test01 cgroupではイベントがカウントされていない）
+</samp></pre>
+
+<p id="gh9P5du50E"><code>test011</code> cgroupでは、これまでの実行例と同様にイベントがカウントされています。</p>
+
+<p id="ghegsNNbl1">一方で、今回の実行例では<code>test011</code> cgroupの親である<code>test01</code> cgroupでは一切イベントがカウントされていません。</p>
+
+<p id="gh36wRIVG9">ここまでで紹介した<code>memory_<wbr>localevents</code>オプションを指定した動作が、5.<wbr>1カーネルまでの<code>memory.<wbr>events</code>ファイルの動作でした。</p>
+
+<p id="ghcoNwwK6r">5.<wbr>2カーネルで、<code>memory.<wbr>events</code>ファイルの動作が変更されましたが、5.<wbr>2カーネルの時点では<code>memory.<wbr>events.<wbr>local</code>ファイルは存在していませんでした。</p>
+
+<p id="ghbQ2fgfUE">このため、特定のcgroup内でのイベントのみを監視したいという要求に応えることができませんでした。そこで、5.<wbr>3カーネルで<code>memory.<wbr>events.<wbr>local</code>が追加され、階層構造を考慮したイベントについても、特定のcgroup内のイベントについても監視できるようになりました<a href="#fn3" id="fn-ref3" class="fn-noteref" role="doc-noteref">[3]</a>。</p>
+
+<aside id="fn3" class="fn" role="doc-footnote">
+<p id="gh57Vt8Y7M"><a href="#fn-ref3" class="fn-backlink" role="doc-backlink">[3]</a> <a href="https://github.com/torvalds/linux/commit/1e577f970f66a53d429cbee37b36177c9712f488">mm, memcg: introduce memory.<wbr>events.<wbr>local</a></p>
+</aside>
+
+<h2 id="gh7QTRlDxM">まとめ</h2>
+
+<p id="ghbb9kxZAZ">今回は、メモリコントローラ関係のイベント回数を表示したり、イベントが起こったことを監視できるファイルについて説明しました。</p>
+
+<p id="gh9MtN6a0y">メモリコントローラは機能が多く、毎回、<wbr><span style="font-feature-settings:'palt'">「</span>&#8288;メモリコントローラの説明は今回が最後」<wbr>と思いつつ書き進めると、書き残しが発生し、次回もやっぱりメモリコントローラの説明をしないといけなくなっています<wbr>（笑&#8288;<span style="font-feature-settings:'palt'">）</span>&#8288;。</p>
+
+<p id="gh5TvhVoRJ">そういうわけで、次回もまだ紹介していないメモリコントローラの機能を紹介する予定です。</p>
+
+
+    </article>
+
+    <aside class="l-article-status">
+      <ul class="article-category">
+<li class="m-category"><a href="/list/category/OS%E3%83%BB%E3%83%87%E3%82%B9%E3%82%AF%E3%83%88%E3%83%83%E3%83%97#rt:/article/2026/03/linux_containers-0061">OS・デスクトップ</a></li>
+
+      </ul>
+    <p class="article-bottom-group"><a href="/list/group/LXC%E3%81%A7%E5%AD%A6%E3%81%B6%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E5%85%A5%E9%96%80-%E8%BB%BD%E9%87%8F%E4%BB%AE%E6%83%B3%E5%8C%96%E7%92%B0%E5%A2%83%E3%82%92%E5%AE%9F%E7%8F%BE%E3%81%99%E3%82%8B%E6%8A%80%E8%A1%93">同じ記事グループをもっと見る</a></p>
+    </aside>
+  </div>
+
+  <div class="l-article-sidecontents"></div>
+
+  <div class="l-article-subcontents">
+    <div class="l-relcontents">
+      <p class="l-relcontents__title">おすすめ記事</p>
+      <ul class="m-listitem m-listitem--card-style">
+        <li class="m-listitem--ad">
+          <!-- /33530947/gihyojp2022/gihyojp2022-recommend1 -->
+          <div id='div-gpt-ad-1655797225182-0' style='min-width: 242px; min-height: 280px;'>
+            <script>
+              googletag.cmd.push(function() { googletag.display('div-gpt-ad-1655797225182-0'); });
+            </script>
+          </div>
+        </li>
+
+        <li class="m-listitem--ad">
+          <!-- /33530947/gihyojp2022/gihyojp2022-recommend2 -->
+          <div id='div-gpt-ad-1655797258948-0' style='min-width: 242px; min-height: 280px;'>
+            <script>
+              googletag.cmd.push(function() { googletag.display('div-gpt-ad-1655797258948-0'); });
+            </script>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="l-article-footer">
+    <div class="l-contents-list">
+      <p class="l-contents-list__title">記事・ニュース一覧</p>
+      <ul class="m-listitem">
+      </ul>
+    </div>
+
+    <div class="l-skyscraper">
+      <!-- /33530947/gihyojp2022/gihyojp2022-skyscraper -->
+      <div id='div-gpt-ad-1655944026899-0' style='min-width: 120px; min-height: 600px;'>
+        <script>
+          googletag.cmd.push(function() { googletag.display('div-gpt-ad-1655944026899-0'); });
+        </script>
+      </div>
+    </div>
+  </div>
+
+</div>
+<footer class="l-footer">
+<div class="l-footer__wrapper">
+  <a href="/book">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 139.3 22.05" class="footer__logo"><g><title>技術評論社</title><desc>運営元のロゴ</desc></g><polyline class="m-logo-color--k" points="115.89 4.26 113.09 4.26 111 2.45 107.5 2.45 105.64 4.32 102.84 4.32 106.62 .1 112.02 .11 115.89 4.26"/><path class="m-logo-color--k" d="M94.63,21.79v-6.88l1.23-1.17h6.06v8.05h-7.29Zm4.84-2.46v-3.03h-2.33v3.03h2.33Z"/><path class="m-logo-color--k" d="M113.55,10.83h-1.16v2.79h1.16v-2.79Zm-4.77-.01v2.79h1.16v-2.79h-1.16Zm-2.46,2.81v-2.79h-1.16v2.79h1.16Zm-1.22,2.45v5.58h-2.39V8.25h13.24v12.01c0,2.08-4.24,1.19-5.78,1.39v-5.56c-.39-.05-.98,.01-1.45-.02v5.65h-2.28v-5.62l-1.34-.02Zm8.44,.1h-1.16v3.03h1.16v-3.03Z"/><rect class="m-logo-color--k" x="95.27" y="10.37" width="5.83" height="2.21"/><rect class="m-logo-color--k" x="95.27" y="6.99" width="5.83" height="2.34"/><rect class="m-logo-color--k" x="103.43" y="5.13" width="11.89" height="2.34"/><rect class="m-logo-color--k" x="94.57" y="3.49" width="7.35" height="2.34"/><rect class="m-logo-color--k" x="95.27" y=".12" width="5.83" height="2.45"/><path class="m-logo-color--k" d="M80.03,21.79h-8.67v-6.64c.17-1.05,.59-1.23,1.56-1.4h7.11v8.04Zm-2.68-5.59h-3.62v3.03h3.62v-3.03Z"/><rect class="m-logo-color--k" x="71.98" y="10.37" width="7.22" height="2.21"/><rect class="m-logo-color--k" x="71.98" y="6.99" width="7.22" height="2.34"/><path class="m-logo-color--k" d="M92.01,11.18h-2.44c.23-2.58,.43-5.17,.81-7.69h2.32l-.69,7.69"/><path class="m-logo-color--k" d="M83.28,3.5c.28,2.61,.38,5.28,.82,7.8h-2.34c-.1-2.67-.71-5.12-.81-7.8h2.33"/><rect class="m-logo-color--k" x="71.29" y="3.49" width="8.74" height="2.46"/><path class="m-logo-color--k" d="M92.72,2.45h-4.79c0,3.24,.05,6.59,.01,9.84h4.77v2.5h-4.71v7h-2.26v-6.99h-4.9v-2.45h4.87c0-3.12-.12-6.69-.04-9.9h-4.83V0h11.87V2.45"/><rect class="m-logo-color--k" x="71.98" width="7.22" height="2.45"/><path class="m-logo-color--k" d="M56.38,9.44c.21,3.28-.27,6.27-.94,9.2h-2.45c.7-2.93,1.05-5.99,1.05-9.2h2.34"/><path class="m-logo-color--k" d="M63.84,9.78c.65,2.66,.62,5.6,.92,8.39h-2.33c-.37-3.03-.1-6.34-1.17-9.09,.86,.25,2.7-.45,2.58,.7"/><path class="m-logo-color--k" d="M54.51,.12c-.38,2.76-3.01,5.47-5.59,6.4h-.94v-2.32c1.8-.44,3.38-2.4,3.96-4.07h2.57"/><path class="m-logo-color--k" d="M62.78,2.57h-2.55c0,.59,.02,1.22,0,1.81h9.2v2.38h-1.16v13.86c-.92,1.78-3.24,.95-4.9,1.17v-2.46h2.5V6.82h-5.59v14.97h-2.5V6.82h-2.92l-2.79,2.17v12.81h-2.45c-.04-3.89-.03-8-.03-11.83-.43,.2-1.11,.26-1.61,.3v-2.35c2.17-.54,4.17-1.46,5.71-3.49h4.02V0h5.06V2.57"/><rect class="m-logo-color--k" x="63.84" width="5.59" height="2.45"/><path class="m-logo-color--k" d="M46.13,6.46c.22,4.63-1.23,8.66-4.7,11.66,1.62,1.32,2.92,1.73,4.84,1.92v1.62c-2.61,.17-4.69-1.02-6.78-2.09-1.8,1.49-4.11,1.78-6.4,2.09v-2.21c1.62-.12,3.09-.59,4.42-1.39-2.31-2.39-3.83-5.12-4.31-8.28l-3.32,3.27v7.69c-1.07,1.67-3.51,1.11-5.18,1.14v-2.2c1.02-.12,2.31,.17,3.03-.23-.04-1.35,.06-2.91,0-4.27l-3.03,3.11v-3.38l3.03-3.03V4.49h-2.9V2.11h2.84V.12h2.4v1.92c1.34,0,2.66-.02,3.96-.02,1.46,0,2.93,0,4.38,.02V.12h2.26v1.92h5.47v2.39h-5.3v2.03h5.29Zm-15.95-1.92v4.66l2.79-2.79h5.48v-1.87h-8.27Zm5.35,4.44c.37,2.93,1.74,5.45,4.08,7.57,2.46-2.07,3.83-4.59,4.07-7.57h-8.15Z"/><path class="m-logo-color--k" d="M118.23,13.78c2.87-1.45,5.22-4.79,5.7-7.7h-6.05V3.69h3.14c.04-1.09-.04-2.15,0-3.26h2.23V3.7c2.61,0,5.08,0,7.61,0V.32h2.39V3.63h5.01v2.4h-4.95v13.6h5.99v2.34h-14.66v-2.33h6.32c-.04-4.49,0-9.07-.04-13.61-1.44,0-2.98-.01-4.54-.01-.43,2.04-1,3.99-2.34,5.7l-.3,.33c.64,.68,1.78,1.39,2.74,1.65v2.68c-1.08-.38-2.08-1.08-3.09-1.64v7.22h-2.5c.08-2.44-.02-4.93,0-7.28-.86,.75-1.98,1.44-3.05,1.7,.01-.73-.04-1.48,0-2.45l.39-.15"/><rect class="m-logo-color--k" y="2" width="20.06" height="20.06"/><rect class="m-logo-color--white-background" x=".25" y="2.25" width="19.56" height="19.56"/><path class="m-logo-color--black" d="M5.27,16.34v.47l-.12,.69c.12,.38,.05,.67,.06,1v.31l.5,.06,.56-.38,.44,.06,.5-.13c-.04-.4-.46-.79-.13-1.19-.11-.68,.17-1.2,.25-1.81-.15-.62,.19-1.2,.26-1.81h.56c.26,.21,.25,.64,.63,.69,.43,.33,.13,1.03,.31,1.39,.06,1.48,.41,2.92,.18,4.43H2.4c.1-.75-.47-1.45,0-2.12l-.06-.82c.27-.62-.02-1.49,.25-2.13-.27-.24-.26-.58-.25-.93,.09-.62,0-1.19,.19-1.78l.25-.34,.82-.19-.95-.19c-.25-.27-.72-.4-.75-.82l.06-.24,.19-.7c2.05-.87,4.76-.42,7.13-.63,.36,.27,.96-.01,1.32,.26,.07-.5,.04-1.15,.49-1.38,.46,.03,.9,.13,1.19,.57-.12,.55,.39,.53,.47,.99l-.03,.2c.25,.42,.65-.01,.96-.12,1.25,.16,2.14,.02,3.17,.47l.57,.45c.35,.67,.5,1.33,.55,2.07-.24,.27-.52,.2-.72,.63l.17,.49c-.03,1.16-.1,2.39,.18,3.37,.05,.75-.04,1.13,.12,1.75,.09,.38-.09,.57,0,1.19h-2.43c.1-.93-.19-1.77-.06-2.63-.2-1.31-.18-2.86,.13-4.12-.2-.4,.28-.72,.56-.94l-.56-.31c-.87,.28-2.32-.39-2.57-.18l-.13,.12,.31,.13c.45,.5-.11,3.96,.25,5.88,.5,.45,.23,1.36,.44,2h-3.25c-.46-1.86-.45-4.08-.25-6.06l.18-2.13,.26-.25c-.53-.49-1.13,.14-1.7-.06-.74,.11-1.79,.04-2.57,.06l-1.06-.06-.62,.25c.11,.37,.71,.57,.69,1.06-.24,.88,.3,1.71-.13,2.63l.06,.78h0Z"/></svg>
+  </a>
+  <p class="footer__copyright">Copyright © 2007-2026 All Rights Reserved by Gijutsu-Hyoron Co., Ltd.<br>ページ内容の全部あるいは一部を無断で利用することを禁止します&#8288;<span style="font-feature-settings:'fwid'">。</span>個別にライセンスが設定されている記事等はそのライセンスに従います。</p>
+</div>
+</footer>
+
+<script>
+const policy_url = '/site/policy';
+</script>
+<script src="/assets/js/cookie_banner.js"></script>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "df4d6a05925249639a53a1b952902493"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

@@ -2379,3 +2379,65 @@ committed. Fleet report: `/home/vgpnk/Projects/shokunin/.ufo/reports/round-41/mo
 Round-41 calibration correction: observed_as_of=35; extension_rows=17.
 (single-line record for the frozen counter; the round-41 entry above records the
 same values — the frozen r40 gate derives 35 as-of ids / 17 extension rows at T1.)
+
+## Round 42 — three routed repairs, OOM-chain assimilation, checker v5 (L1 Kimi fresh mori-r42)
+
+Entering tip `9de7323de482699743619cfa2ee444e7418421e3` (round 41 ADMITTED,
+`corpus/lessons/round-41-verifier-spotcheck.md`). Three causally separable
+claims, each a routed repair: C1 operability (7) — conform checker v5 with
+three fixture arms closing the three surviving round-41 checker-mutation
+lanes (walrus-branch, tuple-extract, sort-deletion; routed defect 5's class,
+sourced S347 opened this round + S230); C2 calibration (5, tied lowest) —
+report-accuracy errata; C3 depth (5, tied lowest) — the d72ac16 inheritance
+named. Freeze: `.ufo/waves/round-42/contract.md` + counters + v4 control
+receipts, pins `evidence/freeze-r42.txt`, committed before any seat ran.
+
+### Round-41 report errata (routed defects 1–3, claim C2)
+
+- (a) The round-41 fleet report's Quality trend said "8/8 mutants killed";
+  that is **superseded by 5/8 killed, 3 SURVIVED** — the survivors are named
+  by `.ufo/waves/round-41/w1/MutC1Walrus.md`, `MutC1Tuple.md`,
+  `MutC1DropSort.md`, each carrying `SURVIVED`. The same three lanes are
+  what C1's v5 arms now kill.
+- (b) The round-41 report Extras said "34 attack seats (53%)"; that is
+  **superseded by 31 attack seats of 64 (48.4%)** under the spec's own
+  definition (12 reviewer + 11 critic + 8 mutation-tester; executors are not
+  attack roles), matching `w1-spec.json`, LOG and SCORECARD.
+- (c) The round-41 report said "2 scouts, 4 scribes"; that is **superseded
+  by 1 scout, 5 scribes** (ScoutSOURCESRows.md; ScrLog, ScrM25Survivor,
+  ScrM26Number, ScrReport, ScrS230Quote) with the returned total 19
+  unchanged.
+
+Routed defect 5 (no C3 mutation seats in r41's wave shape) is addressed in
+this round's wave spec (mutation-tester seats attack the C2/C3 counters
+directly). Routed defect 6 note (Gate walrus wording) is left: the operative
+v5 artifacts state the split accurately.
+
+### Inheritance disposition (routed defect 4, claim C3)
+
+`corpus/knowledge/inheritance-d72ac16-r42.md` names all **145** unnamed
+inherited files (67 round-40 w1 seat reports, 7 round-40 evidence/scratch
+files, 71 `.scratch/*` files) by category and provenance; the 20-path
+named-freeze set is enumerated in `evidence/freeze-r42.txt`.
+
+### Assimilation (addendum item 10)
+
+Theme: the OOM evidence chain below the journal (FR1/FR13). Two entries
+admitted from `shokuknow/merge/mori/` after per-entry re-grounding
+(`corpus/knowledge/oom-evidence-loss-r38.md`,
+`corpus/knowledge/oom-victim-context-r41.md`); one refused with reason and
+flip (`oom-tracing-tracepoints-r42.md`, source S268 unreachable —
+`.ufo/waves/round-42/assimilation/refused-oom-tracing.md`). Registry
+S231 → 238 (S232–S235, S241, S262 from the package; S347 mine): collision
+check 0 (reg 231 ids vs staged 115), the indented-row guard proven on a
+scratch fixture, append block transformed to fleet schema and validated in
+a scratch mirror (rc=0) before the append — receipts under
+`.ufo/waves/round-42/assimilation/`. No campaign file was touched.
+
+### Inherited uncommitted r42 tree (addendum §5)
+
+The earlier same-round launch left `.ufo/waves/round-42/` untracked
+(contract, three counters, fixtures, control receipts, arm-discriminators,
+census-start). All bytes were inspected and re-verified (counters re-run at
+the entering tip: C2/C3 `unmet` controls reproduced; pins hash-match) and
+are reused as this round's freeze; nothing was discarded.
