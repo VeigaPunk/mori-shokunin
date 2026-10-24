@@ -2272,3 +2272,44 @@ Waves: wave 1 (build/attack) 32 seats, wave 2 (falsify) 32 seats, v1 shape.
 Lesson `corpus/lessons/round-39.md` (Gate: S227, S228; M20–M22). Census exit 0
 start and end. Capability rows: fabricated-content discriminator v2, counter
 conformance v2, ancestry supersede reading. Debt (f) OPEN/operator-owned.
+
+## Round 40 (L1 mori-r40, attempt 1 resumed after the 01:32 launch died)
+
+Two claims, measured per claim (contract `.ufo/waves/round-40/contract.md`, pins in
+`evidence/freeze-r40.txt`; the round-39 instruments stay byte-frozen at their
+commits; before-controls ran bytes extracted via `git show bb1f2457:<path>`):
+
+- **C1 operability (7)** — conformance v3, scope-aware timeouts and per-Popen
+  drains (r39 w1 findings 4/8/12; closure routed defects 1–2):
+  `python3 .ufo/waves/round-40/conform.py 265a955cc67be4eae97d2dc5a9338a25f31eb29b`
+  → `CONFORM=met` exit 0 (`evidence/c10-after.txt`); `--selftest` →
+  `CONFORM_SELFTEST pass=11 fail=0` (`c10-after-selftest.txt`); the r39 checker
+  bytes print `CONFORM=met` on nine survivor fixtures + the two-counter audit
+  (`c10-red-*.txt`) where v3 prints `CONFORM=unmet` with the named new check
+  (`c10-after-*.txt`); the conjunct-gutted v3 copy fails every arm with
+  `selftest_conjunct` (`c10-after-conjunct.txt`) where the gutted r39 copy
+  selftested green (`c10-red-conjunct.txt`). Counter parity with count-c7 proven
+  byte-identical receipts (`c10-parity.txt`).
+- **C2 depth (5, tied lowest)** — gate v3 P-C11 eligible set + first-parent
+  reference (r39 w1 findings 2/5; closure routed defects 3–4):
+  `python3 tools/mori-sources-appendonly.py --selftest` → `pass=15 fail=0`
+  (`evidence/c11-after-selftest.txt`); lane line at T1 lists 34 as-of ids incl.
+  S226, none stale (`c11-after-lane.txt` — the contract's "(19 ids)"
+  parenthetical mis-predicted; measured 34, corrected in SCORECARD and lesson
+  M24); at `e37dcc6` → `stale_supersede=[S069]` (`c11-after-e37dcc6.txt`); the
+  v2 gate bytes omit the never-edited superseded row, fabricate the merge edit +
+  stale verdict, on the new DAG fixtures (`c11-red-*.txt`) where v3 prints the
+  P-C11 verdicts (`c11-after-fixture-{n,p,r}.txt`).
+
+Frontier: S229 admitted (Python execution model §4.2.2; copy
+`corpus/evidence/sources-r40/S229.src`; 15-word located quote in lesson
+`corpus/lessons/round-40.md` ## Gate); knowledge entry
+`corpus/knowledge/conform-scope-r40.md` grounds C1; census exit 0 start and end
+(`evidence/census-start.txt`, `census-end.txt`); r39-erratum lands the S227
+17-word label fix and the C2 wording correction (closure routed defects 1 and 4).
+Mistakes M23 (inherited-unverified-freeze) and M24 (parenthetical number-drift)
+mined in `corpus/lessons/round-40.md`. Instruments at
+`265a955cc67be4eae97d2dc5a9338a25f31eb29b`; evidence at this commit.
+Wave: one v2 wave, 66 seats (32 attack), validated `evidence/wave-plan.txt`,
+prepared-but-undispatched (accepted host mapping). SHONEN: no named non-author
+verifier in-round; boxes stay `[~]`/`[ ]` per evidence pointers.

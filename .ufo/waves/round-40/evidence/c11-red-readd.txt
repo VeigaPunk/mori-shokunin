@@ -1,0 +1,7 @@
+command: python3 .ufo/waves/round-40/fixtures/run-c11-dags.py .ufo/waves/round-40/fixtures/extracted/gate-v2-bb1f2457.py /home/vgpnk/Projects/shokunin/mori-shokunin /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-40/evidence/c11-red-readd.txt dag-r
+
+== linear delete-then-re-add is not an edit (dag-r, --round-base b0=07be6c7f1765)
+P-C9: at revision R, tools/mori-sources-appendonly.py reports, after its summary line, `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; an id is superseded-as-of only when its latest superseding row's landing commit is a descendant, by `git merge-base --is-ancestor`, of the commit of the id's last immutable-cell edit, where an edit at a commit is a change against its first parent's state (not the previous walk record), the path walk uses `--full-history`, and the lane-history verdicts are unchanged — S069 is stale at `e37dcc6` and no id is stale at the round-39 tip — and the selftest carries committed fixtures for a side-branch superseder (stale, not as-of) and a merge that must not fabricate an edit (round-38 gate bytes print as-of and a fabricated edit there; the round-39 gate prints stale and no edit).
+appendonly_violations=0 ids=[] deleted=[] superseded=[] round_changed=[S008]
+supersede_timing superseded_as_of=[] stale_supersede=[]
+EXIT=1

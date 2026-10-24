@@ -1,0 +1,3 @@
+command: python3 tools/mori-sources-appendonly.py --selftest
+MORI_SOURCES_APPENDONLY_SELFTEST pass=15 fail=0
+EXIT=0

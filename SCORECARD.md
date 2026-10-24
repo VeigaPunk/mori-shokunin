@@ -2212,3 +2212,49 @@ this round; C1 moves the calibration surface (new counter + receipts), C2 the op
 (new checker version), C3 the depth surface (gate semantics + S227). Sourced claim: C3 rests on
 S227 (opened this round; `corpus/knowledge/gate-ancestry-r39.md`). No retirement, waiver, exploratory
 claim or promotion. Frontier: S227, S228 rows; census 226 → 228.
+
+## Round 40 declaration (attempt 1 resumed, L1 mori-r40) — conformance v3 scope-aware timeouts + per-Popen drains (C1, operability), gate v3 P-C11 eligible set + first-parent reference (C2, depth)
+
+Entering tip `bb1f2457bb8d3e8d5dfe98488b91e8c02e378ca3` (round 39 admitted; closure
+`corpus/lessons/round-39-verifier-spotcheck.md`). Instruments landed at
+`265a955cc67be4eae97d2dc5a9338a25f31eb29b` (T1); evidence + corpus records at the
+round tip (T2, this commit's parent chain). Contract
+`.ufo/waves/round-40/contract.md` (frozen by the prior launch; re-verified and
+completed by this one — see lesson M23). Lowest non-retired axes calibration 5 and
+depth 5 (tied) — C2 works depth; C1 works operability (routed defect 1/2 class).
+
+| Claim | Axis / score | Before (one command over committed bytes) | After (measured at T1) |
+|---|---|---|---|
+| C1 conformance v3: `timeout_scope` resolves every `timeout=` at its read site (function-local shadow, `global`, conditional rebind fail closed; finite-positive fold), `drain_bind` requires a consumed `communicate(timeout=…)` bound to the same name as each `Popen(`, `selftest_conjunct` reads the checker's own mutation table with per-counter comm_violations (r39 w1 findings 4/8/12; routed defects 1–2) | operability 7 | the r39 checker bytes (`fixtures/extracted/conform-v2-r39.py`, sha fe0be179…) print `CONFORM=met` exit 0 on nine survivor fixtures + a two-counter audit, and a conjunct-gutted r39 copy selftests `pass=8 fail=0` (`evidence/c10-red-*.txt`) | `python3 .ufo/waves/round-40/conform.py 265a955cc…` → `CONFORM=met` exit 0 (`evidence/c10-after.txt`); `--selftest` → `CONFORM_SELFTEST pass=11 fail=0` (`c10-after-selftest.txt`); each survivor + the multicounter audit → `CONFORM=unmet` exit 1 with the named new check FAIL (`c10-after-<fixture>.txt`); conjunct-gutted v3 copy → `pass=0 fail=10`, `selftest_conjunct` in every failing list (`c10-after-conjunct.txt`) |
+| C2 gate v3 (P-C11): the `supersede_timing` eligible set is every superseded id present at R (never-edited ids test as-of against their first-sighting commit); an edit compares against the first parent's own state only — a first-parent-lacks-path merge contributes no edits and a linear delete-then-re-add contributes no changed event (r39 w1 findings 2/5; routed defects 3–4) | depth 5 | the v2 gate bytes (`fixtures/extracted/gate-v2-bb1f2457.py`, sha 62cd4132…) print the lane line with 18 as-of ids, S226 absent (`evidence/c11-before-lane.txt`), omit the never-edited superseded row on dag-n, fabricate a changed line + stale verdict on dag-p, and the conjunct-gutted/red set as committed (`c11-red-*.txt`) | `python3 tools/mori-sources-appendonly.py --selftest` → `pass=15 fail=0` (`c11-after-selftest.txt`); lane at T1 → 34 as-of ids incl. S226, `stale_supersede=[]` (`c11-after-lane.txt`); at `e37dcc6` → `stale_supersede=[S069]` (`c11-after-e37dcc6.txt`); dag-n/dag-p/dag-r print the P-C11 verdicts (`c11-after-fixture-{n,p,r}.txt`) |
+
+**Correction folded same-round (number-drift):** the contract's and P-C11's
+parenthetical "(19 ids)" mis-predicted the eligible-set extension: 16 never-edited
+superseded rows (S226 plus 15 earlier) reach the timing line, not only S226 — the
+measured value is **34 as-of ids** at T1. The predicate's semantic sentence is the
+claim; the parenthetical arithmetic is corrected here and in lesson M24. The
+discriminator (S226 present; v2's edit-bounded set omits all 16) is unchanged.
+
+Kill rules as frozen: a do-nothing control cannot print `CONFORM=met` (the r39
+checker on the survivors is the committed control); a gate keeping the edit-bounded
+eligible set prints 18 ids ≠ 34 with S226 absent; a gate with the second-parent
+fall-through fabricates the dag-p edit; a gate keeping the re-add changed event
+prints `stale=[S008]` on dag-r.
+
+Capability rows (demonstrated running this round; closure admits them):
+
+| key | name | what it can now do | evidence | first working |
+|---|---|---|---|---|
+| round-40 C1 | counter conformance v3 | Audits every counter's `timeout=` keywords at their read sites (function-local shadow, `global`, conditional rebind, finite-positive fold), binds every `Popen(` drain to a consumed same-name `communicate(timeout=…)`, and reads its own mutation table for the communicate-timeout conjunct with per-counter comm_violations; eleven-mutation selftest | `.ufo/waves/round-40/conform.py`; `evidence/c10-after.txt`; `c10-after-selftest.txt` | 40 |
+| round-40 C2 | ancestry supersede reading v3 | Separates as-of from stale over every superseded id present at R (never-edited ids test against their first-sighting commit), with edits measured against the first parent's own state only — no second-parent fall-through, no re-add changed event | `tools/mori-sources-appendonly.py` (P-C11); `evidence/c11-after-lane.txt`; `c11-after-fixture-n.txt` | 40 |
+
+Held: coverage 6, operability 7 (C1 moves the surface; the v3 checker row enters
+the registry; score held per the round's honest read — closure rules), depth 5 (C2
+moves the surface; score held, same read), calibration 5, freshness 5, adjacency 6 —
+no scalar score moves this round; both claims are checker-semantics moves whose
+receipts are the improvement. Sourced claim: C1 rests on S229 (opened this round;
+`corpus/knowledge/conform-scope-r40.md`). No retirement, waiver, exploratory claim
+or promotion. Frontier: S229 row; census 228 → 229 (exit 0 both ends).
+Round shape: ONE v2 wave, 66 seats (32 attack = 48.5%), validated under policy v2
+(`evidence/wave-plan.txt`, `w1-spec.json`) — prepared-but-undispatched under the
+accepted host mapping (orchestrator dispatches prepared waves between rounds).
