@@ -2182,7 +2182,7 @@ The round-38 claim-3 row's after cell read "`supersede_timing superseded_as_of=[
 stale_supersede=[]` at the round-38 tip". That literal is superseded: the gate prints **every**
 superseded id whose latest superseder postdates its last immutable-cell edit — 18 ids at the tip
 (`[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193]`),
-as `evidence/gate-after.txt:21` records. The error was the L1's transcription of the r36 oracle's
+as `evidence/gate-after.txt:22` records. The error was the L1's transcription of the r36 oracle's
 `superseded=[S069,S182,S193]` field for a different tool; the w2/RevScorecardClaims seat re-derived
 it. The cell now carries the observed line and this note. The claim's discriminator is unchanged:
 `stale_supersede=[S069]` at `e37dcc6` and `stale_supersede=[]` at the tip.

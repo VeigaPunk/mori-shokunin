@@ -1,0 +1,7 @@
+FAIL predicate      predicate whitespace-only change -> failing=[]
+PASS head_pin       pin label renamed -> only head_pin failed
+FAIL tool_resolve   semantic no-op mutation -> failing=[]
+PASS bounded_reads  git helper run timeout removed -> only bounded_reads failed
+FAIL timeout_state  semantic no-op mutation -> failing=[]
+PASS scratch        scratch parent moved off-lane -> only scratch failed
+CONFORM_SELFTEST pass=3 fail=3

@@ -1,4 +1,4 @@
-command: python3 tools/mori-sources-appendonly.py f725f3076972e6e70595b5ac8279be524a111ff8 --round-base f10a320d
+command: python3 tools/mori-sources-appendonly.py b6993744171a05efc627b5e0664489c31aa5214e --round-base f10a320d
 P-C6: at revision R, tools/mori-sources-appendonly.py reports, after its summary line, `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; an id is superseded-as-of only when its latest superseding row's landing commit is a descendant of the id's last immutable-cell edit commit, and is listed in stale_supersede otherwise; on the lane history S069 is stale before its round-38 supersede row lands and no id is stale after, and the selftest carries a supersede-before-edit fixture that lists the id in stale_supersede.
 changed S041 superseded_by=S206
 changed S044 superseded_by=S207
