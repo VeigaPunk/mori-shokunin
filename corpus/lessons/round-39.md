@@ -93,3 +93,11 @@ SIGTERM → grace → SIGKILL trade).
     their inputs are entering-tip bytes; `head_pin` pins live HEAD (r38-carried, tautological); the
     contract's evidence-path list does not match the disk set; `c7-after.txt` names the data rev in its
     command line (inputs byte-identical to the tip; reproduced).
+12. (w1/RevC8Conjunct, MEDIUM) the contract's kill rule "a checker whose selftest never mutates the
+    conjunct fails selftest_conjunct" is falsified: gutting the `("selftest_conjunct", …)` mutation entry
+    from a checker copy still yields `CONFORM_SELFTEST pass=8 fail=0` and `CONFORM=met` — the check proves
+    the static rule can flag a stripped counter but never reads the checker's own mutation list (M19
+    prevention rests on the committed entry alone). Also: multi-counter audits read `comm_violations` for
+    the first counter only. And (w1/RevC7Live, PASS) the copy-existence bound is demonstrated both ways —
+    a fabricated S103 copy defeats `no_copy`, so the rule raises fabrication cost without proving
+    provenance; receipt corroboration remains blob identity + registry-exact equality.
