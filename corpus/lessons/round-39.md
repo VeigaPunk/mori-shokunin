@@ -44,3 +44,22 @@ SIGTERM → grace → SIGKILL trade).
    version + pin change), next attempt.
 3. (w1/MutC8NoneVal, note) timeout_value's violation message says "non-numeric constant" where the value
    is a name resolving to None; naming the symbol would aid audits. Cosmetic; routed forward.
+4. (w1/RevC8Value, HIGH) timeout_value survives two r38-M19-class bypasses: a function-local shadow
+   (`TIMEOUT = 120` module-level, then `TIMEOUT = None` inside `run()` before a
+   `communicate(timeout=TIMEOUT)`) and a module-level conditional rebind (`if cond: NAME = None` after
+   `NAME = 120` — the fold only walks `tree.body`). Both print CONFORM=met with a runtime-None drain.
+   The frozen C2 claim (routed fixtures + conjunct) stands measured; these survivors are next-round claim
+   material. Also: `1e400` (inf) passes (OverflowError at runtime); fold crashes (`1/0`, `A = A`) exit 2
+   rather than FAIL. Routed to round 40 with the seat's PoCs under `w1/RevC8Value.md`.
+5. (w1/CritC9Semantics, FAIL) Two reproduced gate-v2 defects: (a) a linear delete-then-re-add history
+   changes v2's timing/exit versus v1, so "on linear histories v1 and v2 agree byte-for-byte" holds only
+   for rows without a re-add (the lane has none — lane parity stands); (b) when the first parent lacks the
+   path, the ref falls through to the second parent's state, which contradicts P-C9's "first parent's
+   state" for merges. Routed: eligible-set/refinement semantics as a new gate version or narrowed prose,
+   next attempt.
+6. (w1/RevC9Walk, MEDIUM) `evidence/c9-after-lane.txt` walk counts (53/52) name no rev; at the landed tip
+   the counts are 54/53 (the +1 is this round's own data commit). The 6531ac60 simplification finding
+   stands. Amended receipt names the measured rev (committed alongside).
+7. (w1/RevC9Live + RevCensus, notes) contract prose `pass=11` is stale (selftest prints 12); the
+   "18 ids + S226" prose overclaims (eligible set is edit-bounded — see finding 2 above). Receipts
+   themselves are honest.
