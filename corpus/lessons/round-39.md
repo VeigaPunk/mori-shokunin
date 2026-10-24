@@ -101,3 +101,7 @@ SIGTERM → grace → SIGKILL trade).
     the first counter only. And (w1/RevC7Live, PASS) the copy-existence bound is demonstrated both ways —
     a fabricated S103 copy defeats `no_copy`, so the rule raises fabrication cost without proving
     provenance; receipt corroboration remains blob identity + registry-exact equality.
+13. (w1/RevC7Kill, LOW) the four drawn states were independently verified against the want table
+   (exactly {S103: drawn} changes; non-vacuity controls reject), and `--arms selftest` has a latent spacing
+   bug (`parse_rowstates` requires one space; the probe prints via `%-20s`) — unreachable from the scored
+   path and from `timeout_state` (hang-first), routed to round 40 with `ROWSTATES_RE` dead-code cleanup.
