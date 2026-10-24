@@ -1,0 +1,6 @@
+== merge does not fabricate an edit (dag-c, --round-base c1=2053fccc3728)
+P-C9: at revision R, tools/mori-sources-appendonly.py reports, after its summary line, `supersede_timing superseded_as_of=[...] stale_supersede=[...]`; an id is superseded-as-of only when its latest superseding row's landing commit is a descendant, by `git merge-base --is-ancestor`, of the commit of the id's last immutable-cell edit, where an edit at a commit is a change against its first parent's state (not the previous walk record), the path walk uses `--full-history`, and the lane-history verdicts are unchanged — S069 is stale at `e37dcc6` and no id is stale at the round-39 tip — and the selftest carries committed fixtures for a side-branch superseder (stale, not as-of) and a merge that must not fabricate an edit (round-38 gate bytes print as-of and a fabricated edit there; the round-39 gate prints stale and no edit).
+changed S001 superseded_by=S003
+appendonly_violations=1 ids=[S001] deleted=[] superseded=[S001] round_changed=[]
+supersede_timing superseded_as_of=[S001] stale_supersede=[]
+EXIT=0

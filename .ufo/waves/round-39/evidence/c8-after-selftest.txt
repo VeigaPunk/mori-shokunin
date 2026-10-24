@@ -1,0 +1,12 @@
+command: r39 conform --selftest at f920eaf7
+exit=0
+PASS predicate          predicate token changed -> only predicate failed
+PASS head_pin           pin label renamed -> only head_pin failed
+PASS tool_resolve       relative resolution removed -> only tool_resolve failed
+PASS bounded_reads      git helper run timeout removed -> only bounded_reads failed
+PASS timeout_value      timeout value replaced with None -> only timeout_value failed
+PASS drain_shape        communicate drains replaced by wait+read -> only drain_shape failed
+PASS timeout_state      budget flag ignored -> only timeout_state failed
+PASS scratch            scratch parent moved off-lane -> only scratch failed
+PASS selftest_conjunct  communicate timeout keyword stripped -> only selftest_conjunct failed
+CONFORM_SELFTEST pass=9 fail=0
