@@ -1,0 +1,3 @@
+mori round 39 — dispatch log (QUALITY 103 second clause)
+
+landed 13bfba23b7ca063c76d3504a2ff6eb7b6a294932 (after receipts)

@@ -1,0 +1,397 @@
+{
+  "schema": "ufo-swarm-wave-v1",
+  "wave": "mori-r39-w1",
+  "context": "# mori round 39 — wave 1 (build + first falsifiers), L1 mori-r39\n\nLane repo: /home/vgpnk/Projects/shokunin/mori-shokunin (jj-colocated; git is the backend). Fleet repo: /home/vgpnk/Projects/shokunin (read-only for you).\nScored tip: 13bfba23b7ca063c76d3504a2ff6eb7b6a294932 (pushed). Entering tip: 13f3db7e5c7163e7ef300259ff597a42a79f81f1. Round base of record: f10a320d.\n\n## Claims under attack (frozen in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/contract.md, pins in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/evidence/freeze-r39.txt)\n- C1 calibration: `python3 .ufo/waves/round-39/count-c7.py 13bfba23b7ca063c76d3504a2ff6eb7b6a294932 --seed 20261024` must print `C7=met` exit 0\n  (five v2 checks + four rejected witnesses; `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/evidence/c7-after.txt`). The r38 counter accepts four M18\n  bypass classes: `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/evidence/c7-red-one-char.txt`, `c7-red-comment.txt`, `c7-red-classifier.txt`,\n  `c7-red-clone.txt`. Predicate P-C7 is in the contract.\n- C2 operability: `python3 .ufo/waves/round-39/conform.py 13bfba23b7ca063c76d3504a2ff6eb7b6a294932` must print `CONFORM=met` exit 0 and\n  `--selftest` → `CONFORM_SELFTEST pass=9 fail=0` (`/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/evidence/c8-after.txt`, `c8-after-selftest.txt`);\n  the two M19 bypass fixtures are rejected (`c8-after-none.txt`, `c8-after-wait.txt`) where the r38 checker\n  printed `CONFORM=met` (`c8-red-none.txt`, `c8-red-wait.txt`). Predicate P-C8 in the contract.\n- C3 depth: `python3 tools/mori-sources-appendonly.py --selftest` → `pass=12 fail=0`\n  (`/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/evidence/gate-selftest-after.txt`); the r38 gate bytes fabricate `round_changed=[S001]` on fixture C\n  and print stale on fixture D (`c9-red-a.txt`); v2 prints the predicate-word verdicts\n  (`c9-after-fixture-a.txt`, `c9-after-fixture-c.txt`, `c9-after-fixture-d.txt`) and byte-identical\n  lane-history lines (`c9-after-lane.txt`). Predicate P-C9 in the contract and the gate's PREDICATE.\n- Frontier: S227 (gitrevisions), S228 (supersedes S226, corrected quote) — `corpus/SOURCES.md`,\n  copies `corpus/evidence/sources-r39/`; lesson `corpus/lessons/round-39.md`; knowledge\n  `corpus/knowledge/gate-ancestry-r39.md`.\n\n## Hard bounds (every seat)\n- Write EXACTLY ONE file: your report. The validator renders `Report: .ufo/waves/round-39/w1/<Name>.md`;\n  that path is RELATIVE TO /home/vgpnk/Projects/shokunin/mori-shokunin — write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. Scratch code/outputs only under\n  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/scratch/<YourName>/ or $TMPDIR.\n- The lane repo is READ-ONLY for you: never `git add/commit/push/fetch/reset/stash`, never any mutating\n  jj command, never edit lane files. Read-only tool and counter runs are fine; mutation-testers run COPIES\n  under their own scratch — never edit the lane's real files.\n- Never touch: /home/vgpnk/Projects/shokunin/MANIFEST.json, /home/vgpnk/Projects/shokunin/.ufo/state/, /home/vgpnk/Projects/shokunin/.ufo/watchdog.log, /home/vgpnk/Projects/shokunin/templates/,\n  /home/vgpnk/Projects/shokunin/scripts/, sibling lane repos, ~/.omp/agent/config.yml, ~/.omp/agent/mcp.json.\n- Detection and report only — no remediation, no kills, no config edits (mori province).\n- Tooling directive (operator, 2026-10-19): you may install or upgrade tools that help the task — read\n  `~/.omp/agent/RULES.md` first (official channels only; never pipe a remote script into a shell; record\n  tool/version/channel/reason in your report). **pacman transactions are PAUSED host-wide**: install via\n  `uv tool`/`npx`/an official binary in `~/.local/bin`, or file an L0 question. Never `pacman -Sy`,\n  `-Syu`, `-U`, `-R`, downgrade, or restart a host service.\n- Never use `agent://all`; your result is the report. Cite path:line or a command output for every claim;\n  an unrun check has not passed.\n",
+  "policy": {
+    "source": "config",
+    "maxLanes": 32,
+    "minLanes": 16,
+    "waveMinLanes": 32,
+    "waveMaxLanes": 64,
+    "declaredMaxLanes": 32,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "dispatch": {
+    "calls": 1,
+    "kind": "task",
+    "note": "Issue exactly one batched task call carrying every spawn lane, plus one hub send per resume lane. Never split a wave into multiple task calls (one-swarm-per-wave)."
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-39/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-39/w1",
+    "members": {
+      "ConnSibling": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null
+      },
+      "ScoutC7Bounds": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ExecC7Seeds": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecC8Replay": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecC9Dags": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "RevC7Anchors": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC7CapPath": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC7Live": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC7Kill": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC7Negatives": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC7Clone": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC8Value": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC8Drain": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC8Conjunct": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC9Ancestry": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC9Compat": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC9Live": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC9Walk": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevCensus": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevGateS228": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevFreeze": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevReceipts": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevScorecard": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "MutC7Cheat": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutC8NoneVal": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutC9IndexOrder": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "CritC7Gaming": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritC8Gaming": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritC9Semantics": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "SentCounters": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "sentinel",
+        "item": null
+      },
+      "SimpCounters": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "simplifier",
+        "item": null
+      },
+      "ScribeLesson": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      }
+    }
+  },
+  "priorRegistries": [],
+  "tasks": [
+    {
+      "name": "ConnSibling",
+      "agent": "connector",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nScan sibling lanes' repos under /home/vgpnk/Projects/shokunin for overlap with this round's surfaces: tools/mori-sources-appendonly.py ancestry semantics, wave-directory counters (count-c7/conform), and the gate-ancestry knowledge entry. Name any sibling artifact that already implements this work or that this round's gate-v2 change could break.\n\n# Acceptance\nReport a sibling-overlap table with paths and verdicts; FAIL if an overlapping sibling artifact is omitted.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/ConnSibling.md"
+    },
+    {
+      "name": "ScoutC7Bounds",
+      "agent": "scout",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRead /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/count-c7.py and produce a bounds table for each of the five v2 checks (anchors_v2, capability_v2, live_rows_v2, named_row_drift, drift_kill_v2): what it proves, what it cannot prove, with line references. Include the disclosed verbatim-clone bound.\n\n# Acceptance\nReport check → proves → does-not-prove with line numbers; FAIL if any contract claim is stronger than the code.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/ScoutC7Bounds.md"
+    },
+    {
+      "name": "ExecC7Seeds",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nReplay `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/count-c7.py 13bfba23b7ca063c76d3504a2ff6eb7b6a294932` at three seeds (20261024, 7, 99). Record each run's drawn state, all check lines, the negative lines and the verdict; confirm C7=met at all three and that the drawn state differs or not across seeds.\n\n# Acceptance\nReport the three runs' key lines; FAIL if any verdict differs from C7=met or a check line is seed-dependent beyond the drawn state.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/ExecC7Seeds.md"
+    },
+    {
+      "name": "ExecC8Replay",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nReplay `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/conform.py 13bfba23b7ca063c76d3504a2ff6eb7b6a294932` twice sequentially and both bypass-fixture runs from /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/fixtures/make-m19-bypass.py (rebuild the fixtures from 13f3db7e5c7163e7ef300259ff597a42a79f81f1 yourself). Record exit codes and the load-bearing FAIL lines. Then run two `conform.py 13bfba23b7ca063c76d3504a2ff6eb7b6a294932` processes concurrently and list the scratch dirs created.\n\n# Acceptance\nReport both honest runs' verdicts, both bypass rejections with their failing check names, and the concurrent scratch dirs; FAIL on a shared/seed-derived scratch path.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/ExecC8Replay.md"
+    },
+    {
+      "name": "ExecC9Dags",
+      "agent": "executor",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRebuild the three fixture DAGs via `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/fixtures/run-c9-dags.py <gate> /home/vgpnk/Projects/shokunin/mori-shokunin <out>` twice: once with the round-38 gate bytes (extract: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 13f3db7e5c7163e7ef300259ff597a42a79f81f1:tools/mori-sources-appendonly.py`) and once with the v2 gate bytes (`git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 13bfba23b7ca063c76d3504a2ff6eb7b6a294932:tools/mori-sources-appendonly.py`). Compare each block against /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/evidence/c9-red-a.txt and the c9-after-fixture-*.txt receipts.\n\n# Acceptance\nReport both runs' timing/round_changed/exit lines per fixture; FAIL if any block contradicts its committed receipt.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/ExecC9Dags.md"
+    },
+    {
+      "name": "RevC7Anchors",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nIndependently verify the anchors_v2 check at 13bfba23b7ca063c76d3504a2ff6eb7b6a294932: extract `corpus/knowledge/source-drift-content-anchor-r38.md` and tools/mori-source-drift.py at 13bfba23b7ca063c76d3504a2ff6eb7b6a294932 (`git show 13bfba23b7ca063c76d3504a2ff6eb7b6a294932:<path>`), apply the ≥8-char and non-comment occurrence rule yourself (line-by-line), and compare with the counter's `check anchors_v2` line in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/evidence/c7-after.txt.\n\n# Acceptance\nReport per-anchor resolution (tool line numbers) and agreement; FAIL on any anchor that fails your own resolution or a counter detail that hides one.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevC7Anchors.md"
+    },
+    {
+      "name": "RevC7CapPath",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nIndependently resolve every path in the SCORECARD capability row `source-drift re-fetch probe` at 13bfba23b7ca063c76d3504a2ff6eb7b6a294932 with `git cat-file -t 13bfba23b7ca063c76d3504a2ff6eb7b6a294932:<path>` (must be blob), and verify no other SCORECARD row contains that capability key (the check reads the last single row).\n\n# Acceptance\nReport the path→type table and the row-count check; FAIL on a non-blob or an ambiguous row match.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevC7CapPath.md"
+    },
+    {
+      "name": "RevC7Live",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify live_rows_v2 at 13bfba23b7ca063c76d3504a2ff6eb7b6a294932: parse /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/evidence/drift-live-r37.txt at 13bfba23b7ca063c76d3504a2ff6eb7b6a294932, count per-row `S### drifted` lines vs the summary, check each named id is a registry row, and find each id's committed copy (`git ls-tree -r --name-only 13bfba23b7ca063c76d3504a2ff6eb7b6a294932 corpus/evidence/` → sources-r<N>/<id>.<ext>, highest N).\n\n# Acceptance\nReport the counts, the id→copy-path table, and any id without a copy; FAIL on a mismatch with the counter's detail.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevC7Live.md"
+    },
+    {
+      "name": "RevC7Kill",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRe-derive drift_kill_v2 end-to-end: run the probe's --selftest from bytes at 13bfba23b7ca063c76d3504a2ff6eb7b6a294932 (extract to scratch), then a mutant with `return \"drifted\"` replaced by `return \"<state>\"` for each of the four drawn states. For each, verify the row_states FAIL detail's got table shows exactly the want-drifted rows reading the drawn state and everything else unchanged.\n\n# Acceptance\nReport the four mutants' got-vs-want comparison results; FAIL if any state flips a non-drifted row or leaves a drifted row unflipped.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevC7Kill.md"
+    },
+    {
+      "name": "RevC7Negatives",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nProject each of the four witnesses in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/fixtures/ onto the real other bytes at 13bfba23b7ca063c76d3504a2ff6eb7b6a294932 and name which v2 check rejects it: witness-token-entry.md, witness-dangling-row.md, witness-summary-only-live.txt, witness-comment-anchors.md. Then run `count-c7.py 13bfba23b7ca063c76d3504a2ff6eb7b6a294932 --seed 20261024` and compare its four `negative` lines.\n\n# Acceptance\nReport a witness→failed-check table and the counter lines; FAIL if any witness passes all five v2 checks or a rejection reason differs from yours.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevC7Negatives.md"
+    },
+    {
+      "name": "RevC7Clone",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRebuild the fabricated self-consistent clone yourself (stub entry with the three real anchors; invented live receipt = real ten drifted rows plus `S103 drifted` with summary drifted=11; commit as a sandbox child of 13bfba23b7ca063c76d3504a2ff6eb7b6a294932). Run the r38 counter (`git show 13f3db7e5c7163e7ef300259ff597a42a79f81f1:.ufo/waves/round-38/count-c4.py`, fixtures beside it) and count-c7 on it.\n\n# Acceptance\nReport both verdicts with commands; FAIL unless the r38 counter prints C4=met and count-c7 prints C7=unmet with no_copy=['S103'].\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevC7Clone.md"
+    },
+    {
+      "name": "RevC8Value",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAudit the timeout_value folder in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/conform.py: read `_resolve` and list what it can and cannot fold (Name via params/assignments, List/Tuple, Subscript, BinOp, UnaryOp, IfExp?). Then build three counter variants from count-c7 bytes with timeout=NAME where NAME binds to -1, to 0, and to a string; run the checker on each.\n\n# Acceptance\nReport the fold-capability list and the three variants' verdicts; FAIL if any non-positive or non-numeric variant passes timeout_value.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevC8Value.md"
+    },
+    {
+      "name": "RevC8Drain",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAudit drain_shape in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/conform.py: verify that a counter whose Popen result is drained by a communicate in a DIFFERENT function fails, and one whose communicate result is unused (bare expression statement) fails. Build both variants from count-c7 bytes and run the checker.\n\n# Acceptance\nReport both variants' drain_shape verdicts; FAIL if either passes.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevC8Drain.md"
+    },
+    {
+      "name": "RevC8Conjunct",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify selftest_conjunct: run the strip test mentally/on a scratch copy of count-c7 (strip the first `proc.communicate(timeout=...)`), confirm the checker's rule catches it, and confirm the honest counter passes. Also verify the r38 selftest gap claim in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/evidence/m19-selftest-gap.txt against the r38 conform bytes at 13f3db7e5c7163e7ef300259ff597a42a79f81f1.\n\n# Acceptance\nReport both sides with commands; FAIL if the strip is not caught or the gap receipt misquotes the r38 bytes.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevC8Conjunct.md"
+    },
+    {
+      "name": "RevC9Ancestry",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nIndependently re-derive the fixture verdicts: build dag-a and dag-c with /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/fixtures/run-c9-dags.py's machinery (import the gate module's _selftest_dag_cases/_make_dag_repo in a scratch script), then run `git merge-base --is-ancestor` yourself for each fixture's edit/landing commits and compare against the v2 gate's printed timing.\n\n# Acceptance\nReport your merge-base results vs the gate's lines for both fixtures; FAIL on any contradiction.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevC9Ancestry.md"
+    },
+    {
+      "name": "RevC9Compat",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRun the r37 C1 counter at 13bfba23b7ca063c76d3504a2ff6eb7b6a294932: `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-37/count-c1.py 13bfba23b7ca063c76d3504a2ff6eb7b6a294932 --seed 41` and confirm C1=met (its real arm reads gate bytes at 6bd57097, its drawn arm draws lane revs). Inspect the blind/real/challenge arm lines for malformed per-id lines caused by the new gate output.\n\n# Acceptance\nReport the arm lines and C1= verdict; FAIL on unmet or a malformed-line count > 0.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevC9Compat.md"
+    },
+    {
+      "name": "RevC9Live",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRe-run the gate at 13bfba23b7ca063c76d3504a2ff6eb7b6a294932 and at e37dcc6 (both `--round-base f10a320d`) and diff your outputs against the round-38 receipts (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/../round-38/evidence/gate-after.txt and gate-after-e37dcc6.txt, ignoring the command:/predicate lines). Confirm the S069 receipt value sits at gate-after-e37dcc6.txt line 22.\n\n# Acceptance\nReport the diff results and the line-22 check; FAIL on any non-header difference or a wrong line number.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevC9Live.md"
+    },
+    {
+      "name": "RevC9Walk",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify the walk claims in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/evidence/c9-after-lane.txt: count commits of `git log --full-history -- corpus/SOURCES.md` vs default at 13bfba23b7ca063c76d3504a2ff6eb7b6a294932; confirm 6531ac60 appears only with --full-history; verify the gate's log call carries %P parents (read the gate source at 13bfba23b7ca063c76d3504a2ff6eb7b6a294932).\n\n# Acceptance\nReport the counts and the source line; FAIL on any mismatch with the receipt.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevC9Walk.md"
+    },
+    {
+      "name": "RevCensus",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRe-run `bash /home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori`; count registry rows at 13f3db7e5c7163e7ef300259ff597a42a79f81f1 and 13bfba23b7ca063c76d3504a2ff6eb7b6a294932 (`git show <rev>:corpus/SOURCES.md | grep -c '^| S'`); verify no existing row's status/recheck/used-by cell changed between the two revs.\n\n# Acceptance\nReport exit code, row counts, and the append-only diff verdict; FAIL on a new error line, a count other than +2, or an in-place cell edit.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevCensus.md"
+    },
+    {
+      "name": "RevGateS228",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify S228: the row opens `supersedes S226`; the quoted sentence is verbatim at corpus/evidence/sources-r39/S228.src:657-659 (25 words or fewer); S228's landing commit descends from S226's landing commit (`git merge-base --is-ancestor`); the gate at 13bfba23b7ca063c76d3504a2ff6eb7b6a294932 lists S226 in superseded_as_of; the S226 row at 13f3db7e5c7163e7ef300259ff597a42a79f81f1 still prints the `:657-658` suffix.\n\n# Acceptance\nReport each check with its command output; FAIL on any mismatch.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevGateS228.md"
+    },
+    {
+      "name": "RevFreeze",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify the freeze: recompute sha256 of every path listed in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/evidence/freeze-r39.txt at 13bfba23b7ca063c76d3504a2ff6eb7b6a294932 and compare. Name any drift. Also verify the round-38 instruments under .ufo/waves/round-38/ are byte-identical to their bytes at 13f3db7e5c7163e7ef300259ff597a42a79f81f1 (git show comparisons for count-c4.py, conform.py, count-c1.py, contract.md).\n\n# Acceptance\nReport the hash comparison table; FAIL on any drift not explained by a named new version.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevFreeze.md"
+    },
+    {
+      "name": "RevReceipts",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAudit every file in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/evidence/: each receipt carries a `command:` first line, no absolute operator path other than the lane root, and its printed verdict matches the claim it supports (compare against the contract's C1-C3 after-values).\n\n# Acceptance\nReport a receipt→verdict→claim table and any hygiene defect; FAIL on a receipt whose command does not reproduce its output.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevReceipts.md"
+    },
+    {
+      "name": "RevScorecard",
+      "agent": "reviewer",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRe-derive each counting command in the SCORECARD round-39 declaration rows at 13bfba23b7ca063c76d3504a2ff6eb7b6a294932: run every command quoted in the before/after cells and compare printed literals verbatim (count-c7 C7=met; conform CONFORM=met + selftest 9/9; gate selftest 12/12; the red receipts' RED verdicts).\n\n# Acceptance\nReport a claim→declared-vs-observed table; FAIL on any cell whose literal the command does not print.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/RevScorecard.md"
+    },
+    {
+      "name": "MutC7Cheat",
+      "agent": "mutation-tester",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRe-derive the cheat-probe discrimination: build the r38-M18 cheat probe (row_states detail always appends both `('S103', 'drifted')` and `('S103', 'excerpt')`), run the r38 drift_kill logic on it (PASS = red) and count-c7's drift_kill_v2 on a sandbox carrying it (must FAIL the check).\n\n# Acceptance\nReport both verdicts; PASS only if the r38 check accepts and drift_kill_v2 rejects.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/MutC7Cheat.md"
+    },
+    {
+      "name": "MutC8NoneVal",
+      "agent": "mutation-tester",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nRe-derive bypass-none: run /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/fixtures/make-m19-bypass.py 13f3db7e5c7163e7ef300259ff597a42a79f81f1 /home/vgpnk/Projects/shokunin/mori-shokunin <scratch>, then the r39 checker on bypass-none.py; expected timeout_value FAIL (lines naming UNBOUNDED_DRAIN_S).\n\n# Acceptance\nReport the failing check lines; PASS only if timeout_value fails.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/MutC8NoneVal.md"
+    },
+    {
+      "name": "MutC9IndexOrder",
+      "agent": "mutation-tester",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nMutation-test the gate's timing: take the v2 gate bytes at 13bfba23b7ca063c76d3504a2ff6eb7b6a294932, patch the timing decision back to index order (`landing > last_edit` style) in scratch; run its --selftest. Expected: the fixture-D case fails the mutant (selftest not 12/12).\n\n# Acceptance\nReport the mutant selftest tail; PASS only if pass=11 fail=1 (or worse) naming fixture D.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/MutC9IndexOrder.md"
+    },
+    {
+      "name": "CritC7Gaming",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAttack P-C7: construct the strongest fabricated binding that still passes all five v2 checks without doing the claimed work (consider: anchors copied from code positions, a receipt naming only rows with copies, a probe that prints expected tables). Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/contract.md's disclosed bound and state whether your construction refutes it or fits inside it.\n\n# Acceptance\nReport the strongest construction and whether it refutes the disclosed bound; if it passes, name exactly which check should tighten and why the current P-C7 bound permits it.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/CritC7Gaming.md"
+    },
+    {
+      "name": "CritC8Gaming",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAttack P-C8: can a counter pass all nine checks while being unreplayable or unbounded? Consider computed timeouts (function calls, getattr, conditional rebinding of the budget), a communicate drained via a helper alias, or a mkdtemp dir passed positionally. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/conform.py.\n\n# Acceptance\nReport the strongest bypass and whether the checker or its selftest catches it; name the missing mutation if any.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/CritC8Gaming.md"
+    },
+    {
+      "name": "CritC9Semantics",
+      "agent": "critic",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nAttack P-C9's words against the implementation: the re-add rule on linear histories, 'latest superseding row' selection on incomparable branches, last-edit attribution when two incomparable commits edit the same id, and nearest_path_commit fallback. Which contract sentence is stronger than the code, if any?\n\n# Acceptance\nReport a sentence-by-sentence verdict table; FAIL (the round) if any sentence exceeds the code without being named in the contract's disclosed bounds.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/CritC9Semantics.md"
+    },
+    {
+      "name": "SentCounters",
+      "agent": "sentinel",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nSecurity-review /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/count-c7.py and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/conform.py: --tool/--repo path handling, symlink behavior, scratch permissions, the executed-tool boundary (count-c7 runs the probe under test; conform runs counters), and the hang fixture's process group.\n\n# Acceptance\nReport findings by severity with lines; FAIL if a HIGH is omitted or a MEDIUM/LOW is claimed fixed without a check.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/SentCounters.md"
+    },
+    {
+      "name": "SimpCounters",
+      "agent": "simplifier",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nFind dead weight in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/count-c7.py and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-39/conform.py (unused constants such as ROWSTATES_RE or has_communicate_timeout, unused flags, duplicated logic). Do NOT edit the lane files — the freeze pins them; propose deletions routed to round 40.\n\n# Acceptance\nReport a deletion list with line ranges and the behavior-preserving argument; FAIL on a proposal that changes a predicate, a check, or a printed line.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/SimpCounters.md"
+    },
+    {
+      "name": "ScribeLesson",
+      "agent": "scribe",
+      "task": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Target\nVerify `corpus/lessons/round-39.md`: the Gate rows' quotes are verbatim in corpus/evidence/sources-r39/S227.src (lines 2542-2544) and S228.src (657-659) with ≤25 words; M20-M22 each carry evidence pointers that resolve at 13bfba23b7ca063c76d3504a2ff6eb7b6a294932 and a fix shown able to fail by a runnable command.\n\n# Acceptance\nReport a row-by-row verification table; FAIL on a misquote, a word count over 25, or a fix without a fail-showing command.\n\nTime-box: return within 15 minutes with your best findings+evidence; partial results are acceptable.\nYou are an independent leaf: never block on or wait for another seat; if a needed artifact is absent, record the dependency as a finding and return.\n\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-39/w1/ScribeLesson.md"
+    }
+  ]
+}
