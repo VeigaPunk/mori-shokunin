@@ -69,3 +69,8 @@ SIGTERM → grace → SIGKILL trade).
    tuple-wrapped results also pass as "used"; the rule is per-function, not per-Popen. C2's frozen claim is
    untouched (the routed fixture has no decoy); the drain_shape clause is not what P-C8's words claim.
    Routed to round 40 with the seat's variants under `w1/RevC8Drain.md`.
+9. (w1/RevC7Anchors, LOW) anchors_v2 treats docstring positions as code (P-C7's letter says "not inside a
+   comment"; a docstring-parked anchor witness would pass). Routed to round 40 as witness material. Also:
+   `c7-after.txt` records the command rev f920eaf7 (data commit) rather than the scored tip 13bfba23 —
+   inputs byte-identical and the tip run reproduces the receipt body, so the measurement stands; receipt
+   discipline (name the scored rev) is the takeaway.
