@@ -46,8 +46,8 @@ Two structural facts fix the frame:
   | chousa, kengaku, mori | 8-column table | identical header |
   | kotoba (`:469`), kotodama (`:648`) | 8-column table | title case / `entry command` |
   | mado (`:600`), souji (`:177`) | 8-column table | relabelled cells (`gate/probe`, `self-test command / spelling`, `pinned-value path`, `verdict map (code → class)`) |
-  | kumitate (`:599`), kama (`:1326`) | 5-column table | `name | kind | entry command | self-test | pinned values live in` / kama's `Name | Kind / entry command | Exit map | Self-test / pinned values | Write scope` |
-  | revenger (`:274`) | 2-column | `| field | value |` |
+  | kumitate (`:599`), kama (`:1326`) | 5-column table | `name \| kind \| entry command \| self-test \| pinned values live in` / kama's `Name \| Kind / entry command \| Exit map \| Self-test / pinned values \| Write scope` |
+  | revenger (`:274`) | 2-column | `field \| value` |
   | lore (`:48`) | bullet list | per-gate `- **name:**` / `- **gate/probe:**` blocks, citing `../PROTOCOL.md:360-406` |
   | tsukuroi, kagi | per-round superseding sections | 19 and 2 registry sections in one file |
 
@@ -138,8 +138,9 @@ capability (see §3).
 *the round's* counters is a registered gate" (contract P-C2); `count-c2.py` takes `--counter`
 (repeatable) and checks exactly the paths handed to it. A round can therefore print `C2=met` while
 a committed counter under `.ufo/waves/round-44/` is unregistered — the failure mode kama's round-32
-repair exists to close (kama `SKILL.md:1325`: "round 33 counters live in `tools/` and were invisible
-to this gate"). mori's `mori-gate-registry.py` cannot see that class at all.
+repair exists to close (`kama-shokunin/tools/gate-registry-check.py:14-15`: "Round 34 widens the
+rule: the round-33 counters live in `tools/` and were invisible to this gate (routed defect of the
+round-33 closure)"). mori's `mori-gate-registry.py` cannot see that class at all.
 
 ### 2.3 `--selftest` registry standard — **complementing, but strictly weaker than kumitate's kill predicate**
 
@@ -263,7 +264,9 @@ not its finding-id clause. The word "conformance" in the round's report should c
 subprocess.run(["bash", census, "validate", "--file", staged], …, cwd=repo)
 ```
 
-where `--census` defaults to `<repo>/../scripts/sources-census.sh` — the **fleet-root** script, not
+where `--census` defaults (`count-c3.py:300`:
+`args.census or os.path.join(os.path.dirname(repo), "scripts", "sources-census.sh")`) to the
+**fleet-root** script, not
 a mori file, and not in `evidence/freeze-r44.txt` (which pins 11 lane-relative paths:
 `contract.md`, three counters, `tools/mori-gate-registry.py`, `figures-r43.tsv`, three mutants,
 `SKILL.md`). Two consequences: (a) the census *input* is revision-pinned (staged from `git show`) but
@@ -273,6 +276,10 @@ committed input snapshot"); (b) `validate` also resolves `used-by` paths **on di
 `E11 used-by path missing on disk`), so the leg is worktree-sensitive while C1 and C2 are
 revision-bound. The do-nothing control never reaches this leg (`evidence/control-c3-donothing.txt`
 stops at `check entry_present FAIL (absent)`), so the property is unmeasured today, not disproved.
+A third consequence follows from the same code path: an absent census script makes `bash` exit 127,
+`census_ok` records `FAIL (exit=127)` and the run prints `C3=unmet` exit 1 — a missing dependency
+reads as a failed claim, not `C3_SETUP`. (`ExecOffHostReplay` is measuring the clone case this
+wave; this seat does not duplicate it.)
 
 ---
 

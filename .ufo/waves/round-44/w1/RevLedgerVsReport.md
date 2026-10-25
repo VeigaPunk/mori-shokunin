@@ -13,7 +13,8 @@ Instrument: `.ufo/waves/round-44/count-c1.py`, sha256
 `evidence/freeze-r44.txt` pin.
 
 **State of the object under review.** No `.ufo/waves/round-44/figures.tsv` exists in the lane or
-in any commit; the 31 wave-1 reports are untracked; the round report is not written. The
+in any commit; the wave-1 reports (31 at this reading, 32 with this one) are untracked; the
+round report is not written. The
 integration worktree carries uncommitted corpus changes (`corpus/SOURCES.md`, `QUALITY.md`,
 `README.md`, `knowledge/pid-probe-conclusion-r44.md`, `SCORECARD.md`, `LOG.md`). Everything below
 about "the report's figures" is therefore derived from the report contract

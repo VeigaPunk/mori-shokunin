@@ -182,7 +182,7 @@ Frontier row: `corpus/README.md` Round-44 coverage additions names this entry.
 | requirement | where in the draft | check |
 |---|---|---|
 | `source:` lines with LANE ids | S471 (Ubuntu ja page), S472 (Arch zh_TW page), each `source:` on its own line and starting the id | id follows the document; no campaign ids |
-| `verified-at: 2026-10-25` | line 4, date first in the cell | substring `verified-at:` present (count-c3 requirement) |
+| `verified-at: 2026-10-25` | line 5, date first in the cell | substring `verified-at:` present (count-c3 requirement) |
 | `recheck: 180d — <one runnable command> -> <observed> (ran 2026-10-25)` | one line, one `python3 -c` command covering both pages, observed `ja 1 2 zh 1 2` | replayed 2026-10-25 (§3.4) |
 | `coverage-map: FR5` | `coverage-map: FR5 — …` | `FR5` on the `coverage-map:` line (count-c3 requirement) |
 | `ground:` quoting PROVINCE.md FR5 boundary | `ground:` line quotes the boundary verbatim with `PROVINCE.md:48` | `PROVINCE.md:48` read |

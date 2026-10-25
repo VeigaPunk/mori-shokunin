@@ -92,7 +92,9 @@ tool was run there; no byte was written into it.
 - Collision count. `comm -12` at the entering registry (243 ids) → **0**;
   neither `S471` nor `S472` was allocated there. At the live tree (245 rows) →
   **2**, ids `S471` and `S472` (`w1/ExecCollisionGuard.md` §3; this seat
-  reproduced 243/136 and 0/2).
+  reproduced 243/136 and 0/2). Committed receipts:
+  `assimilation/reg-ids` (245 lines), `assimilation/staged-ids` (136),
+  `assimilation/collisions` (`S471`, `S472`).
 - Renumber map, by document and never by arithmetic: staged `S490` (Ubuntu ja
   proc(5)) → lane **S471**; staged `S491` (Arch zh_TW proc(5)) → lane **S472**.
   The staged block's own `S471`/`S472` (gihyo.jp 61 and 56) are shadowed and
@@ -112,8 +114,8 @@ tool was run there; no byte was written into it.
   `sources-census.sh validate --file …/corpus/SOURCES.md` **exit 0**, 19 W04
   warnings, 0 errors, **245 rows**. The same mirror with the two rows but no
   entry → `E11` on both rows, exit 1: the entry must exist before the append.
-  The live working tree validates identically (exit 0, 19 W04, 0 errors, 245
-  rows).
+  The live working tree at the time of the append validated identically
+  (exit 0, 19 W04, 0 errors, 245 rows).
 - Quarantine slice of the campaign's absent-defect register: mori's rows are
   `S244`, `S262`, `S268` (staged `S483`, `S501`, `S507`). `S244` and `S262` are
   clean (the quote is in a fetchable source the row itself names); `S268` is
@@ -151,16 +153,17 @@ Only rows with an evidence pointer that exists are listed.
 | M3 | counters shipped without the gate standard (round 43) | `evidence/witness-r43-gates.txt` → `REGISTRY=unmet` naming both round-43 counters as unregistered and without a selftest mode | round-43 closure routed defect 4; r44 C2 | `SKILL.md` rows L183–L186, `--selftest` on each counter, committed mutants |
 | M4 | receipt revision ≠ verdict revision (round 43) | round-43 spotcheck §Routed defects item 5 (`dde525ea` vs "the landed tip"); tip run `C1S=met`, exit 0, 14 check lines | round-43 closure; `w1/ExecC1STip.md` | tip-run receipt names its revision; QUALITY 119 |
 | M5 | a recheck command that cannot reproduce | `grep -c '僵死'` → 0 and `grep -c 'ゾンビプロセス'` → 0 on the served pages; decoded → 2 and 1 | this Gate | entity-decoded recheck (landed: `html.unescape(...).count(...)` → 3, 2) |
-| M6 | a frozen check the round's own registry cannot pass | `count-c3.py WORK` → `census_ok FAIL (exit=1)` while `sources-census.sh validate --file corpus/SOURCES.md` → exit 0, 245 rows; the counter writes `SOURCES.md` to a temp dir and the census resolves every `used-by` against that dir's parent (`scripts/sources-census.sh:501`, `usedby_findings`) | this seat (the two-line `--census` stub in the selftest cannot see it; `w1/SentTools.md` F3 is the same check's other face) | post-freeze defect: recorded here, routed to round 45, never patched in place |
-| M7 | map row that does not name the entry the counter checks | `count-c3.py WORK` → `readme_row FAIL (no line names the entry)`; `corpus/README.md` says `knowledge/pid-probe-conclusion-r44.md`, the counter requires `corpus/knowledge/pid-probe-conclusion-r44.md` | this seat; `w1/ScribeFrontierRow.md` §5 X2 | respell the path in `corpus/README.md` |
-| M8 | contract after-value contradicted by the round's own bytes | `git grep -l 'Z ゾンビ' 1429c791 -- corpus/ \| wc -l` → 0; `grep -rl 'Z ゾンビ' corpus/ \| wc -l` → 3 (`SOURCES.md`, `README.md`, the entry) — the contract says 1 | this seat | report and ledger assert the measured value at the landing tip, not 1 (pending: `git grep -l 'Z ゾンビ' <tip> -- corpus/ \| wc -l`); if the 60-word frontier row replaces the README prose the count can drop to 2 |
-| M9 | declared after-command cannot reach the declared value | `count-c2.py WORK --counter …` (no option) → `mutant_kill FAIL (… mutant absent)` → `C2=unmet`; with `--mutants-dir .ufo/waves/round-44/fixtures/mutants` → `C2=met`, exit 0 | this seat | report names the met command with its `--mutants-dir`; the declaration's command is incomplete |
+| M6 | a frozen check that depends on an unstated environment variable | `count-c3.py WORK` with `TMPDIR` unset (`/tmp`) → `census_ok FAIL (exit=1)`; with `TMPDIR=<lane>` → `census_ok PASS (exit=0)`, `C3=met` (`after/c3-after.txt`); mechanism: the counter stages `SOURCES.md` at `$TMPDIR/c3-*/SOURCES.md` and `scripts/sources-census.sh:499-503` resolves every `used-by` against `dirname(file)/..` | this seat; the committed lesson's M3 and `w1/RevEnteringBaseline.md` F-1 | the after receipt runs `TMPDIR=<lane>` and discloses it; round 45 must stage at `<repo>/corpus/SOURCES.md` or pass `--root`, and the gate row's entry cell must name the env requirement until then |
+| M7 | map row that did not name the entry the counter checks | pre-tip `count-c3.py WORK` → `readme_row FAIL (no line names the entry)`; `corpus/README.md` said `knowledge/pid-probe-conclusion-r44.md`, the counter requires `corpus/knowledge/pid-probe-conclusion-r44.md` | this seat; `w1/ScribeFrontierRow.md` §5 X2 | fixed at `5157cdda`: `corpus/README.md:638` names the full path and `readme_row` PASSes at the tip |
+| M8 | contract after-value contradicted by the round's own bytes | `git grep -l 'Z ゾンビ' 1429c791 -- corpus/ \| wc -l` → 0; at `5157cdda` → **3** (`corpus/SOURCES.md`, `corpus/knowledge/pid-probe-conclusion-r44.md`, `corpus/lessons/round-44.md`); the contract says 1 | this seat | the ledger's F03 asserts 3 and reconciles at the tip (`C1=met`); the contract's 1 is the defective record, routed to round 45 |
+| M9 | declared after-command cannot reach the declared value | at `5157cdda`, `count-c2.py` without `--mutants-dir` → `mutant_kill FAIL (… mutant absent)` → `C2=unmet`; with `--mutants-dir .ufo/waves/round-44/fixtures/mutants` → `C2=met` (`after/c2-after.txt`); the default is `fixtures/mutants`, absent at the repo root | this seat | the after receipt names the option; the declaration's command is incomplete (round 45: the gate row should carry the default path) |
 | M10 | predicate names more than the sources ground and the counter checks | P-C3's sentence "the three worlds …"; `w1/ScoutSources490.md` §5 (two worlds grounded, third absent); `count-c3.py` checks no world count | this Gate | entry states two worlds and the retired third; contract wording routed to round 45 |
 
 ## Wave findings (the round's own seats — still the lane, not a reviewer)
 
-Placeholder: the wave was still running when this draft was written; the
-integration owner finalizes this section from `.ufo/waves/round-44/w1/`.
+Placeholder: the wave has landed — 32 seat reports in
+`.ufo/waves/round-44/w1/` and the after receipts in
+`.ufo/waves/round-44/after/`; the integration owner finalizes this section.
 
 | seat | attack / finding | verdict | what it establishes |
 |---|---|---|---|
@@ -184,26 +187,25 @@ integration owner finalizes this section from `.ufo/waves/round-44/w1/`.
 | `ScoutSources490` | the two pages | sha256 and quotes as in this Gate | the Gate's quotes |
 | `ScribeFrontierRow` | README row | 60-word draft; the relative path fails the counter | M7 |
 | `ScribeCriteria` | QUALITY 117–119 | 117 ledger, 118 gate standard, 119 receipt revision | the round's criteria |
+| `after/*.txt` | C1/C2/C3 at `5157cdda` | met / met / met, with the disclosed `--mutants-dir` and `TMPDIR=<lane>` | the declared after-states are reachable with the environment and option the receipts name (M6, M9) |
+| `after/tip-equivalence.txt` | the three counters at `5102022a` | met / met / met | the verdicts do not depend on the landing commit |
 
-Current instrument verdicts measured by this seat on the working tree:
-`count-c1.py WORK` → `ledger_present FAIL (absent)` → `C1=unmet` (no
-`.ufo/waves/round-44/figures.tsv` yet); `count-c2.py WORK` → `C2=met` only with
-`--mutants-dir .ufo/waves/round-44/fixtures/mutants` (M9);
-`count-c3.py WORK` → `entry_present PASS`, `entry_meta PASS`, `rows_present
-PASS`, `census_ok FAIL (exit=1)`, `readme_row FAIL` → `C3=unmet` (M6, M7).
+Current instrument verdicts at the landed tip `5157cdda` (receipts in
+`.ufo/waves/round-44/after/`): `C1=met mismatches=0` (16 rows, 5 classes);
+`C2=met` only with `--mutants-dir .ufo/waves/round-44/fixtures/mutants`
+(without it `C2=unmet`, M9); `C3=met` only with `TMPDIR=<lane>` (without it
+`census_ok FAIL (exit=1)`, M6). The same three print met at the evidence commit
+`5102022a` (`after/tip-equivalence.txt`), so the verdicts do not depend on the
+landing commit.
 
 Pending, with the command that settles each:
 
-- C1 after — `python3 .ufo/waves/round-44/count-c1.py <landed tip>`, once the
-  ledger is committed (draft in `w1/ExecLedger.md`).
-- C2 after — `python3 .ufo/waves/round-44/count-c2.py <landed tip> --counter
-  .ufo/waves/round-44/count-c1.py --counter .ufo/waves/round-44/count-c2.py
-  --counter .ufo/waves/round-44/count-c3.py --mutants-dir
-  .ufo/waves/round-44/fixtures/mutants`.
-- C3 after — `python3 .ufo/waves/round-44/count-c3.py <landed tip> --entry
-  corpus/knowledge/pid-probe-conclusion-r44.md --row S471 --row S472`, after the
-  README respell (M7) and the census decision (M6).
-- Ten seat reports not yet in `w1/`: `ScribeEntryDraft`, `ScribeRowsDraft`,
-  `RevStagedClaims`, `CritAssimilationGate`, `RevLedgerVsReport`,
-  `RevRegistryRows`, `ExecOffHostReplay`, `ConnSiblings`,
-  `RevScorecardPlanned`, `CritPredicates`.
+- The closure verdict — the non-author spot-check is outside this lane; it reads
+  `corpus/lessons/round-44.md` and `after/*.txt`.
+- The committed lesson (`5157cdda:corpus/lessons/round-44.md`) still marks
+  `CritSelftestHonesty`, `SentTools` and `ExecOffHostReplay` as "pending"
+  although their reports are in `w1/`; the finalization pass should fold them in
+  (`ls .ufo/waves/round-44/w1/{CritSelftestHonesty,SentTools,ExecOffHostReplay}.md`).
+- Round-45 routing, not patched into frozen bytes: M2 (vacuity), M5 (auditor
+  table scope), M6 (`TMPDIR` staging), M8 (contract sweep value), M9
+  (`--mutants-dir` default), M10 (three worlds).
