@@ -15,6 +15,7 @@ Purpose
 CLI
   python3 tools/mori-disk-rate.py --a FILE --b FILE [--sysfs DIR] --interval-ms N
   python3 tools/mori-disk-rate.py [--sysfs DIR] --interval-ms N
+  python3 tools/mori-disk-rate.py --selftest
 
   --a FILE, --b FILE   two saved ``/proc/diskstats`` samples (offline mode);
                        both or neither must be given
@@ -22,6 +23,12 @@ CLI
                        read from DIR/class/block/<name>
   --interval-ms N      the sampling interval in milliseconds; it is the
                        denominator of every reported rate
+  --selftest           run the bounded self-test against synthetic samples and
+                       a synthetic sysfs tree under TMPDIR (it reads no live
+                       /proc or /sys entry), print
+                       ``MORI_DISK_RATE_SELFTEST pass=<n> fail=<n>`` and exit
+                       0 when every arm passes, 1 when one fails and 2 when
+                       the fixtures cannot be built
 
   stdout is one JSON object with the keys ``interval_ms``, ``devices`` (a
   mapping of device name to ``class``, ``state`` and ``write_Bps``),
@@ -74,7 +81,9 @@ import json
 import os
 import re
 import select
+import subprocess
 import sys
+import tempfile
 import threading
 import time
 
@@ -254,7 +263,204 @@ def build_report(a_text, b_text, sysfs_root, interval_ms):
     }
 
 
+# ---- selftest -------------------------------------------------------------
+
+SELFTEST_PREFIX = "MORI_DISK_RATE_SELFTEST"
+SELFTEST_SAMPLE_A = (
+    "   8       0 sda 100 0 200 5 10 0 1000 0 0 0 0\n"
+    "   8       1 sda1 50 0 100 5 5 0 500 0 0 0 0\n"
+)
+SELFTEST_SAMPLE_B = (
+    "   8       0 sda 120 0 240 6 12 0 3000 0 0 0 0\n"
+    "   8       1 sda1 60 0 120 6 6 0 1500 0 0 0 0\n"
+)
+
+
+def _selftest_sysfs(root):
+    """Build the synthetic sysfs tree the class arms read (R3, R4)."""
+    block = os.path.join(root, "class", "block")
+    os.makedirs(block)
+    attributes = {"sda": "device", "sda1": "partition"}
+    trees = {"dm-0": "slaves/sda", "loop0": "slaves"}
+    for name, entry in attributes.items():
+        base = os.path.join(block, name)
+        os.makedirs(base)
+        with open(os.path.join(base, entry), "w", encoding="utf-8"):
+            pass
+    for name, entry in trees.items():
+        base = os.path.join(block, name)
+        os.makedirs(base)
+        os.makedirs(os.path.join(base, entry))
+    return root
+
+
+def selftest():
+    """Run the bounded self-test; 0 when every arm passes, 1 a failed arm, 2 setup."""
+    tmpdir = os.environ.get("TMPDIR")
+    if not tmpdir:
+        print("SELFTEST SETUP TMPDIR is not set")
+        print("%s pass=0 fail=0" % SELFTEST_PREFIX)
+        return 2
+    try:
+        temporary = tempfile.TemporaryDirectory(
+            prefix=".mori-disk-rate-selftest-", dir=tmpdir)
+    except OSError as exc:
+        print("SELFTEST SETUP %s" % exc)
+        print("%s pass=0 fail=0" % SELFTEST_PREFIX)
+        return 2
+
+    passed = 0
+    failed = 0
+
+    def arm(name, function):
+        nonlocal passed, failed
+        try:
+            function()
+        except Exception as exc:          # noqa: BLE001 - the selftest reports
+            failed += 1
+            print("SELFTEST FAIL %s: %s: %s" % (name, type(exc).__name__, exc))
+        else:
+            passed += 1
+
+    with temporary as scratch:
+        sysfs = _selftest_sysfs(os.path.join(scratch, "sysfs"))
+        a_path = os.path.join(scratch, "a.diskstats")
+        b_path = os.path.join(scratch, "b.diskstats")
+        with open(a_path, "w", encoding="utf-8") as handle:
+            handle.write(SELFTEST_SAMPLE_A)
+        with open(b_path, "w", encoding="utf-8") as handle:
+            handle.write(SELFTEST_SAMPLE_B)
+
+        def report(a_text, b_text, interval_ms=1000):
+            return build_report(a_text, b_text, sysfs, interval_ms)
+
+        def cli(*arguments):
+            return subprocess.run(
+                [sys.executable, os.path.abspath(__file__)] + list(arguments),
+                capture_output=True, text=True, timeout=60)
+
+        def parse_valid():
+            sectors, malformed = parse_sample(SELFTEST_SAMPLE_A)
+            assert sectors == {"sda": 1000, "sda1": 500}, sectors
+            assert not malformed, malformed
+
+        def parse_ignores_short_line():
+            sectors, malformed = parse_sample("  8 0\n")
+            assert sectors == {} and not malformed, (sectors, malformed)
+
+        def parse_rejects_token_count():
+            line = " ".join(["8", "0", "sda"] + [str(value)
+                                                 for value in range(1, 13)])
+            sectors, malformed = parse_sample(line + "\n")
+            assert sectors == {} and malformed == {"sda"}, (sectors, malformed)
+
+        def parse_rejects_non_decimal():
+            line = "   8       0 sda 100 0 200 5 10 0 4x00 0 0 0 0\n"
+            sectors, malformed = parse_sample(line)
+            assert sectors == {} and malformed == {"sda"}, (sectors, malformed)
+
+        def classify_order():
+            expected = {"sda": "disk", "sda1": "partition", "dm-0": "stacked",
+                        "loop0": "virtual", "ghost": "unknown"}
+            observed = {name: classify(name, sysfs) for name in expected}
+            assert observed == expected, observed
+
+        def state_precedence():
+            pairs = [
+                (device_state("x", {"x": 5}, set(), {"x": 9}, set()), "ok"),
+                (device_state("x", {"x": 5}, set(), {"x": 4}, set()), "reset"),
+                (device_state("x", {}, set(), {"x": 1}, set()), "new"),
+                (device_state("x", {"x": 1}, set(), {}, set()), "gone"),
+                (device_state("x", {}, set(), {}, set()), "absent"),
+                (device_state("x", {}, {"x"}, {}, set()), "bad-line"),
+                (device_state("x", {}, set(), {}, {"x"}), "bad-line"),
+            ]
+            bad = [pair for pair in pairs if pair[0] != pair[1]]
+            assert not bad, bad
+
+        def sysfs_names():
+            assert sysfs_block_names(sysfs) == {"sda", "sda1", "dm-0", "loop0"}
+            assert sysfs_block_names(os.path.join(scratch, "absent")) == set()
+
+        def report_rates():
+            got = report(SELFTEST_SAMPLE_A, SELFTEST_SAMPLE_B)
+            assert got["interval_ms"] == 1000, got
+            assert got["devices"]["sda"] == {
+                "class": "disk", "state": "ok", "write_Bps": 1024000}, got
+            assert got["devices"]["sda1"] == {
+                "class": "partition", "state": "ok",
+                "write_Bps": 512000}, got
+            assert got["devices"]["loop0"] == {
+                "class": "virtual", "state": "absent", "write_Bps": None}, got
+            assert got["host_basis"] == ["sda"], got
+            assert got["host_write_Bps"] == 1024000, got
+
+        def report_reset_is_null_not_zero():
+            higher = (
+                "   8       0 sda 100 0 200 5 10 0 9000 0 0 0 0\n"
+                "   8       1 sda1 50 0 100 5 5 0 500 0 0 0 0\n")
+            got = report(higher, SELFTEST_SAMPLE_B)
+            assert got["devices"]["sda"] == {
+                "class": "disk", "state": "reset", "write_Bps": None}, got
+            assert got["devices"]["sda1"]["write_Bps"] == 512000, got
+            assert got["host_write_Bps"] is None, got
+
+        def report_bad_line_blocks_host():
+            broken = SELFTEST_SAMPLE_B.replace(
+                "   8       0 sda 120 0 240 6 12 0 3000 0 0 0 0",
+                "   8       0 sda 120 0 240 6 12 0 3000 0 0 0")
+            got = report(SELFTEST_SAMPLE_A, broken)
+            assert got["devices"]["sda"]["state"] == "bad-line", got
+            assert got["devices"]["sda"]["write_Bps"] is None, got
+            assert got["host_write_Bps"] is None, got
+
+        def cli_production_ok():
+            proc = cli("--a", a_path, "--b", b_path, "--sysfs", sysfs,
+                       "--interval-ms", "1000")
+            assert proc.returncode == 0, (proc.returncode, proc.stderr)
+            payload = json.loads(proc.stdout)
+            assert payload["host_basis"] == ["sda"], payload
+            assert payload["host_write_Bps"] == 1024000, payload
+
+        def cli_unreadable_sample():
+            proc = cli("--a", os.path.join(scratch, "missing"), "--b", b_path,
+                       "--sysfs", sysfs, "--interval-ms", "1000")
+            assert proc.returncode == 1, (proc.returncode, proc.stderr)
+            assert "cannot read the sample(s) given" in proc.stderr, proc.stderr
+
+        def cli_half_pair():
+            proc = cli("--a", a_path, "--interval-ms", "1000")
+            assert proc.returncode == 2, (proc.returncode, proc.stdout)
+            assert "--a and --b must be given together" in proc.stderr, proc.stderr
+
+        def cli_zero_interval():
+            proc = cli("--a", a_path, "--b", b_path, "--interval-ms", "0")
+            assert proc.returncode == 2, (proc.returncode, proc.stdout)
+            assert "positive number of milliseconds" in proc.stderr, proc.stderr
+
+        arm("parse_valid", parse_valid)
+        arm("parse_ignores_short_line", parse_ignores_short_line)
+        arm("parse_rejects_token_count", parse_rejects_token_count)
+        arm("parse_rejects_non_decimal", parse_rejects_non_decimal)
+        arm("classify_order", classify_order)
+        arm("state_precedence", state_precedence)
+        arm("sysfs_block_names", sysfs_names)
+        arm("report_rates", report_rates)
+        arm("report_reset_is_null_not_zero", report_reset_is_null_not_zero)
+        arm("report_bad_line_blocks_host", report_bad_line_blocks_host)
+        arm("cli_production_ok", cli_production_ok)
+        arm("cli_unreadable_sample", cli_unreadable_sample)
+        arm("cli_half_pair", cli_half_pair)
+        arm("cli_zero_interval", cli_zero_interval)
+
+    print("%s pass=%d fail=%d" % (SELFTEST_PREFIX, passed, failed))
+    return 0 if failed == 0 else 1
+
+
 def main(argv=None):
+    argv = list(sys.argv[1:] if argv is None else argv)
+    if "--selftest" in argv:
+        return selftest()
     parser = argparse.ArgumentParser(
         prog="mori-disk-rate.py",
         description=("Two-sample disk write rate, device classes and host "

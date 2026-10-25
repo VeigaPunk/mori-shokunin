@@ -977,3 +977,48 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     receipt header names `dde525ea4a7fca365e8ff2f3c486bccf28b94e52` while its verdict cell says "at the landed tip",
     which the round-43 closure had to reconcile by hand. Not covered: a tool that never prints its measured revision
     (most of the lane's older gates) is caught only by review, not by this check.
+
+## Criteria added round 45 — the round-44 routed instrument defects, and one operator reflection
+
+120. **A branch-presence check credits a flag only when the tool's own argv or case pattern
+    handles it.** A comment, a docstring, a help string, or a subprocess list that runs *another*
+    tool's flag is not a self-test branch. Lesson: `corpus/lessons/round-45.md` M1/M6; round-44
+    routed defect 2 (`selftest_tally` and the comment-only pass). Rationale: the round-44 auditor
+    credited `tools/mori-silence-cases.sh` from the comment `# ... (bash "$CENSUS", no --selftest)`,
+    and a token grep over the whole population credited `tools/mori-routed-r24.py` from a
+    subprocess list that invokes `mori-pressure.py --selftest` — so the class was undercounted by
+    three (`routed-r24`, `disk-rate`, `round41-calibration`) as well as over-counted by one. Check:
+    `python3 tools/mori-gate-registry.py --rev <tip> --audit-all` prints `no_selftest=0` over the
+    derived population and prints `mode=population` (a `--audit <path>` narrowing must be refused).
+    Shown able to fail: at the entering tip the same command prints
+    `registered=29 unregistered=3 no_selftest=6 duplicate=0 wrong_row=0 tables=7` and its own
+    selftest's `comment_only_selftest` arm goes red on a comment-only fixture. Not covered: the
+    help-string (`add_argument("--verbose", help="see --selftest ...")`) and `selftest-flag=--help`
+    escapes still pass — routed to round 46 (`w1/RevAudit.md` E4/E5).
+121. **A write-scope cell separates observed behaviour from executed-input capability.** "This
+    instrument's selftest writes only under the caller's `TMPDIR`" is a measured claim; "nothing
+    else writes" is a capability claim about the input the instrument executes, and a cell that
+    means the second must say so. Lesson: `corpus/lessons/round-45.md` M10; round-44 sentinel F8.
+    Rationale: the round-45 sandbox arm measured all four round-44 cells true on their observed
+    half (`writescope_mismatch=0`, repo tree unchanged, no write outside `TMPDIR`) while the same
+    instruments execute committed ledger rows (`count-c1.py`) and a caller-named census program
+    (`count-c3.py`), so the cells were false only in the capability half — and a reader relying on
+    them reads the wrong half. Check:
+    `TMPDIR=<lane>/.scratch python3 .ufo/waves/round-45/write-scope-run.py --rev <tip>` prints
+    `WRITESCOPE=met instruments=7 true=<n> false=0 unavailable=0 writescope_mismatch=0` and the
+    fixtures' `declared` cells are byte-diffs of the registry cells. Shown able to fail: the tooth
+    control's declared-clean-but-writes-in-repo writer prints `verdict=FALSE ... first_outside=...`,
+    `writescope_mismatch=1`, exit 1. Not covered: "stdout only" is consistent with, not proof of,
+    no network write.
+122. **A negative membership count names the corpus that can discharge it, and a census that
+    publishes its own finding has discharged it.** Lesson: `corpus/lessons/round-45.md` M9;
+    `considerthese/2026-10-24.md` proposal P24-3 (operator-authored reflection, mined 2026-10-25 —
+    the proposal itself is not implemented and stays open). Rationale: "no receipt cites these
+    three scratch files" was measured as 3 uncited at `7cb59c68` and 0 uncited at the tip, because
+    the only tracked text naming them is round 44's own seat report listing them *as* uncited — the
+    count's membership test let the finding discharge itself. Check: a census whose arm is "uncited"
+    restricts `receipt` to `corpus/evidence/*` and `.ufo/waves/<round>/evidence/*`, excluding
+    `w1/*` seat prose, and prints its population at two revisions. Shown able to fail: at `d72ac16`
+    the same narrow definition prints 71 tracked / 40 uncited, at the tip 225 tracked / 0 uncited
+    under the wide definition. Not covered: the narrower corpus is not yet built (this criterion is
+    the admission, not the instrument).

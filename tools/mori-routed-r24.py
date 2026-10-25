@@ -64,12 +64,22 @@ Output: one JSON object, ``schema: mori-routed-r24-v1``, ``items: 4``, ``held``,
 and the hygiene row holds, 1 otherwise, and 2 when the repository or the
 revision cannot be read.
 
+Self-check: ``--selftest`` runs a bounded self-check of this tool's own parsing
+and verdict arms against a throwaway git repository built under ``$TMPDIR`` --
+its own fixtures, no host repository, no network.  It prints
+``ROUTED_R24_SELFTEST pass=<n> fail=<n>`` and exits 0 when every arm passes, 1
+when an arm fails and 2 when the fixture cannot be set up.  The all-held exit-0
+verdict is out of its reach by construction: D2, D3 and D5 are pinned to fixed
+base commits, so the self-check asserts the verdict mapping directly and the
+synthetic repository exercises the held, failed and could-not-evaluate reads.
+
 Python 3 standard library only; read-only; safe under ``python3 -I -B``.
 """
 
 from __future__ import annotations
 
 import argparse
+import contextlib
 import hashlib
 import io
 import json
@@ -164,6 +174,65 @@ D5_PINNED_SCORE_RE = re.compile(
 # "round 1" as a whole token: "round 12" and "round 13" must not match.
 D5_ROUND1_RE = re.compile(r"\bround\s+1\b", re.IGNORECASE)
 
+# Selftest: a throwaway repository built under $TMPDIR, with a pinned identity
+# so the fixture commits are content-stable.  The entry, lesson and scorecard
+# bodies are shaped so that every parse arm of D2, D3 and D5 accepts them; the
+# three checks still fail closed on the pinned base revisions, which a
+# synthetic repository cannot carry.
+SELFTEST_TALLY_PREFIX = "ROUTED_R24_SELFTEST"
+SELFTEST_GIT_IDENTITY = {
+    "GIT_AUTHOR_NAME": "mori routed selftest",
+    "GIT_AUTHOR_EMAIL": "selftest@example.invalid",
+    "GIT_COMMITTER_NAME": "mori routed selftest",
+    "GIT_COMMITTER_EMAIL": "selftest@example.invalid",
+    "GIT_AUTHOR_DATE": "2001-02-03T04:05:06 +0000",
+    "GIT_COMMITTER_DATE": "2001-02-03T04:05:06 +0000",
+}
+SELFTEST_PRESSURE_TOOL = b"# synthetic pressure tool; never executed\nprint('stub')\n"
+SELFTEST_PRESSURE_CASES = b'{"cases": [1, 2, 3]}\n'
+SELFTEST_GITIGNORE = b"__pycache__/\n*.pyc\n"
+SELFTEST_GITIGNORE_NEGATION = b"__pycache__/\n*.pyc\n!tools/*.pyc\n"
+SELFTEST_KNOWLEDGE_ENTRY = (
+    "# system pressure re-derived\n"
+    "\n"
+    "## facts\n"
+    "\n"
+    "- Only when the next batch lands is the row written.\n"
+    "- Untracked scratch state is not tracked by the gate.\n"
+    "\n"
+    "## decision table\n"
+    "\n"
+    "| case | expected |\n"
+    "|---|---|\n"
+    "| a | one |\n"
+    "| b | two |\n"
+    "\n"
+    "## corrections\n"
+    "\n"
+    "- (k4) the total is seven supplementary cases.\n"
+)
+SELFTEST_LESSON = (
+    "# round 24\n"
+    "\n"
+    "## Correction\n"
+    "\n"
+    "S07 PASS 7/7 at `abcdef1` with the corrected sweep.\n"
+)
+SELFTEST_SCORECARD = (
+    "# scorecard\n"
+    "\n"
+    "## Axes\n"
+    "\n"
+    "| axis | score | last change |\n"
+    "|---|---|---|\n"
+    "| coverage | 7 | round 41 |\n"
+    "| depth | 4 | round 24 |\n"
+    "\n"
+    "## Notes\n"
+    "\n"
+    "Synthetic fixture; unreachable while the base SCORECARD is unreadable.\n"
+)
+
 REVISION_LINE_RE = re.compile(r"^[0-9a-f]{40}$")
 TOOL_BLOB_LINE_RE = re.compile(r"^[0-9a-f]{40}$")
 FIXTURES_TREE_LINE_RE = re.compile(r"^[0-9a-f]{40}$")
@@ -180,6 +249,10 @@ class GitUnavailable(Exception):
 
 class GitError(Exception):
     """A git command failed for a reason other than a missing object."""
+
+
+class SelftestSetupError(Exception):
+    """A self-check fixture could not be built (temp dir, git, fixture commit)."""
 
 
 def _git_env() -> dict[str, str]:
@@ -865,6 +938,18 @@ def _check_d4(repo: str, rev: str) -> tuple[bool, list[str], dict]:
     return not reasons, reasons, detail
 
 
+def _verdict(rows: list[dict], d4_held: bool) -> tuple[str, int, int, int]:
+    """The exit verdict for the counted rows and the hygiene row.
+
+    Returns (status, counted held, mismatches, return code): held only when no
+    counted item is red and the D4 hygiene row holds.
+    """
+    held = sum(1 for row in rows if row["held"])
+    mismatches = len(rows) - held
+    ok = mismatches == 0 and d4_held
+    return ("held" if ok else "failed"), held, mismatches, (RC_HELD if ok else RC_FAILED)
+
+
 def _emit(payload: dict, rc: int) -> int:
     sys.stdout.write(json.dumps(payload, sort_keys=True, separators=(",", ":")) + "\n")
     return rc
@@ -888,7 +973,495 @@ def _cannot_evaluate(repo: str, rev: str, error: str) -> int:
     )
 
 
+# ---- selftest -------------------------------------------------------------
+
+
+def _selftest_base_dir() -> str:
+    """The $TMPDIR every fixture must live under."""
+    base = os.environ.get("TMPDIR") or tempfile.gettempdir()
+    if not os.path.isdir(base):
+        raise SelftestSetupError("fixture base is not a directory: " + base)
+    if not os.access(base, os.W_OK):
+        raise SelftestSetupError("fixture base is not writable: " + base)
+    return base
+
+
+def _selftest_write(root: str, relpath: str, data: bytes) -> None:
+    path = os.path.join(root, relpath)
+    parent = os.path.dirname(path)
+    if parent:
+        os.makedirs(parent, exist_ok=True)
+    with open(path, "wb") as handle:
+        handle.write(data)
+
+
+def _selftest_git(repo: str, args: list[str]) -> str:
+    """Run one fixture-building git command with a pinned identity."""
+    env = _git_env()
+    env.update(SELFTEST_GIT_IDENTITY)
+    try:
+        proc = subprocess.run(
+            ["git", "-c", "commit.gpgsign=false", "-C", repo, *args],
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            env=env,
+            timeout=GIT_TIMEOUT_SECONDS,
+            check=False,
+        )
+    except (OSError, subprocess.SubprocessError) as exc:
+        raise SelftestSetupError("git could not run for the fixture") from exc
+    if proc.returncode != 0:
+        raise SelftestSetupError("git %s failed for the fixture" % " ".join(args))
+    return proc.stdout.decode("utf-8", "replace").strip()
+
+
+def _selftest_fixture(root: str) -> dict[str, str]:
+    """Build the throwaway repository; return its revisions and recorded oids."""
+    repo = os.path.join(root, "fixture-repo")
+    os.makedirs(repo, exist_ok=True)
+    _selftest_git(repo, ["init", "--template=", "--quiet"])
+    _selftest_write(repo, PRESSURE_TOOL_PATH, SELFTEST_PRESSURE_TOOL)
+    _selftest_write(repo, PRESSURE_FIXTURES_PATH + "/cases.json", SELFTEST_PRESSURE_CASES)
+    _selftest_write(repo, KNOWLEDGE_PATH, SELFTEST_KNOWLEDGE_ENTRY.encode("utf-8"))
+    _selftest_write(repo, LESSON_PATH, SELFTEST_LESSON.encode("utf-8"))
+    _selftest_write(repo, SCORECARD_PATH, SELFTEST_SCORECARD.encode("utf-8"))
+    _selftest_write(repo, GITIGNORE_PATH, SELFTEST_GITIGNORE)
+    _selftest_git(repo, ["add", "--all"])
+    _selftest_git(repo, ["commit", "--quiet", "-m", "fixture base"])
+    base_rev = _selftest_git(repo, ["rev-parse", "HEAD"])
+    tool_blob = _selftest_git(repo, ["rev-parse", "HEAD:" + PRESSURE_TOOL_PATH])
+    fixtures_tree = _selftest_git(repo, ["rev-parse", "HEAD:" + PRESSURE_FIXTURES_PATH])
+
+    evidence = (
+        "revision: %s\n" % base_rev
+        + "command: %s\n" % EVIDENCE_COMMAND
+        + "tool_blob: %s\n" % tool_blob
+        + "fixtures_tree: %s\n" % fixtures_tree
+        + "exit: 0\n"
+    ).encode("utf-8") + EXPECTED_BODY
+    _selftest_write(repo, EVIDENCE_PATH, evidence)
+    _selftest_git(repo, ["add", "--all"])
+    _selftest_git(repo, ["commit", "--quiet", "-m", "fixture evidence"])
+    evidence_rev = _selftest_git(repo, ["rev-parse", "HEAD"])
+
+    forged = evidence.replace(
+        ("command: %s\n" % EVIDENCE_COMMAND).encode("utf-8"),
+        b"command: python3 tools/mori-pressure.py --selftest\n",
+    ) + b"MATCHER: rejected 48/48 corrupted expectations (replayed)\n"
+    _selftest_write(repo, EVIDENCE_PATH, forged)
+    _selftest_git(repo, ["add", "--all"])
+    _selftest_git(repo, ["commit", "--quiet", "-m", "fixture forged evidence"])
+    forged_rev = _selftest_git(repo, ["rev-parse", "HEAD"])
+
+    _selftest_write(repo, GITIGNORE_PATH, SELFTEST_GITIGNORE_NEGATION)
+    _selftest_git(repo, ["add", "--all"])
+    _selftest_git(repo, ["commit", "--quiet", "-m", "fixture negation"])
+    negation_rev = _selftest_git(repo, ["rev-parse", "HEAD"])
+
+    return {
+        "repo": repo,
+        "base_rev": base_rev,
+        "evidence_rev": evidence_rev,
+        "forged_rev": forged_rev,
+        "negation_rev": negation_rev,
+        "tool_blob": tool_blob,
+        "fixtures_tree": fixtures_tree,
+        "evidence": evidence.decode("utf-8"),
+    }
+
+
+def _selftest_dispatch(raw: list[str]) -> int:
+    """Reject companion arguments, then run the self-check."""
+    extras = [arg for arg in raw if arg != "--selftest"]
+    if extras:
+        sys.stderr.write(
+            "mori-routed-r24.py: --selftest takes no other argument: %s\n"
+            % " ".join(extras)
+        )
+        return RC_UNAVAILABLE
+    return selftest()
+
+
+def selftest() -> int:
+    """Bounded self-check over synthetic fixtures under $TMPDIR."""
+    passed: list[str] = []
+    failed: list[str] = []
+
+    def arm(name: str, fn) -> None:
+        try:
+            fn()
+        except AssertionError as exc:
+            failed.append("%s: %s" % (name, str(exc) or "assertion failed"))
+            return
+        except Exception as exc:  # an arm failure is reported, never raised
+            failed.append("%s: %s: %s" % (name, type(exc).__name__, exc))
+            return
+        passed.append(name)
+
+    def capture(fn, *args) -> tuple[str, int]:
+        buffer = io.StringIO()
+        with contextlib.redirect_stdout(buffer):
+            rc = fn(*args)
+        return buffer.getvalue(), rc
+
+    def report() -> int:
+        for name in passed:
+            print("selftest PASS " + name)
+        for failure in failed:
+            print("selftest FAIL " + failure)
+        print("%s pass=%d fail=%d" % (SELFTEST_TALLY_PREFIX, len(passed), len(failed)))
+        return RC_HELD if not failed else RC_FAILED
+
+    try:
+        base = _selftest_base_dir()
+        cleanup = tempfile.TemporaryDirectory(
+            prefix="mori-routed-r24-selftest-", dir=base
+        )
+    except Exception as exc:  # setup failure exits 2, after the tally
+        failed.append("setup: %s" % exc)
+        report()
+        return RC_UNAVAILABLE
+
+    with cleanup as root:
+        try:
+            fixture = _selftest_fixture(root)
+            if not os.path.realpath(fixture["repo"]).startswith(
+                os.path.realpath(base) + os.sep
+            ):
+                raise SelftestSetupError("fixture escaped $TMPDIR")
+        except Exception as exc:  # fixture build failure exits 2, after the tally
+            failed.append("setup: %s" % exc)
+            report()
+            return RC_UNAVAILABLE
+
+        header = (
+            b"revision: " + b"a" * 40 + b"\n"
+            b"command: " + EVIDENCE_COMMAND.encode("utf-8") + b"\n"
+            b"tool_blob: " + b"b" * 40 + b"\n"
+            b"fixtures_tree: " + b"c" * 40 + b"\n"
+            b"exit: 0\n"
+        )
+
+        def normalize_arm() -> None:
+            assert _normalize("  *Refreshed   on `each`\tREAD *") == "refreshed on each read"
+
+        def header_ok_arm() -> None:
+            values, body, missing = _split_header(header + EXPECTED_BODY)
+            assert missing == [], missing
+            assert body == EXPECTED_BODY, body
+            assert list(values) == list(HEADER_KEY_ORDER), list(values)
+            assert values["exit"] == "0", values
+
+        def header_missing_arm() -> None:
+            broken = header.replace(b"tool_blob: ", b"tool_bloc: ")
+            values, _body, missing = _split_header(broken + EXPECTED_BODY)
+            assert missing == ["tool_blob"], missing
+            assert "tool_blob" not in values, values
+
+        def body_anchor_arm() -> None:
+            assert EXPECTED_BODY.endswith(b"\n"), EXPECTED_BODY
+            assert not EXPECTED_BODY.endswith(b"\n\n"), EXPECTED_BODY
+            _values, body, _missing = _split_header(header + EXPECTED_BODY + b"\n")
+            assert body != EXPECTED_BODY, body
+
+        def blocks_arm() -> None:
+            text = (
+                "## facts\n\n- a\n\n### note\n\n- b\n\n## corrections\n\n- (k4) total\n"
+            )
+            blocks = _blocks(text.split("\n"))
+            facts = [
+                index
+                for index, (heading, _body) in enumerate(blocks)
+                if heading is not None and _normalize(heading) == D2_FACTS_HEADING
+            ]
+            assert len(facts) == 1, facts
+            span = _section_span(blocks, facts[0])
+            assert span == [facts[0], facts[0] + 1], span
+
+        def data_row_count_arm() -> None:
+            block = ["", "| case | expected |", "|---|---|", "| a | one |", "| b | two |", ""]
+            assert _data_row_count(block) == 2, _data_row_count(block)
+            assert _data_row_count(["", "no table here", ""]) == 0
+
+        def d2_partition_arm() -> None:
+            blocks = _blocks(SELFTEST_KNOWLEDGE_ENTRY.split("\n"))
+            corrections = [
+                index
+                for index, (heading, _body) in enumerate(blocks)
+                if heading is not None
+                and _normalize(heading).startswith(D2_CORRECTIONS_HEADING)
+            ]
+            assert len(corrections) == 1, corrections
+            inside = set(_section_span(blocks, corrections[0]))
+            outside_lines = [
+                line
+                for index, (_heading, body) in enumerate(blocks)
+                if index not in inside
+                for line in body
+            ]
+            inside_lines = [line for index in sorted(inside) for line in blocks[index][1]]
+            outside_text = " ".join(_normalize(line) for line in outside_lines)
+            for phrase in D2_POSITIVE_PHRASES:
+                assert phrase in outside_text, phrase
+            for pattern in D2_NEGATIVE_PATTERNS:
+                assert not re.search(pattern, outside_text), pattern
+            assert D2_BANNER_PHRASE not in outside_text, outside_text
+            normalized_inside = [_normalize(line) for line in inside_lines]
+            assert any(
+                D2_CORRECTIONS_TOKEN in line and D2_CORRECTIONS_WORD in line
+                for line in normalized_inside
+            ), normalized_inside
+            banner_variant = SELFTEST_KNOWLEDGE_ENTRY.replace(
+                D2_CORRECTIONS_HEADING, D2_CORRECTIONS_HEADING + "\n\nThis section wins."
+            )
+            whole = " ".join(_normalize(line) for line in banner_variant.split("\n"))
+            assert D2_BANNER_PHRASE in whole, whole
+
+        def axes_rows_arm() -> None:
+            rows = _axes_rows(SELFTEST_SCORECARD)
+            assert rows == [
+                ("coverage", "7", "round 41"),
+                ("depth", "4", "round 24"),
+            ], rows
+            piped = _axes_rows(
+                "## Axes\n\n| axis | score | last change |\n|---|---|---|\n"
+                "| calibration | 5 | note \\| round 1 |\n"
+            )
+            assert piped == [("calibration", "5", "round 1")], piped
+            assert _axes_rows("# scorecard\n\n## Other\n") is None
+            assert _axes_rows("no headings at all") is None
+
+        def pinned_scores_arm() -> None:
+            filler = ["filler"] * (SCORECARD_BASE_LINE_START - 1)
+            window = [
+                "| coverage 7 |",
+                "| operability 8 |",
+                "| depth 5 |",
+                "| freshness 6 |",
+                "| calibration 5 |",
+                "| adjacency 7 |",
+                "| other 3 |",
+                "",
+            ]
+            scores = _parse_pinned_scores("\n".join(filler + window))
+            assert scores == {
+                "coverage": 7,
+                "operability": 8,
+                "depth": 5,
+                "freshness": 6,
+                "calibration": 5,
+                "adjacency": 7,
+            }, scores
+            assert _parse_pinned_scores("\n".join(filler + window[:5])) is None
+            duplicated = window[:6] + ["| depth 9 |", ""]
+            assert _parse_pinned_scores("\n".join(filler + duplicated)) is None
+
+        def round1_arm() -> None:
+            assert D5_ROUND1_RE.search("round 1"), "round 1"
+            assert D5_ROUND1_RE.search("closed round 1 (start)"), "round 1"
+            assert not D5_ROUND1_RE.search("round 12"), "round 12"
+            assert not D5_ROUND1_RE.search("round 41"), "round 41"
+
+        def pinned_contract_arm() -> None:
+            assert EXPECTED_BODY == (
+                b"MORI_PRESSURE_SELFTEST: PASS 12/12\n"
+                b"MATCHER: rejected 48/48 corrupted expectations\n"
+            ), EXPECTED_BODY
+            assert EVIDENCE_COMMAND == (
+                "python3 -I -B tools/mori-pressure.py --selftest"
+            ), EVIDENCE_COMMAND
+            assert HEADER_KEY_ORDER == (
+                "revision", "command", "tool_blob", "fixtures_tree", "exit",
+            ), HEADER_KEY_ORDER
+            assert REVISION_LINE_RE.match("a" * 40), "40 hex must be accepted"
+            assert not REVISION_LINE_RE.match("a" * 39), "39 hex must be rejected"
+            assert not REVISION_LINE_RE.match("A" * 40), "uppercase hex must be rejected"
+
+        def d2_negative_samples_arm() -> None:
+            samples = {
+                r"refreshed on (each|every) read": "the table is refreshed on each read",
+                r"spike[^|.]{0,60}(is|are|can be|may be) invisible":
+                    "a spike in load is invisible",
+                r"null[^|.]{0,15}means[^|.]{0,15}undefined":
+                    "a null in the cell means undefined",
+            }
+            assert set(samples) == set(D2_NEGATIVE_PATTERNS), sorted(samples)
+            for pattern, sample in samples.items():
+                assert re.search(pattern, _normalize(sample)), (pattern, sample)
+
+        def count_cases_arm() -> None:
+            assert _count_cases(b'{"cases": [1, 2, 3, 4, 5, 6, 7]}') == 7
+            assert _count_cases(b'{"cases": []}') is None
+            assert _count_cases(b"[]") is None
+            assert _count_cases(b'{"cases": 7}') is None
+            assert _count_cases(b"not json") is None
+
+        def hex_token_arm() -> None:
+            assert HEX_TOKEN_RE.findall("at `abcdef1`") == ["abcdef1"]
+            assert HEX_TOKEN_RE.findall("`abcdef0`") == ["abcdef0"], "7 hex must be accepted"
+            assert HEX_TOKEN_RE.findall("`abcdef`") == [], "6 hex must be rejected"
+            assert HEX_TOKEN_RE.findall("`abcde`") == [], "5 hex must be rejected"
+            assert HEX_TOKEN_RE.findall("f" * 41) == []
+            assert HEX_TOKEN_RE.findall("zabcdef1") == []
+            assert HEX_TOKEN_RE.findall("abcdef1g") == []
+
+        def resolve_commit_arm() -> None:
+            repo = fixture["repo"]
+            assert _resolve_commit(repo, fixture["evidence_rev"]) == fixture["evidence_rev"]
+            assert _resolve_commit(repo, fixture["evidence_rev"][:7]) == fixture["evidence_rev"]
+            assert _resolve_commit(repo, "0" * 40) is None
+            assert _is_ancestor(repo, fixture["base_rev"], fixture["evidence_rev"])
+            assert not _is_ancestor(repo, fixture["evidence_rev"], fixture["base_rev"])
+
+        def blob_tree_arm() -> None:
+            repo, rev = fixture["repo"], fixture["evidence_rev"]
+            tree = _ls_tree_entry(repo, rev, PRESSURE_FIXTURES_PATH)
+            assert tree is not None and tree[1] == "tree", tree
+            assert tree[2] == fixture["fixtures_tree"], tree
+            tool = _ls_tree_entry(repo, rev, PRESSURE_TOOL_PATH)
+            assert tool is not None and tool[1] == "blob", tool
+            assert tool[2] == fixture["tool_blob"], tool
+            assert _blob_bytes(repo, rev, PRESSURE_TOOL_PATH) == SELFTEST_PRESSURE_TOOL
+            assert _blob_bytes(repo, rev, EVIDENCE_PATH).decode("utf-8") == fixture["evidence"]
+            assert _blob_bytes(repo, rev, "absent/path") is None
+
+        def d1_held_arm() -> None:
+            held, reasons, detail = _check_d1(
+                fixture["repo"], fixture["evidence_rev"], False
+            )
+            assert held and reasons == [], (held, reasons)
+            assert detail["revision"] == fixture["base_rev"], detail
+            assert detail["tool_blob"] == fixture["tool_blob"], detail
+            assert detail["fixtures_tree"] == fixture["fixtures_tree"], detail
+            assert detail["body_sha256"] == hashlib.sha256(EXPECTED_BODY).hexdigest(), detail
+
+        def d1_forged_arm() -> None:
+            held, reasons, detail = _check_d1(
+                fixture["repo"], fixture["forged_rev"], False
+            )
+            assert not held, held
+            assert "command_line_malformed" in reasons, reasons
+            assert "body_not_byte_equal" in reasons, reasons
+            assert "rerun" not in detail, detail
+
+        def d4_arm() -> None:
+            held, reasons, _detail = _check_d4(fixture["repo"], fixture["evidence_rev"])
+            assert held and reasons == [], reasons
+            held_negated, reasons_negated, _d = _check_d4(
+                fixture["repo"], fixture["negation_rev"]
+            )
+            assert not held_negated, held_negated
+            assert any(
+                reason.startswith("gitignore_negation_reinstates_bytecode")
+                for reason in reasons_negated
+            ), reasons_negated
+
+        def verdict_arm() -> None:
+            assert (RC_HELD, RC_FAILED, RC_UNAVAILABLE) == (0, 1, 2)
+            green = [{"held": True}] * 4
+            assert _verdict(green, True) == ("held", 4, 0, RC_HELD), _verdict(green, True)
+            assert _verdict(green, False) == ("failed", 4, 0, RC_FAILED), _verdict(green, False)
+            mixed = [{"held": True}, {"held": False}, {"held": True}, {"held": False}]
+            assert _verdict(mixed, True) == ("failed", 2, 2, RC_FAILED), _verdict(mixed, True)
+
+        def emit_arm() -> None:
+            out, rc = capture(_emit, {"schema": SCHEMA, "held": 4, "mismatches": 0}, RC_HELD)
+            assert rc == RC_HELD, rc
+            assert out.endswith("\n") and out.count("\n") == 1, out
+            assert json.loads(out)["schema"] == SCHEMA, out
+
+        def main_failed_arm() -> None:
+            out, rc = capture(
+                main, ["--repo", fixture["repo"], "--rev", fixture["evidence_rev"]]
+            )
+            assert rc == RC_FAILED, rc
+            payload = json.loads(out)
+            assert payload["schema"] == SCHEMA, payload["schema"]
+            assert payload["rev_commit"] == fixture["evidence_rev"], payload
+            assert payload["items"] == 4, payload
+            assert payload["held"] == 1 and payload["mismatches"] == 3, payload
+            assert payload["status"] == "failed", payload["status"]
+            assert [row["id"] for row in payload["rows"]] == ["D1", "D2", "D3", "D5"], payload
+            row_d1 = payload["rows"][0]
+            assert row_d1["held"] is True and row_d1["reasons"] == [], row_d1
+            assert payload["rows"][1]["reasons"] == ["base_knowledge_entry_unreadable"], payload
+            assert payload["rows"][2]["reasons"] == ["supplementary_cases_unreadable"], payload
+            assert payload["rows"][3]["reasons"] == ["base_scorecard_unreadable"], payload
+            assert payload["hygiene"]["held"] is True, payload["hygiene"]
+
+        def main_unreadable_repo_arm() -> None:
+            out, rc = capture(
+                main, ["--repo", os.path.join(fixture["repo"], "absent"), "--rev", "HEAD"]
+            )
+            assert rc == RC_UNAVAILABLE, rc
+            payload = json.loads(out)
+            assert payload["status"] == "could-not-evaluate", payload
+            assert payload["error"] == "repository path is not a directory", payload
+            assert payload["items"] == 4 and payload["held"] is None, payload
+
+        def main_unresolvable_rev_arm() -> None:
+            out, rc = capture(main, ["--repo", fixture["repo"], "--rev", "1" * 40])
+            assert rc == RC_UNAVAILABLE, rc
+            payload = json.loads(out)
+            assert payload["error"] == "revision does not resolve to a commit", payload
+
+        def argv_branch_arm() -> None:
+            out, err = io.StringIO(), io.StringIO()
+            with contextlib.redirect_stdout(out), contextlib.redirect_stderr(err):
+                rc = main(["--selftest", "--bogus"])
+                assert rc == RC_UNAVAILABLE, rc
+            assert out.getvalue() == "", out.getvalue()
+            assert "--selftest" in err.getvalue(), err.getvalue()
+
+        def usage_arm() -> None:
+            err = io.StringIO()
+            try:
+                with contextlib.redirect_stderr(err):
+                    main([])
+            except SystemExit as exc:
+                assert exc.code == RC_UNAVAILABLE, exc.code
+            else:
+                raise AssertionError("main([]) did not exit through argparse")
+            assert "--repo" in err.getvalue() and "--rev" in err.getvalue(), err.getvalue()
+
+        arm("normalize_folds_markers_case_whitespace", normalize_arm)
+        arm("split_header_reads_five_keys_and_body", header_ok_arm)
+        arm("split_header_reports_the_missing_key", header_missing_arm)
+        arm("body_is_byte_anchored", body_anchor_arm)
+        arm("blocks_and_section_span_partition", blocks_arm)
+        arm("data_row_count_excludes_header_and_separator", data_row_count_arm)
+        arm("d2_negatives_absent_positives_present_outside", d2_partition_arm)
+        arm("axes_rows_read_score_and_last_change", axes_rows_arm)
+        arm("pinned_scores_parse_window_and_fail_closed", pinned_scores_arm)
+        arm("round1_token_regex", round1_arm)
+        arm("pinned_contract_literals", pinned_contract_arm)
+        arm("d2_negative_patterns_match_samples", d2_negative_samples_arm)
+        arm("count_cases_json_arms", count_cases_arm)
+        arm("hex_token_width_and_boundaries", hex_token_arm)
+        arm("resolve_commit_and_ancestor", resolve_commit_arm)
+        arm("ls_tree_entry_and_blob_bytes", blob_tree_arm)
+        arm("check_d1_holds_on_synthetic_evidence", d1_held_arm)
+        arm("check_d1_rejects_forged_evidence", d1_forged_arm)
+        arm("check_d4_holds_and_rejects_negation", d4_arm)
+        arm("verdict_maps_held_and_failed", verdict_arm)
+        arm("emit_writes_one_json_line", emit_arm)
+        arm("main_failed_verdict_exit_1", main_failed_arm)
+        arm("main_unreadable_repo_exit_2", main_unreadable_repo_arm)
+        arm("main_unresolvable_rev_exit_2", main_unresolvable_rev_arm)
+        arm("selftest_flag_branch_rejects_companions", argv_branch_arm)
+        arm("repo_and_rev_stay_required", usage_arm)
+
+    return report()
+
+
 def main(argv: list[str] | None = None) -> int:
+    raw = list(sys.argv[1:] if argv is None else argv)
+    # The self-check needs no repository, and the production usage error must
+    # not move: dispatch on the flag before argparse enforces --repo/--rev.
+    if "--selftest" in raw:
+        return _selftest_dispatch(raw)
+
     parser = argparse.ArgumentParser(
         description="Check the round-24 routed defect items D1..D5 against committed bytes.",
         allow_abbrev=False,
@@ -929,11 +1502,10 @@ def main(argv: list[str] | None = None) -> int:
         {"id": "D3", "held": d3_held, "reasons": d3_reasons, "detail": d3_detail},
         {"id": "D5", "held": d5_held, "reasons": d5_reasons, "detail": d5_detail},
     ]
-    held = sum(1 for row in rows if row["held"])
-    mismatches = len(rows) - held
+    status, held, mismatches, rc = _verdict(rows, d4_held)
     payload = {
         "schema": SCHEMA,
-        "status": "held" if mismatches == 0 and d4_held else "failed",
+        "status": status,
         "repo": repo,
         "rev": rev,
         "rev_commit": rev_commit,
@@ -943,8 +1515,7 @@ def main(argv: list[str] | None = None) -> int:
         "rows": rows,
         "hygiene": {"id": "D4", "held": d4_held, "reasons": d4_reasons, "detail": d4_detail},
     }
-    ok = mismatches == 0 and d4_held
-    return _emit(payload, RC_HELD if ok else RC_FAILED)
+    return _emit(payload, rc)
 
 
 if __name__ == "__main__":

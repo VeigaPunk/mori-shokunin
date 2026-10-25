@@ -7,6 +7,13 @@
 #   bash tools/mori-silence-cases.sh [path-to-census]
 #     census path default: <this dir>/mori-census.sh
 #     exit 0 iff every case matched; setup failure exits 2.
+#   bash tools/mori-silence-cases.sh --selftest
+#     bounded self-check over this case table's own fixtures (it never runs the
+#     suite): table structure, the final-roll grader, state parsing, seed
+#     determinism, then three case functions end to end against the real census.
+#     Prints MORI_SILENCE_CASES_SELFTEST pass=<n> fail=<n>;
+#     exit 0 all checks passed, 1 a check failed, 2 setup. Fixtures live under
+#     $TMPDIR (absolute, required) and are removed on exit.
 #
 # What it does:
 #   Builds per-case hermetic fixture trees (temp dirs, removed on exit) with
@@ -175,8 +182,15 @@ SELF=$(readlink -f -- "${BASH_SOURCE[0]}" 2>/dev/null || {
   case "$p" in /*) printf '%s' "$p" ;; *) printf '%s' "$PWD/$p" ;; esac
 })
 SCRIPT_DIR=$(cd -- "$(dirname -- "$SELF")" && pwd)
+# --selftest is an argv branch of its own, never a census path: it runs the
+# bounded self-check below and never the suite.
+SELFTEST=0
+case "${1:-}" in
+  --selftest) SELFTEST=1; shift ;;
+esac
 CENSUS=${1:-$SCRIPT_DIR/mori-census.sh}
-[ $# -gt 1 ] && { printf 'usage: mori-silence-cases.sh [path-to-census]\n' >&2; exit 2; }
+[ $# -gt 1 ] && { printf 'usage: mori-silence-cases.sh [path-to-census]\n       mori-silence-cases.sh --selftest\n' >&2; exit 2; }
+[ "$SELFTEST" = 1 ] && [ $# -gt 0 ] && { printf 'mori-silence-cases: --selftest takes no census path\n' >&2; exit 2; }
 [ -f "$CENSUS" ] && [ -r "$CENSUS" ] || { printf 'mori-silence-cases: census not readable: %s\n' "$CENSUS" >&2; exit 2; }
 command -v git >/dev/null 2>&1 || { printf 'mori-silence-cases: real git required on PATH\n' >&2; exit 2; }
 
@@ -240,6 +254,9 @@ if [ "${MORI_CASES_SCRUBBED:-}" != 1 ]; then
       exec 3< <(printf '%s|%s\n' "${MORI_SHUFFLE_SEED:-}" "${MORI_RUN_NONCE:-}")
       export MORI_CASES_SCRUBBED=1
       unset MORI_SHUFFLE_SEED MORI_RUN_NONCE
+      if [ "$SELFTEST" = 1 ]; then
+        exec bash "$SELF" --selftest
+      fi
       exec bash "$SELF" "$CENSUS"
       ;;
   esac
@@ -280,7 +297,17 @@ MW=1699999100            # NOW-GATE: r1 rolling-window start (all fixtures that
 RECENT=1699999940        # NOW-60: inside any sane r1 window and post-launch
 FUT=1700000300           # NOW+300: future-dated commit (must never close)
 
-WORK=$(mktemp -d /tmp/mori-silence-cases.XXXXXX)
+if [ "$SELFTEST" = 1 ]; then
+  # --selftest fixtures live under the caller's TMPDIR only (never /tmp).
+  case "${TMPDIR:-}" in
+    /*) ;;
+    *) die "--selftest requires an absolute TMPDIR" ;;
+  esac
+  [ -d "$TMPDIR" ] || die "--selftest TMPDIR is not a directory: $TMPDIR"
+  WORK=$(mktemp -d "$TMPDIR/mori-silence-cases-selftest.XXXXXX") || die "mktemp under TMPDIR failed"
+else
+  WORK=$(mktemp -d /tmp/mori-silence-cases.XXXXXX)
+fi
 MORI_CASES_WORK=$WORK
 trap 'chmod -R u+rwX "$MORI_CASES_WORK" 2>/dev/null; rm -rf -- "$MORI_CASES_WORK"' EXIT INT TERM
 BIN=$WORK/bin
@@ -1192,6 +1219,143 @@ shuffle_case_ids() { # Fisher-Yates in place; same RUN_SEED => same order
     t=${CASE_IDS[i]}; CASE_IDS[i]=${CASE_IDS[j]}; CASE_IDS[j]=$t
   done
 }
+
+# =================================================================================
+# --selftest — bounded self-check over THIS case table's own fixtures. It never
+# runs the suite. Three layers:
+#   1. table structure: the ids are unique, every id has its case_<id>
+#      function, no case_* function is unregistered, and each case builds the
+#      fixture that carries its own id (shape-invariance builds its own tree);
+#   2. the graders every case depends on, fed synthetic rolls: verdict_grade's
+#      final-roll contract (missing / duplicate / malformed / non-final /
+#      inconsistent, the r11 BANANA proxy, the 2^64 CLEAN-drift wrap), lane and
+#      aggregate state parsing, want_match alternation, redaction, and shuffle
+#      determinism over the case ids;
+#   3. three case functions executed end to end against the real census, so a
+#      broken fixture builder or an ungradeable census fails here first.
+# Exit 0 every check passed, 1 a check failed, 2 setup (handled at startup).
+# =================================================================================
+ST_PASS=0
+ST_FAIL=0
+
+st_check() { # <ok0/1> <label>
+  if [ "$1" = 1 ]; then
+    ST_PASS=$((ST_PASS + 1))
+  else
+    ST_FAIL=$((ST_FAIL + 1))
+    printf 'FAIL selftest: %s\n' "$2" >&2
+  fi
+}
+
+st_verdict() { # <roll with %b escapes> <rc> <want: ok | reason prefix>
+  local got
+  got=$(verdict_grade "$(printf '%b' "$1")" "$2")
+  case "$3" in
+    ok) [ "$got" = ok ] ;;
+    *)  case "$got" in "$3"*) return 0 ;; *) return 1 ;; esac ;;
+  esac
+}
+
+st_main() {
+  local n=${#CASE_IDS[@]} ids_sorted fns_sorted id body bad order_a order_b perm
+  local saved_out=$CASE_OUT saved_seed=$RUN_SEED log ran passed failed
+  local pass_before=$PASS_N total_before=$TOTAL_N fail_before=${#FAILED_IDS[@]}
+  local -a saved_ids=("${CASE_IDS[@]}")
+
+  # ---- 1. case table structure ------------------------------------------------
+  ids_sorted=$(printf '%s\n' "${CASE_IDS[@]}" | LC_ALL=C sort)
+  # case_skeleton is the shared tree builder, not a case: it is the only
+  # case_-prefixed function outside the registry.
+  fns_sorted=$(compgen -A function | grep -E '^case_[a-z0-9_]+$' \
+    | grep -vx 'case_skeleton' | sed -e 's/^case_//' -e 's/_/-/g' | LC_ALL=C sort)
+  st_check "$([ "$n" -gt 0 ] && printf 1 || printf 0)" \
+    "case table is empty"
+  st_check "$([ "$(printf '%s\n' "${CASE_IDS[@]}" | LC_ALL=C sort -u | wc -l)" -eq "$n" ] \
+    && printf 1 || printf 0)" "case ids are not unique"
+  st_check "$([ "$ids_sorted" = "$fns_sorted" ] && printf 1 || printf 0)" \
+    "case registry and case_* functions disagree"
+  bad=''
+  for id in "${CASE_IDS[@]}"; do
+    [ "$id" = shape-invariance ] && continue
+    body=$(declare -f "case_${id//-/_}" || true)
+    case "$body" in *"new_case $id "*) ;; *) bad="$bad $id" ;; esac
+  done
+  st_check "$([ -z "$bad" ] && printf 1 || printf 0)" \
+    "case fixture does not name its id:$bad"
+
+  # ---- 2. the graders every case depends on -----------------------------------
+  st_check "$(st_verdict 'MORI_CENSUS: CLEAN (findings=0 drift=0 unavailable=0 surfaces=2)\n' 0 ok \
+    && printf 1 || printf 0)" "verdict_grade rejects a clean final roll"
+  st_check "$(st_verdict 'MORI_CENSUS: DRIFT (findings=3 drift=3 unavailable=0 surfaces=2)\n' 1 ok \
+    && printf 1 || printf 0)" "verdict_grade rejects a drift final roll"
+  st_check "$(st_verdict 'BANANA: DRIFT (findings=3 drift=3 unavailable=0 surfaces=2)\n' 1 missing \
+    && printf 1 || printf 0)" "verdict_grade accepts a renamed roll (r11 proxy)"
+  st_check "$(st_verdict 'MORI_CENSUS: CLEAN (findings=0 drift=0 unavailable=0 surfaces=2)\nMORI_CENSUS: CLEAN (findings=0 drift=0 unavailable=0 surfaces=2)\n' 0 duplicate \
+    && printf 1 || printf 0)" "verdict_grade accepts a duplicate roll"
+  st_check "$(st_verdict 'MORI_CENSUS: CLEAN (findings=1 drift=0 unavailable=0)\n' 0 malformed \
+    && printf 1 || printf 0)" "verdict_grade accepts a malformed roll"
+  st_check "$(st_verdict 'MORI_CENSUS: CLEAN (findings=0 drift=0 unavailable=0 surfaces=2)\ntrailing replay\n' 0 not-final \
+    && printf 1 || printf 0)" "verdict_grade accepts a non-final roll"
+  st_check "$(st_verdict 'MORI_CENSUS: CLEAN (findings=0 drift=0 unavailable=0 surfaces=2)\n' 1 inconsistent \
+    && printf 1 || printf 0)" "verdict_grade accepts CLEAN with rc 1"
+  st_check "$(st_verdict 'MORI_CENSUS: CLEAN (findings=1 drift=1 unavailable=0 surfaces=2)\n' 0 inconsistent \
+    && printf 1 || printf 0)" "verdict_grade accepts CLEAN with drift>0"
+  st_check "$(st_verdict 'MORI_CENSUS: DRIFT (findings=0 drift=0 unavailable=0 surfaces=2)\n' 1 inconsistent \
+    && printf 1 || printf 0)" "verdict_grade accepts DRIFT with drift=0"
+  st_check "$(st_verdict 'MORI_CENSUS: CLEAN (findings=0 drift=18446744073709551616 unavailable=0 surfaces=2)\n' 0 inconsistent \
+    && printf 1 || printf 0)" "verdict_grade accepts a wrapped CLEAN drift value"
+
+  CASE_OUT=$(printf 'SURFACE lane.kagi: silent age=2000\nSURFACE silence: silent=1 progressing=0 progressing_weak=0 skipped=0 unavailable=0')
+  st_check "$([ "$(lane_state_from_out kagi)" = silent ] && printf 1 || printf 0)" \
+    "lane row parse"
+  st_check "$([ "$(aggregate_state_from_out)" = silent ] && printf 1 || printf 0)" \
+    "aggregate row parse"
+  CASE_OUT=$saved_out
+  st_check "$(want_match silent 'silent|progressing' && printf 1 || printf 0)" \
+    "want_match rejects a listed alternative"
+  st_check "$(want_match young 'silent|progressing' && printf 0 || printf 1)" \
+    "want_match accepts an unlisted state"
+  st_check "$([ "$(redact "pre $NONCE_TOKEN post")" = 'pre nonce-<redacted> post' ] \
+    && printf 1 || printf 0)" "redact leaks the run nonce"
+
+  RUN_SEED=20261025; CASE_IDS=("${saved_ids[@]}"); shuffle_case_ids
+  order_a=$(printf '%s ' "${CASE_IDS[@]}")
+  CASE_IDS=("${saved_ids[@]}"); shuffle_case_ids
+  order_b=$(printf '%s ' "${CASE_IDS[@]}")
+  CASE_IDS=("${saved_ids[@]}"); RUN_SEED=$saved_seed
+  st_check "$([ "$order_a" = "$order_b" ] && printf 1 || printf 0)" \
+    "shuffle is not deterministic for one seed"
+  perm=$(for id in $order_a; do printf '%s\n' "$id"; done | LC_ALL=C sort)
+  st_check "$([ "$perm" = "$ids_sorted" ] && printf 1 || printf 0)" \
+    "shuffle is not a permutation of the case ids"
+  st_check "$([ "$order_a" != "$(printf '%s ' "${saved_ids[@]}")" ] && printf 1 || printf 0)" \
+    "shuffle preserved source order"
+
+  # ---- 3. bounded slice of the case table's own fixtures ----------------------
+  log="$WORK/selftest-cases.log"
+  : > "$log"
+  for id in silent-open completed-not-open ledger-missing-not-silent; do
+    "case_${id//-/_}"
+  done > "$log" 2>&1 || true
+  ran=$((TOTAL_N - total_before))
+  passed=$((PASS_N - pass_before))
+  failed=$(( ${#FAILED_IDS[@]} - fail_before ))
+  st_check "$([ "$ran" -eq 3 ] && printf 1 || printf 0)" \
+    "bounded case slice ran $ran case(s), expected 3"
+  st_check "$([ "$passed" -eq 3 ] && [ "$failed" -eq 0 ] && printf 1 || printf 0)" \
+    "bounded case slice passed=$passed failed=$failed"
+  if [ "$passed" -ne 3 ] || [ "$failed" -ne 0 ]; then
+    grep -E '^FAIL ' "$log" >&2 || true
+  fi
+
+  printf 'MORI_SILENCE_CASES_SELFTEST pass=%d fail=%d\n' "$ST_PASS" "$ST_FAIL"
+  [ "$ST_FAIL" -eq 0 ] && exit 0
+  exit 1
+}
+
+if [ "$SELFTEST" = 1 ]; then
+  st_main
+fi
 
 shuffle_case_ids
 

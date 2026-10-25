@@ -32,8 +32,11 @@ import datetime as dt
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
+from pathlib import Path
 
 SCHEMA = "mori-routed-check-v1"
 BASE_REV = "c725aa37aa3c9ec4f34e3c2abc8ca1b616c7c130"
@@ -677,6 +680,301 @@ def _check_r4(repo: str, rev: str, round_number: int) -> tuple[bool, list[str], 
     return not reasons, reasons, detail
 
 
+# =============================================================================
+# --selftest: bounded self-check over the four routed rows on an isolated
+# synthetic repository built under the caller's TMPDIR.  Each row is read with
+# the tool's own git-object predicate, and every held row has a mutant commit
+# that must turn it red.  Offline, no writes outside the sandbox.
+# Exit 0 every check passed, 1 a check failed, 2 setup.
+# =============================================================================
+SELFTEST_ROUND = 9745
+SELFTEST_COMMIT_DATE = "2020-01-01T00:00:00+00:00"
+SELFTEST_FUTURE_AT = "2099-01-01T00:00:00Z"
+SELFTEST_PAST_AT = "2001-01-01T00:00:00Z"
+SELFTEST_ROUND23 = ".ufo/waves/round-23/"
+# The committed dispatch-ledger tool of the fixture revision: R4 dispatches it
+# exactly as it dispatches the real one (python -I - verify ...), so the row's
+# subprocess plumbing is exercised without importing the lane's ledger tool.
+SELFTEST_LEDGER_TOOL = (
+    b"import json, sys\n"
+    b"if sys.argv[1:2] != ['verify']:\n"
+    b"    print(json.dumps({'status': 'failed', 'finding_ids': ['SYNTHETIC_USAGE']}))\n"
+    b"    raise SystemExit(2)\n"
+    b"print(json.dumps({'status': 'clean', 'finding_ids': ['LEDGER_CLEAN']}))\n"
+    b"raise SystemExit(0)\n"
+)
+
+
+class SelftestSetup(Exception):
+    """The --selftest fixture could not be built (exit 2, never a row verdict)."""
+
+
+class SelftestTally:
+    """Pass/fail counter with failure names (names only, never fixture values)."""
+
+    def __init__(self) -> None:
+        self.passed = 0
+        self.failures: list[str] = []
+
+    def check(self, name: str, ok: bool) -> None:
+        if ok:
+            self.passed += 1
+        else:
+            self.failures.append(name)
+
+
+def _selftest_ledger_bytes(at: str, result: str) -> bytes:
+    round_dir = f".ufo/waves/round-{SELFTEST_ROUND}/"
+    return (json.dumps([{
+        "wave": "1",
+        "dispatch_path": round_dir + "dispatch/wave1.json",
+        "at": at,
+        "result": result,
+    }]) + "\n").encode("utf-8")
+
+
+def _selftest_base_files() -> dict[str, bytes]:
+    round_dir = f".ufo/waves/round-{SELFTEST_ROUND}/"
+    return {
+        SELFTEST_ROUND23 + "frozen/spec.json": b'{"synthetic":"frozen"}\n',
+        SELFTEST_ROUND23 + "evidence/retention-floor-final.json":
+            b'{"synthetic":"retention"}\n',
+        SELFTEST_ROUND23 + "evidence/retention-floor-final-comparison.json":
+            b'{"synthetic":"comparison"}\n',
+        SELFTEST_ROUND23 + "evidence/harness-receipt-overwrite.json":
+            b'{"synthetic":"capture"}\n',
+        SELFTEST_ROUND23 + "evidence/tmpfs-source-provenance-erratum.json":
+            b'{"synthetic":"errata"}\n',
+        SELFTEST_ROUND23 + "rejected/note.json": b'{"synthetic":"rejected"}\n',
+        "tools/mori-retention-gate.py": b"# synthetic retention gate\n",
+        "tools/mori-retention-reconcile.py": b"# synthetic retention reconcile\n",
+        "tools/mori-dispatch-ledger.py": SELFTEST_LEDGER_TOOL,
+        "SCORECARD.md": b"# synthetic scorecard\n",
+        round_dir + "wave1-spec.json": b'{"wave":"1"}\n',
+        round_dir + "wave1-attempts.json":
+            _selftest_ledger_bytes(SELFTEST_FUTURE_AT, "started"),
+        round_dir + "dispatch/wave1.json": b'{"synthetic":"dispatch"}\n',
+    }
+
+
+def _selftest_git_env(sandbox: Path, tmpdir: Path) -> dict[str, str]:
+    env = _git_env()
+    env.update({
+        "HOME": str(sandbox / "home"),
+        "TMPDIR": str(tmpdir),
+        "GIT_AUTHOR_NAME": "mori-synthetic",
+        "GIT_AUTHOR_EMAIL": "synthetic@shokunin.invalid",
+        "GIT_COMMITTER_NAME": "mori-synthetic",
+        "GIT_COMMITTER_EMAIL": "synthetic@shokunin.invalid",
+        "GIT_AUTHOR_DATE": SELFTEST_COMMIT_DATE,
+        "GIT_COMMITTER_DATE": SELFTEST_COMMIT_DATE,
+    })
+    return env
+
+
+def _selftest_git(env: dict[str, str], repo: Path, *args: str) -> bytes:
+    try:
+        proc = subprocess.run(
+            ["git", "--no-optional-locks", "-C", str(repo), *args],
+            stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE, env=env,
+            timeout=GIT_TIMEOUT_SECONDS, check=False,
+        )
+    except (OSError, subprocess.SubprocessError) as exc:
+        raise SelftestSetup("synthetic git unavailable") from exc
+    if proc.returncode != 0:
+        raise SelftestSetup(
+            "synthetic git command failed: " + (args[0] if args else "git"))
+    return proc.stdout
+
+
+def _selftest_write(repo: Path, relative: str, data: bytes) -> None:
+    target = repo / relative
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(data)
+
+
+def _selftest_commit(env: dict[str, str], repo: Path, message: str) -> str:
+    _selftest_git(env, repo, "add", "-A")
+    _selftest_git(env, repo, "commit", "-q", "-m", message)
+    return _selftest_git(env, repo, "rev-parse", "HEAD").decode("ascii").strip()
+
+
+def _selftest_r4_status(detail: dict) -> str | None:
+    """The first ledger row's binding status, or None when unreadable."""
+    ledgers = detail.get("ledgers")
+    if not isinstance(ledgers, list) or not ledgers:
+        return None
+    rows = ledgers[0].get("rows") if isinstance(ledgers[0], dict) else None
+    if not isinstance(rows, list) or not rows:
+        return None
+    status = rows[0].get("status") if isinstance(rows[0], dict) else None
+    return status if isinstance(status, str) else None
+
+
+def run_selftest() -> int:
+    raw_tmpdir = os.environ.get("TMPDIR")
+    if (not raw_tmpdir or not os.path.isabs(raw_tmpdir)
+            or not os.path.isdir(raw_tmpdir)):
+        raise SelftestSetup("--selftest requires an absolute TMPDIR directory")
+    tmpdir = Path(raw_tmpdir)
+    sandbox = Path(tempfile.mkdtemp(prefix="mori-routed-selftest-", dir=tmpdir))
+    tally = SelftestTally()
+    try:
+        (sandbox / "home").mkdir()
+        repo = sandbox / "repo"
+        repo.mkdir()
+        env = _selftest_git_env(sandbox, tmpdir)
+        _selftest_git(env, repo, "init", "-q", "--initial-branch=main")
+        for relative, data in _selftest_base_files().items():
+            _selftest_write(repo, relative, data)
+        base = _selftest_commit(env, repo, "synthetic routed base")
+        _selftest_write(repo, "SCORECARD.md",
+                        b"# synthetic scorecard\n- synthetic benign line\n")
+        _selftest_write(repo, ".ufo/notes.md", b"synthetic tip note\n")
+        tip = _selftest_commit(env, repo, "synthetic routed tip")
+        ledger_path = f".ufo/waves/round-{SELFTEST_ROUND}/wave1-attempts.json"
+
+        def reasons_for(row: str, revision: str) -> list[str]:
+            if row == "r1":
+                return _check_r1(str(repo), revision, base)[1]
+            if row == "r2":
+                return _check_r2(str(repo), revision, base)[1]
+            if row == "r3":
+                return _check_r3(str(repo), revision, base)[1]
+            return _check_r4(str(repo), revision, SELFTEST_ROUND)[1]
+
+        def commit(files: dict[str, bytes], message: str) -> str:
+            for relative, data in files.items():
+                _selftest_write(repo, relative, data)
+            return _selftest_commit(env, repo, message)
+
+        r1_held, r1_reasons, r1_detail = _check_r1(str(repo), tip, base)
+        tally.check("r1-held", r1_held and not r1_reasons)
+        tally.check("r1-finds-no-historical-case-name",
+                    r1_detail.get("historical_case_hits") == [])
+        r2_held, r2_reasons, _ = _check_r2(str(repo), tip, base)
+        tally.check("r2-held", r2_held and not r2_reasons)
+        r3_held, r3_reasons, _ = _check_r3(str(repo), tip, base)
+        tally.check("r3-held", r3_held and not r3_reasons)
+        r4_held, r4_reasons, r4_detail = _check_r4(str(repo), tip, SELFTEST_ROUND)
+        tally.check("r4-held", r4_held and not r4_reasons)
+        tally.check("r4-binds-dispatch-before-call",
+                    _selftest_r4_status(r4_detail) == "bound_before_call")
+        tally.check(
+            "r4-finds-one-ledger-and-one-spec",
+            r4_detail.get("ledgers_found") == [ledger_path]
+            and r4_detail.get("specs_found")
+            == [f".ufo/waves/round-{SELFTEST_ROUND}/wave1-spec.json"],
+        )
+
+        tree_mut = commit(
+            {SELFTEST_ROUND23 + "frozen/spec.json":
+             b'{"synthetic":"frozen-changed"}\n'},
+            "synthetic round-23 tree change",
+        )
+        tally.check("r1-rejects-changed-round23-tree",
+                    "round23_tree_changed" in reasons_for("r1", tree_mut))
+        tally.check("r3-rejects-changed-round23-tree",
+                    "round23_tree_changed" in reasons_for("r3", tree_mut))
+
+        quota_mut = commit({"corpus/knowledge/quota-notes.md":
+                            b"synthetic quota note\n"},
+                           "synthetic quota path added")
+        tally.check("r1-rejects-added-quota-path",
+                    "quota_path_added" in reasons_for("r1", quota_mut))
+
+        absent_mut = commit({"tools/mori-quota-surface.py": b"# synthetic quota\n"},
+                            "synthetic quota capability")
+        tally.check("r1-rejects-quota-capability-present",
+                    "quota_capability_present"
+                    in reasons_for("r1", absent_mut))
+
+        needle_mut = commit(
+            {"tools/note-synthetic.py":
+             b"# " + HISTORICAL_CASE_NEEDLE.encode("utf-8") + b"\n"},
+            "synthetic historical case name",
+        )
+        tally.check("r1-rejects-historical-case-name",
+                    "historical_case_named_in_tools"
+                    in reasons_for("r1", needle_mut))
+
+        privacy_mut = commit(
+            {"SCORECARD.md": b"# synthetic scorecard\n"
+                             b"- synthetic benign line\n"
+                             b"privacy_clearance: true\n"},
+            "synthetic privacy clearance claim",
+        )
+        tally.check("r2-rejects-privacy-clearance-line",
+                    "privacy_clearance_true_line_added"
+                    in reasons_for("r2", privacy_mut))
+
+        retention_mut = commit(
+            {SELFTEST_ROUND23 + "evidence/retention-floor-final.json":
+             b'{"synthetic":"retention-changed"}\n'},
+            "synthetic retention evidence change",
+        )
+        tally.check("r2-rejects-changed-retention-evidence",
+                    "retention_evidence_changed"
+                    in reasons_for("r2", retention_mut))
+
+        capture_mut = commit(
+            {SELFTEST_ROUND23
+             + "evidence/tmpfs-source-provenance-erratum.json":
+             b'{"synthetic":"errata-changed"}\n'},
+            "synthetic capture evidence change",
+        )
+        tally.check("r3-rejects-changed-capture-evidence",
+                    "capture_evidence_changed"
+                    in reasons_for("r3", capture_mut))
+
+        rejected_mut = commit(
+            {SELFTEST_ROUND23 + "rejected/note.json":
+             b'{"synthetic":"rejected-changed"}\n'},
+            "synthetic rejected tree change",
+        )
+        tally.check("r3-rejects-changed-rejected-tree",
+                    "rejected_tree_changed"
+                    in reasons_for("r3", rejected_mut))
+
+        tally.check(
+            "r4-rejects-round-without-ledger",
+            "no_round_ledger" in _check_r4(
+                str(repo), tip, SELFTEST_ROUND + 1)[1],
+        )
+
+        past_mut = commit(
+            {ledger_path: _selftest_ledger_bytes(SELFTEST_PAST_AT, "started")},
+            "synthetic dispatch after its at",
+        )
+        tally.check("r4-rejects-dispatch-committed-after-at",
+                    "dispatch_committed_after_dispatch"
+                    in reasons_for("r4", past_mut))
+
+        invalid_at_mut = commit(
+            {ledger_path: _selftest_ledger_bytes("not-a-timestamp", "started")},
+            "synthetic invalid dispatch timestamp",
+        )
+        tally.check("r4-rejects-invalid-dispatch-at",
+                    "dispatch_at_invalid" in reasons_for("r4", invalid_at_mut))
+
+        pending_mut = commit(
+            {ledger_path: _selftest_ledger_bytes(SELFTEST_FUTURE_AT, "pending")},
+            "synthetic wave never started",
+        )
+        tally.check("r4-rejects-wave-spec-without-started-ledger",
+                    "wave_spec_without_started_ledger"
+                    in reasons_for("r4", pending_mut))
+    finally:
+        shutil.rmtree(sandbox, ignore_errors=True)
+
+    for name in tally.failures:
+        sys.stderr.write("FAIL " + name + "\n")
+    sys.stdout.write(
+        f"ROUTED_CHECK_SELFTEST pass={tally.passed} fail={len(tally.failures)}\n")
+    return RC_HELD if not tally.failures else RC_FAILED
+
+
 def _emit(payload: dict, rc: int) -> int:
     sys.stdout.write(json.dumps(payload, sort_keys=True, separators=(",", ":")) + "\n")
     return rc
@@ -697,6 +995,20 @@ def _cannot_evaluate(repo: str, rev: str, base: str, error: str) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
+    raw = list(sys.argv[1:] if argv is None else argv)
+    if "--selftest" in raw:
+        if raw != ["--selftest"]:
+            sys.stderr.write(
+                "routed-check --selftest takes no other arguments\n")
+            return RC_UNAVAILABLE
+        try:
+            return run_selftest()
+        except SelftestSetup as exc:
+            sys.stderr.write(f"ROUTED_CHECK_SELFTEST setup={exc}\n")
+            return RC_UNAVAILABLE
+        except (GitUnavailable, GitError, OSError) as exc:
+            sys.stderr.write(f"ROUTED_CHECK_SELFTEST setup={exc}\n")
+            return RC_UNAVAILABLE
     parser = argparse.ArgumentParser(
         description="Check the round-23 routed defect items against committed bytes.",
         allow_abbrev=False,
@@ -704,7 +1016,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--repo", required=True)
     parser.add_argument("--rev", required=True)
     parser.add_argument("--round", type=int, default=24, dest="round_number")
-    args = parser.parse_args(list(sys.argv[1:] if argv is None else argv))
+    args = parser.parse_args(raw)
 
     repo = args.repo
     rev = args.rev

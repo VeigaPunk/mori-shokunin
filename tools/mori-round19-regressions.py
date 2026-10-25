@@ -15,6 +15,7 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import stat
 import subprocess
 import sys
@@ -1101,6 +1102,305 @@ def run_harness(args: argparse.Namespace) -> tuple[dict[str, Any], int]:
             pass
 
 
+# =============================================================================
+# --selftest: bounded self-check of this harness over the isolated synthetic git
+# fixtures the `--mode after` path builds (c2_fixture), plus mutant inputs every
+# check must reject.  No production tool is dispatched and nothing is written
+# outside the caller's explicit lane TMPDIR, so the selftest is hermetic and
+# offline.  Exit 0 every check passed, 1 a check failed, 2 setup.
+# =============================================================================
+SELFTEST_VERDICTS = ("pre-build", "co-evolved", "absent", "no-implementation")
+# (frozen path present at the bound tip, implementation path present) per claim.
+SELFTEST_CLAIM_PRESENCE = {
+    "fixture-prebuild": (True, True),
+    "fixture-coevolved": (True, True),
+    "fixture-absent": (False, True),
+    "fixture-no-implementation": (True, False),
+    "fixture-edited-after-implementation": (True, True),
+    "fixture-override": (True, True),
+}
+
+
+class SelftestTally:
+    """Pass/fail counter with failure names (names only, never fixture values)."""
+
+    def __init__(self) -> None:
+        self.passed = 0
+        self.failures: list[str] = []
+
+    def check(self, name: str, ok: bool) -> None:
+        if ok:
+            self.passed += 1
+        else:
+            self.failures.append(name)
+
+
+def selftest_rejects(fn: Any, *args: Any,
+                     errors: tuple[type[BaseException], ...] = (HarnessError,),
+                     **kwargs: Any) -> bool:
+    try:
+        fn(*args, **kwargs)
+    except errors:
+        return True
+    return False
+
+
+def selftest_path_present(repo: Path, revision: str, path: str,
+                          env: dict[str, str]) -> bool:
+    """True when `path` is committed at `revision` (a fixture read)."""
+    try:
+        run_git(repo, ["cat-file", "-e", f"{revision}:{path}"], env)
+    except HarnessError:
+        return False
+    return True
+
+
+def run_selftest() -> int:
+    tmpdir = require_tmpdir()
+    tally = SelftestTally()
+    sandbox = Path(tempfile.mkdtemp(prefix="mori-r19-selftest-", dir=tmpdir))
+    try:
+        home = sandbox / "home"
+        home.mkdir()
+        env = clean_env(home, tmpdir)
+        fixture = c2_fixture(sandbox, tmpdir, env)
+        repo = fixture["repo"]
+        claims = json_load_bytes(fixture["register"].read_bytes())["claims"]
+
+        fixture_oids = [fixture["base"], fixture["measured"],
+                        *fixture["expected_tips"].values()]
+        tally.check(
+            "fixture-commits-resolve",
+            all(run_git(repo, ["rev-parse", "--verify", f"{oid}^{{commit}}"], env)
+                .decode("ascii").strip() == oid for oid in fixture_oids),
+        )
+        tally.check(
+            "fixture-override-tag-resolves",
+            run_git(repo, ["rev-parse", "refs/tags/fixture-override"], env)
+            .decode("ascii").strip()
+            == fixture["expected_tips"]["fixture-override"],
+        )
+
+        tally.check(
+            "register-digest-matches-bytes",
+            sha256_file(fixture["register"]) == fixture["register_sha256"]
+            and sha256_bytes(fixture["register"].read_bytes())
+            == fixture["register_sha256"],
+        )
+        tally.check(
+            "corrections-digest-matches-bytes",
+            sha256_file(fixture["corrections"]) == fixture["corrections_sha256"],
+        )
+
+        tally.check(
+            "register-claims-unique",
+            len({claim["id"] for claim in claims}) == len(claims)
+            == len(fixture["expected_tips"]),
+        )
+        tips_ok = True
+        for claim in claims:
+            if (claim["tip"] != "<synthetic override>"
+                    and claim["tip"] != fixture["expected_tips"][claim["id"]]):
+                tips_ok = False
+            if claim["base"] != fixture["expected_bases"][claim["id"]]:
+                tips_ok = False
+        tally.check("claims-bind-expected-tips", tips_ok)
+
+        presence_ok = True
+        for claim in claims:
+            tip = claim["tip"]
+            if tip == "<synthetic override>":
+                tip = fixture["expected_tips"][claim["id"]]
+            want_frozen, want_impl = SELFTEST_CLAIM_PRESENCE[claim["id"]]
+            observed = (
+                all(selftest_path_present(repo, tip, path, env)
+                    for path in claim["frozen"]),
+                all(selftest_path_present(repo, tip, path, env)
+                    for path in claim["impl"]),
+            )
+            if observed != (want_frozen, want_impl):
+                presence_ok = False
+        tally.check("claims-bind-expected-path-presence", presence_ok)
+        tally.check(
+            "absent-frozen-path-detected",
+            not selftest_path_present(
+                repo, fixture["expected_tips"]["fixture-absent"],
+                "fixture/absent/frozen.txt", env,
+            ),
+        )
+
+        verdicts = expected_verdicts()
+        tally.check(
+            "verdict-table-covers-claims",
+            set(verdicts) == {claim["id"] for claim in claims}
+            and all(value in SELFTEST_VERDICTS for value in verdicts.values()),
+        )
+        declared = next(claim["declared"] for claim in claims
+                        if claim["id"] == "fixture-coevolved")
+        tally.check(
+            "coevolved-verdict-differs-from-declared",
+            verdicts["fixture-coevolved"] == "co-evolved"
+            and verdicts["fixture-coevolved"] != declared,
+        )
+
+        register_obj = json_load_bytes(fixture["register"].read_bytes())
+        tally.check(
+            "canonical-json-roundtrip",
+            json_load_bytes(canonical_json(register_obj)) == register_obj,
+        )
+        tally.check("duplicate-json-key-rejected",
+                    selftest_rejects(json_load_bytes, b'{"a":1,"a":2}',
+                                     errors=(ValueError,)))
+        tally.check("non-finite-json-rejected",
+                    selftest_rejects(json_load_bytes, b'{"a":NaN}',
+                                     errors=(ValueError,)))
+
+        tally.check(
+            "safe-repo-path-rejects-traversal",
+            selftest_rejects(safe_repo_path, "../escape")
+            and selftest_rejects(safe_repo_path, "/absolute")
+            and selftest_rejects(safe_repo_path, "a\\b")
+            and safe_repo_path("a/b").as_posix() == "a/b",
+        )
+
+        existing_output = sandbox / "existing-output.json"
+        existing_output.write_bytes(b"{}\n")
+        tally.check(
+            "output-path-guards",
+            selftest_rejects(output_path, "relative.json", [])
+            and selftest_rejects(output_path, str(existing_output), [])
+            and selftest_rejects(output_path, str(sandbox / "input.json"),
+                                 [sandbox / "input.json"])
+            and output_path(str(sandbox / "fresh-output.json"), [])
+            == sandbox / "fresh-output.json",
+        )
+
+        script_path = Path(__file__).resolve()
+        resolved_self, self_sha = tool_path(str(script_path))
+        absent_tool, absent_sha = tool_path(str(sandbox / "absent-tool.py"))
+        tally.check(
+            "tool-path-digest-and-absence",
+            self_sha == sha256_file(script_path)
+            and resolved_self.is_file()
+            and absent_sha is None and not absent_tool.exists(),
+        )
+        tally.check(
+            "tool-path-rejects-relative-and-directory",
+            selftest_rejects(tool_path, "tools/relative.py")
+            and selftest_rejects(tool_path, str(sandbox)),
+        )
+
+        saved_tmpdir = os.environ.pop("TMPDIR", None)
+        try:
+            missing_rejected = selftest_rejects(require_tmpdir)
+        finally:
+            if saved_tmpdir is not None:
+                os.environ["TMPDIR"] = saved_tmpdir
+        os.environ["TMPDIR"] = str(script_path.parents[1].parent)
+        try:
+            outside_rejected = selftest_rejects(require_tmpdir)
+        finally:
+            if saved_tmpdir is not None:
+                os.environ["TMPDIR"] = saved_tmpdir
+            else:
+                os.environ.pop("TMPDIR", None)
+        tally.check("tmpdir-guard",
+                    missing_rejected and outside_rejected)
+
+        tally.check(
+            "counts-classification",
+            counts([{"status": "pass"}, {"status": "regression"},
+                    {"status": "capability_absent"}, {}])
+            == {"total": 4, "pass": 1, "capability_absent": 1, "regression": 1},
+        )
+
+        ok_proc = subprocess.CompletedProcess(
+            ["synthetic"], 0, b'{"status":"clean"}\n', b"")
+        bad_proc = subprocess.CompletedProcess(["synthetic"], 1, b"not-json", b"")
+        leak_proc = subprocess.CompletedProcess(
+            ["synthetic"], 0, PRIVATE_SENTINEL.encode("utf-8"), b"")
+        tally.check(
+            "process-receipt-shape",
+            process_receipt(ok_proc)["exit_code"] == 0
+            and process_receipt(ok_proc)["stdout_bytes"] == len(ok_proc.stdout)
+            and parsed_stdout(ok_proc) == {"status": "clean"}
+            and parsed_stdout(bad_proc) is None,
+        )
+        tally.check(
+            "private-marker-detected",
+            marker_leaked(leak_proc) and not marker_leaked(ok_proc),
+        )
+
+        payloads = c1_fixture_payloads("synthetic-revision-placeholder")
+        c1_repo = sandbox / "c1-repo"
+        init_repo(c1_repo, env)
+        c1_revision = commit_files(
+            c1_repo, dict(payloads["blob_data"]), "synthetic C1 population", env,
+        )
+        payloads = c1_fixture_payloads(c1_revision)
+        population_sha = sha256_bytes(canonical_json(payloads["population"]))
+        reviews_sha = sha256_bytes(b"synthetic reviews\n")
+        script_sha = sha256_bytes(b"synthetic content tool source\n")
+        receipt = {
+            "revision": c1_revision,
+            "metadata": {
+                "revision": c1_revision,
+                "population_sha256": population_sha,
+                "reviews_sha256": reviews_sha,
+                "script_sha256": script_sha,
+            },
+            "counts": {"population_paths": 2, "review_rows": 2,
+                       "blobs_read": 2, "findings": 1},
+            "findings": [{"code": "SYNTHETIC_FINDING",
+                          "path": "synthetic/alpha.txt"}],
+            "status": "failed",
+        }
+
+        def receipt_valid(data: dict[str, Any]) -> bool:
+            return c1_output_valid(
+                data, revision=c1_revision,
+                population_sha=population_sha,
+                reviews_sha=reviews_sha, script_sha=script_sha,
+            )
+
+        drifted = dict(receipt, metadata=dict(receipt["metadata"],
+                                              population_sha256="0" * 64))
+        overcounted = dict(receipt, counts=dict(receipt["counts"], findings=2))
+        tally.check("c1-receipt-fields", receipt_valid(receipt))
+        tally.check("c1-receipt-mutants-rejected",
+                    not receipt_valid(drifted) and not receipt_valid(overcounted))
+        tally.check(
+            "c1-finding-row-lookup",
+            c1_code_present(receipt, "SYNTHETIC_FINDING", "synthetic/alpha.txt")
+            and not c1_code_present(receipt, "SYNTHETIC_FINDING",
+                                    "synthetic/beta.txt"),
+        )
+        tally.check(
+            "c1-fixture-blobs-match-digests",
+            all(sha256_bytes(run_git(
+                c1_repo, ["cat-file", "blob",
+                          f"{c1_revision}:{row['path']}"], env,
+            )) == row["blob_sha256"] for row in payloads["safe_rows"]),
+        )
+
+        oracle = script_path.parents[1] / ORACLE_RELATIVE_PATH
+        try:
+            _oracle_repo, oracle_bytes, expected = expected_from_pinned_commit(oracle)
+            oracle_ok = (sha256_bytes(oracle_bytes) == sha256_file(oracle)
+                         and expected["schema"] == EXPECTED_SCHEMA)
+        except HarnessError:
+            oracle_ok = False
+        tally.check("pinned-oracle-validates", oracle_ok)
+    finally:
+        shutil.rmtree(sandbox, ignore_errors=True)
+
+    for name in tally.failures:
+        sys.stderr.write("FAIL " + name + "\n")
+    sys.stdout.write(
+        f"R19_SELFTEST pass={tally.passed} fail={len(tally.failures)}\n")
+    return 0 if not tally.failures else 1
+
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--content-tool", required=True, metavar="PATH")
@@ -1112,7 +1412,18 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 
 def main(argv: list[str] | None = None) -> int:
-    args = parse_args(argv)
+    raw = list(sys.argv[1:] if argv is None else argv)
+    if "--selftest" in raw:
+        if raw != ["--selftest"]:
+            sys.stderr.write(
+                "R19_SELFTEST setup=--selftest-takes-no-other-arguments\n")
+            return 2
+        try:
+            return run_selftest()
+        except (HarnessError, OSError) as exc:
+            sys.stderr.write(f"R19_SELFTEST setup={exc}\n")
+            return 2
+    args = parse_args(raw)
     try:
         result, exit_code = run_harness(args)
     except HarnessError as exc:
