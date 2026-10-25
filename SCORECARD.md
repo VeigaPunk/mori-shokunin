@@ -2543,3 +2543,19 @@ v1 wave, 32 seats (12 attack roles = 37.5%), 31 reports returned, 1 seat still
 running at landing (`RevLedgerVsReport`); no wave 2 (fewer than 32 distinct attack
 items on landed bytes by landing time — the residual surface is the round-45 plan
 above). Round total: 32 seats.
+
+## Round 45 — closure-reconciled claims (measured landing `baabc9929f0f272f3a99cd0a7816a2cb35fda835`)
+
+Non-author closure: `corpus/lessons/round-45-verifier-spotcheck.md:42-72`. Score changes were not admitted; scores remain coverage 6, operability 7, depth 5, freshness 5, calibration 5, adjacency 6.
+
+| Claim | Axis | Before → after; measured outcome | Closure verdict |
+|---|---|---|---|
+| C1 ledger gate stops being vacuous | operability | Round-44 counter reports `C1=met` on 3/3 vacuity witnesses; round-45 counter rejects 3/3. | improved |
+| C2 registry stops overstating | calibration | Unregistered members 14→0 and missing selftests 1→0; closure finds 4 stale registry cells at the landing commit. | harmed |
+| C3 sourced cgroup-level naming entry | depth | Entry absent→present; S473 mined and used by the entry; census rc 0. | improved |
+
+Round-45 closure reports quality harmed due to stale registry cells and the false 29/29 freeze-manifest tally; the latter was corrected append-only in `LOG.md` round 46. Evidence and re-derivation: round-45 verifier spot-check above. No score delta is claimed.
+
+## Round 46 — calibration repair
+
+Claim C1 (calibration, held score 5): four round-45 `SKILL.md` registry rows have measured pins. Frozen counter `python3 .ufo/waves/round-46/count-repins.py <SKILL.md>` printed `MORI_R45_REPINS mismatches=4 rows=4` (exit 1) for committed `control-skill.md` and `mismatches=0 rows=4` (exit 0) for repaired `SKILL.md`; counter SHA-256 `ebb6a6d3fe08d78791a45643d1ebda2243e5fff271eaada1d7f682317c673327`. However, CritControl/CritVerdict demonstrated that stale receipt strings placed in another cell of each row also yield zero mismatches, and the counter does not re-measure live tools. **Verdict: unprovable** for the frozen predicate; the corrected cells are independently corroborated but the counter is not a calibration-grade mismatch measure. No score delta is claimed. Evidence: `.ufo/waves/round-46/w1/CritControl.md`, `CritVerdict.md`, and `corpus/lessons/round-46.md`.

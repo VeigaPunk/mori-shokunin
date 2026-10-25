@@ -1,0 +1,201 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r46-calibration-repair",
+  "createdAt": "2026-10-25T13:09:29.566Z",
+  "updatedAt": "2026-10-25T13:11:09.156Z",
+  "reportDir": ".ufo/waves/round-46/w1",
+  "members": {
+    "RevR44Cell": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.RevR44Cell",
+      "role": "reviewer",
+      "item": null
+    },
+    "RevC1Cell": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.RevC1Cell",
+      "role": "reviewer",
+      "item": null
+    },
+    "RevC2Cell": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.RevC2Cell",
+      "role": "reviewer",
+      "item": null
+    },
+    "RevR44Superseder": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.RevR44Superseder",
+      "role": "critic",
+      "item": null
+    },
+    "CritCounterPredicate": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.CritCounterPredicate",
+      "role": "critic",
+      "item": null
+    },
+    "CritControl": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.CritControl",
+      "role": "critic",
+      "item": null
+    },
+    "MutStaleC1": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.MutStaleC1",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutStaleC2": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.MutStaleC2",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "ScoutDigests": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.ScoutDigests",
+      "role": "scout",
+      "item": null
+    },
+    "ScoutTally": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.ScoutTally",
+      "role": "scout",
+      "item": null
+    },
+    "ExecCounter": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.ExecCounter",
+      "role": "executor",
+      "item": null
+    },
+    "ExecFreeze": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.ExecFreeze",
+      "role": "executor",
+      "item": null
+    },
+    "ExecAuditorLines": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.ExecAuditorLines",
+      "role": "executor",
+      "item": null
+    },
+    "ScribeClaim": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.ScribeClaim",
+      "role": "scribe",
+      "item": null
+    },
+    "ScribeLog": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.ScribeLog",
+      "role": "scribe",
+      "item": null
+    },
+    "ScribeScorecard": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.ScribeScorecard",
+      "role": "scribe",
+      "item": null
+    },
+    "ConnOverlap": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.ConnOverlap",
+      "role": "connector",
+      "item": null
+    },
+    "RevSelftest": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.RevSelftest",
+      "role": "reviewer",
+      "item": null
+    },
+    "RevSkillSweep": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.RevSkillSweep",
+      "role": "reviewer",
+      "item": null
+    },
+    "CritSelfAssessment": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.CritSelfAssessment",
+      "role": "critic",
+      "item": null
+    },
+    "RevSourceRow": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.RevSourceRow",
+      "role": "reviewer",
+      "item": null
+    },
+    "ScoutCensus": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.ScoutCensus",
+      "role": "scout",
+      "item": null
+    },
+    "CritNoOp": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.CritNoOp",
+      "role": "critic",
+      "item": null
+    },
+    "RevRowIdentity": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.RevRowIdentity",
+      "role": "reviewer",
+      "item": null
+    },
+    "RevDuplicates": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.RevDuplicates",
+      "role": "reviewer",
+      "item": null
+    },
+    "MutMissing": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.MutMissing",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutDuplicate": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.MutDuplicate",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutControl": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.MutControl",
+      "role": "mutation-tester",
+      "item": null
+    },
+    "ScoutScope": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.ScoutScope",
+      "role": "scout",
+      "item": null
+    },
+    "ScribeLesson": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.ScribeLesson",
+      "role": "scribe",
+      "item": null
+    },
+    "RevCounterCode": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.RevCounterCode",
+      "role": "reviewer",
+      "item": null
+    },
+    "CritVerdict": {
+      "kind": "spawn",
+      "agentId": "L1Mori46.CritVerdict",
+      "role": "critic",
+      "item": null
+    }
+  }
+}

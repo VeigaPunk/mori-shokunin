@@ -1,0 +1,395 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r46-calibration-repair",
+  "policy": {
+    "source": "config",
+    "maxLanes": 256,
+    "minLanes": 16,
+    "waveMinLanes": 32,
+    "waveMaxLanes": 64,
+    "declaredMaxLanes": null,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 32,
+    "resume": 0,
+    "total": 32
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-46/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-46/w1",
+    "members": {
+      "RevR44Cell": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC1Cell": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC2Cell": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevR44Superseder": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritCounterPredicate": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritControl": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "MutStaleC1": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutStaleC2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "ScoutDigests": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScoutTally": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ExecCounter": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecFreeze": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecAuditorLines": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ScribeClaim": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeLog": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeScorecard": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ConnOverlap": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null
+      },
+      "RevSelftest": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevSkillSweep": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "CritSelfAssessment": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "RevSourceRow": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "ScoutCensus": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "CritNoOp": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "RevRowIdentity": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevDuplicates": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "MutMissing": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutDuplicate": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutControl": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "ScoutScope": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScribeLesson": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "RevCounterCode": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "CritVerdict": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "# mori round 46 — calibration repair falsification\nLane repo: /home/vgpnk/Projects/shokunin/mori-shokunin. Fleet root: /home/vgpnk/Projects/shokunin. Adversarially inspect the named predicate and report evidence only. Do not edit code, production files, or any other seat's file; write exactly your own report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-46/w1/<task-name>.md. Every Report trailer is relative to the lane repo and must be written under that absolute root. No git/jj mutations. Fleet and sibling repos are read-only. Do not copy operator configuration values or session identifiers. No tool install is needed; no installs/upgrades made. Pacman transactions are paused; never run pacman. Do not ask questions.\n\nFrozen predicate: count-repins.py reports mismatches=0 rows=4 only when four specific SKILL.md rows match measured pins. The prior committed SKILL snapshot is the do-nothing control and must remain red. Give reproducible findings only; no unsupported verdict. A dispatched seat is not an independent judge.",
+    "tasks": [
+      {
+        "name": "RevR44Cell",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nRevR44Cell: Check r44 registry cell stale selftest tally, digest, line-count substitutions against committed auditor bytes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/RevR44Cell.md"
+      },
+      {
+        "name": "RevC1Cell",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nRevC1Cell: Check C1 row selftest tally and counter digest against freeze manifest and output.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/RevC1Cell.md"
+      },
+      {
+        "name": "RevC2Cell",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nRevC2Cell: Check C2 row counter, mutant and auditor digests, selftest tally and auditor line count.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/RevC2Cell.md"
+      },
+      {
+        "name": "RevR44Superseder",
+        "agent": "critic",
+        "task": "/skill:godspeed\nRevR44Superseder: Attack the r44 superseding registry row for factual accuracy, scope, and provenance.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/RevR44Superseder.md"
+      },
+      {
+        "name": "CritCounterPredicate",
+        "agent": "critic",
+        "task": "/skill:godspeed\nCritCounterPredicate: Falsify the counter predicate: omissions, duplicate rows, row-name collision, stale rows, malformed values.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/CritCounterPredicate.md"
+      },
+      {
+        "name": "CritControl",
+        "agent": "critic",
+        "task": "/skill:godspeed\nCritControl: Try to make the do-nothing control incorrectly pass; identify control/measurement asymmetry.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/CritControl.md"
+      },
+      {
+        "name": "MutStaleC1",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\nMutStaleC1: Restore stale C1 digest/tally and run counter; report exact result.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/MutStaleC1.md"
+      },
+      {
+        "name": "MutStaleC2",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\nMutStaleC2: Restore stale C2/auditor/mutant digests, tallies and line count; report exact result.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/MutStaleC2.md"
+      },
+      {
+        "name": "ScoutDigests",
+        "agent": "scout",
+        "task": "/skill:godspeed\nScoutDigests: Independently compare recorded C1/C2/auditor/mutant SHA values with committed files.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/ScoutDigests.md"
+      },
+      {
+        "name": "ScoutTally",
+        "agent": "scout",
+        "task": "/skill:godspeed\nScoutTally: Rerun and report the three selftest tallies; no editing.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/ScoutTally.md"
+      },
+      {
+        "name": "ExecCounter",
+        "agent": "executor",
+        "task": "/skill:godspeed\nExecCounter: Run frozen counter against current SKILL and committed round-45 control; report outputs and exit codes.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/ExecCounter.md"
+      },
+      {
+        "name": "ExecFreeze",
+        "agent": "executor",
+        "task": "/skill:godspeed\nExecFreeze: Recompute freeze manifest checks and count non-comment lines versus successful checks.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/ExecFreeze.md"
+      },
+      {
+        "name": "ExecAuditorLines",
+        "agent": "executor",
+        "task": "/skill:godspeed\nExecAuditorLines: Check auditor digest and line count against the registry rows.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/ExecAuditorLines.md"
+      },
+      {
+        "name": "ScribeClaim",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nScribeClaim: Review whether the calibration claim is falsifiable and source-supported; findings only.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/ScribeClaim.md"
+      },
+      {
+        "name": "ScribeLog",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nScribeLog: Review append-only LOG correction for exact command, count, and bounded wording.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/ScribeLog.md"
+      },
+      {
+        "name": "ScribeScorecard",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nScribeScorecard: Review round-45 claim outcomes and round-46 measured calibration claim.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/ScribeScorecard.md"
+      },
+      {
+        "name": "ConnOverlap",
+        "agent": "connector",
+        "task": "/skill:godspeed\nConnOverlap: Identify overlap with round-45/prior repairs or an axis attribution conflict.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/ConnOverlap.md"
+      },
+      {
+        "name": "RevSelftest",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nRevSelftest: Check selftest commands are runnable and recorded output matches.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/RevSelftest.md"
+      },
+      {
+        "name": "RevSkillSweep",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nRevSkillSweep: Search SKILL for stale round-45 digests/tallies outside target cells.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/RevSkillSweep.md"
+      },
+      {
+        "name": "CritSelfAssessment",
+        "agent": "critic",
+        "task": "/skill:godspeed\nCritSelfAssessment: Check SCORECARD/SHONEN self-assessment against observed registry state.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/CritSelfAssessment.md"
+      },
+      {
+        "name": "RevSourceRow",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nRevSourceRow: Check S474 row shape, source opened this round, quote location/length, used-by.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/RevSourceRow.md"
+      },
+      {
+        "name": "ScoutCensus",
+        "agent": "scout",
+        "task": "/skill:godspeed\nScoutCensus: Run frozen sources census command and report status and warnings.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/ScoutCensus.md"
+      },
+      {
+        "name": "CritNoOp",
+        "agent": "critic",
+        "task": "/skill:godspeed\nCritNoOp: Evaluate whether no-op can satisfy the predicate; give a concrete replay if possible.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/CritNoOp.md"
+      },
+      {
+        "name": "RevRowIdentity",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nRevRowIdentity: Test exact row identity matching and behavior when target row is missing.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/RevRowIdentity.md"
+      },
+      {
+        "name": "RevDuplicates",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nRevDuplicates: Test whether duplicate target rows could yield a false pass.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/RevDuplicates.md"
+      },
+      {
+        "name": "MutMissing",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\nMutMissing: Probe a missing target row against counter; report exact result.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/MutMissing.md"
+      },
+      {
+        "name": "MutDuplicate",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\nMutDuplicate: Probe an added duplicate target row against counter; report exact result.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/MutDuplicate.md"
+      },
+      {
+        "name": "MutControl",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\nMutControl: Run counter on old committed SKILL control and report mismatch count.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/MutControl.md"
+      },
+      {
+        "name": "ScoutScope",
+        "agent": "scout",
+        "task": "/skill:godspeed\nScoutScope: Check whether repair changes detection/report scope or touches sibling domains.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/ScoutScope.md"
+      },
+      {
+        "name": "ScribeLesson",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nScribeLesson: Review round-46 lesson against verifier defect and Mistakes fields.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/ScribeLesson.md"
+      },
+      {
+        "name": "RevCounterCode",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nRevCounterCode: Inspect counter for wrong path assumptions or a reachable false green.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/RevCounterCode.md"
+      },
+      {
+        "name": "CritVerdict",
+        "agent": "critic",
+        "task": "/skill:godspeed\nCritVerdict: Compare claim, predicate and receipt label; report a falsifier.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-46/w1/CritVerdict.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}

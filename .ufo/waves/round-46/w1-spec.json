@@ -1,0 +1,167 @@
+{
+  "wave": "mori-r46-calibration-repair",
+  "reportDir": ".ufo/waves/round-46/w1",
+  "context": "# mori round 46 \u2014 calibration repair falsification\nLane repo: /home/vgpnk/Projects/shokunin/mori-shokunin. Fleet root: /home/vgpnk/Projects/shokunin. Adversarially inspect the named predicate and report evidence only. Do not edit code, production files, or any other seat's file; write exactly your own report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-46/w1/<task-name>.md. Every Report trailer is relative to the lane repo and must be written under that absolute root. No git/jj mutations. Fleet and sibling repos are read-only. Do not copy operator configuration values or session identifiers. No tool install is needed; no installs/upgrades made. Pacman transactions are paused; never run pacman. Do not ask questions.\n\nFrozen predicate: count-repins.py reports mismatches=0 rows=4 only when four specific SKILL.md rows match measured pins. The prior committed SKILL snapshot is the do-nothing control and must remain red. Give reproducible findings only; no unsupported verdict. A dispatched seat is not an independent judge.",
+  "items": [
+    {
+      "name": "RevR44Cell",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nRevR44Cell: Check r44 registry cell stale selftest tally, digest, line-count substitutions against committed auditor bytes."
+    },
+    {
+      "name": "RevC1Cell",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nRevC1Cell: Check C1 row selftest tally and counter digest against freeze manifest and output."
+    },
+    {
+      "name": "RevC2Cell",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nRevC2Cell: Check C2 row counter, mutant and auditor digests, selftest tally and auditor line count."
+    },
+    {
+      "name": "RevR44Superseder",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nRevR44Superseder: Attack the r44 superseding registry row for factual accuracy, scope, and provenance."
+    },
+    {
+      "name": "CritCounterPredicate",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nCritCounterPredicate: Falsify the counter predicate: omissions, duplicate rows, row-name collision, stale rows, malformed values."
+    },
+    {
+      "name": "CritControl",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nCritControl: Try to make the do-nothing control incorrectly pass; identify control/measurement asymmetry."
+    },
+    {
+      "name": "MutStaleC1",
+      "role": "mutation-tester",
+      "prompt": "/skill:godspeed\nMutStaleC1: Restore stale C1 digest/tally and run counter; report exact result."
+    },
+    {
+      "name": "MutStaleC2",
+      "role": "mutation-tester",
+      "prompt": "/skill:godspeed\nMutStaleC2: Restore stale C2/auditor/mutant digests, tallies and line count; report exact result."
+    },
+    {
+      "name": "ScoutDigests",
+      "role": "scout",
+      "prompt": "/skill:godspeed\nScoutDigests: Independently compare recorded C1/C2/auditor/mutant SHA values with committed files."
+    },
+    {
+      "name": "ScoutTally",
+      "role": "scout",
+      "prompt": "/skill:godspeed\nScoutTally: Rerun and report the three selftest tallies; no editing."
+    },
+    {
+      "name": "ExecCounter",
+      "role": "executor",
+      "prompt": "/skill:godspeed\nExecCounter: Run frozen counter against current SKILL and committed round-45 control; report outputs and exit codes."
+    },
+    {
+      "name": "ExecFreeze",
+      "role": "executor",
+      "prompt": "/skill:godspeed\nExecFreeze: Recompute freeze manifest checks and count non-comment lines versus successful checks."
+    },
+    {
+      "name": "ExecAuditorLines",
+      "role": "executor",
+      "prompt": "/skill:godspeed\nExecAuditorLines: Check auditor digest and line count against the registry rows."
+    },
+    {
+      "name": "ScribeClaim",
+      "role": "scribe",
+      "prompt": "/skill:godspeed\nScribeClaim: Review whether the calibration claim is falsifiable and source-supported; findings only."
+    },
+    {
+      "name": "ScribeLog",
+      "role": "scribe",
+      "prompt": "/skill:godspeed\nScribeLog: Review append-only LOG correction for exact command, count, and bounded wording."
+    },
+    {
+      "name": "ScribeScorecard",
+      "role": "scribe",
+      "prompt": "/skill:godspeed\nScribeScorecard: Review round-45 claim outcomes and round-46 measured calibration claim."
+    },
+    {
+      "name": "ConnOverlap",
+      "role": "connector",
+      "prompt": "/skill:godspeed\nConnOverlap: Identify overlap with round-45/prior repairs or an axis attribution conflict."
+    },
+    {
+      "name": "RevSelftest",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nRevSelftest: Check selftest commands are runnable and recorded output matches."
+    },
+    {
+      "name": "RevSkillSweep",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nRevSkillSweep: Search SKILL for stale round-45 digests/tallies outside target cells."
+    },
+    {
+      "name": "CritSelfAssessment",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nCritSelfAssessment: Check SCORECARD/SHONEN self-assessment against observed registry state."
+    },
+    {
+      "name": "RevSourceRow",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nRevSourceRow: Check S474 row shape, source opened this round, quote location/length, used-by."
+    },
+    {
+      "name": "ScoutCensus",
+      "role": "scout",
+      "prompt": "/skill:godspeed\nScoutCensus: Run frozen sources census command and report status and warnings."
+    },
+    {
+      "name": "CritNoOp",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nCritNoOp: Evaluate whether no-op can satisfy the predicate; give a concrete replay if possible."
+    },
+    {
+      "name": "RevRowIdentity",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nRevRowIdentity: Test exact row identity matching and behavior when target row is missing."
+    },
+    {
+      "name": "RevDuplicates",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nRevDuplicates: Test whether duplicate target rows could yield a false pass."
+    },
+    {
+      "name": "MutMissing",
+      "role": "mutation-tester",
+      "prompt": "/skill:godspeed\nMutMissing: Probe a missing target row against counter; report exact result."
+    },
+    {
+      "name": "MutDuplicate",
+      "role": "mutation-tester",
+      "prompt": "/skill:godspeed\nMutDuplicate: Probe an added duplicate target row against counter; report exact result."
+    },
+    {
+      "name": "MutControl",
+      "role": "mutation-tester",
+      "prompt": "/skill:godspeed\nMutControl: Run counter on old committed SKILL control and report mismatch count."
+    },
+    {
+      "name": "ScoutScope",
+      "role": "scout",
+      "prompt": "/skill:godspeed\nScoutScope: Check whether repair changes detection/report scope or touches sibling domains."
+    },
+    {
+      "name": "ScribeLesson",
+      "role": "scribe",
+      "prompt": "/skill:godspeed\nScribeLesson: Review round-46 lesson against verifier defect and Mistakes fields."
+    },
+    {
+      "name": "RevCounterCode",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nRevCounterCode: Inspect counter for wrong path assumptions or a reachable false green."
+    },
+    {
+      "name": "CritVerdict",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nCritVerdict: Compare claim, predicate and receipt label; report a falsifier."
+    }
+  ]
+}

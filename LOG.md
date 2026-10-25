@@ -2651,3 +2651,15 @@ Measured by attempt 2 at `baabc992`, freeze manifest `sha256sum -c` clean (29/29
 
 Not done by attempt 1 and outside attempt 2's scope: the SCORECARD.md claim
 rows, and wave 2.
+
+## Round-46 correction — round-45 freeze-manifest tally
+
+The round-45 entry above and report say the freeze manifest verified 29/29. The non-author verifier's exact command was `grep -v '^#' .ufo/waves/round-45/evidence/freeze-r45.txt | sha256sum -c`; it reports **27 OK**, rc 0. There are 28 non-comment lines, including one blank line, and 27 checks. The digests and successful verification stand; only the stated tally was wrong.
+
+## Round 46 (L1 calibration repair; claim unprovable)
+
+Re-pinned the four SKILL.md registry rows routed by the round-45 non-author verifier (`SKILL.md:184,190,191,194`): C1/C2 counter tallies and digests, C2 mutant digest, auditor digest/743-line count and auditor selftest tally. Re-derived values are in `.ufo/waves/round-46/w1/ScoutTally.md`, `ScoutDigests.md`, `ExecAuditorLines.md`; non-author spot-check source: `corpus/lessons/round-45-verifier-spotcheck.md:50-66`.
+
+Frozen counter `python3 .ufo/waves/round-46/count-repins.py <SKILL.md>` reported `MORI_R45_REPINS mismatches=4 rows=4` rc 1 on committed prior SKILL control and `mismatches=0 rows=4` rc 0 on the repaired cells. The wave found false-green cases by moving receipt substrings to non-semantic cells while leaving those cells stale (`.ufo/waves/round-46/w1/CritControl.md`, `CritVerdict.md`). The frozen predicate was not changed after scoring; claim C1 is **unprovable**, and this is not admitted as a calibration improvement.
+
+Added closure-reconciled round-45 claim outcomes and the round-46 claim receipt in `SCORECARD.md`; recorded the red-before/green-after control and falsification boundary. Updated SHONEN assessment to `[~]` with evidence pointers only. Added S474 and a round-46 lesson; source census remains conformant with the pre-existing W04 duplicate-URL warnings. The append-only correction above records the round-45 manifest's 27/27, not 29/29.
