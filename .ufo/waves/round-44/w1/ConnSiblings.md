@@ -51,15 +51,15 @@ Two structural facts fix the frame:
   | lore (`:48`) | bullet list | per-gate `- **name:**` / `- **gate/probe:**` blocks, citing `../PROTOCOL.md:360-406` |
   | tsukuroi, kagi | per-round superseding sections | 19 and 2 registry sections in one file |
 
-  mori's auditor lowercases cells and matches the eight field names, so it reads chousa/kengaku/
-  kotoba/kotodama, cannot read mado's or souji's relabelled headers, and cannot read revenger's or
-  lore's form at all.
+  mori's auditor requires the literal heading `## Gates` and the exact eight field names, so it reads
+  chousa's registry and mori's own, and no other lane's — including kengaku's, whose header is
+  identical but whose heading is not (measured in §2.2).
 - **`kama` and `kumitate` both declare their registry home under the same protocol clause while
   using the five-column form.** `kumitate-shokunin/SKILL.md:587` — "Registry home per the fleet
   protocol's §Gate standard (round 34)" — with a five-column table at `:599`; `kama`'s two registry
-  tables (`:1229`, `:1325`) are five columns too. The clause `PROTOCOL.md:398` fixes eight fields;
-  the fleet's child lanes implement six different encodings of it, and no gate checks that any of
-  them matches the clause. `PROTOCOL-APPENDIX.md:35` is protocol's own hand census of the same
+  tables (`:1224`, `:1325`) are five columns too. The clause `PROTOCOL.md:398` fixes eight fields;
+  the fleet's child lanes implement at least six different encodings of it, and no gate checks that
+  any of them matches the clause. `PROTOCOL-APPENDIX.md:35` is protocol's own hand census of the same
   surface — "15 tracked verdict scripts across five child lanes … the exact count is
   classifier-sensitive … self-test depth splits four ways" — i.e. the fleet-level conformance
   measurement is prose, per-lane, and acknowledged classifier-sensitive.
@@ -106,7 +106,7 @@ overlap but neither subsumes the other:
 | row defect classes | `thin-row`, `empty-entry`, `empty-exit-map`, `missing-path` | eight-cell emptiness, entry resolution, selftest presence |
 | table scope | all registry tables it recognises | first table under `## Gates` only — measured by a sibling seat this wave (`w1/ExecGateInventory.md` §4: 6 secondary 8-cell tables invisible, 11 conforming registrations scored absent) |
 | registry-heading acceptance | tables it recognises by its own `REGISTRY_HEADER` | **exact literal `## Gates`** (`parse_gate_table`, `:86`: `line.strip().lower() == "## gates"`) and a header whose first two cells are `name`,`kind` (`:101`) |
-| portability across the fleet | lane-local (own tree) | **spelling-exact**: of the 13 lanes with a gate-registry section, only the exact `## Gates` + exact 8-name header form parses |
+| portability across the fleet | lane-local (own tree) | **spelling-exact**: of the 12 lanes holding a gate registry, only chousa's and mori's heading+header pair parses (`kengaku` has the identical header under a different heading and fails, §2.2) |
 
 The portability row is measured, not inferred. Run read-only against two siblings at their own tips:
 

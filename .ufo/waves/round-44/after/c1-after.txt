@@ -1,0 +1,13 @@
+# C1 after-measurement — the figure ledger re-derived at the landing commit
+# measured rev: 5157cdda41ca711da280a85e7d3ec13da6ec85d3
+# command: python3 .ufo/waves/round-44/count-c1.py 5157cdda41ca711da280a85e7d3ec13da6ec85d3
+# run: 2026-10-25T05:29:12-03:00
+check ledger_present       PASS (1321 bytes)
+check rows_parse           PASS (16 rows)
+check row_floor            PASS (rows=16 min=12)
+check class_floor          PASS (classes=checks,corpus,evidence,registry,wave min=4)
+check commands_reconcile   PASS (all rows match)
+rev=5157cdda41ca711da280a85e7d3ec13da6ec85d3
+ledger=.ufo/waves/round-44/figures.tsv rows=16 classes=checks,corpus,evidence,registry,wave
+C1=met mismatches=0
+exit=0

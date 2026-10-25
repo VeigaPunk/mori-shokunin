@@ -1,0 +1,13 @@
+# C3 after-measurement — the admitted entry, its two rows and the census at the landing commit
+# measured rev: 5157cdda41ca711da280a85e7d3ec13da6ec85d3
+# command: TMPDIR=<lane> python3 .ufo/waves/round-44/count-c3.py 5157cdda41ca711da280a85e7d3ec13da6ec85d3 --entry corpus/knowledge/pid-probe-conclusion-r44.md --row S471 --row S472
+# TMPDIR is required: the frozen counter stages the registry under $TMPDIR and the census resolves used-by against dirname(file)/.. (defect M3, routed)
+# run: 2026-10-25T05:29:14-03:00
+check entry_present    PASS (6186 bytes)
+check entry_meta       PASS (sources S471,S472)
+check rows_present     PASS (rows S471,S472 mined)
+check census_ok        PASS (exit=0)
+check readme_row       PASS (names entry)
+rev=5157cdda41ca711da280a85e7d3ec13da6ec85d3
+C3=met
+exit=0

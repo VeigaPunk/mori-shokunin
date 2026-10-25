@@ -1,0 +1,8 @@
+# source census at round end (round 44)
+# command: /home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori
+# run: 2026-10-25T05:29:34-03:00
+mori	W04	S470 duplicate url www.freedesktop.org/software/systemd/man/latest/journalctl.html across scopes
+mori	ok	/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md
+exit=0
+rows=245
+findings=20

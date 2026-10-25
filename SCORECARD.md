@@ -2524,3 +2524,22 @@ record. All are append-only corrections; frozen instrument bytes stay unchanged.
 5. **Carried**: `considerthese` P3 (repository growth from scratch output) is
    still unimplemented; the lane's 14 unregistered gates and 3 tools without a
    `--selftest` mode stay open (the inventory is in the round-44 report).
+
+### Round 44 measured outcome (L1 lane subagent, mori-r44) — landing commit `5157cdda`
+
+Measured at `5157cdda41ca711da280a85e7d3ec13da6ec85d3`; receipts under
+`.ufo/waves/round-44/after/`.
+
+| # | axis / score | after (one command over committed bytes) | verdict proposed for the closure |
+|---|---|---|---|
+| C1 | calibration 5 | `python3 .ufo/waves/round-44/count-c1.py 5157cdda…` → 16 rows, 5 classes, all checks PASS, `C1=met mismatches=0`, exit 0 (`after/c1-after.txt`); witness `fixtures/figures-r43.tsv` → `C1=unmet mismatches=2` (`evidence/witness-r43-figures.txt`); do-nothing at the entering tip → `C1=unmet` (`evidence/control-c1-donothing.txt`) | **verified (measured), with a disclosed vacuity limitation.** The predicate's measured half holds: a committed ledger is re-derived at the measured revision. The content half — that each row is a figure the report states — is **not** machine-checked: two seats reached `C1=met` with a twelve-row ledger of revision-constant figures (`w1/ExecJunkLedger.md`) and with HEAD-reading rows (`w1/MutC1.md`), and `C1=met` can coexist with the round-43 slips at one revision because the witness's asserted column was transcribed from prose (`w1/CritC1Vacuity.md`). QUALITY 117's "Not covered" carries this; the tightening is round-45 item 1 |
+| C2 | operability 7 | `python3 .ufo/waves/round-44/count-c2.py 5157cdda… --counter …count-c1.py --counter …count-c2.py --counter …count-c3.py --mutants-dir .ufo/waves/round-44/fixtures/mutants` → five checks PASS, `C2=met`, exit 0 (`after/c2-after.txt`); the two round-43 counters audit `REGISTRY=unmet` (`evidence/witness-r43-gates.txt`); entering tip → `C2=unmet` (`evidence/control-c2-donothing.txt`) | **verified (measured), with disclosed instrument limits.** All three round counters are registered with eight cells, resolve, and their selftests catch a committed mutant of themselves. Limits: `--mutants-dir` is required (the default path does not exist); `selftest_tally` accepts a failure-shaped tally (`w1/CritSelftestHonesty.md`, `w1/RevRegistryRows.md` D3); the auditor reads only the first gate table and its row selection flips under duplicates (`w1/MutRegistry.md`, `w1/ExecGateInventory.md`); the registry write-scope cells are false as written for `--repo`/`bash -c` use (`w1/SentTools.md`) |
+| C3 | depth 5 (re-attributed from coverage post-data) | `TMPDIR=<lane> python3 .ufo/waves/round-44/count-c3.py 5157cdda… --entry corpus/knowledge/pid-probe-conclusion-r44.md --row S471 --row S472` → five checks PASS, `C3=met`, exit 0 (`after/c3-after.txt`); census `--root … mori` → `ok`, exit 0, 245 rows (`evidence/census-end.txt`); the `Z ゾンビ` sweep at the entering tip → 0 files (`evidence/control-c3-donothing.txt`) and 3 at the landing commit (ledger `F03`) | **verified (measured), narrower than declared.** The measured predicate holds; the novelty is narrower than the declaration's cell (correction 2 above): the zero-character read and `Z` were already held, and the new ground is the measured mm-less world, the translations' disagreement and the `ENOENT` boundary. The counter is satisfiable only with `TMPDIR=<lane>` (defect M3) |
+
+Held: coverage 6, operability 7, depth 5, calibration 5, freshness 5, adjacency 6 —
+no scalar score moves; the three claims repair routed defects and add one measured
+knowledge world at held scores, the lane's established pattern. Round shape: ONE
+v1 wave, 32 seats (12 attack roles = 37.5%), 31 reports returned, 1 seat still
+running at landing (`RevLedgerVsReport`); no wave 2 (fewer than 32 distinct attack
+items on landed bytes by landing time — the residual surface is the round-45 plan
+above). Round total: 32 seats.

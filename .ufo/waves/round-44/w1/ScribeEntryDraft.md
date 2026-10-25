@@ -361,7 +361,7 @@ Page metadata read for the source cells: ja footer 「この man ページは Li
 **F1 — blocking instrument defect: `census_ok` cannot pass at any revision.**
 `count-c3.py` copies `corpus/SOURCES.md` into `tempfile.mkdtemp()` and runs
 `bash <fleet>/scripts/sources-census.sh validate --file <tmp>/SOURCES.md`
-(`count-c3.py:133-146`). `sources-census.sh:497-503` resolves the lane root as
+(`count-c3.py:133-147`). `sources-census.sh:497-503` resolves the lane root as
 `dirname(file_abs)/..`, and `:566` tests `[ ! -e "$dir/$path" ]` for every
 `used-by` path. Staged one level under `/tmp`, `$dir` is the temp dir's parent,
 so every relative `used-by` dangles: the staged run emits `E11` for **every**
@@ -374,7 +374,7 @@ see it: its `honest` arm uses `fixtures/fake-census.sh`, which ignores
 `validate --file`.)
 
 **F2 — `readme_row` was failing, then a sibling fixed the README.**
-The check is `entry.encode() in readme_body` (`count-c3.py:150-153`), i.e. the
+The check is `entry.encode() in readme_body` (`count-c3.py:150-152`), i.e. the
 literal `corpus/knowledge/pid-probe-conclusion-r44.md`. At run 1 (§3.5) the
 frontier row named the entry as `knowledge/pid-probe-conclusion-r44.md` and the
 counter printed `readme_row FAIL (no line names the entry)`. `corpus/README.md`

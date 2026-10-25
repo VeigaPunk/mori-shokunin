@@ -1,0 +1,12 @@
+# C2 after-measurement — the round's three counters against the gate standard
+# measured rev: 5157cdda41ca711da280a85e7d3ec13da6ec85d3
+# command: python3 .ufo/waves/round-44/count-c2.py 5157cdda41ca711da280a85e7d3ec13da6ec85d3 --counter .ufo/waves/round-44/count-c1.py --counter .ufo/waves/round-44/count-c2.py --counter .ufo/waves/round-44/count-c3.py --mutants-dir .ufo/waves/round-44/fixtures/mutants
+# run: 2026-10-25T05:29:12-03:00
+check counters_present   PASS (3 counters)
+check registry_rows      PASS (REGISTRY=met)
+check tool_selftest      PASS (pass=6 fail=0)
+check selftest_tally     PASS (count-c1.py pass=6; count-c2.py pass=5; count-c3.py pass=6)
+check mutant_kill        PASS (count-c1.py killed (fail=1); count-c2.py killed (fail=1); count-c3.py killed (fail=1))
+rev=5157cdda41ca711da280a85e7d3ec13da6ec85d3
+C2=met
+exit=0
