@@ -1,0 +1,14 @@
+HTTP/2 418 
+content-type: text/html
+content-length: 15410
+cache-control: no-store, must-revalidate, no-cache
+pragma: no-cache
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+x-xss-protection: 1; mode=block
+date: Sun, 25 Oct 2026 00:39:26 GMT
+x-cache: Error from cloudfront
+via: 1.1 25e2a77e25b31f3bbd0a38b5245cd642.cloudfront.net (CloudFront)
+x-amz-cf-pop: GIG52-P3
+x-amz-cf-id: fPOiY-B1y52bLm4ieTnmHGoKv2ecx3afo0dJa3T09W58Tav4Wy_ZkA==
+

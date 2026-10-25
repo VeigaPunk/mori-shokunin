@@ -619,3 +619,7 @@ attribute an OOM to a container from the kernel record alone. The FR13
 tracepoints entry was refused this round (source S268 unreachable; flip
 condition in `.ufo/waves/round-42/assimilation/refused-oom-tracing.md`).
 Frontier rows stay frontier; no Core move is claimed.
+
+## Round-43 coverage additions
+
+Resource-runway ground the map did not hold as a core reading: `journalctl --disk-usage` is a total over archived and active files the command can see, not a per-journal share (`knowledge/journal-disk-usage-total-r51.md`, S470, page re-opened 2026-10-24). A live read-only invocation printed `Archived and active journals take up 269M in the file system.` No vacuum, rotate, or journald change. Two assimilation entries on adjacent ground were refused (campaign file:// plus a MESSAGE grep; `reset-failed` host mutation) — reasons and flips in `corpus/lessons/round-43.md`.

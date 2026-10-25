@@ -2358,3 +2358,18 @@ adjacency 6 — no score move (C1's miss bars a move on operability; C2/C3
 repair routed defects at held scores, the lane's established pattern).
 Mistake M4 added to the lesson (counter never executed end-to-end
 pre-freeze).
+
+## Round 43 declaration (L1 Kimi fresh L1, mori-r43) — successor operability + calibration repair
+
+Entering tip `e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2`. Frozen r42
+`count-c1.py` is not amended. Lowest non-retired axes are tied at 5;
+calibration is the lowest-axis claim. No score move is pre-awarded.
+
+| # | claim | axis / score | before | after (one command) |
+|---|---|---|---|---|
+| C1S | successor measurement completes, including no-harm, and prints `C1S=` | operability 7 | `count-c1s.py e3a2b58` → `C1S=unmet` (counter absent at rev) | `python3 .ufo/waves/round-43/count-c1s.py <tip>` → `C1S=met` exit 0 |
+| C2 | append-only corrections of the r42 `C1=met` declaration cell and the S235 transposed sha | calibration 5 | `count-c2.py e3a2b58` → `C2=unmet mismatches=2` | `python3 .ufo/waves/round-43/count-c2.py <tip>` → `C2=met mismatches=0` exit 0 |
+
+Round-43 calibration correction: r42-declaration-C1=met superseded; frozen counter printed no C1= line
+
+The round-42 declaration cell above is not rewritten. The measured-outcome section already contradicted it. This line is the append-only supersession the round-43 counter reads. The S235 row is not rewritten; S349 records the committed PDF sha256.

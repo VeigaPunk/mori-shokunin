@@ -2481,3 +2481,63 @@ condition fired (VOR PDF fetchable via the stampPDF endpoint, sha256
 d42b2fbf…) — the refusal stands as made on the evidence gathered, and the
 re-gate routes to round 43. No seat wrote outside its report; misroot sweep
 clean (no mori-r42 seat file at the fleet root).
+
+## Round 43 (L1 Kimi fresh mori-r43) — successor operability counter, calibration repair, one-theme assimilation
+
+Inherited from the same round's earlier attempt (which died on a provider-route
+failure before dispatch): the frozen contract, the two counters, the wave spec,
+five SOURCES rows, three knowledge entries and the lesson. This L1 re-executed
+every control, opened the one source the inherited rows had not opened, and
+landed the work. The claims were **not** re-declared: P-C1S and P-C2 are the
+frozen sentences in `.ufo/waves/round-43/contract.md` (entering tip
+`e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2`).
+
+- **C1S — operability (7), successor measurement of the round-42 counter.**
+  The frozen r42 `count-c1.py` is **not amended** (sha256
+  `105ce075f33120837ba5a49a1ad4f23a3dd7dc17fea506ab917140bc7f2053f6`
+  unchanged; its `run()` still takes `argv, timeout` only, so it still dies with
+  `TypeError: run() got an unexpected keyword argument 'cwd'` and prints no
+  `C1=` line). The successor `.ufo/waves/round-43/count-c1s.py` (sha256
+  `93482248b46def2a2cec7238732af1551ef315517e76833c3843875313b65dc5`) runs
+  the frozen counter's whole no-harm arm with a `cwd`-accepting `run()`, and
+  scores `C1S=met` only when the frozen counter still crashes with no `C1=`
+  line. Controls re-executed by this L1, not inherited:
+  do-nothing at the entering tip → `C1S=unmet` exit 1
+  (`evidence/control-c1s-donothing.txt`); a counter that only prints
+  `C1S=met` → `C1S=unmet` exit 1 (`evidence/control-c1s-junk.txt`);
+  green control on a scratch clone carrying the counter → 15 checks PASS,
+  `C1S=met` exit 0 (`evidence/control-c1s-green.txt`).
+- **C2 — calibration (5, tied lowest), append-only repair of two
+  self-assessment errors.** The r42 declaration cell claiming `C1=met` is not
+  rewritten; an append-only correction line naming it is added to
+  `SCORECARD.md`. The S235 row is not rewritten; a new row S349
+  (`supersedes S235 — …`) carries the committed PDF's sha256
+  `9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30dca99359e6df057ad8020`, which
+  transposes two characters against the row's anchor cell. Controls
+  re-executed by this L1: do-nothing at the entering tip → `C2=unmet
+  mismatches=2` exit 1 (`evidence/control-c2-donothing.txt`); green control on
+  a scratch clone → `C2=met mismatches=0` exit 0
+  (`evidence/control-c2-green.txt`).
+- **Frontier and assimilation (item 10), one theme: what
+  `journalctl --disk-usage` counts.** One entry admitted
+  (`corpus/knowledge/journal-disk-usage-total-r51.md`, S470, page re-opened
+  2026-10-24, live read-only read
+  `Archived and active journals take up 269M in the file system.`); two
+  entries refused with reason and flip (S350 `systemd.scope(5)` — a
+  `systemctl reset-failed` recheck is host mutation; S351 `journalctl(1)` —
+  a campaign `file://` note and a kernel MESSAGE grep are not this lane's
+  evidence). Registry 238 → 243 rows; the pre-append census mirror was
+  rebuilt from committed bytes and gated **exit 0** before the first append
+  (`.ufo/waves/round-43/assimilation/validate-receipt.txt`); the post-append
+  collision guard and its shadow map by document are in
+  `.ufo/waves/round-43/assimilation/guard/collisions-post.txt`.
+- **considerthese (item 10):** one still-unimplemented proposal mined —
+  "Check that frozen instruments replay off-host"
+  (`considerthese/2026-10-24.md`, read-only, not edited) → QUALITY 115.
+- **S268 stays refused.** `curl -sI` of the stampPDF URL returned HTTP 418,
+  `content-type: text/html`, content-length 15410 on 2026-10-24
+  (`evidence/s268-headers.txt`); no committed PDF, so no re-gate — the flip
+  condition ("a fetch this host can reproduce") is not met.
+- **OpenAlex tier-A L0 not re-filed:** already filed at fleet commit
+  `527fc8dd5f36a7f7ee45aff66f0e3daf413222de` (mori identity, ancestor of
+  fleet HEAD).

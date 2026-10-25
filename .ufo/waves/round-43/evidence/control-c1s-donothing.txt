@@ -1,0 +1,3 @@
+check self_at_rev            FAIL (absent)
+C1S=unmet
+exit=1

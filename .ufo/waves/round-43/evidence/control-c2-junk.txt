@@ -1,0 +1,9 @@
+check sources_present        PASS (corpus/SOURCES.md)
+check scorecard_present      PASS (SCORECARD.md)
+check pdf_present            PASS (corpus/evidence/sources-r42/S235.pdf)
+check s235_unrewritten       PASS (rows=1)
+check correction_row         FAIL (ids=[])
+check declaration_unrewritten PASS (count=1)
+check scorecard_correction   PASS (count=1)
+check pdf_sha                PASS (9855a4986a31)
+C2=unmet mismatches=1

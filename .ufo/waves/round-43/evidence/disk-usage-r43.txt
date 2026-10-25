@@ -1,0 +1,4 @@
+command: journalctl --disk-usage --no-pager
+when: 2026-10-24
+Archived and active journals take up 269M in the file system.
+exit=0

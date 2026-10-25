@@ -1,0 +1,18 @@
+check self_at_rev            PASS (match)
+check frozen_sha             PASS (105ce075f331)
+check frozen_sig             PASS (run params argv, timeout)
+check v5_present             PASS (.ufo/waves/round-42/conform.py)
+check sandbox_clone          PASS (Note: switching to 'ae22c6d41395490a2d47a1c54525ff1c52a4eee2'.
+
+You are in 'deta)
+check noharm_cwd             PASS (rc=0 MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0)
+check v5_selftest_17         PASS (pass=17 fail=0 rc=0)
+check mutant_present_walrus-branch PASS (.ufo/waves/round-42/fixtures/mutants/conform-mut-walrus-branch.py)
+check mutant_kill_walrus-branch PASS (pass=16 fail=1 fails=['timeout_scope_walrus_positive'])
+check mutant_present_tuple-extract PASS (.ufo/waves/round-42/fixtures/mutants/conform-mut-tuple-extract.py)
+check mutant_kill_tuple-extract PASS (pass=16 fail=1 fails=['timeout_scope_tupleunpack_positive'])
+check mutant_present_sort-deletion PASS (.ufo/waves/round-42/fixtures/mutants/conform-mut-sort-deletion.py)
+check mutant_kill_sort-deletion PASS (pass=16 fail=1 fails=['timeout_scope_source_order'])
+check frozen_still_crashes   PASS (rc=1 crash=True C1_line=False)
+C1S=met
+exit=0

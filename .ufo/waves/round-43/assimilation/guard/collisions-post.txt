@@ -1,0 +1,33 @@
+command: comm -12 reg-ids-post staged-ids  (post-append)
+when: 2026-10-24T22:37:14-03:00
+registry rows: 243  staged rows: 127
+collisions: 5
+S348
+S349
+S350
+S351
+S470
+--- per id: registry url | staged url | same document? ---
+S348 | registry:  subprocess.run | staged:  第61回 Linuxカーネルのコンテナ機能 - cgroup v2から使うメモリコントローラ（6）
+S349 | registry:  openEuler 24.03 LTS 技术白皮书 | staged:  第56回 Linuxカーネルのコンテナ機能 ーcgroup v2から使うメモリコントローラ（1）
+S350 | registry:  systemd.scope(5) | staged:  iSulad `src/daemon/modules/container/supervisor/supervisor.c` at commit 5a79e5e2f46296d8d994f38fa32b429774f33b61
+S351 | registry:  journalctl(1) | staged:  openEuler 24.03 LTS 技术白皮书
+S470 | registry:  journalctl(1) --disk-usage | staged:  systemd v262 journalctl(1) manual page
+--- interpretation (item 10: the id follows the document, never arithmetic) ---
+S470: same document (systemd journalctl(1) manual page) — the adopted row keeps the
+  staged id, the id continues the lane registry. No renumber.
+S348, S349, S350, S351: the lane's own rows (subprocess.run docs; the openEuler
+  sha correction; the systemd.scope(5) refusal; the journalctl(1) refusal) hold ids the
+  campaign had provisionally assigned to four OTHER documents (gihyo 61; gihyo 56;
+  iSulad supervisor.c; the openEuler whitepaper). The registry is append-only and
+  authoritative, so the lane ids stand and the staged ids are shadowed.
+Shadow map by document (for the campaign's next adoption round — the id is decided
+there by the next free lane id, never by arithmetic):
+  staged S348 gihyo 61 (memory-event notification path) -> next free lane id
+  staged S349 gihyo 56 (memory.max vs memory.high)        -> next free lane id
+  staged S350 iSulad supervisor.c (OOM eventfd)            -> next free lane id
+  staged S351 openEuler whitepaper (same document as the lane's S235 and S349) ->
+    not appended: the document is already held at S235 (original) and S349 (superseding
+    sha correction); the staged row adds no new teaching
+Free id space at this round's end: S471, then S475+ (S472-S474 are the campaign's own
+  tail rows). The lane's registry holds 243 rows; the campaign's package holds 127.

@@ -1,0 +1,328 @@
+{
+  "wave": "mori-r43-v2",
+  "reportDir": ".ufo/waves/round-43/w1",
+  "maxLanes": 64,
+  "context": "# mori round 43 \u2014 one v2 wave (build + attack)\n\nLane repo: /home/vgpnk/Projects/shokunin/mori-shokunin. Fleet repo /home/vgpnk/Projects/shokunin is read-only. Never write fleet files, sibling repos, lane Git index, lane jj state, .ufo/state, or .ufo/watchdog.log. /home/vgpnk/Projects/shokuknow is read-only; never run a campaign tool there.\n\nEvery seat path is absolute under /home/vgpnk/Projects/shokunin/mori-shokunin. Tools start at the fleet root. Every Report: trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin \u2014 write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. Write only your own report file. Run code only in /tmp sandboxes. Never mutate lane Git/jj or the lane index. Never read secrets. Never mutate a host service. pacman is paused host-wide.\n\nFrozen counters must not be edited: .ufo/waves/round-42/count-c1.py and .ufo/waves/round-43/count-c1s.py and count-c2.py. Attack them in scratch copies. The L1 holds the planner seat.\n\nRole routing is the operator table at ~/.omp/agent/config.yml. Never pass or hardcode a model.\n\nTooling: you may install via uv/npx/official binary in ~/.local/bin after reading /home/vgpnk/.omp/agent/RULES.md; record tool/version/channel/reason. No pacman.\n",
+  "items": [
+    {
+      "name": "MutC1S1",
+      "role": "mutation-tester",
+      "prompt": "Attack count-c1s.py in a /tmp copy only. Mutant class: self_at_rev absent. Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output. Do not edit the lane counter. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/MutC1S1.md"
+    },
+    {
+      "name": "MutC1S2",
+      "role": "mutation-tester",
+      "prompt": "Attack count-c1s.py in a /tmp copy only. Mutant class: self_at_rev bytes differ. Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output. Do not edit the lane counter. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/MutC1S2.md"
+    },
+    {
+      "name": "MutC1S3",
+      "role": "mutation-tester",
+      "prompt": "Attack count-c1s.py in a /tmp copy only. Mutant class: frozen_sha mismatch. Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output. Do not edit the lane counter. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/MutC1S3.md"
+    },
+    {
+      "name": "MutC1S4",
+      "role": "mutation-tester",
+      "prompt": "Attack count-c1s.py in a /tmp copy only. Mutant class: frozen_sig gains cwd. Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output. Do not edit the lane counter. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/MutC1S4.md"
+    },
+    {
+      "name": "MutC1S5",
+      "role": "mutation-tester",
+      "prompt": "Attack count-c1s.py in a /tmp copy only. Mutant class: noharm_cwd skipped. Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output. Do not edit the lane counter. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/MutC1S5.md"
+    },
+    {
+      "name": "MutC1S6",
+      "role": "mutation-tester",
+      "prompt": "Attack count-c1s.py in a /tmp copy only. Mutant class: v5_selftest_17 loosened to 16. Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output. Do not edit the lane counter. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/MutC1S6.md"
+    },
+    {
+      "name": "MutC1S7",
+      "role": "mutation-tester",
+      "prompt": "Attack count-c1s.py in a /tmp copy only. Mutant class: mutant_kill accepts wrong arm. Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output. Do not edit the lane counter. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/MutC1S7.md"
+    },
+    {
+      "name": "MutC1S8",
+      "role": "mutation-tester",
+      "prompt": "Attack count-c1s.py in a /tmp copy only. Mutant class: frozen_still_crashes accepts a C1= line. Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output. Do not edit the lane counter. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/MutC1S8.md"
+    },
+    {
+      "name": "Rev1",
+      "role": "reviewer",
+      "prompt": "Re-derive this claim attack and write only your report: entering-tip do-nothing still C1S=unmet. Commands must be re-run, not copied from the lesson. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Rev1.md"
+    },
+    {
+      "name": "Rev2",
+      "role": "reviewer",
+      "prompt": "Re-derive this claim attack and write only your report: junk print C1S=met still unmet. Commands must be re-run, not copied from the lesson. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Rev2.md"
+    },
+    {
+      "name": "Rev3",
+      "role": "reviewer",
+      "prompt": "Re-derive this claim attack and write only your report: S235 row sha still 971df55e. Commands must be re-run, not copied from the lesson. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Rev3.md"
+    },
+    {
+      "name": "Rev4",
+      "role": "reviewer",
+      "prompt": "Re-derive this claim attack and write only your report: PDF sha still a30dca99. Commands must be re-run, not copied from the lesson. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Rev4.md"
+    },
+    {
+      "name": "Rev5",
+      "role": "reviewer",
+      "prompt": "Re-derive this claim attack and write only your report: declaration cell still contains the C1=met fragment exactly once. Commands must be re-run, not copied from the lesson. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Rev5.md"
+    },
+    {
+      "name": "Rev6",
+      "role": "reviewer",
+      "prompt": "Re-derive this claim attack and write only your report: correction line present exactly once. Commands must be re-run, not copied from the lesson. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Rev6.md"
+    },
+    {
+      "name": "Rev7",
+      "role": "reviewer",
+      "prompt": "Re-derive this claim attack and write only your report: frozen count-c1.py sha unchanged. Commands must be re-run, not copied from the lesson. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Rev7.md"
+    },
+    {
+      "name": "Rev8",
+      "role": "reviewer",
+      "prompt": "Re-derive this claim attack and write only your report: S348 quote matches the opened subprocess page. Commands must be re-run, not copied from the lesson. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Rev8.md"
+    },
+    {
+      "name": "Rev9",
+      "role": "reviewer",
+      "prompt": "Re-derive this claim attack and write only your report: S470 quote matches the opened journalctl page. Commands must be re-run, not copied from the lesson. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Rev9.md"
+    },
+    {
+      "name": "Rev10",
+      "role": "reviewer",
+      "prompt": "Re-derive this claim attack and write only your report: refused reset-failed entry was not admitted as mined. Commands must be re-run, not copied from the lesson. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Rev10.md"
+    },
+    {
+      "name": "Rev11",
+      "role": "reviewer",
+      "prompt": "Re-derive this claim attack and write only your report: S268 headers are HTTP 418 not a PDF. Commands must be re-run, not copied from the lesson. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Rev11.md"
+    },
+    {
+      "name": "Rev12",
+      "role": "reviewer",
+      "prompt": "Re-derive this claim attack and write only your report: no host service unit was restarted by this round's diff. Commands must be re-run, not copied from the lesson. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Rev12.md"
+    },
+    {
+      "name": "Crit1",
+      "role": "critic",
+      "prompt": "Falsify or bound this attack: a do-nothing replay of e3a2b58 that still prints C1S=met. If you cannot falsify it, say what you ran and why it failed. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Crit1.md"
+    },
+    {
+      "name": "Crit2",
+      "role": "critic",
+      "prompt": "Falsify or bound this attack: a correction row that repeats a30cda99 and still scores C2=met. If you cannot falsify it, say what you ran and why it failed. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Crit2.md"
+    },
+    {
+      "name": "Crit3",
+      "role": "critic",
+      "prompt": "Falsify or bound this attack: an in-place S235 teaches rewrite that still scores C2=met. If you cannot falsify it, say what you ran and why it failed. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Crit3.md"
+    },
+    {
+      "name": "Crit4",
+      "role": "critic",
+      "prompt": "Falsify or bound this attack: a second copy of the declaration fragment that still scores C2=met. If you cannot falsify it, say what you ran and why it failed. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Crit4.md"
+    },
+    {
+      "name": "Crit5",
+      "role": "critic",
+      "prompt": "Falsify or bound this attack: admitting S268 from the 418 HTML body. If you cannot falsify it, say what you ran and why it failed. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Crit5.md"
+    },
+    {
+      "name": "Crit6",
+      "role": "critic",
+      "prompt": "Falsify or bound this attack: treating the frozen counter's 28 PASS lines as C1S=met. If you cannot falsify it, say what you ran and why it failed. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Crit6.md"
+    },
+    {
+      "name": "Crit7",
+      "role": "critic",
+      "prompt": "Falsify or bound this attack: a successor that skips noharm_cwd and still prints C1S=met. If you cannot falsify it, say what you ran and why it failed. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Crit7.md"
+    },
+    {
+      "name": "Crit8",
+      "role": "critic",
+      "prompt": "Falsify or bound this attack: bulk-appending SOURCES.append.md. If you cannot falsify it, say what you ran and why it failed. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Crit8.md"
+    },
+    {
+      "name": "Crit9",
+      "role": "critic",
+      "prompt": "Falsify or bound this attack: a green control that only ran against the hardcoded home path. If you cannot falsify it, say what you ran and why it failed. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Crit9.md"
+    },
+    {
+      "name": "Crit10",
+      "role": "critic",
+      "prompt": "Falsify or bound this attack: rewriting the round-42 declaration cell instead of appending. If you cannot falsify it, say what you ran and why it failed. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Crit10.md"
+    },
+    {
+      "name": "Crit11",
+      "role": "critic",
+      "prompt": "Falsify or bound this attack: a mined row for the reset-failed entry. If you cannot falsify it, say what you ran and why it failed. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Crit11.md"
+    },
+    {
+      "name": "Scout1",
+      "role": "scout",
+      "prompt": "Recon only: sibling overlap: tsukuroi owns OS state; this round's journalctl read is detection only. Report findings with command output. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scout1.md"
+    },
+    {
+      "name": "Scout2",
+      "role": "scout",
+      "prompt": "Recon only: sibling overlap: kumitate owns dispatch; this round does not settle waves. Report findings with command output. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scout2.md"
+    },
+    {
+      "name": "Scout3",
+      "role": "scout",
+      "prompt": "Recon only: province check of journal-disk-usage-total-r51.md. Report findings with command output. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scout3.md"
+    },
+    {
+      "name": "Scout4",
+      "role": "scout",
+      "prompt": "Recon only: quarantine slice S244 S262 S268 prose class. Report findings with command output. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scout4.md"
+    },
+    {
+      "name": "Scout5",
+      "role": "scout",
+      "prompt": "Recon only: considerthese 2026-10-24 unimplemented proposals other than the one mined. Report findings with command output. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scout5.md"
+    },
+    {
+      "name": "Scout6",
+      "role": "scout",
+      "prompt": "Recon only: S014 versus S470 scope difference. Report findings with command output. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scout6.md"
+    },
+    {
+      "name": "Scout7",
+      "role": "scout",
+      "prompt": "Recon only: re-run journalctl --disk-usage --no-pager and record the line. Report findings with command output. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scout7.md"
+    },
+    {
+      "name": "Scout8",
+      "role": "scout",
+      "prompt": "Recon only: confirm OpenAlex L0 527fc8dd exists and is not duplicated. Report findings with command output. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scout8.md"
+    },
+    {
+      "name": "Scout9",
+      "role": "scout",
+      "prompt": "Recon only: entering tip e3a2b58 is ancestor of master and only adds the spot-check. Report findings with command output. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scout9.md"
+    },
+    {
+      "name": "Scout10",
+      "role": "scout",
+      "prompt": "Recon only: r42 count-c1.py line 244 still passes cwd to run(). Report findings with command output. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scout10.md"
+    },
+    {
+      "name": "Scout11",
+      "role": "scout",
+      "prompt": "Recon only: census validate --root mori current working tree. Report findings with command output. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scout11.md"
+    },
+    {
+      "name": "Scout12",
+      "role": "scout",
+      "prompt": "Recon only: wave-slot status, read only. Report findings with command output. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scout12.md"
+    },
+    {
+      "name": "Scribe1",
+      "role": "scribe",
+      "prompt": "Read-only prose check: compare S348 teaches cell to the subprocess.run signature quote. Report disagreements; do not edit production files. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scribe1.md"
+    },
+    {
+      "name": "Scribe2",
+      "role": "scribe",
+      "prompt": "Read-only prose check: compare S349 teaches cell to the PDF sha256. Report disagreements; do not edit production files. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scribe2.md"
+    },
+    {
+      "name": "Scribe3",
+      "role": "scribe",
+      "prompt": "Read-only prose check: compare S470 teaches cell to the journalctl --disk-usage sentence. Report disagreements; do not edit production files. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scribe3.md"
+    },
+    {
+      "name": "Scribe4",
+      "role": "scribe",
+      "prompt": "Read-only prose check: compare S350 rejection reason to failed-scope-keeps-limit-r50.md recheck. Report disagreements; do not edit production files. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scribe4.md"
+    },
+    {
+      "name": "Scribe5",
+      "role": "scribe",
+      "prompt": "Read-only prose check: compare S351 rejection reason to journal-reach-at-ceiling-r46.md sources. Report disagreements; do not edit production files. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scribe5.md"
+    },
+    {
+      "name": "Scribe6",
+      "role": "scribe",
+      "prompt": "Read-only prose check: check the lesson Gate has one admit and two rejects. Report disagreements; do not edit production files. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scribe6.md"
+    },
+    {
+      "name": "Scribe7",
+      "role": "scribe",
+      "prompt": "Read-only prose check: check QUALITY 115 cites considerthese/2026-10-24.md and does not edit that file. Report disagreements; do not edit production files. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scribe7.md"
+    },
+    {
+      "name": "Scribe8",
+      "role": "scribe",
+      "prompt": "Read-only prose check: check README round-43 note does not claim a Core move. Report disagreements; do not edit production files. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scribe8.md"
+    },
+    {
+      "name": "Exec1",
+      "role": "executor",
+      "prompt": "Run this command from /home/vgpnk/Projects/shokunin/mori-shokunin and paste stdout, stderr, and the exit code into your report. Do not edit production files. Command: python3 .ufo/waves/round-43/count-c2.py e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Exec1.md"
+    },
+    {
+      "name": "Exec2",
+      "role": "executor",
+      "prompt": "Run this command from /home/vgpnk/Projects/shokunin/mori-shokunin and paste stdout, stderr, and the exit code into your report. Do not edit production files. Command: python3 .ufo/waves/round-43/count-c1s.py e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Exec2.md"
+    },
+    {
+      "name": "Exec3",
+      "role": "executor",
+      "prompt": "Run this command from /home/vgpnk/Projects/shokunin/mori-shokunin and paste stdout, stderr, and the exit code into your report. Do not edit production files. Command: python3 tools/mori-sources-appendonly.py --selftest. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Exec3.md"
+    },
+    {
+      "name": "Exec4",
+      "role": "executor",
+      "prompt": "Run this command from /home/vgpnk/Projects/shokunin/mori-shokunin and paste stdout, stderr, and the exit code into your report. Do not edit production files. Command: sha256sum corpus/evidence/sources-r42/S235.pdf. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Exec4.md"
+    },
+    {
+      "name": "Exec5",
+      "role": "executor",
+      "prompt": "Run this command from /home/vgpnk/Projects/shokunin/mori-shokunin and paste stdout, stderr, and the exit code into your report. Do not edit production files. Command: sha256sum .ufo/waves/round-42/count-c1.py. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Exec5.md"
+    },
+    {
+      "name": "Exec6",
+      "role": "executor",
+      "prompt": "Run this command from /home/vgpnk/Projects/shokunin/mori-shokunin and paste stdout, stderr, and the exit code into your report. Do not edit production files. Command: python3 -c \"import ast; t=ast.parse(open('.ufo/waves/round-42/count-c1.py').read()); print([ (n.name,[a.arg for a in n.args.args]) for n in ast.walk(t) if isinstance(n, ast.FunctionDef) and n.name=='run'])\". Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Exec6.md"
+    },
+    {
+      "name": "Exec7",
+      "role": "executor",
+      "prompt": "Run this command from /home/vgpnk/Projects/shokunin/mori-shokunin and paste stdout, stderr, and the exit code into your report. Do not edit production files. Command: /home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --file .ufo/waves/round-43/assimilation/validate/corpus/SOURCES.md. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Exec7.md"
+    },
+    {
+      "name": "Exec8",
+      "role": "executor",
+      "prompt": "Run this command from /home/vgpnk/Projects/shokunin/mori-shokunin and paste stdout, stderr, and the exit code into your report. Do not edit production files. Command: git diff e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2 -- corpus/SOURCES.md | grep -n 'a30cda99' | head. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Exec8.md"
+    },
+    {
+      "name": "Conn1",
+      "role": "connector",
+      "prompt": "Scan sibling PROVINCE.md files for overlap with a journalctl --disk-usage reading and a reset-failed refusal. Report which sibling owns OS mutation and which owns dispatch. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Conn1.md"
+    },
+    {
+      "name": "Simp1",
+      "role": "simplifier",
+      "prompt": "Read .ufo/waves/round-43/count-c1s.py and name bytes that could be removed without changing P-C1S. Do not edit the file. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Simp1.md"
+    },
+    {
+      "name": "Revenger1",
+      "role": "revenger",
+      "prompt": "Check each r42 closure routed defect (cwd crash, S235 sha, SCORECARD C1=met, S268 418, report-before-PDF) and say whether this round's committed bytes address it or leave it open. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Revenger1.md"
+    },
+    {
+      "name": "Sent1",
+      "role": "sentinel",
+      "prompt": "Search the round-43 diff for systemctl, vacuum, pacman, kill, and reset-failed. Any host mutation is a FAIL. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Sent1.md"
+    },
+    {
+      "name": "Sent2",
+      "role": "sentinel",
+      "prompt": "Confirm no seat instruction asks for credentials, .env, or SSH keys, and that the wave context forbids secrets. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Sent2.md"
+    }
+  ]
+}
