@@ -1,0 +1,12 @@
+F01	4	registry	git show HEAD:SKILL.md | grep -c '^| r44 '  # @REV@
+F02	4	registry	git show 554ff416459c92f0dea9762f834a556df2990187:SKILL.md | grep -c '^| r44 '  # @REV@
+F03	4	registry	git show master@{u}:SKILL.md | grep -c '^| r4[34] '  # @REV@
+F04	245	corpus	git show HEAD:corpus/SOURCES.md | grep -cE '^ {0,3}\|[[:space:]]*S[0-9]{3,}'  # @REV@
+F05	119	corpus	git show HEAD:corpus/QUALITY.md | grep -cE '^[0-9]+\. '  # @REV@
+F06	54	corpus	git ls-tree -r --name-only HEAD corpus/knowledge | grep -c '\.md$'  # @REV@
+F07	72	wave	git ls-tree -r --name-only HEAD .ufo/waves/round-43/logs | grep -c .  # @REV@
+F08	32	wave	git show HEAD:.ufo/waves/round-44/w1-spec.json | grep -c '"role"'  # @REV@
+F09	32	wave	git show 554ff416459c92f0dea9762f834a556df2990187:.ufo/waves/round-44/w1-spec.json | grep -c '"role"'  # @REV@
+F10	4	evidence	git ls-tree -r --name-only HEAD .ufo/waves/round-44/fixtures | grep -c .  # @REV@
+F11	14	evidence	git show HEAD:.ufo/waves/round-43/evidence/c1s-after.txt | grep -cE '^check'  # @REV@
+F12	14	checks	git show master@{u}:.ufo/waves/round-43/evidence/c1s-after.txt | grep -cE '^check'  # @REV@

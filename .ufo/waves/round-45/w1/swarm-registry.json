@@ -1,0 +1,231 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r45-v1",
+  "createdAt": "2026-10-25T10:39:47.233Z",
+  "updatedAt": "2026-10-25T10:39:51.871Z",
+  "reportDir": ".ufo/waves/round-45/w1",
+  "members": {
+    "PlanDataWalk": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScoutKernelDoc": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScoutCensusBytes": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScoutConsider": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScoutProvince": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScoutS472": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "ScoutSiblings": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null
+    },
+    "ExecLedgerCounter": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ExecWitnesses": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ExecFiguresLedger": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ExecRegistryAuditor": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ExecSelftestModes": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ExecC3Counter": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ExecC2Counter": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ExecWriteScopeFixture": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ExecControlReceipts": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ExecCollisionGuard": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ExecAssimCensus": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "ScribeEntry": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "ScribeRows": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "ScribeRegistryRows": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "ScribeLesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "ScribeQuarantine": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "RevC1Grammar": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "RevAudit": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "RevEntryQuotes": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "RevBeforeAfter": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "RevCensusAppend": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "CritContract": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "CritC2Target": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "CritAxisHarm": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "MutCounters": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "MutAuditor": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "SentInstruments": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "sentinel",
+      "item": null
+    },
+    "SimpInstruments": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "simplifier",
+      "item": null
+    },
+    "RevengerAuditorHistory": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "revenger",
+      "item": null
+    },
+    "ExecMisroot": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    }
+  }
+}

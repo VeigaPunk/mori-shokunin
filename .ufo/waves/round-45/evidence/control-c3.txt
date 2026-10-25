@@ -1,0 +1,41 @@
+# round-45 do-nothing control — C3 at the entering tip
+# status: RUN
+# claim: C3 (round-45 assimilation counter, contract §P-C3 + Correction 1.3 — `--entering-rev` required)
+# instrument: .ufo/waves/round-45/count-c3.py  sha256 37fd7c24ff52d6aa27f718ef0b0a2f2e4affa7a1cd0ab67c1fa05f028854a98e
+# rev: 554ff416459c92f0dea9762f834a556df2990187 (entering tip)
+# entering_rev: 554ff416459c92f0dea9762f834a556df2990187 (same tip: the control has no after-state)
+# repo: /home/vgpnk/Projects/shokunin/mori-shokunin     root: /home/vgpnk/Projects/shokunin
+# TMPDIR: unset for the run (`env -u TMPDIR`) — P-C3 clause 3 requires green with NO override
+# run: 2026-10-25T07:56:03-03:00   python3 --version: Python 3.14.8
+# command:
+#   env -u TMPDIR python3 .ufo/waves/round-45/count-c3.py 554ff416459c92f0dea9762f834a556df2990187 \
+#     --entering-rev 554ff416459c92f0dea9762f834a556df2990187 \
+#     --entry corpus/knowledge/census-cgroup-levels-r45.md --row S473 \
+#     --repo /home/vgpnk/Projects/shokunin/mori-shokunin --root /home/vgpnk/Projects/shokunin
+check entries_declared entries PASS (1 declared)
+check rows_declared   rows PASS (1 declared)
+check entry_present   corpus/knowledge/census-cgroup-levels-r45.md FAIL (absent)
+check entering_absent corpus/knowledge/census-cgroup-levels-r45.md PASS (not in 554ff416459c92f0dea9762f834a556df2990187)
+check rows_present    rows=S473 FAIL (S473 absent)
+check census_ok       census PASS (exit=0)
+check readme_row      corpus/knowledge/census-cgroup-levels-r45.md FAIL (no map row names it)
+repo=/home/vgpnk/Projects/shokunin/mori-shokunin
+root=/home/vgpnk/Projects/shokunin
+census_arm=bash /home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori
+C3=unmet rev=554ff416459c92f0dea9762f834a556df2990187 entering=554ff416459c92f0dea9762f834a556df2990187 entries=1 rows=S473 census_sha256=3fb7261569f46423dd80ecc23e0a23789a7926f667c7a3fc559d2439d4a64e30
+rc=1
+
+# control reading: C3=unmet at the entering tip — the kill rule "a do-nothing control at the
+# entering tip prints C3=unmet" holds, on three named checks, and the new novelty gate is
+# green (`entering_absent PASS`: the entry is not in the entering tip, so the ground the round
+# claims is not ground it already held). The three red checks are the round's before-state:
+#   * entry absent at 554ff416 (`git cat-file -e 554ff416:corpus/knowledge/census-cgroup-levels-r45.md`
+#     -> "exists on disk, but not in '554ff416'", rc=128);
+#   * row S473 absent from the committed registry (`git show 554ff416:corpus/SOURCES.md |
+#     grep -c '^| S473 '` = 0);
+#   * corpus/README.md at the rev carries no coverage-map row naming the entry.
+# The census arm is green with TMPDIR unset (exit 0) and the census script is pinned by
+# sha256 in the verdict line: the round-44 `--file`/TMPDIR dependence is gone by construction
+# (validate --root <fleet root> mori, not a staged copy) — contrast witness-r44-c3-tmpdir.txt.
+# instrument churn note: this counter gained its required `--entering-rev` at ~07:53 (Correction
+# 1.3); 37fd7c24 is the byte-state executed here and it was stable from 07:55:16 to 07:56:03.

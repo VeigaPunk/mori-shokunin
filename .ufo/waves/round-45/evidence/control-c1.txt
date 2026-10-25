@@ -1,0 +1,51 @@
+# round-45 do-nothing control — C1 at the entering tip
+# status: RUN
+# claim: C1 (round-45 hardened ledger counter, contract §P-C1 + Correction 1.1 — `moved>=1`,
+#        witness non-empty, witness floors)
+# instrument: .ufo/waves/round-45/count-c1.py  sha256 d908aa9afaf0dcc8e6cb8695ec6bfdb9091be17b270620403954563f792b6bef
+# rev: 554ff416459c92f0dea9762f834a556df2990187 (entering tip)
+# repo: /home/vgpnk/Projects/shokunin/mori-shokunin
+# other_rev: 3ad8faaa637ae466c61f9427fea1c208bf49ea82 (round-45 freeze commit = worktree HEAD;
+#            the round-45 ledger itself is still uncommitted/absent)
+# witness_dir: .ufo/waves/round-45/fixtures/witnesses (read from the worktree by construction)
+# TMPDIR: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecControlReceipts
+# run: 2026-10-25T08:02:00-03:00   python3 --version: Python 3.14.8
+#        digest re-checked before and after the run: d908aa9a both times (no mid-run swap)
+# command:
+#   python3 .ufo/waves/round-45/count-c1.py 554ff416459c92f0dea9762f834a556df2990187 \
+#     --repo /home/vgpnk/Projects/shokunin/mori-shokunin \
+#     --ledger .ufo/waves/round-45/figures.tsv \
+#     --other-rev 3ad8faaa637ae466c61f9427fea1c208bf49ea82 \
+#     --witness-dir .ufo/waves/round-45/fixtures/witnesses
+check ledger_present         FAIL (absent at 554ff416459c)
+check witness_dir_present    PASS (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/witnesses (3 ledger(s)))
+check witnesses_rejected     PASS (witnesses=3/3)
+check witnesses_vacuous      PASS (witnesses_vacuous=3/3 (floor 12 rows/4 classes, declared vacuity class))
+witness w-dup.tsv                rejected (rows=12 classes=5 fails=rows_parse,revision_sensitivity,revision_moves)
+witness w-head.tsv               rejected (rows=12 classes=5 fails=rows_parse,revision_sensitivity,revision_moves)
+witness w-revconst.tsv           rejected (rows=12 classes=5 fails=revision_sensitivity,revision_moves)
+floors rows>=12 classes>=4 (frozen; requested --min-rows 12 --min-classes 4)
+C1=unmet mismatches=? rows=0 classes=- floor_rows=12 floor_classes=4 rev=554ff416459c92f0dea9762f834a556df2990187 repo=/home/vgpnk/Projects/shokunin/mori-shokunin other_rev=3ad8faaa637ae466c61f9427fea1c208bf49ea82 witnesses=3/3 witnesses_vacuous=3/3 failed=ledger_present
+rc=1
+
+# control reading: C1=unmet at the entering tip — the kill rule "a do-nothing control at the
+# entering tip prints C1=unmet" holds, with the cause named (`ledger_present`, the only failing
+# check). The round-45 ledger is absent at 554ff416 by construction (`git cat-file -e
+# 554ff416:.ufo/waves/round-45/figures.tsv` -> "does not exist in '554ff416'", rc=128) and
+# uncommitted in the worktree at run time.
+# The witness arm is green at this revision: 3/3 rejected and 3/3 inside the frozen floors
+# (12 rows, 5 classes each), so the vacuity classes are exercised on ledgers that are the right
+# SIZE and still rejected — w-revconst on `revision_sensitivity` + `revision_moves` (a real
+# command whose value does not move between the two revisions, no `CONST=`, so `moved=0`),
+# w-head and w-dup additionally on `rows_parse`. The verdict line is self-describing: frozen
+# floors, measured revision, repo path, other_rev, the witness tally and the vacuity tally.
+# instrument churn note: this counter was still being amended during wave 1 — 84bf5879 (07:45),
+# f80e75ac (07:47–08:00), eef2dac6 (08:00), bbe90ce4 (08:00:57), d908aa9a (08:01:48, the bytes
+# measured here). EVERY one of those byte-states printed C1=unmet / rc=1 with `ledger_present`
+# as the sole failing check and 3/3 witnesses rejected; what grew across them was the witness
+# reporting (`revision_moves`, then a `witnesses_vacuous` floor arm and per-witness rows/classes).
+# Last observed at 08:02:52: a564dcc3 (mtime 08:01:48 → then 08:02:4x); re-measured at
+# 08:02:58 with the digest checked before AND after the run (a564dcc3 both): output byte-identical
+# to the receipted d908aa9a run above, `C1=unmet` rc=1, `failed=ledger_present`. If the freeze
+# pins newer bytes, re-run `.ufo/waves/round-45/tmp/ExecControlReceipts/final-run.sh`; the
+# verdict has not moved across any of the five byte-states measured.

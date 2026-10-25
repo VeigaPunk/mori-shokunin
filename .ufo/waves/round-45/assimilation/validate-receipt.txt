@@ -1,0 +1,83 @@
+# round-45 assimilation append validation — sources-census receipt
+# seat: ExecAssimCensus     built: 2026-10-25     snapshot: 2026-10-25T10:53:21Z     lane: /home/vgpnk/Projects/shokunin/mori-shokunin
+# Nothing under corpus/ in the lane was written by this seat: the registry under test is the mirror.
+#
+# census script: /home/vgpnk/Projects/shokunin/scripts/sources-census.sh
+#   sha256 3fb7261569f46423dd80ecc23e0a23789a7926f667c7a3fc559d2439d4a64e30  (not modified by this seat)
+# command (verbatim):
+#   /home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --file /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/assimilation/validate/corpus/SOURCES.md
+# mirror root: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/assimilation/validate
+#   whole lane tree, not corpus/ alone: E11 resolves each used-by against dirname(SOURCES.md)/..,
+#   so SKILL.md, PROVINCE.md, SCORECARD.md, tools/ and corpus/ are all present (the corpus-only
+#   variant yields 26 E11s over 5 targets outside corpus/ — RevCensusAppend reproduced that).
+# row under test: S473, append-block.md line, sha256 d7ac69926608e76074183c44febe212cc38309557ac86231a3b7988eba0285b6
+#   mirror copy of the same row,    sha256 d7ac69926608e76074183c44febe212cc38309557ac86231a3b7988eba0285b6
+# admitted entry (mirror): corpus/knowledge/census-cgroup-levels-r45.md
+#   lane   sha256 b066d2dd1361c6cdd953186d58ac364366751ae9d0b89cbb8911e5d14c9e8483  8357 B / 66 lines
+#   mirror sha256 b066d2dd1361c6cdd953186d58ac364366751ae9d0b89cbb8911e5d14c9e8483  (identical to lane at snapshot)
+#   the entry is a LIVE file (ScribeEntry): observed by this seat at 1f28dd38 (07:44), bf45e4b1 (07:50),
+#   c06245fc, and b066d2dd (this snapshot); the mirror was re-copied and the primary re-run at each move.
+#   The census cannot see the difference (E11 is existence-only), so the digest is the only trace of
+#   which copy ran. Re-copy and re-pin if ScribeEntry writes again.
+
+## PRIMARY RUN
+rc=0
+--- stdout (20 lines) ---
+file	W04	S035 duplicate url raw.githubusercontent.com/systemd/systemd/cf8ebfc6159cf0b3b99aa9a0164ccb07c4c9c5af/catalog/systemd.catalog.in across scopes
+file	W04	S037 duplicate url www.freedesktop.org/software/systemd/man/latest/systemd.journal-fields.html across scopes
+file	W04	S073 duplicate url docs.python.org/3/library/pathlib.html across scopes
+file	W04	S074 duplicate url kubernetes.io/docs/concepts/architecture/controller across scopes
+file	W04	S075 duplicate url ftp.gnu.org/gnu/bash/bash-5.3.tar.gz across scopes
+file	W04	S076 duplicate url michaelfeathers.silvrback.com/characterization-testing across scopes
+file	W04	S147 duplicate url raw.githubusercontent.com/can1357/oh-my-pi/45c35e40c46166dc726ccc52f5d27f40f2449f99/docs/settings.md across scopes
+file	W04	S148 duplicate url raw.githubusercontent.com/torvalds/linux/v7.2/fs/proc/base.c across scopes
+file	W04	S149 duplicate url man7.org/linux/man-pages/man5/proc_pid_oom_score_adj.5.html across scopes
+file	W04	S150 duplicate url raw.githubusercontent.com/systemd/systemd/v262/man/systemd.exec.xml across scopes
+file	W04	S166 duplicate url raw.githubusercontent.com/torvalds/linux/v7.2/fs/proc/base.c across scopes
+file	W04	S168 duplicate url raw.githubusercontent.com/torvalds/linux/v7.2/Documentation/filesystems/proc.rst across scopes
+file	W04	S201 duplicate url raw.githubusercontent.com/torvalds/linux/v7.2/block/genhd.c across scopes
+file	W04	S218 duplicate url github.com/torvalds/linux/commit/b6866318657717c8914673a6394894d12bc9ff5e.patch across scopes
+file	W04	S220 duplicate url raw.githubusercontent.com/sysstat/sysstat/v12.8.0/iostat.c across scopes
+file	W04	S228 duplicate url docs.python.org/3/library/os.path.html across scopes
+file	W04	S349 duplicate url www.openeuler.org/whitepaper/openEuler%2024.03%20LTS%20%E6%8A%80%E6%9C%AF%E7%99%BD%E7%9A%AE%E4%B9%A6.pdf across scopes
+file	W04	S351 duplicate url www.freedesktop.org/software/systemd/man/latest/journalctl.html across scopes
+file	W04	S470 duplicate url www.freedesktop.org/software/systemd/man/latest/journalctl.html across scopes
+file	ok	/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/assimilation/validate/corpus/SOURCES.md
+--- stderr (0 bytes) ---
+(empty)
+
+## NEGATIVE CONTROLS — each mutated copy must be refused (proves the arm is not vacuous)
+# rebuilt from the delivered mirror at this snapshot; each control differs from it in exactly one mutation
+
+### validate-neg-e11 — E11 (admitted entry absent)
+rc=1
+file	E11	S473 missing used-by corpus/knowledge/census-cgroup-levels-r45.md
+
+### validate-neg-e09 — E09 (prose recheck)
+rc=1
+file	E09	S473 recheck=180d — curl -fsSL the pinned URL and sha256sum
+
+### validate-neg-e01 — E01 (literal pipe inside a cell)
+rc=1
+file	E01	S473 fields=12
+
+### validate-neg-e03 — E03/E04 (same row twice)
+rc=1
+file	E03	S473 duplicate id
+file	E04	S473 duplicate url cdn.jsdelivr.net/gh/torvalds/linux@v7.2/Documentation/admin-guide/cgroup-v2.rst within scope the aggregation scope of three cgroup v2 memory files only as the v7.2 rst states it — memory.events hierarchical, memory.events.local not hierarchical, memory.peak covering the cgroup and its descendants; the events-versus-local split itself stays S002's and is not re-claimed here; not this host's readings, not cgroup v1, not systemd resource-control man pages, not the docs.kernel.org HTML rendering
+
+### validate-neg-staged — staged S503 verbatim
+rc=1
+file	E01	S503 fields=12
+file	E11	S503 missing used-by grep -c '受管树'` -> 1 (ran 2026-10-23)
+
+## MIRROR FIDELITY (snapshot 2026-10-25T10:53:21Z)
+diff -rq lane/corpus vs mirror/corpus:   rc=1
+Files /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/assimilation/validate/corpus/SOURCES.md differ
+
+unified diff hunk (lane -> mirror), the only content difference:
+251a252
+> | S473 | Control Group v2 — the aggregation scope of the memory interface, kernel v7.2 (rst) — https://cdn.jsdelivr.net/gh/torvalds/linux@v7.2/Documentation/admin-guide/cgroup-v2.rst | docs | A | th
+
+row parse: awk -F"|" NF=13 (11 cells); literal "|" in cells: 0; escaped "\|" in row: 0
+S473 present in the lane registry at snapshot time: 0 occurrences (the L1 appends it)

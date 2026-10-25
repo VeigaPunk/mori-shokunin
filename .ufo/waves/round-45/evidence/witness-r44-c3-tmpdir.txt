@@ -1,0 +1,60 @@
+# round-45 receipt — the round-44 C3 counter's TMPDIR-dependence witness (item 4)
+# status: RUN   (also serves as the round-44 C3 comparison arm at the entering tip)
+# claim: C3
+# instrument: .ufo/waves/round-44/count-c3.py  sha256 a12170f1cad4a6a0eb18c14dd50b7e22e1dec4b67e5d44c217f8ed8e9c440c68 (== round-44 freeze pin)
+# census: /home/vgpnk/Projects/shokunin/scripts/sources-census.sh  sha256 3fb7261569f46423dd80ecc23e0a23789a7926f667c7a3fc559d2439d4a64e30
+# rev: 554ff416459c92f0dea9762f834a556df2990187
+# repo: /home/vgpnk/Projects/shokunin/mori-shokunin     cwd: the lane root
+# run: 2026-10-25T07:56:03-03:00   python3 --version: Python 3.14.8
+# (same bytes, same verdict at 07:41:59, 07:48:47 and 07:50:22 — each with a DIFFERENT fresh TMPDIR,
+#  which is the point; the counter and the census are both frozen files outside this wave)
+# command (a plain TMPDIR, a fresh dir under the wave's tmp; no --census override):
+#   TMPDIR=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecControlReceipts/tmpdir-witness-fresh2 \
+#   python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c3.py 554ff416 \
+#     --entry corpus/knowledge/pid-probe-conclusion-r44.md --row S471 --row S472 \
+#     --repo /home/vgpnk/Projects/shokunin/mori-shokunin
+check entry_present    PASS (7151 bytes)
+check entry_meta       PASS (sources S471,S472)
+check rows_present     PASS (rows S471,S472 mined)
+check census_ok        FAIL (exit=1)
+check readme_row       PASS (names entry)
+rev=554ff416459c92f0dea9762f834a556df2990187
+C3=unmet
+rc=1
+
+## why: the census arm is TMPDIR-bearing, and only one TMPDIR value is green
+# count-c3.py stages the committed registry at $TMPDIR/c3-XXXXXX/SOURCES.md and runs
+#   bash <census> validate --file <staged>          (count-c3.py:133-145)
+# sources-census.sh --file mode sets the used-by resolution root to realpath(dirname(file)/..):
+#   resolve_targets(): dir_abs=$(realpath -- "$(dirname -- "$file_abs")/..")   (sources-census.sh:497-502)
+#   E11: [ ! -e "$dir/$path" ]                                                  (sources-census.sh:567)
+# so the resolution root is $TMPDIR itself. For every `used-by corpus/...` cell to resolve,
+# $TMPDIR must be one level ABOVE a directory holding corpus/, tools/, SKILL.md, SCORECARD.md,
+# PROVINCE.md — i.e. the lane root. Under any other TMPDIR every mined used-by is an E11.
+
+## probe 1 — committed registry, --file under a fresh dir: E11 wall, rc 1
+# command: bash scripts/sources-census.sh validate --file <fresh>/c3arm.x/tmp/SOURCES.md   (cwd = lane)
+file	E11	S471 missing used-by corpus/knowledge/pid-probe-conclusion-r44.md
+file	E11	S472 missing used-by corpus/knowledge/pid-probe-conclusion-r44.md
+... (one E11 line per used-by path; the 19 W04 URL warnings unchanged)
+rc=1
+
+## probe 2 — same staged bytes, same census, resolution root populated: rc 0
+# $TMPDIR/mech-probe/stage/SOURCES.md, with mech-probe/{corpus,tools,SKILL.md,SCORECARD.md,PROVINCE.md}
+# linked in so that realpath(dirname(file)/..) resolves the used-by paths.
+# before linking the four roots (26 E11 lines):
+file	E11	S201 missing used-by SKILL.md
+file	E11	S202 missing used-by SKILL.md
+# after linking corpus, tools, SKILL.md, SCORECARD.md, PROVINCE.md:
+file	W04	S351 duplicate url www.freedesktop.org/software/systemd/man/latest/journalctl.html across scopes
+file	W04	S470 duplicate url www.freedesktop.org/software/systemd/man/latest/journalctl.html across scopes
+file	ok	/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecControlReceipts/mech-probe/stage/SOURCES.md
+rc=0     (E11 count 0; only W04 warnings, which do not change status)
+
+## reading
+# The round-44 C3 verdict is a function of the TMPDIR environment variable, not of the lane
+# state: at the same revision, with the same committed entry and registry rows, the census arm
+# is red for every TMPDIR that is not the lane root and green only when it is. `census_ok
+# FAIL (exit=1)` here is therefore not a statement about this revision — which is exactly why
+# the round-45 counter (control-c3.txt) runs `validate --root <fleet root> mori` and is green
+# with TMPDIR unset at the same rev.

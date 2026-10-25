@@ -1,0 +1,40 @@
+# round-45 entering-tip receipt — the round-44 C1 counter over round-44's own ledger
+# status: RUN
+# claim: C1 (comparison arm: what the round-44 instrument says at the round-45 entering tip)
+# instrument: .ufo/waves/round-44/count-c1.py  sha256 9477824d5eee45f47d49be52902f7bb0cd67a4d038e0ec7e79094c1e71999f83 (== round-44 freeze pin)
+# rev: 554ff416459c92f0dea9762f834a556df2990187 (round-45 entering tip)
+# repo: /home/vgpnk/Projects/shokunin/mori-shokunin     cwd: the lane root
+# TMPDIR: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecControlReceipts
+# run: 2026-10-25T07:56:03-03:00   python3 --version: Python 3.14.8
+# (same bytes, same verdict at 07:41:50, 07:48:47 and 07:50:22; the counter is the frozen r44 file)
+# command:
+#   python3 .ufo/waves/round-44/count-c1.py 554ff416459c92f0dea9762f834a556df2990187 \
+#     --repo /home/vgpnk/Projects/shokunin/mori-shokunin
+check ledger_present       PASS (1321 bytes)
+check rows_parse           PASS (16 rows)
+check row_floor            PASS (rows=16 min=12)
+check class_floor          PASS (classes=checks,corpus,evidence,registry,wave min=4)
+check commands_reconcile   PASS (all rows match)
+rev=554ff416459c92f0dea9762f834a556df2990187
+ledger=.ufo/waves/round-44/figures.tsv rows=16 classes=checks,corpus,evidence,registry,wave
+C1=met mismatches=0
+rc=0
+
+# comparison reading: the round-44 instrument prints C1=met at the round-45 entering tip, over
+# round-44's own 16-row ledger. It is met because the ledger is honest as far as this counter can
+# see; what it cannot see is the whole of P-C1's new predicate:
+#   * it has no `--other-rev` and no `CONST=` grammar (grep: no other_rev, no CONST in
+#     .ufo/waves/round-44/count-c1.py), so a revision-CONSTANT ledger would also print met;
+#   * it has no duplicate-id / duplicate-command rejection (no such check in `evaluate`);
+#   * it rejects `git rev-parse` only incidentally (GIT_VERBS at line 28 excludes it), and has no
+#     check for the other tip-resolving forms: `@{u}`/`@{...}`, a hard-coded 40-hex, or a `HEAD`
+#     reference inside an allowed verb (`git show HEAD:path` passes, `@REV@` merely has to occur
+#     somewhere in the row). It also still allows `diff` as a read verb (line 28), which the
+#     round-45 counter drops;
+#   * it has no `--witness-dir` arm, so the three frozen vacuity classes are not exercised;
+#   * `--min-rows`/`--min-classes` are passed through unclamped (count-c1.py:333 ->
+#     evaluate(..., args.min_rows, args.min_classes, ...)), so a smaller requested floor is
+#     honoured rather than clamped up.
+# C1=met at this rev is therefore the *before-state*: the old gate cannot distinguish the
+# vacuous ledgers this round's predicate must reject. The round-45 counter (control-c1.txt)
+# prints C1=unmet at the same rev and rejects 3/3 witnesses.

@@ -1,0 +1,13 @@
+# L1 S472 re-open — 2026-10-25 (closes round-44 routed defect 1 attempt)
+
+URL: https://man.archlinux.org/man/proc.5.zh_TW
+fetched-at: 2026-10-25T07:35-03:00 (L1, curl -fsSL --max-time 40)
+http=200 bytes=61889 sha256=b8ede81db8d462b46f5312b392caab7c5fe8d125057ca6093c2d3152efba8be7
+round-44 verifier's failure: ECONNRESET (its session); this host returned 200 today.
+
+located quote (section /proc/[pid]/cmdline, entity-decoded):
+  該檔案儲存了程序的完整命令列. 如果該程序已經被交換出記憶體, 或者該程序已經僵死, 那麼就沒有
+  任何東西在該檔案裡, 這時候對該檔案的讀操作將返回零個字元.
+
+meaning: the file holds the full command line; if the process has been swapped out OR is a zombie, there is nothing in the file and the read returns zero characters.
+verdict: source-reopened, quote-present — the lane's S472 anchor is grounded on a fresh 200 fetch.

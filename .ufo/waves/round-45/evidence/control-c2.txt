@@ -1,0 +1,97 @@
+# round-45 do-nothing control — C2 at the entering tip
+# status: RUN
+# claim: C2 (round-45 registry-predicate counter, contract §P-C2 + Correction 1.2 — tables>=7)
+# instrument: .ufo/waves/round-45/count-c2.py  sha256 e8ee29eb885270b0aa056617ab1c44fd8663c0b7e680506976bbcd5156959c64
+# rev: 554ff416459c92f0dea9762f834a556df2990187 (entering tip)
+# repo: /home/vgpnk/Projects/shokunin/mori-shokunin
+# TMPDIR: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecControlReceipts
+# run: 2026-10-25T07:58:25-03:00   python3 --version: Python 3.14.8
+# command:
+#   python3 .ufo/waves/round-45/count-c2.py 554ff416459c92f0dea9762f834a556df2990187 \
+#     --repo /home/vgpnk/Projects/shokunin/mori-shokunin
+auditor tools/mori-gate-registry.py sha256=743996b11d19
+auditor| audit .ufo/waves/round-44/count-c1.py          PASS (row 'r44 figure ledger (C1)': 8 cells, entry resolves, --selftest present)
+auditor| audit .ufo/waves/round-44/count-c2.py          PASS (row 'r44 gate conformance (C2)': 8 cells, entry resolves, --selftest present)
+auditor| audit .ufo/waves/round-44/count-c3.py          PASS (row 'r44 corpus coverage (C3)': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-blind-check.sh                FAIL (unregistered: no row names mori-blind-check.sh)
+auditor| audit tools/mori-census.sh                     PASS (row 'drift pin': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-content-review.py             PASS (row 'r19 content review (C1)': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-disk-rate.py                  FAIL (unregistered: no row names mori-disk-rate.py)
+auditor| audit tools/mori-dispatch-ledger.py            PASS (row 'r18 dispatch ledger (C3)': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-evidence-loss.py              FAIL (unregistered: no row names mori-evidence-loss.py)
+auditor| audit tools/mori-freeze-order.py               PASS (row 'r18 freeze-order (C2)': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-gate-registry.py              PASS (row 'r44 gate registry (C2)': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-index-clean.sh                FAIL (unregistered: no row names mori-index-clean.sh)
+auditor| audit tools/mori-job-runway.py                 FAIL (unregistered: no row names mori-job-runway.py)
+auditor| audit tools/mori-journal-window.py             PASS (row 'journal window (r16)': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-misroot-sweep.py              PASS (row 'misroot sweep (r17)': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-oom-killers.py                FAIL (unregistered: no row names mori-oom-killers.py)
+auditor| audit tools/mori-pressure.py                   FAIL (unregistered: no row names mori-pressure.py)
+auditor| audit tools/mori-retention-gate.py             PASS (row 'r18 retention (C1)': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-retention-reconcile.py        FAIL (unregistered: no row names mori-retention-reconcile.py)
+auditor| audit tools/mori-round13-regressions.py        PASS (row 'r13 regressions': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-round14-regressions.py        PASS (row 'r14 regressions': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-round15-regressions.py        PASS (row 'r15 regressions': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-round16-context-check.py      PASS (row 'r16 context check': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-round16-regressions.py        PASS (row 'r16 regressions': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-round17-context-check.py      PASS (row 'r17 context check': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-round17-jj-regressions.py     PASS (row 'r17 jj regressions': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-round17-seat-regressions.py   PASS (row 'r17 seat regressions': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-round19-regressions.py        FAIL (row 'r19 finite regressions' tool has no --selftest mode)
+auditor| audit tools/mori-round41-calibration.py        FAIL (unregistered: no row names mori-round41-calibration.py)
+auditor| audit tools/mori-routed-check.py               FAIL (unregistered: no row names mori-routed-check.py)
+auditor| audit tools/mori-routed-r24.py                 FAIL (unregistered: no row names mori-routed-r24.py)
+auditor| audit tools/mori-seat-terminal.py              PASS (row 'seat terminal status (r17)': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-silence-cases.sh              PASS (row 'silence oracle': 8 cells, entry resolves, --selftest present)
+auditor| audit tools/mori-source-drift.py               FAIL (unregistered: no row names mori-source-drift.py)
+auditor| audit tools/mori-sources-appendonly.py         FAIL (unregistered: no row names mori-sources-appendonly.py)
+auditor| audit tools/mori-wave-settlement.py            FAIL (unregistered: no row names mori-wave-settlement.py)
+auditor| rev=554ff416459c92f0dea9762f834a556df2990187
+auditor| REGISTRY=unmet
+writescope .ufo/waves/round-44/count-c1.py match rc=0 repo_unchanged=yes writes_outside_tmpdir=0 declared='stdout only; reads the repo at `--rev`; the selftest writes only under the caller TMPDIR'
+writescope .ufo/waves/round-44/count-c2.py match rc=0 repo_unchanged=yes writes_outside_tmpdir=0 declared='stdout only; counter bytes materialize under the caller TMPDIR; nothing in the repo is written'
+writescope .ufo/waves/round-44/count-c3.py match rc=0 repo_unchanged=yes writes_outside_tmpdir=0 declared='stdout only; the registry copy handed to the census is materialized under the caller TMPDIR'
+writescope tools/mori-gate-registry.py match rc=0 repo_unchanged=yes writes_outside_tmpdir=0 declared='stdout only; reads the registry and the audited paths at `--rev`; the selftest writes only under the caller TMPDIR'
+writescope .ufo/waves/round-45/count-c1.py SKIP (fixture marks it uncheckable)
+writescope .ufo/waves/round-45/count-c2.py SKIP (fixture marks it uncheckable)
+writescope .ufo/waves/round-45/count-c3.py SKIP (fixture marks it uncheckable)
+check auditor_present      PASS (v1 CLI refused --audit-all (rc=2): narrowed --audit over 36 population paths; tables/duplicate/wrong_row unmeasured)
+check auditor_v2           FAIL (v1 CLI refused --audit-all (rc=2): narrowed --audit over 36 population paths; tables/duplicate/wrong_row unmeasured)
+check auditor_mode         FAIL (mode=absent population_digest=absent)
+check population_members   FAIL (registered+unregistered+no_selftest+other=21+14+1+0=36 members=unmeasured)
+check tables               FAIL (unmeasured floor=7)
+check registered           PASS (registered=21)
+check unregistered         FAIL (unregistered=14)
+check no_selftest          FAIL (no_selftest=1)
+check duplicate            FAIL (unmeasured)
+check wrong_row            FAIL (unmeasured)
+check auditor_rc           FAIL (rc=1)
+check auditor_selftest     PASS (pass=6 fail=0)
+check writescope_fixture   PASS (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/write-scope.json)
+check writescope_entries   PASS (checked=4 skipped=3)
+check writescope_mismatch  PASS (mismatch=0)
+check mutant_present       PASS (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/mutants/count-c2.py)
+check mutant_kill          PASS (count-c2.py pass=9 fail=1)
+C2=unmet tables=unmeasured registered=21 unregistered=14 no_selftest=1 duplicate=unmeasured wrong_row=unmeasured writescope_mismatch=0 mode=absent population_digest=absent population_members=unmeasured auditor_selftest=pass=6/fail=0 mutant=killed checks_failed=auditor_v2,auditor_mode,population_members,tables,unregistered,no_selftest,duplicate,wrong_row,auditor_rc rev=554ff416459c92f0dea9762f834a556df2990187 repo=/home/vgpnk/Projects/shokunin/mori-shokunin
+rc=1
+
+# control reading: C2=unmet at the entering tip — the kill rule holds, with the reason printed.
+# The counter materializes the AUDITOR AT THE MEASURED REVISION, so at 554ff416 it gets v1
+# (sha256=743996b11d19, the round-44 frozen auditor), whose `--audit-all` is refused (rc=2);
+# the counter takes its documented v1 fallback — one `--audit <path>` per population path,
+# with tables/duplicate/wrong_row/auditor_mode/population_members unmeasured — and prices it
+# as FAIL rather than scoring it (`auditor_v2`, `auditor_mode`, `population_members`, `tables`).
+# The two audits of the SAME committed bytes disagree, which is the before-state this round
+# measures: v1 here reads registered=21 unregistered=14 no_selftest=1 (and calls
+# mori-silence-cases.sh PASS via its substring fallback), while v2 at the same rev
+# (registry-audit-all.txt) reads registered=29 unregistered=3 no_selftest=4 tables=7.
+# Green arms at this rev: writescope_mismatch=0 over 4 checkable entries, auditor_selftest
+# pass=6/fail=0, mutant_kill PASS (pass=9 fail=1). The unmet is the registry predicate, not a
+# broken fixture.
+# instrument churn note: e8ee29eb is the byte-state executed here (07:58:25). Its output is
+# byte-identical to 9624c574's (07:56:03) except one detail string on `population_members`
+# (`21+14+1+0=36` instead of the earlier wording); the verdict, the counters and the
+# checks_failed set are unchanged. Earlier snapshots of this file (5c84b07d @07:46:24,
+# d057b67a @07:50:22, 9624c574 @07:56:03) all produced C2=unmet with a shorter check list —
+# the checks added later in the wave (`auditor_mode`, `population_members`) are all FAIL at this
+# rev — so the verdict is not sensitive to which of those snapshots is quoted.

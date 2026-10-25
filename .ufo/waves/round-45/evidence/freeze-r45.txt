@@ -1,0 +1,31 @@
+# round-45 freeze manifest — written by the L1 at the landing commit (2026-10-25)
+# format: <sha256>  <repo-relative path>; the census script is external and listed as a comment
+
+ed71e8f6e68c059deefb1f9bcfec42f12f2ae3bdb21aff6d5bc9bca2561cb9ad  SKILL.md
+9d1bcdcf9f40a6ed78ffade6796de558a0be41155b92c778d63a77bf9e7e596a  corpus/SOURCES.md
+d9c5b54f64b1ad10d24f3a759c646ad8b555b25377e6cfb53aa334652c975135  corpus/README.md
+623b6271ba9365565ed3b1d04638d45e018d2ef7e928cf51c580ae87b5c904e4  corpus/QUALITY.md
+ecc85b3175cb554c877c38ac3391bd852308c226a297e6b842f601ea6e6a25db  corpus/knowledge/census-cgroup-levels-r45.md
+b12c3f4e6eeae0a07c372210db0ca7be7d7fa062abafbc22ab364c96e6063e2a  corpus/lessons/round-45.md
+40010eeed46d649586c597f1997809979178e155493f21d3f485e131fb09d939  .ufo/waves/round-45/contract.md
+f05b01748b494033838ea8ddf99496eac32810e99c5a5d777a21759c16bf336d  .ufo/waves/round-45/figures.tsv
+5f2deea0b35c5e1346229d265aa0c07bf7f365bf6c5acda87648045bce658d23  .ufo/waves/round-45/count-c1.py
+153423c48ca90466e85b02707828f5c6b2cf39c87c68ee67e3f9abee956baf93  .ufo/waves/round-45/count-c2.py
+37fd7c24ff52d6aa27f718ef0b0a2f2e4affa7a1cd0ab67c1fa05f028854a98e  .ufo/waves/round-45/count-c3.py
+e5c8159403e2c5da8b451f65b374a40b4ea9db7715bbddcc47b4fdbc29c6ceed  .ufo/waves/round-45/write-scope-run.py
+2af692da8ec5a25f23c40a3a0b73c12335e880d32dbf22eed89ea276a5b8d753  .ufo/waves/round-45/fixtures/write-scope.json
+50900a3fce687430721e6ab36f4d293c928ddef33a3249477c51667881d2ed07  .ufo/waves/round-45/fixtures/mutants/count-c1.py
+9850b3fcc8885456c3e71458b34184d716d54880a91ae5b29c7d003f26708703  .ufo/waves/round-45/fixtures/mutants/count-c2.py
+69bf9b6eb29b781866adde9f1e866808626d7dbb56093ee5c32d49c88ad8b4b3  .ufo/waves/round-45/fixtures/mutants/count-c3.py
+38d5551a4570ed23e4ab6ceccfc22e506212164132e9dd411aaec8e699f3f13d  .ufo/waves/round-45/fixtures/mutants/mori-gate-registry.py
+bbccaf28e69bbdfa324138d3d0a267d8878a1bd16004c87a8e00d1e98edc0fd4  .ufo/waves/round-45/fixtures/witnesses/w-revconst.tsv
+a17d6b1adb43c1fc93aa33ad27a09d015ba4405cb8c4623e344ca71ef7b400cb  .ufo/waves/round-45/fixtures/witnesses/w-head.tsv
+fcaadd3155c245d346202393526ed4a7947d6df459ef79ece3205f4d76ea9b70  .ufo/waves/round-45/fixtures/witnesses/w-dup.tsv
+8b82ac999091ebe65e765ed69f759910a57049ff0e7c5c4aa56df9c7168f5832  tools/mori-gate-registry.py
+ff8b69757dea40e0a1aae4969acf633ee306269da100c594f6104e77809a4dcd  tools/mori-silence-cases.sh
+3c2c77d4d400412c1b9b3be67e20840ed7af5bda90df168b5e47a98007b7781b  tools/mori-round19-regressions.py
+b5498a54ceeb8429f262ea85dda2a740d0292c9458344a05d25ea6251ccffbf8  tools/mori-routed-check.py
+10a36555904a4dce0ffa1c86575cdeeb164c47fe2f8ccd4571a87d7beef95f18  tools/mori-routed-r24.py
+d719fd2e421fd143a8e865075b4e64dd7957c20b5ccc220a09af576c0ab6faf8  tools/mori-disk-rate.py
+8160212a1126ecd4537e943ced4f28e1ab7e7a84055d237135ba4f1a60492e15  tools/mori-round41-calibration.py
+# external: 3fb7261569f46423dd80ecc23e0a23789a7926f667c7a3fc559d2439d4a64e30  /home/vgpnk/Projects/shokunin/scripts/sources-census.sh

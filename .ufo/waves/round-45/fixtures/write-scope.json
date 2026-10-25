@@ -1,0 +1,147 @@
+{
+  "schema": 1,
+  "name": "write-scope",
+  "owner": "mori",
+  "round": 45,
+  "purpose": "P-C2 item 6: every audited instrument whose SKILL.md write-scope cell makes a checkable claim is exercised in a sandbox and the claim is compared with the bytes the run actually leaves behind.",
+  "generated_by": "ExecWriteScopeFixture",
+  "generated_at": "2026-10-25T10:43:53Z",
+  "generated_at_rev": "3ad8faaa637ae466c61f9427fea1c208bf49ea82",
+  "repo": "/home/vgpnk/Projects/shokunin/mori-shokunin",
+  "source": {
+    "file": "SKILL.md",
+    "section": "## Gates",
+    "header": "| name | kind | entry | verdict map | self-test | pinned values | write scope | owner |",
+    "declared_cell": "write scope (column 7 of 8)",
+    "attribution": "a row attributes a path only through its entry cell naming that exact repo-relative path; the last such row in document order supersedes earlier ones"
+  },
+  "check": {
+    "runner": ".ufo/waves/round-45/write-scope-run.py",
+    "sandbox": "the lane repo at --rev (or the working tree with --work) copied to $TMPDIR/mori-writescope-<pid>-<rnd>/lane",
+    "tmpdir": "each instrument runs with TMPDIR=$TMPDIR/mori-writescope-<pid>-<rnd>/tmp/<id>, i.e. outside lane/",
+    "digest": "sorted `find lane -type f -exec sha256sum {} +` plus a sorted listing of every path under the sandbox parent, before and after the run",
+    "repo_unchanged": "no path under lane/ is created, modified or deleted by the run",
+    "writes_outside_tmpdir": "count of created, modified or deleted paths that are not under tmp/<id>/",
+    "verdict": {
+      "TRUE": "repo_unchanged=yes, writes_outside_tmpdir=0, rc matches expect.rc and every expect.stdout_contains token is present",
+      "FALSE": "a created, modified or deleted path outside tmp/<id>/ was observed (the declared cell is contradicted by bytes)",
+      "UNEXERCISED": "no write was observed, but the run did not reach expect.rc/expect.stdout_contains, so the claim was not exercised",
+      "UNAVAILABLE": "the instrument is absent at the measured revision, or no committed write-scope cell names it"
+    },
+    "exit": {
+      "0": "no checkable entry is FALSE or UNEXERCISED and at least one entry was TRUE",
+      "1": "a checkable entry is FALSE or UNEXERCISED",
+      "2": "setup: TMPDIR missing or /tmp, fixture unreadable, revision unresolvable, or nothing exerciseable"
+    }
+  },
+  "entries": [
+    {
+      "id": "r44-figure-ledger-c1",
+      "path": ".ufo/waves/round-44/count-c1.py",
+      "row": "r44 figure ledger (C1)",
+      "declared": "stdout only; reads the repo at `--rev`; the selftest writes only under the caller TMPDIR",
+      "claim": "the instrument writes no file inside the repo; its selftest writes only under the caller TMPDIR",
+      "command": ["python3", ".ufo/waves/round-44/count-c1.py", "--selftest"],
+      "expect": {
+        "rc": 0,
+        "stdout_contains": ["SELFTEST", "fail=0"],
+        "repo_unchanged": "yes",
+        "writes_outside_tmpdir": 0
+      },
+      "checkable": true
+    },
+    {
+      "id": "r44-gate-conformance-c2",
+      "path": ".ufo/waves/round-44/count-c2.py",
+      "row": "r44 gate conformance (C2)",
+      "declared": "stdout only; counter bytes materialize under the caller TMPDIR; nothing in the repo is written",
+      "claim": "counter bytes go under the caller TMPDIR and nothing in the repo is written",
+      "command": ["python3", ".ufo/waves/round-44/count-c2.py", "--selftest"],
+      "expect": {
+        "rc": 0,
+        "stdout_contains": ["SELFTEST", "fail=0"],
+        "repo_unchanged": "yes",
+        "writes_outside_tmpdir": 0
+      },
+      "checkable": true
+    },
+    {
+      "id": "r44-corpus-coverage-c3",
+      "path": ".ufo/waves/round-44/count-c3.py",
+      "row": "r44 corpus coverage (C3)",
+      "declared": "stdout only; the registry copy handed to the census is materialized under the caller TMPDIR",
+      "claim": "the registry copy handed to the census goes under the caller TMPDIR, not into the repo",
+      "command": ["python3", ".ufo/waves/round-44/count-c3.py", "--selftest"],
+      "expect": {
+        "rc": 0,
+        "stdout_contains": ["SELFTEST", "fail=0"],
+        "repo_unchanged": "yes",
+        "writes_outside_tmpdir": 0
+      },
+      "checkable": true
+    },
+    {
+      "id": "r44-gate-registry-c2",
+      "path": "tools/mori-gate-registry.py",
+      "row": "r44 gate registry (C2)",
+      "declared": "stdout only; reads the registry and the audited paths at `--rev`; the selftest writes only under the caller TMPDIR",
+      "claim": "the instrument writes no file inside the repo; its selftest writes only under the caller TMPDIR",
+      "command": ["python3", "tools/mori-gate-registry.py", "--selftest"],
+      "expect": {
+        "rc": 0,
+        "stdout_contains": ["SELFTEST", "fail=0"],
+        "repo_unchanged": "yes",
+        "writes_outside_tmpdir": 0
+      },
+      "checkable": true
+    },
+    {
+      "id": "r45-count-c1",
+      "path": ".ufo/waves/round-45/count-c1.py",
+      "row": null,
+      "declared": null,
+      "claim": null,
+      "command": ["python3", ".ufo/waves/round-45/count-c1.py", "--selftest"],
+      "expect": {
+        "rc": 0,
+        "stdout_contains": ["SELFTEST", "fail=0"],
+        "repo_unchanged": "yes",
+        "writes_outside_tmpdir": 0
+      },
+      "checkable": false,
+      "note": "no committed SKILL.md write-scope cell at fixture time: the round-45 counter rows were still being drafted. The runner re-derives the cell from the measured revision, so this entry becomes checkable, and is checked, as soon as a row's entry cell names the path; until then the run reports it UNAVAILABLE, never TRUE."
+    },
+    {
+      "id": "r45-count-c2",
+      "path": ".ufo/waves/round-45/count-c2.py",
+      "row": null,
+      "declared": null,
+      "claim": null,
+      "command": ["python3", ".ufo/waves/round-45/count-c2.py", "--selftest"],
+      "expect": {
+        "rc": 0,
+        "stdout_contains": ["SELFTEST", "fail=0"],
+        "repo_unchanged": "yes",
+        "writes_outside_tmpdir": 0
+      },
+      "checkable": false,
+      "note": "no committed SKILL.md write-scope cell at fixture time: the round-45 counter rows were still being drafted. The runner re-derives the cell from the measured revision, so this entry becomes checkable, and is checked, as soon as a row's entry cell names the path; until then the run reports it UNAVAILABLE, never TRUE."
+    },
+    {
+      "id": "r45-count-c3",
+      "path": ".ufo/waves/round-45/count-c3.py",
+      "row": null,
+      "declared": null,
+      "claim": null,
+      "command": ["python3", ".ufo/waves/round-45/count-c3.py", "--selftest"],
+      "expect": {
+        "rc": 0,
+        "stdout_contains": ["SELFTEST", "fail=0"],
+        "repo_unchanged": "yes",
+        "writes_outside_tmpdir": 0
+      },
+      "checkable": false,
+      "note": "no committed SKILL.md write-scope cell at fixture time: the round-45 counter rows were still being drafted. The runner re-derives the cell from the measured revision, so this entry becomes checkable, and is checked, as soon as a row's entry cell names the path; until then the run reports it UNAVAILABLE, never TRUE."
+    }
+  ]
+}

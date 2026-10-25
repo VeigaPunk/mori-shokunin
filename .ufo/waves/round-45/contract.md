@@ -107,3 +107,31 @@ round 46, not patches.
   rows, the three selftest modes, the superseding row).
 - C3 lands and verifies with C1/C2 untouched (one entry, one row, one README
   row, the census arm in a separate counter).
+
+## Correction 1 — appended before any after-measurement (the declaration above is not rewritten)
+
+Evidence: `w1/CritContract.md` (629 lines) proved three internal contradictions and one
+vacuity in the predicates above. None of the three claims' *subjects* changes; each
+correction closes a hole through which a control that skips the claimed work could print
+met. Written before the round's after-measurements and before any counter's final tally.
+
+1. **C1's `CONST=` escape contradicted its own kill rule.** §P-C1 admitted a
+   revision-constant row carrying `CONST=<reason>`, while the kill rule says a ledger of
+   revision-constant figures must not print met. Correction: `C1=met` additionally
+   requires `moved>=1` (at least one row whose value actually differs between the two
+   revisions), every `CONST=` row's reason non-empty, `const<=rows-1`, and
+   `--witness-dir` non-empty — `witnesses=0/0` is `C1=unmet`, not a pass.
+2. **C2's `tables=<n>, not 1` was satisfiable at n=2 while seven eight-cell tables
+   exist** (headers 162/524/588/643/718/796/881). Correction: `C2=met` requires
+   `tables>=7` at a revision that carries all seven (the measured count), printed in the
+   verdict line. A later table drop must be argued as a scope change, not absorbed.
+3. **C3 was vacuously reachable using round 44's own entry and row**, which already
+   satisfy items 1, 2 and 4 at the entering tip. Correction: `--entering-rev REV` is
+   required, and every `--entry` must be **absent** at that revision (`git cat-file -e
+   REV:<entry>` must fail) — an entry that already existed at the entering tip is not
+   this round's ground. `--row` and `--entry` are both non-empty.
+4. The freeze manifest is the L1's: `evidence/freeze-r45.txt`, written at the freeze
+   commit, `sha256  path` per instrument, plus the contract and the three counters.
+5. Not adopted from the critic: its "C2 item 6's frozen fixture path does not exist" —
+   `fixtures/write-scope.json` is wave-relative and `ExecWriteScopeFixture` writes exactly
+   that path; the critic read the path before the file landed.

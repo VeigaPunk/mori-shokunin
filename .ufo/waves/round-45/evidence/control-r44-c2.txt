@@ -1,0 +1,49 @@
+# round-45 entering-tip receipt — the round-44 C2 counter at the entering tip
+# status: RUN
+# claim: C2 (comparison arm)
+# instrument: .ufo/waves/round-44/count-c2.py  sha256 0095d0c63afe1312c799dc8f6b8ad66d08eabf6420a9eabde032e894f17f9047 (== round-44 freeze pin)
+# rev: 554ff416459c92f0dea9762f834a556df2990187 (round-45 entering tip)
+# repo: /home/vgpnk/Projects/shokunin/mori-shokunin     cwd: the lane root
+# TMPDIR: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecControlReceipts
+# run: 2026-10-25T07:56:03-03:00   python3 --version: Python 3.14.8
+# (same bytes, same two verdicts at 07:41:59, 07:48:47 and 07:50:22; the counter is the frozen r44 file)
+
+## run A — default --mutants-dir (the round-44 mispath, ConnSiblings.md §4.2)
+# command:
+#   python3 .ufo/waves/round-44/count-c2.py 554ff416459c92f0dea9762f834a556df2990187 \
+#     --repo /home/vgpnk/Projects/shokunin/mori-shokunin \
+#     --counter .ufo/waves/round-44/count-c1.py \
+#     --counter .ufo/waves/round-44/count-c2.py \
+#     --counter .ufo/waves/round-44/count-c3.py
+check counters_present   PASS (3 counters)
+check registry_rows      PASS (REGISTRY=met)
+check tool_selftest      PASS (pass=6 fail=0)
+check selftest_tally     PASS (count-c1.py pass=6; count-c2.py pass=5; count-c3.py pass=6)
+check mutant_kill        FAIL (count-c1.py mutant absent; count-c2.py mutant absent; count-c3.py mutant absent)
+rev=554ff416459c92f0dea9762f834a556df2990187
+C2=unmet
+rc=1
+# the default is `fixtures/mutants` (count-c2.py:355, repo-root-relative) and the committed
+# mutants sit at .ufo/waves/round-44/fixtures/mutants; `<repo>/fixtures` does not exist
+# (`ls fixtures` -> No such file or directory). The three FAILs are the mispath, not absent mutants.
+
+## run B — explicit r44 mutants dir (the honest comparison)
+# command: run A plus  --mutants-dir .ufo/waves/round-44/fixtures/mutants
+check counters_present   PASS (3 counters)
+check registry_rows      PASS (REGISTRY=met)
+check tool_selftest      PASS (pass=6 fail=0)
+check selftest_tally     PASS (count-c1.py pass=6; count-c2.py pass=5; count-c3.py pass=6)
+check mutant_kill        PASS (count-c1.py killed (fail=1); count-c2.py killed (fail=1); count-c3.py killed (fail=1))
+rev=554ff416459c92f0dea9762f834a556df2990187
+C2=met
+rc=0
+
+# comparison reading: the round-44 C2 counter CAN print C2=met at the round-45 entering tip,
+# but only when the caller repairs its default mutants path by hand (run B), and even then it
+# has audited nothing about the registry that P-C2 requires: `registry_rows` is v1's own
+# REGISTRY=met over the three counters it was handed (v1, single table, substring attribution),
+# and it never asks `tables=`, `registered=/unregistered=` over the population, `duplicate=` or
+# `wrong_row=` (no `--audit` beyond the three counter paths; no population mode exists in its
+# CLI). So the r44 met is a statement about 3 paths, not about the lane's registry — the
+# overstatement C2's claim is about. The round-45 counter (control-c2.txt) prints C2=unmet at
+# the same rev and names six missing measurements.

@@ -1,0 +1,408 @@
+mori round-45 — write-scope arm, first run (P-C2 item 6)
+========================================================
+arm       : .ufo/waves/round-45/write-scope-run.py
+fixture   : .ufo/waves/round-45/fixtures/write-scope.json (schema 1, 7 entries)
+lane      : /home/vgpnk/Projects/shokunin/mori-shokunin
+run by    : ExecWriteScopeFixture (round-45 wave 1)
+scratch   : TMPDIR=$LANE/.ufo/waves/round-45/tmp/ExecWriteScopeFixture  (never /tmp)
+host      : linux 7.2.11-arch1-1 x86_64 · python 3.14.8 · git 2.56.0 · find 0.8.0 · GNU tar 1.35
+
+method
+  * copy the lane at --rev (git archive) or the working tree (--work) into
+    $TMPDIR/mori-writescope-<pid>-<rnd>/lane;
+  * digest the copy: sorted `find . -type f -exec sha256sum {} +`, plus a recursive
+    listing of every path under the sandbox parent (the run root that holds lane/,
+    home/, xdg/, tmp/), so a write into a sibling of the copy is visible too;
+  * run the instrument's own --selftest with TMPDIR=$sandbox/tmp/<id> — outside lane/,
+    so any write inside the repo is a violation regardless of TMPDIR — and with HOME,
+    XDG_CACHE_HOME/CONFIG_HOME/DATA_HOME/STATE_HOME redirected into the sandbox,
+    GIT_CEILING_DIRECTORIES=$sandbox, GIT_CONFIG_GLOBAL=/dev/null and no inherited
+    GIT_DIR/GIT_WORK_TREE/GIT_INDEX_FILE;
+  * re-digest and diff: created / modified / deleted / outside_tmpdir / tmp_files.
+
+declared
+  The write-scope cell (column 7 of 8) of the SKILL.md `## Gates` row whose entry cell
+  names the exact repo-relative path, read from the measured revision.  When several
+  rows name the same path the last one in document order supersedes.  The fixture's
+  frozen `declared` is compared with the revision's cell and `declared_drift` is
+  printed; the claim tested is always the revision's.
+
+verdicts
+  TRUE          no created/modified/deleted path outside tmp/<id>/, rc == expect.rc and
+                every expect.stdout_contains token printed.
+  FALSE         the run left bytes outside tmp/<id>/ — the cell is contradicted.
+  UNEXERCISED   no write seen, but the run did not reach its own selftest tally.
+  UNAVAILABLE   the instrument, or a committed write-scope cell naming it, is absent at
+                the measured revision.  Never reported TRUE.
+
+exit 0 all match · 1 mismatch (a FALSE or UNEXERCISED entry) · 2 setup
+
+NOT VERIFIED BY THIS ARM (stated, not implied)
+  * it measures filesystem effects only; "stdout only" is consistent with, not proof of,
+    no network or secret write;
+  * it does not instrument the TMPDIR subtree during the run: an instrument that
+    materialises bytes under TMPDIR and deletes them before exit shows tmp_files=0, so
+    the *positive* clause of a cell ("counter bytes materialize under the caller
+    TMPDIR") is unobserved at exit — the arm falsifies the *location* clause, not the
+    materialisation clause.  Control B below shows tmp_files is counted when bytes
+    remain (tmp_files=1);
+  * file names containing a newline are not representable in the sha256sum digest.
+
+
+A. committed revision — the entering tip
+----------------------------------------
+command:
+  cd /home/vgpnk/Projects/shokunin/mori-shokunin
+  TMPDIR=$PWD/.ufo/waves/round-45/tmp/ExecWriteScopeFixture \
+    python3 .ufo/waves/round-45/write-scope-run.py --rev HEAD
+exit: 0
+WRITESCOPE write-scope arm (P-C2 item 6)
+fixture=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/write-scope.json
+repo=/home/vgpnk/Projects/shokunin/mori-shokunin
+mode=rev rev=3ad8faaa637ae466c61f9427fea1c208bf49ea82
+copy=git archive HEAD
+sandbox=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWriteScopeFixture/mori-writescope-2818335-4f744b93
+interpreter=/usr/bin/python3 python=3.14.8
+gate_rows=43
+lane_files=11830 tree_digest=c5f4a0d68619f6d5d42bc6645cbb031cd6c287cfec9e2226d2cb8f3d7ecb1bdd
+sandbox_parent_listing=lane
+env=minimal(PATH HOME TMPDIR XDG_* LANG GIT_*)
+
+--- instrument r44-figure-ledger-c1
+path=.ufo/waves/round-44/count-c1.py
+declared_source=SKILL.md entry-cell row 'r44 figure ledger (C1)' declared_drift=no
+declared=stdout only; reads the repo at `--rev`; the selftest writes only under the caller TMPDIR
+command=/usr/bin/python3 .ufo/waves/round-44/count-c1.py --selftest
+checkable=yes rows_naming=1
+rc=0 timed_out=no
+selftest=C1_SELFTEST pass=6 fail=0
+repo_unchanged=yes
+writes_outside_tmpdir=0
+observed=created=0 modified=0 deleted=0 outside_tmpdir=0 tmp_files=0 rc=0
+verdict=TRUE reason=no write outside TMPDIR and the selftest tallied
+parent_listing=home,lane,tmp,xdg
+
+--- instrument r44-gate-conformance-c2
+path=.ufo/waves/round-44/count-c2.py
+declared_source=SKILL.md entry-cell row 'r44 gate conformance (C2)' declared_drift=no
+declared=stdout only; counter bytes materialize under the caller TMPDIR; nothing in the repo is written
+command=/usr/bin/python3 .ufo/waves/round-44/count-c2.py --selftest
+checkable=yes rows_naming=1
+rc=0 timed_out=no
+selftest=C2_SELFTEST pass=5 fail=0
+repo_unchanged=yes
+writes_outside_tmpdir=0
+observed=created=0 modified=0 deleted=0 outside_tmpdir=0 tmp_files=0 rc=0
+verdict=TRUE reason=no write outside TMPDIR and the selftest tallied
+parent_listing=home,lane,tmp,xdg
+
+--- instrument r44-corpus-coverage-c3
+path=.ufo/waves/round-44/count-c3.py
+declared_source=SKILL.md entry-cell row 'r44 corpus coverage (C3)' declared_drift=no
+declared=stdout only; the registry copy handed to the census is materialized under the caller TMPDIR
+command=/usr/bin/python3 .ufo/waves/round-44/count-c3.py --selftest
+checkable=yes rows_naming=1
+rc=0 timed_out=no
+selftest=C3_SELFTEST pass=6 fail=0
+repo_unchanged=yes
+writes_outside_tmpdir=0
+observed=created=0 modified=0 deleted=0 outside_tmpdir=0 tmp_files=0 rc=0
+verdict=TRUE reason=no write outside TMPDIR and the selftest tallied
+parent_listing=home,lane,tmp,xdg
+
+--- instrument r44-gate-registry-c2
+path=tools/mori-gate-registry.py
+declared_source=SKILL.md entry-cell row 'r44 gate registry (C2)' declared_drift=no
+declared=stdout only; reads the registry and the audited paths at `--rev`; the selftest writes only under the caller TMPDIR
+command=/usr/bin/python3 tools/mori-gate-registry.py --selftest
+checkable=yes rows_naming=1
+rc=0 timed_out=no
+selftest=GATE_REGISTRY_SELFTEST pass=6 fail=0
+repo_unchanged=yes
+writes_outside_tmpdir=0
+observed=created=0 modified=0 deleted=0 outside_tmpdir=0 tmp_files=0 rc=0
+verdict=TRUE reason=no write outside TMPDIR and the selftest tallied
+parent_listing=home,lane,tmp,xdg
+
+--- instrument r45-count-c1
+path=.ufo/waves/round-45/count-c1.py
+declared_source=none declared_drift=n/a
+declared=<none>
+command=/usr/bin/python3 .ufo/waves/round-45/count-c1.py --selftest
+checkable=no rows_naming=0
+rc=skipped timed_out=no
+repo_unchanged=yes
+writes_outside_tmpdir=0
+observed=created=0 modified=0 deleted=0 outside_tmpdir=0 tmp_files=0 rc=skipped
+verdict=UNAVAILABLE reason=absent at the measured revision
+parent_listing=home,lane,tmp,xdg
+
+--- instrument r45-count-c2
+path=.ufo/waves/round-45/count-c2.py
+declared_source=none declared_drift=n/a
+declared=<none>
+command=/usr/bin/python3 .ufo/waves/round-45/count-c2.py --selftest
+checkable=no rows_naming=0
+rc=skipped timed_out=no
+repo_unchanged=yes
+writes_outside_tmpdir=0
+observed=created=0 modified=0 deleted=0 outside_tmpdir=0 tmp_files=0 rc=skipped
+verdict=UNAVAILABLE reason=absent at the measured revision
+parent_listing=home,lane,tmp,xdg
+
+--- instrument r45-count-c3
+path=.ufo/waves/round-45/count-c3.py
+declared_source=none declared_drift=n/a
+declared=<none>
+command=/usr/bin/python3 .ufo/waves/round-45/count-c3.py --selftest
+checkable=no rows_naming=0
+rc=skipped timed_out=no
+repo_unchanged=yes
+writes_outside_tmpdir=0
+observed=created=0 modified=0 deleted=0 outside_tmpdir=0 tmp_files=0 rc=skipped
+verdict=UNAVAILABLE reason=absent at the measured revision
+parent_listing=home,lane,tmp,xdg
+
+TRUE: r44-figure-ledger-c1, r44-gate-conformance-c2, r44-corpus-coverage-c3, r44-gate-registry-c2
+FALSE: -
+UNEXERCISED: -
+UNAVAILABLE: r45-count-c1, r45-count-c2, r45-count-c3
+WRITESCOPE instruments=7 true=4 false=0 unexercised=0 unavailable=3 writescope_mismatch=0 rev=3ad8faaa637ae466c61f9427fea1c208bf49ea82 repo=/home/vgpnk/Projects/shokunin/mori-shokunin
+WRITESCOPE=met
+
+B. control — a false write-scope cell must not pass
+---------------------------------------------------
+WRITESCOPE write-scope arm (P-C2 item 6)
+fixture=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWriteScopeFixture/ctl/fixture.json
+repo=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWriteScopeFixture/ctl/repo
+mode=rev rev=9a8d4bf1888d1ac82e330ae670b83c744d94545e
+copy=git archive HEAD
+sandbox=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWriteScopeFixture/mori-writescope-2819839-e4d69b28
+interpreter=/usr/bin/python3 python=3.14.8
+gate_rows=2
+lane_files=3 tree_digest=ff83669eff291f120b9098ac1928533b58e347016bb301ef345f57bede9d7d36
+sandbox_parent_listing=lane
+env=minimal(PATH HOME TMPDIR XDG_* LANG GIT_*)
+
+--- instrument ctl-clean
+path=tools/ctl-clean.sh
+declared_source=SKILL.md entry-cell row 'ctl writer (clean)' declared_drift=no
+declared=stdout only; nothing in the repo is written
+command=bash tools/ctl-clean.sh
+checkable=yes rows_naming=1
+rc=0 timed_out=no
+selftest=CTL_SELFTEST pass=1 fail=0
+repo_unchanged=yes
+writes_outside_tmpdir=0
+observed=created=1 modified=0 deleted=0 outside_tmpdir=0 tmp_files=1 rc=0
+verdict=TRUE reason=no write outside TMPDIR and the selftest tallied
+parent_listing=home,lane,tmp,xdg
+
+--- instrument ctl-dirty
+path=tools/ctl-dirty.sh
+declared_source=SKILL.md entry-cell row 'ctl writer (dirty)' declared_drift=no
+declared=stdout only; nothing in the repo is written
+command=bash tools/ctl-dirty.sh
+checkable=yes rows_naming=1
+rc=0 timed_out=no
+selftest=CTL_SELFTEST pass=1 fail=0
+repo_unchanged=no
+writes_outside_tmpdir=1
+observed=created=1 modified=0 deleted=0 outside_tmpdir=1 tmp_files=0 rc=0 first_outside=lane/tools/ctl-dirty-out.txt
+repo_changes=lane/tools/ctl-dirty-out.txt
+verdict=FALSE reason=the run left bytes outside its TMPDIR
+parent_listing=home,lane,tmp,xdg
+
+TRUE: ctl-clean
+FALSE: ctl-dirty
+UNEXERCISED: -
+UNAVAILABLE: -
+WRITESCOPE instruments=2 true=1 false=1 unexercised=0 unavailable=0 writescope_mismatch=1 rev=9a8d4bf1888d1ac82e330ae670b83c744d94545e repo=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWriteScopeFixture/ctl/repo
+WRITESCOPE=unmet
+EXIT=1 (ctl-dirty FALSE, writescope_mismatch=1)
+
+C. working tree — in-flight snapshot, 2026-10-25T10:49:38Z
+------------------------------------------
+round-45 counters and the auditor v2 uncommitted at capture time.
+command:
+  cd /home/vgpnk/Projects/shokunin/mori-shokunin
+  TMPDIR=$PWD/.ufo/waves/round-45/tmp/ExecWriteScopeFixture \
+    python3 .ufo/waves/round-45/write-scope-run.py --work
+exit: 0
+WRITESCOPE write-scope arm (P-C2 item 6)
+fixture=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/write-scope.json
+repo=/home/vgpnk/Projects/shokunin/mori-shokunin
+mode=work rev=WORK
+copy=14226 files (working tree) scratch_excluded=2247586 unreadable_skipped=0
+sandbox=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWriteScopeFixture/mori-writescope-2841837-bfabc151
+interpreter=/usr/bin/python3 python=3.14.8
+gate_rows=43
+lane_files=14226 tree_digest=f9f22769d0893b41fefcce240f4610b7acc83de7496d185e6b7421c4b2cc4a6a
+sandbox_parent_listing=lane
+env=minimal(PATH HOME TMPDIR XDG_* LANG GIT_*)
+
+--- instrument r44-figure-ledger-c1
+path=.ufo/waves/round-44/count-c1.py
+declared_source=SKILL.md entry-cell row 'r44 figure ledger (C1)' declared_drift=no
+declared=stdout only; reads the repo at `--rev`; the selftest writes only under the caller TMPDIR
+command=/usr/bin/python3 .ufo/waves/round-44/count-c1.py --selftest
+checkable=yes rows_naming=1
+rc=0 timed_out=no
+selftest=C1_SELFTEST pass=6 fail=0
+repo_unchanged=yes
+writes_outside_tmpdir=0
+observed=created=0 modified=0 deleted=0 outside_tmpdir=0 tmp_files=0 rc=0
+verdict=TRUE reason=no write outside TMPDIR and the selftest tallied
+parent_listing=home,lane,tmp,xdg
+
+--- instrument r44-gate-conformance-c2
+path=.ufo/waves/round-44/count-c2.py
+declared_source=SKILL.md entry-cell row 'r44 gate conformance (C2)' declared_drift=no
+declared=stdout only; counter bytes materialize under the caller TMPDIR; nothing in the repo is written
+command=/usr/bin/python3 .ufo/waves/round-44/count-c2.py --selftest
+checkable=yes rows_naming=1
+rc=0 timed_out=no
+selftest=C2_SELFTEST pass=5 fail=0
+repo_unchanged=yes
+writes_outside_tmpdir=0
+observed=created=0 modified=0 deleted=0 outside_tmpdir=0 tmp_files=0 rc=0
+verdict=TRUE reason=no write outside TMPDIR and the selftest tallied
+parent_listing=home,lane,tmp,xdg
+
+--- instrument r44-corpus-coverage-c3
+path=.ufo/waves/round-44/count-c3.py
+declared_source=SKILL.md entry-cell row 'r44 corpus coverage (C3)' declared_drift=no
+declared=stdout only; the registry copy handed to the census is materialized under the caller TMPDIR
+command=/usr/bin/python3 .ufo/waves/round-44/count-c3.py --selftest
+checkable=yes rows_naming=1
+rc=0 timed_out=no
+selftest=C3_SELFTEST pass=6 fail=0
+repo_unchanged=yes
+writes_outside_tmpdir=0
+observed=created=0 modified=0 deleted=0 outside_tmpdir=0 tmp_files=0 rc=0
+verdict=TRUE reason=no write outside TMPDIR and the selftest tallied
+parent_listing=home,lane,tmp,xdg
+
+--- instrument r44-gate-registry-c2
+path=tools/mori-gate-registry.py
+declared_source=SKILL.md entry-cell row 'r44 gate registry (C2)' declared_drift=no
+declared=stdout only; reads the registry and the audited paths at `--rev`; the selftest writes only under the caller TMPDIR
+command=/usr/bin/python3 tools/mori-gate-registry.py --selftest
+checkable=yes rows_naming=1
+rc=0 timed_out=no
+selftest=GATE_REGISTRY_SELFTEST pass=10 fail=0
+repo_unchanged=yes
+writes_outside_tmpdir=0
+observed=created=0 modified=0 deleted=0 outside_tmpdir=0 tmp_files=0 rc=0
+verdict=TRUE reason=no write outside TMPDIR and the selftest tallied
+parent_listing=home,lane,tmp,xdg
+
+--- instrument r45-count-c1
+path=.ufo/waves/round-45/count-c1.py
+declared_source=none declared_drift=n/a
+declared=<none>
+command=/usr/bin/python3 .ufo/waves/round-45/count-c1.py --selftest
+checkable=no rows_naming=0
+rc=0 timed_out=no
+selftest=C1_SELFTEST pass=10 fail=0
+repo_unchanged=yes
+writes_outside_tmpdir=0
+observed=created=0 modified=0 deleted=0 outside_tmpdir=0 tmp_files=0 rc=0
+verdict=UNAVAILABLE reason=no committed write-scope cell names the path
+parent_listing=home,lane,tmp,xdg
+
+--- instrument r45-count-c2
+path=.ufo/waves/round-45/count-c2.py
+declared_source=none declared_drift=n/a
+declared=<none>
+command=/usr/bin/python3 .ufo/waves/round-45/count-c2.py --selftest
+checkable=no rows_naming=0
+rc=0 timed_out=no
+selftest=C2_SELFTEST pass=8 fail=0
+repo_unchanged=yes
+writes_outside_tmpdir=0
+observed=created=0 modified=0 deleted=0 outside_tmpdir=0 tmp_files=0 rc=0
+verdict=UNAVAILABLE reason=no committed write-scope cell names the path
+parent_listing=home,lane,tmp,xdg
+
+--- instrument r45-count-c3
+path=.ufo/waves/round-45/count-c3.py
+declared_source=none declared_drift=n/a
+declared=<none>
+command=/usr/bin/python3 .ufo/waves/round-45/count-c3.py --selftest
+checkable=no rows_naming=0
+rc=0 timed_out=no
+selftest=C3_SELFTEST pass=16 fail=0
+repo_unchanged=yes
+writes_outside_tmpdir=0
+observed=created=0 modified=0 deleted=0 outside_tmpdir=0 tmp_files=0 rc=0
+verdict=UNAVAILABLE reason=no committed write-scope cell names the path
+parent_listing=home,lane,tmp,xdg
+
+TRUE: r44-figure-ledger-c1, r44-gate-conformance-c2, r44-corpus-coverage-c3, r44-gate-registry-c2
+FALSE: -
+UNEXERCISED: -
+UNAVAILABLE: r45-count-c1, r45-count-c2, r45-count-c3
+WRITESCOPE instruments=7 true=4 false=0 unexercised=0 unavailable=3 writescope_mismatch=0 rev=WORK repo=/home/vgpnk/Projects/shokunin/mori-shokunin
+WRITESCOPE=met
+
+D. Declarations under test, TRUE or FALSE as written
+----------------------------------------------------
+row (SKILL.md `## Gates`)   instrument                          as written
+r44 figure ledger (C1)      .ufo/waves/round-44/count-c1.py     TRUE
+r44 gate conformance (C2)   .ufo/waves/round-44/count-c2.py     TRUE
+r44 corpus coverage (C3)    .ufo/waves/round-44/count-c3.py     TRUE
+r44 gate registry (C2)      tools/mori-gate-registry.py         TRUE
+round-45 counters           .ufo/waves/round-45/count-c{1,2,3}.py  NOT A DECLARATION YET
+
+  TRUE, in every run (A at 3ad8faaa = committed v1 of the auditor; C at the working tree
+  with the in-flight v2): repo_unchanged=yes, writes_outside_tmpdir=0, rc=0 and the
+  selftest tally printed (C1 pass=6, C2 pass=5, C3 pass=6, GATE_REGISTRY pass=6 at HEAD;
+  C1 pass=10, C2 pass=8, C3 pass=16, GATE_REGISTRY pass=10 on the working tree).  No
+  declaration is contradicted by bytes, so `writescope_mismatch=0` at both measured
+  states and the arm's own exit is 0.
+
+  NOT A DECLARATION YET: at this wave no committed SKILL.md write-scope cell names a
+  round-45 counter (the rows are still being drafted), so the arm cannot test a claim and
+  reports UNAVAILABLE, never TRUE.  The three counters do run cleanly in the sandbox
+  (rc=0, C1/C2/C3_SELFTEST ... fail=0, writes_outside_tmpdir=0, repo_unchanged=yes); the
+  runner re-derives the cell from the measured revision, so as soon as a row's entry cell
+  names `…/round-45/count-cN.py` the entry becomes checkable with no fixture edit.
+
+  Caveat on the two positive clauses: "counter bytes materialize under the caller TMPDIR"
+  (r44 gate conformance) and "the registry copy handed to the census is materialized
+  under the caller TMPDIR" (r44 corpus coverage) name where bytes go, and their selftests
+  delete their mkdtemp trees before exit, so tmp_files=0.  The location clause is not
+  falsified; the materialisation clause is not observed.  Calling those cells TRUE rests
+  on the negative half ("nothing in the repo is written" / writes only under TMPDIR),
+  which is measured.  Control B shows the positive half is measurable when bytes remain.
+
+E. Controls — the arm has teeth (throwaway git repo under TMPDIR, not the lane)
+-------------------------------------------------------------------------------
+$CTL = $TMPDIR/ctl ; $CTL/repo is a fresh `git init` repo (commit 9a8d4bf1) whose SKILL.md
+`## Gates` table declares two instruments "stdout only; nothing in the repo is written":
+  tools/ctl-clean.sh  writes $TMPDIR/ctl-clean-out.txt   -> must be TRUE
+  tools/ctl-dirty.sh  writes tools/ctl-dirty-out.txt inside the repo -> must be FALSE
+command:
+  TMPDIR=$PWD/.ufo/waves/round-45/tmp/ExecWriteScopeFixture \
+    python3 .ufo/waves/round-45/write-scope-run.py \
+      --repo "$CTL/repo" --rev HEAD --fixture "$CTL/fixture.json"
+result: ctl-clean TRUE (tmp_files=1, i.e. TMPDIR bytes counted), ctl-dirty FALSE
+        (repo_unchanged=no, writes_outside_tmpdir=1,
+        first_outside=lane/tools/ctl-dirty-out.txt), writescope_mismatch=1, exit 1.
+        A false write-scope cell therefore cannot print met.
+
+F. Setup guards observed (exit 2, never a traceback)
+---------------------------------------------------
+=== guard: TMPDIR=/tmp ===
+WRITESCOPE_SETUP reason=tmpdir_is_tmp TMPDIR=/tmp; use a lane-local scratch dir
+rc=2
+=== guard: TMPDIR unset ===
+WRITESCOPE_SETUP reason=no_tmpdir TMPDIR must be set (the sandbox lives there)
+rc=2
+=== guard: unresolvable revision ===
+WRITESCOPE_SETUP reason=unresolvable_revision nosuchrev
+rc=2
+=== guard: absent fixture ===
+WRITESCOPE_SETUP reason=fixture_unreadable /nonexistent.json: [Errno 2] No such file or directory: '/nonexistent.json'
+rc=2

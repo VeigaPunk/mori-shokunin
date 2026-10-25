@@ -1,0 +1,15 @@
+F01	246	registry	git show @REV@:corpus/SOURCES.md | grep -cE '^ {0,3}\|[[:space:]]*S[0-9]{3,}'
+F02	75	corpus	git ls-tree -r --name-only @REV@ corpus/lessons | grep -c '\.md$'
+F03	55	corpus	git ls-tree -r --name-only @REV@ corpus/knowledge | grep -c '\.md$'
+F04	33	checks	git ls-tree -r --name-only @REV@ tools | grep -cE '\.(py|sh)$'	CONST=round 45 rewrites tools/mori-gate-registry.py and edits four existing tools; it adds no tools/ filename
+F05	53	registry	git show @REV@:SKILL.md | grep -cE '^\| [^|]+ \| (gate|probe)'
+F06	7	registry	git show @REV@:SKILL.md | grep -cE '^\| name \| kind \| entry \| verdict map \| self-test \| pinned values \| write scope \| owner \|$'	CONST=the round adds rows to existing eight-cell tables, never a new table header
+F07	14	evidence	git show @REV@:.ufo/waves/round-44/w1/ExecGateInventory.md | grep -c 'unregistered: no row names'	CONST=round 44 is admitted and its inventory bytes are closed at 14 unregistered rows
+F08	33	checks	git grep -n -- '--selftest' @REV@ -- tools | grep -vE ':[0-9]+:[[:space:]]*#' | cut -d: -f2 | sort -u | grep -cE '\.(py|sh)$'
+F09	353	checks	git show @REV@:.ufo/waves/round-44/count-c1.py | wc -l	CONST=round-44 counter bytes closed at round-44 admission
+F10	388	checks	git show @REV@:.ufo/waves/round-44/count-c2.py | wc -l	CONST=round-44 counter bytes closed at round-44 admission
+F11	321	checks	git show @REV@:.ufo/waves/round-44/count-c3.py | wc -l	CONST=round-44 counter bytes closed at round-44 admission
+F12	10	wave	git ls-tree -r --name-only @REV@ .ufo/waves/round-43/w1 | grep -c '\.md$'	CONST=round 43 is closed; its w1 report set cannot grow
+F13	32	wave	git ls-tree -r --name-only @REV@ .ufo/waves/round-44/w1 | grep -c '\.md$'	CONST=round 44 is closed; its w1 report set cannot grow
+F14	16	evidence	git show @REV@:.ufo/waves/round-43/logs/residual8/ResCritBulkAppend.log | grep -oE '\b[EW][0-9]{2}\b' | sort -u | wc -l	CONST=round-43 log bytes are closed; it is the lane's only committed copy of the sources-census code space
+F15	245	evidence	git show @REV@:.ufo/waves/round-44/evidence/census-end.txt | grep -oE '^rows=[0-9]+' | cut -d= -f2	CONST=round-44 census receipt is closed at 245 registry rows

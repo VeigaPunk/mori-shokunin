@@ -1,0 +1,494 @@
+# round-45 C1 vacuity witnesses — BEFORE receipt against the round-44 counter
+# seat: L1Mori45.ExecWitnesses   date: 2026-10-25
+# lane: /home/vgpnk/Projects/shokunin/mori-shokunin
+# every block below is captured command output; nothing is transcribed.
+
+## 0. instrument and witness identity
+
+$ sha256sum /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/witnesses/w-revconst.tsv /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/witnesses/w-head.tsv /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/witnesses/w-dup.tsv
+9477824d5eee45f47d49be52902f7bb0cd67a4d038e0ec7e79094c1e71999f83  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py
+bbccaf28e69bbdfa324138d3d0a267d8878a1bd16004c87a8e00d1e98edc0fd4  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/witnesses/w-revconst.tsv
+a17d6b1adb43c1fc93aa33ad27a09d015ba4405cb8c4623e344ca71ef7b400cb  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/witnesses/w-head.tsv
+fcaadd3155c245d346202393526ed4a7947d6df459ef79ece3205f4d76ea9b70  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/witnesses/w-dup.tsv
+rc=0
+
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin rev-parse HEAD master origin/master 554ff416 b1d7269
+3ad8faaa637ae466c61f9427fea1c208bf49ea82
+3ad8faaa637ae466c61f9427fea1c208bf49ea82
+3ad8faaa637ae466c61f9427fea1c208bf49ea82
+554ff416459c92f0dea9762f834a556df2990187
+b1d7269f4f263dc954f31d97208aee4b56055618
+rc=0
+
+The round-44 counter was not edited (read-only lane): only its output is recorded.
+
+=====================================================================
+1. THE COMMAND NAMED BY THE ASSIGNMENT, RUN LITERALLY
+   count-c1.py 554ff416 --ledger <absolute witness path> --repo <lane>
+=====================================================================
+
+### w-revconst
+
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py 554ff416 --ledger /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/witnesses/w-revconst.tsv --repo /home/vgpnk/Projects/shokunin/mori-shokunin
+check ledger_present       FAIL (absent)
+rev=554ff416459c92f0dea9762f834a556df2990187
+ledger=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/witnesses/w-revconst.tsv rows=0 classes=-
+C1=unmet mismatches=?
+rc=1
+
+### w-head
+
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py 554ff416 --ledger /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/witnesses/w-head.tsv --repo /home/vgpnk/Projects/shokunin/mori-shokunin
+check ledger_present       FAIL (absent)
+rev=554ff416459c92f0dea9762f834a556df2990187
+ledger=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/witnesses/w-head.tsv rows=0 classes=-
+C1=unmet mismatches=?
+rc=1
+
+### w-dup
+
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py 554ff416 --ledger /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/witnesses/w-dup.tsv --repo /home/vgpnk/Projects/shokunin/mori-shokunin
+check ledger_present       FAIL (absent)
+rev=554ff416459c92f0dea9762f834a556df2990187
+ledger=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/witnesses/w-dup.tsv rows=0 classes=-
+C1=unmet mismatches=?
+rc=1
+
+RESULT: all three print C1=unmet rc=1 — but the ONLY failing check is
+ledger_present (absent). That is not a vacuity rejection: it is the counter
+reading the ledger out of the measured revision's tree (read_at():
+"git cat-file -e REV:path" / "git show REV:path"), where a file added this
+round cannot exist. Run this way the receipt measures where the bytes live,
+not whether a vacuous ledger is accepted, so it cannot be the BEFORE receipt.
+Section 2 measures the same unmodified counter against the same entering tip
+with the ledger committed at exactly that tree.
+
+=====================================================================
+2. FAIR BEFORE RECEIPT — same unmodified r44 counter, ledger committed,
+   measured tree == 554ff416 tree + the three witness files
+=====================================================================
+
+Fixture repo: a scratch repo in TMPDIR whose object DB is the lane's
+(objects/info/alternates), index read from 554ff416, witness blobs added,
+commit parented on 554ff416. Every byte the witness rows count is therefore
+the 554ff416 byte.
+
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/clone log --format='%H %p %s' -1 b957dad8ddb38bc6b19e255e88a88bd4f912351f
+b957dad8ddb38bc6b19e255e88a88bd4f912351f 554ff416 round-45 C1 witness fixture: 554ff416 tree + 3 witness ledgers
+rc=0
+
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/clone diff --stat 554ff416 b957dad8ddb38bc6b19e255e88a88bd4f912351f
+ .ufo/waves/round-45/fixtures/witnesses/w-dup.tsv      | 12 ++++++++++++
+ .ufo/waves/round-45/fixtures/witnesses/w-head.tsv     | 12 ++++++++++++
+ .ufo/waves/round-45/fixtures/witnesses/w-revconst.tsv | 12 ++++++++++++
+ 3 files changed, 36 insertions(+)
+rc=0
+
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/clone diff --stat 554ff416 b957dad8ddb38bc6b19e255e88a88bd4f912351f -- .ufo/waves/round-45/fixtures/witnesses
+ .ufo/waves/round-45/fixtures/witnesses/w-dup.tsv      | 12 ++++++++++++
+ .ufo/waves/round-45/fixtures/witnesses/w-head.tsv     | 12 ++++++++++++
+ .ufo/waves/round-45/fixtures/witnesses/w-revconst.tsv | 12 ++++++++++++
+ 3 files changed, 36 insertions(+)
+rc=0
+
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/clone rev-parse b957dad8ddb38bc6b19e255e88a88bd4f912351f 'master@{u}'
+b957dad8ddb38bc6b19e255e88a88bd4f912351f
+3ad8faaa637ae466c61f9427fea1c208bf49ea82
+rc=0
+
+### w-revconst @ b957dad8  (tree = 554ff416 + witness)
+
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py b957dad8ddb38bc6b19e255e88a88bd4f912351f --ledger .ufo/waves/round-45/fixtures/witnesses/w-revconst.tsv --repo /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/clone
+check ledger_present       PASS (965 bytes)
+check rows_parse           PASS (12 rows)
+check row_floor            PASS (rows=12 min=12)
+check class_floor          PASS (classes=checks,corpus,evidence,registry,wave min=4)
+check commands_reconcile   PASS (all rows match)
+rev=b957dad8ddb38bc6b19e255e88a88bd4f912351f
+ledger=.ufo/waves/round-45/fixtures/witnesses/w-revconst.tsv rows=12 classes=checks,corpus,evidence,registry,wave
+C1=met mismatches=0
+rc=0
+
+### w-head @ b957dad8  (tree = 554ff416 + witness)
+
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py b957dad8ddb38bc6b19e255e88a88bd4f912351f --ledger .ufo/waves/round-45/fixtures/witnesses/w-head.tsv --repo /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/clone
+check ledger_present       PASS (1122 bytes)
+check rows_parse           PASS (12 rows)
+check row_floor            PASS (rows=12 min=12)
+check class_floor          PASS (classes=checks,corpus,evidence,registry,wave min=4)
+check commands_reconcile   PASS (all rows match)
+rev=b957dad8ddb38bc6b19e255e88a88bd4f912351f
+ledger=.ufo/waves/round-45/fixtures/witnesses/w-head.tsv rows=12 classes=checks,corpus,evidence,registry,wave
+C1=met mismatches=0
+rc=0
+
+### w-dup @ b957dad8  (tree = 554ff416 + witness)
+
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py b957dad8ddb38bc6b19e255e88a88bd4f912351f --ledger .ufo/waves/round-45/fixtures/witnesses/w-dup.tsv --repo /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/clone
+check ledger_present       PASS (980 bytes)
+check rows_parse           PASS (12 rows)
+check row_floor            PASS (rows=12 min=12)
+check class_floor          PASS (classes=checks,corpus,evidence,registry,wave min=4)
+check commands_reconcile   PASS (all rows match)
+rev=b957dad8ddb38bc6b19e255e88a88bd4f912351f
+ledger=.ufo/waves/round-45/fixtures/witnesses/w-dup.tsv rows=12 classes=checks,corpus,evidence,registry,wave
+C1=met mismatches=0
+rc=0
+
+VERDICT: C1=met mismatches=0 rc=0 on all three vacuous ledgers. The hole is open.
+
+=====================================================================
+3. SUPPLEMENTARY — the same counter on the live lane, rev=WORK
+   (reads the witness off the worktree; recomputes at the lane tip 3ad8faaa)
+=====================================================================
+
+### w-revconst rev=WORK @lane
+
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py WORK --ledger .ufo/waves/round-45/fixtures/witnesses/w-revconst.tsv --repo /home/vgpnk/Projects/shokunin/mori-shokunin
+check ledger_present       PASS (965 bytes)
+check rows_parse           PASS (12 rows)
+check row_floor            PASS (rows=12 min=12)
+check class_floor          PASS (classes=checks,corpus,evidence,registry,wave min=4)
+check commands_reconcile   PASS (all rows match)
+rev=WORK
+ledger=.ufo/waves/round-45/fixtures/witnesses/w-revconst.tsv rows=12 classes=checks,corpus,evidence,registry,wave
+C1=met mismatches=0
+rc=0
+
+### w-head rev=WORK @lane
+
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py WORK --ledger .ufo/waves/round-45/fixtures/witnesses/w-head.tsv --repo /home/vgpnk/Projects/shokunin/mori-shokunin
+check ledger_present       PASS (1122 bytes)
+check rows_parse           PASS (12 rows)
+check row_floor            PASS (rows=12 min=12)
+check class_floor          PASS (classes=checks,corpus,evidence,registry,wave min=4)
+check commands_reconcile   PASS (all rows match)
+rev=WORK
+ledger=.ufo/waves/round-45/fixtures/witnesses/w-head.tsv rows=12 classes=checks,corpus,evidence,registry,wave
+C1=met mismatches=0
+rc=0
+
+### w-dup rev=WORK @lane
+
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py WORK --ledger .ufo/waves/round-45/fixtures/witnesses/w-dup.tsv --repo /home/vgpnk/Projects/shokunin/mori-shokunin
+check ledger_present       PASS (980 bytes)
+check rows_parse           PASS (12 rows)
+check row_floor            PASS (rows=12 min=12)
+check class_floor          PASS (classes=checks,corpus,evidence,registry,wave min=4)
+check commands_reconcile   FAIL (F04 asserted=327 observed=328; F05 asserted=73 observed=74)
+rev=WORK
+ledger=.ufo/waves/round-45/fixtures/witnesses/w-dup.tsv rows=12 classes=checks,corpus,evidence,registry,wave
+C1=unmet mismatches=2
+rc=1
+
+w-revconst and w-head also score C1=met on the live lane. w-dup scores unmet
+here only because two of its rows are honestly revision-sensitive (327->328,
+73->74) and are asserted at 554ff416; that is the counter's per-row value
+check firing on a different revision, NOT its duplicate detection, which does
+not exist (section 5). Section 2, measured at the tree the ledger names, is
+the authoritative receipt for w-dup.
+
+=====================================================================
+4. WITNESS CONTENT PROOF — every row re-run at 554ff416, b1d7269, 3ad8faaa
+=====================================================================
+
+$ cd /home/vgpnk/Projects/shokunin/mori-shokunin && TMPDIR=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/audit_rows.py
+== w-revconst.tsv rows=12 bytes=965
+   duplicate ids=0 -
+   duplicate commands=0 -
+   id    asserted class     value@rev[554ff416,b1d7269,3ad8faaa]
+   F01   4        registry  4,4,4 const
+   F02   245      registry  245,245,245 const
+   F03   29       registry  29,29,29 const
+   F04   54       corpus    54,54,54 const
+   F05   119      corpus    119,119,119 const
+   F06   3        corpus    3,3,3 const
+   F07   72       wave      72,72,72 const
+   F08   10       wave      10,10,10 const
+   F09   63       wave      63,63,63 const
+   F10   4        evidence  4,4,4 const
+   F11   15       evidence  15,15,15 const
+   F12   14       checks    14,14,14 const
+
+== w-head.tsv rows=12 bytes=1122
+   duplicate ids=0 -
+   duplicate commands=0 -
+   id    asserted class     value@rev[554ff416,b1d7269,3ad8faaa]
+   F01   4        registry  4,4,4 const
+   F02   4        registry  4,4,4 const
+   F03   4        registry  4,4,4 const
+   F04   245      corpus    245,245,245 const
+   F05   119      corpus    119,119,119 const
+   F06   54       corpus    54,54,54 const
+   F07   72       wave      72,72,72 const
+   F08   32       wave      32,32,32 const
+   F09   32       wave      32,32,32 const
+   F10   4        evidence  4,4,4 const
+   F11   14       evidence  14,14,14 const
+   F12   14       checks    14,14,14 const
+
+== w-dup.tsv rows=12 bytes=980
+   duplicate ids=1 ['F05']
+   duplicate commands=1 ['git ls-tree -r --name-only @REV@ .ufo/waves/round-43...']
+   id    asserted class     value@rev[554ff416,b1d7269,3ad8faaa]
+   F01   4        registry  4,4,4 const
+   F02   245      registry  245,245,245 const
+   F03   29       registry  29,29,29 const
+   F04   327      corpus    327,328,328 MOVES  MISMATCH@b1d7269,3ad8faaa
+   F05   72       wave      72,72,72 const
+   F06   10       wave      10,10,10 const
+   F07   63       wave      63,63,63 const
+   F08   4        evidence  4,4,4 const
+   F09   15       evidence  15,15,15 const
+   F10   14       checks    14,14,14 const
+   F05   73       corpus    73,74,74 MOVES  MISMATCH@b1d7269,3ad8faaa
+   F11   15       evidence  15,15,15 const
+
+rc=0
+
+Reading of the table:
+  w-revconst: all 12 rows identical at all three revisions (const, no CONST=)
+             -> nothing in the ledger can detect a wrong revision.
+  w-head:     all 12 rows identical at all three revisions because no row
+             reads @REV@ at all (see the token proof below).
+  w-dup:      F04 327 and F05 73 move (327->328, 73->74) = honest and
+             revision-sensitive; F05 twice (duplicate id), and the
+             .ufo/waves/round-43/evidence count twice (duplicate command).
+
+Token proof for w-head: the executable part of every row is cut at the first
+comment marker; none of the executable parts contains @REV@.
+
+$ cd /home/vgpnk/Projects/shokunin/mori-shokunin && python3 - <<'PY'
+import re
+p='.ufo/waves/round-45/fixtures/witnesses/w-head.tsv'
+rows=[l.rstrip('\n').split('\t') for l in open(p,encoding='utf-8') if l.strip()]
+for i,c in enumerate(rows,1):
+    fid,val,cls,cmd=[x.strip() for x in c]
+    code=cmd.split('#')[0].strip()
+    tok=[t for t in ('@{u}','HEAD','554ff416459c92f0dea9762f834a556df2990187') if t in code]
+    print('%s %-9s exec_has_@REV@=%s tip_resolver=%s' % (fid,cls,'@REV@' in code,tok))
+PY
+F01 registry  exec_has_@REV@=False tip_resolver=['HEAD']
+F02 registry  exec_has_@REV@=False tip_resolver=['554ff416459c92f0dea9762f834a556df2990187']
+F03 registry  exec_has_@REV@=False tip_resolver=['@{u}']
+F04 corpus    exec_has_@REV@=False tip_resolver=['HEAD']
+F05 corpus    exec_has_@REV@=False tip_resolver=['HEAD']
+F06 corpus    exec_has_@REV@=False tip_resolver=['HEAD']
+F07 wave      exec_has_@REV@=False tip_resolver=['HEAD']
+F08 wave      exec_has_@REV@=False tip_resolver=['HEAD']
+F09 wave      exec_has_@REV@=False tip_resolver=['554ff416459c92f0dea9762f834a556df2990187']
+F10 evidence  exec_has_@REV@=False tip_resolver=['HEAD']
+F11 evidence  exec_has_@REV@=False tip_resolver=['HEAD']
+F12 checks    exec_has_@REV@=False tip_resolver=['@{u}']
+rc=0
+
+Duplicate proof for w-dup:
+
+$ cd /home/vgpnk/Projects/shokunin/mori-shokunin && cut -f1 .ufo/waves/round-45/fixtures/witnesses/w-dup.tsv | sort | uniq -d
+F05
+rc=0
+
+$ cd /home/vgpnk/Projects/shokunin/mori-shokunin && cut -f4 .ufo/waves/round-45/fixtures/witnesses/w-dup.tsv | sort | uniq -d
+git ls-tree -r --name-only @REV@ .ufo/waves/round-43/evidence | grep -c .
+rc=0
+
+=====================================================================
+5. SOURCE-LEVEL ABSENCE PROOF — what the r44 counter never checks
+=====================================================================
+
+### pattern: other-rev
+
+$ grep -c -- 'other-rev' /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py
+0
+rc=1
+
+### pattern: CONST
+
+$ grep -c -- 'CONST' /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py
+0
+rc=1
+
+### pattern: witness
+
+$ grep -c -- 'witness' /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py
+0
+rc=1
+
+### pattern: duplicate
+
+$ grep -c -- 'duplicate' /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py
+0
+rc=1
+
+### pattern: dup
+
+$ grep -c -- 'dup' /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py
+0
+rc=1
+
+### pattern: rev-parse HEAD
+
+$ grep -c -- 'rev-parse HEAD' /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py
+0
+rc=1
+
+### the only revision control is a substring test, and the only producer gate
+
+$ grep -n -- '@REV@. not in cmd' /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py
+100:        if "@REV@" not in cmd:
+rc=0
+
+$ grep -n -- 'head -c 64' /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py
+111:    full = "%s 2>/dev/null | head -c 64" % cmd.replace("@REV@", rev)
+rc=0
+
+$ grep -n -- 'for fid, asserted, _cls, cmd in rows' /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py
+152:        for fid, asserted, _cls, cmd in rows:
+rc=0
+
+$ grep -n -- 'cmd_rev' /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py
+127:def evaluate(repo, rev, ledger, min_rows, min_classes, timeout, cmd_rev=None):
+153:            got, why = run_row(repo, cmd_rev or rev, cmd, timeout)
+321:    cmd_rev = rev
+329:        cmd_rev = tip.stdout.strip()
+334:                                       cmd_rev=cmd_rev)
+rc=0
+
+Consequence line by line:
+  * no --other-rev setting exists anywhere -> a revision-constant ledger is
+    indistinguishable from a sensitive one (w-revconst, w-head).
+  * no CONST= token exists -> nothing to declare a constant row as intended.
+  * no witness-dir arm exists -> witnesses are never required to be rejected.
+  * no id or command uniqueness test exists -> w-dup's duplicate id and
+    duplicate command are silently accepted.
+  * the only "@REV@" enforcement is the substring test, so a trailing
+    "# @REV@" comment satisfies it while the row reads HEAD/@{u}/a fixed sha.
+  * the producer appends "2>/dev/null | head -c 64", whose exit status is
+    head's, so a failing git command is accepted as integer 0 (an extra hole
+    outside the three mandated witness classes; reported, not fixed, in
+    w1/ExecWitnesses.md).
+
+
+### MEASURED: the two flags the round-45 predicate needs do not exist
+
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py b957dad8ddb38bc6b19e255e88a88bd4f912351f --ledger .ufo/waves/round-45/fixtures/witnesses/w-revconst.tsv --repo /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/clone --other-rev b1d7269
+usage: count-c1.py [-h] [--repo REPO] [--ledger LEDGER] [--min-rows MIN_ROWS]
+                   [--min-classes MIN_CLASSES] [--timeout TIMEOUT]
+                   [--selftest]
+                   [rev]
+count-c1.py: error: unrecognized arguments: --other-rev b1d7269
+rc=2
+
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py b957dad8ddb38bc6b19e255e88a88bd4f912351f --repo /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/clone --witness-dir /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/witnesses
+usage: count-c1.py [-h] [--repo REPO] [--ledger LEDGER] [--min-rows MIN_ROWS]
+                   [--min-classes MIN_CLASSES] [--timeout TIMEOUT]
+                   [--selftest]
+                   [rev]
+count-c1.py: error: unrecognized arguments: --witness-dir /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/witnesses
+rc=2
+
+=====================================================================
+6. ADJACENT HOLE, MEASURED (outside the three mandated witness classes)
+   an absent path is scored as integer 0 instead of FAILING
+=====================================================================
+
+Probe ledger = the first 11 rows of w-revconst + one row naming a path that
+exists in no revision, asserted 0. Committed as a second commit on top of the
+witness commit (parent b957dad8), at
+  .ufo/waves/round-45/tmp/ExecWitnesses/absent-path.tsv  inside the scratch repo.
+
+$ head -n 11 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/fixtures/witnesses/w-revconst.tsv > /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/probe/absent-path.tsv; printf 'F12\t0\tchecks\tgit show @REV@:no/such/path-r45-probe.txt | grep -c x\n' >> /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/probe/absent-path.tsv; cat /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/probe/absent-path.tsv | tail -2
+F11	15	evidence	git ls-tree -r --name-only @REV@ .ufo/waves/round-43/evidence | grep -c .
+F12	0	checks	git show @REV@:no/such/path-r45-probe.txt | grep -c x
+rc=0
+
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/clone log --format='%H %p %s' -1 c01352a37df33f41d93392431052312caa57d16b
+c01352a37df33f41d93392431052312caa57d16b b957dad8 round-45 C1 probe: + one absent-path row asserted 0
+rc=0
+
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py c01352a37df33f41d93392431052312caa57d16b --ledger .ufo/waves/round-45/tmp/ExecWitnesses/absent-path.tsv --repo /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/clone
+check ledger_present       PASS (940 bytes)
+check rows_parse           PASS (12 rows)
+check row_floor            PASS (rows=12 min=12)
+check class_floor          PASS (classes=checks,corpus,evidence,registry,wave min=4)
+check commands_reconcile   PASS (all rows match)
+rev=c01352a37df33f41d93392431052312caa57d16b
+ledger=.ufo/waves/round-45/tmp/ExecWitnesses/absent-path.tsv rows=12 classes=checks,corpus,evidence,registry,wave
+C1=met mismatches=0
+rc=0
+The row is not merely unreadable-and-passed; git itself fails:
+
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/clone show c01352a37df33f41d93392431052312caa57d16b:no/such/path-r45-probe.txt
+fatal: path 'no/such/path-r45-probe.txt' does not exist in 'c01352a37df33f41d93392431052312caa57d16b'
+rc=128
+
+$ bash -c 'git -C /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/clone show c01352a37df33f41d93392431052312caa57d16b:no/such/path-r45-probe.txt 2>/dev/null | grep -c x | head -c 64'
+0
+rc=0
+
+git exits 128; the counter appends "2>/dev/null | head -c 64", so the pipeline
+exit status is head's 0, and the counter reads the empty-stdout count as the
+declared 0. C1=met. The round-45 counter must make an absent path a FAIL, not
+a zero (it is on its required-changes list).
+
+=====================================================================
+7. ADJACENT HOLE, MEASURED: the row/class floors are caller-overridable
+   (round-44 has no clamp; contract §Floors requires the r45 counter to clamp up)
+=====================================================================
+
+Probe ledger = w-revconst rows F01 (registry), F04 (corpus), F07 (wave):
+3 rows, 3 classes, values honest at the measured tree. Committed as a third
+commit (parent c01352a3) at .ufo/waves/round-45/tmp/ExecWitnesses/below-floor.tsv
+inside the scratch repo.
+
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/clone log --format='%H %p %s' -1 1cfd300eb8d934a63bc4a893cd85f6bb938fe653
+1cfd300eb8d934a63bc4a893cd85f6bb938fe653 c01352a3 round-45 C1 probe: 3-row ledger for the override knobs
+rc=0
+
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py 1cfd300eb8d934a63bc4a893cd85f6bb938fe653 --ledger .ufo/waves/round-45/tmp/ExecWitnesses/below-floor.tsv --repo /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/clone --min-rows 1 --min-classes 1
+check ledger_present       PASS (223 bytes)
+check rows_parse           PASS (3 rows)
+check row_floor            PASS (rows=3 min=1)
+check class_floor          PASS (classes=corpus,registry,wave min=1)
+check commands_reconcile   PASS (all rows match)
+rev=1cfd300eb8d934a63bc4a893cd85f6bb938fe653
+ledger=.ufo/waves/round-45/tmp/ExecWitnesses/below-floor.tsv rows=3 classes=corpus,registry,wave
+C1=met mismatches=0
+rc=0
+Control — the same ledger at the frozen floors:
+
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-44/count-c1.py 1cfd300eb8d934a63bc4a893cd85f6bb938fe653 --ledger .ufo/waves/round-45/tmp/ExecWitnesses/below-floor.tsv --repo /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/clone
+check ledger_present       PASS (223 bytes)
+check rows_parse           PASS (3 rows)
+check row_floor            FAIL (rows=3 min=12)
+check class_floor          FAIL (classes=corpus,registry,wave min=4)
+check commands_reconcile   PASS (all rows match)
+rev=1cfd300eb8d934a63bc4a893cd85f6bb938fe653
+ledger=.ufo/waves/round-45/tmp/ExecWitnesses/below-floor.tsv rows=3 classes=corpus,registry,wave
+C1=unmet mismatches=0
+rc=1
+
+C1=met at --min-rows 1 --min-classes 1, C1=unmet at the defaults: the r44
+verdict is a function of caller knobs, so "floors hold" is a round-45 addition,
+not a property the round-44 counter already had.
+
+=====================================================================
+8. WHY w-head CARRIES NO LITERAL `git rev-parse HEAD` ROW
+=====================================================================
+
+The item lists `git rev-parse HEAD` as one tip-resolver form. A row starting
+with it cannot appear in a ledger the round-44 counter accepts: rev-parse is
+not in its read-verb allowlist, so such a row is rejected as a FORMAT error
+before any value is measured — a rejection that would prove nothing about
+vacuity. w-head therefore exercises the same hole through commands whose verb
+the counter allows (show / ls-tree) while the revision they read is still the
+tip: HEAD, a fixed 40-hex, and @{u}.
+
+$ cd /home/vgpnk/Projects/shokunin/mori-shokunin && TMPDIR=/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-45/tmp/ExecWitnesses/parser_probe.py
+r44 GIT_VERBS = ['cat-file', 'diff', 'grep', 'log', 'ls-tree', 'rev-list', 'show']
+in GIT_VERBS: rev-parse=False HEAD=False
+git rev-parse HEAD | grep -c .                             -> ["row 1: git verb 'rev-parse' is not a read verb", 'row 1: command does not name @REV@']
+git show HEAD:SKILL.md | grep -c '^| r44 '  # @REV@        -> parses clean
+rc=0
+
+END OF RECEIPT

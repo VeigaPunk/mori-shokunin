@@ -1,0 +1,12 @@
+F01	4	registry	git show @REV@:SKILL.md | grep -c '^| r44 '
+F02	245	registry	git show @REV@:corpus/SOURCES.md | grep -cE '^ {0,3}\|[[:space:]]*S[0-9]{3,}'
+F03	29	registry	git ls-tree -r --name-only @REV@ tools | grep -c '\.py$'
+F04	327	corpus	git ls-tree -r --name-only @REV@ corpus | grep -c .
+F05	72	wave	git ls-tree -r --name-only @REV@ .ufo/waves/round-43/logs | grep -c .
+F06	10	wave	git ls-tree -r --name-only @REV@ .ufo/waves/round-43/w1 | grep -c '\.md$'
+F07	63	wave	git ls-tree -r --name-only @REV@ .ufo/waves/round-44 | grep -c .
+F08	4	evidence	git ls-tree -r --name-only @REV@ .ufo/waves/round-44/fixtures | grep -c .
+F09	15	evidence	git ls-tree -r --name-only @REV@ .ufo/waves/round-43/evidence | grep -c .
+F10	14	checks	git show @REV@:.ufo/waves/round-43/evidence/c1s-after.txt | grep -cE '^check'
+F05	73	corpus	git ls-tree -r --name-only @REV@ corpus/lessons | grep -c '\.md$'
+F11	15	evidence	git ls-tree -r --name-only @REV@ .ufo/waves/round-43/evidence | grep -c .
