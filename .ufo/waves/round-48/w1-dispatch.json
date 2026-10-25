@@ -1,0 +1,582 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r48-w1-build",
+  "policy": {
+    "source": "config",
+    "maxLanes": 256,
+    "minLanes": 16,
+    "waveMinLanes": 32,
+    "waveMaxLanes": 64,
+    "declaredMaxLanes": null,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 49,
+    "resume": 0,
+    "total": 49
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-48/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-48/w1",
+    "members": {
+      "ExecV3ImplA": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecV3ImplB": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecV3Residuals": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecRealRegistryAudit": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecC1Replay": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecUnlandedCheck": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecPortability": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecCensusGuard": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecQuoteFinderMan": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecQuoteFinderErrno": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecS478Recheck": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecAppendSweep": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ExecSkillRowsRun": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null
+      },
+      "ScribeEntryA": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeEntryB": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeRowXfs": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeRowQuotactl": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeRowErrno": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeRowAliyun": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeLessonGate": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeMistakes": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeQuality": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeScorecard": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeLogErratum": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeReadmeFR2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScribeSkillRows": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null
+      },
+      "ScoutStagedQuota": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScoutQuarantineS244": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScoutQuarantineS262": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScoutQuarantineS268": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScoutConsiderthese": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ScoutQuotaHost": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null
+      },
+      "ConnSiblings": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null
+      },
+      "ConnCrossClaim": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null
+      },
+      "CritC1Counter": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritC2Counter": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritContractFreeze": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "CritV3Spec": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "RevC1Counter": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevC2Counter": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "RevAssimPlan": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "MutC1Counter": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutC2Counter": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "MutC1Variants": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null
+      },
+      "CritJunkClasses": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      },
+      "RevPromptHonesty": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null
+      },
+      "SentCopies": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "sentinel",
+        "item": null
+      },
+      "SimpCounters": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "simplifier",
+        "item": null
+      },
+      "CritEntryRisk": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "# mori round 48 — wave w1 (build + first falsifiers)\nLane: mori-shokunin (森, fleet and host observability: detection and report only). Lane repo: /home/vgpnk/Projects/shokunin/mori-shokunin. Fleet root: /home/vgpnk/Projects/shokunin.\nFrozen contract (read it first): /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/contract.md, committed at freeze 4387cf94b69ddce455051a1ff38e93795c2e6cde (entering tip e5dbac05459887d9597ea5d1da0d8e3d024e0d17). Also read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/v3-spec.md. Claims:\n- C1 calibration: `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py --tool <tool> --rev R` must print C1=met — the pin reconciler tools/mori-pin-check.py (v2 at entering) rejects eight frozen junk edits J1-J8 of SKILL.md (header spelled selftest, fullwidth and Cyrillic prefix rows, archived-copy rebinding, fenced replacement, blank-line hiding, stale line-count pin, stale truncated digest) and accepts four honest edits and the real registry. v2 is green on all eight (receipt /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/evidence/control-c1-tool-v2-entering.txt).\n- C2 depth: `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c2.py R` must print C2=met for a new entry corpus/knowledge/quota-observability-r48.md (FR2 filesystem-quota observability): a claim/source/quote table of at least 8 rows, each quote 6-25 words located in a committed source copy under /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48/ (xfs_quota.8.html, quotactl.2.html, errno.h, aliyun-nas-quota.html), each row citing a lane SOURCES.md row opened 2026-10-25 (new ids start at S479; staged ids S477-S482 collide with lane S477/S478 and are renumbered by document). The assimilation package is /home/vgpnk/Projects/shokuknow/merge/mori (read-only).\nRules for every seat:\n- Paths: every `Report:` trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin — write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. Use absolute paths for every read and write. Write ONLY your own report file (plus scratch under /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-<your-name>/ if you must run things). Drafts go INSIDE your report as fenced blocks; never edit SKILL.md, SOURCES.md, corpus/, tools/, LOG.md, SCORECARD.md, the frozen files under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48 (contract.md, v3-spec.md, count-c1.py, count-c2.py, controls/, evidence/) or any other production file — the L1 integrates. A candidate tool lives in your scratch, never in tools/.\n- Never mutate the fleet repo, sibling lanes, the lane's jj state or git index: no git add/commit/stash/checkout/reset/pull/push, no mutating jj command. Read-only git (log/show/diff/rev-parse/ls-files) is fine. Any fixture repo: D=$(mktemp -d) && git -C \"$D\" init -q, name -C \"$D\" on every later call, and verify `git -C \"$D\" rev-parse --show-toplevel` equals $D before the first commit.\n- /home/vgpnk/Projects/shokuknow/merge/mori and /home/vgpnk/Projects/shokuknow are read-only: read bytes, run nothing there.\n- Run lane tools with TMPDIR=/home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-<your-name> (create it), never /tmp for lane tools.\n- Tooling authorization (operator, 2026-10-19): you may install or upgrade tools that help the task — read /home/vgpnk/.omp/agent/RULES.md first (official channels, update-safety gate; record tool/version/channel/reason in your report). pacman guard: ALL pacman transactions are PAUSED host-wide — never run pacman; install via uv tool/npx/an official binary in ~/.local/bin, or report the need.\n- Host reads are read-only (detection and report only). `sudo -n` is allowed only for read-only ls/cat.\n- No credential material, session or private URLs in any report.\n- Leaf seat: no subagents, except an executor may spawn one read-only labrat probe. Do not ask questions. Report observed evidence only (command + output + exit code); say UNVERIFIED where you could not check. A dispatched seat is not an independent judge.\n",
+    "tasks": [
+      {
+        "name": "ExecV3ImplA",
+        "agent": "executor",
+        "task": "/skill:godspeed\nExecV3ImplA: Build the full v3 candidate of the pin reconciler. Copy /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py (v2, sha256 9832e38c…) to /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-ExecV3ImplA/mori-pin-check.py and implement rules R1-R8 of /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/v3-spec.md in that copy only. Acceptance: (1) `python3 <copy> --selftest` prints PIN_CHECK_SELFTEST pass=N fail=0 with arms for every rule; (2) `TMPDIR=<scratch> python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py --tool <copy> --rev e5dbac05459887d9597ea5d1da0d8e3d024e0d17 --scratch <scratch>/c1 --jobs 3` prints C1=met (this takes several minutes; run it in the background and read the file); (3) `python3 <copy> --rev e5dbac05459887d9597ea5d1da0d8e3d024e0d17 --min-tally-pins 26 --baseline-rev 2d85e33d14198d388fd3cda9cc15ec07e57e7a53` on the real registry — if it is unmet, list each finding and say which SKILL.md row/pin must be repaired (do NOT excuse it in the tool). No rule may special-case a variant by name or edit text. Report: the sha256 and line count of the copy, a `diff -u` of v2 → candidate inside a fenced block (full, not truncated), the selftest tail, the count-c1 output, the real-registry output.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ExecV3ImplA.md"
+      },
+      {
+        "name": "ExecV3ImplB",
+        "agent": "executor",
+        "task": "/skill:godspeed\nExecV3ImplB: Independently build a second full v3 candidate of the pin reconciler (another seat builds one too; do not read their scratch). Copy /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py to /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-ExecV3ImplB/mori-pin-check.py and implement R1-R8 of /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/v3-spec.md there. Prefer a structural design: one tokenizer pass over SKILL.md that classifies every line (fence, table header, separator, row, hidden row, other) so visibility accounting (R2) and header recognition (R1) share one code path. Same acceptance and same report contents as an implementer: sha256, line count, full `diff -u` v2 → candidate, selftest tail, count-c1 output (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py --tool <copy> --rev e5dbac05459887d9597ea5d1da0d8e3d024e0d17; run it in the background, it takes minutes), real-registry output with required registry repairs listed.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ExecV3ImplB.md"
+      },
+      {
+        "name": "ExecV3Residuals",
+        "agent": "executor",
+        "task": "/skill:godspeed\nExecV3Residuals: Draft the R7 and R8 parts of /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/v3-spec.md as a patch against v2 (/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py) in /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-ExecV3Residuals/. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-47/w2/ConnNextRound.md §D4 and the MutV2Argv, MutV2Digest, MutV2Exact, MutV2Rebound reports in the same directory for the reproducers (L2 escaped pipe mis-split, L4 pin not at span start, L5 setup traceback, symlink containment, argv_ok sub-checks). For each reproducer: show it failing on v2 (command + output), then passing on your patch, then give the selftest arm text that is killed when the fix is removed (run the mutation: remove the fix, run the arm, show FAIL). Report the unified diff and the arms as fenced blocks; the L1 merges them into the winning candidate.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ExecV3Residuals.md"
+      },
+      {
+        "name": "ExecRealRegistryAudit",
+        "agent": "executor",
+        "task": "/skill:godspeed\nExecRealRegistryAudit: Audit the real registry for the two new pin kinds of /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/v3-spec.md. Over /home/vgpnk/Projects/shokunin/mori-shokunin/SKILL.md at e5dbac05459887d9597ea5d1da0d8e3d024e0d17 (git show), in every self-test cell of every gate table (parse with the v2 tool's parse_registry imported from a scratch copy of /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py), list each `(N lines)` pin and each truncated digest `[0-9a-f]{8,63}…`: the row name and line, the path it binds to per R5/R6, the true newline count / sha256 prefix at e5dbac05459887d9597ea5d1da0d8e3d024e0d17, and match or mismatch. Also list pins of the same kinds that sit OUTSIDE self-test cells (pinned-values or prose cells) as out-of-scope with the same truth values. Report a table and the script you used (fenced). Say exactly which rows the landed v3 would flag so the L1 can repair them before measuring.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ExecRealRegistryAudit.md"
+      },
+      {
+        "name": "ExecC1Replay",
+        "agent": "executor",
+        "task": "/skill:godspeed\nExecC1Replay: Independently replay the C1 control receipts. Run `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py --selftest` and read the control receipts /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/evidence/control-c1-*.txt. Then, with TMPDIR=/home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-ExecC1Replay, regenerate each junk variant from the counter's own functions (import /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py as a module; write each J1-J8, H1-H4 body from `git show e5dbac05459887d9597ea5d1da0d8e3d024e0d17:SKILL.md` to scratch), and for each junk variant run `diff -u` against the unedited SKILL.md and paste the diff. State for each whether the edit really is junk (a false claim in a place a reader trusts) or really honest, with the line it changes. Report any variant whose label (junk/honest) you dispute and why.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ExecC1Replay.md"
+      },
+      {
+        "name": "ExecUnlandedCheck",
+        "agent": "executor",
+        "task": "/skill:godspeed\nExecUnlandedCheck: Write the fix for round-47 routed defect 1 (seat results existed on disk but were never committed; `corpus/lessons/round-47-verifier-spotcheck.md` §5 item 1). Draft tools/mori-unlanded-check.py in /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-ExecUnlandedCheck/: `python3 mori-unlanded-check.py --repo DIR --round N` exits 1 and lists every path under `.ufo/waves/round-N/` and `corpus/lessons/` that is untracked or modified relative to the lane's branch tip (read-only `git status --porcelain=v1 -z`, `--no-optional-locks`), exits 0 and prints `UNLANDED=clean` otherwise, 2 on usage/not-a-repo. `.scratch/` is ignored on purpose. `--selftest` builds sandbox repos (D=$(mktemp -d); git -C \"$D\" init -q; verify rev-parse --show-toplevel; use a throwaway identity ONLY via -c flags on -C \"$D\" calls) with: clean tree, an untracked w2 result file, a modified tracked report, an untracked file elsewhere (not listed), a path with a space. Show the red-before state (the same check run on the sandbox with the late file present exits 1 with the file named) and the green state. Report the full file in a fenced block, the selftest output, and the registry row text (name, kind, entry, verdict map, self-test with the PIN tally, pinned values, write scope, owner).\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ExecUnlandedCheck.md"
+      },
+      {
+        "name": "ExecPortability",
+        "agent": "executor",
+        "task": "/skill:godspeed\nExecPortability: Implement the considerthese/2026-10-25.md suggestion 2 as a counting command only (read /home/vgpnk/Projects/shokunin/mori-shokunin/considerthese/2026-10-25.md): count committed instruments that contain an absolute `/home/vgpnk` path. Scope: files tracked at e5dbac05459887d9597ea5d1da0d8e3d024e0d17 under tools/ and under .ufo/waves/round-*/ that are *.py or *.sh (git ls-tree + git grep -l -F '/home/vgpnk' at that revision, read-only). Report the exact command, the count, the list grouped by directory, and the count for tools/ alone. Also report the same count at the previous round's entering tip 2d85e33d14198d388fd3cda9cc15ec07e57e7a53 so a day-to-day change is visible. Say which files the round-48 instruments (/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py, /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c2.py) would add (they must add none; check with grep).\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ExecPortability.md"
+      },
+      {
+        "name": "ExecCensusGuard",
+        "agent": "executor",
+        "task": "/skill:godspeed\nExecCensusGuard: Re-run the id-collision guard and the quarantine slice independently and propose the renumber map. Inputs: /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md, /home/vgpnk/Projects/shokuknow/merge/mori/SOURCES.append.md, /home/vgpnk/Projects/shokuknow/merge/mori/knowledge/corpus/knowledge/quota-observability-r38.md. Scratch output under /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-ExecCensusGuard/. (1) Run the 0-3-space guard from the round prompt on both files and paste reg-ids count, staged-ids count and the collisions list; compare with /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/assimilation/. (2) Prove the guard still catches an indented fixture row (scratch fixture, not the lane). (3) For the five staged quota rows (staged S477, S478, S479, S481, S482) print the staged row as written and propose lane ids S479..S483 BY DOCUMENT (url → id), never by arithmetic; confirm no URL duplicates an existing lane row (grep the url host/path in the lane registry; note S232-S235 and S078/S084/S088/S089 neighbours). (4) List which staged recheck cells are prose and the normalised ISO/cadence replacement for each. Report tables only.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ExecCensusGuard.md"
+      },
+      {
+        "name": "ExecQuoteFinderMan",
+        "agent": "executor",
+        "task": "/skill:godspeed\nExecQuoteFinderMan: Quote inventory for the two man pages. Read the committed copies /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48/xfs_quota.8.html and /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48/quotactl.2.html. With a script that normalises exactly like /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c2.py (tags stripped, html.unescape, whitespace collapsed — import its normalise()), find and VERIFY by substring test 14 candidate quotes of 6-25 words, 7 per page, covering: XFS separates quota accounting from limit enforcement; the `state` command; `quot` is a whole-filesystem scan; report/soft-limit markers and the grace column; ESRCH when quotas are not on; quotactl_fd addressing a filesystem by mount point; Q_GETQUOTA/Q_GETNEXTQUOTA style per-id reads; the EDQUOT/EPERM-style errors if present. For each: the quote, the word count, the located character offset, the claim it supports in one sentence (state only what the quote says). Report a table plus the script.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ExecQuoteFinderMan.md"
+      },
+      {
+        "name": "ExecQuoteFinderErrno",
+        "agent": "executor",
+        "task": "/skill:godspeed\nExecQuoteFinderErrno: Quote inventory for the errno header and the Aliyun NAS page. Read /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48/errno.h and /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48/aliyun-nas-quota.html (the page is Chinese; keep quotes in the original characters). Normalise exactly like /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c2.py (import its normalise()). Find and VERIFY by substring test 8 candidate quotes of 6-25 whitespace-separated words each (for Chinese, a whitespace-separated token counts as a word, so choose spans with spaces or mixed ASCII; report the word count the counter would compute) covering: EDQUOT = 122 and its comment line in errno.h (and the neighbouring ESTALE/EREMOTEIO lines for context); the directory quota page's `Disk quota exceeded` write error; where the quota state is viewed (配额管理); what the page says about enforcement scope. If a Chinese span cannot reach 6 words, say so and give the nearest English-token span. Report a table plus the script.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ExecQuoteFinderErrno.md"
+      },
+      {
+        "name": "ExecS478Recheck",
+        "agent": "executor",
+        "task": "/skill:godspeed\nExecS478Recheck: Handle round-47 routed defect 5. Row S478 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md (IEEE ROMA full text, url ieeexplore.ieee.org/ielx8/4629386/11644734/11540439.pdf): reproduce that a plain curl returns HTTP 418 and a browser User-Agent returns 200 (scratch dir /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-ExecS478Recheck/, delete the PDF after recording its sha256 and page count). Draft the exact replacement text for S478's recheck cell (status/recheck/used-by are the only cells that may change in place; the new cell must stay a valid ISO date, NNd or symbolic cadence — put the User-Agent note in the lesson Gate, not the cell). Also list every lane registry row whose recheck cell is an ISO date earlier than 2026-10-25 (count and ids; command pasted). Report only commands, outputs, the draft cell and the lesson sentence.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ExecS478Recheck.md"
+      },
+      {
+        "name": "ExecAppendSweep",
+        "agent": "executor",
+        "task": "/skill:godspeed\nExecAppendSweep: Sweep the entering tip for unlanded round-47 leftovers and drift in the lane's own gate rows. (1) At /home/vgpnk/Projects/shokunin/mori-shokunin, `git status --porcelain` and `git ls-files --others --exclude-standard` excluding .scratch: list everything (expected: only .ufo/waves/round-48/ and corpus/evidence/sources-r48/). (2) Confirm the three late round-47 reports (w2/CritV2Junk.md, w2/MutV2Rebound.md, w2/ScoutMisroot.md) and w2-results.json are tracked at e5dbac05459887d9597ea5d1da0d8e3d024e0d17: `git ls-tree -r e5dbac05459887d9597ea5d1da0d8e3d024e0d17 --name-only | grep` each. (3) Run `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-sources-appendonly.py e5dbac05459887d9597ea5d1da0d8e3d024e0d17 --repo /home/vgpnk/Projects/shokunin/mori-shokunin --round-base 2d85e33d14198d388fd3cda9cc15ec07e57e7a53` and paste the verdict line. (4) Run the census `/home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori` and paste exit code and last line. Report outputs only.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ExecAppendSweep.md"
+      },
+      {
+        "name": "ExecSkillRowsRun",
+        "agent": "executor",
+        "task": "/skill:godspeed\nExecSkillRowsRun: Execute every SKILL.md registry self-test pin as a plain re-measurement, off the tool: with TMPDIR=/home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-ExecSkillRowsRun, run `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py --rev e5dbac05459887d9597ea5d1da0d8e3d024e0d17 --repo /home/vgpnk/Projects/shokunin/mori-shokunin --min-tally-pins 26 --baseline-rev 2d85e33d14198d388fd3cda9cc15ec07e57e7a53` and paste the full per-pin output and the final line with rc. Then list the 28 tally pins by line number and state which commands print their tally in under 5 seconds versus more (time each distinct command once with `time`). Report a table (line, row name, prefix, pinned, observed, seconds). This is the before-state the v3 rules are measured against.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ExecSkillRowsRun.md"
+      },
+      {
+        "name": "ScribeEntryA",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nScribeEntryA: Draft corpus/knowledge/quota-observability-r48.md in full (inside your report, fenced). First open the four committed copies in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48 yourself (xfs_quota.8.html, quotactl.2.html, errno.h, aliyun-nas-quota.html) and read the staged entry /home/vgpnk/Projects/shokuknow/merge/mori/knowledge/corpus/knowledge/quota-observability-r38.md only after, as a candidate to correct. Shape: opening lines `source:` (one line per source, `S###` ids written as S479, S480, S481, S482 in order xfs_quota, quotactl, errno.h, aliyun — the L1 re-points them by document if rows change), `verified-at: 2026-10-25`, `recheck: 180d — <command> -> <value> (ran 2026-10-25)` lines, `coverage-map: FR2`; then `## Claims` with the table header exactly `| claim | source | quote |`, at least 10 rows, claim cell a one-sentence statement of at most what the quote says, source cell one bare S-id, quote cell one backticked 6-25-word span copied from the normalised copy of that source (normalised = tags stripped, entities decoded, whitespace collapsed; verify every quote by a substring test script you run and paste). Then `## What the lane held before` (grep -cE sweep with the command and number), `## Boundaries` (read-only; Linux-specific; filesystem-specific; Solaris errno 49 rejected), `## Probe shape` and `## Delivery paths this cannot see`. Correct the staged entry where the copies disagree (say where).\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScribeEntryA.md"
+      },
+      {
+        "name": "ScribeEntryB",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nScribeEntryB: Independently draft corpus/knowledge/quota-observability-r48.md (another scribe drafts it too; do not read their output). Open the four committed copies in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48 yourself. Make the claims table the spine: header exactly `| claim | source | quote |`; at least 10 rows balanced across all four sources (S479 xfs_quota.8, S480 quotactl.2, S481 errno.h v7.2, S482 Aliyun NAS directory-quota page); each quote one backticked 6-25-word span that is a substring of the normalised copy (tags stripped, html.unescape, whitespace collapsed) — verify with a script you paste. Prefer claims that a probe author can act on: what separates 'quota off' from 'zero usage', what the failing write looks like, which error number to match on Linux, what a full-filesystem scan costs, where per-id usage is read. Include prose sections Boundaries and Delivery paths this cannot see. Mark any inference [INFERENCE].\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScribeEntryB.md"
+      },
+      {
+        "name": "ScribeRowXfs",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nScribeRowXfs: Draft the lane SOURCES.md row for https://man7.org/linux/man-pages/man8/xfs_quota.8.html as id S479 in the 11-column schema of /home/vgpnk/Projects/shokunin/CORPUS.md §SOURCES.md (id | source | kind | tier | scope | anchor | teaches | status | opened | recheck | used-by; no `|` inside any cell; status `mined`; opened 2026-10-25; recheck `180d`; used-by `corpus/knowledge/quota-observability-r48.md`). Open /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48/xfs_quota.8.html (committed copy, sha256 6375e40e…) AND fetch the live URL yourself with a browser User-Agent; record the access date, the ≤25-word located quote that grounds `teaches`, and the page's revision/date text (the man page footer). Report the row as one line in a fenced block, plus a Gate block (URL, 2026-10-25, quote, location).\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScribeRowXfs.md"
+      },
+      {
+        "name": "ScribeRowQuotactl",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nScribeRowQuotactl: Draft the lane SOURCES.md row for https://man7.org/linux/man-pages/man2/quotactl.2.html as id S480, same schema and rules as the other row scribes (11 columns, no `|` in cells, status `mined`, opened 2026-10-25, recheck `180d`, used-by `corpus/knowledge/quota-observability-r48.md`). Open /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48/quotactl.2.html (committed copy) and fetch the live URL with a browser User-Agent; record page revision text (man-pages release in the footer), a ≤25-word located quote grounding `teaches`, and the access date. Report the row (one line, fenced) and a Gate block.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScribeRowQuotactl.md"
+      },
+      {
+        "name": "ScribeRowErrno",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nScribeRowErrno: Draft the lane SOURCES.md row for https://raw.githubusercontent.com/torvalds/linux/v7.2/include/uapi/asm-generic/errno.h as id S481, kind `code`, tier A, scope `EDQUOT value on Linux (generic ABI)`, anchor with the line number and tag v7.2 (verify the line in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48/errno.h with grep -n and by fetching the live raw URL; note that architectures with their own errno.h — e.g. mips, sparc, alpha — can differ: check by fetching include/uapi/asm-generic only and say that the generic header is the x86-64 value, UNVERIFIED for arch-specific files unless you fetch them). Same 11-column rules (no `|`, status `mined`, opened 2026-10-25, recheck `on-release` or `180d`, used-by `corpus/knowledge/quota-observability-r48.md`). Report the row and a Gate block with a ≤25-word located quote.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScribeRowErrno.md"
+      },
+      {
+        "name": "ScribeRowAliyun",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nScribeRowAliyun: Draft the lane SOURCES.md row for https://help.aliyun.com/zh/nas/user-guide/set-quotas-on-the-subdirectories-of-nas-nfs-volumes as id S482 (kind `docs`, tier A for Alibaba NAS directory quotas only — scope says so; it documents another product's semantics, so `teaches` states that limit). Same schema rules (11 columns, no `|`, status `mined`, opened 2026-10-25, recheck `180d`, used-by `corpus/knowledge/quota-observability-r48.md`). Open /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48/aliyun-nas-quota.html AND fetch the live URL with a browser User-Agent; record the page's own revision/date text, the heading anchor, and a located quote (keep original Chinese; the Gate quote must still be ≤25 words/tokens; give the count rule you used). Report the row and a Gate block.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScribeRowAliyun.md"
+      },
+      {
+        "name": "ScribeLessonGate",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nScribeLessonGate: Draft the `## Gate` and assimilation parts of corpus/lessons/round-48.md (fenced, in your report). Read the lessons /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-47.md (house shape) and /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-47-verifier-spotcheck.md, CORPUS.md in /home/vgpnk/Projects/shokunin, and /home/vgpnk/Projects/shokuknow/merge/mori/MERGE-REPORT.md. Required content: candidates considered (the quota theme's staged entries quota-observability-r38, quota-counter-freshness-r39, quota-id-to-path-r40, quota-id-mapping-files-r41, quota-path-listing-r42 and alarm-latency-model-r39 — read each staged file and its PROVINCE.md / QUALITY.md fit yourself), admitted (the lane entry quota-observability-r48), rejected with reason and flip condition (at least the staged 'exactly …' style or generic items you find; Solaris errno=49; the RHEL 9 Japanese PDF returning HTTP 403 → `unreachable`, not fabrication), the renumber map by document, the three quarantine rows S244/S262/S268 (leave verdict slots `PENDING-L1` only where a scout's verdict is not yet known — say which scout), and a `## Spot-check` placeholder that cites /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-47-verifier-spotcheck.md as the previous outside check. No placeholder may remain in a line other than those named.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScribeLessonGate.md"
+      },
+      {
+        "name": "ScribeMistakes",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nScribeMistakes: Draft `## Mistakes` for corpus/lessons/round-48.md (fenced). Mine from earlier rounds only; each row: class (one of vacuous, survivor, stale-premise, reference-drift, number-drift, scope, attribution, landing, provider) · evidence pointer (path:line or commit) · captured-by (a QUALITY.md criterion number or `none`; check /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/QUALITY.md 115-124 yourself) · fix. Required rows: (M1) round-47 late seat reports left untracked — landing — evidence /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-47-verifier-spotcheck.md §1 and §5.1; (M2) the frozen v1 scorer green on five junk edits — survivor/vacuous — /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-47/evidence/v1-junk/; (M3) v2's five new false-green classes — survivor — /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-47/w2/CritV2Junk.md; then any other mistake you can evidence from /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-47/w2/*.md. A fix counts only once shown able to fail: for each row name the red-before command or say `fix not yet shown able to fail`. Do not invent evidence; open each pointer.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScribeMistakes.md"
+      },
+      {
+        "name": "ScribeQuality",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nScribeQuality: Draft QUALITY.md criteria 125 onward (fenced, in the file's house style — read the last 40 lines of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/QUALITY.md first and match the numbering and the citation form). Candidates: (a) a registry-visibility criterion (a pin can only be calibrated if every table row that names a self-test is visible to the checker — hidden rows count), citing round-47 w2 CritV2Junk FG1/FG5/O1; (b) a junk-variant criterion (a calibration counter ships with named junk edits and honest edits scored together; a tool that rejects everything fails the honest edits), citing corpus/lessons/round-47.md M1-M2; (c) a host-path portability criterion from considerthese/2026-10-25.md suggestion 2 (instruments carry no absolute host path; the count command is part of the criterion); (d) a quote-located criterion (a depth entry's claims table carries a located quote per row, and the counter proves location, not entailment). Each criterion cites the lesson `corpus/lessons/round-48.md` and a section/row there (the lesson is drafted by other seats: cite it by the Mistakes row id M1.. or the Gate block name you expect, and flag the pointer for the L1 to resolve). Add 'supersedes' only when it names an existing row.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScribeQuality.md"
+      },
+      {
+        "name": "ScribeScorecard",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nScribeScorecard: Draft the SCORECARD.md `## Round 48` section declaration (fenced) in the style of the `## Round 47` section at the end of /home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md: entering tip e5dbac05459887d9597ea5d1da0d8e3d024e0d17, freeze hash 4387cf94b69ddce455051a1ff38e93795c2e6cde, scores entering (coverage 6, operability 7, depth 5, freshness 5, calibration 5, adjacency 6), both claims with counting command, before value from the receipts under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/evidence/ (read them; quote the real lines), After column written as `to be measured at the landed tip` ONLY (the L1 fills it), capabilities row text for count-c1.py's junk-variant counter and for mori-pin-check v3 and mori-unlanded-check (state `enters only after the landed run demonstrates it`), and the Planned (round 49) paragraph (one sentence per candidate claim, drawn from open limits). No score change is claimed by the lane.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScribeScorecard.md"
+      },
+      {
+        "name": "ScribeLogErratum",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nScribeLogErratum: Draft the LOG.md `## Round 48` entry head and an erratum for round 47 (fenced). Read the tail of /home/vgpnk/Projects/shokunin/mori-shokunin/LOG.md for the house shape. The erratum names the round-47 late files (w2/CritV2Junk.md, w2/MutV2Rebound.md, w2/ScoutMisroot.md, w2-results.json) that the round-47 report said were not yet returned, states that they were committed in 356fb94a, and records the closure's routed defects 1-5 each with this round's disposition (fixed by <what>, carried, or declined with reason) — read /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-47-verifier-spotcheck.md §5. The entry head carries the claims, the freeze hash 4387cf94b69ddce455051a1ff38e93795c2e6cde, the assimilation theme and the considerthese item, and `Evidence:` pointers to /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/. Leave result lines out (the L1 appends them after the landed run).\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScribeLogErratum.md"
+      },
+      {
+        "name": "ScribeReadmeFR2",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nScribeReadmeFR2: Draft the corpus/README.md additions (fenced): a `## Round-48 coverage additions` block in the house shape of `## Round-47 coverage additions` (read it at the end of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/README.md) — one coverage-map row for the quota entry with its FR2 ground, and the FR2 Frontier table update as a SUPERSEDING sentence (the Frontier table row text is only appended to by a dated note, never rewritten: draft the dated note). State what is held (user-space reporting and error surface of filesystem quotas, documented) and what stays frontier (a live per-id quota probe is not built; this host's own filesystem and any quota state are unread — verify read-only that `quota`/`repquota`/`xfs_quota` binaries exist or not with `command -v`, and report that without running any quota command).\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScribeReadmeFR2.md"
+      },
+      {
+        "name": "ScribeSkillRows",
+        "agent": "scribe",
+        "task": "/skill:godspeed\nScribeSkillRows: Draft the SKILL.md additions (fenced): a `## Round48` section in the style of `## Round47` at the end of /home/vgpnk/Projects/shokunin/mori-shokunin/SKILL.md with (1) a short prose block naming the C1 counter, v3 rules R1-R8 of /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/v3-spec.md and the unlanded check, (2) gate-table rows (same eight columns as the Round47 table, header cell `self-test`) for `tools/mori-pin-check.py` v3 (replacing the pin text of the existing r47 row as a NEW row named `registry pin reconciler v3 (r48, C1)` that supersedes — do not delete the old row; use placeholders only in the pin tally, written `PIN_CHECK_SELFTEST pass=<N> fail=0` for the L1 to fill), the C1 counter /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py (`C1_SELFTEST pass=34 fail=0` is real — verify by running it), the C2 counter /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c2.py (`C2_SELFTEST pass=22 fail=0` is real — verify), and the unlanded check (tally from the executor's candidate when known; else `<N>`), and (3) a decision-table row for FR2 quota observability pointing at the entry. Note: the registry pin checker reads these rows, so every `--selftest` pin must be real when the L1 lands it.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScribeSkillRows.md"
+      },
+      {
+        "name": "ScoutStagedQuota",
+        "agent": "scout",
+        "task": "/skill:godspeed\nScoutStagedQuota: Read all quota staged entries in /home/vgpnk/Projects/shokuknow/merge/mori/knowledge/corpus/knowledge/: quota-observability-r38.md, quota-counter-freshness-r39.md, quota-id-to-path-r40.md, quota-id-mapping-files-r41.md, quota-path-listing-r42.md, plus alarm-latency-model-r39.md, and their rows in /home/vgpnk/Projects/shokuknow/merge/mori/SOURCES.append.md. For each: the claim, its `source:` rows, whether the cited page supports it (open the URL or the committed copy under /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48 where it exists; quote the located words), PROVINCE fit (/home/vgpnk/Projects/shokunin/mori-shokunin/PROVINCE.md: detection/report only; refuses OS state→tsukuroi, dispatch→kumitate, endpoint health→kama), QUALITY fit (/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/QUALITY.md), and a recommended admit/reject with reason and flip condition. At least one reject must be grounded in something you checked, not in taste. Report a table.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScoutStagedQuota.md"
+      },
+      {
+        "name": "ScoutQuarantineS244",
+        "agent": "scout",
+        "task": "/skill:godspeed\nScoutQuarantineS244: Hand-check quarantine row S244 (the register /home/vgpnk/Projects/shokuknow/.ufo/waves/corpus-expansion-1/absent-defect-register.md marks mori S244 'the cited source could not be fetched, so no quote was checked'). Read the staged row for S244 in /home/vgpnk/Projects/shokuknow/merge/mori/SOURCES.append.md AND the lane's own row with that id in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md if present (state which exists and whether they are the same document — ids collide). Fetch the cited source yourself (browser User-Agent if plain curl is refused), locate the staged quote or one grounding the row's teaches, and give a verdict: PRESENT (adopt with the anchor you located), ABSENT (fabrication class — quote the nearest real text), or UNVERIFIABLE (fetch refused after 3 distinct attempts, commands pasted; `unreachable` is not fabrication). Report the verdict line first, then evidence.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScoutQuarantineS244.md"
+      },
+      {
+        "name": "ScoutQuarantineS262",
+        "agent": "scout",
+        "task": "/skill:godspeed\nScoutQuarantineS262: Hand-check quarantine row S262 (register: mori S262 'the cited source could not be fetched, so no quote was checked'). The lane already holds S262 as the ROMA abstract record (round 47 note). Read the staged S262 in /home/vgpnk/Projects/shokuknow/merge/mori/SOURCES.append.md and the lane row S262 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md, say whether they point at the same document, fetch the cited source yourself (browser User-Agent if plain curl is refused; IEEE hosts answer 418 to a plain UA), locate a quote, and give a verdict: PRESENT, ABSENT or UNVERIFIABLE with commands pasted. Verdict line first, then evidence.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScoutQuarantineS262.md"
+      },
+      {
+        "name": "ScoutQuarantineS268",
+        "agent": "scout",
+        "task": "/skill:godspeed\nScoutQuarantineS268: Hand-check quarantine row S268 (register: mori S268 'the cited source could not be fetched, so no quote was checked'). Read staged S268 in /home/vgpnk/Projects/shokuknow/merge/mori/SOURCES.append.md and lane row S268 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md, say whether they are the same document, fetch the cited source yourself (browser User-Agent if plain curl is refused), locate a quote and give a verdict: PRESENT, ABSENT or UNVERIFIABLE with commands pasted. Verdict line first, then evidence.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScoutQuarantineS268.md"
+      },
+      {
+        "name": "ScoutConsiderthese",
+        "agent": "scout",
+        "task": "/skill:godspeed\nScoutConsiderthese: Read /home/vgpnk/Projects/shokunin/mori-shokunin/considerthese/2026-10-25.md and the earlier files in /home/vgpnk/Projects/shokunin/mori-shokunin/considerthese/. List every suggestion across files with its state: implemented (name the commit, tool or QUALITY row that implemented it — grep /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/QUALITY.md, /home/vgpnk/Projects/shokunin/mori-shokunin/tools/, /home/vgpnk/Projects/shokunin/mori-shokunin/LOG.md), or still unimplemented. Pick the one unimplemented proposal that best fits an observability lane and cheaply verifies (the L1 has chosen suggestion 2 of 2026-10-25; say whether you agree and what the next unimplemented one is, so the next round has it). Report a table with sweep commands pasted.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScoutConsiderthese.md"
+      },
+      {
+        "name": "ScoutQuotaHost",
+        "agent": "scout",
+        "task": "/skill:godspeed\nScoutQuotaHost: Host facts for the FR2 entry's boundary, read-only. Report: the filesystem types under the fleet root and /tmp (`findmnt -T <path> -o TARGET,FSTYPE,OPTIONS`), whether quota options appear in the mount options (usrquota/grpquota/prjquota/quota), `command -v quota repquota xfs_quota quotactl btrfs` (do NOT run any of them with subcommands that read or change quota state; `--version` is allowed), and for btrfs whether `sudo -n btrfs qgroup show` is available — ONLY `ls`/`cat` style reads are permitted by the wave rules, so do not run it; say 'not run' and why. Also grep the lane's tools for the string 'EDQUOT' and 'Disk quota exceeded' (/home/vgpnk/Projects/shokunin/mori-shokunin/tools, /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/audit-r11.md, observability-surfaces-r2.md) and report the lines. Facts only, with commands.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ScoutQuotaHost.md"
+      },
+      {
+        "name": "ConnSiblings",
+        "agent": "connector",
+        "task": "/skill:godspeed\nConnSiblings: Sibling-overlap scan for the FR2 quota entry and the pin-check tool. Search the sibling lane repos under /home/vgpnk/Projects/shokunin/*-shokunin (read-only; skip .scratch and .ufo/waves) for quota ownership: `grep -rliE 'xfs_quota|quotactl|EDQUOT|repquota|Disk quota exceeded' */corpus */SKILL.md */PROVINCE.md` with the command pasted. For each hit say which lane's PROVINCE owns it and whether the mori entry would duplicate or contradict it. Also scan for sibling tools that re-measure SKILL.md self-test pins (grep -l 'self-test' */tools/*), and say whether any sibling already holds a pin reconciler mori's v3 would duplicate. Report contested scope as report-not-absorb.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ConnSiblings.md"
+      },
+      {
+        "name": "ConnCrossClaim",
+        "agent": "connector",
+        "task": "/skill:godspeed\nConnCrossClaim: Cross-claim pattern finding. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/contract.md, /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c2.py (docstrings and structure), plus /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-47.md. Find patterns that connect C1 and C2: both are counters that must resist junk; list the junk class each shares (a located-quote counter and a pin-check counter both accept shape without entailment), and propose the single QUALITY.md sentence that states the shared principle, citing the specific lines in each counter. Also find any way a seat could satisfy one counter by editing the other claim's surface (a separability breach). Report findings with line pointers.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/ConnCrossClaim.md"
+      },
+      {
+        "name": "CritC1Counter",
+        "agent": "critic",
+        "task": "/skill:godspeed\nCritC1Counter: Attack /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py. Look for a way the counter can print C1=met while the tool is still foolable, or print unmet for a good tool: (a) variants that are not really junk or honest, (b) a tool that passes by special-casing (e.g. rejecting any row containing a non-ASCII char, a pipe, a fence — find the cheapest such tool and score it with the counter in /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-CritC1Counter/; if it prints C1=met the counter is too weak — say which honest variant to add), (c) setup/timeout/error handling, (d) races in the thread pool or shared scratch. Report each finding as: class, reproducer, observed output, smallest counter change. Do NOT edit the counter.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/CritC1Counter.md"
+      },
+      {
+        "name": "CritC2Counter",
+        "agent": "critic",
+        "task": "/skill:godspeed\nCritC2Counter: Attack /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c2.py. Build in /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-CritC2Counter/ the cheapest junk entry that prints C2=met without real depth work (e.g. 8 trivial 6-word quotes from boilerplate in the copies, table rows that say nothing, copy-pasted quotes spanning cells, a quote located only in tags/script text that the normaliser keeps) and score it with the counter by building an in-memory repo reader as the counter's selftest does (import the module; reuse its COPIES and evaluate()). Report each junk entry class, whether it printed met, and the smallest counter or predicate change that kills it. Do NOT edit the counter.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/CritC2Counter.md"
+      },
+      {
+        "name": "CritContractFreeze",
+        "agent": "critic",
+        "task": "/skill:godspeed\nCritContractFreeze: Attack /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/contract.md against /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py, /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c2.py and the receipts in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/evidence/ and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/controls/. Check that every sentence in P-C1 and P-C2 is the same condition as the counter's code and the receipt labels; that the claimed before-values equal the receipts (open each); that the controls really skip the claimed work and are unmet; that the claims are causally separable; and that the named limits are honest. Quote the contract line and the code line for every discrepancy. Report discrepancies as freeze defects (they must be fixed before data, so be exact).\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/CritContractFreeze.md"
+      },
+      {
+        "name": "CritV3Spec",
+        "agent": "critic",
+        "task": "/skill:godspeed\nCritV3Spec: Attack /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/v3-spec.md before anyone scores against it: contradictions between rules (R2 hidden rows vs R1 header recognition; R4 rebound by prefix vs honest new rows; R5 binding vs rows with two paths), rules that would turn the real registry red for honest reasons (test on /home/vgpnk/Projects/shokunin/mori-shokunin/SKILL.md at e5dbac05459887d9597ea5d1da0d8e3d024e0d17 with a scratch script that implements just the rule), and junk classes the eight rules still miss (give three concrete new junk edits as unified diffs against e5dbac05459887d9597ea5d1da0d8e3d024e0d17's SKILL.md). Report the contradictions and the three junk edits.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/CritV3Spec.md"
+      },
+      {
+        "name": "RevC1Counter",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nRevC1Counter: Review /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py line by line for correctness: variant edit functions (do they edit what the docstring says? do J5/J6/J1 really keep the file parseable by v2?), verdict(), the pool, exit codes, selftest arms (kill each arm by mutating the line it guards in a scratch copy under /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-RevC1Counter/ and show the FAIL). Report defects with line numbers and a severity.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/RevC1Counter.md"
+      },
+      {
+        "name": "RevC2Counter",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nRevC2Counter: Review /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c2.py line by line: normalise() vs how the copies are really laid out (script/style text, <br>, entities, soft hyphens), the parse_claims() table parser (fences, blank lines, second tables), row validation order, the `used-by` split, the 0-3-space row rule, and the 22 selftest arms (mutate each guarded line in a scratch copy under /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-RevC2Counter/ and show which arm fails). Report defects with line numbers and a severity.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/RevC2Counter.md"
+      },
+      {
+        "name": "RevAssimPlan",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nRevAssimPlan: Review the assimilation plan, not the entry: read /home/vgpnk/Projects/shokuknow/merge/mori/MERGE-REPORT.md, /home/vgpnk/Projects/shokuknow/merge/mori/SOURCES.append.md rows for the quota theme and the round prompt's assimilation contract at /home/vgpnk/Projects/shokunin/.ufo/prompts/mori-round-48.md §10 (lines 440-545). Check each rule against the plan: 1 theme, 1-3 entries, re-open every source, ≥1 admit and ≥1 reject recorded in `## Gate`, id collision check with the 0-3-space pattern, schema normalisation (11 columns, ISO recheck, no `|`), quarantine rows not appended, `doctrine/` not material. List any rule the plan as stated in /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/contract.md would break, with the line.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/RevAssimPlan.md"
+      },
+      {
+        "name": "MutC1Counter",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\nMutC1Counter: Mutation-test the C1 counter's decision logic: in scratch copies of /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py under /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-MutC1Counter/, apply 8 single-point mutations (e.g. treat error as unmet, drop the `real` conjunct, count only J1-J4, flip the exit-code/status consistency check, skip honest_unmet, change MIN_TALLY, accept timeout) and run `--selftest` on each. A mutant is killed iff selftest exits non-zero. Report a table mutation → killed/survived → killing arm, and the arm text to add for each survivor.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/MutC1Counter.md"
+      },
+      {
+        "name": "MutC2Counter",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\nMutC2Counter: Mutation-test /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c2.py: in scratch copies under /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-MutC2Counter/, apply 10 single-point mutations (drop the opened-date check, drop used-by, drop the unique-quote check, drop the sources floor, MIN_WORDS to 1, MAX_WORDS to 99, drop the pin check, accept other-copy locations, accept status queued, drop the claim-cell word floor) and run `--selftest` on each. A mutant is killed iff selftest exits non-zero. Report mutation → killed/survived → killing arm, and the arm text to add for each survivor.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/MutC2Counter.md"
+      },
+      {
+        "name": "MutC1Variants",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\nMutC1Variants: Mutation-test the v2 tool (/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py) against the C1 variants as a detector of detector weakness: in scratch copies under /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-MutC1Variants/, apply 6 single-point weakenings of v2 that a v3 author might make by accident (drop the `dropped` rule, drop `rebound`, drop `unparsed`, drop fence skipping, relax exact match to startswith, drop duplicate-name) and run each mutated tool through `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py --tool <mutant> --rev e5dbac05459887d9597ea5d1da0d8e3d024e0d17` (several minutes each; run up to 3 in the background). Report which variants flip for each weakening — i.e. whether the counter's honest/junk set would notice an accidental regression of v2's own rules — and name any v2 rule no variant exercises.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/MutC1Variants.md"
+      },
+      {
+        "name": "CritJunkClasses",
+        "agent": "critic",
+        "task": "/skill:godspeed\nCritJunkClasses: Find NEW false-green classes against v2 and against the frozen junk set. Work in /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-CritJunkClasses/ with a copy of v2 (/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py) and scratch variants of /home/vgpnk/Projects/shokunin/mori-shokunin/SKILL.md at e5dbac05459887d9597ea5d1da0d8e3d024e0d17. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-47/w2/CritV2Junk.md first: do NOT repeat FG1-FG5/O1/N1-N4. Produce 8 new edits that keep `PIN_CHECK=met` under v2 yet make SKILL.md's self-assessment false (examples to start from: a pinned sha256 of a different file with the right path elsewhere in the row, a tally on a second line of the self-test cell, a second table with the header spelled `Self-test results`, a tilde fence, a row whose self-test cell is empty, a command that prints the pinned text unconditionally via `echo` inside a committed tools/ script). For each: the unified diff, the v2 output line, and whether each v3 rule R1-R8 of /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/v3-spec.md would catch it. These feed wave 2.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/CritJunkClasses.md"
+      },
+      {
+        "name": "RevPromptHonesty",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\nRevPromptHonesty: Read the round prompt /home/vgpnk/Projects/shokunin/.ufo/prompts/mori-round-48.md sections 2, 2b and 4 and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/contract.md. Check conformance of the plan to the round contract: 1-3 claims on distinct axes with a lowest-axis claim, controls built and scored before data, Frontier step items (census before/after, one mined mistake, ≥1 sourced claim citing a row opened this round), report sections and the SHONEN rule. List each requirement as satisfied-by-plan, satisfied-only-when-done (name the later step), or missing, with the contract line.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/RevPromptHonesty.md"
+      },
+      {
+        "name": "SentCopies",
+        "agent": "sentinel",
+        "task": "/skill:godspeed\nSentCopies: Security and hygiene review of the committed source copies in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48: scan for credential material, tokens, cookies, session ids, private URLs or `op://` references (regex and manual), embedded scripts that would execute if the HTML were opened, and absolute host paths. Verify the sha256 of each file against /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c2.py's COPIES pins and report. Also check that no file is over 1 MiB (the lane helper skips larger files in directory commits). Report findings with offsets; if clean, say what you scanned and the commands.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/SentCopies.md"
+      },
+      {
+        "name": "SimpCounters",
+        "agent": "simplifier",
+        "task": "/skill:godspeed\nSimpCounters: Find dead weight in the two frozen counters /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c2.py without changing their behaviour: unused imports/helpers, the no-op `text = text.replace(...)` in the C1 selftest, duplicated normalisation, dead branches. Prove each proposed deletion on a scratch copy under /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48-SimpCounters/ (selftest tallies unchanged, a real run gives identical output). The counters are frozen, so these are proposals for the next round's successor, not edits. Report the diff and the proof.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/SimpCounters.md"
+      },
+      {
+        "name": "CritEntryRisk",
+        "agent": "critic",
+        "task": "/skill:godspeed\nCritEntryRisk: Pre-attack the C2 predicate's blind spot: a quote can be located in the copy while the claim cell says something the quote does not. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c2.py and the staged entry /home/vgpnk/Projects/shokuknow/merge/mori/knowledge/corpus/knowledge/quota-observability-r38.md. Design six claim/quote pairs, built only from the four committed copies in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48, that the counter would score as located and met but that a careful reader rejects (claim stronger than the quote, quote from a different context such as a negation or an example, a claim about another filesystem, a Linux claim from a Solaris/other-product page, a number taken from a comment). For each: the pair, why it passes the counter, and a one-line reviewer check that would reject it. This becomes the wave-2 reviewer checklist for the entry; do not edit the counter.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-48/w1/CritEntryRisk.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}

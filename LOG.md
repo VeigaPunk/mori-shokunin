@@ -2685,3 +2685,38 @@ copies under `corpus/evidence/sources-r47/`). Before: `PIN_CHECK=unmet … misma
 - Wave 1: 42 seats, 41 reports on disk (MutPinSemanticCell's output was not written; that seat also edited the tracked
   tool, restored by the orchestrator — lesson M4). Round-46 `.scratch/` debris `MutMissing/ MutStaleC1/ MutStaleC2/`
   removed (untracked; routed defect 3).
+
+### Erratum to the round-47 entry above (append-only, 2026-10-25, round 48)
+
+The round-47 report and this entry said three late seats (`CritV2Junk`, `MutV2Rebound`, `ScoutMisroot`) had not returned.
+Their reports and `w2-results.json` were committed in `356fb94a`, after the report. The non-author closure
+(`corpus/lessons/round-47-verifier-spotcheck.md` §5) routed five defects; dispositions in round 48: (1) the late files are
+tracked (`356fb94a`) and `tools/mori-unlanded-check.py` now lists uncommitted round work before a report is filed;
+(2) a report filed after the driver's `complete` line — carried, this round files after its last wave settles;
+(3) the lane's own routes — successor `count-c2` shape realised in `.ufo/waves/round-48/count-c2.py`, symlink / argv /
+case-insensitive selftest arms and line-count / truncated-digest pins realised in `tools/mori-pin-check.py` v3;
+(4) the lesson cites the closure file; (5) S478's browser-User-Agent note is in `corpus/lessons/round-48.md` Gate.
+
+## Round 48 (L1 MoriR48; C1 calibration, C2 depth)
+
+Entering `e5dbac05`; froze at `4387cf94` (contract P-C1/P-C2, `count-c1.py`, `count-c2.py`, controls, the four quota source
+copies). Before: the entering v2 pin check scored `C1=unmet junk_met=8` (green on all eight junk edits) and
+`C2=unmet … entry_absent,pins`.
+
+- **C1:** `tools/mori-pin-check.py` is v3: header spelling, hidden rows, ASCII-strict prefixes, rebinding by prefix,
+  line-count pins, truncated digests (R1–R8), and after the wave-1 critic `CritJunkClasses`: tallies in other cells or on
+  continuation lines are `hidden`, a tally outside backticks is `unparsed`, a digest binds to the nearest preceding path
+  of its own cell (R9/R10). The counter `count-c1.py` scores eight junk and four honest edits plus the real registry.
+  v3 found a stale pin: `SKILL.md:168` held the r14 harness as sha256 `c39e5a73…`, which no file in the tree carries;
+  repaired to the current `533218a5…`. Known survivor: a row that names instrument A and runs instrument B (D7).
+- **C2:** `corpus/knowledge/quota-observability-r48.md` — 15 claim rows, each a located quote over four committed
+  copies: the XFS accounting/enforcement split, the `quot` scan cost, `ESRCH` = quotas off, `quotactl_fd`, `EDQUOT`
+  = 122 in the generic ABI and 1133 (MIPS) / 69 (SPARC) elsewhere, the vendor's failing write. Rows S479–S484.
+- Assimilation (FR2 theme): staged `quota-observability-r38` admitted as the new entry; staged r39/r40/r41/r42 quota
+  entries and `alarm-latency-model-r39` refused with reasons (12-cell rows, dangling references, a quote drift); the
+  RHEL 9 PDF refused as unreachable at the freeze; quarantine rows S244/S262/S268 hand-checked, all PRESENT, none
+  appended. considerthese 2026-10-25 suggestion 2 → QUALITY 127.
+- Mistakes mined (`corpus/lessons/round-48.md`): M1 landing → `tools/mori-unlanded-check.py`; M2/M3 survivors → v3;
+  M4 a stale truncated pin; M5 a seat editing the tracked tool again; M6 eight wave-1 results carrying other lanes'
+  output; M7 a wrong negative claim about a copy.
+- Wave 1: 49 seats, 39 reports on disk.

@@ -14,6 +14,24 @@ short row naming `selftest` in any case is unparsed, and digest paths stay
 inside the measured tree. The round-47 claim P-C1 is scored with the frozen
 v1 bytes; v2 is the lane's standing tool.
 
+v3 (round 48, wave w1): adds, per the v3-spec R1-R8: case-insensitive
+header recognition (`self-test` | `selftest` | `self test`); hidden-row
+accounting (a row-shaped line outside a parsed self-test table — including
+inside fences — carrying an ASCII `[A-Z][A-Z0-9_]*SELFTEST` token or the text
+`--selftest` is `hidden`, fatal); ASCII-strict span checks (a span whose first
+token is non-ASCII, or whose first token casefolds to a tally-prefix shape, or
+that carries an ASCII tally token not at its start, is `unparsed`); rebound by
+instrument prefix (a row using a baseline prefix with an argv outside that
+prefix's baseline set); line-count pins (`(\\d+) lines` binds to the nearest
+preceding path in the same cell that resolves inside the tree); truncated-digest
+pins (`hex{8,63}…` must prefix the sha256 of that same nearest preceding in-tree
+path); setup failures exit 2 with one line, never a traceback. Also, after the
+wave-1 critic `CritJunkClasses`: full digests bind to the nearest preceding
+in-tree path of their own cell (R10, a decoy file named elsewhere in the row no
+longer matches); a tally-looking token in another cell of a parsed row, or on a
+continuation line directly under a row, is `hidden` (R9a/R9b); a tally written
+outside backticks in a self-test cell is `unparsed` (R9c).
+
 What it reads
   Every Markdown table in SKILL.md whose header row has a cell named
   `self-test`. Cells are split on unescaped `|`; a data row whose cell count
@@ -77,6 +95,7 @@ import subprocess
 import sys
 import tarfile
 import tempfile
+import unicodedata
 
 TIMEOUT_S = 600
 HEX_RE = re.compile(r"(?<![0-9a-f])[0-9a-f]{64}(?![0-9a-f])")
@@ -90,6 +109,16 @@ INTERPRETERS = ("python3", "python", "bash", "sh")
 # revision and `--selftest`.
 SAFE_PATH = re.compile(r"(?:tools|\.ufo/waves/round-[0-9]+)/[A-Za-z0-9_./-]+\.(?:py|sh)")
 PY_FLAGS = ("-I", "-B")
+
+HEADER_CELLS = ("self-test", "selftest", "self test")
+HIDDEN_TOKEN_RE = re.compile(r"[A-Z][A-Z0-9_]*SELFTEST")
+TRUNC_DIGEST_RE = re.compile(r"[0-9a-f]{8,63}\u2026")
+TALLY_PIN_RE = re.compile(r"([A-Z][A-Z0-9_]*SELFTEST)(.*)$", re.S)
+PINLIKE_T0_RE = re.compile(r"[A-Z][A-Z0-9_]*SELFTEST", re.I)
+LINE_COUNT_RE = re.compile(r"(\d+) lines")
+
+
+TALLY_TEXT_RE = re.compile(r"[A-Z][A-Z0-9_]*SELFTEST[:=]?\s*(?:pass=\d+|PASS)")
 
 
 def argv_ok(argv, rev):
@@ -109,14 +138,29 @@ def argv_ok(argv, rev):
 
 
 def split_cells(line):
+    """Split a GFM table row on unescaped `|`: a pipe is a separator unless an odd number of
+    backslashes precedes it (`\\|` stays in the cell; `\\\\|` is a literal backslash and a
+    real separator — v2's one-character lookbehind mis-split such rows, round-47 L2)."""
     s = line.strip()
     if not s.startswith("|"):
         return None
-    parts = re.split(r"(?<!\\)\|", s)
-    if s.endswith("|") and not s.endswith("\\|"):
-        parts = parts[1:-1]
-    else:
+    parts, cur = [], []
+    for i, c in enumerate(s):
+        if c == "|":
+            j, bs = i - 1, 0
+            while j >= 0 and s[j] == "\\":
+                bs += 1
+                j -= 1
+            if bs % 2 == 0:
+                parts.append("".join(cur))
+                cur = []
+                continue
+        cur.append(c)
+    parts.append("".join(cur))
+    if parts and parts[0] == "":
         parts = parts[1:]
+    if parts and parts[-1] == "":
+        parts = parts[:-1]
     return [p.strip() for p in parts]
 
 
@@ -124,42 +168,158 @@ def is_separator(cells):
     return all(re.fullmatch(r":?-{3,}:?", c or "") for c in cells) if cells else False
 
 
-def parse_registry(text):
-    """Rows of every self-test table: line, cells, header, idx (self-test),
-    eidx (entry), state ('ok'|'unparsed'). Lines inside ``` / ~~~ fences are
-    ignored, and a row followed by a separator row starts a new table."""
-    rows = []
-    header = None
-    idx = eidx = None
-    fence = None
+def scan_lines(text):
+    """Classify every line of SKILL.md — one tokenizer pass shared by header
+    recognition (R1), row parsing and hidden-row accounting (R2).
+
+    Kinds: fence_open/fence_close/fence_body (inside ``` / ~~~ blocks),
+    header (row with a recognised self-test header cell), separator,
+    row (data row of a parsed self-test table), candidate (row-shaped
+    line outside any parsed self-test table), other."""
     lines = text.split("\n")
+    header = None
+    fence = None
     for n, line in enumerate(lines, 1):
         mark = line.lstrip()[:3]
         if mark in ("```", "~~~"):
-            fence = None if fence == mark else (fence or mark)
-            header = None
+            if fence == mark:
+                fence = None
+                header = None
+                yield n, "fence_close", {"raw": line}
+            else:
+                fence = fence or mark
+                yield n, "fence_open", {"raw": line}
             continue
         if fence:
+            yield n, "fence_body", {"raw": line}
             continue
         cells = split_cells(line)
         if cells is None:
             header = None
+            yield n, "other", {"raw": line}
             continue
         low = [c.lower() for c in cells]
-        if "self-test" in low:
-            header, idx = cells, low.index("self-test")
+        if any(c in HEADER_CELLS for c in low):
+            idx = next(i for i, c in enumerate(low) if c in HEADER_CELLS)
             eidx = low.index("entry") if "entry" in low else 2
+            header = (cells, idx, eidx)
+            yield n, "header", {"raw": line, "cells": cells, "idx": idx,
+                                 "eidx": eidx}
             continue
-        if header is None or is_separator(cells):
+        if header is None:
+            yield n, "candidate", {"raw": line, "cells": cells}
+            continue
+        if is_separator(cells):
+            yield n, "separator", {"raw": line, "cells": cells}
             continue
         nxt = split_cells(lines[n]) if n < len(lines) else None
         if nxt is not None and is_separator(nxt):
-            header = None  # another table's header row
+            header = None
+            yield n, "candidate", {"raw": line, "cells": cells}
             continue
-        state = "ok" if len(cells) == len(header) else "unparsed"
-        rows.append({"line": n, "cells": cells, "header": header, "idx": idx,
-                     "eidx": eidx, "state": state, "raw": line})
+        yield n, "row", {"raw": line, "cells": cells, "header": header[0],
+                         "idx": header[1], "eidx": header[2]}
+
+
+def parse_registry(text):
+    """Rows of every self-test table: line, cells, header, idx (self-test),
+    eidx (entry), state ('ok'|'unparsed'). Built from scan_lines; lines inside
+    ``` / ~~~ fences are ignored, and a row followed by a separator row starts
+    a new table."""
+    rows = []
+    for n, kind, payload in scan_lines(text):
+        if kind != "row":
+            continue
+        state = "ok" if len(payload["cells"]) == len(payload["header"]) else "unparsed"
+        rows.append({"line": n, "cells": payload["cells"], "header": payload["header"],
+                     "idx": payload["idx"], "eidx": payload["eidx"], "state": state,
+                     "raw": payload["raw"]})
     return rows
+
+
+def hidden_rows(text):
+    """R2 + R9: pins that a checker would not see are `hidden` (fatal):
+    (R2) row-shaped lines (up to three leading spaces, then `|`) outside a parsed
+    self-test table — including lines inside fences — carrying an ASCII
+    `[A-Z][A-Z0-9_]*SELFTEST` token or the text `--selftest`;
+    (R9a, CritJunkClasses D5) a tally-looking token in a cell of a parsed row other
+    than its self-test cell;
+    (R9b, D2) a continuation line, directly under a table row and not itself a row,
+    carrying a tally-looking token or `--selftest`."""
+    found = []
+    prev_raw = ""
+    for n, kind, payload in scan_lines(text):
+        raw = payload["raw"]
+        row_shaped = bool(re.match(r"^ {0,3}\|", raw))
+        if kind in ("candidate", "fence_body") and row_shaped:
+            if HIDDEN_TOKEN_RE.search(raw) or "--selftest" in raw:
+                found.append((n, raw))
+        elif kind == "row" and len(payload["cells"]) == len(payload["header"]):
+            for ci, c in enumerate(payload["cells"]):
+                if ci != payload["idx"] and TALLY_TEXT_RE.search(c):
+                    found.append((n, raw))
+                    break
+        elif kind == "other" and re.match(r"^ {0,3}\|", prev_raw):
+            if TALLY_TEXT_RE.search(raw) or "--selftest" in raw:
+                found.append((n, raw))
+        prev_raw = raw
+    return found
+
+
+def inside_tree(root, path):
+    rel = os.path.normpath(path)
+    if os.path.isabs(rel) or rel == ".." or rel.startswith(".." + os.sep):
+        return False
+    fp = os.path.join(root, rel)
+    return (os.path.realpath(fp).startswith(os.path.realpath(root) + os.sep)
+            and os.path.isfile(fp))
+
+
+def span_kind(span, cells, rev, eidx):
+    """Classify one backticked span of a self-test cell (R3, R7 L4):
+    ('tally'|'digest'|'trunc'|'command'|'unparsed'/reason|'ignore')."""
+    if HEX_RE.search(span):
+        return "digest", None
+    if TRUNC_DIGEST_RE.search(span):
+        return "trunc", None
+    if TALLY_PIN_RE.match(span):
+        return "tally", None
+    if command_from_span(span, cells, rev, eidx) is not None:
+        return "command", None
+    tok0 = span.split()[0] if span.split() else ""
+    if any(ord(c) > 127 for c in tok0):
+        return "unparsed", "non-ascii-token"
+    if PINLIKE_T0_RE.fullmatch(unicodedata.normalize("NFKC", tok0)):
+        return "unparsed", "casefold-selftest-prefix"
+    if HIDDEN_TOKEN_RE.search(span):
+        return "unparsed", "token-not-at-span-start"
+    return "ignore", None
+
+
+def _nearest_in_tree_path(prefix, root):
+    for pm in reversed(list(PATH_RE.finditer(prefix))):
+        if inside_tree(root, pm.group(0)):
+            return pm.group(0)
+    return None
+
+
+def line_count_pins(st, root):
+    """R5: `(\\d+) lines` binds to the nearest preceding path in the same cell
+    that resolves to an in-tree file; returns [(num, relpath_or_None)]."""
+    return [(int(m.group(1)), _nearest_in_tree_path(st[:m.start()], root))
+            for m in LINE_COUNT_RE.finditer(st)]
+
+
+def trunc_digest_pins(st, raw, root):
+    """R6/R10: `[0-9a-f]{8,63}…` must be a prefix of the sha256 of the nearest
+    preceding in-tree path of the same cell; returns [(prefix, relpath|None)]."""
+    pins = []
+    for m in TRUNC_DIGEST_RE.finditer(st):
+        pfx = m.group(0)[:-1]
+        p = _nearest_in_tree_path(st[:m.start()], root)
+        hit = p if p is not None and sha256_file(os.path.join(root, p)).startswith(pfx) else None
+        pins.append((pfx, hit))
+    return pins
 
 
 def command_from_span(span, cells, rev, eidx=2):
@@ -293,8 +453,9 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None):
     out = []
     counts = {"tally_pins": 0, "digest_pins": 0, "mismatches": 0,
               "unparsed": 0, "no_command": 0, "dropped": 0, "rebound": 0,
-              "duplicate": 0}
+              "duplicate": 0, "hidden": 0}
     base_bind = {}
+    base_bind_prefix = {}
     if baseline_text is not None:
         now = pin_keys(text)
         for k, n in sorted(pin_keys(baseline_text).items()):
@@ -302,7 +463,21 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None):
             if gone > 0:
                 counts["dropped"] += gone
                 out.append("pin kind=baseline state=dropped row=%r pin=%s count=%d" % (k[0], k[1], gone))
+        # R4: keep the v2 per-key binding for existing rows, and record the
+        # baseline prefix → set of bound argv (any row) for new rows. A new row
+        # that binds a prefix whose baseline bindings name exactly one distinct
+        # argv (a single canonical instrument) is `rebound` when its argv is not
+        # in that set (a prefix already shared by several instruments is a
+        # namespace; new genuine instruments may join it).
         base_bind = pin_bindings(baseline_text, "<REV>")
+        # A literal `<REV>` word is rejected by derive_command, so re-resolve the
+        # baseline bindings with a placeholder revision and normalise it back to
+        # `<REV>` so the sets stay comparable with the current text.
+        _REV_PLACEHOLDER = "__REV__"
+        for (_name, prefix, _ordinal), norm in pin_bindings(baseline_text, _REV_PLACEHOLDER).items():
+            if norm is not None:
+                norm = tuple("<REV>" if w == _REV_PLACEHOLDER else w for w in norm)
+                base_bind_prefix.setdefault(prefix, set()).add(norm)
     names = {}
     for row in parse_registry(text):
         if row["state"] == "ok":
@@ -311,6 +486,9 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None):
         if n > 1:
             counts["duplicate"] += n - 1
             out.append("pin kind=row state=duplicate row=%r count=%d" % (name, n))
+    for n, raw in hidden_rows(text):
+        counts["hidden"] += 1
+        out.append("pin line=%d kind=row state=hidden row=%r" % (n, raw[:80]))
     cache = {}
     for row in parse_registry(text):
         line = row["line"]
@@ -322,17 +500,56 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None):
             continue
         cells, idx = row["cells"], row["idx"]
         st = cells[idx]
+        # R3 / R7 L4: ASCII-strict span checks (a tally digitless pin is still
+        # counted by the tally branch below).
+        for m in SPAN_RE.finditer(st):
+            kind, reason = span_kind(m.group(1), cells, rev, row["eidx"])
+            if kind == "unparsed":
+                counts["unparsed"] += 1
+                out.append("pin line=%d kind=span state=unparsed reason=%s span=%r"
+                           % (line, reason, m.group(1)[:60]))
+        # R6 + R10: truncated digest pins (`hex{8,63}…` must prefix the sha256 of the
+        # nearest preceding in-tree path of the cell).
+        for pfx, hit in trunc_digest_pins(st, row["raw"], root):
+            counts["digest_pins"] += 1
+            if hit is None:
+                counts["mismatches"] += 1
+            out.append("pin line=%d kind=digest state=%s digest=%s… file=%s"
+                       % (line, "match" if hit else "mismatch", pfx, hit))
+        # R9c (CritJunkClasses D18): a tally written outside backticks in a self-test cell.
+        if TALLY_TEXT_RE.search(SPAN_RE.sub(" ", st)):
+            counts["unparsed"] += 1
+            out.append("pin line=%d kind=span state=unparsed reason=tally-outside-backticks" % line)
+        # R5: line-count pins (`(\d+) lines` binds to nearest preceding in-tree path).
+        for num, relpath in line_count_pins(st, root):
+            if relpath is None:
+                counts["unparsed"] += 1
+                out.append("pin line=%d kind=lines state=unparsed pinned='%d lines'" % (line, num))
+                continue
+            fp = os.path.join(root, relpath)
+            with open(fp, "rb") as f:
+                nl = f.read().count(b"\n")
+            if nl != num:
+                counts["mismatches"] += 1
+            out.append("pin line=%d kind=lines state=%s pinned='%d lines' file=%s observed=%d"
+                       % (line, "match" if nl == num else "mismatch", num, relpath, nl))
         ordinal = {}
         for prefix, pinned, words in pin_commands(cells, idx, rev, row["eidx"]):
             n = ordinal.get(prefix, 0)
             ordinal[prefix] = n + 1
-            bkey = (cells[0], prefix, n)
             norm = None if words is None else tuple("<REV>" if w == rev else w for w in words)
+            bkey = (cells[0], prefix, n)
+            rebound = False
             if bkey in base_bind and base_bind[bkey] is not None and norm != base_bind[bkey]:
+                rebound = True  # existing row changed its bound argv
+            elif (bkey not in base_bind and norm is not None and prefix in base_bind_prefix
+                    and len(base_bind_prefix[prefix]) == 1
+                    and norm not in base_bind_prefix[prefix]):
+                rebound = True  # new row rebinds a single-instrument prefix
+            if rebound:
                 counts["rebound"] += 1
-                out.append("pin line=%d kind=tally prefix=%s state=rebound baseline_cmd=%r cmd=%r"
-                           % (line, prefix, " ".join(base_bind[bkey]),
-                              " ".join(norm) if norm else None))
+                out.append("pin line=%d kind=tally prefix=%s state=rebound cmd=%r"
+                           % (line, prefix, " ".join(norm)))
             counts["tally_pins"] += 1
             if not re.search(r"\d", pinned):
                 counts["unparsed"] += 1
@@ -364,32 +581,27 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None):
                        % (line, prefix, "match" if ok else "mismatch", want,
                           (observed or "").strip()[:80] if observed is not None else None,
                           rc, " ".join(words)))
-        for digest in HEX_RE.findall(st):
+        for dm in HEX_RE.finditer(st):
+            digest = dm.group(0)
             counts["digest_pins"] += 1
-            paths = sorted(set(PATH_RE.findall(row["raw"])))
-            hit = None
-            for p in paths:
-                rel = os.path.normpath(p)
-                if os.path.isabs(rel) or rel == ".." or rel.startswith(".." + os.sep):
-                    continue
-                fp = os.path.join(root, rel)
-                if (os.path.realpath(fp).startswith(os.path.realpath(root) + os.sep)
-                        and os.path.isfile(fp) and sha256_file(fp) == digest):
-                    hit = rel
-                    break
+            # R10 (round-48 CritJunkClasses D1): a full digest binds to the nearest
+            # preceding in-tree path of its own cell, never to any path of the row.
+            p = _nearest_in_tree_path(st[:dm.start()], root)
+            hit = p if p is not None and sha256_file(os.path.join(root, p)) == digest else None
             if hit is None:
                 counts["mismatches"] += 1
             out.append("pin line=%d kind=digest state=%s digest=%s file=%s"
-                       % (line, "match" if hit else "mismatch", digest[:12], hit))
+                       % (line, "match" if hit else "mismatch", digest[:12], p))
     met = (counts["mismatches"] == 0 and counts["unparsed"] == 0
            and counts["no_command"] == 0 and counts["dropped"] == 0
            and counts["rebound"] == 0 and counts["duplicate"] == 0
-           and counts["tally_pins"] >= min_tally)
+           and counts["hidden"] == 0 and counts["tally_pins"] >= min_tally)
     out.append("PIN_CHECK=%s tally_pins=%d digest_pins=%d mismatches=%d unparsed=%d "
-               "no_command=%d dropped=%d rebound=%d duplicate=%d min_tally_pins=%d rev=%s baseline=%s"
+               "no_command=%d dropped=%d rebound=%d duplicate=%d hidden=%d min_tally_pins=%d rev=%s baseline=%s"
                % ("met" if met else "unmet", counts["tally_pins"], counts["digest_pins"],
                   counts["mismatches"], counts["unparsed"], counts["no_command"],
-                  counts["dropped"], counts["rebound"], counts["duplicate"], min_tally, rev or "-",
+                  counts["dropped"], counts["rebound"], counts["duplicate"], counts["hidden"],
+                  min_tally, rev or "-",
                   "yes" if baseline_text is not None else "no"))
     return met, out
 
@@ -435,41 +647,46 @@ def main(argv):
         return 2
     repo = os.path.abspath(args.repo)
     scratch_parent = os.path.join(repo, ".scratch")
-    os.makedirs(scratch_parent, exist_ok=True)
-    scratch = tempfile.mkdtemp(prefix="pin-check-", dir=scratch_parent)
     try:
-        rev = None
-        if args.rev:
-            got = export_rev(repo, args.rev, scratch)
-            if got is None:
-                print("PIN_CHECK_SETUP unresolvable revision %s" % args.rev, file=sys.stderr)
-                return 2
-            rev, root = got
-        else:
-            root = os.path.abspath(args.root)
-        skill = args.skill or os.path.join(root, "SKILL.md")
+        os.makedirs(scratch_parent, exist_ok=True)
+        scratch = tempfile.mkdtemp(prefix="pin-check-", dir=scratch_parent)
         try:
-            with open(skill, encoding="utf-8") as f:
-                text = f.read()
-        except OSError:
-            print("PIN_CHECK_SETUP unreadable %s" % skill, file=sys.stderr)
-            return 2
-        baseline_text = None
-        if args.baseline_rev:
+            rev = None
+            if args.rev:
+                got = export_rev(repo, args.rev, scratch)
+                if got is None:
+                    print("PIN_CHECK_SETUP unresolvable revision %s" % args.rev, file=sys.stderr)
+                    return 2
+                rev, root = got
+            else:
+                root = os.path.abspath(args.root)
+            skill = args.skill or os.path.join(root, "SKILL.md")
             try:
-                bp = subprocess.run(["git", "-C", repo, "show", args.baseline_rev + ":SKILL.md"],
-                                    stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=60)
-            except (subprocess.SubprocessError, OSError):
-                bp = None
-            if bp is None or bp.returncode != 0:
-                print("PIN_CHECK_SETUP unreadable baseline %s" % args.baseline_rev, file=sys.stderr)
+                with open(skill, encoding="utf-8") as f:
+                    text = f.read()
+            except OSError:
+                print("PIN_CHECK_SETUP unreadable %s" % skill, file=sys.stderr)
                 return 2
-            baseline_text = bp.stdout.decode("utf-8", "replace")
-        met, out = check(text, root, scratch, rev, args.timeout, args.min_tally_pins, baseline_text)
-        print("\n".join(out))
-        return 0 if met else 1
-    finally:
-        shutil.rmtree(scratch, ignore_errors=True)
+            baseline_text = None
+            if args.baseline_rev:
+                try:
+                    bp = subprocess.run(["git", "-C", repo, "show", args.baseline_rev + ":SKILL.md"],
+                                        stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=60)
+                except (subprocess.SubprocessError, OSError):
+                    bp = None
+                if bp is None or bp.returncode != 0:
+                    print("PIN_CHECK_SETUP unreadable baseline %s" % args.baseline_rev, file=sys.stderr)
+                    return 2
+                baseline_text = bp.stdout.decode("utf-8", "replace")
+            met, out = check(text, root, scratch, rev, args.timeout, args.min_tally_pins, baseline_text)
+            print("\n".join(out))
+            return 0 if met else 1
+        finally:
+            shutil.rmtree(scratch, ignore_errors=True)
+    except Exception as exc:
+        # R7 L5: a setup failure exits 2 with one line, never a traceback.
+        print("PIN_CHECK_SETUP %s" % exc, file=sys.stderr)
+        return 2
 
 
 # ---------------------------------------------------------------- selftest
@@ -597,6 +814,73 @@ def selftest():
                       "| name | entry | self-test | owner |\n|---|---|---|---|\n"
                       "| foo | `python3 tools/rev.py <rev>` | `--selftest` → `REV_SELFTEST: PASS (2 cases)` | mori |\n",
                       1, True, None))
+        # v3 arms — R1-R8 (each arm is killed by the mutation that removes its rule).
+        with open(os.path.join(root, "tools", "lc.py"), "w") as f:
+            f.write("import sys\nif '--selftest' in sys.argv:\n    print('LC_SELFTEST pass=1 fail=0')\n"
+                    + "# filler\n" * 39)
+        assert open(os.path.join(root, "tools", "lc.py"), "rb").read().count(b"\n") == 42
+        os.makedirs(os.path.join(root, "src"))
+        with open(os.path.join(root, "src", "foo.py"), "w") as f:
+            f.write(TOOL)
+        with open(os.path.join(root, "foo.py"), "w") as f:
+            f.write(TOOL)
+        os.symlink(os.path.join(base, "outside.py"), os.path.join(root, "tools", "evil.py"))
+        hidrow = "| hidd | gate | `python3 tools/foo.py` | 0 ok | `PIN_CHECK_SELFTEST pass=1 fail=0` | none | none | mori |\n"
+        hidarg = "| hidd | gate | `bash tools/a.sh --selftest` | 0 ok | `A_SELFTEST pass=3 fail=0` | none | none | mori |\n"
+        cases.append(("r1_header_selftest_spelling", HDR.replace("self-test", "selftest", 1) + row(good), 1, True, None))
+        cases.append(("r1_header_self_test_spelling", HDR.replace("self-test", "self test", 1) + row(good), 1, True, None))
+        cases.append(("r2_hidden_row_outside_table", HDR + row(good) + "\n" + hidrow, 1, False, "hidden"))
+        cases.append(("r2_hidden_fenced", "```markdown\n" + hidrow + "```\n" + HDR + row(good), 1, False, "hidden"))
+        cases.append(("r2_hidden_selftest_arg", HDR + row(good) + "\n" + hidarg, 1, False, "hidden"))
+        cases.append(("r3_fullwidth_prefix", HDR + row(good + "; `PIN_CHECK＿SELFTEST pass=999 fail=0`"), 1, False, "unparsed"))
+        cases.append(("r3_lowercase_prefix", HDR + row(good + "; `foo_selftest pass=2 fail=0`"), 1, False, "unparsed"))
+        cases.append(("r3_mixedcase_prefix", HDR + row(good + "; `FOO_Selftest pass=4 fail=0`"), 1, False, "unparsed"))
+        cases.append(("r4_rebound_new_row_same_prefix",
+                       (HDR + row(good) +
+                        "| bar | gate | `python3 tools/old.py` | 0 ok | `python3 tools/old.py --selftest` → `FOO_SELFTEST pass=2 fail=0` | none | none | mori |\n",
+                        HDR + row(good)),
+                       1, False, "rebound"))
+        cases.append(("r5_line_count_match", HDR + row("`python3 tools/lc.py --selftest` → `LC_SELFTEST pass=1 fail=0` (42 lines)",
+                                                      entry="`python3 tools/lc.py`"), 1, True, None))
+        cases.append(("r5_line_count_mismatch", HDR + row("`python3 tools/lc.py --selftest` → `LC_SELFTEST pass=1 fail=0` (41 lines)",
+                                                          entry="`python3 tools/lc.py`"), 1, False, "mismatch"))
+        cases.append(("r5_line_count_no_path", HDR + row("(7 lines) `python3 tools/lc.py --selftest` → `LC_SELFTEST pass=1 fail=0`",
+                                                         entry="`python3 tools/lc.py`"), 1, False, "unparsed"))
+        cases.append(("r6_trunc_digest_match", HDR + row(good + " at sha256 `%s…` of `tools/foo.py`" % digest[:12]), 1, True, None))
+        cases.append(("r6_trunc_digest_mismatch", HDR + row(good + " at sha256 `%s…` of `tools/foo.py`"
+                                                            % (digest[:11] + ("0" if digest[11] != "0" else "1"))), 1, False, "mismatch"))
+        cases.append(("r7_token_not_at_span_start", HDR + row(good + "; `run: FOO_SELFTEST pass=3 fail=0`"), 1, False, "unparsed"))
+        cases.append(("r7_symlink_digest_not_inside", HDR + row(
+            good + " at sha256 `%s` of `tools/evil.py`" % out_digest), 1, False, "mismatch"))
+        cases.append(("r7_argv_shape_rejected", HDR + row("`python3 src/foo.py --selftest` → " + stale, entry="no command here"),
+                      1, False, "no_command"))
+        cases.append(("r7_argv_dotdot_rejected", HDR + row("`python3 tools/../foo.py --selftest` → " + stale, entry="no command here"),
+                      1, False, "no_command"))
+        cases.append(("r7_argv_trailing_args_rejected", HDR + row("`python3 tools/foo.py --selftest extra` → " + stale, entry="no command here"),
+                      1, False, "no_command"))
+        # R7 L2: `\\|` is a literal backslash followed by a real separator; the row stays 8 cells.
+        cases.append(("r7_escaped_double_backslash_pipe", HDR +
+                      "| foo | gate | a\\\\| 0 ok | `python3 tools/foo.py --selftest` → "
+                      "`FOO_SELFTEST pass=3 fail=0` | none | none | mori |\n", 1, True, None))
+        # R10 (round-48 CritJunkClasses D1): a digest of another file named elsewhere in the row.
+        slow_digest = sha256_file(os.path.join(root, "tools", "slow.py"))
+        cases.append(("r10_digest_decoy_file_in_other_cell", HDR + row(
+            good + " at sha256 `%s`" % slow_digest, pinned="`tools/slow.py`"), 1, False, "mismatch"))
+        cases.append(("r10_trunc_digest_decoy_file_in_other_cell", HDR + row(
+            good + " at sha256 `%s…`" % slow_digest[:12], pinned="`tools/slow.py`"), 1, False, "mismatch"))
+        cases.append(("r10_digest_binds_to_nearest_preceding_path", HDR + row(
+            "`python3 tools/foo.py --selftest` → `FOO_SELFTEST pass=3 fail=0` at sha256 `%s` of `tools/foo.py`"
+            % digest), 1, True, None))
+        # R9a (D5): a tally-looking token in a cell other than the self-test cell.
+        cases.append(("r9a_tally_in_pinned_values_cell", HDR + row(
+            "`python3 tools/foo.py --selftest` → `FOO_SELFTEST pass=3 fail=0`",
+            pinned="`FOO_SELFTEST pass=999 fail=0`"), 1, False, "hidden"))
+        # R9b (D2): a continuation line directly under a row carries a tally.
+        cases.append(("r9b_continuation_line_tally", HDR + row(good) +
+                      "→ `FOO_SELFTEST pass=999 fail=0`\n", 1, False, "hidden"))
+        # R9c (D18): a tally written outside backticks in the self-test cell.
+        cases.append(("r9c_tally_outside_backticks", HDR + row(good + "; also FOO_SELFTEST pass=999 fail=0"),
+                      1, False, "unparsed"))
         for name, text, floor, want_met, want_state in cases:
             scratch = tempfile.mkdtemp(prefix="c-", dir=base)
             text, btext = text if isinstance(text, tuple) else (text, None)

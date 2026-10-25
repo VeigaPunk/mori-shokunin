@@ -1046,3 +1046,42 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     only with the command that enumerates them in the cited revision's bytes. Shown able to fail:
     `.ufo/waves/round-47/controls/control-c2-three.md` scores `name_mismatch=5` under
     `count-c2.py` at the freeze commit (`evidence/control-c2-three-at-freeze.txt`).
+
+## Criteria added round 48 — hidden pins, junk next to honest edits, host paths, a located quote per claim
+
+125. **A pin is calibrated only when the checker can see it, and it counts what it cannot see.**
+    Lesson: `corpus/lessons/round-48.md` M2, M3. Rationale: the v2 checker printed `PIN_CHECK=met` on eight
+    structural edits that leave a false tally in the registry — a header spelled `selftest`, a fullwidth or
+    Cyrillic tally prefix, a fenced or blank-line-detached gate row, a tally on a continuation line or in another
+    cell, a digest of a decoy file named elsewhere in the row (`.ufo/waves/round-48/evidence/control-c1-tool-v2-entering.txt`,
+    `w1/CritJunkClasses.md`). Check: `python3 tools/mori-pin-check.py --rev <rev> --baseline-rev <entering>` has
+    `hidden=0 unparsed=0`, and every digest binds to the nearest preceding in-tree path of its own cell. Shown able
+    to fail: selftest arms `r2_hidden_row_outside_table`, `r9a_…`, `r9b_…`, `r9c_…`, `r10_…` and the frozen counter's
+    J1–J8 under the entering tool (`junk_met=8`). Not covered: a row that names instrument A in its entry cell while
+    its self-test cell runs instrument B (`w1/CritJunkClasses.md` D7).
+126. **A calibration counter scores named junk edits and honest edits together, and the real registry is one of the
+    honest cases.** Lesson: `corpus/lessons/round-48.md` M2. Rationale: round 47's frozen scorer was green on
+    five junk edits and could not tell a repair from a pass; a counter that only wants `unmet` on junk is met by a
+    tool that rejects every row. Check: `python3 .ufo/waves/round-48/count-c1.py --tool <tool> --rev <rev>` prints
+    `junk_met=0 honest_unmet=0 real=met errors=0`, and the tool bytes contain no branch on a variant filename or a
+    scratch directory name (`w1/CritC1Counter.md` F1 shows the harness leaks both). Shown able to fail:
+    `controls/stub-always-met.py` (`junk_met=8`), `controls/stub-always-unmet.py` (`honest_unmet=4 real=unmet`),
+    the entering tool (`junk_met=8`) — `evidence/control-c1-*.txt`.
+127. **Instruments carry no absolute host path, and the count of those that do is stated with its scope.**
+    Lesson: `corpus/lessons/round-48.md` Gate (considerthese item); `considerthese/2026-10-25.md` suggestion 2
+    (operator-authored reflection, opened 2026-10-25). Rationale: the reflection's "13 files" reproduces only for
+    the three `tools/` scripts plus ten top-level wave instruments of rounds 40–43; all tracked `.py`/`.sh` under
+    `tools/` and `.ufo/waves/round-*/` give 395 at both `e5dbac05` and `2d85e33d`. Check:
+    `git ls-tree -r --name-only <rev> -- tools/ | grep -E '\.(py|sh)$' | xargs git grep -l -F '/home/vgpnk' <rev> --`
+    lists only files that predate the criterion (3 at `e5dbac05`), and a new instrument adds none. Shown able to
+    fail: the same command run on `.ufo/waves/round-48/build-w1-spec.py` lists it. Not covered: older wave
+    instruments (the 10 and the wider 395 are history, not repaired).
+128. **A depth entry carries a located quote per claim, and the counter proves location, not entailment.**
+    Lesson: `corpus/lessons/round-48.md` Gate, Wave 1 findings. Rationale: round 47's entry was checked by field
+    and call-site names; a prose entry has no such handle, and `w1/CritC2Counter.md` shows eight fragments of
+    page script text score `C2=met`, `w1/CritEntryRisk.md` six claim/quote pairs a reader rejects. Check:
+    `python3 .ufo/waves/round-48/count-c2.py <rev>` is `met` and a reviewer re-opens every row against the page
+    text around the quote (claim no stronger than the quote, no negation or example context, no other-filesystem
+    or other-product page used as a Linux fact, no number from a comment). Shown able to fail: `C2_SELFTEST` arms
+    `altered_quote_unmet`, `quote_from_wrong_copy_unmet`, `used_by_missing_unmet`; the do-nothing receipt
+    `evidence/control-c2-donothing.txt`. Not covered: entailment, and script/JSON text inside a page.

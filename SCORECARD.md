@@ -2581,3 +2581,31 @@ claim as a table (`evidence/control-c2-*-at-freeze.txt`).
 | Capability | What it can now do | Evidence | First-working round |
 |---|---|---|---|
 | registry pin reconciler (v2) | re-run every tally and digest pin in SKILL.md's self-test cells from a `git archive` export of a revision and refuse rebinding, inline code, `.scratch` paths, weakened pins, stale echoes, duplicate or hidden rows | `python3 tools/mori-pin-check.py --selftest` → `PIN_CHECK_SELFTEST pass=34 fail=0`; `.ufo/waves/round-47/evidence/after-c1-v2.txt`; `evidence/v2/` vs `evidence/v1-junk/` | 47 |
+
+## Round 48 — the pin reconciler cannot be turned green by structural junk (C1) and the filesystem-quota entry (C2)
+
+L1 MoriR48, attempt 1. Entering tip `e5dbac05459887d9597ea5d1da0d8e3d024e0d17`; freeze `4387cf94b69ddce455051a1ff38e93795c2e6cde`
+(`.ufo/waves/round-48/contract.md`; both counters, the controls and the four source copies committed before any seat).
+Scores entering: coverage 6, operability 7, depth 5, freshness 5, calibration 5, adjacency 6; both claims work a lowest
+(tied 5) axis. No score change is claimed by the lane; the non-author closure rules.
+
+| Claim | Axis (held) | Counting command | Before (entering `e5dbac05`) | After |
+|---|---|---|---|---|
+| C1 the pin reconciler rejects eight frozen junk edits and accepts four honest edits and the real registry | calibration 5 | `python3 .ufo/waves/round-48/count-c1.py --tool tools/mori-pin-check.py --rev R` | entering tool: `C1=unmet junk_met=8 honest_unmet=0 real=met errors=0 variants=12`, rc 1 — `evidence/control-c1-tool-v2-entering.txt`; `stub-always-met`: `junk_met=8`; `stub-always-unmet`: `honest_unmet=4 real=unmet` | measured at the landed tip, appended below |
+| C2 the FR2 filesystem-quota entry: ≥8 rows, each a located quote | depth 5 | `python3 .ufo/waves/round-48/count-c2.py R` | `C2=unmet claims=0 … failed=entry_absent,pins`, rc 1 — `evidence/control-c2-donothing.txt` | measured at the landed tip, appended below |
+
+Controls that skip the work stay unmet: C1 entering tool, both stubs (`evidence/control-c1-*.txt`); C2 do-nothing and the
+22 `C2_SELFTEST` arms (altered quote, wrong copy, short/long/duplicate quote, unmined row, other-day row, missing
+`used-by`, digest mismatch).
+
+Limits named before data (contract): the variants are eight junk classes found by round-47 seats, not the class of all
+junk; the counter does not run the tool's own selftest; a located quote proves the words exist in the copy, not that the
+claim follows from them. Wave 1 added two harness-level limits (`corpus/lessons/round-48.md` Wave 1): a tool keyed on the
+harness's variant filename passes C1, and script/JSON text inside a copy passes C2's quote check.
+
+### capabilities: demonstrated round 48
+
+| Capability | What it can now do | Evidence | First-working round |
+|---|---|---|---|
+| junk-variant calibration counter | score a registry checker against eight named junk edits and four honest edits plus the real registry, so a checker that rejects everything or accepts everything both fail | `python3 .ufo/waves/round-48/count-c1.py --selftest` → `C1_SELFTEST pass=34 fail=0`; controls `evidence/control-c1-*.txt` | 48 |
+| unlanded-work check | list every uncommitted, modified or staged file under the round directory, `corpus/`, `tools/` and top-level `*.md` before a report is filed | `python3 tools/mori-unlanded-check.py --selftest` → `UNLANDED_SELFTEST pass=13 fail=0` | 48 |

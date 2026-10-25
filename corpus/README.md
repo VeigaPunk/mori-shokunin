@@ -653,3 +653,23 @@ call sites, S477 this host's tracefs listing; S005 re-opened, byte-identical to 
 FR13 stays frontier: no tracer is enabled, installed or proposed (the host's `events/oom/enable`
 reads `0` and stays untouched); the entry names what the kernel's own event says (victim pid,
 comm, uid, memory) and what it never says (cgroup path, culprit).
+
+## Round-48 coverage additions
+
+FR2 ground the map held only as a first-evidence pointer (`knowledge/audit-r11.md:218-222`) and a boundary row — `df`
+capacity percentages cannot detect quota exhaustion; observe and report only, never change quota state: the
+**user-space reporting and error surface of filesystem quotas** — the `xfs_quota`(8) accounting/enforcement split and
+its `quot` scan cost, the `quotactl`(2) `ESRCH` "quotas not turned on" return and `quotactl_fd` by mount point, the
+`EDQUOT` number per architecture (122 generic, 1133 MIPS, 69 SPARC), and one vendor's directory-quota failing write.
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| FR2 quota/EDQUOT observability | `knowledge/quota-observability-r48.md` | the user-space reporting and error surface of filesystem quotas is documented (15 located quotes over four sources, S479–S482; S483/S484 bound the errno number); read-only — no quota command was run |
+
+Count: 15 claim rows — `python3 .ufo/waves/round-48/count-c2.py <rev>` → `C2=met claims=15 located=15 …`. Sweep: no quota-reporting row
+existed before (`grep -cE 'xfs_quota|quotactl|EDQUOT|repquota' corpus/SOURCES.md` at `e5dbac05` → 0).
+
+FR2 Frontier note, dated, appended (the FR2 row above is not rewritten): **round 48 (2026-10-25) supersedes the
+absence of the user-space reporting surface — it is documented in `knowledge/quota-observability-r48.md` (S479–S484);
+still frontier: a live per-id quota probe is not built, and this host's quota state is unread** (`command -v`:
+`xfs_quota` at `/usr/bin/xfs_quota`, `quota` and `repquota` absent; no quota command was run).
