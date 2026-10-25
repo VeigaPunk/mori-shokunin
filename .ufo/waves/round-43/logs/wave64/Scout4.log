@@ -1,0 +1,111 @@
+kimi version 2.3.1
+• Let me parse the task:
+
+  - I'm a scout subagent in the mori round 43 wave.
+  - Task: "Recon only: quarantine slice S244 S262 S268 prose class. Report findings with command output. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scout4.md"
+
+  So I need to investigate "quarantine slice S244 S262 S268 prose class" in the lane repo /home/vgpnk/Projects/shokunin/mori-shokunin. These S-numbers likely refer to snapshot/section IDs — maybe in a quarantine file, e.g., a test quarantine list or a "prose class" in some data file. Let me search the repo.
+
+  Plan:
+  1. Name axes (briefly in report).
+  2. Search for "S244", "S262", "S268", "quarantine", "prose class" in the lane repo.
+  3. Run read-only commands in /tmp sandboxes if needed.
+  4. Write report to .ufo/waves/round-43/w1/Scout4.md.
+
+  Constraints: read-only recon, no writes except my own report file. Don't touch frozen counters. Don't run campaign tools in shokuknow.
+
+  Let me start with parallel greps.
+
+• Axes: (A) locate quarantine slice S244/S262/S268 definitions, (B) characterize "prose class" membership/structure, (C) capture command output as evidence, (D) report only — zero mutation.
+
+  Starting parallel recon:
+
+• Key finding: `.ufo/waves/round-43/assimilation/quarantine-slice` exists — that's the "quarantine slice". Let me read it, plus the w1-spec.json, contract.md, and round-43.md lesson which mentions S244/S262/S268 and prose class.
+
+  Also read AGENTS.md first as instructed.The quarantine slice file at `.ufo/waves/round-43/assimilation/quarantine-slice` has 3 lines:
+
+  ```
+   S244`   the cited source could not be fetched, so no quote was checked 
+   S262`   the cited source could not be fetched, so no quote was checked 
+   S268`   the cited source could not be fetched, so no quote was checked 
+  ```
+
+  Interesting — the lines look like they may have lost leading content (maybe originally "| S244` | ... |" table cells?). Each starts with a space and "S244`" — a backtick after the ID suggests it was sliced from a markdown table like `| S244 | `...`` | reason |`.
+
+  Task: "Recon only: quarantine slice S244 S262 S268 prose class." So I need to characterize the "prose class" of these quarantine slice entries: S244, S262, S268 — all with the reason "the cited source could not be fetched, so no quote was checked".
+
+  Now I need to find where these IDs come from — corpus/SOURCES.md presumably. Let me search for S244, S262, S268 in corpus/SOURCES.md and the round-43 lesson. Also check `.ufo/waves/round-43/evidence/s268-headers.txt` which likely has HTTP 418 evidence for S268.
+
+  Let me:
+  1. Grep corpus/SOURCES.md for S244, S262, S268 rows (content mode with context).
+  2. Read corpus/lessons/round-43.md (mentions S244/S262/S268 and quarantine).
+  3. Read .ufo/waves/round-43/evidence/s268-headers.txt.
+  4. Check the sources-census.sh tool for how quarantine slices / prose classes are defined — maybe "prose" is a class in the census tool. Grep tools/ and scripts/ for "prose".
+
+• Quarantine slice found: 3 entries (S244, S262, S268), all reason "the cited source could not be fetched, so no quote was checked". Now tracing the "prose class" definition and the SOURCE rows:
+
+• Key context established:
+
+  1. The quarantine slice file `.ufo/waves/round-43/assimilation/quarantine-slice` contains 3 lines: S244, S262, S268, each with the prose class "the cited source could not be fetched, so no quote was checked".
+
+  2. Round-43 lesson says: "Quarantine slice of the campaign's absent-defect register: `S244`, `S262`, `S268` — all three carry the prose class 'could not be fetched', so all three are unverifiable, not fabrication. S268 is refused above. S244 is cited by no admitted entry and is not appended. S262 was admitted in round 42 on the OpenAlex deposited abstract and is not re-opened here."
+
+  3. Round-42 lesson (validate copy) mentions "Quarantine register slice (3 rows, all prose-class 'could not be ..." — I should read the exact lines from corpus/lessons/round-42.md around line 63-66 to get the full sentence.
+
+  4. "prose class" — where does this term come from? It might be from the campaign register — the shokuknow campaign side. The lesson says "the campaign's absent-defect register". The class "could not be fetched" is a classification of defects in the campaign register. Let me look for where S244, S268, S262 appear in the campaign register. The register may be in shokuknow (read-only). Let me search for "S244" in shokuknow? Wait — constraints: /home/vgpnk/Projects/shokuknow is read-only; never run a campaign tool there. Reading files is presumably allowed (read-only). But careful: "Never read secrets" — fine. Reading is allowed as it's read-only.
+
+  Actually wait — the constraint says shokuknow read-only; reading files there should be OK (the round-43 lesson says "The package /home/vgpnk/Projects/shokuknow/merge/mori/ was read read-only").
+
+  But first: what does "prose class" mean? Probably in the campaign register, each absent-defect (missing source row) has a "class" describing why it's absent — e.g., "could not be fetched" — and this class is recorded in prose. Let me search shokuknow for S244/S262/S268 and for "prose class" / "could not be fetched".
+
+  Also check round-42.md lesson lines 60-70 for the quarantine register slice text.
+
+  Also, the sources-census.sh tool might define classes. Let me grep the fleet scripts dir for "could not be fetched".
+
+  Also, where does the quarantine-slice file's odd format come from? Lines look like " S244`   the cited source could not be fetched, so no quote was checked " — with a backtick after S244. This suggests it was extracted from a markdown table where cells are like `` `S244` `` and the slicing cut at cell boundaries. Let me hexdump/cat -A the file to capture exact bytes (leading space, backtick, trailing space).
+
+  Plan of evidence commands (read-only, run in lane repo or /tmp):
+  - `cat -A .ufo/waves/round-43/assimilation/quarantine-slice`
+  - `sha256sum .ufo/waves/round-43/assimilation/quarantine-slice`
+  - `awk` to show fields
+  - grep in corpus/SOURCES.md for S244 — wait, the earlier grep found S262 at line 243 but did S244 appear? The grep output showed lines 239-247 context but the matches were only S262 line 243? Actually the grep pattern S244|S262|S268 with -C 4 matched line 243 (S262). Lines 239-242, 244-247 were context. So S244 and S268 are NOT in corpus/SOURCES.md. Good — that confirms S244/S268 are absent rows (not appended), S262 is present.
+
+  - Check reg-ids / reg-ids-post, staged-ids for these ids.
+  - Check the campaign register in shokuknow for S244/S268 rows to establish the "prose class" origin. Search /home/vgpnk/Projects/shokuknow for "S244".
+  - Check `git log`/`git status`? Read-only git queries are fine (don't mutate). Actually avoid touching git index — read-only commands like `git log`, `git show` don't mutate the index. That's fine.
+
+  Also check `.ufo/waves/round-43/assimilation/` other files: append-block.md (may contain the quarantine-slice creation), reg-ids, staged-ids, collisions.
+
+  Also look at round-42 lesson full quarantine text: corpus/lessons/round-42.md around lines 55-75.
+
+  Let me also find where the "absent-defect register" lives: probably in shokuknow/merge/mori/. Let me list that directory (read-only ls via Glob) and grep for "could not be fetched".
+
+  Let me batch:
+  1. Read corpus/lessons/round-42.md lines ~50-80.
+  2. Grep /home/vgpnk/Projects/shokuknow for "could not be fetched" (files_with_matches, head_limit 20).
+  3. Grep /home/vgpnk/Projects/shokuknow for "S244" head_limit 20.
+  4. Read .ufo/waves/round-43/assimilation/reg-ids and staged-ids and collisions (small files).
+  5. Read append-block.md maybe later.
+
+  Also I want command output for the report. I'll run shell commands? Wait — I don't have a Bash tool! My tools: FetchURL, Glob, Grep, Read, WebSearch. There's no Bash. So "command output" must be produced via Grep/Read outputs, which effectively serve as command outputs. I can present Grep/Read evidence as command-equivalent output (e.g., "grep -n 'S262' corpus/SOURCES.md →" with the matched line). That satisfies "Report findings with command output" as best as the toolset allows — I'll note the tool used (Grep/Read equivalents).
+
+  Let me continue gathering.
+
+• Slice established. Now tracing origin: round-42 lesson quarantine text, the campaign register (shokuknow, read-only reads allowed), and assimilation artifacts:
+
+• Interesting. The lane registry (reg-ids, pre-append) contains S001–S235, S241, S262, S347 — 238 ids. It does NOT contain S244 or S268. So S244 and S268 are ids from the campaign's (shokuknow merge package mori) "absent-defect register" — rows the campaign provisionally numbered but which could not be fetched.
+
+  The round-42 lesson says: "Quarantine register slice (3 rows, all prose-class 'could not be fetched'): S244 not cited by any admitted entry — not appended, hand-check attempt not run; S262 hand-checked PRESENT via OpenAlex (adopted); S268 hand-checked ABSENT (entry refused)."
+
+  So the "prose class" refers to the campaign register's class column, where the absence reason is recorded as prose — "could not be fetched" — i.e., a class of defect entries where the source could not be fetched so no quote was checked. These are unverifiable rather than fabricated.
+
+  Now I should find the campaign's absent-defect register for mori: probably /home/vgpnk/Projects/shokuknow/merge/mori/SOURCES.append.md and a CANNOT-ANSWER.md or similar. Let me grep merge/mori for S244, S262, S268, and "could not be fetched".
+
+  Also confirm exact bytes of the quarantine-slice file — I can't run cat -A (no Bash). I have Read output showing leading space and trailing backtick: " S244`   the cited source could not be fetched, so no quote was checked ". Interesting format. It seems each line is `<space>S244<backtick><spaces>the cited source...<space>`. This looks like a slice extracted from a markdown table row where the id cell is `` `S244` `` — e.g., from a row like `| \`S244\` | reason |`. The slicing probably used awk cut fields from a table.
+
+  Let me grep merge/mori for these ids and for "could not be fetched" to locate the register rows.
+
+  Also check whether the quarantine-slice file content matches the campaign register rows. Let me look at /home/vgpnk/Projects/shokuknow/merge/mori/ directory contents via Glob.
+
+• Lane registry pre-append has 238 ids: S001–S235, S241, S262, S347 — S244 and S268 are absent from the lane, so they originate from the campaign (shokuknow merge/mori) register. Tracing there (read-only):
+

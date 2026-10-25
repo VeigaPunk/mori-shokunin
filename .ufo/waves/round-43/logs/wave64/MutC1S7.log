@@ -1,0 +1,73 @@
+kimi version 2.3.1
+• Let me parse the task. I'm a subagent (leaf member) in the mori round 43 wave. My job:
+
+  1. Attack `count-c1s.py` (a frozen counter — must not edit the original; attack a /tmp copy only).
+  2. Mutant class: `mutant_kill` — the mutant "accepts wrong arm". This is about rock-paper-scissors likely: C1S = "choose one scene"? Actually C1/C2/S — maybe "Cooperator 1 / Suppressor"? Let me look at the actual file first.
+
+  The repo: /home/vgpnk/Projects/shokunin/mori-shokunin. The counter: .ufo/waves/round-43/count-c1s.py (frozen, don't edit). Copy to /tmp, mutate so it "accepts wrong arm" (i.e., the counter logic that checks some arm — accepts the wrong arm as valid), then run the frozen counter... wait, no: run the *mutated* copy to show it prints C1S=unmet on that mutant? Re-read:
+
+  "Attack count-c1s.py in a /tmp copy only. Mutant class: mutant_kill accepts wrong arm. Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output."
+
+  Hmm. "Show the frozen counter prints C1S=unmet on that mutant" — this means the counter is used as a detector: presumably count-c1s.py checks some evidence (like a log or state) to determine whether C1S (maybe "Cohort 1 Scenario" or "C1 satisfied") is met or unmet. The mutant class "accepts wrong arm": we create a mutant of the counter itself that accepts the wrong arm... then we show... hmm, actually "frozen counter prints C1S=unmet on that mutant" — the frozen counter is the detector; the mutant is... the counter itself mutated. A mutant of the detector that "accepts wrong arm" — i.e., a mutation where the arm-matching accepts the wrong arm value. Then to kill it we need a test that distinguishes: the frozen counter (original) prints C1S=unmet on that mutant (i.e., when running the mutated counter against the same inputs, output differs... no wait).
+
+  Actually this is standard mutation testing of a program: the "mutant" is a mutation of the program under test. The detector is some behavioral test. Here the program under test is count-c1s.py (the frozen counter). A mutant of the counter that "accepts wrong arm" would be a mutation such that the counter accepts the wrong arm (e.g., if the counter counts results of rock-paper-scissors arms — C1 = player 1 Cooperates? C, D? S = ?). The detector: run the mutated counter on some fixture and check it prints C1S=unmet. If the original prints C1S=met (or some other value) on that same fixture, and the mutant prints... hmm.
+
+  Wait — "Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED". So the detector run: feed the mutant counter the same evidence/fixture that the frozen counter would see. If frozen prints C1S=met and mutant prints C1S=unmet... no — "the frozen counter prints C1S=unmet on that mutant".
+
+  Alternative reading: The counter count-c1s.py is a checker that verifies evidence for C1S. The mutant is a mutated *program under test* elsewhere? But we're told to attack count-c1s.py in a /tmp copy — so the mutant IS the mutated counter copy. The detector is... the frozen counter? You can't run the frozen counter on the mutant.
+
+  Hmm, maybe: mutant = the /tmp mutated copy of count-c1s.py. "Accepts wrong arm" = the mutant's arm validation accepts a wrong arm (e.g., the counter checks journal entries with arm=c1s and the mutant accepts arm=c1 or arm=c2 instead). The detector: run the mutant on a fixture; expected detector outcome is that it prints C1S=unmet (because with the mutant... no, a mutant that accepts MORE would print met more easily).
+
+  Let me think about typical structure: count-c1s.py probably scans wave reports (e.g., .ufo/waves/round-43/...) for Report: trailers or evidence files with "arm: c1s" markers, and prints C1S=met/unmet based on whether enough valid reports exist. A "mutant_kill: accepts wrong arm" mutant would be one where the arm check is weakened to accept the wrong arm (e.g., accepts "c2" reports as "c1s"). To KILL this mutant, we need a test demonstrating that the frozen counter prints C1S=unmet where the mutant prints met — i.e., run BOTH on a fixture containing only wrong-arm evidence: frozen → unmet (correct), mutant → met (wrong). That kills the mutant, showing the frozen counter's arm check is load-bearing.
+
+  So the plan:
+  1. Read the frozen counter count-c1s.py (read-only is fine — reading isn't editing).
+  2. Read the wave context (.ufo/waves/round-43/) to understand arms: c1, c1s, c2; maybe count-c1.py from round 42.
+  3. Build a /tmp sandbox: copy the counter, copy/create fixture evidence.
+  4. Run pristine copy in /tmp → record baseline output + sha256 before hash.
+  5. Create mutant: mutate the smallest behavior-bearing point that makes it accept the wrong arm (e.g., `arm == "c1s"` → `arm == "c2"` or broaden to accept c2/c1). One minimal mutation.
+  6. Run mutant on same fixture → record output + sha256 after hash.
+  7. Detector verdict: if frozen prints C1S=unmet and mutant prints met → KILLED. Record before/after hashes.
+  8. Restore the /tmp bytes? "Restore exact bytes even if the detector fails, unless the tasking declares the scratch copy disposable." /tmp scratch — tasking says "in a /tmp copy only", doesn't declare disposable, so restore exact bytes and show sha matches the pristine hash.
+  9. Write report to /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/MutC1S7.md (write only my own report file; the w1 dir may need creating — is creating the directory okay? "Write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>" — yes, mkdir -p the w1 dir, write only MutC1S7.md).
+
+  Constraints: never write .ufo/state, .ufo/watchdog.log, lane git index, etc. Reading the frozen counter is fine. Don't run any campaign tool in /home/vgpnk/Projects/shokuknow. Run code only in /tmp sandboxes — so all executions of python happen with files in /tmp, cwd in /tmp.
+
+  Also RULES.md reading is only needed if I install tools — I likely don't need to install anything; python3 should exist. I'll check availability of python3.
+
+  Axes (Godspeed): name axes — e.g., (a) mutation minimality, (b) detector determinism, (c) restoration fidelity, (d) report completeness. Iterate cheap in parallel: read files, hash, copy in parallel batches.
+
+  Let me start with parallel reads: ls the round-43 dir, read count-c1s.py, read count-c1.py (round 42) for context, ls .ufo/waves/round-43/w1.
+
+  Let me do it.
+
+  First batch (parallel):
+  - Bash: ls -la /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/
+  - Read: .ufo/waves/round-43/count-c1s.py
+  - Bash: ls -la w1 dir / check python3 --version
+  - Read round-42 count-c1.py maybe.
+
+  Then build sandbox.
+
+  Let me go.total 48
+drwxr-xr-x 1 vgpnk vgpnk   162 Oct 24 22:35 .
+drwxr-xr-x 1 vgpnk vgpnk   496 Oct 24 21:31 ..
+drwxr-xr-x 1 vgpnk vgpnk   256 Oct 24 22:37 assimilation
+-rw-r--r-- 1 vgpnk vgpnk  4298 Oct 24 21:37 contract.md
+-rw-r--r-- 1 vgpnk vgpnk  6022 Oct 24 21:37 count-c1s.py
+-rw-r--r-- 1 vgpnk vgpnk  3094 Oct 24 21:37 count-c2.py
+drwxr-xr-x 1 vgpnk vgpnk   386 Oct 24 21:44 evidence
+drwxr-xr-x 1 vgpnk vgpnk    70 Oct 24 22:37 w1
+-rw-r--r-- 1 vgpnk vgpnk    17 Oct 24 22:37 w1-settle.tsv
+-rw-r--r-- 1 vgpnk vgpnk 22422 Oct 24 21:44 w1-spec.json
+---
+total 16
+drwxr-xr-x 1 vgpnk vgpnk   70 Oct 24 22:37 .
+drwxr-xr-x 1 vgpnk vgpnk  162 Oct 24 22:35 ..
+-rw-r--r-- 1 vgpnk vgpnk 2820 Oct 24 22:37 Exec4.md
+-rw-r--r-- 1 vgpnk vgpnk 1864 Oct 24 22:37 Exec5.md
+-rw------- 1 vgpnk vgpnk 7472 Oct 24 22:34 swarm-registry.json
+---
+Python 3.14.8
+
+

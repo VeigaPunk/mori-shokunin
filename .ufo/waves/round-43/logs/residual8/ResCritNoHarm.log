@@ -1,0 +1,382 @@
+kimi version 2.3.1
+• Let me understand the task:
+
+  1. I'm a critic seat attacking claim C1S's no-harm arm.
+  2. I need to run the lane's append-only gate selftest in a /tmp clone of the lane: `python3 <clone>/tools/mori-sources-appendonly.py --selftest`
+  3. Paste stdout and exit code.
+  4. Report at `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/ResCritNoHarm.md`
+
+  Let me start by exploring the lane repo structure, reading the relevant files in parallel:
+  - The tool `tools/mori-sources-appendonly.py`
+  - The round cache / proposal for C1S
+  - RULES.md maybe
+
+  Let me name axes:
+  - Correctness: does the selftest pass in a clean clone?
+  - Hidden regressions: does the gate script have bugs (e.g., non-append detection failing)?
+  - Identity: the clone must not mutate the lane.
+  - Provenance: outputs must be from an actual run.
+
+  Plan:
+  1. Read `tools/mori-sources-appendonly.py` in the lane.
+  2. Make a /tmp clone (cp -a or git clone the lane repo — but lane repo is the working repo; cloning it to /tmp is fine, read-only on source).
+  3. Run the selftest in the clone.
+  4. Attack: check what the selftest actually covers — does it truly test the append-only gate? Try mutations in scratch copies only (in /tmp), e.g., modify a source file in the clone and see if the gate catches it; test whether the selftest is self-consistent (a selftest that always passes is worthless).
+  5. Write the report.
+
+  Let me batch: ls the repo, read the tool, check .ufo/waves/round-43 for context.
+
+  Let me start with parallel calls:
+  - Bash: ls of repo root and tools dir
+  - Read: tools/mori-sources-appendonly.py
+  - Glob: .ufo/waves/round-43/*
+  - Read: ~/.omp/agent/config.yml (route table, operator-owned, read only) — maybe not needed. Skip; I must not pass or hardcode a model. I don't need it.
+
+  Actually the task says "Attack claim C1S's no-harm arm" — I should find the C1S claim text. Let me glob for round caches: .ufo/waves/round-42 and round-43 files.
+
+  Let me do the first batch.total 948
+drwxr-xr-x 1 vgpnk vgpnk    394 Oct 24 04:23 .
+drwxr-xr-x 1 vgpnk vgpnk   1306 Oct 24 22:36 ..
+-rw-r--r-- 1 vgpnk vgpnk     31 Oct 23 23:27 0
+-rw-r--r-- 1 vgpnk vgpnk    244 Oct 14 21:17 AGENTS.md
+-rw-r--r-- 1 vgpnk vgpnk  98196 Oct 22 14:08 base.c
+drwxr-xr-x 1 vgpnk vgpnk    156 Oct 24 10:01 considerthese
+drwxr-xr-x 1 vgpnk vgpnk    106 Oct 24 02:50 corpus
+drwxr-xr-x 1 vgpnk vgpnk    238 Oct 24 22:43 .git
+-rw-r--r-- 1 vgpnk vgpnk     62 Oct 23 17:10 .gitignore
+drwxr-xr-x 1 vgpnk vgpnk     52 Oct 20 15:26 .jj
+-rw-r--r-- 1 vgpnk vgpnk 177402 Oct 24 20:54 LOG.md
+-rw-r--r-- 1 vgpnk vgpnk  21053 Oct 22 14:08 main.c
+-rw-r--r-- 1 vgpnk vgpnk  10114 Oct 22 14:08 MANPAGE.md
+-rw-r--r-- 1 vgpnk vgpnk   8344 Oct 22 14:08 meminfo.c
+-rw-r--r-- 1 vgpnk vgpnk   1663 Oct 14 21:17 MINT.md
+-rw-r--r-- 1 vgpnk vgpnk  34311 Oct 22 14:08 oom_kill.c
+-rw-r--r-- 1 vgpnk vgpnk  38326 Oct 22 18:23 PROVINCE.md
+-rw-r--r-- 1 vgpnk vgpnk   1595 Oct 20 17:16 README.md
+drwxr-xr-x 1 vgpnk vgpnk      0 Oct 24 01:27 --repo
+-rw-r--r-- 1 vgpnk vgpnk 219123 Oct 24 21:42 SCORECARD.md
+drwxr-xr-x 1 vgpnk vgpnk    488 Oct 24 04:23 .scratch
+-rw-r--r-- 1 vgpnk vgpnk 180617 Oct 22 14:08 sd-main.c
+-rw-r--r-- 1 vgpnk vgpnk    361 Oct 20 01:10 SHONEN.md
+-rw-r--r-- 1 vgpnk vgpnk 127349 Oct 24 02:47 SKILL.md
+drwxr-xr-x 1 vgpnk vgpnk   1500 Oct 24 03:50 tools
+drwxr-xr-x 1 vgpnk vgpnk    226 Oct 20 16:51 .ufo
+-rw-r--r-- 1 vgpnk vgpnk   1315 Oct 22 14:08 user@.service.in
+fixtures
+mori-blind-check.sh
+mori-census.sh
+mori-content-review.py
+mori-disk-rate.py
+mori-dispatch-ledger.py
+mori-evidence-loss.py
+mori-freeze-order.py
+mori-index-clean.sh
+mori-job-runway.py
+mori-journal-window.py
+mori-misroot-sweep.py
+mori-oom-killers.py
+mori-pressure.py
+mori-retention-gate.py
+mori-retention-reconcile.py
+mori-round13-regressions.py
+mori-round14-regressions.py
+mori-round15-regressions.py
+mori-round16-context-check.py
+mori-round16-regressions.py
+mori-round17-context-check.py
+mori-round17-jj-regressions.py
+mori-round17-seat-regressions.py
+mori-round19-regressions.py
+mori-round41-calibration.py
+mori-routed-check.py
+mori-routed-r24.py
+mori-seat-terminal.py
+mori-silence-cases.sh
+mori-source-drift.py
+mori-sources-appendonly.py
+mori-wave-settlement.py
+__pycache__
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-42/:
+total 180
+drwxr-xr-x 1 vgpnk vgpnk   234 Oct 24 20:47 .
+drwxr-xr-x 1 vgpnk vgpnk   496 Oct 24 21:31 ..
+drwxr-xr-x 1 vgpnk vgpnk   194 Oct 24 20:23 assimilation
+drwxr-xr-x 1 vgpnk vgpnk     0 Oct 24 11:28 candidates
+-rw-r--r-- 1 vgpnk vgpnk 46994 Oct 24 20:12 conform.py
+-rw-r--r-- 1 vgpnk vgpnk  7549 Oct 24 11:30 contract.md
+-rwxr-xr-x 1 vgpnk vgpnk 10858 Oct 24 11:36 count-c1.py
+-rwxr-xr-x 1 vgpnk vgpnk  6484 Oct 24 11:33 count-c2.py
+-rwxr-xr-x 1 vgpnk vgpnk  5389 Oct 24 11:34 count-c3.py
+drwxr-xr-x 1 vgpnk vgpnk   470 Oct 24 20:54 evidence
+drwxr-xr-x 1 vgpnk vgpnk   174 Oct 24 11:30 fixtures
+drwxr-xr-x 1 vgpnk vgpnk    48 Oct 24 20:47 __pycache__
+drwxr-xr-x 1 vgpnk vgpnk   578 Oct 24 20:49 w1
+-rw-r--r-- 1 vgpnk vgpnk 94923 Oct 24 20:28 w1-spec.json
+
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/:
+total 48
+drwxr-xr-x 1 vgpnk vgpnk   206 Oct 24 22:46 .
+drwxr-xr-x 1 vgpnk vgpnk   496 Oct 24 21:31 ..
+drwxr-xr-x 1 vgpnk vgpnk   256 Oct 24 22:37 assimilation
+-rw-r--r-- 1 vgpnk vgpnk  4298 Oct 24 21:37 contract.md
+-rw-r--r-- 1 vgpnk vgpnk  6022 Oct 24 21:37 count-c1s.py
+-rw-r--r-- 1 vgpnk vgpnk  3094 Oct 24 21:37 count-c2.py
+drwxr-xr-x 1 vgpnk vgpnk   386 Oct 24 21:44 evidence
+drwxr-xr-x 1 vgpnk vgpnk   102 Oct 24 22:42 w1
+-rw-r--r-- 1 vgpnk vgpnk     0 Oct 24 22:46 w1-settle-residual.tsv
+-rw-r--r-- 1 vgpnk vgpnk  1221 Oct 24 22:44 w1-settle.tsv
+-rw-r--r-- 1 vgpnk vgpnk 22422 Oct 24 21:44 w1-spec.json
+Let me read the key files in parallel: AGENTS.md, the round-43 contract, count-c1s.py, w1-spec.json, and the appendonly tool itself.I'm the residual attack seat (ResCritNoHarm). My task: attack claim C1S's no-harm arm. The C1S claim per contract says the successor `run()` accepts `cwd` and a sandbox-clone invocation of `tools/mori-sources-appendonly.py --selftest` records rc 0 and `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0`.
+
+  So my task: run the lane's append-only gate selftest in a /tmp clone of the lane: `python3 <clone>/tools/mori-sources-appendonly.py --selftest`. Paste stdout and exit code. Report to `.ufo/waves/round-43/w1/ResCritNoHarm.md`.
+
+  Key attack angles on the no-harm arm:
+  1. Run the selftest in a /tmp clone — does it pass with pass=22 fail=0, rc 0?
+  2. Hidden regression: does the selftest actually test 22 things? Count cases: _selftest_cases has 9, dag cases 6, r41 dag cases 7 → 22 total. Good.
+  3. Attack: is the selftest self-consistent / could it pass vacuously? E.g., the selftest runs `sys.executable os.path.abspath(__file__)` — it re-executes itself. Fine.
+  4. Potential no-harm concerns: does the selftest write anywhere outside /tmp? It uses tempfile.mkdtemp — that honors TMPDIR. In the clone it's fine.
+  5. Does running the selftest mutate the lane? No — I'll run in a /tmp clone.
+  6. The no-harm arm: the successor counter (count-c1s.py) requires the selftest to pass in a sandbox clone. If the selftest is flaky (timing, env-dependent, git config dependent), that's a harm. Test: run it multiple times, check exit code stability. Also test under a different environment (e.g., with GIT_DIR set maliciously — the gate strips it, but the selftest's _selftest_env strips too; run with GIT_DIR set to see if results change — should not).
+  7. Also test in a clone made by `git clone` vs `cp -a` — the selftest shouldn't depend on lane history at all (it builds its own fixtures). Attack: run the selftest from the clone while cwd is somewhere else; run from the actual lane working dir but pointing at the clone... Actually the task says run in the /tmp clone: `python3 <clone>/tools/mori-sources-appendonly.py --selftest`.
+  8. Attack sha-identity: verify the clone's tool is byte-identical to the lane's tool (sha256sum), so the selftest result applies to the lane's bytes (provenance axis). 
+  9. Attack: the contract says pass=22 fail=0. If the clone run gives different numbers, that's a finding.
+  10. Also mutation: verify selftest isn't vacuous — scratch copy: inject a mutant into the tool in /tmp (e.g., flip an expectation or break the gate logic) and confirm the selftest fails. That tests that the selftest is a real gate, not a rubber stamp. This is attacking the no-harm arm: if the selftest can't fail, then C1S's no-harm arm is unfalsifiable and useless. One quick mutant: change `appendonly_violations` computation or the expectation for "immutable edit" case. Simpler: modify `_selftest_cases` expectation ("immutable edit" exit 1 → 0) and confirm selftest reports fail=1. Or break the gate: make analyze ignore deletions (`deleted` always []) and confirm cases fail.
+
+  Also check: what does count-c1s.py actually require for the no-harm arm? Let me read count-c1s.py to see exactly how it invokes the selftest (sandbox-clone invocation). It's frozen — read-only. Let me read it to know the exact bytes the no-harm arm checks (pass=22 fail=0, rc 0).
+
+  Plan of execution (parallel batches):
+
+  Batch A:
+  - Read count-c1s.py
+  - Make /tmp clone: `git clone /home/vgpnk/Projects/shokunin/mori-shokunin /tmp/rescrit-clone` — wait, git clone of the lane repo is read-only on the source, fine. But the lane has .jj too; git clone only copies git. For byte-identity of the tool, sha256sum compare. Alternatively `cp -a`. git clone is cleaner and doesn't touch the lane index (cloning reads only). But caution: "Never mutate lane Git index" — git clone doesn't mutate. Fine.
+    Actually simpler and safer: `git clone --no-hardlinks`. Or cp -a of just the tools file? The selftest doesn't need the lane repo at all — it builds its own fixtures in tempfile. But the task explicitly says "/tmp clone of the lane". I'll do a git clone (local clone may hardlink objects under .git — use --no-hardlinks to avoid any chance of writing into the source's object store? Hardlinks don't mutate source but shared objects could in theory be modified via the hardlink. Use --no-hardlinks for safety.)
+  - sha256sum compare tool in clone vs lane.
+
+  Batch B:
+  - Run selftest in clone, capture stdout, exit code. Time it.
+  - Run again (stability), run with TMPDIR pointed at a fresh dir, run with hostile env (GIT_DIR=... set) to check env-independence no-harm.
+  - Check git version.
+
+  Batch C (mutation checks in scratch copy only):
+  - Mutant 1: gate weakened (deleted ignored) → selftest must fail.
+  - Mutant 2: expectation loosened → selftest must fail. Actually one mutant is enough to show non-vacuity; maybe two cheap ones.
+  - Also confirm the pass count = 22 lines: `pass=22 fail=0`.
+
+  Also verify that the selftest doesn't write outside /tmp: use strace? Might not be available. Alternative: run with TMPDIR=/tmp/rescrit-tmpdir and confirm mkdtemp lands there, and check no writes to lane repo (git status in lane before/after — read-only check; lane is a live repo used by others though; `git status` is fine read-only). Simpler: snapshot mtimes? That's overkill. I can check that the selftest only creates tempfile dirs: code review shows tempfile.mkdtemp and shutil.rmtree. The _run_cli subprocesses run `git -C <fixture>` etc. Good.
+
+  Also count the cases to confirm 22: 9 + 6 + 7 = 22.
+
+  One more no-harm angle: the C1S counter will run the selftest via `cwd=` pointing at a sandbox clone. Attack: run the exact invocation style the counter uses. Let me read count-c1s.py first.
+
+  Also: exit code check — `echo $?`.
+
+  Let me also grep LOG.md or evidence for what previous runs recorded (round-43 evidence dir has entries; Exec3 already ran the selftest in the lane). But my job is the clone run. Reading evidence for cross-check is good but not required; keep cheap.
+
+  Let me proceed.
+
+  Batch A calls:
+  1. Read count-c1s.py.
+  2. Bash: rm -rf /tmp/rescrit43 && git clone --no-hardlinks -q /home/vgpnk/Projects/shokunin/mori-shokunin /tmp/rescrit43/clone && sha256sum tools/mori-sources-appendonly.py (in both) && git -C /tmp/rescrit43/clone rev-parse HEAD
+  3. Bash: git --version && python3 --version
+
+  Then batch B: run selftest.
+
+  Note: "Run code only in /tmp sandboxes" — the clone is in /tmp, good. Running `python3 <clone>/tools/...` — code runs from /tmp. Good. Don't run the selftest in the lane itself (Exec3's job, not mine; and running it in the lane writes tempfiles to /tmp anyway, but stays in lane cwd — fine to avoid).
+
+  Let me execute.
+
+• Contract read: C1S's no-harm arm requires a sandbox-clone run of `tools/mori-sources-appendonly.py --selftest` to record rc 0 and `pass=22 fail=0`. My axes: (1) does the selftest actually pass in a clean clone, (2) is it stable/env-independent, (3) is it non-vacuous (can it fail), (4) does the clone run stay byte-faithful to the lane tool and write nothing outside /tmp.CLONED
+75af8f6fc63dc736f07c02617bed4bf6c1ad7f880ffb49849b065b4d40d8f76b  /tmp/rescrit43/clone/tools/mori-sources-appendonly.py
+75af8f6fc63dc736f07c02617bed4bf6c1ad7f880ffb49849b065b4d40d8f76b  /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-sources-appendonly.py
+e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2
+git version 2.56.0
+Python 3.14.8
+
+
+• Clone is at the entering tip e3a2b58f... (git status --porcelain output empty — actually it printed nothing after HEAD, so clean; note the clone HEAD is at the default branch tip which equals e3a2b58f — good, that's the entering tip).
+
+  Wait — the clone HEAD is e3a2b58f72ba... which matches the entering tip in the contract. Good.
+
+  Tool sha256 matches lane working tree: 75af8f6f...
+
+  Now run the selftest in the clone, exactly as the counter does: `cwd=clone`, `python3 <clone>/tools/mori-sources-appendonly.py --selftest`.
+
+  Batch:
+  1. Primary run with rc capture, timed.
+  2. Repeat run (stability), 3x with rc.
+  3. Hostile-env run: GIT_DIR pointing at lane's .git, GIT_WORK_TREE set — gate's _selftest_env strips these for fixture building; the child CLI calls also strip. Confirm result identical.
+  4. Non-vacuity mutants in a scratch copy of the tool (in /tmp): 
+     - M1: make `deleted` never reported (simulate gate missing the round-35 gap). Easiest single-token edit: in `analyze`, `deleted = sorted(set(first) - set(tip))` → `deleted = []`. Expect selftest fail≥1.
+     - M2: timing arm broken: in the as-of test, flip `if edit_commit is not None and ancestor(...)` to always stale (append `and False`). Expect stale cases fail.
+     - M3: loosen expectation: change expected exit in "immutable edit" from 1 to 0 → selftest must fail (shows selftest detects wrong expectations, i.e., it isn't derived from tool output).
+     Actually one or two mutants suffice; I'll do M1 and M2 quickly since they're one-line sed edits in /tmp copies.
+  5. Write-check: confirm no writes outside /tmp — the selftest uses tempfile.mkdtemp (TMPDIR). I'll run with TMPDIR=/tmp/rescrit43/tmpout and confirm the fixture dirs are created there and removed after (finally: shutil.rmtree). Check dir empty after.
+  6. Also confirm the exact bytes the counter greps: `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0` and rc 0.
+
+  Also verify case count = 22: 9 + 6 + 7 = 22. I counted from the read: _selftest_cases returns 9 entries (clean history, mutable-only edit, immutable edit, changed-back, deleted row, superseding row, supersede before edit, row reorder, whitespace padding) = 9. dag cases: side-branch stale, merge no fabricate, landing last edit, never-edited as-of, first-parent-lacks-path, linear delete-re-add = 6. r41: h, h2, z, z2, 2l-early, 2l-late, x = 7. Total 22. ✓
+
+  Let me also attack a subtle no-harm angle: Python 3.14.8 — the tool must run on this version. It did run presumably. Also `encoding` param, fine.
+
+  Another subtle angle: the counter runs the selftest with `cwd=clone`. Does the tool depend on cwd? It uses os.path.abspath(__file__) for re-exec, and fixtures in tempfile. cwd-independence: run from a different cwd (e.g., cd /) and confirm same output. Cheap, include it.
+
+  Batch B now (parallel):
+  - Run 1 (primary, full stdout + rc).
+  - Runs 2-4 loop with rc only + timing.
+  - Hostile env run.
+  - Different cwd run.
+
+  Then Batch C: mutants (must copy tool to /tmp first — they are copies in /tmp/rescrit43/mut/).
+
+  Note the fixture repos are created under tempfile.mkdtemp with default TMPDIR. With `cwd=clone`, `git -C fixture`... all fine.
+
+  One more check: the clone was made with --no-hardlinks; the counter uses `git clone --shared` — shared clones use alternates pointing at LANE objects. The selftest doesn't use the clone's git objects at all (fixtures are separate repos), so no-harm even in shared mode. I could note that.
+
+  Let me run.
+
+• Clone landed at the entering tip `e3a2b58f…`, tool bytes identical to the lane (`75af8f6f…`). Counter's exact no-harm invocation: `run([python, <clone>/tools/mori-sources-appendonly.py, --selftest], cwd=clone)` requiring rc 0 and `pass=22 fail=0`. Now the primary run plus stability/env/cwd variants in parallel:---STDOUT---
+MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0
+---STDERR---
+EXIT_CODE=0
+/bin/bash: line 1: bc: command not found
+SECONDS=
+run2 rc=0 last=MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0
+run3 rc=0 last=MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0
+run4 rc=0 last=MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0
+e8e5f44c552dbfb3b571c2ec5f464e9b868255deaf71e8431c2a3f93ebf91d43  /tmp/rescrit43/run1.out
+e8e5f44c552dbfb3b571c2ec5f464e9b868255deaf71e8431c2a3f93ebf91d43  /tmp/rescrit43/run2.out
+e8e5f44c552dbfb3b571c2ec5f464e9b868255deaf71e8431c2a3f93ebf91d43  /tmp/rescrit43/run3.out
+e8e5f44c552dbfb3b571c2ec5f464e9b868255deaf71e8431c2a3f93ebf91d43  /tmp/rescrit43/run4.out
+hostile-env rc=0
+MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0
+cwd=/ rc=0
+MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0
+TMPDIR-pinned rc=0
+MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0
+---tmpout after run---
+total 0
+drwxr-xr-x 2 vgpnk vgpnk   6 Oct 24 22:50 .
+drwxr-xr-x 4 vgpnk vgpnk 169 Oct 24 22:50 ..
+---clone cleanliness---
+lane-status:
+
+
+• Primary result: rc 0, stdout exactly `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0`, stderr empty. 4 runs byte-identical (same sha), hostile git env and cwd=/ identical, TMPDIR-pinned run leaves no residue, clone clean, lane tools/ clean.
+
+  Now the non-vacuity attack: can the selftest fail? Two one-line mutants in /tmp copies:
+
+  - M1 "deletion blindness": `deleted = sorted(set(first) - set(tip))` → `deleted = []`. Expected: selftest fails cases that assert deleted ids ("deleted row", "r41-dag-z", "r41-dag-z2") → fail≥1, rc 1.
+  - M2 "timing flip": in the as-of/stale decision, force stale: `if edit_commit is not None and ancestor(edit_commit, landing):` → append `and False`. Expected: as-of cases fail.
+
+  Also M3 quickly: corrupt an expectation (immutable edit expected exit 1→0) to prove the selftest isn't rubber-stamping its own expectations. Actually that just proves expectations are checked against tool output — same mechanism as M1/M2 really (M1 checks tool-output side, M3 checks expectation side). M1 + M3 is the best pair: one breaks the gate, one breaks the expectation; both must be caught. Do all three; they're cheap sed edits.
+
+  Sed targets (from the read, careful with exact strings):
+  - M1: line 357: `    deleted = sorted(set(first) - set(tip))` → replace with `    deleted = []`.
+  - M2: line 398: `        if edit_commit is not None and ancestor(edit_commit, landing):` → `        if False and edit_commit is not None and ancestor(edit_commit, landing):` — wait that would make everything stale. Good.
+  - M3: line 922: `("immutable edit", [base, edited], 1,` → `..., 0,`. Careful: sed on `("immutable edit", [base, edited], 1,` unique.
+
+  Also one more angle worth checking: the tool's `--selftest` writes only under TMPDIR — M-scratch runs already confirmed. And re-verify the run's stderr was empty (yes).
+
+  Also confirm the selftest's 22 = 9+6+7 by listing FAIL names if a mutant kills several — the mutant run output will name cases.
+
+  Then write the report. Also should I paste the exact command? The report must end with one-line verdict KILLED/SURVIVED/CONFIRMED + exact command + output. The claim's no-harm arm: selftest passes in clone → the no-harm arm survives my attack → verdict CONFIRMED (the claim arm holds) — with evidence that it's non-vacuous. My mandate: "Attack claim C1S's no-harm arm... Paste stdout and the exit code." Since the attack failed to break it (it passes and can fail under mutation), verdict = CONFIRMED.
+
+  Let me run the mutants.
+
+• Primary run: rc 0, stdout exactly `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0`, empty stderr; four runs byte-identical; identical under hostile `GIT_*` env and `cwd=/`; zero residue with pinned TMPDIR; clone and lane `tools/` clean. Now the vacuity attack — three one-line mutants in scratch copies must all be caught, or the selftest is a rubber stamp:357c357
+<     deleted = sorted(set(first) - set(tip))
+---
+>     deleted = []
+M1 rc=1
+FAIL deleted row: deleted: want ['S002'] got []
+FAIL discarded superseder is ineligible at R: deleted: want ['S002'] got []
+FAIL discarded edit and superseder do not decide timing: deleted: want ['S002'] got []
+MORI_SOURCES_APPENDONLY_SELFTEST pass=19 fail=3
+398c398
+<         if edit_commit is not None and ancestor(edit_commit, landing):
+---
+>         if False and edit_commit is not None and ancestor(edit_commit, landing):
+M2 rc=1
+FAIL superseding row: superseded_as_of: want ['S001'] got []; stale_supersede: want [] got ['S001']
+FAIL merge does not fabricate an edit: superseded_as_of: want ['S001'] got []; stale_supersede: want [] got ['S001']
+FAIL landing is the last edit commit: superseded_as_of: want ['S001'] got []; stale_supersede: want [] got ['S001']
+FAIL never-edited superseded row is as-of: superseded_as_of: want ['S001'] got []; stale_supersede: want [] got ['S001']
+FAIL first-parent-lacks-path merge contributes no edits: superseded_as_of: want ['S001'] got []; stale_supersede: want [] got ['S001']
+FAIL linear delete-then-re-add is not an edit: superseded_as_of: want ['S008'] got []; stale_supersede: want [] got ['S008']
+FAIL per-commit header map prevents fabricated changes: superseded_as_of: want ['S001'] got []; stale_supersede: want [] got ['S001']
+FAIL per-commit teaches map retains permuted superseder: superseded_as_of: want ['S001'] got []; stale_supersede: want [] got ['S001']
+FAIL deleted/re-added superseder uses the later ancestry landing: superseded_as_of: want ['S001'] got []; stale_supersede: want [] got ['S001']
+MORI_SOURCES_APPENDONLY_SELFTEST pass=13 fail=9
+921c921
+<         ("immutable edit", [base, edited], 1,
+---
+>         ("immutable edit", [base, edited], 0,
+M3 rc=1
+FAIL immutable edit: exit: want 0 got 1
+MORI_SOURCES_APPENDONLY_SELFTEST pass=21 fail=1
+
+
+• All three mutants are killed:
+  - M1 (deletion blindness): rc 1, pass=19 fail=3, catches exactly the deleted-row arms.
+  - M2 (timing flip): rc 1, pass=13 fail=9, catches the as-of arms.
+  - M3 (loosened expectation): rc 1, pass=21 fail=1 — the selftest checks exit codes against hand-written expectations, so it is not derived from its own output.
+
+  Also the case count: 22 total confirmed by pass=22; mutants show named cases.
+
+  One residual check for completeness: the counter greps `MORI_SOURCES_APPENDONLY_SELFTEST pass=(\d+) fail=(\d+)` and requires (22, 0) plus rc 0 — my primary run satisfies both. Also the `cwd=clone` invocation style — I ran with cd into clone for run1; run4-style runs were from other cwds and matched. The counter's exact argv is `[sys.executable, os.path.join(clone, "tools/mori-sources-appendonly.py"), "--selftest"]` with cwd=clone. My run1 used an absolute script path with cwd=clone — equivalent.
+
+  Note: bc missing — SECONDS didn't compute, trivial; each run took ~1.2s wall per the tool timings. Fine, drop the timing claim or state ~1.2s per Wall time observation.
+
+  One more small thing: verify the selftest writes nothing into the clone itself even when cwd=clone — clone status was clean after all runs (checked after TMPDIR run; the earlier runs also happened before that check, so the clean status covers all of them). Good.
+
+  Hidden-regression sweep: Python 3.14.8, git 2.56.0 recorded. The selftest re-executes the tool via `sys.executable os.path.abspath(__file__)` — in a clone that's the clone's bytes; provenance holds (sha 75af8f6f… matches lane working tree).
+
+  A residual worth naming: the counter clones with `--shared` (alternates to LANE objects). My clone used --no-hardlinks. The selftest builds its own fixture repos, so object provenance doesn't matter for the no-harm arm — but I did not replicate the exact `--shared` clone mode. Cheap to close: my clone still is a /tmp clone of the lane; the selftest never touches the clone's git objects. I could re-run once inside a --shared clone to close that gap. It's cheap — do it. Actually, `git clone --shared /home/vgpnk/Projects/shokunin/mori-shokunin /tmp/rescrit43/shared-clone` then checkout detach e3a2b58, run selftest. This is a read-only operation against the lane (alternates reference, no writes). Do it, plus the exact counter-style invocation with `python3 -c` mimicking run(..., cwd=clone)? The subprocess.run with cwd=clone is equivalent to cd clone && python3 abs-path --selftest, which I already ran. The --shared gap is the only one; close it.
+
+  Then write the report and finish. Report path: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/ResCritNoHarm.md. Must end with one-line verdict: CONFIRMED, then the exact command and its output.
+
+  Let me also double-check "w1" dir exists (it does, listed earlier, with content). Write only my own report file. Use Write tool. The report should include: axes, primary evidence (stdout + exit code), stability/env runs, mutation kills, bounds/residuals, verdict line with exact command and output.
+
+  Verdict semantics: I attacked the no-harm arm and it held; CONFIRMED. The trailing line: "CONFIRMED — python3 /tmp/rescrit43/clone/tools/mori-sources-appendonly.py --selftest → stdout: MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0, stderr empty, EXIT_CODE=0". Must be one line. The instruction: "Return: ... a one-line verdict: KILLED, SURVIVED, or CONFIRMED, then the exact command and its output." So final line of report contains verdict + command + output on one line. Keep it compact.
+
+  Run the --shared check first.
+
+• All three mutants killed (rc 1 each): M1 `pass=19 fail=3`, M2 `pass=13 fail=9`, M3 `pass=21 fail=1` — the selftest asserts hand-written expectations against real gate output, both directions. One last provenance gap: the frozen counter clones `--shared` (alternates into lane objects) — close that by rerunning in a `--shared` clone at the entering tip:shared-clone rc=0
+MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0
+75af8f6fc63dc736f07c02617bed4bf6c1ad7f880ffb49849b065b4d40d8f76b  /tmp/rescrit43/shared-clone/tools/mori-sources-appendonly.py
+
+
+• The --shared clone at the entering tip also gives rc 0, pass=22 fail=0, same tool sha. Every axis held:
+
+  1. Primary: rc 0, `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0`, empty stderr.
+  2. Stability: 4 runs byte-identical (sha e8e5f44c…).
+  3. Env/cwd independence: hostile GIT_* env, cwd=/ — same result.
+  4. Hygiene: TMPDIR-pinned run leaves zero residue; clone and lane tools/ clean; no writes outside /tmp.
+  5. Non-vacuity: 3 mutants all killed with named-case failures.
+  6. Provenance: clone at entering tip e3a2b58f…, tool sha 75af8f6f… matches lane; --shared mode (counter's clone mode) also green.
+
+  Now write the report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/ResCritNoHarm.md. Write only that file. End with one-line verdict: CONFIRMED + exact command + output.
+
+  Keep the report tight: axes, evidence with commands and outputs, mutants, residuals (bounds), verdict line.
+
+• Every axis held, including the counter's exact `--shared` clone mode. Writing the scoped report:WROTE
+under TMPDIR, and is non-vacuous (3/3 mutants killed).
+
+CONFIRMED — python3 /tmp/rescrit43/clone/tools/mori-sources-appendonly.py --selftest → stdout: "MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0", stderr: empty, exit code: 0
+
+
+• Report written. Summarize for the dispatcher: counterexample attempted, evidence, impacted axes, smallest safe correction (none needed), stop.
+
+• Review complete. Report written to `.ufo/waves/round-43/w1/ResCritNoHarm.md`.
+
+  **Attack summary — C1S no-harm arm (selftest in /tmp clone):**
+
+  - **Counterexample sought, none found.** Primary run in a `--no-hardlinks` clone at entering tip `e3a2b58f…` (tool sha `75af8f6f…` byte-identical to lane): stdout exactly `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0`, empty stderr, **exit code 0** — the exact bytes the frozen-adjacent counter's `noharm_cwd` check requires.
+  - **Stability/independence:** 4 runs sha-identical stdout; identical result under hostile `GIT_DIR`/`GIT_WORK_TREE`/`GIT_INDEX_FILE`, from `cwd=/`, and in the counter's actual `--shared` clone mode.
+  - **Hygiene:** TMPDIR-pinned run leaves zero residue; clone and lane `tools/` clean; nothing written outside /tmp; no lane Git/jj/index touch.
+  - **Non-vacuity (the strongest counterexample):** three one-line scratch mutants in /tmp copies all killed — deletion-blindness `pass=19 fail=3` rc 1, timing-flip `pass=13 fail=9` rc 1, loosened expectation `pass=21 fail=1` rc 1 — so `pass=22 fail=0` is discriminating, not a rubber stamp.
+  - **Impacted axes:** correctness, freshness, calibration (no-harm) — all held; no duplicate authority, no identity drift, no false provenance found.
+  - **Smallest safe correction:** none required.
+
+  CONFIRMED — python3 /tmp/rescrit43/clone/tools/mori-sources-appendonly.py --selftest → stdout: "MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0", stderr: empty, exit code: 0
+
+To resume this session: kimi -r session_39589578-0eca-456a-8970-9ff51e4b97b2

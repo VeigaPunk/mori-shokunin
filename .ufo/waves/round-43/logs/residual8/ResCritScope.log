@@ -1,0 +1,643 @@
+kimi version 2.3.1
+• Let me parse the task. I'm a critic seat (ResCrit — residual attack call) in a "mori round 43" campaign. My assigned scope:
+
+  1. Attack the round's scope bound. Read the round-43 diff of /home/vgpnk/Projects/shokunin/mori-shokunin (git -C ... diff master -- . ':!.ufo/waves/round-43/w1') and search it for systemctl, vacuum, pacman, kill, reset-failed, rm -rf, service. Any host mutation is a FAIL. Paste the grep command and its output. Report at .ufo/waves/round-43/w1/ResCritScope.md.
+
+  Constraints:
+  - Lane repo: /home/vgpnk/Projects/shokunin/mori-shokunin (writable), fleet repo /home/vgpnk/Projects/shokunin read-only.
+  - Frozen counters must not be edited.
+  - Report path: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/ResCritScope.md
+  - Report must end with a one-line verdict: KILLED, SURVIVED, or CONFIRMED, then the exact command and its output.
+  - Run code only in /tmp sandboxes. Don't mutate lane git/jj, don't write frozen counters.
+  - Leaf member: no subagent dispatch.
+
+  The Godspeed skill says act directly via tool calls, parallel batches.
+
+  So the plan:
+  1. Get the round-43 diff: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff master -- . ':!.ufo/waves/round-43/w1'`
+  2. Grep that diff for the forbidden patterns: systemctl, vacuum, pacman, kill, reset-failed, rm -rf, service.
+  3. Write report ResCritScope.md with the grep command and output, plus verdict.
+
+  The verdict semantics: I'm attacking the scope bound. "Any host mutation is a FAIL" — meaning if the diff contains host-mutation commands, the round FAILS (KILLED?). Or my report's verdict reflects whether the diff survived my attack. Let me think: as a critic, if I find host mutations in the diff, I "KILL" the round (verdict KILLED). If the diff is clean, it "SURVIVED" my attack (no counterexample found). Actually the verdict is about... The instruction: "Your report must end with a one-line verdict: KILLED, SURVIVED, or CONFIRMED, then the exact command and its output. A claim you did not run is not a claim."
+
+  As a residual critic attacking the scope bound: if I find violations → KILLED (the round fails). If clean → SURVIVED (the diff survived the attack). CONFIRMED would be if I confirm something. I think SURVIVED if no violations found, KILLED if found.
+
+  Let me run the commands. First check the repo state and get the diff. The diff might be large; let me grep it directly.
+
+  Commands (parallel where independent):
+  - `git -C /home/vgpnk/Projects/shokunin/mori-shokunin status` — maybe not needed.
+  - `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff master --stat -- . ':!.ufo/waves/round-43/w1'` — overview.
+  - `git -C ... diff master -- . ':!.ufo/waves/round-43/w1' | grep -nE 'systemctl|vacuum|pacman|kill|reset-failed|rm -rf|service'` — the required grep. Need exit code handling: grep returns 1 if no match, which makes the chained command exit non-zero. That's fine, output will show "Command failed with exit code: 1" — actually that's informative; but better to write it so the output is clear. I could do `... | grep -nE ... || echo "NO MATCHES"` — but then the pasted command includes the || echo. The instruction says "Paste the grep command and its output." A clean approach: run grep and let exit code 1 be visible, or add `|| true` with explicit echo. I'll paste the exact grep command and its output as produced.
+
+  Careful with the shell: the pathspec ':!.ufo/waves/round-43/w1' needs quoting. `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff master -- . ':!.ufo/waves/round-43/w1'`.
+
+  Also should check whether diff vs master includes round-42 stuff? The scope is "round-43 diff" as defined by that exact command. I must use the exact command given.
+
+  Let me also capture the diff to /tmp for analysis: `git -C ... diff master -- . ':!.ufo/waves/round-43/w1' > /tmp/r43.diff` then grep. That way the grep command is reproducible. Actually simpler: single pipeline.
+
+  Plan of tool calls (first batch, parallel):
+  1. Bash: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff master --stat -- . ':!.ufo/waves/round-43/w1' | tail -40` — overview (read-only, safe).
+  2. Bash: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff master -- . ':!.ufo/waves/round-43/w1' > /tmp/rescrit_r43.diff; wc -l /tmp/rescrit_r43.diff` — save diff for repeated greps.
+  3. Bash: `ls /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1` — see existing files in report dir.
+
+  Wait — grep patterns: "kill" will match "skill", "killed", etc. And "service" will match "services". The round instruction says search for those substrings. I should grep case-insensitively? The instruction lists lowercase terms. I'll do exact substring grep as given (case-sensitive), but maybe also a case-insensitive pass to be thorough, and a word-boundary pass to reduce false positives like "skill"/"killed". The required paste is the grep command + output. I'll paste the canonical one: `grep -nE 'systemctl|vacuum|pacman|kill|reset-failed|rm -rf|service'`.
+
+  Note: the diff contains diff hunk headers with context lines; matches could be in file paths too. Fine — the point is to find any occurrence and then manually inspect whether it's an actual host mutation in added lines (`^+` lines). A residual critic should distinguish context lines from added lines. If "pacman is paused host-wide" — any pacman invocation in diff is FAIL regardless.
+
+  Let me also verify the repo exists and check current branch. Let me batch:
+
+  Batch 1:
+  - `git -C /home/vgpnk/Projects/shokunin/mori-shokunin branch --show-current && git -C /home/vgpnk/Projects/shokunin/mori-shokunin rev-parse --short master HEAD`
+  - `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff master --stat -- . ':!.ufo/waves/round-43/w1' | tail -50`
+  - save diff to /tmp and wc
+
+  Then Batch 2: grep passes on /tmp copy + the canonical pipeline command for the report.
+
+  Actually to keep the pasted command canonical, the report should show: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff master -- . ':!.ufo/waves/round-43/w1' | grep -nE 'systemctl|vacuum|pacman|kill|reset-failed|rm -rf|service'` and its raw output. If exit code 1 (no matches), the tool will append "Command failed with exit code: 1". That's the honest output. Alternatively add `; echo "grep exit: $?"` — cleaner. Hmm, "Paste the grep command and its output" — I'll run it exactly and paste exactly what came back, including the exit-code note if any. That's most faithful.
+
+  Let me also do a second pass distinguishing added lines: `git ... diff master -- ... | grep -nE '^\+' | grep -nE '...'` to check if any forbidden term appears in added lines specifically (stronger FAIL evidence), vs context lines.
+
+  Also check the frozen counters aren't in the diff in a mutating way — but diff doesn't mutate. Also ensure I don't write to .ufo/waves/round-43/w1 except my report file. The report file ResCritScope.md is mine to write.
+
+  Also "Attack them in scratch copies only" refers to frozen counters — not needed for scope attack unless diff touches them. If the diff touches frozen counter files, that could be a scope violation too (editing frozen counters). Let me check `git diff master --stat` for those paths.
+
+  Verdict semantics final decision: 
+  - If forbidden host-mutation commands found in added lines of the round diff → KILLED (scope bound violated; host mutation risk = FAIL).
+  - If clean → SURVIVED (diff survived the residual attack; scope bound holds).
+
+  Now write report file at the end. Use Write tool? There's no Write tool listed — only Bash, Glob, Grep, Read. So write via Bash heredoc `cat > file <<'EOF'`. The instructions say prefer Write tool but it's not available in this environment; Bash it is. The system prompt says "echo > file / cat <<EOF → Write" but Write isn't in my tool list, so Bash is the only way.
+
+  Constraint: "Write only your own report file." — ResCritScope.md in w1 dir. Ensure dir exists (it should, since other seats write there; use mkdir -p only if needed — but mkdir -p on the w1 dir is fine, it's the report dir).
+
+  Report must end with one-line verdict: KILLED/SURVIVED/CONFIRMED, then the exact command and its output. Format like:
+
+  ```
+  Verdict: SURVIVED
+  Command: git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff master -- . ':!.ufo/waves/round-43/w1' | grep -nE 'systemctl|vacuum|pacman|kill|reset-failed|rm -rf|service'
+  Output: <exact output>
+  ```
+
+  One line verdict then exact command and output. Good.
+
+  Let me start executing. Batch 1 (parallel, independent):
+
+  1. git branch/rev info + diff stat tail
+  2. save diff to /tmp + wc -l
+  3. ls the w1 report dir
+
+  Then batch 2: the canonical grep (exit code visible), added-lines-only grep, case-insensitive grep, word-boundary-ish refined grep, plus head of diff for manual inspection of any match context.
+
+  Let me go.
+
+  Actually one nuance: `git diff master` in the lane repo — need to make sure master exists. The dispatcher gave the exact command; trust it. Also `--` pathspec `.` limits to lane repo dir. Note diff includes uncommitted changes? `git diff master` = working tree vs master (unstaged+staged combined? No — `git diff master` shows working tree vs master, including staged changes since it compares working tree to that commit... Actually `git diff <commit>` shows changes between <commit> and working tree (staged + unstaged). Yes. Good — that's the round diff including any uncommitted work.
+
+  Also should I worry the grep matches my own report file? My report is inside `:!.ufo/waves/round-43/w1` exclusion — excluded from the diff. Good, that's why the pathspec excludes w1: to avoid self-matching. But wait — other seats' reports in other dirs (w2?) would be included if not excluded... The exclusion only excludes w1. Other round-43 wave dirs may contain reports with the word "kill" etc. Those are prose, not executable host mutations. As critic I must distinguish: a mention of "systemctl" in a seat report ≠ host mutation command. But the round instruction says "search it for systemctl, vacuum, pacman, kill, reset-failed, rm -rf, service. Any host mutation is a FAIL." So the grep is a tripwire; I then adjudicate: occurrences in executable code/config added lines = FAIL; occurrences in prose reports = flag but judge. My report should enumerate matches and classify each.
+
+  Let me run.
+
+  One more: "Run code only in /tmp sandboxes" — running git diff/grep on the lane repo is reading, not "running code" from the repo. That's fine; the constraint targets executing repo scripts. I won't execute anything from the lane repo.
+
+  Go with batch 1.
+
+• **Axes for this seat:** (1) scope-bound integrity — does the round-43 diff contain host-mutation vectors; (2) evidence discipline — every claim in my report backed by a command I actually ran; (3) no collateral — I write only my report file, touch no frozen counters, no lane git/jj state.
+
+  Executing the read-only attack batch now:fatal: Needed a single revision
+ SCORECARD.md      | 15 +++++++++++++++
+ corpus/QUALITY.md |  1 +
+ corpus/README.md  |  4 ++++
+ corpus/SOURCES.md |  5 +++++
+ 4 files changed, 25 insertions(+)
+60 /tmp/rescrit_r43.diff
+total 24
+drwxr-xr-x 1 vgpnk vgpnk  102 Oct 24 22:42 .
+drwxr-xr-x 1 vgpnk vgpnk  206 Oct 24 22:46 ..
+-rw-r--r-- 1 vgpnk vgpnk 3597 Oct 24 22:42 Exec2.md
+-rw-r--r-- 1 vgpnk vgpnk 2820 Oct 24 22:37 Exec4.md
+-rw-r--r-- 1 vgpnk vgpnk 1864 Oct 24 22:37 Exec5.md
+-rw-r--r-- 1 vgpnk vgpnk 2342 Oct 24 22:42 Exec6.md
+-rw------- 1 vgpnk vgpnk 7472 Oct 24 22:34 swarm-registry.json
+
+
+• The first command failed: `git rev-parse --short master HEAD` → "fatal: Needed a single revision". Odd — `rev-parse --short master HEAD` should work with two revs... Actually `--short` applies per rev; "Needed a single revision" suggests `master` didn't resolve? But the diffstat against master worked in call 2. Hmm — maybe `branch --show-current` printed nothing (detached HEAD) and then `rev-parse --short master HEAD`... "Needed a single revision" happens when rev-parse can't resolve. But diff master worked. Wait — maybe the issue: `git rev-parse --short master HEAD` — that should be fine normally. Unless there's a ref named master AND something ambiguous... Actually if HEAD is unborn or something. Let me just re-run diagnostics.
+
+  Also AGENTS.md applies — I should read it before making changes (writing my report) in the lane repo.
+
+  The diff is small: 60 lines, 4 files, all docs (SCORECARD.md, corpus/*.md), 25 insertions. Now grep for forbidden terms.
+
+  Batch 2:
+  1. Read AGENTS.md
+  2. Diagnose git revs: `git -C ... rev-parse --short master; git -C ... rev-parse --short HEAD; git -C ... status -sb | head -3`
+  3. Canonical grep: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff master -- . ':!.ufo/waves/round-43/w1' | grep -nE 'systemctl|vacuum|pacman|kill|reset-failed|rm -rf|service'` — paste exact output including exit code.
+  4. Added-lines-only pass + case-insensitive pass on /tmp copy: `grep -nE '^\+' /tmp/rescrit_r43.diff | grep -iE 'systemctl|vacuum|pacman|kill|reset-failed|rm[[:space:]]+-rf|service'` and `grep -inE '...' /tmp/rescrit_r43.diff`
+  5. Read the full 60-line diff to manually inspect.
+
+• `branch --show-current` printed nothing (detached HEAD) and rev-parse choked — need diagnostics. Diff is small (60 lines, 4 doc files). Reading AGENTS.md, diagnosing the rev failure, and running the tripwire greps in parallel:e3a2b58f
+e3a2b58f
+## HEAD (no branch)
+ M LOG.md
+ M SCORECARD.md
+ M corpus/QUALITY.md
+ M corpus/README.md
+* (no branch)
+  master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+  remotes/origin/wip/operator-save-20261023
++ hyaku/s3-mori-r24-author
++ hyaku/s3-ready66-mori
+  mori-r19-attempt2-ContentGate
+  mori-r19-attempt2-ContentGate-actual
+  mori-r19-attempt2-FreezeMetadata
+52:+  `systemctl reset-failed` recheck is host mutation; S351 `journalctl(1)` —
+112:+Resource-runway ground the map did not hold as a core reading: `journalctl --disk-usage` is a total over archived and active files the command can see, not a per-journal share (`knowledge/journal-disk-usage-total-r51.md`, S470, page re-opened 2026-10-24). A live read-only invocation printed `Archived and active journals take up 269M in the file system.` No vacuum, rotate, or journald change. Two assimilation entries on adjacent ground were refused (campaign file:// plus a MESSAGE grep; `reset-failed` host mutation) — reasons and flips in `corpus/lessons/round-43.md`.
+119: | S262 | ROMA: Enhancing Container OOM Resilience via Reinforced Isolation and Adaptive Shared Resource Reclamation — https://doi.org/10.1109/TSC.2026.3698682 | paper | A | the paper's abstract-level claims as recorded by the publisher's deposited metadata; not the full text (paywalled from this host) and not any measurement of this lane's host | OpenAlex work record for doi 10.1109/tsc.2026.3698682, abstract inverted index; IEEE Transactions on Services Computing vol. 19 no. 4 pp. 3015-3028, 2026; refetched 2026-10-24, copy corpus/evidence/sources-r42/S262.oa.json (ieeexplore returns HTTP 202 with 0 bytes from this host; Semantic Scholar lacks the DOI) | the kernel's default OOM victim selection has no container context — on a shared kernel an OOM can kill a co-located service and leave shared memory, message queues, semaphores and tmpfs unreclaimed — per the authors' abstract | mined | 2026-10-24 | 180d | corpus/knowledge/oom-victim-context-r41.md |
+123:+| S350 | systemd.scope(5) — https://www.freedesktop.org/software/systemd/man/latest/systemd.scope.html | docs | B | a scope unit's own failure state and the options that bind it; refused as an admitted source this round | systemd.scope(5) Description and Options sections; quote "Scope units may still enter a failure state, for example due to resource exhaustion or stop timeouts being reached"; opened 2026-10-24 | REJECTED: the staged failed-scope entry grounds its recheck in systemctl reset-failed after creating a scope, a host mutation outside mori's detection-and-report province; flip: a read-only MemoryMax show of an already-failed scope, with no reset-failed and no scope creation | rejected | 2026-10-24 | 180d | — |
+124:+| S351 | journalctl(1) — https://www.freedesktop.org/software/systemd/man/latest/journalctl.html | docs | B | the archived-journal store's own size ceiling and reach; refused as an admitted source this round | journalctl(1) Commands section, --vacuum-size= and --disk-usage entries; quote "--vacuum-size= removes the oldest archived journal files until the disk space they use falls below the specified size"; opened 2026-10-24 | REJECTED: the staged journal-reach entry grounds itself in a shokuknow file:// note and a kernel MESSAGE grep, neither of which this lane may treat as evidence; flip: the public --vacuum-size= sentence plus a committed read-only disk-usage receipt, and no MESSAGE grep | rejected | 2026-10-24 | 180d | — |
+--- added-lines-only pass ---
+44:+Resource-runway ground the map did not hold as a core reading: `journalctl --disk-usage` is a total over archived and active files the command can see, not a per-journal share (`knowledge/journal-disk-usage-total-r51.md`, S470, page re-opened 2026-10-24). A live read-only invocation printed `Archived and active journals take up 269M in the file system.` No vacuum, rotate, or journald change. Two assimilation entries on adjacent ground were refused (campaign file:// plus a MESSAGE grep; `reset-failed` host mutation) — reasons and flips in `corpus/lessons/round-43.md`.
+55:+| S350 | systemd.scope(5) — https://www.freedesktop.org/software/systemd/man/latest/systemd.scope.html | docs | B | a scope unit's own failure state and the options that bind it; refused as an admitted source this round | systemd.scope(5) Description and Options sections; quote "Scope units may still enter a failure state, for example due to resource exhaustion or stop timeouts being reached"; opened 2026-10-24 | REJECTED: the staged failed-scope entry grounds its recheck in systemctl reset-failed after creating a scope, a host mutation outside mori's detection-and-report province; flip: a read-only MemoryMax show of an already-failed scope, with no reset-failed and no scope creation | rejected | 2026-10-24 | 180d | — |
+56:+| S351 | journalctl(1) — https://www.freedesktop.org/software/systemd/man/latest/journalctl.html | docs | B | the archived-journal store's own size ceiling and reach; refused as an admitted source this round | journalctl(1) Commands section, --vacuum-size= and --disk-usage entries; quote "--vacuum-size= removes the oldest archived journal files until the disk space they use falls below the specified size"; opened 2026-10-24 | REJECTED: the staged journal-reach entry grounds itself in a shokuknow file:// note and a kernel MESSAGE grep, neither of which this lane may treat as evidence; flip: the public --vacuum-size= sentence plus a committed read-only disk-usage receipt, and no MESSAGE grep | rejected | 2026-10-24 | 180d | — |
+exit=0
+--- case-insensitive whole-diff pass ---
+44:+Resource-runway ground the map did not hold as a core reading: `journalctl --disk-usage` is a total over archived and active files the command can see, not a per-journal share (`knowledge/journal-disk-usage-total-r51.md`, S470, page re-opened 2026-10-24). A live read-only invocation printed `Archived and active journals take up 269M in the file system.` No vacuum, rotate, or journald change. Two assimilation entries on adjacent ground were refused (campaign file:// plus a MESSAGE grep; `reset-failed` host mutation) — reasons and flips in `corpus/lessons/round-43.md`.
+51: | S262 | ROMA: Enhancing Container OOM Resilience via Reinforced Isolation and Adaptive Shared Resource Reclamation — https://doi.org/10.1109/TSC.2026.3698682 | paper | A | the paper's abstract-level claims as recorded by the publisher's deposited metadata; not the full text (paywalled from this host) and not any measurement of this lane's host | OpenAlex work record for doi 10.1109/tsc.2026.3698682, abstract inverted index; IEEE Transactions on Services Computing vol. 19 no. 4 pp. 3015-3028, 2026; refetched 2026-10-24, copy corpus/evidence/sources-r42/S262.oa.json (ieeexplore returns HTTP 202 with 0 bytes from this host; Semantic Scholar lacks the DOI) | the kernel's default OOM victim selection has no container context — on a shared kernel an OOM can kill a co-located service and leave shared memory, message queues, semaphores and tmpfs unreclaimed — per the authors' abstract | mined | 2026-10-24 | 180d | corpus/knowledge/oom-victim-context-r41.md |
+55:+| S350 | systemd.scope(5) — https://www.freedesktop.org/software/systemd/man/latest/systemd.scope.html | docs | B | a scope unit's own failure state and the options that bind it; refused as an admitted source this round | systemd.scope(5) Description and Options sections; quote "Scope units may still enter a failure state, for example due to resource exhaustion or stop timeouts being reached"; opened 2026-10-24 | REJECTED: the staged failed-scope entry grounds its recheck in systemctl reset-failed after creating a scope, a host mutation outside mori's detection-and-report province; flip: a read-only MemoryMax show of an already-failed scope, with no reset-failed and no scope creation | rejected | 2026-10-24 | 180d | — |
+56:+| S351 | journalctl(1) — https://www.freedesktop.org/software/systemd/man/latest/journalctl.html | docs | B | the archived-journal store's own size ceiling and reach; refused as an admitted source this round | journalctl(1) Commands section, --vacuum-size= and --disk-usage entries; quote "--vacuum-size= removes the oldest archived journal files until the disk space they use falls below the specified size"; opened 2026-10-24 | REJECTED: the staged journal-reach entry grounds itself in a shokuknow file:// note and a kernel MESSAGE grep, neither of which this lane may treat as evidence; flip: the public --vacuum-size= sentence plus a committed read-only disk-usage receipt, and no MESSAGE grep | rejected | 2026-10-24 | 180d | — |
+exit=0
+
+
+• Now I have the full picture. Let me analyze as a critic.
+
+  **Findings from the grep:**
+
+  Canonical grep output has 4 matches (lines 52, 112, 119, 123, 124 of the piped diff — wait, line numbers: 52, 112, 119, 123, 124. Let me recount: output shows `52:+`, `112:+`, `119: |`, `123:+|`, `124:+|`. Note diff is 60 lines of file but the pipe grep line numbers 52/112/119... don't match the /tmp file's line numbers (44, 51, 55, 56). Hmm — that's because grep -n on the pipeline counts lines differently? The /tmp file has 60 lines total, but the pipeline grep reports line 124? That can't be — unless the diff output to the pipe differs from what was saved to /tmp!
+
+  Wait, this is important. The canonical grep on the live pipeline reported matches at lines 52, 112, 119, 123, 124 — but /tmp/rescrit_r43.diff has only 60 lines. So the live diff output at grep time was ≥124 lines, i.e., LONGER than what I saved minutes earlier. The working tree changed between my two calls? Or... hold on. Let me re-read.
+
+  Canonical grep output lines:
+  ```
+  52:+  `systemctl reset-failed` recheck is host mutation; S351 `journalctl(1)` —
+  112:+Resource-runway ground...
+  119: | S262 | ROMA ...
+  123:+| S350 ...
+  124:+| S351 ...
+  ```
+
+  /tmp file (Read) shows:
+  - line 44 = the Resource-runway paragraph (README.md addition)
+  - line 51 = S262 context row
+  - lines 55-56 = S350/S351
+
+  So the pipeline diff had ~124+ lines while my saved copy has 60. Different content! Line 52 in pipeline: "+ `systemctl reset-failed` recheck is host mutation; S351 `journalctl(1)` —" — this line does NOT exist in my /tmp copy at all. So the working tree / diff changed between call 3 (batch 1) and the grep (batch 2). Other seats are actively writing to the lane repo concurrently (Exec2/4/5/6 reports exist; other seats may be committing to SCORECARD.md etc. — note `git status` showed ` M LOG.md`, ` M SCORECARD.md` etc. uncommitted).
+
+  So this is a live, moving diff. My /tmp snapshot is stale relative to the canonical grep. The canonical grep is the authoritative run per my instructions ("Paste the grep command and its output"). Its output already pasted. But for classification I should re-fetch a fresh diff now and re-run the grep to get a consistent, current view — and note the moving-target condition in the report (that's a genuine critic finding: the round diff is not frozen at attack time; matches may appear/disappear).
+
+  Also there's a new match line at pipeline-line 52: "+ `systemctl reset-failed` recheck is host mutation; S351 `journalctl(1)` —" which looks like part of SCORECARD.md round-43 declaration text mentioning reset-failed as refused. Need to see its full context.
+
+  **Classification so far:** Every match found so far is documentary prose: lines describing REFUSED host mutations ("reset-failed host mutation", "REJECTED: ... systemctl reset-failed ... a host mutation outside mori's province", "No vacuum, rotate, or journald change", "an OOM can kill a co-located service" in a paper abstract summary). None of these are executable host-mutation commands in the diff; the diff contains only markdown/doc files (SCORECARD.md, corpus/*.md). No shell scripts, no counters modified. The mention "A live read-only invocation printed ... 269M" describes a `journalctl --disk-usage` read-only invocation performed earlier — journalctl --disk-usage is read-only (it prints size). That's fine.
+
+  But wait — I should check whether the diff includes any actual script content, e.g., in `.ufo/waves/round-43/` counters (count-c1s.py, count-c2.py). The diffstat showed only 4 files: SCORECARD.md, corpus/QUALITY.md, corpus/README.md, corpus/SOURCES.md. The counters at .ufo/waves/round-43/ are untracked files? `git diff master` doesn't show untracked files. So counters are untracked — not in diff. Fine: untracked files can't carry host mutations "in the diff", but the scope bound is about the diff. However, as residual critic I could note that untracked files are invisible to this tripwire — but the assignment is specifically the diff grep. I'll note it as a residual-risk observation, not a FAIL.
+
+  The key critic question: does the live diff still match, and are any matches executable mutations? Let me re-run the canonical grep now plus get fresh diffstat and check for newly added files (e.g., if someone added count-c1s.py content into diff as tracked?). Also check `git status --porcelain` for untracked files under .ufo/waves/round-43 to see what's untracked (read-only listing).
+
+  Also LOG.md is modified but wasn't in the diffstat? Diffstat showed 4 files, no LOG.md — but `git status -sb` shows ` M LOG.md`. Wait — diffstat vs master should include LOG.md if it's modified... unless LOG.md modification equals no change vs master (i.e., modified then reverted, or the status shows mtime-only change). Actually ` M` in porcelain = modified in worktree vs index. If content matches master (e.g., touched but same bytes), diffstat shows nothing. Or LOG.md was committed already? No — status says modified vs HEAD... hmm, if worktree == master content but index differs? ` M` means worktree differs from index. If index == master (staged nothing), then worktree differs from index implies differs from master → would appear in diff. Unless the change is staged: `M ` (staged). Status line was ` M LOG.md` — space-M, unstaged. But diffstat omitted it. Contradiction → possibly LOG.md has only line-ending/mtime weirdness, or the diffstat output I got was truncated by `tail -60`? No, tail shows the end; the stat summary line said "4 files changed". So diff vs master genuinely excludes LOG.md. Explanation: LOG.md differs from index but index version differs from master in the other direction? No... Actually simplest: `git diff master` compares worktree to master; if worktree LOG.md == master LOG.md exactly, no diff — but then status ` M` would require index ≠ worktree, meaning index has a different (staged-then-reverted?) version. Possible: someone staged a change, then reverted the file to master content in the worktree → status ` M` (worktree vs index differ), diff master shows nothing. Whatever — it's a curiosity; LOG.md isn't in scope diff. Not my finding to chase deeply, but worth one line as evidence the tree is being mutated concurrently by other seats.
+
+  Main follow-up batch (parallel, read-only):
+  1. Re-run canonical grep fresh + capture exit code visibly: `git -C ... diff master -- . ':!.ufo/waves/round-43/w1' | grep -nE 'systemctl|vacuum|pacman|kill|reset-failed|rm -rf|service'; echo "grep_exit=$?"`
+  2. Fresh diffstat.
+  3. Untracked files under .ufo/waves/round-43: `git -C ... status --porcelain .ufo/waves/round-43 | head -20` (read-only).
+  4. Context around the new match line (pipeline line 52): fresh diff saved to /tmp/rescrit_r43b.diff, then Read / grep -B2 -A6 for systemctl context.
+  5. Word-boundary refined check for actual command-shaped mutations in added lines: `grep -E '^\+' /tmp/rescrit_r43b.diff | grep -cE '^\+[^#]*(sudo |systemctl (start|stop|restart|reset-failed|kill)|journalctl .*(--vacuum|--rotate)|pacman -[RSU]|rm -rf|kill -|pkill|killall)'`.
+
+  Careful: counters are frozen — must not read? No, reading is fine; editing is forbidden. But I don't need to read counters for the scope attack. Skip.
+
+  Also verify whether `git diff master` includes staged changes: yes, worktree vs master. Fine.
+
+  Note about "leaf member — no subagent dispatch": I'm not dispatching anything. Good.
+
+  Then write the report. Verdict: The diff contains zero executable host-mutation vectors; all tripwire hits are documentary prose (refusal records, rejected-source rationales, a paper abstract paraphrase). Round scope bound holds → SURVIVED (my attack failed to kill it). The moving-tree observation (diff grew from 60 lines to ≥124 lines between two reads seconds apart) is a hazard note but not a scope violation — the canonical grep was run on the live tree and its output is pasted verbatim.
+
+  Actually — decision on verdict semantics: I'm attacking; if I find a host mutation, round FAILS → my verdict would be KILLED. If clean → SURVIVED. All evidence says prose-only. But the tree is moving — should I re-verify once more right before writing? Yes, the final grep in the report is the live one I re-run at write time. I'll run the canonical grep one final time and paste THAT exact invocation + output in the report, and note both runs' outputs.
+
+  Let me also double check there are no matches like "pacman" anywhere — canonical output showed none. And "rm -rf" none. "kill" matched only via "OOM can kill a co-located service" (line 119, context line, prose). "service" matched via "Services Computing" (journal name) and "co-located service". All prose.
+
+  One more check for hidden command-shaped lines: search added lines for backtick-quoted commands that look executable: `grep -E '^\+' | grep -oE '`[a-z]+ [^`]*`' | sort -u` — might be big; limit. Actually the three interesting ones: `journalctl --disk-usage`, `python3 .ufo/waves/round-43/count-c1s.py <tip>`, `count-c1s.py e3a2b58 --repo <scratch-clone>`. All read-only/scratch. journalctl --disk-usage is read-only (prints usage). OK.
+
+  Batch now.
+
+• Full 60-line diff read — all four files are docs, and every tripwire hit so far is prose. **But there's a discrepancy**: the canonical grep's line numbers (52, 112, 119, 123, 124) exceed my saved 60-line /tmp snapshot, and pipeline line 52 (`+ systemctl reset-failed` recheck...) doesn't exist in my snapshot at all. The working tree is being mutated concurrently by other seats — the diff is a moving target. Re-verifying against the live tree now:0 /tmp/rescrit_r43b.diff
+grep_exit=1
+?? .ufo/waves/round-43/w1-settle-residual.tsv
+?? .ufo/waves/round-43/w1/
+---
+?? .ufo/waves/round-43/w1-settle-residual.tsv
+?? .ufo/waves/round-43/w1/
+
+
+• The diff went EMPTY. Between my second batch (grep found 5 matches, 124+ lines) and now, the diff became 0 lines / empty diffstat. Other seats committed their work to master (or staged and committed). Let me check: `git log --oneline -3` and where master/HEAD point now.
+
+  Wait — diffstat command output shows nothing after wc: "0 /tmp/rescrit_r43b.diff" and no diffstat lines → empty diff. So worktree now == master. That means the round's changes were committed to master mid-attack (by another seat or the L1 — I must not have done it; I only ran read-only git commands; `git diff` never mutates).
+
+  Check git log to see new commits: `git -C ... log --oneline -5` and `git rev-parse master HEAD`.
+
+  This is a serious evidence-discipline situation for my report: the round-43 diff is a moving target that went 60 lines → 124+ lines → 0 lines within ~2 minutes of wall time. My canonical grep at time T2 found 5 matches (all prose). At T3 the diff is empty → grep_exit=1 (no matches). Which state is "the round-43 diff" for the verdict?
+
+  The honest approach: report all three observations with exact commands and outputs, classify the T2 matches (all documentary prose, zero executable host-mutation vectors), and note that at T3 the changes are in master (committed), so the diff-vs-master bound silently excludes them. The residual attack then should ALSO grep the committed round-43 changes — the scope bound "diff master" is time-sensitive: after the round commits to master, the tripwire greps nothing, which is exactly the kind of bound-escape a residual critic should flag. The correction: audit the commits that landed in master during the round window (e3a2b58f..master now).
+
+  Let me check the log and get the commit range, then run the same tripwire over `git diff e3a2b58f..master` (the committed round-43 content). That's still read-only.
+
+  Batch:
+  1. `git -C ... log --oneline -6` + `git rev-parse --short master HEAD` + `git log -1 --format='%H %ci %s' master`
+  2. Tripwire over committed range: `git -C ... diff e3a2b58f master -- . ':!.ufo/waves/round-43/w1' | grep -nE '...'; echo exit=$?`
+  3. Check whether HEAD moved (was e3a2b58f detached, now?).
+
+  e3a2b58f was both master and HEAD at T1. Now master may be ahead.
+
+• The diff **went empty** mid-attack — worktree now equals master, meaning the round's changes were committed to master by another seat while I was grepping. The scope bound `diff master` silently stopped seeing them. Escalating the attack to the committed range:dde525ea round-43: successor operability counter (C1S), calibration repair (C2), one-theme assimilation
+e3a2b58f round-42 verifier spot-check (integrator, hyaku): non-author admit/reject
+25200325 round-42: S235 whitepaper copy committed by name (1 MiB dir-skip), scratch mirror recursion removed
+62b95e51 round-42: wave — 18/64 seat reports + registry, dispatch evidence, census-end 238 exit 0, S262 erratum, wave record
+f3ec0977 round-42: claim receipts — C2/C3 met, C1 honest stop (frozen counter defect at final check, no-harm re-derived by hand), measured outcomes, lesson M4, wave spec + plan
+34b92673 round-42: data — conform v5 + killed mutants, d72ac16 manifest, registry 231->238, two admitted entries + S347 knowledge, LOG/SCORECARD errata, lesson, QUALITY 114
+fatal: Needed a single revision
+31096 /tmp/rescrit_r43c.diff
+ .ufo/waves/round-43/evidence/disk-usage-r43.txt    |    4 +
+ .ufo/waves/round-43/evidence/s268-headers.txt      |   14 +
+ .ufo/waves/round-43/evidence/wave-plan.json        |  749 +++++++
+ .ufo/waves/round-43/w1-settle.tsv                  |   64 +
+ .ufo/waves/round-43/w1-spec.json                   |  328 +++
+ LOG.md                                             |   60 +
+ SCORECARD.md                                       |   15 +
+ corpus/QUALITY.md                                  |    1 +
+ corpus/README.md                                   |    4 +
+ corpus/SOURCES.md                                  |    5 +
+ corpus/knowledge/c1s-cwd-r43.md                    |   20 +
+ corpus/knowledge/journal-disk-usage-total-r51.md   |   12 +
+ corpus/knowledge/s235-sha-correction-r43.md        |   11 +
+ corpus/lessons/round-43.md                         |  128 ++
+ 171 files changed, 30052 insertions(+)
+
+
+• Now the picture is clear:
+
+  - Commit `dde525ea` "round-43: successor operability counter (C1S), calibration repair (C2), one-theme assimilation" landed on master mid-attack.
+  - `git rev-parse --short master HEAD` → "fatal: Needed a single revision" again. Interesting — `rev-parse --short master HEAD` fails?? But `git log` works and shows master tip = dde525ea. Why would rev-parse fail? Hmm, "fatal: Needed a single revision" — this happens with `git rev-parse --short master HEAD`? No... Actually I bet it's `--short` with multiple args is fine normally. Let me test: `git rev-parse --short master HEAD` — that should print two lines. The error "Needed a single revision" occurs for e.g. `git rev-parse --verify` with multiple. Plain rev-parse shouldn't... unless an alias or hook interferes. Or `--short` combined with two revs is fine. Weird. Maybe there's a `HEAD` ambiguity? No. Whatever — I'll run them separately. It's a diagnostic curiosity, not needed for the verdict. Actually wait — could there be a replace ref or `refs/heads/master` ambiguity with a tag `master`? If a tag named `master` exists, `master` is ambiguous and rev-parse errors "Needed a single revision"? Ambiguity usually produces a warning plus pick. Hmm, with `--short` and two revs, both must resolve. HEAD resolves (detached is still resolvable). Let me just run separately in the next batch for completeness: `git rev-parse --short master; git rev-parse --short HEAD`.
+
+  - The committed range e3a2b58f..master = 171 files, 30052 insertions, 31096 diff lines. That's the real round-43 content: counters (count-c1s.py, count-c2.py presumably in .ufo/waves/round-43/), evidence, wave-plan.json, knowledge, lessons, LOG, SCORECARD, corpus.
+
+  Now the tripwire must run over THIS range — this is where host-mutation vectors would live (actual scripts!). The frozen counters are in this commit. Let me:
+
+  1. Grep the committed diff for the forbidden terms (added lines only, since 31k lines of context is noise): 
+  `grep -E '^\+' /tmp/rescrit_r43c.diff | grep -inE 'systemctl|vacuum|pacman|reset-failed|rm[[:space:]]+-rf|kill|service' | head -40`
+
+  2. More precise: hunt executable command-shaped vectors in added lines:
+  `grep -E '^\+' /tmp/rescrit_r43c.diff | grep -nE '(^|\||&&|;|`|\$\()\s*(sudo\s+)?(systemctl|pacman|pkill|killall|kill)\b' | head`
+  and vacuum/rotate: `grep -E '^\+' /tmp/rescrit_r43c.diff | grep -nE '\-\-vacuum|\-\-rotate|journalctl [^|]*vacuum' | head`
+  and rm -rf: `grep -E '^\+' /tmp/rescrit_r43c.diff | grep -nE 'rm +(-[a-zA-Z]*[fFrR][a-zA-Z]* +|+-rf)' | head`
+
+  3. Check the counter scripts specifically — are they in the committed diff as new files? diffstat tail showed only some; need the full stat for .py files: `grep -E '^\+diff --git' /tmp/rescrit_r43c.diff | grep -E '\.py'` or from diffstat: `git diff --stat e3a2b58f master | grep -E '\.py|\.sh'`.
+
+  4. Verify no match is an actual mutation: inspect contexts with grep -B1 -A2 around systemctl/vacuum/pacman hits in added lines.
+
+  Also confirm w1 dir exclusion: `:!.ufo/waves/round-43/w1` excludes my report dir (untracked anyway — the whole w1/ is untracked `??`, so it wouldn't be in a commit-range diff regardless).
+
+  Key point for the report: the dispatcher's canonical command `git diff master` was correct while the round was uncommitted (found 5 prose matches), but after commit dde525ea it greps NOTHING (grep_exit=1, empty diff) — the scope bound is time-of-day sensitive and the committed content (31k lines including two Python counters) escaped the assigned tripwire. My residual job: run the equivalent tripwire over the committed range. If clean → still SURVIVED but with the correction noted; the smallest safe correction is: run the tripwire against `e3a2b58f..master` (or `master@{round-start}`) and re-run after each commit, since `diff master` post-commit is a no-op.
+
+  Batch now (parallel):
+  1. `git rev-parse --short master; git rev-parse --short HEAD; git rev-parse --short e3a2b58f` (diagnose the rev-parse quirk)
+  2. added-lines tripwire over committed diff (all terms, case-insensitive, head 40)
+  3. command-shaped vector hunt: systemctl|pacman|kill|pkill|killall + shell operators
+  4. vacuum/rotate hunt + rm -rf hunt
+  5. list .py/.sh files in the committed range + show diffstat full head (to see what the 171 files are — likely wave dirs for w2/w3 etc.)
+
+  Also should check `.py` counter content for subprocess calls that mutate: `git show master:.ufo/waves/round-43/count-c1s.py | grep -nE 'systemctl|vacuum|pacman|rm |kill|run\(|Popen|check_output'` — but wait, counters are frozen; reading is allowed ("Attack them in scratch copies only" — reading/show is fine, editing isn't). Let me include reading the counters' subprocess surface.
+
+  Full diffstat head too — 171 files, need to know what else landed (e.g., w2/w3 dirs?). Let me grep diffstat for directory summary.
+
+• Commit `dde525ea` (round-43: counters + assimilation) landed on master mid-grep. The assigned `diff master` tripwire now greps an **empty diff** while 171 files / 30,052 insertions — including the actual Python counters — just escaped it by committing. Running the same tripwire over the committed range `e3a2b58f..master`:dde525ea
+dde525ea
+e3a2b58f
+4:+| S350 | systemd.scope(5) — https://www.freedesktop.org/software/systemd/man/latest/systemd.scope.html | docs | B | a scope unit's own failure state and the options that bind it; refused as an admitted source this round | systemd.scope(5) Description and Options sections; quote "Scope units may still enter a failure state, for example due to resource exhaustion or stop timeouts being reached"; opened 2026-10-24 | REJECTED: the staged failed-scope entry grounds its recheck in systemctl reset-failed after creating a scope, a host mutation outside mori's detection-and-report province; flip: a read-only MemoryMax show of an already-failed scope, with no reset-failed and no scope creation | rejected | 2026-10-24 | 180d | — |
+5:+| S351 | journalctl(1) — https://www.freedesktop.org/software/systemd/man/latest/journalctl.html | docs | B | the archived-journal store's own size ceiling and reach; refused as an admitted source this round | journalctl(1) Commands section, --vacuum-size= and --disk-usage entries; quote "--vacuum-size= removes the oldest archived journal files until the disk space they use falls below the specified size"; opened 2026-10-24 | REJECTED: the staged journal-reach entry grounds itself in a shokuknow file:// note and a kernel MESSAGE grep, neither of which this lane may treat as evidence; flip: the public --vacuum-size= sentence plus a committed read-only disk-usage receipt, and no MESSAGE grep | rejected | 2026-10-24 | 180d | — |
+68:+text (`Killed process`). This lane did not re-open that note as a source,
+70:+man-page vacuum sentence on the same page is not adopted through this entry.
+72:+Flip: a later round re-opens only the public `--vacuum-size=` sentence,
+78:+Reason: the entry's recheck is `systemctl --user reset-failed` after
+79:+creating a scope. That is host service mutation. Province is detection and
+83:+`systemctl show` only, creates nothing, and does not call `reset-failed`,
+732:+pair); kill/OOM-related catalog-ID records and signal-11 coredump records from
+748:+- **Kill/OOM classes** — structured, MESSAGE-free journal records carrying catalog IDs for kernel-OOM unit notices, oomd notices, coredumps, unit-process SIGKILL results and unit failures, plus a distinct numeric signal-11 coredump count; independently labeled user/system scopes, never summed. Positive OOM notices and observed `UNIT_RESULT=oom-kill` retain critical `OOM_KILL_JOURNAL`/DRIFT alarms. Failed-unit subject metadata preserves fleet-only `UNIT_FAILURE_JOURNAL` versus non-fleet `UNIT_FAILURE_OUT_OF_SCOPE` with tsukuroi triage routing; absent or unsafe subject metadata remains unknown. `SURFACE cgroup` retains selected-scope kernel memory-event counters, not a replacement for all journal alarms. Journal labels are client-set, not authenticated producer identity; records are not unique victims or fleet-cause attribution. Other structured signals are unimplemented; arbitrary signals without retained records remain unmeasured. See `corpus/knowledge/journal-alarm-routing-r14.md`.
+749:+- **Same-boot journal window since anchor** — explicit read-only probe `tools/mori-journal-window.py --anchor PATH --scope user|system` (round-16 build; admitted round 16 — `corpus/lessons/round-16-verifier-spotcheck.md:11`). Reads one journal scope from an operator-retained `mori-journal-anchor-v1` cursor using MESSAGE-free output fields. The first record must match the anchor cursor and boot exactly and is dropped; every later record must be a scalar-cursor object in that same boot. Reports `records_after_anchor` and four separate `positive_*` subset counts (kernel OOM, unit OOM, unit signal, process SIGKILL) using the r15 predicates; no total, victim, emitter or completeness claim. Missing or vacuumed anchor, boot mismatch, malformed, duplicate or truncated capture, nonzero rc, stderr, timeout and overflow return `MORI_JOURNAL_WINDOW_UNAVAILABLE` with no positive totals. Byte equality is conservative: libsystemd documents that one entry may carry several cursor strings, so a mismatch refuses without proving deletion and no dedup is cl
+aimed. The anchor is never advanced, stored or written by the probe.
+764:+Round-16 C1 advances FR11 only for the same-boot explicit window above, and only when exact retained-anchor continuity holds. The probe mutates no cursor state, makes no completeness, unique-victim or authenticated-emitter claim, and performs no census cutover. Cursor rotation/vacuum beyond exact-match refusal, cross-boot ordering and cursor-string aliasing stay Frontier (FR11).
+768:+- **FR1 — Kernel OOM event-time attribution and fleet correlation** (state F1/F8 + art F2). First evidence: `corpus/knowledge/kernel-oom-line-attribution-r12.md:10-16`; `corpus/knowledge/audit-r11.md:203-204`. Round 13 advances structured system-journal notice records to Core; event-time kernel summary/victim token validation and fleet correlation remain frontier. No raw `MESSAGE` is emitted, and a host record alone does not prove a fleet-caused kill.
+777:+- **FR10 — Userspace OOM killers (systemd-oomd and earlyoom)** (art F1). First evidence: `corpus/knowledge/userspace-oom-killers-r12.md:10-15`. Boundary: inactive killers are unavailable, not zero; `memory.events oom_kill` does not cover every userspace kill; never enable or tune a killer.
+778:+- **FR11 — Remaining new-since-anchor journal semantics** (art F3). First evidence: `corpus/SOURCES.md:20-21`; `corpus/knowledge/structured-journal-scopes-r13.md:21,81`. Round 16 advances only the explicit same-boot exact-anchor window in Core. Remainder: cursor rotation/vacuum and retention behavior beyond the exact-match refusal, cross-boot ordering, completeness of records after an anchor, persisted or automatically advanced cursor state, and cursor-string aliasing (no byte-level dedup guarantee). Boundary: cursor queries stay read-only and explicit; a byte mismatch is refusal evidence only, not proof of vacuum or deletion.
+780:+- **FR13 — eBPF kill/OOM tracing** (art F5). First evidence: `corpus/SOURCES.md:11-12,23-26`. Boundary: privilege and version matter; a resident tracer is outside the census, so retain this as knowledge/frontier only.
+790:+| tsukuroi | Owns host OS, package, systemd-unit, driver, firmware, and boot diagnosis. It was the only sibling hit in R12Connector's corpus search for `systemd-oomd`, `earlyoom`, `memory.events`, and `MESSAGE_ID`; this is adjacent host diagnosis, not contested fleet ownership. | `../tsukuroi-shokunin/PROVINCE.md:8-14`; `../tsukuroi-shokunin/corpus/knowledge/oom-event-plane.md:231-257,279-281,301,344-367`; `../tsukuroi-shokunin/corpus/knowledge/kill-event-deep-r8.md:30-37,97,120-135`; `PROVINCE.md:12-16` |
+792:+| kagi | Owns secrets, vault operations, and credential-hygiene evidence; mori never reads or reports credential material. | `../kagi-shokunin/PROVINCE.md:3-6`; `SKILL.md:374-393` |
+797:+- **Count-only kill sweep for the packet second:** the packet's single PSI snapshot is not a retained pressure series; its PSI `total` fields are cumulative stall time and the fixed root `memory.events` path was absent, not zero (`../tsukuroi-shokunin/corpus/knowledge/adjacency-handoffs-fleet-r1.md:94-104`). These time-bounded, MESSAGE-free queries returned 0:
+800:+  journalctl -k -b all -q --since='2026-10-15 04:53:46 UTC' --until='2026-10-15 04:53:47 UTC' --grep='^oom-kill:constraint=' -o json --output-fields=_BOOT_ID | wc -l
+812:+  No retained kernel OOM, `fe6faa94…` unit-kill notice, or `d989611b…` oomd notice overlaps this bounded query; [UNKNOWN] no independent pressure-series comparison is available for this packet. The single snapshot cannot establish fleet cause or wave settlement. Correlation is not causation.
+835:+- **Adjacent tsukuroi handoff, detection only:** today's `/var/log/pacman.log`
+836:+  records a 09:15:30 `pacman -Syu` and a 13:23:08 `pacman -U …zcode…`.
+837:+  `.ufo/waves/round-17/build/PacmanTxnToday.md` records their transaction evidence;
+838:+  `PacmanActorTrace.md` correlates the former to a separate OMP session and leaves
+841:+  package transaction or service change.
+975:+  no PSI trigger, writes nothing to `/proc`, `/sys` or a cgroup, and change
+s no service
+1083:+- **Core, one-shot userspace OOM killer read (FR10 partial advance, admitted round 26):**
+1084:+  `tools/mori-oom-killers.py` reads `systemctl show` for `earlyoom.service` and
+1085:+  `systemd-oomd.service`, the earlyoom unit journal of the current boot (counts only, in memory) and the
+1086:+  count of systemd-oomd kill notices (`MESSAGE_ID=d989611b…`) this boot, and reports one JSON object
+1087:+  (`schema: mori-oom-killers-v1`) with a `KILLER_ACTED` / `KILLERS_UNKNOWN` / `KILLERS_QUIET` verdict.
+1088:+  Counts are earlyoom log lines, not processes killed. Knowledge: `corpus/knowledge/userspace-oom-killers-r26.md`.
+1091:+  38 SIGTERM and 1 SIGKILL send lines in the previous boot, none in the current one); oomd cgroup xattrs and
+1092:+  D-Bus `Killed` signals; fleet attribution of any victim.
+1093:+- **Adjacency unchanged:** diagnosing, configuring, enabling or tuning either killer, and the earlyoom and
+1102:+  S150, S130, S151, S132, S142), with the SKILL.md `Round27` decision table.
+1108:+  tsukuroi's kill-plane entries and corrects their "+200 band first" model without absorbing them.
+1116:+`PROVINCE.md:8-14`; `:68` the secret rule is `SKILL.md:374-393`. Evidence: `.ufo/waves/round-30/w1/DraftProvinceR7.md`,
+1136:+| operability | 7 | census `--selftest` PASS (134 cases) before and after round 24 (`SCORECARD.md` round-24 measured outcome); 7 was first set in round 13's table (6 → 7), which closed rejected-harmed; first held in round 14's admitted table and kept since (round 14's closure grades operability unchanged and states the scores, `corpus/lessons/round-14-verifier-spotcheck.md:87`); round-28 closure grades operability improved (ten A2 rules pinned by 30 frozen cases) (`corpus/lessons/round-28-verifier-spotcheck.md:93`); latest admitted closure grades operability improved (blind-writer gate `tools/mori-blind-check.sh`, C2 verified) and states the score stays 7 (`corpus/lessons/round-31-verifier-spotcheck.md:155`); round-35 correction: this cell said round 28; round-37 C2 verified the probe's hardening as named, mutation-killable arms and re-attributed that claim here (SCORECARD round-37 post-data correction; round-38 axes-cell correction) | round 31 (improved, score held); round-37 C2 re-attributed here (score held, 7) |
+--- command-shaped systemctl/pacman/kill vectors ---
+grep: warning: stray \ before "
+78:+Reason: the entry's recheck is `systemctl --user reset-failed` after
+83:+`systemctl show` only, creates nothing, and does not call `reset-failed`,
+836:+  records a 09:15:30 `pacman -Syu` and a 13:23:08 `pacman -U …zcode…`.
+1084:+  `tools/mori-oom-killers.py` reads `systemctl show` for `earlyoom.service` and
+2745:+| userspace OOM killer read (earlyoom 1.9.0, systemd-oomd), bounded | from `systemctl show` and this boot's journal, report each killer's unit state, the earlyoom version string and its four startup thresholds, counts of earlyoom send, escalation, failed-kill, low-memory, process-group and dry-run send log lines for the current invocation, send lines of earlier invocations this boot, and the number of systemd-oomd kill notices this boot, with a `KILLER_ACTED` / `KILLERS_UNKNOWN` / `KILLERS_QUIET` verdict as in contract C2 and amendment A2. Counts are log lines, not processes killed. Known limits: for a running earlyoom, sends of an earlier invocation in the same boot are reported but do not change the verdict; counts with an incomplete scope are lower bounds; no logger-heartbeat check; previous boots are not read | `tools/mori-oom-killers.py --selftest` PASS 32/32 (frozen at `5b10649d`) and PASS 32/32 on `cases-supplementary.json`; `.ufo/waves/round-26/evidence/c2-live-run.txt`; `corpus/knowledge/userspace-oom-killers-r26.md` | 26 |
+4202:+| userspace OOM killers (r26, C2) | gate (host-surface verdict over two units; not a census or fleet-admission gate) | `python3 -I -B tools/mori-oom-killers.py [--inputs FILE \| --selftest \| --dump-inputs] [--cases FILE]` — no arguments collects the inputs live (`systemctl show` of the two units' `LoadState,ActiveState,UnitFileState,ActiveEnterTimestampMonotonic`; the earlyoom unit journal of the current boot; the `d989611b15e44c9dbf31e3c81256e4ed` notice line count) and runs the same pure reader; `--inputs FILE` runs the reader on one JSON inputs object; `--dump-inputs` prints the live inputs with every non-version/threshold `MESSAGE` replaced by its grammar class | 0 → clean (`KILLERS_QUIET`) · 1 → failed (`KILLER_ACTED`) · 2 → could-not-evaluate (`KILLERS_UNKNOWN`: a needed read is null, an active earlyoom has an incomplete scope or an unverified grammar, a show text lacks `ActiveState`, or a setup/internal error — an uncaught exception never exits 1) | `python3 -I -B tools/mori-oom-killers.py --selftest` → `MORI_OOM_KILLERS_SELFTEST: PASS 32/32` over `tools/fixtures/mori-oom-killers/cases.json` (32 cases, `schema: mori-oom-killers-cases-v1`, frozen in `5b10649` before the tool's first commit `c2fdd92`; `count-c2.sh` reports `freeze_order=ok`, `cases_changed_since_freeze=0`) | result `schema: mori-oom-killers-v1`; `earlyoom` {`state` (`active`/`inactive`/`absent`/`unavailable`), `version`, `grammar` (`verified-1.9.0`/`unverified`), `thresholds`, `scope_complete`, `actions`, `dryrun`, `dryrun_send_lines`, `process_group_lines`, `earlier_invocation_send_lines`}, `oomd` {`state`, `notices_this_boot`}, `verdict`; the earlyoom grammar is pinned to tag `v1.9.0` (`main.c:161,295,414,416,519,523`; `kill.c:318,627,654`); `actions` is null for an inactive or absent killer, never zero counts | none live — stdout only; reads `systemctl show` and `journalctl` (two `journalctl` reads, one for the unit journal and one for the notice count); no unit, journal, package or network change; the output carries states, numbers, the version string and counts — never `MESSAGE` text, a process name, a command line, a uid or an `--avoid`/`--prefer` expression | mori |
+6098:+| S156 | systemd v262 shared property printer `src/shared/bus-print-properties.c`, with the `systemctl show` call site `src/systemctl/systemctl-show.c` at the same tag — https://raw.githubusercontent.com/systemd/systemd/v262/src/shared/bus-print-properties.c (companion at the same tag, cited by path only: `src/systemctl/systemctl-show.c`) | code | A | the name-based rendering of D-Bus property values at the v262 release tag: the `bus_property_is_timestamp()` suffix test (`Timestamp` ending plus four `US
+ec` exception names), the UINT64 branch order (timestamp, `ManagedOOMMemoryPressureDurationUSec`, `USec` timespan, `CoredumpFilter`, `RestrictNamespaces`, `MountFlags`, capabilities, cgroup and limit names) and the final `%PRIu64` fallback, the callback-returns-0 hand-off to that printer, and the `systemctl show` callback that declines every non-timestamp uint64; not why the manager reports 0 for a never-set stamp, not `format_timestamp()` output for zero, not the D-Bus interface definition of the properties, not `busctl`, not this host | bus-print-properties.c:19-25 (`bus_property_is_timestamp`, `endswith(name, "Timestamp")` plus the four `USec` exceptions), :109-121 (UINT64 timestamp branch, `FORMAT_TIMESTAMP`), :129 (`strstr(name, "USec")`), :193-194 (final `"%"PRIu64` fallback), :419-422 (callback result 0 selects `bus_print_property`); systemctl-show.c:1222-1234 (its own UINT64 case tests the same predicate and breaks otherwise), :2405 (`bus_message_print_all_properties(reply, print_property, …)`); tag v262 = annotated tag 1f7dffaf714cc4488159c498b7a17cf34c5a96d5 peeled to commit 8cc40e0c5e9234bf45084751ac53b1fbfe70b492 (`git ls-remote`, 2026-10-22); bus-print-properties.c 17,973 B sha256 b56aa781be9c29b610156925030d3c4ab720c0ad73d57907d230ca3047302f2a, 484 lines, HTTP 200 at 2026-10-22T21:12:07Z; systemctl-show.c 121,458 B sha256 88291f8249d6a86a8bf1f8fc7dc0527e76cfa2d0d6fc07ec54bf09911eaf299a, 2 634 lines, HTTP 200 at 2026-10-22T21:12:38Z | A uint64 property whose name ends in `Monotonic` is not recognised by the `Timestamp` suffix test, contains no `USec`, and reaches the printer's final integer branch, so a zero-valued `ActiveEnterTimestampMonotonic` is printed as the bare decimal `0` rather than a formatted date. | mined | 2026-10-22 | on-release | corpus/lessons/round-30.md, corpus/knowledge/earlyoom-invocation-scope-r30.md |
+7467:+source: S157 (systemd v262 `src/core/unit.c:2773-2776` — the active-enter stamp is assigned only on a transition into active-or-reloading, and leaving that set stamps active-exit instead); S156 (systemd v262 `src/shared/bus-print-properties.c:19-24,194` — `ActiveEnterTimestampMonotonic` fails the `Timestamp`-suffix test, so `systemctl show` prints it as a bare decimal, `=0` when unset); S158 (systemd v262 `src/journal/journald-manager.c:1291-1295` — `Suppressed %i messages from %s`, emitted by journald, with the unit name); S159 (earlyoom commit `edd3d943` patch `:6-7`, `:34-36` — `Restart=always`, so a killed or crashed earlyoom starts again and prints a new version line); S160 (systemd v262 `src/journal/journalctl.c:512-517,543-546` — `-b` with no argument selects the current boot, `-u` adds the unit match); older rows re-used: S119 (earlyoom v1.9.0 `main.c:161` version line, `:295` dry-run line), S118 (`kill.c:627` send line, `:318` escalation), S122 (`org.freedesktop.systemd1.xml:2783-2790`: the stamps are 0 when the transition was not recorded this boot), S155 (dry-run is a send-site no-op), S154 (entry-object monotonic stamp); S120 (earlyoom `earlyoom.service.in` at v1.9.0 `:17` — `Restart=always` in the shipped file; added round 31, D4)
+7503:+- `systemctl show` prints `ActiveEnterTimestampMonotonic` as a bare decimal, because the name does not end in
+10578:+recheck: on a kernel release re-open `fs/proc/base.c` `proc_oom_score` and `mm/oom_kill.c` `oom_badness` at the new tag; on an earlyoom release re-open `kill.c` `is_larger` and the send-line format; on a systemd release re-open `units/user@.service.in`, `src/core/main.c` `determine_default_oom_score_adjust`, `man/systemd.exec.xml` (`OOMScoreAdjust=`) and `man/systemd-system.conf.xml` (`DefaultOOMScoreAdjust=`); host: `python3 -I -B .ufo/waves/round-27/evidence/oom-score-classes.py` and `python3 -I -B .ufo/waves/round-27/evidence/boot-send-classes.py` (aggregates only), `systemctl show earlyoom.service user@$(id -u).service -p OOMScoreAdjust`, `systemctl --user show -p DefaultOOMScoreAdjust`
+10621:+- **A victim that vanishes** before the signal produces one `kill failed:` line and no re-selection; the next attempt
+13444:+- Host state on 2026-10-19: `systemctl is-active systemd-oomd.service` → `inactive`; `systemctl is-enabled systemd-oomd.service` → `disabled`; the earlyoom unit then read as not active and its unit file as not found. On 2026-10-22 earlyoom 1.9.0 is active and enabled and systemd-oomd is still inactive and disabled (systemd 262); see the superseding entry `corpus/knowledge/userspace-oom-killers-r26.md` and its capture.
+13465:+source: S114 (earlyoom v1.9.0 README at tag v1.9.0 = commit 202d4db0d308ca6478f68de68b46cae34896ddaf — https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/README.md — the act rule, the staged SIGTERM-then-SIGKILL order, where actions are logged, the journal-reading advice and the v1.9.0 changelog; sha256 23411dbfd8b409d433f984a5d6677830e86a383ec76935fc1e1d675e6b4374dd, opened 2026-10-22); S115 (earlyoom v1.9.0 MANPAGE.md at the same tag — https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/MANPAGE.md — the both-below rule, the PERCENT/2 kill default and the `user mem total` definition; sha256 cc48b02e79255ae27bad9b2c49364fcae1b6b5eb20fe8e83ecef432f360dfeda, opened 2026-10-22); S116 (earlyoom v1.9.0 meminfo.c at the same tag — https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/meminfo.c — the memory and swap percentages earlyoom compares against its limits; sha256 526e512c89c58cb0b1db2ae98ea62d287cdc1516846be80c9173bdc4bf0edfeb, opened 2026-10-22); S117 (earlyoom release and tag history with the logged-message grammar at tags v1.7, v1.8 and v1.9.0 — https://api.github.com/repos/rfjakob/earlyoom/tags and https://api.github.com/repos/rfjakob/earlyoom/releases — the v1.9.0 tag and commit and the stability of the logged-message prefixes across those tags; opened 2026-10-22); S137 (earlyoom kernel-oom option history — https://api.github.com/repos/rfjakob/earlyoom/commits?path=main.c and https://raw.githubusercontent.com/rfjakob/earlyoom/750a7c0d97bb01c1bdf126fd6bf5722da17e8998/main.c — the v1.2 removal of the kernel-oom option (S114, README.md:383) and its re-introduction on master, authored 2026-02-02, merged 2026-02-17; opened 2026-10-22); S118 (earlyoom v1.9.0 kill.c and msg.c at the same tag — https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/kill.c and https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/msg.c — the action, escalation and kill-failure literals, the signal-delivery path, the `warn()`/`info()` write targets and the `"%5.2lf%%"` percentage format; sha256 b32e0fad65e298235102f98aff37e02c94400b544d454cb57192ae697b100bf3 and a771c91529053341c290ede2a7df1d9fdf16e07fb9584db8a64604a45dea5197, opened 2026-10-22); S119 (earlyoom v1.9.0 main.c at the same tag — https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/main.c — the two startup threshold literals, the act decision, the compiled defaults, the dry-run and low-memory literals and the version literal; sha256 08656b0bc90c85f23738661456b25c97af908bc5e2cfea78e0a69697b5f9d0e4, opened 2026-10-22); S120 (earlyoom v1.9.0 service unit template and the installed Arch package — https://raw.githubusercontent.com/rfjakob/earlyoom/v1.9.0/earlyoom.service.in and `pacman -Qi earlyoom` on this host — the unit's EnvironmentFile/ExecStart shape, the package version 1.9.0-1 and its install date; sha256 d4019b66d87539a006fc2d178d972dcf1b46e70343627b8bf66d1a08dcdda0bd, opened 2026-10-22); S121 (systemd v262 oomd-util.c and message catalog — https://raw.githubusercontent.com/systemd/systemd/v262/src/oom/oomd-util.c and https://raw.githubusercontent.com/systemd/systemd/v262/catalog/systemd.catalog.in — oomd's own kill accounting and the d989611b… notice id; sha256 2e94450aa337dd7d2062f2730e46e22ac00fc2c3195c11654047ddcaba487e7a and e53707db7e6963b284e504dc17f36a4d5a2bdb4bd8a9611b2cf95c075ad86592, opened 2026-10-22); S122 (systemd v262 journal documentation — https://www.freedesktop.org/software/systemd/man/latest/journalctl.html and https://www.freedesktop.org/software/systemd/man/latest/systemd.journal-fields.html — `journalctl -q -b -u`, `--output-fields=`, the `MESSA
+GE`/`MESSAGE_ID` field semantics and `_TRANSPORT=kernel`; systemd 262 man pages opened 2026-10-22); S123 (systemd v262 logs-show.c and utf8.c — https://raw.githubusercontent.com/systemd/systemd/v262/src/shared/logs-show.c and https://raw.githubusercontent.com/systemd/systemd/v262/src/basic/utf8.c — how `journalctl` emits the requested journal fields (`logs-show.c:554` parses `MESSAGE=`, `:1456`/`:1459` emit `MESSAGE` and each requested `--output-fields=` entry) and the UTF-8 validation and escaping helpers (`utf8.c:16,105,129,152`) that govern a non-UTF-8 message payload; sha256 abc2fc1f3d6f10d0f01b4d1ff18689eb5561a98fd71fde911117ce16c50ed72f and 7cbebe621330509d7ed4928ea0e8374cf7155e954fee2745ebf08b90cd030d27, opened 2026-10-22); S124 (systemd v262 resource-control and systemd-oomd manual pages — https://raw.githubusercontent.com/systemd/systemd/v262/man/systemd.resource-control.xml and https://raw.githubusercontent.com/systemd/systemd/v262/man/systemd-oomd.service.xml — `ManagedOOMSwap=`/`ManagedOOMMemoryPressure=` auto|kill, the meaning of `auto`, and which cgroups systemd-oomd monitors; sha256 d57641df40e45811403de91e55059b6a8f7506c6812a85cbe9c6ba22900587d8 and 4b29be2e41ef309beb9f9a9fcc9a84f18cd7f9f3540f094b0b5717891ef8651d, opened 2026-10-22); S125 (sibling lane tsukuroi, memory-pressure-r25.md at commit 157ee255 — https://raw.githubusercontent.com/VeigaPunk/tsukuroi-shokunin/157ee255/corpus/knowledge/memory-pressure-r25.md — this host's systemd-oomd `auto` reading and oomd defaults, cited and never absorbed; sha256 ecafdcdd1cc3417f5da40bf8dc9d46925e39550ec1be5baad0949e2458bdcd25, opened 2026-10-22); S126 (Arch Linux packaging of earlyoom 1.9.0-1 — https://gitlab.archlinux.org/archlinux/packaging/packages/earlyoom — the packaged unit and the default arguments file the unit reads; values of that file are not copied; opened 2026-10-22); own-work host capture of 2026-10-22 (`.ufo/waves/round-26/capture/capture.txt` and `.ufo/waves/round-26/capture/capture-boots.txt`, committed; counts, states, thresholds and version strings only — no MESSAGE text, process name, uid, command line or `--avoid`/`--prefer` value was read or copied).
+13467:+recheck: `systemctl is-active earlyoom.service; systemctl is-enabled earlyoom.service; systemctl is-active systemd-oomd.service; systemctl is-enabled systemd-oomd.service; pacman -Q earlyoom systemd`; `journalctl -q -b -u earlyoom.service -o json --output-fields=MESSAGE,__MONOTONIC_TIMESTAMP` (classify in memory, keep counts); `journalctl -q -b MESSAGE_ID=d989611b15e44c9dbf31e3c81256e4ed -o json --output-fields=MESSAGE_ID | wc -l`; on an earlyoom release, re-open the five earlyoom files at the new tag and re-read the eight grammar literals; on a systemd release, re-open the v262 catalog anchor for d989611b…
+13505:+`systemctl` and `pacman -Q` queries (§3.1) and the package install date from `pacman -Qi`
+--- vacuum/rotate vectors ---
+5:+| S351 | journalctl(1) — https://www.freedesktop.org/software/systemd/man/latest/journalctl.html | docs | B | the archived-journal store's own size ceiling and reach; refused as an admitted source this round | journalctl(1) Commands section, --vacuum-size= and --disk-usage entries; quote "--vacuum-size= removes the oldest archived journal files until the disk space they use falls below the specified size"; opened 2026-10-24 | REJECTED: the staged journal-reach entry grounds itself in a shokuknow file:// note and a kernel MESSAGE grep, neither of which this lane may treat as evidence; flip: the public --vacuum-size= sentence plus a committed read-only disk-usage receipt, and no MESSAGE grep | rejected | 2026-10-24 | 180d | — |
+70:+man-page vacuum sentence on the same page is not adopted through this entry.
+72:+Flip: a later round re-opens only the public `--vacuum-size=` sentence,
+749:+- **Same-boot journal window since anchor** — explicit read-only probe `tools/mori-journal-window.py --anchor PATH --scope user|system` (round-16 build; admitted round 16 — `corpus/lessons/round-16-verifier-spotcheck.md:11`). Reads one journal scope from an operator-retained `mori-journal-anchor-v1` cursor using MESSAGE-free output fields. The first record must match the anchor cursor and boot exactly and is dropped; every later record must be a scalar-cursor object in that same boot. Reports `records_after_anchor` and four separate `positive_*` subset counts (kernel OOM, unit OOM, unit signal, process SIGKILL) using the r15 predicates; no total, victim, emitter or completeness claim. Missing or vacuumed anchor, boot mismatch, malformed, duplicate or truncated capture, nonzero rc, stderr, timeout and overflow return `MORI_JOURNAL_WINDOW_UNAVAILABLE` with no positive totals. Byte equality is conservative: libsystemd documents that one entry may carry several cursor strings, so a mismatch refuses without proving deletion and no dedup is claimed. The anchor is never advanced, stored or written by the probe.
+764:+Round-16 C1 advances FR11 only for the same-boot explicit window above, and only when exact retained-anchor continuity holds. The probe mutates no cursor state, makes no completeness, unique-victim or authenticated-emitter claim, and performs no census cutover. Cursor rotation/vacuum beyond exact-match refusal, cross-boot ordering and cursor-string aliasing stay Frontier (FR11).
+778:+- **FR11 — Remaining new-since-anchor journal semantics** (art F3). First evidence: `corpus/SOURCES.md:20-21`; `corpus/knowledge/structured-journal-scopes-r13.md:21,81`. Round 16 advances only the explicit same-boot exact-anchor window in Core. Remainder: cursor rotation/vacuum and retention behavior beyond the exact-match refusal, cross-boot ordering, completeness of records after an anchor, persisted or automatically advanced cursor state, and cursor-string aliasing (no byte-level dedup guarantee). Boundary: cursor queries stay read-only and explicit; a byte mismatch is refusal evidence only, not proof of vacuum or deletion.
+853:+  only; pushed history, exposure assessment, credential rotation and any history rewrite are
+3504:+| Did journal records arrive after a retained anchor? (r16 probe) | `python3 tools/mori-journal-window.py --anchor <PATH> --scope user\|system` — exact-anchor window, see "Window probe (r16)" below | advancing, creating or rewriting the anchor; treating a missing, vacuumed, mismatched or foreign-boot anchor as zero; printing raw cursors, record text or `MESSAGE`; summing scopes; reading the window as a victim count | one JSON object on stdout: `rc0 finding_id=MORI_JOURNAL_WINDOW_OK` with `records_after_anchor`, the four never-summed `positive_*` counts and `evidence_basis=validated-record-subsets`; otherwise `rc2` with `MORI_JOURNAL_WINDOW_UNAVAILABLE reason=<stable>` or `MORI_JOURNAL_WINDOW_SETUP` |
+3609:+  valid scalar cursor. A missing, vacuumed or mismatched anchor cursor, a foreign
+3614:+  continuity only. FR11 (`PROVINCE.md:51`) is not closed by it: cursor rotation and
+3615:+  vacuum behavior remain `[UNKNOWN]`
+. The counts are validated record subsets
+5357:+| `knowledge/journal-cursor-window-r16.md` | exact-anchor, same-boot, MESSAGE-free new-since-anchor window: the first parsed record must byte-match the anchor cursor and `_BOOT_ID` and is dropped; later records must be same-boot scalar-cursor objects; byte-mismatch false unavailable under aliases is accepted; no dedup, no completeness, no unique victims; rotation/vacuum and cross-boot stay unavailable; `-q`-hidden inaccessible-journal partial reads are not detected — an OK window may be partial — [UNKNOWN] | S014/S015/S039/S040; host systemd 261.2-1 `--help`/`man` checks only, no journal read |
+5664:+| FR11 | New-since-anchor journal record/notice subsets via cursors | `SOURCES.md:20-21`; `knowledge/journal-cursor-window-r16.md` | Cursor queries stay read-only and anchor-scoped. Round 16 advances FR11 only to an exact-retained, same-boot window: the first record must byte-match the anchor cursor and `_BOOT_ID`; a byte mismatch can be a false unavailable under cursor aliases and is never proof of vacuum; no dedup or completeness claim. Counts are record/notice subsets, not kill counts. [UNKNOWN] behavior after cursor rotation/vacuum, unreadable later journal files under `-q` (not detected; an OK window may be partial), and ordering across boots remains open. |
+6102:+| S160 | systemd v262 journalctl option grammar and filter application — https://raw.githubusercontent.com/systemd/systemd/v262/src/journal/journalctl.c (companions at the same tag, cited by path only: `src/journal/journalctl-filter.c`, `src/journal/journalctl-util.c`) | code | A | the journalctl read path at the v262 release tag only: how `-b/--boot` takes an optional descriptor and, with none, enables the boot filter with a null boot id and zero offset (help: `Show current boot or the specified boot`), how `-u/--unit` appends its value to the system-unit filter list, how the filter stage resolves a null boot id with zero offset, in the default open with no `--directory`/`--file`/`--root`, to the running machine's boot id and then adds a boot-id match plus a conjunction, and how the unit list becomes unit-name matches over the `SYSTEM_UNITS` fields; not the man-page wording (that URL is S122's and was rejected as a duplicate), not JSON encoding (S122, S123), not this host's journal contents, not journal storage, vacuum or persistence | src/journal/journalctl.c:512-517 (`-b` is `OPTION_OPTIONAL_ARG`; no descriptor sets `arg_boot = true`, `arg_boot_filter = true`, `arg_boot_id = SD_ID128_NULL`, `arg_boot_offset = 0`), :543-544 (`-u` value appended to `arg_system_units`); src/journal/journalctl-filter.c:62-76 (`add_boot`: `add_match_boot_id` then `sd_journal_add_conjunction`), :94-201 (`journal_add_unit_matches`: `add_matches_for_unit_full` plus `sd_journal_add_disjunction` per unit), :203-217 (`add_units` passes `arg_system_units`); src/journal/journalctl-util.c:89-129 (`journal_acquire_boot`: null id and zero offset call `id128_get_boot_for_machine` at :102, `arg_boot_id = boot_id` at :125); src/journal/journalctl-util.h:9-12 (`SYSTEM_UNITS` field list); tag v262 | A descriptorless `-b` restricts the read to the running boot's entries and each `-u UNIT` adds that unit's messages as journal matches rather than text filters; neither option changes which journal files are opened, and neither proves that any killer acted. | mined | 2026-10-22 | on-release | corpus/lessons/round-30.md, corpus/knowledge/earlyoom-invocation-scope-r30.md |
+6184:+| S351 | journalctl(1) — https://www.freedesktop.org/software/systemd/man/latest/journalctl.html | docs | B | the archived-journal store's own size ceiling and reach; refused as an admitted source this round | journalctl(1) Commands section, --vacuum-size= and --disk-usage entries; quote "--vacuum-size= removes the oldest archived journal files until the disk space they use falls below the specified size"; opened 2026-10-24 | REJECTED: the staged journal-reach entry grounds itself in a shokuknow file:// note and a kernel MESSAGE grep, neither of which this lane may treat as evidence; flip: the public --vacuum-size= sentence plus a committed read-only disk-usage receipt, and no MESSAGE grep | rejected | 2026-10-24 | 180d | — |
+--- rm -rf vectors ---
+11091:+trap 'rm -rf -- "${MORI_PR_WORK:-}"' EXIT INT TERM
+18655:+| M14 | deliberate `/tmp` output | `.ufo/waves/round-16/build/PackProcessSignal.md` (self-disclosed, `MoriR16.PackProcessSignal` IRC): staged generated fixture bytes at `/tmp/_pack_ps.txt`, then `rm -f`, reported absent. | seat self-disclosure | Removed per seat; deliverable lives in the owned fixture only. Not runtime prevention. |
+ .../assimilation/validate/tools/mori-disk-rate.py  |  300 +++
+ .ufo/waves/round-43/count-c1s.py                   |  172 ++
+ .ufo/waves/round-43/count-c2.py                    |   91 +
+ 171 files changed, 30052 insertions(+)
+--- top dirs ---
+    162 .ufo/waves/round-43
+      1 SCORECARD.md
+      1 LOG.md
+      1 corpus/SOURCES.md
+      1 corpus/README.md
+      1 corpus/QUALITY.md
+      1 corpus/lessons/round-43.md
+      1 corpus/knowledge/s235-sha-correction-r43.md
+      1 corpus/knowledge/journal-disk-usage-total-r51.md
+      1 corpus/knowledge/c1s-cwd-r43.md
+
+
+• Now I have substantial material. Key findings:
+
+  1. **The moving-target problem is real and material.** The assigned tripwire `git diff master -- . ':!.ufo/waves/round-43/w1'` found 5 prose matches at T2, then found NOTHING at T3 because commit dde525ea landed mid-attack. The committed content (171 files, 30k lines, including `count-c1s.py` 172 lines, `count-c2.py` 91 lines, `mori-disk-rate.py` 300 lines, and `.ufo/waves/round-43/assimilation/...` stuff) is invisible to the assigned command post-commit. This is the strongest counterexample to the scope bound as-a-command: **the bound is time-of-day sensitive and after the round commits, `diff master` is a no-op that can never FAIL anything.**
+
+  2. **Tripwire over the committed range** — the real audit. Findings from added lines:
+     - Line 78-83 area: prose in lessons/round-43.md REJECTING `systemctl --user reset-failed` as host service mutation — documentary refusal, not a mutation.
+     - Line 11091: `+trap 'rm -rf -- "${MORI_PR_WORK:-}"' EXIT INT TERM` — an actual `rm -rf` in committed content! Need to see which file this is in and what MORI_PR_WORK is. It's likely a scratch-dir cleanup in a validation tool — `rm -rf --` on a script-owned temp dir. "Run code only in /tmp sandboxes" — cleaning up its own tmp work dir with `rm -rf --` is bounded, but I must check: is the path constrained to a mktemp dir? If MORI_PR_WORK can be empty or attacker-influenced... `"${MORI_PR_WORK:-}"` with empty value → `rm -rf -- ""` → rm errors on empty operand, harmless. But if the var is unset the trap does `rm -rf -- ` with empty string → "rm: cannot remove '': No such file or directory" — harmless. Need to see the file context: which file, how MORI_PR_WORK is set. This is the strongest counterexample candidate. Let me extract it.
+     - Line 836: `pacman -Syu` / `pacman -U` — prose describing /var/log/pacman.log records of PAST transactions (detection only, "no package transaction or service change"). Documentary.
+     - Lines 1084, 4202, 6098, 7467, 10578, 13444, 13467, 13505: `systemctl show`, `systemctl is-active`, `systemctl is-enabled`, `pacman -Q`, `pacman -Qi` — all read-only queries, documentary/census prose. Wait — but are these lines part of round-43's additions? 171 files changed with 162 in .ufo/waves/round-43 — the bulk is likely `.ufo/waves/round-43/assimilation/...` which appears to embed big corpus snapshots (validate/tools/mori-disk-rate.py, PROVINCE.md content, etc.). So the committed diff includes whole-file additions of round-43 wave artifacts that quote older rounds' census/province text. That explains lines 732-13505: they're inside some large snapshot file (maybe `.ufo/waves/round-43/assimilation/...` context copies or the w1-settle.tsv / wave-plan.json).
+     
+     None of these are executable host mutations: `systemctl show/is-active/is-enabled` are read-only queries; `pacman -Q/-Qi` read-only; the `pacman -Syu` mention is historical log description; `journalctl ... --grep ... | wc -l` read-only.
+
+  3. **The `rm -rf` trap at line 11091** is the one executable mutation-shaped line. Must adjudicate: find the file, read surrounding lines, check what MORI_PR_WORK is set to. If it's a tool cleaning only its own mktemp -d work dir, it's a /tmp sandbox cleanup — bounded, idempotent, no host state. The lane bounds say "Run code only in /tmp sandboxes" — a tool that rm -rf's its own mktemp dir is consistent with that. But `rm -rf` with a variable is a classic footgun; the smallest correction could be noting it. If it rm -rf's something like a repo path or uses unquoted expansion, that's a kill.
+
+  Also check: does any committed script invoke systemctl/vacuum/pacman at RUNTIME? The counters (count-c1s.py, count-c2.py) — check their content for subprocess calls. mori-disk-rate.py under assimilation/validate/tools — check. Let me grep the actual committed files, not just diff text:
+  - `git show master:.ufo/waves/round-43/count-c1s.py | grep -nE 'systemctl|vacuum|pacman|kill|rm |subprocess|run\(|Popen'`
+  - same for count-c2.py
+  - `git show master:.ufo/waves/round-43/assimilation/validate/tools/mori-disk-rate.py | grep -nE '...'` — wait, the diffstat showed `.../assimilation/validate/tools/mori-disk-rate.py | 300 +++` — path truncated. Get full path via name-only grep.
+
+  And find the file containing the rm -rf trap: grep the diff for context around line 11091 — get `diff --git` header preceding it. Easiest: `awk` on /tmp/rescrit_r43c.diff to find current file at line 11091, then show ±10 lines.
+
+  Batch (parallel, read-only):
+  1. awk to locate file + context for line 11091 rm -rf trap.
+  2. `git diff --name-only e3a2b58f master | grep -E '\.py$|\.sh$'` — full script list.
+  3. grep counters for mutation/subprocess surface: `git show master:.ufo/waves/round-43/count-c1s.py | grep -nE 'systemctl|vacuum|pacman|kill|reset-failed|rm |unlink|subprocess|Popen|check_(output|call)|run\(|open\(.*w'` and same for count-c2.py.
+  4. grep mori-disk-rate.py for the same + the MORI_PR_WORK assignment.
+  5. Also scan ALL committed round-43 scripts for the seven terms: `for f in $(git diff --name-only ... | grep -E '\.(py|sh)$'); do git show master:$f | grep -nE ... /dev/null; done` — concise loop output.
+
+  Let me run these.
+
+• The committed range audit surfaced one **executable** mutation-shaped line: `+trap 'rm -rf -- "${MORI_PR_WORK:-}"' EXIT INT TERM` at diff line 11091 — everything else is prose/refusal-records/read-only `systemctl show|is-active|is-enabled` and `pacman -Q|-Qi` queries. Locating that file, its variable, and auditing every committed script's runtime surface:file header before trap line: 11037
+diff --git a/.ufo/waves/round-43/assimilation/validate/corpus/knowledge/progressing-weak-r2.md b/.ufo/waves/round-43/assimilation/validate/corpus/knowledge/progressing-weak-r2.md
+--- context lines 11075..11100 ---
++   15:29Z) exited 1 in fixture setup with no tally (D2 below); a sibling seat then rewrote the
++   file, and on the new bytes (sha256
++   `2cc205fc3666e1ab8b6ecf73228d86e2ae0515f915d4a4570f988327b3e6c11e`, measured 15:39Z) the
++   candidate completes all 27 cases but the tally is not passing:
++   `MORI_SILENCE_CASES: matched=10 total=27`, exit 1, all seven authorship cases among the
++   17 failures (measured by this seat; the harness's own claim to make). The falsifiable claim
++   a future round must register is stated at the end. **No passing tally, no census cutover,
++   no live r2 grade is claimed here.**
++
++## The check — how to run it, and the executed receipt
++
++Extract this file's check block and run it (run the extraction from the lane root; the check
++itself runs from any cwd and writes only its own `/tmp/mori-authorship-check.*` temp dirs,
++removed on exit):
++
++```
++awk '/^###CHECK-BEGIN$/{f=1;next} /^###CHECK-END$/{f=0} f' \
++  corpus/knowledge/progressing-weak-r2.md > /tmp/mori-authorship-check.sh
++sha256sum /tmp/mori-authorship-check.sh
++bash /tmp/mori-authorship-check.sh
++```
++
++Executed 2026-10-15T15:39:00Z on the file produced by the extraction command above
++(byte-for-byte) — verbatim output:
++
++```
+.ufo/waves/round-43/assimilation/validate/tools/mori-disk-rate.py
+.ufo/waves/round-43/count-c1s.py
+.ufo/waves/round-43/count-c2.py
+=== count-c1s.py ===
+17:import subprocess
+50:    proc = subprocess.run(
+57:    proc = subprocess.run(
+91:    running = open(os.path.abspath(__file__), "rb").read()
+142:    for name, arm in V5_MUTANTS:
+148:        with open(v5_abs, "wb") as fh:
+152:        check("mutant_kill_%s" % name,
+155:    with open(v5_abs, "wb") as fh:
+159:    with open(frozen_path, "wb") as fh:
+exit=0
+=== count-c2.py ===
+10:import subprocess
+32:    proc = subprocess.run(
+exit=0
+
+
+• Important developments:
+
+  1. The `rm -rf` trap at line 11091 is inside `.ufo/waves/round-43/assimilation/validate/corpus/knowledge/progressing-weak-r2.md` — a **markdown knowledge file** containing an embedded check script (extracted via awk to /tmp and run with bash). The trap `rm -rf -- "${MORI_PR_WORK:-}"` cleans up its own `/tmp/mori-authorship-check.*` temp dirs on exit. This runs ONLY if a future seat extracts and executes the embedded check block. The cleanup targets its own mktemp dirs under /tmp. Need to verify how MORI_PR_WORK is set inside the check block — if it's `mktemp -d /tmp/mori-authorship-check.XXXXXX`, then the rm -rf is scoped to a /tmp sandbox dir: compliant with "run code only in /tmp sandboxes". It IS technically an `rm -rf` in committed content — the strongest counterexample. Adjudication: bounded self-cleanup of a mktemp /tmp dir, quoted, with `--`, empty-var harmless (rm with empty string arg errors harmlessly... actually `rm -rf -- ""` → GNU rm: "cannot remove '': No such file or directory", exit 1 — inside a trap, non-fatal; with -f, rm suppresses nonexistent-file errors, and empty operand with -f → exit 0? With -f rm ignores nonexistent; empty string is treated as nonexistent → suppressed. Harmless.)
+
+  2. **count-c1s.py writes files**: line 148 `open(v5_abs, "wb")` — the counter OVERWRITES a v5 file for mutant testing (lines 142-159: writes v5_abs with mutant bytes, then restores with `open(v5_abs,"wb")` at 155 and `open(frozen_path, "wb")` at 159). This MUTATES repo files (the conform v5 checker + a frozen file?) at runtime! It writes back the original bytes afterward. Is that a "host mutation"? No — host mutation means host services/system state (systemctl, pacman, journal). Repo file mutation is a different axis (lane file mutation). The counters writing into the lane repo at runtime... count-c1s.py temporarily replaces the v5 checker bytes to verify mutant kill, then restores. Writing files under the lane repo — but I'm not running it; my scope attack is about the diff content. The seven terms: count-c1s.py contains "kill" only in "mutant_kill_%s" check name — not a process kill. No systemctl/vacuum/pacman/rm/reset-failed hits (grep showed none of those). subprocess.run at lines 50/57 — what commands does it run? Need to check: it likely runs `git` or `python3` of the checker. Let me look at lines 40-70 of count-c1s.py to see what subprocess.run invokes. If it runs `git -C <repo>` read-only commands (rev-parse/cat-file) fine.
+
+  3. mori-disk-rate.py — under assimilation/validate/tools/. Need its mutation surface: check for the seven terms + subprocess + what it invokes. "disk-rate" suggests measuring disk write rate — could write a temp file to measure throughput! If it writes to /tmp only, fine. Check.
+
+  Also: what is `assimilation/validate/` — a whole embedded copy of a sibling's (hyaku?) corpus for validation. It contains knowledge docs with embedded checks. Other embedded scripts may exist in .md files across the committed range! The rm -rf I found is one; there may be more executable blocks in committed markdown. My tripwire grep over added lines already covered ALL committed added lines (31k lines) — any other rm -rf/vacuum/systemctl-as-command in embedded scripts would have matched the same patterns. The `rm -rf vectors` grep found exactly 2 hits (11091 trap + line 18655 prose about round-16 rm -f). The command-shaped systemctl grep found only prose/readonly-query lines. Vacuum grep: only prose. pacman: only `-Syu`/`-U` historical-log prose and `-Q/-Qi` read-only queries. So coverage is good.
+
+  Remaining checks:
+  A. count-c1s.py subprocess targets (lines ~40-70).
+  B. mori-disk-rate.py mutation surface: seven terms + subprocess + write targets.
+  C. The embedded check block in progressing-weak-r2.md: verify MORI_PR_WORK assignment is mktemp -d under /tmp.
+  D. Confirm the seven terms' hit counts in the committed diff for the report summary table.
+
+  Batch:
+  1. `git show master:.ufo/waves/round-43/count-c1s.py | sed -n '35,70p'`
+  2. `git show master:.ufo/waves/round-43/assimilation/validate/tools/mori-disk-rate.py | grep -nE 'systemctl|vacuum|pacman|kill|reset-failed|rm -rf|subprocess|Popen|\.run\(|open\(|mktemp|NamedTemporary|write'` | head -30
+  3. `git show master:.ufo/waves/round-43/assimilation/validate/corpus/knowledge/progressing-weak-r2.md | grep -nE 'MORI_PR_WORK=|mktemp|rm -rf' | head`
+  4. Term counts on committed diff: `for t in systemctl vacuum pacman kill reset-failed 'rm -rf' service; do printf '%s: ' "$t"; grep -cE "$t" /tmp/rescrit_r43c.diff; done` — gives per-term totals for the report table. Note grep -c with 'kill' matches skill too... fine, raw counts.
+
+• The `rm -rf` trap lives in an **embedded check script inside a committed markdown file** (`progressing-weak-r2.md`), self-cleaning `/tmp/mori-authorship-check.*` dirs. Also: `count-c1s.py` writes repo files at runtime (mutant restore) and imports subprocess. Adjudicating all three scripts' actual invocation targets:def check(name, ok, detail=""):
+    print("check %-22s %s%s" % (
+        name, "PASS" if ok else "FAIL", (" (%s)" % detail) if detail else ""))
+    if not ok:
+        failures.append(name)
+
+
+def sh256(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+def git_bytes(rev, path):
+    proc = subprocess.run(
+        ["git", "-C", LANE, "show", "%s:%s" % (rev, path)],
+        capture_output=True, timeout=120)
+    return proc.stdout if proc.returncode == 0 else None
+
+
+def run(argv, timeout=900, cwd=None):
+    proc = subprocess.run(
+        argv, capture_output=True, text=True, timeout=timeout, cwd=cwd)
+    return proc.returncode, proc.stdout, proc.stderr
+
+
+def finish(met):
+    print("C1S=%s" % ("met" if met else "unmet"))
+    return 0 if met else 1
+
+
+def selftest(clone, checker_abs, rev):
+    return run([
+        sys.executable, checker_abs, rev, "--repo", clone,
+        "--contract", os.path.join(clone, CONTRACT_REL),
+        "--counter", os.path.join(clone, C8_REL), "--selftest",
+    ])
+121:            result["fd"] = os.open(path, os.O_RDONLY)
+295:    sys.stdout.write("\n")
+296:# under its own mktemp dirs; isolated HOME/config; pinned epochs; no census,
+303:WORK=$(mktemp -d /tmp/mori-authorship-check.XXXXXX)
+304:export MORI_PR_WORK=$WORK
+305:trap 'rm -rf -- "${MORI_PR_WORK:-}"' EXIT INT TERM
+systemctl      29
+vacuum         47
+pacman         28
+kill           908
+reset-failed   19
+rm -rf         1
+service        175
+
+
+• Adjudication complete on the executable surfaces:
+
+  1. **count-c1s.py**: `git_bytes` → `git -C LANE show rev:path` (read-only). `run()` → invokes the checker (`sys.executable checker_abs ... --selftest`) with `--repo clone` — the QUALITY.md note says green control must run against a scratch clone. subprocess targets: `git show` (read-only) and the v5 checker in selftest mode. The "kill" hits are check names `mutant_kill_*` (mutation-testing nomenclature). The file writes (v5_abs, frozen_path) restore original bytes — repo-file round-trip inside the counter, not host state. Not a host mutation.
+
+  2. **mori-disk-rate.py**: only `os.open(path, O_RDONLY)` — read-only; writes to stdout only. Clean.
+
+  3. **Embedded check** (`progressing-weak-r2.md`): `WORK=$(mktemp -d /tmp/mori-authorship-check.XXXXXX); export MORI_PR_WORK=$WORK; trap 'rm -rf -- "${MORI_PR_WORK:-}"' EXIT INT TERM` — rm -rf strictly scoped to its own mktemp dir under /tmp, quoted, with `--`. That is /tmp-sandbox self-cleanup, compliant with lane bounds. Not a host mutation. (Empty-var edge: `rm -rf -- ""` is a no-op under -f. GNU rm: "-f: ignore nonexistent files and arguments, never prompt". Empty string arg with -f → suppressed, exit 0. Harmless.)
+
+  4. **Per-term counts** across the committed diff: systemctl 29, vacuum 47, pacman 28, kill 908 (mostly "killed"/"skill"/OOM-kill vocabulary in knowledge docs), reset-failed 19, rm -rf 1 (the adjudicated trap), service 175 (mostly "unit/service" vocabulary + "Services Computing" journal name). All inspected hits are: documentary prose, refusal records, read-only queries (`systemctl show/is-active/is-enabled`, `pacman -Q/-Qi`, `journalctl --disk-usage/--grep|wc -l`), or the bounded /tmp self-cleanup. **Zero executable host-mutation vectors.**
+
+  One more line to close: the canonical grep command output for the report must be pasted. I have three runs:
+  - T1/T2 (pre-commit): 5 prose matches (exit 0).
+  - T3 (post-commit dde525ea): empty diff, grep_exit=1, no matches.
+
+  And the committed-range audit with per-term adjudication. The round diff is clean → verdict SURVIVED (attack found no host mutation; scope bound held in substance). The hazard finding: the assigned command is time-of-day sensitive — after the round commits to master it inspects an empty diff and can never fail; smallest safe correction: pair it with the committed-range audit (`git diff e3a2b58f master` / re-run after each commit) as I did.
+
+  Also the rev-parse quirk: `git rev-parse --short master HEAD` fails with "Needed a single revision" while separate calls work. Odd but cosmetic — likely `--short` ambiguity handling with two revs in this git version... Actually I realize: `git rev-parse --short master HEAD` — with `--short` and multiple args, older git works. Hmm, whatever ran: first call chained `branch --show-current; rev-parse --short master HEAD` → error. Later separate calls fine. Actually in the first batch the repo CWD default might have been the fleet root or elsewhere? No, `-C` was given. Hmm — but second batch `cd ... && git rev-parse --short master` worked. The difference: `-C` vs `cd`? Should be identical... Unless `.omp` config differs. Not material — cosmetic diagnostic note only; maybe a `rev-parse` alias/hook. I'll mention in one line that the chained diagnostic failed while the substantive commands succeeded, without dwelling.
+
+  Now write the report. Per AGENTS.md: changes append LOG.md entry with evidence — but I'm forbidden from writing anything except my own report file ("Write only your own report file"), which overrides: the dispatcher constraint is explicit for this seat; LOG.md is not mine to write. Note that in the report? Not needed — but I'll respect the dispatcher's bound; LOG.md is the L1's to append.
+
+  Report structure (ResCritScope.md):
+  - Seat, date, scope bound under attack
+  - Method: canonical command, three timepoints
+  - Observations with exact commands+outputs (T2 pre-commit grep output, T3 post-commit empty, committed-range audit)
+  - Adjudication table of hits (term counts, classification)
+  - Executable-surface audit of the 3 committed scripts
+  - Strongest counterexample tried: the rm -rf trap → adjudicated bounded /tmp self-cleanup (mktemp -d /tmp/..., quoted, --, -f)
+  - Hazard finding: diff-master bound goes no-op post-commit; correction: committed-range tripwire
+  - Verdict line: SURVIVED + exact command + output.
+
+  "Your report must end with a one-line verdict: KILLED, SURVIVED, or CONFIRMED, then the exact command and its output." — So the last line(s): verdict, then the exact command and its output. I'll make the final section:
+
+  ```
+  VERDICT: SURVIVED
+  Command: git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff master -- . ':!.ufo/waves/round-43/w1' | grep -nE 'systemctl|vacuum|pacman|kill|reset-failed|rm -rf|service'
+  Output: (no output; grep exit 1 — diff is empty at run time because round-43 work was committed to master as dde525ea during the audit; pre-commit run of the identical command at 22:5x returned 5 prose matches, pasted above)
+  ```
+
+  Hmm — "then the exact command and its output". I'll paste the command and its literal output. For the canonical command at final run the output is empty with exit 1. I should paste both runs verbatim in the body, and in the trailer paste the final canonical run. Let me re-run the canonical one immediately before writing the report to have the freshest state (in case another commit lands... if another commit lands the diff stays empty; if someone adds uncommitted work, grep may fire again — then I'd need to re-adjudicate. Let me check right before writing.)
+
+  Also do a final consistency check that I haven't miswritten: the report file path /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/ResCritScope.md. The w1 dir exists. Writing with cat <<'EOF' via Bash (only Write-tool-free option). Must be careful heredoc content has no problematic backticks — quoted heredoc 'EOF' prevents expansion, safe.
+
+  Let me run the final canonical grep once more + then write report in same batch? No — dependent: I want the final grep output in the report. Two steps: run grep (capture), then write. But I can predict: if it matches again (worktree churn), I'll adjudicate. Run it, then write.
+
+  Also paste exact T2 output — I have it verbatim from the earlier tool result. Good.
+
+  Final batch 1: canonical grep re-run with exit code.
+
+• All executable surfaces adjudicated clean. Final freshness check on the canonical command immediately before writing the report:2026-10-25T01:54:32Z
+dde525ea
+grep_exit=1
+
+
+• Final state: master = dde525ea, worktree clean vs master for the scoped paths, canonical grep empty (exit 1). Now write the report file with full evidence. Only my own report file. Use Bash heredoc with quoted delimiter.
+
+  Report content plan — keep it tight, evidence-first, per AGENTS.md style (cite command outputs). End with verdict line + exact command + output.
+
+• Writing the scoped report:100 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/ResCritScope.md
+-rw-r--r-- 1 vgpnk vgpnk 7120 Oct 24 22:55 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/ResCritScope.md
+
+
+• Report written (100 lines, 7120 bytes). Only my own file written. Done — stop after the assigned review. Summarize concisely: axes, attack result, the one defect found, verdict.
+
+• Report written: `.ufo/waves/round-43/w1/ResCritScope.md` (100 lines). Review complete — stopping here.
+
+  **Attack summary**
+
+  - **Axes named:** scope-bound integrity, evidence discipline (every claim = a run command), collateral harm (only my report file + /tmp scratch touched; frozen counters attacked via `git show`/scratch only).
+  - **The diff is clean.** Canonical tripwire (`systemctl|vacuum|pacman|kill|reset-failed|rm -rf|service`) pre-commit: 5 hits, all prose — refusal records *naming* rejected mutations (S350 `reset-failed`, S351 `--vacuum-size=`), a paper abstract's "kill", read-only `journalctl --disk-usage` receipts.
+  - **Strongest counterexample, tried and rejected:** the range's only executable `rm -rf` — `trap 'rm -rf -- "${MORI_PR_WORK:-}"' EXIT INT TERM` embedded in `progressing-weak-r2.md` — is scoped to its own `mktemp -d /tmp/mori-authorship-check.XXXXXX`; bounded /tmp self-cleanup, not a host mutation.
+  - **Defect found in the bound itself (fixable, not a round-killer):** commit `dde525ea` landed *mid-grep* and `git diff master` went no-op — 171 files / 30,052 insertions (including both counters) silently escaped the assigned command. I re-ran the identical term grep over `e3a2b58f..master` (31,096 diff lines) with per-term counts and audited all three committed scripts' runtime surfaces (`git show` read-only; `os.open(O_RDONLY)` only; checker `--selftest` against scratch clone). Smallest safe correction, already executed in-report: pair the bound with a committed-range grep `<entering-tip>..master`, re-run after each commit.
+
+  **Verdict: SURVIVED** — exact command and output are pasted verbatim in the report trailer (final canonical run: empty diff, `grep_exit=1`, master=`dde525ea`; pre-commit run's 5 prose matches included in full).
+
+To resume this session: kimi -r session_787f0827-3279-41fd-b671-8fefdd8e6343

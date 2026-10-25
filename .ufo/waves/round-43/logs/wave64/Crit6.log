@@ -1,0 +1,120 @@
+kimi version 2.3.1
+• Let me understand the task. I'm Critic 6 (Crit6) in a round-43 wave. My attack target: "treating the frozen counter's 28 PASS lines as C1S=met." I need to falsify or bound this attack. The frozen counters are at `.ufo/waves/round-42/count-c1.py` and `.ufo/waves/round-43/count-c1s.py` and `count-c2.py` (in round-43 presumably). I must not edit them; attack in scratch copies under /tmp.
+
+  Let me start by reading the relevant files:
+  - /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c1s.py
+  - /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-42/count-c1.py
+  - /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c2.py
+  - Look for the 28 PASS lines output.
+
+  Let me do parallel reads and listing./home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-42/:
+total 180
+drwxr-xr-x 1 vgpnk vgpnk   234 Oct 24 20:47 .
+drwxr-xr-x 1 vgpnk vgpnk   496 Oct 24 21:31 ..
+drwxr-xr-x 1 vgpnk vgpnk   194 Oct 24 20:23 assimilation
+drwxr-xr-x 1 vgpnk vgpnk     0 Oct 24 11:28 candidates
+-rw-r--r-- 1 vgpnk vgpnk 46994 Oct 24 20:12 conform.py
+-rw-r--r-- 1 vgpnk vgpnk  7549 Oct 24 11:30 contract.md
+-rwxr-xr-x 1 vgpnk vgpnk 10858 Oct 24 11:36 count-c1.py
+-rwxr-xr-x 1 vgpnk vgpnk  6484 Oct 24 11:33 count-c2.py
+-rwxr-xr-x 1 vgpnk vgpnk  5389 Oct 24 11:34 count-c3.py
+drwxr-xr-x 1 vgpnk vgpnk   470 Oct 24 20:54 evidence
+drwxr-xr-x 1 vgpnk vgpnk   174 Oct 24 11:30 fixtures
+drwxr-xr-x 1 vgpnk vgpnk    48 Oct 24 20:47 __pycache__
+drwxr-xr-x 1 vgpnk vgpnk   578 Oct 24 20:49 w1
+-rw-r--r-- 1 vgpnk vgpnk 94923 Oct 24 20:28 w1-spec.json
+
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/:
+total 48
+drwxr-xr-x 1 vgpnk vgpnk   162 Oct 24 22:35 .
+drwxr-xr-x 1 vgpnk vgpnk   496 Oct 24 21:31 ..
+drwxr-xr-x 1 vgpnk vgpnk   256 Oct 24 22:37 assimilation
+-rw-r--r-- 1 vgpnk vgpnk  4298 Oct 24 21:37 contract.md
+-rw-r--r-- 1 vgpnk vgpnk  6022 Oct 24 21:37 count-c1s.py
+-rw-r--r-- 1 vgpnk vgpnk  3094 Oct 24 21:37 count-c2.py
+drwxr-xr-x 1 vgpnk vgpnk   386 Oct 24 21:44 evidence
+drwxr-xr-x 1 vgpnk vgpnk    70 Oct 24 22:37 w1
+-rw-r--r-- 1 vgpnk vgpnk    17 Oct 24 22:37 w1-settle.tsv
+-rw-r--r-- 1 vgpnk vgpnk 22422 Oct 24 21:44 w1-spec.json
+I need to read AGENTS.md, the round-43 contract.md, and count-c2.py. Also check the w1 directory for context (existing critic reports?), and find where "28 PASS lines" is claimed. The attack: "treating the frozen counter's 28 PASS lines as C1S=met."
+
+  Key observation: the frozen r42 counter `count-c1.py` prints lines per check. Count the check() calls: pins_present, pins_match, v4_present, v5_present, v5_differs_from_v4, v5_regions_intact, v5_new_arms_named, sandbox_clone, v4_control_selftest, v4_mutant_pin_* (3), v4_mutant_survives_* (3), v5_selftest_17, v5_region_* (3), v5_mutant_committed_* (3), v5_mutant_derived_* (3), v5_mutant_kill_* (3), v5_routed_four, gate_selftest_unharmed. That's 1+1+1+1+1+1+1+1+1+3+3+1+3+3+3+3+1+1 = 30? Let me count: pins_present(1), pins_match(2), v4_present(3), v5_present(4), v5_differs_from_v4(5), v5_regions_intact(6), v5_new_arms_named(7), sandbox_clone(8), v4_control_selftest(9), v4_mutant_pin_walrus(10), v4_mutant_pin_tuple(11), v4_mutant_pin_sort(12), v4_mutant_survives_walrus(13), survives_tuple(14), survives_sort(15), v5_selftest_17(16), v5_region_walrus(17), v5_region_tuple(18), v5_region_sort(19), v5_mutant_committed_walrus(20), committed_tuple(21), committed_sort(22), v5_mutant_derived_walrus(23), derived_tuple(24), derived_sort(25), v5_mutant_kill_walrus(26), kill_tuple(27), kill_sort(28), v5_routed_four(29), gate_selftest_unharmed(30). That's 30 checks. Hmm, but maybe 28 PASS lines when counting actual output lines... "28 PASS lines" — maybe the claim is that running the frozen r42 counter at some rev prints 28 PASS lines and 0 FAIL, and someone is treating that as "C1S=met".
+
+  But C1S is the round-43 successor counter (count-c1s.py), which is a different verdict rule. The frozen r42 counter prints C1=met, not C1S=met. C1S per contract.md includes things the r42 counter does NOT check: e.g., frozen counter still crashes (`frozen_still_crashes`), self_at_rev (count-c1s.py present byte-identical at rev), frozen_sha pin, frozen_sig. So the attack to falsify/bound: does the 28-PASS-line output of the frozen r42 counter imply C1S=met? Likely no — the successor counter has its own checks including checks about the frozen counter itself (it must crash with the cwd TypeError). Actually the interesting part: count-c1s.py runs the frozen r42 counter and expects it to CRASH ("frozen_still_crashes") because the frozen counter's run() lacks cwd param... wait no, count-c1s.py's `run()` has cwd param; it runs the frozen counter via `run([sys.executable, frozen_path, rev, "--repo", LANE], timeout=1800)` with cwd=None. The CRASH constant is "TypeError: run() got an unexpected keyword argument 'cwd'" — the frozen r42 counter at some rev is expected to crash because it calls run() with cwd= kwarg (in gate selftest: `run([...], cwd=clone)`) but the frozen counter's run() signature is (argv, timeout) — so running the frozen counter at a rev that contains tools/mori-sources-appendonly.py... wait, actually the frozen counter itself contains `run(..., cwd=clone)` in step 7 (line 244-246: `run([sys.executable, os.path.join(clone, "tools/mori-sources-appendonly.py"), "--selftest"], cwd=clone)`). Yes! The frozen r42 counter's run() at line 93-95 has signature `run(argv, timeout=900)` — no cwd. But step 7 calls run(..., cwd=clone). That would crash with TypeError when it reaches that point... wait, but that's the current bytes of the frozen file. Hmm, but FROZEN_SHA pins specific bytes. The frozen counter at line 244-246 passes cwd=clone → TypeError crash at gate_selftest step. So the frozen counter ALWAYS crashes before printing C1=? That's the "frozen_still_crashes" check in c1s: rc != 0 and CRASH in err and no C1= line.
+
+  So at rev (whatever rev is landed), the frozen counter would print checks 1..28 (up to and including v5_routed_four = check 29?) then crash at gate_selftest_unharmed... Let me count which checks print before the crash: steps 1-6 print checks 1 through 29? Wait step 6 is v5_routed_four (check #29), then step 7 gate_selftest_unharmed crashes with TypeError. So output would be 29 PASS lines then crash. Hmm, but claim says 28 PASS lines. Let me recount.
+
+  Actually wait — the crash occurs when calling run(..., cwd=clone) at line 244-246. Checks printed before: 
+  1. pins_present
+  2. pins_match
+  3. v4_present
+  4. v5_present
+  5. v5_differs_from_v4
+  6. v5_regions_intact
+  7. v5_new_arms_named
+  8. sandbox_clone
+  9. v4_control_selftest
+  10-12. v4_mutant_pin_{walrus-branch,tuple-extract,sort-deletion}
+  13-15. v4_mutant_survives_{...}
+  16. v5_selftest_17
+  17-19. v5_region_{...}
+  20-22. v5_mutant_committed_{...}
+  23-25. v5_mutant_derived_{...}
+  26-28. v5_mutant_kill_{...}
+  29. v5_routed_four
+  then crash at step 7.
+
+  That's 29 PASS lines. Unless... the sandbox_clone check has detail and prints PASS. Hmm, 29 not 28. Unless the claim of "28 PASS lines" is wrong, or maybe one check prints non-PASS (e.g., sandbox_clone prints "PASS (at rev)" — still PASS). Hmm wait — maybe the attack claims: "the frozen counter printed 28 PASS lines → therefore C1S=met". The critic task: falsify or bound this. The falsification: 28/29 PASS lines of the r42 frozen counter is the C1 verdict rule, which crashed before its final check; C1=met was never printed (no C1= line). C1S is a different sentence with different checks (self_at_rev, frozen_sha, frozen_sig, noharm_cwd at 22,0, frozen_still_crashes). Passing C1's checks (or a prefix of them) does not imply C1S: C1S requires count-c1s.py itself to exist byte-identical at rev, requires the frozen counter to crash, requires noharm 22-pass gate selftest — the frozen counter's crashed step 7 (gate_selftest) is exactly the check C1S does run successfully. So the 28 PASS lines cover only a subset.
+
+  But wait — maybe the truth is the opposite: someone claims C1S=met because count-c1s.py printed... no. The attack statement: "treating the frozen counter's 28 PASS lines as C1S=met." I need to falsify or bound this attack. The attack is that this treatment is invalid. I attack the attack? No — I'm the critic; I need to falsify the claim "28 PASS lines ⇒ C1S=met", or if I can't falsify it, report what I ran.
+
+  Hmm, actually as critic my role: test the strongest counterexample. The proposal being attacked: treating frozen counter's 28 PASS lines as C1S=met. I should try to falsify that equivalence — i.e., demonstrate a scenario/evidence where the 28 PASS lines occur but C1S is unmet, or where the count is wrong, or where the lines don't mean what the proposal says.
+
+  Plan:
+  1. Read AGENTS.md (required).
+  2. Read round-43 contract.md (P-C1S sentence).
+  3. Read count-c2.py (round-43).
+  4. Find where "28 PASS" is claimed — grep in round-43 w1, w1-spec.json, w1-settle.tsv.
+  5. Check git log of lane repo for landed tip; find which rev. Run the frozen counter in a /tmp sandbox copy against the rev (read-only w.r.t. lane; it does clone --shared to /tmp; note: running the frozen counter writes to /tmp only — allowed since "run code only in /tmp sandboxes"; it also runs `git -C LANE show` which is read-only; and `git clone --shared LANE` reads only).
+  6. Count PASS lines, compare to 28, and run count-c1s.py in a scratch copy (also writes only to /tmp; it does `git clone --shared` to /tmp; reads lane).
+
+  Careful: count-c1s.py checks `self_at_rev` — compares bytes at rev to the running file. If I copy it to /tmp and run it, __file__ is the /tmp copy, so self_at_rev compares rev's bytes to /tmp copy bytes — fine if byte-identical.
+
+  Also the c1s counter creates sandbox under /tmp with prefix mori-r43-c1s-. Good.
+
+  Timeouts: frozen counter has v4/v5 selftests each up to 900s; total could be long. The frozen counter run via c1s has timeout=1800. Running the frozen counter directly myself: it runs v4 selftest, 3 v4 mutants, v5 selftest, 3 v5 mutants (each runs a selftest = many git ops + python). Each selftest could take tens of seconds. Total maybe several minutes. I'll give generous timeouts (300s max per Bash call... foreground max 300s). Hmm, that's a problem: the full frozen counter run may exceed 300s. I can bound it: the key question is the number of PASS lines. I could instead reason statically + run a truncated version. But better: run the frozen counter in background? Background execution is disabled. Foreground max 300s. 
+
+  Alternative: run pieces. Or run the frozen counter with a smaller timeout and capture partial output? The subprocess timeout in my Bash call kills it; I'd get stdout? If killed by timeout, output may still be returned? "a foreground command that hits its timeout is killed" — output likely lost or partial. Safer: have the command write output to a file in /tmp with unbuffered python (`python3 -u`), run with timeout 290, then read the file. Partial output persists since python writes as it goes with -u and file redirection.
+
+  Also first measure how long a single conform selftest takes. Actually, first check: what does the w1-spec/contract say about 28 PASS lines? Let me gather evidence first, then decide what to run.
+
+  Also check w1 directory contents and existing reports (Crit1..Crit5?) for context. And w1-settle.tsv (17 bytes, tiny).
+
+  Let me also grep the repo for "28 PASS" mentions.
+
+  Let me batch: read AGENTS.md, contract.md (r43), count-c2.py, w1 listing, w1-settle.tsv, grep "28 PASS"/"28 pass"/"PASS lines"./home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/evidence/:
+total 72
+drwxr-xr-x 1 vgpnk vgpnk   386 Oct 24 21:44 .
+drwxr-xr-x 1 vgpnk vgpnk   162 Oct 24 22:35 ..
+-rw-r--r-- 1 vgpnk vgpnk  1991 Oct 24 21:38 census-start.txt
+-rw-r--r-- 1 vgpnk vgpnk    60 Oct 24 22:33 control-c1s-donothing.txt
+-rw-r--r-- 1 vgpnk vgpnk     0 Oct 24 22:33 control-c1s-green.txt
+-rw-r--r-- 1 vgpnk vgpnk    60 Oct 24 22:28 control-c1s-junk.txt
+-rw-r--r-- 1 vgpnk vgpnk   429 Oct 24 22:33 control-c2-donothing.txt
+-rw-r--r-- 1 vgpnk vgpnk   429 Oct 24 22:28 control-c2-green.txt
+-rw-r--r-- 1 vgpnk vgpnk   422 Oct 24 21:38 control-c2-junk.txt
+-rw-r--r-- 1 vgpnk vgpnk   130 Oct 24 21:42 disk-usage-r43.txt
+-rw-r--r-- 1 vgpnk vgpnk   463 Oct 24 21:42 s268-headers.txt
+-rw-r--r-- 1 vgpnk vgpnk 40895 Oct 24 21:44 wave-plan.json
+
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/:
+total 16
+drwxr-xr-x 1 vgpnk vgpnk   70 Oct 24 22:37 .
+drwxr-xr-x 1 vgpnk vgpnk  162 Oct 24 22:35 ..
+-rw-r--r-- 1 vgpnk vgpnk 2820 Oct 24 22:37 Exec4.md
+-rw-r--r-- 1 vgpnk vgpnk 1864 Oct 24 22:37 Exec5.md
+-rw------- 1 vgpnk vgpnk 7472 Oct 24 22:34 swarm-registry.json
+---
+Exec4	executor	0
+
+

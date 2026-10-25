@@ -1,0 +1,56 @@
+kimi version 2.3.1
+• Let me start by understanding the task. I'm a reviewer in a "mori" round 43, one v2 wave. My job:
+
+  1. Re-derive this claim attack: "no host service unit was restarted by this round's diff"
+  2. Commands must be re-run, not copied from the lesson
+  3. Write only my report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Rev12.md
+
+  Let me start by exploring the lane repo, finding the round's diff, and understanding what "this round's diff" means. Let me look at the wave directory structure first.
+
+  Let me name the axes:
+  - Correctness: does the diff actually restart/stop/kill any host systemd service unit?
+  - Coverage: did I check all relevant parts of the diff (scripts, units, timers, install hooks)?
+  - Evidence: re-run commands fresh, cite path/line evidence
+  - Scope: only my report file; no lane git/jj mutation
+
+  Plan:
+  1. Read the round-43 wave dir, lesson files, count scripts (frozen - don't edit, but can read).
+  2. Find the diff: likely in .ufo/waves/round-43/ or git diff. The claim is "no host service unit was restarted by this round's diff" — so I need to examine the diff for systemctl restart/reload/stop/start/kill calls, or unit file changes that trigger daemon-reload, or anything mutating host services.
+  3. Re-run commands in /tmp sandboxes.
+  4. Write report.
+
+  Let me start with parallel exploration.total 48
+drwxr-xr-x 1 vgpnk vgpnk   162 Oct 24 22:35 .
+drwxr-xr-x 1 vgpnk vgpnk   496 Oct 24 21:31 ..
+drwxr-xr-x 1 vgpnk vgpnk   256 Oct 24 22:37 assimilation
+-rw-r--r-- 1 vgpnk vgpnk  4298 Oct 24 21:37 contract.md
+-rw-r--r-- 1 vgpnk vgpnk  6022 Oct 24 21:37 count-c1s.py
+-rw-r--r-- 1 vgpnk vgpnk  3094 Oct 24 21:37 count-c2.py
+drwxr-xr-x 1 vgpnk vgpnk   386 Oct 24 21:44 evidence
+drwxr-xr-x 1 vgpnk vgpnk    70 Oct 24 22:37 w1
+-rw-r--r-- 1 vgpnk vgpnk    17 Oct 24 22:37 w1-settle.tsv
+-rw-r--r-- 1 vgpnk vgpnk 22422 Oct 24 21:44 w1-spec.json
+---
+total 16
+drwxr-xr-x 1 vgpnk vgpnk   70 Oct 24 22:37 .
+drwxr-xr-x 1 vgpnk vgpnk  162 Oct 24 22:35 ..
+-rw-r--r-- 1 vgpnk vgpnk 2820 Oct 24 22:37 Exec4.md
+-rw-r--r-- 1 vgpnk vgpnk 1864 Oct 24 22:37 Exec5.md
+-rw------- 1 vgpnk vgpnk 7472 Oct 24 22:34 swarm-registry.json
+ M SCORECARD.md
+ M corpus/QUALITY.md
+ M corpus/README.md
+ M corpus/SOURCES.md
+?? .ufo/waves/round-43/
+?? corpus/knowledge/c1s-cwd-r43.md
+?? corpus/knowledge/journal-disk-usage-total-r51.md
+?? corpus/knowledge/s235-sha-correction-r43.md
+?? corpus/lessons/round-43.md
+---
+e3a2b58f round-42 verifier spot-check (integrator, hyaku): non-author admit/reject
+25200325 round-42: S235 whitepaper copy committed by name (1 MiB dir-skip), scratch mirror recursion removed
+62b95e51 round-42: wave — 18/64 seat reports + registry, dispatch evidence, census-end 238 exit 0, S262 erratum, wave record
+f3ec0977 round-42: claim receipts — C2/C3 met, C1 honest stop (frozen counter defect at final check, no-harm re-derived by hand), measured outcomes, lesson M4, wave spec + plan
+34b92673 round-42: data — conform v5 + killed mutants, d72ac16 manifest, registry 231->238, two admitted entries + S347 knowledge, LOG/SCORECARD errata, lesson, QUALITY 114
+Let me read the AGENTS.md, contract.md, and the lesson file, plus w1 spec and Exec files.
+

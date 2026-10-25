@@ -1,0 +1,273 @@
+kimi version 2.3.1
+• Let me understand the task. I'm a critic seat ("Crit8") in a "mori round 43 — one v2 wave (build + attack)" workflow. My assignment: "Falsify or bound this attack: bulk-appending SOURCES.append.md. If you cannot falsify it, say what you ran and why it failed. Report at .ufo/waves/round-43/w1/Crit8.md".
+
+  So there's presumably a proposed approach involving "bulk-appending SOURCES.append.md" — likely a file in the lane repo used by some sourcing/citation pipeline. I need to find the proposal context (round cache, wave files) and attack it.
+
+  First, let me explore:
+  1. Read /home/vgpnk/.omp/agent/RULES.md (tooling rules)
+  2. Look at the lane repo structure: /home/vgpnk/Projects/shokunin/mori-shokunin
+  3. Look at .ufo/waves/round-43/ for the wave proposal / cache
+  4. Find SOURCES.append.md and understand what appends to it
+  5. Check frozen counters round-42/count-c1.py, round-43/count-c1s.py, count-c2.py — these likely count sources or something; my attack should test bulk-append behavior in /tmp scratch copies.
+
+  Axes to name (Godspeed): e.g., correctness (duplicate entries, ordering), idempotence (re-append duplicates), concurrency (parallel writers interleaving), atomicity (partial writes/corruption), provenance (false sourcing), scale/perf (file growth, counters), determinism (counters frozen), contract compliance (report path, no lane mutation).
+
+  Plan: run parallel reads/globs, then build a /tmp sandbox replicating the append pipeline, test failure modes: duplicates, concurrency (multiple appends without locking), partial line interleaving with printf from multiple processes, counter drift vs frozen count scripts, size growth, ordering guarantees.
+
+  Let me start with a big parallel batch:
+  - Read RULES.md
+  - Glob .ufo/waves/round-43/**
+  - Glob **/SOURCES.append.md (or grep)
+  - ls the lane repo root
+
+  Let me do that.total 948
+drwxr-xr-x 1 vgpnk vgpnk    394 Oct 24 04:23 .
+drwxr-xr-x 1 vgpnk vgpnk   1306 Oct 24 22:36 ..
+-rw-r--r-- 1 vgpnk vgpnk     31 Oct 23 23:27 0
+-rw-r--r-- 1 vgpnk vgpnk    244 Oct 14 21:17 AGENTS.md
+-rw-r--r-- 1 vgpnk vgpnk  98196 Oct 22 14:08 base.c
+drwxr-xr-x 1 vgpnk vgpnk    156 Oct 24 10:01 considerthese
+drwxr-xr-x 1 vgpnk vgpnk    106 Oct 24 02:50 corpus
+drwxr-xr-x 1 vgpnk vgpnk    238 Oct 24 22:39 .git
+-rw-r--r-- 1 vgpnk vgpnk     62 Oct 23 17:10 .gitignore
+drwxr-xr-x 1 vgpnk vgpnk     52 Oct 20 15:26 .jj
+-rw-r--r-- 1 vgpnk vgpnk 177402 Oct 24 20:54 LOG.md
+-rw-r--r-- 1 vgpnk vgpnk  21053 Oct 22 14:08 main.c
+-rw-r--r-- 1 vgpnk vgpnk  10114 Oct 22 14:08 MANPAGE.md
+-rw-r--r-- 1 vgpnk vgpnk   8344 Oct 22 14:08 meminfo.c
+-rw-r--r-- 1 vgpnk vgpnk   1663 Oct 14 21:17 MINT.md
+-rw-r--r-- 1 vgpnk vgpnk  34311 Oct 22 14:08 oom_kill.c
+-rw-r--r-- 1 vgpnk vgpnk  38326 Oct 22 18:23 PROVINCE.md
+-rw-r--r-- 1 vgpnk vgpnk   1595 Oct 20 17:16 README.md
+drwxr-xr-x 1 vgpnk vgpnk      0 Oct 24 01:27 --repo
+-rw-r--r-- 1 vgpnk vgpnk 219123 Oct 24 21:42 SCORECARD.md
+drwxr-xr-x 1 vgpnk vgpnk    488 Oct 24 04:23 .scratch
+-rw-r--r-- 1 vgpnk vgpnk 180617 Oct 22 14:08 sd-main.c
+-rw-r--r-- 1 vgpnk vgpnk    361 Oct 20 01:10 SHONEN.md
+-rw-r--r-- 1 vgpnk vgpnk 127349 Oct 24 02:47 SKILL.md
+drwxr-xr-x 1 vgpnk vgpnk   1500 Oct 24 03:50 tools
+drwxr-xr-x 1 vgpnk vgpnk    226 Oct 20 16:51 .ufo
+-rw-r--r-- 1 vgpnk vgpnk   1315 Oct 22 14:08 user@.service.in
+Let me read the key files: AGENTS.md, round-43 contract.md, w1-spec.json, wave-plan.json, and find what "SOURCES.append.md" refers to. There's `.ufo/waves/round-43/assimilation/append-block.md` and `assimilation/guard/SOURCES.md` and `assimilation/validate/corpus/SOURCES.md`. Also the round-42 count scripts. Let me look at the proposal that involves "bulk-appending SOURCES.append.md". Perhaps it's in w1-spec.json (the seat specs) or in a proposal file in w1/. Let me glob w1/* fully and read the contract.I'm Crit8: "Falsify or bound this attack: bulk-appending SOURCES.append.md."
+
+  The attack: bulk-appending to SOURCES via a `.append.md` mechanism — presumably `tools/mori-sources-appendonly.py` is the tool that appends SOURCES rows (the contract mentions "a sandbox-clone invocation of `tools/mori-sources-appendonly.py --selftest` records rc 0 and `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0`"). The "attack" being criticized: bulk-appending `SOURCES.append.md` — i.e., appending many rows in bulk (perhaps multiple rows at once via a block file like `append-block.md`) instead of one at a time, which could bypass per-row validation, create duplicate IDs, ordering violations, or bypass the frozen counters / counter checks.
+
+  I need to understand:
+  1. `tools/mori-sources-appendonly.py` — the append-only tool, its invariants (id uniqueness, ordering, guards, collision checks).
+  2. `corpus/SOURCES.md` — the actual production SOURCES file.
+  3. `.ufo/waves/round-43/assimilation/append-block.md` — the block staged for append (bulk append!).
+  4. The guard files: `assimilation/guard/SOURCES.md`, `collisions-post.txt`, `wide-ids`, `col0-ids`, `staged-ids`, `reg-ids-post`, `collisions`.
+  5. Frozen counters count-c1s.py and count-c2.py — do they check SOURCES? C2 checks the S235 registry row (in corpus/SOURCES.md?) byte-identical, correction row etc.
+
+  The attack to falsify: "bulk-appending SOURCES.append.md" — i.e., the maneuver of appending many sources rows in bulk via a SOURCES.append.md file. As Crit8, I must try to falsify the attack (show that bulk-appending is safe / the attack fails) OR bound it (show under what conditions it's dangerous). Actually re-read: "Falsify or bound this attack: bulk-appending SOURCES.append.md. If you cannot falsify it, say what you ran and why it failed."
+
+  So the "attack" is an adversarial maneuver: someone bulk-appends via SOURCES.append.md (perhaps bypassing per-row tool validation). My job: attack the attack — i.e., demonstrate whether this maneuver can sneak bad content through the counters/guards (falsify the defense?) Hmm. Actually in this parlance, each Crit seat is given an "attack" (a hypothesized exploit) and must falsify or bound it. So the exploit hypothesis is "bulk-appending SOURCES.append.md" — presumably an attacker bulk-appends rows to SOURCES (via the append-only tool's append-block feature) and gets away with something (duplicate IDs, C2 unmet masked, guard bypass). I should:
+
+  - Build a /tmp sandbox clone of the lane repo.
+  - Use the real `tools/mori-sources-appendonly.py` (byte-identical copy) to bulk-append rows via its bulk/append-block mode (if it supports one), or simulate bulk-appending SOURCES.append.md content into corpus/SOURCES.md.
+  - Run the frozen counters (count-c1s.py, count-c2.py in scratch copies) against the sandbox rev to see whether bulk append keeps C2=met/correct, whether guards (collisions, id checks) catch duplicates, whether ordering/conformity breaks.
+  - Test: duplicate IDs within a single bulk append; ID collisions with existing rows; rows that would individually be rejected but slip through in bulk (tool may stop at first failure — partial append, non-atomic); interleaved/concurrent appends; content smuggling (a row containing `a30cda99` inside the appended block — does the C2 counter's "some other registry row contains both `corrects S235` and `a30dca99` and does not contain `a30cda99`" check get fooled or tripped?); whether bulk append rewrites history (append-only violation) etc.
+
+  First, read the tool and the corpus SOURCES and the append-block. Also the frozen counters. Let me batch reads:
+
+  - tools/mori-sources-appendonly.py
+  - .ufo/waves/round-43/assimilation/append-block.md
+  - .ufo/waves/round-43/count-c1s.py
+  - .ufo/waves/round-43/count-c2.py
+  - .ufo/waves/round-43/assimilation/guard/SOURCES.md (maybe big)
+  - corpus/SOURCES.md (check size first)
+
+  Let me check sizes and read the tool.  1114 /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-sources-appendonly.py
+   172 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c1s.py
+    91 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c2.py
+   308 /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md
+     5 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/assimilation/append-block.md
+     5 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/assimilation/guard/SOURCES.md
+  1695 total
+evidence
+knowledge
+lessons
+QUALITY.md
+README.md
+SOURCES.md
+append-block.md
+collisions
+collisions-post
+guard
+quarantine-slice
+refused.md
+reg-ids
+reg-ids-post
+staged-ids
+validate
+validate-receipt.txt
+col0-ids
+collisions-post.txt
+SOURCES.md
+wide-ids
+Now read the appendonly tool (1114 lines) and the two counters. The tool is the append-only mechanism; the "attack" is bulk-appending SOURCES.append.md — i.e., appending all 5 rows of append-block.md in one bulk operation (rather than one at a time), possibly bypassing guards or tripping checks.
+
+  Let me read the tool and counters.Now I understand the tooling. Key question: what exactly is "bulk-appending SOURCES.append.md"? It's the maneuver of appending a block of multiple source rows (the append-block.md contains 5 rows: S348, S349, S350, S351, S470) into corpus/SOURCES.md in one commit (bulk), instead of appending rows one at a time. The attack hypothesis presumably is that bulk-appending could:
+
+  1. Bypass the C2 counter's `correction_row` check — e.g., if the bulk block contains a row that trips "a30cda99" or contains a second "corrects S235 ... a30dca99" row, then `correction_row` check requires exactly 1 (`len(others) == 1`). So bulk appending a second correction row breaks C2. That's a bound.
+
+  2. Or bulk-appending a row whose teaches cell starts with "supersedes S###" — the appendonly gate would flag stale_supersede if the target's last edit isn't ancestor of landing... Actually for S349, teaches begins "supersedes S235 — a cgroup OOM..." — wait, the SUPERSEDES_RE is `^supersedes\s+(S\d{3})\b`. S349's teaches cell starts with "supersedes S235 — a cgroup OOM..." so it IS a superseding row for S235. The timing check: S235 was never edited (last edit = first sighting). The landing commit of the (S235, S349) pair is the commit where S349 landed. Is S235's first-sighting commit an ancestor of that landing? Yes (if the block is appended on top of existing history). So superseded_as_of includes S235 → as-of, no stale. Good.
+
+  But if bulk-appended... wait, the interesting attack: bulk-appending multiple rows in one commit means the landing commit for the pair (S235,S349) is that one bulk commit. That's fine.
+
+  Now, what would the "attack" mean in the Crit series? These Crit seats attack defenses: e.g., Crit1 "a do-nothing replay of e3a2b58 that still prints C1S=met" — the attack is an exploit attempt; the critic tries to falsify it (show the exploit fails, i.e., the counter catches it) or bound it (show conditions under which it succeeds). So Crit8's exploit: "bulk-appending SOURCES.append.md" — presumably an attacker (or a sloppy executor) bulk-appends the whole append-block.md to corpus/SOURCES.md in one operation. The question: can a bulk append (a) slip malformed/duplicate rows past the gates, (b) break the frozen counters while still scoring met, (c) violate append-only rules, or (d) trip C2's correction_row uniqueness?
+
+  As Crit8 I must test in /tmp sandboxes:
+
+  Experiment plan:
+  1. Create /tmp sandbox: clone of lane repo (or a minimal repo built from the lane's corpus/SOURCES.md at entering tip). Actually simpler: use `git clone` or `git worktree`? Never mutate lane git. Cloning is read-only w.r.t. source (clone reads). But cloning the lane repo may be heavy; check size. Alternatively, create a fresh git repo in /tmp with corpus/SOURCES.md = current lane file content (read bytes via `git show e3a2b58...:corpus/SOURCES.md` from the lane, or just read the working tree file — but working tree may have moved past entering tip; contract says C2 checks bytes at rev). Use `git -C lane show rev:corpus/SOURCES.md` — read-only, fine.
+
+  2. Simulate bulk append: append the 5 rows of append-block.md to SOURCES.md in ONE commit. Then run:
+     - count-c2.py <rev> --repo sandbox: does it still print met? Expectation: met (S235 row untouched, correction row S349 contains a30dca99 and not a30cda99, exactly one; SCORECARD line etc. — need SCORECARD.md and PDF in sandbox at the right state; the sandbox must contain the SCORECARD with the correction line and unrewritten declaration, plus PDF). Easiest: make sandbox repo a copy of the whole lane working tree (cp -a) then git init? But count-c2 needs git history at rev. Copying the lane .git? That's a copy, not a mutation of the lane. `cp -a` of the repo to /tmp — the lane repo dir includes .git; that's reading, allowed ("Never mutate lane Git/jj or the lane index" — copying doesn't mutate). Check repo size first.
+     
+     Then in the sandbox: commit the bulk append, run count-c2 at new rev, run mori-sources-appendonly.py with --round-base entering-tip, run count-c1s.py at new rev (expect unmet since count-c1s.py not committed in sandbox? The C1S counter requires the counter file at rev byte-identical to the running counter. In sandbox, .ufo/waves/round-43/count-c1s.py exists (copied), and running counter is the same file → byte-identical → checks proceed. Interesting: C1S also requires the appendonly selftest pass=22 fail=0 and v5 checker selftest etc.)
+
+     - Attack variants:
+       a. Bulk block with a duplicate id (two S470 rows in one block) — does parse_registry/counter catch? count-c2 rows() collects all rows with same sid; s235 check requires exactly 1. But for a duplicate non-S235 row like S470, C2 doesn't care. Appendonly gate: rows keyed by id — duplicates silently collapse (`{cells[0]: cells}`), last wins. So duplicate id in bulk append would NOT be flagged by appendonly gate (ids not in violation; dup collapses). Does any guard catch it? The guard/collisions files suggest the assimilation checked collisions. count-c1s? Let me read count-c1s.py.
+       b. Bulk block containing a row with "corrects S235 ... a30dca99" twice → C2 correction_row fails (len(others)==1 required). Bound: bulk append of a second correction row breaks C2=met. But does the counter catch a duplicate with a30cda99? Yes: "a30cda99" in line → excluded from others; also s235 check: only S235 rows; a non-S235 row containing a30cda99 isn't checked. Hmm — so a row like "| S999 | ... | corrects S235 ... a30cda99 ..." (wrong anchor) → others empty → correction_row fails (needs exactly 1; the real S349 provides 1). Wait others would be [S349] only if the S999 excluded → len==1 → PASS! So appending an extra row that repeats a30cda99 does NOT break C2 as long as exactly one row (S349) matches the strict pattern. Interesting: C2's correction_row only fails when there are 0 or ≥2 rows matching the strict pattern. A decoy row carrying a30cda99 (the wrong sha) passes silently — C2 doesn't check that other rows lack the stale sha. Is that a falsification of the "attack"? The attack is "bulk-appending SOURCES.append.md" — not about decoy rows. Keep focus.
+       c. The real bulk-append safety question: does one-commit bulk append of the 5-row block keep all gates green (appendonly rc 0/no violations, C2 met, C1S unaffected)? And does it create the S235 supersede pair correctly (as-of, not stale)? If everything stays green, the attack (that bulk-appending is dangerous/bypasses something) is falsified for those gates; but bounds may exist:
+          - Ordering: bulk append appends rows in block order; parse order matters for... nothing? Row identity is id, not position. row reorder case says reorder is fine (0 violations).
+          - Duplicate id inside one block: gate silently collapses; no gate catches it. That's a real hole of bulk append: with one-row-at-a-time commits + appendonly gate per commit, a duplicate id lands as... also not caught (parse collapses too; id presence at tip, first-sighting...). Actually with per-row commits: commit1 adds S470, commit2 adds another S470 row. Tip parse: two rows with id S470; tip dict collapses. rows count? The gate keys by id everywhere → duplicate never flagged by the gate. So the duplicate hole exists regardless of bulk. But count-c2-style counters use `rows()` with lists — s235 uses len==1. For S470 duplicates nothing checks. So duplication is a pre-existing gap, not specific to bulk. Still worth noting as a bound: bulk append magnifies it (5 rows at once, no per-row review).
+          - Malformed row in bulk (wrong column count): parse_registry skips rows with len(cells) != len(header) → silently ignored by gate AND by count-c2's rows()? count-c2's rows() regex only needs leading `| S### |` — a malformed row with 10 cells still matches count-c2's regex if it's an S235... For S235 dup, s235_unrewritten requires exactly one S235 row whose sha matches — a malformed second S235 row (missing trailing cells) would still match the regex `^ {0,3}\|\s*(S[0-9]+)\s*\|` → s235 rows count 2 → FAIL. Good: counter catches dup S235. But a malformed non-S235 row is invisible to both gates — e.g., appending a truncated row S352 in bulk → no gate notices; it's just dead bytes in the registry. Bound: bulk append can insert rows that no counter validates (no checksum of total row count). Mitigation: census validate (Exec7: sources-census.sh validate --file ...). There's a census tool at /home/vgpnk/Projects/shokunin/scripts/sources-census.sh that validates the corpus SOURCES — that's the additional gate. If census validate catches malformed/duplicate rows, then the hole is covered. Test that too (run against sandbox copy).
+          - Concurrency: two bulk appends racing (cat block >> SOURCES.md from two processes) — last-writer-wins or interleaved partial lines; the appendonly gate compares git-committed bytes only, so racy uncommitted writes vanish silently. But in practice appends go through git commits; concurrency attack = two branches both appending same ids → merge. On merge, both sides' rows... git merges line-wise; identical rows dedupe fine; different content same id both survive as two lines with same id → gate collapses, no violation → silent duplicate. Test: branch A appends S470 v1, branch B appends S470 v2, merge → two S470 rows, appendonly gate rc 0. That's a genuine unbounded hole (no uniqueness check anywhere except census?). Check census validate for duplicate-id detection.
+          
+  3. Also verify the promised green path: sandbox with the block appended in ONE bulk commit → run appendonly gate --round-base entering-tip → expect round_changed=[] and violations 0, S235 superseded as-of. And count-c2 → met (needs SCORECARD correction line + decl fragment + PDF in the sandbox tip; the copied working tree presumably already has them — check).
+
+  Also read count-c1s.py to see whether bulk append interacts (it checks selftest of appendonly = pass 22 fail 0; that's the tool's selftest, independent of registry content).
+
+  Also check guard/ artifacts: staged-ids, collisions, collisions-post, reg-ids — the assimilation already ran collision checks. Read those small files to cite what the guard covered, and see whether the guard itself had a hole (e.g., collisions-post.txt says none).
+
+  Let me now:
+  - Read count-c1s.py
+  - Read guard files + collisions/staged-ids/reg-ids (small)
+  - Check lane repo size for cp
+  - Check census script existence
+
+  Batch these.==> staged-ids <==
+S348
+S349
+S350
+S351
+S352
+S353
+S354
+S355
+S356
+S357
+S358
+S359
+S360
+S361
+S362
+S363
+S364
+S365
+S366
+S367
+S368
+S369
+S370
+S371
+S372
+S373
+S374
+S375
+S376
+S377
+S378
+S379
+S380
+S381
+S382
+S383
+S384
+S385
+S386
+S387
+S388
+S389
+S390
+S391
+S392
+S393
+S394
+S395
+S396
+S397
+
+==> reg-ids <==
+S001
+S002
+S003
+S004
+S005
+S006
+S007
+S008
+S009
+S010
+S011
+S012
+S013
+S014
+S015
+S016
+S017
+S018
+S019
+S020
+S021
+S022
+S023
+S024
+S025
+S026
+S027
+S028
+S029
+S030
+S031
+S032
+S033
+S034
+S035
+S036
+S037
+S038
+S039
+S040
+S041
+S042
+S043
+S044
+S045
+S046
+S047
+S048
+S049
+S050
+
+==> reg-ids-post <==
+S001
+S002
+S003
+S004
+S005
+S006
+S007
+S008
+S009
+S010
+S011
+S012
+S013
+S014
+S015
+107M	/home/vgpnk/Projects/shokunin/mori-shokunin/.git
+
+

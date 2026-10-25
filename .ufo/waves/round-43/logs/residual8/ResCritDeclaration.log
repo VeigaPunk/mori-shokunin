@@ -1,0 +1,554 @@
+kimi version 2.3.1
+• Let me understand the task. I'm a critic seat in a "mori round 43" residual attack call. My job:
+
+  - Attack claim C2's self-assessment repair.
+  - Show that the round-42 SCORECARD declaration cell claiming C1=met is still present and unmodified in the round-43 SCORECARD.md.
+  - Show that the append-only correction line naming it appears exactly once.
+  - Paste grep -n commands and their output.
+  - Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/ResCritDeclaration.md
+  - Verdict line: KILLED, SURVIVED, or CONFIRMED, then exact command and output.
+
+  Let me start by exploring the lane repo to find SCORECARD.md files for round-42 and round-43.
+
+  Let me name axes:
+  1. Presence: round-42 SCORECARD declaration cell (C1=met) persists verbatim in round-43 SCORECARD.md (unmodified).
+  2. Singularity: the append-only correction line naming it appears exactly once.
+  3. Provenance/authority: correction is append-only (not editing the original cell), and the named target actually exists.
+  4. Scope: I write only my own report file.
+
+  Let me look at the files. First, find SCORECARD.md in .ufo/waves/round-42 and round-43./home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-42/:
+assimilation
+candidates
+conform.py
+contract.md
+count-c1.py
+count-c2.py
+count-c3.py
+evidence
+fixtures
+__pycache__
+w1
+w1-spec.json
+
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/:
+assimilation
+contract.md
+count-c1s.py
+count-c2.py
+evidence
+w1
+w1-settle-residual.tsv
+w1-settle.tsv
+w1-spec.json
+I need to read the AGENTS.md and the two SCORECARD files. Let me do that in parallel.I have the first 2137 lines of both files. Both SCORECARD.md files exist. I need to see the tail of both — particularly the round-42 section in round-42's SCORECARD and the round-43 SCORECARD's end where the round-42 section and any corrections live.
+
+  The task: "Attack claim C2's self-assessment repair. Show that the round-42 SCORECARD declaration cell claiming C1=met is still present and unmodified in the round-43 SCORECARD.md, and that the append-only correction line naming it appears exactly once. Paste the grep -n commands and their output."
+
+  So I need:
+  1. Find the round-42 declaration cell claiming C1=met in round-42's SCORECARD.md.
+  2. Show that exact cell (verbatim) still exists in round-43's SCORECARD.md — i.e., it was not modified in place.
+  3. Show that the append-only correction line naming it appears exactly once in round-43's SCORECARD.md.
+
+  Wait — interesting. Both files appear to be near-identical; the round-42/assimilation/validate/SCORECARD.md has 2317 lines, and the round-43 one has 2360 lines. The difference is ~43 lines. Let me diff them to see what changed.
+
+  Let me first find the round-42 section in each file and look at the tail. Let me read the tail of both files.
+
+• Both SCORECARD files found (round-42: 2317 lines; round-43: 2360 lines). Let me read the tails of both to locate the round-42 declaration cells and the correction line.
+
+• Now I have the picture:
+
+  - Round-42 SCORECARD.md (`.ufo/waves/round-42/assimilation/validate/SCORECARD.md`, 2317 lines): contains the Round 42 declaration (lines 2319-2346) and "Round 42 measured outcome" (2348-2360). Ends at line 2360.
+
+  Wait, actually that output labeled "Read" first result is the round-42 file? Let me check: first Read result says "Total lines in file: 2317" — that's round-42/assimilation/validate/SCORECARD.md. But wait, the first result shows the Round 42 section at lines 2319-2360. Hmm, but it says total lines 2317 and the read range started at 2138, returning 180 lines... that would end at 2317. But the content shows lines up to 2360. Hmm, wait — the line numbers shown go up to 2360 in the FIRST result, but "Total lines in file: 2317"? That's inconsistent. Let me re-read.
+
+  Actually looking again: the first Read result ends at line 2360 with "Mistake M4 added to the lesson (counter never executed end-to-end pre-freeze)." and status says "180 lines read from file starting from line 2138. Total lines in file: 2317." That's contradictory — 2138 + 180 = 2318, not 2360. Hmm, but the displayed content includes lines 2318-2360 (the Round 42 sections). Something's off in the status line vs content; possibly the status line numbers are wrong, or the content numbering is accurate. The second Read says "223 lines read from file starting from line 2138. Total lines in file: 2360." 2138 + 223 = 2361 ≈ 2360 lines total. So the SECOND read (round-43 SCORECARD, 2360 lines) contains through line 2360 and includes the Round 42 declaration + measured outcome + M4 note at the end.
+
+  So the file with 2317 lines (round-42 SCORECARD) — I only saw up to line 2317... but the content printed includes Round 42 sections?? Wait no. Let me recheck which result is which. The first result is the Read of round-42 SCORECARD (line_offset 2138, max_chars 120000). Its status says "180 lines read... Total lines in file: 2317. End of file reached." The content shown ends at line 2360 though... Actually no — look carefully: the first result's content ends at "2317 `/home/vgpnk/Projects/shokunin/.ufo/reports/round-41/mori.md`." — yes! The first result ends at line 2317 with the round-41 report line. Then the SECOND result continues with "2318 (blank)", "2319 ## Round 42 declaration..." through "2360 ...pre-freeze)." That's the round-43 SCORECARD which has the Round 42 sections PLUS presumably a round-43 section? Wait, the round-43 file has 2360 lines total and ends at line 2360 with the M4 note. Hmm, so where's the round-43 section and the correction line? 
+
+  Hold on. The second result's content: lines 2318-2360 include "## Round 42 declaration (L1 Kimi fresh mori-r42)..." (2319), the C1/C2/C3 table, "Round-41 report errata recorded here (claim C2, ...)", "### Round 42 measured outcome (L1 Kimi fresh mori-r42, tip 34b9267)" (2348), and ends at 2360 with "Mistake M4 added to the lesson (counter never executed end-to-end pre-freeze)."
+
+  So the round-43 SCORECARD.md currently ends with the Round 42 section — there's no Round 43 section visible yet, and I don't see any append-only correction line naming the C1=met cell. Hmm wait — but the task says "the append-only correction line naming it appears exactly once". Maybe the correction exists somewhere else in the file, or maybe it doesn't exist yet (round 43 in progress). My job as critic: attack claim C2's self-assessment repair — verify whether the round-42 declaration cell claiming C1=met is still present and unmodified in round-43 SCORECARD, and whether the append-only correction line naming it appears exactly once.
+
+  Wait — which cell claims C1=met? In the Round 42 declaration table, C1's "after" cell says: "`python3 .ufo/waves/round-42/count-c1.py <tip>` → `C1=met` exit 0 (`evidence/c1-after.txt`)". But the measured outcome says C1 was NOT verified (honest stop) — the counter crashed with TypeError before printing C1=. So the declaration cell still claims C1=met as a target (declared after-value, "Targets, not results"). The self-assessment repair would be a correction line appended in round 43 that names that declaration cell and states the honest outcome.
+
+  The task statement: "Attack claim C2's self-assessment repair. Show that the round-42 SCORECARD declaration cell claiming C1=met is still present and unmodified in the round-43 SCORECARD.md, and that the append-only correction line naming it appears exactly once."
+
+  So the repair being attacked is C2 of round 42? No wait — "Attack claim C2's self-assessment repair" — C2 of round 42 is "report-accuracy errata in append-only lane records". Its repair: appending correction lines (the "Round-41 report errata recorded here" paragraph names the three superseded values). Hmm, but the task specifically says: "the round-42 SCORECARD declaration cell claiming C1=met is still present and unmodified in the round-43 SCORECARD.md, and that the append-only correction line naming it appears exactly once."
+
+  Hmm. So there should be an append-only correction line in round-43 SCORECARD.md that names the round-42 declaration cell claiming C1=met. But from what I've read of the round-43 file (lines 2138-2360), the Round 42 section appears identical to round-42's file, ending at line 2360 with M4. There's no correction line there yet... unless the file was written after that? Total lines 2360 for round-43 file. The round-42 file has 2317 lines. So round-43 file = round-42 file + 43 lines (the Round 42 section appended: lines 2318-2360, i.e., 43 lines). 
+
+  Hmm wait, that means the round-42 SCORECARD.md does NOT contain the Round 42 declaration; instead it ends at the round-41 attempt-3 note. And the round-43 SCORECARD.md = round-42 content + Round 42 section appended at the end. Interesting: so the Round 42 SCORECARD section was landed in round 43.
+
+  So where is the "append-only correction line naming it"? Let me check the round-43 file more carefully — maybe there's a Round 43 section elsewhere, or maybe the correction line is inside the Round 42 section (e.g., "Round-41 report errata recorded here (claim C2...)" names the superseded values — but those name the round-41 report values, not the C1=met cell).
+
+  Hmm, wait. Let me re-read the task: "Show that the round-42 SCORECARD declaration cell claiming C1=met is still present and unmodified in the round-43 SCORECARD.md, and that the append-only correction line naming it appears exactly once."
+
+  Hmm — maybe the C1=met cell here refers to the Round-41 declaration? No — "round-42 SCORECARD declaration cell claiming C1=met". In the round-42 declaration table (line 2330 of round-43 file), C1's after cell contains "`C1=met` exit 0". That's the declaration cell claiming C1=met. And the measured outcome (line 2352) says C1 was "not verified (honest stop)". 
+
+  But wait — is there also an append-only correction line naming it? Perhaps somewhere in round-43's file there's a line like "Round-42 declaration cell C1=met superseded..." Let me search the whole round-43 file for "C1=met" and for correction lines. Also search round-43 assimilation dir and w1 dir. Maybe the correction line hasn't landed yet in SCORECARD.md but exists elsewhere; or maybe my job is to verify it exists exactly once.
+
+  Actually, hold on. Maybe the round-43 SCORECARD.md is expected to have a round-43 section with the correction line, but the L1 hasn't landed it yet, or it's in the w1 settle files. Let me check `.ufo/waves/round-43/w1-settle-residual.tsv` and `w1-settle.tsv`, and the round-43 w1 dir. Also let me diff the two SCORECARD files to see exactly what changed between them.
+
+  Also the frozen counters: `.ufo/waves/round-42/count-c1.py` (frozen, round-42), `.ufo/waves/round-43/count-c1s.py`, `.ufo/waves/round-43/count-c2.py`. The round-43 count-c1s.py is probably the counter for claim C1 "self-assessment" — "C1s" = C1 self-assessment? The residual wave: round-43 has `w1-settle-residual.tsv` — the residual attack call. My seat is ResCritDeclaration — "Residual critic: Declaration".
+
+  So the round-43 round seems to be a "residual settlement" round whose C-claim is about the round-42 SCORECARD self-assessment: the declaration cell claiming C1=met (a target that was NOT met — honest stop) remains in the file unmodified (append-only discipline), and an append-only correction line naming it appears exactly once. The counter `count-c1s.py` probably checks this. My job: attack that claim — verify with grep -n that (a) the declaration cell is present and unmodified in round-43 SCORECARD, (b) the correction line appears exactly once.
+
+  Let me now:
+  1. Diff the two SCORECARD files.
+  2. Grep round-43 SCORECARD for "C1=met" occurrences.
+  3. Grep for the correction line (something like "Round-42" + "supersede" or "correction").
+  4. Look at count-c1s.py and count-c2.py to understand what exact strings they check.
+  5. Look at w1-spec.json / contract.md for round 43.
+
+  Let me do these in parallel.
+
+• The round-43 SCORECARD ends at line 2360 with the Round-42 section appended (lines 2318–2360); round-42's own file ends at 2317. Now let me diff them, find the exact "C1=met" declaration cell, locate any correction line, and read the frozen counters + contract to know the exact strings under test.2317a2318,2360
+> 
+> ## Round 42 declaration (L1 Kimi fresh mori-r42) — routed repairs + checker v5
+> 
+> Entering tip `9de7323de482699743619cfa2ee444e7418421e3` (round 41 admitted).
+> Lowest non-retired axes depth 5, calibration 5, freshness 5 (tied): C2 works
+> calibration, C3 depth; C1 works operability (routed defect 1/5 class).
+> Freeze `.ufo/waves/round-42/contract.md` + counters + controls, pins
+> `evidence/freeze-r42.txt`, committed before any seat ran (inherited
+> same-round attempt tree, re-verified byte-exact, reused).
+> 
+> | # | claim | axis / score | before | after (measured at the landed tip) |
+> |---|---|---|---|---|
+> | C1 | conform v5 closes the three surviving r41 checker-mutation lanes with three fixture arms (`timeout_scope_walrus_positive`, `timeout_scope_tupleunpack_positive`, `timeout_scope_source_order`), each killed by exactly its own frozen checker mutation; sourced S347 (opened this round) + S230 | operability 7 | v4 bytes selftest `pass=14 fail=0` and the three v4-derived mutants survive (`evidence/control-c1-v4.txt`) | `python3 .ufo/waves/round-42/count-c1.py <tip>` → `C1=met` exit 0 (`evidence/c1-after.txt`) |
+> | C2 | report-accuracy errata in append-only lane records | calibration 5 | `count-c2.py 9de7323d` → `C2=unmet` exit 1 (`evidence/control-c2-before.txt`) | same counter at the landed tip → `C2=met` exit 0 (`evidence/c2-after.txt`) |
+> | C3 | the 145 unnamed inherited `d72ac16` files named by category and provenance | depth 5 | `count-c3.py 9de7323d` → `C3=unmet` exit 1 (`evidence/control-c3-before.txt`) | same counter at the landed tip → `C3=met` exit 0 (`evidence/c3-after.txt`) |
+> 
+> Round-41 report errata recorded here (claim C2, same three corrections as
+> the round-42 LOG entry): "8/8 mutants killed" is **superseded by 5/8 killed,
+> 3 SURVIVED** (MutC1Walrus/MutC1Tuple/MutC1DropSort); "34 attack seats
+> (53%)" is **superseded by 31 attack seats of 64 (48.4%)** (12 reviewer + 11
+> critic + 8 mutation-tester; executors are not attack roles); "2 scouts,
+> 4 scribes" is **superseded by 1 scout, 5 scribes**, returned total 19
+> unchanged. These corrections are recorded so no lane-owned round-42 record
+> re-asserts a superseded value uncontradicted.
+> 
+> Held: coverage 6, freshness 5, adjacency 6. No retirement, waiver,
+> exploratory claim or promotion. Frontier: registry 231 → 238 (S232–S235,
+> S241, S262 admitted with the two assimilation entries; S347 mine); refused
+> entry and flip condition under `.ufo/waves/round-42/assimilation/`.
+> 
+> ### Round 42 measured outcome (L1 Kimi fresh mori-r42, tip 34b9267)
+> 
+> | Claim | After (measured) | Verdict proposed for the closure |
+> |---|---|---|
+> | C1 | `count-c1.py 34b9267…` → 28 checks PASS then `TypeError … cwd` at its final no-harm check, rc 1, no `C1=` line (`evidence/c1-after.txt`) | **not verified (honest stop)**: the frozen counter's own defect; v5 substance (17/0 selftest, three mutants killed on exactly their arms, routed four unchanged) verified by the counter's 28 prior checks and the no-harm clause re-derived by hand (`evidence/c1-noharm-manual.txt`); the counter is pinned and not amended after data (fleet lesson, kumitate r42) |
+> | C2 | `count-c2.py 34b9267…` → `C2=met` exit 0 (`evidence/c2-after.txt`) | verified (measured) |
+> | C3 | `count-c3.py 34b9267…` → `C3=met` exit 0 (`evidence/c3-after.txt`) | verified (measured) |
+> 
+> Held: coverage 6, operability 7, depth 5, calibration 5, freshness 5,
+> adjacency 6 — no score move (C1's miss bars a move on operability; C2/C3
+> repair routed defects at held scores, the lane's established pattern).
+> Mistake M4 added to the lesson (counter never executed end-to-end
+> pre-freeze).
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/:
+total 52
+drwxr-xr-x 1 vgpnk vgpnk   206 Oct 24 22:46 .
+drwxr-xr-x 1 vgpnk vgpnk   496 Oct 24 21:31 ..
+drwxr-xr-x 1 vgpnk vgpnk   256 Oct 24 22:37 assimilation
+-rw-r--r-- 1 vgpnk vgpnk  4298 Oct 24 21:37 contract.md
+-rw-r--r-- 1 vgpnk vgpnk  6022 Oct 24 21:37 count-c1s.py
+-rw-r--r-- 1 vgpnk vgpnk  3094 Oct 24 21:37 count-c2.py
+drwxr-xr-x 1 vgpnk vgpnk   464 Oct 24 22:53 evidence
+drwxr-xr-x 1 vgpnk vgpnk   292 Oct 24 22:57 w1
+-rw-r--r-- 1 vgpnk vgpnk   116 Oct 24 22:57 w1-settle-residual.tsv
+-rw-r--r-- 1 vgpnk vgpnk  1221 Oct 24 22:44 w1-settle.tsv
+-rw-r--r-- 1 vgpnk vgpnk 22422 Oct 24 21:44 w1-spec.json
+
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/:
+total 60
+drwxr-xr-x 1 vgpnk vgpnk  292 Oct 24 22:57 .
+drwxr-xr-x 1 vgpnk vgpnk  206 Oct 24 22:46 ..
+-rw-r--r-- 1 vgpnk vgpnk 3597 Oct 24 22:42 Exec2.md
+-rw-r--r-- 1 vgpnk vgpnk 2820 Oct 24 22:37 Exec4.md
+-rw-r--r-- 1 vgpnk vgpnk 1864 Oct 24 22:37 Exec5.md
+-rw-r--r-- 1 vgpnk vgpnk 2342 Oct 24 22:42 Exec6.md
+-rw-r--r-- 1 vgpnk vgpnk 3955 Oct 24 22:55 ResCritDoNothing.md
+-rw-r--r-- 1 vgpnk vgpnk 3530 Oct 24 22:51 ResCritInPlace.md
+-rw-r--r-- 1 vgpnk vgpnk 3754 Oct 24 22:56 ResCritJunk.md
+-rw-r--r-- 1 vgpnk vgpnk 4879 Oct 24 22:56 ResCritNoHarm.md
+-rw-r--r-- 1 vgpnk vgpnk 4687 Oct 24 22:57 ResCritS268.md
+-rw-r--r-- 1 vgpnk vgpnk 7120 Oct 24 22:55 ResCritScope.md
+-rw------- 1 vgpnk vgpnk 7472 Oct 24 22:34 swarm-registry.json
+
+
+• Key facts so far:
+
+  1. The diff shows round-43 SCORECARD.md = round-42 SCORECARD.md + the Round 42 section (lines 2318–2360). Nothing else changed. So the whole file is byte-identical except the appended Round 42 section.
+
+  Wait — actually, the diff output shows only `2317a2318,2360` — meaning round-43 adds lines 2318-2360. So the round-42 file (2317 lines) does NOT have the Round 42 declaration; the round-43 file adds it. Interesting: so the Round 42 SCORECARD section landed in round 43 (as assimilation/validate output).
+
+  Hmm wait, but actually — the round-42/assimilation/validate/SCORECARD.md is probably a snapshot of the SCORECARD as of round 42's validate step (before the Round 42 section was appended). And round-43's is the snapshot as of round 43's validate step (after appending the Round 42 section).
+
+  2. The Round 42 declaration cell claiming C1=met is at line 2330 in round-43 SCORECARD.md: `| C1 | conform v5 closes ... | `python3 .ufo/waves/round-42/count-c1.py <tip>` → `C1=met` exit 0 (`evidence/c1-after.txt`) |`
+
+  That's a declaration (target) cell. The measured outcome at line 2352 records C1 "not verified (honest stop)".
+
+  3. Now: "the append-only correction line naming it appears exactly once". Hmm — which correction line? Looking at the Round 42 section, there's the paragraph "Round-41 report errata recorded here (claim C2, same three corrections as the round-42 LOG entry): ...". That names claim C2's errata, but it names round-41 report values, not the C1=met cell.
+
+  Wait — maybe the claim C2 of ROUND 43 is about the round-42 SCORECARD declaration cell. Let me read round-43's contract.md and count-c1s.py/count-c2.py to see what the round-43 claims are. "C1s" — claim C1 self-assessment? Let me read the contract.
+
+  Also, there may be a correction line elsewhere — maybe in the round-43 SCORECARD there's supposed to be a "Round-42 declaration correction" line. But grep for "C1=met" shows line 2330 is the only round-42 one in the declaration table. The measured outcome row for C1 (line 2352) says "no `C1=` line".
+
+  Hmm — wait. Maybe I'm misreading the task. Let me re-read: "Attack claim C2's self-assessment repair. Show that the round-42 SCORECARD declaration cell claiming C1=met is still present and unmodified in the round-43 SCORECARD.md, and that the append-only correction line naming it appears exactly once."
+
+  So claim C2 (round 43's? or round 42's?) — round-43 has count-c2.py. Let me read round-43/contract.md and count-c2.py to see. The w1 dir has ResCrit* reports (other residual critics): ResCritDoNothing, ResCritInPlace, ResCritJunk, ResCritNoHarm, ResCritS268, ResCritScope. And Exec2/4/5/6. And w1-settle.tsv + w1-settle-residual.tsv.
+
+  So round 43 is the residual settlement round. Its claims probably:
+  - C1 (count-c1s.py): the round-42 SCORECARD declaration cell claiming C1=met is still present and unmodified, and the append-only correction line naming it appears exactly once.
+  - C2 (count-c2.py): something else.
+
+  Wait, the task says "Attack claim C2's self-assessment repair" — hmm, but then describes the C1-cell check. Maybe round-43's C2 is the self-assessment repair claim? Let me read the contract and counters. Let me also read the settle TSVs and w1-spec.json.
+
+• The Round-42 section was appended in round 43 (only diff hunk: `2317a2318,2360`). The declaration cell claiming `C1=met` is line 2330. Now let me read the round-43 contract, both frozen counters, and the settle files to pin the exact strings under test.
+
+• Now I understand the full picture:
+
+  Round-43 claim C2 (calibration, P-C2) — the "self-assessment repair":
+  - S235 registry row byte-identical to its entering-tip sha (unrewritten, contains `a30cda99` — the wrong hash) — wait, the contract says the S235 row "still contains `a30cda99` and `byte-identical`". Interesting: the entering S235 row has hash `a30cda99...` — and the PDF sha is `9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30dca99359e6df057ad8020`. Notice: `a30cda99` vs `a30dca99` — a transposition! The S235 row recorded the PDF sha as `9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30cda99359e6df057ad8020` (with `a30cda99`) but the true PDF sha is `...a30dca99...`. So the self-assessment recorded a wrong hash (digit transposition), and the repair is: append a correction row (some other registry row containing `corrects S235` and the correct `a30dca99`, not the wrong `a30cda99`), leave S235 unrewritten, leave the SCORECARD declaration cell unrewritten, and add the exact SCORECARD line:
+
+  `Round-43 calibration correction: r42-declaration-C1=met superseded; frozen counter printed no C1= line`
+
+  And keep the unrewritten declaration fragment: `` `C1=met` exit 0 (`evidence/c1-after.txt`) `` — exactly once.
+
+  The counter checks:
+  - `declaration_unrewritten`: card.count(DECL) == 1 where DECL = "`C1=met` exit 0 (`evidence/c1-after.txt`)"
+  - `scorecard_correction`: card.count(CORR) == 1 where CORR = "Round-43 calibration correction: r42-declaration-C1=met superseded; frozen counter printed no C1= line"
+
+  Note the counter reads `SCORECARD.md` at repo ROOT (`git_bytes(rev, "SCORECARD.md")`), not the assimilation/validate copy! Important distinction. The task says "the round-43 SCORECARD.md" — my dispatched task says to check `.ufo/waves/round-43/assimilation/validate/SCORECARD.md`? No wait — my dispatch says "Show that the round-42 SCORECARD declaration cell claiming C1=met is still present and unmodified in the round-43 SCORECARD.md". The round-43 SCORECARD.md — which one? The route: Glob found two: round-42/assimilation/validate/SCORECARD.md and round-43/assimilation/validate/SCORECARD.md. But there's also a root SCORECARD.md in the lane repo. The counter count-c2.py reads `SCORECARD.md` at the repo root.
+
+  So I should check BOTH: the root SCORECARD.md (what the counter reads) and the assimilation/validate snapshot (round-43). The task's grep outputs should probably be against the root SCORECARD.md since that's what the counter scores. But the dispatch says "the round-43 SCORECARD.md" — ambiguous; I'll check both and report both, since the critic's job is to attack: if the correction line is missing from one of them, that's a defect.
+
+  Now, has the correction line landed yet? Let me grep the root SCORECARD.md for the CORR string and the DECL fragment. Earlier grep on the round-43 assimilation/validate/SCORECARD.md for "C1=met" found line 2330 (the declaration cell) but I haven't grepped for the correction line. The round-43 assimilation snapshot was last modified Oct 24 22:37. The w1 evidence dir was modified 22:53, w1 dir 22:57. The lane's root SCORECARD.md may have been updated by the L1 after 22:37 (the assimilation snapshot predates the correction). Let me check:
+
+  1. Root SCORECARD.md: grep -n for DECL and CORR.
+  2. Round-43 assimilation/validate/SCORECARD.md: grep -n for CORR (already know DECL is at 2330; need to check the exact DECL fragment count).
+
+  Also confirm the DECL fragment appears exactly once in round-43 SCORECARD (the assimilation one): the C1 declaration cell at line 2330 contains "`C1=met` exit 0 (`evidence/c1-after.txt`)". Are there other occurrences of the exact fragment? From the grep results for "C1=met", line 2330 is the only one with that exact suffix in the round-42 section. But the DECL string includes backticks: `` `C1=met` exit 0 (`evidence/c1-after.txt`) ``. Let me grep for that exact string.
+
+  Also check the entering tip e3a2b58f: is the Round-42 section even in root SCORECARD.md at the entering tip? The counter's green-control expects: at the settled rev, SCORECARD.md contains DECL once and CORR once. The entering tip should contain DECL once, CORR zero times.
+
+  My attack job:
+  1. Verify the round-42 declaration cell claiming C1=met is present and unmodified in round-43 SCORECARD.md (both the assimilation/validate copy AND the root SCORECARD.md at the current rev — since the counter scores the root one).
+  2. Verify the append-only correction line naming it appears exactly once.
+  3. Attack: find counterexamples — e.g., the correction line missing, appearing twice, the DECL fragment modified, or a mismatch between the two SCORECARD copies (assimilation snapshot vs root), or the correction line present in root but not in the assimilation snapshot (which would mean the assimilation snapshot is stale — but that's expected if it was captured before the correction landed).
+
+  Wait — actually, there's a subtlety: the round-43/assimilation/validate/SCORECARD.md is presumably the "validate" step's copy of SCORECARD.md (a snapshot for validation). If the correction line landed in root SCORECARD.md after 22:37, the snapshot won't have it. My dispatch says: "Show that the round-42 SCORECARD declaration cell claiming C1=met is still present and unmodified in the round-43 SCORECARD.md, and that the append-only correction line naming it appears exactly once." — For the dispatch's claims to hold in the round-43 SCORECARD.md (the assimilation/validate one), the correction line must be in it. If the correction line is only in root SCORECARD.md, then the dispatch claim fails for the assimilation copy... but the counter reads root SCORECARD.md. Hmm.
+
+  Let me check the current state of root SCORECARD.md. Also check git log/status to see the current rev. Note: I must not mutate git state; read-only commands are fine (git log, git show, git status). Let me run the greps.
+
+  Also note the round-43 contract says the entering tip is e3a2b58f (round-42 verifier spot-check), and the SCORECARD correction line should be present at the settled rev. Let me check whether the L1 has landed the correction yet. If it hasn't, then my attack report should say the claim C2's state as of now: declaration cell present and unmodified (survives), correction line absent (0 occurrences) → the "appears exactly once" claim would FAIL as of the current bytes — KILLED. But if it's landed exactly once, then the claim CONFIRMED/SURVIVED.
+
+  Also the frozen r42 count-c1.py — I must attack it in scratch copies only, not edit. Fine.
+
+  Let me also look at w1-settle.tsv and w1-settle-residual.tsv and the existing ResCrit* reports to avoid duplicating and to know the format. And evidence dir. Let me batch:
+  - grep -n CORR in root SCORECARD.md and round-43 assimilation SCORECARD.md
+  - grep -n DECL in both
+  - git -C lane log --oneline -5; git status --short (read-only)
+  - read w1-settle.tsv, w1-settle-residual.tsv
+  - read one ResCrit report for format (ResCritInPlace.md is closest: "in-place" attack).
+
+  The grep tool output for content mode with -n. Let me do it.
+
+• The counter pins the exact strings: `DECL = `` `C1=met` exit 0 (`evidence/c1-after.txt`) `` ` and `CORR = "Round-43 calibration correction: r42-declaration-C1=met superseded; frozen counter printed no C1= line"`. Critically, `count-c2.py` reads **root `SCORECARD.md`** at the rev, not the assimilation/validate snapshot. I must attack both copies. Let me grep both, check lane git state read-only, and read the settle ledgers.2373:Round-43 calibration correction: r42-declaration-C1=met superseded; frozen counter printed no C1= line
+--- root exit: 0
+--- snapshot exit: 1
+2330:| C1 | conform v5 closes the three surviving r41 checker-mutation lanes with three fixture arms (`timeout_scope_walrus_positive`, `timeout_scope_tupleunpack_positive`, `timeout_scope_source_order`), each killed by exactly its own frozen checker mutation; sourced S347 (opened this round) + S230 | operability 7 | v4 bytes selftest `pass=14 fail=0` and the three v4-derived mutants survive (`evidence/control-c1-v4.txt`) | `python3 .ufo/waves/round-42/count-c1.py <tip>` → `C1=met` exit 0 (`evidence/c1-after.txt`) |
+--- root exit: 0
+SCORECARD.md:1
+.ufo/waves/round-43/assimilation/validate/SCORECARD.md:1
+dde525ea round-43: successor operability counter (C1S), calibration repair (C2), one-theme assimilation
+e3a2b58f round-42 verifier spot-check (integrator, hyaku): non-author admit/reject
+25200325 round-42: S235 whitepaper copy committed by name (1 MiB dir-skip), scratch mirror recursion removed
+62b95e51 round-42: wave — 18/64 seat reports + registry, dispatch evidence, census-end 238 exit 0, S262 erratum, wave record
+f3ec0977 round-42: claim receipts — C2/C3 met, C1 honest stop (frozen counter defect at final check, no-harm re-derived by hand), measured outcomes, lesson M4, wave spec + plan
+34b92673 round-42: data — conform v5 + killed mutants, d72ac16 manifest, registry 231->238, two admitted entries + S347 knowledge, LOG/SCORECARD errata, lesson, QUALITY 114
+316f3dcf round-42: assimilation scratch — collision guard proof, transformed append block, mirror validation rc=0, refusal record
+249c7e73 round-42: freeze — contract, three counters, fixtures, v4 control receipts (inherited same-round tree, re-verified)
+?? .ufo/waves/round-43/evidence/c1s-after.txt
+?? .ufo/waves/round-43/evidence/c2-after.txt
+?? .ufo/waves/round-43/evidence/census-end.txt
+?? .ufo/waves/round-43/w1-settle-residual.tsv
+?? .ufo/waves/round-43/w1/
+dde525ea4a7fca365e8ff2f3c486bccf28b94e52
+
+
+• Key findings:
+
+  1. Root `SCORECARD.md` (the file the frozen counter `count-c2.py` reads at the rev):
+     - Correction line: **present exactly once**, at line 2373.
+     - Declaration fragment `` `C1=met` exit 0 (`evidence/c1-after.txt`) ``: **exactly once**, at line 2330.
+
+  2. Round-43 assimilation/validate snapshot `.ufo/waves/round-43/assimilation/validate/SCORECARD.md`:
+     - Correction line: **ABSENT** (grep exit 1).
+     - Declaration fragment: once (line 2330).
+
+  3. Lane git: HEAD = dde525ea (round-43 commit). The w1 residual evidence is untracked (`?? .ufo/waves/round-43/w1/`, `?? .ufo/waves/round-43/evidence/c1s-after.txt` etc.). So the round-43 L1 committed the SCORECARD correction in dde525ea, but the assimilation/validate snapshot in that commit is stale relative to the root SCORECARD.md (it lacks line 2373).
+
+  Wait — actually, let me check: is the assimilation/validate/SCORECARD.md tracked in dde525ea and does it match what I read? The round-43 file I read has 2360 lines and lacks the correction line. The root SCORECARD.md has the correction at line 2373, so root has ≥2373 lines — it's 13 lines longer (correction block). So the snapshot diverges from root by more than just the correction line. Let me diff root SCORECARD.md vs the round-43 snapshot to see exactly what differs.
+
+  Also, "the append-only correction line naming it appears exactly once" — in root SCORECARD.md: exactly once (count via grep -c). Good. But I should verify with the counter semantics: `card.count(CORR) == 1` — Python `str.count` counts non-overlapping occurrences of the whole string. grep -c counts LINES containing the match. If the correction line appeared twice on the SAME line (e.g., "CORR ... CORR"), count would be 2 but grep -c would report 1. Let me verify with `grep -o | wc -l` too (occurrence count, not line count). Python count == occurrence count. So `grep -oF CORR | wc -l` is the faithful check.
+
+  Similarly for DECL: `card.count(DECL) == 1` — occurrences. grep -c gives lines=1; verify occurrences with grep -o | wc -l.
+
+  Also: does the correction line "name" the declaration cell? CORR = "Round-43 calibration correction: r42-declaration-C1=met superseded; frozen counter printed no C1= line" — it names "r42-declaration-C1=met". Yes.
+
+  4. The declaration cell "still present and unmodified": I can prove unmodified by diffing the Round-42 section bytes between the round-42 assimilation snapshot... wait, the round-42 snapshot doesn't have the Round 42 section (it ends at 2317). The Round 42 section landed in root SCORECARD.md... when? Let me check git history of SCORECARD.md: which commit added the Round 42 declaration? Probably f3ec0977 or 34b92673 ("LOG/SCORECARD errata"). And then dde525ea added the correction line. Let me verify: `git log --oneline -L` or `git log -p` on SCORECARD.md limited — simpler: `git show dde525ea -- SCORECARD.md | head -50` to see the round-43 diff to SCORECARD.md (should show only the appended correction block, nothing removed → append-only, declaration unmodified).
+
+  And compare the declaration cell bytes across: (a) the commit where the Round 42 section first landed, (b) dde525ea (HEAD), (c) the round-43 assimilation snapshot. Show byte-identical.
+
+  5. Now the attack vectors (my critic job — attack the repair):
+
+     a. **The snapshot divergence**: the round-43 `assimilation/validate/SCORECARD.md` lacks the correction line. Is that a defect? The counter reads root SCORECARD.md. The assimilation/validate/SCORECARD.md is presumably a validation snapshot produced by the assimilation tool at round-43 validate time — if it was produced BEFORE the correction line was appended to root SCORECARD.md, it's a stale snapshot inside the same round's own artifacts. But is assimilation/validate/SCORECARD.md supposed to be a byte-copy of the lane SCORECARD.md? If yes, divergence = the lane's own validate artifact doesn't reflect the settled SCORECARD → a self-assessment inconsistency worth flagging. But wait — was it captured at validate time (before the after-score)? The round-42 counterpart (round-42/assimilation/validate/SCORECARD.md) also equals the root SCORECARD.md at round-42's entering state? Round-42 snapshot = 2317 lines = root SCORECARD.md at the entering tip e3a2b58f? Let me check: root SCORECARD.md at e3a2b58f — how many lines? The correction block was added in dde525ea (13 lines?). At e3a2b58f, root SCORECARD.md should have the Round 42 section (landed in round-42 commits) but no correction → 2360 lines, matching the round-43 snapshot exactly. So the round-43 assimilation/validate snapshot = root SCORECARD.md at the entering tip e3a2b58f (pre-correction). That's consistent with "validate" snapshots being taken at round entry (validate step before the round's work). Let me verify with git show e3a2b58f:SCORECARD.md | wc -l and diff.
+
+     So the snapshot divergence is explainable and NOT a defect: the validate snapshot is the entering state. Good — that actually strengthens the "append-only" story: the entering snapshot has the declaration cell unmodified and no correction; the settled root has the same declaration cell unmodified + exactly one correction line.
+
+     b. **Wrong-hash origin**: the S235 row has `a30cda99` (transposed) while the true PDF sha is `...a30dca99...`. The correction row must contain `corrects S235` + `a30dca99` and NOT `a30cda99`. Also S235 must remain byte-identical to the entering sha. That's the other half of C2, but my dispatch is specifically the SCORECARD declaration-cell half. Still, as the residual critic on the declaration, I should verify my half precisely and note the neighboring half only insofar as it interacts (the correction line is in SCORECARD; the correction ROW is in SOURCES.md). My dispatch: "Attack claim C2's self-assessment repair. Show that the round-42 SCORECARD declaration cell claiming C1=met is still present and unmodified in the round-43 SCORECARD.md, and that the append-only correction line naming it appears exactly once." So focus on the SCORECARD half.
+
+     c. **Duplicate correction lines elsewhere**: check that the CORR string doesn't appear in other files that could be confused (LOG.md? round-43 w1 reports?). The counter only reads SCORECARD.md, but "appears exactly once" per the dispatch — I'll scope to the round-43 SCORECARD.md (root, settled rev) as the counter defines, and note the snapshot's absence as the expected entering-state. Also check: does the CORR string appear in the round-43 contract.md? Yes! Contract.md line 47 contains the exact line `Round-43 calibration correction: r42-declaration-C1=met superseded; frozen counter printed no C1= line` (as the frozen predicate). That's the contract copy, not SCORECARD — fine, expected (the predicate quotes it). Not a defect.
+
+     d. **Whitespace/typography mutations of the declaration cell**: prove byte-identity of the declaration CELL across revisions: extract line from e3a2b58f:SCORECARD.md, dde525ea:SCORECARD.md, and working tree, and diff. Also from the round-42 snapshot? The round-42 snapshot lacks the Round-42 section entirely (landed later). Which commit landed the Round 42 declaration into SCORECARD.md? Possibly 34b92673 (data) or f3ec0977 (claim receipts). Let me find with git log -S 'C1=met` exit 0 (`evidence/c1-after.txt`)' -- SCORECARD.md. Hmm, -S with backticks fine in single quotes.
+
+     e. **The correction line's own position/append-only proof**: git show dde525ea -- SCORECARD.md must show ONLY additions (a pure append), no deletions/modifications. That proves "unmodified".
+
+     f. **The name-it requirement**: the correction line names "r42-declaration-C1=met". Does it actually unambiguously identify the declaration cell? The DECL fragment `` `C1=met` exit 0 (`evidence/c1-after.txt`) `` appears once in SCORECARD.md — so yes, the naming is unambiguous *within SCORECARD.md*. Attack: is `C1=met` ambiguous? The correction says "r42-declaration-C1=met superseded" — the r42 prefix pins it. OK.
+
+     g. **Counter blind spots worth reporting** (smallest safe correction / residual):
+        - The counter checks `card.count(DECL) == 1` at `<rev>` — but the SCORECARD is mutable going forward; not my concern.
+        - grep -c vs str.count subtlety: if the correction line were embedded twice on one line, the counter catches it (count=2) — good.
+        - A subtler hole: the counter does not anchor the correction line to a position AFTER the declaration cell. A correction line ABOVE the declaration (i.e., inserted earlier) would still count. But the counter can't check ordering via count. Append-only ordering is provable by git diff (pure append at EOF region). Let me check where line 2373 sits: total lines of root SCORECARD.md? The Round 42 section ended at 2360 in the entering state; correction at 2373 → appended after line 2360, i.e., after the declaration cell (2330). Let me get wc -l of root SCORECARD.md and show lines 2361-2373 to display the correction block.
+        - Another hole: the counter compares `git show <rev>:SCORECARD.md`, i.e., the COMMITTED bytes. The working tree matches? Root SCORECARD.md in working tree has the line at 2373 — and git status shows SCORECARD.md not modified (only untracked files). So HEAD == working tree for SCORECARD.md. Good.
+
+     h. **Attack the r42 count-c1.py frozen counter in a scratch copy?** My dispatch doesn't require running it; the ResCrit* sibling seats covered do-nothing/in-place/junk/no-harm/scope/S268. My seat is the Declaration critic: the specific SCORECARD cell + correction line. I should stay scoped but complete: run the actual verification commands (grep -n), run the frozen count-c2.py in a /tmp sandbox copy? Wait — "Attack them in scratch copies only" for frozen counters. Can I run count-c2.py directly? It's frozen; running it read-only against the lane with `git show` is read-only. It spawns `git -C LANE show` — read-only. That's safe and doesn't mutate anything. But rules say "Run code only in /tmp sandboxes". Running `python3 .ufo/waves/round-43/count-c2.py <rev>` executes code from the lane directory. Hmm — "Run code only in /tmp sandboxes" — to be safe, copy the counter to /tmp and run it with --repo pointing at the lane (the counter takes --repo LANE; LANE default is the absolute lane path; the git show targets the lane repo — read-only). Actually running the counter from /tmp with --repo /home/vgpnk/Projects/shokunin/mori-shokunin only does `git show` — read-only operations on the lane. That satisfies "run code only in /tmp sandboxes" (the code file itself is in /tmp; it reads lane bytes via git show).
+
+     Actually, do I even need to run the counter? My dispatch: "Paste the grep -n commands and their output." The core requirement is the greps. But a critic run of the actual frozen counter in /tmp strengthens the evidence (and validates that the counter agrees with my greps). I'll do:
+     1. grep -n for DECL and CORR in the round-43 SCORECARD (root, working tree) — the dispatch's literal ask.
+     2. grep -n in the round-43 assimilation/validate snapshot (to show entering-state: DECL present unmodified, CORR absent).
+     3. Occurrence counts (grep -o | wc -l) to match Python str.count semantics.
+     4. git show dde525ea -- SCORECARD.md → pure append proof (no - lines except header).
+     5. Byte-compare the declaration CELL line across e3a2b58f, dde525ea, working tree, and both snapshots (sha256 of the line).
+     6. Run the frozen count-c2.py from a /tmp copy against dde525ea (and against e3a2b58f for the do-nothing: should be C2=unmet — actually ResCritDoNothing covered that; I can include the settled-rev run).
+     7. Also verify HEAD SCORECARD.md == working tree (git diff --stat -- SCORECARD.md empty).
+
+     One more attack: does the correction line also exist in the round-42 w1 or elsewhere in .ufo/waves/round-43? Let me grep -rn the CORR string across the lane to enumerate all occurrences (expect: contract.md, SCORECARD.md root, maybe LOG.md, maybe round-43 reports). The dispatch's "appears exactly once" is scoped to SCORECARD.md, but knowing the full occurrence set guards against a duplicate-authority attack (e.g., the same correction asserted twice in SCORECARD-adjacent records contradicting). Quick grep -rnF CORR across the repo, excluding .git. Also grep -rn for 'r42-declaration' to see variants.
+
+     Also check LOG.md — AGENTS.md says every change appends a LOG.md entry; the correction should have a LOG entry; not required for my verdict but note.
+
+     i. The verdict semantics: My report must end with "KILLED, SURVIVED, or CONFIRMED, then the exact command and its output." Which one? The dispatch asks me to show two things:
+        - declaration cell still present and unmodified in round-43 SCORECARD.md → I can show this (TRUE).
+        - correction line appears exactly once → TRUE in root SCORECARD.md (the scored file); ABSENT in the assimilation/validate snapshot.
+        
+        The attack succeeds (KILLED) if I find the repair defective; SURVIVED if the claim holds under attack; CONFIRMED if the claim is exactly true as stated. Hmm. The three-way verdict: typically "SURVIVED" = attack failed to kill the claim; "CONFIRMED" = verified positive. Given the dispatch frames the check as "Show that X ... and that Y", if both hold, the claim survives/confirmed. The nuance: the snapshot divergence. Is the snapshot the "round-43 SCORECARD.md"? The Glob showed `.ufo/waves/round-43/assimilation/validate/SCORECARD.md` — that's what my earlier Glob found under round-43. The dispatch's "the round-43 SCORECARD.md" most plausibly refers to... hmm. The counter scores root SCORECARD.md at the rev. The round-43 wave's SCORECARD copy in assimilation/validate is the round-entry snapshot. The dispatch says "the round-42 SCORECARD declaration cell ... still present and unmodified in the round-43 SCORECARD.md, and ... the append-only correction line naming it appears exactly once".
+
+        If "round-43 SCORECARD.md" = the assimilation/validate copy: the correction line does NOT appear → claim Y false → KILLED? But that reading would also make the repair claim false, yet the frozen counter defines the scored surface as root SCORECARD.md. The honest critic output: report both surfaces precisely, verdict based on the scored surface (root SCORECARD.md at the settled rev dde525ea): both halves hold → SURVIVED/CONFIRMED, with the snapshot divergence named as a bounded finding (the assimilation snapshot is the entering-tip state, not the settled state — explainable, not a defect, but must be documented so nobody later reads the snapshot as the settled SCORECARD).
+
+        Which verdict word? The instructions: "Your report must end with a one-line verdict: KILLED, SURVIVED, or CONFIRMED, then the exact command and its output. A claim you did not run is not a claim." Since I ran the checks and the claim's two components hold on the scored bytes, and the attack didn't kill it → I'd say CONFIRMED (the claim is verified true by my runs) — but if the intended semantics is "critic attack verdict: the claim survived my attack" → SURVIVED. Hmm. "CONFIRMED" fits when the critic's own measurements positively establish the claim. The dispatch asked to "show" the two facts — I show them with outputs; the verdict is that the claim is CONFIRMED (with the snapshot caveat). I'll go with SURVIVED... no wait. Let me think.
+
+        KILLED = my attack found a counterexample that defeats the claim.
+        SURVIVED = the claim withstood the attack (claim stands).
+        CONFIRMED = I positively verified the claim.
+
+        For a residual critic asked to "show that X holds", if X holds, CONFIRMED is the natural verdict: I confirmed the claim's assertions by execution. I'll use CONFIRMED, and in the same line note the exact command. Actually the format: "then the exact command and its output" — a single command. I'll pick the decisive grep command (the correction-line count in root SCORECARD.md) or a compound command. I can make one compound command that checks both halves and prints both counts. Better: give the exact grep -n command + output for the correction line, since "appears exactly once" is the riskiest half. Actually I'll craft the final verdict line with one command that outputs both counts:
+
+        `grep -nF 'Round-43 calibration correction: r42-declaration-C1=met superseded; frozen counter printed no C1= line' SCORECARD.md | grep -c . && grep -oF ... | wc -l` — hmm, compound. Simpler: paste the actual grep -n command and output (line 2373) — but that shows presence, not exact-once. The count needs `grep -cF` (lines) plus occurrence check. Let me run `grep -oF "$CORR" SCORECARD.md | wc -l` → 1, and `grep -oF "$DECL" SCORECARD.md | wc -l` → 1. Both occurrence counts of 1 + grep -n line numbers. For the verdict line I'll use the two grep -n commands and outputs (compact).
+
+  Let me now also verify:
+  - root SCORECARD.md line count and content of lines 2361-2373 (the appended block).
+  - git show dde525ea -- SCORECARD.md (diff) — pure append?
+  - git log -S to find which commit landed the Round-42 declaration section into SCORECARD.md.
+  - byte-compare declaration cell line across revisions via git show | sha256sum of that specific line.
+  - grep -rn the CORR string across the whole lane (all occurrences).
+  - run the frozen counter from /tmp against dde525ea (green) and maybe e3a2b58f (red, do-nothing) — read-only git show; code executed from /tmp.
+  - Check the round-43 evidence receipts c2-after.txt (untracked) — the L1's own counter output; compare with mine.
+
+  Also for "unmodified": compare the full Round-42 section (lines 2318-2360) between the round-43 assimilation snapshot (entering state) and root at HEAD — should be byte-identical. And between git e3a2b58f:SCORECARD.md and git dde525ea:SCORECARD.md — diff should show only the appended block.
+
+  Wait, actually — which commit appended the Round-42 section to SCORECARD.md? If it was appended in dde525ea (round 43) together with the correction, then the "declaration cell" landed in round 43 itself. Let me check: the round-43 snapshot (taken at round-43 validate, presumably at entering tip e3a2b58f) already HAS the Round 42 section (lines 2319-2360). And the round-42 snapshot does NOT. The round-43 snapshot's provenance: assimilation/validate — probably written during round-43's validate step from the entering state. If the snapshot is from e3a2b58f, then e3a2b58f already contains the Round 42 section in SCORECARD.md → the Round-42 section landed during round 42 (in one of its commits: 34b92673 or f3ec0977). The round-42/assimilation/validate snapshot is from round-42's entering tip (9de7323d), which predates the Round 42 section. Consistent.
+
+  So sequence: Round-42 section entered SCORECARD.md during round 42 (declaration cell with `C1=met` as a TARGET); round-42 measured outcome recorded honest stop; round 43 (dde525ea) appended the correction line naming the declaration cell. The repair: declaration left unmodified, correction appended once. 
+
+  Let me now run the verification battery. Batch 1 (read-only, parallel):
+  1. `git show dde525ea --stat -- SCORECARD.md` and the actual diff `git show dde525ea -- SCORECARD.md | head -40`.
+  2. `git log --oneline -S'C1=met` exit 0 (`evidence/c1-after.txt`)' -- SCORECARD.md` — find landing commit. Careful with backticks in shell — use single quotes; backticks inside single quotes are literal. The string contains both backticks and parentheses — fine inside single quotes. But it also contains a single... no apostrophes. OK.
+  3. wc -l root SCORECARD.md; sed -n '2361,2373p' — wait, "avoid sed/awk for in-place edit" — reading with sed is fine but prefer Read tool. I'll use Read with line_offset on root SCORECARD.md around 2320-2375. Actually I need root SCORECARD.md lines ~2318-2373 to show the section + correction block. Let me Read root SCORECARD.md from 2318.
+  4. grep -rn 'r42-declaration' across lane (all files, tracked+untracked) excluding .git.
+  5. Byte-identity of the declaration cell: extract the line from each source and sha256:
+     - `git show e3a2b58f:SCORECARD.md | grep -F 'C1=met` exit 0 (`evidence/c1-after.txt`)' | sha256sum` — hmm the grep pattern with backticks in single quotes fine.
+     - same for dde525ea:SCORECARD.md, working tree, round-43 snapshot, and round-42 snapshot (absent there).
+     - Actually simpler: `git show <rev>:SCORECARD.md | grep -nF "$DECL" | sha256sum`? The line contains the DECL substring; grep prints whole line. Compare sha256 of the printed line across the three sources. But careful: grep output identical if lines identical. Good.
+  6. Run counter from /tmp: `cp .ufo/waves/round-43/count-c2.py /tmp/... && python3 /tmp/.../count-c2.py dde525ea` (LANE default absolute — fine, read-only git show). Also `python3 /tmp/.../count-c2.py e3a2b58f` (expect unmet). Timeout: each check does 3 git shows + 3 more — fast. But the pdf check reads `corpus/evidence/sources-r42/S235.pdf` (1 MiB) — fine.
+  7. Read the L1's receipts: .ufo/waves/round-43/evidence/c2-after.txt and c1s-after.txt (untracked) to compare.
+
+  Also check the round-43 evidence dir listing. And read one sibling ResCrit report (ResCritInPlace.md) to avoid overlap/format alignment — actually my seat must attack alone; reading siblings helps avoid duplicate authorities. Quick read of ResCritInPlace.md and ResCritScope.md would inform "duplicate authorities". Let me read ResCritInPlace.md at least (it's about in-place rewrites — adjacent to my declaration-unmodified check).
+
+  Let me fire batch 1.
+
+• Root `SCORECARD.md` (the scored surface): correction line present at 2373, declaration fragment at 2330, both exactly once. The round-43 assimilation/validate snapshot lacks the correction line — I need to determine whether that snapshot is the entering-tip state (benign) or a stale settled-state copy (defect). Running the full battery now.== dde525ea SCORECARD.md diff ==
+commit dde525ea4a7fca365e8ff2f3c486bccf28b94e52
+Author: mori-shokunin <mori@shokunin.local>
+Date:   Sat Oct 24 21:13:07 2026 -0300
+
+    round-43: successor operability counter (C1S), calibration repair (C2), one-theme assimilation
+
+diff --git a/SCORECARD.md b/SCORECARD.md
+index 038bd2bc..c6a3c589 100644
+--- a/SCORECARD.md
++++ b/SCORECARD.md
+@@ -2358,3 +2358,18 @@ adjacency 6 — no score move (C1's miss bars a move on operability; C2/C3
+ repair routed defects at held scores, the lane's established pattern).
+ Mistake M4 added to the lesson (counter never executed end-to-end
+ pre-freeze).
++
++## Round 43 declaration (L1 Kimi fresh L1, mori-r43) — successor operability + calibration repair
++
++Entering tip `e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2`. Frozen r42
++`count-c1.py` is not amended. Lowest non-retired axes are tied at 5;
++calibration is the lowest-axis claim. No score move is pre-awarded.
++
++| # | claim | axis / score | before | after (one command) |
++|---|---|---|---|---|
++| C1S | successor measurement completes, including no-harm, and prints `C1S=` | operability 7 | `count-c1s.py e3a2b58` → `C1S=unmet` (counter absent at rev) | `python3 .ufo/waves/round-43/count-c1s.py <tip>` → `C1S=met` exit 0 |
++| C2 | append-only corrections of the r42 `C1=met` declaration cell and the S235 transposed sha | calibration 5 | `count-c2.py e3a2b58` → `C2=unmet mismatches=2` | `python3 .ufo/waves/round-43/count-c2.py <tip>` → `C2=met mismatches=0` exit 0 |
++
++Round-43 calibration correction: r42-declaration-C1=met superseded; frozen counter printed no C1= line
++
++The round-42 declaration cell above is not rewritten. The measured-outcome section already contradicted it. This line is the append-only supersession the round-43 counter reads. The S235 row is not rewritten; S349 records the committed PDF sha256.
+== e3a2b58f vs dde525ea diffstat ==
+0
+(count of removed lines above)
+== which commit landed the r42 declaration cell ==
+34b92673 round-42: data — conform v5 + killed mutants, d72ac16 manifest, registry 231->238, two admitted entries + S347 knowledge, LOG/SCORECARD errata, lesson, QUALITY 114
+git:e3a2b58f sha256=dfdd9a14def72073 len=515
+git:dde525ea sha256=dfdd9a14def72073 len=515
+worktree sha256=dfdd9a14def72073 len=515
+snapshot-r43 sha256=dfdd9a14def72073 len=515
+== occurrence counts (str.count semantics) ==
+1
+1
+== working tree vs HEAD for SCORECARD.md ==
+(empty = clean)
+2375 SCORECARD.md
+
+
+• Excellent. Now I have almost everything:
+
+  1. **dde525ea SCORECARD.md diff**: pure append (15 added lines, 0 removed). The Round 43 declaration + correction line + explanation paragraph appended after the Round 42 measured outcome. `git diff e3a2b58f dde525ea -- SCORECARD.md | grep -c '^-[^-]'` → 0 removed lines.
+
+  2. **Declaration cell byte-identity**: sha256 of the DECL-containing line identical (dfdd9a14def72073…) across e3a2b58f, dde525ea, working tree, and the round-43 snapshot. Length 515 chars.
+
+  3. **Occurrence counts**: DECL appears 1× (str.count semantics), CORR appears 1×.
+
+  4. **Landing commit of the r42 declaration cell**: 34b92673 (round-42 data commit).
+
+  5. **Root SCORECARD.md** is clean vs HEAD (dde525ea), 2375 lines.
+
+  6. **The L1's own receipt** c2-after.txt: all checks PASS, C2=met mismatches=0, exit 0, correction row S349.
+
+  7. The `grep -rn 'r42-declaration'` across all files timed out at 60s (probably because it walked the whole lane including corpus/evidence with many files, and `--include` filters don't prevent traversal of big dirs; also it may have hit .git despite my grep -v — the -v only filters output, not traversal). I should redo it scoped: search only the top-level md + .ufo/waves/round-4{2,3} + LOG.md. Use rg via Grep tool instead — the Grep tool respects workspace policy and is faster. Let me use the Grep tool for 'r42-declaration' across the lane.
+
+  Wait — actually the timeout concern: the command got killed at 60s. Did it leave any state? It was read-only (grep). Fine.
+
+  Remaining verification steps:
+
+  A. **Snapshot provenance**: is `.ufo/waves/round-43/assimilation/validate/SCORECARD.md` byte-identical to e3a2b58f:SCORECARD.md? If yes → it's the entering-state snapshot, benign; the correction line's absence there is expected and NOT a defect of the repair (the scored surface is root SCORECARD.md at the rev). Compare: `git show e3a2b58f:SCORECARD.md | cmp - .ufo/waves/round-43/assimilation/validate/SCORECARD.md`. Also compare to dde525ea:SCORECARD.md (should differ by the 15-line append).
+
+  Also: is the snapshot tracked at dde525ea? `git ls-tree dde525ea -- .ufo/waves/round-43/assimilation/validate/SCORECARD.md` and check if its blob matches e3a2b58f's SCORECARD blob (038bd2bc pre / c6a3c589 post). If the committed snapshot blob == 038bd2bc, it's literally the entering SCORECARD bytes. Good.
+
+  B. **Run the frozen counter myself** from /tmp (rule: run code only in /tmp sandboxes): copy count-c2.py to /tmp/r43-rescrit/ and run against dde525ea (expect C2=met mismatches=0) and against e3a2b58f (expect C2=unmet mismatches=2 — the do-nothing/red control; contract says entering fails "the correction-row check and the SCORECARD-line check" → mismatches=2). This reproduces the L1's receipt independently. Runtime: git show × ~8 + sha256 of 1MiB PDF — fast (<5s). The earlier c2-after receipt took 22:53; fine.
+
+  Wait — do I need to be careful about `--repo`? Default LANE is the absolute lane path — the counter only does `git -C LANE show` — read-only. OK.
+
+  C. **The "names it" requirement**: the correction line names "r42-declaration-C1=met". Does it name the DECLARATION CELL specifically? It names "r42-declaration-C1=met superseded". The declaration cell is the only `C1=met`-claiming r42 declaration cell; the DECL fragment is unique in SCORECARD.md (count=1). Also the appended paragraph right below says "The round-42 declaration cell above is not rewritten." Good.
+
+  D. **Attack: does the correction line contradict the r42 measured outcome?** The measured outcome already said "no `C1=` line" — consistent. The correction line says "frozen counter printed no C1= line" — consistent with evidence/c1-after.txt. No duplicate-authority conflict.
+
+  E. **Attack: is the correction line positioned AFTER the cell it supersedes?** Line 2373 > 2330 (declaration), and it's in the Round 43 section appended at EOF. Yes — as-of ordering sound (superseder postdates).
+
+  F. **Attack: would a future grep reader see stale "C1=met" uncontradicted?** The correction paragraph explicitly addresses it. Fine.
+
+  G. **Attack: exactness of CORR string vs contract** — contract.md line 47: `Round-43 calibration correction: r42-declaration-C1=met superseded; frozen counter printed no C1= line` — the SCORECARD line 2373 must be byte-equal to the contract's quoted line. Let me verify byte-equality (the counter checks equality by string constant; both derived from the same constant — but let me verify the contract's line vs SCORECARD's line byte-wise). `grep -F` already matched SCORECARD with the exact constant. And contract has it at line 47. Quick check: extract both and cmp. Actually my earlier grep -nF with the literal found it in SCORECARD at 2373 — that proves byte-equality with the constant I typed (which I took from the counter source). Good enough; but let me also grep the contract to show it's there once (predicate quote).
+
+  H. **The round-43 snapshot lacking CORR — decide benign vs defect**: If snapshot == e3a2b58f bytes → it's the entering-state validation snapshot (like round-42's snapshot == round-42's entering state 9de7323d? Actually round-42's snapshot ends at line 2317 which is the state BEFORE the r42 section landed — i.e., round-42's entering tip 9de7323d state. Let me verify: `git show 9de7323d:SCORECARD.md | cmp - round-42/assimilation/validate/SCORECARD.md`). If both snapshots == their round's entering tip, the convention is proven and the r43 snapshot's missing CORR is by-design (captured before the repair). Then: the dispatch's literal claim "the correction line appears exactly once in the round-43 SCORECARD.md" — under the assimilation-snapshot reading it would be FALSE (0 times). This is the critical interpretation fork. The frozen counter defines the scored surface: root SCORECARD.md at the rev. The wave's own artifacts (w1-spec.json) may define "SCORECARD.md" as the root file. I'll report both readings with evidence and base the verdict on the scored surface, flagging the ambiguity.
+
+  Hmm, wait. Actually let me reconsider: is the round-43 assimilation/validate/SCORECARD.md even the "round-43 SCORECARD.md"? The dispatch said "Show that the round-42 SCORECARD declaration cell claiming C1=met is still present and unmodified in the round-43 SCORECARD.md". Given my Glob found the snapshot first, but the counter and contract both mean the root SCORECARD.md at the rev... The honest report covers both: cell unmodified in BOTH copies (sha-identical); correction line once in root (scored), zero in the snapshot (which is the byte-exact entering-tip state). Verdict: CONFIRMED on the scored surface, with the snapshot divergence documented as the entering-state snapshot (not a repair defect).
+
+  Actually — one more possible defect to check: is the snapshot committed in dde525ea, and does it match the working tree file? `git status` showed no modification to it (only untracked evidence/w1 files). So the committed blob == working file. Check blob id vs e3a2b58f's SCORECARD blob (038bd2bc). If equal → the snapshot IS the entering SCORECARD bytes, provenance clean.
+
+  I. Also verify the round-42 snapshot == 9de7323d:SCORECARD.md (convention proof).
+
+  J. **Neighbor half (S235/S349)** — not my dispatch, but the correction line references S349 ("S349 records the committed PDF sha256"). ResCritS268 seat covers S268; the S235/S349 half is likely another seat's scope (ResCritScope?). I'll verify only what my dispatch needs and mention the S349 pointer exists in SOURCES (the counter verified correction_row S349). Don't overreach.
+
+  K. Read w1-spec.json quickly to see how the wave names the SCORECARD surface? Maybe useful for the interpretation fork. 22KB — skim with Grep for 'SCORECARD' in it.
+
+  L. Also: per my dispatch, "Attack claim C2's self-assessment repair" — the strongest counterexample hunt:
+     - Counterexample candidate 1: correction line appears in round-43 SCORECARD twice → disproved (count 1).
+     - Candidate 2: declaration cell modified in place → disproved (sha equal across 4 sources; 0 removed lines in diff).
+     - Candidate 3: correction line present but NOT naming the cell → disproved (names r42-declaration-C1=met; unique DECL fragment in same file).
+     - Candidate 4: correction line placed BEFORE the cell (broken as-of ordering) → disproved (line 2373 > 2330; append at EOF in a later section).
+     - Candidate 5: snapshot divergence → explained as entering-state snapshot (byte-equal to e3a2b58f blob) — bounded finding, not a kill.
+     - Candidate 6: the correction line also appears in LOG.md or elsewhere creating a second authority → need the scoped grep (do it).
+     - Candidate 7: does the r42 cell's claim that "C1=met exit 0 (`evidence/c1-after.txt`)" get contradicted by the actual c1-after.txt evidence? The measured outcome says the counter crashed with TypeError and printed NO C1= line. So the declaration cell asserts an evidence file that (per the r42 outcome) does NOT contain a C1=met line. The correction line supersedes it. Should I check round-42 evidence/c1-after.txt to confirm it truly lacks a C1= line (i.e., the correction is factually true)? Yes — cheap and strengthens "the correction names a real defect". `grep -c '^C1=' .ufo/waves/round-42/evidence/c1-after.txt` → expect 0. And it should contain the TypeError. Let me check.
+
+  M. Attack the frozen counter in scratch (optional per bounds: "Attack them in scratch copies only" — i.e., if I want to attack the counters, do it on scratch copies). My dispatch is about the SCORECARD facts, not the counter bytes. I'll run the counter as-is (frozen, read-only) from /tmp — that's running, not attacking. A light counter attack: does `card.count(DECL)==1` have a blind spot? E.g., DECL embedded in a longer line elsewhere counts too (count counts substrings — any line containing the substring adds 1 — so a duplicate in a quote/erratum would fail it → conservative, good). CORR likewise substring-counted — conservative. One real blind spot: the counter does not verify the correction line is AFTER the declaration (ordering) — but git history + line numbers close it. Another: it reads only the rev's SCORECARD — fine.
+
+  Also note: counter reads `SCORECARD.md` (root) — matches the contract's "SCORECARD.md contains the exact line" — the contract doesn't say which SCORECARD.md; root is the lane's canonical one. OK.
+
+  Batch 2 commands:
+  1. Snapshot provenance:
+     - `git ls-tree e3a2b58f SCORECARD.md dde525ea ls-tree` blobs; `git ls-tree dde525ea .ufo/waves/round-43/assimilation/validate/SCORECARD.md` and `.ufo/waves/round-42/assimilation/validate/SCORECARD.md` at 9de7323d... wait round-42 snapshot is committed in some round-42 commit; just compare content: `git show 9de7323d:SCORECARD.md | cmp - .ufo/waves/round-42/assimilation/validate/SCORECARD.md && echo r42-snapshot==9de7323d`; `git show e3a2b58f:SCORECARD.md | cmp - .ufo/waves/round-43/assimilation/validate/SCORECARD.md && echo r43-snapshot==e3a2b58f`.
+  2. Blob ids: `git rev-parse e3a2b58f:SCORECARD.md dde525ea:SCORECARD.md dde525ea:.ufo/waves/round-43/assimilation/validate/SCORECARD.md` → expect first two 038bd2bc/c6a3c589 and third == 038bd2bc if snapshot is entering bytes.
+  3. Scoped grep for CORR occurrences: use Grep tool 'r42-declaration' across lane root (it respects ignores; .ufo/waves should be searchable — is .ufo gitignored? The wave files are committed, so tracked; Grep tool searches hidden dirs by default? It says hidden files searched by default. Let me use Grep tool pattern 'r42-declaration' path=lane root).
+  4. r42 evidence c1-after.txt check: `grep -n '^C1=' .ufo/waves/round-42/evidence/c1-after.txt; echo exit=$?; grep -n 'TypeError' .ufo/waves/round-42/evidence/c1-after.txt | head -3`.
+  5. Run frozen counter from /tmp: mkdir -p /tmp/r43-rescrit && cp count-c2.py there && run against dde525ea and e3a2b58f. Wait — running against e3a2b58f: L1's contract says entering fails 2 checks (mismatches=2). Do-nothing was ResCritDoNothing's seat, but running the red control myself is cheap and supports "appears exactly once" is meaningful (0→1 transition). Keep it.
+  6. Check contract line 47 vs SCORECARD 2373 byte equality: `awk`? Avoid awk for reading? sed -n '47p' is fine read-only but prefer: `grep -nF "$CORR" .ufo/waves/round-43/contract.md`. That proves presence in contract once. Byte equality with SCORECARD: both matched the same literal string → equal. Enough.
+
+  Let me also peek at w1-spec.json for the SCORECARD surface naming (grep SCORECARD in it).
+
+  Batch 2 (parallel):
+  - Bash A: blob ids + cmp snapshot provenance.
+  - Bash B: r42 evidence c1-after.txt C1-line/TypeError check.
+  - Bash C: /tmp counter runs (both revs) with timeout 120.
+  - Grep D: 'r42-declaration' across lane.
+  - Grep E: 'SCORECARD' in w1-spec.json (content, -n, head_limit small).
+
+  Then write the report.
+
+• Append-only proven: the round-43 SCORECARD diff is pure append (0 removed lines), the declaration cell is sha-identical across all four surfaces, both counts are 1, and the L1's own receipt shows `C2=met mismatches=0` (correction row S349). The broad grep timed out — I'll scope it via the Grep tool. Remaining: snapshot provenance, the factual truth of the correction (r42 receipt has no `C1=` line), and an independent /tmp run of the frozen counter.== blob ids ==
+038bd2bc5c45039ac2ba4cc445b157886ceb2025
+c6a3c5890120787b7f1c49e55d7f467587c86c4a
+038bd2bc5c45039ac2ba4cc445b157886ceb2025
+== snapshot provenance ==
+r42-snapshot == 9de7323d:SCORECARD.md (entering state)
+r43-snapshot == e3a2b58f:SCORECARD.md (entering state)
+== r42 c1-after.txt: any C1= line? ==
+grep exit=1 (1 = none found)
+41:TypeError: run() got an unexpected keyword argument 'cwd'
+== frozen counter, settled rev dde525ea ==
+check sources_present        PASS (corpus/SOURCES.md)
+check scorecard_present      PASS (SCORECARD.md)
+check pdf_present            PASS (corpus/evidence/sources-r42/S235.pdf)
+check s235_unrewritten       PASS (rows=1)
+check correction_row         PASS (ids=['S349'])
+check declaration_unrewritten PASS (count=1)
+check scorecard_correction   PASS (count=1)
+check pdf_sha                PASS (9855a4986a31)
+C2=met mismatches=0
+exit=0
+== frozen counter, entering rev e3a2b58f (red control) ==
+check sources_present        PASS (corpus/SOURCES.md)
+check scorecard_present      PASS (SCORECARD.md)
+check pdf_present            PASS (corpus/evidence/sources-r42/S235.pdf)
+check s235_unrewritten       PASS (rows=1)
+check correction_row         FAIL (ids=[])
+check declaration_unrewritten PASS (count=1)
+check scorecard_correction   FAIL (count=0)
+check pdf_sha                PASS (9855a4986a31)
+C2=unmet mismatches=2
+exit=1
+
+

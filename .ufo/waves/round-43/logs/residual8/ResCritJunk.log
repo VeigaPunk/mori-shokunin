@@ -1,0 +1,294 @@
+kimi version 2.3.1
+• Let me name the axes and attack.
+
+  The task: Attack claim C1S. In /tmp only: create a scratch copy of `.ufo/waves/round-43/count-c1s.py` whose body is only `print("C1S=met")`, then show the real counter at that rev scores it `C1S=unmet`. Paste command, stdout, exit code. Report at `.ufo/waves/round-43/w1/ResCritJunk.md`.
+
+  So I need to:
+  1. Read the real counter `.ufo/waves/round-43/count-c1s.py`.
+  2. Create a scratch copy in /tmp with body only `print("C1S=met")` — run it, show it scores C1S=met (trivially).
+  3. Run the real counter at that rev, show output `C1S=unmet` — this is the attack: the claim C1S is a self-proclaimed "met" via junk scratch? Wait — the task: "Attack claim C1S. In /tmp only: create a scratch copy ... whose body is only print("C1S=met"), then show the real counter at that rev scores it C1S=unmet."
+
+  So the attack is to demonstrate that a trivial stub would claim met, while the real counter says unmet — i.e., testing whether the claim C1S is junk/self-fulfilling. The report should paste command, stdout, exit code.
+
+  Important constraints:
+  - Frozen counters must not be edited: attack in scratch copies only.
+  - Write only my own report file.
+  - Run code only in /tmp sandboxes.
+  - Copy the counter to /tmp, then edit the /tmp copy.
+
+  Let me start by reading the real counter and the wave directory.
+
+  Axes to name:
+  - A1: Execution fidelity — scratch copy actually run in /tmp, real counter run unmodified at repo rev.
+  - A2: Evidence integrity — stdout/exit codes pasted verbatim, commands reproducible.
+  - A3: Safety/bounds — no writes outside report file and /tmp; no edits to frozen counters; no lane git/jj mutation.
+  - A4: Claim adjudication — does C1S actually hold (unmet vs met), i.e., is the claim junk.
+
+  Let me do it. First read the counter file and list the round-43 dir. Parallel calls: Read counter, Glob wave dir, git rev.
+
+  Then in /tmp: mkdir, cp counter, create stub variant, run both, capture outputs.
+
+  Let me go.
+
+• Axes: (A1) execution fidelity — real counter run unmodified at this rev, stub run only in /tmp; (A2) evidence integrity — verbatim stdout + exit codes; (A3) lane bounds — no frozen-counter edits, no git/jj/index mutation, report file only; (A4) claim adjudication — is C1S's "met" self-attested junk or evidence-backed.total 48
+drwxr-xr-x 1 vgpnk vgpnk   206 Oct 24 22:46 .
+drwxr-xr-x 1 vgpnk vgpnk   496 Oct 24 21:31 ..
+drwxr-xr-x 1 vgpnk vgpnk   256 Oct 24 22:37 assimilation
+-rw-r--r-- 1 vgpnk vgpnk  4298 Oct 24 21:37 contract.md
+-rw-r--r-- 1 vgpnk vgpnk  6022 Oct 24 21:37 count-c1s.py
+-rw-r--r-- 1 vgpnk vgpnk  3094 Oct 24 21:37 count-c2.py
+drwxr-xr-x 1 vgpnk vgpnk   386 Oct 24 21:44 evidence
+drwxr-xr-x 1 vgpnk vgpnk   102 Oct 24 22:42 w1
+-rw-r--r-- 1 vgpnk vgpnk     0 Oct 24 22:46 w1-settle-residual.tsv
+-rw-r--r-- 1 vgpnk vgpnk  1221 Oct 24 22:44 w1-settle.tsv
+-rw-r--r-- 1 vgpnk vgpnk 22422 Oct 24 21:44 w1-spec.json
+e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2
+ M SCORECARD.md
+ M corpus/QUALITY.md
+ M corpus/README.md
+ M corpus/SOURCES.md
+?? .ufo/waves/round-43/
+?? corpus/knowledge/c1s-cwd-r43.md
+?? corpus/knowledge/journal-disk-usage-total-r51.md
+?? corpus/knowledge/s235-sha-correction-r43.md
+?? corpus/lessons/round-43.md
+
+
+• Let me read AGENTS.md and the contract sentence P-C1S to understand the claim. Then execute the attack plan in /tmp.
+
+  The plan per assignment:
+  1. Scratch copy in /tmp whose body is only `print("C1S=met")` — run it → C1S=met.
+  2. Real counter at that rev → C1S=unmet.
+
+  Important: the real counter checks `self_at_rev`: it compares bytes of the file at the given rev vs the running file. Since round-43/ is untracked (`?? .ufo/waves/round-43/`), `git show rev:path` will return None for the counter at HEAD (rev e3a2b58...) unless it's committed. The counter requires the rev to contain the file byte-identical. HEAD is e3a2b58f72ba... and `.ufo/waves/round-43/` is untracked, so `git show HEAD:.ufo/waves/round-43/count-c1s.py` fails → at_rev None → self_at_rev FAIL → C1S=unmet, exit 1.
+
+  But the task says "the real counter at that rev" — "that rev" refers to the rev used. What rev should I use? The task: "create a scratch copy ... whose body is only print('C1S=met'), then show the real counter at that rev scores it C1S=unmet."
+
+  Hmm, "at that rev" — the rev arg passed. I need to pick the rev the lane is at (HEAD: e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2). At HEAD, the counter file is untracked, so self_at_rev fails → unmet. That's a legitimate "unmet" outcome but perhaps a junk reason (untracked file, not substantive failure). Let me check git log to see if count-c1s.py was committed at any rev. Let me check `git log --all -- .ufo/waves/round-43/count-c1s.py`.
+
+  Actually wait — maybe there's a commit containing it. `?? .ufo/waves/round-43/` means the whole dir is untracked relative to HEAD, so no commit contains it. Unless... let me verify with git log.
+
+  If the file has never been committed, then the real counter can never pass self_at_rev at any rev — meaning C1S is structurally unmet until committed. That's a real finding: the counter scores unmet because the counter itself isn't in the rev. But the attack assignment is specific: demonstrate stub says met vs real says unmet. The rev choice: use HEAD rev.
+
+  Also read AGENTS.md first (required). And contract.md P-C1S sentence for the report.
+
+  Plan:
+  1. Read AGENTS.md, contract.md (P-C1S section), check git log for counter file.
+  2. In /tmp sandbox: mkdir, cp real counter, create stub with body only print("C1S=met"), run both with rev=HEAD.
+  3. Capture stdout/exit codes verbatim.
+  4. Write report.
+
+  Note: running the real counter with rev=HEAD will do the self_at_rev check first and bail with unmet — fast, no sandbox cloning. Good, cheap.
+
+  Stub: body only `print("C1S=met")` — but should it be a full file? "whose body is only print('C1S=met')". I'll create the scratch copy via cp then overwrite with a minimal python file: maybe shebang + print. To keep it a "scratch copy", I'll copy then write. Simplest: `printf '#!/usr/bin/env python3\nprint("C1S=met")\n' > /tmp/.../count-c1s-stub.py` — but "scratch copy of count-c1s.py whose body is only print(...)" — copy the file then replace body. Either way the resulting body is just the print. I'll do cp then truncate to just the print line to be faithful to "copy of ... whose body is only".
+
+  Run stub: `python3 stub.py <rev>` → prints C1S=met, exit 0.
+  Run real: `python3 count-c1s.py <rev>` → self_at_rev FAIL → C1S=unmet, exit 1.
+
+  Let me also verify the claim about rev semantics: counter usage `count-c1s.py <rev>`. Use HEAD sha.
+
+  Let me proceed. Read AGENTS.md + contract.md P-C1S + git log in parallel.---
+fatal: path '.ufo/waves/round-43/count-c1s.py' exists on disk, but not in 'e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2'
+exit=128
+The contract's control "Do-nothing C1S junk" is exactly my assigned attack: "a scratch rev whose `count-c1s.py` only prints `C1S=met` is scored `C1S=unmet` by this counter."
+
+  "a scratch rev" — so I should create a scratch git rev whose `count-c1s.py` only prints C1S=met. Hmm. Two readings:
+
+  1. Simple: scratch file in /tmp, run real counter against the lane rev (HEAD) — the real counter at HEAD gives unmet because at HEAD the counter doesn't exist / differs.
+
+  2. Contract-faithful: create a scratch git repo/commit ("scratch rev") whose `.ufo/waves/round-43/count-c1s.py` is only `print("C1S=met")`, then run the real counter with that rev → the counter reads `git show <rev>:.ufo/waves/round-43/count-c1s.py`... wait no. The counter's `self_at_rev` check compares the RUNNING file (the real counter, `os.path.abspath(__file__)`) against `git_bytes(rev, SELF_REL)` — the bytes of count-c1s.py at the given rev. If I pass a scratch rev whose count-c1s.py is the stub, then `at_rev` = stub bytes ≠ real counter bytes → "bytes differ" → self_at_rev FAIL → C1S=unmet. 
+
+  The task says: "create a scratch copy of .ufo/waves/round-43/count-c1s.py whose body is only print('C1S=met'), then show the real counter at that rev scores it C1S=unmet."
+
+  "the real counter at that rev" — the real counter, evaluated at that rev (the rev carrying the stub). So the cleanest faithful execution: build a scratch git repo in /tmp containing the stub at `.ufo/waves/round-43/count-c1s.py`, get its sha as the rev, then run the real counter: `python3 .ufo/waves/round-43/count-c1s.py <scratch_rev>` from the lane. The counter will use LANE (default lane path) for git_bytes against that rev... but wait — the scratch rev must be resolvable by `git -C LANE show <rev>:path`. A commit from a /tmp scratch repo isn't in the lane repo. Options:
+
+  - Pass `--repo <scratch_clone>`: then LANE = scratch clone, and `git -C clone show <rev>:...` resolves. But the running counter is the real one (from the lane dir). self_at_rev compares real counter bytes vs stub bytes at rev → differ → unmet, exit 1. 
+
+  - Or create the scratch commit inside a temp clone of the lane (shared clone), commit the stub there — then the rev exists in the clone. Run real counter with `--repo /tmp/scratch-repo <scratch_rev>`.
+
+  The contract's control says "a scratch rev whose count-c1s.py only prints C1S=met is scored C1S=unmet by this counter" — i.e., run the real counter against that rev. With `--repo` pointing at the scratch repo so the rev resolves.
+
+  Actually simpler and still faithful to the assignment ("In /tmp only: create a scratch copy ... then show the real counter at that rev scores it C1S=unmet"): 
+
+  Plan in /tmp:
+  1. `mkdir /tmp/mori-r43-c1s-junk && cd there`
+  2. `git clone -q --shared /home/vgpnk/Projects/shokunin/mori-shokunin repo` — clone the lane into /tmp (read-only op on lane; clone writes only to /tmp). Then in the clone, overwrite `.ufo/waves/round-43/count-c1s.py` with stub body `print("C1S=met")`, commit → scratch rev SHA.
+  3. Run stub directly: `python3 repo/.ufo/waves/round-43/count-c1s.py` → C1S=met, exit 0 (shows the stub self-attests met — junk).
+  4. Run the REAL counter: `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c1s.py <scratch_rev> --repo /tmp/mori-r43-c1s-junk/repo` → self_at_rev "bytes differ" → C1S=unmet, exit 1.
+
+  Wait — running the real counter executes lane code but writes only a /tmp sandbox (tempfile.mkdtemp dir="/tmp") if it gets past self_at_rev. It won't get past self_at_rev (bytes differ → early return), so no clone of its own. Good — pure read on lane.
+
+  Hmm, but the counter clones LANE with `--shared` — `git clone --shared` creates alternates and reads the lane; does it write into the lane repo? `git clone --shared` only reads source objects; it does not modify the source repo (no config writes to source). It's safe and is what the frozen counter itself does. Also, do I even need a shared clone? I could create the scratch rev in a fresh `git init` repo — but then the rev is unrelated to the lane; the real counter would check `self_at_rev` (bytes differ → unmet) before touching frozen checks. A fresh git init is cheaper and avoids cloning the lane entirely. But contract says "a scratch rev" — any rev. Minimal: git init /tmp scratch repo, add stub at the path, commit, then run real counter with `--repo /tmp/scratch`. self_at_rev compares running(real) vs stub bytes → differ → unmet. 
+
+  But wait: is that a strong test? The stub-vs-real bytes differ check is exactly the guard the contract mandates. With a lane-shared clone, same outcome. The fresh-init version is cleaner (no lane reads at all beyond reading the counter file). But one nuance: with `--repo` pointing at a fresh repo, if self_at_rev somehow passed, the later checks would fail on frozen missing etc. Not relevant — self_at_rev fails first.
+
+  Which rev though — "at that rev". The stub rev. Yes.
+
+  Also do the trivial stub run first: `python3 stub.py` → C1S=met exit 0. The assignment: "create a scratch copy ... whose body is only print('C1S=met'), then show the real counter at that rev scores it C1S=unmet. Paste the command, stdout and exit code." So paste both runs.
+
+  Edge: the real counter reads `open(os.path.abspath(__file__), "rb")` — running counter = real lane counter bytes. `git_bytes(rev, SELF_REL)` from scratch repo = stub bytes. Differ → unmet. Exit 1.
+
+  Let me also double check "scratch copy of .ufo/waves/round-43/count-c1s.py whose body is only print(...)": I'll cp the real counter to /tmp then overwrite the body — final content: shebang + print. To honor "copy", I'll `cp` then `printf` over it. Content-wise identical to writing fresh, but the cp makes the provenance explicit.
+
+  Now execute. One Bash call with a heredoc-free sequence (avoid writing files via cat>? echo > file guidance says use Write... but Write can't write to /tmp? Write can write absolute paths; /tmp is fine. But these are git repo setup steps — easier in bash. The guidance prefers Write for file creation, but this is a multi-step sandbox build in /tmp; I'll use bash for repo plumbing and keep file contents minimal via printf, which is reasonable for a sandbox. Actually to respect the tool guidance, I'll use Write for the stub file and bash for git plumbing.
+
+  Sequence:
+  1. Bash: `mkdir -p /tmp/mori-r43-w1-junk && git -C /tmp/mori-r43-w1-junk init -q scratch && cp counter /tmp/mori-r43-w1-junk/orig-copy.py` (keep an untouched copy for provenance/diff).
+  2. Write stub to /tmp/mori-r43-w1-junk/count-c1s-stub.py with body `print("C1S=met")`.
+  3. Bash: run stub → capture; build scratch rev: mkdir repo dir, git init, mkdir -p .ufo/waves/round-43, cp stub there, commit, get sha; then run real counter with --repo.
+
+  Then report.
+
+  For the scratch rev: does the counter need the rev to be a commit in the repo given by --repo? Yes. Fresh init + commit works.
+
+  Commands (careful with git identity — commit needs user.name/email; use -c flags to avoid touching global config):
+
+  git -C /tmp/.../scratch -c user.name=crit -c user.email=crit@tmp commit -q -m "junk stub"
+
+  Let me run steps. First parallel: Bash mkdir/cp, Write stub (Write depends on dir existing — so mkdir first; I'll chain mkdir in bash then Write in next turn, or use printf in the same bash call. To parallelize: Bash(mkdir + cp + git init) and I can't Write before mkdir... I'll just do Bash first turn, then Write + Bash in second turn. Actually simpler: single bash call does everything except stub content; use Write for stub. Do: Turn A: Bash mkdir/init/cp. Turn B: Write stub, then Turn C: bash run everything. That's 3 turns; fine. Or turn A bash + turn B Write in parallel? Write needs dir. I'll accept serialization for the dir creation only.
+
+  Actually I can do it all in one bash call using printf to create the stub — it's a one-liner body, sandbox-internal plumbing, not user-facing file authorship. The Write-tool preference is for workspace files; /tmp plumbing via printf is fine and keeps it atomic. I'll do one careful bash script that echoes clearly delimited results, and I'll re-run the two key commands individually afterward to paste clean verbatim outputs with exit codes.
+
+  Better: script builds everything; then I run the two headline commands as separate clean Bash calls to capture exact stdout+exit code. Let me write the setup script.
+
+  Setup:
+  ```
+  set -e
+  SB=/tmp/mori-r43-w1-c1s-junk
+  rm -rf "$SB"
+  mkdir -p "$SB"
+  cp /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c1s.py "$SB/count-c1s-real-copy.py"
+  printf '#!/usr/bin/env python3\nprint("C1S=met")\n' > "$SB/count-c1s-stub.py"
+  git init -q "$SB/scratch-rev"
+  mkdir -p "$SB/scratch-rev/.ufo/waves/round-43"
+  cp "$SB/count-c1s-stub.py" "$SB/scratch-rev/.ufo/waves/round-43/count-c1s.py"
+  git -C "$SB/scratch-rev" add -A
+  git -C "$SB/scratch-rev" -c user.name=critic -c user.email=critic@scratch commit -q -m "junk: count-c1s.py body is only print(C1S=met)"
+  git -C "$SB/scratch-rev" rev-parse HEAD
+  diff <(head -1 "$SB/count-c1s-real-copy.py") <(head -1 "$SB/count-c1s-stub.py") || true
+  ```
+  Show stub content and diff-vs-real to prove only-body change... The stub body isn't "the real file with body replaced" literally; contract says "whose count-c1s.py only prints C1S=met" — content = only that print. Fine.
+
+  Then run:
+  A) `python3 $SB/count-c1s-stub.py; echo exit=$?` → C1S=met exit 0
+  B) `python3 /home/vgpnk/.../.ufo/waves/round-43/count-c1s.py <SHA> --repo $SB/scratch-rev; echo exit=$?` → check self_at_rev FAIL (bytes differ) → C1S=unmet exit 1
+
+  Note B runs the real counter which on self_at_rev fail prints just that check + C1S=unmet. It reads the lane counter file (read-only) — fine.
+
+  Also worth capturing: the counter's own stdout shows `check self_at_rev FAIL (bytes differ)` — evidence.
+
+  Go.
+
+• Contract P-C1S and its "Do-nothing C1S junk" control confirmed: a rev whose `count-c1s.py` only prints `C1S=met` must score `C1S=unmet`. The counter guards this via `self_at_rev` (byte-identity of the running file vs `<rev>` bytes). Building the scratch rev in /tmp now.== scratch rev ==
+3eb02b954d7da41c7ef8411d300538596a00e95a
+== stub bytes at rev ==
+#!/usr/bin/env python3
+print("C1S=met")
+== real counter first/last line vs stub ==
+#!/usr/bin/env python3
+ 172 /tmp/mori-r43-w1-c1s-junk/count-c1s-real-copy.py
+   2 /tmp/mori-r43-w1-c1s-junk/count-c1s-stub.py
+ 174 total
+
+
+• Scratch rev: 3eb02b954d7da41c7ef8411d300538596a00e95a. Now run the two headline commands cleanly:
+
+  A) stub alone → C1S=met, exit 0 (junk self-attestation)
+  B) real counter at that rev with --repo scratch → expect self_at_rev FAIL (bytes differ) → C1S=unmet, exit 1
+
+• Scratch rev `3eb02b954d7da41c7ef8411d300538596a00e95a` carries the 2-line stub. Running both headline commands:C1S=met
+exit=0
+check self_at_rev            FAIL (bytes differ)
+C1S=unmet
+exit=1
+
+
+• Both results captured:
+
+  A) Stub: `C1S=met`, exit 0 — self-attests met, junk.
+  B) Real counter at scratch rev: `check self_at_rev FAIL (bytes differ)`, `C1S=unmet`, exit 1.
+
+  The contract's do-nothing junk control holds: stub prints met, real counter scores unmet. The claim C1S (as the junk attack) — the attack fails to break the counter; the guard works. Verdict: the attack did not kill C1S's junk-control; SURVIVED.
+
+  Wait — verdict semantics: I'm attacking claim C1S. The attack is: stub says met, real counter says unmet. That is exactly the expected contract behavior ("A planted file that prints C1S=met without those bytes is C1S=unmet"). So the counter survives the junk attack. Verdict: SURVIVED.
+
+  One residual note for the report: at the lane's entering tip (HEAD e3a2b58f), the counter file is untracked — `git show HEAD:.ufo/waves/round-43/count-c1s.py` → "exists on disk, but not in rev" → self_at_rev "absent" → C1S=unmet (the contract's stated do-nothing result on the entering tip). That's consistent with contract line 32-33, not a defect. I did not run the full counter at HEAD for the green-path check — that's the L1/planner's control, not mine. But should I note it as evidence? I ran `git show` (exit 128) earlier — that's evidence the entering tip scores unmet. I can include it as an observed side-fact without re-running the full counter (running full counter at HEAD would exit early the same way — actually it would do exactly the same early return). Keep scope tight: the assignment is the junk attack. I'll mention the entering-tip observation with the git show output I already captured.
+
+  Actually let me be precise: should I run the real counter at HEAD too? It would terminate instantly with self_at_rev FAIL (absent). It's cheap and strengthens the report — shows both the junk rev and the entering tip score unmet. But scope: "show the real counter at that rev scores it C1S=unmet" — "that rev" = scratch rev. Done. I'll include the git-show evidence as a supplementary note. Adding one more run is cheap and harmless (read-only on lane; early exit before any /tmp clone). Let me do it for completeness of the do-nothing control.
+
+  Then write the report. Report must end with a one-line verdict: KILLED/SURVIVED/CONFIRMED, then the exact command and its output. Two headline commands — I'll put the decisive one (real counter) in the final verdict line block, and paste both above.
+
+  Verdict: SURVIVED (the junk attack fails; the counter correctly scores the stub rev unmet).
+
+  Report path: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/ResCritJunk.md. Check w1 dir exists (it does, listed earlier). Write only that file.
+
+  Report content: axes, attack setup, evidence (commands/stdout/exit codes), impacted axes, smallest safe correction (none needed — control holds; note the entering-tip untracked state is per-contract do-nothing, and the green-path control remains planner's job).
+
+  Let me run the HEAD counter check first, then write report.
+
+• Both results in hand. One cheap supplementary probe — the entering tip (per contract, do-nothing must print `C1S=unmet`):check self_at_rev            FAIL (absent)
+C1S=unmet
+exit=1
+
+
+• All evidence collected. Write the report now. Must be my own file only: .ufo/waves/round-43/w1/ResCritJunk.md, ending with one-line verdict + exact command and output.
+
+  Verdict: SURVIVED — the junk-self-attestation attack does not break C1S's guard; the real counter scores the stub rev C1S=unmet with exit 1, exactly as the contract's "Do-nothing C1S junk" control requires.
+
+  Structure:
+  - Claim attacked
+  - Axes
+  - Attack setup (paths, scratch rev)
+  - Evidence: three commands with stdout + exit codes
+  - Analysis: which guard fires (self_at_rev byte-identity, counter lines 91–97), contract alignment (lines 32–35, 60–61)
+  - Residual observations: entering tip untracked → unmet per contract (not a defect); frozen counters untouched; no lane mutation
+  - Impacted axes / smallest safe correction: none required; guard is sound. Note duplicate-authority check: stub is not an authority (bytes differ). No false provenance (real counter run from lane path, unmodified — sha check could strengthen; I can include sha256 of the real counter for provenance).
+
+  Let me compute sha256 of the real counter for provenance in the report — cheap. Actually I'll just include it via a quick command... I can note the file copy provenance instead. A sha is stronger. One more tiny bash call alongside the Write? Write depends on nothing; bash sha is independent. Do both in parallel, but the report should contain the sha... then Write depends on bash output. Keep it simple: skip sha; instead reference that the running file is the lane file at the absolute path and that my untouched copy matches (diff was implied). Actually I can run `cmp` of lane counter vs my real-copy to prove I didn't mutate the frozen counter — that's a valuable lane-integrity check and cheap. Let me run it, plus git status to prove no lane mutation, in parallel with... they're independent of the Write? The report should mention cmp result. I'll run the two checks first, then Write.frozen counter unmodified (byte-identical to pre-attack copy)
+0
+dde525ea4a7fca365e8ff2f3c486bccf28b94e52
+Wait — HEAD changed from e3a2b58f... to dde525ea... between my first call and now. Another seat (L1/planner) is working concurrently in the lane and committed something. My modified-files count grep returned 0 — no staged/modified entries matching my pattern now (the earlier ` M SCOREBOARD.md` etc. may have been committed). This is a concurrent lane, not my mutation — my writes were only in /tmp. I must not touch git state. Note it in the report: HEAD advanced during review (concurrent seat activity); my probes are rev-pinned so evidence stands (I pinned e3a2b58f for the entering-tip probe and scratch rev 3eb02b9 for the junk probe).
+
+  Does the new HEAD include the counter file? Quick check for report accuracy — if dde525ea now contains count-c1s.py, the do-nothing note changes. One cheap `git show --stat` / `git cat-file -e`. Let me check quickly, then write the report.
+
+• HEAD advanced during my review (`e3a2b58f` → `dde525ea`) — concurrent seat activity; my probes were rev-pinned so evidence stands. Checking whether the new tip contains the counter, then writing the report:cat-file exit=0
+at new HEAD: byte-identical to running counter
+
+
+• The new tip dde525ea contains the counter byte-identical. So the do-nothing note should reference the tip at the time of my probe (e3a2b58f, untracked → unmet, per contract's do-nothing expectation), and the current tip dde525ea is byte-identical (self_at_rev would pass there — but running the full counter at dde525ea would proceed to the sandbox clone + full checks, up to ~30 min. Not my assignment; leave the green-path control to the L1/planner. I note the byte-identity fact only, from `git show | cmp`).
+
+  Now write the report. Final verdict line: SURVIVED, then exact command + output (the decisive junk-attack command).Exec2.md
+Exec4.md
+Exec5.md
+Exec6.md
+ResCritInPlace.md
+ResCritScope.md
+swarm-registry.json
+ResCritJunk.md doesn't exist yet — I write only my own file. Write it now.written
+83 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/ResCritJunk.md
+
+
+• **Review complete — C1S junk-self-attestation attack.**
+
+  **Axes:** A1 execution fidelity (stub in /tmp, real counter unmodified) · A2 evidence integrity (verbatim stdout/exit) · A3 lane bounds (frozen counters untouched, only my report written) · A4 claim adjudication (junk `print("C1S=met")` vs real verdict).
+
+  **Attack result:**
+  - Stub at scratch rev `3eb02b95…`: `C1S=met`, exit 0 (junk self-attestation).
+  - Real counter at that same rev: `check self_at_rev FAIL (bytes differ)` → `C1S=unmet`, exit 1.
+  - Entering tip `e3a2b58f…` (counter then untracked): `FAIL (absent)` → `C1S=unmet`, exit 1 — the contract's mandated do-nothing result.
+
+  **Counterexample hunt:** none found. The `self_at_rev` byte-identity gate is the single verdict authority — a planted stub cannot masquerade as evidence; no duplicate authority, no premature saturation, no false provenance (real counter ran from its canonical lane path; `--repo` only locates `<rev>` bytes). Lane HEAD moved `e3a2b58f`→`dde525ea` from concurrent seat activity mid-review; my probes are rev-pinned and reproducible, and at the new tip the committed counter is byte-identical to the running file (green-path scoring there belongs to the planner seat, not mine).
+
+  **Smallest safe correction:** none — the contract's "Do-nothing C1S junk" control holds exactly as written.
+
+  **Report:** `.ufo/waves/round-43/w1/ResCritJunk.md`
+
+  Verdict: SURVIVED
+  ```
+  $ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c1s.py 3eb02b954d7da41c7ef8411d300538596a00e95a --repo /tmp/mori-r43-w1-c1s-junk/scratch-rev; echo "exit=$?"
+  check self_at_rev            FAIL (bytes differ)
+  C1S=unmet
+  exit=1
+  ```
+
+To resume this session: kimi -r session_1f49c7ea-7bb5-45f8-aaae-3bcbf7441ec0

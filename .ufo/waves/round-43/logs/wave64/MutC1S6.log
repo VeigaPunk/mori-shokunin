@@ -1,0 +1,186 @@
+kimi version 2.3.1
+• Let me start by understanding the task:
+
+  1. Lane repo: /home/vgpnk/Projects/shokunin/mori-shokunin
+  2. Attack count-c1s.py (frozen counter at .ufo/waves/round-43/count-c1s.py) in a /tmp copy only
+  3. Mutant class: v5_selftest_17 loosened to 16 — presumably there's a check for selftest count == 17 or >= 17, and I loosen it to 16
+  4. Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED
+  5. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/MutC1S6.md
+  6. Run code only in /tmp sandboxes
+  7. Don't edit the lane counter
+
+  Let me first look at the counter file, the RULES.md, and the wave directory in parallel.
+
+  Axes (Godspeed):
+  - A1: mutation fidelity (mutant actually changes behavior)
+  - A2: detector sensitivity (frozen counter detects)
+  - A3: restoration exactness (byte hashes match)
+  - A4: report completeness
+
+  Let me act.assimilation
+contract.md
+count-c1s.py
+count-c2.py
+evidence
+w1
+w1-settle.tsv
+w1-spec.json
+Exec4.md
+Exec5.md
+swarm-registry.json
+Let me read the AGENTS.md and also the contract to understand the check "v5_selftest_17". The mutant class: v5_selftest_17 loosened to 16 — i.e., change the check on line 139 from `(p, f) == (17, 0)` to `(p, f) == (16, 0)`. Then the detector (the frozen counter itself, i.e., the run of count-c1s.py) should... wait.
+
+  Actually the task: "Attack count-c1s.py in a /tmp copy only. Mutant class: v5_selftest_17 loosened to 16. Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output."
+
+  Wait — "Show the frozen counter prints C1S=unmet on that mutant". The counter IS count-c1s.py. The mutant is count-c1s.py with v5_selftest_17 check loosened to 16. Hmm, but if we loosen the check to accept 16, would that print met or unmet?
+
+  Important subtlety: the counter's `self_at_rev` check: "A rev that does not contain this file byte-identical to the running file stops after that check." So if I run the mutated copy from /tmp against a lane rev, the rev contains the pristine count-c1s.py, so `self_at_rev` will FAIL (bytes differ), and it prints C1S=unmet trivially — that's the "baseline failure is inconclusive" case. That's an inconclusive detector run, not a killed mutant.
+
+  Hmm. So to properly test whether the counter detects the loosened check, I need a rev where the mutated counter is byte-identical to what's at the rev. That means I need a git rev in the lane whose count-c1s.py equals my mutant... but I can't mutate the lane or its git index.
+
+  Alternative: create a /tmp sandbox clone of the lane repo, commit the mutant counter there (in the sandbox clone), and run the mutant counter from that sandbox rev with --repo pointing at... hmm, the counter uses LANE for git_bytes via `git -C LANE show rev:path` and --repo sets LANE. So LANE must be a git repo containing the rev. A /tmp clone of the lane is a copy of the lane repo in /tmp — allowed ("Run code only in /tmp sandboxes", and I'm not mutating the lane).
+
+  Wait, but --shared clone: `git clone --shared` uses alternates; committing in the clone creates new objects in the clone only. That's fine — it's a /tmp copy. But careful: "Never mutate lane Git index" — the clone has its own index in /tmp. Good.
+
+  But wait — do I need to commit? The rev must be resolvable by `git -C LANE show rev:path`. If I make a commit in the /tmp clone, that works. Also `git clone -q --shared LANE clone` then `checkout --detach rev` — the clone checks out the rev's files into the working tree, and the counter then runs the sandbox tools from the clone (mori-sources-appendonly.py selftest, conform.py v5 selftest, mutants...). Those are read-only selftests mostly; conform.py selftest probably runs in temp dirs. The mutated counter itself writes mutant bytes into the clone's v5 file — inside the sandbox clone. Fine.
+
+  However — there's a subtlety about whether the mutant counter should be run from the clone as the "running file". The mutant at rev must be byte-identical to the running file. If I commit the mutant to the /tmp clone at a rev (a new commit on top), then run `python3 /tmp/sandbox/repo/.ufo/waves/round-43/count-c1s.py <newrev> --repo /tmp/sandbox/repo`, then self_at_rev passes (bytes match), and the rest of the checks run.
+
+  Then the mutation: v5_selftest_17 check `(p, f) == (17, 0)` → `(p, f) == (16, 0)`. In the pristine run, the real v5 selftest gives pass=17 fail=0. Under the mutant, the check becomes `== (16,0)`, which fails on a healthy repo → v5_selftest_17 FAIL → C1S=unmet.
+
+  Wait, but hold on. The task says "Show the frozen counter prints C1S=unmet on that mutant". Hmm — "the frozen counter" — ambiguous: does it mean the count-c1s.py (the round-43 counter, frozen for this round) prints unmet when run against... hmm. Actually I think the intended semantics: the mutant is a mutation of the counter itself (a "self-test" mutation). The detector for a mutated counter is... the counter detecting it? A counter mutant that's supposed to print "met" on a healthy repo but prints "unmet" = the mutation is detected by behavior difference.
+
+  Actually re-read: "Attack count-c1s.py in a /tmp copy only. Mutant class: v5_selftest_17 loosened to 16. Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output."
+
+  Hmm, alternative reading: the mutant is in v5 (conform.py)? No — "v5_selftest_17" is the name of the check inside count-c1s.py. "loosened to 16" means the check now passes when pass=16... wait "loosened" — hmm, (p,f)==(16,0) is actually stricter/different, not looser. But maybe "loosened" in the sense that it would accept a weaker v5 (one that only passes 16 of 17). I.e., a defective counter that would let a v5 with one failing selftest case slip through as met... no wait, if v5 selftest gives pass=17, the check (16,0) fails → unmet. The "loosening" means the counter now requires 16 instead of 17 — so a broken v5 (16 passes) would be accepted as met. That's the classic "test oracle weakened" mutant. Detection: on the pristine/healthy repo, the mutant counter must still print... hmm, no. The detector to distinguish mutant from pristine: run both against the same healthy rev. Pristine prints C1S=met; mutant prints C1S=unmet. The mutant's changed behavior is observable → killed.
+
+  The task says "Show the frozen counter prints C1S=unmet on that mutant" — i.e., run the mutant counter on the healthy lane rev and show it prints C1S=unmet (whereas pristine prints met). That kills the mutant: the mutation changes the observable verdict.
+
+  But there's the self_at_rev problem: the running file (mutant) must be byte-identical to the file at the rev. If I run the mutant from /tmp against the lane HEAD, self_at_rev fails → unmet trivially → inconclusive (baseline failure). So I MUST create the rev where the mutant is committed. Options:
+
+  1. /tmp clone with a commit containing the mutant at .ufo/waves/round-43/count-c1s.py. Run mutant from the clone against that rev. self_at_rev passes; all other checks run against the clone's files (which equal lane HEAD files for everything else, since the commit only changes the counter).
+
+  But wait — the other checks: frozen_sha checks round-42/count-c1.py at the rev — same bytes as lane. v5_present — same. sandbox_clone: `git clone -q --shared LANE clone` where LANE = my /tmp repo (via --repo). Nested clone inside. noharm_cwd runs tools/mori-sources-appendonly.py selftest from clone. v5_selftest runs conform.py selftest. mutant_kill checks three committed mutants. frozen_still_crashes runs the r42 frozen counter with --repo LANE (the /tmp repo) — expecting the crash TypeError with cwd kwarg.
+
+  Hmm wait, frozen_still_crashes expects the frozen r42 counter to crash with `TypeError: run() got an unexpected keyword argument 'cwd'`. Interesting — that means on a healthy rev, the pristine count-c1s.py expects frozen_still_crashes PASS (rc != 0 and crash present). So the full pristine run should print C1S=met.
+
+  So plan:
+  1. /tmp sandbox A: `git clone --shared <lane> A/repo` (clone only, no commits yet).
+  2. Make baseline: pristine count-c1s.py committed? Wait — for the baseline (pristine) run, I can run the lane's own count-c1s.py against lane HEAD with --repo lane... but that would run `git -C LANE show` — read-only git ops on the lane, fine. But it also runs conform.py selftest etc. in its own /tmp sandbox. Running the pristine counter against the lane is presumably safe/read-only (it creates its own tempfile.mkdtemp in /tmp). But it does `git clone --shared LANE` into /tmp — read-only on the lane. OK.
+
+  Actually, is running the pristine baseline necessary? Yes — "Run the same bounded behavioral detector on pristine, mutated and restored bytes. A baseline failure is inconclusive." So I need:
+  - Baseline: pristine counter, healthy rev → expect C1S=met.
+  - Mutant: mutated counter, rev containing mutant bytes → expect C1S=unmet (with v5_selftest_17 FAIL as the only failure).
+  - Restored: restored bytes == pristine, re-run → expect C1S=met again (restoration evidence: hashes before/after equal).
+
+  But careful with baseline: to be apples-to-apples, both pristine and mutant should run against revs in the same kind of /tmp repo. The self_at_rev constraint forces: pristine run against a rev whose count-c1s.py == pristine bytes. Lane HEAD satisfies that (assuming HEAD has the pristine file). Let me check that lane HEAD's count-c1s.py is byte-identical to the working-tree file. Actually the working tree file IS the frozen counter; the file at rev must match. Let me verify with git show.
+
+  But there's a wrinkle: if I run the pristine counter with --repo <lane>, the check frozen_still_crashes runs the r42 counter with --repo LANE (lane). It crashes on TypeError quickly (per design). Fine.
+
+  Alternatively, run everything inside /tmp clones only ("Run code only in /tmp sandboxes"). Hmm — "Run code only in /tmp sandboxes" — running the counter with --repo pointing at the lane means the counter executes git show against the lane (read-only) and clones it. Code execution is in /tmp (tempfile.mkdtemp dir="/tmp"). I think running the counter against the lane rev is the intended baseline since the counter is designed for that. But to be safe and self-contained, I could do the whole thing in /tmp: clone lane to /tmp/repoA (with working tree at HEAD), run pristine counter from /tmp/repoA/.ufo/.../count-c1s.py against HEAD with --repo /tmp/repoA. But self_at_rev compares running bytes vs rev bytes — both pristine, passes. And the clone inside (`git clone --shared /tmp/repoA`) works. frozen_still_crashes runs frozen counter with --repo /tmp/repoA — reads git from /tmp/repoA — fine.
+
+  Hmm, but wait: does `git clone --shared` from a /tmp clone of the lane work with the alternates? --shared sets up objects/info/alternates pointing to the source repo's objects. Fine.
+
+  One more wrinkle: the lane repo might have uncommitted changes or the wave file count-c1s.py might not be committed at HEAD. Let me check `git -C lane show HEAD:.ufo/waves/round-43/count-c1s.py | sha256sum` vs the file's hash.
+
+  Also, for the mutant run: create /tmp/repoB clone, checkout --detach HEAD, then modify count-c1s.py to the mutant, commit (need git user config in the clone: set user.email/user.name locally via `git -c` or config in clone). Commit only that file. Then run `python3 /tmp/repoB/.ufo/waves/round-43/count-c1s.py HEAD --repo /tmp/repoB`. self_at_rev: running file = mutant bytes = rev bytes ✓. All other checks run. v5_selftest_17: pristine v5 in clone gives pass=17 → (16,0) comparison FAILS → only that check fails → C1S=unmet, exit 1. That's the kill: the mutated counter produces a different verdict on the same healthy tree.
+
+  Hmm wait, but hold on — is that "detected"? In mutation testing of a counter/detector, a mutant is "killed" if the detector's behavior changes on the healthy input. Here the mutated counter prints unmet where pristine prints met. The task explicitly frames it: "Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED". So the expected result is C1S=unmet → mutant killed (behavior changed detectably). 
+
+  But actually, wait. Let me reconsider: maybe "the frozen counter" refers to the r42 count-c1.py? No — count-c1s.py is the r43 counter; the r42 one is "frozen" and crashes by design (frozen_still_crashes expects TypeError). The r42 counter can't print C1S=unmet... actually it prints C1=... lines. It crashes with TypeError before printing C1=. So "the frozen counter" must mean count-c1s.py (frozen for round 43, per "Frozen counters must not be edited: ... round-43/count-c1s.py"). Yes, the tasking lists count-c1s.py as a frozen counter. So "the frozen counter prints C1S=unmet on that mutant" = the (unmutated? no...) hmm.
+
+  Wait, now I'm confused again. "Show the frozen counter prints C1S=unmet on that mutant" — if the frozen counter can't be edited, then the mutant is... the counter run ON the mutant? What mutant? The mutant class is "v5_selftest_17 loosened to 16" — v5_selftest_17 is a check in count-c1s.py. Hmm, but could there be a mutants fixture dir for the counter itself? Let me check .ufo/waves/round-43/ or evidence/ for prior rounds' mutation probes (Exec4.md, Exec5.md exist in w1). Let me read those to understand the established protocol for these mutation probes.
+
+  Actually the more coherent reading: this is a meta-mutation exercise. The lane's testing discipline: counters must detect mutants of the code they check (v5 mutants). Round-43 w1 wave runs mutation probes on the counters themselves (self-attacks): mutate the counter in a /tmp copy, run it, see if the change is behaviorally observable. "Show the frozen counter prints C1S=unmet on that mutant" — i.e., run the mutant copy of the counter and show it prints unmet (on the healthy tree), demonstrating the mutation is behavior-detectable (killed). If the mutant still prints met (i.e., the loosened check doesn't change the verdict because... hmm, it would change it), report SURVIVED.
+
+  Let me check prior rounds' reports to match protocol. Let me look at w1/Exec4.md, Exec5.md, w1-spec.json, w1-settle.tsv, and evidence/.
+
+  Also read AGENTS.md as instructed, and contract.md for P-C1S.
+
+  Plan of parallel calls:
+  1. Read AGENTS.md
+  2. Read w1-spec.json, w1-settle.tsv
+  3. Read Exec4.md, Exec5.md (prior probe reports, to match format)
+  4. Check git state: `git -C lane rev-parse HEAD`, `git -C lane status --porcelain -- .ufo/waves/round-43/` and `git -C lane show HEAD:.ufo/waves/round-43/count-c1s.py | sha256sum` vs `sha256sum` of the file.
+  5. Read contract.md (round-43) for P-C1S sentence.
+
+  Let me also check evidence dir listing.
+
+  Then:
+  - Build /tmp sandbox: two clones (baseline+restored can share one clone run? No — baseline run against lane HEAD or clone HEAD; restored run same rev again).
+  - Actually simplest: 
+    - Sandbox S1: clone lane → /tmp/mutc1s6/base/repo. Verify HEAD count-c1s.py bytes == lane working file bytes. Run pristine: `python3 /tmp/.../base/repo/.ufo/waves/round-43/count-c1s.py HEAD --repo /tmp/.../base/repo`. Expect C1S=met. Record hash of running file.
+    - Sandbox S2: clone → /tmp/mutc1s6/mut/repo, edit count-c1s.py line 139: `(p, f) == (17, 0)` → `(p, f) == (16, 0)`. Commit. Record mutant hash. Run `python3 .../mut/repo/.ufo/waves/round-43/count-c1s.py HEAD --repo /tmp/.../mut/repo`. Expect: check v5_selftest_17 FAIL, C1S=unmet, exit 1.
+    - Restore: in S2, `git checkout` the file back to pristine? But the commit exists... For restoration evidence, the lane file was never touched. "Restore exact bytes" — the scratch copy: restore mutant working file back to pristine bytes and re-run detector → expect C1S=met again, and hash matches pristine hash. But self_at_rev: after restoring working file to pristine bytes but rev (HEAD commit) contains mutant bytes → self_at_rev fails → C1S=unmet trivially! Hmm. For the restored run, run against the base commit... but the commit with mutant is HEAD. I could reset --hard HEAD~1 (in the /tmp clone, allowed) so HEAD's count-c1s.py is pristine, then run restored bytes against that rev → expect C1S=met. That gives clean restoration evidence.
+
+  Wait, do I even need the mutant committed? Alternative to avoid commits: run the mutant counter file from /tmp path X against a rev... self_at_rev compares running bytes (from abspath(__file__)) to rev bytes. If I never commit the mutant, self_at_rev fails. Unless... I run the mutant from the clone where I committed it. Commit is needed. OK.
+
+  Also note: the counter's internal sandbox clone uses `--shared LANE` where LANE=/tmp clone → nested clone with alternates → works, and checkout --detach rev works since rev is in the shared objects.
+
+  One concern: `git clone --shared` of a repo whose HEAD is detached... fine.
+
+  Another concern: conform.py selftest (v5_selftest) — how long does it take? It runs 17 selftest cases; also mutant_kill runs 3 more selftests (each expecting pass=16 fail=1). And noharm_cwd runs mori-sources-appendonly.py selftest (22 cases). Plus frozen_still_crashes (fast crash). The counter has timeout=900 for selftests. Total runtime maybe tens of seconds to a few minutes. Set generous timeouts (300s each Bash call).
+
+  Also the "frozen_still_crashes" check runs the r42 counter with `--repo LANE` where LANE is my /tmp repo. The r42 counter presumably also does git show rev:... and eventually crashes on the cwd kwarg TypeError. Should be quick.
+
+  Let me also confirm the lane working tree is clean for that file and HEAD contains it. If HEAD does NOT contain count-c1s.py (e.g., wave files not yet committed), then baseline against lane HEAD would fail self_at_rev ("absent") — then baseline is inconclusive and I'd need to commit pristine in a /tmp clone as baseline rev too. Safer: do ALL runs (baseline, mutant, restored) in /tmp clones with explicit commits:
+  - S1: clone, commit pristine (or just use existing HEAD if file present and identical).
+  Let me check first.
+
+  Also: never write to lane. All writes in /tmp + one report file in lane (.ufo/waves/round-43/w1/MutC1S6.md) — that's explicitly required, "Write only your own report file."
+
+  Also check the w1 dir already has Exec4.md, Exec5.md — sibling reports; do not touch.
+
+  Let me also grep for how sibling mutation reports are formatted (Exec4/Exec5 might be from other seats — MutC1S6 suggests seats 1..N; maybe other Mut*.md exist in evidence/ from round 42). Let me list evidence/ and read one prior Mut report for format.
+
+  Parallel batch now:
+  - Read AGENTS.md
+  - Read .ufo/waves/round-43/w1-spec.json
+  - Read .ufo/waves/round-43/w1/Exec5.md
+  - Read .ufo/waves/round-43/contract.md
+  - Bash: git checks (rev-parse HEAD; show HEAD:count-c1s.py | sha256sum; sha256sum working file; status porcelain for round-43)
+  - Bash: ls evidence/ and glob for Mut*.md in lane .ufo/waves
+
+  Then execute.
+
+• Axes: **A1** mutation fidelity (mutant bytes actually change the check), **A2** detector behavior (verdict flips on healthy tree), **A3** restoration exactness (hashes round-trip), **A4** report fidelity. Reading context + repo state in parallel:47206f83e6de0bffccff379526386f7a267ba576
+warning: could not open directory '.ufo/waves/round-43/': No such file or directory
+---worktree hash---
+sha256sum: .ufo/waves/round-43/count-c1s.py: No such file or directory
+---HEAD hash---
+fatal: path '.ufo/waves/round-43/count-c1s.py' does not exist in 'HEAD'
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  -
+census-start.txt
+control-c1s-donothing.txt
+control-c1s-green.txt
+control-c1s-junk.txt
+control-c2-donothing.txt
+control-c2-green.txt
+control-c2-junk.txt
+disk-usage-r43.txt
+s268-headers.txt
+wave-plan.json
+---
+assimilation
+candidates
+conform.py
+contract.md
+count-c1.py
+count-c2.py
+count-c3.py
+evidence
+fixtures
+__pycache__
+---
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/build/MutationAttribution.md
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-14/build/MutationDesign.md
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/falsify/MutMisroot.md
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/falsify/MutQuota.md
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/falsify/MutBranch.md
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-17/falsify/MutContext.md
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-18/falsify/MutFreezeOrder.md
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-18/falsify/MutDispatchLedger.md
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-18/falsify/MutRetentionGate.md
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-20/falsify/MutTrailerLastLine.md
+
+

@@ -1,0 +1,25 @@
+kimi version 2.3.1
+• Let me start by naming the axes and doing recon. My task: confirm OpenAlex L0 527fc8dd exists and is not duplicated. This is a recon-only task.
+
+  Axes:
+  1. Existence — does an OpenAlex L0 source with ID 527fc8dd exist in the lane?
+  2. Duplication — is it referenced/stored more than once (duplicated records)?
+  3. Report fidelity — write scoped findings to the exact path.
+
+  Let me search the lane repo for "527fc8dd" occurrences. Also check wave directories for prior scout reports about OpenAlex L0 sources, context files.
+
+  Let me run parallel greps:
+  - Grep for `527fc8dd` in the lane repo.
+  - Glob for files in .ufo/waves/round-42 and round-43 for context.
+  - Read ~/.omp/agent/config.yml? That's role routing — I don't need to pass a model. Maybe not needed.
+
+  Let me start.Let me read AGENTS.md and look for where the corpus sources live — specifically where L0 files are stored. The grep showed "L0 already filed as `527fc8dd5f36a7f7ee45aff66f0e3daf413222de`". So the L0 source file likely lives under corpus/evidence/sources-* with a name containing 527fc8dd, or it's a "Tier-A question" filed somewhere. Let me search for the full ID and for how sources are filed.
+
+  Note the initial grep for `527fc8dd` only found references in .ufo/waves and corpus/lessons — but wait, the output limit was 100 lines and it showed matches 1-100 of... actually the grep result showed only those lines (the "Showing matches 1–100 of 773" line belongs to the Glob result). Actually looking carefully: first result (Grep) shows 11 lines, no truncation notice. So only ~11 matches of `527fc8dd` in the repo. Interesting — that means the L0 file itself doesn't have "527fc8dd" in its filename or content? Or maybe the corpus sources are stored elsewhere, e.g., a SOURCES.md registry or a SQLite DB, or content-addressed storage where the ID is a question hash not stored in plain text.
+
+  Wait — "L0 already filed as `527fc8dd5f36a7f7ee45aff66f0e3daf413222de`" — that's a 40-hex hash. The grep pattern `527fc8dd` should match substrings within files. It found only those files. So the corpus itself doesn't contain the string "527fc8dd" in any text file. Maybe sources are stored in a JSONL where the question hash is stored? Or maybe there's an L0/L1 ledger file. Let me look at the corpus structure.
+
+  Let me read AGENTS.md, the contract.md around line 80, the round-42-verifier-spotcheck.md lesson, and explore corpus directory structure. Also check SOURCES.md.
+
+  Also, "OpenAlex L0" — maybe sources are filed under corpus/evidence/sources-r42/S262.oa.json. The lesson says S262's abstract was filed, and the Tier-A question already filed as 527fc8dd. So the L0 (level-0? "question") might be stored in some questions ledger. Let me search for "L0" in corpus.
+

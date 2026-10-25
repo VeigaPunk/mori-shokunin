@@ -1,0 +1,202 @@
+kimi version 2.3.1
+• Let me start by understanding the task:
+
+  1. Attack `count-c1s.py` (a frozen counter at `.ufo/waves/round-43/count-c1s.py` in the lane repo `/home/vgpnk/Projects/shokunin/mori-shokunin`) in a /tmp copy only.
+  2. Mutant class: `frozen_still_crashes` accepts a `C1=` line.
+  3. Show the frozen counter prints `C1S=unmet` on that mutant, or report SURVIVED with the command and output.
+  4. Don't edit the lane counter.
+  5. Report at `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/MutC1S8.md`.
+
+  Let me name the axes:
+  - A1: mutant kill fidelity (does the mutant actually change behavior?)
+  - A2: detector boundedness (same command on pristine/mutated/restored)
+  - A3: restoration evidence (exact bytes via hashes)
+  - A4: report fidelity
+
+  First steps (parallel):
+  - Read the frozen counter `.ufo/waves/round-43/count-c1s.py`
+  - Check ~/.omp/agent/config.yml (role routing) — actually I shouldn't need it; I must not pass a model. Just reading RULES.md may be needed if installing tools, but I likely don't need to install anything — bash + python should suffice.
+  - Copy the counter to /tmp sandbox.
+
+  Let me do it.
+
+  Plan:
+  1. Read the counter file, compute sha256 of pristine.
+  2. Create /tmp sandbox, copy counter in.
+  3. Understand its behavior: run on pristine with a sample input (baseline). Need to find what input format it takes (stdin? argv? files in cwd?). Probably reads wave report files.
+  4. Craft the mutant: make it accept a `C1=` line (e.g., change a regex or condition that matches `C1S=` or requires `C1S=` to also accept `C1=`). Mutant class "frozen_still_crashes" — the name suggests: frozen counter still crashes/errors when given something it shouldn't accept? Actually "frozen_still_crashes accepts a C1= line" — the mutant class is that the frozen counter, which should still crash (or refuse?) ... Hmm. Let me interpret: mutant = modified counter that accepts a `C1=` line (treating it as satisfying C1S?). Then show the frozen counter prints `C1S=unmet` on that mutant. Wait — "Show the frozen counter prints C1S=unmet on that mutant" — the mutated copy should print `C1S=unmet` when fed input containing only `C1=` (no `C1S=`), i.e., the mutant that accepts `C1=` lines is killed by showing it prints `C1S=unmet`.
+
+  Actually re-reading: "Attack count-c1s.py in a /tmp copy only. Mutant class: frozen_still_crashes accepts a C1= line. Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output."
+
+  So the mutant is: a version of the counter that (incorrectly) accepts a `C1=` line. The expectation: even the mutated copy should print `C1S=unmet` (because the invariant is that only `C1S=` satisfies C1S), which would kill the mutant (frozen_still_crashes — the mutant still crashes/outputs unmet despite accepting C1=). Hmm, "frozen_still_crashes" as a mutant class name — the hypothesis being tested is "frozen still crashes" i.e., even when mutated to accept C1=, it still reports unmet. If the mutant instead reports met, then SURVIVED (coverage finding).
+
+  So the detector: feed the mutated counter an input where a `C1=` line appears (maybe instead of C1S=), and check output contains `C1S=unmet`. If output says met (or C1S=met), mutant SURVIVED.
+
+  I need to see the counter to know how it's invoked and what input it reads. Let me read the file first.
+
+  Also need to check `.ufo/waves/round-43/` directory for context files (task files, etc.) and maybe round-42's count-c1.py for comparison.
+
+  Steps:
+  1. Read counter, list wave dirs.
+  2. sha256 pristine.
+  3. /tmp sandbox: copy, run baseline detector on pristine bytes (bounded), run on mutant, restore bytes in the sandbox copy (verify hash), record.
+
+  Actually "Restore exact bytes even if the detector fails" — restoration applies to the lane file; since we only work in /tmp, restoration means... The instruction says record before/after hashes and restore exact bytes. Since we never touch the lane counter, restoration evidence = lane file hash unchanged before/after. And in the /tmp copy, we can also restore the pristine bytes to show the detector on pristine == baseline.
+
+  The protocol: "Run the same bounded behavioral detector on pristine, mutated and restored bytes." So:
+  - Pristine (in /tmp copy): run detector → baseline result. A baseline failure is inconclusive.
+  - Mutated: run detector → if prints C1S=unmet, killed.
+  - Restored: restore pristine bytes in the /tmp copy, rerun detector → matches pristine.
+
+  Record hashes before/after.
+
+  Let me start. Parallel batch 1:
+  - Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c1s.py
+  - ls the round-43 dir and round-42 dir
+  - sha256sum the counter
+
+  I can't read and bash in the same batch? I can — independent calls. Let me do that.
+
+• Axes: (A1) mutant kill fidelity — does "accepts a `C1=` line" actually change behavior; (A2) detector boundedness — same command on pristine/mutant/restored bytes in a /tmp sandbox; (A3) restoration evidence — lane counter hash untouched, pristine hash restored; (A4) report fidelity at the required path.total 48
+drwxr-xr-x 1 vgpnk vgpnk   162 Oct 24 22:35 .
+drwxr-xr-x 1 vgpnk vgpnk   496 Oct 24 21:31 ..
+drwxr-xr-x 1 vgpnk vgpnk   256 Oct 24 22:37 assimilation
+-rw-r--r-- 1 vgpnk vgpnk  4298 Oct 24 21:37 contract.md
+-rw-r--r-- 1 vgpnk vgpnk  6022 Oct 24 21:37 count-c1s.py
+-rw-r--r-- 1 vgpnk vgpnk  3094 Oct 24 21:37 count-c2.py
+drwxr-xr-x 1 vgpnk vgpnk   386 Oct 24 21:44 evidence
+drwxr-xr-x 1 vgpnk vgpnk   102 Oct 24 22:42 w1
+-rw-r--r-- 1 vgpnk vgpnk    51 Oct 24 22:42 w1-settle.tsv
+-rw-r--r-- 1 vgpnk vgpnk 22422 Oct 24 21:44 w1-spec.json
+93482248b46def2a2cec7238732af1551ef315517e76833c3843875313b65dc5  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c1s.py
+assimilation
+candidates
+conform.py
+contract.md
+count-c1.py
+count-c2.py
+count-c3.py
+evidence
+fixtures
+__pycache__
+w1
+w1-spec.json
+
+
+• The system reminder says to read AGENTS.md before making changes. I should read it. Also I now understand the counter.
+
+  Key part — the `frozen_still_crashes` check:
+
+  ```python
+  rc, out, err = run(
+      [sys.executable, frozen_path, rev, "--repo", LANE], timeout=1800)
+  check("frozen_still_crashes",
+        rc != 0 and CRASH in (err or "") and not re.search(r"^C1=", out or "", re.M),
+        ...)
+  ```
+
+  Wait — the check asserts that output does NOT contain a line starting with `C1=`. The mutant class: "frozen_still_crashes accepts a C1= line." So the mutant would relax that condition to accept (allow) a `C1=` line in the frozen counter's output — i.e., mutate `not re.search(r"^C1=", ...)` to `re.search(...)` or drop the negation, so that the mutant passes the check even when the frozen counter emits a `C1=` line.
+
+  Hmm, but the task says: "Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output."
+
+  So the detector: run the mutant copy of count-c1s.py, and it should print `C1S=unmet`. Wait — but the mutant only changes the check condition; it wouldn't change the C1S= verdict... Unless the mutation makes `frozen_still_crashes` pass when it shouldn't (accepting a C1= line), which would then make the overall verdict `C1S=met` (exit 0) when it should be `C1S=unmet`.
+
+  Let me think again. The check `frozen_still_crashes` requires:
+  1. rc != 0
+  2. CRASH string in stderr
+  3. NOT a `^C1=` line in stdout
+
+  If the actual frozen counter at rev emits `C1=met` (i.e., the frozen counter no longer crashes properly... wait, actually the frozen r42 counter crashes with `TypeError: run() got an unexpected keyword argument 'cwd'` — that's the expected state: the frozen counter crashes because the r43 code passed `cwd=` to its `run()`... no wait, the frozen counter is run standalone with `run([sys.executable, frozen_path, rev, "--repo", LANE])`. The crash presumably happens inside the frozen counter itself for another reason. Anyway, expected: frozen counter crashes with that TypeError and does NOT print a `C1=` line.
+
+  The mutant: `frozen_still_crashes` accepts a `C1=` line — i.e., mutate the third condition to require or allow `^C1=`. Two sub-interpretations:
+
+  (a) Accept = allow (drop the negation): `re.search(r"^C1=", out or "", re.M)` — but then the check would only pass if a C1= line IS present. That would flip behavior too.
+
+  (b) Accept = tolerate (remove the C1= condition entirely), so the check passes even if frozen prints `C1=met`.
+
+  For the mutation test, the minimal behavior-bearing point: the check condition in count-c1s.py. The detector is the full counter run; the expected outcome per the tasking: the mutant prints `C1S=unmet` — meaning the mutant is still killed by the overall verdict? Hmm.
+
+  Wait, re-read the task: "Attack count-c1s.py in a /tmp copy only. Mutant class: frozen_still_crashes accepts a C1= line. Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output."
+
+  Hmm — "Show the frozen counter prints C1S=unmet on that mutant". Actually maybe: run the mutant count-c1s.py; its final verdict line is `C1S=...`. If the mutant changes the check so it accepts a `C1=` line, and the real frozen counter does NOT print a C1= line (it crashes without printing), then the mutant's behavior on the real repo would be identical → verdict still `C1S=unmet` (or met, depending on repo state). So the mutant would survive against the real repo — the detector can't distinguish.
+
+  But hold on — the mutation test protocol here per the system prompt: mutate the smallest behavior-bearing point, run the same bounded behavioral detector on pristine, mutated, and restored bytes. The detector expected: "the frozen counter prints C1S=unmet on that mutant". Hmm, "the frozen counter prints C1S=unmet" — the frozen counter is count-c1.py (r42). The mutant makes the r43 counter's frozen_still_crashes check accept a `C1=` line. When we run the mutant r43 counter... the frozen counter subprocess runs and crashes; the question is whether the mutant then prints C1S=unmet.
+
+  Hmm, actually maybe the intended reading: The mutant of count-c1s.py is designed such that `frozen_still_crashes` would still pass if the frozen counter printed `C1=...`. To kill it (show it as detected/killed), we need a scenario where the frozen counter DOES print a `C1=` line, and the pristine counter would then print `C1S=unmet` overall, while the mutant might print `C1S=met`. The task says "Show the frozen counter prints C1S=unmet on that mutant" — wait, that says frozen counter prints C1S=unmet. The frozen r42 counter prints `C1=met` or `C1=unmet` (it's count-c1), not C1S. Hmm.
+
+  Let me re-read once more: "Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output."
+
+  Hmm, I think "the frozen counter" here loosely refers to the frozen counter file under attack, i.e., the mutated count-c1s.py copy. The detector: run the mutant copy of count-c1s.py against some rev in a sandbox, and observe that it prints `C1S=unmet`. 
+
+  Wait, but that's weird: if the mutant makes frozen_still_crashes more permissive, on the actual lane repo the outcome would be the same C1S verdict — the mutant survives trivially. That can't be the intent of "Show ... prints C1S=unmet on that mutant" as a kill.
+
+  Alternative: the mutant makes frozen_still_crashes ACCEPT (i.e., positively require/allow) a C1= line — e.g., condition becomes `rc != 0 and CRASH in err and re.search(r"^C1=", out, re.M)` (accept presence), or drops the negation so a C1= line doesn't cause failure. Then to kill the mutant, we construct a scenario: a fake rev/repo where the frozen counter crashes AND prints a `C1=met` line. On that scenario:
+
+  - Pristine count-c1s.py: frozen_still_crashes FAILS (because C1= line present) → prints `C1S=unmet`.
+  - Mutant: frozen_still_crashes PASSES (accepts the C1= line) → prints `C1S=met`.
+
+  Then the detector on the mutant... hmm, but the task says show the mutant prints `C1S=unmet`. That would mean the mutant is killed (still unmet). Confusing.
+
+  Hmm wait — maybe I have the polarity backwards. Maybe the mutation is in the FROZEN counter's direction... No, we attack count-c1s.py.
+
+  Let me think about what "frozen_still_crashes accepts a C1= line" means as a mutant class. The check is named `frozen_still_crashes`. The mutant class name describes the mutation: the check now "accepts a C1= line" — i.e., the check condition is mutated so that a `C1=` line in the frozen counter's output no longer fails the check (it's accepted/tolerated).
+
+  To kill this mutant, we need a behavioral detector that distinguishes pristine from mutant. The natural one: a crafted rev where the frozen counter at that rev crashes with the TypeError AND prints `C1=met`. Under pristine, check fails → C1S=unmet. Under mutant, check passes → C1S=met (assuming all other checks pass in our crafted scenario). 
+
+  But crafting all other checks to pass (self_at_rev byte-identical, frozen_sha, frozen_sig, v5_present, sandbox_clone, noharm_cwd 22/0, v5_selftest 17/0, three mutant kills 16/1 with exact arms) is heavy but doable? That requires a full git repo clone with all those fixtures — the mutants and conform.py from the real repo at some rev. Hmm, that's a lot.
+
+  But wait — the task's expected kill evidence is simpler: "Show the frozen counter prints C1S=unmet on that mutant." So maybe the polarity: the mutant makes frozen_still_crashes ACCEPT a C1= line... and the expected detector output is that even the mutant prints `C1S=unmet` — because the frozen counter actually does NOT print a C1= line (it crashes), the mutant's acceptance of a C1= line changes nothing about the verdict... no wait, then the verdict equals pristine's verdict, meaning the mutation is behavior-preserving on the real repo — a SURVIVED mutant (equivalent mutant in that context), which would be a coverage finding: the detector at rev X can't distinguish.
+
+  Hmm, hold on. Let me reconsider: maybe the mutation is intended in the opposite direction: the check requires "not C1= line". A mutant that "accepts a C1= line" would flip `not re.search(...)` to `re.search(...)`. On the real lane state (frozen crashes, no C1= line): pristine check PASSES (rc!=0, crash present, no C1= line). Mutant check FAILS (no C1= line present). So pristine → check passes; mutant → check fails → mutant prints `C1S=unmet` while pristine prints `C1S=met` (if everything else passes). That matches "Show the frozen counter prints C1S=unmet on that mutant"! I.e., run the mutant counter on the lane (or a sandbox clone at the current rev); if it prints `C1S=unmet` (and specifically due to frozen_still_crashes FAIL), the mutant is killed by the existing harness. If it prints `C1S=met`, then SURVIVED — meaning the real repo state can't detect an inverted acceptance (coverage finding).
+
+  Yes! That reading is consistent: The mutant class "frozen_still_crashes accepts a C1= line" = the check now accepts (requires positive presence of) a `C1=` line. Detector: run mutant; expected `C1S=unmet` with check frozen_still_crashes FAIL (because frozen prints no C1= line). Kill shown by the FAIL line in output.
+
+  Actually, "accepts a C1= line" could also mean "tolerates". But given the expected evidence is "prints C1S=unmet", the requiring/inverted variant is the one where a kill is demonstrable via the plain run. However, with the "tolerates" variant, the mutant would still print C1S=met on the healthy repo (same as pristine) → SURVIVED, which is the trivial outcome and not interesting. The task explicitly frames it as "Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED" — so the kill path is: run the mutant, observe `C1S=unmet` (with frozen_still_crashes FAIL). 
+
+  Hmm, but "accepts" more naturally = "tolerates/permits". Ugh. Let me think about which is the "smallest behavior-bearing point" and which produces a meaningful kill either way. 
+
+  Under interpretation (a) invert: mutant requires C1= line present. On real repo: frozen crashes, no C1= → check fails → C1S=unmet. Pristine: check passes → C1S=met (assuming other checks pass). Kill.
+
+  Under interpretation (b) drop condition: mutant tolerates C1= line. On real repo: same as pristine → C1S=met → SURVIVED (undetectable by full-run detector, since the frozen counter never prints C1= in the crash state). To kill (b), we'd need to craft a rev where frozen crashes AND prints C1=... and also everything else passes. That's the heavy path.
+
+  The task says: "Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output." This suggests the primary experiment: run the mutant against the real rev, and if it prints C1S=unmet (kill), done; else SURVIVED.
+
+  Which mutant do I build? "frozen_still_crashes accepts a C1= line" — I'll implement the minimal single-point mutation: remove the `not` → the check then accepts/requires... hmm.
+
+  Actually, let's think about what a grader would consider "accepts a C1= line": The original condition `not re.search(r"^C1=", out or "", re.M)` — "accepting a C1= line" = the mutated condition is `re.search(r"^C1=", out or "", re.M)`. That is literally "the check accepts [the presence of] a C1= line". The cleanest single-token mutation: delete `not `. That's the smallest behavior-bearing point: one token.
+
+  With that mutant, on the current lane rev:
+  - frozen counter runs, crashes with TypeError, prints no C1= line (expected state per r42 counter being broken).
+  - Mutant check: rc != 0 ✓, CRASH in err ✓, re.search(C1=) → False → check FAILS → `C1S=unmet`, exit 1.
+
+  That kills the mutant if pristine at the same rev prints `C1S=met`. But wait — do the other checks pass at the current rev? The counter requires the rev to contain count-c1s.py byte-identical to the running file (self_at_rev). If I run the /tmp mutant copy, `self_at_rev` compares the rev's committed count-c1s.py with the running file (the mutant) → bytes differ → check fails → early return `C1S=unmet`. That's an unmet for the wrong reason — not a proper kill (the mutation didn't cause it; any mutated file would unmet on self_at_rev).
+
+  Hmm. So the bounded detector must isolate the frozen_still_crashes check rather than run the whole counter. Per the Godspeed mutation protocol: "Run the same bounded behavioral detector on pristine, mutated and restored bytes." The detector must distinguish mutant from pristine, and baseline (pristine) must succeed (else inconclusive).
+
+  Options for the detector:
+
+  Option 1: Unit-level harness. Import the mutated module in a sandbox and directly exercise the `frozen_still_crashes` condition. But the condition is inline in main(), not a function. I can't easily call it. Alternative: run main() with a mocked environment? Heavy.
+
+  Option 2: Build a crafted scenario where the full counter runs to the frozen_still_crashes check and every earlier check passes for BOTH pristine and mutant. For self_at_rev, the rev must contain the running file byte-identical — but pristine and mutant bytes differ, so a single rev can't satisfy both. Unless... I run each variant in its own sandbox clone where the rev's SELF_REL bytes match the running variant. I.e., two scratch clones (or one clone, two commits/revs, one containing pristine bytes, one containing mutant bytes), everything else identical.
+
+  That's doable: create a sandbox repo (clone --shared of lane, or a fresh worktree) with a commit that has:
+  - `.ufo/waves/round-43/count-c1s.py` = variant bytes (pristine run in clone A; mutant run in clone B)
+  - `.ufo/waves/round-42/count-c1.py` = frozen bytes with sha256 == FROZEN_SHA (must equal the real frozen counter — take from lane rev) AND modified so that... wait, frozen_sha must match FROZEN_SHA exactly, so I cannot modify the frozen counter. The frozen counter at the rev must be the real bytes. So the frozen subprocess will behave exactly as in reality: it crashes with TypeError and prints no C1= line? Let me check what the real frozen r42 counter does — it's count-c1.py at round-42; the expectation is it crashes with `TypeError: run() got an unexpected keyword argument 'cwd'`... but that crash string appears when run() is called with cwd= by... hmm, actually the r43 counter calls the frozen counter as a subprocess `[sys.executable, frozen_path, rev, "--repo", LANE]` — no cwd kwarg. The TypeError must arise inside the frozen counter itself when it calls its own `run(argv, timeout)` with `cwd=`... no — frozen_sig check ensures frozen's run has params (argv, timeout) exactly. So if someone modified frozen to have cwd param, frozen_sha would fail. The crash: presumably the r42 frozen counter's `run` doesn't accept cwd, but the r41 fixtures' count-c8.py counter (invoked via `--counter`) calls run(..., cwd=...) → TypeError. Whatever — empirically, the frozen counter crashes with that TypeError and prints no `C1=` line when run. That's the real state (the whole point: frozen counter is broken/crashes, r43 counter asserts it still crashes and prints no C1= line).
+
+  So at any rev satisfying frozen_sha, the frozen subprocess prints no `^C1=` line. Therefore:
+  - Pristine: frozen_still_crashes → PASS.
+  - Mutant (`not` deleted): frozen_still_crashes → FAIL → C1S=unmet.
+
+  But to reach that check, all earlier checks must pass in both runs:
+  1. self_at_rev: rev contains running file byte-identical → satisfied per-variant by committing each variant's bytes in its own rev. 
+  2. frozen_sha: rev contains real frozen bytes → commit real frozen bytes.
+  3. frozen_sig: parse of frozen bytes → run(argv, timeout) → true for real bytes.
+  4. v5_present: rev contains `.ufo/waves/round-42/conform.py` → commit it.
+  5. sandbox_clone: `git clone -q --shared LANE clone` where LANE = the `--repo` arg. I can pass `--repo <sandbox repo>`! LANE is overridden by --repo. The sandbox clone then clones my crafted repo (shared clone). It must have the needed files: tools/mori-sources-appendonly.py, v5 conform.py, fixtures mutants, fixtures/c1/count-c8.py, contract.md at CONTRACT_REL.
+  6. noharm_cwd: run tools/mori-sources-appendonly.py --selftest in clone → needs (22, 0). Must commit the real tools file from the lane at a rev where selftest passes 22/0.
+  7. v5_selftest_17: conform.py --selftest with --contract contract.md --counter count-c8.py → pass=17 fail=0 rc=0. Needs real conform.py, contract.md, count-c8.py at right paths.
+  8. mutant_kill_* (3): fixtures/mutants/conform-mut-{walrus-branch,tuple-extract,sort-deletion}.py committed; each swapped in, selftest → 16/1 with exact arm.
+  9. Then frozen_still_crashes.
+
+  So the crafted rev must essentially contain: the r43 counter bytes (variant), frozen counter bytes, conform.py, contract.md, count-c8.py, 3 mutant fixtures, tools/mori-sources-appendonly.py. All exist in the lane repo at some rev (current HEAD presumably, since round-43 files exist in working tree). But the r43 counter at HEAD differs from pristine? No — lane HEAD should contain the pristine count-c1s.py (hash 93482248...). I
+

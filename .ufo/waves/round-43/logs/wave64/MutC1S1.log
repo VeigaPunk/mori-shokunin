@@ -1,0 +1,288 @@
+kimi version 2.3.1
+• Let me understand the task:
+
+  1. Attack `count-c1s.py` in a /tmp copy only. The frozen counter is at `.ufo/waves/round-43/count-c1s.py` in the lane repo `/home/vgpnk/Projects/shokunin/mori-shokunin`.
+  2. Mutant class: `self_at_rev` absent.
+  3. Show the frozen counter prints `C1S=unmet` on that mutant, or report SURVIVED with the command and output.
+  4. Do not edit the lane counter.
+  5. Report at `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/MutC1S1.md`.
+
+  Axes (Godspeed):
+  - A1: mutant fidelity — is `self_at_rev` actually removed without altering other behavior?
+  - A2: detector determinism — same bounded run on pristine/mutated/restored bytes.
+  - A3: restoration integrity — byte-identical restore, hash before/after.
+
+  Plan:
+  1. Read the counter at `.ufo/waves/round-43/count-c1s.py` (read-only read is fine).
+  2. Copy it to /tmp (sandbox), hash pristine.
+  3. Create mutant: remove `self_at_rev` (probably an attribute or variable). Need to see the code to know how `self_at_rev` appears.
+  4. Run detector: run counter on pristine (expect C1S=met presumably), on mutant (expect C1S=unmet), restore (hash match), run on restored.
+
+  Let me start by reading the counter and checking the environment. Parallel batch:
+  - Read the counter file.
+  - ls the lane repo .ufo/waves/round-43 directory.
+  - Check /tmp writability.
+
+  Let me do that.total 48
+drwxr-xr-x 1 vgpnk vgpnk   162 Oct 24 22:35 .
+drwxr-xr-x 1 vgpnk vgpnk   496 Oct 24 21:31 ..
+drwxr-xr-x 1 vgpnk vgpnk   256 Oct 24 22:37 assimilation
+-rw-r--r-- 1 vgpnk vgpnk  4298 Oct 24 21:37 contract.md
+-rw-r--r-- 1 vgpnk vgpnk  6022 Oct 24 21:37 count-c1s.py
+-rw-r--r-- 1 vgpnk vgpnk  3094 Oct 24 21:37 count-c2.py
+drwxr-xr-x 1 vgpnk vgpnk   386 Oct 24 21:44 evidence
+drwxr-xr-x 1 vgpnk vgpnk    70 Oct 24 22:37 w1
+-rw-r--r-- 1 vgpnk vgpnk    17 Oct 24 22:37 w1-settle.tsv
+-rw-r--r-- 1 vgpnk vgpnk 22422 Oct 24 21:44 w1-spec.json
+93482248b46def2a2cec7238732af1551ef315517e76833c3843875313b65dc5  /tmp/mut_c1s_probe/count-c1s.py
+93482248b46def2a2cec7238732af1551ef315517e76833c3843875313b65dc5  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c1s.py
+Let me read the AGENTS.md file as instructed, plus plan the mutation.
+
+  The counter's `self_at_rev` check (lines 91-97): it reads the running file (`__file__`), fetches the file at the given rev via `git show`, and compares. If not same, prints `check self_at_rev FAIL (...)` then `C1S=unmet` and exits 1.
+
+  Mutant class: `self_at_rev` absent. There are two plausible interpretations of "self_at_rev absent":
+  1. The check itself is absent (lines 92-97 removed: the `at_rev`/`same` computation and the check call) — i.e., remove the behavior-bearing point.
+  2. The rev doesn't contain the file (`at_rev is None`) — but that's an input condition, not a code mutation.
+
+  "Mutant class: self_at_rev absent" — the smallest behavior-bearing point related to `self_at_rev` is the check. The natural mutation: delete the `self_at_rev` check block (lines 92-97) so the check never runs. But then what? If we remove the check but keep the `if not same: return finish(False)` gate, then... if we remove the check call but keep `same` computed, the behavior changes: `self_at_rev FAIL` line disappears.
+
+  Alternative minimal mutant: remove just the `check("self_at_rev", same, ...)` call. Then if the file is present at rev but differs, the counter would proceed instead of stopping. But on a pristine rev where self_at_rev matches, output is identical to pristine (check line gone but verdict same) — that's an equivalent-ish mutant for the pass path but behavior-bearing on the fail path.
+
+  The simplest mutant demonstrating "self_at_rev absent": delete the check call + the gate, i.e., make the counter not check self_at_rev at all. Then run against a rev where the file at rev differs from the running (mutated) file... hmm.
+
+  Actually the cleanest demonstration per the tasking: "Show the frozen counter prints C1S=unmet on that mutant". Wait — "the frozen counter" here likely means the counter (count-c1s.py) — the tasking calls count-c1s.py "the frozen counter" (the task says "Frozen counters must not be edited: .ufo/waves/round-42/count-c1.py and .ufo/waves/round-43/count-c1s.py and count-c2.py"). So we mutate the /tmp copy of count-c1s.py with `self_at_rev` absent, then run it and show it prints C1S=unmet.
+
+  Wait, but if self_at_rev check is absent, and the mutant runs against a rev where the file matches... The detector should still print C1S=unmet because... hmm. Let's think about what happens.
+
+  The task: "Attack count-c1s.py in a /tmp copy only. Mutant class: self_at_rev absent. Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output."
+
+  So we mutate the /tmp copy: remove `self_at_rev` (the check). Then run the mutant. Expected: C1S=unmet. Why would it be unmet? Because of the self-consistency mechanism: the mutant compares the running file (mutant bytes) to the file at rev (pristine bytes at HEAD presumably) — wait, but if we remove the self_at_rev check entirely, then that mechanism is gone.
+
+  Hmm, wait. Let me reconsider. Two mutation interpretations:
+
+  (a) Remove the `self_at_rev` check + gate (lines 92-97). The counter then proceeds to other checks. If run against a rev (e.g., HEAD) where everything else passes... it might print C1S=met. That would be SURVIVED (detector fails to catch). But the task asks to "show the frozen counter prints C1S=unmet on that mutant" — the tasking expects unmet. How?
+
+  Consider: run the mutant with rev = HEAD. The mutant's `running` bytes = mutant bytes. If self_at_rev check is present (pristine), `same` = False (mutant ≠ pristine at rev) → "check self_at_rev FAIL (bytes differ)" → C1S=unmet, exit 1. That IS the detector: the counter's own self_at_rev check detects tampering. The mutant class "self_at_rev absent"... 
+
+  Hmm wait. Maybe the mutation target is the *rev content*: i.e., a mutant where `self_at_rev` is absent means the file is absent at rev? No — we can't create revs (mutating lane git is forbidden).
+
+  Re-read: "Attack count-c1s.py in a /tmp copy only. Mutant class: self_at_rev absent. Show the frozen counter prints C1S=unmet on that mutant."
+
+  I think the intended mutant: the check named `self_at_rev` is absent from the mutated copy (a coverage probe: does anything else catch a copy that drops the self-check?). Then run the mutant against the lane at some rev. The other checks (frozen_sha, frozen_sig, v5_present, sandbox_clone, noharm_cwd, v5_selftest_17, mutant checks, frozen_still_crashes) would presumably all pass against HEAD if the repo is in a good state. Then the mutant would print C1S=met → SURVIVED.
+
+  But wait — there's a subtlety: the mutant runs other checks that involve `rev`. Note `git_bytes(rev, SELF_REL)` is only used in self_at_rev. If we remove the self_at_rev check entirely (both the `at_rev` fetch and the gate), the counter no longer verifies the rev at all before proceeding — e.g., `git clone --shared LANE` then `checkout --detach rev`.
+
+  Alternatively "self_at_rev absent" minimal mutant: delete only line 94-95 (the `check("self_at_rev", ...)` call), keeping the `same` computation and the gate. Then behavior on tampered copy: gate returns unmet silently (no FAIL line, but C1S=unmet printed). Run against HEAD with mutant bytes: `same` = False → C1S=unmet. That shows C1S=unmet but the check name line is absent — demonstrating that the verdict still holds. Hmm, but that mutant isn't really "attacking" — it shows robustness.
+
+  Which reading is right for a mutation-testing wave? The point of a mutant is: does the detector (the counter's self-protection) catch a tampered counter? The mutant class "self_at_rev absent" = attacker removes the self_at_rev check from the counter copy. The expected detector behavior: the counter prints C1S=unmet on that mutant. Why would it be unmet?
+
+  Because of the bootstrapping: when the mutant runs with `--repo LANE` at rev HEAD, `running` = mutant bytes; `at_rev` = pristine bytes → differ. If self_at_rev check is removed (interpretation (a)), the gate must also be removed (otherwise `same` is referenced but the check absent — actually if we remove only the check call, the gate still triggers unmet).
+
+  So for the mutant to potentially print "met", we must remove both the check and the gate — otherwise the tamper is still caught. Then the remaining checks run. Would they pass on HEAD? If the lane repo is in a state where all checks pass (that's presumably the case since the wave is running), then mutant prints C1S=met → SURVIVED.
+
+  Hmm, but the tasking says "Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED". So both outcomes are acceptable; we just report what happens.
+
+  But wait — is there another mechanism that would catch it? The `finish` gate at line 96-97: `if not same: return finish(False)`. If we remove the whole block lines 92-97 (at_rev, same, check, gate), then the counter proceeds. All other checks don't compare running bytes to rev. So if the repo is healthy at HEAD, verdict = met. That means SURVIVED.
+
+  Hmm, but hold on — maybe there's something else: the w1 wave may have a watchdog or the report contract expects that the *other* checks fail? Let me think about `selftest` — it runs conform.py with `--selftest`. No self-reference to count-c1s.
+
+  Actually wait, let me reconsider interpretation. "Mutant class: self_at_rev absent" could also mean: make the counter behave as if `self_at_rev` were absent at rev, i.e., `at_rev is None`. That's achieved by running against a rev that predates the file — e.g., a rev before round-43 file was committed. That's not a code mutation though; the tasking explicitly says "Attack count-c1s.py in a /tmp copy only" — mutate the file. And the system prompt: "Mutate the smallest behavior-bearing point in the assigned isolated scratch copy".
+
+  Smallest behavior-bearing point for `self_at_rev`: the `same` computation feeding the check. Options ranked by size:
+  1. Remove `check("self_at_rev", ...)` call only (2 lines). Behavior: FAIL line absent when tampered; gate still fires → C1S=unmet still printed (silently). Detector on the pass path: identical output minus nothing (the check line absent). On tamper path: `check self_at_rev FAIL (bytes differ)` line disappears but C1S=unmet remains. So the tamper-detection verdict survives the mutant → mutant killed? The detector is "counter prints C1S=unmet on that mutant" → it would print unmet → "killed" (the tasking's expectation holds).
+
+  Hmm, but that's weird: the mutant removes the check yet unmet still prints — good defense in depth via the gate.
+
+  2. Remove check + gate (lines 92-97). Behavior: tampered copy proceeds; verdict depends on other checks. On healthy HEAD: C1S=met → the tamper goes undetected → SURVIVED (coverage finding: the self_at_rev gate is the only mechanism catching a modified counter copy).
+
+  Which is "the smallest behavior-bearing point"? The behavior "self_at_rev" is the check name. The class "self_at_rev absent" most naturally = the check is absent = remove the check call. The minimal edit is deleting the check call (and its gate? no).
+
+  Hmm. Actually, let me think about what makes a meaningful mutation test here. A mutant is "killed" if the system's detector catches it. Here the counter itself is the subject. The tasking's expected detector: "the frozen counter prints C1S=unmet on that mutant".
+
+  If mutant = remove check call only: run mutant against rev=HEAD with --repo LANE. running=mutant bytes, at_rev=pristine → same=False → gate → "C1S=unmet". Detector fires → mutant killed. But this doesn't exercise the removed check at all; the mutant is killed by the gate, and the mutation is effectively equivalent on this path except the missing FAIL detail line.
+
+  If mutant = remove check + gate: run against HEAD → all other checks likely pass → "C1S=met" → SURVIVED. That's a real coverage finding: nothing else verifies the running counter matches the rev.
+
+  The tasking says "Mutant class: self_at_rev absent". I think the intended mutation is that the `self_at_rev` behavior is absent — i.e., the counter no longer checks self_at_rev — and the question is whether the counter still prints C1S=unmet. If only the check line is removed but the gate remains, unmet is trivially printed. For a genuine probe, the mutation should remove the behavior-bearing point = the gate + check (the whole `self_at_rev` semantics). Hmm.
+
+  Let me look at the wave spec to see how mutants are classified — `.ufo/waves/round-43/w1-spec.json` might define mutant classes. Let me read it. Also read AGENTS.md as instructed.
+
+  Also check w1 directory contents and w1-settle.tsv.
+
+  Let me do that in parallel: read AGENTS.md, w1-spec.json, ls w1, cat w1-settle.tsv.
+
+  Actually w1-spec.json is 22KB; readable. Let me read it.
+
+  Then decide. Let me also prepare the detector: a bounded run of the mutant with a rev argument. What rev to use? HEAD of the lane repo (read-only git operations are fine: `git show`, `git clone --shared` into /tmp — clone writes to /tmp, doesn't mutate lane git; `--shared` clone creates alternates pointing at lane; that's read-only on the lane). The counter itself clones LANE into /tmp sandbox. That's allowed: "Run code only in /tmp sandboxes" — the counter does that. Running the counter on the lane repo is the intended use.
+
+  Wait — but caution: the counter's `finish` path runs the frozen r42 counter (`frozen_still_crashes`) which runs `python3 frozen-count-c1.py rev --repo LANE`. That crashes with TypeError per the check. Fine, bounded.
+
+  Also note `--repo LANE` — LANE default is the lane path anyway.
+
+  One concern: running the mutant executes code from /tmp (mutant) which clones the lane and runs repo tools in the clone. That's within /tmp sandboxes. Good. Timeouts: the counter's internal run timeout is 900s default for v5 selftest etc. The frozen counter crash check has 1800s timeout but it crashes immediately (TypeError on cwd kwarg). v5_selftest_17 — conform.py selftest, unknown duration but presumably quick (it's a selftest, designed to run in waves). noharm_cwd — mori-sources-appendonly.py selftest with 22 passes. These are repo selftests meant to be fast. Total should be < a few minutes. I'll set my wrapper timeout to 300s... maybe more. Let me use 600s to be safe? Foreground max 300s. Hmm, Bash foreground allows up to 300s. The counter could exceed if v5 selftest is slow. Let me first run the *pristine* copy in /tmp against HEAD to get a baseline (does it print C1S=met? and timing). Then the mutant.
+
+  Actually the tasking says: "Run the same bounded behavioral detector on pristine, mutated and restored bytes." So detector = `python3 <copy> <rev> --repo LANE` (plus capture output). Run on pristine (baseline), mutant, and restored (hash-identical restore, rerun to show identical behavior). Baseline failure is inconclusive — so if pristine prints C1S=unmet for some environmental reason, the mutant result is inconclusive.
+
+  Which rev? Use HEAD (the lane's current commit). The counter at HEAD should contain itself byte-identical (the file is committed presumably — ls showed the file at 21:37, and repo state at 22:35). Let me get HEAD hash. If the file isn't committed at HEAD, pristine would print C1S=unmet (absent) — that would make baseline "unmet" and the mutant "unmet" too → inconclusive for killing. Let me check: does HEAD contain `.ufo/waves/round-43/count-c1s.py` byte-identical to the working copy? `git -C LANE status --porcelain -- .ufo/waves/round-43/count-c1s.py` (read-only) and `git -C LANE show HEAD:.ufo/waves/round-43/count-c1s.py | sha256sum`.
+
+  If HEAD's copy differs from working copy (e.g., file modified after last commit), then even pristine prints unmet → baseline failure → inconclusive per protocol. Then I'd need another rev... but I can't create commits (no lane git mutation). If baseline is unmet, the tasking expectation "prints C1S=unmet on that mutant" would be trivially satisfied but inconclusive. Better: find whether HEAD matches.
+
+  Now, the mutation decision. Let me check w1-spec.json for the mutant class definition first. Let me batch:
+
+  1. Read AGENTS.md (lane).
+  2. Read w1-spec.json.
+  3. Bash: ls w1; cat w1-settle.tsv; git -C lane rev-parse HEAD; git show HEAD:.ufo/waves/round-43/count-c1s.py | sha256sum; git status --porcelain for that path.
+
+  All read-only. Go.
+
+• Lane AGENTS.md and wave spec first, plus HEAD state of the counter (read-only git queries):total 24
+drwxr-xr-x 1 vgpnk vgpnk  102 Oct 24 22:42 .
+drwxr-xr-x 1 vgpnk vgpnk  162 Oct 24 22:35 ..
+-rw-r--r-- 1 vgpnk vgpnk 3597 Oct 24 22:42 Exec2.md
+-rw-r--r-- 1 vgpnk vgpnk 2820 Oct 24 22:37 Exec4.md
+-rw-r--r-- 1 vgpnk vgpnk 1864 Oct 24 22:37 Exec5.md
+-rw-r--r-- 1 vgpnk vgpnk 2342 Oct 24 22:42 Exec6.md
+-rw------- 1 vgpnk vgpnk 7472 Oct 24 22:34 swarm-registry.json
+Exec4	executor	0
+Exec2	executor	0
+Exec5	executor	0
+--- HEAD:
+e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2
+--- counter at HEAD sha:
+98b26675b839f53055b2a79559499bb64cc1255e797feb61116998e478c9b6a4  -
+--- worktree status of counter:
+?? .ufo/waves/round-43/count-c1s.py
+(empty=clean)
+
+
+• Critical finding: `.ufo/waves/round-43/count-c1s.py` is **untracked** (`??`) and HEAD does not contain it. Wait — `git show HEAD:.ufo/waves/round-43/count-c1s.py` printed a sha256: 98b26675... Hmm, but the file is untracked. If `git show` failed, stdout would be empty and sha256 of empty input = e3b0c442... but we got 98b26675... So `git show` succeeded? But status says `??` untracked...
+
+  Wait, that's contradictory. `git show HEAD:.ufo/waves/round-43/count-c1s.py` succeeded with content sha 98b26675, but the blob is 6022 bytes worktree... The pristine copy sha256 is 93482248. So HEAD's version (98b26675) **differs** from the working copy (93482248). And status `??` means untracked... but if untracked, `git show HEAD:path` should fail. Unless... the `??` is for the path shown relative — wait, `git status --porcelain -- .ufo/waves/round-43/count-c1s.py` shows `?? .ufo/waves/round-43/count-c1s.py`. Hmm, but maybe the repo has multiple... Actually wait — maybe jj is in play (jj repos show git untracked differently). The lane is a jj colocated repo possibly. Or maybe there's a `.gitignore` making it show as `??`... no, ignored files don't show as `??`.
+
+  Hold on, maybe `git -C "$LANE" show "HEAD:..."` — I ran it with `2>&1 | sha256sum`, so if it errored, stderr text would be hashed. Let me verify: the error message "fatal: path ... does not exist in 'HEAD'" — that's ~60 chars, its sha wouldn't be 98b26675 by coincidence. Let me recheck carefully.
+
+  Actually wait — maybe the file IS at HEAD (committed), and the worktree file was later modified (hence 93482248 vs 98b26675), and the `??` is confusing... `??` can't appear for a tracked file. Unless the status path filter matched something else. Hmm, `git status --porcelain -- .ufo/waves/round-43/count-c1s.py` printed `?? .ufo/waves/round-43/count-c1s.py`.
+
+  Hmm, could there be a case-sensitivity or a different repo root? Let me just directly check `git ls-files` and `git log` for the path, and run `git show HEAD:.ufo/waves/round-43/count-c1s.py | head` to see actual content, and `git cat-file` on HEAD tree.
+
+  Actually — another possibility: HEAD here resolved in a **worktree/submodule**... `git -C LANE` — LANE is the lane repo. Let me check `git -C LANE ls-tree HEAD .ufo/waves/round-43/` and `git log --oneline -- path`.
+
+  Also possible: the repo is jj-colocated; jj auto-commits the working copy on every jj command, so the working copy content would be committed to a jj working-commit revision, but git HEAD stays behind. In colocated repos, `git status` would show modifications as staged/modified, not `??`... The `??` strongly suggests untracked. But then `git show HEAD:path` must fail. The sha we got (98b26675) must then be sha256 of the stderr text. Let me verify: `echo 'fatal: ...' | sha256sum`. Let me just re-run without 2>&1 and check exit code.
+
+  Wait, actually more carefully: my command was `git -C "$LANE" show "HEAD:.ufo/waves/round-43/count-c1s.py" 2>&1 | sha256sum`. If git failed, stdout empty + stderr line → sha of the error text. Let me compute both hypotheses.
+
+  Error text: `fatal: path '.ufo/waves/round-43/count-c1s.py' does not exist in 'HEAD'` — that's 70 chars + newline. I can compute quickly. Actually simpler: rerun and print exit code and first bytes.
+
+  This matters enormously: if HEAD lacks the file, then even the pristine counter run at rev=HEAD prints `check self_at_rev FAIL (absent)` and `C1S=unmet` — the baseline is "unmet", so the detector on the mutant printing unmet would be inconclusive, not a kill. Per protocol: "A baseline failure is inconclusive, not a killed mutant."
+
+  But wait — Exec2.md exists in w1 (written at 22:42, exit 0). Exec2's command was `python3 .ufo/waves/round-43/count-c1s.py e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2` — run from the lane repo. Exit code recorded as 0 in w1-settle.tsv. If the counter exited 0, it printed C1S=met, meaning self_at_rev matched at rev e3a2b58 → the file at e3a2b58 equals the running file → the file IS committed at e3a2b58 with bytes == worktree bytes (sha 93482248).
+
+  Hmm! So then why did my `git show HEAD:...` give 98b26675 and status give `??`?
+
+  OH WAIT. I see — maybe the lane repo has multiple worktrees or the git dir... `git -C "$LANE"` — I ran `cd /tmp` first, then used `-C`. That should be fine.
+
+  Hmm, another idea: there might be **two different repos**: `/home/vgpnk/Projects/shokunin/mori-shokunin` (lane) — and my `git -C` pointed there. HEAD = e3a2b58f... matches the Exec2 rev. So `git show e3a2b58:.ufo/waves/round-43/count-c1s.py` should be the worktree bytes if Exec2 passed with exit 0.
+
+  Unless Exec2's exit 0 in settle.tsv is just "seat completed" not "command exit 0". The tsv rows: `Exec2 executor 0` — ambiguous. Let me read Exec2.md to see actual output — it contains stdout/stderr/exit code. That's the ground truth from a sibling seat. Reading a sibling's report is read-only, allowed ("Write only your own report file" — writing is restricted, reading is fine).
+
+  Let me recheck the git facts precisely:
+  - `git -C LANE ls-tree -r HEAD -- .ufo/waves/round-43/ | head`
+  - `git -C LANE show 'HEAD:.ufo/waves/round-43/count-c1s.py' > /tmp/probe/ath head; echo rc=$?; sha256sum`
+  - `git -C LANE log --oneline -3 -- .ufo/waves/round-43/count-c1s.py`
+  - `git -C LANE status --porcelain | head -20` (full status)
+  - read Exec2.md.
+
+  Maybe the untracked status is because the file was written *after* the last commit and jj/git index... no, if committed at HEAD it'd be tracked.
+
+  Alternative: maybe HEAD moved. At 22:42 Exec2 ran; maybe at that time HEAD was a commit containing the file, and later (22:5x?) something reset HEAD? HEAD is e3a2b58f72... which is the rev Exec2 used. If e3a2b58 lacked the file, Exec2 would print unmet exit 1. Settle says 0. Hmm, but Exec2's report will clarify.
+
+  Wait, actually — maybe the `??` is because the lane uses **jj** and the git repo is a colocation where `.ufo/waves/round-43/count-c1s.py` is *ignored* by .gitignore but committed? No — ignored + committed → status shows nothing (clean), not `??`. Unless... skip-worktree flags? Rare.
+
+  Let me also consider: maybe my `git show` output sha 98b26675 is genuinely the file at HEAD, and it *differs* from worktree (93482248) because the worktree copy was edited after the commit (the frozen rule says don't edit — but the wave author may have iterated). Then status would show ` M`, not `??`. Contradiction again.
+
+  Unless the file at HEAD exists under a *different* path case or the show command followed a symlink... Enough speculation — run the diagnostics.
+
+  Also read Exec2.md for the sibling's actual recorded output. And check `git -C LANE rev-parse --show-toplevel`, `ls-files -s` for the path, `check-ignore`, and `jj` presence (`ls -d .jj` / `jj root` maybe not installed; just check dir existence read-only).
+
+  Batch (all read-only):
+  1. Bash: git diagnostics bundle.
+  2. Read Exec2.md.
+
+• Wave spec confirms my seat: MutC1S1, mutant class `self_at_rev` absent, sibling MutC1S2 handles "bytes differ" — so my class is the check/gate removal variant, distinct from a byte-mismatch. But the git state is confusing (`??` untracked yet `git show HEAD:` returned bytes). Reading the sibling's Exec2 evidence and pinning down git truth:== toplevel ==
+/home/vgpnk/Projects/shokunin/mori-shokunin
+== ls-tree round-43 at HEAD ==
+== ls-files -s ==
+rc=0
+== show to file ==
+fatal: path '.ufo/waves/round-43/count-c1s.py' exists on disk, but not in 'HEAD'
+rc=128
+0 /tmp/mut_c1s_probe/at_head.py
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  /tmp/mut_c1s_probe/at_head.py
+== log of path ==
+== full status porcelain (head) ==
+ M SCORECARD.md
+ M corpus/QUALITY.md
+ M corpus/README.md
+ M corpus/SOURCES.md
+?? .ufo/waves/round-43/
+?? corpus/knowledge/c1s-cwd-r43.md
+?? corpus/knowledge/journal-disk-usage-total-r51.md
+?? corpus/knowledge/s235-sha-correction-r43.md
+?? corpus/lessons/round-43.md
+== jj colocation ==
+/home/vgpnk/Projects/shokunin/mori-shokunin/.jj
+1:.ufo/interactive-sessions/
+2:.ufo/worktrees/
+
+
+• Now the picture is clear:
+
+  - The counter `.ufo/waves/round-43/count-c1s.py` is **untracked** — not in HEAD (e3a2b58). So `at_rev = git_bytes(rev, SELF_REL)` = None for rev=HEAD → `check self_at_rev FAIL (absent)` → `C1S=unmet`, exit 1, short-circuit before any sandbox work.
+
+  - Exec2 already recorded this for pristine bytes: pristine counter at rev e3a2b58 → `self_at_rev FAIL (absent)`, `C1S=unmet`.
+
+  So for my mutant: if I run the mutant counter against rev e3a2b58 (entering tip), what happens depends on the mutation:
+
+  **Mutant interpretation A — remove only the `check("self_at_rev", ...)` call (keep gate):**
+  ```
+  at_rev = None → same = False → gate fires → finish(False) → "C1S=unmet"
+  ```
+  Output: just `C1S=unmet` (no FAIL line). Exit 1. But this mutant is basically indistinguishable from pristine behavior on this rev except a missing check line — and on this rev it prints unmet. Tasking satisfied? "Show the frozen counter prints C1S=unmet on that mutant" — yes, trivially, but the mutation didn't change the verdict path (gate still there). Weak mutant — trivially "killed" but kills prove little since pristine also prints unmet here. Baseline equality problem.
+
+  **Mutant interpretation B — remove the whole self_at_rev behavior (fetch + check + gate):**
+  The counter proceeds to `frozen_sha` etc. against rev e3a2b58:
+  - frozen = git_bytes(e3a2b58, .ufo/waves/round-42/count-c1.py) → exists at HEAD (round-42 is committed; FROZEN_SHA matches per Exec2 item 4) → frozen_sha PASS.
+  - frozen_sig PASS (run(argv, timeout)).
+  - v5_present: .ufo/waves/round-42/conform.py at HEAD — was round-42 committed? Exec2 says round-43 is not committed but round-42 frozen counter IS at HEAD. conform.py likely also committed (round-42 wave files). Probably present.
+  - Then sandbox clone, checkout rev, run noharm selftest (22/0), v5 selftest (17/0), mutant kills, frozen_still_crashes.
+
+  If all pass → mutant prints `C1S=met` → **SURVIVED**: dropping the entire self-consistency gate lets a tampered counter copy declare met against a rev that doesn't even contain the counter. That's a genuine coverage finding: the only check tying the running bytes to the rev is self_at_rev; without it, nothing stops a modified copy.
+
+  Hmm wait, but actually — does the tasking intend B or the "bytes differ" class? MutC1S2 is "self_at_rev bytes differ" — for that class, the attacker makes the rev's copy differ from running (e.g., mutate the running copy so bytes differ, keeping the check) → `check self_at_rev FAIL (bytes differ)` → unmet. For my MutC1S1 "self_at_rev absent": the attacker removes the self_at_rev check itself (the gate included, since the gate is part of the check's enforcement — without removing the gate, the check isn't really absent). Class B is the coherent reading: `self_at_rev` absent = the self_at_rev mechanism (fetch, check, and stop) is absent.
+
+  Hmm, but the "smallest behavior-bearing point" principle: the smallest point whose removal makes self_at_rev absent as behavior is the `if not same: return finish(False)` gate plus the check call. If I only remove the check call, self_at_rev's *enforcement* (gate) remains — the class would be "self_at_rev detail line absent", not "self_at_rev absent". The class name maps to the check name `self_at_rev`. Removing the check and its gate = the mutant where `self_at_rev` is absent.
+
+  But hold on — there's a subtlety: with the gate removed, does the mutant really reach `met`? Need every other check to pass at e3a2b58. Concerns:
+
+  1. `git clone -q --shared LANE clone` — works (lane repo readable). Note: `--shared` clone of a repo where files are untracked — clone copies committed objects only; checkout rev = e3a2b58 → clone worktree = e3a2b58 content. Then the counter reads `os.path.join(clone, V5_REL)` (`.ufo/waves/round-42/conform.py`) — must exist in the clone (i.e., committed at e3a2b58). The frozen counter is at HEAD; conform.py should be too (round-42 wave presumably fully committed).
+
+  2. `selftest(clone, v5_abs, rev)` → runs conform.py with `--contract clone/.ufo/waves/round-39/contract.md`, `--counter clone/.ufo/waves/round-41/fixtures/c1/count-c8.py`. Must be committed at e3a2b58. Contract round-39, counter round-41 — presumably committed.
+
+  3. noharm_cwd: runs `tools/mori-sources-appendonly.py --selftest` in the clone → needs 22/0. Exec3 was assigned that command at the working tree; at e3a2b58 the tool may differ... `M tools...`? Status shows modified SCORECARD/QUALITY/README/SOURCES but not tools/. The round-42 fix (cwd crash fix) was committed in r42, so at e3a2b58 tools/mori-sources-appendonly.py should accept cwd → 22/0.
+
+  4. v5_selftest_17 → (17, 0).
+
+  5. mutant_kill_* → need `.ufo/waves/round-42/fixtures/mutants/conform-mut-*.py` at e3a2b58 → (16,1) with the right arm.
+
+  6. frozen_still_crashes → runs frozen r42 counter at rev → TypeError cwd crash → PASS.
+
+  Whether all pass is an empirical question. But note: **Crit1** asks about "a do-nothing replay of e3a2b58 that still prints C1S=met" — implying the open question whether any run can reach met at e3a2b58. And Rev1: "entering-tip do-nothing still C1S=unmet". So the lane's designed state: at e3a2b58, pristine counter → unmet *only because self_at_rev fails* (file not committed yet). The counter will only print met once the counter itself is committed. That's the self-bootstrapping design: P-C1S becomes met only when the successor counter bytes are committed at the tip.
+
+  So with mutant B (self_at_rev fully absent), running against e3a2b58, the remaining checks may all pass → C1S=met. If so: SURVIVED — strong finding. If some other check fails (e.g., v5_selftest fails at that rev), then mutant prints unmet via another check → killed (detector output differs from... well, tasking asks only "prints C1S=unmet on that mutant").
+
+  Wait, wait. Re-read the tasking once more: "Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output."
+
+  The detector: run the mutant counter; if it prints C1S=unmet → the attack was caught (mutant killed). If it prints C1S=met → SURVIVED.
+
+  Now the baseline: pristine counter against e3a2b58 ALSO prints C1S=unmet (Exec2, and I must reproduce it myself — "Commands must be re-run" ethos; I'll run pristine in /tmp
+

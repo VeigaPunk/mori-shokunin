@@ -13,8 +13,8 @@ is always a /tmp file; the lane counter and the lane repo are untouched.
 class                          construction                 verdict    evidence
 self_at_rev_absent             rev without the counter       KILLED    check self_at_rev FAIL (absent) -> C1S=unmet exit 1
 self_at_rev_bytes_differ       rev copy carries a comment    KILLED    check self_at_rev FAIL (bytes differ) -> C1S=unmet exit 1
-frozen_sha_mismatch            coordinated (FROZEN_SHA=0..)   KILLED    check frozen_sha FAIL -> C1S=unmet exit 1
-frozen_sig_gains_cwd           coordinated (frozen run()     KILLED    check frozen_sig FAIL (run params argv, timeout) -> C1S=unmet exit 1
+frozen_sha_mismatch            coordinated (FROZEN_SHA=0..)   KILLED    rev 35bfa05eaf426900350807e97a574168b5da4e4b: check frozen_sha FAIL (000000000000) ... C1S=unmet exit 1
+frozen_sig_gains_cwd           coordinated (frozen run()     KILLED    rev 3fe2985af6b3d7eb38ed79c8a4f2557826385c2a: check frozen_sig FAIL (run params argv, timeout) -> C1S=unmet exit 1
                                gains cwd, pin updated)
 noharm_cwd_skipped             coordinated (the no-harm      SURVIVED  rc=0, 13 check lines (the healthy counter prints 15),
                                check removed)                          C1S=met

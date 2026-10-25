@@ -1,0 +1,127 @@
+kimi version 2.3.1
+• Let me parse the task:
+
+  - Lane repo: /home/vgpnk/Projects/shokunin/mori-shokunin
+  - I'm a subagent, leaf member — no subagent dispatch.
+  - Attack `.ufo/waves/round-43/count-c1s.py` (frozen counter) in a /tmp scratch copy only.
+  - Mutant class: `frozen_sig` gains `cwd` (parameter).
+  - Show the frozen counter prints `C1S=unmet` on that mutant, or report SURVIVED with command and output.
+  - Do not edit the lane counter.
+  - Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/MutC1S4.md
+  - Run code only in /tmp sandboxes.
+  - Record before/after hashes, restoration evidence, actual outputs.
+
+  First, read the counter file. Let me look at the round-43 counter: .ufo/waves/round-43/count-c1s.py.
+
+  Also read /home/vgpnk/.omp/agent/RULES.md if installing tools — probably not needed; python3 should suffice.
+
+  Plan:
+  1. Read the counter source.
+  2. Copy to /tmp scratch.
+  3. Hash pristine bytes.
+  4. Create mutant: add `cwd` to frozen_sig (need to see how frozen_sig is used — probably a function that computes a frozen signature of inputs; adding cwd means signature changes based on cwd... wait, mutant is "frozen_sig gains cwd" — meaning the frozen signature function now includes cwd as an input. Then when the counter runs from a different cwd than when the sig was recorded, it prints unmet).
+
+  Actually the direction: "Show the frozen counter prints C1S=unmet on that mutant" — i.e., the detector: run the mutated counter in a scratch copy from a different directory (or same?), and it should print C1S=unmet because the frozen signature no longer matches (since sig now includes cwd which differs from recorded state). Hmm, but if there's no recorded state, the counter may bootstrap. Let me read the file first.
+
+  Let me start by reading the counter and listing round-43 directory.
+
+  Batch: Read the counter file, list .ufo/waves/round-43/, read RULES.md maybe. Let's do parallel calls.total 48
+drwxr-xr-x 1 vgpnk vgpnk   162 Oct 24 22:35 .
+drwxr-xr-x 1 vgpnk vgpnk   496 Oct 24 21:31 ..
+drwxr-xr-x 1 vgpnk vgpnk   256 Oct 24 22:37 assimilation
+-rw-r--r-- 1 vgpnk vgpnk  4298 Oct 24 21:37 contract.md
+-rw-r--r-- 1 vgpnk vgpnk  6022 Oct 24 21:37 count-c1s.py
+-rw-r--r-- 1 vgpnk vgpnk  3094 Oct 24 21:37 count-c2.py
+drwxr-xr-x 1 vgpnk vgpnk   386 Oct 24 21:44 evidence
+drwxr-xr-x 1 vgpnk vgpnk    70 Oct 24 22:37 w1
+-rw-r--r-- 1 vgpnk vgpnk    17 Oct 24 22:37 w1-settle.tsv
+-rw-r--r-- 1 vgpnk vgpnk 22422 Oct 24 21:44 w1-spec.json
+---
+Exec4.md
+Exec5.md
+swarm-registry.json
+Let me read the AGENTS.md and the contract.md to understand P-C1S, plus the mutant spec context. Also check the w1-spec.json for the mutation class details maybe.
+
+  The counter: `frozen_sig` check parses the frozen r42 counter at rev, finds `run` FunctionDef, and requires `[a.arg for a in node.args.args] == ["argv", "timeout"]`. The mutant class: "frozen_sig gains cwd" — i.e., mutate the frozen_sig check in count-c1s.py so it accepts (or requires) `["argv", "timeout", "cwd"]`.
+
+  Wait — mutate the smallest behavior-bearing point in the assigned scratch copy: the mutant is count-c1s.py itself with frozen_sig line changed to `["argv", "timeout", "cwd"]`.
+
+  The detector: "Show the frozen counter prints C1S=unmet on that mutant" — i.e., run the mutated count-c1s.py in /tmp against the lane rev, and the frozen_sig check should FAIL (because the real frozen counter's run signature is ["argv", "timeout"], not ["argv","timeout","cwd"]), causing C1S=unmet. This demonstrates that the mutant is killed by the existing check... wait no. Let's think about the mutation-testing semantics here.
+
+  Actually this is a meta-mutation exercise: we mutate the checker (count-c1s.py) and check whether the checker's own contract holds. The mutant class says: frozen_sig gains cwd. Expected: the counter should then print C1S=unmet on the lane's real rev, because the actual frozen counter has run(argv, timeout) — the mutated check expects run(argv, timeout, cwd), sig_ok becomes False, and the flow returns finish(False) early after checks self_at_rev, frozen_sha, frozen_sig, v5_present.
+
+  So the detector: run mutated counter with `python3 /tmp/.../count-c1s.py <rev> --repo <lane>` and expect output to include "check frozen_sig FAIL (...)" and "C1S=unmet", exit code 1.
+
+  Note the self_at_rev check: running file must be byte-identical to rev's copy of SELF_REL. But the mutant is byte-different from the committed count-c1s.py, so self_at_rev FAILs and it stops immediately with C1S=unmet before even reaching frozen_sig. Hmm. That means running the mutant directly gives C1S=unmet but via self_at_rev, not frozen_sig. That's still "the frozen counter prints C1S=unmet on that mutant" — well, count-c1s prints C1S=unmet. The task says "Show the frozen counter prints C1S=unmet on that mutant". The counter being attacked is count-c1s.py. So output C1S=unmet is the expected kill.
+
+  But to be more informative, I can also do a variant where I check frozen_sig specifically: e.g., run the mutant from a rev where... Actually simpler: to isolate the frozen_sig behavior, I could also run a second probe where the running file equals rev's bytes — impossible for mutant since rev's bytes are committed. Alternative: use a scratch git repo? No — git operations in /tmp on a clone are fine (clone is allowed: run code only in /tmp sandboxes; I can clone the lane to /tmp — the counter itself does `git clone --shared`). I could clone lane into /tmp, commit the mutant there? That would create a new rev in the /tmp clone — allowed, it's a /tmp sandbox, not the lane repo. But --shared clone shares objects; committing a new commit in the /tmp clone writes new objects only to the /tmp clone's object store? With --shared (alternates), new objects go to the clone's own .git/objects. That doesn't mutate the lane. But git config etc. — safe.
+
+  However, the counter's git_bytes uses `git -C LANE show rev:path` where LANE is passed via --repo. So I could point --repo at my /tmp clone and rev at a new commit in the /tmp clone that contains: mutant count-c1s.py (byte-identical to running mutant file → self_at_rev PASS), the real frozen r42 counter (frozen_sha PASS), and conform.py etc. Then the frozen_sig check would be reached, and would FAIL due to the mutant's changed expectation → C1S=unmet with frozen_sig FAIL specifically. That isolates the behavior point.
+
+  Hmm, but wait: does committing in a /tmp --shared clone mutate the lane? No — commits create new objects in the clone. `--shared` uses alternates to read from lane's objects but writes its own. Safe. Also need branches? rev can be a sha or any ref; the counter does `git show <rev>:<path>` and `git checkout --detach <rev>` in the clone. A sha works.
+
+  But careful: the sandbox clone inside the counter run: it clones LANE (which would be my /tmp repo) — fine.
+
+  Also the checks downstream: mutant count-c1s with frozen_sig expecting ["argv","timeout","cwd"] — sig_ok False → early return finish(False) right after v5_present check. Output would be:
+
+  ```
+  check self_at_rev            PASS (match)
+  check frozen_sha             PASS (105ce075f331)
+  check frozen_sig             FAIL (run params argv, timeout)
+  check v5_present             PASS (...)
+  C1S=unmet
+  ```
+
+  Exit 1.
+
+  That's the kill demonstration: the mutant is detected (C1S=unmet). Actually from the mutation-testing viewpoint of this exercise: we're testing the wave's detectors? The tasking: "Attack count-c1s.py in a /tmp copy only. Mutant class: frozen_sig gains cwd. Show the frozen counter prints C1S=unmet on that mutant, or report SURVIVED with the command and output."
+
+  So the goal is to verify that the mutated counter itself yields C1S=unmet when run (i.e., the counter is "self-protecting" — its self_at_rev/frozen_sig checks catch the mutation). If somehow it printed C1S=met, that'd be SURVIVED (a coverage finding).
+
+  Direct run: self_at_rev FAIL (bytes differ) → early finish(False) → C1S=unmet. That alone shows unmet, but trivially. The stronger probe isolates frozen_sig via the /tmp-commit route. Both are cheap; do both in parallel.
+
+  Plan:
+  1. mkdir /tmp/mutc1s4-<pid>, copy count-c1s.py pristine, sha256 it.
+  2. Probe A (direct): run mutant (frozen_sig expects ["argv","timeout","cwd"]) with rev = current lane HEAD (need a rev; find one containing this file — probably HEAD). `python3 mutant.py <rev> --repo <lane>`. Expect self_at_rev FAIL bytes differ, C1S=unmet, rc=1.
+  3. Probe B (isolated frozen_sig): create /tmp scratch git repo: `git clone --shared lane /tmp/.../repo2`? Actually a plain clone (local hardlinks) also only reads lane. Then in the clone: `git checkout --detach HEAD` (it will be at lane's HEAD), write mutated count-c1s.py at SELF_REL, plus ensure frozen r42 counter, conform.py, c8 fixture, contract, tools/mori-sources-appendonly.py all present at that tree (they are, since based on lane HEAD... need HEAD to contain count-c1s.py; check). Commit → get sha R2. Run `python3 /tmp/mutant.py R2 --repo /tmp/.../repo2`. Expect self_at_rev PASS, frozen_sha PASS, frozen_sig FAIL, v5_present PASS, C1S=unmet, rc=1.
+
+  Note: does the clone need the working tree? git show works from objects; checkout --detach HEAD will materialize the tree. Committing requires user.name/email config — set local config in /tmp clone (`git -C clone -c user.email=... commit`) using -c flags, avoiding global config mutation.
+
+  Careful: `git clone` from lane — allowed to read. We must not write anything in lane. Clone writes only to /tmp. Good.
+
+  4. Restore: "Restore exact bytes" — since we work on a /tmp copy, restoration = verify lane file unchanged (hash before/after). Record hashes: pristine sha of lane file before and after, mutant sha.
+
+  5. Write report MutC1S4.md.
+
+  Also check AGENTS.md as instructed. And contract.md P-C1S sentence for context. Let me batch: read AGENTS.md, contract.md, get lane HEAD sha and verify file at HEAD matches, hash files.
+
+  Let me now run the batch.
+
+• Reading AGENTS.md + contract, and hashing the pristine target in parallel:e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2
+93482248b46def2a2cec7238732af1551ef315517e76833c3843875313b65dc5  .ufo/waves/round-43/count-c1s.py
+105ce075f33120837ba5a49a1ad4f23a3dd7dc17fea506ab917140bc7f2053f6  .ufo/waves/round-42/count-c1.py
+?? .ufo/waves/round-43/count-c1s.py
+status-done
+
+
+• Interesting: `.ufo/waves/round-43/count-c1s.py` is untracked (??). So it's NOT in HEAD. The counter's self_at_rev check requires `git show <rev>:count-c1s.py` bytes == running bytes. If the file isn't committed at any rev, then at HEAD, at_rev is None → self_at_rev FAIL → C1S=unmet trivially for any run against HEAD. Hmm. Let me check the contract sentence and whether the file exists at some rev (maybe staged/committed on another rev). Check `git log --all -- .ufo/waves/round-43/count-c1s.py` and `git show HEAD:.ufo/waves/round-43/count-c1s.py`.
+
+  Note: I must not mutate the lane Git index — so no `git add`. The file being untracked is the lane's business.
+
+  Read contract.md P-C1S sentence. Also check w1-spec.json for the mutant class definition (MutC1S4 likely defined there). Let me grep w1-spec.json for C1S4.
+
+  Probe plan adjustment:
+  - Probe A (direct, rev=HEAD): expect self_at_rev FAIL (absent) → C1S=unmet, rc=1. This is "baseline failure is inconclusive" territory? No — for the mutant, C1S=unmet is the expected detector output. But it's unmet for a trivial reason (self_at_rev), not due to frozen_sig. The tasking says "Show the frozen counter prints C1S=unmet on that mutant" — that's the detector: mutated counter run → C1S=unmet. It holds.
+  - Probe B (isolate frozen_sig): build /tmp clone, commit tree with mutant at SELF_REL → self_at_rev PASS, frozen_sha PASS, frozen_sig FAIL → C1S=unmet. This isolates the smallest behavior-bearing point.
+
+  But wait — if count-c1s.py is not committed anywhere in the lane, can probe B still work? Probe B uses my own /tmp clone where I commit the mutant myself. The frozen counter at HEAD is committed (frozen_sha matches HEAD's copy, 105ce0... verified). conform.py, c8 fixture, contract at HEAD — need to check presence for v5_present check... Actually with sig_ok=False, flow: self_at_rev, frozen_sha, frozen_sig, v5_present checks, then `if frozen is None or v5 is None or not sig_ok: return finish(False)`. So probe B only needs v5 present; sandbox clone checks never run. But for a complete run, downstream checks would run if sig_ok were True — not our case.
+
+  Also should I run the pristine counter as baseline in the same /tmp setup? "Run the same bounded behavioral detector on pristine, mutated and restored bytes." So:
+  - Pristine: run pristine count-c1s.py at rev where? self_at_rev fails (not committed) → C1S=unmet — that's a baseline failure = inconclusive. Hmm, that's the "pristine baseline fails" case. To make the pristine baseline meaningful, use the same /tmp-commit trick with pristine bytes: commit pristine count-c1s.py in /tmp clone → run → expect frozen_sig PASS, and downstream checks run (sandbox clone of /tmp repo, mori-sources selftest 22/0, v5 selftest 17/0, mutant kills, frozen crashes, C1S=met). That could take a while (v5 selftest 17 checks, three mutant kills with 16/1, frozen counter run with timeout 1800). Bounded? The counter itself has timeouts. It might take a few minutes but it's the real detector. Let me try pristine-baseline via /tmp commit; if too slow, timeout 300s and report inconclusive-but-expected.
+
+  Actually the pristine run's value: shows the ONLY delta between pristine and mutant outcome is the frozen_sig check line — proving the mutant's behavioral point is the frozen_sig verdict, and the detector (C1S verdict) distinguishes them. That's the before/after.
+
+  Let me first read contract.md P-C1S and check git history for the file, and w1-spec.json for C1S4.---spec---
+---c2---
+
+

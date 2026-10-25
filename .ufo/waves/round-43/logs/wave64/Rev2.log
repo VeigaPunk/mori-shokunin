@@ -1,0 +1,467 @@
+kimi version 2.3.1
+• Let me start by understanding the task. I'm a reviewer (Rev2) in a "mori round 43 — one v2 wave (build + attack)" setup. My task:
+
+  "Re-derive this claim attack and write only your report: junk print C1S=met still unmet. Commands must be re-run, not copied from the lesson. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Rev2.md"
+
+  So there's a claim about "junk print" with counters C1S — apparently a lesson claims "C1S=met still unmet" (some claim that C1S being met still leaves something unmet, or the claim is that junk print C1S=met but something is still unmet). I need to re-derive the attack: re-run commands, not copy from the lesson.
+
+  Frozen counters: .ufo/waves/round-42/count-c1.py and .ufo/waves/round-43/count-c1s.py and count-c2.py. Attack them in scratch copies.
+
+  First, let me explore the environment:
+  1. Read /home/vgpnk/.omp/agent/RULES.md (tooling rules)
+  2. Read the role routing at ~/.omp/agent/config.yml (operator table) — but I shouldn't pass or hardcode a model. I'm a subagent; probably just informational.
+  3. Look at the lane repo /home/vgpnk/Projects/shokunin/mori-shokunin, especially .ufo/waves/round-43/, round-42 counters, lessons about "junk print C1S".
+
+  Let me name axes:
+  - Correctness of the claim attack (does "C1S=met still unmet" hold under re-derived commands?)
+  - Fidelity (re-run, not copy)
+  - Safety (scratch copies, no mutation of frozen counters, no writes outside allowed)
+  - Report quality (scoped findings, severity, residual risk)
+
+  Let me start exploring in parallel.round-13
+round-14
+round-15
+round-16
+round-17
+round-18
+round-19
+round-20
+round-21
+round-22
+round-23
+round-24
+round-25
+round-26
+round-27
+round-28
+round-29
+round-30
+round-31
+round-32
+round-33
+round-34
+round-35
+round-36
+round-37
+round-38
+round-39
+round-40
+round-41
+round-42
+round-43
+assimilation
+contract.md
+count-c1s.py
+count-c2.py
+evidence
+w1
+w1-settle.tsv
+w1-spec.json
+assimilation
+candidates
+conform.py
+contract.md
+count-c1.py
+count-c2.py
+count-c3.py
+evidence
+fixtures
+__pycache__
+w1
+w1-spec.json
+0
+AGENTS.md
+base.c
+considerthese
+corpus
+LOG.md
+main.c
+MANPAGE.md
+meminfo.c
+MINT.md
+oom_kill.c
+PROVINCE.md
+README.md
+--repo
+SCORECARD.md
+sd-main.c
+SHONEN.md
+SKILL.md
+tools
+user@.service.in
+Let me read AGENTS.md, the round-43 contract, w1 spec, and the frozen counters. Also look at the round-42 lesson about "junk print C1S".I'm Rev2. My claim attack: "junk print C1S=met still unmet" — i.e., the contract control: "Do-nothing C1S junk: a scratch rev whose `count-c1s.py` only prints `C1S=met` is scored `C1S=unmet` by this counter." I need to re-derive this attack: build a scratch rev whose `.ufo/waves/round-43/count-c1s.py` only prints `C1S=met`, run the frozen counter from the lane repo against that rev, and show it prints `C1S=unmet`.
+
+  Key subtlety: the counter (count-c1s.py) reads `self_at_rev` = the running file bytes vs `git show <rev>:<SELF_REL>`. If they differ (e.g., junk file prints only C1S=met), check fails and returns finish(False) → prints `C1S=unmet`, exit 1.
+
+  Which counter do I run? The lane's frozen (round-43) counter at the lane repo: `python3 .ufo/waves/round-43/count-c1s.py <junk-rev>`. The running counter (my copy in the lane repo, unmodified) is byte-identical to nothing in the junk rev — the junk rev has a planted file that only prints C1S=met. So `self_at_rev` fails → C1S=unmet.
+
+  But wait — "the running counter" is whatever file I execute. The attack claim: a planted file that prints `C1S=met` without those bytes is `C1S=unmet`. To attack this, I should:
+
+  1. Create a /tmp scratch clone of the lane repo (git clone --shared), detach/checkout entering tip e3a2b58, commit a junk `.ufo/waves/round-43/count-c1s.py` that only prints `C1S=met`.
+  2. Run the lane counter `python3 .ufo/waves/round-43/count-c1s.py <junkrev>` and show it prints C1S=unmet.
+
+  Important: I must not mutate the lane repo's git index or git state. Creating a scratch clone in /tmp is allowed ("Attack them in scratch copies", "Run code only in /tmp sandboxes"). A `git clone --shared` doesn't mutate the source repo (it just reads). Actually `git clone` creates refs in the clone, reads the source. That's read-only for the source. The counter itself does `git clone -q --shared LANE clone` too.
+
+  But careful: I must not write to the lane repo. I'll clone to /tmp, then in the clone, checkout a branch, commit the junk file. Commits happen in the clone only. That's fine.
+
+  Also, "junk print C1S=met still unmet" — variants to attack:
+  - Variant A: junk rev where `.ufo/waves/round-43/count-c1s.py` is a junk file printing only `C1S=met`. Run lane counter against that rev → self_at_rev mismatch → unmet.
+  - Variant B: run the junk file itself directly (i.e., someone could claim "the counter prints C1S=met, exit 0" if they run the planted file). The contract says `C1S=met` iff `python3 .ufo/waves/round-43/count-c1s.py <rev>` exits 0 with last line `C1S=met` — but that's when run from the lane repo, where the file is the real counter. The attack is: the junk file prints C1S=met (if executed), but the counter's verdict on that rev is still unmet.
+
+  Also check edge: what if the junk file is byte-identical to the running counter... then it's not junk. The junk one prints only C1S=met.
+
+  Another subtlety: The counter's `self_at_rev` check uses `git_bytes(rev, SELF_REL)` which runs `git -C LANE show <rev>:<path>`. LANE default is the lane repo, but can be overridden with `--repo`. If the rev is a rev in the lane repo (I commit junk in the clone — but the rev wouldn't exist in the lane repo!). Important: the counter does `git -C LANE show <rev>:`. If I commit the junk rev in a /tmp clone, the lane repo doesn't have that rev. So I need to run the counter with `--repo /tmp/clone` — as the contract's Green C1S control does ("scored with --repo pointing at that clone").
+
+  But then `self_at_rev` compares `running` (the running counter — which is the lane counter file since I invoke the lane's count-c1s.py) vs `git show junkrev:...count-c1s.py` in the clone. The junk rev has the junk file → differ → unmet. 
+
+  Also `git_bytes` with `--repo clone` uses the clone. Good.
+
+  Now the subtlety for my re-derivation: which counter do I run, from where? I should run the lane's counter file: `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c1s.py <junkrev> --repo /tmp/clone`. But wait — the lane repo's count-c1s.py is frozen; I must not edit it. I can run it. Running it executes: self_at_rev fails at first check → prints C1S=unmet and returns before creating any sandbox or cloning. So it's fast and safe. It reads only.
+
+  Hmm, but wait: does running the lane counter against a junk rev also need the junk rev to be reachable? Yes, in the clone.
+
+  Also, I should attack robustness of the claim itself: "junk print C1S=met still unmet" — is there any junk rev that could still be scored met? E.g.:
+  - A junk rev whose count-c1s.py is byte-identical to the running counter but the rev otherwise only prints met... no, that contradicts "only prints C1S=met".
+  - A rev where the planted junk file is identical except... no.
+  - What if the junk file only prints C1S=met, but the attacker also plants matching bytes such that `running == at_rev`? That requires planting the actual counter at rev — then it's the real counter, and later checks run. Not the junk case.
+  - One subtle attack: the running counter's `self_at_rev` compares against `open(os.path.abspath(__file__), "rb").read()`. If someone copies the counter to /tmp and runs the /tmp copy with `--repo <junk-clone>`... the running file is the /tmp copy (bytes identical to lane counter). Junk rev's file differs → unmet. Still holds.
+  - What about a junk file that prints `C1S=met` AND is byte-identical? Impossible by definition.
+  - What if the junk file contains null bytes or is binary? git show returns bytes; comparison fails → unmet.
+  - What if the junk rev doesn't have the file at all? at_rev None → unmet ("absent").
+
+  Potential weakness to probe: the `--repo` argument handling. `LANE = args[args.index("--repo") + 1]` — if `--repo` is last, IndexError → traceback, exit code != 0 or !=1... but that's not my claim.
+
+  Also verify the claim's other half: the junk rev, if you actually execute the planted junk file directly, prints `C1S=met` exit 0 — demonstrating the junk "print" exists, and yet the counter scores unmet. That's the attack re-derivation: show both.
+
+  Also should I check the counter against the junk rev prints C1S=unmet as the LAST line and exit code 1? Yes: contract says `C1S=met` iff exit 0 and last line C1S=met. For unmet: exit 1.
+
+  Another angle: does the counter's early return happen before any mutation? `self_at_rev` fails → `return finish(False)` → prints C1S=unmet, exit 1. No writes anywhere. Good — zero side effects.
+
+  Now, is there a way a junk-print rev still gets met? Consider: attacker commits junk file in a clone, and then runs the counter as `python3 <clone>/.ufo/waves/round-43/count-c1s.py <rev> --repo <clone>`. The running counter is the junk file (from clone). self_at_rev: at_rev bytes == running bytes (both junk) → PASS! Then frozen_sha check: `git show <rev>:.ufo/waves/round-42/count-c1.py` — the junk rev (clone of entering tip + junk commit) has the real frozen counter → sha matches → PASS. frozen_sig: PASS. v5_present: PASS. Then it creates sandbox, clones `--shared` from LANE (the clone), checks out rev, runs noharm_cwd: runs the clone's `tools/mori-sources-appendonly.py --selftest` → pass=22 fail=0 → PASS. Then v5 selftest: pass=17 fail=0 → PASS. Then mutants... all committed at rev (since clone is full checkout of entering tip) → PASS each. Then frozen_still_crashes: runs frozen counter at rev with `--repo LANE` where LANE==clone → TypeError → PASS. So all checks PASS → prints C1S=met!
+
+  Wait — this is the "Green C1S" control essentially: a scratch clone of the entering tip with the counter committed byte-identical scores met. But here the "running counter" is the junk file... no wait, in this scenario I ran the junk file as the counter, and the junk file at rev == running junk file. But the junk file only prints C1S=met — it wouldn't run all those checks! I conflated. Let me redo:
+
+  Scenario X: the junk file (only prints C1S=met) is both the running counter AND at rev. Then self_at_rev passes (both bytes are the junk file). But then the script exits — the junk file only prints C1S=met; it doesn't implement the checks. So executing the junk file prints C1S=met exit 0. So a junk rev scored by running the junk file at rev prints C1S=met!
+
+  Is that a counter-controlled scenario? The contract says: `C1S=met` iff `python3 .ufo/waves/round-43/count-c1s.py <rev>` exits 0 and last line C1S=met — where the invocation path is the lane's canonical file. The threat model: the seat/scorer runs the lane's frozen counter (the one committed in the lane repo at round-43), not a rev-provided file. The `self_at_rev` check exists precisely to defeat rev-planted junk when the scorer runs the lane counter. If the scorer instead runs the junk file from the junk rev, that's outside the contract's invocation (contract: `python3 .ufo/waves/round-43/count-c1s.py <rev>` from the lane). So the claim "junk print C1S=met still unmet" holds under the canonical invocation.
+
+  But my job as Rev2 is to re-derive the attack: build junk rev, run lane counter, confirm unmet. Also probe variants:
+  1. Junk file at rev, lane counter run with --repo clone → C1S=unmet exit 1, last line C1S=unmet.
+  2. Executing the junk file directly at the junk rev prints C1S=met exit 0 (showing the junk print is real) — and demonstrate that this invocation is not the contract's canonical verdict path... Actually careful: the contract defines met iff `python3 .ufo/waves/round-43/count-c1s.py <rev>` — relative path, implying run from lane repo root with the lane's file. The junk-clone invocation `python3 <clone>/.ufo/...` is a different path. The contract's green control explicitly blesses `--repo` pointing at the clone while running the lane counter. So canonical scorer = lane counter file + optional --repo.
+
+  3. Variant: junk rev ALSO at the real rev in lane repo? Can't — can't write lane repo. Junk rev exists only in clone.
+
+  4. Another variant worth testing: what if the junk rev's file differs from running only in trailing whitespace? Still differs → unmet. Good.
+
+  5. Attack: what if junk rev file is byte-identical to running counter but junk (impossible).
+
+  6. Edge: `git show` for a path with `--repo` pointing to clone — the clone after my commit: the junk commit is on a branch; `git -C clone show <sha>:path` works regardless of branch.
+
+  7. Edge: does `self_at_rev` detail print "bytes differ"? Yes.
+
+  8. Deeper attack on the claim: could a junk-print rev get met via `--repo` shenanigans? E.g., run lane counter with `--repo` clone where clone at rev has junk file... that's variant 1 → unmet. What if the attacker runs the lane counter but sets `__file__`... no, running the lane counter, running file is lane counter bytes.
+
+  9. What if the junk file at rev is a symlink or mode change? `git show rev:path` gives blob content. If the tree entry is a symlink, `git show rev:path` shows the link target text, not target content. If it's a gitlink (submodule), git show fails? Then at_rev None → unmet.
+
+  10. The subtle one: if the planted path in the junk rev has different case or the check uses exact path — trivial.
+
+  11. What about a rev where count-c1s.py at rev is byte-identical to the RUNNING counter, but the rev ALSO includes a different count-c1s.py somewhere in PATH... no.
+
+  Also the Crit1 angle is a different seat (do-nothing replay printing met). My claim is specifically the junk-print control. Stay scoped: junk rev → unmet.
+
+  One more thing to verify per my role instructions: "Verify one canonical runtime" — run the counter with python3 (the canonical interpreter). And commands must be re-run, not copied from the lesson. Let me check if there's a lesson (round-42 evidence or lessons) mentioning this — I can look but must re-run.
+
+  Also: verify the frozen r42 counter's sha? That's Rev7's claim. Not mine. Stay scoped to the junk control, but the self_at_rev mechanism underpins it.
+
+  Let me also confirm the counter in the lane repo is byte-identical to what I read (i.e., I'm running the frozen file; check its sha and that it's not modified in working tree — git status? That would touch lane git read-only — `git status` is read-only, fine. Actually `git status` doesn't mutate. But careful: "Never mutate lane Git index" — `git status` can refresh the index (stat cache). Hmm, git status may write to .git/index (refresh). To be safe, avoid `git status` in lane. I can compare sha256 of the lane counter to... the contract doesn't freeze count-c1s.py's sha in round-43 contract... it says frozen r42 counter sha. For my purposes, running the lane file as-is is the canonical runtime. I can hash it and record.
+
+  Plan of commands (all in /tmp sandbox):
+
+  1. Hash the lane counter: sha256sum .ufo/waves/round-43/count-c1s.py (read-only).
+  2. Create sandbox: mkdir -p /tmp/r43-rev2; git clone --shared --no-hardlinks? `--shared` avoids copying objects; it sets up alternates. Cloning is read-only on source. Then in clone: `git checkout -q --detach e3a2b58f...`. Wait — the clone includes all branches from lane. The entering tip e3a2b58 is an ancestor of master. Detach at it.
+
+  Hmm — but what is the current state? The wave is "build + attack": there may be a round-43 tip with the successor counter committed already (Scout9 says entering tip is ancestor of master). The junk rev should be based on the entering tip per contract control ("a scratch rev whose count-c1s.py only prints C1S=met"). The do-nothing result on entering tip is C1S=unmet (no counter at rev). For the junk control, base on entering tip: junk rev = entering tip + junk count-c1s.py commit.
+
+  3. In clone: write junk file that only prints C1S=met exit 0. E.g.:
+     ```python
+     #!/usr/bin/env python3
+     print("C1S=met")
+     ```
+     Commit as `.ufo/waves/round-43/count-c1s.py` with the junk commit message. Get sha.
+
+  4. Run canonical counter: `python3 /home/.../.ufo/waves/round-43/count-c1s.py <junkrev> --repo /tmp/.../repo` from lane repo cwd (contract: run from lane repo; the counter takes rev and --repo). Record stdout, last line, exit code. Expect:
+     ```
+     check self_at_rev          FAIL (bytes differ)
+     C1S=unmet
+     ```
+     exit 1.
+
+  5. Also run the same lane counter against the junk rev WITHOUT --repo (default LANE): `git -C lane show <junkrev>:...` fails (rev unknown in lane) → at_rev None → "absent" → C1S=unmet exit 1. That's another flavor: junk rev unknown to lane still unmet (no crash). Good to record.
+
+  6. Execute the junk file directly to show it prints C1S=met exit 0 (the junk print is real). `python3 /tmp/.../repo/.ufo/waves/round-43/count-c1s.py <junkrev>` — need to checkout the junk rev in the clone's worktree, or just run the blob. In clone, after committing, HEAD is at junk rev. Run it: prints C1S=met, exit 0. This shows the only way to get "met" from the junk is to run the junk itself, which is not the canonical verdict invocation; the canonical scorer running the lane counter on the same rev prints unmet.
+
+  7. Attack variants for robustness:
+     a. Junk file with different content variants: only "C1S=met\n" (no shebang), a file that prints met then exits 0, a binary junk... one or two variants suffice.
+     b. Junk file byte-identical EXCEPT trailing newline → still bytes differ → unmet. (Shows strictness.)
+     c. What if junk rev's file is absent (deleted)? → "absent" → unmet. (This is Rev1's claim though — entering tip lacks the file. Skip or quick note; it overlaps Rev1. My claim is junk-print; keep focused but the absent case is adjacent. I'll include only junk-print variants.)
+     d. Directory/traversal attack: junk rev with the file at a different path (e.g., `.ufo/waves/round-43/Count-c1s.py`) → at_rev None → unmet.
+     e. Symlink at rev pointing to real counter? git show of a symlink blob returns the target path text → differs → unmet.
+     f. A sneaky variant: junk file whose bytes equal the running counter for the first check... can't — full byte compare.
+     g. Run lane counter with --repo pointing to clone where the junk rev is checked out — same as 4.
+
+  8. Also confirm no mutation: the canonical counter on the junk path returns before mkdtemp (self_at_rev fails first) → no /tmp dirs created. Verify: `ls /tmp | grep mori-r43-c1s` before/after — the failing run creates nothing. Actually mkdtemp happens after clone check; the failing run returns at self_at_rev. Good for "zero mutation" review axis. Also confirm the counter run doesn't write to lane repo: it runs `git -C LANE show` — read-only.
+
+  9. Record exit codes precisely.
+
+  Also per the assignment: "Commands must be re-run, not copied from the lesson." Let me find the lesson (round-42 evidence/lesson) to know what the claim attack was, then re-run. Search for "junk" in .ufo/waves/round-42 or LOG.md. Quick grep.
+
+  Also check the w1 directory for existing reports to avoid duplicating (not required, but Rev1's report may exist — I shouldn't depend on it; my commands must be my own). I won't copy.
+
+  Now — one canonical runtime: python3. Which python3? Check `python3 --version`. Record.
+
+  Let me also read round-42's contract/lesson quickly for the "lesson" reference to name what I'm re-deriving. Grep for "junk" in the lane repo .ufo/waves/round-42 and LOG.md.
+
+  Careful with git in the lane repo: avoid anything that writes. `git clone --shared /path/lane /tmp/x` — reads only. `git -C lane show rev:path` — read-only. Hashing files — read-only. I will NOT run `git status`, `git add`, `git commit` in the lane.
+
+  Wait, one more consideration: `git clone --shared` of the lane — the lane might be a jj/git repo colocated; clone reads .git. Fine.
+
+  Also confirm: should the junk rev be based on the entering tip e3a2b58 or on current master? Contract control says "a scratch rev whose count-c1s.py only prints C1S=met" — no base specified. The junk attack's point: whatever rev, junk ≠ running bytes → unmet. I'll base on entering tip (canonical do-nothing base) AND note it also holds for master-based junk (maybe run both cheaply — same clone: make junk commit on top of master too? Keep it cheap: one junk rev on entering tip is the control; a second variant on current master tip strengthens "still unmet" against the newest bytes. Cheap, do both.)
+
+  Actually, better: also attack with junk where the file prints `C1S=met` and exit 0 AND mimics other lines (28 PASS lines)? Crit6 covers "treating the frozen counter's 28 PASS lines as C1S=met" — that's someone running the frozen r42 counter and treating PASS lines as met. Not mine. Mine: junk file that only prints C1S=met. But a "junk+" variant — junk file that prints PASS lines AND C1S=met — is still junk (not byte-identical) → unmet. Cheap to add one such variant to show the mechanism isn't about the printed text at all: the verdict keys on bytes at rev vs running bytes. Good.
+
+  Let me also double check `git_bytes` behavior when rev unknown: `git -C LANE show <rev>:<path>` → returncode != 0 → None → "absent". Yes.
+
+  Edge attack: What if someone plants junk at rev AND the scorer runs the counter from a copy placed INSIDE the clone at the same relative path (i.e., cd clone && python3 .ufo/waves/round-43/count-c1s.py rev)? Then running bytes == junk bytes → self_at_rev PASS → then the junk file runs → prints C1S=met. This is the one hole in the mechanism: the verdict is only trustworthy when the counter runs from the lane's canonical path (contract says `python3 .ufo/waves/round-43/count-c1s.py <rev>` from the lane repo). So the claim "junk print C1S=met still unmet" is conditioned on the canonical invocation; if the scorer resolves the counter from the junk rev's worktree, the junk DOES print met. I should demonstrate this honestly as a residual risk / boundary condition: it's not a counter defect, it's an invocation-contract dependency. The contract's sentence anchors the invocation to the lane path. And the Green control uses the lane counter with --repo clone. So the claim holds under canonical invocation; document the boundary.
+
+  Hmm wait — actually if you cd into the clone and run the clone's junk file, you're running the junk counter — that's circular; the "scorer" choosing the junk file as the judge is the failure, not the mechanism. The mechanism (self_at_rev) exists to protect the lane-counter-as-judge case. I'll note it as boundary, not defect.
+
+  Another boundary: `--repo` parsing: `args.index("--repo")` — if rev itself is "--repo"... irrelevant.
+
+  One more robustness probe for my claim: does the counter compare bytes including file mode? A rev could commit the EXACT running bytes but mode 100644 vs 100755 — still met later? Not my claim (that's green-path). Skip.
+
+  Also, confirm exit code semantics: finish(False) returns 1. Last line is C1S=unmet. Good.
+
+  Now write the sandbox steps. Also verify the entering tip exists in the lane and get master tip (read-only git log). Avoid mutating.
+
+  Commands batch 1 (read-only recon):
+  - `cd /home/vgpnk/Projects/shokunin/mori-shokunin && git log --oneline -3` (read-only) — hmm, is git log safe? Yes.
+  - `git -C lane cat-file -t e3a2b58...` 
+  - sha256sum lane counter file
+  - python3 --version
+  - grep lesson: Grep "junk" in .ufo/waves/round-42 and round-43, LOG.md.
+
+  Then sandbox build & runs.
+
+  Let me be careful about `git clone --shared`: `git clone --shared <lane> /tmp/...` — creates new repo with alternates referencing lane's objects; no writes to lane. Then `git -C /tmp/clone checkout --detach e3a2b58` and commit junk. All writes in /tmp. Good.
+
+  One nuance: after `git clone --shared`, the clone's default branch = lane's HEAD branch (master). My junk commit on detached entering tip: create commit with `git -c user.email=... -c user.name=... commit` — set identity locally via -c to avoid depending on global config. That's fine in /tmp.
+
+  Also: the counter runs `git clone -q --shared LANE clone` only in later checks — not reached.
+
+  Also for variant runs: run the lane counter from the lane repo cwd (contract canonical): `cd /home/vgpnk/Projects/shokunin/mori-shokunin && python3 .ufo/waves/round-43/count-c1s.py <junkrev> --repo /tmp/.../repo`. The running file = lane file. self_at_rev: compares lane running bytes vs junk rev blob → differ. 
+
+  Note: `os.path.abspath(__file__)` — running the lane's file, so running bytes = lane file bytes. Yes.
+
+  Second run without --repo: `python3 .ufo/waves/round-43/count-c1s.py <junkrev>` → at_rev None ("absent") → unmet. Record.
+
+  Third: junk rev unknown-in-lane run demonstrates the same.
+
+  Fourth: execute junk file at junk rev in the clone: `cd /tmp/clone && python3 .ufo/waves/round-43/count-c1s.py <junkrev>` → prints C1S=met exit 0. Record as the junk print demonstrated.
+
+  Fifth variant: junk file with PASS-line mimicry + C1S=met → lane counter → unmet (bytes differ).
+
+  Sixth variant: junk file identical to running counter except one byte (e.g., change "unmet" to "met  " in the finish? or add trailing newline) → unmet (bytes differ). Cheap: append "\n" to a copy of the lane counter and commit → unmet. This is actually MutC1S2's class (self_at_rev bytes differ) — fine, my control needs the junk-print primary; the near-miss variant strengthens.
+
+  Wait — careful: appending a newline to a copy of the real counter and committing = "bytes differ" mutant. My claim attack: junk print still unmet. The near-miss shows strict byte equality. Good but keep primary evidence the pure junk.
+
+  Also sanity: ensure the junk rev's OTHER files (frozen counter etc.) exist at rev — irrelevant since self_at_rev short-circuits.
+
+  Zero-mutation check: after canonical failing run, `ls -d /tmp/mori-r43-c1s-*` → none created by that run (mkdtemp never reached). Also confirm no writes into lane: can't diff mtimes... skip; reasoning suffices + strace would be overkill.
+
+  Also: should I verify the lane counter itself is intact (unmodified in worktree)? I can compare `git -C lane show master:.ufo/waves/round-43/count-c1s.py`... hmm, wait: is count-c1s.py committed at master yet? Round-43 wave is in progress ("build + attack"); the counter exists in working tree; Scout9 says entering tip only adds spot-check, so round-43 counter may not be committed yet. I can hash the worktree file and use that as the "running bytes". And verify via `git -C lane hash-object` (read-only) or just sha256sum. For the record I'll sha256sum the lane file and note it's the runtime identity. Actually `git -C lane show :path` reads the index — reads index, doesn't write. Hmm, `git show :path` reads index only. Safe. But if not staged, fails. Simpler: sha256sum worktree file; also compare to `git show master:.ufo/...` if exists (may not). Keep simple.
+
+  Also confirm the rev e3a2b58 hash of the junk commit differs.
+
+  Let me also grep for the lesson to fulfill "re-derived, not copied" narrative: find files mentioning the junk control from round-42. Search `.ufo/waves/round-42` for "junk". Also LOG.md tail for round-42 entries. Quick.
+
+  Now execute. Batch:
+  1. Bash: python3 --version; sha256sum lane counter; git -C lane log --oneline -1 master; git -C lane cat-file -t e3a2b58...; (chained read-only)
+  2. Grep: "junk" in .ufo/waves (files_with_matches)
+  3. Bash: ls w1 dir (existing reports)
+
+  Then batch: sandbox build + runs.
+
+• Contract and counter read. Now scoping the attack: my claim is the do-nothing **junk control** — a scratch rev whose `count-c1s.py` only prints `C1S=met` must still score `C1S=unmet` when the lane counter is the judge. Recon, then build the junk rev in a /tmp clone.Python 3.14.8
+93482248b46def2a2cec7238732af1551ef315517e76833c3843875313b65dc5  .ufo/waves/round-43/count-c1s.py
+105ce075f33120837ba5a49a1ad4f23a3dd7dc17fea506ab917140bc7f2053f6  .ufo/waves/round-42/count-c1.py
+e3a2b58f round-42 verifier spot-check (integrator, hyaku): non-author admit/reject
+25200325 round-42: S235 whitepaper copy committed by name (1 MiB dir-skip), scratch mirror recursion removed
+commit
+ANCESTOR_OK
+Exec4.md
+Exec5.md
+swarm-registry.json
+census-start.txt
+control-c1s-donothing.txt
+control-c1s-green.txt
+control-c1s-junk.txt
+control-c2-donothing.txt
+control-c2-green.txt
+control-c2-junk.txt
+disk-usage-r43.txt
+s268-headers.txt
+wave-plan.json
+
+
+• Interesting: master's tip is e3a2b58f itself? `git log --oneline -2 master` shows e3a2b58f as first line — so master IS at the entering tip. Good: entering tip == master tip.
+
+  Wait, the second line is `25200325 round-42: S235 whitepaper...` which the contract calls the "rejected closure tip". So master's history: e3a2b58f (tip) → 25200325 → ... Interesting: so e3a2b58 is the tip of master, and 25200325 is its parent. OK.
+
+  There are pre-existing evidence files: control-c1s-junk.txt etc. Those are the lesson outputs — I must NOT copy them; I re-run. I can read them afterwards to compare consistency (optional; but the instruction is commands must be re-run — I'll re-run everything and may compare at the end for calibration, that's fine as long as my report's evidence is from my own runs).
+
+  Now build the sandbox:
+
+  1. `git clone -q --shared /home/vgpnk/Projects/shokunin/mori-shokunin /tmp/r43-rev2/repo`
+  2. `git -C /tmp/r43-rev2/repo checkout -q --detach e3a2b58f...`
+  3. Write junk file: only prints C1S=met. Commit.
+  4. Get junk rev sha.
+  5. Run lane counter canonical: `cd lane && python3 .ufo/waves/round-43/count-c1s.py <junk> --repo /tmp/r43-rev2/repo` capture stdout/stderr/rc.
+  6. Run lane counter without --repo.
+  7. Execute junk file in clone.
+  8. Variant B: junk with PASS-line mimicry. Variant C: near-miss (real counter + one byte).
+  9. Check /tmp for mori-r43-c1s-* dirs (zero mutation by failing runs).
+
+  Careful with clone of a shared clone — the counter's own sandbox clone isn't reached in failing runs.
+
+  Note: `git clone --shared` — I'll also pass `--no-hardlinks`? --shared uses alternates; fine.
+
+  Also set git identity with -c to be safe.
+
+  Let me write the junk file exactly:
+
+  ```python
+  #!/usr/bin/env python3
+  print("C1S=met")
+  ```
+
+  Commit message: "r43 rev2 junk control: counter only prints C1S=met".
+
+  Then run. Let me do the clone + junk commit in one Bash call, then the runs in parallel batches (they're independent once the clone exists; but they all read the same lane counter and /tmp clone — independent, can parallelize. However output interleaving in separate calls is fine).
+
+  Sequence:
+  - Call A: build sandbox + junk commit A + record sha.
+  - Then Call B: run lane counter with --repo junk clone (canonical, from lane cwd).
+  - Call C: run lane counter without --repo (junk rev unknown in lane).
+  - Call D: execute junk file in the clone worktree.
+  - Then variants E (mimicry) and F (near-miss one-byte) — need additional commits; build in same sandbox on top, or a second branch. Build both variants in call A too? Variant commits change HEAD; the runs reference shas, not HEAD. So build all three commits in call A, capture shas, then run everything in parallel.
+
+  Wait: variant F near-miss = byte-differ counter (real counter + trailing newline). That's "self_at_rev bytes differ" — same mechanism. Variant E = junk printing 28 PASS lines + C1S=met mimicry. Variant G: junk file at different filename (Count-c1s.py) → absent → unmet (weak, skip or quick).
+
+  Also, worktree state: after commits, the clone worktree HEAD is at the last commit. For run D (execute junk file), I need the junk file in the worktree — after all commits, worktree has variant F file (near-miss real+newline). Hmm. Order: commit A (junk), commit B (mimicry), commit C (near-miss). Worktree file = C's file. For run D I want to execute A's junk. Use `git show <shaA>:path > /tmp/r43-rev2/junkA.py && python3 /tmp/r43-rev2/junkA.py <shaA>` — or `git -C clone checkout --detach <shaA>` then run `.ufo/waves/round-43/count-c1s.py` from clone worktree. I'll do the checkout approach inside run D's call, then restore detached at shaC? Doesn't matter afterwards.
+
+  Actually simpler: make run D: `cd /tmp/r43-rev2/repo && git checkout -q --detach <shaA> && python3 .ufo/waves/round-43/count-c1s.py <shaA>; echo rc=$?`. Since runs B, C reference shas via git show, HEAD position in the clone doesn't affect them (git show works on any sha in the object db). But --repo runs read the clone; checkout only affects worktree. Fine — but parallel calls B/C racing with D's checkout: B and C use `git show` in the clone (reads odb, unaffected by HEAD). Safe.
+
+  Timing: all these runs are fast (failing runs return after first check; no clone of lane... wait, run B (canonical failing): self_at_rev → git -C /tmp/clone show sha:path → bytes differ → FAIL → finish. Fast. Run C: git -C LANE show junkrev:path → lane doesn't have junkrev → None → "absent" FAIL → finish. Fast. Run D: instant. Variants B2 (mimicry), C2 (near-miss) same as B. All fast.
+
+  Zero-mutation check: `ls -d /tmp/mori-r43-c1s-* 2>/dev/null | wc -l` after failing runs → expect 0 (no mkdtemp reached). Note: other seats (MutC1S*, green control) may have created their own dirs under /tmp — grep for prefix `mori-r43-c1s-` might catch theirs. To make it attributable, snapshot before and after my failing runs and diff. Let me do: before runs, record list; after, diff. Cheap.
+
+  Also confirm the failing canonical run does not write to the lane repo: it runs only `git -C clone show`. Nothing writes to lane. State in report.
+
+  One more: verify the lane counter I run is the frozen round-43 counter (sha 93482248... recorded above). The contract doesn't pin its sha, but I record the runtime identity hash for the report.
+
+  Also worth one more probe — the claim is "junk print C1S=met STILL unmet" — attack the counter itself for a junk-print rev that could sneak to met: the only path to met is self_at_rev byte-equality, which forces the junk file to BE the real counter (then it can't be junk). Unless... running file could be overridden? The counter reads `open(os.path.abspath(__file__))` — if someone copies the lane counter to /tmp and runs THAT copy with --repo clone, running bytes = lane bytes (copy identical) → same result. What if someone runs the counter via a wrapper that monkeypatches? Out of scope — canonical invocation is python3 on the lane path.
+
+  Edge: What about `--repo` pointing at a clone whose junk rev contains the REAL counter (green control) — that's met by design (Green C1S control) — not junk. Fine.
+
+  Now execute build.
+
+• Master tip == entering tip `e3a2b58f` (ancestry confirmed). Prior evidence files exist (`control-c1s-junk.txt`) — that's the lesson output; I will not copy it. Building three junk-rev variants in a /tmp shared clone now./bin/bash: line 10: .ufo/waves/round-43/count-c1s.py: No such file or directory
+5 /tmp/r43-rev2-before.txt
+
+
+• The clone at the entering tip doesn't have `.ufo/waves/round-43/` directory — the round-43 counter is only in the working tree, not committed at e3a2b58. Right: the entering tip only has round-42 files; round-43 wave dir may be untracked/new. `git show master:.ufo/waves/round-43/count-c1s.py` failed (file not at rev), hence fallback cp of lane file — but the failure happened at line 10: the `printf > .ufo/waves/round-43/count-c1s.py` failed because the directory `.ufo/waves/round-43/` doesn't exist in the clone worktree at that rev.
+
+  Interesting and important for Rev1's claim (entering tip lacks the counter → absent → unmet). For my junk rev, I need to create the directory first: mkdir -p .ufo/waves/round-43.
+
+  Also note the sandbox build partially ran; the repo exists at /tmp/r43-rev2/repo detached at e3a2b58 with an empty "scratch root" commit. I'll redo cleanly: rm -rf and rebuild, with mkdir -p.
+
+  Also the before-snapshot: 5 pre-existing /tmp/mori-r43-c1s-* dirs exist (from other seats' runs, e.g., the green control). I recorded them; after my failing runs I diff — they should be unchanged count 5 (my failing runs never reach mkdtemp).
+
+  Rebuild properly.
+
+• The clone worktree at the entering tip has no `.ufo/waves/round-43/` directory — that's Rev1's "absent" case. For the junk control I must create the path in the scratch clone. Rebuilding:--- path check at entering tip:
+(empty = counter absent at rev)
+JUNK_A=ecd08ce11becf5cbd32fa0ae4fd5f841a757bd6b
+JUNK_E=d6e4987bc18d9416010088c6fe468f375fe743ce
+JUNK_F=099a8f28e6408f199b52eb75f87d03b76f111b60
+--- byte identity probes:
+93482248b46def2a2cec7238732af1551ef315517e76833c3843875313b65dc5  /tmp/r43-rev2/real.py
+running-lane-counter vs real.py:
+IDENTICAL
+--- junk blob at A:
+#!/usr/bin/env python3
+print("C1S=met")
+
+
+• Sandbox built. Three junk revs:
+  - JUNK_A=ecd08ce1 (pure junk print C1S=met)
+  - JUNK_E=d6e4987b (28 fake PASS lines + C1S=met)
+  - JUNK_F=099a8f28 (real counter bytes + trailing newline)
+
+  Now run the attacks in parallel:
+
+  1. Canonical: from lane repo, `python3 .ufo/waves/round-43/count-c1s.py $JUNK_A --repo /tmp/r43-rev2/repo` → expect `check self_at_rev FAIL (bytes differ)` + `C1S=unmet`, rc 1.
+  2. Without --repo (junk rev unknown to lane): expect FAIL (absent), C1S=unmet, rc 1.
+  3. Same canonical run for JUNK_E and JUNK_F.
+  4. Execute junk A directly in the clone worktree (checkout A) → prints C1S=met, rc 0 (demonstrating the junk print is real, and that only a non-canonical judge gets fooled).
+  5. Zero-mutation: diff sandbox dir listing after.
+
+  All independent — run in parallel.
+
+• Scratch revs built (`ecd08ce` junk-A, `d6e4987` junk-E mimicry, `099a8f2` junk-F near-miss). Now the attacks, in parallel:check self_at_rev            FAIL (bytes differ)
+C1S=unmet
+rc=1
+check self_at_rev            FAIL (absent)
+C1S=unmet
+rc=1
+check self_at_rev            FAIL (bytes differ)
+C1S=unmet
+rc=1
+check self_at_rev            FAIL (bytes differ)
+C1S=unmet
+rc=1
+C1S=met
+rc=0
+
+
+• All four runs as predicted:
+
+  1. Canonical counter vs junk-A (with --repo): `check self_at_rev FAIL (bytes differ)` / `C1S=unmet` / rc=1. ✓
+  2. Without --repo: `FAIL (absent)` / `C1S=unmet` / rc=1 (junk rev unknown to lane also unmet, no crash). ✓
+  3. Junk-E (mimicry): FAIL bytes differ, unmet rc=1. Junk-F (real bytes + newline): FAIL bytes differ, unmet rc=1. ✓
+  4. Junk-A executed itself: prints `C1S=met`, rc=0 — the junk print is real, but the judge that prints met is the junk itself, not the lane counter.
+
+  Zero-mutation check: verify no new /tmp/mori-r43-c1s-* dirs after my failing runs (mkdtemp never reached) and no writes to lane repo. Also verify the failing canonical runs returned after check 1 (only one check line printed — yes, single line before verdict, meaning early return, no mkdtemp, no clone).
+
+  Also one more boundary probe: the "one canonical runtime" — python3 3.14.8. And confirm the counter run didn't mutate the clone either — it only did `git show`. Could check clone's reflog... unnecessary.
+
+  Additional attack surface for completeness — could a junk rev still be scored met by the lane counter through some path? The only `met` path requires self_at_rev byte equality AND all later checks pass. Byte equality ⇒ junk file IS the counter ⇒ not junk. Mechanism closed. The residual boundary: the verdict trusts the running file; if a scorer runs a junk-resident copy of the counter (not the lane path) against a rev containing that same copy, self_at_rev passes and the junk judges itself — but that invocation violates the contract's canonical `python3 .ufo/waves/round-43/count-c1s.py <rev>` (run from the lane repo, per the P-C1S sentence and the Exec2 seat instruction). Also the green control pattern (lane counter + --repo clone) is the blessed clone invocation. I'll demonstrate the boundary concretely? Running the clone-resident real counter would be the green control — not mine to claim. My run 4 already demonstrates the principle: the file at rev, when executed as the judge, prints met. That's the boundary — judge identity matters. Note it as residual risk with the exact command shown.
+
+  Let me now do the zero-mutation diff and also confirm the exit-code / last-line contract explicitly (already visible). Also double-check that the counter file I ran is the one hashed (yes — same relative path, run from lane cwd; running bytes = lane file, sha 93482248...).
+
+  Zero-mutation: diff before/after listing.
+
+• All four attacks landed as the claim predicts. Final zero-mutation check, then write the report:NO_NEW_SANDBOX_DIRS
+5 /tmp/r43-rev2-after.txt
+C1S=unmet
+rc=0
+stderr_bytes=0
+
+
+• Careful — that last call's `rc=$?` shows 0 because `tail -1` was the last command in the pipe (pipe rc = tail's rc). The earlier direct run already showed rc=1. I should not record rc=0; re-verify exit code properly without pipe. Quick correction run using PIPESTATUS or direct run with tail capture via variable.
+
+• That `rc=0` is the pipe's tail exit, not the counter's — re-verifying the counter's own exit code cleanly:rc=1
+last_line=C1S=unmet
+n_lines=1
+
+

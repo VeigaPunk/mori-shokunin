@@ -1,0 +1,219 @@
+kimi version 2.3.1
+• Let me start by understanding the task. I'm a reviewer (Rev5) in a "mori round 43" wave. The task:
+
+  - Re-derive a claim attack and write only my report: "declaration cell still contains the C1=met fragment exactly once."
+  - Commands must be re-run, not copied from the lesson.
+  - Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Rev5.md
+  - Leaf member — no subagent dispatch.
+  - Frozen counters must not be edited: .ufo/waves/round-42/count-c1.py and .ufo/waves/round-43/count-c1s.py and count-c2.py. Attack them in scratch copies.
+
+  Let me explore the lane repo first. I need to:
+  1. Name the axes.
+  2. Look at the frozen counters (read them, copy to /tmp scratch, run them).
+  3. Check the claim: "declaration cell still contains the C1=met fragment exactly once."
+  4. Write report.
+
+  Let me start by exploring the repo structure and reading relevant files. I'll do a big parallel batch.
+
+  First batch:
+  - ls the repo root
+  - read the frozen counters
+  - look at .ufo/waves/round-42 and round-43
+  - check config/rules
+
+  Let me act.total 948
+drwxr-xr-x 1 vgpnk vgpnk    394 Oct 24 04:23 .
+drwxr-xr-x 1 vgpnk vgpnk   1306 Oct 24 22:36 ..
+-rw-r--r-- 1 vgpnk vgpnk     31 Oct 23 23:27 0
+-rw-r--r-- 1 vgpnk vgpnk    244 Oct 14 21:17 AGENTS.md
+-rw-r--r-- 1 vgpnk vgpnk  98196 Oct 22 14:08 base.c
+drwxr-xr-x 1 vgpnk vgpnk    156 Oct 24 10:01 considerthese
+drwxr-xr-x 1 vgpnk vgpnk    106 Oct 24 02:50 corpus
+drwxr-xr-x 1 vgpnk vgpnk    238 Oct 24 22:37 .git
+-rw-r--r-- 1 vgpnk vgpnk     62 Oct 23 17:10 .gitignore
+drwxr-xr-x 1 vgpnk vgpnk     52 Oct 20 15:26 .jj
+-rw-r--r-- 1 vgpnk vgpnk 177402 Oct 24 20:54 LOG.md
+-rw-r--r-- 1 vgpnk vgpnk  21053 Oct 22 14:08 main.c
+-rw-r--r-- 1 vgpnk vgpnk  10114 Oct 22 14:08 MANPAGE.md
+-rw-r--r-- 1 vgpnk vgpnk   8344 Oct 22 14:08 meminfo.c
+-rw-r--r-- 1 vgpnk vgpnk   1663 Oct 14 21:17 MINT.md
+-rw-r--r-- 1 vgpnk vgpnk  34311 Oct 22 14:08 oom_kill.c
+-rw-r--r-- 1 vgpnk vgpnk  38326 Oct 22 18:23 PROVINCE.md
+-rw-r--r-- 1 vgpnk vgpnk   1595 Oct 20 17:16 README.md
+drwxr-xr-x 1 vgpnk vgpnk      0 Oct 24 01:27 --repo
+-rw-r--r-- 1 vgpnk vgpnk 219123 Oct 24 21:42 SCORECARD.md
+drwxr-xr-x 1 vgpnk vgpnk    488 Oct 24 04:23 .scratch
+-rw-r--r-- 1 vgpnk vgpnk 180617 Oct 22 14:08 sd-main.c
+-rw-r--r-- 1 vgpnk vgpnk    361 Oct 20 01:10 SHONEN.md
+-rw-r--r-- 1 vgpnk vgpnk 127349 Oct 24 02:47 SKILL.md
+drwxr-xr-x 1 vgpnk vgpnk   1500 Oct 24 03:50 tools
+drwxr-xr-x 1 vgpnk vgpnk    226 Oct 20 16:51 .ufo
+-rw-r--r-- 1 vgpnk vgpnk   1315 Oct 22 14:08 user@.service.in
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-42:
+total 180
+drwxr-xr-x 1 vgpnk vgpnk   234 Oct 24 20:47 .
+drwxr-xr-x 1 vgpnk vgpnk   496 Oct 24 21:31 ..
+drwxr-xr-x 1 vgpnk vgpnk   194 Oct 24 20:23 assimilation
+drwxr-xr-x 1 vgpnk vgpnk     0 Oct 24 11:28 candidates
+-rw-r--r-- 1 vgpnk vgpnk 46994 Oct 24 20:12 conform.py
+-rw-r--r-- 1 vgpnk vgpnk  7549 Oct 24 11:30 contract.md
+-rwxr-xr-x 1 vgpnk vgpnk 10858 Oct 24 11:36 count-c1.py
+-rwxr-xr-x 1 vgpnk vgpnk  6484 Oct 24 11:33 count-c2.py
+-rwxr-xr-x 1 vgpnk vgpnk  5389 Oct 24 11:34 count-c3.py
+drwxr-xr-x 1 vgpnk vgpnk   470 Oct 24 20:54 evidence
+drwxr-xr-x 1 vgpnk vgpnk   174 Oct 24 11:30 fixtures
+drwxr-xr-x 1 vgpnk vgpnk    48 Oct 24 20:47 __pycache__
+drwxr-xr-x 1 vgpnk vgpnk   578 Oct 24 20:49 w1
+-rw-r--r-- 1 vgpnk vgpnk 94923 Oct 24 20:28 w1-spec.json
+
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43:
+total 48
+drwxr-xr-x 1 vgpnk vgpnk   162 Oct 24 22:35 .
+drwxr-xr-x 1 vgpnk vgpnk   496 Oct 24 21:31 ..
+drwxr-xr-x 1 vgpnk vgpnk   256 Oct 24 22:37 assimilation
+-rw-r--r-- 1 vgpnk vgpnk  4298 Oct 24 21:37 contract.md
+-rw-r--r-- 1 vgpnk vgpnk  6022 Oct 24 21:37 count-c1s.py
+-rw-r--r-- 1 vgpnk vgpnk  3094 Oct 24 21:37 count-c2.py
+drwxr-xr-x 1 vgpnk vgpnk   386 Oct 24 21:44 evidence
+drwxr-xr-x 1 vgpnk vgpnk    70 Oct 24 22:37 w1
+-rw-r--r-- 1 vgpnk vgpnk    17 Oct 24 22:37 w1-settle.tsv
+-rw-r--r-- 1 vgpnk vgpnk 22422 Oct 24 21:44 w1-spec.json
+total 2060
+drwxr-xr-x 1 vgpnk vgpnk    1306 Oct 24 22:36 .
+drwxr-xr-x 1 vgpnk vgpnk     750 Oct 24 18:07 ..
+-rw-r--r-- 1 vgpnk vgpnk    5921 Oct 22 15:12 AGENTS.md
+drwxr-xr-x 1 vgpnk vgpnk     372 Oct 22 00:57 audio-shokunin
+-rw-r--r-- 1 vgpnk vgpnk    5160 Oct 16 15:54 AXES.md
+drwxr-xr-x 1 vgpnk vgpnk       8 Oct 18 14:01 bash: 
+-rw-r--r-- 1 vgpnk vgpnk    5563 Oct 24 18:07 bm.json
+drwxr-xr-x 1 vgpnk vgpnk     246 Oct 23 18:29 chousa-shokunin
+-rw-r--r-- 1 vgpnk vgpnk   11296 Oct 19 21:22 CORPUS.md
+drwxr-xr-x 1 vgpnk vgpnk      12 Oct 14 10:42 .devin
+drwxr-xr-x 1 vgpnk vgpnk     160 Oct 22 00:57 game-dev-2d-shokunin
+drwxr-xr-x 1 vgpnk vgpnk     188 Oct 21 11:24 game-dev-3d-shokunin
+drwxr-xr-x 1 vgpnk vgpnk     222 Oct 24 22:38 .git
+-rw-r--r-- 1 vgpnk vgpnk     250 Oct 19 20:10 .gitignore
+drwxr-xr-x 1 vgpnk vgpnk      52 Oct 22 00:49 .jj
+drwxr-xr-x 1 vgpnk vgpnk     218 Oct 20 18:30 kagi-shokunin
+drwxr-xr-x 1 vgpnk vgpnk     316 Oct 23 08:20 kaidoku-shokunin
+drwxr-xr-x 1 vgpnk vgpnk     232 Oct 24 03:04 kake-shokunin
+drwxr-xr-x 1 vgpnk vgpnk     268 Oct 23 16:05 kama-shokunin
+drwxr-xr-x 1 vgpnk vgpnk     218 Oct 20 18:30 kasegi-shokunin
+drwxr-xr-x 1 vgpnk vgpnk     236 Oct 23 21:17 kengaku-shokunin
+drwxr-xr-x 1 vgpnk vgpnk     236 Oct 24 00:02 kotoba-shokunin
+drwxr-xr-x 1 vgpnk vgpnk     330 Oct 24 09:20 kotodama-shokunin
+drwxr-xr-x 1 vgpnk vgpnk     222 Oct 24 10:16 kumitate-shokunin
+-rw-r--r-- 1 vgpnk vgpnk    5562 Oct 19 20:10 LEARNING.md
+-rw-r--r-- 1 vgpnk vgpnk   57113 Oct 24 18:07 live.html
+-rw-r--r-- 1 vgpnk vgpnk    5196 Oct 24 18:07 live_s228.html
+-rw-r--r-- 1 vgpnk vgpnk   99844 Oct 22 01:29 LOG.md
+drwxr-xr-x 1 vgpnk vgpnk     286 Oct 22 19:46 lore-shokunin
+drwxr-xr-x 1 vgpnk vgpnk     292 Oct 24 20:30 mado-shokunin
+-rw-r--r-- 1 vgpnk vgpnk 1614359 Oct 24 22:36 MANIFEST.json
+-rw-r--r-- 1 vgpnk vgpnk    5040 Oct 19 21:10 MISSION.md
+drwxr-xr-x 1 vgpnk vgpnk     394 Oct 24 04:23 mori-shokunin
+-rw-r--r-- 1 vgpnk vgpnk   68855 Oct 24 18:07 nama.html
+drwxr-xr-x 1 vgpnk vgpnk      28 Oct 24 18:07 .omp
+-rw-r--r-- 1 vgpnk vgpnk   15863 Oct 19 20:10 PROTOCOL-APPENDIX.md
+-rw-r--r-- 1 vgpnk vgpnk   46627 Oct 19 20:10 PROTOCOL.md
+-rw-r--r-- 1 vgpnk vgpnk    9306 Oct 22 00:52 README.md
+drwxr-xr-x 1 vgpnk vgpnk     120 Oct 15 09:04 research
+drwxr-xr-x 1 vgpnk vgpnk     204 Oct 24 01:30 revenger-shokunin
+-rw-r--r-- 1 vgpnk vgpnk    9247 Oct 13 16:50 ROADMAP.md
+drwxr-xr-x 1 vgpnk vgpnk      66 Oct 24 21:19 .ruff_cache
+-rw-r--r-- 1 vgpnk vgpnk       0 Oct 24 18:07 s395.txt
+-rw-r--r-- 1 vgpnk vgpnk   73649 Oct 23 20:10 SCORECARD.md
+drwxr-xr-x 1 vgpnk vgpnk     394 Oct 24 17:49 .scratch
+drwxr-xr-x 1 vgpnk vgpnk     100 Oct 19 23:02 scripts
+-rw-r--r-- 1 vgpnk vgpnk    4706 Oct 19 21:10 shokunin.conf
+drwxr-xr-x 1 vgpnk vgpnk     298 Oct 20 14:21 souji-shokunin
+drwxr-xr-x 1 vgpnk vgpnk     234 Oct 20 12:24 tabi-shokunin
+Let me read the key files: AGENTS.md in mori-shokunin, the round-43 contract, w1-spec.json, count-c1s.py, count-c2.py, and the round-42 count-c1.py. Also check the w1 dir and evidence.I'm Rev5. My claim attack to re-derive: "declaration cell still contains the C1=met fragment exactly once."
+
+  From the contract P-C2: SCORECARD.md ... "still contains the unrewritten declaration fragment `` `C1=met` exit 0 (`evidence/c1-after.txt`) ``"
+
+  Wait, let me re-read. The P-C2 claim says:
+
+  "SCORECARD.md contains the exact line `Round-43 calibration correction: r42-declaration-C1=met superseded; frozen counter printed no C1= line` and still contains the unrewritten declaration fragment `` `C1=met` exit 0 (`evidence/c1-after.txt`) ``"
+
+  So the declaration fragment is `` `C1=met` exit 0 (`evidence/c1-after.txt`) `` — presumably in the r42 declaration cell in SCORECARD.md. My attack: verify the declaration cell still contains the `C1=met` fragment exactly once (i.e., not rewritten in place, not duplicated). Commands must be re-run, not copied from the lesson.
+
+  So the plan:
+  1. Find the declaration cell in SCORECARD.md at the relevant rev (entering tip e3a2b58f...? or the current working tree / round-43 diff?). My claim is about "still contains" — meaning after round 43 changes, the fragment remains exactly once. The relevant rev is probably the entering tip e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2, and possibly the current working tree as the round-43 diff is being built. Let me check git log and the diff.
+
+  2. Re-run: count occurrences of the fragment `C1=met` exit 0 (`evidence/c1-after.txt`) in the declaration cell. Find where the declaration cell is — probably in SCORECARD.md under a r42 declaration section.
+
+  Let me look at:
+  - git log to find e3a2b58 and current HEAD
+  - git diff between e3a2b58 and HEAD/working tree for SCORECARD.md
+  - grep for the fragment in SCORECARD.md
+  - count-c2.py to see how it checks (read-only, don't edit)
+  - round-42 evidence and the declaration cell location
+
+  Also read the counter count-c2.py to see the exact check for the fragment (read the frozen counters, don't edit).
+
+  Let me batch:
+  - Read count-c2.py (round-43)
+  - git log --oneline -5
+  - git status
+  - grep -n "C1=met" SCORECARD.md (use Grep tool)
+  - ls round-43/w1, evidence dirs
+
+  Also the lesson: LOG.md round-42 might contain prior commands. But I must re-run, not copy.
+
+  Let me do this batch now.e3a2b58f round-42 verifier spot-check (integrator, hyaku): non-author admit/reject
+25200325 round-42: S235 whitepaper copy committed by name (1 MiB dir-skip), scratch mirror recursion removed
+62b95e51 round-42: wave — 18/64 seat reports + registry, dispatch evidence, census-end 238 exit 0, S262 erratum, wave record
+f3ec0977 round-42: claim receipts — C2/C3 met, C1 honest stop (frozen counter defect at final check, no-harm re-derived by hand), measured outcomes, lesson M4, wave spec + plan
+34b92673 round-42: data — conform v5 + killed mutants, d72ac16 manifest, registry 231->238, two admitted entries + S347 knowledge, LOG/SCORECARD errata, lesson, QUALITY 114
+316f3dcf round-42: assimilation scratch — collision guard proof, transformed append block, mirror validation rc=0, refusal record
+ M SCORECARD.md
+ M corpus/QUALITY.md
+ M corpus/README.md
+ M corpus/SOURCES.md
+?? .ufo/waves/round-43/
+?? corpus/knowledge/c1s-cwd-r43.md
+?? corpus/knowledge/journal-disk-usage-total-r51.md
+?? corpus/knowledge/s235-sha-correction-r43.md
+?? corpus/lessons/round-43.md
+e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/assimilation:
+total 32
+drwxr-xr-x 1 vgpnk vgpnk  256 Oct 24 22:37 .
+drwxr-xr-x 1 vgpnk vgpnk  162 Oct 24 22:35 ..
+-rw-r--r-- 1 vgpnk vgpnk 3456 Oct 24 22:36 append-block.md
+-rw-r--r-- 1 vgpnk vgpnk    0 Oct 24 21:38 collisions
+-rw-r--r-- 1 vgpnk vgpnk   25 Oct 24 22:37 collisions-post
+drwxr-xr-x 1 vgpnk vgpnk   90 Oct 24 22:37 guard
+-rw-r--r-- 1 vgpnk vgpnk  219 Oct 24 21:38 quarantine-slice
+-rw-r--r-- 1 vgpnk vgpnk 1286 Oct 24 21:40 refused.md
+-rw-r--r-- 1 vgpnk vgpnk 1190 Oct 24 21:38 reg-ids
+-rw-r--r-- 1 vgpnk vgpnk 1215 Oct 24 22:37 reg-ids-post
+-rw-r--r-- 1 vgpnk vgpnk  635 Oct 24 22:37 staged-ids
+drwxr-xr-x 1 vgpnk vgpnk   84 Oct 24 21:41 validate
+-rw-r--r-- 1 vgpnk vgpnk 2198 Oct 24 22:36 validate-receipt.txt
+
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/evidence:
+total 72
+drwxr-xr-x 1 vgpnk vgpnk   386 Oct 24 21:44 .
+drwxr-xr-x 1 vgpnk vgpnk   162 Oct 24 22:35 ..
+-rw-r--r-- 1 vgpnk vgpnk  1991 Oct 24 21:38 census-start.txt
+-rw-r--r-- 1 vgpnk vgpnk    60 Oct 24 22:33 control-c1s-donothing.txt
+-rw-r--r-- 1 vgpnk vgpnk     0 Oct 24 22:33 control-c1s-green.txt
+-rw-r--r-- 1 vgpnk vgpnk    60 Oct 24 22:28 control-c1s-junk.txt
+-rw-r--r-- 1 vgpnk vgpnk   429 Oct 24 22:33 control-c2-donothing.txt
+-rw-r--r-- 1 vgpnk vgpnk   429 Oct 24 22:28 control-c2-green.txt
+-rw-r--r-- 1 vgpnk vgpnk   422 Oct 24 21:38 control-c2-junk.txt
+-rw-r--r-- 1 vgpnk vgpnk   130 Oct 24 21:42 disk-usage-r43.txt
+-rw-r--r-- 1 vgpnk vgpnk   463 Oct 24 21:42 s268-headers.txt
+-rw-r--r-- 1 vgpnk vgpnk 40895 Oct 24 21:44 wave-plan.json
+
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1:
+total 16
+drwxr-xr-x 1 vgpnk vgpnk   70 Oct 24 22:37 .
+drwxr-xr-x 1 vgpnk vgpnk  162 Oct 24 22:35 ..
+-rw-r--r-- 1 vgpnk vgpnk 2820 Oct 24 22:37 Exec4.md
+-rw-r--r-- 1 vgpnk vgpnk 1864 Oct 24 22:37 Exec5.md
+-rw------- 1 vgpnk vgpnk 7472 Oct 24 22:34 swarm-registry.json
+
+

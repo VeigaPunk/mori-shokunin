@@ -1,0 +1,362 @@
+kimi version 2.3.1
+• Let me start by understanding the task. I'm a subagent in a "mori round 43" wave. My job:
+
+  1. Build + attack: "one v2 wave (build + attack)"
+  2. Frozen counters: `.ufo/waves/round-42/count-c1.py` and `.ufo/waves/round-43/count-c1s.py` and `count-c2.py` must not be edited; attack them in scratch copies.
+  3. Report at `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Sent2.md`
+  4. Confirm no seat instruction asks for credentials, .env, SSH keys, and wave context forbids secrets.
+  5. Leaf member — no subagent dispatch.
+
+  Axes to name. Let me look at the materials first. Read the key files in parallel:
+  - The frozen counters (read-only reading is fine)
+  - RULES.md at /home/vgpnk/.omp/agent/RULES.md
+  - ~/.omp/agent/config.yml (role routing table)
+  - The wave directory .ufo/waves/round-43/
+
+  Let me batch a bunch of reads/listings.
+
+  Godspeed axes — let me define:
+  - Axis A: build correctness (counters work as intended, evidence-based)
+  - Axis B: attack surface found (real exploits vs generic hardening)
+  - Axis C: continuity safety (failed preflights cause zero mutation; frozen counters untouched)
+  - Axis D: report precision (severity, exploit path, evidence, impact, smallest remediation)
+
+  Start by exploring.total 48
+drwxr-xr-x 1 vgpnk vgpnk   162 Oct 24 22:35 .
+drwxr-xr-x 1 vgpnk vgpnk   496 Oct 24 21:31 ..
+drwxr-xr-x 1 vgpnk vgpnk   256 Oct 24 22:37 assimilation
+-rw-r--r-- 1 vgpnk vgpnk  4298 Oct 24 21:37 contract.md
+-rw-r--r-- 1 vgpnk vgpnk  6022 Oct 24 21:37 count-c1s.py
+-rw-r--r-- 1 vgpnk vgpnk  3094 Oct 24 21:37 count-c2.py
+drwxr-xr-x 1 vgpnk vgpnk   386 Oct 24 21:44 evidence
+drwxr-xr-x 1 vgpnk vgpnk    70 Oct 24 22:37 w1
+-rw-r--r-- 1 vgpnk vgpnk    17 Oct 24 22:37 w1-settle.tsv
+-rw-r--r-- 1 vgpnk vgpnk 22422 Oct 24 21:44 w1-spec.json
+---
+total 180
+drwxr-xr-x 1 vgpnk vgpnk   234 Oct 24 20:47 .
+drwxr-xr-x 1 vgpnk vgpnk   496 Oct 24 21:31 ..
+drwxr-xr-x 1 vgpnk vgpnk   194 Oct 24 20:23 assimilation
+drwxr-xr-x 1 vgpnk vgpnk     0 Oct 24 11:28 candidates
+-rw-r--r-- 1 vgpnk vgpnk 46994 Oct 24 20:12 conform.py
+-rw-r--r-- 1 vgpnk vgpnk  7549 Oct 24 11:30 contract.md
+-rwxr-xr-x 1 vgpnk vgpnk 10858 Oct 24 11:36 count-c1.py
+-rwxr-xr-x 1 vgpnk vgpnk  6484 Oct 24 11:33 count-c2.py
+-rwxr-xr-x 1 vgpnk vgpnk  5389 Oct 24 11:34 count-c3.py
+drwxr-xr-x 1 vgpnk vgpnk   470 Oct 24 20:54 evidence
+drwxr-xr-x 1 vgpnk vgpnk   174 Oct 24 11:30 fixtures
+drwxr-xr-x 1 vgpnk vgpnk    48 Oct 24 20:47 __pycache__
+drwxr-xr-x 1 vgpnk vgpnk   578 Oct 24 20:49 w1
+-rw-r--r-- 1 vgpnk vgpnk 94923 Oct 24 20:28 w1-spec.json
+---
+interactive-sessions
+reports
+round-10
+round-11
+round-2
+round-3
+round-4
+round-5
+round-6
+round-7
+round-8
+round-9
+waves
+worktrees
+Let me read the AGENTS.md, the round-43 contract, and the frozen counters. Also look at w1 directory and w1-spec.json./home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/assimilation/:
+total 32
+drwxr-xr-x 1 vgpnk vgpnk  256 Oct 24 22:37 .
+drwxr-xr-x 1 vgpnk vgpnk  162 Oct 24 22:35 ..
+-rw-r--r-- 1 vgpnk vgpnk 3456 Oct 24 22:36 append-block.md
+-rw-r--r-- 1 vgpnk vgpnk    0 Oct 24 21:38 collisions
+-rw-r--r-- 1 vgpnk vgpnk   25 Oct 24 22:37 collisions-post
+drwxr-xr-x 1 vgpnk vgpnk   90 Oct 24 22:37 guard
+-rw-r--r-- 1 vgpnk vgpnk  219 Oct 24 21:38 quarantine-slice
+-rw-r--r-- 1 vgpnk vgpnk 1286 Oct 24 21:40 refused.md
+-rw-r--r-- 1 vgpnk vgpnk 1190 Oct 24 21:38 reg-ids
+-rw-r--r-- 1 vgpnk vgpnk 1215 Oct 24 22:37 reg-ids-post
+-rw-r--r-- 1 vgpnk vgpnk  635 Oct 24 22:37 staged-ids
+drwxr-xr-x 1 vgpnk vgpnk   84 Oct 24 21:41 validate
+-rw-r--r-- 1 vgpnk vgpnk 2198 Oct 24 22:36 validate-receipt.txt
+
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/evidence/:
+total 72
+drwxr-xr-x 1 vgpnk vgpnk   386 Oct 24 21:44 .
+drwxr-xr-x 1 vgpnk vgpnk   162 Oct 24 22:35 ..
+-rw-r--r-- 1 vgpnk vgpnk  1991 Oct 24 21:38 census-start.txt
+-rw-r--r-- 1 vgpnk vgpnk    60 Oct 24 22:33 control-c1s-donothing.txt
+-rw-r--r-- 1 vgpnk vgpnk     0 Oct 24 22:33 control-c1s-green.txt
+-rw-r--r-- 1 vgpnk vgpnk    60 Oct 24 22:28 control-c1s-junk.txt
+-rw-r--r-- 1 vgpnk vgpnk   429 Oct 24 22:33 control-c2-donothing.txt
+-rw-r--r-- 1 vgpnk vgpnk   429 Oct 24 22:28 control-c2-green.txt
+-rw-r--r-- 1 vgpnk vgpnk   422 Oct 24 21:38 control-c2-junk.txt
+-rw-r--r-- 1 vgpnk vgpnk   130 Oct 24 21:42 disk-usage-r43.txt
+-rw-r--r-- 1 vgpnk vgpnk   463 Oct 24 21:42 s268-headers.txt
+-rw-r--r-- 1 vgpnk vgpnk 40895 Oct 24 21:44 wave-plan.json
+
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/:
+total 16
+drwxr-xr-x 1 vgpnk vgpnk   70 Oct 24 22:37 .
+drwxr-xr-x 1 vgpnk vgpnk  162 Oct 24 22:35 ..
+-rw-r--r-- 1 vgpnk vgpnk 2820 Oct 24 22:37 Exec4.md
+-rw-r--r-- 1 vgpnk vgpnk 1864 Oct 24 22:37 Exec5.md
+-rw------- 1 vgpnk vgpnk 7472 Oct 24 22:34 swarm-registry.json
+Let me read the key files: w1-spec.json (22KB), the counters count-c1s.py and count-c2.py, the wave-plan.json evidence, and the w1 Exec4/Exec5 files, plus swarm-registry.json. I'm the Sent2 seat — my report is Sent2.md. Let me figure out what the seat's role is. "Sent2" suggests sentinel seat 2. Let me look at the w1-spec.json which likely has the seat assignments.I am the Sent2 seat (sentinel role #2). My assigned task from the wave spec:
+
+  > "Sent2", role "sentinel", prompt: "Confirm no seat instruction asks for credentials, .env, or SSH keys, and that the wave context forbids secrets. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Sent2.md"
+
+  My job:
+  1. Confirm no seat instruction asks for credentials, .env, or SSH keys — that means scanning all seat prompts (w1-spec.json items, all 57 items) for credential/.env/SSH-key asks.
+  2. Confirm the wave context forbids secrets — the context says "Never read secrets."
+  3. Report to Sent2.md.
+
+  Godspeed axes for this seat:
+  - Axis A: coverage — did I scan every seat instruction in the spec (not just a sample)?
+  - Axis B: soundness — the check must be evidence-based (grep with regexes over the actual bytes of the spec, plus the wave-plan.json and any other dispatch surfaces that carry seat instructions).
+  - Axis C: zero mutation — read-only scan; write only my own report file Sent2.md.
+  - Axis D: adversarial depth — not just grep the spec; also check whether other seat-instruction carriers exist (w1-spec.json is the dispatch source; also the context field). Also check the swarm-registry.json in w1? That might contain additional seat info. And evidence/wave-plan.json (the planner's plan) may carry seat prompts too. Sent2 should confirm over all seat instruction surfaces.
+
+  Also per the Godspeed system prompt: "Confirm no seat instruction asks for credentials, .env, or SSH keys, and that the wave context forbids secrets." Also I should do a real adversarial check — e.g., check for instructions in other files that seats were pointed at (seat prompts may include paths to read; if a seat is told to read a file, and that file asks for secrets, that's an indirect ask). But scope: "no seat instruction asks for credentials, .env, or SSH keys" — the instructions are the prompts in w1-spec.json. I'll scan:
+  1. w1-spec.json context field and all 57 item prompts.
+  2. wave-plan.json (planner's plan — may embed seat instructions).
+  3. swarm-registry.json (w1 dir).
+  4. Any other files in round-43 that could carry seat instructions: contract.md, assimilation/*.md.
+
+  Let me also verify the reverse direction: does any seat instruction *forbid* secrets (context says "Never read secrets") — yes, the context field contains "Never read secrets."
+
+  Additionally, adversarial verification angle (from the system prompt: "Adversarially verify that every failed continuity preflight causes zero mutation" — that's more relevant to counter attacks, but my seat is narrow). I should stay within my assigned surface: Sent2 scope = secrets ask scan + context forbids secrets. The instruction says "Stop after the assigned surface."
+
+  But the wave context also says this is a "build + attack" wave and I'm a sentinel. My job is verification of the no-secrets-ask property. Let me be thorough but scoped:
+
+  1. Grep w1-spec.json for credential-ish patterns: `(?i)(credential|password|passwd|secret|\.env|ssh[-_ ]?key|id_rsa|private[-_ ]?key|token|api[-_ ]?key|\.ssh|AWS_|GITHUB_TOKEN|OPENAI_API|api[-_]?secret)` across all item prompts.
+  2. Verify the context contains "Never read secrets."
+  3. Also check each of the 57 prompts individually — enumerate them and run the regex per item, so the report has per-seat results.
+  4. Check other seat-instruction carriers (wave-plan.json, swarm-registry.json) for the same patterns.
+  5. Also check that no seat prompt points a seat at a secret-bearing path (e.g., ~/.ssh, ~/.env, /home/vgpnk/.config/...). E.g., Rev/Scribe/Scout seats read production files; Exec seats run commands. Commands reference only repo-relative paths. One command references `/home/vgpnk/Projects/shokunin/scripts/sources-census.sh` — that's a fleet script, fine.
+
+  Also, ~/.omp/agent/config.yml contains model routing but no secrets. I should not read secrets — I already read config.yml (it was explicitly named by the dispatch as the role routing table; contains no credentials).
+
+  Let me also confirm nothing in the prompts asks to cat .env or similar. Also check for prompts that might cause a seat to read secrets indirectly, e.g., "read RULES.md" is fine.
+
+  One more check: the swarm-registry.json (0600 perms, my own wave dir) — reading it is fine (it's in w1, not a secret store). Let me look at it to see if it contains additional seat instructions.
+
+  Also, per Godspeed: iterate cheap in parallel. Let me run the scans in one batch:
+
+  - jq extraction of prompts from w1-spec.json + regex scan per item
+  - grep over wave-plan.json and swarm-registry.json
+  - grep the whole round-43 tree for secret-ask patterns (excluding frozen counters? They're code; scanning is read-only and fine)
+  - confirm context string
+
+  Also verify the "forbids secrets" claim: the context says "Never read secrets." Also check round-43/contract.md — it says "No host service is mutated" but secrets? The context in w1-spec.json (which is the dispatch context) is what matters.
+
+  Let me also do a differential check: are there any files matching .env patterns in the repo that seats might touch? Not needed for the verdict, but the exploit angle: could a seat instruction indirectly cause secret exfiltration? E.g., Exec7 runs sources-census.sh validate --file ... — a fleet script; is that script reading secrets? I could statically inspect that script for secret access as part of "no seat instruction asks for credentials" diligence — but that's beyond prompt scan; still within sentinel spirit: seats executing commands must not read secrets. Let me check the script quickly (read-only) for env/secret reads. Actually the instruction says scan seat instructions. But a good sentinel checks the executed surface too: Exec1-8 commands. Those are all read-only repo commands. Exec3 runs tools/mori-sources-appendonly.py --selftest — repo tool. Exec7 runs the fleet census script — I can grep it for secret paths.
+
+  Plan the batch:
+
+  Batch 1 (parallel):
+  1. Bash: python3 script to load w1-spec.json, for each item run regexes on prompt, print per-item verdict; also check context.
+  2. Grep: pattern `(?i)(credential|password|passwd|secret|ssh[-_]?key|id_rsa|\.env\b|private[-_]?key|api[-_]?key|token)` over round-43 dir (content mode) — but "token" will hit nothing hopefully; contract may mention "token"? Let's see.
+  3. Grep: same pattern over wave-plan.json and swarm-registry.json.
+  4. Read: swarm-registry.json.
+
+  Then Batch 2: check census script + mori-sources-appendonly.py for secret reads (grep for `open(` on home paths, environ reads). Actually `os.environ` reads could be legit config. Let me grep for `environ`, `\.ssh`, `\.env`, `.netrc`, `.git-credentials`, `.gnupg`.
+
+  Then write the report.
+
+  Severity framing: my report should state findings. Expected result: PASS — no seat instruction asks for credentials, and context forbids secrets ("Never read secrets"). Also check the pacmand... no.
+
+  Wait — one more surface: the dispatch I received (the conversation's first user message) is the wave context + skill. It says "Never read secrets." Good.
+
+  Also should I check round-42 files for seat instructions? No — this round's seats are in round-43/w1-spec.json. Stop after assigned surface.
+
+  One nuance: "no seat instruction asks for credentials, .env, or SSH keys". The prompts: let me eyeball all 57 from the read above. Scanning mentally:
+
+  - MutC1S1-8: attack count-c1s.py in /tmp copies. No secrets. They say "Do not edit the lane counter." Fine.
+  - Rev1-12: re-derive claim attacks, re-run commands. No secrets.
+  - Crit1-11: falsify/bound attacks. No secrets.
+  - Scout1-12: recon only. Scout7 runs journalctl --disk-usage --no-pager — read-only journal query, no secrets (journal may contain sensitive data but --disk-usage prints only size aggregate). Scout12 "wave-slot status, read only". Fine.
+  - Scribe1-8: read-only prose checks. Fine.
+  - Exec1-8: run specific commands. Exec7 runs census script. Fine.
+  - Conn1, Simp1, Revenger1: no secrets.
+  - Sent1: search diff for systemctl, vacuum, pacman, kill, reset-failed. Fine.
+  - Sent2 (me): the secrets confirmation itself.
+
+  Context: "Never write fleet files... Never read secrets. Never mutate a host service. pacman is paused host-wide." — yes, forbids secrets.
+
+  Regex patterns to run per prompt:
+  - `(?i)credential`
+  - `(?i)password|passwd|passphrase`
+  - `\.env` (also `(?i)\benv file\b`)
+  - `(?i)ssh[-_ ]?(key|keys|private|pub)|id_rsa|id_ed25519|\.ssh\b|authorized_keys`
+  - `(?i)private[-_ ]?key|secret[-_ ]?key|api[-_ ]?key|access[-_ ]?token|auth[-_ ]?token|\btoken\b`
+  - `(?i)\bsecrets?\b` — expected hits: the context's "Never read secrets" and my own Sent2 prompt. That's fine — those are prohibitions, not asks.
+
+  Distinguish asks vs forbids: a hit is a "forbid" if the match is within a prohibition phrase (never/read secrets forbidden). I'll classify.
+
+  Also scan the two counter files and contract.md? The counters contain no secret-asks (they're code). Not seat instructions, but included in "wave context" surfaces. The verdict text only concerns seat instructions + wave context. I'll include the whole w1-spec.json scan (covers context + all prompts) as primary, and note secondary carriers.
+
+  Also — adversarial angle worth one check: does any seat prompt direct a seat to read a file whose content asks for secrets (indirect injection)? The prompts point at: count-c1s.py, count-c2.py, count-c1.py, conform.py, S348/S349/S470 rows (corpus/SOURCES.md), SCORECARD.md, journal pages (external fetch — Rev8/Rev9 "matches the opened subprocess page" — opened pages are man7.org / man pages; s268-headers.txt in evidence), failed-scope-keeps-limit-r50.md, journal-reach-at-ceiling-r46.md, QUALITY 115 cites considerthese/2026-10-24.md (in shokuknow — read-only; scribe must not edit), README round-43 note, PROVINCE.md files, census validate, wave-slot status. None of these is a secret store. I can spot-check the local ones for injected secret-asks with a repo-wide grep for `(?i)(read|fetch|send|curl|post).*(secret|credential|password|token|\.env|ssh)` — but "Stop after the assigned surface." A repo-wide content grep for ask-phrases in the files seats are told to read is arguably within surface ("no seat instruction asks for credentials" — indirectly). I'll do one bounded grep over the referenced instruction-bearing files (contract.md, assimilation/, evidence/) rather than the whole repo, to bound scope. Actually evidence/wave-plan.json is 40KB — the planner plan; grep it.
+
+  Let me also verify there are no `.env`-style files that a seat might be tempted to read? Not needed — verdict is about instructions.
+
+  Let me run the batch now.
+
+  Command 1 (per-item scan with python):
+
+  ```python
+  import json, re
+  spec = json.load(open('.ufo/waves/round-43/w1-spec.json'))
+  ctx = spec['context']
+  pats = {
+   'credential': r'(?i)credential',
+   'password': r'(?i)passwo?rd|passphrase',
+   'dotenv': r'(?i)\.env\b|env file|dotenv',
+   'ssh': r'(?i)\.ssh\b|ssh[-_ ]?key|id_rsa|id_ed25519|id_ecdsa|authorized_keys',
+   'key/token': r'(?i)private[-_ ]?key|secret[-_ ]?key|api[-_ ]?key|access[-_ ]?token|auth[-_ ]?token|\bapi[-_ ]?secret\b|\btoken\b',
+   'secret-word': r'(?i)\bsecrets?\b',
+  }
+  hits = []
+  def classify(text):
+      out = []
+      for name, p in pats.items():
+          for m in re.finditer(p, text):
+              s = max(0, m.start()-40); e = min(len(text), m.end()+40)
+              out.append((name, text[s:e].replace('\n',' ')))
+      return out
+  print('=== context hits ===')
+  for name, snip in classify(ctx):
+      print(f'[{name}] ...{snip}...')
+  print()
+  print('=== per-item ===')
+  for it in spec['items']:
+      h = classify(it['prompt'])
+      flag = 'CLEAN' if not h else 'HIT'
+      print(f"{it['name']:10s} {it['role']:16s} {flag}")
+      for name, snip in h:
+          print(f'    [{name}] ...{snip}...')
+  ```
+
+  Need cwd = lane repo. Fine.
+
+  Command 2: grep wave-plan.json + swarm-registry.json + contract.md + assimilation + evidence for ask patterns.
+
+  Grep tool: pattern `(?i)(credential|password|passphrase|id_rsa|id_ed25519|authorized_keys|\.env\b|private[-_ ]?key|api[-_ ]?key|access[-_ ]?token|secret)` with path round-43, output content, -n. That covers everything in one go, including w1-spec.json (dup of command 1, fine) and Exec4.md etc.
+
+  Command 3: Read swarm-registry.json (mode 600 — it's my wave dir; reading is allowed? It's in w1 which is reportDir; it was created by dispatcher presumably. Nothing says I can't read it. It's not a secret store. I'll read it to check it doesn't carry extra seat instructions with secret asks.)
+
+  Command 4: grep the fleet census script referenced by Exec7 and the repo tool referenced by Exec3 for secret reads: pattern `(?i)(\.ssh|\.env|\.netrc|git-credentials|\.gnupg|password|credential|token)` in /home/vgpnk/Projects/shokunin/scripts/sources-census.sh and mori-shokunin/tools/mori-sources-appendonly.py. This verifies "no seat instruction causes secret reads" for the exec surface.
+
+  Let me fire batch 1: the python scan (bash), the Grep over round-43, the Read of swarm-registry.json, and the Grep over the two scripts. All independent.
+
+  Note: Grep tool default skips sensitive files — .env always filtered. That's fine; w1-spec.json is not sensitive. swarm-registry.json is mode 600 but grep tool doesn't filter by perms (only by name patterns for secrets). Should be OK.
+
+  Then write Sent2.md with: verdict, evidence (per-seat table, patterns used, hits classified), the confirmations, plus the standard Report trailer? The task says "Every Report: trailer path is relative to ..." — meaning when a seat writes a report it ends with a `Report: <path>` trailer. I'll end my file with `Report: .ufo/waves/round-43/w1/Sent2.md`.
+
+  Also record tooling installs: none needed (python3/git present). No installs — state that.
+
+  Let me also double check the w1 directory currently has Exec4.md, Exec5.md — other seats writing concurrently. I only write Sent2.md.
+
+  Fire.
+
+• I'm seat **Sent2** (sentinel): confirm no seat instruction asks for credentials/.env/SSH keys, and that the wave context forbids secrets. Axes for this seat:
+
+  1. **Coverage** — every seat instruction surface (all 57 items in `w1-spec.json`, plus secondary carriers: planner plan, registry, contract, assimilation), not a sample.
+  2. **Soundness** — regex-classified asks vs. forbids on actual bytes, re-run not copied.
+  3. **Zero mutation** — read-only scan; write only `Sent2.md`.
+  4. **Scope discipline** — stop after the secrets surface.Traceback (most recent call last):
+  File "<stdin>", line 2, in <module>
+FileNotFoundError: [Errno 2] No such file or directory: '.ufo/waves/round-43/w1-spec.json'
+
+
+• The first bash failed because cwd is the fleet root (`/home/vgpnk/Projects/shokunin`), not the lane. Retry with the lane path. Also run the census script scan (Exec7 runs `/home/vgpnk/Projects/shokunin/scripts/sources-census.sh`).
+
+  Findings so far from the Grep over round-43:
+  - w1-spec.json: only two hits — the context's "Never read secrets" (a prohibition) and Sent2's own prompt (mentions the words as the audit subject). No seat instruction asks for credentials/.env/SSH keys.
+  - wave-plan.json: same context + the Sent2 task text. Same classification.
+  - assimilation/validate/* corpus files: many "credential"/"secret" mentions but those are (a) not seat instructions — they're knowledge/lesson prose already committed, and (b) prohibitions/policy prose ("mori never reads or reports credential material", "credential material (→ kagi)"). Note: the validate/PROVINCE.md says kagi owns secrets — consistent forbidding.
+  - Exec4.md already contains a "Not touched: ... secrets" statement — a report file, not an instruction.
+
+  One important check: are the assimilation corpus files part of "seat instructions"? No — seats are told to read production files like corpus/SOURCES.md (the real one at repo root), not the validate slice. But Rev/Scribe seats may read corpus files that contain the word "credential" — that's not an ask.
+
+  Now re-run the per-item scan with correct path, and scan sources-census.sh. Also verify the wave-plan.json items match w1-spec.json items (the carrier equivalence): quick python compare of prompt sets.
+
+• `swarm-registry.json` carries only role/kind stubs (no instructions). The round-43 grep shows the only instruction-surface hits are the context's own prohibition (`Never read secrets`) and my seat's own audit prompt. Re-running the per-item scan with the correct lane path, plus the Exec7-cited fleet script scan and spec↔plan equivalence check:=== CONTEXT (1241 chars) ===
+  [SECRETWORD] ...Never mutate lane Git/jj or the lane index. Never read secrets. Never mutate a host service. pacman is paused host-wi...
+=== PER-ITEM (64 items) ===
+MutC1S1    mutation-tester   CLEAN
+MutC1S2    mutation-tester   CLEAN
+MutC1S3    mutation-tester   CLEAN
+MutC1S4    mutation-tester   CLEAN
+MutC1S5    mutation-tester   CLEAN
+MutC1S6    mutation-tester   CLEAN
+MutC1S7    mutation-tester   CLEAN
+MutC1S8    mutation-tester   CLEAN
+Rev1       reviewer          CLEAN
+Rev2       reviewer          CLEAN
+Rev3       reviewer          CLEAN
+Rev4       reviewer          CLEAN
+Rev5       reviewer          CLEAN
+Rev6       reviewer          CLEAN
+Rev7       reviewer          CLEAN
+Rev8       reviewer          CLEAN
+Rev9       reviewer          CLEAN
+Rev10      reviewer          CLEAN
+Rev11      reviewer          CLEAN
+Rev12      reviewer          CLEAN
+Crit1      critic            CLEAN
+Crit2      critic            CLEAN
+Crit3      critic            CLEAN
+Crit4      critic            CLEAN
+Crit5      critic            CLEAN
+Crit6      critic            CLEAN
+Crit7      critic            CLEAN
+Crit8      critic            CLEAN
+Crit9      critic            CLEAN
+Crit10     critic            CLEAN
+Crit11     critic            CLEAN
+Scout1     scout             CLEAN
+Scout2     scout             CLEAN
+Scout3     scout             CLEAN
+Scout4     scout             CLEAN
+Scout5     scout             CLEAN
+Scout6     scout             CLEAN
+Scout7     scout             CLEAN
+Scout8     scout             CLEAN
+Scout9     scout             CLEAN
+Scout10    scout             CLEAN
+Scout11    scout             CLEAN
+Scout12    scout             CLEAN
+Scribe1    scribe            CLEAN
+Scribe2    scribe            CLEAN
+Scribe3    scribe            CLEAN
+Scribe4    scribe            CLEAN
+Scribe5    scribe            CLEAN
+Scribe6    scribe            CLEAN
+Scribe7    scribe            CLEAN
+Scribe8    scribe            CLEAN
+Exec1      executor          CLEAN
+Exec2      executor          CLEAN
+Exec3      executor          CLEAN
+Exec4      executor          CLEAN
+Exec5      executor          CLEAN
+Exec6      executor          CLEAN
+Exec7      executor          CLEAN
+Exec8      executor          CLEAN
+Conn1      connector         CLEAN
+Simp1      simplifier        CLEAN
+Revenger1  revenger          CLEAN
+Sent1      sentinel          CLEAN
+Sent2      sentinel          HIT
+    [CREDENTIAL] ...Confirm no seat instruction asks for credentials, .env, or SSH keys, and that the wave context forbids...
+    [DOTENV] ...Confirm no seat instruction asks for credentials, .env, or SSH keys, and that the wave context forbids secret...
+    [SSH] ...irm no seat instruction asks for credentials, .env, or SSH keys, and that the wave context forbids secrets. Report at ...
+    [SECRETWORD] ..., .env, or SSH keys, and that the wave context forbids secrets. Report at /home/vgpnk/Projects/shokunin/mori-shokunin...
+=== items with any hit: 1/64 ===
+plan item count: 0 | spec item count: 64
+name sets equal: False
+role/prompt mismatches spec vs plan: none
+plan context == spec context: True
+rc=1 (1 = no matches)
+-rwxr-xr-x 1 vgpnk vgpnk 35466 Oct 19 21:22 /home/vgpnk/Projects/shokunin/scripts/sources-census.sh
+
+

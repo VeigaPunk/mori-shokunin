@@ -2585,3 +2585,11 @@ verbatim directive bytes.
   round-43 file at the fleet root (`bm.json`, `live.html`, `live_s228.html`
   there are dated 18:07, predate this round, name no lane and were left
   untouched, as were the driver's `.ufo/state/*` files).
+
+### Round-43 seat logs (L1)
+
+The 72 seat logs (64 wave seats under `.ufo/waves/round-43/logs/wave64/`, 8 residual
+seats under `.ufo/waves/round-43/logs/residual8/`) are committed with the round as
+evidence: they carry each dead seat's last error text (`provider.rate_limit: 429`
+in 34 of the 64 wave seats) and the residue of the two residual seats that were
+killed at their seat timeout without filing a report.

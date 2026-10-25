@@ -1,0 +1,301 @@
+kimi version 2.3.1
+• Let me understand the task. I'm a UFO critic seat in a "mori round 43" wave. My assignment:
+
+  "Falsify or bound this attack: a do-nothing replay of e3a2b58 that still prints C1S=met. If you cannot falsify it, say what you ran and why it failed. Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Crit1.md"
+
+  So there's a claim/attack to evaluate: "a do-nothing replay of e3a2b58 that still prints C1S=met". I need to falsify or bound this. e3a2b58 is likely a git commit in the lane repo. C1S is some counter (frozen counters at .ufo/waves/round-42/count-c1.py and .ufo/waves/round-43/count-c1s.py and count-c2.py).
+
+  The attack claim seems to be: replaying commit e3a2b58 (presumably an earlier round's work) without doing new work would still print "C1S=met" — i.e., the counter C1S would report met even for stale/do-nothing work, which would be a false provenance / premature saturation issue. I need to test: if I do nothing new (just replay e3a2b58's state), does count-c1s.py print C1S=met?
+
+  Let me start by exploring the repo structure to understand what's going on.
+
+  Plan:
+  1. Read the frozen counters (read-only, they're data): .ufo/waves/round-43/count-c1s.py, count-c2.py, round-42/count-c1.py.
+  2. Find e3a2b58 in git log — what does it do.
+  3. Copy repo state to /tmp sandbox, replay e3a2b58 (checkout that commit?), run counter copy in scratch, see whether it prints C1S=met.
+  4. Determine whether the attack is real (counter can be gamed by stale state), bound it, and propose smallest safe correction.
+  5. Write report.
+
+  Constraints: Never mutate lane git/jj/index; run code only in /tmp sandboxes; write only my own report file. So all experiments: clone/copy the repo into /tmp and experiment there.
+
+  Let me start with parallel reads: git log to find e3a2b58, ls of .ufo/waves/round-43, read counters.
+
+  Let me be careful: read-only operations in the lane repo are fine (git log, cat). Writes only to my report file and /tmp.
+
+  Let me begin.e3a2b58f round-42 verifier spot-check (integrator, hyaku): non-author admit/reject
+25200325 round-42: S235 whitepaper copy committed by name (1 MiB dir-skip), scratch mirror recursion removed
+62b95e51 round-42: wave — 18/64 seat reports + registry, dispatch evidence, census-end 238 exit 0, S262 erratum, wave record
+f3ec0977 round-42: claim receipts — C2/C3 met, C1 honest stop (frozen counter defect at final check, no-harm re-derived by hand), measured outcomes, lesson M4, wave spec + plan
+34b92673 round-42: data — conform v5 + killed mutants, d72ac16 manifest, registry 231->238, two admitted entries + S347 knowledge, LOG/SCORECARD errata, lesson, QUALITY 114
+316f3dcf round-42: assimilation scratch — collision guard proof, transformed append block, mirror validation rc=0, refusal record
+249c7e73 round-42: freeze — contract, three counters, fixtures, v4 control receipts (inherited same-round tree, re-verified)
+9de7323d round-41 verifier spot-check (integrator, hyaku): non-author admit/reject
+46275ca4 round-41 attempt3: wave evidence (19 seat reports + dispatch record), receipt repairs (census-end header, calibration-after measured-revision), lesson M27/M28 + M-id adjudication + S230 quote erratum, LOG/SCORECARD attempt-3 notes
+7450722e round-41: after-measurement receipts (control-after, calibration-after, census-end), SCORECARD r41 declaration, lesson fix
+c5326c61 round-41: single-line calibration correction records (frozen counter regex)
+aa161e99 round-41: C3 correction records (35/17), r41 lesson, S230/S231 source copies, freeze verify + attempt-1 receipt, round22 strays
+e4293ad9 considerthese: 2026-10-24 daily reflection
+d72ac167 round-41: freeze C1-C3 contracts and controls
+62a207f7 round-40 verifier spot-check (integrator, hyaku): non-author admit/reject
+ede486b7 round-40: repair S229 registry placement (E12: row inside ## Registry) + commit referenced gutted-conjunct fixture
+8d3badd0 round-40: evidence receipts, wave spec (66-seat v2, validated), SCORECARD/LOG/lesson
+265a955c round-40: instruments — conform v3 (P-C10), gate v3 (P-C11), S229, r39 erratum
+bb1f2457 round-39 verifier spot-check (integrator, hyaku): non-author admit/reject
+44151c5b round-39: wave-1 report RevC9Ancestry (merge-base re-derivation PASS; A/C prose swap already recorded) — wave 1 complete, 30/30 seats returned
+---
+commit e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2
+Author: protocol-shokunin <protocol@shokunin.local>
+Date:   Sat Oct 24 21:13:07 2026 -0300
+
+    round-42 verifier spot-check (integrator, hyaku): non-author admit/reject
+
+ corpus/lessons/round-42-verifier-spotcheck.md | 173 ++++++++++++++++++++++++++
+ 1 file changed, 173 insertions(+)
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-42/:
+total 180
+drwxr-xr-x 1 vgpnk vgpnk   234 Oct 24 20:47 .
+drwxr-xr-x 1 vgpnk vgpnk   496 Oct 24 21:31 ..
+drwxr-xr-x 1 vgpnk vgpnk   194 Oct 24 20:23 assimilation
+drwxr-xr-x 1 vgpnk vgpnk     0 Oct 24 11:28 candidates
+-rw-r--r-- 1 vgpnk vgpnk 46994 Oct 24 20:12 conform.py
+-rw-r--r-- 1 vgpnk vgpnk  7549 Oct 24 11:30 contract.md
+-rwxr-xr-x 1 vgpnk vgpnk 10858 Oct 24 11:36 count-c1.py
+-rwxr-xr-x 1 vgpnk vgpnk  6484 Oct 24 11:33 count-c2.py
+-rwxr-xr-x 1 vgpnk vgpnk  5389 Oct 24 11:34 count-c3.py
+drwxr-xr-x 1 vgpnk vgpnk   470 Oct 24 20:54 evidence
+drwxr-xr-x 1 vgpnk vgpnk   174 Oct 24 11:30 fixtures
+drwxr-xr-x 1 vgpnk vgpnk    48 Oct 24 20:47 __pycache__
+drwxr-xr-x 1 vgpnk vgpnk   578 Oct 24 20:49 w1
+-rw-r--r-- 1 vgpnk vgpnk 94923 Oct 24 20:28 w1-spec.json
+
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/:
+total 48
+drwxr-xr-x 1 vgpnk vgpnk   162 Oct 24 22:35 .
+drwxr-xr-x 1 vgpnk vgpnk   496 Oct 24 21:31 ..
+drwxr-xr-x 1 vgpnk vgpnk   256 Oct 24 22:37 assimilation
+-rw-r--r-- 1 vgpnk vgpnk  4298 Oct 24 21:37 contract.md
+-rw-r--r-- 1 vgpnk vgpnk  6022 Oct 24 21:37 count-c1s.py
+-rw-r--r-- 1 vgpnk vgpnk  3094 Oct 24 21:37 count-c2.py
+drwxr-xr-x 1 vgpnk vgpnk   386 Oct 24 21:44 evidence
+drwxr-xr-x 1 vgpnk vgpnk    70 Oct 24 22:37 w1
+-rw-r--r-- 1 vgpnk vgpnk    17 Oct 24 22:37 w1-settle.tsv
+-rw-r--r-- 1 vgpnk vgpnk 22422 Oct 24 21:44 w1-spec.json
+Let me read AGENTS.md, the round-43 contract, and the counters. Also look at w1 spec and what e3a2b58 contains. The attack: "a do-nothing replay of e3a2b58 that still prints C1S=met" — meaning replaying the round-42 verifier spot-check commit (adding corpus/lessons/round-42-verifier-spotcheck.md) somehow makes count-c1s.py print C1S=met without doing round-43 work. That would be a false-provenance / counter-gaming defect.
+
+  Let me read the counters and contract.Now I understand the setup. The attack to falsify/bound:
+
+  "a do-nothing replay of e3a2b58 that still prints C1S=met."
+
+  That is: replay commit e3a2b58 (the round-42 verifier spot-check commit, which only adds corpus/lessons/round-42-verifier-spotcheck.md) — a "do-nothing" replay — and somehow the counter count-c1s.py still prints C1S=met.
+
+  The claim in the contract (line 32-36): "A rev that lacks this counter, or whose copy is not byte-identical to the running file, prints `C1S=unmet` and does not run the later checks. That is the do-nothing result on the entering tip."
+
+  Wait — key detail: the entering tip e3a2b58 does NOT contain `.ufo/waves/round-43/count-c1s.py` (round-43 files were committed later? Let me check). Actually the counter file exists in the working tree at round-43. Is it committed? Let me check git status and whether round-43 files are committed at HEAD (e3a2b58 is HEAD presumably).
+
+  Actually, HEAD appears to be e3a2b58 ("round-42 verifier spot-check"). The round-43 counter files exist on disk but may be untracked/uncommitted working-tree files. So the "do-nothing" result: `python3 .ufo/waves/round-43/count-c1s.py e3a2b58` — the running file exists on disk (uncommitted), but `git show e3a2b58:.ufo/waves/round-43/count-c1s.py` fails → at_rev is None → self_at_rev FAIL → C1S=unmet. Good.
+
+  But the attack: "a do-nothing replay of e3a2b58 that still prints C1S=met". Interpretations:
+
+  1. Someone replays e3a2b58 (cherry-pick/re-commit) into a new rev, then claims C1S=met without doing round-43 work. For that to print met, the rev must contain the counter byte-identical... but a replay of e3a2b58 wouldn't include round-43 files, so it would print unmet. Unless...
+
+  2. The `--repo` flag: the counter uses `git -C LANE show rev:path`. If you run the counter from a *clone* with `--repo` pointing at a scratch clone that contains the round-43 counter committed... but that's the "Green C1S" control, not do-nothing.
+
+  3. A subtle hole: `git_bytes` uses `LANE` which is swapped by `--repo`. The check `self_at_rev` compares running file bytes to `<rev>:SELF_REL` from LANE. If someone runs the counter in the lane repo itself with rev=e3a2b58 — the file is uncommitted, so unmet.
+
+  4. Another hole: `git show rev:path` with a rev that has the file... The attack as stated: "a do-nothing replay of e3a2b58 that still prints C1S=met". Maybe the replay includes *index state* — e.g., using `git commit-tree` or replaying with the working tree included? Hmm.
+
+  5. Potential real bug: In `git_bytes`, `subprocess.run(["git", "-C", LANE, "show", "%s:%s" % (rev, path)])` — if LANE is the lane repo and rev is e3a2b58, and path is `.ufo/waves/round-43/count-c1s.py` — does e3a2b58 contain that file? Only if round-43 files were committed before e3a2b58. Let me check: `git ls-tree e3a2b58 .ufo/waves/round-43/`. The round-43 files have mtime Oct 24 21:37, and e3a2b58 is dated Oct 24 21:13. Likely uncommitted. Let me verify with git status / git ls-tree.
+
+  Also check `--shared` clone: `git clone --shared LANE clone` — shared clones use alternates to the original object store; checkout of rev works. Then `run([... tools/mori-sources-appendonly.py --selftest], cwd=clone)`. Fine.
+
+  Now, my job as critic: falsify or bound the attack. The attack is a claimed do-nothing replay that prints C1S=met. I need to:
+
+  - Attempt to construct such a replay in /tmp sandbox: e.g., in a scratch clone, replay e3a2b58 (or just use e3a2b58 directly) and run the round-43 counter against it; verify it prints C1S=unmet.
+  - Try adversarial variants that a "do-nothing" attacker could plausibly do while still being "do-nothing": 
+    - Run counter with `--repo` pointing to a clone that happens to have the file committed (but that's not do-nothing — committing the counter is the required work? Actually wait — is committing the counter file part of round-43 work, or part of infrastructure? The contract says the "Green C1S" control is "a scratch clone of the entering tip with this counter committed byte-identical, scored with --repo pointing at that clone, prints C1S=met". So committing the counter alone is NOT sufficient — you also need: frozen counter sha matches at rev (yes at entering tip), frozen sig argv/timeout (yes), re-execution of frozen counter crashes with TypeError (yes — since frozen counter's run(argv, timeout) gets called with cwd kwarg), noharm selftest pass=22 (yes at entering tip?), v5 selftest pass=17 (yes), mutants killed (yes). Hmm! Wait — if all of those pass at the entering tip, then merely committing the round-43 counter file at the entering tip and scoring with --repo pointing at that clone prints C1S=met. That IS essentially "do-nothing" — the work is only committing the counter file itself!
+
+  Hmm wait, but that's exactly what the contract intends? Let me re-read: "the do-nothing result on the entering tip" prints C1S=unmet because the rev lacks the counter. The Green C1S control explicitly is "a scratch clone of the entering tip with this counter committed byte-identical, scored with --repo pointing at that clone, prints C1S=met". So the contract acknowledges that committing just the counter to a clone of the entering tip = met. That's by design: P-C1S is "operability" — the claim is that the successor counter runs and the inherited frozen pieces behave as expected. The actual lane work includes committing the counter into the lane. So "do-nothing replay of e3a2b58" (i.e., no new commit at all) prints unmet — good.
+
+  The attack I must falsify or bound: "a do-nothing replay of e3a2b58 that still prints C1S=met". So someone claims: you can replay e3a2b58 (i.e., a rev identical in tree to the entering tip) and still get C1S=met — meaning the counter is gamed/false-provenance: met without the round-43 counter being present? How could that happen?
+
+  Possible genuine defects to test in the counter:
+
+  a) `git_bytes(rev, path)` with rev = e3a2b58 and LANE = lane repo: `git show e3a2b58:.ufo/waves/round-43/count-c1s.py`. If the round-43 directory is NOT tracked at e3a2b58, returns None → unmet. Verify.
+
+  b) Rev-parsing pitfalls: `git show <rev>:<path>` — if rev is something like `e3a2b58:.ufo/waves/round-43/count-c1s.py`? No.
+
+  c) The `--repo` global swap: LANE is used for both `git_bytes` and for running the frozen counter with `--repo LANE` and for the sandbox clone source. If an attacker runs `python3 count-c1s.py e3a2b58 --repo /tmp/clone-with-counter-committed`, then self_at_rev checks the clone's rev... The rev argument is the same string. If the clone has the counter committed at some rev X but you pass rev=e3a2b58, `git show e3a2b58:...` in the clone fails (if e3a2b58 there lacks the file) → unmet. If you pass rev=X (the doctored clone's rev), then... self_at_rev passes, frozen sha passes, sig passes, clone of the doctored repo, checkout X, noharm selftest, v5 selftest, mutants, frozen crash — all pass → C1S=met. But that's the Green control by design; the doctored rev *contains the counter*, so it's not "do-nothing" — though it is "do-nothing" in the sense of no round-43 domain work (no SOURCES row, no corpus work). Hmm — is that within the attack scope? The attack says "do-nothing replay of e3a2b58". A replay that adds the counter file is not a pure replay.
+
+  But wait — the real question: can a rev *lacking* the round-43 counter print met? The gate `self_at_rev` requires at_rev == running bytes. The running file is the counter itself. So a rev lacking the counter → unmet, always. The only way around: make `git_bytes` return the running bytes for a rev that lacks the path. `git show rev:path` returns the path's blob at rev. If the rev lacks the path, rc != 0 → None. Unless... `rev` is attacker-controlled (it's argv). What if rev contains a colon or glob? `git show 'e3a2b58:.ufo/waves/round-43/count-c1s.py'` is the format. rev is used as `"%s:%s" % (rev, path)`. If attacker passes rev = `e3a2b58:.ufo/waves/round-43/count-c1s.py`... then the string becomes `e3a2b58:.ufo/waves/round-43/count-c1s.py:.ufo/waves/round-43/count-c1s.py` — invalid. What about rev = e3a2b58^{tree}? Same tree → still lacks file.
+
+  Hmm, but there's a subtler one: `--repo` swap happens AFTER rev parsing but LANE is used in git_bytes. Attacker scenario "do-nothing replay of e3a2b58 that still prints C1S=met" could be: run the counter with `--repo` pointing at a *different* repo where the counter IS committed, while claiming to score the lane's e3a2b58 replay. E.g., the scorer runs `python3 .ufo/waves/round-43/count-c1s.py <newrev> --repo /tmp/green`. But the protocol presumably scores against the lane repo by default. The attack as framed is about the lane: a do-nothing replay of e3a2b58 committed into the lane (e.g., cherry-pick producing a new commit with the same tree, minus round-43 files... wait, a cherry-pick of e3a2b58 onto e3a2b58 is empty).
+
+  Actually, hold on. Let me reconsider: maybe the attack is that HEAD is e3a2b58 and round-43 files are uncommitted in the working tree. A "do-nothing replay" — re-commit e3a2b58's message/author to produce a new lane tip WITHOUT adding round-43 content — then run the counter against the new tip. The counter reads `git show newrev:...` → None → unmet. So falsified: the counter correctly prints unmet.
+
+  But there's a subtle working-tree leakage: `git_bytes` uses `git -C LANE show rev:path` — only committed bytes. Good. But the *noharm selftest* runs `tools/mori-sources-appendonly.py` from the sandbox clone at rev — clean. The v5 selftest runs from the clone at rev. The frozen counter re-execution: `run([sys.executable, frozen_path, rev, "--repo", LANE])` where frozen_path is written from the *committed* frozen bytes. Clean.
+
+  One more: `check("self_at_rev", ...)` — `running = open(os.path.abspath(__file__), "rb").read()`. If someone runs the counter from a directory where the file differs... not relevant.
+
+  Also `git clone --shared` — alternates; if LANE has uncommitted round-43 files, the clone's checkout at rev won't include them. Good.
+
+  Now the deeper adversarial question: is there ANY rev in the lane (including future replays) that lacks round-43 work yet passes? The counter only verifies inherited round-41/42 artifacts + the counter's own presence. So "C1S=met" is achievable by ANY commit that merely adds the byte-identical counter file to the entering tip — zero domain work. That's a real bound on the counter's meaning: C1S=met does not certify any round-43 SOURCES row or corpus work; it certifies only operability of the toolchain, which the contract itself says ("landing it does not by itself print C1S=met" refers to the SOURCES row). Is that a defect? The contract's P-C1S sentence defines C1S=met exactly as those checks; the do-nothing on the *entering tip* is unmet. The Green control explicitly blesses "clone of entering tip + counter committed" as met. So the "attack" (do-nothing replay prints met) is FALSE for a pure replay (no counter file), and TRUE-by-design for "replay + commit the counter itself" — which is not do-nothing (it commits the instrument) and is explicitly the contract's green control.
+
+  Wait, actually — re-read the attack: "a do-nothing replay of e3a2b58 that still prints C1S=met". Maybe the intended meaning: someone replays e3a2b58 as the round-43 wave (i.e., does nothing new in round-43) and the counter prints met. For the counter to even run it must exist... The counter at rev is required. On the entering tip it's absent → unmet. So the falsification experiment: 
+
+  1. In /tmp, clone the lane (or use a scratch clone), create a replay rev of e3a2b58 (e.g., `git commit-tree` with same tree, new message "replay"), run the round-43 counter against it (from the lane working tree, since the counter file must be run from somewhere — the running file is the lane's uncommitted counter). Expect C1S=unmet with self_at_rev FAIL (absent).
+
+  2. Also run against e3a2b58 directly: expect unmet.
+
+  3. Then bound: attempt the strongest counterexample — a scratch clone with ONLY the counter file committed on top of e3a2b58 (pure replay + instrument), run with --repo pointing at the scratch clone. This will likely print C1S=met — that's the contract's green control, and I should note it as the bounded sense in which "do-nothing" gets met: the only delta is the counter file itself (byte-identical), no domain work. Whether that's a defect is a per-axis judgment; the contract explicitly defines it, so it's by-design, not a hidden regression. But wait — I should check the sandbox-clone noharm and v5 selftest at the entering tip actually pass; if they pass, green prints met. Let me actually run it.
+
+  Also important: verify the do-nothing control the contract demands ("Do-nothing C1S: the counter against the entering tip prints C1S=unmet") — I can verify that in my sandbox without mutating the lane (running the counter is read-only; it creates /tmp sandboxes only). Running `python3 .ufo/waves/round-43/count-c1s.py e3a2b58` in the lane is allowed (code execution? "Run code only in /tmp sandboxes." Hmm — the counter itself creates its sandbox in /tmp; running the counter from the lane working dir executes the lane's counter... The rule says run code only in /tmp sandboxes. The counter is the frozen instrument; the L1/planner will run it too. To be safe, copy the counter to /tmp and run it from there with --repo pointing at the lane for the do-nothing check? But `self_at_rev` compares the running file to `<rev>:...` — if I run a /tmp copy, `os.path.abspath(__file__)` is the /tmp copy, bytes identical → same behavior. The check compares bytes, not path. So running a byte-identical copy in /tmp is faithful. But `LANE` default points to the lane; git_bytes uses `git -C LANE` — read-only. The sandbox clone `git clone --shared LANE` — read-only w.r.t. lane. So I can run everything with copies in /tmp. 
+
+  But careful: the counter writes nothing to the lane. It's safe. However, to comply strictly with "Run code only in /tmp sandboxes", I'll copy the counter and the repo into /tmp and run there. Actually `git clone --shared` requires LANE to be a git repo — I can pass --repo /tmp/lane-clone where /tmp/lane-clone is a full clone of the lane (not shared), so nothing touches the lane. Let me do: `git clone` (full, or --shared is fine read-only too, but full clone avoids any write to the source? git clone never writes to source; --shared only reads). I'll do a plain clone in /tmp for cleanliness, then run the counter copies with --repo /tmp/lane-clone.
+
+  Hmm, but one nuance: `git -C LANE show rev:path` — with LANE=/tmp/lane-clone, fine.
+
+  Plan of experiments (all in /tmp):
+
+  E1: Do-nothing on entering tip: run counter (byte-identical /tmp copy) with rev=e3a2b58, --repo=/tmp/lane-clone. Expect: check self_at_rev FAIL (absent) → C1S=unmet, exit 1. This falsifies "do-nothing replay of e3a2b58 prints C1S=met".
+
+  E2: Do-nothing *replay* rev: in /tmp/lane-clone, create commit R = commit-tree of e3a2b58's tree with new message/author (replay with no content delta, and also a cherry-pick style replay that includes round-43 uncommitted files? no — uncommitted files aren't in the tree). Run counter with rev=R. Expect unmet, self_at_rev absent.
+
+  E3 (bound / strongest counterexample): scratch clone at e3a2b58 + exactly one new commit adding ONLY `.ufo/waves/round-43/count-c1s.py` byte-identical (and nothing else). Run counter with --repo pointing at scratch, rev=R3. Expect: passes self_at_rev, frozen_sha (entering tip has r42 counter), frozen_sig, noharm_cwd (need pass=22 fail=0 at entering tip — check), v5_selftest_17, mutants, frozen_still_crashes → C1S=met. This demonstrates: the ONLY lane delta needed for met is the counter file itself — i.e., C1S=met certifies no round-43 domain work (no SOURCES row, no calibration fixes). Document as bounded by contract design (green control), not a falsification of the do-nothing claim.
+
+  E4 (adversarial bypasses on the gate):
+  - E4a: run counter against rev=e3a2b58 with --repo pointing at the E3 scratch (which has the counter). rev is e3a2b58 → in scratch, `git show e3a2b58:.ufo/waves/round-43/count-c1s.py`... wait — e3a2b58 is an ancestor of R3 in scratch; the path doesn't exist AT e3a2b58 → absent → unmet. Good: rev and repo must both be the doctored pair; a scorer passing the lane's replay rev can't be fooled by repo swap. Verify.
+  - E4b: junk counter: rev whose count-c1s.py prints C1S=met unconditionally — contract's second control. The running file is the real counter; junk at rev ≠ running bytes → unmet at check 1. Verify quickly in scratch.
+  - E4c: Check `git show` rev/path injection: rev="e3a2b58", path fixed — no injection surface since path is constant. rev with leading "-"? `["git","-C",LANE,"show", rev+":"+path]` — rev="-x" → arg "-x:..." treated as option? `git show --foo:...` would error → None → unmet. Not exploitable to produce met.
+  - E4d: The `__pycache__` note in round-42 (mtime Oct 24 20:47) — irrelevant.
+
+  E5: Check whether round-43 counter is committed anywhere in lane history (it shouldn't be at e3a2b58): `git ls-tree -r e3a2b58 --name-only | grep round-43` → empty. Also `git status` to see untracked/modified (read-only op, safe — git status doesn't mutate... it can refresh the index (write .git/index mtime). Hmm — "Never mutate lane Git/jj or the lane index." `git status` may refresh the index stat cache. To be safe, use `git status --no-optional-locks` (GIT_OPTIONAL_LOCKS=0) or `git ls-files` with GIT_OPTIONAL_LOCKS=0. I'll use `env GIT_OPTIONAL_LOCKS=0 git status --porcelain`. Even safer: `git ls-tree` and `git show` only. Let me avoid `git status` entirely; use `env GIT_OPTIONAL_LOCKS=0 git status --porcelain=v1` — that's explicitly the no-lock mode, safe.
+
+  Also verify frozen r42 counter sha at e3a2b58 matches, and that its run() signature is (argv, timeout) — part of E1's later checks... they won't run because self_at_rev fails first. Fine.
+
+  For E3, the counter needs tools/mori-sources-appendonly.py selftest pass=22 at the entering tip, v5 pass=17, mutants pass=16 fail=1. These should hold since round-42 committed them. If any fails, green won't print met — which would itself be a finding (counter too strict → the contract's green control fails → "counter is wrong and is fixed before any seat scores"). Let me run and see.
+
+  One more possible hidden-regression angle: the counter writes the frozen counter to sandbox and runs it with `--repo LANE` (the real lane by default!). The frozen r42 counter — what does it do with --repo? It might clone LANE or run tools... It crashed with TypeError before doing anything? Actually the crash: round-43 counter calls `run([sys.executable, frozen_path, rev, "--repo", LANE], ...)` — the round-43 run() has signature run(argv, timeout=900, cwd=None). The frozen counter at rev, when executed, internally calls ITS OWN run(...) with cwd=... → TypeError. Wait no — frozen_still_crashes: the frozen counter script, when run as a subprocess, calls its own `run()` helper with `cwd=` kwarg which its old signature lacks → TypeError → rc non-zero, stderr contains message, and no C1= line printed before the crash? If the frozen counter printed C1=met before crashing... the check requires no `^C1=` in stdout. The TypeError presumably happens before printing. This is the round-42 "frozen counter defect" (C1 honest stop). Fine.
+
+  But note: running the frozen counter with --repo LANE — if the frozen counter before crashing does something mutating... it crashes at the first cwd= call, likely early. The contract says "a re-execution of that frozen counter exits non-zero, stderr contains TypeError..." — by design.
+
+  Also: does the frozen r42 counter write anything? It crashed before... Actually wait, how does it crash? Old signature `def run(argv, timeout=900)`. Somewhere it calls run(..., cwd=clone). The round-43 contract says the r42 counter's `run()` takes `argv, timeout` "and not cwd". So during round-42 someone added a cwd= call site without updating the signature → the counter crashes → "frozen counter printed no C1= line" → round-43 calibration claim C2. OK.
+
+  Now — my deliverable: falsify or bound the attack. Let me now also think about whether there's any way a PURE do-nothing replay prints met. The gate is byte-identity of the counter at rev vs running file. A pure replay of e3a2b58 lacks the file → unmet. The only theoretical bypass: `git_bytes` returns non-None equal bytes from a repo where the path exists at that rev — impossible for e3a2b58's tree unless someone forges an object: e.g., create a scratch repo where a NEW commit also named/pointed-to by the string "e3a2b58..." has a tree containing the counter. Abbreviated sha collision! rev is resolved by the repo passed via --repo. If a scorer runs `count-c1s.py e3a2b58f --repo /tmp/forged` where /tmp/forged contains a different commit whose abbreviated sha starts with e3a2b58f and whose tree contains the counter + inherited files... git resolves abbreviations to a unique object; an attacker could craft a commit whose full sha begins with e3a2b58f7 (7+ hex chars of prefix collision). "Do-nothing replay of e3a2b58" — forging a sha prefix collision is not do-nothing, and the default scoring uses the lane repo (full 40-hex in contract). I can bound this: within the lane repo, rev e3a2b58f... resolves uniquely to the round-42 commit; its tree lacks round-43 → unmet. The abbreviation attack requires --repo swap + prefix collision (2^(4*7) work ≈ 268M commits — not "do-nothing", and git show with abbreviated sha ambiguity errors if multiple matches). Mention as bounded, negligible.
+
+  Another angle: `--repo` swap uses `args.index("--repo") + 1` — no validation that the path exists; if missing, git -C errors → git_bytes returns None → unmet. Safe-fail.
+
+  Also check: does the counter validate that `rev` is an ancestor of the lane tip or that the sandbox clone's rev == rev? `run(["git","-C",clone,"checkout","-q","--detach",rev])` — rc ignored! If checkout fails (rev not in clone), subsequent checks run against whatever HEAD is in the clone (default branch tip!). Hmm — sandbox clone is cloned from LANE then detached to rev. If rev isn't in LANE (typo/foreign rev), self_at_rev already failed (git_bytes from LANE) → early return. But with --repo scratch where rev exists, fine. Edge: rev exists in LANE but clone checkout fails? --shared clone has all objects; checkout would succeed. Minor robustness note, not exploitable for met.
+
+  Now, the strongest TRUE version of the attack: "replay + commit only the counter" prints met with zero domain work (E3). Is that the attack being asked about? "a do-nothing replay of e3a2b58 that still prints C1S=met" — I think the intended attack is exactly: replay the entering tip (do nothing of round-43 work) and yet the counter prints met → counter broken/false provenance. My E1/E2 falsify the pure version. E3 bounds the residual: met requires committing the counter byte-identical, which is the contract's own green control — by design, and C1S's sentence explicitly scopes what met means (operability of inherited tooling), with the SOURCES row explicitly NOT part of the predicate. Also C2 (calibration) is unmet at entering tip and requires real registry/SCORECARD edits, so a met-only-C1S replay can't fake the round verdict. Additionally the lane protocol: "Do-nothing C1S: the counter against the entering tip prints C1S=unmet" — control passes if E1 shows unmet.
+
+  Wait — one more check for E3: will noharm_cwd pass at entering tip? tools/mori-sources-appendonly.py exists at e3a2b58? It was used in round-42 ("mirror validation rc=0"). Let me check ls-tree. And v5 conform.py exists at round-42 (yes, 46994 bytes, committed at 249c7e73 or later). Mutants committed (34b92673 mentions killed mutants). Frozen count-c1.py committed at 249c7e73. So E3 should print met. Let me run it.
+
+  Also should I check the r42 counter's actual signature at e3a2b58 to confirm frozen_sig passes (ast parse: run params exactly ["argv","timeout"]). And frozen_still_crashes reproduces. If in E3 some check FAILs (e.g., noharm pass=22 fail=0 mismatch), then green control fails → counter wrong per contract — that'd be a different finding. Let me run.
+
+  Timeboxing: frozen counter re-execution timeout=1800 — the crash should be quick. v5 selftest and mutants: each runs conform selftest — could take some seconds each. Fine within 300s per bash call; I'll set timeout 300.
+
+  Let me also read the frozen r42 counter quickly to confirm run signature and crash site (read-only). And check w1-spec.json for the critic seat's expected scope? The w1 directory already has files; let me look at w1 listing and maybe an existing Crit or peer files for format. Round-42/w1 had reports. Let me peek at one for format convention. Not strictly needed but cheap.
+
+  Experiments in parallel batch:
+
+  Batch A (read-only lane queries):
+  - env GIT_OPTIONAL_LOCKS=0 git status --porcelain (see untracked round-43 files)
+  - git ls-tree -r e3a2b58 --name-only | grep -E "round-43|count-c1|conform|mori-sources" (what exists at entering tip)
+  - git show e3a2b58:.ufo/waves/round-42/count-c1.py | sha256sum (verify FROZEN_SHA)
+  - sed -n run signature: git show e3a2b58:.ufo/waves/round-42/count-c1.py | grep -n "def run"
+  - ls .ufo/waves/round-43/w1/
+
+  Batch B (sandbox setup in /tmp):
+  - rm -rf /tmp/crit1-sbx && mkdir -p /tmp/crit1-sbx && git clone -q /home/vgpnk/Projects/shokunin/mori-shokunin /tmp/crit1-sbx/lane && cp .ufo/waves/round-43/count-c1s.py /tmp/crit1-sbx/counter.py && sha256sum both.
+
+  Wait — cloning the lane: `git clone` reads the lane, writes only to /tmp. Safe. A plain (non-shared) full clone may be heavy (1 MiB whitepaper mentioned, corpus). Let me use --shared? --shared creates alternates pointing at lane objects — read-only usage; the clone never writes to the source. But later in E3 I create scratch clones FROM /tmp/lane (shared) — chain of alternates is fine. Actually for E3 scratch I clone from /tmp/crit1-sbx/lane. Keep it simple: full clone once. Check repo size first: du -sh .git.
+
+  Then runs:
+  - E1: python3 /tmp/crit1-sbx/counter.py e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2 --repo /tmp/crit1-sbx/lane ; echo rc=$?
+  - E2: cd /tmp/crit1-sbx/lane; create replay: R2=$(git commit-tree e3a2b58^{tree} -p e3a2b58 -m "round-43 do-nothing replay") — wait, tree identical + parent e3a2b58 → empty diff commit. Then run counter rev=$R2. Expect unmet (absent).
+  - E4a: same as E1 but expect unmet with rev=e3a2b58 in a repo that has the counter at descendant rev.
+  - E3: scratch = clone of lane; checkout -b? detach at e3a2b58; copy counter file into path; commit; R3; run counter rev=$R3 --repo scratch. Expect full run; see result.
+  - E4b: junk: scratch junk repo: detach e3a2b58, write `print("C1S=met")` as count-c1s.py, commit; run counter rev=$RJ --repo junk. Expect unmet at self_at_rev (bytes differ) — and importantly LAST LINE C1S=unmet, not junk's met.
+
+  Also verify the counter's exit codes: E1 rc=1; E3 rc=0 (if met).
+
+  Also: "Run code only in /tmp sandboxes" — the counter spawns git and python from /tmp copies; conform selftest runs inside /tmp clone. Good.
+
+  Note about running `python3` on the lane file directly — I'll avoid; use /tmp copies. But byte-identity must be confirmed: sha256sum lane file vs /tmp copy. (The counter compares running bytes to rev bytes; the running bytes will be my /tmp copy which is byte-identical.)
+
+  One more subtlety for E3: the counter's `git clone -q --shared LANE clone` with LANE=scratch (a clone in /tmp) — fine. And `selftest(clone, v5_abs, rev)` passes `--repo clone` and `--contract clone/...`, `--counter clone/...`. The v5 conform selftest needs round-41 fixtures at rev — present.
+
+  Potential wrinkle: `git clone --shared` from scratch — scratch itself is a full clone, fine.
+
+  Let me also confirm HEAD is e3a2b58: git rev-parse HEAD (read-only). And `git log --oneline -1`.
+
+  Let me execute Batch A + B now in parallel.
+
+  Then Batch C runs (dependent on B). Then write the report.
+
+  Report location: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Crit1.md — write only that file.
+
+  Axes framing (Godspeed): depth (does the counter measure what it claims), freshness (do-nothing control current at entering tip), calibration (met achievable without domain work — bound), operability (counter runs). Impacted axes: mostly calibration/depth bound; verdict: attack falsified for pure replay; bounded residual by design.
+
+  Let me run batch A and B in parallel.
+
+• Reading the contract and counter, the attack is clear to test. Setting up parallel evidence gathering: lane read-only queries + /tmp sandbox build.47206f83e6de0bffccff379526386f7a267ba576
+fatal: Not a valid object name e3a2b58
+---frozen sha at tip:
+fatal: invalid object name 'e3a2b58'.
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  -
+---frozen run sig:
+fatal: invalid object name 'e3a2b58'.
+ M .ufo/state/chousa.report-baseline
+ M .ufo/state/kagi.report-baseline
+ M .ufo/state/kaidoku.report-baseline
+ M .ufo/state/kake.report-baseline
+ M .ufo/state/kama.report-baseline
+ M .ufo/state/kengaku.report-baseline
+ M .ufo/state/kumitate.report-baseline
+ M .ufo/state/mado.report-baseline
+ M .ufo/state/mori.report-baseline
+ M .ufo/state/souji.report-baseline
+ M .ufo/state/tameshi.report-baseline
+ M .ufo/state/tsukuroi.report-baseline
+ M .ufo/watchdog.log
+?? .omp/mcp.json
+?? .ufo/state/kotoba.report-baseline
+?? .ufo/state/kotodama.report-baseline
+?? .ufo/state/revenger.report-baseline
+?? bm.json
+?? live.html
+?? live_s228.html
+?? nama.html
+?? s395.txt
+?? scripts/hyaku/append-closure.py.bak-20261023T040735Z
+?? scripts/hyaku/fleet-commit.sh.bak-20261023T040735Z
+?? tf_bavelas.html
+?? unblob.log
+?? wb2.html
+?? write
+?? xc.xml
+---
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/evidence/:
+census-start.txt
+control-c1s-donothing.txt
+control-c1s-green.txt
+control-c1s-junk.txt
+control-c2-donothing.txt
+control-c2-green.txt
+control-c2-junk.txt
+disk-usage-r43.txt
+s268-headers.txt
+wave-plan.json
+
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/:
+Exec2.md
+Exec4.md
+Exec5.md
+Exec6.md
+swarm-registry.json
+107M	/home/vgpnk/Projects/shokunin/mori-shokunin/.git
+93482248b46def2a2cec7238732af1551ef315517e76833c3843875313b65dc5  /tmp/crit1-sbx/counter.py
+93482248b46def2a2cec7238732af1551ef315517e76833c3843875313b65dc5  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c1s.py
+
+

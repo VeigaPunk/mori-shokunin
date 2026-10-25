@@ -1,0 +1,222 @@
+kimi version 2.3.1
+• Let me start by understanding the task. I'm a scout subagent in a "mori round 43" wave. My task:
+
+  - Recon only: wave-slot status, read only.
+  - Report findings with command output.
+  - Report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Scout12.md
+
+  Lane bounds: leaf member — no subagent dispatch.
+
+  Wait — the report path mentioned is `.ufo/waves/round-43/w1/Scout12.md`. The prompt says "write your scoped findings to .ufo/waves/round-43/w1/Scout12.md" relative to the lane repo /home/vgpnk/Projects/shokunin/mori-shokunin.
+
+  But the task says "Recon only: wave-slot status, read only." Yet also "Write only your own report file." So I can write my report file.
+
+  Let me figure out what "wave-slot status" means. Probably there's some state under .ufo/waves/round-43/ describing slots, seat assignments, etc. Let me look.
+
+  Axes (Godspeed): I'd name axes like: (a) coverage of wave-slot status (which slots exist, claimed/free, stale?), (b) evidence quality (raw command output), (c) safety (read-only compliance), (d) speed.
+
+  Let me do parallel reads: list .ufo/waves/round-43 directory, check role routing config maybe not needed (never pass model — role routing is operator table, I shouldn't need it for recon).
+
+  Plan:
+  1. Explore /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/ — files like plan, slots, counts.
+  2. Check .ufo/state maybe (read-only allowed? It says never mutate .ufo/state — reading should be fine).
+  3. Check wave-slot status — maybe there's a command in RULES.md or a tool. Let me read /home/vgpnk/.omp/agent/RULES.md since tooling instructions reference it.
+
+  Let me batch: 
+  - Glob .ufo/waves/round-43/** 
+  - Read RULES.md
+  - Glob .ufo/waves/round-42/**
+
+  Actually I should use Bash? Wait, I don't have a Bash tool in this environment. Tools available: FetchURL, Glob, Grep, Read, WebSearch. Read-only tools. Good — that enforces recon-only.
+
+  So I can't run commands. "Report findings with command output" — I'll interpret as tool output. I can't run shell. Fine.
+
+  Let me start:
+  - Glob pattern ".ufo/waves/round-43/**" in path /home/vgpnk/Projects/shokunin/mori-shokunin
+  - Read /home/vgpnk/.omp/agent/RULES.md (to understand wave-slot semantics maybe)
+
+  Parallel batch 1:
+  1. Glob .ufo/waves/round-43/**/*
+  2. Glob .ufo/waves/round-43/*
+  3. Read RULES.md
+  4. Glob .ufo/state/*
+
+  Let me go.I should read the AGENTS.md for the lane repo, plus key wave-43 files: contract.md, w1-spec.json, w1-settle.tsv, w1/swarm-registry.json, wave-plan.json. Let me batch reads.I'm Scout12. My task: "Recon only: wave-slot status, read only. Report findings with command output."
+
+  "Wave-slot status" — I need to find where wave-slot status lives. Probably in .ufo/ somewhere: maybe .ufo/state (but .ufo/state glob found nothing — interesting; maybe it's a file not dir, or doesn't exist). Let me check .ufo structure. Also "w1-settle.tsv" exists but Read returned empty (0 lines) — that's itself a finding: the settle TSV is empty (no slots settled yet).
+
+  Let me look at:
+  1. Glob .ufo/* (top level) to see state files, watchdog.log, etc.
+  2. Read .ufo/waves/round-43/w1-settle.tsv again — confirmed 0 lines. Maybe check with Grep for any byte. Actually Read said "No lines read from file. Total lines in file: 0." So empty file.
+  3. Look for wave-slot status semantics: maybe there's a tool like .ufo/waves/slots or fleet scripts. Check /home/vgpnk/Projects/shokunin/scripts/ (fleet root, read-only) for wave-related scripts. "Tools start at the fleet root" — there might be scripts like swarm-wave.mjs that define "wave-slot status".
+  4. Check .ufo/waves/ directory listing for round-43 and other rounds to see slot patterns (e.g., w1/w2 dirs, settle.tsv files, slot status files).
+  5. Check .ufo/state — maybe it's a file: Glob .ufo/state/** found no matches. Try Glob .ufo/state* and .ufo/**.
+
+  I can't run commands (no Bash tool). "Report findings with command output" — I'll paste tool outputs verbatim as the evidence. That's the best I can do; note it in the report.
+
+  Actually wait — maybe there IS a way to see wave-slot status via files. The .ufo directory likely has: state.json? watchdog.log? Let me glob.
+
+  Batch next:
+  - Glob pattern ".ufo/*" (top-level entries, files only)
+  - Glob pattern ".ufo/waves/*" 
+  - Glob pattern ".ufo/waves/round-43/*" (top of round-43)
+  - Grep for "wave-slot" or "waveSlot" or "slot" in fleet repo scripts (path /home/vgpnk/Projects/shokunin, pattern "wave-slot" -i) — but that could be big; limit to files_with_matches, head_limit 30.
+  - Glob "/home/vgpnk/Projects/shokunin/scripts/*"
+
+  Let me do these in parallel.
+
+• Scout12 axis naming: (a) coverage — find where wave-slot status actually lives; (b) evidence — verbatim file/tool output; (c) compliance — strictly read-only, write only my own report. Proceeding in parallel.
+
+• Interesting. The first glob ".ufo/*" seems to have matched recursively? It matched files like .ufo/reports/... — wait no, pattern ".ufo/*" returned files at various depths? It returned `.ufo/reports/round-67/revenger.md` etc. Odd — maybe the glob tool treats `*` as matching across `/`? Anyway partial, timed out at 20s.
+
+  No "wave-slot" string matches anywhere in fleet repo (0.048s, "No matches found" — hmm, that grep was fast; suspicious it scanned everything? Path /home/vgpnk/Projects/shokunin — that's the fleet repo. Result says no matches for wave-slot|wave_slot|waveSlot. OK.)
+
+  ".ufo/waves/*" only returned round-43 top-level files?? That's weird — should return .ufo/waves/round-42/*, hyaku, etc. Hmm, actually it returned only 5 files: w1-settle.tsv, w1-spec.json, count-c1s.py, count-c2.py, contract.md — all directly under round-43. So the glob tool's `*` semantics here: matches files whose path relative... no wait, it returned `.ufo/waves/round-43/w1-settle.tsv` for pattern `.ufo/waves/*` — so `*` matches one path segment but the output shows full path with `round-43/` — meaning `*` matched `round-43/w1-settle.tsv`? No... `*` in this tool might match any characters including `/` (like ripgrep --glob?). The doc says "a bare pattern without `/` matches recursively". So `.ufo/waves/*` matches recursively under .ufo/waves... but then why only round-43 files? Maybe because results sorted by modification time (most recent first) and truncated at 100? No — it returned only 5 with no truncation notice. Hmm, maybe other rounds' files exist but... Actually wait, maybe `.ufo/waves/` in the lane repo only contains round-42 and round-43? But the earlier glob `.ufo/waves/round-43/**` returned 160 matches (truncated at 100). For `.ufo/waves/*` returning just 5 files, maybe the tool only lists files directly in matched dirs? Confusing. Possibly the glob semantics: pattern without `**` but with `*` at end = single level? But then w1-settle.tsv is directly under round-43 which is one level under waves, and pattern `.ufo/waves/*` shouldn't match it.
+
+  Let me not over-theorize. Key: the first Glob on `.ufo/*` timed out (20s) with partial results showing .ufo/reports, .ufo/waves, MANIFEST.json, AGENTS.md, .scratch — wait, it showed AGENTS.md and MANIFEST.json and .scratch/goal... those aren't under .ufo/. So pattern `.ufo/*` behaved like "match anywhere containing .ufo/"? The tool seems to treat the pattern loosely. Fine.
+
+  Now, what is "wave-slot status"? The w1-settle.tsv is the settle file — empty (0 lines). The w1-spec.json is the wave spec (64 items). swarm-registry.json has all 64 members with kind "spawn", agentId null, item null — i.e., registered at dispatch time (2026-10-25T01:34:41Z), not yet updated with agent IDs. "Wave-slot status" likely = per-seat (slot) status: claimed/running/done, which is observable via:
+  1. swarm-registry.json member states (all null → slots not yet bound to agents).
+  2. w1-settle.tsv (empty → no settle results yet).
+  3. Presence/absence of report files in .ufo/waves/round-43/w1/ (each seat writes its report on completion).
+
+  Also .ufo/state — the context says "never write .ufo/state" — but does .ufo/state exist in the lane repo? Earlier glob `.ufo/state/**` found no matches. Maybe state lives at fleet root .ufo/? Or in the lane repo but empty/absent. Let me check: Glob ".ufo/state*" in lane repo. Also check fleet root .ufo (path /home/vgpnk/Projects/shokunin/.ufo). And watchdog.log.
+
+  Let me also list the w1 directory to see which reports exist so far (slot completion status). Glob ".ufo/waves/round-43/w1/*".
+
+  Also check hyaku/inline-run and PHASE files? Not needed for slot status of round-43 w1.
+
+  Also: the fleet root might have .ufo/waves/mori/... no — waves live per-repo.
+
+  Let me batch:
+  1. Glob lane ".ufo/waves/round-43/w1/*" — see which reports exist now.
+  2. Glob lane ".ufo/state*" — check existence.
+  3. Glob fleet "/home/vgpnk/Projects/shokunin/.ufo/*" — fleet .ufo top (may timeout; use smaller pattern ".ufo/state*").
+  4. Glob lane ".ufo/waves/round-42/*" — compare with prior round for slot-status shape.
+  5. Read scripts/shokunin-watchdog.sh — watchdog may define slot status semantics.
+
+  Note the earlier 20s timeout: avoid globbing the whole fleet repo root with broad patterns.
+
+• Wave files located. Now enumerating the w1 slot directory (report presence = slot completion), .ufo/state, and the watchdog script that may define slot semantics.
+
+• Now I have the watchdog's state model. The watchdog's "state" is at fleet root `.ufo/state/<lane>.round` etc. — that's the fleet-level lane/round state, not wave-slot state. The lane repo has no `.ufo/state*` (glob found nothing in lane repo). The fleet `.ufo/state*` glob found state-counters.txt files under waves/hyaku and rounds 12/15 — those are different (wave frozen counters).
+
+  Hmm — but the instruction says "Never write ... .ufo/state" in lane context. The lane repo .ufo may have a state dir? Glob `.ufo/state*` in lane found no matches — could be because glob only matches files, and `.ufo/state` is an empty directory? Or it doesn't exist. Let me check with a different approach: Glob ".ufo/state/**" (already did — no matches). Can't easily distinguish empty dir vs missing. Read can't read dirs. It's fine — report as "no files found under lane .ufo/state*".
+
+  Now "wave-slot status": The wave machinery (w1-spec.json → swarm-registry.json → w1-settle.tsv → per-seat reports in .ufo/waves/round-43/w1/) is the slot system:
+  - 64 slots declared in w1-spec.json (items) — count: 8 MutC1S + 12 Rev + 11 Crit + 12 Scout + 8 Scribe + 8 Exec + 1 Conn + 1 Simp + 1 Revenger + 2 Sent = 64. maxLanes: 64.
+  - swarm-registry.json: all 64 members kind=spawn, agentId=null, item=null → no slot bound to an agent yet (registry created 2026-10-25T01:34:41.307Z, updatedAt same timestamp — never updated).
+  - w1-settle.tsv: 0 lines → no slot settled yet.
+  - Report files present in w1/: Exec4.md, Exec5.md only (+ swarm-registry.json). So 2 of 64 slots have landed reports.
+
+  Wait — Glob sorted by mtime, most recent first: Exec5.md, Exec4.md, swarm-registry.json. So only two seat reports exist so far. Note: my own Scout12.md report doesn't exist yet (I'm writing it).
+
+  Hmm, interesting: earlier `.ufo/waves/*` glob returned only round-43 files — but that's because the pattern `.ufo/waves/*` apparently matched only... weird. Whatever; the round-43/w1 glob is authoritative: 3 files total in w1/ (Exec4, Exec5, swarm-registry.json). Wait, is that glob complete? It said "Wall time 0.032" with 3 results, no truncation notice. But `*` semantics were odd earlier. Let me double check with a `**` pattern on w1/ to be safe, and also check mtimes ordering. Also verify whether there are hidden files.
+
+  Also useful for "wave-slot status":
+  - The wave-plan.json counts: spawn 64, resume 0, total 64; policy waveMaxLanes 128, declaredMaxLanes 64; dispatch calls 1 (one batched task call per one-swarm-per-wave).
+  - evidence/control-*.txt and census-start.txt — those are evidence, not slot status.
+
+  Also check .ufo/waves/round-43/evidence/census-start.txt? Not needed for slot status. Skip.
+
+  Also check the fleet-level .ufo/reports/round-43/mori.md or chousa.md/kake.md? Those are lane-round reports at fleet root (.ufo/reports/round-43/chousa.md, kake.md exist per earlier glob). Wave-slot status is specific to round-43 w1 though. The fleet .ufo is read-only but readable. Hmm, the wave lives in the lane repo (.ufo/waves/round-43 in mori-shokunin). Fleet root .ufo/waves/hyaku is a different lane's wave system.
+
+  For completeness of "wave-slot status, read only": I should report:
+  1. Wave declaration: w1-spec.json — 64 items, roles, maxLanes 64 (verbatim counts + item/role table summary with counts per role).
+  2. Dispatch evidence: wave-plan.json — counts spawn=64/resume=0, dispatch.calls=1, policy caps.
+  3. Registry: swarm-registry.json — createdAt=updatedAt=2026-10-25T01:34:41.307Z, all members agentId=null, item=null, kind=spawn → registry untouched since dispatch.
+  4. Settle file: w1-settle.tsv — 0 bytes → no settlements.
+  5. Report dir listing: only Exec4.md and Exec5.md present → 2/64 slots landed reports; 62 pending.
+  6. No .ufo/state files in lane repo (glob empty).
+  7. Watchdog state model reference (fleet-level .ufo/state/<lane>.round — lane rounds, distinct from wave slots; note read-only).
+
+  Wait — one more thing: is there a lane-level state at fleet root .ufo/state/mori.round? The watchdog writes state at fleet root .ufo/state/. Fleet root is /home/vgpnk/Projects/shokunin. Glob there for ".ufo/state*" returned only state-counters.txt under waves/... — those matched ".ufo/state*"? No — matches were like "waves/hyaku/.../state-counters.txt" — the tool matched files whose name contains "state"? Odd glob semantics again (it seems to fuzzy-match). It didn't show e.g. "state/mori.round". Let me directly check fleet .ufo/state dir with pattern ".ufo/state/**" or read a specific file path /home/vgpnk/Projects/shokunin/.ufo/state/mori.round (Read a known text path is fine; if missing, error is a finding).
+
+  Also read .ufo/watchdog.log tail? "Never write .ufo/watchdog.log" — reading is fine, but it could be huge; Read with negative offset for last ~60 lines. That gives current lane round + tick activity — relevant to "wave-slot status"? It's fleet-level, but worth a tail: most recent entries show mori round activity (launch/complete lines with rounds). That's good recon context. Let me try Read with line_offset negative.
+
+  Also confirm the exact count of items per role from w1-spec: MutC1S1..8 (8 mutation-tester), Rev1..12 (12 reviewer), Crit1..11 (11 critic), Scout1..12 (12 scout), Scribe1..8 (8 scribe), Exec1..8 (8 executor), Conn1 (1 connector), Simp1 (1 simplifier), Revenger1 (1 revenger), Sent1..2 (2 sentinel) = 8+12+11+12+8+8+1+1+1+2 = 64. ✓ matches counts.spawn=64.
+
+  Next batch (parallel):
+  1. Read /home/vgpnk/Projects/shokunin/.ufo/state/mori.round (known path probe)
+  2. Read /home/vgpnk/Projects/shokunin/.ufo/watchdog.log offset -80
+  3. Glob lane ".ufo/waves/round-43/w1/**" (recursive double-check for any files incl. hidden)
+  4. Glob fleet ".ufo/state/**" with include_ignored maybe; pattern "state/**" path /home/vgpnk/Projects/shokunin/.ufo
+  5. Also check /home/vgpnk/Projects/shokunin/.ufo/waves/round-43? Probably doesn't exist (fleet-level waves are hyaku). Skip — keep it tight.
+
+  Actually also probe lane .ufo/state existence differently: Grep in lane .ufo/state would error if missing... simpler: Glob pattern "state/**" path lane/.ufo. Did already as .ufo/state/** → no matches. I'll state: no state files found (may be absent or empty dir — cannot distinguish with file-only glob; note as caveat).
+
+• Slot machinery mapped: w1-spec (declaration) → wave-plan (dispatch) → swarm-registry (binding) → w1/*.md (per-slot reports) → w1-settle.tsv (settlements). Now probing driver state (fleet .ufo/state, watchdog tail) and re-checking the w1 dir recursively for completeness.
+
+• Now I have solid data. Note: the recursive `**` glob of w1/ shows 5 files now: Exec6.md, Exec2.md, Exec5.md, Exec4.md, swarm-registry.json — more reports landed between my two globs (earlier `*` glob showed only Exec5, Exec4, swarm-registry.json; the `**` pattern also revealed Exec2, Exec6 — those may have landed in between, or `*` didn't match them? Both sorted by mtime; the `**` run is later and shows more. Live wave — reports are landing in real time. I should timestamp this observation and re-list right before writing the report).
+
+  Also fleet .ufo/state: mori.round=2? Wait — watchdog log says mori round=43 launched at 21:21:34 and mori.round file says "2"?? That's odd. Let me re-read: the Read returned "2" for /home/vgpnk/Projects/shokunin/.ufo/state/mori.round. Hmm, but watchdog log line 1216 says "launch mori round=43". The state file should hold 43. Unless... the Read hit a different file? Path: /home/vgpnk/Projects/shokunin/.ufo/state/mori.round. Content "2".
+
+  Hold on — maybe the log's driver is "hyaku-inline" (a different driver, per SHOKUNIN_ROOT of that conf?) and the fleet-root .ufo/state belongs to a different conf/driver whose mori lane is at round 2. The log at /home/vgpnk/Projects/shokunin/.ufo/watchdog.log mentions driver=hyaku-inline. The watchdog script derives UFO=$SHOKUNIN_ROOT/.ufo. If SHOKUNIN_ROOT is the fleet root /home/vgpnk/Projects/shokunin, then mori.round should be 43 after that launch.
+
+  Unless the mori lane runs in its own repo with its own SHOKUNIN_ROOT? No — the log is at fleet root .ufo.
+
+  Wait, maybe I misread: does the value "2" belong to a fresh state? Or maybe the driver re-bootstrapped. Actually — check mori.round again and also mori.mission. Also, maybe the Read tool truncated "43"? No, it printed "2".
+
+  Hmm, could there be TWO confs? The hyaku/inline-run-20261023.md and PHASE5.md suggest an inline driver ("hyaku-inline") that reuses the fleet .ufo. The log's launch line format "launch mori round=43 pgid=... driver=hyaku-inline attempt=1" — "driver=hyaku-inline" field is not in the watchdog script I read (log format is just `log "launch $lane round=$n pgid=$pid"`). So the live driver is a DIFFERENT (v6?) watchdog variant that appends driver/attempt fields. Fine.
+
+  But mori.round=2 contradicts round=43 in the log... unless the state file was re-created recently (bootstrap) or the lane's state lives elsewhere. Let me just re-read mori.round and mori.mission, and also tameshi.round (log shows tameshi round=40 completed 22:36:57) to cross-check. If tameshi.round=40, then mori.round=2 is anomalous — or mori state got clobbered. Actually wait — today is 2026-10-24 (per system reminder). The log's last entry is 2026-10-24T22:36:57-03:00. The registry createdAt was 2026-10-25T01:34:41.307Z — UTC. 2026-10-25T01:34Z = 2026-10-24T22:34-03:00. So the wave dispatch happened at ~22:34 local, right after tameshi round 40 completed. mori round 43 (the current lane round) launched 21:21:34 local.
+
+  So mori.round should read 43. It reads 2. Curious. Possibly I read a stale/different file... Let me re-read both mori.round and mori.mission now. Also maybe "2" is a line number artifact? No — Read output "2" is the content.
+
+  Hmm wait, actually maybe the mori lane driver writes state to the LANE repo? The context said "Never write ... .ufo/state" — for the lane repo mori-shokunin. Maybe mori's SHOKUNIN_ROOT is the lane repo? No, mori-shokunin/.ufo has no state dir.
+
+  Let me just probe: re-read mori.round, mori.mission, tameshi.round. Also grep the watchdog.log for "mori round=43" to get exact current state. And re-glob w1/ one more time at the end before writing the report.
+
+  Actually, one plausible explanation: multiple confs share the log but the round file mori.round was recently reset (e.g., a "mori-v2" fresh start). The log would show "state-corrupt mori :: invalid .round; treating as round 1" if corrupt. Let me grep the log tail for 'mori round=' to see the sequence. The tail I read shows consistent increments 41→42→43. So mori.round=2 is inconsistent with the log — worth flagging as an anomaly in the recon report (observed fact: file says 2; log says round 43 launched; unresolved which is authoritative — but I must not fix anything, read-only).
+
+  Hmm wait, wait. Let me double check the Read result. It said:
+
+  ```
+  1	2
+  ```
+
+  That's line 1 = "2". OK.
+
+  Alternatively — maybe there are multiple fleet roots: /home/vgpnk/Projects/shokunin (fleet root) vs the hyaku-inline driver using a different SHOKUNIN_ROOT... but the log IS at fleet root and has driver=hyaku-inline entries. The state dir is also at fleet root. So same root. The mismatch stands.
+
+  Unless... "mori.round" contains "2" because the hyaku-inline driver is the OLD script version writing a different state layout? Or a second driver ("hyaku") managing a "mori" lane at low round numbers while hyaku-inline manages... no, same file path.
+
+  OK — record as observed anomaly. Actually, let me grep the full log for recent "state-corrupt mori" or "launch mori round=2" to see whether mori.round got reset/re-bootstrapped. Also grep for "mori" in the log's last 200 lines is already done (lines 1171-1230) — last mori entries: launch mori round=43 at 21:21:34. No state-corrupt. So mori.round=2 conflicts with the log's round=43.
+
+  OH WAIT. I bet the hyaku-inline driver is a NEWER watchdog version where state file semantics changed — maybe .round stores something else (e.g., "attempt" or a v2 counter). Or maybe... the file was written by the wave tooling ("swarm" system) which uses .ufo/state for wave-slot state! "wave-slot status" — maybe the swarm driver tracks wave slots in .ufo/state too. A value "2" could be a slot-count or wave index. I shouldn't speculate too far; just report observed bytes.
+
+  Let me also check .ufo/state/mori.mission content and tameshi.round for comparison, plus kumitate.round (log says kumitate completed round=59). If most .round files match the log's rounds and only mori.round is 2, that's a genuine anomaly to flag.
+
+  Also — I still need the definitive current w1/ listing right before report writing. And per the task, "Report findings with command output" — I'll paste verbatim tool outputs.
+
+  Also worth reading: .ufo/state/mori.report-baseline (round SHA) to confirm the lane round report baseline — gives "mori round 43 report not yet landed" status. And check whether /home/vgpnk/Projects/shokunin/.ufo/reports/round-43/mori.md exists (lane-level round report). Earlier fleet glob showed .ufo/reports/round-43/chousa.md and kake.md exist. mori.md for round-43 not in the first-40 results (truncated though). Glob fleet ".ufo/reports/round-43/*".
+
+  Batch:
+  1. Read /home/vgpnk/Projects/shokunin/.ufo/state/mori.mission
+  2. Read /home/vgpnk/Projects/shokunin/.ufo/state/tameshi.round
+  3. Read /home/vgpnk/Projects/shokunin/.ufo/state/mori.report-baseline
+  4. Glob fleet ".ufo/reports/round-43/*"
+  5. Re-glob lane ".ufo/waves/round-43/w1/*" for fresh listing
+
+  Then write report.
+
+• Two anomalies to pin down: fleet `.ufo/state/mori.round` reads `2` while watchdog.log shows `launch mori round=43` — and the w1 report set grew between globs (Exec2, Exec6 appeared). Cross-checking state files and the lane round report.
+
+• Now the picture is clearer, but with genuine anomalies:
+
+  1. `mori.report-baseline` = `43 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855` — round 43, digest = sha256 of empty byte stream (e3b0c442... is sha256("")). So baseline recorded for mori round 43 with no report file present at baseline time → mori round-43 lane report has NOT landed. Good, that confirms current lane round = 43 and no round report yet.
+
+  2. `mori.round` = `2` and `mori.mission` = `2685430`; `tameshi.round` = `1` while log says tameshi round=40 completed. So the `.round`/`.mission` files do NOT match the log rounds at all — they look like a different numbering scheme. mission 2685430 doesn't match any pgid in the visible tail (e.g., mori round 43 pgid=2878367). tameshi.round=1... 
+
+  Hypothesis: these state files belong to a DIFFERENT driver instance/convention. Note log format `driver=hyaku-inline attempt=1` — the running driver is not exactly the script I read (its log lines lack driver/attempt fields). Possibly the newer driver stores different content in .round (e.g., a slot or sub-round index) and .mission. mori.round=2 could mean "wave slot 2" or "attempt"... I can't resolve the semantics from the old script. This is a genuine unresolved gap → report as observed bytes + inconsistency with v5 script semantics + log.
+
+  Actually wait — maybe I should check whether there's a newer watchdog script that explains the state format. Glob /home/vgpnk/Projects/shokunin/scripts/* showed only sources-census.sh and shokunin-watchdog.sh. The hyaku/inline-run-20261023.md and PHASE5.md under fleet .ufo/waves/hyaku might describe the inline driver (wave-slot semantics!). Let me read those two — they may define "wave-slot" terminology (inline-run = running multiple lanes inline per round?). That would ground "wave-slot status".
+
+  Also the earlier grep for "wave-slot|wave_slot|waveSlot" over /home/vgpnk/Projects/shokunin found NO matches — but that grep ran in 0.048s over a big repo, suspiciously fast; maybe it didn't complete? ripgrep is fast; 48ms is plausible if it respects .gitignore and the fleet repo is mostly ignored... but it found nothing even in .ufo (which may be gitignored — rg respects .gitignore by default, so .ufo content might have been SKIPPED). That's a real caveat: my grep probably skipped .gitignored .ufo dirs. A targeted grep with include_ignored in .ufo/waves/hyaku for "slot" would be more reliable.
+
+  Let me read the hyaku inline-run + PHASE5 docs (they're small probably) and grep for "slot" in fleet .ufo/waves/hyaku with include_ignored=true.
+
+  Also, the sw/ wave system ("ufo-swarm-wave-v1") — where's the tool that runs it? Maybe under ~/.omp or a npm package (ufo?). The wave-plan.json schema mentions "one-swarm-per-wave" policy note. The tool might live outside the repos. Not needed — my slot status comes from the files.
+
+  Also I should sample the two landed seat reports to confirm slots actually producing output? Exec2/Exec4/Exec5/Exec6 now exist. A quick peek at one (Exec4.md, small) grounds the report. But keep scope tight: slot status. I'll list files + read none fully... actually reading one tiny report to confirm "REAL content" convention is
+

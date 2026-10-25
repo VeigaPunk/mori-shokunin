@@ -1,0 +1,878 @@
+kimi version 2.3.1
+• Let me parse this task carefully.
+
+  I'm an executor (Exec3) in "mori round 43". The task:
+
+  1. Run from /home/vgpnk/Projects/shokunin/mori-shokunin: `python3 tools/mori-sources-appendonly.py --selftest` and paste stdout, stderr, exit code into report.
+  2. Do not edit production files.
+  3. Frozen counters must not be edited: .ufo/waves/round-42/count-c1.py, .ufo/waves/round-43/count-c1s.py and count-c2.py. Attack them in scratch copies (in /tmp).
+  4. Write report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/Exec3.md
+  5. Lane bounds: leaf member — no subagent dispatch except my single labrat. But wait — the labrat is only allowed "only when explicitly seated as the probeParent executor". I am Exec3, not stated as probeParent. So I should spawn ZERO subagents. The lane bounds say "no subagent dispatch except your single labrat" — but the system prompt says probe seat: only when explicitly seated as the probeParent executor. I'm not explicitly seated as probeParent, so zero descendants.
+  6. "one v2 wave (build + attack)" — I'm Exec3. My assignment per the L1 dispatcher: run the selftest command and attack frozen counters in scratch copies? The "attack them in scratch copies" is an instruction. The Godspeed posture says implement only the move assigned by the L1 dispatcher. The assignment here is: run the selftest, report, and attack the frozen counters in scratch copies (in /tmp), writing scoped findings to the report.
+
+  Let me be careful about what "attack them in scratch copies" means: the counters are appendonly-source counting scripts presumably. I should copy them to /tmp and try to find bugs/edge cases where they miscount or crash.
+
+  Constraints:
+  - Never write fleet files (/home/vgpnk/Projects/shokunin root), sibling repos, lane Git index, lane jj state, .ufo/state, .ufo/watchdog.log.
+  - /home/vgpnk/Projects/shokuknow read-only; never run a campaign tool there.
+  - Write only my own report file: .ufo/waves/round-43/w1/Exec3.md.
+  - Run code only in /tmp sandboxes.
+  - Never read secrets.
+  - pacman paused; no pacman installs.
+
+  Wait — "Run code only in /tmp sandboxes" but also run `python3 tools/mori-sources-appendonly.py --selftest` from the lane repo. That's explicitly commanded, so it's fine — it's the assigned command. The selftest presumably is self-contained.
+
+  Also "Do not edit production files" — but I must write the report file, which is in .ufo/waves/round-43/w1/Exec3.md. That's my own report file, allowed ("Write only your own report file").
+
+  Let me start:
+
+  1. First read the relevant files: tools/mori-sources-appendonly.py, the frozen counters, RULES.md maybe. Actually tooling install only if needed — probably not needed since it's plain python.
+
+  2. Run the selftest command from the lane repo, capture stdout/stderr/exit code.
+
+  3. Copy the frozen counters to /tmp scratch, inspect them, and attack: craft inputs (temp repos in /tmp) that make the counters miscount or crash. Report findings.
+
+  Let me do the first batch of parallel calls:
+  - Read /home/vgpnk/.omp/agent/RULES.md (required before installing tools — maybe not needed; cheap to read anyway).
+  - Read /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-sources-appendonly.py
+  - Read the three frozen counters.
+  - Bash: run the selftest with stdout/stderr captured and exit code.
+
+  Actually running the selftest — I should capture exactly: `cd /home/vgpnk/Projects/shokunin/mori-shokunin && python3 tools/mori-sources-appendonly.py --selftest; echo "EXIT=$?"`. But careful: the Bash tool doesn't preserve cwd between calls; pass cwd parameter. The command output — I need stdout, stderr, exit code. The tool combines stdout+stderr. I can do:
+
+  ```
+  python3 tools/mori-sources-appendonly.py --selftest > /tmp/exec3-selftest-stdout.txt 2> /tmp/exec3-selftest-stderr.txt; echo "exit=$?"
+  ```
+
+  But writing to /tmp is fine. Then read the files. Hmm, but the instruction says "paste stdout, stderr, and the exit code into your report". Simplest: run without redirection so output is captured by the tool, and echo exit code. The tool merges streams and marks failures. But to be precise about which stream is which, separate files are better. Let me do both: run with redirection to /tmp files AND echo exit code, then cat both files. Actually simpler: 
+
+  ```
+  set -o pipefail; python3 tools/mori-sources-appendonly.py --selftest 2>/tmp/exec3-selftest-stderr.txt; rc=$?; echo "EXIT_CODE=$rc"; echo "--- STDERR ---"; cat /tmp/exec3-selftest-stderr.txt
+  ```
+
+  That gives stdout in tool output, stderr after marker, exit code. Good. Note: "Set -o pipefail" not needed. Keep it simple.
+
+  Also I want `git -C ... status --porcelain` — no wait, don't touch lane git index. Reading git status is read-only, but "Never mutate lane Git/jj or the lane index" — read-only git commands are fine. Actually I don't even need git. Skip.
+
+  Let me also check the wave dir exists: .ufo/waves/round-43/w1/ — I'll create the report with Write (it creates parents automatically).
+
+  Plan:
+  1. Parallel batch: read RULES.md, read mori-sources-appendonly.py, read count-c1.py, count-c1s.py, count-c2.py, run selftest.
+  2. Analyze counters, build scratch attack harness in /tmp.
+  3. Run attacks, gather evidence.
+  4. Write report.
+
+  The axes (Godspeed): name them briefly — correctness (selftest verdict), robustness (counter attacks), evidence fidelity (exact stdout/stderr/exit). Keep report tight.
+
+  "one v2 wave (build + attack)" — my role appears to be attack (Exec3 runs the selftest + attacks counters). I should not edit production files at all. Only report file.
+
+  Let me begin. First batch of parallel tool calls.
+
+  Careful with reading .ufo/waves/round-43/count-c1s.py and count-c2.py — same directory. Paths:
+  - /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-42/count-c1.py
+  - /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c1s.py
+  - /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c2.py
+
+  And tools/mori-sources-appendonly.py.
+
+  Let me fire all in one block.
+
+• Axes for this seat: (1) selftest verdict fidelity — exact stdout/stderr/exit for the assigned command; (2) counter robustness — frozen round-42/43 counters attacked in /tmp scratch only; (3) scope discipline — zero production edits, zero subagents (not probeParent-seated), report at the assigned path.
+
+  Batching the reads and the assigned run concurrently now.EXIT_CODE=1
+--- STDERR BEGIN ---
+--- STDERR END ---
+/bin/bash: line 1: cd: /home/vggnk/Projects/shokunin/mori-shokunin: No such file or directory
+cat: /tmp/exec3-selftest-stderr.txt: No such file or directory
+
+
+• I made a typo in the cwd: "vggnk" instead of "vgpnk". The command never ran. Also I should read AGENTS.md first. Let me re-run with correct cwd, and read AGENTS.md in parallel.
+
+  Note: the stderr capture file was written by shell redirection... wait, the cd failed so the whole command... actually the command was `python3 ... 2>/tmp/exec3-selftest-stderr.txt; rc=$?; ...` with cwd=/home/vggnk/... which doesn't exist, so bash failed at cwd — the tool reported "cd: ... No such file". So nothing ran. EXIT_CODE=1 is from the failed shell. I must re-run properly with the correct path.
+
+  Let me batch: Read AGENTS.md + re-run selftest with correct cwd.
+
+• Typo in my cwd (`vggnk`) — nothing ran. Re-running correctly, and reading AGENTS.md as required.MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0
+EXIT_CODE=0
+--- STDERR BEGIN ---
+--- STDERR END ---
+
+
+• The selftest passed: `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0`, exit 0, empty stderr.
+
+  Now the attack phase: frozen counters must not be edited; attack them in scratch copies in /tmp.
+
+  The three frozen counters:
+  1. `.ufo/waves/round-42/count-c1.py` (r42 C1 counter)
+  2. `.ufo/waves/round-43/count-c1s.py` (r43 successor counter)
+  3. `.ufo/waves/round-43/count-c2.py` (r43 calibration counter)
+
+  Attack = find inputs/edge cases where they misbehave (crash, false met, false unmet, wrong verdict) — in /tmp scratch copies only. "Run code only in /tmp sandboxes." So I copy the counters to /tmp and craft adversarial scenarios there.
+
+  What attack surfaces do these counters have?
+
+  **count-c2.py** (smallest, most attackable):
+  - `rows()` regex: `^ {0,3}\|\s*(S[0-9]+)\s*\|` — matches ANY line starting with `| S123 |` anywhere in the file, not just registry rows. E.g., a row in a different table or a quoted example in prose could match. Also `S[0-9]+` allows more than 3 digits (S9999).
+  - `correction_row`: searches any row line containing "corrects S235" AND "a30dca99" AND not "a30cda99". Interesting: the string "a30dca99" — note the check `and "a30cda99" not in line` guards against the transposed typo variant. But the S235_SHA check uses the full row line hash — attack: if the row line has trailing whitespace differences... whatever, the attack is about robustness/false-verdicts.
+  - `DECL` count in SCORECARD: `card.count(DECL) == 1` — plain substring count.
+  - Attack vectors:
+    - A second table elsewhere in SOURCES.md (e.g., a "notes" section) containing a `| S235 |` line would make `s235` len 2 → check fails (false unmet) even if registry is fine. That's a false-unmet / parser-overreach attack.
+    - Conversely, `rows()` matches `S235` in a code fence or blockquote; the gate can't distinguish.
+    - If SOURCES.md has NO header at all, rows() still matches any pipe line — parser doesn't validate table structure at all.
+    - S235 unrewritten check: hash of the *line*, so reordering columns of the same row fails (good) but the line could be moved anywhere in the file (append-only violation not detected? Actually the frozen counter is not the append-only gate; C2 is about "S235 unrewritten" — moving the row doesn't change its line. That's arguably within scope).
+    - `others` correction row: any line starting with `| S999 |` containing "corrects S235" and "a30dca99" counts — including a duplicated line inside a fenced code block example. Two examples in docs → false unmet.
+    - CRLF: if SOURCES.md uses CRLF, `text.splitlines()` handles \r\n, but line would end with... splitlines strips \r\n? Actually splitlines() splits on \r\n and doesn't keep the terminator, so the line wouldn't include \r. Hmm, `"a\r\n".splitlines()` → `["a\r"]`? No: `"a\r\n".splitlines()` → `['a']`? Let me think: splitlines treats \r\n as one line boundary, so `'line\r\n'.splitlines()` → `['line']`. Right, \r\n is stripped as a unit. But lone `\r`? edge.
+    - Encoding: `sources.decode()` — UTF-8 default; a latin-1 byte → UnicodeDecodeError crash (exit code traceback, not 2). That's a crash-attack: non-UTF-8 byte in SOURCES.md → unhandled exception, exit 1 via traceback (actually Python exits 1 on unhandled exception). Counter contract says exit 2 on usage only; crash is misbehavior but minor.
+    - `--repo` parsing: `args[args.index("--repo") + 1]` — if `--repo` is last arg with no value → IndexError crash. Attack: `python3 count-c2.py HEAD --repo` → IndexError traceback instead of usage exit 2.
+    - `rev` starting with `-`: guarded (`args[0].startswith("-")` → usage 2). Good.
+    - But `--repo` before rev? Usage says `<rev> [--repo LANE]`; `--repo LANE rev` → rev=args[0]="--repo" → usage. Fine.
+
+  **count-c1s.py**:
+  - `--repo` same IndexError issue.
+  - `frozen_sig` check: walks AST for FunctionDef named "run", checks params == ["argv","timeout"]. If there are TWO functions named `run` (e.g., nested or later def), it breaks at the FIRST found in ast.walk order (BFS-ish: ast.walk is BFS). If the frozen file had a decoy `run` defined earlier... but frozen sha is pinned, so sig_ok is deterministic on the pinned bytes. The frozen bytes have one `run`. Fine.
+  - Attack: `self_at_rev` — reads `os.path.abspath(__file__)` bytes and compares to `git show rev:path`. If run from a scratch copy in /tmp with a different LANE via --repo, `git_bytes` uses LANE var (overridden). OK.
+  - `noharm_cwd`: runs the gate selftest with cwd=clone. Gate reads `--repo`? No — gate selftest ignores repo. The gate selftest is cwd-independent anyway (builds temp repos). Actually the gate's selftest doesn't use the cwd repo at all. So `cwd=clone` is cosmetic. Attack: none there.
+  - `frozen_still_crashes`: runs frozen counter from sandbox path with `--repo LANE`; expects TypeError crash `run() got an unexpected keyword argument 'cwd'` and no `^C1=` line. Note: frozen counter count-c1.py at line 246: `run([...], cwd=clone)` — but frozen `run()` signature is `(argv, timeout=900)` (per the c1s sig check). Indeed count-c1.py's run: `def run(argv, timeout=900)` and section 7 calls `run([...], cwd=clone)` → TypeError. So the frozen counter ALWAYS crashes at check 7 when it gets there... wait, but section 7 is the last check; sections 1-6 run first. The TypeError happens in check "gate_selftest_unharmed" → unhandled → traceback, exit 1, no C1= line. That's the r43 finding being encoded: the frozen r42 counter crashes before printing C1=.
+  - Attack on c1s: `parse_selftest` returns (None, None) if regex absent; then `v5_selftest_17` compares (None,None) != (17,0) → FAIL, fine.
+  - IndexError on `--repo` with missing value.
+  - LANE injection: `--repo` value with spaces etc. Minor.
+  - `if not args or args[0].startswith("-")` — but what about `count-c1s.py --repo X HEAD`? args[0]="--repo" → usage 2. OK.
+  - What if rev is something like `--selftest`? startswith("-") → usage. Good.
+  - `git_bytes` returns None on git failure — good; but `subprocess.run(...timeout=120)` could raise TimeoutExpired → unhandled crash. Attack: huge rev? Not practical.
+  - `frozen_still_crashes` check: `rc != 0 and CRASH in (err or "") and not re.search(r"^C1=", out or "", re.M)`. Attack: if the frozen counter crashed EARLIER (e.g., before clone) with a different error, rc != 0 and no C1= line but CRASH not in err → FAIL (correct behavior). If frozen counter were fixed to not crash, rc==0, prints C1=met → `not re.search` fails → FAIL → correct.
+  - Hmm: what if err contains CRASH but the counter ALSO printed C1= line before crashing? Guarded.
+
+  **count-c1.py** (frozen r42):
+  - Known bug (encoded): line 246 `run([...], cwd=clone)` → TypeError because run() lacks cwd param. Confirmed by reading. I can demonstrate in scratch: running it will crash at section 7 with that exact TypeError. That's presumably already known (c1s encodes it). My attack: confirm reproducibly, plus find OTHER issues:
+    - `global LANE` — `if "--repo" in args: global LANE` — wait, in count-c1.py main(): `if "--repo" in args: global LANE; LANE = ...`. Actually looking at the code: 
+      ```
+      def main():
+          args = sys.argv[1:]
+          if not args: ...
+          rev = args[0]
+          if "--repo" in args:
+              global LANE
+              LANE = args[args.index("--repo") + 1]
+      ```
+      Python3 syntax: `global LANE` must appear before any use of LANE in the function... LANE isn't used before, fine.
+    - Section 1 `pins_match`: iterates ALL pins in freeze file, including mutant pins — mutant files `conform-mut-*.py` are pinned and present at rev, so pins_match ok.
+    - Attack: `git_bytes` with no `-C`... it uses `git -C LANE show` — LANE is a hardcoded absolute path; with `--repo` override. If LANE repo missing → git fails → None → checks fail → C1=unmet exit 1 (graceful).
+    - The cwd crash: line 245-246: `run([sys.executable, os.path.join(clone, "tools/mori-sources-appendonly.py"), "--selftest"], cwd=clone)` → TypeError: run() got an unexpected keyword argument 'cwd'. Exit code 1 via traceback. So C1 NEVER prints. Attack/demo in /tmp: run a scratch copy against the lane → observe TypeError. This requires cloning the lane into /tmp (--shared clone is read-only wrt lane; `git clone --shared` doesn't mutate the source repo... it reads. Safe: clone reads objects. It does create `.git` in the /tmp clone only.)
+    - Wait — one more: count-c1.py line 167: `tempfile.mkdtemp(prefix=..., dir="/tmp")` fine.
+    - Also `v5_routed_four` compares failing lists sorted vs ROUTED order. Fine.
+    - Another latent bug: in section 3, `assert v4.decode().count(old) == 1` — assert can be stripped with -O. Minor.
+    - `TRANSFORMS["sort-deletion"]` old string `    events.sort(key=lambda event: (event[0], event[1]))\n` — count==1 in v5.
+
+  Attack plan in /tmp (scratch copies only):
+  1. Copy all three counters to /tmp/exec3-attack/ (cp — writing only to /tmp, allowed).
+  2. Confirm frozen count-c1.py crash: run scratch copy `python3 /tmp/.../count-c1.py HEAD --repo /home/vgpnk/Projects/shokunin/mori-shokunin`. Hmm — but that runs the FULL counter (clones lane into /tmp — allowed, "run code only in /tmp sandboxes"; git clone --shared reads the lane git dir, which is read-only operation, permitted? "Never mutate lane Git/jj or the lane index" — clone doesn't mutate. c1s itself does exactly this. OK.) But full run is slow (it runs many selftests, ~minutes). Timeout: count-c1 full run could take several minutes (v4 selftest 14 arms, v5 17 arms, 3 v4 mutants + 3 v5 mutants each running selftest... each selftest spawns subprocesses building repos; earlier the gate selftest alone was 1.4s; conform selftests maybe ~5-15s each; total maybe 2-5 min). I can shortcut: instead of full run, demonstrate the crash with a minimal repro: import the module in /tmp copy? The crash is in main() section 7 — to reach it, everything before must pass, which takes minutes. Alternative: reproduce the exact TypeError semantics with a tiny harness: load count-c1.py as module, monkeypatch nothing... Actually simpler: grep-based static analysis + a minimal dynamic proof: `python3 -c` that imports the run function from the scratch copy and calls `run(["true"], cwd="/tmp")` → TypeError. That proves the frozen signature can't accept the call at line 246. Plus AST check: run() params are [argv, timeout] while line 246 passes cwd. That's solid evidence without a 5-minute run.
+
+     Actually, better: run the real thing in background and let it complete — evidence quality higher ("the counter crashed with the exact TypeError at section 7 after passing checks 1-6"). But it runs the conform selftests... need .ufo/waves/round-42/conform.py etc. present at HEAD. It clones the lane. Time: each conform selftest spawns the checker as subprocess which builds fixture repos; r42 counter runs: v4 selftest (1), 3 v4 mutant selftests, v5 selftest, 3 v5 mutant selftests = 8 conform selftests + 4 routed runs. Could be 1-10 minutes. Let me try in background with generous timeout and check later. Hmm, but background bash max 86400s, fine. Actually let me just run it with run_in_background=true and continue with other attacks meanwhile. Risk: none to lane (read-only ops: git show -C LANE, git clone --shared LANE).
+
+     Wait — careful: count-c1.py writes into the CLONE (`v4_abs` under /tmp clone) — fine, /tmp.
+
+     One concern: `git clone --shared LANE clone` then `checkout --detach rev` — reads lane objects only. Safe.
+
+  3. count-c2.py attacks (scratch copy):
+     a. Craft adversarial SOURCES.md/SCORECARD.md in a /tmp git repo:
+        - Repo A ("false unmet via prose/example tables"): registry fine, plus a fenced code block containing an example row `| S235 |` → s235 len 2 → false unmet. Shows parser overreach (no table/section scoping).
+        - Repo B ("false met via duplicate S235 in code block + missing real row"?): if real S235 row absent but an identical line exists in a code fence → s235_ok true → false met. Strong finding: the row-hash check can be satisfied by ANY line anywhere (comment, fence, prose quote), not just a registry row. Also works with the row outside any table at file end.
+        - Repo C (correction_row false met): a prose line `| S000 | ... corrects S235 ... a30dca99 ...` inside a fence counts as the correction row.
+        - Repo D (crash): `--repo` with missing value → IndexError traceback exit 1 (contract says exit 2 on usage).
+        - Repo E (encoding crash): SOURCES.md with invalid UTF-8 byte → UnicodeDecodeError → traceback exit 1 (not a clean 2).
+        - Repo F (S[0-9]+ unbounded): S2350 also matches regex `S[0-9]+`... rows() matches `S2350` as sid "S2350", not S235 — fine. But `| S235extra |`? regex `^ {0,3}\|\s*(S[0-9]+)\s*\|` requires `|` right after digits+whitespace, so S235x doesn't match. S2350 would be its own sid. OK not a bug.
+        - Repo G (CRLF): line ends with \r? splitlines strips \r\n... but if file has CRLF, `text.splitlines()` → line without \r? Test: "abc\r\ndef".splitlines() = ['abc','def']. Yes stripped. But if the registry row is the LAST line without trailing newline and file uses CR only — obscure, skip.
+        - Also: `rows()` scans `SCORECARD.md`? No, only SOURCES.
+        - Attack: DECL count in SCORECARD: `card.count(DECL)` counts substring anywhere — a quoted mention in prose of `` `C1=met` exit 0 (`evidence/c1-after.txt`) `` in a changelog section would break count==1 → false unmet. Or: if the declaration moved/quoted, unmet. Weak but real (substring, no line anchoring).
+        - What about `s235` check being `len(s235) == 1` — S235 appearing in a *different* legit table (e.g., a "superseded history" table quoting the row) → false unmet. Covered by repo A.
+     b. Also attack c2's git_bytes: rev `HEAD` vs tags fine.
+
+  4. count-c1s.py attacks (scratch copy):
+     - IndexError on `--repo` missing value (same pattern).
+     - `args[0].startswith("-")` guard exists; but `--repo` as args[0]... covered → usage 2 fine.
+     - UnicodeDecodeError: `frozen.decode()`, `v5.decode()`, `v5_text = v5.decode()` — if the file bytes at rev aren't UTF-8 → crash. But frozen sha pinned so frozen is fine; v5 present check only — if v5 at rev is non-UTF-8, `v5.decode()` at line 141 crashes AFTER printing some checks — traceback, exit 1 with partial output, no C1S= line. False-crash attack. But requires a malicious rev — this is a robustness finding (exit-code contract: only 0/1/2 promised; crash gives 1 with traceback and NO C1S= line, which downstream parsers expecting the line would misread). Similar class.
+     - TimeoutExpired from git_bytes subprocess (timeout=120) unhandled → crash. Hard to trigger practically; note statically.
+     - `LANE` default hardcoded; with --repo pointing to a /tmp repo missing the required files → checks fail → C1S=unmet exit 1 gracefully. Good.
+     - Attack `self_at_rev` when file run via symlink or different bytes: run scratch copy at rev where file differs → "bytes differ" → C1S=unmet. Correct per design.
+     - One more subtle: `check("frozen_sig", sig_ok...)` — `ast.walk` order: if the frozen file had a nested/later function also named `run`... pinned bytes, single run. Skip.
+     - The `frozen_still_crashes` check runs frozen counter with `--repo LANE` — note it uses LANE (possibly overridden to /tmp repo). With a /tmp repo override, frozen counter's pins_present would fail → it prints "C1=unmet" exit 1 BEFORE reaching the cwd crash! Then check fails: `not re.search(r"^C1=", out)` is False → frozen_still_crashes FAIL → C1S=unmet. Attack: pointing --repo at a sandbox repo lacking the r42 files makes c1s report unmet via frozen_still_crashes detail (C1_line=True). That's expected/unmet but shows the crash-check depends on lane content. It's the design ("a rev that does not contain this file..." etc.). Not a bug per se; note as observation.
+
+  5. The appendonly gate itself: also attack? The assignment says attack the frozen counters. The gate got its selftest run (22 pass). Scope: counters. Maybe quick gate attacks too? "Attack them in scratch copies" refers to the frozen counters. Keep focus, but the gate shares `--repo` style parsing... The gate uses argparse (clean exit 2). Counters use hand-rolled parsing. Fine.
+
+  Time budget: run the full count-c1.py in background (evidence of crash), and in parallel build c2/c1s attack repos in /tmp.
+
+  Also: verify my /tmp copies match frozen bytes (sha256) — copy with cp preserves bytes; print sha256 of lane files and copies to prove attack targeted frozen bytes.
+
+  Also compute sha256 of the three lane files for the report.
+
+  Commands batch 1 (parallel):
+  1. Bash: mkdir /tmp/exec3-attack; cp the three counters; sha256sum lane files and copies.
+  2. Bash background: run scratch count-c1.py `HEAD --repo <lane>` capturing output to /tmp file. Wait — running it with default LANE is same thing. Use the /tmp copy path as argv0. Note: it will clone the lane into /tmp (safe, shared clone). Run in background with timeout generous (1800s). Also IMPORTANT: it must not be affected by my cwd. Run with cwd=/tmp/exec3-attack.
+     Actually hold on: will `git clone --shared /home/vgpnk/Projects/shokunin/mori-shokunin` be affected by GIT_* env or worktree? LANE is a normal repo presumably. Fine.
+     Note the crash happens at section 7 — everything before must pass, needing conform.py selftests to pass at HEAD... They should (round-42 landed). If earlier checks fail for env reasons, I still get output. Either way evidence.
+  3. Meanwhile build c2 attack repos: a single script writing /tmp/exec3-attack/c2-* repos with adversarial content, then run scratch count-c2.py against them with rev=HEAD, capturing exit codes.
+
+  Careful with heredocs writing registry content — use Write tool to create the attack script? Write only to /tmp — Write tool can write /tmp paths (path outside working dir must be absolute — allowed? "a path outside the working directory must be absolute" — so /tmp absolute paths OK). The instructions say "Run code only in /tmp sandboxes" and "Never mutate..." — /tmp writes fine.
+
+  Let me write attack scripts with Write to /tmp/exec3-attack/attack-c2.py etc. Or just bash heredocs. Write tool is cleaner for python scripts.
+
+  Plan the c2 attack script:
+
+  ```python
+  #!/usr/bin/env python3
+  """Exec3 scratch attack on frozen round-43 count-c2.py — /tmp only."""
+  import hashlib, os, subprocess, sys
+
+  SCRATCH = "/tmp/exec3-attack"
+  C2 = os.path.join(SCRATCH, "count-c2.py")  # byte copy of frozen counter
+  LANE = "/home/vgpnk/Projects/shokunin/mori-shokunin"
+
+  S235_SHA = "971df55e9e1ed8826e66dd31d12f9cbb5b2c727cf71201a2c0eabc7311e169a2"  # per-line sha from counter source
+  ```
+
+  Wait — S235_SHA is the sha of the LINE string. To forge, I need the exact line from the real corpus/SOURCES.md. Read it from the lane (read-only OK). Get the S235 row line bytes via `git -C LANE show HEAD:corpus/SOURCES.md` and extract the line whose sha matches S235_SHA. Then reuse that line inside a fence in attack repo. That yields "false met" for s235_unrewritten even with no registry table at all... but `correction_row` needs one correction row; pdf present; scorecard content. For a minimal false-met repo I need:
+  - corpus/SOURCES.md containing (only in a code fence) the exact S235 line + a `| S900 | ... corrects S235 ... a30dca99 ...` line
+  - SCORECARD.md containing DECL and CORR strings once each
+  - corpus/evidence/sources-r42/S235.pdf with bytes sha == PDF_SHA → copy the real pdf bytes from lane git (`git show HEAD:corpus/evidence/sources-r42/S235.pdf`).
+  Then run counter → expect all checks PASS → "C2=met mismatches=0" exit 0 on a repo whose SOURCES.md has NO registry header and NO real table. That's the strongest finding: parser accepts fence/prose content; "met" is forgeable.
+
+  Hmm wait — is that actually "false met"? The counter's P-C2 contract (per its docstring) is a calibration check on the real lane at rev: S235 unrewritten, exactly one correction row, scorecard declaration + correction, pdf sha. If a repo (or a malicious commit on the lane) placed the S235 row line only inside a fenced example, the counter says met. The append-only gate doesn't police that either (line unchanged vs first sighting — if the fence version appeared newly, its id S235 first sighting = that commit; imm cells differ from...? The fence line IS the same text as original row, but as a different location; the appendonly gate parses registry rows by header; a fence line wouldn't parse as a registry row (no header) → S235 would become "deleted" → violation flagged by gate. But C2 itself would print met. The two gates disagree → worth reporting as a finding (defense-in-depth gap in C2 alone). Good nuance.
+
+  For attack repos:
+
+  Repo F1 "forged-met": as above → expect exit 0, C2=met. Finding: counter content checks are string-scoped, not table-scoped.
+
+  Repo F2 "prose-false-unmet": take the REAL lane SOURCES.md at HEAD, append an innocuous fenced example containing a second `| S235 |` line → expect C2=unmet (s235 rows=2) → false unmet on otherwise-conformant content. Wait, but appending an example row might violate append-only? Not our concern — C2 alone flags it. Actually more realistic: a doc section quoting the old row. Either way: parser overreach.
+
+  Actually for F2, simpler: real SOURCES.md + a line in a comment `<!-- | S235 | -->`? The regex `^ {0,3}\|\s*(S[0-9]+)\s*\|` — needs the line to start (≤3 spaces) with `|`. An HTML comment starting `<!-- ` won't match. A fenced block line `| S235 | ... |` does match. So use a fenced example.
+
+  Repo F3 "usage-crash": `count-c2.py HEAD --repo` (missing value) → IndexError traceback, exit 1. Contract: exit 2 on usage. Finding.
+
+  Repo F4 "encoding-crash": SOURCES.md with b"\xff" byte → UnicodeDecodeError traceback exit 1 (not exit 2, no C2= line).
+
+  Repo F5 "scorecard-substring": SCORECARD.md contains DECL twice (declaration quoted in a log note) → unmet. Minor; skip? Cheap to include: use real scorecard + append a line quoting DECL. Actually the real scorecard already contains DECL once and CORR once; append "reverted: `C1=met` exit 0 (`evidence/c1-after.txt`)" → count 2 → unmet. Shows substring count fragility. Eh — that IS the check working as intended (declaration unrewritten means exactly once). Not a bug. Skip F5. Better: DECL appears in prose *before* the actual declaration section → count==1 satisfied by prose only while real declaration absent → false met. Forge repo: SCORECARD.md containing just the DECL sentence in a changelog → declaration_unrewritten PASS + scorecard_correction PASS with both strings in one prose paragraph → false met contribution. Fold into F1: make F1's scorecard a single prose paragraph containing both strings — demonstrating no section/line anchoring.
+
+  Also F6: `rows()` matches `S1234` (4+ digits)? Not relevant.
+
+  Also cross-check c2's `git_bytes` on missing rev: `git show badrev:...` → returncode !=0 → None → checks fail → "C2=unmet mismatches=3" exit 1. Graceful. OK.
+
+  For c1s attacks:
+  - G1: `count-c1s.py HEAD --repo` missing value → IndexError exit 1 (contract usage=2). Same class as F3.
+  - G2: run with `--repo /tmp/exec3-attack/empty-repo` (a fresh git repo without the files) — observe behavior: self_at_rev: git_bytes(rev, SELF_REL) from empty repo → None → unmet, exit 1 gracefully. Fine, expected. Skip? It also demonstrates self-check gating. Maybe run quickly for completeness — cheap.
+  - G3: UnicodeDecodeError on v5: repo where .ufo/waves/round-42/conform.py is binary garbage and count-c1s.py is byte-identical (copy the counter INTO the repo at the right path, plus frozen count-c1.py present but wrong sha? frozen_sha would FAIL → early return finish(False) before v5 decode. To reach v5.decode() crash, need frozen present with matching FROZEN_SHA — i.e., exact frozen bytes at .ufo/waves/round-42/count-c1.py (I have them — copy), sig_ok True (yes), v5 = binary garbage → checks: v5_present PASS → then clone step: clone that repo, checkout, gate selftest (22,0 — gate selftest is cwd-independent and doesn't depend on repo content! It will PASS), v5 selftest: runs garbage → rc!=0, (None,None) → v5_selftest_17 FAIL → then `v5_text = v5.decode()` → UnicodeDecodeError crash → traceback exit 1, no C1S= line. Good crash finding: decode precedes/follows without try. Also need the clone to succeed: repo needs a commit; and rev must contain SELF_REL byte-identical (path .ufo/waves/round-43/count-c1s.py in the repo) — so put copies at those paths. Let me include G3: crash → exit 1 traceback, no C1S= verdict line (contract promises C1S= line? "Prints one line per check, then C1S=met or C1S=unmet" — crash violates).
+    Wait — the empty-repo F5 above also crashes at decode since frozen None → early return... no, early return avoids decode. Fine.
+
+  Also note count-c1s G4: TimeoutExpired unhandled — static note only.
+
+  For count-c1 (frozen r42):
+  - H1: full run in background against lane → expect it to print checks 1..N PASS then crash TypeError at gate_selftest (line 246) with no C1= line, exit 1. This corroborates c1s's frozen_still_crashes.
+  - H2 (static + micro-dynamic): AST extract run() signature of frozen count-c1.py → [argv, timeout]; grep call sites with cwd= → line ~246. Plus micro repro: `python3 -c "import runpy; mod=runpy... "` — simplest: small script: load module via importlib.util.spec_from_file_location, call mod.run(["true"], cwd="/tmp") → catch TypeError. Good.
+  - H3: `--repo` missing value → IndexError (same hand-rolled parsing class). Verify: `python3 scratch/count-c1.py HEAD --repo` → IndexError before anything. Cheap.
+
+  Also verify my scratch copies are byte-identical to frozen lane files (sha256 both sides).
+
+  Now, H1 full-run duration: sections run 8 conform selftests + 4 routed runs. Each conform selftest — unknown, maybe 10-60s? The r42 evidence should exist... total possibly ~5-15 min. Background it with disable_timeout? Max background timeout 86400; set timeout=7200. Output to file; I'll check at end.
+
+  Also careful: count-c1.py hardcodes LANE default = the lane; I'll pass --repo LANE explicitly (same). And it reads PINS etc. from rev=HEAD of lane. Since I mustn't rely on lane state changing, HEAD now is fine.
+
+  One more c1 static quirk: line 68-69 `V4_REGIONS` includes tuple-extract old text — v5_regions_intact checks v4 mutation regions persist in v5. OK.
+
+  Also c1 `check("pins_present", True, "%d pins")` — always PASS when pins_raw exists (even 0 pins); if pins file exists but empty → pins={} → pins_match vacuous PASS. Attack: a rev where freeze-r42.txt is empty → pins_present PASS (0 pins), pins_match PASS, then v4_present check `sh256(v4) == pins.get(V4_REL)` → None ≠ sha → FAIL → unmet. Still caught downstream. Not a false-met. Note: pins_present is vacuous (0 pins PASSes) — minor finding. Can't easily demo without crafting repo with empty pins file + everything else… skip demo, static note.
+
+  Priority: get F1 (forged met) right — it's the strongest. Need exact S235 line + pdf bytes from lane git. Script will fetch via `git -C LANE show`.
+
+  Wait, one catch on F1: `s235_ok = len(s235) == 1 and sha == S235_SHA` — the line in fence must be byte-exact including leading spaces? rows() captures the full line; sha256(line). The real line presumably `| S235 | ... |`. I'll extract by hashing candidate lines from the real SOURCES.md at HEAD — guaranteed exact.
+
+  CORR string: "Round-43 calibration correction: r42-declaration-C1=met superseded; frozen counter printed no C1= line" — must appear once in scorecard.
+  DECL: "`C1=met` exit 0 (`evidence/c1-after.txt`)" once.
+  correction row: line starting `| S900 |` containing "corrects S235" and "a30dca99" (and not "a30cda99").
+
+  F1 expectations: checks: sources_present PASS, scorecard PASS, pdf PASS (real bytes), s235_unrewritten PASS (fence line, 1 row), correction_row PASS (fence line), declaration_unrewritten PASS, scorecard_correction PASS, pdf_sha PASS → C2=met mismatches=0 exit 0. 
+
+  Also need the attack repos to be git repos with at least one commit (rev HEAD). git init + add + commit -q. Use GIT_CONFIG_NOSYSTEM etc.? Fine without; set user.email/name locally.
+
+  Env safety: all in /tmp/exec3-attack. No lane writes. git -C LANE show is read-only.
+
+  Let me also record `git -C LANE rev-parse HEAD` for the report context. Read-only.
+
+  Alright — batch now:
+  1. Bash: setup scratch dir, cp counters, sha256 both, rev-parse HEAD.
+  2. Write: /tmp/exec3-attack/attack-c2.py
+  3. Write: /tmp/exec3-attack/attack-c1s.py
+  4. Write: /tmp/exec3-attack/attack-c1-micro.py
+  5. Bash background: full count-c1 run.
+
+  Dependencies: scripts need scratch dir to exist before running, but Write creates parent dirs automatically. cp needs dir — I'll mkdir -p && cp in the setup command. The background run needs the copy — the setup must run first. So: do setup Bash first alone, then batch the rest? I can make the background command itself do `mkdir -p ... && cp ... && python3 ...`. And the setup/sha command also does mkdir/cp (idempotent). Then Writes are independent. Then run attacks in a follow-up call after scripts are written.
+
+  Order: 
+  Batch A (parallel): [Bash setup+sha], [Write attack-c2.py], [Write attack-c1s.py], [Write attack-c1-micro.py], [Bash background full c1 run (self-contained: mkdir, cp, run)].
+  Wait — background c1 run and setup both cp to same path — race on cp same content, harmless (same bytes). Fine. Actually to be safe, background cmd does its own mkdir+cp to a SEPARATE path? Simpler: cp identical bytes; even if concurrent, content identical. But partial-file risk if both cp simultaneously... cp to same dest concurrently could interleave? cp truncates then writes; two writers → potential torn file read by python later — but python starts after cp completes in its own command chain. Torn file possible if setup-cp still writing when background python reads... background chain: mkdir && cp && python3. Both cps run ~simultaneously writing same bytes; worst case python reads while other cp mid-write → garbage. Avoid: background uses its own copy dir /tmp/exec3-attack/c1run/. Cheap insurance.
+
+  Then Batch B: run attack-c2.py and attack-c1s.py and micro (foreground, after writes done).
+
+  Then write report.
+
+  Also: MUST paste into report the exact assigned-command transcript: stdout `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0`, stderr empty, exit 0. Note first attempt failed due to my cwd typo — that's my execution noise, not command output; report only the valid run (mention the typo honestly as a note? The instruction: run the command and paste stdout/stderr/exit. I'll paste the valid run; the invalid attempt never executed the command, so there's nothing to paste from it. I'll note it briefly for honesty.)
+
+  Now write the attack scripts.
+
+  attack-c2.py plan:
+
+  ```python
+  #!/usr/bin/env python3
+  """Exec3 scratch attacks on frozen .ufo/waves/round-43/count-c2.py (copy in /tmp)."""
+  import hashlib, os, re, subprocess, sys
+
+  SCRATCH = "/tmp/exec3-attack"
+  C2 = os.path.join(SCRATCH, "count-c2.py")
+  LANE = "/home/vgpnk/Projects/shokunin/mori-shokunin"
+  C2_SRC = os.path.join(LANE, ".ufo/waves/round-43/count-c2.py")
+  PDF_REL = "corpus/evidence/sources-r42/S235.pdf"
+  DECL = "`C1=met` exit 0 (`evidence/c1-after.txt`)"
+  CORR = ("Round-43 calibration correction: r42-declaration-C1=met superseded; "
+          "frozen counter printed no C1= line")
+
+  def sh(b): return hashlib.sha256(b).hexdigest()
+
+  def git_show(rev, path):
+      p = subprocess.run(["git", "-C", LANE, "show", "%s:%s" % (rev, path)],
+                         capture_output=True)
+      return p.stdout if p.returncode == 0 else None
+
+  def make_repo(path, files):
+      os.makedirs(path)
+      def g(*a):
+          subprocess.run(["git", "-C", path] + list(a), check=True, capture_output=True)
+      g("init", "-q")
+      g("config", "user.name", "exec3 attack")
+      g("config", "user.email", "exec3@scratch.invalid")
+      for rel, data in files.items():
+          full = os.path.join(path, rel)
+          os.makedirs(os.path.dirname(full), exist_ok=True)
+          mode = "wb" if isinstance(data, bytes) else "w"
+          with open(full, mode) as fh:
+              fh.write(data)
+          g("add", rel)
+      g("commit", "-q", "-m", "fixture")
+      return path
+
+  def run_counter(repo, extra=()):
+      p = subprocess.run([sys.executable, C2, "HEAD", "--repo", repo, *extra],
+                         capture_output=True, text=True)
+      return p.returncode, p.stdout, p.stderr
+
+  HEAD = subprocess.run(["git", "-C", LANE, "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+  src = git_show(HEAD, "corpus/SOURCES.md").decode()
+  # locate the exact S235 line by the counter's own line-sha
+  S235_SHA = "971df55e..."  # read from counter source to avoid hardcode drift
+  ```
+
+  Extract S235_SHA from the counter copy: parse `S235_SHA = "..."` via regex from source. Good — no hardcode.
+
+  ```python
+  m = re.search(r'S235_SHA = "([0-9a-f]{64})"', open(C2).read())
+  S235_SHA = m.group(1)
+  lines = src.splitlines()
+  s235_line = next(l for l in lines if sh(l.encode()) == S235_SHA)
+  pdf = git_show(HEAD, PDF_REL)
+  PDF_SHA_OK = sh(pdf)  # compare to counter's PDF_SHA? just embed real bytes; check outcome via counter output
+  ```
+
+  F1 forged-met repo:
+  ```python
+  f1_sources = (
+      "# SOURCES — forged fixture (no registry header at all)\n\n"
+      "```markdown\n"          # fenced example block
+      + s235_line + "\n"
+      + "| S900 | https://example.invalid/z | docs | A | scope z | anchor z | "
+        "corrects S235 (row sha a30dca99…) | open | 2026-10-24 | on-release | c2 |\n"
+      + "```\n")
+  ```
+  Wait "a30dca99" must be in the line; "a30cda99" must NOT be. The real correction row presumably contains "a30dca99" (S235 pdf sha prefix 9855a498...a30dca99? PDF_SHA = 9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30dca99359e6df057ad8020 — contains "a30dca99"! and "a30cda99" is the transposition trap). So include PDF full sha or the fragment; I'll include the full pdf sha in teaches text.
+
+  F1 scorecard:
+  ```python
+  f1_scorecard = (
+      "# SCORECARD (forged fixture)\n\n"
+      "Log note: the declaration read %s and the correction says %s\n" % (DECL, CORR))
+  ```
+  Contains each once. Counter counts substrings → both PASS.
+
+  F1 = {sources: f1_sources, SCORECARD.md: f1_scorecard, PDF_REL: pdf}
+
+  Expect: C2=met mismatches=0, exit 0.
+
+  F2 prose-false-unmet: real sources + "\nExample (docs fence):\n```markdown\n" + s235_line + "\n```\n" appended → expect s235_unrewritten FAIL rows=2 → C2=unmet mismatches=1 exit 1. (Everything else real → other checks pass. pdf from real lane; scorecard from real lane.) Need real scorecard bytes: git_show(HEAD, "SCORECARD.md").
+
+  F3 usage crash: run_counter with extra argv trick — modify: run [C2, "HEAD", "--repo"] (no value). Returncode expect 1 with IndexError traceback.
+
+  F4 encoding crash: real repo but sources bytes = real sources with a b"\xff" appended (or replaced). decode() crashes → exit 1 traceback with UnicodeDecodeError, no C2= line.
+
+  Print a tidy PASS/ATTACK table: for each attack, expected vs got.
+
+  attack-c1s.py plan:
+  G1: [C1S, "HEAD", "--repo"] → IndexError.
+  G2: repo with byte-identical self at rel path, frozen bytes at frozen rel (exact FROZEN_SHA match), v5 = b"\x00\x01garbage not utf8 \xff" → expect crash at v5_text=v5.decode() (line ~141) — traceback, exit 1, no C1S= line. Note: this repo needs clone --shared to work: any git repo fine. Also the gate selftest inside (noharm_cwd) runs the CLONE's tools/mori-sources-appendonly.py — clone won't have it (our fixture repo lacks tools/) → run() returns rc!=0 (python can't find file → rc 2? subprocess with argv running nonexistent file → FileNotFoundError raised in parent! `subprocess.run([sys.executable, os.path.join(clone, "tools/...")])` — sys.executable exists, the script arg missing → python exits 2 "can't open file". rc=2, out empty → m None → noharm_cwd FAIL (recorded). Then v5 selftest: [python, clone/.ufo/waves/round-42/conform.py ...] → conform.py is the garbage bytes → python fails to parse → SyntaxError to stderr, rc 1... wait python running a file with invalid syntax: rc 1. out empty → parse (None,None) → v5_selftest_17 FAIL recorded. Then `v5_text = v5.decode()` → UnicodeDecodeError → crash. Yes: traceback exit 1, checks printed so far, NO C1S= line. 
+
+  Also the fixture needs `git clone` to work: commit all files. Also self_at_rev needs SELF_REL at HEAD == running file bytes → copy C1S source into fixture at .ufo/waves/round-43/count-c1s.py. But wait: "running" file is my SCRATCH copy — `open(os.path.abspath(__file__))` → the scratch copy path. Byte-identical to lane original (cp). Fixture copy also from lane original → identical. 
+
+  Frozen fixture: bytes from lane .ufo/waves/round-42/count-c1.py → sha must equal FROZEN_SHA (read from c1s source; also verify ourselves — if lane's frozen file sha ≠ FROZEN_SHA pinned in c1s, G2 crashes earlier at finish(False) — fine, report accordingly).
+
+  G3: empty repo (no files): self_at_rev None → "absent" FAIL → C1S=unmet exit 1, only one check line. Behavior OK per design (documented "stops after that check"). Include for completeness (verifies graceful early stop).
+
+  attack-c1-micro.py:
+  - Load frozen count-c1.py from scratch copy via importlib (module name exec3_c1).
+    PROBLEM: importing executes module top-level — only defs + constants, main() guarded. Safe.
+  - AST: find FunctionDef run → args list.
+  - Grep source for "cwd=" call inside run( calls: find `run([...], cwd=clone)` line number.
+  - Dynamic: call mod.run(["true"], cwd="/tmp") → expect TypeError matching c1s's CRASH string exactly: "run() got an unexpected keyword argument 'cwd'".
+  - Also `--repo` missing value: subprocess [python, copy, "HEAD", "--repo"] → IndexError exit 1.
+
+  And the background full run of frozen c1 — self-contained bash:
+  ```bash
+  mkdir -p /tmp/exec3-attack/c1run && cp /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-42/count-c1.py /tmp/exec3-attack/c1run/count-c1.py && cd /tmp/exec3-attack/c1run && (python3 count-c1.py HEAD --repo /home/vgpnk/Projects/shokunin/mori-shokunin > c1-full.out 2> c1-full.err; echo "EXIT=$?" > c1-full.rc)
+  ```
+  run_in_background=true, timeout large (7200). Note: count-c1 takes <rev> positional and optional --repo. Uses LANE default anyway.
+
+  Hmm wait — count-c1.py main: `if "--repo" in args: global LANE; LANE = args[...+1]`. Passing --repo lane explicit is same as default. Fine, explicit is clearer.
+
+  One risk in full run: `git clone -q --shared LANE clone` — if the lane repo has worktree-specific stuff (jj colocation?) it's fine, clone reads.
+
+  Duration unknown — proceed; report will cite whatever completed by the time I finish writing (check at end; it's background so I get notified).
+
+  Also should I run the c1s counter for real against the lane? That's its purpose; not my assignment. My assignment: run the gate selftest + attack counters in scratch. Skip full c1s run (its full run also does clone + conform runs; and c1s at HEAD should pass; not needed).
+
+  Actually wait — one more consideration about the frozen_still_crashes interplay: my micro-repro already proves the frozen c1 crash; the background full run gives end-to-end proof. Good.
+
+  Report contents (Exec3.md):
+  - Axis statement, scope, environment.
+  - Assigned command transcript (stdout/stderr/exit).
+  - Method: scratch copies, sha256 pins proving bytes == frozen lane bytes.
+  - Findings per counter with evidence (expected vs got, exit codes, key stderr lines).
+  - Severity ordering: F1 forged-met (high), F2 false-unmet parser overreach (medium), F3/F4/G1/G3 crash & usage-contract violations (medium/low), G2 decode crash no-verdict-line (medium), H1/H2 frozen c1 cwd TypeError (known-by-design? c1s encodes it as EXPECTED — the r43 finding — so it's not new; report as corroborated), pins_present vacuous (low), TimeoutExpired unhandled (low, static), IndexError --repo class across all three (low-medium).
+  - Remaining risks / not-covered.
+  - No production files touched; list of /tmp paths.
+
+  Important framing: frozen counters are FROZEN — findings are for the tower/L1 to route (v3 counters or contract amendments), not for me to fix. Attack summary only.
+
+  Severity of F1: to exploit on the real lane you'd need a commit rewriting SOURCES.md — which the append-only gate would flag (S235 deleted + S900 imm row...). Actually would it? S900 correction row in fence: gate's parse_registry requires header; fence block without header → not registry → ids/deleted computed from registry rows only → S235 absent → deleted violation. So F1 as a lane attack gets caught by the OTHER gate. C2 standalone is forgeable; combined defense holds. Honest report: note the interplay. F2 (false unmet via prose second S235): if someone appends a docs example quoting the row, C2 unmet even though append-only intact — availability annoyance, not integrity. Medium-low.
+
+  G2 severity: c1s decode crash — only via malicious/garbage rev; c1s is run by operator on lane revs. Low-medium robustness.
+
+  Also the IndexError class: `--repo` last → IndexError exit 1 traceback vs usage 2. Low.
+
+  One more c2 static: `rows()` sid regex `S[0-9]+` also matches 4-digit — only used for S235 equality and correction-row scan; a `| S2359 |` line containing "corrects S235" would count as correction row for... `others` includes sid S2359 if line contains "corrects S235" — the substring "corrects S235" matches inside "corrects S2359"! So a row "corrects S2359" (about a different id) with pdf-sha fragment would satisfy/miscount the correction_row check → false met if it appears while real correction absent. Attack: correction row for S2359 (legit different row) → correction_row PASS wrongly. Substring boundary bug: "corrects S235" lacks \b. Worth including as F6 mini — actually just fold into report as static finding with the regex evidence; demo optional. Cheap to demo in F1's repo? F1 already met. Separate tiny repo: sources with registry-ish rows where only `| S700 | ... teaches: corrects S2359 ... a30dca99 ...` exists, no real correction row, S235 line present in fence... eh — that repeats fence trick. Static note suffices; keep scope tight. Actually the boundary bug stands alone: real-world SOURCES could legitimately contain "corrects S235" inside "corrects S2351" text? S2351 doesn't exist (3-digit convention S###; S\d{3} fullmatch in gate; 4-digit ids rejected by gate). Rows with 4-digit ids wouldn't parse in the gate but c2's rows() accepts them. Mixed-validator class finding. Static note.
+
+  Now — one subtlety about writing my report: path .ufo/waves/round-43/w1/Exec3.md — "Write only your own report file" — OK. Use Write tool.
+
+  Also should the report avoid non-ASCII? AGENTS.md says nothing about that; fine to use ASCII mostly. The em-dash in DECL/CORR strings — CORR has "; " ASCII. DECL has backticks + parens, ASCII. s235 line may contain non-ASCII (— in teaches?). I'll quote carefully/truncated in report.
+
+  Let me also capture `git -C LANE rev-parse --short HEAD` and whether lane is on a branch — read-only, for context. Minor; include rev-parse HEAD in setup.
+
+  Alright, execute Batch A now.
+
+  Actually one more check on attack-c2 F1: `s235_ok = len(s235) == 1 and hashlib.sha256(s235[0].encode()).hexdigest() == S235_SHA` — `.encode()` utf-8 of the LINE (no trailing newline since splitlines). My fence line must be exactly s235_line (stripped of newline). My script reads lines via splitlines → exact. 
+
+  And `others` requires `"corrects S235" in line and "a30dca99" in line and "a30cda99" not in line` — my S900 line contains "corrects S235 (row sha a30dca99…)" — include real full PDF sha: 9855a498...a30dca99... — contains a30dca99, not a30cda99 (check: ...4f1e65a4a30dca993... — "a30dca99" present; "a30cda99"? string contains "a4a30dca99" → 'a30dca99' yes; transposed 'a30cda99' would need c before d: our substring has 'a30d' → no 'a30c'. Good.) But careful the S235 line itself — does IT contain "corrects S235"? If the S235 teaches mentions... the regex correction scan skips sid == "S235" explicitly. Fine.
+
+  Also the fence in F1: lines inside a fenced block still start with `|` at col 0 → match. Good.
+
+  For F2, expect mismatches: s235_unrewritten FAIL only → C2=unmet mismatches=1 exit 1.
+
+  F4: sources bytes = real + b"\n\xff\n"? Put junk line: b"\xff\xfe binary note\n". decode() at `text = sources.decode()` crashes. Expect exit 1, stderr UnicodeDecodeError, no C2= line.
+
+  Now G2 details (c1s decode crash): need FROZEN bytes sha == FROZEN_SHA constant. Script asserts; if mismatch, prints note and skips gracefully.
+
+  Also G2 fixture must have count-c1s.py at SELF_REL and count-c1.py at FROZEN_REL and conform.py garbage at V5_REL, committed. clone --shared of a tiny repo fine.
+
+  Wait — in G2, before decode, `selftest(clone, v5_abs, rev)` runs [python, v5_abs, rev, --repo, clone, --contract, ..., --counter, ..., --selftest]. v5_abs is garbage bytes → python: "SyntaxError: invalid character" or decode error → rc 1, out empty → FAIL recorded. Then v5_text = v5.decode() → UnicodeDecodeError('utf-8' codec can't decode byte 0xff...) → crash. But careful: v5 bytes must FAIL utf-8 decode: b"\xff\xfe\x00garbage" → \xff invalid → yes.
+
+  Then G3 empty repo: no commits! `git show HEAD:...` → git fails ("does not exist"? `HEAD:path` in empty repo → fatal) → None → absent → finish(False) exit 1 with single check line. Even simpler — no commit needed. But clone in G3 never happens (early return). Make G3 a repo with one empty commit to be tidy — or none at all; git_bytes fails → fine. I'll init+commit nothing... `git rev-parse HEAD` fails in truly empty repo but c1s doesn't rev-parse; git show "HEAD:..." fails cleanly. OK.
+
+  Also add G4 (documented design check): run c1s scratch copy against LANE? Not needed; skip (full c1s run also long due to conform selftests — skip; note as not-run).
+
+  Micro-c1 script: importlib load:
+  ```python
+  import importlib.util
+  spec = importlib.util.spec_from_file_location("frozen_c1", C1_COPY)
+  mod = importlib.util.module_from_spec(spec)
+  spec.loader.exec_module(mod)
+  ```
+  Top-level of count-c1.py: imports, constants, failures=[], def check..., def main guarded. Safe.
+  Then:
+  - AST of source: FunctionDef run params.
+  - dynamic: try mod.run(["/bin/true"], cwd="/tmp") → TypeError message.
+  - static scan: find line numbers containing "cwd=" → line with `], cwd=clone)`.
+  - subprocess: [python, copy, "HEAD", "--repo"] → IndexError exit 1.
+  - pins_present vacuity: static note (no demo).
+
+  Batch A calls now. I'll write the three scripts via Write (to /tmp/exec3-attack/...), the setup bash, and the background c1 run — 5 parallel calls. Write auto-creates dirs, so no ordering issue with setup bash for the Writes; the background bash is self-contained (own cp dir). The setup bash mkdir+cp+sha: independent.
+
+  One more thing — AGENTS.md: "Every change appends a LOG.md entry" — but my constraints say write ONLY my report file; LOG.md entry would violate the narrower lane instruction? AGENTS.md applies to "changes" in the repo; I make none except the report file. The round instruction "Write only your own report file" is more specific and authoritative for this seat. No LOG.md.
+
+  Also "Never fabricate domain knowledge: cite a file, a command output, or a source" — my report will cite command outputs. Good.
+
+  Let me write everything now.
+
+  Script details — careful with quoting in Write content. Use plain ASCII in scripts.
+
+  attack-c2.py full:
+
+  ```python
+  #!/usr/bin/env python3
+  """Exec3 scratch attacks on frozen round-43 counter count-c2.py.
+
+  Runs only against /tmp fixture repos; the lane repo is read via `git show`
+  only. Frozen counter is a byte copy; never edited here.
+  """
+  import hashlib
+  import os
+  import re
+  import subprocess
+  import sys
+
+  SCRATCH = "/tmp/exec3-attack"
+  C2 = os.path.join(SCRATCH, "count-c2.py")
+  LANE = "/home/vgpnk/Projects/shokunin/mori-shokunin"
+  PDF_REL = "corpus/evidence/sources-r42/S235.pdf"
+
+  fail = []
+
+
+  def sh(data):
+      return hashlib.sha256(data).hexdigest()
+
+
+  def lane_show(path):
+      p = subprocess.run(["git", "-C", LANE, "show", "HEAD:%s" % path],
+                         capture_output=True)
+      return p.stdout if p.returncode == 0 else None
+
+
+  def make_repo(name, files):
+      path = os.path.join(SCRATCH, name)
+      subprocess.run(["rm", "-rf", path])
+      os.makedirs(path)
+
+      def g(*a):
+          r = subprocess.run(["git", "-C", path] + list(a),
+                             capture_output=True)
+          assert r.returncode == 0, (a, r.stderr)
+
+      g("init", "-q")
+      g("config", "user.name", "exec3")
+      g("config", "user.email", "exec3@scratch.invalid")
+      for rel, data in files.items():
+          full = os.path.join(path, rel)
+          os.makedirs(os.path.dirname(full), exist_ok=True)
+          with open(full, "wb") as fh:
+              fh.write(data if isinstance(data, bytes) else data.encode())
+          g("add", rel)
+      g("commit", "-q", "-m", "fixture")
+      return path
+
+
+  def run_counter(argv):
+      p = subprocess.run([sys.executable, C2] + argv, capture_output=True,
+                         text=True)
+      return p.returncode, p.stdout, p.stderr
+
+
+  def expect(name, ok, detail):
+      print("%-28s %s  %s" % (name, "EXP-HIT" if ok else "no-hit", detail))
+      if not ok:
+          fail.append(name)
+
+
+  counter_src = open(C2).read()
+  S235_SHA = re.search(r'S235_SHA = "([0-9a-f]{64})"', counter_src).group(1)
+
+  sources = lane_show("corpus/SOURCES.md")
+  scorecard = lane_show("SCORECARD.md")
+  pdf = lane_show(PDF_REL)
+  assert sources and scorecard and pdf
+  s235_line = next(l for l in sources.decode().splitlines()
+                   if sh(l.encode()) == S235_SHA)
+
+  corr_line = ("| S900 | https://example.invalid/z | docs | A | scope z | "
+               "anchor z | corrects S235 (pdf %s) | open | 2026-10-24 | "
+               "on-release | c2 |" % sh(pdf))
+
+  # F1 forged-met: no registry header anywhere; both rows live in a fence.
+  f1 = make_repo("c2-f1-forged-met", {
+      "corpus/SOURCES.md":
+          "# forged fixture: no registry\n\n```markdown\n"
+          + s235_line + "\n" + corr_line + "\n```\n",
+      "SCORECARD.md":
+          "# forged scorecard\n\nprose note: declared %s; correction: %s\n"
+          % ("`C1=met` exit 0 (`evidence/c1-after.txt`)",
+             "Round-43 calibration correction: r42-declaration-C1=met superseded; "
+             "frozen counter printed no C1= line"),
+      PDF_REL: pdf,
+  })
+  rc, out, err = run_counter(["HEAD", "--repo", f1])
+  expect("F1 forged-met", rc == 0 and "C2=met mismatches=0" in out,
+         "rc=%d tail=%r" % (rc, out.strip().splitlines()[-1] if out.strip() else err[-160:]))
+
+  # F2 false unmet: real content + one doc example quoting the S235 line.
+  f2 = make_repo("c2-f2-prose-unmet", {
+      "corpus/SOURCES.md":
+          sources.decode() + "\nDocs example (fence):\n\n```markdown\n"
+          + s235_line + "\n```\n",
+      "SCORECARD.md": scorecard,
+      PDF_REL: pdf,
+  })
+  rc, out, err = run_counter(["HEAD", "--repo", f2])
+  expect("F2 prose-false-unmet", rc == 1 and "C2=unmet mismatches=1" in out
+         and "FAIL s235_unrewritten" in out,
+         "rc=%d s235_line=%r" % (rc, "FAIL s235_unrewritten" in out))
+
+  # F3 usage contract: `--repo` with no value must be usage exit 2, not IndexError.
+  rc, out, err = run_counter(["HEAD", "--repo"])
+  expect("F3 repo-missing-value", rc == 2,
+         "rc=%d err=%r" % (rc, err.strip().splitlines()[-1] if err.strip() else ""))
+
+  # F4 non-UTF-8 SOURCES.md: crash instead of a verdict line.
+  f4 = make_repo("c2-f4-bad-utf8", {
+      "corpus/SOURCES.md": sources + b"\n\xff\xfe corrupt\n",
+      "SCORECARD.md": scorecard,
+      PDF_REL: pdf,
+  })
+  rc, out, err = run_counter(["HEAD", "--repo", f4])
+  expect("F4 bad-utf8-crash", rc == 1 and "UnicodeDecodeError" in err
+         and "C2=" not in out,
+         "rc=%d unicode=%s c2line=%s" % (rc, "UnicodeDecodeError" in err,
+                                         "C2=" in out))
+
+  print("ATTACK-C2 done hits=%d miss=%d" % (
+      4 - len(fail) if not fail else 4 - len(fail), len(fail)))
+  sys.exit(0)
+  ```
+
+  Hmm the final print is clumsy; simplify: `print("ATTACK-C2 summary: %d/%d expectations hit" % (4-len(fail), 4))`.
+
+  Note in F1, DECL string: I must reproduce the exact DECL from counter source: DECL = "`C1=met` exit 0 (`evidence/c1-after.txt`)". And CORR = "Round-43 calibration correction: r42-declaration-C1=met superseded; frozen counter printed no C1= line". Better: extract both from counter source via regex, avoiding typos:
+
+  ```python
+  DECL = re.search(r'DECL = "(`[^`]*`[^"]*)"', counter_src).group(1)
+  ```
+  Counter source line: DECL = "`C1=met` exit 0 (`evidence/c1-after.txt`)" → regex r'DECL = "(.*)"' fine.
+  CORR is parenthesized multi-line:
+  ```
+  CORR = ("Round-43 calibration correction: r42-declaration-C1=met superseded; "
+          "frozen counter printed no C1= line")
+  ```
+  regex over source with DOTALL: r'CORR = \((.*?)\)' then strip quotes/concat — messy. Use ast.literal_eval on the assigned expression: find assignment via ast:
+
+  ```python
+  import ast
+  tree = ast.parse(counter_src)
+  consts = {}
+  for node in tree.body:
+      if isinstance(node, ast.Assign) and len(node.targets) == 1 and isinstance(node.targets[0], ast.Name):
+          if node.targets[0].id in ("DECL", "CORR", "S235_SHA", "PDF_SHA"):
+              consts[node.targets[0].id] = ast.literal_eval(node.value)
+  ```
+  Clean. Use consts["DECL"], consts["CORR"], consts["S235_SHA"].
+
+  attack-c1s.py:
+
+  ```python
+  #!/usr/bin/env python3
+  """Exec3 scratch attacks on frozen round-43 counter count-c1s.py."""
+  import ast
+  import hashlib
+  import os
+  import re
+  import subprocess
+  import sys
+
+  SCRATCH = "/tmp/exec3-attack"
+  C1S = os.path.join(SCRATCH, "count-c1s.py")
+  LANE = "/home/vgpnk/Projects/shokunin/mori-shokunin"
+  SELF_REL = ".ufo/waves/round-43/count-c1s.py"
+  FROZEN_REL = ".ufo/waves/round-42/count-c1.py"
+  V5_REL = ".ufo/waves/round-42/conform.py"
+
+  fail = []
+
+
+  def lane_show(path):
+      p = subprocess.run(["git", "-C", LANE, "show", "HEAD:%s" % path],
+                         capture_output=True)
+      return p.stdout if p.returncode == 0 else None
+
+
+  def make_repo(name, files, commit=True):
+      path = os.path.join(SCRATCH, name)
+      subprocess.run(["rm", "-rf", path])
+      os.makedirs(path)
+
+      def g(*a):
+          r = subprocess.run(["git", "-C", path] + list(a), capture_output=True)
+          assert r.returncode == 0, (a, r.stderr)
+
+      g("init", "-q")
+      g("config", "user.name", "exec3")
+      g("config", "user.email", "exec3@scratch.invalid")
+      for rel, data in files.items():
+          full = os.path.join(path, rel)
+          os.makedirs(os.path.dirname(full), exist_ok=True)
+          with open(full, "wb") as fh:
+              fh.write(data)
+          g("add", rel)
+      if commit:
+          g("commit", "-q", "-m", "fixture")
+      return path
+
+
+  def run_c1s(argv):
+      p = subprocess.run([sys.executable, C1S] + argv, capture_output=True,
+                         text=True)
+      return p.returncode, p.stdout, p.stderr
+
+
+  def expect(name, ok, detail):
+      print("%-26s %s  %s" % (name, "EXP-HIT" if ok else "no-hit", detail))
+      if not ok:
+          fail.append(name)
+
+
+  src = open(C1S, "rb").read()
+  frozen = lane_show(FROZEN_REL)
+
+  # G1: `--repo` missing value -> usage contract (exit 2), not IndexError.
+  rc, out, err = run_c1s(["HEAD", "--repo"])
+  expect("G1 repo-missing-value", rc == 2,
+         "rc=%d err=%r" % (rc, err.strip().splitlines()[-1] if err.strip() else ""))
+
+  # G2: non-UTF-8 v5 at rev -> UnicodeDecodeError, no C1S= verdict line.
+  frozen_sha = hashlib.sha256(frozen).hexdigest()
+  pin = re.search(r'FROZEN_SHA = "([0-9a-f]{64})"', src.decode()).group(1)
+  if frozen_sha == pin:
+      g2 = make_repo("c1s-g2-bad-utf8-v5", {
+          SELF_REL: src,
+          FROZEN_REL: frozen,
+          V5_REL: b"\xff\xfe\x00 not utf8",
+      })
+      rc, out, err = run_c1s(["HEAD", "--repo", g2])
+      expect("G2 v5-decode-crash", rc == 1 and "UnicodeDecodeError" in err
+             and "C1S=" not in out,
+             "rc=%d unicode=%s c1sline=%s checks=%d"
+             % (rc, "UnicodeDecodeError" in err, "C1S=" in out,
+                len([l for l in out.splitlines() if l.startswith("check")])))
+  else:
+      print("G2 skipped: lane frozen bytes sha %s != pinned %s"
+            % (frozen_sha[:12], pin[:12]))
+
+  # G3: rev lacking the counter itself -> documented early stop.
+  g3 = make_repo("c1s-g3-empty", {".gitkeep": b""})
+  rc, out, err = run_c1s(["HEAD", "--repo", g3])
+  expect("G3 self-absent-early-stop", rc == 1 and "C1S=unmet" in out
+         and "FAIL self_at_rev" in out,
+         "rc=%d lines=%d" % (rc, len(out.strip().splitlines())))
+
+  print("ATTACK-C1S summary: %d/3 expectations hit" % (3 - len(fail)))
+  sys.exit(0)
+  ```
+
+  Wait G3: .gitkeep only — `git show HEAD:.ufo/waves/round-43/count-c1s.py` → fails → at_rev None → check FAIL "absent" → finish(False) → "C1S=unmet" exit 1. Good. But note `run_c1s(["HEAD", "--repo", g3])` — args[0]="HEAD" fine.
+
+  Hmm G3 commit includes .gitkeep — fine.
+
+  Also for G2: v5_rel garbage — before decode, selftest runs [python, clone/.ufo/.../conform.py, HEAD, --repo, clone, ...] → python tries to compile garbage → SyntaxError? b"\xff\xfe\x00 not utf8" → python source decode error: "SyntaxError: Non-UTF-8 code..." rc 1. Then v5.decode() UnicodeDecodeError. Yes.
+
+  But careful: does c1s reach v5 decode before or after noharm_cwd? Order in main: self_at_rev → frozen_sha → frozen_sig → v5_present → sandbox clone → noharm_cwd (gate selftest, clone lacks tools/ → rc!=0 → FAIL recorded, continues) → v5 selftest FAIL → v5_text = v5.decode() → crash. Output has ~6 check lines, then traceback. No C1S= line. 
+
+  Wait — noharm_cwd runs `[sys.executable, os.path.join(clone, "tools/mori-sources-appendonly.py"), "--selftest"]` with cwd=clone → file missing → python rc 2, stderr "can't open file" — captured, fine, no crash.
+
+  attack-c1-micro.py:
+
+  ```python
+  #!/usr/bin/env python3
+  """Exec3 micro-attack on frozen round-42 count-c1.py (scratch copy)."""
+  import ast
+  import importlib.util
+  import os
+  import subprocess
+  import sys
+
+  SCRATCH = "/tmp/exec3-attack/c1run"
+  C1 = os.path.join(SCRATCH, "count-c1.py")
+  LANE = "/home/vgpnk/Projects/shokunin/mori-shokunin"
+
+  src = open(C1, "rb").read()
+
+  # 1. AST: the frozen run() signature.
+  tree = ast.parse(src.decode())
+  sigs = [ [a.arg for a in n.args.args] for n in ast.walk(tree)
+           if isinstance(n, ast.FunctionDef) and n.name == "run" ]
+  print("run signatures at module top level: %s" % sigs)
+
+  # 2. call sites passing cwd=
+  lines = src.decode().splitlines()
+  cwd_calls = [(i + 1, l.strip()) for i, l in enumerate(lines) if "cwd=" in l]
+  for no, l in cwd_calls:
+      print("cwd= at line %d: %s" % (no, l))
+
+  # 3. dynamic: the exact call the frozen counter makes at its section 7.
+  spec = importlib.util.spec_from_file_location("frozen_c1", C1)
+  mod = importlib.util.module_from_spec(spec)
+  spec.loader.exec_module(mod)
+  try:
+      mod.run(["/bin/true"], cwd="/tmp")
+      print("dynamic: run(argv, cwd=...) ACCEPTED (unexpected)")
+  except TypeError as exc:
+      print("dynamic: TypeError: %s" % exc)
+
+  # 4. usage contract: `--repo` with no value.
+  p = subprocess.run([sys.executable, C1, "HEAD", "--repo"],
+                     capture_output=True, text=True)
+  last = p.stderr.strip().splitlines()[-1] if p.stderr.strip() else ""
+  print("argv-repo-missing-value: rc=%d last_err=%r" % (p.returncode, last))
+  ```
+
+  Note exec_module runs `failures = []` etc. top-level only. check prints? No, defs only. Safe.
+
+  Hmm: ast.walk finds FunctionDef run at module level only (there's exactly one `run`). sigs should print [['argv', 'timeout']].
+
+  Now bash setup:
+
+  ```bash
+  mkdir -p /tmp/exec3-attack/c1run
+  cp /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-42/count-c1.py /tmp/exec3-attack/c1run/count-c1.py
+  cp /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c1s.py /tmp/exec3-attack/count-c1s.py
+  cp /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c2.py /tmp/exec3-attack/count-c2.py
+  cp /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-42/count-c1.py /tmp/exec3-attack/count-c1.py
+  sha256sum /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-42/count-c1.py /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c1s.py /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c2.py /tmp/exec3-attack/count-c1.py /tmp/exec3-attack/count-c1s.py /tmp/exec3-attack/count-c2.py
+  git -C /home/vgpnk/Projects/shokunin/mori-shokunin rev-parse HEAD
+  ```
+
+  Background full run:
+  ```bash
+  cd /tmp/exec3-attack/c1run && { python3 count-c1.py HEAD --repo /home/vgpnk/Projects/shokunin/mori-shokunin > c1-full.out 2> c1-full.err; echo $? > c1-full.rc; }
+  ```
+  run_in_background, timeout 7200, description. But this needs count-c1.py copied — the setup bash and this both cp; this one cps to its own dir first in the chain. Race on different destinations → no conflict.
+
+  Then after Writes+setup, run the three attack scripts (foreground bash calls in parallel batch):
+  - python3 /tmp/exec3-attack/attack-c2.py
+  - python3 /tmp/exec3-attack/attack-c1s.py
+  - python3 /tmp/exec3-attack/attack-c1-micro.py
+
+  Then read outputs, check background c1-full status, write report.
+
+  Total attack-c2 runs 4 counter invocations (fast). c1s G2 does a clone + a few quick runs — the gate selftest inside G2? No — noharm_cwd fails instantly (missing file). conform garbage instant. G2 fast. Good.
+
+  Go.
+
+• AGENTS.md read; selftest verdict captured: **stdout `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0`, stderr empty, exit 0**. (First attempt hit a cwd typo on my side — nothing executed; the transcript above is the valid run.)
+
+  Now the attack phase: scratch copies in `/tmp` only, frozen bytes pinned by sha256 before attacking. Setting up scratch, writing attack harnesses, and launching the full frozen-c1 end-to-end run in the background concurrently.105ce075f33120837ba5a49a1ad4f23a3dd7dc17fea506ab917140bc7f2053f6  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-42/count-c1.py
+93482248b46def2a2cec7238732af1551ef315517e76833c3843875313b65dc5  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c1s.py
+a1e05c983c0595dae0aaaefe62513cd9c2264dca07eee5c1b869d73eebff5b88  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c2.py
+105ce075f33120837ba5a49a1ad4f23a3dd7dc17fea506ab917140bc7f2053f6  /tmp/exec3-attack/count-c1.py
+93482248b46def2a2cec7238732af1551ef315517e76833c3843875313b65dc5  /tmp/exec3-attack/count-c1s.py
+a1e05c983c0595dae0aaaefe62513cd9c2264dca07eee5c1b869d73eebff5b88  /tmp/exec3-attack/count-c2.py
+e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2
+
+

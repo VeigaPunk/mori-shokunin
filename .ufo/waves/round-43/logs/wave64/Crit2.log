@@ -1,0 +1,104 @@
+kimi version 2.3.1
+• Let me start by understanding the assignment. I'm the Crit2 seat in round 43, wave 1 of the mori-shokunin lane. My task: falsify or bound this attack — "a correction row that repeats a30cda99 and still scores C2=met". I need to find what a30cda99 is — likely a commit hash in the lane repo. Let me explore.
+
+  Let me look at:
+  1. The lane repo structure, especially .ufo/waves/round-43 and round-42.
+  2. What a30cda99 is (git show).
+  3. The frozen counters: .ufo/waves/round-42/count-c1.py, .ufo/waves/round-43/count-c1s.py, count-c2.py.
+  4. C1/C2 criteria definitions.
+
+  Let me run parallel exploration.47206f83 round-40: hyaku closure dispatch for tameshi
+f8c8f2bb rounds ledger: kumitate r59 closure (admitted) — hyaku, non-author
+980dbb91 round-40: tameshi report
+a234a20c rounds ledger: revenger r67 closure (rejected-honest-stop) — hyaku, non-author
+d3e457e9 round-67: hyaku closure dispatch for revenger
+58b035be round-67: revenger L0 question — shokuknow register S099/S100 wrapped row + URL cross-wiring (quarantine hand-check evidence)
+b2935b85 round-67: revenger report — wave-4 quarantine-first (26/26 verdicts, zero adoptions); both claims honestly falsified (C05 re-gate Q02 anchor FAIL retained rejected; C7 attributed-kill 0/1 structural); 64-seat v2 wave dispatched in-seat, 64/64 reports
+4da3b376 round-59: hyaku closure dispatch for kumitate
+e56ed383 round-59: kumitate report
+289b6212 round-50: kake dispatch evidence (hyaku inline attempt 1)
+190a8297 rounds ledger: kake r49 closure (admitted) — hyaku, non-author
+4428a2b2 round-36: kama dispatch evidence (hyaku inline attempt 1)
+9820b722 rounds ledger: kama r35 closure (admitted) — hyaku, non-author
+127a2669 round-49: hyaku closure dispatch for kake
+5cff012c round-49: kake report
+0d848b2a round-34: mado dispatch evidence (hyaku inline attempt 1)
+79965815 rounds ledger: mado r33 closure (rejected-honest-stop) — hyaku, non-author
+8dd0ad8a round-44: chousa dispatch evidence (hyaku inline attempt 1)
+d4fb5cbc rounds ledger: chousa r43 closure (admitted) — hyaku, non-author
+2974c4b4 round-40: tameshi dispatch evidence (hyaku inline attempt 1)
+fatal: ambiguous argument 'a30cda99': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions, like this:
+'git <command> [<revision>...] -- [<file>...]'
+a30cda99 isn't a git revision. It must be a hash ID of something else — maybe a report ID, or a hash of a "correction row" in the wave cache. Let me search for "a30cda99" in the repo.round-13
+round-14
+round-15
+round-16
+round-17
+round-18
+round-19
+round-20
+round-21
+round-22
+round-23
+round-24
+round-25
+round-26
+round-27
+round-28
+round-29
+round-30
+round-31
+round-32
+round-33
+round-34
+round-35
+round-36
+round-37
+round-38
+round-39
+round-40
+round-41
+round-42
+round-43
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-42/:
+assimilation
+candidates
+conform.py
+contract.md
+count-c1.py
+count-c2.py
+count-c3.py
+evidence
+fixtures
+__pycache__
+w1
+w1-spec.json
+
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/:
+assimilation
+contract.md
+count-c1s.py
+count-c2.py
+evidence
+w1
+w1-settle.tsv
+w1-spec.json
+Now I understand the shape. a30cda99 is a substring appearing in:
+  1. The S235 registry row (which must be byte-identical to sha256 971df55e... and still contains `a30cda99` and `byte-identical`)
+  2. The SCORECARD declaration fragment `` `C1=met` exit 0 (`evidence/c1-after.txt`) ``
+  3. The sha256 of `corpus/evidence/sources-r42/S235.pdf`: `9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30dca99359e6df057ad8020` — note the PDF's hash contains `a30dca99` (with the transposition d/c!). Wait: `...4a30dca99359e...` — that contains `a30dca99`. And the correction row check requires some OTHER registry row containing both `corrects S235` and `a30dca99` and NOT `a30cda99`.
+
+  Interesting — so `a30cda99` is presumably a hash fragment of the PDF? Let me check. The declaration says SCORECARD contains fragment `` `C1=met` exit 0 (`evidence/c1-after.txt`) `` — presumably the original r42 declaration claimed C1=met with evidence c1-after.txt whose hash... hmm. Actually a30cda99 might be a fragment of the sha256 of c1-after.txt.
+
+  The attack to falsify: "a correction row that repeats a30cda99 and still scores C2=met". I.e., a would-be cheat: create a correction row that repeats the token `a30cda99` (the wrong hash fragment, likely the transcription error from r42) but still passes the C2 counter. Wait, re-read the C2 predicate:
+
+  - S235 registry row byte-identical to sha 971df55e..., still contains `a30cda99` and `byte-identical`.
+  - some OTHER registry row contains both `corrects S235` and `a30dca99` and does NOT contain `a30cda99`.
+  - SCORECARD contains exact correction line and still contains unrewritten declaration fragment with `C1=met` exit 0 (`evidence/c1-after.txt`).
+  - sha256 of S235.pdf is 9855a498...a30dca99359e6df057ad8020.
+
+  So the correction row must contain `a30dca99` (correct spelling per PDF hash) and must NOT contain `a30cda99` (the erroneous one). The attack: a correction row that repeats `a30cda99` (the wrong token) yet still scores `C2=met`. That would mean the counter fails to reject — the counter's check for "does not contain a30cda99" is weak (e.g., checks only a specific line, or the substring check is bypassable by whitespace/case tricks, or the row-scoping finds a different "row" that lacks the token while the actual correction row carries it).
+
+  My job: falsify or bound this attack against the frozen count-c2.py. Attack it in scratch copies. Let me read count-c2.py (round-43).
+

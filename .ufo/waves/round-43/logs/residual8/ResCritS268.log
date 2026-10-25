@@ -1,0 +1,425 @@
+kimi version 2.3.1
+• Let me start by understanding the task. I'm the ResCritS268 seat in round 43, w1 wave. My job: attack the S268 refusal. I need to:
+
+  1. Find the round-42 refusal — likely in .ufo/waves/round-42/ somewhere, mentioning S268 and a stampPDF URL.
+  2. Run `curl -sI <the stampPDF url>` and record status line and content-type.
+  3. State whether any committed file under corpus/evidence/ is a PDF for that source.
+  4. Paste command and output.
+  5. Write report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/ResCritS268.md
+
+  Let me first explore the lane repo structure and find the S268 refusal. Let me do parallel searches./home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-42/:
+assimilation
+candidates
+conform.py
+contract.md
+count-c1.py
+count-c2.py
+count-c3.py
+evidence
+fixtures
+__pycache__
+w1
+w1-spec.json
+
+/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/:
+assimilation
+contract.md
+count-c1s.py
+count-c2.py
+evidence
+w1
+w1-settle-residual.tsv
+w1-settle.tsv
+w1-spec.json
+Let me read the AGENTS.md, the round-43 refused.md, round-42 RevRefusal.md, and search for the S268 refusal details.Now I have context. The S268 refusal is about a paper at IEEE: DOI 10.1109/TSC.2026.3698682, arnumber 11540439. The round-43 refused.md says:
+
+  "Not re-admitted. `curl -sI` of the stampPDF URL on 2026-10-24 returned HTTP 418, `content-type: text/html`, content-length 15410. No committed PDF. The r42 refusal stands."
+
+  Wait — interesting. The round-42 RevRefusal said `GET ieeexplore.ieee.org/stampPDF/getPDF.jsp?tp=&arnumber=11540439` returned HTTP 200, application/pdf, 2,363,161 bytes. But round-43's refused.md claims `curl -sI` of the stampPDF URL returned HTTP 418 text/html.
+
+  My task: attack the S268 refusal. Run: `curl -sI <the stampPDF url the round-42 refusal used>` and record status line and content-type. Also state whether any committed file under corpus/evidence/ is a PDF for that source.
+
+  Which stampPDF URL did the round-42 refusal use? The round-42 refusal is `.ufo/waves/round-42/assimilation/refused-oom-tracing.md`. Let me read that to find the exact stampPDF URL it used. Note: "the round-42 refusal used" — the refusal record (refused-oom-tracing.md) recorded the fetch attempts. The RevRefusal says the L1 tried `/document/` and `/stamp/stamp.jsp` but NOT `stampPDF/getPDF.jsp`. So the round-42 refusal's stampPDF URL is probably `https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=11540439` — the stamp.jsp URL. The round-43 refused.md says "curl -sI of the stampPDF URL" returned 418 — that's suspicious because round-42's RevRefusal demonstrated getPDF.jsp returns 200 application/pdf. If round-43's refusal re-checked `stampPDF/getPDF.jsp` with `curl -sI` (HEAD) and got 418... hmm, HEAD requests to getPDF.jsp might return 418 while GET returns 200. That's a classic flaw: the refusal used HEAD (-I) instead of GET, and IEEE's endpoint rejects HEAD requests.
+
+  So my attack: run `curl -sI` on the stampPDF URL (per the task instruction) to record status line and content-type — this reproduces the round-43 refusal's claim — but then also run `curl -s` (GET) to check whether GET returns 200 application/pdf. That's the counterexample: the refusal's flip-check used HEAD, which gets 418, while GET serves the PDF. Also check whether any committed file under corpus/evidence/ is a PDF for that source.
+
+  Let me read the round-42 refusal record first, and check corpus/evidence for PDFs. Also read the round-43 contract/spec and w1-spec.json to know my lane bounds.
+
+  Let me do these in parallel:
+  1. Read .ufo/waves/round-42/assimilation/refused-oom-tracing.md
+  2. Glob corpus/evidence/**/*.pdf and grep for S268/11540439 in corpus/evidence
+  3. Read round-43 w1-spec.json
+  4. Check git log/status for corpus/evidence (committed files)
+
+  Then run curl in /tmp sandbox (well, curl output to stdout; I can run curl -sI directly). The instructions: "Run code only in /tmp sandboxes" — curl writing to stdout is fine; if I download a PDF, put it in /tmp.
+
+  Let me proceed.Key facts so far:
+
+  1. Round-42 refusal (refused-oom-tracing.md): the round-42 refusal record itself. The task says "curl -sI <the stampPDF url the round-42 refusal used>". Hmm — the round-42 refusal record does NOT name a stampPDF URL; it names doi.org → ieeexplore.ieee.org/document/11540439. The stampPDF URL appears in the round-42 w1 RevRefusal.md: `https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?tp=&arnumber=11540439`. But wait — "the stampPDF url the round-42 refusal used". Ambiguity: The "round-42 refusal" might refer to the refusal record (refused-oom-tracing.md) — which doesn't have a stampPDF URL — or the round-43 refused.md which says "`curl -sI` of the stampPDF URL on 2026-10-24 returned HTTP 418, content-type: text/html, content-length 15410."
+
+  The round-43 refused.md S268 section claims: `curl -sI` of the stampPDF URL returned HTTP 418. But round-42's RevRefusal.md recorded that `GET ieeexplore.ieee.org/stampPDF/getPDF.jsp?tp=&arnumber=11540439` returned HTTP 200 application/pdf 2,363,161 bytes.
+
+  So the counterexample hypothesis: the round-43 refusal re-checked with `curl -sI` (HEAD request) on `stampPDF/getPDF.jsp`, which IEEE rejects with 418 text/html — but GET on the same URL serves the PDF (per round-42 evidence). The refusal's flip-check is method-sensitive: HEAD → 418, GET → 200 PDF. The round-43 refusal concluded "The r42 refusal stands" based on a HEAD probe that a GET refutes. That's the attack.
+
+  Also "stamp.jsp" URL: `https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=11540439` returned 418 15KB HTML per round-42. And round-43 says content-length 15410 — that matches the stamp.jsp mitigation page (~15KB HTML). So the round-43 refusal possibly probed `stamp/stamp.jsp` (which always 418s) and called it "the stampPDF URL" — a wrong-endpoint or wrong-method error. Either way, the round-43 flip-check contradicts round-42's RevRefusal recorded GET result.
+
+  My task: "Attack the S268 refusal. Run: curl -sI <the stampPDF url the round-42 refusal used> and record the status line and content-type. Also state whether any committed file under corpus/evidence/ is a PDF for that source."
+
+  So I should run `curl -sI` on the stampPDF URL — the getPDF.jsp URL is the "stampPDF" URL (the endpoint literally named stampPDF). Which one did "the round-42 refusal use"? The round-42 refusal record used doi.org/document/11540439. The round-42 RevRefusal (review of the refusal) used both stamp.jsp and stampPDF/getPDF.jsp. The round-43 refused.md used "the stampPDF URL" with curl -sI → 418.
+
+  Given ambiguity, best to probe all three with both HEAD and GET:
+  - https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?tp=&arnumber=11540439 (HEAD and GET)
+  - https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=11540439 (HEAD)
+  - https://doi.org/10.1109/TSC.2026.3698682 (HEAD, follows redirects with -L)
+
+  And crucially: GET on getPDF.jsp to test whether the 418-on-HEAD is a method artifact. If GET returns 200 application/pdf, then the round-43 refusal's "no PDF reachable" claim collapses — the flip condition fired in r42 and was wrongly closed in r43 by a HEAD probe. That's the counterexample.
+
+  Also: state whether any committed file under corpus/evidence/ is a PDF for that source. The Glob found only corpus/evidence/sources-r42/S235.pdf — that's S235, not S268. I need to check git-tracked files too ("committed file"). Let me check `git ls-files corpus/evidence/` to see all committed files, and check for S268-related files. The S262.oa.json is for DOI 10.1109/TSC.2026.3698682 — wait! Look at that: corpus/evidence/sources-r42/S262.oa.json has doi 10.1109/TSC.2026.3698682 titled "ROMA: Enhancing Container OOM Resilience..." — that's the SAME paper as S268! Interesting: S262 and S268 appear to be different rows for... wait, no. RevRefusal said "S262 adopted only after its abstract was located in a fetched OpenAlex copy". And S262.oa.json in corpus/evidence/sources-r42/ has the ROMA DOI. Hmm, wait — that's odd. Let me re-check: the S262.oa.json contains the ROMA paper DOI 10.1109/tsc.2026.3698682. But RevRefusal line 69-71 says "S262 adopted only after its abstract was located in a fetched OpenAlex copy". Hmm, but RevRefusal line 22 mentions OpenAlex `works/doi:10.1109/tsc.2026.3698682` in the S268 channel table. So S262.oa.json with the ROMA DOI is confusing — maybe S262 is a different paper and I misread. Let me look: the JSON id W7163066205, doi 10.1109/tsc.2026.3698682, title ROMA. So corpus/evidence/sources-r42/S262.oa.json is the ROMA OpenAlex record, keyed as S262?
+
+  Wait, maybe the quarantine slice is S244 S262 S268 (per Scout4's prompt). So S262 and S268 are both quarantined. Hmm, but S262.oa.json contains the ROMA record... That could be a mis-keyed evidence file! If S262 is a different paper (the one adopted after its abstract was located), then having the ROMA DOI under S262.oa.json would be a duplicate-authority / false-provenance defect. OR maybe S262 IS the ROMA paper's earlier row and S268 is a duplicate row for the same source — duplicate authority! That would be an even stronger attack: two source rows for the same paper, one adopted (S262) with a committed OpenAlex evidence file, one quarantined (S268).
+
+  Hmm wait, but let me not overreach. Let me check corpus/SOURCES.md for S262 and S268 rows. Also check git ls-files under corpus/evidence/.
+
+  Actually the task instruction is precise: run curl -sI on the stampPDF URL, record status line + content-type, state whether any committed file under corpus/evidence/ is a PDF for that source, paste command+output, write report.
+
+  The verdict line must be KILLED, SURVIVED, or CONFIRMED. My attack: "Attack the S268 refusal" — i.e., try to falsify the refusal (show the PDF is reachable → refusal's factual basis collapses). If my GET shows 200 application/pdf, the refusal is KILLED (its factual claim "not reachable" is falsified). If HEAD 418 reproduces and GET also fails, refusal SURVIVES.
+
+  Let me now:
+  1. git ls-files corpus/evidence/ (committed files)
+  2. Check corpus/SOURCES.md rows S262/S268
+  3. curl -sI HEAD on getPDF.jsp
+  4. curl -s GET on getPDF.jsp → /tmp sandbox, check magic bytes
+  5. curl -sI on stamp.jsp for comparison
+
+  Network calls to ieeexplore may be blocked/slow; give timeout. Let me batch: git ls-files + grep SOURCES first (local, fast), and the curls.
+
+  Note the URL: "the stampPDF url the round-42 refusal used". The r42 refusal record used doi.org→document/11540439. The r43 refused.md says "the stampPDF URL" → in round-42 RevRefusal the stampPDF endpoint is `https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?tp=&arnumber=11540439`. I'll treat that as the stampPDF URL (it's the endpoint named "stampPDF"), and also probe stamp.jsp and document/ to cover the full channel set. I'll document which URL each record names.
+
+  Let me run everything in parallel now.
+
+• S268 = ROMA paper (DOI 10.1109/TSC.2026.3698682, IEEE arnumber 11540439). The r42 RevRefusal recorded `stampPDF/getPDF.jsp` serving a 200 `application/pdf` (2,363,161 B), while r43's refused.md closed it on a `curl -sI` HEAD probe returning 418 HTML. Attack axis: **method-sensitivity of the flip-check** — does GET still serve PDF where HEAD 418s? Probing now, plus committed-evidence census.corpus/evidence/README.md
+corpus/evidence/backchannel-r6-20261015T191216Z-attack-r1.log
+corpus/evidence/backchannel-r6-20261015T191216Z-attack-r2.log
+corpus/evidence/backchannel-r6-20261015T191216Z-live.log
+corpus/evidence/backchannel-r6-20261015T191216Z-oracle-1.log
+corpus/evidence/backchannel-r6-20261015T191216Z-oracle-2.log
+corpus/evidence/backchannel-r6-20261015T191216Z-oracle-3.log
+corpus/evidence/backchannel-r6-20261015T191216Z-selftest.log
+corpus/evidence/baseline-r10-20261015T2231Z.json
+corpus/evidence/baseline-r20-20261021T1051Z.json
+corpus/evidence/cutover-r3-20261015T164140Z-before.log
+corpus/evidence/cutover-r3-20261015T165712Z-live.log
+corpus/evidence/cutover-r3-20261015T165712Z-oracle-counterfactual.log
+corpus/evidence/cutover-r3-20261015T165712Z-oracle.log
+corpus/evidence/cutover-r3-20261015T165712Z-selftest.log
+corpus/evidence/drift-classification-r20.json
+corpus/evidence/drift-r12-20261019T2204Z-classification.md
+corpus/evidence/drift-r12-20261019T2230Z-after-roster.log
+corpus/evidence/effective-disposition-r21.json
+corpus/evidence/flake-r9-20261015T2119Z-live.log
+corpus/evidence/flake-r9-20261015T2119Z-oracle.log
+corpus/evidence/flake-r9-20261015T2119Z-selftest-battery-a.log
+corpus/evidence/flake-r9-20261015T2119Z-selftest-battery-b.log
+corpus/evidence/flake-r9-20261015T2119Z-selftest.log
+corpus/evidence/freeze-register.json
+corpus/evidence/loss-accounting-r21.json
+corpus/evidence/order-r5-20261015T180431Z-live.log
+corpus/evidence/order-r5-20261015T180431Z-oracle-1.log
+corpus/evidence/order-r5-20261015T180431Z-oracle-2.log
+corpus/evidence/order-r5-20261015T180431Z-oracle-3.log
+corpus/evidence/order-r5-20261015T180431Z-selftest.log
+corpus/evidence/order-r5-20261015T180431Z-sniffer.log
+corpus/evidence/pin-r10-20261015T2231Z-drift.log
+corpus/evidence/pin-r10-20261015T2231Z-live.log
+corpus/evidence/pin-r10-20261015T2231Z-oracle.log
+corpus/evidence/pin-r10-20261015T2231Z-pin.log
+corpus/evidence/pin-r10-20261015T2231Z-selftest.log
+corpus/evidence/recheck-r32/README.md
+corpus/evidence/recheck-r32/S001.src
+corpus/evidence/recheck-r32/S002.src
+corpus/evidence/recheck-r32/S007.src
+corpus/evidence/recheck-r32/S012.src
+corpus/evidence/recheck-r32/S014.src
+corpus/evidence/recheck-r32/S015.src
+corpus/evidence/recheck-r32/S031.src
+corpus/evidence/recheck-r32/S037.src
+corpus/evidence/recheck-r32/S039.src
+corpus/evidence/recheck-r32/S040.src
+corpus/evidence/recheck-r32/S041.src
+corpus/evidence/recheck-r32/S043.src
+corpus/evidence/recheck-r32/S044.src
+corpus/evidence/recheck-r32/S045.src
+corpus/evidence/recheck-r32/S046.src
+corpus/evidence/recheck-r32/S047.src
+corpus/evidence/recheck-r32/S049.src
+corpus/evidence/recheck-r32/S051.src
+corpus/evidence/recheck-r32/S052.src
+corpus/evidence/recheck-r32/S056-pmc-mirror.html
+corpus/evidence/recheck-r32/S056.fetch.txt
+corpus/evidence/recheck-r32/S058-difftree.src
+corpus/evidence/recheck-r32/S058.src
+corpus/evidence/recheck-r32/S062.src
+corpus/evidence/recheck-r32/S064.src
+corpus/evidence/recheck-r32/S067.src
+corpus/evidence/recheck-r32/S068.src
+corpus/evidence/recheck-r32/S069.src
+corpus/evidence/recheck-r32/S071.src
+corpus/evidence/recheck-r32/S073.src
+corpus/evidence/recheck-r32/S074.src
+corpus/evidence/recheck-r32/S076.src
+corpus/evidence/recheck-r32/S117.src
+corpus/evidence/recheck-r32/S128.src
+corpus/evidence/recheck-r32/S137.src
+corpus/evidence/recheck-r32/S149.src
+corpus/evidence/recheck-r33/S058-difftree-r33.src
+corpus/evidence/recheck-r33/S117-README-v1.9.0.src
+corpus/evidence/recheck-r33/S117-kill-v1.7.src
+corpus/evidence/recheck-r33/S117-kill-v1.8.src
+corpus/evidence/recheck-r33/S117-kill-v1.9.0.src
+corpus/evidence/recheck-r33/S117-main-v1.7.src
+corpus/evidence/recheck-r33/S117-main-v1.8.src
+corpus/evidence/recheck-r33/S117-main-v1.9.0.src
+corpus/evidence/recheck-r33/S117-msg-v1.9.0.src
+corpus/evidence/recheck-r33/S128-S149-oom_score.src
+corpus/evidence/recheck-r33/S137-main-750a.src
+corpus/evidence/recheck-r33/SHA256SUMS
+corpus/evidence/residuals-r8-20261015T2040Z-instantaneous.log
+corpus/evidence/residuals-r8-20261015T2040Z-live.log
+corpus/evidence/residuals-r8-20261015T2040Z-memory.log
+corpus/evidence/residuals-r8-20261015T2040Z-oracle.log
+corpus/evidence/residuals-r8-20261015T2040Z-roundfiles.log
+corpus/evidence/residuals-r8-20261015T2040Z-selftest.log
+corpus/evidence/residuals-r8-20261015T2040Z-tmux.log
+corpus/evidence/retention-allowlist.json
+corpus/evidence/roster-r12-20261019T220912Z-before-live.log
+corpus/evidence/roster-r12-20261019T220912Z-live.log
+corpus/evidence/roster-r12-20261019T220912Z-mutation.md
+corpus/evidence/roster-r12-20261019T220912Z-oracle.log
+corpus/evidence/roster-r12-20261019T220912Z-selftest.log
+corpus/evidence/roster-r12-20261019T220912Z-walltime.log
+corpus/evidence/round-1-cgroup-dispatch.json
+corpus/evidence/round-2/completed-before.txt
+corpus/evidence/round-2/dispatch.json
+corpus/evidence/round-2/live-before.txt
+corpus/evidence/sources-r30/S156.txt
+corpus/evidence/sources-r30/S157.txt
+corpus/evidence/sources-r30/S158.txt
+corpus/evidence/sources-r30/S159.txt
+corpus/evidence/sources-r30/S160.txt
+corpus/evidence/sources-r31/S161.src
+corpus/evidence/sources-r31/S162.src
+corpus/evidence/sources-r31/S163.src
+corpus/evidence/sources-r31/S164.src
+corpus/evidence/sources-r31/S165.src
+corpus/evidence/sources-r31/S167.src
+corpus/evidence/sources-r31/S169.src
+corpus/evidence/sources-r31/S170.src
+corpus/evidence/sources-r31/S171.src
+corpus/evidence/sources-r31/S172.src
+corpus/evidence/sources-r31/S173.src
+corpus/evidence/sources-r31/S174.src
+corpus/evidence/sources-r32/S175.src
+corpus/evidence/sources-r32/S176.src
+corpus/evidence/sources-r32/S177.src
+corpus/evidence/sources-r33/S180.src
+corpus/evidence/sources-r33/S181.src
+corpus/evidence/sources-r33/S182.src
+corpus/evidence/sources-r33/S183.src
+corpus/evidence/sources-r33/S184.src
+corpus/evidence/sources-r33/S185.src
+corpus/evidence/sources-r33/S186.src
+corpus/evidence/sources-r33/S187.src
+corpus/evidence/sources-r33/S188.src
+corpus/evidence/sources-r33/S189.src
+corpus/evidence/sources-r33/S190.src
+corpus/evidence/sources-r34/S191.src
+corpus/evidence/sources-r34/S192.src
+corpus/evidence/sources-r34/S193.src
+corpus/evidence/sources-r34/S194.src
+corpus/evidence/sources-r34/S195.src
+corpus/evidence/sources-r34/S196.src
+corpus/evidence/sources-r34/S197.src
+corpus/evidence/sources-r34/S198.src
+corpus/evidence/sources-r35/S199.src
+corpus/evidence/sources-r35/S203.src
+corpus/evidence/sources-r35/S204.src
+corpus/evidence/sources-r36/S205.src
+corpus/evidence/sources-r36/S206.src
+corpus/evidence/sources-r36/S207.src
+corpus/evidence/sources-r36/S208.src
+corpus/evidence/sources-r36/S209.src
+corpus/evidence/sources-r36/S210.src
+corpus/evidence/sources-r36/S211.src
+corpus/evidence/sources-r36/S212.src
+corpus/evidence/sources-r36/S213.src
+corpus/evidence/sources-r36/S214.src
+corpus/evidence/sources-r36/S215.src
+corpus/evidence/sources-r36/S216.src
+corpus/evidence/sources-r36/S217.src
+corpus/evidence/sources-r36/S218.src
+corpus/evidence/sources-r36/S219.src
+corpus/evidence/sources-r36/S220.src
+corpus/evidence/sources-r37/S221.src
+corpus/evidence/sources-r37/S222.src
+corpus/evidence/sources-r37/S223.src
+corpus/evidence/sources-r37/S224.src
+corpus/evidence/sources-r37/S225.src
+corpus/evidence/sources-r38/S226.src
+corpus/evidence/sources-r39/S227.src
+corpus/evidence/sources-r39/S228.src
+corpus/evidence/sources-r40/S229.src
+corpus/evidence/sources-r41/S230.src
+corpus/evidence/sources-r41/S231.src
+corpus/evidence/sources-r42/S232.html
+corpus/evidence/sources-r42/S233.html
+corpus/evidence/sources-r42/S234.c
+corpus/evidence/sources-r42/S235.pdf
+corpus/evidence/sources-r42/S241.html
+corpus/evidence/sources-r42/S262.oa.json
+corpus/evidence/sources-r42/S347.html
+corpus/evidence/surfaces-r7-20261015T1948Z-diskrate.log
+corpus/evidence/surfaces-r7-20261015T1948Z-live.log
+corpus/evidence/surfaces-r7-20261015T1948Z-memory.log
+corpus/evidence/surfaces-r7-20261015T1948Z-oracle.log
+corpus/evidence/surfaces-r7-20261015T1948Z-selftest.log
+corpus/evidence/surfaces-r7-20261015T1948Z-staterounds.log
+corpus/evidence/surfaces-r7-20261015T1948Z-tmux.log
+corpus/evidence/verdict-r4-20261015T173551Z-canary227.log
+corpus/evidence/verdict-r4-20261015T173551Z-l
+ive.log
+corpus/evidence/verdict-r4-20261015T173551Z-oracle.log
+corpus/evidence/verdict-r4-20261015T173551Z-selftest.log
+corpus/evidence/verdict-r4-20261015T173551Z-sniffer-v2.log
+corpus/evidence/watch-r2-20261015T152746Z.log
+corpus/evidence/watch-r2-20261015T152855Z.log
+corpus/evidence/watch-r2-20261015T153003Z.log
+---HEAD getPDF---
+HTTP/2 418 
+content-type: text/html
+content-length: 15410
+cache-control: no-store, must-revalidate, no-cache
+pragma: no-cache
+x-content-type-options: nosniff
+x-frame-options: SAMEORIGIN
+x-xss-protection: 1; mode=block
+date: Sun, 25 Oct 2026 01:56:07 GMT
+x-cache: Error from cloudfront
+via: 1.1 7aaab53a596909564459a4a21007ab68.cloudfront.net (CloudFront)
+x-amz-cf-pop: GIG52-P3
+x-amz-cf-id: iIIttnC2NWuxlR0zC1671ripWNuTmIguy-BXR4f25tLnUjWOXdtBKw==
+
+curl_head_exit=0
+HTTP 418 | content-type: text/html | size: 15410
+curl_get_exit=0
+get.pdf: HTML document, ASCII text, with very long lines (1361)
+-rw-r--r-- 1 vgpnk vgpnk 15410 Oct 24 22:56 get.pdf
+0000000   <   s   c   r   i   p   t   >
+0000010
+243:| S262 | ROMA: Enhancing Container OOM Resilience via Reinforced Isolation and Adaptive Shared Resource Reclamation — https://doi.org/10.1109/TSC.2026.3698682 | paper | A | the paper's abstract-level claims as recorded by the publisher's deposited metadata; not the full text (paywalled from this host) and not any measurement of this lane's host | OpenAlex work record for doi 10.1109/tsc.2026.3698682, abstract inverted index; IEEE Transactions on Services Computing vol. 19 no. 4 pp. 3015-3028, 2026; refetched 2026-10-24, copy corpus/evidence/sources-r42/S262.oa.json (ieeexplore returns HTTP 202 with 0 bytes from this host; Semantic Scholar lacks the DOI) | the kernel's default OOM victim selection has no container context — on a shared kernel an OOM can kill a co-located service and leave shared memory, message queues, semaphores and tmpfs unreclaimed — per the authors' abstract | mined | 2026-10-24 | 180d | corpus/knowledge/oom-victim-context-r41.md |
+
+
+• Very interesting. Key results:
+
+  1. **HEAD probe** (`curl -sI` on `stampPDF/getPDF.jsp?tp=&arnumber=11540439`): HTTP/2 418, content-type: text/html, content-length: 15410 — exactly reproduces the round-43 refused.md claim.
+
+  2. **GET probe**: also HTTP 418, content-type text/html, size 15410, body starts with `<script>` — an HTML challenge/mitigation page, NOT a PDF. So the method-sensitivity hypothesis is falsified — GET also 418s now. The endpoint that r42's RevRefusal saw serving 2,363,161 bytes of application/pdf now returns the 15,410-byte HTML mitigation page for both HEAD and GET.
+
+  3. **Committed evidence**: `git ls-files corpus/evidence/` shows only one PDF: `corpus/evidence/sources-r42/S235.pdf` — that's S235, not S268. No S268 PDF committed. There's `S262.oa.json` which is the ROMA paper's OpenAlex record (same DOI), but it's the abstract-level metadata for row S262, not a PDF for S268.
+
+  Wait — hold on. This is important: S262 in corpus/SOURCES.md IS the ROMA paper (same DOI 10.1109/TSC.2026.3698682), status "mined", class A, adopted into corpus/knowledge/oom-victim-context-r41.md. And S268 is also the ROMA paper's VOR PDF (the oom-tracing entry's source). So the same paper appears as two source rows: S262 (abstract-level, mined/adopted with committed OpenAlex JSON evidence) and S268 (full-text VOR PDF, quarantined-unverifiable). That's consistent — different evidence classes (abstract vs full text), different knowledge entries. Not a duplicate authority per se; the refusal record distinguishes them.
+
+  So for my assigned checks:
+  - `curl -sI` of the stampPDF URL → HTTP/2 418, content-type: text/html, content-length: 15410. Reproduces the r43 refusal claim exactly. ✓
+  - GET also returns 418 HTML (15,410 bytes, `<script>` body) — not a PDF. So the refusal is not method-sensitive; the endpoint that served the PDF in r42 (per RevRefusal.md) no longer does from this host today (2026-10-24/25 — note server date header says Sun, 25 Oct 2026 01:56:07 GMT, which is local Oct 24 22:56, timezone offset).
+  - No committed file under corpus/evidence/ is a PDF for that source: only PDF is S235.pdf (different row/source); no S268*.pdf, no ROMA PDF. Confirmed by git ls-files (committed) — 1 PDF total, keyed S235.
+
+  So the attack "the r43 flip-check used a HEAD probe and a GET would serve the PDF" is KILLED — GET also 418s. The refusal's factual basis (no fetchable PDF from this host on 2026-10-24 via the stampPDF endpoint) SURVIVES my attack. Also let me do a couple more cheap probes to strengthen: doi.org redirect status, and maybe stamp.jsp HEAD, to compare with r42's record (202 + 0 bytes). Also check the sha of the 15410-byte body vs "ieee-stamp.bin" mentioned in r42 sandbox (not available now). Also verify the mitigation HTML is the same as stamp.jsp's (content-length 15410 matches r42's "15 KB HTML (mitigation page)").
+
+  Interesting nuance: r42 RevRefusal recorded stamp.jsp 418 15KB HTML AND getPDF.jsp 200 application/pdf. Today both return the 418/15410 page. So the flip condition that r42 said "has now fired" has since un-fired — the fetchable copy is no longer fetchable from this host. The r43 refusal ("r42 refusal stands... not re-admitted") is factually correct as of today's probes, even though it cites only the HEAD probe; my GET probe removes the method-artifact objection, so no hidden regression.
+
+  One more check for completeness: the doi.org channel (r42 refusal's primary claim: 202 + 0 bytes). Let me HEAD doi.org with -L to record. And confirm there's no other committed file anywhere named S268 (grep the whole git ls-files). Let me also confirm the 15410-byte body is the mitigation/challenge page (it starts with `<script>` — IEEE's anti-bot). 
+
+  Also worth checking: is there any other committed PDF anywhere in the repo (not just corpus/evidence)? The task asks specifically about corpus/evidence/ though. I'll do a quick repo-wide glob for *.pdf for completeness.
+
+  Then write the report with:
+  - Axes named
+  - Commands + outputs (HEAD, GET, file magic, git ls-files census)
+  - Counterexample test result: KILLED (my attack that the refusal was method-sensitive died) — the refusal SURVIVES.
+
+  Verdict semantics: "Your report must end with a one-line verdict: KILLED, SURVIVED, or CONFIRMED, then the exact command and its output." Since I attacked the refusal and the refusal held (its load-bearing facts reproduce: 418 text/html 15410; no committed PDF), the verdict is SURVIVED — the refusal survived the attack. I'll make that explicit in wording.
+
+  Let me run the remaining probes in parallel, then write the report.
+
+• HEAD **and** GET both return 418 HTML (15,410 B, `<script>` body) — the method-artifact hypothesis is dead. The endpoint that served the PDF in r42 no longer serves it. Completing the channel census and committed-PDF check:---HEAD doi.org (follow)---
+https://ieeexplore.ieee.org/document/11540439/ -> HTTP 202 | type=text/html; charset=UTF-8 | size=0
+---HEAD stamp.jsp---
+HTTP/2 418 
+content-type: text/html
+content-length: 15410
+cache-control: no-store, must-revalidate, no-cache
+---body head---
+<script>	var MEMBER_PROFILE_CHANGE_USERNAMEPASS_LINK = 'https://www.ieee.org/profile/changeusrpwd/showChangeUsrPwdPage.html?refSite=https://ieeexplore.ieee.org&refSiteName=IEEE Xplore'; var MEMBER_PRO
+
+eea70952e36f4e23a9aa13d4607acbc8420753bab6433bd47d6789a2466d8007  get.pdf
+---committed PDFs anywhere---
+corpus/evidence/sources-r42/S235.pdf
+---any S268-named committed file---
+.ufo/waves/round-43/evidence/s268-headers.txt
+---git log for corpus/evidence PDF---
+25200325 round-42: S235 whitepaper copy committed by name (1 MiB dir-skip), scratch mirror recursion removed
+
+
+• All probes complete:
+
+  1. `curl -sI https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?tp=&arnumber=11540439` → `HTTP/2 418`, `content-type: text/html`, `content-length: 15410`. Matches r43 refused.md exactly.
+  2. GET same URL → HTTP 418, text/html, 15,410 bytes, body is IEEE Xplore HTML (`<script> var MEMBER_PROFILE_...`), sha256 `eea70952...`. Not a PDF. Not method-sensitive.
+  3. `stamp.jsp` → 418 text/html 15410 too.
+  4. doi.org → 302 → `ieeexplore.ieee.org/document/11540439/` → HTTP 202, text/html, 0 bytes. Reproduces r42 refusal's claim.
+  5. Committed evidence under corpus/evidence/: only PDF is `sources-r42/S235.pdf` — S235, a different source (r42 whitepaper). No PDF for the ROMA/S268 source. `S262.oa.json` is the same DOI but abstract-level OpenAlex metadata committed for row S262, not a PDF for S268. Also `.ufo/waves/round-43/evidence/s268-headers.txt` exists (round-43 evidence of the headers) but that's under .ufo, not corpus/evidence, and isn't a PDF.
+
+  So the S268 refusal SURVIVED my attack. My strongest counterexample (method-artifact: HEAD 418 but GET 200 PDF per r42 RevRefusal) is falsified — as of today GET also returns the 418 mitigation page. The r42 RevRefusal's "flip condition has fired" claim no longer reproduces; the endpoint state regressed (or was session/cookie dependent). The r43 refusal's factual basis reproduces exactly.
+
+  Note the residual: r43 refused.md cites only the HEAD probe; my GET probe was needed to rule out the method artifact. That's the smallest safe correction: record that the flip-check should probe with GET (full-body) not just `-I`, since the r42 evidence chain itself proved HEAD/GET can diverge on this endpoint... wait, actually it's the opposite: r42 showed GET=200 while... no, r42 didn't record a HEAD on getPDF.jsp. Hmm. r43 recorded HEAD 418. My probe shows both HEAD and GET 418 today. The method-artifact objection was a live possibility given the r42 record (GET 200). So the correction is: keep the refusal, but note the refusal record should cite a GET probe (not merely `-I`), because a HEAD-only probe cannot distinguish "mitigation page" from "HEAD-rejected-but-GET-serves" — and r42's own RevRefusal demonstrated GET-serves on this exact endpoint. Today GET also fails, so the refusal stands on the stronger evidence.
+
+  Also note the date nuance: server `date: Sun, 25 Oct 2026 01:56:07 GMT` = local 2026-10-24 22:56 (host is UTC-something). The refused.md says "on 2026-10-24" — consistent with local date.
+
+  One more consideration: the 15,410-byte body — is it the same mitigation page as the stamp.jsp one? Both content-length 15410. Fine.
+
+  Also the S262 nuance: the same paper has two rows. S262 (abstract-level, mined, adopted) and S268 (full-text, quarantined). The refusal only blocks S268's full-text claims, not S262's abstract claims. That's consistent, not a duplicate authority. Worth one line in the report to preempt confusion.
+
+  Now write the report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/ResCritS268.md. End with one-line verdict: SURVIVED, then the exact command and its output. The verdict line must end the report: "SURVIVED" then exact command + output on that line (or after). I'll put the primary command (the assigned curl -sI) as the verdict command.
+
+  Report content:
+  - Seat, date, axes
+  - What the refusal claims (r43 refused.md S268 section)
+  - Attack hypothesis: method-artifact (r42 RevRefusal recorded GET 200 application/pdf on getPDF.jsp; r43 closed on curl -sI HEAD 418 → if GET still serves, refusal collapses)
+  - Probes: HEAD getPDF.jsp, GET getPDF.jsp, stamp.jsp, doi.org; body hash, magic bytes
+  - Census: git ls-files corpus/evidence → only PDF is S235.pdf; no S268 PDF committed; S262.oa.json is same-DOI abstract metadata keyed to S262 (different row/class), not a PDF for S268
+  - Result: counterexample falsified; refusal's load-bearing facts reproduce; verdict SURVIVED
+  - Smallest safe correction: flip-check must include a full GET probe, not only `-I`; r42's own evidence showed the endpoint can serve GET while other channels stub, so a HEAD-only check is insufficient either direction. (Advisory; no file edited by me.)
+
+  Keep it tight. Write the file now.
+
+• All probes done. Writing the scoped report:
+
+written
+49 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/ResCritS268.md
+• Report written. Now give the final summary to the user: counterexample, evidence, impacted axes, smallest safe correction, and the verdict line with the exact command and output.
+
+• **Report written:** `.ufo/waves/round-43/w1/ResCritS268.md` (only my own report file; scratch in `/tmp/rescrit-s268/`, lane Git/jj untouched).
+
+  **Attack axes tried**
+  1. *Method artifact* — r43 closed the flip on `curl -sI` (HEAD) → 418, while r42's RevRefusal recorded GET on the same `stampPDF/getPDF.jsp` endpoint serving 200 `application/pdf`, 2 363 161 B. If GET still served, the refusal would be unsound.
+  2. *Wrong-endpoint artifact* — the 15 410-byte 418 body matches r42's `stamp/stamp.jsp` mitigation page; probing the wrong stamp path would leave "no PDF" unproven.
+  3. *Committed-copy escape* — a PDF for this source already under `corpus/evidence/` would moot the refusal.
+
+  **Result: refusal SURVIVED.** All three attacks falsified:
+  - GET (full body) on `stampPDF/getPDF.jsp?tp=&arnumber=11540439` → `HTTP 418 | content-type: text/html | size: 15410`, body is IEEE Xplore HTML starting `<script>` (sha256 `eea70952…d8007`) — not `%PDF`. The r42-recorded 200/PDF no longer reproduces; the flip condition that RevRefusal declared "fired" has un-fired.
+  - `stamp/stamp.jsp` → same 418/15410; `doi.org/10.1109/TSC.2026.3698682` → 302 → `document/11540439/` → `HTTP 202 | type=text/html | size=0`, reproducing the r42 refusal's primary claim.
+  - `git ls-files corpus/evidence/` contains exactly one PDF: `sources-r42/S235.pdf` (row S235, different source). **No committed PDF for the S268/ROMA source.** `S262.oa.json` is the same DOI's abstract-level OpenAlex record keyed to row S262 (consistent class split, not a duplicate authority).
+
+  **Smallest safe correction (advisory):** the refusal is correct but cites a HEAD-only probe; since r42's own record shows this endpoint can serve GET while other channels stub, make the checklist require a full-GET probe (status + content-type + magic bytes) per endpoint before any unreachable verdict. S268 correctly stays quarantined-unverifiable.
+
+  SURVIVED — `curl -sI 'https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?tp=&arnumber=11540439'` → `HTTP/2 418`, `content-type: text/html`, `content-length: 15410` (full header block pasted in the report).
+
+To resume this session: kimi -r session_661e110d-f0ac-4b20-8a24-e608db0d39ae

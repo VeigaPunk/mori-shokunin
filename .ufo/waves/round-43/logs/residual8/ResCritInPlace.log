@@ -1,0 +1,403 @@
+kimi version 2.3.1
+• Let me understand the task:
+
+  - Attack claim C2. In /tmp only: rewrite the S235 row's teaches cell in place (change the transposed sha) and show that count-c2.py then prints C2=unmet.
+  - Command: `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c2.py <rev> --repo <scratch-clone>`
+  - Paste command, stdout, exit code.
+  - Report at `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/ResCritInPlace.md`
+
+  So the plan:
+  1. Look at the counter script `.ufo/waves/round-43/count-c2.py` to understand what it does (read-only in lane, fine).
+  2. Create a scratch clone of the lane repo in /tmp.
+  3. Find the S235 row's teaches cell — probably in some CSV/data file with sha references.
+  4. Rewrite in place (in the scratch clone), commit? The command takes `<rev>` — probably a git rev. So I need to commit the change in the scratch clone and pass the rev.
+  5. Run the counter with that rev and `--repo /tmp/scratch-clone`, show C2=unmet.
+
+  Constraints:
+  - Run code only in /tmp sandboxes.
+  - Never mutate lane Git/jj or the lane index — so the scratch clone in /tmp is fine; do NOT touch the lane repo's git.
+  - Frozen counters must not be edited — attack in scratch copies only. So copy count-c2.py to /tmp if needed for experimentation, but actually the command uses the original count-c2.py path with `--repo` pointing to scratch clone. That's fine — reading the frozen counter is fine; we just must not edit it.
+  - Report path: write only that file.
+  - Never pass or hardcode a model — fine.
+  - The L1 holds the planner seat — I'm a critic, don't plan beyond.
+
+  Let me start by reading the counter script and finding the S235 row.
+
+  Steps:
+  1. Read count-c2.py.
+  2. Grep for S235 in the lane repo.
+  3. Clone lane repo into /tmp (git clone /home/vgpnk/Projects/shokunin/mori-shokunin /tmp/xxx — cloning reads the repo, doesn't mutate).
+  4. In scratch clone, edit S235 teaches cell sha, commit, get rev.
+  5. Run counter with rev --repo scratch.
+
+  Careful: "Never write fleet files" — writing report file in the lane repo at .ufo/waves/round-43/w1/ResCritInPlace.md is required and allowed ("Write only your own report file").
+
+  Let me do parallel reads first: read count-c2.py and grep S235.I need to read AGENTS.md before making changes. Let me read it, plus look at the S235 row in corpus/SOURCES.md, and check the evidence files to understand what the counter does. Also I need to figure out the "teaches cell" and "transposed sha" — the S235 row in SOURCES.md presumably contains a sha. The counter's S235_SHA is a sha256 of the exact line. "Change the transposed sha" — the row likely contains a sha (sha256 of S235.pdf?) — transposed meaning two characters swapped (e.g., "a30dca99" vs "a30cda99" in the correction row — note the correction-row check: `"a30dca99" in line and "a30cda99" not in line`, which is a transposition pair). The S235 row's teaches cell likely contains a sha like `a30cda99...` (transposed) that needs correction, and PDF_SHA = "9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30dca99359e6df057ad8020" — contains "a30dca99". So the S235 row's teaches cell probably contains the transposed sha `...a30cda99...` and the correction is to fix it to `a30dca99`.
+
+  The attack: rewrite the S235 row's teaches cell in place — change the transposed sha — and show count-c2.py then prints C2=unmet. Because s235_unrewritten check hashes the exact line; any change to the line changes its hash → FAIL s235_unrewritten → C2=unmet.
+
+  So the attack is a mutation test of the counter: change the sha in the S235 row in the scratch clone, commit, run counter at that rev with --repo scratch, expect C2=unmet with s235_unrewritten FAIL.
+
+  Also note: "corrects S235" row check — the correction_row check requires exactly one other row containing "corrects S235" with "a30dca99" and not "a30cda99". If I edit the S235 row, correction_row stays fine; only s235_unrewritten fails. mismatches=1. Good.
+
+  Now, the counter reads via `git -C LANE show rev:path` — so the scratch clone must contain the commit. I'll clone the lane repo to /tmp, edit corpus/SOURCES.md in place (sed the sha in the S235 row), commit, and run.
+
+  Careful: "Never mutate lane Git/jj or the lane index" — clone reads only. Good. Also don't touch `.ufo` writes except my report.
+
+  But wait: the clone must include the frozen counter? No — I invoke the frozen counter from its lane path; it uses `--repo` for the repo. The rev is resolved within LANE (--repo). Good.
+
+  Let me read AGENTS.md, the S235 row in corpus/SOURCES.md, and the existing evidence control files to understand expected outputs. Also check the w1-spec.json for context maybe. And check contract.md for C2 definition. Let me do these reads in parallel.Now I understand the attack:
+
+  - The S235 row at corpus/SOURCES.md:241 contains the transposed sha `...a30cda99359e6df057ad8020` (transposed "d" and "c": should be `a30dca99`). The teaches cell (last-but-one column, "a cgroup OOM simultaneously triggers...") — wait, actually the attack says "rewrite the S235 row's teaches cell in place (change the transposed sha)". Hmm — the transposed sha is in the anchor cell (column with "PDF sha256 ...a30cda99..."), not the teaches cell. Let me look at the row structure:
+
+  `| S235 | url | docs | A | <teaches?> | <anchor?> | <lesson/teaches> | mined | 2026-10-24 | 180d | <knowledge path> |`
+
+  Column 5 (A | "openEuler's own statement of the limitation...") — that's probably "teaches". Column 6 is the anchor cell ("p.27... PDF sha256 ..."). Column 7 is the lesson. Hmm, depends on header. Let me check the SOURCES.md header to know which cell is "teaches".
+
+  The instruction says "rewrite the S235 row's teaches cell in place (change the transposed sha)". Maybe in this registry the "teaches" column is column 7 and the sha lives in the anchor column... The dispatcher's phrasing may be loose. The important mutation: change the transposed sha in the S235 row in place (a30cda99 → a30dca99), which rewrites the row, so its line sha256 no longer matches S235_SHA → s235_unrewritten FAIL → C2=unmet.
+
+  Actually maybe the "teaches" cell does contain the sha? Let me check header of SOURCES.md. Line 241: columns:
+  1. S235
+  2. url
+  3. docs
+  4. A
+  5. "openEuler's own statement of the limitation of its container runtime's OOM-event capture and of the ContainerStatus reason field; one vendor's whitepaper" — likely "teaches"
+  6. "p.27... PDF sha256 9855...a30cda99...; refetched 2026-10-24 byte-identical, copy corpus/evidence/sources-r42/S235.pdf (pdftotext ...)" — anchor/evidence cell
+  7. lesson text
+  8. mined
+  9. 2026-10-24
+  10. 180d
+  11. knowledge path
+
+  Hmm, but the attack instruction says "the S235 row's teaches cell... (change the transposed sha)". The transposed sha is in the anchor cell per my reading. Maybe the header names differ. Let me read the SOURCES.md header. Regardless, the mutation is: change a30cda99 → a30dca99 in the S235 row in place, commit in scratch clone, run counter → expect s235_unrewritten FAIL and C2=unmet mismatches=1.
+
+  Wait — careful: if I fix the transposed sha in the S235 row, the line changes → line-sha mismatch → s235_unrewritten FAIL. Also correction_row check unaffected. mismatches=1. Good, that's the expected result: "A row that still carries `a30cda99`, or an in-place rewrite of the S235 row, is `C2=unmet`."
+
+  Plan:
+  1. Check header of corpus/SOURCES.md (line 1-ish) to identify teaches column.
+  2. Clone lane repo to /tmp/scratch-c2 (git clone — read-only on lane; make sure clone doesn't create files in lane; it won't). But the lane repo may have a jj workspace? It says "Never mutate lane Git/jj state". `git clone` reads only. But careful: if lane repo uses colocated jj, cloning via git is still read-only. Also `git clone` of a local path uses hardlinks by default — hardlinks to objects, which is fine; but to be extra safe use `git clone --no-hardlinks`. Yes, use --no-hardlinks to avoid any chance of touching lane object files.
+  3. In scratch clone, sed line 241: change `a30cda99` → `a30dca99` only on the S235 row. Verify exactly one replacement.
+  4. Verify line sha256 differs from S235_SHA, and that the row still has exactly one S235 row.
+  5. git add/commit in scratch clone; capture rev.
+  6. Run the frozen counter: `python3 .ufo/waves/round-43/count-c2.py <rev> --repo /tmp/...` capture stdout and exit code.
+  7. Also confirm baseline: run counter at the pre-mutation rev in scratch (should be C2=unmet mismatches=2 like control-c2-green? Actually control-green exists; entering tip gives mismatches=2). Maybe run do-nothing baseline in the scratch clone before mutation to show the delta: baseline rev (clone HEAD) → C2=unmet mismatches=2 (correction_row + scorecard_correction FAIL per entering tip). Wait — is the lane HEAD the entering tip e3a2b58? The repo may have moved. Better to clone at the entering tip? The instruction: rewrite the S235 row's teaches cell in place and show counter prints C2=unmet. Simplest: clone lane HEAD (which contains the S235 row with a30cda99), commit mutation, run counter at mutant rev with --repo scratch.
+
+  Hmm, but if lane HEAD ≠ entering tip, the S235 row is still the same (assimilation validate copy exists). The counter only needs SOURCES.md, SCORECARD.md, PDF at rev. Cloning HEAD is fine. But to match the contract's framing (entering tip e3a2b58), maybe clone that rev. Let me check git log. Actually simplest and most faithful: clone the lane, checkout the entering tip if present... but wait, must not mutate lane — checkout in the scratch clone is fine.
+
+  Let me check lane HEAD and whether e3a2b58 exists.
+
+  Also verify sha256 of the S235 line currently equals S235_SHA (sanity that lane HEAD row == entering-tip row).
+
+  Also note: scorecard_correction check needs SCORECARD.md to contain CORR line — at lane HEAD, has SCORECARD already got the correction line? If the round already appended it, then baseline might be mismatches=1. Doesn't matter for my claim; the mutation should add s235_unrewritten FAIL. I'll run baseline and mutant for delta.
+
+  Also important detail: the counter hashes the whole line via rows() regex match `^ {0,3}\|\s*(S[0-9]+)\s*\|`. sed replacement of `a30cda99` → `a30dca99` on that line only.
+
+  Steps in one bash script (in /tmp). Let me write it carefully:
+
+  ```bash
+  set -euo pipefail
+  LANE=/home/vgpnk/Projects/shokunin/mori-shokunin
+  SCRATCH=/tmp/c2-inplace-$$  # fixed name fine
+  rm -rf /tmp/c2-inplace
+  git clone --no-hardlinks --quiet "$LANE" /tmp/c2-inplace
+  cd /tmp/c2-inplace
+  git log --oneline -3
+  ```
+
+  Then identify S235 line number: `grep -n 'S235' corpus/SOURCES.md | head`. Then sed in place only that line: `sed -i '241s/a30cda99/a30dca99/' corpus/SOURCES.md` (compute line number programmatically).
+
+  But "teaches cell" — let me check the header first. If the teaches cell is column 5 and it doesn't contain the sha, then "rewrite the teaches cell in place (change the transposed sha)" might mean the sha lives in the teaches cell per the dispatcher's understanding... Looking again at line 241 column 5: "openEuler's own statement of the limitation of its container runtime's OOM-event capture and of the ContainerStatus reason field; one vendor's whitepaper" — no sha. Column 6 has the sha. Let me read the SOURCES.md header to name columns properly. If teaches is col 5, then to honor "teaches cell" strictly, I'd change the sha inside... it's not there. The intent is clear: in-place rewrite of the S235 row by changing the transposed sha. I'll do the anchor-cell sha change (the only transposed sha in the row) and note the column naming in the report. Let me check the header.
+
+  Also grab first line of SOURCES.md.
+
+  Then commit: `git -c user.name=... -c user.email=... commit -am "..."`. Configure locally in scratch only (git -c flags avoid touching global config).
+
+  Then run:
+  `python3 $LANE/.ufo/waves/round-43/count-c2.py <rev> --repo /tmp/c2-inplace; echo "exit=$?"`
+
+  Baseline first:
+  `python3 $LANE/.ufo/waves/round-43/count-c2.py <base> --repo /tmp/c2-inplace`
+
+  Note the frozen counter resolves rev inside --repo clone. Good — lane git untouched.
+
+  Also compute line sha before/after to show it changed and no longer equals S235_SHA.
+
+  Also, must verify the sha256 of the original line equals S235_SHA (proving the baseline row is the entering-tip row). Use awk to extract line, sha256sum.
+
+  One more consideration: the counter runs `git -C LANE show` with LANE replaced by scratch — reading the scratch clone. Fine.
+
+  Timeout: clone may take a bit; set timeout 120.
+
+  Let me now run: read header of SOURCES.md + git log in parallel. Then do the scratch work.e3a2b58f round-42 verifier spot-check (integrator, hyaku): non-author admit/reject
+25200325 round-42: S235 whitepaper copy committed by name (1 MiB dir-skip), scratch mirror recursion removed
+62b95e51 round-42: wave — 18/64 seat reports + registry, dispatch evidence, census-end 238 exit 0, S262 erratum, wave record
+f3ec0977 round-42: claim receipts — C2/C3 met, C1 honest stop (frozen counter defect at final check, no-harm re-derived by hand), measured outcomes, lesson M4, wave spec + plan
+34b92673 round-42: data — conform v5 + killed mutants, d72ac16 manifest, registry 231->238, two admitted entries + S347 knowledge, LOG/SCORECARD errata, lesson, QUALITY 114
+e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2
+Lane HEAD = entering tip e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2.
+
+  Header: `| id | source | kind | tier | scope | anchor | teaches | status | opened | recheck | used-by |`
+
+  So teaches is column 7: "a cgroup OOM simultaneously triggers deletion of the container's cgroup path, so if the runtime handles the OOM event after that deletion the event cannot be captured and the reported reason field may be wrong". The transposed sha is in the anchor cell (column 6), not teaches.
+
+  The dispatcher's instruction says "rewrite the S235 row's teaches cell in place (change the transposed sha)". The transposed sha `a30cda99` lives in the anchor cell of the S235 row. Two interpretations:
+
+  1. The intended mutation: change the transposed sha wherever it is in the S235 row (anchor cell) — an in-place rewrite of the row.
+  2. Literal: edit the teaches cell itself to contain a (changed) sha.
+
+  The counter check `s235_unrewritten` hashes the entire line, so ANY in-place edit of any cell breaks it. The strongest, most faithful attack: perform the in-place rewrite the contract warns about ("A row that still carries `a30cda99`, or an in-place rewrite of the S235 row, is `C2=unmet`"). I'll do the sha change in the anchor cell (the actual transposed sha location), since that is "the transposed sha" being changed. To fully cover the literal reading too, I could ALSO show a second mutant where the teaches cell text is touched — but that's extra; the contract already says any in-place rewrite is unmet. Cheap to do both in one scratch clone as two commits: mutant A (anchor sha corrected a30cda99→a30dca99), run counter → expect s235_unrewritten FAIL, mismatches=1 (assuming baseline mismatches=2 are correction_row and scorecard_correction... wait, at lane HEAD, does SCORECARD contain the CORR line? Let me check control files: control-c2-donothing.txt should show entering-tip results. The contract says entering tip fails correction_row and scorecard_correction → mismatches=2.
+
+  But wait — is the clone's HEAD SCORECARD already carrying the round-43 correction line? Lane HEAD is e3a2b58 (entering tip), and the correction line is a round-43 landing that hasn't been committed to the lane yet (append-block staged in assimilation dir). So baseline = mismatches=2. Mutant A = mismatches=3? No wait: mutant A fixes the anchor sha in S235 row → s235_unrewritten FAIL. correction_row still FAIL (no correction row at HEAD... actually S349 row DOES exist? Grep showed S349 in corpus/SOURCES.md at line 246 with "corrects S235" and "a30dca99" and presumably not a30cda99. Hold on — line 246 exists in the lane's corpus/SOURCES.md at HEAD? The grep output showed S349 row with "corrects S235's transposed anchor". So correction_row check may PASS at HEAD! But contract says "The entering tip fails the correction-row check". Hmm — the grep was against the working tree of the lane, and HEAD == entering tip e3a2b58. Is the working tree dirty? The S349 row might be an uncommitted working-tree change, or committed after e3a2b58... but HEAD is e3a2b58 which per contract is the entering tip that "fails the correction-row check". Yet grep found the S349 row in the working file. Let me check git status of the lane (read-only) — I must not mutate, but status is read-only. Hmm, "Never mutate lane Git/jj or the lane index" — `git status` is safe (doesn't write index... actually `git status` can refresh the index's stat cache; `git --no-optional-locks status` avoids that). Use `git --no-optional-locks -C ... status --porcelain` to be safe.
+
+  Wait, actually maybe the working tree is clean and the contract's statement about entering tip failing correction_row is about the S349 row not existing at that time... but grep found it. The grep path was corpus/SOURCES.md in working tree. HEAD is e3a2b58. If the file is clean, then at e3a2b58 the S349 row EXISTS → correction_row check would PASS (it has "corrects S235", "a30dca99", no "a30cda99" — check line 246: "corrects S235's transposed anchor... a30dca99359e6df057ad8020... the S235 anchor cell transposed two characters" — does it contain "a30cda99"? Scanning line 246 text: "sha256 9855a4986a312dfc946b1b97b6010a8e4f1e65a4a30dca99359e6df057ad8020" twice; "the S235 anchor cell transposed two characters of it" — no literal a30cda99. So correction_row PASS.
+
+  Then why does the contract say entering tip fails correction-row? Maybe because at entering tip the SCORECARD lacks the CORR line (scorecard_correction FAIL) and... control-c2-donothing.txt will tell me. Let me read it. Also control-c2-junk.txt.
+
+  Actually wait — maybe the working tree has uncommitted changes (the round-43 work staged in working tree, not committed). The assimilation/validate/corpus/SOURCES.md copy also has S235/S349. So plausibly the lane working tree contains round-43 edits not yet committed, and `git show rev:...` uses committed bytes at rev. For my attack I clone HEAD (committed state) — the S235 row bytes at e3a2b58: does it contain a30cda99? Contract says the entering-tip row "still contains `a30cda99` and `byte-identical`" with sha256 971df55e... The counter's S235_SHA = 971df55e9e1ed8826e66dd31d12f9cbb5b2c727cf71201a2c0eabc7311e169a2. I'll verify in the clone: sha256 of the S235 line at HEAD == S235_SHA.
+
+  And baseline at HEAD: control-c2-donothing.txt presumably records C2=unmet mismatches=2 (correction_row FAIL ids=[] and scorecard_correction FAIL). But my grep suggests S349 row exists in working tree... if that's committed at HEAD, correction_row would PASS. Unless the S349 row contains "a30cda99" somewhere — let me recheck: line 246: "...corrects S235's transposed anchor, the document's teaching unchanged | p.27...sha256 ...a30dca99...; opened 2026-10-24 | supersedes S235 — ... the committed PDF's sha256 is ...a30dca99... and the S235 anchor cell transposed two characters of it — that row is not rewritten | mined..." — I don't see "a30cda99" literally. Hmm, "transposed two characters" — not the literal. So correction_row PASS at HEAD?
+
+  But contract says entering tip fails correction-row. Contradiction → likely the S349 row is NOT committed at HEAD; it's a working-tree or staged change. Let me check with git --no-optional-locks status and git show HEAD:corpus/SOURCES.md | grep S235/S349. Read-only.
+
+  Actually — the cleanest: in the /tmp clone, inspect the committed SOURCES.md. The clone gives exactly committed bytes. I'll grep S235/S349 there and hash the S235 line. That settles baseline without touching the lane at all (except clone read).
+
+  Plan the /tmp script:
+
+  ```bash
+  set -euo pipefail
+  LANE=/home/vgpnk/Projects/shokunin/mori-shokunin
+  rm -rf /tmp/c2-inplace
+  git clone --no-hardlinks --quiet "$LANE" /tmp/c2-inplace
+  cd /tmp/c2-inplace
+  echo "== HEAD =="; git rev-parse HEAD
+  echo "== S235/S349 rows at HEAD =="
+  grep -n -E '^\| S(235|349) ' corpus/SOURCES.md | cut -c1-120
+  LN=$(grep -n -E '^\| S235 ' corpus/SOURCES.md | head -1 | cut -d: -f1)
+  echo "S235 line: $LN"
+  sed -n "${LN}p" corpus/SOURCES.md | sha256sum
+  ```
+
+  Baseline run:
+  ```bash
+  python3 "$LANE/.ufo/waves/round-43/count-c2.py" HEAD_REVA --repo /tmp/c2-inplace; echo exit=$?
+  ```
+
+  Then mutation A (change transposed sha in anchor cell in place):
+  ```bash
+  sed -i "${LN}s/a30cda99/a30dca99/" corpus/SOURCES.md
+  sed -n "${LN}p" corpus/SOURCES.md | sha256sum   # differs from S235_SHA
+  git -c user.name=crit -c user.email=crit@scratch commit -aqm "mutant: S235 anchor sha corrected in place"
+  REVB=$(git rev-parse HEAD)
+  python3 .../count-c2.py $REVB --repo /tmp/c2-inplace; echo exit=$?
+  ```
+
+  Expected: check s235_unrewritten FAIL (rows=1), C2=unmet mismatches=N (N = baseline fails + 1, minus... correction_row at HEAD? whatever baseline gives, +1).
+
+  Also mutant B (touch teaches cell only, keep a30cda99): swap a word in teaches cell → also FAIL. The dispatcher explicitly said "teaches cell". To honor both readings cheaply, do A first (change the transposed sha where it lives — anchor cell), then B (edit teaches cell text in place, leaving a30cda99). Both should print C2=unmet because the line hash breaks. Actually the dispatcher's intent: "rewrite the S235 row's teaches cell in place (change the transposed sha)" — maybe they think the sha is in the teaches cell. I'll do A as primary (it changes the transposed sha, which is the named target) and B as the literal-teaches-cell variant. Cheap.
+
+  One catch: the counter checks `git -C LANE show` — LANE replaced by scratch repo path. The scratch clone has its own .git; commits there are fine (my own /tmp sandbox).
+
+  Also confirm exit codes. Use `; echo "exit=$?"` right after each python call — careful with set -e: put set -e off or use `|| true`. I'll not use set -e; handle manually.
+
+  Also verify pdf check passes so that failures are only the expected ones.
+
+  Let me also read control-c2-donothing.txt and control-c2-junk.txt quickly in parallel with building the clone — gives me the recorded baseline to compare (evidence delta). Already read green. Good enough; I'll read donothing in the same batch as the clone script? The clone script is the dependent chain; reads are independent. Fire them together.
+
+  Write the whole thing as one bash script with echo separators. Note: guidance says don't stitch outputs with echo separators — but here it's one coherent multi-step experiment; internal labeled echoes are part of the script output, acceptable. Keep it tight.
+
+  Script:
+
+  ```bash
+  set -u
+  LANE=/home/vgpnk/Projects/shokunin/mori-shokunin
+  CNT="$LANE/.ufo/waves/round-43/count-c2.py"
+  SCR=/tmp/c2-inplace
+  rm -rf "$SCR"
+  git clone --no-hardlinks --quiet "$LANE" "$SCR" || exit 9
+  cd "$SCR" || exit 9
+  REVA=$(git rev-parse HEAD)
+  echo "clone_HEAD=$REVA"
+  grep -c '^| S235 ' corpus/SOURCES.md
+  LN=$(grep -n '^| S235 ' corpus/SOURCES.md | head -1 | cut -d: -f1)
+  echo "s235_line=$LN"
+  sed -n "${LN}p" corpus/SOURCES.md | sha256sum | cut -d' ' -f1
+  echo '--- baseline (do-nothing rev) ---'
+  python3 "$CNT" "$REVA" --repo "$SCR"; echo "exit=$?"
+  echo '--- mutant A: anchor cell a30cda99 -> a30dca99 in place ---'
+  sed -i "${LN}s/a30cda99/a30dca99/" "$SCR/corpus/SOURCES.md"
+  sed -n "${LN}p" "$SCR/corpus/SOURCES.md" | sha256sum | cut -d' ' -f1
+  git -c user.name=c2crit -c user.email=c2crit@scratch.local commit -aqm 'mutant A: S235 transposed sha corrected in place (anchor cell)'
+  REVB=$(git rev-parse HEAD)
+  echo "mutantA_rev=$REVB"
+  python3 "$CNT" "$REVB" --repo "$SCR"; echo "exit=$?"
+  ```
+
+  Then mutant B in a follow-up call (reset to REVA, edit teaches cell):
+
+  ```bash
+  cd /tmp/c2-inplace
+  git checkout -q "$REVA"
+  LN=$(grep -n '^| S235 ' corpus/SOURCES.md | head -1 | cut -d: -f1)
+  sed -i "${LN}s/reported reason field may be wrong/reported reason field may be WRONG (crit probe)/" corpus/SOURCES.md
+  grep -c a30cda99 corpus/SOURCES.md  # still transposed
+  git -c ... commit -aqm 'mutant B: teaches cell edited in place'
+  REVC=$(git rev-parse HEAD)
+  python3 "$CNT" "$REVC" --repo "$SCR"; echo "exit=$?"
+  ```
+
+  Careful: the teaches cell text "the reported reason field may be wrong" also appears in the S349 row's teaches cell! Line 246: "supersedes S235 — a cgroup OOM simultaneously triggers ... may be wrong; the committed PDF's ...". So sed with the phrase would hit S349's line too. Restrict to line LN: `sed -i "${LN}s/may be wrong/may be wrong (crit probe)/"` — line-scoped, only S235 line. Good.
+
+  If S349 isn't committed at HEAD, grep finds only S235 line anyway, but line-scoped sed is safe regardless.
+
+  Also need git commit to work in clone: default branch, fine. Use `-c commit.gpgformat...`? Not needed; clone of local repo won't gpg-sign by default.
+
+  Timeout: clone size — PDF is 1MiB, repo small. 120s plenty.
+
+  Let me run batch 1: clone+baseline+mutantA script, and read control-c2-donothing.txt in parallel.
+
+• Lane HEAD = entering tip `e3a2b58f…`. The S235 row (SOURCES.md:241) carries the transposed sha `…a30cda99…` in its anchor cell; the counter hashes the whole line (`s235_unrewritten`), so any in-place rewrite must flip it. Building the /tmp scratch clone and running baseline + mutant now, plus pulling the recorded do-nothing control for delta comparison:clone_HEAD=e3a2b58f72ba3bd52a90646f7285fb85f0ee5dd2
+s235_rows=1
+s235_line=241
+line_sha_at_base=e0f284a0bfb451633f785a5f7a912e130abcdc6faaf7c3e2935de5761285b279
+transposed_in_row=1
+=== baseline: frozen counter at clone HEAD (do-nothing) ===
+check sources_present        PASS (corpus/SOURCES.md)
+check scorecard_present      PASS (SCORECARD.md)
+check pdf_present            PASS (corpus/evidence/sources-r42/S235.pdf)
+check s235_unrewritten       PASS (rows=1)
+check correction_row         FAIL (ids=[])
+check declaration_unrewritten PASS (count=1)
+check scorecard_correction   FAIL (count=0)
+check pdf_sha                PASS (9855a4986a31)
+C2=unmet mismatches=2
+exit=1
+=== mutant A: in-place rewrite, anchor cell a30cda99 -> a30dca99 ===
+line_sha_after=ad6965b8bb07d1096a59af7bfe59045626f3ff53da22f85c40d1e37bfbca60a2
+mutantA_rev=0cbca0b0a10e9aa18d6eee030f7cf95c01c6e4c4
+check sources_present        PASS (corpus/SOURCES.md)
+check scorecard_present      PASS (SCORECARD.md)
+check pdf_present            PASS (corpus/evidence/sources-r42/S235.pdf)
+check s235_unrewritten       FAIL (rows=1)
+check correction_row         FAIL (ids=[])
+check declaration_unrewritten PASS (count=1)
+check scorecard_correction   FAIL (count=0)
+check pdf_sha                PASS (9855a4986a31)
+C2=unmet mismatches=3
+exit=1
+
+
+• Interesting finding: `line_sha_at_base=e0f284a0bfb451633f785a5f7a912e130abcdc6faaf7c3e2935de5761285b279` — but the counter's S235_SHA is `971df55e9e1ed8826e66dd31d12f9cbb5b2c727cf71201a2c0eabc7311e169a2`. The baseline `s235_unrewritten` check printed PASS though! Why? Because my `sed -n 241p | sha256sum` hashes the line WITH a trailing newline added by sed output? Actually `sed -n 241p` outputs the line + newline. sha256sum includes the newline → e0f284a... differs from the counter's hash of `line.encode()` (no newline) = 971df55e... So the discrepancy is my measurement artifact (trailing newline), not a defect in the counter. The counter PASSes baseline, so the committed line's sha256 (without newline) == 971df55e. Let me verify with printf to be exact: `git show HEAD:corpus/SOURCES.md | sed -n 241p | head -c -1 | sha256sum` or use python to hash line without newline. Confirm 971df55e. This matters for my report accuracy — I should state the artifact, or just recompute properly.
+
+  Mutant A: s235_unrewritten FAIL, mismatches=3, exit=1, C2=unmet. The delta vs baseline: +1 failure (s235_unrewritten), exactly the targeted check. correction_row/scorecard_correction remain FAIL as at baseline (do-nothing residuals, unchanged by my mutation — as expected since I only touched the S235 row).
+
+  Now mutant B (literal dispatcher phrasing): edit the teaches cell in place while leaving a30cda99 transposed. Expected: s235_unrewritten FAIL again, mismatches=3. This shows the in-place rewrite of the teaches cell specifically is caught — the counter hashes the entire line regardless of which cell.
+
+  Also recompute exact no-newline hash of the original line to confirm 971df55e (validating the frozen S235_SHA matches the entering-tip row — a calibration sanity, and it defends my report from the newline artifact).
+
+  Run mutant B now.
+
+• Mutant A lands: `s235_unrewritten FAIL`, `mismatches=3` (baseline 2 + the targeted check), `exit=1`. One artifact to pin down: my raw `sed|sha256sum` printed `e0f284a0…`, not the frozen `971df55e…`, yet the counter passes baseline — that's a trailing-newline artifact in my measurement, not a counter defect; I'll verify the exact no-newline hash. Also running mutant B — the literal dispatcher reading (edit only the teaches cell, leave `a30cda99` in place):=== exact no-newline hash of entering-tip S235 line ===
+812
+971df55e9e1ed8826e66dd31d12f9cbb5b2c727cf71201a2c0eabc7311e169a2
+=== mutant B: teaches cell edited in place, a30cda99 left transposed ===
+s235_line=241 teaches_has_a30cda99=1
+mutantB_rev=156bdcb0d04a2834df8cd48594e85549b3466831
+check sources_present        PASS (corpus/SOURCES.md)
+check scorecard_present      PASS (SCORECARD.md)
+check pdf_present            PASS (corpus/evidence/sources-r42/S235.pdf)
+check s235_unrewritten       FAIL (rows=1)
+check correction_row         FAIL (ids=[])
+check declaration_unrewritten PASS (count=1)
+check scorecard_correction   FAIL (count=0)
+check pdf_sha                PASS (9855a4986a31)
+C2=unmet mismatches=3
+exit=1
+
+
+• Both mutants killed. Exact no-newline hash of the entering-tip S235 line = 971df55e… — matches the frozen S235_SHA, so the counter's anchor is honest and my earlier e0f284a0 was the newline artifact.
+
+  Findings summary:
+  - Attack: in-place rewrite of the S235 row's sha (anchor cell holds the transposed `a30cda99`; the "teaches" cell holds the lesson text) — both an anchor-sha correction (mutant A) and a teaches-cell edit (mutant B) flip `s235_unrewritten` to FAIL → `C2=unmet mismatches=3` exit 1. The line-level sha256 makes the row rewrite-proof, exactly as the contract's one-sentence predicate demands.
+  - Note the correction_row/scorecard_correction FAILs persist in all runs — those are the do-nothing residuals at the entering tip (S349 correction row and SCORECARD CORR line are not committed at e3a2b58; the working tree copies in assimilation/ are uncommitted). My mutation adds exactly +1 mismatch and touches nothing else.
+  - Small measurement caveat for the record: hashing the line with trailing newline gives a different value (e0f284a0…); the frozen hash is over the line without newline. Not a defect.
+
+  Smallest safe correction: none needed — counter survives. Verdict: SURVIVED (the attack failed to make the counter pass/miss the rewrite; the counter correctly prints C2=unmet). Wait — verdict semantics: "KILLED, SURVIVED, or CONFIRMED". I attacked claim C2's counter. The attack was: show that count-c2.py prints C2=unmet after in-place rewrite. It DOES print C2=unmet — which is what the dispatcher predicted, i.e., the counter catches the rewrite. So the counter/claim survives the attack → SURVIVED. The requested demonstration succeeded (C2=unmet printed), meaning the defense works.
+
+  Now write the report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/ResCritInPlace.md. Must end with one-line verdict: SURVIVED, then the exact command and its output. "Your report must end with a one-line verdict: KILLED, SURVIVED, or CONFIRMED, then the exact command and its output." So format: last line verdict, then exact command + output (the mutant A one — the assigned attack). I'll paste the mutant A command verbatim and its stdout + exit code.
+
+  Check that the w1 directory exists — yes, w1/Exec4.md exists per grep. Write the file with the Write tool... wait, I don't have a Write tool listed — tools are Bash, Glob, Grep, Read. So write via bash heredoc. Use `cat > file <<'EOF'`. The instructions say echo > file → Write tool, but Write isn't available in this seat, so Bash it is.
+
+  Report content:
+
+  # ResCritInPlace — C2 counter vs in-place rewrite of the S235 row
+
+  Scope: attack C2 by rewriting the S235 row's sha in place in a /tmp scratch clone and running the frozen counter at the mutant rev.
+
+  ## Setup
+  - frozen counter: .ufo/waves/round-43/count-c2.py (unmodified, run from lane path)
+  - scratch clone: /tmp/c2-inplace (git clone --no-hardlinks of lane HEAD = entering tip e3a2b58f…)
+  - S235 row = corpus/SOURCES.md line 241, sole row (rows=1), transposed anchor a30cda99 present once
+  - exact no-newline sha256 of entering-tip line = 971df55e…169a2 == frozen S235_SHA (verified)
+  - note: `sed -n 241p | sha256sum` shows e0f284a0… because it includes the trailing newline; counter hashes the line without it. Measurement artifact, not a defect.
+
+  ## Mutation
+  - mutant A (assigned): anchor cell a30cda99 → a30dca99 in place. Note: the transposed sha lives in the anchor cell, not the teaches cell (header: id|source|kind|tier|scope|anchor|teaches|status|opened|recheck|used-by); teaches cell holds lesson text.
+  - mutant B (literal reading): teaches cell text edited in place, a30cda99 left as-is.
+
+  ## Results
+  baseline do-nothing at e3a2b58: C2=unmet mismatches=2 (correction_row, scorecard_correction) — matches control-c2-donothing.txt
+  mutant A rev 0cbca0b…: s235_unrewritten FAIL (rows=1), C2=unmet mismatches=3, exit=1
+  mutant B rev 156bdcb…: s235_unrewritten FAIL (rows=1), C2=unmet mismatches=3, exit=1
+  Delta = +1 mismatch, exactly s235_unrewritten; other checks byte-unchanged.
+
+  ## Assessment
+  - The line-level sha256 pin makes any in-place rewrite of the S235 row fatal to C2, as the contract's predicate requires ("an in-place rewrite of the S235 row is C2=unmet").
+  - No escape hatch found: whitespace-preserving regex `rows()` matches the line as-is; hash covers the whole line, so cell-local edits cannot dodge it.
+  - correction_row/scorecard_correction FAILs are pre-existing do-nothing residuals at the entering tip, not side effects of the mutation.
+  - Counter hash sanity: S235_SHA matches the entering-tip row exactly.
+
+  No correction proposed — counter behaved as contracted under both readings of the assigned attack.
+
+  Verdict: SURVIVED
+  Command: python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c2.py 0cbca0b0a10e9aa18d6eee030f7cf95c01c6e4c4 --repo /tmp/c2-inplace
+  Output: (stdout + exit=1)
+
+  Paste full stdout of mutant A run.
+
+  One more consideration: should I try any cleverer bypass before declaring survival? E.g., does the counter read working tree or rev bytes? It uses `git show rev:path` — rev bytes only, so no working-tree trickery. Multiple S235 rows? s235_ok requires len==1, and adding a row changes... adding an extra S235 row → rows=2 → FAIL too. Padding the line with trailing spaces? Still hash mismatch. The only way to keep hash is byte-identical row. Genuinely rewrite-proof. Also could a second "corrects S235" row fake correction? correction_row requires exactly 1 — fine. I'm satisfied; counter is tight. Attack surfaces all covered by the assigned run; no further cheap probes needed — actually one more cheap probe: does `git show` resolve the rev in the scratch repo even though the counter script lives in the lane? Yes — demonstrated: it found mutant commits that exist only in /tmp/c2-inplace. `--repo` correctly redirects. That's already evidenced by the run itself.
+
+  Write the report now. Also keep /tmp sandbox intact for the L1 to re-run (mention path). Don't delete it.
+
+• Both readings of the assigned attack are dead on arrival, and the exact no-newline hash `971df55e…` matches the frozen `S235_SHA`, so the counter's anchor is honest. Writing the report:written rc=0
+-rw-r--r-- 1 vgpnk vgpnk 3530 Oct 24 22:51 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/w1/ResCritInPlace.md
+
+
+• Report written. Summarize concisely with the verdict, command, output, exit code. Done — stop after assigned review.
+
+• Attack executed in `/tmp/c2-inplace` (scratch clone of entering tip `e3a2b58f…`, `--no-hardlinks`, lane untouched). Report at `.ufo/waves/round-43/w1/ResCritInPlace.md`.
+
+  **Result — counter SURVIVED.** The S235 row is pinned by whole-line sha256 (`971df55e…`, verified to match the entering-tip line byte-for-byte, no trailing newline), so any in-place rewrite flips it:
+
+  - Mutant A (assigned): anchor cell `a30cda99` → `a30dca99` in place → `s235_unrewritten FAIL (rows=1)`, `C2=unmet mismatches=3`, exit 1. Delta vs baseline (`mismatches=2`, matching `control-c2-donothing.txt`): exactly +1, the targeted check; the two residual FAILs (`correction_row`, `scorecard_correction`) are pre-existing entering-tip state, unmoved.
+  - Mutant B (literal "teaches cell" reading): teaches cell edited in place, `a30cda99` left transposed → identical `C2=unmet mismatches=3`, exit 1.
+
+  No bypass found: the counter reads `git show <rev>:path` bytes only, so working-tree edits are invisible, and the hash covers the whole line, so no cell-local edit can dodge it. `--repo` correctly resolves mutant revs that exist only in the scratch clone.
+
+  Verdict line, as required:
+
+  **SURVIVED**
+  ```
+  $ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/count-c2.py 0cbca0b0a10e9aa18d6eee030f7cf95c01c6e4c4 --repo /tmp/c2-inplace
+  check sources_present        PASS (corpus/SOURCES.md)
+  check scorecard_present      PASS (SCORECARD.md)
+  check pdf_present            PASS (corpus/evidence/sources-r42/S235.pdf)
+  check s235_unrewritten       FAIL (rows=1)
+  check correction_row         FAIL (ids=[])
+  check declaration_unrewritten PASS (count=1)
+  check scorecard_correction   FAIL (count=0)
+  check pdf_sha                PASS (9855a4986a31)
+  C2=unmet mismatches=3
+  exit=1
+  ```
+
+To resume this session: kimi -r session_d00eb127-53bd-4b33-9f9a-06e4b3657eaf
