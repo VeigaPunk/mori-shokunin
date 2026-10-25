@@ -316,6 +316,11 @@ Concretely, for the C2 receipt the executor seat already owes (`w1/ExecWitnessRe
    round work, (ii) that the default `--mutants-dir` is a mispath (§4.2) routed to round 45,
    (iii) that the claim is registry conformance, narrower than `PROTOCOL.md:385` (§4.3), with
    `kumitate` `gate-mutants.mjs` K43 named as the stronger standard for a successor.
+   Route targets: the lane's own queue is its `SCORECARD.md` routed-defect rows (the round-24 D1–D4
+   convention, `SCORECARD.md:1545`); the fleet queue is the aggregator ledger
+   `/home/vgpnk/Projects/shokunin/.ufo/reports/AGGREGATE.md` (165 `| D-` rows), which
+   `PROTOCOL.md:398` names as "the routed-defect queue, not a second inventory". A fleet-wide
+   standard question goes to the aggregator; the two C2 defects stay lane-local rows.
 
 **Why this and not an import.** It improves calibration (no claim of round work where the freeze
 commit already printed `met`; no "conformance" wider than the measurement) and operability (the
