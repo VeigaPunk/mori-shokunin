@@ -1,0 +1,1023 @@
+
+
+<!DOCTYPE html>
+<html lang="zh_TW">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>proc(5) — Arch manual pages</title>
+        <link rel="stylesheet" type="text/css" href="/static/archlinux_common_style/navbar.css">
+        <link rel="stylesheet" type="text/css" href="/static/archmanweb/base.css">
+        <link rel="icon" type="image/x-icon" href="/static/archlinux_common_style/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/static/archlinux_common_style/favicon.ico" />
+        
+    <link rel="stylesheet" type="text/css" href="/static/archmanweb/man_page.css">
+    
+        <link rel="alternate" href="/man/proc.5.ar" hreflang="ar">
+    
+        <link rel="alternate" href="/man/proc.5.de" hreflang="de">
+    
+        <link rel="alternate" href="/man/proc.5.en" hreflang="en">
+    
+        <link rel="alternate" href="/man/proc.5.fr" hreflang="fr">
+    
+        <link rel="alternate" href="/man/proc.5.pl" hreflang="pl">
+    
+        <link rel="alternate" href="/man/proc.5.ro" hreflang="ro">
+    
+        <link rel="alternate" href="/man/proc.5.zh_CN" hreflang="zh_CN">
+    
+
+    </head>
+    <body>
+        <header>
+            <div id="archnavbar">
+	<div id="logo"><a href="https://archlinux.org" title="Return to the main page">Arch Linux</a></div>
+	<div id="archnavbarmenu">
+		<ul id="archnavbarlist">
+			<li id="anb-home"><a href="https://archlinux.org" title="Arch news, packages, projects and more">Home</a></li>
+			<li id="anb-packages"><a href="https://archlinux.org/packages/" title="Arch Package Database">Packages</a></li>
+			<li id="anb-forums"><a href="https://bbs.archlinux.org/" title="Community forums">Forums</a></li>
+			<li id="anb-wiki"><a href="https://wiki.archlinux.org/" title="Community documentation">Wiki</a></li>
+			<li id="anb-gitlab"><a href="https://gitlab.archlinux.org/archlinux" title="GitLab">GitLab</a></li>
+			<li id="anb-security"><a href="https://security.archlinux.org/" title="Arch Linux Security Tracker">Security</a></li>
+			<li id="anb-aur"><a href="https://aur.archlinux.org/" title="Arch Linux User Repository">AUR</a></li>
+			<li id="anb-download"><a href="https://archlinux.org/download/" title="Get Arch Linux">Download</a></li>
+		</ul>
+	</div>
+</div>
+
+        </header>
+        <main id="content">
+            
+            <article id="content-left">
+                
+<section class="man-page-content">
+    <table class="head">
+  <tr>
+    <td class="head-ltitle">PROC(5)</td>
+    <td class="head-vol">File Formats Manual</td>
+    <td class="head-rtitle">PROC(5)</td>
+  </tr>
+</table>
+<div class="manual-text">
+<section class="Sh">
+<h1 class="Sh" id='NAME'><a class='permalink' href='#NAME'>NAME</a></h1>
+<p class="Pp">proc -
+    &#x7A0B;&#x5E8F;&#x8CC7;&#x8A0A;&#x507D;&#x6A94;&#x6848;&#x7CFB;&#x7D71;</p>
+</section>
+<section class="Sh">
+<h1 class="Sh">&#x63CF;&#x8FF0;</h1>
+<p class="Pp">/proc
+    &#x662F;&#x4E00;&#x500B;&#x507D;&#x6A94;&#x6848;&#x7CFB;&#x7D71;,
+    &#x88AB;&#x7528;&#x4F5C;&#x6838;&#x5FC3;&#x8CC7;&#x6599;&#x7D50;&#x69CB;&#x7684;&#x4ECB;&#x9762;,
+    &#x800C;&#x4E0D;&#x50C5;&#x50C5; &#x662F;&#x89E3;&#x91CB;&#x8AAA;&#x660E;
+    /dev/kmem.
+    /proc&#x88E1;&#x7684;&#x5927;&#x591A;&#x6578;&#x6A94;&#x6848;&#x90FD;&#x662F;&#x96BB;&#x8B80;&#x7684;,
+    &#x4F46;&#x4E5F;&#x53EF;
+    &#x4EE5;&#x901A;&#x904E;&#x5BEB;&#x4E00;&#x4E9B;&#x6A94;&#x6848;&#x4F86;&#x6539;&#x8B8A;&#x6838;&#x5FC3;&#x8B8A;&#x6578;.</p>
+<p class="Pp">&#x4E0B;&#x9762;&#x5C0D;&#x6574;&#x500B; /proc
+    &#x76EE;&#x9304;&#x4F5C;&#x4E00;&#x500B;&#x5927;&#x7565;&#x7684;&#x4ECB;&#x7D39;.</p>
+<dl class="Bl-tag">
+  <dt><i>[number]</i></dt>
+  <dd>&#x5728; /proc &#x76EE;&#x9304;&#x88E1;,
+      &#x6BCF;&#x500B;&#x6B63;&#x5728;&#x57F7;&#x884C;&#x7684;&#x7A0B;&#x5E8F;&#x90FD;&#x6709;&#x4E00;&#x500B;&#x4EE5;&#x8A72;&#x7A0B;&#x5E8F;
+      ID &#x547D;&#x540D;&#x7684;&#x5B50;&#x76EE;&#x9304;,
+      &#x5176;&#x4E0B;&#x5305;&#x62EC;&#x5982;&#x4E0B;&#x7684;&#x76EE;&#x9304;&#x548C;&#x507D;&#x6A94;&#x6848;.</dd>
+</dl>
+<div class="Bd-indent">
+<dl class="Bl-tag">
+  <dt id="cmdline"><a class="permalink" href="#cmdline"><i>cmdline</i></a></dt>
+  <dd>&#x8A72;&#x6A94;&#x6848;&#x5132;&#x5B58;&#x4E86;&#x7A0B;&#x5E8F;&#x7684;&#x5B8C;&#x6574;&#x547D;&#x4EE4;&#x5217;.
+      &#x5982;&#x679C;&#x8A72;&#x7A0B;&#x5E8F;&#x5DF2;&#x7D93;
+      &#x88AB;&#x4EA4;&#x63DB;&#x51FA;&#x8A18;&#x61B6;&#x9AD4;,
+      &#x6216;&#x8005;&#x8A72;&#x7A0B;&#x5E8F;&#x5DF2;&#x7D93;&#x50F5;&#x6B7B;,
+      &#x90A3;&#x9EBC;&#x5C31;&#x6C92;&#x6709;
+      &#x4EFB;&#x4F55;&#x6771;&#x897F;&#x5728;&#x8A72;&#x6A94;&#x6848;&#x88E1;,
+      &#x9019;&#x6642;&#x5019;&#x5C0D;&#x8A72;&#x6A94;&#x6848;&#x7684;&#x8B80;&#x64CD;&#x4F5C;&#x5C07;&#x8FD4;&#x56DE;&#x96F6;
+      &#x500B;&#x5B57;&#x5143;.
+      &#x8A72;&#x6A94;&#x6848;&#x4EE5;&#x7A7A;&#x5B57;&#x5143; null
+      &#x800C;&#x4E0D;&#x662F;&#x63DB;&#x884C;&#x7B26;&#x4F5C;&#x70BA;&#x7D50;
+      &#x675F;&#x6A19;&#x8A8C;.</dd>
+  <dt id="cwd"><a class="permalink" href="#cwd"><i>cwd</i></a></dt>
+  <dd>&#x4E00;&#x500B;&#x7B26;&#x865F;&#x9023;&#x7DDA;,
+      &#x6307;&#x5411;&#x7A0B;&#x5E8F;&#x7576;&#x524D;&#x7684;&#x5DE5;&#x4F5C;&#x76EE;&#x9304;.
+      &#x4F8B;&#x5982;, &#x8981;&#x627E;&#x51FA;&#x7A0B;&#x5E8F; 20 &#x7684;
+      cwd, &#x4F60;&#x53EF;&#x4EE5;:
+    <br/>
+    <pre><span class="Li">cd /proc/20/cwd; /bin/pwd</span></pre>
+  </dd>
+</dl>
+<p class="Pp">&#x8ACB;&#x6CE8;&#x610F; pwd
+    &#x547D;&#x4EE4;&#x901A;&#x5E38;&#x662F; shell &#x5167;&#x5EFA;&#x7684;,
+    &#x5728;&#x9019;&#x6A23;&#x7684;&#x60C5;&#x6CC1;&#x4E0B;&#x53EF;&#x80FD;
+    &#x5DE5;&#x4F5C;&#x5F97;&#x4E0D;&#x662F;&#x5F88;&#x597D;.</p>
+<dl class="Bl-tag">
+  <dt id="environ"><a class="permalink" href="#environ"><i>environ</i></a></dt>
+  <dd>&#x8A72;&#x6A94;&#x6848;&#x5132;&#x5B58;&#x7A0B;&#x5E8F;&#x7684;&#x74B0;&#x5883;&#x8B8A;&#x6578;,
+      &#x5404;&#x9805;&#x4E4B;&#x9593;&#x4EE5;&#x7A7A;&#x5B57;&#x5143;&#x5206;&#x9694;,
+      &#x7D50;&#x5C3E;&#x4E5F;&#x53EF;&#x80FD;&#x662F;&#x4E00;&#x500B;&#x7A7A;&#x5B57;&#x5143;.
+      &#x56E0;&#x6B64;, &#x5982;&#x679C;&#x8981;&#x8F38;&#x51FA;&#x7A0B;&#x5E8F;
+      1 &#x7684;&#x74B0;&#x5883;&#x8B8A;&#x6578;, &#x4F60;&#x61C9;&#x8A72;:
+    <br/>
+    <pre><span class="Li">(cat /proc/1/environ; echo) | tr &quot;;\000&quot;; &quot;;\n&quot;;</span></pre>
+  </dd>
+</dl>
+<p class="Pp">(&#x81F3;&#x65BC;&#x70BA;&#x4EC0;&#x9EBC;&#x60F3;&#x8981;&#x9019;&#x9EBC;&#x505A;,
+    &#x8ACB;&#x53C3;&#x95B1; <a href='/man/lilo.8.zh_TW'>lilo(8)</a>.)</p>
+<dl class="Bl-tag">
+  <dt id="exe"><a class="permalink" href="#exe"><i>exe</i></a></dt>
+  <dd>&#x4E5F;&#x662F;&#x4E00;&#x500B;&#x7B26;&#x865F;&#x9023;&#x7DDA;,
+      &#x6307;&#x5411;&#x88AB;&#x57F7;&#x884C;&#x7684;&#x4E8C;&#x9032;&#x4F4D;&#x5236;&#x7A0B;&#x5F0F;&#x78BC;.
+    <p class="Pp">&#x5728; Linux 2.0
+        &#x6216;&#x8005;&#x66F4;&#x65E9;&#x7684;&#x7248;&#x672C;&#x4E0B;,
+        &#x5C0D; exe &#x7279;&#x6B8A;&#x6A94;&#x6848;&#x7684; <a href='/man/readlink.2.zh_TW'>readlink(2)</a>
+        &#x8FD4;&#x56DE;&#x4E00;&#x500B;&#x5982;&#x4E0B;&#x683C;&#x5F0F;&#x7684;&#x5B57;&#x4E32;:</p>
+    <p class="Pp">[&#x88DD;&#x7F6E;&#x865F;]:&#x7BC0;&#x9EDE;&#x865F;</p>
+    <p class="Pp">&#x8209;&#x500B;&#x4F8B;&#x5B50;, [0301]:1502
+        &#x5C31;&#x662F;&#x67D0;&#x88DD;&#x7F6E;&#x7684; 1502 &#x7BC0;&#x9EDE;,
+        &#x8A72;&#x88DD;&#x7F6E;&#x7684;&#x4E3B;&#x88DD;&#x7F6E;&#x865F;&#x70BA;
+        03 (&#x5982; IDE, MFM &#x7B49;&#x9A45;&#x52D5;&#x5668;),
+        &#x5F9E;&#x88DD;&#x7F6E;&#x865F;&#x70BA; 01
+        (&#x7B2C;&#x4E00;&#x500B;&#x9A45;&#x52D5;&#x5668;&#x7684;&#x7B2C;&#x4E00;&#x5206;&#x5272;&#x69FD;).</p>
+    <p class="Pp">&#x800C;&#x5728; Linux 2.2 &#x4E0B;, <a href='/man/readlink.2.zh_TW'>readlink(2)</a>
+        &#x5247;&#x7D66;&#x51FA;&#x547D;&#x4EE4;&#x7684;&#x5BE6;&#x969B;&#x8DEF;&#x5F91;&#x540D;.</p>
+    <p class="Pp">&#x53E6;&#x5916;,
+        &#x8A72;&#x7B26;&#x865F;&#x9023;&#x7DDA;&#x4E5F;&#x53EF;&#x4EE5;&#x6B63;&#x5E38;&#x6790;&#x5F15;&#x7528;(&#x8A66;&#x5716;&#x958B;&#x555F;
+        exe
+        &#x6A94;&#x6848;&#x5BE6;&#x969B;&#x4E0A;&#x5C07;&#x958B;&#x555F;&#x4E00;&#x500B;&#x57F7;&#x884C;&#x6A94;).
+        &#x4F60;&#x751A;&#x81F3;&#x53EF;&#x4EE5;&#x9375;&#x5165;
+        <i>/proc/[number]/exe</i> &#x4F86;&#x57F7;&#x884C; [number]
+        &#x7A0B;&#x5E8F;&#x7684;&#x526F;&#x672C;.</p>
+    <p class="Pp">&#x5E36; -inum &#x9078;&#x9805;&#x7684; <a href='/man/find.1.zh_TW'>find(1)</a>
+        &#x547D;&#x4EE4;&#x53EF;&#x4EE5;&#x5B9A;&#x4F4D;&#x8A72;&#x6A94;&#x6848;.</p>
+  </dd>
+  <dt id="fd"><a class="permalink" href="#fd"><i>fd</i></a></dt>
+  <dd>&#x7A0B;&#x5E8F;&#x6240;&#x958B;&#x555F;&#x7684;&#x6BCF;&#x500B;&#x6A94;&#x6848;&#x90FD;&#x6709;&#x4E00;&#x500B;&#x7B26;&#x865F;&#x9023;&#x7DDA;&#x5728;&#x8A72;&#x5B50;&#x76EE;
+      &#x9304;&#x88E1;,
+      &#x4EE5;&#x6A94;&#x6848;&#x63CF;&#x8FF0;&#x7B26;&#x547D;&#x540D;,
+      &#x9019;&#x500B;&#x540D;&#x5B57;&#x5BE6;&#x969B;&#x4E0A;&#x662F;&#x6307;&#x5411;
+      &#x771F;&#x6B63;&#x7684;&#x6A94;&#x6848;&#x7684;&#x7B26;&#x865F;&#x9023;&#x7DDA;&#xFF0C;&#xFF08;&#x548C;
+      exe &#x8A18;&#x9304;&#x4E00;&#x6A23;&#xFF09;&#xFF0E; &#x4F8B;&#x5982;, 0
+      &#x662F;&#x6A19;&#x6E96;&#x8F38;&#x5165;, 1
+      &#x662F;&#x6A19;&#x6E96;&#x8F38;&#x51FA;, 2
+      &#x662F;&#x6A19;&#x6E96;&#x932F;&#x8AA4;, &#x7B49;&#x7B49;.
+    <p class="Pp">&#x7A0B;&#x5F0F;&#x6709;&#x6642;&#x53EF;&#x80FD;&#x60F3;&#x8981;&#x8B80;&#x53D6;&#x4E00;&#x500B;&#x6A94;&#x6848;&#x537B;&#x4E0D;&#x60F3;&#x8981;&#x6A19;&#x6E96;&#x8F38;&#x5165;&#xFF0C;
+        &#x6216;&#x8005;&#x60F3;&#x5BEB;&#x5230;&#x4E00;&#x500B;&#x6A94;&#x6848;&#x537B;&#x4E0D;&#x60F3;&#x5C07;&#x8F38;&#x51FA;&#x9001;&#x5230;&#x6A19;&#x6E96;&#x8F38;&#x51FA;&#x53BB;&#xFF0C;
+        &#x90A3;&#x9EBC;&#x5C31;&#x53EF;&#x4EE5;&#x5F88;&#x6709;&#x6548;&#x5730;&#x7528;&#x5982;&#x4E0B;&#x7684;&#x8FA6;&#x6CD5;&#x9A19;&#x904E;(&#x5047;&#x5B9A;
+        -i &#x662F;&#x8F38;&#x5165; &#x6A94;&#x6848;&#x7684;&#x6A19;&#x8A8C;,
+        &#x800C; -o
+        &#x662F;&#x8F38;&#x51FA;&#x6A94;&#x6848;&#x7684;&#x6A19;&#x8A8C;):
+      <br/>
+    </p>
+    <pre><span class="Li">foobar -i /proc/self/fd/0 -o /proc/self/fd/1 ...</span></pre>
+    <br/>
+    &#x9019;&#x6A23;&#x5C31;&#x662F;&#x4E00;&#x500B;&#x80FD;&#x904B;&#x8F49;&#x7684;&#x904E;&#x6FFE;&#x5668;.
+      &#x8ACB;&#x6CE8;&#x610F;&#x8A72;&#x65B9;&#x6CD5;&#x4E0D;&#x80FD;
+      &#x7528;&#x4F86;&#x5728;&#x6A94;&#x6848;&#x88E1;&#x641C;&#x5C0B;,
+      &#x9019;&#x662F;&#x56E0;&#x70BA; fd
+      &#x76EE;&#x9304;&#x88E1;&#x7684;&#x6A94;&#x6848;&#x662F;
+      &#x4E0D;&#x53EF;&#x641C;&#x5C0B;&#x7684;.
+    <p class="Pp">&#x5728; UNIX &#x985E;&#x7684;&#x7CFB;&#x7D71;&#x4E0B;,
+        /proc/self/fd/N &#x57FA;&#x672C;&#x4E0A;&#x5C31;&#x8207; /dev/fd/N
+        &#x76F8;&#x540C;. &#x5BE6;&#x969B;&#x4E0A;,
+        &#x5927;&#x591A;&#x6578;&#x7684; Linux MAKEDEV
+        &#x6307;&#x4EE4;&#x78BC;&#x90FD;&#x5C07; /dev/fd
+        &#x7B26;&#x865F;&#x9023;&#x7DDA;&#x5230; [..]/proc/self/fd &#x4E0A;.</p>
+  </dd>
+  <dt id="maps"><a class="permalink" href="#maps"><i>maps</i></a></dt>
+  <dd>&#x8A72;&#x6A94;&#x6848;&#x5305;&#x542B;&#x7576;&#x524D;&#x7684;&#x6620;&#x8C61;&#x8A18;&#x61B6;&#x9AD4;&#x5340;&#x53CA;&#x4ED6;&#x5011;&#x7684;&#x8A2A;&#x554F;&#x8A31;&#x53EF;.
+    <p class="Pp">&#x683C;&#x5F0F;&#x5982;&#x4E0B;:</p>
+    <pre>address           perms offset   dev   inode
+00000000-0002f000 r-x-- 00000400 03:03 1401
+0002f000-00032000 rwx-p 0002f400 03:03 1401
+00032000-0005b000 rwx-p 00000000 00:00 0
+60000000-60098000 rwx-p 00000400 03:03 215
+60098000-600c7000 rwx-p 00000000 00:00 0
+bfffa000-c0000000 rwx-p 00000000 00:00 0
+</pre>
+    <br/>
+  </dd>
+</dl>
+<p class="Pp">address
+    &#x662F;&#x7A0B;&#x5E8F;&#x6240;&#x4F54;&#x64DA;&#x7684;&#x5730;&#x5740;&#x7A7A;&#x9593;,
+    perms &#x662F;&#x8A31;&#x53EF;&#x6B0A;&#x96C6;:</p>
+<pre>r = read
+w = write
+x = execute
+s = shared
+p = private (copy on write)</pre>
+<p class="Pp">offset
+    &#x662F;&#x6A94;&#x6848;&#x6216;&#x8005;&#x5225;&#x7684;&#x4EC0;&#x9EBC;&#x7684;&#x504F;&#x79FB;&#x91CF;,
+    dev &#x662F;&#x88DD;&#x7F6E;&#x865F;(&#x4E3B;&#x8A2D;
+    &#x5099;&#x865F;:&#x5F9E;&#x88DD;&#x7F6E;&#x865F;), &#x800C; inode
+    &#x5247;&#x662F;&#x88DD;&#x7F6E;&#x7684;&#x7BC0;&#x9EDE;&#x865F;. 0
+    &#x8868;&#x660E;&#x6C92;&#x6709;
+    &#x7BC0;&#x9EDE;&#x8207;&#x8A18;&#x61B6;&#x9AD4;&#x76F8;&#x5C0D;&#x61C9;,
+    &#x5C31;&#x8C61; bss &#x7684;&#x60C5;&#x5F62;.</p>
+<p class="Pp">&#x5728; Linux 2.2
+    &#x4E0B;&#x9084;&#x589E;&#x52A0;&#x4E86;&#x4E00;&#x500B;&#x57DF;&#x7D66;&#x53EF;&#x7528;&#x7684;&#x8DEF;&#x5F91;&#x540D;.</p>
+<dl class="Bl-tag">
+  <dt id="mem"><a class="permalink" href="#mem"><i>mem</i></a></dt>
+  <dd>&#x8A72;&#x6A94;&#x6848;&#x4E26;&#x4E0D;&#x662F; mem (1:1)
+      &#x88DD;&#x7F6E;,
+      &#x5118;&#x7BA1;&#x5B83;&#x5011;&#x6709;&#x76F8;&#x540C;&#x7684;&#x88DD;&#x7F6E;&#x865F;.
+      /dev/mem
+      &#x88DD;&#x7F6E;&#x662F;&#x505A;&#x4EFB;&#x4F55;&#x5730;&#x5740;&#x8F49;&#x63DB;&#x4E4B;&#x524D;&#x7684;&#x5BE6;&#x9AD4;&#x8A18;&#x61B6;&#x9AD4;,
+      &#x800C;&#x9019;&#x88E1;&#x7684; mem
+      &#x6A94;&#x6848;&#x662F;&#x8A2A;&#x554F;&#x5B83;&#x7684;&#x7A0B;&#x5E8F;&#x7684;&#x8A18;&#x61B6;&#x9AD4;.&#x76EE;&#x524D;&#x9019;&#x500B;
+      mem &#x9084;&#x4E0D;&#x80FD; <a href='/man/mmap.2.zh_TW'>mmap(2)</a>
+      &#xFF08;&#x8A18;&#x61B6;&#x9AD4;&#x5C0D;&#x6620;&#xFF09;&#x51FA;&#x53BB;&#xFF0C;&#x800C;&#x4E14;&#x53EF;&#x80FD;&#x4E00;&#x76F4;&#x8981;&#x7B49;&#x5230;&#x6838;&#x5FC3;&#x4E2D;&#x589E;&#x52A0;&#x4E86;&#x4E00;&#x500B;&#x901A;&#x7528;&#x7684;
+      <a href='/man/mmap.2.zh_TW'>mmap(2)</a> &#x4EE5;&#x5F8C;&#x624D;&#x80FD;&#x5BE6;&#x73FE;&#xFF0E;
+      (&#x4E5F;&#x8A31;&#x5728;&#x4F60;&#x8B80;&#x672C;&#x624B;&#x518A;&#x9801;&#x6642;&#x9019;&#x4E00;&#x5207;&#x5DF2;&#x7D93;&#x767C;&#x751F;&#x4E86;)</dd>
+  <dt id="mmap"><a class="permalink" href="#mmap"><i>mmap</i></a></dt>
+  <dd><a href='/man/mmap.2.zh_TW'>mmap(2)</a> &#x505A;&#x7684; maps
+      &#x5C0D;&#x6620;&#x76EE;&#x9304;&#xFF0C;&#x662F;&#x548C; exe, fd/*
+      &#x7B49;&#x985E;&#x4F3C;&#x7684;&#x7B26;&#x865F;&#x9023;&#x7DDA;.
+      &#x8ACB;&#x6CE8;&#x610F; maps &#x5305;&#x542B;&#x4E86;&#x6BD4;
+      /proc/*/mmap &#x66F4;&#x591A;&#x7684;&#x8CC7;&#x8A0A;,
+      &#x6240;&#x4EE5;&#x61C9;&#x8A72;&#x5EE2;&#x68C4; mmap.
+    <p class="Pp">&quot;;0&quot;; &#x901A;&#x5E38;&#x6307; libc.so.4.</p>
+    <p class="Pp">&#x5728; linux &#x6838;&#x5FC3; 1.1.40 &#x88E1;,
+        <i>/proc/*/mmap</i> &#x88AB;&#x53D6;&#x6D88;&#x4E86;.
+        (&#x73FE;&#x5728;&#x662F; <b>&#x771F;&#x7684;</b>
+        &#x5EE2;&#x68C4;&#x4E0D;&#x7528;&#x4E86;!)</p>
+  </dd>
+  <dt id="root"><a class="permalink" href="#root"><i>root</i></a></dt>
+  <dd>&#x4F9D;&#x9760;&#x7CFB;&#x7D71;&#x547C;&#x53EB; <i>chroot(2),</i> unix
+      &#x548C; linux &#x53EF;&#x4EE5;&#x8B93;
+      &#x6BCF;&#x500B;&#x7A0B;&#x5E8F;&#x6709;&#x5404;&#x81EA;&#x7684;&#x6A94;&#x6848;&#x7CFB;&#x7D71;&#x6839;&#x76EE;&#x9304;.
+      &#x7531; <a href='/man/chroot.2.zh_TW'>chroot(2)</a>
+      &#x7CFB;&#x7D71;&#x547C;&#x53EB;&#x8A2D;&#x5B9A;&#xFF0E;
+      &#x6839;&#x6307;&#x5411;&#x6A94;&#x6848;&#x7CFB;&#x7D71;&#x7684;&#x6839;&#xFF0C;&#x6027;&#x8CEA;&#x5C31;&#x8C61;
+      exe, fd/* &#x7B49;&#x4E00;&#x6A23;&#xFF0E;</dd>
+  <dt id="stat"><a class="permalink" href="#stat"><i>stat</i></a></dt>
+  <dd>&#x7A0B;&#x5E8F;&#x72C0;&#x614B;&#x8CC7;&#x8A0A;, &#x88AB;&#x547D;&#x4EE4;
+      <a href='/man/ps.1.zh_TW'>ps(1)</a> &#x4F7F;&#x7528;.
+    <p class="Pp">&#x73FE;&#x5C07;&#x8A72;&#x6A94;&#x6848;&#x88E1;&#x5404;&#x57DF;,
+        &#x4EE5;&#x53CA;&#x4ED6;&#x5011;&#x7684; <a href='/man/scanf.3.zh_TW'>scanf(3)</a>
+        &#x683C;&#x5F0F;&#x8AAA;&#x660E;&#x7B26;,
+        &#x6309;&#x9806;&#x5E8F;&#x5206;&#x8FF0;&#x5982;&#x4E0B;:</p>
+  </dd>
+</dl>
+<div class="Bd-indent">
+<dl class="Bl-tag">
+  <dt id="pid"><a class="permalink" href="#pid"><i>pid</i> %d</a></dt>
+  <dd>&#x7A0B;&#x5E8F;&#x6A19;&#x8B58;&#xFF0E;</dd>
+  <dt id="comm"><a class="permalink" href="#comm"><i>comm</i> %s</a></dt>
+  <dd>&#x57F7;&#x884C;&#x6A94;&#x7684;&#x6A94;&#x540D;,
+      &#x5305;&#x62EC;&#x8DEF;&#x5F91;.
+      &#x8A72;&#x6A94;&#x6848;&#x662F;&#x5426;&#x53EF;
+      &#x898B;&#x53D6;&#x6C7A;&#x65BC;&#x8A72;&#x6A94;&#x6848;&#x662F;&#x5426;&#x5DF2;&#x88AB;&#x4EA4;&#x63DB;&#x51FA;&#x8A18;&#x61B6;&#x9AD4;.</dd>
+  <dt id="state"><a class="permalink" href="#state"><i>state</i> %c</a></dt>
+  <dd>&quot;;RSDZT&quot;; &#x4E2D;&#x7684;&#x4E00;&#x500B;, R
+      &#x662F;&#x6B63;&#x5728;&#x57F7;&#x884C;, S &#x662F;
+      &#x5728;&#x53EF;&#x4E2D;&#x65B7;&#x7684;&#x5C31;&#x7DD2;&#x614B;&#x4E2D;&#x7761;&#x7720;,
+      D &#x662F;&#x5728;&#x4E0D;&#x53EF;&#x4E2D;
+      &#x65B7;&#x7684;&#x7B49;&#x5F85;&#x6216;&#x4EA4;&#x63DB;&#x614B;&#x4E2D;&#x7761;&#x7720;,
+      Z &#x662F;&#x50F5;&#x6B7B;, T
+      &#x662F;&#x88AB;&#x8DDF;&#x8E64;&#x6216;&#x88AB;&#x505C;&#x6B62;(&#x7531;&#x65BC;&#x6536;&#x5230;&#x8A0A;&#x865F;).</dd>
+  <dt id="ppid"><a class="permalink" href="#ppid"><i>ppid</i> %d</a></dt>
+  <dd>&#x7236;&#x7A0B;&#x5E8F; PID.</dd>
+  <dt id="pgrp"><a class="permalink" href="#pgrp"><i>pgrp</i> %d</a></dt>
+  <dd>&#x7A0B;&#x5E8F;&#x7684;&#x7A0B;&#x5E8F;&#x7D44; ID.</dd>
+  <dt id="session"><a class="permalink" href="#session"><i>session</i>
+    %d</a></dt>
+  <dd>&#x7A0B;&#x5E8F;&#x7684;&#x6703;&#x8A71; ID.</dd>
+  <dt id="tty"><a class="permalink" href="#tty"><i>tty</i> %d</a></dt>
+  <dd>&#x7A0B;&#x5E8F;&#x6240;&#x4F7F;&#x7528;&#x7D42;&#x7AEF;.</dd>
+  <dt id="tpgid"><a class="permalink" href="#tpgid"><i>tpgid</i> %d</a></dt>
+  <dd>&#x7576;&#x524D;&#x64C1;&#x6709;&#x8A72;&#x7A0B;&#x5E8F;&#x6240;&#x9023;&#x7DDA;&#x7D42;&#x7AEF;&#x7684;&#x7A0B;&#x5E8F;&#x6240;&#x5728;&#x7684;&#x7A0B;&#x5E8F;
+      &#x7D44; ID.</dd>
+  <dt id="flags"><a class="permalink" href="#flags"><i>flags</i> %u</a></dt>
+  <dd>&#x7A0B;&#x5E8F;&#x6A19;&#x8A8C;.
+      &#x76EE;&#x524D;&#x6BCF;&#x500B;&#x6A19;&#x8A8C;&#x90FD;&#x8A2D;&#x4E86;&#x6578;&#x5B78;&#x4F4D;,
+      &#x6240;&#x4EE5;&#x8F38;&#x51FA;&#x88E1;&#x5C31;&#x4E0D;&#x5305;&#x62EC;&#x8A72;&#x4F4D;.
+      crt0.s &#x6AA2;&#x67E5;&#x6578;&#x5B78;&#x6A21;&#x64EC;
+      &#x9019;&#x53EF;&#x80FD;&#x662F;&#x4E00;&#x500B;&#x81ED;&#x87F2;,
+      &#x56E0;&#x70BA;&#x4E0D;&#x662F;&#x6BCF;&#x500B;&#x9032;
+      &#x7A0B;&#x90FD;&#x662F;&#x7528; c
+      &#x7DE8;&#x8B6F;&#x7684;&#x7A0B;&#x5F0F;.
+      &#x6578;&#x5B78;&#x4F4D;&#x61C9;&#x8A72;&#x662F;&#x5341;
+      &#x9032;&#x4F4D;&#x5236;&#x7684; 4,
+      &#x800C;&#x8DDF;&#x8E64;&#x4F4D;&#x61C9;&#x8A72;&#x662F;&#x5341;&#x9032;&#x4F4D;&#x5236;&#x7684;
+      10.</dd>
+  <dt id="minflt"><a class="permalink" href="#minflt"><i>minflt</i> %u</a></dt>
+  <dd>&#x7A0B;&#x5E8F;&#x6240;&#x5C0E;&#x81F4;&#x7684;&#x5C0F;&#x932F;&#x8AA4;&#xFF08;minor
+      faults&#xFF09;&#x6578;&#x76EE;, &#x9019;&#x6A23;&#x7684;
+      &#x5C0F;&#x932F;&#x8AA4;&#xFF08;minor
+      faults&#xFF09;&#x4E0D;&#x9700;&#x8981;&#x5F9E;&#x78C1;&#x789F;&#x91CD;&#x65B0;&#x8F09;&#x5165;&#x4E00;&#x500B;
+      &#x8A18;&#x61B6;&#x9AD4;&#x9801;.</dd>
+  <dt id="cminflt"><a class="permalink" href="#cminflt"><i>cminflt</i>
+    %u</a></dt>
+  <dd>&#x7A0B;&#x5E8F;&#x53CA;&#x5176;&#x5B50;&#x7A0B;&#x5E8F;&#x6240;&#x5C0E;&#x81F4;&#x7684;&#x5C0F;&#x932F;&#x8AA4;&#xFF08;minor
+      faults&#xFF09;&#x6578;&#x76EE;.</dd>
+  <dt id="majflt"><a class="permalink" href="#majflt"><i>majflt</i> %u</a></dt>
+  <dd>&#x7A0B;&#x5E8F;&#x6240;&#x5C0E;&#x81F4;&#x7684;&#x5927;&#x932F;&#x8AA4;&#xFF08;major
+      faults&#xFF09;&#x6578;&#x76EE;, &#x9019;&#x6A23;&#x7684;
+      &#x5927;&#x932F;&#x8AA4;&#xFF08;major
+      faults&#xFF09;&#x9700;&#x8981;&#x91CD;&#x65B0;&#x8F09;&#x5165;&#x8A18;&#x61B6;&#x9AD4;&#x9801;.</dd>
+  <dt id="cmajflt"><a class="permalink" href="#cmajflt"><i>cmajflt</i>
+    %u</a></dt>
+  <dd>&#x7A0B;&#x5E8F;&#x53CA;&#x5176;&#x5B50;&#x7A0B;&#x5E8F;&#x6240;&#x5C0E;&#x81F4;&#x7684;&#x5927;&#x932F;&#x8AA4;&#xFF08;major
+      faults&#xFF09;&#x6578;&#x76EE;.</dd>
+  <dt id="utime"><a class="permalink" href="#utime"><i>utime</i> %d</a></dt>
+  <dd>&#x7A0B;&#x5E8F;&#x88AB;&#x6392;&#x7A0B;&#x9032;&#x4F7F;&#x7528;&#x8005;&#x614B;&#x7684;&#x6642;&#x9593;(&#x4EE5;
+      jiffy &#x70BA;&#x55AE; &#x4F4D;, 1 jiffy=1/100
+      &#x79D2;&#xFF0C;&#x53E6;&#x5916;&#x4E0D;&#x540C;&#x786C;&#x9AD4;&#x9AD4;&#x7CFB;&#x7565;&#x6709;&#x4E0D;&#x540C;).</dd>
+  <dt id="stime"><a class="permalink" href="#stime"><i>stime</i> %d</a></dt>
+  <dd>&#x7A0B;&#x5E8F;&#x88AB;&#x6392;&#x7A0B;&#x9032;&#x6838;&#x5FC3;&#x614B;&#x7684;&#x6642;&#x9593;,
+      &#x4EE5; jiffy &#x70BA; &#x55AE;&#x4F4D;.</dd>
+  <dt id="cutime"><a class="permalink" href="#cutime"><i>cutime</i> %d</a></dt>
+  <dd>&#x7A0B;&#x5E8F;&#x53CA;&#x5176;&#x5B50;&#x7A0B;&#x5E8F;&#x88AB;&#x6392;&#x7A0B;&#x9032;&#x4F7F;&#x7528;&#x8005;&#x614B;&#x7684;&#x6642;&#x9593;,
+      &#x4EE5; jiffy &#x70BA;&#x55AE;&#x4F4D;.</dd>
+  <dt id="cstime"><a class="permalink" href="#cstime"><i>cstime</i> %d</a></dt>
+  <dd>&#x7A0B;&#x5E8F;&#x53CA;&#x5176;&#x5B50;&#x7A0B;&#x5E8F;&#x88AB;&#x6392;&#x7A0B;&#x9032;&#x6838;&#x5FC3;&#x614B;&#x7684;&#x6642;&#x9593;,
+      &#x4EE5; jiffy &#x70BA;&#x55AE;&#x4F4D;.</dd>
+  <dt id="counter"><a class="permalink" href="#counter"><i>counter</i>
+    %d</a></dt>
+  <dd>&#x5982;&#x679C;&#x7A0B;&#x5E8F;&#x4E0D;&#x662F;&#x7576;&#x524D;&#x6B63;&#x5728;&#x57F7;&#x884C;&#x7684;&#x7A0B;&#x5E8F;,
+      &#x5C31;&#x662F;
+      &#x7A0B;&#x5E8F;&#x5728;&#x4E0B;&#x500B;&#x6642;&#x9593;&#x7247;&#x7576;&#x524D;&#x53EF;&#x4EE5;&#x64C1;&#x6709;&#x7684;&#x6700;&#x5927;&#x6642;
+      &#x9593;, &#x4EE5; jiffy &#x70BA;&#x55AE;&#x4F4D;.
+      &#x5982;&#x679C;&#x7A0B;&#x5E8F;&#x662F;&#x7576;&#x524D;&#x6B63;
+      &#x5728;&#x57F7;&#x884C;&#x7684;&#x7A0B;&#x5E8F;,
+      &#x5C31;&#x662F;&#x7576;&#x524D;&#x6642;&#x9593;&#x7247;&#x4E2D;&#x6240;&#x5269;&#x4E0B;
+      jiffy &#x6578;&#x76EE;.</dd>
+  <dt id="priority"><a class="permalink" href="#priority"><i>priority</i>
+    %d</a></dt>
+  <dd>&#x6A19;&#x6E96;&#x512A;&#x5148;&#x6578;&#x53EA;&#x518D;&#x52A0;&#x4E0A;
+      15, &#x5728;&#x6838;&#x5FC3;&#x88E1;&#x8A72;&#x503C;&#x7E3D;
+      &#x662F;&#x6B63;&#x7684;.</dd>
+  <dt id="timeout"><a class="permalink" href="#timeout"><i>timeout</i>
+    %u</a></dt>
+  <dd>&#x7576;&#x524D;&#x81F3;&#x7A0B;&#x5E8F;&#x7684;&#x4E0B;&#x4E00;&#x6B21;&#x9593;&#x6B47;&#x6642;&#x9593;,
+      &#x4EE5; jiffy &#x70BA;&#x55AE;&#x4F4D;.</dd>
+  <dt id="itrealvalue"><a class="permalink" href="#itrealvalue"><i>itrealvalue</i>
+    %u</a></dt>
+  <dd>&#x7531;&#x65BC;&#x8A08;&#x6642;&#x9593;&#x9694;&#x5C0E;&#x81F4;&#x7684;&#x4E0B;&#x4E00;&#x500B;
+      SIGALRM
+      &#x50B3;&#x9001;&#x7A0B;&#x5E8F;&#x7684;&#x6642;&#x5EF6;&#xFF0C;&#x4EE5;
+      jiffy &#x70BA;&#x55AE;&#x4F4D;.</dd>
+  <dt id="starttime"><a class="permalink" href="#starttime"><i>starttime</i>
+    %d</a></dt>
+  <dd>&#x7A0B;&#x5E8F;&#x81EA;&#x7CFB;&#x7D71;&#x555F;&#x52D5;&#x4EE5;&#x4F86;&#x7684;&#x958B;&#x59CB;&#x6642;&#x9593;,
+      &#x4EE5; jiffy &#x70BA;&#x55AE;&#x4F4D;.</dd>
+  <dt id="vsize"><a class="permalink" href="#vsize"><i>vsize</i> %u</a></dt>
+  <dd>&#x865B;&#x64EC;&#x8A18;&#x61B6;&#x9AD4;&#x5927;&#x5C0F;.</dd>
+  <dt id="rss"><a class="permalink" href="#rss"><i>rss</i> %u</a></dt>
+  <dd>Resident Set Size&#xFF08;&#x99D0;&#x7559;&#x5927;&#x5C0F;&#xFF09;:
+      &#x7A0B;&#x5E8F;&#x6240;&#x4F54;&#x7528;&#x7684;&#x771F;&#x5BE6;&#x5167;
+      &#x5B58;&#x5927;&#x5C0F;, &#x4EE5;&#x9801;&#x70BA;&#x55AE;&#x4F4D;,
+      &#x70BA;&#x4FBF;&#x65BC;&#x7BA1;&#x7406;&#x800C;&#x6E1B;&#x53BB; &#x4E86;
+      3. rss &#x53EA;&#x5305;&#x62EC;&#x6B63;&#x6587;,
+      &#x8CC7;&#x6599;&#x4EE5;&#x53CA;&#x5806;&#x758A;&#x7684;&#x7A7A;&#x9593;,
+      &#x4F46;&#x4E0D;&#x5305;&#x62EC;&#x5C1A;&#x672A;&#x8981;&#x6C42;&#x88DD;&#x5165;&#x8A18;&#x61B6;&#x9AD4;&#x7684;&#x6216;&#x5DF2;&#x88AB;&#x4EA4;&#x63DB;&#x51FA;&#x53BB;&#x7684;.</dd>
+  <dt id="rlim"><a class="permalink" href="#rlim"><i>rlim</i> %u</a></dt>
+  <dd>&#x7576;&#x524D;&#x7A0B;&#x5E8F;&#x7684; rss &#x9650;&#x5236;,
+      &#x4EE5;&#x4F4D;&#x5143;&#x7D44;&#x70BA;&#x55AE;&#x4F4D;, &#x901A;
+      &#x5E38;&#x70BA; 2,147,483,647.</dd>
+  <dt id="startcode"><a class="permalink" href="#startcode"><i>startcode</i>
+    %u</a></dt>
+  <dd>&#x6B63;&#x6587;&#x90E8;&#x5206;&#x5730;&#x5740;&#x4E0B;&#x9650;.</dd>
+  <dt id="endcode"><a class="permalink" href="#endcode"><i>endcode</i>
+    %u</a></dt>
+  <dd>&#x6B63;&#x6587;&#x90E8;&#x5206;&#x5730;&#x5740;&#x4E0A;&#x9650;.</dd>
+  <dt id="startstack"><a class="permalink" href="#startstack"><i>startstack</i>
+    %u</a></dt>
+  <dd>&#x5806;&#x758A;&#x958B;&#x59CB;&#x5730;&#x5740;.</dd>
+  <dt id="kstkesp"><a class="permalink" href="#kstkesp"><i>kstkesp</i>
+    %u</a></dt>
+  <dd>esp(32 &#x4F4D;&#x5806;&#x758A;&#x6307;&#x6A19;)
+      &#x7684;&#x7576;&#x524D;&#x503C;, &#x8207;&#x5728;&#x7A0B;&#x5E8F;
+      &#x7684;&#x6838;&#x5FC3;&#x5806;&#x758A;&#x9801;&#x5F97;&#x5230;&#x7684;&#x4E00;&#x81F4;.</dd>
+  <dt id="kstkeip"><a class="permalink" href="#kstkeip"><i>kstkeip</i>
+    %u</a></dt>
+  <dd>EIP(32
+      &#x4F4D;&#x6307;&#x4EE4;&#x6307;&#x6A19;)&#x7684;&#x7576;&#x524D;&#x503C;.</dd>
+  <dt id="signal"><a class="permalink" href="#signal"><i>signal</i> %d</a></dt>
+  <dd>&#x5F85;&#x8655;&#x7406;&#x8A0A;&#x865F;&#x7684;
+      bitmap(&#x901A;&#x5E38;&#x70BA; 0).</dd>
+  <dt id="blocked"><a class="permalink" href="#blocked"><i>blocked</i>
+    %d</a></dt>
+  <dd>&#x88AB;&#x963B;&#x585E;&#x8A0A;&#x865F;&#x7684; bitmap(&#x5C0D; shell
+      &#x901A;&#x5E38;&#x662F; 0, 2)&#xFF0E;</dd>
+  <dt id="sigignore"><a class="permalink" href="#sigignore"><i>sigignore</i>
+    %d</a></dt>
+  <dd>&#x88AB;&#x5FFD;&#x7565;&#x8A0A;&#x865F;&#x7684; bitmap.</dd>
+  <dt id="sigcatch"><a class="permalink" href="#sigcatch"><i>sigcatch</i>
+    %d</a></dt>
+  <dd>&#x88AB;&#x4FD8;&#x7372;&#x8A0A;&#x865F;&#x7684; bitmap.</dd>
+  <dt id="wchan"><a class="permalink" href="#wchan"><i>wchan</i> %u</a></dt>
+  <dd>&#x7A0B;&#x5E8F;&#x5728;&#x5176;&#x4E2D;&#x7B49;&#x5F85;&#x7684;&#x901A;&#x9053;,
+      &#x5BE6;&#x969B;&#x662F;&#x4E00;&#x500B;&#x7CFB;&#x7D71;
+      &#x547C;&#x53EB;&#x7684;&#x5730;&#x5740;.
+      &#x5982;&#x679C;&#x4F60;&#x9700;&#x8981;&#x6587;&#x672C;&#x683C;&#x5F0F;&#x7684;,
+      &#x4E5F;
+      &#x53EF;&#x4EE5;&#x5728;&#x540D;&#x5B57;&#x5217;&#x8868;&#x4E2D;&#x627E;&#x5230;.
+      (&#x5982;&#x679C;&#x6709;&#x6700;&#x65B0;&#x7248;&#x672C;&#x7684;
+      /etc/psdatabase, &#x4F60; &#x53EF;&#x4EE5;&#x5728; <i>ps -l</i>
+      &#x7684;&#x7D50;&#x679C;&#x4E2D;&#x7684; WCHAN
+    &#x57DF;&#x770B;&#x5230;)</dd>
+</dl>
+</div>
+</div>
+<dl class="Bl-tag">
+  <dt id="cpuinfo"><a class="permalink" href="#cpuinfo"><i>cpuinfo</i></a></dt>
+  <dd>&#x5132;&#x5B58;&#x4E86;CPU
+      &#x4EE5;&#x53CA;&#x9AD4;&#x7CFB;&#x67B6;&#x69CB;&#x4F9D;&#x8CF4;&#x689D;&#x76EE;&#x7684;&#x5217;&#x8868;.
+      &#x5C0D;&#x65BC;&#x4E0D;&#x540C;&#x7684;&#x7CFB;
+      &#x7D71;&#x67B6;&#x69CB;&#x6709;&#x4E0D;&#x540C;&#x7684;&#x5217;&#x8868;,
+      &#x5171;&#x6709;&#x7684;&#x5169;&#x9805;&#x662F; <i>cpu</i> &#x548C;
+      <i>BogoMIPS</i>, <i>cpu</i>
+      &#x53EF;&#x80FD;&#x662F;&#x7576;&#x524D;&#x5728;&#x7528;&#x7684; CPU,
+      &#x800C; <i>BogoMIPS</i>
+      &#x5247;&#x662F;&#x6838;&#x5FC3;&#x521D;&#x59CB;&#x5316;&#x6642;&#x8A08;&#x7B97;&#x51FA;
+      &#x7684;&#x4E00;&#x500B;&#x7CFB;&#x7D71;&#x5E38;&#x6578;.</dd>
+  <dt id="devices"><a class="permalink" href="#devices"><i>devices</i></a></dt>
+  <dd>&#x4E3B;&#x88DD;&#x7F6E;&#x865F;&#x53CA;&#x88DD;&#x7F6E;&#x7D44;&#x7684;&#x5217;&#x8868;,
+      &#x6587;&#x672C;&#x683C;&#x5F0F;. MAKEDEV
+      &#x6307;&#x4EE4;&#x78BC;&#x4F7F;&#x7528;
+      &#x8A72;&#x6A94;&#x6848;&#x4F86;&#x7DAD;&#x6301;&#x6838;&#x5FC3;&#x7684;&#x4E00;&#x81F4;&#x6027;.</dd>
+  <dt id="dma"><a class="permalink" href="#dma"><i>dma</i></a></dt>
+  <dd>&#x4E00;&#x500B;&#x5217;&#x8868;,
+      &#x6307;&#x51FA;&#x6B63;&#x5728;&#x4F7F;&#x7528;&#x7684;<i>ISA</i> DMA
+      (&#x76F4;&#x63A5;&#x8A18;&#x61B6;&#x9AD4;&#x8A2A;&#x554F;)&#x901A;&#x9053;.</dd>
+  <dt id="filesystems"><a class="permalink" href="#filesystems"><i>filesystems</i></a></dt>
+  <dd>&#x4EE5;&#x6587;&#x672C;&#x683C;&#x5F0F;&#x5217;&#x51FA;&#x4E86;&#x88AB;&#x7DE8;&#x8B6F;&#x9032;&#x6838;&#x5FC3;&#x7684;&#x6A94;&#x6848;&#x7CFB;&#x7D71;.
+      &#x7576;&#x6C92;&#x6709;&#x7D66; <a href='/man/mount.1.zh_TW'>mount(1)</a>
+      &#x6307;&#x660E;&#x54EA;&#x500B;&#x6A94;&#x6848;&#x7CFB;&#x7D71;&#x7684;&#x6642;&#x5019;,
+      <a href='/man/mount.1.zh_TW'>mount(1)</a>
+      &#x5C31;&#x4F9D;&#x9760;&#x8A72;&#x6A94;&#x6848;&#x904D;&#x6B77;&#x4E0D;&#x540C;&#x7684;&#x6A94;&#x6848;&#x7CFB;&#x7D71;.</dd>
+  <dt id="interrupts"><a class="permalink" href="#interrupts"><i>interrupts</i></a></dt>
+  <dd>&#x8A72;&#x6A94;&#x6848;&#x4EE5; ASCII
+      &#x683C;&#x5F0F;&#x8A18;&#x9304;&#x4E86;&#xFF08;&#x81F3;&#x5C11;&#x662F;&#x5728;
+      i386 &#x9AD4;&#x7CFB;&#x4E0A;&#x7684;&#xFF09;&#x6BCF;&#x6B21; IRQ
+      &#x7684;&#x4E2D;&#x65B7;&#x6578;&#x76EE;.</dd>
+  <dt id="ioports"><a class="permalink" href="#ioports"><i>ioports</i></a></dt>
+  <dd>&#x8A72;&#x6A94;&#x6848;&#x5217;&#x51FA;&#x4E86;&#x7576;&#x524D;&#x5728;&#x7528;&#x7684;&#x5DF2;&#x8A3B;&#x518A;
+      I/O &#x57E0;&#x7BC4;&#x570D;.</dd>
+  <dt id="kcore"><a class="permalink" href="#kcore"><i>kcore</i></a></dt>
+  <dd>&#x8A72;&#x507D;&#x6A94;&#x6848;&#x4EE5; core
+      &#x6A94;&#x6848;&#x683C;&#x5F0F;&#x7D66;&#x51FA;&#x4E86;&#x7CFB;&#x7D71;&#x7684;&#x5BE6;&#x9AD4;&#x8A18;&#x61B6;&#x9AD4;&#x6620;&#x8C61;,
+      &#x518D;
+      &#x5229;&#x7528;&#x672A;&#x89E3;&#x9664;&#x5B89;&#x88DD;&#x7684;&#x6838;&#x5FC3;
+      (/usr/src/linux/tools/zSystem), &#x6211;
+      &#x5011;&#x5C31;&#x53EF;&#x4EE5;&#x7528; GDB
+      &#x67E5;&#x63A2;&#x7576;&#x524D;&#x6838;&#x5FC3;&#x7684;&#x4EFB;&#x610F;&#x8CC7;&#x6599;&#x7D50;&#x69CB;.
+    <p class="Pp">&#x8A72;&#x6A94;&#x6848;&#x7684;&#x7E3D;&#x9577;&#x5EA6;&#x662F;&#x5BE6;&#x9AD4;&#x8A18;&#x61B6;&#x9AD4;
+        (RAM) &#x7684;&#x5927;&#x5C0F;&#x518D;&#x52A0;&#x4E0A; 4KB.</p>
+  </dd>
+  <dt id="kmsg"><a class="permalink" href="#kmsg"><i>kmsg</i></a></dt>
+  <dd>&#x53EF;&#x4EE5;&#x7528;&#x8A72;&#x6A94;&#x6848;&#x53D6;&#x4EE3;&#x7CFB;&#x7D71;&#x547C;&#x53EB;
+      <a href='/man/syslog.2.zh_TW'>syslog(2)</a> &#x4F86;&#x8A18;&#x9304;&#x6838;&#x5FC3;&#x8CC7;&#x8A0A;.
+      &#x4F46;&#x662F;&#x8B80;&#x8A72;&#x6A94;&#x6848;&#x9700;&#x8981;&#x8D85;&#x7D1A;&#x4F7F;&#x7528;&#x8005;&#x8A31;&#x53EF;&#x6B0A;,
+      &#x4E26;&#x4E14;&#x4E00;&#x6B21;&#x53EA;&#x80FD;&#x6709;&#x4E00;&#x500B;&#x9032;
+      &#x7A0B;&#x53EF;&#x4EE5;&#x8B80;&#x8A72;&#x6A94;&#x6848;,
+      &#x56E0;&#x800C;&#x5982;&#x679C;&#x4E00;&#x500B;&#x4F7F;&#x7528;&#x4E86;
+      <a href='/man/syslog.2.zh_TW'>syslog(2)</a>
+      &#x7CFB;&#x7D71;&#x547C;&#x53EB;&#x529F;&#x80FD;&#x4F86;&#x8A18;&#x9304;&#x6838;&#x5FC3;&#x8CC7;&#x8A0A;&#x7684;&#x7CFB;&#x7D71;&#x65E5;&#x8A8C;&#x7A0B;&#x5E8F;&#x6B63;&#x5728;&#x57F7;&#x884C;&#x7684;&#x8A71;,
+      &#x5225;&#x7684;&#x7A0B;&#x5E8F;&#x5C31;&#x4E0D;&#x80FD;&#x518D;&#x53BB;&#x8B80;&#x8A72;&#x507D;&#x6A94;&#x6848;&#x4E86;.
+    <p class="Pp">&#x8A72;&#x6A94;&#x6848;&#x7684;&#x5167;&#x5BB9;&#x53EF;&#x4EE5;&#x7528;
+        <a href='/man/dmesg.8.zh_TW'>dmesg(8)</a> &#x4F86;&#x5BDF;&#x770B;.</p>
+  </dd>
+  <dt id="ksyms"><a class="permalink" href="#ksyms"><i>ksyms</i></a></dt>
+  <dd>&#x8A72;&#x6A94;&#x6848;&#x5132;&#x5B58;&#x4E86;&#x6838;&#x5FC3;&#x8F38;&#x51FA;&#x7684;&#x7B26;&#x865F;&#x5B9A;&#x7FA9;,
+      <i>modules(X)</i> &#x4F7F;&#x7528;&#x8A72;&#x6A94;&#x6848;
+      &#x52D5;&#x614B;&#x5730;&#x9023;&#x7DDA;&#x548C;&#x6346;&#x7D81;&#x53EF;&#x88DD;&#x8F09;&#x7684;&#x6A21;&#x7D44;.</dd>
+  <dt id="loadavg"><a class="permalink" href="#loadavg"><i>loadavg</i></a></dt>
+  <dd>&#x5E73;&#x5747;&#x8CA0;&#x8F09;&#x6578;&#x7D66;&#x51FA;&#x4E86;&#x5728;&#x904E;&#x53BB;&#x7684;
+      1, 5, 15
+      &#x5206;&#x9418;&#x88E1;&#x5728;&#x57F7;&#x884C;&#x4F47;&#x5217;&#x88E1;
+      &#x7684;&#x4EFB;&#x52D9;&#x6578;, &#x8207; <a href='/man/uptime.1.zh_TW'>uptime(1)</a>
+      &#x7B49;&#x547D;&#x4EE4;&#x7684;&#x7D50;&#x679C;&#x76F8;&#x540C;.</dd>
+  <dt id="locks"><a class="permalink" href="#locks"><i>locks</i></a></dt>
+  <dd>&#x9019;&#x500B;&#x6A94;&#x6848;&#x986F;&#x793A;&#x7576;&#x524D;&#x6A94;&#x6848;&#x9396;&#xFF0E;</dd>
+  <dt id="malloc"><a class="permalink" href="#malloc"><i>malloc</i></a></dt>
+  <dd>&#x53EA;&#x6709;&#x5728;&#x7DE8;&#x8B6F;&#x6642;&#x5B9A;&#x7FA9;&#x4E86;
+      CONFIGDEBUGMALLOC
+    &#x624D;&#x6703;&#x6709;&#x8A72;&#x6A94;&#x6848;&#xFF0E;</dd>
+  <dt id="meminfo"><a class="permalink" href="#meminfo"><i>meminfo</i></a></dt>
+  <dd><a href='/man/free.1.zh_TW'>free(1)</a>
+      &#x5229;&#x7528;&#x8A72;&#x6A94;&#x6848;&#x4F86;&#x7D66;&#x51FA;&#x7CFB;&#x7D71;&#x7E3D;&#x7684;&#x7A7A;&#x9592;&#x8A18;&#x61B6;&#x9AD4;&#x548C;&#x5DF2;&#x7528;&#x8A18;&#x61B6;&#x9AD4;
+      (&#x5305;&#x62EC;&#x5BE6;&#x9AD4;&#x8A18;&#x61B6;&#x9AD4;&#x548C;&#x4EA4;&#x63DB;&#x8A18;&#x61B6;&#x9AD4;),
+      &#x4EE5;&#x53CA;&#x6838;&#x5FC3;&#x6240;&#x4F7F;&#x7528;&#x7684;&#x5171;&#x4EAB;&#x8A18;&#x61B6;&#x9AD4;
+      &#x548C;&#x7DE9;&#x885D;&#x5340;.
+    <p class="Pp">&#x8A72;&#x6A94;&#x6848;&#x8207; <a href='/man/free.1.zh_TW'>free(1)</a>
+        &#x683C;&#x5F0F;&#x76F8;&#x540C;,
+        &#x4F46;&#x662F;&#x4EE5;&#x4F4D;&#x5143;&#x7D44;&#x70BA;&#x55AE;&#x4F4D;&#x800C;&#x4E0D;&#x662F;
+        KB.</p>
+  </dd>
+  <dt id="modules"><a class="permalink" href="#modules"><i>modules</i></a></dt>
+  <dd>&#x5217;&#x51FA;&#x4E86;&#x7CFB;&#x7D71;&#x5DF2;&#x8F09;&#x5165;&#x7684;&#x6A21;&#x7D44;,
+      &#x6587;&#x672C;&#x683C;&#x5F0F;.</dd>
+  <dt id="net"><a class="permalink" href="#net"><i>net</i></a></dt>
+  <dd>&#x8A72;&#x5B50;&#x76EE;&#x9304;&#x5305;&#x62EC;&#x591A;&#x500B; ASCII
+      &#x683C;&#x5F0F;&#x7684;&#x7DB2;&#x8DEF;&#x507D;&#x6A94;&#x6848;,
+      &#x63CF;&#x8FF0;&#x4E86;&#x7DB2;&#x8DEF;
+      &#x5C64;&#x7684;&#x90E8;&#x5206;&#x60C5;&#x6CC1;. &#x53EF;&#x4EE5;&#x7528;
+      cat &#x4F86;&#x5BDF;&#x770B;&#x9019;&#x4E9B;&#x6A94;&#x6848;,
+      &#x4F46;&#x6A19;&#x6E96;&#x7684; <a href='/man/netstat.8.zh_TW'>netstat(8)</a>
+      &#x547D;&#x4EE4;&#x7D44;&#x66F4;&#x6E05;&#x6670;&#x5730;&#x7D66;&#x51FA;&#x4E86;&#x9019;&#x4E9B;&#x6A94;&#x6848;&#x7684;&#x8CC7;&#x8A0A;.</dd>
+</dl>
+<div class="Bd-indent">
+<dl class="Bl-tag">
+  <dt id="arp"><a class="permalink" href="#arp"><i>arp</i></a></dt>
+  <dd>&#x8A72;&#x6A94;&#x6848;&#x4EE5; ASCII
+      &#x683C;&#x5F0F;&#x5132;&#x5B58;&#x4E86;&#x6838;&#x5FC3; ARP &#x8868;,
+      &#x7528;&#x65BC;&#x5730;&#x5740;&#x89E3;&#x6790;,
+      &#x5305;&#x62EC;&#x975C;&#x614B;&#x548C;&#x52D5;&#x614B; arp
+      &#x8CC7;&#x6599;. &#x6A94;&#x6848;&#x683C;&#x5F0F;&#x5982;&#x4E0B;:
+    <pre>IP address       HW type     Flags       HW address
+10.11.100.129    0x1         0x6         00:20:8A:00:0C:5A
+10.11.100.5      0x1         0x2         00:C0:EA:00:00:4E
+44.131.10.6      0x3         0x2         GW4PTS
+</pre>
+    <br/>
+  </dd>
+</dl>
+<p class="Pp">&#x5176;&#x4E2D; 'IP address' &#x662F;&#x6A5F;&#x5668;&#x7684;
+    IPv4 &#x5730;&#x5740;; 'HW type' &#x662F;&#x5730;&#x5740;&#x7684;&#x786C;
+    &#x4EF6;&#x578B;&#x5225;, &#x9075;&#x5FAA; RFC 826; flags &#x662F; ARP
+    &#x7D50;&#x69CB;&#x7684;&#x5167;&#x90E8;&#x6A19;&#x8A8C;, &#x5728;
+    /usr/include/linux/if_arp.h &#x4E2D;&#x5B9A;&#x7FA9;; 'HW address'
+    &#x662F;&#x8A72; IP
+    &#x5730;&#x5740;&#x7684;&#x7269;&#x7406;&#x5C64;&#x5C0D;&#x6620;(&#x5982;&#x679C;&#x77E5;&#x9053;&#x7684;&#x8A71;).</p>
+<dl class="Bl-tag">
+  <dt id="dev"><a class="permalink" href="#dev"><i>dev</i></a></dt>
+  <dd>&#x8A72;&#x507D;&#x6A94;&#x6848;&#x5305;&#x542B;&#x7DB2;&#x8DEF;&#x88DD;&#x7F6E;&#x72C0;&#x614B;&#x8CC7;&#x8A0A;,
+      &#x7D66;&#x51FA;&#x4E86;&#x50B3;&#x9001;&#x548C;&#x6536;
+      &#x5230;&#x7684;&#x5305;&#x7684;&#x6578;&#x76EE;,
+      &#x932F;&#x8AA4;&#x548C;&#x885D;&#x7A81;&#x7684;&#x6578;&#x76EE;,
+      &#x4EE5;&#x53CA;&#x5225;&#x7684;&#x4E00;&#x4E9B;
+      &#x57FA;&#x672C;&#x7D71;&#x8A08;&#x8CC7;&#x6599;. <a href='/man/ifconfig.8.zh_TW'>ifconfig(8)</a>
+      &#x5229;&#x7528;&#x4E86;&#x8A72;&#x6A94;&#x6848;&#x4F86;&#x5831;
+      &#x544A;&#x7DB2;&#x8DEF;&#x88DD;&#x7F6E;&#x72C0;&#x614B;.
+      &#x6A94;&#x6848;&#x683C;&#x5F0F;&#x5982;&#x4E0B;:
+    <pre>Inter-|   Receive                  |   Transmit
+face |packets errs drop fifo frame|packets errs drop fifo colls carrier
+lo:      0    0    0    0    0     2353    0    0    0     0    0
+eth0: 644324    1    0    0    1   563770    0    0    0   581    0
+</pre>
+  </dd>
+  <dt id="ipx"><a class="permalink" href="#ipx"><i>ipx</i></a></dt>
+  <dd>&#x7121;&#x8CC7;&#x8A0A;.</dd>
+  <dt id="ipx_route"><a class="permalink" href="#ipx_route"><i>ipx_route</i></a></dt>
+  <dd>&#x7121;&#x8CC7;&#x8A0A;.</dd>
+  <dt id="rarp"><a class="permalink" href="#rarp"><i>rarp</i></a></dt>
+  <dd>&#x8A72;&#x6A94;&#x6848;&#x5177;&#x6709;&#x548C; <i>arp</i>
+      &#x540C;&#x6A23;&#x7684;&#x683C;&#x5F0F;,
+      &#x5305;&#x542B;&#x7576;&#x524D;&#x7684;&#x9006;&#x5411;
+      &#x5730;&#x5740;&#x5C0D;&#x6620;&#x8CC7;&#x6599;. <a href='/man/rarp.8.zh_TW'>rarp(8)</a>
+      &#x5229;&#x7528;&#x9019;&#x4E9B;&#x8CC7;&#x6599;&#x4F86;&#x4F5C;&#x9006;&#x5411;
+      &#x5730;&#x5740;&#x67E5;&#x8A62;&#x670D;&#x52D9;. &#x53EA;&#x6709;&#x5C07;
+      RARP &#x914D;&#x7F6E;&#x9032;&#x6838;&#x5FC3;,
+      &#x8A72;&#x6A94;&#x6848;&#x624D; &#x5B58;&#x5728;.</dd>
+  <dt id="raw"><a class="permalink" href="#raw"><i>raw</i></a></dt>
+  <dd>&#x8A72;&#x6A94;&#x6848;&#x5132;&#x5B58;&#x4E86; RAW
+      &#x5957;&#x63A5;&#x5B57;&#x8868;,
+      &#x5927;&#x90E8;&#x5206;&#x8CC7;&#x8A0A;&#x9664;&#x7528;&#x65BC;&#x9664;&#x932F;&#x4EE5;&#x5916;&#x6C92;&#x6709;&#x4EC0;&#x9EBC;&#x7528;.
+      `sl'
+      &#x6307;&#x51FA;&#x4E86;&#x5957;&#x63A5;&#x5B57;&#x7684;&#x6838;&#x5FC3;&#x96DC;&#x6E4A;&#x69FD;&#x865F;;
+      'local address'
+      &#x5305;&#x62EC;&#x672C;&#x5730;&#x5730;&#x5740;&#x548C;&#x5354;&#x8B70;&#x865F;&#x5C0D;;
+      &quot;St&quot;
+      &#x662F;&#x5957;&#x63A5;&#x5B57;&#x7684;&#x5167;&#x90E8;&#x72C0;&#x614B;;
+      tx_queue &#x548C; rx_queue
+      &#x662F;&#x6838;&#x5FC3;&#x5132;&#x5B58;&#x5668;&#x4F7F;&#x7528;&#x610F;&#x7FA9;&#x4E0A;&#x7684;&#x8F38;&#x5165;&#x8F38;
+      &#x51FA;&#x8CC7;&#x6599;&#x4F47;&#x5217;; RAW
+      &#x6C92;&#x6709;&#x4F7F;&#x7528;&quot;tr&quot;,
+      &quot;tm-&amp;gt;when&quot; &#x548C; &quot;rexmits&quot;; uid
+      &#x662F;&#x5957;&#x63A5;&#x5B57;&#x5EFA;&#x7ACB;&#x8005;&#x7684;&#x6709;&#x6548;
+      uid.</dd>
+  <dt id="route"><a class="permalink" href="#route"><i>route</i></a></dt>
+  <dd>&#x6C92;&#x6709;&#x8CC7;&#x8A0A;,
+      &#x4F46;&#x662F;&#x770B;&#x4E0A;&#x53BB;&#x985E;&#x4F3C;&#x65BC;
+      <a href='/man/route.8.zh_TW'>route(8)</a></dd>
+  <dt id="snmp"><a class="permalink" href="#snmp"><i>snmp</i></a></dt>
+  <dd>&#x8A72;&#x6A94;&#x6848;&#x4EE5; ASCII
+      &#x683C;&#x5F0F;&#x5132;&#x5B58;&#x4E86; IP, ICMP, TCP &#x4EE5;&#x53CA;
+      UDP
+      &#x7BA1;&#x7406;&#x6240;&#x9700;&#x7684;&#x8CC7;&#x6599;&#x8CC7;&#x8A0A;,
+      &#x57FA;&#x65BC; snmp &#x5354;&#x8B70;. TCP mib (TCP
+      &#x7BA1;&#x7406;&#x8CC7;&#x6599;&#x5EAB;)&#x5C1A;&#x672A;&#x5B8C;&#x5584;,
+      &#x53EF;&#x80FD;&#x5728; 1.2.0 &#x6838;&#x5FC3;&#x80FD;&#x5920;
+      &#x5B8C;&#x6210;.</dd>
+  <dt id="tcp"><a class="permalink" href="#tcp"><i>tcp</i></a></dt>
+  <dd>&#x8A72;&#x6A94;&#x6848;&#x5132;&#x5B58;&#x4E86; TCP
+      &#x5957;&#x63A5;&#x5B57;&#x8868;,
+      &#x5927;&#x90E8;&#x5206;&#x8CC7;&#x8A0A;&#x9664;&#x7528;&#x65BC;&#x9664;&#x932F;&#x4EE5;&#x5916;&#x6C92;&#x6709;&#x4EC0;&#x9EBC;&#x7528;.
+      &quot;sl&quot;
+      &#x6307;&#x51FA;&#x4E86;&#x5957;&#x63A5;&#x5B57;&#x7684;&#x6838;&#x5FC3;&#x96DC;&#x6E4A;&#x69FD;&#x865F;;
+      &quot;local address&quot;
+      &#x5305;&#x62EC;&#x672C;&#x5730;&#x5730;&#x5740;&#x548C;&#x57E0;&#x865F;;
+      &quot;remote address&quot; &#x5305;&#x62EC;&#x9060;&#x5730;
+      &#x5730;&#x5740;&#x548C;&#x57E0;&#x865F;(&#x5982;&#x679C;&#x6709;&#x9023;&#x7DDA;&#x7684;&#x8A71;);
+      'St' &#x662F;&#x5957;&#x63A5;&#x5B57;&#x7684;&#x5167;
+      &#x90E8;&#x72C0;&#x614B;; 'tx_queue' &#x548C; 'rx_queue'
+      &#x662F;&#x6838;&#x5FC3;&#x5132;&#x5B58;&#x5668;&#x4F7F;&#x7528;&#x610F;&#x7FA9;&#x4E0A;
+      &#x7684;&#x8F38;&#x5165;&#x8F38;&#x51FA;&#x8CC7;&#x6599;&#x4F47;&#x5217;;
+      &quot;tr&quot;, &quot;tm-&amp;gt;when&quot; &#x548C; &quot;rexmits&quot;
+      &#x5132;&#x5B58;
+      &#x4E86;&#x6838;&#x5FC3;&#x5957;&#x63A5;&#x5B57;&#x5BA3;&#x544A;&#x7684;&#x5167;&#x90E8;&#x8CC7;&#x8A0A;,
+      &#x53EA;&#x7528;&#x65BC;&#x9664;&#x932F;; uid
+      &#x662F;&#x5957;&#x63A5;&#x5B57;&#x5EFA;&#x7ACB;&#x8005;&#x7684;&#x6709;&#x6548;
+      uid.</dd>
+  <dt id="udp"><a class="permalink" href="#udp"><i>udp</i></a></dt>
+  <dd>&#x8A72;&#x6A94;&#x6848;&#x5132;&#x5B58;&#x4E86; UDP
+      &#x5957;&#x63A5;&#x5B57;&#x8868;,
+      &#x5927;&#x90E8;&#x5206;&#x8CC7;&#x8A0A;&#x9664;&#x7528;&#x65BC;&#x9664;&#x932F;&#x4EE5;&#x5916;&#x6C92;&#x6709;&#x4EC0;&#x9EBC;&#x7528;.
+      &quot;sl&quot;
+      &#x6307;&#x51FA;&#x4E86;&#x5957;&#x63A5;&#x5B57;&#x7684;&#x6838;&#x5FC3;&#x96DC;&#x6E4A;&#x69FD;&#x865F;;
+      &quot;local address&quot;
+      &#x5305;&#x62EC;&#x672C;&#x5730;&#x5730;&#x5740;&#x548C;&#x57E0;&#x865F;;
+      &quot;remote address&quot; &#x5305;&#x62EC;&#x9060;&#x5730;
+      &#x5730;&#x5740;&#x548C;&#x57E0;&#x865F;(&#x5982;&#x679C;&#x6709;&#x9023;&#x7DDA;&#x7684;&#x8A71;);
+      &quot;St&quot; &#x662F;&#x5957;&#x63A5;&#x5B57;&#x7684;&#x5167;
+      &#x90E8;&#x72C0;&#x614B;; &quot;tx_queue&quot; &#x548C;
+      &quot;rx_queue&quot;
+      &#x662F;&#x6838;&#x5FC3;&#x5132;&#x5B58;&#x5668;&#x4F7F;&#x7528;&#x610F;&#x7FA9;&#x4E0A;
+      &#x7684;&#x8F38;&#x5165;&#x8F38;&#x51FA;&#x8CC7;&#x6599;&#x4F47;&#x5217;;
+      UDP &#x6C92;&#x6709;&#x4F7F;&#x7528;
+      &quot;tr&quot;,&quot;tm-&amp;gt;when&quot; &#x548C; &quot;rexmits&quot;;
+      uid
+      &#x662F;&#x5957;&#x63A5;&#x5B57;&#x5EFA;&#x7ACB;&#x8005;&#x7684;&#x6709;&#x6548;
+      uid. &#x683C;&#x5F0F;&#x5982;&#x4E0B;:
+    <pre>sl  local_address rem_address   st tx_queue rx_queue tr rexmits  tm-&amp;gt;when uid
+1: 01642C89:0201 0C642C89:03FF 01 00000000:00000001 01:000071BA 00000000 0
+1: 00000000:0801 00000000:0000 0A 00000000:00000000 00:00000000 6F000100 0
+1: 00000000:0201 00000000:0000 0A 00000000:00000000 00:00000000 00000000 0
+</pre>
+  </dd>
+  <dt id="unix"><a class="permalink" href="#unix"><i>unix</i></a></dt>
+  <dd>&#x5217;&#x51FA;&#x4E86;&#x7576;&#x524D;&#x7CFB;&#x7D71;&#x7684;UNIX&#x57DF;&#x5957;&#x63A5;&#x5B57;&#x4EE5;&#x53CA;&#x5B83;&#x5011;&#x7684;&#x72C0;&#x614B;,
+      &#x683C;&#x5F0F;&#x5982;&#x4E0B;:
+    <pre><span class="Li">Num RefCount Protocol Flags    Type St Path</span>
+<span class="Li">0: 00000002 00000000 00000000 0001 03</span>
+<span class="Li">1: 00000001 00000000 00010000 0001 01 /dev/printer</span>
+
+</pre>
+  </dd>
+</dl>
+<p class="Pp">`Num' &#x662F;&#x6838;&#x5FC3;&#x96DC;&#x6E4A;&#x69FD;&#x865F;;
+    'RefCount' &#x662F;&#x4F7F;&#x7528;&#x8005;&#x5957;&#x63A5;&#x5B57;&#x865F;;
+    'Protocol' &#x7576;&#x524D;&#x7E3D;&#x662F; 0; 'Flags'
+    &#x662F;&#x6838;&#x5FC3;&#x6A19;&#x8A8C;,
+    &#x6307;&#x51FA;&#x4E86;&#x5957;&#x63A5;&#x5B57;&#x7684;&#x72C0;&#x614B;;
+    'Type' &#x7576;&#x524D;&#x7E3D;&#x662F;
+    1(&#x5728;&#x6838;&#x5FC3;&#x4E2D;&#x5C1A;&#x672A;&#x652F;&#x63F4; unix
+    &#x57DF;&#x8CC7;&#x6599;&#x5305;&#x5957;&#x63A5;&#x5B57;); 'St'
+    &#x662F;&#x5957;&#x63A5;&#x5B57;&#x5167;&#x90E8;&#x72C0;&#x614B;; 'Path'
+    &#x5957;&#x63A5;&#x5B57;&#x7D81;&#x6346;&#x7684;&#x8DEF;&#x5F91;(&#x5982;&#x679C;&#x6709;&#x7684;&#x8A71;).</p>
+</div>
+<dl class="Bl-tag">
+  <dt id="pci"><a class="permalink" href="#pci"><i>pci</i></a></dt>
+  <dd>&#x8A72;&#x6A94;&#x6848;&#x5217;&#x51FA;&#x4E86;&#x6838;&#x5FC3;&#x521D;&#x59CB;&#x5316;&#x6642;&#x767C;&#x73FE;&#x7684;&#x6240;&#x6709;
+      PCI &#x88DD;&#x7F6E;&#x53CA;&#x5176;&#x914D;&#x7F6E;.</dd>
+  <dt id="scsi"><a class="permalink" href="#scsi"><i>scsi</i></a></dt>
+  <dd>&#x8A72;&#x76EE;&#x9304;&#x5305;&#x62EC; scsi
+      &#x4E2D;&#x9593;&#x5C64;&#x507D;&#x6A94;&#x6848;&#x53CA;&#x5404;&#x7A2E;
+      SCSI &#x5E95;&#x5C64;&#x9A45;&#x52D5;&#x5668;&#x5B50;&#x76EE;&#x9304;,
+      &#x5C0D;&#x7CFB;&#x7D71;&#x4E2D;&#x6BCF;&#x500B; SCSI host,
+      &#x5B50;&#x76EE;&#x9304;&#x4E2D;&#x90FD;&#x5B58;&#x5728;&#x4E00;&#x500B;&#x6A94;&#x6848;&#x8207;&#x4E4B;&#x5C0D;&#x61C9;,
+      &#x5C55;&#x793A;&#x4E86;&#x90E8;&#x5206; SCSI IO
+      &#x5B50;&#x7CFB;&#x7D71;&#x7684;&#x72C0;&#x614B;.
+      &#x9019;&#x4E9B;&#x6A94;&#x6848;&#x662F; ASCII &#x683C;&#x5F0F; &#x7684;,
+      &#x53EF;&#x7528;cat&#x95B1;&#x8B80;.
+    <p class="Pp">&#x4F60;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x904E;&#x5BEB;&#x5176;&#x4E2D;&#x67D0;&#x4E9B;&#x6A94;&#x6848;&#x4F86;&#x91CD;&#x65B0;&#x914D;&#x7F6E;&#x8A72;&#x5B50;&#x7CFB;&#x7D71;,
+        &#x958B;&#x95DC;&#x4E00;&#x4E9B;&#x529F;&#x80FD;.</p>
+  </dd>
+</dl>
+<div class="Bd-indent">
+<dl class="Bl-tag">
+  <dt id="scsi~2"><a class="permalink" href="#scsi~2"><i>scsi</i></a></dt>
+  <dd>&#x8A72;&#x6A94;&#x6848;&#x5217;&#x51FA;&#x4E86;&#x6838;&#x5FC3;&#x638C;&#x63E1;&#x7684;&#x6240;&#x6709;
+      SCSI &#x88DD;&#x7F6E;, &#x5176;&#x5167;&#x5BB9;&#x5C31;
+      &#x548C;&#x7CFB;&#x7D71;&#x555F;&#x52D5;&#x6642;&#x6240;&#x770B;&#x5230;&#x7684;&#x985E;&#x4F3C;.
+      &#x76EE;&#x524D; scsi &#x53EA;&#x652F;&#x63F4;
+      <i>singledevice</i>&#x547D;&#x4EE4;,
+      &#x8A72;&#x547D;&#x4EE4;&#x5141;&#x8A31; root
+      &#x65B0;&#x589E;&#x4E00;&#x500B;&#x71B1;&#x63D2;
+      &#x62D4;(hotplugged)&#x88DD;&#x7F6E;&#x5230;&#x4E00;&#x500B;&#x5DF2;&#x77E5;&#x88DD;&#x7F6E;&#x5217;&#x8868;&#x4E2D;.
+    <p class="Pp">&#x547D;&#x4EE4; <b>echo 'scsi singledevice 1 0 5 0' &amp;gt;
+        /proc/scsi/scsi</b> &#x4EE4; host scsi1 &#x6383;&#x63CF; SCSI
+        &#x901A;&#x9053; 0, &#x770B;&#x5728; ID 5 LUN 0
+        &#x662F;&#x5426;&#x5B58;&#x5728;&#x88DD;&#x7F6E;,
+        &#x5982;&#x679C;&#x5728;&#x8A72;&#x5730;&#x5740;
+        &#x5B58;&#x5728;&#x88DD;&#x7F6E;,
+        &#x6216;&#x8005;&#x8A72;&#x5730;&#x5740;&#x7121;&#x6548;,
+        &#x5247;&#x8FD4;&#x56DE;&#x4E00;&#x500B;&#x932F;&#x8AA4;.</p>
+  </dd>
+  <dt id="drivername"><a class="permalink" href="#drivername"><i>drivername</i></a></dt>
+  <dd>&#x76EE;&#x524D; <i>drivername</i> &#x53EF;&#x5305;&#x542B;: NCR53c7xx,
+      aha152x, aha1542, aha1740, aic7xxx, buslogic, eata_dma, eata_pio, fdomain,
+      in2000, pas16, qlogic, scsi_debug, seagate, t128, u15-24f, ultrastore
+      &#x6216;&#x8005; wd7000.
+      &#x9019;&#x4E9B;&#x76EE;&#x9304;&#x5C55;&#x793A;&#x90A3;&#x4E9B;&#x81F3;&#x5C11;&#x8A3B;&#x518A;&#x4E86;&#x4E00;&#x500B;
+      SCSI HBA &#x7684;&#x9A45;&#x52D5;.
+      &#x800C;&#x5C0D;&#x6BCF;&#x500B;&#x5DF2;&#x8A3B;&#x518A;&#x7684; host,
+      &#x6BCF;&#x500B;&#x76EE;&#x9304;&#x4E2D;&#x90FD;&#x5305;&#x542B;&#x4E00;&#x500B;&#x6A94;&#x6848;&#x8207;&#x4E4B;&#x5C0D;&#x61C9;,
+      &#x800C;&#x9019;&#x4E9B;&#x5C0D;&#x61C9;&#x7684; host
+      &#x6A94;&#x6848;&#x5C31;&#x4EE5;&#x521D;&#x59CB;&#x5316;&#x6642;&#x5206;&#x914D;&#x7D66;
+      host &#x7684;&#x6578;&#x5B57;&#x4F86;&#x547D;&#x540D;.
+    <p class="Pp">&#x9019;&#x4E9B;&#x6A94;&#x6848;&#x7D66;&#x51FA;&#x4E86;&#x9A45;&#x52D5;&#x7A0B;&#x5F0F;&#x4EE5;&#x53CA;&#x88DD;&#x7F6E;&#x7684;&#x914D;&#x7F6E;,
+        &#x7D71;&#x8A08;&#x8CC7;&#x6599;&#x7B49;.</p>
+    <p class="Pp">&#x53EF;&#x4EE5;&#x901A;&#x904E;&#x5BEB;&#x9019;&#x4E9B;&#x6A94;&#x6848;&#x5BE6;&#x73FE;&#x4E0D;&#x540C;&#x7684;
+        host &#x4E0A;&#x505A;&#x4E0D;&#x540C;&#x7684;&#x5DE5;&#x4F5C;.
+        &#x4F8B;&#x5982;, root &#x53EF;&#x4EE5;&#x7528; <i>latency</i> &#x548C;
+        <i>nolatency</i> &#x547D;&#x4EE4;&#x6253;
+        &#x958B;&#x6216;&#x8005;&#x95DC;&#x9589; eata_dma
+        &#x9A45;&#x52D5;&#x5668;&#x4E0A;&#x6E2C;&#x91CF;&#x5EF6;&#x6642;&#x7684;&#x7A0B;&#x5F0F;&#x78BC;,
+        &#x4E5F;&#x53EF;&#x4EE5;&#x7528; <i>lockup</i> &#x548C; <i>unlock</i>
+        &#x547D;&#x4EE4; &#x63A7;&#x5236; scsi_debug
+        &#x9A45;&#x52D5;&#x5668;&#x6240;&#x6A21;&#x64EC;&#x7684;&#x532F;&#x6D41;&#x6392;&#x9396;&#x64CD;&#x4F5C;.</p>
+  </dd>
+</dl>
+</div>
+<dl class="Bl-tag">
+  <dt id="self"><a class="permalink" href="#self"><i>self</i></a></dt>
+  <dd>&#x7576;&#x67D0;&#x7A0B;&#x5E8F;&#x8A2A;&#x554F; /proc
+      &#x76EE;&#x9304;&#x6642;, &#x8A72;&#x76EE;&#x9304;&#x5C31;&#x6307;&#x5411;
+      /proc &#x4E0B;&#x4EE5;&#x8A72;&#x9032; &#x7A0B; ID
+      &#x547D;&#x540D;&#x7684;&#x76EE;&#x9304;.</dd>
+  <dt id="stat~2"><a class="permalink" href="#stat~2"><i>stat</i></a></dt>
+  <dd>&#x6838;&#x5FC3;&#x53CA;&#x7CFB;&#x7D71;&#x7684;&#x7D71;&#x8A08;&#x8CC7;&#x6599;.</dd>
+</dl>
+<div class="Bd-indent">
+<dl class="Bl-tag">
+  <dt id="cpu"><a class="permalink" href="#cpu"><i>cpu 3357 0 4313
+    1362393</i></a></dt>
+  <dd>&#x7CFB;&#x7D71;&#x5206;&#x5225;&#x6D88;&#x8017;&#x5728;&#x4F7F;&#x7528;&#x8005;&#x6A21;&#x5F0F;,
+      &#x4F4E;&#x512A;&#x5148;&#x6B0A;&#x7684;&#x4F7F;&#x7528;&#x8005;&#x6A21;&#x5F0F;&#xFF08;nice&#xFF09;,
+      &#x7CFB;&#x7D71;&#x6A21;&#x5F0F;,
+      &#x4EE5;&#x53CA;&#x7A7A;&#x9592;&#x4EFB;&#x52D9;&#x7684;&#x6642;&#x9593;,
+      &#x4EE5; jiffy &#x70BA;&#x55AE;&#x4F4D;.
+      &#x6700;&#x5F8C;&#x4E00;&#x500B;&#x6578;&#x503C;&#x61C9;&#x8A72;&#x662F;
+      uptime
+      &#x507D;&#x6A94;&#x6848;&#x7B2C;&#x4E8C;&#x500B;&#x6578;&#x503C;&#x7684;
+      100 &#x500D;.</dd>
+  <dt id="disk"><a class="permalink" href="#disk"><i>disk 0 0 0 0</i></a></dt>
+  <dd>&#x76EE;&#x524D;&#x4E26;&#x6C92;&#x6709;&#x5BE6;&#x73FE;&#x9019;&#x56DB;&#x500B;&#x78C1;&#x789F;&#x8A18;&#x9304;,
+      &#x6211;&#x751A;&#x81F3;&#x8A8D;&#x70BA;&#x5C31;&#x4E0D;&#x61C9;&#x8A72;&#x5BE6;&#x73FE;&#x5B83;&#xFF0C;
+      &#x9019;&#x662F;&#x7531;&#x65BC;&#x5728;&#x5225;&#x7684;&#x6A5F;&#x5668;&#x4E0A;&#x6838;&#x5FC3;&#x7D71;&#x8A08;&#x901A;&#x5E38;&#x4F9D;&#x8CF4;&#x8F49;&#x63DB;&#x7387;&#x53CA;
+      &#x6BCF;&#x79D2; I/O &#x6578;,
+      &#x800C;&#x9019;&#x4EE4;&#x6BCF;&#x500B;&#x9A45;&#x52D5;&#x5668;&#x53EA;&#x80FD;&#x6709;&#x4E00;&#x500B;&#x57DF;.</dd>
+  <dt id="page"><a class="permalink" href="#page"><i>page 5741 1808</i></a></dt>
+  <dd>&#x7CFB;&#x7D71;&#xFF08;&#x5F9E;&#x78C1;&#x789F;&#xFF09;&#x4EA4;&#x63DB;&#x9032;&#x7684;&#x9801;&#x6578;&#x548C;&#x4EA4;&#x63DB;&#x51FA;&#x53BB;&#x7684;&#x9801;&#x6578;&#xFF0E;</dd>
+  <dt id="swap"><a class="permalink" href="#swap"><i>swap 1 0</i></a></dt>
+  <dd>&#x53D6;&#x5165;&#x7684;&#x4EA4;&#x63DB;&#x9801;&#x53CA;&#x88AB;&#x53D6;&#x51FA;&#x7684;&#x4EA4;&#x63DB;&#x9801;&#x7684;&#x9801;&#x6578;.</dd>
+  <dt id="intr"><a class="permalink" href="#intr"><i>intr 1462898</i></a></dt>
+  <dd>&#x7CFB;&#x7D71;&#x81EA;&#x555F;&#x52D5;&#x4EE5;&#x4F86;&#x6240;&#x6536;&#x5230;&#x7684;&#x4E2D;&#x65B7;&#x6578;.</dd>
+  <dt id="ctxt"><a class="permalink" href="#ctxt"><i>ctxt 115315</i></a></dt>
+  <dd>&#x7CFB;&#x7D71;&#x6240;&#x4F5C;&#x7684;&#x7A0B;&#x5E8F;&#x74B0;&#x5883;&#x5207;&#x63DB;&#x6B21;&#x6578;.</dd>
+  <dt id="btime"><a class="permalink" href="#btime"><i>btime
+    769041601</i></a></dt>
+  <dd>&#x7CFB;&#x7D71;&#x81EA; 1970 &#x5E74; 1 &#x6708; 1
+      &#x865F;&#x4EE5;&#x4F86;&#x7E3D;&#x7684;&#x57F7;&#x884C;&#x6642;&#x9593;,
+      &#x4EE5;&#x79D2;&#x70BA;&#x55AE;&#x4F4D;.</dd>
+</dl>
+</div>
+<dl class="Bl-tag">
+  <dt id="sys"><a class="permalink" href="#sys"><i>sys</i></a></dt>
+  <dd>&#x8A72;&#x76EE;&#x9304;&#x5728; 1.3.57
+      &#x7684;&#x6838;&#x5FC3;&#x88E1;&#x958B;&#x59CB;&#x51FA;&#x73FE;,
+      &#x5305;&#x542B;&#x4E00;&#x4E9B;&#x5C0D;&#x61C9;&#x65BC;&#x5167;
+      &#x6838;&#x8B8A;&#x6578;&#x7684;&#x6A94;&#x6848;&#x548C;&#x5B50;&#x76EE;&#x9304;.
+      &#x4F60;&#x53EF;&#x4EE5;&#x8B80;&#x9019;&#x4E9B;&#x8B8A;&#x6578;,
+      &#x6709;&#x7684;&#x4E5F;&#x53EF;&#x4EE5;
+      &#x901A;&#x904E;<i>proc</i>&#x4FEE;&#x6539;,
+      &#x6216;&#x8005;&#x7528;&#x7CFB;&#x7D71;&#x547C;&#x53EB; <a href='/man/sysctl.2.zh_TW'>sysctl(2)</a>
+      &#x4FEE;&#x6539;.
+      &#x76EE;&#x524D;&#x8A72;&#x76EE;&#x9304;&#x4E0B;&#x6709;&#x5982;&#x4E0B;&#x4E09;&#x500B;&#x5B50;&#x76EE;&#x9304;:
+      <i>kernel</i>;, <i>;</i>net<i>;, </i>;<i>vm</i>
+      &#x6BCF;&#x500B;&#x5404;&#x81EA;&#x5305;&#x62EC;&#x4E00;&#x4E9B;&#x6A94;&#x6848;&#x548C;&#x5B50;&#x76EE;&#x9304;.</dd>
+</dl>
+<div class="Bd-indent">
+<dl class="Bl-tag">
+  <dt id="kernel"><a class="permalink" href="#kernel"><i>kernel</i></a></dt>
+  <dd>&#x8A72;&#x76EE;&#x9304;&#x5305;&#x62EC;&#x5982;&#x4E0B;&#x6A94;&#x6848;:
+      <i>domainname</i>;, <i>;</i>file-max<i>;, </i>;<i>file-nr</i>;,
+      <i>;</i>hostname<i>;, </i>; <i>inode-max</i>;, <i>;</i>inode-nr<i>;,
+      </i>;<i>osrelease</i>;, <i>;</i>ostype<i>;, </i>; <i>panic</i>;,
+      <i>;</i>real-root-dev<i>;, </i>;<i>securelevel</i>;,
+      <i>;</i>version<i>,</i>
+      &#x7531;&#x6A94;&#x540D;&#x5C31;&#x53EF;&#x4EE5;&#x6E05;&#x695A;&#x5730;&#x5F97;&#x77E5;&#x5404;&#x6A94;&#x6848;&#x529F;&#x80FD;.</dd>
+</dl>
+<p class="Pp">&#x53EA;&#x8B80;&#x6A94;&#x6848; <i>file-nr</i>
+    &#x7D66;&#x51FA;&#x7576;&#x524D;&#x958B;&#x555F;&#x7684;&#x6A94;&#x6848;&#x6578;.</p>
+<p class="Pp">&#x6A94;&#x6848; <i>file-max</i>
+    &#x7D66;&#x51FA;&#x7CFB;&#x7D71;&#x6240;&#x5BB9;&#x8A31;&#x7684;&#x6700;&#x5927;&#x53EF;&#x958B;&#x555F;&#x6A94;&#x6848;&#x6578;.
+    &#x5982;&#x679C; 1024 &#x4E0D;&#x5920;&#x5927;&#x7684;&#x8A71;,
+    &#x53EF;&#x4EE5;
+  <br/>
+</p>
+<pre><span class="Li">echo 4096 &amp;gt; /proc/sys/kernel/file-max</span></pre>
+<p class="Pp">&#x985E;&#x4F3C;&#x5730;, &#x6A94;&#x6848; <i>inode-nr</i>
+    &#x4EE5;&#x53CA;&#x6A94;&#x6848; <i>inode-max</i>
+    &#x6307;&#x51FA;&#x4E86;&#x7576;&#x524D; inode
+    &#x6578;&#x548C;&#x6700;&#x5927; inode &#x6578;.</p>
+<p class="Pp">&#x6A94;&#x6848; <i>ostype</i>;, <i>;</i>osrelease<i>;,
+    </i>;<i>version</i> &#x5BE6;&#x969B;&#x4E0A;&#x662F; <i>/proc/version</i>
+    &#x7684;&#x5B50;&#x5B57;&#x4E32;&#xFF0E;</p>
+<p class="Pp">&#x6A94;&#x6848; <i>panic</i>
+    &#x53EF;&#x4EE5;&#x5C0D;&#x6838;&#x5FC3;&#x8B8A;&#x6578;
+    <i>panic_timeout</i>
+    &#x9032;&#x884C;&#x8B80;/&#x5BEB;&#x8A2A;&#x554F;&#xFF0E;
+    &#x5982;&#x679C;&#x8A72;&#x503C;&#x70BA;&#x96F6;, &#x6838;&#x5FC3;&#x5728;
+    panic &#x6642;&#x9032;&#x5165;&#xFF08;&#x6B7B;&#xFF09;&#x8FF4;&#x5708;;
+    &#x5982;&#x679C;&#x975E;&#x96F6;,
+    &#x8A72;&#x503C;&#x6307;&#x51FA;&#x6838;&#x5FC3;&#x5C07;&#x81EA;&#x52D5;&#x91CD;&#x8D77;&#x7684;&#x6642;&#x9593;,
+    &#x4EE5;&#x79D2;&#x70BA;&#x55AE;&#x4F4D;.</p>
+<p class="Pp">&#x6A94;&#x6848; <i>securelevel</i>
+    &#x76EE;&#x524D;&#x4F3C;&#x4E4E;&#x6C92;&#x4EC0;&#x9EBC;&#x610F;&#x7FA9; -
+    root &#x7121;&#x6240;&#x4E0D;&#x80FD;.</p>
+</div>
+<dl class="Bl-tag">
+  <dt id="uptime"><a class="permalink" href="#uptime"><i>uptime</i></a></dt>
+  <dd>&#x8A72;&#x6A94;&#x6848;&#x5305;&#x542B;&#x5169;&#x500B;&#x6578;:
+      &#x7CFB;&#x7D71;&#x6B63;&#x5E38;&#x57F7;&#x884C;&#x6642;&#x9593;&#x548C;&#x7E3D;&#x7684;&#x7A7A;&#x9592;&#x6642;&#x9593;,
+      &#x90FD;&#x4EE5;&#x79D2;&#x70BA;&#x55AE;&#x4F4D;.</dd>
+  <dt id="version"><a class="permalink" href="#version"><i>version</i></a></dt>
+  <dd>&#x6307;&#x660E;&#x77AD;&#x7576;&#x524D;&#x6B63;&#x5728;&#x57F7;&#x884C;&#x7684;&#x6838;&#x5FC3;&#x7248;&#x672C;,
+      &#x4F8B;&#x5982;:
+    <pre><span class="Li">Linux version 1.0.9 (quinlan@phaze) #1 Sat May 14 01:51:54 EDT 1994</span>
+</pre>
+      </dd>
+</dl>
+</section>
+<section class="Sh">
+<h1 class="Sh">&#x53C8;&#x898B;</h1>
+<p class="Pp">cat(1), find(1), free(1), mount(1), ps(1), tr(1), uptime(1),
+    readlink(2), mmap(2), chroot(2), syslog(2), hier(7), arp(8), dmesg(8),
+    netstat(8), route(8), ifconfig(8), procinfo(8)&#x7B49;&#x7B49;.</p>
+</section>
+<section class="Sh">
+<h1 class="Sh">&#x9075;&#x5FAA;</h1>
+<p class="Pp">&#x672C;&#x624B;&#x518A;&#x9801;&#x57FA;&#x672C;&#x4E0A;&#x662F;&#x91DD;&#x5C0D;
+    Linux 1.3.11 &#x6838;&#x5FC3;,
+    &#x5982;&#x6709;&#x5FC5;&#x8981;&#x8ACB;&#x53CA;&#x6642;&#x66F4;&#x65B0;!</p>
+<p class="Pp">&#x6700;&#x5F8C;&#x66F4;&#x65B0;&#x4E5F;&#x662F;&#x91DD;&#x5C0D;
+    Linux 1.3.11.</p>
+</section>
+<section class="Sh">
+<h1 class="Sh">&#x6CE8;&#x610F;&#x4E8B;&#x9805;</h1>
+<p class="Pp">&#x8ACB;&#x6CE8;&#x610F;&#x8A31;&#x591A;&#x5B57;&#x4E32;(&#x4F8B;&#x5982;&#x74B0;&#x5883;&#x8B8A;&#x6578;&#x6216;&#x8005;&#x547D;&#x4EE4;&#x5217;)&#x662F;&#x4EE5;&#x5167;&#x90E8;&#x683C;&#x5F0F;&#x5132;&#x5B58;&#x7684;,
+    &#x4EE5; NUL
+    &#x4F5C;&#x70BA;&#x5B50;&#x57DF;&#x7684;&#x7D50;&#x675F;&#x6A19;&#x8A8C;,
+    &#x53EF;&#x4EE5;&#x7528; <i>od -c</i> &#x6216;&#x8005; <i>tr
+    &quot;;\000&quot;; &quot;;\n&quot;;</i>
+    &#x4F7F;&#x4E4B;&#x8B8A;&#x5F97;&#x66F4;&#x53EF;&#x8B80;.</p>
+<p class="Pp">&#x672C;&#x624B;&#x518A;&#x9801;&#x9084;&#x4E0D;&#x5B8C;&#x5584;,
+    &#x53EF;&#x80FD;&#x6709;&#x4E0D;&#x5920;&#x78BA;&#x5207;&#x7684;&#x5730;&#x65B9;,
+    &#x9700;&#x8981;&#x7D93;&#x5E38;&#x66F4;&#x65B0;.</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id='BUGS'><a class='permalink' href='#BUGS'>BUGS</a></h1>
+<p class="Pp"><i>/proc</i>
+    &#x53EF;&#x80FD;&#x6703;&#x7D66;&#x90A3;&#x4E9B;&#x4F7F;&#x7528;&#x4E86;
+    <a href='/man/chroot.2.zh_TW'>chroot(2)</a>
+    &#x7684;&#x7A0B;&#x5E8F;&#x5E36;&#x4F86;&#x5B89;&#x5168;&#x554F;&#x984C;.
+    &#x4F8B;&#x5982;, &#x5982;&#x679C; <i>/proc</i> &#x88AB; mount &#x5728;
+    <b>chroot</b> &#x7D1A;&#x5225;&#x88E1;, &#x4E00;&#x500B; &#x5230;
+    <i>/proc/1/root</i> &#x7684; <a href='/man/chdir.2.zh_TW'>chdir(2)</a>
+    &#x64CD;&#x4F5C;&#x5C07;&#x8FD4;&#x56DE;&#x6A94;&#x6848;&#x7CFB;&#x7D71;&#x7684;&#x539F;&#x59CB;&#x6839;&#x76EE;&#x9304;.
+    &#x7531;&#x65BC; Linux &#x9084;&#x4E0D;&#x652F;&#x63F4; <a href='/man/fchroot.2.zh_TW'>fchroot(2)</a>
+    &#x547C;&#x53EB;,
+    &#x8A72;&#x554F;&#x984C;&#x53EF;&#x80FD;&#x66F4;&#x61C9;&#x8A72;&#x770B;&#x4F5C;&#x4E00;&#x500B;&#x7279;&#x6027;&#x800C;&#x4E0D;&#x662F;&#x4E00;&#x500B;
+    bug.</p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id='[&amp;#x4E2D;&amp;#x6587;&amp;#x7248;&amp;#x7DAD;&amp;#x8B77;&amp;#x4EBA;]'><a class='permalink' href='#%5B&amp;#x4E2D;&amp;#x6587;&amp;#x7248;&amp;#x7DAD;&amp;#x8B77;&amp;#x4EBA;%5D'>[&#x4E2D;&#x6587;&#x7248;&#x7DAD;&#x8B77;&#x4EBA;]</a></h1>
+<p class="Pp"><b>mapping &lt;mapping@263.net&gt;</b></p>
+</section>
+<section class="Sh">
+<h1 class="Sh" id='[&amp;#x4E2D;&amp;#x6587;&amp;#x7248;&amp;#x6700;&amp;#x65B0;&amp;#x66F4;&amp;#x65B0;]'><a class='permalink' href='#%5B&amp;#x4E2D;&amp;#x6587;&amp;#x7248;&amp;#x6700;&amp;#x65B0;&amp;#x66F4;&amp;#x65B0;%5D'>[&#x4E2D;&#x6587;&#x7248;&#x6700;&#x65B0;&#x66F4;&#x65B0;]</a></h1>
+<p class="Pp"><b>2000/11/26</b></p>
+</section>
+<section class="Sh">
+<h1 class="Sh">&#x300A;&#x4E2D;&#x570B;linux&#x8AD6;&#x58C7;man&#x624B;&#x518A;&#x9801;&#x7FFB;&#x8B6F;&#x8A08;&#x5283;&#x300B;:</h1>
+<p class="Pp"><a href='http://cmpp.linuxforum.net'>http://cmpp.linuxforum.net</a></p>
+</section>
+<section class="Sh">
+<h1 class="Sh">&#x8DCB;</h1>
+<p class="Pp">&#x672C;&#x9801;&#x9762;&#x4E2D;&#x6587;&#x7248;&#x7531;&#x4E2D;&#x6587;
+    man &#x624B;&#x518A;&#x9801;&#x8A08;&#x5283;&#x63D0;&#x4F9B;&#x3002;
+  <br/>
+  &#x4E2D;&#x6587; man
+    &#x624B;&#x518A;&#x9801;&#x8A08;&#x5283;&#xFF1A;<a href='https://github.com/man-pages-zh/manpages-zh'>https://github.com/man-pages-zh/manpages-zh</a></p>
+</section>
+</div>
+<table class="foot">
+  <tr>
+    <td class="foot-date">22 July 1996</td>
+    <td class="foot-os">Linux Programmer's Manual</td>
+  </tr>
+</table>
+
+</section>
+
+            </article>
+            <aside id="sidebar">
+                
+<section class="search">
+    <form action="/search" class="search direct-search" role="search">
+    <input type="search" placeholder="Search manual page" name="q" value=""
+         />
+    <input type="submit" name="go" value="Go" />
+</form>
+
+</section>
+
+<section class="package-info">
+    <p>Package information:</p>
+    <dl>
+        <dt>Package name:</dt>
+        <dd><a href="https://www.archlinux.org/packages/extra/any/man-pages-zh_tw/">extra/man-pages-zh_tw</a></dd>
+        <dt>Version:</dt>
+        <dd>1.6.4.5-1</dd>
+        <dt>Upstream:</dt>
+        <dd><a href="https://github.com/man-pages-zh/manpages-zh">https://github.com/man-pages-zh/manpages-zh</a></dd>
+        <dt>Licenses:</dt>
+        <dd>GFDL-1.2-or-later, GPL-2.0-only, GPL-2.0-or-later, GPL-3.0-or-later, GPL-3.0-or-later WITH Autoconf-exception-generic-3.0, BSD-3-Clause, LicenseRef-permissive-gzip, LicenseRef-GPLv2+_DOC_FULL</dd>
+        <dt>Manuals:</dt>
+        <dd><a href="/listing/extra/man-pages-zh_tw/">/listing/extra/man-pages-zh_tw/</a></dd>
+    </dl>
+</section>
+
+<details>
+    <summary>Table of contents</summary>
+    <nav class="toc">
+        <ul>
+        
+            <li><a href="#NAME">NAME</a></li>
+        
+            <li><a href="#BUGS">BUGS</a></li>
+        
+            <li><a href="#%5B&amp;#x4E2D;&amp;#x6587;&amp;#x7248;&amp;#x7DAD;&amp;#x8B77;&amp;#x4EBA;%5D">[中文版維護人]</a></li>
+        
+            <li><a href="#%5B&amp;#x4E2D;&amp;#x6587;&amp;#x7248;&amp;#x6700;&amp;#x65B0;&amp;#x66F4;&amp;#x65B0;%5D">[中文版最新更新]</a></li>
+        
+        </ul>
+    </nav>
+</details>
+
+
+
+
+<nav class="other-languages">
+    <p>In other languages:</p>
+    <ul>
+    
+        <li><a href="/man/proc.5.ar">ar</a></li>
+    
+        <li><a href="/man/proc.5.de">de</a></li>
+    
+        <li><a href="/man/proc.5.en">en</a></li>
+    
+        <li><a href="/man/proc.5.fr">fr</a></li>
+    
+        <li><a href="/man/proc.5.pl">pl</a></li>
+    
+        <li><a href="/man/proc.5.ro">ro</a></li>
+    
+        <li><a href="/man/proc.5.zh_CN">zh_CN</a></li>
+    
+    </ul>
+</nav>
+
+
+
+<nav class="other-sections">
+    <p>In other sections:</p>
+    <ul>
+    
+        <li><a href="/man/proc.3tcl.zh_TW">proc(3tcl)</a></li>
+    
+    </ul>
+</nav>
+
+
+<nav class="other-formats">
+    <p>Other formats:
+        
+            <a href="/man/proc.5.zh_TW.txt">txt</a>, 
+        
+            <a href="/man/proc.5.zh_TW.raw">raw</a>
+        
+    </p>
+</nav>
+
+            </aside>
+            
+        </main>
+        <footer>
+            <p>Powered by <a href="https://gitlab.archlinux.org/archlinux/archmanweb">archmanweb</a>,
+               using <a href="https://mandoc.bsd.lv/">mandoc</a> for the conversion of manual pages.
+            </p>
+            <p>The website is available under the terms of the <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPL-3.0</a>
+               license, except for the contents of the manual pages, which have their own license
+               specified in the corresponding Arch Linux package.
+            </p>
+        </footer>
+    </body>
+</html>
