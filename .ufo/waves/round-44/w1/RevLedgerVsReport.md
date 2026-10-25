@@ -13,7 +13,8 @@ Objects reviewed:
   Byte-identical at `5102022a`.
 - **The proposal** `.ufo/waves/round-44/w1/ExecLedger.md`, 365 lines, sha256
   `e9e86a3d7766df9338a8bb7b16e7b9f9496b2424bf85c5f5081a427bf4eb1a27` — 20 rows. The landed
-  ledger is not this draft; it drops eight draft rows and adds seven of its own.
+  ledger is not this draft: it carries nine of the draft's figures (five unchanged, four
+  re-derived), drops eleven, and adds seven of its own.
 - Instrument `.ufo/waves/round-44/count-c1.py`, sha256
   `9477824d5eee45f47d49be52902f7bb0cd67a4d038e0ec7e79094c1e71999f83` (matches the freeze pin).
 
@@ -44,9 +45,8 @@ outside the ledger, and `C1=met` still certifies only ledger arithmetic at one r
   adds the report's real figures — 32 seats, 3 sweep files, 3 new criteria, 14 check lines,
   8 mistakes, 2 rows naming the entry.
 - But it **drops four load-bearing proposal rows**: the 10 freeze pins, the 3 do-nothing
-  controls, the 3 counters, and the 6 C1 selftest arms. The report's C1/C2 evidence sentences
-  ("10 pinned artifacts", "three controls", "three counters", "`pass=6 fail=0`") are now
-  uncovered.
+  controls, the 3 counters, and the 6 C1 selftest arms. The round's C1/C2 evidence figures
+  (ten pins, three controls, three counters, `pass=6 fail=0`) are now uncovered.
 - **Uncovered and required**: every before-value (243, 116, 53, 72, 0 sweep), the census
   (245 rows / exit 0 / findings 20), the README frontier row, the role mix (12 attack roles,
   37.5%), dead seats, the 31 reports returned, the witness's 12 rows / 15 / 34 / 2 mismatches,
