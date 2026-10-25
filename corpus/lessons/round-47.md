@@ -92,3 +92,9 @@ the outside check (LEARNING.md). Sample offered: admit S478, reject the staged e
 - `w2/RevQuality.md` O2: `evidence/selftest-pin-check.txt` is the frozen v1 selftest (22 arms); v2 prints 34.
 - `w2/RevSourcesRows.md`: S477's anchor cell carries no receipt line numbers; left as written (rule 2).
 - C2 holds: `w2/ExecEntryFacts.md`, `RevEntryLifecycle.md`, `CritC2Depth.md`, `RevSourcesRows.md`, `ExecRerunC2.md`.
+- Late w2 seats (after the first report filing): `w2/CritV2Junk.md` found five new v2 false-green classes on the
+  real registry, all structural (e.g. renaming a table's `self-test` header removes its pins while the floor of 26
+  still holds); the v2 capability row is therefore limited, and a successor must key the floor and baseline on
+  table identity, not a tally count — routed to round 48. `w2/MutV2Rebound.md`: rebound conjunct killed, two
+  equivalent no-ops, one survivor killed only by a constructed reproducer. `w2/ScoutMisroot.md`:
+  `MORI_MISROOT_CLEAN` for mori 47 — no fleet-root strays.
