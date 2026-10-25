@@ -1,0 +1,7 @@
+# control: do-nothing at the entering tip 1429c791 — no admitted entry, rows S471/S472 absent
+# command: python3 .ufo/waves/round-44/count-c3.py 1429c791 --entry corpus/knowledge/pid-probe-conclusion-r44.md --row S471 --row S472
+# run: 2026-10-25T05:05:12-03:00
+check entry_present    FAIL (absent)
+rev=1429c791db5891c484684feef893799909d2d6a8
+C3=unmet
+exit=1

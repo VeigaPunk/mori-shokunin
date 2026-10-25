@@ -1,0 +1,20 @@
+# round-44 freeze pins — recorded before the first data seat is dispatched
+# run: 2026-10-25T05:05:18-03:00  host: plazir27
+# python3 --version: Python 3.14.8
+
+0c261cb310c63e093d0cff3c71455a4d3ac7fe8d7e6ee162ee2190732e17555d  .ufo/waves/round-44/contract.md
+9477824d5eee45f47d49be52902f7bb0cd67a4d038e0ec7e79094c1e71999f83  .ufo/waves/round-44/count-c1.py
+0095d0c63afe1312c799dc8f6b8ad66d08eabf6420a9eabde032e894f17f9047  .ufo/waves/round-44/count-c2.py
+a12170f1cad4a6a0eb18c14dd50b7e22e1dec4b67e5d44c217f8ed8e9c440c68  .ufo/waves/round-44/count-c3.py
+743996b11d19261b87e3ea6c0d0be4c0e5e6750d05f6d603af51dc1a7e125a1f  tools/mori-gate-registry.py
+51e63f0186c5d8edcfd283edd29de1e6df95a65959611302c03491128f2ce953  .ufo/waves/round-44/fixtures/figures-r43.tsv
+f37bd18b7c95e0adb7b9a85da435421d2c4bc7b2590c0c697de57f950a6b1892  .ufo/waves/round-44/fixtures/mutants/count-c1.py
+919bc783ea9c2b0fde9952898b94eb42d11ddedf94381b4ec0da0e6c91207db4  .ufo/waves/round-44/fixtures/mutants/count-c2.py
+27cbed5a14062e521af69f33338511a575e6126f6f06e0f10370d570e1badcd8  .ufo/waves/round-44/fixtures/mutants/count-c3.py
+f9b1e2bf999b8c8e4d6bef245899c8c5865848b6d7f410d34f5c52b9a2e76d05  SKILL.md
+
+# selftest tallies at freeze
+count-c1: C1_SELFTEST pass=6 fail=0
+count-c2: C2_SELFTEST pass=5 fail=0
+count-c3: C3_SELFTEST pass=6 fail=0
+gate-registry: GATE_REGISTRY_SELFTEST pass=6 fail=0

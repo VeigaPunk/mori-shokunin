@@ -1,0 +1,8 @@
+# control: do-nothing at the entering tip 1429c791 — no figure ledger exists
+# command: python3 .ufo/waves/round-44/count-c1.py 1429c791
+# run: 2026-10-25T05:05:12-03:00
+check ledger_present       FAIL (absent)
+rev=1429c791db5891c484684feef893799909d2d6a8
+ledger=.ufo/waves/round-44/figures.tsv rows=0 classes=-
+C1=unmet mismatches=?
+exit=1

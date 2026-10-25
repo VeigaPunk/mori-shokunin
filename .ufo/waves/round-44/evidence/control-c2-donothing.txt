@@ -1,0 +1,11 @@
+# control: do-nothing at the entering tip 1429c791 — the round's counters are absent
+# command: python3 .ufo/waves/round-44/count-c2.py 1429c791 --counter .ufo/waves/round-44/count-c1.py --counter .ufo/waves/round-44/count-c2.py --counter .ufo/waves/round-44/count-c3.py
+# run: 2026-10-25T05:05:12-03:00
+check counters_present   FAIL (absent=['.ufo/waves/round-44/count-c1.py', '.ufo/waves/round-44/count-c2.py', '.ufo/waves/round-44/count-c3.py'])
+check registry_rows      FAIL (tools/mori-gate-registry.py absent)
+check tool_selftest      FAIL (tools/mori-gate-registry.py absent)
+check selftest_tally     FAIL (.ufo/waves/round-44/count-c1.py absent; .ufo/waves/round-44/count-c2.py absent; .ufo/waves/round-44/count-c3.py absent)
+check mutant_kill        FAIL (.ufo/waves/round-44/count-c1.py absent; .ufo/waves/round-44/count-c2.py absent; .ufo/waves/round-44/count-c3.py absent)
+rev=1429c791db5891c484684feef893799909d2d6a8
+C2=unmet
+exit=1

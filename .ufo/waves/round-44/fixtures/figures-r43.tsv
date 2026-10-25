@@ -1,0 +1,18 @@
+# mori round-44 C1 witness — the round-43 report's figures, exactly as asserted.
+# Rows F03 and F04 reproduce the two superseded values the round-43 closure routed
+# (report: "15 checks PASS" and "34 seat logs carry provider.rate_limit: 429";
+# observed: 14 check lines, 8 seat logs). The other ten rows are figures the
+# round-43 report asserted correctly, so the counter's verdict isolates the slips.
+# Format: id <TAB> asserted <TAB> class <TAB> command (@REV@ = measured revision)
+F01	243	registry	git show @REV@:corpus/SOURCES.md | grep -cE '^ {0,3}\|[[:space:]]*S[0-9]{3,}'
+F02	72	wave	git ls-tree -r --name-only @REV@ .ufo/waves/round-43/logs | wc -l
+F03	15	checks	git show @REV@:.ufo/waves/round-43/evidence/c1s-after.txt | grep -cE '^check'
+F04	34	wave	git grep -l 'provider.rate_limit' @REV@ -- .ufo/waves/round-43/logs | wc -l
+F05	10	wave	git ls-tree -r --name-only @REV@ .ufo/waves/round-43/w1 | grep -c '\.md$'
+F06	116	corpus	git show @REV@:corpus/QUALITY.md | grep -cE '^[0-9]+\. '
+F07	64	wave	git show @REV@:.ufo/waves/round-43/w1-spec.json | grep -c '"role"'
+F08	52	wave	git show @REV@:.ufo/waves/round-43/w1-settle.tsv | awk -F'\t' '$3==124' | wc -l
+F09	6	wave	git show @REV@:.ufo/waves/round-43/w1-settle-residual.tsv | awk -F'\t' '$3==0' | wc -l
+F10	15	evidence	git ls-tree -r --name-only @REV@ .ufo/waves/round-43/evidence | wc -l
+F11	5	corpus	git show @REV@:corpus/lessons/round-43.md | grep -cE '^\| M[0-9]+'
+F12	3	corpus	git show @REV@:corpus/lessons/round-43.md | grep -c 'corpus/knowledge/'

@@ -1,0 +1,8 @@
+# witness (round-43 routed defect 4): the two round-43 counters against the gate standard
+# command: python3 tools/mori-gate-registry.py --rev 1429c791 --audit .ufo/waves/round-43/count-c1s.py --audit .ufo/waves/round-43/count-c2.py
+# run: 2026-10-25T05:05:12-03:00
+audit .ufo/waves/round-43/count-c1s.py         FAIL (unregistered: no row names count-c1s.py)
+audit .ufo/waves/round-43/count-c2.py          FAIL (unregistered: no row names count-c2.py)
+rev=1429c791db5891c484684feef893799909d2d6a8
+REGISTRY=unmet
+exit=1
