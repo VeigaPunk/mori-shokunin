@@ -924,13 +924,16 @@ v2 (landed the same round, after wave-1 seats turned the frozen v1 green on junk
 `.ufo/waves/round-47/w1/CritC1Predicate.md` v2/v3/v7/v8, `w1/SentPinExec.md`): a bound command
 must be `<interpreter> [-I] [-B] <tools/… or .ufo/waves/round-N/… path> [<rev>] --selftest`
 (no inline `-c`, no `.scratch/`, no `..`), a pin's bound command may not differ from the
-`--baseline-rev` binding (`rebound`), the pinned text must equal the observed text, row names
-are unique, a short row naming `selftest` in any case is `unparsed`, and digest paths stay
-inside the measured tree. The seven junk variants score unmet under v2 and the honest repair
-met (`.ufo/waves/round-47/evidence/v2/`). The round-47 claim itself is scored with the frozen
-v1 bytes (`git show 63eecf27:tools/mori-pin-check.py`).
+`--baseline-rev` binding (`rebound`), the pinned text must equal the observed text on the lines
+that start with the prefix (all such lines must agree, so a `compat:` echo of an old tally is
+ignored), row names are unique, a short row naming `selftest` in any case is `unparsed`, fenced
+example tables are not read, the entry column comes from the header, and digest paths stay
+inside the measured tree (w1 `RevPinCheckCode.md` M1/M3/L1 closed the same round). The seven
+junk variants score unmet under v2 and the honest repair met (`.ufo/waves/round-47/evidence/v2/`).
+The round-47 claim itself is scored with the frozen v1 bytes
+(`git show 63eecf27:tools/mori-pin-check.py`).
 
 | name | kind | entry | verdict map | self-test | pinned values | write scope | owner |
 |---|---|---|---|---|---|---|---|
-| registry pin reconciler (r47, C1) | gate | `python3 tools/mori-pin-check.py --rev <rev> [--repo DIR] [--min-tally-pins N] [--baseline-rev REV] [--skill PATH] [--timeout S]` (`--root DIR` measures a directory as-is) | 0 → `PIN_CHECK=met` (mismatches=0, unparsed=0, no_command=0, dropped=0, rebound=0, duplicate=0, tally pins ≥ N) · 1 → `PIN_CHECK=unmet`, one `pin … state=mismatch\|unparsed\|no_command\|dropped\|rebound\|duplicate` line per finding · 2 → `PIN_CHECK_SETUP` (no `--rev`/`--root`, unresolvable revision or baseline, unreadable SKILL) | `python3 tools/mori-pin-check.py --selftest` → `PIN_CHECK_SELFTEST pass=30 fail=0` | round-47 floor `--min-tally-pins 26 --baseline-rev 2d85e33d14198d388fd3cda9cc15ec07e57e7a53` (`.ufo/waves/round-47/contract.md` P-C1); limits: line-count pins and truncated digests are not checked | its own export and TMPDIR under `<repo>/.scratch` (removed on exit); runs the registered selftests, which write only their own temp dirs | mori |
+| registry pin reconciler (r47, C1) | gate | `python3 tools/mori-pin-check.py --rev <rev> [--repo DIR] [--min-tally-pins N] [--baseline-rev REV] [--skill PATH] [--timeout S]` (`--root DIR` measures a directory as-is) | 0 → `PIN_CHECK=met` (mismatches=0, unparsed=0, no_command=0, dropped=0, rebound=0, duplicate=0, tally pins ≥ N) · 1 → `PIN_CHECK=unmet`, one `pin … state=mismatch\|unparsed\|no_command\|dropped\|rebound\|duplicate` line per finding · 2 → `PIN_CHECK_SETUP` (no `--rev`/`--root`, unresolvable revision or baseline, unreadable SKILL) | `python3 tools/mori-pin-check.py --selftest` → `PIN_CHECK_SELFTEST pass=34 fail=0` | round-47 floor `--min-tally-pins 26 --baseline-rev 2d85e33d14198d388fd3cda9cc15ec07e57e7a53` (`.ufo/waves/round-47/contract.md` P-C1); limits: line-count pins and truncated digests are not checked | its own export and TMPDIR under `<repo>/.scratch` (removed on exit); runs the registered selftests, which write only their own temp dirs | mori |
 | r47 tracepoint catalogue (C2) | gate | `python3 .ufo/waves/round-47/count-c2.py <rev> [--repo DIR] [--entry PATH]` | 0 → `C2=met events=8 rows=8 …` · 1 → `C2=unmet … failed=<checks>` (entry absent, provenance, table, name/field/call-site mismatch, pin mismatch, source row) · 2 → `C2_SETUP` (usage, unresolvable revision) | `python3 .ufo/waves/round-47/count-c2.py --selftest` → `C2_SELFTEST pass=13 fail=0` | sha256 of the four v7.2 copies under `corpus/evidence/sources-r47/` (in-script `PINS`); `ROW_ID = "S475"`; entry `corpus/knowledge/oom-tracepoints-r47.md` | none (read-only `git show`) | mori |

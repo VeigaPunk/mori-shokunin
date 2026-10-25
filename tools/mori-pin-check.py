@@ -43,9 +43,10 @@ How it measures
   revision, plus `--selftest`. No preceding span → `no_command`.
   The command runs (no shell) in the measured tree with TMPDIR set to a fresh
   directory under `<measured tree>/.scratch` (lane tools refuse a TMPDIR
-  outside their own lane root); the text after the prefix on the last output
-  line containing it must equal the pinned text exactly, and when the pin says
-  `fail=0` the exit code must be 0.
+  outside their own lane root); the output lines that START with the prefix
+  must all carry one text after it, that text must equal the pinned text
+  exactly, and when the pin says `fail=0` the exit code must be 0. Lines inside
+  ``` / ~~~ fences are not read; the entry column is found by its header name.
 
 Modes
   --rev REV [--repo DIR]   export REV with `git archive` and measure it there
@@ -124,11 +125,22 @@ def is_separator(cells):
 
 
 def parse_registry(text):
-    """Yield dicts: line, cells, header, idx, state ('ok'|'unparsed')."""
+    """Rows of every self-test table: line, cells, header, idx (self-test),
+    eidx (entry), state ('ok'|'unparsed'). Lines inside ``` / ~~~ fences are
+    ignored, and a row followed by a separator row starts a new table."""
     rows = []
     header = None
-    idx = None
-    for n, line in enumerate(text.split("\n"), 1):
+    idx = eidx = None
+    fence = None
+    lines = text.split("\n")
+    for n, line in enumerate(lines, 1):
+        mark = line.lstrip()[:3]
+        if mark in ("```", "~~~"):
+            fence = None if fence == mark else (fence or mark)
+            header = None
+            continue
+        if fence:
+            continue
         cells = split_cells(line)
         if cells is None:
             header = None
@@ -136,16 +148,21 @@ def parse_registry(text):
         low = [c.lower() for c in cells]
         if "self-test" in low:
             header, idx = cells, low.index("self-test")
+            eidx = low.index("entry") if "entry" in low else 2
             continue
         if header is None or is_separator(cells):
             continue
+        nxt = split_cells(lines[n]) if n < len(lines) else None
+        if nxt is not None and is_separator(nxt):
+            header = None  # another table's header row
+            continue
         state = "ok" if len(cells) == len(header) else "unparsed"
         rows.append({"line": n, "cells": cells, "header": header, "idx": idx,
-                     "state": state, "raw": line})
+                     "eidx": eidx, "state": state, "raw": line})
     return rows
 
 
-def command_from_span(span, cells, rev):
+def command_from_span(span, cells, rev, eidx=2):
     """Return argv for one backticked self-test-cell span, or None (v2: only
     argv that passes argv_ok)."""
     if "--selftest" not in span:
@@ -155,11 +172,11 @@ def command_from_span(span, cells, rev):
         elif re.fullmatch(r"[A-Za-z0-9_.][A-Za-z0-9_./-]*\.sh", span):
             argv = ["bash", span, "--selftest"]
         return argv if argv is not None and argv_ok(argv, rev) else None
-    argv = derive_command(span, cells, rev)
+    argv = derive_command(span, cells, rev, eidx)
     return argv if argv is not None and argv_ok(argv, rev) else None
 
 
-def pin_commands(cells, idx, rev):
+def pin_commands(cells, idx, rev, eidx=2):
     """Bind each tally pin in the self-test cell to the nearest preceding
     executable span: a `--selftest` command, or a bare `.py`/`.sh` path (a
     mutant named after the main command is run as `<interp> <path> --selftest`)."""
@@ -172,7 +189,7 @@ def pin_commands(cells, idx, rev):
         if pm:
             bound.append((pm.group(1), pm.group(2), current))
             continue
-        cmd = command_from_span(span, cells, rev)
+        cmd = command_from_span(span, cells, rev, eidx)
         if cmd is not None:
             current = cmd
     return bound
@@ -184,7 +201,7 @@ def strip_env(words):
     return words
 
 
-def derive_command(span, cells, rev):
+def derive_command(span, cells, rev, eidx=2):
     """argv for a span containing `--selftest`; the bare flag borrows the entry cell."""
     try:
         words = strip_env(shlex.split(span))
@@ -194,7 +211,7 @@ def derive_command(span, cells, rev):
         return words
     if span.strip() != "--selftest":
         return None
-    entry_spans = SPAN_RE.findall(cells[2] if len(cells) > 2 else "")
+    entry_spans = SPAN_RE.findall(cells[eidx] if len(cells) > eidx else "")
     if not entry_spans:
         return None
     ewords = []
@@ -264,7 +281,7 @@ def pin_bindings(text, rev):
         if row["state"] != "ok":
             continue
         seen = {}
-        for prefix, _pinned, words in pin_commands(row["cells"], row["idx"], rev):
+        for prefix, _pinned, words in pin_commands(row["cells"], row["idx"], rev, row["eidx"]):
             n = seen.get(prefix, 0)
             seen[prefix] = n + 1
             norm = None if words is None else tuple("<REV>" if w == rev else w for w in words)
@@ -306,7 +323,7 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None):
         cells, idx = row["cells"], row["idx"]
         st = cells[idx]
         ordinal = {}
-        for prefix, pinned, words in pin_commands(cells, idx, rev):
+        for prefix, pinned, words in pin_commands(cells, idx, rev, row["eidx"]):
             n = ordinal.get(prefix, 0)
             ordinal[prefix] = n + 1
             bkey = (cells[0], prefix, n)
@@ -330,8 +347,11 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None):
             if key not in cache:
                 cache[key] = run_cmd(words, root, scratch, timeout)
             rc, text_out = cache[key]
-            seen = [l for l in text_out.splitlines() if prefix in l]
-            observed = seen[-1].split(prefix, 1)[1] if seen else None
+            # v2: only lines that START with the prefix are tally lines (a `compat:`
+            # echo of an old tally is not), and they must all agree.
+            tails = {l.strip()[len(prefix):].strip() for l in text_out.splitlines()
+                     if re.match(re.escape(prefix) + r"(?![A-Za-z0-9_])", l.strip())}
+            observed = tails.pop() if len(tails) == 1 else None
             want = pinned.strip()
             # v2: the observed tail must equal the pinned text exactly (a weakened pin
             # such as `pass=22` for `pass=22 fail=0` is a mismatch).
@@ -559,6 +579,24 @@ def selftest():
         out_digest = sha256_file(os.path.join(base, "outside.py"))
         cases.append(("v2_digest_path_traversal", HDR + row(
             good + " at sha256 `%s` of `../outside.py`" % out_digest), 1, False, "mismatch"))
+        # v2 arms — w1 RevPinCheckCode M1 (stale echo), M3 (fenced example), L1 (entry column).
+        with open(os.path.join(root, "tools", "decoy.py"), "w") as f:
+            f.write("import sys\nif '--selftest' in sys.argv:\n    print('FOO_SELFTEST pass=4 fail=0')\n"
+                    "    print('compat: FOO_SELFTEST pass=3 fail=0')\n")
+        with open(os.path.join(root, "tools", "twice.py"), "w") as f:
+            f.write("import sys\nif '--selftest' in sys.argv:\n    print('FOO_SELFTEST pass=3 fail=0')\n"
+                    "    print('FOO_SELFTEST pass=4 fail=0')\n")
+        cases.append(("v2_stale_echo_line_ignored", HDR + row(
+            "`python3 tools/decoy.py --selftest` → `FOO_SELFTEST pass=3 fail=0`", entry="`python3 tools/decoy.py`"),
+            1, False, "mismatch"))
+        cases.append(("v2_disagreeing_tally_lines", HDR + row(
+            "`python3 tools/twice.py --selftest` → `FOO_SELFTEST pass=3 fail=0`", entry="`python3 tools/twice.py`"),
+            1, False, "mismatch"))
+        cases.append(("v2_fenced_example_not_counted", "```markdown\n" + HDR + row(good) + "```\n", 1, False, None))
+        cases.append(("v2_entry_column_from_header",
+                      "| name | entry | self-test | owner |\n|---|---|---|---|\n"
+                      "| foo | `python3 tools/rev.py <rev>` | `--selftest` → `REV_SELFTEST: PASS (2 cases)` | mori |\n",
+                      1, True, None))
         for name, text, floor, want_met, want_state in cases:
             scratch = tempfile.mkdtemp(prefix="c-", dir=base)
             text, btext = text if isinstance(text, tuple) else (text, None)
