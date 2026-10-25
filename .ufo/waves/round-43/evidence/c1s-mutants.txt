@@ -1,0 +1,49 @@
+Round-43 successor-counter mutant battery (L1 run, /tmp scratch only, the lane
+counter was never edited). Counter under test:
+.ufo/waves/round-43/count-c1s.py sha256
+93482248b46def2a2cec7238732af1551ef315517e76833c3843875313b65dc5
+The frozen r42 counter is sha256
+105ce075f33120837ba5a49a1ad4f23a3dd7dc17fea506ab917140bc7f2053f6.
+
+Construction: every class is applied to a scratch clone's rev copy; "coordinated"
+classes apply the mutation to BOTH the rev copy and the running copy, so the
+counter's own self_at_rev check cannot short-circuit the test. The running copy
+is always a /tmp file; the lane counter and the lane repo are untouched.
+
+class                          construction                 verdict    evidence
+self_at_rev_absent             rev without the counter       KILLED    check self_at_rev FAIL (absent) -> C1S=unmet exit 1
+self_at_rev_bytes_differ       rev copy carries a comment    KILLED    check self_at_rev FAIL (bytes differ) -> C1S=unmet exit 1
+frozen_sha_mismatch            coordinated (FROZEN_SHA=0..)   KILLED    check frozen_sha FAIL -> C1S=unmet exit 1
+frozen_sig_gains_cwd           coordinated (frozen run()     KILLED    check frozen_sig FAIL (run params argv, timeout) -> C1S=unmet exit 1
+                               gains cwd, pin updated)
+noharm_cwd_skipped             coordinated (the no-harm      SURVIVED  rc=0, 13 check lines (the healthy counter prints 15),
+                               check removed)                          C1S=met
+v5_selftest_17_loosened_to_16  coordinated (>= 16 instead    SURVIVED  rc=0, 14 check lines, C1S=met
+                               of == 17)
+mutant_kill_accepts_wrong_arm  coordinated (any single      SURVIVED  rc=0, 14 check lines, C1S=met
+                               failing arm accepted)
+frozen_still_crashes_accepts_  coordinated (a C1= line no   SURVIVED  rc=0, 14 check lines, C1S=met
+C1_line                        longer disqualifies)
+
+What this means, stated plainly: the successor counter's verdict is not
+tamper-evident. A counter whose bytes were changed coherently in both copies
+can still print C1S=met while checking one clause fewer than the frozen
+sentence requires. It does NOT produce a false positive on honest input: at the
+landed tip dde525ea4a7fca365e8ff2f3c486bccf28b94e52 the counter printed 15
+PASS lines and C1S=met, and every clause of P-C1S is discharged by the receipt
+evidence/c1s-after.txt (see the generated clause map
+evidence/c1s-clause-map.txt). The counter's identity is pinned by the sha256
+above; a mutated copy is not the claim's counter.
+
+Routed to round 44: the successor counter needs a check-name/count guard (the
+expected check list must match what it printed) so that a check removed from
+the counter itself is a failure rather than a silent pass. That guard is a
+change to the instrument and was deliberately NOT made after seats had scored.
+
+Seats' own attacks (reports under .ufo/waves/round-43/w1/): ResCritJunk (a
+counter that only prints C1S=met -> SURVIVED, the attack failed), ResCritNoHarm
+(the no-harm arm -> CONFIRMED, pass=22 fail=0, 3/3 of the gate's own mutants
+killed), ResCritDoNothing (the entering tip -> C1S=unmet exit 1),
+ResCritInPlace (an in-place S235 rewrite -> scored C2=unmet), ResCritS268 (the
+refusal stands, HTTP 418, no committed PDF), ResCritScope (no host-mutation
+vector in the round's diff).

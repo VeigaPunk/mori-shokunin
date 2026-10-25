@@ -126,3 +126,26 @@ runs `count-c1s.py <scratch-rev> --repo <scratch-clone>` and prints `C1S=met`.
 M1's fix is shown able to fail: `count-c1s.py e3a2b58` prints `C1S=unmet`
 because the successor is absent. A planted `print("C1S=met")` also prints
 `C1S=unmet`.
+
+## Wave findings (the round's own seats — still the lane, not a reviewer)
+
+The 64-seat v2 wave was starved by the provider's rate limit (34 seat logs
+carry `provider.rate_limit: 429`); 52 of its seats were then killed by the
+540 s seat timeout and 4 wrote reports. A residual call of 8 reviewer/critic
+seats (the contract's ≤8 allowance), staggered two at a time with a 1200 s
+timeout, delivered the attack evidence the starved wave could not.
+
+| seat | attack | verdict | what it establishes |
+|---|---|---|---|
+| `ResCritDoNothing` | do-nothing replay of the entering tip | the counter prints `C1S=unmet` exit 1 | the claimed after-state is not reachable without the work |
+| `ResCritJunk` | a counter whose body only prints `C1S=met` | **SURVIVED** (the attack failed): `self_at_rev FAIL (bytes differ)` → `C1S=unmet` exit 1 | self-attestation cannot flip the claim |
+| `ResCritInPlace` | rewriting the S235 row's anchor cell in place | the counter scores the mutant `C2=unmet` | the S235 row is not rewritten |
+| `ResCritNoHarm` | the no-harm arm (append-only gate selftest) | **CONFIRMED**: `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0` exit 0, 3/3 of the gate's own mutants killed | the no-harm arm is non-vacuous |
+| `ResCritS268` | re-fetching the S268 stampPDF endpoint | **SURVIVED** (the refusal stands): HTTP 418, `text/html`, 15410 bytes; no committed PDF for that source | S268 stays refused |
+| `ResCritScope` | host-mutation grep over the round's diff | **no executable vector** — every hit is a refusal record or prose quoting a paper | detection-and-report scope held |
+
+`ResCritS268` also produced a defect in this round's own method: the S268
+refusal rests on a HEAD probe (`curl -sI`), and a HEAD-only probe cannot
+distinguish a mitigation page from an endpoint that refuses HEAD but serves
+GET. That became QUALITY 116; the refusal itself stands on the absence of any
+committed PDF, not on the probe's completeness.

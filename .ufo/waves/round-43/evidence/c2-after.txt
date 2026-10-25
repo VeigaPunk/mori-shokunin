@@ -1,0 +1,12 @@
+command: python3 .ufo/waves/round-43/count-c2.py dde525ea4a7fca365e8ff2f3c486bccf28b94e52
+when: 2026-10-24T22:53:03-03:00
+check sources_present        PASS (corpus/SOURCES.md)
+check scorecard_present      PASS (SCORECARD.md)
+check pdf_present            PASS (corpus/evidence/sources-r42/S235.pdf)
+check s235_unrewritten       PASS (rows=1)
+check correction_row         PASS (ids=['S349'])
+check declaration_unrewritten PASS (count=1)
+check scorecard_correction   PASS (count=1)
+check pdf_sha                PASS (9855a4986a31)
+C2=met mismatches=0
+exit=0

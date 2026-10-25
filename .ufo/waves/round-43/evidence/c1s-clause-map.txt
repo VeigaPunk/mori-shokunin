@@ -1,0 +1,28 @@
+Round-43 P-C1S clause map — generated from /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-43/evidence/c1s-after.txt
+measured rev: dde525ea4a7fca365e8ff2f3c486bccf28b94e52
+sha256 .ufo/waves/round-43/count-c1s.py = 93482248b46def2a2cec7238732af1551ef315517e76833c3843875313b65dc5
+sha256 .ufo/waves/round-42/count-c1.py = 105ce075f33120837ba5a49a1ad4f23a3dd7dc17fea506ab917140bc7f2053f6
+
+clause                             result what it discharges                                         receipt line
+self_at_rev                        PASS   the running counter is byte-identical to <rev>:.ufo/waves/ check self_at_rev            PASS (match)
+frozen_sha                         PASS   the frozen r42 counter at <rev> matches the pinned sha256  check frozen_sha             PASS (105ce075f331)
+frozen_sig                         PASS   the frozen counter's run() parameters are exactly argv, ti check frozen_sig             PASS (run params argv, timeout)
+v5_present                         PASS   the r42 v5 checker is present at <rev>                     check v5_present             PASS (.ufo/waves/round-42/conform.py)
+sandbox_clone                      PASS   a sandbox clone of <rev> is available for the no-harm arm  check sandbox_clone          PASS
+noharm_cwd                         PASS   the successor run() accepts cwd and the append-only gate s check noharm_cwd             PASS (rc=0 MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0)
+v5_selftest_17                     PASS   the r42 v5 checker selftest is pass=17 fail=0 rc 0         check v5_selftest_17         PASS (pass=17 fail=0 rc=0)
+mutant_present_walrus-branch       PASS   the walrus-branch mutant is committed at <rev>             check mutant_present_walrus-branch PASS (.ufo/waves/round-42/fixtures/mutants/conform-mut-walrus-branch.py)
+mutant_kill_walrus-branch          PASS   the walrus-branch mutant prints pass=16 fail=1 failing exa check mutant_kill_walrus-branch PASS (pass=16 fail=1 fails=['timeout_scope_walrus_positive'])
+mutant_present_tuple-extract       PASS   the tuple-extract mutant is committed at <rev>             check mutant_present_tuple-extract PASS (.ufo/waves/round-42/fixtures/mutants/conform-mut-tuple-extract.py)
+mutant_kill_tuple-extract          PASS   the tuple-extract mutant prints pass=16 fail=1 failing exa check mutant_kill_tuple-extract PASS (pass=16 fail=1 fails=['timeout_scope_tupleunpack_positive'])
+mutant_present_sort-deletion       PASS   the sort-deletion mutant is committed at <rev>             check mutant_present_sort-deletion PASS (.ufo/waves/round-42/fixtures/mutants/conform-mut-sort-deletion.py)
+mutant_kill_sort-deletion          PASS   the sort-deletion mutant prints pass=16 fail=1 failing exa check mutant_kill_sort-deletion PASS (pass=16 fail=1 fails=['timeout_scope_source_order'])
+frozen_still_crashes               PASS   a re-execution of the frozen counter exits non-zero with t check frozen_still_crashes   PASS (rc=1 crash=True C1_line=False)
+
+verdict line in the receipt: ['C1S=met']
+exit line in the receipt: ['exit=0']
+
+Note: the clause map shows the counter's own verdict line for each clause of the
+frozen sentence. It does not prove the counter would notice a counter that had
+been tampered with; see evidence/c1s-mutants.txt for that battery, and the
+counter's sha256 above pins which counter this map is about.

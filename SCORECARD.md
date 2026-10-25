@@ -2373,3 +2373,20 @@ calibration is the lowest-axis claim. No score move is pre-awarded.
 Round-43 calibration correction: r42-declaration-C1=met superseded; frozen counter printed no C1= line
 
 The round-42 declaration cell above is not rewritten. The measured-outcome section already contradicted it. This line is the append-only supersession the round-43 counter reads. The S235 row is not rewritten; S349 records the committed PDF sha256.
+
+### Round 43 measured outcome (L1 Kimi fresh mori-r43, tip dde525ea4a7fca365e8ff2f3c486bccf28b94e52)
+
+| Claim | After (measured) | Verdict proposed for the closure |
+|---|---|---|
+| C1S | `python3 .ufo/waves/round-43/count-c1s.py dde525ea…` → 15 checks PASS, then `C1S=met` exit 0 (`evidence/c1s-after.txt`) | **verified (measured), with a disclosed instrument-tamper limitation.** The successor completes the arm the frozen r42 counter never reached: the frozen counter still exits non-zero with `TypeError: run() got an unexpected keyword argument 'cwd'` and prints no `C1=` line, and the no-harm arm records `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0` rc 0 in a sandbox clone. Controls re-executed by the L1: do-nothing at the entering tip → `C1S=unmet` exit 1; a counter whose body only prints `C1S=met` → `C1S=unmet` exit 1; green control on a scratch clone → `C1S=met` exit 0. **Limitation, disclosed:** the counter's verdict is not tamper-evident — a coordinated mutation applied to both the running copy and the rev copy (the no-harm arm removed, or a check loosened) still prints `C1S=met` with one check fewer; the counter's identity is therefore pinned by its sha256 `93482248b46def2a2cec7238732af1551ef315517e76833c3843875313b65dc5` at the landed tip, and a mutated copy is not the claim's counter. Routed to round 44 as a counter-hardening item. A stricter reading of the kill rule would grade this claim not verified; the ruling is the closure's. |
+| C2 | `python3 .ufo/waves/round-43/count-c2.py dde525ea…` → `C2=met mismatches=0` exit 0 (`evidence/c2-after.txt`) | **verified (measured).** The round-42 declaration cell is still present and unmodified (the counter's `declaration_unrewritten` check counts it exactly once), the append-only correction line appears exactly once, the S235 row's bytes are unchanged (sha256 `971df55e…`), and a separate row carries the committed PDF's sha256 `9855a498…`. Controls re-executed by the L1: do-nothing at the entering tip → `C2=unmet mismatches=2` exit 1; green control on a scratch clone → `C2=met mismatches=0` exit 0. |
+
+Held: coverage 6, operability 7, depth 5, calibration 5, freshness 5,
+adjacency 6 — no score move (the claims repair two routed defects at held
+scores, the lane's established pattern; the lowest-axis obligation is worked
+by C2 on calibration, tied lowest with depth and freshness). Frontier:
+registry 238 → 243 rows (S348, S349, S350, S351, S470); one admitted
+assimilation entry on the `--disk-usage` theme, two refusals with reason and
+flip. QUALITY 115 (frozen instruments must replay off-host) and QUALITY 116
+(an unreachable verdict needs a GET probe, not a HEAD probe) added this
+round. Mistakes M1–M5 in `corpus/lessons/round-43.md`.

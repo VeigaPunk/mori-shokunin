@@ -1,0 +1,8 @@
+ResCritInPlace	critic	0
+ResCritScope	critic	0
+ResCritDoNothing	critic	0
+ResCritNoHarm	critic	0
+ResCritJunk	critic	0
+ResCritS268	critic	0
+ResCritBulkAppend	critic	124
+ResCritDeclaration	critic	124

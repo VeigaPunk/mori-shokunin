@@ -2541,3 +2541,47 @@ frozen sentences in `.ufo/waves/round-43/contract.md` (entering tip
 - **OpenAlex tier-A L0 not re-filed:** already filed at fleet commit
   `527fc8dd5f36a7f7ee45aff66f0e3daf413222de` (mori identity, ancestor of
   fleet HEAD).
+
+### Round-43 wave record (L1 Kimi fresh mori-r43)
+
+Round shape: **one v2 wave** (policy `scripts/hyaku/ufo-wave-policy-v2.json`,
+band 64–128), 64 seats, 31 attack roles (48.4%: reviewer 12, critic 11,
+mutation-tester 8; build 33: scout 12, scribe 8, executor 8, sentinel 2,
+connector 1, simplifier 1, revenger 1), validated with
+`ufo-swarm-wave.mjs run --spec .ufo/waves/round-43/w1-spec.json` (exit 0,
+`evidence/wave-plan.json`, `counts.spawn=64`). **AgentSwarm is not exposed on
+this Kimi seat**; the validator's `taskCall` (context + 64 tasks, unchanged)
+was issued as ONE batch of 64 `kimi --agent-file` processes, one per seat,
+each with a 540 s timeout, and the `/skill:godspeed` lead followed by the
+verbatim directive bytes.
+
+- Grant, immediately before the dispatch:
+  `wave-slot.sh acquire mori round-43-w1 64 3600` →
+  `granted lane=mori wave=round-43-w1 seats=64 live=54 pending=0 cap=256`.
+- **The wave was starved by the provider.** 34 of the 64 seat logs carry
+  `provider.rate_limit: 429 Rate limit reached for requests`; 52 seats were
+  then killed by the 540 s seat timeout. Settlement (`w1-settle.tsv`): 4 seats
+  exit 0, 8 exit 1, 52 exit 124. **4 reports returned** (`Exec2.md`,
+  `Exec4.md`, `Exec5.md`, `Exec6.md`); the other 60 seats are dead seats, are
+  not credited, and were **not replaced**.
+- The launcher's `wait` ran inside a pipeline subshell and printed `SEATS 0`
+  while the 64 processes were already running (`/tmp/mori-r43-launch.log`);
+  the seats themselves were fine. A waiter parent that spawns nothing stayed
+  alive until the seats had settled (lesson M5).
+- **Residual call** (the contract's ≤8 reviewer/critic allowance), staggered
+  two at a time with a 1200 s seat timeout so the 429 storm did not repeat:
+  8 seats, all attack roles, 6 reports (`ResCritDoNothing.md`,
+  `ResCritInPlace.md`, `ResCritJunk.md`, `ResCritNoHarm.md`, `ResCritS268.md`,
+  `ResCritScope.md`), 2 dead seats killed at the timeout
+  (`ResCritBulkAppend`, `ResCritDeclaration` — their logs are kept, they filed
+  no report, they are not credited and were not replaced).
+- **Round total: 72 seats** (64 in the wave + 8 in the residual call). No
+  second wave shape, no residual filler, no replaced seat.
+- L1's own mutant battery against the successor counter (8 classes, /tmp
+  scratch only): 4 KILLED, 4 SURVIVED — the counter's verdict is not
+  tamper-evident; see `evidence/c1s-mutants.txt` and the disclosed limitation
+  in the round-43 SCORECARD measured outcome.
+- No seat wrote outside its report path; the misroot sweep found no mori
+  round-43 file at the fleet root (`bm.json`, `live.html`, `live_s228.html`
+  there are dated 18:07, predate this round, name no lane and were left
+  untouched, as were the driver's `.ufo/state/*` files).
