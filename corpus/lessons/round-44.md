@@ -130,6 +130,17 @@ swap-out branch. Evidence: `w1/ScribeEntryDraft.md` F6; fixed in the entry and i
 the README map row. Captured by: none at authoring time; the seat read the
 sections, this L1 had read the sentences.
 
+M10 (appended after the wave): three more entry defects, all found by
+`w1/CritAssimilationGate.md` after the entry had landed — (a) the Boundaries
+section still said the entry "adds the state alphabet" while the Claim disclosed
+it is already held; (b) the mm discriminator was asserted inside a receipt whose
+method never read an `mm` indicator (a `/proc/<pid>/maps` reading was added; note
+that procfs reports `st_size = 0` for both files, so a size-based check reads zero
+for every pid); (c) the S170 negative in S472's `scope` cell is imprecise —
+S170's source carries the swap-out sentence as a roff comment at `:15`. (a) and
+(b) are fixed in the entry; (c) is recorded here because the S472 row is
+append-only and is not rewritten. Captured by: none at authoring time.
+
 M2 and M3 are the round's two load-bearing mistakes: both are instrument
 properties discovered only by attack, and both are disclosed in the report rather
 than patched into frozen bytes.

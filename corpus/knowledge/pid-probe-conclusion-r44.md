@@ -29,13 +29,18 @@ evidence about an existing task, and it has three explanations:
    breath as the swap-out case: 「如果該程序已經被交換出記憶體, 或者該程序已經僵死, 那麼就沒有
    任何東西在該檔案裡，這時候對該檔案的讀操作將返回零個字元。」
 2. **The task has no `mm` — a kernel thread.** Measured on this host (kernel
-   7.2.11-arch1-1): of 1931 `/proc` entries, 1698 read a zero-length `cmdline`,
-   and every one of them was state `I` (1489) or `S` (209)
-   (`evidence/cmdline-empty-by-state.txt`). No `Z`/`X` was present at that
-   instant. **This is the load-bearing reading: the state letter does not
-   separate this world from a sleeping user process** — `S` covers both a
-   sleeping user task with an `mm` and an mm-less kernel thread. The
-   discriminator is the absence of an `mm`, not the state field.
+   7.2.11-arch1-1), two snapshots, both read-only
+   (`evidence/cmdline-empty-by-state.txt`): every zero-length `cmdline` read had
+   an **empty `/proc/<pid>/maps`** and every non-empty one had a non-empty `maps`
+   (1229/1229 and 190/190 in the second snapshot), and the empty reads were state
+   `I` (1020) or `S` (209). No `Z`/`X` was present at either instant. **This is
+   the load-bearing reading: the state letter does not separate this world from a
+   sleeping user process** — `S` covers both a sleeping user task with an `mm` and
+   an mm-less kernel thread. The discriminator is the absence of an `mm`, not the
+   state field. Two cautions travel with it: procfs reports `st_size = 0` for both
+   files, so a size-based check reads zero for every pid (both readings use
+   `read()` lengths); and the totals move between snapshots because the fleet is
+   live (1931/1698 at the first, 1419/1229 at the second).
 3. **The task was swapped out — a claim only an old translation makes.** S472
    states it for the `comm` **file**; S471 states the opposite for `stat`'s comm
    **field**: 「実行形式がスワップアウトされているかどうかによらず、見ることができる。」
@@ -63,10 +68,12 @@ stands: none of these is daemon identity.
   kernel threads read zero-length is this host's reading, and the general
   mechanism is not quoted from either page.
 - **The zombie/0-character rule itself is already held** in English as S170
-  (`proc_pid_cmdline(5)` at man-pages 6.20). This entry adds the state alphabet,
-  the measured mm-less world, the contradiction between the two translations, and
-  the ENOENT boundary; it does not re-assert the held rule and does not supersede
-  S170.
+  (`proc_pid_cmdline(5)` at man-pages 6.20). This entry adds the `X` version
+  qualifier and the two translations' accounts, the measured mm-less world and the
+  ENOENT boundary; it does not re-assert the held rule and does not supersede
+  S170. S170's rendered contract states the zombie case; its source file carries
+  the swap-out sentence only as a roff comment (`:15`), which is why a "does not
+  state" claim about it must be read as "does not state it in the rendered text".
 - **It does not identify the watchdog daemon.** FR5 stays open: a state field read
   is not an argv-substring probe, and neither one establishes daemon identity.
 - **It does not change the census.** No probe, surface, finding id or threshold is

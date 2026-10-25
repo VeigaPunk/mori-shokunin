@@ -9,3 +9,12 @@ nonexistent_pid=OSError errno=2
 # reading: every empty read on this host is a state I or S task with no mm (kernel threads); no Z/X observed at this instant.
 # so the state field does NOT separate a sleeping user process (S) from an mm-less kernel thread (S): the discriminator is the absence of an mm, not the state letter.
 # detection and report only; no process was signalled, stopped or inspected beyond these two procfs reads.
+
+# second reading, same method plus /proc/<pid>/maps content length (the mm indicator); read-only
+# run: 2026-10-25T05:39:11-03:00
+empty_cmdline=1229 (empty_maps=1229 nonempty_maps=0)
+nonempty_cmdline=190 (empty_maps=0 nonempty_maps=190)
+empty_by_state=I=1020 S=209
+# reading: every zero-length cmdline read in this snapshot has an empty maps file, and every non-empty one has a non-empty maps file — the mm discriminator holds on this host at this instant.
+# caution: procfs reports st_size=0 for cmdline and maps, so a size-based check reads zero for every pid; both readings above use read() lengths.
+# the totals move between runs (the fleet is live): 1931/1698 at 05:24:54, 1230+189 at this run. S=209 was stable across both.
