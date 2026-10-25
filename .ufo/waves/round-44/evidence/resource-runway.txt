@@ -1,0 +1,18 @@
+# host resource runway, measured read-only during round 44 wave 1 (detection and report only; no reclamation)
+# run: 2026-10-25T05:22:20-03:00
+$ df -h /tmp /
+Filesystem        Size  Used Avail Use% Mounted on
+/dev/nvme0n1p1    128G  127G  1.1G 100% /tmp
+/dev/mapper/root  930G  311G  562G  36% /
+
+$ df -i /tmp
+/dev/nvme0n1p1 8975776 6837147 2138629   77% /tmp
+
+$ ls /tmp | wc -l
+33812
+
+$ du -sh /tmp (bounded, 60s)
+167G	/tmp
+du timed out at 60s
+
+# note: the round's own seats reported /tmp at 100% during wave 1 (ExecLedger); mori reports, never reclaims (PROVINCE: detection and report only; souji owns residue proposals, operator owns removal)

@@ -2390,3 +2390,137 @@ assimilation entry on the `--disk-usage` theme, two refusals with reason and
 flip. QUALITY 115 (frozen instruments must replay off-host) and QUALITY 116
 (an unreachable verdict needs a GET probe, not a HEAD probe) added this
 round. Mistakes M1–M5 in `corpus/lessons/round-43.md`.
+
+## Round 44 declaration (L1 lane subagent, mori-r44) — figure reconciliation, gate standard, FR5 pid-probe ground
+
+Entering tip `1429c791db5891c484684feef893799909d2d6a8` (round-43 closure
+admitted). Instruments frozen at `7cb59c6891d4f5d0266fe062565f094da835dc84`
+before the first data seat; pins `.ufo/waves/round-44/evidence/freeze-r44.txt`.
+Lowest non-retired axes at the entering tip: calibration 5 tied with depth 5 and
+freshness 5 — C1 works calibration, C2 operability, C3 coverage. Contract and
+predicates: `.ufo/waves/round-44/contract.md` (P-C1, P-C2, P-C3).
+
+Routed round-43 defects answered: item 3 (count slips) by C1, item 4 (no gate
+registry row, no `--selftest`) by C2, item 5 (receipt revision vs verdict
+revision) by the tip-run receipt and QUALITY 119. Items 1, 2 and 6 are durable
+records or operator-side and are named in the report, not fixed.
+
+| # | claim | axis / score | before (one command over committed bytes) | declared after-value (one command) |
+|---|---|---|---|---|
+| C1 | a committed figure ledger reconciles the round's reported counts: `git`-pipeline rows naming `@REV@`, re-derived at the measured revision, 12-row and 4-class floors | calibration 5 | `python3 .ufo/waves/round-44/count-c1.py 1429c791` → `check ledger_present FAIL (absent)` → `C1=unmet`, exit 1 (`evidence/control-c1-donothing.txt`) | `python3 .ufo/waves/round-44/count-c1.py <landed tip>` → `C1=met mismatches=0`, exit 0 |
+| C2 | each of the round's counters is a registered gate: eight non-empty standard cells in `SKILL.md`'s gate table, resolvable entry, a `--selftest` over isolated fixtures whose tally is fail 0, and a committed mutant its own selftest catches | operability 7 | `python3 .ufo/waves/round-44/count-c2.py 1429c791 --counter …` → `check counters_present FAIL (absent)` → `C2=unmet`, exit 1 (`evidence/control-c2-donothing.txt`) | `python3 .ufo/waves/round-44/count-c2.py <landed tip> --counter .ufo/waves/round-44/count-c1.py --counter .ufo/waves/round-44/count-c2.py --counter .ufo/waves/round-44/count-c3.py` → `C2=met`, exit 0 |
+| C3 | FR5 ground the lane did not hold enters the corpus: the `Z`/`X` process-state alphabet and the three worlds a zero-character `/proc/<pid>/cmdline` read is consistent with, with mined rows whose `used-by` names the entry, a census-green registry and a README map row | coverage 6 | `git grep -l 'Z ゾンビ' 1429c791 -- corpus/` → 0 files; registry 243 rows (`evidence/control-c3-donothing.txt`) | `python3 .ufo/waves/round-44/count-c3.py <landed tip> --entry corpus/knowledge/pid-probe-conclusion-r44.md --row S471 --row S472` → `C3=met`, exit 0 |
+
+Witnesses (the classes the round-43 closure routed):
+`count-c1.py <tip> --ledger .ufo/waves/round-44/fixtures/figures-r43.tsv` →
+`C1=unmet mismatches=2`, naming F03 (asserted 15, observed 14) and F04
+(asserted 34, observed 8); `tools/mori-gate-registry.py --rev <tip> --audit
+.ufo/waves/round-43/count-c1s.py --audit .ufo/waves/round-43/count-c2.py` →
+`REGISTRY=unmet` (`evidence/witness-r43-gates.txt`).
+
+Kill rules as frozen: a do-nothing control cannot print `C1=met`, `C2=met` or
+`C3=met` (the three entering-tip receipts above); a ledger whose rows are not
+single `git` pipelines naming `@REV@` is rejected, not scored; a row below the
+floor is rejected; a registry row missing a standard cell, naming an
+unresolvable path, or a counter without `--selftest` fails `C2`; a mutant a
+counter's own selftest cannot catch fails `C2`; a token quoted by no opened
+source fails the C3 Gate.
+
+### Round 44 correction appended before the after-measurement — the C3 ground sentence's "three worlds"
+
+Appended after the declaration above; the declaration's bytes are not rewritten
+(the frozen contract's P-C3 sentence keeps its wording). Evidence: the opened
+pages, `w1/ScoutSources490.md` §5–§6.2.
+
+The declaration's C3 cell says "the three worlds a zero-character
+`/proc/<pid>/cmdline` read is consistent with". That phrasing is **superseded**:
+the two opened pages ground **two** worlds — the pid never existed, and the pid
+exists and is a zombie (`Z`) or `X` dead — plus a third, "swapped out", that only
+the Linux-1.3.11-era zh_TW translation states and that the focal ja page
+contradicts on the adjacent `comm` field (「スワップアウトされているかどうかによらず、
+見ることができる。」 vs 「該檔案是否可見取決於該檔案是否已被交換出記憶體」). The
+admitted entry asserts the two grounded worlds, records the third as a retired
+translation-level claim, and gains the `Z`/`X` state alphabet with its `X`
+version qualifier. The measured predicate P-C3 is unchanged: the token
+`Z ゾンビ`, the two `mined` rows whose `used-by` names the entry, a census-green
+registry and a README map row.
+
+### Round 44 post-data corrections (appended before the report lands; the declaration above is not rewritten)
+
+Wave-1 seats falsified four things in the declaration and one in the round-43
+record. All are append-only corrections; frozen instrument bytes stay unchanged.
+
+1. **C3's axis is depth, not coverage** (`w1/CritPredicates.md`; the lane's own
+   admitted ruling at `corpus/lessons/round-31-verifier-spotcheck.md:156` says
+   "The frontier step (+14 SOURCES rows, README FR5/D5 map rows) is not an axis
+   claim"). The round's C3 changes what the lane can *say and show* about a pid
+   probe — a decision-grade knowledge move — not the fraction of domain surfaces
+   governed. **C3 = depth (5, tied lowest)**, and coverage is **not claimed as
+   moved**. C1 remains calibration (5) and C2 operability (7); the three claims
+   keep distinct axes and the lowest-axis obligation is met by C1 and C3.
+2. **C3's novelty is narrower than the declaration says.** The zero-character
+   `cmdline` read and the `Z` state are already held
+   (`corpus/knowledge/watchdog-identity-r31.md:27,29`, S170/S167/S171), and
+   S171's scope already names `X`. The new ground the entry actually lands is the
+   **measured mm-less world** — 1698 of 1931 `/proc` entries read a zero-length
+   `cmdline` and every one was state `I` (1489) or `S` (209), so the state letter
+   does **not** separate an mm-less kernel thread from a sleeping user process
+   (`evidence/cmdline-empty-by-state.txt`) — plus the two translations'
+   disagreement on `comm` under swap, and the `ENOENT` boundary for a pid that
+   does not exist. The entry states the held/new split in its own Claim.
+3. **The P-C3 after-figure "1 file" is wrong.** `git grep -l 'Z ゾンビ'` at the
+   landed tip finds **3** files: the entry, the S471 `anchor` cell and the
+   `corpus/README.md` map row (`w1/RevScorecardPlanned.md`). The measured
+   after-value is 3, and the ledger carries it as `F03`.
+4. **C2's declared after-command is incomplete.** The frozen counter's
+   `--mutants-dir` default (`fixtures/mutants`, lane-relative) does not exist, so
+   the declared form prints `C2=unmet` on `mutant_kill`. The runnable form — the
+   one this round measured — is
+   `python3 .ufo/waves/round-44/count-c2.py <tip> --counter .ufo/waves/round-44/count-c1.py
+   --counter .ufo/waves/round-44/count-c2.py --counter .ufo/waves/round-44/count-c3.py
+   --mutants-dir .ufo/waves/round-44/fixtures/mutants`. The `SKILL.md` row's entry
+   cell carries the same gap; correcting it in place would break the freeze pin, so
+   it is routed to round 45 and disclosed in the report.
+5. **C2 was already met at the freeze commit**, before any data seat: the
+   capability landed with the instruments. The honest before/after is therefore
+   "entering tip → freeze commit", and the round-44 data wave added no part of it.
+   Disclosed; the claim is still measured, but it is not a data-wave product.
+6. **C3's frozen counter is satisfiable only under an environment override.**
+   `count-c3.py` stages the registry at `$TMPDIR/c3-*/SOURCES.md` while
+   `sources-census.sh --file` resolves `used-by` against `dirname(file)/..`, so
+   every repo-relative `used-by` misses (279 `E11`, exit 1). The after-measurement
+   runs with `TMPDIR=<lane>`; the defect and its fix are routed to round 45.
+7. **Round-43 SCORECARD cells are superseded.** The round-43 measured-outcome
+   section says `C1S` printed "15 checks PASS" and names `dde525ea` as the
+   measured tip. Superseded: the counter prints **14** check lines
+   (`git show 91cb221f:.ufo/waves/round-43/evidence/c1s-after.txt | grep -cE '^check'`
+   → 14), and the receipt of record for this round is
+   `evidence/c1s-tip-run.txt` at the round-44 tip (14 checks PASS, `C1S=met`,
+   exit 0). The round-43 cells are not rewritten; this note supersedes their
+   numbers.
+
+## Planned (round 45)
+
+1. **C1's vacuity, closed**: a revision-sensitivity arm — each ledger row's value
+   must differ from its value at a second revision (or be declared a constant with
+   a reason), plus distinct ids and distinct commands, no `WORK` mode for scoring,
+   an absent path is a FAIL not a zero, and the floors non-overridable
+   (`w1/MutC1.md`, `w1/CritC1Vacuity.md`, `w1/ExecJunkLedger.md`).
+2. **C2's instrument honesty**: `selftest_tally` must read the parsed tally
+   (`fail==0`, `pass>=min_arms`, rc 0) instead of `" pass=" in t`; each mutant must
+   be a byte-diff of its counter that disables exactly one check; the auditor must
+   read every standard-header table in `SKILL.md`, resolve the *row's* entry path,
+   and reject duplicate rows; the registry cells' write-scope claims must be
+   corrected by an append-only superseding row (`w1/CritSelftestHonesty.md`,
+   `w1/MutRegistry.md`, `w1/SentTools.md`, `w1/ExecGateInventory.md`).
+3. **C3's census arm**: mirror the registry at `<repo>/corpus/SOURCES.md` (or pass
+   `--root`) so `used-by` resolves without `TMPDIR`; pin the census script in the
+   freeze manifest; make `source:`/`coverage-map:` token-exact.
+4. **Instruments' exit maps**: move `git rev-parse` inside the `try`, so a git
+   timeout prints `*_SETUP` exit 2 instead of a traceback exit 1; scrub `GIT_*`
+   from the child environment; give `count-c1.py`'s `bash -c` rows a
+   producer-rc/pipefail gate and forbid command substitution
+   (`w1/RevVerdictMap.md`, `w1/SentTools.md`).
+5. **Carried**: `considerthese` P3 (repository growth from scratch output) is
+   still unimplemented; the lane's 14 unregistered gates and 3 tools without a
+   `--selftest` mode stay open (the inventory is in the round-44 report).

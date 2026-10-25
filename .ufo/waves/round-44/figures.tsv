@@ -1,0 +1,16 @@
+F01	245	registry	git show @REV@:corpus/SOURCES.md | grep -cE '^ {0,3}\|[[:space:]]*S[0-9]{3,}'
+F02	2	registry	git show @REV@:corpus/SOURCES.md | grep -c 'corpus/knowledge/pid-probe-conclusion-r44.md'
+F03	3	corpus	git grep -l 'Z ゾンビ' @REV@ -- corpus/ | grep -c .
+F04	54	corpus	git ls-tree -r --name-only @REV@ corpus/knowledge | grep -c '\.md$'
+F05	119	corpus	git show @REV@:corpus/QUALITY.md | grep -cE '^[0-9]+\. '
+F06	3	corpus	git show @REV@:corpus/QUALITY.md | grep -cE '^11[789]\. '
+F07	4	registry	git show @REV@:SKILL.md | grep -c '^| r44 '
+F08	72	wave	git ls-tree -r --name-only @REV@ .ufo/waves/round-43/logs | grep -c .
+F09	10	wave	git ls-tree -r --name-only @REV@ .ufo/waves/round-43/w1 | grep -c '\.md$'
+F10	8	wave	git grep -l 'provider.rate_limit' @REV@ -- .ufo/waves/round-43/logs | grep -c .
+F11	14	checks	git show @REV@:.ufo/waves/round-43/evidence/c1s-after.txt | grep -cE '^check'
+F12	32	wave	git show @REV@:.ufo/waves/round-44/w1-spec.json | grep -c '"role"'
+F13	4	evidence	git ls-tree -r --name-only @REV@ .ufo/waves/round-44/fixtures | grep -c .
+F14	8	corpus	git show @REV@:corpus/lessons/round-44.md | grep -cE '^\| M[0-9]+'
+F15	73	corpus	git ls-tree -r --name-only @REV@ corpus/lessons | grep -c '\.md$'
+F16	15	evidence	git ls-tree -r --name-only @REV@ .ufo/waves/round-43/evidence | grep -c .

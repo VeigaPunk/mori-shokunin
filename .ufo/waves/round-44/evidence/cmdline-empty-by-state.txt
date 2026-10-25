@@ -1,0 +1,11 @@
+# own-work reading: how a zero-character /proc/<pid>/cmdline read is distributed over process states on this host
+# run: 2026-10-25T05:24:54-03:00  host: plazir27  kernel: 7.2.11-arch1-1
+# method: read-only; for every /proc/<pid>, read stat field 3 (state) and the length of cmdline bytes; no write, no signal, no cgroup change
+
+pids_scanned=1931 empty_cmdline=1698 nonempty_cmdline=233 unreadable=0
+empty_by_state=I=1489 S=209
+nonexistent_pid=OSError errno=2
+
+# reading: every empty read on this host is a state I or S task with no mm (kernel threads); no Z/X observed at this instant.
+# so the state field does NOT separate a sleeping user process (S) from an mm-less kernel thread (S): the discriminator is the absence of an mm, not the state letter.
+# detection and report only; no process was signalled, stopped or inspected beyond these two procfs reads.

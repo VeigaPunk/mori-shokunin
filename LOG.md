@@ -2593,3 +2593,14 @@ seats under `.ufo/waves/round-43/logs/residual8/`) are committed with the round 
 evidence: they carry each dead seat's last error text (`provider.rate_limit: 429`
 in 34 of the 64 wave seats) and the residue of the two residual seats that were
 killed at their seat timeout without filing a report.
+
+## Erratum appended round 44 — the round-43 rate-limit seat count
+
+Appended after the filed bytes; the round-43 entry above is not rewritten
+(round-43 closure routed defect 3; round-44 C1).
+
+- Superseded: 「`provider.rate_limit: 429` in 34 of the 64 wave seats」. Observed:
+  **8** — `git grep -l 'provider.rate_limit' 91cb221f -- .ufo/waves/round-43/logs
+  | wc -l` → 8; 39 logs merely contain the string `429` (byte counts and file
+  sizes). The wave-health observation stands as "the wave was starved"; the
+  figure is 8 of 72 committed seat logs, not 34 of 64.

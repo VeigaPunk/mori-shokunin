@@ -937,3 +937,43 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     r41 mutants surviving (`evidence/control-c1-v4.txt`). Not covered: survivor classes no fixture names yet.
 115. A frozen instrument's green control must replay with `--repo` pointing at a scratch clone, not only a hardcoded home path. A receipt that cannot be re-run off that path is weaker evidence. Rationale: considerthese/2026-10-24.md, "Check that frozen instruments replay off-host" (operator-authored reflection, mined round 43; not edited). The r40 `conform.py` hardcoded `LANE` is the pointer, not the evidence. Check: the round-43 green control runs `count-c1s.py <scratch-rev> --repo <scratch-clone>` and prints `C1S=met`. Shown able to fail: the same counter against the entering tip, where the successor file is absent, prints `C1S=unmet`. Not covered: instruments this round did not re-run.
 116. An "unreachable" or "not fetchable" verdict must carry a full GET probe (status line, content-type and the first bytes or magic) for every candidate endpoint, not a HEAD probe alone. A HEAD-only probe cannot distinguish a mitigation page from an endpoint that rejects HEAD but serves GET, so the verdict is weaker than it reads. Rationale: the round-43 residual seat's S268 attack (`.ufo/waves/round-43/w1/ResCritS268.md`) — `curl -sI` returns HTTP 418 with `content-type: text/html` and content-length 15410, while the round-42 record shows the same endpoint serving a GET under other channels. Check: the refusal receipt records a GET probe. Shown able to fail: the round-43 receipt is a HEAD probe (`evidence/s268-headers.txt` records the `-I` response only), so the criterion does not yet hold for this round's own S268 refusal — the refusal stands on the absence of any committed PDF, not on the probe's completeness. Not covered: endpoints that need authentication or a session.
+
+## Criteria added round 44 — the round-43 closure's three routed defects
+
+117. A round's reported counts are reconciled by a committed ledger re-derived at the measured revision, not by
+    re-reading the round's own prose. Lesson: `corpus/lessons/round-44.md`; round-43 closure routed defect 3 (two
+    counts wrong: "15 checks" observed 14, "34 seat logs" observed 8). Rationale also cites
+    `considerthese/2026-10-24.md` ("Reproduce headline numbers mechanically", operator-authored reflection, mined
+    round 44 on 2026-10-25 — the general form had no artifact: `tools/mori-round41-calibration.py` is round-40-only
+    and `.ufo/waves/round-44/figures.tsv` was absent at the entering tip). Check:
+    `python3 .ufo/waves/round-44/count-c1.py <tip>` prints `C1=met mismatches=0` over a ledger of at least 12 rows
+    covering at least 4 of the declared classes, each row one `git` pipeline naming `@REV@`. Shown able to fail: the
+    witness fixture `.ufo/waves/round-44/fixtures/figures-r43.tsv` reproduces round-43's two figures and the counter
+    prints `C1=unmet mismatches=2`, naming F03 (asserted 15, observed 14) and F04 (asserted 34, observed 8). Not
+    covered: **the counter measures ledger well-formedness and arithmetic agreement, not informativeness** — a
+    twelve-row ledger of revision-constant figures (`git diff @REV@ @REV@ | wc -l`, asserted 0) prints `C1=met`
+    (`w1/ExecJunkLedger.md`), so `C1=met` never certifies that a row is a figure the report states. The tightening
+    (a revision-sensitivity arm: every row's value must differ from its value at a second revision, or the row must
+    be declared a constant) is routed to round 45; the frozen bytes are not amended.
+118. A round-scoped measurement counter is a registered gate before it scores anything: eight non-empty standard
+    cells in `SKILL.md`'s `## Gates` table, an entry path that resolves at the audited revision, and a `--selftest`
+    over isolated fixtures whose `pass=/fail=` tally a committed mutant of that same counter flips. Lesson:
+    `corpus/lessons/round-44.md`; round-43 closure routed defect 4 ("no `SKILL.md` registry row and no `--selftest`
+    mode"). Check: `python3 .ufo/waves/round-44/count-c2.py <tip> --counter .ufo/waves/round-44/count-c1.py
+    --counter .ufo/waves/round-44/count-c2.py --counter .ufo/waves/round-44/count-c3.py` prints `C2=met`, and
+    `python3 tools/mori-gate-registry.py --rev <tip> --audit <path>` prints `REGISTRY=met` per row. Shown able to
+    fail: at the entering tip the counters are absent (`C2=unmet`); the two round-43 counters audit `REGISTRY=unmet`
+    (`.ufo/waves/round-44/evidence/witness-r43-gates.txt`); a mutant whose gutted check its own selftest cannot catch
+    fails `mutant_kill`. Not covered: a row's *content* is checked for presence and by the round's reviewer, not
+    machine-compared to the tool's behaviour; and the auditor's own selection rule is weak under crafted input — a
+    duplicate row wins by shortest entry cell and flips the verdict, a row naming an absent path still registers a
+    present target, and a nine-cell row passes (`w1/MutRegistry.md`). Gates landed before round 44 remain
+    unregistered; the inventory is in the round report.
+119. A receipt names the revision it measured, and the verdict names that same revision. Lesson:
+    `corpus/lessons/round-44.md`; round-43 closure routed defect 5 (the C1S receipt was measured at `dde525ea` while
+    the verdict cell said "at the landed tip"). Check: `head -3 .ufo/waves/round-44/evidence/c1s-tip-run.txt` names
+    the revision the run measured, and every counter prints `rev=<full commit>` on its verdict path
+    (`grep -L 'rev=' .ufo/waves/round-44/evidence/control-c*.txt` → empty). Shown able to fail: the round-43
+    receipt header names `dde525ea4a7fca365e8ff2f3c486bccf28b94e52` while its verdict cell says "at the landed tip",
+    which the round-43 closure had to reconcile by hand. Not covered: a tool that never prints its measured revision
+    (most of the lane's older gates) is caught only by review, not by this check.

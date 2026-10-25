@@ -149,3 +149,24 @@ refusal rests on a HEAD probe (`curl -sI`), and a HEAD-only probe cannot
 distinguish a mitigation page from an endpoint that refuses HEAD but serves
 GET. That became QUALITY 116; the refusal itself stands on the absence of any
 committed PDF, not on the probe's completeness.
+
+## Erratum appended round 44 — two superseded counts in this lesson and in the round-43 report
+
+Appended after the filed bytes; nothing above is rewritten (round-43 closure
+routed defect 3; round-44 C1).
+
+- Superseded: 「the healthy counter prints 15」 / the report's "15 checks PASS"
+  (report `0c9e9999:.ufo/reports/round-43/mori.md:45,109,123`). Observed:
+  **14** check lines — `git show 91cb221f:.ufo/waves/round-43/evidence/c1s-after.txt
+  | grep -cE '^check'` → 14; the green control also prints 14.
+- Superseded: 「34 seat logs carry `provider.rate_limit: 429`」 (this lesson's
+  wave-findings paragraph, and report `:11-12,210`). Observed: **8** —
+  `git grep -l 'provider.rate_limit' 91cb221f -- .ufo/waves/round-43/logs | wc -l`
+  → 8; 39 logs merely contain the string `429` (byte counts and file sizes).
+
+Both superseded values are reproduced verbatim in the round-44 witness fixture
+`.ufo/waves/round-44/fixtures/figures-r43.tsv`, and the round-44 counter scores
+them `C1=unmet mismatches=2` (`F03 asserted=15 observed=14`, `F04 asserted=34
+observed=8`). The verdicts those counts supported are unchanged: the C1S
+receipt's own 14 check lines discharge the frozen predicate's clauses, and the
+rate-limit figure was a disclosed wave-health observation, not a claim.

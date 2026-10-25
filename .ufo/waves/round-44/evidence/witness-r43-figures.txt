@@ -1,0 +1,12 @@
+# witness re-run at the freeze commit 7cb59c6891d4f5d0266fe062565f094da835dc84 (L1)
+# command: python3 .ufo/waves/round-44/count-c1.py 7cb59c68 --ledger .ufo/waves/round-44/fixtures/figures-r43.tsv
+# run: 2026-10-25T05:23:28-03:00
+check ledger_present       PASS (1518 bytes)
+check rows_parse           PASS (12 rows)
+check row_floor            PASS (rows=12 min=12)
+check class_floor          PASS (classes=checks,corpus,evidence,registry,wave min=4)
+check commands_reconcile   FAIL (F03 asserted=15 observed=14; F04 asserted=34 observed=8)
+rev=7cb59c6891d4f5d0266fe062565f094da835dc84
+ledger=.ufo/waves/round-44/fixtures/figures-r43.tsv rows=12 classes=checks,corpus,evidence,registry,wave
+C1=unmet mismatches=2
+exit=1

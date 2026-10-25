@@ -623,3 +623,18 @@ Frontier rows stay frontier; no Core move is claimed.
 ## Round-43 coverage additions
 
 Resource-runway ground the map did not hold as a core reading: `journalctl --disk-usage` is a total over archived and active files the command can see, not a per-journal share (`knowledge/journal-disk-usage-total-r51.md`, S470, page re-opened 2026-10-24). A live read-only invocation printed `Archived and active journals take up 269M in the file system.` No vacuum, rotate, or journald change. Two assimilation entries on adjacent ground were refused (campaign file:// plus a MESSAGE grep; `reset-failed` host mutation) — reasons and flips in `corpus/lessons/round-43.md`.
+
+## Round-44 coverage additions
+
+FR5 ground the map held only as row scopes: the zero-character `/proc/<pid>/cmdline`
+read and the `Z` state were already carried by `corpus/knowledge/watchdog-identity-r31.md:27,29`
+(S170, S167/S171), and S171's scope already names `X`. What round 44 adds is the
+**measured mm-less world** — 1698 of 1931 `/proc` entries read a zero-length
+`cmdline` and every one was state `I` (1489) or `S` (209), so the state letter does
+not separate an mm-less kernel thread from a sleeping user process
+(`corpus/evidence` reading: `.ufo/waves/round-44/evidence/cmdline-empty-by-state.txt`)
+— plus the two translations' disagreement on `comm` under swap (S471 vs S472, the
+latter a Linux-1.3.11-era translation), and the `ENOENT` boundary for a pid that
+does not exist. Entry: `corpus/knowledge/pid-probe-conclusion-r44.md` (S471, S472,
+both pages opened 2026-10-25). No probe, census surface or finding id is added;
+FR5 stays open — a state read does not establish daemon identity.
