@@ -6,31 +6,45 @@ Round 47 (C1, calibration). Replaces round 46's row-wide substring counter
 to another cell of the same row (`corpus/lessons/round-46.md` M1;
 `corpus/lessons/round-46-verifier-spotcheck.md` routed defect 1).
 
+v2 (round 47, after wave-1 seats CritC1Predicate and SentPinExec turned the
+frozen v1 — freeze `63eecf27`, sha256 `e3ef425a…` — green on junk edits):
+bound commands are restricted, a pin's command may not change from the
+baseline, the pinned text must equal the observed text, rows are unique, a
+short row naming `selftest` in any case is unparsed, and digest paths stay
+inside the measured tree. The round-47 claim P-C1 is scored with the frozen
+v1 bytes; v2 is the lane's standing tool.
+
 What it reads
   Every Markdown table in SKILL.md whose header row has a cell named
   `self-test`. Cells are split on unescaped `|`; a data row whose cell count
-  differs from its header's and that names a `SELFTEST` token is `unparsed`.
+  differs from its header's and that names `selftest` (any case) is
+  `unparsed`; two parsed rows with one name are `duplicate`.
   Only the self-test cell is read for pins (the semantic cell):
     tally pin  — a backticked span that starts with `<PREFIX>SELFTEST`
                  (PREFIX = [A-Z0-9_]*), e.g. `C1_SELFTEST pass=16 fail=0`,
                  `X_SELFTEST: PASS (6 cases)`, `X_SELFTEST: PASS 12/12`.
                  The text after the prefix must carry a digit, else `unparsed`.
     digest pin — a full 64-hex token in the self-test cell; it must equal the
-                 sha256 of at least one file path named anywhere in the row.
+                 sha256 of at least one file path named anywhere in the row
+                 that resolves inside the measured tree.
 
 How it measures
   Each tally pin binds to the nearest preceding executable span in the same
   self-test cell: a span containing `--selftest` that starts with an
   interpreter (`python3`, `bash`, `sh`; leading `VAR=value` words dropped),
   or a bare `.py`/`.sh` path (e.g. a named mutant), run as
-  `<interpreter> <path> --selftest`. If the span is the bare `--selftest`,
+  `<interpreter> <path> --selftest`. A bound argv must be exactly
+  `<python3|python|bash|sh> [-I] [-B] <path> [<rev>] --selftest` with
+  `<path>` under `tools/` or `.ufo/waves/round-N/`, no `..`, no `.scratch/`;
+  anything else (inline `-c` code, extra arguments) binds nothing.
+  If the span is the bare `--selftest`,
   the command is the entry cell's first backticked span cut at its first `[`
   or `-` word, `<rev>`/`<REV>`/`<revision>` replaced by the measured
   revision, plus `--selftest`. No preceding span → `no_command`.
   The command runs (no shell) in the measured tree with TMPDIR set to a fresh
   directory under `<measured tree>/.scratch` (lane tools refuse a TMPDIR
-  outside their own lane root); the last output line containing the prefix
-  must start with the pinned text after the prefix, and when the pin says
+  outside their own lane root); the text after the prefix on the last output
+  line containing it must equal the pinned text exactly, and when the pin says
   `fail=0` the exit code must be 0.
 
 Modes
@@ -40,12 +54,13 @@ Modes
   --skill PATH             read the registry from PATH instead
   --min-tally-pins N       floor on tally pins found (a deleted pin is not a fix)
   --baseline-rev REV       every (row name, pin prefix | sha256) key present in
-                           SKILL.md at REV must still be present (`dropped=0`)
-  A pinned text matches only at a token boundary: `pass=2` does not match an
-  observed `pass=22`.
+                           SKILL.md at REV must still be present (`dropped=0`),
+                           and each pin's bound argv must equal its argv at REV
+                           (`rebound=0`); rows new since REV are not compared.
 
 Output: one `pin line=… kind=… prefix=… state=… …` line per pin, then
-  `PIN_CHECK=met|unmet tally_pins=N digest_pins=N mismatches=N unparsed=N no_command=N rev=…`
+  `PIN_CHECK=met|unmet tally_pins=N digest_pins=N mismatches=N unparsed=N
+  no_command=N dropped=N rebound=N duplicate=N min_tally_pins=N rev=… baseline=yes|no`
 Exit: 0 met · 1 unmet · 2 setup (usage, unresolvable revision, unreadable SKILL).
 Read-only over committed bytes: with --rev it writes only its own export
 under `<repo>/.scratch` (removed on exit); with --root it writes temp dirs
@@ -68,6 +83,28 @@ PATH_RE = re.compile(r"[A-Za-z0-9_.][A-Za-z0-9_./-]*\.(?:py|sh|json|md|txt|tsv)"
 SPAN_RE = re.compile(r"`([^`]*)`")
 REV_WORDS = ("<rev>", "<REV>", "<revision>", "REV")
 INTERPRETERS = ("python3", "python", "bash", "sh")
+# v2 (round 47, after w1 CritC1Predicate/SentPinExec): a bound command must run a
+# registered instrument path — `tools/…` or `.ufo/waves/round-N/…` — never `.scratch/`,
+# never `..`, never inline code (`-c`), and carry no argument beyond an optional
+# revision and `--selftest`.
+SAFE_PATH = re.compile(r"(?:tools|\.ufo/waves/round-[0-9]+)/[A-Za-z0-9_./-]+\.(?:py|sh)")
+PY_FLAGS = ("-I", "-B")
+
+
+def argv_ok(argv, rev):
+    if not argv or argv[0] not in INTERPRETERS:
+        return False
+    i = 1
+    while i < len(argv) and argv[0].startswith("python") and argv[i] in PY_FLAGS:
+        i += 1
+    if i >= len(argv):
+        return False
+    path = argv[i]
+    if (not SAFE_PATH.fullmatch(path) or ".." in path.split("/")
+            or "/.scratch/" in "/" + path):
+        return False
+    rest = argv[i + 1:]
+    return rest == ["--selftest"] or (rev is not None and rest == [rev, "--selftest"])
 
 
 def split_cells(line):
@@ -109,14 +146,17 @@ def parse_registry(text):
 
 
 def command_from_span(span, cells, rev):
-    """Return argv for one backticked self-test-cell span, or None."""
+    """Return argv for one backticked self-test-cell span, or None (v2: only
+    argv that passes argv_ok)."""
     if "--selftest" not in span:
+        argv = None
         if re.fullmatch(r"[A-Za-z0-9_.][A-Za-z0-9_./-]*\.py", span):
-            return ["python3", span, "--selftest"]
-        if re.fullmatch(r"[A-Za-z0-9_.][A-Za-z0-9_./-]*\.sh", span):
-            return ["bash", span, "--selftest"]
-        return None
-    return derive_command(span, cells, rev)
+            argv = ["python3", span, "--selftest"]
+        elif re.fullmatch(r"[A-Za-z0-9_.][A-Za-z0-9_./-]*\.sh", span):
+            argv = ["bash", span, "--selftest"]
+        return argv if argv is not None and argv_ok(argv, rev) else None
+    argv = derive_command(span, cells, rev)
+    return argv if argv is not None and argv_ok(argv, rev) else None
 
 
 def pin_commands(cells, idx, rev):
@@ -217,11 +257,27 @@ def pin_keys(text):
             keys[k] = keys.get(k, 0) + 1
     return keys
 
+def pin_bindings(text, rev):
+    """{(row name, prefix, ordinal): bound argv with the revision as `<REV>`}."""
+    out = {}
+    for row in parse_registry(text):
+        if row["state"] != "ok":
+            continue
+        seen = {}
+        for prefix, _pinned, words in pin_commands(row["cells"], row["idx"], rev):
+            n = seen.get(prefix, 0)
+            seen[prefix] = n + 1
+            norm = None if words is None else tuple("<REV>" if w == rev else w for w in words)
+            out[(row["cells"][0], prefix, n)] = norm
+    return out
+
 
 def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None):
     out = []
     counts = {"tally_pins": 0, "digest_pins": 0, "mismatches": 0,
-              "unparsed": 0, "no_command": 0, "dropped": 0}
+              "unparsed": 0, "no_command": 0, "dropped": 0, "rebound": 0,
+              "duplicate": 0}
+    base_bind = {}
     if baseline_text is not None:
         now = pin_keys(text)
         for k, n in sorted(pin_keys(baseline_text).items()):
@@ -229,18 +285,37 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None):
             if gone > 0:
                 counts["dropped"] += gone
                 out.append("pin kind=baseline state=dropped row=%r pin=%s count=%d" % (k[0], k[1], gone))
+        base_bind = pin_bindings(baseline_text, "<REV>")
+    names = {}
+    for row in parse_registry(text):
+        if row["state"] == "ok":
+            names[row["cells"][0]] = names.get(row["cells"][0], 0) + 1
+    for name, n in sorted(names.items()):
+        if n > 1:
+            counts["duplicate"] += n - 1
+            out.append("pin kind=row state=duplicate row=%r count=%d" % (name, n))
     cache = {}
     for row in parse_registry(text):
         line = row["line"]
         if row["state"] == "unparsed":
-            if "SELFTEST" in row["raw"]:
+            if re.search(r"(?i)selftest", row["raw"]):
                 counts["unparsed"] += 1
                 out.append("pin line=%d kind=row state=unparsed cells=%d header=%d"
                            % (line, len(row["cells"]), len(row["header"])))
             continue
         cells, idx = row["cells"], row["idx"]
         st = cells[idx]
+        ordinal = {}
         for prefix, pinned, words in pin_commands(cells, idx, rev):
+            n = ordinal.get(prefix, 0)
+            ordinal[prefix] = n + 1
+            bkey = (cells[0], prefix, n)
+            norm = None if words is None else tuple("<REV>" if w == rev else w for w in words)
+            if bkey in base_bind and base_bind[bkey] is not None and norm != base_bind[bkey]:
+                counts["rebound"] += 1
+                out.append("pin line=%d kind=tally prefix=%s state=rebound baseline_cmd=%r cmd=%r"
+                           % (line, prefix, " ".join(base_bind[bkey]),
+                              " ".join(norm) if norm else None))
             counts["tally_pins"] += 1
             if not re.search(r"\d", pinned):
                 counts["unparsed"] += 1
@@ -258,8 +333,9 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None):
             seen = [l for l in text_out.splitlines() if prefix in l]
             observed = seen[-1].split(prefix, 1)[1] if seen else None
             want = pinned.strip()
-            ok = observed is not None and re.match(re.escape(want) + r"(?![0-9A-Za-z])",
-                                                   observed.strip()) is not None
+            # v2: the observed tail must equal the pinned text exactly (a weakened pin
+            # such as `pass=22` for `pass=22 fail=0` is a mismatch).
+            ok = observed is not None and observed.strip() == want
             if ok and re.search(r"\bfail=0\b", want) and rc != 0:
                 ok = False
             if not ok:
@@ -273,9 +349,13 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None):
             paths = sorted(set(PATH_RE.findall(row["raw"])))
             hit = None
             for p in paths:
-                fp = os.path.join(root, p)
-                if os.path.isfile(fp) and sha256_file(fp) == digest:
-                    hit = p
+                rel = os.path.normpath(p)
+                if os.path.isabs(rel) or rel == ".." or rel.startswith(".." + os.sep):
+                    continue
+                fp = os.path.join(root, rel)
+                if (os.path.realpath(fp).startswith(os.path.realpath(root) + os.sep)
+                        and os.path.isfile(fp) and sha256_file(fp) == digest):
+                    hit = rel
                     break
             if hit is None:
                 counts["mismatches"] += 1
@@ -283,12 +363,13 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None):
                        % (line, "match" if hit else "mismatch", digest[:12], hit))
     met = (counts["mismatches"] == 0 and counts["unparsed"] == 0
            and counts["no_command"] == 0 and counts["dropped"] == 0
+           and counts["rebound"] == 0 and counts["duplicate"] == 0
            and counts["tally_pins"] >= min_tally)
     out.append("PIN_CHECK=%s tally_pins=%d digest_pins=%d mismatches=%d unparsed=%d "
-               "no_command=%d dropped=%d min_tally_pins=%d rev=%s baseline=%s"
+               "no_command=%d dropped=%d rebound=%d duplicate=%d min_tally_pins=%d rev=%s baseline=%s"
                % ("met" if met else "unmet", counts["tally_pins"], counts["digest_pins"],
                   counts["mismatches"], counts["unparsed"], counts["no_command"],
-                  counts["dropped"], min_tally, rev or "-",
+                  counts["dropped"], counts["rebound"], counts["duplicate"], min_tally, rev or "-",
                   "yes" if baseline_text is not None else "no"))
     return met, out
 
@@ -448,6 +529,36 @@ def selftest():
         two = HDR + row(good) + row(good).replace("| foo |", "| bar |", 1)
         cases.append(("baseline_row_deleted", (HDR + row(good), two), 1, False, "dropped"))
         cases.append(("baseline_all_present", (two, two), 1, True, None))
+        # v2 arms — the w1 CritC1Predicate/SentPinExec false-green classes (each green under v1).
+        stale = "`FOO_SELFTEST pass=2 fail=0`"
+        os.makedirs(os.path.join(root, ".scratch", "old"))
+        with open(os.path.join(root, ".scratch", "old", "foo.py"), "w") as f:
+            f.write("import sys\nif '--selftest' in sys.argv:\n    print('FOO_SELFTEST pass=2 fail=0')\n")
+        with open(os.path.join(root, "tools", "old.py"), "w") as f:
+            f.write("import sys\nif '--selftest' in sys.argv:\n    print('FOO_SELFTEST pass=2 fail=0')\n")
+        cases.append(("v2_inline_code_rejected", HDR + row(
+            "`python3 -c \"print('FOO_SELFTEST pass=2 fail=0')\" --selftest` → " + stale,
+            entry="no command here"), 1, False, "no_command"))
+        cases.append(("v2_scratch_path_rejected", HDR + row(
+            "`python3 .scratch/old/foo.py --selftest` → " + stale, entry="no command here"),
+            1, False, "no_command"))
+        cases.append(("v2_weakened_pin_exact", HDR + row(
+            "`python3 tools/foo.py --selftest` → `FOO_SELFTEST pass=3`"), 1, False, "mismatch"))
+        cases.append(("v2_rebound_to_other_tool", (HDR + row("`python3 tools/old.py --selftest` → " + stale),
+                                                   HDR + row(good)), 1, False, "rebound"))
+        cases.append(("v2_entry_rebound", (HDR + row("`--selftest` → " + stale, entry="`python3 tools/old.py`"),
+                                           HDR + row("`--selftest` → `FOO_SELFTEST pass=3 fail=0`")),
+                      1, False, "rebound"))
+        hidden = ("| foo | gate | `python3 tools/foo.py` | 0 ok | `python3 tools/foo.py --selftest` → "
+                  "`foo_selftest pass=2 fail=0` | none | mori |\n")
+        cases.append(("v2_hidden_row_and_duplicate", (HDR + hidden + row(good) + row(good), HDR + row(good)),
+                      1, False, "unparsed"))
+        cases.append(("v2_duplicate_name", HDR + row(good) + row(good), 1, False, "duplicate"))
+        with open(os.path.join(base, "outside.py"), "w") as f:
+            f.write("x = 1\n")
+        out_digest = sha256_file(os.path.join(base, "outside.py"))
+        cases.append(("v2_digest_path_traversal", HDR + row(
+            good + " at sha256 `%s` of `../outside.py`" % out_digest), 1, False, "mismatch"))
         for name, text, floor, want_met, want_state in cases:
             scratch = tempfile.mkdtemp(prefix="c-", dir=base)
             text, btext = text if isinstance(text, tuple) else (text, None)

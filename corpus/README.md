@@ -640,3 +640,16 @@ Linux-1.3.11-era translation), and the `ENOENT` boundary for a pid that does not
 exist. Entry: `corpus/knowledge/pid-probe-conclusion-r44.md` (S471, S472,
 both pages opened 2026-10-25). No probe, census surface or finding id is added;
 FR5 stays open — a state read does not establish daemon identity.
+
+## Round-47 coverage additions
+
+FR13 ground the map held only as a peer-reviewed abstract (`knowledge/oom-victim-context-r41.md`,
+S262) and one queued field-schema row (S005): the **full v7.2 `oom` trace-event set** — eight
+events, each with its `TP_STRUCT__entry` field set and the function that emits it — and the
+reaper lifecycle (`mark_victim` → `wake_reaper` → `skip`/`start`/`finish_task_reaping`, all
+pid-only after the mark). Entry: `corpus/knowledge/oom-tracepoints-r47.md` (S475 header, S476
+call sites, S477 this host's tracefs listing; S005 re-opened, byte-identical to v7.2). Count:
+8 — `grep -c '^TRACE_EVENT(' corpus/evidence/sources-r47/include_trace_events_oom.h` 2026-10-25.
+FR13 stays frontier: no tracer is enabled, installed or proposed (the host's `events/oom/enable`
+reads `0` and stays untouched); the entry names what the kernel's own event says (victim pid,
+comm, uid, memory) and what it never says (cgroup path, culprit).

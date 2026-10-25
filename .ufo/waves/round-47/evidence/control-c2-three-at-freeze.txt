@@ -1,0 +1,3 @@
+$ python3 .ufo/waves/round-47/count-c2.py 63eecf2738db96f46b0bd02b1b2dfd66787493d0 --entry .ufo/waves/round-47/controls/control-c2-three.md
+C2=unmet events=8 rows=3 name_mismatch=5 field_mismatch=0 callsite_mismatch=0 pin_mismatch=0 source_row=bad provenance=ok rev=63eecf2738db96f46b0bd02b1b2dfd66787493d0 failed=name_mismatch,source_row
+rc=1

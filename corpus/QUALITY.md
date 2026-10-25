@@ -1022,3 +1022,27 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     the same narrow definition prints 71 tracked / 40 uncited, at the tip 225 tracked / 0 uncited
     under the wide definition. Not covered: the narrower corpus is not yet built (this criterion is
     the admission, not the instrument).
+
+## Criteria added round 47 — the round-46 routed counter defect, a stale pin, and a count the source refutes
+
+123. **A registry pin is calibrated only when an instrument re-runs it from committed bytes and reads
+    it from its own cell.** Lesson: `corpus/lessons/round-47.md` M1, M2; `considerthese/2026-10-25.md`
+    suggestion 1 (operator-authored reflection, opened 2026-10-25). Rationale: round 46's counter
+    matched needles anywhere in the row and turned green with the stale receipt still in the
+    self-test cell (`corpus/lessons/round-46-verifier-spotcheck.md` routed defect 1); and
+    `SKILL.md:912` pinned `MORI_SOURCES_APPENDONLY_SELFTEST pass=15 fail=0` from round 40 to round 47
+    while the committed tool printed `pass=22` from the round-41 freeze `d72ac167` on. Check:
+    `python3 tools/mori-pin-check.py --rev <rev> --baseline-rev <entering>` exits 0 before a round
+    that edits a registry row or a registered tool lands. Shown able to fail: at the round-47
+    entering tip `2d85e33` it prints `PIN_CHECK=unmet … mismatches=1` (line 912), and the committed
+    controls for a deleted row, a moved-cell receipt and a truncated pin each stay unmet
+    (`.ufo/waves/round-47/evidence/control-c1-*.txt`). Not covered: line-count pins and truncated
+    digests.
+124. **A stated count of kernel objects carries the enumerating command over a pinned source.**
+    Lesson: `corpus/lessons/round-47.md` M3. Rationale: the staged assimilation entry
+    `oom-tracing-tracepoints-r42.md` headlined "exactly three named tracepoints" from a paper whose
+    own sentence says "such as"; the v7.2 header defines eight (`grep -c '^TRACE_EVENT('` → 8).
+    Check: "exactly N", "the N …" or "only" about kernel events, fields, files or knobs is admitted
+    only with the command that enumerates them in the cited revision's bytes. Shown able to fail:
+    `.ufo/waves/round-47/controls/control-c2-three.md` scores `name_mismatch=5` under
+    `count-c2.py` at the freeze commit (`evidence/control-c2-three-at-freeze.txt`).

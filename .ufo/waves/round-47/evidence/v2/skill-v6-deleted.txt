@@ -1,0 +1,34 @@
+$ python3 tools/mori-pin-check.py (v2) --rev 63eecf2738db96f46b0bd02b1b2dfd66787493d0 --min-tally-pins 26 --baseline-rev 2d85e33d14198d388fd3cda9cc15ec07e57e7a53 --skill .ufo/waves/round-47/controls/c1-junk/skill-v6-deleted.md
+pin kind=baseline state=dropped row='SOURCES append-only timing (r38)' pin=MORI_SOURCES_APPENDONLY_SELFTEST count=1
+pin line=166 kind=tally prefix=MORI_SILENCE_CASES_SELFTEST state=match pinned='pass=24 fail=0' observed='pass=24 fail=0' rc=0 cmd='bash tools/mori-silence-cases.sh --selftest'
+pin line=182 kind=tally prefix=R19_SELFTEST state=match pinned='pass=26 fail=0' observed='pass=26 fail=0' rc=0 cmd='python3 tools/mori-round19-regressions.py --selftest'
+pin line=183 kind=tally prefix=C1_SELFTEST state=match pinned='pass=6 fail=0' observed='pass=6 fail=0' rc=0 cmd='python3 .ufo/waves/round-44/count-c1.py --selftest'
+pin line=184 kind=tally prefix=GATE_REGISTRY_SELFTEST state=match pinned='pass=15 fail=0' observed='pass=15 fail=0' rc=0 cmd='python3 tools/mori-gate-registry.py --selftest'
+pin line=184 kind=digest state=match digest=8b82ac999091 file=tools/mori-gate-registry.py
+pin line=185 kind=tally prefix=C2_SELFTEST state=match pinned='pass=5 fail=0' observed='pass=5 fail=0' rc=0 cmd='python3 .ufo/waves/round-44/count-c2.py --selftest'
+pin line=186 kind=tally prefix=C3_SELFTEST state=match pinned='pass=6 fail=0' observed='pass=6 fail=0' rc=0 cmd='python3 .ufo/waves/round-44/count-c3.py --selftest'
+pin line=187 kind=tally prefix=MORI_DISK_RATE_SELFTEST state=match pinned='pass=14 fail=0' observed='pass=14 fail=0' rc=0 cmd='python3 tools/mori-disk-rate.py --selftest'
+pin line=188 kind=tally prefix=MORI_WAVE_SETTLEMENT_SELFTEST state=match pinned=': PASS (23 cases, 23 passed, 0 failed)' observed=': PASS (23 cases, 23 passed, 0 failed)' rc=0 cmd='python3 tools/mori-wave-settlement.py --selftest'
+pin line=189 kind=tally prefix=MORI_R41_CALIBRATION_SELFTEST state=match pinned='pass=10 fail=0' observed='pass=10 fail=0' rc=0 cmd='python3 tools/mori-round41-calibration.py --selftest'
+pin line=190 kind=tally prefix=C1_SELFTEST state=match pinned='pass=16 fail=0' observed='pass=16 fail=0' rc=0 cmd='python3 .ufo/waves/round-45/count-c1.py --selftest'
+pin line=190 kind=tally prefix=C1_SELFTEST state=match pinned='pass=15 fail=1' observed='pass=15 fail=1' rc=1 cmd='python3 .ufo/waves/round-45/fixtures/mutants/count-c1.py --selftest'
+pin line=190 kind=digest state=match digest=5f2deea0b35c file=.ufo/waves/round-45/count-c1.py
+pin line=191 kind=tally prefix=C2_SELFTEST state=match pinned='pass=14 fail=0' observed='pass=14 fail=0' rc=0 cmd='python3 .ufo/waves/round-45/count-c2.py --selftest'
+pin line=191 kind=digest state=match digest=153423c48ca9 file=.ufo/waves/round-45/count-c2.py
+pin line=191 kind=digest state=match digest=9850b3fcc888 file=.ufo/waves/round-45/fixtures/mutants/count-c2.py
+pin line=192 kind=tally prefix=C3_SELFTEST state=match pinned='pass=19 fail=0' observed='pass=19 fail=0' rc=0 cmd='python3 .ufo/waves/round-45/count-c3.py --selftest'
+pin line=192 kind=tally prefix=C3_SELFTEST state=match pinned='pass=17 fail=2' observed='pass=17 fail=2' rc=1 cmd='python3 .ufo/waves/round-45/fixtures/mutants/count-c3.py --selftest'
+pin line=193 kind=tally prefix=C1_SELFTEST state=match pinned='pass=6 fail=0' observed='pass=6 fail=0' rc=0 cmd='python3 .ufo/waves/round-44/count-c1.py --selftest'
+pin line=194 kind=tally prefix=GATE_REGISTRY_SELFTEST state=match pinned='pass=15 fail=0' observed='pass=15 fail=0' rc=0 cmd='python3 tools/mori-gate-registry.py --selftest'
+pin line=194 kind=digest state=match digest=8b82ac999091 file=tools/mori-gate-registry.py
+pin line=195 kind=tally prefix=C2_SELFTEST state=match pinned='pass=5 fail=0' observed='pass=5 fail=0' rc=0 cmd='python3 .ufo/waves/round-44/count-c2.py --selftest'
+pin line=196 kind=tally prefix=C3_SELFTEST state=match pinned='pass=6 fail=0' observed='pass=6 fail=0' rc=0 cmd='python3 .ufo/waves/round-44/count-c3.py --selftest'
+pin line=664 kind=tally prefix=MORI_PRESSURE_SELFTEST state=match pinned=': PASS 12/12' observed=': PASS 12/12' rc=0 cmd='python3 tools/mori-pressure.py --selftest'
+pin line=665 kind=tally prefix=ROUTED_CHECK_SELFTEST state=match pinned='pass=20 fail=0' observed='pass=20 fail=0' rc=0 cmd='python3 -I tools/mori-routed-check.py --selftest'
+pin line=739 kind=tally prefix=MORI_OOM_KILLERS_SELFTEST state=match pinned=': PASS 32/32' observed=': PASS 32/32' rc=0 cmd='python3 -I -B tools/mori-oom-killers.py --selftest'
+pin line=740 kind=tally prefix=ROUTED_R24_SELFTEST state=match pinned='pass=26 fail=0' observed='pass=26 fail=0' rc=0 cmd='python3 -I -B tools/mori-routed-r24.py --selftest'
+pin line=741 kind=tally prefix=MORI_JOB_RUNWAY_SELFTEST state=match pinned=': PASS 21/21' observed=': PASS 21/21' rc=0 cmd='python3 -I -B tools/mori-job-runway.py --selftest'
+pin line=905 kind=tally prefix=MORI_SOURCE_DRIFT_SELFTEST state=match pinned=': PASS (6 cases)' observed=': PASS (6 cases)' rc=0 cmd='python3 tools/mori-source-drift.py --selftest'
+pin line=911 kind=tally prefix=CONFORM_SELFTEST state=match pinned='pass=11 fail=0' observed='pass=11 fail=0' rc=0 cmd='python3 .ufo/waves/round-40/conform.py 63eecf2738db96f46b0bd02b1b2dfd66787493d0 --selftest'
+PIN_CHECK=unmet tally_pins=25 digest_pins=5 mismatches=0 unparsed=0 no_command=0 dropped=1 rebound=0 duplicate=0 min_tally_pins=26 rev=63eecf2738db96f46b0bd02b1b2dfd66787493d0 baseline=yes
+rc=1
