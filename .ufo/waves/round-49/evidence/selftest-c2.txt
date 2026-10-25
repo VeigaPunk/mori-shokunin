@@ -1,0 +1,27 @@
+PASS honest_met
+PASS entry_absent_unmet
+PASS no_table_unmet
+PASS altered_quote_unmet
+PASS quote_from_wrong_copy_unmet
+PASS short_quote_unmet
+PASS long_quote_unmet
+PASS duplicate_quote_unmet
+PASS claims_floor_unmet
+PASS sources_floor_unmet
+PASS row_not_mined_unmet
+PASS row_opened_other_day_unmet
+PASS used_by_missing_unmet
+PASS indented_row_ok
+PASS code_indented_row_unmet
+PASS pin_mismatch_unmet
+PASS table_id_uncited_in_source_unmet
+PASS verified_at_missing_unmet
+PASS header_wrong_unmet
+PASS claim_cell_short_unmet
+PASS table_inside_fence_unseen_unmet
+PASS other_entry_path_unmet
+PASS normalise_drops_script_text
+PASS normalise_drops_style_text
+PASS normalise_drops_comment_text
+PASS normalise_keeps_visible_text
+C2_SELFTEST pass=26 fail=0

@@ -1,0 +1,98 @@
+# host-journal-reach receipt — own-work, read-only, mori round 49
+# captured 2026-10-25T20:43:09-03:00 on 7.2.11-arch1-1; no vacuum, rotate or config change was run
+
+$ journalctl --disk-usage
+Archived and active journals take up 56M in the file system.
+[exit 0]
+
+$ journalctl --system --disk-usage
+Archived and active journals take up 19M in the file system.
+[exit 0]
+
+$ journalctl --user --disk-usage
+Archived and active journals take up 37M in the file system.
+[exit 0]
+
+$ systemd-analyze cat-config systemd/journald.conf
+# /etc/systemd/journald.conf
+#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it under the
+#  terms of the GNU Lesser General Public License as published by the Free
+#  Software Foundation; either version 2.1 of the License, or (at your option)
+#  any later version.
+#
+# Entries in this file show the compile time defaults. Local configuration
+# should be created by either modifying this file (or a copy of it placed in
+# /etc/ if the original file is shipped in /usr/), or by creating "drop-ins" in
+# the /etc/systemd/journald.conf.d/ directory. The latter is generally
+# recommended. Defaults can be restored by simply deleting the main
+# configuration file and all drop-ins located in /etc/.
+#
+# Use 'systemd-analyze cat-config systemd/journald.conf' to display the full config.
+#
+# See journald.conf(5) for details.
+
+[Journal]
+#Storage=persistent
+#Compress=yes
+#Seal=yes
+#SplitMode=uid
+#SyncIntervalSec=5m
+#RateLimitIntervalSec=30s
+#RateLimitBurst=10000
+#SystemMaxUse=
+#SystemKeepFree=
+#SystemMaxFileSize=
+#SystemMaxFiles=100
+#RuntimeMaxUse=
+#RuntimeKeepFree=
+#RuntimeMaxFileSize=
+#RuntimeMaxFiles=100
+#MaxRetentionSec=0
+#MaxFileSec=1month
+#ForwardToSyslog=no
+#ForwardToKMsg=no
+#ForwardToConsole=no
+#ForwardToWall=yes
+#TTYPath=/dev/console
+#MaxLevelStore=debug
+#MaxLevelSyslog=debug
+#MaxLevelKMsg=notice
+#MaxLevelConsole=info
+#MaxLevelWall=emerg
+#MaxLevelSocket=debug
+#LineMax=48K
+#ReadKMsg=yes
+#Audit=yes
+
+# /etc/systemd/journald.conf.d/size.conf
+[Journal]
+SystemMaxUse=256M
+RuntimeMaxUse=64M
+[exit 0]
+
+$ stat -c '%n %s bytes mtime %y' /etc/systemd/journald.conf.d/size.conf
+/etc/systemd/journald.conf.d/size.conf 46 bytes mtime 2026-10-16 11:53:47.069871418 -0300
+[exit 0]
+
+$ findmnt -no FSTYPE /run
+tmpfs
+[exit 0]
+
+$ findmnt -no FSTYPE /var/log/journal
+[exit 1]
+
+$ ls -A /run/log/journal
+[exit 0]
+
+$ journalctl --list-boots --no-pager
+IDX BOOT ID                          FIRST ENTRY                 LAST ENTRY
+ -1 0a3785aac7104585a914f6cda41795a7 Sat 2026-10-24 20:57:12 -03 Sun 2026-10-25 13:35:39 -03
+  0 7ab69ee4149c4811a3faf6c08c9d119b Sun 2026-10-25 13:36:19 -03 Sun 2026-10-25 20:43:03 -03
+[exit 0]
+
+$ journalctl -b 0 -u systemd-journald --no-pager -q -g 'Journal .* is .*max'
+Oct 25 13:36:19 plazir27 systemd-journald[1025]: Runtime Journal (/run/log/journal/MACHINE_ID) is 8M, max 64M, 56M free.
+Oct 25 13:36:20 plazir27 systemd-journald[1025]: System Journal (/var/log/journal/MACHINE_ID) is 45M, max 256M, 210.9M free.
+[exit 0]

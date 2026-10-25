@@ -1,0 +1,2 @@
+C2=unmet claims=0 located=0 quote_missing=0 bad_rows=0 sources=0 source_rows=bad pins=bad provenance=bad rev=b3e3453d45ffbbecf2cce50fa1089b8eb80a4f86 failed=entry_absent,pins
+exit=1

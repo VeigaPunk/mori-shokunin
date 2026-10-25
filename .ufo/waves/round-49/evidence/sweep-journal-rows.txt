@@ -1,0 +1,7 @@
+# sweep at b3e3453d (entering tip); each count is over tracked bytes at that revision
+SystemMaxUse SOURCES.md=0 knowledge=0
+MaxRetentionSec SOURCES.md=0 knowledge=0
+journald\.conf SOURCES.md=0 knowledge=1
+RuntimeMaxUse SOURCES.md=0 knowledge=0
+vacuum SOURCES.md=3 knowledge=12
+# command: git show b3e3453d:corpus/SOURCES.md | grep -cE '<pattern>'; git grep -hE '<pattern>' b3e3453d -- corpus/knowledge | wc -l

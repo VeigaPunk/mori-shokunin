@@ -1,0 +1,45 @@
+PASS apply_J1  
+PASS apply_J2  
+PASS apply_J3  
+PASS apply_J4  
+PASS apply_J5  
+PASS apply_J6  
+PASS apply_J7  
+PASS apply_J8  
+PASS apply_H1  
+PASS apply_H2  
+PASS apply_H3  
+PASS apply_H4  
+PASS apply_N1  
+PASS apply_N2  
+PASS apply_N3  
+PASS apply_N4  
+PASS apply_N5  
+PASS apply_N6  
+PASS apply_N7  
+PASS apply_N8  
+PASS apply_N9  
+PASS apply_H6  
+PASS apply_H7  
+PASS variants_pairwise_distinct  23
+PASS plan_ok  None
+PASS handles_carry_no_variant_name  []
+PASS order_not_expect_sorted  
+PASS verdict_all_good_met  C1=met junk_met=0 honest_unmet=0 real=met errors=0 variants=3 rev=r
+PASS verdict_junk_green_unmet  
+PASS verdict_honest_red_unmet  
+PASS verdict_real_red_unmet  
+PASS verdict_error_unmet  
+PASS verdict_line_shape  C1=met junk_met=0 honest_unmet=0 real=met errors=0 variants=3 rev=r
+PASS filename_sniffer_not_met  C1=unmet junk_met=17 honest_unmet=0 real=met errors=0 variants=24 rev=b3e3453d45ffbbecf2cce50fa1089b8eb80a4f86
+PASS order_covers_every_variant  27
+PASS fixture_False_baseline_pin_two  
+PASS fixture_False_instrument_prints_three  
+PASS fixture_False_pin_stale  
+PASS fixture_False_own_toplevel  
+PASS fixture_True_baseline_pin_two  
+PASS fixture_True_instrument_prints_three  
+PASS fixture_True_pin_moved  
+PASS fixture_True_own_toplevel  
+PASS lane_head_unchanged  
+C1_SELFTEST pass=44 fail=0

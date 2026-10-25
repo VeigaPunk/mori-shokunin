@@ -1,0 +1,322 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>journald.conf</title><meta name="generator" content="DocBook XSL Stylesheets Vsnapshot"></head><body><script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><script src="../nav.js"></script><style>
+    :root {
+      color-scheme: light dark;
+    }
+
+    a.headerlink {
+      color: #c60f0f;
+      font-size: 0.8em;
+      padding: 0 4px 0 4px;
+      text-decoration: none;
+      visibility: hidden;
+    }
+
+    a.headerlink:hover {
+      background-color: #c60f0f;
+      color: white;
+    }
+
+    h1:hover > a.headerlink, h2:hover > a.headerlink, h3:hover > a.headerlink, dt:hover > a.headerlink {
+      visibility: visible;
+    }
+  </style><a href="index.html">Index </a>·
+  <a href="systemd.directives.html">Directives </a><span style="float:right">systemd 262</span><hr><div class="refentry"><a name="journald.conf"></a><div class="titlepage"></div><div class="refnamediv"><h2>Name</h2><p>journald.conf, journald.conf.d, journald@.conf — Journal service configuration files</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><table border="0" summary="Simple list" class="simplelist"><tr><td><code class="filename">/etc/systemd/journald.conf</code></td></tr><tr><td><code class="filename">/run/systemd/journald.conf</code></td></tr><tr><td><code class="filename">/usr/local/lib/systemd/journald.conf</code></td></tr><tr><td><code class="filename">/usr/lib/systemd/journald.conf</code></td></tr><tr><td><code class="filename">/etc/systemd/journald.conf.d/*.conf</code></td></tr><tr><td><code class="filename">/run/systemd/journald.conf.d/*.conf</code></td></tr><tr><td><code class="filename">/usr/local/lib/systemd/journald.conf.d/*.conf</code></td></tr><tr><td><code class="filename">/usr/lib/systemd/journald.conf.d/*.conf</code></td></tr><tr><td><code class="filename">/etc/systemd/journald@<em class="replaceable"><code>NAMESPACE</code></em>.conf</code></td></tr><tr><td><code class="filename">/etc/systemd/journald@<em class="replaceable"><code>NAMESPACE</code></em>.conf.d/*.conf</code></td></tr><tr><td><code class="filename">/run/systemd/journald@<em class="replaceable"><code>NAMESPACE</code></em>.conf.d/*.conf</code></td></tr><tr><td><code class="filename">/usr/local/lib/systemd/journald@<em class="replaceable"><code>NAMESPACE</code></em>.conf.d/*.conf</code></td></tr><tr><td><code class="filename">/usr/lib/systemd/journald@<em class="replaceable"><code>NAMESPACE</code></em>.conf.d/*.conf</code></td></tr></table></div><div class="refsect1"><a name="id-1.5"></a><h2 id="Description">Description<a class="headerlink" title="Permalink to this headline" href="#Description">¶</a></h2><p>These files configure various parameters of the systemd journal service,
+    <a href="systemd-journald.service.html#"><span class="citerefentry"><span class="refentrytitle">systemd-journald.service</span>(8)</span></a>.
+    See
+    <a href="systemd.syntax.html#"><span class="citerefentry"><span class="refentrytitle">systemd.syntax</span>(7)</span></a>
+    for a general description of the syntax.</p><p>The <span class="command"><strong>systemd-journald</strong></span> instance managing the default namespace is configured by
+    <code class="filename">/etc/systemd/journald.conf</code> and associated drop-ins. Instances managing other
+    namespaces read <code class="filename">/etc/systemd/journald@<em class="replaceable"><code>NAMESPACE</code></em>.conf</code>
+    and associated drop-ins with the namespace identifier filled in. This allows each namespace to carry
+    a distinct configuration. See
+    <a href="systemd-journald.service.html#"><span class="citerefentry"><span class="refentrytitle">systemd-journald.service</span>(8)</span></a>
+    for details about journal namespaces.</p></div><div class="refsect1"><a name="main-conf"></a><h2 id="Configuration Directories and Precedence">Configuration Directories and Precedence<a class="headerlink" title="Permalink to this headline" href="#Configuration%20Directories%20and%20Precedence">¶</a></h2><p>The default configuration is set during compilation, so configuration is only needed when it is
+    necessary to deviate from those defaults. The main configuration file is loaded from one of the
+    listed directories in order of priority, only the first file found is used:
+    <code class="filename">/etc/systemd/</code>,
+    <code class="filename">/run/systemd/</code>,
+    <code class="filename">/usr/local/lib/systemd/</code> <a href="#ftn.usr-local-footnote" class="footnote" name="usr-local-footnote"><sup class="footnote">[1]</sup></a>,
+    <code class="filename">/usr/lib/systemd/</code>.
+    The vendor version of the file contains commented out entries showing the defaults as a guide to the
+    administrator. Local overrides can also be created by creating drop-ins, as described below. The main
+    configuration file can also be edited for this purpose (or a copy in <code class="filename">/etc/</code> if it is
+    shipped under <code class="filename">/usr/</code>), however using drop-ins for local configuration is recommended
+    over modifications to the main configuration file.</p><p>In addition to the main configuration file, drop-in configuration snippets are read from
+    <code class="filename">/usr/lib/systemd/*.conf.d/</code>, <code class="filename">/usr/local/lib/systemd/*.conf.d/</code>,
+    and <code class="filename">/etc/systemd/*.conf.d/</code>. Those drop-ins have higher precedence and override the
+    main configuration file. Files in the <code class="filename">*.conf.d/</code> configuration subdirectories are
+    sorted by their filename in lexicographic order, regardless of in which of the subdirectories they
+    reside. When multiple files specify the same option, for options which accept just a single value, the
+    entry in the file sorted last takes precedence, and for options which accept a list of values, entries
+    are collected as they occur in the sorted files.</p><p>When packages need to customize the configuration, they can install drop-ins under
+    <code class="filename">/usr/</code>. Files in <code class="filename">/etc/</code> are reserved for the local administrator,
+    who may use this logic to override the configuration files installed by vendor packages. Drop-ins have to
+    be used to override package drop-ins, since the main configuration file has lower precedence. It is
+    recommended to prefix all filenames in those subdirectories with a two-digit number and a dash, to
+    simplify the ordering. This also defines a concept of drop-in priorities to allow OS vendors to ship
+    drop-ins within a specific range lower than the range used by users. This should lower the risk of
+    package drop-ins overriding accidentally drop-ins defined by users. It is recommended to use the range
+    10-40 for drop-ins in <code class="filename">/usr/</code> and the range 60-90 for drop-ins in
+    <code class="filename">/etc/</code> and <code class="filename">/run/</code>, to make sure that local and transient drop-ins
+    take priority over drop-ins shipped by the OS vendor.</p><p>To disable a configuration file supplied by the vendor, the recommended way is to place a symlink
+    to <code class="filename">/dev/null</code> in the configuration directory in <code class="filename">/etc/</code>, with the
+    same filename as the vendor configuration file.</p></div><div class="refsect1"><a name="id-1.7"></a><h2 id="Options">Options<a class="headerlink" title="Permalink to this headline" href="#Options">¶</a></h2><p>All options are configured in the
+    [Journal] section:</p><div class="variablelist"><dl class="variablelist"><dt id="Storage="><span class="term"><code class="varname">Storage=</code></span><a class="headerlink" title="Permalink to this term" href="#Storage=">¶</a></dt><dd><p>Controls where to store journal data. One of "<code class="literal">volatile</code>",
+        "<code class="literal">persistent</code>", "<code class="literal">auto</code>" and "<code class="literal">none</code>". If
+        "<code class="literal">volatile</code>", journal log data will be stored only in memory, i.e. below the
+        <code class="filename">/run/log/journal</code> hierarchy (which is created if needed). If
+        "<code class="literal">persistent</code>", data will be stored preferably on disk, i.e. below the
+        <code class="filename">/var/log/journal</code> hierarchy (which is created if needed), with a fallback to
+        <code class="filename">/run/log/journal</code> (which is created if needed), during early boot and if the disk
+        is not writable. "<code class="literal">auto</code>" behaves like "<code class="literal">persistent</code>" if the
+        <code class="filename">/var/log/journal</code> directory exists, and "<code class="literal">volatile</code>" otherwise
+        (the existence of the directory controls the storage mode). "<code class="literal">none</code>" turns off all
+        storage, all log data received will be dropped (but forwarding to other targets, such as the console,
+        the kernel log buffer, or a syslog socket will still work). Defaults to
+        "<code class="literal">persistent</code>" in the default journal namespace (this value is
+        determined at compilation time), and "<code class="literal">persistent</code>" in all others.</p><p>Note that journald will initially use volatile storage, until a call to
+        <span class="command"><strong>journalctl --flush</strong></span> (or sending <code class="constant">SIGUSR1</code> to journald) will cause
+        it to switch to persistent logging (under the conditions mentioned above). This is done automatically
+        on boot via "<code class="literal">systemd-journal-flush.service</code>".</p><p>Note that when this option is changed to "<code class="literal">volatile</code>", existing persistent data
+        is not removed. In the other direction,
+        <a href="journalctl.html#"><span class="citerefentry"><span class="refentrytitle">journalctl</span>(1)</span></a> with
+        the <code class="option">--flush</code> option may be used to move volatile data to persistent storage.</p><p>When journal namespacing (see <code class="varname">LogNamespace=</code> in
+        <a href="systemd.exec.html#"><span class="citerefentry"><span class="refentrytitle">systemd.exec</span>(5)</span></a>) is
+        used, setting <code class="varname">Storage=</code> to "<code class="literal">volatile</code>" or "<code class="literal">auto</code>"
+        will not have an effect on the creation of the per-namespace logs directory in
+        <code class="filename">/var/log/journal/</code>, as the <code class="filename">systemd-journald@.service</code> service
+        file by default carries <code class="varname">LogsDirectory=</code>. To turn that off, add a unit file drop-in
+        file that sets <code class="varname">LogsDirectory=</code> to an empty string.</p><p>Note that per-user journal files are not supported unless persistent storage is enabled, thus
+        making <span class="command"><strong>journalctl --user</strong></span> unavailable.</p><p>The storage to use can also be specified via the "<code class="literal">journal.storage</code>"
+        credential. Values configured via configuration files take priority over values configured via the
+        credential.</p><p><a name="v186"></a>Added in version 186.</p></dd><dt id="Compress="><span class="term"><code class="varname">Compress=</code></span><a class="headerlink" title="Permalink to this term" href="#Compress=">¶</a></dt><dd><p>Can take a boolean value. If enabled (the
+        default), data objects that shall be stored in the journal
+        and are larger than the default threshold of 512 bytes are
+        compressed before they are written to the file system. It
+        can also be set to a number of bytes to specify the
+        compression threshold directly. Suffixes like K, M, and G
+        can be used to specify larger units.</p></dd><dt id="Seal="><span class="term"><code class="varname">Seal=</code></span><a class="headerlink" title="Permalink to this term" href="#Seal=">¶</a></dt><dd><p>Takes a boolean value. If enabled (the
+        default), and a sealing key is available (as created by
+        <a href="journalctl.html#"><span class="citerefentry"><span class="refentrytitle">journalctl</span>(1)</span></a>'s
+        <code class="option">--setup-keys</code> command), Forward Secure Sealing
+        (FSS) for all persistent journal files is enabled. FSS is
+        based on <a class="ulink" href="https://eprint.iacr.org/2013/397" target="_top">Seekable Sequential Key
+        Generators</a> by G. A. Marson and B. Poettering
+        (doi:10.1007/978-3-642-40203-6_7) and may be used to protect
+        journal files from unnoticed alteration.</p><p><a name="v189"></a>Added in version 189.</p></dd><dt id="SplitMode="><span class="term"><code class="varname">SplitMode=</code></span><a class="headerlink" title="Permalink to this term" href="#SplitMode=">¶</a></dt><dd><p>Controls whether to split up journal files per user, either "<code class="literal">uid</code>" or
+        "<code class="literal">none</code>". Split journal files are primarily useful for access control: on UNIX/Linux access
+        control is managed per file, and the journal daemon will assign users read access to their journal files. If
+        "<code class="literal">uid</code>", all regular users (with UID outside the range of system users, dynamic service users,
+        and the nobody user) will each get their own journal files, and system users will log to the system journal.
+        See <a class="ulink" href="https://systemd.io/UIDS-GIDS" target="_top">Users, Groups, UIDs and GIDs on systemd systems</a>
+        for more details about UID ranges.
+        If "<code class="literal">none</code>", journal files are not split up by user and all messages are
+        instead stored in the single system journal. In this mode unprivileged users generally do not have access to
+        their own log data. Note that splitting up journal files by user is only available for journals stored
+        persistently. If journals are stored on volatile storage (see <code class="varname">Storage=</code> above), only a single
+        journal file is used. Defaults to "<code class="literal">uid</code>".</p><p><a name="v190"></a>Added in version 190.</p></dd><dt id="RateLimitIntervalSec="><span class="term"><code class="varname">RateLimitIntervalSec=</code>, </span><span class="term"><code class="varname">RateLimitBurst=</code></span><a class="headerlink" title="Permalink to this term" href="#RateLimitIntervalSec=">¶</a></dt><dd><p>Configures the rate limiting that is applied
+        to all messages generated on the system. If, in the time
+        interval defined by <code class="varname">RateLimitIntervalSec=</code>,
+        more messages than specified in
+        <code class="varname">RateLimitBurst=</code> are logged by a service,
+        all further messages within the interval are dropped until the
+        interval is over. A message about the number of dropped
+        messages is generated. This rate limiting is applied
+        per-service, so that two services which log do not interfere
+        with each other's limits. Defaults to 10000 messages in 30s.
+        The time specification for
+        <code class="varname">RateLimitIntervalSec=</code> may be specified in the
+        following units: "<code class="literal">s</code>", "<code class="literal">min</code>",
+        "<code class="literal">h</code>", "<code class="literal">ms</code>",
+        "<code class="literal">us</code>". To turn off any kind of rate limiting,
+        set either value to 0.</p><p>Note that the effective rate limit is multiplied by a
+        factor derived from the available free disk space for the journal.
+        Currently, this factor is calculated using the base 2 logarithm.</p><div class="table"><a name="id-1.7.3.5.3.3"></a><p class="title"><b>Table 1. Example <code class="varname">RateLimitBurst=</code> rate
+            modifications by the available disk space</b></p><div class="table-contents"><table class="table" summary="Example RateLimitBurst= rate
+            modifications by the available disk space" border="1"><colgroup><col class="freespace"><col class="multiplier"></colgroup><thead><tr><th>Available Disk Space</th><th>Burst Multiplier</th></tr></thead><tbody><tr><td>&lt;= 1MB</td><td>1</td></tr><tr><td>&lt;= 16MB</td><td>2</td></tr><tr><td>&lt;= 256MB</td><td>3</td></tr><tr><td>&lt;= 4GB</td><td>4</td></tr><tr><td>&lt;= 64GB</td><td>5</td></tr><tr><td>&lt;= 1TB</td><td>6</td></tr></tbody></table></div></div><br class="table-break"><p>If a service provides rate limits for itself through
+        <code class="varname">LogRateLimitIntervalSec=</code> and/or <code class="varname">LogRateLimitBurst=</code>
+        in <a href="systemd.exec.html#"><span class="citerefentry"><span class="refentrytitle">systemd.exec</span>(5)</span></a>,
+        those values will override the settings specified here.</p></dd><dt id="SystemMaxUse="><span class="term"><code class="varname">SystemMaxUse=</code>, </span><span class="term"><code class="varname">SystemKeepFree=</code>, </span><span class="term"><code class="varname">SystemMaxFileSize=</code>, </span><span class="term"><code class="varname">SystemMaxFiles=</code>, </span><span class="term"><code class="varname">RuntimeMaxUse=</code>, </span><span class="term"><code class="varname">RuntimeKeepFree=</code>, </span><span class="term"><code class="varname">RuntimeMaxFileSize=</code>, </span><span class="term"><code class="varname">RuntimeMaxFiles=</code></span><a class="headerlink" title="Permalink to this term" href="#SystemMaxUse=">¶</a></dt><dd><p>Enforce size limits on the journal files
+        stored. The options prefixed with "<code class="literal">System</code>"
+        apply to the journal files when stored on a persistent file
+        system, more specifically
+        <code class="filename">/var/log/journal</code>. The options prefixed
+        with "<code class="literal">Runtime</code>" apply to the journal files
+        when stored on a volatile in-memory file system, more
+        specifically <code class="filename">/run/log/journal</code>. The former
+        is used only when <code class="filename">/var/</code> is mounted,
+        writable, and the directory
+        <code class="filename">/var/log/journal</code> exists. Otherwise, only
+        the latter applies. Note that this means that during early
+        boot and if the administrator disabled persistent logging,
+        only the latter options apply, while the former apply if
+        persistent logging is enabled and the system is fully booted
+        up. <span class="command"><strong>journalctl</strong></span> and
+        <span class="command"><strong>systemd-journald</strong></span> ignore all files with
+        names not ending with "<code class="literal">.journal</code>" or
+        "<code class="literal">.journal~</code>", so only such files, located in
+        the appropriate directories, are taken into account when
+        calculating current disk usage.</p><p><code class="varname">SystemMaxUse=</code> and
+        <code class="varname">RuntimeMaxUse=</code> control how much disk space
+        the journal may use up at most.
+        <code class="varname">SystemKeepFree=</code> and
+        <code class="varname">RuntimeKeepFree=</code> control how much disk
+        space systemd-journald shall leave free for other uses.
+        <span class="command"><strong>systemd-journald</strong></span> will respect both limits
+        and use the smaller of the two values.</p><p>The first pair defaults to 10% and the second to 15% of
+        the size of the respective file system, but each of the calculated default values is
+        capped to 4G. If the file system is nearly full and either
+        <code class="varname">SystemKeepFree=</code> or
+        <code class="varname">RuntimeKeepFree=</code> are violated when
+        systemd-journald is started, the limit will be raised to the
+        percentage that is actually free. This means that if there was
+        enough free space before and journal files were created, and
+        subsequently something else causes the file system to fill up,
+        journald will stop using more space, but it will not be
+        removing existing files to reduce the footprint again,
+        either. Also note that only archived files are deleted to reduce the
+        space occupied by journal files. This means that, in effect, there might
+        still be more space used than <code class="varname">SystemMaxUse=</code> or
+        <code class="varname">RuntimeMaxUse=</code> limit after a vacuuming operation is
+        complete.</p><p><code class="varname">SystemMaxFileSize=</code> and <code class="varname">RuntimeMaxFileSize=</code> control how
+        large individual journal files may grow at most. This influences the granularity in which disk space
+        is made available through rotation, i.e. deletion of historic data. Defaults to one eighth of the
+        values configured with <code class="varname">SystemMaxUse=</code> and <code class="varname">RuntimeMaxUse=</code> capped
+        to 128M, so that usually seven rotated journal files are kept as history. If the journal compact
+        mode is enabled (enabled by default), the maximum file size is capped to 4G.</p><p>Specify values in bytes or use K, M, G, T, P, E as units for the specified sizes (equal to
+        1024, 1024², … bytes). Note that size limits are enforced synchronously when journal files are
+        extended, and no explicit rotation step triggered by time is needed.</p><p><code class="varname">SystemMaxFiles=</code> and
+        <code class="varname">RuntimeMaxFiles=</code> control how many
+        individual journal files to keep at most. Note that only
+        archived files are deleted to reduce the number of files until
+        this limit is reached; active files will stay around. This
+        means that, in effect, there might still be more journal files
+        around in total than this limit after a vacuuming operation is
+        complete. This setting defaults to 100.</p></dd><dt id="MaxFileSec="><span class="term"><code class="varname">MaxFileSec=</code></span><a class="headerlink" title="Permalink to this term" href="#MaxFileSec=">¶</a></dt><dd><p>The maximum time to store entries in a single
+        journal file before rotating to the next one. Normally,
+        time-based rotation should not be required as size-based
+        rotation with options such as
+        <code class="varname">SystemMaxFileSize=</code> should be sufficient to
+        ensure that journal files do not grow without bounds. However,
+        to ensure that not too much data is lost at once when old
+        journal files are deleted, it might make sense to change this
+        value from the default of one month. Set to 0 to turn off this
+        feature. This setting takes time values which may be suffixed
+        with the units "<code class="literal">year</code>",
+        "<code class="literal">month</code>", "<code class="literal">week</code>",
+        "<code class="literal">day</code>", "<code class="literal">h</code>" or
+        "<code class="literal">m</code>" to override the default time unit of
+        seconds.</p><p><a name="v195"></a>Added in version 195.</p></dd><dt id="MaxRetentionSec="><span class="term"><code class="varname">MaxRetentionSec=</code></span><a class="headerlink" title="Permalink to this term" href="#MaxRetentionSec=">¶</a></dt><dd><p>The maximum time to store journal entries.
+        This controls whether journal files containing entries older
+        than the specified time span are deleted. Normally, time-based
+        deletion of old journal files should not be required as
+        size-based deletion with options such as
+        <code class="varname">SystemMaxUse=</code> should be sufficient to
+        ensure that journal files do not grow without bounds. However,
+        to enforce data retention policies, it might make sense to
+        change this value from the default of 0 (which turns off this
+        feature). This setting also takes time values which may be
+        suffixed with the units "<code class="literal">year</code>",
+        "<code class="literal">month</code>", "<code class="literal">week</code>",
+        "<code class="literal">day</code>", "<code class="literal">h</code>" or "<code class="literal">
+        m</code>" to override the default time unit of
+        seconds.</p><p><a name="v195"></a>Added in version 195.</p></dd><dt id="SyncIntervalSec="><span class="term"><code class="varname">SyncIntervalSec=</code></span><a class="headerlink" title="Permalink to this term" href="#SyncIntervalSec=">¶</a></dt><dd><p>The timeout before synchronizing journal files
+        to disk. After syncing, journal files are placed in the
+        OFFLINE state. Note that syncing is unconditionally done
+        immediately after a log message of priority CRIT, ALERT or
+        EMERG has been logged. This setting hence applies only to
+        messages of the levels ERR, WARNING, NOTICE, INFO, DEBUG. The
+        default timeout is 5 minutes. </p><p><a name="v199"></a>Added in version 199.</p></dd><dt id="ForwardToSyslog="><span class="term"><code class="varname">ForwardToSyslog=</code>, </span><span class="term"><code class="varname">ForwardToKMsg=</code>, </span><span class="term"><code class="varname">ForwardToConsole=</code>, </span><span class="term"><code class="varname">ForwardToWall=</code>, </span><span class="term"><code class="varname">ForwardToSocket=</code></span><a class="headerlink" title="Permalink to this term" href="#ForwardToSyslog=">¶</a></dt><dd><p>Control whether log messages received by the journal daemon shall be forwarded to a
+        traditional syslog daemon, to the kernel log buffer (kmsg), to the system console, sent as wall
+        messages to all logged-in users or sent over a socket. These options take boolean arguments except
+        for "<code class="literal">ForwardToSocket=</code>" which takes an address instead. If forwarding
+        to syslog is enabled but nothing reads messages from the socket, forwarding to syslog has no effect. By default,
+        only forwarding to wall is enabled. These settings may be overridden at boot time with the kernel
+        command line options "<code class="literal">systemd.journald.forward_to_syslog</code>",
+        "<code class="literal">systemd.journald.forward_to_kmsg</code>",
+        "<code class="literal">systemd.journald.forward_to_console</code>", and
+        "<code class="literal">systemd.journald.forward_to_wall</code>". If the option name is specified without
+        "<code class="literal">=</code>" and the following argument, true is assumed. Otherwise, the argument is parsed
+        as a boolean.</p><p>The socket forwarding address can be specified with the credential
+        "<code class="literal">journal.forward_to_socket</code>". The following socket types are supported:</p><p><span class="simplelist"><code class="constant">AF_INET</code> (e.g. "<code class="literal">192.168.0.11:4444</code>"), <code class="constant">AF_INET6</code> (e.g. "<code class="literal">[2001:db8::ff00:42:8329]:4444</code>"), <code class="constant">AF_UNIX</code> (e.g. "<code class="literal">/run/host/journal/socket</code>"), <code class="constant">AF_VSOCK</code> (e.g. "<code class="literal">vsock:2:1234</code>")</span></p><p>When forwarding to the console, the TTY to log to can be changed with
+        <code class="varname">TTYPath=</code>, described below.</p><p>When forwarding to the kernel log buffer (kmsg), make sure to select a suitably large size for
+        the log buffer, for example by adding "<code class="literal">log_buf_len=8M</code>" to the kernel command line.
+        <span class="command"><strong>systemd</strong></span> will automatically disable kernel's rate-limiting applied to userspace
+        processes (equivalent to setting "<code class="literal">printk.devkmsg=on</code>").</p><p>When forwarding over a socket the <a class="ulink" href="https://systemd.io/JOURNAL_EXPORT_FORMATS/#journal-export-format" target="_top">
+        Journal Export Format</a> is used when sending over the wire.  Notably this includes the metadata
+        field <code class="varname">__REALTIME_TIMESTAMP</code> so that
+        <span class="command"><strong>systemd-journal-remote</strong></span> (see
+        <a href="systemd-journal-remote.service.html#"><span class="citerefentry"><span class="refentrytitle">systemd-journal-remote.service</span>(8)</span></a>)
+        can be used to receive the forwarded journal entries.</p><p>Note: Forwarding is performed synchronously within journald, and may significantly affect its
+        performance.  This is particularly relevant when using ForwardToConsole=yes in cloud environments,
+        where the console is often a slow, virtual serial port.
+        Since journald is implemented as a conventional single-process daemon, forwarding to a completely
+        hung console will block journald. This can have a cascading effect resulting in any services synchronously
+        logging to the blocked journal also becoming blocked.  Unless actively debugging/developing something, it is
+        generally preferable to setup a <span class="command"><strong>journalctl --follow</strong></span> style service redirected to the
+        console, instead of ForwardToConsole=yes, for production use.</p></dd><dt id="MaxLevelStore="><span class="term"><code class="varname">MaxLevelStore=</code>, </span><span class="term"><code class="varname">MaxLevelSyslog=</code>, </span><span class="term"><code class="varname">MaxLevelKMsg=</code>, </span><span class="term"><code class="varname">MaxLevelConsole=</code>, </span><span class="term"><code class="varname">MaxLevelWall=</code>, </span><span class="term"><code class="varname">MaxLevelSocket=</code></span><a class="headerlink" title="Permalink to this term" href="#MaxLevelStore=">¶</a></dt><dd><p>Controls the maximum log level of messages that are stored in the journal, forwarded
+        to syslog, kmsg, the console, the wall, or a socket (if that is enabled, see above).  As argument,
+        takes one of "<code class="literal">emerg</code>", "<code class="literal">alert</code>", "<code class="literal">crit</code>",
+        "<code class="literal">err</code>", "<code class="literal">warning</code>", "<code class="literal">notice</code>",
+        "<code class="literal">info</code>", "<code class="literal">debug</code>", or integer values in the range of 0–7
+        (corresponding to the same levels). Messages equal or below the log level specified are
+        stored/forwarded, messages above are dropped. Defaults to "<code class="literal">debug</code>" for
+        <code class="varname">MaxLevelStore=</code>, <code class="varname">MaxLevelSyslog=</code> and
+        <code class="varname">MaxLevelSocket=</code>, to ensure that the all messages are stored in the journal,
+        forwarded to syslog and the socket if one exists.  Defaults to "<code class="literal">notice</code>" for
+        <code class="varname">MaxLevelKMsg=</code>, "<code class="literal">info</code>" for <code class="varname">MaxLevelConsole=</code>,
+        and "<code class="literal">emerg</code>" for <code class="varname">MaxLevelWall=</code>. These settings may be overridden
+        at boot time with the kernel command line options
+        "<code class="literal">systemd.journald.max_level_store=</code>",
+        "<code class="literal">systemd.journald.max_level_syslog=</code>",
+        "<code class="literal">systemd.journald.max_level_kmsg=</code>",
+        "<code class="literal">systemd.journald.max_level_console=</code>",
+        "<code class="literal">systemd.journald.max_level_wall=</code>",
+        "<code class="literal">systemd.journald.max_level_socket=</code>".</p><p><a name="v185"></a>Added in version 185.</p></dd><dt id="ReadKMsg="><span class="term"><code class="varname">ReadKMsg=</code></span><a class="headerlink" title="Permalink to this term" href="#ReadKMsg=">¶</a></dt><dd><p>Takes a boolean value. If enabled <span class="command"><strong>systemd-journal</strong></span> processes
+        <code class="filename">/dev/kmsg</code> messages generated by the kernel. In the default journal namespace
+        this option is enabled by default, it is disabled in all others.</p><p><a name="v235"></a>Added in version 235.</p></dd><dt id="Audit="><span class="term"><code class="varname">Audit=</code></span><a class="headerlink" title="Permalink to this term" href="#Audit=">¶</a></dt><dd><p>Takes a boolean value or special value "<code class="literal">keep</code>". If enabled
+        <span class="command"><strong>systemd-journald</strong></span> will turn on kernel auditing on start-up. If disabled it will
+        turn it off. When "<code class="literal">keep</code>" it will neither enable nor disable it, leaving the previous
+        state unchanged. This means if another tool turns on auditing even if
+        <span class="command"><strong>systemd-journald</strong></span> left it off, it will still collect the generated messages.
+        Defaults to yes in the default journal namespace, and "<code class="literal">keep</code>" otherwise.</p><p>Note that this option does not control whether <span class="command"><strong>systemd-journald</strong></span> collects
+        generated audit records, it just controls whether it tells the kernel to generate them. If you need
+        to prevent <span class="command"><strong>systemd-journald</strong></span> from collecting the generated messages, the socket
+        unit "<code class="literal">systemd-journald-audit.socket</code>" can be disabled and, in this case, this setting
+        is without effect.</p><p><a name="v246"></a>Added in version 246.</p></dd><dt id="TTYPath="><span class="term"><code class="varname">TTYPath=</code></span><a class="headerlink" title="Permalink to this term" href="#TTYPath=">¶</a></dt><dd><p>Change the console TTY to use if
+        <code class="varname">ForwardToConsole=yes</code> is used. Defaults to
+        <code class="filename">/dev/console</code>.</p><p><a name="v185"></a>Added in version 185.</p></dd><dt id="LineMax="><span class="term"><code class="varname">LineMax=</code></span><a class="headerlink" title="Permalink to this term" href="#LineMax=">¶</a></dt><dd><p>The maximum line length to permit when converting stream logs into record logs. When a systemd
+        unit's standard output/error are connected to the journal via a stream socket, the data read is split into
+        individual log records at newline ("<code class="literal">\n</code>", ASCII 10) and <code class="constant">NUL</code> characters. If no such delimiter is
+        read for the specified number of bytes a hard log record boundary is artificially inserted, breaking up overly
+        long lines into multiple log records. Selecting overly large values increases the possible memory usage of the
+        Journal daemon for each stream client, as in the worst case the journal daemon needs to buffer the specified
+        number of bytes in memory before it can flush a new log record to disk. Also note that permitting overly large
+        line maximum line lengths affects compatibility with traditional log protocols as log records might not fit
+        anymore into a single <code class="constant">AF_UNIX</code> or <code class="constant">AF_INET</code> datagram. Takes a size in
+        bytes. If the value is suffixed with K, M, G or T, the specified size is parsed as Kilobytes, Megabytes,
+        Gigabytes, or Terabytes (with the base 1024), respectively. Defaults to 48K, which is relatively large but
+        still small enough so that log records likely fit into network datagrams along with extra room for
+        metadata. Note that values below 79 are not accepted and will be bumped to 79.</p><p><a name="v235"></a>Added in version 235.</p></dd></dl></div></div><div class="refsect1"><a name="id-1.8"></a><h2 id="Forwarding to traditional syslog daemons">Forwarding to traditional syslog daemons<a class="headerlink" title="Permalink to this headline" href="#Forwarding%20to%20traditional%20syslog%20daemons">¶</a></h2><p>
+      Journal events can be transferred to a different logging daemon
+      in two different ways. With the first method, messages are
+      immediately forwarded to a socket
+      (<code class="filename">/run/systemd/journal/syslog</code>), where the
+      traditional syslog daemon can read them. This method is
+      controlled by the <code class="varname">ForwardToSyslog=</code> option. With a
+      second method, a syslog daemon behaves like a normal journal
+      client, and reads messages from the journal files, similarly to
+      <a href="journalctl.html#"><span class="citerefentry"><span class="refentrytitle">journalctl</span>(1)</span></a>.
+      With this, messages do not have to be read immediately,
+      which allows a logging daemon which is only started late in boot
+      to access all messages since the start of the system. In
+      addition, full structured meta-data is available to it. This
+      method of course is available only if the messages are stored in
+      a journal file at all. So it will not work if
+      <code class="varname">Storage=none</code> is set. It should be noted that
+      usually the <span class="emphasis"><em>second</em></span> method is used by syslog
+      daemons, so the <code class="varname">Storage=</code> option, and not the
+      <code class="varname">ForwardToSyslog=</code> option, is relevant for them.
+    </p></div><div class="refsect1"><a name="id-1.9"></a><h2 id="See Also">See Also<a class="headerlink" title="Permalink to this headline" href="#See%20Also">¶</a></h2><p><span class="simplelist"><a href="systemd.html#"><span class="citerefentry"><span class="refentrytitle">systemd</span>(1)</span></a>, <a href="systemd-journald.service.html#"><span class="citerefentry"><span class="refentrytitle">systemd-journald.service</span>(8)</span></a>, <a href="journalctl.html#"><span class="citerefentry"><span class="refentrytitle">journalctl</span>(1)</span></a>, <a href="systemd.journal-fields.html#"><span class="citerefentry"><span class="refentrytitle">systemd.journal-fields</span>(7)</span></a>, <a href="systemd-system.conf.html#"><span class="citerefentry"><span class="refentrytitle">systemd-system.conf</span>(5)</span></a></span></p></div><div class="footnotes"><br><hr style="width:100; text-align:left;margin-left: 0"><div id="ftn.usr-local-footnote" class="footnote"><p><a href="#usr-local-footnote" class="para"><sup class="para">[1] </sup></a>💣💥🧨💥💥💣 Please note that those configuration files must be available at all times. If
+      <code class="filename">/usr/local/</code> is a separate partition, it may not be available during early boot,
+      and must not be used for configuration.</p></div></div></div></body></html>
