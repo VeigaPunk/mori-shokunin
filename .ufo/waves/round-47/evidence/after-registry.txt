@@ -1,0 +1,8 @@
+$ python3 tools/mori-gate-registry.py --rev 4dea3d091820cb3bd73b509b6ec047d017cdb023 --audit tools/mori-pin-check.py --audit .ufo/waves/round-47/count-c2.py
+audit tools/mori-pin-check.py                  PASS row='registry pin reconciler (r47, C1)' (8 cells, entry resolves, --selftest argv branch)
+audit .ufo/waves/round-47/count-c2.py          PASS row='r47 tracepoint catalogue (C2)' (8 cells, entry resolves, --selftest argv branch)
+tables=8
+rev=4dea3d091820cb3bd73b509b6ec047d017cdb023
+registered=2 unregistered=0 no_selftest=0 duplicate=0 wrong_row=0 tables=8
+REGISTRY=met
+rc=0

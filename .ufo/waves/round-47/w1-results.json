@@ -1,0 +1,260 @@
+{
+ "lane": "mori",
+ "round": 47,
+ "wave": "w1",
+ "seats": 42,
+ "results": [
+  {
+   "name": "ScribeCatalogue",
+   "agent": "scribe",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ScribeLifecycle",
+   "agent": "scribe",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ScribeBoundaries",
+   "agent": "scribe",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ScribeRowS475",
+   "agent": "scribe",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ScribeRowS476",
+   "agent": "scribe",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ScribeRowHost",
+   "agent": "scribe",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ScribeMistakes",
+   "agent": "scribe",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ScribeGate",
+   "agent": "scribe",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ScribeScorecardLog",
+   "agent": "scribe",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ScribeQuality",
+   "agent": "scribe",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ScribeReadme",
+   "agent": "scribe",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ScribeRegistryRows",
+   "agent": "scribe",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ExecC1Controls",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ExecC2Controls",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ExecCollisionGuard",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ExecLiveRefetch",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ExecOffHostReplay",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ExecRegistryAudit",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ExecPinTiming",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ExecS005Status",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ExecMisrootBaseline",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ExecStagedTable",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "LabPinStability",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "LabC2Parser",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ScoutROMA",
+   "agent": "scout",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ScoutStagedTheme",
+   "agent": "scout",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ScoutConsider",
+   "agent": "scout",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "RevPinHistory",
+   "agent": "reviewer",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ConnSiblings",
+   "agent": "connector",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "ConnCrossClaim",
+   "agent": "connector",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "MutPinSemanticCell",
+   "agent": "mutation-tester",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "MutPinRcFloor",
+   "agent": "mutation-tester",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "MutC2Fields",
+   "agent": "mutation-tester",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "MutC2Source",
+   "agent": "mutation-tester",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "CritC1Predicate",
+   "agent": "critic",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "CritC2Predicate",
+   "agent": "critic",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "CritAxisNaming",
+   "agent": "critic",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "RevPinCheckCode",
+   "agent": "reviewer",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "RevCountC2Code",
+   "agent": "reviewer",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "RevContract",
+   "agent": "reviewer",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "SentPinExec",
+   "agent": "sentinel",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "SimpInstruments",
+   "agent": "simplifier",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  }
+ ]
+}

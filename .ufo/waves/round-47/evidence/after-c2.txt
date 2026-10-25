@@ -1,0 +1,3 @@
+$ python3 .ufo/waves/round-47/count-c2.py af2250d80033ded23ec34af328068eeb85007d1c
+C2=met events=8 rows=8 name_mismatch=0 field_mismatch=0 callsite_mismatch=0 pin_mismatch=0 source_row=ok provenance=ok rev=af2250d80033ded23ec34af328068eeb85007d1c
+rc=0

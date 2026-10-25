@@ -1,4 +1,4 @@
-$ python3 tools/mori-pin-check.py (v2) --rev 63eecf2738db96f46b0bd02b1b2dfd66787493d0 --min-tally-pins 26 --baseline-rev 2d85e33d14198d388fd3cda9cc15ec07e57e7a53 --skill .ufo/waves/round-47/controls/c1-junk/skill-v3-fakeecho.md
+$ python3 tools/mori-pin-check.py (v2 at af2250d80033ded23ec34af328068eeb85007d1c) --rev 63eecf2738db96f46b0bd02b1b2dfd66787493d0 --min-tally-pins 26 --baseline-rev 2d85e33d14198d388fd3cda9cc15ec07e57e7a53 --skill .ufo/waves/round-47/controls/c1-junk/skill-v3-fakeecho.md
 pin line=166 kind=tally prefix=MORI_SILENCE_CASES_SELFTEST state=match pinned='pass=24 fail=0' observed='pass=24 fail=0' rc=0 cmd='bash tools/mori-silence-cases.sh --selftest'
 pin line=182 kind=tally prefix=R19_SELFTEST state=match pinned='pass=26 fail=0' observed='pass=26 fail=0' rc=0 cmd='python3 tools/mori-round19-regressions.py --selftest'
 pin line=183 kind=tally prefix=C1_SELFTEST state=match pinned='pass=6 fail=0' observed='pass=6 fail=0' rc=0 cmd='python3 .ufo/waves/round-44/count-c1.py --selftest'
