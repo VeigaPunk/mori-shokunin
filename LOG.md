@@ -2663,3 +2663,25 @@ Re-pinned the four SKILL.md registry rows routed by the round-45 non-author veri
 Frozen counter `python3 .ufo/waves/round-46/count-repins.py <SKILL.md>` reported `MORI_R45_REPINS mismatches=4 rows=4` rc 1 on committed prior SKILL control and `mismatches=0 rows=4` rc 0 on the repaired cells. The wave found false-green cases by moving receipt substrings to non-semantic cells while leaving those cells stale (`.ufo/waves/round-46/w1/CritControl.md`, `CritVerdict.md`). The frozen predicate was not changed after scoring; claim C1 is **unprovable**, and this is not admitted as a calibration improvement.
 
 Added closure-reconciled round-45 claim outcomes and the round-46 claim receipt in `SCORECARD.md`; recorded the red-before/green-after control and falsification boundary. Updated SHONEN assessment to `[~]` with evidence pointers only. Added S474 and a round-46 lesson; source census remains conformant with the pre-existing W04 duplicate-URL warnings. The append-only correction above records the round-45 manifest's 27/27, not 29/29.
+
+## Round 47 (L1 MoriR47; C1 calibration, C2 depth)
+
+Froze at `63eecf27` (contract P-C1/P-C2, `tools/mori-pin-check.py` v1, `count-c2.py`, controls, the four Linux v7.2
+copies under `corpus/evidence/sources-r47/`). Before: `PIN_CHECK=unmet … mismatches=1` and `C2=unmet` at `2d85e33`.
+
+- **C1:** `SKILL.md:912` pinned `MORI_SOURCES_APPENDONLY_SELFTEST pass=15 fail=0` since round 40; the round-41 freeze
+  `d72ac167` grew the tool to 22 arms (re-run at `265a955c` → 15, at `d72ac167` → 22; `w1/RevPinHistory.md`). The cell
+  now reads `pass=22`. Round 46's `count-repins.py` is retired as a calibration proof (SKILL.md Round47 section). Frozen
+  v1 at `af2250d8` → `PIN_CHECK=met tally_pins=28 digest_pins=5 mismatches=0`. Wave 1 turned v1 green on junk edits
+  (`w1/CritC1Predicate.md`, `w1/SentPinExec.md`, `w1/RevPinCheckCode.md`); v2 landed in `4dea3d09`/`af2250d8` and scores
+  them unmet (`evidence/v2/` vs `evidence/v1-junk/`); the claim stays scored by the frozen v1 bytes, so C1 is reported **unprovable** (`w2/CritC1Verdict.md`).
+- **C2:** `corpus/knowledge/oom-tracepoints-r47.md` — eight v7.2 `oom` trace events with their field sets and emitting
+  functions, the reaper lifecycle, and the attribution boundary (victim, never culprit). Rows S475 (oom.h v7.2), S476
+  (call sites), S477 (this host's tracefs, read-only `sudo -n`), S478 (ROMA full text, "such as"); S005 queued → mined.
+  `count-c2.py af2250d8` → `C2=met events=8 rows=8 …`.
+- Assimilation (FR13 theme): staged S507's document admitted as S478; the staged entry's "exactly three" headline and
+  staged S501 refused; collisions S471–S474; quarantine slice of 3 left closed. considerthese 2026-10-25 suggestion 1 →
+  `tools/mori-pin-check.py` + QUALITY 123; QUALITY 124 from the count overclaim.
+- Wave 1: 42 seats, 41 reports on disk (MutPinSemanticCell's output was not written; that seat also edited the tracked
+  tool, restored by the orchestrator — lesson M4). Round-46 `.scratch/` debris `MutMissing/ MutStaleC1/ MutStaleC2/`
+  removed (untracked; routed defect 3).

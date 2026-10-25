@@ -2559,3 +2559,25 @@ Round-45 closure reports quality harmed due to stale registry cells and the fals
 ## Round 46 — calibration repair
 
 Claim C1 (calibration, held score 5): four round-45 `SKILL.md` registry rows have measured pins. Frozen counter `python3 .ufo/waves/round-46/count-repins.py <SKILL.md>` printed `MORI_R45_REPINS mismatches=4 rows=4` (exit 1) for committed `control-skill.md` and `mismatches=0 rows=4` (exit 0) for repaired `SKILL.md`; counter SHA-256 `ebb6a6d3fe08d78791a45643d1ebda2243e5fff271eaada1d7f682317c673327`. However, CritControl/CritVerdict demonstrated that stale receipt strings placed in another cell of each row also yield zero mismatches, and the counter does not re-measure live tools. **Verdict: unprovable** for the frozen predicate; the corrected cells are independently corroborated but the counter is not a calibration-grade mismatch measure. No score delta is claimed. Evidence: `.ufo/waves/round-46/w1/CritControl.md`, `CritVerdict.md`, and `corpus/lessons/round-46.md`.
+
+## Round 47 — registry pins re-measured from committed bytes (C1) and the v7.2 OOM tracepoint catalogue (C2)
+
+L1 MoriR47, attempt 1. Entering tip `2d85e33d14198d388fd3cda9cc15ec07e57e7a53`; freeze `63eecf2738db96f46b0bd02b1b2dfd66787493d0`
+(`.ufo/waves/round-47/contract.md`, both counters and the controls committed before any seat). Scores entering:
+coverage 6, operability 7, depth 5, freshness 5, calibration 5, adjacency 6; both claims work a lowest (tied 5) axis.
+No score change is claimed by the lane; the non-author closure rules.
+
+| Claim | Axis (held) | Counting command | Before (entering `2d85e33`) | After (measured at `af2250d8`) | Verdict proposed for the closure |
+|---|---|---|---|---|---|
+| C1 SKILL.md registry self-test pins reproduce from committed bytes | calibration 5 | `python3 <git show 63eecf27:tools/mori-pin-check.py> --rev R --min-tally-pins 26 --baseline-rev 2d85e33d…` | `PIN_CHECK=unmet tally_pins=26 digest_pins=5 mismatches=1` (`SKILL.md:912` pinned `pass=15`, tool prints `pass=22`), rc 1 — `evidence/control-c1-donothing.txt` | `PIN_CHECK=met tally_pins=28 digest_pins=5 mismatches=0 unparsed=0 no_command=0 dropped=0`, rc 0 — `evidence/after-c1-v1-frozen.txt` | **unprovable**: the frozen scorer prints `met`, but it is also green on five junk edits (`evidence/v1-junk/`, `w2/CritC1Verdict.md`); the landed change is honest (`w2/ExecDiffScope.md`) and passes the hardened v2 (`evidence/after-c1-v2.txt`), which scores every junk variant unmet (`evidence/v2/`) |
+| C2 OOM tracepoint catalogue entry (FR13) | depth 5 | `python3 .ufo/waves/round-47/count-c2.py R` | `C2=unmet … failed=entry_absent,pins,source_row`, rc 1 — `evidence/control-c2-donothing.txt` | `C2=met events=8 rows=8 name_mismatch=0 field_mismatch=0 callsite_mismatch=0 pin_mismatch=0 source_row=ok provenance=ok`, rc 0 — `evidence/after-c2.txt` | met; limits: prose and lifecycle claims are not counted, and a used-by survivor / indented-row miss are recorded (`corpus/lessons/round-47.md` M5) |
+
+Controls that skip the work stay unmet: C1 do-nothing, deleted row, moved-cell and truncated pin
+(`evidence/control-c1-*.txt`); C2 do-nothing, the staged entry byte-exact and the staged "three tracepoints"
+claim as a table (`evidence/control-c2-*-at-freeze.txt`).
+
+### capabilities: first demonstrated round 47
+
+| Capability | What it can now do | Evidence | First-working round |
+|---|---|---|---|
+| registry pin reconciler (v2) | re-run every tally and digest pin in SKILL.md's self-test cells from a `git archive` export of a revision and refuse rebinding, inline code, `.scratch` paths, weakened pins, stale echoes, duplicate or hidden rows | `python3 tools/mori-pin-check.py --selftest` → `PIN_CHECK_SELFTEST pass=34 fail=0`; `.ufo/waves/round-47/evidence/after-c1-v2.txt`; `evidence/v2/` vs `evidence/v1-junk/` | 47 |
