@@ -1,9 +1,14 @@
 # ConnSiblings — sibling-lane overlap scan for round 44's three instruments
 
 Seat: `L1Mori44-4.ConnSiblings` (round 44, wave 1, connector). Leaf member, no subagent dispatch.
-Lane: `/home/vgpnk/Projects/shokunin/mori-shokunin`, HEAD `7cb59c6891d4f5d0266fe062565f094da835dc84`
-(the freeze commit). Fleet and sibling repos read-only; nothing written but this file; no
-`git add/commit/push/checkout/stash/reset`, no mutating `jj`, no instrument byte edited.
+Lane: `/home/vgpnk/Projects/shokunin/mori-shokunin`. **Every measurement below is taken at
+`7cb59c6891d4f5d0266fe062565f094da835dc84`** (the freeze commit, where the instruments were pinned);
+the lane tip advanced to `6d2f5192` while this seat ran — the round's after-measurements landed at
+`5102022a`, `360e3774`, `6d2f5192`, and `5102022a` carried an earlier state of this file, so the
+edits after it (the fleet schema census, the two sibling-repo runs, §4.4's TMPDIR mechanism) are
+working-tree content, not committed bytes. Fleet and sibling repos read-only; nothing written but
+this file; no `git add/commit/push/checkout/stash/reset`, no mutating `jj`, no instrument byte
+edited.
 
 **Axes named (godspeed).** C1 calibration 5 · C2 operability 7 · C3 coverage 6
 (`.ufo/waves/round-44/contract.md` §Context). This seat produces no claim score; it names where
@@ -276,10 +281,22 @@ committed input snapshot"); (b) `validate` also resolves `used-by` paths **on di
 `E11 used-by path missing on disk`), so the leg is worktree-sensitive while C1 and C2 are
 revision-bound. The do-nothing control never reaches this leg (`evidence/control-c3-donothing.txt`
 stops at `check entry_present FAIL (absent)`), so the property is unmeasured today, not disproved.
-A third consequence follows from the same code path: an absent census script makes `bash` exit 127,
-`census_ok` records `FAIL (exit=127)` and the run prints `C3=unmet` exit 1 — a missing dependency
+A third consequence follows from the same code path, and the round has already met it: the census
+resolves a `--file` target's root as `realpath(dirname(file)/..)`, so staging the registry under
+`/tmp` makes every repo-relative `used-by` resolve under `/tmp` and every mined row `E11`
+(`scripts/sources-census.sh:497-502,566`). `TMPDIR` is therefore **verdict-bearing** for C3, not
+cosmetic: the after-receipt records it — `after/c3-after.txt:4-5` "TMPDIR is required: the frozen
+counter stages the registry under `$TMPDIR` and the census resolves used-by against
+dirname(file)/.. (defect M3, routed)". An absent census script is a fourth: `bash` exits 127,
+`census_ok` records `FAIL (exit=127)`, and the run prints `C3=unmet` exit 1 — a missing dependency
 reads as a failed claim, not `C3_SETUP`. (`ExecOffHostReplay` is measuring the clone case this
 wave; this seat does not duplicate it.)
+
+**First-finder note.** §4.1 and §4.2 were found independently here and are also recorded by the
+critic seat in `w1/CritPredicates.md` — pre-satisfaction at freeze at its `:153`, `:337`, `:424`;
+the caller-supplied counter set at `:139`; the default mutants dir at `:169`, `:388`, `:422`; the
+census leg's unpinned external authority at `:236`. What this seat adds is the *sibling* axis: the
+same facts against `kama`'s population rule, `kumitate`'s K43, and `protocol`'s §Gate standard.
 
 ---
 
@@ -292,7 +309,9 @@ Concretely, for the C2 receipt the executor seat already owes (`w1/ExecWitnessRe
 
 1. Run the frozen counter twice at the *landed* tip with the same `--counter` set:
    (a) the default invocation, (b) `--mutants-dir .ufo/waves/round-44/fixtures/mutants`; record both
-   exit codes and both `C2=` lines verbatim, plus `TMPDIR`.
+   exit codes and both `C2=` lines verbatim, plus `TMPDIR` — which is disk-bearing for C2 here
+   (`/tmp` full) and verdict-bearing for C3 (the census resolves `used-by` against
+   `dirname(file)/..`, so `TMPDIR` must sit in the lane; `after/c3-after.txt:4-5`, defect M3).
 2. In the round report, state (i) that C2 was already `met` at `7cb59c68` (§4.1) and therefore is not
    round work, (ii) that the default `--mutants-dir` is a mispath (§4.2) routed to round 45,
    (iii) that the claim is registry conformance, narrower than `PROTOCOL.md:385` (§4.3), with

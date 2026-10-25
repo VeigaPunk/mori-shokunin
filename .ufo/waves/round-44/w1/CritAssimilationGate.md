@@ -4,25 +4,39 @@
 checkable failures, all mechanical). *Frozen instrument: **C3=unmet***, and one of its five
 arms is structurally red on this lane (§6) — an instrument defect, not an entry defect.
 
-Judged bytes: `corpus/knowledge/pid-probe-conclusion-r44.md`, sha256
-`3ad7992f93be33bc46bf7da070e05b6bc6a2170cb74231dabb35c69c83a1e082`, 6186 bytes; rows
-`corpus/SOURCES.md:250-251`; README row `corpus/README.md:632`; working tree at HEAD
+Judged bytes: `corpus/knowledge/pid-probe-conclusion-r44.md` revision **#3** (sha256
+`26ae3c4ff2ec620d37c9a24ed7736334370bc883c54ad19514e88881df68cb74`, 6497 bytes); line
+numbers below are that revision's, and every §5 failure was also checked on revision #2
+(`3ad7992f…`, 6186 B) where the text is identical. Rows `corpus/SOURCES.md:250-251`;
+README row `corpus/README.md:632`; working tree at HEAD
 `7cb59c6891d4f5d0266fe062565f094da835dc84` (entering tip `1429c791…` is an ancestor:
 `git merge-base --is-ancestor 1429c791 HEAD` → true).
 
-**The entry is a moving target.** It changed twice while I reviewed it (5526 B → 6186 B;
-the claim moved from "three worlds, the state field is the discriminator" to "two
-documented worlds, one measured world, one retired"). Every line number below is against
-the sha above. A Gate that scores a file that keeps changing is scoring a different claim
-than the one it read (QUALITY 33: hash every verdict-driving input); **freeze the bytes
-before the Gate decides**, and re-run `count-c3.py` on the frozen sha.
+**The entry is a moving target — revision ledger observed during this review:**
+
+| # | bytes | sha256 (prefix) | change |
+|---|---|---|---|
+| 1 | 5526 | — | "three worlds", state field is the discriminator |
+| 2 | 6186 | `3ad7992f93be33bc…` | "two documented worlds, one measured world, one retired"; mm-less + ENOENT added |
+| 3 | 6497 | `26ae3c4ff2ec620d…` | still moving at review close |
+
+All five failures in §5 were re-checked against the **newest** sha and none is fixed by
+the revisions: `:66` still says "adds the state alphabet"; `:22`/`:34` still cite the
+unresolvable `evidence/…` path; `:29-30` still re-punctuate the zh sentence; `:57` still
+calls `X` a "teardown-window state"; the `recheck:` line still packs two bare-word
+commands; `.ufo/waves/round-44/evidence/cmdline-empty-by-state.txt` is byte-unchanged
+(861 B, 05:24) and its method still reads no mm indicator; `corpus/SOURCES.md:251` still
+carries the unswept S170 negative. A Gate that scores a file that keeps changing is
+scoring a different claim than the one it read (QUALITY 33: hash every verdict-driving
+input) — **freeze the bytes, then re-run `count-c3.py` on the frozen sha** (current
+`WORK` run: `entry_present PASS (6497 bytes)`, `census_ok FAIL (exit=1)`, `C3=unmet`).
 
 ---
 
 ## 1. The frozen instrument's verdict, first
 
 ```
-$ python3 .ufo/waves/round-44/count-c3.py WORK --row S471 --row S472
+$ python3 .ufo/waves/round-44/count-c3.py WORK --row S471 --row S472   # revision #2 of the entry
 check entry_present    PASS (6186 bytes)
 check entry_meta       PASS (sources S471,S472)
 check rows_present     PASS (rows S471,S472 mined)
@@ -31,6 +45,9 @@ check readme_row       PASS (names entry)
 rev=WORK
 C3=unmet
 ```
+
+(The same run on revision #3 prints `entry_present PASS (6497 bytes)` with every other
+line identical — the one failing arm is not the entry's.)
 
 Declared Before, reproduced exactly:
 
@@ -94,7 +111,7 @@ whether an endpoint works. … **fleet correlation belongs to mori**."
 
 **Verdict: in province.** The subject is what a liveness probe may conclude from a
 zero-character read — FR5's own boundary sentence. The entry refuses every crossing:
-no daemon identity (`:67-68`), no crash cause (`:71-72`), no census change (`:69-70`), no
+no daemon identity (`:70-71`), no crash cause (`:74-75`), no census change (`:72-73`), no
 remediation, no host-state diagnosis.
 
 Two province notes the round should carry:
@@ -136,7 +153,7 @@ What that means for the round:
    entry's typography, not the source's text.
 2. The honest coverage sentence is the one the entry now writes at `:12-17` — *the letters
    are held; the mm-less world, the ENOENT boundary and the translation disagreement are
-   new* — and **not** the stale bullet at `:63` ("This entry adds the state alphabet").
+   new* — and **not** the stale bullet at `:66` ("This entry adds the state alphabet").
    That bullet is the replay claim; it must go (§5.1).
 3. QUALITY 108 says a binding is checked for **resolvability, not token presence**. This
    instrument checks presence and not resolvability; the two rules that would have caught
@@ -149,7 +166,7 @@ What that means for the round:
 ### 5.1 The coverage claim contradicts itself (QUALITY 25)
 
 `:12-14` discloses that `watchdog-identity-r31.md:27/:29` and S171 already hold the read and
-the `Z`/`X` letters; `:63` then says "This entry adds the state alphabet". Both cannot
+the `Z`/`X` letters; `:66` then says "This entry adds the state alphabet". Both cannot
 stand. The claim is admitted at the scope measured — the narrow one.
 
 ### 5.2 The load-bearing mechanism is asserted, not measured (QUALITY 2)
@@ -220,7 +237,7 @@ Two smaller provenance items in the same class:
 - `:22` and `:34` cite `evidence/cmdline-empty-by-state.txt`, which **does not resolve from
   the repo root**; the file is at `.ufo/waves/round-44/evidence/cmdline-empty-by-state.txt`
   (QUALITY 9: every path pointer resolves at the carrying commit).
-- `:53-54` calls `X` "a teardown-window state" — an unsourced gloss presented as
+- `:56-57` calls `X` a "teardown-window state" — an unsourced gloss presented as
   documentation (QUALITY 3: observation, inference and unknown stay separate).
 
 ### 5.6 The recheck reproduces but tests a word (attack (c))
@@ -239,7 +256,7 @@ commands where the wave spec asks for one runnable command per `recheck:`.
 
 ### 5.7 The flip (all six are mechanical; none changes the claim)
 
-1. Delete the "adds the state alphabet" bullet (`:63`) and keep only the narrow claim.
+1. Delete the "adds the state alphabet" bullet (`:66`) and keep only the narrow claim.
 2. Add the mm read to the receipt's method and to the entry's anchor for the load-bearing
    sentence (e.g. "691/691 zero-length `cmdline` pids read an empty `/proc/<pid>/maps`;
    229/229 non-empty ones did not — `<command>`, 2026-10-25").
