@@ -1,26 +1,24 @@
-# RevLedgerVsReport — does the proposed C1 ledger back the report's numbers?
+# RevLedgerVsReport — does the C1 ledger back the report's numbers?
 
 Seat: `L1Mori44-4.RevLedgerVsReport` (reviewer, leaf — no subagent dispatch).
 Lane: `/home/vgpnk/Projects/shokunin/mori-shokunin`.
-Entering tip `1429c791db5891c484684feef893799909d2d6a8`; freeze / lane HEAD at reading
-`7cb59c6891d4f5d0266fe062565f094da835dc84`.
+Entering tip `1429c791db5891c484684feef893799909d2d6a8`; freeze `7cb59c68…`;
+**landed ledger commit `5157cdda41ca711da280a85e7d3ec13da6ec85d3`**; lane tip at this reading
+`5102022a3978e167eaf34dbaecad68ae320a5fbe`.
 
-Draft reviewed: `.ufo/waves/round-44/w1/ExecLedger.md`, 365 lines, sha256
-`e9e86a3d7766df9338a8bb7b16e7b9f9496b2424bf85c5f5081a427bf4eb1a27` (read 2026-10-25T05:28-03;
-the seat was still running, so a later revision of the draft can differ).
-Instrument: `.ufo/waves/round-44/count-c1.py`, sha256
-`9477824d5eee45f47d49be52902f7bb0cd67a4d038e0ec7e79094c1e71999f83` — matches the
-`evidence/freeze-r44.txt` pin.
+Objects reviewed:
 
-**State of the object under review.** No `.ufo/waves/round-44/figures.tsv` exists in the lane or
-in any commit; the wave-1 reports (31 at this reading, 32 with this one) are untracked; the
-round report is not written. The
-integration worktree carries uncommitted corpus changes (`corpus/SOURCES.md`, `QUALITY.md`,
-`README.md`, `knowledge/pid-probe-conclusion-r44.md`, `SCORECARD.md`, `LOG.md`). Everything below
-about "the report's figures" is therefore derived from the report contract
-(`/home/vgpnk/Projects/shokunin/.ufo/prompts/mori-round-44.md` §4, §6), the round's SCORECARD
-declaration (`SCORECARD.md:2394-2426`) and the committed/uncommitted artifacts — not from a
-report that exists.
+- **The landed ledger** `.ufo/waves/round-44/figures.tsv` at `5157cdda`, sha256
+  `21fe80dd24bc0e310063aa9c11fc4be4b08e5451e2c9d2ccc802564caf7ace2b` — 16 rows, 5 classes.
+  Byte-identical at `5102022a`.
+- **The proposal** `.ufo/waves/round-44/w1/ExecLedger.md`, 365 lines, sha256
+  `e9e86a3d7766df9338a8bb7b16e7b9f9496b2424bf85c5f5081a427bf4eb1a27` — 20 rows. The landed
+  ledger is not this draft; it drops eight draft rows and adds seven of its own.
+- Instrument `.ufo/waves/round-44/count-c1.py`, sha256
+  `9477824d5eee45f47d49be52902f7bb0cd67a4d038e0ec7e79094c1e71999f83` (matches the freeze pin).
+
+This version supersedes the 402-line version carried in `5102022a`; that version reviewed only
+ExecLedger's proposal because the landed ledger did not exist when it was written.
 
 No file was edited except this one. No frozen byte, corpus file, SKILL.md, SCORECARD, LOG or
 figures.tsv was written. Scratch ran under `/home/vgpnk/revledger-*` because `/tmp` was full
@@ -28,30 +26,82 @@ figures.tsv was written. Scratch ran under `/home/vgpnk/revledger-*` because `/t
 
 ---
 
-## 1. Verdict in one paragraph
+## 1. Verdict
 
-The draft is **honest but partial, and its green runs are not at a landed tip.** All 20 rows
-reconcile at the freeze commit — I re-ran every command and got the asserted integer 20/20. But
-12 rows are load-bearing for report sentences, 4 are proxies, and 4 are padding that no required
-report section states (`F02`, `F05`, `F15`, `F16`). Seven cells are stale at the landed tip by the
-draft's own admission (`F06`, `F07`, `F08`, `F09`, `F12`, `F13`, `F14`), and two of its landing
-predictions are wrong by one commit (`F16`=29 and `F12`=74; the closure lesson lands *after* the
-round tip — `F16` stays 28, `F12` is 73). The ledger cannot cover the report's before-values, the
-wave shape, the census, the witness's 15/14/34/8/12/2, the other three selftest tallies, the gate
-table total, the gate inventory or the c1s receipt. The C3 sweep figure the report must cite is
-**3 files at the integration tip, not the contract's 1**. The draft's only executed `C1=met` runs
-are at the freeze tree (where it reconciles the *before* values 243/116/53/0/6) and at fabricated
-simulations; no landed-tip run exists. As specified, `C1=met` certifies ledger well-formedness and
-arithmetic agreement at one revision — not that the report's numbers are reconciled.
+**The landed ledger is a good-faith sample of the report's figures, not "one row per numeric
+assertion the round report makes". It is arithmetically sound and materially better than the
+proposal, but it leaves the report's before-values and most of the claim-verdict evidence
+outside the ledger, and `C1=met` still certifies only ledger arithmetic at one revision.**
+
+- **16/16 rows reconcile at `5157cdda` and again at `5102022a`** (I ran each command and the
+  counter at both revisions). `C1=met mismatches=0`, exit 0, at both.
+- **11 rows are load-bearing**, 3 are proxies, 2 are decorative (`F09`, `F16`). Removing the two
+  decorative rows still leaves 14 rows and all five class labels, so they are padding, not floor
+  necessity.
+- The landed ledger **fixes the proposal's worst rows**: it drops the `.ufo/waves/` round-dir
+  count that looked like a seat count, the `.md`-report count mislabeled "seat logs" (a false
+  zero while `w1` is absent), the corpus/evidence file count and the spotcheck-lesson count; it
+  adds the report's real figures — 32 seats, 3 sweep files, 3 new criteria, 14 check lines,
+  8 mistakes, 2 rows naming the entry.
+- But it **drops four load-bearing proposal rows**: the 10 freeze pins, the 3 do-nothing
+  controls, the 3 counters, and the 6 C1 selftest arms. The report's C1/C2 evidence sentences
+  ("10 pinned artifacts", "three controls", "three counters", "`pass=6 fail=0`") are now
+  uncovered.
+- **Uncovered and required**: every before-value (243, 116, 53, 72, 0 sweep), the census
+  (245 rows / exit 0 / findings 20), the README frontier row, the role mix (12 attack roles,
+  37.5%), dead seats, the 31 reports returned, the witness's 12 rows / 15 / 34 / 2 mismatches,
+  the other three selftest tallies (5 / 6 / 6), the gate table total (23), the gate inventory
+  (33 / 18 / 15), the round-44 evidence count (11), and the ledger's own 16 rows / 5 classes.
+- **Rev identity is honest**: the receipt names `5157cdda`; `C1=met` also holds at the later tip
+  `5102022a` because no counted path changed. The report must name `5157cdda`, not "the tip".
+- **`C1=met` does not mean "the round's reported counts are reconciled."** It means the 16-row
+  ledger parses, spans five labels, and each row's own command equals its asserted integer at
+  the measured revision. The report's own measured-outcome cell already discloses the vacuity
+  half; this review adds the coverage, rev-identity and `@REV@`-use limits (§8).
 
 ---
 
 ## 2. What I ran (receipts)
 
-### 2.1 Every draft row, at the freeze commit
+### 2.1 The landed ledger, both revisions
 
-I extracted the 20 rows from `ExecLedger.md:47-67` and ran each command exactly as `run_row`
-does (`@REV@` → `7cb59c68`, `2>/dev/null | head -c 64`, cwd = lane):
+```
+$ python3 .ufo/waves/round-44/count-c1.py 5157cdda
+check ledger_present       PASS (1321 bytes)
+check rows_parse           PASS (16 rows)
+check row_floor            PASS (rows=16 min=12)
+check class_floor          PASS (classes=checks,corpus,evidence,registry,wave min=4)
+check commands_reconcile   PASS (all rows match)
+rev=5157cdda41ca711da280a85e7d3ec13da6ec85d3
+C1=met mismatches=0        (exit 0)
+
+$ python3 .ufo/waves/round-44/count-c1.py 5102022a
+… same five PASS lines …
+rev=5102022a3978e167eaf34dbaecad68ae320a5fbe
+C1=met mismatches=0        (exit 0)
+```
+
+`git diff --stat 5157cdda 5102022a -- corpus SKILL.md .ufo/waves/round-43
+.ufo/waves/round-44/figures.tsv .ufo/waves/round-44/w1-spec.json .ufo/waves/round-44/fixtures`
+is empty, and the ledger's sha256 is identical at both revisions. The after commit added
+`after/` receipts, `evidence/census-end.txt`, late `w1/` reports and `SCORECARD.md` — no counted
+path. That is why `C1=met` survives the tip move.
+
+Row-by-row at `5157cdda` (counter invocation: `@REV@` → rev, `2>/dev/null | head -c 64`,
+cwd = lane):
+
+```
+F01 245=245  F02 2=2    F03 3=3    F04 54=54
+F05 119=119  F06 3=3    F07 4=4    F08 72=72
+F09 10=10    F10 8=8    F11 14=14  F12 32=32
+F13 4=4      F14 8=8    F15 73=73  F16 15=15
+```
+
+**16/16 reconcile.** The arithmetic half is sound at both revisions.
+
+### 2.2 The proposal, at the freeze commit
+
+I extracted the 20 draft rows (`ExecLedger.md:48-67`) and ran each exactly as `run_row` does:
 
 ```
 F01 72=72  F02 10=10  F03 8=8   F04 39=39  F05 32=32
@@ -60,32 +110,11 @@ F11 10=10  F12 72=72  F13 116=116 F14 53=53 F15 195=195
 F16 28=28  F17 4=4    F18 3=3   F19 4=4    F20 6=6
 ```
 
-**20/20 reconcile at `7cb59c68`.** The arithmetic half of the draft is sound.
+**20/20 reconcile at `7cb59c68`.** I also rebuilt the freeze tree plus the draft in scratch and
+reproduced the proposal's green run at `ff4e2ae2…`: `C1=met`, 20 rows, 5 classes — at a revision
+whose registry is 243 and whose criteria are 116, i.e. the **before** values.
 
-### 2.2 The draft's green run is a before-state run
-
-I rebuilt the freeze tree in scratch (`git archive 7cb59c68 corpus .ufo/waves SKILL.md`), added
-the draft verbatim, and ran the counter:
-
-```
-$ python3 .ufo/waves/round-44/count-c1.py ff4e2ae2… --repo <scratch>
-check ledger_present       PASS (1671 bytes)
-check rows_parse           PASS (20 rows)
-check row_floor            PASS (rows=20 min=12)
-check class_floor          PASS (classes=checks,corpus,evidence,registry,wave min=4)
-check commands_reconcile   PASS (all rows match)
-rev=ff4e2ae22669b0c52151ebd0491374d809a39cc3
-C1=met mismatches=0
-rc=0
-```
-
-At that revision the ledger asserts `F07=243`, `F13=116`, `F14=53`, `F06=0`, `F09=6` — the
-**before** values. The report's after-values are 245, 119, 54, N, N. So the draft's own
-demonstrated `C1=met` does not back a single headline after-figure until the re-derivation in its
-§5 is executed at a landed tip. ExecLedger's §1 (`rev=85fc3bca`) and §4 (`rev=55703287`,
-`rev=729ed5ac`) are the same shape: freeze tree, or fabricated artifacts.
-
-### 2.3 Witness and selftest (instrument sanity)
+### 2.3 Witness, selftest, after receipts
 
 ```
 $ python3 .ufo/waves/round-44/count-c1.py 7cb59c68 --ledger .ufo/waves/round-44/fixtures/figures-r43.tsv
@@ -96,236 +125,197 @@ $ python3 .ufo/waves/round-44/count-c1.py --selftest
 … C1_SELFTEST pass=6 fail=0  (exit 0)
 ```
 
-### 2.4 The after-state I could measure (integration worktree, uncommitted)
-
-```
-grep -cE '^ {0,3}\|[[:space:]]*S[0-9]{3,}' corpus/SOURCES.md   -> 245
-grep -c '| mined |' corpus/SOURCES.md                          -> 194
-grep -cE '^[0-9]+\. ' corpus/QUALITY.md                        -> 119
-ls corpus/knowledge/*.md | wc -l                               -> 54
-ls corpus/lessons/*.md | wc -l                                 -> 72   (round-44.md not yet written)
-grep -c '^## Round-44' corpus/README.md                        -> 1
-ls .ufo/waves/round-44/w1/*.md | wc -l                         -> 31   (32 seats; this report is the last)
-ls .ufo/waves/round-44/evidence | wc -l                        -> 6    (no after receipts yet)
-```
-
-Census on the same bytes:
-
-```
-$ bash scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori
-… 19 × W04 … mori ok …      EXIT=0
-$ bash scripts/sources-census.sh census --file mori-shokunin/corpus/SOURCES.md
-file rows 245 / file status.mined 194 / FLEET rows 245 / FLEET status.mined 194   EXIT=0
-```
+`after/c1-after.txt` (13 lines), `after/c2-after.txt` (12), `after/c3-after.txt` (13) and
+`evidence/census-end.txt` are committed at `5102022a`. Their measured rev is `5157cdda`:
+C1 16 rows / 5 classes / `C1=met`; C2 five checks PASS / `C2=met` (tallies c1 6, c2 5, c3 6);
+C3 five checks PASS / `C3=met` under `TMPDIR=<lane>`; census `ok`, `exit=0`, `rows=245`,
+`findings=20`.
 
 ---
 
-## 3. Row-by-row verdict
+## 3. The landed ledger, row by row
 
-Legend: **L** load-bearing (a figure a required report section states), **P** proxy (counts a
-required artifact but not the figure the report states), **D** decorative (no required section
-states it), **S** stale at the landed tip as drafted.
+Legend: **L** load-bearing (a figure a required report section or the measured-outcome cell
+states), **P** proxy (counts a required artifact but not the stated figure), **D** decorative
+(no required section states it).
 
-| id | asserted | observed@freeze | class | what the command measures | verdict |
-|---|---|---|---|---|---|
-| F01 | 72 | 72 | wave | round-43 seat logs (`.ufo/waves/round-43/logs`) | **L** — the erratum's "8 of 72" |
-| F02 | 10 | 10 | wave | round-43 w1 reports (4 `Exec*` + 6 `ResCrit*`) | **D** — round-43 wave record, not r44 |
-| F03 | 8 | 8 | wave | round-43 logs carrying `provider.rate_limit` | **L** — routed defect 3 |
-| F04 | 39 | 39 | wave | round-43 logs containing `429` | **L** — erratum's "39 logs" |
-| F05 | 32 | 32 | wave | children of `.ufo/waves/` = round-13…round-44 | **D** — decoy: equals the seat count |
-| F06 | 0 | 0 | wave | `.md` reports under `.ufo/waves/round-44/w1` | **L/S** — mislabeled "seat logs" |
-| F07 | 243 | 243 | registry | `corpus/SOURCES.md` registry rows | **L/S** — after 245 |
-| F08 | 192 | 192 | registry | rows whose status cell is `mined` | **P/S** — after 194; report states total |
-| F09 | 6 | 6 | evidence | files under `.ufo/waves/round-44/evidence` | **L/S** — N unknown |
-| F10 | 3 | 3 | evidence | `control-c{1,2,3}-donothing.txt` | **L** — three controls |
-| F11 | 10 | 10 | evidence | sha256 pins in `freeze-r44.txt` | **L** — 10/10 pinned |
-| F12 | 72 | 72 | corpus | lesson files | **P/S** — after 73; report states the lesson |
-| F13 | 116 | 116 | corpus | numbered criteria in `QUALITY.md` | **L/S** — after 119 |
-| F14 | 53 | 53 | corpus | knowledge `.md` files | **P/S** — after 54; report states "one entry" |
-| F15 | 195 | 195 | corpus | files under `corpus/evidence` | **D** — no required section states it |
-| F16 | 28 | 28 | corpus | `*verifier-spotcheck*` lessons | **D** — no required section states it |
-| F17 | 4 | 4 | checks | `^| r44 ` rows in `SKILL.md`'s gate table | **L** — four r44 rows |
-| F18 | 3 | 3 | checks | round-44 counters | **L** — three counters |
-| F19 | 4 | 4 | checks | files under `.ufo/waves/round-44/fixtures` | **P** — witness + 3 mutants |
-| F20 | 6 | 6 | checks | `count-c1.py` selftest arm calls | **L** — `pass=6` |
+| id | asserted | class | what the command measures | verdict |
+|---|---|---|---|---|
+| F01 | 245 | registry | `corpus/SOURCES.md` registry rows | **L** — Sources & frontier after-value |
+| F02 | 2 | registry | lines naming `corpus/knowledge/pid-probe-conclusion-r44.md` | **L** — the two `used-by` rows |
+| F03 | 3 | corpus | files matching `Z ゾンビ` under `corpus/` | **L** — the corrected sweep after-value |
+| F04 | 54 | corpus | knowledge `.md` files | **P** — report states "one entry" |
+| F05 | 119 | corpus | numbered criteria in `QUALITY.md` | **L** — criteria after-value |
+| F06 | 3 | corpus | criteria numbered `117`–`119` | **L** — three new criteria |
+| F07 | 4 | registry | gate rows whose name begins `r44 ` in `SKILL.md` | **L** — four r44 rows |
+| F08 | 72 | wave | round-43 seat logs | **L** — erratum "8 of 72" |
+| F09 | 10 | wave | round-43 w1 reports | **D** — round-43's wave record |
+| F10 | 8 | wave | round-43 logs carrying `provider.rate_limit` | **L** — routed defect 3 |
+| F11 | 14 | checks | `^check` lines in round-43 `c1s-after.txt` | **L** — 14 checks (defect 3) |
+| F12 | 32 | wave | `"role"` entries in `w1-spec.json` | **L** — 32 seats |
+| F13 | 4 | evidence | files under `.ufo/waves/round-44/fixtures` | **P** — witness + 3 mutants |
+| F14 | 8 | corpus | mistake rows `M1`–`M8` in `corpus/lessons/round-44.md` | **L** — M1–M8 |
+| F15 | 73 | corpus | lesson `.md` files | **P** — report states the lesson, not the total |
+| F16 | 15 | evidence | files under `.ufo/waves/round-43/evidence` | **D** — round-43's evidence count |
 
-Counts: **L 12** (F01, F03, F04, F06, F07, F09, F10, F11, F13, F17, F18, F20), **P 4** (F08,
-F12, F14, F19), **D 4** (F02, F05, F15, F16).
+Counts: **L 11**, **P 3**, **D 2**. Drop F09 and F16 and the ledger still has 14 rows and
+classes `registry, corpus, wave, checks, evidence` — both floors hold without them. They are
+padding by construction.
 
-### 3.1 Padding, with the reason it is padding
+### 3.1 What the landed ledger covers well
 
-- **F05 is the dangerous one.** It counts 32 *round directories* (`.ufo/waves/round-13` …
-  `round-44`), not seats. The report contract requires "each wave's seat count, role mix"
-  (`prompt:215-216`). Both are 32 today, so a reader could mistake F05 for the seat count; it
-  would still be 32 if the wave had 31 or 33 seats, because the wave spec has 32 items
-  (`python3 -c "json.load(open('.ufo/waves/round-44/w1-spec.json'))"` → 32; roles: executor 8,
-  scribe 5, reviewer 5, scout 4, critic 4, mutation-tester 2, revenger 1, sentinel 1,
-  simplifier 1, connector 1). No row counts seats or roles.
-- **F15** counts 195 files under `corpus/evidence` (109 `.src`, 56 `.log`, 10 `.json`, …). No
-  required section states a corpus-evidence file count.
-- **F16** counts 28 verifier-spotcheck lessons. The report states that a closure lesson will be
-  written, not how many exist.
-- **F02** counts round-43's 10 reports. That is round-43's wave record; round-44's report states
-  its own wave.
+It backs the figures the report's **Sources & frontier** and **Trend verdicts** sections state:
+245 registry rows, the two rows naming the entry, the 3-file `Z ゾンビ` sweep, 119 criteria, the
+3 new criteria, 4 r44 gate rows, 72/8 round-43 seat-log figures, 14 check lines, 32 seats, and
+M1–M8. That is a real improvement on the proposal, which had none of 32 seats, 3 sweep files,
+3 criteria, 14 checks or 8 mistakes.
 
-The draft's own sentence "every row a count the round's report will cite"
-(`ExecLedger.md:15`) is therefore false for 4 of 20 rows.
+### 3.2 What it dropped from the proposal (coverage regression)
 
-### 3.2 Rows whose asserted value is wrong, stale or mislabeled
+The proposal carried four load-bearing rows the landed ledger does not:
 
-1. **F06 is mislabeled and is a false zero.** The draft's table calls it "round-44 wave-1 seat
-   logs" (`ExecLedger.md:101`), but the command counts `*.md` **reports**
-   (`.ufo/waves/round-44/w1`), not logs. At the freeze and entering tips the `w1` subtree does
-   not exist, and `git ls-tree -r … | grep '\.md$' | wc -l` prints `0` with **rc 0** — a false
-   zero, not "zero reports". The draft's §8.3 justification ("`F05` independently proves the
-   `.ufo/waves/` tree exists") does not prove the `round-44/w1` subtree exists. If the ledger is
-   filed before the reports land, F06 passes as 0 while the report claims N reports. The report's
-   routed-defect-3 sentence is about *seat logs* (round-43's 72 `.log` files); F06 cannot back it.
-2. **Seven cells are stale at the landed tip as drafted**: F06 0→N, F07 243→245, F08 192→194,
-   F09 6→N, F12 72→73, F13 116→119, F14 53→54. The draft says so (§4) and gives a re-derivation
-   recipe (§5); the defect is only if the recipe is not executed before filing.
-3. **Two landing predictions are wrong by one commit.** The draft says "`245 / 194 / 54 / 119 /
-   29 / 74` are the arithmetic consequences" (`ExecLedger.md:212`). `F16`=29 and `F12`=74 assume
-   the round-44 closure spotcheck lesson lands with the round. It does not: round-43's closure
-   lesson `corpus/lessons/round-43-verifier-spotcheck.md` landed at `1429c791`, one commit after
-   the round-43 lane tip `91cb221f` (`git log --oneline -3 1429c791` → `1429c791` →
-   `91cb221f`; `git show --stat 1429c791` adds only that lesson). At the round-44 landed tip
-   `F16` stays 28 and `F12` is 73. The recipe re-derives, but the prediction table and the
-   arithmetic sentence are wrong and should not be quoted in the report.
-4. **F05 is not the seat count** (see §3.1). If the report writes "32 seats" beside F05, the row
-   does not back it.
-
----
-
-## 4. Figures the report must cite that no row covers
-
-Grounded in the report contract (`prompt:104-118` required sections; `prompt:215-216` wave
-record) and the round's own SCORECARD declaration (`SCORECARD.md:2410`). "No row" means the
-draft has no row whose command yields that figure at the measured tip.
-
-| figure the report must state | value at the integration tip | command I ran | row? |
+| proposal row | figure | report sentence it backs | landed? |
 |---|---|---|---|
-| SOURCES rows **before** | 243 | `git show 1429c791:corpus/SOURCES.md \| grep -cE …` | **no** — F07 yields 245 at tip |
-| criteria **before** | 116 | same regex on `1429c791` | **no** — F13 yields 119 |
-| knowledge entries **before** | 53 | `git ls-tree -r 1429c791 corpus/knowledge` | **no** — F14 yields 54 |
-| lessons **before** | 72 | `git ls-tree -r 1429c791 corpus/lessons` | **no** — F12 yields 73 |
-| C3 sweep before → after | 0 → **3** | `git grep -l --untracked 'Z ゾンビ' -- corpus/` | **no**, and the contract says 1 |
-| rows added by tier | 2 (S471 A, S472 B) | `grep -cE '^\| S47[12] '` | **no** |
-| rows touched old→new | 0 | — | **no** |
-| census rows before → after | 243 → 245 | `sources-census.sh` / `census --file` | **no** — F07 is the registry, not the census |
-| census exit codes / W04 | 0 / 0, 19 W04 | `sources-census.sh validate …` | **no** |
-| README frontier row | 1 (`## Round-44`) | `grep -c '^## Round-44' corpus/README.md` | **no** |
-| knowledge entry delta | 1 | `ls corpus/knowledge/pid-probe-conclusion-r44.md` | **no** — F14 is the total |
-| QUALITY criteria added | 3 (117–119) | `grep -cE '^[0-9]+\. '` 116→119 | **partial** — only 119 |
-| lesson mistakes | M1..Mn (lesson not yet written) | — | **no** |
-| wave seat count | 32 | `grep -c '"role"' w1-spec.json` | **no** — F05 is round dirs |
-| role mix | 8/5/5/4/4/2/1/1/1/1 | same spec | **no** |
-| reports returned | 31 at reading, N at landing | `ls w1/*.md \| wc -l` | **F06 only if pinned at the final tip** |
-| dead seats | unknown at reading | seat roster/logs | **no** |
-| round total | 32 | spec | **no** |
-| witness fixture rows | 12 | `grep -c '^F' fixtures/figures-r43.tsv` | **partial** — F19 counts 4 fixture *files* |
-| witness asserted/observed | 15→14, 34→8 | counter over the fixture | **no** — ledger F03/F04 assert 8/39, not 15/34/14 |
-| witness mismatches | 2 | `C1=unmet mismatches=2` | **no** |
-| selftest tallies | 6 / 5 / 6 / 6 | four `--selftest` runs; `freeze-r44.txt` | **partial** — F20 covers c1's 6 arms only |
-| gate table rows total | 23 | `SKILL.md` `## Gates` | **no** — F17 counts the 4 r44 rows |
-| gate inventory | 33 tools, 18 PASS, 15 FAIL | `ExecGateInventory.md` | **no** |
-| c1s tip receipt | 14 check lines, `C1S=met`, exit 0 | `ExecC1STip.md` | **no** |
-| C1 ledger rows/classes | 20 / 5 | the counter's own output | **no** — no self-row |
+| F10 | 3 | three do-nothing controls (`evidence/control-c{1,2,3}-donothing.txt`) | **dropped** |
+| F11 | 10 | 10 pinned artifacts (`RevEnteringBaseline.md` "10/10 pinned artifacts match") | **dropped** |
+| F18 | 3 | three round counters (C2's object) | **dropped** |
+| F20 | 6 | `C1_SELFTEST pass=6 fail=0` (C1's own evidence) | **dropped** |
+
+The measured-outcome cell says "16 rows, 5 classes", "five checks PASS" for C2, "five checks
+PASS" for C3 and cites the tallies. None of those is a ledger row. The landed ledger is strong on
+**corpus/registry content** and weak on **claim-verdict evidence**.
+
+### 3.3 The proposal's defects, for the record
+
+The landed ledger avoided them, but the proposal is still the document a round-45 author will
+read, so they are recorded here:
+
+1. **"every row a count the round's report will cite"** (`ExecLedger.md:15`) is false for 4 of
+   its 20 rows: F02 (round-43 reports), F05 (round dirs), F15 (`corpus/evidence` 195 files),
+   F16 (spotcheck lessons). The report contract requires the wave's seat count/role mix
+   (`prompt:215-216`), not these.
+2. **F05 is a decoy.** It counts 32 *round directories* (`.ufo/waves/round-13` … `round-44`), not
+   seats. It equals 32 today by coincidence and would stay 32 for a 31- or 33-seat wave.
+3. **F06 is mislabeled and is a false zero.** The proposal calls it "round-44 wave-1 seat logs"
+   (`ExecLedger.md:101`), but the command counts `*.md` **reports**; at the freeze and entering
+   tips the `w1` subtree is absent, so `git ls-tree -r … | grep '\.md$' | wc -l` prints `0` with
+   **rc 0** — not "zero reports". The proposal's §8.3 justification (`F05` proves the
+   `.ufo/waves/` tree exists) does not prove the `w1` subtree exists.
+4. **Two landing predictions are wrong by one commit.** The proposal says "`245 / 194 / 54 /
+   119 / 29 / 74` are the arithmetic consequences" (`ExecLedger.md:212`). `F16`=29 and `F12`=74
+   assume the closure spotcheck lesson lands with the round; it does not. Round-43's closure
+   lesson landed at `1429c791`, one commit **after** the round-43 tip `91cb221f`
+   (`git log --oneline -3 1429c791`; `git show --stat 1429c791` adds only that lesson). At the
+   round-44 landing the lesson count is 73 (landed `F15`), and no spotcheck lesson is present.
+5. **Seven cells were stale at landing** (F06, F07, F08, F09, F12, F13, F14). The proposal said
+   so and gave a re-derivation recipe; the landed ledger executed the equivalent.
+
+---
+
+## 4. Figures the report states that no landed row covers
+
+Grounded in the report contract (`prompt:104-118`, `prompt:215-216`) and the measured-outcome
+cell (`SCORECARD.md`, "Round 44 measured outcome"). Values are from the committed receipts at
+`5102022a` / the integration tip.
+
+| figure the report states | value | row? |
+|---|---|---|
+| SOURCES rows **before** | 243 | **no** — F01 yields 245 at the measured rev |
+| criteria **before** | 116 | **no** — F05 yields 119 |
+| knowledge entries **before** | 53 | **no** — F04 yields 54 |
+| lessons **before** | 72 | **no** — F15 yields 73 |
+| C3 sweep **before** | 0 files | **no** — F03 yields 3 |
+| rows touched old→new | 0 | **no** |
+| census rows / exit / findings | 245 / 0 / 20 (`evidence/census-end.txt`) | **no** — F01 is the registry, not the census |
+| README frontier row | 1 (`## Round-44`) | **no** |
+| knowledge entry delta | 1 | **no** — F04 is the total |
+| wave seat count | 32 | **F12** |
+| attack roles / share | 12 / 37.5% | **no** |
+| reports returned | 31 at landing; 32 at `5102022a` | **no** |
+| seat still running at landing | 1 (`RevLedgerVsReport`) | **no** |
+| dead seats | 0 named | **no** |
+| round total | 32 | **F12** (seats) |
+| C1 ledger size | 16 rows / 5 classes | **no** — no self-row |
+| C1 witness fixture rows | 12 | **no** — F13 counts 4 fixture files |
+| C1 witness asserted/observed | 15→14, 34→8 | **partial** — F11 gives 14, F10 gives 8; 15 and 34 uncovered |
+| C1 witness mismatches | 2 | **no** |
+| C2 checks PASS | 5 | **no** — F11 is 14 c1s check lines |
+| C3 checks PASS | 5 | **no** |
+| selftest tallies | 6 / 5 / 6 / 6 | **no** |
+| freeze pins | 10 | **no** — proposal F11, dropped |
+| do-nothing controls | 3 | **no** — proposal F10, dropped |
+| round counters | 3 | **no** — proposal F18, dropped |
+| gate table rows total | 23 | **no** — F07 is the 4 r44 rows |
+| gate inventory | 33 tools / 18 PASS / 15 FAIL | **no** |
+| round-44 evidence files | 11 | **no** — F16 is round-43 evidence (15) |
+| C3 sweep after | 3 | **F03** |
+
+The ledger therefore backs **the content half of the report** (registry, corpus, gate rows,
+seats, the sweep) and leaves **the claim-evidence half** (C1/C2/C3 check counts, tallies,
+controls, pins, witness mismatch, before-values, census, inventory) to prose and receipts.
 
 Two of these deserve emphasis.
 
-**The C3 sweep is 3 files, not 1.** Contract P-C3 says "After: the same sweep at the landed tip →
-1 file". At the integration tip the token `Z ゾンビ` appears in three corpus files:
+**The C3 sweep is 3 files.** Contract P-C3 says "After … → 1 file". The landed ledger carries 3
+(`F03`), the SCORECARD correction records the contract sentence as wrong, and the three files are
+`corpus/README.md`, `corpus/SOURCES.md` and `corpus/knowledge/pid-probe-conclusion-r44.md`. That
+is now consistent — but it means the report must not repeat the frozen contract's "1 file".
 
-```
-$ git grep -l --untracked 'Z ゾンビ' -- corpus/
-corpus/README.md
-corpus/SOURCES.md
-corpus/knowledge/pid-probe-conclusion-r44.md
-→ 3
-```
-
-`corpus/README.md:631` quotes `Z ゾンビ (Zombie)` in the Round-44 coverage row;
-`corpus/SOURCES.md` S471 quotes it in `teaches`; the entry quotes it in `source:`. If the report
-repeats the contract's "1 file", it is false; if it reports 3, the frozen contract's after-value
-is falsified and belongs in the lesson (not a patch). No ledger row covers the sweep either way.
-
-**The witness numbers are outside the ledger.** The report's routed-defect-3 sentence is
-"15 checks observed 14; 34 seat logs observed 8" (`ScoutR43Wording.md`, `ExecWitnessReceipt.md`).
-The ledger asserts 8 (F03) and 39 (F04) and 72 (F01); it has no row for 15, 14 or 34. The witness
-is evidenced by running the fixture through the counter (`C1=unmet mismatches=2`), not by the
-ledger.
+**The witness numbers are outside the ledger.** The report's routed-defect-3 sentence is "15
+checks observed 14; 34 seat logs observed 8". The ledger carries 14 (F11) and 8 (F10), not 15 or
+34; the fixture row count (12) and the mismatch count (2) are also outside. The witness is
+evidenced by running `fixtures/figures-r43.tsv` through the counter, not by the ledger.
 
 ---
 
-## 5. Rev identity, drift, and the fallback spine
+## 5. Rev identity, stability and the drift the landed ledger avoided
 
-### 5.1 The draft's recipe is mechanically right; the ordering is the risk
-
-The draft's §5 order — land all wave artifacts (A), re-derive, commit the ledger alone (B), run
-the counter at B — is the only order that both keeps the ledger filed once and lets the counter
-read it at the measured rev. But every row that counts wave files is pinned to B. I demonstrated
-the drift in scratch: a re-derived 20-row ledger was `C1=met` at B, then one late seat report
-was committed as C:
-
-```
-$ python3 .ufo/waves/round-44/count-c1.py B --repo <scratch>
-check commands_reconcile   PASS (all rows match)     → C1=met mismatches=0
-$ python3 .ufo/waves/round-44/count-c1.py C --repo <scratch>
-check commands_reconcile   FAIL (F06 asserted=17 observed=18)
-→ C1=unmet mismatches=1
-```
-
-This is the QUALITY 119 shape the round is answering (receipt rev vs verdict rev). At the time of
-this review 31 of 32 seats had filed; **this report is itself the 32nd `*.md` and will move F06
-by +1.** If the ledger is committed before the last seat, `C1=met` at the final tip is false. The
-report must name the exact `rev=` line the counter printed and that rev must be the lane tip it
-cites; otherwise the claim is "C1=met at B" while the report says "at the landed tip".
-
-### 5.2 The fallback spine cannot support a conformant report
-
-The draft's §6 spine is 12 rows `F01 F02 F03 F04 F05 F10 F11 F15 F17 F18 F19 F20` — no registry
-row, no `corpus/knowledge` or `corpus/lessons` row. The draft itself says "use it only if … and
-then do not cite those numbers" (`ExecLedger.md:259`). But the report contract **requires**
-`Sources & frontier` with "`SOURCES.md` rows before→after with the counting command, rows added
-by tier" (`prompt:111-112`). Dropping F07/F14 makes that section unciteable. The spine is
-therefore not a conformant fallback for this round; the full ledger must be pinned at the final
-tip.
+- The receipt `after/c1-after.txt` names `5157cdda`; the SCORECARD measured outcome names the
+  same rev. The lane tip is `5102022a`. `C1=met` holds at both because no counted path moved
+  (`§2.1`). The report must say **"measured at 5157cdda"**, not "at the landed tip", unless it
+  re-runs the counter at `5102022a` and receipts that run. QUALITY 119 is satisfied as filed;
+  it would be violated by a sentence that swaps the two revs.
+- **The 31→32 report growth is the drift the proposal would have hit.** `w1` has 31 `*.md` at
+  `5157cdda` and 32 at `5102022a` (this report). The proposal's F06 counted those files; a
+  ledger filed at `5157cdda` with F06=31 would be `C1=unmet` at `5102022a` with
+  `F06 asserted=31 observed=32`. I demonstrated the mechanism in scratch: a re-derived 20-row
+  ledger was `C1=met` at B, then one late report at C produced
+  `check commands_reconcile FAIL (F06 asserted=17 observed=18)` → `C1=unmet mismatches=1`. The
+  landed ledger has **no** report-count row, so it is stable — but that also means the report's
+  "31 reports returned / 1 still running" sentence has no ledger row.
+- The proposal's §6 fallback spine (12 rows, no registry) could not support the mandatory
+  **Sources & frontier** section ("`SOURCES.md` rows before→after with the counting command",
+  `prompt:111-112`). The landed ledger correctly kept F01 and did not use the spine.
 
 ---
 
-## 6. The grammar does not enforce "re-derived at the measured revision"
+## 6. The grammar still does not enforce "re-derived at the measured revision"
 
 The counter checks that `@REV@` is *present* in the command text (`count-c1.py:100`), not that the
-command consumes it. Two consequences, both demonstrated in scratch:
+command consumes it. Two demonstrations in scratch:
 
-1. **A HEAD-reading row passes at a different measured rev.** In a scratch repo with `data.txt`
-   = 3 lines at measured rev B, one row `git show HEAD:data.txt | grep -c x # @REV@` asserted 4
-   (true only at the later commit C). At B the counter printed:
+1. **HEAD-reading row.** Measured rev B has `data.txt` = 3 lines; one row
+   `git show HEAD:data.txt | grep -c x # @REV@` asserted 4 (true only at the later commit C).
+   At B: `check commands_reconcile PASS (all rows match)` → `C1=met`, although B's own value is 3.
+2. **Hard-coded old revision.** A row `git show <A>:data.txt | grep -c x # @REV@` asserted 3 at
+   measured rev B (whose value is 4) and passed because `@REV@` sits in a comment.
 
-   ```
-   check commands_reconcile   PASS (all rows match)
-   rev=<B>                    → C1=met mismatches=0
-   ```
-
-   The measured revision's own value is 3; the row never read B.
-2. **A hard-coded old revision passes.** A row `git show <A>:data.txt | grep -c x # @REV@`
-   asserted 3 at measured rev B (whose value is 4); it passed because `@REV@` sits in a comment.
-
-So `C1=met` does **not** prove that any row was re-derived at the measured revision. It proves
-that each row's *effective* read (whatever rev it actually names) equals the asserted integer.
-This is the same family as ExecJunkLedger's "12 tautologies" and MutC1's attack #2 (SURVIVED),
-but it is sharper: the report's own phrase is "re-derived at the measured revision"
-(`SCORECARD.md:2410`), and the instrument cannot see the difference.
+The landed 16 rows do **not** exploit this: I inspected each command and every effective read
+names `@REV@` (no `HEAD`, no literal rev). So the landed ledger's `C1=met` is, by inspection,
+a genuine measured-revision result. The instrument still cannot certify that for the next
+ledger; MutC1's attack #2 (SURVIVED) and ExecJunkLedger's 12 tautologies remain the round's
+disclosed limits.
 
 ---
 
-## 7. Does `C1=met` mean what the report says it means?
+## 7. Does `C1=met` mean what the report says?
 
-The SCORECARD/contract wording is "a committed figure ledger reconciles the round's reported
-counts … re-derived at the measured revision" (`SCORECARD.md:2410`; `contract.md:23-28`).
+The claim wording is "a committed figure ledger reconciles the round's reported counts …
+re-derived at the measured revision" (`SCORECARD.md:2410`; `contract.md:23-28`). The measured
+outcome already narrows it: "the content half — that each row is a figure the report states — is
+**not** machine-checked" (SCORECARD, C1 row).
 
-**What `C1=met` certifies** (from the code and my runs):
+**What `C1=met` certifies** (code + my runs):
 
 1. `.ufo/waves/round-44/figures.tsv` exists at the measured rev and parses into ≥12 four-cell
    rows whose ids, classes and command grammar pass `parse_ledger`.
@@ -334,70 +324,67 @@ counts … re-derived at the measured revision" (`SCORECARD.md:2410`; `contract.
 
 **What it does not certify:**
 
-1. That the rows are the report's figures. There is no linkage from a row to a report sentence;
-   4 of the draft's 20 rows are decorative (§3.1).
-2. That every report figure is covered. The uncovered list in §4 is most of the report's numeric
-   assertions, including every before-value and the whole wave-shape record.
-3. That the measured rev is the landed tip the report cites (§5.1).
+1. That the rows are the report's figures. No row→sentence linkage exists; 2 of 16 are
+   decorative and 3 are proxies.
+2. That every report figure is covered. §4 is most of the claim-evidence half.
+3. That the measured rev is the tip the report names (§5).
 4. That each row actually reads `@REV@` (§6).
-5. That the figures are non-trivial (ExecJunkLedger: `C1=met` on 12 copies of `git diff @REV@
-   @REV@ | wc -l`; QUALITY 117's own "Not covered" cell says exactly this, `QUALITY.md:943-956`).
-6. That the report's prose equals the ledger's numbers — the counter never reads the report. A
-   row may assert 245 while the report says 250 and `C1=met` still holds.
+5. That the figures are non-trivial (ExecJunkLedger; QUALITY 117's "Not covered" cell).
+6. That the report's prose equals the ledger's numbers — the counter never reads the report.
 
-**Verdict.** If the report writes "C1=met — the round's reported counts are reconciled", that is
-**false as a universal**. If it writes "the ledger's 20 figures reconcile at `<rev>`; the
-remaining report figures are cited with their own commands and are outside the ledger", that is
-true **only if** (a) the seven rev-sensitive cells are re-derived at the final tip, (b) the ledger
-is the last lane commit, and (c) the report names the counter's `rev=` line. QUALITY 117 already
-records the informativeness limit; this review adds the coverage, rev-identity and
-`@REV@`-use limits. The honest report sentence is narrower than the claim's title.
+**Verdict.** A report sentence of the form "C1=met — the round's reported counts are reconciled"
+is **false as a universal**. The true sentence is: "the ledger's 16 figures reconcile at
+`5157cdda`; the remaining report figures are cited with their own commands and receipts and are
+outside the ledger." That is a real, measured improvement over round 43's unaudited counts, and
+it is narrower than the claim's title. The closure should read it that way.
 
 ---
 
 ## 8. Residual risk and verification gaps
 
-- **No landed tip and no ledger exist.** Every after-value in §2.4 is read from the integration
-  worktree (uncommitted), not from a commit. `F06` and `F09` are unknown until the seats and the
-  L1 file. The draft is live (sha256 may change after this reading).
-- **The report is unwritten.** The figure list in §4 is derived from the report contract and the
-  integration state; a report that omits some of those sections would shrink the gap, but
-  `Sources & frontier` and `Before → after measurements` are required.
-- **The C3 claim is separately blocked** by `RevEnteringBaseline.md` finding F-1 (`count-c3.py`'s
-  `census_ok` stages the registry under `/tmp`, so `used-by` resolves against `/tmp` and exits 1).
-  That is a C3 instrument defect, not a C1 one; it does not change this review's C1 findings, but
-  it means a "C3=met" sentence is not reachable as frozen.
-- **The ledger's own row/class count is not asserted by a row.** The counter prints `rows=20
-  classes=5`; if the report states that, no row backs it (a self-row would).
-- **I did not verify the report's final prose** (it does not exist) and did not re-run the
-  draft's sandbox revisions (`85fc3bca`, `55703287`, `729ed5ac`) — I reproduced the freeze-tree
-  case at `ff4e2ae2` and the drift/hole cases independently.
+- **Before-values are structurally outside a single-`@REV@` ledger.** The report's
+  before→after table (243→245, 116→119, 53→54, 72→73, 0→3) is half-covered. The only way to put
+  a before-value in this ledger is to hard-code the old rev and park `@REV@` in a comment
+  (§6.2), which is a snapshot, not a reconciliation. The SCORECARD's separate before-cells and
+  the `control-*-donothing.txt` receipts are the right vehicle; the report should say so.
+- **The report is not written.** Every "figure the report states" in §4 is derived from the
+  measured-outcome cell and the report contract, not from prose. A report that omits some
+  sections would shrink the gap; `Sources & frontier` and `Before → after measurements` are
+  required.
+- **C3's `TMPDIR` requirement is a disclosed instrument defect.** `after/c3-after.txt` runs with
+  `TMPDIR=<lane>`; the default staging under `/tmp` makes `used-by` resolve against `/tmp` and
+  exits 1 (`RevEnteringBaseline.md` F-1; SCORECARD correction 6). `C3=met` is true only under
+  that override. This is C3, not C1, but the report must not present `C3=met` as the default
+  invocation.
+- **C2's default `--mutants-dir` does not exist.** The runnable form passes
+  `--mutants-dir .ufo/waves/round-44/fixtures/mutants`; the SKILL.md entry cell carries the same
+  gap (SCORECARD correction 4). Again not C1, but it is a claim-evidence figure the ledger does
+  not carry.
+- **I did not re-run the proposal's sandbox revisions** (`85fc3bca`, `55703287`, `729ed5ac`); I
+  reproduced the freeze-tree case at `ff4e2ae2` and the drift/hole cases independently. The
+  landed ledger's 16 rows I re-ran at both real revisions.
 
 ---
 
 ## 9. Routed recommendations (no edits made)
 
-1. **File the ledger last, and name the printed rev.** Commit all reports, evidence, corpus and
-   lesson changes first; re-derive F06–F16; commit `figures.tsv` alone; run the counter at that
-   commit; quote its `rev=` line in the report. Do not file the draft's freeze values.
-2. **Add rows only for report figures the draft misses**: seat count and role mix (spec), rows
-   added by tier (2), README frontier row (1), census rows/exit/W04, witness check lines and
-   mismatch count, the other three selftest tallies, gate table total (23), c1s check lines (14),
-   and the ledger's own row/class count. Do not add more proxies.
-3. **Drop or relabel the four decorative rows**: F02, F05, F15, F16. In particular, do not let
-   F05 stand beside a "32 seats" sentence.
-4. **Relabel F06** as wave-1 seat **reports**, not logs; if the report must cite seat **logs**,
-   there is no round-44 log tree at the tip and the row cannot exist.
-5. **Correct the landing predictions**: at the round-44 landed tip `F16` = 28 and `F12` = 73 (the
-   closure lesson lands after the tip, as round-43's did at `1429c791`). Do not quote
-   "29 / 74".
-6. **State the coverage limit in the report**: the ledger reconciles the landed-state figures it
-   carries; the before-values are cited at `1429c791` with their own commands; the C3 sweep is 3
-   files (or the contract sentence is recorded as falsified in the lesson, never patched).
-7. **Round 45 instrument tightening** (frozen bytes are not amended this round): a
-   revision-sensitivity arm (each row's value must differ at a second revision, or be declared a
-   constant), rejection of rows whose effective read is `HEAD`/the working tree, and a
-   report-linkage manifest (row id → report anchor) — the only way "reconciles every reported
-   count" becomes machine-checkable.
+1. **Keep the 16 rows; add only report-stated figures**: the census (`rows=245`, `exit=0`,
+   `findings=20` from `evidence/census-end.txt`), the README Round-44 row (1), the attack-role
+   count (12 / 37.5%), the witness mismatch count (2) and fixture row count (12), the other
+   selftest tallies (5 / 6 / 6), the gate table total (23), the round-44 evidence count (11), and
+   the ledger's own 16/5. Do not add more proxies.
+2. **Restore the four dropped claim-evidence rows**: 3 controls, 10 freeze pins, 3 counters,
+   6 C1 selftest arms — or state those figures in prose with their receipts and say they are
+   outside the ledger.
+3. **Drop F09 and F16.** They are round-43 artifacts the round-44 report contract does not
+   state; 14 rows and 5 classes remain.
+4. **Name the measured rev.** The report must say `5157cdda` for C1 (the receipt's rev), not
+   `5102022a`, unless it re-runs and receipts the counter at `5102022a`.
+5. **Report the C3 sweep as 3 files**, not the frozen contract's 1; the SCORECARD correction
+   already records the contract sentence as wrong.
+6. **Round 45 instrument tightening** (frozen bytes are not amended this round): a
+   revision-sensitivity arm, rejection of rows whose effective read is `HEAD`/the working tree,
+   an absent path as FAIL not zero, distinct ids/commands, and a row→report-anchor manifest —
+   the only way "reconciles every reported count" becomes machine-checkable.
 
 Report: `.ufo/waves/round-44/w1/RevLedgerVsReport.md`

@@ -574,6 +574,42 @@ $ git grep -l "/home/" 7cb59c68 -- 'tools/*.py'
 `census_ok` instead calls `validate --file <staged>` with no `--root`. The two shapes are not
 interchangeable (F2), so the census evidence does not certify the check C3 runs.
 
+### F7 — the round-43 control hardcodes its sandbox under `/tmp`, ignoring `TMPDIR`
+
+```
+$ grep -n 'dir="/tmp"' .ufo/waves/round-43/count-c1s.py
+119:    sandbox = tempfile.mkdtemp(prefix="mori-r43-c1s-", dir="/tmp")
+```
+
+Measured consequence during this replay: `/tmp` on this host is a separate 128 GB partition that
+reached 100% while `/` still had 562 GB free —
+
+```
+$ findmnt -no SOURCE,SIZE,USED,AVAIL,TARGET /tmp
+/dev/nvme0n1p1 127.9G 127.9G  304K /tmp
+$ df -h / | tail -1
+/dev/mapper/root  930G  311G  562G  36% /
+```
+
+— and `count-c1s.py` then fails at `sandbox_clone`:
+
+```
+$ git clone -q --shared <clone> "$T/repo"      # $T from mktemp -d /tmp/…
+mktemp: No space left on device (os error 28)
+fatal: could not create work tree dir '/repo': Permission denied
+rc=128
+$ python3 .ufo/waves/round-43/count-c1s.py 7cb59c68… --repo <clone>
+check sandbox_clone          FAIL (Note: switching to '7cb59c68…'.
+
+You are in 'deta)
+C1S=unmet
+EXIT=1
+```
+
+A control that cannot replay when the caller's `TMPDIR` has room but `/tmp` does not is weaker
+evidence than one that honours `TMPDIR`. Round-44's four instruments do honour it —
+`tempfile.mkdtemp(prefix=…)` with no `dir=` — as §5.1 verifies.
+
 ### Non-finding: `MORI_GATE_REGISTRY`
 
 `count-c2.py:251` reads `MORI_GATE_REGISTRY` only inside `auditor_bytes()`, which seeds the
