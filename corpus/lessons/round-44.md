@@ -147,12 +147,12 @@ mutation-tester 2, sentinel 1). Reports under `.ufo/waves/round-44/w1/`.
 | `MutRegistry` | duplicate rows, embedded basenames, absent entry paths, 9-cell rows | 4 KILLED, 2 **SURVIVED** (duplicate-row verdict flip; embedded-basename acceptance) | the auditor's row selection is weak under crafted input (QUALITY 118 "Not covered") |
 | `ExecGateInventory` | the lane's whole gate inventory | 33 gate/probe tools: 18 PASS, 15 FAIL; 11 of the 15 are a reader defect | the standard is not met fleet-wide, and the auditor under-reads (M5) |
 | `RevVerdictMap` | every documented failure class | all classes trigger; one exit-code gap | rev-parse sits outside the `try`, so a git timeout exits 1 with a traceback where `*_SETUP` exit 2 is documented (routed) |
-| `CritSelftestHonesty` | is a `pass=` tally evidence the checks ran | pending | — |
-| `SentTools` | path handling, subprocess bounds, trust boundary | pending | — |
-| `ExecOffHostReplay` | replay from a scratch clone at another path | pending | — |
+| `CritSelftestHonesty` | is a `pass=` tally evidence the checks ran | **SURVIVED** — `-O` strips every `assert` and all four tallies still print; a failure-shaped tally scores `selftest_tally PASS`; a mutant that disables no check is recorded killed | a `pass=` line is printed, never asserted, so the tally is weaker evidence than it reads |
+| `SentTools` | path handling, subprocess bounds, trust boundary | 3 HIGH, 5 MEDIUM, 3 LOW | `bash -c` ledger rows can write outside the repo, so `C1=met` is not a read-only claim; `GIT_*` is inherited by children; the C3 census default is a fleet file not in the lane; the registry write-scope cells are false as written |
+| `ExecOffHostReplay` | replay from a scratch clone at another path | clone replays the four selftests and `count-c2` off-host; the instruments resolve their repo by walking up | QUALITY 115's practice holds for the round's own instruments |
 | `ScoutSources490` | open both C3 pages | both GET 200; JA carries `Z`/`X`, zh_TW carries the swap-out disjunct; only two worlds grounded | M7, and the entry's boundaries |
-| `RevStagedClaims` | which staged sentences hold | pending | — |
-| `CritAssimilationGate` | is the entry in-province and new ground | pending | — |
+| `RevStagedClaims` | which staged sentences hold | quotes accurate, conclusions not: the `comm` rule is a translation inversion; swap-out is a retired 2.3.26 roff comment; a nonexistent pid gives `ENOENT`; the real non-zombie empty-read class is mm-less kernel threads | the entry's world list, rewritten accordingly |
+| `CritAssimilationGate` | is the entry in-province and new ground | in-province (detection and report, no remediation); the `Z` row and the zero-character read are **already held** | C3's novelty narrowed to the measured mm-less world (SCORECARD correction 2) |
 | `ScoutRegisterSlice` | the campaign's absent-defect slice | 3 rows, none fabrication-class; S268 unverifiable | the quarantine verdicts above |
 | `ScribeFrontierRow` | the README map row and its bounds | `readme_row` FAIL on a relative path (M6) | the row's shape is machine-checked |
 | `RevEnteringBaseline` | re-derive the five before-values | all five match the contract; F-1 = M3 | the before-state is independently reproduced |
@@ -161,15 +161,15 @@ mutation-tester 2, sentinel 1). Reports under `.ufo/waves/round-44/w1/`.
 | `ExecMisrootSweep` | fleet-root sweep | `MORI_MISROOT_CLEAN`, 0 candidates | no seat wrote to the fleet root |
 | `ExecLedger` | the honest ledger | 20 rows reconcile at the freeze; two falsifiers forced corrections (a bare `git ls-tree` tree pathspec yields 1, and QUALITY.md was not stable) | a ledger row can be silently off by 31 |
 | `ScoutConsider` | considerthese mining | P4 unimplemented in general; P3 unimplemented | QUALITY 117 |
-| `RevScorecardPlanned` | the round's record-keeping obligations | pending | — |
-| `CritPredicates` | the three predicates as written | pending | — |
-| `SimpCounters` | dead weight in the instruments | pending | — |
-| `ConnSiblings` | sibling overlap | pending | — |
-| `ScribeCriteria` | QUALITY 117–119 drafts | pending | — |
-| `ScribeLesson` | this lesson's draft | pending | — |
-| `ScribeEntryDraft` | the C3 entry draft | pending | — |
-| `ScribeRowsDraft` | the two SOURCES rows | pending | — |
-| `ExecCollisionGuard` | the id-collision guard | pending | — |
+| `RevScorecardPlanned` | the round's record-keeping obligations | C2's declared after-command lacks `--mutants-dir`; C2 was met at the freeze commit; the `Z ゾンビ` sweep is 3 files not 1; the round-43 SCORECARD cells carried no erratum | SCORECARD corrections 3-7 |
+| `CritPredicates` | the three predicates as written | P-C1 narrow (constant-row ledger); P-C2 reword (audited set is caller-supplied, met at freeze); P-C3 reword (novelty falsified; axis attribution contradicted by the lane's own r31 ruling) | C3 re-attributed to depth; the rest routed |
+| `SimpCounters` | dead weight in the instruments | 28 items, 0 removable before the after-measurement; `count-c2.py`'s auditor-absent branch raises `UnboundLocalError`; the `--mutants-dir` default has never existed | round-45 items |
+| `ConnSiblings` | sibling overlap | no sibling holds a figure ledger or a gate-registry auditor; the closest patterns are kumitate's wave lifecycle and protocol's gate integrity | mori keeps the instruments local this round |
+| `ScribeCriteria` | QUALITY 117-119 drafts | the draft's 118 check command omitted `--mutants-dir` and 119 cited an absent receipt | both corrected before the append |
+| `ScribeLesson` | this lesson's draft | the draft's census mirror reached exit 0 with 245 rows; its three pending seat rows are filled from the returned reports | this file |
+| `ScribeEntryDraft` | the C3 entry draft | ten quotes verified on entity-decoded pages; F6: the two pages' swap-out sentences concern different objects | M9 |
+| `ScribeRowsDraft` | the two SOURCES rows | 11 cells each (`awk -F'|'` gives 13), no escaped pipe, `teaches` 20/21 words, census green on a mirror | rows S471/S472 as landed |
+| `ExecCollisionGuard` | the id-collision guard | 0 collisions at the entering registry, 2 after the append; indented-row guard 1 vs 2; the staged block needs de-pipe and cadence fixes before any bulk append | the shadow map by document |
 
 Wave-2 seats were not dispatched: the wave returned fewer than 32 *distinct*
 attack items on landed bytes by the time the round had to land, so the residual
