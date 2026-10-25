@@ -1,9 +1,9 @@
 # A zero-character cmdline read is not absence: two documented worlds, one measured world, and a retired one
 
-source: S471 — https://manpages.ubuntu.com/manpages/focal/ja/man5/proc.5.html — 節「/proc/[pid]/cmdline」, 節「/proc/[pid]/stat」の state 欄 (`Z ゾンビ (Zombie)`, `X 死亡 (Dead) (Linux 2.6.0 以降)`) and 同節 field `(2) comm` (`スワップアウトされているかどうかによらず`); Ubuntu focal (20.04) ja 翻訳, fetched 2026-10-25
+source: S471 — https://manpages.ubuntu.com/manpages/focal/ja/man5/proc.5.html — 節「/proc/[pid]/cmdline」, 節「/proc/[pid]/stat」の state 欄 (`Z ゾンビ (Zombie)`, `X 死亡 (Dead) (Linux 2.6.0 以降)`) and 同節 field `(2) comm` (`スワップアウトされているかどうかによらず`) — the `stat` comm **field**, not the `/proc/<pid>/comm` file; Ubuntu focal (20.04) ja 翻訳, fetched 2026-10-25
 source: S472 — https://man.archlinux.org/man/proc.5.zh_TW — 「cmdline」段 and the `comm` sentence `該檔案是否可見取決於該檔案是否已被交換出記憶體`; Arch Linux man page, zh_TW translation of Linux 1.3.11-era man-pages (last Chinese update 2000-11-26), fetched 2026-10-25
 verified-at: 2026-10-25 — both pages fetched 2026-10-25; this entry first lands in round 44 (no earlier revision holds it)
-recheck: 180d — `curl -fsSL --max-time 40 'https://manpages.ubuntu.com/manpages/focal/ja/man5/proc.5.html' | python3 -c 'import sys,html;print(html.unescape(sys.stdin.read()).count("ゾンビ"))'` -> 3; `curl -fsSL --http1.1 --max-time 40 'https://man.archlinux.org/man/proc.5.zh_TW' | python3 -c 'import sys,html;print(html.unescape(sys.stdin.read()).count("僵死"))'` -> 2 (ran 2026-10-25)
+recheck: 180d — `curl -fsSL --max-time 40 'https://manpages.ubuntu.com/manpages/focal/ja/man5/proc.5.html' | python3 -c 'import sys,html;print(html.unescape(sys.stdin.read()).count("ゾンビ"))'` -> 3; `curl -fsSL --max-time 40 'https://man.archlinux.org/man/proc.5.zh_TW' | python3 -c 'import sys,html;print(html.unescape(sys.stdin.read()).count("僵死"))'` -> 2 (ran 2026-10-25)
 coverage-map: FR5 — watchdog daemon identity and degraded-pgrep visibility
 ground: frontier item **FR5** — "an unavailable pid probe is not absence, and argv-substring matches do not establish daemon identity" (`PROVINCE.md`, Frontier FR5)
 
@@ -36,11 +36,14 @@ evidence about an existing task, and it has three explanations:
    separate this world from a sleeping user process** — `S` covers both a
    sleeping user task with an `mm` and an mm-less kernel thread. The
    discriminator is the absence of an `mm`, not the state field.
-3. **The task was swapped out — retired wording, not current behaviour.** S472
-   states it; S471 contradicts the coupling for the neighbouring `comm` field:
-   「実行形式がスワップアウトされているかどうかによらず、見ることができる。」
-   S472 is a translation of Linux 1.3.11-era man-pages (last Chinese update
-   2000-11-26), so its sentence describes a 1.3.x kernel.
+3. **The task was swapped out — a claim only an old translation makes.** S472
+   states it for the `comm` **file**; S471 states the opposite for `stat`'s comm
+   **field**: 「実行形式がスワップアウトされているかどうかによらず、見ることができる。」
+   The two sentences are about **different objects**, so this is a divergence, not
+   a clean contradiction — and it is not evidence that current kernels empty
+   `cmdline` on swap-out. S472 is a translation of Linux 1.3.11-era man-pages
+   (last Chinese update 2000-11-26), so its sentence describes a 1.3.x kernel;
+   S471's `cmdline` entry carries no swap-out clause at all.
 
 So: the read alone separates none of these; `stat`'s state field separates the
 `Z`/`X` world from the rest, an `mm` check separates the kernel-thread world, and

@@ -633,8 +633,9 @@ read and the `Z` state were already carried by `corpus/knowledge/watchdog-identi
 `cmdline` and every one was state `I` (1489) or `S` (209), so the state letter does
 not separate an mm-less kernel thread from a sleeping user process
 (`corpus/evidence` reading: `.ufo/waves/round-44/evidence/cmdline-empty-by-state.txt`)
-— plus the two translations' disagreement on `comm` under swap (S471 vs S472, the
-latter a Linux-1.3.11-era translation), and the `ENOENT` boundary for a pid that
-does not exist. Entry: `corpus/knowledge/pid-probe-conclusion-r44.md` (S471, S472,
+— plus the two translations' divergence on swap-out visibility, which concerns
+**different objects** (S471's `stat` comm field vs S472's `comm` file, the latter a
+Linux-1.3.11-era translation), and the `ENOENT` boundary for a pid that does not
+exist. Entry: `corpus/knowledge/pid-probe-conclusion-r44.md` (S471, S472,
 both pages opened 2026-10-25). No probe, census surface or finding id is added;
 FR5 stays open — a state read does not establish daemon identity.

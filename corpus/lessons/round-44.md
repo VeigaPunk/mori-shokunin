@@ -122,6 +122,14 @@ are already criteria (115, 114) whose residual artifacts are absent.
 | M7 | a claim's ground sentence asserted a world its sources do not ground | `w1/ScoutSources490.md` §5 (only two worlds; the swap-out branch is 1.3.11-era and contradicted by the same desk's `comm` sentence) | the seat, after the contract was frozen | the contract's P-C3 sentence is left byte-unchanged; `SCORECARD.md` carries an append-only correction naming the superseded phrase, and the entry asserts the two grounded worlds plus the contradiction |
 | M8 | the auditor's selftest arm named for "entry does not resolve" actually exercises the *unregistered* branch | `w1/RevVerdictMap.md` observation: the branch is reachable and correct when built by hand, but no arm covers it | none | routed to round 45 with the fixture that shows the branch works (so the fix is an arm, not a code change) |
 
+M9 (appended after the wave): the entry's first text called S471 and S472 a clean
+contradiction on swap-out visibility, but the two sentences concern **different
+objects** — `stat`'s comm field (ja) versus the `comm` file (zh) — so it is a
+divergence, not a contradiction, and neither page dates the retirement of the
+swap-out branch. Evidence: `w1/ScribeEntryDraft.md` F6; fixed in the entry and in
+the README map row. Captured by: none at authoring time; the seat read the
+sections, this L1 had read the sentences.
+
 M2 and M3 are the round's two load-bearing mistakes: both are instrument
 properties discovered only by attack, and both are disclosed in the report rather
 than patched into frozen bytes.
