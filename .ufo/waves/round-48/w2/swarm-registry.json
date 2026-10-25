@@ -1,0 +1,213 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r48-w2-falsify",
+  "createdAt": "2026-10-25T22:32:49.800Z",
+  "updatedAt": "2026-10-25T22:32:49.800Z",
+  "reportDir": ".ufo/waves/round-48/w2",
+  "members": {
+    "R48MutV3Header": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "R48MutV3Bind": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "R48MutV3Hidden": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "R48MutUnlanded": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "R48MutC1Counter": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "R48MutC2Counter": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "R48RevV3Code": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "R48RevHarnessLeak": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "R48RevEntryXfs": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "R48RevEntryQuotactl": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "R48RevEntryErrnoAliyun": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "R48RevLesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "R48RevQuality": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "R48RevSkillScore": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "R48CritV3Junk1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "R48CritV3Junk2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "R48CritEntryClaims": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "R48CritFreeze": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "R48ExecRerunC1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "R48ExecRerunC1Clone": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "R48ExecD7": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "R48ExecRerunC2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "R48ExecLiveRefetch": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "R48ExecCensusEnd": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "R48ExecGates": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "R48ExecRealRegistry": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "R48ScribeTrends": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "R48SentTools": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "sentinel",
+      "item": null
+    },
+    "R48SimpV3": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "simplifier",
+      "item": null
+    },
+    "R48ScoutEntryContext": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "R48ConnSiblings": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null
+    },
+    "R48ConnPatterns": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null
+    },
+    "R48RevC1Counter": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "R48RevC2Counter": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    }
+  }
+}

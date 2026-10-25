@@ -2609,3 +2609,16 @@ harness's variant filename passes C1, and script/JSON text inside a copy passes 
 |---|---|---|---|
 | junk-variant calibration counter | score a registry checker against eight named junk edits and four honest edits plus the real registry, so a checker that rejects everything or accepts everything both fail | `python3 .ufo/waves/round-48/count-c1.py --selftest` → `C1_SELFTEST pass=34 fail=0`; controls `evidence/control-c1-*.txt` | 48 |
 | unlanded-work check | list every uncommitted, modified or staged file under the round directory, `corpus/`, `tools/` and top-level `*.md` before a report is filed | `python3 tools/mori-unlanded-check.py --selftest` → `UNLANDED_SELFTEST pass=13 fail=0` | 48 |
+
+### Round 48 measured outcome (appended after wave 2; the table above is the declaration)
+
+| Claim | After (measured at `e4dfff32d4f97c7ef250e9a7538fa75d4f284492`; the tool and counter bytes are unchanged at the final tip) | Verdict proposed for the closure |
+|---|---|---|
+| C1 | `C1=met junk_met=0 honest_unmet=0 real=met errors=0 variants=12`, rc 0 — `.ufo/waves/round-48/evidence/after-c1-at-e4dfff32.txt`; re-run `w2/R48ExecRerunC1.md`, clone replay `w2/R48ExecRerunC1Clone.md` | **verified (proposed) on the frozen counter, with named limits:** the counter is met by a tool keyed on the harness's filename (`w1/CritC1Counter.md` F1, `w2/R48CritFreeze.md`), and the landed v3 still scores `met` on seven of fourteen new junk probes (`w2/R48CritV3Junk1.md`). The landed tool holds no harness branch (`w2/R48RevHarnessLeak.md`). |
+| C2 | `C2=met claims=15 located=15 quote_missing=0 bad_rows=0 sources=4 source_rows=ok pins=ok provenance=ok` — receipt `evidence/after-c2-final.txt` (re-measured after the one overclaim row of `w2/R48RevEntryXfs.md` was reworded) | **verified (proposed);** limits: a located quote does not prove the claim; script/JSON text in a page also passes (`w1/CritC2Counter.md`) — none of the 15 quotes sits in script text (`w2/R48RevC2Counter.md`, `w2/R48ScoutEntryContext.md`) |
+
+No axis table cell changed and no score change is claimed. Capability rows above stand: the junk-variant counter and the
+unlanded check ran and their selftests pass; the v3 reconciler is the tool the C1 run measured. Axis harm: `w2/R48RevSkillScore.md` found the
+Axes table unchanged. Planned (round 49): close the seven v3 survivors of `R48CritV3Junk1` and rule R11 for D7 (`R48ExecD7`);
+add the selftest arms the mutation seats named; a successor C1 counter that hides the variant identity from the tool and
+includes an honest edit that updates a pin.

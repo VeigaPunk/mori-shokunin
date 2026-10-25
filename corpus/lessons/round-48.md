@@ -140,3 +140,45 @@ and the rewritten entry, reject staged `quota-id-mapping-files-r41.md` (12-cell 
 - Seat accounting for wave 1: 49 seats spawned; 39 wrote a report to `w1/`; ten did not — the eight of M6,
   `ExecV3ImplA` (aborted after editing the tracked tool and restoring it) and `ExecUnlandedCheck` (ended mid-debug, so
   the tool was written by the L1); results mapping in `w1-results.json`.
+
+## Wave 2 (falsify) — integrated findings
+
+Measured at the landed data commit `e4dfff32`: `C1=met junk_met=0 honest_unmet=0 real=met errors=0 variants=12` (rc 0,
+`evidence/after-c1-at-e4dfff32.txt`; re-run by `w2/R48ExecRerunC1.md` and replayed in a clone at another path by
+`w2/R48ExecRerunC1Clone.md`); `C2=met claims=15 located=15 quote_missing=0 bad_rows=0 sources=4` (`evidence/after-c2-at-e4dfff32.txt`).
+
+- **Errata to this lesson** (`w2/R48RevLesson.md`, `w2/R48RevSkillScore.md`): (a) M7 states a wrong mechanism — the raw
+  bytes of the Aliyun copy contain `Disk quota exceeded` contiguously at offsets 26626 and 81461, no tag splits it; the
+  negative claim of `ScribeEntryA` was wrong, the cause is not established; (b) M3 and `SKILL.md` said four rows would go red
+  under a D7 rule; the header-aware parse finds three (190, 191, 192) — row 912 only mentions the pin tool, `SKILL.md`
+  is corrected, this erratum corrects M3; (c) `contract.md` records the start census as 20 output lines, one too many or
+  few by the reviewer's count — the contract is frozen and stays as written; (d) the SCORECARD After cells were appended
+  after the review; (e) `freeze-sha256.txt` pins four of the six committed copies (the two `arch-*` copies were added after
+  the freeze and carry rows S483/S484 outside the counter).
+- **Entry** (`w2/R48CritEntryClaims.md`, `w2/R48RevEntryXfs.md`): one overclaim — the superuser row said a root-owned
+  workload "cannot hit a quota"; the page says only that limits are never enforced there. Corrected in the entry
+  (claim cell reworded, quote unchanged); `count-c2.py` is `met` after the edit. The other 14 rows HOLD
+  (`R48RevEntryQuotactl`, `R48RevEntryErrnoAliyun`, `R48RevC2Counter`, `R48ExecLiveRefetch`: five of six live pages
+  byte-identical, the Aliyun page differs, all 15 quotes still present).
+- **Tool v3 survivors (not closed this round)** — `w2/R48CritV3Junk1.md`: seven of fourteen new probes stay `met`:
+  an HTML comment around a row, a zero-width space in a token or an NBSP in the header, a tab-indented row, a row
+  indented four spaces outside a table, a duplicate row under another name with the same prefix, `fail=0` in prose with
+  a false observed text split across lines, and HTML table markup. They are false-green classes of the landed v3, so
+  the calibration claim rests on the frozen counter and is reported with these limits. Routed to round 49 with
+  `w2/R48ExecD7.md`'s proposed rule R11 (D7 closed there against the real registry).
+- **Selftest arm coverage** (mutation seats): `R48MutV3Header` 3 of 6 mutants survive (partial removals of R1/R2/R3),
+  `R48MutV3Bind` 2 of 8, `R48MutV3Hidden` 6 of 12, `R48MutUnlanded` 2 of 8 (no arm builds a rename or exceeds the 50-path
+  cap), `R48MutC2Counter` 4 of 10 (sources floor, word minimum, word maximum, wrong-copy acceptance — the counter is
+  frozen, so these are limits). The whole-feature removals are all killed; the gaps are partial removals. The arm texts
+  are in the seat reports; none was added this round.
+- Held: `R48RevHarnessLeak` (no harness-identity branch in the landed tool), `R48RevV3Code`, `R48RevQuality` (QUALITY
+  125–128 hold), `R48CritFreeze` (no frozen byte drifted; one BREAKS-class note — the filename-sniffing tool of w1 `CritC1Counter`
+  F1, a limit of the frozen counter), `R48ExecCensusEnd`, `R48ExecGates` (gate registry `REGISTRY=met`), `R48ExecRealRegistry`,
+  `R48ExecRerunC2`, `R48SentTools` (extraction and argv restrictions hold), `R48SimpV3`, `R48ConnSiblings` (no contested
+  scope), `R48ConnPatterns`.
+- Late seats: `w2/R48CritV3Junk2.md` — P-C1 reproduced `met`; the tool's reach breaks on seven further command-binding
+  junk classes (K2–K8) plus one tool defect (a junk row that makes the checker misbehave); `w2/R48MutC1Counter.md` — the
+  frozen counter's selftest kills 4 of 8 mutants (survivors recorded as limits); `w2/R48ExecD7.md` — D7 breaks the
+  landed v3 and is closed by a proposed rule R11 against the real registry (round 49).
+- Seat accounting for wave 2: 34 seats spawned, 34 reports on disk, no dead seat (`w2-results.json`). Round total 83
+  seats (w1 49 + w2 34), no residual call. I held the planner seat.

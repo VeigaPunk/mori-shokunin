@@ -958,8 +958,8 @@ continuation line under a row is `hidden`; a backticked span with a non-ASCII fi
 `rebound`; `(N lines)` pins and truncated digests `hex{8,63}…` are read in self-test cells; every digest
 binds to the nearest preceding in-tree path of its own cell, so a decoy file named elsewhere in the row no
 longer matches. Known survivor, not closed: a row that names instrument A in its entry cell while its
-self-test cell runs instrument B (`w1/CritJunkClasses.md` D7); closing it as a rule turns four legitimate
-mutant-command rows red, so it is a limit.
+self-test cell runs instrument B (`w1/CritJunkClasses.md` D7); closing it as a rule turns three legitimate
+mutant-command rows (190, 191, 192) red, so it is a limit.
 
 `tools/mori-unlanded-check.py` lists every file under `.ufo/waves/round-N/`, `corpus/`, `tools/` or at the
 top level that is untracked, modified or staged, so a late seat result cannot sit off the record at report

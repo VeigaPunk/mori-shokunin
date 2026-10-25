@@ -1,0 +1,212 @@
+{
+ "lane": "mori",
+ "round": 48,
+ "wave": "w2",
+ "seats": 34,
+ "results": [
+  {
+   "name": "R48MutV3Header",
+   "agent": "mutation-tester",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48MutV3Bind",
+   "agent": "mutation-tester",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48MutV3Hidden",
+   "agent": "mutation-tester",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48MutUnlanded",
+   "agent": "mutation-tester",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48MutC1Counter",
+   "agent": "mutation-tester",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48MutC2Counter",
+   "agent": "mutation-tester",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48RevV3Code",
+   "agent": "reviewer",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48RevHarnessLeak",
+   "agent": "reviewer",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48RevEntryXfs",
+   "agent": "reviewer",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48RevEntryQuotactl",
+   "agent": "reviewer",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48RevEntryErrnoAliyun",
+   "agent": "reviewer",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48RevLesson",
+   "agent": "reviewer",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48RevQuality",
+   "agent": "reviewer",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48RevSkillScore",
+   "agent": "reviewer",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48CritV3Junk1",
+   "agent": "critic",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48CritV3Junk2",
+   "agent": "critic",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48CritEntryClaims",
+   "agent": "critic",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48CritFreeze",
+   "agent": "critic",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48ExecRerunC1",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48ExecRerunC1Clone",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48ExecD7",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48ExecRerunC2",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48ExecLiveRefetch",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48ExecCensusEnd",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48ExecGates",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48ExecRealRegistry",
+   "agent": "executor",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48ScribeTrends",
+   "agent": "scribe",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48SentTools",
+   "agent": "sentinel",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48SimpV3",
+   "agent": "simplifier",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48ScoutEntryContext",
+   "agent": "scout",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48ConnSiblings",
+   "agent": "connector",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48ConnPatterns",
+   "agent": "connector",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48RevC1Counter",
+   "agent": "reviewer",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  },
+  {
+   "name": "R48RevC2Counter",
+   "agent": "reviewer",
+   "output": null,
+   "note": "orchestrator kernel restarted mid-wave; seat output was delivered to the orchestrator session but not retained \u2014 read the seat report file in the wave dir"
+  }
+ ]
+}

@@ -1,0 +1,177 @@
+{
+ "wave": "mori-r48-w2-falsify",
+ "reportDir": ".ufo/waves/round-48/w2",
+ "context": "# mori round 48 \u2014 wave w2 (falsify)\nLane: mori-shokunin (\u68ee, fleet and host observability: detection and report only). Lane repo: /home/vgpnk/Projects/shokunin/mori-shokunin. Fleet root: /home/vgpnk/Projects/shokunin.\nLanded tip under attack: e4dfff32d4f97c7ef250e9a7538fa75d4f284492 (freeze 4387cf94b69ddce455051a1ff38e93795c2e6cde, entering e5dbac05459887d9597ea5d1da0d8e3d024e0d17). Contract: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/contract.md, v3 spec /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/v3-spec.md, lesson /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-48.md, wave-1 reports /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/w1/.\nClaims: C1 `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py --tool /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py --rev e4dfff32d4f97c7ef250e9a7538fa75d4f284492` must print C1=met (v3 pin reconciler rejects 8 junk edits, accepts 4 honest edits and the real registry); C2 `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c2.py e4dfff32d4f97c7ef250e9a7538fa75d4f284492` met for /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/quota-observability-r48.md (15 located quotes over /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48).\nRules for every seat:\n- Paths: every `Report:` trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin \u2014 write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. Absolute paths everywhere. Write ONLY your own report file (plus scratch under /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48w2-<your-name>/). Never edit tools/, SKILL.md, SOURCES.md, corpus/, LOG.md, SCORECARD.md, frozen files under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48, or any production file; drafts go inside your report. Mutants and variants live in scratch copies only; never pass a tracked path to an edit tool.\n- Never mutate the fleet repo, sibling lanes, the lane's jj state or git index: no git add/commit/stash/checkout/reset/pull/push, no mutating jj. Read-only git is fine. Any fixture repo: D=$(mktemp -d) && git -C \"$D\" init -q, name -C \"$D\" on every later call, verify rev-parse --show-toplevel equals $D before the first commit.\n- Run lane tools with TMPDIR=/home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48w2-<your-name>. Host reads read-only. No credential material in reports.\n- Tooling authorization (operator, 2026-10-19): you may install or upgrade tools that help the task \u2014 read /home/vgpnk/.omp/agent/RULES.md first (official channels; record tool/version/channel/reason). pacman guard: ALL pacman transactions are PAUSED host-wide \u2014 never run pacman; use uv tool/npx/an official binary in ~/.local/bin or report the need.\n- Leaf seat; an executor may spawn one read-only labrat probe. Report observed evidence only (command + output + exit code); say UNVERIFIED where unchecked. Your name starts with R48; keep it. A dispatched seat is not an independent judge. State at the top: what you attacked and the verdict (HOLDS / BREAKS with class).\n",
+ "items": [
+  {
+   "name": "R48MutV3Header",
+   "role": "mutation-tester",
+   "prompt": "/skill:godspeed\nR48MutV3Header: Mutation-test the landed v3 tool /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py (copy it to scratch; the tracked file is never edited). Rules: R1 header recognition (`HEADER_CELLS`), R2 hidden rows (`hidden_rows` row-shaped branch), R3 ASCII span checks (`span_kind`). For each rule apply 2 single-point mutations that remove or weaken it, run `python3 <mutant> --selftest` (killed iff non-zero exit) and, for any survivor, show a reproducer (a SKILL.md variant the mutant scores met and the real tool scores unmet) and the arm text that kills it. Attacks the R1-R3 selftest arms. Report a table: mutation \u2192 killed/survived \u2192 killing arm."
+  },
+  {
+   "name": "R48MutV3Bind",
+   "role": "mutation-tester",
+   "prompt": "/skill:godspeed\nR48MutV3Bind: Mutation-test the landed v3 tool /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py (copy it to scratch; the tracked file is never edited). Rules: R4 rebound by prefix, R5 line-count pins (`line_count_pins`), R6/R10 truncated and full digest binding to the nearest preceding path. For each rule apply 2 single-point mutations that remove or weaken it, run `python3 <mutant> --selftest` (killed iff non-zero exit) and, for any survivor, show a reproducer (a SKILL.md variant the mutant scores met and the real tool scores unmet) and the arm text that kills it. Attacks the R4-R6/R10 arms. Report a table: mutation \u2192 killed/survived \u2192 killing arm."
+  },
+  {
+   "name": "R48MutV3Hidden",
+   "role": "mutation-tester",
+   "prompt": "/skill:godspeed\nR48MutV3Hidden: Mutation-test the landed v3 tool /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py (copy it to scratch; the tracked file is never edited). Rules: R9a other-cell tallies, R9b continuation lines, R9c tally outside backticks, R7 `split_cells` parity, `argv_ok` sub-checks, digest symlink containment. For each rule apply 2 single-point mutations that remove or weaken it, run `python3 <mutant> --selftest` (killed iff non-zero exit) and, for any survivor, show a reproducer (a SKILL.md variant the mutant scores met and the real tool scores unmet) and the arm text that kills it. Attacks the R9/R7/R8 arms. Report a table: mutation \u2192 killed/survived \u2192 killing arm."
+  },
+  {
+   "name": "R48MutUnlanded",
+   "role": "mutation-tester",
+   "prompt": "/skill:godspeed\nR48MutUnlanded: Mutation-test /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-unlanded-check.py in scratch: 8 single-point mutations (drop the top-level guard, drop `-z` handling of renames, scope prefix, `.scratch` exclusion, staged records, round filter, exit codes, the list cap) vs `--selftest`. Report mutation \u2192 killed/survived and arm text for survivors."
+  },
+  {
+   "name": "R48MutC1Counter",
+   "role": "mutation-tester",
+   "prompt": "/skill:godspeed\nR48MutC1Counter: Mutation-test the frozen counter /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py in scratch (it stays frozen; findings are limits): 8 mutations of verdict(), run_tool() status consistency, MIN_TALLY, the real arm, error handling vs `--selftest`. Report mutation \u2192 killed/survived."
+  },
+  {
+   "name": "R48MutC2Counter",
+   "role": "mutation-tester",
+   "prompt": "/skill:godspeed\nR48MutC2Counter: Mutation-test the frozen counter /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c2.py in scratch: 10 mutations (drop opened-date, used-by, unique-quote, sources floor, word bounds, pin check, wrong-copy acceptance, status, claim-cell floor) vs `--selftest`. Report mutation \u2192 killed/survived."
+  },
+  {
+   "name": "R48RevV3Code",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nR48RevV3Code: Review the landed v3 diff line by line: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff e5dbac05459887d9597ea5d1da0d8e3d024e0d17 e4dfff32d4f97c7ef250e9a7538fa75d4f284492 -- tools/mori-pin-check.py`. Look for logic errors, false-red risks on honest registries, traceback paths, ordering bugs between hidden_rows/parse_registry/check, and any branch keyed on a variant name, filename or TMPDIR name. Report defects with line numbers and severity."
+  },
+  {
+   "name": "R48RevHarnessLeak",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nR48RevHarnessLeak: QUALITY 126 check: prove the landed tool /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py contains no branch on a harness identity. Grep it for `variant`, `c1-`, `J[0-9]`, `H[0-9]`, basename of --skill, TMPDIR name tests; then run it twice on one junk SKILL.md variant under two different filenames and two different TMPDIR names (build the variant from /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py functions) and show identical verdicts. Also state whether a tool keyed on the harness (wave-1 `CritC1Counter` F1) could be written without reading the registry and what in the landed tool differs."
+  },
+  {
+   "name": "R48RevEntryXfs",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nR48RevEntryXfs: Re-open every XFS row (source S479) of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/quota-observability-r48.md against the page text around its quote in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48/xfs_quota.8.html (normalised: tags stripped, entities decoded). For each row print \u00b1300 characters around the quote and judge: claim no stronger than the quote, no negation/example context, XFS-only. Use the six classes of /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/w1/CritEntryRisk.md. Verdict per row: HOLDS / OVERCLAIM / CONTEXT with reason."
+  },
+  {
+   "name": "R48RevEntryQuotactl",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nR48RevEntryQuotactl: Same as an XFS row review for the quotactl rows (source S480) of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/quota-observability-r48.md against /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48/quotactl.2.html, and also check that the `ESRCH` claim 'quotas are not turned on, not the same observation as zero usage' is what the page says and no more. Verdict per row with \u00b1300 characters of context."
+  },
+  {
+   "name": "R48RevEntryErrnoAliyun",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nR48RevEntryErrnoAliyun: Review the errno and Aliyun rows (S481, S482) of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/quota-observability-r48.md against /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48/errno.h and /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48/aliyun-nas-quota.html, and the boundary claims about S483/S484 against /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48/arch-mips-errno.h and arch-sparc-errno.h (line numbers, values). Check the Aliyun quotes are rendered page text and not script/JSON (the page embeds its body twice) and that 'Disk quota exceeded' is the vendor example, not a general rule. Verdict per row."
+  },
+  {
+   "name": "R48RevLesson",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nR48RevLesson: Attack /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-48.md: open every pointer (path, line, commit, section) and every number (251 registry ids, 136 staged, 8 collisions, 39 reports, 49 seats, 13/395 portability counts, 12 vs 11 cells, offsets) and re-derive it; check each Mistakes row's captured-by and 'shown able to fail' command actually fails as stated (run the named selftest arm or receipt). List every claim that does not reproduce."
+  },
+  {
+   "name": "R48RevQuality",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nR48RevQuality: Attack QUALITY.md criteria 125-128 in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/QUALITY.md: is each backed by the lesson row it cites, does each Check command exist and run, is each 'Shown able to fail' true (run the arm or receipt), is anything claimed that the landed tool or counter does not do (e.g. 125's `hidden=0 unparsed=0`, 126's harness-leak check, 127's command output 3 at e5dbac05459887d9597ea5d1da0d8e3d024e0d17)? Report each criterion HOLDS / BREAKS."
+  },
+  {
+   "name": "R48RevSkillScore",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nR48RevSkillScore: Attack SKILL.md Round48 section, SCORECARD.md Round 48 and LOG.md Round 48 in /home/vgpnk/Projects/shokunin/mori-shokunin: every pinned selftest tally (PIN_CHECK 60, C1 34, C2 22, UNLANDED 13) re-run; SKILL.md:168 repair true (sha256 prefix 533218a5\u2026 of tools/mori-round14-regressions.py); SCORECARD before-values equal the receipts under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/evidence/; the Axes table unchanged (no axis harmed); LOG numbers match. Report each discrepancy with the line."
+  },
+  {
+   "name": "R48CritV3Junk1",
+   "role": "critic",
+   "prompt": "/skill:godspeed\nR48CritV3Junk1: New false-green hunt against the LANDED v3 (/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py) in scratch. Do not repeat J1-J8 (count-c1.py), FG1-FG5/O1 (round-47 CritV2Junk) or D1-D18 (w1/CritJunkClasses.md). Produce 8 new SKILL.md edits (unified diffs against e4dfff32d4f97c7ef250e9a7538fa75d4f284492's SKILL.md) that keep PIN_CHECK=met yet falsify a pin: try HTML comments around rows, zero-width/NBSP characters in the header or prefix, tab-separated cells, rows with extra leading spaces (4+), a gate table under a list item, duplicate row with a different name but same prefix, pin with `fail=0` in prose but `fail=3` observed text split across lines. Score each with `--skill`; report survivors and the smallest rule that kills them."
+  },
+  {
+   "name": "R48CritV3Junk2",
+   "role": "critic",
+   "prompt": "/skill:godspeed\nR48CritV3Junk2: Command-binding false greens against the landed v3 (/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py): rows whose bound command is a registered tools/ script that prints the pinned text unconditionally, `VAR=x` env prefixes, `bash` vs `sh`, a bare .py span naming another tool than the entry, a baseline-prefix row rebinding with identical argv text but different path spelling (`tools//x.py`, `./tools/x.py`), D7 (row names instrument A, runs B). Build variants in scratch, score with the real CLI flags of count-c1.py's run_tool, report survivors (met) with reproducers."
+  },
+  {
+   "name": "R48CritEntryClaims",
+   "role": "critic",
+   "prompt": "/skill:godspeed\nR48CritEntryClaims: Adversarial read of the 15 claim rows of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/quota-observability-r48.md: for each claim cell find the weakest word (e.g. 'cannot', 'always', 'so a root-owned workload cannot hit a quota') that goes beyond its quote or beyond the page, and state whether the page elsewhere supports it. Also check the Boundaries/Probe-shape prose for unsourced factual claims (mark each sourced / [INFERENCE] / unsupported). Report unsupported statements with the exact text."
+  },
+  {
+   "name": "R48CritFreeze",
+   "role": "critic",
+   "prompt": "/skill:godspeed\nR48CritFreeze: Freeze integrity: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff --stat 4387cf94b69ddce455051a1ff38e93795c2e6cde e4dfff32d4f97c7ef250e9a7538fa75d4f284492 -- .ufo/waves/round-48/contract.md .ufo/waves/round-48/count-c1.py .ufo/waves/round-48/count-c2.py .ufo/waves/round-48/controls .ufo/waves/round-48/v3-spec.md corpus/evidence/sources-r48/xfs_quota.8.html corpus/evidence/sources-r48/quotactl.2.html corpus/evidence/sources-r48/errno.h corpus/evidence/sources-r48/aliyun-nas-quota.html` must be empty; verify sha256 against /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/evidence/freeze-sha256.txt; check that the landed contract wording still equals the counters (P-C1/P-C2) and that nothing in the lane changed the counter predicates after wave-1 seats scored (compare w1 reports' scored commit with the freeze). Report any drift."
+  },
+  {
+   "name": "R48ExecRerunC1",
+   "role": "executor",
+   "prompt": "/skill:godspeed\nR48ExecRerunC1: Independent acceptance run: `TMPDIR=/home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48w2-R48ExecRerunC1 python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py --tool /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py --rev e4dfff32d4f97c7ef250e9a7538fa75d4f284492 --scratch /home/vgpnk/Projects/shokunin/mori-shokunin/.scratch/r48w2-R48ExecRerunC1/c1 --jobs 6` (several minutes; run in the background, read the file). Paste the full output and exit code, and compare with /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/evidence/after-c1-at-e4dfff32.txt if present."
+  },
+  {
+   "name": "R48ExecRerunC1Clone",
+   "role": "executor",
+   "prompt": "/skill:godspeed\nR48ExecRerunC1Clone: Off-host replay: clone the lane to a different path (`D=$(mktemp -d)`; `git clone -q /home/vgpnk/Projects/shokunin/mori-shokunin \"$D/lane\"`; verify `git -C \"$D/lane\" rev-parse --show-toplevel`; checkout is forbidden in the lane, so in the clone use `git -C \"$D/lane\" checkout -q --detach e4dfff32d4f97c7ef250e9a7538fa75d4f284492`) and run count-c1.py --selftest, count-c2.py e4dfff32d4f97c7ef250e9a7538fa75d4f284492 --repo \"$D/lane\", mori-pin-check.py --selftest and mori-unlanded-check.py --selftest from the clone. Report each output; flag any path or user-dependent failure. TMPDIR must be inside the clone's .scratch."
+  },
+  {
+   "name": "R48ExecD7",
+   "role": "executor",
+   "prompt": "/skill:godspeed\nR48ExecD7: Close or bound D7 (a row names instrument A in its entry cell, its self-test cell runs instrument B; w1/CritJunkClasses.md D7). In a scratch copy of the tool implement the narrowest rule that rejects D7 yet keeps the real registry at e4dfff32d4f97c7ef250e9a7538fa75d4f284492 met (the four legitimate rows 190/191/192/912 run mutants or a named other tool: classify them, e.g. allow a path named in the row's pinned-values cell or under fixtures/mutants). Show the D7 variant red and the real registry green, selftest arms, and the diff. This is a proposal for round 49."
+  },
+  {
+   "name": "R48ExecRerunC2",
+   "role": "executor",
+   "prompt": "/skill:godspeed\nR48ExecRerunC2: Run `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c2.py e4dfff32d4f97c7ef250e9a7538fa75d4f284492` and `--selftest`; then build in scratch five in-memory variants of the entry (import count-c2 and call evaluate): drop one row, swap two sources, add a 16th row with a bogus quote, break provenance, replace a quote by script text from the Aliyun copy. Report each verdict line and exit code."
+  },
+  {
+   "name": "R48ExecLiveRefetch",
+   "role": "executor",
+   "prompt": "/skill:godspeed\nR48ExecLiveRefetch: Re-fetch all six source URLs of the entry's S479-S484 rows with a browser User-Agent (curl -A 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'), report HTTP code and sha256 against the committed copies, and for each of the 15 quotes in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/quota-observability-r48.md whether it still occurs in the live page (same normalisation as count-c2.normalise). Aliyun bytes may differ; the quotes should not."
+  },
+  {
+   "name": "R48ExecCensusEnd",
+   "role": "executor",
+   "prompt": "/skill:godspeed\nR48ExecCensusEnd: Registry end-state: run `/home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori` (rc and last lines), `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-sources-appendonly.py e4dfff32d4f97c7ef250e9a7538fa75d4f284492 --repo /home/vgpnk/Projects/shokunin/mori-shokunin --round-base e5dbac05459887d9597ea5d1da0d8e3d024e0d17` (round_changed must be []), row counts `git show <rev>:corpus/SOURCES.md | grep -cE '^ {0,3}\\|[[:space:]]*S[0-9]{3,}'` at e5dbac05459887d9597ea5d1da0d8e3d024e0d17 and e4dfff32d4f97c7ef250e9a7538fa75d4f284492, tier and status histograms at both, and the list of added ids. Paste commands and outputs."
+  },
+  {
+   "name": "R48ExecGates",
+   "role": "executor",
+   "prompt": "/skill:godspeed\nR48ExecGates: Run the lane gates at e4dfff32d4f97c7ef250e9a7538fa75d4f284492 in the lane (TMPDIR in scratch): `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-gate-registry.py --rev e4dfff32d4f97c7ef250e9a7538fa75d4f284492 --repo /home/vgpnk/Projects/shokunin/mori-shokunin --audit tools/mori-unlanded-check.py --audit .ufo/waves/round-48/count-c1.py --audit .ufo/waves/round-48/count-c2.py` and `--audit-all` if available, `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-unlanded-check.py --repo /home/vgpnk/Projects/shokunin/mori-shokunin --round 48` (it will list wave-2 files still uncommitted: expected), and the portability count of lesson QUALITY 127 at e4dfff32d4f97c7ef250e9a7538fa75d4f284492. Paste outputs; say which rows each gate flags."
+  },
+  {
+   "name": "R48ExecRealRegistry",
+   "role": "executor",
+   "prompt": "/skill:godspeed\nR48ExecRealRegistry: Run the v3 tool on the real registry at the landed tip with the frozen flags (`--rev e4dfff32d4f97c7ef250e9a7538fa75d4f284492 --repo /home/vgpnk/Projects/shokunin/mori-shokunin --min-tally-pins 26 --baseline-rev 2d85e33d14198d388fd3cda9cc15ec07e57e7a53`), paste every non-match line and the final line with rc; list every distinct hidden/unparsed/mismatch finding if any; time it. Then run the same with `--skill` set to the SKILL.md at e5dbac05459887d9597ea5d1da0d8e3d024e0d17 and report what v3 says about the entering registry (expect the line-168 digest mismatch)."
+  },
+  {
+   "name": "R48ScribeTrends",
+   "role": "scribe",
+   "prompt": "/skill:godspeed\nR48ScribeTrends: Draft the Trend verdicts for round 48 (expansion, quality, discernment; vocabulary improved/harmed/unchanged/unprovable-but-better) with evidence pointers, from /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-48.md, /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/quota-observability-r48.md, /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/w1/ and the verifier closure of round 47. State what would make each verdict harmed. No placeholders; mark anything unverified."
+  },
+  {
+   "name": "R48SentTools",
+   "role": "sentinel",
+   "prompt": "/skill:godspeed\nR48SentTools: Security review of the landed tools /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py, /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-unlanded-check.py and /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py, count-c2.py: command execution (the pin tool runs registered selftests from a git archive; path and argv restrictions), symlink and path traversal, tar extraction, environment leakage, temp-dir handling, git invocation in untrusted repos (hooks, config). Report findings with reproducers or say what you tried."
+  },
+  {
+   "name": "R48SimpV3",
+   "role": "simplifier",
+   "prompt": "/skill:godspeed\nR48SimpV3: Dead weight in the landed v3 /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-pin-check.py: unused helpers, duplicated regexes (HIDDEN_TOKEN_RE vs TALLY_TEXT_RE vs PINLIKE_T0_RE), duplicated nearest-path logic. Prove each deletion in a scratch copy (selftest 60/60, count-c1 verdict unchanged on one junk and one honest variant). A proposal for round 49; the tool is not edited."
+  },
+  {
+   "name": "R48ScoutEntryContext",
+   "role": "scout",
+   "prompt": "/skill:godspeed\nR48ScoutEntryContext: Read-only: for each of the 15 quotes of /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/quota-observability-r48.md, print the surrounding \u00b1400 characters from the committed copy in /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r48 (normalised: tags stripped, entities decoded, whitespace collapsed) as a table with the quote highlighted, and note quotes that sit in a code example, a footnote, a NOTES/HISTORY section or JSON. Output only the table and the notes; reviewers use it."
+  },
+  {
+   "name": "R48ConnSiblings",
+   "role": "connector",
+   "prompt": "/skill:godspeed\nR48ConnSiblings: Sibling overlap for the quota entry and the pin tool: `grep -rliE 'xfs_quota|quotactl|EDQUOT|repquota|Disk quota exceeded' /home/vgpnk/Projects/shokunin/*-shokunin/corpus /home/vgpnk/Projects/shokunin/*-shokunin/SKILL.md /home/vgpnk/Projects/shokunin/*-shokunin/PROVINCE.md` (skip .scratch and .ufo/waves), and sibling tools that re-measure SKILL.md self-test pins (`grep -l 'self-test' /home/vgpnk/Projects/shokunin/*-shokunin/tools/*`). For each hit: owning lane, duplicate or contradict mori's entry or tool? Report contested scope as report-not-absorb. Do not read sibling .scratch."
+  },
+  {
+   "name": "R48ConnPatterns",
+   "role": "connector",
+   "prompt": "/skill:godspeed\nR48ConnPatterns: Cross-claim and cross-round pattern: read /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-48.md Mistakes M1-M7 and the round-47 lesson; find the pattern the quota entry's quote counter and the pin counter share (shape accepted without entailment; a harness leaking identity), and list which QUALITY row states it (125-128) and which instance is still open (D7, script-text quotes, filename-keyed tool). Report as a table with pointers."
+  },
+  {
+   "name": "R48RevC1Counter",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nR48RevC1Counter: Fresh review of the frozen counter /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c1.py (it stays frozen): variant edit functions vs the docstring, verdict() conjunction, run_tool() consistency, thread-pool scratch handling, exit codes; and whether the harness-identity leak (w1/CritC1Counter.md F1) is the only way a tool can pass without reading the registry. Defects with line numbers; limits, not edits."
+  },
+  {
+   "name": "R48RevC2Counter",
+   "role": "reviewer",
+   "prompt": "/skill:godspeed\nR48RevC2Counter: Fresh review of the frozen counter /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-48/count-c2.py: normalise() on the real copies (script/style text, entities), parse_claims, the 0-3-space row rule, used-by split, the 22 arms; confirm the wave-1 finding that script/JSON text scores met and size the harm for this entry (are any of the 15 quotes in script/JSON text?). Defects with line numbers."
+  }
+ ]
+}
