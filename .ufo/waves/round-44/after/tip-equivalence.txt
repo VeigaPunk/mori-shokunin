@@ -1,0 +1,24 @@
+# C1/C2/C3 re-derived at the evidence commit 5102022a3978e167eaf34dbaecad68ae320a5fbe (tip-equivalence check for the report)
+# run: 2026-10-25T05:31:07-03:00
+$ python3 .ufo/waves/round-44/count-c1.py 5102022a3978e167eaf34dbaecad68ae320a5fbe
+ledger=.ufo/waves/round-44/figures.tsv rows=16 classes=checks,corpus,evidence,registry,wave
+C1=met mismatches=0
+$ python3 .ufo/waves/round-44/count-c2.py 5102022a3978e167eaf34dbaecad68ae320a5fbe --counter … --mutants-dir …
+rev=5102022a3978e167eaf34dbaecad68ae320a5fbe
+C2=met
+$ TMPDIR=<lane> python3 .ufo/waves/round-44/count-c3.py 5102022a3978e167eaf34dbaecad68ae320a5fbe --entry … --row S471 --row S472
+rev=5102022a3978e167eaf34dbaecad68ae320a5fbe
+C3=met
+# after-measurement re-derived at the entry-precision commit 360e3774fec032ea3ea11d08fb4b623b3d2b047c (the ledger is unaffected: no row counts the entry's prose)
+# run: 2026-10-25T05:33:29-03:00
+$ python3 .ufo/waves/round-44/count-c1.py 360e3774fec032ea3ea11d08fb4b623b3d2b047c
+ledger=.ufo/waves/round-44/figures.tsv rows=16 classes=checks,corpus,evidence,registry,wave
+C1=met mismatches=0
+$ python3 .ufo/waves/round-44/count-c2.py 360e3774fec032ea3ea11d08fb4b623b3d2b047c --counter … --mutants-dir …
+rev=360e3774fec032ea3ea11d08fb4b623b3d2b047c
+C2=met
+$ TMPDIR=<lane> python3 .ufo/waves/round-44/count-c3.py 360e3774fec032ea3ea11d08fb4b623b3d2b047c --entry … --row S471 --row S472
+rev=360e3774fec032ea3ea11d08fb4b623b3d2b047c
+C3=met
+
+# lane tip after this commit: 360e3774fec032ea3ea11d08fb4b623b3d2b047c
