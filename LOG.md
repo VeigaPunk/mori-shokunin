@@ -2604,3 +2604,50 @@ Appended after the filed bytes; the round-43 entry above is not rewritten
   | wc -l` → 8; 39 logs merely contain the string `429` (byte counts and file
   sizes). The wave-health observation stands as "the wave was starved"; the
   figure is 8 of 72 committed seat logs, not 34 of 64.
+
+## Round 45 (L1 mori-r45; entry written by attempt 2, a documentary finish)
+
+Attempt 1 did the round's work and landed it in three commits on top of the
+round-44 closure `b1d7269f`: `3ad8faaa` (frozen contract, wave-1 spec and
+dispatch, opened sources), `18fd68b0` (SKILL.md registry refresh, entry
+`corpus/knowledge/census-cgroup-levels-r45.md`, row S473, README map row,
+QUALITY 120-122, lesson `corpus/lessons/round-45.md`, the rewritten auditor
+`tools/mori-gate-registry.py` and six more tool edits) and `baabc992` (counters, ledger `figures.tsv`, witnesses, mutants,
+write-scope fixture, freeze manifest, evidence and 39 seat reports). Its session
+then died on a provider content-policy refusal before the report and this entry
+were written (`.ufo/watchdog.log:1325`; error text
+`[openai-codex/gpt-6-luna] Codex error event: Invalid prompt: your prompt was
+flagged as potentially violating our usage policy`). Attempt 2 runs no craft
+work and no swarm (a safety refusal is not rephrased, rerouted or retried,
+kagi r28 precedent); it re-measures the committed counters and files the report.
+
+Motivating evidence per claim (contract `.ufo/waves/round-45/contract.md`):
+
+- C1 (operability): the round-44 ledger counter printed `C1=met` on three
+  vacuous witnesses — revision-constant, HEAD-reading, duplicate
+  (`w1/ExecWitnesses.md`, lesson M2).
+- C2 (calibration): the round-44 auditor read only the first of seven
+  eight-cell registry tables and credited a `--selftest` that occurs only in a
+  comment (lesson M1); entering-tip control `C2=unmet registered=21
+  unregistered=14 no_selftest=1` (`evidence/control-c2.txt`).
+- C3 (depth): shokuknow level-naming theme re-grounded on S473 (cgroup-v2.rst
+  at v7.2, opened 2026-10-25); round 44's C3 needed a `TMPDIR` override
+  (`evidence/witness-r44-c3-tmpdir.txt`).
+
+Measured by attempt 2 at `baabc992`, freeze manifest `sha256sum -c` clean (29/29):
+
+- `python3 .ufo/waves/round-45/count-c1.py baabc992… --repo <lane> --ledger
+  .ufo/waves/round-45/figures.tsv --other-rev 554ff416… --witness-dir
+  .ufo/waves/round-45/fixtures/witnesses` → `C1=met mismatches=0 rows=15`,
+  `moved=5`, `witnesses=3/3`, rc 0; `--selftest` → `C1_SELFTEST pass=16 fail=0`.
+- `python3 .ufo/waves/round-45/count-c2.py baabc992… --repo <lane>` →
+  `C2=met tables=7 registered=39 unregistered=0 no_selftest=0 duplicate=0
+  wrong_row=0 writescope_mismatch=0`, rc 0.
+- `env -u TMPDIR python3 .ufo/waves/round-45/count-c3.py baabc992…
+  --entering-rev 554ff416… --entry corpus/knowledge/census-cgroup-levels-r45.md
+  --row S473 --repo <lane> --root <fleet>` → `C3=met`, rc 0.
+- Round-end census `sources-census.sh validate --root <fleet> mori` → `mori ok`,
+  rc 0 (W04 warnings only); registry rows 245 → 246.
+
+Not done by attempt 1 and outside attempt 2's scope: the SCORECARD.md claim
+rows, and wave 2.
