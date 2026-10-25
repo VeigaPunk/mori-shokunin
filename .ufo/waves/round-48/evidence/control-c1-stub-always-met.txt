@@ -1,0 +1,15 @@
+variant name=J1 expect=unmet got=met rc=0
+variant name=J2 expect=unmet got=met rc=0
+variant name=J3 expect=unmet got=met rc=0
+variant name=J4 expect=unmet got=met rc=0
+variant name=J5 expect=unmet got=met rc=0
+variant name=J6 expect=unmet got=met rc=0
+variant name=J7 expect=unmet got=met rc=0
+variant name=J8 expect=unmet got=met rc=0
+variant name=H1 expect=met got=met rc=0
+variant name=H2 expect=met got=met rc=0
+variant name=H3 expect=met got=met rc=0
+variant name=H4 expect=met got=met rc=0
+variant name=real expect=met got=met rc=0
+C1=unmet junk_met=8 honest_unmet=0 real=met errors=0 variants=12 rev=e5dbac05459887d9597ea5d1da0d8e3d024e0d17
+rc=1

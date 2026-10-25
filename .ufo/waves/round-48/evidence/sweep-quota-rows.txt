@@ -1,0 +1,3 @@
+# grep -cE 'xfs_quota|quotactl|EDQUOT|repquota' corpus/SOURCES.md at e5dbac05 (2026-10-25)
+0
+# lines
