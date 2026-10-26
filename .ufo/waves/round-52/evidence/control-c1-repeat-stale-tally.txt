@@ -1,0 +1,46 @@
+# control repeat-stale-tally (parts: axes,locator,receipts,repeat); clone of the lane at 4f266ef2fdf74d8b046f5b4f5a5c4945f65b966d, control commit 953559c33b7083f75f575eff223562d941b3d3d0
+$ python3 .ufo/waves/round-52/count-c1.py 953559c33b7083f75f575eff223562d941b3d3d0 --repo /fast/scratch/hyaku/mori-r52/l1/controls/clone-repeat-stale-tally --fleet-repo /home/vgpnk/Projects/shokunin --scratch /fast/scratch/hyaku/mori-r52/l1/controls/c1-repeat-stale-tally
+item axis coverage expect=round_47_improved got=ok state=ok
+item axis operability expect=round_51_improved got=ok state=ok
+item axis depth expect=round_51_improved got=ok state=ok
+item axis freshness expect=round_28_improved got=ok state=ok
+item axis calibration expect=round_50_improved got=ok state=ok
+item axis adjacency expect=round_19_improved got=ok state=ok
+item pin python3_tools/mori-pin-check.py_--selftest expect=(125/125) got=PIN_CHECK_SELFTEST_pass=125_fail=0 state=ok
+item pin python3_tools/mori-unlanded-check.py_--selftest expect=(17/17) got=UNLANDED_SELFTEST_pass=17_fail=0 state=ok
+item living corpus/QUALITY.md:885 expect=CONFORM_SELFTEST_pass=6_fail=0 got=superseded state=ok
+item living corpus/QUALITY.md:909 expect=pass=12_fail=0 got=superseded state=ok
+item living corpus/QUALITY.md:1354 expect=pass=12_fail=0 got=MORI_SOURCES_APPENDONLY_SELFTEST_pass=22_fail=0_rc=0 state=mismatch
+item living corpus/README.md:607 expect=pass=9_fail=0 got=superseded state=ok
+item living corpus/README.md:608 expect=pass=12_fail=0 got=superseded state=ok
+item living corpus/README.md:722 expect=pass=12_fail=0 got=MORI_SOURCES_APPENDONLY_SELFTEST_pass=22_fail=0_rc=0 state=mismatch
+item living corpus/README.md:722 expect=pass=9_fail=0 got=unrunnable state=mismatch
+item locator corpus/lessons/round-24-verifier-spotcheck.md:88 expect=quote:Score_6_→_6 got=found state=ok
+item locator corpus/lessons/round-26-verifier-spotcheck.md:133 expect=range got=ok state=ok
+item locator corpus/lessons/round-47-verifier-spotcheck.md:68 expect=range got=ok state=ok
+item locator corpus/lessons/round-14-verifier-spotcheck.md:87 expect=range got=ok state=ok
+item locator corpus/lessons/round-28-verifier-spotcheck.md:93 expect=range got=ok state=ok
+item locator corpus/lessons/round-31-verifier-spotcheck.md:155 expect=range got=ok state=ok
+item locator corpus/lessons/round-47-verifier-spotcheck.md:67 expect=range got=ok state=ok
+item locator corpus/lessons/round-51-verifier-spotcheck.md:130 expect=range got=ok state=ok
+item locator corpus/lessons/round-12-verifier-spotcheck.md:17 expect=range got=ok state=ok
+item locator corpus/lessons/round-31-verifier-spotcheck.md:154 expect=range got=ok state=ok
+item locator corpus/lessons/round-49-verifier-spotcheck.md:76 expect=range got=ok state=ok
+item locator corpus/lessons/round-50-verifier-spotcheck.md:126 expect=range got=ok state=ok
+item locator corpus/lessons/round-51-verifier-spotcheck.md:131 expect=range got=ok state=ok
+item locator corpus/lessons/round-28-verifier-spotcheck.md:92 expect=range got=ok state=ok
+item locator SCORECARD.md:1781 expect=pair:5_→_6 got=found state=ok
+item locator corpus/lessons/round-14-verifier-spotcheck.md:87 expect=range got=ok state=ok
+item locator corpus/lessons/round-24-verifier-spotcheck.md:68 expect=quote:Score_5_→_5 got=found state=ok
+item locator corpus/lessons/round-25-verifier-spotcheck.md:124 expect=range got=ok state=ok
+item locator corpus/lessons/round-49-verifier-spotcheck.md:75 expect=range got=ok state=ok
+item locator corpus/lessons/round-50-verifier-spotcheck.md:125 expect=range got=ok state=ok
+item locator corpus/lessons/round-14-verifier-spotcheck.md:87 expect=range got=ok state=ok
+item locator SKILL.md:1069-1141 expect=range got=ok state=ok
+item locator SKILL.md:1018-1067 expect=range got=ok state=ok
+item locator corpus/QUALITY.md:1252-1352 expect=range got=ok state=ok
+item locator LOG.md:2765-2805 expect=range got=ok state=ok
+item locator LOG.md:2732-2763 expect=range got=ok state=ok
+item locator PROVINCE.md:3-16 expect=range got=ok state=ok
+C1=unmet items=42 axes=6 pins=2 boxes=4 living=7 superseded=4 locators=27 mismatches=3 errors=0 hidden=0 lane_writes=0 manifest=6209bdb8e400 rev=953559c33b7083f75f575eff223562d941b3d3d0 failed=mismatch
+exit=1

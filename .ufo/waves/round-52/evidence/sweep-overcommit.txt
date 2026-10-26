@@ -1,0 +1,18 @@
+# sweep at 4f266ef2 over corpus/SOURCES.md corpus/knowledge SKILL.md (git grep -l -F, files per term)
+CommitLimit 0
+Committed_AS 0
+overcommit_memory 0
+overcommit_ratio 0
+overcommit_kbytes 0
+vm_commit_limit 0
+__vm_enough_memory 0
+vm_committed_as 0
+user_reserve_kbytes 0
+admin_reserve_kbytes 0
+MAP_NORESERVE 0
+OVERCOMMIT_NEVER 0
+overcommit-accounting 0
+# merge/mori staged package (read-only):
+CommitLimit 0
+Committed_AS 0
+overcommit 0

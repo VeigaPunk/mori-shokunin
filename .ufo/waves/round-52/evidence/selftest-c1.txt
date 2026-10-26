@@ -1,0 +1,45 @@
+$ python3 .ufo/waves/round-52/count-c1.py --selftest
+PASS targets_from_manifest
+PASS honest_met
+PASS rejected_round_ignored
+PASS admitted_prefix_verdict_ignored
+PASS through_round_cutoff
+PASS other_lane_ignored
+PASS harmed_counts
+PASS stale_round_unmet
+PASS verdict_word_wrong_unmet
+PASS verdict_substring_unmet
+PASS evidence_pointer_missing_unmet
+PASS absent_spotcheck_needs_manifest
+PASS duplicate_axis_row_unmet
+PASS second_axes_heading_unmet
+PASS fenced_axes_heading_ignored_met
+PASS score_cell_unread_unmet
+PASS score_move_read_met
+PASS newest_closure_score_wins_unmet
+PASS stale_pin_unmet
+PASS receipt_missing_unmet
+PASS symlinked_pin_path_unmet
+PASS hidden_tally_unmet
+PASS boxes_floor_unmet
+PASS runner_timeout_is_error
+PASS living_stale_unmet
+PASS living_rewritten_in_place_unmet
+PASS living_pin_deleted_unmet
+PASS living_superseding_pin_wrong_unmet
+PASS living_self_supersede_not_counted_unmet
+PASS living_fragment_unrunnable_unmet
+PASS living_placeholder_unrunnable_unmet
+PASS living_nonzero_rc_unmet
+PASS lane_writes_error_unmet
+PASS multiline_span_not_enumerated
+PASS locator_quote_ws_folded_unmet_when_split
+PASS locator_quote_found_met
+PASS locator_quote_absent_unmet
+PASS locator_pair_absent_unmet
+PASS locator_pair_found_met
+PASS locator_out_of_range_unmet
+PASS locator_file_absent_unmet
+PASS loose_tally_parses
+C1_SELFTEST pass=42 fail=0
+exit=0
