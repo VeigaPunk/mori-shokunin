@@ -1,0 +1,10 @@
+item axis coverage expect=round_47_improved got=ok state=ok
+item axis operability expect=round_47_improved got=ok state=ok
+item axis depth expect=round_49_improved got=ok state=ok
+item axis freshness expect=round_28_improved got=ok state=ok
+item axis calibration expect=round_49_improved got=ok state=ok
+item axis adjacency expect=round_19_improved got=ok state=ok
+item pin python3_tools/mori-pin-check.py_--selftest expect=(114/114) got=PIN_CHECK_SELFTEST_pass=114_fail=0 state=ok
+item pin python3_tools/mori-unlanded-check.py_--selftest expect=(17/17) got=UNLANDED_SELFTEST_pass=17_fail=0 state=ok
+C1=met items=8 axes=6 pins=2 boxes=4 mismatches=0 errors=0 hidden=0 manifest=a94551c5bc8d rev=487941b9395e89678af0053cc443cdb49cdee6e3
+exit=0
