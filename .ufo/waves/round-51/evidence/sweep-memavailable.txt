@@ -1,0 +1,17 @@
+$ for p in MemAvailable si_mem_available totalreserve wmark_low folio_is_file_lru 34e431b0 show_mem.c; do git grep -c -F "$p" aa3af1ec -- corpus/SOURCES.md corpus/knowledge SKILL.md; done
+## MemAvailable
+aa3af1ec:corpus/SOURCES.md:1
+aa3af1ec:corpus/knowledge/audit-r11.md:1
+aa3af1ec:corpus/knowledge/harness-job-capacity-r25.md:1
+aa3af1ec:corpus/knowledge/observability-surfaces-r2.md:1
+aa3af1ec:corpus/knowledge/surfaces-r7.md:1
+aa3af1ec:corpus/knowledge/surfaces-r8.md:1
+aa3af1ec:corpus/knowledge/userspace-oom-killers-r26.md:1
+## si_mem_available
+## totalreserve
+## wmark_low
+## folio_is_file_lru
+## 34e431b0
+## show_mem.c
+## merge/mori (read-only): grep -rl -i "MemAvailable|si_mem_available" /home/vgpnk/Projects/shokuknow/merge/mori
+rc=1 (1 = no file)

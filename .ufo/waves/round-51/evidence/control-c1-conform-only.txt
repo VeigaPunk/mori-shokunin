@@ -1,0 +1,10 @@
+$ python3 .ufo/waves/round-51/count-c1.py d57cd56e1ded99675ea560de5b559404ae5e3c4d --repo /fast/scratch/hyaku/mori-r51/L1/ctl/K --scratch /fast/scratch/hyaku/mori-r51/L1/ctl/s-conform-only
+classified: pin line=3 kind=tally prefix=ENVA_SELFTEST state=mismatch pinned='pass=3 fail=0' observed=None rc=2 cmd='python3 tools/enva.py --selftest'
+classified: pin line=4 kind=tally prefix=ENVB_SELFTEST state=mismatch pinned='pass=4 fail=0' observed=None rc=1 cmd='python3 tools/envb.py --selftest'
+classified: pin line=5 kind=tally prefix=STLA_SELFTEST state=mismatch pinned='pass=4 fail=0' observed='pass=5 fail=0' rc=0 cmd='python3 tools/stla.py --selftest'
+classified: pin line=6 kind=tally prefix=STLB_SELFTEST state=mismatch pinned='pass=2 fail=0' observed='pass=2 fail=0' rc=1 cmd='python3 tools/stlb.py --selftest'
+classified: pin line=7 kind=tally prefix=OKAY_SELFTEST state=match pinned='pass=1 fail=0' observed='pass=1 fail=0' rc=0 cmd='python3 tools/okay.py --selftest'
+classified: PIN_CHECK=unmet tally_pins=5 digest_pins=0 mismatches=4 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=- baseline=no
+kill_residue_first: !! .scratch/pin-check-rgdihbt2/tree/.gitignore
+C1=unmet kill_residue=12478 relocated=met reloc_mismatch=0 classified=bad selftest=pass=114,fail=0 rev=d57cd56e1ded99675ea560de5b559404ae5e3c4d failed=kill_residue,classified
+exit=1
