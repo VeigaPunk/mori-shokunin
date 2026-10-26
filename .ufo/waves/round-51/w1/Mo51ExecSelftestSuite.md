@@ -2,8 +2,11 @@
 
 Seat: leaf executor, no-harm for operability. Scope: run every tool selftest the SKILL.md registry pins, at the
 data commit `87e0c374537557754bf71dd68036ded3ddc6699c` and, for anything that differs, at the entering tip
-`aa3af1ec3118ee7766dfce1d9709ce3c0c3f6bfd`; compare each last tally line with its pin. No file outside my own
-report and my scratch was written; no counter, predicate, control or kill rule was changed or proposed.
+`aa3af1ec3118ee7766dfce1d9709ce3c0c3f6bfd`; compare each last tally line with its pin. No tracked file, counter,
+predicate, control or kill rule was changed or proposed. One observed side effect: the round-38/round-39
+`conform.py` instruments still hardcode the live lane path at both tips, so running their registered
+`--selftest` inside a clone wrote untracked temp dirs into the live lane's `.ufo/waves/round-38|39/scratch`
+(empty `mkdtemp` residue; exact paths and times in B7). No tracked file in the lane was written by this seat.
 
 Environment: Linux x64, kernel 7.2.11-arch1-1, Python 3.14.8 (`/usr/bin/python3`), GNU bash 5.3.20, git 2.56.0.
 No tool was installed or upgraded (no pacman; nothing from uv/npx/release channels was needed).
@@ -20,8 +23,10 @@ No tool was installed or upgraded (no pacman; nothing from uv/npx/release channe
    (verified `git -C <scratch>/data rev-parse --show-toplevel` = `<scratch>/data`). All 52 commands were run with
    `bash -c`, cwd = clone root, `TMPDIR=<clone>/.scratch` (created), `PYTHONDONTWRITEBYTECODE` untouched, 900 s cap
    per command; rc, stdout and stderr captured. Then `git checkout --detach aa3af1ec` in the same clone and the
-   same 52 commands re-run. No second clone, no full mirror; the lane repo, the fleet repo, any git index and any
-   jj state were never mutated (reads only: `git show`, `git diff`, `git clone` FROM the lane).
+   same 52 commands re-run. No second clone, no full mirror; no mutating git/jj command was run against the lane
+   or the fleet repo (reads only: `git show`, `git diff`, `git clone` FROM the lane), and no tracked file was
+   touched by this seat. The exception is untracked scratch written *by the r38/r39 instruments themselves*, whose
+   bytes hardcode the live lane path — observed, measured and reported in B7.
 3. The three `conform.py` rows were additionally run with the `<rev>` positional their entry cells require
    (the self-test cells abbreviate to `--selftest`); those runs are the observed values in the table, and the
    literal-argv result is recorded as an anomaly (B2).
@@ -43,17 +48,21 @@ One clone is the only heavy artifact; it was removed at the end (`rm -rf` of my 
   `mori-pin-check.py --selftest` prints `pass=114` at `aa3af1ec` (entering SKILL.md pin 114) and `pass=119` at
   `87e0c374` (data SKILL.md pin 119); `round-40/conform.py --selftest` prints `pass=11` at both. `round-15`'s
   tail contains a random `selftest_root` path, not a tally difference.
-- Two anomalies, both pre-existing and identical at both tips (neither is caused by the data commit):
-  `mori-index-clean.sh --selftest` fails its `not_a_repo` arm when `TMPDIR` is inside a git work tree (B1);
-  the three `conform.py` self-test cells, taken literally without `<rev>`, exit 2 with an internal-shaped error (B2).
+- Three anomalies, all present at both tips and none caused by the data commit: `mori-index-clean.sh --selftest`
+  fails its `not_a_repo` arm when `TMPDIR` is inside a git work tree (B1); the three `conform.py` self-test cells,
+  taken literally without `<rev>`, exit 2 with an internal-shaped error (B2); and the round-38/round-39
+  `conform.py` selftests still write into the live lane because their bytes hardcode its path (B7).
 - Coverage fact about the C1 instrument: only rows that carry a tally pin are executed by
-  `mori-pin-check.py --rev`; 23 of the 52 unique registered selftest commands are never run by it (B3).
+  `mori-pin-check.py --rev`; 23 of the 52 unique registered selftest command strings (22 tools) are never run by it
+  (B3).
 
 ## Table
 
 `<REV>` = the tip being measured (the entry cell's `<rev>`, resolved as the reconciler does). Observed strings are
 the exact last tally line; long ones are shortened here with `…` and given in full in Appendix A. "Match" compares
-the observed tally and rc with the pin.
+the observed tally and rc with the pin. Rows 41–42 (`round-38`/`round-39` conform) executed the live lane's
+counter and fixtures because those bytes hardcode it (B7); their tallies are identical at both tips and neither row
+is pinned.
 
 | # | command | pinned tally (data-commit SKILL.md) | observed @87e0c374 (rc) | observed @aa3af1ec (rc) | match |
 |---|---|---|---|---|---|
@@ -218,13 +227,77 @@ matching row 48. `SHONEN.md` pins 119/119 for pin-check and 17/17 for unlanded i
 `fixtures/mutants/count-c2.py` → `9850b3fcc888…`; `count-c3.py` → `37fd7c24ff52…`;
 `fixtures/mutants/count-c3.py` → `69bf9b6eb29b…`.
 
+### B7 the r38/r39 conformance checkers are still bound to the live lane path (observed lane-side scratch writes)
+
+At **both** tips, only `.ufo/waves/round-40/conform.py` derives its lane from its own path
+(`LANE = os.path.dirname(...os.path.abspath(__file__))`, `SCRATCH_ROOT = tempfile.gettempdir()`; data-commit
+diff hunk at `round-40/conform.py:66-76`). The other two keep the host path:
+
+```
+$ git show 87e0c374:.ufo/waves/round-38/conform.py | sed -n '37,38p'
+LANE = "/home/vgpnk/Projects/shokunin/mori-shokunin"
+SCRATCH_ROOT = os.path.join(LANE, ".ufo/waves/round-38/scratch")
+$ git show 87e0c374:.ufo/waves/round-39/conform.py | sed -n '53,54p'
+LANE = "/home/vgpnk/Projects/shokunin/mori-shokunin"
+SCRATCH_ROOT = os.path.join(LANE, ".ufo", "waves", "round-39", "scratch")
+```
+
+Consequence measured here: running `python3 .ufo/waves/round-38/conform.py <REV> --selftest` and
+`…/round-39/conform.py <REV> --selftest` **inside the clone** still writes its `mori-conform-selftest-*` work dir
+and the counter's temp dirs into the live lane, and only the work dir is removed. Observed after my entering-tip
+runs:
+
+```
+$ ls -ld --time-style=full-iso mori-shokunin/.ufo/waves/round-38/scratch/*
+drwx------ … 2026-10-26 19:55:12 -0300 …/c1-5qq4uc08            (empty)
+drwx------ … 2026-10-26 19:55:12 -0300 …/mori-c1-tool-q05i1wam (empty)
+$ stat -c '%y %n' mori-shokunin/.ufo/waves/round-39/scratch
+2026-10-26 19:56:31 … mori-shokunin/.ufo/waves/round-39/scratch   (empty; mtime is the moment my run's work dir
+                                                                    was removed — the last child change)
+```
+
+Both timestamps fall inside this seat's r38 runs (entering tip: 19:54:58–19:55:40; the data-tip conform cell ran
+between ≈19:49 and ≈19:51), so these two empty pairs are this seat's residue from executing the registered
+selftest of a path-bound instrument; concurrent seats run the same counters, so I do not claim the 19:49:45 pair
+beyond that coincidence of window and shape. Older pairs from 2026-10-24 01:xx and 2026-10-26 09:41 predate this
+seat. The lane's `.ufo/waves/round-40/scratch` also held two partial `mori-conform-selftest-*` work dirs from
+19:53:11–19:54:13 (9 and 5 mutation files, i.e. interrupted runs) that fall outside every command this seat ran
+(its conform commands in that minute were literal `--selftest` invocations of ≈0.1 s each, and its rev-corrected
+r40 run was 19:56:31–19:57:28); they are not attributed to this seat. I did **not** delete any of these dirs: the
+lane is not mine to clean, and they are untracked so they appear in no commit.
+
+After my observation (and after this seat's commands ended) the L1 deleted the recorded residue and left a receipt
+in `.ufo/waves/round-51/evidence/w1-lane-residue-deletion.txt` ("Lane residue written by wave-w1 seats running
+pre-fix instruments (round-40 conform.py at the entering bytes) — deleted by the L1 after the wave"): it removed
+the two `mori-conform-selftest-*` work dirs and the two empty `mori-c1-tool-*` dirs created at 19:49/19:55. At my
+final check the two matching empty `c1-*` pairs (`c1-hqleifox` 19:49:45, `c1-5qq4uc08` 19:55:12) and the empty
+`.ufo/waves/round-39/scratch` directory are still present (round-38/scratch 15 entries, round-40/scratch 3). The
+deletion receipt independently corroborates the class: a w1 seat's clone-side run of the pre-fix `conform.py`
+wrote into the live lane.
+
+Measurement caveat this exposes: because `LANE`/`DEFAULT_COUNTERS`/`DEFAULT_CONTRACT`/`HANG_FIXTURE` in
+`round-38/conform.py` and `round-39/conform.py` are the live-lane constants, my runs of those two rows executed the
+**live lane's** counter and fixtures and read the **live lane's** git repository, not the checked-out clone's, even
+though cwd was the clone. Their tallies (`pass=6`, `pass=9`) are still the measured values of those bytes — the
+files are unchanged between the two tips — but they are not evidence about the clone's copy, and the rows are
+unpinned so no claim rests on them.
+
+Tracked files: `git status` in the lane now shows modifications to `SHONEN.md`, `SKILL.md`, `tools/mori-pin-check.py`,
+`corpus/QUALITY.md`, `corpus/README.md`, `corpus/knowledge/memavailable-estimate-r51.md` and the two
+`.ufo/waves/round-51/evidence/selftests/*.txt` receipts, all with mtimes 19:59–20:01 — after every command this
+seat ran. These are another actor's edits (the L1 integrating the wave); I did not write, revert or inspect them
+beyond `git status`/`git diff --stat`.
+
 ## Named limits of this seat's check
 
 - A green tally line is the instrument's own self-report. I executed the registered commands and compared their
-  tallies; I did not audit every arm's assertion (the two anomalies above are the ones that surfaced).
+  tallies; I did not audit every arm's assertion (the three anomalies in Appendix B are the ones that surfaced).
 - Measured in one `--no-local` clone under scratch at two commits, with `TMPDIR` inside the measured tree as the
   seat spec and `mori-pin-check.py` do; not the live lane worktree. `index-clean`'s `TMPDIR` sensitivity is shown
   by the two-run contrast, and no other command was re-run with an out-of-tree `TMPDIR`.
+- Two rows are not clone-local by construction: `round-38/conform.py` and `round-39/conform.py` hardcode the live
+  lane, so their selftests executed the lane's counter/fixtures/git repository (B7). Their tallies are unchanged
+  between the tips and neither row is pinned, so no pin comparison depends on them.
 - One run per command per tip; no repetition for flakes. The 900 s cap never fired.
 - Commands were run through `bash -c` so the registry cells' shell-isms (`mkdir -p .scratch &&`, `$PWD`,
   `TMPDIR=…`) mean what they say; `<scratch>` and `<REV>` are placeholders for my scratch paths and the measured
@@ -234,6 +307,16 @@ matching row 48. `SHONEN.md` pins 119/119 for pin-check and 17/17 for unlanded i
 
 ## Findings
 
+- **MED** — `.ufo/waves/round-38/conform.py:37-38` and `.ufo/waves/round-39/conform.py:53-54` (both unchanged at
+  `87e0c374`): `LANE` and `SCRATCH_ROOT` are the hardcoded host lane path, so executing their registered
+  `--selftest` inside a clone writes work/counter temp dirs into the live lane — observed here as empty
+  `mkdtemp` dirs `…/round-38/scratch/{c1-5qq4uc08,mori-c1-tool-q05i1wam}` at 19:55:12 and as
+  `…/round-39/scratch` mtime 19:56:31 (B7; the L1 later removed the recorded residue and left
+  `.ufo/waves/round-51/evidence/w1-lane-residue-deletion.txt`, while the two empty `c1-*` pairs remain). Only
+  round-40 got the round-51 path fix. The rows at `SKILL.md:908,
+  910` are unpinned, so `mori-pin-check.py --rev` never runs them (B3) and the C1 tally arm cannot see it; the
+  frozen P-C1 surface names only `round-40/conform.py`, so the claim itself is unaffected, but the "relocated pin
+  re-execution is hermetic" property does not hold for these two registered instruments when they are executed.
 - **MED** — `tools/mori-index-clean.sh:147` and `:204-210`: the `not_a_repo` selftest arm fails whenever `TMPDIR`
   lies inside a git work tree (sandbox `notrepo` resolves to the enclosing repo, `rc=0
   out=MORI_INDEX_CLEAN staged=0 intent_to_add=0`), so `--selftest` prints `pass=3 fail=1` rc 1 in exactly the

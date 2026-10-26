@@ -2702,3 +2702,33 @@ Planned (round 51): the two live producers of lane `.scratch/` residue (`tools/m
 full tree into the lane; `.ufo/waves/round-40/conform.py:69` hardcodes the lane path) as an instrument fix with its
 own counter; K4 beyond `SHONEN.md` (tally pins in `QUALITY.md`, `README.md`, `LOG.md`); a successor C1 counter that
 closes the named survivors (verdict-word substring, second `## Axes`, symlinked pin path, the `admitted` filter arm).
+
+## Round 51 — hermetic pin re-execution with env/stale classes (C1) and MemAvailable as the kernel's estimate (C2)
+
+L1 MoriR51, attempt 1. Entering tip `aa3af1ec3118ee7766dfce1d9709ce3c0c3f6bfd`; freeze
+`4677910eae6df3dabd38fe9a0daf1945146a1110` (`.ufo/waves/round-51/contract.md`); data
+`87e0c374537557754bf71dd68036ded3ddc6699c`. Scores entering: coverage 6, operability 7, depth 5, freshness 5,
+calibration 5, adjacency 6; C2 works a lowest (tied 5) axis. No score change is claimed by the lane; the non-author
+closure rules.
+
+| Claim | Axis (held) | Counting command | Before | After |
+|---|---|---|---|---|
+| C1 a `--rev` pin re-execution leaves nothing in the repo it reads when killed, holds with the lane path hidden, and classes every mismatch env or stale | operability 7 | `python3 .ufo/waves/round-51/count-c1.py R [--scratch DIR]` | `C1=unmet kill_residue=12547 relocated=unmet reloc_mismatch=1 classified=bad selftest=pass=114,fail=0 … failed=kill_residue,relocated,classified`, rc 1 — `evidence/control-c1-do-nothing.txt` | `C1=met kill_residue=0 relocated=met reloc_mismatch=0 classified=ok selftest=pass=125,fail=0`, rc 0 — `evidence/c1-at-landed.txt` |
+| C2 what `/proc/meminfo`'s MemAvailable is at v7.2, 21 located quotes over 5 sources, each row with a non-L1 entailment vote | depth 5 | `python3 .ufo/waves/round-51/count-c2.py R` | `C2=unmet claims=0 … pins=bad … failed=entry_absent,pins`, rc 1 — `evidence/control-c2-do-nothing.txt` | `C2=met claims=21 located=21 quote_missing=0 bad_rows=0 sources=5 source_rows=ok pins=ok provenance=ok entailed=21 dissent=0`, rc 0 — `evidence/c2-at-landed.txt` |
+
+Controls that skip the work stay unmet (receipts under `.ufo/waves/round-51/evidence/`): C1 do-nothing,
+scratch-only (`reloc_mismatch=3`), conform-only (`kill_residue=12478`, `classified=bad`), class-only
+(`kill_residue=1`), always-env (`classified=bad`); the witness (feasibility, built by the L1) met. C2 do-nothing
+`failed=entry_absent,pins`, and the data commit before any vote `failed=entailment` (`evidence/c2-at-data.txt`).
+Counter selftest `C2_SELFTEST pass=34 fail=0`; `count-c1.py` has no selftest (controls instead).
+
+No capability row is claimed: the pin reconciler predates round 51 (v5/v5.1 change how it runs, not what it can do).
+
+Limits named before data and found by the wave (`corpus/lessons/round-51.md` `## Wave w1 — integrated findings`):
+arm A kills at one moment and runs the revision's code unsandboxed; arm B checks exit code and last line; arm D
+parses a printed tally; arm C's fixture is five rows; the entailment arm accepts any non-`MoriR51` `.md` under `w1/`
+and one vote per row; a vote records a seat's judgment, not its correctness; the entry claims v7.2 bytes only.
+
+Planned (round 52): the successor calibration counter and K4 beyond `SHONEN.md` (round-50 §5 item 3, not taken this
+round); the remaining in-lane writers (round-38/39/41/42 `conform.py`, round-48/49 `count-c1.py` scratch under the
+lane) as a hermeticity sweep with its own counter.

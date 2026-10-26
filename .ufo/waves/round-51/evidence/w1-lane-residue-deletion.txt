@@ -1,0 +1,54 @@
+# Lane residue written by wave-w1 seats running pre-fix instruments (round-40 conform.py at the entering bytes) — deleted by the L1 after the wave, 2026-10-26
+$ git status --porcelain --ignored --untracked-files=all -- .ufo/waves/round-3* .ufo/waves/round-4* | grep -v __pycache__
+?? .ufo/waves/round-40/scratch/mori-conform-selftest-858cf_2r/counter-bounded_reads.py
+?? .ufo/waves/round-40/scratch/mori-conform-selftest-858cf_2r/counter-drain_bind.py
+?? .ufo/waves/round-40/scratch/mori-conform-selftest-858cf_2r/counter-drain_bind_decoy.py
+?? .ufo/waves/round-40/scratch/mori-conform-selftest-858cf_2r/counter-head_pin.py
+?? .ufo/waves/round-40/scratch/mori-conform-selftest-858cf_2r/counter-predicate.py
+?? .ufo/waves/round-40/scratch/mori-conform-selftest-858cf_2r/counter-timeout_scope.py
+?? .ufo/waves/round-40/scratch/mori-conform-selftest-858cf_2r/counter-timeout_scope_shadow.py
+?? .ufo/waves/round-40/scratch/mori-conform-selftest-858cf_2r/counter-timeout_state.py
+?? .ufo/waves/round-40/scratch/mori-conform-selftest-858cf_2r/counter-tool_resolve.py
+?? .ufo/waves/round-40/scratch/mori-conform-selftest-y5k7kzyi/counter-bounded_reads.py
+?? .ufo/waves/round-40/scratch/mori-conform-selftest-y5k7kzyi/counter-head_pin.py
+?? .ufo/waves/round-40/scratch/mori-conform-selftest-y5k7kzyi/counter-predicate.py
+?? .ufo/waves/round-40/scratch/mori-conform-selftest-y5k7kzyi/counter-timeout_scope.py
+?? .ufo/waves/round-40/scratch/mori-conform-selftest-y5k7kzyi/counter-tool_resolve.py
+ls: cannot access '.ufo/waves/round-41/scratch': No such file or directory
+ls: cannot access '.ufo/waves/round-42/scratch': No such file or directory
+.ufo/waves/round-38/scratch:
+drwxr-xr-x 1 vgpnk vgpnk 536 2026-10-26 19:55:40.840739283 -0300 .
+drwxr-xr-x 1 vgpnk vgpnk 464 2026-10-25 03:49:32.800187021 -0300 ..
+drwx------ 1 vgpnk vgpnk   0 2026-10-26 19:55:12.498972649 -0300 c1-5qq4uc08
+drwx------ 1 vgpnk vgpnk   0 2026-10-24 01:14:11.825222489 -0300 c1-7e6iaqr4
+drwx------ 1 vgpnk vgpnk   0 2026-10-26 09:41:17.630646689 -0300 c1-9wz4iqqu
+drwx------ 1 vgpnk vgpnk   0 2026-10-24 01:11:45.831534690 -0300 c1-gxykk5zm
+drwx------ 1 vgpnk vgpnk   0 2026-10-24 01:12:11.653170160 -0300 c1-hdiy48g3
+drwx------ 1 vgpnk vgpnk   0 2026-10-26 19:49:45.464218009 -0300 c1-hqleifox
+drwx------ 1 vgpnk vgpnk   0 2026-10-24 01:02:47.191015240 -0300 c1-o305hom3
+drwx------ 1 vgpnk vgpnk   0 2026-10-24 01:15:39.038320405 -0300 c1-paug1lsd
+drwx------ 1 vgpnk vgpnk   0 2026-10-26 09:41:17.629698639 -0300 mori-c1-tool-i5236vo8
+drwx------ 1 vgpnk vgpnk   0 2026-10-24 01:12:11.652057348 -0300 mori-c1-tool-jo0jask6
+drwx------ 1 vgpnk vgpnk   0 2026-10-24 01:11:45.830933960 -0300 mori-c1-tool-kkzjbb9f
+drwx------ 1 vgpnk vgpnk   0 2026-10-24 01:02:47.190264597 -0300 mori-c1-tool-p8ju0xq_
+drwx------ 1 vgpnk vgpnk   0 2026-10-26 19:55:12.497758991 -0300 mori-c1-tool-q05i1wam
+drwx------ 1 vgpnk vgpnk   0 2026-10-26 19:49:45.463990724 -0300 mori-c1-tool-rucjeetf
+drwx------ 1 vgpnk vgpnk   0 2026-10-24 01:14:11.823619788 -0300 mori-c1-tool-uoiwdygv
+drwx------ 1 vgpnk vgpnk   0 2026-10-24 01:15:39.037017502 -0300 mori-c1-tool-vseuwgcw
+drwxr-xr-x 1 vgpnk vgpnk 266 2026-10-23 23:20:53.796754305 -0300 red-receipts
+
+.ufo/waves/round-39/scratch:
+drwxr-xr-x 1 vgpnk vgpnk   0 2026-10-26 19:56:31.429442067 -0300 .
+drwxr-xr-x 1 vgpnk vgpnk 232 2026-10-25 03:49:32.806943411 -0300 ..
+
+.ufo/waves/round-40/scratch/:
+drwxr-xr-x 1 vgpnk vgpnk 238 2026-10-26 19:57:28.890664555 -0300 .
+drwxr-xr-x 1 vgpnk vgpnk 170 2026-10-26 09:07:15.753855382 -0300 ..
+drwx------ 1 vgpnk vgpnk 426 2026-10-26 19:54:13.879799907 -0300 mori-conform-selftest-858cf_2r
+drwx------ 1 vgpnk vgpnk 220 2026-10-26 19:53:24.633379775 -0300 mori-conform-selftest-y5k7kzyi
+drwxr-xr-x 1 vgpnk vgpnk 248 2026-10-26 09:07:15.755468942 -0300 mutconform-arms2
+-rw-r--r-- 1 vgpnk vgpnk 932 2026-10-26 09:07:15.755468942 -0300 selftest-v3-draft.txt
+-rw-r--r-- 1 vgpnk vgpnk 945 2026-10-26 09:07:15.755468942 -0300 selftest-v3-draft2.txt
+$ (after rm -rf of the two mori-conform-selftest-* dirs)
+0
+$ rmdir .ufo/waves/round-38/scratch/mori-c1-tool-q05i1wam .ufo/waves/round-38/scratch/mori-c1-tool-rucjeetf   # empty dirs created 19:49/19:55 by w1 seats running round-38 instruments; older empty dirs (2026-10-24, 2026-10-26 09:41) predate the round and are left

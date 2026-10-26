@@ -2761,3 +2761,45 @@ tallies were prose only; K4) and the do-nothing receipt `.ufo/waves/round-50/evi
   correction entry.
 - Not done, stated: the contract's two-v1-wave shape (one v2 wave ran after the data); 104 seats dispatched across both
   attempts, above the 100 ceiling; the C1/C2 counter survivors stay named limits (frozen).
+
+## Round 51 (L1 MoriR51, attempt 1; C1 operability, C2 depth)
+
+Entering tip `aa3af1ec`; freeze `4677910e` (contract, both counters, the C1 controls with witness bytes, receipts, five
+source copies); data `87e0c374`; wave spec `b504cb17`; integration `7c0b6232` and the final integration commit named in
+the round report. One v2 wave `w1` (68 seats) after the data commit, as frozen. Motivating evidence: round-50 closure
+`corpus/lessons/round-50-verifier-spotcheck.md` §5 items 1 and 4 (`tools/mori-pin-check.py:884-887` exported a full
+tree under the lane's `.scratch`; `conform.py:69` hardcoded the lane path; a depth counter that scores location
+only) and `considerthese/2026-10-26.md` suggestion 1 (split "can't run here" from "stale").
+
+- C1 (operability): `tools/mori-pin-check.py` v5 measures a `git clone --shared` at the revision under scratch
+  instead of a `git archive` under `<repo>/.scratch`, and tags every mismatch `class=env` or `class=stale`;
+  `.ufo/waves/round-40/conform.py` derives the lane from its own path. Wave w1 then took v5.1 (default scratch
+  `$TMPDIR` outside the repo else `/var/tmp`, `--scratch` inside the repo refused, the tree's `master` = the
+  revision, four class corrections; selftest 119 → 125). `count-c1.py R`: entering
+  `C1=unmet kill_residue=12547 relocated=unmet reloc_mismatch=1 classified=bad` (`evidence/control-c1-do-nothing.txt`)
+  → `C1=met kill_residue=0 relocated=met reloc_mismatch=0 classified=ok selftest=pass=119,fail=0` at `87e0c374`
+  (`evidence/c1-at-data.txt`) and `selftest=pass=125,fail=0` at the landed tip (`evidence/c1-at-landed.txt`).
+- C2 (depth): `corpus/knowledge/memavailable-estimate-r51.md` (MemAvailable is `si_mem_available()`'s estimate at
+  v7.2: free pages minus `totalreserve_pages`, plus file-LRU pages and reclaimable kernel memory each less
+  min(half, summed low watermarks), clamped at 0; why `MemFree + Cached` is not it), rows S492–S496. `count-c2.py R`:
+  entering `failed=entry_absent,pins` → at data `C2=unmet … located=21 … entailed=0 … failed=entailment` → at the
+  landed tip `C2=met claims=21 located=21 … sources=5 … entailed=21 dissent=0` (`evidence/c2-at-landed.txt`). Four
+  rows (6, 12, 14, 15) drew an `overclaim` vote and now carry the voting seat's entailed replacement text.
+- Frontier: census start rc 0 (22 W04) → end rc 0 (23 W04, S492 shares S082's URL at another scope); sourced claim C2
+  on S492–S496; mistakes M1 (hidden location dependence), M2 (round-50 residue producers), M3 (two seat reports
+  misrooted to the fleet root, moved by the orchestrator); considerthese `2026-10-26.md` suggestion 1 implemented in
+  C1; assimilation none (`merge/mori/` holds nothing on MemAvailable); QUALITY 137–140; README round-51 block;
+  SKILL `## Round51`; SCORECARD Axes depth and calibration cells now lead with the round-50 closure (the frozen
+  round-50 C1 counter's through-49 cut no longer describes them).
+- Round-40 freeze note: `conform.py`'s bytes no longer match `.ufo/waves/round-40/evidence/freeze-r40.txt`
+  (`5025b966…` → `7f5174d5…`); round-40 receipts stay measured with the frozen bytes via `git show`; the edited file
+  is the standing gate (lesson `## Wave w1 — integrated findings`).
+- Lane residue: two `round-40/scratch/mori-conform-selftest-*` dirs and two empty `round-38/scratch` dirs written by
+  w1 seats running pre-fix instruments were deleted (`evidence/w1-lane-residue-deletion.txt`).
+- Routed defects (round-50 §5): 1 → C1; 2 → one v2 wave after data, 68 seats, within 64–128; 4 → P-C2's entailment
+  arm; 5 → this entry names the deviations below; 6 → operator's (fleet-commit author date).
+- Not done, stated (deviations, routed defect 5): round-50 §5 item 3 — the successor calibration counter and K4 beyond
+  `SHONEN.md` — was not taken this round (routed to round 52); the contract planned two entailment votes per row,
+  but rows 6, 12, 14 and 15 carry one (the replacement author's); the C1/C2 counter survivors found by the wave stay
+  named limits (frozen); other lane instruments that write into the lane (round-38/39/41/42 `conform.py`,
+  round-48/49 `count-c1.py`) are outside C1 and routed.

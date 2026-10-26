@@ -257,6 +257,12 @@ Taken into the data after the wave (the counters, predicates, controls and kill 
   matches its PROVINCE (`Mo51SentEntryScope` LOW 3); a `## What this changes for mori` section
   (`Mo51ScribeWhatChanges`, `Mo51ScoutPriorMentions`).
 - S492 scope wording (`Mo51RevSourcesRows` LOW 1).
+- Round-40 freeze: `.ufo/waves/round-40/evidence/freeze-r40.txt` pins `conform.py` at sha256 `5025b966…`; the
+  round-51 data commit changed that file (now `7f5174d5…` at `87e0c374`), so the working file no longer matches the
+  round-40 freeze line (`Mo51RevConformDiff` MED 1). Round 40's receipts were produced by, and are re-measured with,
+  the frozen bytes (`git show <round-40 freeze>:.ufo/waves/round-40/conform.py`, the round-40 contract's own rule);
+  the round-51 file is the standing gate, not the round-40 claim's instrument. Selftest unchanged:
+  `CONFORM_SELFTEST pass=11 fail=0` at both.
 - C1 tool, v5 → v5.1: the default scratch was `tempfile.gettempdir()`, so a bare `--rev` run put a ~330 MB tree
   in `/tmp` against the 2026-10-25 directive (`Mo51SentKillSafety` HIGH 1, `Mo51RevPinCheckDiff` MED,
   `Mo51RevenScratchProducers` MED 3) — now `--scratch`, else a TMPDIR outside the repo, else `/var/tmp`, and a
@@ -275,7 +281,9 @@ Named limits, not repaired (frozen counters; a weakness found after scoring is a
   (`Mo51SentBwrap` HIGH 1); arm B checks exit code and the last line, so a stub or a lane-path short-circuit passes
   (`Mo51CritC1Counter` HIGH); arm D parses the printed tally (a selftest that prints without running passes);
   arm C's five prefixes can be hardcoded; bwrap is a one-path mask with the caller's environment and network
-  (`Mo51SentBwrap` MED 2); the controls cannot be replayed from a copy outside the lane (`Mo51ExecC1Controls`
+  (`Mo51SentBwrap` MED 2); every frozen control fails on two or more arms at once, so no control isolates one
+  arm and 7 of 9 single-arm mutants of the counter keep every control verdict (`Mo51MutC1Counter` HIGH); the
+  controls cannot be replayed from a copy outside the lane (`Mo51ExecC1Controls`
   MED); `--root` mode and other lane writers (round-39 `conform.py`, round-48/49 `count-c1.py` scratch under
   `<repo>/.scratch`) are outside C1 (`Mo51RevenScratchProducers` MED 4-6, `Mo51RevPromptConformance` F1).
 - `count-c2.py`: any `.md` under `w1/` not named `MoriR51*` can vote, lines inside fences count, and one vote meets
@@ -296,4 +304,6 @@ Named limits, not repaired (frozen counters; a weakness found after scoring is a
 
 One v2 wave `w1` (policy v2, validated rc 0): 68 seats — executor 18, reviewer 14, critic 12, scribe 9, sentinel 4,
 mutation-tester 3, connector 3, scout 2, simplifier 2, revenger 1; m_flash roles 34/68, attack roles 29/68. No
-residual call. The L1 held the planner seat (the validator rejects `planner`). Seat outcomes are in the round report.
+residual call. The L1 held the planner seat (the validator rejects `planner`). All 68 seats settled with a report and an output in `w1-results.json`; no dead seat. The contract's stated
+do-nothing residue range (12475–12547) is low by one: `Mo51ExecC1Rerun` measured 12474 at `aa3af1ec` (LOW; any
+nonzero value is unmet, so no verdict moves).
