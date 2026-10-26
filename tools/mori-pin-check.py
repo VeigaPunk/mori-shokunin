@@ -111,7 +111,8 @@ How it measures
   ``` / ~~~ fences are not read; the entry column is found by its header name.
 
 Modes
-  --rev REV [--repo DIR]   export REV with `git archive` and measure it there
+  --rev REV [--repo DIR]   check REV out in a `git clone --shared` under --scratch
+                           (v5; was a `git archive` export) and measure it there
                            (SKILL.md read from REV unless --skill is given)
   --root DIR               measure DIR as-is (selftest and fixtures)
   --skill PATH             read the registry from PATH instead
@@ -128,8 +129,9 @@ Output: one `pin line=… kind=… prefix=… state=… …` line per pin, then
 Exit: 0 met · 1 unmet · 2 setup (usage, unresolvable revision, unreadable SKILL).
 Read-only over committed bytes: with --rev it writes only its own measured
 tree — a `git clone --shared` checked out at the revision — under `--scratch DIR`
-(default: the TMPDIR temp dir, never `<repo>`; removed on exit, and a killed run
-leaves it in scratch, not in the repo it reads); with
+(default: $TMPDIR, else /var/tmp — never `<repo>`, and never a RAM-backed /tmp by
+default: the tree is ~330 MB; removed on exit, and a killed run leaves it in
+scratch, not in the repo it reads); with
 --root it writes temp dirs under `<root>/.scratch`. `--selftest` builds
 synthetic trees under TMPDIR.
 
@@ -140,6 +142,12 @@ v5 (round 51, C1 — routed defect 1 of `corpus/lessons/round-50-verifier-spotch
 path, timeout, OS error: the instrument could not run here); `stale` = it ran and printed a different
 tally, or a tally whose exit code contradicts it, or a digest/line-count pin differs. The summary
 line ends `env=N stale=N`, and env + stale = mismatches.
+v5.1 (round 51, wave w1 — `w1/Mo51CritClassRule.md`, `Mo51CritExportClone.md`, `Mo51SentKillSafety.md`): a pin
+whose instrument file is absent from the measured tree is `stale` (a content change, not the host); two or more
+disagreeing tally lines are `stale` (the instrument ran); a timeout keeps the output printed before it, so a
+different tally printed before a timeout is `stale`; the measured tree's `master` is set to the measured
+revision (the tree is a function of REV, not of the source repo's live branch); the default scratch parent is
+$TMPDIR (skipped when it lies inside the repo), else /var/tmp, and an explicit --scratch inside the repo exits 2. Named limit: a tally printed before a crash on a missing host path is still `stale`.
 """
 import argparse
 import hashlib
@@ -551,8 +559,13 @@ def run_cmd(words, root, scratch, timeout, extra_env=None):
         proc = subprocess.run(words, cwd=root, env=env, stdout=subprocess.PIPE,
                               stderr=subprocess.STDOUT, timeout=timeout)
         return proc.returncode, proc.stdout.decode("utf-8", "replace")
-    except subprocess.TimeoutExpired:
-        return None, "timeout"
+    except subprocess.TimeoutExpired as exc:
+        # v5.1: keep what the instrument printed before the timeout (a different tally
+        # printed first is stale, not env).
+        part = exc.stdout or exc.output or b""
+        if isinstance(part, str):
+            part = part.encode("utf-8", "replace")
+        return None, part.decode("utf-8", "replace") + "\ntimeout"
     except OSError as exc:
         return None, "oserror: %s" % exc
     finally:
@@ -804,7 +817,8 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None,
             # echo of an old tally is not), and they must all agree.
             tails = {l.strip()[len(prefix):].strip() for l in text_out.splitlines()
                      if re.match(re.escape(prefix) + r"(?![A-Za-z0-9_])", l.strip())}
-            observed = tails.pop() if len(tails) == 1 else None
+            ntails = len(tails)
+            observed = tails.pop() if ntails == 1 else None
             want = pinned.strip()
             # v2: the observed tail must equal the pinned text exactly (a weakened pin
             # such as `pass=22` for `pass=22 fail=0` is a mismatch).
@@ -821,7 +835,19 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None,
                 # v5 (considerthese 2026-10-26 s1): no tally line at all means the
                 # instrument could not run here (env); a tally that differs, or an exit
                 # code that contradicts the tally, means the pin is stale.
-                kind = "env" if observed is None else "stale"
+                # v5.1: an absent instrument file or disagreeing tally lines are stale.
+                inst_path = os.path.join(root, inst) if inst and not os.path.isabs(inst) else inst
+                absent = bool(inst_path) and not os.path.isfile(inst_path)
+                if absent or ntails > 1:
+                    kind = "stale"
+                elif observed is None:
+                    kind = "env"
+                elif observed.strip() != want:
+                    kind = "stale"
+                else:
+                    # the pinned tally was printed; the exit code is what failed: a timeout
+                    # or OS error cannot confirm it (env), a real nonzero exit contradicts it.
+                    kind = "env" if rc is None else "stale"
                 counts[kind] += 1
                 cls = " class=" + kind
             out.append("pin line=%d kind=tally prefix=%s state=%s pinned=%r observed=%r rc=%s cmd=%r%s"
@@ -879,7 +905,9 @@ def export_rev(repo, rev, dest):
                               timeout=60, check=True).stdout.decode().strip()
         subprocess.run(["git", "clone", "-q", "--shared", "--no-checkout", repo, tree],
                        stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=300, check=True)
-        subprocess.run(["git", "-C", tree, "checkout", "-q", "--detach", full],
+        # v5.1: `master` in the measured tree is the measured revision, so an instrument
+        # that reads `master` (round-49 count-c1.py) sees REV, not the source's live branch.
+        subprocess.run(["git", "-C", tree, "checkout", "-q", "-B", "master", full],
                        stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=600, check=True)
     except (subprocess.SubprocessError, OSError):
         return None
@@ -909,7 +937,19 @@ def main(argv):
     repo = os.path.abspath(args.repo)
     # v5 (round 51): the export goes to scratch, never into the repo it reads — a
     # SIGKILLed run used to leave a full tree under <repo>/.scratch (round-50 D-d).
-    scratch_parent = os.path.abspath(args.scratch) if args.scratch else tempfile.gettempdir()
+    def _inside(path, top):
+        path, top = os.path.realpath(path), os.path.realpath(top)
+        return path == top or path.startswith(top + os.sep)
+    # v5.1 (w1/Mo51RevenScratchProducers F1): "never <repo>" is enforced — an explicit
+    # --scratch inside the repo is refused; a TMPDIR inside it (the lane's own convention
+    # for its tools) is skipped for the --rev tree.
+    if args.scratch and _inside(args.scratch, repo):
+        print("PIN_CHECK_SETUP --scratch %s is inside the repo %s" % (args.scratch, repo), file=sys.stderr)
+        return 2
+    tmpdir = os.environ.get("TMPDIR")
+    if tmpdir and _inside(tmpdir, repo):
+        tmpdir = None
+    scratch_parent = os.path.abspath(args.scratch or tmpdir or "/var/tmp")
     try:
         os.makedirs(scratch_parent, exist_ok=True)
         scratch = tempfile.mkdtemp(prefix="pin-check-", dir=scratch_parent)
@@ -1455,6 +1495,36 @@ def selftest():
             hit = [l for l in out if mark in l]
             results.append((arm_name, (not met) and len(hit) == 1 and hit[0].endswith(want_cls)
                             and out[-1].endswith(" env=%d stale=%d" % (want_env, want_stale)), out[-1]))
+        # v5.1 classes (round 51 wave w1): absent instrument, two disagreeing tallies, a
+        # different tally printed before a timeout -> stale; the pinned tally then a timeout -> env.
+        with open(os.path.join(root, "tools", "twotally.py"), "w") as f:
+            f.write("import sys\nif '--selftest' in sys.argv:\n    print('TWO_SELFTEST pass=3 fail=0')\n"
+                    "    print('TWO_SELFTEST pass=2 fail=1')\n")
+        with open(os.path.join(root, "tools", "slowwrong.py"), "w") as f:
+            f.write("import sys, time\nif '--selftest' in sys.argv:\n    print('SW_SELFTEST pass=1 fail=1', flush=True)\n"
+                    "    time.sleep(30)\n")
+        with open(os.path.join(root, "tools", "slowright.py"), "w") as f:
+            f.write("import sys, time\nif '--selftest' in sys.argv:\n    print('SR_SELFTEST pass=2 fail=0', flush=True)\n"
+                    "    time.sleep(30)\n")
+        for arm_name, body, mark, want_env, want_stale, tmo in (
+                ("v51_class_absent_instrument_stale",
+                 HDR + row("`python3 tools/gone.py --selftest` → `GONE_SELFTEST pass=1 fail=0`",
+                           entry="`python3 tools/gone.py`"), "prefix=GONE_SELFTEST state=mismatch", 0, 1, 5),
+                ("v51_class_two_tallies_stale",
+                 HDR + row("`python3 tools/twotally.py --selftest` → `TWO_SELFTEST pass=3 fail=0`",
+                           entry="`python3 tools/twotally.py`"), "prefix=TWO_SELFTEST state=mismatch", 0, 1, 5),
+                ("v51_class_wrong_then_timeout_stale",
+                 HDR + row("`python3 tools/slowwrong.py --selftest` → `SW_SELFTEST pass=2 fail=0`",
+                           entry="`python3 tools/slowwrong.py`"), "prefix=SW_SELFTEST state=mismatch", 0, 1, 3),
+                ("v51_class_right_then_timeout_env",
+                 HDR + row("`python3 tools/slowright.py --selftest` → `SR_SELFTEST pass=2 fail=0`",
+                           entry="`python3 tools/slowright.py`"), "prefix=SR_SELFTEST state=mismatch", 1, 0, 3)):
+            scratch = tempfile.mkdtemp(prefix="c-", dir=base)
+            met, out = check(body, root, scratch, "deadbeef", tmo, 1)
+            want_cls = "class=env" if want_env else "class=stale"
+            hit = [l for l in out if mark in l]
+            results.append((arm_name, (not met) and len(hit) == 1 and hit[0].endswith(want_cls)
+                            and out[-1].endswith(" env=%d stale=%d" % (want_env, want_stale)), out[-1]))
         # v5: the --rev export is not written under the repo it reads.
         grepo = os.path.join(base, "grepo")
         os.makedirs(os.path.join(grepo, "tools"))
@@ -1481,6 +1551,40 @@ def selftest():
                         cli3.returncode == 0 and b"PIN_CHECK=met" in cli3.stdout and left == ""
                         and not os.path.exists(os.path.join(grepo, ".scratch")) and os.listdir(xs) == [],
                         "rc=%d left=%d" % (cli3.returncode, len(left.splitlines()))))
+        # v5.1: with no --scratch the tree goes under $TMPDIR (here a private dir), never the repo;
+        # and the measured tree's `master` is the measured revision.
+        xt = os.path.join(base, "xtmp")
+        os.makedirs(xt)
+        mtool = ("import subprocess, sys\nif '--selftest' in sys.argv:\n"
+                 "    m = subprocess.run(['git', 'rev-parse', 'master'], stdout=subprocess.PIPE).stdout.decode().strip()\n"
+                 "    h = subprocess.run(['git', 'rev-parse', 'HEAD'], stdout=subprocess.PIPE).stdout.decode().strip()\n"
+                 "    ok = bool(m) and m == h\n"
+                 "    print('MASTER_SELFTEST pass=%d fail=%d' % (int(ok), int(not ok))); sys.exit(0 if ok else 1)\n")
+        with open(os.path.join(grepo, "tools", "mtool.py"), "w") as f:
+            f.write(mtool)
+        with open(os.path.join(grepo, "SKILL.md"), "w") as f:
+            f.write(HDR + row("`python3 tools/mtool.py --selftest` → `MASTER_SELFTEST pass=1 fail=0`",
+                              entry="`python3 tools/mtool.py`"))
+        subprocess.run(gx + ["add", "-A"], check=True, timeout=60)
+        subprocess.run(gx + ["-c", "user.name=pin-check-selftest", "-c", "user.email=selftest@invalid",
+                             "commit", "-q", "-m", "fixture 2"], check=True, timeout=60)
+        # the source's master moves on past the measured revision
+        subprocess.run(gx + ["-c", "user.name=pin-check-selftest", "-c", "user.email=selftest@invalid",
+                             "commit", "-q", "--allow-empty", "-m", "later"], check=True, timeout=60)
+        env4 = dict(os.environ, TMPDIR=xt)
+        cli4 = subprocess.run([sys.executable, os.path.abspath(__file__), "--rev", "HEAD~1", "--repo", grepo],
+                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=120, env=env4)
+        left4 = subprocess.run(gx + ["status", "--porcelain", "--ignored", "--untracked-files=all"],
+                               stdout=subprocess.PIPE, timeout=60).stdout.decode()
+        cli5 = subprocess.run([sys.executable, os.path.abspath(__file__), "--rev", "HEAD", "--repo", grepo,
+                               "--scratch", os.path.join(grepo, "sub")],
+                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=120)
+        results.append(("v51_scratch_inside_repo_refused", cli5.returncode == 2
+                        and not os.path.exists(os.path.join(grepo, "sub")), "rc=%d" % cli5.returncode))
+        results.append(("v51_default_scratch_tmpdir_and_master_is_rev",
+                        cli4.returncode == 0 and b"PIN_CHECK=met" in cli4.stdout and left4 == ""
+                        and os.listdir(xt) == [],
+                        "rc=%d left=%d" % (cli4.returncode, len(left4.splitlines()))))
         # CLI arm: --root through main(), exit codes.
         with open(os.path.join(root, "SKILL.md"), "w") as f:
             f.write(HDR + row(good))

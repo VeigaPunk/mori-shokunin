@@ -1248,3 +1248,105 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     `sha256sum -c evidence/freeze-sha256.txt`'s job); a closure scored at a revision no longer reachable from the
     lane's branches cannot be re-executed at all; and the C1 run costs minutes of CPU, so it is one check per
     round, not per seat.
+
+## Criteria added round 51 — a re-execution outside the repo, a mismatch class, a runway reading, an entailment vote
+
+137. **An instrument that re-executes pins runs on a tree outside the repo it reads, and the re-execution holds
+    with that repo's path hidden.** Lesson: `corpus/lessons/round-51.md` M1 (hidden location dependence; the row
+    is drafted this wave with `captured-by` QUALITY 127). Rationale: at the entering tip
+    `tools/mori-pin-check.py`'s `--rev` mode exported the tree it measured under `<repo>/.scratch`, so a
+    SIGKILLed run left 12,547 untracked or ignored paths in the repo it read
+    (`C1=unmet kill_residue=12547 relocated=unmet reloc_mismatch=1`,
+    `.ufo/waves/round-51/evidence/control-c1-do-nothing.txt`, exit 1); moving that export to TMPDIR removed the
+    residue but left three pins failing outside the repo (`reloc_mismatch=3`,
+    `.ufo/waves/round-51/evidence/control-c1-scratch-only.txt`, exit 1) because
+    `.ufo/waves/round-49/count-c1.py` reads the `master` branch and `tools/mori-round19-regressions.py` reads git
+    objects from the tree it runs in — a `git archive` export has neither. v5 checks out a `git clone --shared`
+    of R under `--scratch`, else a TMPDIR outside the repo, else /var/tmp (v5.1 sets the tree's `master` to R and
+    refuses a `--scratch` inside the repo; `tools/mori-pin-check.py` docstring v5/v5.1). Check:
+    `python3 .ufo/waves/round-51/count-c1.py <rev>` exits 0 with
+    `C1=met kill_residue=0 relocated=met reloc_mismatch=0`, where arm A starts
+    `tools/mori-pin-check.py --rev R --repo C0` in a fresh `--no-local` clone C0 with TMPDIR in scratch, waits
+    until it is writing, waits 3 s, SIGKILLs the process group, and counts
+    `git -C C0 status --porcelain --ignored --untracked-files=all` lines; arm B runs in a second clone inside
+    bubblewrap with `--tmpfs <lane>` and asserts `<lane>/SKILL.md` is absent. At the data commit `87e0c374` it
+    printed `C1=met kill_residue=0 relocated=met reloc_mismatch=0 classified=ok selftest=pass=119,fail=0
+    rev=87e0c374… failed=-`, exit 0 (`.ufo/waves/round-51/evidence/c1-at-data.txt`). Shown able to fail: the two
+    receipts above, `kill_residue=12547` and `reloc_mismatch=3`, each `C1=unmet` and exit 1. Not covered: arm A
+    kills at one moment (3 s after the first write) and proves nothing about a kill at another; arm B hides one
+    path and does not prove portability to another host, user or kernel; the counter's C0/C1 are `--no-local`
+    clones but v5's own measured tree is `--shared`, so a repack or prune of the source repo during the run is
+    untested; `--root` mode still writes `<root>/.scratch` and is not claimed; other lane instruments that write
+    inside the lane (`.ufo/waves/round-39/conform.py`, round-48/49 `count-c1.py`) are outside this check
+    (`.ufo/waves/round-51/w1/Mo51RevenScratchProducers.md`, `Mo51RevPromptConformance.md`).
+
+138. **A pin mismatch carries a class that separates "could not run here" from "the pin is stale", and the
+    summary counts both.** Lesson: `corpus/lessons/round-51.md` M1 — the hidden dependence surfaced as a bare
+    mismatch; the class rule itself is `considerthese/2026-10-26.md` suggestion 1 (operator reflection, opened
+    2026-10-26), not an M row. Rationale: at the entering tip a mismatch line read `state=mismatch …
+    observed=None rc=2` and ended with no class (`.ufo/waves/round-51/evidence/control-c1-do-nothing.txt`; this
+    seat reproduced that shape with the `aa3af1ec` tool on the frozen five-row fixture), so a pin that could not
+    run and a pin that had drifted looked alike. v5 tags `class=env` when the pinned command printed no tally
+    line for its prefix (setup error, missing path, timeout, OS error), `class=stale` when it ran and printed a
+    different tally, a tally its exit code contradicts, or a digest/line-count difference, and its summary ends
+    `env=N stale=N` with env + stale = mismatches (`tools/mori-pin-check.py:804-866`). Check:
+    `python3 .ufo/waves/round-51/count-c1.py <rev>` prints `classified=ok` and five `classified:` lines —
+    `ENVA_SELFTEST … class=env`, `ENVB_SELFTEST … class=env`, `STLA_SELFTEST … class=stale`,
+    `STLB_SELFTEST … class=stale`, `OKAY_SELFTEST state=match` with no class — and a summary ending
+    `env=2 stale=2`; at `87e0c374` the receipt's lines are those
+    (`.ufo/waves/round-51/evidence/c1-at-data.txt`). Shown able to fail: a classifier that says env for
+    everything prints `class=env` on the two stale rows and ends `env=4 stale=0`, with `classified=bad` and
+    `C1=unmet` (`.ufo/waves/round-51/evidence/control-c1-always-env.txt`, exit 1); the class-only control is
+    green on this arm (`classified=ok`) while residue and relocation still fail
+    (`.ufo/waves/round-51/evidence/control-c1-class-only.txt`, exit 1), so the class alone is not the claim. Not
+    covered: a tool that prints a tally and then dies for an environmental reason is classed stale (named in the
+    contract; v5.1 narrowed the rest of `w1/Mo51CritClassRule.md`'s cases: an absent instrument file, disagreeing
+    tally lines and a different tally before a timeout are stale, the pinned tally then a timeout is env, each
+    with a selftest arm, `PIN_CHECK_SELFTEST pass=125 fail=0`); an ImportError of a repo-local module is env; every class observed so far is on a synthetic
+    five-row registry — no real lane pin mismatched at the data commit; `--root` mode's classes are not claimed.
+
+139. **A runway reading is read from `MemAvailable`, and no lane instrument or entry rebuilds it as the sum of
+    free and cached memory.** Lesson: no round-51 M row covers this rule; the pointer is
+    `corpus/knowledge/memavailable-estimate-r51.md` Reading rules, sourced by S496 (the 2014 commit says workload
+    placers summed "free" and "cached" and calls that wrong because `Cached` includes shmem and tmpfs). Rationale:
+    the fleet's hyaku gates read `MemAvailable` (fleet-owned `scripts/hyaku/`), and `tools/mori-census.sh:1792` reads the field itself
+    (`mavail=$(meminfo_field MemAvailable)`), while a `MemFree + Cached` sum counts tmpfs and shmem pages the
+    estimate does not add (entry rows 4, 7, 17, 20) — the reading the commit that introduced the line replaced.
+    Check: `grep -n 'meminfo_field MemAvailable' tools/mori-census.sh` prints
+    `1792:    mavail=$(meminfo_field MemAvailable)`; `grep -c 'never rebuild it as'
+    corpus/knowledge/memavailable-estimate-r51.md` prints `1`; and
+    `for p in 'MemFree[[:space:]]*\+' '\+[[:space:]]*MemFree'; do printf '%s -> ' "$p"; grep -rE "$p" tools/
+    corpus/knowledge/ | grep -v 'never rebuild' | wc -l; done` prints `MemFree[[:space:]]*\+ -> 0` and
+    `\+[[:space:]]*MemFree -> 0`. Shown able to fail: on a scratch copy of the entry whose bullet reads
+    "rebuild it as `MemFree + Cached`" the same loop prints `1` for the first pattern and the rule count prints
+    `0` (run in this seat's scratch; no committed receipt under `.ufo/waves/round-51/evidence/`, so the committed
+    arm is `not yet shown`). Not covered: the greps prove no lane file spells the sum, not that every reading
+    uses `MemAvailable` (a reading could use `MemTotal` or swap); row 2 legitimately names `MemFree` as an input
+    of the kernel's formula, so the rule is about rebuilding the output, not about mentioning the input;
+    `MemAvailable` is itself a model (entry rows 1 and 3), so a threshold on it is a threshold on an estimate;
+    S116 (earlyoom) records a fallback guesstimate and is not covered by the grep.
+
+140. **A depth claim carries a committed entailment vote for every row, and an `overclaim` vote blocks the row
+    until its text is replaced.** Lesson: `corpus/lessons/round-50.md` M4 (an overclaim survived the counter),
+    carried by `corpus/lessons/round-50-verifier-spotcheck.md` §5 item 4; no round-51 M row. Rationale: round
+    50's depth counter met at `487941b9` with `claims=22 located=22` while wave a2w1 found six claims their quotes
+    do not carry (M4) — location proves the quoted words exist, not that the claim follows. P-C2 adds: for every
+    row, the report files committed at R under `.ufo/waves/round-51/w1/` whose names do not start `MoriR51` carry
+    at least one line `ENTAIL <h> entailed` and no line `ENTAIL <h> overclaim`, where `<h>` is the first 12 hex
+    digits of the sha256 of the row's claim cell with whitespace collapsed and ends stripped; `--hashes R` prints
+    each `<h>` (`count-c2.py:117-133`). Check: `python3 .ufo/waves/round-51/count-c2.py <rev>` exits 0 and prints
+    `C2=met claims=21 located=21 … entailed=21 dissent=0`, and
+    `python3 .ufo/waves/round-51/count-c2.py --hashes <rev>` lists 21 row hashes equal to
+    `.ufo/waves/round-51/evidence/c2-hashes-at-data.txt`. At the data commit the counter printed
+    `C2=unmet claims=21 located=21 quote_missing=0 bad_rows=0 sources=5 source_rows=ok pins=ok provenance=ok
+    entailed=0 dissent=0 … failed=entailment`, exit 1 (`.ufo/waves/round-51/evidence/c2-at-data.txt`), and the
+    same command reproduced that line in this seat's run. Shown able to fail: that receipt;
+    `C2_SELFTEST pass=34 fail=0` (`.ufo/waves/round-51/evidence/selftest-c2.txt`) carries
+    `entail_one_row_unreviewed_unmet`, `entail_dissent_unmet`, `entail_l1_file_ignored_unmet`,
+    `entail_other_dir_ignored_unmet`, `entail_hash_of_other_text_unmet` and `entail_non_md_ignored_unmet`. Not
+    covered: a vote records that a non-L1 seat asserted the judgment for that exact text, not that the judgment
+    is right; the counter filters `MoriR51*` files by name and accepts any other `.md` under `w1/`, so it cannot
+    tell an ENTAILMENT seat's vote from another seat's line, and it parses lines inside fenced blocks; one
+    `entailed` vote meets the arm although the wave dispatches two seats per row; the hash covers the claim cell
+    only, not the quote; an `overclaim` clears only when the claim text is replaced (new hash), never by deleting
+    the vote.

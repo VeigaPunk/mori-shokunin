@@ -1,4 +1,4 @@
-$ TMPDIR=<scratch> python3 tools/mori-unlanded-check.py --selftest   # working tree after the round-51 C1 data edit, run 2026-10-26
+$ TMPDIR=<scratch> python3 tools/mori-unlanded-check.py --selftest   # working tree after the round-51 wave-w1 integration (v5.1), run 2026-10-26
 PASS clean_tree_exit0  rc=0 UNLANDED=clean round=8
 PASS untracked_late_result_exit1_names_it  rc=1 ['UNLANDED=dirty round=8 paths=1', 'unlanded ?? .ufo/waves/round-8/w2/Late.md']
 PASS modified_tracked_report_exit1  rc=1 ['UNLANDED=dirty round=8 paths=1', 'unlanded .M .ufo/waves/round-8/w1/A.md']

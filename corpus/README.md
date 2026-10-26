@@ -694,3 +694,27 @@ in bytes, the victim's own counters on the `Killed process` line), and a global 
 the block and names no charged scope (`knowledge/oom-memcg-stat-r50.md`, S489–S491); no frontier row is rewritten.
 Still frontier: no host OOM block was read (the lane's no-MESSAGE-grep rule), and attributing a block to a fleet job
 rests on the `task_memcg=` token, still [UNKNOWN] in `knowledge/kernel-oom-line-attribution-r12.md`.
+
+## Round-51 coverage additions
+
+| coverage-map row | entry | ground | sweep |
+|---|---|---|---|
+| resource runway — what the fleet's hyaku gates and the census `MemAvailable/MemTotal` row actually read (the `si_mem_available()` estimate: free pages minus `totalreserve_pages`, plus the file-LRU pages and the reclaimable kernel memory, each less `min(half, the zones' summed low watermark)`, clamped at zero; printed in kB; no swap in the figure) and why `MemFree + Cached` is not that number (tmpfs folios sort onto anon LRU lists while MADV_FREE anonymous folios sort onto the file lists, and `Cached` counts all file pages minus swap cache and buffers) | `knowledge/memavailable-estimate-r51.md` (S492–S496, opened 2026-10-26; S492 shares its URL and bytes with S082 at a different scope) | new ground — no FR row held it; the map held `MemAvailable` only as a value read (`knowledge/surfaces-r7.md:83`, `knowledge/observability-surfaces-r2.md:234`, the dispatcher's `MEM_MIN_GB` floor). States the kernel's model at v7.2, never a host value as typical, and reports rather than configures (`vm.min_free_kbytes`, `watermark_scale_factor`, swap and every limit are tsukuroi's; the floor is the orchestrator's); FR8 stays open — a runway threshold on this figure is a labeled-local threshold on a model | `si_mem_available`, `totalreserve`, `wmark_low`, `folio_is_file_lru`, `34e431b0` and `show_mem.c` → 0 in `corpus/SOURCES.md`, `corpus/knowledge` and `SKILL.md` at `aa3af1ec`; `MemAvailable` occurs in 7 paths (`corpus/SOURCES.md`, `audit-r11.md`, `harness-job-capacity-r25.md`, `observability-surfaces-r2.md`, `surfaces-r7.md`, `surfaces-r8.md`, `userspace-oom-killers-r26.md`) and is never defined there, and read-only `merge/mori` holds no file on it (`.ufo/waves/round-51/evidence/sweep-memavailable.txt`) |
+
+Count: 21 claim rows and 21 located quotes over the five sources — at the data commit `87e0c37`
+`python3 .ufo/waves/round-51/count-c2.py 87e0c374537557754bf71dd68036ded3ddc6699c` prints `C2=unmet claims=21
+located=21 quote_missing=0 bad_rows=0 sources=5 source_rows=ok pins=ok provenance=ok … dissent=0
+failed=entailment` (`.ufo/waves/round-51/evidence/c2-at-data.txt`): every quote resolves in its committed copy,
+and the wave's recorded per-row entailment judgment was the one arm still open (the landed-tip line is in the
+round-51 report and `.ufo/waves/round-51/evidence/c2-at-landed.txt`).
+
+Dated note (append-only, 2026-10-26): round 51 supersedes the resource-runway ground's silence about what
+`MemAvailable` is — the hyaku gates and the census ratio read an estimate, not free memory:
+`si_mem_available()` starts from free pages minus `totalreserve_pages`, adds the file LRU pages and the
+reclaimable kernel memory each less `min(half, wmark_low)`, and clamps at zero, so the figure is neither
+`MemFree + Cached` nor a count of free pages, and a reading of zero is a clamp
+(`knowledge/memavailable-estimate-r51.md`, S492–S496); no frontier row is rewritten. Still frontier: no host
+`MemAvailable` value is claimed as typical, `/proc/meminfo` alone cannot reproduce the estimate (it needs
+`/proc/zoneinfo`'s per-zone figures too), the entry claims the v7.2 bytes only, and FR8's calibration
+stays open — a floor on this figure is a labeled-local threshold on a model whose holdbacks are
+`min(half, the low-watermark sum)` and whose accuracy the proc document says varies from system to system.

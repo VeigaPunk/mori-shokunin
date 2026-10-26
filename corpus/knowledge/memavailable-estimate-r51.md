@@ -10,10 +10,12 @@ recheck: on-release — `for u in https://raw.githubusercontent.com/torvalds/lin
 coverage-map: resource runway (new ground; no FR row held it)
 
 mori reports resource runway: how much memory the host can still give to a new seat before it swaps or kills.
-The fleet's dispatcher stops spawning seats when `MemAvailable` drops below a floor, and the lane's census and
-pressure probes print `MemAvailable/MemTotal`. This entry says what that number is at kernel v7.2: an estimate
-computed by `si_mem_available()` (`show_mem.c.v7.2:32-72`) from free pages, the file LRU lists, reclaimable
-kernel memory and the zones' low watermarks, printed in kB by `meminfo.c.v7.2:62`.
+The lane's census fill arm prints `MemAvailable/MemTotal` as `host_mem_avail_pct` (`tools/mori-census.sh:1791-1793`),
+and the fleet's hyaku orchestration reads the same line for its own spawn and wave-grant gates (fleet-owned
+`scripts/hyaku/inline-dispatcher.py`, `scripts/hyaku/wave-slot.sh`; read, never edited, by this lane). This entry
+says what that number is at kernel v7.2: an estimate computed by `si_mem_available()` (`show_mem.c.v7.2:32-72`) from
+free pages, the file LRU lists, reclaimable kernel memory and the zones' low watermarks, printed in kB by
+`meminfo.c.v7.2:62`.
 
 ## Claims
 
@@ -24,16 +26,16 @@ kernel memory and the zones' low watermarks, printed in kB by `meminfo.c.v7.2:62
 | The documentation itself warns that how much cache and slab is really reclaimable differs between machines, so the figure is a model rather than a measurement. | S492 | `The impact of those factors will vary from system to system.` |
 | The Cached line of /proc/meminfo counts tmpfs and shmem pages together with ordinary file page cache. | S492 | `In-memory cache for files read from the disk (the pagecache) as well as tmpfs & shmem.` |
 | The Shmem line reports the memory held by shared memory segments and tmpfs files as one figure. | S492 | `Total memory used by shared memory (shmem) and tmpfs` |
-| The estimate starts from the free page count minus totalreserve_pages, the pages the kernel holds back from userspace allocations. | S493 | `without causing swapping or OOM. */ available = global_zone_page_state(NR_FREE_PAGES) - totalreserve_pages;` |
+| The estimate begins with the free page count minus totalreserve_pages, then adds file cache and reclaimable slab. | S493 | `without causing swapping or OOM. */ available = global_zone_page_state(NR_FREE_PAGES) - totalreserve_pages;` |
 | Only the active and inactive file LRU lists enter the estimate as page cache; nothing else that Cached counts is added. | S493 | `cache, needs to stay. */ pagecache = global_node_page_state(NR_ACTIVE_FILE) + global_node_page_state(NR_INACTIVE_FILE);` |
 | From that file cache the code withholds the smaller of half the cache and the summed low watermarks, then adds the remainder. | S493 | `pagecache -= min(pagecache / 2, wmark_low); available += pagecache;` |
 | The kernel's stated reason for holding cache back is that freeing all of it would drive the system into swapping or thrashing. | S493 | `Not all the page cache can be freed, otherwise the system will * start swapping or thrashing.` |
 | Reclaimable slab and other reclaimable kernel memory are added under the same rule: withhold the smaller of half and the low watermark sum. | S493 | `reclaimable -= min(reclaimable / 2, wmark_low); available += reclaimable;` |
 | The holdback on that kernel term exists because some reclaimable slab objects are still in use and cannot be freed. | S493 | `Part of the reclaimable slab and other kernel memory consists of * items that are in use, and cannot be freed.` |
-| A negative result is clamped, so the line reads zero instead of a negative figure when the reserves exceed everything counted. | S493 | `if (available < 0) available = 0; return available;` |
+| A negative result is clamped to zero, so the returned estimate is never negative when the reserves exceed everything counted. | S493 | `if (available < 0) available = 0; return available;` |
 | The watermark used for both holdbacks is the low watermark summed over every memory zone of the machine. | S493 | `struct zone *zone; for_each_zone(zone) wmark_low += low_wmark_pages(zone);` |
-| Every meminfo value goes through one helper that shifts a page count by PAGE_SHIFT minus 10 and prints the result in kB. | S494 | `seq_put_decimal_ull_width(m, s, num << (PAGE_SHIFT - 10), 8); seq_write(m, " kB\n", 4);` |
-| The Cached figure is computed from all file pages minus swap cache and buffers, a different base from the two file LRU lists. | S494 | `cached = global_node_page_state(NR_FILE_PAGES) - total_swapcache_pages() - i.bufferram;` |
+| The meminfo printer defines one helper that shifts its argument by PAGE_SHIFT minus 10 and writes the kB suffix. | S494 | `seq_put_decimal_ull_width(m, s, num << (PAGE_SHIFT - 10), 8); seq_write(m, " kB\n", 4);` |
+| The Cached figure is computed from all file pages minus swap cache and buffers, and clamped at zero if negative. | S494 | `cached = global_node_page_state(NR_FILE_PAGES) - total_swapcache_pages() - i.bufferram;` |
 | MemFree prints the sysinfo free count while MemAvailable prints the separately computed estimate, as two adjacent lines. | S494 | `show_val_kb(m, "MemFree: ", i.freeram); show_val_kb(m, "MemAvailable: ", available);` |
 | The LRU sorting helper returns zero for tmpfs folios, which places them on an anon LRU list instead of a file list. | S495 | `0 if @folio is a normal anonymous folio, a tmpfs folio or otherwise * ram or swap backed folio.` |
 | The file LRU lists hold regular filesystem page cache and also anonymous pages lazily freed through MADV_FREE. | S495 | `1 if @folio is a regular filesystem backed page cache folio * or a lazily freed anonymous folio (e.g. via MADV_FREE).` |
@@ -43,23 +45,46 @@ kernel memory and the zones' low watermarks, printed in kB by `meminfo.c.v7.2:62
 
 ## Reading rules
 
-- Read `MemAvailable` itself for runway; never rebuild it as `MemFree + Cached` — that sum counts tmpfs and shmem
-  pages that sit on anon LRU lists and that the estimate does not add (rows 4, 7, 17, 20).
-- The figure excludes swap by construction ("without swapping"): a host with free swap can keep running past
-  `MemAvailable = 0`, and a reading of 0 is a clamp, not an exact zero (rows 1, 12).
-- Units are kB on every meminfo line (row 14); a ratio `MemAvailable/MemTotal` is unit-free.
+- Read `MemAvailable` itself for runway; never rebuild it as `MemFree + Cached`. The 2014 commit names that sum as
+  the wrong estimate (rows 19, 20): `Cached` counts tmpfs and shmem pages (row 4), which sit on anon LRU lists
+  (row 17) that the estimate does not add (row 7), and it leaves out the reclaimable slab the estimate does add
+  (row 10). On one host capture the sum read 13–15 % below `MemAvailable`, driven by reclaimable slab, with `Shmem`
+  a few MB (`.ufo/waves/round-51/w1/Mo51ExecHostMeminfo.md`); the direction of the error is host-dependent.
+- The estimate has no swap term (row 1 says "without swapping"; rows 6-13 add no swap figure). A reading of 0 is the
+  clamp (row 12), not an exact zero.
+- `MemAvailable`, `MemFree`, `Cached` and `Shmem` print in kB through the one shift helper (rows 14, 16); not every
+  meminfo line does (`meminfo.c.v7.2:93-95,111-112,127-128,137-138` use `seq_printf`, and the `HugePages_*` lines
+  printed by `hugetlb_report_meminfo` are counts). A ratio `MemAvailable/MemTotal` is unit-free.
 - When `Cached` is large but `MemAvailable` is small, compare `Shmem`: tmpfs and shared memory raise `Cached`
   without raising the estimate [INFERENCE from rows 4, 5, 7, 17 — not measured on this host].
-- A runway threshold on `MemAvailable` is a threshold on a model whose holdbacks are min(half, low-watermark sum);
-  the proc document says the model's accuracy varies by system (row 3). Report the threshold as local, as the lane
-  already does for its other thresholds (FR8).
+- A runway threshold on `MemAvailable` is a threshold on a model whose holdbacks are min(half, low-watermark sum)
+  (rows 8, 10, 13), and the low watermark includes the runtime `watermark_boost`; the proc document says the
+  model's accuracy varies by system (row 3). Report the threshold as local, as the lane already does for its other
+  thresholds (FR8). The operands are read one after another, not as one snapshot (`meminfo.c.v7.2:44-56`), so a
+  gate reads a moving value.
 
 ## Boundaries
 
 - Detection and report only: this entry reads `/proc/meminfo`; it never changes `vm.min_free_kbytes`,
-  `watermark_scale_factor`, swap or any limit (host configuration is tsukuroi's; the dispatcher's floor is the
-  orchestrator's).
-- v7.2 only. The formula has had the same shape since the 2014 commit's patch (S496), but this entry claims only
-  the v7.2 bytes.
-- No host value is claimed as typical; `totalreserve_pages` is not exported to userspace as one line, so the
-  estimate cannot be recomputed exactly from `/proc/meminfo` alone.
+  `watermark_scale_factor`, swap or any limit. OS state is tsukuroi's to diagnose and the operator's to change
+  (`../tsukuroi-shokunin/PROVINCE.md:8-14,28`); the orchestration's floors are the orchestrator's.
+- v7.2 only. The estimate comes from the 2014 commit (S496), and its two `min(half, wmark_low)` holdbacks survive
+  verbatim, but other inputs changed since (S496 shows only the 2014 code; the tag-by-tag reads are in
+  `.ufo/waves/round-51/w1/Mo51ExecPatchVsV72.md`): the free term subtracts `totalreserve_pages` instead of the
+  low-watermark sum from v4.5 on, reclaimable kernel memory adds `NR_KERNEL_MISC_RECLAIMABLE` from v4.20 on, the
+  slab counter is the byte-based `NR_SLAB_RECLAIMABLE_B` from v5.9 on, and `low_wmark_pages()` includes
+  `watermark_boost` from v5.0 on. This entry claims only the v7.2 bytes.
+- No host value is claimed as typical. `/proc/meminfo` alone cannot reproduce the estimate: it needs the per-zone
+  `low`, `high`, `protection` and `managed` figures of `/proc/zoneinfo` as well; one read-only host check with those
+  inputs reproduced `MemAvailable` to the page at four of five samples
+  (`.ufo/waves/round-51/w1/Mo51ExecHostMeminfo.md`).
+
+## What this changes for mori
+
+- `surfaces-r7.md:83-85`, `observability-surfaces-r2.md:234-235`: the census grades `host_mem_avail_pct` against a
+  local 10 % floor; rows 1, 6, 8 and 13 make that value a model, so a low row is not by itself pressure [INFERENCE].
+- `system-pressure-r24.md:176`: PSI `avg10` is decayed stall time, not startable bytes — `PRESSURE_OK` is no runway.
+- `userspace-oom-killers-r26.md:57-60`: earlyoom's "mem avail %" divides by `MemAvailable + AnonPages`, not
+  `MemTotal`, so it is not the census figure.
+- `harness-job-capacity-r25.md:178`: that gate's floor (`6144`, MiB despite the "MB" label — `int(kB/1024)`) and the
+  census's 10 % read the same estimate in two units; neither is calibrated off this host (row 3).

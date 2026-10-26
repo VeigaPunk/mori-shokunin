@@ -1,4 +1,4 @@
-$ TMPDIR=<scratch> python3 tools/mori-pin-check.py --selftest   # working tree after the round-51 C1 data edit, run 2026-10-26
+$ TMPDIR=<scratch> python3 tools/mori-pin-check.py --selftest   # working tree after the round-51 wave-w1 integration (v5.1), run 2026-10-26
 PASS honest  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
 PASS stale_tally  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
 PASS stale_in_cell_true_elsewhere  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=1 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
@@ -31,7 +31,7 @@ PASS v2_hidden_row_and_duplicate  PIN_CHECK=unmet tally_pins=2 digest_pins=0 mis
 PASS v2_duplicate_name  PIN_CHECK=unmet tally_pins=2 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=1 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
 PASS v2_digest_path_traversal  PIN_CHECK=unmet tally_pins=1 digest_pins=1 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
 PASS v2_stale_echo_line_ignored  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
-PASS v2_disagreeing_tally_lines  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=1 stale=0
+PASS v2_disagreeing_tally_lines  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
 PASS v2_fenced_example_not_counted  PIN_CHECK=unmet tally_pins=0 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=1 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
 PASS v2_entry_column_from_header  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
 PASS r1_header_selftest_spelling  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
@@ -115,8 +115,14 @@ PASS v5_class_env_setup_error  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismat
 PASS v5_class_env_timeout  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=1 stale=0
 PASS v5_class_stale_tally  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
 PASS v5_class_stale_digest  PIN_CHECK=unmet tally_pins=1 digest_pins=1 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS v51_class_absent_instrument_stale  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS v51_class_two_tallies_stale  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS v51_class_wrong_then_timeout_stale  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS v51_class_right_then_timeout_env  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=1 stale=0
 PASS v5_rev_export_outside_repo  rc=0 left=0
+PASS v51_scratch_inside_repo_refused  rc=2
+PASS v51_default_scratch_tmpdir_and_master_is_rev  rc=0 left=0
 PASS cli_met_rc0  rc=0
 PASS cli_bad_rev_rc2  rc=2
-PIN_CHECK_SELFTEST pass=119 fail=0
+PIN_CHECK_SELFTEST pass=125 fail=0
 exit=0
