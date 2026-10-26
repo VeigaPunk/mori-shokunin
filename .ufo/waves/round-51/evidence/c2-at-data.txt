@@ -1,0 +1,3 @@
+$ python3 .ufo/waves/round-51/count-c2.py 87e0c374537557754bf71dd68036ded3ddc6699c
+C2=unmet claims=21 located=21 quote_missing=0 bad_rows=0 sources=5 source_rows=ok pins=ok provenance=ok entailed=0 dissent=0 rev=87e0c374537557754bf71dd68036ded3ddc6699c failed=entailment
+exit=1

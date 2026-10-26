@@ -1,0 +1,21 @@
+row=1 hash=2d0daa4192f1 claim=The proc documentation defines MemAvailable as an estimate for starting new applications, not as a count of free pages.
+row=2 hash=eba2b78b47f3 claim=The documentation names the inputs of that estimate as free memory, reclaimable slab, the file LRU list sizes and each zone's low watermark.
+row=3 hash=ad57d1b66582 claim=The documentation itself warns that how much cache and slab is really reclaimable differs between machines, so the figure is a model rather than a measurement.
+row=4 hash=72cdbee44353 claim=The Cached line of /proc/meminfo counts tmpfs and shmem pages together with ordinary file page cache.
+row=5 hash=a9cf30c5ed71 claim=The Shmem line reports the memory held by shared memory segments and tmpfs files as one figure.
+row=6 hash=5d06a2ae70cf claim=The estimate starts from the free page count minus totalreserve_pages, the pages the kernel holds back from userspace allocations.
+row=7 hash=6c8b6efc9731 claim=Only the active and inactive file LRU lists enter the estimate as page cache; nothing else that Cached counts is added.
+row=8 hash=6b8f33ed528e claim=From that file cache the code withholds the smaller of half the cache and the summed low watermarks, then adds the remainder.
+row=9 hash=1b9c863ec2c2 claim=The kernel's stated reason for holding cache back is that freeing all of it would drive the system into swapping or thrashing.
+row=10 hash=cbcd91de05ac claim=Reclaimable slab and other reclaimable kernel memory are added under the same rule: withhold the smaller of half and the low watermark sum.
+row=11 hash=58ba82f481b8 claim=The holdback on that kernel term exists because some reclaimable slab objects are still in use and cannot be freed.
+row=12 hash=ec0f6c97eeba claim=A negative result is clamped, so the line reads zero instead of a negative figure when the reserves exceed everything counted.
+row=13 hash=40b46a312e03 claim=The watermark used for both holdbacks is the low watermark summed over every memory zone of the machine.
+row=14 hash=a06f1037d952 claim=Every meminfo value goes through one helper that shifts a page count by PAGE_SHIFT minus 10 and prints the result in kB.
+row=15 hash=102feb3debfa claim=The Cached figure is computed from all file pages minus swap cache and buffers, a different base from the two file LRU lists.
+row=16 hash=357c747c23d2 claim=MemFree prints the sysinfo free count while MemAvailable prints the separately computed estimate, as two adjacent lines.
+row=17 hash=d6001a798ea7 claim=The LRU sorting helper returns zero for tmpfs folios, which places them on an anon LRU list instead of a file list.
+row=18 hash=8f6d04247472 claim=The file LRU lists hold regular filesystem page cache and also anonymous pages lazily freed through MADV_FREE.
+row=19 hash=a07e4bd7a5ec claim=The 2014 commit says workload placers estimated free memory by summing free and cached, which it calls outdated.
+row=20 hash=4d162ecf1409 claim=That commit's reason the sum misleads is that Cached includes shared memory, tmpfs and ramfs pages that cannot be dropped like cache.
+row=21 hash=50f54829ae20 claim=The commit put the estimate into meminfo so that monitoring programs need not model reclaim internals themselves.
