@@ -124,11 +124,22 @@ Modes
 Output: one `pin line=… kind=… prefix=… state=… …` line per pin, then
   `PIN_CHECK=met|unmet tally_pins=N digest_pins=N mismatches=N unparsed=N
   no_command=N dropped=N rebound=N duplicate=N hidden=N misattributed=N
-  env_unexpanded=N min_tally_pins=N rev=… baseline=yes|no`
+  env_unexpanded=N min_tally_pins=N rev=… baseline=yes|no env=N stale=N`
 Exit: 0 met · 1 unmet · 2 setup (usage, unresolvable revision, unreadable SKILL).
-Read-only over committed bytes: with --rev it writes only its own export
-under `<repo>/.scratch` (removed on exit); with --root it writes temp dirs
-under `<root>/.scratch`. `--selftest` builds synthetic trees under TMPDIR.
+Read-only over committed bytes: with --rev it writes only its own measured
+tree — a `git clone --shared` checked out at the revision — under `--scratch DIR`
+(default: the TMPDIR temp dir, never `<repo>`; removed on exit, and a killed run
+leaves it in scratch, not in the repo it reads); with
+--root it writes temp dirs under `<root>/.scratch`. `--selftest` builds
+synthetic trees under TMPDIR.
+
+v5 (round 51, C1 — routed defect 1 of `corpus/lessons/round-50-verifier-spotcheck.md` §5 and
+`considerthese/2026-10-26.md` suggestion 1): the `--rev` export no longer lands under `<repo>/.scratch`
+(a SIGKILLed run left a full tree export in the lane); and every mismatch line carries `class=env` or
+`class=stale`. `env` = the pinned command printed no tally line for its prefix (setup error, missing
+path, timeout, OS error: the instrument could not run here); `stale` = it ran and printed a different
+tally, or a tally whose exit code contradicts it, or a digest/line-count pin differs. The summary
+line ends `env=N stale=N`, and env + stale = mismatches.
 """
 import argparse
 import hashlib
@@ -138,7 +149,6 @@ import shlex
 import shutil
 import subprocess
 import sys
-import tarfile
 import tempfile
 import unicodedata
 
@@ -596,7 +606,8 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None,
     out = []
     counts = {"tally_pins": 0, "digest_pins": 0, "mismatches": 0,
               "unparsed": 0, "no_command": 0, "dropped": 0, "rebound": 0,
-              "duplicate": 0, "hidden": 0, "misattributed": 0, "env_unexpanded": 0}
+              "duplicate": 0, "hidden": 0, "misattributed": 0, "env_unexpanded": 0,
+              "env": 0, "stale": 0}
     base_bind = {}
     base_bind_prefix = {}
     if baseline_text is not None:
@@ -696,8 +707,10 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None,
             counts["digest_pins"] += 1
             if hit is None:
                 counts["mismatches"] += 1
-            out.append("pin line=%d kind=digest state=%s digest=%s… file=%s"
-                       % (line, "match" if hit else "mismatch", pfx, hit))
+                counts["stale"] += 1
+            out.append("pin line=%d kind=digest state=%s digest=%s… file=%s%s"
+                       % (line, "match" if hit else "mismatch", pfx, hit,
+                          "" if hit else " class=stale"))
         # R9c (CritJunkClasses D18): a tally written outside backticks in a self-test cell.
         if TALLY_TEXT_RE.search(SPAN_RE.sub(" ", st)):
             counts["unparsed"] += 1
@@ -711,8 +724,9 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None,
                 continue
             if not bound:
                 counts["mismatches"] += 1
+                counts["stale"] += 1
                 out.append("pin line=%d kind=lines state=mismatch pinned='%d lines' file=%s "
-                           "reason=path-not-row-instrument bound=%s"
+                           "reason=path-not-row-instrument class=stale bound=%s"
                            % (line, num, relpath,
                               " ".join(sorted(a for a in allowed if a)) or "-"))
                 continue
@@ -721,8 +735,10 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None,
                 nl = f.read().count(b"\n")
             if nl != num:
                 counts["mismatches"] += 1
-            out.append("pin line=%d kind=lines state=%s pinned='%d lines' file=%s observed=%d"
-                       % (line, "match" if nl == num else "mismatch", num, relpath, nl))
+                counts["stale"] += 1
+            out.append("pin line=%d kind=lines state=%s pinned='%d lines' file=%s observed=%d%s"
+                       % (line, "match" if nl == num else "mismatch", num, relpath, nl,
+                          "" if nl == num else " class=stale"))
         ordinal = {}
         for prefix, pinned, words, penv in binds:
             n = ordinal.get(prefix, 0)
@@ -799,12 +815,19 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None,
             # must be 0 unless the pinned text itself asserts a nonzero failure count.
             if ok and rc != 0 and not re.search(r"\bfail=[1-9]\d*\b", want):
                 ok = False
+            cls = ""
             if not ok:
                 counts["mismatches"] += 1
-            out.append("pin line=%d kind=tally prefix=%s state=%s pinned=%r observed=%r rc=%s cmd=%r"
+                # v5 (considerthese 2026-10-26 s1): no tally line at all means the
+                # instrument could not run here (env); a tally that differs, or an exit
+                # code that contradicts the tally, means the pin is stale.
+                kind = "env" if observed is None else "stale"
+                counts[kind] += 1
+                cls = " class=" + kind
+            out.append("pin line=%d kind=tally prefix=%s state=%s pinned=%r observed=%r rc=%s cmd=%r%s"
                        % (line, prefix, "match" if ok else "mismatch", want,
                           (observed or "").strip()[:80] if observed is not None else None,
-                          rc, render_cmd(words, penv)))
+                          rc, render_cmd(words, penv), cls))
         for dm in HEX_RE.finditer(st):
             digest = dm.group(0)
             counts["digest_pins"] += 1
@@ -814,8 +837,10 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None,
             hit = p if p is not None and sha256_file(os.path.join(root, p)) == digest else None
             if hit is None:
                 counts["mismatches"] += 1
-            out.append("pin line=%d kind=digest state=%s digest=%s file=%s"
-                       % (line, "match" if hit else "mismatch", digest[:12], p))
+                counts["stale"] += 1
+            out.append("pin line=%d kind=digest state=%s digest=%s file=%s%s"
+                       % (line, "match" if hit else "mismatch", digest[:12], p,
+                          "" if hit else " class=stale"))
     # R13 (round-49 K6): a measured tree that ships this instrument must pin it. The
     # registry floor and `dropped` cannot see the reconciler's own row — the row is
     # new since the baseline — so deleting it left the registry green at 30 pins.
@@ -831,34 +856,33 @@ def check(text, root, scratch, rev, timeout, min_tally, baseline_text=None,
            and counts["tally_pins"] >= min_tally)
     out.append("PIN_CHECK=%s tally_pins=%d digest_pins=%d mismatches=%d unparsed=%d "
                "no_command=%d dropped=%d rebound=%d duplicate=%d hidden=%d misattributed=%d "
-               "env_unexpanded=%d min_tally_pins=%d rev=%s baseline=%s"
+               "env_unexpanded=%d min_tally_pins=%d rev=%s baseline=%s env=%d stale=%d"
                % ("met" if met else "unmet", counts["tally_pins"], counts["digest_pins"],
                   counts["mismatches"], counts["unparsed"], counts["no_command"],
                   counts["dropped"], counts["rebound"], counts["duplicate"], counts["hidden"],
                   counts["misattributed"], counts["env_unexpanded"],
                   min_tally, rev or "-",
-                  "yes" if baseline_text is not None else "no"))
+                  "yes" if baseline_text is not None else "no",
+                  counts["env"], counts["stale"]))
     return met, out
 
 
 def export_rev(repo, rev, dest):
+    # v5 (round 51): the measured tree is a `git clone --shared` checked out at rev, placed in
+    # scratch outside the repo. The old `git archive` export sat under <repo>/.scratch, so
+    # pinned instruments that read git objects (`git -C <tree> …`) silently resolved to the
+    # enclosing repo; outside the repo they need a repository of their own.
+    tree = os.path.join(dest, "tree")
     try:
         full = subprocess.run(["git", "-C", repo, "rev-parse", "--verify", rev + "^{commit}"],
                               stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                               timeout=60, check=True).stdout.decode().strip()
-        arc = subprocess.run(["git", "-C", repo, "archive", "--format=tar", full],
-                             stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                             timeout=300, check=True).stdout
+        subprocess.run(["git", "clone", "-q", "--shared", "--no-checkout", repo, tree],
+                       stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=300, check=True)
+        subprocess.run(["git", "-C", tree, "checkout", "-q", "--detach", full],
+                       stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=600, check=True)
     except (subprocess.SubprocessError, OSError):
         return None
-    tarpath = os.path.join(dest, "tree.tar")
-    with open(tarpath, "wb") as f:
-        f.write(arc)
-    tree = os.path.join(dest, "tree")
-    os.mkdir(tree)
-    with tarfile.open(tarpath) as t:
-        t.extractall(tree, filter="data")
-    os.unlink(tarpath)
     return full, tree
 
 
@@ -873,6 +897,8 @@ def main(argv):
     ap.add_argument("--baseline-rev", help="every pin key (row name, prefix) in SKILL.md at this "
                     "revision must still be present (a deleted pin is not a fix)")
     ap.add_argument("--timeout", type=int, default=TIMEOUT_S)
+    ap.add_argument("--scratch", help="parent dir for the --rev export (default: the TMPDIR "
+                    "temp dir; v5: never <repo>/.scratch)")
     ap.add_argument("--selftest", action="store_true")
     args = ap.parse_args(argv)
     if args.selftest:
@@ -881,7 +907,9 @@ def main(argv):
         print("PIN_CHECK_SETUP need --rev or --root", file=sys.stderr)
         return 2
     repo = os.path.abspath(args.repo)
-    scratch_parent = os.path.join(repo, ".scratch")
+    # v5 (round 51): the export goes to scratch, never into the repo it reads — a
+    # SIGKILLed run used to leave a full tree under <repo>/.scratch (round-50 D-d).
+    scratch_parent = os.path.abspath(args.scratch) if args.scratch else tempfile.gettempdir()
     try:
         os.makedirs(scratch_parent, exist_ok=True)
         scratch = tempfile.mkdtemp(prefix="pin-check-", dir=scratch_parent)
@@ -1402,6 +1430,57 @@ def selftest():
                                               else "tools/selfpin.py"))
             results.append((arm_name, met == want_met and
                             (want_mark is None or any(want_mark in l for l in out)), out[-1]))
+        # v5 (round 51) mismatch classes: no tally line -> env; a different tally or a
+        # contradicting exit code -> stale. The summary ends `env=N stale=N`.
+        envtool = ("import sys\n"
+                   "if '--selftest' in sys.argv:\n"
+                   "    print('conformance setup error: No such file or directory: /nonexistent/x')\n"
+                   "    sys.exit(2)\n")
+        with open(os.path.join(root, "tools", "envtool.py"), "w") as f:
+            f.write(envtool)
+        for arm_name, body, mark, want_env, want_stale, tmo in (
+                ("v5_class_env_setup_error", HDR + row("`python3 tools/envtool.py --selftest` → `ENVT_SELFTEST pass=3 fail=0`",
+                                                       entry="`python3 tools/envtool.py`"),
+                 "prefix=ENVT_SELFTEST state=mismatch", 1, 0, 5),
+                ("v5_class_env_timeout", HDR + row("`python3 tools/slow.py --selftest` → `SLOW_SELFTEST pass=1 fail=0`",
+                                                   entry="`python3 tools/slow.py`"),
+                 "prefix=SLOW_SELFTEST state=mismatch", 1, 0, 2),
+                ("v5_class_stale_tally", HDR + row("`python3 tools/foo.py --selftest` → `FOO_SELFTEST pass=2 fail=0`"),
+                 "prefix=FOO_SELFTEST state=mismatch", 0, 1, 5),
+                ("v5_class_stale_digest", HDR + row(good + " at sha256 `%s` of `tools/foo.py`" % ("0" * 64)),
+                 "kind=digest state=mismatch", 0, 1, 5)):
+            scratch = tempfile.mkdtemp(prefix="c-", dir=base)
+            met, out = check(body, root, scratch, "deadbeef", tmo, 1)
+            want_cls = "class=env" if want_env else "class=stale"
+            hit = [l for l in out if mark in l]
+            results.append((arm_name, (not met) and len(hit) == 1 and hit[0].endswith(want_cls)
+                            and out[-1].endswith(" env=%d stale=%d" % (want_env, want_stale)), out[-1]))
+        # v5: the --rev export is not written under the repo it reads.
+        grepo = os.path.join(base, "grepo")
+        os.makedirs(os.path.join(grepo, "tools"))
+        with open(os.path.join(grepo, "tools", "foo.py"), "w") as f:
+            f.write(TOOL)
+        with open(os.path.join(grepo, "SKILL.md"), "w") as f:
+            f.write(HDR + row(good))
+        gx = ["git", "-C", grepo]
+        subprocess.run(gx + ["init", "-q"], check=True, timeout=60)
+        top = subprocess.run(gx + ["rev-parse", "--show-toplevel"], stdout=subprocess.PIPE,
+                             check=True, timeout=60).stdout.decode().strip()
+        if os.path.realpath(top) != os.path.realpath(grepo):
+            raise RuntimeError("fixture repo toplevel mismatch: %s" % top)
+        subprocess.run(gx + ["add", "-A"], check=True, timeout=60)
+        subprocess.run(gx + ["-c", "user.name=pin-check-selftest", "-c", "user.email=selftest@invalid",
+                             "commit", "-q", "-m", "fixture"], check=True, timeout=60)
+        xs = os.path.join(base, "xscratch")
+        os.makedirs(xs)
+        cli3 = subprocess.run([sys.executable, os.path.abspath(__file__), "--rev", "HEAD", "--repo", grepo,
+                               "--scratch", xs], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=120)
+        left = subprocess.run(gx + ["status", "--porcelain", "--ignored", "--untracked-files=all"],
+                              stdout=subprocess.PIPE, timeout=60).stdout.decode()
+        results.append(("v5_rev_export_outside_repo",
+                        cli3.returncode == 0 and b"PIN_CHECK=met" in cli3.stdout and left == ""
+                        and not os.path.exists(os.path.join(grepo, ".scratch")) and os.listdir(xs) == [],
+                        "rc=%d left=%d" % (cli3.returncode, len(left.splitlines()))))
         # CLI arm: --root through main(), exit codes.
         with open(os.path.join(root, "SKILL.md"), "w") as f:
             f.write(HDR + row(good))

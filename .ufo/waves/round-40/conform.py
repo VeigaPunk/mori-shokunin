@@ -66,8 +66,11 @@ import subprocess
 import sys
 import tempfile
 
-LANE = "/home/vgpnk/Projects/shokunin/mori-shokunin"
-SCRATCH_ROOT = os.path.join(LANE, ".ufo", "waves", "round-40", "scratch")
+# Round 51 (C1, routed defect 1 of the round-50 spot-check): the lane is the tree this file
+# sits in (<lane>/.ufo/waves/round-40/conform.py), not a hardcoded host path, and the selftest
+# scratch lives under TMPDIR, not inside the lane.
+LANE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+SCRATCH_ROOT = tempfile.gettempdir()
 DEFAULT_COUNTERS = [os.path.join(LANE, ".ufo/waves/round-40/count-c8.py")]
 # The counter's predicate of record is frozen in the round-39 contract
 # (P-C7); the round-40 contract carries P-C10/P-C11 for the new instruments.
