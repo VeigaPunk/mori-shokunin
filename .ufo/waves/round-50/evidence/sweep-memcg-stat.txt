@@ -1,0 +1,28 @@
+$ git grep -c -F 'memory.stat' 7197160b -- corpus/SOURCES.md corpus/knowledge SKILL.md
+rc=1
+$ git grep -c -F 'Memory cgroup stats' 7197160b -- corpus/SOURCES.md corpus/knowledge SKILL.md
+rc=1
+$ git grep -c -F 'failcnt' 7197160b -- corpus/SOURCES.md corpus/knowledge SKILL.md
+rc=1
+$ git grep -c -F 'print_oom_meminfo' 7197160b -- corpus/SOURCES.md corpus/knowledge SKILL.md
+rc=1
+$ git grep -c -F 'memory_stat_format' 7197160b -- corpus/SOURCES.md corpus/knowledge SKILL.md
+rc=1
+$ git grep -c -F 'shmem-rss' 7197160b -- corpus/SOURCES.md corpus/knowledge SKILL.md
+7197160b:corpus/knowledge/oom-tracepoints-r47.md:1
+rc=0
+$ git grep -c -F 'anon-rss' 7197160b -- corpus/SOURCES.md corpus/knowledge SKILL.md
+7197160b:corpus/knowledge/oom-tracepoints-r47.md:1
+rc=0
+$ git grep -c -F 'docs.kernel.org/7.2/admin-guide/cgroup-v2' 7197160b -- corpus/SOURCES.md corpus/knowledge SKILL.md
+rc=1
+$ git grep -c -F 'v7.2/mm/memcontrol.c' 7197160b -- corpus/SOURCES.md corpus/knowledge SKILL.md
+rc=1
+$ git grep -c -F 'v7.2/mm/oom_kill.c' 7197160b -- corpus/SOURCES.md corpus/knowledge SKILL.md
+7197160b:SKILL.md:3
+7197160b:corpus/SOURCES.md:2
+7197160b:corpus/knowledge/kernel-oom-line-attribution-r12.md:2
+7197160b:corpus/knowledge/kill-classes-by-message-id-r12.md:1
+7197160b:corpus/knowledge/oom-kill-counter-kernel-only-r12.md:2
+7197160b:corpus/knowledge/userspace-oom-killers-r12.md:1
+rc=0

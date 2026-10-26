@@ -1,0 +1,9 @@
+$ count-c1.py <fixture commit> --fleet-repo <fleet>  (control pins-deleted, entering 7197160b927f04db294c9553fb48fadcc7a3f4e3)
+item axis coverage expect=round_47_improved got=round=26,evidence_missing:corpus/lessons/round-47-verifier-spotcheck.md state=mismatch
+item axis operability expect=round_47_improved got=round=31,evidence_missing:corpus/lessons/round-47-verifier-spotcheck.md state=mismatch
+item axis depth expect=round_49_improved got=round=31,evidence_missing:corpus/lessons/round-49-verifier-spotcheck.md state=mismatch
+item axis freshness expect=round_28_improved got=ok state=ok
+item axis calibration expect=round_49_improved got=round=25,evidence_missing:corpus/lessons/round-49-verifier-spotcheck.md state=mismatch
+item axis adjacency expect=round_19_improved got=ok state=ok
+C1=unmet items=6 axes=6 pins=0 boxes=4 mismatches=4 errors=0 hidden=0 manifest=a94551c5bc8d rev=188024586e5c94d0bf1f2caec99fefd5634f7796 failed=mismatch,pins_floor
+exit=1

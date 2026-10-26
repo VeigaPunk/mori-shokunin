@@ -1,0 +1,3 @@
+$ count-c2.py evaluate() over entering 7197160b927f04db294c9553fb48fadcc7a3f4e3 + frozen copies (control do-nothing)
+C2=unmet claims=0 located=0 quote_missing=0 bad_rows=0 sources=0 source_rows=bad pins=ok provenance=bad rev=7197160b927f04db294c9553fb48fadcc7a3f4e3 failed=entry_absent
+exit=1
