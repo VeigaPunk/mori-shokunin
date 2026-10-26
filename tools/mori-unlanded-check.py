@@ -150,6 +150,47 @@ def selftest():
         rc, out = run(d, 8)
         arm("staged_but_uncommitted_listed", rc == 1 and any("round-8.md" in l for l in out), "rc=%d" % rc)
 
+        # round 49 (Mo49ExecArmsBindUnlanded): shapes the arms above never build —
+        # a git rename (the `-z` rename-source skip was dead code to the suite) and a
+        # list longer than LIST_CAP (the 50-path cap was never reached).
+        rn = sandbox("rename")
+        write(rn, "NOTE.md", "note\n")
+        commit(rn, "note")
+        os.makedirs(os.path.join(rn, "docs"), exist_ok=True)
+        subprocess.run(["git", "-C", rn, "mv", "NOTE.md", "docs/NOTE.md"], check=True)
+        rc, out = run(rn, 8)
+        arm("rename_source_not_listed", rc == 0 and out == ["UNLANDED=clean round=8"], "rc=%d %s" % (rc, out))
+        write(rn, "corpus/keep.md", "keep\n")
+        commit(rn, "keep")
+        subprocess.run(["git", "-C", rn, "mv", "corpus/keep.md", "corpus/moved.md"], check=True)
+        rc, out = run(rn, 8)
+        arm("in_scope_rename_lists_destination_only",
+            rc == 1 and out == ["UNLANDED=dirty round=8 paths=1", "unlanded R. corpus/moved.md"],
+            "rc=%d %s" % (rc, out))
+
+        cap = sandbox("cap")
+        write(cap, ".ufo/waves/round-8/w2/keep.md", "x\n")
+        commit(cap)
+        for i in range(60):
+            write(cap, ".ufo/waves/round-8/w2/F%02d.md" % i)
+        rc, out = run(cap, 8)
+        arm("list_cap_50_of_60",
+            rc == 1 and out[0] == "UNLANDED=dirty round=8 paths=60" and len(out) == 51
+            and out[1] == "unlanded ?? .ufo/waves/round-8/w2/F00.md"
+            and out[-1] == "unlanded ?? .ufo/waves/round-8/w2/F49.md",
+            "rc=%d lines=%d last=%s" % (rc, len(out), out[-1]))
+
+        # The rendered status pair is part of the output line (`unlanded .M path`);
+        # `any(" .M " … or "A.md" in l …)` above also passes when the space is kept.
+        fmt = sandbox("format")
+        write(fmt, "corpus/lessons/round-8.md", "v1\n")
+        commit(fmt)
+        write(fmt, "corpus/lessons/round-8.md", "v2\n")
+        rc, out = run(fmt, 8)
+        arm("modified_status_rendered_with_dot",
+            rc == 1 and out == ["UNLANDED=dirty round=8 paths=1", "unlanded .M corpus/lessons/round-8.md"],
+            "rc=%d %s" % (rc, out))
+
         sub = os.path.join(d, "corpus")
         try:
             run(sub, 8)

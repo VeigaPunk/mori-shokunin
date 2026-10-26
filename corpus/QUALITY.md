@@ -1085,3 +1085,90 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     or other-product page used as a Linux fact, no number from a comment). Shown able to fail: `C2_SELFTEST` arms
     `altered_quote_unmet`, `quote_from_wrong_copy_unmet`, `used_by_missing_unmet`; the do-nothing receipt
     `evidence/control-c2-donothing.txt`. Not covered: entailment, and script/JSON text inside a page.
+
+## Criteria added round 49 — an opaque harness, rows a reader can see, bound pins, a dated reach, a flag that must land
+
+129. **A scoring harness hands the tool under test only opaque names, and a tool that keys on the harness's own
+    artifacts cannot pass.** Lesson: `corpus/lessons/round-49.md` M1. Rationale: round 48's counter passed a tool
+    that never parsed the registry — it read `--skill`'s basename (`variant-J1.md`) and the per-variant `TMPDIR`
+    (`c1-J1-…`) and returned red on J, green on H (`w1/CritC1Counter.md` F1). The successor names each copy and
+    scratch directory by a sha256 prefix of its bytes (`s-<12 hex>.md`, `t-<12 hex>`), orders the runs by that
+    hash, and builds its two fixture edits in a repository whose path and commit message carry no variant name.
+    Check: the harness is read as well as run. `grep -n 'def opaque' .ufo/waves/round-49/count-c1.py` shows the
+    sha256 handle, and `grep -n 's-%s.md\|"t-" + ' .ufo/waves/round-49/count-c1.py` shows the only two names
+    handed to the tool; then `python3 .ufo/waves/round-49/count-c1.py` run with
+    `--tool .ufo/waves/round-49/controls/stub-filename-sniffer.py` and `--rev <rev>` prints `junk_met=18` — the
+    name-keyed stub cannot pass. Shown able to fail: the same sniffer
+    prints `C1=met … variants=12` under the round-48 counter (`evidence/control-c1-sniffer-under-r48-counter.txt`)
+    and `C1=unmet junk_met=18 … variants=26` here (`evidence/control-c1-stub-filename-sniffer.txt`). Not covered:
+    content-keying — a tool may still special-case a literal the variants carry (`pass=999`), and the harness does
+    not randomise the edits; the names stay opaque only while the variant bytes are unknown to the tool.
+
+130. **A registry checker reads what a reader sees: any line that renders as, or is quoted as, a table row is a row
+    for the hidden-pin scan.** Lesson: `corpus/lessons/round-49.md` M4; `.ufo/waves/round-48/w2/R48CritV3Junk1.md`
+    §1-§8. Rationale: v3's hidden scan recognised a row only when it began with up to three spaces and a pipe, so a
+    row inline in an HTML comment after a blank line, a tab-indented fenced row, a four-space row outside a table
+    and HTML table markup each kept a false pin (`PIN_CHECK_SELFTEST pass=999 fail=0`) while the tool printed
+    `PIN_CHECK=met` (§1, §3, §4, §8) — and R2 already made a plain fenced row fatal on exactly that reasoning.
+    Check: `python3 .ufo/waves/round-49/count-c1.py --tool tools/mori-pin-check.py --rev <rev>` prints one
+    `variant name=…` line per edit; the four lines matching `name=N[1347] ` read `expect=unmet got=unmet rc=1`, and
+    the two matching `name=H[67] ` read `expect=met got=met rc=0` (the same shapes carrying no pin token are not
+    flagged); the real registry's verdict line carries `hidden=0 unparsed=0`. Shown able to fail: the entering tool
+    prints `got=met rc=0` for N1, N3, N4 and N7
+    (`evidence/control-c1-tool-v3-entering.txt`, `junk_met=9`), and R11 alone leaves them met
+    (`evidence/control-c1-tool-r48-r11-only.txt`, `junk_met=7`). Not covered: "renders" is the GFM rule as read,
+    not a renderer's output; the adjacency repair makes honest prose that quotes a tally on the first line after a
+    table `hidden` (cost on the real registry: 0 lines, `w2/R48CritV3Junk1.md` §1); a pin token laundered into
+    another script (fullwidth, Cyrillic) is a different class.
+
+131. **A row's pin is bound to the instrument its own cells claim, and two rows binding one command agree on its
+    exit contract.** Lesson: `corpus/lessons/round-49.md` M4 and `corpus/lessons/round-48.md` M3 ("Not closed:
+    D7"); `.ufo/waves/round-48/w2/R48ExecD7.md` §2, §6. Rationale: v3 related no cell to the argv it measured, so
+    a row whose entry cell names the source-drift probe while its self-test cell runs the pin checker and pins that
+    checker's true tally scored `PIN_CHECK=met` (`w2/R48ExecD7.md` §2), and a second row for an already-registered
+    command with a contradicting verdict map scored `met` with `duplicate=0` (`w2/R48CritV3Junk1.md` §6). Check:
+    `python3 .ufo/waves/round-49/count-c1.py --tool tools/mori-pin-check.py --rev <rev>` — the lines matching
+    `name=(N[589]|H[67]) ` read N5, N8 and N9 `got=unmet rc=1` and H6, H7 `got=met rc=0`; the real registry's
+    verdict line carries `misattributed=0 duplicate=0`. Shown able to fail: N8 and N9 print `got=met` under the
+    entering tool (`evidence/control-c1-tool-v3-entering.txt`); with only the five surface rules N9 stays `met`
+    (`junk_met=1`, `evidence/control-c1-tool-r48-surface-fixes.txt`), and with only R11 N5-N9 stay `met`
+    (`junk_met=7`, `evidence/control-c1-tool-r48-r11-only.txt`) — each half is separately required. Not covered:
+    the carve-out for a `fixtures/`/`mutants/` path carrying the claimed instrument's basename
+    (`w2/R48ExecD7.md` §8) is what keeps three legitimate rows green and is a stated limit, not a closed class; a
+    junk row that copies the authority row's contract verbatim is consistent by construction.
+
+132. **A depth entry about a retention bound names the journal, and dates every number it takes from the host.**
+    Lesson: `corpus/lessons/round-49.md` Gate (the C2 named limits). Rationale: the staged entries this round
+    rewrote state one bound for "the journal" — the reach is "bounded by **size**, not by age", 258.3M
+    against a 256M ceiling, in the staged
+    `/home/vgpnk/Projects/shokuknow/merge/mori/knowledge/corpus/knowledge/journal-reach-at-ceiling-r46.md` —
+    while the 2026-10-25 receipt prints two journals with two ceilings (`Runtime Journal … max 64M`,
+    `System Journal … max 256M`) and a total that moved from 269M (2026-10-24,
+    `corpus/knowledge/journal-disk-usage-total-r51.md:10`) to 56M in one day
+    (`corpus/evidence/sources-r49/host-journal-reach.txt:2,5`). A reach number without its day is a fact about
+    another day. Check: `grep -nE '/(var|run)/log/journal' corpus/knowledge/journal-reach-r49.md` names both
+    journals, `grep -oE '[0-9]+(\.[0-9])?M' corpus/knowledge/journal-reach-r49.md | sort -u` is a subset of the
+    receipt's `56M 19M 37M 256M 64M 8M 45M 210.9M` plus the dated 269M (S470) and the `50M` of a quoted vacuum command, and the entry carries `verified-at: 2026-10-25`;
+    `python3 .ufo/waves/round-49/count-c2.py <rev>` is `met`. Shown able to fail: the staged r46/r45 entries carry
+    `258.3M`, `250.3M` and `243.6M`, none of which is in the 2026-10-25 receipt, and the r46 entry gives one size
+    bound where the receipt prints two ceilings. Not covered: a number that matches the receipt is not thereby
+    true today (the receipt is one capture; 269M → 56M inside a day), and the check does not decide which journal
+    a window spans — that is a reader's claim against the located quotes, which the counter locates but does not
+    entail.
+
+133. **A round counts the defects its critics flagged and whether the landing fixed them.** Lesson:
+    `corpus/lessons/round-49.md` Gate (considerthese item; `considerthese/2026-10-25.md` suggestion 3, opened
+    2026-10-25). Rationale: round 45's `w1/CritAxisHarm.md` §1b flagged four false `SKILL.md` registry cells
+    (`:184`, `:190`, `:191`, `:194`) in the worktree before they were committed, and no round-45 commit fixed
+    them: `18fd68b0` wrote the cells, `git diff --numstat 18fd68b0 baabc992 -- SKILL.md` prints nothing, and
+    `:190` still pins `C1_SELFTEST pass=10` at `baabc992` — so the flag changed no outcome and nothing in the
+    round graded it (`corpus/lessons/round-45-verifier-spotcheck.md:50-57` re-measures the same cells as harmed).
+    Check:
+    `python3 .ufo/waves/round-49/flagged-fixed/count-flagged.py` reads the round's defect list (one row per `## Findings` line of that round's
+    `w1/Crit*.md` and `Rev*.md`), the landing diff and a re-run at the landing revision, and prints
+    `flagged=N fixed=N unfixed=N` (round 48: `flagged=45 fixed=18 unfixed=9`, `na=18`; control with the freeze as landing: `fixed=0 unfixed=27`); the closure states the three numbers, and a defect counts FIXED only when the landing
+    changes the named file/line or the defect no longer reproduces at the landing, UNFIXED when neither holds,
+    NOT-APPLICABLE only with a stated reason. Shown able to fail: round 45 measures `flagged=4 fixed=0` against
+    `baabc992` (cells `:184` and `:194` still pin `GATE_REGISTRY_SELFTEST pass=6`, `:190` still `pass=10` at
+    `f80e75ac7421…`). Not covered: the script reads flags and diffs, not intent — a false flag counts like a true
+    one (precision is not measured), and a defect fixed by an unrelated later edit counts FIXED.

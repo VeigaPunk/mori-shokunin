@@ -673,3 +673,11 @@ FR2 Frontier note, dated, appended (the FR2 row above is not rewritten): **round
 absence of the user-space reporting surface — it is documented in `knowledge/quota-observability-r48.md` (S479–S484);
 still frontier: a live per-id quota probe is not built, and this host's quota state is unread** (`command -v`:
 `xfs_quota` at `/usr/bin/xfs_quota`, `quota` and `repquota` absent; no quota command was run).
+
+## Round-49 coverage additions
+
+| coverage-map row | entry | ground | sweep |
+|---|---|---|---|
+| FR1 evidence reach — how far back the journal records mori reads can go (retention rule, persistent-versus-volatile split, vacuum order, one dated host capture) | `knowledge/journal-reach-r49.md` (S485–S488; S486 supersedes the rejected S351) | FR1/FR11 context; reports reach, never advises a ceiling (journald configuration is tsukuroi's) | `SystemMaxUse`, `MaxRetentionSec`, `RuntimeMaxUse` → 0 in `SOURCES.md` and `knowledge/` at `b3e3453d` (`.ufo/waves/round-49/evidence/sweep-journal-rows.txt`) |
+
+Dated note (append-only): the FR1 Frontier row gains the retention rule behind its boundary; no frontier row is rewritten. Host numbers in the entry are the 2026-10-25 capture (`evidence/sources-r49/host-journal-reach.txt`); `journal-disk-usage-total-r51.md` (S470, added round 43) read 269M the day before and the receipt reads 56M.

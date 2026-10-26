@@ -2720,3 +2720,11 @@ copies). Before: the entering v2 pin check scored `C1=unmet junk_met=8` (green o
   M4 a stale truncated pin; M5 a seat editing the tracked tool again; M6 eight wave-1 results carrying other lanes'
   output; M7 a wrong negative claim about a copy.
 - Wave 1: 49 seats, 39 reports on disk.
+
+## Round 49 (L1 MoriR49, attempt 1)
+
+Entering tip `b3e3453d`; freeze `0df17b7b` (contract, both counters, controls, receipts, source copies). Motivating evidence: round-48 closure `corpus/lessons/round-48-verifier-spotcheck.md` §5 (seven v3 survivors, harness leak, `.scratch` residue, report author date) and the lane's own rejected row S351.
+- C1 (calibration): `tools/mori-pin-check.py` v4 (F1–F5, R11, K2, K5, K8, X1, R12–R14; selftest 114) and `tools/mori-unlanded-check.py` (17 arms); scored by `.ufo/waves/round-49/count-c1.py` (opaque handles, 18 junk + 7 honest edits). Do-nothing control `junk_met=9` (`evidence/control-c1-tool-v3-entering.txt`). Disclosure: the merged round-48 patches already met the predicate at the freeze (`control-c1-tool-r48-merged-witness.txt`).
+- C2 (depth): `corpus/knowledge/journal-reach-r49.md`, rows S485–S488 (S486 supersedes S351); `C2=met claims=21 located=21` at `24ebc799` (`evidence/after-c2-at-24ebc799.txt`).
+- Frontier: considerthese 2026-10-25 #3 → `.ufo/waves/round-49/flagged-fixed/`, QUALITY 129–133; `.scratch/` added to `.gitignore` (the jj snapshot failed on seat temp dirs without it); lesson `corpus/lessons/round-49.md`.
+- Not done, stated: no wave 2 (round total 49 seats, below the 64 floor); `.scratch` residue not deleted; K4 and the R11 carve-out stay open.

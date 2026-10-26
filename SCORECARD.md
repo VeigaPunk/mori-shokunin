@@ -2622,3 +2622,23 @@ unlanded check ran and their selftests pass; the v3 reconciler is the tool the C
 Axes table unchanged. Planned (round 49): close the seven v3 survivors of `R48CritV3Junk1` and rule R11 for D7 (`R48ExecD7`);
 add the selftest arms the mutation seats named; a successor C1 counter that hides the variant identity from the tool and
 includes an honest edit that updates a pin.
+
+## Round 49 — the pin reconciler reads what a reader sees (C1) and the journal-reach entry (C2)
+
+L1 MoriR49, attempt 1. Entering tip `b3e3453d`; freeze `0df17b7b` (`.ufo/waves/round-49/contract.md`). Scores entering: coverage 6, operability 7, depth 5, freshness 5, calibration 5, adjacency 6; no score change is claimed by the lane.
+
+| Claim | Axis (held) | Counting command | Before | After |
+|---|---|---|---|---|
+| C1 reconciler rejects 18 junk edits, accepts 7 honest edits and the real registry, variants handed over under opaque names | calibration 5 | `python3 .ufo/waves/round-49/count-c1.py --tool tools/mori-pin-check.py --rev R` | entering v3: `C1=unmet junk_met=9 … variants=26`; stubs and the filename sniffer unmet | measured at the landed tip (see the report) |
+| C2 journal-reach entry, ≥8 located quotes over ≥3 sources | depth 5 | `python3 .ufo/waves/round-49/count-c2.py R` | `C2=unmet … failed=entry_absent,pins` | `C2=met claims=21 located=21 quote_missing=0 bad_rows=0 sources=4 …` at `24ebc799` |
+
+Controls (all unmet before data): do-nothing, `stub-always-met`, `stub-always-unmet`, `stub-filename-sniffer` (met under the round-48 counter), `tool-r48-surface-fixes` (`junk_met=1`), `tool-r48-r11-only` (`junk_met=7`). Feasibility witness disclosed: `tool-r48-merged-witness` meets the predicate.
+
+### capabilities: demonstrated round 49
+
+| Capability | What it can now do | Evidence | First-working round |
+|---|---|---|---|
+| opaque-handle junk-variant counter | score a registry checker on 18 junk and 7 honest edits without handing it a variant name; the name-keyed stub fails | `python3 .ufo/waves/round-49/count-c1.py --selftest` → `C1_SELFTEST pass=44 fail=0`; sniffer pair in `evidence/` | 49 |
+| flagged-versus-fixed count | count a round's critic flags against its landing diff | `python3 .ufo/waves/round-49/flagged-fixed/count-flagged.py` → `flagged=45 fixed=18 unfixed=9` (round 48) | 49 |
+
+Limits and planned round 50: the handle is content-derived and the selftest covers a twin of `plan()` (`w1/Mo49CritC1Counter.md`, `Mo49MutC1Counter.md`); C2 measures location, not depth (`Mo49CritC2Counter.md`); K4, the R11 carve-out and a randomised handle are routed; a wave 2 was not run this round.
