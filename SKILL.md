@@ -1014,3 +1014,54 @@ as the tool.
 | situation | do | do not | source |
 |---|---|---|---|
 | a journal query's window starts before the oldest retained record (`journalctl --list-boots` first entry, or a `--since` older than it) | read the window as **not retained** and state the reach: the oldest retained boot entry, the configured ceilings from `systemd-analyze cat-config systemd/journald.conf`, and `journalctl --disk-usage` as a dated total | read the silence as host quiet or a failed probe; read a `--disk-usage` total as an event count or a per-journal share; read an empty `/run/log/journal` as "no journal" (a flush moves the boot's records to the persistent store); vacuum or rotate to widen the reach | `corpus/knowledge/journal-reach-r49.md` (S485–S488) |
+
+## Round50 — the calibration counter and the memcg report-block entry (attempt 2)
+
+Round 49's spot-check routed defect 2 — the 114/114 and 17/17 tallies were prose only — and the lane's K4 class
+(a pin outside the registry's self-test cell), and round 50 puts both claims on a lowest axis (depth, freshness and
+calibration tied at 5; freshness is untouched). Attempt 1 froze the predicates and counters at `950e99be…` and died
+in a host crash; attempt 2 landed the data at `487941b9…`. The counters stay frozen: a counter weakness found after
+scoring is a named limit, never a repair.
+
+`.ufo/waves/round-50/count-c1.py` (calibration) scores the lane's self-assessment against the fleet record and the
+instruments. For each of the six `SCORECARD.md` `## Axes` rows the Last change cell's first `round N` must be the
+highest admitted mori round at or before 49 that the fleet `MANIFEST.json` at `e0144996…` grades `improved` or
+`harmed` on that axis, the text from that `round N` to the next `;` must name that round's verdict word, and the
+Evidence cell must cite that round's spot-check when the file exists at R, else `MANIFEST.json`. Every `SHONEN.md`
+tally pin must be a backticked `python3 <path> --selftest` span followed by `(N/M)` or `-> PREFIX pass=N fail=K`,
+re-run at R with `git archive`, matching its tally, with a receipt under `.ufo/waves/round-50/evidence/selftests/`
+and no stray tally token elsewhere in the file; the floors are 2 pins and 4 boxes. Entering `7197160b` it read `mismatches=6`
+(`.ufo/waves/round-50/evidence/control-c1-do-nothing.txt`); at `487941b9…` it reads
+`C1=met items=8 axes=6 pins=2 boxes=4 mismatches=0 errors=0 hidden=0 manifest=a94551c5bc8d`. Eight controls carry
+the reason classes: do-nothing 6, blanket all-latest 6, pins deleted `pins_floor`, corrected number without a
+receipt 6, axes-only 2, SHONEN-only 4, box dropped `boxes_floor`, and a witness that is feasibility only. Named
+limits: the Score column is not checked (the MANIFEST holds verdicts, not scores); the MANIFEST is trusted, not
+re-judged; the hidden-tally scan enumerates `SHONEN.md` only; and a matching tally proves the instrument prints it
+at R, not that its arms are good.
+
+`.ufo/waves/round-50/count-c2.py` (depth) scores `corpus/knowledge/oom-memcg-stat-r50.md` against the three frozen
+copies under `corpus/evidence/sources-r50/`: at least 10 claim rows, each claim cell 6+ words, unique, carrying 3
+words its own quote does not; one mined `SOURCES.md` row per claim, opened 2026-10-26, naming its URL among the
+three copies and citing the entry; one backticked 6–25-word quote per row located in that row's copy; all three
+copies drawn on and every copy sha256-pinned. At `487941b9…` it reads
+`C2=met claims=22 located=22 quote_missing=0 bad_rows=0 sources=3 source_rows=ok pins=ok provenance=ok`; entering
+`7197160b` it failed with `entry_absent`. Named limits: a located quote proves the words occur in the copy, not
+that the claim cell follows from them; the beyond-quote word floor is a floor, not entailment; v7.2 says nothing
+about later kernels or cgroup v1; and no host OOM block was read (the no-MESSAGE-grep lane rule), so the entry
+states what the kernel prints, not what a past kill on this host printed. Both selftests re-run 2026-10-26:
+`C1_SELFTEST pass=34 fail=0` and `C2_SELFTEST pass=31 fail=0`.
+
+| name | kind | entry | verdict map | self-test | pinned values | write scope | owner |
+|---|---|---|---|---|---|---|---|
+| r50 calibration counter (C1) | gate | `python3 .ufo/waves/round-50/count-c1.py <rev> [--repo DIR] [--fleet-repo DIR] [--fleet-rev REV] [--scratch DIR] [--timeout S]` | 0 → `C1=met items=N axes=6 pins=P boxes=B mismatches=0 errors=0 hidden=0 manifest=<sha12> rev=R` · 1 → `C1=unmet … failed=<reasons>` with one `item` line per axis and pin (expect/got/state) · 2 → `C1_SETUP` (usage, a missing option value, an unresolvable revision on the lane or the fleet repo) | `python3 .ufo/waves/round-50/count-c1.py --selftest` → `C1_SELFTEST pass=34 fail=0` | `FLEET_REV` e0144996…, `THROUGH` 49, `MIN_BOXES` 4, `MIN_PINS` 2, `RECEIPT_DIR` `.ufo/waves/round-50/evidence/selftests/`; limit: the Score column is unchecked and the fleet MANIFEST is trusted | none (read-only `git show` / `git cat-file` / `git archive`; the archive is extracted under `--scratch` and removed) | mori |
+| r50 memcg report-block entry counter (C2) | gate | `python3 .ufo/waves/round-50/count-c2.py <rev> [--repo DIR] [--entry PATH]` | 0 → `C2=met claims=N located=N quote_missing=0 bad_rows=0 sources=3 source_rows=ok pins=ok provenance=ok` · 1 → `C2=unmet … failed=<checks>` (entry absent, table, claims floor, bad rows, quote missing, sources floor, pins, provenance) · 2 → `C2_SETUP` (usage, unresolvable revision) | `python3 .ufo/waves/round-50/count-c2.py --selftest` → `C2_SELFTEST pass=31 fail=0` | sha256 of the three copies under `corpus/evidence/sources-r50/` (in-script `COPIES`); `ENTRY` `corpus/knowledge/oom-memcg-stat-r50.md`; `OPENED` 2026-10-26; claims floor 10; quote 6–25 words with 3 words beyond it | none (read-only `git show` / `git rev-parse`) | mori |
+
+### Decision row — memcg OOM block (round 50)
+
+| situation | do | do not | source |
+|---|---|---|---|
+| a burst carries a usage line, a `Memory cgroup stats for <path>:` block and `Killed process` lines, and their numbers are compared | convert first: the usage and swap lines and the `Killed process` fields are kB, the `Tasks state (memory values in pages)` table is pages except `pgtables_bytes` in bytes, the block prints its charge amounts (`anon`, `file`, `shmem`, `kernel`) in bytes and its `workingset_*`, `pgscan*`, `pgsteal*` keys as counts | compare a block key with a victim-line figure as if both were kB, or read a `workingset_*` count as a byte amount | `corpus/knowledge/oom-memcg-stat-r50.md` (S489–S491) |
+| the stats block is read | look keys up by name; read a missing `zswap`, `zswap_incomp`, `anon_thp` or `hugetlb` as not printed under this build's CONFIG (`hugetlb` also at run time), never as zero | index the block by line position, or read a short block as a low charge | `corpus/knowledge/oom-memcg-stat-r50.md` (S489–S490) |
+| the block's bytes are totalled | keep `anon`, `file` and `shmem` distinct, and count `kernel_stack`, `pagetables`, `percpu`, `vmalloc` and `slab` once, inside `kernel` as the documentation defines it | add `file` to `shmem` (shmem is the swap-backed part of file), or add the five sub-keys to `kernel` a second time | `corpus/knowledge/oom-memcg-stat-r50.md` (S489) |
+| the kill is attributed to a cgroup | read the block as the charged cgroup's charge, aggregated over the cgroup and its descendants, and the `Killed process` counters as the victim's own; read `oom_memcg=` and `task_memcg=` as two labels that can differ when hierarchy is enabled | infer the victim's usage from the block, or read the victim's own cgroup as the cgroup whose limit was hit | `corpus/knowledge/oom-memcg-stat-r50.md` (S490–S491) |
+| victim lines print with no stats block, or a group kill is read | read the summary as rate-limited and the victim line as not; order a group kill as the selected victim's line, then `Tasks in <path> are going to be killed due to memory.oom.group set`, then a line per further kill, and keep `oom_kill` (processes) apart from `oom_group_kill` (group events) | read a missing block as proof the kill was global, or expect a line for a process that only shared a victim's mm | `corpus/knowledge/oom-memcg-stat-r50.md` (S491) |

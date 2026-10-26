@@ -1,0 +1,51 @@
+# routed defect 4 (round-49 spot-check §5 item 4): .scratch residue and round-40 conform selftest dirs; L1 MoriR50a2 2026-10-26T10:50:53-03:00, after WAVE-DONE a2w1
+## BEFORE
+$ git status --porcelain --ignored | wc -l
+188
+$ git status --porcelain --ignored -- .scratch | wc -l
+166
+$ ls -d .scratch/*/ | wc -l
+ls: cannot access '.scratch/ExeDagN-c11-after-fixture-n.txt/': Not a directory
+ls: cannot access '.scratch/SrcGitCommit-git-rev-parse.html/': Not a directory
+ls: cannot access '.scratch/c11-after-fixture-r-ExeDagR.txt/': Not a directory
+183
+$ du -sh .scratch
+25G
+$ ls -d .ufo/waves/round-40/scratch/mori-conform-selftest-* 2>/dev/null | wc -l
+0
+$ git ls-files .scratch | wc -l
+225
+## DELETE
+$ git clean -fdX -q -- .scratch
+rc=0
+$ rm -rf -- .ufo/waves/round-40/scratch/mori-conform-selftest-*
+rc=0
+## AFTER
+$ git status --porcelain --ignored | wc -l
+58
+$ git status --porcelain --ignored -- .scratch | wc -l
+36
+$ ls -d .scratch/*/ | wc -l
+ls: cannot access '.scratch/ExeDagN-c11-after-fixture-n.txt/': Not a directory
+ls: cannot access '.scratch/SrcGitCommit-git-rev-parse.html/': Not a directory
+ls: cannot access '.scratch/c11-after-fixture-r-ExeDagR.txt/': Not a directory
+46
+$ du -sh .scratch
+5.0G
+$ ls -d .ufo/waves/round-40/scratch/mori-conform-selftest-* 2>/dev/null | wc -l
+0
+$ git ls-files .scratch | wc -l ; git status --porcelain -- .scratch | wc -l
+225
+0
+## SECOND PASS (36 ignored entries held nested git repos; git clean needs -ff for them)
+$ git clean -ffdX -q -- .scratch
+rc=0
+$ git status --porcelain --ignored | wc -l
+22
+$ git status --porcelain --ignored -- .scratch | wc -l
+0
+$ du -sh .scratch
+29M
+$ git ls-files .scratch | wc -l ; git status --porcelain -- .scratch | wc -l
+225
+0

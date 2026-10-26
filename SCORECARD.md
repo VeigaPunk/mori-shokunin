@@ -18,11 +18,15 @@ Round-25 correction (C1 item D5): until round 25 this table still showed the rou
 operability 6, depth 4) with "round 1" in every row, while the round tables below held 6, 7 and 5. The scores
 above are the ones the closure-admitted round-24 section records (`SCORECARD.md:1499-1506` at `28b79d3d`).
 
-Round-50 correction (C1, calibration): the Last change cells of coverage, operability, depth and calibration
-lagged four admitted closures (they named rounds 26, 31, 31 and 25; the fleet `MANIFEST.json` at
-`e014499613f63f8a467821219b0296121119ca53` records the latest admitted mori round grading each axis improved as
-47, 47, 49 and 49). Each cell now leads with that round and keeps the older history after a `;`; scores are
-unchanged because no closure states a new number. Checked by `python3 .ufo/waves/round-50/count-c1.py <rev>`.
+Round-50 correction (C1, calibration): the Last change cells of coverage, operability, depth and calibration named
+rounds 26, 31, 31 and 25 while the fleet `MANIFEST.json` at `e014499613f63f8a467821219b0296121119ca53` records the
+latest admitted mori round grading each axis improved as 47, 47, 49 and 49; the cells had skipped admitted
+improvements in coverage (47), operability (36, 37, 38, 39, 41, 43, 44, 47), depth (38, 39, 41, 44, 47, 48, 49) and
+calibration (37, 38, 39, 41, 43, 44, 46, 47, 48, 49) (`.ufo/waves/round-50/a2w1/Mo50bScribeMistakes.md` §3 item 2).
+Each cell now leads with the latest round and keeps the older history after a `;`; scores are unchanged because no
+closure states a new number. "Last change" here means the latest admitted closure grading the axis improved or
+harmed, not the latest score move (a named limit of this convention:
+`.ufo/waves/round-50/a2w1/Mo50bCritAxesSemantics.md`). Checked by `python3 .ufo/waves/round-50/count-c1.py <rev>`.
 
 ## Move log
 
@@ -2648,3 +2652,53 @@ Controls (all unmet before data): do-nothing, `stub-always-met`, `stub-always-un
 | flagged-versus-fixed count | count a round's critic flags against its landing diff | `python3 .ufo/waves/round-49/flagged-fixed/count-flagged.py` → `flagged=45 fixed=18 unfixed=9` (round 48) | 49 |
 
 Limits and planned round 50: the handle is content-derived and the selftest covers a twin of `plan()` (`w1/Mo49CritC1Counter.md`, `Mo49MutC1Counter.md`); C2 measures location, not depth (`Mo49CritC2Counter.md`); K4, the R11 carve-out and a randomised handle are routed; a wave 2 was not run this round.
+
+## Round 50 — the self-assessment agrees with the fleet record (C1) and the memcg OOM report block (C2)
+
+L1 MoriR50a2, attempt 2. Entering tip `7197160b927f04db294c9553fb48fadcc7a3f4e3`; freeze
+`950e99be6757a52b00e9eb70ae1a1a7bbe2ea379` (`.ufo/waves/round-50/contract.md`; both counters, the controls, the
+receipts and the three source copies committed before any seat); data
+`487941b9395e89678af0053cc443cdb49cdee6e3`. Attempt 1 dispatched wave w1 (40 seats, 5 reports on disk) and died in
+an orchestrator host crash; the orchestrator salvaged its tree at `9b8562a3`. Scores entering: coverage 6,
+operability 7, depth 5, freshness 5, calibration 5, adjacency 6; both claims work a lowest (tied 5) axis. No score
+change is claimed by the lane; the non-author closure rules.
+
+| Claim | Axis (held) | Counting command | Before | After |
+|---|---|---|---|---|
+| C1 the self-assessment agrees with the fleet `MANIFEST.json` and with the instruments | calibration 5 | `python3 .ufo/waves/round-50/count-c1.py R` | `C1=unmet items=8 axes=6 pins=2 boxes=4 mismatches=6 errors=0 hidden=0 manifest=a94551c5bc8d rev=7197160b927f04db294c9553fb48fadcc7a3f4e3 failed=mismatch`, rc 1 — `evidence/control-c1-do-nothing.txt` | `C1=met items=8 axes=6 pins=2 boxes=4 mismatches=0 errors=0 hidden=0 manifest=a94551c5bc8d rev=487941b9395e89678af0053cc443cdb49cdee6e3`, rc 0 — `evidence/a2-c1-at-data.txt` |
+| C2 the memcg OOM report block and `memory.stat`, 22 located quotes over 3 sources (FR1) | depth 5 | `python3 .ufo/waves/round-50/count-c2.py R` | `C2=unmet claims=0 located=0 quote_missing=0 bad_rows=0 sources=0 source_rows=bad pins=bad provenance=bad rev=7197160b927f04db294c9553fb48fadcc7a3f4e3 failed=entry_absent,pins`, rc 1 — `evidence/control-c2-donothing-git.txt` | `C2=met claims=22 located=22 quote_missing=0 bad_rows=0 sources=3 source_rows=ok pins=ok provenance=ok rev=487941b9395e89678af0053cc443cdb49cdee6e3`, rc 0 — `evidence/a2-c2-at-data.txt` |
+
+The C1 landing is in the `## Axes` table and `SHONEN.md`: the round-50 correction paragraph under the table
+(`SCORECARD.md:21-29`) records the four lagging cells and states that scores are unchanged because
+no closure states a new number; the four Last change cells now lead with rounds 47, 47, 49 and 49 and each Evidence
+cell names the newer round's closure file; SHONEN's two tally pins read `(114/114)` and `(17/17)` and cite committed
+receipts `evidence/selftests/mori-pin-check.txt` and `evidence/selftests/mori-unlanded-check.txt`. The C2 landing is
+`corpus/knowledge/oom-memcg-stat-r50.md` with rows S489–S491 (opened 2026-10-26) and the three copies under
+`corpus/evidence/sources-r50/`.
+
+Controls that skip the work stay unmet (all receipts under `.ufo/waves/round-50/evidence/`): C1 do-nothing
+`mismatches=6`, all-latest `mismatches=6`, pins-deleted `pins=0 … failed=mismatch,pins_floor`,
+pins-updated-no-receipt `mismatches=6`, axes-only `mismatches=2`, shonen-only `mismatches=4`, box-dropped
+`boxes=3 … failed=boxes_floor,mismatch,pins_floor`; C2 do-nothing `failed=entry_absent`, the git do-nothing
+`failed=entry_absent,pins`, and the three byte-exact staged-entry controls
+`failed=claims_floor,provenance,source_rows,sources_floor,table`. Feasibility witness disclosed:
+`control-c1-witness.txt` (both halves plus receipts, built by the L1's script) meets the C1 predicate. Counter
+selftests: `C1_SELFTEST pass=34 fail=0`, `C2_SELFTEST pass=31 fail=0` (`evidence/selftest-c1.txt`,
+`evidence/selftest-c2.txt`).
+
+No capability row is claimed this round: both counters and both self-testable tools predate round 50, and the
+round's new artifacts are knowledge and receipts rather than instruments.
+
+Limits named before data: the Score column is not checked (verdicts, not scores); the Last-change convention is
+read, not judged; the hidden scan is SHONEN.md only; a matching tally proves the instrument prints the number, not
+that its arms are good; the fleet MANIFEST is trusted, not re-judged; a located quote proves the words occur in the
+committed copy, not that the claim follows from them; the three-new-words floor is a floor; the entry says what
+v7.2 prints, not what this host printed (no kernel MESSAGE grep, S351/QUALITY 15). Wave a2w1 re-opened all 22 C2 rows
+and the prose; its overclaims were corrected in the data before landing, and the counter weaknesses it found are named
+limits (`corpus/lessons/round-50.md` `## Wave a2w1 — integrated findings`, M4). The after values at the landed tip are
+in the round report and `.ufo/waves/round-50/evidence/a2-c{1,2}-at-landed.txt`.
+
+Planned (round 51): the two live producers of lane `.scratch/` residue (`tools/mori-pin-check.py:884-887` exports a
+full tree into the lane; `.ufo/waves/round-40/conform.py:69` hardcodes the lane path) as an instrument fix with its
+own counter; K4 beyond `SHONEN.md` (tally pins in `QUALITY.md`, `README.md`, `LOG.md`); a successor C1 counter that
+closes the named survivors (verdict-word substring, second `## Axes`, symlinked pin path, the `admitted` filter arm).

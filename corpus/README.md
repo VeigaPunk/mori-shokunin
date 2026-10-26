@@ -681,3 +681,16 @@ still frontier: a live per-id quota probe is not built, and this host's quota st
 | FR1 evidence reach — how far back the journal records mori reads can go (retention rule, persistent-versus-volatile split, vacuum order, one dated host capture) | `knowledge/journal-reach-r49.md` (S485–S488; S486 supersedes the rejected S351) | FR1/FR11 context; reports reach, never advises a ceiling (journald configuration is tsukuroi's) | `SystemMaxUse`, `MaxRetentionSec`, `RuntimeMaxUse` → 0 in `SOURCES.md` and `knowledge/` at `b3e3453d` (`.ufo/waves/round-49/evidence/sweep-journal-rows.txt`) |
 
 Dated note (append-only): the FR1 Frontier row gains the retention rule behind its boundary; no frontier row is rewritten. Host numbers in the entry are the 2026-10-25 capture (`evidence/sources-r49/host-journal-reach.txt`); `journal-disk-usage-total-r51.md` (S470, added round 43) read 269M the day before and the receipt reads 56M.
+
+## Round-50 coverage additions
+
+| coverage-map row | entry | ground | sweep |
+|---|---|---|---|
+| FR1 event-time attribution — what a memcg OOM burst prints about the charged scope (the usage and swap usage/limit/failcnt lines, a `Memory cgroup stats for <path>:` block written by the same formatter that writes `memory.stat`, the per-victim `Killed process` line) and what a global OOM prints in its place (`__show_mem`, no charged scope) | `knowledge/oom-memcg-stat-r50.md` (S489–S491, opened 2026-10-26; S491 shares its URL with S003 and S476 at a different scope) | FR1 context; states what the kernel prints at the kill, never what a past kill on this host printed, and reports rather than configures (`memory.max`, `memory.oom.group`, `oom_score_adj` are tsukuroi's) | `memory.stat`, `Memory cgroup stats`, `failcnt`, `print_oom_meminfo`, `memory_stat_format` and the v7.2 cgroup-v2 and memcontrol.c URLs → 0 in `corpus/SOURCES.md`, `corpus/knowledge` and `SKILL.md` at `7197160b`; `anon-rss`/`shmem-rss` once, in `oom-tracepoints-r47.md` (the tracepoint schema, not the report block), and the v7.2 `oom_kill.c` URL already present as S003/S476 at another scope (`.ufo/waves/round-50/evidence/sweep-memcg-stat.txt`) |
+
+Dated note (append-only, 2026-10-26): round 50 supersedes the FR1 row's silence about the memcg report block — a
+memcg kill prints its charge three ways (the usage and swap lines in kB, the `memory.stat` formatter's stats block
+in bytes, the victim's own counters on the `Killed process` line), and a global OOM prints `__show_mem` in place of
+the block and names no charged scope (`knowledge/oom-memcg-stat-r50.md`, S489–S491); no frontier row is rewritten.
+Still frontier: no host OOM block was read (the lane's no-MESSAGE-grep rule), and attributing a block to a fleet job
+rests on the `task_memcg=` token, still [UNKNOWN] in `knowledge/kernel-oom-line-attribution-r12.md`.

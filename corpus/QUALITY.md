@@ -1172,3 +1172,79 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     `baabc992` (cells `:184` and `:194` still pin `GATE_REGISTRY_SELFTEST pass=6`, `:190` still `pass=10` at
     `f80e75ac7421…`). Not covered: the script reads flags and diffs, not intent — a false flag counts like a true
     one (precision is not measured), and a defect fixed by an unrelated later edit counts FIXED.
+
+## Criteria added round 50 — a self-assessment that is reconciled, a unit per line, a closure that is re-executed
+
+134. **A round reconciles its own self-assessment with the fleet record and with the instruments, and every pin it
+    corrects carries a committed receipt.** Lesson: `corpus/lessons/round-50.md` M1 (self-assessment drift).
+    Rationale: `SHONEN.md` pinned `(60/60)` and `(13/13)` from round 48 on while the committed instruments printed
+    `PIN_CHECK_SELFTEST pass=114 fail=0` and `UNLANDED_SELFTEST pass=17 fail=0`, and four `SCORECARD.md` `## Axes`
+    Last change cells named rounds 26, 31, 31 and 25 while the fleet `MANIFEST.json` at
+    `e014499613f63f8a467821219b0296121119ca53` graded rounds 47, 47, 49 and 49 `improved` — six mismatches at the
+    entering tip `7197160b` (`evidence/control-c1-do-nothing.txt`); QUALITY 123 reads `SKILL.md`'s registry only
+    ("A registry pin is calibrated only when an instrument re-runs it from committed bytes and reads it from its
+    own cell", `:1028-1029`), so the lane's own self-assessment was outside every check. Check:
+    `python3 .ufo/waves/round-50/count-c1.py <rev>` prints
+    `C1=met items=8 axes=6 pins=2 boxes=4 mismatches=0 errors=0 hidden=0` and exits 0, and each pinned tally's
+    observed line is committed under `.ufo/waves/round-50/evidence/selftests/<stem>.txt`. Shown able to fail: at
+    `7197160b` the same command prints `C1=unmet items=8 axes=6 pins=2 boxes=4 mismatches=6 errors=0 hidden=0 …
+    failed=mismatch` exit 1 (`evidence/control-c1-do-nothing.txt`); a corrected tally with no committed receipt
+    stays unmet (`evidence/control-c1-pins-updated-no-receipt.txt`, `mismatches=6`); a blanket "every cell names
+    round 49" edit stays unmet (`evidence/control-c1-all-latest.txt`, `mismatches=6`); deleting the pins fails the
+    floor (`evidence/control-c1-pins-deleted.txt`, `pins=0`). Not covered: the Score column (the MANIFEST carries
+    verdicts, not scores); the counter trusts the fleet MANIFEST instead of re-judging the closures; the
+    Last-change convention itself is not scored; a tally pin outside `SHONEN.md` is not enumerated (`hidden` scans
+    `SHONEN.md` only); and the counter's fleet revision is pinned, so a later closure moves the expected `round N`
+    without moving this receipt.
+135. **A memcg OOM report is read key by key with each line's own unit, and the cgroup's composition is taken from
+    the stats block, never from the victim line.** Lesson: `corpus/lessons/round-50.md` Gate — the C2 named limits
+    (the class is the rejected `scope-charge-fields-r46.md` hypothesis; `M1`–`M3` do not cover it). Rationale: the
+    staged r46 entry reasoned from the victim's own growth — "a child that writes into `/tmp` consumes the scope's
+    cap **without the victim process growing at all** — and the victim's own `anon-rss` would never show it" — a
+    statement about the cgroup's composition drawn from a per-process line; and the report's numbers split three
+    ways, the usage and swap lines and the `Killed process` fields in kB, the `Tasks state (memory values in
+    pages)` table in pages, and the `Memory cgroup stats` block in bytes. Check:
+    `for p in 'Units are per line' 'Read the block by key' 'charge, not the victim'; do printf '%s -> ' "$p";
+    grep -c -- "$p" corpus/knowledge/oom-memcg-stat-r50.md; done` prints `Units are per line -> 1`,
+    `Read the block by key -> 1`, `charge, not the victim -> 1`, and
+    `awk '/^- Units are per line/,/^$/' corpus/knowledge/oom-memcg-stat-r50.md | grep -oE 'kB|bytes|pages' |
+    sort -u` prints `bytes`, `kB`, `pages` — the anchors are the check, so an entry whose prose moves keeps its
+    verdict (at `487941b9` the rules sat at `:46-48`, `:49`, `:56-58`; a same-day data correction moved two of
+    them to `:52` and `:61`). Shown able to fail: the three greps over the rejected staged
+    `/home/vgpnk/Projects/shokuknow/merge/mori/knowledge/corpus/knowledge/scope-charge-fields-r46.md` print `0`,
+    `0`, `0` (exit 1), and over a copy of the landed entry with the units bullet deleted and the charge bullet
+    reworded into a victim-property claim they print `0`, `1`, `0` — an entry that does infer composition
+    (demonstrated in `.ufo/waves/round-50/a2w1/Mo50bScribeQuality.md` §5; no committed evidence receipt, so this
+    arm is `not yet shown` as a file under `evidence/`). Not covered: the greps prove the rule is written, not
+    that a reader follows it, and no counter reads prose (the round's C2 counter locates quotes and checks
+    provenance); the `pg*`/`workingset_*` keys of memory.stat are event counts, not bytes, and the check does not
+    test that; and the entry states what kernel v7.2 prints, not what any kill on this host printed (no MESSAGE
+    read — lane rule).
+136. **The round after a closure re-executes that closure's frozen counter at the revision the closure scored, and
+    reports a divergence instead of smoothing it.** Lesson: `corpus/lessons/round-49.md` Gate ("Ruling:
+    **verified** (evidence-verified, not re-executed)"); `considerthese/2026-10-26.md` suggestion 3 (operator
+    reflection, opened 2026-10-26); `corpus/lessons/round-50.md` Gate (to be written). Rationale: the round-49
+    ruling rests on committed receipts the integrator did not run, and the same closure records an "undocumented
+    off-by-one (27 `variant` lines vs `variants=26`)" that only a re-execution settles — the counter's verdict
+    line prints `len(results) - 1` (`.ufo/waves/round-49/count-c1.py:304-305`), counting out the `real` run, which
+    is one of the 27 `variant` lines in both of the round's receipts; a reader holding only the receipt cannot tell
+    a wrong line from a wrong closure. Round 50 re-ran its own counters at the landed revision with committed
+    receipts (`evidence/a2-c1-at-data.txt`, `evidence/a2-c2-at-data.txt`; `a2w1/Mo50bExecC1Rerun.md` §1a). Check:
+    `git show 64c2d5fc:tools/mori-pin-check.py > <scratch>/pin-check-at-64c2d5fc.py` then
+    `python3 .ufo/waves/round-49/count-c1.py --tool <scratch>/pin-check-at-64c2d5fc.py --rev 64c2d5fc --scratch
+    <scratch>/r49c1 --jobs 4 | grep '^C1='` compared with `grep '^C1='
+    .ufo/waves/round-49/evidence/after-c1-at-tip.txt` — the two lines are equal and `diff` of them is empty, exit
+    0, and the round's report quotes the re-executed line with its exit code. Shown able to fail: the same counter
+    run with the v3 tool at `b3e3453d` prints `C1=unmet junk_met=9 honest_unmet=0 real=met errors=0 variants=26 rev=
+    b3e3453d…` (`.ufo/waves/round-49/evidence/control-c1-tool-v3-entering.txt`), so a stale tool and a re-executed
+    one are distinguishable by the verdict line; no committed receipt yet records a closure whose re-execution
+    contradicts it, so the divergence arm is `not yet shown`. Run once for the agreement arm: 9m29s wall with
+    `--jobs 4`, `C1=met … variants=26 rev=64c2d5fc…`, `diff` empty, and
+    `python3 .ufo/waves/round-49/count-c2.py 24ebc799` printing the same `C2=met claims=21 located=21 …` line as
+    `evidence/after-c2-at-24ebc799.txt`, `diff` empty
+    (`.ufo/waves/round-50/a2w1/Mo50bScribeQuality.md` §5f). Not covered: a matching line proves the counter and
+    the bytes are re-runnable at R, not that the counter's arms are good (its `--selftest` does that); the
+    re-execution trusts the committed counter, so a counter edited after its freeze is not detected (that is
+    `sha256sum -c evidence/freeze-sha256.txt`'s job); a closure scored at a revision no longer reachable from the
+    lane's branches cannot be re-executed at all; and the C1 run costs minutes of CPU, so it is one check per
+    round, not per seat.

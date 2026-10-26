@@ -2728,3 +2728,36 @@ Entering tip `b3e3453d`; freeze `0df17b7b` (contract, both counters, controls, r
 - C2 (depth): `corpus/knowledge/journal-reach-r49.md`, rows S485–S488 (S486 supersedes S351); `C2=met claims=21 located=21` at `24ebc799` (`evidence/after-c2-at-24ebc799.txt`).
 - Frontier: considerthese 2026-10-25 #3 → `.ufo/waves/round-49/flagged-fixed/`, QUALITY 129–133; `.scratch/` added to `.gitignore` (the jj snapshot failed on seat temp dirs without it); lesson `corpus/lessons/round-49.md`.
 - Not done, stated: no wave 2 (round total 49 seats, below the 64 floor); `.scratch` residue not deleted; K4 and the R11 carve-out stay open.
+
+## Round 50 (L1 MoriR50a2, attempt 2; C1 calibration, C2 depth)
+
+Entering tip `7197160b`; freeze `950e99be` (attempt 1: contract, counters, controls, receipts, source copies); attempt 1
+died in the orchestrator host crash after dispatching wave `w1` (40 seats, 5 reports, 35 unknown); salvage `9b8562a3`;
+attempt-2 data `487941b9`; one v2 wave `a2w1` of 64 seats (all 64 reports on disk, results `a2w1-results.json`).
+Motivating evidence: round-49 closure `corpus/lessons/round-49-verifier-spotcheck.md` §5 (the 114/114 and 17/17
+tallies were prose only; K4) and the do-nothing receipt `.ufo/waves/round-50/evidence/control-c1-do-nothing.txt`
+(`mismatches=6`: four Axes Last change cells and both SHONEN pins stale).
+
+- C1 (calibration): `SCORECARD.md` `## Axes` Last change/Evidence cells for coverage, operability, depth and
+  calibration now lead with the latest admitted closures 47, 47, 49, 49 (fleet `MANIFEST.json` at `e0144996`); the
+  round-50 correction paragraph lists the 26 admitted improvements the cells had skipped; `SHONEN.md` pins
+  `(114/114)` and `(17/17)` with receipts `evidence/selftests/`. `python3 .ufo/waves/round-50/count-c1.py R` →
+  `C1=met … mismatches=0` (`evidence/a2-c1-at-data.txt`, `evidence/a2-c1-at-landed.txt`).
+- C2 (depth): `corpus/knowledge/oom-memcg-stat-r50.md` (memcg OOM report block, `memory.stat` keys and units, the
+  victim line, the global-OOM difference), rows S489–S491 (S489 = staged S533 renumbered by document);
+  `count-c2.py R` → `C2=met claims=22 located=22 … sources=3`. Wave a2w1 found six overclaims the counter cannot see;
+  all corrected before landing (lesson M4).
+- Frontier: census before rc 0 (21 W04) → after rc 0 (22 W04, S491); sourced claim C2 on S489–S491; mistake M1–M4;
+  considerthese `2026-10-26.md` suggestion 3 — rounds 47–49's frozen counters re-executed at their scored revisions,
+  all AGREE (one transient r47 divergence from `conform.py` under load); QUALITY 134–136; README Round-50 coverage
+  block; SKILL `## Round50` (gate rows for both counters, memcg decision row).
+- Routed defects (round-49 §5): 2 receipts committed; 3 the correction below; 4 `.scratch/` ignored residue deleted
+  (`git status --porcelain --ignored -- .scratch | wc -l` 166 → 0, `du` 25G → 29M; 225 tracked files kept;
+  `evidence/a2-scratch-deletion.txt`), its two producers routed to round 51; 5 the round-49 seats were late, not dead;
+  6 `variants` = runs − the `real` control; 7 K4 closed for `SHONEN.md` only, handle rule not met; 8 D-g wording
+  corrected in the lesson; 1 report filed after the last lane commit with the author-date check in the report.
+- Correction (round-49 D-c): round 49's lesson said "48 of 49 reports"; 47 report files were on disk when it was
+  committed (`64c2d5fc`), 48 at `7197160b`, 49 at `9b8562a3`. `LOG.md` carried no round-49 count; this is the named
+  correction entry.
+- Not done, stated: the contract's two-v1-wave shape (one v2 wave ran after the data); 104 seats dispatched across both
+  attempts, above the 100 ceiling; the C1/C2 counter survivors stay named limits (frozen).
