@@ -1,0 +1,3 @@
+command: python3 -B .ufo/waves/round-54/checks/receipt-stage.py f111d4b0120a04ed1a0a2270a72ec0a343d20e29
+RECEIPT_STAGE rev=f111d4b0 cited_intermediate=5 flagged=0
+exit=0

@@ -63,9 +63,9 @@ lines, none at the three quoted lines. Three files moved the quoted lines: `mm/m
 the OOM report block +45 lines, the `memory.stat` reader +84), `mm/mm_init.c` (the `mm_compute_batch` block +4)
 and the rendered cgroup-v2 page (+31 lines: 8 lines of new navigation captions and 23 lines of new page content above
 the quoted block — the note that the five CFS bandwidth stats are non-hierarchical and the `cgroup_set_bandwidth` /
-`cgroup_set_idle` sentences added to `cpu.max`, `cpu.max.burst` and `cpu.idle`; `Mo54ExecLineArm` diff opcodes). The `line:` anchors that
-`oom-memcg-stat-r50.md` and its rows S490/S491 give in prose (S490's anchor `mm/memcontrol.c:629,1546-1608,…,1787-1830,…,4905-4919`) are v7.2 positions;
-read at v7.3 they are off by the `moved` column. v7.2 lines below are from the committed v7.2 copies
+`cgroup_set_idle` sentences added to `cpu.max`, `cpu.max.burst` and `cpu.idle`; `Mo54ExecLineArm` diff opcodes).
+The S490-backed memcontrol prose anchors in `oom-memcg-stat-r50.md` are v7.2 positions; their v7.3 locations are
+off by the `moved` column. S491's `oom_kill.c` anchors did not move. The v7.2 lines below are from committed copies
 (`sources-r50/`, `sources-r52/util.c.v7.2`, `sources-r53/*.v7.2`, `sources-r48/errno.h`).
 
 | h | path | v7.2 line | v7.3 line | moved |

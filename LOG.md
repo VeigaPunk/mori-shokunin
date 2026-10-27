@@ -2886,3 +2886,51 @@ reviewer, 3 critic) attacked what the salvage carried unattacked; integrated: ba
 `percpu_counter_batch`, mode-0 cap as a per-request accounting check, S514 limited to `mm_compute_batch`), PROVINCE
 boundary no longer assigns fault attribution to tsukuroi, lesson M2 probe wording, LOG receipt pointers. Round total
 75 seats (w1 67 + a2r1 8).
+
+## Round 54 (L1 MoriR54, attempt 1; C1 freshness, C2 depth)
+
+Entering tip `39dcf4d7e410d362781a47e8365ca23b5c807598`. C1 rechecked all 31 remaining Linux-v7.2-pinned
+`claim|source|quote` rows in three knowledge entries at v7.3, with the v7.3 quote-start line and 31 final RECHECK
+votes; C2 admitted the new hardware-memory-failure kill entry (21 located claim rows, six source copies, two-voter
+entailment). Freeze `6830f3af`; data `1116c092`; pre-wave C2 correction `78295c76`; wave spec/dispatch
+`2d0347a3`; post-wave C2 corrections `782c6e7d`, `c71d088a`; integration commit `f111d4b0`. Round claim receipts
+are measured at `f111d4b0`: C1 `met` (31/31 status, line, quote; 31/31 disposition voted; zero dissent), C2 `met`
+(21/21 located, 21/21 final hashes entailed, zero dissent). Full command/output/exit receipts:
+`.ufo/waves/round-54/evidence/{c1,c2}-at-landed.txt`.
+
+Before → after: C1 do-nothing control at `39dcf4d7` had no ledger/copies (`C1=unmet scope=31 rows=0 … failed=ledger_absent,pins`,
+exit 1), after `f111d4b0` `C1=met scope=31 rows=31 line_ok=31 quote_ok=31 voted=31 dissent=0`, exit 0.
+C2 do-nothing had no entry/copies (`C2=unmet claims=0 … failed=entry_absent,pins`, exit 1), after
+`f111d4b0` `C2=met claims=21 located=21 sources=6 entailed=21 dissent=0`, exit 0. Frozen counters and selftests:
+C1 `57 pass / 0 fail`, C2 `54 pass / 0 fail`; control receipts and controls table in the round-54 contract.
+The no-line control falsifies the C1 locator arm (`line_ok=0`, exit 1).
+
+Wave: one v2 `w1`, 74 seats: reviewer 19, critic 18, executor 15, scribe 9, scout 4, sentinel 3, mutation-tester 2,
+connector 2, revenger 1, simplifier 1; attack share 39/74; 24 voters. Results file records 74 outputs. One seat
+(`Mo54RevC1Counter`) returned malformed coordinator prose and no report file; four other seats lack report files but
+their structured outputs are in `w1-results.json`. The dispatcher did not provide a status/last-error field, so no
+provider death is inferred from report absence. No seats were re-spawned. Non-author closure remains pending; the
+wave is not an independent judge.
+
+Frontier: census start exit 0 / 23 W04; end exit 0 / same 23 W04 (`evidence/census-{start,end}.txt`); registry
+287→298 rows (10 new mined A rows S515–S524 plus rejected S525). Used-by additions: S502, S507, S508, S514.
+Assimilation none: the narrow C1/C2-topic package sweep finds zero files; a broad sweep finds three quota/EDQUOT
+files, not claim ground, and the freeze receipt's prior `0` is not reproducible (`evidence/assimilation-sweep-correction.txt`).
+The three-row quarantine slice is resolved in `corpus/lessons/round-54.md`: S244 unverifiable; S262/S268 present
+in the publisher PDF. considerthese `2026-10-26.md` suggestion 3 completed: re-executed the round-53 closure's
+evidence-verified counters/selftests at its scored revision, agreement token-for-token (`w1/Mo54ExecConsiderthese.md`).
+
+Mistakes mined in `corpus/lessons/round-54.md`: M1 intermediate-stage receipt references (QUALITY 148 red 5→0);
+M2 eight stale lane-root misroots relocated byte-exact under rounds 28/38 (QUALITY 149); M3 first-picked wrong RAS
+header rejected in favor of S524; M4 C2 overclaim texts narrowed after wave votes. Quality criteria 148–151 added.
+Round-53 closure D2: appended correction paragraphs for the round-50 and round-53 intermediate receipts; the
+`receipt-stage.py` after receipt prints `flagged=0`. D3: files `0`, `base.c`, `main.c`, `meminfo.c`, `oom_kill.c`,
+`sd-main.c`, `user@.service.in`, `MANPAGE.md` moved to named round wave paths; `--repo/` empty untracked directory
+removed. D1 remains disclosure-only: no r54 salvage occurred.
+
+Sources drift that remains: C1's exact scope is claim tables only; four other release-triggered artefacts remain
+outside it. S508's old anchor omits `vm_memory_committed:937`; S520's old anchor says footer, and its quote-lines
+cell omits the second occurrence; these first-published cells were not edited in place, and are routed for
+append-only superseders in round 55. The C2 counter is frozen; wave mutations found selftest survivors and the
+results-name check is not cryptographic. No tool installs; pacman paused; no L0 question. Stale-lane:
+respawn-per-round driver; no other mori mission open.

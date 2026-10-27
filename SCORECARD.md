@@ -2861,3 +2861,18 @@ with `rev=` removed prints nothing, round-54 L1), so no number in the cells chan
 `.ufo/waves/round-50/evidence/a2-c2-at-landed.txt` (R = `bae8656ea74a8ea3a4f2cf784e15cbeb91d9ad7d`) hold the landed
 measurement; the `C1=`/`C2=` lines are token-identical apart from `rev=` (`manifest=a94551c5bc8d` in both C1 lines).
 Rows retained as filed (lesson `corpus/lessons/round-54.md` M1).
+
+## Round 54 — C1 freshness and C2 hardware memory-failure kills
+
+Measured at `f111d4b0120a04ed1a0a2270a72ec0a343d20e29`. Entering `39dcf4d7`; freeze `6830f3af`; data `1116c092`; wave `2d0347a3`; data corrections `78295c76`, `782c6e7d`, `c71d088a`. Scores entering: coverage 6, operability 7, depth 5, freshness 5, calibration 5, adjacency 6. C1 freshness and C2 depth work tied-lowest axes; no scalar score delta.
+
+| Claim | Axis | Counting command | Before | After |
+|---|---|---|---|---|
+| C1: all 31 remaining claim-table rows pinned to Linux v7.2 have a v7.3 copy, derived status, located quote, quote-start line and two-voter disposition | freshness 5 | `python3 .ufo/waves/round-54/count-c1.py R` | `C1=unmet scope=31 rows=0 … failed=ledger_absent,pins`, rc 1 — `evidence/control-c1-do-nothing.txt` | `C1=met scope=31 rows=31 matched=31 status_ok=31 line_ok=31 quote_ok=31 source_rows=ok pins=ok provenance=ok held=31 absent=0 holds=31 changed=0 voted=31 dissent=0`, rc 0 — `evidence/c1-at-landed.txt` |
+| C2: a source-linked 21-row depth entry on hardware memory-failure kills outside the OOM-victim path, every quote located in its own v7.3 copy and two settled entailment votes per claim | depth 5 | `python3 .ufo/waves/round-54/count-c2.py R` | `C2=unmet claims=0 … failed=entry_absent,pins`, rc 1 — `evidence/control-c2-do-nothing.txt` | `C2=met claims=21 located=21 quote_missing=0 bad_rows=0 sources=6 source_rows=ok pins=ok provenance=ok entailed=21 dissent=0`, rc 0 — `evidence/c2-at-landed.txt` |
+
+Limits: all C1 rows are `held`; 31/31 v7.2 quotes already occur at v7.3, and ten rows use byte-identical tag copies, so those status/disposition arms do not discriminate. Four other release-triggered artefacts remain outside C1's exact table scope. C2's results-name binding does not prove report authorship; a fabricated results file could assert two voter names. C2 quote normalization can join source lines. No memory-failure event was observed live; host counters are zero. Ten control clone revisions were removed and could not be replayed independently; receipts are first-run observations, not durable revision proofs.
+
+No capability row. No-harm reviewer found no axis harmed. Sources census 287→298 rows; end validator rc 0, 23 W04. Assimilation none; S262/S268 quarantine rows source-checked in the lesson, no package item adopted. considerthese suggestion 3 completed. No installs; L0 none. Stale-lane: respawn-per-round, no other mission open. Trend verdicts: expansion improved, quality improved, discernment unchanged pending non-author closure.
+
+Planned (round 55): the four other release-triggered artefacts outside C1's claim-table scope; a C2 voter-authenticity control; append-only superseding rows for the S508/S520 anchor gaps; durable control-tree witnesses.

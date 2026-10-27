@@ -1,0 +1,3 @@
+command: python3 -B .ufo/waves/round-54/count-c2.py f111d4b0120a04ed1a0a2270a72ec0a343d20e29
+C2=met claims=21 located=21 quote_missing=0 bad_rows=0 sources=6 source_rows=ok pins=ok provenance=ok entailed=21 dissent=0 rev=f111d4b0120a04ed1a0a2270a72ec0a343d20e29
+exit=0
