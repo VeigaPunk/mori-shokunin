@@ -39,3 +39,7 @@ Round-end command is the same census command; complete captured output and exit 
 ## Assimilation and quarantine
 
 Assimilation: none; no merge package entry was adopted. The S244/S262/S268 quarantine rows were not re-adjudicated this round; prior adjudication remains in `corpus/lessons/round-56.md` and its source trail. `considerthese/2026-10-26.md` was checked: no proposal was implemented; suggestion 2's carry-over ledger remains planned.
+
+## Capability-register correction
+
+The frozen C1 counter selects the first, superseded `## Capabilities` section, not the active register at `SCORECARD.md:1951-1988`; mutation seats proved pointer and duplicate-row false-green cases and the counter cannot be changed after scoring. The round-56 closure is admitted as `MANIFEST.json` rounds[832], with two capability strings. I appended those exact two rows as a current-register continuation at the end of `SCORECARD.md`. The fixed-scope count `grep -cE '^\| `rounds\[832\]\.capabilities_added\[[01]\]` \|' SCORECARD.md` is 0 at entering revision `618562c72a03dc4d17386b715357f863fd327274` and 2 after the continuation; the frozen C1 remains unmet on its false-negative target. It is an observed correction to the register, not a verified C1 verdict.

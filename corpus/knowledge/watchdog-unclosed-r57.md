@@ -4,7 +4,7 @@ recheck: `cmp tools/mori-driver-liveness.py corpus/evidence/sources-r57/mori-dri
 
 # Interpreting the driver-liveness `unclosed` diagnostic
 
-`unclosed` is the count of launch keys still present in the parser's pairing list after processing the captured log. It is not a count of processes currently running, and it does not establish a lane failure or a settled/unsettled wave. The separate `in_flight` field is also only a last-event log fact. These readings are bounded to the parser grammar and bytes supplied to the probe; log truncation, omitted records, or unrecognized event text can change what remains unmatched.
+`unclosed` is a pairing count: it counts launch keys still present in the parser's pairing list after processing the captured log. It is not a count of processes currently running, and it does not establish a lane failure or a settled/unsettled wave. The separate `in_flight` field is also only a last-event log fact. These readings are bounded to the parser grammar and bytes supplied to the probe; log truncation, omitted records, or unrecognized event text can change what remains unmatched.
 
 | Claim | Located source quote | Interpretation / limit |
 |---|---|---|
