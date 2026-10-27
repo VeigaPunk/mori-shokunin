@@ -1,0 +1,4 @@
+# attempt 2 (L1 MoriR53a2), at the final integration tip 0b36d23e596276c70725873621fe15a28c87189f, 2026-10-27T00:55:37-03:00
+$ TMPDIR=/fast/scratch/hyaku/mori-r53/L1 python3 .ufo/waves/round-53/count-c2.py 0b36d23e596276c70725873621fe15a28c87189f --scratch /fast/scratch/hyaku/mori-r53/L1/fin/c2
+C2=met tool=present selftest=pass n=31 fixtures=80 agree=80 disagree=0 registry=ok live=ok rev=0b36d23e596276c70725873621fe15a28c87189f
+exit=0
