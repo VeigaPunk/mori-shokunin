@@ -1,0 +1,12 @@
+2026-09-28T15:50:56-03:00 launch kagi round=1
+2026-09-28T15:56:52-03:00 launch kengaku round=4 mission=m_5ddf2cabcef146ccb3eb1328dd1bfc8a
+2026-09-28T15:56:53-03:00 launch kasegi round=4 pgid=999 mission=m_5ddf2cabcef146ccb3eb1328dd1bfc8a
+2026-09-28T16:00:00-03:00 complete kagi round=1; respawning
+2026-09-28T16:05:00-03:00 complete kengaku round=4; respawning
+2026-10-19T23:24:27-03:00 lane-dead-no-report kama round=11; retry same round (hyaku: headless attempt ended by operator directive to run in-session)
+2026-10-19T23:30:00-03:00 complete kama round=11; hyaku-inline attempt=2
+2026-10-20T00:00:00-03:00 wrap kotoba round=9 landed; NOT respawning (fleet-wrap)
+2026-09-28T15:50:55-03:00 steer kake -> round 1
+2026-09-28T15:44:59-03:00 watchdog tick (live-missions-in-last-status~=64)
+2026-10-20T00:05:00-03:00 launch kama round=55 runId=shokunin-r5-kama-r1790622131
+2026-10-20T00:06:00-03:00 wrap mado round=51 complete; NOT respawning (fleet-wrap)

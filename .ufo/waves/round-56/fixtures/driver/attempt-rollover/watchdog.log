@@ -1,0 +1,4 @@
+2026-10-27T09:00:00-03:00 launch mori round=56 pgid=111 driver=hyaku-inline attempt=1
+2026-10-27T09:19:00-03:00 lane-dead-no-report mori round=56; retry same round (hyaku-inline attempt=1: L1 died at start)
+2026-10-27T09:22:00-03:00 launch mori round=56 pgid=222 driver=hyaku-inline attempt=2
+2026-10-27T09:49:00-03:00 complete mori round=56; hyaku-inline attempt=2

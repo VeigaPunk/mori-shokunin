@@ -1,0 +1,7 @@
+total garbage line
+2026-10-27T10:00:00-03:00 launch mori round=56 pgid=620717 driver=hyaku-inline attempt=1
+2026-99-99T99:99:99-03:00 complete mori round=56; hyaku-inline attempt=1
+another broken thing
+2026-10-27T11:00:00-03:00 complete mori round=56; advancing nowhere
+tick=1
+2026-10-27T10:30:00-03:00 steer mori -> round 57

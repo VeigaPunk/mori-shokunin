@@ -1,0 +1,2 @@
+C2_COUNTER_SELFTEST pass=1 fail=0
+exit=0

@@ -1,0 +1,6 @@
+  log "launch $lane round=$n pgid=$$ driver=hyaku-inline attempt=$a"
+  log "complete $lane round=$n; hyaku-inline attempt=$(claim "$lane" attempt)"
+  log "lane-dead-no-report $lane round=$n; retry same round (hyaku-inline attempt=$a: $why)"
+  log "launch $lane round=$n pgid=$pid"
+      log "complete $lane round=$n; advancing to round=$((n+1))"
+        log "lane-dead-no-report $lane round=$n; retry same round"

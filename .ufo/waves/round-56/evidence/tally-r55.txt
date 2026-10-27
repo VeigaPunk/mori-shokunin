@@ -1,0 +1,2 @@
+TALLY rows=78 agree=78 double=68 single=10 zero=0 dissent=0 voters=16 bound_voters=15
+exit=0
