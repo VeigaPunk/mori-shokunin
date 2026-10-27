@@ -1,0 +1,58 @@
+# Mo58Revenger63 receipt — C2 entry duplication/overreach probe (read-only over the lane)
+
+date: 2026-10-27 (host)
+freeze rev: fe8801120a67c1a6b8899d7d0423839caa09e7d0
+entering rev: b783d0b892637ce8d20f188cad20e4d8913ca635 (ancestor of freeze, git merge-base --is-ancestor rc=0)
+
+## sha256 (working tree unless a rev is named)
+
+e7fc469cf4ffd86a6ba14e8b6e2f66ec6366e46f853b0733553ee414c81a9e55  corpus/knowledge/driver-events-r58.md  [untracked]
+7d74c837c19c7be1fee72c9926403657c08865f1745b1c3ebe819bac29b98952  corpus/knowledge/watchdog-unclosed-r57.md
+ce438eeb42ac92b5ad9b4a2058d9256cb17b411db5d964c041e8c5caaa0866b2  corpus/knowledge/driver-liveness-r56.md
+6b3dba74c639190e7e96b6bed8e6ac8f285a51ce6d910fbe92e6dd39bf7be997  tools/mori-driver-liveness.py  [working tree]
+6b3dba74c639190e7e96b6bed8e6ac8f285a51ce6d910fbe92e6dd39bf7be997  corpus/evidence/sources-r58/mori-driver-liveness.py  [untracked]
+6b3dba74c639190e7e96b6bed8e6ac8f285a51ce6d910fbe92e6dd39bf7be997  corpus/evidence/sources-r57/mori-driver-liveness.py
+6b3dba74c639190e7e96b6bed8e6ac8f285a51ce6d910fbe92e6dd39bf7be997  git show fe880112…:tools/mori-driver-liveness.py | sha256sum
+6b3dba74c639190e7e96b6bed8e6ac8f285a51ce6d910fbe92e6dd39bf7be997  git show 618562c7…:tools/mori-driver-liveness.py | sha256sum
+6b3dba74c639190e7e96b6bed8e6ac8f285a51ce6d910fbe92e6dd39bf7be997  git show fe880112…:corpus/evidence/sources-r57/mori-driver-liveness.py | sha256sum
+
+## pointer resolution at the named revisions
+
+git cat-file -e fe880112…:corpus/knowledge/driver-events-r58.md            -> fatal: exists on disk, but not in 'fe880112…'
+git cat-file -e fe880112…:corpus/evidence/sources-r58/mori-driver-liveness.py -> fatal: exists on disk, but not in 'fe880112…'
+git log --all --oneline -- corpus/knowledge/driver-events-r58.md           -> (empty)
+git log --all --oneline -- corpus/evidence/sources-r58/                    -> (empty)
+git status --porcelain                                                     -> '?? corpus/evidence/sources-r58/', '?? corpus/knowledge/driver-events-r58.md'
+git cat-file -e 618562c7…:corpus/evidence/sources-r57/mori-driver-liveness.py -> fatal: exists on disk, but not in '618562c7…'
+git cat-file -e fe880112…:corpus/evidence/sources-r57/mori-driver-liveness.py -> rc=0 (present)
+
+## regex behaviour (imported frozen tool, no network, read-only)
+
+LAUNCHFAIL_RE = re.compile(r"^ :: (.*)$")        tools/mori-driver-liveness.py:61
+LAUNCHFAIL_RE.match(' :: ')     -> True          (empty reason accepted: no 'reason shape' constraint)
+LAUNCHFAIL_RE.match(' :: boom') -> True
+LAUNCH_REST_RE.match('')        -> True          (empty launch rest accepted; :56-58 trailing ')?$')
+LINE_RE.groups                  -> 5             (supports r58 K2 'five parsed fields')
+
+## frozen count-c2.py arms — scratch fixtures, tool bytes = freeze rev, copy = same bytes,
+## SOURCES row = corpus/SOURCES.md:330, LANE pointed at each fixture
+
+[A verbatim-entry]              rc=1  C2=unmet claims=0 located=0 copy=ok tree=ok rows=ok sources=ok failed=claims rev=3d6e3fbd07c058f442bf0a4f414917999ec9dd75
+[B format-only-fix]             rc=0  C2=met   claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=7f2f484fd4d27f3d4bf69fac896bb6a6a3c5f228
+[C overreach claim text]        rc=0  C2=met   claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=5e320b19d128abe119d98dd0dd1f3c62f65f30f2
+[D fabricated+token]            rc=0  C2=met   claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=95584e545a613146f7dc7d534944b1d80afe8984
+[E r57 quote onto r58 K3]       rc=0  C2=met   claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=f03c5216c0637e2c561393b980e1feeac3cccee3
+[F bare-stub claims]            rc=1  C2=unmet claims=8 located=0 copy=ok tree=ok rows=ok sources=ok failed=quotes rev=c216a75346d9c923a86e9b02134cfba6f9c13a43
+[G frontmatter-moved-to-body]   rc=0  C2=met   claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=e6db1d1ccde37b4f8f282e0e18312d72415cbc5d
+[H r57-content-duplicate]       rc=0  C2=met   claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=d6590d745cd60d187d7d99bb7668dd76791e3241
+
+Mutation deltas (only these changed between arms):
+A->B  '- **K<n> — ' -> '- **K<n>** — ' in 8 bullets; nothing else.
+B->C  K7 claim text -> 'launch-fail proves the lane died and the provider is gone.' (quote untouched)
+B->D  K7 quote -> '`a fabricated quote asserting reason-shape validation` / `LAUNCHFAIL_RE`'
+B->E  K3 quote -> '`row[\"open_launches\"].append(key)`' (r57 K1's genuine quote, wrong line for :123)
+B->H  body -> 8 bullets quoting r57's rows/lines (133,143,150,157,162,172,173,118) with identical frontmatter
+B->G  frontmatter source:/verified-at:/recheck: lines removed, same strings mentioned in body prose
+
+Fixture roots: /fast/scratch/hyaku/mori-r58/Mo58Revenger63/fx{,2,3,4} (git init at each path, all git calls
+`git -C <fixture>`); removed after this receipt was copied.

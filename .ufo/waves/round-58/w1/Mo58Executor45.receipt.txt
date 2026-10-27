@@ -1,0 +1,17 @@
+frozen sha256: 6ecdb627bb55522c258dc484ed5c530cfd6f7c57c6a89b4c38179df4c0f84e4b
+
+01_baseline_exact_rows                       rc=0 met  C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none  <-- EXPECTED-MET
+02_register_names_altered                    rc=0 met  C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none  <-- EXPECTED-MET
+03_register_names_swapped                    rc=0 met  C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none  <-- EXPECTED-MET
+04_capability_cell_empty                     rc=0 met  C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none  <-- EXPECTED-MET
+05_key_token_only_in_prose                   rc=0 met  C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none  <-- EXPECTED-MET
+06_both_keys_in_both_rows                    rc=0 met  C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none  <-- EXPECTED-MET
+07_manifest_caps_bare_hints                  rc=0 met  C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none  <-- EXPECTED-MET
+08_manifest_caps_negated_hints               rc=0 met  C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none  <-- EXPECTED-MET
+09_manifest_round_lane_mismatch              rc=0 met  C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none  <-- EXPECTED-MET
+10_manifest_extra_cap                        rc=0 met  C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none  <-- EXPECTED-MET
+11_badptr_outside_prefixes                   rc=0 met  C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none  <-- EXPECTED-MET
+12_badptr_dot_slash_prefix                   rc=0 met  C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none  <-- EXPECTED-MET
+13_first_working_round_bogus                 rc=0 met  C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none  <-- EXPECTED-MET
+14_control_badptr_inside_tools               rc=1 unmet C1=unmet rows=2 pointers=bad manifest=ok binding=ok failed=pointers  <-- EXPECTED-MET
+15_control_key_suffix                        rc=1 unmet C1=unmet rows=0 pointers=bad manifest=ok binding=ok failed=rows  <-- EXPECTED-MET

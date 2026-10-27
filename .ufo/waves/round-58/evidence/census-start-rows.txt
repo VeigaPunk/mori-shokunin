@@ -1,0 +1,7 @@
+Round-start registry row count, rederived from committed entering revision b783d0b892637ce8d20f188cad20e4d8913ca635:
+
+Command: git -C /home/vgpnk/Projects/shokunin/mori-shokunin show b783d0b892637ce8d20f188cad20e4d8913ca635:corpus/SOURCES.md | grep -cE '^\|[[:space:]]*S[0-9]{3,}[[:space:]]*\|'
+Output: 322
+Exit code: 0
+
+Round-start census validator command was run at round start and captured in `census-start.txt`; observed validation exit: 0 (`mori ok`, W04 warning set).

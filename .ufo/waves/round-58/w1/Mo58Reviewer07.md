@@ -1,0 +1,9 @@
+# C2 adversarial review — Mo58Reviewer07
+
+**Axes:** C2 depth claim scope; duplicated/overreaching claims versus round-57 knowledge entry.
+
+**Finding: no actionable counterexample found (bounded review).** `corpus/knowledge/watchdog-unclosed-r57.md:7-8,20` already establishes the interpretive boundary: `unclosed`/`in_flight` are parser/log facts, not process or health/settlement verdicts, and conclusions are bounded to supplied snapshot bytes. Round 58 explicitly preserves that boundary at `driver-events-r58.md:6,8,19`. Its individual claims at lines 10-17 instead locate input classification and event-specific suffix validation (five branches plus malformed timestamp handling); round 57 lines 11-18 locate pairing-list mutations and derived fields. These are adjacent aspects of the same parser, but the located claims are not duplicates of the round-57 claims.
+
+No scope overreach identified: the entry disclaims provider death, authoritative settlement, successful completion, and lane health (`driver-events-r58.md:8,19`); C2 is expressly about event-class parsing semantics (`.ufo/waves/round-58/contract.md:36-44`). The parser evidence supports the specific mechanics: timestamp-first nonmatching lines increment `other_lines` (`corpus/evidence/sources-r58/mori-driver-liveness.py:99-103`), and each event branch validates its own rest grammar before counting (`:122-163`).
+
+**Method/bounds:** Read the frozen round-58 contract and C2 counter, the proposed r58 entry and its pinned source, and `corpus/knowledge/watchdog-unclosed-r57.md`; compared claim subjects and stated limits, and checked cited parser branches. Freeze revision `fe8801120a67c1a6b8899d7d0423839caa09e7d0` exists. This is a scoped content/overlap review, not a complete C2 counter execution or independent audit of every claim. Disk guard status was green (scratch 32% used; 549.8G free).

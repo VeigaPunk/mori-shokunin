@@ -1,0 +1,26 @@
+# Mo58Executor46 — cheapest no-work state, reproduced in an isolated scratch clone
+
+scratch clone top: /fast/scratch/hyaku/mori-r58/Mo58Executor46/minimal/lane
+git top-level assert: /fast/scratch/hyaku/mori-r58/Mo58Executor46/minimal/lane
+
+## step 1: snapshot the entering rev b783d0b8 into the throwaway repo
+5ee664d entering snapshot b783d0b8
+
+## step 2: add ONLY the frozen counter (no SCORECARD/MANIFEST/corpus edit)
+files changed vs entering:
+.ufo/waves/round-58/count-c1.py
+counter blob: a772d56d1fae83efa4ebeb4fcc515007137ae2ba
+
+## step 3: run the counter against the new minimal rev
+rev: be66f5e1f57d408e993eec73416393c3c57d5626
+rc= 0
+out= C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=be66f5e1f57d408e993eec73416393c3c57d5626
+
+## step 4: entering -> freeze file list (lane-side delta the freeze actually introduced)
+.ufo/waves/round-58/contract.md
+.ufo/waves/round-58/count-c1.py
+.ufo/waves/round-58/count-c2.py
+.ufo/waves/round-58/evidence/census-start.txt
+.ufo/waves/round-58/evidence/controls.txt
+
+SCORECARD.md identical entering vs freeze: YES

@@ -1,0 +1,12 @@
+m0_control_real :: C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=cc3586beecf1d1fdbc9e43310961c289359781a5 rc=0
+m1_content_swapped_keys_fixed :: C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=8cee6d55dc551f7770644104cd85eae6a0e89e10 rc=0
+m2_key_cells_swapped :: C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=0114d9bd4aa2b17d0af75bf21cac3dee622c06b0 rc=0
+m3_manifest_hint_spoof :: C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=1724659a357855dbfdf2f5d44a5663839aded11a rc=0
+m4_manifest_order_swapped_ctl :: C1=unmet rows=2 pointers=ok manifest=bad binding=ok failed=manifest,manifest rev=23b770f5628fd1366ef9419f601289736d9bacf6 rc=1
+m5_key_in_evidence_cell :: C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=75f5635f7b06ca603e093d3fd1cdc89a832c88d8 rc=0
+m6a_pointer_unchecked_prefix :: C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=2cbca3b2ef163f814841e3286663389034269964 rc=0
+m6b_pointer_missing_ctl :: C1=unmet rows=2 pointers=bad manifest=ok binding=ok failed=pointers rev=6f3c04ec363b88a04ca8648eb0e139873f2e10b1 rc=1
+m7_earlier_duplicate_register :: C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=7154ed84395fff89cd0f74f578c2f7670666d30e rc=0
+m8_live_manifest_altered_same_rev :: C1=unmet rows=2 pointers=ok manifest=bad binding=ok failed=manifest rev=c436429d19fae076704293874e6ce9b7001de298 rc=1
+m9_dir_pointer :: C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=10f72d77dff1af4f3cf7f9cb609fe43ad3eca88e rc=0
+m10_manifest_missing_ctl :: C1=unmet rows=2 pointers=ok manifest=bad binding=ok failed=manifest rev=680bf024496d5f3790abc9fcd008051d47cdc7f4 rc=1

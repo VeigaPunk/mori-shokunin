@@ -1,0 +1,28 @@
+## C1 at entering b783d0b8
+C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=b783d0b892637ce8d20f188cad20e4d8913ca635
+rc=0
+
+## C1 at freeze fe88011
+C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=fe8801120a67c1a6b8899d7d0423839caa09e7d0
+rc=0
+
+## C1 at HEAD 4272736c
+C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=4272736cfc5147586e1543413772f80daf44b04b
+rc=0
+
+## C1 selftest
+C1_SELFTEST pass=4 fail=0
+rc=0
+
+## round-57 counter contrast at entering (known wrong-table false-negative)
+C1=unmet rows=0 evidence=bad rev=b783d0b892637ce8d20f188cad20e4d8913ca635
+rc=1
+
+## round-57 counter contrast at HEAD (same false-negative preserved)
+C1=unmet rows=0 evidence=bad rev=4272736cfc5147586e1543413772f80daf44b04b
+rc=1
+
+## C1 at pre-rows rev 2f1d0c5d (round-56 register rows absent)
+C1=unmet rows=0 pointers=bad manifest=ok binding=ok failed=rows rev=2f1d0c5d4a2bec7345c48d0ddfc138898dd3635d
+rc=1
+

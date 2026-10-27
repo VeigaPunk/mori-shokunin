@@ -799,3 +799,10 @@ Append-only correction to Round54: the r54 C1 scope did not include these four p
 |---|---|---|
 | Fleet liveness — FR5's named open ground (the hyaku driver's log lines as a second liveness source) | `knowledge/driver-liveness-r56.md` (S544) | Moves `.ufo/watchdog.log` launch/complete/dead/wrap/fail reading to Core as `tools/mori-driver-liveness.py`: per-lane log-shape facts (counts, ages, in_flight, unclosed), full live-log grammar coverage (0 malformed at capture), 13-case selftest, 9 frozen fixtures; no health verdict and no state-value reads. |
 | Seat-output vote binding — the round-55 vote-arm output-shape failure class | `knowledge/vote-binding-r56.md` (S545) | `tools/mori-vote-bind.py` binds votes in both plain-text and JSON string-scalar shapes (16-case selftest); re-binds the committed round-55 tally to 68 quorum rows + 10 honestly single-voted rows with 0 dissent, where the frozen r55 counter read voted=0 on the same bytes; binding proves carriage, not authorship. |
+
+## Round-58 knowledge addition — C2 driver event-class parsing
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| Existing Core FR5 driver-liveness parser semantics | `knowledge/driver-events-r58.md` (S550) | Adds eleven source-located implementation details on lane/round token boundaries, timestamp conversion, event-specific regular expressions and malformed-example sampling; deepens the existing Core tool without moving Frontier ground or claiming a lane-health verdict. |
+

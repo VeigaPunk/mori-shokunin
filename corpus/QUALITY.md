@@ -1554,3 +1554,17 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     `C2-F1`), so the round directory is part of the key and an id-only ledger is rejected; and
     the id list is the round-49 ledger's, so each new round needs its own extraction before the
     command means anything.
+
+## Criterion added round 58 — frozen claim output/predicate identity
+
+154. A frozen claim's literal target output must be produced by the frozen
+    counting command; a separate selftest or a report-composed string cannot
+    supply a missing required token. Before dispatch, the contract target,
+    counter condition and receipt label must name the same predicate and
+    output. If a required target token is absent from the counting command's
+    output, the claim is unverified even when an auxiliary selftest passes;
+    do not patch the predicate after scoring. ← `corpus/lessons/round-58.md`
+    `## Mistakes`, "Frozen C1 predicate/output mismatch"; shown able to fail by
+    contract `:29-34` requiring `selftest=ok` while frozen `count-c1.py:124-125`
+    omits it in the measured output `evidence/controls.txt`.
+

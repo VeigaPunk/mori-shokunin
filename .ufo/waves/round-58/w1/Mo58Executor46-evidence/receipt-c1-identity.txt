@@ -1,0 +1,38 @@
+# Mo58Executor46 receipts — C1 do-nothing
+
+## lane state
+lane HEAD:        4272736cfc5147586e1543413772f80daf44b04b
+entering rev:     b783d0b892637ce8d20f188cad20e4d8913ca635
+freeze rev:       fe8801120a67c1a6b8899d7d0423839caa09e7d0
+
+## counter identity (frozen bytes unchanged)
+frozen blob:   a772d56d1fae83efa4ebeb4fcc515007137ae2ba
+worktree blob: a772d56d1fae83efa4ebeb4fcc515007137ae2ba
+HEAD blob:     a772d56d1fae83efa4ebeb4fcc515007137ae2ba
+
+## counter absence at entering rev (do-nothing control per contract)
+fatal: path '.ufo/waves/round-58/count-c1.py' exists on disk, but not in 'b783d0b892637ce8d20f188cad20e4d8913ca635'
+rc=128 (expected: counter absent at entering rev)
+
+## contract frozen target string vs actual measure output
+target: C1=met rows=2 pointers=ok manifest=ok binding=ok selftest=ok rev=R
+actual: C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=b783d0b892637ce8d20f188cad20e4d8913ca635
+occurrences of literal 'selftest=ok' in counter source: 0
+measure() print line: 75:        print(f"C1=unmet reason=revision failed=rev rev={rev}")
+124:    print(f"C1={state} rows={len(rows)} pointers={pointers} manifest={manifest} "
+
+## evidence pointers of the two round-56 rows resolve at entering rev
+tools/mori-vote-bind.py -> rc=0 (resolves)
+.ufo/waves/round-56/evidence/c2-at-landed.txt -> rc=0 (resolves)
+tools/mori-driver-liveness.py -> rc=0 (resolves)
+.ufo/waves/round-56/evidence/c1-at-landed.txt -> rc=0 (resolves)
+
+## active register header + row count at entering rev (SCORECARD.md)
+1953:Round 35 (claim C1, calibration). This is the lane's current capabilities register, the `capabilities` field of the
+20
+(>=10 key rows required by the counter's binding arm)
+
+## stub marker forms in the real SCORECARD.md at entering rev
+ascii '-- none yet --' occurrences: 0
+600:| — none yet — | | | |
+1958:a rejected round, are not rows. As the current self-assessment this register supersedes the `— none yet —` table in the

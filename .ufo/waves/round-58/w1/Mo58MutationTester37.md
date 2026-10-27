@@ -1,0 +1,23 @@
+# Round 58 — quarantine slice re-derivation
+
+Freeze inspected: `fe8801120a67c1a6b8899d7d0423839caa09e7d0`. The campaign absent-defect register is external/read-only: `/home/vgpnk/Projects/shokuknow/.ufo/waves/corpus-expansion-1/absent-defect-register.md:356-358`. Its three `mori` rows are malformed (`S244\``, `S262\``, `S268\``) and all say “the cited source could not be fetched, so no quote was checked.” The lane’s round-43 `assimilation/quarantine-slice` reproduces that text. The slice is not itself three lane-registry rows.
+
+## Hand-check
+
+| Slice ID | Lane-registry / pointer reachability at freeze | Fresh bounded source check | Verdict |
+|---|---|---|---|
+| S244 | No `corpus/SOURCES.md` history hit (`git log --all -S'S244' …` = 0); staged row is S483 (`/home/vgpnk/Projects/shokuknow/merge/mori/SOURCES.append.md:19`). Its named `used-by`, `corpus/knowledge/kernel-oom-line-attribution-r12.md`, exists, but a targeted search for `98.9%`, `3643916`, `2403.18832`, `rationale` finds no match. | Cited DOI: HTTP 403, 5471 B (final `dl.acm.org` URL). Named arXiv PDF companion: HTTP 200, 1,420,568 B, SHA-256 `ab8ab19551fb3614307b818e48b49885eca6f8af933b9eddfde8a18e6bf6018e`. Extracted text lines 29–30: “We find that 98.9% of commits / in our dataset contain sentences with rationale information”. | `quote-present` on the declared companion, despite the publisher endpoint’s failure. The old “could not be fetched” class is not a quote-absence finding; the `used-by` association is mismatched. |
+| S262 | Lane row exists at `corpus/SOURCES.md:243`; `corpus/evidence/sources-r42/S262.oa.json` and `corpus/knowledge/oom-victim-context-r41.md` exist. History search returns 14 hits. | DOI route: HTTP 202, 0 B (final `ieeexplore` document URL). OpenAlex record: HTTP 200, 67,270 B, SHA-256 `6c477abb276657e3fcd98ad6c6b79d3a6d6b527cfe7bfb10a6b4419e4649207a`. Reconstructed `abstract_inverted_index` contains the exact sentence in both fetched JSON and committed copy: “Our study shows that Linux cgroups and the default Out-of-Memory (OOM) mechanism lack sufficient container context when selecting victim processes.” The lane entry locates it at lines 15–17 and attributes it to S262. | `quote-present`, at abstract scope only; the publisher route remains unavailable. |
+| S268 | No `corpus/SOURCES.md` history hit (0); staged row is S507 (`SOURCES.append.md:43`). Its purported used-by `corpus/knowledge/oom-tracing-tracepoints-r42.md` is absent at freeze (`git cat-file -e` rc 128); the round-42 refusal is present. | DOI route is HTTP 202, 0 B. Fresh publisher stampPDF GET: HTTP 418, `text/html`, 15,410 B; SHA-256 `aa3b5aa9d9f04276cb63e70d6c2383b61d2089d8bb860abbb6fbde2861987b93`, `x-cache: Error from cloudfront`. Search of this HTML for `mark_victim`, `start_task_reaping`, `finish_task_reaping`, and `lsm_oom_kill_check`: no matches. | `unverifiable`, not fabrication: this attempt yielded an error page, not the claimed full text. No supporting lane entry or source carrier was present at freeze. |
+
+The registry/history distinctions are evidence-backed: `S244 history=0`, `S262 history=14`, `S268 history=0`; the S268 missing-path check reports `fatal: path ... does not exist in 'fe880…'`. For S244, “absent” describes its lane registry row, not the quote/source: its arXiv companion was reachable and the quote is present. For S268, both the row and used-by entry are absent, while the full-text proposition remains unverified. None of the three justifies a fabrication verdict. This re-derives the prior round-45 disposition (lesson `corpus/lessons/round-45.md:103-117`) and identifies the S244 companion as a material correction to the original never-checked label.
+
+## Bounded C2 counter mutation probe
+
+Used the frozen C2 script bytes (SHA-256 `aab888ad787964f7a153d64d85dafa58f652f977e21e22eaa492706a691010d3`) and its `--selftest` as the same bounded detector on pristine, mutant, and restored scratch bytes. Mutation removed the quote-substring requirement while retaining the 12-character minimum: `len(s) >= 12 and s in copy_lines[...]` → `len(s) >= 12`. Expected detector: the `junk_quotes` fixture must reject with `failed=quotes`.
+
+- Pristine: `C2_SELFTEST pass=6 fail=0`, exit 0.
+- Mutant: `C2_SELFTEST pass=5 fail=1`, exit 1; stderr identifies `junk_quotes` incorrectly accepted as `C2=met … located=8 … failed=none`. **Killed.**
+- Restored: `C2_SELFTEST pass=6 fail=0`, exit 0. Before and restored SHA-256 both `aab888ad787964f7a153d64d85dafa58f652f977e21e22eaa492706a691010d3`; restored bytes compared identical.
+
+No production, corpus, register, SCORECARD, LOG, or VCS bytes were changed. No tools installed.

@@ -1,0 +1,17 @@
+# Mo58Reviewer12 — cross-claim no-harm review
+
+## Finding — C1 table-identity control is not frozen-revision-bound (actionable)
+
+The contract requires C1's table-identity binding to be “proven against the freeze revision” and identifies the active table by its current-register preamble (contract.md, C1). But `count-c1.py`'s `_find_register(text)` searches only the measured revision's `SCORECARD.md`; it accepts whichever `## Capabilities` section first has the marker within its first 12 body lines, lacks the stub marker, and has the header. It does not compare that section/table identity or bytes with `fe8801120a67c1a6b8899d7d0423839caa09e7d0`. Existing selftest only covers stub-only, pointer, and wrong-key arms; it has no changed/duplicated active-register identity arm (`count-c1.py`, `_find_register`, `_run_selftest`). Therefore a measured revision can supply a different/spoofed marker-bearing table and still pass the asserted identity predicate if it carries the two rows and ten key rows. This is a gap in the frozen identity falsifier, not evidence that the actual landed register is wrong.
+
+Evidence for intended identity: `SCORECARD.md:596-604` is the superseded stub, while `:1951-1960` explicitly says the later register supersedes it; C1's marker does locate that later section in the current SCORECARD. Round-57 spot-check explicitly routed this target-identity defect (round-57-verifier-spotcheck.md, “Routed defects for round 58”, item 1). The counter improves the prior first-heading bug, but its rule is marker matching at R, not proof of identity against the frozen target.
+
+## Cross-claim / boundary review
+
+- No axis overlap counterexample found in the bounded contracts and prior records: round 56 assigns coverage and operability to separate artifacts and explicitly says separable; round 57 assigns calibration and depth and says separable; round 58 C1 measures SCORECARD capability registration while C2 measures source-grounded parser semantics in a knowledge entry. They share the underlying round-56 driver-liveness capability as context, but the predicates and measured artifacts differ; this is not by itself axis double-counting.
+- C2's frozen predicate checks source-copy/tool SHA equality and line-local quote substrings, plus entry frontmatter and S550 row/use-by. The round-57 spot-check's cited C2 false-green was specifically accepted arbitrary backticks without reading a source copy; the round-58 mechanism addresses that construction. No detection/report boundary bleed or provider-death inference was found in the inspected contract/counter code.
+- Counter/contract scope inspected: round-58 contract and both complete counters; round-56/57 contracts and counters; the full round-57 verifier spot-check; SCORECARD stub/active-register ranges; MANIFEST round 832 capability values. No production files changed.
+
+## Verification gaps
+
+Could not establish freeze-vs-working-tree file identity: the asynchronous hash-check output was not available from the process handle. No round-56/57 seat-level falsifier records were inspected. No counters or tests were executed; this is static review only. The C1 identity finding is based on the frozen source code and contract wording above.

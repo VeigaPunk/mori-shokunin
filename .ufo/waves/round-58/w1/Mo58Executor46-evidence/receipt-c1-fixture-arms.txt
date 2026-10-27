@@ -1,0 +1,23 @@
+# Mo58Executor46 — independent fixture arms (own throwaway git repos, no lane VCS touched)
+
+## A/B/C: contract §9 do-nothing arms, reproduced independently of the counter's own --selftest
+A_donothing_stub_only: rc=1 out=C1=unmet rows=0 pointers=ok manifest=bad binding=bad failed=binding rev=9a7f0c4ac8ee10cbea0791e445997b69a4f2ac1f
+B_donothing_bad_pointer: rc=1 out=C1=unmet rows=2 pointers=bad manifest=ok binding=ok failed=pointers rev=a52cd52f73229b3d2046b8f2b670c7d5405b43d8
+C_donothing_conformant: rc=0 out=C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=0580ce7dfad1e50a19332e018d6c259a454b3dd2
+
+## D/E: pointer-resolution coverage probes (bogus path with slash, and bogus bare .py name)
+D_bogus_nonexistent_prefixed_path: rc=0 out=C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=32d5d204c4d434021b08cbc4167a21932eaee8bc
+E_bogus_bare_name_no_slash: rc=0 out=C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=15a1d57da867c7874d088a868eb37f65268582c8
+
+## G/H/I: register-selection arms (rows only in superseded stub; rows absent; duplicate rows)
+G_rows_only_in_superseded_stub: rc=1 out=C1=unmet rows=0 pointers=bad manifest=ok binding=ok failed=rows rev=709d62f84c8e351acc56f7b64e215e8e5fd17d9c
+H_active_register_missing_both_rows: rc=1 out=C1=unmet rows=0 pointers=bad manifest=ok binding=ok failed=rows rev=4297bfd3a94dbc4c22a4e3cf71e2e3a656412b9a
+I_duplicate_rows_in_active: rc=1 out=C1=unmet rows=3 pointers=bad manifest=ok binding=ok failed=rows rev=96292445397706bc8909b10e756fb1c59b51cc86
+
+## J/K: manifest-binding strength (hint substrings only; rounds[832] absent)
+J_manifest_content_unrelated_hints_only: rc=0 out=C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=1fd95fb52fcb2a22dcd6974fc9f290de43a2589c
+K_manifest_832_absent: rc=1 out=C1=unmet rows=2 pointers=ok manifest=bad binding=ok failed=manifest rev=1fd95fb52fcb2a22dcd6974fc9f290de43a2589c
+
+## L: real-file stub marker form (em-dash '— none yet —') vs counter's STUB_MARK '-- none yet --'
+L_em_dash_stub_marker_not_detected: rc=0 out=C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=214c3cb9f6d11313ce98113a411d221a60e05580
+STUB_MARK literal in counter: '-- none yet --'

@@ -1,0 +1,109 @@
+# Mo58Executor48 — C2 registry-binding attack receipt
+
+Generated: 2026-10-27T14:42:14-03:00
+Counter under attack: .ufo/waves/round-58/count-c2.py @ fe8801120a67c1a6b8899d7d0423839caa09e7d0
+Counter sha256: aab888ad787964f7a153d64d85dafa58f652f977e21e22eaa492706a691010d3
+Pinned copy sha256: 6b3dba74c639190e7e96b6bed8e6ac8f285a51ce6d910fbe92e6dd39bf7be997
+
+## frozen counter selftest
+C2_SELFTEST pass=6 fail=0
+rc=0
+
+## frozen counter vs lane revisions
+C2=unmet entry=absent failed=entry rev=fe8801120a67c1a6b8899d7d0423839caa09e7d0
+rc=1 rev=fe8801120a67c1a6b8899d7d0423839caa09e7d0
+C2=unmet entry=absent failed=entry rev=b783d0b892637ce8d20f188cad20e4d8913ca635
+rc=1 rev=b783d0b892637ce8d20f188cad20e4d8913ca635
+C2=unmet entry=absent failed=entry rev=4272736cfc5147586e1543413772f80daf44b04b
+rc=1 rev=4272736cfc5147586e1543413772f80daf44b04b
+
+## arms (all harnesses)
+### arms.json
+A0_conformant_baseline	 rc=1	 expect=met	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=ok sources=ok failed=claims rev=00486a630e4fd303e68dfc6aa1b67b31a3a53b1d
+A1_duplicate_id_same_table	 rc=1	 expect=rows=bad	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=bad sources=ok failed=claims,rows rev=fde4d83683b6d3da07e9e50f11fc81e44b588511
+A1b_duplicate_id_other_section	 rc=1	 expect=rows=bad	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=bad sources=ok failed=claims,rows rev=f553097f918b212a5b04daf0e6c55320f6c82d35
+A2_wrong_status_queued	 rc=1	 expect=rows=bad	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=bad sources=ok failed=claims,rows rev=0fd5136e931fbe2836ff33ebb20e9a3ce49036c8
+A2b_status_mined_suffix	 rc=1	 expect=rows=bad	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=bad sources=ok failed=claims,rows rev=38c26040250c85bd07c4ce94e162730505249be2
+A3_dangling_usedby_suffix	 rc=1	 expect=rows=ok(FALSE GREEN?)	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=ok sources=ok failed=claims rev=9cc198e669b26f9795fb50a17a954dcf4cd930e8
+A3b_dangling_usedby_prose	 rc=1	 expect=rows=ok(FALSE GREEN?)	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=ok sources=ok failed=claims rev=01863b55fffcc9c6bad2eab8ebdc6c2dc97a6284
+A4_short_row_9_cells	 rc=1	 expect=rows=bad	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=bad sources=ok failed=claims,rows rev=3b6d442757fd5e3899319dbdf9f24782204c6173
+A4b_extra_column_shift	 rc=1	 expect=rows=ok(FALSE GREEN?)	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=ok sources=ok failed=claims rev=f875c4da853104280eb21b61f1e2833b0aa5a061
+A5_lookalike_S5500_only	 rc=1	 expect=rows=bad	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=bad sources=ok failed=claims,rows rev=c4441176f9813e9fbbbaf0c7e7781279c549c372
+A5b_lookalike_letter_O	 rc=1	 expect=rows=bad	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=bad sources=ok failed=claims,rows rev=641947b078dd2be316dae7cea4bcb978097eb0ed
+A5c_lookalike_S5500_plus_real	 rc=1	 expect=rows=ok	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=ok sources=ok failed=claims rev=dee4e516202ff82045935ee5fd5e7f66ab47024b
+A6_row_outside_registry_table	 rc=1	 expect=rows=ok(FALSE GREEN?)	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=ok sources=ok failed=claims rev=b49f646bb23c690cfa15e385a721a47dd4261083
+A6b_row_in_fenced_code_block	 rc=1	 expect=rows=ok(FALSE GREEN?)	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=ok sources=ok failed=claims rev=3060e36758a9479c54c07ee4650fbd2e6fe9f591
+A7_entry_frontmatter_S5500	 rc=1	 expect=sources=ok(FALSE GREEN?)	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=ok sources=ok failed=claims rev=03465f54b32956e76e4b6527b86db5cc91492cf7
+A7b_entry_frontmatter_S550x	 rc=1	 expect=sources=ok(FALSE GREEN?)	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=ok sources=ok failed=claims rev=d7e64d60bb771f88e919c66b6c5c1a209ef5b1a5
+A8_entry_frontmatter_S548	 rc=1	 expect=sources=bad	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=ok sources=bad failed=sources,claims rev=6b910dfe45d046d8d7878623954d82eab7942b90
+
+### arms2.json
+B0_conformant_baseline	 rc=0	 expect=met	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=3e11cbf13f745a20f2ad8c7d0fa386f4f341c4cd
+B1_staged_lane_entry	 rc=1	 expect=met	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=ok sources=ok failed=claims rev=59609be7c37034249a7119535be408e317a181b0
+B2_duplicate_id_same_table	 rc=1	 expect=rows=bad	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=4bccc447f2438096ad0763b5289a9bbe7023199b
+B3_duplicate_id_other_section	 rc=1	 expect=rows=bad	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=7e38f74d37ab40c3a85a3d27fd1a85bc1b515b59
+B4_wrong_status_queued	 rc=1	 expect=rows=bad	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=c41b5d9c9a83167c97c1f7997eed722499fed282
+B4b_status_mined_suffix	 rc=1	 expect=rows=bad	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=2191920e16c1e941155eb095629cbfcae9fb8ca9
+B5_dangling_usedby_bak	 rc=0	 expect=rows=ok	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=5b2f97adb4091c1974c09f5c59c17487b2137d4a
+B5b_dangling_usedby_prose	 rc=0	 expect=rows=ok	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=6ec99faad3072305d9fa3c0ed97499a1f697f761
+B6_short_row_9_columns	 rc=1	 expect=rows=bad	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=5573898c8d91cfb191004b5e0b1d66070a36daf4
+B6b_extra_column_shift	 rc=0	 expect=rows=ok	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=e1f01919abb30367a264059cda9388cb22fe3365
+B7_lookalike_S5500_only	 rc=1	 expect=rows=bad	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=ab02fcdc5047dca138dd4fe526d928b05d4ef052
+B7b_lookalike_letter_O	 rc=1	 expect=rows=bad	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=8d377726a9e0b0b90f8e55554d1aa294c7a100a5
+B7c_lookalike_S5500_plus_real	 rc=0	 expect=rows=ok	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=10c011cdb7182fd5d6a186d53a318614c5ce9628
+B7d_row_id_lowercase	 rc=1	 expect=rows=bad	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=cf6c059270e3f4d3c67cdfc54055af3ea9d87218
+B8_row_outside_registry_table	 rc=0	 expect=rows=ok	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=0a22a8f3a00d504a68b4b4de22485e97b8efa90b
+B8b_row_in_fenced_code_block	 rc=0	 expect=rows=ok	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=082db7ed4dbcaab97205515c61198067200752e4
+B9_entry_frontmatter_S5500	 rc=0	 expect=sources=ok	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=bf4c42b6401364a8ed3be78fb956f95414b535ef
+B9b_entry_frontmatter_S548	 rc=1	 expect=sources=bad	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=ok sources=bad failed=sources rev=a8a2e99c82343449fd56157020c34c693a2e9f61
+
+### arms3.json
+C1_verified_at_bogus_suffix	 rc=0	 expect=sources=ok	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=58178bf04d4ed368e42539828433abc1df38fcb2
+C2_coverage_map_in_body_only	 rc=0	 expect=sources=ok	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=1640e06a70536128c7c6c67b08c1afbc4f6d679a
+C3_recheck_empty_value	 rc=0	 expect=sources=ok	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=cf63e1658ef80bb8b8d634cd9f19aa6f2a7e3a45
+C4_quote_masked_by_incidental_span	 rc=1	 expect=located=ok(FALSE GREEN?)	 C2=unmet claims=1 located=1 copy=ok tree=ok rows=ok sources=ok failed=claims rev=be841ada02695d4d40c2e26701bada7f40b25069
+C5_usedby_other_real_file	 rc=1	 expect=rows=ok	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=e10f60ad7a1881d264400f07f367eac14a1c5f6e
+C6_usedby_path_prefix_token	 rc=0	 expect=rows=ok	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=13b576535989f5d101966a73c6a4c6855c4e6186
+C7_usedby_resolves_to_real_entry_copy	 rc=1	 expect=rows=ok	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=c100b9153a4e2e2d29742ea7b096c163b526e7ea
+C8_path_in_cell12_only	 rc=1	 expect=rows=bad	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=c22dd307cb4c6db038c639ff98bf7cf6c7c79331
+C9_header_extra_column_row_unchanged	 rc=0	 expect=rows=ok	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=03e8ae31261427fa4223c998ed4cb651135ef854
+
+### arms4.json
+D0_staged_entry_as_is	 rc=1	 expect=unmet(claims=0)	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=ok sources=ok failed=claims rev=1382aa03818574d73d61d94a185540ebd00dba78
+D0b_staged_entry_reshaped	 rc=0	 expect=met	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=d049b8e23cac1f7b7954a2ef7ca56d4080ec0f97
+D1_quote_masked_by_incidental_span	 rc=1	 expect=unmet(failed=quotes)	 C2=unmet claims=8 located=7 copy=ok tree=ok rows=ok sources=ok failed=quotes rev=2e8c8ab3f6aeaabf9a4a3ced376c87bdd84fa4e6
+D1b_quote_fabricated_no_mask	 rc=1	 expect=unmet(failed=quotes)	 C2=unmet claims=8 located=7 copy=ok tree=ok rows=ok sources=ok failed=quotes rev=fdc22c7e6f633a2e17fe90e7c47b5dccc1ef0cc5
+D2_row_outside_registry_table	 rc=0	 expect=met(FALSE GREEN?)	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=4a0ee650b748a221af66e561e46b069f4cca8800
+D3_dangling_usedby_bak	 rc=0	 expect=met(FALSE GREEN?)	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=3f7598568c7662920e83b87f7961a7270f7d60f0
+D3b_dangling_usedby_prose	 rc=0	 expect=met(FALSE GREEN?)	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=40a5b519d157d6dd366dfdde2e703a69ce5a228f
+D3c_usedby_prefix_token	 rc=0	 expect=met(FALSE GREEN?)	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=f2fef09868981dec184e18d5cac7a2701b599891
+D4_wrong_status_queued	 rc=1	 expect=unmet(rows=bad)	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=3120fa35cb65afd41d4e0da8b37bf44baf0128e4
+D4b_status_mined_suffix	 rc=1	 expect=unmet(rows=bad)	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=7d118717326dbf62b0a1843f5f51e8e0e0355fbe
+D4c_status_column_shift	 rc=0	 expect=met(FALSE GREEN?)	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=baa1366a4762925a5398e511314f7b1d65101a6b
+D5_short_row	 rc=1	 expect=unmet(rows=bad)	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=c3a7cd57b16f56c29da87274fb06920166cd44e3
+D5b_extra_column	 rc=0	 expect=met(FALSE GREEN?)	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=fe6497d95c33e61b2a9aae3e59d99307406a5bea
+D5c_header_declares_extra_column	 rc=0	 expect=met(FALSE GREEN?)	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=f7564594fafc382c8300be3f52ab29632aeb2c86
+D6_lookalike_S5500_only	 rc=1	 expect=unmet(rows=bad)	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=1a97f9d2e554e722526dfffba88545de0eeee7b6
+D6b_lookalike_letter_O	 rc=1	 expect=unmet(rows=bad)	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=e15d620bc56b3d0c128268bc4933a4714babe062
+D6c_lookalike_S5500_plus_real	 rc=0	 expect=met	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=9bf03fcd7ca4025528f4e03bb9eaaca0779894f1
+D6d_lookalike_lowercase_id	 rc=1	 expect=unmet(rows=bad)	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=50b2666f6fd83b1915de235d9df86044ccd2e540
+D7_duplicate_same_table	 rc=1	 expect=unmet(rows=bad)	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=acf7b9801b2c092f64ccd409f78b54164a31a19b
+D7b_duplicate_other_section	 rc=1	 expect=unmet(rows=bad)	 C2=unmet claims=8 located=8 copy=ok tree=ok rows=bad sources=ok failed=rows rev=30b63537208d2740e929f47e8650a2de27d5dae2
+
+### arms5.json
+E0_real_worktree_as_is	 rc=1	 expect=unmet(failed=claims)	 C2=unmet claims=0 located=0 copy=ok tree=ok rows=ok sources=ok failed=claims rev=047c83f0637caddfc3337b2bbc952addfda59715
+E1_real_entry_reshaped	 rc=0	 expect=met	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=758098e854932707143e97f48e0329f8fbbb1e15
+E2_dangling_usedby_on_real_registry	 rc=0	 expect=met(FALSE-GREEN)	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=954b422f1da5d4deb4476553fffbc9eed408f32e
+E3_row_outside_registry_on_real_sources	 rc=0	 expect=met(FALSE-GREEN)	 C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=71165109948943f1d6578ee460a4ac099437d1a7
+
+
+## harness7 — quote-masking (arms not captured in arms*.json)
+MASKED  (fabricated primary quote + incidental `LAUNCH_REST_RE` on cited line 123):
+  rc=0 :: C2=met claims=8 located=8 copy=ok tree=ok rows=ok sources=ok failed=none rev=406e10385db31002c9ed5c4c4015b5c58a94568b
+CONTROL (identical fabricated quote, no incidental span):
+  rc=1 :: C2=unmet claims=8 located=7 copy=ok tree=ok rows=ok sources=ok failed=quotes rev=6ecb8b6342cfcd40c789ae90209b5832b33756be
+
+## harness6 — per-claim located replay against the REAL staged entry (reshaped)
+  K1 line=101 located=True   K2 line=103 located=True   K3 line=123 located=True   K4 line=135 located=True
+  K5 line=145 located=True   K6 line=152 located=True   K7 line=159 located=True   K8 line=96  located=True
+  => claims=8 located=8

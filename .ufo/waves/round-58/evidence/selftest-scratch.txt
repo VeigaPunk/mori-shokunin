@@ -1,0 +1,10 @@
+Round-58 selftests rerun with the required scratch root (initial control receipt used inherited TMPDIR; no scratch residue remains from that run, but it is disclosed as a deviation).
+
+Scratch: /fast/scratch/hyaku/mori-r58/L1-controls
+Commands:
+TMPDIR=/fast/scratch/hyaku/mori-r58/L1-controls python3 .ufo/waves/round-58/count-c1.py --selftest
+TMPDIR=/fast/scratch/hyaku/mori-r58/L1-controls python3 .ufo/waves/round-58/count-c2.py --selftest
+
+C1_SELFTEST pass=4 fail=0 (exit 0)
+C2_SELFTEST pass=6 fail=0 (exit 0)
+The scratch directory was removed before yielding from the command.

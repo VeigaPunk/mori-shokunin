@@ -1,0 +1,41 @@
+# Mo58Executor42 receipt — frozen counter / selftest / probe outputs
+generated: 2026-10-27T17:39:20Z
+lane: /home/vgpnk/Projects/shokunin/mori-shokunin
+scratch: /fast/scratch/hyaku/mori-r58/Mo58Executor42  (created explicitly, TMPDIR set here for all counter runs)
+freeze rev: fe8801120a67c1a6b8899d7d0423839caa09e7d0
+entering rev: b783d0b892637ce8d20f188cad20e4d8913ca635
+lane HEAD at audit: 4272736cfc5147586e1543413772f80daf44b04b
+
+== counter sha256 (identical to freeze blob sha256) ==
+6ecdb627bb55522c258dc484ed5c530cfd6f7c57c6a89b4c38179df4c0f84e4b  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-58/count-c1.py
+aab888ad787964f7a153d64d85dafa58f652f977e21e22eaa492706a691010d3  /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-58/count-c2.py
+
+== selftests (TMPDIR=scratch) ==
+C1_SELFTEST pass=4 fail=0
+C2_SELFTEST pass=6 fail=0
+
+== counter at entering / freeze / HEAD ==
+-- b783d0b892637ce8d20f188cad20e4d8913ca635
+C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=b783d0b892637ce8d20f188cad20e4d8913ca635
+C2=unmet entry=absent failed=entry rev=b783d0b892637ce8d20f188cad20e4d8913ca635
+-- fe8801120a67c1a6b8899d7d0423839caa09e7d0
+C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=fe8801120a67c1a6b8899d7d0423839caa09e7d0
+C2=unmet entry=absent failed=entry rev=fe8801120a67c1a6b8899d7d0423839caa09e7d0
+-- 4272736cfc5147586e1543413772f80daf44b04b
+C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=4272736cfc5147586e1543413772f80daf44b04b
+C2=unmet entry=absent failed=entry rev=4272736cfc5147586e1543413772f80daf44b04b
+
+== round-57 contrast control at HEAD (contract: C1=unmet rows=0 evidence=bad) ==
+C1=unmet rows=0 evidence=bad rev=HEAD
+
+== census validate (read-only, fleet root) ==
+mori	W04	S546 duplicate url www.rfc-editor.org/rfc/rfc8259.txt across scopes
+mori	ok	/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md
+census exit=0
+
+== disk guard ==
+root                             use%     free
+/tmp                               4%   122.7G
+/var/tmp                          35%   587.2G
+/fast/scratch/hyaku               28%   581.1G
+

@@ -1,0 +1,107 @@
+Mo58Scribe51 — round-58 absent-defect-register slice, measurement receipts
+Access date: 2026-10-27  (all commands run from /fast/scratch/hyaku/mori-r58/Mo58Scribe51, TMPDIR set there)
+Lane: /home/vgpnk/Projects/shokunin/mori-shokunin; worktree HEAD 4272736cfc5147586e1543413772f80daf44b04b
+Freeze revision read-only: fe8801120a67c1a6b8899d7d0423839caa09e7d0 (not checked out, not modified)
+No pacman, no tool install/upgrade, no VCS mutation, no corpus/registry write.
+
+== 1. Register identity and slice extraction ==
+$ sha256sum /home/vgpnk/Projects/shokuknow/.ufo/waves/corpus-expansion-1/absent-defect-register.md
+5afe1810a6c3d62f37987b575a954f5b1197daa23005d4bb2f1d982f64bad833  .../absent-defect-register.md
+  (identical to the sha256 recorded in .ufo/waves/round-50 and round-56 reports)
+
+$ awk -F'|' -v l='mori' '$2 ~ ("`" l "`") && $3 ~ /round[0-9]+/ && $4 ~ /S[0-9]+/ {gsub(/ /,"",$4); print NR": "$4" |"$5}' <register>
+356: S244` | the cited source could not be fetched, so no quote was checked
+357: S262` | the cited source could not be fetched, so no quote was checked
+358: S268` | the cited source could not be fetched, so no quote was checked
+
+$ awk -F'|' '$2 ~ /`mori`/ {c++} END{print "mori_rows="c}' <register>
+mori_rows=3
+
+Register section header (lines 256-264) verbatim:
+  "## Rows whose quotes were NEVER CHECKED"
+  "These are not fabrications and they are not confirmed. The checker could not
+   reach the source, so it never attempted a match, and the register's first
+   section says nothing about them. ..."
+  "rows: **109**"
+  "| lane | round | id | why it was not checked | cited source |"
+=> the never-checked table has NO quote column; the class string is an access
+   verdict, not a content verdict.
+
+Lane registry presence (corpus/SOURCES.md, read-only):
+$ for id in S244 S262 S268 S478; do grep -cE "^\| $id " corpus/SOURCES.md; done
+S244: 0   S262: 1 (line 243)   S268: 0   S478: 1 (line 257)
+$ grep -c "3643916\|2403.18832" corpus/SOURCES.md
+0
+
+== 2. S244 — cited DOI 10.1145/3643916.3644413 ==
+$ curl -sS -L -m 25 -o /dev/null -w 'http=%{http_code} url=%{url_effective}' -A '<Chrome UA>' https://doi.org/10.1145/3643916.3644413
+http=403 url=https://dl.acm.org/doi/10.1145/3643916.3644413        (Cloudflare wall)
+
+$ curl -sSL -A '<Chrome UA>' https://api.crossref.org/works/10.1145/3643916.3644413
+http=200 bytes=10957
+title   : Rationale Dataset and Analysis for the Commit Messages of the Linux Kernel Out-of-Memory Killer
+venue   : Proceedings of the 32nd IEEE/ACM International Conference on Program Comprehension
+pages   : 415-425 ; published 2024-04-15 ; has_abstract: False
+
+$ curl -sSL https://api.openalex.org/works/https://doi.org/10.1145/3643916.3644413
+http=200 bytes=15978 ; doi matches ; publication_date 2024-04-15 ; abstract_inverted_index present
+reconstructed abstract contains:
+  "We find that 98.9% of commits in our dataset contain sentences with rationale information,
+   and that experienced developers report rationale in about 60% of the sentences in their commits."
+
+$ curl -sSL https://export.arxiv.org/api/query?id_list=2403.18832
+http=200 bytes=2314
+<entry><id>http://arxiv.org/abs/2403.18832v1</id>
+<title>Rationale Dataset and Analysis for the Commit Messages of the Linux Kernel Out-of-Memory Killer</title>
+<arxiv:doi>10.1145/3643916.3644413</arxiv:doi>          <= same work, publisher DOI declared by arXiv
+<published>2024-02-06</published>
+
+$ curl -sSL -A '<Chrome UA>' https://arxiv.org/pdf/2403.18832v1 -o s244.pdf
+http=200 bytes=1420568 ; 11 pages ; sha256 ab8ab19551fb3614307b818e48b49885eca6f8af933b9eddfde8a18e6bf6018e
+$ pdftotext s244.pdf s244.txt ; wc -l s244.txt
+1437
+$ grep -n '98.9%' s244.txt
+29:temporal evolution, and structure. We find that 98.9% of commits
+630:its sentences is labelled as Rationale. In our dataset, 98.9% of the
+1186:98.9% of the commits contain rationale.
+per-page check: pdftotext -f 1 -l 1 -> "98.9%" at L29 (abstract, p. 1)
+
+== 3. S262 / S268 — cited DOI 10.1109/TSC.2026.3698682 ==
+$ curl -sS -L -o /dev/null -w 'http=%{http_code} url=%{url_effective}' -A '<Chrome UA>' https://doi.org/10.1109/TSC.2026.3698682
+http=202 url=https://ieeexplore.ieee.org/document/11540439/
+
+$ curl -sSL -A '<Chrome UA>' https://ieeexplore.ieee.org/document/11540439 -o ieee11540439.html
+http=202 bytes=0 ; sha256 e3b0c442...b855 (empty)
+
+$ curl -sSL -A '<Chrome UA>' https://ieeexplore.ieee.org/ielx8/4629386/11644734/11540439.pdf -o roma.pdf
+http=200 bytes=2357114
+$ sha256sum roma.pdf
+1603404dd25b3a0dff93f2dcb23c75b671d4e2d78da3cce8f461e87ebde6add2
+  (byte-identical to the sha256 recorded in SOURCES.md S478 and in the round-54 verdict file)
+
+$ pdfinfo roma.pdf
+Pages: 14 ; Page size: 594 x 792 pts   (printed pages 3015-3028; page 1 prints "3015", page 2 "3016")
+$ pdftotext roma.pdf roma-raw.txt ; wc -l roma-raw.txt   -> 1406 lines (poppler pdftotext 26.08.0)
+$ pdftotext -f 1 -l 1 / -f 2 -l 2 (per-page)
+
+S262 quote, substring test over whitespace-flattened full text: True (147 chars)
+  "Our study shows that Linux cgroups and the default Out-of-Memory (OOM) mechanism lack sufficient container context when selecting victim processes."
+  location: printed p. 3015 = PDF p. 1, Abstract; pdftotext default mode raw lines 14-15
+  (line 14 ends "Our study shows"; line 15 carries "mechanism lack sufficient container context when selecting victim processes.")
+  same quote also present in the deposited OpenAlex copy corpus/evidence/sources-r42/S262.oa.json (abstract_inverted_index reconstruction): True
+
+S268 quote, substring test: True (126 chars)
+  "It leverages eBPF to hook into OOM-related kernel tracepoints such as mark_victim, start_task_reaping, and finish_task_reaping"
+  location: printed p. 3016 = PDF p. 2, §I Introduction; pdftotext raw lines 139-141
+  (L139 "...hook into OOM-related kernel tracepoints such" / L140 "as mark_victim, start_task_reaping, and finish_task_reaping to record OOM-triggering process" / L141 "metadata.")
+  second occurrence of the same three tracepoint names: raw lines 441-442 (§ROMA design, oom:mark_victim, oom:start_task_reaping, oom:finish_task_reaping)
+
+== 4. Consistency checks against earlier round artifacts ==
+- S478 row (SOURCES.md:257) records "pdftotext lines 139-141" and the sha256 above: reproduced exactly today.
+- Round-54 verdict file records S268 at "extracted lines 121-126" and S262 at "17-22": these are -layout
+  mode numbers and reproduce there; default-mode numbers are S262 line 14 / S268 lines 139-141 (which is
+  what SOURCES.md:257 records). Content matches in both modes, but hyphenation breaks literal matching:
+$ python3 (flatten whitespace, substring test)
+default {'S262': True,  'S268': True}
+layout  {'S262': False, 'S268': False}     # "-layout" splits "(OOM) mech-"/"anism" and "fin-"/"ish_task_reaping"
+- Round-56 report records arxiv.pdf 1420568 bytes sha ab8ab195... and 1437 extracted lines: reproduced exactly.

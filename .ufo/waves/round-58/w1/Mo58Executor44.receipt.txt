@@ -1,0 +1,96 @@
+freeze rev            : fe8801120a67c1a6b8899d7d0423839caa09e7d0
+frozen counter sha256 : 6ecdb627bb55522c258dc484ed5c530cfd6f7c57c6a89b4c38179df4c0f84e4b
+worktree  sha256      : 6ecdb627bb55522c258dc484ed5c530cfd6f7c57c6a89b4c38179df4c0f84e4b
+bytes identical       : True
+
+====================================================================================================
+arm                                        git_rc  cnt_rc counter stdout
+====================================================================================================
+R01_control_all_resolvable                 -       0      C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=18d6737d5ee739fa384ab1af18ad8850dd6d2fea
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R01_control_all_resolvable
+                                           rev=18d6737d5ee739fa384ab1af18ad8850dd6d2fea
+R02_missing_under_tools_prefix             128     1      C1=unmet rows=2 pointers=bad manifest=ok binding=ok failed=pointers rev=c6539a2551f45f434c82d1bb682a0d3a519710d2
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R02_missing_under_tools_prefix
+                                           rev=c6539a2551f45f434c82d1bb682a0d3a519710d2
+R03_missing_under_corpus_prefix            128     1      C1=unmet rows=2 pointers=bad manifest=ok binding=ok failed=pointers rev=c96fd8afcd5478205526110a5b2cf54036b05ab9
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R03_missing_under_corpus_prefix
+                                           rev=c96fd8afcd5478205526110a5b2cf54036b05ab9
+R04_missing_under_ufo_prefix               128     1      C1=unmet rows=2 pointers=bad manifest=ok binding=ok failed=pointers rev=479f4d70948e34996f9a2e64e1fae67e29ca26c1
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R04_missing_under_ufo_prefix
+                                           rev=479f4d70948e34996f9a2e64e1fae67e29ca26c1
+R05_missing_under_evidence_prefix          128     0      C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=b7a27b15d98e294db774f5ed4b7db4c3d9c27eba
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R05_missing_under_evidence_prefix
+                                           rev=b7a27b15d98e294db774f5ed4b7db4c3d9c27eba
+R06_missing_under_docs_prefix              128     0      C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=37b93a01d248a64d5dd0add71b024f0c103b88fa
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R06_missing_under_docs_prefix
+                                           rev=37b93a01d248a64d5dd0add71b024f0c103b88fa
+R07_missing_basename_only                  128     0      C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=0ea2053805f3605e2e8301779f21dc46bf290552
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R07_missing_basename_only
+                                           rev=0ea2053805f3605e2e8301779f21dc46bf290552
+R08_missing_absolute_path                  128     0      C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=cd217f1f910c16688af9294aa828e159f070e358
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R08_missing_absolute_path
+                                           rev=cd217f1f910c16688af9294aa828e159f070e358
+R09_missing_absolute_host_path             128     0      C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=af406465f322be3386b60ed3efc63117b73389ea
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R09_missing_absolute_host_path
+                                           rev=af406465f322be3386b60ed3efc63117b73389ea
+R10_pointer_escapes_tree                   128     0      C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=67048ce404ece108c42d33a605c16b0472d9c7a9
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R10_pointer_escapes_tree
+                                           rev=67048ce404ece108c42d33a605c16b0472d9c7a9
+R11_pointer_to_fleet_root_file             128     0      C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=986b2efdaae0330ee90e273f4fb679b047abd927
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R11_pointer_to_fleet_root_file
+                                           rev=986b2efdaae0330ee90e273f4fb679b047abd927
+R12_no_pointer_at_all                      -       0      C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=3369bcac4a053eeca5dbe867dc1d2c7cbca45d8e
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R12_no_pointer_at_all
+                                           rev=3369bcac4a053eeca5dbe867dc1d2c7cbca45d8e
+R13_both_evidence_cells_empty              -       0      C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=88e73081ff4fec93aebc796fc8fd7b4794ddd402
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R13_both_evidence_cells_empty
+                                           rev=88e73081ff4fec93aebc796fc8fd7b4794ddd402
+R14_unbackticked_nonexistent_pointer       128     0      C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=82181665ae438393dbc0f02c8abeb48b05623674
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R14_unbackticked_nonexistent_pointer
+                                           rev=82181665ae438393dbc0f02c8abeb48b05623674
+R15_empty_backticks                        -       0      C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=ae73c135cacd491d34e262272bdc2b48a61e4740
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R15_empty_backticks
+                                           rev=ae73c135cacd491d34e262272bdc2b48a61e4740
+R16_directory_pointer                      0       0      C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=02650285f75c5a7dc10dcf52b1f89c70ebdf5473
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R16_directory_pointer
+                                           rev=02650285f75c5a7dc10dcf52b1f89c70ebdf5473
+R17_subdirectory_pointer                   128     1      C1=unmet rows=2 pointers=bad manifest=ok binding=ok failed=pointers rev=0040e05b2b14788d7ef09da3ec654589a1eb0db8
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R17_subdirectory_pointer
+                                           rev=0040e05b2b14788d7ef09da3ec654589a1eb0db8
+R18_traversal_up                           128     1      C1=unmet rows=2 pointers=bad manifest=ok binding=ok failed=pointers rev=30f10add49a58938621551b930a38e99b993bfe4
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R18_traversal_up
+                                           rev=30f10add49a58938621551b930a38e99b993bfe4
+R19_double_slash                           128     1      C1=unmet rows=2 pointers=bad manifest=ok binding=ok failed=pointers rev=69893ae231655fa5c51753689994d8f4afbc8c06
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R19_double_slash
+                                           rev=69893ae231655fa5c51753689994d8f4afbc8c06
+R20_glob_pointer                           128     1      C1=unmet rows=2 pointers=bad manifest=ok binding=ok failed=pointers rev=adc419b77a9d1984027ab826fba289daccd1ba28
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R20_glob_pointer
+                                           rev=adc419b77a9d1984027ab826fba289daccd1ba28
+R21_trailing_space_pointer                 128     1      C1=unmet rows=2 pointers=bad manifest=ok binding=ok failed=pointers rev=17baa2a6d80785a2cdf8b3bd0966cd6540a9861f
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R21_trailing_space_pointer
+                                           rev=17baa2a6d80785a2cdf8b3bd0966cd6540a9861f
+R22_swapped_pointers                       0,0     0      C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=d723884a9a7b96b9f59ea9eb27dd716dcdb3fbad
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R22_swapped_pointers
+                                           rev=d723884a9a7b96b9f59ea9eb27dd716dcdb3fbad
+R23_key0_twice_key1_absent                 0,0     0      C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=91a1a9d83660745a7b1028daea9d52b6b8bf64be
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R23_key0_twice_key1_absent
+                                           rev=91a1a9d83660745a7b1028daea9d52b6b8bf64be
+R24_emdash_stub_marker_not_matched         0,0     0      C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=47a595f4f07507cd129797c7941d8b9b1f3f80ba
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R24_emdash_stub_marker_not_matched
+                                           rev=47a595f4f07507cd129797c7941d8b9b1f3f80ba
+R25_hyphen_stub_marker_matched             0,0     1      C1=unmet rows=0 pointers=ok manifest=bad binding=bad failed=binding rev=1242aa867ca209b6ae05d38f966aa2e8219cf484
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R25_hyphen_stub_marker_matched
+                                           rev=1242aa867ca209b6ae05d38f966aa2e8219cf484
+R26_decoy_section_wins_over_real_register  0,0     0      C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=e4fe0f09858f72e1d43d1bbefc988e9588b0f319
+                                           fixture=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s/R26_decoy_section_wins_over_real_register
+                                           rev=e4fe0f09858f72e1d43d1bbefc988e9588b0f319
+
+====================================================================================================
+REAL-LANE MEASURE AT THE FREEZE REVISION
+  rc=0  C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=fe8801120a67c1a6b8899d7d0423839caa09e7d0
+  contract C1 target : 'C1=met rows=2 pointers=ok manifest=ok binding=ok selftest=ok rev=R'
+  actual   C1 stdout : 'C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=fe8801120a67c1a6b8899d7d0423839caa09e7d0'
+  BYTE-EXACT MATCH   : False
+  contract-only tokens: ['selftest=ok', 'rev=R']
+  actual-only tokens  : ['failed=none', 'rev=fe8801120a67c1a6b8899d7d0423839caa09e7d0']
+ROOT=/fast/scratch/hyaku/mori-r58/Mo58Executor44/m58exec44-receipt-mso3ei8s
