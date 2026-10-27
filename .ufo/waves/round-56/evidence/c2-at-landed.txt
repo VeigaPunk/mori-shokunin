@@ -1,0 +1,2 @@
+C2=met selftest=ok tally=ok control=ok contrast=voted0 entry=ok row=ok rev=097c342b6c7d71444c0d81c9615197dc87d59c50
+exit=0
