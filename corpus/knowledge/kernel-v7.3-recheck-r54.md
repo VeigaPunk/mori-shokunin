@@ -1,6 +1,8 @@
 # Linux v7.3 recheck of the remaining v7.2-pinned claim rows (round 54)
 
-source: S508, S514, S515, S516, S517, S518, S519, S520
+source: S515 — Linux mm/memcontrol.c at tag v7.3 — https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/mm/memcontrol.c?h=v7.3 — copy `corpus/evidence/sources-r54/memcontrol.c.v7.3`; S516 — mm/oom_kill.c at v7.3 — copy `sources-r54/oom_kill.c.v7.3`
+source: S517 — lib/percpu_counter.c at v7.3 — copy `sources-r54/percpu_counter.c.v7.3`; S518 — include/linux/percpu_counter.h at v7.3 — copy `sources-r54/percpu_counter.h.v7.3`; S519 — include/uapi/asm-generic/errno.h at v7.3 — copy `sources-r54/errno.h.v7.3`
+source: S520 — rendered Control Group v2 page 7.3.0 — https://docs.kernel.org/7.3/admin-guide/cgroup-v2.html — copy `sources-r54/cgroup-v2.7.3.html`; S508 — mm/util.c at v7.3 and S514 — mm/mm_init.c at v7.3 (round-53 rows, copies under `corpus/evidence/sources-r53/`), all code rows tier A from git.kernel.org cgit, opened 2026-10-27 (S508, S514: 2026-10-26)
 verified-at: 2026-10-27
 recheck: on-release — `python3 .ufo/waves/round-54/count-c1.py <rev>`
 coverage-map: freshness of the claim tables of `oom-memcg-stat-r50.md`, `commit-runway-read-r53.md` and `quota-observability-r48.md`
@@ -54,13 +56,15 @@ judged by the voters.
 
 ## Where the quotes moved (v7.2 copy line → v7.3 copy line)
 
-All 31 v7.2 quotes occur verbatim in the v7.3 copies. Four of the eight files did not change at all between the tags
+All 31 v7.2 quotes occur in the v7.3 copies, read whitespace-collapsed (and, for the rendered page, with tags read as a space and entities decoded — none of its seven quotes is a raw byte substring of the HTML). Four of the eight files did not change at all between the tags
 (`mm/oom_kill.c`, `lib/percpu_counter.c`, `include/linux/percpu_counter.h`, `include/uapi/asm-generic/errno.h`:
 `diff` of the committed copies prints nothing; errno.h has the same sha256 as S481's copy). `mm/util.c` changed 14
 lines, none at the three quoted lines. Three files moved the quoted lines: `mm/memcontrol.c` (258 changed lines;
 the OOM report block +45 lines, the `memory.stat` reader +84), `mm/mm_init.c` (the `mm_compute_batch` block +4)
-and the rendered cgroup-v2 page (+31 lines, from the new top-level navigation). The `line:` anchors that
-`oom-memcg-stat-r50.md` and its rows S490/S491 give in prose (`memcontrol.c:1774-1830`, …) are v7.2 positions;
+and the rendered cgroup-v2 page (+31 lines: 8 lines of new navigation captions and 23 lines of new page content above
+the quoted block — the note that the five CFS bandwidth stats are non-hierarchical and the `cgroup_set_bandwidth` /
+`cgroup_set_idle` sentences added to `cpu.max`, `cpu.max.burst` and `cpu.idle`; `Mo54ExecLineArm` diff opcodes). The `line:` anchors that
+`oom-memcg-stat-r50.md` and its rows S490/S491 give in prose (S490's anchor `mm/memcontrol.c:629,1546-1608,…,1787-1830,…,4905-4919`) are v7.2 positions;
 read at v7.3 they are off by the `moved` column. v7.2 lines below are from the committed v7.2 copies
 (`sources-r50/`, `sources-r52/util.c.v7.2`, `sources-r53/*.v7.2`, `sources-r48/errno.h`).
 
