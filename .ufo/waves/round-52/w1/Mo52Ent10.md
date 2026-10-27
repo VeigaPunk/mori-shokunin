@@ -1,0 +1,36 @@
+# Mo52Ent10 — ENTAILMENT vote, round 52, rows 22-28
+
+Seat: Mo52Ent10 (entailment). Lane: mori-shokunin. Data commit: `8524904adb25e44f24d9f25aac7eae909625c18c`. Entering tip: `4f266ef2fdf74d8b046f5b4f5a5c4945f65b966d`.
+
+Method per row: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 8524904adb25e44f24d9f25aac7eae909625c18c:corpus/knowledge/overcommit-commit-limit-r52.md` (exit 0) to read the Claims table; locate the quote in the committed copy under `corpus/evidence/sources-r52/`; read ~20 lines around it; judge whether the CLAIM cell follows from quote + context. Hashes recomputed for all seven rows with the same normalizer (`re.sub(r"\s+"," ",t).strip()` then sha256[:12]) — all match `evidence/c2-hashes-at-data.txt` rows 22-28 (exit 0, eight hashes printed, seven matched).
+
+## Verdicts
+
+ENTAIL 2d64007fa0dc entailed
+ENTAIL 02f5bfd6be3b entailed
+ENTAIL ff0d23e9fde8 entailed
+ENTAIL 0fbd62f51ce8 entailed
+ENTAIL d7a1dc88dcb3 entailed
+ENTAIL 10dc80bb5b2e entailed
+ENTAIL 42295e410c2b entailed
+
+## Row-by-row judgment
+
+- Row 22 (`2d64007fa0dc`), S499 `util.c.v7.2`. Quote at lines 814-815: `The deviation of sync_overcommit_as could be big with loose policy * like OVERCOMMIT_ALWAYS/OVERCOMMIT_GUESS.` Context (lines 801-840): `overcommit_policy_handler` comment states the switch order — 1. change the batch, 2. sync percpu count on each CPU, 3. switch the policy; code at 831-834 runs `mm_compute_batch(new_policy)`, then `if (new_policy == OVERCOMMIT_NEVER) schedule_on_each_cpu(sync_overcommit_as);` before `sysctl_overcommit_memory = new_policy;` and `sync_overcommit_as` (801-804) calls `percpu_counter_sync(&vm_committed_as)`. The claim (drift under loose modes; switching to mode 2 syncs every CPU first) follows. Careless over-read: the drift note does not mean the mode-0/1 test is broken — the mode-2 test deliberately uses a cheap approximate read (entry Boundaries section), and the sync runs only on the transition to NEVER, not periodically.
+- Row 23 (`02f5bfd6be3b`), S500 `mman.h.v7.2`. Quote at lines 76-79: `static inline void vm_acct_memory(long pages) { percpu_counter_add_batch(&vm_committed_as, pages, vm_committed_as_batch); }`. Context: line 62 declares `extern struct percpu_counter vm_committed_as;`, line 65 the batch variable, lines 64-72 CONFIG_SMP guards. The claim (batched add into a per-CPU counter, not one global variable) follows. Careless over-read: "batched" does not mean deferred or lossy — charges land promptly in per-CPU counters; the batch size only bounds how far a single CPU's counter can lag (entry Boundaries).
+- Row 24 (`ff0d23e9fde8`), S500 `mman.h.v7.2`. Quote at lines 81-84: `static inline void vm_unacct_memory(long pages) { vm_acct_memory(-pages); }`. The claim (same batched add, negated page count) is a restatement. Careless over-read: uncharging does not add back usable memory; it only decrements the committed ledger, and the negated add may land on a different CPU's counter than the original charge.
+- Row 25 (`0fbd62f51ce8`), S501 `mmap.c.v7.2`, function `do_mmap` (336-566). Quote at lines 551-553, inside `if (flags & MAP_NORESERVE)` (550-558): `/* We honor MAP_NORESERVE if allowed to overcommit */ if (sysctl_overcommit_memory != OVERCOMMIT_NEVER) vm_flags |= VM_NORESERVE;`. Context comment 546-549: "Set 'VM_NORESERVE' if we should not account for the memory use of this mapping." For ordinary (non-hugetlb) mappings the flag is set exactly when the mode is not NEVER, i.e. commit charging is dropped only then. The claim follows. Careless over-read: the very next branch (555-557) is the hugetlb file exception — do not extend the mode-2 "ignored" rule to hugetlb; and VM_NORESERVE only skips commit accounting, it does not bypass other mmap validation.
+- Row 26 (`d7a1dc88dcb3`), S501 `mmap.c.v7.2`. Quote at lines 555-557: `/* hugetlb applies strict overcommit unless MAP_NORESERVE */ if (file && is_file_hugepages(file)) vm_flags |= VM_NORESERVE;`. Context: the mode-2 statement in the S497 copy, `overcommit-accounting.rst.v7.2` line 48 ("In mode 2 the MAP_NORESERVE flag is ignored."), contains no hugetlb caveat, so the claim's "carve-out the mode-2 rule does not mention" is accurate; "charged strictly unless MAP_NORESERVE" restates the comment. The claim follows. Careless over-read: the anonymous `MAP_HUGETLB` path (586-604) sets up a hugetlb file with `VMA_NORESERVE_BIT` and is not the file-mapping branch quoted here; do not conflate the two.
+- Row 27 (`10dc80bb5b2e`), S501 `mmap.c.v7.2`. Quote at line 1595 in `init_user_reserve()` (1579-1599), `subsys_initcall` at 1598: `sysctl_user_reserve_kbytes = min(free_kbytes / 32, SZ_128K);`. The sysctl unit is kilobytes; `SZ_128K` is the integer 131072, i.e. 128 MiB expressed in kB, so the boot default is min(1/32 of free memory, 128 MiB). Corroboration: `vm.rst.v7.2` line 1039 ("user_reserve_kbytes defaults to min(3% of the current process size, 128MB)"), the code comment at 1646 ("Default max is 128MB"), and this host's read-only ground truth `/proc/sys/vm/user_reserve_kbytes` = 131072 (128 MiB). The claim follows. Careless over-read: the constant name `SZ_128K` invites misreading as 128 KiB (a factor-of-1024 error); also the documentation's first operand (3% of current process size) differs from the code's free_kbytes/32 — the claim correctly follows the code.
+- Row 28 (`42295e410c2b`), S501 `mmap.c.v7.2`. Quote at line 1616 in `init_admin_reserve()` (1600-1619), `subsys_initcall` at 1619: `sysctl_admin_reserve_kbytes = min(free_kbytes / 32, SZ_8K);`. `SZ_8K` = 8192 = 8 MiB in kB. Corroboration: `vm.rst.v7.2` line 90 ("admin_reserve_kbytes defaults to min(3% of free pages, 8MB)"), code comment at 1606 ("Systems with more than 256MB will reserve 8MB"), and host `/proc/sys/vm/admin_reserve_kbytes` = 8192 (8 MiB). The claim follows. Careless over-read: same `SZ_8K` naming trap (8 KiB vs 8 MiB).
+ENTAIL 10ac5a250ac2 entailed
+ENTAIL 1cadeed9914b entailed
+
+Evidence commands: `git show` (exit 0); `grep`/`read` on the five source copies; hash recomputation (exit 0); `cat /proc/sys/vm/user_reserve_kbytes /proc/sys/vm/admin_reserve_kbytes` -> `131072` / `8192` (host read-only, allowed).
+
+## Findings
+
+- MED — Rows 27/28 are entailed, but the source constant names `SZ_128K`/`SZ_8K` are self-misleading (they read as 128 KiB/8 KiB while used as kB counts = 128 MiB/8 MiB). A future editor could "correct" the entry back to KiB. Anchor: `mmap.c.v7.2:1595,1616`, entry rows 27/28.
+- MED — The kernel's own docs and code disagree on the first operand of the reserve defaults: `vm.rst.v7.2:1039,90` say min(3% of current process size / free pages, cap); `mmap.c.v7.2:1595,1616` use `free_kbytes / 32`. Both claims follow the code; SOURCES readers must not cross-apply the 3% phrasing. Anchor: `corpus/knowledge/overcommit-commit-limit-r52.md` rows 27/28.
+- LOW — Row 22's causal wording ("which is why … syncs every CPU first") depends on the documented switch order inside `overcommit_policy_handler` (`util.c.v7.2:813-834`); if that block is reordered, the wording rots. No change proposed.
+- LOW — The hugetlb carve-out (row 26) sits next to S497's unqualified "In mode 2 the MAP_NORESERVE flag is ignored" (`overcommit-accounting.rst.v7.2:48`). The entry already keeps the two straight in its Boundaries; keep the exception visible when the mode-2 rule is quoted elsewhere.

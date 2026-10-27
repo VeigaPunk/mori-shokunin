@@ -2732,3 +2732,40 @@ and one vote per row; a vote records a seat's judgment, not its correctness; the
 Planned (round 52): the successor calibration counter and K4 beyond `SHONEN.md` (round-50 §5 item 3, not taken this
 round); the remaining in-lane writers (round-38/39/41/42 `conform.py`, round-48/49 `count-c1.py` scratch under the
 lane) as a hermeticity sweep with its own counter.
+
+
+## Round 52 — the self-assessment agrees with the fleet record, its instruments and its own pointers (C1) and CommitLimit/Committed_AS at v7.2 (C2)
+
+L1 MoriR52, attempt 1. Entering tip `4f266ef2`; freeze `d3a8ea59` (`.ufo/waves/round-52/contract.md`; both
+counters, C1 controls, receipts, source copies); data `8524904a`. Scores entering: coverage 6, operability 7,
+depth 5, freshness 5, calibration 5, adjacency 6; both claims work a lowest (tied 5) axis. No score change is
+claimed by the lane; the non-author closure rules.
+
+| Claim | Axis (held) | Counting command | Before | After |
+|---|---|---|---|---|
+| C1 the self-assessment agrees with the fleet MANIFEST, its instruments and its own pointers, with K4 taken beyond SHONEN to the living pins of QUALITY.md and README.md | calibration 5 | `python3 .ufo/waves/round-52/count-c1.py R` | `C1=unmet items=37 … living=4 superseded=1 locators=25 mismatches=8 errors=0 hidden=0 lane_writes=0 … failed=mismatch`, rc 1 — `evidence/control-c1-do-nothing.txt` | `C1=met items=42 axes=6 pins=2 boxes=4 living=7 superseded=4 locators=27 mismatches=0 errors=0 hidden=0 lane_writes=0`, rc 0 — `evidence/c1-at-landed.txt` |
+| C2 what /proc/meminfo's CommitLimit and Committed_AS are at v7.2, 28 located quotes over 5 sources, each row with two non-author entailment votes | depth 5 | `python3 .ufo/waves/round-52/count-c2.py R` | `C2=unmet claims=0 … pins=bad … failed=entry_absent,pins`, rc 1 — `evidence/control-c2-do-nothing.txt` | `C2=met claims=28 located=28 quote_missing=0 bad_rows=0 sources=5 source_rows=ok pins=ok provenance=ok entailed=28 dissent=0`, rc 0 — `evidence/c2-at-landed.txt` |
+
+Controls that skip the work stay unmet (receipts under `.ufo/waves/round-52/evidence/`): C1 do-nothing
+(`mismatches=8`), axes-only (5), receipts-only (6), living-only (5), rewrite-in-place (`pin_removed_or_rewritten`
+×3), delete-stale-pins (×3), repeat-stale-tally (×3); the witness (feasibility, built by the L1 with
+`controls/c1-data.py`) met. Counter selftests `C1_SELFTEST pass=42 fail=0`, `C2_SELFTEST pass=45 fail=0`
+(`evidence/selftest-c1.txt`, `evidence/selftest-c2.txt`). The C2 data commit before any vote read
+`failed=entailment` (`evidence/c2-at-data.txt`); rows 3, 27 and 28 were replaced in-round after overclaim votes
+and re-voted by non-author voters.
+
+No capability row is claimed: the K4 arm extends the round-50 calibration counter; the entailment arm extends the
+round-51 depth counter.
+
+Limits named before data and found by the wave (`corpus/lessons/round-52.md` `## Wave w1 — integrated findings`):
+arm A's verdict comparison is pinned only to `admitted` (a `startswith` mutant survived); the `superseded()`
+guard for the pin's own criterion survived; receipts are pure text (a handwritten receipt passes); the newest
+closure file is trusted verbatim for scores; `lane_writes` measures working-tree churn (concurrent writers flip a
+run to unmet — final runs therefore use a quiescent tree); a supersede line quoting a stale span requires no
+replacement pin tied to the subject; the locator arm covers only the Axes rows and SHONEN boxes (QUALITY/README
+hold 78 more pointers); C2's voter distinctness is by filename and a REPLACE line is the only authorship signal.
+
+Planned (round 53): the in-lane writers' successor freeze (round-38/39/41/42 `conform.py`, round-48/49
+`count-c1.py`); the locator sweep beyond the Axes rows; the C1 arm-isolating controls for M4/M8 and the
+receipt/closure trust gaps; a commit-ledger census line (CommitLimit/Committed_AS) and a mode-2 error band; the
+PROVINCE/SCORECARD present-tense tally pins (K4 scope).

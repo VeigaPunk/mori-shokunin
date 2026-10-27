@@ -2803,3 +2803,36 @@ only) and `considerthese/2026-10-26.md` suggestion 1 (split "can't run here" fro
   but rows 6, 12, 14 and 15 carry one (the replacement author's); the C1/C2 counter survivors found by the wave stay
   named limits (frozen); other lane instruments that write into the lane (round-38/39/41/42 `conform.py`,
   round-48/49 `count-c1.py`) are outside C1 and routed.
+
+
+## Round 52 (L1 MoriR52, attempt 1; C1 calibration, C2 depth)
+
+Entering tip `4f266ef2`; freeze `d3a8ea59` (contract, both counters with selftests, C1 controls and receipts,
+census-start, sweep, five v7.2 source copies); data `8524904a`; wave spec `075436b1` (one v2 wave w1, 68 seats).
+C1 — calibration: the self-assessment agrees with the fleet record, its instruments and its own pointers; K4 is
+taken beyond SHONEN to the living pins of QUALITY.md and README.md (counter `count-c1.py`, arms A-D). C2 — depth:
+what CommitLimit and Committed_AS are at kernel v7.2 (entry
+`corpus/knowledge/overcommit-commit-limit-r52.md`, rows S497–S501; `count-c2.py` with the two-voter non-author
+entailment arm). Before (entering): `C1=unmet … mismatches=8` (`evidence/control-c1-do-nothing.txt`);
+`C2=unmet … failed=entry_absent,pins` (`evidence/control-c2-do-nothing.txt`). At data:
+`C1=met … mismatches=0 … lane_writes=0` (`evidence/c1-at-data.txt`); `C2=unmet … failed=entailment`
+(`evidence/c2-at-data.txt`) — every quote located, votes pending. The wave voted 28/28 rows; row 3 drew two
+`overclaim` votes and two replacement texts; the L1 adopted one replacement (Ent01's, hash `3c2512af8468`), and
+rows 27/28 were reworded to the literal `SZ_128K`/`SZ_8K` caps (hashes `10ac5a250ac2`, `1cadeed9914b`). All
+three replacements then drew ≥2 non-author `entailed` votes (Ent02/Ent03/Ent04 on 3c2512af8468; Ent10/Ent11/
+Ent12 on the reserve rows), so at the landed tip `C2=met claims=28 located=28 … entailed=28 dissent=0`
+(`evidence/c2-at-landed.txt`). Controls that skip the work stay unmet (receipts under `evidence/`): C1
+do-nothing, axes-only, receipts-only, living-only, rewrite-in-place, delete-stale-pins, repeat-stale-tally;
+witness met (feasibility, disclosed). Counter selftests: `C1_SELFTEST pass=42 fail=0`, `C2_SELFTEST pass=45
+fail=0`. Census `scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori`: start rc 0, 23
+W04 (`evidence/census-start.txt`); end rc 0 (`evidence/census-end.txt`). Assimilation: none (`merge/mori/`
+holds no overcommit staging; `evidence/sweep-overcommit.txt`). considerthese: suggestion 3 (re-execute what
+closures only evidence-verified) ran the round-51 counters at `70e68cdd` — both reproduced their landed receipts
+field for field (`w1/Mo52ExecR51C1Rerun.md`, `w1/Mo52ExecR51C2Rerun.md`). Mistakes mined in lessons: M1 living
+pin held at one round's tally and never superseded; M2 a scorecard pointer named `:1771` for a pair at `:1781`
+plus the applier's history-row overmatch; M3 the wave spec's first validation refusal (labrat role, copy-on-change
+amend); M4 a frozen instrument edited in place (round-40 conform.py) with no successor-freeze record; M5 the
+round-51 entailment arm limits. Round-51 closure routed defects: 1 → both counters ship `--selftest`; 2 → P-C2
+arm (two non-author voters, unfenced, frozen voter list); 3 → C1 survivor mutants routed as limits (M4/M8 noted in
+lesson); 4 → C1; 5 → erratum `corpus/lessons/round-51-erratum.md`; 6 → no frozen file edited this round; 7 →
+receipts carry literal commands; 8 → in-lane writers inventoried (`w1/Mo52ExecWritersConform.md`, `w1/Mo52ExecWritersCounters.md`) and routed with a successor-freeze design.

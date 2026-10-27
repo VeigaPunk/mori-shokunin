@@ -11,7 +11,7 @@ coverage-map: resource runway (new ground; no FR row held it; sweep `.ufo/waves/
 
 mori reports resource runway. Round 51 said what `MemAvailable` is: an estimate of how much memory can be given to
 new work before swapping. This entry covers the other two runway lines of `/proc/meminfo`, `CommitLimit` and
-`Committed_AS`, printed at `fs/proc/meminfo.c:125-126` in the round-51 copy (S494, as `vm_commit_limit()` and
+`Committed_AS`, printed at `fs/proc/meminfo.c:46,125-126` in the round-51 copy (S494, as `vm_commit_limit()` and
 `vm_memory_committed()`). They answer a different question: can an allocation be *refused* (ENOMEM at request time)
 before memory runs out? At v7.2 the answer depends on `vm.overcommit_memory`. Under mode 2 the kernel refuses a
 request once the committed total would reach the limit. Under the default mode 0 it refuses only a single request
@@ -24,7 +24,7 @@ enforced only under mode 2.
 |---|---|---|
 | Mode 0 is the default and refuses only allocations that are plainly too large, so it still lets the host overcommit. | S497 | `Heuristic overcommit handling. Obvious overcommits of address space are refused. Used for a typical system.` |
 | Only under mode 2 is the committed total capped, at swap plus a share of RAM that defaults to one half. | S497 | `The total address space commit for the system is not permitted to exceed swap + a configurable amount (default is 50%) of physical RAM.` |
-| Under mode 2 the documented failure is an allocation error at request time rather than a kill when pages are later touched. | S497 | `in most situations this means a process will not be killed while accessing pages but will receive errors on memory allocation as appropriate.` |
+| The documentation says that under mode 2, in most situations, a process receives errors on memory allocation instead of being killed while touching pages. | S497 | `in most situations this means a process will not be killed while accessing pages but will receive errors on memory allocation as appropriate.` |
 | The documentation says the current limit and the committed amount are both published by the kernel for reading, as two meminfo lines. | S497 | `The current overcommit limit and amount committed are viewable in` |
 | Under mode 2 a mapping request carrying MAP_NORESERVE is still charged against the commit limit. | S497 | `In mode 2 the MAP_NORESERVE flag is ignored.` |
 | Shared and read-only file mappings add nothing to the committed total, because the file itself backs those pages. | S497 | `SHARED or READ-only - 0 cost (the file is the map not swap)` |
@@ -48,28 +48,29 @@ enforced only under mode 2.
 | Releasing a commitment uses the same batched add with the page count negated. | S500 | `static inline void vm_unacct_memory(long pages) { vm_acct_memory(-pages); }` |
 | For ordinary mappings MAP_NORESERVE drops commit charging only when the mode is something other than never-overcommit. | S501 | `We honor MAP_NORESERVE if allowed to overcommit */ if (sysctl_overcommit_memory != OVERCOMMIT_NEVER) vm_flags \|= VM_NORESERVE;` |
 | Hugetlb file mappings are charged strictly unless the caller passes MAP_NORESERVE, a carve-out the mode-2 rule does not mention. | S501 | `hugetlb applies strict overcommit unless MAP_NORESERVE */ if (file && is_file_hugepages(file)) vm_flags \|= VM_NORESERVE;` |
-| At boot the user reserve knob is set to the smaller of one thirty-second of free memory and 128 MiB. | S501 | `sysctl_user_reserve_kbytes = min(free_kbytes / 32, SZ_128K);` |
-| At boot the admin reserve knob is set to the smaller of one thirty-second of free memory and 8 MiB. | S501 | `sysctl_admin_reserve_kbytes = min(free_kbytes / 32, SZ_8K);` |
+| At boot the user reserve knob starts at the smaller of one thirty-second of free memory in kB and the byte constant SZ_128K - 128 KiB, while the documented default is 128 MiB. | S501 | `sysctl_user_reserve_kbytes = min(free_kbytes / 32, SZ_128K);` |
+| At boot the admin reserve knob starts at the smaller of one thirty-second of free memory in kB and the byte constant SZ_8K - 8 KiB, while the documented default is 8 MiB. | S501 | `sysctl_admin_reserve_kbytes = min(free_kbytes / 32, SZ_8K);` |
 
 ## Reading rules (mori)
 
 | reading | what it means at v7.2 | what it does not mean |
 |---|---|---|
-| `Committed_AS` > `CommitLimit` under mode 0 or 1 | normal: the limit is printed, not enforced (`util.c.v7.2:969-977`) | memory pressure, or an imminent OOM kill |
-| `Committed_AS` near `CommitLimit` under mode 2 | new private writable mappings, `brk` and `fork` can fail with ENOMEM before `MemAvailable` is low | that running processes will be killed: mode 2 refuses at request time |
+| `Committed_AS` > `CommitLimit` under mode 0 or 1 | normal: the limit is printed, not enforced (`util.c.v7.2:978-995`) | memory pressure, or an imminent OOM kill |
+| `Committed_AS` near `CommitLimit` under mode 2 | new private writable mappings, `brk` and `fork` can fail with ENOMEM at request time, independently of how much `MemAvailable` reports | that running processes will be killed: mode 2 refuses at request time |
 | kernel line `__vm_enough_memory: pid: N, comm: X, bytes: B not enough memory for the allocation` | a commit refusal (rate-limited, so not a count) | an OOM kill; the OOM report is a different block (`oom-memcg-stat-r50.md`) |
 | `vm.overcommit_ratio` reads 0 | possibly `vm.overcommit_kbytes` in force (setting one zeroes the other) | that the limit is swap only |
 
 A host read needs `/proc/sys/vm/overcommit_memory` with the two meminfo lines; mori reads them and never writes a
 `vm.*` sysctl. Choosing or changing the overcommit mode is host configuration, which the operator owns. Host
-OS-state triage is tsukuroi's ground (`../tsukuroi-shokunin/PROVINCE.md:8-14,28`: detection and report, the operator
-remediates); this entry claims no sysctl ownership for either lane.
+OS-state triage is tsukuroi's ground (`../tsukuroi-shokunin/PROVINCE.md:28,30-31`: detection and report, the operator remediates; memory measurements support OS triage without fleet attribution); this entry claims no sysctl ownership for either lane.
 
 ## Boundaries
 
 - The entry claims what the v7.2 bytes say; other kernels and this host's sysctl values are not claimed.
 - `Committed_AS` is a per-CPU counter; the meminfo line is its full sum (`util.c.v7.2:937-940`), and the mode-2
-  test uses a cheaper approximate read (`util.c.v7.2:994`). The two can differ by up to the batch size per CPU.
+  test uses a cheaper approximate read (`util.c.v7.2:994`). The mode-2 limit also subtracts the admin and user
+  reserves for the requesting process (`util.c.v7.2:982-993`), so a refusal can land before the printed
+  `CommitLimit`. The two can differ by up to the batch size per CPU; on this host that is a 3.78 MiB batch under mode 2 (121.0 MiB under the loose modes), so a mode-2 reading inside that band is not evidence of a broken ledger (own-work host check, wave w1; not claimed as a v7.2 fact).
 - The ledger has known holes: ptrace pages are listed as unaccounted (S497), and hugetlb file mappings with
   `MAP_NORESERVE` stay uncharged even under mode 2 (S501).
 - No threshold for `Committed_AS/CommitLimit` is proposed (FR8 stays open).

@@ -725,9 +725,23 @@ Dated note (append-only, 2026-10-26): two command-tally pins in the coverage tab
 they say, and neither row is rewritten.
 
 - Round-39 row "Ancestry-based timed supersede": this note supersedes `python3 tools/mori-sources-appendonly.py --selftest` → `pass=12 fail=0` (the round-39 count); the committed gate has printed 22 since the round-41 freeze `d72ac167`: `python3 tools/mori-sources-appendonly.py --selftest` → `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0`.
-- Round-39 row "Counter conformance v2": this note supersedes `--selftest` → `pass=9 fail=0`, which names no command; the runnable form takes a revision: `python3 .ufo/waves/round-39/conform.py 4f266ef2fdf74d8b046f5b4f5a5c4945f65b966d --selftest` → `CONFORM_SELFTEST pass=9 fail=0`.
+- Round-39 row "Counter conformance v2": this note supersedes `--selftest` → `pass=9 fail=0`, which names no command; the runnable form takes a revision and runs hermetic (the instrument hardcodes the lane path, so the wrapper clones the lane into scratch and bind-mounts the clone over it): `bash .ufo/waves/round-52/r39-conform-selftest.sh 4f266ef2fdf74d8b046f5b4f5a5c4945f65b966d --selftest` → `CONFORM_SELFTEST pass=9 fail=0`.
 
 Each bullet is one line on purpose: the counter reads a quoted stale pin as a quotation only when its replacement
 pin stands on the same line.
 
 Counter: `python3 .ufo/waves/round-52/count-c1.py <rev>` arm (C) (QUALITY 141).
+
+
+## Round-52 coverage additions
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| Resource runway — the commit ledger | `knowledge/overcommit-commit-limit-r52.md` (S497–S501) | CommitLimit/Committed_AS at v7.2: what the two meminfo lines count, under which mode they are enforced, and what the refusal log line means; no host value, no threshold (FR8 stays open) |
+
+Dated note (append-only, 2026-10-26): the overcommit entry supersedes the resource-runway ground's silence about
+the commit ledger — `CommitLimit` and `Committed_AS` are printed under every mode, but only mode 2
+(`vm.overcommit_memory=2`) enforces the limit, at request time (ENOMEM), so `Committed_AS > CommitLimit` under
+modes 0/1 is normal and not an OOM precursor (`knowledge/overcommit-commit-limit-r52.md`, S497–S501); no frontier
+row is rewritten, and no instrument reads the ledger yet (the census and both hyaku gates read `MemAvailable`) —
+a commit-ledger census line is routed to round 53.

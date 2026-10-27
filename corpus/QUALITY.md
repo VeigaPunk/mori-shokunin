@@ -1355,8 +1355,10 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
 
 141. **A command-tally pin in a living document (`corpus/QUALITY.md`, `corpus/README.md`) prints its tally when run
     today, or a later line supersedes it; the stale pin itself is never rewritten.** This row supersedes 112's check
-    cell only; 112's criterion stands. Rationale: 112's check pinned the gate's selftest at the round-39 count while
-    the committed tool has printed 22 since the round-41 freeze `d72ac167` (QUALITY 128). Check:
+    cell only; 112's criterion stands. Lesson: round-52 M1 (a living check pinned at one round's tally and never
+    superseded), carried by `corpus/lessons/round-52.md`; round-51 closure §5 item 4 for the K4 scope.
+    Rationale: 112's check pinned the gate's selftest at the round-39 count while
+    the committed tool has printed 22 since the round-41 freeze `d72ac167` (QUALITY 123). Check:
     `python3 tools/mori-sources-appendonly.py --selftest` → `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0`, exit 0, run in a `git archive` of the tip with `TMPDIR` in scratch. Counter:
     `python3 .ufo/waves/round-52/count-c1.py <rev>` arm (C) lists every single-line pin in both files as good,
     superseded or a mismatch. Shown able to fail: at the entering tip `4f266ef2` the arm read three mismatches
@@ -1365,9 +1367,13 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     as a pin when it spans lines.
 142. **A self-assessment pointer lands on the words it reports.** In `SCORECARD.md` `## Axes` and in the
     `SHONEN.md` boxes, a `path:N` pointer after a quoted string or a `proposed A → B` phrase names lines that hold
-    that string or pair; every pointer names lines that exist. Rationale: the freshness cell pointed round 28's
+    that string or pair; every pointer names lines that exist. Lesson: round-52 M2 (a scorecard pointer named
+    `:1771` for a pair that lives at `:1781`), carried by `corpus/lessons/round-52.md` and the round-51 closure
+    D-c. Rationale: the freshness cell pointed round 28's
     proposed `5 → 6` at `SCORECARD.md:1771`, which holds the amendment A1 paragraph; the pair is at `:1781`.
     Check: `python3 .ufo/waves/round-52/count-c1.py <rev>` arm (D), `item locator … state=` lines. Shown able to
     fail: the entering tip reads `item locator SCORECARD.md:1771 expect=pair:5_→_6 got=absent state=mismatch`.
     Not covered: prose before a pointer other than a quoted string or a `proposed A → B` pair is checked for range
     only.
+
+143. **A depth row needs two `entailed` votes from voters that did not write its text; an `overclaim` vote blocks the row until its text is replaced.** This row supersedes 140's "Not covered" text only; 140's criterion stands. Lesson: round-51 closure §5 item 2; round-52 M5 (the r51 arm took one vote, fenced lines and any .md). Check: `python3 .ufo/waves/round-52/count-c2.py <rev>` exits 0 and prints `C2=met … entailed=N dissent=0`; `C2_SELFTEST pass=45 fail=0` carries `entail_one_voter_unmet`, `entail_author_vote_not_counted_unmet`, `entail_fenced_votes_ignored_unmet`, `entail_non_voter_seat_ignored_unmet`. Shown able to fail: the data commit printed `failed=entailment` with `entailed=0` (`.ufo/waves/round-52/evidence/c2-at-data.txt`); row 3 had two overclaim votes and needed text replacement (lesson §Wave). Not covered: two files written by one seat look like two voters; a voter's REPLACE line is the only authorship signal.

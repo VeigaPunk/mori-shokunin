@@ -1139,3 +1139,38 @@ the run, not of the registry: `unparsed`, `no_command`, `dropped`, `rebound`, `d
 Named limits of the classes, frozen with the counter: a tool that prints a tally and then fails for an
 environmental reason is classed stale; a row that binds no command is a `no_command` registry defect rather than
 either class; and the class says why the pin failed, never whether the revision is good.
+
+
+## Round52 — the calibration counter, the overcommit ledger and the living-pin rule
+
+### Reading CommitLimit / Committed_AS by mode (decision row; entry `corpus/knowledge/overcommit-commit-limit-r52.md`)
+
+| /proc/meminfo row | mode 0 / 1 | mode 2 (vm.overcommit_memory=2) |
+|---|---|---|
+| `Committed_AS` > `CommitLimit` | normal: the limit is printed, not enforced (`util.c.v7.2:969-977`) | new private writable mappings, `brk`, `fork` can fail with ENOMEM at request time, independently of how much `MemAvailable` reports |
+| kernel line `__vm_enough_memory: pid: N, comm: X, bytes: B not enough memory for the allocation` | impossible (mode 0 refuses only single requests larger than RAM + swap; mode 1 never refuses) | a commit refusal; rate-limited, so presence is a signal but never a count; the OOM report is a different block |
+| `vm.overcommit_ratio` reads 0 | — | possibly `vm.overcommit_kbytes` in force; setting one zeroes the other (S498) |
+
+Reading rule: mori reads `/proc/meminfo` and `/proc/sys/vm/overcommit_memory`; it never writes a `vm.*`
+sysctl, and choosing/changing the overcommit mode is host configuration (operator). A mode-2 reading inside the
+batch band is not evidence of a broken ledger (S500, S501).
+
+### The refusal log line as a detection signal
+
+`mm/util.c.v7.2:998-999` prints `pr_warn_ratelimited("%s: pid: %d, comm: %s, bytes: %lu not enough memory for
+the allocation
+", __func__, current->pid, current->comm, bytes_failed)`. QUALITY 15 forbids counting by message
+text, so the row permits presence and forbids a count.
+
+### The living-pin rule (K4 beyond SHONEN; counter arm C)
+
+A command-tally pin in `corpus/QUALITY.md` or `corpus/README.md` is good (its command runs today and prints the
+pinned tally), superseded (a later line carries `supersedes` with the stale span verbatim, and in QUALITY a later
+numbered criterion says `supersedes N's check`), or a mismatch. The stale pin is never rewritten: the record is
+appended to (QUALITY 141; `count-c1.py` arm C).
+
+### Pin mismatch classes (unchanged from Round51)
+
+`class=env` — the pinned command printed no tally for its prefix (setup); `class=stale` — it ran and printed a
+different tally, or a tally whose exit code contradicts it, or a digest/line-count pin differs; the summary ends
+`env=N stale=N` (`tools/mori-pin-check.py`).

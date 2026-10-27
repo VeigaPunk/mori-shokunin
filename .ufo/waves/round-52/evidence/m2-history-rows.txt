@@ -1,0 +1,6 @@
+$ python3 .ufo/waves/round-52/check-history-rows.py 4f266ef2fdf74d8b046f5b4f5a5c4945f65b966d --applier
+HISTORY_ROWS changed=6 lines=[1058, 1060, 1205, 1206, 1652, 1656]
+exit=1
+$ python3 .ufo/waves/round-52/check-history-rows.py 4f266ef2fdf74d8b046f5b4f5a5c4945f65b966d 8524904adb25e44f24d9f25aac7eae909625c18c
+HISTORY_ROWS changed=0 lines=[]
+exit=0
