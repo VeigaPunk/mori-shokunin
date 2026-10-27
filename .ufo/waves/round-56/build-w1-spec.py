@@ -211,6 +211,8 @@ add("LabCensusSpace", "labrat",
     f"Probe the census parser's 0-3 leading-space rule: copy corpus/SOURCES.md into scratch, append one row with TWO leading spaces whose id collides with a staged shokuknow id (use S471 from merge/mori), run `{F}/scripts/sources-census.sh validate --file <copy>` and show the collision/malformed behaviour; then append the same row at column zero and diff the validator output. Report whether the 0-3-space pattern matters for mori's registry hygiene (per the assimilation contract's collision check).")
 add("ExecAssimSlice", "executor",
     f"Re-derive the mori absent-defect register slice independently of ExecQuarantine: same awk over /home/vgpnk/Projects/shokuknow/.ufo/waves/corpus-expansion-1/absent-defect-register.md; count the rows; compare with the 2026-10-24 census note (mori slice) and with any prior round's verdict file ({L}/.ufo/waves/round-5*/assimilation/quarantine-verdicts.txt). Report row count, ids, and whether prior verdicts (S244 flip, S262/S268 PRESENT) are consistent with the register text.")
+add("CritWaveShape", "critic",
+    f"Verify this wave itself conforms to the round contract: read {W}/w1-spec.json — seat count inside the policy v2 band (64-128), attack-role share >= 25% (count reviewer+critic+mutation-tester+labrat+security-reviewer seats), every role routed per the host route table (never a model alias hardcoded in the spec), a connector seat present, no planner role (orchestrator ruling), every item names absolute paths under {L}, the context carries the tooling authorization + pacman guard sentences, and the Report-trailer resolution sentence is present. Report each violation (expect none) with the spec line.")
 
 
 def main():
