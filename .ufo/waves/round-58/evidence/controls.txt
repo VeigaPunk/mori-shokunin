@@ -1,0 +1,20 @@
+== entering revision: b783d0b892637ce8d20f188cad20e4d8913ca635 (lane master tip at round start)
+-- counter absence at entering (do-nothing control)
+fatal: path '.ufo/waves/round-58/count-c1.py' exists on disk, but not in 'b783d0b892637ce8d20f188cad20e4d8913ca635'
+rc=128
+fatal: path '.ufo/waves/round-58/count-c2.py' exists on disk, but not in 'b783d0b892637ce8d20f188cad20e4d8913ca635'
+rc=128
+-- new C1 counter at entering (register rows pre-exist; claim is the instrument)
+C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=b783d0b892637ce8d20f188cad20e4d8913ca635
+rc=0
+-- round-57 C1 counter at entering (known wrong-table false-negative, contrast)
+C1=unmet rows=0 evidence=bad rev=b783d0b892637ce8d20f188cad20e4d8913ca635
+rc=1
+-- new C2 counter at entering (entry absent)
+C2=unmet entry=absent failed=entry rev=b783d0b892637ce8d20f188cad20e4d8913ca635
+rc=1
+-- selftests
+C1_SELFTEST pass=4 fail=0
+rc=0
+C2_SELFTEST pass=6 fail=0
+rc=0
