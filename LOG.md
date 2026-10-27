@@ -2836,3 +2836,41 @@ round-51 entailment arm limits. Round-51 closure routed defects: 1 → both coun
 arm (two non-author voters, unfenced, frozen voter list); 3 → C1 survivor mutants routed as limits (M4/M8 noted in
 lesson); 4 → C1; 5 → erratum `corpus/lessons/round-51-erratum.md`; 6 → no frozen file edited this round; 7 →
 receipts carry literal commands; 8 → in-lane writers inventoried (`w1/Mo52ExecWritersConform.md`, `w1/Mo52ExecWritersCounters.md`) and routed with a successor-freeze design.
+
+
+## Round 53 (L1 MoriR53, attempt 1; C1 freshness, C2 coverage)
+
+Entering tip `20edafa5`; freeze `f4da3fd4` (contract, both counters with selftests, ten control receipts,
+census-start, sweeps, twelve source copies); data `2a4213bf`; wave spec `95cf78ee` (one v2 wave w1, 67 seats);
+data corrections after the wave `fd86307a`. Trigger: Linux v7.3 was tagged 2026-10-18 (`refs/tags/v7.3^{}` →
+`c03c1a14507d`, `evidence/sweeps.txt`; tag date `w1/Mo53ExecTagCommit.md`) while the round-51/52 entries pin 46
+claim rows to v7.2 with `recheck: on-release`, and no lane tool read the commit ledger the round-52 entry defined.
+C1 — freshness: the 46 rows re-read at v7.3 (ledger `corpus/knowledge/kernel-v7.3-recheck-r53.md`, rows
+S502–S510, counter `count-c1.py`). Re-verification result: 44 quotes held, 2 absent (the `mm/mmap.c`
+MAP_NORESERVE rule respelled `vma_flags_set(&vma_flags, VMA_NORESERVE_BIT)`), all 46 dispositions `holds`, each
+carried by two or three RECHECK seats (`w1/Mo53Fr01.md`–`Mo53Fr12.md`), none dissenting. C2 — coverage:
+`tools/mori-commit-runway.py` reads CommitLimit/Committed_AS by overcommit mode and, under mode 2, against the
+per-CPU error band (entry `corpus/knowledge/commit-runway-read-r53.md`, rows S511–S514, SKILL `## Round53`
+registry row, counter `count-c2.py`). End-to-end on this host (mode 0): `python3 -I -B
+tools/mori-commit-runway.py` → `COMMIT_HEURISTIC`, exit 0, recomputed limit equal to the printed 47583772 kB
+(`w1/Mo53ExecHostLive.md`). Before (entering): `C1=unmet … failed=ledger_absent,pins`
+(`evidence/control-c1-do-nothing.txt`); `C2=unmet tool=absent … failed=registry,tool_absent`
+(`evidence/control-c2-do-nothing.txt`). At data: `C1=unmet … status_ok=46 quote_ok=46 … voted=0 failed=votes`
+(`evidence/c1-at-data.txt`); `C2=met … n=23 … agree=80 disagree=0` (`evidence/c2-at-data.txt`). After: the
+landed receipts `evidence/c1-at-landed.txt`, `evidence/c2-at-landed.txt` (SCORECARD round-53 section). Controls
+that skip the work stay unmet: C1 do-nothing, all-held, v72-copies, no-votes; C2 do-nothing, mode-blind, no-band,
+memoriser; both witnesses met (feasibility, disclosed). Counter selftests `C1_SELFTEST pass=37 fail=0`,
+`C2_SELFTEST pass=30 fail=0`. Wave corrections to data (not to any frozen file): bounded, non-blocking, strict
+input parsing in the tool (+3 cases, +5 hostile checks, `PASS 31/31`); the band read two-sided; the CPU-hotplug
+limit; S514 (`mm_init.c` at v7.3); in-round anchor/teaches corrections to S502–S512 (lesson Gate, old→new); the
+ledger change table. Census start rc 0, 23 W04 (`evidence/census-start.txt`); end in `evidence/census-end.txt`.
+Assimilation: none (`merge/mori/` holds 0 files on either ground). considerthese: `2026-10-26.md` suggestion 2 —
+the round-52 wave's 61 distinct HIGH/MED flags carried forward: 13 fixed, 18 routed, 30 dropped
+(`w1/Mo53ExecConsiderthese.md`; lesson section). Mistakes mined (lesson): M1 a SCORECARD row with the at-data
+tally citing the landed receipt; M2 `[FILL]` where the round-52 report's own hash belongs; M3 the v7.3 trigger
+unanswered for eight days; M4 two lane-tree writes by wave seats (`r53-data.tar`, the `cases.json` rewrite); M5 the
+band first read one-sided. Round-52 closure routed defects: 1 → appended SCORECARD correction; 2 → report names its
+commit by command (QUALITY 147), erratum hash `aacd7a83` in the round-53 report; 3 → `Planned (round 54)`.
+QUALITY 144–147 added. Not done, stated: the in-lane writers' successor freeze, the locator sweep beyond the Axes
+rows and the C1 arm-isolating controls (all `Planned (round 53)`) were not taken this round and move to
+`Planned (round 54)` with the 30 dropped round-52 flags.

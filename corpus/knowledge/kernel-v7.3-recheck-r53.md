@@ -25,14 +25,17 @@ commit patch, which no release changes) is read again against the same path at v
 |---|---|---|
 | `fs/proc/meminfo.c`, `Documentation/mm/overcommit-accounting.rst`, `include/linux/mman.h` | byte-identical (same sha256) | — |
 | `Documentation/filesystems/proc.rst` | 3 changed lines | outside the meminfo field definitions |
-| `mm/show_mem.c` | 22 changed lines | an include, `const nodemask_t *` parameters, printk units (`%luKB` → `%lukB`); `si_mem_available` untouched |
-| `include/linux/mm_inline.h` | 49 changed lines | removal of the uffd-wp pte helper; `folio_is_file_lru` untouched |
-| `Documentation/admin-guide/sysctl/vm.rst` | 64 changed lines | a new `panic_on_unrecoverable_memory_failure` section and index line; a dropped `mm/swap.c` pointer |
-| `mm/util.c` | 14 changed lines | `vm_mmap_pgoff` and the shadow-stack helper (`vm_flags_t` → `vma_flags_t`); `vm_commit_limit`, `__vm_enough_memory` untouched |
-| `mm/mmap.c` | 190 changed lines | the `vm_flags_t` → `vma_flags_t` conversion, including the `MAP_NORESERVE` block |
+| `mm/show_mem.c` | 22 changed lines | an include, `const nodemask_t *` parameters, printk units (`%luKB` → `%lukB`), two printk format-specifier flips (`%ld`/`%lu`) and one `(unsigned long)` cast; `si_mem_available` untouched |
+| `include/linux/mm_inline.h` | 49 changed lines (57 added+removed) | removal of the uffd-wp pte helper and two `memdesc_section(&cur_page->flags)` call sites; `folio_is_file_lru` untouched |
+| `Documentation/admin-guide/sysctl/vm.rst` | 64 changed lines (83 added+removed) | a new `panic_on_unrecoverable_memory_failure` section and index line; a dropped `mm/swap.c` pointer |
+| `mm/util.c` | 14 changed lines | `vm_mmap_pgoff` (`EMPTY_VMA_FLAGS`), the shadow-stack helper (`vm_flags_t` → `vma_flags_t`), and two `vma->vm_pgoff` → `vma_start_pgoff(vma)` conversions (`compat_set_desc_from_vma`, `call_vma_mapped`); `vm_commit_limit`, `__vm_enough_memory` untouched |
+| `mm/mmap.c` | 190 changed lines (205 added+removed) | the `vm_flags_t` → `vma_flags_t` conversion including the `MAP_NORESERVE` block, the `mm_get_unmapped_area_vmflags` → `mm_get_unmapped_area_vmaflags` rename, and the removal of `__install_special_mapping` from this file (38 lines) |
 
 Line counts: `diff -u <v7.2 copy> <v7.3 copy> | grep -c '^[-+][^-+]'` over the round-51/52 copies and
-`corpus/evidence/sources-r53/`.
+`corpus/evidence/sources-r53/` (this pattern skips changed blank lines). Added+removed lines by
+`git diff --no-index --numstat`: proc.rst 3, show_mem.c 22, mm_inline.h 57 (2/55), vm.rst 83 (80/3), util.c 14,
+mmap.c 205 (92/113) (round-53 wave `w1/Mo53ExecAnchorCheck.md` §4.9). Of the 46 rows, only rows 34 and 37 (the two
+`absent` ones) sit in an enclosing function or section that changed at all (`w1/Mo53ExecDiffAudit.md`).
 
 ## Ledger
 
@@ -40,7 +43,8 @@ Line counts: `diff -u <v7.2 copy> <v7.3 copy> | grep -c '^[-+][^-+]'` over the r
 copy, `absent` otherwise. `quote` is the v7.2 quote when held and a v7.3 quote of the same rule when absent.
 `disposition` says whether the claim, read against the v7.3 file, still holds (`holds`) or not (`changed`); it is
 the L1's reading at the data commit and is decided by two RECHECK votes per row from seats that did not write the
-row (`.ufo/waves/round-53/w1/Mo53Fr01.md`–`Mo53Fr12.md`). The claim text of each hash is listed in
+row (`.ufo/waves/round-53/w1/Mo53Fr01.md`–`Mo53Fr12.md`): all 46 `holds` carry two or three such votes and no
+seat voted `changed` or proposed another quote. The claim text of each hash is listed in
 `.ufo/waves/round-53/evidence/c1-claims.txt`.
 
 | h | entry | status | source | quote | disposition |

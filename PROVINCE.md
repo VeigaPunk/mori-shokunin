@@ -398,3 +398,58 @@ round 27 `:375`. The `## Frontier` head (`:44-57`) lists FR1–FR14; FR15 is the
 Neither head is a completeness claim. Still open (named, not fixed this round): sixteen `tools/` files and six
 fixture directories are not named here (ScoutProvinceStale items 4–5); the census citation `tools/mori-census.sh:211-212,282`
 at `:94` has drifted (the default now sits near `:237`, `:321`; ScoutProvinceStale item 8).
+
+## Round-53 appended scope notes (2026-10-26)
+
+- **Core, commit-ledger runway read (`tools/mori-commit-runway.py`; round-53 C2):** reads `CommitLimit`,
+  `Committed_AS`, `MemTotal`, `SwapTotal` (optional `Hugetlb`) from `/proc/meminfo`, the five commit knobs under
+  `/proc/sys/vm`, and `/sys/devices/system/cpu/present`, and prints one JSON object (`schema:
+  mori-commit-runway-v1`): `verdict`, `mode`, `enforced`, `commit_limit_kb`, `committed_as_kb`, `headroom_kb`,
+  `reserve_kb`, `usable_kb`, `band_kb`, `batch_pages`, `cpus_present`, `single_request_cap_kb`,
+  `limit_recomputed_kb`, `limit_consistent`. Verdicts `COMMIT_OK`, `COMMIT_HEURISTIC`, `COMMIT_UNLIMITED`
+  (exit 0), `COMMIT_LOW` (exit 1), `COMMIT_UNKNOWN` (exit 2). The mode decides what the numbers are: under
+  `overcommit_memory` 0 the two lines are printed but never compared, so `Committed_AS` above `CommitLimit` is
+  normal (`over_limit_not_enforced`) and only a single request larger than RAM + swap is refused
+  (`single_request_cap_kb`); under 1 the commit test always passes and the read says nothing about memory left
+  (read `MemAvailable`); under 2 the limit is enforced, `usable_kb = CommitLimit - Committed_AS -
+  admin_reserve_kbytes - user_reserve_kbytes` (the user reserve at its worst case), and `COMMIT_LOW` means the
+  room is inside the per-CPU counter's own error band (`band_kb = batch x present CPUs x page`, batch
+  `max(min(ram pages / CPUs / 256, INT_MAX), max(2 x CPUs, 32))`), where the printed figures no longer decide the
+  next request — the enforced read sits above or below `Committed_AS` by up to the band, so a non-root allocation
+  can be refused while they show room, or admitted past them. `COMMIT_UNKNOWN` means this tool cannot derive a number
+  from the bytes it was pointed at — never zero room, never a pass. `COMMIT_LOW` is **not** a calibrated alarm
+  (FR8 stays open), and `band_kb` is an upper bound from the batch rule with today's totalram and present CPUs,
+  not a measured deviation. Read-only: seven regular files of at most 1 MiB opened for reading (a FIFO, device or directory is refused without blocking) (`/proc/meminfo`, five `/proc/sys/vm`
+  knobs, `/sys/devices/system/cpu/present`); it writes no sysctl, chooses no mode, ratio or reserve, triggers no
+  allocation and reads no cgroup commit (there is none). It is **not a census surface**: no `SURFACE` row, no
+  census finding id, no DRIFT verdict, no baseline re-pin — `tools/mori-census.sh` names neither line. Limits
+  carried with the row: the counter's reference reading and the tool share one author, so a shared misreading of
+  `mm/util.c` passes both (independent recomputation is the wave's job), and the live leg compares stable fields
+  only and turns on the host it runs on. Knowledge: `corpus/knowledge/commit-runway-read-r53.md` (S499,
+  S511-S514, v7.2 and the v7.3 batch rule); SKILL registry `## Round53`.
+- **Freshness work on existing surfaces, no scope change (round-53 C1):**
+  `corpus/knowledge/kernel-v7.3-recheck-r53.md` re-reads the 46 claim rows of `memavailable-estimate-r51.md` and
+  `overcommit-commit-limit-r52.md` that cite a v7.2 file (three further rows cite the 2014 commit patch, which no
+  release changes) against the same paths at tag v7.3 (`refs/tags/v7.3^{}` → `c03c1a14507d`); S502-S510 are
+  those nine files at v7.3, with pinned copies under `corpus/evidence/sources-r53/`. 44 of the 46 quotes still
+  occur; the two `mm/mmap.c` `MAP_NORESERVE` quotes are respelled as `vma_flags_set(&vma_flags,
+  VMA_NORESERVE_BIT)` for the same condition, so their status is `absent` and their disposition still `holds`. A
+  `held` status proves only that the words still occur somewhere in the v7.3 file — not at the same place and
+  not with the same meaning; the row's `disposition` carries the reading, and all 46 `holds` are carried by two
+  or three RECHECK seats each (`.ufo/waves/round-53/w1/Mo53Fr01.md`–`Mo53Fr12.md`), none dissenting. The two round-51/52 entries remain
+  the host's reading: this ledger says what a v7.3 host would read, and the host's kernel line was 7.2.11 when
+  it landed (entry Boundaries). Not rechecked: `oom-tracepoints-r47.md`, the round-50 memcg entry
+  (`recheck: 90d`), prose outside the two tables, and the anchors of S492-S501. No probe, no frontier row, no
+  ownership change.
+- **Owns-scope extension (append-only; `PROVINCE.md:6-10` left byte-unchanged):** the first Core bullet above
+  extends the owned read-only probe list named at `PROVINCE.md:6-10` — which today reads "resource runway (disk
+  on the fleet root and `/tmp`, memory pressure)" — with VM commit accounting under the overcommit mode, a
+  quantity that is neither disk use nor pressure. The `## Core` head (`PROVINCE.md:22-28`, whose Resource runway
+  row at `:26` names only the `SURFACE disk` and `SURFACE cgroup` census reads) and the `## Frontier` head
+  (`:44-57`) are not rewritten and gain no row; this section is appended at EOF, so no line moves and every
+  existing line citation into this file stays valid.
+- **Boundaries:** choosing `vm.overcommit_memory`, `overcommit_ratio`, `overcommit_kbytes`,
+  `admin_reserve_kbytes` or `user_reserve_kbytes`, and deciding whether a commit refusal is a host fault, belong
+  to the operator and tsukuroi; the lane reports the reading it made and no remediation. This note claims no
+  admission: both claims are scored by the round-53 counters, and no census integration, threshold, baseline
+  re-pin or frontier closure is added.

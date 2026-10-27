@@ -1377,3 +1377,101 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     only.
 
 143. **A depth row needs two `entailed` votes from voters that did not write its text; an `overclaim` vote blocks the row until its text is replaced.** This row supersedes 140's "Not covered" text only; 140's criterion stands. Lesson: round-51 closure §5 item 2; round-52 M5 (the r51 arm took one vote, fenced lines and any .md). Check: `python3 .ufo/waves/round-52/count-c2.py <rev>` exits 0 and prints `C2=met … entailed=N dissent=0`; `C2_SELFTEST pass=45 fail=0` carries `entail_one_voter_unmet`, `entail_author_vote_not_counted_unmet`, `entail_fenced_votes_ignored_unmet`, `entail_non_voter_seat_ignored_unmet`. Shown able to fail: the data commit printed `failed=entailment` with `entailed=0` (`.ufo/waves/round-52/evidence/c2-at-data.txt`); row 3 had two overclaim votes and needed text replacement (lesson §Wave). Not covered: two files written by one seat look like two voters; a voter's REPLACE line is the only authorship signal.
+
+## Criteria added round 53 — a release recheck answers a pin, a runway verdict names its mode and band, a scorecard row matches the receipt it cites, a report names its own commit
+
+144. **An entry whose claim rows pin a tag and whose provenance line says `recheck: on-release` is answered by a
+    recheck ledger once a newer tag exists: one row per claim hash, the counter-derived status, a quote located in
+    the new tag's copy, a disposition, and two votes that did not propose that row's quote.** Lesson: round-53 C1
+    (the round-51 and round-52 entries pin 46 of their 49 claim rows to v7.2 files and each carries one
+    `recheck: on-release` line; `evidence/sweeps.txt:19` reads `refs/tags/v7.3^{}` → `c03c1a14507d…`, so the
+    trigger fired with no answer in `corpus/knowledge`). Rationale: a `recheck: on-release` line is a promise the
+    entry makes about itself; without a ledger the promise is prose, and a reader of the round-51/52 tables cannot
+    tell a quote that still holds from one the release respelled. Check: `python3 .ufo/waves/round-53/count-c1.py
+    <R>` exits 0 and prints `C1=met scope=46 rows=46 matched=46 status_ok=46 quote_ok=46 source_rows=ok pins=ok
+    provenance=ok … voted=46 dissent=0`; the ledger `corpus/knowledge/kernel-v7.3-recheck-r53.md` carries the same
+    next-tag procedure on its own `recheck:` line (line 13), so the entry that answers one trigger states how the
+    next is answered. At the data commit `2a4213bf` the counter printed `… voted=0 dissent=0 … failed=votes`,
+    exit 1 (`.ufo/waves/round-53/evidence/c1-at-data.txt`) — rows and located quotes before votes. Shown able to
+    fail: `.ufo/waves/round-53/evidence/control-c1-do-nothing.txt` (`rows=0 … pins=bad provenance=bad …
+    failed=ledger_absent,pins`, exit 1); `control-c1-all-held.txt` (`status_ok=44 quote_ok=44 … failed=quote,status`)
+    fails exactly the two `mm/mmap.c` rows whose quote v7.3 respelled to `vma_flags_set(&vma_flags,
+    VMA_NORESERVE_BIT)`; `control-c1-v72-copies.txt` (`pins=bad … failed=pins,quote,status`) fails v7.2 bytes
+    presented as v7.3; `control-c1-no-votes.txt` reproduces the data line. Not covered: `held` proves the v7.2
+    quote's words still occur somewhere in the v7.3 file, not at the same place nor with the same meaning; the two
+    `absent` rows carry disposition `holds` because the rule survived a respelling, so `holds=46 changed=0` must not
+    be read as "no quote moved" (the entry title says "two quotes respelled"); 3 of the 49 rows cite the 2014 commit
+    patch and are out of scope; D is the two entries' claim tables only — not `oom-tracepoints-r47.md`, the
+    round-50 memcg entry, prose outside the tables, or the SOURCES anchors; the votes are lane seats, not outside
+    verification; and the pins prove the copies are the bytes fetched from cgit, not that cgit served the tag.
+
+145. **A runway verdict names the enforcement mode, and under mode 2 the error band that decides `COMMIT_LOW`; a
+    band field that the verdict does not use is not the rule.** Lesson: round-53 C2 (the commit ledger moves from
+    `corpus/knowledge/overcommit-commit-limit-r52.md` into `tools/mori-commit-runway.py`; the band is
+    `mm_compute_batch` × present CPUs × page size, rows S511–S513). Rationale: one "commit headroom" number
+    misleads in every mode — under mode 0 nothing below RAM + swap is refused, under mode 1 nothing is refused at
+    all, and under mode 2 the enforced value is the global part of a per-CPU counter whose signed local deltas put
+    it above or below the printed exact sum by up to one batch per CPU, so inside the band the printed figures do
+    not decide the next request (wave correction: `w1/Mo53RevC2Counter.md` finding 1, `w1/Mo53ScribeSkill.md`). A tool that prints `band_kb` but
+    declares `COMMIT_LOW` only below zero usable room is band-blind and its fields look honest. Check:
+    `python3 -I -B tools/mori-commit-runway.py` prints one JSON object in which `mode` and `enforced` name the
+    policy (host 2026-10-26: `"mode": 0, "enforced": false, "band_kb": null, "verdict": "COMMIT_HEURISTIC"`,
+    exit 0), and under mode 2 `usable_kb` and `band_kb` are numbers; the frozen edge pair decides the rule —
+    `mode2-band-edge-equal-is-low` prints `usable_kb 32768 = band_kb 32768`, `COMMIT_LOW`, exit 1, and
+    `mode2-band-edge-one-page-above` prints `usable_kb 32772 > band_kb 32768`, `COMMIT_OK`, exit 0 (both cases
+    materialised from `tools/fixtures/mori-commit-runway/cases.json` and run with `--meminfo --vm-dir
+    --cpu-present --page-kb`); `python3 .ufo/waves/round-53/count-c2.py <R> --scratch DIR` exits 0 printing
+    `C2=met tool=present selftest=pass n=31 fixtures=80 agree=80 disagree=0 registry=ok live=ok`. Shown able to
+    fail: `control-c2-mode-blind.txt` (`agree=53 disagree=27`), `control-c2-no-band.txt` (`agree=71 disagree=9`,
+    including `mode2-band-edge-low want=COMMIT_LOW got=COMMIT_OK`) and `control-c2-memoriser.txt` (`71/9`); all
+    three print `selftest=pass n=12`, so the fixture arm and not the selftest is what separates them. Not covered:
+    REF and the tool share one author, so a shared misreading of the kernel passes both; the band is an upper bound
+    from the batch rule with present CPUs and totalram at read time, not a measured deviation; `COMMIT_LOW` is
+    "inside the counter's own band", not a calibrated alarm (FR8 stays open); the live leg compares stable fields
+    only, and on a mode-0 host — this one — the band fields are `null` live, so the mode-2 rule is exercised by
+    fixtures alone; the tool reads no cgroup-level commit and sets no alert threshold.
+
+146. **A SCORECARD row's numbers are the numbers of the receipt it cites.** Lesson: round-52 closure D2 — row
+    `SCORECARD.md:2746` records `items=42 … locators=27` while citing `evidence/c1-at-landed.txt`, which prints
+    `items=43 … locators=28`; the digits are verbatim from `evidence/c1-at-data.txt` measured at `8524904a`, so the
+    citation anticipates the later receipt (the verdict is unaffected — both receipts print `C1=met …
+    mismatches=0 errors=0`, rc 0). Rationale: a scorecard row is where a reader checks a round's arithmetic; a row
+    whose citation names one receipt and whose digits come from another silently rewrites the round in the
+    direction of whichever receipt the author last had open. Check: the loop below takes, for each tally key, the
+    row's last occurrence and the `^C1=` line of the receipt named last in the row (the after-cell), and prints
+    `ok|mismatch`:
+
+    n=2746; row=$(sed -n "${n}p" SCORECARD.md)
+    rec=$(printf '%s' "$row" | grep -o 'evidence/[a-z0-9-]*\.txt' | tail -1)
+    for k in items locators; do
+      a=$(printf '%s' "$row" | grep -o "$k=[0-9]*" | tail -1 | cut -d= -f2)
+      b=$(grep -h '^C1=' ".ufo/waves/round-52/$rec" | grep -o "$k=[0-9]*" | tail -1 | cut -d= -f2)
+      printf '%s row=%s receipt=%s %s\n' "$k" "$a" "$b" "$([ "$a" = "$b" ] && echo ok || echo mismatch)"
+    done
+
+    on the round-52 pair it prints `items row=42 receipt=43 mismatch` and `locators row=27 receipt=28 mismatch`,
+    while the same row against `c1-at-data.txt` prints `row=42 receipt=42` and `row=27 receipt=27` — which names
+    the attribution; for the round-53 row, `n=$(grep -n 'count-c1.py R' SCORECARD.md | tail -1 | cut -d: -f1)` and
+    the receipt prefix `.ufo/waves/round-53/`. Shown able to fail: that reading, and the round-53 instantiation is
+    the appended correction line the round-52 closure requires (routed defect 1). Not covered: only the keys the
+    row displays are compared, so a count the row omits is unchecked; the receipt side is read at whatever bytes
+    the tree holds, so an edit to the receipt after the row moves the comparison silently (no pin binds it); a row
+    citing no `evidence/*.txt` path is skipped by the selector; the selector takes the last path in the cell, so a
+    row naming its after-receipt before its before-receipt compares the wrong pair.
+
+147. **A report names its own commit by command, never by a placeholder.** Lesson: round-52 closure D1 — the report
+    carries `[FILL]` at line 5 (`… Report commit `[FILL]`.`), where its own commit hash belongs, and at line 46
+    (`| `[FILL]` | receipts at landed tip: …`); the hash that exists is
+    `aacd7a83027cdee8e950a2c39d490feaed3be13c` (`git log --format=%H -- .ufo/reports/round-52/mori.md` on the fleet
+    repo). Rationale: a report is written before its own commit exists, so the commit cell is the one value the
+    author cannot know while writing; a placeholder left there survives every later reading and makes the report
+    unverifiable from its own text. The round-53 convention replaces it with the command that prints the value.
+    Check: the report carries the literal command `git log --format=%H -- .ufo/reports/round-53/mori.md` where its
+    own commit belongs (on the fleet repo the command prints one 40-hex hash once the report is committed), and `grep -nE 'Report commit `?\[FILL\]|^\| `\[FILL\]` \|' .ufo/reports/round-53/mori.md`
+    prints nothing, rc 1. Shown able to fail: the same grep on `.ufo/reports/round-52/mori.md` prints
+    `5:… Report commit `[FILL]`.` and `46:| `[FILL]` | receipts at landed tip: `c1-at-landed.txt`,
+    `c2-at-landed.txt`, `census-end.txt` | Round 52 |`. Not covered: the grep matches the two positions round 52
+    used (a metadata line and a commit-table row); a placeholder spelled `TBD`, `<hash>` or `pending`, or one placed
+    in prose, is not matched; the positive arm holds only after the report is committed, so at writing time only the
+    negative arm runs; the criterion binds the report to a commit that touched it, not to the commit the author
+    intended.

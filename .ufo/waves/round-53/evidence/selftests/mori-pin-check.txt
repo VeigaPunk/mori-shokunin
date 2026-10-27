@@ -1,0 +1,8 @@
+# run from a git archive of 2a4213bf8da72f7cd78189baa5bb9be825dca1df (lane data commit), TMPDIR=/fast/scratch/hyaku/mori-r53/L1/st/tmp, 2026-10-26T22:41:29-03:00
+$ python3 tools/mori-pin-check.py --selftest
+PASS v51_scratch_inside_repo_refused  rc=2
+PASS v51_default_scratch_tmpdir_and_master_is_rev  rc=0 left=0
+PASS cli_met_rc0  rc=0
+PASS cli_bad_rev_rc2  rc=2
+PIN_CHECK_SELFTEST pass=125 fail=0
+exit=0

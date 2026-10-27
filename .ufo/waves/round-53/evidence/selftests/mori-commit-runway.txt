@@ -1,0 +1,5 @@
+# run from a git archive of 2a4213bf8da72f7cd78189baa5bb9be825dca1df (lane data commit), TMPDIR=/fast/scratch/hyaku/mori-r53/L1/st/tmp, 2026-10-26T22:41:44-03:00
+$ python3 -I -B tools/mori-commit-runway.py --selftest
+MATCHER: rejected 23/23 corrupted expectations
+MORI_COMMIT_RUNWAY_SELFTEST: PASS 23/23
+exit=0

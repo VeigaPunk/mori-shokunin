@@ -745,3 +745,25 @@ the commit ledger — `CommitLimit` and `Committed_AS` are printed under every m
 modes 0/1 is normal and not an OOM precursor (`knowledge/overcommit-commit-limit-r52.md`, S497–S501); no frontier
 row is rewritten, and no instrument reads the ledger yet (the census and both hyaku gates read `MemAvailable`) —
 a commit-ledger census line is routed to round 53.
+
+
+## Round-53 coverage additions
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| Resource runway — the commit ledger as a verdict (knowledge → tool) | `knowledge/commit-runway-read-r53.md` (S511–S514); `tools/mori-commit-runway.py`, its fixtures and the `## Round53` registry row | Round 52 said what `CommitLimit` and `Committed_AS` are; the tool reads them under the mode that decides enforcement and, under mode 2, prints `usable_kb` against `band_kb` = batch × present CPUs × page — the signed error the per-CPU counter's global-only read carries against `Committed_AS`, in either direction (`COMMIT_LOW`, exit 1, when the room is inside the band) — while modes 0/1 print the ledger and never read it as a limit (`COMMIT_HEURISTIC` / `COMMIT_UNLIMITED`, exit 0). `python3 -I -B tools/mori-commit-runway.py --selftest` → `MORI_COMMIT_RUNWAY_SELFTEST: PASS 31/31` with `MATCHER: rejected 26/26 corrupted expectations` (23/23 at the data commit `2a4213bf`; three hostile-input cases and five built-in checks added after the wave); the frozen counter agrees 80/80, no disagreement (`C2=met … agree=80 disagree=0 registry=ok live=ok`, `.ufo/waves/round-53/evidence/c2-at-landed.txt`); the live read on this host (2026-10-26, mode 0, 32 present CPUs) printed `COMMIT_HEURISTIC` with `limit_consistent: true`, exit 0. Bounded: `COMMIT_LOW` is "inside the counter's own error band", not a calibrated alarm (FR8 stays open); the band is an upper bound from the batch rule with present CPUs and today's totalram, not a measured deviation; the counter's REF and the tool share one author, so a shared misreading of the kernel passes both; the tool reads no cgroup-level commit and gives no alert threshold. |
+| Freshness — the round-51/52 claim rows rechecked at tag v7.3 | `knowledge/kernel-v7.3-recheck-r53.md` (S502–S510; its own `coverage-map:` files it under resource runway, no new ground) | The release trigger is answered for the two entries' tables: 46 v7.2-pinned rows re-read at v7.3 (44 `held`, 2 `absent` — both `MAP_NORESERVE` quotes, respelled `vma_flags_set(&vma_flags, VMA_NORESERVE_BIT)`), every row's disposition `holds`. `python3 .ufo/waves/round-53/count-c1.py 2a4213bf8da72f7cd78189baa5bb9be825dca1df` → `C1=unmet scope=46 rows=46 matched=46 status_ok=46 quote_ok=46 source_rows=ok pins=ok provenance=ok held=44 absent=2 holds=46 changed=0 voted=0 dissent=0 … failed=votes`, exit 1 (`.ufo/waves/round-53/evidence/c1-at-data.txt`; the vote arm is the twelve RECHECK seats', and its landed line is the round-53 report's). Bounded: `held` proves the words still occur somewhere in the v7.3 file, not at the same place or with the same meaning — the disposition and its two votes carry that; the recheck covers the two tables only, so `oom-tracepoints-r47.md`, the round-50 memcg entry (`recheck: 90d`), the prose outside the tables and the anchors of S492–S501 stay unrechecked at v7.3; the pins prove the bytes are what the L1 fetched from cgit, not that cgit served the tag. |
+
+Dated note (append-only, 2026-10-26): the commit-runway entry supersedes the round-52 note's "no instrument reads
+the ledger yet" — the ledger has a read-only reader, and under mode 2 that reader states its own error band instead
+of a headroom number; the routed commit-ledger census line is answered by that tool, not by a census arm (the
+census carries 0 hits of the commit-ledger names at the entering tip and `tools/mori-census.sh` is unchanged
+through the data commit, `evidence/sweeps.txt`); no frontier row is rewritten. Still frontier: FR8 —
+`COMMIT_LOW` is "inside the counter's own error band", not a calibrated threshold, and no workload window
+prices it (`knowledge/commit-runway-read-r53.md` §Boundaries); the v7.3
+`panic_on_unrecoverable_memory_failure` section (S507 copy line 926) names a panic surface for an unrecoverable
+hardware memory error — a lead for mori's kill-event frontier, not a claim of this round, and `mm/memory-failure.c`
+at v7.3 was not opened (`SOURCES.md` `## Leads (unopened)`, round-53 bullet); and the recheck is bounded to the round-51/52 tables, so
+`knowledge/oom-tracepoints-r47.md` (its own pin is `recheck: on-release`, and the v7.3 tag fires it too) and
+`knowledge/oom-memcg-stat-r50.md` (`recheck: 90d`) are unrechecked at v7.3
+(`knowledge/kernel-v7.3-recheck-r53.md` §Boundaries).
