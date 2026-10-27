@@ -1,0 +1,20 @@
+$ cd <lane checkout at d3a8ea5957b73bddbde750a8c0af2fba8da8b7c2> && python3 tools/mori-unlanded-check.py --selftest
+PASS clean_tree_exit0  rc=0 UNLANDED=clean round=8
+PASS untracked_late_result_exit1_names_it  rc=1 ['UNLANDED=dirty round=8 paths=1', 'unlanded ?? .ufo/waves/round-8/w2/Late.md']
+PASS modified_tracked_report_exit1  rc=1 ['UNLANDED=dirty round=8 paths=1', 'unlanded .M .ufo/waves/round-8/w1/A.md']
+PASS outside_scope_and_scratch_not_listed  rc=0 ['UNLANDED=clean round=8']
+PASS other_round_not_listed  rc=0 ['UNLANDED=clean round=8']
+PASS other_round_listed_for_that_round  rc=1
+PASS lessons_and_space_in_path_listed  rc=1 ['UNLANDED=dirty round=8 paths=2', 'unlanded ?? corpus/lessons/round-8.md', 'unlanded ?? tools/new tool.py']
+PASS staged_but_uncommitted_listed  rc=1
+PASS rename_source_not_listed  rc=0 ['UNLANDED=clean round=8']
+PASS in_scope_rename_lists_destination_only  rc=1 ['UNLANDED=dirty round=8 paths=1', 'unlanded R. corpus/moved.md']
+PASS list_cap_50_of_60  rc=1 lines=51 last=unlanded ?? .ufo/waves/round-8/w2/F49.md
+PASS modified_status_rendered_with_dot  rc=1 ['UNLANDED=dirty round=8 paths=1', 'unlanded .M corpus/lessons/round-8.md']
+PASS subdirectory_is_setup_error  --repo is not a repository top level (git top level is /fast/scratch/hyaku/mori-
+PASS missing_directory_is_setup_error  setup
+PASS cli_dirty_rc1  rc=1
+PASS cli_setup_rc2  rc=2
+PASS cli_usage_rc2  rc=2
+UNLANDED_SELFTEST pass=17 fail=0
+rc=0

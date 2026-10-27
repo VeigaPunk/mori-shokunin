@@ -718,3 +718,16 @@ reclaimable kernel memory each less `min(half, wmark_low)`, and clamps at zero, 
 `/proc/zoneinfo`'s per-zone figures too), the entry claims the v7.2 bytes only, and FR8's calibration
 stays open — a floor on this figure is a labeled-local threshold on a model whose holdbacks are
 `min(half, the low-watermark sum)` and whose accuracy the proc document says varies from system to system.
+
+## Round-52 corrections (living pins)
+
+Dated note (append-only, 2026-10-26): two command-tally pins in the coverage tables above no longer print what
+they say, and neither row is rewritten.
+
+- Round-39 row "Ancestry-based timed supersede": this note supersedes `python3 tools/mori-sources-appendonly.py --selftest` → `pass=12 fail=0` (the round-39 count); the committed gate has printed 22 since the round-41 freeze `d72ac167`: `python3 tools/mori-sources-appendonly.py --selftest` → `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0`.
+- Round-39 row "Counter conformance v2": this note supersedes `--selftest` → `pass=9 fail=0`, which names no command; the runnable form takes a revision: `python3 .ufo/waves/round-39/conform.py 4f266ef2fdf74d8b046f5b4f5a5c4945f65b966d --selftest` → `CONFORM_SELFTEST pass=9 fail=0`.
+
+Each bullet is one line on purpose: the counter reads a quoted stale pin as a quotation only when its replacement
+pin stands on the same line.
+
+Counter: `python3 .ufo/waves/round-52/count-c1.py <rev>` arm (C) (QUALITY 141).

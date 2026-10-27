@@ -1350,3 +1350,24 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     `entailed` vote meets the arm although the wave dispatches two seats per row; the hash covers the claim cell
     only, not the quote; an `overclaim` clears only when the claim text is replaced (new hash), never by deleting
     the vote.
+
+## Criteria added round 52 — a living pin is current or superseded, and a self-assessment pointer lands on its words
+
+141. **A command-tally pin in a living document (`corpus/QUALITY.md`, `corpus/README.md`) prints its tally when run
+    today, or a later line supersedes it; the stale pin itself is never rewritten.** This row supersedes 112's check
+    cell only; 112's criterion stands. Rationale: 112's check pinned the gate's selftest at the round-39 count while
+    the committed tool has printed 22 since the round-41 freeze `d72ac167` (QUALITY 128). Check:
+    `python3 tools/mori-sources-appendonly.py --selftest` → `MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0`, exit 0, run in a `git archive` of the tip with `TMPDIR` in scratch. Counter:
+    `python3 .ufo/waves/round-52/count-c1.py <rev>` arm (C) lists every single-line pin in both files as good,
+    superseded or a mismatch. Shown able to fail: at the entering tip `4f266ef2` the arm read three mismatches
+    (`.ufo/waves/round-52/evidence/control-c1-do-nothing.txt`); rewriting a stale pin in place reads
+    `pin_removed_or_rewritten`. Not covered: a pin split across lines or carrying a placeholder is not enumerated
+    as a pin when it spans lines.
+142. **A self-assessment pointer lands on the words it reports.** In `SCORECARD.md` `## Axes` and in the
+    `SHONEN.md` boxes, a `path:N` pointer after a quoted string or a `proposed A → B` phrase names lines that hold
+    that string or pair; every pointer names lines that exist. Rationale: the freshness cell pointed round 28's
+    proposed `5 → 6` at `SCORECARD.md:1771`, which holds the amendment A1 paragraph; the pair is at `:1781`.
+    Check: `python3 .ufo/waves/round-52/count-c1.py <rev>` arm (D), `item locator … state=` lines. Shown able to
+    fail: the entering tip reads `item locator SCORECARD.md:1771 expect=pair:5_→_6 got=absent state=mismatch`.
+    Not covered: prose before a pointer other than a quoted string or a `proposed A → B` pair is checked for range
+    only.
