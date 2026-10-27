@@ -1,0 +1,187 @@
+# round-54 C1 claim text per ledger row (row = ledger table order at the data commit)
+
+row=1 h=4aab78fbca9c entry=corpus/knowledge/commit-runway-read-r53.md v7.2-source=S513
+  claim: The mode-2 read takes only the global count and returns zero for a negative value, never summing the per-CPU deltas.
+  v7.2 quote: s64 ret = READ_ONCE(fbc->count); if (ret >= 0) return ret; return 0;
+  v7.2 copy: corpus/evidence/sources-r53/percpu_counter.h.v7.2 lines 121
+  v7.3 copy: corpus/evidence/sources-r54/percpu_counter.h.v7.3 line 121 (ledger source S518)
+
+row=2 h=c8fb3a4fb56f entry=corpus/knowledge/commit-runway-read-r53.md v7.2-source=S512
+  claim: A CPU keeps adding into its own local delta and folds it into the global count only once the delta would reach the batch.
+  v7.2 quote: if (unlikely(abs(count + amount) >= batch)) { raw_spin_lock_irqsave(&fbc->lock, flags);
+  v7.2 copy: corpus/evidence/sources-r53/percpu_counter.c.v7.2 lines 100
+  v7.3 copy: corpus/evidence/sources-r54/percpu_counter.c.v7.3 line 100 (ledger source S517)
+
+row=3 h=0d09a65619e5 entry=corpus/knowledge/commit-runway-read-r53.md v7.2-source=S511
+  claim: The batch never falls below twice the present CPU count or 32 pages, whichever is larger.
+  v7.2 quote: s32 nr = num_present_cpus(); s32 batch = max_t(s32, nr*2, 32);
+  v7.2 copy: corpus/evidence/sources-r53/mm_init.c.v7.2 lines 194
+  v7.3 copy: corpus/evidence/sources-r53/mm_init.c.v7.3 line 198 (ledger source S514)
+
+row=4 h=47887dc7067f entry=corpus/knowledge/commit-runway-read-r53.md v7.2-source=S511
+  claim: The kernel comment states the mode-2 batch as 0.4 percent of memory per CPU and the looser modes' batch as 25 percent.
+  v7.2 quote: For policy OVERCOMMIT_NEVER, set batch size to 0.4% of * (total memory/#cpus), and lift it to 25% for other policies
+  v7.2 copy: corpus/evidence/sources-r53/mm_init.c.v7.2 lines 199
+  v7.3 copy: corpus/evidence/sources-r53/mm_init.c.v7.3 line 203 (ledger source S514)
+
+row=5 h=da4075a0131e entry=corpus/knowledge/commit-runway-read-r53.md v7.2-source=S511
+  claim: Under mode 2 the batch of the committed-memory counter is RAM pages divided by CPUs and by 256, capped at INT_MAX.
+  v7.2 quote: if (overcommit_policy == OVERCOMMIT_NEVER) memsized_batch = min_t(u64, ram_pages/nr/256, INT_MAX);
+  v7.2 copy: corpus/evidence/sources-r53/mm_init.c.v7.2 lines 204
+  v7.3 copy: corpus/evidence/sources-r53/mm_init.c.v7.3 line 208 (ledger source S514)
+
+row=6 h=196504e1a96c entry=corpus/knowledge/commit-runway-read-r53.md v7.2-source=S499
+  claim: Switching the sysctl to mode 2 recomputes the batch and syncs every CPU before the new policy takes effect.
+  v7.2 quote: 1. changing the batch * 2. sync percpu count on each CPU * 3. switch the policy
+  v7.2 copy: corpus/evidence/sources-r52/util.c.v7.2 lines 820
+  v7.3 copy: corpus/evidence/sources-r53/util.c.v7.3 line 820 (ledger source S508)
+
+row=7 h=3b7ff65291be entry=corpus/knowledge/commit-runway-read-r53.md v7.2-source=S499
+  claim: The figure printed as Committed_AS is the exact sum across CPUs, not the read the mode-2 test uses.
+  v7.2 quote: unsigned long vm_memory_committed(void) { return percpu_counter_sum_positive(&vm_committed_as); }
+  v7.2 copy: corpus/evidence/sources-r52/util.c.v7.2 lines 937
+  v7.3 copy: corpus/evidence/sources-r53/util.c.v7.3 line 937 (ledger source S508)
+
+row=8 h=646b97a23371 entry=corpus/knowledge/commit-runway-read-r53.md v7.2-source=S499
+  claim: The mode-2 refusal compares that global-only read with the allowed figure, so the enforced value is approximate.
+  v7.2 quote: if (percpu_counter_read_positive(&vm_committed_as) < allowed) return 0;
+  v7.2 copy: corpus/evidence/sources-r52/util.c.v7.2 lines 994
+  v7.3 copy: corpus/evidence/sources-r53/util.c.v7.3 line 994 (ledger source S508)
+
+row=9 h=07524a78c749 entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S489
+  claim: Every memory amount the block prints is a byte count, and an unaligned write may be rounded up to a page when read back.
+  v7.2 quote: All memory amounts are in bytes. If a value which is not aligned to PAGE_SIZE is written,
+  v7.2 copy: corpus/evidence/sources-r50/cgroup-v2.7.2.html lines 1194
+  v7.3 copy: corpus/evidence/sources-r54/cgroup-v2.7.3.html line 1225 (ledger source S520)
+
+row=10 h=202158f50bb3 entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S489
+  claim: The anon key counts anonymous mappings such as brk and MAP_ANONYMOUS, so it carries a process heap rather than page cache.
+  v7.2 quote: anon Amount of memory used in anonymous mappings such as brk() , sbrk() , and mmap(MAP_ANONYMOUS).
+  v7.2 copy: corpus/evidence/sources-r50/cgroup-v2.7.2.html lines 1406
+  v7.3 copy: corpus/evidence/sources-r54/cgroup-v2.7.3.html line 1437 (ledger source S520)
+
+row=11 h=41496ae6cbe1 entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S489
+  claim: The oom_kill field counts this cgroup's processes killed by an OOM kill, so on its own it cannot tell a memcg OOM from a global one.
+  v7.2 quote: The number of processes belonging to this cgroup killed by any kind of OOM killer.
+  v7.2 copy: corpus/evidence/sources-r50/cgroup-v2.7.2.html lines 1378
+  v7.3 copy: corpus/evidence/sources-r54/cgroup-v2.7.3.html line 1409 (ledger source S520)
+
+row=12 h=460b0cafc999 entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S489
+  claim: A parser must match key names, because a newer kernel can insert a counter between existing lines.
+  v7.2 quote: Don’t rely on items remaining in a fixed position; use the keys to look up specific values!
+  v7.2 copy: corpus/evidence/sources-r50/cgroup-v2.7.2.html lines 1399,1605
+  v7.3 copy: corpus/evidence/sources-r54/cgroup-v2.7.3.html line 1430 (ledger source S520)
+
+row=13 h=51390e34b4d7 entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S489
+  claim: The shmem key is the swap-backed part of that cached data, covering tmpfs, shm segments and shared anonymous mmap.
+  v7.2 quote: shmem Amount of cached filesystem data that is swap-backed, such as tmpfs, shm segments, shared anonymous mmap()s
+  v7.2 copy: corpus/evidence/sources-r50/cgroup-v2.7.2.html lines 1434
+  v7.3 copy: corpus/evidence/sources-r54/cgroup-v2.7.3.html line 1465 (ledger source S520)
+
+row=14 h=ed03d041e844 entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S489
+  claim: The documentation defines the kernel key as a total that includes kernel_stack, pagetables, percpu, vmalloc and slab, each also printed under its own name.
+  v7.2 quote: kernel (npn) Amount of total kernel memory, including (kernel_stack, pagetables, percpu, vmalloc, slab) in addition to other kernel memory use cases.
+  v7.2 copy: corpus/evidence/sources-r50/cgroup-v2.7.2.html lines 1415
+  v7.3 copy: corpus/evidence/sources-r54/cgroup-v2.7.3.html line 1446 (ledger source S520)
+
+row=15 h=fd3728bdc6d6 entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S489
+  claim: The file key includes tmpfs and shared memory, so a filesystem cache total also carries tmpfs pages.
+  v7.2 quote: file Amount of memory used to cache filesystem data, including tmpfs and shared memory.
+  v7.2 copy: corpus/evidence/sources-r50/cgroup-v2.7.2.html lines 1412
+  v7.3 copy: corpus/evidence/sources-r54/cgroup-v2.7.3.html line 1443 (ledger source S520)
+
+row=16 h=0145725d3c6c entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S490
+  claim: The memory.stat file is produced by the same memory_stat_format call, so the file and the block write their keys through one formatter.
+  v7.2 quote: seq_buf_init(&s, buf, SEQ_BUF_SIZE); memory_stat_format(memcg, &s); seq_puts(m, buf);
+  v7.2 copy: corpus/evidence/sources-r50/memcontrol.c.v7.2 lines 4913
+  v7.3 copy: corpus/evidence/sources-r54/memcontrol.c.v7.3 line 4997 (ledger source S515)
+
+row=17 h=16a3733a5002 entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S490
+  claim: The stats block is filled by memory_stat_format and printed at KERN_INFO, so its lines reach the kernel log like any other message.
+  v7.2 quote: seq_buf_init(&s, buf, SEQ_BUF_SIZE); memory_stat_format(memcg, &s); seq_buf_do_printk(&s, KERN_INFO);
+  v7.2 copy: corpus/evidence/sources-r50/memcontrol.c.v7.2 lines 1827
+  v7.3 copy: corpus/evidence/sources-r54/memcontrol.c.v7.3 line 1872 (ledger source S515)
+
+row=18 h=26b9666a61be entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S490
+  claim: A second label on the same line records the victim's own memory cgroup path, next to the OOM cgroup path.
+  v7.2 quote: if (p) { pr_cont(",task_memcg="); pr_cont_cgroup_path(task_cgroup(p, memory_cgrp_id)); }
+  v7.2 copy: corpus/evidence/sources-r50/memcontrol.c.v7.2 lines 1779
+  v7.3 copy: corpus/evidence/sources-r54/memcontrol.c.v7.3 line 1824 (ledger source S515)
+
+row=19 h=90f96cf997c2 entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S490
+  claim: On a cgroup v2 hierarchy the printed failcnt comes from the MEMCG_MAX event counter, not from the page counter's own failcnt field.
+  v7.2 quote: if (cgroup_subsys_on_dfl(memory_cgrp_subsys)) memory_failcnt = atomic_long_read(&memcg->memory_events[MEMCG_MAX]); else memory_failcnt = memcg->memory.failcnt;
+  v7.2 copy: corpus/evidence/sources-r50/memcontrol.c.v7.2 lines 1800
+  v7.3 copy: corpus/evidence/sources-r54/memcontrol.c.v7.3 line 1845 (ledger source S515)
+
+row=20 h=a4965056de62 entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S490
+  claim: A second line reports swap usage, limit and failcnt on cgroup v2, printed before the stats block header.
+  v7.2 quote: pr_info("swap: usage %llukB, limit %llukB, failcnt %lu\n",
+  v7.2 copy: corpus/evidence/sources-r50/memcontrol.c.v7.2 lines 1809
+  v7.3 copy: corpus/evidence/sources-r54/memcontrol.c.v7.3 line 1854 (ledger source S515)
+
+row=21 h=adf25120cfe8 entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S490
+  claim: A group kill announces itself with its own line naming every task in the cgroup as about to be killed.
+  v7.2 quote: pr_info("Tasks in "); pr_cont_cgroup_path(memcg->css.cgroup); pr_cont(" are going to be killed due to memory.oom.group set\n");
+  v7.2 copy: corpus/evidence/sources-r50/memcontrol.c.v7.2 lines 1996
+  v7.3 copy: corpus/evidence/sources-r54/memcontrol.c.v7.3 line 2041 (ledger source S515)
+
+row=22 h=de58513701cb entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S490
+  claim: When no cgroup is named the OOM context prints global_oom instead of a cgroup path, marking a system-wide kill.
+  v7.2 quote: if (memcg) { pr_cont(",oom_memcg="); pr_cont_cgroup_path(memcg->css.cgroup); } else pr_cont(",global_oom");
+  v7.2 copy: corpus/evidence/sources-r50/memcontrol.c.v7.2 lines 1774
+  v7.3 copy: corpus/evidence/sources-r54/memcontrol.c.v7.3 line 1819 (ledger source S515)
+
+row=23 h=f5626c899cea entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S490
+  claim: The first usage line prints usage, limit and failcnt in that order, with usage and limit converted to kB.
+  v7.2 quote: pr_info("memory: usage %llukB, limit %llukB, failcnt %lu\n",
+  v7.2 copy: corpus/evidence/sources-r50/memcontrol.c.v7.2 lines 1805
+  v7.3 copy: corpus/evidence/sources-r54/memcontrol.c.v7.3 line 1850 (ledger source S515)
+
+row=24 h=0aa4618b2166 entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S491
+  claim: The oom-kill context line records the constraint and nodemask before the victim name, pid and uid are appended.
+  v7.2 quote: /* one line summary of the oom killer context. */ pr_info("oom-kill:constraint=%s,nodemask=%*pbl", oom_constraint_text[oc->constraint], nodemask_pr_args(oc->nodemask));
+  v7.2 copy: corpus/evidence/sources-r50/oom_kill.c.v7.2 lines 446
+  v7.3 copy: corpus/evidence/sources-r54/oom_kill.c.v7.3 line 446 (ledger source S516)
+
+row=25 h=3a75d41492ad entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S491
+  claim: The Killed process line carries total-vm, anon-rss, file-rss and shmem-rss in kB, plus pgtables and oom_score_adj.
+  v7.2 quote: pr_err("%s: Killed process %d (%s) total-vm:%lukB, anon-rss:%lukB, file-rss:%lukB, shmem-rss:%lukB, UID:%u pgtables:%lukB oom_score_adj:%d\n",
+  v7.2 copy: corpus/evidence/sources-r50/oom_kill.c.v7.2 lines 945
+  v7.3 copy: corpus/evidence/sources-r54/oom_kill.c.v7.3 line 945 (ledger source S516)
+
+row=26 h=53d8f38c2827 entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S491
+  claim: The victim line's message prefix says whether the kill was global or a cgroup kill, choosing between two distinct strings.
+  v7.2 quote: oom_kill_process(oc, !is_memcg_oom(oc) ? "Out of memory" : "Memory cgroup out of memory");
+  v7.2 copy: corpus/evidence/sources-r50/oom_kill.c.v7.2 lines 1169
+  v7.3 copy: corpus/evidence/sources-r54/oom_kill.c.v7.3 line 1169 (ledger source S516)
+
+row=27 h=b962596a058b entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S491
+  claim: The summary header and the oom-kill context line print only when the rate limit allows, so a burst of kills can leave Killed process lines without them.
+  v7.2 quote: if (__ratelimit(&oom_rs)) { dump_header(oc); dump_oom_victim(oc, victim); }
+  v7.2 copy: corpus/evidence/sources-r50/oom_kill.c.v7.2 lines 1030
+  v7.3 copy: corpus/evidence/sources-r54/oom_kill.c.v7.3 line 1030 (ledger source S516)
+
+row=28 h=d6bf02678216 entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S491
+  claim: The Tasks state table prints total_vm and rss in pages, unlike the kB victim line and the byte-valued charge keys of the stats block.
+  v7.2 quote: pr_info("Tasks state (memory values in pages):\n"); pr_info("[ pid ] uid tgid total_vm rss rss_anon rss_file rss_shmem pgtables_bytes swapents oom_score_adj name\n");
+  v7.2 copy: corpus/evidence/sources-r50/oom_kill.c.v7.2 lines 424
+  v7.3 copy: corpus/evidence/sources-r54/oom_kill.c.v7.3 line 424 (ledger source S516)
+
+row=29 h=e4e93c6a050c entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S491
+  claim: The vm and memcg kill counters are incremented before the signal is sent, so the count predates the victim's death record.
+  v7.2 quote: /* Raise event before sending signal: task reaper must see this */ count_vm_event(OOM_KILL); memcg_memory_event_mm(mm, MEMCG_OOM_KILL);
+  v7.2 copy: corpus/evidence/sources-r50/oom_kill.c.v7.2 lines 934
+  v7.3 copy: corpus/evidence/sources-r54/oom_kill.c.v7.3 line 934 (ledger source S516)
+
+row=30 h=fdc2273230e1 entry=corpus/knowledge/oom-memcg-stat-r50.md v7.2-source=S491
+  claim: A global OOM prints the system memory summary through __show_mem instead of the memcg stats block.
+  v7.2 quote: if (is_memcg_oom(oc)) mem_cgroup_print_oom_meminfo(oc->memcg); else { __show_mem(SHOW_MEM_FILTER_NODES, oc->nodemask, gfp_zone(oc->gfp_mask));
+  v7.2 copy: corpus/evidence/sources-r50/oom_kill.c.v7.2 lines 465
+  v7.3 copy: corpus/evidence/sources-r54/oom_kill.c.v7.3 line 465 (ledger source S516)
+
+row=31 h=687e03745cd9 entry=corpus/knowledge/quota-observability-r48.md v7.2-source=S481
+  claim: The generic Linux ABI header gives EDQUOT the number 122.
+  v7.2 quote: #define EDQUOT 122 /* Quota exceeded */
+  v7.2 copy: corpus/evidence/sources-r48/errno.h lines 107
+  v7.3 copy: corpus/evidence/sources-r54/errno.h.v7.3 line 107 (ledger source S519)

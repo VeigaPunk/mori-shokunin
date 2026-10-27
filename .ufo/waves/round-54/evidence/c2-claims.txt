@@ -1,0 +1,85 @@
+# round-54 C2 claim rows (row = entry table order); h = first 12 hex of sha256 of the whitespace-collapsed claim cell
+
+row=1 h=fcf9f378a818 source=S521 copy=corpus/evidence/sources-r54/memory-failure.c.v7.3
+  claim: Every message the memory-failure handler prints starts with the same prefix, "Memory failure:", which names the kernel component that wrote the line.
+  quote: `#define pr_fmt(fmt) "Memory failure: " fmt #include <linux/kernel.h>`
+
+row=2 h=ba07ddfe1488 source=S521 copy=corpus/evidence/sources-r54/memory-failure.c.v7.3
+  claim: Before signalling a process that maps a poisoned page, the handler logs at error level the page frame number, the command name and the pid.
+  quote: `pr_err("%#lx: Sending SIGBUS to %s:%d due to hardware memory corruption\n", pfn, t->comm, task_pid_nr(t));`
+
+row=3 h=e874fc1a128e source=S521 copy=corpus/evidence/sources-r54/memory-failure.c.v7.3
+  claim: A task that consumed the poisoned data itself is sent a forced SIGBUS whose code is BUS_MCEERR_AR, meaning action required.
+  quote: `if ((flags & MF_ACTION_REQUIRED) && (t == current)) ret = force_sig_mceerr(BUS_MCEERR_AR,`
+
+row=4 h=8426794e271e source=S521 copy=corpus/evidence/sources-r54/memory-failure.c.v7.3
+  claim: Other processes sharing the page are signalled through the ordinary path, deliberately not forced, so they may block the signal for a while.
+  quote: `Don't use force here, it's convenient if the signal * can be temporarily blocked.`
+
+row=5 h=4fdea8d0253f source=S521 copy=corpus/evidence/sources-r54/memory-failure.c.v7.3
+  claim: When unmapping the corrupted page failed, the process receives SIGKILL instead of SIGBUS and the log line says it was forcibly killed.
+  quote: `pr_err("%#lx: forcibly killing %s:%d because of failure to unmap corrupted page\n", pfn, tk->tsk->comm, task_pid_nr(tk->tsk)); do_send_sig_info(SIGKILL,`
+
+row=6 h=4748dc4eb41e source=S521 copy=corpus/evidence/sources-r54/memory-failure.c.v7.3
+  claim: A signal that could not be delivered gets its own error line, so a sending line alone does not prove that the process received anything.
+  quote: `pr_err("%#lx: Cannot send advisory machine check signal to %s:%d\n",`
+
+row=7 h=3233412a93be source=S521 copy=corpus/evidence/sources-r54/memory-failure.c.v7.3
+  claim: Each handled page ends in one error-level line that names the page type and the outcome of the recovery attempt.
+  quote: `pr_err("%#lx: recovery action for %s: %s\n", pfn, action_page_types[type], action_name[result]);`
+
+row=8 h=f5e240db68c0 source=S521 copy=corpus/evidence/sources-r54/memory-failure.c.v7.3
+  claim: The outcome printed in that line is one of four fixed words, so a parser can classify every recovery line exactly.
+  quote: `[MF_IGNORED] = "Ignored", [MF_FAILED] = "Failed", [MF_DELAYED] = "Delayed", [MF_RECOVERED] = "Recovered",`
+
+row=9 h=2eb3990f7a81 source=S521 copy=corpus/evidence/sources-r54/memory-failure.c.v7.3
+  claim: Only the Recovered and Delayed outcomes count as success for the caller; Ignored and Failed make the recovery step return an error.
+  quote: `return (result == MF_RECOVERED \|\| result == MF_DELAYED) ? 0 : -EBUSY;`
+
+row=10 h=c98ac2ffa163 source=S521 copy=corpus/evidence/sources-r54/memory-failure.c.v7.3
+  claim: The per-node counters advance in the recovery step for every page type except pages already poisoned and raw PFN mappings, so a repeated failure of a poisoned page is not counted again.
+  quote: `if (type != MF_MSG_ALREADY_POISONED && type != MF_MSG_PFN_MAP) { num_poisoned_pages_inc(pfn); update_per_node_mf_stats(pfn, result); }`
+
+row=11 h=5a235a277033 source=S521 copy=corpus/evidence/sources-r54/memory-failure.c.v7.3
+  claim: The v7.3 panic switch fires only when a reserved kernel page is reported with the Ignored outcome, and it is off unless set.
+  quote: `if (!sysctl_panic_on_unrecoverable_mf) return false; return type == MF_MSG_KERNEL && result == MF_IGNORED;`
+
+row=12 h=e3f8e075e4b2 source=S522 copy=corpus/evidence/sources-r54/hwpoison.rst.v7.3
+  claim: In early-kill mode the signal goes out when the background check finds the error, before any process touches the page again.
+  quote: `Send SIGBUS to the application as soon as the error is detected`
+
+row=13 h=63f08aa3baf0 source=S522 copy=corpus/evidence/sources-r54/hwpoison.rst.v7.3
+  claim: Late kill is the default: a process is signalled only when it runs into the page, so the kill can come long after the error was detected.
+  quote: `Send SIGBUS when the application runs into the corrupted page. This is best for memory error unaware applications and default`
+
+row=14 h=e3b581d09d1d source=S522 copy=corpus/evidence/sources-r54/hwpoison.rst.v7.3
+  claim: With recovery switched off, no process is killed for a memory error because the whole machine panics instead.
+  quote: `vm.memory_failure_recovery sysctl set to zero: All memory failures cause a panic. Do not attempt recovery.`
+
+row=15 h=77be7d2e2179 source=S507 copy=corpus/evidence/sources-r53/vm.rst.v7.3
+  claim: An early-kill SIGBUS can be caught and handled, so a logged signal need not be followed by the death of that process.
+  quote: `The kill is done using a catchable SIGBUS with BUS_MCEERR_AO, so processes can handle this if they want to.`
+
+row=16 h=734269273c22 source=S507 copy=corpus/evidence/sources-r53/vm.rst.v7.3
+  claim: Version 7.3 adds a sysctl that turns an unrecoverable error on kernel-owned pages into a panic, where the default ignores it and keeps running.
+  quote: `When enabled, this sysctl triggers a panic on memory failure events hitting kernel-owned pages that the handler cannot recover:`
+
+row=17 h=2401e4d865f0 source=S523 copy=corpus/evidence/sources-r54/sysfs-devices-node.v7.3
+  claim: Each NUMA node exposes in sysfs a running total of raw poisoned pages, readable without the kernel log.
+  quote: `The total number of raw poisoned pages (pages containing corrupted data due to memory errors) on a NUMA node.`
+
+row=18 h=c81900e6c688 source=S523 copy=corpus/evidence/sources-r54/sysfs-devices-node.v7.3
+  claim: The ignored counter on a node counts pages the kernel gave up recovering, usually because that page type has no recovery support.
+  quote: `Of the raw poisoned pages on a NUMA node, how many pages are ignored by memory error recovery attempt,`
+
+row=19 h=4f693eb5f736 source=S524 copy=corpus/evidence/sources-r54/memory-failure-trace.h.v7.3
+  claim: The tracepoint belongs to the ras trace system for historical reasons, so it is enabled as ras:memory_failure_event and not under oom.
+  quote: `For historical versions, memory_failure_event is in ras subsystem, * some user programs depend on it. */ #define TRACE_SYSTEM ras`
+
+row=20 h=8248e6d24be8 source=S524 copy=corpus/evidence/sources-r54/memory-failure-trace.h.v7.3
+  claim: The traced line repeats the page type and outcome strings of the logged recovery line after the pfn, so traced and logged outcomes can be matched.
+  quote: `TP_printk("pfn %#lx: recovery action for %s: %s",`
+
+row=21 h=257f4acfda4e source=S502 copy=corpus/evidence/sources-r53/proc.rst.v7.3
+  claim: The meminfo field reports, in kilobytes for the whole host, how much memory the kernel has marked as corrupted.
+  quote: `HardwareCorrupted The amount of RAM/memory in KB, the kernel identifies as corrupted.`

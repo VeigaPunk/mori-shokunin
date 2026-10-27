@@ -22,7 +22,7 @@ counters, the `HardwareCorrupted` line of `/proc/meminfo`, and the `ras:memory_f
 
 | claim | source | quote |
 |---|---|---|
-| Every message the memory-failure handler prints carries the prefix "Memory failure:", so one journal match on that prefix finds the whole class of lines. | S521 | `#define pr_fmt(fmt) "Memory failure: " fmt #include <linux/kernel.h>` |
+| Every message the memory-failure handler prints starts with the same prefix, "Memory failure:", which names the kernel component that wrote the line. | S521 | `#define pr_fmt(fmt) "Memory failure: " fmt #include <linux/kernel.h>` |
 | Before signalling a process that maps a poisoned page, the handler logs at error level the page frame number, the command name and the pid. | S521 | `pr_err("%#lx: Sending SIGBUS to %s:%d due to hardware memory corruption\n", pfn, t->comm, task_pid_nr(t));` |
 | A task that consumed the poisoned data itself is sent a forced SIGBUS whose code is BUS_MCEERR_AR, meaning action required. | S521 | `if ((flags & MF_ACTION_REQUIRED) && (t == current)) ret = force_sig_mceerr(BUS_MCEERR_AR,` |
 | Other processes sharing the page are signalled through the ordinary path, deliberately not forced, so they may block the signal for a while. | S521 | `Don't use force here, it's convenient if the signal * can be temporarily blocked.` |
@@ -45,6 +45,10 @@ counters, the `HardwareCorrupted` line of `/proc/meminfo`, and the `ras:memory_f
 | The meminfo field reports, in kilobytes for the whole host, how much memory the kernel has marked as corrupted. | S502 | `HardwareCorrupted The amount of RAM/memory in KB, the kernel identifies as corrupted.` |
 
 ## Decision table — reading a death that has no OOM record
+
+Count with the structured surfaces (the per-node counters, `HardwareCorrupted`); read the kernel lines only to
+attribute an event the counters already show. The lines are kernel text with no `MESSAGE_ID`, so a tally of them
+is a text-selected record count, never a structured count (QUALITY 15).
 
 | evidence on the host | what it means | what it does not mean |
 |---|---|---|
