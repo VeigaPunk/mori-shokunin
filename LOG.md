@@ -2934,3 +2934,15 @@ cell omits the second occurrence; these first-published cells were not edited in
 append-only superseders in round 55. The C2 counter is frozen; wave mutations found selftest survivors and the
 results-name check is not cryptographic. No tool installs; pacman paused; no L0 question. Stale-lane:
 respawn-per-round driver; no other mori mission open.
+
+## Round 55 (L1 MoriR55 attempt 1 died pre-WAVE-DONE; attempt 2 MoriR55a2 closed it; C1 freshness, C2 depth)
+
+Entering tip `ca52426ea496bc6592e3e867cc9d28843e45f196`. Freeze `c9b908f0`; data `b8b7064c`; dispatch `b8a70adf` (w1.ready.dispatched); integration `a27ec482` (this round's wave evidence, registry fixes, lesson verdicts). Two claims, both unmet on the frozen vote arms with all data arms green, measured at `a27ec482`.
+
+C1 at `a27ec482`: `C1=unmet scope=78 rows=78 matched=78 status_ok=78 line_ok=78 source_rows=ok pins=ok provenance=ok same=69 moved=7 changed=2 broken=0 holds=78 stale=0 voted=0 dissent=0 failed=votes` rc 1 (`evidence/c1-at-landed.txt`); at the frozen data rev `b8b7064c` the same minus votes (`evidence/c1-at-data.txt`). Do-nothing control at `ca52426e`: `failed=ledger_absent,pins` rc 1. Selftest 44/0 (`evidence/selftest-c1.txt`).
+
+C2 at `a27ec482`: `C2=unmet claims=23 located=23 quote_missing=0 bad_rows=0 sources=9 source_rows=ok pins=ok provenance=ok entailed=15 dissent=8 failed=entailment` rc 1 (`evidence/c2-at-landed.txt`); do-nothing at `ca52426e`: `failed=entry_absent,pins` rc 1. Selftest 10/0 (`evidence/selftest-c2.txt`).
+
+Vote-arm causes (full detail in `corpus/lessons/round-55.md`): C1 (1) all 15 reporting Rc voters emitted structured JSON yields whose `vote_lines` arrays quote the vote lines, and the frozen C1 counter binds only stripped-line equality against the captured output, so `voted=0`; the same round's C2 counter uses substring binding and accepts the same shape (`entailed=15`); (2) even under substring binding the tally is 68/78 with 0 dissent because `Mo55Rc14` settled with no vote lines and no report (10 rows single-voted). C2 dissent=8 on rows 1, 2, 7, 11, 12, 14, 16, 23 with voter rationales and Mo55Rev02's D1–D5 adjudication in the lesson.
+
+Wave w1 (one v2, 64 seats): reviewer 28 (the 16 Rc and 12 En voters), critic 12, mutation-tester 6, executor 4, scribe 4, scout 2, connector 2, sentinel 2, revenger 2, simplifier 2; attack share ≥25%; all 64 settled (`w1-results.json`), 63 report files, one lost seat `Mo55Rc14` (malformed settlement). `Mo55Mut05` settlement probes 15/15. Frontier: census start/end rc 0, 298 rows both ends, 23 W04 (`evidence/census-{start,end}.txt`); registry anchor/scope cells for S526–S543 corrected in place after the Mo55Scribe02 audit (F1–F3); D6 prose reconciled to the captured snapshot; D7 receipts re-taken at `b8b7064c`; S244 flipped to PRESENT at its arXiv companion (append-only); assimilation none; considerthese checked. Attempt-1 inherited uncommitted routed corrections (SCORECARD r54-D3, QUALITY 152, lesson M1/M2 anchors) committed under this round. No installs; pacman paused; no L0 question. Stale-lane: respawn-per-round driver; no other mori mission open.
