@@ -1,5 +1,4 @@
-$ python3 .ufo/waves/round-52/count-c1.py 2f245af7d6dd6878de266f3436d12f47df900144 --scratch /fast/scratch/hyaku/mori-r52/l1/c1land2
-lane_write ?? .ufo/waves/round-52/w1-results.json
+$ python3 .ufo/waves/round-52/count-c1.py e7e056b8a17e54516a3c17798221c30e9902c250 --scratch /fast/scratch/hyaku/mori-r52/l1/c1fin
 item axis coverage expect=round_47_improved got=ok state=ok
 item axis operability expect=round_51_improved got=ok state=ok
 item axis depth expect=round_51_improved got=ok state=ok
@@ -43,5 +42,5 @@ item locator LOG.md:2808 expect=range got=ok state=ok
 item locator LOG.md:2765-2805 expect=range got=ok state=ok
 item locator PROVINCE.md:3-16 expect=range got=ok state=ok
 item locator corpus/knowledge/overcommit-commit-limit-r52.md:68-75 expect=range got=ok state=ok
-C1=unmet items=43 axes=6 pins=2 boxes=4 living=7 superseded=4 locators=28 mismatches=0 errors=1 hidden=0 lane_writes=1 manifest=6209bdb8e400 rev=2f245af7d6dd6878de266f3436d12f47df900144 failed=errors,lane_writes
-exit=1
+C1=met items=43 axes=6 pins=2 boxes=4 living=7 superseded=4 locators=28 mismatches=0 errors=0 hidden=0 lane_writes=0 manifest=6209bdb8e400 rev=e7e056b8a17e54516a3c17798221c30e9902c250
+exit=0
