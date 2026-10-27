@@ -107,8 +107,9 @@ Pending the non-author closure (LEARNING.md: a seat this lane dispatched is stil
   as an instrument — the report names its own commit by command, never by placeholder:
   `git log --format=%H -- .ufo/reports/round-53/mori.md` on the fleet repo, run after the report's commit (contract
   §Round-52 closure routed defects 2). Shown able to fail by a placeholder arm: `grep -rl '\[FILL\]'
-  .ufo/reports --include='mori.md'` exits 0 on the round-52 report (2 hits) and finds 0 hits in the other 41 of 42
-  mori reports, so the check fails exactly where the convention was broken and passes everywhere else. Not covered:
+  .ufo/reports --include='mori.md'` exits 0 and lists exactly one file, the round-52 report (whose two
+  `[FILL]` lines `grep -c` counts), out of the 42 existing `mori.md` reports (`ls .ufo/reports/*/mori.md | wc -l`,
+  re-run at attempt 2), so the check fails exactly where the convention was broken and passes everywhere else. Not covered:
   the arm reads the placeholder token only; a report that names no commit at all passes it.
 
 - M3: stale premise — an `on-release` recheck was authored *after* its release had been tagged, and the trigger sat

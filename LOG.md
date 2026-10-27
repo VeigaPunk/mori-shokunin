@@ -2856,14 +2856,16 @@ tools/mori-commit-runway.py` → `COMMIT_HEURISTIC`, exit 0, recomputed limit eq
 (`w1/Mo53ExecHostLive.md`). Before (entering): `C1=unmet … failed=ledger_absent,pins`
 (`evidence/control-c1-do-nothing.txt`); `C2=unmet tool=absent … failed=registry,tool_absent`
 (`evidence/control-c2-do-nothing.txt`). At data: `C1=unmet … status_ok=46 quote_ok=46 … voted=0 failed=votes`
-(`evidence/c1-at-data.txt`); `C2=met … n=23 … agree=80 disagree=0` (`evidence/c2-at-data.txt`). After: the
-landed receipts `evidence/c1-at-landed.txt`, `evidence/c2-at-landed.txt` (SCORECARD round-53 section). Controls
+(`evidence/c1-at-data.txt`); `C2=met … n=23 … agree=80 disagree=0` (`evidence/c2-at-data.txt`). After: at the
+salvage tip `0df80303` `evidence/c1-at-salvage.txt`, `evidence/c2-at-salvage.txt` (the SCORECARD round-53 cells),
+re-run at the final integration tip as `evidence/c1-at-landed.txt`, `evidence/c2-at-landed.txt`. Controls
 that skip the work stay unmet: C1 do-nothing, all-held, v72-copies, no-votes; C2 do-nothing, mode-blind, no-band,
 memoriser; both witnesses met (feasibility, disclosed). Counter selftests `C1_SELFTEST pass=37 fail=0`,
 `C2_SELFTEST pass=30 fail=0`. Wave corrections to data (not to any frozen file): bounded, non-blocking, strict
 input parsing in the tool (+3 cases, +5 hostile checks, `PASS 31/31`); the band read two-sided; the CPU-hotplug
 limit; S514 (`mm_init.c` at v7.3); in-round anchor/teaches corrections to S502–S512 (lesson Gate, old→new); the
-ledger change table. Census start rc 0, 23 W04 (`evidence/census-start.txt`); end in `evidence/census-end.txt`.
+ledger change table. Census start rc 0, 23 W04 (`evidence/census-start.txt`); end `evidence/census-end.txt`
+(written at the final integration tip by attempt 2).
 Assimilation: none (`merge/mori/` holds 0 files on either ground). considerthese: `2026-10-26.md` suggestion 2 —
 the round-52 wave's 61 distinct HIGH/MED flags carried forward: 13 fixed, 18 routed, 30 dropped
 (`w1/Mo53ExecConsiderthese.md`; lesson section). Mistakes mined (lesson): M1 a SCORECARD row with the at-data
@@ -2874,3 +2876,13 @@ commit by command (QUALITY 147), erratum hash `aacd7a83` in the round-53 report;
 QUALITY 144–147 added. Not done, stated: the in-lane writers' successor freeze, the locator sweep beyond the Axes
 rows and the C1 arm-isolating controls (all `Planned (round 53)`) were not taken this round and move to
 `Planned (round 54)` with the 30 dropped round-52 flags.
+
+Attempt 2 (L1 MoriR53a2): attempt 1 and its seats died in the orchestrator session exit (2026-10-26 23:57:36 -03);
+the orchestrator committed the uncommitted drafts as salvage `0df80303`. Re-verified before use: freeze sha256 rc 0;
+C1/C2 `met` at `0df80303`; the ledger's 46 voted rows unchanged since `2a4213bf`. Landed `34d97cd3` (SCORECARD
+round-52 correction and round-53 section, lesson M6 and attempt-2 section). Residual call `a2r1` (8 seats: 5
+reviewer, 3 critic) attacked what the salvage carried unattacked; integrated: band entry and SKILL rows tightened
+(stable-batch qualifier, boot-time and policy-write recomputation, a dying CPU recomputes only the generic
+`percpu_counter_batch`, mode-0 cap as a per-request accounting check, S514 limited to `mm_compute_batch`), PROVINCE
+boundary no longer assigns fault attribution to tsukuroi, lesson M2 probe wording, LOG receipt pointers. Round total
+75 seats (w1 67 + a2r1 8).

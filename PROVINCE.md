@@ -449,7 +449,8 @@ at `:94` has drifted (the default now sits near `:237`, `:321`; ScoutProvinceSta
   (`:44-57`) are not rewritten and gain no row; this section is appended at EOF, so no line moves and every
   existing line citation into this file stays valid.
 - **Boundaries:** choosing `vm.overcommit_memory`, `overcommit_ratio`, `overcommit_kbytes`,
-  `admin_reserve_kbytes` or `user_reserve_kbytes`, and deciding whether a commit refusal is a host fault, belong
-  to the operator and tsukuroi; the lane reports the reading it made and no remediation. This note claims no
+  `admin_reserve_kbytes` or `user_reserve_kbytes` is the operator's, and deciding whether a commit refusal is a
+  host fault is outside this lane's detection-and-report scope (OS-state triage is tsukuroi's; this note does not
+  assign commit-accounting fault attribution to any lane); the lane reports the reading it made and no remediation. This note claims no
   admission: both claims are scored by the round-53 counters, and no census integration, threshold, baseline
   re-pin or frontier closure is added.

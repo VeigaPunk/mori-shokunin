@@ -1181,10 +1181,10 @@ different tally, or a tally whose exit code contradicts it, or a digest/line-cou
 
 | `python3 -I -B tools/mori-commit-runway.py` says | means | do not read it as |
 |---|---|---|
-| `COMMIT_HEURISTIC` (mode 0), exit 0 | only one request above RAM + swap is refused (`single_request_cap_kb`); `over_limit_not_enforced` when Committed_AS exceeds CommitLimit | a host out of commit room |
+| `COMMIT_HEURISTIC` (mode 0), exit 0 | this commit-accounting check refuses an individual request only when it exceeds RAM + swap pages (`single_request_cap_kb`); `over_limit_not_enforced` when Committed_AS exceeds CommitLimit | a host out of commit room; a promise that a request at or below the cap succeeds |
 | `COMMIT_UNLIMITED` (mode 1), exit 0 | the commit test always passes | memory left — read `MemAvailable` (`memavailable-estimate-r51.md`) |
 | `COMMIT_OK` (mode 2), exit 0 | `usable_kb` (limit − committed − admin and user reserves) is above `band_kb` | room for any allocation of `usable_kb`: the reserve is per process, the band an upper bound |
-| `COMMIT_LOW` (mode 2), exit 1 | `usable_kb ≤ band_kb`: inside the per-CPU counter's error band the printed figures no longer decide the next request — net-negative local deltas can refuse a non-root allocation while they show room, net-positive deltas can admit past them (S511–S513, S499) | a calibrated alarm threshold (FR8 open), or a prediction of refusal |
+| `COMMIT_LOW` (mode 2), exit 1 | `usable_kb ≤ band_kb`: inside the per-CPU counter's error band the printed figures no longer decide the comparison — the global-only read can differ from the exact sum in either direction, so a non-root request may be refused while they show room or admitted past them, depending on the caller's `allowed` and the request (S511–S513, S499) | a calibrated alarm threshold (FR8 open), or a prediction of refusal |
 | `COMMIT_UNKNOWN`, exit 2 | an input is missing, unreadable, not a regular file, over 1 MiB, not ASCII or malformed; the mode is outside 0–2; `--page-kb` is not a power of two in 1..1024; or a usage error (`notes`) | zero room, or a pass |
 | `limit_mismatch` finding | the recomputed `vm_commit_limit()` differs from the printed CommitLimit: the inputs were misread (page size, Hugetlb) | a kernel fault |
 
@@ -1193,7 +1193,7 @@ different tally, or a tally whose exit code contradicts it, or a digest/line-cou
 - Reading `Committed_AS > CommitLimit` under mode 0 as exhaustion: mode 0 never compares them (S497, S499).
 - Subtracting only `admin_reserve_kbytes`: a non-root process also loses up to `user_reserve_kbytes` (vm.rst).
 - Treating `Committed_AS` as the enforced value: it is the exact sum; the test reads the global count (S513, S499).
-- Reading the band as one-sided: each CPU's local delta is signed, so the enforced read can sit above or below the exact sum by up to the band (S512, `mman.h.v7.3:76-84`); and after a CPU hot-add the batch is not recomputed, so the true bound can exceed the reported band (`commit-runway-read-r53.md` Boundaries).
+- Reading the band as one-sided: each CPU's local delta is signed, so while the batch is stable the enforced read can sit above or below the exact sum by up to the band (S512, `mman.h.v7.3:76-84`); after a CPU hot-add `vm_committed_as_batch` is not recomputed (a dying CPU recomputes only the generic `percpu_counter_batch`), so the true bound can exceed the reported band (`commit-runway-read-r53.md` Boundaries).
 
 ### Release recheck rule (`corpus/knowledge/kernel-v7.3-recheck-r53.md`)
 

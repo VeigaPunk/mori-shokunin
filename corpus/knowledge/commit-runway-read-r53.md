@@ -13,13 +13,14 @@ Round 52 said what `CommitLimit` and `Committed_AS` are and that the limit is en
 `vm.overcommit_memory = 2` (`overcommit-commit-limit-r52.md`). A runway read needs one more fact: how close to the
 limit the kernel's own test can disagree with the printed figure. `Committed_AS` in /proc/meminfo is an exact
 sum over CPUs; the mode-2 test reads only the global part of a per-CPU counter. Each CPU holds a signed local
-delta below one batch (charges add, uncharges subtract), so the global part differs from the exact sum by less
-than one batch per CPU, in either direction. The batch is sized by policy: under mode 2 it is about 0.4 % of RAM
-per CPU, with a floor of `max(2 × CPUs, 32)` pages. `tools/mori-commit-runway.py` reports, under mode 2,
-`usable_kb` (limit minus committed minus both reserves) and `band_kb` (batch × present CPUs × page size), and
-says `COMMIT_LOW` when the usable room is inside the band: there the outcome of the next request is not decided
-by the printed numbers — with net-negative local deltas a non-root allocation can be refused while they still
-show room, with net-positive deltas the kernel can admit past them.
+delta below one batch (charges add, uncharges subtract), so while the batch is stable the global part differs from
+the exact sum by less than one batch per CPU, in either direction. The batch is sized by policy: under mode 2 it is
+about 0.4 % of RAM per CPU, with a floor of `max(2 × CPUs, 32)` pages. `tools/mori-commit-runway.py` reports, under
+mode 2, `usable_kb` (limit minus committed minus both reserves, a conservative model of the strictest caller) and
+`band_kb` (batch × present CPUs × page size), and says `COMMIT_LOW` when the usable room is inside the band: there
+the printed numbers no longer decide the comparison — near the boundary the global-only read can differ from the
+exact sum in either direction, so a non-root request may be refused while the printed figures show room, or
+admitted past them; which one happens depends on the caller's `allowed` value and the request, not on the band.
 
 ## Claims
 
@@ -38,7 +39,7 @@ show room, with net-positive deltas the kernel can admit past them.
 
 | mode | tool verdict | what the numbers mean | what they do not mean |
 |---|---|---|---|
-| 0 (guess, the default) | `COMMIT_HEURISTIC`, exit 0 | only one request larger than RAM + swap is refused (`single_request_cap_kb`); `CommitLimit` is printed, not enforced, and `Committed_AS` above it is normal (`over_limit_not_enforced` finding) | that the host is out of commit room |
+| 0 (guess, the default) | `COMMIT_HEURISTIC`, exit 0 | this commit-accounting check refuses an individual request only when its page count exceeds total RAM pages plus swap pages (`single_request_cap_kb`); other failure paths are outside the read; `CommitLimit` is printed, not enforced, and `Committed_AS` above it is normal (`over_limit_not_enforced` finding) | that the host is out of commit room; that a request at or below the cap succeeds |
 | 1 (always) | `COMMIT_UNLIMITED`, exit 0 | the commit test always passes | anything about memory left; read `MemAvailable` (`memavailable-estimate-r51.md`) |
 | 2 (never) | `COMMIT_OK` (0) or `COMMIT_LOW` (1) | `usable_kb` = CommitLimit − Committed_AS − admin_reserve_kbytes − user_reserve_kbytes; LOW when `usable_kb ≤ band_kb`: the printed figures no longer decide the next request, in either direction | a calibrated alarm (FR8 stays open); a prediction of refusal; the band is an upper bound, not a measured deviation; `usable_kb` models the strictest caller (non-root, full user reserve) — root keeps the admin reserve |
 | any, inputs missing or malformed | `COMMIT_UNKNOWN`, exit 2 | the reason is in `notes` | a zero or a pass |
@@ -52,15 +53,18 @@ wave seat `Mo53ScoutRunwayTools`' read later (below it, no finding). Under mode 
 
 ## Boundaries
 
-- v7.2 bytes, the host's kernel line (7.2.11); the batch rule is unchanged at v7.3: `mm_compute_batch` in
+- v7.2 bytes, the host's kernel line (7.2.11); at v7.3 the function body of `mm_compute_batch` in
   `corpus/evidence/sources-r53/mm_init.c.v7.3:195-214` (S514) is byte-identical to `mm_init.c.v7.2:191-210`
-  (`diff` of the two ranges is empty).
-- The band uses present CPUs and today's totalram. Memory hotplug and a write of the overcommit sysctl recompute
-  the batch (`mm_init.c.v7.2:212-233`, `util.c.v7.2:806-831`); CPU hotplug does not — a dying CPU only folds its
-  delta into the global count (`percpu_counter.c.v7.2:266-286`) — and a balloon that changes totalram without
-  hotplug does not either. After a CPU hot-add the batch stays sized for the old CPU count, so the true bound can
-  exceed the reported band. The band is a bound for the common case, not a proof (round-53 wave
-  `Mo53ScribeSkill`, `Mo53RevC2Counter`).
+  (`diff` of the two ranges is empty). That is the only v7.3 comparison this entry pins: `percpu_counter.c/.h` and
+  `util.c` at v7.3 are not pinned here (the ledger `kernel-v7.3-recheck-r53.md` pins `util.c` and `mman.h`).
+- The band uses present CPUs and today's totalram. `vm_committed_as_batch` is computed at boot
+  (`mm_compute_batch_init`, `mm_init.c.v7.2:226-233`), on memory online/offline (`mm_init.c.v7.2:212-224`) and when
+  the overcommit policy sysctl is written (`util.c.v7.2:806-831`). A dying CPU folds its delta into the global count
+  and recomputes the generic `percpu_counter_batch` (`percpu_counter.c.v7.2:258-286`), not `vm_committed_as_batch`;
+  a balloon that changes totalram without memory hotplug does not recompute it either. After a CPU hot-add the
+  batch stays sized for the old CPU count, so the true bound can exceed the reported band. The band is a bound for
+  the stable-batch case, not a proof (round-53 wave `Mo53ScribeSkill`, `Mo53RevC2Counter`; residual
+  `a2r1/Mo53a2CritBandEntry`).
 - The per-process user reserve is `min(total_vm/32, user_reserve_kbytes)`; the tool subtracts the full reserve
   (worst case for a large process).
 - Read-only. Choosing an overcommit mode, a ratio or a reserve is the operator's; OS-state triage is tsukuroi's.
