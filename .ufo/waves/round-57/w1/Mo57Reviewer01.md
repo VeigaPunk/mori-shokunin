@@ -1,0 +1,9 @@
+# Mo57Reviewer01 — C1 calibration review
+
+**Verdict: C1 false as stated (capability-table predicate unmet at entering tip).** Round 56's two demonstrations and their landed evidence are real and resolvable, but SCORECARD does not record them as capability rows with first-working round 56.
+
+- `SCORECARD.md:2903-2904` records round-56 *claim* rows under `| Claim | Axis | Counting command | Before | After |`: C1 describes the driver-liveness probe; C2 describes the dual-shape vote binder. These are not capability-table rows and neither names a `first-working` field/value.
+- The two relevant capability demonstrations are independently corroborated by `corpus/knowledge/driver-liveness-r56.md:1-5` and `corpus/knowledge/vote-binding-r56.md` (entry exists; SCORECARD C2 receipt pointer below). Round-56 landed receipts are resolvable: `SCORECARD.md:2903` points to `evidence/c1-at-landed.txt`, whose lines 1-2 record `C1=met ... rev=097c342b6c7d71444c0d81c9615197dc87d59c50`, exit 0; `SCORECARD.md:2904` points to `evidence/c2-at-landed.txt`, whose lines 1-2 record `C2=met ... rev=097c342b6c7d71444c0d81c9615197dc87d59c50`, exit 0. The receipts substantiate the round-56 demos, not the missing capability-row naming/first-working metadata.
+- Counterexample to calibration claim: SCORECARD line 2876 explicitly says “No capability row” in the preceding Round-55 section, and lines 2901-2904 contain only the two claim table rows; no matching capability table rows occur there. Thus the required two named rows and first-working round values are absent, despite valid evidence pointers.
+
+LSP status: no `lsp` device was mounted (`read xd://lsp` returned “No such tool”); no semantic references/definition/diagnostics available. Used literal SCORECARD/entry/receipt inspection only. No code changed; only this report was written.

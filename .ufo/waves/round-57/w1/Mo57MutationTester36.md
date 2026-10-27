@@ -1,0 +1,15 @@
+# Mo57MutationTester36 — no-harm and settlement-boundary review
+
+**Verdict: no demonstrated boundary violation in the frozen contract or inspected R56 interpretation; the eight R57 claims remain unreviewable because the target entry is absent.** This is not a semantic pass for claims that have not been presented.
+
+## Evidence and boundary
+
+- Frozen C2 requires eight located, source-grounded claims and explicitly says `unclosed` is a pairing count, not a present-running count (`.ufo/waves/round-57/contract.md:7`). The entering controls report C2 unmet (`.ufo/waves/round-57/controls.txt:5-7`). Direct read of `corpus/knowledge/watchdog-unclosed-r57.md` returned `Path ... not found`; therefore no eight-row claim-by-claim check was possible.
+- Mori's province limits its role to read-only probes and explicitly says “Detection and report only — never remediation” (`PROVINCE.md:6-16`). It distinguishes passive reporting of filesystem settlement shape from kumitate's dispatch/orchestration mechanism (`PROVINCE.md:7-8,12-16`); authoritative wave settlement is separately identified as frontier, with kumitate owning orchestration/result semantics (`PROVINCE.md:46`). Kumitate's province confirms its orchestration/tooling domain (`../kumitate-shokunin/PROVINCE.md:3-6`).
+- The existing R56 knowledge note says `unclosed` means launches with no same-round close, that the fields are log-shape facts rather than health verdicts, that an open launch does not mean “stuck,” and that driver-authored log lines are not authenticated events (`corpus/knowledge/driver-liveness-r56.md:20-26,62-68`). The source-copy grammar shows event writer forms, not current process or settlement state (`corpus/evidence/sources-r56/watchdog-log-grammar-v2.txt:1-11`).
+
+## Counterexamples and limits
+
+A claim such as “`unclosed=3` proves three workers are currently running,” “the driver is dead,” or “the wave/result is settled or unsettled” would exceed the evidence: unmatched log pairings need not correspond to presently running work, and driver-log events do not adjudicate kumitate's mission/result semantics. Such language would also cross Mori's detection/report-only boundary. Conversely, a bounded statement that the parsed log contains unmatched launch/close pairings, without a health, execution, or settlement verdict, is consistent with the inspected R56 source. These are counterexamples to over-interpretation, not findings about the absent R57 text.
+
+**Actionable review result:** preserve the frozen predicate; do not treat the C2 counter or an `unclosed` count as authority for process death, dispatch, remediation, or settlement. Recheck the actual eight claims against their located source-copy quotes before claiming semantic closure. No production files, host state, fixtures, or commits were changed.

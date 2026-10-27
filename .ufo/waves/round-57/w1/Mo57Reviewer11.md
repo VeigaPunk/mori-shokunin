@@ -1,0 +1,13 @@
+# Mo57Reviewer11 — FR5 / driver-liveness coverage cross-check
+
+Verdict: **One genuinely distinct observability surface is supported, narrowly: per-event pairing and log-shape reporting, not watchdog daemon identity or launch-epoch lane silence.** No production edits or commits.
+
+## Finding
+
+- **MED — The new surface is strict event-shape/pairing telemetry, not the broad FR5 “launch/complete second liveness source.”** FR5 itself records that the census launch-epoch silence read existed since round 2 and preserves pid-identity/degraded-pgrep as frontier (`corpus/README.md:345`). Existing core reads the last launch anchor, keyed same-round closes, age, state value and Git/authorship evidence to emit a lane grade (`tools/mori-census.sh:1978-2000, 2513-2545`); the watchdog surface uses `pgrep`, log mtime, and state values (`tools/mori-census.sh:703-755`). In contrast, `tools/mori-driver-liveness.py:164-176` reports per-lane event counts, last-event `in_flight`, and count of open `(round,attempt)` pairs; `:26-30,32-40` adds malformed/other-line shape counts and explicitly limits the output to log facts. This is outside the present core *as an observability product* (standalone strict event/log-shape report), though it reuses the same log and overlaps in event vocabulary; do not claim first reading of launch/complete lines or daemon identity.
+
+Counterexamples/boundary checks: census `grade_lane` already considers complete/wrap and per-lane launch epochs, so those facts alone are not novel (`tools/mori-census.sh:1983-1986, 1994-2000`). The new probe does not establish actual daemon presence, process identity, lane health, or work settlement; its verdict is only `DRIVER_LIVENESS_OK` / unavailable (`tools/mori-driver-liveness.py:32-40`). The narrow novelty aligns with the knowledge entry's correction that census silence read launch epochs since r2 (`corpus/knowledge/driver-liveness-r56.md:10-24`).
+
+## Evidence / verification gaps
+
+Read frozen contract first (`.ufo/waves/round-57/contract.md`); C1/C2 predicates are not altered. Evidence commands were read-only: `read` of `corpus/README.md:345`, `tools/mori-census.sh:703-755,1978-2001,2509-2545`, `tools/mori-driver-liveness.py:1-40,139-198`, and the existing `corpus/knowledge/driver-liveness-r56.md:10-24`. No LSP device was mounted (attempt to resolve `xd://lsp` returned “No such tool”); the cited text is literal source evidence, not LSP semantic-reference proof. Disk guard status checked; scratch directory created at `/fast/scratch/hyaku/mori-r57/Mo57Reviewer11`. No live host probe or fixture run was needed for this comparison; no tool installed. No scratch files were created.

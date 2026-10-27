@@ -1,0 +1,11 @@
+# Mo57Critic32 — source frontier review
+
+**Verdict: no qualifying newly opened round-57 source is evidenced at this inspection.** The frozen C2 contract requires a newly opened source row plus eight located quotes in that source copy (`.ufo/waves/round-57/contract.md:7`). Current `corpus/SOURCES.md` ends its source rows at S547 (`:327`); no S548 row or round-57 source-copy directory exists (glob of `corpus/evidence/sources-r57` returned missing). The registry search log likewise has no round-57 bounded search entry (`corpus/SOURCES.md:339-393`). This is an absence finding, not evidence that no one has opened a source outside this tree.
+
+**Strongest in-scope existing source:** S547, `corpus/evidence/sources-r56/watchdog-log-grammar-v2.txt` (registry `corpus/SOURCES.md:327`) is direct writer-source evidence for parsing watchdog launch/complete/dead/wrap event shapes; the round-56 knowledge note cites that grammar. It supports only the bounded interpretation that `unclosed` derives from event pairing, not that it counts currently running processes. It is not newly opened this round, and cannot by itself substantiate eight newly sourced claims or their broader limits. Counterexample to treating it as qualifying: the same writer grammar can leave a launch unmatched because a close is missing, malformed, omitted, or outside the pairing window; that does not imply a process remains running.
+
+**Evidence and boundary:** `.ufo/waves/round-57/count-c2.py:13-15` explicitly expects S548 and checks string/backtick/row structure, but this does not make an absent source real or independently locate quotes. Other reviewers independently report absent S548 and source-copy (`Mo57Reviewer08.md:5-7`; `Mo57Reviewer05.md:7`). No registry edits or production changes made; no tests run.
+
+**Impacted axes:** C2 depth/source-grounding is not yet evidenced; no score delta asserted. Smallest safe correction is to leave C2 unmet until an actually opened, in-scope source copy and accurate registry row exist, and verify each located quote against that copy. Do not relabel S547 as newly opened or infer source opening from a proposed S548 identifier.
+
+Report: .ufo/waves/round-57/w1/Mo57Critic32.md

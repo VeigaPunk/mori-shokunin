@@ -1,0 +1,9 @@
+# Mo57Critic29 — C2 source-grounding review
+
+**Predicate:** C2 requires eight claims with located source-copy quotes, including that `unclosed` is a pairing count, not a present-running count.
+
+**Located quote / claim tested:** `corpus/knowledge/driver-liveness-r56.md:22-24` describes `unclosed` as “launches with no same-round close”; `:62-63` explicitly calls `in_flight`/`unclosed` pairing facts, not health verdicts. The implementation independently substantiates the narrower interpretation: `tools/mori-driver-liveness.py:127-133` appends launch keys to `open_launches`; `:139-150` removes a matching key on complete/wrap; `:155-157` removes all keys for the round on dead; `:172-173` defines `in_flight` as last event launch and `unclosed` as the remaining list length. The source-copy grammar itself (`corpus/evidence/sources-r56/watchdog-log-grammar-v2.txt:1-11`) shows launch/complete/dead/wrap writer forms, but does not establish real process liveness.
+
+**Counterexample / limitation:** A launch followed by a complete in the log leaves `in_flight=false` even if the process were still running; conversely, an unmatched logged launch yields `unclosed>0` without establishing that a process is presently running. Thus the report correctly avoids treating either field as current process state. Nuance: the implementation's actual pairing key is `(round, attempt)` where available (`:113-133`, `:139-143`), while the report's shorthand “same-round close” omits attempt matching; closes without attempt use fallback behavior (`:116-120`). Eight claims should not generalize beyond the quoted grammar/implementation behavior.
+
+**Verdict:** This specific knowledge claim is source-grounded and accurate as an interpretation/limitation. The C2 target file is absent at review time, so I cannot verify its eight claim rows or their individual quote locations; no conclusion on whole-predicate satisfaction. No production edits.

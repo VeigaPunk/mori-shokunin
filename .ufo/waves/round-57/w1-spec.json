@@ -1,0 +1,327 @@
+{
+  "wave": "mori-r57-w1",
+  "reportDir": ".ufo/waves/round-57/w1",
+  "context": "# mori round 57 \u2014 one v2 verification wave\nLane repo: /home/vgpnk/Projects/shokunin/mori-shokunin. Fleet root: /home/vgpnk/Projects/shokunin. L1: MoriR57. Claims and frozen predicates: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md. Entering branch revision 53e2b4768af93dd2472eb26ecc9b9fdca2e9daf2; freeze landed 618562c72a03dc4d17386b715357f863fd327274. C1 is calibration: round-56 driver-liveness and vote-binding demonstrations appear in SCORECARD capabilities with resolving evidence and first-working round 56. C2 is depth: eight source-grounded statements on interpretation and limits of watchdog `unclosed` pairing counts. Controls at entering tip: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/controls.txt. Attack exact predicates; do not broaden them.\n\nEvery Report trailer is relative to /home/vgpnk/Projects/shokunin/mori-shokunin; write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. Write only your own report under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/w1/. No fleet/sibling/lane code changes or commit/jj mutations. Use absolute paths. Detection/report only: never remediate host state or infer provider death from missing reports. No secrets/private URLs.\n\nScratch: use `$HYAKU_SCRATCH/mori-r57/<seat-name>/`, default `/fast/scratch/hyaku`; mkdir explicitly, set TMPDIR there and clean before yielding; `/tmp` only for files under 50 MB and never cite it. One lightweight archive/worktree per seat; check `/home/vgpnk/Projects/shokunin/scripts/hyaku/disk-guard.sh status` before heavy work and stop on ENOSPC. Before installing/updating a tool read `/home/vgpnk/.omp/agent/RULES.md`, use official channels and record tool/version/channel/reason. Pacman is paused: do not run pacman.\n\nFrozen contract/counters are immutable after scoring. Do not change predicates, counters, kill rules, claims or targets. Auditors return findings; fixtures must live only under scratch and use explicit `git -C` paths. No seat spawns/additional swarms.",
+  "items": [
+    {
+      "name": "Mo57Reviewer01",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer01: C1 calibration: independently inspect the two round-56 demonstrations and verify the SCORECARD capability row names and evidence pointers; report any false claim. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer02",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer02: C1 counter attack: find a do-nothing or junk-row fixture that reaches its target; name exact bytes and expected output. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer03",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer03: C1 mutation: mutate each capability row field (name, evidence path, first-working round) and check whether the frozen counter rejects it. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer04",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer04: C2 depth: reopen the committed round-56 driver-live report and verify the pairing list and whether unclosed counts mean running work. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer05",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer05: C2 source-grounding: independently locate one exact quote in the committed source report and test the knowledge claim it supports. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer06",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer06: C2 counter attack: devise a fixture that makes the entry counter falsely report eight located claims or a mined S548 source. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer07",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer07: Cross-claim no-harm: inspect the frozen claims, predicates, controls, and round-56 artifacts for scope bleed or axis harm. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer08",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer08: Frontier: inspect the current SOURCES registry and identify a real in-scope source opened this round that supports one claim; do not write the registry. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer09",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer09: Round-56 routed defect: inspect exact capability-table defect and recommend a falsifiable correction with evidence. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer10",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer10: Round-56 routed defect: inspect receipt path/wording defects and provide an independent recheck plan; no edits. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer11",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer11: Coverage cross-check: inspect FR5 and the driver-liveness probe for one new observability surface genuinely outside current core; report only. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer12",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer12: No-harm and boundary: check proposed interpretations remain detection/report only and do not claim authoritative settlement semantics owned by kumitate. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer13",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer13: C1 calibration: independently inspect the two round-56 demonstrations and verify the SCORECARD capability row names and evidence pointers; report any false claim. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer14",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer14: C1 counter attack: find a do-nothing or junk-row fixture that reaches its target; name exact bytes and expected output. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer15",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer15: C1 mutation: mutate each capability row field (name, evidence path, first-working round) and check whether the frozen counter rejects it. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer16",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer16: C2 depth: reopen the committed round-56 driver-live report and verify the pairing list and whether unclosed counts mean running work. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer17",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer17: C2 source-grounding: independently locate one exact quote in the committed source report and test the knowledge claim it supports. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer18",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer18: C2 counter attack: devise a fixture that makes the entry counter falsely report eight located claims or a mined S548 source. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer19",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer19: Cross-claim no-harm: inspect the frozen claims, predicates, controls, and round-56 artifacts for scope bleed or axis harm. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer20",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer20: Frontier: inspect the current SOURCES registry and identify a real in-scope source opened this round that supports one claim; do not write the registry. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer21",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer21: Round-56 routed defect: inspect exact capability-table defect and recommend a falsifiable correction with evidence. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Reviewer22",
+      "role": "reviewer",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Reviewer22: Round-56 routed defect: inspect receipt path/wording defects and provide an independent recheck plan; no edits. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Critic23",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Critic23: Coverage cross-check: inspect FR5 and the driver-liveness probe for one new observability surface genuinely outside current core; report only. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Critic24",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Critic24: No-harm and boundary: check proposed interpretations remain detection/report only and do not claim authoritative settlement semantics owned by kumitate. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Critic25",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Critic25: C1 calibration: independently inspect the two round-56 demonstrations and verify the SCORECARD capability row names and evidence pointers; report any false claim. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Critic26",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Critic26: C1 counter attack: find a do-nothing or junk-row fixture that reaches its target; name exact bytes and expected output. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Critic27",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Critic27: C1 mutation: mutate each capability row field (name, evidence path, first-working round) and check whether the frozen counter rejects it. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Critic28",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Critic28: C2 depth: reopen the committed round-56 driver-live report and verify the pairing list and whether unclosed counts mean running work. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Critic29",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Critic29: C2 source-grounding: independently locate one exact quote in the committed source report and test the knowledge claim it supports. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Critic30",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Critic30: C2 counter attack: devise a fixture that makes the entry counter falsely report eight located claims or a mined S548 source. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Critic31",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Critic31: Cross-claim no-harm: inspect the frozen claims, predicates, controls, and round-56 artifacts for scope bleed or axis harm. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Critic32",
+      "role": "critic",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Critic32: Frontier: inspect the current SOURCES registry and identify a real in-scope source opened this round that supports one claim; do not write the registry. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57MutationTester33",
+      "role": "mutation-tester",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57MutationTester33: Round-56 routed defect: inspect exact capability-table defect and recommend a falsifiable correction with evidence. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57MutationTester34",
+      "role": "mutation-tester",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57MutationTester34: Round-56 routed defect: inspect receipt path/wording defects and provide an independent recheck plan; no edits. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57MutationTester35",
+      "role": "mutation-tester",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57MutationTester35: Coverage cross-check: inspect FR5 and the driver-liveness probe for one new observability surface genuinely outside current core; report only. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57MutationTester36",
+      "role": "mutation-tester",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57MutationTester36: No-harm and boundary: check proposed interpretations remain detection/report only and do not claim authoritative settlement semantics owned by kumitate. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57MutationTester37",
+      "role": "mutation-tester",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57MutationTester37: C1 calibration: independently inspect the two round-56 demonstrations and verify the SCORECARD capability row names and evidence pointers; report any false claim. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57MutationTester38",
+      "role": "mutation-tester",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57MutationTester38: C1 counter attack: find a do-nothing or junk-row fixture that reaches its target; name exact bytes and expected output. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57MutationTester39",
+      "role": "mutation-tester",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57MutationTester39: C1 mutation: mutate each capability row field (name, evidence path, first-working round) and check whether the frozen counter rejects it. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57MutationTester40",
+      "role": "mutation-tester",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57MutationTester40: C2 depth: reopen the committed round-56 driver-live report and verify the pairing list and whether unclosed counts mean running work. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Executor41",
+      "role": "executor",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Executor41: C2 source-grounding: independently locate one exact quote in the committed source report and test the knowledge claim it supports. Execute the frozen C1 or C2 counter on the entering revision and inspect the corresponding counter implementation for the assigned arm; capture exact output and exit code. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Executor42",
+      "role": "executor",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Executor42: C2 counter attack: devise a fixture that makes the entry counter falsely report eight located claims or a mined S548 source. Execute the frozen C1 or C2 counter on the entering revision and inspect the corresponding counter implementation for the assigned arm; capture exact output and exit code. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Executor43",
+      "role": "executor",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Executor43: Cross-claim no-harm: inspect the frozen claims, predicates, controls, and round-56 artifacts for scope bleed or axis harm. Execute the frozen C1 or C2 counter on the entering revision and inspect the corresponding counter implementation for the assigned arm; capture exact output and exit code. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Executor44",
+      "role": "executor",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Executor44: Frontier: inspect the current SOURCES registry and identify a real in-scope source opened this round that supports one claim; do not write the registry. Execute the frozen C1 or C2 counter on the entering revision and inspect the corresponding counter implementation for the assigned arm; capture exact output and exit code. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Executor45",
+      "role": "executor",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Executor45: Round-56 routed defect: inspect exact capability-table defect and recommend a falsifiable correction with evidence. Execute the frozen C1 or C2 counter on the entering revision and inspect the corresponding counter implementation for the assigned arm; capture exact output and exit code. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Executor46",
+      "role": "executor",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Executor46: Round-56 routed defect: inspect receipt path/wording defects and provide an independent recheck plan; no edits. Execute the frozen C1 or C2 counter on the entering revision and inspect the corresponding counter implementation for the assigned arm; capture exact output and exit code. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Scribe47",
+      "role": "scribe",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Scribe47: Coverage cross-check: inspect FR5 and the driver-liveness probe for one new observability surface genuinely outside current core; report only. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Scribe48",
+      "role": "scribe",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Scribe48: No-harm and boundary: check proposed interpretations remain detection/report only and do not claim authoritative settlement semantics owned by kumitate. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Scribe49",
+      "role": "scribe",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Scribe49: C1 calibration: independently inspect the two round-56 demonstrations and verify the SCORECARD capability row names and evidence pointers; report any false claim. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Scribe50",
+      "role": "scribe",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Scribe50: C1 counter attack: find a do-nothing or junk-row fixture that reaches its target; name exact bytes and expected output. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Scribe51",
+      "role": "scribe",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Scribe51: C1 mutation: mutate each capability row field (name, evidence path, first-working round) and check whether the frozen counter rejects it. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Scribe52",
+      "role": "scribe",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Scribe52: C2 depth: reopen the committed round-56 driver-live report and verify the pairing list and whether unclosed counts mean running work. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Scribe53",
+      "role": "scribe",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Scribe53: C2 source-grounding: independently locate one exact quote in the committed source report and test the knowledge claim it supports. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Scribe54",
+      "role": "scribe",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Scribe54: C2 counter attack: devise a fixture that makes the entry counter falsely report eight located claims or a mined S548 source. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Scout55",
+      "role": "scout",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Scout55: Cross-claim no-harm: inspect the frozen claims, predicates, controls, and round-56 artifacts for scope bleed or axis harm. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Scout56",
+      "role": "scout",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Scout56: Frontier: inspect the current SOURCES registry and identify a real in-scope source opened this round that supports one claim; do not write the registry. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Scout57",
+      "role": "scout",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Scout57: Round-56 routed defect: inspect exact capability-table defect and recommend a falsifiable correction with evidence. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Scout58",
+      "role": "scout",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Scout58: Round-56 routed defect: inspect receipt path/wording defects and provide an independent recheck plan; no edits. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Connector59",
+      "role": "connector",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Connector59: Coverage cross-check: inspect FR5 and the driver-liveness probe for one new observability surface genuinely outside current core; report only. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Connector60",
+      "role": "connector",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Connector60: No-harm and boundary: check proposed interpretations remain detection/report only and do not claim authoritative settlement semantics owned by kumitate. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Sentinel61",
+      "role": "sentinel",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Sentinel61: C1 calibration: independently inspect the two round-56 demonstrations and verify the SCORECARD capability row names and evidence pointers; report any false claim. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Sentinel62",
+      "role": "sentinel",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Sentinel62: C1 counter attack: find a do-nothing or junk-row fixture that reaches its target; name exact bytes and expected output. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Revenger63",
+      "role": "revenger",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Revenger63: C1 mutation: mutate each capability row field (name, evidence path, first-working round) and check whether the frozen counter rejects it. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    },
+    {
+      "name": "Mo57Simplifier64",
+      "role": "simplifier",
+      "prompt": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\nMo57Simplifier64: C2 depth: reopen the committed round-56 driver-live report and verify the pairing list and whether unclosed counts mean running work. Read the frozen contract `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-57/contract.md` first. Return concise findings with exact file:line/command evidence, counterexamples and verdict; no production edits or commits."
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+# Mo57Reviewer21 — round-56 capability-table defect
+
+**Verdict: C1’s proposed table placement is falsifiable and appears to target the wrong table.** At the entering revision, `SCORECARD.md:1951-1960` explicitly designates the table beginning `:1969` as the current capabilities register, superseding both the earlier demonstrations table and per-round tables. Its rows begin `:1971`; round-56 capabilities are not present there. The separate round-56 verdict table at `:2903-2904` describes claims/results, not capability rows.
+
+**Evidence / counterexample:** the initial `## Capabilities` table at `SCORECARD.md:597-601` is marked “— none yet —”; the later current register at `:1969-1988` has capability/evidence/first-working columns but no `driver-liveness` or `vote-binding` rows. Round-56 claim rows at `:2903-2904` do mention those demonstrations and resolving evidence, but are not the canonical register specified at `:1953-1960`. Thus counting names anywhere in SCORECARD (or adding rows to a superseded demonstration table) would produce a false positive for C1’s intended completeness claim.
+
+**Falsifiable correction recommendation:** add exactly two rows to the current register (`SCORECARD.md:1969` table): capability names exactly `driver-liveness` and `vote-binding`; give each a resolvable round-56 evidence pointer and first-working value `56`. Then run the frozen check `python3 .ufo/waves/round-57/count-c1.py <revision>`; the correction is supported only if it reports `C1=met rows=2 evidence=ok` (or its exact emitted success form) at the tested revision. Counterexample: placing both rows only in the initial/superseded table while leaving the current register unchanged must remain unmet. No production changes made.
+
+**Verification gap:** I did not run the counter or inspect the counter implementation; the precise expected success output above is conditional on its documented contract. Evidence cited is the entering-tip SCORECARD text.

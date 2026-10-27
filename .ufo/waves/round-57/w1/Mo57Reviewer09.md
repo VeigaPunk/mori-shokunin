@@ -1,0 +1,13 @@
+# Mo57Reviewer09 — round 57 C1 review
+
+## Finding (high): C1 counter accepts rows outside the current capabilities table
+
+Evidence: frozen contract says C1 requires the *current SCORECARD capabilities table* to have exactly two rows naming `driver-liveness` and `vote-binding`, each with a resolvable round-56 evidence pointer and first-working round 56 (`.ufo/waves/round-57/contract.md:5`). The counter instead selects the first `## Capabilities` section and ends at the first `## Saturation` (`.ufo/waves/round-57/count-c1.py:10`), then counts any pipe line containing either name and checks only for a `.ufo/waves/round-56/` substring and `| 56 |` (`count-c1.py:11-12`). SCORECARD has an obsolete initial `## Capabilities` table at lines 596-602, explicitly saying none yet; the current register is the later section beginning at line 1951, with round-specific capability history thereafter. Therefore the counter does not inspect the current table at all.
+
+Falsifiable counterexamples: (1) Add the two expected-looking rows with arbitrary/nonexistent evidence paths under the initial table, leave current register unchanged: counter can report rows=2/evidence=ok although pointers do not resolve and the current table lacks the rows. (2) Conversely, add valid round-56 rows to the current register while leaving the initial table untouched: the counter reports rows=0/unmet. This is a direct false negative for the frozen target. (3) A single matching line containing both names can satisfy `len(rows)==2` only if duplicated; duplicates are counted without uniqueness or row-field parsing. No actual run on constructed revisions was performed.
+
+Recommendation: correct the frozen counter predicate before relying on its result: select the canonical current register section (not the superseded first section), parse its row structure and require exactly one row per capability, first-working field exactly 56, and resolve each evidence pointer against revision R (including the referenced round-56 evidence artifact). Negative controls should show the counter fails for the initial-table-only forgery and dangling pointer, and passes for the two valid current-register rows. Do not broaden beyond C1's specified two rows.
+
+## Verdict
+
+C1 is not established by the frozen counter as written; its selection window contradicts the current-table target, and the evidence check is substring-only rather than resolution. The round-56 narrative at `SCORECARD.md:2903-2904` documents the two demonstrations and their evidence receipts, but does not repair this counter/target mismatch. C2 was not evaluated.

@@ -1,0 +1,17 @@
+# Mo57Critic31 — cross-claim no-harm review
+
+## Finding — C2's required eight located quotes and new source are not verified by its frozen counter
+
+**Counterexample.** At a revision with an entry containing eight `| K...` lines with any backtick-delimited text, the literal `S548`, and `pairing count`, and a registry line containing `| S548 |` and `mined`, `count-c2.py` can report C2 met even if none of those strings are quoted from a source copy and no newly opened source exists. The counter never reads a source copy or verifies quote substrings.
+
+**Evidence.** Contract `.ufo/waves/round-57/contract.md:7` requires a newly opened source row, eight claim rows each with a located quote in the source copy, and the pairing-count distinction. Frozen `.ufo/waves/round-57/count-c2.py:8-16` reads only the entry and `corpus/SOURCES.md`; `quote_ok` checks for backticks, while `source_ok` checks marker strings. At inspection the target entry `corpus/knowledge/watchdog-unclosed-r57.md` is absent; reviewer evidence independently records no S548 row/source copy (`Mo57Reviewer08.md:5-7`).
+
+**Semantic counterexample / boundary.** `unclosed` is a pairing-derived log count, not process liveness: the parser opens `(round, attempt)` keys when launch lines are read and reports `len(open_launches)` (`tools/mori-driver-liveness.py:122-143,164-174`); `in_flight` is simply whether the last parsed event is `launch` (`:172-173`). The cited writer extract documents launch/complete/dead/wrap forms (`corpus/evidence/sources-r56/watchdog-log-grammar-v2.txt:1-11`), while the entry itself explicitly says log lines are unauthenticated and omits a historical driver's `lane-round-failed` event class (`corpus/knowledge/driver-liveness-r56.md:62-75`). Therefore neither `unclosed` nor `in_flight` entails a currently running process; missing/unknown events and rewritten or incomplete logs also limit interpretation. C2's narrow “rather than a present-running count” is sound, but must not be upgraded to a death/health conclusion.
+
+**C1 / scope.** Frozen C1 is a SCORECARD-table presence predicate for the two round-56 capability names, evidence-path substring, and first-working round (`contract.md:5`; `count-c1.py:7-13`). Round-56 reviewers identify historical-input demonstration and axis-attribution limits (`Mo56CritC2Claim.md:140-146`; `Mo56CritC1Claim.md:100-114`). This round's C1 predicate does not claim to fix those limits or establish new coverage/depth; contract explicitly asserts no axis delta (`contract.md:9`). No scope bleed if closure reports only table completeness and does not re-score the old capabilities or claim a score increase.
+
+**Impacted axes:** C2 depth/source grounding (counter enforcement is weaker than its frozen predicate); calibration (a green counter alone would overstate quote/source verification). C1 calibration remains limited to the frozen table predicate; no score delta established.
+
+**Smallest safe correction:** Keep frozen predicates and counters immutable. Do not treat a green C2 counter as proof of located quotes: require manual/source-copy resolution for all eight quotes and actual S548 provenance before claiming C2 met. Preserve the pairing-versus-current-running distinction and its stated limits; report unmet/unknown honestly if evidence is absent. No production changes, counter runs, or commits made.
+
+Report: .ufo/waves/round-57/w1/Mo57Critic31.md
