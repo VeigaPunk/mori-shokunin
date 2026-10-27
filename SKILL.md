@@ -1244,3 +1244,13 @@ The round-53 rule holds, with a located line: each ledger row names the v7.3 lin
 words survive. At v7.3 the quoted lines moved in `mm/memcontrol.c` (+45, +84), `mm/mm_init.c` (+4) and the rendered
 cgroup-v2 page (+31); prose anchors written at v7.2 (`memcontrol.c:1774-1830`, …) are read with the ledger's
 `## Where the quotes moved` table, not as v7.3 positions.
+
+### Round-55 correction — memory-failure panic trigger
+
+The panic setting is narrower than the Round54 wording above: v7.3 `panic_on_unrecoverable_mf()` returns true only for `type == MF_MSG_KERNEL && result == MF_IGNORED` (`corpus/evidence/sources-r54/memory-failure.c.v7.3:1268-1275`). A high-order kernel-page `Ignored` result does not trigger it. Interpret the Round54 “kernel-owned page” wording as the reserved-kernel-page `MF_MSG_KERNEL` case only; see the append-only correction in `memory-failure-kills-r54.md`.
+
+## Round55 — release-pointer recheck and disk-runway ENOSPC
+
+`corpus/knowledge/kernel-v7.3-recheck-r55.md` is a separate pointer ledger, not a widening of the round-54 claim-table predicate. It rechecks v7.2 line pointers in `oom-tracepoints-r47.md`, `system-pressure-r24.md`, and `oom-victim-selection-r27.md`; the counter freezes 78 entry/path/line groups and verifies v7.3 locations/statuses, with reviewer votes carrying meaning judgments. `watchdog-identity-r31.md` cites v7.2 kernel rows without line pointers and is an explicit scope limit.
+
+For an unexpected ENOSPC, do not treat `df -P` as a complete diagnosis. Read both `df -P` and `df -i` on filesystems that report inode counts; classify btrfs zero Avail with its allocation sysfs counters and global reserve, and distinguish tmpfs's block and inode mount limits. XFS reports its free/available block counts equally; its inode counts are separate. This is interpretation only: do not write filesystem or mount state, and do not claim a live failure from a healthy snapshot. The sourced rules and host values are in `corpus/knowledge/disk-runway-enospc-r55.md`.

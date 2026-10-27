@@ -783,3 +783,12 @@ rendered cgroup-v2 7.3.0 page renames the `io.stat` throttle field `delay` → `
 nanoseconds) and documents `memory.pressure`/`io.pressure` as read-write (`knowledge/kernel-v7.3-recheck-r54.md`
 `## Release drift`); the memory-error surfaces before `memory_failure()` runs (MCE decoding, EDAC, `rasdaemon`)
 are hardware-health ground the lane does not hold.
+
+## Round-55 knowledge additions
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| Freshness — v7.2 Linux source-line pointers outside the claim-table ledgers | `knowledge/kernel-v7.3-recheck-r55.md` (S526–S534; S502/S516 reused) | Rechecks 78 extracted line-pointer groups across the OOM tracepoint catalogue, system-pressure notes, and OOM victim-selection notes against v7.3 copies; derives same/moved/changed status and records vote-backed holds or stale dispositions. `watchdog-identity-r31.md` cites v7.2 source IDs without matching line pointers and is outside this counter's explicit scope. |
+| Resource runway — ENOSPC causes beyond the block-availability column | `knowledge/disk-runway-enospc-r55.md` (S535–S543) | Separates block availability, inode availability, XFS reporting, btrfs metadata/global-reserve behavior and tmpfs limits; provides a read-only decision table and point-in-time host snapshot, with no live ENOSPC reproduction or tool. |
+
+Append-only correction to Round54: the r54 C1 scope did not include these four prose/catalogue entries; r55's separate pointer extractor is the extension, not a retroactive change to the r54 claim.

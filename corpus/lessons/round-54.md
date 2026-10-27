@@ -95,3 +95,27 @@ One v2 wave, 74 seats: reviewer 19, critic 18, executor 15, scribe 9, scout 4, s
 | discernment | unchanged | independent admit/reject spot-check is still pending; wave voters are the lane |
 
 Assimilation: none. Tool installs: none. L0 questions: none. Stale-lane: respawn-per-round driver; no other mission is open.
+
+## Round-55 append-only errata (outside spot-check D1–D6)
+
+### M1 — number-drift (QUALITY 148)
+
+The round-54 `Mistakes` row at original line 67 is the number-drift mistake cited by QUALITY 148; the prior `#M1` locator did not exist. Its check and result remain as written: `receipt-stage.py 39dcf4d7` flagged 5 intermediate receipts before correction and `flagged=0` afterward.
+
+### M2 — landing / misroot strays (QUALITY 149)
+
+The round-54 `Mistakes` row at original line 68 is the misroot mistake cited by QUALITY 149; the prior `#M2` locator did not exist. The byte-exact relocation and root-list check remain the evidence; QUALITY 149's pointer now resolves to this heading.
+
+### Gate locator corrections (D2)
+
+The original Gate table lines are retained, but these four locations were wrong: S515's quote starts at `sources-r54/memcontrol.c.v7.3:1850` (not 1819); S520's quote is at rendered line 1409 (not 1225); S522's quote starts at `sources-r54/hwpoison.rst.v7.3:70` (not 68); S525's quote starts at `sources-r54/ras_event.h.v7.3:3` (not 7). S524 is the distinct row at line 7.
+
+### Remaining routed corrections (D1, D3, D5)
+
+- D1: `evidence/census-end.txt` is a transcription, not the validator's captured bytes; its S349 URL is also wrong. The source file and live validator use `...%E6%8A%80%E6%9C%AF%E7%99%BD%E7%9A%AE%E4%B9%A6.pdf`, not `...%E7%99%BD%E6%96%87%E6%9C%AC.pdf`. Round 55 captures its own census stdout/stderr and exit code mechanically; the old receipt is not rewritten.
+- D3: the Round 54 limits paragraph at original line 87 says “Ten control clone revisions”; the measured observation is 12/14 unavailable. The scorecard correction is appended in Round 55; this historical line is retained.
+- D5: round-54 `w1-results.json` has 74 results and the committed `w1/` directory has 73 `.md` reports; only `Mo54RevC1Counter` lacks one. The previous “four other seat reports are absent” statement is incorrect.
+
+### Gate observation
+
+The outside review found the four locator defects above and the decision-table panic overclaim (corrected append-only in `memory-failure-kills-r54.md` and `SKILL.md`). Round-54's historical source decisions remain as filed; this erratum does not rewrite them.

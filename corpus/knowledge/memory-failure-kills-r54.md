@@ -90,3 +90,6 @@ kernel taint mask has bits 4 (machine check) and 5 (bad page) clear (`Mo54ExecHo
 - The rows are v7.3 bytes; the host runs 7.2.11. The counters and the two older sysctls are read live above; the
   kill and recovery lines exist in the v7.2 source (`Mo54ExecMfV72`: 19 of the 21 quotes also occur at v7.2); the
   panic switch and its code (rows 11 and 16) are v7.3 only.
+## Round-55 append-only correction — panic trigger
+
+The panic switch is narrower than the original table wording above: `panic_on_unrecoverable_mf()` returns true only when `type == MF_MSG_KERNEL && result == MF_IGNORED` (`corpus/evidence/sources-r54/memory-failure.c.v7.3:1268-1275`). A `MF_MSG_KERNEL_HIGH_ORDER` result does not trigger this switch. Read the round-54 cells as applying only to the reserved-kernel-page `MF_MSG_KERNEL` case; the adjacent row 11 claim is the specific trigger. This correction does not alter the historic rows.
