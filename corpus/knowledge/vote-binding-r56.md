@@ -1,6 +1,6 @@
 # Vote binding across seat-output shapes (round 56)
 
-source: S545 (RFC 8259 — the JSON grammar the JSON channel parses)
+source: S545 (RFC 8259 — the JSON grammar the JSON channel parses; section labels corrected by S546)
 verified-at: 2026-10-27 (live fetch, `corpus/evidence/sources-r56/rfc8259.txt`, sha256 `61a5378f…`)
 recheck: on-release
 coverage-map: new capability — seat-output vote binding (no prior lane note)
@@ -10,14 +10,18 @@ coverage-map: new capability — seat-output vote binding (no prior lane note)
 Round 55 C1 (freshness, 78-row v7.3 recheck ledger) landed **unmet on its vote
 arm with every data arm green**, cause (1): the frozen C1 counter bound an
 agreeing vote only when the voter's captured output contained the exact
-`RECHECK <h> <w>` line as a stripped *text* line (`.ufo/waves/round-55/count-c1.py:286-301`).
-All fifteen reporting RECHECK voters emitted structured JSON yields whose
-`vote_lines` arrays quote the lines, so stripped-line equality failed for every
-one of them and the counter read `voted=0`. The same round's C2 counter binds
-by substring and accepted the identical shape (`entailed=15`) — the two
-counters disagreed on the same bytes because they implemented "contains"
-differently. The operator's run-10 binding note for exactly this incident:
-freeze a parser that accepts both shapes, or bind on files the seat writes.
+`RECHECK <h> <w>` line as a stripped *text* line
+(`.ufo/waves/round-55/count-c1.py:286-301`). All fifteen reporting RECHECK
+voters emitted structured JSON yields whose string arrays quote the vote
+lines — under varying keys: `vote_lines` on 2 of 15 seats, `votes` on 9,
+`final_vote_lines` on 3, `final_votes` and `voteLines` on 1 each — so
+stripped-line equality failed for every one of them and the counter read
+`voted=0`. (The binder walks every string scalar, which is why the key
+variation does not matter to it.) The same round's C2 counter binds by
+substring and accepted the identical shape (`entailed=15`) — the two counters
+disagreed on the same bytes because they implemented "contains" differently.
+The operator's run-10 binding note for exactly this incident: freeze a parser
+that accepts both shapes, or bind on files the seat writes.
 
 ## The frozen rule (tools/mori-vote-bind.py)
 
@@ -28,13 +32,15 @@ One parser, two channels, chosen per document and never mixed:
   binds iff its *stripped content* matches the vote grammar anchored at the
   start: `<verb> <hash12> <word> [<rest>]`, verb `RECHECK|ENTAIL`, hash exactly
   12 lowercase hex, word `[A-Za-z][A-Za-z0-9_-]*`. This is the RFC 8259
-  grammar reading: a JSON text is one serialized value (S545 §1, line 251)
-  whose value may be an object, array or string (S545 §2 grammar, line 308),
-  and a string is `quotation-mark *char quotation-mark` (S545 §2, line 461) —
-  so a seat's vote surface in a JSON yield is the set of string scalars, and a
+  grammar reading: `A JSON text is a serialized value.` (S545 §2, line 251)
+  and that value may be `false / null / true / object / array / number /
+  string` (S545 §3 grammar, line 308), while a string is
+  `string = quotation-mark *char quotation-mark` (S545 §7, line 461) — so a
+  seat's vote surface in a JSON yield is the set of string scalars, and a
   scalar that merely *contains* a vote sentence ("the claim is RECHECK …
   holds today") is prose, not a vote. That anchoring is the overclaim guard a
-  loose substring binding lacks.
+  loose substring binding lacks. (S546 carries the corrected section labels;
+  S545's line numbers and quotes were always true substrings.)
 * **text channel** — otherwise the output is read as lines; fenced blocks are
   skipped; an unfenced stripped line binds by the same anchored grammar.
 * Last write wins per (verb, hash) inside the chosen channel; the channel that
@@ -53,11 +59,14 @@ over the **committed** round-55 artifacts prints:
 
 The identical bytes under the frozen round-55 C1 counter print `voted=0`
 (receipt `evidence/c2-old-counter-voted0.txt`). Both readings are receipts,
-not interpretations; the difference is entirely the binding shape. The 10
-single-vote rows are the dispatch-coverage hole the round-55 lesson records
-(rows assigned to Mo55Rc13+Mo55Rc14, the latter settling with no votes); under
-the dual-shape reading they are single-voted with zero dissent — a coverage
-fact the binder surfaces honestly instead of zeroing the arm.
+not interpretations; the difference they measure is the binding shape: under
+the round-55 metric's own ≥2-voter rule the dual-shape reading takes 68 rows
+to quorum (from 0), while the 10 remaining rows stay single-voted — the
+dispatch-coverage hole the round-55 lesson records (rows assigned to
+Mo55Rc13+Mo55Rc14, the latter settling with no votes), surfaced honestly by
+the binder's `single=10` instead of zeroing the arm. A unanimous-but-wrong
+vote set would still read `dissent=0` (the tally counts inter-voter
+disagreement only) — a named limit, not a quorum guarantee.
 
 ## Limits (named before data)
 

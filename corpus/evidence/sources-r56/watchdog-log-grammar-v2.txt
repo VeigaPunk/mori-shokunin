@@ -1,0 +1,11 @@
+  log "launch $lane round=$n pgid=$$ driver=hyaku-inline attempt=$a"
+  log "complete $lane round=$n; hyaku-inline attempt=$(claim "$lane" attempt)"
+  log "lane-dead-no-report $lane round=$n; retry same round (hyaku-inline attempt=$a: $why)"
+  [ -n "${SUBSTRATE_CMD:-}" ] || { log "launch-fail $lane round=$n :: SUBSTRATE_CMD unset"; return 1; }
+  [ -d "${LANE_CWD[$lane]:-}" ] || { log "launch-fail $lane round=$n :: cwd missing: ${LANE_CWD[$lane]:-}"; return 1; }
+  render_prompt "$lane" "$n" || { log "launch-fail $lane round=$n :: prompt render failed"; return 1; }
+    log "launch-fail $lane round=$n :: report baseline unavailable; not spawning"
+  log "launch $lane round=$n pgid=$pid"
+    log "wrap $lane round=$n landed; NOT respawning (fleet-wrap)"
+      log "complete $lane round=$n; advancing to round=$((n+1))"
+        log "lane-dead-no-report $lane round=$n; retry same round"

@@ -1,7 +1,7 @@
 # Driver-liveness reading of .ufo/watchdog.log (round 56)
 
-source: S544 (the driver scripts that write the log — grammar authority)
-verified-at: 2026-10-27 (extract `corpus/evidence/sources-r56/watchdog-log-grammar.txt`, sha256 `38ba3e6b…`)
+source: S544 (the driver scripts that write the log — grammar authority; launch-fail and wrap lines and the fleet revision added by S547)
+verified-at: 2026-10-27 (extract `corpus/evidence/sources-r56/watchdog-log-grammar.txt`, sha256 `38ba3e6b…`; corrected extract v2 `watchdog-log-grammar-v2.txt`, sha256 `1ea4524c…`)
 recheck: on-release
 coverage-map: FR5 advance — the launch/complete liveness source named open ground in `corpus/README.md` (FR5 boundary, round-33 note)
 
@@ -10,8 +10,14 @@ coverage-map: FR5 advance — the launch/complete liveness source named open gro
 Under the hyaku inline driver no `shokunin-watchdog` daemon runs, so the
 census watchdog surface fires `WATCHDOG_ABSENT` every round. FR5 names the
 open coverage ground: reading the driver's own `launch`/`complete` lines in
-`.ufo/watchdog.log` as a second liveness source. `tools/mori-driver-liveness.py`
-moves that ground to Core, bounded: it reads the log and reports per-lane
+`.ufo/watchdog.log` as a second liveness source. Precision (round-56 wave
+correction): the census silence surface has read launch *epochs* from this
+log since round 2 for silence grading, so the probe is not the first reader
+of the log — its new surface is the strict per-event reading: per-lane
+pairing of every launch/complete/dead/wrap/fail line into counts,
+`in_flight` and `unclosed`, with the full writer-grammar coverage and
+malformed/other_line classification. `tools/mori-driver-liveness.py` moves
+that strict reading to Core, bounded: it reads the log and reports per-lane
 driver-activity **facts** — launches, completes, deads, launch-fails, wraps,
 last-launch age, `in_flight` (last event is a launch), `unclosed` (launches
 with no same-round close) — and log shape (line count, malformed count,
@@ -60,5 +66,12 @@ re-running the command reproduces it modulo ages.
 * Log lines are driver-authored shape, not authenticated events; a rewritten
   log would rewrite the reading. This is the same trust level as the census
   log-freshness arm it complements.
+* The grammar is anchored on the two writer scripts in the fleet repo (S544,
+  corrected by S547); a historical driver's shape can sit outside it — the
+  committed live log carries 35 `lane-round-failed <lane> round=<n> :: …`
+  lines from the kimi-port driver whose source is not in the repo, and the
+  probe classifies them as `other_lines` (never as events, never as
+  malformed). Their failure events are real but unattributed — a named
+  grammar-coverage gap, routed to round 57.
 * Aged launches measure from the log timestamp; clock moves between driver and
   probe shift `last_launch_age_s` without changing the event counts.

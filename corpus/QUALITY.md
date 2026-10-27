@@ -1518,3 +1518,39 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     covered: no tool enforces it yet (knowledge only); corrected errors (EDAC) are not counted by these surfaces.
 
 152. **A census receipt is the command's captured bytes, not a retyped summary.** Lesson: `corpus/lessons/round-54-verifier-spotcheck.md` D1 — `census-end.txt` had spaces where the command emits tabs, no final newline, and a mistranscribed S349 URL. Check: run `/home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori` with stdout/stderr redirected directly to the receipt, then append the actual exit code; do not reconstruct its rows by hand. Shown able to fail: the r54 spot-check compared the saved bytes with a fresh run and found those byte-level differences. The r55 `evidence/census-end.txt` is a direct capture and ends `exit=0`. Not covered: whether the census validator itself classifies source rows correctly; this criterion checks receipt fidelity only.
+
+153. **An unfixed critic flag is carried by round-qualified id into the next round's ledger,
+    and its disposition is decided against that round's landing.** Lesson:
+    `considerthese/2026-10-26.md` suggestion 2 (operator reflection, opened 2026-10-26);
+    `corpus/lessons/round-49.md:159` records the snapshot (round 48
+    `flagged=45 fixed=18 unfixed=9 na=18`) and `:211` the capability;
+    `corpus/lessons/round-55.md:106` still lists the "carry-over-flag ledger" as outstanding.
+    Rationale: `.ufo/waves/round-49/flagged-fixed/count-flagged.py` hardcodes its freeze and
+    landing (`:45-46`) and reads one `defects.jsonl` (`:58-61`), so it decides one round's rows
+    against one diff; the nine UNFIXED rows it prints for round 48 are named nowhere in rounds
+    49-56, and the only landing that closes two of them (round 48 `C1-F1` by round 49's
+    opaque-handle counter, `RH-F2` by QUALITY 152) does so under a different artifact, so an
+    id-keyed ledger is the only place a reader can see that. Check: in the lane,
+    `ids=$(python3 .ufo/waves/round-49/flagged-fixed/count-flagged.py |
+    awk '/verdict=UNFIXED/{print $1}')` then for each id
+    `git grep -F -- "$id" <next-round-tip> -- corpus/lessons .ufo/waves
+    ':!.ufo/waves/round-49/' ':!.ufo/waves/round-17/'` must match at least one line that also
+    carries `fixed`, `routed` or `dropped` and the round that decided it; at
+    `8be2717b` every id prints `later=0`. Shown able to fail: the nine `later=0` lines above
+    (exit 0 from the loop, and `git grep` itself exiting 1 with no output) are the unmet arm,
+    and the bare-id control is worse than useless without the round directory in the key —
+    `C2-F1` matches 134 lines, all from `.ufo/waves/round-17/falsify/CriticC2Final.md`, a
+    different defect that reuses the id, so an unscoped grep would score a false fix. The pass
+    arm is a fixture repo (`mktemp -d`, commits under a fixture identity, `rev-parse
+    --show-toplevel` asserted first) whose `corpus/lessons/round-50.md` carries
+    `C1-F1 routed to round 57 (successor counter counts cels).`: the same
+    `git grep -c -F -- C1-F1 HEAD -- corpus/lessons` prints `1`, and for an id the file does
+    not carry it prints nothing and exits 1. Not covered: the grep proves a later committed
+    line names the id and a disposition word, not that the disposition is true; it reads
+    `corpus/lessons` and `.ufo/waves` only, so a disposition written in `LOG.md` or
+    `SCORECARD.md` is invisible to it; flags closed by a substitute artifact with no flag-level
+    line still need a hand-written successor clause (round 48 `C1-F1`, `RH-F2` would otherwise
+    score "dropped"); per-round ids are not globally unique (round 17 and round 48 both have a
+    `C2-F1`), so the round directory is part of the key and an id-only ledger is rejected; and
+    the id list is the round-49 ledger's, so each new round needs its own extraction before the
+    command means anything.
