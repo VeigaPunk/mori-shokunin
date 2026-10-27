@@ -1,0 +1,5 @@
+control: c2 witness
+note: feasibility only: synthetic claim text over real located quotes, rows from c2data.py, two synthetic voters listed in a fixture results file
+command: python3 -B /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-54/count-c2.py --repo /fast/scratch/hyaku/mori-r54/l1/controls/c2-witness d99c87a9ca03d8fafb1a55eb1f48d66e39b4d718
+C2=met claims=14 located=14 quote_missing=0 bad_rows=0 sources=6 source_rows=ok pins=ok provenance=ok entailed=14 dissent=0 rev=d99c87a9ca03d8fafb1a55eb1f48d66e39b4d718
+exit=0

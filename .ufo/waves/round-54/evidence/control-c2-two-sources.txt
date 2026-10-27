@@ -1,0 +1,5 @@
+control: c2 two-sources
+note: fourteen located rows drawn from mm/memory-failure.c and vm.rst only, votes present
+command: python3 -B /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-54/count-c2.py --repo /fast/scratch/hyaku/mori-r54/l1/controls/c2-two-sources fa9e03bd64a4f9cb2980c8565119faec1f8d87f3
+C2=unmet claims=14 located=14 quote_missing=0 bad_rows=0 sources=2 source_rows=ok pins=ok provenance=ok entailed=14 dissent=0 rev=fa9e03bd64a4f9cb2980c8565119faec1f8d87f3 failed=sources_floor
+exit=1

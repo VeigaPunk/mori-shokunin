@@ -1,0 +1,5 @@
+control: c1 copies-only
+note: entering tip + the frozen copies and counters, no ledger, rows or votes (the freeze state)
+command: python3 -B /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-54/count-c1.py --repo /fast/scratch/hyaku/mori-r54/l1/controls/c1-do-nothing a6888a0735ad6b9c18b4bd1738ae64c83ace483e
+C1=unmet scope=31 rows=0 matched=0 status_ok=0 line_ok=0 quote_ok=0 source_rows=bad pins=ok provenance=bad held=0 absent=0 holds=0 changed=0 voted=0 dissent=0 rev=a6888a0735ad6b9c18b4bd1738ae64c83ace483e failed=ledger_absent
+exit=1

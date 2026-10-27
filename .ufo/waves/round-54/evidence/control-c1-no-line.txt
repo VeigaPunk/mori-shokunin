@@ -1,0 +1,5 @@
+control: c1 no-line
+note: the r53-style all-held relabel: every row held with its v7.2 quote and votes, but no located v7.3 line
+command: python3 -B /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-54/count-c1.py --repo /fast/scratch/hyaku/mori-r54/l1/controls/c1-no-line e79f525f1c359f4d40c3209006e5a2d42b2ef1ec
+C1=unmet scope=31 rows=31 matched=31 status_ok=31 line_ok=0 quote_ok=31 source_rows=ok pins=ok provenance=ok held=31 absent=0 holds=31 changed=0 voted=31 dissent=0 rev=e79f525f1c359f4d40c3209006e5a2d42b2ef1ec failed=line
+exit=1

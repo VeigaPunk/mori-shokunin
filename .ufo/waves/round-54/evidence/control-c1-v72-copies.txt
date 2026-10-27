@@ -1,0 +1,5 @@
+control: c1 v72-copies
+note: the committed v7.2 bytes presented as the v7.3 copies (errno.h is byte-identical across the tags), ledger, rows and votes derived from them
+command: python3 -B /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-54/count-c1.py --repo /fast/scratch/hyaku/mori-r54/l1/controls/c1-v72-copies 34b544d8b64576e4ff900dca7547ff96ffe4225e
+C1=unmet scope=31 rows=31 matched=31 status_ok=31 line_ok=31 quote_ok=31 source_rows=ok pins=bad provenance=ok held=31 absent=0 holds=31 changed=0 voted=31 dissent=0 rev=34b544d8b64576e4ff900dca7547ff96ffe4225e failed=pins
+exit=1

@@ -1,0 +1,5 @@
+control: c2 copies-only
+note: entering tip + frozen copies and counters, no entry or rows (the freeze state)
+command: python3 -B /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-54/count-c2.py --repo /fast/scratch/hyaku/mori-r54/l1/controls/c2-do-nothing ed10983d3912b9f703f72e836936742e851612a4
+C2=unmet claims=0 located=0 quote_missing=0 bad_rows=0 sources=0 source_rows=bad pins=ok provenance=bad entailed=0 dissent=0 rev=ed10983d3912b9f703f72e836936742e851612a4 failed=entry_absent
+exit=1

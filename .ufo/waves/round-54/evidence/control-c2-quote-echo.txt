@@ -1,0 +1,5 @@
+control: c2 quote-echo
+note: every claim cell is its quote plus one word (no reading beyond the bytes), rows and votes present
+command: python3 -B /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-54/count-c2.py --repo /fast/scratch/hyaku/mori-r54/l1/controls/c2-quote-echo bd730353b60f900591bd8e38a691d042830b285c
+C2=unmet claims=14 located=0 quote_missing=0 bad_rows=14 sources=0 source_rows=bad pins=ok provenance=bad entailed=0 dissent=0 rev=bd730353b60f900591bd8e38a691d042830b285c failed=bad_rows,entailment,provenance,source_rows,sources_floor
+exit=1

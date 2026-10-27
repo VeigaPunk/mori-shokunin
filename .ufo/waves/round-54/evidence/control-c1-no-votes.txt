@@ -1,0 +1,5 @@
+control: c1 no-votes
+note: ledger and rows, no voter; the data commit before the wave must read this
+command: python3 -B /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-54/count-c1.py --repo /fast/scratch/hyaku/mori-r54/l1/controls/c1-no-votes 9c52523be102fd36a618116290e346b7b1a3e91e
+C1=unmet scope=31 rows=31 matched=31 status_ok=31 line_ok=31 quote_ok=31 source_rows=ok pins=ok provenance=ok held=31 absent=0 holds=31 changed=0 voted=0 dissent=0 rev=9c52523be102fd36a618116290e346b7b1a3e91e failed=votes
+exit=1

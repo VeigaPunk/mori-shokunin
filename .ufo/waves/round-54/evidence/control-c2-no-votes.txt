@@ -1,0 +1,5 @@
+control: c2 no-votes
+note: entry and rows, no voter; the data commit before the wave must read this
+command: python3 -B /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-54/count-c2.py --repo /fast/scratch/hyaku/mori-r54/l1/controls/c2-no-votes c3a724f9cd7f1125fbde78f6f4c4908fee028f9e
+C2=unmet claims=14 located=14 quote_missing=0 bad_rows=0 sources=6 source_rows=ok pins=ok provenance=ok entailed=0 dissent=0 rev=c3a724f9cd7f1125fbde78f6f4c4908fee028f9e failed=entailment
+exit=1

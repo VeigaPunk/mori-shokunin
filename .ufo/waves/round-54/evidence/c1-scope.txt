@@ -1,0 +1,33 @@
+h=4aab78fbca9c entry=corpus/knowledge/commit-runway-read-r53.md path=include/linux/percpu_counter.h quote=s64 ret = READ_ONCE(fbc->count); if (ret >= 0) return ret; return 0;
+h=c8fb3a4fb56f entry=corpus/knowledge/commit-runway-read-r53.md path=lib/percpu_counter.c quote=if (unlikely(abs(count + amount) >= batch)) { raw_spin_lock_irqsave(&fbc->lock, flags);
+h=0d09a65619e5 entry=corpus/knowledge/commit-runway-read-r53.md path=mm/mm_init.c quote=s32 nr = num_present_cpus(); s32 batch = max_t(s32, nr*2, 32);
+h=47887dc7067f entry=corpus/knowledge/commit-runway-read-r53.md path=mm/mm_init.c quote=For policy OVERCOMMIT_NEVER, set batch size to 0.4% of * (total memory/#cpus), and lift it to 25% for other policies
+h=da4075a0131e entry=corpus/knowledge/commit-runway-read-r53.md path=mm/mm_init.c quote=if (overcommit_policy == OVERCOMMIT_NEVER) memsized_batch = min_t(u64, ram_pages/nr/256, INT_MAX);
+h=196504e1a96c entry=corpus/knowledge/commit-runway-read-r53.md path=mm/util.c quote=1. changing the batch * 2. sync percpu count on each CPU * 3. switch the policy
+h=3b7ff65291be entry=corpus/knowledge/commit-runway-read-r53.md path=mm/util.c quote=unsigned long vm_memory_committed(void) { return percpu_counter_sum_positive(&vm_committed_as); }
+h=646b97a23371 entry=corpus/knowledge/commit-runway-read-r53.md path=mm/util.c quote=if (percpu_counter_read_positive(&vm_committed_as) < allowed) return 0;
+h=07524a78c749 entry=corpus/knowledge/oom-memcg-stat-r50.md path=docs:admin-guide/cgroup-v2.html quote=All memory amounts are in bytes. If a value which is not aligned to PAGE_SIZE is written,
+h=202158f50bb3 entry=corpus/knowledge/oom-memcg-stat-r50.md path=docs:admin-guide/cgroup-v2.html quote=anon Amount of memory used in anonymous mappings such as brk() , sbrk() , and mmap(MAP_ANONYMOUS).
+h=41496ae6cbe1 entry=corpus/knowledge/oom-memcg-stat-r50.md path=docs:admin-guide/cgroup-v2.html quote=The number of processes belonging to this cgroup killed by any kind of OOM killer.
+h=460b0cafc999 entry=corpus/knowledge/oom-memcg-stat-r50.md path=docs:admin-guide/cgroup-v2.html quote=Don’t rely on items remaining in a fixed position; use the keys to look up specific values!
+h=51390e34b4d7 entry=corpus/knowledge/oom-memcg-stat-r50.md path=docs:admin-guide/cgroup-v2.html quote=shmem Amount of cached filesystem data that is swap-backed, such as tmpfs, shm segments, shared anonymous mmap()s
+h=ed03d041e844 entry=corpus/knowledge/oom-memcg-stat-r50.md path=docs:admin-guide/cgroup-v2.html quote=kernel (npn) Amount of total kernel memory, including (kernel_stack, pagetables, percpu, vmalloc, slab) in addition to other kernel memory use cases.
+h=fd3728bdc6d6 entry=corpus/knowledge/oom-memcg-stat-r50.md path=docs:admin-guide/cgroup-v2.html quote=file Amount of memory used to cache filesystem data, including tmpfs and shared memory.
+h=0145725d3c6c entry=corpus/knowledge/oom-memcg-stat-r50.md path=mm/memcontrol.c quote=seq_buf_init(&s, buf, SEQ_BUF_SIZE); memory_stat_format(memcg, &s); seq_puts(m, buf);
+h=16a3733a5002 entry=corpus/knowledge/oom-memcg-stat-r50.md path=mm/memcontrol.c quote=seq_buf_init(&s, buf, SEQ_BUF_SIZE); memory_stat_format(memcg, &s); seq_buf_do_printk(&s, KERN_INFO);
+h=26b9666a61be entry=corpus/knowledge/oom-memcg-stat-r50.md path=mm/memcontrol.c quote=if (p) { pr_cont(",task_memcg="); pr_cont_cgroup_path(task_cgroup(p, memory_cgrp_id)); }
+h=90f96cf997c2 entry=corpus/knowledge/oom-memcg-stat-r50.md path=mm/memcontrol.c quote=if (cgroup_subsys_on_dfl(memory_cgrp_subsys)) memory_failcnt = atomic_long_read(&memcg->memory_events[MEMCG_MAX]); else memory_failcnt = memcg->memory.failcnt;
+h=a4965056de62 entry=corpus/knowledge/oom-memcg-stat-r50.md path=mm/memcontrol.c quote=pr_info("swap: usage %llukB, limit %llukB, failcnt %lu\n",
+h=adf25120cfe8 entry=corpus/knowledge/oom-memcg-stat-r50.md path=mm/memcontrol.c quote=pr_info("Tasks in "); pr_cont_cgroup_path(memcg->css.cgroup); pr_cont(" are going to be killed due to memory.oom.group set\n");
+h=de58513701cb entry=corpus/knowledge/oom-memcg-stat-r50.md path=mm/memcontrol.c quote=if (memcg) { pr_cont(",oom_memcg="); pr_cont_cgroup_path(memcg->css.cgroup); } else pr_cont(",global_oom");
+h=f5626c899cea entry=corpus/knowledge/oom-memcg-stat-r50.md path=mm/memcontrol.c quote=pr_info("memory: usage %llukB, limit %llukB, failcnt %lu\n",
+h=0aa4618b2166 entry=corpus/knowledge/oom-memcg-stat-r50.md path=mm/oom_kill.c quote=/* one line summary of the oom killer context. */ pr_info("oom-kill:constraint=%s,nodemask=%*pbl", oom_constraint_text[oc->constraint], nodemask_pr_args(oc->nodemask));
+h=3a75d41492ad entry=corpus/knowledge/oom-memcg-stat-r50.md path=mm/oom_kill.c quote=pr_err("%s: Killed process %d (%s) total-vm:%lukB, anon-rss:%lukB, file-rss:%lukB, shmem-rss:%lukB, UID:%u pgtables:%lukB oom_score_adj:%d\n",
+h=53d8f38c2827 entry=corpus/knowledge/oom-memcg-stat-r50.md path=mm/oom_kill.c quote=oom_kill_process(oc, !is_memcg_oom(oc) ? "Out of memory" : "Memory cgroup out of memory");
+h=b962596a058b entry=corpus/knowledge/oom-memcg-stat-r50.md path=mm/oom_kill.c quote=if (__ratelimit(&oom_rs)) { dump_header(oc); dump_oom_victim(oc, victim); }
+h=d6bf02678216 entry=corpus/knowledge/oom-memcg-stat-r50.md path=mm/oom_kill.c quote=pr_info("Tasks state (memory values in pages):\n"); pr_info("[ pid ] uid tgid total_vm rss rss_anon rss_file rss_shmem pgtables_bytes swapents oom_score_adj name\n");
+h=e4e93c6a050c entry=corpus/knowledge/oom-memcg-stat-r50.md path=mm/oom_kill.c quote=/* Raise event before sending signal: task reaper must see this */ count_vm_event(OOM_KILL); memcg_memory_event_mm(mm, MEMCG_OOM_KILL);
+h=fdc2273230e1 entry=corpus/knowledge/oom-memcg-stat-r50.md path=mm/oom_kill.c quote=if (is_memcg_oom(oc)) mem_cgroup_print_oom_meminfo(oc->memcg); else { __show_mem(SHOW_MEM_FILTER_NODES, oc->nodemask, gfp_zone(oc->gfp_mask));
+h=687e03745cd9 entry=corpus/knowledge/quota-observability-r48.md path=include/uapi/asm-generic/errno.h quote=#define EDQUOT 122 /* Quota exceeded */
+scope=31
+exit=0

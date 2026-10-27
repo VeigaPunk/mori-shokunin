@@ -1,0 +1,5 @@
+control: c1 witness
+note: feasibility only: c1data.py ledger and rows plus two synthetic voters listed in a fixture results file
+command: python3 -B /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-54/count-c1.py --repo /fast/scratch/hyaku/mori-r54/l1/controls/c1-witness f5b7a8c9222bc5380d92562108c736afb5a51dbf
+C1=met scope=31 rows=31 matched=31 status_ok=31 line_ok=31 quote_ok=31 source_rows=ok pins=ok provenance=ok held=31 absent=0 holds=31 changed=0 voted=31 dissent=0 rev=f5b7a8c9222bc5380d92562108c736afb5a51dbf
+exit=0

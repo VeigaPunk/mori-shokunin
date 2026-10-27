@@ -1,0 +1,37 @@
+# round-54 sweeps (L1 MoriR54, 2026-10-27, before freeze)
+
+$ git ls-remote https://github.com/torvalds/linux refs/tags/v7.3 refs/tags/v7.3^{}
+091b06388b117fefdcb63336ac09956a4914b961	refs/tags/v7.3
+c03c1a14507dfaf8b856c2608f9ac216021fc222	refs/tags/v7.3^{}
+
+$ git grep -ilE "memory.failure|hwpoison|HardwareCorrupted|BUS_MCEERR" 39dcf4d7 -- corpus/knowledge SKILL.md PROVINCE.md tools
+39dcf4d7:corpus/knowledge/kernel-v7.3-recheck-r53.md
+(exit=0)
+
+$ git grep -cE "memory_failure|hwpoison" 39dcf4d7 -- corpus/knowledge/kernel-v7.3-recheck-r53.md
+39dcf4d7:corpus/knowledge/kernel-v7.3-recheck-r53.md:2
+(exit=0)
+
+$ grep -n panic_on_unrecoverable corpus/SOURCES.md (the round-53 lead)
+286:| S507 | Linux Documentation/admin-guide/sysctl/vm.rst at tag v7.3 — https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/Documentation/admin-guide/sysctl/vm.rst?h=v7.3 | doc
+353:- (round 53) `panic_on_unrecoverable_memory_failure`, new in v7.3 `Documentation/admin-guide/sysctl/vm.rst` (S507 copy) — a kill/panic surface for mori's kill-event frontier; `mm/memory-failure.
+
+$ uname -r; host memory-failure surfaces (read-only)
+7.2.11-arch1-1
+/sys/devices/system/node/node0/memory_failure/delayed:0
+/sys/devices/system/node/node0/memory_failure/failed:0
+/sys/devices/system/node/node0/memory_failure/ignored:0
+/sys/devices/system/node/node0/memory_failure/recovered:0
+/sys/devices/system/node/node0/memory_failure/total:0
+HardwareCorrupted:     0 kB
+memory_failure_early_kill: 0
+memory_failure_recovery: 1
+enable_soft_offline: 1
+panic_on_unrecoverable_memory_failure: cat: /proc/sys/vm/panic_on_unrecoverable_memory_failure: No such file or directory
+
+$ assimilation sweep: grep -rliE "memory.failure|hwpoison|SIGBUS|memcontrol|percpu_counter|EDQUOT|v7\.3" /home/vgpnk/Projects/shokuknow/merge/mori | wc -l
+0
+
+$ registry ids before append: last id
+S514
+287

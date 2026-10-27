@@ -1,0 +1,5 @@
+control: c2 do-nothing
+note: the entering tip itself (no entry, no copies)
+command: python3 -B /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-54/count-c2.py --repo /fast/scratch/hyaku/mori-r54/l1/controls/c2-do-nothing 39dcf4d7e410d362781a47e8365ca23b5c807598
+C2=unmet claims=0 located=0 quote_missing=0 bad_rows=0 sources=0 source_rows=bad pins=bad provenance=bad entailed=0 dissent=0 rev=39dcf4d7e410d362781a47e8365ca23b5c807598 failed=entry_absent,pins
+exit=1

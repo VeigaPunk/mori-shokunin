@@ -1,0 +1,5 @@
+control: c2 unlocated
+note: claims and votes present, every quote paraphrased (words reordered) so none is located
+command: python3 -B /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-54/count-c2.py --repo /fast/scratch/hyaku/mori-r54/l1/controls/c2-unlocated 1fc152046ba032e896c8dfeb3fe42f54810854e5
+C2=unmet claims=14 located=0 quote_missing=14 bad_rows=0 sources=0 source_rows=ok pins=ok provenance=ok entailed=14 dissent=0 rev=1fc152046ba032e896c8dfeb3fe42f54810854e5 failed=quote_missing,sources_floor
+exit=1
