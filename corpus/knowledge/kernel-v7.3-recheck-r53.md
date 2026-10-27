@@ -25,8 +25,8 @@ commit patch, which no release changes) is read again against the same path at v
 |---|---|---|
 | `fs/proc/meminfo.c`, `Documentation/mm/overcommit-accounting.rst`, `include/linux/mman.h` | byte-identical (same sha256) | — |
 | `Documentation/filesystems/proc.rst` | 3 changed lines | outside the meminfo field definitions |
-| `mm/show_mem.c` | 22 changed lines | an include, `const nodemask_t *` parameters, printk units (`%luKB` → `%lukB`), two printk format-specifier flips (`%ld`/`%lu`) and one `(unsigned long)` cast; `si_mem_available` untouched |
-| `include/linux/mm_inline.h` | 49 changed lines (57 added+removed) | removal of the uffd-wp pte helper and two `memdesc_section(&cur_page->flags)` call sites; `folio_is_file_lru` untouched |
+| `mm/show_mem.c` | 22 changed lines | an include, `const nodemask_t *` parameters, printk units (`%luKB`/`%ukB` → `%lukB`), two printk format-specifier flips (`%ld`/`%lu`) and one `(unsigned long)` cast; `si_mem_available` untouched |
+| `include/linux/mm_inline.h` | 49 changed lines (57 added+removed) | removal of the uffd-wp pte helper and two call sites rewritten to `memdesc_section(&cur_page->flags)`; `folio_is_file_lru` untouched |
 | `Documentation/admin-guide/sysctl/vm.rst` | 64 changed lines (83 added+removed) | a new `panic_on_unrecoverable_memory_failure` section and index line; a dropped `mm/swap.c` pointer |
 | `mm/util.c` | 14 changed lines | `vm_mmap_pgoff` (`EMPTY_VMA_FLAGS`), the shadow-stack helper (`vm_flags_t` → `vma_flags_t`), and two `vma->vm_pgoff` → `vma_start_pgoff(vma)` conversions (`compat_set_desc_from_vma`, `call_vma_mapped`); `vm_commit_limit`, `__vm_enough_memory` untouched |
 | `mm/mmap.c` | 190 changed lines (205 added+removed) | the `vm_flags_t` → `vma_flags_t` conversion including the `MAP_NORESERVE` block, the `mm_get_unmapped_area_vmflags` → `mm_get_unmapped_area_vmaflags` rename, and the removal of `__install_special_mapping` from this file (38 lines) |

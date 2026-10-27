@@ -1,0 +1,56 @@
+{
+ "lane": "mori",
+ "round": 53,
+ "wave": "a2r1",
+ "seats": 8,
+ "results": [
+  {
+   "name": "Mo53a2RevLedgerProse",
+   "agent": "reviewer",
+   "output": "{\n  \"summary\": \"Reviewed target prose at 34d97cd3eaea8c13b0f065afc52aac1e5cf518a5. Found two LOW issues: omitted show_mem.c local_pcp format change and ambiguous mm_inline.h call-site description. Counts, tag prefix, untouched functions, and rows 34/37 statement checked out.\",\n  \"report\": \".ufo/waves/round-53/a2r1/Mo53a2RevLedgerProse.md\",\n  \"scratch_removed\": true\n}",
+   "note": null
+  },
+  {
+   "name": "Mo53a2RevToolPostWave",
+   "agent": "reviewer",
+   "output": "{\n  \"findings\": [],\n  \"report\": \"mori-shokunin/.ufo/waves/round-53/a2r1/Mo53a2RevToolPostWave.md\",\n  \"scratch\": \"removed\",\n  \"summary\": \"No actionable findings. Selftest passed 31/31; live read exited 0 with no write syscalls detected; FIFO, oversize, non-ASCII, overlapping CPU ranges, page bounds, and symlink-loop probes returned COMMIT_UNKNOWN as intended.\"\n}",
+   "note": null
+  },
+  {
+   "name": "Mo53a2CritBandEntry",
+   "agent": "critic",
+   "output": "{\n  \"counterexample\": \"Review found overclaims about a universal signed per-CPU band, CPU hotplug conflating the generic counter batch with vm_committed_as_batch, omitted initialization recomputation, broad mode-0 refusal wording, reserve modeling, and the scope of the v7.3 comparison.\",\n  \"evidence\": \"Read source copies for mm_init.c v7.2, percpu_counter.c v7.2, percpu_counter.h v7.2, mman.h v7.3, and util.c v7.2; inspected target entry and SKILL Round53 at the requested revision. Exact replacements and observed commands are in the report.\",\n  \"impacted_axes\": [\n    \"calibration\",\n    \"depth\",\n    \"freshness\",\n    \"coverage\"\n  ],\n  \"smallest_safe_correction\": \"Clarify the stable-batch bound and transition limits; distinguish generic from VM-specific batch refresh; include init; qualify mode-0 as a per-request accounting check; identify reserves as a conservative model; narrow S514 to the compared function body.\",\n  \"report\": \".ufo/waves/round-53/a2r1/Mo53a2CritBandEntry.md\",\n  \"scratch_removed\": true\n}",
+   "note": null
+  },
+  {
+   "name": "Mo53a2RevSourcesAnchors",
+   "agent": "reviewer",
+   "output": "{\n  \"findings\": [\n    {\n      \"severity\": \"LOW\",\n      \"file\": \"corpus/SOURCES.md S502\u2013S514; corpus/lessons/round-53.md Gate\",\n      \"detail\": \"SHA prefixes and used-by citations match; census validation exited 0 with 23 W04 warnings and no E findings. Full anchor-range and located-quote line verification remains UNVERIFIED; no mismatch established.\"\n    }\n  ],\n  \"report\": \"mori-shokunin/.ufo/waves/round-53/a2r1/Mo53a2RevSourcesAnchors.md\",\n  \"scratch_removed\": true\n}",
+   "note": null
+  },
+  {
+   "name": "Mo53a2RevQuality",
+   "agent": "reviewer",
+   "output": "{\n  \"report_path\": \".ufo/waves/round-53/a2r1/Mo53a2RevQuality.md\",\n  \"findings\": [\n    {\n      \"severity\": \"LOW\",\n      \"file\": \"corpus/lessons/round-53.md\",\n      \"lines\": \"109-111\",\n      \"detail\": \"M2 wording says the `grep -rl` probe finds '0 hits in the other 41 of 42 mori reports'; -rl counts matching files, while line-level grep finds two occurrences (lines 5 and 46) in the round-52 report. The 41/42 historical denominator was not reproducible from the current fleet-root .ufo/reports tree with the stated command. Suggested correction: state that grep -rl returns the round-52 report path and no other matching paths, that line-level grep finds its two occurrences, and that the 41/42 denominator is historical.\"\n    }\n  ],\n  \"verification_summary\": [\n    {\n      \"criterion\": \"QUALITY 144\",\n      \"lesson_backed\": true,\n      \"checkable\": true,\n      \"shown_able_to_fail_holds\": true,\n      \"notes\": \"Counter invocation and control receipts (do-nothing, all-held, v72-copies, no-votes) match cited results; trigger-prose limitation named.\"\n    },\n    {\n      \"criterion\": \"QUALITY 145\",\n      \"lesson_backed\": true,\n      \"checkable\": true,\n      \"shown_able_to_fail_holds\": true,\n      \"notes\": \"mode-blind/no-band/memoriser receipts carry the cited disagree counts; fake PASS 12/12 selftest does not rescue them; mode-0 live coverage named.\"\n    },\n    {\n      \"criterion\": \"QUALITY 146\",\n      \"lesson_backed\": true,\n      \"checkable\": true,\n      \"shown_able_to_fail_holds\": true,\n      \"notes\": \"Round-52 row 2746 (42/27) vs receipt (43/28) confirmed; appended correction accurate. Round-53 self-application clean: C1 After cell matches c1-at-salvage.txt field-for-field; C2 After cell (n=31, 80/80) matches c2-at-salvage.txt. No tally mismatch.\"\n    },\n    {\n      \"criterion\": \"QUALITY 147\",\n      \"lesson_backed\": true,\n      \"checkable\": \"partly\",\n      \"shown_able_to_fail_holds\": true,\n      \"notes\": \"Round-52 report shows exactly the two cited [FILL] positions (lines 5, 46) by line-level grep; grep -rl returns one matching file. Round-53 positive arm unverifiable until that fleet report is committed (criterion already states this).\"\n    }\n  ],\n  \"unverified\": [\n    \"41-of-42 mori reports denominator (historical; not reproduced)\",\n    \"round-53 report's own commit-command arm (report not yet committed at review time)\"\n  ],\n  \"scratch\": \"removed\",\n  \"tool_installs\": \"none\",\n  \"notes\": \"LSP device unavailable (xd://lsp: No such tool); evidence is revision-pinned reads and rerun probes, not LSP semantic checks.\"\n}",
+   "note": null
+  },
+  {
+   "name": "Mo53a2CritDrafts",
+   "agent": "critic",
+   "output": "{\n  \"findings\": [\n    {\n      \"severity\": \"HIGH\",\n      \"file\": \"LOG.md:2860-2866\",\n      \"summary\": \"C1/C2 landed receipts and census-end receipt cited but absent at reviewed revision; census end UNVERIFIED.\"\n    },\n    {\n      \"severity\": \"MED\",\n      \"file\": \"corpus/README.md:754-755\",\n      \"summary\": \"After-counter citation must not claim absent landed C2 receipt; use salvaged evidence with explicit state or defer.\"\n    },\n    {\n      \"severity\": \"MED\",\n      \"file\": \"PROVINCE.md:451-453\",\n      \"summary\": \"Tsukuroi ownership assertion for commit-refusal fault attribution is not established; remove attribution or cite authority.\"\n    },\n    {\n      \"severity\": \"LOW\",\n      \"file\": \"SHONEN.md:6\",\n      \"summary\": \"LOG heading pointer is too shallow to substantiate cited result; use body lines.\"\n    }\n  ],\n  \"report\": \".ufo/waves/round-53/a2r1/Mo53a2CritDrafts.md\",\n  \"scratch_removed\": true\n}",
+   "note": null
+  },
+  {
+   "name": "Mo53a2RevScorecard",
+   "agent": "reviewer",
+   "output": "{\n  \"summary\": \"No actionable HIGH/MED findings. Both round-53 counters remain met; the Round-52 correction and Round-53 count rows match cited receipts, and the capability row has a passing demonstration. One LOW traceability note: Planned (round 54) routes MED frozen-counter weaknesses by pointing to the lesson rather than enumerating them. Report: `.ufo/waves/round-53/a2r1/Mo53a2RevScorecard.md`. Scratch removed.\"\n}",
+   "note": null
+  },
+  {
+   "name": "Mo53a2CritNoHarm",
+   "agent": "critic",
+   "output": "{\n  \"summary\": \"LOW finding: documented bare pin-check command lacks required --rev/--root, so normal invocation exits setup rc 2. Standing pin/unlanded and r53 runway/census selftests passed; no adjacency harm found in reviewed round-53 text. Broader calibration is UNVERIFIED.\",\n  \"report\": \".ufo/waves/round-53/a2r1/Mo53a2CritNoHarm.md\",\n  \"scratch\": \"Removed via EXIT trap.\"\n}",
+   "note": null
+  }
+ ]
+}

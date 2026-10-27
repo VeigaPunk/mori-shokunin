@@ -257,7 +257,8 @@ mutation-tester 3, sentinel 4, scout 2, connector 2, scribe 10, revenger 1, simp
 flash-eligible 36/67 at spawn). Twelve RECHECK voters (`Mo53Fr01`–`Mo53Fr12`, three per block of 11-12 rows). The
 L1 held the planner seat. The operator changed the role routing mid-round (executor → `@m_mim`, critic/connector →
 `@m_kfc`, then connector → `@m_antigravity`, scout → `@m_kfc`); a seat keeps the model it was spawned with.
-Residual calls: 0. Round total: 67.
+Attempt 1: residual calls 0, 67 seats (1 dead: `Mo53RevLedgerProse`, no output, no report). Attempt 2: one residual
+call `a2r1` of 8 seats (5 reviewer, 3 critic; 0 dead). Round total: 75.
 
 ## Attempt 2 (L1 MoriR53a2) — salvage re-verification
 
@@ -280,3 +281,27 @@ re-verifying it:
 - Attempt 2 adds: the SCORECARD round-52 correction line and the round-53 section (Mo53ScribeScorecard's drafts,
   After cells from the at-salvage receipts so that each row's numbers are those of the receipt it cites — QUALITY
   146), M6 above, this section.
+
+### Residual call a2r1 — integrated findings
+
+Eight seats (5 reviewer, 3 critic; `.ufo/waves/round-53/a2r1/`, `a2r1-results.json`), all settled with reports.
+
+- Fixed (`7b90a3c6` and the final integration commit): `Mo53a2CritBandEntry` MED×3/LOW×2 — the band bound holds
+  while the batch is stable; `vm_committed_as_batch` is computed at boot (`mm_init.c.v7.2:226-233`), on memory
+  online/offline and on a policy write, while a dying CPU recomputes only the generic `percpu_counter_batch`
+  (`percpu_counter.c.v7.2:258-283`, checked against the copy — the old sentence "CPU hotplug does not" was wrong for
+  the generic batch); mode 0 is a per-request accounting check; reserves are a conservative model; S514 covers
+  `mm_compute_batch` only; the refusal/admission direction depends on the caller's `allowed`. `Mo53a2CritDrafts`
+  HIGH×2 — LOG cited `c1-at-landed.txt`, `c2-at-landed.txt` and `census-end.txt`, absent at `34d97cd3`: LOG now names
+  the at-salvage receipts and the at-landed re-runs, which land with this round; MED — PROVINCE no longer assigns
+  commit-refusal fault attribution to tsukuroi; LOW — SHONEN pointers. `Mo53a2RevQuality` LOW — M2's probe wording
+  (one file listed, two lines, 42 reports re-counted). `Mo53a2RevLedgerProse` LOW×2 — the change table's
+  `show_mem.c` cell gains the `local_pcp:%ukB` → `%lukB` change and the `mm_inline.h` cell says the two call sites
+  were rewritten, not removed (both checked by `diff` of the copies).
+- No change, stated: `Mo53a2RevToolPostWave` found no regression in the post-wave tool and fixtures;
+  `Mo53a2RevScorecard` found the round-52 correction and the round-53 cells match their receipts (LOW: Planned
+  (round 54) points to the lesson for the counter weaknesses rather than listing them); `Mo53a2CritNoHarm` found no
+  HIGH/MED harm (its LOW — `mori-pin-check.py` without `--rev` exits 2 — is the documented interface,
+  `SKILL.md:938`; the L1 ran it with `--rev`: `PIN_CHECK=met tally_pins=37 … mismatches=0` at `7b90a3c6`, 36 at the
+  entering tip); `Mo53a2RevSourcesAnchors` left full anchor-range resolution UNVERIFIED (no mismatch asserted) — so
+  the S502–S514 anchor corrections rest on `w1/Mo53ExecAnchorCheck.md` alone, a named limit.
