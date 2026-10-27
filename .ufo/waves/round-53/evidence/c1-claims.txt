@@ -1,0 +1,186 @@
+# round-53 C1 scope: ledger row number, hash, entry, v7.2 path, claim text (read at entering tip 20edafa5)
+# $ python3 .ufo/waves/round-53/count-c1.py --scope   (hashes and quotes); claim text from the same parse
+
+row=1 h=2d0daa4192f1 entry=corpus/knowledge/memavailable-estimate-r51.md path=Documentation/filesystems/proc.rst
+  claim: The proc documentation defines MemAvailable as an estimate for starting new applications, not as a count of free pages.
+  v7.2 quote: An estimate of how much memory is available for starting new applications, without swapping.
+
+row=2 h=72cdbee44353 entry=corpus/knowledge/memavailable-estimate-r51.md path=Documentation/filesystems/proc.rst
+  claim: The Cached line of /proc/meminfo counts tmpfs and shmem pages together with ordinary file page cache.
+  v7.2 quote: In-memory cache for files read from the disk (the pagecache) as well as tmpfs & shmem.
+
+row=3 h=a9cf30c5ed71 entry=corpus/knowledge/memavailable-estimate-r51.md path=Documentation/filesystems/proc.rst
+  claim: The Shmem line reports the memory held by shared memory segments and tmpfs files as one figure.
+  v7.2 quote: Total memory used by shared memory (shmem) and tmpfs
+
+row=4 h=ad57d1b66582 entry=corpus/knowledge/memavailable-estimate-r51.md path=Documentation/filesystems/proc.rst
+  claim: The documentation itself warns that how much cache and slab is really reclaimable differs between machines, so the figure is a model rather than a measurement.
+  v7.2 quote: The impact of those factors will vary from system to system.
+
+row=5 h=eba2b78b47f3 entry=corpus/knowledge/memavailable-estimate-r51.md path=Documentation/filesystems/proc.rst
+  claim: The documentation names the inputs of that estimate as free memory, reclaimable slab, the file LRU list sizes and each zone's low watermark.
+  v7.2 quote: Calculated from MemFree, SReclaimable, the size of the file LRU lists, and the low watermarks in each zone.
+
+row=6 h=357c747c23d2 entry=corpus/knowledge/memavailable-estimate-r51.md path=fs/proc/meminfo.c
+  claim: MemFree prints the sysinfo free count while MemAvailable prints the separately computed estimate, as two adjacent lines.
+  v7.2 quote: show_val_kb(m, "MemFree: ", i.freeram); show_val_kb(m, "MemAvailable: ", available);
+
+row=7 h=6c2327e19df1 entry=corpus/knowledge/memavailable-estimate-r51.md path=fs/proc/meminfo.c
+  claim: The meminfo printer defines one helper that shifts its argument by PAGE_SHIFT minus 10 and writes the kB suffix.
+  v7.2 quote: seq_put_decimal_ull_width(m, s, num << (PAGE_SHIFT - 10), 8); seq_write(m, " kB\n", 4);
+
+row=8 h=7e14f1771092 entry=corpus/knowledge/memavailable-estimate-r51.md path=fs/proc/meminfo.c
+  claim: The Cached figure is computed from all file pages minus swap cache and buffers, and clamped at zero if negative.
+  v7.2 quote: cached = global_node_page_state(NR_FILE_PAGES) - total_swapcache_pages() - i.bufferram;
+
+row=9 h=8f6d04247472 entry=corpus/knowledge/memavailable-estimate-r51.md path=include/linux/mm_inline.h
+  claim: The file LRU lists hold regular filesystem page cache and also anonymous pages lazily freed through MADV_FREE.
+  v7.2 quote: 1 if @folio is a regular filesystem backed page cache folio * or a lazily freed anonymous folio (e.g. via MADV_FREE).
+
+row=10 h=d6001a798ea7 entry=corpus/knowledge/memavailable-estimate-r51.md path=include/linux/mm_inline.h
+  claim: The LRU sorting helper returns zero for tmpfs folios, which places them on an anon LRU list instead of a file list.
+  v7.2 quote: 0 if @folio is a normal anonymous folio, a tmpfs folio or otherwise * ram or swap backed folio.
+
+row=11 h=0a908e8eb4f3 entry=corpus/knowledge/memavailable-estimate-r51.md path=mm/show_mem.c
+  claim: The estimate begins with the free page count minus totalreserve_pages, then adds file cache and reclaimable slab.
+  v7.2 quote: without causing swapping or OOM. */ available = global_zone_page_state(NR_FREE_PAGES) - totalreserve_pages;
+
+row=12 h=1b9c863ec2c2 entry=corpus/knowledge/memavailable-estimate-r51.md path=mm/show_mem.c
+  claim: The kernel's stated reason for holding cache back is that freeing all of it would drive the system into swapping or thrashing.
+  v7.2 quote: Not all the page cache can be freed, otherwise the system will * start swapping or thrashing.
+
+row=13 h=40b46a312e03 entry=corpus/knowledge/memavailable-estimate-r51.md path=mm/show_mem.c
+  claim: The watermark used for both holdbacks is the low watermark summed over every memory zone of the machine.
+  v7.2 quote: struct zone *zone; for_each_zone(zone) wmark_low += low_wmark_pages(zone);
+
+row=14 h=58ba82f481b8 entry=corpus/knowledge/memavailable-estimate-r51.md path=mm/show_mem.c
+  claim: The holdback on that kernel term exists because some reclaimable slab objects are still in use and cannot be freed.
+  v7.2 quote: Part of the reclaimable slab and other kernel memory consists of * items that are in use, and cannot be freed.
+
+row=15 h=6b8f33ed528e entry=corpus/knowledge/memavailable-estimate-r51.md path=mm/show_mem.c
+  claim: From that file cache the code withholds the smaller of half the cache and the summed low watermarks, then adds the remainder.
+  v7.2 quote: pagecache -= min(pagecache / 2, wmark_low); available += pagecache;
+
+row=16 h=6c8b6efc9731 entry=corpus/knowledge/memavailable-estimate-r51.md path=mm/show_mem.c
+  claim: Only the active and inactive file LRU lists enter the estimate as page cache; nothing else that Cached counts is added.
+  v7.2 quote: cache, needs to stay. */ pagecache = global_node_page_state(NR_ACTIVE_FILE) + global_node_page_state(NR_INACTIVE_FILE);
+
+row=17 h=cbcd91de05ac entry=corpus/knowledge/memavailable-estimate-r51.md path=mm/show_mem.c
+  claim: Reclaimable slab and other reclaimable kernel memory are added under the same rule: withhold the smaller of half and the low watermark sum.
+  v7.2 quote: reclaimable -= min(reclaimable / 2, wmark_low); available += reclaimable;
+
+row=18 h=d901a2d666fb entry=corpus/knowledge/memavailable-estimate-r51.md path=mm/show_mem.c
+  claim: A negative result is clamped to zero, so the returned estimate is never negative when the reserves exceed everything counted.
+  v7.2 quote: if (available < 0) available = 0; return available;
+
+row=19 h=00e2a9db523b entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/admin-guide/sysctl/vm.rst
+  claim: Mode 2 also holds back a user reserve sized from the requesting process and capped by the user_reserve_kbytes knob.
+  v7.2 quote: When overcommit_memory is set to 2, "never overcommit" mode, reserve min(3% of current process size, user_reserve_kbytes) of free memory.
+
+row=20 h=35d642f1d0d9 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/admin-guide/sysctl/vm.rst
+  claim: Mode 1 never refuses an allocation on commit grounds; the kernel behaves as though memory were unlimited until it is exhausted.
+  v7.2 quote: When this flag is 1, the kernel pretends there is always enough memory until it actually runs out.
+
+row=21 h=43cf2a78acdd entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/admin-guide/sysctl/vm.rst
+  claim: In mode 0 a single request is compared with all RAM plus all swap, not with what is currently free.
+  v7.2 quote: When this flag is 0, the kernel compares the userspace memory request size against total memory plus swap and rejects obvious overcommits.
+
+row=22 h=5c40f6fa5c62 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/admin-guide/sysctl/vm.rst
+  claim: The kbytes and ratio knobs are mutually exclusive, so a ratio that reads 0 can simply mean the kbytes knob is in force.
+  v7.2 quote: Only one of them may be specified at a time. Setting one disables the other (which then appears as 0 when read).
+
+row=23 h=bfb15534fa5e entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/admin-guide/sysctl/vm.rst
+  claim: The admin reserve exists so that root can still log in and kill a runaway process when memory runs short.
+  v7.2 quote: That should provide enough for the admin to log in and kill a process, if necessary, under the default overcommit 'guess' mode.
+
+row=24 h=fcd0e7a78872 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/admin-guide/sysctl/vm.rst
+  claim: The ratio setting is a percentage cap on physical RAM that applies only in mode 2, with swap added on top.
+  v7.2 quote: When overcommit_memory is set to 2, the committed address space is not permitted to exceed swap plus this percentage of physical RAM.
+
+row=25 h=3b02f6680556 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/mm/overcommit-accounting.rst
+  claim: The documentation says the current limit and the committed amount are both published by the kernel for reading, as two meminfo lines.
+  v7.2 quote: The current overcommit limit and amount committed are viewable in
+
+row=26 h=3c2512af8468 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/mm/overcommit-accounting.rst
+  claim: The documentation says that under mode 2, in most situations, a process receives errors on memory allocation instead of being killed while touching pages.
+  v7.2 quote: in most situations this means a process will not be killed while accessing pages but will receive errors on memory allocation as appropriate.
+
+row=27 h=61b7677d56fe entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/mm/overcommit-accounting.rst
+  claim: Only under mode 2 is the committed total capped, at swap plus a share of RAM that defaults to one half.
+  v7.2 quote: The total address space commit for the system is not permitted to exceed swap + a configurable amount (default is 50%) of physical RAM.
+
+row=28 h=7b2fc298698e entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/mm/overcommit-accounting.rst
+  claim: The documentation still lists ptrace pages as unaccounted, so the committed total is not a complete ledger of every commitment.
+  v7.2 quote: To Do ===== * Account ptrace pages (this is hard)
+
+row=29 h=921c2e511e09 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/mm/overcommit-accounting.rst
+  claim: Under mode 2 a mapping request carrying MAP_NORESERVE is still charged against the commit limit.
+  v7.2 quote: In mode 2 the MAP_NORESERVE flag is ignored.
+
+row=30 h=9afaa81505da entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/mm/overcommit-accounting.rst
+  claim: Mode 0 is the default and refuses only allocations that are plainly too large, so it still lets the host overcommit.
+  v7.2 quote: Heuristic overcommit handling. Obvious overcommits of address space are refused. Used for a typical system.
+
+row=31 h=e37e65e64a4c entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/mm/overcommit-accounting.rst
+  claim: Shared and read-only file mappings add nothing to the committed total, because the file itself backs those pages.
+  v7.2 quote: SHARED or READ-only - 0 cost (the file is the map not swap)
+
+row=32 h=02f5bfd6be3b entry=corpus/knowledge/overcommit-commit-limit-r52.md path=include/linux/mman.h
+  claim: Charging the committed total is a batched add into a per-CPU counter, not a write to one global variable.
+  v7.2 quote: static inline void vm_acct_memory(long pages) { percpu_counter_add_batch(&vm_committed_as, pages, vm_committed_as_batch); }
+
+row=33 h=ff0d23e9fde8 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=include/linux/mman.h
+  claim: Releasing a commitment uses the same batched add with the page count negated.
+  v7.2 quote: static inline void vm_unacct_memory(long pages) { vm_acct_memory(-pages); }
+
+row=34 h=0fbd62f51ce8 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/mmap.c
+  claim: For ordinary mappings MAP_NORESERVE drops commit charging only when the mode is something other than never-overcommit.
+  v7.2 quote: We honor MAP_NORESERVE if allowed to overcommit */ if (sysctl_overcommit_memory != OVERCOMMIT_NEVER) vm_flags |= VM_NORESERVE;
+
+row=35 h=10ac5a250ac2 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/mmap.c
+  claim: At boot the user reserve knob starts at the smaller of one thirty-second of free memory in kB and the byte constant SZ_128K - 128 KiB, while the documented default is 128 MiB.
+  v7.2 quote: sysctl_user_reserve_kbytes = min(free_kbytes / 32, SZ_128K);
+
+row=36 h=1cadeed9914b entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/mmap.c
+  claim: At boot the admin reserve knob starts at the smaller of one thirty-second of free memory in kB and the byte constant SZ_8K - 8 KiB, while the documented default is 8 MiB.
+  v7.2 quote: sysctl_admin_reserve_kbytes = min(free_kbytes / 32, SZ_8K);
+
+row=37 h=d7a1dc88dcb3 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/mmap.c
+  claim: Hugetlb file mappings are charged strictly unless the caller passes MAP_NORESERVE, a carve-out the mode-2 rule does not mention.
+  v7.2 quote: hugetlb applies strict overcommit unless MAP_NORESERVE */ if (file && is_file_hugepages(file)) vm_flags |= VM_NORESERVE;
+
+row=38 h=28d3042fded0 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c
+  claim: CommitLimit is RAM minus hugetlb pages, scaled by the ratio percentage, with every swap page then added on top.
+  v7.2 quote: allowed = ((totalram_pages() - hugetlb_total_pages()) * sysctl_overcommit_ratio / 100); allowed += total_swap_pages;
+
+row=39 h=2d64007fa0dc entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c
+  claim: Under the loose modes the per-CPU counter may drift far from its true sum, which is why switching to mode 2 syncs every CPU first.
+  v7.2 quote: The deviation of sync_overcommit_as could be big with loose policy * like OVERCOMMIT_ALWAYS/OVERCOMMIT_GUESS.
+
+row=40 h=309f4487d8b6 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c
+  claim: In the default heuristic mode a request fails only when its own size exceeds all RAM plus all swap together.
+  v7.2 quote: if (pages > totalram_pages() + total_swap_pages) goto error; return 0;
+
+row=41 h=41934e8b2887 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c
+  claim: Processes lacking CAP_SYS_ADMIN see the mode-2 limit lowered further by the admin reserve, converted to pages.
+  v7.2 quote: if (!cap_sys_admin) allowed -= sysctl_admin_reserve_kbytes >> (PAGE_SHIFT - 10);
+
+row=42 h=967021950067 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c
+  claim: The never-overcommit test compares a fast approximate read of the per-CPU committed counter with the computed limit.
+  v7.2 quote: if (percpu_counter_read_positive(&vm_committed_as) < allowed) return 0;
+
+row=43 h=9cb0e908f997 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c
+  claim: The compiled-in default for the ratio knob is fifty, meaning half of physical RAM under mode 2.
+  v7.2 quote: static int sysctl_overcommit_ratio __read_mostly = 50;
+
+row=44 h=a75ce7619818 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c
+  claim: When the kbytes knob is nonzero it replaces the ratio term entirely, after conversion from kilobytes to pages.
+  v7.2 quote: if (sysctl_overcommit_kbytes) allowed = sysctl_overcommit_kbytes >> (PAGE_SHIFT - 10);
+
+row=45 h=ca2418460394 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c
+  claim: A refused request leaves a rate-limited kernel log warning that names the pid, the command and the byte count.
+  v7.2 quote: pr_warn_ratelimited("%s: pid: %d, comm: %s, bytes: %lu not enough memory for the allocation\n",
+
+row=46 h=cddcf1bc062f entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c
+  claim: Every request is charged to the committed counter before the mode is examined, so the counter grows under modes 0 and 1 too.
+  v7.2 quote: vm_acct_memory(pages); /* * Sometimes we want to use more memory than we have */ if (sysctl_overcommit_memory == OVERCOMMIT_ALWAYS) return 0;

@@ -1174,3 +1174,35 @@ appended to (QUALITY 141; `count-c1.py` arm C).
 `class=env` — the pinned command printed no tally for its prefix (setup); `class=stale` — it ran and printed a
 different tally, or a tally whose exit code contradicts it, or a digest/line-count pin differs; the summary ends
 `env=N stale=N` (`tools/mori-pin-check.py`).
+
+## Round53 — the commit ledger as a runway read, and the v7.3 recheck
+
+### Commit runway by mode (decision table; entry `corpus/knowledge/commit-runway-read-r53.md`)
+
+| `python3 -I -B tools/mori-commit-runway.py` says | means | do not read it as |
+|---|---|---|
+| `COMMIT_HEURISTIC` (mode 0), exit 0 | only one request above RAM + swap is refused (`single_request_cap_kb`); `over_limit_not_enforced` when Committed_AS exceeds CommitLimit | a host out of commit room |
+| `COMMIT_UNLIMITED` (mode 1), exit 0 | the commit test always passes | memory left — read `MemAvailable` (`memavailable-estimate-r51.md`) |
+| `COMMIT_OK` (mode 2), exit 0 | `usable_kb` (limit − committed − admin and user reserves) is above `band_kb` | room for any allocation of `usable_kb`: the reserve is per process, the band an upper bound |
+| `COMMIT_LOW` (mode 2), exit 1 | `usable_kb ≤ band_kb`: inside the per-CPU counter's error band a non-root allocation may already be refused (S511–S513, S499) | a calibrated alarm threshold (FR8 open) |
+| `COMMIT_UNKNOWN`, exit 2 | an input is missing, unreadable or malformed, or the mode is outside 0–2 (`notes`) | zero room, or a pass |
+| `limit_mismatch` finding | the recomputed `vm_commit_limit()` differs from the printed CommitLimit: the inputs were misread (page size, Hugetlb) | a kernel fault |
+
+### Error patterns (commit runway)
+
+- Reading `Committed_AS > CommitLimit` under mode 0 as exhaustion: mode 0 never compares them (S497, S499).
+- Subtracting only `admin_reserve_kbytes`: a non-root process also loses up to `user_reserve_kbytes` (vm.rst).
+- Treating `Committed_AS` as the enforced value: it is the exact sum; the test reads the global count (S513, S499).
+
+### Release recheck rule (`corpus/knowledge/kernel-v7.3-recheck-r53.md`)
+
+When a tag newer than an entry's pinned tag exists and the entry says `recheck: on-release`, re-read every claim
+row against the same path at the new tag: a row is `held` when its quote still occurs, `absent` otherwise, and
+either way its disposition (`holds` / `changed`) is a reading of the new file, not of the quote
+(`.ufo/waves/round-53/count-c1.py`).
+
+### Round53 registry additions
+
+| name | kind | entry | verdict map | self-test | pinned values | write scope | owner |
+|---|---|---|---|---|---|---|---|
+| commit runway (r53, C2) | gate (host-surface verdict; not a census or fleet-admission gate) | `python3 -I -B tools/mori-commit-runway.py [--meminfo PATH] [--vm-dir DIR] [--cpu-present PATH] [--page-kb N] [--selftest [--cases FILE]]` — defaults `/proc/meminfo`, `/proc/sys/vm`, `/sys/devices/system/cpu/present`, the system page size; read-only | 0 → clean (`COMMIT_OK`, `COMMIT_HEURISTIC`, `COMMIT_UNLIMITED`) · 1 → failed (`COMMIT_LOW`) · 2 → could-not-evaluate (`COMMIT_UNKNOWN`, usage error) | `python3 -I -B tools/mori-commit-runway.py --selftest` → `MORI_COMMIT_RUNWAY_SELFTEST: PASS 23/23` (also prints `MATCHER: rejected 23/23 corrupted expectations`) | `tools/fixtures/mori-commit-runway/cases.json` (23 cases) | none (selftest: a temporary directory under `$TMPDIR`) | mori |

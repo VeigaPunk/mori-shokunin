@@ -1,0 +1,754 @@
+{
+ "cases": [
+  {
+   "expect": {
+    "band_kb": null,
+    "batch_pages": null,
+    "commit_limit_kb": 47583772,
+    "committed_as_kb": 60169456,
+    "cpus_present": 32,
+    "enforced": false,
+    "headroom_kb": -12585684,
+    "limit_consistent": true,
+    "limit_recomputed_kb": 47583772,
+    "mode": 0,
+    "reserve_kb": null,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": 63444672,
+    "usable_kb": null,
+    "verdict": "COMMIT_HEURISTIC"
+   },
+   "expect_exit": 0,
+   "expect_findings": [
+    "over_limit_not_enforced"
+   ],
+   "id": "host-mode0-over-limit",
+   "meminfo": "MemTotal:        31721796 kB\nMemFree:         10573932 kB\nMemAvailable:    15860898 kB\nSwapTotal:       31722876 kB\nSwapFree:        31722876 kB\nCommitLimit:     47583772 kB\nCommitted_AS:    60169456 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-31\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "0\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": null,
+    "batch_pages": null,
+    "commit_limit_kb": 47583772,
+    "committed_as_kb": 1000000,
+    "cpus_present": 32,
+    "enforced": false,
+    "headroom_kb": 46583772,
+    "limit_consistent": true,
+    "limit_recomputed_kb": 47583772,
+    "mode": 0,
+    "reserve_kb": null,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": 63444672,
+    "usable_kb": null,
+    "verdict": "COMMIT_HEURISTIC"
+   },
+   "expect_exit": 0,
+   "expect_findings": [],
+   "id": "mode0-under-limit",
+   "meminfo": "MemTotal:        31721796 kB\nMemFree:         10573932 kB\nMemAvailable:    15860898 kB\nSwapTotal:       31722876 kB\nSwapFree:        31722876 kB\nCommitLimit:     47583772 kB\nCommitted_AS:     1000000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-31\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "0\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": null,
+    "batch_pages": null,
+    "commit_limit_kb": 15860896,
+    "committed_as_kb": 90000000,
+    "cpus_present": 32,
+    "enforced": false,
+    "headroom_kb": -74139104,
+    "limit_consistent": true,
+    "limit_recomputed_kb": 15860896,
+    "mode": 1,
+    "reserve_kb": null,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": null,
+    "verdict": "COMMIT_UNLIMITED"
+   },
+   "expect_exit": 0,
+   "expect_findings": [
+    "over_limit_not_enforced"
+   ],
+   "id": "mode1-over-limit",
+   "meminfo": "MemTotal:        31721796 kB\nMemFree:         10573932 kB\nMemAvailable:    15860898 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:     15860896 kB\nCommitted_AS:    90000000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-31\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "1\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": 32768,
+    "batch_pages": 256,
+    "commit_limit_kb": 4194304,
+    "committed_as_kb": 4000000,
+    "cpus_present": 32,
+    "enforced": true,
+    "headroom_kb": 194304,
+    "limit_consistent": true,
+    "limit_recomputed_kb": 4194304,
+    "mode": 2,
+    "reserve_kb": 139264,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": 55040,
+    "verdict": "COMMIT_OK"
+   },
+   "expect_exit": 0,
+   "expect_findings": [],
+   "id": "mode2-ok",
+   "meminfo": "MemTotal:         8388608 kB\nMemFree:          2796202 kB\nMemAvailable:     4194304 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:      4194304 kB\nCommitted_AS:     4000000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-31\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": 32768,
+    "batch_pages": 256,
+    "commit_limit_kb": 4194304,
+    "committed_as_kb": 4030000,
+    "cpus_present": 32,
+    "enforced": true,
+    "headroom_kb": 164304,
+    "limit_consistent": true,
+    "limit_recomputed_kb": 4194304,
+    "mode": 2,
+    "reserve_kb": 139264,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": 25040,
+    "verdict": "COMMIT_LOW"
+   },
+   "expect_exit": 1,
+   "expect_findings": [
+    "inside_band"
+   ],
+   "id": "mode2-low-inside-band",
+   "meminfo": "MemTotal:         8388608 kB\nMemFree:          2796202 kB\nMemAvailable:     4194304 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:      4194304 kB\nCommitted_AS:     4030000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-31\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": 32768,
+    "batch_pages": 256,
+    "commit_limit_kb": 4194304,
+    "committed_as_kb": 4022272,
+    "cpus_present": 32,
+    "enforced": true,
+    "headroom_kb": 172032,
+    "limit_consistent": true,
+    "limit_recomputed_kb": 4194304,
+    "mode": 2,
+    "reserve_kb": 139264,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": 32768,
+    "verdict": "COMMIT_LOW"
+   },
+   "expect_exit": 1,
+   "expect_findings": [
+    "inside_band"
+   ],
+   "id": "mode2-band-edge-equal-is-low",
+   "meminfo": "MemTotal:         8388608 kB\nMemFree:          2796202 kB\nMemAvailable:     4194304 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:      4194304 kB\nCommitted_AS:     4022272 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-31\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": 32768,
+    "batch_pages": 256,
+    "commit_limit_kb": 4194304,
+    "committed_as_kb": 4022268,
+    "cpus_present": 32,
+    "enforced": true,
+    "headroom_kb": 172036,
+    "limit_consistent": true,
+    "limit_recomputed_kb": 4194304,
+    "mode": 2,
+    "reserve_kb": 139264,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": 32772,
+    "verdict": "COMMIT_OK"
+   },
+   "expect_exit": 0,
+   "expect_findings": [],
+   "id": "mode2-band-edge-one-page-above",
+   "meminfo": "MemTotal:         8388608 kB\nMemFree:          2796202 kB\nMemAvailable:     4194304 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:      4194304 kB\nCommitted_AS:     4022268 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-31\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": 123904,
+    "batch_pages": 968,
+    "commit_limit_kb": 15860896,
+    "committed_as_kb": 17000000,
+    "cpus_present": 32,
+    "enforced": true,
+    "headroom_kb": -1139104,
+    "limit_consistent": true,
+    "limit_recomputed_kb": 15860896,
+    "mode": 2,
+    "reserve_kb": 139264,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": -1278368,
+    "verdict": "COMMIT_LOW"
+   },
+   "expect_exit": 1,
+   "expect_findings": [
+    "inside_band"
+   ],
+   "id": "mode2-negative-headroom",
+   "meminfo": "MemTotal:        31721796 kB\nMemFree:         10573932 kB\nMemAvailable:    15860898 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:     15860896 kB\nCommitted_AS:    17000000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-31\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": 123904,
+    "batch_pages": 968,
+    "commit_limit_kb": 5242880,
+    "committed_as_kb": 1000000,
+    "cpus_present": 32,
+    "enforced": true,
+    "headroom_kb": 4242880,
+    "limit_consistent": true,
+    "limit_recomputed_kb": 5242880,
+    "mode": 2,
+    "reserve_kb": 139264,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": 4103616,
+    "verdict": "COMMIT_OK"
+   },
+   "expect_exit": 0,
+   "expect_findings": [],
+   "id": "mode2-overcommit-kbytes",
+   "meminfo": "MemTotal:        31721796 kB\nMemFree:         10573932 kB\nMemAvailable:    15860898 kB\nSwapTotal:        1048576 kB\nSwapFree:         1048576 kB\nCommitLimit:      5242880 kB\nCommitted_AS:     1000000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-31\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "4194304\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": 65536,
+    "batch_pages": 2048,
+    "commit_limit_kb": 10066328,
+    "committed_as_kb": 3000000,
+    "cpus_present": 8,
+    "enforced": true,
+    "headroom_kb": 7066328,
+    "limit_consistent": true,
+    "limit_recomputed_kb": 10066328,
+    "mode": 2,
+    "reserve_kb": 139264,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": 6927064,
+    "verdict": "COMMIT_OK"
+   },
+   "expect_exit": 0,
+   "expect_findings": [],
+   "id": "mode2-hugetlb-ratio80",
+   "meminfo": "MemTotal:        16777216 kB\nMemFree:          5592405 kB\nMemAvailable:     8388608 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:     10066328 kB\nCommitted_AS:     3000000 kB\nHugetlb:          4194304 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-7\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "80\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": 32768,
+    "batch_pages": 128,
+    "commit_limit_kb": 524288,
+    "committed_as_kb": 1000,
+    "cpus_present": 64,
+    "enforced": true,
+    "headroom_kb": 523288,
+    "limit_consistent": true,
+    "limit_recomputed_kb": 524288,
+    "mode": 2,
+    "reserve_kb": 139264,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": 384024,
+    "verdict": "COMMIT_OK"
+   },
+   "expect_exit": 0,
+   "expect_findings": [],
+   "id": "mode2-batch-floor-64cpu",
+   "meminfo": "MemTotal:         1048576 kB\nMemFree:           349525 kB\nMemAvailable:      524288 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:       524288 kB\nCommitted_AS:        1000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-63\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": 8192,
+    "batch_pages": 2048,
+    "commit_limit_kb": 1048576,
+    "committed_as_kb": 600000,
+    "cpus_present": 1,
+    "enforced": true,
+    "headroom_kb": 448576,
+    "limit_consistent": true,
+    "limit_recomputed_kb": 1048576,
+    "mode": 2,
+    "reserve_kb": 139264,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": 309312,
+    "verdict": "COMMIT_OK"
+   },
+   "expect_exit": 0,
+   "expect_findings": [],
+   "id": "mode2-one-cpu",
+   "meminfo": "MemTotal:         2097152 kB\nMemFree:           699050 kB\nMemAvailable:     1048576 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:      1048576 kB\nCommitted_AS:      600000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": 262128,
+    "batch_pages": 10922,
+    "commit_limit_kb": 33554432,
+    "committed_as_kb": 1000000,
+    "cpus_present": 6,
+    "enforced": true,
+    "headroom_kb": 32554432,
+    "limit_consistent": true,
+    "limit_recomputed_kb": 33554432,
+    "mode": 2,
+    "reserve_kb": 139264,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": 32415168,
+    "verdict": "COMMIT_OK"
+   },
+   "expect_exit": 0,
+   "expect_findings": [],
+   "id": "mode2-sparse-cpulist",
+   "meminfo": "MemTotal:        67108864 kB\nMemFree:         22369621 kB\nMemAvailable:    33554432 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:     33554432 kB\nCommitted_AS:     1000000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0,2-5,8\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": 524288,
+    "batch_pages": 128,
+    "commit_limit_kb": 33554432,
+    "committed_as_kb": 1000000,
+    "cpus_present": 64,
+    "enforced": true,
+    "headroom_kb": 32554432,
+    "limit_consistent": true,
+    "limit_recomputed_kb": 33554432,
+    "mode": 2,
+    "reserve_kb": 139264,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": 32415168,
+    "verdict": "COMMIT_OK"
+   },
+   "expect_exit": 0,
+   "expect_findings": [],
+   "id": "mode2-page64",
+   "meminfo": "MemTotal:        67108864 kB\nMemFree:         22369621 kB\nMemAvailable:    33554432 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:     33554432 kB\nCommitted_AS:     1000000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 64,
+   "present": "0-63\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": null,
+    "batch_pages": null,
+    "commit_limit_kb": 123456,
+    "committed_as_kb": 1000,
+    "cpus_present": 32,
+    "enforced": false,
+    "headroom_kb": 122456,
+    "limit_consistent": false,
+    "limit_recomputed_kb": 47583772,
+    "mode": 0,
+    "reserve_kb": null,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": 63444672,
+    "usable_kb": null,
+    "verdict": "COMMIT_HEURISTIC"
+   },
+   "expect_exit": 0,
+   "expect_findings": [
+    "limit_mismatch"
+   ],
+   "id": "mode0-limit-mismatch",
+   "meminfo": "MemTotal:        31721796 kB\nMemFree:         10573932 kB\nMemAvailable:    15860898 kB\nSwapTotal:       31722876 kB\nSwapFree:        31722876 kB\nCommitLimit:       123456 kB\nCommitted_AS:        1000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-31\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "0\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": null,
+    "batch_pages": null,
+    "commit_limit_kb": null,
+    "committed_as_kb": null,
+    "cpus_present": null,
+    "enforced": null,
+    "headroom_kb": null,
+    "limit_consistent": null,
+    "limit_recomputed_kb": null,
+    "mode": null,
+    "reserve_kb": null,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": null,
+    "verdict": "COMMIT_UNKNOWN"
+   },
+   "expect_exit": 2,
+   "expect_findings": [],
+   "id": "unknown-mode3",
+   "meminfo": "MemTotal:        31721796 kB\nMemFree:         10573932 kB\nMemAvailable:    15860898 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:     15860896 kB\nCommitted_AS:        1000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-31\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "3\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": null,
+    "batch_pages": null,
+    "commit_limit_kb": null,
+    "committed_as_kb": null,
+    "cpus_present": null,
+    "enforced": null,
+    "headroom_kb": null,
+    "limit_consistent": null,
+    "limit_recomputed_kb": null,
+    "mode": null,
+    "reserve_kb": null,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": null,
+    "verdict": "COMMIT_UNKNOWN"
+   },
+   "expect_exit": 2,
+   "expect_findings": [],
+   "id": "unknown-commitlimit-missing",
+   "meminfo": "MemTotal:        31721796 kB\nMemFree:         10573932 kB\nMemAvailable:    15860898 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitted_AS:        1000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-31\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": null,
+    "batch_pages": null,
+    "commit_limit_kb": null,
+    "committed_as_kb": null,
+    "cpus_present": null,
+    "enforced": null,
+    "headroom_kb": null,
+    "limit_consistent": null,
+    "limit_recomputed_kb": null,
+    "mode": null,
+    "reserve_kb": null,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": null,
+    "verdict": "COMMIT_UNKNOWN"
+   },
+   "expect_exit": 2,
+   "expect_findings": [],
+   "id": "unknown-committed-twice",
+   "meminfo": "MemTotal:        31721796 kB\nMemFree:         10573932 kB\nMemAvailable:    15860898 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:     15860896 kB\nCommitted_AS:        1000 kB\nCommitted_AS:        1000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-31\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": null,
+    "batch_pages": null,
+    "commit_limit_kb": null,
+    "committed_as_kb": null,
+    "cpus_present": null,
+    "enforced": null,
+    "headroom_kb": null,
+    "limit_consistent": null,
+    "limit_recomputed_kb": null,
+    "mode": null,
+    "reserve_kb": null,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": null,
+    "verdict": "COMMIT_UNKNOWN"
+   },
+   "expect_exit": 2,
+   "expect_findings": [],
+   "id": "unknown-swaptotal-no-unit",
+   "meminfo": "MemTotal:        31721796 kB\nMemFree:         10573932 kB\nMemAvailable:    15860898 kB\nSwapTotal:                 0\nSwapFree:               0 kB\nCommitLimit:     15860896 kB\nCommitted_AS:        1000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-31\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "0\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": null,
+    "batch_pages": null,
+    "commit_limit_kb": null,
+    "committed_as_kb": null,
+    "cpus_present": null,
+    "enforced": null,
+    "headroom_kb": null,
+    "limit_consistent": null,
+    "limit_recomputed_kb": null,
+    "mode": null,
+    "reserve_kb": null,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": null,
+    "verdict": "COMMIT_UNKNOWN"
+   },
+   "expect_exit": 2,
+   "expect_findings": [],
+   "id": "unknown-user-reserve-missing",
+   "meminfo": "MemTotal:        31721796 kB\nMemFree:         10573932 kB\nMemAvailable:    15860898 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:     15860896 kB\nCommitted_AS:        1000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-31\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": null
+   }
+  },
+  {
+   "expect": {
+    "band_kb": null,
+    "batch_pages": null,
+    "commit_limit_kb": null,
+    "committed_as_kb": null,
+    "cpus_present": null,
+    "enforced": null,
+    "headroom_kb": null,
+    "limit_consistent": null,
+    "limit_recomputed_kb": null,
+    "mode": null,
+    "reserve_kb": null,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": null,
+    "verdict": "COMMIT_UNKNOWN"
+   },
+   "expect_exit": 2,
+   "expect_findings": [],
+   "id": "unknown-cpulist-garbage",
+   "meminfo": "MemTotal:        31721796 kB\nMemFree:         10573932 kB\nMemAvailable:    15860898 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:     15860896 kB\nCommitted_AS:        1000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-3,x\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": null,
+    "batch_pages": null,
+    "commit_limit_kb": null,
+    "committed_as_kb": null,
+    "cpus_present": null,
+    "enforced": null,
+    "headroom_kb": null,
+    "limit_consistent": null,
+    "limit_recomputed_kb": null,
+    "mode": null,
+    "reserve_kb": null,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": null,
+    "verdict": "COMMIT_UNKNOWN"
+   },
+   "expect_exit": 2,
+   "expect_findings": [],
+   "id": "unknown-cpulist-reversed",
+   "meminfo": "MemTotal:        31721796 kB\nMemFree:         10573932 kB\nMemAvailable:    15860898 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:     15860896 kB\nCommitted_AS:        1000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "5-1\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": null,
+    "batch_pages": null,
+    "commit_limit_kb": null,
+    "committed_as_kb": null,
+    "cpus_present": null,
+    "enforced": null,
+    "headroom_kb": null,
+    "limit_consistent": null,
+    "limit_recomputed_kb": null,
+    "mode": null,
+    "reserve_kb": null,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": null,
+    "verdict": "COMMIT_UNKNOWN"
+   },
+   "expect_exit": 2,
+   "expect_findings": [],
+   "id": "unknown-meminfo-absent",
+   "meminfo": null,
+   "page_kb": 4,
+   "present": "0-31\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "0\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  }
+ ],
+ "note": "Expected values computed from the round-53 counter's REF reading (.ufo/waves/round-53/count-c2.py, frozen at f4da3fd4) and checked by hand for host-mode0-over-limit (CommitLimit 47583772 = (7930449*50//100 + 7930719)*4), mode2-ok (batch 256, band 32768, usable 55040) and mode2-low-inside-band (usable 25040 <= 32768); findings derived from the documented rules.",
+ "schema": "mori-commit-runway-cases-v1"
+}
