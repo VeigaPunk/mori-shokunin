@@ -1,0 +1,4 @@
+# attempt 2 (L1 MoriR53a2), at the salvage tip 0df803033fba2386b10f5dcc6aa96bdef65cba15, 2026-10-27T00:20:50-03:00
+$ TMPDIR=/fast/scratch/hyaku/mori-r53/L1 python3 .ufo/waves/round-53/count-c2.py 0df803033fba2386b10f5dcc6aa96bdef65cba15 --scratch /fast/scratch/hyaku/mori-r53/L1/c2s
+C2=met tool=present selftest=pass n=31 fixtures=80 agree=80 disagree=0 registry=ok live=ok rev=0df803033fba2386b10f5dcc6aa96bdef65cba15
+exit=0

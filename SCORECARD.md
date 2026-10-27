@@ -2769,3 +2769,80 @@ Planned (round 53): the in-lane writers' successor freeze (round-38/39/41/42 `co
 `count-c1.py`); the locator sweep beyond the Axes rows; the C1 arm-isolating controls for M4/M8 and the
 receipt/closure trust gaps; a commit-ledger census line (CommitLimit/Committed_AS) and a mode-2 error band; the
 PROVINCE/SCORECARD present-tense tally pins (K4 scope).
+
+**Round-52 correction:** the round-52 C1 row's After cell above carries the superseded tally `items=42 axes=6
+pins=2 boxes=4 living=7 superseded=4 locators=27 mismatches=0 errors=0 hidden=0 lane_writes=0` and must be read as
+`items=43 axes=6 pins=2 boxes=4 living=7 superseded=4 locators=28 mismatches=0 errors=0 hidden=0 lane_writes=0`. The
+receipt that row cites (`.ufo/waves/round-52/evidence/c1-at-landed.txt:45`, measured
+`e7e056b8a17e54516a3c17798221c30e9902c250`) prints the 43/28 form with `manifest=6209bdb8e400`, rc 0; the two
+superseded tokens are verbatim the at-data tally (`.ufo/waves/round-52/evidence/c1-at-data.txt:44`, measured
+`8524904adb25e44f24d9f25aac7eae909625c18c`), written before the landed receipt existed. Every other token, the
+`C1=met` verdict and the exit code agree; the row above is retained as filed (append-only; round-52 closure D2,
+routed defect 1; drafted by `.ufo/waves/round-53/w1/Mo53ScribeScorecard.md` Draft 1).
+
+## Round 53 — the release-pinned quotes re-verified at Linux v7.3 (C1) and the commit ledger as a runway read (C2)
+
+L1 MoriR53 (attempt 1: freeze, data, wave w1, data corrections) and MoriR53a2 (attempt 2, after the orchestrator
+session exit killed attempt 1 at 2026-10-26 23:57:36 -03; salvage commit `0df803033fba2386b10f5dcc6aa96bdef65cba15`).
+Entering tip `20edafa59b38dac1ca358893f0259b1f436372d3` (round-52 verifier spot-check); freeze
+`f4da3fd400fa88a6db8ea544a4f7045c15d2410e` (`.ufo/waves/round-53/contract.md`; both counters, controls, receipts,
+both counter selftests, census-start, sweeps, twelve source copies); data `2a4213bf8da72f7cd78189baa5bb9be825dca1df`;
+data corrections after the wave `fd86307ad54c13edb8b6dd13182a2ad196f42fcd`. Scores entering: coverage 6, operability
+7, depth 5, freshness 5, calibration 5, adjacency 6; C1 works a lowest (tied 5) axis and C2 is a coverage move with
+a capability row. No score change is claimed by the lane; the non-author closure rules.
+
+| Claim | Axis (held) | Counting command | Before | After |
+|---|---|---|---|---|
+| C1 the release-pinned located-quote claims of `memavailable-estimate-r51.md` and `overcommit-commit-limit-r52.md` re-verified at Linux v7.3: one ledger row per claim hash (46), each with a v7.3 source row, a located v7.3 quote and a `holds`/`changed` disposition, and two RECHECK voters per row whose final line carries that disposition, neither a proposer of the row's quote | freshness 5 | `python3 .ufo/waves/round-53/count-c1.py R` | `C1=unmet scope=46 rows=0 matched=0 status_ok=0 quote_ok=0 source_rows=bad pins=bad provenance=bad held=0 absent=0 holds=0 changed=0 voted=0 dissent=0 … failed=ledger_absent,pins`, rc 1 — `evidence/control-c1-do-nothing.txt` (R = `20edafa5`) | `C1=met scope=46 rows=46 matched=46 status_ok=46 quote_ok=46 source_rows=ok pins=ok provenance=ok held=44 absent=2 holds=46 changed=0 voted=46 dissent=0`, rc 0 — `evidence/c1-at-salvage.txt` (R = `0df80303`; the at-landed re-run is named in the round-53 report) |
+| C2 the commit ledger (`CommitLimit` / `Committed_AS`) as a runway surface `tools/mori-commit-runway.py` reads by overcommit mode, with the mode-2 per-CPU error band and a `--selftest` over its own fixtures | coverage 6 | `python3 .ufo/waves/round-53/count-c2.py R [--scratch DIR]` | `C2=unmet tool=absent selftest=error n=0 fixtures=80 agree=0 disagree=0 registry=bad live=error failed=registry,tool_absent`, rc 1 — `evidence/control-c2-do-nothing.txt` (R = `20edafa5`) | `C2=met tool=present selftest=pass n=31 fixtures=80 agree=80 disagree=0 registry=ok live=ok`, rc 0 — `evidence/c2-at-salvage.txt` (R = `0df80303`; the data commit read `n=23`, `evidence/c2-at-data.txt`; the at-landed re-run is named in the round-53 report) |
+
+The C1 landing is `corpus/knowledge/kernel-v7.3-recheck-r53.md` with rows S502–S510 and the nine pinned v7.3 copies
+under `corpus/evidence/sources-r53/`; the ledger's 46 table rows are byte-identical between the voted data commit
+`2a4213bf` and `0df80303` (`git diff 2a4213bf 0df80303 -- corpus/knowledge/kernel-v7.3-recheck-r53.md` touches no
+`| <12 hex> |` row). The C2 landing is `tools/mori-commit-runway.py` with `tools/fixtures/mori-commit-runway/cases.json`
+(26 cases; `--selftest` `PASS 31/31` with five built-in hostile checks), the `## Round53` registry row in `SKILL.md`,
+the band entry `corpus/knowledge/commit-runway-read-r53.md` and rows S511–S514.
+
+Controls that skip the work stay unmet (receipts under `.ufo/waves/round-53/evidence/`, readings in the table at the
+end of the contract): C1 do-nothing `rows=0 … pins=bad … failed=ledger_absent,pins`; all-held
+`status_ok=44 quote_ok=44 … voted=46 dissent=0`, `failed=quote,status` — labelling everything held fails exactly the
+two MAP_NORESERVE rows; v72-copies `held=46 absent=0 … pins=bad`, `failed=pins,quote,status`; no-votes
+`status_ok=46 quote_ok=46 … voted=0`, `failed=votes`; the witness (feasibility only, built by the L1 with
+`controls/c1-data.py`) met. C2 do-nothing `tool=absent … failed=registry,tool_absent`; mode-blind
+`agree=53 disagree=27`, `failed=fixtures`; no-band `agree=71 disagree=9`; memoriser `agree=71 disagree=9`, exact on
+the frozen 16 and wrong on the seeded near-edge cases (the junk tools print a fake `PASS 12/12` selftest, so the
+fixture arm is what separates them); the witness (the counter's REF wrapped as a tool, `n=12` at the floor) met,
+disclosed. Counter selftests `C1_SELFTEST pass=37 fail=0` and `C2_SELFTEST pass=30 fail=0`
+(`evidence/selftest-c1.txt`, `evidence/selftest-c2.txt`).
+
+### capabilities: first demonstrated round 53
+
+Capability rows (demonstrated running this round; the closure admits them, and the register's `key` cell is filled
+then — the round-41 shape):
+
+| key | name | what it can now do | evidence | first working |
+|---|---|---|---|---|
+| round-53 C2 | commit runway read by overcommit mode | Reads `CommitLimit` and `Committed_AS` from `/proc/meminfo`, five `/proc/sys/vm` files, the present-CPU mask and the page size (bounded, non-blocking reads) and prints one `mori-commit-runway-v1` JSON object whose verdict follows the mode: `COMMIT_HEURISTIC` (mode 0, never LOW, `single_request_cap_kb`), `COMMIT_UNLIMITED` (mode 1, never LOW), `COMMIT_OK` / `COMMIT_LOW` (mode 2 — LOW, exit 1, iff `usable_kb` = limit − committed − `admin_reserve_kbytes` − `user_reserve_kbytes` is at or below `band_kb` = batch × present CPUs × page), `COMMIT_UNKNOWN` (exit 2) on a missing, unreadable or malformed input; on this host (mode 0) it prints `COMMIT_HEURISTIC`, exit 0, with the limit recomputed equal to the printed one | `python3 -I -B tools/mori-commit-runway.py --selftest` (`PASS 31/31`); `evidence/c2-at-salvage.txt`; `w1/Mo53ExecHostLive.md` | 53 |
+
+Limits named before data (the wave's own findings land in `corpus/lessons/round-53.md` `## Wave w1 — integrated
+findings`): `held` proves the v7.2 quote's words still occur somewhere in the v7.3 file, not at the same place nor
+with the same meaning — the disposition and its two votes carry the meaning; the vote arm proves two lane seats
+recorded a judgment, not outside verification; D covers the claim tables of the two entries only (46 rows); the
+pins prove the bytes are what the L1 fetched (the wave re-fetched them by two independent channels and found them
+equal); C2's REF function and the tool share one author, so a shared misreading of the kernel passes both (two
+independent kernel-derived oracles agreed, `w1/Mo53ExecFixtureOracleA.md`, `w1/Mo53ExecFixtureOracleB.md`); the band
+is an upper bound from the batch rule with present CPUs and totalram at read time, not a measured deviation; the
+seeded fixtures are derivable from the commit id; the live leg compares stable fields only — this host reads mode
+0, so the mode-2 band arm is exercised by fixtures, not live. Counter weaknesses the wave names are routed for round
+54 and were not fixed in-round (frozen bytes).
+
+Planned (round 54): the round-52 standing limits carried in as routed defect 3 — the locator arm's scope
+(`QUALITY.md` and `README.md` hold 78 pointers it does not read), receipts that are pure text, and arm A's verdict
+pinned only to `admitted`; the items `Planned (round 53)` named and this round did not take (the in-lane writers'
+successor freeze including round-40 `conform.py`, the locator sweep beyond the Axes rows, the C1 arm-isolating
+controls); the v7.3 trigger for what D does not cover (`oom-tracepoints-r47.md`, `oom-victim-selection-r27.md`,
+`disk-write-rate-r33.md`, `watchdog-identity-r31.md`, the round-50 memcg entry, S511–S513); a row-vs-citation arm
+for SCORECARD claim rows (lesson M1); the frozen-counter weaknesses routed from wave w1 (lesson `## Wave w1 —
+integrated findings`: filename-keyed voter identity, the C2 exit-code arm, REF importable from the archive); FR8's
+calibrated `COMMIT_LOW` threshold, which needs measured refusal behaviour and is not a counter change; the 30
+round-52 flags dropped without an owner (lesson considerthese section).

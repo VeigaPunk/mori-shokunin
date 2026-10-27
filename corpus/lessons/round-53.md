@@ -156,6 +156,18 @@ Pending the non-author closure (LEARNING.md: a seat this lane dispatched is stil
   carry the same rule; the rule is direction-neutral, only the reading was wrong). Fix: the entry, SKILL row and
   docstring now state the band two-sided (`fd86307a`); QUALITY 145's rationale carries the corrected reading.
   Shown able to fail: none mechanical — a prose reading has no counter; the lesson records it as such.
+- M6: landing latency — attempt 1 left its integration drafts uncommitted while the wave closed. The data
+  corrections landed at `fd86307a` (22:41 -03), then `LOG.md`, `PROVINCE.md`, `SHONEN.md`, `corpus/QUALITY.md`,
+  `corpus/README.md`, `corpus/SOURCES.md`, the ledger prose, this lesson, all 66 seat reports and the wave record sat
+  in the working tree until the orchestrator session exited at 23:57:36 -03 (SIGHUP during an operator `omp update`)
+  and killed the L1; the orchestrator had to commit them as salvage `0df80303`, which no L1 had reviewed. Evidence:
+  `git show --stat 0df80303` (81 files, +16994/−19), `.ufo/watchdog.log` lane-dead line, the attempt-2 resume note.
+  Captured-by: none — the commit order (§4) requires landing before the report, not landing in slices while seats
+  settle. Fix (attempt 2, convention): seat reports and integration drafts land in one helper commit as soon as each
+  integration pass ends, before the next pass starts; the checkable form is `jj-lane.sh state <lane>` printing
+  `tracked=0 untracked=0` at each pass boundary. Shown able to fail: at the salvage-equivalent moment the same
+  command would have printed nonzero counts (the 81 files were uncommitted); not shown on a live run — routed as a
+  check for the round-54 L1, not counted as a fix.
 
 ## Round-52 closure routed defects — dispositions
 
@@ -245,3 +257,25 @@ flash-eligible 36/67 at spawn). Twelve RECHECK voters (`Mo53Fr01`–`Mo53Fr12`, 
 L1 held the planner seat. The operator changed the role routing mid-round (executor → `@m_mim`, critic/connector →
 `@m_kfc`, then connector → `@m_antigravity`, scout → `@m_kfc`); a seat keeps the model it was spawned with.
 Residual calls: 0. Round total: 67.
+
+## Attempt 2 (L1 MoriR53a2) — salvage re-verification
+
+Attempt 1 (L1 MoriR53) and every seat of its orchestrator session were killed at 2026-10-26 23:57:36 -03 (session
+exit, SIGHUP during an operator `omp update`; not a lane defect). The orchestrator committed the uncommitted tree as
+salvage `0df803033fba2386b10f5dcc6aa96bdef65cba15` (parent `fd86307a`). Attempt 2 cites nothing from it before
+re-verifying it:
+
+- Frozen bytes: `sha256sum -c` over `.ufo/waves/round-53/evidence/freeze-sha256.txt` → rc 0 at `0df80303`.
+- Both counters at `0df80303`: `C1=met … voted=46 dissent=0`, rc 0 (`evidence/c1-at-salvage.txt`); `C2=met … n=31
+  fixtures=80 agree=80 disagree=0 registry=ok live=ok`, rc 0 (`evidence/c2-at-salvage.txt`); census `validate --root
+  … mori` rc 0.
+- Votes against unchanged rows: `git diff 2a4213bf 0df80303 -- corpus/knowledge/kernel-v7.3-recheck-r53.md` touches 0
+  `| <12 hex> |` ledger rows; the salvage changes only the change-table prose and the reading-rules sentence.
+- Wave record: `w1-results.json` 67 seats, 66 outputs recovered; `Mo53RevLedgerProse` (reviewer) died with no output
+  and no report — stays dead in the evidence; its item is re-dispatched in the attempt-2 residual call.
+- What the salvage carries that no seat attacked: the tool's post-wave corrections (`git diff 2a4213bf fd86307a --
+  tools/` 181 lines), the band entry's two-sided rewrite, the SOURCES anchor corrections, QUALITY 144–147, the
+  README/PROVINCE/SHONEN/LOG drafts and this lesson. Those are the residual call's items.
+- Attempt 2 adds: the SCORECARD round-52 correction line and the round-53 section (Mo53ScribeScorecard's drafts,
+  After cells from the at-salvage receipts so that each row's numbers are those of the receipt it cites — QUALITY
+  146), M6 above, this section.
