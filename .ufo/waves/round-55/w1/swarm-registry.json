@@ -1,0 +1,393 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r55-w1",
+  "createdAt": "2026-10-27T06:37:39.308Z",
+  "updatedAt": "2026-10-27T06:40:15.975Z",
+  "reportDir": ".ufo/waves/round-55/w1",
+  "members": {
+    "Mo55Rc01": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "Mo55Rc02": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Rc03": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "Mo55Rc04": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Rc05": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "Mo55Rc06": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Rc07": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "Mo55Rc08": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Rc09": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "Mo55Rc10": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Rc11": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "Mo55Rc12": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Rc13": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "Mo55Rc14": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Rc15": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "Mo55Rc16": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55En01": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "Mo55En02": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55En03": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "Mo55En04": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55En05": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "Mo55En06": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55En07": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "Mo55En08": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55En09": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "Mo55En10": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55En11": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null
+    },
+    "Mo55En12": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Crit01": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Crit02": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Crit03": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Crit04": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Crit05": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Crit06": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Crit07": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Crit08": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Crit09": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Crit10": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Crit11": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Crit12": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null
+    },
+    "Mo55Mut01": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "Mo55Mut02": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "Mo55Mut03": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "Mo55Mut04": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "Mo55Mut05": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "Mo55Mut06": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null
+    },
+    "Mo55Exec01": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "Mo55Exec02": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "Mo55Exec03": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "Mo55Exec04": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null
+    },
+    "Mo55Scribe01": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "Mo55Scribe02": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "Mo55Scribe03": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "Mo55Scribe04": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null
+    },
+    "Mo55Scout01": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "Mo55Scout02": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null
+    },
+    "Mo55Conn01": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null
+    },
+    "Mo55Conn02": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null
+    },
+    "Mo55Sent01": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "sentinel",
+      "item": null
+    },
+    "Mo55Sent02": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "sentinel",
+      "item": null
+    },
+    "Mo55Rev01": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "revenger",
+      "item": null
+    },
+    "Mo55Rev02": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "revenger",
+      "item": null
+    },
+    "Mo55Simple01": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "simplifier",
+      "item": null
+    },
+    "Mo55Simple02": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "simplifier",
+      "item": null
+    }
+  }
+}

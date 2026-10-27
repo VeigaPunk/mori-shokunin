@@ -13,3 +13,17 @@ S262 — PRESENT. Reopened https://ieeexplore.ieee.org/ielx8/4629386/11644734/11
 S268 — PRESENT, same reopened PDF. Printed page 3016, extracted lines 123–126: “It leverages eBPF to hook into OOM-related kernel tracepoints such as mark_victim, start_task_reaping, and finish_task_reaping to record OOM-triggering process metadata.” This supports the examples-as-such wording in `corpus/knowledge/oom-tracepoints-r47.md`; it does not make the list exhaustive. No registry data changed.
 
 No package entry was adopted, no campaign file was changed, and the 404 btrfs documentation path rejection in the lesson is a separate source-route check.
+
+## Correction 2026-10-27 (Mo55Scribe04 F2/F6) — S244 flip
+
+S244 — PRESENT at the row's arXiv companion, publisher path still 403. The staged gate for this row
+names the arXiv companion https://arxiv.org/abs/2403.18832, which today returns HTTP 200, 41,919 bytes,
+sha256 2f302c3cb6c055452cd81d708e1e071b9fc9264681e550724e5a5d90cb771bb4, and carries the gate quote
+verbatim ("We find that 98.9% of commits in our dataset contain sentences with rationale information").
+The page's citation_doi meta is 10.1145/3643916.3644413, matching the register DOI. Round 45 already
+recorded this companion as quote-present (.ufo/waves/round-45/w1/ScribeQuarantine.md:52); that history
+is acknowledged here. The ACM publisher path remains unverifiable today: 403 with curl (5,471 B),
+with a browser User-Agent (5,684 B), and HEAD (0 B); no browser-UA route exists. Correction to the
+figure above: the "5,620-byte denial response" does not reproduce (today 5,471/5,684 B) and no stored
+copy exists, so that byte count is disclosed as unpinnable; the 403 status and Cloudflare challenge
+body do reproduce.

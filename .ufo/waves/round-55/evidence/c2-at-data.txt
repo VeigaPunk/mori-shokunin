@@ -1,2 +1,2 @@
-C2=unmet claims=23 located=23 quote_missing=0 bad_rows=0 sources=9 source_rows=ok pins=ok provenance=ok entailed=0 dissent=0 rev=f70051ddcb903dc6c4393c410f8bab054951af82 failed=entailment
+C2=unmet claims=23 located=23 quote_missing=0 bad_rows=0 sources=9 source_rows=ok pins=ok provenance=ok entailed=0 dissent=0 rev=b8b7064c2b54c8b6b22c288232a96c43fae1af47 failed=entailment
 exit=1

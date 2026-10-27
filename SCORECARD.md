@@ -2876,3 +2876,5 @@ Limits: all C1 rows are `held`; 31/31 v7.2 quotes already occur at v7.3, and ten
 No capability row. No-harm reviewer found no axis harmed. Sources census 287→298 rows; end validator rc 0, 23 W04. Assimilation none; S262/S268 quarantine rows source-checked in the lesson, no package item adopted. considerthese suggestion 3 completed. No installs; L0 none. Stale-lane: respawn-per-round, no other mission open. Trend verdicts: expansion improved, quality improved, discernment unchanged pending non-author closure.
 
 Planned (round 55): the four other release-triggered artefacts outside C1's claim-table scope; a C2 voter-authenticity control; append-only superseding rows for the S508/S520 anchor gaps; durable control-tree witnesses.
+
+**Round-55 correction to the Round-54 limits paragraph above:** the captured control observation is 12/14 control-clone revisions unavailable, not “Ten”; the other two are not stated to be removed. The old sentence is preserved append-only, as routed by the round-54 verifier spot-check D3.

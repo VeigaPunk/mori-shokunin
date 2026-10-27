@@ -119,3 +119,13 @@ The original Gate table lines are retained, but these four locations were wrong:
 ### Gate observation
 
 The outside review found the four locator defects above and the decision-table panic overclaim (corrected append-only in `memory-failure-kills-r54.md` and `SKILL.md`). Round-54's historical source decisions remain as filed; this erratum does not rewrite them.
+
+## Stable QUALITY reference anchors
+
+<a id="M1"></a>
+
+M1 is the original number-drift row (QUALITY 148): `receipt-stage.py` detects intermediate receipts.
+
+<a id="M2"></a>
+
+M2 is the original landing/misroot row (QUALITY 149): byte-exact swept files belong under their round's wave directory.
