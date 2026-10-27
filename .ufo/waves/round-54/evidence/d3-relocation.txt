@@ -1,0 +1,10 @@
+# round-54 D3 relocation receipt (L1 MoriR54, 2026-10-27T01:33:08-03:00)
+cef1a2cf3f34f683e69d623c4df563d5c0dc6bd71dcb3d42f40dadb0084915c6  base.c -> .ufo/waves/round-28/misroot-lane-root/base.c  cmp=ok
+08656b0bc90c85f23738661456b25c97af908bc5e2cfea78e0a69697b5f9d0e4  main.c -> .ufo/waves/round-28/misroot-lane-root/main.c  cmp=ok
+526e512c89c58cb0b1db2ae98ea62d287cdc1516846be80c9173bdc4bf0edfeb  meminfo.c -> .ufo/waves/round-28/misroot-lane-root/meminfo.c  cmp=ok
+452f1348e79c252ee89215d55fb104591412bbcea4a3ee965e873a401f756b4e  oom_kill.c -> .ufo/waves/round-28/misroot-lane-root/oom_kill.c  cmp=ok
+5ecdca43a8e0ed088758b228b54c72df311c0b9dc3855721ed02c5b169d3aae3  sd-main.c -> .ufo/waves/round-28/misroot-lane-root/sd-main.c  cmp=ok
+72c2f40dcfced1d85bcc17583715966fc8a552b68af44404c213de2ea320504c  user@.service.in -> .ufo/waves/round-28/misroot-lane-root/user@.service.in  cmp=ok
+cc48b02e79255ae27bad9b2c49364fcae1b6b5eb20fe8e83ecef432f360dfeda  MANPAGE.md -> .ufo/waves/round-28/misroot-lane-root/MANPAGE.md  cmp=ok
+b24122a0f0245c0aa6961fa234fb40adc4527bcd8e61c3c1e247ec8ba1c3a078  0 -> .ufo/waves/round-38/misroot-lane-root/0  cmp=ok
+--repo/: 0 entries, untracked (0 tracked) -> rmdir
