@@ -1,0 +1,23 @@
+row=1 hash=faeadb48a5f8 claim=The generic Linux errno header assigns 28 to ENOSPC and labels it “No space left on device,” giving the error name and documented message rather than diagnosing the failed operation
+row=2 hash=e581c99e0a8d claim=Before the filesystem's own statfs handler runs, the VFS clears the whole reply buffer, so any field a filesystem never sets reaches userspace as zero
+row=3 hash=a7fc4050c55d claim=When a filesystem leaves the fragment size unset, the VFS fills it with the block size, so block counts on such filesystems are expressed in block-size units
+row=4 hash=22a23e3fb849 claim=A statfs reply carries two different free-block figures: the plain free count, and a second count limited to what an unprivileged process may still use
+row=5 hash=81caa7b585a4 claim=Inode capacity is reported beside block capacity in the same statfs reply, as a separate pair of total and free counts that a block-only reading ignores
+row=6 hash=4c77d3eef474 claim=Linux offers no unprivileged-only inode figure distinct from the plain one: the statvfs field meant for ordinary users always equals the total free inodes
+row=7 hash=420d69d60ee5 claim=The manual justifies that equality by stating that no filesystem keeps inodes back for the superuser, so one free-inode reading serves every caller
+row=8 hash=f216a7fcdad1 claim=The df command shows inode counts only when asked for them, and that mode replaces the block columns rather than adding to them in the same listing
+row=9 hash=9acbe1f98b27 claim=The XFS statfs handler explicitly assigns its available-block field to the same value as its reported free-block field
+row=10 hash=b320b95f7e31 claim=XFS subtracts an internally unavailable amount from its free-block counter before reporting free space, and clamps that result so it can never fall below zero
+row=11 hash=4aab9fc1a48b claim=XFS computes its reported inode total as inodes already allocated plus how many more the current free blocks could hold, so that total moves with free space
+row=12 hash=d51f0bfc539f claim=When an XFS mount has a maximum inode count configured, the reported inode total is additionally capped by that maximum before free inodes are derived
+row=13 hash=f26a22184676 claim=Btrfs treats its global block reserve as already consumed when computing free blocks, so the reported free figure sits below raw unallocated capacity by that reserve
+row=14 hash=51e630031934 claim=Btrfs deliberately reports zero available space once its metadata profile can take no further chunk allocations, a condition about metadata rather than file data
+row=15 hash=5961ec3475c0 claim=That zero-available rule also requires the global block reserve not to fit in the remaining free metadata space
+row=16 hash=c159bdf1a5a9 claim=The metadata exhaustion test compares remaining metadata room against a fixed four-megabyte threshold, chosen because the gap observed in practice was about two megabytes
+row=17 hash=1b8e15e9537e claim=A btrfs Avail of zero therefore does not guarantee that every write fails: small metadata-consuming operations can still succeed after statfs reports nothing available
+row=18 hash=a179fcbe3d08 claim=Btrfs exports each space type's allocated chunk total and the bytes used inside it as separate sysfs counters, alongside pinned, reserved and may-use figures
+row=19 hash=efba48156572 claim=The size of the btrfs global block reserve is published as an attribute of the allocation directory, read from the reserve under its own lock
+row=20 hash=8f7ef0a716f2 claim=A tmpfs instance carries an inode ceiling of its own, set through a mount option that is separate from the instance's size limit
+row=21 hash=15ca5549f7db claim=On a tmpfs with an inode limit, extended attributes draw on that same allowance, so inode usage can grow without any new file being created
+row=22 hash=5fb083a379d0 claim=Setting the tmpfs inode option to zero removes the inode ceiling entirely, an option the documentation itself describes as generally unwise to mount with
+row=23 hash=b7cd35201fee claim=A tmpfs mounted without any size option may grow to half of physical memory, so its block runway is bounded by RAM rather than by a disk device

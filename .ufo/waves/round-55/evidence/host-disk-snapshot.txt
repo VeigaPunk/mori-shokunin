@@ -1,0 +1,35 @@
+date=2026-10-27
+$ stat -f -c type=%T bsize=%S blocks=%b bfree=%f bavail=%a files=%c ffree=%d /tmp /fast / /home/vgpnk/Projects/shokunin /dev/shm /run/user/1000
+type=xfs bsize=4096 blocks=33529345 bfree=32795553 bavail=32795553 files=67108864 ffree=67004121
+type=xfs bsize=4096 blocks=210532927 bfree=155927507 bavail=155927507 files=421271552 ffree=418617687
+type=btrfs bsize=4096 blocks=243661568 bfree=164012985 bavail=154665001 files=0 ffree=0
+type=btrfs bsize=4096 blocks=243661568 bfree=164012985 bavail=154665001 files=0 ffree=0
+type=tmpfs bsize=4096 blocks=2097152 bfree=2096303 bavail=2096303 files=3965224 ffree=3965173
+type=tmpfs bsize=4096 blocks=793044 bfree=792437 bavail=792437 files=793044 ffree=791759
+exit=0
+$ df -P /tmp /fast / /dev/shm
+Filesystem       1024-blocks      Used Available Capacity Mounted on
+/dev/nvme1n1p1     134117380   2935168 131182212       3% /tmp
+/dev/nvme1n1p2     842131708 218421680 623710028      26% /fast
+/dev/mapper/root   974646272 318594332 618660004      34% /
+tmpfs                8388608      3396   8385212       1% /dev/shm
+exit=0
+$ df -i /tmp /fast /dev/shm /
+Filesystem          Inodes   IUsed     IFree IUse% Mounted on
+/dev/nvme1n1p1    67108864  104743  67004121    1% /tmp
+/dev/nvme1n1p2   421271552 2653865 418617687    1% /fast
+tmpfs              3965224      51   3965173    1% /dev/shm
+/dev/mapper/root         0       0         0     - /
+exit=0
+$ findmnt -n -o TARGET,FSTYPE,OPTIONS /tmp /fast / /dev/shm
+exit=1
+$ btrfs sysfs allocation values uuid=1d02a454-c549-4a35-b567-89d60902af8e
+data/total_bytes=277033779200 exit=0
+data/bytes_used=242055213056 exit=0
+metadata/total_bytes=61203283968 exit=0
+metadata/bytes_used=41824190464 exit=0
+system/total_bytes=33554432 exit=0
+system/bytes_used=65536 exit=0
+global_rsv_size=536870912 exit=0
+global_rsv_reserved=536870912 exit=0
+kernel=7.2.11-arch1-1

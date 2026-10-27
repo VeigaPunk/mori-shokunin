@@ -1,0 +1,2 @@
+C1=unmet scope=78 rows=0 matched=0 status_ok=0 line_ok=0 source_rows=bad pins=bad provenance=bad same=0 moved=0 changed=0 broken=0 holds=0 stale=0 voted=0 dissent=0 rev=ca52426ea496bc6592e3e867cc9d28843e45f196 failed=ledger_absent,pins
+exit=1
