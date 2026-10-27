@@ -1,0 +1,15 @@
+Round-58 claim measurements on lane data commit 7d317495245fec896c6ee7214d8eb995ad2302ba.
+
+C1 counting command:
+python3 .ufo/waves/round-58/count-c1.py 7d317495245fec896c6ee7214d8eb995ad2302ba
+Output: C1=met rows=2 pointers=ok manifest=ok binding=ok failed=none rev=7d317495245fec896c6ee7214d8eb995ad2302ba
+Exit: 0
+Frozen target at contract.md:30 additionally requires `selftest=ok`; count-c1.py:124-125 cannot emit it. Separate TMPDIR-scoped selftest: C1_SELFTEST pass=4 fail=0, exit 0 (`selftest-scratch.txt`). W1 falsified the frozen pointer/active-register/row-key/MANIFEST checks with fixtures; see reports and lesson. C1 verdict: unverified under the frozen target; no counter/contract edits after freeze.
+
+C2 counting command:
+python3 .ufo/waves/round-58/count-c2.py 7d317495245fec896c6ee7214d8eb995ad2302ba
+Output: C2=met claims=11 located=11 copy=ok tree=ok rows=ok sources=ok failed=none rev=7d317495245fec896c6ee7214d8eb995ad2302ba
+Exit: 0
+Separate TMPDIR-scoped selftest: C2_SELFTEST pass=6 fail=0, exit 0 (`selftest-scratch.txt`). The actual 11 K-claims are distinct and manually checked against the frozen source lines; copy and tool SHA-256 are equal. However W1 falsified frozen C2 control (c): body-only strings with no frontmatter score `sources=ok`/C2=met; it also found duplicate-line, fabricated-span, used-by substring, CRLF-normalization and extra-column false greens. C2 verdict: unverified under its frozen kill rule; no counter/contract edits after freeze.
+
+Round-start controls are `.ufo/waves/round-58/evidence/controls.txt`; compliant selftests are `.ufo/waves/round-58/evidence/selftest-scratch.txt`. Frozen contract/counter hashes: contract 3aeff1d1766f4ddcc8732924a77ea48767fb9695515c71e76ea175546d2e5223, C1 6ecdb627bb55522c258dc484ed5c530cfd6f7c57c6a89b4c38179df4c0f84e4b, C2 aab888ad787964f7a153d64d85dafa58f652f977e21e22eaa492706a691010d3.
