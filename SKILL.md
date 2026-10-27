@@ -1184,8 +1184,8 @@ different tally, or a tally whose exit code contradicts it, or a digest/line-cou
 | `COMMIT_HEURISTIC` (mode 0), exit 0 | only one request above RAM + swap is refused (`single_request_cap_kb`); `over_limit_not_enforced` when Committed_AS exceeds CommitLimit | a host out of commit room |
 | `COMMIT_UNLIMITED` (mode 1), exit 0 | the commit test always passes | memory left — read `MemAvailable` (`memavailable-estimate-r51.md`) |
 | `COMMIT_OK` (mode 2), exit 0 | `usable_kb` (limit − committed − admin and user reserves) is above `band_kb` | room for any allocation of `usable_kb`: the reserve is per process, the band an upper bound |
-| `COMMIT_LOW` (mode 2), exit 1 | `usable_kb ≤ band_kb`: inside the per-CPU counter's error band a non-root allocation may already be refused (S511–S513, S499) | a calibrated alarm threshold (FR8 open) |
-| `COMMIT_UNKNOWN`, exit 2 | an input is missing, unreadable or malformed, or the mode is outside 0–2 (`notes`) | zero room, or a pass |
+| `COMMIT_LOW` (mode 2), exit 1 | `usable_kb ≤ band_kb`: inside the per-CPU counter's error band the printed figures no longer decide the next request — net-negative local deltas can refuse a non-root allocation while they show room, net-positive deltas can admit past them (S511–S513, S499) | a calibrated alarm threshold (FR8 open), or a prediction of refusal |
+| `COMMIT_UNKNOWN`, exit 2 | an input is missing, unreadable, not a regular file, over 1 MiB, not ASCII or malformed; the mode is outside 0–2; `--page-kb` is not a power of two in 1..1024; or a usage error (`notes`) | zero room, or a pass |
 | `limit_mismatch` finding | the recomputed `vm_commit_limit()` differs from the printed CommitLimit: the inputs were misread (page size, Hugetlb) | a kernel fault |
 
 ### Error patterns (commit runway)
@@ -1193,6 +1193,7 @@ different tally, or a tally whose exit code contradicts it, or a digest/line-cou
 - Reading `Committed_AS > CommitLimit` under mode 0 as exhaustion: mode 0 never compares them (S497, S499).
 - Subtracting only `admin_reserve_kbytes`: a non-root process also loses up to `user_reserve_kbytes` (vm.rst).
 - Treating `Committed_AS` as the enforced value: it is the exact sum; the test reads the global count (S513, S499).
+- Reading the band as one-sided: each CPU's local delta is signed, so the enforced read can sit above or below the exact sum by up to the band (S512, `mman.h.v7.3:76-84`); and after a CPU hot-add the batch is not recomputed, so the true bound can exceed the reported band (`commit-runway-read-r53.md` Boundaries).
 
 ### Release recheck rule (`corpus/knowledge/kernel-v7.3-recheck-r53.md`)
 
@@ -1205,4 +1206,4 @@ either way its disposition (`holds` / `changed`) is a reading of the new file, n
 
 | name | kind | entry | verdict map | self-test | pinned values | write scope | owner |
 |---|---|---|---|---|---|---|---|
-| commit runway (r53, C2) | gate (host-surface verdict; not a census or fleet-admission gate) | `python3 -I -B tools/mori-commit-runway.py [--meminfo PATH] [--vm-dir DIR] [--cpu-present PATH] [--page-kb N] [--selftest [--cases FILE]]` — defaults `/proc/meminfo`, `/proc/sys/vm`, `/sys/devices/system/cpu/present`, the system page size; read-only | 0 → clean (`COMMIT_OK`, `COMMIT_HEURISTIC`, `COMMIT_UNLIMITED`) · 1 → failed (`COMMIT_LOW`) · 2 → could-not-evaluate (`COMMIT_UNKNOWN`, usage error) | `python3 -I -B tools/mori-commit-runway.py --selftest` → `MORI_COMMIT_RUNWAY_SELFTEST: PASS 23/23` (also prints `MATCHER: rejected 23/23 corrupted expectations`) | `tools/fixtures/mori-commit-runway/cases.json` (23 cases) | none (selftest: a temporary directory under `$TMPDIR`) | mori |
+| commit runway (r53, C2) | gate (host-surface verdict; not a census or fleet-admission gate) | `python3 -I -B tools/mori-commit-runway.py [--meminfo PATH] [--vm-dir DIR] [--cpu-present PATH] [--page-kb N] [--selftest [--cases FILE]]` — defaults `/proc/meminfo`, `/proc/sys/vm`, `/sys/devices/system/cpu/present`, the system page size; read-only | 0 → clean (`COMMIT_OK`, `COMMIT_HEURISTIC`, `COMMIT_UNLIMITED`) · 1 → failed (`COMMIT_LOW`) · 2 → could-not-evaluate (`COMMIT_UNKNOWN`, usage error) | `python3 -I -B tools/mori-commit-runway.py --selftest` → `MORI_COMMIT_RUNWAY_SELFTEST: PASS 31/31` (26 cases plus 5 built-in hostile-input checks; also prints `MATCHER: rejected 26/26 corrupted expectations`) | `tools/fixtures/mori-commit-runway/cases.json` (26 cases) | none (selftest: a temporary directory under `$TMPDIR`) | mori |

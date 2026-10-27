@@ -4,18 +4,22 @@ source: S499 — https://raw.githubusercontent.com/torvalds/linux/v7.2/mm/util.c
 source: S511 — https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/mm/mm_init.c?h=v7.2 — code, tier A, mm/mm_init.c at tag v7.2 (mm_compute_batch), committed copy `corpus/evidence/sources-r53/mm_init.c.v7.2`, opened 2026-10-26
 source: S512 — https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/lib/percpu_counter.c?h=v7.2 — code, tier A, lib/percpu_counter.c at tag v7.2 (percpu_counter_add_batch), committed copy `corpus/evidence/sources-r53/percpu_counter.c.v7.2`, opened 2026-10-26
 source: S513 — https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/include/linux/percpu_counter.h?h=v7.2 — code, tier A, include/linux/percpu_counter.h at tag v7.2 (percpu_counter_read_positive), committed copy `corpus/evidence/sources-r53/percpu_counter.h.v7.2`, opened 2026-10-26
+source: S514 — https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/mm/mm_init.c?h=v7.3 — code, tier A, mm/mm_init.c at tag v7.3 (mm_compute_batch unchanged), committed copy `corpus/evidence/sources-r53/mm_init.c.v7.3`, opened 2026-10-26
 verified-at: 2026-10-26
-recheck: on-release — `python3 -I -B tools/mori-commit-runway.py --selftest` (the reading below as 23 frozen cases); at the next tag fetch the three paths with `curl -fsSL 'https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/<path>?h=<tag>'` and compare `mm_compute_batch`, `percpu_counter_add_batch` and `percpu_counter_read_positive` with the copies
+recheck: on-release — `python3 -I -B tools/mori-commit-runway.py --selftest` (the reading below as 26 frozen cases and 5 hostile-input checks); at the next tag fetch the three paths with `curl -fsSL 'https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/<path>?h=<tag>'` and compare `mm_compute_batch`, `percpu_counter_add_batch` and `percpu_counter_read_positive` with the copies
 coverage-map: resource runway (the commit ledger moves from knowledge, round 52, into a tool, `tools/mori-commit-runway.py`)
 
 Round 52 said what `CommitLimit` and `Committed_AS` are and that the limit is enforced only under
 `vm.overcommit_memory = 2` (`overcommit-commit-limit-r52.md`). A runway read needs one more fact: how close to the
-limit the kernel's own test can be wrong. `Committed_AS` in /proc/meminfo is an exact sum over CPUs; the mode-2
-test reads only the global part of a per-CPU counter, which lags the sum by less than one batch per CPU. The
-batch is sized by policy: under mode 2 it is about 0.4 % of RAM per CPU, with a floor of `max(2 × CPUs, 32)`
-pages. `tools/mori-commit-runway.py` reports, under mode 2, `usable_kb` (limit minus committed minus both
-reserves) and `band_kb` (batch × present CPUs × page size), and says `COMMIT_LOW` when the usable room is inside
-the band: there, a non-root allocation may already be refused although the printed numbers still show room.
+limit the kernel's own test can disagree with the printed figure. `Committed_AS` in /proc/meminfo is an exact
+sum over CPUs; the mode-2 test reads only the global part of a per-CPU counter. Each CPU holds a signed local
+delta below one batch (charges add, uncharges subtract), so the global part differs from the exact sum by less
+than one batch per CPU, in either direction. The batch is sized by policy: under mode 2 it is about 0.4 % of RAM
+per CPU, with a floor of `max(2 × CPUs, 32)` pages. `tools/mori-commit-runway.py` reports, under mode 2,
+`usable_kb` (limit minus committed minus both reserves) and `band_kb` (batch × present CPUs × page size), and
+says `COMMIT_LOW` when the usable room is inside the band: there the outcome of the next request is not decided
+by the printed numbers — with net-negative local deltas a non-root allocation can be refused while they still
+show room, with net-positive deltas the kernel can admit past them.
 
 ## Claims
 
@@ -36,21 +40,27 @@ the band: there, a non-root allocation may already be refused although the print
 |---|---|---|---|
 | 0 (guess, the default) | `COMMIT_HEURISTIC`, exit 0 | only one request larger than RAM + swap is refused (`single_request_cap_kb`); `CommitLimit` is printed, not enforced, and `Committed_AS` above it is normal (`over_limit_not_enforced` finding) | that the host is out of commit room |
 | 1 (always) | `COMMIT_UNLIMITED`, exit 0 | the commit test always passes | anything about memory left; read `MemAvailable` (`memavailable-estimate-r51.md`) |
-| 2 (never) | `COMMIT_OK` (0) or `COMMIT_LOW` (1) | `usable_kb` = CommitLimit − Committed_AS − admin_reserve_kbytes − user_reserve_kbytes; LOW when `usable_kb ≤ band_kb` | a calibrated alarm (FR8 stays open); the band is an upper bound, not a measured deviation; root keeps the admin reserve |
+| 2 (never) | `COMMIT_OK` (0) or `COMMIT_LOW` (1) | `usable_kb` = CommitLimit − Committed_AS − admin_reserve_kbytes − user_reserve_kbytes; LOW when `usable_kb ≤ band_kb`: the printed figures no longer decide the next request, in either direction | a calibrated alarm (FR8 stays open); a prediction of refusal; the band is an upper bound, not a measured deviation; `usable_kb` models the strictest caller (non-root, full user reserve) — root keeps the admin reserve |
 | any, inputs missing or malformed | `COMMIT_UNKNOWN`, exit 2 | the reason is in `notes` | a zero or a pass |
 
 `limit_consistent` recomputes `vm_commit_limit()` from MemTotal, Hugetlb, SwapTotal and the ratio (or
 `overcommit_kbytes`); a mismatch (`limit_mismatch`) means the reading of the inputs is off, not the kernel's.
-On this host on 2026-10-26 (mode 0, 32 present CPUs, MemTotal 31721796 kB): the recomputed limit equals the
-printed 47583772 kB and Committed_AS exceeds it — `COMMIT_HEURISTIC` with `over_limit_not_enforced`, exit 0.
+On this host on the evening of 2026-10-26 (mode 0, 32 present CPUs, MemTotal 31721796 kB) the recomputed limit
+equals the printed 47583772 kB in every read. Committed_AS moves with load: 60169456 kB at the L1's read (about
+22:20 -03, above the limit — `COMMIT_HEURISTIC` with `over_limit_not_enforced`, exit 0) and 41354964 kB at the
+wave seat `Mo53ScoutRunwayTools`' read later (below it, no finding). Under mode 0 neither reading is a fault.
 
 ## Boundaries
 
-- v7.2 bytes, the host's kernel line (7.2.11); the batch rule is unchanged at v7.3 (`mm_compute_batch` in the
-  v7.3 copy differs only by its line number).
-- The band uses present CPUs and today's totalram; memory hotplug recomputes the batch, a balloon that changes
-  totalram without hotplug does not, and offline CPUs' deltas are folded at hotplug — the band is a bound for the
-  common case, not a proof.
+- v7.2 bytes, the host's kernel line (7.2.11); the batch rule is unchanged at v7.3: `mm_compute_batch` in
+  `corpus/evidence/sources-r53/mm_init.c.v7.3:195-214` (S514) is byte-identical to `mm_init.c.v7.2:191-210`
+  (`diff` of the two ranges is empty).
+- The band uses present CPUs and today's totalram. Memory hotplug and a write of the overcommit sysctl recompute
+  the batch (`mm_init.c.v7.2:212-233`, `util.c.v7.2:806-831`); CPU hotplug does not — a dying CPU only folds its
+  delta into the global count (`percpu_counter.c.v7.2:266-286`) — and a balloon that changes totalram without
+  hotplug does not either. After a CPU hot-add the batch stays sized for the old CPU count, so the true bound can
+  exceed the reported band. The band is a bound for the common case, not a proof (round-53 wave
+  `Mo53ScribeSkill`, `Mo53RevC2Counter`).
 - The per-process user reserve is `min(total_vm/32, user_reserve_kbytes)`; the tool subtracts the full reserve
   (worst case for a large process).
 - Read-only. Choosing an overcommit mode, a ratio or a reserve is the operator's; OS-state triage is tsukuroi's.

@@ -747,8 +747,104 @@
     "overcommit_ratio": "50\n",
     "user_reserve_kbytes": "131072\n"
    }
+  },
+  {
+   "expect": {
+    "band_kb": null,
+    "batch_pages": null,
+    "commit_limit_kb": null,
+    "committed_as_kb": null,
+    "cpus_present": null,
+    "enforced": null,
+    "headroom_kb": null,
+    "limit_consistent": null,
+    "limit_recomputed_kb": null,
+    "mode": null,
+    "reserve_kb": null,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": null,
+    "verdict": "COMMIT_UNKNOWN"
+   },
+   "expect_exit": 2,
+   "expect_findings": [],
+   "id": "unknown-memtotal-30-digits",
+   "meminfo": "MemTotal:         999999999999999999999999999999 kB\nMemFree:          2796202 kB\nMemAvailable:     4194304 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:      4194304 kB\nCommitted_AS:     4000000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-31\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": null,
+    "batch_pages": null,
+    "commit_limit_kb": null,
+    "committed_as_kb": null,
+    "cpus_present": null,
+    "enforced": null,
+    "headroom_kb": null,
+    "limit_consistent": null,
+    "limit_recomputed_kb": null,
+    "mode": null,
+    "reserve_kb": null,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": null,
+    "verdict": "COMMIT_UNKNOWN"
+   },
+   "expect_exit": 2,
+   "expect_findings": [],
+   "id": "unknown-cpulist-overlapping",
+   "meminfo": "MemTotal:         8388608 kB\nMemFree:          2796202 kB\nMemAvailable:     4194304 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:      4194304 kB\nCommitted_AS:     4000000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-2,1-3\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
+  },
+  {
+   "expect": {
+    "band_kb": null,
+    "batch_pages": null,
+    "commit_limit_kb": null,
+    "committed_as_kb": null,
+    "cpus_present": null,
+    "enforced": null,
+    "headroom_kb": null,
+    "limit_consistent": null,
+    "limit_recomputed_kb": null,
+    "mode": null,
+    "reserve_kb": null,
+    "schema": "mori-commit-runway-v1",
+    "single_request_cap_kb": null,
+    "usable_kb": null,
+    "verdict": "COMMIT_UNKNOWN"
+   },
+   "expect_exit": 2,
+   "expect_findings": [],
+   "id": "unknown-cpulist-above-ceiling",
+   "meminfo": "MemTotal:         8388608 kB\nMemFree:          2796202 kB\nMemAvailable:     4194304 kB\nSwapTotal:              0 kB\nSwapFree:               0 kB\nCommitLimit:      4194304 kB\nCommitted_AS:     4000000 kB\nHugetlb:                0 kB\nHugePages_Total:       0\nHugepagesize:       2048 kB\n",
+   "page_kb": 4,
+   "present": "0-65536\n",
+   "vm": {
+    "admin_reserve_kbytes": "8192\n",
+    "overcommit_kbytes": "0\n",
+    "overcommit_memory": "2\n",
+    "overcommit_ratio": "50\n",
+    "user_reserve_kbytes": "131072\n"
+   }
   }
  ],
- "note": "Expected values computed from the round-53 counter's REF reading (.ufo/waves/round-53/count-c2.py, frozen at f4da3fd4) and checked by hand for host-mode0-over-limit (CommitLimit 47583772 = (7930449*50//100 + 7930719)*4), mode2-ok (batch 256, band 32768, usable 55040) and mode2-low-inside-band (usable 25040 <= 32768); findings derived from the documented rules.",
+ "note": "Expected values computed from the round-53 counter's REF reading (.ufo/waves/round-53/count-c2.py, frozen at f4da3fd4) and checked by hand for host-mode0-over-limit (CommitLimit 47583772 = (7930449*50//100 + 7930719)*4), mode2-ok (batch 256, band 32768, usable 55040) and mode2-low-inside-band (usable 25040 <= 32768); findings derived from the documented rules. Round-53 integration added three hand-written UNKNOWN cases (a 30-digit MemTotal, an overlapping CPU list, a CPU list naming 65537 CPUs) after the wave's hostile-input findings; their expectations are not REF readings (REF accepts all three).",
  "schema": "mori-commit-runway-cases-v1"
 }
