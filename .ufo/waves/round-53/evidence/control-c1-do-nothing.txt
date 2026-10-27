@@ -1,0 +1,4 @@
+# control c1-do-nothing (parts: -); clone of the lane at 20edafa59b38dac1ca358893f0259b1f436372d3, control commit 20edafa59b38dac1ca358893f0259b1f436372d3
+$ python3 .ufo/waves/round-53/count-c1.py 20edafa59b38dac1ca358893f0259b1f436372d3 --repo /fast/scratch/hyaku/mori-r53/L1/controls/clone-c1-do-nothing
+C1=unmet scope=46 rows=0 matched=0 status_ok=0 quote_ok=0 source_rows=bad pins=bad provenance=bad held=0 absent=0 holds=0 changed=0 voted=0 dissent=0 rev=20edafa59b38dac1ca358893f0259b1f436372d3 failed=ledger_absent,pins
+exit=1

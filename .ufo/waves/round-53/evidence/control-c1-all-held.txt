@@ -1,0 +1,4 @@
+# control c1-all-held (parts: ledger,allheld,rows,votes); clone of the lane at 20edafa59b38dac1ca358893f0259b1f436372d3 + round-53 freeze files, control commit 1b0ca6b36afdbad6dae3d8c2500905bdce8c69ec
+$ python3 .ufo/waves/round-53/count-c1.py 1b0ca6b36afdbad6dae3d8c2500905bdce8c69ec --repo /fast/scratch/hyaku/mori-r53/L1/controls/clone-c1-all-held
+C1=unmet scope=46 rows=46 matched=46 status_ok=44 quote_ok=44 source_rows=ok pins=ok provenance=ok held=44 absent=2 holds=46 changed=0 voted=46 dissent=0 rev=1b0ca6b36afdbad6dae3d8c2500905bdce8c69ec failed=quote,status
+exit=1

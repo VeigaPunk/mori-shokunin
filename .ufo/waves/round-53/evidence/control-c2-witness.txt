@@ -1,0 +1,4 @@
+# control c2-witness (parts: -); clone of the lane at 20edafa59b38dac1ca358893f0259b1f436372d3 + round-53 freeze files, control commit 2890d6c3e09fb0d1dd81e18515a320e29e0d15bd
+$ python3 .ufo/waves/round-53/count-c2.py 2890d6c3e09fb0d1dd81e18515a320e29e0d15bd --repo /fast/scratch/hyaku/mori-r53/L1/controls/clone-c2-witness --scratch /fast/scratch/hyaku/mori-r53/L1/controls/c2-c2-witness
+C2=met tool=present selftest=pass n=12 fixtures=80 agree=80 disagree=0 registry=ok live=ok rev=2890d6c3e09fb0d1dd81e18515a320e29e0d15bd
+exit=0

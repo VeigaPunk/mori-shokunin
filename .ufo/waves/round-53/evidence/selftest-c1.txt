@@ -1,0 +1,40 @@
+$ python3 .ufo/waves/round-53/count-c1.py --selftest
+ok   honest_met
+ok   ledger_absent_unmet
+ok   no_table_unmet
+ok   missing_row_unmet
+ok   extra_row_unmet
+ok   duplicate_row_unmet
+ok   all_held_unmet
+ok   held_labelled_absent_unmet
+ok   held_with_other_quote_unmet
+ok   replacement_not_located_unmet
+ok   replacement_too_short_unmet
+ok   replacement_from_other_file_unmet
+ok   wrong_entry_unmet
+ok   bad_disposition_unmet
+ok   row_not_mined_unmet
+ok   row_opened_earlier_unmet
+ok   row_usedby_unmet
+ok   row_v72_url_unmet
+ok   indented_rows_met
+ok   row_other_path_unmet
+ok   provenance_unmet
+ok   pin_tampered_unmet
+ok   pin_missing_unmet
+ok   no_votes_unmet
+ok   one_voter_unmet
+ok   same_voter_twice_unmet
+ok   non_voters_unmet
+ok   fenced_votes_unmet
+ok   dissent_unmet
+ok   revised_dissent_met
+ok   fenced_dissent_ignored_met
+ok   non_voter_dissent_ignored_but_one_voter_unmet
+ok   author_vote_not_counted_unmet
+ok   fenced_quote_proposal_ignored_met
+ok   all_changed_with_votes_met
+ok   empty_scope_unmet
+ok   scope_reader
+C1_SELFTEST pass=37 fail=0
+exit=0

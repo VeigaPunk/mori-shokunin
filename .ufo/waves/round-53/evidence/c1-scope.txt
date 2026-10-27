@@ -1,0 +1,49 @@
+$ python3 .ufo/waves/round-53/count-c1.py --scope
+h=2d0daa4192f1 entry=corpus/knowledge/memavailable-estimate-r51.md path=Documentation/filesystems/proc.rst quote=An estimate of how much memory is available for starting new applications, without swapping.
+h=72cdbee44353 entry=corpus/knowledge/memavailable-estimate-r51.md path=Documentation/filesystems/proc.rst quote=In-memory cache for files read from the disk (the pagecache) as well as tmpfs & shmem.
+h=a9cf30c5ed71 entry=corpus/knowledge/memavailable-estimate-r51.md path=Documentation/filesystems/proc.rst quote=Total memory used by shared memory (shmem) and tmpfs
+h=ad57d1b66582 entry=corpus/knowledge/memavailable-estimate-r51.md path=Documentation/filesystems/proc.rst quote=The impact of those factors will vary from system to system.
+h=eba2b78b47f3 entry=corpus/knowledge/memavailable-estimate-r51.md path=Documentation/filesystems/proc.rst quote=Calculated from MemFree, SReclaimable, the size of the file LRU lists, and the low watermarks in each zone.
+h=357c747c23d2 entry=corpus/knowledge/memavailable-estimate-r51.md path=fs/proc/meminfo.c quote=show_val_kb(m, "MemFree: ", i.freeram); show_val_kb(m, "MemAvailable: ", available);
+h=6c2327e19df1 entry=corpus/knowledge/memavailable-estimate-r51.md path=fs/proc/meminfo.c quote=seq_put_decimal_ull_width(m, s, num << (PAGE_SHIFT - 10), 8); seq_write(m, " kB\n", 4);
+h=7e14f1771092 entry=corpus/knowledge/memavailable-estimate-r51.md path=fs/proc/meminfo.c quote=cached = global_node_page_state(NR_FILE_PAGES) - total_swapcache_pages() - i.bufferram;
+h=8f6d04247472 entry=corpus/knowledge/memavailable-estimate-r51.md path=include/linux/mm_inline.h quote=1 if @folio is a regular filesystem backed page cache folio * or a lazily freed anonymous folio (e.g. via MADV_FREE).
+h=d6001a798ea7 entry=corpus/knowledge/memavailable-estimate-r51.md path=include/linux/mm_inline.h quote=0 if @folio is a normal anonymous folio, a tmpfs folio or otherwise * ram or swap backed folio.
+h=0a908e8eb4f3 entry=corpus/knowledge/memavailable-estimate-r51.md path=mm/show_mem.c quote=without causing swapping or OOM. */ available = global_zone_page_state(NR_FREE_PAGES) - totalreserve_pages;
+h=1b9c863ec2c2 entry=corpus/knowledge/memavailable-estimate-r51.md path=mm/show_mem.c quote=Not all the page cache can be freed, otherwise the system will * start swapping or thrashing.
+h=40b46a312e03 entry=corpus/knowledge/memavailable-estimate-r51.md path=mm/show_mem.c quote=struct zone *zone; for_each_zone(zone) wmark_low += low_wmark_pages(zone);
+h=58ba82f481b8 entry=corpus/knowledge/memavailable-estimate-r51.md path=mm/show_mem.c quote=Part of the reclaimable slab and other kernel memory consists of * items that are in use, and cannot be freed.
+h=6b8f33ed528e entry=corpus/knowledge/memavailable-estimate-r51.md path=mm/show_mem.c quote=pagecache -= min(pagecache / 2, wmark_low); available += pagecache;
+h=6c8b6efc9731 entry=corpus/knowledge/memavailable-estimate-r51.md path=mm/show_mem.c quote=cache, needs to stay. */ pagecache = global_node_page_state(NR_ACTIVE_FILE) + global_node_page_state(NR_INACTIVE_FILE);
+h=cbcd91de05ac entry=corpus/knowledge/memavailable-estimate-r51.md path=mm/show_mem.c quote=reclaimable -= min(reclaimable / 2, wmark_low); available += reclaimable;
+h=d901a2d666fb entry=corpus/knowledge/memavailable-estimate-r51.md path=mm/show_mem.c quote=if (available < 0) available = 0; return available;
+h=00e2a9db523b entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/admin-guide/sysctl/vm.rst quote=When overcommit_memory is set to 2, "never overcommit" mode, reserve min(3% of current process size, user_reserve_kbytes) of free memory.
+h=35d642f1d0d9 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/admin-guide/sysctl/vm.rst quote=When this flag is 1, the kernel pretends there is always enough memory until it actually runs out.
+h=43cf2a78acdd entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/admin-guide/sysctl/vm.rst quote=When this flag is 0, the kernel compares the userspace memory request size against total memory plus swap and rejects obvious overcommits.
+h=5c40f6fa5c62 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/admin-guide/sysctl/vm.rst quote=Only one of them may be specified at a time. Setting one disables the other (which then appears as 0 when read).
+h=bfb15534fa5e entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/admin-guide/sysctl/vm.rst quote=That should provide enough for the admin to log in and kill a process, if necessary, under the default overcommit 'guess' mode.
+h=fcd0e7a78872 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/admin-guide/sysctl/vm.rst quote=When overcommit_memory is set to 2, the committed address space is not permitted to exceed swap plus this percentage of physical RAM.
+h=3b02f6680556 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/mm/overcommit-accounting.rst quote=The current overcommit limit and amount committed are viewable in
+h=3c2512af8468 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/mm/overcommit-accounting.rst quote=in most situations this means a process will not be killed while accessing pages but will receive errors on memory allocation as appropriate.
+h=61b7677d56fe entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/mm/overcommit-accounting.rst quote=The total address space commit for the system is not permitted to exceed swap + a configurable amount (default is 50%) of physical RAM.
+h=7b2fc298698e entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/mm/overcommit-accounting.rst quote=To Do ===== * Account ptrace pages (this is hard)
+h=921c2e511e09 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/mm/overcommit-accounting.rst quote=In mode 2 the MAP_NORESERVE flag is ignored.
+h=9afaa81505da entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/mm/overcommit-accounting.rst quote=Heuristic overcommit handling. Obvious overcommits of address space are refused. Used for a typical system.
+h=e37e65e64a4c entry=corpus/knowledge/overcommit-commit-limit-r52.md path=Documentation/mm/overcommit-accounting.rst quote=SHARED or READ-only - 0 cost (the file is the map not swap)
+h=02f5bfd6be3b entry=corpus/knowledge/overcommit-commit-limit-r52.md path=include/linux/mman.h quote=static inline void vm_acct_memory(long pages) { percpu_counter_add_batch(&vm_committed_as, pages, vm_committed_as_batch); }
+h=ff0d23e9fde8 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=include/linux/mman.h quote=static inline void vm_unacct_memory(long pages) { vm_acct_memory(-pages); }
+h=0fbd62f51ce8 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/mmap.c quote=We honor MAP_NORESERVE if allowed to overcommit */ if (sysctl_overcommit_memory != OVERCOMMIT_NEVER) vm_flags |= VM_NORESERVE;
+h=10ac5a250ac2 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/mmap.c quote=sysctl_user_reserve_kbytes = min(free_kbytes / 32, SZ_128K);
+h=1cadeed9914b entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/mmap.c quote=sysctl_admin_reserve_kbytes = min(free_kbytes / 32, SZ_8K);
+h=d7a1dc88dcb3 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/mmap.c quote=hugetlb applies strict overcommit unless MAP_NORESERVE */ if (file && is_file_hugepages(file)) vm_flags |= VM_NORESERVE;
+h=28d3042fded0 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c quote=allowed = ((totalram_pages() - hugetlb_total_pages()) * sysctl_overcommit_ratio / 100); allowed += total_swap_pages;
+h=2d64007fa0dc entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c quote=The deviation of sync_overcommit_as could be big with loose policy * like OVERCOMMIT_ALWAYS/OVERCOMMIT_GUESS.
+h=309f4487d8b6 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c quote=if (pages > totalram_pages() + total_swap_pages) goto error; return 0;
+h=41934e8b2887 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c quote=if (!cap_sys_admin) allowed -= sysctl_admin_reserve_kbytes >> (PAGE_SHIFT - 10);
+h=967021950067 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c quote=if (percpu_counter_read_positive(&vm_committed_as) < allowed) return 0;
+h=9cb0e908f997 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c quote=static int sysctl_overcommit_ratio __read_mostly = 50;
+h=a75ce7619818 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c quote=if (sysctl_overcommit_kbytes) allowed = sysctl_overcommit_kbytes >> (PAGE_SHIFT - 10);
+h=ca2418460394 entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c quote=pr_warn_ratelimited("%s: pid: %d, comm: %s, bytes: %lu not enough memory for the allocation\n",
+h=cddcf1bc062f entry=corpus/knowledge/overcommit-commit-limit-r52.md path=mm/util.c quote=vm_acct_memory(pages); /* * Sometimes we want to use more memory than we have */ if (sysctl_overcommit_memory == OVERCOMMIT_ALWAYS) return 0;
+scope=46
+exit=0

@@ -1,0 +1,4 @@
+# control c1-witness (parts: ledger,rows,votes); clone of the lane at 20edafa59b38dac1ca358893f0259b1f436372d3 + round-53 freeze files, control commit 07546461e8c4ac43900e6aa85c331030f742d550
+$ python3 .ufo/waves/round-53/count-c1.py 07546461e8c4ac43900e6aa85c331030f742d550 --repo /fast/scratch/hyaku/mori-r53/L1/controls/clone-c1-witness
+C1=met scope=46 rows=46 matched=46 status_ok=46 quote_ok=46 source_rows=ok pins=ok provenance=ok held=44 absent=2 holds=46 changed=0 voted=46 dissent=0 rev=07546461e8c4ac43900e6aa85c331030f742d550
+exit=0

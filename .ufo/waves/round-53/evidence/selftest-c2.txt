@@ -1,0 +1,33 @@
+$ TMPDIR=/fast/scratch/hyaku/mori-r53/L1/tmp python3 .ufo/waves/round-53/count-c2.py --selftest
+ok   ref_host_limit
+ok   ref_mode2_ok
+ok   ref_mode2_low
+ok   ref_small_batch
+ok   ref_batch_floor
+ok   ref_kbytes
+ok   ref_hugetlb
+ok   ref_present_parse
+ok   ref_mode1
+ok   ref_unknown_mode3
+ok   ref_unknown_drop
+ok   ref_unknown_dup
+ok   ref_unknown_garble
+ok   ref_unknown_vmdrop
+ok   ref_limit_mismatch
+ok   frozen_count
+ok   seeded_reproducible
+ok   seeded_varies
+ok   fixture_verdict_mix
+ok   harness_witness_met
+ok   harness_absent_unmet
+ok   harness_registry_unmet
+ok   harness_mutant_mode_blind_unmet
+ok   harness_mutant_no_band_unmet
+ok   harness_mutant_no_hugetlb_unmet
+ok   harness_mutant_string_numbers_unmet
+ok   harness_selftest_floor_unmet
+ok   harness_selftest_partial_unmet
+ok   harness_memoriser_unmet
+ok   harness_live_witness
+C2_SELFTEST pass=30 fail=0
+exit=0

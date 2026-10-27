@@ -1,0 +1,20 @@
+# sweeps at entering tip 20edafa59b38dac1ca358893f0259b1f436372d3 (2026-10-26T22:28:47-03:00)
+$ git grep -c -E 'CommitLimit|Committed_AS|overcommit_memory|overcommit_ratio|overcommit_kbytes|vm_committed_as|mm_compute_batch' 20edafa59b38dac1ca358893f0259b1f436372d3 -- tools/
+exit=1 (1 = no match)
+$ git grep -c -E 'v7\.3|7\.3\.0|tag v7\.3' 20edafa59b38dac1ca358893f0259b1f436372d3 -- corpus/knowledge corpus/SOURCES.md SKILL.md
+exit=1 (1 = no match)
+$ git grep -c -E 'percpu_counter|mm_compute_batch|vm_committed_as_batch' 20edafa59b38dac1ca358893f0259b1f436372d3 -- corpus SKILL.md
+20edafa59b38dac1ca358893f0259b1f436372d3:corpus/evidence/sources-r52/mman.h.v7.2:7
+20edafa59b38dac1ca358893f0259b1f436372d3:corpus/evidence/sources-r52/mmap.c.v7.2:1
+20edafa59b38dac1ca358893f0259b1f436372d3:corpus/evidence/sources-r52/util.c.v7.2:5
+20edafa59b38dac1ca358893f0259b1f436372d3:corpus/knowledge/overcommit-commit-limit-r52.md:2
+20edafa59b38dac1ca358893f0259b1f436372d3:corpus/lessons/round-52-verifier-spotcheck.md:1
+20edafa59b38dac1ca358893f0259b1f436372d3:corpus/lessons/round-52.md:2
+exit=0 (1 = no match)
+$ grep -rilE 'overcommit|CommitLimit|Committed_AS|percpu_counter|v7\.3' /home/vgpnk/Projects/shokuknow/merge/mori | wc -l
+0
+$ git ls-remote https://github.com/torvalds/linux refs/tags/v7.3 'refs/tags/v7.3^{}' refs/tags/v7.2
+237a1c39e8dfd3e1c6f1f023eea37a48ec04cc63	refs/tags/v7.2
+091b06388b117fefdcb63336ac09956a4914b961	refs/tags/v7.3
+c03c1a14507dfaf8b856c2608f9ac216021fc222	refs/tags/v7.3^{}
+exit=0

@@ -1,0 +1,13 @@
+# control c2-memoriser (parts: memoriser); clone of the lane at 20edafa59b38dac1ca358893f0259b1f436372d3 + round-53 freeze files, control commit 87f557175c27e013bfe7a08c9661ce0e5a77044b
+$ python3 .ufo/waves/round-53/count-c2.py 87f557175c27e013bfe7a08c9661ce0e5a77044b --repo /fast/scratch/hyaku/mori-r53/L1/controls/clone-c2-memoriser --scratch /fast/scratch/hyaku/mori-r53/L1/controls/c2-c2-memoriser
+C2=unmet tool=present selftest=pass n=12 fixtures=80 agree=71 disagree=9 registry=ok live=ok failed=fixtures rev=87f557175c27e013bfe7a08c9661ce0e5a77044b
+disagree seeded-01: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+disagree seeded-04: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+disagree seeded-06: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+disagree seeded-14: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+disagree seeded-19: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+disagree seeded-29: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+disagree seeded-43: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+disagree seeded-44: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+disagree seeded-56: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+exit=1

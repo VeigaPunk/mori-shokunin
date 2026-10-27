@@ -1,0 +1,13 @@
+# control c2-no-band (parts: no_band); clone of the lane at 20edafa59b38dac1ca358893f0259b1f436372d3 + round-53 freeze files, control commit dcd515560d8d8491b17c05c8b9e8561dada75617
+$ python3 .ufo/waves/round-53/count-c2.py dcd515560d8d8491b17c05c8b9e8561dada75617 --repo /fast/scratch/hyaku/mori-r53/L1/controls/clone-c2-no-band --scratch /fast/scratch/hyaku/mori-r53/L1/controls/c2-c2-no-band
+C2=unmet tool=present selftest=pass n=12 fixtures=80 agree=71 disagree=9 registry=ok live=ok failed=fixtures rev=dcd515560d8d8491b17c05c8b9e8561dada75617
+disagree mode2-band-edge-low: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+disagree seeded-04: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+disagree seeded-09: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+disagree seeded-13: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+disagree seeded-15: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+disagree seeded-16: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+disagree seeded-18: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+disagree seeded-40: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+disagree seeded-45: exit want=1 got=0; verdict want='COMMIT_LOW' got='COMMIT_OK'
+exit=1
