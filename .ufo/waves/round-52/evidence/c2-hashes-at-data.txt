@@ -1,0 +1,30 @@
+$ python3 .ufo/waves/round-52/count-c2.py --hashes 8524904adb25e44f24d9f25aac7eae909625c18c
+row=1 hash=9afaa81505da claim=Mode 0 is the default and refuses only allocations that are plainly too large, so it still lets the host overcommit.
+row=2 hash=61b7677d56fe claim=Only under mode 2 is the committed total capped, at swap plus a share of RAM that defaults to one half.
+row=3 hash=93b4fe285dc7 claim=Under mode 2 the documented failure is an allocation error at request time rather than a kill when pages are later touched.
+row=4 hash=3b02f6680556 claim=The documentation says the current limit and the committed amount are both published by the kernel for reading, as two meminfo lines.
+row=5 hash=921c2e511e09 claim=Under mode 2 a mapping request carrying MAP_NORESERVE is still charged against the commit limit.
+row=6 hash=e37e65e64a4c claim=Shared and read-only file mappings add nothing to the committed total, because the file itself backs those pages.
+row=7 hash=7b2fc298698e claim=The documentation still lists ptrace pages as unaccounted, so the committed total is not a complete ledger of every commitment.
+row=8 hash=43cf2a78acdd claim=In mode 0 a single request is compared with all RAM plus all swap, not with what is currently free.
+row=9 hash=35d642f1d0d9 claim=Mode 1 never refuses an allocation on commit grounds; the kernel behaves as though memory were unlimited until it is exhausted.
+row=10 hash=fcd0e7a78872 claim=The ratio setting is a percentage cap on physical RAM that applies only in mode 2, with swap added on top.
+row=11 hash=5c40f6fa5c62 claim=The kbytes and ratio knobs are mutually exclusive, so a ratio that reads 0 can simply mean the kbytes knob is in force.
+row=12 hash=00e2a9db523b claim=Mode 2 also holds back a user reserve sized from the requesting process and capped by the user_reserve_kbytes knob.
+row=13 hash=bfb15534fa5e claim=The admin reserve exists so that root can still log in and kill a runaway process when memory runs short.
+row=14 hash=28d3042fded0 claim=CommitLimit is RAM minus hugetlb pages, scaled by the ratio percentage, with every swap page then added on top.
+row=15 hash=a75ce7619818 claim=When the kbytes knob is nonzero it replaces the ratio term entirely, after conversion from kilobytes to pages.
+row=16 hash=309f4487d8b6 claim=In the default heuristic mode a request fails only when its own size exceeds all RAM plus all swap together.
+row=17 hash=cddcf1bc062f claim=Every request is charged to the committed counter before the mode is examined, so the counter grows under modes 0 and 1 too.
+row=18 hash=967021950067 claim=The never-overcommit test compares a fast approximate read of the per-CPU committed counter with the computed limit.
+row=19 hash=41934e8b2887 claim=Processes lacking CAP_SYS_ADMIN see the mode-2 limit lowered further by the admin reserve, converted to pages.
+row=20 hash=ca2418460394 claim=A refused request leaves a rate-limited kernel log warning that names the pid, the command and the byte count.
+row=21 hash=9cb0e908f997 claim=The compiled-in default for the ratio knob is fifty, meaning half of physical RAM under mode 2.
+row=22 hash=2d64007fa0dc claim=Under the loose modes the per-CPU counter may drift far from its true sum, which is why switching to mode 2 syncs every CPU first.
+row=23 hash=02f5bfd6be3b claim=Charging the committed total is a batched add into a per-CPU counter, not a write to one global variable.
+row=24 hash=ff0d23e9fde8 claim=Releasing a commitment uses the same batched add with the page count negated.
+row=25 hash=0fbd62f51ce8 claim=For ordinary mappings MAP_NORESERVE drops commit charging only when the mode is something other than never-overcommit.
+row=26 hash=d7a1dc88dcb3 claim=Hugetlb file mappings are charged strictly unless the caller passes MAP_NORESERVE, a carve-out the mode-2 rule does not mention.
+row=27 hash=10dc80bb5b2e claim=At boot the user reserve knob is set to the smaller of one thirty-second of free memory and 128 MiB.
+row=28 hash=42295e410c2b claim=At boot the admin reserve knob is set to the smaller of one thirty-second of free memory and 8 MiB.
+exit=0
