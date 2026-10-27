@@ -767,3 +767,19 @@ at v7.3 was not opened (`SOURCES.md` `## Leads (unopened)`, round-53 bullet); an
 `knowledge/oom-tracepoints-r47.md` (its own pin is `recheck: on-release`, and the v7.3 tag fires it too) and
 `knowledge/oom-memcg-stat-r50.md` (`recheck: 90d`) are unrechecked at v7.3
 (`knowledge/kernel-v7.3-recheck-r53.md` §Boundaries).
+
+## Round-54 coverage additions
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| Kill and OOM events — hardware memory-failure kills, a kill class outside the OOM path (new ground, knowledge only) | `knowledge/memory-failure-kills-r54.md` (S521–S524, S502, S507) | The SIGBUS/SIGKILL lines `mm/memory-failure.c` prints, the recovery-action line and its four outcomes, the per-node `memory_failure/*` counters, `HardwareCorrupted`, the recovery and early-kill sysctls and v7.3's panic switch, and `ras:memory_failure_event`, with a decision table for a death that has no OOM record; no tool reads these surfaces yet, and none was seen firing (this host's counters read 0) |
+| Freshness — the remaining v7.2-pinned claim rows rechecked at tag v7.3 | `knowledge/kernel-v7.3-recheck-r54.md` (S515–S520; S508, S514 reused) | The 31 claim rows of `oom-memcg-stat-r50.md`, `commit-runway-read-r53.md` and `quota-observability-r48.md` read at v7.3 with the line each quote now begins on; no claim-table row of the lane pins v7.2 unrechecked; prose anchors are out of scope |
+
+Dated note (append-only, 2026-10-27): the round-53 note's lead "`panic_on_unrecoverable_memory_failure` … `mm/memory-failure.c`
+at v7.3 was not opened" is answered by `knowledge/memory-failure-kills-r54.md`; the round-53 note's "unrechecked at
+v7.3" list loses `oom-memcg-stat-r50.md` (its claim table is in the round-54 ledger) and keeps
+`oom-tracepoints-r47.md` (a catalogue, not a claim table). No frontier row is rewritten. New leads, not held: the
+rendered cgroup-v2 7.3.0 page renames the `io.stat` throttle field `delay` → `delay_nsec` (microseconds →
+nanoseconds) and documents `memory.pressure`/`io.pressure` as read-write (`knowledge/kernel-v7.3-recheck-r54.md`
+`## Release drift`); the memory-error surfaces before `memory_failure()` runs (MCE decoding, EDAC, `rasdaemon`)
+are hardware-health ground the lane does not hold.

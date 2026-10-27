@@ -454,3 +454,23 @@ at `:94` has drifted (the default now sits near `:237`, `:321`; ScoutProvinceSta
   assign commit-accounting fault attribution to any lane); the lane reports the reading it made and no remediation. This note claims no
   admission: both claims are scored by the round-53 counters, and no census integration, threshold, baseline
   re-pin or frontier closure is added.
+
+## Round-54 appended scope notes (2026-10-27)
+
+- **Hardware memory-failure kills (kill events, knowledge only).** The kill/OOM ground above names catalog-ID
+  journal records, `memory.events` and the kernel OOM path. The kernel also kills for a hardware memory error:
+  `mm/memory-failure.c` sends SIGBUS (`BUS_MCEERR_AO`/`BUS_MCEERR_AR`) or, when the page cannot be unmapped, SIGKILL,
+  and records the event in the five per-node counters `/sys/devices/system/node/node<N>/memory_failure/*`, in
+  `HardwareCorrupted` of `/proc/meminfo` and in the `ras:memory_failure_event` tracepoint
+  (`corpus/knowledge/memory-failure-kills-r54.md`, S521–S524, S502, S507). None of it passes the OOM killer, so the
+  existing kill/OOM reads above never see it. This note adds the ground as knowledge: no probe, census surface or
+  tool reads it yet; counts come from the counters, never from kernel text (QUALITY 15).
+- **Boundaries:** injecting or unpoisoning memory, loading hwpoison-inject and writing `vm.memory_failure_*` or
+  `vm.panic_on_unrecoverable_memory_failure` are host actions (operator; host repair → tsukuroi); corrected-error
+  accounting (EDAC, `rasdaemon`, MCE decoding) is hardware-health ground the lane does not hold. Mori reads the
+  counters and reports.
+- **Freshness:** the remaining 31 claim rows that pinned Linux v7.2 (`oom-memcg-stat-r50.md`,
+  `commit-runway-read-r53.md`, `quota-observability-r48.md`) are rechecked at v7.3 in
+  `corpus/knowledge/kernel-v7.3-recheck-r54.md`; no claim-table row of the lane pins v7.2 unrechecked after this
+  round. Prose anchors outside the claim tables (`oom-tracepoints-r47.md`, `system-pressure-r24.md`, …) are not
+  rechecked. No ownership change; this section is appended at EOF, so no existing line citation moves.

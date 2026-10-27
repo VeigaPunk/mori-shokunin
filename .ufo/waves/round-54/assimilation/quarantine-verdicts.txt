@@ -1,0 +1,16 @@
+Round-54 mori absent-defect quarantine (read-only source repo; access date 2026-10-27)
+
+Slice command (run against the register header/rows, not its stale totals):
+awk -F'|' -v l='mori' '$2 ~ ("`" l "`") && $3 ~ /round[0-9]+/ && $4 ~ /S[0-9]+/ {print $4, $5}' /home/vgpnk/Projects/shokuknow/.ufo/waves/corpus-expansion-1/absent-defect-register.md
+Output (3 rows):
+S244`   the cited source could not be fetched, so no quote was checked
+S262`   the cited source could not be fetched, so no quote was checked
+S268`   the cited source could not be fetched, so no quote was checked
+
+S244 — UNVERIFIABLE, not fabrication. Opened https://doi.org/10.1145/3643916.3644413 via Crossref (title: “Rationale Dataset and Analysis for the Commit Messages of the Linux Kernel Out-of-Memory Killer”, published 2024-04-15; no abstract in Crossref response). Opened publisher URL https://dl.acm.org/doi/10.1145/3643916.3644413; reader returned HTTP 403. Web search surfaced an ACM abstract, but the old register row contains no locator/quote to compare and no publisher full text was accessible; therefore no fabricated-quote verdict is justified. Recheck/flip: open the ACM publisher record or full paper and compare the original Gate claim/quote.
+
+S262 — PRESENT at the cited source; the old “could not be fetched” family is stale. Re-opened the publisher-deposited PDF https://ieeexplore.ieee.org/ielx8/4629386/11644734/11540439.pdf with browser User-Agent: HTTP 200, 2,357,114 bytes, sha256 1603404dd25b3a0dff93f2dcb23c75b671d4e2d78da3cce8f461e87ebde6add2; pdftotext succeeds. Located the abstract sentence at extracted lines 17–22, printed page 3015: “Our study shows that Linux cgroups and the default Out-of-Memory (OOM) mechanism lack sufficient container context when selecting victim processes.” This agrees with `corpus/knowledge/oom-victim-context-r41.md:15-17` and the lane’s S262 abstract-level scope. Full text is separately recorded as S478 for the OOM tracepoints entry. No S262 data row changed in this round.
+
+S268 — PRESENT at the same opened publisher PDF. Located the introduction at extracted lines 121–126, printed page 3016: “It leverages eBPF to hook into OOM-related kernel tracepoints such as mark_victim, start_task_reaping, and finish_task_reaping to record OOM-triggering process metadata.” This supports the examples-as-such wording in `corpus/knowledge/oom-tracepoints-r47.md` and S478; it does not make the list an inventory of all kernel OOM events. No S268 data row changed in this round.
+
+No package entries/rows were adopted from `merge/mori/`; these quarantine rows did not concern the two frozen claims and were not used as a sourced claim. The Crossref/ACM attempts are recorded separately from the publisher PDF fetch; no source-repo file was written.

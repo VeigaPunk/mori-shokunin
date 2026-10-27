@@ -2846,3 +2846,18 @@ for SCORECARD claim rows (lesson M1); the frozen-counter weaknesses routed from 
 integrated findings`: filename-keyed voter identity, the C2 exit-code arm, REF importable from the archive); FR8's
 calibrated `COMMIT_LOW` threshold, which needs measured refusal behaviour and is not a counter change; the 30
 round-52 flags dropped without an owner (lesson considerthese section).
+
+**Round-53 correction:** the round-53 C1 and C2 After cells above cite the at-salvage receipts
+`evidence/c1-at-salvage.txt` and `evidence/c2-at-salvage.txt` (R = `0df803033fba2386b10f5dcc6aa96bdef65cba15`);
+the landed measurement of those rows is `.ufo/waves/round-53/evidence/c1-at-landed.txt` and
+`.ufo/waves/round-53/evidence/c2-at-landed.txt` (R = `0b36d23e596276c70725873621fe15a28c87189f`, the revision the
+round-53 report measures). The verdict lines are token-identical apart from `rev=` (`diff` of the `C1=`/`C2=` lines
+with `rev=` removed prints nothing, round-54 L1), so no number in the cells changes; the rows are retained as filed
+(append-only; round-53 closure D2, routed defect 1; lesson `corpus/lessons/round-54.md` M1).
+
+**Round-50 correction:** the same pattern, found by the round-54 sweep (`.ufo/waves/round-54/checks/receipt-stage.py
+39dcf4d7`): the round-50 C1 and C2 After cells cite `evidence/a2-c1-at-data.txt` and `evidence/a2-c2-at-data.txt`
+(R = `487941b9395e89678af0053cc443cdb49cdee6e3`), while `.ufo/waves/round-50/evidence/a2-c1-at-landed.txt` and
+`.ufo/waves/round-50/evidence/a2-c2-at-landed.txt` (R = `bae8656ea74a8ea3a4f2cf784e15cbeb91d9ad7d`) hold the landed
+measurement; the `C1=`/`C2=` lines are token-identical apart from `rev=` (`manifest=a94551c5bc8d` in both C1 lines).
+Rows retained as filed (lesson `corpus/lessons/round-54.md` M1).

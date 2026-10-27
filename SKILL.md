@@ -1207,3 +1207,40 @@ either way its disposition (`holds` / `changed`) is a reading of the new file, n
 | name | kind | entry | verdict map | self-test | pinned values | write scope | owner |
 |---|---|---|---|---|---|---|---|
 | commit runway (r53, C2) | gate (host-surface verdict; not a census or fleet-admission gate) | `python3 -I -B tools/mori-commit-runway.py [--meminfo PATH] [--vm-dir DIR] [--cpu-present PATH] [--page-kb N] [--selftest [--cases FILE]]` — defaults `/proc/meminfo`, `/proc/sys/vm`, `/sys/devices/system/cpu/present`, the system page size; read-only | 0 → clean (`COMMIT_OK`, `COMMIT_HEURISTIC`, `COMMIT_UNLIMITED`) · 1 → failed (`COMMIT_LOW`) · 2 → could-not-evaluate (`COMMIT_UNKNOWN`, usage error) | `python3 -I -B tools/mori-commit-runway.py --selftest` → `MORI_COMMIT_RUNWAY_SELFTEST: PASS 31/31` (26 cases plus 5 built-in hostile-input checks; also prints `MATCHER: rejected 26/26 corrupted expectations`) | `tools/fixtures/mori-commit-runway/cases.json` (26 cases) | none (selftest: a temporary directory under `$TMPDIR`) | mori |
+
+## Round54 — hardware memory-failure kills, and the v7.3 recheck of the remaining v7.2 rows
+
+| a process died, and `memory.events oom_kill`, the OOM catalog-ID notices and `oom:mark_victim` show nothing | not yet explained: hardware-memory failure can signal tasks outside the OOM-killer path (entry `## Claim`) | `/sys/devices/system/node/node*/memory_failure/total` and `HardwareCorrupted` in `/proc/meminfo` | "no kill happened" or "unexplained" before those two reads |
+| a per-node `memory_failure/total` above 0 | pages poisoned on that node since boot; `ignored`/`failed`/`delayed`/`recovered` split the outcomes (S523) | the `Memory failure:` kernel lines for which process, if any, was signalled | a process kill: a free or clean page can be recovered with no process signalled |
+| `HardwareCorrupted:` above `0 kB` | memory the kernel identifies as corrupted, host-wide, in kB (S502) | the per-node counters | a per-process or per-node figure |
+| kernel line `Memory failure: 0x…: Sending SIGBUS to <comm>:<pid> due to hardware memory corruption` | SIGBUS to that process: forced `BUS_MCEERR_AR` if it consumed the poisoned data; ordinary `BUS_MCEERR_AO` to a mapper selected for early-kill (S521 `kill_proc`, `task_early_kill`) | that the process died: `BUS_MCEERR_AO` is catchable, and delivery can fail | a death, or a count — kernel text is attribution, never a tally (QUALITY 15) |
+| kernel line `Memory failure: 0x…: forcibly killing <comm>:<pid> because of failure to unmap corrupted page` | SIGKILL sent to a collected task whose user address was unresolved during a forced kill; the message text is used for other forced-kill causes too (S521 `kill_procs`) | an OOM kill; `memory.events oom_kill` does not move |
+| kernel line `Memory failure: 0x…: recovery action for <page type>: Ignored\|Failed\|Delayed\|Recovered` | one recovery attempt that reached an outcome; only Recovered and Delayed are success (S521 `action_result`) | proof that any process was signalled |
+| panic banner `Kernel panic - not syncing: Memory failure: 0x…: unrecoverable page` | `panic_on_unrecoverable_memory_failure` was 1 and a kernel-owned page came back Ignored; its recovery-action line precedes the panic (S521, S507) | a process kill |
+| panic banner `Kernel panic - not syncing: Memory failure on page <hex>` | `memory_failure_recovery` was 0; recovery is disabled and the memory error panicked (S521) | a SIGBUS or OOM-killer event |
+| all five counters 0 and `HardwareCorrupted: 0 kB` (this host, 2026-10-27) | no memory failure is represented in these counters since boot | that the hardware is healthy |
+
+Sysctls (read, never write): `vm.memory_failure_recovery` 1 = attempt recovery, 0 = every memory failure panics;
+`vm.memory_failure_early_kill` 0 (default; this host) = signal selected tasks on access, 1 = signal selected mappers
+when the error is detected; `vm.panic_on_unrecoverable_memory_failure` is documented at v7.3 (absent from the v7.2
+copy and this 7.2.11 host): 1 = panic on unrecoverable kernel-owned pages, 0 (default) = ignore and continue.
+The event-time hook is `ras:memory_failure_event` — under `ras`, not `oom` (S524); on this host tracefs is
+root-only (`0700 root`), and kernel text is readable through journald, not `dmesg` (`dmesg_restrict=1`).
+
+### Error patterns (memory-failure kills)
+
+- Calling a death unexplained after checking only OOM evidence: the memory-failure counters are a second kill source
+  (QUALITY 151).
+- Counting `Memory failure:` lines: kernel text has no `MESSAGE_ID`; count with the per-node counters, read the lines
+  for attribution only (QUALITY 15).
+- Reading a `Sending SIGBUS` line as a death: early kill uses a catchable signal, and delivery can fail.
+- Looking for the event under `oom` tracepoints: it is `ras:memory_failure_event` (S524).
+- Expecting `panic_on_unrecoverable_memory_failure` on the host: it is a v7.3 sysctl; the host runs 7.2.11.
+
+### Release recheck rule, round 54 (`corpus/knowledge/kernel-v7.3-recheck-r54.md`)
+
+The round-53 rule holds, with a located line: each ledger row names the v7.3 line on which its quote begins
+(`.ufo/waves/round-54/count-c1.py` derives it), so a recheck says where the claim now sits, not only that its
+words survive. At v7.3 the quoted lines moved in `mm/memcontrol.c` (+45, +84), `mm/mm_init.c` (+4) and the rendered
+cgroup-v2 page (+31); prose anchors written at v7.2 (`memcontrol.c:1774-1830`, …) are read with the ledger's
+`## Where the quotes moved` table, not as v7.3 positions.

@@ -1,0 +1,6 @@
+# run from a git archive of 78295c764093ff1f6cee08d7246679900bde7265 (lane data commit), TMPDIR=/fast/scratch/hyaku/mori-r54/Mo54ExecSelftestReceipts/tmp, 2026-10-27T02:05:15-03:00
+# tools/mori-commit-runway.py sha256=b3c123400f41a8e8d62e678d81175956c68a9735643a8a3cd09975666be1ffe4; 2 lines; wall 0.306s
+$ python3 -I -B tools/mori-commit-runway.py --selftest
+MATCHER: rejected 26/26 corrupted expectations
+MORI_COMMIT_RUNWAY_SELFTEST: PASS 31/31
+exit=0

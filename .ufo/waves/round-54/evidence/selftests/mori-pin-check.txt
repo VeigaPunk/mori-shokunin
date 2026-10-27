@@ -1,0 +1,10 @@
+# run from a git archive of 78295c764093ff1f6cee08d7246679900bde7265 (lane data commit), TMPDIR=/fast/scratch/hyaku/mori-r54/Mo54ExecSelftestReceipts/tmp, 2026-10-27T02:05:15-03:00
+# tools/mori-pin-check.py sha256=32685b9306db061d2c2df21e976823d84a4017cc3524194f4ed76327443081f0; 126 lines: 125 PASS, 0 FAIL; wall 18.026s
+$ python3 tools/mori-pin-check.py --selftest
+PASS v5_rev_export_outside_repo  rc=0 left=0
+PASS v51_scratch_inside_repo_refused  rc=2
+PASS v51_default_scratch_tmpdir_and_master_is_rev  rc=0 left=0
+PASS cli_met_rc0  rc=0
+PASS cli_bad_rev_rc2  rc=2
+PIN_CHECK_SELFTEST pass=125 fail=0
+exit=0

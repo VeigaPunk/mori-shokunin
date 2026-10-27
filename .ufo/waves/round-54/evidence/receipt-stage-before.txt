@@ -1,0 +1,8 @@
+command: python3 .ufo/waves/round-54/checks/receipt-stage.py 39dcf4d7e410d362781a47e8365ca23b5c807598
+FLAG line 2668 round 50 cites a2-c1-at-data while .ufo/waves/round-50/evidence/a2-c1-at-landed.txt exists
+FLAG line 2669 round 50 cites a2-c2-at-data while .ufo/waves/round-50/evidence/a2-c2-at-landed.txt exists
+FLAG line 2796 round 53 cites c1-at-salvage while .ufo/waves/round-53/evidence/c1-at-landed.txt exists
+FLAG line 2797 round 53 cites c2-at-salvage while .ufo/waves/round-53/evidence/c2-at-landed.txt exists
+FLAG line 2797 round 53 cites c2-at-data while .ufo/waves/round-53/evidence/c2-at-landed.txt exists
+RECEIPT_STAGE rev=39dcf4d7 cited_intermediate=5 flagged=5
+exit=1

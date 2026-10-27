@@ -68,3 +68,7 @@ wave seat `Mo53ScoutRunwayTools`' read later (below it, no finding). Under mode 
 - The per-process user reserve is `min(total_vm/32, user_reserve_kbytes)`; the tool subtracts the full reserve
   (worst case for a large process).
 - Read-only. Choosing an overcommit mode, a ratio or a reserve is the operator's; OS-state triage is tsukuroi's.
+
+## Recheck at Linux v7.3 (appended 2026-10-27, round 54)
+
+The claim rows of this entry that pin Linux v7.2 are re-read at tag v7.3 in `corpus/knowledge/kernel-v7.3-recheck-r54.md` (one row per claim hash: status, the v7.3 line the quote now begins on, disposition and its RECHECK votes). The rows above are unchanged and keep their v7.2 anchors; read moved line numbers through that ledger's `## Where the quotes moved` table.

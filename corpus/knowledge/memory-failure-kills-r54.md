@@ -10,21 +10,21 @@ author: MoriR54 (L1); the wave's ENTAILMENT voters judge each row (`.ufo/waves/r
 
 ## Claim
 
-The kernel kills processes for a reason other than memory exhaustion. When hardware reports a corrupted page
-(an uncorrected ECC error, a machine check), `mm/memory-failure.c` unmaps the page and signals the processes that
-map it: **SIGBUS** with a machine-check code (forced on the task that consumed the data; to the other mappers only in
-early-kill mode), or **SIGKILL** when a forced kill finds no mapped address for a task. None of this passes through the
-OOM killer, so it raises no `oom_kill` count in `memory.events`, prints no `Out of memory` or `oom-kill:` line and
-emits no `oom:mark_victim` event. A census that reads only OOM evidence will see a process die with no cause on
-record. The evidence the kernel does leave is its own: lines under the prefix `Memory failure:`, five per-node
-counters, the `HardwareCorrupted` line of `/proc/meminfo`, and the `ras:memory_failure_event` tracepoint (root-only
-on this host: tracefs is `0700 root`).
+Hardware-memory failure can signal tasks outside the OOM-killer path. For an error requiring immediate action,
+the memory-failure handler can send SIGBUS to the current task; it can also send catchable advisory SIGBUS to
+other mapped processes selected for early kill, and may send SIGKILL to a collected task whose page address it
+could not resolve during a forced kill. These outcomes do not increment the cgroup-v2 `memory.events` `oom_kill`
+counter or emit the OOM-victim tracepoint. The handler can also print the diagnostic `Out of memory while machine
+check handling` if allocating its task list fails; that is not an OOM-killer victim event. Its observable evidence
+includes recovery-action records and per-node counters, `/proc/meminfo` `HardwareCorrupted`, and
+`ras:memory_failure_event` (root-only on this host: tracefs is `0700 root`). Kernel text is attribution, not a count
+(QUALITY 15).
 
 ## Claims (located quotes, v7.3)
 
 | claim | source | quote |
 |---|---|---|
-| The pr_err and pr_info lines of the memory-failure handler start with the prefix "Memory failure:", set by pr_fmt at the top of the file; the unpoison and soft-offline code later in the same file sets other prefixes. | S521 | `#define pr_fmt(fmt) "Memory failure: " fmt #include <linux/kernel.h>` |
+| The pr_err and pr_info lines of the memory-failure handler start with the prefix "Memory failure:", set by pr_fmt at the top of the file; the unpoison and soft-offline code later in the same file sets other prefixes. | S521 | `#define pr_fmt(fmt) "Memory failure: " fmt` |
 | Before signalling a process that maps a poisoned page, the handler logs at error level the page frame number, the command name and the pid. | S521 | `pr_err("%#lx: Sending SIGBUS to %s:%d due to hardware memory corruption\n", pfn, t->comm, task_pid_nr(t));` |
 | A task that consumed the poisoned data itself is sent a forced SIGBUS whose code is BUS_MCEERR_AR, meaning action required. | S521 | `if ((flags & MF_ACTION_REQUIRED) && (t == current)) ret = force_sig_mceerr(BUS_MCEERR_AR,` |
 | When the current task consumed the poisoned data, the source treats the error as action-optional for other processes sharing that page, and returns such a process for signalling only if it is an early-kill process. | S521 | `this error is Action Optional for other non current * processes sharing the same error page,if the process is "early kill", the` |
@@ -42,7 +42,7 @@ on this host: tracefs is `0700 root`).
 | The v7.3 sysctl documentation describes a switch that turns an unrecoverable error on kernel-owned pages into a panic, where the default ignores the error and keeps running. | S507 | `When enabled, this sysctl triggers a panic on memory failure events hitting kernel-owned pages that the handler cannot recover:` |
 | Each NUMA node exposes in sysfs a running total of raw poisoned pages, readable without the kernel log. | S523 | `The total number of raw poisoned pages (pages containing corrupted data due to memory errors) on a NUMA node.` |
 | The ignored counter on a node counts pages the kernel gave up recovering, usually because that page type has no recovery support. | S523 | `Of the raw poisoned pages on a NUMA node, how many pages are ignored by memory error recovery attempt,` |
-| The tracepoint belongs to the ras trace system for historical reasons, so it is enabled as ras:memory_failure_event and not under oom. | S524 | `For historical versions, memory_failure_event is in ras subsystem, * some user programs depend on it. */ #define TRACE_SYSTEM ras` |
+| The tracepoint belongs to the ras trace system for historical reasons, so it is enabled as ras:memory_failure_event and not under oom. | S524 | `For historical versions, memory_failure_event is in ras subsystem,` |
 | The traced event prints the page frame number followed by the page type and the recovery outcome as words, the outcome being Ignored, Failed, Delayed or Recovered. | S524 | `TP_printk("pfn %#lx: recovery action for %s: %s",` |
 | The meminfo field reports, in kilobytes for the whole host, how much memory the kernel identifies as corrupted. | S502 | `HardwareCorrupted The amount of RAM/memory in KB, the kernel identifies as corrupted.` |
 
@@ -54,20 +54,20 @@ is a text-selected record count, never a structured count (QUALITY 15).
 
 | evidence on the host | what it means | what it does not mean |
 |---|---|---|
-| `Memory failure: 0x…: Sending SIGBUS to <comm>:<pid> due to hardware memory corruption` | the handler signalled that process: forced `BUS_MCEERR_AR` if it consumed the poisoned data, ordinary `BUS_MCEERR_AO` if it maps the page and is in early-kill mode (per-process `PF_MCE_EARLY` or the global sysctl) | that the process died: the AO signal is catchable, and a `Cannot send advisory machine check signal` line means it was not delivered |
-| `Memory failure: 0x…: forcibly killing <comm>:<pid> because of failure to unmap corrupted page` | SIGKILL from the memory-failure handler: a forced kill (dirty page, `MF_MUST_KILL`, or failed unmap) for a task whose mapped address could not be resolved — the text names unmap failure even when the cause was another | an OOM kill; `memory.events oom_kill` does not move |
+| `Memory failure: 0x…: Sending SIGBUS to <comm>:<pid> due to hardware memory corruption` | the handler signalled that process: forced `BUS_MCEERR_AR` if it consumed the poisoned data, ordinary `BUS_MCEERR_AO` if it maps the page and is selected for early-kill | that the process died: the AO signal is catchable, and a `Cannot send advisory machine check signal` line means it was not delivered |
+| `Memory failure: 0x…: forcibly killing <comm>:<pid> because of failure to unmap corrupted page` | SIGKILL was sent by the handler to a collected task whose user address was unresolved during a forced kill; the message text is used for other forced-kill causes too | an OOM kill; `memory.events oom_kill` does not move |
 | `Memory failure: 0x…: recovery action for <page type>: Ignored\|Failed\|Delayed\|Recovered` | one recovery attempt that reached an outcome; the per-node counter of that outcome and `total` advance (not for the `already poisoned page` or `non struct page pfn` types) | which process, if any, was signalled — read the SIGBUS/SIGKILL lines for that |
 | `/sys/devices/system/node/node<N>/memory_failure/{total,ignored,failed,delayed,recovered}` above 0 | pages poisoned on that node since boot, by outcome | a kill: a free or clean page can be recovered with no process signalled |
 | `HardwareCorrupted:` above `0 kB` in `/proc/meminfo` | memory the kernel identifies as corrupted, host-wide, in kB | which node or which process |
-| a panic `Memory failure: 0x…: unrecoverable page` | v7.3 `panic_on_unrecoverable_memory_failure` was 1 and a kernel-owned page (reserved, slab, page-table or large kmalloc) came back Ignored | a process kill — the host went down |
-| all five counters 0 and `HardwareCorrupted: 0 kB` (this host, 2026-10-27) | no memory failure handled since boot | that the hardware is healthy: corrected errors are not counted here, and on this host nothing counts them (no `rasdaemon`, `mcelog` or EDAC `mc*` instance) |
+| `Kernel panic - not syncing: Memory failure: 0x…: unrecoverable page` | `panic_on_unrecoverable_memory_failure` was 1 and a kernel-owned page came back Ignored; its recovery-action line precedes the panic | a process kill |
+| `Kernel panic - not syncing: Memory failure on page <hex>` | `memory_failure_recovery` was 0; recovery is disabled and the memory error panicked | a SIGBUS or OOM-killer event |
+| all five counters 0 and `HardwareCorrupted: 0 kB` (this host, 2026-10-27) | no memory failure is represented in these counters since boot | that the hardware is healthy |
 
 | sysctl (v7.3) | value → behaviour |
 |---|---|
 | `vm.memory_failure_recovery` | 1 (default): attempt recovery and kill per mode; 0: every memory failure panics |
-| `vm.memory_failure_early_kill` | 0 (default, this host): unmap everywhere, signal only a process that later touches the page; 1: signal every process mapping it as soon as the error is found |
-| `vm.panic_on_unrecoverable_memory_failure` | new in v7.3, absent on this host's 7.2.11; 1: panic when a kernel-owned page cannot be recovered; 0 (default): ignore and continue |
-
+| `vm.memory_failure_early_kill` | 0 (default, this host): signal selected tasks on access; 1: signal selected mappers when the error is detected |
+| `vm.panic_on_unrecoverable_memory_failure` | documented at v7.3, absent on this host's 7.2.11; 1: panic when a kernel-owned page cannot be recovered; 0 (default): ignore and continue |
 ## On this host (read-only, 2026-10-27)
 
 Kernel 7.2.11-arch1-1: `node0/memory_failure/{total,ignored,failed,delayed,recovered}` all `0`,

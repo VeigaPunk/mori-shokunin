@@ -91,3 +91,7 @@ A filesystem with accounting off and no way to turn it on; a quota held by a rem
 lag behind the write; exhaustion bounded by a capacity limit rather than a quota limit; a non-XFS filesystem
 whose superuser is subject to its limits; the live page state between rechecks (the copies are dated
 2026-10-25).
+
+## Recheck at Linux v7.3 (appended 2026-10-27, round 54)
+
+The claim rows of this entry that pin Linux v7.2 are re-read at tag v7.3 in `corpus/knowledge/kernel-v7.3-recheck-r54.md` (one row per claim hash: status, the v7.3 line the quote now begins on, disposition and its RECHECK votes). The rows above are unchanged and keep their v7.2 anchors; read moved line numbers through that ledger's `## Where the quotes moved` table.

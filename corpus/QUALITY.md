@@ -1475,3 +1475,44 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     in prose, is not matched; the positive arm holds only after the report is committed, so at writing time only the
     negative arm runs; the criterion binds the report to a commit that touched it, not to the commit the author
     intended.
+
+148. **A SCORECARD claim row cites the receipt measured at the landed revision, never an intermediate one.** Lesson:
+    `lessons/round-54.md#M1` — round-53 closure D2: the round-53 C1/C2 After cells cite `c1-at-salvage.txt` and
+    `c2-at-salvage.txt` (R = `0df80303`), while the report measures `0b36d23e` (`c1-at-landed.txt`,
+    `c2-at-landed.txt`); the round-50 C1/C2 rows repeat the pattern with `a2-c1-at-data.txt`/`a2-c2-at-data.txt`
+    beside existing `*-at-landed.txt`. QUALITY 146 did not fire because the numbers matched. Check:
+    `python3 .ufo/waves/round-54/checks/receipt-stage.py <rev>` flags every claim row of a `## Round N` section whose
+    After cell cites `evidence/<x>-at-data.txt` or `<x>-at-salvage.txt` while `<x>-at-landed.txt` exists in that
+    round's evidence directory and no later `Round-N correction` line names `<x>-at-landed`. Shown able to fail: at
+    `39dcf4d7` it prints `flagged=5` (round 50 C1, C2; round 53 C1, C2 and the C2 cell's `c2-at-data` aside); after
+    this round's appended corrections it prints `flagged=0`. Not covered: receipts named in another style
+    (`after-c1.txt`, `c1-tip.txt`) are not classed as intermediate; a correction line is matched by name, not by
+    content; rows before the `*-at-landed` naming (rounds ≤ 49) are out of its reach.
+
+149. **A misroot relocation lands under the wave directory of the round that swept it, never at the lane root.**
+    Lesson: `lessons/round-54.md#M2` — round-53 closure D3: seven round-27 seat fetches (`base.c`, `main.c`,
+    `meminfo.c`, `oom_kill.c`, `sd-main.c`, `user@.service.in`, `MANPAGE.md`) were relocated by round 28 and one file
+    (`0`) by round 38 "into the same relative path under the lane" — the lane root — and stayed tracked there for 26
+    rounds. Check: `git ls-tree --name-only <rev>` lists at the lane root only the lane's own files and directories
+    (`.gitignore .scratch .ufo AGENTS.md LOG.md MINT.md PROVINCE.md README.md SCORECARD.md SHONEN.md SKILL.md
+    considerthese corpus tools`). Shown able to fail: at `39dcf4d7` it also lists `0 MANPAGE.md base.c main.c
+    meminfo.c oom_kill.c sd-main.c user@.service.in`; at the round-54 data commit `1116c092` it lists none of them
+    (`.ufo/waves/round-54/evidence/d3-relocation.txt`, byte-exact, `cmp` ok). Not covered: a misroot deeper in the
+    tree (e.g. under `corpus/`) is not caught by a root listing; the allowed set is this round's list and must be
+    amended when the lane adds a root file on purpose.
+
+150. **A release recheck says where each quote now begins, not only that its words survive.** Lesson:
+    `lessons/round-54.md` (round-53 named limit: `held` proves the words occur somewhere). Check:
+    `python3 .ufo/waves/round-54/count-c1.py <rev>` requires each ledger row's `line` cell to be a line of the new
+    copy on which the quote begins (`line_ok`). Shown able to fail: `evidence/control-c1-no-line.txt` — every row
+    held, quoted and voted, lines blank — reads `line_ok=0 … failed=line`, exit 1. Not covered: the line proves place,
+    not meaning (the votes carry meaning); a quote that occurs twice passes on either line.
+
+151. **A death with no OOM record is not called unexplained until the memory-failure counters are read.** Lesson:
+    `lessons/round-54.md` (C2, `knowledge/memory-failure-kills-r54.md`): the kernel kills for a hardware memory error
+    outside the OOM path (SIGBUS/SIGKILL from `mm/memory-failure.c`), so OOM evidence alone cannot exclude a kernel
+    kill. Check: a kill/death reading that reports "no cause" names the values of
+    `/sys/devices/system/node/node*/memory_failure/total` and `HardwareCorrupted` it read (SKILL `## Round54`).
+    Shown able to fail: the round-54 sweep at `39dcf4d7` finds no mori tool, SKILL row or PROVINCE line naming those
+    surfaces (`.ufo/waves/round-54/evidence/sweeps.txt`), so any earlier "no cause" reading fails the check. Not
+    covered: no tool enforces it yet (knowledge only); corrected errors (EDAC) are not counted by these surfaces.

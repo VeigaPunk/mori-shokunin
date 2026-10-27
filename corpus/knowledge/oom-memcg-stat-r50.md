@@ -109,3 +109,7 @@ kill.
 - Detection and report only. Setting `memory.max`, `memory.oom.group` or `oom_score_adj` is tsukuroi's work; this entry
   licenses no configuration change.
 - No remediation, and no attribution: a memcg OOM block names the cgroup that was charged, not what made it grow.
+
+## Recheck at Linux v7.3 (appended 2026-10-27, round 54)
+
+The claim rows of this entry that pin Linux v7.2 are re-read at tag v7.3 in `corpus/knowledge/kernel-v7.3-recheck-r54.md` (one row per claim hash: status, the v7.3 line the quote now begins on, disposition and its RECHECK votes). The rows above are unchanged and keep their v7.2 anchors; read moved line numbers through that ledger's `## Where the quotes moved` table.
