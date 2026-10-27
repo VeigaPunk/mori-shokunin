@@ -2958,3 +2958,14 @@ no row count; the "316 rows" figures in the contract/LOG were retyped prose
 (the QUALITY-152 class recurring in-round). The counting command and both
 counts (316 → 320 with S544–S547) are captured bytes in
 `.ufo/waves/round-56/evidence/census-end.txt`; see `corpus/lessons/round-56.md`.
+
+## Round 57 (L1 MoriR57; C1 calibration register correction, C2 depth: `unclosed` interpretation)
+
+Entering `53e2b4768af93dd2472eb26ecc9b9fdca2e9daf2`; frozen contract/counters/control `618562c72a03dc4d17386b715357f863fd327274`. One v2 `w1` wave, 64 seats: reviewer 22, critic 10, mutation-tester 8, executor 6, scribe 8, scout 4, connector 2, sentinel 2, revenger 1, simplifier 1. Results contain 64 outputs; 62 reports exist; Mo57Reviewer15 and Mo57MutationTester37 reports absent, but their results outputs exist and the dispatcher provides no status/error field, so no death is inferred. Attack roles (reviewer/critic/mutation-tester/sentinel): 42/64.
+
+Measured at lane commit `81931bcb590cdf936919d59ec76f4bf364475463`:
+- C1 frozen counter `python3 .ufo/waves/round-57/count-c1.py R`: entering `C1=unmet rows=0 evidence=bad`, rc 1; at `81931bcb` same `C1=unmet rows=0 evidence=bad`, rc 1. Mutation seats found it scans the first, superseded `## Capabilities` table, not the active register; it has pointer false-greens and does not match the intended surface. The actual current register continuation adds the two admitted r56 closure entries (`MANIFEST.json` rounds[832]); the explicit count `grep -cE '^\| `rounds\[832\]\.capabilities_added\[[01]\]` \|' SCORECARD.md` is 0 → 2. C1 is unverified by its frozen counter; calibration score unchanged.
+- C2 frozen counter `python3 .ufo/waves/round-57/count-c2.py R`: entering `C2=unmet claims=0 source=bad`, rc 1; at `81931bcb` `C2=met claims=8 source=ok quotes=ok`, rc 0. Independent `verify-c2-source.py` re-checks all eight line-located quotes in the captured S548 source copy: `C2_SOURCE_CHECK ok rows=8 mismatches=0`, rc 0; removing the K3 source statement in a scratch copy yields `unmet`, rc 1. The wave also found the frozen counter's false-green constructions; the measured committed entry itself was manually/source-copy checked. C2 depth verified, no scalar score delta.
+- S548/S549 append-only source rows (one admitted A, one rejected C); census 320 → 322 rows; census validation exit 0, full end receipt `.ufo/waves/round-57/evidence/census-end.txt`; start output `.ufo/waves/round-57/evidence/census-start.txt`. No old row cells changed; no frontier map row advanced; assimilation none.
+
+Mistakes and gate decisions are in `corpus/lessons/round-57.md`; knowledge entry is `corpus/knowledge/watchdog-unclosed-r57.md`. No non-author admit/reject spot-check was available; the wave is the lane, so discernment unchanged pending outside review. Tool installations/updates: none. L0: none. Stale-lane: respawn-per-round; no other mori mission open.
