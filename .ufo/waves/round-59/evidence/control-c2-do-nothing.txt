@@ -1,0 +1,4 @@
+# C2 do-nothing control at entering rev 2b9f03975bfb6e508f35074ac8181ec8bf54e805
+$ python3 .ufo/waves/round-59/count-c2.py 2b9f0397…
+C2=unmet selftest=bad scan=bad drift=bad trees=bad entry=bad rows=bad pins=bad tree=bad claims=0 files=0 rev=2b9f03975bfb6e508f35074ac8181ec8bf54e805 failed=copy_absent:corpus/evidence/sources-r59/w1-results-r54.json,copy_absent:corpus/evidence/sources-r59/w1-results-r55.json,copy_absent:corpus/evidence/sources-r59/w1-results-r56.json,copy_absent:corpus/evidence/sources-r59/w1-results-r57.json,copy_absent:corpus/evidence/sources-r59/w1-results-r58.json,copy_absent:corpus/evidence/sources-r59/w1-settlement-r58.json,drift,entry_absent,scan,selftest,tool_absent,tree,trees,trees_absent
+rc=1

@@ -1,0 +1,4 @@
+# C1 do-nothing control at entering rev 2b9f03975bfb6e508f35074ac8181ec8bf54e805
+$ python3 .ufo/waves/round-59/count-c1.py 2b9f0397…
+C1=unmet selftest=bad fixtures=bad real=bad pointers=bad rev=2b9f03975bfb6e508f35074ac8181ec8bf54e805 failed=tool_absent,selftest,fixtures_absent,real,pointers
+rc=1

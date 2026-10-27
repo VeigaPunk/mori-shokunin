@@ -1,0 +1,9 @@
+# selftests (TMPDIR=/fast/scratch/hyaku/mori-r59/L1)
+C1_SELFTEST pass=6 fail=0
+c1 rc=0
+C2_SELFTEST pass=9 fail=0
+c2 rc=0
+REGCHECK_SELFTEST pass=12 fail=0
+tool1 rc=0
+SETSCAN_SELFTEST pass=10 fail=0
+tool2 rc=0
