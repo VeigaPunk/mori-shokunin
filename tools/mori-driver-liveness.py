@@ -6,9 +6,8 @@ watchdog surface fires WATCHDOG_ABSENT every round; the driver's own
 launch/complete/dead lines in .ufo/watchdog.log are a second liveness source
 nobody reads (FR5 named open ground, corpus/README.md).  This probe reads that
 log and reports per-lane driver-activity facts.  Detection and report only:
-every field is a log-shape fact (counts, ages, pairing state); the probe makes
-NO health verdict, never says a lane is healthy or failed, and never
-remediates.
+every field is a log-shape fact (counts, ages, pairing state); the probe emits
+no wellness or failure verdict about a lane and never remediates.
 
 Frozen line grammar (two writers, one log; every variant observed in the
 committed live log 2026-09-28..2026-10-27):
