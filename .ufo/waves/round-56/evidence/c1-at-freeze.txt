@@ -1,0 +1,2 @@
+C1=met selftest=ok fixtures=ok entry=ok row=ok norem=ok rev=3f494b49cde612d929e82887a48e1660c022c359
+exit=0

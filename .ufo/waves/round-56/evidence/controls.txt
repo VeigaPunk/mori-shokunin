@@ -1,0 +1,10 @@
+do-nothing-c1                PASS C1=unmet selftest=bad fixtures=bad entry=bad row=bad norem=bad failed=tool_absent rev=5b295eeebd87ebd610d8d39b
+do-nothing-c2                PASS C2=unmet selftest=ok tally=ok control=ok contrast=voted0 entry=ok row=ok rev=5b295eeebd87ebd610d8d39bfe2035742
+mut:fence-toggle-dropped     KILLED arm=t_fenced_text_ignored
+mut:substring-scalar-binding KILLED arm=t_json_prose_substring_rejected
+mut:hash-length-opened       KILLED arm=t_hash_len_drift_rejected
+mut:first-wins               KILLED arm=t_last_wins_text
+mut:text-channel-closed      KILLED arm=t_plain_binds
+mut:json-channel-closed      KILLED arm=t_json_array_binds
+mut:roster-filter-dropped    KILLED arm=t_roster_and_name_filter
+mut:entail-verb-dropped      KILLED arm=t_entailed_verb_parsed

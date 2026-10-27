@@ -3,7 +3,7 @@
 088761f3f05c85ab644f8a1f91cb561a5cbfc2036acc536e08ebc48ec849bd3c  contract.md
 c4e58eedadda2f7069bb8f31c5b1b6ae527a54aecaa7490308a55f127047f71d  count-c1.py
 4b350c773a3c31e54cf2cb0e3d7a5c8e92d9a1101722c9a94f53db2492812465  count-c2.py
-08620c17e20f7d4bef6dd011823b95a3caa4ca40ee2ad9946e18ee08e295cc28  controls/controls.py
+5bf65ac0d7e70a5a4d295d52ad00186070adbef12512d1c457f73716b2a6d491  controls/controls.py
 # tools (data commit)
 6b3dba74c639190e7e96b6bed8e6ac8f285a51ce6d910fbe92e6dd39bf7be997  tools/mori-driver-liveness.py@6ced9da9
 8be1acdbb36cd68deba005e21a4a8679534ab5a5099a787aa9335d288dfa6bca  tools/mori-vote-bind.py@6ced9da9

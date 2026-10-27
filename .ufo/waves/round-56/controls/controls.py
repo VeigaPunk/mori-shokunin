@@ -21,7 +21,7 @@ C2 = ".ufo/waves/round-56/count-c2.py"
 
 MUTANTS = [
     ("fence-toggle-dropped",
-     r"        if fence:\n            continue\n", "", "t_fenced_text_ignored"),
+     "        if fence:\n            continue\n", "", "t_fenced_text_ignored"),
     ("substring-scalar-binding",
      'm = VOTE_RE.match(s.strip())',
      'm = re.search(r"(RECHECK|ENTAIL)\\s+([0-9a-f]{12})\\s+([A-Za-z][A-Za-z0-9_-]*)", s)',
