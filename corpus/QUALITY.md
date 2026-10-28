@@ -1568,3 +1568,19 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     contract `:29-34` requiring `selftest=ok` while frozen `count-c1.py:124-125`
     omits it in the measured output `evidence/controls.txt`.
 
+
+## Criterion added round 59 — registry duplicate-source sweep before a new row
+
+155. Before a new SOURCES row is opened for a source the lane may already
+    hold, grep the registry for the source's durable identifiers (DOI, sha256
+    of the fetched payload, canonical URL) — a hit means the row is a
+    reconciliation (supersedes/duplicate), never a fresh admit. Lesson:
+    `corpus/lessons/round-58-verifier-spotcheck.md` routed defect 2 — S552
+    re-admitted the ROMA eBPF OOM paper already held as S478 (same DOI
+    `10.1109/TSC.2026.3698682`, same PDF sha256 `1603404d…`); the sweep that
+    would have caught it is `grep -n -e '10.1109/TSC.2026.3698682' -e
+    '1603404d' corpus/SOURCES.md`, which prints S262, S478 and S552 at the
+    round-58 tip. Shown able to fail: that grep prints three rows (a
+    duplicate exists) versus zero or one (no duplicate). Not covered: a
+    duplicate under a *different* DOI/URL/hash (mirror, new version) escapes;
+    the check binds identifiers, not content families.

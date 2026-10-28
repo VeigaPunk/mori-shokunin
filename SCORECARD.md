@@ -2935,3 +2935,32 @@ Axis observations: coverage unchanged; operability unchanged (the new counters h
 
 Planned (round 59): freeze a C1 target that matches the counter's emitted output and binds exact row keys/names, every evidence pointer and a revision-pinned MANIFEST; add explicit scratch-path support before freezing new counters; harden C2's frontmatter, distinct-claim, designated-quote and exact used-by predicates before relying on it again. Do not retroactively alter round-58 frozen bytes.
 
+## Round 59 — C1 calibration instrument (verified met) and C2 depth entry (unverified)
+
+Attempt 2 of round 59 (attempt 1 exited without freezing; its unverified draft counters were
+discarded, not reused). Entering `2b9f03975bfb6e508f35074ac8181ec8bf54e805`; freeze
+`ccfd554e` amended pre-data to `60b3a76ad0524c8978cc51922940be1c8c388915` (all amendments
+before any seat scored); validated dispatch `8ff344ff18924c1ea63d46c3b3969f9fea05bc51`;
+data `be7372114ded3075e5f5a15227ffec977df22f7d` + correction `7b86704d7c0754a09958d131b64dbfa2a6d3eaed`.
+Scores entering/after: coverage 6, operability 7, depth 5, freshness 5, calibration 5, adjacency 6.
+Lowest-scoring tie: depth/freshness/calibration at 5. C1 targets calibration; C2 targets depth.
+
+| Claim | Axis | Counting command | Before | After / verdict |
+|---|---|---|---|---|
+| C1: pinned `tools/mori-register-check.py` (sha `38b733d8…`) verifies the two round-56 rows in the unique self-declaring active capabilities register — exact key/name/pointer binding plus MANIFEST `rounds[832]` at fleet `2807c6ab` — against 13 committed hostile fixtures | calibration 5 | `python3 .ufo/waves/round-59/count-c1.py R` | At entering `2b9f0397`: `C1=unmet selftest=bad fixtures=bad real=bad pointers=bad failed=tool_absent,selftest,fixtures_absent,real,pointers`, rc 1 (`.ufo/waves/round-59/evidence/c1-entering.txt`) | At `7b86704d`: `C1=met selftest=ok fixtures=ok real=ok pointers=ok`, rc 0. W1 falsifiers found **no met-flip**: manifest-arm pure-function pinning confirmed (Mo59Critic24), replay agrees (Mo59Reviewer05/06), all 13 hostile fixtures still killed (Mo59Executor41). **Verified met.** Robustness defects routed forward: self-graded semantic arms (Mo59Critic27), unpinned-tool execution + symlink write-out (Mo59Sentinel57/58 HIGH), expect-prefix coverage (Mo59MutationTester36), selftest-blind mutants (Mo59MutationTester38), provenance class — met at freeze rev itself (Mo59Critic26) |
+| C2: pinned `tools/mori-settlement-scan.py` (sha `4c04bf21…`) + entry `corpus/knowledge/wave-settlement-artifacts-r59.md` ≥10 byte-exact pin-bound claims over ≥3 of 7 artifacts + mined S-rows | depth 5 | `python3 .ufo/waves/round-59/count-c2.py R` | At entering `2b9f0397`: `C2=unmet failed=copy_absent:…,entry_absent,tree`, rc 1 (`.ufo/waves/round-59/evidence/c2-entering.txt`) | At `7b86704d`: `C2=met selftest=ok scan=ok drift=ok trees=ok entry=ok rows=ok pins=ok tree=ok claims=13 files=6`, rc 0. **Unverified** — verified met-flip counterexamples on the frozen predicate: semantically-empty entry scores `met` incl. orphaned `grammar:` reasons and one-row-covers-all-copies (Mo59Critic22, Mo59Reviewer08 end-to-end), vacuous claim sets/duplicate spans (Mo59Critic23), drift arm accepts any nonzero exit (Mo59Critic25), committed-symlink copy survives eval_entry (Mo59MutationTester37 latent). The landed entry's own 13 claims are honest and byte-verified; the instrument cannot certify the class. No depth score change claimed |
+
+Wave w1: one v2 wave, 64 seats dispatched; attack roles (reviewer/critic/mutation-tester/sentinel)
+40/64 = 62.5%. L1 held planner. Settlement receipt and integration totals recorded in the lesson
+(`corpus/lessons/round-59.md`, `## Wave w1`).
+
+Axis observations: coverage unchanged; operability unchanged (counters gained a `--scratch` CLI
+this round — the r58 routed defect is closed); depth and calibration held at 5 (C1 is an instrument
+claim: it demonstrates the capability without a scalar move); freshness/adjacency unchanged.
+No capability row added; the register-check capability lands as *proposed*, not demonstrated.
+
+Planned (round 60): harden C2's orphan `grammar:` reasons, distinct-span minimum, per-copy row
+binding and drift-arm reason attribution before re-using the entry class; gate all tool
+executions on `tool_ok` and add containment asserts to counter materialization (sentinel HIGHs);
+decide whether instrument claims may score an axis or stay capability-only.
+
