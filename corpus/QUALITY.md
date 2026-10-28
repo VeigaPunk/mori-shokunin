@@ -1584,3 +1584,36 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     duplicate exists) versus zero or one (no duplicate). Not covered: a
     duplicate under a *different* DOI/URL/hash (mirror, new version) escapes;
     the check binds identifiers, not content families.
+
+## Criteria added round 60 — pointer existence and verdict routing
+
+156. Every evidence pointer cited by a report or a SCORECARD claim table
+    must resolve at the cited revision before the round is filed. Sweep:
+    `git grep -oE '(\.ufo/[A-Za-z0-9/._-]+|corpus/[A-Za-z0-9/._-]+)' --`
+    over the filed text plus `git cat-file -e <rev>:<path>` per hit; any
+    dead name is corrected in place with a `r60-correction:` marker naming
+    the real pointer, or not cited. ← `corpus/lessons/round-60.md`
+    `## Mistakes` row 1 — the r59 report and SCORECARD cited
+    `c1-entering.txt`/`c2-entering.txt`, never committed under those names
+    (real receipts: `control-c1-do-nothing.txt`/`control-c2-do-nothing.txt`).
+    Shown able to fail: `python3 .ufo/waves/round-60/count-c1.py <entering
+    rev>` prints `dead-uncorrected=2` (exit 1) at the entering revision and
+    `dead-uncorrected=0` (exit 0) after the correction — the same command,
+    two committed states. Not covered: pointers outside `.ufo/`/`corpus/`
+    (fleet-repo report paths are resolved by the closure, not this sweep).
+
+157. A verifier's failure reasons must route to the verdict it composes —
+    no reason class may be emitted and then ignored ("orphaned"), and a
+    quoted-claim set must cover distinct byte spans. ← S561 (Mo59Critic22
+    D2/D3) and S563 (Mo59Critic25): r59's `eval_entry` emitted `grammar:`
+    while `measure()` composed `met` from a reason whitelist that omitted
+    it, and the drift arm read only the exit code. Shown able to fail:
+    `git show 7b86704d:.ufo/waves/round-59/count-c2.py` scored the r60
+    hostile tree `trees-c2h/h02-malformed-claim` met (grammar orphaned;
+    receipt `.ufo/waves/round-60/evidence/control-c2-do-nothing.txt`
+    records the class at the entering revision), while the r60 counter
+    prints `C2=met` only with the hardened routing —
+    `python3 .ufo/waves/round-60/count-c2.py <freeze rev>` exit 0 with
+    `trees=ok` covering all 13 trees. Not covered: reasons the verifier
+    cannot express at all (semantic truth of a well-formed claim) — those
+    stay judge work.
