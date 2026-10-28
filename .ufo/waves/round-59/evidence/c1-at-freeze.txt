@@ -1,0 +1,3 @@
+# at amended-freeze rev 60b3a76ad0524c8978cc51922940be1c8c388915 (freeze ccfd554e + counter scratch-mkdir/ls-tree + PIN + name-boundary amendment)
+C1=met selftest=ok fixtures=ok real=ok pointers=ok rev=60b3a76ad0524c8978cc51922940be1c8c388915
+rc=0

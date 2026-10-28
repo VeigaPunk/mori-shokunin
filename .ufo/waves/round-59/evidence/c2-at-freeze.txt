@@ -1,0 +1,3 @@
+# at amended-freeze rev 60b3a76ad0524c8978cc51922940be1c8c388915
+C2=unmet selftest=ok scan=ok drift=ok trees=ok entry=bad rows=bad pins=bad tree=bad claims=0 files=0 rev=60b3a76ad0524c8978cc51922940be1c8c388915 failed=copy_absent:corpus/evidence/sources-r59/w1-results-r54.json,copy_absent:corpus/evidence/sources-r59/w1-results-r55.json,copy_absent:corpus/evidence/sources-r59/w1-results-r56.json,copy_absent:corpus/evidence/sources-r59/w1-results-r57.json,copy_absent:corpus/evidence/sources-r59/w1-results-r58.json,copy_absent:corpus/evidence/sources-r59/w1-settlement-r58.json,entry_absent,tree
+rc=1
