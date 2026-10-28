@@ -48,10 +48,12 @@ of `corpus/lessons/round-59-verifier-spotcheck.md`). Truth by
 `git cat-file -e` (full table: `.ufo/waves/round-60/evidence/r59-absent-set.md`):
 
 - Mo59Critic29 — supersedes the round-59 lesson claim of absent-at-filing:
-  committed pre-filing in `bf6c0ad3` (2026-10-28 03:12:38 -03); the lesson's
-  set was wrong, the report's missing set did not name it — consistent.
+  committed pre-filing in `bf6c0ad3` (2026-10-28 03:12:38 -03); the record
+  set of the wave completes at `f091bd77`. The lesson's set was wrong, the
+  report's missing set did not name it — consistent.
 - Mo59Reviewer16 — supersedes the round-59 lesson claim of absent-at-filing:
-  committed pre-filing in `bf6c0ad3`.
+  committed pre-filing in `bf6c0ad3`; the record set completes at
+  `f091bd77`.
 - Mo59MutationTester32 — added `bf6c0ad3` (pre-filing), modified post-filing
   in `f091bd77`; the report's "missing" listed it because its modified bytes
   were uncommitted at filing.
@@ -59,6 +61,14 @@ of `corpus/lessons/round-59-verifier-spotcheck.md`). Truth by
 - Mo59MutationTester31 — late: landed post-filing in `f091bd77`.
 - `.ufo/waves/round-59/w1-results.json` — landed post-filing in `f091bd77`
   (the WAVE-DONE handoff arrived after the round commit; see Mistakes row 2).
+
+Reading note (fixed here so both readings of the frozen C1 sentence hold on
+the same bytes): `f091bd77` is the commit at which the round-59 wave RECORD
+SET is complete — every one of the five names is covered by it, directly
+(two files) or as the completing commit of a record whose earlier bytes
+landed in `bf6c0ad3` (three files). The count-c1 lesson arm reads the
+pointer file-globally; the per-name lines above now carry it distributively
+as well (Mo60Reviewer03, this round's wave).
 
 ## Mistakes
 
@@ -85,3 +95,39 @@ of `corpus/lessons/round-59-verifier-spotcheck.md`). Truth by
 
 (filled after WAVE-DONE integration: seat count, role mix, attack share,
 dead seats, results handoff.)
+
+## Wave-found instrument defects (routed; frozen bytes stand)
+
+Recorded as seats reported them (evidence in the named w1 reports). The kill
+rule froze the counters once seats scored, so these are routed to round 61,
+not patched:
+
+1. count-c3 verdict composition (Mo60Reviewer13 HIGH 1+2, Mo60Reviewer02 F1):
+   `toolgate/containment/expectgate` output tokens derive from failed-list
+   literals that are never appended, so they read "not skipped"; `met`
+   omits the count-c1 pin checks — demonstrated: a scratch clone with
+   count-c1 sha `f5ed5dd7…` ≠ PIN_C1 prints the exact frozen
+   `C3=met toolgate=ok containment=ok expectgate=ok cases=6` line (direct
+   measure: `met=True, failed=['count_c1_sha']`), and a pre-seeded
+   `<scratch>/escape.txt` prints `containment=ok` with
+   `failed=g2_escape_written`. On the real pinned revisions the checks all
+   pass honestly, but the instrument cannot certify hostile input — the
+   same class that decertified r59's C2.
+2. count-c1 lesson-arm reading (Mo60Reviewer03): the pointer check is
+   file-global; under a distributive reading of the contract sentence the
+   tip scores 3/5. Fixed truthfully in the correction lines above (each
+   name now carries `f091bd77` as the record-completing commit), so both
+   readings hold on the same bytes; the counter itself is frozen.
+3. count-c1 marker arm is existential, not universal (Mo60Reviewer03): a
+   rogue marker line citing a dead name without its real pointer still
+   scores met (clone-demonstrated; the real tip carries zero rogue lines).
+4. count-c3 F2/F3 (Mo60Reviewer02): the G2 symlink arm uses a dangling
+   in-root symlink (proves no-symlink-parent; the real escape is also
+   refused), and the `tool_absent`/`tool_sha` failed-token match also
+   matches the `scan_tool_*` variants.
+5. Hygiene: a transient untracked `EXEC-MARKER` appeared at the lane root
+   (~13:16–13:18) while a seat ran the old-counter PoC without `--scratch`
+   (the r59 counter's scan arm invokes the blob with cwd = lane root) —
+   cleaned by the seat; lane commits use explicit pathspecs, so no sweep
+   risk materialized. This is Sentinel57's hole live: the old counter lets
+   the blob write to the invoker's cwd.
