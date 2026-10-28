@@ -1,0 +1,747 @@
+{
+ "schema": "ufo-swarm-wave-dispatch-v1",
+ "wave": "mori-r60-w1",
+ "policy": {
+  "source": "config",
+  "maxLanes": 256,
+  "minLanes": 16,
+  "waveMinLanes": 64,
+  "waveMaxLanes": 128,
+  "declaredMaxLanes": null,
+  "hardCeiling": 256,
+  "rampBatchSize": 5,
+  "rampIntervalMs": 700,
+  "globalRunnerCeiling": 1056
+ },
+ "counts": {
+  "spawn": 64,
+  "resume": 0,
+  "total": 64
+ },
+ "registry": {
+  "schema": "ufo-swarm-registry-v1",
+  "path": ".ufo/waves/round-60/w1/swarm-registry.json",
+  "reportDir": ".ufo/waves/round-60/w1",
+  "members": {
+   "Mo60Reviewer01": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "reviewer",
+    "item": null
+   },
+   "Mo60Reviewer02": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "reviewer",
+    "item": null
+   },
+   "Mo60Reviewer03": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "reviewer",
+    "item": null
+   },
+   "Mo60Reviewer04": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "reviewer",
+    "item": null
+   },
+   "Mo60Reviewer05": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "reviewer",
+    "item": null
+   },
+   "Mo60Reviewer06": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "reviewer",
+    "item": null
+   },
+   "Mo60Reviewer07": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "reviewer",
+    "item": null
+   },
+   "Mo60Reviewer08": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "reviewer",
+    "item": null
+   },
+   "Mo60Reviewer09": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "reviewer",
+    "item": null
+   },
+   "Mo60Reviewer10": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "reviewer",
+    "item": null
+   },
+   "Mo60Reviewer11": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "reviewer",
+    "item": null
+   },
+   "Mo60Reviewer12": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "reviewer",
+    "item": null
+   },
+   "Mo60Reviewer13": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "reviewer",
+    "item": null
+   },
+   "Mo60Reviewer14": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "reviewer",
+    "item": null
+   },
+   "Mo60Reviewer15": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "reviewer",
+    "item": null
+   },
+   "Mo60Reviewer16": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "reviewer",
+    "item": null
+   },
+   "Mo60Critic21": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "critic",
+    "item": null
+   },
+   "Mo60Critic22": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "critic",
+    "item": null
+   },
+   "Mo60Critic23": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "critic",
+    "item": null
+   },
+   "Mo60Critic24": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "critic",
+    "item": null
+   },
+   "Mo60Critic25": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "critic",
+    "item": null
+   },
+   "Mo60Critic26": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "critic",
+    "item": null
+   },
+   "Mo60Critic27": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "critic",
+    "item": null
+   },
+   "Mo60Critic28": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "critic",
+    "item": null
+   },
+   "Mo60MutationTester31": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "mutation-tester",
+    "item": null
+   },
+   "Mo60MutationTester32": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "mutation-tester",
+    "item": null
+   },
+   "Mo60MutationTester33": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "mutation-tester",
+    "item": null
+   },
+   "Mo60MutationTester34": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "mutation-tester",
+    "item": null
+   },
+   "Mo60MutationTester35": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "mutation-tester",
+    "item": null
+   },
+   "Mo60Sentinel41": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "sentinel",
+    "item": null
+   },
+   "Mo60Sentinel42": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "sentinel",
+    "item": null
+   },
+   "Mo60Sentinel43": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "sentinel",
+    "item": null
+   },
+   "Mo60Executor51": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "executor",
+    "item": null
+   },
+   "Mo60Executor52": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "executor",
+    "item": null
+   },
+   "Mo60Executor53": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "executor",
+    "item": null
+   },
+   "Mo60Executor54": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "executor",
+    "item": null
+   },
+   "Mo60Executor55": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "executor",
+    "item": null
+   },
+   "Mo60Executor56": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "executor",
+    "item": null
+   },
+   "Mo60Executor57": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "executor",
+    "item": null
+   },
+   "Mo60Executor58": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "executor",
+    "item": null
+   },
+   "Mo60Executor59": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "executor",
+    "item": null
+   },
+   "Mo60Executor60": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "executor",
+    "item": null
+   },
+   "Mo60Executor61": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "executor",
+    "item": null
+   },
+   "Mo60Executor62": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "executor",
+    "item": null
+   },
+   "Mo60Scribe71": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "scribe",
+    "item": null
+   },
+   "Mo60Scribe72": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "scribe",
+    "item": null
+   },
+   "Mo60Scribe73": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "scribe",
+    "item": null
+   },
+   "Mo60Scribe74": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "scribe",
+    "item": null
+   },
+   "Mo60Scribe75": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "scribe",
+    "item": null
+   },
+   "Mo60Scribe76": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "scribe",
+    "item": null
+   },
+   "Mo60Scout81": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "scout",
+    "item": null
+   },
+   "Mo60Scout82": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "scout",
+    "item": null
+   },
+   "Mo60Scout83": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "scout",
+    "item": null
+   },
+   "Mo60Scout84": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "scout",
+    "item": null
+   },
+   "Mo60Connector91": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "connector",
+    "item": null
+   },
+   "Mo60Connector92": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "connector",
+    "item": null
+   },
+   "Mo60Revenger95": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "revenger",
+    "item": null
+   },
+   "Mo60Revenger96": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "revenger",
+    "item": null
+   },
+   "Mo60Revenger97": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "revenger",
+    "item": null
+   },
+   "Mo60Revenger98": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "revenger",
+    "item": null
+   },
+   "Mo60SimplifierA1": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "simplifier",
+    "item": null
+   },
+   "Mo60SimplifierA2": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "simplifier",
+    "item": null
+   },
+   "Mo60SimplifierA3": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "simplifier",
+    "item": null
+   },
+   "Mo60SimplifierA4": {
+    "kind": "spawn",
+    "agentId": null,
+    "role": "simplifier",
+    "item": null
+   }
+  }
+ },
+ "compaction": {
+  "applied": false,
+  "mechanism": null,
+  "reason": null,
+  "savedBytes": 0,
+  "payloadBytesBefore": 0,
+  "payloadBytesAfter": 0
+ },
+ "taskCall": {
+  "context": "# mori round 60 — one v2 build/falsify wave (64 seats)\nLane repo: /home/vgpnk/Projects/shokunin/mori-shokunin. Fleet root: /home/vgpnk/Projects/shokunin. L1: MoriR60. Frozen contract: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md. Frozen counters: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/count-c1.py, count-c2.py, count-c3.py. Amended freeze revision: ac496c7cde8cad965079858accae3bedfe4a73f2 (pre-data amendments 1-2 recorded in the contract; no seat scored before them); entering revision: ddfb12fb0838b4307c445194a844f0c4b1950195. Claims: C1 calibration (round-59 self-record: dead-pointer corrections under r60-correction:, receipts r59-c1-met.txt/r59-c2-met.txt byte-equal to fresh re-runs at 7b86704d7c0754a09958d131b64dbfa2a6d3eaed, absent-set table r59-absent-set.md vs git truth, round-60 lesson corrections); C2 depth (hardened verifier tools/mori-entry-claims-check.py — H1 grammar blocks, H2 distinct byte spans >=8, H3 non-degenerate texts, H4 per-copy row binding, H5 attributed drift arm + renamed r54 control — over 13 frozen hostile trees and the real r59 entry); C3 operability (G1 pin-gated execution — an unpinned blob never runs while the r59 counter reproduces the marker hole as control; G2 containment-asserted materialization; G3 frozen expect tables with tamper flagging). C2 and C3 already measure met at the freeze revision (evidence/c2-at-freeze.txt, c3-at-freeze.txt); C1's data (receipts, SCORECARD corrections, absent-set table, lesson, SOURCES rows) lands DURING this wave, so the lane tip may move under you: pin every re-derivation to a named revision and never trust an unpinned working-tree read.\n\nEvery `Report:` trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin — write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>. Write only your own report under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/w1/. Do not edit production files, corpus registry, SCORECARD, LOG, or lane VCS; return findings/drafts only. Do not write to fleet or sibling repos. Use absolute paths for every file access.\n\nScratch root for this round is `$HYAKU_SCRATCH/mori-r60/<seat-name>/` (default `/fast/scratch/hyaku`): create it explicitly with mkdir -p, set TMPDIR there, pass --scratch to the counters, clean it before yielding, and copy any small receipt into your report first. `/tmp` only for files under 50 MB, never as evidence. One lightweight clone/worktree per seat only if needed; prefer `git show`/read-only reads (a lane gate or selftest that runs git writes must run on a sandbox clone under your scratch dir, never in the lane). Check `/home/vgpnk/Projects/shokunin/scripts/hyaku/disk-guard.sh status` before heavy work; on ENOSPC report free space and do not rerun until status is green.\n\nBefore installing/updating a tool, read `/home/vgpnk/.omp/agent/RULES.md`; use official channels and record tool/version/channel/reason. Pacman transactions are paused host-wide: do not run pacman. Never pipe unverified remote scripts into a shell. Never expose secrets, session material or private URLs. Detection/report only; no remediation or provider-death inference. No seat spawns or additional swarms. Frozen claims, counters, predicates and kill rules are immutable after scoring. Any fixture repo must be initialized at an explicit scratch path (`D=$(mktemp -d -p $HYAKU_SCRATCH/mori-r60/<seat-name>) && git -C \"$D\" init -q`) and every git command must use `git -C <that path>`; never commit outside that throwaway repo. Never `agent://all`; you report only to the L1 (MoriR60) by agent message when coordination is essential.",
+  "tasks": [
+   {
+    "name": "Mo60Reviewer01",
+    "agent": "reviewer",
+    "task": "/skill:godspeed\nMo60Reviewer01: C2 re-derivation at the freeze: run `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/count-c2.py ac496c7cde8cad965079858accae3bedfe4a73f2 --scratch <your scratch>/c2f` and byte-compare with /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/evidence/c2-at-freeze.txt; then re-run at the current lane tip and report any drift in the met line. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Reviewer01.md"
+   },
+   {
+    "name": "Mo60Reviewer02",
+    "agent": "reviewer",
+    "task": "/skill:godspeed\nMo60Reviewer02: C3 re-derivation at the freeze: run `python3 /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/count-c3.py ac496c7cde8cad965079858accae3bedfe4a73f2 --scratch <your scratch>/c3f` and byte-compare with evidence/c3-at-freeze.txt; confirm the old-counter control arm still reproduces the EXEC-MARKER (a control that stops failing would invalidate the claim). Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Reviewer02.md"
+   },
+   {
+    "name": "Mo60Reviewer03",
+    "agent": "reviewer",
+    "task": "/skill:godspeed\nMo60Reviewer03: C1 re-derivation at the current lane tip once the data lands: run count-c1.py <tip> and verify the frozen target `C1=met dead-uncorrected=0 receipts=2/2 absent-set=5/5 lesson=ok`; if the tip does not yet carry the data, say so and retry once after 10 minutes. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Reviewer03.md"
+   },
+   {
+    "name": "Mo60Reviewer04",
+    "agent": "reviewer",
+    "task": "/skill:godspeed\nMo60Reviewer04: no-false-negative audit of the hardened verifier: materialize the real entry + registry + 6 copies at ac496c7cde8cad965079858accae3bedfe4a73f2 into scratch, run tools/mori-entry-claims-check.py, confirm ok with claims=13 spans=13; then apply three benign mutations in your scratch copy (fix a typo in a claim text, reorder two claim lines, append one prose paragraph) and confirm the verdict stays ok for each. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Reviewer04.md"
+   },
+   {
+    "name": "Mo60Reviewer05",
+    "agent": "reviewer",
+    "task": "/skill:godspeed\nMo60Reviewer05: hostile-tree battery: materialize all 13 trees under /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/trees-c2h/ at ac496c7cde8cad965079858accae3bedfe4a73f2, run the tool per tree, and build the per-tree verdict+reason table; confirm each matches its frozen expect (h00 must verify True). Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Reviewer05.md"
+   },
+   {
+    "name": "Mo60Reviewer06",
+    "agent": "reviewer",
+    "task": "/skill:godspeed\nMo60Reviewer06: H1 grammar-routing: in scratch, append a malformed claim line to the real entry and confirm the tool fails with grammar; then import the r59 counter (git show 7b86704d7c0754a09958d131b64dbfa2a6d3eaed:.ufo/waves/round-59/count-c2.py) and drive its eval_entry on the same variant to confirm the old grammar orphaned the reason (the routed hole). Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Reviewer06.md"
+   },
+   {
+    "name": "Mo60Reviewer07",
+    "agent": "reviewer",
+    "task": "/skill:godspeed\nMo60Reviewer07: H2 span-aliasing: in scratch, build entry variants over the real copies — line+offset to the same span, two claims to one span — and confirm distinct:dup_span; confirm the old r59 eval_entry accepted both. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Reviewer07.md"
+   },
+   {
+    "name": "Mo60Reviewer08",
+    "agent": "reviewer",
+    "task": "/skill:godspeed\nMo60Reviewer08: H4 row-binding: registry variants in scratch (status queued, used-by another entry, source cell scrubbed of the artifact path) must yield rows:status / rows:usedby / rows:binding; also confirm the real registry rows S553-S559 bind all six cited copies. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Reviewer08.md"
+   },
+   {
+    "name": "Mo60Reviewer09",
+    "agent": "reviewer",
+    "task": "/skill:godspeed\nMo60Reviewer09: receipts arm: re-run the r59 counters at 7b86704d7c0754a09958d131b64dbfa2a6d3eaed (`git show 7b86704d7c0754a09958d131b64dbfa2a6d3eaed:.ufo/waves/round-59/count-c1.py` to scratch, run with --scratch) and byte-compare each output with the committed /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/evidence/r59-c1-met.txt and r59-c2-met.txt; both rc must be 0. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Reviewer09.md"
+   },
+   {
+    "name": "Mo60Reviewer10",
+    "agent": "reviewer",
+    "task": "/skill:godspeed\nMo60Reviewer10: absent-set truth matrix: for Mo59Executor40, Mo59MutationTester31, Mo59MutationTester32, Mo59Critic29, Mo59Reviewer16 run `git -C /home/vgpnk/Projects/shokunin/mori-shokunin cat-file -e <rev>:.ufo/waves/round-59/w1/<name>.md` at 7b86704d7c0754a09958d131b64dbfa2a6d3eaed, f091bd773c4cfec8877061c84f4bae5f11e8bbe5 and the current tip; compare with /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/evidence/r59-absent-set.md rows and report any disagreement. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Reviewer10.md"
+   },
+   {
+    "name": "Mo60Reviewer11",
+    "agent": "reviewer",
+    "task": "/skill:godspeed\nMo60Reviewer11: dead-name sweep: `grep -n 'c1-entering\\.txt\\|c2-entering\\.txt' /home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md` at the tip; every occurrence must sit on a line carrying `r60-correction:` and name the real pointer; confirm both control-*.txt real pointers exist at the tip. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Reviewer11.md"
+   },
+   {
+    "name": "Mo60Reviewer12",
+    "agent": "reviewer",
+    "task": "/skill:godspeed\nMo60Reviewer12: lesson-correction audit: /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-60.md must contain `supersedes round-59`, a `supersedes` line for Mo59Critic29 and Mo59Reviewer16, and `late` lines for the other three names carrying f091bd77. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Reviewer12.md"
+   },
+   {
+    "name": "Mo60Reviewer13",
+    "agent": "reviewer",
+    "task": "/skill:godspeed\nMo60Reviewer13: QUALITY-154 predicate-identity audit: the contract's frozen target tokens for C1/C2/C3 must each be emitted by the corresponding counter's print line (read the mains); name any token the counter cannot print. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Reviewer13.md"
+   },
+   {
+    "name": "Mo60Reviewer14",
+    "agent": "reviewer",
+    "task": "/skill:godspeed\nMo60Reviewer14: C1 control replay: run count-c1.py ddfb12fb0838b4307c445194a844f0c4b1950195 and byte-compare with evidence/control-c1-do-nothing.txt (both the line and exit 1). Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Reviewer14.md"
+   },
+   {
+    "name": "Mo60Reviewer15",
+    "agent": "reviewer",
+    "task": "/skill:godspeed\nMo60Reviewer15: C2/C3 control replay at ddfb12fb0838b4307c445194a844f0c4b1950195: run both counters, confirm unmet with failed lists matching evidence/control-c2-do-nothing.txt and control-c3-do-nothing.txt (token sets, modulo rev). Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Reviewer15.md"
+   },
+   {
+    "name": "Mo60Reviewer16",
+    "agent": "reviewer",
+    "task": "/skill:godspeed\nMo60Reviewer16: wave-shape conformance: from /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/w1-dispatch.json report the seat count, per-role counts, attack share (reviewer+critic+mutation-tester+sentinel)/total, and that policy v2 band 64-128 applies; flag any duplicate name or unknown role. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Reviewer16.md"
+   },
+   {
+    "name": "Mo60Critic21",
+    "agent": "critic",
+    "task": "/skill:godspeed\nMo60Critic21: cheapest-met attack on C2: rebuild Mo59Critic22's semantically-empty construction (ten `x.` claims, one repeated span, fabricated row) against the NEW tool in a scratch root; if any variant returns ok=true, that is a kill — report the exact entry bytes. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Critic21.md"
+   },
+   {
+    "name": "Mo60Critic22",
+    "agent": "critic",
+    "task": "/skill:godspeed\nMo60Critic22: grammar-orphan hunt: try to make a claim-shaped line that the r60 tool ignores (unicode lookalike dashes, double-star variants, trailing spaces, K-labels inside code spans) yet still counts as a claim or smuggles a false quote past the grammar; report any bypass. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Critic22.md"
+   },
+   {
+    "name": "Mo60Critic23",
+    "agent": "critic",
+    "task": "/skill:godspeed\nMo60Critic23: row-binding forgery: fabricate rows that satisfy H4 while lying (source cell naming the artifact path but wrong anchor/date; a second row for the same artifact; mined row whose teaches is empty) — map exactly which lies H4 catches and which it structurally cannot (scope boundary, not a defect unless a claim depends on it). Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Critic23.md"
+   },
+   {
+    "name": "Mo60Critic24",
+    "agent": "critic",
+    "task": "/skill:godspeed\nMo60Critic24: drift-arm mutants: build mutant scan tools (filename heuristic, note-nullability, unconditional exit 1) in scratch PoC repos and run the r60 count-c2 drift arm logic against them — attribution (extra_keys) or the renamed r54 control must kill each mutant; verify. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Critic24.md"
+   },
+   {
+    "name": "Mo60Critic25",
+    "agent": "critic",
+    "task": "/skill:godspeed\nMo60Critic25: receipts determinism: run each r59 counter TWICE at 7b86704d7c0754a09958d131b64dbfa2a6d3eaed under different scratch dirs and confirm byte-identical stdout; then analyze at token level whether a committed receipt could byte-equal a re-run yet lie about the revision (the rev= token is the only rev carrier) — report. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Critic25.md"
+   },
+   {
+    "name": "Mo60Critic26",
+    "agent": "critic",
+    "task": "/skill:godspeed\nMo60Critic26: absent-set lie attack: would a flipped disposition cell or a wrong at-data cell be caught by count-c1 against real git truth? Drive parse_absent_table + the measure() checks on a tampered table copy in scratch; report exactly which lies are caught. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Critic26.md"
+   },
+   {
+    "name": "Mo60Critic27",
+    "agent": "critic",
+    "task": "/skill:godspeed\nMo60Critic27: dead-name marker gaming: try SCORECARD constructions where a dead name survives outside the marker rule (marker on a neighboring line, mixed into a path, different case) — confirm count-c1 counts them (dead>0) or name the gap. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Critic27.md"
+   },
+   {
+    "name": "Mo60Critic28",
+    "agent": "critic",
+    "task": "/skill:godspeed\nMo60Critic28: whole-contract falsification sweep: find the cheapest committed-revision path where all three counters print met WITHOUT the claimed work (empty tree, entering rev, counters-only tree); report per-claim why the do-nothing arms hold or break. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Critic28.md"
+   },
+   {
+    "name": "Mo60MutationTester31",
+    "agent": "mutation-tester",
+    "task": "/skill:godspeed\nMo60MutationTester31: mutate tools/mori-entry-claims-check.py one predicate at a time in scratch copies (drop the H1 grammar block; MIN_SPAN 8->1; distinct-span collapse off; MIN_TEXT 10->1; H4 binder loop off) — each mutant must flip at least one hostile tree verdict or the h00 control; report the kill table. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60MutationTester31.md"
+   },
+   {
+    "name": "Mo60MutationTester32",
+    "agent": "mutation-tester",
+    "task": "/skill:godspeed\nMo60MutationTester32: mutate count-c2.py arms in scratch copies (drop the renamed r54 control; accept any nonzero drift exit without verdict check; skip expect.txt equality; skip spans==claims) — each mutant must flip a frozen tree, the drift arm, or the entry arm; report the kill table. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60MutationTester32.md"
+   },
+   {
+    "name": "Mo60MutationTester33",
+    "agent": "mutation-tester",
+    "task": "/skill:godspeed\nMo60MutationTester33: mutate count-c1.py in scratch copies (ignore the r60-correction: marker filter; skip one receipt byte-compare; accept any 5-cell row; drop the lesson greps) — each must flip the C1 target or a selftest case; report. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60MutationTester33.md"
+   },
+   {
+    "name": "Mo60MutationTester34",
+    "agent": "mutation-tester",
+    "task": "/skill:godspeed\nMo60MutationTester34: mutate count-c3.py gates in scratch copies (execute the blob regardless of pin; drop the containment assert; accept any expect.txt) — the PoC battery must catch each mutant (marker appears / escape writes / tamper unflagged); report. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60MutationTester34.md"
+   },
+   {
+    "name": "Mo60MutationTester35",
+    "agent": "mutation-tester",
+    "task": "/skill:godspeed\nMo60MutationTester35: selftest consistency: run all three counters' --selftest plus the tool selftest twice each — once with TMPDIR set to your scratch, once with TMPDIR unset — and confirm identical pass counts, exit 0, and no writes outside the explicit scratch (list any stray dirs). Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60MutationTester35.md"
+   },
+   {
+    "name": "Mo60Sentinel41",
+    "agent": "sentinel",
+    "task": "/skill:godspeed\nMo60Sentinel41: execution-boundary re-audit: read all three r60 counters end-to-end and confirm no code path executes repo-supplied bytes whose sha256 differs from the frozen pin (count-c1 executes no repo tool blob at all — verify structurally); drive one unpinned-blob PoC if in doubt. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Sentinel41.md"
+   },
+   {
+    "name": "Mo60Sentinel42",
+    "agent": "sentinel",
+    "task": "/skill:godspeed\nMo60Sentinel42: write-boundary audit: snapshot `git -C /home/vgpnk/Projects/shokunin/mori-shokunin status --porcelain` before and after one full run of each counter; confirm zero lane-tree writes and that materialize() refuses symlink-parent escapes (drive the G2 cases yourself under scratch). Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Sentinel42.md"
+   },
+   {
+    "name": "Mo60Sentinel43",
+    "agent": "sentinel",
+    "task": "/skill:godspeed\nMo60Sentinel43: leakage audit: confirm the committed receipt bytes contain no scratch/TMPDIR paths and no host paths (receipts must reproduce byte-for-byte on any checkout); grep the counters for absolute host paths (QUALITY 127) and report any hit. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Sentinel43.md"
+   },
+   {
+    "name": "Mo60Executor51",
+    "agent": "executor",
+    "task": "/skill:godspeed\nMo60Executor51: materialize the r59 count-c1 from `git show 7b86704d7c0754a09958d131b64dbfa2a6d3eaed:.ufo/waves/round-59/count-c1.py` under your scratch and run it at 7b86704d7c0754a09958d131b64dbfa2a6d3eaed with --scratch under your scratch; return the exact stdout bytes (cat -A) and rc — this is the C1 receipt payload the L1 lands. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Executor51.md"
+   },
+   {
+    "name": "Mo60Executor52",
+    "agent": "executor",
+    "task": "/skill:godspeed\nMo60Executor52: same for the r59 count-c2 at 7b86704d7c0754a09958d131b64dbfa2a6d3eaed: exact stdout bytes + rc, run twice under different scratch dirs to show determinism. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Executor52.md"
+   },
+   {
+    "name": "Mo60Executor53",
+    "agent": "executor",
+    "task": "/skill:godspeed\nMo60Executor53: run `/home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori` and `grep -cE '^\\|[[:space:]]*S[0-9]{3,}[[:space:]]*\\|' /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md`; return both outputs and the row count (mid-round census). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Executor53.md"
+   },
+   {
+    "name": "Mo60Executor54",
+    "agent": "executor",
+    "task": "/skill:godspeed\nMo60Executor54: run count-c1 at the current lane tip; return the exact line + rc (C1 progress probe; repeat once if the data has not landed yet). Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Executor54.md"
+   },
+   {
+    "name": "Mo60Executor55",
+    "agent": "executor",
+    "task": "/skill:godspeed\nMo60Executor55: build the absent-set truth matrix: for the five frozen names run `git -C /home/vgpnk/Projects/shokunin/mori-shokunin cat-file -e` at 7b86704d7c0754a09958d131b64dbfa2a6d3eaed, f091bd773c4cfec8877061c84f4bae5f11e8bbe5, and the current tip (path .ufo/waves/round-59/w1/<name>.md); return the 5x3 truth table with rc per cell. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Executor55.md"
+   },
+   {
+    "name": "Mo60Executor56",
+    "agent": "executor",
+    "task": "/skill:godspeed\nMo60Executor56: dead-name census: `grep -c 'c1-entering\\.txt' /home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md` and the same for c2-entering.txt at the entering rev, at ac496c7cde8cad965079858accae3bedfe4a73f2, and at the current tip (git show <rev>:SCORECARD.md); return the three counts per name plus how many tip occurrences carry the r60-correction: marker. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Executor56.md"
+   },
+   {
+    "name": "Mo60Executor57",
+    "agent": "executor",
+    "task": "/skill:godspeed\nMo60Executor57: hostile-tree battery at ac496c7cde8cad965079858accae3bedfe4a73f2: for each of the 13 trees run the tool (--artifacts-json from the counter's frozen map, materialized in scratch) and return the per-tree ok + first three reasons. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Executor57.md"
+   },
+   {
+    "name": "Mo60Executor58",
+    "agent": "executor",
+    "task": "/skill:godspeed\nMo60Executor58: boundary PoC re-run: build the evil-blob PoC repo (both tool paths) per the git-fixture rule under your scratch; run the r59 counter (materialized at 7b86704d7c0754a09958d131b64dbfa2a6d3eaed) and the r60 count-c2 at ac496c7cde8cad965079858accae3bedfe4a73f2 against it; return marker-present/marker-absent evidence plus the counter lines. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Executor58.md"
+   },
+   {
+    "name": "Mo60Executor59",
+    "agent": "executor",
+    "task": "/skill:godspeed\nMo60Executor59: run `/home/vgpnk/Projects/shokunin/scripts/hyaku/disk-guard.sh status`; list the round-60 scratch dirs under /fast/scratch/hyaku/mori-r60/ with sizes; return both (hygiene receipt). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Executor59.md"
+   },
+   {
+    "name": "Mo60Executor60",
+    "agent": "executor",
+    "task": "/skill:godspeed\nMo60Executor60: misroot probe: `git -C /home/vgpnk/Projects/shokunin status --porcelain` (no pathspec); list any untracked file whose content names mori or round-60; return the listing and your per-file ownership guess (report only — never move or delete). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Executor60.md"
+   },
+   {
+    "name": "Mo60Executor61",
+    "agent": "executor",
+    "task": "/skill:godspeed\nMo60Executor61: selftest battery: run the three counters' --selftest and the tool's --selftest under your scratch TMPDIR; return all four lines + rc. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Executor61.md"
+   },
+   {
+    "name": "Mo60Executor62",
+    "agent": "executor",
+    "task": "/skill:godspeed\nMo60Executor62: builder determinism: export the lane tree at ac496c7cde8cad965079858accae3bedfe4a73f2 (git archive or worktree) into scratch, run .ufo/waves/round-60/build-fixtures-r60.py there into a fresh trees-c2h, and byte-compare (diff -r) against the committed trees; return the diff result. Read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/contract.md first (freeze ac496c7cde8cad965079858accae3bedfe4a73f2, entering ddfb12fb0838b4307c445194a844f0c4b1950195). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Executor62.md"
+   },
+   {
+    "name": "Mo60Scribe71",
+    "agent": "scribe",
+    "task": "/skill:godspeed\nMo60Scribe71: draft three SOURCES rows (S561 Mo59Critic22 report, S562 Mo59Sentinel57 report, S563 Mo59Critic25 report — own-work, tier A, status mined, used-by corpus/knowledge/entry-claims-hardening-r60.md): read each report at /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-59/w1/<name>.md, write the 11-cell row (no pipe chars inside cells; anchor = report path + line; teaches = one grounded benefit) and the <=25-word located Gate quote per row; return the exact rows + quotes. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Scribe71.md"
+   },
+   {
+    "name": "Mo60Scribe72",
+    "agent": "scribe",
+    "task": "/skill:godspeed\nMo60Scribe72: draft row S564 for Mo59Sentinel58 as REJECTED (duplicate scope of S562's execution-boundary finding; flip condition: a distinct expect-tamper construction this round actually needs) with reason + flip in teaches; read the report first; return the exact row + Gate quote. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Scribe72.md"
+   },
+   {
+    "name": "Mo60Scribe73",
+    "agent": "scribe",
+    "task": "/skill:godspeed\nMo60Scribe73: draft the knowledge entry corpus/knowledge/entry-claims-hardening-r60.md: one source: line per cited row (S561 S562 S563, artifact paths named), verified-at (freeze ac496c7cde8cad965079858accae3bedfe4a73f2), recheck (`python3 .ufo/waves/round-60/count-c2.py R`), coverage-map line; body: the H1-H5 and G1-G3 predicate table with the routed defect each closes (Mo59Critic22 D1-D4, Mo59Critic23 F1-F3, Mo59Critic25, Mo59Reviewer08 F1, Mo59Sentinel57/58 F1) and the no-false-negative evidence (real entry 13 claims / 13 spans / min span 12). Return the full markdown. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Scribe73.md"
+   },
+   {
+    "name": "Mo60Scribe74",
+    "agent": "scribe",
+    "task": "/skill:godspeed\nMo60Scribe74: draft the round-60 lesson skeleton (Gate section: candidates considered, admitted S561-S563, rejected S564, spot-check pending; Mistakes rows: (a) class reference-drift — r59 report+SCORECARD cited dead evidence names c1-entering.txt/c2-entering.txt, captured-by none, fix = r60-correction: re-pointing + count-c1 dead-name arm + QUALITY 156; (b) class landing — w1-results.json and three late seat reports committed post-report in f091bd77, captured-by none, fix = final post-WAVE-DONE sweep duty; Wave w1 settlement section placeholder). Return full markdown. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Scribe74.md"
+   },
+   {
+    "name": "Mo60Scribe75",
+    "agent": "scribe",
+    "task": "/skill:godspeed\nMo60Scribe75: draft the absent-set reconciliation table exactly in count-c1's grammar: 5-cell rows `| <name> | present|absent at 7b86704d | present|absent at tip | late-committed|wrong-superseded | <pointer> |` with header; fill the truth cells from `git cat-file -e` (Mo59Critic29 and Mo59Reviewer16 present at 7b86704d -> wrong-superseded; the other three absent there -> late-committed, pointer f091bd77); return the exact table bytes. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Scribe75.md"
+   },
+   {
+    "name": "Mo60Scribe76",
+    "agent": "scribe",
+    "task": "/skill:godspeed\nMo60Scribe76: draft QUALITY criteria 156 and 157: 156 — every evidence pointer cited by a report or SCORECARD claim table must resolve at the cited revision before filing (sweep command included), motivated by the r59 dead-pointer defect; 157 — a verifier's failure reasons must route to the verdict (no orphan grammar class) and every claim must cover a distinct byte span, motivated by the r59 met-flip decertification; each cites its lesson/report and shows the red arm. Return the exact texts. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Scribe76.md"
+   },
+   {
+    "name": "Mo60Scout81",
+    "agent": "scout",
+    "task": "/skill:godspeed\nMo60Scout81: instrument-surface recon: `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff --stat ddfb12fb0838b4307c445194a844f0c4b1950195..<current tip>` — name every file the round touched and confirm the instrument set is exactly tools/mori-entry-claims-check.py + the three counters + fixtures; flag anything else. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Scout81.md"
+   },
+   {
+    "name": "Mo60Scout82",
+    "agent": "scout",
+    "task": "/skill:godspeed\nMo60Scout82: sibling overlap scan: grep sibling corpora (kumitate, kotodama, souji, tabi) for entry-claims verification / counter-boundary hardening equivalents; report any overlap with mori's PROVINCE boundary (detection/report only). Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Scout82.md"
+   },
+   {
+    "name": "Mo60Scout83",
+    "agent": "scout",
+    "task": "/skill:godspeed\nMo60Scout83: assimilation/considerthese pass: read /home/vgpnk/Projects/shokunin/mori-shokunin/considerthese/2026-10-26.md (absolute-host-path item) and /home/vgpnk/Projects/shokuknow/merge/mori/MERGE-REPORT.md; report whether any theme matches instrument-hardening or whether `Assimilation: none` is the honest line for this round. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Scout83.md"
+   },
+   {
+    "name": "Mo60Scout84",
+    "agent": "scout",
+    "task": "/skill:godspeed\nMo60Scout84: fresh-start defect ledger: list every routed defect from corpus/lessons/round-57-verifier-spotcheck.md, round-58-verifier-spotcheck.md and round-59-verifier-spotcheck.md with its current disposition pointer (fixed r59 / fixed r60 / open); return the table. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Scout84.md"
+   },
+   {
+    "name": "Mo60Connector91",
+    "agent": "connector",
+    "task": "/skill:godspeed\nMo60Connector91: cross-claim pattern scan: read the three counters + their frozen targets in the contract; find shared-pattern defects (token drift contract-vs-counter, revision pins disagreeing, receipt paths spelled differently between contract and counter); report findings per claim. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Connector91.md"
+   },
+   {
+    "name": "Mo60Connector92",
+    "agent": "connector",
+    "task": "/skill:godspeed\nMo60Connector92: cross-round defect classes: compare the routed defects of the round 57, 58 and 59 spot-checks; name recurring classes (instrument false-green, record/pointer drift) with one line each for the round-60 lesson Mistakes table. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Connector92.md"
+   },
+   {
+    "name": "Mo60Revenger95",
+    "agent": "revenger",
+    "task": "/skill:godspeed\nMo60Revenger95: reconstruct the r59 C2 decertification chain from the Mo59Critic22/23/25 + Mo59Reviewer08 reports and give one verdict per class (semantically-empty, alias/vacuous spans, drift confound, grammar orphan) on whether the r60 instrument now rejects it — evidence per class. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Revenger95.md"
+   },
+   {
+    "name": "Mo60Revenger96",
+    "agent": "revenger",
+    "task": "/skill:godspeed\nMo60Revenger96: commit archaeology of the dead pointers: when did c1-entering.txt/c2-entering.txt first appear as citations (git log -S on SCORECARD), was any file ever committed under those names, and which commit introduced the real control-*.txt names — return the timeline for the Mistakes row. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Revenger96.md"
+   },
+   {
+    "name": "Mo60Revenger97",
+    "agent": "revenger",
+    "task": "/skill:godspeed\nMo60Revenger97: absent-set arrival reconstruction: from f091bd773c4cfec8877061c84f4bae5f11e8bbe5 and the w1 dir listing, derive which of the five seat files landed when (commit, timestamp) vs what the r59 report and lesson each claimed; return the reconciled timeline. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Revenger97.md"
+   },
+   {
+    "name": "Mo60Revenger98",
+    "agent": "revenger",
+    "task": "/skill:godspeed\nMo60Revenger98: the r59 Sentinel57 F1 exploit chain step-by-step vs the r60 counters: (1) unpinned blob executes? (2) materialize join escapes? (3) expect.txt trusted? — for each step give the r59 behavior and the r60 kill with code line pointers. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60Revenger98.md"
+   },
+   {
+    "name": "Mo60SimplifierA1",
+    "agent": "simplifier",
+    "task": "/skill:godspeed\nMo60SimplifierA1: read /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/count-c2.py; propose minimal deletions that preserve the frozen predicate semantics (dead branches, duplicate failed-append tokens); report only — the committed bytes are frozen. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60SimplifierA1.md"
+   },
+   {
+    "name": "Mo60SimplifierA2",
+    "agent": "simplifier",
+    "task": "/skill:godspeed\nMo60SimplifierA2: same audit for count-c1.py and count-c3.py (unused variables, the selftest good_row reuse); report proposals only. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60SimplifierA2.md"
+   },
+   {
+    "name": "Mo60SimplifierA3",
+    "agent": "simplifier",
+    "task": "/skill:godspeed\nMo60SimplifierA3: same audit for tools/mori-entry-claims-check.py (unused copy_prefix param, unused imports, the artifacts-json CLI path unused by the counter); report proposals only. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60SimplifierA3.md"
+   },
+   {
+    "name": "Mo60SimplifierA4",
+    "agent": "simplifier",
+    "task": "/skill:godspeed\nMo60SimplifierA4: builder audit: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-60/build-fixtures-r60.py — the h04 double-replace leftover and the expect/EXPECTS duality; propose the minimal cleanup for a future builder; report only. Work read-only; return concise findings with exact evidence (commands, outputs, line pointers). No commits, no VCS mutation, no fleet/sibling writes.\n\nLane bounds: leaf member — no subagent dispatch.\n\nReport: write your scoped findings to .ufo/waves/round-60/w1/Mo60SimplifierA4.md"
+   }
+  ]
+ },
+ "resumeSends": [],
+ "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}
