@@ -55,7 +55,7 @@ C2_REL = ".ufo/waves/round-60/count-c2.py"
 R59_DATA = "7b86704d7c0754a09958d131b64dbfa2a6d3eaed"
 R59_C2 = ".ufo/waves/round-59/count-c2.py"
 EVIL_REL = "tools/mori-entry-claims-check.py"
-TAMPER_REL = "trees-c2h/h02-malformed-claim/expect.txt"
+TAMPER_REL = (".ufo/waves/round-60/trees-c2h/h02-malformed-claim/expect.txt")
 FROZEN_H02 = "grammar"
 
 EVIL_BLOB = '''#!/usr/bin/env python3
