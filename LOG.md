@@ -2993,3 +2993,73 @@ Attempt-1 leftovers (`.ufo/waves/round-59/count-c{1,2}.py`, selftest 21/24, neve
 Controls before data (receipts `.ufo/waves/round-59/evidence/`): do-nothing at entering → `C1=unmet failed=tool_absent,selftest,fixtures_absent,real,pointers` rc 1; `C2=unmet … failed=copy_absent…,entry_absent,tree` rc 1. At freeze `60b3a76a`: `C1=met` rc 0 (capability arm); `C2=unmet` rc 1 (data arms pending, tool/selftest/scan/drift/trees already ok). At data `7b86704d`: `C1=met` rc 0; `C2=met selftest=ok scan=ok drift=ok trees=ok entry=ok rows=ok pins=ok tree=ok claims=13 files=6` rc 0. Selftests `C1_SELFTEST pass=6`, `C2_SELFTEST pass=9`, `REGCHECK_SELFTEST pass=12`, `SETSCAN_SELFTEST pass=10`.
 
 One v2 wave w1, 64 seats: reviewer 20, critic 10, mutation-tester 8, executor 8, scribe 4, scout 4, connector 2, sentinel 2, revenger 4, simplifier 2 (attack share 40/64 = 62.5%; L1 held planner seat). SOURCES census: start 325 rows → 333 rows (S553–S560 appended; S560 rejected reconciliation of S552-vs-S478 per routed defect 2); validator exit 0 with standing W04s +1 (S560 shares S552's DOI by design). Quarantine slice re-derived: S244 unverifiable (no locator), S262/S268 present — carried from round-58 verdicts, re-handed to the w1 scout seat. Assimilation: none. considerthese: suggestion-2 flag ledger executed in the round-59 lesson (C1-F1/RH-F2 disposed; 7 ids open). QUALITY 155 added (registry DOI/sha sweep before a new row; routed defect 2). No installs; pacman paused. L0: open mori r58 route-map question noted, no new question filed.
+
+## Round 60 — Mori (L1 MoriR60): C1 calibration verified; C2 depth and C3 operability measured met, instruments decertified (honest stop)
+
+Entering `ddfb12fb0838b4307c445194a844f0c4b1950195`; amended freeze
+`ac496c7cde8cad965079858accae3bedfe4a73f2` (amendments 1–2 pre-data, recorded in the
+contract); validated dispatch `76904b21ea44c6a3197f67f151d4311b984bd887`; data
+`398d3225` + `b3c25613` + `0f8340cf` (the last recovered via `jj-lane.sh recover`
+after a git-index lock interrupted the first helper commit). Scores entering/after:
+coverage 6, operability 7, depth 5, freshness 5, calibration 5, adjacency 6 —
+instrument claims stay capability-only (contract ruling); no scalar moved.
+
+Frozen claims (fresh-start duty: r57–r59 rejected closures + spot-checks read first;
+do-nothing controls scored at the entering revision and committed pre-data):
+- C1 calibration: round-59 self-record pointer-honest, receipt-complete, reconciled.
+  At data tip: `C1=met dead-uncorrected=0 receipts=2/2 absent-set=5/5 lesson=ok` rc 0
+  (`evidence/c1-at-data.txt`); control at entering `C1=unmet dead-uncorrected=2
+  receipts=0/2 absent-set=0/5 lesson=absent` rc 1. Wave: re-derived byte-identical
+  twice (Mo60Reviewer03), receipts 2/2 byte-equal (Mo60Reviewer09), control replay
+  byte-for-byte (Mo60Reviewer14), absent-set lies caught (Mo60Critic26), dead-name
+  constructions counted (Mo60Critic27). **Verified met** with routed limits
+  (file-global pointer reading — fixed truthfully in the lesson lines; existential
+  marker arm; lesson-arm selftest blind spot, Mo60MutationTester33 M4).
+- C2 depth: hardened entry-claims verifier (H1–H5) over 13 hostile trees + real
+  entry. At freeze: `C2=met selftest=ok scan=ok drift=ok trees=ok entry=ok rows=ok
+  pins=ok tree=ok claims=13 files=6 spans=13` rc 0 (`evidence/c2-at-freeze.txt`).
+  Wave: 5/5 predicate mutants killed (Mo60MutationTester31) and no false negative on
+  the real entry (Mo60Reviewer04), **but** Mo60Critic21 scored a zero-evidential
+  entry (`ok=true`, then `C2=met` on a sandbox commit) with nested-varying spans and
+  Mo60Critic22 found two bypass classes. **Instrument decertified — unverified, no
+  score claim** (same class as r59's C2).
+- C3 operability: counter execution boundary (G1 pin-gated execution, G2 containment,
+  G3 frozen expect tables). At freeze: `C3=met toolgate=ok containment=ok
+  expectgate=ok cases=6` rc 0 (`evidence/c3-at-freeze.txt`). Wave:
+  Mo60Reviewer13 printed the exact frozen met line on a clone with count-c1
+  sha ≠ PIN_C1 (`met=True, failed=['count_c1_sha']`) and `containment=ok` next to
+  `failed=g2_escape_written`; Mo60Sentinel41 falsified the contract sentence
+  "count-c1 executes no repo-supplied tool blob" (it executes four, revision-pinned).
+  **Instrument decertified — unverified, no score claim.** The gates themselves are
+  necessary and real (Mo60MutationTester34, Mo60Sentinel42 PASS on all real escape
+  classes; Mo60Critic24: G1 refused all 11 mutant scanners with zero execution).
+
+Admission: C1 verifies; C2 and C3 are measured-met-with-decertified-instruments →
+not admitted per the all-claims-verify rule (honest stop; fourth consecutive round
+with this disposition — reported, not prettified; run-start directive lifted the
+streak block).
+
+Wave w1: one v2 wave, 64 seats, 64 settled, 0 empty outputs, 0 dead
+(`SETTLEMENT_SCAN_OK`); reviewer 16, critic 8, mutation-tester 5, sentinel 3,
+executor 12, scribe 6, scout 4, connector 2, revenger 4, simplifier 4 — attack
+share 32/64 = 50%; L1 held the §3 planner seat; no residual call. Dispatch-payload
+defect recorded: godspeed directive bytes absent (builder relied on renderer
+injection; fixed in `build-w1-spec.py` this round).
+
+SOURCES census: start 333 rows → end 337 rows (S561–S564: three own-work admits
+opened this round, one honest reject S564 duplicate-scope; QUALITY 155 sweep grep
+run before the append); validator exit 0 (census-start.txt, census-end.txt).
+Knowledge entry admitted: `corpus/knowledge/entry-claims-hardening-r60.md`
+(H1–H5/G1–G3 with routed-defect mapping and declared limits), citing S561–S563.
+QUALITY 156 (pointer-existence sweep before filing) and 157 (reason routing +
+distinct spans) added from this round's own falsifications. Assimilation: none
+(Scout83: no merge/mori theme matches instrument hardening; MERGE-REPORT read).
+considerthese 2026-10-26 absolute-host-path item honored by construction (no r60
+instrument carries an absolute host path) — lesson line, not a claim. No
+capability row added: the hardened verifier lands as proposed (r59 precedent)
+pending a closure that passes it. L0: none filed; older mori questions R25/R26/
+R38/R42/R58 remain open — the r58 route-map question is superseded by the run-11
+routing amendment (connector/reviewer seats moved at run start). Tool
+installs/updates: none. Stale-lane: respawn-per-round; no other mori mission open.
+Misroot: none of this lane's files at the fleet root (o.bin/oldrep*.out predate
+this round and name other work; left untouched).

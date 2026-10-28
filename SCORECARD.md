@@ -2964,3 +2964,43 @@ binding and drift-arm reason attribution before re-using the entry class; gate a
 executions on `tool_ok` and add containment asserts to counter materialization (sentinel HIGHs);
 decide whether instrument claims may score an axis or stay capability-only.
 
+
+## Round 60 — C1 calibration verified; C2/C3 instruments decertified (honest stop)
+
+Entering `ddfb12fb0838b4307c445194a844f0c4b1950195`; amended freeze
+`ac496c7cde8cad965079858accae3bedfe4a73f2` (amendments 1–2 pre-data, recorded in
+the round-60 contract); validated dispatch `76904b21ea44c6a3197f67f151d4311b984bd887`;
+data `398d3225`/`b3c25613`/`0f8340cf` (recovered via `jj-lane.sh recover` after an
+index-lock interruption). Scores entering/after: coverage 6, operability 7, depth 5,
+freshness 5, calibration 5, adjacency 6 — instrument claims stay capability-only
+(contract ruling); no scalar moved. Lowest tie depth/freshness/calibration at 5:
+C1 targets calibration, C2 depth; C3 is the owned operability axis.
+
+| Claim | Axis | Counting command | Before | After / verdict |
+|---|---|---|---|---|
+| C1: the round-59 self-record is pointer-honest, receipt-complete and reconciled — dead names re-pointed under `r60-correction:`, receipts byte-equal fresh re-runs at `7b86704d`, absent-set table agrees with `git cat-file -e` truth, lesson correction landed | calibration 5 | `python3 .ufo/waves/round-60/count-c1.py R` | At entering `ddfb12fb…`: `C1=unmet dead-uncorrected=2 receipts=0/2 absent-set=0/5 lesson=absent`, rc 1 (`evidence/control-c1-do-nothing.txt`) | At data `b3c25613…`: `C1=met dead-uncorrected=0 receipts=2/2 absent-set=5/5 lesson=ok`, rc 0 (`evidence/c1-at-data.txt`). **Verified met**: re-derived byte-identical twice (Mo60Reviewer03), receipts 2/2 (Mo60Reviewer09), control replay (Mo60Reviewer14/15), lies caught (Mo60Critic26/27/25). Routed limits: file-global pointer reading (fixed truthfully in lesson), existential marker arm, lesson-arm selftest blind spot (Mo60MutationTester33 M4) |
+| C2: hardened entry-claims verifier `tools/mori-entry-claims-check.py` (sha `cffe9f33…`) — H1 grammar routing, H2 distinct spans ≥8, H3 non-degenerate texts, H4 per-copy row binding, H5 attributed drift arm + renamed control — over 13 frozen hostile trees + the real entry | depth 5 | `python3 .ufo/waves/round-60/count-c2.py R` | At entering: `C2=unmet … failed=…,tool_absent,selftest,trees,trees_set`, rc 1 (`evidence/control-c2-do-nothing.txt`) | At freeze `ac496c7c…`: `C2=met selftest=ok scan=ok drift=ok trees=ok entry=ok rows=ok pins=ok tree=ok claims=13 files=6 spans=13`, rc 0 (`evidence/c2-at-freeze.txt`). **Unverified**: Mo60Critic21 scored a zero-evidential entry ok=true → `C2=met` on a sandbox commit (nested-varying spans, distinct filler texts); Mo60Critic22 found two bypass classes; 5/5 predicate mutants died (Mo60MutationTester31) and the real entry has no false negative (Mo60Reviewer04) — shape predicates cannot certify content. No depth score claim |
+| C3: round-60 counter execution boundary — G1 pin-gated execution, G2 containment-asserted materialization, G3 frozen expect tables — demonstrated by replaying the Sentinel57/58 PoCs | operability 7 | `python3 .ufo/waves/round-60/count-c3.py R` | At entering: `C3=unmet … failed=count_c1_absent,count_c2_absent,g1_new_skipped,g2_skipped,g3_skipped` with the old-counter marker hole reproduced, rc 1 (`evidence/control-c3-do-nothing.txt`) | At freeze: `C3=met toolgate=ok containment=ok expectgate=ok cases=6`, rc 0 (`evidence/c3-at-freeze.txt`). **Unverified**: Mo60Reviewer13 printed the exact frozen met line on a clone with count-c1 sha ≠ PIN_C1 and `containment=ok` beside `failed=g2_escape_written`; Mo60Sentinel41 falsified the contract's "count-c1 executes no repo-supplied tool blob" sentence. Gates themselves necessary and real (Mo60MutationTester34, Mo60Sentinel42, Mo60Critic24: G1 refused all 11 mutants with zero execution). No operability score claim |
+
+Wave w1: one v2 wave, 64 seats, 64 settled, 0 empty outputs, 0 dead
+(`SETTLEMENT_SCAN_OK`); reviewer 16, critic 8, mutation-tester 5, sentinel 3,
+executor 12, scribe 6, scout 4, connector 2, revenger 4, simplifier 4 — attack
+share 32/64 = 50%; L1 held the §3 planner seat; no residual call. Aggregate
+(Mo60Critic28): no committed revision prints all three counters met without the
+claimed work — the do-nothing arms hold. Dispatch-payload defect: godspeed
+directive bytes absent (renderer injection did not happen; builder fixed).
+
+Admission: C1 verified; C2/C3 measured-met with decertified instruments → not
+admitted per the all-claims-verify rule (honest stop). SOURCES: 333 → 337 rows
+(S561–S563 admits, S564 reject); census exit 0. One admitted knowledge entry
+(`entry-claims-hardening-r60.md`, citing S561–S563, limits declared); QUALITY
+156–157 added. Assimilation: none (Mo60Scout83). No capability row added
+(proposed, not demonstrated — r59 precedent).
+
+Planned (round 61): enforce the count-c1/c2 pins inside count-c3's `met`
+composition and gate the three output tokens on real failure tokens (routed
+Reviewer13/Reviewer02 items); make the c1 marker arm universal and give the
+lesson arm a selftest case (routed Reviewer03/MutationTester33 M4); close the
+C2 nested-span class (minimum span separation or coverage-ratio predicate)
+before re-claiming depth on the entry class; embed and verify godspeed bytes
+at dispatch time.

@@ -93,8 +93,55 @@ as well (Mo60Reviewer03, this round's wave).
 
 ## Wave w1
 
-(filled after WAVE-DONE integration: seat count, role mix, attack share,
-dead seats, results handoff.)
+One v2 wave, 64 seats dispatched, 64 settled, zero empty outputs, zero
+duplicates (`SETTLEMENT_SCAN_OK`, mori-settlement-scan over
+`w1-results.json`). Role mix: reviewer 16, critic 8, mutation-tester 5,
+sentinel 3, executor 12, scribe 6, scout 4, connector 2, revenger 4,
+simplifier 4 — attack share 32/64 = 50%; L1 held the §3 planner seat; no
+residual call. Dispatch `76904b21`, results `.ufo/waves/round-60/w1-results.json`,
+64 seat reports under `w1/`. Dispatch-payload defect (recorded): the seats
+received the `/skill:godspeed` leading line but not the verbatim directive
+bytes (this round's spec builder relied on renderer injection that did not
+happen; r59's builder embedded them) — builder fixed for future waves.
+
+Per-claim verdicts from the wave (all receipts at named revisions):
+
+- **C1 (calibration) — VERIFIED met, limits disclosed.** Re-derived
+  byte-identical at the data revision by Mo60Reviewer03 (twice) and the
+  receipt arms re-verified by Mo60Reviewer09 (2/2 byte-equal, rc 0);
+  do-nothing control replayed byte-for-byte (Mo60Reviewer14/15); absent-set
+  lies caught in the operative row (Mo60Critic26); dead-name constructions
+  counted (Mo60Critic27); receipt relabeling caught (`bytes_differ`,
+  Mo60Critic25). Routed limits: the lesson-arm pointer reading is
+  file-global (fixed truthfully in the correction lines), the marker arm is
+  existential not universal (clone-demonstrated, zero rogue lines on real
+  bytes), and MutationTester33's M4 shows the lesson arm has a selftest
+  blind spot.
+- **C2 (depth) — measured met, instrument DECERTIFIED; unverified; no score
+  claim.** The real entry verifies with no false negative
+  (Mo60Reviewer04; benign mutations hold) and 5/5 predicate mutants die
+  (Mo60MutationTester31), but Mo60Critic21 built a zero-evidential entry
+  (nested-varying spans at offset 2/3, distinct filler texts) scoring
+  `ok=true` and `C2=met` on a sandbox commit, and Mo60Critic22 found two
+  further bypass classes (orphan claim-shaped lines silently skipped;
+  claim text uninspected). Same class that decertified r59's C2: shape
+  predicates cannot certify content. Honest stop.
+- **C3 (operability) — measured met, instrument DECERTIFIED; unverified; no
+  score claim.** Mo60Reviewer13 demonstrated the exact frozen `C3=met` line
+  on a scratch clone whose count-c1 sha ≠ PIN_C1 (`met=True,
+  failed=['count_c1_sha']` — the pin is checked but does not compose the
+  verdict) and `containment=ok` beside `failed=g2_escape_written`;
+  Mo60Sentinel41 falsified the contract's "count-c1 executes no
+  repo-supplied tool blob" sentence (it executes four: two r59 counters,
+  two tools — revision-pinned, but the pin is not an execution gate under a
+  hostile `--repo`). The boundary gates themselves are real and necessary
+  (Mo60MutationTester34: marker clause necessary; Mo60Sentinel42: all real
+  escape classes refused) — the verdict composition is what fails.
+- Aggregate (Mo60Critic28): no committed revision prints all three counters
+  met without the claimed work — the do-nothing arms hold.
+
+Spot-check material for the non-author closure: ≥1 admit (S561) and ≥1
+reject (S564) are recorded above; the closure re-opens at least one.
 
 ## Wave-found instrument defects (routed; frozen bytes stand)
 

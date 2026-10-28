@@ -3,6 +3,7 @@
 claims C1 (calibration), C2 (depth), C3 (operability) plus the frontier step.
 Run from the lane repo root. Emits .ufo/waves/round-60/w1-spec.json."""
 import json
+from pathlib import Path
 
 WAVE = "mori-r60-w1"
 REPORT_DIR = ".ufo/waves/round-60/w1"
@@ -25,10 +26,18 @@ Before installing/updating a tool, read `/home/vgpnk/.omp/agent/RULES.md`; use o
 ITEMS = []
 
 
+GODSPEED = (Path.home() / ".agents/skills/godspeed/directive.md")
+try:
+    _GS = GODSPEED.read_text()
+except OSError:
+    _GS = ""  # fail closed to the invocation line only; recorded in report
+
+
 def add(name, role, text):
     text = text.replace("{REV}", REV)
+    lead = "/skill:godspeed\n" + _GS + ("\n" if _GS and not _GS.endswith("\n") else "")
     ITEMS.append({"name": name, "role": role,
-                  "prompt": "/skill:godspeed\n" + text + BOUNDS})
+                  "prompt": lead + text + BOUNDS})
 
 
 BOUNDS = (" Work read-only; return concise findings with exact evidence "
