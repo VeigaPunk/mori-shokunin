@@ -49,7 +49,7 @@ import tempfile
 from pathlib import Path
 
 PIN_C1 = "795c1f3193a76406a40561ac60fedb3eee75fc38df2b2efb3fc5295d617ddbae"
-PIN_C2 = "c5e4bb4be0785cc99313855fbf7c76ffdd32bdeaef3bc0e7289cbc030b66a2bc"
+PIN_C2 = "8c4814f54c564a7f00beec5249de092a2d3b2c4043e07be773d80e8e3ccdf976"
 C1_REL = ".ufo/waves/round-60/count-c1.py"
 C2_REL = ".ufo/waves/round-60/count-c2.py"
 R59_DATA = "7b86704d7c0754a09958d131b64dbfa2a6d3eaed"

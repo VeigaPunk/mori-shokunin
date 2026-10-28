@@ -71,7 +71,7 @@ bytes:
 
 Claim: the hardened entry-claims verifier
 `tools/mori-entry-claims-check.py` (frozen sha
-`8d9f0dc1e68356a95982eb911cd96eb8cd21cb5e174ef37794aa8b1aa294adad`) closes
+`cffe9f3359097277a7ea39729309efdc5831a1738994ceb30ee023ac0eae6e69`) closes
 the routed r59 entry-class defects on the SAME real entry, with no false
 negative: H1 `grammar:` reasons block the verdict; H2 claims resolve to
 distinct byte spans (line/offset aliasing collapses; whitespace-only quotes
@@ -120,7 +120,7 @@ with the frozen table yields `expect_tamper:h02-malformed-claim`.
   `evidence/control-c3-do-nothing.txt`.
 - Selftest: `count-c3.py --selftest` → `C3_SELFTEST pass=3 fail=0`.
 - Kill rule: same as C1. count-c3 pins count-c1 (sha `795c1f31…ddbae`) and
-  count-c2 (sha `c5e4bb4b…6a2bc`); count-c1 executes no repo-supplied tool
+  count-c2 (sha `8c4814f5…df976`); count-c1 executes no repo-supplied tool
   blob (its re-runs are revision-pinned), so G1 is structural there.
 
 ## Sourced-claim rule (§2b)
@@ -152,4 +152,12 @@ the count).
 ## Amendment clause
 
 Amendments are allowed only before any seat scores; every amendment is
-recorded here with its reason. None so far.
+recorded here with its reason.
+
+- Amendment 1 (pre-dispatch, no seat scored): the rewritten tool selftest
+  was missing its summary print (the counter's `selftest=ok` token checks
+  the printed line) and the fixture builder wrote empty expect.txt files
+  because it never passed the frozen expects into `write_tree`. Fixed both;
+  tool sha is now `cffe9f33…e6e69` (PIN_EC), count-c2 `8c4814f5…df976`,
+  count-c3 re-pinned. Trees regenerated with byte-exact expect.txt files.
+  No predicate, target or kill rule changed.

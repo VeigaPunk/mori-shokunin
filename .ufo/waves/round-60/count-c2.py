@@ -45,7 +45,7 @@ import tempfile
 from pathlib import Path
 
 TOOL_EC = "tools/mori-entry-claims-check.py"
-PIN_EC = "8d9f0dc1e68356a95982eb911cd96eb8cd21cb5e174ef37794aa8b1aa294adad"
+PIN_EC = "cffe9f3359097277a7ea39729309efdc5831a1738994ceb30ee023ac0eae6e69"
 TOOL_SCAN = "tools/mori-settlement-scan.py"
 PIN_SCAN = ("4c04bf2170b0484192dd157ee04851e8243e030c54046c5e8806d46eea5a"
             "c9a9")

@@ -22,6 +22,7 @@ import sys
 from pathlib import Path
 
 OUT = Path(".ufo/waves/round-60/trees-c2h")
+EXPECTS = {}
 ENTRY = "corpus/knowledge/wave-settlement-artifacts-r59.md"
 SOURCES = "corpus/SOURCES.md"
 C1 = "corpus/evidence/sources-r59/w1-results-r54.json"
@@ -136,7 +137,8 @@ def write_tree(name, entry_text, registry_text, extra_copies=None,
         p = d / rel
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_bytes(b)
-    (d / "expect.txt").write_text(",".join(expect) + "\n")
+    (d / "expect.txt").write_text(",".join(EXPECTS.get(name, expect))
+                                  + "\n")
     return name
 
 
@@ -144,10 +146,8 @@ def main():
     if OUT.exists():
         print("refusing to overwrite existing %s" % OUT, file=sys.stderr)
         return 2
-    expects = {}
-
     # h00: good control — must verify (empty expect)
-    expects["h00-good-control"] = []
+    EXPECTS["h00-good-control"] = []
     write_tree("h00-good-control", HEAD_OK + "\n".join(good_claims()) + "\n",
                good_registry())
 
@@ -158,14 +158,14 @@ def main():
                 "The artifact encodes waveform audio in YAML form.",
                 q, C1, "offset", 3, pin1) for i in range(10)]
     em.append("- **K99** — dangling claim with no pin or span")
-    expects["h01-semantically-empty"] = ["distinct:dup_span", "text:short"]
+    EXPECTS["h01-semantically-empty"] = ["distinct:dup_span", "text:short"]
     write_tree("h01-semantically-empty", HEAD_OK + "\n".join(em) + "\n",
                good_registry())
 
     # h02 (Reviewer08 F1): clean entry + one malformed claim line
     g = good_claims()
     g.append("- **K77** — malformed claim line missing quote and pin")
-    expects["h02-malformed-claim"] = ["grammar"]
+    EXPECTS["h02-malformed-claim"] = ["grammar"]
     write_tree("h02-malformed-claim", HEAD_OK + "\n".join(g) + "\n",
                good_registry())
 
@@ -177,7 +177,7 @@ def main():
                     C1, "offset", start, pin1))
     al[0] = claim(1, "seats equals members count", off.decode(), C1, "line",
                   2, pin1)
-    expects["h03-line-offset-alias"] = ["distinct:dup_span"]
+    EXPECTS["h03-line-offset-alias"] = ["distinct:dup_span"]
     write_tree("h03-line-offset-alias", HEAD_OK + "\n".join(al) + "\n",
                good_registry())
 
@@ -188,7 +188,7 @@ def main():
     blobs4 = dict(BLOBS)
     blobs4[C1] = BLOBS[C1] + b'        \n'
     # ^ appended blank line is line 7 of the extended blob
-    expects["h04-blank-quote"] = ["span:blank"]
+    EXPECTS["h04-blank-quote"] = ["span:blank"]
     write_tree("h04-blank-quote", HEAD_OK + "\n".join(bl) + "\n",
                good_registry(), blobs=blobs4)
     # rebuild claims with the extended blob's pin
@@ -207,7 +207,7 @@ def main():
     sh = [claim(i + 1, "short span claim %d here" % (i + 1),
                 ['aa', 'bb', 'cc', 'dd'][i % 4], C1, "line", i + 1,
                 sha(blobs5[C1])) for i in range(4)]
-    expects["h05-short-quotes"] = ["span:short"]
+    EXPECTS["h05-short-quotes"] = ["span:short"]
     write_tree("h05-short-quotes", HEAD_OK + "\n".join(sh) + "\n",
                good_registry(),
                blobs=dict(blobs5, **{k: v for k, v in BLOBS.items()
@@ -218,7 +218,7 @@ def main():
                 (b' "members": 74,' if i % 2 else b' "seats": 64,').decode(),
                 C1 if i % 2 else C2, "line", 2,
                 sha(BLOBS[C1 if i % 2 else C2])) for i in range(10)]
-    expects["h06-degenerate-text"] = ["text:short"]
+    EXPECTS["h06-degenerate-text"] = ["text:short"]
     write_tree("h06-degenerate-text", HEAD_OK + "\n".join(dg) + "\n",
                good_registry())
 
@@ -226,17 +226,17 @@ def main():
     one_row = ("| S901 | artifact %s captured | own-work | A | scope | "
                "anchor | teaches | mined | 2026-10-28 | 90d | %s |\n"
                % (ART[C1], ENTRY))
-    expects["h07-single-row"] = ["rows:binding"]
+    EXPECTS["h07-single-row"] = ["rows:binding"]
     write_tree("h07-single-row", HEAD_OK + "\n".join(good_claims()) + "\n",
                one_row)
 
     # h08: rows not mined
-    expects["h08-row-not-mined"] = ["rows:status"]
+    EXPECTS["h08-row-not-mined"] = ["rows:status"]
     write_tree("h08-row-not-mined", HEAD_OK + "\n".join(good_claims()) + "\n",
                good_registry(mined=False))
 
     # h09: used-by another entry
-    expects["h09-usedby-other"] = ["rows:usedby"]
+    EXPECTS["h09-usedby-other"] = ["rows:usedby"]
     write_tree("h09-usedby-other", HEAD_OK + "\n".join(good_claims()) + "\n",
                good_registry(usedby=False))
 
@@ -244,25 +244,25 @@ def main():
     st = [ln.replace(sha(BLOBS[C1]), "b" * 64)
           for ln in (HEAD_OK + "\n".join(good_claims()) + "\n")
           .splitlines()]
-    expects["h10-stale-pin"] = ["pin:"]
+    EXPECTS["h10-stale-pin"] = ["pin:"]
     write_tree("h10-stale-pin", "\n".join(st) + "\n", good_registry())
 
     # h11: quote not on the cited line (byte mismatch)
     wm = good_claims()
     wm[0] = claim(1, "wrong line content claimed here", ' "nope": 1,', C1,
                   "line", 2, sha(BLOBS[C1]))
-    expects["h11-wrong-line"] = ["span:"]
+    EXPECTS["h11-wrong-line"] = ["span:"]
     write_tree("h11-wrong-line", HEAD_OK + "\n".join(wm) + "\n",
                good_registry())
 
     # h12: frontmatter-less body
     body = "\n".join(good_claims()) + "\n"
-    expects["h12-no-frontmatter"] = ["frontmatter"]
+    EXPECTS["h12-no-frontmatter"] = ["frontmatter"]
     write_tree("h12-no-frontmatter", body, good_registry())
 
     (OUT.parent / "trees-c2h-expects.json").write_text(
-        json.dumps(expects, indent=1, sort_keys=True) + "\n")
-    print("trees=%d expects=%d" % (len(expects), len(expects)))
+        json.dumps(EXPECTS, indent=1, sort_keys=True) + "\n")
+    print("trees=%d expects=%d" % (len(EXPECTS), len(EXPECTS)))
     return 0
 
 

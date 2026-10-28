@@ -432,6 +432,7 @@ def selftest(scratch=None):
         (base / entry).unlink()
         ok12, r12, _ = run()
         chk("entry_absent", not ok12 and r12 == ["entry_absent"])
+        print("ENTRYCLAIMS_SELFTEST pass=%d fail=%d" % (passed, failed))
         return 0 if failed == 0 else 1
     finally:
         shutil.rmtree(base, ignore_errors=True)
