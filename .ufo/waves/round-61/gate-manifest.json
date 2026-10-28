@@ -1,0 +1,127 @@
+[
+ {
+  "path": ".ufo/waves/round-52/count-c1.py",
+  "round": 52,
+  "landing": "d3a8ea5957b73bddbde750a8c0af2fba8da8b7c2"
+ },
+ {
+  "path": ".ufo/waves/round-52/count-c2.py",
+  "round": 52,
+  "landing": "d3a8ea5957b73bddbde750a8c0af2fba8da8b7c2"
+ },
+ {
+  "path": ".ufo/waves/round-53/count-c1.py",
+  "round": 53,
+  "landing": "f4da3fd400fa88a6db8ea544a4f7045c15d2410e"
+ },
+ {
+  "path": ".ufo/waves/round-53/count-c2.py",
+  "round": 53,
+  "landing": "f4da3fd400fa88a6db8ea544a4f7045c15d2410e"
+ },
+ {
+  "path": ".ufo/waves/round-54/count-c1.py",
+  "round": 54,
+  "landing": "6830f3af992d906bfa1e17e3743e631ab834f67c"
+ },
+ {
+  "path": ".ufo/waves/round-54/count-c2.py",
+  "round": 54,
+  "landing": "6830f3af992d906bfa1e17e3743e631ab834f67c"
+ },
+ {
+  "path": ".ufo/waves/round-55/count-c1.py",
+  "round": 55,
+  "landing": "c9b908f0bb89974f30b927776ce2450ae4198b10"
+ },
+ {
+  "path": ".ufo/waves/round-55/count-c2.py",
+  "round": 55,
+  "landing": "c9b908f0bb89974f30b927776ce2450ae4198b10"
+ },
+ {
+  "path": ".ufo/waves/round-56/count-c1.py",
+  "round": 56,
+  "landing": "3f494b49cde612d929e82887a48e1660c022c359"
+ },
+ {
+  "path": ".ufo/waves/round-56/count-c2.py",
+  "round": 56,
+  "landing": "3f494b49cde612d929e82887a48e1660c022c359"
+ },
+ {
+  "path": ".ufo/waves/round-57/count-c1.py",
+  "round": 57,
+  "landing": "618562c72a03dc4d17386b715357f863fd327274"
+ },
+ {
+  "path": ".ufo/waves/round-57/count-c2.py",
+  "round": 57,
+  "landing": "618562c72a03dc4d17386b715357f863fd327274"
+ },
+ {
+  "path": ".ufo/waves/round-58/count-c1.py",
+  "round": 58,
+  "landing": "fe8801120a67c1a6b8899d7d0423839caa09e7d0"
+ },
+ {
+  "path": ".ufo/waves/round-58/count-c2.py",
+  "round": 58,
+  "landing": "fe8801120a67c1a6b8899d7d0423839caa09e7d0"
+ },
+ {
+  "path": ".ufo/waves/round-59/count-c1.py",
+  "round": 59,
+  "landing": "ccfd554e64084a0b4370806dd12a850e0a7bd7db"
+ },
+ {
+  "path": ".ufo/waves/round-59/count-c2.py",
+  "round": 59,
+  "landing": "ccfd554e64084a0b4370806dd12a850e0a7bd7db"
+ },
+ {
+  "path": ".ufo/waves/round-60/count-c1.py",
+  "round": 60,
+  "landing": "4d036fb07207dbc9aa400617e57117b9857114e9"
+ },
+ {
+  "path": ".ufo/waves/round-60/count-c2.py",
+  "round": 60,
+  "landing": "4d036fb07207dbc9aa400617e57117b9857114e9"
+ },
+ {
+  "path": ".ufo/waves/round-60/count-c3.py",
+  "round": 60,
+  "landing": "4d036fb07207dbc9aa400617e57117b9857114e9"
+ },
+ {
+  "path": ".ufo/waves/round-57/verify-c2-source.py",
+  "round": 57,
+  "landing": "6f3f84820911bafbb3f66cdcb080368c9242303f"
+ },
+ {
+  "path": "tools/mori-vote-bind.py",
+  "round": 56,
+  "landing": "c419fe6dc051a5828fabd5f472f851e76dd54e8d"
+ },
+ {
+  "path": "tools/mori-driver-liveness.py",
+  "round": 56,
+  "landing": "c419fe6dc051a5828fabd5f472f851e76dd54e8d"
+ },
+ {
+  "path": "tools/mori-register-check.py",
+  "round": 59,
+  "landing": "ccfd554e64084a0b4370806dd12a850e0a7bd7db"
+ },
+ {
+  "path": "tools/mori-settlement-scan.py",
+  "round": 59,
+  "landing": "ccfd554e64084a0b4370806dd12a850e0a7bd7db"
+ },
+ {
+  "path": "tools/mori-entry-claims-check.py",
+  "round": 60,
+  "landing": "4d036fb07207dbc9aa400617e57117b9857114e9"
+ }
+]

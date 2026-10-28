@@ -1,0 +1,12 @@
+case good: ok=True want=True pass failed=[]
+case quote-missing: ok=False want=False pass failed=['quote_missing:a.rst:5-7']
+case row-missing: ok=False want=False pass failed=['rows_missing:a.rst:5-7', 'rows_ne_pointers']
+case orphan: ok=False want=False pass failed=['rows_orphan:b.c:25', 'quote_words:b.c:25', 'rows_ne_pointers']
+case small-span: ok=False want=False pass failed=['span_small:a.rst:5-7']
+case dup-quote: ok=False want=False pass failed=['quote_dup:a.rst:9']
+case not-mined: ok=False want=False pass failed=['rows_src:a.rst', 'rows_src:b.c', 'rows_src:c.txt', 'rows_src:d.h']
+case usedby-miss: ok=False want=False pass failed=['rows_src:a.rst', 'rows_src:b.c', 'rows_src:c.txt', 'rows_src:d.h']
+case tampered-copy: ok=False want=False pass failed=['copy_pin:a.rst', 'loc_bad:a.rst:5-7', 'loc_bad:a.rst:9', 'sources_floor']
+case no-prov: ok=False want=False pass failed=['provenance']
+C2_SELFTEST pass=10 fail=0
+rc=0

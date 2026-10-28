@@ -1,0 +1,8 @@
+case good: ok=True want=True pass failed=[]
+case missing: ok=False want=False pass failed=['missing:tools/absent.py']
+case thin: ok=False want=False pass failed=['thin:tools/h.py:owner']
+case noselftest: ok=False want=False pass failed=['noselftest:tools/i.py']
+case superseded-ok: ok=True want=True pass failed=[]
+case unres: ok=False want=False pass failed=['missing:tools/nothere.py']
+C1_SELFTEST pass=6 fail=0
+rc=0

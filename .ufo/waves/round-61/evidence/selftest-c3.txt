@@ -1,0 +1,10 @@
+case all-arms-good: got=True want=True pass
+case r60-tamper-detected: got=True want=True pass
+case self-mutant-detected: got=True want=True pass
+case wrong-pins-detected: got=True want=True pass
+case blobrefusal: got=True want=True pass
+case expectpin: got=True want=True pass
+case r60hole-real-bytes: got=True want=True pass
+case r61repair-real-bytes: got=True want=True pass
+C3_SELFTEST pass=8 fail=0
+rc=0
