@@ -44,8 +44,9 @@ Diffs (11/11/11/29 lines, saved as runs/diff-M{1,2,3,4}.patch before cleanup):
 -            reasons.append("pin:%s" % kid)
 ```
 
-Mutant sha256 at run time: M1 `b41c9652…` see below (full: computed per file;
-all four derived from the pristine copy above via `edit`, verified by diff).
+Mutant identity at run time: each mutant was verified against the pristine copy
+by the unified diffs above (exact hunk content) and by behavior (R2-R4); no
+mutant byte was ever written to the lane.
 
 ## Detector protocol (bounded)
 
