@@ -28,7 +28,7 @@ a no-harm reviewer seat is in the wave.
 ## C1 — calibration (score 5, tied lowest non-retired)
 
 Claim: the lane lands a capability `tools/mori-register-check.py` at frozen
-sha256 `02feb852…954f7b` — the active capabilities-register checker that
+sha256 `38b733d8…472b8` — the active capabilities-register checker that
 VERIFIES the two round-56 admitted capabilities in the ACTIVE register
 (the unique `## Capabilities` section self-declaring "current capabilities
 register", `SCORECARD.md:1951-1953`; NOT the superseded `— none yet —` stub) —

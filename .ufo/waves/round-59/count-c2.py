@@ -192,9 +192,9 @@ def eval_entry(root):
 
 def measure(repo, rev, scratch):
     scratch = Path(scratch)
+    scratch.mkdir(parents=True, exist_ok=True)
     failed = []
     detail = {"claims": 0, "files": 0}
-
     tool_b = git_show(repo, rev, TOOL)
     tool_ok = tool_b is not None and sha256(tool_b) == PIN
     if tool_b is None:
@@ -317,7 +317,7 @@ def measure(repo, rev, scratch):
 
     # hostile trees arm
     trees_ok = True
-    listing = git(repo, "ls-tree", "--name-only", rev, TREES + "/")
+    listing = git(repo, "ls-tree", "--name-only", "%s:%s" % (rev, TREES))
     tdirs = [n for n in listing.stdout.decode().splitlines()
              if n] if listing.returncode == 0 else []
     if not tdirs:

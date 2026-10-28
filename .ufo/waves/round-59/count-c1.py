@@ -43,7 +43,7 @@ BOUND = {
         "strict per-event driver-liveness probe",
 }
 MANIFEST_REV = "2807c6ab8a9b04dcf256682bcd722c695fdd6e14"
-PIN = "02feb852f1d23474be84b930f0989341af5971648a5fb97949bf11e743954f7b"  # frozen at freeze commit
+PIN = "38b733d896f880f5b7ecb464848b80798810ab052fcf0a8afb320918151472b8"  # frozen at freeze commit
 
 
 def sha256(b):
@@ -90,6 +90,7 @@ def materialize(repo, rev, paths, root):
 
 def measure(repo, fleet, rev, scratch):
     scratch = Path(scratch)
+    scratch.mkdir(parents=True, exist_ok=True)
     failed = []
     detail = {}
     tool_b = git_show(repo, rev, TOOL)
@@ -120,7 +121,7 @@ def measure(repo, fleet, rev, scratch):
     # fixture arm: every committed fixture dir must be judged UNMET with its
     # frozen expected reason prefix.
     fix_ok = True
-    fix_listing = git(repo, "ls-tree", "--name-only", rev, FIXDIR + "/")
+    fix_listing = git(repo, "ls-tree", "--name-only", "%s:%s" % (rev, FIXDIR))
     names = [] if fix_listing.returncode != 0 else [
         n for n in fix_listing.stdout.decode().splitlines() if n]
     dirs = [n for n in names if not n.endswith(".py")]

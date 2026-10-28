@@ -165,8 +165,10 @@ def check(scorecard_path, manifest_path, root, require):
                     reasons.append("manifest:entry_missing=%s" % want)
                 else:
                     entry = cap[cai]
-                    if not (entry == name or entry.startswith(name + " (")
-                            or entry.startswith(name + ",")):
+                    if not (entry == name or
+                            (entry.startswith(name)
+                             and not entry[len(name)].isalnum()
+                             and entry[len(name)] not in "_")):
                         reasons.append("manifest:name=%s" % want)
                 lr = obj.get("lane_round")
                 if cells[4] != str(lr):
