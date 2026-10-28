@@ -16,8 +16,9 @@ settlement artifacts — the file the inline spawn handoff writes beside `<wave>
 when every seat settles — and about the lane's own `mori-wave-settlement-v1` settlement summary.
 They are shape facts of committed artifacts, not settlement semantics: `seats` says how many
 seats the file lists, `output` is the captured final seat output, `note` is free-form metadata;
-nothing here proves a seat ran, judged, or agreed. The round-53 member `report_file` key is a
-writer-version difference (its drift is *recorded*, not repaired).
+nothing here proves a seat ran, judged, or agreed. The round-53 member `report_file` key — `'   "report_file": ".ufo/waves/round-53/w1/Mo53Fr01.md"'` at line 16 of S559's copy — is a
+writer-version difference observed as prose (not a K claim: the r53 copy sits outside the
+counter's frozen artifact set; its drift is *recorded*, not repaired).
 
 ## Claims
 
@@ -31,7 +32,6 @@ writer-version difference (its drift is *recorded*, not repaired).
 - **K8** — the top-level `lane` field names mori in the round-54 artifact. Quote: ` "lane": "mori",` (corpus/evidence/sources-r59/w1-results-r54.json:line:2; pin ea48a0cc07fa948c70d90103b589db0cdf7d48343aa689a3e56742c1cd59335f)
 - **K9** — the top-level `wave` field names w1 in the round-58 artifact. Quote: ` "wave": "w1",` (corpus/evidence/sources-r59/w1-results-r58.json:line:4; pin a57b660d9f41c55dc5d614444f60f1cf658d19a55a530c9788369e5fb7ec61fc)
 - **K10** — member `agent` carries a taxonomy role name (reviewer) in r58 member[0]. Quote: `   "agent": "reviewer",` (corpus/evidence/sources-r59/w1-results-r58.json:line:9; pin a57b660d9f41c55dc5d614444f60f1cf658d19a55a530c9788369e5fb7ec61fc)
-- **K11** — the round-53 artifact's member entries carry a report_file field — a key absent from r54-r58 members. Quote: `   "report_file": ".ufo/waves/round-53/w1/Mo53Fr01.md"` (corpus/evidence/sources-r59/w1-results-r53.json:line:16; pin 0d644e0fb9c50101a00f47c4ef95e637bb1b1cf1168b5e49bdd19c2f0e584260)
 - **K12** — the settlement scanner's committed summary names schema mori-wave-settlement-v1. Quote: `mori-wave-settlement-v1` (corpus/evidence/sources-r59/w1-settlement-r58.json:offset:89; pin b259e73cdddef7ff8565a01c6d97f79da8b112aa6c7dbb97a8aa541b4f0b5588)
 - **K13** — the round-58 settlement summary totals record 26 partial waves. Quote: `"partial":26` (corpus/evidence/sources-r59/w1-settlement-r58.json:offset:224; pin b259e73cdddef7ff8565a01c6d97f79da8b112aa6c7dbb97a8aa541b4f0b5588)
 - **K14** — the round-58 settlement summary totals record 36 settled waves. Quote: `"settled":36` (corpus/evidence/sources-r59/w1-settlement-r58.json:offset:237; pin b259e73cdddef7ff8565a01c6d97f79da8b112aa6c7dbb97a8aa541b4f0b5588)
