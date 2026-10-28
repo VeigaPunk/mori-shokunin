@@ -1,0 +1,1 @@
+C2=unmet selftest=bad scan=ok drift=ok trees=bad entry=bad rows=bad pins=bad tree=ok claims=0 files=0 spans=0 rev=ddfb12fb0838b4307c445194a844f0c4b1950195 failed=entry,pins,rows,selftest,tool_absent,trees,trees_set

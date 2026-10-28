@@ -1,0 +1,40 @@
+{
+ "h00-good-control": [],
+ "h01-semantically-empty": [
+  "distinct:dup_span",
+  "text:short"
+ ],
+ "h02-malformed-claim": [
+  "grammar"
+ ],
+ "h03-line-offset-alias": [
+  "distinct:dup_span"
+ ],
+ "h04-blank-quote": [
+  "span:blank"
+ ],
+ "h05-short-quotes": [
+  "span:short"
+ ],
+ "h06-degenerate-text": [
+  "text:short"
+ ],
+ "h07-single-row": [
+  "rows:binding"
+ ],
+ "h08-row-not-mined": [
+  "rows:status"
+ ],
+ "h09-usedby-other": [
+  "rows:usedby"
+ ],
+ "h10-stale-pin": [
+  "pin:"
+ ],
+ "h11-wrong-line": [
+  "span:"
+ ],
+ "h12-no-frontmatter": [
+  "frontmatter"
+ ]
+}

@@ -1,0 +1,1 @@
+C1=unmet dead-uncorrected=2 receipts=0/2 absent-set=0/5 lesson=absent rev=ddfb12fb0838b4307c445194a844f0c4b1950195 failed=absent_set=0/5,absent_table_absent,correction_incomplete,dead=2,lesson_absent,receipt_absent:.ufo/waves/round-60/evidence/r59-c1-met.txt,receipt_absent:.ufo/waves/round-60/evidence/r59-c2-met.txt,receipts=0/2
