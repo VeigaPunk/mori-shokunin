@@ -74,9 +74,11 @@ byte-identical to the S478/S552 pin, eBPF-tracepoint quote located at printed p.
 
 64 seats dispatched via `w1.ready` (orchestrator marker 2026-10-28T02:53:55). Mix: reviewer 20,
 critic 10, mutation-tester 8, executor 8, scribe 4, scout 4, connector 2, sentinel 2, revenger 4,
-simplifier 2 — attack share 40/64 = 62.5%; L1 held the planner seat. Reports absent at filing:
-Mo59Critic29, Mo59Executor40, Mo59MutationTester31, Mo59MutationTester32, Mo59Reviewer16 (missing
-reports are not labeled dead — the settlement channel is report-presence only).
+simplifier 2 — attack share 40/64 = 62.5%; L1 held the planner seat. **All 64 reports landed
+after WAVE-DONE** (`w1-results.json` 64/64 members); the three late seats (Mo59Executor40,
+Mo59MutationTester31/32) added no verdict change — MT31's sole survivor (m3) mutates the
+counter's own MANIFEST_REV pin (detector-redundancy note, not a committed-bytes attack) and
+MT32 killed every C2 counter mutant fail-closed.
 
 **Claim verdicts.** C1 `met` — no met-flip found by any attack seat (Mo59Critic24 pure-function
 MANIFEST arm; Mo59Reviewer05/06 replay; Mo59Executor41 13/13 fixtures killed; Mo59Reviewer14
