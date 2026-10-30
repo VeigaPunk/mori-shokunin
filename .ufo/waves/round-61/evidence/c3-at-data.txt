@@ -1,0 +1,3 @@
+rev=986d4b46db6e67682ef84091f606d125f987ecbc
+C3=met r60hole=ok r61repair=ok blobrefusal=ok expectpin=ok livepins=ok cases=5 failed=none rev=986d4b46db6e67682ef84091f606d125f987ecbc
+rc=0

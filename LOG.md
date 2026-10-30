@@ -3063,3 +3063,61 @@ routing amendment (connector/reviewer seats moved at run start). Tool
 installs/updates: none. Stale-lane: respawn-per-round; no other mori mission open.
 Misroot: none of this lane's files at the fleet root (o.bin/oldrep*.out predate
 this round and name other work; left untouched).
+
+## Round 61 — Mori (L1 MoriR61a2, attempt 2, recovery): C1 calibration registry backfill landed; C2 freshness PSI v7.3 recheck landed, frozen counter honest-stops on its own quote floor; C3 operability boundary v2 demonstrated (named limits)
+
+Entering `325f7e639916fcbc77fa2ec7475951a1b86bb1cb`; freeze (attempt 1)
+`7370a731abcafc4c803111de7c22cd6264d63be1` — counters, gate manifest, controls, selftests
+and the six pinned v7.3 copies; attempt 1 died to provider 429 post-dispatch; attempt 2
+inherited the frozen bytes and the in-flight wave unchanged, re-verified all sha pins, and
+landed the data. Scores entering/after: coverage 6, operability 7, depth 5, freshness 5,
+calibration 5, adjacency 6 — instrument claims stay capability-only (contract ruling); no
+scalar moved.
+
+Frozen claims (fresh-start duty discharged by attempt 1 and re-verified by attempt 2 via the
+committed do-nothing control receipts):
+- C1 calibration (gate registry carries every gate landed r52–r60): control at entering
+  `C1=unmet gates=25 registered=0 missing=25 …` rc 1. Data: 25 one-row-per-path rows landed
+  in `SKILL.md` (Round61 section) from each instrument's own usage output and a 2026-10-30
+  selftest re-run (22 built-in `--selftest`s green: tallies in the rows; the three r57
+  instruments have no `--selftest` mode — their cells say so and cite exercising receipts,
+  r57 count-c2 re-run met at tip, verify-c2-source `ok rows=8 mismatches=0` rc 0).
+  Pre-commit validation: parser registers 25/25, no dup/thin/noselftest/unres.
+- C2 freshness (PSI v7.3 recheck ledger): control at entering
+  `C2=unmet pointers=47 rows=0 … failed=entry_absent` rc 1. Data: ledger
+  `corpus/knowledge/psi-v73-recheck-r61.md` — 47 rows, 44 same, 3 moved (Kconfig ×2 +6,
+  kernel-parameters +35; all byte-identical), 0 changed (v7.2→v7.3 delta is one psi.c line
+  no anchor covers), 47 pairwise-distinct located quotes, provenance trio; SOURCES S565–S570
+  appended (337 → 343 rows; census-before rc 0 recorded pre-append). The frozen counter
+  honest-stops: its quote floor (≥5 words, count-c2.py:137) is unsatisfiable for exactly the
+  14 anchors RevC2 F5 proved pre-data (short C lines); landed verdict `C2=unmet …
+  failed=quote_words:×14` rc 1 — reported, not prettified (§8). Named counter limits
+  (pre-data, frozen): status/loc unbound, no v7.2 pin, stuffable SOURCES arm, met reachable
+  with zero real recheck (RevC2 F1–F3, Critic22, MutC2b/c survivors) — r62 ships a new
+  instrument; no post-scoring amendments.
+- C3 operability (counter execution boundary v2): control at entering
+  `C3=unmet … livepins=FAIL …` rc 1. The r61 counter (`count-c3.py`, freeze) runs its five
+  arms over committed bytes at the data rev; selftest 8/8 (`evidence/selftest-c3.txt`);
+  mutation kill table green (`w1/Mo61MutC3a.md`). Named limits (frozen): the static arms
+  read the working-tree counter bytes, so `C3=met` certifies the landed file more than the
+  revision (Critic24 arms B/E); EXPECT_PIN is recomputed from the table it pins (MutC3b).
+
+Wave w1: one v2 wave, 64 seats, 64 settled, 0 empty outputs; scribe 13, executor 12,
+reviewer 9, mutation-tester 8, critic 7, scout 5, revenger 3, sentinel 3, connector 2,
+simplifier 2 — attack share 46.9%; L1 held the §3 planner seat; one aborted seat
+(Mo61ExecLedgerFix, prerequisite stall — its deliverable was performed by the L1);
+godspeed bytes verified in all 64 payloads (r60 dispatch defect closed). Counters that bind
+seat votes: none frozen (C2 vote arm deliberately not repeated).
+
+SOURCES census: start 337 rows, validator exit 0 (`evidence/census-start-r61.txt`, argv
+recorded) → end 343 rows (S565–S570, six v7.3 pinned-copy rows opened this round; C2 is the
+sourced claim). Frontier rows advanced: S565–S570 mined, used-by the ledger. Knowledge entry
+admitted: `corpus/knowledge/psi-v73-recheck-r61.md` (provenance trio + 47-row ledger;
+generator `build-ledger-r61.py` committed). Assimilation: adopt nothing — merge/mori mass id
+drift (94/136 staged ids collide, S471–S564) → L0 filed, inputs sha-pinned in the round
+lesson (Critic27 verified count and ruling; contract's §10 cite is wrong, rule is
+lane-addendum §6 item 10). Quarantine slice re-derived (S244 PRESENT; verdicts maintained).
+considerthese: mined; latest residual proposal already partially executed — nothing
+implementable taken. Mistakes mined: six (quote-floor overreach, C2 met-line tokens,
+semantic unbinding trio, --floor-1 receipt defect, wave misroot of .cover files, contract
+mis-citation) — `corpus/lessons/round-61.md`.

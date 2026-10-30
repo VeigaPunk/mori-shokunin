@@ -3004,3 +3004,33 @@ lesson arm a selftest case (routed Reviewer03/MutationTester33 M4); close the
 C2 nested-span class (minimum span separation or coverage-ratio predicate)
 before re-claiming depth on the entry class; embed and verify godspeed bytes
 at dispatch time.
+
+## Round 61 — registry backfill, PSI v7.3 recheck, counter boundary v2 (attempt 2, recovery)
+
+Entering `325f7e63…`; freeze `7370a731…` (attempt 1; died to provider 429 post-dispatch);
+data tip `986d4b46db6e67682ef84091f606d125f987ecbc`. Scores: coverage 6, operability 7,
+depth 5, freshness 5, calibration 5, adjacency 6 — unchanged; the contract claims no scalar
+(instrument claims are capability-only). Fresh-start duty: r57–r59 rejected closures and
+spot-checks read before declaring (attempt 1), re-verified via the committed do-nothing
+controls by attempt 2.
+
+| Claim | Axis | Verdict | Frozen counter at data tip (`evidence/c{1,2,3}-at-data.txt`) | Control (entering rev) |
+|---|---|---|---|---|
+| C1 — SKILL.md gate registry carries every gate landed r52–r60 (25 paths, one conformant row each) | calibration | **verified (met)** | `C1=met gates=25 registered=25 missing=0 thin=0 dup=0 unres=0 noselftest=0 noowner=0 failed=none` rc 0 | `C1=unmet gates=25 registered=0 missing=25 …` rc 1 |
+| C2 — PSI v7.3 recheck ledger over the r24 anchors | freshness | **honest stop (unmet on the counter's own quote floor)**; the recheck work landed (47 rows: 44 same, 3 moved, 0 changed; S565–S570) | `C2=unmet pointers=47 rows=47 same=30 moved=3 changed=0 quotes_ok=33 spans_ok=33 sources=5 failed=quote_words:×14` rc 1 — the 14 anchors whose spans hold no 5-word line (`w1/Mo61RevC2.md` F5, pre-data) | `C2=unmet … failed=entry_absent` rc 1 |
+| C3 — counter execution boundary repaired and demonstrated (capability acquisition) | operability | **verified (met)**, with named limits (static arms read working-tree bytes; EXPECT_PIN tautology — `w1/Mo61Critic24.md` arms B/E, `w1/Mo61MutC3b.md`) | `C3=met r60hole=ok r61repair=ok blobrefusal=ok expectpin=ok livepins=ok cases=5 failed=none` rc 0; selftest 8/8 | `C3=unmet … livepins=FAIL …` rc 1 |
+
+Counting commands (frozen; amendments barred once any seat scored):
+`python3 .ufo/waves/round-61/count-c{1,2,3}.py 986d4b46db6e67682ef84091f606d125f987ecbc`.
+Round total: one v2 wave of 64 seats (46.9% attack), all settled, one aborted seat
+(Mo61ExecLedgerFix, prerequisite stall); no residual call.
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| counter-execution boundary v2 (`count-c3.py`) | refuses to execute any blob whose sha256 is not pinned (in-process, zero child executions), binds every printed verdict token to a measured boolean (TOKEN_MAP), and sha-pins its frozen expect table | `python3 .ufo/waves/round-61/count-c3.py 986d4b46… --scratch <dir>` → `C3=met … cases=5 failed=none`; selftest 8/8 (`.ufo/waves/round-61/evidence/selftest-c3.txt`) | 61 |
+
+Named limits carried to round 62 (new instruments only; r61 bytes frozen): C2 needs a
+counter whose quote floor matches its contract (≥1 word / multi-line hay), pins v7.2 bytes
+at rev, derives statuses from a difflib map, and binds SOURCES rows to Registry ids; C1's
+met cannot distinguish an omnibus or all-superseded table — the landed table holds the
+per-path shape by discipline. Sources: S565–S570 (6 rows, 337→343, census rc 0 both ends).
