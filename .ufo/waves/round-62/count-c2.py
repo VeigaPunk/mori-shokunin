@@ -84,10 +84,28 @@ def materialize_and_selftest(repo, rev, tool_sha, tally_floor, scratch,
     out["tool"] = True
     mat = Path(scratch) / "mat"
     tpath = mat / "mori-cgroup-pressure.py"
-    cpath = mat / "cases.json"
+    cpath = mat / CASES
     tpath.parent.mkdir(parents=True, exist_ok=True)
     tpath.write_bytes(tb)
+    cpath.parent.mkdir(parents=True, exist_ok=True)
     cpath.write_bytes(cb)
+    # materialize the whole fixture battery at its repo-relative paths (data
+    # reads, not executed blobs; byte-identity to rev is by construction)
+    lt = sh(repo, "ls-tree", "-r", "--name-only", "--full-tree", rev,
+            "tools/fixtures/mori-cgroup-pressure")
+    if lt is None:
+        out["exec_refused"] = "fixtures_unlistable"
+        return out
+    for rel in lt.splitlines():
+        if not rel.strip():
+            continue
+        fb = cat(repo, rev, rel)
+        if fb is None:
+            out["exec_refused"] = f"fixture_absent:{rel}"
+            return out
+        dst = mat / rel
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        dst.write_bytes(fb)
     env = dict(os.environ)
     env["PYTHONDONTWRITEBYTECODE"] = "1"
     if marker_dir is not None:
