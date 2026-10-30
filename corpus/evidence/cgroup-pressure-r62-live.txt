@@ -1,0 +1,164 @@
+# argv: python3 tools/mori-cgroup-pressure.py --group user.slice ; python3 tools/mori-cgroup-pressure.py --group system.slice
+# date: 2026-10-30T15:33:59-03:00
+--- user.slice
+{
+  "findings": [],
+  "group": "user.slice",
+  "group_present": true,
+  "local_threshold": {
+    "label": "local, not calibrated (FR8 open)",
+    "warn_avg10": 10.0
+  },
+  "psi_accounting": {
+    "state": "ok",
+    "value": "1"
+  },
+  "read_only": true,
+  "resources": {
+    "cpu": {
+      "full": {
+        "avg10": 0.0,
+        "avg300": 0.0,
+        "avg60": 0.0,
+        "total": 1662058137
+      },
+      "resource": "cpu",
+      "some": {
+        "avg10": 0.0,
+        "avg300": 0.0,
+        "avg60": 0.0,
+        "total": 26205148281
+      },
+      "state": "ok"
+    },
+    "io": {
+      "full": {
+        "avg10": 0.0,
+        "avg300": 0.0,
+        "avg60": 0.0,
+        "total": 1134829463
+      },
+      "resource": "io",
+      "some": {
+        "avg10": 0.0,
+        "avg300": 0.0,
+        "avg60": 0.0,
+        "total": 2265267088
+      },
+      "state": "ok"
+    },
+    "irq": {
+      "full": {
+        "avg10": 0.0,
+        "avg300": 0.02,
+        "avg60": 0.02,
+        "total": 2040074115
+      },
+      "resource": "irq",
+      "some": null,
+      "state": "ok"
+    },
+    "memory": {
+      "full": {
+        "avg10": 0.01,
+        "avg300": 0.46,
+        "avg60": 0.9,
+        "total": 455318727
+      },
+      "resource": "memory",
+      "some": {
+        "avg10": 0.01,
+        "avg300": 0.46,
+        "avg60": 0.9,
+        "total": 516603973
+      },
+      "state": "ok"
+    }
+  },
+  "root": "/sys/fs/cgroup",
+  "schema": "mori-cgroup-pressure-v1",
+  "verdict": "PRESSURE_OK"
+}
+MORI_CGROUP_PRESSURE: PRESSURE_OK (group=user.slice ok=4 absent=0 unreadable=0 malformed=0 findings=0)
+rc=0
+--- system.slice
+{
+  "findings": [],
+  "group": "system.slice",
+  "group_present": true,
+  "local_threshold": {
+    "label": "local, not calibrated (FR8 open)",
+    "warn_avg10": 10.0
+  },
+  "psi_accounting": {
+    "state": "ok",
+    "value": "1"
+  },
+  "read_only": true,
+  "resources": {
+    "cpu": {
+      "full": {
+        "avg10": 0.0,
+        "avg300": 0.0,
+        "avg60": 0.0,
+        "total": 32960750
+      },
+      "resource": "cpu",
+      "some": {
+        "avg10": 0.0,
+        "avg300": 0.0,
+        "avg60": 0.0,
+        "total": 44249013
+      },
+      "state": "ok"
+    },
+    "io": {
+      "full": {
+        "avg10": 0.0,
+        "avg300": 0.0,
+        "avg60": 0.0,
+        "total": 32349432
+      },
+      "resource": "io",
+      "some": {
+        "avg10": 0.0,
+        "avg300": 0.0,
+        "avg60": 0.0,
+        "total": 32651949
+      },
+      "state": "ok"
+    },
+    "irq": {
+      "full": {
+        "avg10": 0.0,
+        "avg300": 0.0,
+        "avg60": 0.0,
+        "total": 6157443
+      },
+      "resource": "irq",
+      "some": null,
+      "state": "ok"
+    },
+    "memory": {
+      "full": {
+        "avg10": 0.0,
+        "avg300": 0.0,
+        "avg60": 0.0,
+        "total": 10386605
+      },
+      "resource": "memory",
+      "some": {
+        "avg10": 0.0,
+        "avg300": 0.0,
+        "avg60": 0.0,
+        "total": 10557310
+      },
+      "state": "ok"
+    }
+  },
+  "root": "/sys/fs/cgroup",
+  "schema": "mori-cgroup-pressure-v1",
+  "verdict": "PRESSURE_OK"
+}
+MORI_CGROUP_PRESSURE: PRESSURE_OK (group=system.slice ok=4 absent=0 unreadable=0 malformed=0 findings=0)
+rc=0

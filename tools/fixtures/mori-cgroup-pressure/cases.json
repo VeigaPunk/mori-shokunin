@@ -1,0 +1,160 @@
+{
+ "schema": "mori-cgroup-pressure-cases-v1",
+ "note": "round-62 fixture battery; one synthetic cgroup tree per case under <case>/sys/fs/cgroup",
+ "cases": [
+  {
+   "name": "ok-all",
+   "verdict": "PRESSURE_OK",
+   "rc": 0,
+   "resources": {
+    "cpu": "ok",
+    "memory": "ok",
+    "io": "ok",
+    "irq": "ok"
+   },
+   "group": "user.slice",
+   "psi_accounting": "1",
+   "high_resources": []
+  },
+  {
+   "name": "high-cpu",
+   "verdict": "PRESSURE_HIGH",
+   "rc": 1,
+   "resources": {
+    "cpu": "ok",
+    "memory": "ok",
+    "io": "ok",
+    "irq": "ok"
+   },
+   "group": "user.slice",
+   "high_resources": [
+    "cpu"
+   ]
+  },
+  {
+   "name": "missing-irq",
+   "verdict": "PRESSURE_PARTIAL",
+   "rc": 2,
+   "resources": {
+    "cpu": "ok",
+    "memory": "ok",
+    "io": "ok",
+    "irq": "absent"
+   },
+   "group": "user.slice",
+   "high_resources": []
+  },
+  {
+   "name": "missing-group",
+   "verdict": "PRESSURE_UNAVAILABLE",
+   "rc": 2,
+   "resources": {
+    "cpu": "absent",
+    "memory": "absent",
+    "io": "absent",
+    "irq": "absent"
+   },
+   "group": "user.slice"
+  },
+  {
+   "name": "malformed-mem",
+   "verdict": "PRESSURE_PARTIAL",
+   "rc": 2,
+   "resources": {
+    "cpu": "ok",
+    "memory": "malformed",
+    "io": "ok",
+    "irq": "ok"
+   },
+   "group": "user.slice"
+  },
+  {
+   "name": "irq-some-line",
+   "verdict": "PRESSURE_PARTIAL",
+   "rc": 2,
+   "resources": {
+    "cpu": "ok",
+    "memory": "ok",
+    "io": "ok",
+    "irq": "malformed"
+   },
+   "group": "user.slice"
+  },
+  {
+   "name": "psi-disabled",
+   "verdict": "PRESSURE_OK",
+   "rc": 0,
+   "resources": {
+    "cpu": "ok",
+    "memory": "ok",
+    "io": "ok",
+    "irq": "ok"
+   },
+   "group": "user.slice",
+   "psi_accounting": "0",
+   "high_resources": []
+  },
+  {
+   "name": "unreadable-io",
+   "verdict": "PRESSURE_PARTIAL",
+   "rc": 2,
+   "resources": {
+    "cpu": "ok",
+    "memory": "ok",
+    "io": "unreadable",
+    "irq": "ok"
+   },
+   "group": "user.slice"
+  },
+  {
+   "name": "empty-irq",
+   "verdict": "PRESSURE_PARTIAL",
+   "rc": 2,
+   "resources": {
+    "cpu": "ok",
+    "memory": "ok",
+    "io": "ok",
+    "irq": "malformed"
+   },
+   "group": "user.slice"
+  },
+  {
+   "name": "truncated-mem",
+   "verdict": "PRESSURE_PARTIAL",
+   "rc": 2,
+   "resources": {
+    "cpu": "ok",
+    "memory": "malformed",
+    "io": "ok",
+    "irq": "ok"
+   },
+   "group": "user.slice"
+  },
+  {
+   "name": "threshold-low",
+   "verdict": "PRESSURE_OK",
+   "rc": 0,
+   "resources": {
+    "cpu": "ok",
+    "memory": "ok",
+    "io": "ok",
+    "irq": "ok"
+   },
+   "group": "user.slice",
+   "warn_avg10": 10.0,
+   "high_resources": []
+  },
+  {
+   "name": "dup-some",
+   "verdict": "PRESSURE_PARTIAL",
+   "rc": 2,
+   "resources": {
+    "cpu": "ok",
+    "memory": "malformed",
+    "io": "ok",
+    "irq": "ok"
+   },
+   "group": "user.slice"
+  }
+ ]
+}
