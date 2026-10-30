@@ -1,0 +1,1 @@
+tracked file so git keeps the directory; open() on a directory yields EISDIR (unreadable state)
