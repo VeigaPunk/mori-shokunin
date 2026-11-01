@@ -490,3 +490,19 @@ AgentSwarm L2 dispatch surface (MISSION L2 concurrency) is absent in this
 session; an L0 line is filed and round 62 ran L1-only over committed bytes.
 Detection and report only: nothing on this host was killed, modified or
 reconfigured by this lane.
+
+## Round-63 host note (2026-10-31) — Windows event-log surface present and probed
+
+On the same Windows workspace host (win32 x64, Git Bash, Python 3.13.15 as
+`python`; `python3` remains the non-functional Store stub), one observability
+surface of the lane's class is PRESENT and now probed counts-only: the
+Windows event log, read through `wevtutil qe` with XPath provider/event-id
+filters (read-only; no export, no clear). First-working round 63:
+`tools/mori-host-events-win.py` — live `AVAILABLE surfaces=4 ok=4 matched=209
+window=200` rc 0, counts only (no pids, user names, computer names, message
+text or timestamps; `.ufo/waves/round-63/evidence/host-events-live-win-r63.txt`).
+Grounded in S572/S573 (pinned copies `corpus/evidence/sources-r63/`). The
+Linux-host instruments (journalctl, cgroupfs, `/proc/pressure`) remain absent
+here per the Round-62 note, and remain the registered gates on Linux hosts.
+Detection and report only: nothing on this host was killed, modified or
+reconfigured by this lane.

@@ -1,0 +1,10 @@
+# argv: python tools/mori-host-events-win.py (live, this host; read-only wevtutil qe counts, window=200, most-recent-first; detection and report only)
+# date: 2026-10-31T20:54:22-07:00
+# host: win32 x64, Git Bash, Python 3.13.15 as 'python'
+
+surface log=System provider=Microsoft-Windows-Resource-Exhaustion-Detector id=2004 label=memory-exhaustion-diagnosis matched=8
+surface log=Application provider=Application Error id=1000 label=application-fault matched=1
+surface log=Application provider=Windows Error Reporting id=1001 label=wer-report matched=200
+surface log=System provider=Microsoft-Windows-EventLog id=6008 label=unexpected-shutdown matched=0
+HOST_EVENTS_WIN: AVAILABLE surfaces=4 ok=4 unavailable=0 matched=209 window=200 recent_first=true
+rc=0

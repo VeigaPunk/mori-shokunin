@@ -148,6 +148,19 @@ disagreeing tally lines are `stale` (the instrument ran); a timeout keeps the ou
 different tally printed before a timeout is `stale`; the measured tree's `master` is set to the measured
 revision (the tree is a function of REV, not of the source repo's live branch); the default scratch parent is
 $TMPDIR (skipped when it lies inside the repo), else /var/tmp, and an explicit --scratch inside the repo exits 2. Named limit: a tally printed before a crash on a missing host path is still `stale`.
+v6 (round 63 — r62 lesson Mistakes 1/2 host-portability class, stale-host instruction naming): the
+self-test's synthetic registry rows previously hard-coded the `python3` interpreter word, and bound
+commands run verbatim — on a host where `python3` is only a non-functional store stub the selftest
+measured pass=86 fail=39 (every arm that needs a bound tally to execute went env-class) even though
+the parser, pin classes and tallies were correct. Fix is fixture-side only: inside --selftest every
+fixture registry text is rewritten through one helper that binds the interpreter word to the
+interpreter running the selftest (basename of sys.executable, `.exe` stripped; falls back to
+`python`; identity on a Linux host where that basename is `python3`, so the fixture bytes — and
+therefore every measured predicate, class and the pass=125 fail=0 tally — are unchanged there).
+One measured-path word changes with it: the argv synthesized for a bare `.py` path span (the
+fixtures/mutants convention, `command_from_span`) names RUNNER — the interpreter running this
+process — instead of a hard-coded `python3` (identity word `python3` on a POSIX host, so the
+synthesized argv bytes are unchanged there); parse, classes, tallies and summary are byte-identical.
 """
 import argparse
 import hashlib
@@ -166,6 +179,18 @@ PATH_RE = re.compile(r"[A-Za-z0-9_.][A-Za-z0-9_./-]*\.(?:py|sh|json|md|txt|tsv)"
 SPAN_RE = re.compile(r"`([^`]*)`")
 REV_WORDS = ("<rev>", "<REV>", "<revision>", "REV")
 INTERPRETERS = ("python3", "python", "bash", "sh")
+
+# v6 (round 63, host-portability — the r62 lesson's stale-host naming class): the
+# argv synthesized for a bare `.py` path span (the fixtures/mutants convention)
+# names the interpreter running this process — the identity word `python3` on a
+# POSIX host, `python` where only a store stub answers to `python3` — so the
+# mutant-convention measurement executes on the measuring host instead of
+# env-failing there.
+RUNNER = os.path.basename(sys.executable)
+if RUNNER.lower().endswith(".exe"):
+    RUNNER = RUNNER[:-4]
+if RUNNER not in INTERPRETERS:
+    RUNNER = "python"
 # v2 (round 47, after w1 CritC1Predicate/SentPinExec): a bound command must run a
 # registered instrument path — `tools/…` or `.ufo/waves/round-N/…` — never `.scratch/`,
 # never `..`, never inline code (`-c`), and carry no argument beyond an optional
@@ -436,7 +461,7 @@ def command_from_span(span, cells, rev, eidx=2):
     if "--selftest" not in span:
         argv = None
         if re.fullmatch(r"[A-Za-z0-9_.][A-Za-z0-9_./-]*\.py", span):
-            argv = ["python3", span, "--selftest"]
+            argv = [RUNNER, span, "--selftest"]
         elif re.fullmatch(r"[A-Za-z0-9_.][A-Za-z0-9_./-]*\.sh", span):
             argv = ["bash", span, "--selftest"]
         return (argv, {}) if argv is not None and argv_ok(argv, rev) else None
@@ -1043,6 +1068,20 @@ def row(selftest_cell, entry="`python3 tools/foo.py`", pinned="none", name="foo"
 def selftest():
     base = tempfile.mkdtemp(prefix="pin-selftest-")
     results = []
+
+    # v6 (round 63, host-portability — see docstring): fixture rows must bind an
+    # interpreter that exists on the measuring host. Fixture text only; the
+    # measured predicates are untouched, and on a host whose interpreter basename
+    # is `python3` this is the identity (byte-identical fixtures).
+    _p3 = os.path.basename(sys.executable)
+    if _p3.lower().endswith(".exe"):
+        _p3 = _p3[:-4]
+    if _p3 not in INTERPRETERS:
+        _p3 = "python"
+
+    def _hi(t):
+        return t.replace("python3 ", _p3 + " ")
+
     try:
         root = os.path.join(base, "tree")
         os.makedirs(os.path.join(root, "tools"))
@@ -1435,23 +1474,24 @@ def selftest():
         for name, text, floor, want_met, want_state in cases:
             scratch = tempfile.mkdtemp(prefix="c-", dir=base)
             text, btext = text if isinstance(text, tuple) else (text, None)
-            met, out = check(text, root, scratch, "deadbeef", 5, floor, btext)
+            met, out = check(_hi(text), root, scratch, "deadbeef", 5, floor,
+                             _hi(btext) if btext is not None else None)
             ok = met == want_met and (want_state is None or any("state=%s" % want_state in l for l in out))
             results.append((name, ok, out[-1]))
         # rc arm: tool prints the pinned tally but exits non-zero.
         with open(os.path.join(root, "tools", "foo.py.rc"), "w") as f:
             f.write("1")
         scratch = tempfile.mkdtemp(prefix="c-", dir=base)
-        met, out = check(HDR + row(good), root, scratch, "deadbeef", 5, 1)
+        met, out = check(_hi(HDR + row(good)), root, scratch, "deadbeef", 5, 1)
         results.append(("nonzero_rc_with_fail0", (not met) and any("state=mismatch" in l for l in out), out[-1]))
         os.unlink(os.path.join(root, "tools", "foo.py.rc"))
         # K8 arm: the PASS-form pin's command prints the pinned text and exits 1.
         with open(os.path.join(root, "tools", "passtool.py.rc"), "w") as f:
             f.write("1")
         scratch = tempfile.mkdtemp(prefix="c-", dir=base)
-        met, out = check(HDR + row(
+        met, out = check(_hi(HDR + row(
             "`python3 tools/passtool.py --selftest` → `P_PASS_SELFTEST: PASS (6 cases)`",
-            entry="`python3 tools/passtool.py`"), root, scratch, "deadbeef", 5, 1)
+            entry="`python3 tools/passtool.py`")), root, scratch, "deadbeef", 5, 1)
         results.append(("k8_pass_form_rc1", (not met) and any("state=mismatch" in l for l in out), out[-1]))
         os.unlink(os.path.join(root, "tools", "passtool.py.rc"))
         # R13 arms (round-49 K6): the instrument under measurement must be pinned.
@@ -1465,7 +1505,7 @@ def selftest():
                 ("r13_self_row_pinned", HDR + row(good) + self_row, True, None),
                 ("r13_self_instrument_absent_no_obligation", HDR + row(good), True, None)):
             scratch = tempfile.mkdtemp(prefix="c-", dir=base)
-            met, out = check(body, root, scratch, "deadbeef", 5, 1,
+            met, out = check(_hi(body), root, scratch, "deadbeef", 5, 1,
                              self_instrument=("tools/absent.py" if "absent" in arm_name
                                               else "tools/selfpin.py"))
             results.append((arm_name, met == want_met and
@@ -1490,7 +1530,7 @@ def selftest():
                 ("v5_class_stale_digest", HDR + row(good + " at sha256 `%s` of `tools/foo.py`" % ("0" * 64)),
                  "kind=digest state=mismatch", 0, 1, 5)):
             scratch = tempfile.mkdtemp(prefix="c-", dir=base)
-            met, out = check(body, root, scratch, "deadbeef", tmo, 1)
+            met, out = check(_hi(body), root, scratch, "deadbeef", tmo, 1)
             want_cls = "class=env" if want_env else "class=stale"
             hit = [l for l in out if mark in l]
             results.append((arm_name, (not met) and len(hit) == 1 and hit[0].endswith(want_cls)
@@ -1520,7 +1560,7 @@ def selftest():
                  HDR + row("`python3 tools/slowright.py --selftest` → `SR_SELFTEST pass=2 fail=0`",
                            entry="`python3 tools/slowright.py`"), "prefix=SR_SELFTEST state=mismatch", 1, 0, 3)):
             scratch = tempfile.mkdtemp(prefix="c-", dir=base)
-            met, out = check(body, root, scratch, "deadbeef", tmo, 1)
+            met, out = check(_hi(body), root, scratch, "deadbeef", tmo, 1)
             want_cls = "class=env" if want_env else "class=stale"
             hit = [l for l in out if mark in l]
             results.append((arm_name, (not met) and len(hit) == 1 and hit[0].endswith(want_cls)
@@ -1531,7 +1571,7 @@ def selftest():
         with open(os.path.join(grepo, "tools", "foo.py"), "w") as f:
             f.write(TOOL)
         with open(os.path.join(grepo, "SKILL.md"), "w") as f:
-            f.write(HDR + row(good))
+            f.write(_hi(HDR + row(good)))
         gx = ["git", "-C", grepo]
         subprocess.run(gx + ["init", "-q"], check=True, timeout=60)
         top = subprocess.run(gx + ["rev-parse", "--show-toplevel"], stdout=subprocess.PIPE,
@@ -1563,8 +1603,8 @@ def selftest():
         with open(os.path.join(grepo, "tools", "mtool.py"), "w") as f:
             f.write(mtool)
         with open(os.path.join(grepo, "SKILL.md"), "w") as f:
-            f.write(HDR + row("`python3 tools/mtool.py --selftest` → `MASTER_SELFTEST pass=1 fail=0`",
-                              entry="`python3 tools/mtool.py`"))
+            f.write(_hi(HDR + row("`python3 tools/mtool.py --selftest` → `MASTER_SELFTEST pass=1 fail=0`",
+                                  entry="`python3 tools/mtool.py`")))
         subprocess.run(gx + ["add", "-A"], check=True, timeout=60)
         subprocess.run(gx + ["-c", "user.name=pin-check-selftest", "-c", "user.email=selftest@invalid",
                              "commit", "-q", "-m", "fixture 2"], check=True, timeout=60)
@@ -1587,7 +1627,7 @@ def selftest():
                         "rc=%d left=%d" % (cli4.returncode, len(left4.splitlines()))))
         # CLI arm: --root through main(), exit codes.
         with open(os.path.join(root, "SKILL.md"), "w") as f:
-            f.write(HDR + row(good))
+            f.write(_hi(HDR + row(good)))
         cli = subprocess.run([sys.executable, os.path.abspath(__file__), "--root", root, "--repo", base],
                              stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=120)
         results.append(("cli_met_rc0", cli.returncode == 0 and b"PIN_CHECK=met" in cli.stdout, "rc=%d" % cli.returncode))

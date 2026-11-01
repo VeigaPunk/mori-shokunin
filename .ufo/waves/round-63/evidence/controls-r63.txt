@@ -1,0 +1,25 @@
+# do-nothing controls for round-63 claims, all at the entering revision 6aa926348be17b56621d44da85c6fe94f75e45fa (win32 x64, Git Bash, python 3.13.15; date 2026-10-31T20:58:33-07:00)
+
+## C1 control: SHONEN box-3 commands as written at entering (python3 = Store stub)
+grep -c 'python3 ' SHONEN.md at entering:
+1
+(working tree after this round's SHONEN edit:
+0
+)
+
+## C1 control: entering pin-check bytes (v5.1) selftest on this host
+PIN_CHECK_SELFTEST pass=86 fail=39
+rc=1
+
+## C2 control: the guard does not exist at entering
+fatal: path 'tools/mori-receipt-complete.py' exists on disk, but not in '6aa926348be17b56621d44da85c6fe94f75e45fa'
+cat-file rc=128 (absent)
+
+## C2/C3 control: SOURCES row count at entering
+344
+
+## C3 control: the probe and the entry do not exist at entering
+0
+(0 = absent)
+0
+(0 = absent)

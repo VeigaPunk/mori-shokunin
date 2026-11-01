@@ -1,0 +1,5 @@
+# argv: python .ufo/waves/round-61/count-c2.py 986d4b46db6e67682ef84091f606d125f987ecbc --scratch <workspace>/scratch/mori-r63/r61spot (r63 re-capture of the r61 frozen-counter spot-check; full-output redirect, no width cut — closes the r62 routed nit 1 truncation)
+# date: 2026-10-31 (run this round, after the round-start census and before the box-3 selftest receipt; captured stdout redirected straight to this file, header prepended at assembly — body bytes are the run's own)
+# host: win32 x64, Git Bash, Python 3.13.15 as 'python'
+C2=unmet pointers=47 rows=47 same=30 moved=3 changed=0 quotes_ok=33 spans_ok=33 sources=5 failed=quote_words:psi.c:1268-1270;quote_words:psi.c:1712;quote_words:psi.c:1017;quote_words:psi.c:1540;quote_words:psi.c:1686;quote_words:psi.c:1710-1721;quote_words:psi.c:1268;quote_words:psi.c:1269-1270;quote_words:psi_types.h:41-49;quote_words:psi.c:1717-1719;quote_words:psi.c:1257-1258;quote_words:psi.c:228-240;quote_words:psi.c:1711-1719;quote_words:psi.c:1596-1598 rev=986d4b46db6e67682ef84091f606d125f987ecbc
+rc=1

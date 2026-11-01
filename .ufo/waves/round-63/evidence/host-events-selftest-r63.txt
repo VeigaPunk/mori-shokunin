@@ -1,0 +1,18 @@
+# argv: python tools/mori-host-events-win.py --selftest (binary-mode fixtures, unaccommodated; two consecutive runs for determinism)
+# date: 2026-10-31T21:00:55-07:00
+# host: win32 x64, Git Bash, Python 3.13.15 as 'python'
+
+PASS three_events_matched_partial_ok  rc=0
+PASS zero_is_a_real_zero  rc=0
+PASS window_cap  rc=0
+PASS partial_availability_honest  rc=0
+PASS all_unavailable_rc2_no_zeros  rc=2
+PASS malformed_reads_as_zero_not_crash  rc=0
+PASS redaction_counts_only  rc=0
+PASS output_shape_grammar  rc=0
+PASS usage_rc1_no_traceback  rc=1
+PASS window_default_echoed  rc=0
+HOST_EVENTS_WIN_SELFTEST pass=10 fail=0
+rc=0
+--- second run (determinism) ---
+HOST_EVENTS_WIN_SELFTEST pass=10 fail=0

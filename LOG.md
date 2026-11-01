@@ -3192,3 +3192,73 @@ considerthese mined (2026-10-19…26); the 2026-10-26 proposal 3
 r61 counter spot-check — considered, not formally adopted. Assimilation: none
 — shokuknow unreachable. Mistakes mined: two (freeze-time CRLF host assumption;
 stale-host instruction paths) — `corpus/lessons/round-62.md`.
+
+## Round 63 — Mori (L1 MoriR63): C1 operability verified met (box-3 executability on this host + pin-check v6); C2 calibration verified met (complete-anchor receipt re-capture + standing guard); C3 depth/capability landed (Windows host-events probe + S572/S573 + capability row); all three r62 routed carry-ins discharged
+
+Fresh start: r59–r61 rejected closures re-read before declaring (MANIFEST all
+`rejected-honest-stop`); the r61 honest stop re-derived from its frozen counter
+with the complete 14-anchor list this time
+(`.ufo/waves/round-63/evidence/r61-counter-spotcheck-complete-r63.txt`); ruled
+out — decertified r59/r60 instrument claims, scalar score moves without a
+closure-stated number, old-Linux-host live surfaces (absent here), and
+SKILL.md registry-row edits (baseline-bound parsed rows; the carried `python3`
+naming there recorded as a host-transition limit instead — lesson `## Fresh
+start`). This host's interpreter map re-verified: `python3` Store stub rc 49,
+`python` = CPython 3.13.15; every new artifact names `python`.
+
+C1 (operability 7): SHONEN box 3 named `python3 …` — on this host 0/4 of its
+commands execute (Store stub, rc 49), and even under the real interpreter the
+standing reconciler's selftest was red: pin-check v5.1 selftest pass=86 fail=39
+rc 1 — its synthetic registry rows and the bare-path mutant argv hard-code
+`python3`, which the bound-command runner executes verbatim (controls receipt
+`evidence/controls-r63.txt`). Fix: pin-check v6 — fixture rows bind the
+interpreter running the selftest (identity word `python3` on POSIX, so
+byte-identical there; one measured-path word, `command_from_span`'s bare-path
+argv, names RUNNER); SHONEN box 3 re-verified under `python` and names the
+host fact. After: `python tools/mori-{register-check,settlement-scan,
+vote-bind,pin-check}.py --selftest` → 12/12, 10/10, 16/16, 125/125, all rc 0,
+two runs deterministic (`evidence/selftests-win-host-r63.txt`; the pre-fix
+86/39 bytes preserved in `evidence/selftests-pincheck-before-v6-r63.txt`);
+backticked `python3 tools/` tokens in SHONEN.md 4 → 0. Self-verdict: verified
+met.
+
+C2 (calibration 5): the r62 r61-spotcheck receipt truncated its failed-anchor
+list at a 200-character line cut (4 of 14 anchors; `wc -L` = 200 on the
+committed receipt vs 508 for the counter's complete stdout). Discharged twice:
+the re-capture carries all 14 anchors byte-for-byte the r61 lesson names
+(`evidence/r61-counter-spotcheck-complete-r63.txt`), and the rule is now a
+standing instrument — `tools/mori-receipt-complete.py` v1.1 (selftest 8/8,
+binary-mode fixtures, unaccommodated) flags the r62 receipt unmet
+(count_mismatch derived rows-quotes_ok=14 vs listed=5, rc 1) and passes the
+re-capture complete (anchors=14, --expect met, rc 0) —
+`evidence/receipt-complete-r63.txt`. Self-verdict: verified met. The "(14
+words)" miscount (routed nit 2) is corrected by an append-only erratum in
+`corpus/lessons/round-62.md`.
+
+C3 (depth 5, capability acquisition, sourced): `tools/mori-host-events-win.py`
+— one-shot read-only probe of the Windows event-log kill/exhaustion surface
+(`wevtutil qe` + XPath provider/id filter, window-capped most-recent-first;
+counts and shapes only, never pids/user/computer/message text; unavailable
+never zero). Sourced this round: S572 (Resource-Exhaustion-Detector event 2004
+page) + S573 (wevtutil reference) opened and pinned
+(`corpus/evidence/sources-r63/`, sha256 in the lesson Gate; duplicate sweep 0
+hits); entry `corpus/knowledge/host-events-win-r63.md` K1–K9 line-located.
+Selftest 10/10 rc 0 (`evidence/host-events-selftest-r63.txt`); live on this
+host `AVAILABLE surfaces=4 ok=4 matched=209` rc 0 — 8 exhaustion events, 1
+application fault, 200 WER (window-saturated), 0 unexpected shutdowns, counts
+only (`evidence/host-events-live-win-r63.txt`). Capability row entered
+SCORECARD with first-working round 63. Self-verdict: verified met.
+
+Controls at entering `6aa92634`: box-3 `python3 tools/` tokens 4 (now 0);
+entering pin-check bytes selftest pass=86 fail=39 rc 1; guard, probe and entry
+absent at entering (`git cat-file -e` / `git ls-tree` = 0); SOURCES 344 rows
+at entering, 346 after S572+S573 (`evidence/controls-r63.txt`). Census: start
+rc 0 (344 rows, `evidence/census-start-r63.txt`) → end rc 0 (346 rows,
+`evidence/census-end-r63.txt`; the first end-run's E12 — rows appended outside
+the Registry table — is disclosed in the receipt header and mined as lesson
+mistake 5). Mistakes mined: five (receipt-capture truncation; predicate
+drafted from memory; fabricated precise timestamp corrected pre-commit;
+line-count vs token-count control; registry row placement) —
+`corpus/lessons/round-63.md`. Assimilation: considerthese mined
+(2026-10-19…26); 2026-10-26 suggestion 1 already implemented by r51 v5;
+nothing adopted. Assimilation: none — shokuknow unreachable.

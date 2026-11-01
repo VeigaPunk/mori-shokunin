@@ -1,0 +1,39 @@
+# argv: python tools/mori-receipt-complete.py --selftest; then the guard against the r62 truncated receipt and the r63 complete re-capture (C2 instrument, first working round 63; v1.1 — the v1 draft's token grammar was corrected by this selftest before any receipt was scored, see the tool docstring)
+# date: 2026-10-31T20:43:32-07:00
+# host: win32 x64, Git Bash, Python 3.13.15 as 'python'
+
+## selftest (binary-mode fixtures, unaccommodated)
+RECEIPT_COMPLETE=complete failed_lines=1 anchors=14 truncated_tail=0 malformed=0 count_mismatch=0 receipt=full.txt
+finding count_mismatch:listed=5 derived rows-quotes_ok=14
+RECEIPT_COMPLETE=unmet failed_lines=1 anchors=5 truncated_tail=0 malformed=0 count_mismatch=1 receipt=cut.txt
+RECEIPT_COMPLETE=complete failed_lines=1 anchors=3 truncated_tail=0 malformed=0 count_mismatch=0 receipt=cut_nocount.txt
+RECEIPT_COMPLETE=complete failed_lines=1 anchors=0 truncated_tail=0 malformed=0 count_mismatch=0 receipt=none.txt
+RECEIPT_COMPLETE=complete failed_lines=1 anchors=3 truncated_tail=0 malformed=0 count_mismatch=0 receipt=refused.txt
+finding malformed:quote_w…x
+RECEIPT_COMPLETE=unmet failed_lines=1 anchors=2 truncated_tail=0 malformed=1 count_mismatch=0 receipt=malformed.txt
+finding count_mismatch:listed=13 --expect 14
+RECEIPT_COMPLETE=unmet failed_lines=1 anchors=13 truncated_tail=0 malformed=0 count_mismatch=1 receipt=short.txt
+RECEIPT_COMPLETE_SETUP unreadable: [Errno 2] No such file or directory: 'C:\\Users\\jpvei\\AppData\\Local\\Temp\\receipt-selftest-580es1yk\\absent.txt'
+PASS complete_list_expect_met  rc=0
+PASS r62_truncation_caught_by_derived_count  rc=1
+PASS boundary_cut_without_counters_undetected  rc=0
+PASS failed_none_complete  rc=0
+PASS class_and_bare_detail_tokens_ok  rc=0
+PASS malformed_mid_token  rc=1
+PASS expect_outranks_derived_count  rc=1
+PASS missing_file_setup  rc=2
+RECEIPT_COMPLETE_SELFTEST pass=8 fail=0
+rc=0
+
+## guard vs the r62 receipt (truncated capture)
+finding count_mismatch:listed=5 derived rows-quotes_ok=14
+RECEIPT_COMPLETE=unmet failed_lines=1 anchors=5 truncated_tail=0 malformed=0 count_mismatch=1 receipt=r61-counter-spotcheck.txt
+rc=1
+
+## guard vs the r63 complete re-capture
+RECEIPT_COMPLETE=complete failed_lines=1 anchors=14 truncated_tail=0 malformed=0 count_mismatch=0 receipt=r61-counter-spotcheck-complete-r63.txt
+rc=0
+
+## visible-anchor counting commands (pasteable before/after)
+old receipt quote_words tokens: 4
+new receipt quote_words tokens: 14

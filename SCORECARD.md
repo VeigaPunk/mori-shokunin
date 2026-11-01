@@ -3081,3 +3081,48 @@ written bytes so `--selftest` runs unaccommodated on any host (lesson Mistakes
 1); give the C1 met an omnibus/superseded discriminator if the entry class is
 reused; consider a Windows-host liveness probe as a capability claim if the
 dispatch surface returns.
+
+## Round 63 — host-portability round on the Windows workspace host: C1 operability verified met (box-3 executability + pin-check v6); C2 calibration verified met (complete-anchor receipt + standing guard); C3 depth/capability landed and met (Windows host-events probe, sourced S572+S573)
+
+Entering `6aa92634…` (r62 verifier spotcheck tip). Fresh start: r59–r61
+rejected closures re-read; rule-outs in the round lesson `## Fresh start`
+(decertified r59/r60 instruments; scalar moves without a closure-stated
+number; old-Linux-host live surfaces; SKILL.md registry-row edits). Scores
+entering/after: coverage 6, operability 7, depth 5, freshness 5, calibration
+5, adjacency 6 — no scalar claimed (all three claims are instrument,
+instruction or capability moves). Lowest tie depth/freshness/calibration at 5:
+C2 targets calibration, C3 targets depth. All three r62 routed carry-ins
+discharged (complete-anchor receipt + guard; append-only erratum; `python`
+naming in every new artifact).
+
+| Claim | Axis | Counting command | Before | After / verdict |
+|---|---|---|---|---|
+| C1: SHONEN box-3 executability on this host — the four cited selftests re-verified under the host's real interpreter with fresh receipts, and pin-check v6 makes the standing reconciler's selftest host-portable (fixture rows bind the running interpreter; the bare-path mutant argv names RUNNER; identity on POSIX) | operability 7 | `python tools/mori-{register-check,settlement-scan,vote-bind,pin-check}.py --selftest`; `grep -o 'python3 tools/' SHONEN.md | wc -l` | At entering `6aa92634…`: `python3 …` ×4 rc 49 (Store stub — 0/4 commands execute as written) and entering pin-check bytes under `python`: `PIN_CHECK_SELFTEST pass=86 fail=39` rc 1 (`evidence/controls-r63.txt`, `evidence/selftests-pincheck-before-v6-r63.txt`) | `REGCHECK_SELFTEST pass=12 fail=0`, `SETSCAN_SELFTEST pass=10 fail=0`, `VOTE_BIND_SELFTEST pass=16 fail=0`, `PIN_CHECK_SELFTEST pass=125 fail=0`, all rc 0, two runs deterministic (`evidence/selftests-win-host-r63.txt`); SHONEN box-3 command tokens (`grep -o 'python3 tools/' | wc -l`) 4 → 0 and (`grep -o 'python tools/' | wc -l`) 0 → 4. **Self-verdict: verified met** (closure to re-derive). Routed limits: SKILL.md registry rows still name `python3` (frozen, parsed, baseline-bound — recorded host-transition limit, L0 class); v6 changes one measured-path word (bare-path argv) and fixture text only — on POSIX the bytes are identical |
+| C2: the r61-spotcheck receipt truncation made detectable and closed — complete 14-anchor re-capture committed, and a standing guard (`tools/mori-receipt-complete.py` v1.1, selftest 8/8, binary-mode fixtures) enforces "receipts carry the full failed list" over committed bytes (routed nit 1) | calibration 5 | `python tools/mori-receipt-complete.py <receipt>`; `grep -o 'quote_words:' <receipt> \| wc -l` | At entering: the r62 receipt `.ufo/waves/round-62/evidence/r61-counter-spotcheck.txt` carries 4 of 14 anchors (`wc -L` = 200, line cut mid-token; `quote_words:` tokens = 4) and no instrument in the lane detects it — the guard does not exist at entering (`git cat-file -e` rc 128, `evidence/controls-r63.txt`) | Guard vs the r62 receipt: `RECEIPT_COMPLETE=unmet … anchors=5 count_mismatch=1` (derived rows-quotes_ok=14) rc 1; guard vs the re-capture `.ufo/waves/round-63/evidence/r61-counter-spotcheck-complete-r63.txt`: `RECEIPT_COMPLETE=complete failed_lines=1 anchors=14` rc 0 with `--expect 14`; `quote_words:` tokens 4 → 14 (`evidence/receipt-complete-r63.txt`). **Self-verdict: verified met** (closure to re-derive). Routed limits: a cut exactly at a `;` boundary with no `rows=`/`quotes_ok=` and no `--expect` is undetectable from the receipt bytes alone (named selftest arm); the derived-count arithmetic is the r61/r62 C2 counter family's |
+| C3: Windows host-events kill/exhaustion probe capability + sourced entry — `tools/mori-host-events-win.py` (read-only `wevtutil qe` counts, window-capped, honest-unavailable, redaction-armed selftest), entry K1–K9 line-located in pinned S572/S573 copies, capability row below (routed note: a Windows-host liveness probe was r62's planned capability candidate) | depth 5 | `python tools/mori-host-events-win.py --selftest`; `python tools/mori-host-events-win.py`; `grep -c "^| S" corpus/SOURCES.md` | At entering `6aa92634…`: tool absent, entry absent, sources-r63 absent (`git ls-tree` = 0), SOURCES 344 rows — a do-nothing round reaches none of them (`evidence/controls-r63.txt`) | Selftest `HOST_EVENTS_WIN_SELFTEST pass=10 fail=0` rc 0 (`evidence/host-events-selftest-r63.txt`); live on this host `HOST_EVENTS_WIN: AVAILABLE surfaces=4 ok=4 matched=209 window=200` rc 0 — counts only: 8 exhaustion (2004), 1 fault (1000), 200 WER (window-saturated), 0 unexpected shutdowns (`evidence/host-events-live-win-r63.txt`); SOURCES 344 → 346 (S572+S573 opened and pinned this round; census start rc 0 → end rc 0). **Self-verdict: verified met** (closure to re-derive). Routed limits: counts are bounded reads, never totals; the 1000/1001/6008 rows are live-verified host conventions, not doc-located (K1–K4 ground the 2004 row only); saturated rows measure saturation, not volume; output is counts and pinned table names only (redaction arm 7) |
+
+Counter/instrument selftests this round, unaccommodated on this host:
+`tools/mori-receipt-complete.py --selftest` 8/8 rc 0;
+`tools/mori-host-events-win.py --selftest` 10/10 rc 0 (binary-mode fixture
+writes throughout — the r62 lesson Mistakes 1 routed fix applied to every new
+instrument); pin-check v6 selftest 125/125 rc 0
+(`evidence/receipt-complete-r63.txt`, `evidence/host-events-selftest-r63.txt`,
+`evidence/selftests-win-host-r63.txt`).
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Windows host-events kill/exhaustion probe (`tools/mori-host-events-win.py`) | one-shot read-only survey of the Windows event log for resource-exhaustion (2004), application-fault (1000), WER (1001) and unexpected-shutdown (6008) events — XPath provider+id filtered, most-recent-first, window-capped; counts and shapes only, unavailable never zero; fixture mode + redaction-armed selftest make it host-portable | `python tools/mori-host-events-win.py --selftest` → `HOST_EVENTS_WIN_SELFTEST pass=10 fail=0` rc 0; live `HOST_EVENTS_WIN: AVAILABLE surfaces=4 ok=4 matched=209 window=200` rc 0 on the Windows host (`.ufo/waves/round-63/evidence/host-events-selftest-r63.txt`, `.ufo/waves/round-63/evidence/host-events-live-win-r63.txt`) | 63 |
+| receipt-completeness guard (`tools/mori-receipt-complete.py`) | classifies a counter receipt's `failed=` list as complete or truncated over committed bytes (token charset + derived rows-quotes_ok count + optional `--expect`), so a width-cut receipt is red before it can be cited | `python tools/mori-receipt-complete.py .ufo/waves/round-62/evidence/r61-counter-spotcheck.txt` → unmet rc 1 (count_mismatch derived 14 vs listed 5); selftest 8/8 rc 0 (`.ufo/waves/round-63/evidence/receipt-complete-r63.txt`) | 63 |
+
+Windows-host protocol work (unclaimed): PROVINCE Round-63 host note appended
+(the event-log surface is present and probed counts-only); the three r62
+routed carry-ins discharged (receipt re-capture + guard; append-only erratum
+`corpus/lessons/round-62.md`; `python` naming in all new artifacts). L2
+dispatch: no AgentSwarm surface in this session (carried L0, routed around);
+round 63 ran L1-only.
+
+Planned (round 64): wire `mori-receipt-complete.py` into the receipt-writing
+checklist so every future counter receipt is guarded at capture time; extend
+the host-events probe with a bounded matched-total mode beyond the window cap
+(/c pagination) if the WER row's saturation is judged load-bearing; the SKILL
+registry's carried `python3` naming stays L0-gated (frozen parsed rows).

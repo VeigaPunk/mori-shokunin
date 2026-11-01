@@ -1,0 +1,26 @@
+# argv: python tools/mori-{register-check,settlement-scan,vote-bind,pin-check}.py --selftest (SHONEN box-3 re-verification on the Windows workspace host; python3 is the non-functional Store stub here, rc 49)
+# date: 2026-10-31T20:35:01-07:00
+# host: win32 x64, Git Bash, Python 3.13.15 as 'python'
+
+## before-state (as SHONEN.md box 3 was written): python3 naming, 0/4 executable here
+python3 tools/mori-register-check.py --selftest: rc=49 output=<Python was not found; run without arguments to install from the Microsoft Store, or disable this shortcut from Settings > Apps > Advanced app settings > App execution aliases.>
+python3 tools/mori-settlement-scan.py --selftest: rc=49 output=<Python was not found; run without arguments to install from the Microsoft Store, or disable this shortcut from Settings > Apps > Advanced app settings > App execution aliases.>
+python3 tools/mori-vote-bind.py --selftest: rc=49 output=<Python was not found; run without arguments to install from the Microsoft Store, or disable this shortcut from Settings > Apps > Advanced app settings > App execution aliases.>
+python3 tools/mori-pin-check.py --selftest: rc=49 output=<Python was not found; run without arguments to install from the Microsoft Store, or disable this shortcut from Settings > Apps > Advanced app settings > App execution aliases.>
+
+## mid-state: python naming, pin-check v5.1 selftest before the v6 fixture fix
+PIN_CHECK_SELFTEST pass=86 fail=39 (rc 1) — full captured bytes of that run, including the 39 per-case FAIL lines: `selftests-pincheck-before-v6-r63.txt` (same directory)
+
+## after-state: real interpreter (python), pin-check v6 (host-portable fixture binding)
+--- python tools/mori-register-check.py --selftest
+REGCHECK_SELFTEST pass=12 fail=0
+rc=0
+--- python tools/mori-settlement-scan.py --selftest
+SETSCAN_SELFTEST pass=10 fail=0
+rc=0
+--- python tools/mori-vote-bind.py --selftest
+VOTE_BIND_SELFTEST pass=16 fail=0
+rc=0
+--- python tools/mori-pin-check.py --selftest
+PIN_CHECK_SELFTEST pass=125 fail=0
+rc=0

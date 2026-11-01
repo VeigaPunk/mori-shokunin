@@ -123,3 +123,10 @@ this round's r61 counter spot-check — the exact shape it asks for; considered,
 not formally adopted (a standing re-execution practice is beyond one round).
 No other implementable proposal taken. Assimilation: none — shokuknow
 unreachable.
+
+## Round-63 erratum (append-only; routed by the r62 verifier spotcheck, note 2)
+
+The `## Gate` S571 quote above is annotated "(14 words)"; the space-separated
+count is 10. The ≤25-word floor holds either way (verifier re-count,
+`corpus/lessons/round-62-verifier-spotcheck.md` §4 row 2). The annotation is
+not rewritten; this erratum is the correction of record.
