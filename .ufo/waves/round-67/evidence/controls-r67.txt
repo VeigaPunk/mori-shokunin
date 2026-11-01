@@ -1,0 +1,18 @@
+# mori r67 do-nothing controls (entering bytes 8470a025f94f7449e881c3d8a8c997ed89aa7a9a = r66 verifier spotcheck tip) — what a do-nothing round cannot reach
+date: 2026-11-01T10:42:42Z
+---
+$ git show 8470a025f94f7449e881c3d8a8c997ed89aa7a9a:tools/mori-drift-recheck.py | grep -c asset-churn
+0
+rc=1 (want rc 1 / count 0 — the class does not exist at entering)
+$ git show 8470a025f94f7449e881c3d8a8c997ed89aa7a9a:tools/mori-drift-recheck.py | grep -c from-sweep
+0
+rc=1 (want rc 1 / count 0 — the mode does not exist at entering)
+$ git show 8470a025f94f7449e881c3d8a8c997ed89aa7a9a:corpus/QUALITY.md | grep -c '^159\.'
+0
+rc=1 (want rc 1 / count 0)
+$ git show 8470a025f94f7449e881c3d8a8c997ed89aa7a9a:corpus/SOURCES.md | grep -c '^| S578 '
+0
+rc=1 (want rc 1 / count 0 — row not opened yet)
+$ git show 8470a025f94f7449e881c3d8a8c997ed89aa7a9a:tools/mori-drift-recheck.py | grep -c time-churn  (the r66 capability IS present at entering — the r67 claims extend it, they do not re-declare it)
+14
+rc=0

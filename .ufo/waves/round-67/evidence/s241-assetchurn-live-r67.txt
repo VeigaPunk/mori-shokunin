@@ -1,0 +1,24 @@
+# mori r67 — S241 asset-churn live A/B (the r66 closure routed item 1: the second vendor grammar taught, then demonstrated on the vendor's live surface)
+date: 2026-11-01T10:36:28Z
+# grammar ground: the vendor's own redeploy signature recorded at .ufo/waves/round-65/evidence/disposition-diffs-r65.txt (S241 changed_opcodes=2, both asset-reference lines: /static/assets/0.4.03574.8308-9505b1c8/ -> /static/assets/0.4.03589.8339-b0a05127/) — the r65 semantic review's KEEP-CHROME naming, now a byte-layer class (learn-microsoft-asset-build-id)
+---
+$ committed before-state (r66 standing run at c62683fb bytes):
+  .ufo/waves/round-66/evidence/sweep-live-r66.txt:240  S241 drifted
+  .ufo/waves/round-66/evidence/recheck-standing-r66.txt:20  S241 content-drift as-of=2026-11-01T08:40:58Z
+$ live pin-vs-fresh diffs taken this round (curl/8.21.0 body vs the r42 pin, both 53963 bytes; pin sha256 1168b2a6…, live sha256 ddb7ba17…):
+  163c163  <link rel=stylesheet href=/static/assets/0.4.03574.8308-9505b1c8/styles/site.css /> -> …/0.4.03589.8339-b0a05127/…
+  211c211  src=/static/assets/0.4.03574.8308-9505b1c8/scripts/ja-jp/index-docs.js -> …/0.4.03589.8339-b0a05127/…
+  changed-line count: 2 of 1499 — the ONLY delta is the asset build id (grep -c '^[<>]' over the full diff = 4, i.e. 2 removed + 2 added)
+$ instrument-UA body (mori-source-drift/1.0, 54343 bytes): the same two asset-id lines PLUS one serving-injection line before </head> (218c218: a per-response bot-manager token + script) — serving variance, not content, not a third grammar; this is why the row resolves on the pinning-UA body
+---
+$ live run at the PRE-FIX bytes (grammars on the instrument arm only) 2026-11-01T10:21:36Z:
+S241 content-drift as-of=2026-11-01T10:21:36Z
+(the pinning-UA body was grammar-clean but the tool never tried the grammars there — the design gap the live run caught, fixed, disclosed in the selftest receipt run history)
+$ live run at the FINAL bytes 2026-11-01T10:30:24Z:
+# argv: python tools/mori-drift-recheck.py --root . --only S241
+# MORI_DRIFT_RECHECK second_ua=curl/8.21.0 only=S241 from-sweep=- findings=- run-start=2026-11-01T10:36:28Z stamp-class=python-docs-page-stamp asset-class=learn-microsoft-asset-build-id
+S241 asset-churn as-of=2026-11-01T10:36:29Z
+MORI_DRIFT_RECHECK rows=1 adjudicated=1 fresh=0 excerpt=0 time-churn=0 asset-churn=1 receipt-open=0 receipt-stale=0 ua-serving=0 content-drift=0 gate=0 unavailable=0 window=2026-11-01T10:36:29Z..2026-11-01T10:36:29Z
+rc=0
+---
+A/B: the same row, the same pin — content-drift (r66 instrument, grammar untaught) -> asset-churn as-of=… (r67, grammar taught, moment-bound); teaching content stands still, the vendor redeployed its assets

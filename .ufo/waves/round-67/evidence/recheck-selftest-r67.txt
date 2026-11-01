@@ -1,0 +1,45 @@
+# mori r67 — mori-drift-recheck.py selftest receipt (asset-churn grammar + --from-sweep mode, post-change bytes)
+date: 2026-11-01T10:31:45Z
+# argv: python tools/mori-drift-recheck.py --selftest  (offline 127.0.0.1 fixture, per-UA routes)
+# host condition (carried r65 L0 disclosure, still open): this host's loopback HTTP transport is degraded and variable (transport_cap measured 65536 at the r64 certification; 1024/4096/16384 across r65 runs) — three dedicated runs taken at the final bytes; a red run here needs the transport condition named beside it before it is read as instrument decay
+# run history (honest): (1) the first execution of the r67 edit died rc 1 — the edit had dropped the emit= definition (NameError at the header write), caught by that run and fixed; (2) first green version, PASS 10/10 on a 7-row fixture — but it taught the churn grammars on the instrument-UA arm only; the live S241 run then classified content-drift where the pinning-UA body was grammar-clean (the S241 live shape: per-response bot-manager chrome on the instrument body), so the second-UA arm now attempts the grammars too and an 8-row fixture adds the S241 shape (S914); (3) the three runs below are the FINAL bytes: PASS (10 cases) x3
+---
+$ run 1: python tools/mori-drift-recheck.py --selftest
+selftest row_tokens               PASS (got={'S911': 'fresh', 'S912': 'time-churn', 'S913': 'asset-churn', 'S914': 'asset-churn', 'S915': 'content-drift', 'S916': 'ua-serving', 'S917': 'receipt-open', 'S918': 'unavailable'} want={'S911': 'fresh', 'S912': 'time-churn', 'S913': 'asset-churn', 'S914': 'asset-churn', 'S915': 'content-drift', 'S916': 'ua-serving', 'S917': 'receipt-open', 'S918': 'unavailable'})
+selftest as_of_on_every_row       PASS (every token row carries as-of=<ISO8601Z>)
+selftest summary                  PASS (summary=('8', '8', '1', '0', '1', '2', '1', '0', '1', '1', '0', '1', '2026-11-01T10:31:48Z..2026-11-01T10:31:49Z'))
+selftest exit_code                PASS (rc=0 want 0)
+selftest header_disclosure        PASS (second UA + both churn classes + from-sweep=- + run-start on the header line)
+selftest window_same_run          PASS (window bounds parse and are ordered (same-run snapshot pair))
+selftest parse_sweep_rows_not_summary PASS (row lines only (deduped), summary token kept separate: ids=['S156'] summary_n=17)
+selftest from_sweep_selects_drifted PASS (only the receipt's drifted rows adjudicated: rows=['S912', 'S913'] rc=0)
+selftest from_sweep_malformed_exit2 PASS (not-a-sweep rc=2; rows-vs-summary disagreement rc=2 (both want 2))
+selftest missing_sources_exit2    PASS (rc=2 want 2)
+MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)
+rc=0
+$ run 2: python tools/mori-drift-recheck.py --selftest
+selftest row_tokens               PASS (got={'S911': 'fresh', 'S912': 'time-churn', 'S913': 'asset-churn', 'S914': 'asset-churn', 'S915': 'content-drift', 'S916': 'ua-serving', 'S917': 'receipt-open', 'S918': 'unavailable'} want={'S911': 'fresh', 'S912': 'time-churn', 'S913': 'asset-churn', 'S914': 'asset-churn', 'S915': 'content-drift', 'S916': 'ua-serving', 'S917': 'receipt-open', 'S918': 'unavailable'})
+selftest as_of_on_every_row       PASS (every token row carries as-of=<ISO8601Z>)
+selftest summary                  PASS (summary=('8', '8', '1', '0', '1', '2', '1', '0', '1', '1', '0', '1', '2026-11-01T10:31:50Z..2026-11-01T10:31:55Z'))
+selftest exit_code                PASS (rc=0 want 0)
+selftest header_disclosure        PASS (second UA + both churn classes + from-sweep=- + run-start on the header line)
+selftest window_same_run          PASS (window bounds parse and are ordered (same-run snapshot pair))
+selftest parse_sweep_rows_not_summary PASS (row lines only (deduped), summary token kept separate: ids=['S156'] summary_n=17)
+selftest from_sweep_selects_drifted PASS (only the receipt's drifted rows adjudicated: rows=['S912', 'S913'] rc=0)
+selftest from_sweep_malformed_exit2 PASS (not-a-sweep rc=2; rows-vs-summary disagreement rc=2 (both want 2))
+selftest missing_sources_exit2    PASS (rc=2 want 2)
+MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)
+rc=0
+$ run 3: python tools/mori-drift-recheck.py --selftest
+selftest row_tokens               PASS (got={'S911': 'fresh', 'S912': 'time-churn', 'S913': 'asset-churn', 'S914': 'asset-churn', 'S915': 'content-drift', 'S916': 'ua-serving', 'S917': 'receipt-open', 'S918': 'unavailable'} want={'S911': 'fresh', 'S912': 'time-churn', 'S913': 'asset-churn', 'S914': 'asset-churn', 'S915': 'content-drift', 'S916': 'ua-serving', 'S917': 'receipt-open', 'S918': 'unavailable'})
+selftest as_of_on_every_row       PASS (every token row carries as-of=<ISO8601Z>)
+selftest summary                  PASS (summary=('8', '8', '1', '0', '1', '2', '1', '0', '1', '1', '0', '1', '2026-11-01T10:31:56Z..2026-11-01T10:31:56Z'))
+selftest exit_code                PASS (rc=0 want 0)
+selftest header_disclosure        PASS (second UA + both churn classes + from-sweep=- + run-start on the header line)
+selftest window_same_run          PASS (window bounds parse and are ordered (same-run snapshot pair))
+selftest parse_sweep_rows_not_summary PASS (row lines only (deduped), summary token kept separate: ids=['S156'] summary_n=17)
+selftest from_sweep_selects_drifted PASS (only the receipt's drifted rows adjudicated: rows=['S912', 'S913'] rc=0)
+selftest from_sweep_malformed_exit2 PASS (not-a-sweep rc=2; rows-vs-summary disagreement rc=2 (both want 2))
+selftest missing_sources_exit2    PASS (rc=2 want 2)
+MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)
+rc=0

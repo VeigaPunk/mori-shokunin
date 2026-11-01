@@ -1,0 +1,22 @@
+# mori r67 standing selftest battery (no-harm check over the tools the lane's SHONEN box 3 cites)
+date: 2026-11-01T10:43:41Z
+# host condition (carried r65 L0 disclosure, still open): loopback HTTP transport degraded and variable — the two transport-sensitive tools' tallies are read with that condition beside them
+---
+$ python tools/mori-register-check.py --selftest
+REGCHECK_SELFTEST pass=12 fail=0
+rc=0
+$ python tools/mori-settlement-scan.py --selftest
+SETSCAN_SELFTEST pass=10 fail=0
+rc=0
+$ python tools/mori-vote-bind.py --selftest
+VOTE_BIND_SELFTEST pass=16 fail=0
+rc=0
+$ python tools/mori-pin-check.py --selftest
+PIN_CHECK_SELFTEST pass=125 fail=0
+rc=0
+$ python tools/mori-drift-adjudicate.py --selftest
+MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)
+rc=0
+$ python tools/mori-drift-recheck.py --selftest  (r67 bytes: 10 cases after the asset-churn grammar + --from-sweep mode; was 7 at r66)
+MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)
+rc=0

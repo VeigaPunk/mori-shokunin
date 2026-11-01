@@ -3543,3 +3543,84 @@ round end (`evidence/census-end-r66.txt`). Assimilation: considerthese mined
 suggestion 3 (re-execute what closures only evidence-verify) executed again —
 the fresh-start counter re-derived and the time-sensitivity A/B re-taken
 rather than cited. Assimilation: none — shokuknow unreachable.
+## Round 67 — Mori (L1 MoriR67): C1 depth verified met (the re-check's second vendor churn grammar — `asset-churn`, `learn-microsoft-asset-build-id`, taught from the vendor's own redeploy signature recorded in the r65 S241 diff receipt, decided on the pinning-UA body; the live S241 row flips `content-drift` to `asset-churn`, moment-bound); C2 operability verified met (`--from-sweep <receipt>` — the standing step reads the sweep receipt's own finding list with rows-vs-summary agreement enforced, the M1 lesson made procedural)
+
+Entering `8470a025` (r66 verifier spotcheck tip; r66 closed admitted with five
+status-neutral routed notes — notes 1 and 2 are this round's carry-ins and are
+discharged below as C1/C2; note 3 (SKILL:905 `python3` naming) stays open for
+the operator, routed around). FRESH-START duty re-performed with own receipts
+(`.ufo/waves/round-67/evidence/freshstart-spotchecks-r67.txt`): the frozen r61
+counter re-derived at the r61 data tip -> `C2=unmet` rc 1 (the same verdict the
+prior re-derivations reached); r59/r60 cited evidence PRESENT and ancestral.
+Do-nothing controls (`evidence/controls-r67.txt`): `asset-churn` = 0 and
+`from-sweep` = 0 in the entering tool bytes (rc 1 each), QUALITY `^159\.` = 0,
+S578 = 0 — neither claim reachable without this round's edits.
+
+C1 (depth): the learn.microsoft.com static-asset build-id path segment
+(`/static/assets/<build-id>/`) taught as the second vendor churn grammar —
+ground in the vendor's own redeploy signature recorded at
+`.ufo/waves/round-65/evidence/disposition-diffs-r65.txt` (S241,
+changed_opcodes=2, both asset-reference lines:
+`0.4.03574.8308-9505b1c8` -> `0.4.03589.8339-b0a05127`), general ground in
+S578 (web.dev versioned URLs, opened this round — a version-token delta in
+asset URLs is the deploy pipeline's cache invalidation, not page-content
+drift). Vendor-scoped by construction and named on the header line
+(`asset-class=learn-microsoft-asset-build-id` beside `stamp-class=`); the
+class is decided on the pinning-UA body when the instrument UA is served a
+different variant — the S241 live shape (per-response bot-manager chrome on
+the instrument body; serving variance, disclosed in QUALITY 159, not a third
+grammar). Honest run history: the live S241 run at the pre-fix bytes still
+printed `content-drift` (10:21:36Z) because the second-UA arm never attempted
+the churn grammars — the live run caught the design gap the selftest missed;
+fixed, then `S241 asset-churn as-of=2026-11-01T10:30:25Z` (reproduced
+10:36:29Z) — the same row the r66 standing run printed
+`content-drift as-of=2026-11-01T08:40:58Z`
+(`evidence/s241-assetchurn-live-r67.txt`). QUALITY 159 landed with the
+append-only erratum on 158's not-covered clause (S241 no longer stays
+content-drift; its KEEP-CHROME semantic disposition is unchanged).
+
+C2 (operability): `--from-sweep <receipt>` reads the sweep's finding list
+directly — rows are lines whose whole head matches `S### drifted` (the
+`drifted=N` summary token is never counted as a row — the r65 M1 lesson made
+procedural), the parsed set must agree with the receipt's own summary (rc 2
+on disagreement), a file with neither rows nor summary is refused (rc 2),
+ids absent from the registry are a setup error, `--only` mutually exclusive.
+Standing run on the committed r66 sweep receipt: `findings=17`, 17/17
+adjudicated rc 0 — 8 time-churn, 1 asset-churn (S241, the single intended
+flip), 5 receipt-open, 2 ua-serving, 1 gate, 0 content-drift — every r66
+standing class reproduced except the disclosed flip
+(`evidence/fromsweep-standing-r67.txt`, window 10:38:29Z..10:38:33Z).
+
+No frozen byte edited: the sweep (`tools/mori-source-drift.py`) and the r65
+adjudicator (`tools/mori-drift-adjudicate.py`) are absent from the round's
+diff; the SKILL:905 tally pin stays true by construction. Selftest: the
+extended re-check `PASS (10 cases)` rc 0 three consecutive runs at the final
+bytes (`evidence/recheck-selftest-r67.txt`; the emit-definition NameError of
+the first edit execution and the second-arm gap are disclosed in the receipt's
+run history). Standing battery green — register 12/12, settlement 10/10,
+vote-bind 16/16, pin-check 125/125, adjudicate 5/5, recheck 10/10
+(`evidence/selftests-battery-r67.txt`).
+
+Sourced claim: C1 rests on S578 (web.dev, "Prevent unnecessary network
+requests with the HTTP Cache", opened 2026-11-01, pinned byte-identical
+`corpus/evidence/sources-r67/S578.html` sha `5c02b661…`; quote "Versioned
+URLs are a good practice because they make it easier to invalidate cached
+responses." — 15 words at `S578.html:4647`, section heading `:4638`,
+continuation "You can't, at least not without changing the URL of the
+resource" `:4652`; duplicate sweeps `grep -c "web.dev"` = 0, `grep -c
+"http-cache"` = 0, `grep -c "cache.busting"` = 0 before opening). SOURCES
+350 -> 351.
+
+Carry-ins from the r66 closure, both discharged: (1) the second vendor
+grammar — built as C1 with its vendor scoping made a standing criterion
+(QUALITY 159); (2) `--from-sweep` — built as C2 with the M1 lesson enforced
+in the parser. The r65 L0 degraded-transport posture question and the r62
+dispatch-surface question stand open; routed around, never treated as
+answered. Census: validator rc 0 at round start (`evidence/census-start-r67.txt`,
+command + rc line) -> rc 0 at round end (`evidence/census-end-r67.txt`).
+Assimilation: considerthese re-mined (2026-10-19…2026-10-26, all eight files;
+no newer file exists — checked this round); the 2026-10-26 suggestion 1
+(split pin-check mismatches environmental vs stale) is a real still-open
+proposal but touches a tally-cited instrument's behavior — not adopted this
+round, left for the operator's instrument-change ruling (the r65 L0 line).
+Assimilation: none — shokuknow unreachable.

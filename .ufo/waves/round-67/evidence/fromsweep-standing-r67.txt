@@ -1,0 +1,29 @@
+# mori r67 — the standing adjudicate step now reads the sweep receipt directly (--from-sweep, r66 closure routed item 2), demonstrated on the r66 sweep's committed finding list
+date: 2026-11-01T10:39:39Z
+# argv: python tools/mori-drift-recheck.py --root . --from-sweep .ufo/waves/round-66/evidence/sweep-live-r66.txt
+# no hand-copied id list: the header's only= set is parsed from the receipt's own `S### drifted` rows (findings=17), the parsed set verified against the receipt's drifted=17 summary, summary token never counted as a row (lesson M1), ids absent from the registry would be a setup error
+---
+# MORI_DRIFT_RECHECK second_ua=curl/8.21.0 only=S156,S157,S158,S159,S160,S176,S177,S223,S226,S228,S229,S231,S241,S262,S347,S572,S573 from-sweep=.ufo/waves/round-66/evidence/sweep-live-r66.txt findings=17 run-start=2026-11-01T10:39:39Z stamp-class=python-docs-page-stamp asset-class=learn-microsoft-asset-build-id
+S156 receipt-open as-of=2026-11-01T10:39:39Z
+S157 receipt-open as-of=2026-11-01T10:39:39Z
+S158 receipt-open as-of=2026-11-01T10:39:39Z
+S159 receipt-open as-of=2026-11-01T10:39:40Z
+S160 receipt-open as-of=2026-11-01T10:39:40Z
+S176 time-churn as-of=2026-11-01T10:39:40Z
+S177 time-churn as-of=2026-11-01T10:39:40Z
+S223 time-churn as-of=2026-11-01T10:39:40Z
+S226 time-churn as-of=2026-11-01T10:39:40Z
+S228 time-churn as-of=2026-11-01T10:39:40Z
+S229 time-churn as-of=2026-11-01T10:39:40Z
+S231 time-churn as-of=2026-11-01T10:39:40Z
+S241 asset-churn as-of=2026-11-01T10:39:40Z
+S262 gate as-of=2026-11-01T10:39:40Z
+S347 time-churn as-of=2026-11-01T10:39:41Z
+S572 ua-serving as-of=2026-11-01T10:39:41Z
+S573 ua-serving as-of=2026-11-01T10:39:41Z
+MORI_DRIFT_RECHECK rows=17 adjudicated=17 fresh=0 excerpt=0 time-churn=8 asset-churn=1 receipt-open=5 receipt-stale=0 ua-serving=2 content-drift=0 gate=1 unavailable=0 window=2026-11-01T10:39:39Z..2026-11-01T10:39:41Z
+rc=0
+---
+row-isolated class counts, command beside the count it names:
+  grep -cE '^S[0-9]{3} ' .ufo/waves/round-67/evidence/fromsweep-standing-r67.txt  ->  17
+  (8 time-churn, 1 asset-churn (S241, the r66 content-drift flip), 5 receipt-open, 2 ua-serving, 1 gate, 0 content-drift — every r66 standing class reproduced except the intended S241 flip)

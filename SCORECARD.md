@@ -3296,3 +3296,64 @@ asset-build-id churn S241 shows) needs its own named grammar or stays honest
 `content-drift` at the byte layer; consider a `--from-sweep <receipt>` mode
 that reads the sweep's finding list directly instead of an `--only` id list;
 the r65 L0 degraded-transport posture question remains open.
+
+## Round 67 — the second vendor grammar + receipt-driven standing step: C1 depth landed (the re-check learns `asset-churn` — the learn.microsoft.com asset-build-id class, vendor-scoped, decided on the pinning-UA body; the live S241 row flips `content-drift` to `asset-churn`, moment-bound); C2 operability landed (`--from-sweep` — the standing step reads the sweep receipt's own finding list, rows-vs-summary agreement enforced, the M1 lesson made procedural)
+
+Entering `8470a025...` (r66 verifier spotcheck tip; r66 closed admitted with
+five status-neutral routed notes — notes 1 and 2 discharged this round as
+C1/C2; note 3 (SKILL:905 `python3` naming, this host's Store stub) stays open
+for the operator and is routed around; notes 4-5 are promotion/redaction
+notes for the operator). FRESH-START duty re-performed on the §7 rejections
+r59-r61 with own receipts (`.ufo/waves/round-67/evidence/freshstart-spotchecks-r67.txt`):
+the frozen r61 counter re-derived at the r61 data tip -> `C2=unmet` rc 1 (the
+same verdict the r61 and r65/r66 re-derivations reached); r59/r60 cited
+evidence `git cat-file -e` PRESENT and both revisions `merge-base
+--is-ancestor` of refs/heads/master rc 0 each. Rule-outs, and why: (1)
+re-declaring the r59/r60 entry-claims instruments — their met-flip
+counterexamples stand on frozen bytes; (2) scalar score moves — no closure
+states a new number and no lane convention licenses an L1-authored scalar;
+(3) claims on the old Linux host's live surfaces — absent here; (4) editing
+the frozen sweep `tools/mori-source-drift.py` or the r65 adjudicator's
+committed behavior — the SKILL:905 tally pin and the r65/r66 receipts bind
+those bytes; the r67 work extends only the lane-owned r66 re-check, which
+pins no SKILL tally; (5) teaching a third grammar for the instrument-UA
+bot-manager chrome — it is per-response serving variance, not a build
+artifact (disclosed in QUALITY 159); (6) re-declaring the admitted r64-r66
+sweep/disposition/re-check work. Do-nothing controls
+(`.ufo/waves/round-67/evidence/controls-r67.txt`): `asset-churn` 0 and
+`from-sweep` 0 in the entering tool bytes (rc 1 each), QUALITY `^159\.` = 0,
+S578 row 0 — both claims unreachable without this round's edits.
+Scores entering/after: coverage 6, operability 7, depth 5, freshness 5,
+calibration 5, adjacency 6 — no scalar claimed. Lowest tie
+depth/freshness/calibration at 5: C1 targets depth.
+
+| Claim | Axis | Counting command | Before | After / verdict |
+|---|---|---|---|---|
+| C1: the second vendor churn grammar — the re-check classifies a pin-vs-fresh delta confined to the learn.microsoft.com `/static/assets/<build-id>/` segment as `asset-churn as-of=T` (grammar `learn-microsoft-asset-build-id`, named on the header line beside `stamp-class=`), taught from the vendor's own redeploy signature the r65 diff receipt recorded (S241, changed_opcodes=2, both asset-reference lines); decided on the pinning-UA body when the instrument UA is served a different variant (S241's live shape: per-response bot-manager chrome on the instrument body — serving variance, disclosed, not a third grammar); other vendors' build artifacts stay honest `content-drift` until their own grammar is taught (QUALITY 159 + the append-only erratum on 158's not-covered clause) | depth 5 | `git show <base>:tools/mori-drift-recheck.py \| grep -c asset-churn`; `grep -c "asset-churn" tools/mori-drift-recheck.py`; `python tools/mori-drift-recheck.py --selftest`; `grep -c "^159\." corpus/QUALITY.md` | At entering `8470a025...`: the class does not exist — `grep -c asset-churn` on the entering tool bytes = 0 rc 1 (`evidence/controls-r67.txt`); the r66 standing run printed `S241 content-drift as-of=2026-11-01T08:40:58Z` (`recheck-standing-r66.txt:20`) and the sweep printed `S241 drifted` (`sweep-live-r66.txt:240`); QUALITY carried no vendor-scoping criterion (`grep -c "^159\." corpus/QUALITY.md` = 0) | Selftest `MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)` rc 0, three consecutive runs at the final bytes (`evidence/recheck-selftest-r67.txt`), the fixture's S914 replicating the S241 shape (pinning body asset-only, instrument body + bot-manager chrome). Live A/B (`evidence/s241-assetchurn-live-r67.txt`): fresh pin-vs-live diffs show the ONLY pinning-UA delta is the two asset-id lines (`0.4.03574.8308-9505b1c8` -> `0.4.03589.8339-b0a05127`, 2 of 1499 lines, `grep -c "^[<>]"` = 4); the pre-fix live run at 10:21:36Z still printed `content-drift` — the live run caught the design gap the selftest missed (the second-UA arm never attempted the grammars); post-fix the same row prints `S241 asset-churn as-of=2026-11-01T10:30:25Z` (reproduced 10:36:29Z). QUALITY 159 landed (`grep -c "^159\." corpus/QUALITY.md` = 1) with the append-only erratum on 158. Routed limits: one vendor's observed token shape; a mixed stamp+asset delta satisfies neither grammar and stays `content-drift`. **Self-verdict: verified met** (closure to re-derive) |
+| C2: `--from-sweep <receipt>` — the standing step reads the sweep receipt's own finding list instead of a hand-copied `--only` id list: rows are lines whose whole head matches `S### drifted` (the `drifted=N` summary token is never counted as a row — the r65 M1 lesson made procedural), the parsed set must agree with the receipt's own `drifted=N` summary (rc 2 on disagreement) and a file with neither rows nor summary is refused (rc 2); ids absent from the registry are a setup error, and `--only` is mutually exclusive | operability 7 | `git show <base>:tools/mori-drift-recheck.py \| grep -c from-sweep`; `grep -c "from-sweep" tools/mori-drift-recheck.py`; `grep -cE "^S[0-9]{3} " .ufo/waves/round-67/evidence/fromsweep-standing-r67.txt` | At entering: the standing step required a hand-copied id list (the r66 report transcribed the 17 ids into `--only` by hand; the r66 closure routed note 2 names the transcription step); `grep -c from-sweep` on the entering tool bytes = 0 rc 1 (`evidence/controls-r67.txt`) | `python tools/mori-drift-recheck.py --root . --from-sweep .ufo/waves/round-66/evidence/sweep-live-r66.txt` -> header `only=S156,…,S573 from-sweep=…sweep-live-r66.txt findings=17`, `grep -cE "^S[0-9]{3} " …fromsweep-standing-r67.txt` = 17 rows adjudicated rc 0 — 8 time-churn, 1 asset-churn (S241, the single intended flip), 5 receipt-open, 2 ua-serving, 1 gate, 0 content-drift: every r66 standing class reproduced except the disclosed flip, window 10:38:29Z..10:38:33Z (`evidence/fromsweep-standing-r67.txt`). Selftest cases `parse_sweep_rows_not_summary` and `from_sweep_malformed_exit2` ride the same 10/10 receipt. Standing selftest battery green (no-harm: register 12/12, settlement 10/10, vote-bind 16/16, pin-check 125/125, adjudicate 5/5, recheck 10/10 — `evidence/selftests-battery-r67.txt`). **Self-verdict: verified met** (closure to re-derive) |
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Standing drift re-check (`tools/mori-drift-recheck.py`) — r67 extension | everything the r66 row records, plus: a second vendor-scoped churn grammar (`asset-churn`, `learn-microsoft-asset-build-id`, decided on the pinning-UA body when the instrument UA is served a different variant) and `--from-sweep <receipt>` selection that reads the sweep's finding list with rows-vs-summary agreement enforced | `python tools/mori-drift-recheck.py --selftest` -> `MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)` rc 0 x3 (`.ufo/waves/round-67/evidence/recheck-selftest-r67.txt`); live S241 A/B content-drift -> `asset-churn as-of=…` (`.ufo/waves/round-67/evidence/s241-assetchurn-live-r67.txt`); `--from-sweep` standing run on the committed r66 sweep receipt, 17/17 adjudicated (`.ufo/waves/round-67/evidence/fromsweep-standing-r67.txt`) | 66 (grammar + mode 67) |
+
+Selftests this round: the extended tool's selftest 10/10 x3 at the final
+bytes with the loopback-transport condition carried in the receipt header
+(r65 L0 line stands open); the frozen sweep's own selftest untouched and its
+tally pin unedited; the standing battery green (`evidence/selftests-battery-r67.txt`).
+Carry-ins from the r66 closure: (1) the second vendor grammar — built as C1
+(QUALITY 159 + erratum); (2) `--from-sweep` — built as C2; (3) SKILL:905
+`python3` naming — stays open for the operator (L0), routed around, no
+frozen byte edited. SOURCES 350 -> 351 (S578, web.dev versioned-URL ground,
+opened this round; duplicate sweeps `grep -c "web.dev"` = 0,
+`grep -c "http-cache"` = 0, `grep -c "cache.busting"` = 0 before opening).
+Census: validator rc 0 at round start (`evidence/census-start-r67.txt`,
+command + rc line) -> rc 0 at round end (`evidence/census-end-r67.txt`).
+
+Planned (round 68): the bot-manager chrome is disclosed serving variance but
+the instrument-UA body of a bot-managed page is otherwise unadjudicated — a
+future round could receipt per-response token variance (two instrument-UA
+fetches minutes apart) to separate per-response tokens from stable chrome;
+the remaining churn-grammar frontier is third-vendor shapes (none observed
+in the registry yet — none taught pre-emptively); the L0 instrument-change
+question (mori | round-65) and the dispatch-surface question (mori |
+round-62) stand open for the operator.
