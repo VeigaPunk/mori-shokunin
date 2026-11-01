@@ -1672,3 +1672,30 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
      Not covered: single-run receipts (the run-start on the one header suffices);
      the not-captured 10:30:25Z bytes stay not-captured — this criterion governs
      labeling discipline from r68 forward, it cannot resurrect uncaptured bytes.
+
+
+161. An A/A variance receipt STATES ITS OBSERVATION WINDOW: the compare summary
+     line carries the A→B gap (`window-s=<N>` seconds, computed by the caller
+     from the two capture receipts' own `as-of=` values), and a compare run
+     whose window was not stated reads `window-s=unavailable reason=not-stated`
+     — never a fabricated gap. A receipt whose window is unstated does not
+     constrain any rotation-timing claim: the same page at different windows is
+     a different observation (the r68 closure carry-in: the closure's
+     ~15-minute re-derivation window caught no per-response rotation while the
+     r68 round's 21-minute A/A window caught per-response=4).
+     ← the r68 receipt (`.ufo/waves/round-68/evidence/s241-uavariance-r68.txt`):
+     its capture blocks carry `as-of=` stamps 1268 seconds apart, but its
+     UA_VARIANCE summary line carries no window token — the window was
+     derivable from the receipt and stated nowhere in the receipt grammar.
+     Shown able to fail: `grep -c "window-s="` over the r68 receipt finds 0
+     (rc 1 — the rule's subject fails there), while the r69 stated-window
+     receipt (`.ufo/waves/round-69/evidence/s241-window-r69.txt`) carries
+     `window-s=4015` computed from its own capture stamps; demonstration
+     receipt `.ufo/waves/round-69/evidence/quality161-abletofail-r69.txt`; the
+     tool-side grammar (stated / marked-unavailable / non-integer refused) is
+     selftest cases window_stated_when_given, window_unstated_marked_unavailable,
+     window_rejects_non_integer (14/14 x3 at the r69 final bytes).
+     Not covered: rotation-TTL values — the window is metadata, never a
+     lifetime measurement; the tool decides no rotation clock (S580 grounds
+     that token clocks exist, not their values); single-capture receipts (no
+     A/B pair, no window to state).

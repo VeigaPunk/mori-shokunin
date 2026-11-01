@@ -1,0 +1,77 @@
+# mori r69 — S241 instrument-UA per-response variance at a STATED window (tools/mori-ua-variance.py --window-s / --recheck-summary; the r68 SCORECARD planned item and the r68 closure carry-in: the receipt grammar now states its observation window)
+date: 2026-11-01 (capture A 16:23:39Z; capture B 17:30:34Z; fresh re-check 17:30:35Z; compare 17:32:11Z)
+ground: S579 + S580 — a mitigation token is per-client-session machinery whose content carries the timestamps of the client's latest successful challenge responses, so token-bearing served bytes rotate on the mitigation's own clocks (clocks this tool does not read); an observation's WINDOW is therefore a load-bearing parameter, and this receipt states its own.
+redaction: the two capture bodies stay in scratch (they can embed per-response token values) — counts and shapes only below, per the lane redaction rule; the compare tool never emits line values (selftest cases token_value_never_emitted, crosscheck arms).
+window: A->B = 4015 s (16:23:39Z -> 17:30:34Z, computed by the caller from the two capture receipts' own as-of values; the r68 receipt's window was 1268 s — this observation is ~3.2x longer, the r68 "longer gap" intent carried as far as one round reaches).
+revision note: capture A ran at the ENTERING bytes (tool sha 3f6eb7a6… == HEAD at entering, matching the r68 verifier's quoted digest); capture B at the r69 final working bytes (5528b961…). fetch()/capture()/now_utc()/sha256_hex() are byte-identical across the two revisions (block below), so the A/B pair is revision-uniform in capture behavior; the COMPARE and CROSS-CHECK run only at the final bytes.
+---
+$ capture A (block carries its own run-start; ENTERING bytes):
+$ python tools/mori-ua-variance.py --capture --url https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/linux/oom-swap-file-linux-vm --ua mori-source-drift/1.0 --out <scratch>/s241-instr-a.bin
+UA_VAR_CAPTURE url=https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/linux/oom-swap-file-linux-vm ua=mori-source-drift/1.0 bytes=54343 sha256=066513da29ec29651b8b68bef818a5586ff392703b038c811c5dd45a71dedc47 out=<scratch>/s241-instr-a.bin as-of=2026-11-01T16:23:39Z rc=0
+
+$ capture B, 4015 s after A (block carries its own run-start; r69 working bytes):
+$ python tools/mori-ua-variance.py --capture --url <same URL> --ua mori-source-drift/1.0 --out <scratch>/s241-instr-b.bin
+UA_VAR_CAPTURE url=https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/linux/oom-swap-file-linux-vm ua=mori-source-drift/1.0 bytes=54343 sha256=38fc2cfdb6a873ff32c2ab9eae2c5143609fd59a3dc4c8a03c43aa6e84bec452 out=<scratch>/s241-instr-b.bin as-of=2026-11-01T17:30:34Z rc=0
+
+$ revision-uniformity check (awk-extracted function bodies, HEAD bytes vs working bytes; re-run at receipt-writing time 2026-11-01T17:3xZ; first pass 17:35Z, not separately captured)
+  ^def fetch head=c0744fd4599c4a99 work=c0744fd4599c4a99 IDENTICAL
+  ^def capture head=9954502d1cafe965 work=9954502d1cafe965 IDENTICAL
+  ^def now_utc head=184ae80120a5044e work=184ae80120a5044e IDENTICAL
+  ^def sha256_hex head=018b32976976be68 work=018b32976976be68 IDENTICAL
+
+$ the standing re-check, fresh same-round paired run (block carries its own run-start; run 17:30:35Z):
+$ python tools/mori-drift-recheck.py --root <lane> --only S241
+# MORI_DRIFT_RECHECK second_ua=curl/8.21.0 only=S241 from-sweep=- findings=- run-start=2026-11-01T17:30:35Z stamp-class=python-docs-page-stamp asset-class=learn-microsoft-asset-build-id
+S241 asset-churn as-of=2026-11-01T17:30:35Z
+MORI_DRIFT_RECHECK rows=1 adjudicated=1 fresh=0 excerpt=0 time-churn=0 asset-churn=1 receipt-open=0 receipt-stale=0 ua-serving=0 content-drift=0 gate=0 unavailable=0 window=2026-11-01T17:30:35Z..2026-11-01T17:30:35Z
+(stderr: 0 bytes; rc=0)
+
+$ compare (pin = the committed r42 pin corpus/evidence/sources-r42/S241.html, sha 1168b2a6...357; line values never emitted; block carries its own run-start):
+$ python tools/mori-ua-variance.py --compare --label S241-window-r69 --pin corpus/evidence/sources-r42/S241.html --a <scratch>/s241-instr-a.bin --b <scratch>/s241-instr-b.bin --window-s 4015 --recheck-summary <scratch>/recheck-s241-r69.txt
+UA_VARIANCE label=S241-window-r69 per-response=4 stable=1497 stable-not-in-pin=2 stable-in-pin=1495 lines-a=1499 lines-b=1499 lines-pin=1499 same-bytes=false sha-a=066513da29ec29651b8b68bef818a5586ff392703b038c811c5dd45a71dedc47 sha-b=38fc2cfdb6a873ff32c2ab9eae2c5143609fd59a3dc4c8a03c43aa6e84bec452 sha-pin=1168b2a626ec4b69fbdf7341ae3331c16ff0e42667d67488762b30e206591357 window-s=4015 crosscheck=consistent crosscheck-basis=stable-not-in-pin=2+recheck-asset-churn=1 run-start=2026-11-01T17:32:11Z
+rc=0
+
+$ shapes only (line numbers and lengths, never values) — commands receipted, run in scratch over the capture bodies:
+$ python -I (difflib opcodes over A/B lines; printed fields: tag, positions, side lengths; re-run at receipt-writing time 2026-11-01T17:3xZ over the saved captures — the first pass ran 17:33Z; this block is the re-run's own output; the first pass also printed per-position same-length shape lines (reflected in the reading below), not separately captured):
+  DIFF replace at a-line 218 (a-lines 218-218, b-lines 218-218; len 1 vs 1)
+  DIFF replace at a-line 1498 (a-lines 1498-1498, b-lines 1498-1498; len 1 vs 1)
+  total diff positions: 2
+$ python -I (line numbers of A-lines absent from the pin; regex count for /static/assets/):
+  a-lines not in pin (numbers only): [163, 211, 218, 1498]
+  asset-id segment (/static/assets/) present at 2 of those lines: [163, 211]
+
+$ reading (classes stay the standing step's job — this receipt only separates and states its window):
+  - window-s=4015 stated: per-response=4 at a 67-minute window — the SAME TWO positions
+    as the r68 1268 s window (218 before </head>, 1498 near page end; both same-length
+    1-line replaces, token-shaped; same-bytes=false with fresh shas = both positions
+    rotated again). Reading: BOTH positions rotate within BOTH windows (21 min and
+    67 min), so these two windows cannot separate the positions' rotation clocks —
+    what would separate their TTLs remains unmeasured, and this receipt decides no
+    TTL value (the window is metadata; S580 grounds why token clocks exist, not
+    their values).
+  - stable-not-in-pin=2, unchanged from r68: exactly the two asset-id lines (163, 211)
+    — the vendor did NOT redeploy between the windows in a way that grows this count
+    (the r68 planned item's growth arm did not materialize).
+  - crosscheck=consistent (crosscheck-basis=stable-not-in-pin=2+recheck-asset-churn=1):
+    the standing cross-check arm's first LIVE agreement — the compare's stable-not-in-pin=2
+    and the same-round re-check's asset-churn=1 agree (both instruments see build churn;
+    QUALITY 159 untouched, no row re-classed, the arm decides nothing). Moments: the
+    re-check's fetches are stamped as-of=17:30:35Z on its own lines; the captures at
+    16:23:39Z/17:30:34Z; all moments stated above — the arm compares COUNTS, never clocks.
+  - disclosed scratch control run (17:03:10Z, working bytes, never committed evidence):
+    compare of capture A against ITSELF with --window-s 0 ->
+    per-response=0 stable=1499 stable-not-in-pin=4 (A's own 2 asset lines + A's 2 token
+    lines), crosscheck=unavailable reason=not-provided — a same-file control whose
+    decomposition matches the A/B reading (2+2=4).
+$ able-to-fail, the criterion's other side (run 17:10Z):
+$ grep -c "window-s=" .ufo/waves/round-68/evidence/s241-uavariance-r68.txt
+0
+rc=1  (the r68 receipt's grammar carried NO window token — its 1268 s gap was derivable
+       from its capture stamps and stated nowhere; QUALITY 161 is written able to fail
+       against exactly this receipt. This receipt states window-s=4015.)
+$ selftest at the r69 final bytes (three consecutive runs, 16:46Z):
+MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)  x3 — receipt
+.ufo/waves/round-69/evidence/uavariance-selftest-final-r69.txt (run history: the FIRST
+three runs at the pre-fix bytes failed rc 1 silently — three bare rc=1 lines — receipted
+.ufo/waves/round-69/evidence/uavariance-selftest-r69.txt and mined as the round lesson's
+mistake 1).

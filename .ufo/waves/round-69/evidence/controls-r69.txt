@@ -1,0 +1,22 @@
+# mori r69 entering-controls (do-nothing control reachability, at entering c53dd7895b3e4a7391215972dc4e4d83f78b4b08)
+date: 2026-11-01T16:19:38Z
+---
+$ grep -c '^161\.' corpus/QUALITY.md   (C1 subject absent at entering)
+0
+rc=1 (1 = no match, criterion not yet written)
+
+$ grep -c 'window-s=' tools/mori-ua-variance.py   (C2 tool field absent at entering)
+0
+rc=1
+
+$ grep -c 'recheck-summary' tools/mori-ua-variance.py   (C3 arm absent at entering)
+0
+rc=1
+
+$ ls .ufo/waves/round-69/evidence/ (before this receipt, filtered)
+controls-r69.txt
+(only the census-start receipt exists so far — no r69 ua-variance receipt at entering)
+
+$ git cat-file -e HEAD:.ufo/waves/round-69/evidence/s241-window-r69.txt
+fatal: path '.ufo/waves/round-69/evidence/s241-window-r69.txt' does not exist in 'HEAD'
+rc=128 (128 = absent at entering)

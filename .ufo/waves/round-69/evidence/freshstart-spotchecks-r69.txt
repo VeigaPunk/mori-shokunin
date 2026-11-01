@@ -1,0 +1,22 @@
+# mori r69 fresh-start spot-checks (r59-r61 rejected closures re-derived with own receipts, prompt §7 digests re-read before declaring)
+date: 2026-11-01T16:20:57Z
+entering: c53dd7895b3e4a7391215972dc4e4d83f78b4b08
+---
+$ python .ufo/waves/round-61/count-c2.py 986d4b46db6e67682ef84091f606d125f987ecbc
+C2=unmet pointers=47 rows=47 same=30 moved=3 changed=0 quotes_ok=33 spans_ok=33 sources=5 failed=quote_words:psi.c:1268-1270;quote_words:psi.c:1712;quote_words:psi.c:1017;quote_words:psi.c:1540;quote_words:psi.c:1686;quote_words:psi.c:1710-1721;quote_words:psi.c:1268;quote_words:psi.c:1269-1270;quote_words:psi_types.h:41-49;quote_words:psi.c:1717-1719;quote_words:psi.c:1257-1258;quote_words:psi.c:228-240;quote_words:psi.c:1711-1719;quote_words:psi.c:1596-1598 rev=986d4b46db6e67682ef84091f606d125f987ecbc
+rc=1
+
+$ git cat-file -e 986d4b46:.ufo/waves/round-59/evidence/control-c2-do-nothing.txt && echo PRESENT
+PRESENT
+rc=0
+
+$ git cat-file -e b3c25613:.ufo/waves/round-60/evidence/c2-at-freeze.txt && echo PRESENT
+PRESENT
+rc=0
+
+$ git merge-base --is-ancestor checks
+986d4b46db6e67682ef84091f606d125f987ecbc ancestor rc=0
+b3c256138f00c704d5aa56eb0332d74506502ef2 ancestor rc=0
+
+$ grep -c '^| S' corpus/SOURCES.md  (SOURCES row count at round start)
+352

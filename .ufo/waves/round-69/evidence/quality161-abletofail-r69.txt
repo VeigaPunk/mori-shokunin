@@ -1,0 +1,15 @@
+# mori r69 — QUALITY 161 able-to-fail demonstration (the window-stating rule fires on the r68 receipt and passes on the r69 receipt)
+date: 2026-11-01T17:38:59Z
+
+$ grep -c 'window-s=' .ufo/waves/round-68/evidence/s241-uavariance-r68.txt  (the rule's origin: the r68 receipt could not state its window)
+0
+rc=1   <- the rule fires: 0 window tokens in a receipt whose gap (1268 s) was derivable from its own capture stamps but stated nowhere in its grammar
+
+$ grep -c 'window-s=' .ufo/waves/round-69/evidence/s241-window-r69.txt  (the r69 receipt)
+4
+rc=0   <- the rule passes: window-s=4015 stated on the compare line (plus its header derivation)
+
+$ grep -c 'window-s=unavailable reason=not-stated' <selftest fixture text>  (the tool-side grammar: an unstated window is MARKED, never fabricated — selftest cases window_stated_when_given / window_unstated_marked_unavailable / window_rejects_non_integer, 14/14 x3 at the final bytes)
+(selftest receipt: .ufo/waves/round-69/evidence/uavariance-selftest-final-r69.txt)
+
+not covered: rotation-TTL values — the window is metadata, never a lifetime measurement (S580 grounds that token clocks exist, not their values); single-capture receipts (no A/B pair, no window to state).

@@ -3724,3 +3724,108 @@ around. Assimilation: considerthese re-mined (no newer file than
 2026-10-26); suggestion 1 (split pin-check mismatches) stays behind the
 operator's open instrument-change ruling. Assimilation: none — shokuknow
 unreachable.
+
+## Round 69 — Mori (L1 MoriR69): C1 calibration verified met (the observation-window grammar: QUALITY 161 makes a stated window procedural for every A/A variance receipt, able-to-fail against the r68 receipt whose window was derivable-but-unstated); C2 depth verified met, sourced S580 (the tool states its window and the 4015 s receipt answers the r68 planned question at the observable level: both per-response positions rotate within BOTH windows — no TTL separation between 21 and 67 minutes); C3 operability verified met (the standing cross-check arm `--recheck-summary`, first live agreement crosscheck=consistent against a fresh same-round re-check)
+
+Entering `c53dd789` (r68 verifier spotcheck tip). CARRY-INS from the r68
+closure, both addressed: (1) the ua-variance tool's window sensitivity (the
+closure's ~15-minute window caught no rotation; r68's 21-minute window caught
+per-response=4) — discharged in the tool's docstring (the observation-window
+dependency paragraph), in its receipt grammar (`window-s=<N>` stated from the
+capture receipts' own `as-of=` values, `unavailable reason=not-stated` never a
+fabricated gap), in QUALITY 161 (procedural, able-to-fail), and in the live
+stated-window receipt; (2) the r65 L0 (SKILL:905 `python3` naming) stays open
+for the operator, routed around — no frozen byte edited, every command
+`python`. FRESH-START duty re-performed with own receipts
+(`evidence/freshstart-spotchecks-r69.txt`): frozen r61 counter re-derived at
+the r61 data tip -> `C2=unmet` rc 1 (the same verdict the r61 closure and the
+r65-r68 re-derivations reached); r59/r60 cited evidence PRESENT and ancestral.
+Do-nothing controls (`evidence/controls-r69.txt`): QUALITY `^161\.` = 0 rc 1,
+`window-s=` = 0 and `recheck-summary` = 0 in the tool, the r69 receipt absent
+at entering rc 128 — none of the three claims reachable without this round's
+edits.
+
+C1 (calibration): QUALITY 161 landed (`grep -c "^161\." corpus/QUALITY.md`
+0 -> 1; 158/159/160 unchanged at 1 each) — every A/A variance receipt states
+its observation window; a receipt whose window is unstated does not constrain
+any rotation-timing claim. Demonstrated able to fail against the r68 receipt
+(`grep -c "window-s=" .ufo/waves/round-68/evidence/s241-uavariance-r68.txt` =
+0 rc 1 — its 1268 s gap was derivable from its own capture stamps and stated
+nowhere) and passing on the r69 receipt (4 hits incl. the compare line's
+`window-s=4015`) — `evidence/quality161-abletofail-r69.txt`. The tool side:
+`--window-s N` (non-negative integer, else rc 2), omitted ->
+`window-s=unavailable reason=not-stated`, selftest cases
+window_stated_when_given / window_unstated_marked_unavailable /
+window_rejects_non_integer.
+
+C2 (depth, sourced S580): the stated-window receipt —
+`evidence/s241-window-r69.txt`. Capture A 16:23:39Z at the ENTERING bytes
+(sha `3f6eb7a6…` == HEAD, the r68 verifier's quoted digest), capture B
+17:30:34Z at the r69 bytes; fetch()/capture()/now_utc()/sha256_hex()
+byte-identical across the two revisions (function-hash block in the receipt),
+so the pair is revision-uniform in capture behavior. Window 4015 s (~3.2x the
+r68 window), stated on the compare line. Finding:
+`per-response=4 stable=1497 stable-not-in-pin=2` — the SAME TWO positions as
+r68 (218, 1498; both same-length 1-line replaces): both positions rotate
+within BOTH windows (21 min and 67 min), so these two windows cannot separate
+the positions' rotation clocks — TTL separation remains unmeasured and no TTL
+value is decided (the window is metadata; S580 grounds that token clocks
+exist, not their values). stable-not-in-pin stayed 2 — the vendor did not
+redeploy between the windows (the r68 planned item's growth arm did not
+materialize). Ground: S579 + S580 (token content carries the timestamps of
+the client's latest challenge responses — token-bearing bytes are bound to
+token-lifetime machinery with its own clocks). QUALITY 159 untouched: no row
+re-classed, no grammar taught.
+
+C3 (operability): the standing cross-check arm — `--recheck-summary FILE`
+holding the re-check's MORI_DRIFT_RECHECK summary line; the arm compares two
+COUNTS (stable-not-in-pin vs asset-churn) and reports
+`crosscheck=consistent` / `crosscheck=inconsistent reason=<side>` (a review
+lead, rc stays 0) / `crosscheck=unavailable reason=not-provided` (omitted —
+never assumed); a provided file that is not a re-check summary is rc 2 setup
+(matching `--from-sweep` strictness). First LIVE agreement in the r69 receipt:
+`crosscheck=consistent crosscheck-basis=stable-not-in-pin=2+recheck-asset-churn=1`
+against a fresh same-round `--only S241` re-check run (its own lines stamped
+as-of=17:30:35Z; the arm compares counts, never clocks). Selftest arms:
+crosscheck_consistent, crosscheck_inconsistent_is_lead_not_failure,
+crosscheck_reverse_disagreement, crosscheck_absent_unavailable,
+crosscheck_nonsummary_input_exit2.
+
+No frozen byte edited: SKILL.md, `tools/mori-source-drift.py`,
+`tools/mori-drift-adjudicate.py`, PROVINCE.md, AGENTS.md, corpus/README.md
+are absent from the round's diff; the SKILL:905 tally pin stays true by
+construction. The tool edit is to r68's own non-frozen
+`tools/mori-ua-variance.py` (its r68 receipts remain historical facts about
+the `3f6eb7a6…` bytes git history holds); capture mode is unchanged
+(function hashes receipted). Standing battery green on unchanged bytes —
+register 12/12, settlement 10/10, vote-bind 16/16, pin-check 125/125,
+adjudicate 5/5, recheck 10/10 (`evidence/selftests-battery-r69.txt`); the
+edited tool 14/14 rc 0 x3 at the final bytes
+(`evidence/uavariance-selftest-final-r69.txt`).
+
+Sourced claim: C2 rests on S580 (AWS WAF Developer Guide, "AWS WAF token
+characteristics", opened 2026-11-01, pinned byte-identical
+`corpus/evidence/sources-r69/S580.html` sha `238ec28d…` 15183 bytes; quotes at
+`S580.html:63-64` + `:70` — the token "fingerprints the client session with a
+sticky granular identifier" carrying "the timestamp of the client's latest
+successful response to a silent challenge"; duplicate sweeps receipted
+`evidence/source-sweeps-r69.txt`, with the honest order note that the pre-row
+sweeps ran un-receipted and are attested-not-captured — mined as mistake 2).
+SOURCES 352 -> 353. Census: validator rc 0 at round start
+(`evidence/census-start-r69.txt`) -> rc 0 at round end
+(`evidence/census-end-r69.txt`); the S580 row was appended INSIDE the Registry
+section after S579 (the r68 mistake-5 rule applied from the start; position
+verified by the validator, not count greps alone).
+
+Three mistakes mined this round (`corpus/lessons/round-69.md`): a harness
+idiom extracted into a helper changed Python's scoping — the restore line
+assigned a helper-local and crashed inside its own finally, hiding the
+traceback in a discarded StringIO (three silent rc-1 selftest runs); a
+negative sweep that ran before its own receipt existed (attested-not-captured,
+not re-staged as contemporaneous); a tool rewrite nearly written outside the
+lane repo by a mistyped path (caught on the Write path report, deleted).
+Carry-ins from the r68 closure: (1) the window sensitivity — discharged as
+C1+C2; (2) the r65 L0 — stays open, routed around. Assimilation:
+considerthese re-mined (no newer file than 2026-10-26); suggestion 1 stays
+behind the operator's open instrument-change ruling. Assimilation: none —
+shokuknow unreachable.

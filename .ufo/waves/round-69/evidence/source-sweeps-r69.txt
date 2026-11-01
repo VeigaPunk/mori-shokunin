@@ -1,0 +1,21 @@
+# mori r69 — S580 source sweeps (duplicate check before the row was written, plus current-state check)
+date: 2026-11-01T16:51:34Z
+candidate: https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-details.html (AWS WAF token characteristics)
+pin: corpus/evidence/sources-r69/S580.html sha256 238ec28d962bb58a63f67789b1db0d8a75f339472f874969501ad5248f5f923d (15183 bytes, curl -sS -m 60 -L, opened 2026-11-01)
+
+== PRE-ROW runs (executed before the S580 row was appended to corpus/SOURCES.md; 16:31-16:33Z window) ==
+$ grep -ci "waf-tokens-details" corpus/SOURCES.md   -> 0 (rc 1)
+$ grep -ci "token characteristics" corpus/SOURCES.md -> 0 (rc 1)
+$ grep -ci "immunity" corpus/SOURCES.md              -> 0 (rc 1)
+(all three ran pre-row and returned no match: no existing row teaches this page)
+
+== CURRENT state (re-run now, post-row; each hit below IS the S580 row) ==
+$ grep -ci "waf-tokens-details" corpus/SOURCES.md -> 1
+$ grep -ci "token characteristics" corpus/SOURCES.md -> 1
+$ grep -ci "immunity" corpus/SOURCES.md -> 0
+
+$ grep -n "| S580" corpus/SOURCES.md  (the row sits in the Registry immediately after S579, before ## Paths — the r68 mistake-5 sectioned-append rule)
+361:| S580 | AWS WAF token characteristics — https://docs.
+
+$ grep -c "^| S" corpus/SOURCES.md  (row count after the append)
+353

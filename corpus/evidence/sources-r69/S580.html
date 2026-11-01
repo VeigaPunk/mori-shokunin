@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>AWS WAF token characteristics - AWS WAF, AWS Firewall Manager, AWS Shield Advanced, and AWS Shield network security director</title><meta name="viewport" content="width=device-width,initial-scale=1" /><meta name="assets_root" content="/assets" /><meta name="target_state" content="waf-tokens-details" /><meta name="default_state" content="waf-tokens-details" /><link rel="icon" type="image/ico" href="/assets/images/favicon.ico" /><link rel="shortcut icon" type="image/ico" href="/assets/images/favicon.ico" /><link rel="canonical" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-details.html" /><link rel="alternate" type="text/markdown" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-details.md" title="Markdown version" /><meta name="description" content="Understand token characteristics." /><meta name="deployment_region" content="IAD" /><meta name="product" content="AWS WAF, AWS Firewall Manager, AWS Shield Advanced, and AWS Shield network security director" /><meta name="guide" content="Developer Guide" /><meta name="abstract" content="Describes how to get started with AWS WAF and AWS Firewall Manager, the AWS web application firewall services, Shield Advanced, which provides expanded DDoS attack protection, and AWS Shield network security director, which runs network analysiss and evaluates the security of AWS resources." /><meta name="guide-locale" content="en_us" /><meta name="tocs" content="toc-contents.json" /><link rel="canonical" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-details.html" /><link rel="alternate" href="https://docs.aws.amazon.com/id_id/waf/latest/developerguide/waf-tokens-details.html" hreflang="id-id" /><link rel="alternate" href="https://docs.aws.amazon.com/id_id/waf/latest/developerguide/waf-tokens-details.html" hreflang="id" /><link rel="alternate" href="https://docs.aws.amazon.com/de_de/waf/latest/developerguide/waf-tokens-details.html" hreflang="de-de" /><link rel="alternate" href="https://docs.aws.amazon.com/de_de/waf/latest/developerguide/waf-tokens-details.html" hreflang="de" /><link rel="alternate" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-details.html" hreflang="en-us" /><link rel="alternate" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-details.html" hreflang="en" /><link rel="alternate" href="https://docs.aws.amazon.com/es_es/waf/latest/developerguide/waf-tokens-details.html" hreflang="es-es" /><link rel="alternate" href="https://docs.aws.amazon.com/es_es/waf/latest/developerguide/waf-tokens-details.html" hreflang="es" /><link rel="alternate" href="https://docs.aws.amazon.com/fr_fr/waf/latest/developerguide/waf-tokens-details.html" hreflang="fr-fr" /><link rel="alternate" href="https://docs.aws.amazon.com/fr_fr/waf/latest/developerguide/waf-tokens-details.html" hreflang="fr" /><link rel="alternate" href="https://docs.aws.amazon.com/it_it/waf/latest/developerguide/waf-tokens-details.html" hreflang="it-it" /><link rel="alternate" href="https://docs.aws.amazon.com/it_it/waf/latest/developerguide/waf-tokens-details.html" hreflang="it" /><link rel="alternate" href="https://docs.aws.amazon.com/ja_jp/waf/latest/developerguide/waf-tokens-details.html" hreflang="ja-jp" /><link rel="alternate" href="https://docs.aws.amazon.com/ja_jp/waf/latest/developerguide/waf-tokens-details.html" hreflang="ja" /><link rel="alternate" href="https://docs.aws.amazon.com/ko_kr/waf/latest/developerguide/waf-tokens-details.html" hreflang="ko-kr" /><link rel="alternate" href="https://docs.aws.amazon.com/ko_kr/waf/latest/developerguide/waf-tokens-details.html" hreflang="ko" /><link rel="alternate" href="https://docs.aws.amazon.com/pt_br/waf/latest/developerguide/waf-tokens-details.html" hreflang="pt-br" /><link rel="alternate" href="https://docs.aws.amazon.com/pt_br/waf/latest/developerguide/waf-tokens-details.html" hreflang="pt" /><link rel="alternate" href="https://docs.aws.amazon.com/zh_cn/waf/latest/developerguide/waf-tokens-details.html" hreflang="zh-cn" /><link rel="alternate" href="https://docs.aws.amazon.com/zh_tw/waf/latest/developerguide/waf-tokens-details.html" hreflang="zh-tw" /><link rel="alternate" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-details.html" hreflang="x-default" /><meta name="feedback-item" content="AWS WAF" /><meta name="this_doc_product" content="AWS WAF, AWS Firewall Manager, AWS Shield Advanced, and AWS Shield network security director" /><meta name="this_doc_guide" content="Developer Guide" /><head xmlns="http://www.w3.org/1999/xhtml"> <script defer="" src="/assets/r/awsdocs-doc-page.2.0.0.js"></script><link href="/assets/r/awsdocs-doc-page.2.0.0.css" rel="stylesheet"/></head>
+<script defer="" id="awsc-panorama-bundle" type="text/javascript" src="https://prod.pa.cdn.uis.awsstatic.com/panorama-nav-init.js" data-config="{'appEntity':'aws-documentation','region':'us-east-1','service':'waf'}"></script><meta id="panorama-serviceSubSection" value="Developer Guide" /><meta id="panorama-serviceConsolePage" value="AWS WAF token characteristics" /></head><body class="awsdocs awsui"><div class="awsdocs-container"><p><a href="waf-tokens-details.md">View a markdown version of this page</a></p><awsdocs-header></awsdocs-header><awsui-app-layout id="app-layout" class="awsui-util-no-gutters" ng-controller="ContentController as $ctrl" header-selector="awsdocs-header" navigation-hide="false" navigation-width="$ctrl.navWidth" navigation-open="$ctrl.navOpen" navigation-change="$ctrl.onNavChange($event)" tools-hide="$ctrl.hideTools" tools-width="$ctrl.toolsWidth" tools-open="$ctrl.toolsOpen" tools-change="$ctrl.onToolsChange($event)"><div id="guide-toc" dom-region="navigation"><awsdocs-toc></awsdocs-toc></div><div id="main-column" dom-region="content" tabindex="-1"><awsdocs-view class="awsdocs-view"><div id="awsdocs-content"><head><title>AWS WAF token characteristics - AWS WAF, AWS Firewall Manager, AWS Shield Advanced, and AWS Shield network security director</title><meta name="pdf" content="/pdfs/waf/latest/developerguide/waf-dg.pdf#waf-tokens-details" /><meta name="rss" content="aws-waf-doc-history.rss" /><meta name="forums" content="https://repost.aws/tags/TAKdJ093DSSdGOQ1VVKX4EvQ" /><meta name="feedback" content="https://docs.aws.amazon.com/forms/aws-doc-feedback?hidden_service_name=AWS%20WAF&amp;topic_url=https://docs.aws.amazon.com/en_us/waf/latest/developerguide/waf-tokens-details.html" /><meta name="feedback-yes" content="feedbackyes.html?topic_url=https://docs.aws.amazon.com/en_us/waf/latest/developerguide/waf-tokens-details.html" /><meta name="feedback-no" content="feedbackno.html?topic_url=https://docs.aws.amazon.com/en_us/waf/latest/developerguide/waf-tokens-details.html" /><meta name="keywords" content="AWS Firewall Manager,Firewall Manager,AWS WAF,web application firewall,firewall,ACL,access control list,tokens,Challenge,CAPTCHA,application integration,characteristics,properties" /><script type="application/ld+json">
+{
+    "@context" : "https://schema.org",
+    "@type" : "BreadcrumbList",
+    "itemListElement" : [
+      {
+        "@type" : "ListItem",
+        "position" : 1,
+        "name" : "AWS",
+        "item" : "https://aws.amazon.com"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 2,
+        "name" : "AWS WAF",
+        "item" : "https://docs.aws.amazon.com/waf/index.html"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 3,
+        "name" : "Developer Guide",
+        "item" : "https://docs.aws.amazon.com/waf/latest/developerguide"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 4,
+        "name" : "AWS WAF",
+        "item" : "https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 5,
+        "name" : "Intelligent threat mitigation in AWS WAF",
+        "item" : "https://docs.aws.amazon.com/waf/latest/developerguide/waf-managed-protections.html"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 6,
+        "name" : "Token use in AWS WAF intelligent threat mitigation",
+        "item" : "https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens.html"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 7,
+        "name" : "AWS WAF token characteristics",
+        "item" : "https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens.html"
+      }
+    ]
+}
+</script></head><body><div id="main"><div style="display: none"><a href="/pdfs/waf/latest/developerguide/waf-dg.pdf#waf-tokens-details" target="_blank" rel="noopener noreferrer" title="Open PDF"></a></div><div id="breadcrumbs" class="breadcrumb"><a href="/index.html">Documentation</a><a href="/waf/index.html">AWS WAF</a><a href="what-is-aws-waf.html">Developer Guide</a></div><div id="main-content" class="awsui-util-container"><div id="main-col-body"><awsdocs-language-banner data-service="$ctrl.pageService"></awsdocs-language-banner><awsui-alert class="awsdocs-page-banner awsui-util-mb-l"><p><b>Introducing a new console experience for AWS WAF</b></p><p>You can now use the updated experience to access AWS WAF functionality anywhere in the console.
+				For more details, see <a href="https://docs.aws.amazon.com/waf/latest/developerguide/working-with-console.html">Working with the console</a>.
+			</p></awsui-alert><h1 class="topictitle" id="waf-tokens-details">AWS WAF token characteristics</h1><div class="awsdocs-page-header-container"><awsdocs-page-header></awsdocs-page-header><awsdocs-filter-selector id="awsdocs-filter-selector"></awsdocs-filter-selector></div><p>Each token has the following characteristics: </p><div class="itemizedlist">
+		 
+		 
+		 
+	  <ul class="itemizedlist"><li class="listitem">
+			<p>The token is stored in a cookie named <code class="code">aws-waf-token</code>.</p>
+		</li><li class="listitem">
+			<p>The token is encrypted.</p>
+		</li><li class="listitem">
+				<p>The token fingerprints the client session with a sticky granular identifier
+					that contains the following information: </p>
+			<div class="itemizedlist">
+				 
+				 
+				 
+			<ul class="itemizedlist"><li class="listitem">
+					<p>The timestamp of the client's latest successful response to a silent challenge. </p>
+				</li><li class="listitem">
+					<p>The timestamp of the end user's latest successful response to a CAPTCHA. This
+						is only present if you use CAPTCHA in your protections. </p>
+				</li><li class="listitem">
+					<p>Additional information about the client and client behavior that can help separate your
+							legitimate clients from unwanted traffic. The information includes
+							various client identifiers and client-side signals that can be used to
+							detect automated activities. The information gathered is non-unique and
+							can't be mapped to an individual human being. </p>
+						<div class="itemizedlist">
+							 
+							 
+						<ul class="itemizedlist"><li class="listitem">
+								<p>All tokens include data from client browser interrogation,
+									such as indications of automation and browser setting
+									inconsistencies. This information is retrieved by the scripts
+									that are run by the Challenge action and by the client
+									application SDKs. The scripts actively interrogate the browser
+									and put the results into the token. </p>
+							</li><li class="listitem">
+								<p>Additionally, when you implement a client application integration SDK, the token
+									includes passively collected information about the end user's
+									interactivity with the application page. Interactivity includes
+									mouse movements, key presses, and interactions with any HTML
+									form that's present on the page. This information helps AWS WAF
+									detect the level of human interactivity in the client, to
+									challenge users that do not seem to be human. For information
+									about client side integrations, see <a href="./waf-application-integration.html">Client application integrations in AWS WAF</a>.</p>
+							</li></ul></div>
+				</li></ul></div>
+		</li></ul></div><p>For security reasons, AWS doesn't provide a complete description of the contents of
+		AWS WAF tokens or detailed information about the token encryption process. </p><awsdocs-copyright class="copyright-print"></awsdocs-copyright><awsdocs-thumb-feedback right-edge="{{$ctrl.thumbFeedbackRightEdge}}"></awsdocs-thumb-feedback></div><noscript><div><div><div><div id="js_error_message"><p><img src="https://d1ge0kk1l5kms0.cloudfront.net/images/G/01/webservices/console/warning.png" alt="Warning" /> <strong>Javascript is disabled or is unavailable in your browser.</strong></p><p>To use the Amazon Web Services Documentation, Javascript must be enabled. Please refer to your browser's Help pages for instructions.</p></div></div></div></div></noscript><div id="main-col-footer" class="awsui-util-font-size-0"><div id="doc-conventions"><a target="_top" href="/general/latest/gr/docconventions.html">Document Conventions</a></div><div class="prev-next"><div id="previous" class="prev-link" accesskey="p" href="./waf-tokens-usage.html">How AWS WAF uses tokens</div><div id="next" class="next-link" accesskey="n" href="./waf-tokens-immunity-times.html">Setting timestamp expiration and token immunity times</div></div></div><awsdocs-page-utilities></awsdocs-page-utilities></div><div id="quick-feedback-yes" style="display: none;"><div class="title">Did this page help you? - Yes</div><div class="content"><p>Thanks for letting us know we're doing a good job!</p><p>If you've got a moment, please tell us what we did right so we can do more of it.</p><p><awsui-button id="fblink" rel="noopener noreferrer" target="_blank" text="Feedback" click="linkClick($event)" href="https://docs.aws.amazon.com/forms/aws-doc-feedback?hidden_service_name=AWS WAF&amp;topic_url=https://docs.aws.amazon.com/en_us/waf/latest/developerguide/waf-tokens-details.html"></awsui-button></p></div></div><div id="quick-feedback-no" style="display: none;"><div class="title">Did this page help you? - No</div><div class="content"><p>Thanks for letting us know this page needs work. We're sorry we let you down.</p><p>If you've got a moment, please tell us how we can make the documentation better.</p><p><awsui-button id="fblink" rel="noopener noreferrer" target="_blank" text="Feedback" click="linkClick($event)" href="https://docs.aws.amazon.com/forms/aws-doc-feedback?hidden_service_name=AWS WAF&amp;topic_url=https://docs.aws.amazon.com/en_us/waf/latest/developerguide/waf-tokens-details.html"></awsui-button></p></div></div></div></body></div></awsdocs-view><div class="page-loading-indicator" id="page-loading-indicator"><awsui-spinner size="large"></awsui-spinner></div></div><div id="tools-panel" dom-region="tools"><awsdocs-tools-panel id="awsdocs-tools-panel"></awsdocs-tools-panel></div></awsui-app-layout><awsdocs-cookie-banner class="doc-cookie-banner"></awsdocs-cookie-banner></div></body></html>

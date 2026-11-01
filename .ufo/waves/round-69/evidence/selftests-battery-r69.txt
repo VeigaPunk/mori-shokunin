@@ -1,0 +1,28 @@
+# mori r69 — standing battery (selftests on UNCHANGED bytes; no-harm side of the round)
+date: 2026-11-01T16:49:00Z
+interpreter: python (python3 is a non-functional Store stub on this host — r65 L0 routed around, stays open)
+
+$ python tools/mori-register-check.py --selftest
+REGCHECK_SELFTEST pass=12 fail=0
+rc=0
+
+$ python tools/mori-settlement-scan.py --selftest
+SETSCAN_SELFTEST pass=10 fail=0
+rc=0
+
+$ python tools/mori-vote-bind.py --selftest
+VOTE_BIND_SELFTEST pass=16 fail=0
+rc=0
+
+$ python tools/mori-pin-check.py --selftest
+PIN_CHECK_SELFTEST pass=125 fail=0
+rc=0
+
+$ python tools/mori-drift-adjudicate.py --selftest
+MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)
+rc=0
+
+$ python tools/mori-drift-recheck.py --selftest
+MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)
+rc=0
+

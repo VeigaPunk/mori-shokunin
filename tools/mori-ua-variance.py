@@ -4,11 +4,13 @@ managed page's instrument-UA body, by same-UA A/A fetches (round 68; the r67
 SCORECARD planned item: "the bot-manager chrome is disclosed serving variance but
 the instrument-UA body of a bot-managed page is otherwise unadjudicated — a future
 round could receipt per-response token variance (two instrument-UA fetches minutes
-apart) to separate per-response tokens from stable chrome").
+apart) to separate per-response tokens from stable chrome"). Round 69 adds the
+observation-window grammar (below) and the standing re-check cross-check arm.
 
 Usage:
   python tools/mori-ua-variance.py --capture --url URL --ua UA --out FILE
   python tools/mori-ua-variance.py --compare --label ID --pin FILE --a FILE --b FILE
+          [--window-s N] [--recheck-summary FILE]
   python tools/mori-ua-variance.py --selftest
 
 Modes:
@@ -38,8 +40,41 @@ Modes:
              the receipt is committable even when a token value exists. Summary
              line: UA_VARIANCE label= ... per-response= stable= stable-not-in-pin=
              stable-in-pin= lines-a= lines-b= lines-pin= same-bytes= sha-a= sha-b=
-             sha-pin= run-start=...
-             rc 0 compared; rc 2 setup error (missing/unreadable input).
+             sha-pin= window-s=<N|unavailable reason=not-stated> crosscheck=<...>
+             run-start=...
+             rc 0 compared; rc 2 setup error (missing/unreadable input, a
+             --window-s that is not a non-negative integer, or a provided
+             --recheck-summary that is not a re-check summary).
+
+Observation-window dependency (r69 — the r68 closure carry-in): the A/A
+separation is WINDOW-CONDITIONAL. The motivating observation, recorded by the
+r68 non-author closure: a ~15-minute window in the closure's re-derivation
+caught no per-response rotation, while the r68 round's 21-minute A/A window
+caught per-response=4 — two windows, different catches, same page. Every
+compare receipt therefore STATES its window: pass --window-s N, the A->B gap in
+seconds computed by the caller from the two UA_VAR_CAPTURE receipts' own
+`as-of=` values (1-second resolution; 0 is legal when both stamps land in the
+same second). Omitted, the summary carries
+`window-s=unavailable reason=not-stated` — never a fabricated gap — and per
+QUALITY 161 a receipt whose window is unstated does not constrain any
+rotation-timing claim. The window is METADATA, never a TTL measurement: this
+tool reports counts and shapes only and decides no rotation clock (see S580:
+token content carries the timestamps of the client's latest challenge
+responses, so token-bearing bytes are bound to token-lifetime machinery with
+its own clocks — clocks this tool does not read).
+
+Standing re-check cross-check arm (r69; the r68 SCORECARD planned item):
+pass --recheck-summary FILE holding the standing step's MORI_DRIFT_RECHECK
+summary line (tools/mori-drift-recheck.py output) from the same round's paired
+run. The arm compares two COUNTS and nothing else: if the compare saw
+stable-not-in-pin>0 while the re-check saw asset-churn=0 (or the reverse), the
+line reads `crosscheck=inconsistent reason=<which side>` — a review LEAD only.
+Agreement reads `crosscheck=consistent` with
+`crosscheck-basis=stable-not-in-pin=<n>+recheck-asset-churn=<n>`. Omitted, the
+line reads `crosscheck=unavailable reason=not-provided` — never assumed. The
+arm decides nothing: it re-classes no SOURCES row, teaches no grammar, and
+never resolves UA-conditional vs newer-build (the two arms run different UAs
+at possibly different moments; the receipt states both runs' own timestamps).
 
 What this tool does NOT do: it re-classifies no SOURCES row, teaches no churn
 grammar, and never generalizes one vendor's bytes to another (the standing step
@@ -60,6 +95,9 @@ FETCH_TIMEOUT_S = 60
 FETCH_TRIES = 3
 RETRY_BACKOFF_S = 1.0
 MAX_BODY = 8 * 1024 * 1024
+WINDOW_S_RE = re.compile(r"^[0-9]+$")
+RECHECK_LINE_RE = re.compile(r"^MORI_DRIFT_RECHECK\b")
+ASSET_CHURN_RE = re.compile(r"(?<![\w-])asset-churn=(\d+)")
 
 
 def now_utc():
@@ -125,7 +163,35 @@ def capture(url, ua, out_path):
     return 0
 
 
-def compare(label, pin_path, a_path, b_path):
+def parse_recheck_summary(path):
+    """Read a provided --recheck-summary file. Returns (asset_churn, None) on a
+    parsed MORI_DRIFT_RECHECK summary line, or (None, reason) when the file is
+    unreadable or carries no re-check summary (caller turns that into rc 2)."""
+    try:
+        with open(path, "r", encoding="utf-8", errors="replace") as fh:
+            text = fh.read()
+    except OSError as exc:
+        return None, "unreadable: %s" % exc
+    for line in text.splitlines():
+        if RECHECK_LINE_RE.match(line):
+            m = ASSET_CHURN_RE.search(line)
+            if m is None:
+                return None, "recheck-summary-has-no-asset-churn-token"
+            return int(m.group(1)), None
+    return None, "no-mori-drift-recheck-line"
+
+
+def crosscheck_verdict(stable_not_in_pin, asset_churn):
+    """The standing consistency predicate over two counts. Decides nothing: the
+    verdict is a review lead, never a row class and never a failure."""
+    if stable_not_in_pin > 0 and asset_churn == 0:
+        return "inconsistent reason=stable-not-in-pin-without-asset-churn"
+    if stable_not_in_pin == 0 and asset_churn > 0:
+        return "inconsistent reason=asset-churn-without-stable-not-in-pin"
+    return "consistent"
+
+
+def compare(label, pin_path, a_path, b_path, window_s=None, recheck_path=None):
     paths = {"pin": pin_path, "a": a_path, "b": b_path}
     bodies = {}
     for name in ("pin", "a", "b"):
@@ -135,6 +201,19 @@ def compare(label, pin_path, a_path, b_path):
         except OSError as exc:
             sys.stderr.write("UA_VARIANCE_SETUP: --%s %s unreadable: %s\n" %
                              (name, paths[name], exc))
+            return 2
+    if window_s is not None and not WINDOW_S_RE.match(window_s):
+        sys.stderr.write("UA_VARIANCE_SETUP: --window-s wants a non-negative "
+                         "integer (the A->B gap in seconds, from the capture "
+                         "receipts' as-of values)\n")
+        return 2
+    window_field = "window-s=%s" % window_s if window_s is not None \
+        else "window-s=unavailable reason=not-stated"
+    if recheck_path is not None:
+        asset_churn, reason = parse_recheck_summary(recheck_path)
+        if asset_churn is None:
+            sys.stderr.write("UA_VARIANCE_SETUP: --recheck-summary %s: %s\n" %
+                             (recheck_path, reason))
             return 2
     lines_a = bodies["a"].splitlines()
     lines_b = bodies["b"].splitlines()
@@ -151,14 +230,22 @@ def compare(label, pin_path, a_path, b_path):
         else:
             per_response += (i2 - i1) + (j2 - j1)
     stable_in_pin = stable - stable_not_in_pin
+    if recheck_path is not None:
+        verdict = crosscheck_verdict(stable_not_in_pin, asset_churn)
+        crosscheck_field = ("crosscheck=%s crosscheck-basis=stable-not-in-pin=%d"
+                            "+recheck-asset-churn=%d"
+                            % (verdict, stable_not_in_pin, asset_churn))
+    else:
+        crosscheck_field = "crosscheck=unavailable reason=not-provided"
     print("UA_VARIANCE label=%s per-response=%d stable=%d stable-not-in-pin=%d "
           "stable-in-pin=%d lines-a=%d lines-b=%d lines-pin=%d same-bytes=%s "
-          "sha-a=%s sha-b=%s sha-pin=%s run-start=%s"
+          "sha-a=%s sha-b=%s sha-pin=%s %s %s run-start=%s"
           % (label, per_response, stable, stable_not_in_pin, stable_in_pin,
              len(lines_a), len(lines_b), len(lines_pin),
              str(bodies["a"] == bodies["b"]).lower(),
              sha256_hex(bodies["a"]), sha256_hex(bodies["b"]),
-             sha256_hex(bodies["pin"]), now_utc()))
+             sha256_hex(bodies["pin"]), window_field, crosscheck_field,
+             now_utc()))
     return 0
 
 
@@ -227,22 +314,46 @@ def _selftest():
                 sys.stdout, sys.stderr = sys_stdout, sys_stderr
             return rc
 
+        def cmp_capture(text_buf, *args, **kw):
+            sys.stdout, sys.stderr = text_buf, StringIO()
+            try:
+                rc = compare(*args, **kw)
+            finally:
+                sys.stdout, sys.stderr = sys_stdout, sys_stderr
+            return rc
+
         pin_file = os.path.join(root, "pin.bin")
         with open(pin_file, "wb") as fh:
             fh.write(pin_body)
+        # re-check summary fixtures for the cross-check arm (grammar of
+        # tools/mori-drift-recheck.py's summary line; counts only)
+        rc_consistent = os.path.join(root, "recheck-churn2.txt")
+        with open(rc_consistent, "w", encoding="ascii") as fh:
+            fh.write("MORI_DRIFT_RECHECK rows=1 adjudicated=1 fresh=0 excerpt=0 "
+                     "time-churn=0 asset-churn=2 receipt-open=0 receipt-stale=0 "
+                     "ua-serving=1 content-drift=0 gate=0\n")
+        rc_nochurn = os.path.join(root, "recheck-nochurn.txt")
+        with open(rc_nochurn, "w", encoding="ascii") as fh:
+            fh.write("MORI_DRIFT_RECHECK rows=1 adjudicated=1 fresh=1 excerpt=0 "
+                     "time-churn=0 asset-churn=0 receipt-open=0 receipt-stale=0 "
+                     "ua-serving=1 content-drift=0 gate=0\n")
+        rc_churn3 = os.path.join(root, "recheck-churn3.txt")
+        with open(rc_churn3, "w", encoding="ascii") as fh:
+            fh.write("MORI_DRIFT_RECHECK rows=2 adjudicated=2 fresh=0 excerpt=0 "
+                     "time-churn=0 asset-churn=3 receipt-open=0 receipt-stale=0 "
+                     "ua-serving=2 content-drift=0 gate=0\n")
+        rc_notasummary = os.path.join(root, "not-a-summary.txt")
+        with open(rc_notasummary, "w", encoding="ascii") as fh:
+            fh.write("hello world, no recheck line here\n")
 
         # case 1: two captures minutes-apart semantics are the caller's; here the
         # server hands a fresh nonce per request, so A and B differ only there
         rc_a = cap("/variance", "a.bin")
         rc_b = cap("/variance", "b.bin")
         buf = StringIO()
-        sys.stdout, sys.stderr = buf, StringIO()
-        try:
-            rc_cmp = compare("S-fix", pin_file, os.path.join(root, "a.bin"),
+        rc_cmp = cmp_capture(buf, "S-fix", pin_file, os.path.join(root, "a.bin"),
                              os.path.join(root, "b.bin"))
-        finally:
-            text = buf.getvalue()
-            sys.stdout, sys.stderr = sys_stdout, sys_stderr
+        text = buf.getvalue()
         m = re.search(r"per-response=(\d+) stable=(\d+) stable-not-in-pin=(\d+) "
                       r"stable-in-pin=(\d+) lines-a=(\d+) lines-b=(\d+) "
                       r"lines-pin=(\d+)", text)
@@ -265,13 +376,9 @@ def _selftest():
         rc_s1 = cap("/static", "s1.bin")
         rc_s2 = cap("/static", "s2.bin")
         buf2 = StringIO()
-        sys.stdout, sys.stderr = buf2, StringIO()
-        try:
-            compare("S-static", pin_file, os.path.join(root, "s1.bin"),
+        cmp_capture(buf2, "S-static", pin_file, os.path.join(root, "s1.bin"),
                     os.path.join(root, "s2.bin"))
-        finally:
-            text2 = buf2.getvalue()
-            sys.stdout, sys.stderr = sys_stdout, sys_stderr
+        text2 = buf2.getvalue()
         m2 = re.search(r"per-response=(\d+) .*same-bytes=(\w+)", text2)
         checks.append(("identical_bodies_zero_per_response",
                        rc_s1 == 0 and rc_s2 == 0 and m2 is not None
@@ -300,6 +407,100 @@ def _selftest():
         finally:
             sys.stdout, sys.stderr = sys_stdout, sys_stderr
         checks.append(("missing_input_exit2", rc_miss == 2, "rc=%d" % rc_miss))
+
+        # case 5 (r69): a stated window lands in the summary line; an unstated
+        # window is marked unavailable, never fabricated
+        buf_w = StringIO()
+        rc_w = cmp_capture(buf_w, "S-fix", pin_file,
+                           os.path.join(root, "a.bin"),
+                           os.path.join(root, "b.bin"), window_s="1260")
+        text_w = buf_w.getvalue()
+        mw = re.search(r"window-s=(\d+)", text_w)
+        checks.append(("window_stated_when_given",
+                       rc_w == 0 and mw is not None and mw.group(1) == "1260",
+                       "rc=%d window-s=%s" % (rc_w, mw.group(1) if mw else None)))
+        buf_u = StringIO()
+        rc_u = cmp_capture(buf_u, "S-fix", pin_file,
+                           os.path.join(root, "a.bin"),
+                           os.path.join(root, "b.bin"))
+        text_u = buf_u.getvalue()
+        checks.append(("window_unstated_marked_unavailable",
+                       rc_u == 0
+                       and "window-s=unavailable reason=not-stated" in text_u,
+                       "rc=%d unstated-window field present=%s"
+                       % (rc_u, "window-s=unavailable reason=not-stated" in text_u)))
+        buf_badw = StringIO()
+        rc_badw = cmp_capture(buf_badw, "S-fix", pin_file,
+                              os.path.join(root, "a.bin"),
+                              os.path.join(root, "b.bin"), window_s="abc")
+        checks.append(("window_rejects_non_integer",
+                       rc_badw == 2 and buf_badw.getvalue() == "",
+                       "rc=%d stdout-empty=%s" % (rc_badw,
+                                                  buf_badw.getvalue() == "")))
+
+        # case 6 (r69): the cross-check arm — agreement, disagreement as a lead
+        # (rc stays 0), the omitted arm unavailable, and a non-summary input rc 2
+        buf_c = StringIO()
+        rc_c = cmp_capture(buf_c, "S-fix", pin_file,
+                           os.path.join(root, "a.bin"),
+                           os.path.join(root, "b.bin"),
+                           recheck_path=rc_consistent)
+        text_c = buf_c.getvalue()
+        # fixture-derived expectation: A/B stable-not-in-pin=1 (the botmgr line),
+        # recheck fixture says asset-churn=2 -> consistent
+        checks.append(("crosscheck_consistent",
+                       rc_c == 0
+                       and "crosscheck=consistent" in text_c
+                       and "crosscheck-basis=stable-not-in-pin=1"
+                           "+recheck-asset-churn=2" in text_c,
+                       "rc=%d consistent-with-basis=%s"
+                       % (rc_c, "crosscheck=consistent" in text_c)))
+        buf_i = StringIO()
+        rc_i = cmp_capture(buf_i, "S-fix", pin_file,
+                           os.path.join(root, "a.bin"),
+                           os.path.join(root, "b.bin"),
+                           recheck_path=rc_nochurn)
+        text_i = buf_i.getvalue()
+        checks.append(("crosscheck_inconsistent_is_lead_not_failure",
+                       rc_i == 0 and "crosscheck=inconsistent reason="
+                                     "stable-not-in-pin-without-asset-churn"
+                                     in text_i,
+                       "rc=%d (a disagreement is a reported lead, never rc 1)"
+                       % rc_i))
+        buf_r = StringIO()
+        rc_r = cmp_capture(buf_r, "S-revpin", pin_file, pin_file, pin_file,
+                           recheck_path=rc_churn3)
+        text_r = buf_r.getvalue()
+        # pin vs pin: stable-not-in-pin=0 while the recheck fixture says
+        # asset-churn=3 -> the reverse disagreement
+        checks.append(("crosscheck_reverse_disagreement",
+                       rc_r == 0 and "crosscheck=inconsistent reason="
+                                     "asset-churn-without-stable-not-in-pin"
+                                     in text_r,
+                       "rc=%d reverse-lead=%s"
+                       % (rc_r, "asset-churn-without-stable-not-in-pin"
+                                in text_r)))
+        buf_n = StringIO()
+        rc_n = cmp_capture(buf_n, "S-fix", pin_file,
+                           os.path.join(root, "a.bin"),
+                           os.path.join(root, "b.bin"))
+        text_n = buf_n.getvalue()
+        checks.append(("crosscheck_absent_unavailable",
+                       rc_n == 0
+                       and "crosscheck=unavailable reason=not-provided" in text_n,
+                       "rc=%d absent-arm marked unavailable=%s"
+                       % (rc_n, "crosscheck=unavailable reason=not-provided"
+                                in text_n)))
+        buf_b = StringIO()
+        rc_b2 = cmp_capture(buf_b, "S-fix", pin_file,
+                            os.path.join(root, "a.bin"),
+                            os.path.join(root, "b.bin"),
+                            recheck_path=rc_notasummary)
+        checks.append(("crosscheck_nonsummary_input_exit2",
+                       rc_b2 == 2 and buf_b.getvalue() == "",
+                       "rc=%d (a provided file that is not a re-check summary "
+                       "is a setup error, matching --from-sweep strictness)"
+                       % rc_b2))
     finally:
         srv.shutdown()
         srv.server_close()
@@ -307,7 +508,7 @@ def _selftest():
 
     failed = [c for c in checks if not c[1]]
     for name, ok, detail in checks:
-        print("selftest %-34s %s (%s)" % (name, "PASS" if ok else "FAIL", detail))
+        print("selftest %-42s %s (%s)" % (name, "PASS" if ok else "FAIL", detail))
     if failed:
         print("MORI_UA_VARIANCE_SELFTEST: FAIL (%d/%d)"
               % (len(checks) - len(failed), len(checks)))
@@ -322,7 +523,7 @@ def main(argv):
         return _selftest()
     mode = None
     url = ua = out = label = None
-    pin = a = b = None
+    pin = a = b = window_s = recheck_path = None
     i = 0
     while i < len(args):
         arg = args[i]
@@ -332,7 +533,8 @@ def main(argv):
         elif arg == "--compare":
             mode = "compare"
             i += 1
-        elif arg in ("--url", "--ua", "--out", "--label", "--pin", "--a", "--b"):
+        elif arg in ("--url", "--ua", "--out", "--label", "--pin", "--a", "--b",
+                     "--window-s", "--recheck-summary"):
             if i + 1 >= len(args):
                 sys.stderr.write("UA_VARIANCE_SETUP: %s wants a value\n" % arg)
                 return 2
@@ -349,12 +551,17 @@ def main(argv):
                 pin = val
             elif arg == "--a":
                 a = val
-            else:
+            elif arg == "--b":
                 b = val
+            elif arg == "--window-s":
+                window_s = val
+            else:
+                recheck_path = val
             i += 2
         else:
             sys.stderr.write("usage: %s --capture --url URL --ua UA --out FILE | "
-                             "--compare --label ID --pin FILE --a FILE --b FILE | "
+                             "--compare --label ID --pin FILE --a FILE --b FILE "
+                             "[--window-s N] [--recheck-summary FILE] | "
                              "--selftest\n"
                              % os.path.basename(args[0] if args else __file__))
             return 2
@@ -364,7 +571,8 @@ def main(argv):
         if label is None:
             sys.stderr.write("UA_VARIANCE_SETUP: --compare wants --label\n")
             return 2
-        return compare(label, pin, a, b)
+        return compare(label, pin, a, b, window_s=window_s,
+                       recheck_path=recheck_path)
     sys.stderr.write("usage: %s --capture ... | --compare ... | --selftest\n"
                      % os.path.basename(args[0] if args else __file__))
     return 2

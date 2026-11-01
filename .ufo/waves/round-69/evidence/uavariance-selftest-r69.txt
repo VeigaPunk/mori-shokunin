@@ -1,0 +1,13 @@
+# mori r69 — ua-variance selftest at the r69 working bytes (3 consecutive runs)
+date: 2026-11-01T16:37:40Z
+bytes: a12161f17b63dbdd07eb6fe617d0852cd130f91e81691e3bc7c400bf3226dd35 (working tree; not yet committed)
+
+$ python tools/mori-ua-variance.py --selftest  (run 1)
+rc=1
+
+$ python tools/mori-ua-variance.py --selftest  (run 2)
+rc=1
+
+$ python tools/mori-ua-variance.py --selftest  (run 3)
+rc=1
+

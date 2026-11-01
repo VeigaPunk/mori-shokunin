@@ -3435,3 +3435,69 @@ stable-not-in-pin count grows beyond 2 and must stay consistent with the
 re-check's `asset-churn` classification on the same fetch (a standing
 cross-check arm, deciding nothing); the r65 L0 instrument-change question and
 the dispatch-surface question (mori | round-62) stand open for the operator.
+
+## Round 69 — the observation-window grammar + the standing cross-check arm: C1 calibration landed (QUALITY 161 — every A/A variance receipt states its window; able-to-fail against the r68 receipt whose 1268 s gap was derivable-but-unstated); C2 depth landed, sourced S580 (the tool states `window-s=` and the 4015 s receipt answers the r68 planned question at the observable level: both per-response positions rotate within BOTH windows — no TTL separation between 21 and 67 minutes, no TTL value decided); C3 operability landed (the standing cross-check arm `--recheck-summary`, first live agreement `crosscheck=consistent` against a fresh same-round re-check)
+
+Entering `c53dd789` (r68 verifier spotcheck tip). Carry-ins from the r68
+closure, both addressed: (1) the ua-variance tool's window sensitivity —
+discharged in the tool's docstring, its receipt grammar (`window-s=` /
+`unavailable reason=not-stated`), QUALITY 161, and the live stated-window
+receipt; (2) the r65 L0 (SKILL:905 `python3` naming) stays open for the
+operator, routed around — no frozen byte edited, every command `python`.
+FRESH-START duty re-performed with own receipts
+(`.ufo/waves/round-69/evidence/freshstart-spotchecks-r69.txt`): the frozen r61
+counter re-derived at the r61 data tip (`python .ufo/waves/round-61/count-c2.py
+986d4b46…` → `C2=unmet` rc 1 — the same verdict the r61 closure and the
+r65–r68 re-derivations reached); r59/r60 cited evidence `git cat-file -e`
+PRESENT and both revisions `merge-base --is-ancestor` of refs/heads/master,
+rc 0 each. Ruled out, and why: (1) re-declaring the r59/r60/r61
+entry-claims-class instruments (their met-flip counterexamples stand on frozen
+bytes — re-derived unmet again this round); (2) scalar score moves (no closure
+states a new number; no lane convention licenses an L1-authored scalar);
+(3) claims on the old Linux host's live surfaces (absent here); (4) editing
+the frozen bytes (the SKILL:905 tally pin and the r65–r68 receipts bind them;
+the r69 edit touches only r68's own non-frozen `tools/mori-ua-variance.py`);
+(5) a third churn grammar for the bot-manager chrome (r67's ruling stands; r69
+receipts the variance's WINDOW dependence instead — QUALITY 159 untouched);
+(6) re-declaring the admitted r64–r68 work; (7) adopting considerthese
+2026-10-26 suggestion 1 (behind the operator's open instrument-change ruling).
+Controls (`.ufo/waves/round-69/evidence/controls-r69.txt`): QUALITY `^161\.`
+= 0, `window-s=` = 0 and `recheck-summary` = 0 in the tool, the r69 receipt
+absent at entering rc 128.
+
+| Claim | Axis | Counting commands | At entering `c53dd789` | Landed |
+|---|---|---|---|---|
+| C1: the observation-window grammar — every A/A variance receipt states its window (`window-s=<N>` from the capture receipts' own `as-of=` values; unstated reads `unavailable reason=not-stated`, never a fabricated gap); QUALITY 161 makes it procedural and is demonstrated able to fail against the r68 receipt | calibration 5 | `git show <base>:corpus/QUALITY.md \| grep -c "^161\."` (0, rc 1); `grep -c "^161\." corpus/QUALITY.md` (1); `grep -c "window-s=" .ufo/waves/round-68/evidence/s241-uavariance-r68.txt` (0, rc 1 — the rule fires); `grep -c "window-s=" .ufo/waves/round-69/evidence/s241-window-r69.txt` (4 — the rule passes) | At entering: QUALITY carried no window criterion (`controls-r69.txt`), the r68 receipt's grammar carried no window token though its 1268 s gap was derivable from its own capture stamps, and the tool could not emit one | QUALITY 161 landed (`grep -c "^161\."` = 1; 158/159/160 unchanged at 1 each), written able-to-fail against the r68 receipt; demonstration receipt `.ufo/waves/round-69/evidence/quality161-abletofail-r69.txt`. Tool side: `--window-s` validated (non-negative integer, rc 2 otherwise), omitted -> `window-s=unavailable reason=not-stated`; selftest cases window_stated_when_given / window_unstated_marked_unavailable / window_rejects_non_integer inside `MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)` rc 0 x3 at the final bytes (`.ufo/waves/round-69/evidence/uavariance-selftest-final-r69.txt`). **Self-verdict: verified met** (closure to re-derive) |
+| C2 (sourced, S580+S579): the stated-window receipt — the r68 planned item ("re-capture at a longer gap") executed at the round's reachable scale: capture A 16:23:39Z at the ENTERING bytes, capture B 17:30:34Z at the r69 bytes (capture helpers byte-identical across the two revisions — function-hash block receipted), window-s=4015 stated on the compare line | depth 5 | `git cat-file -e <base>:.ufo/waves/round-69/evidence/s241-window-r69.txt` (rc 128 at entering); `grep -c "window-s=4015" .ufo/waves/round-69/evidence/s241-window-r69.txt` | At entering: no stated-window receipt existed; the r68 receipt could not state its window (C1's finding); whether the two per-response positions rotate on the same clock was explicitly unanswerable at the r68 window | The receipt runs and verifies (`.ufo/waves/round-69/evidence/s241-window-r69.txt`): `per-response=4 stable=1497 stable-not-in-pin=2 stable-in-pin=1495 window-s=4015` rc 0 — the SAME TWO positions as the r68 1268 s window (218 before `</head>`, 1498 near page end; both same-length 1-line replaces; fresh shas = both rotated again). Finding: both positions rotate within BOTH windows (21 min and 67 min), so these two windows cannot separate the positions' rotation clocks — TTL separation remains unmeasured and no TTL value is decided; stable-not-in-pin stayed 2 (exactly the two asset-id lines 163, 211 — the vendor did not redeploy between the windows; the r68 planned item's growth arm did not materialize). Ground: S580 (token content carries the timestamps of the client's latest challenge responses — token-bearing bytes are bound to token-lifetime machinery with its own clocks) + S579. QUALITY 159 untouched: no row re-classed, no grammar taught. **Self-verdict: verified met** (closure to re-derive) |
+| C3: the standing cross-check arm (the r68 planned item's second half) — `--recheck-summary FILE`: the compare reports `crosscheck=consistent` / `crosscheck=inconsistent reason=<side>` (a review lead, rc stays 0) / `crosscheck=unavailable reason=not-provided` (omitted, never assumed); a provided file that is not a re-check summary is rc 2; first LIVE agreement against a fresh same-round `--only S241` re-check | operability 7 | `grep -c "recheck-summary" tools/mori-ua-variance.py` (0 at entering -> ≥1); the selftest tally `MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)` (6 cases at entering -> 14); `grep -c "crosscheck=consistent" .ufo/waves/round-69/evidence/s241-window-r69.txt` | At entering: no cross-check arm existed (`controls-r69.txt`); nothing bound the probe's stable-not-in-pin count to the re-check's asset-churn class | The arm runs and its output verifies: five selftest arms (crosscheck_consistent with exact fixture-derived basis `stable-not-in-pin=1+recheck-asset-churn=2`, crosscheck_inconsistent_is_lead_not_failure rc 0, crosscheck_reverse_disagreement rc 0, crosscheck_absent_unavailable, crosscheck_nonsummary_input_exit2 rc 2) inside 14/14 rc 0 x3; live: `crosscheck=consistent crosscheck-basis=stable-not-in-pin=2+recheck-asset-churn=1` in the r69 receipt against the fresh re-check run (its own lines stamped as-of=17:30:35Z; the arm compares COUNTS, never clocks; QUALITY 159 untouched). **Self-verdict: verified met** (closure to re-derive) |
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Stated-window A/A receipt (`--window-s`) + standing cross-check arm (`--recheck-summary`) on `tools/mori-ua-variance.py` | states its observation window in the receipt grammar (computed from the capture receipts' own as-of stamps, marked unavailable when unstated) and cross-checks the compare's stable-not-in-pin count against a re-check summary's asset-churn count — a counts-level consistency report that decides nothing | `python tools/mori-ua-variance.py --selftest` -> `MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)` rc 0 x3; live S241 A/A window-s=4015 with `crosscheck=consistent crosscheck-basis=stable-not-in-pin=2+recheck-asset-churn=1` (`.ufo/waves/round-69/evidence/s241-window-r69.txt`) | 69 |
+
+Selftests this round: the edited tool 14/14 x3 at the final bytes (run
+history disclosed — the first three runs at the pre-fix bytes failed rc 1
+silently, mined as lesson mistake 1); the standing battery green on unchanged
+bytes — register 12/12, settlement 10/10, vote-bind 16/16, pin-check 125/125,
+adjudicate 5/5, recheck 10/10
+(`.ufo/waves/round-69/evidence/selftests-battery-r69.txt`). No frozen byte
+edited: SKILL.md, `tools/mori-source-drift.py`, `tools/mori-drift-adjudicate.py`,
+PROVINCE.md, AGENTS.md, corpus/README.md are absent from the round's diff; the
+SKILL:905 tally pin stays true by construction. SOURCES 352 -> 353 (S580, AWS
+WAF token characteristics — the token-lifetime ground of the window rule;
+opened this round; sweeps receipted
+`.ufo/waves/round-69/evidence/source-sweeps-r69.txt`, with the honest order
+note that the pre-row sweeps ran un-receipted and are attested-not-captured).
+Census: validator rc 0 at round start (`evidence/census-start-r69.txt`) ->
+rc 0 at round end (`evidence/census-end-r69.txt`); the S580 row was appended
+INSIDE the Registry section after S579 (the r68 mistake-5 rule applied from
+the start).
+
+Planned (round 70): the two windows (1268 s, 4015 s) cannot separate the two
+per-response positions' rotation clocks — a future round could pair SHORT
+windows (minutes apart, repeated) to bound each position's rotation from
+above, still deciding no TTL value; the cross-check arm's inconsistent branch
+has no live observation yet (selftest-proven only) — it stays a standing arm
+that fires only if the vendor's serving arms ever disagree; the r65 L0
+instrument-change question and the dispatch-surface question (mori |
+round-62) stand open for the operator.
