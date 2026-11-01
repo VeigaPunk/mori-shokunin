@@ -1,0 +1,26 @@
+# mori r66 — the standing adjudicate step, wired after the sweep (r65 planned item)
+date: 2026-11-01T08:40:57Z
+# pipeline: python tools/mori-source-drift.py --root .   (sweep-live-r66.txt: rows=349 fresh=62 drifted=17 unavailable=2 no-copy=268 rc 1)
+#           python tools/mori-drift-recheck.py --root . --only <the 17 drifted ids>   (this receipt)
+# the sweep's finding list grew 9 -> 17 since the r65 sweep because the hourly docs.python.org template rebuilt again — the phenomenon the re-check exists to adjudicate
+---
+# MORI_DRIFT_RECHECK second_ua=curl/8.21.0 only=S156,S157,S158,S159,S160,S176,S177,S223,S226,S228,S229,S231,S241,S262,S347,S572,S573 run-start=2026-11-01T08:40:57Z stamp-class=python-docs-page-stamp
+S156 receipt-open as-of=2026-11-01T08:40:57Z
+S157 receipt-open as-of=2026-11-01T08:40:57Z
+S158 receipt-open as-of=2026-11-01T08:40:58Z
+S159 receipt-open as-of=2026-11-01T08:40:58Z
+S160 receipt-open as-of=2026-11-01T08:40:58Z
+S176 time-churn as-of=2026-11-01T08:40:58Z
+S177 time-churn as-of=2026-11-01T08:40:58Z
+S223 time-churn as-of=2026-11-01T08:40:58Z
+S226 time-churn as-of=2026-11-01T08:40:58Z
+S228 time-churn as-of=2026-11-01T08:40:58Z
+S229 time-churn as-of=2026-11-01T08:40:58Z
+S231 time-churn as-of=2026-11-01T08:40:58Z
+S241 content-drift as-of=2026-11-01T08:40:58Z
+S262 gate as-of=2026-11-01T08:40:58Z
+S347 time-churn as-of=2026-11-01T08:40:59Z
+S572 ua-serving as-of=2026-11-01T08:40:59Z
+S573 ua-serving as-of=2026-11-01T08:40:59Z
+MORI_DRIFT_RECHECK rows=17 adjudicated=17 fresh=0 excerpt=0 time-churn=8 receipt-open=5 receipt-stale=0 ua-serving=2 content-drift=1 gate=1 unavailable=0 window=2026-11-01T08:40:57Z..2026-11-01T08:40:59Z
+rc=0

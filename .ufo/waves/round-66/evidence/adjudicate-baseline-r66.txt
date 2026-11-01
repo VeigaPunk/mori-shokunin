@@ -1,0 +1,16 @@
+# mori r66 — baseline adjudicator run on the 8 docs.python.org re-pins (the time-of-measurement BEFORE state)
+date: 2026-11-01T08:30:45Z
+# argv: python tools/mori-drift-adjudicate.py --root . --only S176,S177,S223,S226,S228,S229,S231,S347
+# purpose: show the r65 adjudicator re-classes the re-pins from today's fetches with NO fetch-time record — every verdict is unbound to its measurement moment; the re-pins were taken 2026-11-01 early UTC (receipts adjudicate-live-r65.txt 07:06:39Z, refetch earlier)
+---
+# MORI_DRIFT_ADJUDICATE second_ua=curl/8.21.0 only=S176,S177,S223,S226,S228,S229,S231,S347
+S176 content-drift
+S177 content-drift
+S223 content-drift
+S226 content-drift
+S228 content-drift
+S229 content-drift
+S231 content-drift
+S347 content-drift
+MORI_DRIFT_ADJUDICATE rows=8 adjudicated=8 passthrough=0 receipt-open=0 receipt-stale=0 ua-serving=0 content-drift=8 gate=0 unavailable=0
+rc=0

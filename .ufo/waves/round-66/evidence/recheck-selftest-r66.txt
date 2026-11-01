@@ -1,0 +1,36 @@
+# mori r66 — mori-drift-recheck.py selftest receipt
+date: 2026-11-01T08:38:07Z
+# argv: python tools/mori-drift-recheck.py --selftest  (offline 127.0.0.1 fixture, per-UA routes)
+# host condition (carried r65 L0 disclosure): this host's loopback HTTP transport is degraded and variable (transport_cap measured 65536 at the r64 certification; 1024/4096/16384 across r65 runs) — three dedicated runs taken; a red run here needs the transport condition named beside it before it is read as instrument decay
+# run history (honest): the FIRST selftest version failed 5/7 on its own comparator (it compared the whole row line including the as-of= suffix against the bare token) — the tool classes were 6/6 correct in every failing run; comparator fixed, then a second comparator bug (summary group 11 vs 12) fixed; the three runs below are the post-fix receipt
+---
+$ run 1: python tools/mori-drift-recheck.py --selftest
+selftest row_tokens               PASS (got={'S911': 'fresh', 'S912': 'time-churn', 'S913': 'content-drift', 'S914': 'ua-serving', 'S915': 'receipt-open', 'S916': 'unavailable'} want={'S911': 'fresh', 'S912': 'time-churn', 'S913': 'content-drift', 'S914': 'ua-serving', 'S915': 'receipt-open', 'S916': 'unavailable'})
+selftest as_of_on_every_row       PASS (every token row carries as-of=<ISO8601Z>)
+selftest summary                  PASS (summary=('6', '6', '1', '0', '1', '1', '0', '1', '1', '0', '1', '2026-11-01T08:38:12Z..2026-11-01T08:38:17Z'))
+selftest exit_code                PASS (rc=0 want 0)
+selftest header_disclosure        PASS (second UA + stamp class + run-start on the header line)
+selftest window_same_run          PASS (window bounds parse and are ordered (same-run snapshot pair))
+selftest missing_sources_exit2    PASS (rc=2 want 2)
+MORI_DRIFT_RECHECK_SELFTEST: PASS (7 cases)
+rc=0
+$ run 2: python tools/mori-drift-recheck.py --selftest
+selftest row_tokens               PASS (got={'S911': 'fresh', 'S912': 'time-churn', 'S913': 'content-drift', 'S914': 'ua-serving', 'S915': 'receipt-open', 'S916': 'unavailable'} want={'S911': 'fresh', 'S912': 'time-churn', 'S913': 'content-drift', 'S914': 'ua-serving', 'S915': 'receipt-open', 'S916': 'unavailable'})
+selftest as_of_on_every_row       PASS (every token row carries as-of=<ISO8601Z>)
+selftest summary                  PASS (summary=('6', '6', '1', '0', '1', '1', '0', '1', '1', '0', '1', '2026-11-01T08:38:18Z..2026-11-01T08:38:23Z'))
+selftest exit_code                PASS (rc=0 want 0)
+selftest header_disclosure        PASS (second UA + stamp class + run-start on the header line)
+selftest window_same_run          PASS (window bounds parse and are ordered (same-run snapshot pair))
+selftest missing_sources_exit2    PASS (rc=2 want 2)
+MORI_DRIFT_RECHECK_SELFTEST: PASS (7 cases)
+rc=0
+$ run 3: python tools/mori-drift-recheck.py --selftest
+selftest row_tokens               PASS (got={'S911': 'fresh', 'S912': 'time-churn', 'S913': 'content-drift', 'S914': 'ua-serving', 'S915': 'receipt-open', 'S916': 'unavailable'} want={'S911': 'fresh', 'S912': 'time-churn', 'S913': 'content-drift', 'S914': 'ua-serving', 'S915': 'receipt-open', 'S916': 'unavailable'})
+selftest as_of_on_every_row       PASS (every token row carries as-of=<ISO8601Z>)
+selftest summary                  PASS (summary=('6', '6', '1', '0', '1', '1', '0', '1', '1', '0', '1', '2026-11-01T08:38:23Z..2026-11-01T08:38:25Z'))
+selftest exit_code                PASS (rc=0 want 0)
+selftest header_disclosure        PASS (second UA + stamp class + run-start on the header line)
+selftest window_same_run          PASS (window bounds parse and are ordered (same-run snapshot pair))
+selftest missing_sources_exit2    PASS (rc=2 want 2)
+MORI_DRIFT_RECHECK_SELFTEST: PASS (7 cases)
+rc=0

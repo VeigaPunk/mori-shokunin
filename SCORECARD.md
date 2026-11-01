@@ -3251,3 +3251,48 @@ pins, or a standing adjudicate step wired after every sweep run; the
 loopback-transport stability finding routed to the operator (L0); consider
 re-pin of S574/S575-class en-us learn pages if the vendor asset churn reaches
 their content.
+
+## Round 66 — the standing drift re-check: C1 depth/capability landed (tools/mori-drift-recheck.py — fetch-time recorded per row, classes re-derived against the same-time snapshot, stamp-only churn separated from content drift via the same-day A/B); C2 freshness landed (the standing adjudicate step wired after the sweep, demonstrated on this round's own sweep whose finding list grew 9→17 from template churn alone; QUALITY 158 pins the moment-pin convention)
+
+Entering `54fcd7c9…` (r65 verifier spotcheck tip; r65 closed admitted with
+three status-neutral routed defects — all three discharged this round).
+Fresh-start duty on the §7 listed rejections r59–r61 re-performed with own
+receipts (`.ufo/waves/round-66/evidence/freshstart-spotchecks-r66.txt`).
+Rule-outs, and why: (1) r59/r60 entry-claims instruments — met-flip
+counterexamples stand on frozen bytes; (2) scalar score moves — no closure
+states a new number; (3) old-Linux-host live surfaces — absent here; (4)
+editing the frozen sweep `tools/mori-source-drift.py` — the SKILL:905 tally
+pin and r38 content anchors bind its bytes; (5) editing the r65 adjudicator's
+committed behavior — its receipts are evidence at those bytes, so the new
+tool IMPORTS it (policy shared by construction); (6) re-declaring the
+admitted r64/r65 sweep and disposition work. Scores entering/after: coverage
+6, operability 7, depth 5, freshness 5, calibration 5, adjacency 6 — no
+scalar claimed. Lowest tie depth/freshness/calibration at 5: C1 targets
+depth, C2 targets freshness.
+
+| Claim | Axis | Counting command | Before | After / verdict |
+|---|---|---|---|---|
+| C1: the standing drift re-check capability — `tools/mori-drift-recheck.py` records each fresh fetch's completion moment (`as-of=<ISO8601Z>` on the row's own line) and re-derives the class against the same-time snapshot: a pin-vs-fresh delta confined to the docs.python.org page-generation stamp lines (per-build strftime render, ground S577) classifies `time-churn`, not `content-drift`; receipt/ua-serving/gate/unavailable mirror the r65 adjudicator's precedence; the run's `window=` bounds its own fetches (no class ever mixes snapshots across runs). Imports the r65 adjudicator → frozen sweep; no standing byte edited | depth 5 | `python tools/mori-drift-recheck.py --selftest`; `grep -c "time-churn" tools/mori-drift-adjudicate.py tools/mori-source-drift.py`; `grep -c "^S" .ufo/waves/round-66/evidence/adjudicate-baseline-r66.txt`; `grep -c "^S" .ufo/waves/round-66/evidence/recheck-live-r66.txt` | At entering `54fcd7c9…`: tool absent (`git cat-file -e` rc 128) and no standing instrument records a fetch moment or a stamp-churn class — `grep -c "time-churn"` = 0 and `grep -c "as-of"` = 0 in both standing tools, rc 1 each (`evidence/controls-r66.txt`); same-day baseline on the 8 docs.python.org r65 re-pins: all 8 `content-drift` with NO fetch-time bound (`evidence/adjudicate-baseline-r66.txt`, rc 0, row count `grep -c "^S"` = 8) — verdicts unreadable as moments, the r65 closure's routed time-of-measurement finding reproduced live | Selftest `MORI_DRIFT_RECHECK_SELFTEST: PASS (7 cases)` rc 0, three consecutive post-fix runs identical (`evidence/recheck-selftest-r66.txt`; the first version's two comparator bugs disclosed in the receipt and mined as lesson M2). Same-day A/B: the re-check on the same 8 rows minutes later — all 8 `time-churn as-of=2026-11-01T08:39:07/08Z` + `window=` (`evidence/recheck-live-r66.txt`, rc 0, `grep -c "^S"` = 8): the same deltas the baseline called content drift are stamp-only churn, now named and moment-bound. Capability row entered below, first-working round 66. **Self-verdict: verified met** (closure to re-derive). Routed limits: `time-churn` is a byte-layer class — whether a beyond-stamp delta is chrome or content stays the semantic-review layer (S241 re-classified content-drift at the byte layer in the standing run, KEEP-CHROME disposition unchanged); the stamp grammar is pinned to the docs.python.org render observed in the r65 re-pins (S577 `:2638-2639`) — another vendor's template stamp needs its own grammar, honestly `content-drift` until taught |
+| C2: the standing adjudicate step wired after the sweep — the round's own full sweep re-run (frozen v1.1 bytes), then the re-check adjudicates every finding time-bound in one run; the convention lands as QUALITY 158 (a re-pin of an hourly-regenerated template page certifies a moment, not the day; a drift verdict without its fetch moment is unreadable as evidence) | freshness 5 | `python tools/mori-source-drift.py --root .`; `grep -cE "^S[0-9]{3} " .ufo/waves/round-66/evidence/recheck-standing-r66.txt`; `grep -c "^158\." corpus/QUALITY.md` | At entering: no standing adjudicate step existed after a sweep — the r65 sweep ended at a receipted but unadjudicated-instrument remainder (9 drifted rows whose classes live in side receipts), and the r65 planned item ("a standing adjudicate step wired after every sweep run") was open; QUALITY carried no moment-pin rule (`grep -c "^158\." corpus/QUALITY.md` = 0 at entering) | Sweep `MORI_SOURCE_DRIFT rows=349 fresh=62 drifted=17 unavailable=2 no-copy=268` rc 1 (frozen bytes; `evidence/sweep-live-r66.txt`, command + rc line embedded) — the finding list grew 9 → 17 since the r65 sweep because the hourly template rebuilt again: the phenomenon itself. Standing step: `grep -cE "^S[0-9]{3} " …recheck-standing-r66.txt` = 17 rows adjudicated rc 0 — 8 time-churn, 5 receipt-open (S156–S160), 1 content-drift (S241), 1 gate (S262), 2 ua-serving (S572/S573), window 08:40:57Z..08:40:59Z — 17/17 agreement with the r65 manual dispositions, now each bound to its moment. QUALITY 158 landed (`grep -c "^158\." corpus/QUALITY.md` = 1). **Self-verdict: verified met** (closure to re-derive). Routed limits: the sweep itself still reports `drifted` for receipt-shape/UA/gate rows by design (instrument-visible facts, dispositioned one layer up — the r65 boundary); the standing step's `as-of` binds the re-check's verdicts, not the sweep's own summary line |
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Standing drift re-check (`tools/mori-drift-recheck.py`) | after every source-drift sweep, re-adjudicate its findings with each fetch's moment recorded (`as-of=` per row, `window=` per run) and stamp-only template churn classified `time-churn` instead of `content-drift` — full-registry or `--only` subset mode, rc 0/1/2 contract, importing the r65 adjudicator and the frozen sweep (no standing byte edited) | `python tools/mori-drift-recheck.py --selftest` → `MORI_DRIFT_RECHECK_SELFTEST: PASS (7 cases)` rc 0 ×3 (`.ufo/waves/round-66/evidence/recheck-selftest-r66.txt`); same-day A/B on the 8 r65 re-pins: baseline adjudicator 8 × `content-drift` unbound vs re-check 8 × `time-churn as-of=…` (`evidence/adjudicate-baseline-r66.txt`, `evidence/recheck-live-r66.txt`); standing run on the round's own 17 sweep findings → 17/17 adjudicated (`.ufo/waves/round-66/evidence/recheck-standing-r66.txt`) | 66 |
+
+Selftests this round: the new tool's selftest 7/7 ×3 with the
+loopback-transport condition carried in the receipt header (r65 L0 line
+stands open); the frozen sweep's own selftest untouched and its tally pin
+unedited. Carry-ins from the r65 closure: (1) counting commands row-line
+isolated and always beside the counts they name (lesson M1); (2) census
+receipts embed command + output + rc line; (3) the standing adjudicate item
+built and demonstrated (C1/C2). The r65 planned item "standing adjudicate
+step wired after every sweep run" is discharged; the L0-routed instrument
+change (teaching the sweep excerpt-receipt/second-UA awareness) remains the
+operator's call and is not exercised (frozen bytes).
+
+Planned (round 67): the re-check's stamp grammar covers the docs.python.org
+class only — a second vendor template class (e.g. the learn.microsoft.com
+asset-build-id churn S241 shows) needs its own named grammar or stays honest
+`content-drift` at the byte layer; consider a `--from-sweep <receipt>` mode
+that reads the sweep's finding list directly instead of an `--only` id list;
+the r65 L0 degraded-transport posture question remains open.

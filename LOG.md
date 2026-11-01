@@ -3464,3 +3464,82 @@ eight files; no newer file exists); the 2026-10-26 suggestion 3
 round — the fresh-start counter re-derived and all 23 findings re-opened and
 re-fetched rather than cited from r64's receipts; no still-unimplemented
 proposal adopted. Assimilation: none — shokuknow unreachable.
+
+## Round 66 — Mori (L1 MoriR66): C1 depth/capability verified met (tools/mori-drift-recheck.py — the standing drift re-check: every verdict carries its fetch moment and stamp-only churn no longer masquerades as content drift); C2 freshness verified met (the standing adjudicate step wired after the sweep and run on this round's own sweep — the finding list's growth 9→17 is adjudicated time-bound, plus QUALITY 158 pins the moment-pin convention)
+
+Entering `54fcd7c9` (r65 verifier spotcheck tip; r65 closed admitted with three
+status-neutral routed defects — all three are this round's carry-ins and are
+discharged below). Fresh-start duty on the §7 listed rejections r59–r61
+re-performed, not cited from r65: frozen r61 counter re-derived (`C2=unmet`
+rc 1, all 14 quote_words anchors), r59/r60 evidence PRESENT + ancestral
+(receipt `.ufo/waves/round-66/evidence/freshstart-spotchecks-r66.txt`).
+Rule-outs: r59/r60 instruments (met-flip counterexamples on frozen bytes);
+scalar moves (no closure states numbers); old-Linux live surfaces (absent);
+editing the frozen sweep (SKILL:905 tally pin + r38 anchors); editing the r65
+adjudicator's committed behavior (its receipts are committed evidence at those
+bytes — the new tool IMPORTS it); re-declaring admitted r64/r65 work. Scores
+held 6/7/5/5/5/6 — no scalar claimed; lowest tie depth/freshness/calibration
+at 5: C1 targets depth, C2 targets freshness.
+
+C1 (depth 5, capability acquisition) — `tools/mori-drift-recheck.py`: for
+every considered row it takes a FRESH fetch at re-check time, stamps that
+fetch's completion moment `as-of=<ISO8601Z>` on the row's own line, and
+re-derives the class against the same-time snapshot: the pin-vs-fresh delta
+confined to the docs.python.org page-generation stamp lines (a per-build
+strftime render, ground S577) classifies `time-churn` instead of
+`content-drift`; receipt/ua-serving/gate/unavailable arms mirror the r65
+adjudicator's precedence; the run's `window=` bounds every fetch the run took
+— classes never mix snapshots across runs. Imports the r65 adjudicator (which
+imports the frozen sweep) — grammar, copy discovery, fetch cap, redirect and
+UA policy shared by construction; no frozen byte edited (SKILL:905 tally pin
+stays true). Selftest `MORI_DRIFT_RECHECK_SELFTEST: PASS (7 cases)` rc 0,
+three consecutive post-fix runs (loopback-transport variability carried in the
+receipt header; the two comparator bugs of the first selftest version are
+disclosed there and mined as lesson M2). The same-day A/B on the 8
+docs.python.org re-pins: baseline r65 adjudicator — all 8 `content-drift`,
+no moment recorded (`evidence/adjudicate-baseline-r66.txt`, rc 0,
+`grep -c "^S"` = 8); the re-check minutes later — all 8
+`time-churn as-of=2026-11-01T08:39:07/08Z`, window recorded
+(`evidence/recheck-live-r66.txt`, rc 0, `grep -c "^S"` = 8). Capability row
+entered SCORECARD, first-working round 66. Self-verdict: verified met.
+
+C2 (freshness 5) — the standing adjudicate step, wired after the sweep: the
+round's own full sweep re-run (`python tools/mori-source-drift.py --root .`,
+frozen v1.1 bytes — `evidence/sweep-live-r66.txt`: `MORI_SOURCE_DRIFT rows=349
+fresh=62 drifted=17 unavailable=2 no-copy=268` rc 1, command + rc line
+embedded) — the finding list grew 9 → 17 since the r65 sweep because the
+hourly template rebuilt again, which is the phenomenon itself; the re-check
+then adjudicated all 17 findings in one run (`evidence/recheck-standing-r66.txt`,
+rc 0): 8 time-churn (the re-pins, stamp-only), 5 receipt-open (S156–S160,
+sources unchanged), 1 content-drift (S241, byte truth — KEEP-CHROME stays the
+semantic-review layer), 1 gate (S262), 2 ua-serving (S572/S573) — window
+08:40:57Z..08:40:59Z; class agreement with the r65 manual dispositions 17/17,
+now each bound to its moment. The convention lands as QUALITY 158 (a re-pin of
+an hourly-regenerated template page certifies a moment, not the day; classes
+without fetch moments are unreadable as evidence). Self-verdict: verified met.
+
+Sourced claim: C1's stamp grammar rests on S577 (sphinx-doc.org configuration
+page, opened 2026-11-01, pinned `corpus/evidence/sources-r66/S577.html` sha
+`93373f28…`; quote "a 'Last updated on:' timestamp is inserted into the page
+footer" — first 11 words of the 16-word quote, `S577.html:2638`, strftime
+continuation `:2639`; duplicate sweeps `grep -c "sphinx-doc"` = 0 and
+`grep -c "html_last_updated_fmt"` = 0 before opening). SOURCES 349 → 350.
+
+Carry-ins from the r65 closure, all three discharged: (1) counting-command
+nit — every count this round is row-line-isolating with its command beside it
+(mined as lesson M1); (2) census receipts now embed command + output + rc
+line; (3) the standing adjudicate item — built and demonstrated (C1/C2).
+Lesson `corpus/lessons/round-66.md` mines four mistakes (the r65
+summary-counting grep; the re-check's two selftest comparator bugs; the S577
+drafted anchor `:2726` that the pin does not contain, caught pre-commit by
+anchor verification; and the SCORECARD round-66 section's here-document write
+that silently truncated mid-word, caught by the read-before-commit landmark
+check and repaired with every landmark re-counted before staging). Standing
+instruments untouched: frozen sweep bytes and
+the r65 adjudicator bytes unchanged this round. Census: validator rc 0 at
+round start (`evidence/census-start-r66.txt`, command + rc line) → rc 0 at
+round end (`evidence/census-end-r66.txt`). Assimilation: considerthese mined
+(2026-10-19…26, all eight files; no newer file exists); the 2026-10-26
+suggestion 3 (re-execute what closures only evidence-verify) executed again —
+the fresh-start counter re-derived and the time-sensitivity A/B re-taken
+rather than cited. Assimilation: none — shokuknow unreachable.

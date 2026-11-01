@@ -1,0 +1,17 @@
+# mori r66 — the standing re-check on the same 8 rows as the baseline (the A/B pair)
+date: 2026-11-01T08:39:07Z
+# argv: python tools/mori-drift-recheck.py --root . --only S176,S177,S223,S226,S228,S229,S231,S347
+# baseline (adjudicate-baseline-r66.txt): adjudicator classes all 8 'content-drift' with no fetch-time record — re-pins taken 2026-11-01 early UTC re-drift on every same-day re-run because the vendor rebuilds the template hourly
+# expected here: the re-derivation against the same-time snapshot separates the stamp-line churn ('time-churn as-of=T') from content drift, with each row's fetch moment recorded
+---
+# MORI_DRIFT_RECHECK second_ua=curl/8.21.0 only=S176,S177,S223,S226,S228,S229,S231,S347 run-start=2026-11-01T08:39:07Z stamp-class=python-docs-page-stamp
+S176 time-churn as-of=2026-11-01T08:39:07Z
+S177 time-churn as-of=2026-11-01T08:39:07Z
+S223 time-churn as-of=2026-11-01T08:39:07Z
+S226 time-churn as-of=2026-11-01T08:39:07Z
+S228 time-churn as-of=2026-11-01T08:39:07Z
+S229 time-churn as-of=2026-11-01T08:39:07Z
+S231 time-churn as-of=2026-11-01T08:39:07Z
+S347 time-churn as-of=2026-11-01T08:39:08Z
+MORI_DRIFT_RECHECK rows=8 adjudicated=8 fresh=0 excerpt=0 time-churn=8 receipt-open=0 receipt-stale=0 ua-serving=0 content-drift=0 gate=0 unavailable=0 window=2026-11-01T08:39:07Z..2026-11-01T08:39:08Z
+rc=0

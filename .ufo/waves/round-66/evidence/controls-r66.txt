@@ -1,0 +1,27 @@
+# mori r66 — before-state controls at entering 54fcd7c978ac9be39ba37bec4d1a3965f480cf92
+date: 2026-11-01T08:29:35Z
+---
+$ git cat-file -e HEAD:tools/mori-drift-recheck.py (re-check tool absent?)
+fatal: path 'tools/mori-drift-recheck.py' does not exist in 'HEAD'
+rc=128 (128 = absent)
+
+$ grep -c "time-churn" tools/mori-drift-adjudicate.py tools/mori-source-drift.py (time-churn class in standing instruments)
+tools/mori-source-drift.py:0
+tools/mori-drift-adjudicate.py:0
+rc=1 (1 = no matches in both files)
+
+$ grep -c "as-of" tools/mori-drift-adjudicate.py tools/mori-source-drift.py (fetch-time record in standing instruments)
+tools/mori-source-drift.py:0
+tools/mori-drift-adjudicate.py:0
+rc=1 (1 = no matches in both files)
+
+$ grep -c "recheck" tools/mori-drift-adjudicate.py tools/mori-source-drift.py (any fetch-time re-derivation step)
+tools/mori-drift-adjudicate.py:1
+tools/mori-source-drift.py:1
+rc=0
+
+$ grep -c "mori-drift-recheck" SCORECARD.md LOG.md SKILL.md (standing re-check planned/referenced)
+LOG.md:0
+SKILL.md:0
+SCORECARD.md:0
+rc=1

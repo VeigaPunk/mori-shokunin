@@ -1617,3 +1617,26 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     `trees=ok` covering all 13 trees. Not covered: reasons the verifier
     cannot express at all (semantic truth of a well-formed claim) — those
     stay judge work.
+
+## Criterion added round 66 — a moment-pin is a moment: drift classes bind their fetch-time
+
+158. A re-pin of an hourly-regenerated vendor template page (the docs.python.org
+    class) certifies a MOMENT, not the day: every drift class derived from a
+    fresh fetch carries the fetch moment it was derived at (`as-of=<ISO8601Z>`
+    on the row's own line, plus the run's `window=` bounds), and a pin-vs-fresh
+    delta confined to the vendor's page-generation stamp lines classifies
+    `time-churn`, never `content-drift`. A drift verdict without its fetch
+    moment is unreadable as evidence — a reader cannot tell what it certifies.
+    ← the r65 verifier spotcheck routed note 3: 8 of the 14 r65 re-pins
+    re-classified `content-drift` on a same-day re-run with no fetch-time in
+    the output (`.ufo/waves/round-66/evidence/adjudicate-baseline-r66.txt`);
+    the standing re-check (`tools/mori-drift-recheck.py`, importing the r65
+    adjudicator and the frozen sweep) re-derives the same rows
+    `time-churn as-of=…` (`.ufo/waves/round-66/evidence/recheck-live-r66.txt`).
+    Shown able to fail: the same 8 rows, the same day, two instruments — the
+    r65 adjudicator prints 8 × `content-drift` and no moment; the re-check
+    prints 8 × `time-churn`, each with `as-of=` and a same-run `window=`.
+    Ground: S577 (the stamp is a per-build strftime render, inserted when the
+    option is set). Not covered: content deltas beyond the stamp lines still
+    classify `content-drift` (S241 stays content-drift at the byte layer; its
+    KEEP-CHROME disposition stays the semantic-review layer, QUALITY #41).
