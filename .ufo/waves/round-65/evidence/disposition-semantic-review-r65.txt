@@ -1,0 +1,137 @@
+# mori r65 — semantic review and disposition, one row per r64 drift finding (QUALITY #41: a re-pin
+# names what changed and why the new pin is correct; QUALITY #67: a re-pin certifies sameness, never health)
+# companion receipt: disposition-refetch-r65.txt (two-UA digests, run-1 CRLF disclosure)
+# diff method: difflib opcodes pin-lines vs fresh-lines (semantic-diffs scratch receipt, opcodes+samples
+# committed below per row); teaching anchors greped in pin AND fresh (needle counts quoted per row).
+# disposition set (closed): KEEP-A (UA-dependent serving, curl-UA body == pin) · KEEP-C (pinned artifact
+# is an excerpt receipt; today's body == the header-recorded opening sha; instrument cannot grade it) ·
+# KEEP-CHROME (body bytes differ only in vendor chrome/asset ids; anchor content byte-identical) ·
+# REPIN (real body change under the pinning UA; anchor teaching verified intact; fresh raw body pinned
+# to corpus/evidence/sources-r65/<ID>.<ext>) · GATE (2xx empty body; no content evidence).
+# No row was silently re-pinned: every REPIN row names its diff and its new sha; every KEEP row names
+# its renewed evidence. No SOURCES.md cell changed (all 23 rows carry cadence rechecks and mined status;
+# the dispositions ride this receipt, the lesson, and LOG — r58 precedent).
+---
+S156 KEEP-C systemd bus-print-properties.c v262 (pinned r30 excerpt receipt)
+  diff: none at content level — today's body sha b56aa781… == the receipt header's opening sha; 17973 B == the row's recorded 17,973 B
+  why-not-repin: the source is unchanged; the finding is the artifact shape (an excerpt receipt with header
+    + line-number-prefixed quotes can never equal the raw body, so the sweep's fresh/excerpt states are
+    unreachable for it by construction)
+  renewed evidence: curl-UA and tool-UA bodies byte-identical to each other AND to the opening body
+S157 KEEP-C systemd unit.c v262 — same shape; body sha 47e98d39… == receipt header sha; 263849 B
+S158 KEEP-C systemd journald-manager.c v262 — same shape; body sha 428dc830… == receipt header sha; 101383 B
+S159 KEEP-C earlyoom Restart=always commit patch — same shape; body sha dc5a771c… == receipt header sha; 1180 B
+S160 KEEP-C systemd journalctl.c v262 — same shape; body sha 285b3d0c… == receipt header sha; 47020 B
+S175 REPIN curl(1) man page (pinned r32)
+  diff: 7 opcodes, 465399 → 466181 B — NTLM option paragraphs rewritten ("NTLM authentication support was
+    removed in 8.24.0. This option is no longer supported and causes curl to fail with an
+    unsupported-feature error."), two SSPI/Kerberos paragraphs drop NTLM from their lists, one new
+    --output/--remote-name cleanup paragraph — curl release churn (8.24.0 notes) outside the row's scope
+  teaching verified: '-f, --fail' and '-m, --max-time' present pin 2/2 fresh 2/2 (line count check in the
+    refetch receipt) — the row's scope (exit codes 22/28 on the recheck fetch) untouched by the diff
+  new pin: corpus/evidence/sources-r65/S175.src sha256 d4d2bfcfc0f8ce78826c4b34076282ab9a4bebff0fc4101b9a084264531a3fb1
+S176 REPIN Python 3.15 unicodedata docs (pinned r32)
+  diff: 7 opcodes, 55620 → 55560 B — template version bump 3.15.1 → 3.15.2 (title, search title,
+    breadcrumbs), documentation_options.js build hash, plus one table-row anchor change (the decimal row's
+    cross-reference retargeted) — patch-release doc churn
+  teaching verified: 'unicodedata.normalize' 3 == 3 and 'NFKC' 3 == 3 pin vs fresh — the NFKC/NFKD
+    paragraphs (the row's ground) unchanged by the diff
+  new pin: corpus/evidence/sources-r65/S176.src sha256 0114d13b36d7f351e831323ced1f37bb3b9bbccae967737c83963c0e2b25337f
+S177 REPIN Python html module docs (pinned r32)
+  diff: 6 opcodes, 20100 → 20100 B — template-only: version bump 3.15.1 → 3.15.2, build hash, "Last
+    updated on Oct 23, 2026" → "Nov 01, 2026"; no prose change
+  teaching verified: 'unescape' 2 == 2 pin vs fresh (html.unescape contract text intact)
+  new pin: corpus/evidence/sources-r65/S177.src sha256 3e4436418e09becc6ced2a41511d372758f02c2417ce2427130e82710713891a
+S206 REPIN RFC 6585 (pinned r36)
+  diff: 4 opcodes, 171482 → 172289 B — rfc-editor info-page chrome only (head meta, noscript banner,
+    sidebar nav comment markers, footer wrapper); the RFC text including §4 unchanged
+  teaching verified: 'Too Many Requests' 9 == 9 pin vs fresh — the 429 definition intact
+  new pin: corpus/evidence/sources-r65/S206.src sha256 a146229e4e365917f8510324cff6fe2e651a316375eaf0aaac8e492df9c20ee3
+S209 REPIN RFC 8785 (pinned r36)
+  diff: 5 opcodes, 476658 → 477832 B — same rfc-editor chrome class (head, banner, nav, footer); the
+    canonicalization sections unchanged
+  teaching verified: 'Serialization of Strings' and 'Sorting of Object Properties' 3 == 3 pin vs fresh
+  new pin: corpus/evidence/sources-r65/S209.src sha256 aa0939fa927fd36bf8a1b0c133850aa231fd534ef8c19bc37edd675d88586fb3
+S210 REPIN git-rev-parse(1) (pinned r36)
+  diff: 2 opcodes, 122463 → 122331 B — git-scm.com site template asset hashes only (stylesheet + script
+    URLs, integrity attribute dropped); no prose change
+  teaching verified: '--verify' 6 == 6 and 'end-of-options' 3 == 3 pin vs fresh
+  new pin: corpus/evidence/sources-r65/S210.src sha256 c9c17130ad6c9ddbeeb3146458475390ea7a6db82b8aee00481350e59f0a2aeb
+S223 REPIN Python 3 urllib.request docs (pinned r37)
+  diff: 7 opcodes, 216510 → 218392 B — template version bump plus ONE real prose insertion at pin line
+    ~295: a new paragraph stating that exceptions raised while reading or parsing an HTTP response are not
+    wrapped in URLError (subclasses of http.client.HTTPException pass through) — a genuine docs content
+    addition adjacent to (not contradicting) the row's redirect-handler teaching; +9 line shift after the
+    insertion point
+  teaching verified: 'redirect_request' 2 == 2 and '301' 7 == 7 pin vs fresh — the HTTPRedirectHandler
+    deviation teaching intact
+  new pin: corpus/evidence/sources-r65/S223.src sha256 f94e7de40c59c1f145a4f9d2d35dce8c08d93ebdd02d1ae9df1fc7b906fe6c91
+S226 REPIN Python os.path docs, canonical-path paragraph (pinned r38)
+  diff: 6 opcodes, 90223 → 90223 B — template-only (3.15.1 → 3.15.2, build hash, "Last updated"
+    timestamps); the realpath paragraph unchanged
+  teaching verified: 'Return the canonical path of the specified filename' 1 == 1 and 'symbolic links'
+    7 == 7 pin vs fresh
+  new pin: corpus/evidence/sources-r65/S226.src sha256 b64fc11fcf681baed878086d70626c9e1b97ec71a535da468fa6d45c49efde9c
+S227 REPIN gitrevisions(7) (pinned r39)
+  diff: 2 opcodes, 74526 → 74526 B — git-scm.com template asset hashes only; prose unchanged
+  teaching verified: 'reachable from r2' 1 == 1 pin vs fresh (the two-dot range sentence intact)
+  new pin: corpus/evidence/sources-r65/S227.src sha256 41249848b128c56ffb5d479b3257a2310091b60f6bb09b54ab04692c02ef3289
+S228 REPIN Python os.path docs (re-open row, same URL as S226; pinned r39)
+  diff: identical fetch to S226 (one URL, one body) — template-only
+  teaching verified: same needles as S226, 1 == 1 / 7 == 7
+  new pin: corpus/evidence/sources-r65/S228.src sha256 b64fc11fcf681baed878086d70626c9e1b97ec71a535da468fa6d45c49efde9c (same bytes as S226's — the two rows share one URL)
+S229 REPIN Python 3 execution model docs (pinned r40)
+  diff: 6 opcodes, 63374 → 63374 B — template-only (3.15.1 → 3.15.2, build hash, timestamps)
+  teaching verified: 'nearest enclosing scope' 1 == 1 pin vs fresh
+  new pin: corpus/evidence/sources-r65/S229.src sha256 bc2931e1b63a458c0fea651a109de1c155494c4b22659c4ff4d5a395ba4af4ce
+S230 REPIN Python 3.13 simple statements docs (pinned r41)
+  diff: 6 opcodes, 113070 → 113070 B — template version bump 3.13.17 → 3.13.18, build hash, timestamps;
+    §7.2 prose unchanged
+  teaching verified: 'Assignment statements' 5 == 5 pin vs fresh
+  new pin: corpus/evidence/sources-r65/S230.src sha256 a0a069f2757da8391bcb4fbed2fc3415b444d2d6467b534cba73c7141ba9d79e
+S231 REPIN Python 3.15 execution model docs, located-quote correction row (pinned r41)
+  diff: 6 opcodes, 63374 → 63374 B — template-only; byte-identical to today's /3/ page (S229) — the
+    versionless URL now serves the same bytes as the 3.15 URL
+  teaching verified: 'nearest enclosing scope' 1 == 1 pin vs fresh
+  new pin: corpus/evidence/sources-r65/S231.src sha256 bc2931e1b63a458c0fea651a109de1c155494c4b22659c4ff4d5a395ba4af4ce
+S241 KEEP-CHROME learn.microsoft.com ja-jp Azure OOM page (pinned r42)
+  diff: 2 opcodes, 53963 → 53963 B — ONLY the two vendor static-asset build ids
+    (/static/assets/0.4.03574.8308-… → 0.4.03589.8339-…, site.css + ja-jp index-docs.js); zero prose change
+  teaching verified: 診断 count 6 == 6 pin vs fresh; ms.date 2025-09-15 == 2025-09-15; updated_at
+    2026-10-14 == 2026-10-14 — the r64 provisional class-B reading ("real content drift") is corrected:
+    the served body churns in asset ids only; the diagnosis-at-detection teaching is byte-identical
+  why-not-repin: a re-pin would chase vendor asset-build churn and certify nothing about the anchor
+    (QUALITY #41/#67); the pin stays, the churn is receipted
+  renewed evidence: fresh curl-UA body sha ddb7ba179052f9c3c6900b6b108875adc79baf563f9b82261200ae7c4c6ba727
+    (== the r64 receipt's curl-UA digest: stable across rounds); tool-UA body differs (1668edf8…, 54343 B)
+S262 GATE+KEEP-CHROME ROMA paper, OpenAlex work record (pinned r42)
+  gate: the row URL doi.org/10.1109/TSC.2026.3698682 returns HTTP 202 with a 0-byte body from this host
+    (both UAs) — serving-side publisher gate, no content evidence (the row's own anchor documents this)
+  canonical-source refetch (the anchor's OpenAlex record): field-level JSON diff pin → fresh
+    (67270 → 68099 B): updated_date 2026-10-24 → 2026-10-30; related_works [] → populated;
+    language null → "en"; citation_normalized_percentile 0.36688 → 0.35363; authorships enrichment —
+    abstract_inverted_index NOT in the changed-field set (word-set identical; the teaching sentence
+    reconstructs at the same positions 27–39: "lack sufficient container context")
+  teaching verified: the abstract inverted index — the field the row's anchor grounds — unchanged
+  why-not-repin: record-metadata enrichment churn; the anchor field is byte-identical; a re-pin would
+    archive vendor enrichment, not source knowledge (QUALITY #41)
+  grounding opened this round: S576 (OpenAlex work-object docs — abstract ships as an inverted index;
+    updated_date is a vendor-managed shared record attribute)
+S347 REPIN Python 3 ast module docs (pinned r42)
+  diff: 6 opcodes, 362029 → 362029 B — template-only (3.15.1 → 3.15.2, build hash, timestamps)
+  teaching verified: 'no specified order' 1 == 1 pin vs fresh (the ast.walk traversal-order sentence intact)
+  new pin: corpus/evidence/sources-r65/S347.html sha256 f02814da91df6a6793ab942b18d8bbc4755948c6ff29ec4a4e80bcbdfaa1f1e5
+S572 KEEP-A learn.microsoft.com en-us memory-leak troubleshoot page (pinned r63)
+  curl-UA body 3f2fd8a2… == pin (61869 B) — byte-identical, renewed; tool-UA body a3c96037… (62249 B)
+    differs — class A (UA-dependent vendor serving) confirmed with fresh digests; pin stays
+S573 KEEP-A learn.microsoft.com en-us wevtutil commands page (pinned r63)
+  curl-UA body e6dc1174… == pin (62997 B) — byte-identical, renewed; tool-UA body 85c487ca… (63377 B)
+    differs — class A confirmed; pin stays
+---
+tally: KEEP-C 5 (S156 S157 S158 S159 S160) · KEEP-A 2 (S572 S573) · KEEP-CHROME 1 (S241) ·
+  GATE+KEEP-CHROME 1 (S262) · REPIN 14 (S175 S176 S177 S206 S209 S210 S223 S226 S227 S228 S229 S230 S231 S347)
+23 of 23 findings dispositioned; unclassified count 0 (QUALITY #65); no row silently re-pinned.
+UA question per vendor, settled on today's evidence: raw.githubusercontent.com, github.com, docs.python.org,
+  rfc-editor.org, git-scm.com, curl.se — UA-stable (curl-UA body == tool-UA body on every row);
+  learn.microsoft.com — UA-dependent (en-us pages serve different HTML per UA; ja-jp page adds asset churn);
+  doi.org/IEEE — gated (202, 0 bytes) for non-browser agents from this host.

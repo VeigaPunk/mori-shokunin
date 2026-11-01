@@ -3442,11 +3442,14 @@ stability finding is mined in the lesson and routed to the operator via L0.
 
 Census: validator rc 0 at round start (`evidence/census-start-r65.txt`,
 tolerated W04 duplicate-URL class) — end receipt at round end. Mistakes
-mined: three (`corpus/lessons/round-65.md` — the CRLF URL-list that malformed
+mined: four (`corpus/lessons/round-65.md` — the CRLF URL-list that malformed
 every fetch URL; the verification greps polluted by their own `--` separator,
 discarded and re-taken needle-by-needle; the battery receipt v1 that piped
 selftest rc through `tail` and caught a transient FAIL without naming the
-load condition — discarded, retaken v2 with real rc lines). Carry-ins from
+load condition — discarded, retaken v2 with real rc lines; and [pre-seat
+amendment] the treecommit helper silently dropped the two directory paths
+from the round's first commit — 40c192e7 landed 6 of 32 files, caught by
+the post-commit landmark check, re-committed with individual file paths). Carry-ins from
 the r64 closure:
 (1) LOG r64 "three" → four — appended correction in the r64 entry's tail;
 (2) the in-place-correction precedent kept narrow — the only prior-entry

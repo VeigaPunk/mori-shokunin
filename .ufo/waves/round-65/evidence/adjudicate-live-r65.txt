@@ -1,0 +1,29 @@
+# mori r65 — live adjudication of the 23 r64 drift findings (capability demonstration)
+date: 2026-11-01T07:06:39Z
+$ python tools/mori-drift-adjudicate.py --root . --only S156,S157,S158,S159,S160,S175,S176,S177,S206,S209,S210,S223,S226,S227,S228,S229,S230,S231,S241,S262,S347,S572,S573
+# MORI_DRIFT_ADJUDICATE second_ua=curl/8.21.0 only=S156,S157,S158,S159,S160,S175,S176,S177,S206,S209,S210,S223,S226,S227,S228,S229,S230,S231,S241,S262,S347,S572,S573
+S156 receipt-open
+S157 receipt-open
+S158 receipt-open
+S159 receipt-open
+S160 receipt-open
+S175 pass-through fresh
+S176 pass-through fresh
+S177 pass-through fresh
+S206 pass-through fresh
+S209 pass-through fresh
+S210 pass-through fresh
+S223 pass-through fresh
+S226 pass-through fresh
+S227 pass-through fresh
+S228 pass-through fresh
+S229 pass-through fresh
+S230 pass-through fresh
+S231 pass-through fresh
+S241 content-drift
+S262 gate
+S347 pass-through fresh
+S572 ua-serving
+S573 ua-serving
+MORI_DRIFT_ADJUDICATE rows=23 adjudicated=9 passthrough=14 receipt-open=5 receipt-stale=0 ua-serving=2 content-drift=1 gate=1 unavailable=0
+rc=0

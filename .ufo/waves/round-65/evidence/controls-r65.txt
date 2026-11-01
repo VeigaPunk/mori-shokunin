@@ -1,0 +1,18 @@
+# mori r65 — controls at entering 7d369cd2 (do-nothing round reaches neither after-state)
+date: 2026-11-01T07:30:55Z
+$ git rev-parse HEAD
+7d369cd26d0ec697f5b734fd63fa4aba8fdc7891
+$ git cat-file -e 7d369cd26d0ec697f5b734fd63fa4aba8fdc7891:tools/mori-drift-adjudicate.py
+fatal: path 'tools/mori-drift-adjudicate.py' exists on disk, but not in '7d369cd26d0ec697f5b734fd63fa4aba8fdc7891'
+rc=128 (128 = absent at entering)
+$ git ls-tree -r 7d369cd2 --name-only | grep -c "round-65"
+0
+  (0 disposition/adjudication receipts existed at entering)
+$ git ls-tree -r 7d369cd2 --name-only | grep -c "sources-r65"
+0
+$ git show 7d369cd2:corpus/SOURCES.md | grep -c '^| S'
+348
+$ python tools/mori-source-drift.py --selftest | tail -1   (entering bytes = current bytes: tool untouched this round)
+MORI_SOURCE_DRIFT_SELFTEST: PASS (6 cases)
+$ r64 sweep state at entering (committed receipt)
+MORI_SOURCE_DRIFT rows=346 fresh=53 excerpt=0 drifted=23 unavailable=2 no-copy=268

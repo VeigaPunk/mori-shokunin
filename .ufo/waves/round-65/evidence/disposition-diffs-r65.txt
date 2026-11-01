@@ -1,0 +1,241 @@
+### S175  pin=4053 lines, fresh=4055 lines, changed_opcodes=7
+    replace pin[2031:2032] fresh[2031:2033]
+      - <p class="level1">(HTTP) Use NTLM authentication. The NTLM authentication method was designed by Microsoft and is used by IIS web servers. It is a proprietary protocol, reverse-engineered by clever people and implemented
+      + <p class="level1">(HTTP) NTLM authentication support was removed in 8.24.0. This option is no longer supported and causes curl to fail with an unsupported-feature error. </p>
+      + <p class="level1">Use NTLM authentication. The NTLM authentication method was designed by Microsoft and is used by IIS web servers. It is a proprietary protocol, reverse-engineered by clever people and implemented in cur
+    insert pin[2433:2433] fresh[2434:2435]
+      + <p class="level1">NTLM authentication support was removed in 8.24.0. This option is no longer supported and causes curl to fail with an unsupported-feature error. </p>
+    replace pin[2531:2532] fresh[2533:2534]
+      - <p class="level1">If you use a Windows SSPI-enabled curl binary and do either Negotiate or NTLM authentication then you can tell curl to select the username and password from your environment by specifying a single colon
+      + <p class="level1">If you use a Windows SSPI-enabled curl binary and do Negotiate authentication then you can tell curl to select the username and password from your environment by specifying a single colon with this opti
+    insert pin[2766:2766] fresh[2768:2769]
+      + <p class="level1">Before retrying, curl removes data that the failed attempt wrote to an output file set with <a class="emphasis" href="#--output">--output</a> or <a class="emphasis" href="#--remote-name">--remote-name</
+    delete pin[3365:3366] fresh[3368:3368]
+      - <p class="level1">When using NTLM, the username can be specified without the domain, if there is a single domain and forest in your setup for example. </p>
+    replace pin[3367:3368] fresh[3369:3370]
+      - <p class="level1">If you use a Windows SSPI-enabled curl binary and perform Kerberos V5, Negotiate, NTLM or Digest authentication then you can tell curl to select the username and password from your environment by specif
+      + <p class="level1">If you use a Windows SSPI-enabled curl binary and perform Kerberos V5, Negotiate, Digest authentication then you can tell curl to select the username and password from your environment by specifying a s
+    ... (1 more opcodes not shown)
+
+### S176  pin=732 lines, fresh=733 lines, changed_opcodes=7
+    replace pin[19:20] fresh[19:20]
+      -     <title>unicodedata — Unicode Database &#8212; Python 3.15.1 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+      +     <title>unicodedata — Unicode Database &#8212; Python 3.15.2 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    replace pin[26:27] fresh[26:27]
+      -     <script src="../_static/documentation_options.js?v=6b28f8f5"></script>
+      +     <script src="../_static/documentation_options.js?v=c6788839"></script>
+    replace pin[33:34] fresh[33:34]
+      -           title="Search within Python 3.15.1 documentation"
+      +           title="Search within Python 3.15.2 documentation"
+    replace pin[169:170] fresh[169:170]
+      -       <a href="../index.html">3.15.1 Documentation</a> &#187;
+      +       <a href="../index.html">3.15.2 documentation</a> &#187;
+    replace pin[229:231] fresh[229:232]
+      - <tr class="row-odd"><td><p><a class="reference internal" href="decimal.html#module-decimal" title="decimal: Implementation of the General Decimal Arithmetic Specification."><code class="xref py py-func docutils literal n
+      - <td><p>Decimal value of a character</p></td>
+      + <tr class="row-odd"><td><p><a class="reference internal" href="#unicodedata.decimal" title="unicodedata.decimal"><code class="xref py py-func docutils literal notranslate"><span class="pre">decimal(chr)</span></code></a>
+      + <td><p>Decimal value of a
+      + character</p></td>
+    replace pin[674:675] fresh[675:676]
+      -       <a href="../index.html">3.15.1 Documentation</a> &#187;
+      +       <a href="../index.html">3.15.2 documentation</a> &#187;
+    ... (1 more opcodes not shown)
+
+### S177  pin=381 lines, fresh=381 lines, changed_opcodes=6
+    replace pin[19:20] fresh[19:20]
+      -     <title>html — HyperText Markup Language support &#8212; Python 3.15.1 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+      +     <title>html — HyperText Markup Language support &#8212; Python 3.15.2 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    replace pin[26:27] fresh[26:27]
+      -     <script src="../_static/documentation_options.js?v=6b28f8f5"></script>
+      +     <script src="../_static/documentation_options.js?v=c6788839"></script>
+    replace pin[33:34] fresh[33:34]
+      -           title="Search within Python 3.15.1 documentation"
+      +           title="Search within Python 3.15.2 documentation"
+    replace pin[169:170] fresh[169:170]
+      -       <a href="../index.html">3.15.1 Documentation</a> &#187;
+      +       <a href="../index.html">3.15.2 documentation</a> &#187;
+    replace pin[323:324] fresh[323:324]
+      -       <a href="../index.html">3.15.1 Documentation</a> &#187;
+      +       <a href="../index.html">3.15.2 documentation</a> &#187;
+    replace pin[369:370] fresh[369:370]
+      -       Last updated on Oct 23, 2026 (00:01 UTC).
+      +       Last updated on Nov 01, 2026 (05:22 UTC).
+
+### S206  pin=698 lines, fresh=698 lines, changed_opcodes=4
+    replace pin[0:1] fresh[0:1]
+      - <!DOCTYPE html><html  lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>RFC 6585: Additional HTTP Status Codes | RFC Editor</title><link rel="preconnect" hre
+      + <!DOCTYPE html><html  lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>RFC 6585: Additional HTTP Status Codes | RFC Editor</title><link rel="preconnect" hre
+    replace pin[117:118] fresh[117:118]
+      - }</script></head><body><noscript data-nosnippet="true"><div style="background-color: #ffc9c9; color: #9f0712; padding: 7px; text-align:center; text-size: .9rem;"><span style="font-weight: 600;">Your browser has JavaScrip
+      + }</script></head><body><noscript data-nosnippet="true"><div style="background-color: #ffc9c9; color: #9f0712; padding: 7px; text-align:center; text-size: .9rem;"><span style="font-weight: 600;">Your browser has JavaScrip
+    replace pin[674:675] fresh[674:675]
+      - <!--]--></div></div><!--]--><!--]--></div><div class="flex pl-3 hidden w-[var(--sidebar-width)] lg:block"><!--[--><div class="h-full flex-1 print:block"><!--[--><!--v-if--><!--]--><nav aria-label="In this RFC (desktop me
+      + <!--]--></div></div><!--]--><!--]--></div><div class="flex pl-3 hidden w-[var(--sidebar-width)] lg:block"><!--[--><div class="h-full flex-1 print:block"><!--[--><!--v-if--><!--]--><nav aria-label="In this RFC (desktop me
+    replace pin[697:698] fresh[697:698]
+      -   </noscript></div><!--]--></nav></div><!--]--></div></div><!--]--><!--]--><!--]--></main></div><footer class="bg-blue-900 text-white dark:bg-blue-950 border-t border-t-white dark:border-t-blue-900 relative print:hidden"
+      +   </noscript></div><!--]--></nav></div><!--]--></div></div><!--[--><!--v-if--><!--]--><!--]--><!--]--><!--]--></main></div><footer class="bg-blue-900 text-white dark:bg-blue-950 border-t border-t-white dark:border-t-blue
+
+### S209  pin=1696 lines, fresh=1696 lines, changed_opcodes=5
+    replace pin[0:1] fresh[0:1]
+      - <!DOCTYPE html><html  lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>RFC 8785: JSON Canonicalization Scheme (JCS) | RFC Editor</title><link rel="preconnec
+      + <!DOCTYPE html><html  lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>RFC 8785: JSON Canonicalization Scheme (JCS) | RFC Editor</title><link rel="preconnec
+    replace pin[6:7] fresh[6:7]
+      -  This document describes the JSON Canonicalization Scheme (JCS). This specification defines how to create a canonical representation of JSON data by building on the strict serialization methods for JSON primitives define
+      +  This document describes the JSON Canonicalization Scheme (JCS). This specification defines how to create a canonical representation of JSON data by building on the strict serialization methods for JSON primitives define
+    replace pin[123:124] fresh[123:124]
+      - }</script></head><body><noscript data-nosnippet="true"><div style="background-color: #ffc9c9; color: #9f0712; padding: 7px; text-align:center; text-size: .9rem;"><span style="font-weight: 600;">Your browser has JavaScrip
+      + }</script></head><body><noscript data-nosnippet="true"><div style="background-color: #ffc9c9; color: #9f0712; padding: 7px; text-align:center; text-size: .9rem;"><span style="font-weight: 600;">Your browser has JavaScrip
+    replace pin[1672:1673] fresh[1672:1673]
+      - <!--]--></div></div><!--]--><!--]--></div><div class="flex pl-3 hidden w-[var(--sidebar-width)] lg:block"><!--[--><div class="h-full flex-1 print:block"><!--[--><!--v-if--><!--]--><nav aria-label="In this RFC (desktop me
+      + <!--]--></div></div><!--]--><!--]--></div><div class="flex pl-3 hidden w-[var(--sidebar-width)] lg:block"><!--[--><div class="h-full flex-1 print:block"><!--[--><!--v-if--><!--]--><nav aria-label="In this RFC (desktop me
+    replace pin[1695:1696] fresh[1695:1696]
+      -   </noscript></div><!--]--></nav></div><!--]--></div></div><!--]--><!--]--><!--]--></main></div><footer class="bg-blue-900 text-white dark:bg-blue-950 border-t border-t-white dark:border-t-blue-900 relative print:hidden"
+      +   </noscript></div><!--]--></nav></div><!--]--></div></div><!--[--><!--v-if--><!--]--><!--]--><!--]--><!--]--></main></div><footer class="bg-blue-900 text-white dark:bg-blue-950 border-t border-t-white dark:border-t-blue
+
+### S210  pin=3830 lines, fresh=3830 lines, changed_opcodes=2
+    replace pin[35:36] fresh[35:36]
+      -   <link rel="stylesheet" href="/application.min.c863b1eca1217b6c0d4a322bad3dcbe8f057d08564bd9fb8dca5a00a04dc66e6.css" integrity="sha256-yGOx7KEhe2wNSjIrrT3L6PBX0IVkvZ&#43;43KWgCgTcZuY=">
+      +   <link rel="stylesheet" href="/application.min.30a88cf2b7a1c9603a6853e42996cef77335ab31d161d1435c7cd652ccde7525.css">
+    replace pin[3820:3821] fresh[3820:3821]
+      - <script src="/js/application.min.2c50db482403f7c73cf1c3fdff10121a98d563baede24a87cbc8b056a298196a.js" integrity="sha256-LFDbSCQD98c88cP9/xASGpjVY7rt4kqHy8iwVqKYGWo="></script>
+      + <script src="/js/application.min.b1596bd8193dbaa5632b401c79dd5164e1d16ad54e9836877fae59882510a0bb.js"></script>
+
+### S223  pin=1964 lines, fresh=1973 lines, changed_opcodes=7
+    replace pin[19:20] fresh[19:20]
+      -     <title>urllib.request — Extensible library for opening URLs &#8212; Python 3.15.1 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+      +     <title>urllib.request — Extensible library for opening URLs &#8212; Python 3.15.2 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    replace pin[26:27] fresh[26:27]
+      -     <script src="../_static/documentation_options.js?v=6b28f8f5"></script>
+      +     <script src="../_static/documentation_options.js?v=c6788839"></script>
+    replace pin[33:34] fresh[33:34]
+      -           title="Search within Python 3.15.1 documentation"
+      +           title="Search within Python 3.15.2 documentation"
+    replace pin[204:205] fresh[204:205]
+      -       <a href="../index.html">3.15.1 Documentation</a> &#187;
+      +       <a href="../index.html">3.15.2 documentation</a> &#187;
+    insert pin[295:295] fresh[295:304]
+      + <p>Exceptions raised while reading or parsing an HTTP response are not
+      + wrapped in <a class="reference internal" href="urllib.error.html#urllib.error.URLError" title="urllib.error.URLError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">URLError</span></code></a>
+      + These include subclasses of <a class="reference internal" href="http.client.html#http.client.HTTPException" title="http.client.HTTPException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ht
+      + ... (6 more fresh lines)
+    replace pin[1906:1907] fresh[1915:1916]
+      -       <a href="../index.html">3.15.1 Documentation</a> &#187;
+      +       <a href="../index.html">3.15.2 documentation</a> &#187;
+    ... (1 more opcodes not shown)
+
+### S226  pin=1030 lines, fresh=1030 lines, changed_opcodes=6
+    replace pin[19:20] fresh[19:20]
+      -     <title>os.path — Common pathname manipulations &#8212; Python 3.15.1 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+      +     <title>os.path — Common pathname manipulations &#8212; Python 3.15.2 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    replace pin[26:27] fresh[26:27]
+      -     <script src="../_static/documentation_options.js?v=6b28f8f5"></script>
+      +     <script src="../_static/documentation_options.js?v=c6788839"></script>
+    replace pin[33:34] fresh[33:34]
+      -           title="Search within Python 3.15.1 documentation"
+      +           title="Search within Python 3.15.2 documentation"
+    replace pin[169:170] fresh[169:170]
+      -       <a href="../index.html">3.15.1 Documentation</a> &#187;
+      +       <a href="../index.html">3.15.2 documentation</a> &#187;
+    replace pin[972:973] fresh[972:973]
+      -       <a href="../index.html">3.15.1 Documentation</a> &#187;
+      +       <a href="../index.html">3.15.2 documentation</a> &#187;
+    replace pin[1018:1019] fresh[1018:1019]
+      -       Last updated on Oct 23, 2026 (20:21 UTC).
+      +       Last updated on Nov 01, 2026 (05:22 UTC).
+
+### S227  pin=2751 lines, fresh=2751 lines, changed_opcodes=2
+    replace pin[35:36] fresh[35:36]
+      -   <link rel="stylesheet" href="/application.min.ee050e6639aacc8d3f18c4718a1a579307a7b4f7e327a148fb17dba7398c7476.css">
+      +   <link rel="stylesheet" href="/application.min.30a88cf2b7a1c9603a6853e42996cef77335ab31d161d1435c7cd652ccde7525.css">
+    replace pin[2741:2742] fresh[2741:2742]
+      - <script src="/js/application.min.eab2fadf7c740b753eac932d50ce3f1a8faccdef730adfe2b7d9c14c898960c9.js"></script>
+      + <script src="/js/application.min.b1596bd8193dbaa5632b401c79dd5164e1d16ad54e9836877fae59882510a0bb.js"></script>
+
+### S229  pin=869 lines, fresh=869 lines, changed_opcodes=6
+    replace pin[19:20] fresh[19:20]
+      -     <title>4. Execution model &#8212; Python 3.15.1 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+      +     <title>4. Execution model &#8212; Python 3.15.2 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    replace pin[26:27] fresh[26:27]
+      -     <script src="../_static/documentation_options.js?v=6b28f8f5"></script>
+      +     <script src="../_static/documentation_options.js?v=c6788839"></script>
+    replace pin[33:34] fresh[33:34]
+      -           title="Search within Python 3.15.1 documentation"
+      +           title="Search within Python 3.15.2 documentation"
+    replace pin[194:195] fresh[194:195]
+      -       <a href="../index.html">3.15.1 Documentation</a> &#187;
+      +       <a href="../index.html">3.15.2 documentation</a> &#187;
+    replace pin[812:813] fresh[812:813]
+      -       <a href="../index.html">3.15.1 Documentation</a> &#187;
+      +       <a href="../index.html">3.15.2 documentation</a> &#187;
+    replace pin[857:858] fresh[857:858]
+      -       Last updated on Oct 24, 2026 (03:37 UTC).
+      +       Last updated on Nov 01, 2026 (05:22 UTC).
+
+### S230  pin=1131 lines, fresh=1131 lines, changed_opcodes=6
+    replace pin[19:20] fresh[19:20]
+      -     <title>7. Simple statements &#8212; Python 3.13.17 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+      +     <title>7. Simple statements &#8212; Python 3.13.18 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    replace pin[26:27] fresh[26:27]
+      -     <script src="../_static/documentation_options.js?v=c12f47a6"></script>
+      +     <script src="../_static/documentation_options.js?v=b4adfe99"></script>
+    replace pin[33:34] fresh[33:34]
+      -           title="Search within Python 3.13.17 documentation"
+      +           title="Search within Python 3.13.18 documentation"
+    replace pin[184:185] fresh[184:185]
+      -       <a href="../index.html">3.13.17 Documentation</a> &#187;
+      +       <a href="../index.html">3.13.18 Documentation</a> &#187;
+    replace pin[1074:1075] fresh[1074:1075]
+      -       <a href="../index.html">3.13.17 Documentation</a> &#187;
+      +       <a href="../index.html">3.13.18 Documentation</a> &#187;
+    replace pin[1119:1120] fresh[1119:1120]
+      -       Last updated on Oct 22, 2026 (11:59 UTC).
+      +       Last updated on Oct 26, 2026 (13:10 UTC).
+
+### S231  pin=869 lines, fresh=869 lines, changed_opcodes=6
+    replace pin[19:20] fresh[19:20]
+      -     <title>4. Execution model &#8212; Python 3.15.1 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+      +     <title>4. Execution model &#8212; Python 3.15.2 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    replace pin[26:27] fresh[26:27]
+      -     <script src="../_static/documentation_options.js?v=6b28f8f5"></script>
+      +     <script src="../_static/documentation_options.js?v=c6788839"></script>
+    replace pin[33:34] fresh[33:34]
+      -           title="Search within Python 3.15.1 documentation"
+      +           title="Search within Python 3.15.2 documentation"
+    replace pin[194:195] fresh[194:195]
+      -       <a href="../index.html">3.15.1 Documentation</a> &#187;
+      +       <a href="../index.html">3.15.2 documentation</a> &#187;
+    replace pin[812:813] fresh[812:813]
+      -       <a href="../index.html">3.15.1 Documentation</a> &#187;
+      +       <a href="../index.html">3.15.2 documentation</a> &#187;
+    replace pin[857:858] fresh[857:858]
+      -       Last updated on Oct 24, 2026 (11:38 UTC).
+      +       Last updated on Nov 01, 2026 (05:22 UTC).
+
+### S241  pin=1499 lines, fresh=1499 lines, changed_opcodes=2
+    replace pin[162:163] fresh[162:163]
+      - 			<link rel="stylesheet" href="/static/assets/0.4.03574.8308-9505b1c8/styles/site.css" />
+      + 			<link rel="stylesheet" href="/static/assets/0.4.03589.8339-b0a05127/styles/site.css" />
+    replace pin[210:211] fresh[210:211]
+      - 				src="/static/assets/0.4.03574.8308-9505b1c8/scripts/ja-jp/index-docs.js"
+      + 				src="/static/assets/0.4.03589.8339-b0a05127/scripts/ja-jp/index-docs.js"
+
+### S347  pin=3339 lines, fresh=3339 lines, changed_opcodes=6
+    replace pin[19:20] fresh[19:20]
+      -     <title>ast — Abstract syntax trees &#8212; Python 3.15.1 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+      +     <title>ast — Abstract syntax trees &#8212; Python 3.15.2 documentation</title><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    replace pin[26:27] fresh[26:27]
+      -     <script src="../_static/documentation_options.js?v=6b28f8f5"></script>
+      +     <script src="../_static/documentation_options.js?v=c6788839"></script>
+    replace pin[33:34] fresh[33:34]
+      -           title="Search within Python 3.15.1 documentation"
+      +           title="Search within Python 3.15.2 documentation"
+    replace pin[203:204] fresh[203:204]
+      -       <a href="../index.html">3.15.1 Documentation</a> &#187;
+      +       <a href="../index.html">3.15.2 documentation</a> &#187;
+    replace pin[3281:3282] fresh[3281:3282]
+      -       <a href="../index.html">3.15.1 Documentation</a> &#187;
+      +       <a href="../index.html">3.15.2 documentation</a> &#187;
+    replace pin[3327:3328] fresh[3327:3328]
+      -       Last updated on Oct 24, 2026 (21:57 UTC).
+      +       Last updated on Nov 01, 2026 (05:22 UTC).
+

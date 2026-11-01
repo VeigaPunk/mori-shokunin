@@ -147,3 +147,18 @@ evidence-verify) was executed again this round — the fresh-start counter
 re-derived and all 23 findings re-opened and re-fetched rather than cited
 from r64's receipts. No still-unimplemented proposal adopted this round.
 Assimilation: none — shokuknow unreachable.
+
+## Mistakes (pre-seat amendment, same round)
+
+4. class: silent tool behavior — directory paths passed to the treecommit
+   helper were dropped without error or warning: the round's first commit
+   (`40c192e7`) landed only the 6 individually named files and silently
+   omitted both directories (`.ufo/waves/round-65`, containing all 11
+   evidence receipts, and `corpus/evidence/sources-r65`, containing all 15
+   pinned copies). captured-by: the post-commit landmark check the lane
+   owes every landing — `git diff <base>..<new> --stat` and
+   `git ls-tree -r <new> | grep -c` against the known file inventory, which
+   showed 6 files where 32 were committed-and-pushed. fix: re-committed with
+   every path listed as an individual file (follow-up commit; the helper
+   pins mode 100644 and takes file paths only — the r63 D5 note and this
+   round's lesson now record both constraints of the lane's commit path).

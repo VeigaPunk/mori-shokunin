@@ -1,0 +1,18 @@
+# mori r65 — adjudicator selftest, two consecutive runs (D2 discipline: one receipt, both runs, tallies identical)
+date: 2026-11-01T07:07:30Z
+$ python tools/mori-drift-adjudicate.py --selftest  (run A)
+selftest row_tokens               PASS (got={'S901': 'receipt-open', 'S902': 'receipt-stale', 'S903': 'ua-serving', 'S904': 'content-drift', 'S905': 'gate', 'S906': 'unavailable', 'S907': 'pass-through fresh'} want={'S901': 'receipt-open', 'S902': 'receipt-stale', 'S903': 'ua-serving', 'S904': 'content-drift', 'S905': 'gate', 'S906': 'unavailable', 'S907': 'pass-through fresh'})
+selftest summary                  PASS (summary=('7', '6', '1', '1', '1', '1', '1', '1', '1'))
+selftest exit_code                PASS (rc=0 want 0)
+selftest header_line              PASS (second UA disclosed on the header line)
+selftest missing_sources_exit2    PASS (rc=2 want 2)
+MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)
+rcA=0
+$ python tools/mori-drift-adjudicate.py --selftest  (run B)
+selftest row_tokens               PASS (got={'S901': 'receipt-open', 'S902': 'receipt-stale', 'S903': 'ua-serving', 'S904': 'content-drift', 'S905': 'gate', 'S906': 'unavailable', 'S907': 'pass-through fresh'} want={'S901': 'receipt-open', 'S902': 'receipt-stale', 'S903': 'ua-serving', 'S904': 'content-drift', 'S905': 'gate', 'S906': 'unavailable', 'S907': 'pass-through fresh'})
+selftest summary                  PASS (summary=('7', '6', '1', '1', '1', '1', '1', '1', '1'))
+selftest exit_code                PASS (rc=0 want 0)
+selftest header_line              PASS (second UA disclosed on the header line)
+selftest missing_sources_exit2    PASS (rc=2 want 2)
+MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)
+rcB=0
