@@ -1,0 +1,58 @@
+# mori r71 — standing battery on unchanged bytes
+date: 2026-11-01T22:34:26Z
+interpreter posture: plain `python` — the standing battery convention (r70 receipt parity). Host env sets
+PYTHONUTF8=1; plain python inherits it (preferred encoding utf-8). DISCLOSED host fact discovered this round:
+the same commands under `python -I` (isolated mode ignores PYTHONUTF8) make mori-register-check's selftest
+crash rc 1 (fixture write_text falls back to cp1252; em-dash -> 0x97 -> utf-8 read-back UnicodeDecodeError at
+the fixture's 'met' case) — the -I attempt and its real rc were receipted first, then the battery was re-run at
+the standing posture; the tool bytes are UNCHANGED (this is an environment dependency disclosure, not a tool
+edit; a versioned encoding pin is next-round/operator material, routed beside the open r65 L0).
+
+$ python tools/mori-register-check.py --selftest (under -I: UnicodeDecodeError traceback, rc 1 — receipted above)
+rc=0
+REGCHECK_SELFTEST pass=12 fail=0
+
+$ python tools/mori-settlement-scan.py --selftest
+rc=0
+SETSCAN_SELFTEST pass=10 fail=0
+
+$ python tools/mori-vote-bind.py --selftest
+rc=0
+VOTE_BIND_SELFTEST pass=16 fail=0
+
+$ python tools/mori-pin-check.py --selftest
+rc=0
+PIN_CHECK_SELFTEST pass=125 fail=0
+
+$ python tools/mori-drift-adjudicate.py --selftest
+rc=0
+MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)
+
+$ python tools/mori-drift-recheck.py --selftest
+rc=0
+MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)
+
+$ python tools/mori-ua-variance.py --selftest
+rc=0
+MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)
+
+$ python tools/mori-uptime-win.py --selftest
+(r70 bytes, unchanged: tool sha256 04e437fe971fe51f87dd74b803fd2809f8ce0a96d43a03948097bbfb5c7e0577)
+rc=0
+UPTIME_WIN_SELFTEST: PASS (8 cases)
+
+$ bash tools/mori-index-clean.sh .
+rc=1
+MORI_INDEX_CLEAN staged=157 intent_to_add=0
+
+battery summary: register 12/12, settlement 10/10, vote-bind 16/16, pin-check 125/125, adjudicate 5/5, recheck 10/10, ua-variance 14/14, uptime-win 8/8 — all rc 0 at unchanged bytes; the two NEW tools' selftests carry their own receipts (workstate 10/10 x3, events-context 10/10 x3).
+
+$ bash tools/mori-index-clean.sh . — index finding, disclosed:
+rc=1 MORI_INDEX_CLEAN staged=157 intent_to_add=0. The 157 staged entries are staged DELETIONS of tracked
+paths (git diff --cached --stat: "157 files changed, 29 insertions(+), 56029 deletions(-)", e.g.
+tools/mori-uptime-win.py | 278 -) — the host's known unreliable-index state (round contract section 0:
+"the git index on this host is unreliable (NTFS-uncheckoutable paths)"). The worktree files exist; this
+round landed nothing through the index and will not: all commits go through the treecommit.py plumbing
+helper, which writes trees directly. Not introduced by this round's work (no git add ran; the round's
+writes are worktree writes); disclosed rather than cleaned (index mutation is a full-tree op the contract
+forbids).

@@ -1699,3 +1699,31 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
      lifetime measurement; the tool decides no rotation clock (S580 grounds
      that token clocks exist, not their values); single-capture receipts (no
      A/B pair, no window to state).
+
+
+162. A located-line pointer in a source row's anchor cell or a knowledge entry
+     is verified against the PINNED copy before landing: the quoted text must
+     appear on the named line of the pin (a grep of the exact sentence against
+     that one line returns 1). A drifted pointer is corrected by a NEW
+     supersedes row naming old→new plus an erratum receipt binding each
+     corrected pointer to its line — never an in-place anchor edit (contract
+     v1 rule 2: the anchor cell is immutable; errata are append-only blocks).
+     ← the r70 closure's routed defect D1 (corpus/lessons/round-70-verifier-spotcheck.md
+     §6): the S582 row, the r70 lesson Gate, the r70 opening receipt and the
+     knowledge entry K2/K4/K5 recorded located-line pointers (:833/:842/:845)
+     that the pinned copy contradicts — "The number of milliseconds." is at
+     :834, the working-state boundary sentence at :841, the ~49-day alert at
+     :842; the recorded :833/:845 are `<h2>` headings that carry no quote text
+     at all. Corrected r71: supersedes row S583 + erratum
+     `.ufo/waves/round-71/evidence/s582-pointers-erratum-r71.txt`.
+     Shown able to fail: `sed -n '833p' <pin> | grep -c "The number of
+     milliseconds."` → 0 (the rule's subject fails on the r70 bytes) while
+     the corrected pointers return 1 each (:834/:841/:842 greps in the
+     erratum receipt), and the live re-open of the page was byte-identical to
+     the pin (sha256 equal, `source-s582-reopen-r71.txt`), so the corrected
+     pointers bind the live body too.
+     Not covered: quote WORD-count or wording drift (texts were real; only
+     locations drifted — the closure verified the texts separately); pages
+     whose fetched body shifts line numbers between fetches (the pin-relative
+     grep is the ground; a re-open must be byte-identical before corrected
+     pointers are read into it).

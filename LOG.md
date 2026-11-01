@@ -3921,3 +3921,111 @@ landing); a lesson edit that duplicated its own sentences (caught by the
 read-back rule). Assimilation: considerthese re-mined (no newer file than
 2026-10-26); suggestion 1 stays behind the operator's open instrument-change
 ruling. Assimilation: none — shokuknow unreachable.
+
+## Round 71 — Mori (L1 MoriR71): C1 calibration verified met (the r70 closure's D1/D2 carry-ins discharged: supersedes row S583 re-points the S582 located-line pointers old→new — :833→:834, :842→:841, :845→:842 — each re-verified against the pinned copy and the byte-identical live re-open, the erratum receipt binds every pointer, the r70 entry takes an append-only correction block, QUALITY 162 makes located-line pin-verification procedural, and D2 is corrected old→new in the round-71 lesson); C2 depth verified met, sourced S584 (capability acquisition tools/mori-workstate-win.py — the Windows working-state read: the biased tick count beside the unbiased interrupt-time count in 100-ns units floored to ms, the conversion named on the line, the failed-call signature mapped to honest-unavailable, count=biased+unbiased boot_identity=absent debug_build_caveat=carried on every line); C3 operability verified met (capability acquisition tools/mori-events-context-win.py — the r70 planned (b): a fresh r63-class host-events re-derivation bound WITH the boot window in one receipt, boot_binding=none events_window=recent-N-not-boot-scoped traveling on every line)
+
+C1 (calibration, sourced S583 supersedes-S582, the r70 closure carry-in D1 +
+D2): the S582 located-line pointers drifted against the pin in five carriers
+(the r70 opening receipt, the S582 SOURCES row anchor, the r70 lesson Gate,
+the r70 entry K2/K4/K5, the fleet report — all named, none rewritten in
+place). Corrections are new entries: S583 (teaches opens `supersedes S582 —`,
+INSIDE the Registry after S582) names the three pointers old→new; the live
+re-open of the page is byte-identical to the r70 pin (sha256 `580f1935…`,
+receipt `evidence/source-s582-reopen-r71.txt`), so the corrected pointers
+bind the live body too; the erratum receipt `evidence/s582-pointers-erratum-r71.txt`
+greps each quote against its recorded line (0 — the recorded :833/:845 are
+`<h2>` headings) and its actual line (1) on the pin; the r70 entry's
+correction block re-points K2/K4/K5 and re-confirms K1/K3; QUALITY 162
+(able-to-fail against the drifted pointers themselves: recorded lines grep 0,
+corrected lines grep 1); D2 old→new in this round's lesson Gate (the r70
+lesson said `sysinfoapi` sweep 0; the r70 receipt records rows=1 = the S574
+row; the page-identifying `gettickcount64` sweep was and is 0 — the admit
+decision stands). Quote texts were real throughout (the closure verified
+them); only locations drifted. Self-verdict: verified met.
+
+C2 (depth, sourced S584 opened this round, capability acquisition):
+`tools/mori-workstate-win.py` reads GetTickCount64 (ms — the r70 probe's
+count, which includes sleep/hibernation per the corrected boundary pointer
+S582:841) beside QueryUnbiasedInterruptTime (S584:817 "in units of 100
+nanoseconds", floored to ms by division by 10000 with the conversion named
+on the line — the 10000x unit trap pinned by the unit_math selftest arm) and
+prints `surface workstate: state=ok biased_ms=… unbiased_100ns=…
+unbiased_ms=… biased_minus_unbiased_ms=… conversion=unbiased_ms-floor(10000)
+read_model=two-separate-reads count=biased+unbiased boot_identity=absent
+debug_build_caveat=carried` + `WORKSTATE_WIN: AVAILABLE surfaces=1 ok=1` rc
+0. The failed-call signature (S584:826-827 — a zero RETURN is a failed call)
+maps to honest-unavailable, never to a zero count; zero is real (S584:828);
+the delta is declared a two-read-instant derivation (no episode attribution,
+no power diagnosis — tsukuroi/operator; PROVINCE head byte-frozen, no edit);
+the Precise variant (S584:876) stays unopened. Selftest
+`WORKSTATE_WIN_SELFTEST: PASS (10 cases)` rc 0 x3 at the final bytes
+(`evidence/workstate-selftest-r71.txt` — the three pre-final 9/10 runs
+disclosed in-receipt: the fixture's 100-ns unit arithmetic was drafted from
+memory wrong twice and the grammar arm's expected literal once, all caught
+before landing); live rc 0 x3, three separate one-shot counts
+(`evidence/workstate-live-r71.txt`): deltas −7/−12/−11 ms at
+biased_ms≈493.6e9 (~5.7 days — the same boot window the r70 read opened:
+489381578 ms at the r70 closure → 493623375 ms here), the exact skew shape
+the declared read model predicts on a never-slept boot. Entry
+`corpus/knowledge/workstate-win-r71.md` K1–K6 line-located in the pinned
+S584 copy. Self-verdict: verified met.
+
+C3 (operability, capability acquisition, the r70 planned note (b) verbatim):
+`tools/mori-events-context-win.py` runs the two existing probes as read-only
+children and prints one bound receipt — the fresh r63-class event counts
+WITH the r70-class boot window: `events-context: events_state=AVAILABLE
+matched=209 window=200 surfaces=4 ok=4` bound with `uptime_state=AVAILABLE
+uptime_ms=494001000 count=biased boot_identity=absent` and the limit line
+`boot_binding=none events_window=recent-200-not-boot-scoped` (the pair
+shares the host, never a time window — printed on every receipt, never
+implied). The runner parses only the two children's summary lines and never
+echoes their bytes (the redaction arm proves fixture child-outputs carrying
+computer/user/path/token values cannot reach stdout); unparseable child
+summaries are leg-unavailable, never guessed; PARTIAL events still pairs
+with the state word traveling. Selftest `EVENTS_CONTEXT_SELFTEST: PASS (10
+cases)` rc 0 x3 at the final bytes (`evidence/events-context-selftest-r71.txt`
+— the pre-fix down-leg TypeError crash disclosed NOT-CAPTURED per QUALITY
+160, fixed as `events_window=unavailable`); live rc 0 x3
+(`evidence/events-context-live-r71.txt`). Self-verdict: verified met.
+
+No frozen byte edited: SKILL.md, `tools/mori-source-drift.py`,
+`tools/mori-drift-adjudicate.py`, PROVINCE.md, AGENTS.md, corpus/README.md
+absent from the round's diff; the SKILL:905 tally pin true by construction.
+Standing battery green on unchanged bytes — register 12/12, settlement
+10/10, vote-bind 16/16, pin-check 125/125, adjudicate 5/5, recheck 10/10,
+ua-variance 14/14, uptime-win 8/8 (`evidence/selftests-battery-r71.txt`),
+with the interpreter-posture finding disclosed there: under `python -I` the
+host's PYTHONUTF8=1 is ignored, register-check's fixture write falls back to
+cp1252 and the selftest crashes rc 1 — an environment dependency of a
+standing instrument, disclosed (tool bytes unchanged; a versioned encoding
+pin routed beside the open r65 L0), caught because the first battery attempt
+also piped selftests through `tail -1` and masked the real rc (both receipted,
+both mined in the lesson).
+
+Sourced claims: C1 rests on S583 (the re-opened S582 page, byte-identical to
+its pin); C2 rests on S584 (both opened this round; QUALITY 155 sweeps INTO
+the receipts before each fetch — the S584 sweep carries its interpretation:
+the API-name keyword hits the S582 row's quote text, the page-identifying
+URL-slug sweep is 0). SOURCES 355 -> 357; both rows INSIDE the Registry after
+S582 (S583 :364, S584 :365; badNF=0). Census: validator rc 0 at round start
+(`evidence/census-start-r71.txt`) -> rc 0 at round end
+(`evidence/census-end-r71.txt`).
+
+Six mistakes mined this round (`corpus/lessons/round-71.md`): a selftest
+fixture with from-memory unit arithmetic — wrong twice, plus a stale
+expected literal (the grammar arm caught all three; fixture values now
+derived from the pinned sentence, never recalled); a rc-masking pipe on
+battery output (traceback beside rc=0; rc capture now unpiped); an
+interpreter-posture change dressed as hygiene (`python -I` vs the standing
+plain-`python` convention — the environment dependency above); a receipt
+header claiming a verbatim capture it did not hold (rewritten as a
+NOT-CAPTURED disclosure before anything cited it); a duplicate sweep read
+without its page-identifying form (the S584 keyword hit is S582's quote
+text; the slug sweep is the real sweep); and a used-by cell that carried
+prose inside the parsed path list (the round-end census E11'd it rc 1 —
+first-attempt receipt disclosed, cell fixed in place per contract rule 2,
+end run rc 0). Assimilation: considerthese
+re-mined (newest-named 2026-10-26.md; the receipt's own first newest-file
+line corrected in-place with disclosure after an `ls -t` mtime tie printed
+the wrong file); suggestion 1 stays behind the operator's open instrument
+ruling. Assimilation: none — shokuknow unreachable.

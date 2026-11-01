@@ -1,0 +1,51 @@
+# mori r71 — tools/mori-events-context-win.py selftest (offline)
+tool sha256 (final bytes): 9bd73b18a379452a4465c8365e72b1cdce55ff3a33d1fead09342b9afb77f133
+
+## disclosed pre-final defect (NOT CAPTURED, disclosed per the QUALITY 160 convention):
+the first selftest run crashed at arm 3 with TypeError "%d format: a real number is required, not NoneType"
+at the binding-line render: when the events leg is down there is no observed window value, and the fixture-mode
+call passes window=None. That run's raw bytes were overwritten by the corrected receipt before a verbatim
+capture was kept — the crash is DISCLOSED here, not approximated by another run's block. Fix: a down events
+leg now prints events_window=unavailable (there is no window to name); no other arm ran at the pre-fix bytes.
+Post-fix receipt only, beneath the divider.
+
+$ python -I tools/mori-events-context-win.py --selftest
+--- run 1 ---
+selftest pair_grammar         PASS
+selftest window_echo          PASS
+selftest events_unavailable   PASS
+selftest uptime_unavailable   PASS
+selftest unparseable_rejected PASS
+selftest fixture_missing      PASS
+selftest redaction            PASS
+selftest uptime_echo          PASS
+selftest partial_pairs        PASS
+selftest binding_line         PASS
+EVENTS_CONTEXT_SELFTEST: PASS (10 cases)
+rc=0
+--- run 2 ---
+selftest pair_grammar         PASS
+selftest window_echo          PASS
+selftest events_unavailable   PASS
+selftest uptime_unavailable   PASS
+selftest unparseable_rejected PASS
+selftest fixture_missing      PASS
+selftest redaction            PASS
+selftest uptime_echo          PASS
+selftest partial_pairs        PASS
+selftest binding_line         PASS
+EVENTS_CONTEXT_SELFTEST: PASS (10 cases)
+rc=0
+--- run 3 ---
+selftest pair_grammar         PASS
+selftest window_echo          PASS
+selftest events_unavailable   PASS
+selftest uptime_unavailable   PASS
+selftest unparseable_rejected PASS
+selftest fixture_missing      PASS
+selftest redaction            PASS
+selftest uptime_echo          PASS
+selftest partial_pairs        PASS
+selftest binding_line         PASS
+EVENTS_CONTEXT_SELFTEST: PASS (10 cases)
+rc=0

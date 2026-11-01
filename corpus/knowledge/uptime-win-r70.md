@@ -52,3 +52,27 @@ Round-62 host note's absent Linux surfaces stay absent here; the registered
 gates on Linux hosts are unchanged). Owns-scope extension recorded in the
 round-70 SCORECARD section and this entry; the PROVINCE.md head stays
 byte-frozen (r65 L0 set) and takes no edit this round.
+
+Round-71 correction (append-only block; routed defect D1, r70 closure section 6,
+status-neutral) — the K2/K4/K5 located-line pointers above are superseded by
+S583 (supersedes S582) and the erratum
+`.ufo/waves/round-71/evidence/s582-pointers-erratum-r71.txt`, each pointer
+re-verified against the pinned copy (byte-identical live re-open,
+`source-s582-reopen-r71.txt`):
+
+- **K2** — read `S582.html:831-834` for `S582.html:831-833`: the return-value
+  sentence "The number of milliseconds." is at `:834` (the recorded `:833` is
+  the `<h2 id="return-value">` heading). Signature `:831` unchanged.
+- **K4** — read `S582.html:841` for `S582.html:842`: the working-state
+  boundary sentence is at `:841` (the recorded `:842` is the alert div that
+  follows it). The `count=biased` claim and its ground are unchanged.
+- **K5** — read `S582.html:842` for `S582.html:845`: the debug-build ~49-day
+  alert is at `:842`, inside that alert div (the recorded `:845` is the
+  `<h2 id="requirements">` heading). The caveat itself is unchanged.
+- K1 (`:829`) and K3 (`:836`) were re-verified exact; the quote texts were
+  real throughout (the closure verified them) — only the locations drifted.
+The r70 receipt and fleet report bytes carry the same superseded pointers and
+stay untouched (frozen history; the erratum names them). Downstream: the
+round-71 entry `workstate-win-r71.md` is written against the corrected
+pointers, and this entry's working-state boundary now points at the opened
+surface (`corpus/knowledge/workstate-win-r71.md`, sourced S584).

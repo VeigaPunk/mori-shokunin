@@ -1,0 +1,32 @@
+# mori round-71 source opening — QueryUnbiasedInterruptTime (realtimeapiset)
+date opened: 2026-11-01T22:03:48Z
+fetcher: curl curl 8.21.0
+
+## QUALITY 155 duplicate sweep (pre-row, INTO this receipt)
+$ grep -ci "queryunbiasedinterrupttime" corpus/SOURCES.md
+1
+rows_above rc=0 (1 = no hit = no duplicate)
+$ grep -ci "unbiasedinterrupttime" corpus/SOURCES.md
+1
+rows_above rc=0
+
+## fetch
+$ curl -sS -m 60 -L -o corpus/evidence/sources-r71/S584.html https://learn.microsoft.com/en-us/windows/win32/api/realtimeapiset/nf-realtimeapiset-queryunbiasedinterrupttime
+curl rc=0
+bytes: 54774
+sha256: d0bcbba945e7cf29d4664feb28a35aa31c1f80cadb5191644a33ab84464f9136
+
+## sweep interpretation (run and receipted before anything cites the row)
+the API-name keyword hits the S582 row text (its K4 quote names QueryUnbiasedInterruptTime). The page-identifying sweep is the URL slug:
+$ grep -c "nf-realtimeapiset-queryunbiasedinterrupttime" corpus/SOURCES.md
+0
+rows_above rc=1 (0 = no duplicate; the row may land)
+
+## located facts (line numbers in the fetched body as fetched; first reading of this page)
+- `:817` — "Gets the current unbiased interrupt-time count, in units of 100 nanoseconds." (11 words) + "The unbiased interrupt-time count does not include time the system spends in sleep or hibernation." (17 words) — the definition and the UNIT ground: the raw count is 100-ns units, NOT milliseconds (S582 counts ms; a naive ms-reading of this count is a 10000x unit error the probe must convert).
+- `:819` — signature `BOOL QueryUnbiasedInterruptTime(` — a BOOL-returning function taking the count via an OUT parameter (UnbiasedTime, :820) — a different call shape from GetTickCount64's return-value shape; the live reader passes byref and pins the restype.
+- `:826-827` — "If the function succeeds, the return value is nonzero. If the function fails because it is called with a null parameter, the return value is zero." (22 words) — the named error signature: a zero return is a FAILED call, never a zero count; the probe maps it to unavailable.
+- `:828` — "The interrupt-time count begins at zero when the system starts and is incremented at each clock interrupt by the length of a clock tick." (24 words) — zero-at-boot semantics; a zero is a real count near boot.
+- `:830` — "reflects only the time that the system is in the working state" + "not \"biased\" by time the system spends in sleep or hibernation" — the working-state boundary this probe reports (counts only; no episode attribution).
+- `:833` — the debug-build alert: "the interrupt-time count and tick count are advanced by approximately 49 days" on debug ("checked") builds — BOTH counters shift there; the caveat travels on the receipt line.
+- `:876` — the Precise variant (`QueryUnbiasedInterruptTimePrecise`) exists and stays UNOPENED: this probe reads the plain count only.

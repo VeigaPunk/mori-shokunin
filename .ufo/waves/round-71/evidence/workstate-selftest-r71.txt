@@ -1,0 +1,51 @@
+# mori r71 — tools/mori-workstate-win.py selftest (offline)
+tool sha256 (final bytes): ce3b1e7415954bd6c55c195f0da3fe86ccbec5d17546cfd0d7fc0430b12acf28
+
+## disclosed pre-final runs, and what caught them:
+- first draft (sha 1ba1549c…): fixture arithmetic wrong (unbiased_100ns 977_184_000_000 is 97_718_400 ms, not 977_184 ms) — grammar arm failed 3/3 (9/10).
+- second draft: the delta-equal fixture still wrong (9_771_840_000 100-ns units = 977_184 ms; the pinned delta read 976206816, not 0) — grammar arm failed 3/3 (9/10), caught by hand-diffing the rendered line against the expectation.
+- third draft: fixture values right (9_771_840_000_000 100-ns = 977184000 ms exactly), but the grammar arm's EXPECTED literal still spelled the stale values — grammar failed 3/3 (9/10) a third time.
+- final bytes: fixture and expected literal agree; all ten arms PASS x3 below.
+No live reading, no citation and no other artifact ever consumed a wrong fixture value; every failed run was
+receipted verbatim before the passing receipt replaced it (run-history disclosure per the r69 box-3 convention).
+
+$ python -I tools/mori-workstate-win.py --selftest
+--- run 1 ---
+selftest grammar              PASS
+selftest unit_math            PASS
+selftest zero_is_real         PASS
+selftest honest_unavailable   PASS
+selftest negative_rejected    PASS
+selftest noninteger_rejected  PASS
+selftest redaction            PASS
+selftest uint64_max_rendered  PASS
+selftest delta_signed_shape   PASS
+selftest conversion_floor     PASS
+WORKSTATE_WIN_SELFTEST: PASS (10 cases)
+rc=0
+--- run 2 ---
+selftest grammar              PASS
+selftest unit_math            PASS
+selftest zero_is_real         PASS
+selftest honest_unavailable   PASS
+selftest negative_rejected    PASS
+selftest noninteger_rejected  PASS
+selftest redaction            PASS
+selftest uint64_max_rendered  PASS
+selftest delta_signed_shape   PASS
+selftest conversion_floor     PASS
+WORKSTATE_WIN_SELFTEST: PASS (10 cases)
+rc=0
+--- run 3 ---
+selftest grammar              PASS
+selftest unit_math            PASS
+selftest zero_is_real         PASS
+selftest honest_unavailable   PASS
+selftest negative_rejected    PASS
+selftest noninteger_rejected  PASS
+selftest redaction            PASS
+selftest uint64_max_rendered  PASS
+selftest delta_signed_shape   PASS
+selftest conversion_floor     PASS
+WORKSTATE_WIN_SELFTEST: PASS (10 cases)
+rc=0

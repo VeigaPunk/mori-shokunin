@@ -1,0 +1,16 @@
+# mori round-71 source RE-open — the GetTickCount64 page (for the supersedes-S582 correction row)
+date opened: 2026-11-01T22:02:43Z
+fetcher: curl curl 8.21.0
+
+## pre-row sweep (INTO this receipt, before the fetch)
+$ grep -c "nf-sysinfoapi-gettickcount64" corpus/SOURCES.md
+rows=1 (rc=0 ; 1 = the S582 row itself — EXPECTED: this re-open grounds a supersedes-S582 correction row, not a duplicate surface claim)
+
+## fetch (live re-open; the pin is corpus/evidence/sources-r70/S582.html)
+$ curl -sS -m 60 -L -o <scratch>/S582-reopen.html https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-gettickcount64
+curl rc=0
+live bytes: 52661
+live sha256: 580f1935fb47b5c992a48d22299f7452aaeb00099f2ac96ba74c92002a18277f
+pin  sha256: 580f1935fb47b5c992a48d22299f7452aaeb00099f2ac96ba74c92002a18277f
+verdict: live body vs pin = byte-identical
+-> the corrected pointers (:834/:841/:842) are therefore pointers into the LIVE body too; the erratum receipt's per-line greps bind them.

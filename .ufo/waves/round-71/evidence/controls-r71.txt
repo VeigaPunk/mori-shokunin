@@ -1,0 +1,24 @@
+# mori r71 — do-nothing controls (every r71 artifact absent at entering)
+entering: 015787e6
+
+$ git cat-file -e <entering>:<path> — rc 128 = absent at entering
+tools/mori-workstate-win.py -> rc=128 (expect 128)
+tools/mori-events-context-win.py -> rc=128 (expect 128)
+corpus/knowledge/workstate-win-r71.md -> rc=128 (expect 128)
+corpus/evidence/sources-r71/S584.html -> rc=128 (expect 128)
+corpus/lessons/round-71.md -> rc=128 (expect 128)
+.ufo/waves/round-71/evidence/s582-pointers-erratum-r71.txt -> rc=128 (expect 128)
+.ufo/waves/round-71/evidence/workstate-selftest-r71.txt -> rc=128 (expect 128)
+.ufo/waves/round-71/evidence/events-context-live-r71.txt -> rc=128 (expect 128)
+
+$ git show <entering>:corpus/SOURCES.md | grep -c "^| S"
+355
+$ git show <entering>:corpus/SOURCES.md | grep -c "supersedes S582"
+0
+rc_above=1 (1 = no hit = no supersedes row at entering)
+$ git show <entering>:corpus/SOURCES.md | grep -c "nf-realtimeapiset-queryunbiasedinterrupttime"
+0
+rc_above=1 (1 = no hit = the S584 URL unseen at entering)
+$ git show <entering>:corpus/QUALITY.md | grep -c "^162\."
+0
+rc_above=1 (1 = criterion 162 absent at entering)

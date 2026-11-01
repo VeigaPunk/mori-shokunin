@@ -1,0 +1,22 @@
+# mori r71 — L0 re-verify + considerthese check
+date: 2026-11-01T22:27:03Z
+
+$ grep -c "^mori |" <fleet>/.ufo/l0-questions.md
+mori_lines=11
+$ grep -n "^mori | round-6[25]" <fleet>/.ufo/l0-questions.md | cut -c1-120
+226:mori | round-62 | MISSION L2 concurrency requires >=8 L2 subagents in one batched AgentSwarm call, but that dispatch
+242:mori | round-65 | This host's loopback HTTP transport is degraded and variable (r64 cert measured transport_cap=6553
+verdict: both mori lines (round-62, round-65) remain OPEN — no answer follows either line; routed around this round, never treated as answered (the round-65 line is the SKILL:905 instrument pin + operating-posture question: SKILL.md untouched again this round, the tally pin true by construction).
+
+$ ls -la <lane>/considerthese/ | tail -5
+-rw-r--r-- 1 jpvei 197609 4512 Oct 31 17:36 2026-10-22.md
+-rw-r--r-- 1 jpvei 197609 3896 Oct 31 17:36 2026-10-23.md
+-rw-r--r-- 1 jpvei 197609 4464 Oct 31 17:36 2026-10-24.md
+-rw-r--r-- 1 jpvei 197609 5035 Oct 31 17:36 2026-10-25.md
+-rw-r--r-- 1 jpvei 197609 5145 Oct 31 17:36 2026-10-26.md
+$ newest-named considerthese file (mtime ties on checkout make `ls -t` unreliable; name-sorted is the honest check):
+2026-10-26.md  (disclosed: the first receipt line above ran `ls -t | head -1` and printed 2026-10-25.md because
+all checked-out files share the Oct 31 17:36 checkout mtime and the tie fell to a non-name order; corrected
+in this receipt BEFORE anything cited it — the full listing above shows 2026-10-26.md present, newest-named)
+
+(considerthese mined: no file newer than 2026-10-26 — same finding as r70; suggestion 1 remains the one still-unimplemented proposal behind the operator's open round-65 instrument-change ruling)

@@ -1,0 +1,23 @@
+# mori r71 — tools/mori-events-context-win.py live on this host (the fresh r63-class re-derivation, bound to the boot window)
+date: 2026-11-01T22:21:32Z
+tool sha256: 9bd73b18a379452a4465c8365e72b1cdce55ff3a33d1fead09342b9afb77f133
+three separate one-shot paired counts — never a rate (no series is claimed)
+$ python -I tools/mori-events-context-win.py
+--- run 1 ---
+events-context: events_state=AVAILABLE matched=209 window=200 surfaces=4 ok=4
+events-context: uptime_state=AVAILABLE uptime_ms=494001000 count=biased boot_identity=absent
+events-context: boot_binding=none events_window=recent-200-not-boot-scoped
+EVENTS_CONTEXT_WIN: PAIRED events_ok=1 uptime_ok=1
+rc=0
+--- run 2 ---
+events-context: events_state=AVAILABLE matched=209 window=200 surfaces=4 ok=4
+events-context: uptime_state=AVAILABLE uptime_ms=494002640 count=biased boot_identity=absent
+events-context: boot_binding=none events_window=recent-200-not-boot-scoped
+EVENTS_CONTEXT_WIN: PAIRED events_ok=1 uptime_ok=1
+rc=0
+--- run 3 ---
+events-context: events_state=AVAILABLE matched=209 window=200 surfaces=4 ok=4
+events-context: uptime_state=AVAILABLE uptime_ms=494004859 count=biased boot_identity=absent
+events-context: boot_binding=none events_window=recent-200-not-boot-scoped
+EVENTS_CONTEXT_WIN: PAIRED events_ok=1 uptime_ok=1
+rc=0

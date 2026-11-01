@@ -1,0 +1,9 @@
+# mori round-71 census — END, first attempt (rc 1) — DISCLOSED
+date: 2026-11-01
+status: NOT FULLY CAPTURED — the first end run's raw output was overwritten by the corrected receipt before being kept (the QUALITY 160 convention: not-captured is disclosed, never approximated). What WAS captured in-session, verbatim, from that run's tail:
+
+mori\tW04\tS583 duplicate url learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-gettickcount64 across scopes
+mori\tE11\tS583 missing used-by corpus/knowledge/uptime-win-r70.md (r71 correction block)
+rc=1
+
+reading: the S583 used-by cell carried a parenthetical comment — 'corpus/knowledge/uptime-win-r70.md (r71 correction block)' — and the validator parses used-by as comma-separated repo-relative paths, so the parenthetical rode into the path and the existence check failed (E11). The W04 line is the tolerated duplicate-URL warning class (S583 legitimately re-uses the S582 URL for the supersedes correction row). Fix: the parenthetical removed from the used-by cell (contract rule 2 — used-by is mutable in place, logged in the lesson as mistake 6), then the end run reran rc 0 (census-end-r71.txt). The row was fixed before anything cited it.

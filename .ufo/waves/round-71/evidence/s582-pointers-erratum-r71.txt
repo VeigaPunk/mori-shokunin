@@ -1,0 +1,41 @@
+# mori r71 — erratum: S582 located-line pointers (r70 closure carry-in D1)
+date: 2026-11-01 (r71; corrections are new entries, never in-place rewrites)
+routed note: corpus/lessons/round-70-verifier-spotcheck.md section 6 D1 (status-neutral)
+pin: corpus/evidence/sources-r70/S582.html sha256 580f1935fb47b5c992a48d22299f7452aaeb00099f2ac96ba74c92002a18277f (52661 bytes) — unchanged from the r70 row
+
+$ verification of each pointer against the PINNED copy (grep -c on the exact quoted text):
+
+-- recorded :829 (K1/def sentence) -- confirmed correct:
+$ sed -n "829p" pin | grep -c "Retrieves the number of milliseconds that have elapsed since the system was started."
+grep_rc=0 count=1 line829=1
+
+-- DRIFT 1: the return-value sentence (recorded :833 in the S582 row, the lesson Gate, the r70 receipt located-facts line and knowledge entry K2; actual :834) --
+$ sed -n "833p" pin | grep -c "The number of milliseconds."
+recorded :833 -> count=0 (the recorded line does NOT carry the quote; line 833 is the h2 heading: <h2 id="return-value">Return value</h2>)
+$ sed -n "834p" pin | grep -c "The number of milliseconds."
+actual   :834 -> count=1
+
+-- DRIFT 2: the working-state boundary sentence (recorded :842 in the row, the lesson Gate, the receipt and knowledge entry K4; actual :841) --
+$ sed -n "842p" pin | grep -c "To obtain the time the system has spent in the working state since it was started"
+recorded :842 -> count=0 (line 842 is the alert div; its text starts: <div class="alert"><b>Note</b>&nbsp;&nbsp;The <a href="/en-u)
+$ sed -n "841p" pin | grep -c "To obtain the time the system has spent in the working state since it was started"
+actual   :841 -> count=1
+
+-- DRIFT 3: the debug-build ~49-day note (recorded :845 in the row, the lesson Gate, the receipt and knowledge entry K5; actual :842, inside the same alert div) --
+$ sed -n "845p" pin | grep -c "advanced by approximately 49 days"
+recorded :845 -> count=0 (line 845 is the h2 heading: <h2 id="requirements">Requirements</h2>)
+$ sed -n "842p" pin | grep -c "advanced by approximately 49 days"
+actual   :842 -> count=1
+
+-- untouched pointers, re-confirmed against the pin: :829 def sentence (above), :831 signature, :836 resolution --
+line831: <pre><code class="lang-cpp">ULONGLONG GetTickCount64();
+$ sed -n "836p" pin | grep -c "typically in the range of"
+line836 resolution count=1
+
+quote texts: UNCHANGED and verified real (every quoted sentence found on its actual line, byte-level, above);
+only the stated locations drift. Superseded pointers named old->new: :833->:834, :842->:841, :845->:842.
+The drift carriers (named, none rewritten in place): the r70 receipt .ufo/waves/round-70/evidence/source-s582-r70.txt
+(located-facts lines 21/23/24), the S582 SOURCES.md row anchor cell, the r70 lesson Gate, the knowledge entry
+corpus/knowledge/uptime-win-r70.md K2/K4/K5, and the fleet report .ufo/reports/round-70/mori.md (fleet repo,
+orchestrator-owned). The correction lands as new row S583 (supersedes S582) + an appended correction block in
+the knowledge entry; the frozen r70 receipt/report bytes stay untouched.

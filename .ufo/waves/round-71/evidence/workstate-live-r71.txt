@@ -1,0 +1,17 @@
+# mori r71 — tools/mori-workstate-win.py live on this host
+date: 2026-11-01T22:15:15Z
+tool sha256: ce3b1e7415954bd6c55c195f0da3fe86ccbec5d17546cfd0d7fc0430b12acf28
+three separate one-shot counts — never a rate (no series is claimed)
+$ python -I tools/mori-workstate-win.py
+--- run 1 ---
+surface workstate: state=ok biased_ms=493623375 unbiased_100ns=4936233824524 unbiased_ms=493623382 biased_minus_unbiased_ms=-7 conversion=unbiased_ms-floor(10000) read_model=two-separate-reads count=biased+unbiased boot_identity=absent debug_build_caveat=carried
+WORKSTATE_WIN: AVAILABLE surfaces=1 ok=1 unavailable=0
+rc=0
+--- run 2 ---
+surface workstate: state=ok biased_ms=493623750 unbiased_100ns=4936237621484 unbiased_ms=493623762 biased_minus_unbiased_ms=-12 conversion=unbiased_ms-floor(10000) read_model=two-separate-reads count=biased+unbiased boot_identity=absent debug_build_caveat=carried
+WORKSTATE_WIN: AVAILABLE surfaces=1 ok=1 unavailable=0
+rc=0
+--- run 3 ---
+surface workstate: state=ok biased_ms=493623921 unbiased_100ns=4936239321632 unbiased_ms=493623932 biased_minus_unbiased_ms=-11 conversion=unbiased_ms-floor(10000) read_model=two-separate-reads count=biased+unbiased boot_identity=absent debug_build_caveat=carried
+WORKSTATE_WIN: AVAILABLE surfaces=1 ok=1 unavailable=0
+rc=0
