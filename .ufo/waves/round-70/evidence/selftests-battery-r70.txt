@@ -1,0 +1,37 @@
+# mori round-70 standing selftest battery on this Windows workspace host
+date: 2026-11-01T20:19:41Z
+interpreter: python (the standing SKILL:905 python3-naming L0 is routed around; python3 is a non-functional Store stub here)
+unchanged-byte tools: register, settlement-scan, vote-bind, pin-check, drift-adjudicate, drift-recheck, ua-variance (r69 bytes); uptime-win is the round's NEW tool (its own receipt: uptime-win-selftest-r70.txt, 8/8 x3)
+
+$ python tools/mori-register-check.py --selftest
+REGCHECK_SELFTEST pass=12 fail=0
+rc=0
+--- mori-register-check end ---
+$ python tools/mori-settlement-scan.py --selftest
+SETSCAN_SELFTEST pass=10 fail=0
+rc=0
+--- mori-settlement-scan end ---
+$ python tools/mori-vote-bind.py --selftest
+VOTE_BIND_SELFTEST pass=16 fail=0
+rc=0
+--- mori-vote-bind end ---
+$ python tools/mori-pin-check.py --selftest
+PASS cli_bad_rev_rc2  rc=2
+PIN_CHECK_SELFTEST pass=125 fail=0
+rc=0
+--- mori-pin-check end ---
+$ python tools/mori-drift-adjudicate.py --selftest
+selftest missing_sources_exit2    PASS (rc=2 want 2)
+MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)
+rc=0
+--- mori-drift-adjudicate end ---
+$ python tools/mori-drift-recheck.py --selftest
+selftest missing_sources_exit2    PASS (rc=2 want 2)
+MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)
+rc=0
+--- mori-drift-recheck end ---
+$ python tools/mori-ua-variance.py --selftest
+selftest crosscheck_nonsummary_input_exit2          PASS (rc=2 (a provided file that is not a re-check summary is a setup error, matching --from-sweep strictness))
+MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)
+rc=0
+--- mori-ua-variance end ---

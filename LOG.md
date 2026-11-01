@@ -3829,3 +3829,95 @@ C1+C2; (2) the r65 L0 — stays open, routed around. Assimilation:
 considerthese re-mined (no newer file than 2026-10-26); suggestion 1 stays
 behind the operator's open instrument-change ruling. Assimilation: none —
 shokuknow unreachable.
+
+## Round 70 — Mori (L1 MoriR70): C1 depth verified met (the short-window rotation-bound receipts, sourced S581: three same-UA A/A pairs at computed windows 31 s / 91 s / 304 s — the documented AWS WAF immunity-time scale — rotation caught within the 91 s window and absent within 31 s and 304 s, so the observed rotation tracks no single per-interval clock at these scales; no TTL value decided); C2 operability verified met, sourced S582 (capability acquisition tools/mori-uptime-win.py — the Windows host-uptime read, the boot window of this host's own evidence, count=biased boot_identity=absent on every receipt line)
+
+Entering `9dc4314d` (r69 verifier spotcheck tip). CARRY-IN from the r69
+closure: none beyond the standing L0s — routed around again (the mori |
+round-62 dispatch-surface line and the mori | round-65 SKILL:905
+python3-naming line re-verified unanswered this round,
+`evidence/l0-considerthese-r70.txt`; every command used `python`; no frozen
+byte edited). FRESH-START duty re-performed with own receipts
+(`evidence/freshstart-spotchecks-r70.txt`): the frozen r61 counter
+re-derived at the r61 data tip -> `C2=unmet` rc 1 (same verdict as the r61
+closure and the r65–r69 re-derivations); r59/r60/r61 cited revs PRESENT and
+ancestral (2b9f0397, 7b86704d, ddfb12fb, 6752eafd, 325f7e63, 7370a731,
+d21c0e5c, 986d4b46); fleet report commits 2807c6ab/eeedfd53/3bb9b8e7
+PRESENT. Do-nothing controls (`evidence/controls-r70.txt`): every r70
+receipt, tool, entry and source pin absent at entering rc 128; SOURCES 353
+rows at entering with zero matches for either new URL; the lesson absent rc
+128 — none of the round's claims reachable without this round's edits.
+
+C1 (depth, sourced S581): the r69 SCORECARD planned item ("pair SHORT
+windows to bound each position's rotation from above, still deciding no TTL
+value") executed at the documented scale. S581 (AWS WAF "Setting timestamp
+expiration and token immunity times", opened this round, sweeps INSIDE the
+receipt `evidence/source-s581-r70.txt`) supplies the documented scale:
+default 300 s, challenge minimum 300 s, CAPTCHA minimum 60 s; a successful
+challenge response updates a timestamp inside the token (`:59-60`). Three
+pairs on the S241 instrument-UA body, each receipt stating its computed
+window: 31 s -> `per-response=0 same-bytes=true` (`evidence/shortwin-a-r70.txt`); 91 s -> `per-response=4
+stable-not-in-pin=2 same-bytes=false` (`evidence/shortwin-b-r70.txt`); 304 s -> `per-response=0
+same-bytes=true` (`evidence/shortwin-c-r70.txt`). Finding: rotation is
+NON-UNIFORM at the documented scale points — caught within a 91 s window
+(faster than the documented 300 s challenge minimum and default), absent
+within 31 s and 304 s — the observed rotation tracks no single per-interval
+clock at these scales. Byte-identity spans receipted in the shas (pair B's
+capture B == pair C's capture A `6e7b906d…`; pair A's body == pair B's
+capture A `e4bf924c…`). No TTL value decided, no mechanism named (the
+client answers no challenges — S581's update mechanism describes challenge
+responses this client never performs), no row re-classed, no grammar taught
+(QUALITY 159/161 intact).
+
+C2 (operability, sourced S582, capability acquisition):
+`tools/mori-uptime-win.py` reads GetTickCount64 once (read-only ctypes,
+standard library only; restype pinned `c_ulonglong` so the 64-bit count
+cannot truncate — selftest arm uint64_max_rendered pins the exact domain-max
+rendering) and prints `surface uptime: state=ok uptime_ms=… uptime_s=…
+uptime_d=… count=biased boot_identity=absent` + `UPTIME_WIN: AVAILABLE
+surfaces=1 ok=1` rc 0 — the boot window of this host's own evidence (the
+r63 event-log counts and the r64 runway reads accumulate inside it; this
+host has been up ~5.6 days, so the r63/r64/r70 evidence shares ONE boot
+window). The caveats travel on every receipt line: `count=biased`
+(S582:842 — the count includes sleep/hibernation; QueryUnbiasedInterruptTime
+is the doc's unbiased pointer, unopened), `boot_identity=absent` (the API
+returns none, never inferred), the debug-build ~49-day shift recorded
+(S582:845), resolution 10–16 ms system-timer (S582:836). No liveness
+verdict (a hung host still accrues uptime); not a census surface; boot
+diagnosis stays tsukuroi/operator. Selftest `UPTIME_WIN_SELFTEST: PASS (8
+cases)` rc 0 x3 (`evidence/uptime-win-selftest-r70.txt`); live rc 0 x3,
+three separate one-shot counts never a rate
+(`evidence/uptime-win-live-r70.txt`). Entry
+`corpus/knowledge/uptime-win-r70.md` K1–K5 line-located in the pinned S582
+copy. The PROVINCE head is a frozen byte (r65 L0 set): the owns-scope
+extension is recorded in the SCORECARD r70 section and the entry, and
+PROVINCE takes no edit.
+
+No frozen byte edited: SKILL.md, `tools/mori-source-drift.py`,
+`tools/mori-drift-adjudicate.py`, PROVINCE.md, AGENTS.md, corpus/README.md
+absent from the round's diff; the SKILL:905 tally pin true by
+construction. Standing battery green on unchanged bytes — register 12/12,
+settlement 10/10, vote-bind 16/16, pin-check 125/125, adjudicate 5/5,
+recheck 10/10, ua-variance 14/14 (`evidence/selftests-battery-r70.txt`).
+
+Sourced claims: C1 rests on S581; C2 rests on S582 (both opened this round;
+pins `corpus/evidence/sources-r70/S581.html` sha `5e5b941e…` 16179 bytes,
+`S582.html` sha `580f1935…` 52661 bytes; QUALITY 155 duplicate sweeps run
+INTO the receipts before each fetch). SOURCES 353 -> 355; both rows
+appended INSIDE the Registry section after S580 (the r68 sectioned-append
+rule applied from the start; position verified by the end validator run).
+Census: validator rc 0 at round start (`evidence/census-start-r70.txt`) ->
+rc 0 at round end (`evidence/census-end-r70.txt`).
+
+Four mistakes mined this round (`corpus/lessons/round-70.md`): a citation
+drafted with a digest typed from memory as a placeholder (caught by the
+verify-before-land re-read against the receipt's own sha line; fixed before
+anything cited it — the working rule: a digest is pasted from the receipt's
+sha line at write time, never typed); an existence check run against the
+wrong repo (the r61 lane-side freeze sha first receipted ABSENT under the
+fleet checkout; corrected on the receipt with an explicit correction line);
+a receipt header transcribing the wrong file name (fixed in place before
+landing); a lesson edit that duplicated its own sentences (caught by the
+read-back rule). Assimilation: considerthese re-mined (no newer file than
+2026-10-26); suggestion 1 stays behind the operator's open instrument-change
+ruling. Assimilation: none — shokuknow unreachable.

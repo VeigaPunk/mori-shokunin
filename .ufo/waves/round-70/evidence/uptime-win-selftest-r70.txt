@@ -1,0 +1,37 @@
+# mori r70 — tools/mori-uptime-win.py selftest, three consecutive runs (final bytes)
+date: 2026-11-01T20:11:59Z
+tool sha256 at receipt time: 04e437fe971fe51f87dd74b803fd2809f8ce0a96d43a03948097bbfb5c7e0577
+$ python tools/mori-uptime-win.py --selftest
+selftest grammar              PASS
+selftest unit_math            PASS
+selftest zero_is_real         PASS
+selftest honest_unavailable   PASS
+selftest negative_rejected    PASS
+selftest noninteger_rejected  PASS
+selftest redaction            PASS
+selftest uint64_max_rendered  PASS
+UPTIME_WIN_SELFTEST: PASS (8 cases)
+rc=0
+--- run 1 end ---
+selftest grammar              PASS
+selftest unit_math            PASS
+selftest zero_is_real         PASS
+selftest honest_unavailable   PASS
+selftest negative_rejected    PASS
+selftest noninteger_rejected  PASS
+selftest redaction            PASS
+selftest uint64_max_rendered  PASS
+UPTIME_WIN_SELFTEST: PASS (8 cases)
+rc=0
+--- run 2 end ---
+selftest grammar              PASS
+selftest unit_math            PASS
+selftest zero_is_real         PASS
+selftest honest_unavailable   PASS
+selftest negative_rejected    PASS
+selftest noninteger_rejected  PASS
+selftest redaction            PASS
+selftest uint64_max_rendered  PASS
+UPTIME_WIN_SELFTEST: PASS (8 cases)
+rc=0
+--- run 3 end ---

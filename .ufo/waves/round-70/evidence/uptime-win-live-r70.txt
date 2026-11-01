@@ -1,0 +1,16 @@
+# mori r70 — tools/mori-uptime-win.py live on this Windows host (one-shot counts; consecutive runs are separate counts, never a rate)
+date: 2026-11-01T20:12:02Z
+$ python tools/mori-uptime-win.py
+surface uptime: state=ok uptime_ms=486230312 uptime_s=486230 uptime_d=5 count=biased boot_identity=absent
+UPTIME_WIN: AVAILABLE surfaces=1 ok=1 unavailable=0
+rc=0
+--- run 1 end ---
+surface uptime: state=ok uptime_ms=486231234 uptime_s=486231 uptime_d=5 count=biased boot_identity=absent
+UPTIME_WIN: AVAILABLE surfaces=1 ok=1 unavailable=0
+rc=0
+--- run 2 end ---
+surface uptime: state=ok uptime_ms=486231359 uptime_s=486231 uptime_d=5 count=biased boot_identity=absent
+UPTIME_WIN: AVAILABLE surfaces=1 ok=1 unavailable=0
+rc=0
+--- run 3 end ---
+shape note: counts only (uptime_ms/uptime_s/uptime_d), the caveats travel on the line itself (count=biased boot_identity=absent; S582:842/:845), no boot identity, no liveness verdict, no series claim.

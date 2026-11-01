@@ -1,0 +1,21 @@
+# mori r70 — short-window A/A pair (target ~30s; computed window stated below)
+date: 2026-11-01T19:57:09Z
+ground: S579 + S580 (token machinery rotates token-bearing served bytes) + S581 opened this round (immunity times: default 300 s, challenge min 300 s, CAPTCHA min 60 s; the timestamp inside the token is updated on each successful challenge response) — this pair observes at the documented sub-minimum-to-default scale and decides no TTL value.
+redaction: capture bodies stay in C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r70/captures (never committed); counts and shapes only below.
+---
+$ capture A (block carries its own run-start):
+$ python tools/mori-ua-variance.py --capture --url <S241 url> --ua mori-source-drift/1.0 --out <scratch>/captures/shortwin-a-r70-a.bin
+UA_VAR_CAPTURE url=https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/linux/oom-swap-file-linux-vm ua=mori-source-drift/1.0 bytes=54343 sha256=e4bf924c6a655d3e532b7b8410a19c08714b7bd186fe9f90288724e8af241388 out=C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r70/captures/shortwin-a-r70-a.bin as-of=2026-11-01T19:57:10Z rc=0
+rc=0
+
+$ capture B (block carries its own run-start):
+$ python tools/mori-ua-variance.py --capture --url <S241 url> --ua mori-source-drift/1.0 --out <scratch>/captures/shortwin-a-r70-b.bin
+UA_VAR_CAPTURE url=https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/linux/oom-swap-file-linux-vm ua=mori-source-drift/1.0 bytes=54343 sha256=e4bf924c6a655d3e532b7b8410a19c08714b7bd186fe9f90288724e8af241388 out=C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r70/captures/shortwin-a-r70-b.bin as-of=2026-11-01T19:57:41Z rc=0
+rc=0
+
+computed window A->B = 31 s (2026-11-01T19:57:10Z -> 2026-11-01T19:57:41Z), stated per QUALITY 161
+
+$ compare (pin = the committed r42 pin corpus/evidence/sources-r42/S241.html; line values never emitted):
+$ python tools/mori-ua-variance.py --compare --label shortwin-a-r70 --pin corpus/evidence/sources-r42/S241.html --a <scratch>/captures/shortwin-a-r70-a.bin --b <scratch>/captures/shortwin-a-r70-b.bin --window-s 31
+UA_VARIANCE label=shortwin-a-r70 per-response=0 stable=1499 stable-not-in-pin=4 stable-in-pin=1495 lines-a=1499 lines-b=1499 lines-pin=1499 same-bytes=true sha-a=e4bf924c6a655d3e532b7b8410a19c08714b7bd186fe9f90288724e8af241388 sha-b=e4bf924c6a655d3e532b7b8410a19c08714b7bd186fe9f90288724e8af241388 sha-pin=1168b2a626ec4b69fbdf7341ae3331c16ff0e42667d67488762b30e206591357 window-s=31 crosscheck=unavailable reason=not-provided run-start=2026-11-01T19:57:43Z
+rc=0

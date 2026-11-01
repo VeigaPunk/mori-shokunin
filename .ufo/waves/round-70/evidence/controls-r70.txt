@@ -1,0 +1,24 @@
+# mori round-70 do-nothing controls at the entering tip 9dc4314d1572fe3e2ae18dd8c9c8f51f1263736f
+A do-nothing round reaches none of the round's claimed surfaces.
+
+$ git cat-file -e <entering>:.ufo/waves/round-70/evidence/shortwin-a-r70.txt -> rc=128 (128 = absent)
+$ git cat-file -e <entering>:.ufo/waves/round-70/evidence/shortwin-b-r70.txt -> rc=128 (128 = absent)
+$ git cat-file -e <entering>:.ufo/waves/round-70/evidence/shortwin-c-r70.txt -> rc=128 (128 = absent)
+$ git cat-file -e <entering>:.ufo/waves/round-70/evidence/uptime-win-selftest-r70.txt -> rc=128 (128 = absent)
+$ git cat-file -e <entering>:.ufo/waves/round-70/evidence/uptime-win-live-r70.txt -> rc=128 (128 = absent)
+$ git cat-file -e <entering>:tools/mori-uptime-win.py -> rc=128 (128 = absent)
+$ git cat-file -e <entering>:corpus/knowledge/uptime-win-r70.md -> rc=128 (128 = absent)
+$ git cat-file -e <entering>:corpus/evidence/sources-r70/S581.html -> rc=128 (128 = absent)
+$ git cat-file -e <entering>:corpus/evidence/sources-r70/S582.html -> rc=128 (128 = absent)
+$ git cat-file -e <entering>:corpus/lessons/round-70.md -> rc=128 (128 = absent)
+
+$ git show <entering>:corpus/SOURCES.md | grep -c 'waf-tokens-immunity-times'
+rows=0
+rc=1 (1 = no row at entering)
+$ git show <entering>:corpus/SOURCES.md | grep -ci 'gettickcount64'
+rows=0
+rc=1 (1 = no row at entering)
+$ git show <entering>:corpus/SOURCES.md | grep -c '^| S' -> rows=353
+$ git show <entering>:corpus/QUALITY.md | grep -c '^161\.' (QUALITY 161 from r69, standing)
+rows=1
+rc=0

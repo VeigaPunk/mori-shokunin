@@ -1,0 +1,22 @@
+# mori round-70 source opening — S581 (AWS WAF token immunity times)
+date opened: 2026-11-01T19:52:49Z
+fetcher: curl curl 8.21.0 (x86_64-w64-mingw32)
+
+## QUALITY 155 duplicate sweep (pre-row, INTO this receipt per the r69 lesson's rule)
+$ grep -c 'waf-tokens-immunity-times' corpus/SOURCES.md
+rows=0
+rc=1 (1 = no hit = no duplicate)
+$ grep -c 'token immunity' corpus/SOURCES.md
+rows=0
+rc=1 (1 = no hit = no duplicate)
+$ grep -ci 'immunity' corpus/SOURCES.md
+rows=0
+rc=1
+
+## fetch
+$ curl -sS -m 60 -L -o corpus/evidence/sources-r70/S581.html https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-immunity-times.html
+curl rc=0
+bytes: 16179
+sha256: 5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865
+
+## located facts (line numbers via grep -n / awk on the fetched body)

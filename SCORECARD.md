@@ -3501,3 +3501,52 @@ has no live observation yet (selftest-proven only) — it stays a standing arm
 that fires only if the vendor's serving arms ever disagree; the r65 L0
 instrument-change question and the dispatch-surface question (mori |
 round-62) stand open for the operator.
+
+## Round 70 — the short-window rotation bound + the Windows host-uptime read: C1 depth landed, sourced S581 (three stated-window A/A pairs at the documented immunity-time scale: rotation caught within the 91 s window — faster than the documented 300 s challenge minimum and default — absent within 31 s and 304 s; no TTL value decided); C2 operability landed, sourced S582 (capability acquisition `tools/mori-uptime-win.py` — the boot-window context read, `count=biased boot_identity=absent` traveling on every receipt line)
+
+Fresh start (r59–r61 rejected closures re-read and re-derived with own
+receipts; eight named rule-outs): `.ufo/waves/round-70/evidence/freshstart-spotchecks-r70.txt`
+— the frozen r61 counter re-derived at the r61 data tip
+(`python .ufo/waves/round-61/count-c2.py 986d4b46…` → `C2=unmet` rc 1, the
+same verdict the r61 closure and the r65–r69 re-derivations reached); the
+r59/r60/r61 cited lane revs PRESENT and ancestral, the three fleet report
+commits PRESENT. Controls (`.ufo/waves/round-70/evidence/controls-r70.txt`):
+every r70 receipt, tool, entry and source pin absent at entering rc 128;
+SOURCES 353 rows at entering with zero matches for either new URL; the
+lesson absent rc 128 — a do-nothing round reaches none of this.
+
+| Claim | Axis | Counting commands | At entering | After (measured this round) |
+|---|---|---|---|---|
+| C1: the short-window rotation-bound receipts — three same-UA A/A pairs on the S241 instrument-UA body at computed windows 31 s / 91 s / 304 s (the documented immunity-time scale points: S581 default 300 s, challenge minimum 300 s, CAPTCHA minimum 60 s), each pair receipted with its own stated window (QUALITY 161) and counts only | depth 5 | `git cat-file -e <entering>:.ufo/waves/round-70/evidence/shortwin-b-r70.txt` (rc 128 at entering); `grep -c "computed window A->B" .ufo/waves/round-70/evidence/shortwin-{a,b,c}-r70.txt` (3); `grep -oE "window-s=[0-9]+" <receipts> \| sort -u` (31, 91, 304); `grep -h "UA_VARIANCE" <receipts> \| grep -c "per-response=4"` (1) and `per-response=0` (2) | No short-window receipt existed; the smallest stated window anywhere in the tree was the r68 receipt's derivable-but-unstated 1268 s (`controls-r70.txt`: the r70 receipts absent rc 128; r69's `window-s=4015` was the longest). Whether the observed rotation continued at sub-300 s scales was unobservable | `.ufo/waves/round-70/evidence/shortwin-a-r70.txt` (window-s=31: `per-response=0 stable=1499 same-bytes=true` rc 0), `shortwin-b-r70.txt` (window-s=91: `per-response=4 stable=1497 stable-not-in-pin=2 same-bytes=false` rc 0), `shortwin-c-r70.txt` (window-s=304: `per-response=0 stable=1499 same-bytes=true` rc 0). Finding: rotation is NON-UNIFORM at the documented scale points — caught within a 91 s window (faster than the documented 300 s challenge minimum and default), absent within 31 s and 304 s windows — so the observed rotation tracks no single per-interval clock at these scales. Byte-identity spans receipted in the shas: pair B's capture B == pair C's capture A (`6e7b906d…`), pair A's body == pair B's capture A (`e4bf924c…`). Sourced S581 (opened this round, sweeps INSIDE the receipt); S579+S580 boundary untouched: no TTL value decided, no mechanism named (the client answers no challenges — S581's update mechanism describes challenge responses this client never performs), no row re-classed, no grammar taught (QUALITY 159/161 intact). **Self-verdict: verified met** (closure to re-derive) |
+| C2 (sourced, S582): `tools/mori-uptime-win.py` — the Windows host-uptime read (capability acquisition): one-shot read-only GetTickCount64 via ctypes, standard library only; the boot window of this host's own evidence (the r63 event-log counts and the r64 runway reads accumulate inside it); output counts/shapes only with `count=biased boot_identity=absent` traveling on EVERY receipt line (S582:842 the count includes sleep/hibernation; :845 the debug-build ~49-day shift; :836 system-timer resolution 10–16 ms); honest-unavailable; offline redaction-armed selftest; entry `corpus/knowledge/uptime-win-r70.md` K1–K5 line-located in the pinned S582 copy | operability 7 | `git cat-file -e <entering>:tools/mori-uptime-win.py` (rc 128 at entering); `python tools/mori-uptime-win.py --selftest` -> `UPTIME_WIN_SELFTEST: PASS (8 cases)`; `python tools/mori-uptime-win.py` -> `UPTIME_WIN: AVAILABLE surfaces=1 ok=1` rc 0; `grep -c "^| S" corpus/SOURCES.md` (353 -> 355) | Tool absent, entry absent, sources-r70 absent (`controls-r70.txt` rc 128 each); the host had NO registered uptime/liveness-context read — the Round-62 host note lists the Linux class as absent here and nothing Windows-side read since-boot context | The capability runs and its output verifies: selftest 8/8 rc 0 x3 at the final bytes (`.ufo/waves/round-70/evidence/uptime-win-selftest-r70.txt`, arms: grammar, pinned unit arithmetic ms->s->d, zero-is-real, honest-unavailable, negative/non-integer rejected, redaction against name/path/token fixtures, unsigned-64-max rendering pinned so a truncating restype cannot pass); live on this host `surface uptime: state=ok uptime_ms=486169515 uptime_s=486169 uptime_d=5 count=biased boot_identity=absent` rc 0, three runs receipted as separate one-shot counts never a rate (`.ufo/waves/round-70/evidence/uptime-win-live-r70.txt`) — the r63/r64/r70 evidence shares ONE boot window (~5.6 d). **Self-verdict: verified met** (closure to re-derive). Routed limits: no boot identity (the API returns none — printed, never inferred); no working-state time (QueryUnbiasedInterruptTime stays unopened, S582:842 pointer recorded); no liveness verdict (a hung host still accrues uptime); not a census surface; boot-state diagnosis stays tsukuroi/operator (PROVINCE refuses) — the PROVINCE head is a frozen byte (r65 L0 set), so the owns-scope extension is recorded here and in the entry, and PROVINCE takes no edit |
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Windows host-uptime read (`tools/mori-uptime-win.py`) | reads the one-shot host tick count as the boot window of this host's own evidence, with the biased-count, no-boot-identity and debug-build-shift caveats carried on every receipt line | `python tools/mori-uptime-win.py --selftest` -> `UPTIME_WIN_SELFTEST: PASS (8 cases)` rc 0 x3 (`.ufo/waves/round-70/evidence/uptime-win-selftest-r70.txt`); live `UPTIME_WIN: AVAILABLE surfaces=1 ok=1` rc 0, uptime_d=5, three separate one-shot runs (`.ufo/waves/round-70/evidence/uptime-win-live-r70.txt`) | 70 |
+
+Selftests this round: the standing battery green on unchanged bytes —
+register 12/12, settlement 10/10, vote-bind 16/16, pin-check 125/125,
+adjudicate 5/5, recheck 10/10, ua-variance 14/14
+(`.ufo/waves/round-70/evidence/selftests-battery-r70.txt`); the new tool 8/8
+x3 at the final bytes (`.ufo/waves/round-70/evidence/uptime-win-selftest-r70.txt`).
+No frozen byte edited: SKILL.md, `tools/mori-source-drift.py`,
+`tools/mori-drift-adjudicate.py`, PROVINCE.md, AGENTS.md, corpus/README.md
+are absent from the round's diff; the SKILL:905 tally pin stays true by
+construction. SOURCES 353 -> 355 (S581 AWS WAF token immunity times — the
+documented scale ground of C1's windows; S582 GetTickCount64 — C2's entry
+ground; both opened this round; duplicate sweeps receipted INSIDE
+`.ufo/waves/round-70/evidence/source-s581-r70.txt` and `source-s582-r70.txt`
+per the r69 lesson's rule). Census: validator rc 0 at round start
+(`evidence/census-start-r70.txt`) -> rc 0 at round end
+(`evidence/census-end-r70.txt`); both rows appended INSIDE the Registry
+section after S580 (the r68 sectioned-append rule applied from the start).
+
+Planned (round 71): (a) the rotation bound is ONE session's observation — a
+later round can receipt whether the 91 s-scale rotation and the byte-identity
+spans recur (the r70 shas make recurrence checkable without re-deriving
+positions); (b) pair a fresh host-events re-derivation with the uptime read
+so the r63-class event counts travel WITH their boot window (the context the
+uptime read exists for); (c) the cross-check arm's inconsistent branch stays
+a standing arm (no live observation; cannot be manufactured honestly); (d)
+QueryUnbiasedInterruptTime (working-state time) stays unopened — a distinct
+surface, S582:842 pointer recorded, claimed only if a round needs it.

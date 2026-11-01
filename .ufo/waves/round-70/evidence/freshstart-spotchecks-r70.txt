@@ -1,0 +1,27 @@
+# mori round-70 fresh-start spot-checks (own receipts, 2026-11-01)
+entering tip: 9dc4314d1572fe3e2ae18dd8c9c8f51f1263736f
+git: git version 2.55.0.windows.3
+
+## r61 frozen counter re-derivation at the r61 data tip
+986d4b46 full sha: 986d4b46db6e67682ef84091f606d125f987ecbc
+986d4b46 is-ancestor-of-master rc=0
+$ python .ufo/waves/round-61/count-c2.py 986d4b46db6e67682ef84091f606d125f987ecbc
+C2=unmet pointers=47 rows=47 same=30 moved=3 changed=0 quotes_ok=33 spans_ok=33 sources=5 failed=quote_words:psi.c:1268-1270;quote_words:psi.c:1712;quote_words:psi.c:1017;quote_words:psi.c:1540;quote_words:psi.c:1686;quote_words:psi.c:1710-1721;quote_words:psi.c:1268;quote_words:psi.c:1269-1270;quote_words:psi_types.h:41-49;quote_words:psi.c:1717-1719;quote_words:psi.c:1257-1258;quote_words:psi.c:228-240;quote_words:psi.c:1711-1719;quote_words:psi.c:1596-1598 rev=986d4b46db6e67682ef84091f606d125f987ecbc
+rc=1
+
+## r59/r60/r61 cited revisions: existence + ancestry (lane side)
+2b9f0397: lane commit PRESENT, is-ancestor-of-master rc=0
+7b86704d: lane commit PRESENT, is-ancestor-of-master rc=0
+ddfb12fb0838b4307c445194a844f0c4b1950195: lane commit PRESENT, is-ancestor-of-master rc=0
+6752eafdf0e2bc07052e3e8ab922bd22ea5dfe25: lane commit PRESENT, is-ancestor-of-master rc=0
+986d4b46: lane commit PRESENT, is-ancestor-of-master rc=0
+
+## r59/r60/r61 fleet-side report commits (cited in the §7 digests)
+2807c6ab: fleet commit PRESENT (round-59: mori dispatch evidence (hyaku inline attempt 2))
+eeedfd53: fleet commit PRESENT (round-60: mori report — C1 verified met; C2/C3 instruments)
+3bb9b8e7: fleet commit PRESENT (round-61: mori report — C1 met, C2 honest-stop on counter )
+7370a731: ABSENT
+
+Reports re-read this round: r59 (C1 calibration verified met; C2 depth measured met, unverified by met-flip counterexamples — orphaned grammar reasons, no distinct-span bound), r60 (depth/operability unprovable), r61 (C2 freshness unmet on the frozen counter's own >=5-word quote floor; C1/C3 verify; honest same-rows not reclassified to fit — honest stop).
+correction: 7370a731 is the r61 LANE-side freeze commit (per the r61 report header), not fleet-side — lane check: PRESENT, is-ancestor-of-master rc=0
+also lane-side entering rev from the r61 report header: 325f7e63 -> PRESENT; r61 report final tip d21c0e5c -> PRESENT

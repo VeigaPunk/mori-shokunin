@@ -1,0 +1,40 @@
+# mori round-70 frozen-set and orphan scan (content-checked, not git-status-based — the host index is unreliable per the standing contract)
+date: 2026-11-01T20:41:27Z
+
+## frozen set: worktree bytes == HEAD bytes (sha256 pairs, all must match)
+SKILL.md: 01556f056cd7ead39e9bc268f4c89d51a66c13a8ca8f5cd97ccb33bec7626998 MATCH
+PROVINCE.md: 2af29312d28727b4dc91236b6f2ce188c0b721a3759e6a8cdaf73f98f4919838 MATCH
+AGENTS.md: f64e332c73e5115c258e3a12bcc7831da5baa6f9aa53dbd302ca77657d5f8d6c MATCH
+corpus/README.md: fbe94947b590e107d4c71b70e9b823491592d73c717792f69d82c8af921962eb MATCH
+tools/mori-source-drift.py: eb5affa188b53fd0bc120c338ae34e7e84593a2a6ce3be9ba5367c708a969243 MATCH
+tools/mori-drift-adjudicate.py: ed3cabd0b53f69bd0da64b69b17e056c8e873c2a7ca7016cad0a17a60878b2ca MATCH
+
+## r70 modified tracked files (content diff vs HEAD, numstat)
+49	0	SCORECARD.md
+92	0	LOG.md
+3	3	SHONEN.md
+2	0	corpus/SOURCES.md
+
+## round-70 new files (all cited from SCORECARD/LOG/lesson)
+census-end-r70.txt
+census-start-r70.txt
+controls-r70.txt
+freshstart-spotchecks-r70.txt
+l0-considerthese-r70.txt
+orphan-scan-r70.txt
+selftests-battery-r70.txt
+shortwin-a-r70.txt
+shortwin-b-r70.txt
+shortwin-c-r70.txt
+source-s581-r70.txt
+source-s582-r70.txt
+sources-appendonly-r70.txt
+uptime-win-live-r70.txt
+uptime-win-selftest-r70.txt
+
+## stray-file check: no scratch paths inside the repo
+no scratch dir inside repo
+./.ufo/waves/round-16/evidence/capability-after/cases/anchor-only-user-empty-window/payload-stderr.bin
+./.ufo/waves/round-16/evidence/capability-after/cases/anchor-only-user-empty-window/payload-stdout.bin
+./.ufo/waves/round-16/evidence/capability-after/cases/anchor-realistic-cursor-then-benign-unit-result-system/payload-stderr.bin
+(no capture bodies committed — they live in the workspace scratch, deleted at round end)

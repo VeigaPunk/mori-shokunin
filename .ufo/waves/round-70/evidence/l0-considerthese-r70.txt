@@ -1,0 +1,23 @@
+# mori round-70 L0 re-verification and considerthese re-mine
+date: 2026-11-01T20:18:59Z
+
+## standing L0 lines (append-only file; routed around, never treated as answered)
+226:mori | round-62 | MISSION L2 concurrency requires >=8 L2 subagents in one ba
+242:mori | round-65 | This host's loopback HTTP transport is degraded and variab
+(both lines present with their original text; no operator answer appended after either line since the r69 re-verification; the SKILL:905 python3 naming L0 is the round-65 line's subject — routed around again this round: no frozen byte edited, every command used `python`)
+
+## considerthese re-mine
+$ ls considerthese/
+2026-10-19.md
+2026-10-20.md
+2026-10-21.md
+2026-10-22.md
+2026-10-23.md
+2026-10-24.md
+2026-10-25.md
+2026-10-26.md
+newest file: 2026-10-26.md — no newer file exists than 2026-10-26 (the r69 re-mine's state stands)
+suggestion 1 (split pin-check mismatches into can't-run-here vs stale): still unimplemented, still behind the operator's open instrument-change ruling (mori | round-65 L0 above) — adopted nothing
+suggestions 2-4: proposals only; suggestion 3 (re-execute evidence-verified closures) is the standing fresh-start spot-check practice, re-performed this round (.ufo/waves/round-70/evidence/freshstart-spotchecks-r70.txt)
+
+Assimilation: none — shokuknow unreachable

@@ -1,0 +1,24 @@
+# mori round-70 source opening — S582 (GetTickCount64, sysinfoapi)
+date opened: 2026-11-01T20:02:52Z
+fetcher: curl curl 8.21.0 (x86_64-w64-mingw32)
+
+## QUALITY 155 duplicate sweep (pre-row, INTO this receipt)
+$ grep -c 'gettickcount64' corpus/SOURCES.md
+rows=0
+rc=1 (1 = no hit = no duplicate)
+$ grep -ci 'sysinfoapi' corpus/SOURCES.md
+rows=1
+rc=0
+
+## fetch
+$ curl -sS -m 60 -L -o corpus/evidence/sources-r70/S582.html https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-gettickcount64
+curl rc=0
+bytes: 52661
+sha256: 580f1935fb47b5c992a48d22299f7452aaeb00099f2ac96ba74c92002a18277f
+
+## located facts (line numbers in the fetched body as fetched; this page is UA-stable per the r65 KEEP-A/S572-S573 class... none recorded for this page — first reading)
+- `:829` — "Retrieves the number of milliseconds that have elapsed since the system was started." (14 words) — the uptime definition the probe reports.
+- `:831` — `ULONGLONG GetTickCount64();` — the signature; return `:833` "The number of milliseconds."
+- `:836` — resolution "limited to the resolution of the system timer, which is typically in the range of 10 milliseconds to 16 milliseconds" — the printed millisecond count carries that resolution; the probe rounds nothing.
+- `:842` — "To obtain the time the system has spent in the working state since it was started, use the QueryUnbiasedInterruptTime function." — the doc's own pointer defines the boundary: this count is NOT working-state time (it includes sleep/hibernation); the probe never claims working-state uptime.
+- `:845` — the debug-build note: "the interrupt-time count and tick count are advanced by approximately 49 days" on debug ("checked") builds — a shifted count is possible there; the live probe reports the raw count and this caveat travels with it.
