@@ -78,9 +78,12 @@ recorded in the report's fresh-start section).
 
 Census (validator): start receipt
 `.ufo/waves/round-63/evidence/census-start-r63.txt` (this host, 2026-10-31,
-rc 0, 344 rows, tolerated W04 duplicate-URL class) → end receipt
-`.ufo/waves/round-63/evidence/census-end-r63.txt` (rc 0, 346 rows; S572+S573).
-SOURCES row-count command: `grep -c "^| S" corpus/SOURCES.md`.
+rc 0, tolerated W04 duplicate-URL class) → end receipt
+`.ufo/waves/round-63/evidence/census-end-r63.txt` (rc 0; the receipts carry
+the validator's bytes, not a row count — the validator reads the fleet-root
+clone, which lags the lane push). SOURCES row count 344 → 346 (S572+S573) is
+counted in the lane repo by `grep -c "^| S" corpus/SOURCES.md`, a separate
+instrument from the validator rc.
 
 ## Mistakes
 

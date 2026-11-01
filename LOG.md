@@ -3252,11 +3252,13 @@ SCORECARD with first-working round 63. Self-verdict: verified met.
 Controls at entering `6aa92634`: box-3 `python3 tools/` tokens 4 (now 0);
 entering pin-check bytes selftest pass=86 fail=39 rc 1; guard, probe and entry
 absent at entering (`git cat-file -e` / `git ls-tree` = 0); SOURCES 344 rows
-at entering, 346 after S572+S573 (`evidence/controls-r63.txt`). Census: start
-rc 0 (344 rows, `evidence/census-start-r63.txt`) → end rc 0 (346 rows,
-`evidence/census-end-r63.txt`; the first end-run's E12 — rows appended outside
-the Registry table — is disclosed in the receipt header and mined as lesson
-mistake 5). Mistakes mined: five (receipt-capture truncation; predicate
+at entering, 346 after S572+S573 (`evidence/controls-r63.txt`). Census: validator
+rc 0 at both ends (`evidence/census-start-r63.txt`,
+`evidence/census-end-r63.txt`; the receipts carry the validator's bytes, not a
+row count — it reads the fleet-root clone, which lags the lane push); lane row
+count 344 → 346 (S572+S573) by `grep -c "^| S" corpus/SOURCES.md`; the first
+end-run's E12 — rows appended outside the Registry table — is disclosed in the
+receipt header and mined as lesson mistake 5. Mistakes mined: five (receipt-capture truncation; predicate
 drafted from memory; fabricated precise timestamp corrected pre-commit;
 line-count vs token-count control; registry row placement) —
 `corpus/lessons/round-63.md`. Assimilation: considerthese mined
