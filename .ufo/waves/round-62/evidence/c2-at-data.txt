@@ -1,0 +1,3 @@
+rev=8327bdfce72e0ef1169bc070d77d190206d5163e
+C2=met tool=ok selftest=ok live=ok entry=ok claims=12 quotes=12 sources=ok capability=ok failed=none rev=8327bdfce72e0ef1169bc070d77d190206d5163e
+rc=0
