@@ -1,0 +1,5 @@
+# argv: GIT_CONFIG_GLOBAL=<scratch>/gitconfig-crlf-true GIT_CONFIG_NOSYSTEM=1 python .ufo/waves/round-62/count-c1.py --selftest --scratch <scratch>/st1b
+# host-note: naive invocation fails on this Windows host (user gitconfig core.autocrlf=false; Python text-mode fixture writes emit CRLF, so synthetic-repo blob sha256s diverge from the LF pins). The accommodation sets autocrlf=true for the selftest's throwaway repos only; committed-blob measurements (git cat-file) are byte-exact and unaffected. Routed to r63: write fixtures in binary / pin over written bytes.
+# date: 2026-10-31T19:23:44-07:00
+C1_SELFTEST pass=15 fail=0
+rc=0

@@ -1,0 +1,4 @@
+# argv: python .ufo/waves/round-62/count-c1.py 2f5b0626 --repo <lane> --scratch <scratch>/c1-control (do-nothing control, entering rev)
+# date: 2026-10-31T19:21:01-07:00
+C1=unmet pointers=47 rows=0 same=0 moved=0 changed=0 quotes=0 derived=0 failed=copy72_absent:psi.rst;copy72_absent:psi.c;copy72_absent:psi_types.h;copy72_absent:cgroup-v2.rst;copy72_absent:Kconfig;copy72_absent:kernel-parameters.txt rev=2f5b0626
+rc=1

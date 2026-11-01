@@ -1,0 +1,5 @@
+# argv: python tools/mori-cgroup-pressure.py --group user.slice
+# date: 2026-10-31T19:24:03-07:00
+# host-note: Windows workspace host; /sys/fs/cgroup does not exist — honest unavailable, never zeros
+MORI_CGROUP_PRESSURE: PRESSURE_UNAVAILABLE (group=user.slice ok=0 absent=4 unreadable=0 malformed=0 findings=0)
+rc=2

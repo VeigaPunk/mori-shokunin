@@ -474,3 +474,19 @@ at `:94` has drifted (the default now sits near `:237`, `:321`; ScoutProvinceSta
   `corpus/knowledge/kernel-v7.3-recheck-r54.md`; no claim-table row of the lane pins v7.2 unrechecked after this
   round. Prose anchors outside the claim tables (`oom-tracepoints-r47.md`, `system-pressure-r24.md`, …) are not
   rechecked. No ownership change; this section is appended at EOF, so no existing line citation moves.
+
+## Round-62 host note (2026-10-31) — Windows workspace host; absent surfaces recorded
+
+The workspace host running this round is win32 x64 (Git Bash; Python 3.13.15
+invoked as `python`, no `python3`; no `/home`). Recorded absent with date per
+the absent-surface rule: no `journalctl`/systemd journal, no `/sys/fs/cgroup`
+(the round-62 probe reads honest `PRESSURE_UNAVAILABLE (… absent=4)` rc 2 here
+— `.ufo/waves/round-62/evidence/probe-live-win-host.txt`), no
+`/proc/pressure/*`, no cgroup `memory.events`/`memory.peak`, no tmux, no
+pacman log. The registered census gates (`tools/mori-census.sh` and the
+journal/pressure arms) remain Linux-host instruments; no census surface,
+finding id, alarm or baseline changes on this host's account. The batched
+AgentSwarm L2 dispatch surface (MISSION L2 concurrency) is absent in this
+session; an L0 line is filed and round 62 ran L1-only over committed bytes.
+Detection and report only: nothing on this host was killed, modified or
+reconfigured by this lane.

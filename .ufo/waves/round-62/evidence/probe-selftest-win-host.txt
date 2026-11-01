@@ -1,0 +1,4 @@
+# argv: python tools/mori-cgroup-pressure.py --selftest --scratch <scratch>/probe-selftest
+# date: 2026-10-31T19:24:03-07:00
+MORI_CGROUP_PRESSURE_SELFTEST: pass=12 fail=0
+rc=0

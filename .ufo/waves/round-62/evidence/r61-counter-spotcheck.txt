@@ -1,0 +1,4 @@
+# argv: python .ufo/waves/round-61/count-c2.py 986d4b46db6e67682ef84091f606d125f987ecbc --scratch <scratch>/r61spot (fresh-start spot-check: r61 frozen counter re-run at the r61 data tip)
+# date: 2026-10-31T19:21:17-07:00
+C2=unmet pointers=47 rows=47 same=30 moved=3 changed=0 quotes_ok=33 spans_ok=33 sources=5 failed=quote_words:psi.c:1268-1270;quote_words:psi.c:1712;quote_words:psi.c:1017;quote_words:psi.c:1540;quote_
+rc=1

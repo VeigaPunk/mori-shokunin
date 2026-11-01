@@ -1,0 +1,4 @@
+# argv: python .ufo/waves/round-62/count-c2.py 2f5b0626 --repo <lane> --scratch <scratch>/c2-control (do-nothing control, entering rev)
+# date: 2026-10-31T19:21:02-07:00
+C2=unmet tool=bad selftest=bad live=bad entry=bad claims=0 quotes=0 sources=bad capability=bad failed=refused:tool_absent;live_absent;entry_absent rev=2f5b0626 refused=tool_absent
+rc=1

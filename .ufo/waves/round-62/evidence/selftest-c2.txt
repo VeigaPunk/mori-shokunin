@@ -1,0 +1,5 @@
+# argv: GIT_CONFIG_GLOBAL=<scratch>/gitconfig-crlf-true GIT_CONFIG_NOSYSTEM=1 python .ufo/waves/round-62/count-c2.py --selftest --scratch <scratch>/st2b
+# host-note: same CRLF accommodation as selftest-c1.txt
+# date: 2026-10-31T19:23:54-07:00
+C2_SELFTEST pass=8 fail=0
+rc=0

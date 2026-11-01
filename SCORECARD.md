@@ -3034,3 +3034,50 @@ counter whose quote floor matches its contract (≥1 word / multi-line hay), pin
 at rev, derives statuses from a difflib map, and binds SOURCES rows to Registry ids; C1's
 met cannot distinguish an omnibus or all-superseded table — the landed table holds the
 per-path shape by discipline. Sources: S565–S570 (6 rows, 337→343, census rc 0 both ends).
+
+## Round 62 — frozen-pair recovery on the Windows workspace host: C1 calibration verified met; C2 depth/capability landed and met
+
+Entering `2f5b0626…`; inherited freeze `43cfbb10…` with pre-seat amendments
+`56b47179…` and `6d98b5cd…` (prior attempt, 2026-10-30, died before dispatch —
+no wave exists under `.ufo/waves/round-62/`; pins re-verified before reuse:
+tool sha `aa5bfc37…` = PIN_TOOL, cases sha `42551edb…` = PIN_CASES; frozen
+bytes unchanged). Data tip: see `## Round 62` receipts. Scores entering/after:
+coverage 6, operability 7, depth 5, freshness 5, calibration 5, adjacency 6 —
+no scalar claimed (instrument + capability claims). Lowest tie
+depth/freshness/calibration at 5: C1 targets calibration, C2 depth.
+
+| Claim | Axis | Counting command | Before | After / verdict |
+|---|---|---|---|---|
+| C1: the r61 PSI v7.3 recheck ledger re-measured by the round-62 sound instrument — statuses re-derived from pinned v7.2/v7.3 byte copies, quote floor 1 word / ≥8 distinct bytes over multi-line hay, rows bound to Registry ids S565–S570 (r61 lesson Mistakes 1–3 fixes) | calibration 5 | `python .ufo/waves/round-62/count-c1.py <rev> --repo <lane> --scratch <dir>` | At entering `2f5b0626…`: `C1=unmet pointers=47 rows=0 … failed=copy72_absent:psi.rst;…:kernel-parameters.txt` rc 1 (`.ufo/waves/round-62/evidence/control-c1-do-nothing.txt`); the r61 frozen counter honest-stopped on the same ledger — `failed=quote_words:` ×14 (`.ufo/waves/round-62/evidence/r61-counter-spotcheck.txt`) | At data tip: `C1=met pointers=47 rows=47 same=44 moved=3 changed=0 quotes=47 derived=47 failed=none` rc 0 (`.ufo/waves/round-62/evidence/c1-at-data.txt`). **Self-verdict: verified met** (closure to re-derive). Routed limits: met cannot distinguish an omnibus or all-superseded table — the landed table holds one honest row per anchor by discipline (r61 lesson); the selftest needs the disclosed CRLF accommodation on this host (`.ufo/waves/round-62/evidence/selftest-c1.txt`) |
+| C2: cgroup-pressure probe capability + sourced entry — pinned `tools/mori-cgroup-pressure.py` selftest 12/12 on this host, Linux live receipt (counter's live arm), 12 located claims K1–K12 verified against pinned v7.3 bytes, S571 opened this round, capability row below | depth 5 | `python .ufo/waves/round-62/count-c2.py <rev> --repo <lane> --scratch <dir>` | At entering `2f5b0626…`: `C2=unmet tool=bad selftest=bad live=bad entry=bad claims=0 … failed=refused:tool_absent;live_absent;entry_absent` rc 1 (`.ufo/waves/round-62/evidence/control-c2-do-nothing.txt`) | At data tip: `C2=met tool=ok selftest=ok live=ok entry=ok claims=12 quotes=12 sources=ok capability=ok failed=none` rc 0 (`.ufo/waves/round-62/evidence/c2-at-data.txt`). **Self-verdict: verified met** (closure to re-derive). Routed limits: shape predicates certify form, not content; the live arm is the Linux receipt — this Windows host reads honest `PRESSURE_UNAVAILABLE (… absent=4)` rc 2, never zeros (`.ufo/waves/round-62/evidence/probe-live-win-host.txt`) |
+
+Counter selftests: C1 `pass=15 fail=0`, C2 `pass=8 fail=0`, each with the
+disclosed CRLF accommodation (`.ufo/waves/round-62/evidence/selftest-c{1,2}.txt`);
+unaccommodated invocation fails on this host — lesson Mistakes 1, routed to r63.
+Probe selftest on this host: `MORI_CGROUP_PRESSURE_SELFTEST: pass=12 fail=0` rc 0
+(`.ufo/waves/round-62/evidence/probe-selftest-win-host.txt`).
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| per-cgroup pressure probe (`tools/mori-cgroup-pressure.py`) | one-shot read-only survey of `<group>/{cpu,memory,io,irq}.pressure` plus the group's `cgroup.pressure` switch, with absent/unreadable/malformed states that are never zeros; every claim grounded line-located in pinned v7.3 bytes | `python tools/mori-cgroup-pressure.py --selftest` → `MORI_CGROUP_PRESSURE_SELFTEST: pass=12 fail=0` rc 0; live `MORI_CGROUP_PRESSURE: PRESSURE_UNAVAILABLE (group=user.slice ok=0 absent=4 …)` rc 2 on the Windows host (`.ufo/waves/round-62/evidence/probe-selftest-win-host.txt`, `.ufo/waves/round-62/evidence/probe-live-win-host.txt`) | 62 |
+
+Fresh start: r57–r61 rejected closures re-read before declaring (MANIFEST rounds
+59–61 all `rejected-honest-stop`); the r61 honest stop re-derived from its frozen
+counter (`evidence/r61-counter-spotcheck.txt`, same 14 anchors); ruled out —
+entry-claims class claims via the decertified r59/r60 instruments (their
+met-flip counterexamples stand and their bytes are frozen), score moves without
+a closure-stated number, and claims resting on the old Linux host's live
+surfaces, absent here (lesson `## Fresh start`).
+
+Windows-host census (protocol work, unclaimed): 17/17 lane clones resolve HEAD
+and are in sync with their origin refs; the watchdog log is fresh (a round
+closed `admitted` and the next launched during the census; `base=` shas match
+clone tips); no `.ufo/state/*.round` on this host; disk 19% used; ~302
+processes, counts only — no pids, no user names (`.ufo/waves/round-62/evidence/host-win-census-r62.txt`).
+PROVINCE absent-surface note appended with date.
+
+Planned (round 63): port both counters' fixture writes to binary / pin over
+written bytes so `--selftest` runs unaccommodated on any host (lesson Mistakes
+1); give the C1 met an omnibus/superseded discriminator if the entry class is
+reused; consider a Windows-host liveness probe as a capability claim if the
+dispatch surface returns.

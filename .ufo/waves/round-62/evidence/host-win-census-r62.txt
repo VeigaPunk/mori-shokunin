@@ -1,0 +1,56 @@
+# mori round-62 Windows host census (read-only detection; nothing killed or modified)
+# date: 2026-10-31T19:26:27-07:00
+# host: win32 x64 (Git Bash; python 3.13.15; no python3, no /home)
+
+== disk ==
+workspace_used_pct=19%
+tmp_used_pct=19%
+
+== processes (counts only by image name; no pids, no users) ==
+89 svchost.exe
+29 bash.exe
+28 ZCode.exe
+20 conhost.exe
+20 Kimi.exe
+6 msedgewebview2.exe
+6 1Password.exe
+4 python.exe
+4 cmd.exe
+4 RuntimeBroker.exe
+total=302
+count_zcode=28
+count_node=2
+count_python=7
+count_git=2
+count_bash=33
+
+== lane clones (17) git liveness ==
+chousa-shokunin branch=master head=4f784d9e in-sync
+kagi-shokunin branch=master head=66d1a2cc in-sync
+kake-shokunin branch=master head=b783d184 in-sync
+kama-shokunin branch=master head=3325e8ed in-sync
+kasegi-shokunin branch=master head=bcd5d89a in-sync
+kengaku-shokunin branch=master head=8db18e23 in-sync
+kotoba-shokunin branch=master head=ff3b9625 in-sync
+kotodama-shokunin branch=main head=efdc19e5 in-sync
+kumitate-shokunin branch=master head=fb60afcd in-sync
+mado-shokunin branch=master head=5337d250 in-sync
+mori-shokunin branch=master head=6d98b5cd in-sync
+shokunin-binary-forensics branch=main head=85db6abe in-sync
+shokunin-repo-hygiene branch=master head=7f8fa3ca in-sync
+shokunin-reverse-engineering branch=main head=5c25d9cc in-sync
+tabi-shokunin branch=master head=5c3f4cca in-sync
+tameshi-shokunin branch=master head=9bc9b20b in-sync
+tsukuroi-shokunin branch=master head=d4f2ffe1 in-sync
+clones=17 resolved=17
+
+== campaign state ==
+state_dir_ufo_state=0
+watchdog_log_mtime=2026-10-31 19:21:40
+watchdog_last_lines:
+2026-10-31T18:58:02-07:00 launch kotoba round=82 base=ff3b962561ea (zcode run14)
+2026-10-31T18:58:02-07:00 launch kagi round=29 base=66d1a2cc0d06 (zcode run14)
+2026-10-31T19:21:24-07:00 closed kasegi round=50 verdict=admitted spotcheck=bcd5d89a65ab
+2026-10-31T19:21:40-07:00 launch kasegi round=51 base=bcd5d89a65ab (zcode run14)
+launch_base_matches_clone_tip: kagi=a2cc0d06/66d1a2cc
+round62_reports=9 mori_report=absent

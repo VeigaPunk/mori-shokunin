@@ -1,0 +1,6 @@
+# argv: bash scripts/sources-census.sh validate --root <workspace>/shokunin-clone/shokunin mori
+# date: 2026-10-31T19:30:11-07:00
+mori	W04	S570 duplicate url git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/Documentation/admin-guide/kernel-parameters.txt?h=v7.3 across scopes
+mori	W04	S571 duplicate url git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/plain/kernel/sched/psi.c?h=v7.3 across scopes
+mori	ok	C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/shokunin-clone/shokunin/mori-shokunin/corpus/SOURCES.md
+rc=0

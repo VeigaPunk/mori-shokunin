@@ -3121,3 +3121,74 @@ considerthese: mined; latest residual proposal already partially executed — no
 implementable taken. Mistakes mined: six (quote-floor overreach, C2 met-line tokens,
 semantic unbinding trio, --floor-1 receipt defect, wave misroot of .cover files, contract
 mis-citation) — `corpus/lessons/round-61.md`.
+
+## Round 62 — Mori (L1 MoriR62, attempt 2, recovery of the pre-seat freeze): C1 calibration verified met (r61 ledger re-measured by the sound instrument); C2 depth/capability landed (cgroup-pressure probe + S571 + capability row); Windows-host census and absent-surface record
+
+Recovery: the prior r62 attempt (2026-10-30 15:43 -03) froze the round pair
+pre-seat — `.ufo/waves/round-62/count-c1.py` (sound r61-ledger instrument:
+1-word/8-byte quote floor over multi-line hay, statuses re-derived from the
+pinned v7.2/v7.3 copies, Registry-id binding) and `count-c2.py` (probe
+capability + sourced entry, blobrefusal + TOKEN_MAP discipline) — plus the
+probe, its fixture battery, the v7.2 pin baseline, the entry
+`corpus/knowledge/cgroup-pressure-r62.md` and a Linux live receipt, then died
+before dispatching any wave. This attempt inherited the frozen bytes unchanged
+(pins re-verified: tool `aa5bfc37…`, cases `42551edb…` over the working tree;
+no counter or contract edited; no wave dispatched — no AgentSwarm surface on
+this host; L0 filed).
+
+Fresh start: r57–r61 rejected closures re-read; spot-checks — the r61 frozen
+counter re-run at the r61 data tip reproduces the honest stop exactly
+(`C2=unmet … failed=quote_words:` ×14, receipt
+`.ufo/waves/round-62/evidence/r61-counter-spotcheck.txt`); r59/r60 cited
+receipts verified present (`git cat-file -e`). Ruled out: re-declaring
+entry-claims claims on the decertified r59/r60 instruments; uncited score
+moves; claims on the old Linux host's live surfaces (absent here).
+
+- C1 calibration (5): control at entering `2f5b0626…` reads
+  `C1=unmet … failed=copy72_absent:×6` rc 1
+  (`.ufo/waves/round-62/evidence/control-c1-do-nothing.txt`). At the data tip
+  the frozen instrument reads `C1=met pointers=47 rows=47 same=44 moved=3
+  changed=0 quotes=47 derived=47 failed=none` rc 0 — receipt
+  `.ufo/waves/round-62/evidence/c1-at-data.txt` (landed in the measured-
+  verdicts batch, measured at the data tip). The r61 ledger's 47 rows are now
+  certifiably honest: every status re-derived from pinned bytes, all 47 quotes
+  1–25 words over multi-line spans, S565–S570 mined and used-by-bound.
+  Self-verdict: verified met, closure to re-derive.
+- C2 depth (5), capability acquisition: control at entering reads
+  `C2=unmet … failed=refused:tool_absent;live_absent;entry_absent` rc 1
+  (`.ufo/waves/round-62/evidence/control-c2-do-nothing.txt`). Landed this
+  round: S571 (psi.c v7.3 opened 2026-10-31, curl, sha256 `c4edc1e7…`
+  byte-identical to the pinned copy; 12 K-claims re-verified line-located
+  against the fetched bytes) and the SCORECARD capability row. At the data tip
+  the frozen counter reads `C2=met tool=ok selftest=ok live=ok entry=ok
+  claims=12 quotes=12 sources=ok capability=ok failed=none` rc 0 — receipt
+  `.ufo/waves/round-62/evidence/c2-at-data.txt`. Self-verdict: verified met,
+  closure to re-derive.
+
+Windows host (protocol work, unclaimed): host census receipt
+`.ufo/waves/round-62/evidence/host-win-census-r62.txt` — 17/17 lane clones
+resolve HEAD, all in sync with origin; watchdog log fresh (kasegi r50 closed
+`admitted`, r51 launched during the census; `base=` shas match clone tips);
+no `.ufo/state/*.round` on this host; disk 19%; process counts only (no pids,
+no user names). Probe live on this host: `MORI_CGROUP_PRESSURE:
+PRESSURE_UNAVAILABLE (… absent=4)` rc 2 — honest unavailable, never zeros
+(`.ufo/waves/round-62/evidence/probe-live-win-host.txt`). PROVINCE
+absent-surface note appended with date.
+
+Host-portability finding (routed to r63): both frozen counters' `--selftest`
+fail unaccommodated on this host (Python text-mode fixture writes emit CRLF;
+user gitconfig `core.autocrlf=false`), so the selftests ran under a disclosed
+scratch-gitconfig accommodation (`C1_SELFTEST pass=15 fail=0`, `C2_SELFTEST
+pass=8 fail=0` — `.ufo/waves/round-62/evidence/selftest-c{1,2}.txt`, argv
+recorded). Probe selftest unaccommodated: `pass=12 fail=0` rc 0
+(`.ufo/waves/round-62/evidence/probe-selftest-win-host.txt`).
+
+SOURCES census: start 343 rows, validator exit 0 (prior attempt receipt
+`evidence/census-start-r62.txt`, taken on the Linux host 2026-10-30) → end 344
+rows (S571 opened this round; C2 is the sourced claim), validator exit 0 on
+this host (`evidence/census-end-r62.txt`, argv recorded). Assimilation:
+considerthese mined (2026-10-19…26); the 2026-10-26 proposal 3
+(re-execute what closures only evidence-verified) was partially executed by the
+r61 counter spot-check — considered, not formally adopted. Assimilation: none
+— shokuknow unreachable. Mistakes mined: two (freeze-time CRLF host assumption;
+stale-host instruction paths) — `corpus/lessons/round-62.md`.
