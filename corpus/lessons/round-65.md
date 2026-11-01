@@ -159,6 +159,11 @@ Assimilation: none — shokuknow unreachable.
    owes every landing — `git diff <base>..<new> --stat` and
    `git ls-tree -r <new> | grep -c` against the known file inventory, which
    showed 6 files where 32 were committed-and-pushed. fix: re-committed with
-   every path listed as an individual file (follow-up commit; the helper
-   pins mode 100644 and takes file paths only — the r63 D5 note and this
-   round's lesson now record both constraints of the lane's commit path).
+   every path listed as an individual file (follow-up commit `71106707`);
+   the same silent drop then fired a second way — the freshstart receipt was
+   passed while still living only in scratch, and the helper committed 27
+   files without complaint — so the receipt was copied into the wave dir and
+   landed in a third commit; the helper (a) pins mode 100644, (b) takes file
+   paths only, (c) silently skips any path that does not resolve, and every
+   landing therefore needs the count-the-files landmark check (the r63 D5
+   note and this round's lesson now record all three constraints).
