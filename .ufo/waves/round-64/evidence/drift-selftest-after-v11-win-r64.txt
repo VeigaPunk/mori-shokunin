@@ -1,0 +1,14 @@
+# argv: python tools/mori-source-drift.py --selftest
+# bytes: working tree v1.1 final (uncommitted at run time); sha256 below
+eb5affa188b53fd0bc120c338ae34e7e84593a2a6ce3be9ba5367c708a969243 *tools/mori-source-drift.py
+# date: 2026-11-01T05:26:55Z (UTC)
+# host: win32 x64, Git Bash, Python 3.13.15 as 'python'
+---
+selftest exit_code            PASS
+selftest row_states           PASS
+selftest summary              PASS
+selftest huge_cap             PASS (over_cap=unavailable at_cap=body len=65536 frozen_cap_literal=True transport_cap=65536 (loopback HTTP transport cannot stream 4 MiB here; fixture scaled to transport_cap))
+selftest redirect_private_refused PASS
+selftest missing_sources_exit2 PASS
+MORI_SOURCE_DRIFT_SELFTEST: PASS (6 cases)
+rc=0

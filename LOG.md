@@ -3255,7 +3255,10 @@ absent at entering (`git cat-file -e` / `git ls-tree` = 0); SOURCES 344 rows
 at entering, 346 after S572+S573 (`evidence/controls-r63.txt`). Census: validator
 rc 0 at both ends (`evidence/census-start-r63.txt`,
 `evidence/census-end-r63.txt`; the receipts carry the validator's bytes, not a
-row count — it reads the fleet-root clone, which lags the lane push); lane row
+row count — it reads each lane registry through the fleet root, whose
+`<lane>-shokunin` entries are NTFS junctions to the lane repos, so it sees the
+lane's own working tree and no lagging clone exists; wording corrected round
+64, closure D6 — host inspection, no measured value changes); lane row
 count 344 → 346 (S572+S573) by `grep -c "^| S" corpus/SOURCES.md`; the first
 end-run's E12 — rows appended outside the Registry table — is disclosed in the
 receipt header and mined as lesson mistake 5. Mistakes mined: five (receipt-capture truncation; predicate
@@ -3264,3 +3267,83 @@ line-count vs token-count control; registry row placement) —
 `corpus/lessons/round-63.md`. Assimilation: considerthese mined
 (2026-10-19…26); 2026-10-26 suggestion 1 already implemented by r51 v5;
 nothing adopted. Assimilation: none — shokuknow unreachable.
+
+## Round 64 — Mori (L1 MoriR64): C1 freshness verified met (drift instrument certified on this host + first on-host sweep, 23 drift findings classed and flagged); C2 depth/capability landed (Windows resource-runway probe, sourced S574+S575); all six r63 routed carry-ins discharged
+
+Entering `6e70931d` (r63 verifier spotcheck tip). MANIFEST rounds 62/63
+`admitted`; the prompt §7 binds the fresh-start duty to r59–r61 — performed on
+those three as bound (frozen counter re-derived rc 1 with all 14 anchors;
+r59/r60 evidence present and ancestral — receipt
+`.ufo/waves/round-64/evidence/freshstart-spotchecks-r64.txt`), with the
+manifest state noted. Rule-outs: decertified r59/r60 instruments; scalar
+moves; old-Linux-host live surfaces; SKILL registry-row edits. Scores held
+(6/7/5/5/5/6) — no scalar claimed.
+
+C1 (freshness 5): `tools/mori-source-drift.py` v1.1 — the round-37 `huge_cap`
+arm's 4 MiB loopback fixture cannot stream on this host (security-layer
+resets/stalls on loopback HTTP bodies at tens-of-KiB and up; raw TCP streams
+the same bytes fine — diagnosed in-round, mined in the lesson). v1.1 scales
+the pair to the largest body the host's loopback HTTP streams twice
+consecutively (probe; `transport_cap=65536` on this run) and folds the frozen
+`FETCH_MAX_BYTES = 4 * 1024 * 1024` literal into the arm's pass condition, so
+the r37 cap-kill mutation and the r38 content anchors still bind; arm names,
+row grammar, exit codes unchanged; `fetch()` gained an explicit cap argument
+defaulting to the frozen constant. Before: entering v1 bytes selftest FAIL
+5/6 rc 1 (`evidence/drift-selftest-before-v1-win-r64.txt`); after: PASS 6/6
+rc 0 with the scaling on the PASS line
+(`evidence/drift-selftest-after-v11-win-r64.txt`). First on-host sweep:
+`MORI_SOURCE_DRIFT rows=346 fresh=53 excerpt=0 drifted=23 unavailable=2
+no-copy=268` rc 1 (`evidence/drift-live-win-r64.txt`) — 23 drifted rows
+listed and classed, not left unmarked: class A UA-dependent vendor rendering
+(S572: tool-UA fetch != pinned, curl-UA fetch byte-identical to pinned) vs
+class B real content drift (S241, S156 differ under the same curl UA that
+pinned them) — `evidence/drift-findings-ua-vs-content-r64.txt`; per-row
+re-adjudication planned r65 (SCORECARD). Self-verdict: verified met.
+
+C2 (depth 5, capability acquisition, sourced): `tools/mori-runway-win.py` —
+one-shot read-only Windows resource-runway probe (`GlobalMemoryStatusEx` +
+`GetDiskFreeSpaceExW` via ctypes, standard library only; counts and shapes
+only — no paths beyond the drive root, no user/process names, no timestamps;
+unavailable never zero; offline fixture selftest, binary-mode writes). Sourced
+this round: S574 + S575 opened with `curl -sS -m 60 -L` and pinned
+byte-identical (`corpus/evidence/sources-r64/`, sha256 in the lesson Gate;
+duplicate sweep 0 hits before opening); entry
+`corpus/knowledge/runway-win-r64.md` K1–K8 line-located (self-verified
+9/9 probe hits at the cited lines). Selftest `RUNWAY_WIN_SELFTEST: PASS
+(9 cases)` rc 0, two consecutive runs identical; live `RUNWAY_WIN: AVAILABLE
+surfaces=2 ok=2 unavailable=0` rc 0 — load_pct=68, commit_avail_pct=44,
+free_pct=80, free_to_caller==free_bytes (no quota gap on this volume), counts
+only (`evidence/runway-live-win-r64.txt`). Capability row entered SCORECARD
+with first-working round 64. Self-verdict: verified met.
+
+Controls at entering `6e70931d` (`evidence/controls-r64.txt`): entering v1
+drift bytes selftest red (before receipt); on-host sweep receipts 0; runway
+tool/entry/sources-r64 absent (rc 128 each); S574/S575 rows 0 at entering;
+SOURCES 346 → 348. Do-nothing round reaches neither after-state.
+
+Carry-ins from the r63 non-author closure (all six discharged): D1 lesson
+mistake 5 relocated from the `## Assimilation` tail to `## Mistakes` verbatim
+with a correction note; D2 second after-state selftest run committed alongside
+the first (one receipt, both runs, identical tallies —
+`evidence/selftests-rerun-and-guard-argv-r64.txt`); D3 the guard's full argv
+including `--expect 14` printed in the receipt; D4 correction: the r63
+report's "the lane's first Microsoft Learn rows" is imprecise — S241
+(learn.microsoft.com ja-jp Azure OOM page, opened 2026-10-24) predates; S572/
+S573 are the lane's first en-us Windows Server troubleshoot / Windows-commands
+rows; D5 noted, not fought: the r63 new tools landed mode 100644 because the
+treecommit helper pins that mode for new blobs — the working tree's
+executable bit cannot reach the index; immaterial on this host (`python
+tools/…` invocation), a POSIX-portability note; D6 census wording corrected
+in LOG and lesson (the fleet root's `<lane>-shokunin` entries are NTFS
+junctions to the lane repos, so the validator reads the lane's live working
+tree — no lagging clone exists; precision correction in place, no measured
+value changes, 67efdb79 precedent).
+
+Census: validator rc 0 at round start (`evidence/census-start-r64.txt`,
+tolerated W04 duplicate-URL class) — end receipt at round end. Mistakes
+mined: three (`corpus/lessons/round-64.md` — loopback-HTTP streaming measured
+as cap semantics; concurrent-load probe failure; the heredoc-truncation near
+miss caught by reading the landed diff). Assimilation: considerthese mined
+(2026-10-19…26, all eight files — no new files since r63's sweep); no
+still-unimplemented proposal adopted. Assimilation: none — shokuknow
+unreachable.

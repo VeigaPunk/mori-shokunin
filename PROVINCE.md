@@ -506,3 +506,32 @@ Linux-host instruments (journalctl, cgroupfs, `/proc/pressure`) remain absent
 here per the Round-62 note, and remain the registered gates on Linux hosts.
 Detection and report only: nothing on this host was killed, modified or
 reconfigured by this lane.
+
+## Round-64 host note (2026-10-31) — resource-runway surface present and probed; drift instrument certified
+
+On the same Windows workspace host (win32 x64, Git Bash, Python 3.13.15 as
+`python`), the province's Resource-runway row now has its Windows-host
+instrument, first-working round 64: `tools/mori-runway-win.py` — one-shot
+read-only `GlobalMemoryStatusEx` + `GetDiskFreeSpaceExW` through the Windows
+API (standard library only), live `RUNWAY_WIN: AVAILABLE surfaces=2 ok=2
+unavailable=0` rc 0, counts and shapes only (no paths beyond the drive root,
+no user/process names, no timestamps; one-shot volatile counts, no series —
+S574:846-847). Grounded in S574/S575 (pinned copies
+`corpus/evidence/sources-r64/`; entry
+`corpus/knowledge/runway-win-r64.md` K1–K8). The Linux-host runway
+instruments (`df -P` on `$ROOT`/`/tmp`, memory PSI/fill/avail from `/proc`)
+remain absent here per the Round-62 note and remain the registered gates on
+Linux hosts.
+
+Also recorded: this host's loopback HTTP path resets or stalls mid-size
+request bodies (tens of KiB upward, non-deterministically) while raw TCP
+streams the same sizes — an environment property, not a network failure;
+`tools/mori-source-drift.py` v1.1 measures its selftest fixture transport and
+scales to it (r64 lesson Mistakes 1). First on-host source-drift sweep run
+(round 64): 346 rows classified, 23 drifted findings classed
+(UA-dependent vendor rendering vs real content drift) and flagged for r65
+per-row disposition — the drift findings are reported, not silently
+normalized.
+
+Detection and report only: nothing on this host was killed, modified or
+reconfigured by this lane.

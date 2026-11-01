@@ -3126,3 +3126,61 @@ checklist so every future counter receipt is guarded at capture time; extend
 the host-events probe with a bounded matched-total mode beyond the window cap
 (/c pagination) if the WER row's saturation is judged load-bearing; the SKILL
 registry's carried `python3` naming stays L0-gated (frozen parsed rows).
+
+## Round 64 — first on-host freshness sweep (drift instrument certified + findings classed); C2 depth/capability landed (Windows resource-runway probe, sourced S574+S575); all six r63 routed carry-ins discharged
+
+Entering `6e70931d…` (r63 verifier spotcheck tip; MANIFEST rounds 62 and 63
+`admitted`, §7's listed rejections are r59–r61 — the fresh-start duty was
+performed on those three as bound, with the manifest state noted honestly).
+Fresh-start spot-checks re-run at entering: the r61 honest stop re-derived
+from the frozen counter at the r61 data tip (rc 1, all 14 anchors — receipt
+`.ufo/waves/round-64/evidence/freshstart-spotchecks-r64.txt`); r59/r60 cited
+evidence `git cat-file -e` PRESENT and both revisions ancestral of
+refs/heads/master. Rule-outs, and why: (1) re-declaring the r59/r60
+entry-claims instruments — the met-flip counterexamples stand on frozen
+bytes; (2) scalar score moves — no closure states a new number; (3) claims on
+old-Linux-host live surfaces — absent here, honestly `unavailable`; (4)
+SKILL.md registry-row edits — parsed, baseline-bound, L0-gated. Scores
+entering/after: coverage 6, operability 7, depth 5, freshness 5, calibration
+5, adjacency 6 — no scalar claimed (both claims are instrument or capability
+moves). Lowest tie depth/freshness/calibration at 5: C1 targets freshness
+(last admitted freshness improvement round 28, the oldest of the three), C2
+targets depth.
+
+| Claim | Axis | Counting command | Before | After / verdict |
+|---|---|---|---|---|
+| C1: first on-host source-drift sweep — the standing drift instrument certified on this host (v1.1: the round-37 huge_cap arm scales its fixture to the largest body the host's loopback HTTP transport streams twice consecutively, with the frozen `FETCH_MAX_BYTES = 4 * 1024 * 1024` literal folded into the arm's pass condition so the r37 cap-kill and the r38 anchors still bind), then the whole registry's pinned copies re-fetched and classified, drift findings classed on receipt (UA-dependent rendering vs real content drift) and flagged for per-row r65 disposition | freshness 5 | `python tools/mori-source-drift.py --selftest`; `python tools/mori-source-drift.py --root .`; `grep -c " drifted" <receipt>` | At entering `6e70931d…`: entering v1 bytes selftest on this host `MORI_SOURCE_DRIFT_SELFTEST: FAIL (5/6)` rc 1 — `huge_cap` grades the host's loopback transport, not the cap (receipt `evidence/drift-selftest-before-v1-win-r64.txt`); on-host sweep receipts: 0 (`git ls-tree -r 6e70931d \| grep -c drift-live-win` = 0, `evidence/controls-r64.txt`) — every prior sweep receipt is an old-Linux-host artifact (r36/r37) | v1.1 selftest `MORI_SOURCE_DRIFT_SELFTEST: PASS (6 cases)` rc 0 with the transport scaling disclosed on the PASS line (`transport_cap=65536`, receipt `evidence/drift-selftest-after-v11-win-r64.txt`); sweep `MORI_SOURCE_DRIFT rows=346 fresh=53 excerpt=0 drifted=23 unavailable=2 no-copy=268` rc 1 (receipt `evidence/drift-live-win-r64.txt`); 23 drifted rows listed and classed, not left unmarked: class A (UA-dependent vendor rendering — S572 tool-UA fetch `b49921a4…` ≠ pinned, curl-UA fetch `3f2fd8a2…` == pinned byte-identical) vs class B (real content drift — S241 and S156 differ under the same curl UA that pinned them); evidence `evidence/drift-findings-ua-vs-content-r64.txt`; per-row re-adjudication is SCORECARD planned r65. **Self-verdict: verified met** (closure to re-derive). Routed limits: the transport probe is load-dependent (it failed once under the concurrent before-receipt's 4 MiB streaming — disclosed in the after-receipt header); drifted means the copy is not reproducible from today's body, never "the source changed" (QUALITY 105); the probe's UA differs from the pinning UA — an instrument-vs-registry interaction the r65 disposition must settle row by row |
+| C2: Windows resource-runway probe capability + sourced entry — `tools/mori-runway-win.py` (one-shot read-only `GlobalMemoryStatusEx` + `GetDiskFreeSpaceExW` via ctypes, standard library only; counts/shapes only; honest-unavailable; offline redaction-armed selftest), entry K1–K8 line-located in pinned S574/S575 copies, capability row below; the province's "Resource runway" row gets its Windows-host instrument (its Linux `df`/PSI class is absent here) | depth 5 | `python tools/mori-runway-win.py --selftest`; `python tools/mori-runway-win.py`; `grep -c "^| S" corpus/SOURCES.md` | At entering `6e70931d…`: tool absent, entry absent, sources-r64 absent (`git cat-file -e` rc 128 each), SOURCES 346 rows (`evidence/controls-r64.txt`) — a do-nothing round reaches none of them | Selftest `RUNWAY_WIN_SELFTEST: PASS (9 cases)` rc 0, two consecutive runs identical (`evidence/runway-live-win-r64.txt`); live on this host `RUNWAY_WIN: AVAILABLE surfaces=2 ok=2 unavailable=0` rc 0 — load_pct=68, commit_avail_pct=44, free_pct=80, free_to_caller==free_bytes (no quota gap on this volume), counts only; SOURCES 346 → 348 (S574+S575 opened and pinned this round). **Self-verdict: verified met** (closure to re-derive). Routed limits: one-shot volatile counts, no series/rate/trend claim (S574:846-847); the commit naming rests on K2's allocation question, not a structure-page anchor; the live receipt is the sole live demonstration (selftest is offline) |
+
+Selftests this round, unaccommodated: `tools/mori-source-drift.py --selftest`
+6/6 rc 0 (v1.1); `tools/mori-runway-win.py --selftest` 9/9 rc 0 ×2
+(binary-mode fixture writes). The r63 planned receipt-guard wiring was
+exercised as the D3 discipline instead (every guard invocation in this
+round's receipts prints its full argv — `evidence/selftests-rerun-and-guard-argv-r64.txt`);
+host-events pagination and the SKILL registry naming stay as planned/L0-gated.
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Windows resource-runway probe (`tools/mori-runway-win.py`) | one-shot read-only read of the host's memory runway (dwMemoryLoad percent, physical and commit totals/availability) and the workspace drive's free space (total/free/free-to-caller, percentage from the caller figure per the quota caveat) through the Windows API — counts and shapes only, unavailable never zero, offline selftest; the Windows-host instrument for the province's Resource-runway row | `python tools/mori-runway-win.py --selftest` → `RUNWAY_WIN_SELFTEST: PASS (9 cases)` rc 0; live `RUNWAY_WIN: AVAILABLE surfaces=2 ok=2 unavailable=0` rc 0 on the Windows host (`.ufo/waves/round-64/evidence/runway-live-win-r64.txt`) | 64 |
+
+Windows-host protocol work (unclaimed): all six r63 routed carry-ins
+discharged — D1 lesson mistake 5 relocated under `## Mistakes` with a
+correction note; D2 a second after-state selftest run committed alongside the
+first (one receipt, both runs, tallies identical); D3 the guard's full argv
+(`--expect 14`) printed in the receipt; D4 correction note for the r63
+report's "first Microsoft Learn rows" (S241, learn.microsoft.com ja-jp,
+predates — S572/S573 are the first en-us Windows Server troubleshoot /
+Windows-commands rows); D5 the 100644 limitation noted (treecommit pins that
+mode for new blobs — the working tree's executable bit cannot reach the
+index; immaterial on this host, `python tools/…` invocation); D6 the census
+wording corrected (the fleet root's `<lane>-shokunin` entries are NTFS
+junctions to the lane repos — the validator reads the lane's live working
+tree, no lagging clone exists; LOG and lesson corrected in place, no measured
+value changes). L2 dispatch: no AgentSwarm surface in this session (carried
+L0, routed around); round 64 ran L1-only.
+
+Planned (round 65): per-row drift disposition for the 23 flagged rows
+(refetch-and-repin with row-cell refetch notes, or supersede — settling the
+UA question per vendor); re-run the sweep after disposition to a drifted=0
+receipt or an honest remainder; wire the receipt guard's argv discipline into
+the wave checklist.

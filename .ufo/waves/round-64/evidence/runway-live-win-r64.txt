@@ -1,0 +1,36 @@
+# argv: python tools/mori-runway-win.py
+# bytes: working tree v1 (this round's new tool); sha256 below
+474289d079cf491ee4022d18778533e3aa822fe50f72a089b2ad4c8c2f6885bf *tools/mori-runway-win.py
+# date: 2026-11-01T05:37:50Z (UTC)
+# host: win32 x64, Git Bash, Python 3.13.15 as 'python'
+# redaction: counts and shapes only — no paths beyond the drive root, no user/process names, no timestamps
+---
+surface memory: state=ok load_pct=68 phys_total=17094025216 phys_avail=5403672576 commit_limit=32126410752 commit_avail=14413799424 commit_avail_pct=44
+surface disk: state=ok drive=C: total_bytes=997926629376 free_bytes=801362259968 free_to_caller=801362259968 free_pct=80
+RUNWAY_WIN: AVAILABLE surfaces=2 ok=2 unavailable=0
+rc=0
+
+## selftest run A (argv: python tools/mori-runway-win.py --selftest)
+selftest grammar              PASS
+selftest pct_math             PASS
+selftest zero_is_real         PASS
+selftest quota_boundary       PASS
+selftest honest_unavailable   PASS
+selftest partial              PASS
+selftest redaction            PASS
+selftest rc_contract          PASS
+selftest malformed_fixture    PASS
+RUNWAY_WIN_SELFTEST: PASS (9 cases)
+rc=0
+## selftest run B (consecutive, fixture-based arms — identical tallies expected)
+selftest grammar              PASS
+selftest pct_math             PASS
+selftest zero_is_real         PASS
+selftest quota_boundary       PASS
+selftest honest_unavailable   PASS
+selftest partial              PASS
+selftest redaction            PASS
+selftest rc_contract          PASS
+selftest malformed_fixture    PASS
+RUNWAY_WIN_SELFTEST: PASS (9 cases)
+rc=0

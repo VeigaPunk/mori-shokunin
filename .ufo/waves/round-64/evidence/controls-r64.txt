@@ -1,0 +1,30 @@
+# mori r64 do-nothing controls at the entering revision 6e70931d8583279fcdf0398ff5875ae5e613847a
+# date: 2026-11-01T05:39:37Z
+none of the round's after-states is reachable without this round's work:
+
+## C1 controls
+$ git show 6e70931d:tools/mori-source-drift.py | sha256sum   # entering v1 bytes
+453c5d8e260301df7a99daf62b4c16ea08e4a0b4f9e4f53821cdbce447011552 *-
+entering-bytes selftest on this host: MORI_SOURCE_DRIFT_SELFTEST: FAIL (5/6), rc 1 — receipt drift-selftest-before-v1-win-r64.txt
+$ git ls-tree -r --name-only 6e70931d | grep -c 'drift-live-win'   # on-host sweep receipts before
+0
+(the only prior MORI_SOURCE_DRIFT rows= receipts are r36/r37 old-host artifacts)
+
+## C2 controls
+$ git cat-file -e 6e70931d:tools/mori-runway-win.py
+fatal: path 'tools/mori-runway-win.py' exists on disk, but not in '6e70931d'
+rc=128
+$ git cat-file -e 6e70931d:corpus/knowledge/runway-win-r64.md
+fatal: path 'corpus/knowledge/runway-win-r64.md' does not exist in '6e70931d'
+rc=128
+$ git cat-file -e 6e70931d:corpus/evidence/sources-r64/S574.html
+fatal: path 'corpus/evidence/sources-r64/S574.html' exists on disk, but not in '6e70931d'
+rc=128
+$ git show 6e70931d:corpus/SOURCES.md | grep -c '^| S57[45]'
+0
+$ git show 6e70931d:corpus/SOURCES.md | grep -c '^| S'   # rows at entering
+346
+SOURCES rows now:
+348
+$ git ls-tree --name-only 6e70931d -- .ufo/waves/ | grep -c round-64   # wave dir at entering
+0

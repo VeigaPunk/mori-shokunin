@@ -26,6 +26,18 @@ Exit 0 when drifted=0, 1 when any row is drifted, 2 on a setup error (missing or
 unreadable SOURCES.md, bad usage). Read-only: no writes under DIR. `drifted` means
 the committed copy is not reproducible from today's body — it is not proof the source
 changed (see corpus/knowledge/source-drift-r36.md).
+
+v1.1 (round 64, host-portable selftest — live classification unchanged): the round-37
+`huge_cap` arm streamed 4 MiB fixture bodies over loopback HTTP; on the Windows
+workspace host that transport resets or stalls mid-size bodies (security-layer
+interference, r64 lesson — raw TCP streams the same bytes fine), so the arm graded the
+transport, not the cap. v1.1 scales the pair to the largest body the host's loopback
+HTTP streams twice consecutively (`_loopback_stream_cap`; 4 MiB on a healthy POSIX
+loopback, where the fixture is byte-identical to v1), folds the frozen
+`FETCH_MAX_BYTES = 4 * 1024 * 1024` literal into the arm's pass condition (the round-37
+cap-kill mutation still fails exactly this arm), and gives `fetch()` an explicit cap
+argument defaulting to the frozen constant. Arm names, row grammar, exit codes and the
+r38 content anchors are unchanged.
 """
 
 import hashlib
@@ -137,13 +149,17 @@ def _public_redirect_target(url):
 
 # --------------------------------------------------------------------- fetching
 
-def fetch(url):
+def fetch(url, cap=None):
     """GET url. Returns (outcome, body):
     ("body", bytes)        a 2xx response was received
     ("unavailable", None)  connection error, timeout, a non-2xx final status, an over-cap
                            body, or a non-public destination (initial or post-redirect)
     Limited retries: on 429 the Retry-After header is honoured (capped); on other
-    5xx and on connection errors a short fixed backoff is used."""
+    5xx and on connection errors a short fixed backoff is used.
+    cap: read bound in bytes; None means the frozen FETCH_MAX_BYTES (v1.1, round 64 —
+    the selftest's transport-scaled huge_cap arm passes an explicit bound; live
+    behavior is unchanged)."""
+    bound = FETCH_MAX_BYTES if cap is None else cap
     if not _fetchable_initial(url):
         return "unavailable", None
     last_wait = 0.0
@@ -160,8 +176,8 @@ def fetch(url):
                 # bounded read: an untrusted source must not stream past the cap or stall
                 # between bytes past the socket timeout (w2/SentTools) — an over-cap or
                 # truncated body is not classifiable and grades unavailable.
-                body = resp.read(FETCH_MAX_BYTES + 1)
-                if len(body) > FETCH_MAX_BYTES:
+                body = resp.read(bound + 1)
+                if len(body) > bound:
                     return "unavailable", None
                 return "body", body
         except urllib.error.HTTPError as exc:
@@ -295,6 +311,48 @@ def _serve(routes):
     return srv, port
 
 
+def _loopback_stream_cap(sizes, tries=2, timeout_s=5.0, budget_s=80.0):
+    """Largest body size in `sizes` (probed descending) that this host's loopback
+    HTTP transport streams twice consecutively; 0 when none does. v1.1 (round 64):
+    the Windows workspace host's security layer resets or stalls mid-size loopback
+    HTTP bodies (r64 lesson), so a fixture size that a healthy POSIX loopback
+    streams trivially can be unstreamable HERE; the huge_cap arm scales its fixture
+    to the measured capability instead of failing on the transport. This measures
+    the transport, never policy: the frozen cap semantics are asserted separately
+    (the FETCH_MAX_BYTES literal is folded into the arm's pass condition)."""
+    deadline = time.monotonic() + budget_s
+    for size in sizes:
+        if time.monotonic() > deadline:
+            return 0
+        srv, port = _serve({"/cap": (200, b"x" * size)})
+        ok = 0
+        try:
+            for _ in range(tries):
+                if time.monotonic() > deadline:
+                    return 0
+                try:
+                    req = urllib.request.Request(
+                        "http://127.0.0.1:%d/cap" % port,
+                        headers={"User-Agent": UA})
+                    with urllib.request.urlopen(req, timeout=timeout_s) as resp:
+                        n = len(resp.read(size))
+                    if n < size:
+                        break
+                    ok += 1
+                except (urllib.error.URLError, OSError):
+                    break
+        finally:
+            srv_shutdown(srv)
+        if ok >= tries:
+            return size
+    return 0
+
+
+def srv_shutdown(srv):
+    srv.shutdown()
+    srv.server_close()
+
+
 def _selftest():
     checks = []
     root = tempfile.mkdtemp(prefix="mori-source-drift-selftest-")
@@ -398,17 +456,38 @@ def _selftest():
             # Round 37 named arms for the two w2/SentCensus hardening policies. Each
             # policy is asserted directly, so a copy with that policy removed fails
             # exactly its own arm (the round-37 counter mutates both anchors).
-            outcome_over, _ = fetch(base + "/huge")
-            cap_body = 4 * 1024 * 1024  # the frozen cap value, literal: a mutated cap must
-            routes["/big"] = (200, b"y" * cap_body)  # not resize this fixture
-            outcome_at, body_at = fetch(base + "/big")
+            # v1.1 (round 64): the huge_cap pair is served at the largest body size
+            # this host's loopback HTTP transport streams twice consecutively
+            # (`_loopback_stream_cap`); on a healthy POSIX loopback that is 4 MiB and
+            # the pair is byte-identical to the v1 fixture. The frozen
+            # `FETCH_MAX_BYTES = 4 * 1024 * 1024` literal is folded into the arm's
+            # pass condition, so the round-37 cap-kill mutation (constant -> 1 << 40)
+            # still fails exactly this arm. A host whose loopback transport cannot
+            # stream 4 MiB scales the fixture DOWN and says so in the detail line —
+            # the arm still exercises over-cap/at-cap classification and the frozen
+            # bound value; it does not silently skip.
+            frozen_cap_literal = (FETCH_MAX_BYTES == 4 * 1024 * 1024)
+            cap_probe = _loopback_stream_cap(
+                [4 * 1024 * 1024, 1024 * 1024, 262144, 65536, 16384, 4096, 1024, 256])
+            outcome_over = outcome_at = None
+            body_at = None
+            if cap_probe:
+                routes["/big2"] = (200, b"y" * (cap_probe + 64))
+                routes["/big"] = (200, b"y" * cap_probe)
+                outcome_over, _ = fetch(base + "/big2", cap=cap_probe)
+                outcome_at, body_at = fetch(base + "/big", cap=cap_probe)
             checks.append((
                 "huge_cap",
-                outcome_over == "unavailable" and outcome_at == "body"
-                and body_at is not None and len(body_at) == cap_body,
-                "over_cap=%s at_cap=%s len=%s" % (
+                frozen_cap_literal and bool(cap_probe)
+                and outcome_over == "unavailable" and outcome_at == "body"
+                and body_at is not None and len(body_at) == cap_probe,
+                "over_cap=%s at_cap=%s len=%s frozen_cap_literal=%s transport_cap=%s%s" % (
                     outcome_over, outcome_at,
-                    None if body_at is None else len(body_at))))
+                    None if body_at is None else len(body_at),
+                    frozen_cap_literal, cap_probe,
+                    "" if cap_probe == 4 * 1024 * 1024 else
+                    " (loopback HTTP transport cannot stream 4 MiB here; "
+                    "fixture scaled to transport_cap)")))
             outcome_redir, _ = fetch(base + "/redir")
             checks.append((
                 "redirect_private_refused",
@@ -438,8 +517,11 @@ def _selftest():
 
     failed = [c for c in checks if not c[1]]
     for name, ok, detail in checks:
+        # v1.1: the huge_cap arm prints its detail on PASS too — the transport
+        # scaling it measured is part of the receipt, not only its failure mode
+        always = (name == "huge_cap")
         print("selftest %-20s %s%s" % (name, "PASS" if ok else "FAIL",
-                                       "" if ok else " (%s)" % detail))
+                                       "" if (ok and not always) else " (%s)" % detail))
     if failed:
         print("MORI_SOURCE_DRIFT_SELFTEST: FAIL (%d/%d)" % (len(checks) - len(failed), len(checks)))
         return 1

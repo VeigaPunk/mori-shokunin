@@ -80,10 +80,14 @@ Census (validator): start receipt
 `.ufo/waves/round-63/evidence/census-start-r63.txt` (this host, 2026-10-31,
 rc 0, tolerated W04 duplicate-URL class) → end receipt
 `.ufo/waves/round-63/evidence/census-end-r63.txt` (rc 0; the receipts carry
-the validator's bytes, not a row count — the validator reads the fleet-root
-clone, which lags the lane push). SOURCES row count 344 → 346 (S572+S573) is
+the validator's bytes, not a row count — the validator reads each lane
+registry through the fleet root, whose `<lane>-shokunin` entries are NTFS
+junctions to the lane repos, so it sees the lane's own working tree and no
+lagging clone exists). SOURCES row count 344 → 346 (S572+S573) is
 counted in the lane repo by `grep -c "^| S" corpus/SOURCES.md`, a separate
-instrument from the validator rc.
+instrument from the validator rc. (Wording corrected round 64, closure D6:
+the r63 text said the validator reads a fleet-root clone that lags the lane
+push; host inspection shows the junction layout above.)
 
 ## Mistakes
 
@@ -115,6 +119,17 @@ instrument from the validator rc.
    captured-by: running the control and reading the 1. fix: token count
    `grep -o '` + "`python3 tools/'" + ` | wc -l` → 4 at entering, 0 after;
    correction noted in the controls receipt.
+5. class: registry row placement — the two new SOURCES rows were first
+   appended at EOF, after the Registry section's trailing prose; the census
+   validator exited 1 (`mori E12 S573 row outside Registry section`). the
+   before-state census had been rc 0, so the failure was introduced and caught
+   within the round. captured-by: the round-end census receipt (kept, with the
+   correction disclosed in its header). fix: rows belong inside the Registry
+   table (moved to lines 352–353, after S571); validator re-run rc 0.
+   correction (round 64, closure D1): this item was originally misfiled at the
+   tail of `## Assimilation` (committed 1592f53d); the round-64 carry-in
+   relocates it here under `## Mistakes` verbatim — placement corrected, item
+   text unchanged.
 
 ## Wave
 
@@ -130,10 +145,6 @@ r51's pin-check v5; suggestion 3 (re-execute what closures only
 evidence-verify) was partially executed by this round's r61 re-capture, same
 reading as r62. No still-unimplemented proposal adopted this round.
 Assimilation: none — shokuknow unreachable.
-5. class: registry row placement — the two new SOURCES rows were first
-   appended at EOF, after the Registry section's trailing prose; the census
-   validator exited 1 (`mori E12 S573 row outside Registry section`). the
-   before-state census had been rc 0, so the failure was introduced and caught
-   within the round. captured-by: the round-end census receipt (kept, with the
-   correction disclosed in its header). fix: rows belong inside the Registry
-   table (moved to lines 352–353, after S571); validator re-run rc 0.
+(correction, round 64: mistake 5, which this section had erroneously carried
+at its tail since 1592f53d — closure D1 — now lives under `## Mistakes`
+above, relocated verbatim with a correction note.)

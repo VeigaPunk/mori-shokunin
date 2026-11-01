@@ -1,0 +1,30 @@
+# drift-class evidence for the r64 sweep findings (23 drifted rows) — UA-dependent rendering vs real content drift
+# date: 2026-11-01T05:37:00Z (UTC)
+# argv: curl -sS -m 60 -L [-A mori-source-drift/1.0] -o <file> <row-url>; sha256sum <files> vs pinned copies
+# host: win32 x64, Git Bash
+
+## class A evidence — UA-dependent vendor rendering (S572, learn.microsoft.com)
+$ curl -sS -m 60 -L -A mori-source-drift/1.0 -o s572-toolua.html <S572 url>
+b49921a4c8939d0381afdb2710e00f690bb0bd97ef7445ddcf06768c68d9b3f2 *C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r64/sources/../s572-toolua.html
+pinned r63 copy:
+3f2fd8a26e9258ecb8e5456819992338a96343adb456affc248fe56892f71bf6 *C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/fleet/mori-shokunin/corpus/evidence/sources-r63/S572.html
+tool-UA fetch != pinned copy -> the sweep's 'drifted' for S572
+$ curl -sS -m 60 -L (default curl UA) -o s572-curl.html <S572 url>
+3f2fd8a26e9258ecb8e5456819992338a96343adb456affc248fe56892f71bf6 *C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r64/s572-curl.html
+curl-UA fetch == pinned copy (byte-identical) -> the source body did NOT change; the drift is UA-dependent serving
+
+## class B evidence — real content drift (curl-UA refetch differs from pinned copy)
+S241 (learn.microsoft.com ja-jp, pinned r42, refetched-identical 2026-10-24): today curl-UA fetch
+ddb7ba179052f9c3c6900b6b108875adc79baf563f9b82261200ae7c4c6ba727 *C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r64/s241-curl.html
+pinned:
+1168b2a626ec4b69fbdf7341ae3331c16ff0e42667d67488762b30e206591357 *C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/fleet/mori-shokunin/corpus/evidence/sources-r42/S241.html
+-> differs under the same curl UA that pinned it: the served body changed since 2026-10-24
+
+S156 (raw.githubusercontent.com systemd v262, pinned r30): today curl-UA fetch
+b56aa781be9c29b610156925030d3c4ab720c0ad73d57907d230ca3047302f2a *C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r64/s156-curl.txt
+pinned:
+4c02999410622d782979d025a9a61314104873cba9c19e4857feba4bd0473b5e *C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/fleet/mori-shokunin/corpus/evidence/sources-r30/S156.txt
+-> differs under curl: real drift at a tag-pinned raw URL
+
+# class assignment for all 23 drifted rows is by-domain provisional (class A candidates: the learn.microsoft.com rows S241 S572 S573);
+# per-row re-adjudication (refetch-and-repin or supersede) is SCORECARD planned for r65 — no row bytes were rewritten this round

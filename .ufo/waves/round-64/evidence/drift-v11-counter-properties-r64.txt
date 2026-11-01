@@ -1,0 +1,22 @@
+# argv: python <mutated-copy> --selftest (x2) — r37 counter cap-kill and redirect-kill properties re-proven on the v1.1 bytes
+# date: 2026-11-01T05:52:45Z
+---
+mutants written
+## cap-kill copy (FETCH_MAX_BYTES -> 1 << 40): huge_cap must FAIL
+selftest exit_code            PASS
+selftest row_states           PASS
+selftest summary              PASS
+selftest huge_cap             FAIL (over_cap=unavailable at_cap=body len=4096 frozen_cap_literal=False transport_cap=4096 (loopback HTTP transport cannot stream 4 MiB here; fixture scaled to transport_cap))
+selftest redirect_private_refused PASS
+selftest missing_sources_exit2 PASS
+MORI_SOURCE_DRIFT_SELFTEST: FAIL (5/6)
+rc=1
+## redirect-kill copy (guard -> if False:): redirect_private_refused must FAIL
+selftest exit_code            PASS
+selftest row_states           PASS
+selftest summary              PASS
+selftest huge_cap             PASS (over_cap=unavailable at_cap=body len=16384 frozen_cap_literal=True transport_cap=16384 (loopback HTTP transport cannot stream 4 MiB here; fixture scaled to transport_cap))
+selftest redirect_private_refused FAIL (redirect_to_loopback=body)
+selftest missing_sources_exit2 PASS
+MORI_SOURCE_DRIFT_SELFTEST: FAIL (5/6)
+rc=1
