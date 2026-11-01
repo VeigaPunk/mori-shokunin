@@ -3184,3 +3184,70 @@ Planned (round 65): per-row drift disposition for the 23 flagged rows
 UA question per vendor); re-run the sweep after disposition to a drifted=0
 receipt or an honest remainder; wire the receipt guard's argv discipline into
 the wave checklist.
+
+## Round 65 — carry-in round: C1 freshness verified met (all 23 r64 drift findings dispositioned row by row with two-UA receipts — 14 re-pinned loudly, zero silent re-pins, the S241 class-B reading corrected, honest remainder 9 with every row tokenized); C2 depth/capability landed (mori-drift-adjudicate.py resolves sweep findings into a closed set; live run agrees with the manual receipts 23/23)
+
+Entering `7d369cd2…` (r64 verifier spotcheck tip; r64 closed with routed
+defects — the LOG "three vs four" number-drift and the standing 23-row
+disposition are this round's carry-ins). Fresh-start duty on the §7 listed
+rejections r59–r61 re-performed: frozen r61 counter re-derived (`C2=unmet`
+rc 1, all 14 quote_words anchors), r59/r60 evidence `git cat-file -e` PRESENT
+and both revisions ancestral — receipt
+`.ufo/waves/round-65/evidence/freshstart-spotchecks-r65.txt`. Rule-outs, and
+why: (1) re-declaring the r59/r60 entry-claims instruments — met-flip
+counterexamples stand on frozen bytes; (2) scalar score moves — no closure
+states a new number; (3) claims on old-Linux-host live surfaces — absent
+here; (4) SKILL.md registry-row edits — L0-gated, and discovered binding this
+round: SKILL:905 pins the sweep selftest tally `PASS (6 cases)` and the r38
+anchors bind the sweep's source lines, so the new capability shipped as a
+SEPARATE tool importing the frozen module rather than an edit to it; (5)
+editing the frozen drift tool at all — same pins; (6) re-declaring the r64
+sweep as a claim — it is admitted; its carry-in disposition is the work.
+Scores entering/after: coverage 6, operability 7, depth 5, freshness 5,
+calibration 5, adjacency 6 — no scalar claimed. Lowest tie
+depth/freshness/calibration at 5: C1 targets freshness (last admitted
+freshness improvement round 28, the oldest), C2 targets depth.
+
+| Claim | Axis | Counting command | Before | After / verdict |
+|---|---|---|---|---|
+| C1: per-row disposition of the 23 r64 drift findings (the routed carry-in) — every row re-opened under the pinning UA (curl default, curl/8.21.0) and the instrument UA, digested against the committed pins, diffed (difflib opcodes), teaching anchors greped in pin AND fresh, dispositioned into a closed set {KEEP-A ua-serving, KEEP-C receipt-shape, KEEP-CHROME vendor-chrome-only, GATE, REPIN} with QUALITY #41 reasoning; 14 rows re-pinned loudly as raw bodies in `corpus/evidence/sources-r65/`; S241's r64 provisional class-B reading corrected (asset-id churn only); S262 dispositioned GATE + record-churn-keep, grounded in S576 opened this round; then the post-disposition sweep to an honest remainder | freshness 5 | `grep -c "^S" .ufo/waves/round-65/evidence/disposition-semantic-review-r65.txt`; `grep -c " drifted" .ufo/waves/round-65/evidence/drift-live-post-r65.txt` | At entering `7d369cd2…`: disposition receipts 0, sources-r65 absent, findings unadjudicated (r64 findings receipt ends "per-row re-adjudication … planned r65"; `controls-r65.txt`: `git ls-tree -r 7d369cd2 \| grep -c round-65` = 0, `grep -c sources-r65` = 0) | Dispositioned 23/23, unclassified 0 (QUALITY #65): KEEP-C 5 (S156–S160 — r30 pins are excerpt receipts whose header shas still equal today's bodies: source unchanged since opening, finding is artifact shape), KEEP-A 2 (S572/S573 renewed: curl-UA body == pin, tool-UA differs), KEEP-CHROME 1 (S241 — only two vendor asset-build-id strings differ; 診断 6==6, ms.date/updated_at equal), GATE+KEEP-CHROME 1 (S262 — doi.org 202/0-byte; OpenAlex record metadata churned, abstract_inverted_index unchanged, S576-grounded), REPIN 14 (S175 curl-8.24 NTLM removal, S223 real paragraph insertion, S230 3.13.17→3.13.18, the rest template/asset churn — every row's teaching anchors equal pin vs fresh). `grep -c "^S" …disposition-semantic-review-r65.txt` = 23. Post-disposition sweep `MORI_SOURCE_DRIFT rows=349 fresh=70 drifted=9 unavailable=2 no-copy=268` rc 1 — the honest remainder, every drifted row carrying its adjudicator token + disposition receipt. **Self-verdict: verified met** (closure to re-derive). Routed limits: re-pins archive today's bytes, they do not certify the sources "healthy" (QUALITY #67); the S241/S262 keeps rest on the diff receipts, not on absence of change; the sweep's drifted state for the 9 remains by design (receipt-shape, UA-serving, chrome, gate are instrument-visible facts, dispositioned one layer up) |
+| C2: drift-adjudicator capability — `tools/mori-drift-adjudicate.py` resolves the sweep's findings into a closed set {receipt-open, receipt-stale, ua-serving, content-drift, gate, unavailable} (+pass-through) by importing the frozen sweep module (grammar, copy discovery, fetch policy shared; frozen bytes and the SKILL:905 `PASS (6 cases)` tally pin untouched), with the second (pinning) UA disclosed on the output header line; offline per-UA loopback selftest; live `--only` run on the 23 cross-validated against the C1 manual receipts | depth 5 | `python tools/mori-drift-adjudicate.py --selftest`; `python tools/mori-drift-adjudicate.py --root . --only S156,…,S573` | At entering `7d369cd2…`: tool absent (`git cat-file -e` rc 128, `controls-r65.txt`), no adjudication receipts, no sources-r65 — a do-nothing round reaches none of them | Selftest `MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)` rc 0, runs A/B in the dedicated receipt plus 3/3 in the round battery, identical tallies (`evidence/adjudicate-selftest-r65.txt`, `evidence/selftests-r65.txt`); live `--only` on the 23: `rows=23 adjudicated=9 passthrough=14 receipt-open=5 receipt-stale=0 ua-serving=2 content-drift=1 gate=1 unavailable=0` rc 0 (`evidence/adjudicate-live-r65.txt`) — 23/23 agreement with the manual receipts (S241 content-drift is the byte-level truth; its KEEP-CHROME disposition is the semantic-review layer, the boundary the tool's docstring discloses). Capability row entered below, first-working round 65. **Self-verdict: verified met** (closure to re-derive). Routed limits: receipt-stale and unavailable are selftest-only arms today (no live row exercised them); the second UA default is this host's curl version — a future host re-pins under its own curl and must say so on the header line |
+
+Selftests this round: standing battery retaken v2 after a discarded v1 (the
+v1 piped every selftest through `tail` so its rc lines showed tail's 0, and
+caught one transient drift-selftest FAIL 5/6 without naming the load
+condition — discarded, reason recorded in the receipt): register 12/12,
+settlement-scan 10/10, vote-bind 16/16, pin-check 125/125, drift 6/6 ×3,
+adjudicator 5/5 ×3, runway 9/9, all rc 0
+(`evidence/selftests-r65.txt`). Host finding, disclosed not fixed: this
+host's loopback HTTP transport is degraded and variable today — the r64
+certification measured `transport_cap=65536`, today's runs measured 1024 /
+4096 / 16384 across runs, and one run dropped even the small `fresh` fixture
+fetch (FAIL 4/6, transient; three consecutive PASS runs immediately after).
+The v1.1 huge_cap arm degrades exactly as designed (scales the fixture, keeps
+the frozen literal asserted); the row_states arm is exposed to the flaky
+transport — a standing-selftest stability finding for the operator, mined in
+the lesson, not patched (frozen bytes).
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Drift-finding adjudicator (`tools/mori-drift-adjudicate.py`) | resolve a source-drift sweep's findings into a closed set (receipt-open/receipt-stale/ua-serving/content-drift/gate/unavailable, plus pass-through) in one run, using the frozen sweep's own fetch policy and a disclosed second (pinning) UA — the automation of the r65 hand disposition; full-registry or `--only` subset mode, rc 0/1/2 contract | `python tools/mori-drift-adjudicate.py --selftest` → `MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)` rc 0; live `--only` on the 23 r64 findings → 23/23 agreement with the manual receipts (`.ufo/waves/round-65/evidence/adjudicate-live-r65.txt`) | 65 |
+
+Carry-ins from the r64 non-author closure: (1) the LOG r64 "Mistakes mined:
+three" number-drift — appended correction entry in the r64 entry's tail (LOG
+append-only; no rewrite); (2) the in-place-correction precedent kept narrow —
+this round's only prior-entry change is that appended block; (3) the standing
+23-row disposition + re-sweep — discharged as C1 (above). The r64 planned
+"wire the receipt guard's argv discipline into the wave checklist": no wave
+checklist artifact exists in the lane (searched; the only occurrence was the
+planned line itself); the argv discipline was applied as practice — every r65
+receipt header carries its commands — and the wiring stays an open item
+honestly reported, not claimed.
+
+Planned (round 66): the sweep instrument's receipt-shape blindness is now
+classified but still fails the standing sweep (9 drifted) — either an
+L0-routed instrument change that understands excerpt receipts and second-UA
+pins, or a standing adjudicate step wired after every sweep run; the
+loopback-transport stability finding routed to the operator (L0); consider
+re-pin of S574/S575-class en-us learn pages if the vendor asset churn reaches
+their content.

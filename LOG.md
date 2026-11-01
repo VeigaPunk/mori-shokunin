@@ -3347,3 +3347,117 @@ miss caught by reading the landed diff). Assimilation: considerthese mined
 (2026-10-19…26, all eight files — no new files since r63's sweep); no
 still-unimplemented proposal adopted. Assimilation: none — shokuknow
 unreachable.
+
+[r65 appended correction — the line above says "Mistakes mined: three" but
+`corpus/lessons/round-64.md` `## Mistakes` carries FOUR; the omitted fourth is
+the quote word-count asserted without counting (the S575 row's quote first
+written "(20 words)", counted 21, corrected pre-commit). The r64 report's
+Sources & frontier said four — the tally line in this entry is the drift.
+Number-drift, routed by the r64 non-author closure (7d369cd2); appended, not
+rewritten, per LOG append-only discipline.]
+
+## Round 65 — Mori (L1 MoriR65): C1 freshness verified met (the routed carry-in discharged: all 23 r64 drift findings dispositioned row by row, 14 re-pinned loudly, S241's class-B reading corrected, honest remainder 9 receipted); C2 depth/capability landed (mori-drift-adjudicate.py — sweep findings resolve to a closed set, live 23/23 agrees with the manual receipts)
+
+Entering `7d369cd2` (r64 verifier spotcheck tip). Fresh-start duty on the §7
+listed rejections r59–r61 re-performed: frozen r61 counter re-derived rc 1
+with all 14 quote_words anchors; r59/r60 cited evidence PRESENT and ancestral
+(receipt `.ufo/waves/round-65/evidence/freshstart-spotchecks-r65.txt`).
+Rule-outs: r59/r60 instruments (met-flip counterexamples on frozen bytes);
+scalar moves (no closure states numbers); old-Linux live surfaces (absent);
+SKILL registry-row edits (L0-gated — and discovered binding: SKILL:905 pins
+the sweep selftest tally and the r38 anchors bind the sweep's source lines,
+so the new capability shipped as a separate tool importing the frozen
+module); editing the frozen drift tool at all (same pins); re-declaring the
+admitted r64 sweep as a claim (the carry-in disposition is the work). Scores
+held 6/7/5/5/5/6 — no scalar claimed; lowest tie depth/freshness/calibration:
+C1 freshness (last admitted improvement round 28, the oldest), C2 depth.
+
+C1 (freshness 5): per-row disposition of the 23 r64 drift findings — every
+row re-opened under the pinning UA (curl default `curl/8.21.0`) and the
+instrument UA, digested against the committed pins, diffed, teaching anchors
+greped in pin AND fresh, dispositioned into a closed set with QUALITY #41
+reasoning. Receipts: `evidence/disposition-refetch-r65.txt` (two-UA digests;
+run-1 disclosed: the row-URL list was written CRLF and all 46 fetches died
+rc 3 URL-malform — retaken LF-clean as the sole fetch process),
+`evidence/disposition-semantic-review-r65.txt` (per-row class, what changed,
+disposition), `evidence/disposition-diffs-r65.txt` (opcode samples). Result:
+KEEP-C 5 (S156–S160: the r30 pins are excerpt receipts whose header shas
+still equal today's bodies — source unchanged since opening, the finding is
+artifact shape); KEEP-A 2 (S572/S573 renewed); KEEP-CHROME 1 (S241: ONLY two
+vendor asset-build-id strings differ — 診断 6==6, ms.date and updated_at
+equal; the r64 provisional class-B reading is corrected, correction recorded
+where the r64 reading is cited forward); GATE+KEEP-CHROME 1 (S262: doi.org
+202/0-byte gate; the OpenAlex record's metadata churned — updated_date,
+related_works, language, enrichment — while abstract_inverted_index is
+unchanged; grounded in S576 opened this round); REPIN 14 (S175 curl-8.24
+NTLM removal; S223 a real new paragraph on HTTP-response exceptions;
+S230 3.13.17→3.13.18; the rest template/asset churn — teaching anchors equal
+pin vs fresh on every row). Re-pins are raw bodies in
+`corpus/evidence/sources-r65/` (14 files, shas in the receipt) — loud,
+receipted, zero silent. No SOURCES.md cell changed (all 23 rows carry
+cadence rechecks and mined status; dispositions ride receipts/LOG/lesson —
+r58 precedent). Post-disposition sweep: `MORI_SOURCE_DRIFT rows=349 fresh=70
+drifted=9 unavailable=2 no-copy=268` rc 1
+(`evidence/drift-live-post-r65.txt`) — the honest remainder, every drifted
+row carrying its adjudicator token + disposition. Self-verdict: verified met.
+
+C2 (depth 5, capability acquisition): `tools/mori-drift-adjudicate.py` —
+resolves the sweep's findings into {receipt-open, receipt-stale, ua-serving,
+content-drift, gate, unavailable} (+pass-through), importing the frozen sweep
+module so grammar, copy discovery, fetch cap and redirect policy are the
+sweep's own (frozen bytes untouched; the SKILL:905 `PASS (6 cases)` tally pin
+stays true); the second UA is disclosed on the output header line. Selftest
+`MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)` rc 0, two dedicated runs
+identical plus 3/3 in the round battery
+(`evidence/adjudicate-selftest-r65.txt`, `evidence/selftests-r65.txt`); live
+`--only` on the 23: `rows=23 adjudicated=9 passthrough=14 receipt-open=5
+receipt-stale=0 ua-serving=2 content-drift=1 gate=1 unavailable=0` rc 0
+(`evidence/adjudicate-live-r65.txt`) — 23/23 agreement with the manual
+receipts (S241 content-drift is the byte-level truth; its KEEP-CHROME
+disposition is the semantic-review layer — the boundary the tool's docstring
+discloses). Capability row entered SCORECARD, first-working round 65.
+Self-verdict: verified met.
+
+Sourced claim: C1's S262 disposition rests on S576
+(docs.openalex.org work-object page, opened 2026-11-01, pinned
+`corpus/evidence/sources-r65/S576.html` sha `4671f96d…`; quote
+"OpenAlex does not ship plaintext abstracts for legal reasons; reconstruct
+the abstract from the index." 15 words at `S576.html:62`; duplicate sweep
+`grep -c "docs.openalex.org" corpus/SOURCES.md` = 0 before opening).
+SOURCES 348 → 349.
+
+Controls at entering `7d369cd2` (`evidence/controls-r65.txt`): adjudicator
+absent (cat-file rc 128); round-65 receipts 0; sources-r65 absent; SOURCES
+348 rows; r64 sweep state drifted=23. Do-nothing reaches neither after-state.
+
+Standing selftests, no regression: register 12/12, settlement-scan 10/10,
+vote-bind 16/16, pin-check 125/125, drift 6/6 ×3, adjudicator 5/5 ×3, runway
+9/9, all rc 0 (`evidence/selftests-r65.txt`, retaken v2 — v1 discarded for
+piped-rc capture and an undisclosed transient FAIL; the reason is recorded in
+the receipt). Host finding, disclosed not fixed: the loopback HTTP transport
+is degraded and variable today (transport_cap measured 65536 at the r64
+certification; 1024/4096/16384 across today's runs; one transient FAIL 4/6
+that passed 3× immediately after) — the v1.1 arm degrades as designed; the
+stability finding is mined in the lesson and routed to the operator via L0.
+
+Census: validator rc 0 at round start (`evidence/census-start-r65.txt`,
+tolerated W04 duplicate-URL class) — end receipt at round end. Mistakes
+mined: three (`corpus/lessons/round-65.md` — the CRLF URL-list that malformed
+every fetch URL; the verification greps polluted by their own `--` separator,
+discarded and re-taken needle-by-needle; the battery receipt v1 that piped
+selftest rc through `tail` and caught a transient FAIL without naming the
+load condition — discarded, retaken v2 with real rc lines). Carry-ins from
+the r64 closure:
+(1) LOG r64 "three" → four — appended correction in the r64 entry's tail;
+(2) the in-place-correction precedent kept narrow — the only prior-entry
+change is that appended block; (3) the 23-row disposition + re-sweep —
+discharged as C1. The r64 planned "wire the receipt guard's argv discipline
+into the wave checklist": no wave-checklist artifact exists (the only
+occurrence in the lane is the planned line itself); the argv discipline was
+applied as practice in every r65 receipt header; the wiring is reported
+open, not claimed. Assimilation: considerthese mined (2026-10-19…26, all
+eight files; no newer file exists); the 2026-10-26 suggestion 3
+(re-execute what closures only evidence-verify) was executed again this
+round — the fresh-start counter re-derived and all 23 findings re-opened and
+re-fetched rather than cited from r64's receipts; no still-unimplemented
+proposal adopted. Assimilation: none — shokuknow unreachable.
