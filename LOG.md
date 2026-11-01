@@ -3624,3 +3624,103 @@ no newer file exists — checked this round); the 2026-10-26 suggestion 1
 proposal but touches a tally-cited instrument's behavior — not adopted this
 round, left for the operator's instrument-change ruling (the r65 L0 line).
 Assimilation: none — shokuknow unreachable.
+
+## Round 68 — Mori (L1 MoriR68): C1 calibration verified met (the receipt-labeling discipline: the r67 A/B receipt erratum written with the not-captured run disclosed, QUALITY 160 makes per-block run-start labeling procedural, fresh per-block-labeled reproduction at the same final bytes); C2 depth/capability verified met, sourced S579 (tools/mori-ua-variance.py — per-response tokens separated from stable chrome on the instrument-UA body by same-UA A/A fetches, counts and shapes only; the live S241 A/A finds a second per-response position the r67 single diff could not name)
+
+Entering `8440cf6c` (r67 verifier spotcheck tip; r67 closed admitted with four
+routed items — item 1 is this round's carry-in, discharged as C1; item 2 (the
+r65 L0, SKILL:905 `python3` naming) stays open for the operator, routed
+around; items 3-4 are operator notes). Orphaned-evidence hygiene duty
+discharged: both citation surfaces scanned (all filed fleet mori reports +
+the lane's own artifacts), 20 candidates triaged, NOTHING TO LAND — every
+mori-owned cited evidence file is committed at the tip and each absent name
+resolves to a documented disposition (deliberate redaction withholding r28,
+documented r23 withdrawal with the falsification retained, fleet-resident
+paths, sibling-lane files, old-host state, extraction truncations)
+(`evidence/orphan-scan-r68.txt`). FRESH-START duty re-performed with own
+receipts (`evidence/freshstart-spotchecks-r68.txt`): the frozen r61 counter
+re-derived at the r61 data tip -> `C2=unmet` rc 1 (the same verdict the prior
+re-derivations reached); r59/r60 cited evidence PRESENT and ancestral.
+Do-nothing controls (`evidence/controls-r68.txt`): QUALITY `^160\.` = 0 rc 1,
+`tools/mori-ua-variance.py` absent at entering (rc 128), S579 = 0 rc 1 —
+neither claim reachable without this round's edits.
+
+C1 (calibration): the r67 closure's routed labeling nit made procedural —
+the r67 A/B receipt's heading "live run at the FINAL bytes
+2026-11-01T10:30:24Z" sat above the reproduced run's block (its own header
+`run-start=2026-11-01T10:36:28Z` disproves its label), and the 10:30:25Z
+first post-fix run's raw output was quoted nowhere (sweep: only as CITED
+as-of values at `SCORECARD.md:3332` and `LOG.md:3575`). Discharged three
+ways: the erratum (`evidence/abreceipt-labeling-erratum-r68.txt`) corrects
+the record and discloses the 10:30:25Z bytes NOT CAPTURED; QUALITY 160
+(`grep -c "^160\." corpus/QUALITY.md` 0 -> 1, 158/159 unchanged) pins the
+rule — every output block carries its own run-start, one heading never
+stands for two blocks, not-captured is disclosed, never approximated —
+written able-to-fail against the r67 receipt's own disagreeing timestamps;
+and a fresh reproduction at the same final bytes (tool sha `61ea74cc…` ==
+HEAD == the r67 bytes) quotes every run separately —
+`evidence/s241-rerun-labeled-r68.txt`, runs at 14:13:44Z and 14:23:12Z, both
+`S241 asset-churn as-of=…` rc 0 (the class reproduces at r68 moments),
+computed label check headings=2 blocks=2 mismatch=0.
+
+C2 (depth, capability acquisition, sourced S579): `tools/mori-ua-variance.py`
+receipts what the r67 receipt could only assert. Two same-UA (instrument)
+fetches of the same URL minutes apart cannot differ in page content, so every
+line position differing between them is serving-generated (per-response) and
+every agreeing position is stable; stable lines are cross-counted against the
+pinning body WITHOUT deciding UA-conditional vs newer-build (QUALITY 159
+untouched — no grammar taught, no row re-classed; classes stay the standing
+step's job). Output is counts and shapes only — line values are never emitted
+(a capture body can embed a token value, so bodies stay in scratch, never
+committed). Selftest `MORI_UA_VARIANCE_SELFTEST: PASS (6 cases)` rc 0 x3 at
+the final bytes, including the redaction arm and both able-to-fail arms.
+Live A/A on S241 (`evidence/s241-uavariance-r68.txt`): fetches 21 minutes
+apart, 54343 bytes each (shas `4e258124…`/`707eec3f…`, same-bytes=false),
+compare against the committed r42 pin: `per-response=4 stable=1497
+stable-not-in-pin=2 stable-in-pin=1495` rc 0 — two per-response positions
+(218 before `</head>`, 1498 near page end) and exactly the two asset-id lines
+(163, 211) stable-but-absent-from-pin. Finding: the second per-response
+position (1498) was not separable by the r67 single pin-vs-instrument diff —
+the r67 receipt's "one serving-injection line" description of the instrument
+body was incomplete as to per-response line count (disclosed in the receipt;
+the r67 verdicts did not rest on the line count). Ground: S579 (a mitigation
+token is a per-client-session artifact the client carries on every request)
+plus the vendor's own serving shape.
+
+No frozen byte edited: SKILL.md, the sweep, the r65 adjudicator, PROVINCE.md,
+AGENTS.md and corpus/README.md are absent from the round's diff; the
+SKILL:905 tally pin stays true by construction; every command used `python`
+(the r65 L0 `python3` Store-stub naming stands open). Standing battery green
+on unchanged bytes — register 12/12, settlement 10/10, vote-bind 16/16,
+pin-check 125/125, adjudicate 5/5, recheck 10/10 — plus the new tool 6/6
+(`evidence/selftests-battery-r68.txt`, loopback-transport condition carried;
+the new fetcher inherits the sweep's retry discipline after this host's
+loopback reset killed a first run — re-observation receipt
+`evidence/loopback-reset-r68.txt`, mined as mistake 3).
+
+Sourced claim: C2 rests on S579 (AWS WAF Developer Guide, "Token use in AWS
+WAF intelligent threat mitigation", opened 2026-11-01, pinned byte-identical
+`corpus/evidence/sources-r68/S579.html` sha `41b601f1…`; quotes at
+`S579.html:49` + `:50` — a token is "a collection of information about a
+single client / session that the client stores and provides with every web
+request that it sends"; duplicate sweeps receipted
+`evidence/source-sweeps-r68.txt`, with the honest order note that two scratch
+selection fetches preceded the sweeps and the sweeps predate the row and the
+claim). SOURCES 351 -> 352. Census: validator rc 0 at round start
+(`evidence/census-start-r68.txt`) -> rc 0 at round end
+(`evidence/census-end-r68.txt`); the FIRST end run failed rc 1 (`mori E12
+S579 row outside Registry section` — the row had been appended at EOF; moved
+into the Registry after S578, re-validated clean; the validator caught what
+count greps could not — mined as mistake 5).
+
+Five mistakes mined this round (`corpus/lessons/round-68.md`): a negative
+sweep run on CRLF-contaminated input lists (567 false candidates, discarded);
+a test assertion authored against a fixture that did not exist; a one-shot
+fetcher on a host whose loopback intermittently resets; a receipt field that
+printed bytes where its name said lines; and a sectioned append done as an
+EOF append (E12). Carry-ins from the r67 closure: (1) the labeling nit —
+discharged as C1; (2) the r65 L0 — stays open for the operator, routed
+around. Assimilation: considerthese re-mined (no newer file than
+2026-10-26); suggestion 1 (split pin-check mismatches) stays behind the
+operator's open instrument-change ruling. Assimilation: none — shokuknow
+unreachable.

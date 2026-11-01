@@ -1,0 +1,47 @@
+# mori r68 — erratum: block labeling in .ufo/waves/round-67/evidence/s241-assetchurn-live-r67.txt
+date: 2026-11-01 (r68; the r67 closure's routed item 1, route: lane)
+routed note: corpus/lessons/round-67-verifier-spotcheck.md §7 item 1
+---
+$ the defect, in the r67 receipt's own bytes (lines 17-21):
+  17: $ live run at the FINAL bytes 2026-11-01T10:30:24Z:
+  18: # argv: python tools/mori-drift-recheck.py --root . --only S241
+  19: # MORI_DRIFT_RECHECK second_ua=curl/8.21.0 only=S241 ... run-start=2026-11-01T10:36:28Z ...
+  20: S241 asset-churn as-of=2026-11-01T10:36:29Z
+  The heading says 10:30:24Z; the block beneath it proves itself the 10:36:28Z
+  REPRODUCED run (its own header line carries run-start=2026-11-01T10:36:28Z).
+  One heading was made to stand for two runs; the block it labels is not the run
+  it names.
+$ the first post-fix run (as-of=2026-11-01T10:30:25Z): NOT CAPTURED, disclosed.
+  Sweep of the lane repo at the entering bytes for its timestamps:
+  - `10:30:25` appears only as a CITED as-of value — SCORECARD.md:3332
+    ("post-fix the same row prints S241 asset-churn as-of=2026-11-01T10:30:25Z
+    (reproduced 10:36:29Z)") and LOG.md:3575 ("fixed, then S241 asset-churn
+    as-of=2026-11-01T10:30:25Z (reproduced") — and in this round's erratum and
+    QUALITY 160 text;
+  - `10:30:24` appears only as the r67 receipt's mislabeling heading (:17), the
+    routed note that names it, and this round's criterion/erratum text;
+  - no raw output block of the 10:30:25Z run exists in any committed artifact —
+    its bytes were not captured when the r67 receipt was assembled and cannot be
+    reconstructed after the fact (the fetch is moment-bound; the vendor surface
+    has moved on). The verdict it produced is corroborated by the r67 closure's
+    own independent live re-run (~11:43Z) and by this round's fresh reproduction.
+$ the correction, forward-looking (QUALITY 160, landed this round):
+  1. this erratum corrects the record: the r67 receipt's single FINAL-bytes
+     heading labeled the REPRODUCED run; the first post-fix run's raw block is
+     not-captured;
+  2. a fresh reproduction at the same final bytes now quotes every run's raw
+     output as its own block, each heading restating that block's own
+     run-start= — .ufo/waves/round-68/evidence/s241-rerun-labeled-r68.txt
+     (two runs, minutes apart; an awk check in that receipt binds each heading
+     to its block: 0 mismatches);
+  3. QUALITY 160 makes the discipline procedural: every output block in a
+     multi-run evidence receipt carries its own run-start; not-captured is
+     disclosed, never approximated by another run's block.
+Identity of the bytes re-run: tools/mori-drift-recheck.py is byte-identical to
+the r67 final bytes (verified: `git diff eed7272fc17d8beea75a275b13d03542ae275446
+8440cf6c035a8f9af9cc8b3c95fc5584176c2d5c -- tools/mori-drift-recheck.py` is
+empty, rc 0; and `git show HEAD:tools/mori-drift-recheck.py | sha256sum` ==
+`sha256sum tools/mori-drift-recheck.py` == `61ea74ccc06207f6e401f4f558b007bec
+191dee2910d245692b4e79614cc57e6` — the r68 working tree adds no edit to it).
+The live vendor surface is moment-bound and may have moved since r67; the
+reproduction certifies its own as-of moments on its face (QUALITY 158).

@@ -1,0 +1,16 @@
+# mori r68 do-nothing controls (claims must be unreachable by a do-nothing round)
+date: 2026-11-01T13:37:16Z
+entering: 8440cf6c035a8f9af9cc8b3c95fc5584176c2d5c
+---
+$ git show 8440cf6c035a8f9af9cc8b3c95fc5584176c2d5c:corpus/QUALITY.md | grep -c "^160\."
+0
+rc=1
+$ git cat-file -e 8440cf6c035a8f9af9cc8b3c95fc5584176c2d5c:tools/mori-ua-variance.py
+fatal: path 'tools/mori-ua-variance.py' does not exist in '8440cf6c035a8f9af9cc8b3c95fc5584176c2d5c'
+rc=128 (fatal: absent at entering)
+$ git show 8440cf6c035a8f9af9cc8b3c95fc5584176c2d5c:corpus/SOURCES.md | grep -c "| S579 "
+0
+rc=1
+$ grep -c "^160\." corpus/QUALITY.md  (working tree now, pre-edit)
+0
+rc=1

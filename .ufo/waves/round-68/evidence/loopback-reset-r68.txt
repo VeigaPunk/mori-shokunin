@@ -1,0 +1,6 @@
+# mori r68 — this host's loopback HTTP intermittently resets (observed while building the r68 ua-variance selftest)
+date: 2026-11-01T14:31:20Z
+# re-observation of the minimal repro from the round session (3 servers, one request each):
+$ python -I -c "3x (ThreadingHTTPServer 127.0.0.1:0, HTTP/1.1 handler, one urlopen GET)"
+trial 0 OK 200 12; trial 1 FAIL ConnectionResetError [WinError 10054] An existing connection was forcibly closed by the remote host; trial 2 OK 200 12
+# the frozen sweep's fetch retries connection errors for exactly this reason; the r68 ua-variance fetcher inherited the discipline (FETCH_TRIES=3) after its first selftest run died on a reset

@@ -1645,3 +1645,30 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
     <- the r66 verifier spotcheck routed note 1: the `time-churn` grammar covered the docs.python.org render only; S241 (learn.microsoft.com asset-build-id churn) stayed honest `content-drift` at the byte layer with KEEP-CHROME at the semantic-review layer. Taught this round from the vendor's own redeploy signature recorded in `.ufo/waves/round-65/evidence/disposition-diffs-r65.txt` (S241, changed_opcodes=2, both asset-reference lines); demonstrated live: the same row the r66 standing run printed `content-drift` now prints `asset-churn as-of=...` (`.ufo/waves/round-67/evidence/s241-assetchurn-live-r67.txt`; standing run `.ufo/waves/round-67/evidence/fromsweep-standing-r67.txt`, 17/17 with the single intended flip).
     Shown able to fail: the pre-fix instrument classified S241 `content-drift` at 2026-11-01T10:21:36Z because the second-UA arm never attempted the grammars — the live run caught the gap the selftest missed; post-fix the same pin classifies `asset-churn`, and a delta mixing a stamp line with an asset id satisfies neither grammar (each normalization removes only its own class of bytes) and stays `content-drift`.
     Ground: S578 (versioned URLs are the deploy-time cache-invalidation mechanism - changing the URL is how a vendor ships new assets) and S241's observed signature. Scope limit: the grammar names ONE vendor's observed token shape; other vendors' build artifacts stay honest `content-drift` until their own grammar is taught from pinned observed bytes.
+
+## Criterion added round 68 — every output block in a multi-run evidence receipt carries its own run-start
+
+160. A multi-run evidence receipt labels EVERY captured output block with its own
+     run-start — the block's own header line restates it, so a reader (and a grep)
+     can bind each block to the run that produced it — and never one heading above
+     two blocks. A run whose raw output was not separately captured is disclosed as
+     not-captured (with where its verdict IS cited), never approximated by quoting
+     a different run's block under its name. A receipt that must be re-derived to
+     learn which bytes came from which run is unreadable as evidence.
+     ← the r67 verifier spotcheck routed note 1: the r67 A/B receipt's heading
+     "live run at the FINAL bytes 2026-11-01T10:30:24Z" sat above the output block
+     of the reproduced run (`run-start=2026-11-01T10:36:28Z`), and the 10:30:25Z
+     first post-fix run — cited in the r67 report and SCORECARD — had its own raw
+     output block quoted nowhere (`.ufo/waves/round-67/evidence/s241-assetchurn-live-r67.txt`;
+     `corpus/lessons/round-67-verifier-spotcheck.md` §7 item 1). Corrected by the
+     r68 erratum `.ufo/waves/round-68/evidence/abreceipt-labeling-erratum-r68.txt`
+     with a fresh per-block-labeled reproduction at the same final bytes
+     (`.ufo/waves/round-68/evidence/s241-rerun-labeled-r68.txt`, two runs, each
+     block's heading restating that block's own `run-start=`).
+     Shown able to fail: in the r67 receipt the heading timestamp 10:30:24Z and the
+     block beneath it disagree (`run-start=10:36:28Z` — the block proves itself the
+     later run); in the r68 reproduction every heading equals the `run-start=` on
+     the block's own header line (an awk check in the receipt prints 0 mismatches).
+     Not covered: single-run receipts (the run-start on the one header suffices);
+     the not-captured 10:30:25Z bytes stay not-captured — this criterion governs
+     labeling discipline from r68 forward, it cannot resurrect uncaptured bytes.

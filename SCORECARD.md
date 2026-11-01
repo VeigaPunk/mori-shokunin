@@ -3357,3 +3357,81 @@ the remaining churn-grammar frontier is third-vendor shapes (none observed
 in the registry yet — none taught pre-emptively); the L0 instrument-change
 question (mori | round-65) and the dispatch-surface question (mori |
 round-62) stand open for the operator.
+
+## Round 68 — the per-response separation receipt + the receipt-labeling discipline: C1 calibration landed (the r67 closure's routed labeling nit discharged as a rule: the A/B receipt erratum written, the not-captured 10:30:25Z block disclosed with the sweep that proves it, QUALITY 160 makes per-block run-start labeling procedural, fresh per-block-labeled reproduction at the same final bytes); C2 depth/capability landed, sourced S579 (tools/mori-ua-variance.py — the instrument-UA body's per-response tokens separated from stable chrome by same-UA A/A fetches, counts and shapes only; the live S241 A/A finds a SECOND per-response position the r67 single diff could not name)
+
+Entering `8440cf6c` (r67 verifier spotcheck tip; r67 closed admitted with four
+routed items — item 1 is this round's carry-in, discharged as C1; item 2 (the
+r65 L0, SKILL:905 `python3` naming, this host's Store stub) stays open for the
+operator and is routed around — no frozen byte edited, every command `python`;
+items 3-4 are promotion/redaction notes for the operator). Orphaned-evidence
+hygiene duty discharged: both citation surfaces scanned (all filed fleet mori
+reports + the lane's own artifacts), 20 candidates triaged, NOTHING TO LAND —
+every mori-owned cited evidence file is committed at the tip and each absent
+name resolves to a documented disposition (deliberate redaction withholding,
+documented r23 withdrawal with the falsification retained, fleet-resident
+paths, sibling-lane files, old-host state, extraction truncations)
+(`.ufo/waves/round-68/evidence/orphan-scan-r68.txt`). FRESH-START duty
+re-performed on the §7 rejections r59-r61 with own receipts
+(`.ufo/waves/round-68/evidence/freshstart-spotchecks-r68.txt`): the frozen r61
+counter re-derived at the r61 data tip -> `C2=unmet` rc 1 (the same verdict the
+r61 closure and the r65/r66/r67 re-derivations reached); r59/r60 cited evidence
+`git cat-file -e` PRESENT and both revisions `merge-base --is-ancestor` of
+refs/heads/master rc 0 each. Rule-outs, and why: (1) re-declaring the r59/r60
+entry-claims instruments (met-flip counterexamples on frozen bytes, re-derived
+unmet again); (2) scalar score moves (no closure states a new number); (3)
+old-Linux-host live surfaces (absent here); (4) editing the frozen bytes (the
+SKILL:905 tally pin and the r65/r66/r67 receipts bind them — the r68 tool is
+new and separate); (5) a third churn grammar for the bot-manager chrome (r67's
+ruling stands — r68 RECEIPTS the variance, re-classes no row, QUALITY 159's
+vendor scoping untouched); (6) re-declaring the admitted r64-r67 work; (7)
+adopting considerthese 2026-10-26 suggestion 1 (changes a tally-cited
+instrument's reported behavior — stays behind the operator's open
+instrument-change ruling). Do-nothing controls
+(`.ufo/waves/round-68/evidence/controls-r68.txt`): QUALITY `^160\.` = 0 rc 1,
+`tools/mori-ua-variance.py` absent at entering (rc 128), S579 row = 0 rc 1 —
+both claims unreachable without this round's edits. Scores entering/after:
+coverage 6, operability 7, depth 5, freshness 5, calibration 5, adjacency 6 —
+no scalar claimed. Lowest tie depth/freshness/calibration at 5: C1 targets
+calibration, C2 targets depth.
+
+| Claim | Axis | Counting command | Before | After / verdict |
+|---|---|---|---|---|
+| C1: the receipt-labeling discipline — every output block in a multi-run evidence receipt carries its own run-start (the block's own header line restates it), one heading never stands for two blocks, and a run whose raw output was not captured is disclosed as not-captured with where its verdict IS cited; discharged with the r67 erratum + a fresh per-block-labeled reproduction | calibration 5 | `git show <base>:corpus/QUALITY.md \| grep -c "^160\."` (0, rc 1); `grep -c "^160\." corpus/QUALITY.md` (1); the reproduction's computed label check (`grep -c '^[$] run'` vs the blocks' own `run-start=` headers: 2 vs 2, mismatch=0) | At entering `8440cf6c`: QUALITY carried no labeling criterion (`grep -c "^160\."` = 0 rc 1, `controls-r68.txt`); the r67 A/B receipt's heading "live run at the FINAL bytes 2026-11-01T10:30:24Z" sat above the reproduced run's block (its own header `run-start=2026-11-01T10:36:28Z` — the block disproves its label), and the 10:30:25Z first post-fix run's raw output was quoted nowhere (sweep: only as CITED as-of values at `SCORECARD.md:3332` and `LOG.md:3575` — receipted in the erratum) | Erratum landed (`.ufo/waves/round-68/evidence/abreceipt-labeling-erratum-r68.txt`): the mislabel corrected on the record; the 10:30:25Z bytes disclosed NOT CAPTURED (a labeling rule cannot resurrect uncaptured bytes — QUALITY 160's not-covered clause). QUALITY 160 landed (`grep -c "^160\." corpus/QUALITY.md` = 1; 158/159 counts unchanged), written able-to-fail against the r67 receipt's own disagreeing timestamps. Fresh reproduction at the same final bytes (tool sha `61ea74cc…` == HEAD == the r67 bytes; `git diff eed7272f 8440cf6c -- tools/mori-drift-recheck.py` empty) — `.ufo/waves/round-68/evidence/s241-rerun-labeled-r68.txt`: two runs 14:13:44Z and 14:23:12Z, each its own block carrying its own `run-start=`, both `S241 asset-churn as-of=…` rc 0 (the class reproduces at r68 moments), computed check headings=2 blocks=2 mismatch=0. **Self-verdict: verified met** (closure to re-derive) |
+| C2 (sourced, S579): `tools/mori-ua-variance.py` — the per-response separation receipt: two same-UA (instrument) fetches of the same URL minutes apart cannot differ in page CONTENT, so every line position differing between them is serving-generated (per-response), every agreeing position is stable; stable lines are cross-counted against the pinning body WITHOUT deciding UA-conditional vs newer-build (QUALITY 159 untouched — no grammar taught, no row re-classed; row classes stay the standing step's job); output is counts and shapes only — line values are never emitted (a capture body can embed a token value, so bodies stay in scratch, never committed) | depth 5 (capability acquisition) | `git cat-file -e <base>:tools/mori-ua-variance.py` (rc 128 at entering); `python tools/mori-ua-variance.py --selftest`; `grep -c "per-response=" .ufo/waves/round-68/evidence/s241-uavariance-r68.txt` | At entering: the instrument-UA body of a bot-managed page was unadjudicated — the r67 receipt asserted "per-response bot-manager chrome" from a single pin-vs-instrument diff and could name only ONE injection line; no separation tool existed (`git cat-file -e` rc 128, `controls-r68.txt`); planned as the r67 SCORECARD's first round-69-intent item | The capability runs and its output verifies: selftest `MORI_UA_VARIANCE_SELFTEST: PASS (6 cases)` rc 0 x3 at the final bytes, including the redaction arm (`token_value_never_emitted`) and both able-to-fail arms (capture 404 → rc 1 with no bytes written; missing compare input → rc 2). Live A/A on S241 (`.ufo/waves/round-68/evidence/s241-uavariance-r68.txt`): two instrument-UA fetches 21 minutes apart, 54343 bytes each (shas `4e258124…` / `707eec3f…`, same-bytes=false), compare against the committed r42 pin (sha `1168b2a6…`): `per-response=4 stable=1497 stable-not-in-pin=2 stable-in-pin=1495 lines-a=1499 lines-b=1499 lines-pin=1499` rc 0 — TWO per-response positions (218 before `</head>`, and 1498 near page end; both same-length replaces), and exactly the two asset-id lines (163, 211) stable-but-absent-from-pin (the build churn the standing step already classifies `asset-churn` on the pinning arm). Finding: the SECOND per-response position (1498) was not separable by the r67 single pin-vs-instrument diff — the r67 receipt's "one serving-injection line" description of the instrument body was incomplete as to per-response line count (disclosed in the receipt; the r67 verdicts did not rest on the line count). Ground: S579 (a mitigation token is a per-client-session artifact carried on every request) + the vendor's own serving shape. **Self-verdict: verified met** (closure to re-derive) |
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Per-response separation receipt (`tools/mori-ua-variance.py`) | separates per-response tokens from stable chrome on a bot-managed page's instrument-UA body by same-UA A/A fetches — counts and shapes only, line values never emitted; decides nothing a grammar should (QUALITY 159 vendor scoping untouched) | `python tools/mori-ua-variance.py --selftest` -> `MORI_UA_VARIANCE_SELFTEST: PASS (6 cases)` rc 0 x3; live S241 A/A 21 min apart -> `per-response=4 stable=1497 stable-not-in-pin=2` with the two positions named by number (`.ufo/waves/round-68/evidence/s241-uavariance-r68.txt`) | 68 |
+
+Selftests this round: the new tool 6/6 x3 at the final bytes; the standing
+battery green on unchanged bytes — register 12/12, settlement 10/10,
+vote-bind 16/16, pin-check 125/125, adjudicate 5/5, recheck 10/10
+(`.ufo/waves/round-68/evidence/selftests-battery-r68.txt`, loopback-transport
+condition carried; the r68 tool's fetch inherits the sweep's retry discipline
+after this host's loopback reset killed a first run — mined as mistake 3,
+re-observation receipt `.ufo/waves/round-68/evidence/loopback-reset-r68.txt`).
+No frozen byte edited: SKILL.md, `tools/mori-source-drift.py`,
+`tools/mori-drift-adjudicate.py`, PROVINCE.md, AGENTS.md, corpus/README.md are
+absent from the round's diff; the SKILL:905 tally pin stays true by
+construction. Carry-ins from the r67 closure: (1) the receipt-labeling nit —
+built as C1 (erratum + QUALITY 160 + labeled reproduction); (2) the r65 L0 —
+stays open for the operator, routed around; plus the orphaned-evidence hygiene
+duty — scanned, nothing to land (receipt above). SOURCES 351 -> 352 (S579, AWS
+WAF token semantics — the per-request ground the A/A separation reads; opened
+this round; sweeps receipted `.ufo/waves/round-68/evidence/source-sweeps-r68.txt`,
+with the honest order note that two scratch selection fetches preceded the
+sweeps and the sweeps predate the row and the claim). Census: validator rc 0
+at round start (`evidence/census-start-r68.txt`) -> rc 0 at round end
+(`evidence/census-end-r68.txt`); the FIRST end run failed rc 1 (`mori E12
+S579 row outside Registry section` — the row had been appended at EOF; moved
+into the Registry after S578, re-validated clean; mined as mistake 5).
+
+Planned (round 69): the A/A receipt is a 21-minute window — a future round
+could re-capture at a longer gap (hours) to test whether the two per-response
+positions (218, 1498) rotate on the same clock or different TTLs (the r68
+window cannot distinguish them); if the vendor redeploys, the probe's
+stable-not-in-pin count grows beyond 2 and must stay consistent with the
+re-check's `asset-churn` classification on the same fetch (a standing
+cross-check arm, deciding nothing); the r65 L0 instrument-change question and
+the dispatch-surface question (mori | round-62) stand open for the operator.

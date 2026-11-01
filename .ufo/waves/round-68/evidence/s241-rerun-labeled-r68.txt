@@ -1,0 +1,21 @@
+# mori r68 — fresh S241 re-check runs at the r67 final bytes, each block labeled with its own run-start (QUALITY 160; the r67 routed note 1 correction)
+date: 2026-11-01T14:13:43Z
+bytes: tools/mori-drift-recheck.py sha256 61ea74ccc06207f6e401f4f558b007bec191dee2910d245692b4e79614cc57e6 (== HEAD, == the r67 final bytes; see abreceipt-labeling-erratum-r68.txt)
+---
+$ run 1 of 2:
+$ python tools/mori-drift-recheck.py --root . --only S241
+# MORI_DRIFT_RECHECK second_ua=curl/8.21.0 only=S241 from-sweep=- findings=- run-start=2026-11-01T14:13:44Z stamp-class=python-docs-page-stamp asset-class=learn-microsoft-asset-build-id
+S241 asset-churn as-of=2026-11-01T14:13:44Z
+MORI_DRIFT_RECHECK rows=1 adjudicated=1 fresh=0 excerpt=0 time-churn=0 asset-churn=1 receipt-open=0 receipt-stale=0 ua-serving=0 content-drift=0 gate=0 unavailable=0 window=2026-11-01T14:13:44Z..2026-11-01T14:13:44Z
+rc=0
+$ run 2 of 2, minutes after run 1:
+$ python tools/mori-drift-recheck.py --root . --only S241
+# MORI_DRIFT_RECHECK second_ua=curl/8.21.0 only=S241 from-sweep=- findings=- run-start=2026-11-01T14:23:12Z stamp-class=python-docs-page-stamp asset-class=learn-microsoft-asset-build-id
+S241 asset-churn as-of=2026-11-01T14:23:12Z
+MORI_DRIFT_RECHECK rows=1 adjudicated=1 fresh=0 excerpt=0 time-churn=0 asset-churn=1 receipt-open=0 receipt-stale=0 ua-serving=0 content-drift=0 gate=0 unavailable=0 window=2026-11-01T14:23:12Z..2026-11-01T14:23:12Z
+rc=0
+---
+$ computed labeling check (QUALITY 160):
+$ grep -c '^[$] run' receipt  -> 2 block headings
+$ run-start= on the blocks' own MORI_DRIFT_RECHECK header lines -> 2 ('2026-11-01T14:13:44Z', '2026-11-01T14:23:12Z')
+$ mismatches (headings - self-labeled blocks) = 0 — every block carries its own run-start; no heading stands for two blocks

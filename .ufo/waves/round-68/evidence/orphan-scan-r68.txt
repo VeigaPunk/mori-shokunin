@@ -1,0 +1,69 @@
+# mori r68 — orphaned-evidence hygiene scan (evidence cited by closed reports but never committed)
+date: 2026-11-01
+method: plumbing only (git cat-file -e / ls-tree / log --all; the `git status` surface is
+unreliable on this host and was not used). Cited paths extracted from (a) every filed
+fleet report `.ufo/reports/round-*/mori.md` (through round 67) and (b) the lane's own
+artifacts (corpus/lessons/*, SCORECARD.md, LOG.md, SHONEN.md); each candidate tested
+against the lane tip `8440cf6c035a8f9af9cc8b3c95fc5584176c2d5c` and the working tree;
+cross-checks against the fleet repo tip and both repos' full history.
+---
+$ scan commands (per candidate path p, after CRLF-stripping the extracted lists — a
+  first scan pass produced false absents from CRLF endings and was discarded):
+  git cat-file -e "HEAD:$p"            (committed at tip?)
+  [ -e "$p" ]                          (present in the working tree?)
+  git -C <fleet repo> cat-file -e ...  (resolves in the fleet repo?)
+  git log --all --oneline -1 -- "$p"   (ever committed, either repo?)
+$ candidates (paths cited but absent from the lane tip; identical set from BOTH
+  citation surfaces — fleet reports and the lane's own artifacts — 20 total):
+  .ufo/state/mori.report-baseline         old-host watchdog state; not lane evidence
+  .ufo/state/mori.round                   old-host watchdog state; not lane evidence
+  .ufo/waves/kaika/steer.md               FLEET-repo path — PRESENT in the fleet repo
+  .ufo/waves/round-13/shonen-seed.txt     FLEET-repo path — PRESENT in the fleet repo
+  .ufo/waves/round-24/wave                prose truncation (grep artifact), not a path
+  .ufo/waves/round-28/w1/FixR1Runway.md   cited by r28 as deliberately WITHHELD
+                                          ("quotes the live harness settings value;
+                                          lesson disposition" — round-28/mori.md:132);
+                                          a redaction withholding, never to be landed
+  .ufo/waves/round-33/w2/ScoutPinsFlagAccuracy.md
+                                          cited by r29 as a KAKE wave file seen at the
+                                          fleet root, "not mori's; untouched" (r29
+                                          report:51) — another lane's file
+  .ufo/waves/round-37/scratch             scratch path named in a report; scratch is
+                                          never committed by design
+  .ufo/waves/round-49/falsify/RowGameDev2d.md
+                                          cited by r25 as a KOTOBA misroot "left to
+                                          its owner" (r25 report:95) — another lane's
+                                          file
+  .ufo/waves/round-59/count-c             prose truncation of count-c1/c2.py (committed)
+  .ufo/waves/round-61/evidence/control-c  prose truncation (committed files exist)
+  .ufo/waves/round-62/evidence/c          prose truncation (committed files exist)
+  .ufo/waves/round-62/evidence/selftest-c prose truncation (committed files exist)
+  corpus/evidence/sources-r30/S156-S160.txt
+                                          shorthand for the five committed files
+                                          S156.txt..S160.txt (ls-tree verified)
+  corpus/evidence/sources-r41/{S230       brace-abbreviation prose, not a path
+  corpus/knowledge/{evidence-minimization brace-abbreviation prose, not a path
+  corpus/knowledge/quota-surface-r23.md   DELIBERATELY WITHDRAWN: removed by lane
+                                          commit 0d8f2d50 "round-23: withdraw
+                                          unadmitted quota surface and retain pinned
+                                          falsification" (history verified; the
+                                          withdrawal evidence is committed under
+                                          .ufo/waves/round-23/) — cites point at the
+                                          documented withdrawal, not lost work
+  tools/gate-registry-check.py            KAMA's tool (sibling path; r44 report:263
+                                          "kama's tools/gate-registry-check.py") —
+                                          the sibling prefix was stripped by extraction
+  tools/mori-quota-surface.py             same withdrawal as quota-surface-r23.md
+                                          (removed by 0d8f2d50)
+  tools/mori-{register-check              brace-abbreviation prose, not a path
+$ conclusion: NOTHING TO LAND. Every mori-owned evidence file cited by a closed report
+  is either committed at the lane tip, or its absence is itself the documented record
+  (a deliberate redaction withholding, a documented claim withdrawal with the
+  falsification retained, a fleet-repo-resident path, another lane's file, old-host
+  runtime state, or extraction truncation of a committed name). No cited evidence file
+  exists uncommitted in the working tree (working-tree hits: none beyond tools/__pycache__,
+  which is out of scope by design).
+$ hygiene note carried to the lesson: the scan's first pass produced 567 false
+  candidates from CRLF line endings in the extracted path lists (every cat-file -e
+  failed on a trailing \r); discarded and redone after `tr -d '\r'` — mined as a
+  round-68 mistake (evidence-scan ran before checking its own inputs' encoding).

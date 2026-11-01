@@ -1,0 +1,15 @@
+# mori r68 duplicate sweeps over the source registry (pre-row)
+date: 2026-11-01T13:55:13Z
+---
+grep -ci "waf" corpus/SOURCES.md -> 0
+rc=1
+grep -ci "docs.aws" corpus/SOURCES.md -> 0
+rc=1
+grep -ci "amazonaws" corpus/SOURCES.md -> 0
+rc=1
+grep -ci "fingerprint" corpus/SOURCES.md -> 1
+rc=0
+grep -ci "bot management" corpus/SOURCES.md -> 0
+rc=1
+grep -ci "bot-manager" corpus/SOURCES.md -> 0
+rc=1

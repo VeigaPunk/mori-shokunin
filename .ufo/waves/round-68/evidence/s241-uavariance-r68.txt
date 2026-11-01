@@ -1,0 +1,47 @@
+# mori r68 — S241 instrument-UA per-response variance, receipted by same-UA A/A fetches (tools/mori-ua-variance.py; the r67 SCORECARD planned item)
+date: 2026-11-01 (captures 13:53:46Z and 14:14:54Z; compare 14:16Z)
+ground: S579 (a mitigation token is a per-client-session artifact the client carries on every request) + the vendor's own serving shape recorded at r67
+redaction: the two capture bodies stay in scratch (they can embed per-response token values) — counts and shapes only below, per the lane redaction rule; the compare tool never emits line values (selftest case token_value_never_emitted)
+---
+$ capture A (block carries its own run-start):
+$ python tools/mori-ua-variance.py --capture --url https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/linux/oom-swap-file-linux-vm --ua mori-source-drift/1.0 --out <scratch>/s241-instr-a.bin
+UA_VAR_CAPTURE url=https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/linux/oom-swap-file-linux-vm ua=mori-source-drift/1.0 bytes=54343 sha256=4e25812429f963796b35d3812c0eb98a05aaa72f41dcb4eb85917ad9b2991c90 as-of=2026-11-01T13:53:46Z rc=0
+$ capture B, 21 minutes after A (block carries its own run-start):
+$ python tools/mori-ua-variance.py --capture --url <same URL> --ua mori-source-drift/1.0 --out <scratch>/s241-instr-b.bin
+UA_VAR_CAPTURE url=https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/linux/oom-swap-file-linux-vm ua=mori-source-drift/1.0 bytes=54343 sha256=707eec3f2df94ee13f2c357a2f32dbd6c317fbeff48e01060abb3d7134c54d39 as-of=2026-11-01T14:14:54Z rc=0
+$ compare (pin = the committed r42 pin corpus/evidence/sources-r42/S241.html, sha 1168b2a6...357; line values never emitted):
+$ python tools/mori-ua-variance.py --compare --label S241 --pin corpus/evidence/sources-r42/S241.html --a <scratch>/s241-instr-a.bin --b <scratch>/s241-instr-b.bin
+UA_VARIANCE label=S241 per-response=4 stable=1497 stable-not-in-pin=2 stable-in-pin=1495 lines-a=1499 lines-b=1499 lines-pin=1499 same-bytes=false sha-a=4e25812429f963796b35d3812c0eb98a05aaa72f41dcb4eb85917ad9b2991c90 sha-b=707eec3f2df94ee13f2c357a2f32dbd6c317fbeff48e01060abb3d7134c54d39 sha-pin=1168b2a626ec4b69fbdf7341ae3331c16ff0e42667d67488762b30e206591357 run-start=2026-11-01T14:21:45Z
+rc=0
+  (run history, disclosed: the FIRST compare run, 14:16:08Z, printed the same
+  per-response/stable counts but mislabeled the pin field — `lines-pin=53963`,
+  the pin's BYTE count, not its line count; the tool was corrected (the field
+  now splits lines) and the selftest extended to bind lines-a/lines-b/lines-pin
+  to the fixture's exact values; this block is the corrected tool's output.
+  Counts did not move: per-response=4 stable=1497 stable-not-in-pin=2 in both.)
+---
+$ shapes only (line numbers and lengths, never values) — commands receipted, run in scratch over the capture bodies:
+$ python -I (difflib opcodes over A/B lines; printed fields: tag, positions, side lengths)
+  DIFF replace at line 218 (a-lines 218-218, b-lines 218-218; len 158 both sides) — the line before </head> (a </head> is at 218)
+  DIFF replace at line 1498 (a-lines 1498-1498, b-lines 1498-1498; len 241 both sides)
+  total diff positions: 2
+$ python -I (line numbers of A-lines absent from the pin; regex count for /static/assets/):
+  a-lines not in pin (numbers only): [163, 211, 218, 1498]
+  asset-id segment (/static/assets/) present at 2 of those 4 lines (163, 211)
+$ reading (classes stay the standing step's job — this receipt only separates):
+  - per-response=4 (the `<`+`>` convention: TWO line positions, 218 and 1498, differ
+    between two same-UA fetches of the same URL 21 minutes apart — serving-generated
+    bytes, not page identity; both positions are same-length replaces, token-shaped);
+  - stable=1497 lines agree between A and B; of those, stable-not-in-pin=2 — exactly
+    the two asset-id lines (163, 211), i.e. build churn the pinning-UA arm of the
+    standing step already classifies `asset-churn` (this tool decides nothing about it);
+  - the r67 receipt described the instrument body as pin + "the same two asset-id
+    lines PLUS one serving-injection line before </head> (218c218)"; today's A/A
+    separation shows TWO per-response positions (218 AND 1498). The 1498 position was
+    not separable by the r67 single pin-vs-instrument diff and its description there
+    was incomplete as to the instrument body's per-response line count (disclosed;
+    the r67 verdicts did not rest on the line count).
+$ selftest at the r68 final bytes (three consecutive runs):
+MORI_UA_VARIANCE_SELFTEST: PASS (6 cases)
+MORI_UA_VARIANCE_SELFTEST: PASS (6 cases)
+MORI_UA_VARIANCE_SELFTEST: PASS (6 cases)
