@@ -66,6 +66,18 @@ boot state, and anything preceding the current boot are tsukuroi/operator
 ground; mori reads the two counters as fleet-evidence context and reports
 them. The probe writes nothing to the host.
 
+Correction (append-only, 2026-11-02, round-72): K4's located-line anchor was
+drifted — the zero-at-boot sentence sits at `S584.html:829`, not `:828` (the
+recorded :828 is the `<h2 id="remarks">Remarks</h2>` heading; grep of the
+quote against :828 returns 0, against :829 returns 1, on the pinned copy and
+the byte-identical live re-open of 2026-11-02). Read K4 at :829. Correction
+row S585 (supersedes S584); erratum
+`.ufo/waves/round-72/evidence/s584-anchors-erratum-r72.txt` (which also
+re-confirms K1 `:817`, K2 `:819-820`, K3 `:826-827` — sentence wholly on
+:827 — K5 `:830`, K6 `:833`, and corrects two S584-trail word-counts:
+failed-call 26 words, sleep/hibernation 15 words). K1–K6 quote texts are
+unchanged; every other anchor is exact.
+
 Coverage-map: advances the Windows-host liveness-context arm only (the
 Round-62 host note's absent Linux surfaces stay absent; registered gates on
 Linux hosts unchanged). Owns-scope extension recorded in the round-71

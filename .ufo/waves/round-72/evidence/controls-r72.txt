@@ -1,0 +1,43 @@
+# mori round-72 do-nothing controls (entering state  — every r72 artifact absent, drifted mentions standing)
+date: 2026-11-02T00:37:35Z
+entering tip: c5873f73d9811b65e44b5edcdeea625e519ed984
+
+$ -- r72 artifacts absent at entering (git cat-file -e, rc 128 expected) --
+rc=128 path=.ufo/waves/round-72/evidence/s584-anchors-erratum-r72.txt
+rc=128 path=.ufo/waves/round-72/evidence/source-s584-reopen-r72.txt
+rc=128 path=.ufo/waves/round-72/evidence/pin-family-reverify-r72.txt
+rc=128 path=tools/mori-anchor-check.py
+rc=128 path=corpus/lessons/round-72.md
+
+$ -- SOURCES state at entering --
+$ grep -c "^| S" corpus/SOURCES.md
+357
+$ grep -c "supersedes S584" corpus/SOURCES.md
+0
+(0 = no S585 correction row yet)
+
+$ -- the drifted mentions STANDING at entering (each grep count > 0 proves the do-nothing state) --
+$ grep -c "S584:828" tools/mori-workstate-win.py
+1
+$ grep -c "S584.html:828" corpus/knowledge/workstate-win-r71.md
+1
+$ grep -c "(`:828`" corpus/lessons/round-71.md
+1
+$ grep -c ":828" .ufo/waves/round-71/evidence/source-s584-r71.txt
+1
+$ grep -c "(22 words)" corpus/SOURCES.md
+1
+$ grep -c "(17 words)" corpus/SOURCES.md
+1
+$ grep -c "(22 words)" .ufo/waves/round-71/evidence/source-s584-r71.txt
+1
+$ grep -c "(17 words)" .ufo/waves/round-71/evidence/source-s584-r71.txt
+1
+
+$ -- QUALITY: no new criterion numbers claimed this round; 162 present (r71 bytes) --
+$ grep -c "^162\." corpus/QUALITY.md
+1
+$ grep -c "^163\." corpus/QUALITY.md
+0
+
+$ conclusion: a do-nothing round leaves the S584 located-line drift (D71-1) and both misstated word-counts (D71-2) standing with zero correction rows, zero receipts and zero instruments — every r72 claim below is unreachable by it

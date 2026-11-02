@@ -3604,3 +3604,58 @@ considerthese 2026-10-26 suggestion 1 (pin-check mismatch split "can't run
 here" vs "stale") if the instrument-change ruling lands; (d) the Precise
 variant stays unopened unless a round needs sub-tick working-state
 resolution.
+
+## Round 72 — the located-line + word-count-label discharge and the anchor-checker: C1 calibration landed (the r71 closure's D71-1/D71-2 carry-ins discharged — supersedes row S585 re-points the S584 zero-at-boot anchor :828→:829 against the byte-identical re-open and corrects the two misstated word-counts 22→26 and 17→15, every-mention sweep across all seven carriers with named dispositions; PLUS the same class self-found by the round's own instruments and discharged in the same round — supersedes row S586 corrects two S581 word-count labels 10→9 and 15→14, supersedes row S587 corrects the S582/S583 `:829` definition label 14→13, the standing QUALITY 90 label check failing rc 1 on the entering bytes and the family label audit closing the parser's blind spot); C2 freshness landed (the standing pin-family live re-verification — all seven pinned pages behind S574–S585 re-fetched byte-identical, nine registry rows covered); C3 operability landed (capability acquisition `tools/mori-anchor-check.py` — the QUALITY 162/90 located-line + word-count check made runnable, able-to-fail demonstrated against the recorded drifted values themselves, runs A–E)
+
+Fresh start (r59–r61 rejected closures re-read and re-derived with own
+receipts; nine named rule-outs): `.ufo/waves/round-72/evidence/freshstart-spotchecks-r72.txt`
+— the frozen r61 counter re-derived at the r61 data tip (`python -I
+.ufo/waves/round-61/count-c2.py 986d4b46…` → `C2=unmet` rc 1, the same
+verdict the closures and the r65–r71 re-derivations reached); the eight
+r59/r60/r61 lane revs PRESENT and ancestral rc 0 each; the three fleet
+report commits PRESENT. Controls
+(`.ufo/waves/round-72/evidence/controls-r72.txt`): every r72 artifact
+absent at entering rc 128; SOURCES 357 rows at entering with zero
+supersedes-S584/S581/S583 rows; the drifted mentions STANDING at entering
+(tool header `S584:828` =1, K4 `S584.html:828` =1, r71 lesson `(:828` =1,
+r71 receipt `:828` =1, the 22/17 labels =1 each) — a do-nothing round
+reaches none of this round's claims.
+
+| Claim | Axis | Counting commands | At entering | After (measured this round) |
+|---|---|---|---|---|
+| C1: the r71 closure's D71-1/D71-2 carry-ins discharged as a calibration move, extended with the self-found same-class corrections — supersedes row S585 (teaches opens `supersedes S584 —`, INSIDE the Registry after S584) names the zero-at-boot anchor old→new :828→:829 (recorded :828 is the `<h2 id="remarks">` heading, greps 0 there and 1 at :829 on pin and byte-identical live re-open, receipt `.ufo/waves/round-72/evidence/source-s584-reopen-r72.txt`, sha256 equal to the r71 pin) and the two word-counts old→new 22→26 (failed-call) and 17→15 (sleep/hibernation), each re-verified by `grep -o \| wc -w` on the located lines; erratum `.ufo/waves/round-72/evidence/s584-anchors-erratum-r72.txt` sweeps EVERY mention — seven carriers with named dispositions (row anchor immutable; r71 receipt untouched; r71 lesson Gate corrected old→new in the round-72 lesson; K4 append-only correction block; tool header comment fixed in place as the licensed next-round change, code untouched, selftest 10/10 x3 + live rc 0 x3 at the new bytes `workstate-r72-recheck.txt`; r71 LOG/SCORECARD historical records stand; fleet r71 report orchestrator-owned, named); THEN the same class self-found: the standing QUALITY 90 label check run at the entering bytes returns rc 1 (`word_labels=8 mismatched=3` — incl. S581 `:70-71` label 15 vs wc 14, unflagged since r70) and the family label audit (S574–S585, nearest-quote pairing, wc -w arbiter, 3 pairing artifacts + 2 prose phrases excluded by reading each pair) finds S581 `:54` 10→9, S582 `:829` 14→13, S583 `:829` 14→13 — supersedes rows S586 and S587 land with erratum `.ufo/waves/round-72/evidence/s581-s583-labels-erratum-r72.txt` (r70 lesson Gate :65/:69/:80 untouched, corrected old→new in the round-72 lesson; r70 receipt :20 untouched; fleet r70 report named; LOG/SCORECARD grep-clean; K1 carries no count); all of S583's pointer corrections stand, re-confirmed | calibration 5 | `git show <entering>:corpus/SOURCES.md \| grep -c "supersedes S584"` (0); `git show <entering>:corpus/SOURCES.md \| grep -c "supersedes S581"` (0); `git show <entering>:corpus/SOURCES.md \| grep -c "supersedes S583"` (0); `git cat-file -e <entering>:.ufo/waves/round-72/evidence/s584-anchors-erratum-r72.txt` (rc 128); `git show <entering>:tools/mori-workstate-win.py \| grep -c "S584:828"` (1) | The record carried the drifted S584 anchor (:828) and two misstated S584 labels (22/17) in five untouched carriers, plus three more misstated labels in the S581/S582/S583 trail that no round had flagged; no supersedes row, no erratum receipt, no label audit existed | `grep -c "supersedes S584" corpus/SOURCES.md` → 1 (S585); `grep -c "supersedes S581" corpus/SOURCES.md` → 1 (S586); `grep -c "supersedes S583" corpus/SOURCES.md` → 1 (S587); `grep -c "S584:828" tools/mori-workstate-win.py` → 0; able-to-fail pair on the pin: `sed -n '828p' corpus/evidence/sources-r71/S584.html \| grep -c "The interrupt-time count begins at zero"` → 0 vs `sed -n '829p' …` → 1; word-count commands in the errata receipts (wc -w = 26/15/9/14/13); anchor-check run B replays the r71-recorded values → FAIL rc 1 mislocated=1 wordcount_mismatch=2. **Self-verdict: verified met** (closure to re-derive) |
+| C2: the standing pin-family live re-verification — all seven distinct pinned pages behind S574/S575 (r64), S579/S580/S581 (r68–r70), S582+S583 (r70/r71), S584+S585 (r71/r72) re-fetched 2026-11-02 with the rows' own fetcher posture (`curl -sS -m 60 -L`), sha256 compared against each pin, per-row verdicts receipted; nine registry rows covered (S583/S585 share pins with S582/S584) | freshness 5 | `git cat-file -e <entering>:.ufo/waves/round-72/evidence/pin-family-reverify-r72.txt` (rc 128 at entering) | Zero r72-dated re-verification receipts; the newest live re-binds were the r71 closure's two (2026-11-01, S582/S584 only) | `grep -c "^verdict: byte-identical" .ufo/waves/round-72/evidence/pin-family-reverify-r72.txt` → 7; `grep -c "^verdict: DIFFERS" …` → 0 (all seven curl rc 0; no churn class fired, none manufactured). **Self-verdict: verified met** (closure to re-derive) |
+| C3 (capability acquisition): `tools/mori-anchor-check.py` — the QUALITY 162/90 located-line + word-count check made runnable: per anchor (recorded line, exact quote, recorded word-count) it reports located/mislocated and word-count match/mismatch against a pinned copy; rc 0 only when every anchor locates and every recorded count equals its own recorded text's token count (one occurrence — a co-located sentence cannot skew it); rc 1 on any mislocation or mismatch; rc 2 on unreadable pin or malformed SPEC; declares its span limit (two-line sentences verify as fragment-locates; their labels via the QUALITY 90 wc form in the errata); never fetches (local pins; live byte-identity is the separate curl receipt); counts/shapes only on stdout (redaction arm plants a marker token and proves it cannot reach output) | operability 7 | `git cat-file -e <entering>:tools/mori-anchor-check.py` (rc 128 at entering); `python tools/mori-anchor-check.py --selftest` -> `ANCHOR_CHECK_SELFTEST: PASS (11 cases)`; `python tools/mori-anchor-check.py --pin <S584 pin> --check "zero_at_boot\|828\|24\|<zero sentence>" …` (run B) -> `ANCHOR_CHECK: FAIL …` rc 1 | Tool absent (controls rc 128); the pin-verification rule (QUALITY 162) was a hand procedure — the r71 round landed a drifted anchor and two misstated labels THROUGH it, and the standing QUALITY 90 parser cannot see location-token label shapes at all | The capability runs and its output verifies: selftest 11/11 rc 0 x3 at the final bytes (`.ufo/waves/round-72/evidence/anchor-check-r72.txt`; the pre-fix run with 3 FAIL arms disclosed NOT-CAPTURED in the lesson — the r71 mistake-1 class, fixture values now derived); run A the S585-corrected anchors PASS 8/8 rc 0; run B the r71-recorded values FAIL rc 1 (mislocated=1 wordcount_mismatch=2 — D71-1 AND both D71-2 items caught mechanically); run C the S587-corrected S582 anchors PASS 6/6 rc 0; run D the S586-corrected S581 anchors PASS 5/5 rc 0; run E the pre-correction labels FAIL rc 1 x2. **Self-verdict: verified met** (closure to re-derive) |
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Anchor-checker (`tools/mori-anchor-check.py`) | verifies recorded quote anchors (line + exact text + word count) against a pinned copy in one command, failing rc 1 on a drifted located-line anchor or a misstated word-count label — the D71-1/D71-2 class caught mechanically, demonstrated failing on the recorded pre-correction values and passing on the corrected ones | `python tools/mori-anchor-check.py --selftest` -> `ANCHOR_CHECK_SELFTEST: PASS (11 cases)` rc 0 x3 (`.ufo/waves/round-72/evidence/anchor-check-r72.txt`); live runs A–E in the same receipt (A PASS 8/8, B FAIL mislocated=1 wordcount_mismatch=2, C PASS 6/6, D PASS 5/5, E FAIL x2) | 72 |
+
+Selftests this round: the standing battery green — register 12/12,
+settlement 10/10, vote-bind 16/16, pin-check 125/125, adjudicate 5/5,
+recheck 10/10, ua-variance 14/14, uptime-win 8/8, workstate 10/10 (at the
+r72 header-corrected bytes), events-context 10/10, anchor-check 11/11 (the
+new tool) — all rc 0, plain-`python` posture, unpiped rc capture
+(`.ufo/waves/round-72/evidence/selftests-battery-r72.txt`). No frozen byte
+edited: SKILL.md, `tools/mori-source-drift.py`,
+`tools/mori-drift-adjudicate.py`, PROVINCE.md, AGENTS.md, corpus/README.md
+are absent from the round's diff; the SKILL:905 tally pin stays true by
+construction. SOURCES 357 -> 360 (S585/S586/S587 supersedes correction
+rows, INSIDE the Registry after S584; both errata receipts bind every
+corrected value and sweep every mention). Census: validator rc 0 at round
+start (`evidence/census-start-r72.txt`, the tolerated 32 W04 class) -> rc 0
+at round end (`evidence/census-end-r72.txt`).
+
+Planned (round 73): (a) the rotation-recurrence protocol as a DESIGNED
+multi-window instrument over the S241 serving (the r70/r71 planned item,
+ruled out twice now on sizing — it gets a dedicated design round, stated
+windows per QUALITY 161, no TTL decided); (b) the label-blind-spot
+follow-through: the standing QUALITY 90 parser cannot see location-token
+label shapes (`(`:829`, 14 words)`) — this round's committed
+anchor-checker covers per-anchor verification, but a SOURCES-wide
+label-sweep instrument (the round's audited pairing, made standing) is
+operator-material beside the open r65 L0; (c) the considerthese 2026-10-26
+suggestion 1 (pin-check mismatch split "can't run here" vs "stale") and
+the encoding-pin harness, both still behind the operator's open
+instrument-change ruling; (d) the Precise variant stays unopened unless a
+round needs sub-tick working-state resolution.

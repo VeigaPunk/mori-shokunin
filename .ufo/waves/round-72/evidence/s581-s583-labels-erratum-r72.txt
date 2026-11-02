@@ -1,0 +1,91 @@
+# mori r72 — erratum: S581 and S582/S583 quote word-count labels (self-found this round; D71-2 class)
+date: 2026-11-02 (r72; corrections are new entries, never in-place rewrites)
+routed note: NOT closure-routed — SELF-FOUND this round when the standing QUALITY 90 label check was run
+  against the entering rev; same class as the routed D71-2 (a recorded (N words) label differing from wc -w
+  of the quoted text). QUALITY 90: 'A label that differs by one is a defect, not rounding.'
+pins: corpus/evidence/sources-r70/S581.html sha256 5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865 (16179 bytes);
+      corpus/evidence/sources-r70/S582.html sha256 580f1935fb47b5c992a48d22299f7452aaeb00099f2ac96ba74c92002a18277f (52661 bytes) — both
+      re-opened LIVE and byte-identical 2026-11-02 (receipt .ufo/waves/round-72/evidence/pin-family-reverify-r72.txt),
+      so every grep/wc below binds the LIVE bodies too
+
+## 1. the standing QUALITY 90 check, run this round over the ENTERING rev (c5873f73) — rc 1
+$ { git show c5873f73:corpus/lessons/round-71.md; git show c5873f73:corpus/SOURCES.md; } | python -I -B <QUALITY 90 check script>
+word_labels=8 mismatched=3
+line=362 label=15 wc=14 quote=The default protection pack (web ACL) setting for both immunity times ...  (S581 row — NEW finding)
+line=365 label=17 wc=15 quote=The unbiased interrupt-time count does not include time the system spe...  (S584 row — the routed D71-2)
+line=365 label=22 wc=26 quote=If the function succeeds, the return value is nonzero. If the function ...  (S584 row — the routed D71-2)
+rc=1 (the standing instrument ALREADY fails on the entering bytes — the round's own able-to-fail proof, and the
+ S581 mismatch nobody had flagged). Note: the checker's parser sees only quote-ADJACENT labels; the location-token
+ label shapes ("(`:829`, 14 words)") are structurally invisible to it — audited separately below.
+
+## 2. per-label machine verification (grep -c locate + grep -o | wc -w, on the PINS)
+
+-- S581 :54 label 10, actual 9 --
+$ sed -n "54p" pin | grep -c "This section explains how challenge and CAPTCHA timestamps expire."
+located :54 -> count=1
+$ sed -n "54p" pin | grep -o "<the sentence>" | wc -w
+wc -w = 9 (label 10)
+
+-- S581 :70-71 label 15, actual 14 (the sentence spans the two lines: locate both fragments, then wc -w of the QUOTED TEXT per QUALITY 90) --
+$ sed -n "70p" pin | grep -c "The default protection pack (web ACL) setting for both immunity times is"
+located :70 first fragment -> count=1
+$ sed -n "71p" pin | grep -c "300 seconds."
+located :71 second fragment -> count=1
+$ printf "%s" "The default protection pack (web ACL) setting for both immunity times is 300 seconds." | wc -w
+wc -w of the quoted text = 14 (label 15)
+
+-- S582 :829 and S583 :829 label 14, actual 13 (same sentence, both rows) --
+$ sed -n "829p" pin | grep -o "<def sentence>" | wc -w
+wc -w = 13 (label 14 in BOTH the S582 row and the S583 row)
+
+-- S581/S582 untouched labels, re-confirmed correct --
+$ printf "%s" "AWS WAF records a successful response to a challenge or CAPTCHA by updating the corresponding timestamp inside the token." | wc -w  (sentence spans :59-60; QUALITY 90 wc form)
+S581 :59-60 label 19 -> wc -w = 19 (correct)
+$ sed -n "59p" pin581 | grep -c "AWS WAF records a successful response to a challenge or CAPTCHA by updating the"
+located :59 first fragment -> count=1
+$ grep -o "The minimum value for the challenge immunity time is 300 seconds." pin581 | wc -w
+S581 :83-84 label 11 -> wc -w = 11 (correct)
+$ sed -n "841p" pin582 | grep -c "To obtain the time the system has spent in the working state since it was started"
+S582/S583 :841 boundary located -> count=1 (label 20 re-confirmed correct by the r71 erratum receipt)
+$ sed -n "842p" pin582 | grep -c "advanced by approximately 49 days"
+S582/S583 :842 debug alert -> count=1
+
+## 3. family-wide label audit (S574-S585, every "(N words)" label paired with its nearest quote, wc -w arbiter)
+audited_labels=23 mismatched=8 raw — after de-artifacting the 3 pairing artifacts (S578 15-vs-5 paired the
+ section-heading quote; S582 14-vs-4 paired the return-quote; S585 11-vs-15 paired the sleep quote) and excluding
+ the 2 non-label prose phrases (S577 "first 11 words of the 16-word quote"), the TRUE mismatch set is:
+   S581 :54  10->9   (this receipt)
+   S581 :70-71 15->14 (this receipt)
+   S582 :829 14->13  (this receipt)
+   S583 :829 14->13  (this receipt)
+   S584 17->15 and 22->26 (the routed D71-2 — corrected-of-record by S585, receipt
+   .ufo/waves/round-72/evidence/s584-anchors-erratum-r72.txt)
+All other audited labels equal their wc -w (S574 13, S575 21, S576 15, S578 15, S579 14+14, S580 16+12,
+ S581 19+11, S582 20, S583 20, S584 11+24, S585 11+15+26+24).
+
+## 4. every-mention sweep for the misstated labels (patterns pinned to the three quotes)
+$ grep -rn --exclude-dir=.git "S581.html:54" . | cut -c1-110
+./corpus/lessons/round-70.md:65:  — opened 2026-11-01T19:52:49Z — quotes (`S581.html:54`, 10 words): "This
+./corpus/SOURCES.md:362:| S581 | Setting timestamp expiration and token immunity times in AWS WAF — https://
+$ grep -rn --exclude-dir=.git ":70-71., 15 words" corpus .ufo/waves/round-70 LOG.md SCORECARD.md | cut -c1-110
+corpus/lessons/round-70.md:69:  scale (`:70-71`, 15 words): "The default protection pack (web ACL) setting
+$ grep -rn --exclude-dir=.git ":829., 14 words" corpus .ufo/waves/round-70 LOG.md SCORECARD.md | cut -c1-110
+corpus/lessons/round-70.md:80:  — opened 2026-11-01 — quotes (`S582.html:829`, 14 words): "Retrieves the
+corpus/SOURCES.md:363:| S582 | GetTickCount64 function (sysinfoapi) — https://learn.microsoft.com/en-us/wind
+corpus/SOURCES.md:364:| S583 | GetTickCount64 function (sysinfoapi) — https://learn.microsoft.com/en-us/wind
+$ grep -c "(14 words)" .ufo/waves/round-70/evidence/source-s582-r70.txt
+count=1 (the r70 opening receipt located-facts line — carrier)
+$ fleet-side: grep -c "10 words|15 words|14 words" <fleet>/.ufo/reports/round-70/mori.md
+count=3 (fleet repo, orchestrator-owned — named, not lane-editable)
+$ LOG.md and SCORECARD.md: grep for the three label strings returns no r70/r71-section hits (clean).
+$ r71 lesson Gate: no 14/15/10 label for these quotes (the S583 bullet carries no word-count for :829) — clean.
+
+## 5. carriers and dispositions (named, none rewritten in place)
+1. corpus/SOURCES.md S581 row (:362, labels 10 and 15) — anchor cells are IMMUTABLE (contract v1 rule 2): corrected by the NEW supersedes row S586.
+2. corpus/SOURCES.md S582 row (:363, label 14) and S583 row (:364, label 14) — IMMUTABLE: corrected by the NEW supersedes row S587 (which also re-affirms S583's pointer corrections).
+3. corpus/lessons/round-70.md (:65 label 10, :69 label 15, :80 label 14) — lesson bytes UNTOUCHED: the round-72 lesson Gate carries old->new (the D2 precedent).
+4. .ufo/waves/round-70/evidence/source-s582-r70.txt (:20, label 14) — r70 receipt bytes UNTOUCHED: THIS erratum receipt is the correction of record.
+5. <fleet>/.ufo/reports/round-70/mori.md — orchestrator-owned; named here; S586/S587 are the correction of record.
+6. LOG.md / SCORECARD.md — no carriers (grep clean, see sweep above).
+7. corpus/knowledge/uptime-win-r70.md K1 — quotes the def sentence WITHOUT a word count: not a label carrier, no block needed (verified this round).
+Superseded labels named old->new: S581 :54 10->9; S581 :70-71 15->14; S582/S583 :829 14->13.

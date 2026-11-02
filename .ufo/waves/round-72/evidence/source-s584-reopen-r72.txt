@@ -1,0 +1,19 @@
+# mori round-72 source RE-open — the QueryUnbiasedInterruptTime page (for the supersedes-S584 correction row S585)
+date opened: 2026-11-02T00:45:29Z
+fetcher: curl curl 8.21.0
+
+## pre-row sweep (INTO this receipt, before the fetch)
+$ grep -c "nf-realtimeapiset-queryunbiasedinterrupttime" corpus/SOURCES.md
+rows=1 (rc=0 ; 1 = the S584 row itself — EXPECTED: this re-open grounds a supersedes-S584 correction row, not a duplicate surface claim)
+$ grep -ci "queryunbiasedinterrupttime" corpus/SOURCES.md
+3
+(keyword hits also expected: the S582/S583 rows quote the QueryUnbiasedInterruptTime name in their boundary sentences)
+
+## fetch (live re-open; the pin is corpus/evidence/sources-r71/S584.html)
+$ curl -sS -m 60 -L -o <scratch>/S584-reopen.html https://learn.microsoft.com/en-us/windows/win32/api/realtimeapiset/nf-realtimeapiset-queryunbiasedinterrupttime
+curl rc=0
+live bytes: 54774
+live sha256: d0bcbba945e7cf29d4664feb28a35aa31c1f80cadb5191644a33ab84464f9136
+pin  sha256: d0bcbba945e7cf29d4664feb28a35aa31c1f80cadb5191644a33ab84464f9136
+verdict: live body vs pin = byte-identical
+-> the corrected anchors (:829, counts 11/15/26/24) are therefore anchors into the LIVE body too; the erratum receipt per-line greps bind them.

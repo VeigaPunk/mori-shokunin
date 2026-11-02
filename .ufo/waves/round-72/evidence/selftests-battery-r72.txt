@@ -1,0 +1,66 @@
+# mori round-72 standing battery — every standing selftest at the round's final bytes
+date: 2026-11-02T01:41:37Z
+posture: plain python (the r71 disclosure stands: python -I ignores the host's PYTHONUTF8=1 and breaks the
+register fixture encoding); rc captured unpiped (> file; rc=$?); the summary line is read back separately.
+no frozen byte is part of any battery target with modified bytes: register/settlement/vote-bind/pin-check/
+adjudicate/recheck/ua-variance are UNCHANGED this round (v-entering bytes); uptime-win UNCHANGED; workstate
+carries the r72 header-comment correction; events-context UNCHANGED; anchor-check is NEW (r72 build).
+
+## tools/mori-register-check.py
+$ python tools/mori-register-check.py --selftest
+REGCHECK_SELFTEST pass=12 fail=0
+rc=0
+
+## tools/mori-settlement-scan.py
+$ python tools/mori-settlement-scan.py --selftest
+SETSCAN_SELFTEST pass=10 fail=0
+rc=0
+
+## tools/mori-vote-bind.py
+$ python tools/mori-vote-bind.py --selftest
+VOTE_BIND_SELFTEST pass=16 fail=0
+rc=0
+
+## tools/mori-pin-check.py
+$ python tools/mori-pin-check.py --selftest
+PIN_CHECK_SELFTEST pass=125 fail=0
+rc=0
+
+## tools/mori-drift-adjudicate.py
+$ python tools/mori-drift-adjudicate.py --selftest
+MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)
+rc=0
+
+## tools/mori-drift-recheck.py
+$ python tools/mori-drift-recheck.py --selftest
+MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)
+rc=0
+
+## tools/mori-ua-variance.py
+$ python tools/mori-ua-variance.py --selftest
+MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)
+rc=0
+
+## tools/mori-uptime-win.py
+$ python tools/mori-uptime-win.py --selftest
+UPTIME_WIN_SELFTEST: PASS (8 cases)
+rc=0
+
+## tools/mori-workstate-win.py
+$ python tools/mori-workstate-win.py --selftest
+WORKSTATE_WIN_SELFTEST: PASS (10 cases)
+rc=0
+
+## tools/mori-events-context-win.py
+$ python tools/mori-events-context-win.py --selftest
+EVENTS_CONTEXT_SELFTEST: PASS (10 cases)
+rc=0
+
+## tools/mori-anchor-check.py
+$ python tools/mori-anchor-check.py --selftest
+ANCHOR_CHECK_SELFTEST: PASS (11 cases)
+rc=0
+
+## battery read-back (summary lines above extracted verbatim; a FAIL here is a landing stop)
+11
+ lines with rc=0 (expect 11)

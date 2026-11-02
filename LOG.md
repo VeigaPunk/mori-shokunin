@@ -4029,3 +4029,117 @@ re-mined (newest-named 2026-10-26.md; the receipt's own first newest-file
 line corrected in-place with disclosure after an `ls -t` mtime tie printed
 the wrong file); suggestion 1 stays behind the operator's open instrument
 ruling. Assimilation: none — shokuknow unreachable.
+
+## Round 72 — Mori (L1 MoriR72): C1 calibration verified met (the r71 closure's D71-1/D71-2 carry-ins discharged: supersedes row S585 re-points the S584 zero-at-boot anchor :828→:829 and corrects the two misstated word-counts 22→26 and 17→15 against the byte-identical re-open, every-mention sweep across all seven carriers; PLUS the same class self-found and discharged in-round: S586 corrects two S581 word-count labels 10→9 and 15→14, S587 corrects the S582/S583 `:829` definition label 14→13 — found because the standing QUALITY 90 label check, run against the entering bytes for the first time since these rows landed, fails rc 1 on them); C2 freshness verified met (the standing pin-family live re-verification: all seven pinned pages behind S574–S585 re-fetched byte-identical); C3 operability verified met (capability acquisition tools/mori-anchor-check.py — the QUALITY 162/90 located-line + word-count check made runnable, able-to-fail against the recorded drifted values themselves)
+
+C1 (calibration, sourced S585 supersedes-S584 — the r71 closure carry-ins
+D71-1 + D71-2 — and extended with the self-found S586/S587 same-class
+corrections): the S584 zero-at-boot anchor is off by one — the sentence
+greps 0 at the recorded :828 (the `<h2 id="remarks">` heading) and 1 at
+:829 on the pin and on the byte-identical live re-open (sha256
+`d0bcbba9…` equal, receipt `evidence/source-s584-reopen-r72.txt`), and two
+S584 word-counts are misstated (failed-call 26 words recorded 22;
+sleep/hibernation 15 recorded 17, `grep -o | wc -w` on the located lines).
+Corrections are new entries: S585 (teaches opens `supersedes S584 —`,
+INSIDE the Registry after S584) names :828→:829 and 22→26 and 17→15; the
+erratum receipt `evidence/s584-anchors-erratum-r72.txt` binds every anchor
+and sweeps EVERY mention — seven carriers, dispositions named, none
+rewritten in place except the licensed one: the S584 row anchor cell
+(immutable), the r71 opening receipt (untouched; the erratum is the
+correction of record), the r71 lesson Gate (untouched; corrected old→new
+in the round-72 lesson, the D2 precedent), knowledge entry K4
+(append-only correction block landed in `corpus/knowledge/workstate-win-r71.md`),
+the `tools/mori-workstate-win.py` header comment (fixed in place — the
+closure routing's licensed "next-round change"; code untouched; selftest
+10/10 x3 and live rc 0 x3 at the new bytes,
+`evidence/workstate-r72-recheck.txt`), the r71 LOG/SCORECARD entries
+(historical append-only records: they STAND as recorded, corrected-of-
+record by S585), and the fleet r71 report (orchestrator-owned, named).
+Then the round's own instruments turned on the entering bytes: the
+standing QUALITY 90 label check run at c5873f73 returns rc 1
+(word_labels=8 mismatched=3 — the two routed S584 labels AND S581's
+`:70-71` label 15, actual 14, unflagged since r70), and the family-wide
+label audit (rows S574–S585, every "(N words)" label paired with its
+nearest quote, wc -w arbiter) found three more: S581 `:54` 10→9, S582
+`:829` 14→13, S583 `:829` 14→13 (the audit's own first pass over-flagged;
+3 pairing artifacts + 2 prose phrases excluded by reading each pair
+against its row — lesson mistake 4). S586 (supersedes S581) and S587
+(supersedes S583 — all of S583's pointer corrections stand, re-confirmed
+on the pin; the label only) land with
+`evidence/s581-s583-labels-erratum-r72.txt`: per-label machine wc, the
+carrier sweep (rows immutable; r70 lesson Gate :65/:69/:80 untouched —
+corrected old→new in the round-72 lesson; r70 receipt `source-s582-r70.txt:20`
+untouched; fleet r70 report orchestrator-owned, named; LOG/SCORECARD
+grep-clean; `uptime-win-r70.md` K1 carries no count — not a carrier).
+Able-to-fail: the anchor-checker run B replays the r71-recorded values
+against the S584 pin — FAIL rc 1, mislocated=1 wordcount_mismatch=2; run E
+replays the pre-correction labels on the S581/S582 pins — FAIL rc 1 x2.
+Self-verdict: verified met.
+
+C2 (freshness, joint-lowest axis 5): the standing pin-family live
+re-verification — all seven distinct pinned pages behind S574/S575 (r64),
+S579/S580/S581 (r68–r70), S582+S583 (r70/r71), S584+S585 (r71/r72)
+re-fetched 2026-11-02 with the rows' own fetcher posture (`curl -sS -m 60
+-L`), every sha256 equal to its pin
+(`evidence/pin-family-reverify-r72.txt`, byte-identical x7, differs=0),
+covering nine registry rows; no churn class fired, none manufactured. The
+recheck cadence stays 180d; the receipts re-bind the correction rows'
+anchors to the live bodies the same day they landed. Self-verdict:
+verified met.
+
+C3 (operability, capability acquisition): `tools/mori-anchor-check.py`
+makes the QUALITY 162/90 check runnable — per anchor (recorded line,
+exact quote, recorded word-count) it reports located/mislocated and
+word-count match/mismatch against a pinned copy; rc 0 only when every
+anchor locates and every recorded count equals its own recorded text's
+token count (one occurrence — a co-located sentence cannot skew it).
+Selftest `ANCHOR_CHECK_SELFTEST: PASS (11 cases)` rc 0 x3 at the final
+bytes (`evidence/anchor-check-r72.txt`; the pre-fix run with 3 FAIL arms
+disclosed NOT-CAPTURED in the lesson — fixture values were drafted from
+memory, the r71 mistake-1 class repeated, now derived). Live runs in the
+same receipt: A the S585-corrected anchors PASS 8/8 rc 0; B the
+r71-recorded values FAIL rc 1 (mislocated=1 wordcount_mismatch=2); C the
+S587-corrected S582 anchors PASS 6/6 rc 0; D the S586-corrected S581
+anchors PASS 5/5 rc 0; E the pre-correction labels FAIL rc 1 x2. The tool
+never fetches (local pins; live byte-identity is the separate curl
+receipt), prints counts/shapes only (redaction arm), and its span limit
+is declared: sentences spanning two pin lines verify as fragment-locates
+(their labels via the QUALITY 90 wc-of-quoted-text form in the errata).
+Standing battery green: register 12/12, settlement 10/10, vote-bind
+16/16, pin-check 125/125, adjudicate 5/5, recheck 10/10, ua-variance
+14/14, uptime-win 8/8, workstate 10/10, events-context 10/10, anchor-check
+11/11 — all rc 0 at the final bytes, plain-`python` posture, unpiped rc
+capture (`evidence/selftests-battery-r72.txt`). Self-verdict: verified
+met.
+
+Fresh start (r59–r61 rejected closures re-read and re-derived with own
+receipts; nine named rule-outs): `.ufo/waves/round-72/evidence/freshstart-spotchecks-r72.txt`
+— the frozen r61 counter re-derived at the r61 data tip (`python -I
+.ufo/waves/round-61/count-c2.py 986d4b46…` → `C2=unmet` rc 1); the eight
+lane revs PRESENT and ancestral rc 0 each; the three fleet report commits
+PRESENT. Controls (`evidence/controls-r72.txt`): every r72 artifact absent
+at entering rc 128; SOURCES 357 rows with zero supersedes-S584/S581/S583
+rows; the drifted mentions STANDING (tool header, K4, r71 lesson, r71
+receipt, the 22/17 labels). SOURCES 357 → 360 (S585/S586/S587 INSIDE the
+Registry after S584); shape check `rows_matched=360 bad=0` (the vacuous
+`[0-9]+\|` pattern retired — lesson mistake 1). Census rc 0 at round start
+(`evidence/census-start-r72.txt`, 32 W04 tolerated) and rc 0 at round end
+(`evidence/census-end-r72.txt`). No frozen byte edited: SKILL.md,
+`tools/mori-source-drift.py`, `tools/mori-drift-adjudicate.py`,
+PROVINCE.md, AGENTS.md, corpus/README.md absent from the round diff; the
+SKILL:905 tally pin stays true by construction; the r65 L0 line re-verified
+unanswered (`evidence/l0-considerthese-r72.txt`) and routed around.
+
+Four mistakes mined this round (`corpus/lessons/round-72.md`): a shape
+check whose awk pattern could never match the row shape (vacuous badNF=0 —
+the denominator is now printed beside the exception count); fixture
+expected-values drafted from memory, the r71 mistake-1 class repeated (the
+selftest arms caught it; expectations now derived, and the count arm
+counts the matched occurrence, not the whole line); a receipt summary that
+grepped its own echoed command lines (byte-identical=8 for 7 fetches —
+read-back before landing caught it; anchored patterns now); a label-pairing
+audit whose first pass over-flagged (3 pairing artifacts + 2 prose phrases
+excluded by reading each pair against its row before any correction
+landed). Assimilation: considerthese re-mined (newest-named 2026-10-26.md;
+suggestion 1 stays behind the operator's open instrument ruling).
+Assimilation: none — shokuknow unreachable.

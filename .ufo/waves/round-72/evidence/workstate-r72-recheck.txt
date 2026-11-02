@@ -1,0 +1,59 @@
+# mori round-72 — workstate tool selftest + live at the r72 bytes (header comment corrected :828->:829, code untouched)
+date: 2026-11-02T00:59:44Z
+$ grep -c "S584:828" tools/mori-workstate-win.py
+0
+(0 = the drifted anchor is gone from the tool header; the corrected S584:829 line remains:)
+63:rule); zero IS a real count (S584:829 — anchor corrected :828->:829 by the
+
+$ run 1: python tools/mori-workstate-win.py --selftest
+selftest grammar              PASS
+selftest unit_math            PASS
+selftest zero_is_real         PASS
+selftest honest_unavailable   PASS
+selftest negative_rejected    PASS
+selftest noninteger_rejected  PASS
+selftest redaction            PASS
+selftest uint64_max_rendered  PASS
+selftest delta_signed_shape   PASS
+selftest conversion_floor     PASS
+WORKSTATE_WIN_SELFTEST: PASS (10 cases)
+rc=0
+$ run 2: python tools/mori-workstate-win.py --selftest
+selftest grammar              PASS
+selftest unit_math            PASS
+selftest zero_is_real         PASS
+selftest honest_unavailable   PASS
+selftest negative_rejected    PASS
+selftest noninteger_rejected  PASS
+selftest redaction            PASS
+selftest uint64_max_rendered  PASS
+selftest delta_signed_shape   PASS
+selftest conversion_floor     PASS
+WORKSTATE_WIN_SELFTEST: PASS (10 cases)
+rc=0
+$ run 3: python tools/mori-workstate-win.py --selftest
+selftest grammar              PASS
+selftest unit_math            PASS
+selftest zero_is_real         PASS
+selftest honest_unavailable   PASS
+selftest negative_rejected    PASS
+selftest noninteger_rejected  PASS
+selftest redaction            PASS
+selftest uint64_max_rendered  PASS
+selftest delta_signed_shape   PASS
+selftest conversion_floor     PASS
+WORKSTATE_WIN_SELFTEST: PASS (10 cases)
+rc=0
+
+$ run 1: python tools/mori-workstate-win.py
+surface workstate: state=ok biased_ms=503492984 unbiased_100ns=5034929973216 unbiased_ms=503492997 biased_minus_unbiased_ms=-13 conversion=unbiased_ms-floor(10000) read_model=two-separate-reads count=biased+unbiased boot_identity=absent debug_build_caveat=carried
+WORKSTATE_WIN: AVAILABLE surfaces=1 ok=1 unavailable=0
+rc=0
+$ run 2: python tools/mori-workstate-win.py
+surface workstate: state=ok biased_ms=503493609 unbiased_100ns=5034936210806 unbiased_ms=503493621 biased_minus_unbiased_ms=-12 conversion=unbiased_ms-floor(10000) read_model=two-separate-reads count=biased+unbiased boot_identity=absent debug_build_caveat=carried
+WORKSTATE_WIN: AVAILABLE surfaces=1 ok=1 unavailable=0
+rc=0
+$ run 3: python tools/mori-workstate-win.py
+surface workstate: state=ok biased_ms=503494515 unbiased_100ns=5034945303538 unbiased_ms=503494530 biased_minus_unbiased_ms=-15 conversion=unbiased_ms-floor(10000) read_model=two-separate-reads count=biased+unbiased boot_identity=absent debug_build_caveat=carried
+WORKSTATE_WIN: AVAILABLE surfaces=1 ok=1 unavailable=0
+rc=0

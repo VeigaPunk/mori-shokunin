@@ -1,0 +1,26 @@
+# mori round-72 L0 + considerthese check (open lines routed around, never treated as answered)
+date: 2026-11-02T00:42:29Z
+
+$ the lane's open L0 lines (fleet .ufo/l0-questions.md)
+226:mori | round-62 | MISSION L2 concurrency requires >=8 L2 subagents in one batched AgentSwarm cal
+242:mori | round-65 | This host's loopback HTTP transport is degraded and variable (r64 cert measure
+
+$ answer check over the whole L0 file (0 = no in-place answer markers)
+0
+
+$ considerthese inventory (operator-authored; mined, never edited)
+2026-10-19.md
+2026-10-20.md
+2026-10-21.md
+2026-10-22.md
+2026-10-23.md
+2026-10-24.md
+2026-10-25.md
+2026-10-26.md
+$ newest-named file:
+2026-10-26.md
+
+$ the still-unimplemented proposal (2026-10-26 suggestion 1, at :47):
+47:1. **Split pin-check mismatches into "can't run here" and "stale".** In my daily run, tag a mismatch as
+
+$ disposition: the 2026-10-26 suggestion 1 (split pin-check mismatches into "can't run here" vs "stale") stays behind the operator's open instrument-change ruling (the mori | round-65 L0 line above, still unanswered) — routed around, NOT implemented this round; the r71 planned (b)/(c) items (encoding-pin harness, the same split) sit behind the same ruling. Shokuknow register unreachable from this host.

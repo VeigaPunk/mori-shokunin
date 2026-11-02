@@ -1,0 +1,61 @@
+# mori round-72 — standing pin-family live re-verification (freshness move)
+date: 2026-11-02T01:28:18Z
+fetcher: curl curl 8.21.0, posture identical to the opening rows: curl -sS -m 60 -L
+scope: the seven distinct pinned pages behind registry rows S574/S575 (r64), S579/S580/S581 (r68-r70), S582+S583 (r70/r71), S584+S585 (r71/r72)
+
+## S574
+$ curl -sS -m 60 -L -o <scratch>/S574-r72.html https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-globalmemorystatusex
+curl rc=0
+live: bytes=54736 sha256=d52b00df51caf4037b383dfb86691a245022be22f0dedd7f0d7040ce73e8a82a
+pin:  bytes=54736 sha256=d52b00df51caf4037b383dfb86691a245022be22f0dedd7f0d7040ce73e8a82a
+verdict: byte-identical (sha256_match=yes)
+
+## S575
+$ curl -sS -m 60 -L -o <scratch>/S575-r72.html https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getdiskfreespaceexw
+curl rc=0
+live: bytes=55183 sha256=0d3c8d306e76ef502fa5d9a4b646d629b8354e0ddf3ae4d464b0f3622d89caf5
+pin:  bytes=55183 sha256=0d3c8d306e76ef502fa5d9a4b646d629b8354e0ddf3ae4d464b0f3622d89caf5
+verdict: byte-identical (sha256_match=yes)
+
+## S579
+$ curl -sS -m 60 -L -o <scratch>/S579-r72.html https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens.html
+curl rc=0
+live: bytes=14127 sha256=41b601f1da6ad11b5cfb167c5e64c780c15b83b7609caac4e9d8fefeafda7a9e
+pin:  bytes=14127 sha256=41b601f1da6ad11b5cfb167c5e64c780c15b83b7609caac4e9d8fefeafda7a9e
+verdict: byte-identical (sha256_match=yes)
+
+## S580
+$ curl -sS -m 60 -L -o <scratch>/S580-r72.html https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-details.html
+curl rc=0
+live: bytes=15183 sha256=238ec28d962bb58a63f67789b1db0d8a75f339472f874969501ad5248f5f923d
+pin:  bytes=15183 sha256=238ec28d962bb58a63f67789b1db0d8a75f339472f874969501ad5248f5f923d
+verdict: byte-identical (sha256_match=yes)
+
+## S581
+$ curl -sS -m 60 -L -o <scratch>/S581-r72.html https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-immunity-times.html
+curl rc=0
+live: bytes=16179 sha256=5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865
+pin:  bytes=16179 sha256=5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865
+verdict: byte-identical (sha256_match=yes)
+
+## S582
+$ curl -sS -m 60 -L -o <scratch>/S582-r72.html https://learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-gettickcount64
+curl rc=0
+live: bytes=52661 sha256=580f1935fb47b5c992a48d22299f7452aaeb00099f2ac96ba74c92002a18277f
+pin:  bytes=52661 sha256=580f1935fb47b5c992a48d22299f7452aaeb00099f2ac96ba74c92002a18277f
+verdict: byte-identical (sha256_match=yes)
+
+## S584
+$ curl -sS -m 60 -L -o <scratch>/S584-r72.html https://learn.microsoft.com/en-us/windows/win32/api/realtimeapiset/nf-realtimeapiset-queryunbiasedinterrupttime
+curl rc=0
+live: bytes=54774 sha256=d0bcbba945e7cf29d4664feb28a35aa31c1f80cadb5191644a33ab84464f9136
+pin:  bytes=54774 sha256=d0bcbba945e7cf29d4664feb28a35aa31c1f80cadb5191644a33ab84464f9136
+verdict: byte-identical (sha256_match=yes)
+
+## summary
+(anchored patterns so the greps cannot count their own echoed command lines)
+$ grep -c "^verdict: byte-identical" .ufo/waves/round-72/evidence/pin-family-reverify-r72.txt
+7
+$ grep -c "^verdict: DIFFERS" .ufo/waves/round-72/evidence/pin-family-reverify-r72.txt
+0
+rows covered: S574 S575 S579 S580 S581 S582 S583 S584 S585 (S583 shares the S582 pin; S585 shares the S584 pin — the r71 closure re-opened both byte-identical on 2026-11-01 and this round's fetches re-bind them)

@@ -1,0 +1,90 @@
+# mori r72 — erratum: S584 located-line anchor + quote word-counts (r71 closure carry-ins D71-1/D71-2)
+date: 2026-11-02 (r72; corrections are new entries, never in-place rewrites)
+routed note: corpus/lessons/round-71-verifier-spotcheck.md section 5 D71-1 + D71-2 (status-neutral)
+pin: corpus/evidence/sources-r71/S584.html sha256 d0bcbba945e7cf29d4664feb28a35aa31c1f80cadb5191644a33ab84464f9136 (54774 bytes) — unchanged from the r71 row
+live re-open: byte-identical 2026-11-02T00:49:36Z (receipt .ufo/waves/round-72/evidence/source-s584-reopen-r72.txt, sha256 equal), so every grep below binds the LIVE body too
+
+$ verification of each anchor against the PINNED copy (grep -c on the exact quoted text):
+
+-- D71-1: the zero-at-boot sentence (recorded :828 in the S584 row anchor cell, the r71 opening receipt located-facts, the r71 lesson Gate, knowledge entry K4, and the tools/mori-workstate-win.py header comment; actual :829) --
+$ sed -n "828p" pin
+<h2 id="remarks">Remarks</h2>
+$ sed -n "828p" pin | grep -c "The interrupt-time count begins at zero"
+recorded :828 -> count=0 (the recorded line does NOT carry the quote)
+$ sed -n "829p" pin | grep -c "The interrupt-time count begins at zero when the system starts and is incremented at each clock interrupt by the length of a clock tick."
+actual   :829 -> count=1
+$ sed -n "829p" <live-reopen> | grep -c "The interrupt-time count begins at zero when the system starts and is incremented at each clock interrupt by the length of a clock tick."
+actual   :829 on the LIVE copy -> count=1
+$ sed -n "829p" <live-reopen> | grep -c "The interrupt-time count begins at zero"
+actual   :829 on the LIVE copy (short form) -> count=1
+
+-- D71-2a: the failed-call quote word-count (recorded 22 in the S584 row anchor cell, the r71 opening receipt and the r71 lesson Gate; actual 26) --
+$ sed -n "827p" pin | grep -c "If the function succeeds, the return value is nonzero."
+located :827 -> count=1 (the whole failed-call sentence sits on :827; :826 is the h2 Return value heading — the S584 row recorded the span :826-827, retained)
+$ sed -n "827p" pin | grep -o "<failed-call sentence>" | wc -w
+word-count actual=26 -> wc -w = 26 (recorded 22)
+
+-- D71-2b: the :817 sleep/hibernation quote word-count (recorded 17 in the S584 row anchor cell, the r71 opening receipt and the r71 lesson Gate; actual 15) --
+$ sed -n "817p" pin | grep -o "<sleep sentence>" | wc -w
+word-count actual=15 -> wc -w = 15 (recorded 17)
+
+-- untouched anchors, re-confirmed against the pin (each grep of the exact text against its recorded line returns 1) --
+$ sed -n "817p" pin | grep -c "<def sentence>"
+line817 def count=1
+$ sed -n "817p" pin | grep -o "<def sentence>" | wc -w
+line817 def word-count=11 -> wc -w = 11 (recorded 11, correct)
+$ sed -n "817p" pin | grep -o "<sleep sentence>" | wc -w  (recorded line :817 confirmed; only its word-count drifted)
+$ sed -n "819,820p" pin
+<pre><code class="lang-cpp">BOOL QueryUnbiasedInterruptTime(
+  PULONGLONG UnbiasedTime
+$ sed -n "827p" pin | grep -c "<failed-call first clause>"
+line827 failed-call count=1
+$ sed -n "830p" pin | grep -c "reflects only the time that the system is in the working state"
+line830 working-state count=1
+$ sed -n "833p" pin | grep -c "advanced by approximately 49 days"
+line833 debug-alert count=1
+$ sed -n "876p" pin | grep -c "QueryUnbiasedInterruptTimePrecise"
+line876 precise-variant count=1 (stays UNOPENED)
+$ sed -n "829p" pin | grep -o "<zero-at-boot sentence>" | wc -w
+line829 zero-at-boot word-count=24 -> wc -w = 24 (recorded 24, correct — only its LINE drifted)
+
+quote texts: UNCHANGED and verified real (every quoted sentence found on its actual line, byte-level, above);
+only ONE stated location drifts (:828->:829) and TWO word-counts are misstated (22->26, 17->15).
+
+## every-mention sweep (repo-wide, patterns: S584:828 / S584.html:828 / backtick-anchored :828 / the two misstated counts)
+$ grep -rn --exclude-dir=.git -e "S584:828" -e "S584\.html:828" -e "(\`:828\`" -e "\`:828\`" . | cut -c1-120
+./.ufo/waves/round-17/falsify/PatternConsistency.md:50:- `mori-misroot-sweep.py:468` (help text says "under TMPDIR", `:8
+./.ufo/waves/round-71/evidence/source-s584-r71.txt:29:- `:828` — "The interrupt-time count begins at zero when the sys
+./.ufo/waves/round-72/evidence/controls-r72.txt:20:$ grep -c "S584:828" tools/mori-workstate-win.py
+./.ufo/waves/round-72/evidence/controls-r72.txt:22:$ grep -c "S584.html:828" corpus/knowledge/workstate-win-r71.md
+./.ufo/waves/round-72/evidence/controls-r72.txt:24:$ grep -c "(`:828`" corpus/lessons/round-71.md
+./.ufo/waves/round-72/evidence/s584-anchors-erratum-r72.txt:54:## every-mention sweep (repo-wide, patterns: S584:828 / S
+./.ufo/waves/round-72/evidence/s584-anchors-erratum-r72.txt:55:$ grep -rn --exclude-dir=.git -e "S584:828" -e "S584\.htm
+./corpus/knowledge/workstate-win-r71.md:38:- **K4** — `S584.html:828` — "The interrupt-time count begins at zero whe
+./corpus/lessons/round-71-verifier-spotcheck.md:145:  all record `:828` — which is `<h2 id="remarks">Remarks</h2>` (gr
+./corpus/lessons/round-71.md:107:  parameter, the return value is zero."; zero-at-boot (`:828`, 24 words):
+./corpus/SOURCES.md:365:| S584 | QueryUnbiasedInterruptTime function (realtimeapiset) — https://learn.microsoft.com/en
+./LOG.md:3957:maps to honest-unavailable, never to a zero count; zero is real (S584:828);
+./SCORECARD.md:3571:| C2 (sourced, S584 opened this round): `tools/mori-workstate-win.py` — the Windows working-state 
+./tools/mori-workstate-win.py:63:rule); zero IS a real count (S584:828 — "The interrupt-time count begins at
+Binary file ./tools/__pycache__/mori-workstate-win.cpython-313.pyc matches
+$ grep -rn --exclude-dir=.git "(22 words)" corpus/SOURCES.md corpus/lessons/round-71.md .ufo/waves/round-71/evidence/source-s584-r71.txt
+corpus/SOURCES.md:365:| S584 | QueryUnbiasedInterruptTime function (realtimeapiset) — https://learn.microsoft.com/en-u
+.ufo/waves/round-71/evidence/source-s584-r71.txt:28:- `:826-827` — "If the function succeeds, the return value is nonz
+$ grep -rn --exclude-dir=.git "(17 words)" corpus/SOURCES.md corpus/lessons/round-71.md .ufo/waves/round-71/evidence/source-s584-r71.txt
+corpus/SOURCES.md:365:| S584 | QueryUnbiasedInterruptTime function (realtimeapiset) — https://learn.microsoft.com/en-u
+.ufo/waves/round-71/evidence/source-s584-r71.txt:26:- `:817` — "Gets the current unbiased interrupt-time count, in uni
+$ fleet-side: grep -c ":828" <fleet>/.ufo/reports/round-71/mori.md
+count=2 (fleet repo, orchestrator-owned bytes — named, not lane-editable)
+$ closure-file note: corpus/lessons/round-71-verifier-spotcheck.md names :828 three times — that is the closure recording the DEFECT itself; those bytes stand as-written (not a drift carrier).
+
+## carriers and dispositions (named, none rewritten in place except the lane-owned tool comment — a next-round change per the closure routing)
+1. SOURCES.md S584 row anchor cell (+ its 22/17 word-counts) — anchor cells are IMMUTABLE (contract v1 rule 2): corrected by the NEW supersedes row S585 landing this round.
+2. .ufo/waves/round-71/evidence/source-s584-r71.txt (located-facts: :828, 22 words, 17 words) — r71 receipt bytes UNTOUCHED: THIS erratum receipt is the correction of record.
+3. corpus/lessons/round-71.md Gate (:828, 22 words, 17 words) — lesson bytes UNTOUCHED: the round-72 lesson Gate carries old->new (the r71 D2 precedent).
+4. corpus/knowledge/workstate-win-r71.md K4 (S584.html:828) — append-only correction block appended THIS round (the r71 entry-correction precedent).
+5. tools/mori-workstate-win.py header comment line (S584:828) — lane-owned, NOT a frozen byte: fixed in place THIS round (the closure routing allows a next-round change); selftest re-run at the new bytes.
+6. LOG.md (r71 entry) and SCORECARD.md (r71 C2 row) each carry one S584:828 mention — historical append-only round records: they STAND as recorded (what the r71 measurement cited), corrected-of-record by S585; rewriting them would falsify the historical claim record (same rule that kept the r71 lesson bytes).
+7. <fleet>/.ufo/reports/round-71/mori.md — orchestrator-owned, outside lane write scope; named here; S585 is the correction of record.
+Superseded values named old->new: :828->:829 (zero-at-boot anchor), 22->26 (failed-call word-count), 17->15 (sleep/hibernation word-count).
+Sweep self-hits named and excluded: the round-17 PatternConsistency hit is a DIFFERENT :828 (mori-misroot-sweep.py help text, no S584 relation); the controls-r72.txt and this receipt's own lines NAME the patterns they grep (self-reference, not carriers); the tools/__pycache__ .pyc hit is an untracked local build artifact of the tool comment, not a source carrier.

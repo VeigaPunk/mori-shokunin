@@ -60,8 +60,9 @@ or
   surface workstate: state=unavailable reason=<why>
   WORKSTATE_WIN: UNAVAILABLE surfaces=1 ok=0 unavailable=1
 A failed call is `unavailable`, never zero (the lane's honest-unavailable
-rule); zero IS a real count (S584:828 — "The interrupt-time count begins at
-zero when the system starts"). Exit: 0 available · 2 unavailable or
+rule); zero IS a real count (S584:829 — anchor corrected :828->:829 by the
+r72 S585 erratum; "The interrupt-time count begins at zero when the system
+starts"). Exit: 0 available · 2 unavailable or
 unreadable/malformed fixture · argparse's own exit (2) for unknown arguments
 — usage errors are never a live reading.
 

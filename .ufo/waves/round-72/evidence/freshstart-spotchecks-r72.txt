@@ -1,0 +1,25 @@
+# mori round-72 fresh-start spot-checks (r59/r60/r61 rejected closures re-derived with own receipts)
+date: 2026-11-02 (r72)
+
+$ the frozen r61 counter re-derived at the r61 data tip
+$ python -I .ufo/waves/round-61/count-c2.py 986d4b46db6e67682ef84091f606d125f987ecbc
+C2=unmet pointers=47 rows=47 same=30 moved=3 changed=0 quotes_ok=33 spans_ok=33 sources=5 failed=quote_words:psi.c:1268-1270;quote_words:psi.c:1712;quote_words:psi.c:1017;quote_words:psi.c:1540;quote_words:psi.c:1686;quote_words:psi.c:1710-1721;quote_words:psi.c:1268;quote_words:psi.c:1269-1270;quote_words:psi_types.h:41-49;quote_words:psi.c:1717-1719;quote_words:psi.c:1257-1258;quote_words:psi.c:228-240;quote_words:psi.c:1711-1719;quote_words:psi.c:1596-1598 rev=986d4b46db6e67682ef84091f606d125f987ecbc
+rc=1
+
+$ lane-side rev presence + ancestry (the checkout each rev belongs to: the lane repo)
+2b9f0397 -> 2b9f03975bfb6e508f35074ac8181ec8bf54e805 present=1 ancestor_rc=0
+7b86704d -> 7b86704d7c0754a09958d131b64dbfa2a6d3eaed present=1 ancestor_rc=0
+ddfb12fb -> ddfb12fb0838b4307c445194a844f0c4b1950195 present=1 ancestor_rc=0
+6752eafd -> 6752eafdf0e2bc07052e3e8ab922bd22ea5dfe25 present=1 ancestor_rc=0
+325f7e63 -> 325f7e639916fcbc77fa2ec7475951a1b86bb1cb present=1 ancestor_rc=0
+7370a731 -> 7370a731abcafc4c803111de7c22cd6264d63be1 present=1 ancestor_rc=0
+d21c0e5c -> d21c0e5c38f5c78c47e7a4e72466f9a55a27e579 present=1 ancestor_rc=0
+986d4b46 -> 986d4b46db6e67682ef84091f606d125f987ecbc present=1 ancestor_rc=0
+
+$ fleet-side report commits (checked out in the FLEET repo)
+2807c6ab -> 2807c6ab8a9b04dcf256682bcd722c695fdd6e14 present=1 (fleet repo)
+eeedfd53 -> eeedfd534b8f38d86fcf82c381e3b9ee018adc71 present=1 (fleet repo)
+3bb9b8e7 -> 3bb9b8e72438e7d78a144a0aa29aca5d2934eafa present=1 (fleet repo)
+
+$ note: this round's entering tip
+c5873f73d9811b65e44b5edcdeea625e519ed984

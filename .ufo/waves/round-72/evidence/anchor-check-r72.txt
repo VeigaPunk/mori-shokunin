@@ -1,0 +1,110 @@
+# mori round-72 — tools/mori-anchor-check.py: selftest x3 + live runs A-E
+date: 2026-11-02T01:39:56Z
+the QUALITY 162/90 check made runnable: per anchor (recorded line, exact quote, recorded word-count) it
+reports located/mislocated and word-count match/mismatch; rc 0 only when every anchor locates and every
+recorded count equals the count of its own recorded text. Tool limit (declared): anchors whose sentence
+spans two pin lines are verified as fragment-locate items (WORDS -); their labels are verified by the
+QUALITY 90 wc-of-quoted-text form inside the erratum receipts.
+
+$ run 1: python tools/mori-anchor-check.py --selftest
+selftest located_ok       PASS
+selftest mislocated       PASS
+selftest wordcount_mismatch PASS
+selftest span_located     PASS
+selftest span_all_zero    PASS
+selftest mixed_multi_item PASS
+selftest redaction        PASS
+selftest missing_pin      PASS
+selftest malformed_spec   PASS
+selftest words_skipped    PASS
+selftest double_locate    PASS
+ANCHOR_CHECK_SELFTEST: PASS (11 cases)
+rc=0
+
+$ run 2: python tools/mori-anchor-check.py --selftest
+selftest located_ok       PASS
+selftest mislocated       PASS
+selftest wordcount_mismatch PASS
+selftest span_located     PASS
+selftest span_all_zero    PASS
+selftest mixed_multi_item PASS
+selftest redaction        PASS
+selftest missing_pin      PASS
+selftest malformed_spec   PASS
+selftest words_skipped    PASS
+selftest double_locate    PASS
+ANCHOR_CHECK_SELFTEST: PASS (11 cases)
+rc=0
+
+$ run 3: python tools/mori-anchor-check.py --selftest
+selftest located_ok       PASS
+selftest mislocated       PASS
+selftest wordcount_mismatch PASS
+selftest span_located     PASS
+selftest span_all_zero    PASS
+selftest mixed_multi_item PASS
+selftest redaction        PASS
+selftest missing_pin      PASS
+selftest malformed_spec   PASS
+selftest words_skipped    PASS
+selftest double_locate    PASS
+ANCHOR_CHECK_SELFTEST: PASS (11 cases)
+rc=0
+
+## run A — the S585-corrected anchors on the S584 pin: expected PASS rc 0
+$ python tools/mori-anchor-check.py --pin corpus/evidence/sources-r71/S584.html --check ... (8 items: def 817/11w, sleep 817/15w, signature 819-820, failed-call 826-827/26w, zero-at-boot 829/24w, working-state 830, debug-alert 833, precise-variant 876)
+anchor item=def span=817 verdict=ok located_on=817 occurrences=1 words_counted=11 words_recorded=11
+anchor item=sleep span=817 verdict=ok located_on=817 occurrences=1 words_counted=15 words_recorded=15
+anchor item=signature span=819-820 verdict=ok located_on=819 occurrences=1 words_counted=2 words_recorded=-
+anchor item=failed_call span=826-827 verdict=ok located_on=827 occurrences=1 words_counted=26 words_recorded=26
+anchor item=zero_at_boot span=829 verdict=ok located_on=829 occurrences=1 words_counted=24 words_recorded=24
+anchor item=working_state span=830 verdict=ok located_on=830 occurrences=1 words_counted=12 words_recorded=-
+anchor item=debug_alert span=833 verdict=ok located_on=833 occurrences=1 words_counted=12 words_recorded=-
+anchor item=precise_variant span=876 verdict=ok located_on=876 occurrences=1 words_counted=1 words_recorded=-
+ANCHOR_CHECK: PASS items=8 ok=8 pin_sha256=d0bcbba945e7cf29d4664feb28a35aa31c1f80cadb5191644a33ab84464f9136 pin_bytes=54774
+rc=0
+
+## run B — the r71-RECORDED anchors (pre-correction) on the same pin: expected FAIL rc 1 (able-to-fail)
+$ ... --check zero_at_boot|828|24 (recorded :828), failed_call|826-827|22 (recorded 22), sleep|817|17 (recorded 17), def|817|11
+anchor item=def span=817 verdict=ok located_on=817 occurrences=1 words_counted=11 words_recorded=11
+anchor item=sleep span=817 verdict=wordcount_mismatch located_on=817 occurrences=1 words_counted=15 words_recorded=17
+anchor item=failed_call span=826-827 verdict=wordcount_mismatch located_on=827 occurrences=1 words_counted=26 words_recorded=22
+anchor item=zero_at_boot span=828 verdict=mislocated located_on=- occurrences=0 words_counted=- words_recorded=24
+ANCHOR_CHECK: FAIL items=4 ok=1 mislocated=1 wordcount_mismatch=2 pin_sha256=d0bcbba945e7cf29d4664feb28a35aa31c1f80cadb5191644a33ab84464f9136 pin_bytes=54774
+rc=1  (mislocated=1 wordcount_mismatch=2 — the instrument catches D71-1 AND both D71-2 items mechanically)
+
+## run C — the S587-corrected anchors on the S582 pin: expected PASS rc 0
+$ ... --check def|829|13 (corrected), return|834, resolution|836, boundary_prefix|841, debug|842, signature|831
+anchor item=def span=829 verdict=ok located_on=829 occurrences=1 words_counted=13 words_recorded=13
+anchor item=return span=834 verdict=ok located_on=834 occurrences=1 words_counted=4 words_recorded=-
+anchor item=resolution span=836 verdict=ok located_on=836 occurrences=1 words_counted=5 words_recorded=-
+anchor item=boundary_prefix span=841 verdict=ok located_on=841 occurrences=1 words_counted=16 words_recorded=-
+anchor item=debug span=842 verdict=ok located_on=842 occurrences=1 words_counted=5 words_recorded=-
+anchor item=signature span=831 verdict=ok located_on=831 occurrences=1 words_counted=2 words_recorded=-
+ANCHOR_CHECK: PASS items=6 ok=6 pin_sha256=580f1935fb47b5c992a48d22299f7452aaeb00099f2ac96ba74c92002a18277f pin_bytes=52661
+rc=0
+
+## run D — the S586-corrected anchors on the S581 pin: expected PASS rc 0
+$ ... --check section|54|9 (corrected), mechanism_frag|59, default_pack_frag|70, minimum|83|11, captcha_floor|84
+anchor item=section span=54 verdict=ok located_on=54 occurrences=1 words_counted=9 words_recorded=9
+anchor item=mechanism_frag span=59 verdict=ok located_on=59 occurrences=1 words_counted=14 words_recorded=-
+anchor item=default_pack_frag span=70 verdict=ok located_on=70 occurrences=1 words_counted=12 words_recorded=-
+anchor item=minimum span=83 verdict=ok located_on=83 occurrences=1 words_counted=11 words_recorded=11
+anchor item=captcha_floor span=84 verdict=ok located_on=84 occurrences=1 words_counted=10 words_recorded=-
+ANCHOR_CHECK: PASS items=5 ok=5 pin_sha256=5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865 pin_bytes=16179
+rc=0
+
+## run E — the PRE-correction recorded labels on the S581/S582 pins: expected FAIL rc 1 (able-to-fail #2)
+$ ... --pin S581 --check section|54|10  AND  --pin S582 --check def|829|14
+anchor item=section span=54 verdict=wordcount_mismatch located_on=54 occurrences=1 words_counted=9 words_recorded=10
+ANCHOR_CHECK: FAIL items=1 ok=0 mislocated=0 wordcount_mismatch=1 pin_sha256=5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865 pin_bytes=16179
+rc=1 (S581 :54 recorded 10, actual 9)
+anchor item=def span=829 verdict=wordcount_mismatch located_on=829 occurrences=1 words_counted=13 words_recorded=14
+ANCHOR_CHECK: FAIL items=1 ok=0 mislocated=0 wordcount_mismatch=1 pin_sha256=580f1935fb47b5c992a48d22299f7452aaeb00099f2ac96ba74c92002a18277f pin_bytes=52661
+rc=1 (S582/S583 :829 recorded 14, actual 13)
+
+## summary
+runs: selftest 11/11 x3 at the final bytes; A PASS rc 0; B FAIL rc 1 (mislocated=1 wordcount_mismatch=2);
+C PASS rc 0; D PASS rc 0; E FAIL rc 1 x2 (wordcount_mismatch=1 each) — the instrument demonstrates BOTH
+defect classes (located-line drift, word-count misstatement) failing on the recorded values and passing on
+the corrected ones, on pins whose live bodies are byte-identical today (pin-family-reverify-r72.txt).
