@@ -4815,3 +4815,6 @@ Assimilation: considerthese re-mined (all eight files re-listed; newest-named
 operator's open instrument-change ruling (the mori | round-65 L0); suggestion 3 is
 the standing fresh-start spot-check practice, re-performed this round.
 Assimilation: none — shokuknow unreachable.
+
+
+Post-landing addendum (same round, pre-report): commit B `2360cc3b` verified — 22 paths (14 A receipts + 5 M carriers + 3 A corpus files, +2118/-7), pushed (`ls-remote origin refs/heads/master` == HEAD), and every artifact the round claims as landed checked IN its tree (`.ufo/waves/round-78/evidence/post-landing-verify-r78.txt` — the receipt's first draft ran its check loop with an unset shell variable and printed false MISSING lines; caught by counting the verdict lines against the receipt's own 22-path header before use, rewritten, mined as lesson addendum mistake 6). The frozen-set audit stands: 14274 paths at `ecb916ce`, 14269 byte-identical, 5 round-carriers, 0 mismatches. Lane head after the final round commit: see the report's lane_head line.

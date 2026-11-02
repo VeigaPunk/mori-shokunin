@@ -1,0 +1,36 @@
+# mori round-78 POST-LANDING verification (receipted after commit B by nature -- a receipt of a landing cannot precede the landing; committed in the round's final commit; the D77-3 class closed on this round's own landing)
+run-start=2026-11-02T19:15:29Z
+
+## the two round commits
+commit A (D77-1): 4ce9e438a287e51aa705b0426d8817999a0cdef9 -- diff-tree: exactly one path 'A tools/mori-counter-win.py'; blob sha256 e6c527dbef07dbede0b963db1d68cbbbccdf0d148d0e9409b9a4514789ff7a1f == the receipted landing bytes; pushed
+commit B (the round): 2360cc3b77a510c6a2a87bd8119c3a3d0291c4cf -- diff-tree -r --name-status: 22 paths (14 A receipts + 5 M round-carriers + 3 A corpus files); numstat total 22 files changed, 2118 insertions(+), 7 deletions(-) (the -7 = SHONEN's 4 rewritten box lines + SOURCES' 3 in-place used-by replacements; the S593 row and URL re-point net to additions against ecb916ce)
+
+## push state
+2360cc3b77a510c6a2a87bd8119c3a3d0291c4cf	refs/heads/master
+local HEAD: 2360cc3b77a510c6a2a87bd8119c3a3d0291c4cf
+
+## every artifact the round claims as landed IS in commit B's tree (git cat-file -e 2360cc3b...:<path>; NOTE: the first draft of this receipt ran the loop with an unset commit variable and printed false MISSING lines -- caught by counting the verdict lines before use, receipt rewritten, and the incident mined as lesson addendum mistake 6)
+IN LOG.md
+IN SCORECARD.md
+IN SHONEN.md
+IN corpus/README.md
+IN corpus/SOURCES.md
+IN corpus/knowledge/counter-semantics-r78.md
+IN corpus/evidence/sources-r78/S593.html
+IN corpus/lessons/round-78.md
+IN .ufo/waves/round-78/evidence/census-start-r78.txt
+IN .ufo/waves/round-78/evidence/census-end-r78.txt
+IN .ufo/waves/round-78/evidence/controls-r78.txt
+IN .ufo/waves/round-78/evidence/counter-win-live-r78.txt
+IN .ufo/waves/round-78/evidence/counter-win-selftest-r78.txt
+IN .ufo/waves/round-78/evidence/foreign-sweep-r78.txt
+IN .ufo/waves/round-78/evidence/freshstart-spotchecks-r78.txt
+IN .ufo/waves/round-78/evidence/frozen-audit-r78.txt
+IN .ufo/waves/round-78/evidence/pin-family-r78.txt
+IN .ufo/waves/round-78/evidence/pin-family-r78-final.txt
+IN .ufo/waves/round-78/evidence/pin-family-r78-s593-isolated.txt
+IN .ufo/waves/round-78/evidence/s593-anchor-check-r78.txt
+IN .ufo/waves/round-78/evidence/selftests-battery-r78.txt
+IN .ufo/waves/round-78/evidence/source-s593-r78.txt
+
+## the foreign sweep's 14 own artifacts: all 14 are among the 22 paths above -- the sweep's scheduling claim is now CHECKED against the actual commit (the D77-3 class)

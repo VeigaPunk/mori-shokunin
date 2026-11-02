@@ -181,3 +181,24 @@ remains behind the operator's open instrument-change ruling (the mori | round-65
 L0 line); suggestions 2–4 stay proposals (suggestion 3 is the standing
 fresh-start spot-check practice, re-performed this round with own receipts).
 Assimilation: none — shokuknow unreachable.
+
+## Mistakes addendum (post-landing, same round — appended at end-of-file, not inserted; the landing lesson's bytes are proven unchanged by the prefix sha at the bottom of this addendum)
+
+6. class: landing (an unset shell variable in a receipt generator) — the
+   post-landing verification receipt's first draft ran its `git cat-file -e`
+   loop with the commit variable set in a PREVIOUS shell invocation; each Bash
+   call on this host starts a fresh shell, the variable was empty, every path
+   printed a false `MISSING`, and the receipt would have "proven" the landing
+   failed. captured-by: counting the verdict lines (`IN` 5 / `MISSING` 17 —
+   neither count matches the 22 paths the receipt names) BEFORE using the
+   receipt, the same post-append re-read discipline that caught r77's mistake 4.
+   fix: receipt rewritten with the variable set inside the same invocation —
+   all 22 paths `IN`, 0 `MISSING`
+   (`.ufo/waves/round-78/evidence/post-landing-verify-r78.txt`); standing —
+   every variable a receipt generator uses is set in the SAME invocation that
+   runs it (the r75 unset-variable class, host-specific: shells do not persist
+   here), and a receipt's verdict counts are cross-checked against the
+   population its own header names before the receipt is consumed.
+
+entering-bytes sha256 (the committed round-78 lesson at `2360cc3b`): `2fd194f95779d357f45ab769a118aaad8b48aab6e61539801980f6047b180066` —
+every byte of the landing lesson is unchanged; this addendum is append-only.
