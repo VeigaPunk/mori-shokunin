@@ -1,0 +1,24 @@
+# mori round-78 fresh-start spot-checks (r59/r60/r61 rejected closures re-derived)
+run-start=2026-11-02T17:53:31Z
+entering=ecb916ce0105c37142aef08def00d95ec70cf503
+
+## 1. the frozen r61 counter at the r61 data tip
+C2=unmet pointers=47 rows=47 same=30 moved=3 changed=0 quotes_ok=33 spans_ok=33 sources=5 failed=quote_words:psi.c:1268-1270;quote_words:psi.c:1712;quote_words:psi.c:1017;quote_words:psi.c:1540;quote_words:psi.c:1686;quote_words:psi.c:1710-1721;quote_words:psi.c:1268;quote_words:psi.c:1269-1270;quote_words:psi_types.h:41-49;quote_words:psi.c:1717-1719;quote_words:psi.c:1257-1258;quote_words:psi.c:228-240;quote_words:psi.c:1711-1719;quote_words:psi.c:1596-1598 rev=986d4b46db6e67682ef84091f606d125f987ecbc
+counter_rc=1
+
+## 2. the r59/r60/r61 lane revs ancestral of refs/heads/master
+ancestor ok d21c0e5c38f5c78c47e7a4e72466f9a55a27e579
+ancestor ok 7b62d6e9fc367fceff36d3d328e97b09622bb37f
+ancestor ok 986d4b46db6e67682ef84091f606d125f987ecbc
+ancestor ok 72db3c2becc867b745531f3315c6839e0ed3e5bc
+ancestor ok 7370a731abcafc4c803111de7c22cd6264d63be1
+ancestor ok 6752eafdf0e2bc07052e3e8ab922bd22ea5dfe25
+ancestor ok bc05a1455014749faa633ce231fb265852762302
+ancestor ok 0f8340cf62b588fd64be8d9176ed7d5444c426b2
+ancestor ok b3c256138f00c704d5aa56eb0332d74506502ef2
+ancestor ok 398d32252d5495f362c4e7d66b5dd48426dca0bc
+
+## 3. the three fleet report commits PRESENT (fleet repo)
+2807c6ab round-59: mori dispatch evidence (hyaku inline attempt 2)
+eeedfd53 round-60: mori report — C1 verified met; C2/C3 instruments decertified (honest stop); wave 64/64; SOURCES 333->337
+3bb9b8e7 round-61: mori report — C1 met, C2 honest-stop on counter quote floor, C3 met (capability); wave 64 seats; l0-questions mori round-61 append

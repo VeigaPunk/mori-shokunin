@@ -1,0 +1,18 @@
+# mori round-78 S593 anchor-check receipt (the r72 checker over the pinned copy bytes)
+run-start=2026-11-02T18:19:00Z
+pin=corpus/evidence/sources-r78/S593.html sha256=7eb834fc1450f8f93d94e11cd66c4c7a84049631ca1b1032ffbb3019ff6a9bac bytes=48532
+
+## A. recorded anchors
+$ python -I tools/mori-anchor-check.py --pin corpus/evidence/sources-r78/S593.html --check 'topic_associates|713|18|This topic associates performance counters with the data returned by memory performance functions and the Windows Task Manager' --check 'table_associates_memory_object|720|19|The following table associates memory object performance counters with the data returned by the memory performance functions in the' --check 'counter_column_header|730|6|Memory object counter (unless otherwise noted)' --check 'committed_bytes_cell|750|2|Committed Bytes' --check 'commit_limit_cell|756|2|Commit Limit'
+anchor item=topic_associates span=713 verdict=ok located_on=713 occurrences=1 words_counted=18 words_recorded=18
+anchor item=table_associates_memory_object span=720 verdict=ok located_on=720 occurrences=1 words_counted=19 words_recorded=19
+anchor item=counter_column_header span=730 verdict=ok located_on=730 occurrences=1 words_counted=6 words_recorded=6
+anchor item=committed_bytes_cell span=750 verdict=ok located_on=750 occurrences=1 words_counted=2 words_recorded=2
+anchor item=commit_limit_cell span=756 verdict=ok located_on=756 occurrences=1 words_counted=2 words_recorded=2
+ANCHOR_CHECK: PASS items=5 ok=5 pin_sha256=7eb834fc1450f8f93d94e11cd66c4c7a84049631ca1b1032ffbb3019ff6a9bac pin_bytes=48532
+anchor_rc=0
+
+## B. able-to-fail arm (mislocation: wrong line + mutated count)
+anchor item=commit_limit_cell span=750 verdict=mislocated located_on=- occurrences=0 words_counted=- words_recorded=3
+ANCHOR_CHECK: FAIL items=1 ok=0 mislocated=1 wordcount_mismatch=0 pin_sha256=7eb834fc1450f8f93d94e11cd66c4c7a84049631ca1b1032ffbb3019ff6a9bac pin_bytes=48532
+abletofail_rc=1

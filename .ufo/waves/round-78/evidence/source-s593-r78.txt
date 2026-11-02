@@ -1,0 +1,40 @@
+# mori round-78 S593 source receipt (sweep BEFORE fetch, title check before pin)
+run-start=2026-11-02T18:02:22Z
+
+## 1. duplicate sweep INTO this receipt BEFORE the fetch (the r69 lesson rule)
+-- sweep A: URL fragments across corpus/SOURCES.md --
+hits_cimwin32prov=0
+hits_wmisdk=0
+hits_perfos_memory=0
+-- sweep B: distinctive words across corpus/SOURCES.md --
+hits_GlobalMemoryStatusEx=1
+hits_PerfOS=0
+hits_CommitLimit=3
+-- sweep C: the whole-file unique-id check --
+S593_rows=0
+SOURCES_rows_before=365
+
+sweep interpretation: no registry row is the WMI PerfOS_Memory class reference; the held rows nearest this surface are S572 (the exhaustion-event troubleshooter, the r63 ground), S574 (the GlobalMemoryStatusEx function page -- the r64 probe's API-approximation ground, a DIFFERENT surface: one Win32 struct, not the WMI counter class), and S592 (the typeperf command reference, the r77 transport ground); the CommitLimit grep hits are the Linux overcommit/meminfo sources (S499/S502/S504), a different OS. [CORRECTED pre-landing: the first draft of this line wrongly said the GlobalMemoryStatusEx page is not a registry row -- it is S574; caught by re-reading the sweep hits before fetch.]
+
+## 2. fetch, title check, pin (after the sweep above)
+candidates fetched and REJECTED before the located page: cimwin32prov/win32-perfformatteddata-perfos-memory -> 404; previous-versions/windows/desktop/wmisdk/win32-perfformatteddata-perfos-memory -> 404; previous-versions/aa394346(v=vs.85) -> 404; windows/win32/wmisdk/win32-perfformatteddata-perfos-memory -> 404 (title '404 - Content not found', 17593-byte error page)
+located page: https://learn.microsoft.com/en-us/previous-versions/windows/desktop/legacy/aa965225(v=vs.85)
+resolved <title>: 'Memory Performance Information (Windows)' with the Microsoft Learn site suffix (separator not spelled in the row -- the r76 title-pipe rule)
+pinned copy: corpus/evidence/sources-r78/S593.html sha256=7eb834fc1450f8f93d94e11cd66c4c7a84049631ca1b1032ffbb3019ff6a9bac bytes=48532
+word counts wc -w pre-pin: 18 / 19 / 6 / 2 / 2 (QUALITY 90)
+anchor-check: PASS items=5 ok=5 rc 0 + able-to-fail mislocation arm FAIL rc 1 (.ufo/waves/round-78/evidence/s593-anchor-check-r78.txt)
+
+## 3. row insert facts
+S593 inserted at SOURCES.md:374 INSIDE the Registry immediately after S592 (:373)
+SOURCES rows 365 -> 366 (grep -cE '^[|][[:space:]]*S[0-9]{3,}[[:space:]]*[|]'); shape badNF=0 over 366 rows (awk NF==13 per row)
+prefix lines 1-373 byte-unchanged (pre-insert sha256 e870f4afc62004b9c8941fc735e58dd308c1f11311b9a0314c4d0e75ab492666); suffix byte-unchanged (verified line-by-line in the insert script)
+
+## 4. used-by appends (in place, old -> new logged)
+S572 (:line 352) used-by old: corpus/knowledge/host-events-win-r63.md, corpus/knowledge/counter-win-r77.md, corpus/knowledge/counter-semantics-r78.md
+S574 (:line 354) used-by old: corpus/knowledge/runway-win-r64.md, corpus/knowledge/counter-win-r77.md, corpus/knowledge/counter-semantics-r78.md
+S592 (:line 373) used-by old: corpus/knowledge/counter-win-r77.md, corpus/lessons/round-77.md, corpus/knowledge/counter-semantics-r78.md
+old values (the new lines above name the appended entry in place):
+- S572 old used-by: corpus/knowledge/host-events-win-r63.md, corpus/knowledge/counter-win-r77.md
+- S574 old used-by: corpus/knowledge/runway-win-r64.md, corpus/knowledge/counter-win-r77.md
+- S592 old used-by: corpus/knowledge/counter-win-r77.md, corpus/lessons/round-77.md
+every other SOURCES line byte-unchanged (verified line-by-line); post-edit file sha256=48148dcfe0f29a755ce0d5689aeece1ceac5905c926f78da179db868a774fd19

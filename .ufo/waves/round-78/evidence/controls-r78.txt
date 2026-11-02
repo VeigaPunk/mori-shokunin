@@ -1,0 +1,35 @@
+# mori round-78 do-nothing controls (all claimed after-states absent at entering)
+run-start=2026-11-02T17:54:48Z
+entering=ecb916ce0105c37142aef08def00d95ec70cf503
+
+## 1. the counter instrument absent from the entering tree
+fatal: path 'tools/mori-counter-win.py' exists on disk, but not in 'ecb916ce0105c37142aef08def00d95ec70cf503'
+cat_file_rc=128
+
+## 2. the tool in no ref, ever (log --all / rev-list --all --objects)
+log_all_lines=0
+revlist_objects_named=0
+
+## 3. the canonical capabilities row absent at entering
+counter_win_mentions_in_SCORECARD=1
+canonical_capability_headings_at_entering=26
+
+## 4. the D77-3 correction absent at entering
+correction_marker_in_LOG_at_entering=0
+
+## 5. S593 absent at entering
+S593_rows_in_SOURCES_at_entering=0
+SOURCES_rows_at_entering=365
+
+## 6. this round's receipts absent at entering
+.ufo/waves/round-78/evidence/counter-win-selftest-r78.txt rc=128
+.ufo/waves/round-78/evidence/counter-win-live-r78.txt rc=128
+corpus/knowledge/counter-semantics-r78.md rc=128
+corpus/evidence/sources-r78/S593.html rc=128
+corpus/lessons/round-78.md rc=128
+
+## 7. the family table at entering (tolerant form, r77 lesson rule)
+family_rows_at_entering=12
+
+## 3b. precise row-form control (the 1 mention at entering is the Round-77 section C2 prose at SCORECARD.md:3892, not a capabilities-table row)
+row_form_counter_win_rows_at_entering=0

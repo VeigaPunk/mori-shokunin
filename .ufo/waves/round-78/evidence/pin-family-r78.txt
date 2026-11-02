@@ -1,0 +1,22 @@
+# mori round-78 standing pin-family arm: rows=7 (the r77 five + S592 first family adjudication + S593 opened this round)
+run-start=2026-11-02T18:26:47Z
+$ python -I tools/mori-drift-recheck.py --root . --only S241,S581,S589,S590,S591,S592,S593
+# MORI_DRIFT_RECHECK second_ua=curl/8.21.0 only=S241,S581,S589,S590,S591,S592,S593 from-sweep=- findings=- run-start=2026-11-02T18:26:47Z stamp-class=python-docs-page-stamp asset-class=learn-microsoft-asset-build-id
+S241 asset-churn as-of=2026-11-02T18:26:48Z
+S581 fresh as-of=2026-11-02T18:26:48Z
+S589 time-churn as-of=2026-11-02T18:26:48Z
+S590 fresh as-of=2026-11-02T18:26:48Z
+S591 ua-serving as-of=2026-11-02T18:26:49Z
+S592 ua-serving as-of=2026-11-02T18:26:49Z
+S593 unavailable as-of=2026-11-02T18:26:50Z
+MORI_DRIFT_RECHECK rows=7 adjudicated=7 fresh=2 excerpt=0 time-churn=1 asset-churn=1 receipt-open=0 receipt-stale=0 ua-serving=2 content-drift=0 gate=0 unavailable=1 window=2026-11-02T18:26:48Z..2026-11-02T18:26:50Z
+exit=0
+
+## cause receipt for the S593 unavailable above (tied to cause per the r77 lesson rule)
+run=2026-11-02T18:34:30Z isolated re-run (.ufo/waves/round-78/evidence/pin-family-r78-s593-isolated.txt): unavailable reproduced NOT a burst rate-gate.
+cause found: mori-source-drift parse_registry truncates the row URL at the closing parenthesis -- S593 parsed as .../aa965225(v=vs.85 (final ')' dropped; direct module check receipted: parse output repr shows the truncation). The truncated URL does not serve the page; mod.fetch returns non-body -> the instrument's first-fetch branch classifies unavailable.
+the transport is NOT at fault: mod.fetch on the TRUE url returned body 5/5 samples (48909 bytes each, UA mori-source-drift/1.0) -- the learn.microsoft.com per-UA serving-variance shape (the S591/S592 class): the curl-UA fetch returns 48532 bytes == the pin exactly.
+instrument NOT edited (registered, tally-pinned; the mori | round-65 L0 instrument-change class stays open -- routed around).
+row-side accommodation instead: the row URL re-pointed in place (old -> new logged) to the percent-encoded form ...aa965225%28v%3Dvs.85%29 which serves BYTE-IDENTICAL bytes (curl fetch sha256 7eb834fc1450f8f93d94e11cd66c4c7a84049631ca1b1032ffbb3019ff6a9bac == the pinned copy; cmp rc 0), and mori-source-drift parse_registry now carries it intact (verified repr above).
+the opening URL itself stays receipted as the paren form actually opened; the encoded form is RFC-equivalent for the same resource and is the byte-identical surface.
+SOURCES.md post-re-point sha256 e7487961c08c... (badNF=0, rows 366).

@@ -1,0 +1,13 @@
+# mori round-78 standing pin-family arm FINAL: rows=7 after the S593 URL re-point (first-run receipt pin-family-r78.txt disclosed beside)
+run-start=2026-11-02T18:40:56Z
+$ python -I tools/mori-drift-recheck.py --root . --only S241,S581,S589,S590,S591,S592,S593
+# MORI_DRIFT_RECHECK second_ua=curl/8.21.0 only=S241,S581,S589,S590,S591,S592,S593 from-sweep=- findings=- run-start=2026-11-02T18:40:56Z stamp-class=python-docs-page-stamp asset-class=learn-microsoft-asset-build-id
+S241 asset-churn as-of=2026-11-02T18:40:57Z
+S581 fresh as-of=2026-11-02T18:40:57Z
+S589 time-churn as-of=2026-11-02T18:40:57Z
+S590 fresh as-of=2026-11-02T18:40:57Z
+S591 ua-serving as-of=2026-11-02T18:40:58Z
+S592 ua-serving as-of=2026-11-02T18:40:58Z
+S593 ua-serving as-of=2026-11-02T18:40:58Z
+MORI_DRIFT_RECHECK rows=7 adjudicated=7 fresh=2 excerpt=0 time-churn=1 asset-churn=1 receipt-open=0 receipt-stale=0 ua-serving=3 content-drift=0 gate=0 unavailable=0 window=2026-11-02T18:40:57Z..2026-11-02T18:40:58Z
+exit=0

@@ -1,0 +1,7 @@
+# mori round-78 S593 isolated re-adjudication (cause receipt for the burst-run unavailable: the 7-row run fetched 5 learn.microsoft.com URLs back-to-back; isolated run tests the rate-gate hypothesis per the r77 lesson's tied-to-cause rule)
+run-start=2026-11-02T18:34:30Z
+$ python -I tools/mori-drift-recheck.py --root . --only S593
+# MORI_DRIFT_RECHECK second_ua=curl/8.21.0 only=S593 from-sweep=- findings=- run-start=2026-11-02T18:34:30Z stamp-class=python-docs-page-stamp asset-class=learn-microsoft-asset-build-id
+S593 unavailable as-of=2026-11-02T18:34:30Z
+MORI_DRIFT_RECHECK rows=1 adjudicated=1 fresh=0 excerpt=0 time-churn=0 asset-churn=0 receipt-open=0 receipt-stale=0 ua-serving=0 content-drift=0 gate=0 unavailable=1 window=2026-11-02T18:34:30Z..2026-11-02T18:34:30Z
+exit=0

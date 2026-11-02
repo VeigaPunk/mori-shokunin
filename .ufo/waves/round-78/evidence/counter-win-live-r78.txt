@@ -1,0 +1,12 @@
+# mori round-78 D77-1 re-receipt: counter-win first live run AT THE LANDED BYTES (second live session at a distance: the r77 planned head (b) -- separate counts, never a series, K6)
+run-start=2026-11-02T17:59:56Z
+landing_commit=4ce9e438a287e51aa705b0426d8817999a0cdef9
+landed_blob_sha256=e6c527dbef07dbede0b963db1d68cbbbccdf0d148d0e9409b9a4514789ff7a1f
+prior session: r77 live receipt counter-win-live-r77.txt run-start=2026-11-02T16:06:01Z -- this run is a SECOND session roughly two hours later; counts are separate readings, no series is claimed
+$ python -I tools/mori-counter-win.py
+counter path=\Memory\Committed Bytes kind=gauge value=28999446528.000000
+counter path=\Memory\Commit Limit kind=gauge value=36932628480.000000
+counter path=\Memory\% Committed Bytes In Use kind=gauge value=78.519856
+counter path=\Memory\Pages/sec kind=rate value=28.981110
+COUNTER_WIN: AVAILABLE surfaces=4 ok=4 unavailable=0 samples=2
+exit=0

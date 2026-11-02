@@ -4693,3 +4693,125 @@ remains behind the operator's open instrument-change ruling; suggestion 3 is
 the standing fresh-start spot-check practice, re-performed this round.
 Assimilation: none — shokuknow unreachable.
 
+## Round 78 (2026-11-02, L1 MoriR78) — the r77 recovery: D77-1 the counter instrument lands in committed bytes at the receipted sha (commit 4ce9e438) with the selftest + live re-receipts AT THE LANDED BYTES, D77-2 the canonical SCORECARD capabilities-table row (C1 operability, capability acquisition); D77-3 the correction of record for the r77 landing decomposition (C2 calibration); C3 freshness the standing pin-family arm extended to rows=7 (S592 + S593 join; S593 opened this round with the full Gate receipts — the round's sourced claim), SOURCES 365 -> 366
+
+Entering `ecb916ce` (the r77 verifier-spotcheck tip; the r77 carry-ins D77-1/D77-2/D77-3
+fully staged by the spotcheck). This section appended at end-of-file — every entering
+line unchanged (entering 4695 lines, entering-bytes sha256
+`d32bc0e4f46cce4894d00330bcca5da3b4bee9e66c3c24371ecb210a9ca5c3cf` — the value this
+script computed over the entering bytes before the append). PROVINCE.md, AGENTS.md,
+corpus/QUALITY.md, SKILL.md and every registered instrument byte are absent from this
+round's diff.
+
+- **C1 (operability, capability acquisition — the r77 C2 instrument finally lands).**
+  Before: `git cat-file -e ecb916ce:tools/mori-counter-win.py` rc 128;
+  `git log --all -- tools/mori-counter-win.py` EMPTY; `git rev-list --all --objects`
+  names 0 counter-win objects (controls-r78.txt); the SKILL registry row 12 cited a
+  command that did not resolve from committed bytes. After: commit `4ce9e438` lands
+  `tools/mori-counter-win.py` as a NEW commit (diff-tree: exactly one path, `A`), blob
+  sha256 == the receipted landing bytes
+  `e6c527dbef07dbede0b963db1d68cbbbccdf0d148d0e9409b9a4514789ff7a1f`
+  (`git show 4ce9e438:tools/mori-counter-win.py | sha256sum`); the r77 landing
+  `6a230c4b` untouched (no amend, no rewrite). Re-receipts AT THE LANDED BYTES:
+  selftest `COUNTER_WIN_SELFTEST: PASS (12 cases)` rc 0
+  (`.ufo/waves/round-78/evidence/counter-win-selftest-r78.txt`) and one live run
+  `COUNTER_WIN: AVAILABLE surfaces=4 ok=4 unavailable=0 samples=2` rc 0
+  (`.ufo/waves/round-78/evidence/counter-win-live-r78.txt`) — both receipts name the
+  landing commit and carry its blob sha; the live run is the SECOND live session at a
+  distance (r77 run-start 16:06:01Z, r78 17:59:56Z — the r77 planned head (b); counts
+  are separate readings, never a series, counter-win-r77 K6). D77-2: the canonical
+  4-column capabilities-table row lands append-only at SCORECARD end-of-file
+  (entering 3937 lines sha `bd73125d1dd4571a387bf76e86e4251cf342a10166833c4f6b1798ec1a5ac04b`
+  byte-identical prefix; canonical headings 26 -> 27; the capabilities row lands once (lead-cell anchored count `grep -cE '^\| Windows performance-counter one-shot probe' SCORECARD.md` 0 -> 1; the loose form `^\|.*mori-counter-win` reads 3 after the Round-78 section lands — the one capabilities row + two claim-table mentions, both numbers receipted per the r77 lesson 3 rule); first-working round recorded as 77 — the round that
+  demonstrated the capability running). Counting commands:
+  `git cat-file -e 4ce9e438:tools/mori-counter-win.py` rc 0;
+  `grep -c 'Capability | What it can now do' SCORECARD.md` = 27;
+  `grep -cE '^\| Windows performance-counter one-shot probe' SCORECARD.md` = 1 (the loose form `^\|.*mori-counter-win` = 3: the capabilities row + the two Round-78 claim-table rows that name the tool in their counting commands — the loose form cannot discriminate and is receipted beside, the r77 lesson 3 rule).
+- **C2 (calibration — D77-3, the correction of record).** The r77 report, LOG,
+  SCORECARD and SHONEN r77 clauses state the tool landed in the 21-path landing
+  commit and name the selftest receipts' bytes as "the landing bytes". TRUE
+  decomposition, now of record: the r77 landing `6a230c4b` carries 21 paths and
+  `mori-counter-win` is NOT one of them (`git show 6a230c4b --numstat --format= | wc -l`
+  = 21; `git show 6a230c4b --numstat --format= | grep -c mori-counter-win` = 0; the
+  r77 report's landed-changes list totals 22 items — the discrepancy the spotcheck
+  caught); the selftest receipts' "landing bytes" were the disk bytes at sha
+  `e6c527db…`, which existed in NO ref until this round's `4ce9e438`. Correction of
+  record rides HERE and in the round report, append-only; NO r77 artifact is edited
+  (the r77 files are frozen history; this round's diff touches none of them). What
+  DID land in r77 is confirmed: the SKILL registry row 12, the knowledge entry, S592,
+  the receipts — the registration was real metadata about an instrument that was not
+  yet in the tree.
+- **C3 (freshness, sourced — S593 opened this round).** The standing pin-family arm
+  extended to rows=7: the r77 five (S241, S581, S589, S590, S591) re-adjudicated and
+  S592 + S593 join. S593 (Memory Performance Information, the vendor's
+  counter-to-structure association table) opened with the full Gate: duplicate sweep
+  INTO the receipt BEFORE the fetch (0 rows on the URL, "PerfOS" and the WMI class
+  name; four wrong-URL candidates fetched and rejected as 404 before the located page
+  was found), title checked before the pin, pinned copy
+  `corpus/evidence/sources-r78/S593.html` sha256 `7eb834fc1450f8f93d94e11cd66c4c7a84049631ca1b1032ffbb3019ff6a9bac`
+  (48532 bytes), word counts wc -w-verified pre-pin (18/19/6/2/2), anchors
+  machine-verified PASS items=5 + able-to-fail FAIL rc 1
+  (`.ufo/waves/round-78/evidence/s593-anchor-check-r78.txt`); row landed at
+  SOURCES.md:374 INSIDE the Registry immediately after S592 (:373); rows 365 -> 366,
+  badNF=0 over 366; prefix/suffix byte-proven; used-by cells S572 (:352), S574
+  (:354), S592 (:373) gained `corpus/knowledge/counter-semantics-r78.md` in place,
+  old->new logged (`.ufo/waves/round-78/evidence/source-s593-r78.txt`); knowledge
+  entry `corpus/knowledge/counter-semantics-r78.md` (K1–K4 + named absence for
+  Pages/sec + limits/boundaries); README knowledge-index row appended 858 -> 859,
+  entering 858 lines byte-identical. Family receipts:
+  `.ufo/waves/round-78/evidence/pin-family-r78.txt` (first run: S593 `unavailable`),
+  `-s593-isolated.txt` (unavailable reproduced in isolation — NOT a burst
+  rate-gate), and `-final.txt`: `MORI_DRIFT_RECHECK rows=7 adjudicated=7 fresh=2
+  time-churn=1 asset-churn=1 ua-serving=3 unavailable=0` rc 0 — S591/S592/S593
+  `ua-serving` (the QUALITY 159 class: per-response chrome is serving variance, not
+  content; the pins are immutable, the anchor receipts hold, no supersedes owed, no
+  manual registry edit), S581/S590 fresh, S589 time-churn, S241 asset-churn (the
+  persistent r74 state). **The arm caught a real finding on its new member**: the
+  S593 row URL's closing parenthesis `(v=vs.85)` is truncated by the drift
+  re-check's parse_registry (the parsed URL repr receipted: the final paren dropped)
+  so the instrument's fetch could not resolve the page -> `unavailable`. Cause tied
+  to receipts per the r77 lesson rule: the transport is NOT at fault (mod.fetch on
+  the true URL returned body 5/5 samples, 48909 bytes each — the learn.microsoft.com
+  per-UA serving-variance shape; the curl-UA variant is 48532 bytes == the pin
+  exactly). The registered instrument was NOT edited (the mori | round-65
+  instrument-change L0 stays open — routed around): the ROW-side accommodation
+  instead re-points the URL to the RFC-equivalent percent-encoded form, verified
+  byte-identical to the pin (cmp rc 0) and now carried intact by parse_registry. The
+  first-run receipt, the isolated run, the cause chain and the old->new URL re-point
+  are receipted in `source-s593-r78.txt` and `pin-family-r78.txt`.
+- **C3 counting commands**: `python -I tools/mori-drift-recheck.py --root . --only
+  S241,S581,S589,S590,S591,S592,S593` -> rows=7 adjudicated=7 unavailable=0 rc 0;
+  `grep -cE '^\|[[:space:]]*S[0-9]{3,}[[:space:]]*\|' corpus/SOURCES.md` = 366.
+
+Fresh-start duty re-performed (r59/r60/r61 re-derived:
+`.ufo/waves/round-78/evidence/freshstart-spotchecks-r78.txt` — the frozen r61 counter
+`C2=unmet` rc 1 again at `986d4b46`; ten lane revs ancestral rc 0 each; the three
+fleet report commits present). Do-nothing controls
+(`.ufo/waves/round-78/evidence/controls-r78.txt`): the tool absent rc 128 at entering
+and in no ref ever (log --all empty, rev-list --all --objects 0); canonical row-form
+counter-win rows 0 at entering (the single entering mention is the Round-77 section's
+C2 prose at SCORECARD.md:3892); the D77-3 correction marker 0; S593 rows 0; the
+family table 12 rows at entering; this round's receipts absent rc 128.
+
+Selftests: the standing battery TWELVE instruments 12/12 rc 0
+(`.ufo/waves/round-78/evidence/selftests-battery-r78.txt`, anchored
+`grep -c "^rc=0$"` = 12; backgrounded per the r74 process-spawn budget rule;
+plain-python posture, rc captured unpiped) plus the counter selftest at the landed
+bytes as C1's receipt. Foreign-evidence sweep
+(`.ufo/waves/round-78/evidence/foreign-sweep-r78.txt`): the three r76 foreign receipt
+files still disk-only, uncommitted, uncited — the leave-for-operator ruling stands;
+the 14 disk-only paths are this round's own artifacts, all scheduled into this round's
+landing commit, with the D77-3 class (own artifact mis-filed as committed) closed by
+the post-landing ls-tree re-check receipted in the round report. Census: validator
+rc 0 at round start (`census-start-r78.txt`, the tolerated 35 W04 class) -> end
+receipt at round close.
+
+L2: none — no dispatch surface on this host (carried disclosure; the three open mori
+L0 lines — round-62, round-65, round-73 — re-verified present and unanswered this
+round, routed around, never treated as answered).
+Assimilation: considerthese re-mined (all eight files re-listed; newest-named
+2026-10-26.md): suggestion 1 (split pin-check mismatches into "can't run here" vs
+"stale") remains the one still-unimplemented proposal and remains behind the
+operator's open instrument-change ruling (the mori | round-65 L0); suggestion 3 is
+the standing fresh-start spot-check practice, re-performed this round.
+Assimilation: none — shokuknow unreachable.

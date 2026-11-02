@@ -3935,3 +3935,55 @@ receipts; (d) the label-sweep instrument stays operator-material while the
 mori | round-73 L0 stays open; (e) if the drift grammar's ua-serving class
 recurs on S591, adjudicate with the standing instrument — no manual registry
 edit.
+
+The r77 round demonstrated the counter capability running (selftest 12/12 x3, live
+AVAILABLE surfaces=4 ok=4 samples=2 rc 0, receipts at
+`.ufo/waves/round-77/evidence/`) and registered it (SKILL registry row 12), but the
+instrument itself was disk-only at the r77 closure and no canonical row existed: the
+r77 verifier spotcheck routed D77-1 (land the tool at the receipted sha as a NEW
+commit) and D77-2 (this row, the r75 precedent's class — the register the closures
+grade against did not match the demonstrated state). The row lands HERE, append-only
+at end-of-file: every byte of the entering SCORECARD (3937 lines, sha256
+bd73125d1dd4571a387bf76e86e4251cf342a10166833c4f6b1798ec1a5ac04b) is unchanged — the Round-77 section is frozen history and takes no
+in-place insert. First-working round is 77 (the round that demonstrated the capability
+running); the instrument lands this round at `4ce9e438` with the re-receipts at the
+landed bytes.
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Windows performance-counter one-shot probe (`tools/mori-counter-win.py`) | reads the four Memory counters (`\Memory\Committed Bytes`, `\Memory\Commit Limit`, `\Memory\% Committed Bytes In Use`, `\Memory\Pages/sec`) ONE-SHOT through the documented `typeperf` command with a `-sc 2` sample bound: per-counter `kind=gauge|rate value=` lines plus an `AVAILABLE|PARTIAL|UNAVAILABLE surfaces=N ok=N unavailable=N samples=2` summary line, machine-name prefix and sample timestamps redacted (selftest-proven), dot-decimal value grammar with honest `unavailable` at every failure layer (zero is a real value; a failed read is never zero); detection and report only — the only child is one bounded `typeperf` read, no `-f`/`-o`, stdout-only write scope | selftest `PASS (12 cases)` x3 at the round-77 bytes and the D77-1 re-receipt AT THE LANDED BYTES: `python -I tools/mori-counter-win.py --selftest` -> PASS (12 cases) rc 0 (`.ufo/waves/round-78/evidence/counter-win-selftest-r78.txt`) and live `COUNTER_WIN: AVAILABLE surfaces=4 ok=4 unavailable=0 samples=2` rc 0 (`.ufo/waves/round-78/evidence/counter-win-live-r78.txt`), both receipts naming the landing commit `4ce9e438` whose blob sha256 equals the receipted `e6c527dbef07dbede0b963db1d68cbbbccdf0d148d0e9409b9a4514789ff7a1f`; registered as SKILL registry row 12 at r77; counter paths live-enumerated by the documented `-q` listing (`.ufo/waves/round-77/evidence/counter-enum-r77.txt` enumeration_matched=4 rc 0); ground `corpus/knowledge/counter-win-r77.md` (S592) + `corpus/knowledge/counter-semantics-r78.md` (S593) | 77 |
+## Round 78 (2026-11-02, L1 MoriR78) — the r77 recovery round: C1 operability landed (D77-1: `tools/mori-counter-win.py` committed as NEW commit `4ce9e438` at the receipted sha `e6c527db…`, selftest 12/12 + live AVAILABLE surfaces=4 ok=4 re-receipted AT THE LANDED BYTES; D77-2: the canonical capabilities-table row appended, headings 26 -> 27, first-working 77); C2 calibration landed (D77-3: the correction of record — the r77 landing `6a230c4b` is 21 paths and does NOT contain the tool; the "landing bytes" existed in no ref until `4ce9e438`; append-only, no r77 artifact edited); C3 freshness landed, sourced S593 opened this round (the pin-family arm rows=7: S591/S592/S593 ua-serving per QUALITY 159, S581/S590 fresh, S589 time-churn, S241 asset-churn, rc 0; the arm caught the parse_registry paren-truncation on S593, cause receipted, the row URL re-pointed byte-identically instead of editing the registered instrument)
+
+Entering `ecb916ce`; this section appended after the D77-2 capabilities row at
+end-of-file — every entering line unchanged (entering 3954 lines at this append —
+the 3937-line entering bytes sha `bd73125d1dd4571a387bf76e86e4251cf342a10166833c4f6b1798ec1a5ac04b`
+byte-identical through the D77-2 append, proven in the D77-2 block above; the 3954-line state sha256 `9f18f8da2a2da2e6a13ebf5c01b10624c33f3ba9e2aaae3afa25d6d495f4c4d0`). The axes table above is untouched —
+no scalar moved, no closure states a new number; scores stand: coverage 6, operability
+7, depth 5, freshness 5, calibration 5, adjacency 6.
+
+| Claim | Axis | Counting commands | At entering | After (measured this round) |
+|---|---|---|---|---|
+| C1 the capability acquisition lands in committed bytes: D77-1 (the instrument at the receipted sha + re-receipts at the landed bytes) + D77-2 (the canonical row) | operability | `git cat-file -e 4ce9e438:tools/mori-counter-win.py`; `git show 4ce9e438:tools/mori-counter-win.py \| sha256sum`; `grep -c 'Capability \| What it can now do' SCORECARD.md`; `grep -cE '^\| Windows performance-counter one-shot probe' SCORECARD.md` (lead-cell anchored; the loose form `^\|.*mori-counter-win` cannot discriminate once the claim table itself names the tool — both forms receipted) | tool rc 128 at `ecb916ce`, in no ref ever (log --all empty, rev-list --objects 0); headings 26; anchored capability rows 0 at entering (the loose form 0 at entering too — its one entering mention is Round-77 C2 prose, not a row; `.ufo/waves/round-78/evidence/controls-r78.txt`) | rc 0 at `4ce9e438` (one path, `A`); blob sha == `e6c527dbef07dbede0b963db1d68cbbbccdf0d148d0e9409b9a4514789ff7a1f`; selftest PASS (12 cases) rc 0 + live `AVAILABLE surfaces=4 ok=4 unavailable=0 samples=2` rc 0 at the landed bytes (`counter-win-selftest-r78.txt`, `counter-win-live-r78.txt` — receipts name the landing commit; the live run is the second session at a distance, K6 separate-counts); headings 27; anchored capability rows 0 -> 1 (first-working 77) |
+| C2 the correction of record (D77-3) | calibration | `git show 6a230c4b --numstat --format=` (21 paths; `grep -c mori-counter-win` = 0); `git show ecb916ce:LOG.md \| grep -c 'correction of record (D77-3'` | the r77 report/LOG/SCORECARD/SHONEN carry the false decomposition (22-item list vs the 21-path commit; "at the landing bytes" naming uncommitted bytes); correction marker 0 in LOG | the correction of record rides in LOG.md Round 78 + this round's report, append-only; `git show 6a230c4b --numstat --format=` re-derived: 21 paths, 0 counter-win; NO r77 artifact edited (this round's diff carries none of them) |
+| C3 the standing pin-family arm rows=7, sourced S593 opened this round | freshness | `python -I tools/mori-drift-recheck.py --root . --only S241,S581,S589,S590,S591,S592,S593`; `grep -cE '^\|[[:space:]]*S[0-9]{3,}[[:space:]]*\|' corpus/SOURCES.md`; `grep -cE '^\|[[:space:]]*S593[[:space:]]*\|' corpus/SOURCES.md` | family receipt rows=5 at r77; S593 rows 0; SOURCES rows 365 | rows=7 adjudicated=7 fresh=2 time-churn=1 asset-churn=1 ua-serving=3 unavailable=0 rc 0 (`pin-family-r78-final.txt`; the first run's S593 `unavailable` + the isolated run + the cause chain + the byte-identical URL re-point disclosed in `pin-family-r78.txt`/`-s593-isolated.txt`); SOURCES 365 -> 366 badNF=0, S593 at :374 after S592; S593 Gate receipts complete (sweep-before-fetch, 4 rejected 404 candidates, title check, 5-anchor PASS items=5 + able-to-fail FAIL rc 1, `s593-anchor-check-r78.txt`); knowledge entry + README index row 858 -> 859 |
+
+Fresh-start duty re-performed with own receipts
+(`freshstart-spotchecks-r78.txt`: the frozen r61 counter `C2=unmet` rc 1 at
+`986d4b46`; ten r59/r60/r61 lane revs ancestral rc 0; the three fleet report commits
+present) and the do-nothing controls receipted (`controls-r78.txt` — every claimed
+after-state absent at entering). Standing battery TWELVE instruments 12/12 rc 0
+(`selftests-battery-r78.txt`, anchored form). Census rc 0 at round start (the
+tolerated 35 W04 class) -> end receipt at round close. The three open mori L0 lines
+(round-62, round-65, round-73) re-verified present and unanswered; routed around.
+
+Planned (r79 candidates, none declared yet): (a) the ua-serving class now holds
+THREE members (S591, S592, S593) — if the operator answers the mori | round-65 L0,
+a sweep-instrument change could add a per-UA variant-diff arm; until then the
+standing grammar handles each occurrence, no manual registry edit; (b) the
+parse_registry paren-truncation is a NAMED instrument limit (receipted this round):
+any future row whose URL must carry parentheses lands percent-encoded, with the
+byte-identity proof the r78 precedent set; (c) the rotation recurrence series waits
+for wall-clock distance (the r75 planned head (d) stands); (d) the boot-scoped
+events window stays behind the mori | round-65 L0; (e) the label-sweep instrument
+stays operator-material while the mori | round-73 L0 stays open.
+

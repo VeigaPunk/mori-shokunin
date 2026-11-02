@@ -1,0 +1,39 @@
+# mori round-78 standing battery: ALL TWELVE registered instruments' selftests at this round's bytes
+run-start=2026-11-02T18:43:03Z
+posture: plain python (the r71 PYTHONUTF8/-I disclosure stands), each rc captured unpiped on its own line (the anchored grep -c '^rc=0$' counting form), run backgrounded per the r74 process-spawn budget rule
+== python tools/mori-register-check.py --selftest
+REGCHECK_SELFTEST pass=12 fail=0
+rc=0
+== python tools/mori-settlement-scan.py --selftest
+SETSCAN_SELFTEST pass=10 fail=0
+rc=0
+== python tools/mori-vote-bind.py --selftest
+VOTE_BIND_SELFTEST pass=16 fail=0
+rc=0
+== python tools/mori-pin-check.py --selftest
+PIN_CHECK_SELFTEST pass=125 fail=0
+rc=0
+== python tools/mori-drift-adjudicate.py --selftest
+MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)
+rc=0
+== python tools/mori-drift-recheck.py --selftest
+MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)
+rc=0
+== python tools/mori-ua-variance.py --selftest
+MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)
+rc=0
+== python tools/mori-uptime-win.py --selftest
+UPTIME_WIN_SELFTEST: PASS (8 cases)
+rc=0
+== python tools/mori-workstate-win.py --selftest
+WORKSTATE_WIN_SELFTEST: PASS (10 cases)
+rc=0
+== python tools/mori-events-context-win.py --selftest
+EVENTS_CONTEXT_SELFTEST: PASS (10 cases)
+rc=0
+== python tools/mori-anchor-check.py --selftest
+ANCHOR_CHECK_SELFTEST: PASS (11 cases)
+rc=0
+== python tools/mori-rotation-schedule.py --selftest
+MORI_ROTATION_SCHEDULE_SELFTEST: PASS (13 cases)
+rc=0

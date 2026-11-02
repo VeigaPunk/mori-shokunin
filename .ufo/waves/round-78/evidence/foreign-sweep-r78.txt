@@ -1,0 +1,25 @@
+# mori round-78 foreign-evidence sweep (detection and report only; method per the r76/r77 closures: git ls-tree -r HEAD vs disk -- the index on this host reads stale, ls-files not used; generator run from the round scratch dir with python -I, scratch deleted at round end)
+run-start=2026-11-02T18:44:15Z
+disk_minus_committed count: 17
+KNOWN-DISCLOSED .ufo/waves/round-76/evidence/s591-source-r76.txt -- foreign (r76), leave-for-operator ruling stands, NOT committed, NOT cited
+KNOWN-DISCLOSED .ufo/waves/round-76/evidence/source-s591-sweep-r76.txt -- foreign (r76), leave-for-operator ruling stands, NOT committed, NOT cited
+KNOWN-DISCLOSED .ufo/waves/round-76/evidence/win-family-live-r76.txt -- foreign (r76), leave-for-operator ruling stands, NOT committed, NOT cited
+UNEXPECTED .ufo/waves/round-78/evidence/census-start-r78.txt
+UNEXPECTED .ufo/waves/round-78/evidence/controls-r78.txt
+UNEXPECTED .ufo/waves/round-78/evidence/counter-win-live-r78.txt
+UNEXPECTED .ufo/waves/round-78/evidence/counter-win-selftest-r78.txt
+UNEXPECTED .ufo/waves/round-78/evidence/foreign-sweep-r78.txt
+UNEXPECTED .ufo/waves/round-78/evidence/freshstart-spotchecks-r78.txt
+UNEXPECTED .ufo/waves/round-78/evidence/pin-family-r78-final.txt
+UNEXPECTED .ufo/waves/round-78/evidence/pin-family-r78-s593-isolated.txt
+UNEXPECTED .ufo/waves/round-78/evidence/pin-family-r78.txt
+UNEXPECTED .ufo/waves/round-78/evidence/s593-anchor-check-r78.txt
+UNEXPECTED .ufo/waves/round-78/evidence/selftests-battery-r78.txt
+UNEXPECTED .ufo/waves/round-78/evidence/source-s593-r78.txt
+UNEXPECTED corpus/evidence/sources-r78/S593.html
+UNEXPECTED corpus/knowledge/counter-semantics-r78.md
+unexpected_count: 14
+
+note: the r76 closure's tools/__pycache__/*.pyc note stands (interpreter bytecode excluded from the walk; operator may sweep; not evidence).
+
+classification: the 14 UNEXPECTED paths are ALL this round's own artifacts (round-78 evidence receipts, the S593 pin, the knowledge entry) -- every one is scheduled into this round's landing commit; the D77-3 class (an own artifact listed disk-only then mis-filed as committed without checking the commit) is closed by the post-landing verification: after the landing commit, git ls-tree -r <commit> is re-checked against this list and the re-check receipted in the LOG round-78 entry. The 3 KNOWN-DISCLOSED r76 foreign files remain leave-for-operator: NOT committed, NOT cited by this round.
