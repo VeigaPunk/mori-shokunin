@@ -1,0 +1,15 @@
+# mori r74 — S589 anchors machine-verified by the r72 anchor-checker (QUALITY 162 made runnable)
+date: 2026-11-02T07:49:48Z; pin corpus/evidence/sources-r74/S589.html (129606 bytes, sha256 c8cc430e04d232f9e67412eae254a2c67ad153b4bde78121f83f2389739e91c7)
+
+$ run A — the recorded anchors (PASS expected, rc 0)
+$ python tools/mori-anchor-check.py --pin corpus/evidence/sources-r74/S589.html --check "monotonic_return|524|13|Return the value (in fractional seconds) of a monotonic clock, i.e. a clock" --check "monotonic_invariant|525|13|that cannot go backwards.  The clock is not affected by system clock updates."
+anchor item=monotonic_return span=524 verdict=ok located_on=524 occurrences=1 words_counted=13 words_recorded=13
+anchor item=monotonic_invariant span=525 verdict=ok located_on=525 occurrences=1 words_counted=13 words_recorded=13
+ANCHOR_CHECK: PASS items=2 ok=2 pin_sha256=c8cc430e04d232f9e67412eae254a2c67ad153b4bde78121f83f2389739e91c7 pin_bytes=129606
+rc=0
+
+$ run B — the able-to-fail arm: the invariant recorded at the WRONG line (:524) and a mutated word-count (12) must FAIL rc 1
+$ python tools/mori-anchor-check.py --pin corpus/evidence/sources-r74/S589.html --check "monotonic_invariant|524|12|that cannot go backwards.  The clock is not affected by system clock updates."
+anchor item=monotonic_invariant span=524 verdict=mislocated located_on=- occurrences=0 words_counted=- words_recorded=12
+ANCHOR_CHECK: FAIL items=1 ok=0 mislocated=1 wordcount_mismatch=0 pin_sha256=c8cc430e04d232f9e67412eae254a2c67ad153b4bde78121f83f2389739e91c7 pin_bytes=129606
+rc=1

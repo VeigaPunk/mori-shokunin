@@ -1,0 +1,56 @@
+# mori r74 — mori-rotation-schedule.py --selftest, three consecutive runs at the final bytes
+date: 2026-11-02T07:41:15Z; cwd = the lane repo root; plain-python posture; rc captured unpiped immediately after each run; offline fixture-based (a fake child in one temp dir — no network, no live fetch)
+
+$ run 1
+$ python tools/mori-rotation-schedule.py --selftest
+selftest schedule_parse               PASS
+selftest schedule_rejects_noninteger  PASS
+selftest window_from_stamps           PASS
+selftest classify_yes                 PASS
+selftest classify_no                  PASS
+selftest classify_bytes_only          PASS
+selftest unavailable_dead_leg         PASS
+selftest unavailable_compare_setup    PASS
+selftest unavailable_unparseable      PASS
+selftest redaction_stdout             PASS
+selftest integration_window0          PASS
+selftest missing_child_refused        PASS
+selftest windows_value_domain         PASS
+MORI_ROTATION_SCHEDULE_SELFTEST: PASS (13 cases)
+rc=0
+
+$ run 2
+$ python tools/mori-rotation-schedule.py --selftest
+selftest schedule_parse               PASS
+selftest schedule_rejects_noninteger  PASS
+selftest window_from_stamps           PASS
+selftest classify_yes                 PASS
+selftest classify_no                  PASS
+selftest classify_bytes_only          PASS
+selftest unavailable_dead_leg         PASS
+selftest unavailable_compare_setup    PASS
+selftest unavailable_unparseable      PASS
+selftest redaction_stdout             PASS
+selftest integration_window0          PASS
+selftest missing_child_refused        PASS
+selftest windows_value_domain         PASS
+MORI_ROTATION_SCHEDULE_SELFTEST: PASS (13 cases)
+rc=0
+
+$ run 3
+$ python tools/mori-rotation-schedule.py --selftest
+selftest schedule_parse               PASS
+selftest schedule_rejects_noninteger  PASS
+selftest window_from_stamps           PASS
+selftest classify_yes                 PASS
+selftest classify_no                  PASS
+selftest classify_bytes_only          PASS
+selftest unavailable_dead_leg         PASS
+selftest unavailable_compare_setup    PASS
+selftest unavailable_unparseable      PASS
+selftest redaction_stdout             PASS
+selftest integration_window0          PASS
+selftest missing_child_refused        PASS
+selftest windows_value_domain         PASS
+MORI_ROTATION_SCHEDULE_SELFTEST: PASS (13 cases)
+rc=0

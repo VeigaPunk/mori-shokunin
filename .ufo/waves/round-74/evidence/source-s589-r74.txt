@@ -1,0 +1,25 @@
+# mori r74 — S589 source-open receipt (the Python time-library page: the monotonic clock the schedule instrument runs on)
+date: 2026-11-02T07:45:18Z (r74)
+
+-- pre-row duplicate sweep INTO this receipt (the r69 lesson's rule; the entering-tip grep already ran in controls-r74.txt, re-run now over the unchanged worktree bytes) --
+$ grep -c 'docs.python.org/3/library/time.html' corpus/SOURCES.md
+0
+grep rc=1
+interpretation: 0 = no existing row names this page; the S589 slot is the next unused id at 361 rows (S588 last). The page grounds ONE thing this round's new instrument states on every summary line: the schedule clock is time.monotonic — the Python time library's monotonic clock (a clock that cannot go backwards) — which is what makes the stated windows waitable and the wall_s total honest; no other claim reads it.
+
+-- the fetch (the lane's standing fetcher posture) --
+$ curl -sS -m 60 -L -o corpus/evidence/sources-r74/S589.html https://docs.python.org/3/library/time.html
+curl rc=0
+c8cc430e04d232f9e67412eae254a2c67ad153b4bde78121f83f2389739e91c7 *corpus/evidence/sources-r74/S589.html
+129606
+
+-- located quotes (the Gate's <=25-word floor; wc -w over the quoted text) --
+$ sed -n '524p' corpus/evidence/sources-r74/S589.html | grep -c "Return the value (in fractional seconds) of a monotonic clock, i.e. a clock"
+1
+:524 quote = 13 words
+$ sed -n '525p' corpus/evidence/sources-r74/S589.html | grep -c "that cannot go backwards.  The clock is not affected by system clock updates."
+1
+:525 quote = 13 words
+
+-- row landed --
+SOURCES.md 443 -> 444 lines; rows 361 -> 362 (grep -cE '^.|[[:space:]]*S[0-9]{3,}[[:space:]]*.' corpus/SOURCES.md = 362); shape badNF=0 (13 fields each); S589 at :370 INSIDE the Registry immediately after S588 (:369); prefix lines 1-369 and the suffix from :371 byte-unchanged (sha256 8d9707c482df973f... / 041e92482ba6e8f0... in the insert script output)

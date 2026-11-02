@@ -1,0 +1,7 @@
+# mori r74 — registry row 11 appended (the r74 probe registered at landing — the D72-1 defect class pre-empted)
+date: 2026-11-02T08:02:51Z
+license: metadata at the registry home, not an instrument change (the r73 C1 ruling; the r65 L0 untouched) — append-only at end-of-file
+prefix lines 1-1326 sha256 before = after = 9c2b11b15efbc2aa55cea02b70dc598e0d36d75a9f5ed5d02fc29281902eab70 (byte-identical)
+sed -n '905p' SKILL.md | grep -c 'PASS (6 cases)' = 1 (the tally pin, unchanged)
+section tool rows: 10 -> 11 (one per entry, all NF=10); the joined events-context row keeps its NF=10
+row: rotation-schedule probe (r74 tool) | probe | entry/verdict-map/self-test/pinned-values/write-scope transcribed from the tool's own usage and modes; selftest PASS (13 cases) x3 at the landing bytes

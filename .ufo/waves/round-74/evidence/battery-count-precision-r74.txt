@@ -1,0 +1,26 @@
+# mori round-74 / D73-2 discharge — the r73 report's C1 battery count, precision correction of record
+date: 2026-11-02T07:31:20Z; defect: the r73 closure routed defect 2 (status-neutral, cosmetic; no artifact change owed — corrections land in the next round's report, i.e. THIS record)
+
+r73 report body quoted: grep -c "rc=0" backfill-selftests-r73.txt -> '10/10 runs green'; the literal command output is 11.
+The substance ('all ten registered instruments' selftests rc 0') is TRUE; the literal count decomposes as:
+
+$ grep -n "rc=0" .ufo/waves/round-73/evidence/backfill-selftests-r73.txt
+8:rc=0
+13:rc=0
+18:rc=0
+23:rc=0
+28:rc=0
+31:PASS window_default_echoed  rc=0
+33:rc=0
+38:rc=0
+43:rc=0
+48:rc=0
+53:rc=0
+
+decomposition: 10 run-result lines (:8 :13 :18 :23 :28 :33 :38 :43 :48 :53 — one per registered instrument, the rc captured unpiped after each run) + 1 embedded sample line (:31 'PASS window_default_echoed  rc=0', part of the captured host-events selftest sample INSIDE its block, not a header — the r73 closure's routed note said 'header mention'; the precise carrier is this sample line).
+corrected honest form (used everywhere from r74 on): 'the receipt carries 11 literal rc=0 matches: 10 run-result lines + 1 captured sample line; 10/10 runs green.'
+
+$ the run-result lines are exactly the rc captured after each $ python tools/... --selftest line (11 minus the sample = 10)
+10
+(note: the sample line :31 carries a trailing CR from the captured child stdout — 'rc=0^M' — so the anchored form ^rc=0$ counts exactly the 10 run-result lines; this is the paste-able discriminator)
+disposition: r73 report and receipt are frozen landed artifacts — corrected HERE and in the r74 LOG entry + round report; nothing else edited

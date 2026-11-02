@@ -1,0 +1,35 @@
+# mori r74 — the standing pin-family live re-verification, extended to the rotation instrument's pin family
+date: 2026-11-02T07:55:55Z; the r72-class check over the rows the r74 instrument reads: S241 (the serving object + the compare pin) and S581 (the documented window scale). Every fetch is a read of a public vendor page into scratch; the lane writes only its own receipts.
+
+$ pinned copies and their recorded shas
+corpus/evidence/sources-r42/S241.html 1168b2a626ec4b69fbdf7341ae3331c16ff0e42667d67488762b30e206591357 53963 bytes
+corpus/evidence/sources-r70/S581.html 5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865 16179 bytes
+
+$ live re-open S241 (learn.microsoft.com ja-jp oom-swap-file-linux-vm)
+curl rc=0
+ddb7ba179052f9c3c6900b6b108875adc79baf563f9b82261200ae7c4c6ba727
+53963
+
+$ live re-open S581 (docs.aws.amazon.com waf-tokens-immunity-times)
+curl rc=0
+5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865
+16179
+
+$ byte-identity verdicts (pin sha == live sha => byte-identical)
+S241: DRIFTED pin=1168b2a626ec4b69fbdf7341ae3331c16ff0e42667d67488762b30e206591357 live=ddb7ba179052f9c3c6900b6b108875adc79baf563f9b82261200ae7c4c6ba727
+S581: IDENTICAL pin=5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865 live=5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865
+
+-- the drift, named --
+diff rc=1 (equal size 53963 bytes, different sha): 4 changed lines = 2 asset-URL pairs, the learn.microsoft.com static asset build id moved 0.4.03574.8308-9505b1c8 -> 0.4.03589.8339-b0a05127 (stylesheet :~ the scripts ja-jp index-docs.js line) — the r67 asset-churn grammar's home class (learn-microsoft-asset-build-id)
+
+-- the standing instrument adjudicates the round's own finding --
+$ python tools/mori-drift-recheck.py --root . --only S241
+# MORI_DRIFT_RECHECK second_ua=curl/8.21.0 only=S241 from-sweep=- findings=- run-start=2026-11-02T07:59:12Z stamp-class=python-docs-page-stamp asset-class=learn-microsoft-asset-build-id
+S241 asset-churn as-of=2026-11-02T07:59:12Z
+MORI_DRIFT_RECHECK rows=1 adjudicated=1 fresh=0 excerpt=0 time-churn=0 asset-churn=1 receipt-open=0 receipt-stale=0 ua-serving=0 content-drift=0 gate=0 unavailable=0 window=2026-11-02T07:59:12Z..2026-11-02T07:59:12Z
+rc=0
+
+-- the row's teaching re-verified on the LIVE body (no content drift behind the asset churn) --
+counting-method disclosure (the r72 label class): the anchor cell's count 3 is the LINE-count method (grep -c) — re-measured IDENTICAL on both bodies: pin lines=3 live lines=3; the occurrence method (grep -o | wc -l) also agrees: pin=6 live=6. No counting-method drift; the teaching holds on the live body.
+
+dispositions: S581 IDENTICAL — the documented window-scale pin stands, read through S586's labels; S241 asset-churn adjudicated by the standing re-check rc 0 — the pin stays immutable, NO supersedes row owed (the row's anchors hold on the pin; the teaching holds on the live body; the drift is vendor asset churn, the class the r67 grammar exists to separate from content drift); the finding is this claim's EVIDENCE, not a correction debt

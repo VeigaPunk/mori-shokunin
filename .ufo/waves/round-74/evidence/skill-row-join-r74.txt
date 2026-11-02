@@ -1,0 +1,21 @@
+# mori round-74 / D73-1 discharge — the events-context registry row joined (one physical row per entry)
+date: 2026-11-02T07:30:30Z; defect: the r73 closure routed defect 1 — the SKILL.md gate-registry backfill's events-context row split across two physical lines mid-cell (the verdict map wrapped after '… one receipt) · ' and resumed ' 2 → …' on the next line; at the entering tip the split sat at :1325-1326; the r73 spotcheck cited :1323-1324 at the r73 head numbering — same defect, one split row either way)
+license: the closure itself names the section 'the lane's own freshly appended section, not pinned history' — the join is the routed repair; every line before the section (the SKILL:905 tally pin included) is proven byte-unchanged below
+
+entering tip: a9c3abb70572e5be2eb3afd941b1993b7af8d0d8 (SKILL.md 1327 lines; split-continuation=1; joined-cell=0)
+
+$ byte proofs (computed in the join receipt script)
+prefix lines 1-1324 sha256 before = 5e987926df0eb46ea0938820c93755bcb6cd4ae720573e26597e75ebe997fe3f
+prefix lines 1-1324 sha256 after  = 5e987926df0eb46ea0938820c93755bcb6cd4ae720573e26597e75ebe997fe3f  (IDENTICAL)
+last-line sha256 before = 16974aad6779ab309ac35ad948106ef132fe43bdddba123b1bfea0653211b4a7
+last-line sha256 after  = 16974aad6779ab309ac35ad948106ef132fe43bdddba123b1bfea0653211b4a7  (IDENTICAL)
+join form: line1325.rstrip(' ') + ' ' + line1326.lstrip(' ') — matches the sibling rows' ' · 2 → ' separator shape exactly (the r73 truncation cut INSIDE the appended section: the r73 lesson mistake 2 class)
+
+$ counting commands (paste-able; before over 'git show a9c3abb70572e5be2eb3afd941b1993b7af8d0d8:SKILL.md', after over the worktree bytes)
+grep -c '' SKILL.md                                : before 1327 -> after 1326
+grep -c '^ 2 → `UNAVAILABLE' SKILL.md              : before 1 -> after 0
+grep -c 'receipt) · 2 → `UNAVAILABLE' SKILL.md     : before 0 -> after 1
+awk orphan-continuation count                      : before 1 -> after 0
+section tool rows (one per entry)                  : before 10 -> after 10
+sed -n '905p' SKILL.md | grep -c 'PASS (6 cases)'   : before 1 -> after 1
+awk -F'|' NF of the events-context row             : before (split — row unparseable as one row) -> after 10 (identical to sibling rows' NF=10)

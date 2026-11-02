@@ -4229,3 +4229,108 @@ r72 planned item (b) label-sweep instrument surfaced to the operator as
 the round's one new L0 line). Assimilation: considerthese re-mined
 (newest-named 2026-10-26.md; suggestion 1 stays behind the operator's open
 instrument ruling). Assimilation: none — shokuknow unreachable.
+## Round 74 — Mori (L1 MoriR74): C1 calibration verified met (the r73 closure's two status-neutral routed defects discharged — D73-1 the events-context registry row joined back into one physical row with the prefix and last line byte-identical; D73-2 the battery-count precision correction of record: the r73 report's literal `grep -c "rc=0"` output was 11 = 10 run-result lines + 1 embedded sample line, the '10/10 runs green' substance true); C2 depth landed, sourced S589 (capability acquisition `tools/mori-rotation-schedule.py` — the r73 planned head (a) landed: the rotation-recurrence protocol as a designed multi-window schedule instrument composing the REGISTERED ua-variance probe, registered at landing as registry row 11, selftest 13/13 x3, first live run rc 0 — the r70 schedule re-run under the pinned grammar: 31s=no 91s=no 304s=YES, a DIFFERENT per-window classification than the r70 session's 31s=no 91s=YES 304s=no); C3 freshness landed (the standing pin-family re-verification extended to the rotation family — S581 byte-identical, S241 equal-size byte drift FOUND and adjudicated `asset-churn` by the standing drift re-check rc 0, the finding receipted and the teaching re-verified on the live body)
+
+C1 (calibration, the r73 routed-defect discharge): D73-1 — at entering,
+SKILL.md 1327 lines with the events-context row split mid-cell
+(`evidence/controls-r74.txt`: split-continuation=1, joined-cell=0); the
+join (the closure's own licensed repair: 'the lane's own freshly appended
+section, not pinned history') lands one physical row
+(`evidence/skill-row-join-r74.txt`: 1327 -> 1326 lines; split-continuation
+1 -> 0; joined-cell 0 -> 1; NF=10 identical to the sibling rows; prefix
+lines 1-1324 and the last line sha-identical; the SKILL:905 tally pin
+counts 1 unchanged). D73-2 — the precision correction of record
+(`evidence/battery-count-precision-r74.txt`): the r73 report body quoted
+the battery as '10/10 runs green' while the literal command output is 11;
+the decomposition is 10 run-result lines (:8 :13 :18 :23 :28 :33 :38 :43
+:48 :53) + 1 embedded sample line (:31 'PASS window_default_echoed  rc=0',
+part of the captured host-events selftest sample — the routed note said
+'header mention'; the precise carrier is the sample line); the anchored
+form `grep -c "^rc=0$"` returns exactly the 10 run-result lines. No r73
+artifact edited — corrections live HERE, in the receipt, and in the round
+report.
+
+C2 (depth, capability acquisition, sourced S589 opened this round): at
+entering, the tool absent rc 128 and no time-library row in SOURCES
+(`evidence/controls-r74.txt`). `tools/mori-rotation-schedule.py` lands the
+r73 planned head (a): the schedule stated before the run
+(`--windows 31,91,304`, the r70 windows at the S581 documented scale),
+every window an A/A pair on the monotonic clock, capture and compare
+DELEGATED to the registered ua-variance probe as read-only children (the
+r71 composition precedent; no registered byte edited), each observation
+window computed from the children's own as-of stamps (QUALITY 161),
+classification yes/no/unavailable with the reason on the line. Selftest
+13/13 rc 0 x3 at the landing bytes
+(`evidence/rotation-schedule-selftest-r74.txt`; arms: schedule parse,
+non-integer refused, window computation with 0 legal, yes/no/bytes-only
+classification, unavailable x3, redaction with a planted marker token,
+integration over a fake child, missing child refused). First live run rc 0
+(`evidence/rotation-schedule-live-r74.txt`): 31s=no, 91s=no, 304s=YES
+(per-response=4, sha 3e0ece8127c6 -> 5d88b3cc6039),
+window_s_computed=31,91,304, wall_s=429 — the r70 schedule re-run under
+the pinned grammar, and the per-window classes came back DIFFERENT than
+the r70 session (no TTL decided; S580/S581 boundary untouched; the body
+states are scratch session artifacts, never pinned content). S589 (the
+Python time-library page, sweep-then-fetch receipted
+`evidence/source-s589-r74.txt`, both anchors machine-verified PASS items=2
++ able-to-fail FAIL rc 1, `evidence/s589-anchor-check-r74.txt`) grounds the
+clock (`:524-525` cannot-go-backwards; `:526-527` differences-only-valid).
+Registered at landing as registry row 11
+(`evidence/skill-registry-row11-r74.txt`; append-only, prefix
+byte-identical, SKILL:905 pin counts 1) — the D72-1 class pre-empted; the
+standing battery re-run 11/11 rc 0 at the landing bytes
+(`evidence/selftests-battery-r74.txt`, tallies row-for-row equal to the
+registry cells). Knowledge entry `corpus/knowledge/rotation-schedule-r74.md`
+(K1-K5 + limits + boundaries).
+
+C3 (freshness): at entering, no r74-era receipt for the rotation family
+(S241's pin last re-fetched 2026-10-24 per its row; S581's last re-open
+2026-11-02 via the r72 receipt). The r72-class standing re-verification
+extends to the rows the instrument reads
+(`evidence/pin-family-reverify-r74.txt`): S581 byte-IDENTICAL (sha256
+equal, 16179 bytes — the documented scale stands); S241 equal-size byte
+drift FOUND (53963 bytes both, sha differs; diff = 4 changed lines, 2
+asset-URL pairs, the learn.microsoft.com static asset build id moved
+0.4.03574.8308-9505b1c8 -> 0.4.03589.8339-b0a05127) and adjudicated by the
+standing instrument (`python tools/mori-drift-recheck.py --root . --only
+S241` -> `S241 asset-churn`, rows=1 adjudicated=1, rc 0) — the r67 grammar
+separating vendor asset churn from content drift on live ground; the
+teaching re-verified on the live body (診断 line-count pin=3 live=3,
+occurrence-count 6=6, both methods receipted); pin immutable, no supersedes
+row owed. used-by in-place updates (contract rule 2, logged): S241
+`corpus/knowledge/oom-evidence-loss-r38.md` -> + `corpus/knowledge/rotation-schedule-r74.md`;
+S581 `corpus/lessons/round-70.md` -> + `corpus/knowledge/rotation-schedule-r74.md`.
+
+Fresh start (r59-r61 rejected closures re-derived with own receipts,
+`evidence/freshstart-spotchecks-r74.txt`: the frozen r61 counter re-derived
+unmet rc 1 at the r61 data tip; the eight lane revs present + ancestral;
+the three fleet report commits present) + do-nothing controls
+(`evidence/controls-r74.txt`: the tool, the knowledge entry and this
+round's pin receipt all absent rc 128 at entering; no time-library row;
+SKILL.md 1327 lines with the split present; SOURCES 361 rows; the battery
+receipt's literal rc=0 count 11). Ruled out (lesson
+`corpus/lessons/round-74.md`): landing the boot-scoped events window in
+the registered pairing tool (the r73 closure's discernment verdict stands
+while the mori | round-65 L0 is open); the label-sweep instrument (the
+mori | round-73 L0 line, re-verified unanswered, stays operator-material);
+the encoding-pin harness and the pin-check mismatch split (L0-gated);
+scalar score moves; Linux-host surfaces; L2 dispatch (no surface on this
+host — carried disclosure). All declared claims unreachable by a
+do-nothing round.
+
+Census: validator rc 0 at round start (`evidence/census-start-r74.txt`,
+the tolerated 35 W04 duplicate-URL class) — end receipt at round close.
+Lesson `corpus/lessons/round-74.md`: mistakes mined (counting-method mix —
+a receipt line written 'pin=3 live=6' from two different counting methods,
+caught by re-measuring both before commit; process-spawn budget — the
+selftest's child-spawning arms make each run ~40 s on this host, so the
+battery run is backgrounded or it eats the shell timeout; heredoc-append
+truncation recurred — the LOG.md entry write through a large quoted
+heredoc died unparsed ('here-document delimited by end-of-file'), caught
+this time by bash's own warning plus the completeness tail-grep, and the
+append went through the r73 lesson's fix: scratch file + cat >> +
+completeness greps + prefix sha). L2: none — no dispatch surface on this
+host (carried disclosure; the three open mori L0 lines re-verified
+unanswered and routed around). Assimilation: considerthese re-mined
+(newest-named 2026-10-26.md; suggestion 1 stays behind the operator's open
+instrument ruling). Assimilation: none — shokuknow unreachable.

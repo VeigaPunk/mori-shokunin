@@ -1,0 +1,46 @@
+# mori r74 — the standing battery: every REGISTERED instrument's --selftest re-run at the final bytes (registry row count 11 = battery line count 11)
+date: 2026-11-02T08:05:31Z; cwd = the lane repo root; plain-python posture; rc captured unpiped immediately after each run; every run offline fixture-based (no network, no live reads)
+
+$ python tools/mori-rotation-schedule.py --selftest
+MORI_ROTATION_SCHEDULE_SELFTEST: PASS (13 cases)
+rc=0
+
+$ python tools/mori-anchor-check.py --selftest
+ANCHOR_CHECK_SELFTEST: PASS (11 cases)
+rc=0
+
+$ python tools/mori-ua-variance.py --selftest
+MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)
+rc=0
+
+$ python tools/mori-uptime-win.py --selftest
+UPTIME_WIN_SELFTEST: PASS (8 cases)
+rc=0
+
+$ python tools/mori-workstate-win.py --selftest
+WORKSTATE_WIN_SELFTEST: PASS (10 cases)
+rc=0
+
+$ python tools/mori-events-context-win.py --selftest
+EVENTS_CONTEXT_SELFTEST: PASS (10 cases)
+rc=0
+
+$ python tools/mori-host-events-win.py --selftest
+HOST_EVENTS_WIN_SELFTEST pass=10 fail=0
+rc=0
+
+$ python tools/mori-runway-win.py --selftest
+RUNWAY_WIN_SELFTEST: PASS (9 cases)
+rc=0
+
+$ python tools/mori-receipt-complete.py --selftest
+RECEIPT_COMPLETE_SELFTEST pass=8 fail=0
+rc=0
+
+$ python tools/mori-drift-adjudicate.py --selftest
+MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)
+rc=0
+
+$ python tools/mori-drift-recheck.py --selftest
+MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)
+rc=0

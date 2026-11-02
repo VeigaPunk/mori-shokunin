@@ -1,0 +1,29 @@
+# mori round-74 do-nothing controls at entering tip a9c3abb70572e5be2eb3afd941b1993b7af8d0d8
+date: 2026-11-02T07:27:04Z; every check runs over the ENTERING commit's bytes (git show), the worktree is untouched at this moment
+
+$ C2 before — the rotation-schedule tool absent at entering
+rc=128 (128 = absent); git says: fatal: path 'tools/mori-rotation-schedule.py' does not exist in 'a9c3abb70572e5be2eb3afd941b1993b7af8d0d8'
+
+$ C2 before — no python time-library row exists in SOURCES at entering (the S589 sweep base)
+0
+(0 = the URL class is unseen at entering)
+
+$ C2 before — the knowledge entry absent at entering
+rc=128 (128 = absent); git says: fatal: path 'corpus/knowledge/rotation-schedule-r74.md' does not exist in 'a9c3abb70572e5be2eb3afd941b1993b7af8d0d8'
+
+$ C3 before — this round's pin-family receipt absent at entering
+rc=128 (128 = absent); git says: fatal: path '.ufo/waves/round-74/evidence/pin-family-reverify-r74.txt' does not exist in 'a9c3abb70572e5be2eb3afd941b1993b7af8d0d8'
+
+$ D73-1 before — SKILL.md at entering: total lines; the split-row continuation line present (expected 1); the joined cell absent (expected 0)
+1327
+split-continuation count: 1
+joined-cell count: 0
+
+$ D73-1 before — registry-section physical lines after the events-context row start that are not '|'-rows (expected 1: the orphan continuation)
+1
+
+$ SOURCES row count at entering
+361
+
+$ D73-2 before — the r73 battery receipt literal rc=0 count at entering (the value standing: 11 = 10 run-result lines + 1 embedded sample line, see the r74 LOG correction)
+11
