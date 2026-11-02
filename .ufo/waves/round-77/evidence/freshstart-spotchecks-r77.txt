@@ -1,0 +1,34 @@
+# mori round-77 fresh-start spot-checks (r59/r60/r61 rejected closures re-derived)
+run-start=2026-11-02T15:27:51Z
+
+## 1. the frozen r61 counter at the r61 data tip
+C2=unmet pointers=47 rows=47 same=30 moved=3 changed=0 quotes_ok=33 spans_ok=33 sources=5 failed=quote_words:psi.c:1268-1270;quote_words:psi.c:1712;quote_words:psi.c:1017;quote_words:psi.c:1540;quote_words:psi.c:1686;quote_words:psi.c:1710-1721;quote_words:psi.c:1268;quote_words:psi.c:1269-1270;quote_words:psi_types.h:41-49;quote_words:psi.c:1717-1719;quote_words:psi.c:1257-1258;quote_words:psi.c:228-240;quote_words:psi.c:1711-1719;quote_words:psi.c:1596-1598 rev=986d4b46db6e67682ef84091f606d125f987ecbc
+counter_rc=1
+
+## 2. the r59/r60/r61 lane revs ancestral of refs/heads/master
+d21c0e5c38f5c78c47e7a4e72466f9a55a27e579 round-61: misroot recovery — wave coverage-run residue (.cover) copied byte-exact from the fleet root per the misroot rule
+7b62d6e9fc367fceff36d3d328e97b09622bb37f round-61: measured verdicts — C1 met, C2 honest-stop on counter quote floor, C3 met (capability row); LOG entry; counter receipts at data tip
+986d4b46db6e67682ef84091f606d125f987ecbc round-61: wave evidence — w1 dispatch/spec/ready/results, seat reports, controls+selftests receipts, census before/end, builders
+72db3c2becc867b745531f3315c6839e0ed3e5bc round-61: data — gate-registry backfill rows (r52-r60), PSI v7.3 recheck ledger, S565-S570, round lesson
+7370a731abcafc4c803111de7c22cd6264d63be1 round-61: freeze C1 gate-registry r52-60 / C2 psi v7.3 recheck ledger / C3 counter-boundary v2 — counters, manifest, controls, selftests, v7.3 copies
+6752eafdf0e2bc07052e3e8ab922bd22ea5dfe25 round-60: w1 ready + orchestrator dispatched marker (wave evidence)
+bc05a1455014749faa633ce231fb265852762302 round-60: integrate w1 — C1 verified met, C2/C3 instruments decertified (honest stop); lesson wave section, LOG, SCORECARD r60, wave evidence, census end
+0f8340cf62b588fd64be8d9176ed7d5444c426b2 round-60: lesson — distributive pointer lines, wave-found routed instrument defects (c3 verdict composition met-flips, c1 reading/marker arms, PoC hygiene)
+b3c256138f00c704d5aa56eb0332d74506502ef2 round-60: move S561-S564 rows into the Registry table (census E12 fix)
+398d32252d5495f362c4e7d66b5dd48426dca0bc round-60: land C1 data — r59 met receipts at 7b86704d, absent-set reconciliation, SCORECARD r60-correction re-pointing, S561-S564 rows, entry-claims-hardening-r60 entry, lesson gate+mistakes, QUALITY 156-157
+
+ancestor ok d21c0e5c38f5c78c47e7a4e72466f9a55a27e579
+ancestor ok 7b62d6e9fc367fceff36d3d328e97b09622bb37f
+ancestor ok 986d4b46db6e67682ef84091f606d125f987ecbc
+ancestor ok 72db3c2becc867b745531f3315c6839e0ed3e5bc
+ancestor ok 7370a731abcafc4c803111de7c22cd6264d63be1
+ancestor ok 6752eafdf0e2bc07052e3e8ab922bd22ea5dfe25
+ancestor ok bc05a1455014749faa633ce231fb265852762302
+ancestor ok 0f8340cf62b588fd64be8d9176ed7d5444c426b2
+ancestor ok b3c256138f00c704d5aa56eb0332d74506502ef2
+ancestor ok 398d32252d5495f362c4e7d66b5dd48426dca0bc
+
+## 3. the three fleet report commits PRESENT
+present 2807c6ab round-59: mori dispatch evidence (hyaku inline attempt 2)
+present eeedfd53 round-60: mori report — C1 verified met; C2/C3 instruments decertified (honest
+present 3bb9b8e7 round-61: mori report — C1 met, C2 honest-stop on counter quote floor, C3 met 

@@ -3865,3 +3865,73 @@ unindexed-knowledge loop becomes a standing one-line LOG check each round a
 knowledge entry lands (the index-repair's own upkeep); (e) if the S589
 time-churn state recurs or content moves behind it, the standing drift
 grammar handles it — no manual registry edit.
+
+## Round 77 (2026-11-02, L1 MoriR77) — the Windows performance-counter surface: the commit gauge pair and the paging rate (C1 depth sourced + C2 capability acquisition, both sourced S592 opened this round; C3 freshness the standing pin-family arm extended to S591)
+
+Entering `608815aa` (the r76 verifier spotcheck tip); this section appended at
+end-of-file — every entering line unchanged (entering 3867 lines, sha
+`27e57d4136cd…`; the axes table above untouched, no scalar moved, no closure
+states a new number).
+
+- **C1 (depth, sourced) — `corpus/knowledge/counter-win-r77.md` (K1–K7 +
+  limits + boundaries).** The surface class between two landed reads: the
+  r63 event-log probe reads the exhaustion-EVENT history (Event 2004, S572
+  K4 commit-limit semantics) and the r64 probe reads API-side totals
+  (GlobalMemoryStatusEx); the OS performance counters themselves were
+  unprobed on this host. The entry grounds the commit gauge pair
+  (`\Memory\Committed Bytes`, `\Memory\Commit Limit`) — the lane's r53
+  Linux commit-runway object continued on the Windows workspace host — plus
+  the in-use share and the OS-computed paging rate, with the FR6/FR12
+  boundaries carried (a gauge sample is not a series; a rate sample is not a
+  stall proof; the Linux PSI instruments remain the registered pressure
+  gates). S592 row landed (SOURCES 364 → 365, badNF=0; duplicate sweep
+  receipted before the fetch; title checked before the pin; anchors
+  machine-verified PASS items=3 + able-to-fail FAIL rc 1 —
+  `.ufo/waves/round-77/evidence/s592-anchor-check-r77.txt`); S572/S573/S574
+  used-by cells gained the entry in place (old→new logged in LOG.md).
+- **C2 (operability, capability acquisition) — `tools/mori-counter-win.py`
+  (round-77 build), registered AT LANDING as registry row 12** in the
+  Round73 family table (SKILL 1351 → 1352 append-only; the entering 1327
+  lines sha `8e287544…` byte-identical; the SKILL:905 tally pin unchanged;
+  the mori | round-65 L0 stays open, untouched, routed around — registration
+  is registry-home metadata in the r73/r74 precedent's class, no registered
+  instrument byte edited). Selftest PASS (12 cases) ×3 at the landing bytes
+  (`.ufo/waves/round-77/evidence/counter-win-selftest-r77.txt`; landing
+  sha256 `e6c527dbef07dbede0b963db1d68cbbbccdf0d148d0e9409b9a4514789ff7a1f`).
+  First live run and the re-run at the final bytes both
+  `COUNTER_WIN: AVAILABLE surfaces=4 ok=4 unavailable=0 samples=2` rc 0
+  (`.ufo/waves/round-77/evidence/counter-win-live-r77.txt`): the read is
+  counts/shapes only — the CSV machine-name prefix and every sample timestamp
+  redacted (selftest arms), no raw chatter echoed, the only child one
+  `typeperf` read with `-sc 2`. Counter paths enumerated live by the
+  documented `-q` listing (`counter-enum-r77.txt` enumeration_matched=4 rc 0).
+  Standing battery: TWELVE registered instruments, 12/12 with the ua-variance
+  arm's first-run FAIL 12/14 disclosed and three immediate PASS re-runs
+  carried with own run-starts (`.ufo/waves/round-77/evidence/selftests-battery-r77.txt`;
+  the r65 loopback-transport transient class, the L0 stays open).
+- **C3 (freshness) — the standing pin-family arm extended to the
+  receipt-grammar family + its r76 member: rows=5 adjudicated=5 rc 0**
+  (`.ufo/waves/round-77/evidence/pin-family-r77.txt`; the fetch rule every
+  live URL read from the row): S581 fresh, S590 fresh, S241 asset-churn (the
+  persistent r74 state), S589 time-churn, and S591's first family
+  classification `ua-serving` — QUALITY 159's serving-variance class (the
+  second-UA arm was served a different variant; per-response chrome is
+  serving variance, not content; the pin is immutable, its anchors hold, no
+  supersedes row owed).
+
+Fresh-start duty re-performed (r59/r60/r61 re-derived:
+`.ufo/waves/round-77/evidence/freshstart-spotchecks-r77.txt` — the frozen r61
+counter C2=unmet rc 1 again; ten lane revs ancestral rc 0; three fleet report
+commits present) and the do-nothing controls receipted
+(`controls-r77.txt` — every claimed after-state absent at entering).
+
+Planned (r78 candidates, none declared yet): (a) if the operator answers the
+mori | round-65 L0, the boot-scoped events window (the r73 candidate anchor
+pairing) returns to scope; (b) a second live counter session at a distance
+(a sample is one-shot — the entry's K6 names what a second reading can and
+cannot add: separate counts, never a series); (c) the r77 planned head (b)
+discipline: any new source ride the sweep-then-fetch + title + anchor
+receipts; (d) the label-sweep instrument stays operator-material while the
+mori | round-73 L0 stays open; (e) if the drift grammar's ua-serving class
+recurs on S591, adjudicate with the standing instrument — no manual registry
+edit.

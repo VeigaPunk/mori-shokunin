@@ -1,0 +1,19 @@
+# mori round-77 source S592 — sweep-then-fetch receipt
+run-start=2026-11-02T15:30:21Z
+
+## 1. duplicate sweep INTO this receipt BEFORE the fetch
+$ grep -ci typeperf corpus/SOURCES.md
+0
+$ grep -c 'windows-commands/typeperf' corpus/SOURCES.md
+0
+
+interpretation: no registry row is the typeperf command reference page (0 rows name it; the nearest rows S573 wevtutil and S572 the exhaustion-event troubleshooter name the sibling commands and the exhaustion DIAGNOSIS page, not this one)
+
+## 2. fetch
+$ curl -sS -m 60 -L -o <scratch>/S592.html https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/typeperf
+curl_rc=0
+<title>typeperf | Microsoft Learn</title>
+
+title checked before the pin per the r75 lesson rule
+50980 C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r77/S592.html
+5f2e58ad44160bc35bb52be688812047f09bd5bab81c2959f32682c586ee2bfe *C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r77/S592.html

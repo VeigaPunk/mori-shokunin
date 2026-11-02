@@ -1,0 +1,24 @@
+# mori round-77 do-nothing controls (at the entering rev 608815aa)
+run-start=2026-11-02T15:49:46Z
+
+cat-file rc=128 for tools/mori-counter-win.py (128=absent at entering)
+cat-file rc=128 for corpus/knowledge/counter-win-r77.md (128=absent at entering)
+cat-file rc=128 for corpus/evidence/sources-r77/S592.html (128=absent at entering)
+cat-file rc=128 for .ufo/waves/round-77/evidence/pin-family-r77.txt (128=absent at entering)
+$ grep -c 'mori-counter-win' at HEAD:SKILL.md
+0
+
+$ grep -c 'windows-commands/typeperf' at HEAD:corpus/SOURCES.md
+0
+
+$ grep -ci 'typeperf' at HEAD:corpus/SOURCES.md
+0
+
+$ HEAD:SKILL.md line count (entering) + registry '(rNN tool)' rows at entering
+1351
+registry_rows_entering=14
+round73_family_rows_entering=9
+round73_family_rows_now=10
+counting-command correction: the narrow regex misses the two slash-joined names (r66/r67, r68/r69); the tolerant form:
+round73_family_rows_entering=11
+round73_family_rows_now=12

@@ -1,0 +1,18 @@
+# mori round-77 S592 anchor-check receipt (the r72 checker over the committed pin bytes)
+run-start=2026-11-02T15:40:52Z
+pin=corpus/evidence/sources-r77/S592.html sha256=5f2e58ad44160bc35bb52be688812047f09bd5bab81c2959f32682c586ee2bfe bytes=50980
+
+## A. recorded anchors
+$ python -I tools/mori-anchor-check.py --pin corpus/evidence/sources-r77/S592.html --check 'typeperf_writes|749|13|command writes performance data to the command window or to a log file.' --check 'samples_option|806|7|Specifies the number of samples to collect.' --check 'q_option|798|18|Display a list of installed counters (no instances). To list counters for one object, include the object name.'
+anchor item=typeperf_writes span=749 verdict=ok located_on=749 occurrences=1 words_counted=13 words_recorded=13
+anchor item=samples_option span=806 verdict=ok located_on=806 occurrences=1 words_counted=7 words_recorded=7
+anchor item=q_option span=798 verdict=ok located_on=798 occurrences=1 words_counted=18 words_recorded=18
+ANCHOR_CHECK: PASS items=3 ok=3 pin_sha256=5f2e58ad44160bc35bb52be688812047f09bd5bab81c2959f32682c586ee2bfe pin_bytes=50980
+anchor_rc=0
+
+## B. able-to-fail arm (mislocation: wrong line + mutated count)
+$ python -I tools/mori-anchor-check.py --pin corpus/evidence/sources-r77/S592.html --check 'typeperf_writes|806|14|command writes performance data to the command window or to a log file.'
+anchor item=typeperf_writes span=806 verdict=mislocated located_on=- occurrences=0 words_counted=- words_recorded=14
+ANCHOR_CHECK: FAIL items=1 ok=0 mislocated=1 wordcount_mismatch=0 pin_sha256=5f2e58ad44160bc35bb52be688812047f09bd5bab81c2959f32682c586ee2bfe pin_bytes=50980
+abletofail_rc=1
+PASS items=3 rc 0 + able-to-fail FAIL rc 1 — the checker discriminates.

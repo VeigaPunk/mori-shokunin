@@ -850,3 +850,9 @@ three rejected-closure entries (r59/r60/r61) rather than silently adopting them.
 | Ground | Entry | Bounded advance |
 |---|---|---|
 | The rotation-receipt reading grammar (r70–r75 rounds distilled; r75 planned head (a)) | `knowledge/rotation-receipt-grammar-r76.md` (S591) | Per-window yes/no/unavailable meanings, the clock leg grounded at both layers (S589 invariant + S591 vendor QPC guidance), the documented scale and mechanism layers restated, the no-TTL boundary intact; the SKILL.md end-section decision table is the teachable form (append-only, the SKILL:905 pin untouched). No new session, no window change, no TTL decided. |
+
+## Round-77 knowledge addition — the performance-counter surface (new growth, indexed the round it lands)
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| The Windows performance-counter surface (r77, S592) | `knowledge/counter-win-r77.md` (S592) | The commit gauge pair (Committed Bytes, Commit Limit), the in-use share and the OS-computed paging rate read ONCE through the documented `typeperf` command — the r53 Linux commit-runway object continued on this host, tied to the S572 exhaustion semantics; counter paths live-enumerated by the documented `-q` listing, not doc-located; a sample is volatile and one-shot, never a series, a stall proof or a cause (FR6/FR12 stay open). The registered form is `tools/mori-counter-win.py` (registry row 12). |

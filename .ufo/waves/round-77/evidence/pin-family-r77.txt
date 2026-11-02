@@ -1,0 +1,15 @@
+# mori round-77 standing pin-family re-verification (the receipt-grammar family + its r76 member S591)
+run-start=2026-11-02T15:52:23Z
+fetch rule: every live URL is read from the registry row (never from memory or prose — the r76 lesson standing fix)
+
+$ python -I tools/mori-drift-recheck.py --root . --only S241,S581,S589,S590,S591
+# MORI_DRIFT_RECHECK second_ua=curl/8.21.0 only=S241,S581,S589,S590,S591 from-sweep=- findings=- run-start=2026-11-02T15:52:24Z stamp-class=python-docs-page-stamp asset-class=learn-microsoft-asset-build-id
+S241 asset-churn as-of=2026-11-02T15:52:24Z
+S581 fresh as-of=2026-11-02T15:52:25Z
+S589 time-churn as-of=2026-11-02T15:52:25Z
+S590 fresh as-of=2026-11-02T15:52:25Z
+S591 ua-serving as-of=2026-11-02T15:52:25Z
+MORI_DRIFT_RECHECK rows=5 adjudicated=5 fresh=2 excerpt=0 time-churn=1 asset-churn=1 receipt-open=0 receipt-stale=0 ua-serving=1 content-drift=0 gate=0 unavailable=0 window=2026-11-02T15:52:24Z..2026-11-02T15:52:25Z
+instrument_rc=0
+
+interpretation: S241 asset-churn (the persistent r74 state, same class), S581 fresh, S590 fresh, S589 time-churn (the docs.python.org stamp class), S591 ua-serving — the second-UA arm was served a different variant (QUALITY 159: per-response bot-manager chrome is serving variance, not content); the pin is immutable, its anchors machine-verified at landing this round (s592... no — s591 anchors: PASS items=2 r76 receipt s591-anchor-check-r76.txt), so no supersedes row is owed and no registry correction is manufactured.

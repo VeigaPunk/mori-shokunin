@@ -1,0 +1,43 @@
+# mori round-77 foreign-evidence sweep (disk vs ls-tree HEAD; the index on this host is stale, per the r76 closure's method)
+run-start=2026-11-02T16:00:57Z
+disk_files=14064 tracked_at_head=14258
+disk_only=18
+  disk-only .ufo/waves/round-76/evidence/s591-source-r76.txt
+  disk-only .ufo/waves/round-76/evidence/source-s591-sweep-r76.txt
+  disk-only .ufo/waves/round-76/evidence/win-family-live-r76.txt
+  disk-only .ufo/waves/round-77/evidence/census-start-r77.txt
+  disk-only .ufo/waves/round-77/evidence/controls-r77.txt
+  disk-only .ufo/waves/round-77/evidence/counter-enum-r77.txt
+  disk-only .ufo/waves/round-77/evidence/counter-win-live-r77.txt
+  disk-only .ufo/waves/round-77/evidence/counter-win-selftest-r77.txt
+  disk-only .ufo/waves/round-77/evidence/foreign-sweep-r77.txt
+  disk-only .ufo/waves/round-77/evidence/freshstart-spotchecks-r77.txt
+  disk-only .ufo/waves/round-77/evidence/pin-family-r77.txt
+  disk-only .ufo/waves/round-77/evidence/s592-anchor-check-r77.txt
+  disk-only .ufo/waves/round-77/evidence/selftests-battery-r77.txt
+  disk-only .ufo/waves/round-77/evidence/source-s592-r77.txt
+  disk-only corpus/evidence/sources-r77/S592.html
+  disk-only corpus/knowledge/counter-win-r77.md
+  disk-only output.csv
+  disk-only tools/mori-counter-win.py
+tracked_missing_on_disk=212
+  tracked-missing .ufo/waves/round-20/falsify/SelftestC2/final/C1-checker-always-true/tools/__pycache__/mori-wave-settlement.cpython-314.pyc
+  tracked-missing .ufo/waves/round-20/falsify/SelftestC2/final/C2-no-name-hint-check+R3-A/tools/__pycache__/mori-wave-settlement.cpython-314.pyc
+  tracked-missing .ufo/waves/round-20/falsify/SelftestC2/final/C3-no-dup-paths-check+R5-A/tools/__pycache__/mori-wave-settlement.cpython-314.pyc
+  tracked-missing .ufo/waves/round-20/falsify/SelftestC2/final/C4-no-unique-check+R4-B/tools/__pycache__/mori-wave-settlement.cpython-314.pyc
+  tracked-missing .ufo/waves/round-20/falsify/SelftestC2/final/R1-A-final-line-only/tools/__pycache__/mori-wave-settlement.cpython-314.pyc
+  tracked-missing .ufo/waves/round-20/falsify/SelftestC2/final/R1-B-first-match/tools/__pycache__/mori-wave-settlement.cpython-314.pyc
+  tracked-missing .ufo/waves/round-20/falsify/SelftestC2/final/R1-C-no-rstrip/tools/__pycache__/mori-wave-settlement.cpython-314.pyc
+  tracked-missing .ufo/waves/round-20/falsify/SelftestC2/final/R1-D-no-split-no-rstrip/tools/__pycache__/mori-wave-settlement.cpython-314.pyc
+  tracked-missing .ufo/waves/round-20/falsify/SelftestC2/final/R1-E-split-keep-rstrip/tools/__pycache__/mori-wave-settlement.cpython-314.pyc
+  tracked-missing .ufo/waves/round-20/falsify/SelftestC2/final/R2-A-no-stub/tools/__pycache__/mori-wave-settlement.cpython-314.pyc
+
+## re-sweep after removing the misroot residue
+re-run-start=2026-11-02T16:09:42Z
+disk_only=17
+this_rounds_artifacts=14 (committed this round)
+other_disk_only=3
+  other .ufo/waves/round-76/evidence/s591-source-r76.txt
+  other .ufo/waves/round-76/evidence/source-s591-sweep-r76.txt
+  other .ufo/waves/round-76/evidence/win-family-live-r76.txt
+finding: output.csv (144 bytes, sha256 beaab2caa0def51fbc8771943bd768b65f3603ef43dfcb7d760df1270057ecc1) was found at the lane root by the first sweep -- THIS round's own exploratory typeperf run wrote it (`-f csv` without `-o` redirects samples to the DEFAULT log file in cwd); its header proves provenance (PDH-CSV, the commit-gauge counter, one sample). It was removed this round; not foreign, an own misroot (the QUALITY 149 class). The three r76 foreign receipt files REMAIN disk-only, uncommitted, uncited -- the leave-for-operator disposition stands unchanged.

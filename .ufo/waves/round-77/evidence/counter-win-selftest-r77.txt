@@ -1,0 +1,55 @@
+# mori round-77 counter-win selftest x3 at the landing bytes (final bytes after the docstring misattribution correction)
+run-start=2026-11-02T16:05:48Z
+
+## run 1
+$ python -I -B tools/mori-counter-win.py --selftest  (last line)
+PASS four_counters_available  rc=0
+PASS last_sample_wins  rc=0
+PASS host_prefix_redacted  rc=0
+PASS timestamps_redacted  rc=0
+PASS zero_samples_honest_unavailable  rc=2
+PASS missing_columns_partial  rc=0
+PASS nonnumeric_cell_refused  rc=0
+PASS comma_thousands_refused  rc=0
+PASS missing_child_rc2  rc=2
+PASS output_shape_grammar  rc=0
+PASS usage_rc1_no_traceback  rc=1
+PASS kinds_labeled  rc=0
+COUNTER_WIN_SELFTEST: PASS (12 cases)
+rc1=0
+
+## run 2
+$ python -I -B tools/mori-counter-win.py --selftest  (last line)
+PASS four_counters_available  rc=0
+PASS last_sample_wins  rc=0
+PASS host_prefix_redacted  rc=0
+PASS timestamps_redacted  rc=0
+PASS zero_samples_honest_unavailable  rc=2
+PASS missing_columns_partial  rc=0
+PASS nonnumeric_cell_refused  rc=0
+PASS comma_thousands_refused  rc=0
+PASS missing_child_rc2  rc=2
+PASS output_shape_grammar  rc=0
+PASS usage_rc1_no_traceback  rc=1
+PASS kinds_labeled  rc=0
+COUNTER_WIN_SELFTEST: PASS (12 cases)
+rc2=0
+
+## run 3
+$ python -I -B tools/mori-counter-win.py --selftest  (last line)
+PASS four_counters_available  rc=0
+PASS last_sample_wins  rc=0
+PASS host_prefix_redacted  rc=0
+PASS timestamps_redacted  rc=0
+PASS zero_samples_honest_unavailable  rc=2
+PASS missing_columns_partial  rc=0
+PASS nonnumeric_cell_refused  rc=0
+PASS comma_thousands_refused  rc=0
+PASS missing_child_rc2  rc=2
+PASS output_shape_grammar  rc=0
+PASS usage_rc1_no_traceback  rc=1
+PASS kinds_labeled  rc=0
+COUNTER_WIN_SELFTEST: PASS (12 cases)
+rc3=0
+e6c527dbef07dbede0b963db1d68cbbbccdf0d148d0e9409b9a4514789ff7a1f *tools/mori-counter-win.py
+pass_lines=3

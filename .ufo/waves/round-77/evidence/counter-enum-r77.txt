@@ -1,0 +1,12 @@
+# mori round-77 counter-path enumeration receipt (typeperf -q Memory, paths only)
+run-start=2026-11-02T15:38:25Z
+$ typeperf -q Memory  (grep: fixed-string matches for the four pinned paths, case-insensitive)
+target=\Memory\Committed Bytes matched=1
+enumerated \Memory\Committed Bytes
+target=\Memory\Commit Limit matched=1
+enumerated \Memory\Commit Limit
+target=\Memory\% Committed Bytes In Use matched=1
+enumerated \Memory\% Committed Bytes In Use
+target=\Memory\Pages/sec matched=1
+enumerated \Memory\Pages/sec
+enumeration_matched=4 rc=0

@@ -1,0 +1,56 @@
+# mori r77 — standing selftest battery over ALL TWELVE registered instruments at this round's bytes
+date: 2026-11-02T16:06:04Z; plain-python posture, rc captured unpiped, backgrounded per the r74 lesson's process-spawn budget rule; the r71 PYTHONUTF8/-I disclosure and the r65 loopback-transport disclosure stand
+== mori-receipt-complete.py
+rc=0
+RECEIPT_COMPLETE_SELFTEST pass=8 fail=0
+== mori-host-events-win.py
+rc=0
+HOST_EVENTS_WIN_SELFTEST pass=10 fail=0
+== mori-runway-win.py
+rc=0
+RUNWAY_WIN_SELFTEST: PASS (9 cases)
+== mori-drift-adjudicate.py
+rc=0
+MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)
+== mori-drift-recheck.py
+rc=0
+MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)
+== mori-ua-variance.py
+rc=1
+MORI_UA_VARIANCE_SELFTEST: FAIL (12/14)
+== mori-uptime-win.py
+rc=0
+UPTIME_WIN_SELFTEST: PASS (8 cases)
+== mori-workstate-win.py
+rc=0
+WORKSTATE_WIN_SELFTEST: PASS (10 cases)
+== mori-events-context-win.py
+rc=0
+EVENTS_CONTEXT_SELFTEST: PASS (10 cases)
+== mori-anchor-check.py
+rc=0
+ANCHOR_CHECK_SELFTEST: PASS (11 cases)
+== mori-rotation-schedule.py
+rc=0
+MORI_ROTATION_SCHEDULE_SELFTEST: PASS (13 cases)
+== mori-counter-win.py
+rc=0
+COUNTER_WIN_SELFTEST: PASS (12 cases)
+
+anchored run-result count: grep -c '^rc=0$' on this receipt = expected 12
+
+## ua-variance re-run block (the r65 loopback-transport transient class; each block carries its own run-start per QUALITY 160)
+
+== ua-variance re-run 1 run-start=2026-11-02T16:08:27Z
+rc=0
+MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)
+
+== ua-variance re-run 2 run-start=2026-11-02T16:08:35Z
+rc=0
+MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)
+
+== ua-variance re-run 3 run-start=2026-11-02T16:08:38Z
+rc=0
+MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)
+
+battery tally (disclosure form): the battery block itself counted grep -c '^rc=0$' = 11 — the ua-variance arm FAILed 12/14 on its first battery run; three immediate re-runs (own run-starts above) PASS 14/14 rc 0 each, the r65 transient signature reproduced (the mori | round-65 L0 line: one transient FAIL that passed 3x right after; the loopback-transport disclosure stands; the L0 stays open and unanswered, routed around). The standing battery verdict for this round is 12/12 with the ua-variance arm carried by the re-run blocks; the first-run FAIL is disclosed, not overwritten.

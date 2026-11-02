@@ -1,0 +1,10 @@
+
+# mori round-77 counter-win live receipt (counts and shapes only) — re-run at the final bytes
+run-start=2026-11-02T16:06:01Z
+$ python -I -B tools/mori-counter-win.py
+counter path=\Memory\Committed Bytes kind=gauge value=29466923008.000000
+counter path=\Memory\Commit Limit kind=gauge value=36454608896.000000
+counter path=\Memory\% Committed Bytes In Use kind=gauge value=80.831818
+counter path=\Memory\Pages/sec kind=rate value=15.768613
+COUNTER_WIN: AVAILABLE surfaces=4 ok=4 unavailable=0 samples=2
+rc=0
