@@ -1,0 +1,52 @@
+# mori r75 — the pin-family standing arm, receipted as the NAMED practice step (the r74 planned head (b))
+date: 2026-11-02T10:31:07Z; the named step, now standing: when a rotation-family receipt lands, the SAME-ROUND receipt carries the drift re-check's --only S241 adjudication beside it, so the schedule's A/A classifications are read against a fresh adjudication of the serving. This receipt lands the step beside the r75 schedule re-run receipt (rotation-schedule-live-r75.txt, same round). Every fetch is a read of a public vendor page into scratch; the lane writes only its own receipts.
+
+$ pinned copies and their recorded shas
+1168b2a626ec4b69fbdf7341ae3331c16ff0e42667d67488762b30e206591357 *corpus/evidence/sources-r42/S241.html
+5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865 *corpus/evidence/sources-r70/S581.html
+53963 corpus/evidence/sources-r42/S241.html
+16179 corpus/evidence/sources-r70/S581.html
+70142 total
+
+$ live re-open S241 (learn.microsoft.com ja-jp oom-swap-file-linux-vm)
+curl rc=0
+ddb7ba179052f9c3c6900b6b108875adc79baf563f9b82261200ae7c4c6ba727 *C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r75/s241-live-r75.html
+53963 C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r75/s241-live-r75.html
+
+$ live re-open S581 (docs.aws.amazon.com waf-tokens-immunity-times)
+curl rc=0
+5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865 *C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r75/s581-live-r75.html
+16179 C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r75/s581-live-r75.html
+
+$ byte-identity verdicts (pin sha == live sha => byte-identical)
+S241: DRIFTED pin=1168b2a626ec4b69fbdf7341ae3331c16ff0e42667d67488762b30e206591357 live=ddb7ba179052f9c3c6900b6b108875adc79baf563f9b82261200ae7c4c6ba727
+S581: IDENTICAL pin=5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865 live=5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865
+
+-- drift diff, if any --
+cmp: differs rc=1; size pin=53963 live=53963
+163c163
+< 			<link rel="stylesheet" href="/static/assets/0.4.03574.8308-9505b1c8/styles/site.css" />
+---
+> 			<link rel="stylesheet" href="/static/assets/0.4.03589.8339-b0a05127/styles/site.css" />
+211c211
+< 				src="/static/assets/0.4.03574.8308-9505b1c8/scripts/ja-jp/index-docs.js"
+---
+> 				src="/static/assets/0.4.03589.8339-b0a05127/scripts/ja-jp/index-docs.js"
+
+-- the standing instrument adjudicates this round's own finding (THE NAMED STEP) --
+$ python tools/mori-drift-recheck.py --root . --only S241
+# MORI_DRIFT_RECHECK second_ua=curl/8.21.0 only=S241 from-sweep=- findings=- run-start=2026-11-02T10:31:13Z stamp-class=python-docs-page-stamp asset-class=learn-microsoft-asset-build-id
+S241 asset-churn as-of=2026-11-02T10:31:13Z
+MORI_DRIFT_RECHECK rows=1 adjudicated=1 fresh=0 excerpt=0 time-churn=0 asset-churn=1 receipt-open=0 receipt-stale=0 ua-serving=0 content-drift=0 gate=0 unavailable=0 window=2026-11-02T10:31:13Z..2026-11-02T10:31:13Z
+rc=0
+
+-- the row's teaching re-verified on the LIVE body (no content drift behind the asset churn) --
+counting-method disclosure (the r72 label class; the r74 lesson's fix applied): the anchor cell's count 3 is the LINE-count method (grep -c) — re-measured on both bodies:
+pin lines=3 live lines=3
+vs live: 3
+the occurrence method (grep -o | wc -l) also measured:
+pin occurrences=6
+live occurrences=6
+agreement under EACH method (the two methods agree within themselves across bodies); the live sha equals the r74 live sha (ddb7ba17…) — the same asset-churn state persists since r74, still no content drift behind it.
+
+dispositions: S581 IDENTICAL (the documented window-scale pin stands, read through S586's labels); S241 asset-churn adjudicated by the standing re-check rc 0 — the pin stays immutable, NO supersedes row owed (anchors hold on the pin, teaching holds on the live body); the STEP is the landing: this receipt is the named same-round standing arm beside the r75 rotation-family receipt — the practice the r74 planned head (b) asked for, now exercised.

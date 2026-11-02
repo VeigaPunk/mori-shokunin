@@ -1,0 +1,16 @@
+# mori r75 — S590 anchors machine-verified by the r72 anchor-checker (QUALITY 162 made runnable)
+date: 2026-11-02T10:28:06Z; pin corpus/evidence/sources-r75/S590.html (19812 bytes, sha256 8bff4311b27061c944059a4300564347a3c04c6870b88198fa0b4dd0755037fa)
+
+$ run A — the recorded anchors (PASS expected, rc 0)
+$ python tools/mori-anchor-check.py --pin corpus/evidence/sources-r75/S590.html --check "challenge_solve_ts|138|9|it updates the token with the challenge solve timestamp." --check "resubmit_updated_token|144|11|the script resubmits the original web request using the updated token." --check "expired_token_path|78|9|AWS WAF discontinues the protection pack (web ACL) evaluation"
+anchor item=challenge_solve_ts span=138 verdict=ok located_on=138 occurrences=1 words_counted=9 words_recorded=9
+anchor item=resubmit_updated_token span=144 verdict=ok located_on=144 occurrences=1 words_counted=11 words_recorded=11
+anchor item=expired_token_path span=78 verdict=ok located_on=78 occurrences=1 words_counted=9 words_recorded=9
+ANCHOR_CHECK: PASS items=3 ok=3 pin_sha256=8bff4311b27061c944059a4300564347a3c04c6870b88198fa0b4dd0755037fa pin_bytes=19812
+rc=0
+
+$ run B — the able-to-fail arm: the solve-timestamp anchor recorded at the WRONG line (144) and a mutated word-count (10) must FAIL rc 1
+$ python tools/mori-anchor-check.py --pin corpus/evidence/sources-r75/S590.html --check "challenge_solve_ts|144|10|it updates the token with the challenge solve timestamp."
+anchor item=challenge_solve_ts span=144 verdict=mislocated located_on=- occurrences=0 words_counted=- words_recorded=10
+ANCHOR_CHECK: FAIL items=1 ok=0 mislocated=1 wordcount_mismatch=0 pin_sha256=8bff4311b27061c944059a4300564347a3c04c6870b88198fa0b4dd0755037fa pin_bytes=19812
+rc=1

@@ -1,0 +1,23 @@
+# mori round-75 do-nothing controls at entering 8ddf29dd9f59c14559a003d3b613f02d52bd0a4f
+date: 2026-11-02T10:03:34Z; cwd = the lane repo root
+
+$ C1: the canonical capability-table row for the r74 tool exists at entering?
+rows naming the tool as a capability-row lead cell: 0
+0
+canonical capability-table headings: 25
+SCORECARD lines at entering: 3758
+entering SCORECARD sha256: 043951b26b7ea13c74a06cd7abe7deacd43cc1cf4de2514cec18efa6271f9e27 *-
+
+$ C2: the r75 pin-family standing-arm receipt absent at entering?
+fatal: path '.ufo/waves/round-75/evidence/pin-family-rotrec-r75.txt' does not exist in '8ddf29dd'
+cat-file rc=128
+
+$ C3: the r75 schedule re-run receipt absent; the new-row URL unseen; the series entry absent?
+fatal: path '.ufo/waves/round-75/evidence/rotation-schedule-live-r75.txt' does not exist in '8ddf29dd'
+cat-file rc=128
+challenge-page rows in entering SOURCES: 0
+0
+fatal: path 'corpus/knowledge/rotation-series-r75.md' does not exist in '8ddf29dd'
+cat-file rc=128
+
+a do-nothing round reaches none of the three claims' after-states.

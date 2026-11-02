@@ -3756,3 +3756,64 @@ pin-check mismatch split and the label-sweep instrument — routed around
 until answered; (d) the boot-scoped events window stays unlanded behind
 the r73 closure's discernment verdict (its own able-to-fail design round
 when the L0 class is ruled).
+
+## Round 75 backfill — the round-74 capability row (the r74 closure's carry-in 1)
+
+The canonical capabilities-table row the round-74 section lacks: its C2 was a
+capability acquisition (`tools/mori-rotation-schedule.py` demonstrated running
+in-round), but r74's section shipped without the 4-column row — rounds 62-72
+each landed their capability row in-section. The row lands HERE, append-only
+at end-of-file: every byte of the entering SCORECARD (3758 lines, sha256
+043951b26b7ea13c74a06cd7abe7deacd43cc1cf4de2514cec18efa6271f9e27) is
+unchanged — the r74 section is frozen history and takes no in-place insert.
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Rotation-recurrence schedule instrument (`tools/mori-rotation-schedule.py`) | re-runs the r70 stated-window rotation schedule (default 31,91,304 s) as ONE instrument run: every window an A/A capture pair on the monotonic clock (S589), capture/compare delegated to the registered ua-variance probe as read-only children, per-window `rotated=yes/no/unavailable` classification computed from the children's own `as-of=` stamps (QUALITY 161), stdout counts/shapes/stamps/sha-prefixes only with the redaction arm; the per-window classes across sessions are the recurrence observation the instrument makes repeatable | `python tools/mori-rotation-schedule.py --selftest` -> `MORI_ROTATION_SCHEDULE_SELFTEST: PASS (13 cases)` rc 0 x3 (`.ufo/waves/round-74/evidence/rotation-schedule-selftest-r74.txt`); first live run rc 0: 31s rotated=no, 91s rotated=no, 304s rotated=yes (per-response=4), `window_s_computed=31,91,304`, `wall_s=429`, `clock=monotonic` (`.ufo/waves/round-74/evidence/rotation-schedule-live-r74.txt`); registered at landing as registry row 11 (`rotation-schedule probe (r74 tool)`, SKILL.md:1327) | 74 |
+
+## Round 75 — the carry-in discharge and the three-session series: C1 calibration landed (the r74 closure's carry-ins discharged — the canonical 4-column capabilities-table row for the r74 C2 capability acquisition backfilled append-only at SCORECARD end-of-file with the entering bytes sha-identical; the −8 prose-decomposition precision correction of record — numstat shows SHONEN −4 + SKILL join −2 + the two SOURCES used-by replacements −2 = 8, no r74 artifact edited); C2 freshness landed (the pin-family standing arm receipted as the NAMED practice step: the drift re-check's `--only S241` adjudication carried beside this round's rotation-family receipt — S581 byte-identical, S241 asset-churn persisting since r74 and re-adjudicated rc 0); C3 depth landed, sourced S590 opened this round (the stated schedule re-executed by the r74 instrument in a fresh process — THREE sessions, three different per-window classifications, the comparison receipted from committed receipts, the mechanism layer grounded by S590)
+
+Fresh start (r59–r61 rejected closures re-derived with own receipts):
+`.ufo/waves/round-75/evidence/freshstart-spotchecks-r75.txt` — the frozen
+r61 counter re-derived at the r61 data tip (`python -I
+.ufo/waves/round-61/count-c2.py 986d4b46…` → `C2=unmet` rc 1, the same
+verdict every closure and the r65–r74 re-derivations reached); the eight
+r59/r60/r61 lane revs PRESENT and ancestral rc 0 each; the three fleet
+report commits PRESENT. Controls
+(`.ufo/waves/round-75/evidence/controls-r75.txt`): the canonical
+capability-row lead cell greps 0 in the entering SCORECARD (3758 lines,
+sha `043951b2…`); the standing-arm, schedule and series receipts absent at
+entering rc 128; no challenge-action row in SOURCES at entering; the
+series entry absent — a do-nothing round reaches none of this round's
+claims.
+
+| Claim | Axis | Counting commands | At entering | After (measured this round) |
+|---|---|---|---|---|
+| C1: the r74 closure carry-ins discharged — carry-in 1: the canonical capabilities-table row for `tools/mori-rotation-schedule.py` (first-working round 74, demonstrated running in r74) backfilled append-only at end-of-file (`## Round 75 backfill` block; the r74 section is frozen history and takes no in-place insert — ruled out and recorded); carry-in 2: the −8 decomposition precision correction of record — `git show dc50c80b --numstat`: SHONEN +4/−4, SKILL +2/−2, SOURCES +3/−2 — the r74 report's prose covered 6 of 8 deletions, the other 2 are the SOURCES used-by in-place replacements; recorded in LOG + the round report, no r74 artifact edited | calibration 5 | `git show 8ddf29dd:SCORECARD.md \| grep -cE '^\| Rotation-recurrence schedule instrument'` (0) → `grep -cE '^\| Rotation-recurrence schedule instrument' SCORECARD.md` (1); canonical capability-table headings `grep -c "Capability \| What it can now do"` 25 → 26; `head -3758 SCORECARD.md \| sha256sum` = `043951b26b7ea13c74a06cd7abe7deacd43cc1cf4de2514cec18efa6271f9e27` (the entering sha — every entering byte unchanged) | The r74 C2 capability acquisition had NO canonical row — the register the closures grade against did not match the demonstrated state | The row is in the canonical shape (26th table, first-working 74), the record matches the demonstrated capability, and the −8 note states the true decomposition. **Self-verdict: verified met** (closure to re-derive) |
+| C2: the r74 planned head (b) landed as a NAMED practice step — when a rotation-family receipt lands, the same-round receipt carries the drift re-check's `--only S241` adjudication beside it; receipt `.ufo/waves/round-75/evidence/pin-family-rotrec-r75.txt`: S581 byte-IDENTICAL (sha256 equal, 16179 bytes); S241 DRIFTED with the live sha EQUAL to the r74 live sha (ddb7ba17…) — the same equal-size asset-churn state persists (the same 2 asset-URL pairs), adjudicated by the standing instrument (`python tools/mori-drift-recheck.py --root . --only S241` → `S241 asset-churn as-of=2026-11-02T10:31:13Z`, rows=1 adjudicated=1, rc 0); teaching re-verified both methods (診断 line-count pin=3 live=3; occurrence pin=6 live=6) | freshness 5 | `git cat-file -e 8ddf29dd:.ufo/waves/round-75/evidence/pin-family-rotrec-r75.txt` (rc 128 at entering); after: the receipt's verdict lines (`S241: DRIFTED pin=1168b2a6… live=ddb7ba17…`, `S581: IDENTICAL pin=5e5b941e… live=5e5b941e…`), the adjudication line `MORI_DRIFT_RECHECK rows=1 adjudicated=1 … asset-churn=1 … rc=0`, and the both-methods block in the same receipt | The standing arm existed only as the r74 planned note — no receipt carried the named same-round step, so a rotation receipt could land without a fresh serving adjudication | The step is named in the receipt header, exercised beside this round's rotation-family receipt (C3's), and discriminating (S241 re-found drifted + re-adjudicated; S581 re-found identical — the practice distinguishes, not rubber-stamps). **Self-verdict: verified met** (closure to re-derive) |
+| C3 (sourced, S590 opened this round): the recurrence question as a RE-RUN — the r74 planned head (a): the stated schedule (31,91,304, byte-identical posture) re-executed by the r74 instrument in a FRESH process (`evidence/rotation-schedule-live-r75.txt`: 31s=no 91s=no 304s=no, one body state 34353de6db05 across all six legs, window_s_computed=31,91,304, wall_s=429, rc 0 — the first single-state session); the THREE-session window-by-window comparison receipted entirely from committed receipts (`rotation-series-comparison-r75.txt`: r70 31=no 91=YES 304=no; r74 31=no 91=no 304=YES; r75 31=no 91=no 304=no — no stated window classified yes in every session, the two YESes at different windows in different sessions, 31s stayed no ×3); the mechanism layer grounded by S590 (a challenge solve updates the token timestamp `S590.html:138` and the client resubmits with the UPDATED token `:144` — anchor-check PASS items=3, able-to-fail FAIL rc 1); knowledge entry `corpus/knowledge/rotation-series-r75.md` S1–S5; SOURCES 362 → 363 (S590 INSIDE the Registry after S589, sweep-then-fetch, three guide-index-frame slugs rejected) | depth 5 | `git cat-file -e 8ddf29dd:.ufo/waves/round-75/evidence/rotation-schedule-live-r75.txt` (rc 128); `git show 8ddf29dd:corpus/SOURCES.md \| grep -c "waf-captcha-and-challenge-actions"` (0) → `grep -c` (1); `grep -cE '^\|[[:space:]]*S[0-9]{3,}[[:space:]]*\|' corpus/SOURCES.md` 362 → 363; `grep -c "ROTATION_SCHEDULE window=" …rotation-schedule-live-r75.txt` (3); `grep -c "ROTATION_SCHEDULE window=.*rotated=yes" …rotation-schedule-live-r74.txt` (1, the anchored D73-2 form; literal prints 2 = 1+1 prose, decomposition named in the receipt) | Two single-session observations existed (r70 hand-run, r74 instrument); the recurrence question had no series, and the per-response arm had no mechanism ground | Three sessions now: the classification series is committed knowledge (S1–S5), the 31s bound held ×3, the no-TTL boundary intact; the mechanism ground (S590) explains WHAT the per-response arm observes without deciding a TTL. **Self-verdict: verified met** (closure to re-derive). Routed limits: three sessions bound nothing statistically; a same-day fourth session is NOT planned (planned (d) below) |
+
+Selftests this round: the standing battery re-run over ALL ELEVEN registered
+instruments at this round's bytes, 11/11 rc 0 by the anchored form
+`grep -c "^rc=0$"` = 11 (`.ufo/waves/round-75/evidence/selftests-battery-r75.txt`;
+backgrounded per the r74 lesson's process-spawn budget rule). SOURCES 362 →
+363 (S590 INSIDE the Registry after S589, sweep-then-fetch receipted; S589
+used-by updated in place, old→new logged). Census: validator rc 0 at round
+start (`evidence/census-start-r75.txt`, the tolerated 35 W04 class) → end
+receipt at round close. No frozen byte edited: the drift family, the
+rotation instrument and every registered tool are absent from this round's
+diff; SKILL.md, PROVINCE.md, AGENTS.md, corpus/README.md and the QUALITY
+file are untouched this round.
+
+Planned (round 76): (a) distill the series grammar into a SKILL.md
+end-section decision table for reading rotation-schedule receipts (what
+yes/no/unavailable mean per window, the S590 mechanism layer, the no-TTL
+boundary — the craft the r70-r75 rounds built, made teachable at the
+registry home; append-only, the SKILL:905 pin untouched); (b) the
+boot-scoped events window stays unlanded behind the r73 closure's
+discernment verdict (mori | round-65 L0 open); (c) the operator's rulings
+(mori | round-65, mori | round-73) still gate the encoding-pin harness,
+the pin-check mismatch split and the label-sweep instrument — routed
+around until answered; (d) a same-day fourth schedule session is NOT
+planned — the series waits for wall-clock distance, so a future session
+adds information three same-day sessions cannot.

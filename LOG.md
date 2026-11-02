@@ -4334,3 +4334,102 @@ host (carried disclosure; the three open mori L0 lines re-verified
 unanswered and routed around). Assimilation: considerthese re-mined
 (newest-named 2026-10-26.md; suggestion 1 stays behind the operator's open
 instrument ruling). Assimilation: none — shokuknow unreachable.
+
+## Round 75 — Mori (L1 MoriR75): C1 calibration verified met (the r74 closure's carry-ins discharged — carry-in 1: the canonical 4-column capabilities-table row for the r74 C2 capability acquisition `tools/mori-rotation-schedule.py` backfilled append-only at SCORECARD end-of-file with the entering 3758 lines sha-identical; carry-in 2: the r74 report's −8 prose-decomposition precision correction of record — SHONEN −4 + the SKILL join −2 + the two SOURCES used-by replacements −2 = 8, no r74 artifact edited); C2 freshness verified met (the pin-family standing arm receipted as the NAMED practice step — the r74 planned head (b): when a rotation-family receipt lands, the same-round receipt carries the drift re-check's `--only S241` adjudication beside it — S581 byte-identical again, S241 equal-size asset churn persisting since r74 and re-adjudicated rc 0, teaching re-verified both methods); C3 depth landed, sourced S590 opened this round (the recurrence question as a RE-RUN — the r74 planned head (a): the stated schedule re-executed by the r74 instrument in a FRESH process, three sessions now with three different per-window classifications, the window-by-window comparison receipted entirely from committed receipts, the mechanism layer grounded by the new S590 row, knowledge entry `corpus/knowledge/rotation-series-r75.md` S1–S5)
+
+C1 (calibration, the r74 closure carry-ins): carry-in 1 — at entering, the
+canonical capability-row lead cell `| Rotation-recurrence schedule
+instrument` grepped 0 in SCORECARD and the canonical tables counted 25
+(`evidence/controls-r75.txt`); the backfill lands the row append-only at
+end-of-file (`## Round 75 backfill` block, canonical 4 columns name / what
+it can now do / evidence pointer / first-working round 74): SCORECARD 3758
+-> 3772 lines, prefix sha256 over the first 3758 lines UNCHANGED
+(043951b26b7ea13c74a06cd7abe7deacd43cc1cf4de2514cec18efa6271f9e27), the
+lead-cell grep 0 -> 1, canonical tables 25 -> 26 — the r74 section is
+frozen history and takes no in-place insert. Carry-in 2 — the precision
+correction of record: the r74 report body named the −8 as "SHONEN's four
+re-asserted box lines and SKILL.md's join" (6 of 8); the commit numstat
+(`git show dc50c80b --numstat`) shows the other 2 are the two SOURCES
+used-by in-place replacements (SHONEN +4/−4, SKILL +2/−2, SOURCES +3/−2) —
+the decomposition is recorded HERE and in the round report; no r74 artifact
+edited.
+
+C2 (freshness, the r74 planned head (b) landed as a named step): at
+entering, no r75 standing-arm receipt existed (`evidence/controls-r75.txt`
+rc 128). The step, now standing: a rotation-family receipt carries its
+same-round S241 adjudication beside it
+(`evidence/pin-family-rotrec-r75.txt`): S581 byte-IDENTICAL again (sha256
+equal, 16179 bytes); S241 DRIFTED again with the live sha EQUAL to the
+r74 live sha (ddb7ba17…) — the same equal-size asset-churn state persists
+(diff = the same 2 asset-URL pairs, build 0.4.03574.8308-9505b1c8 ->
+0.4.03589.8339-b0a05127); the standing instrument adjudicates
+(`python tools/mori-drift-recheck.py --root . --only S241` -> `S241
+asset-churn as-of=2026-11-02T10:31:13Z`, rows=1 adjudicated=1, rc 0); the
+teaching re-verified on the live body both methods (診断 line-count pin=3
+live=3; occurrence-count pin=6 live=6 — the r74 lesson's counting-method
+rule applied); pin immutable, no supersedes owed.
+
+C3 (depth, sourced S590 opened this round; the r74 planned head (a)):
+at entering, the r75 schedule receipt, the series entry and the
+challenge-action row were all absent (`evidence/controls-r75.txt`). The
+stated schedule re-executed by the r74 instrument in a FRESH process —
+same stated windows 31,91,304 (byte-identical posture: same URL, UA, pin),
+receipt `evidence/rotation-schedule-live-r75.txt`: 31s=no, 91s=no, 304s=no
+(all six capture legs one body state 34353de6db05), window_s_computed=
+31,91,304, wall_s=429, clock=monotonic, rc 0 — the FIRST single-state
+session. The series receipt `evidence/rotation-series-comparison-r75.txt`
+compares all three sessions window-by-window entirely from committed
+receipts (r70 shortwin-{a,b,c}-r70.txt; r74 and r75 live receipts): three
+sessions, three different per-window classifications; no stated window
+classified yes in every session; the two YESes landed at DIFFERENT windows
+in different sessions; 31s stayed no across all three; no TTL value
+decided. S590 (the AWS WAF CAPTCHA/Challenge action-behavior page,
+sweep-then-fetch receipted `evidence/source-s590-r75.txt` — the sweep ran
+BEFORE the fetch and rejected three guide-index-frame slugs; anchors
+machine-verified PASS items=3 + able-to-fail FAIL rc 1,
+`evidence/s590-anchor-check-r75.txt`) grounds the mechanism layer: a
+challenge solve updates the token with the challenge solve timestamp
+(`S590.html:138`) and the client resubmits with the UPDATED token (`:144`)
+— the mechanism consistent with per-response>0/same-bytes=false windows;
+the S580/S581 boundary intact. Knowledge entry
+`corpus/knowledge/rotation-series-r75.md` (S1–S5 + limits + boundaries).
+used-by in-place update (contract rule 2, logged): S589 used-by
+`corpus/knowledge/rotation-schedule-r74.md, corpus/lessons/round-74.md` ->
++ `, corpus/knowledge/rotation-series-r75.md`.
+
+Fresh start (r59–r61 rejected closures re-derived with own receipts
+`evidence/freshstart-spotchecks-r75.txt`: the frozen r61 counter -> C2=unmet
+rc 1 at the r61 data tip, the same verdict every closure reached; the eight
+lane revs PRESENT and ancestral rc 0 each; the three fleet report commits
+PRESENT) + do-nothing controls (`evidence/controls-r75.txt`: the canonical
+capability-row lead cell 0 in the entering SCORECARD; the standing-arm,
+schedule and series artifacts absent rc 128; no challenge-action row; the
+series entry absent — a do-nothing round reaches none of the claims).
+Ruled out (lesson `corpus/lessons/round-75.md`): the boot-scoped events
+window (the r73 discernment verdict stands, mori | round-65 L0 open); the
+label-sweep instrument (mori | round-73 L0, operator-material); the
+encoding-pin harness and pin-check mismatch split (L0-gated); the in-place
+insert of the capability row into the frozen r74 section; widening the
+schedule windows (the series is comparable only under the byte-identical
+stated schedule); scalar score moves; Linux-host surfaces; L2 dispatch (no
+surface on this host — carried disclosure).
+
+Census: validator rc 0 at round start (`evidence/census-start-r75.txt`,
+the tolerated 35 W04 duplicate-URL class) — end receipt at round close.
+Standing battery re-run over ALL ELEVEN registered instruments at this
+round's bytes, 11/11 rc 0 by the anchored form `grep -c "^rc=0$"` = 11
+(`evidence/selftests-battery-r75.txt`; backgrounded per the r74 lesson's
+process-spawn budget rule). Lesson
+`corpus/lessons/round-75.md`: mistakes mined (a counting command quoted
+into a receipt with a hand-derived count — the verbatim re-run printed
+2, the D73-2 class recurring and caught in-round; a docs host serving 404s
+as HTTP 200 with the frame page — three slugs rejected by reading their
+titles, the real page located from the S579 pin's topic tree; the
+process-spawn budget class recurring on the fleet-root census — now
+backgrounded by default; an unset shell variable turning a temp path into a
+dotfile named `.md` at the repo root — byte-verified with cmp and deleted,
+caught by the pre-commit untracked-dotfile sweep). L2: none — no dispatch surface on this host
+(carried disclosure; the three open mori L0 lines re-verified unanswered
+and routed around). Assimilation: considerthese re-mined (newest-named
+2026-10-26.md; suggestion 1 stays behind the operator's open instrument
+ruling). Assimilation: none — shokuknow unreachable.

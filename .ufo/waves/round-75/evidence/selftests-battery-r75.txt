@@ -1,0 +1,165 @@
+# mori r75 — the standing battery: every REGISTERED instrument's --selftest re-run at this round's bytes (registry row count 11 = battery line count 11)
+date: 2026-11-02T10:30:29Z; cwd = the lane repo root; plain-python posture; rc captured unpiped immediately after each run; every run offline fixture-based (no network, no live reads); backgrounded per the r74 lesson's process-spawn budget rule
+
+$ python tools/mori-rotation-schedule.py --selftest
+selftest schedule_parse               PASS
+selftest schedule_rejects_noninteger  PASS
+selftest window_from_stamps           PASS
+selftest classify_yes                 PASS
+selftest classify_no                  PASS
+selftest classify_bytes_only          PASS
+selftest unavailable_dead_leg         PASS
+selftest unavailable_compare_setup    PASS
+selftest unavailable_unparseable      PASS
+selftest redaction_stdout             PASS
+selftest integration_window0          PASS
+selftest missing_child_refused        PASS
+selftest windows_value_domain         PASS
+MORI_ROTATION_SCHEDULE_SELFTEST: PASS (13 cases)
+rc=0
+
+$ python tools/mori-anchor-check.py --selftest
+selftest located_ok       PASS
+selftest mislocated       PASS
+selftest wordcount_mismatch PASS
+selftest span_located     PASS
+selftest span_all_zero    PASS
+selftest mixed_multi_item PASS
+selftest redaction        PASS
+selftest missing_pin      PASS
+selftest malformed_spec   PASS
+selftest words_skipped    PASS
+selftest double_locate    PASS
+ANCHOR_CHECK_SELFTEST: PASS (11 cases)
+rc=0
+
+$ python tools/mori-ua-variance.py --selftest
+selftest separates_per_response_from_stable         PASS (rc=0,0,0 counts=('2', '4', '1', '3', '5', '5', '3'))
+selftest token_value_never_emitted                  PASS (compare output carries counts only, no line values)
+selftest summary_line_shape                         PASS (label + counts + run-start on one line)
+selftest identical_bodies_zero_per_response         PASS (per-response=0 same-bytes=true)
+selftest capture_failure_rc1_no_body                PASS (rc=1 out-written=False)
+selftest missing_input_exit2                        PASS (rc=2)
+selftest window_stated_when_given                   PASS (rc=0 window-s=1260)
+selftest window_unstated_marked_unavailable         PASS (rc=0 unstated-window field present=True)
+selftest window_rejects_non_integer                 PASS (rc=2 stdout-empty=True)
+selftest crosscheck_consistent                      PASS (rc=0 consistent-with-basis=True)
+selftest crosscheck_inconsistent_is_lead_not_failure PASS (rc=0 (a disagreement is a reported lead, never rc 1))
+selftest crosscheck_reverse_disagreement            PASS (rc=0 reverse-lead=True)
+selftest crosscheck_absent_unavailable              PASS (rc=0 absent-arm marked unavailable=True)
+selftest crosscheck_nonsummary_input_exit2          PASS (rc=2 (a provided file that is not a re-check summary is a setup error, matching --from-sweep strictness))
+MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)
+rc=0
+
+$ python tools/mori-uptime-win.py --selftest
+selftest grammar              PASS
+selftest unit_math            PASS
+selftest zero_is_real         PASS
+selftest honest_unavailable   PASS
+selftest negative_rejected    PASS
+selftest noninteger_rejected  PASS
+selftest redaction            PASS
+selftest uint64_max_rendered  PASS
+UPTIME_WIN_SELFTEST: PASS (8 cases)
+rc=0
+
+$ python tools/mori-workstate-win.py --selftest
+selftest grammar              PASS
+selftest unit_math            PASS
+selftest zero_is_real         PASS
+selftest honest_unavailable   PASS
+selftest negative_rejected    PASS
+selftest noninteger_rejected  PASS
+selftest redaction            PASS
+selftest uint64_max_rendered  PASS
+selftest delta_signed_shape   PASS
+selftest conversion_floor     PASS
+WORKSTATE_WIN_SELFTEST: PASS (10 cases)
+rc=0
+
+$ python tools/mori-events-context-win.py --selftest
+selftest pair_grammar         PASS
+selftest window_echo          PASS
+selftest events_unavailable   PASS
+selftest uptime_unavailable   PASS
+selftest unparseable_rejected PASS
+selftest fixture_missing      PASS
+selftest redaction            PASS
+selftest uptime_echo          PASS
+selftest partial_pairs        PASS
+selftest binding_line         PASS
+EVENTS_CONTEXT_SELFTEST: PASS (10 cases)
+rc=0
+
+$ python tools/mori-host-events-win.py --selftest
+PASS three_events_matched_partial_ok  rc=0
+PASS zero_is_a_real_zero  rc=0
+PASS window_cap  rc=0
+PASS partial_availability_honest  rc=0
+PASS all_unavailable_rc2_no_zeros  rc=2
+PASS malformed_reads_as_zero_not_crash  rc=0
+PASS redaction_counts_only  rc=0
+PASS output_shape_grammar  rc=0
+PASS usage_rc1_no_traceback  rc=1
+PASS window_default_echoed  rc=0
+HOST_EVENTS_WIN_SELFTEST pass=10 fail=0
+rc=0
+
+$ python tools/mori-runway-win.py --selftest
+selftest grammar              PASS
+selftest pct_math             PASS
+selftest zero_is_real         PASS
+selftest quota_boundary       PASS
+selftest honest_unavailable   PASS
+selftest partial              PASS
+selftest redaction            PASS
+selftest rc_contract          PASS
+selftest malformed_fixture    PASS
+RUNWAY_WIN_SELFTEST: PASS (9 cases)
+rc=0
+
+$ python tools/mori-receipt-complete.py --selftest
+RECEIPT_COMPLETE=complete failed_lines=1 anchors=14 truncated_tail=0 malformed=0 count_mismatch=0 receipt=full.txt
+finding count_mismatch:listed=5 derived rows-quotes_ok=14
+RECEIPT_COMPLETE=unmet failed_lines=1 anchors=5 truncated_tail=0 malformed=0 count_mismatch=1 receipt=cut.txt
+RECEIPT_COMPLETE=complete failed_lines=1 anchors=3 truncated_tail=0 malformed=0 count_mismatch=0 receipt=cut_nocount.txt
+RECEIPT_COMPLETE=complete failed_lines=1 anchors=0 truncated_tail=0 malformed=0 count_mismatch=0 receipt=none.txt
+RECEIPT_COMPLETE=complete failed_lines=1 anchors=3 truncated_tail=0 malformed=0 count_mismatch=0 receipt=refused.txt
+finding malformed:quote_w…x
+RECEIPT_COMPLETE=unmet failed_lines=1 anchors=2 truncated_tail=0 malformed=1 count_mismatch=0 receipt=malformed.txt
+finding count_mismatch:listed=13 --expect 14
+RECEIPT_COMPLETE=unmet failed_lines=1 anchors=13 truncated_tail=0 malformed=0 count_mismatch=1 receipt=short.txt
+RECEIPT_COMPLETE_SETUP unreadable: [Errno 2] No such file or directory: 'C:\\Users\\jpvei\\AppData\\Local\\Temp\\receipt-selftest-rgxgpefi\\absent.txt'
+PASS complete_list_expect_met  rc=0
+PASS r62_truncation_caught_by_derived_count  rc=1
+PASS boundary_cut_without_counters_undetected  rc=0
+PASS failed_none_complete  rc=0
+PASS class_and_bare_detail_tokens_ok  rc=0
+PASS malformed_mid_token  rc=1
+PASS expect_outranks_derived_count  rc=1
+PASS missing_file_setup  rc=2
+RECEIPT_COMPLETE_SELFTEST pass=8 fail=0
+rc=0
+
+$ python tools/mori-drift-adjudicate.py --selftest
+selftest row_tokens               PASS (got={'S901': 'receipt-open', 'S902': 'receipt-stale', 'S903': 'ua-serving', 'S904': 'content-drift', 'S905': 'gate', 'S906': 'unavailable', 'S907': 'pass-through fresh'} want={'S901': 'receipt-open', 'S902': 'receipt-stale', 'S903': 'ua-serving', 'S904': 'content-drift', 'S905': 'gate', 'S906': 'unavailable', 'S907': 'pass-through fresh'})
+selftest summary                  PASS (summary=('7', '6', '1', '1', '1', '1', '1', '1', '1'))
+selftest exit_code                PASS (rc=0 want 0)
+selftest header_line              PASS (second UA disclosed on the header line)
+selftest missing_sources_exit2    PASS (rc=2 want 2)
+MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)
+rc=0
+
+$ python tools/mori-drift-recheck.py --selftest
+selftest row_tokens               PASS (got={'S911': 'fresh', 'S912': 'time-churn', 'S913': 'asset-churn', 'S914': 'asset-churn', 'S915': 'content-drift', 'S916': 'ua-serving', 'S917': 'receipt-open', 'S918': 'unavailable'} want={'S911': 'fresh', 'S912': 'time-churn', 'S913': 'asset-churn', 'S914': 'asset-churn', 'S915': 'content-drift', 'S916': 'ua-serving', 'S917': 'receipt-open', 'S918': 'unavailable'})
+selftest as_of_on_every_row       PASS (every token row carries as-of=<ISO8601Z>)
+selftest summary                  PASS (summary=('8', '8', '1', '0', '1', '2', '1', '0', '1', '1', '0', '1', '2026-11-02T10:31:14Z..2026-11-02T10:31:15Z'))
+selftest exit_code                PASS (rc=0 want 0)
+selftest header_disclosure        PASS (second UA + both churn classes + from-sweep=- + run-start on the header line)
+selftest window_same_run          PASS (window bounds parse and are ordered (same-run snapshot pair))
+selftest parse_sweep_rows_not_summary PASS (row lines only (deduped), summary token kept separate: ids=['S156'] summary_n=17)
+selftest from_sweep_selects_drifted PASS (only the receipt's drifted rows adjudicated: rows=['S912', 'S913'] rc=0)
+selftest from_sweep_malformed_exit2 PASS (not-a-sweep rc=2; rows-vs-summary disagreement rc=2 (both want 2))
+selftest missing_sources_exit2    PASS (rc=2 want 2)
+MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)
+rc=0

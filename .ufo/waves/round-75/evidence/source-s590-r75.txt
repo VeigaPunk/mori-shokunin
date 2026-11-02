@@ -1,0 +1,24 @@
+# mori r75 — S590 opened this round: the AWS WAF CAPTCHA/Challenge action-behavior page (sweep-then-fetch)
+date: 2026-11-02T10:26:33Z; cwd = the lane repo root
+
+$ duplicate sweep ran BEFORE any fetch of the candidate URL: .ufo/waves/round-75/evidence/source-s590-sweep-r75.txt
+  (4 WAF rows at entering: S579 tokens-overview, S580 token-characteristics, S581/S586 immunity-times;
+   challenge-action topic grep = 0 rows; the waf-challenge/waf-challenge-action/challenge.html slugs probed
+   HTTP 200 but <title> resolved to the guide index — the 404-as-200 frame, rejected as the anchor surface;
+   the real page located FROM THE S579 PIN's own topic tree: waf-captcha-and-challenge.html ->
+   waf-captcha-and-challenge-how-it-works.html -> 'Action behavior' -> waf-captcha-and-challenge-actions.html)
+
+$ the fetch (completion moment on the line)
+run-start=2026-11-02T10:26:34Z
+cmd: curl -sS -m 60 -L https://docs.aws.amazon.com/waf/latest/developerguide/waf-captcha-and-challenge-actions.html -o corpus/evidence/sources-r75/S590.html
+<title>CAPTCHA and Challenge action behavior - AWS WAF, AWS Firewall Manager, AWS Shield Advanced, and AWS Shield network security director</title>
+19812 corpus/evidence/sources-r75/S590.html
+8bff4311b27061c944059a4300564347a3c04c6870b88198fa0b4dd0755037fa *corpus/evidence/sources-r75/S590.html
+pin lines: 144
+
+$ located-line + word-count labels (QUALITY 162; the wc -w arbiter on the located line; occurrences checked UNIQUE)
+a1: line 138 — 'it updates the token with the challenge solve timestamp.' — wc 9, occurrences 1 (the challenge solve timestamp the schedule's per-response rotations track)
+a2: line 144 — 'the script resubmits the original web request using the updated token.' — wc 11, occurrences 1 (the updated-token resubmission: WHY a client's later requests can carry a rotated fingerprint)
+a3: line 78 — 'AWS WAF discontinues the protection pack (web ACL) evaluation' — wc 9, occurrences 1 (fragment of a two-line sentence per the checker's declared span limit; the expired-token path)
+
+teaches: the Challenge action's behavior — a valid token passes like Count (no challenge, no rotation), an expired token blocks and the response carries the challenge interstitial, whose successful solve initializes-or-updates the token with the challenge solve timestamp and resubmits with the UPDATED token — the mechanism layer under the schedule instrument's per-response= counts (S580/S581 the token-clock scale).

@@ -1,0 +1,14 @@
+# mori r75 — the recurrence question as a RE-RUN: second instrument session of the stated schedule (the r74 planned head (a))
+date: 2026-11-02T10:29:09Z; cwd = the lane repo root; this is a FRESH SESSION process distinct from the r74 session (different process, later wall clock); the ONLY child is the registered ua-variance probe; stdout captured verbatim; every window line carries its own run-start= (QUALITY 160), every window its computed window-s= (QUALITY 161); capture files live in scratch and are deleted at round end — their sha12 prefixes travel on the lines
+
+posture: --url https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/linux/oom-swap-file-linux-vm (S241) --ua mori-source-drift/1.0 (the instrument UA, the r68-r75 posture) --pin corpus/evidence/sources-r42/S241.html --windows 31,91,304 (the r70/r74 stated windows, UNCHANGED so the series stays comparable) --label rotrec-r75
+
+-- captured stdout, run-start=2026-11-02T10:29:09Z (the wrapper's own header; the tool's lines carry their own stamps) --
+run-start=2026-11-02T10:29:10Z
+cmd: python tools/mori-rotation-schedule.py --url https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/linux/oom-swap-file-linux-vm --ua mori-source-drift/1.0 --pin corpus/evidence/sources-r42/S241.html --out-dir <scratch>/mori-r75/captures --windows 31,91,304 --label rotrec-r75
+ROTATION_SCHEDULE window=31s window-s=31 label=rotrec-r75 per-response=0 stable=1499 same-bytes=true rotated=no reason=na as-of-a=2026-11-02T10:29:11Z as-of-b=2026-11-02T10:29:42Z run-start=2026-11-02T10:29:42Z capture-a=34353de6db05 capture-b=34353de6db05
+ROTATION_SCHEDULE window=91s window-s=91 label=rotrec-r75 per-response=0 stable=1499 same-bytes=true rotated=no reason=na as-of-a=2026-11-02T10:29:43Z as-of-b=2026-11-02T10:31:14Z run-start=2026-11-02T10:31:14Z capture-a=34353de6db05 capture-b=34353de6db05
+ROTATION_SCHEDULE window=304s window-s=304 label=rotrec-r75 per-response=0 stable=1499 same-bytes=true rotated=no reason=na as-of-a=2026-11-02T10:31:15Z as-of-b=2026-11-02T10:36:19Z run-start=2026-11-02T10:36:19Z capture-a=34353de6db05 capture-b=34353de6db05
+ROTATION_SCHEDULE_SUMMARY label=rotrec-r75 windows=31,91,304 window_s_computed=31,91,304 rotated_yes=0 rotated_no=3 rotated_unavailable=0 clock=monotonic schedule_start=2026-11-02T10:29:10Z schedule_end=2026-11-02T10:36:19Z wall_s=429 rc=0
+rc=0
+run-end=2026-11-02T10:36:19Z

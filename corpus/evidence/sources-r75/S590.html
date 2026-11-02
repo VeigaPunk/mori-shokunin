@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml" lang="en-US"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>CAPTCHA and Challenge action behavior - AWS WAF, AWS Firewall Manager, AWS Shield Advanced, and AWS Shield network security director</title><meta name="viewport" content="width=device-width,initial-scale=1" /><meta name="assets_root" content="/assets" /><meta name="target_state" content="waf-captcha-and-challenge-actions" /><meta name="default_state" content="waf-captcha-and-challenge-actions" /><link rel="icon" type="image/ico" href="/assets/images/favicon.ico" /><link rel="shortcut icon" type="image/ico" href="/assets/images/favicon.ico" /><link rel="canonical" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" /><link rel="alternate" type="text/markdown" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-captcha-and-challenge-actions.md" title="Markdown version" /><meta name="description" content="Understand what the CAPTCHA and Challenge actions do." /><meta name="deployment_region" content="IAD" /><meta name="product" content="AWS WAF, AWS Firewall Manager, AWS Shield Advanced, and AWS Shield network security director" /><meta name="guide" content="Developer Guide" /><meta name="abstract" content="Describes how to get started with AWS WAF and AWS Firewall Manager, the AWS web application firewall services, Shield Advanced, which provides expanded DDoS attack protection, and AWS Shield network security director, which runs network analysiss and evaluates the security of AWS resources." /><meta name="guide-locale" content="en_us" /><meta name="tocs" content="toc-contents.json" /><link rel="canonical" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" /><link rel="alternate" href="https://docs.aws.amazon.com/id_id/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="id-id" /><link rel="alternate" href="https://docs.aws.amazon.com/id_id/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="id" /><link rel="alternate" href="https://docs.aws.amazon.com/de_de/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="de-de" /><link rel="alternate" href="https://docs.aws.amazon.com/de_de/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="de" /><link rel="alternate" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="en-us" /><link rel="alternate" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="en" /><link rel="alternate" href="https://docs.aws.amazon.com/es_es/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="es-es" /><link rel="alternate" href="https://docs.aws.amazon.com/es_es/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="es" /><link rel="alternate" href="https://docs.aws.amazon.com/fr_fr/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="fr-fr" /><link rel="alternate" href="https://docs.aws.amazon.com/fr_fr/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="fr" /><link rel="alternate" href="https://docs.aws.amazon.com/it_it/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="it-it" /><link rel="alternate" href="https://docs.aws.amazon.com/it_it/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="it" /><link rel="alternate" href="https://docs.aws.amazon.com/ja_jp/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="ja-jp" /><link rel="alternate" href="https://docs.aws.amazon.com/ja_jp/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="ja" /><link rel="alternate" href="https://docs.aws.amazon.com/ko_kr/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="ko-kr" /><link rel="alternate" href="https://docs.aws.amazon.com/ko_kr/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="ko" /><link rel="alternate" href="https://docs.aws.amazon.com/pt_br/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="pt-br" /><link rel="alternate" href="https://docs.aws.amazon.com/pt_br/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="pt" /><link rel="alternate" href="https://docs.aws.amazon.com/zh_cn/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="zh-cn" /><link rel="alternate" href="https://docs.aws.amazon.com/zh_tw/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="zh-tw" /><link rel="alternate" href="https://docs.aws.amazon.com/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" hreflang="x-default" /><meta name="feedback-item" content="AWS WAF" /><meta name="this_doc_product" content="AWS WAF, AWS Firewall Manager, AWS Shield Advanced, and AWS Shield network security director" /><meta name="this_doc_guide" content="Developer Guide" /><head xmlns="http://www.w3.org/1999/xhtml"> <script defer="" src="/assets/r/awsdocs-doc-page.2.0.0.js"></script><link href="/assets/r/awsdocs-doc-page.2.0.0.css" rel="stylesheet"/></head>
+<script defer="" id="awsc-panorama-bundle" type="text/javascript" src="https://prod.pa.cdn.uis.awsstatic.com/panorama-nav-init.js" data-config="{'appEntity':'aws-documentation','region':'us-east-1','service':'waf'}"></script><meta id="panorama-serviceSubSection" value="Developer Guide" /><meta id="panorama-serviceConsolePage" value="CAPTCHA and Challenge action behavior" /></head><body class="awsdocs awsui"><div class="awsdocs-container"><p><a href="waf-captcha-and-challenge-actions.md">View a markdown version of this page</a></p><awsdocs-header></awsdocs-header><awsui-app-layout id="app-layout" class="awsui-util-no-gutters" ng-controller="ContentController as $ctrl" header-selector="awsdocs-header" navigation-hide="false" navigation-width="$ctrl.navWidth" navigation-open="$ctrl.navOpen" navigation-change="$ctrl.onNavChange($event)" tools-hide="$ctrl.hideTools" tools-width="$ctrl.toolsWidth" tools-open="$ctrl.toolsOpen" tools-change="$ctrl.onToolsChange($event)"><div id="guide-toc" dom-region="navigation"><awsdocs-toc></awsdocs-toc></div><div id="main-column" dom-region="content" tabindex="-1"><awsdocs-view class="awsdocs-view"><div id="awsdocs-content"><head><title>CAPTCHA and Challenge action behavior - AWS WAF, AWS Firewall Manager, AWS Shield Advanced, and AWS Shield network security director</title><meta name="pdf" content="/pdfs/waf/latest/developerguide/waf-dg.pdf#waf-captcha-and-challenge-actions" /><meta name="rss" content="aws-waf-doc-history.rss" /><meta name="forums" content="https://repost.aws/tags/TAKdJ093DSSdGOQ1VVKX4EvQ" /><meta name="feedback" content="https://docs.aws.amazon.com/forms/aws-doc-feedback?hidden_service_name=AWS%20WAF&amp;topic_url=https://docs.aws.amazon.com/en_us/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" /><meta name="feedback-yes" content="feedbackyes.html?topic_url=https://docs.aws.amazon.com/en_us/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" /><meta name="feedback-no" content="feedbackno.html?topic_url=https://docs.aws.amazon.com/en_us/waf/latest/developerguide/waf-captcha-and-challenge-actions.html" /><meta name="keywords" content="AWS Firewall Manager,Firewall Manager,AWS WAF,web application firewall,firewall,ACL,access control list,CAPTCHA,Challenge,action,how it works" /><script type="application/ld+json">
+{
+    "@context" : "https://schema.org",
+    "@type" : "BreadcrumbList",
+    "itemListElement" : [
+      {
+        "@type" : "ListItem",
+        "position" : 1,
+        "name" : "AWS",
+        "item" : "https://aws.amazon.com"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 2,
+        "name" : "AWS WAF",
+        "item" : "https://docs.aws.amazon.com/waf/index.html"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 3,
+        "name" : "Developer Guide",
+        "item" : "https://docs.aws.amazon.com/waf/latest/developerguide"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 4,
+        "name" : "AWS WAF",
+        "item" : "https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 5,
+        "name" : "Intelligent threat mitigation in AWS WAF",
+        "item" : "https://docs.aws.amazon.com/waf/latest/developerguide/waf-managed-protections.html"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 6,
+        "name" : "CAPTCHA and Challenge in AWS WAF",
+        "item" : "https://docs.aws.amazon.com/waf/latest/developerguide/waf-captcha-and-challenge.html"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 7,
+        "name" : "How the AWS WAF CAPTCHA and Challenge rule actions work",
+        "item" : "https://docs.aws.amazon.com/waf/latest/developerguide/waf-captcha-and-challenge-how-it-works.html"
+      },
+      {
+        "@type" : "ListItem",
+        "position" : 8,
+        "name" : "CAPTCHA and Challenge action behavior",
+        "item" : "https://docs.aws.amazon.com/waf/latest/developerguide/waf-captcha-and-challenge-how-it-works.html"
+      }
+    ]
+}
+</script></head><body><div id="main"><div style="display: none"><a href="/pdfs/waf/latest/developerguide/waf-dg.pdf#waf-captcha-and-challenge-actions" target="_blank" rel="noopener noreferrer" title="Open PDF"></a></div><div id="breadcrumbs" class="breadcrumb"><a href="/index.html">Documentation</a><a href="/waf/index.html">AWS WAF</a><a href="what-is-aws-waf.html">Developer Guide</a></div><div id="main-content" class="awsui-util-container"><div id="main-col-body"><awsdocs-language-banner data-service="$ctrl.pageService"></awsdocs-language-banner><awsui-alert class="awsdocs-page-banner awsui-util-mb-l"><p><b>Introducing a new console experience for AWS WAF</b></p><p>You can now use the updated experience to access AWS WAF functionality anywhere in the console.
+				For more details, see <a href="https://docs.aws.amazon.com/waf/latest/developerguide/working-with-console.html">Working with the console</a>.
+			</p></awsui-alert><h1 class="topictitle" id="waf-captcha-and-challenge-actions">CAPTCHA and Challenge action behavior</h1><div class="awsdocs-page-header-container"><awsdocs-page-header></awsdocs-page-header><awsdocs-filter-selector id="awsdocs-filter-selector"></awsdocs-filter-selector></div><p>This section explains what the CAPTCHA and Challenge actions do.</p><p>When a web request matches the inspection criteria of a rule with CAPTCHA or
+				Challenge action, AWS WAF determines how to handle the request according to
+				the state of its token and immunity time configuration. AWS WAF also considers whether
+				the request can handle the CAPTCHA puzzle or challenge script interstitials. The scripts are
+				designed to be handled as HTML content, and they can only be handled properly by a
+				client that's expecting HTML content. </p><div class="awsdocs-note"><div class="awsdocs-note-title"><awsui-icon name="status-info" variant="link"></awsui-icon><h6>Note</h6></div><div class="awsdocs-note-text"><p>You are charged additional fees when you use the CAPTCHA or Challenge rule action in one of your rules or as a rule action override in a rule group. For more information, see <a href="https://aws.amazon.com/waf/pricing/" rel="noopener noreferrer" target="_blank"><span>AWS WAF Pricing</span><awsui-icon class="awsdocs-link-icon" name="external"></awsui-icon></a>.</p></div></div>
+				<h6>How the action handles the web request</h6>
+				<p>AWS WAF applies the CAPTCHA or Challenge action to a web request
+					as follows:</p>
+			<div class="itemizedlist">
+			 
+			 
+		    <ul class="itemizedlist"><li class="listitem">
+				<p><b>Valid token</b> – AWS WAF handles this similar to a
+						Count action. AWS WAF applies any labels and request customizations
+						that you've configured for the rule action, and then continues evaluating
+						the request using the remaining rules in the protection pack (web ACL). </p>
+			</li><li class="listitem">
+					<p><b>Missing, invalid, or expired token</b> – AWS WAF discontinues the protection pack (web ACL) evaluation
+						of the request and blocks it from going to its intended destination. </p>
+				<p>AWS WAF generates a response that it sends back to the client, according to the rule action type: </p>
+				<div class="itemizedlist">
+						 
+					 
+		            <ul class="itemizedlist"><li class="listitem">
+							<p><b>Challenge</b> – AWS WAF
+								includes the following in the response:</p>
+							<div class="itemizedlist">
+								 
+								 
+								 
+							<ul class="itemizedlist"><li class="listitem">
+									<p>The header <code class="code">x-amzn-waf-action</code> with a value of
+											<code class="code">challenge</code>.</p>
+									<div class="awsdocs-note"><div class="awsdocs-note-title"><awsui-icon name="status-info" variant="link"></awsui-icon><h6>Note</h6></div><div class="awsdocs-note-text"><p>For Javascript applications running in the client browser, this header is only available within the
+											application's domain. The header isn't available for cross-domain retrieval. For details, see the section that follows.</p></div></div>
+								</li><li class="listitem">
+									<p>The HTTP status code <code class="code">202 Request
+										Accepted</code>.</p>
+								</li><li class="listitem">
+									<p>If the request contains an <code class="code">Accept</code> header with
+										a value of <code class="code">text/html</code>, the response includes a
+										JavaScript page interstitial with a challenge script.</p>
+								</li></ul></div>
+						</li><li class="listitem">
+						<p><b>CAPTCHA</b> – AWS WAF includes the following
+								in the response:</p>
+						<div class="itemizedlist">
+							 
+							 
+							 
+						<ul class="itemizedlist"><li class="listitem">
+								<p>The header <code class="code">x-amzn-waf-action</code> with a value of
+										<code class="code">captcha</code>.</p>
+									<div class="awsdocs-note"><div class="awsdocs-note-title"><awsui-icon name="status-info" variant="link"></awsui-icon><h6>Note</h6></div><div class="awsdocs-note-text"><p>For Javascript applications running in the client browser, this header is only available within the
+											application's domain. The header isn't available for cross-domain retrieval. For details, see the section that follows.</p></div></div>
+							</li><li class="listitem">
+								<p>The HTTP status code <code class="code">405 Method Not Allowed</code>.</p>
+							</li><li class="listitem">
+								<p>If the request contains an <code class="code">Accept</code> header with a value of
+											<code class="code">text/html</code>, the response includes a
+										JavaScript page interstitial with a CAPTCHA script. </p>
+							</li></ul></div>
+					  </li></ul></div>
+			    </li></ul></div><p>To configure the timing of token expiration at the protection pack (web ACL) or rule level, see <a href="./waf-tokens-immunity-times.html">Setting timestamp expiration and token immunity times in AWS WAF</a>.</p>
+				<h6>Headers are unavailable to JavaScript applications that run in the client browser</h6>
+				<p>When AWS WAF responds to a client request with a CAPTCHA or challenge
+					response, it doesn't include cross-origin resource sharing (CORS) headers. CORS
+					headers are a set of access control headers that tell the client web browser
+					which domains, HTTP methods, and HTTP headers can be used by JavaScript
+					applications. Without CORS headers, JavaScript applications running in a client
+					browser are not granted access to HTTP headers and so are unable to read the
+						<code class="code">x-amzn-waf-action</code> header that's provided in the CAPTCHA
+					and Challenge responses. </p>
+			 
+				<h6>What the challenge and CAPTCHA interstitials do</h6>
+				<p>When a challenge interstitial runs, after the client responds successfully, if
+					it doesn't already have a token, the interstitial initializes one for it. Then
+					it updates the token with the challenge solve timestamp.</p>
+			<p>When a CAPTCHA interstitial runs, if the client doesn't have a token yet, the
+				CAPTCHA interstitial invokes the challenge script first to challenge the browser
+				and initialize the token. Then the interstitial runs its CAPTCHA puzzle. When the
+				end user successfully completes the puzzle, the interstitial updates the token with
+				the CAPTCHA solve timestamp. </p><p>In either case, after the client responds successfully and the script updates the
+				token, the script resubmits the original web request using the updated token. </p><p>You can configure how AWS WAF handles tokens. For information, see <a href="./waf-tokens.html">Token use in AWS WAF intelligent threat mitigation</a>.</p><awsdocs-copyright class="copyright-print"></awsdocs-copyright><awsdocs-thumb-feedback right-edge="{{$ctrl.thumbFeedbackRightEdge}}"></awsdocs-thumb-feedback></div><noscript><div><div><div><div id="js_error_message"><p><img src="https://d1ge0kk1l5kms0.cloudfront.net/images/G/01/webservices/console/warning.png" alt="Warning" /> <strong>Javascript is disabled or is unavailable in your browser.</strong></p><p>To use the Amazon Web Services Documentation, Javascript must be enabled. Please refer to your browser's Help pages for instructions.</p></div></div></div></div></noscript><div id="main-col-footer" class="awsui-util-font-size-0"><div id="doc-conventions"><a target="_top" href="/general/latest/gr/docconventions.html">Document Conventions</a></div><div class="prev-next"><div id="previous" class="prev-link" accesskey="p" href="./waf-captcha-and-challenge-how-it-works.html">How the rule actions work</div><div id="next" class="next-link" accesskey="n" href="./waf-captcha-and-challenge-logs-metrics.html">Logs and metrics</div></div></div><awsdocs-page-utilities></awsdocs-page-utilities></div><div id="quick-feedback-yes" style="display: none;"><div class="title">Did this page help you? - Yes</div><div class="content"><p>Thanks for letting us know we're doing a good job!</p><p>If you've got a moment, please tell us what we did right so we can do more of it.</p><p><awsui-button id="fblink" rel="noopener noreferrer" target="_blank" text="Feedback" click="linkClick($event)" href="https://docs.aws.amazon.com/forms/aws-doc-feedback?hidden_service_name=AWS WAF&amp;topic_url=https://docs.aws.amazon.com/en_us/waf/latest/developerguide/waf-captcha-and-challenge-actions.html"></awsui-button></p></div></div><div id="quick-feedback-no" style="display: none;"><div class="title">Did this page help you? - No</div><div class="content"><p>Thanks for letting us know this page needs work. We're sorry we let you down.</p><p>If you've got a moment, please tell us how we can make the documentation better.</p><p><awsui-button id="fblink" rel="noopener noreferrer" target="_blank" text="Feedback" click="linkClick($event)" href="https://docs.aws.amazon.com/forms/aws-doc-feedback?hidden_service_name=AWS WAF&amp;topic_url=https://docs.aws.amazon.com/en_us/waf/latest/developerguide/waf-captcha-and-challenge-actions.html"></awsui-button></p></div></div></div></body></div></awsdocs-view><div class="page-loading-indicator" id="page-loading-indicator"><awsui-spinner size="large"></awsui-spinner></div></div><div id="tools-panel" dom-region="tools"><awsdocs-tools-panel id="awsdocs-tools-panel"></awsdocs-tools-panel></div></awsui-app-layout><awsdocs-cookie-banner class="doc-cookie-banner"></awsdocs-cookie-banner></div></body></html>

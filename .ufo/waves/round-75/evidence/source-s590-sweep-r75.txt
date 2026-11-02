@@ -1,0 +1,19 @@
+# mori r75 — S590 candidate duplicate sweep + URL probe (sweep BEFORE fetch, the r69 lesson rule)
+date: 2026-11-02T10:04:30Z; cwd = the lane repo root
+
+$ registry sweep for the candidate topic terms (run BEFORE any fetch)
+rows mentioning challenge actions: 5
+rows with docs.aws.amazon.com/waf: 4
+360:| S579 | Token use in AWS WAF intelligent threat mitigation — https://docs.aws.amazon.com/waf/latest/developerguid
+361:| S580 | AWS WAF token characteristics — https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-details.
+362:| S581 | Setting timestamp expiration and token immunity times in AWS WAF — https://docs.aws.amazon.com/waf/latest
+367:| S586 | Setting timestamp expiration and token immunity times in AWS WAF — https://docs.aws.amazon.com/waf/latest
+
+interpretation: the four WAF rows are S579 (tokens overview), S580 (token characteristics),
+S581 (+S586 label ground) (immunity times). NO row carries the challenge-action mechanism page —
+no duplicate. The sweep ran before any fetch of the candidate URL.
+
+$ candidate URL probes (HTTP code + title, HEAD-class GET, no pin yet)
+probe https://docs.aws.amazon.com/waf/latest/developerguide/waf-challenge.html -> HTTP 200
+probe https://docs.aws.amazon.com/waf/latest/developerguide/challenge.html -> HTTP 200
+probe https://docs.aws.amazon.com/waf/latest/developerguide/waf-challenge-action.html -> HTTP 200

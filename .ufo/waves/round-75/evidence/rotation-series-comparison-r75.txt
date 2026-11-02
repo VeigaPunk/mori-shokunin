@@ -1,0 +1,37 @@
+# mori r75 — the two-session series made THREE: window-by-window comparison of the stated schedule across the committed sessions (the r74 planned head (a) landed)
+date: 2026-11-02T10:40:48Z; every per-window datum below is quoted FROM A COMMITTED RECEIPT (each line names its file); no capture body is committed (K5 discipline); the schedule and its stated windows (31,91,304) are byte-identical across the two instrument sessions
+
+session 1 — r70 hand-run (three separate A/A pairs), receipts .ufo/waves/round-70/evidence/shortwin-{a,b,c}-r70.txt:
+  31s: per-response=0 same-bytes=true sha e4bf924c6a65 both legs (shortwin-a) -> rotated=no
+  91s: per-response=4 same-bytes=false sha e4bf924c6a65 -> 6e7b906d223e (shortwin-b) -> rotated=YES
+  304s: per-response=0 same-bytes=true sha 6e7b906d223e both legs (shortwin-c) -> rotated=no
+
+session 2 — r74 instrument run (first live run of tools/mori-rotation-schedule.py), receipt .ufo/waves/round-74/evidence/rotation-schedule-live-r74.txt:
+  31s: per-response=0 same-bytes=true sha 3e0ece8127c6 both legs -> rotated=no
+  91s: per-response=0 same-bytes=true sha 3e0ece8127c6 both legs -> rotated=no
+  304s: per-response=4 same-bytes=false sha 3e0ece8127c6 -> 5d88b3cc6039 -> rotated=YES
+
+session 3 — r75 instrument run (THIS round, fresh process, same stated windows, same pin, same UA posture), receipt .ufo/waves/round-75/evidence/rotation-schedule-live-r75.txt:
+  31s: per-response=0 same-bytes=true sha 34353de6db05 both legs -> rotated=no
+  91s: per-response=0 same-bytes=true sha 34353de6db05 both legs -> rotated=no
+  304s: per-response=0 same-bytes=true sha 34353de6db05 both legs -> rotated=no
+
+-- window-by-window across the three sessions --
+| stated window | r70 | r74 | r75 |
+|---|---|---|---|
+| 31s  | no  | no  | no  |
+| 91s  | YES | no  | no  |
+| 304s | no  | YES | no  |
+
+-- the reading (no TTL value decided, S580/S581 boundary intact) --
+1. No stated window classified rotated=yes in EVERY session; each of the two YES observations occurred in exactly one session, at DIFFERENT windows (91s in r70, 304s in r74). The per-window classification is not a stable function of the stated window: the recurrence question's honest three-session answer is that rotation-class events appear within the 91-304 s scale in two of three sessions, at unpredictable windows.
+2. The 31s window stayed no across all three sessions — the short bound is the only stable reading so far (still three observations, not a law).
+3. Body states: every session saw state(s) the others did not (r70 e4bf924c/6e7b906d; r74 3e0ece81/5d88b3cc; r75 34353de6 across all six legs) — the serving's state SET is not stable either, and r75 is the first single-state session (a session can contain no rotation at any stated window).
+4. Mechanism layer (NEW ground, S590 opened this round): the schedule's per-response arm observes the token-update machinery — a challenge interstitial's successful solve updates the token with the challenge solve timestamp and the client resubmits with the UPDATED token (S590.html:138 and :144, anchor-check-verified) — so per-response>0/same-bytes=false windows are consistent with a challenge solve landing inside the observation window; the receipts decide no TTL value and no vendor verdict.
+5. Stamp resolution (within design): window_s_computed=31,91,304 exactly in both instrument sessions — each computed window derives from the children's own as-of stamps at 1-second resolution and may read one second off the stated value (QUALITY 161: the caller computes the gap); this run showed none.
+
+-- counting commands --
+grep -c "ROTATION_SCHEDULE window=" .ufo/waves/round-75/evidence/rotation-schedule-live-r75.txt   # 3
+grep -c "ROTATION_SCHEDULE window=.*rotated=no" .ufo/waves/round-75/evidence/rotation-schedule-live-r75.txt   # 3 (the anchored run-result form; the D73-2 discriminator — the LITERAL grep -c "rotated=no" prints 3 too because this r75 receipt's prose happens to carry no extra rotated=no line, checked)
+grep -c "ROTATION_SCHEDULE window=.*rotated=yes" .ufo/waves/round-74/evidence/rotation-schedule-live-r74.txt  # 1 (anchored; the LITERAL grep -c "rotated=yes" prints 2 = 1 run-result line + 1 prose reading line — the D73-2 decomposition named here)
+grep -c "per-response=4" .ufo/waves/round-70/evidence/shortwin-b-r70.txt                           # 1 (the r70 91s YES arm)
