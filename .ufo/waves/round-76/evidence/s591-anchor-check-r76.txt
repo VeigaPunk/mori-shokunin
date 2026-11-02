@@ -1,0 +1,14 @@
+# mori r76 — S591 anchors machine-verified by the r72 anchor-checker (QUALITY 162 made runnable)
+date: 2026-11-02T13:25:06Z; pin corpus/evidence/sources-r76/S591.html (106427 bytes, sha256 233893693810754dbd4122a9a43320596a381e179a38ade6636e294d2dbffc1c)
+
+$ run A — the recorded anchors (PASS expected, rc 0)
+$ python tools/mori-anchor-check.py --pin corpus/evidence/sources-r76/S591.html --check "qpc_monotonic|918|6|Yes. QPC does not go backward." --check "qpc_independent_utc|863|9|is completely independent of the system time and UTC."
+anchor item=qpc_monotonic span=918 verdict=ok located_on=918 occurrences=1 words_counted=6 words_recorded=6
+anchor item=qpc_independent_utc span=863 verdict=ok located_on=863 occurrences=1 words_counted=9 words_recorded=9
+ANCHOR_CHECK: PASS items=2 ok=2 pin_sha256=233893693810754dbd4122a9a43320596a381e179a38ade6636e294d2dbffc1c pin_bytes=106427
+rc=0
+
+$ run B — the able-to-fail arm: the monotonic anchor recorded at the WRONG line (863) and a mutated word-count (7) must FAIL rc 1
+anchor item=qpc_monotonic span=863 verdict=mislocated located_on=- occurrences=0 words_counted=- words_recorded=7
+ANCHOR_CHECK: FAIL items=1 ok=0 mislocated=1 wordcount_mismatch=0 pin_sha256=233893693810754dbd4122a9a43320596a381e179a38ade6636e294d2dbffc1c pin_bytes=106427
+rc=1

@@ -1,0 +1,23 @@
+# mori round-76 do-nothing controls at entering fdb11b1d8d9d9ead6bf1ad17d699d7cf4b39acc4
+date: 2026-11-02T13:29:16Z; cwd = the lane repo root; all counts against COMMITTED entering bytes (git show <entering>:...)
+
+$ C1a: the precision correction of record present at entering?
+LOG 'backfill-only intermediate' rows: 0
+
+$ C1b: the retrospective knowledge-index repair present at entering?
+README 'retrospective knowledge-index repair' rows: 0
+README lines at entering: 808
+README sha256 at entering: fbe94947b590e107d4c71b70e9b823491592d73c717792f69d82c8af921962eb
+knowledge .md entries at entering (committed tree listing): 82
+unindexed knowledge entries at entering (committed README vs committed knowledge listing): 17
+
+$ C2: the SKILL receipt-grammar section present at entering?
+SKILL '^## Round76' rows: 0
+SKILL lines at entering: 1327
+SOURCES rows with the new-row URL at entering: 0
+grammar entry cat-file rc=128 (128 = absent)
+
+$ C3: the r76 pin-family receipt absent at entering?
+pin-family receipt cat-file rc=128 (128 = absent)
+
+a do-nothing round reaches none of the three claims' after-states.

@@ -4433,3 +4433,130 @@ caught by the pre-commit untracked-dotfile sweep). L2: none — no dispatch surf
 and routed around). Assimilation: considerthese re-mined (newest-named
 2026-10-26.md; suggestion 1 stays behind the operator's open instrument
 ruling). Assimilation: none — shokuknow unreachable.
+
+## Round 76 — Mori (L1 MoriR76): C1 calibration landed (both r75 closure carry-ins discharged — carry-in 1: the scorecard line-count precision correction of record, the r75 report's "SCORECARD 3758 → 3772 lines" naming the backfill-only intermediate while the committed file at `32132cfb` is 3819 lines, +61 = blank 3759 + the backfill block 3760–3773 (14 lines) + the Round 75 section 3774–3819 (46 lines), numstat +61/−0, both deltas now stated so the after-count is re-derivable at the cited commit, no r75 artifact edited; carry-in 2: the corpus README retrospective knowledge-index repair — 17 unindexed knowledge entries at entering (`fdb11b1d`, README 808 lines sha `fbe94947…`) indexed by an append-only Round-19-shaped section, unindexed 17 → 0, README 808 → 852 with the entering 808 lines sha-identical, the three rejected-closure entries (r59/r60/r61) indexed with their honest status named); C2 depth landed, sourced S591 opened this round (the r75 planned head (a): the r70–r75 receipt grammar distilled into a SKILL.md end-section decision table at the registry home — 1327 → 1351 lines, the SKILL:905 tally pin grep 1, the entering 1327 lines sha `8e287544…` byte-identical; prose ground `corpus/knowledge/rotation-receipt-grammar-r76.md`; S591 the Microsoft QPC guidance page opened sweep-then-fetch with title check and machine-verified anchors — SOURCES 363 → 364, S581/S589/S590 used-by updated in place old→new logged); C3 freshness landed (the standing pin-family re-verification continued over the receipt-grammar family — S581 IDENTICAL, S590 IDENTICAL, S241 DRIFTED with the live sha EQUAL to the r74/r75 live sha `ddb7ba17…` re-adjudicated `asset-churn` rc 0, teaching re-verified 3/3 lines and 6/6 occurrences, AND S589 DRIFTED stamp-only `time-churn` — the Python docs page regenerated today, 2 changed lines, stamp 03:08 → 13:28 UTC, the monotonic-definition anchors holding at :524-525 and the stamp line at :1553 in both bodies — the instrument classifying rows=4 adjudicated=4 rc 0, no supersedes owed)
+
+Fresh start (r59–r61 rejected closures re-derived with own receipts
+`.ufo/waves/round-76/evidence/freshstart-spotchecks-r76.txt`: the frozen r61
+counter re-derived at the r61 data tip (`python -I
+.ufo/waves/round-61/count-c2.py 986d4b46…` → `C2=unmet` rc 1, the same verdict
+every closure and the r65–r75 re-derivations reached); the eight r59/r60/r61
+lane revs PRESENT and `merge-base --is-ancestor` of refs/heads/master rc 0
+each; the three fleet report commits PRESENT) + do-nothing controls
+(`.ufo/waves/round-76/evidence/controls-r76.txt`: the precision correction 0
+in the entering LOG; the index-repair heading 0 in the entering README; the
+SKILL `^## Round76` rows 0; the new-row URL 0 in entering SOURCES; the grammar
+entry and the pin-family receipt absent rc 128; the unindexed-knowledge loop
+17 at entering — a do-nothing round reaches none of the claims).
+
+Ruled out as r76 claims, and why (the fresh-start duty; carried from r75's
+list where still true): (1) the boot-scoped events window — the r73 closure's
+discernment verdict stands while the mori | round-65 L0 stays open (re-verified
+unanswered this round); (2) the label-sweep instrument (mori | round-73 L0) —
+operator-material, not lane-claimed; (3) the encoding-pin harness and the
+pin-check mismatch split — behind the same open instrument-change ruling;
+(4) a fourth same-day schedule session — the r75 planned head (d) stands, the
+series waits for wall-clock distance; (5) scalar score moves — no closure
+states a new number; (6) Linux-host live surfaces and L2 dispatch — absent on
+this host (carried disclosure); (7) editing the r59–r61 entries' bytes or
+re-trying their claims — the repair indexes them with honest status notes;
+(8) in-place edits to the README's existing lines — the repair is append-only
+(Round-19 shape; entering sha proven).
+
+Claim measurements (all at lane `fdb11b1d` → this round's commit):
+
+- C1a: `git show 32132cfb:SCORECARD.md | grep -c ""` → 3819;
+  `git show 32132cfb:SCORECARD.md | grep -n "^## Round 75"` → 3760 and 3774;
+  `git show 32132cfb --numstat -- SCORECARD.md` → 61/0. After: the correction
+  of record in this LOG entry and the round report (grep
+  "backfill-only intermediate" LOG.md → 2 = 1 correction sentence + 1 this
+  command itself — the D73-2 anchored-decomposition form; the plain count is
+  not 1). No r75 artifact edited.
+- C1b: before `git show fdb11b1d:corpus/README.md | grep -c "retrospective
+  knowledge-index repair"` → 0; the unindexed loop (each committed knowledge
+  basename grepped in the committed README) → 17. After: the loop → 0;
+  `grep -c "retrospective knowledge-index repair" corpus/README.md` → 1;
+  `wc -l corpus/README.md` → 852 (846 at the retrospective-repair stop; the same-round
+  knowledge-addition subsection — the r76 entry indexed the round it lands, the drift
+  class not re-created — brings 846 → 852); `head -808 corpus/README.md | sha256sum` →
+  `fbe94947b590e107d4c71b70e9b823491592d73c717792f69d82c8af921962eb` (the
+  entering sha — every entering byte unchanged).
+- C2: before `git show fdb11b1d:SKILL.md | grep -c "^## Round76"` → 0; SKILL
+  1327 lines sha `8e2875446f8e629a3cc9d8270e7ea29a15c7b590b49558def2df3b8e99c78826`.
+  After: `grep -c "^## Round76" SKILL.md` → 1; `wc -l SKILL.md` → 1351;
+  `head -1327 SKILL.md | sha256sum` → the entering sha;
+  `sed -n '905p' SKILL.md | grep -c "PASS (6 cases)"` → 1; the grammar entry
+  exists (`git cat-file -e` rc 128 at entering → rc 0 at the landing commit);
+  S591 anchors machine-verified (`.ufo/waves/round-76/evidence/s591-anchor-check-r76.txt`:
+  PASS items=2 rc 0, able-to-fail FAIL rc 1); SOURCES rows
+  `grep -cE '^\|[[:space:]]*S[0-9]{3,}[[:space:]]*\|' corpus/SOURCES.md`
+  363 → 364, badNF=0 over all 364; used-by in-place updates logged:
+  S581 `corpus/lessons/round-70.md, corpus/knowledge/rotation-schedule-r74.md`
+  → `…, corpus/knowledge/rotation-receipt-grammar-r76.md`; S589
+  `corpus/knowledge/rotation-schedule-r74.md, corpus/lessons/round-74.md,
+  corpus/knowledge/rotation-series-r75.md` → `…,
+  corpus/knowledge/rotation-receipt-grammar-r76.md`; S590
+  `corpus/knowledge/rotation-series-r75.md, corpus/lessons/round-75.md` →
+  `…, corpus/knowledge/rotation-receipt-grammar-r76.md`. Status/recheck cells
+  untouched.
+- C3: receipt `.ufo/waves/round-76/evidence/pin-family-r76.txt` (the fetch
+  rule: every live URL read from the row, never from memory — draft-1
+  disclosure inside): S241 DRIFTED pin `1168b2a6…` live `ddb7ba17…` (the SAME
+  live sha as r74/r75 — the persistent asset-churn state; diff = the same 2
+  asset-URL pairs 0.4.03574.8308-9505b1c8 → 0.4.03589.8339-b0a05127),
+  re-adjudicated by the standing instrument with the family
+  (`python tools/mori-drift-recheck.py --root . --only
+  S241,S581,S589,S590` → rows=4 adjudicated=4 fresh=2 time-churn=1
+  asset-churn=1, rc 0); S581 IDENTICAL `5e5b941e…`; S590 IDENTICAL
+  `8bff4311…`; S589 DRIFTED `c8cc430e…` → `29167186…` — stamp-only
+  `time-churn` (2 changed lines, "Last updated on Nov 02, 2026 (03:08 UTC)"
+  → "(13:28 UTC)"; the stamp line at :1553 in BOTH bodies; the
+  monotonic-definition anchors :524-525 present in the live body; teaching
+  holds); S241 teaching re-verified both methods (pin lines=3 live lines=3;
+  pin occurrences=6 live occurrences=6); no supersedes row owed (anchors hold
+  on the pins; the S589 row's pin is immutable and the live page holds the
+  same anchors).
+
+Selftests: the standing battery re-run over ALL ELEVEN registered instruments
+at this round's bytes, 11/11 rc 0 by the anchored form `grep -c "^rc=0$"` = 11
+(`.ufo/waves/round-76/evidence/selftests-battery-r76.txt`; backgrounded per
+the r74 lesson's process-spawn budget rule; plain-python posture, rc captured
+unpiped; the r71 PYTHONUTF8/`-I` disclosure and the r65 loopback-transport
+disclosure stand). Census: validator rc 0 at round start
+(`evidence/census-start-r76.txt`, the tolerated 35 W04 duplicate-URL class) →
+end receipt at round close. Lesson `corpus/lessons/round-76.md`: mistakes
+mined (a receipt fetch URL guessed from memory instead of read from the
+registry row — the draft-1 404 caught by the receipt's own title check; a
+SOURCES row field carrying the page title's literal pipe separator splitting
+the row to NF=14, caught by the standing badNF check; a receipt's rc captured
+after a pipe reporting the wrong rc, caught by re-reading the receipt against
+the r75 form; the heredoc-append truncation class RECURRED on the LOG append —
+the r74 lesson's fix applied again, the file restored from the committed bytes
+and the entry re-appended by file copy; the routed number-drift class from the
+r75 closure — state both deltas so the after-count is re-derivable at the
+cited commit). L2: none — no dispatch surface on this host (carried
+disclosure; the three open mori L0 lines — round-62, round-65, round-73 —
+re-verified unanswered this round, routed around, never treated as answered).
+Assimilation: considerthese re-mined (all eight files re-listed;
+newest-named 2026-10-26.md): suggestion 1 (split pin-check mismatches into
+"can't run here" vs "stale") remains the one still-unimplemented proposal and
+remains behind the operator's open instrument-change ruling. Assimilation:
+none — shokuknow unreachable.
+
+Foreign-evidence disclosure (detection and report only): three receipt files
+exist in the round-76 worktree evidence directory that THIS L1 did not author —
+`.ufo/waves/round-76/evidence/source-s591-sweep-r76.txt` (mtime 12:25Z),
+`s591-source-r76.txt` (12:44Z) and `win-family-live-r76.txt` (12:48Z), all
+written between this round's dispatch (11:54Z) and this L1's first evidence
+write (13:05Z), and none committed by any lane commit (HEAD at entering was
+this L1's own entering tip). They carry a DIFFERENT round-76 plan: an S591
+naming the Event-ID-41 kernel-power page with a claimed pin of 67455 bytes sha
+`9613e8b0…` at the SAME pin path this round landed (`corpus/evidence/sources-r76/S591.html`
+— the landed pin is THIS L1's QPC copy, 106427 bytes sha `23389369…`,
+machine-verified by this round's own anchor-check receipt), plus a live
+win-family re-read receipt over the registered probes. They are internally
+coherent but unverifiable by this author, and their claimed pin no longer
+exists on disk (this round's fetch wrote the path later); they are therefore
+NOT committed and NOT cited as evidence anywhere in this round's records —
+left in the worktree for the operator/orchestrator to disposition (a
+misrooted/foreign-evidence finding, reported not absorbed).

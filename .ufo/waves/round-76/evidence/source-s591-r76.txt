@@ -1,0 +1,20 @@
+# mori r76 — S591 candidate duplicate sweep + URL probe + pinned fetch (sweep BEFORE fetch, the r69 lesson rule)
+date: 2026-11-02T13:22:31Z; cwd = the lane repo root
+
+$ registry sweep for the candidate topic terms (run BEFORE any fetch)
+rows with docs.aws URL acquiring-high-resolution: 0
+rows with win32/sysinfo URL: 0
+
+interpretation: no row IS the Microsoft QPC guidance page; S589 (the Python time page) MENTIONS the
+Windows QueryPerformanceCounter note at :529 located-unopened — a mention inside another page's row,
+not a duplicate of the vendor's own QPC page. No URL duplicate; the sweep ran before any fetch.
+
+$ candidate URL probe (HTTP code + resolved page title — the r75 lesson's check-the-title rule)
+probe HTTP 200
+<title>Acquiring high-resolution time stamps - Win32 apps | Microsoft Learn</title>
+
+$ pinned fetch
+curl rc=0
+233893693810754dbd4122a9a43320596a381e179a38ade6636e294d2dbffc1c *corpus/evidence/sources-r76/S591.html
+106427 corpus/evidence/sources-r76/S591.html
+<title>Acquiring high-resolution time stamps - Win32 apps | Microsoft Learn</title>

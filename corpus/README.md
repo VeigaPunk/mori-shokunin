@@ -806,3 +806,47 @@ Append-only correction to Round54: the r54 C1 scope did not include these four p
 |---|---|---|
 | Existing Core FR5 driver-liveness parser semantics | `knowledge/driver-events-r58.md` (S550) | Adds eleven source-located implementation details on lane/round token boundaries, timestamp conversion, event-specific regular expressions and malformed-example sampling; deepens the existing Core tool without moving Frontier ground or claiming a lane-health verdict. |
 
+
+## Round76 retrospective knowledge-index repair (r40–r75 stragglers; the r75 closure's routed carry-in 2; not new growth)
+
+The round-75 closure routed a pre-existing corpus-index drift observation: this
+index's round-sections and knowledge rows end at round 58 while the knowledge
+registry holds r59–r75 entries (plus six older stragglers) with no rows here —
+17 unindexed entries at the entering tip (`fdb11b1d`: README 808 lines, sha
+`fbe94947b590e107d4c71b70e9b823491592d73c717792f69d82c8af921962eb`). Their
+missing rows did not justify any new-growth claim: every entry below predates
+this round, nothing new is explored, and the repair follows this file's own
+Round19 precedent shape (a retrospective table, not a coverage claim). This
+append-only section indexes all 17; every line above is byte-and-line unchanged.
+The unindexed count is 0 after this section (the counting loop in the round-76
+LOG entry and report).
+
+| Existing ground | Existing entry | Scope retained |
+|---|---|---|
+| Wave-result artifact shape (r59) | `knowledge/wave-settlement-artifacts-r59.md` | Artifact-shape facts only; round 59 closed rejected-honest-stop, so no capability claim rides on it; result acceptance stays kumitate-owned |
+| Entry-claims hardening rules (r60 routed findings) | `knowledge/entry-claims-hardening-r60.md` | The entry-claims checker's rules against claim-text/spans/grammar/binding and unpinned-byte defects; round 60 closed rejected-honest-stop |
+| PSI claim-table recheck at Linux v7.3 (r61) | `knowledge/psi-v73-recheck-r61.md` | The 46-row recheck receipted from pinned v7.3 copies; round 61 closed rejected-honest-stop and its C2 verdict stays unmet on the frozen counter (re-derived rc 1 every r65–r76 spotcheck) |
+| Cgroup pressure probe ground (r62) | `knowledge/cgroup-pressure-r62.md` | The r62 probe reads honest `PRESSURE_UNAVAILABLE (absent=4)` on the Windows workspace host; the Linux census gates unchanged |
+| Windows host-event surface (r63) | `knowledge/host-events-win-r63.md` | The wevtutil counts-only probe (S572/S573): counts/shapes only, no message text or timestamps |
+| Windows runway read (r64) | `knowledge/runway-win-r64.md` | The GlobalMemoryStatusEx + GetDiskFreeSpaceExW probe (S574/S575): counts/shapes only, no series |
+| FR5 driver-liveness parser semantics (r57) | `knowledge/watchdog-unclosed-r57.md` | The r57 driver-liveness entry (S548): log-shape facts only, no lane-health verdict |
+| r43 successor cwd measurement | `knowledge/c1s-cwd-r43.md` | The successor measurement's cwd acceptance note (r43 wave record) |
+| r40 timeout-fold scope | `knowledge/conform-scope-r40.md` | Why the conformance timeout fold is scope-aware (conformance-v3 ground) |
+| r42 binding-event order | `knowledge/conform-source-order-r42.md` | Why the conformance checker sorts binding events (walk order unspecified) |
+| d72ac16 inheritance naming (r42) | `knowledge/inheritance-d72ac16-r42.md` | The 145 unnamed files named (the r42 inheritance record) |
+| S235 anchor correction (r43) | `knowledge/s235-sha-correction-r43.md` | S235's transposed anchor sha256 noted by erratum; the row itself not rewritten |
+| Windows host-uptime read (r70) | `knowledge/uptime-win-r70.md` | The GetTickCount64 probe (S582/S583): counts only, `count=biased` on every line |
+| Windows working-state pair (r71) | `knowledge/workstate-win-r71.md` | The biased-vs-unbiased pair (S584/S585): counts only with the read-model token |
+| Windows boot-anchor candidate (r73) | `knowledge/boot-anchor-win-r73.md` | The r73 event-surface anchor (S588) is a CANDIDATE; the boot-scoped events window stays unlanded behind the r73 discernment verdict while the mori | round-65 L0 stays open |
+| Rotation-recurrence schedule (r74) | `knowledge/rotation-schedule-r74.md` | The schedule instrument (S589): stated windows 31/91/304, monotonic clock, no TTL decided |
+| Three-session recurrence series (r75) | `knowledge/rotation-series-r75.md` | The r75 series (S590): three sessions, three per-window classifications, the mechanism layer, no TTL decided |
+
+Retrospective index/table repairs are not newly explored frontier ground (the
+Round19 section's own words). Scope notes above name the honest status of the
+three rejected-closure entries (r59/r60/r61) rather than silently adopting them.
+
+## Round-76 knowledge addition — the receipt grammar (new growth, indexed the round it lands)
+
+| Ground | Entry | Bounded advance |
+|---|---|---|
+| The rotation-receipt reading grammar (r70–r75 rounds distilled; r75 planned head (a)) | `knowledge/rotation-receipt-grammar-r76.md` (S591) | Per-window yes/no/unavailable meanings, the clock leg grounded at both layers (S589 invariant + S591 vendor QPC guidance), the documented scale and mechanism layers restated, the no-TTL boundary intact; the SKILL.md end-section decision table is the teachable form (append-only, the SKILL:905 pin untouched). No new session, no window change, no TTL decided. |

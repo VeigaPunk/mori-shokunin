@@ -1,0 +1,87 @@
+# mori r76 — the standing pin-family re-verification continued: the receipt-grammar family the round's table teaches
+date: 2026-11-02T13:47:08Z; every fetch is a read of a public vendor page into scratch; the lane writes only its own receipts. This is the r72-launched standing practice extended to the round's own family (the r74 C3 / r75 C2 pattern); NO schedule session is run (the r75 planned head (d) stands).
+FETCH RULE this round: every live URL is READ FROM THE ROW in corpus/SOURCES.md, never from memory (draft-1 disclosure at the end of this receipt).
+
+$ pinned copies and their recorded shas
+1168b2a626ec4b69fbdf7341ae3331c16ff0e42667d67488762b30e206591357 *corpus/evidence/sources-r42/S241.html
+5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865 *corpus/evidence/sources-r70/S581.html
+c8cc430e04d232f9e67412eae254a2c67ad153b4bde78121f83f2389739e91c7 *corpus/evidence/sources-r74/S589.html
+8bff4311b27061c944059a4300564347a3c04c6870b88198fa0b4dd0755037fa *corpus/evidence/sources-r75/S590.html
+ 53963 corpus/evidence/sources-r42/S241.html
+ 16179 corpus/evidence/sources-r70/S581.html
+129606 corpus/evidence/sources-r74/S589.html
+ 19812 corpus/evidence/sources-r75/S590.html
+219560 total
+
+$ the rows' own URLs (read from the registry, the fetch rule above)
+
+$ live re-opens of the ROWS' URLs (curl -sS -m 60 -L, rc + resolved title captured)
+s241 curl rc=0 title: <title>Linux Azure仮想マシンでメモリ不足エラーが発生する - Virtual Machines | Microsoft Learn</title>
+s581 curl rc=0 title: <title>Setting timestamp expiration and token immunity times in AWS WAF - AWS WAF, AWS Firewall Manager, AWS Shield Advanced, and AWS Shield network security director</title>
+s589 curl rc=0 title: <title>time — Time access and conversions &#8212; Python 3.15.2 documentation</title>
+s590 curl rc=0 title: <title>CAPTCHA and Challenge action behavior - AWS WAF, AWS Firewall Manager, AWS Shield Advanced, and AWS Shield network security director</title>
+
+ddb7ba179052f9c3c6900b6b108875adc79baf563f9b82261200ae7c4c6ba727 */c/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r76/s241-live.html
+5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865 */c/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r76/s581-live.html
+29167186ebe50385c136adcb863393020658d81d482be9bc760f153e9390ce4c */c/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r76/s589-live.html
+8bff4311b27061c944059a4300564347a3c04c6870b88198fa0b4dd0755037fa */c/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r76/s590-live.html
+ 53963 /c/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r76/s241-live.html
+ 16179 /c/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r76/s581-live.html
+129606 /c/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r76/s589-live.html
+ 19812 /c/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/scratch/mori-r76/s590-live.html
+219560 total
+
+$ byte-identity verdicts (pin sha == live sha => IDENTICAL)
+S241: DRIFTED pin=1168b2a626ec4b69fbdf7341ae3331c16ff0e42667d67488762b30e206591357 live=ddb7ba179052f9c3c6900b6b108875adc79baf563f9b82261200ae7c4c6ba727
+S581: IDENTICAL pin=5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865 live=5e5b941e97c0aa6e2d7bd958bdc66a6fbb2a260508880e99becda543e71fc865
+S589: DRIFTED pin=c8cc430e04d232f9e67412eae254a2c67ad153b4bde78121f83f2389739e91c7 live=29167186ebe50385c136adcb863393020658d81d482be9bc760f153e9390ce4c
+S590: IDENTICAL pin=8bff4311b27061c944059a4300564347a3c04c6870b88198fa0b4dd0755037fa live=8bff4311b27061c944059a4300564347a3c04c6870b88198fa0b4dd0755037fa
+
+$ URL provenance, corrected form (each row's URL cell quoted from the registry)
+S241 row URL: https://learn.microsoft.com/ja-jp/troubleshoot/azure/virtual-machines/linux/oom-swap-file-linux-vm
+S581 row URL: https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens-immunity-times.html
+S589 row URL: https://docs.python.org/3/library/time.html
+S590 row URL: https://docs.aws.amazon.com/waf/latest/developerguide/waf-captcha-and-challenge-actions.html
+
+$ the standing instrument adjudicates the family (rows=4 expected)
+# MORI_DRIFT_RECHECK second_ua=curl/8.21.0 only=S241,S581,S589,S590 from-sweep=- findings=- run-start=2026-11-02T13:48:30Z stamp-class=python-docs-page-stamp asset-class=learn-microsoft-asset-build-id
+S241 asset-churn as-of=2026-11-02T13:48:30Z
+S581 fresh as-of=2026-11-02T13:48:31Z
+S589 time-churn as-of=2026-11-02T13:48:31Z
+S590 fresh as-of=2026-11-02T13:48:31Z
+MORI_DRIFT_RECHECK rows=4 adjudicated=4 fresh=2 excerpt=0 time-churn=1 asset-churn=1 receipt-open=0 receipt-stale=0 ua-serving=0 content-drift=0 gate=0 unavailable=0 window=2026-11-02T13:48:30Z..2026-11-02T13:48:31Z
+recheck rc=0
+
+$ diff S589 (instrument class: time-churn — confirm stamp-only, no content drift)
+cmp rc=1 (1 = differs)
+size pin=129606 live=129606
+<       Last updated on Nov 02, 2026 (03:08 UTC).
+>       Last updated on Nov 02, 2026 (13:28 UTC).
+changed lines total: 2
+
+$ diff S241 (instrument class: asset-churn — the persistent state since r74)
+cmp rc=1 (1 = differs)
+size pin=53963 live=53963
+< 			<link rel="stylesheet" href="/static/assets/0.4.03574.8308-9505b1c8/styles/site.css" />
+> 			<link rel="stylesheet" href="/static/assets/0.4.03589.8339-b0a05127/styles/site.css" />
+< 				src="/static/assets/0.4.03574.8308-9505b1c8/scripts/ja-jp/index-docs.js"
+> 				src="/static/assets/0.4.03589.8339-b0a05127/scripts/ja-jp/index-docs.js"
+
+$ the S241 row's teaching re-verified on the LIVE body (both counting methods, the r72 label-class disclosure)
+pin lines=3 live lines=3
+pin occurrences=6 live occurrences=6
+
+$ supersedes check: anchors hold on the pins, teaching holds on the live bodies
+S589 stamp line in pin: 1553 / in live: 1553
+S589 monotonic anchors :524-525 present in live: 1
+S590 mechanism anchors :138/:144 present in live: 2
+S581 immunity-scale anchor present in live: 2
+
+## draft-1 disclosure (caught in-round, receipt redone)
+draft 1 fetched S241 with a URL guessed from memory (windows-server/performance/ path instead of the
+row's azure/virtual-machines/linux/ path); the resolved page was the ja-jp 404 frame (title '404 - コンテンツが見つかりません',
+17962 bytes, sha 91abedbf788520ca8c2fa8971bad9c8e0afe5209eec1c20a83f38b924ea56e7f) and draft 1's S241 verdict line and
+teaching counts (live lines=0) were measurements of THAT 404 artifact. Caught by the receipt's own title/diff check
+(the r75 lesson's check-the-title rule applied to MY OWN receipt draft). The receipt was REDONE with the fetch rule
+'every live URL is read from the row'; all verdict lines above are the corrected run. The mistake is mined in
+corpus/lessons/round-76.md (the guessed-URL class: a receipt's fetch must quote its URL from the registry row).
