@@ -3659,3 +3659,48 @@ suggestion 1 (pin-check mismatch split "can't run here" vs "stale") and
 the encoding-pin harness, both still behind the operator's open
 instrument-change ruling; (d) the Precise variant stays unopened unless a
 round needs sub-tick working-state resolution.
+
+## Round 73 — the gate-registry backfill and the documented-form discharge: C1 operability landed (the r72 closure's D72-1 carry-in discharged family-wide — ALL TEN unregistered r62–r72 Windows-family instruments registered at the registry home in an append-only SKILL.md end section, the SKILL:905 tally pin and every earlier line byte-and-line-number unchanged, all ten selftests re-run rc 0); C2 calibration landed (the r72 closure's D72-2 carry-in discharged — the s581-s583 erratum receipt's append-only addendum carries the DOCUMENTED QUALITY 90 form re-run byte-exact against the receipt's own §1 block, and the §90 verbatim-indent defect found and repaired by erratum QUALITY 163); C3 depth landed, sourced S588 (the Windows boot-anchor event surface opened and pinned — the candidate anchor the events-context pairing's `boot_binding=none` limit names — live read-only XPath demonstration, anchor-checker-verified anchors)
+
+Fresh start (r59–r61 rejected closures re-derived with own receipts; seven
+named rule-outs): `.ufo/waves/round-73/evidence/freshstart-spotchecks-r73.txt`
+— the frozen r61 counter re-derived at the r61 data tip (`python -I
+.ufo/waves/round-61/count-c2.py 986d4b46…` → `C2=unmet` rc 1); the eight
+r59/r60/r61 lane revs PRESENT and ancestral rc 0 each; the three fleet
+report commits PRESENT. Controls
+(`.ufo/waves/round-73/evidence/controls-r73.txt`): all ten instrument
+names grep 0 in SKILL.md at entering; the r72 erratum receipt carries zero
+`@@LESSON`/`@@SOURCES` markers at entering; every r73 artifact absent at
+entering rc 128; SKILL.md 1297 lines at entering — a do-nothing round
+reaches none of this round's claims.
+
+| Claim | Axis | Counting commands | At entering | After (measured this round) |
+|---|---|---|---|---|
+| C1: the D72-1 family-wide discharge — the SKILL.md end section `## Round73 — the gate-registry backfill (r62–r72; the r72 closure routed defect 1)` registers all ten unregistered instruments, one row per path, 8 PROTOCOL-schema cells each (name, kind, entry, verdict map, self-test, pinned values, write scope, owner), kinds gated by the §Gate standard definition (gate = compares against in-repo expected values: receipt-complete, adjudicate, recheck, anchor-check; probe = one-shot honest-unavailable counter: host-events, runway, ua-variance, uptime, workstate, events-context); every selftest re-run rc 0 at the r73 tip with exact tallies receipted; the section is append-only at end-of-file so the SKILL:905 tally pin and every earlier line are byte-and-line-number unchanged, and no instrument byte is edited — registration is metadata at the registry home, not an instrument change (the mori \| round-65 L0 stays open, routed around) | operability 7 | for each of the ten names: `git show <entering>:SKILL.md \| grep -c <name>` (all 0); after: `grep -c <name> SKILL.md` (≥1 each); `sed -n '905p' SKILL.md \| grep -c "PASS (6 cases)"` (1, unchanged); `head -1297 SKILL.md \| sha256sum` = `git show <entering>:SKILL.md \| sha256sum` (identical) | Ten gate-shaped instruments with committed selftests and live receipts, none registered at the registry home — no closure could grade any of them a conformant gate (PROTOCOL §Gate standard, the r72 spotcheck's grading note) | All ten rows landed (SKILL.md:1299-1327); battery `grep -c "rc=0" backfill-selftests-r73.txt` = 10/10 runs; tallies: anchor-check 11, ua-variance 14, uptime-win 8, workstate-win 10, events-context 10, host-events-win 10, runway-win 9, receipt-complete 8, adjudicate 5, recheck 10 — all rc 0 (`.ufo/waves/round-73/evidence/backfill-selftests-r73.txt`). **Self-verdict: verified met** (closure to re-derive) |
+| C2: the D72-2 discharge — the r72 erratum receipt's append-only addendum carries the documented QUALITY 90 runnable form (with `@@LESSON`/`@@SOURCES` echo markers, the documented cat-file guards, the host's `python`/dedent adaptations disclosed) re-run over the SAME entering-rev bytes (c5873f73, lesson round-71), byte-exact against the receipt's own §1 output block under a named annotation map; the §90 verbatim-indent defect found (the fenced block's `-c` bytes carry the markdown list's indent and raise IndentationError as pasted), evidenced, and repaired by erratum QUALITY 163 appended at end-of-file (the §90 fenced block immutable) | calibration 5 | `git show <entering>:.ufo/waves/round-72/evidence/s581-s583-labels-erratum-r72.txt \| grep -c "@@LESSON"` (0) → `grep -c "@@LESSON" .ufo/waves/round-72/evidence/s581-s583-labels-erratum-r72.txt` (≥1); the three diff commands in `q90-documented-form-rerun-r73.txt` §3 (two empty diffs; the third empty under the finding-3 one-space annotation map); `grep -c "IndentationError" <(verbatim run)` = the receipted §4 | The receipt's printed command could not produce its own output (no markers → no SOURCES-relative line numbering), and no documented-form run was on record anywhere | Addendum landed (the receipt's first 91 lines byte-verified unchanged, sha256 `38bbef53…` before = after); the re-run reproduces `word_labels=8 mismatched=3` rc 1 with all three findings byte-identical (annotation map named; od-shown one-byte receipt-side annotation space); QUALITY 163 at :1731 with 162's line numbers unchanged; the verbatim-indent failure receipted with rc (`.ufo/waves/round-73/evidence/q90-documented-form-rerun-r73.txt`). **Self-verdict: verified met** (closure to re-derive) |
+| C3: sourced S588 (opened this round) — the Windows boot-anchor event surface (learn.microsoft.com troubleshoot-unexpected-reboots page) opened, sweep-then-fetch receipted, pinned (58472 bytes, sha `aef06f30…`), the row landed INSIDE the Registry after S587 with both located-line anchors machine-verified by the r72 anchor-checker (PASS items=2; able-to-fail label-mutation arm FAIL rc 1); the live read-only XPath query for the EventLog/6005 clean-boot record demonstrated on this host (rc 0, counts only, the registered host-events probe's child posture); knowledge entry `corpus/knowledge/boot-anchor-win-r73.md` (K1–K4) records the candidate anchor for the events-context pairing's standing `boot_binding=none` limit — the pairing tool itself untouched (K4) | depth 5 | `git cat-file -e <entering>:corpus/knowledge/boot-anchor-win-r73.md` (rc 128); `git show <entering>:corpus/SOURCES.md \| grep -c "^| S588 "` (0); after: `grep -c "^| S588 " corpus/SOURCES.md` (1); `awk -F'\|' '/^\| S[0-9]+ \|/ {n++; if (NF!=13) bad++} END {print n+0, bad+0}'` → `361 0`; anchor-check PASS/FAIL runs in `boot-anchor-live-r73.txt` | No SOURCES row named the reboot-history/boot-anchor surface; the pairing's limit had no grounded candidate anchor; the knowledge entry did not exist | Row S588 at SOURCES.md:369 (rows 360 → 361 by `grep -c "^| S"`; the tolerated W04 class unchanged by a new URL); anchors verified (17/6 words, located, PASS items=2 rc 0; mutation arm rc 1); live query rc 0, counts only; entry K1–K4 landed. **Self-verdict: verified met** (closure to re-derive) |
+
+Selftests this round: the D72-1 backfill battery — all ten newly registered
+instruments' `--selftest` re-run at the r73 tip, all rc 0, exact tallies in
+`.ufo/waves/round-73/evidence/backfill-selftests-r73.txt` (plain-`python`
+posture, unpiped rc capture). SOURCES 360 → 361 (S588, INSIDE the Registry
+after S587; sweep-then-fetch receipted). Census: validator rc 0 at round
+start (`evidence/census-start-r73.txt`, the tolerated 35 W04 class) → rc 0
+at round end (`evidence/census-end-r73.txt`). No frozen byte edited:
+`tools/mori-source-drift.py`, `tools/mori-drift-adjudicate.py`,
+`tools/mori-drift-recheck.py`, PROVINCE.md, AGENTS.md, corpus/README.md
+and the QUALITY 90 fenced block are absent from the round's diff (QUALITY
+grows by append-only row 163 at end-of-file; SKILL.md by the end section;
+the axes table is untouched).
+
+Planned (round 74): (a) the rotation-recurrence protocol as a DESIGNED
+multi-window instrument over the S241 serving — ruled out three rounds on
+sizing now; it gets the design round with stated windows per QUALITY 161;
+(b) the boot-scoped events window: land the 6005-anchored window in
+`tools/mori-events-context-win.py` against the S588 candidate (able-to-fail
+against the standing `boot_binding=none` line) — sized honestly behind (a);
+(c) the operator's ruling on the label-sweep instrument (the mori |
+round-73 L0 line) and on the instrument-change class (mori | round-65)
+gates the encoding-pin harness and the pin-check mismatch split; (d) the
+Precise variant stays unopened unless a round needs sub-tick working-state
+resolution.

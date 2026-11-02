@@ -1,0 +1,18 @@
+
+-- the live boot-anchor demonstration (read-only XPath query through the same child the registered host-events probe uses) --
+$ python -I -B -c "subprocess.run(['wevtutil','qe','System','/q:*[System[(EventID=6005)]]','/c:1','/rd:true','/f:text'],...)"  (counts only; no record text, no timestamps printed)
+rc=0 nonempty_lines=14
+stderr_bytes=0
+the capture rc (also the counts line above): (0 = the most-recent 6005 record is present and queryable — the clean-boot anchor event exists on this host's System log)
+interpretation: the events-context pairing's named limit (boot_binding=none events_window=recent-200-not-boot-scoped) has a grounded anchor candidate: an EventLog/6005 XPath query returns the clean-boot record read-only. Detection and report only; no write/clear/export/reconfigure; boot-state diagnosis stays tsukuroi/operator.
+
+-- the anchor-checker on the S588 pin (the r72 capability exercised on the new row) --
+$ pass run (the recorded anchors as they will land in S588):
+anchor item=boot_history span=758 verdict=ok located_on=758 occurrences=1 words_counted=17 words_recorded=17
+anchor item=service_started span=789 verdict=ok located_on=789 occurrences=1 words_counted=6 words_recorded=6
+ANCHOR_CHECK: PASS items=2 ok=2 pin_sha256=aef06f304d2ce0856f30ad7281d0d252b4fa1bc56e5b5a47e1259a8b7f447531 pin_bytes=58472
+rc=0
+$ able-to-fail run (label one low, 16 vs the true 17):
+anchor item=boot_history span=758 verdict=wordcount_mismatch located_on=758 occurrences=1 words_counted=17 words_recorded=16
+ANCHOR_CHECK: FAIL items=1 ok=0 mislocated=0 wordcount_mismatch=1 pin_sha256=aef06f304d2ce0856f30ad7281d0d252b4fa1bc56e5b5a47e1259a8b7f447531 pin_bytes=58472
+rc=1

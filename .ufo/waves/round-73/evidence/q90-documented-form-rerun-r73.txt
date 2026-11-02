@@ -1,0 +1,75 @@
+# mori r73 — D72-2 discharge: the s581-s583 erratum §1 QUALITY 90 command in its DOCUMENTED form, re-run
+date: 2026-11-02 (r73)
+routed: the r72 verifier spotcheck §6 defect 2 — the receipt's §1 printed the invocation WITHOUT the
+  @@LESSON/@@SOURCES echo markers that its output's SOURCES-relative line numbering (line=362/365)
+  presupposes; the documented form is corpus/QUALITY.md §90 (fenced block :534-568, program span :540-567).
+inputs: the SAME bytes §1 ran over — lesson corpus/lessons/round-71.md and corpus/SOURCES.md at rev
+  c5873f73 (the r72 entering rev), read through git show, never the worktree.
+host posture: python 3.13.15 invoked as `python` (no python3 on this host — PROVINCE round-62/63 host
+  notes; the r72 closure's own re-run used the same posture and disclosed it there).
+
+## 1. the documented form, runnable verbatim on this host
+
+Two mechanical adaptations, each disclosed (nothing else changed):
+
+(a) `python3` -> `python` (host posture above);
+
+(b) the -c program is the §90 block's own bytes (corpus/QUALITY.md:540-567) extracted mechanically:
+    `sed -n '540,567p' corpus/QUALITY.md | sed "s/'\$//; s/^    //"` — strips the -c argument's trailing
+    quote and the markdown-list 4-space indent. (b) is not cosmetic: the VERBATIM indented bytes raise
+    IndentationError under -c (§4 below) because that indent is the markdown list's, not python's —
+    §90 does not say so, and any runner of the documented form must dedent; named here, mined as the
+    r73 lesson's mistake 1.
+
+The command, exactly as run (cwd = the lane repo root):
+
+lane="C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/fleet/mori-shokunin"
+rev=c5873f73d9811b65e44b5edcdeea625e519ed984
+round=71
+git -C "$lane" cat-file -e "$rev:corpus/lessons/round-$round.md" || { echo missing_lesson; exit 2; }
+git -C "$lane" cat-file -e "$rev:corpus/SOURCES.md" || { echo missing_sources; exit 2; }
+{ echo "@@LESSON"; git -C "$lane" show "$rev:corpus/lessons/round-$round.md"
+  echo "@@SOURCES"; git -C "$lane" show "$rev:corpus/SOURCES.md"; } | python -I -B -c "$(sed -n '540,567p' corpus/QUALITY.md | sed "s/'\$//; s/^    //")"
+
+## 2. the re-run's captured stdout (verbatim, LF-normalized; rc line at the end)
+
+line=362 label=15 wc=14 quote=The default protection pack (web ACL) setting for both immunity times 
+line=365 label=17 wc=15 quote=The unbiased interrupt-time count does not include time the system spe
+line=365 label=22 wc=26 quote=If the function succeeds, the return value is nonzero. If the function
+word_labels=8 mismatched=3
+rc=1  (mismatched=3 > 0 — the documented form reproduces §1's rc 1 on the entering bytes)
+
+## 3. byte-exact proof against the receipt's own §1 output block (receipt lines 13-16)
+
+normalization: `tr -d '\r'` on the re-run side only — win32 Python writes CRLF on text-mode stdout, the
+r72 receipt capture is LF; applied to nothing else. Ordering note: the four checker lines appear
+findings-first in this capture and summary-first in the receipt's §1 (stream buffering at capture time,
+not content); the diffs below are per-pattern, order-independent, and each line compares byte-for-byte.
+
+annotation map (the receipt's hand-rendering, per §1's own note that the parentheticals are annotations):
+each finding's 70-char quote cut is followed by the receipt's ellipsis `...` plus a parenthetical note,
+stripped mechanically with `sed 's/\.\.\..*//'`.
+
+$ diff <(sed -n '13p' RECEIPT) <(grep '^word_labels=' RERUN)
+  -> empty, rc 0 — the summary line is byte-identical
+$ diff <(sed -n '14,15p' RECEIPT | sed 's/\.\.\..*//') <(grep '^line=' RERUN | sed -n '1,2p')
+  -> empty, rc 0 — findings 1 and 2 are byte-identical
+$ diff <(sed -n '16p' RECEIPT | sed 's/ \?\.\.\..*//') <(grep '^line=' RERUN | sed -n '3p')
+  -> empty, rc 0 — finding 3 is byte-identical; its annotation map carries ONE extra receipt-side
+     separating space before the ellipsis (findings 1-2 do not have it): the receipt line ends
+     `t i o n   . . .` (od) while the checker's 70-char cut ends at `function` with no trailing space —
+     that one byte is receipt annotation, not checker output, and is named here so the map is exact.
+
+Every checker-origin field of §1 — the summary and all three (line=, label=, wc=, 70-char quote cut)
+findings — is byte-identical under the documented form on the same input bytes. The receipt's §1 output
+is thereby reproducible from its own committed bytes, and the printed command shorthand is superseded
+by the documented runnable form (also appended, in brief, as an addendum in the receipt itself).
+
+## 4. the verbatim-indent evidence (why adaptation (b) exists)
+
+== the verbatim §90 program bytes (markdown-list 4-space indent intact) fail under -c ==
+$ printf '@@LESSON\nx\n@@SOURCES\nx\n' | python -I -B -c "$(sed -n '540,567p' corpus/QUALITY.md | sed \"s/'$//\")"
+  File "<string>", line 1
+    import re,subprocess,sys
+IndentationError: unexpected indent
+rc=1 (IndentationError — the documented block's indentation is the markdown list's, not python's)

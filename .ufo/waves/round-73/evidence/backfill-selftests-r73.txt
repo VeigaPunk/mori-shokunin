@@ -1,0 +1,54 @@
+# mori r73 — the D72-1 backfill battery: every registered instrument's --selftest re-run at the r73 tip
+date: 2026-11-02 (r73); cwd = the lane repo root; plain-python posture (3.13.15 as `python`, the r72 battery posture),
+rc captured unpiped immediately after each run; every run is offline fixture-based (no network, no live reads).
+
+$ python tools/mori-anchor-check.py --selftest
+selftest double_locate    PASS
+ANCHOR_CHECK_SELFTEST: PASS (11 cases)
+rc=0
+
+$ python tools/mori-ua-variance.py --selftest
+selftest crosscheck_nonsummary_input_exit2          PASS (rc=2 (a provided file that is not a re-check summary is a setup error, matching --from-sweep strictness))
+MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)
+rc=0
+
+$ python tools/mori-uptime-win.py --selftest
+selftest uint64_max_rendered  PASS
+UPTIME_WIN_SELFTEST: PASS (8 cases)
+rc=0
+
+$ python tools/mori-workstate-win.py --selftest
+selftest conversion_floor     PASS
+WORKSTATE_WIN_SELFTEST: PASS (10 cases)
+rc=0
+
+$ python tools/mori-events-context-win.py --selftest
+selftest binding_line         PASS
+EVENTS_CONTEXT_SELFTEST: PASS (10 cases)
+rc=0
+
+$ python tools/mori-host-events-win.py --selftest
+PASS window_default_echoed  rc=0
+HOST_EVENTS_WIN_SELFTEST pass=10 fail=0
+rc=0
+
+$ python tools/mori-runway-win.py --selftest
+selftest malformed_fixture    PASS
+RUNWAY_WIN_SELFTEST: PASS (9 cases)
+rc=0
+
+$ python tools/mori-receipt-complete.py --selftest
+PASS missing_file_setup  rc=2
+RECEIPT_COMPLETE_SELFTEST pass=8 fail=0
+rc=0
+
+$ python tools/mori-drift-adjudicate.py --selftest
+selftest missing_sources_exit2    PASS (rc=2 want 2)
+MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)
+rc=0
+
+$ python tools/mori-drift-recheck.py --selftest
+selftest missing_sources_exit2    PASS (rc=2 want 2)
+MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)
+rc=0
+

@@ -1,0 +1,13 @@
+# mori r73 — S588 source-open receipt (the Windows boot-anchor event documentation)
+date: 2026-11-02 (r73)
+
+-- pre-row duplicate sweep INTO this receipt (the r69 lesson's rule) --
+$ grep -c 'troubleshoot-unexpected-reboots-system-event-logs' corpus/SOURCES.md
+count=0  (rc=1)
+interpretation: 0 = no existing row names this page; a NEW surface for the lane (the boot-anchor candidate for the events-context pairing's recorded boot_binding=none limit).
+
+-- the fetch (the lane's standing fetcher posture) --
+$ curl -sS -m 60 -L -o corpus/evidence/sources-r73/S588.html <url>
+curl rc=0
+aef06f304d2ce0856f30ad7281d0d252b4fa1bc56e5b5a47e1259a8b7f447531 *corpus/evidence/sources-r73/S588.html
+58472

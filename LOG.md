@@ -4143,3 +4143,89 @@ excluded by reading each pair against its row before any correction
 landed). Assimilation: considerthese re-mined (newest-named 2026-10-26.md;
 suggestion 1 stays behind the operator's open instrument ruling).
 Assimilation: none — shokuknow unreachable.
+
+## Round 73 — Mori (L1 MoriR73): C1 operability verified met (the r72 closure's D72-1 carry-in discharged family-wide: a gate-registry backfill section appended at SKILL.md's end registers ALL TEN unregistered r62–r72 Windows-family instruments at the registry home — the anchor-checker and the r68–r71 set the closure named plus the r62–r67 instruments the same defect class covers — entry/verdict-map/self-test/pins/write-scope transcribed from each instrument's own usage output, all ten selftests re-run rc 0 at the r73 tip, the append-only form keeping the SKILL:905 tally pin and every earlier line byte-and-line-number unchanged); C2 calibration verified met (the r72 closure's D72-2 carry-in discharged: the s581-s583 erratum receipt carries an append-only addendum with the DOCUMENTED QUALITY 90 runnable form re-run over the same entering-rev bytes, byte-exact against the receipt's own §1 output block under a named annotation map; plus the §90 verbatim-indent defect found, evidenced, repaired by erratum QUALITY 163); C3 depth verified met, sourced S588 (the Windows boot-anchor event surface opened and pinned — the candidate anchor the events-context pairing's recorded `boot_binding=none` limit names — live read-only XPath demonstration on this host, the r72 anchor-checker machine-verifying the row's anchors on new material)
+
+C1 (operability, the D72-1 family-wide backfill): at entering, all ten
+instrument names grep 0 in SKILL.md
+(`evidence/controls-r73.txt`). The section `## Round73 — the gate-registry
+backfill (r62–r72; the r72 closure routed defect 1)` lands at SKILL.md's
+end (lines 1299–1327): receipt-complete guard (r63, gate), host-events
+probe (r63, probe), runway probe (r64, probe), drift-finding adjudicator
+(r65, gate), standing drift re-check (r66/r67, gate), UA-variance probe
+(r68/r69, probe), uptime probe (r70, probe), workstate probe (r71, probe),
+events-context pairing (r71, probe), anchor checker (r72, gate) — kinds
+per PROTOCOL §Gate standard (a tool that compares against in-repo expected
+values is a gate; a one-shot honest-unavailable counter is a probe). Every
+selftest re-run at the r73 tip, all rc 0
+(`evidence/backfill-selftests-r73.txt`: anchor-check 11, ua-variance 14,
+uptime-win 8, workstate-win 10, events-context 10, host-events-win 10,
+runway-win 9, receipt-complete 8, adjudicate 5, recheck 10 — the exact
+tally lines in the receipt). Append-only verified: the first 1297 lines
+sha-identical to entering (`01556f056cd7ead3…` both sides), the SKILL:905
+`PASS (6 cases)` tally pin counts exactly 1 after the append; no instrument
+byte edited; registration is metadata at the registry home, not an
+instrument change — the mori | round-65 L0 stays open and routed around
+(`evidence/l0-considerthese-r73.txt`).
+
+C2 (calibration, the D72-2 discharge): the r72 spotcheck §6 defect 2 — the
+erratum receipt §1 printed the QUALITY 90 invocation without the
+`@@LESSON`/`@@SOURCES` echo markers its SOURCES-relative line numbering
+presupposes. The receipt now carries an append-only addendum (the original
+91 lines byte-verified unchanged, sha256 `38bbef53…` before = after) with
+the documented form run over the SAME input bytes (rev c5873f73, lesson
+round-71): `word_labels=8 mismatched=3` rc 1 — the summary and findings
+1–2 diff EMPTY against the receipt's §1 block; finding 3 diffs empty under
+its named one-space annotation map (the receipt's hand-rendering inserted a
+separating space before its ellipsis that the checker's 70-char cut does
+not end with — one byte, receipt-side, od-shown). Full form, capture and
+proof: `evidence/q90-documented-form-rerun-r73.txt`. The re-run also found
+a REAL documentation defect: the §90 fenced block's `-c` program carries
+the markdown list's 4-space indent in its verbatim bytes and raises
+`IndentationError` under `-c` as pasted (§4 of the same receipt) — repaired
+by erratum QUALITY 163 appended at end-of-file (the fenced block immutable;
+162 still at :1704). Receipt command shorthand is hereby a mined class:
+receipts print runnable commands, markers included.
+
+C3 (depth, sourced S588 — the boot-anchor surface): the events-context
+pairing's standing limit line reads `boot_binding=none
+events_window=recent-200-not-boot-scoped` (r71 receipt, three lines); a
+boot-scoped window needs an anchor record. S588 opened and pinned
+(`evidence/source-s588-r73.txt`: pre-row URL-slug sweep 0 receipted BEFORE
+the fetch; copy 58472 bytes, sha256 `aef06f30…`); row landed INSIDE the
+Registry after S587 (SOURCES.md:369, rows 360 → 361, shape check
+`rows=361 badNF=0`); both located-line anchors machine-verified by the r72
+anchor-checker (PASS items=2 rc 0; able-to-fail label-mutation arm FAIL rc
+1 — `evidence/boot-anchor-live-r73.txt`); the live read-only XPath query
+for the EventLog/6005 clean-boot record returns rc 0 on this host (counts
+only; the same child posture the registered host-events probe uses).
+Knowledge entry `corpus/knowledge/boot-anchor-win-r73.md` (K1–K4; the
+anchor is a CANDIDATE — the pairing tool is untouched, K4 records it;
+boot-cause classification is the page's separate unopened section).
+
+Fresh start (r59–r61 rejected closures re-derived with own receipts,
+`evidence/freshstart-spotchecks-r73.txt`: the frozen r61 counter re-derived
+unmet rc 1 at the r61 data tip; the eight lane revs present + ancestral;
+the three fleet report commits present) + do-nothing controls
+(`evidence/controls-r73.txt`). Ruled out (lesson `corpus/lessons/round-73.md`):
+the rotation-recurrence protocol head — ruled out a third time on stated
+sizing (the family-wide D72-1 grew to ten instruments; D72-2 uncovered the
+extraction defect; a rushed multi-window protocol would violate QUALITY
+161); the L0-gated items; landing the boot-scoped window itself (the
+smaller honest claim taken); scalar moves; Linux-host surfaces. All
+declared claims unreachable by a do-nothing round.
+
+Census: validator rc 0 at round start (`evidence/census-start-r73.txt`,
+the tolerated 35 W04 duplicate-URL class) — end receipt at round close.
+Lesson `corpus/lessons/round-73.md`: three mistakes mined
+(documentation-extraction — a documented command that does not run as
+documented, fixed by QUALITY 163; landing — large heredoc appends
+truncated mid-file TWICE this round, caught by the per-row completeness
+greps, repaired with sha-verified prefixes; verification — a diff against
+the unreliable index read as damage, the baseline rule restated). L2: none — no dispatch
+surface on this host (carried disclosure; both mori L0 lines re-verified
+unanswered and routed around, `evidence/l0-considerthese-r73.txt`; the
+r72 planned item (b) label-sweep instrument surfaced to the operator as
+the round's one new L0 line). Assimilation: considerthese re-mined
+(newest-named 2026-10-26.md; suggestion 1 stays behind the operator's open
+instrument ruling). Assimilation: none — shokuknow unreachable.

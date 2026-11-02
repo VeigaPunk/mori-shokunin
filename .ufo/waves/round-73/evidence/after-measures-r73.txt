@@ -1,0 +1,28 @@
+# mori r73 — the AFTER measurements (paste-able counting commands, run at the r73 working tree pre-commit)
+
+-- C1: the ten registry rows --
+grep -c "mori-anchor-check" SKILL.md -> 1
+grep -c "mori-ua-variance" SKILL.md -> 1
+grep -c "mori-uptime-win" SKILL.md -> 1
+grep -c "mori-workstate-win" SKILL.md -> 1
+grep -c "mori-events-context-win" SKILL.md -> 2
+grep -c "mori-host-events-win" SKILL.md -> 1
+grep -c "mori-runway-win" SKILL.md -> 1
+grep -c "mori-receipt-complete" SKILL.md -> 1
+grep -c "mori-drift-adjudicate" SKILL.md -> 1
+grep -c "mori-drift-recheck" SKILL.md -> 1
+sed -n '905p' SKILL.md | grep -c 'PASS (6 cases)' -> 1  (the r65 tally pin, unchanged)
+head -1297 SKILL.md | sha256sum -> 01556f056cd7ead3… (entering: 01556f056cd7ead3…)
+grep -c 'rc=0' .ufo/waves/round-73/evidence/backfill-selftests-r73.txt -> 11 (10 runs + 1 header mention; per-run tallies in the receipt)
+
+-- C2: the documented form on record --
+grep -c '@@LESSON' .ufo/waves/round-72/evidence/s581-s583-labels-erratum-r72.txt -> 2
+grep -c '@@SOURCES' .ufo/waves/round-72/evidence/s581-s583-labels-erratum-r72.txt -> 2
+head -91 .ufo/waves/round-72/evidence/s581-s583-labels-erratum-r72.txt | sha256sum -> 38bbef538b3f8eeb… (the untouched r72 prefix)
+grep -c '^163\.' corpus/QUALITY.md -> 1; grep -c '^162\.' corpus/QUALITY.md -> 1 (at :1704, unchanged)
+
+-- C3: the sourced row --
+grep -c '^| S588 ' corpus/SOURCES.md -> 1
+grep -c '^| S' corpus/SOURCES.md -> 361  (360 -> 361)
+awk -F'|' '/^\| S[0-9]+ \|/ {n++; if (NF!=13) bad++} END {print n+0, bad+0}' corpus/SOURCES.md -> 361 0
+git cat-file -e 8990ff28:corpus/knowledge/boot-anchor-win-r73.md -> rc 128 (absent at entering; present in the worktree)

@@ -1,0 +1,26 @@
+# mori r73 — do-nothing controls at entering rev 8990ff2851b72925af2695267175cab65a1d4150 (2026-11-02)
+# every artifact this round claims is absent at entering (rc 128 = git cat-file -e miss); do-nothing rounds reach none of them
+
+-- D72-1 controls: the ten r62-r72 family instruments have NO SKILL.md registry row at entering --
+git show 8990ff2851b72925af2695267175cab65a1d4150:SKILL.md | grep -c "mori-anchor-check" -> 0
+git show 8990ff2851b72925af2695267175cab65a1d4150:SKILL.md | grep -c "mori-ua-variance" -> 0
+git show 8990ff2851b72925af2695267175cab65a1d4150:SKILL.md | grep -c "mori-uptime-win" -> 0
+git show 8990ff2851b72925af2695267175cab65a1d4150:SKILL.md | grep -c "mori-workstate-win" -> 0
+git show 8990ff2851b72925af2695267175cab65a1d4150:SKILL.md | grep -c "mori-events-context-win" -> 0
+git show 8990ff2851b72925af2695267175cab65a1d4150:SKILL.md | grep -c "mori-host-events-win" -> 0
+git show 8990ff2851b72925af2695267175cab65a1d4150:SKILL.md | grep -c "mori-runway-win" -> 0
+git show 8990ff2851b72925af2695267175cab65a1d4150:SKILL.md | grep -c "mori-receipt-complete" -> 0
+git show 8990ff2851b72925af2695267175cab65a1d4150:SKILL.md | grep -c "mori-drift-adjudicate" -> 0
+git show 8990ff2851b72925af2695267175cab65a1d4150:SKILL.md | grep -c "mori-drift-recheck" -> 0
+
+-- D72-2 controls: the r72 erratum receipt carries no documented-form markers at entering --
+git show 8990ff2851b72925af2695267175cab65a1d4150:.ufo/waves/round-72/evidence/s581-s583-labels-erratum-r72.txt | grep -c '@@LESSON' -> 0  (grep rc=1)
+git show 8990ff2851b72925af2695267175cab65a1d4150:.ufo/waves/round-72/evidence/s581-s583-labels-erratum-r72.txt | grep -c '@@SOURCES' -> 0
+
+-- r73 artifact absence at entering --
+git cat-file -e 8990ff2851b72925af2695267175cab65a1d4150:.ufo/waves/round-73/evidence/backfill-selftests-r73.txt -> rc 128 (128=absent)
+git cat-file -e 8990ff2851b72925af2695267175cab65a1d4150:.ufo/waves/round-73/evidence/q90-documented-form-rerun-r73.txt -> rc 128 (128=absent)
+git cat-file -e 8990ff2851b72925af2695267175cab65a1d4150:corpus/knowledge/boot-anchor-win-r73.md -> rc 128 (128=absent)
+git show 8990ff2851b72925af2695267175cab65a1d4150:corpus/SOURCES.md | grep -c '^| S588 ' -> 0
+git show 8990ff2851b72925af2695267175cab65a1d4150:SKILL.md | tail -1 | cut -c1-60 -> | entry-claims checker (r60 tool) | gate | `python3 tools/mo
+git show 8990ff2851b72925af2695267175cab65a1d4150:SKILL.md | wc -l -> 1297

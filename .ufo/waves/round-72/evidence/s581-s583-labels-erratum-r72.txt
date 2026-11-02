@@ -89,3 +89,26 @@ $ r71 lesson Gate: no 14/15/10 label for these quotes (the S583 bullet carries n
 6. LOG.md / SCORECARD.md — no carriers (grep clean, see sweep above).
 7. corpus/knowledge/uptime-win-r70.md K1 — quotes the def sentence WITHOUT a word count: not a label carrier, no block needed (verified this round).
 Superseded labels named old->new: S581 :54 10->9; S581 :70-71 15->14; S582/S583 :829 14->13.
+
+## Addendum (r73 — the D72-2 discharge: the documented runnable form; the bytes above are untouched)
+date: 2026-11-02 (r73; routed by the r72 verifier spotcheck §6 defect 2: §1's printed command omits the
+  @@LESSON/@@SOURCES echo markers its output's SOURCES-relative line numbering presupposes)
+documented form: corpus/QUALITY.md §90 (fenced block :534-568, program span :540-567), over the SAME
+  input bytes as §1 (rev c5873f73, lesson round-71), run this round; host adaptations disclosed there:
+  python3->python, and the §90 program bytes extracted with the markdown-list indent stripped (the
+  verbatim indented bytes raise IndentationError under -c — corpus/QUALITY.md's indent is markdown's,
+  not python's; mined as the r73 lesson's mistake 1).
+$ lane="C:/Users/jpvei/.zcode/workspace/95b1ba4d-5089-47a4-9fd8-54adebbce2ae/fleet/mori-shokunin"; rev=c5873f73d9811b65e44b5edcdeea625e519ed984; round=71
+$ { echo "@@LESSON"; git -C "$lane" show "$rev:corpus/lessons/round-$round.md"
+    echo "@@SOURCES"; git -C "$lane" show "$rev:corpus/SOURCES.md"; } | python -I -B -c "$(sed -n '540,567p' corpus/QUALITY.md | sed "s/'\$//; s/^    //")"
+line=362 label=15 wc=14 quote=The default protection pack (web ACL) setting for both immunity times 
+line=365 label=17 wc=15 quote=The unbiased interrupt-time count does not include time the system spe
+line=365 label=22 wc=26 quote=If the function succeeds, the return value is nonzero. If the function
+word_labels=8 mismatched=3
+rc=1
+byte-exact proof (receipt lines 13-16; LF normalization `tr -d '\r'` on the re-run side only, win32
+  stdout CRLF -> the capture's LF; the §1 hand annotations stripped with `sed 's/\.\.\..*//'`): the
+  summary line and findings 1-2 diff EMPTY; finding 3 diffs empty under its one-space annotation map
+  (§1's finding-3 line carries a receipt-side separating space before its ellipsis that the checker's
+  70-char cut does not end with — one byte, annotation, od-shown). Full form, capture, diffs and
+  evidence: `.ufo/waves/round-73/evidence/q90-documented-form-rerun-r73.txt`.

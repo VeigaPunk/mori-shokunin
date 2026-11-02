@@ -1727,3 +1727,24 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
      whose fetched body shifts line numbers between fetches (the pin-relative
      grep is the ground; a re-open must be byte-identical before corrected
      pointers are read into it).
+
+163. A criterion block whose runnable command sits inside this file's markdown list carries the
+    list's indentation in its verbatim bytes: a runner extracts the fenced block's `-c` program and
+    strips the markdown-list 4-space indent and the argument's trailing quote mechanically before
+    invocation — the verbatim indented bytes raise `IndentationError` under `-c`. A receipt that
+    quotes a standing check's command prints it runnable: the `@@LESSON`/`@@SOURCES` echo markers a
+    check's own output presupposes are part of the command, not optional decoration.
+    ← the r73 D72-2 discharge (the r72 closure's routed defect 2): the s581-s583 erratum receipt §1
+    printed the QUALITY 90 invocation without the echo markers its SOURCES-relative line numbering
+    presupposes, and the §90 block's verbatim indented bytes do not run as pasted — erratum-on-90,
+    appended here (the fenced block itself is immutable: lessons and closures cite it by line).
+    Evidence: `.ufo/waves/round-73/evidence/q90-documented-form-rerun-r73.txt` — §1 the documented
+    form re-run over the same entering-rev bytes (c5873f73, lesson round-71), §3 the byte-exact proof
+    against the receipt's own §1 output block, §4 the verbatim-indent failure.
+    Shown able to fail: `printf '@@LESSON\nx\n@@SOURCES\nx\n' | python -I -B -c "<verbatim indented
+    §90 bytes>"` → `IndentationError: unexpected indent` rc 1 (receipt §4); the dedented program over
+    the same smoke input prints `word_labels=0 mismatched=0` rc 1 — n=0 fails by §90's own n>0
+    clause, so the check never passes vacuously.
+    Not covered: this file's other fenced blocks — each is extracted on its own evidence, and a
+    block that runs verbatim needs no erratum; the §90 line numbers cited by earlier lessons are
+    unchanged (this row appends at end-of-file).

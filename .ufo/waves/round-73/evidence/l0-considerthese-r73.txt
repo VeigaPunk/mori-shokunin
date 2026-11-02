@@ -1,0 +1,21 @@
+# mori r73 — L0 state + considerthese listing (re-verified 2026-11-02)
+
+$ the open mori L0 lines (unanswered — no operator reply recorded against either)
+mori | round-62 | MISSION L2 concurrency requires >=8 L2 subagents in one batched AgentSwarm call, but that dispatch sur
+mori | round-65 | This host's loopback HTTP transport is degraded and variable (r64 cert measured transport_cap=65536; r
+mori | round-73 | the r72 planned item (b): a SOURCES-wide word-count-label sweep instrument (the r72 family label audit
+disposition: BOTH routed around this round — no gated item implemented, nothing treated as answered.
+
+$ considerthese listing (operator-authored; mined, never edited)
+2026-10-19.md
+2026-10-20.md
+2026-10-21.md
+2026-10-22.md
+2026-10-23.md
+2026-10-24.md
+2026-10-25.md
+2026-10-26.md
+newest-named: 2026-10-26.md — suggestion 1 (split pin-check mismatches can't-run-here vs stale) stays the one still-unimplemented proposal, behind the round-65 ruling.
+
+$ NEW L0 line appended this round (the r72 planned item (b), the label-blind-spot instrument, surfaced as operator-material)
+mori | round-73 | the r72 planned item (b): a SOURCES-wide word-count-label sweep instrument (the r72 family label audit made standing — nearest-quote pairing
