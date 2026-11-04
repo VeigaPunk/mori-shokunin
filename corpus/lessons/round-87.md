@@ -134,3 +134,13 @@ population row declares `required` or `clone`, and add two arms — a header-str
 read `failed problems=missing-replay`, and the fixture-5 population must read `C2=unmet`. The frozen
 counter is not edited this round: the rule was frozen before data and a post-data change is not the
 claim's rule (§9).
+
+## Deferred source candidate (recorded so round 88 can open it)
+
+The wave's sources seat (`w1/Mo87S02Sources.md`) confirms the round's candidate URL is S600 and
+proposes **The Update Framework specification v1.0.37** for the supersede/rollback half — a
+superseding record admitted only by verification against the record trusted first, and an older
+version not allowed to displace it — with its own two byte-identical fetches, a tag-pinned revision
+and a 20-word located quote. The L1 did not independently re-fetch it this round, so no row is
+written: a seat's pointer is not the L1's opening. Flip condition: round 88 re-fetches, hashes,
+locates the quote and appends the row if it grounds the `missing-replay` repair.
