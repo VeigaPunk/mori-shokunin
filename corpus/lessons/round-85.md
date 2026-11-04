@@ -159,3 +159,12 @@ evidence-verifying a closure. The receipt-producing harness
 this lesson was written**, so this line cites the frozen grader it can measure and not the harness it
 cannot. Cross-reference: `corpus/QUALITY.md` 173 (quoted-tally freshness) and 175 (the `# limits:`
 header).
+
+## Errata (round 86, 2026-11-04; the r85 verifier spot-check's routed defect 4)
+
+The round-85 report says the "five amendments, each disclosed in the contract and the round lesson";
+this lesson carried no amendment disclosure and the contract's §Amendments jumped A3 → A5 because
+the A4 block was missing. The missing A4 anchor (`91f657f6`) is now recorded in
+`.ufo/waves/round-85/contract.md` under *Errata*, and this paragraph is the lesson-side disclosure
+the report's sentence promised. The report itself is a filed record and is corrected here, not
+rewritten.

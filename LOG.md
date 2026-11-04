@@ -5327,3 +5327,26 @@ fail=0` (`evidence/battery-r85.txt`; the four setup cases are the same lane-TMPD
 r84). The record sweep reads `RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0`
 and the claim sweep `CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=4
 pointers=266` at the measured revision (both committed as receipts). No axis harmed; no score moved.
+
+### Routed-defect corrections carried into round 86 (2026-11-04)
+
+The round-85 verifier spot-check routed five defects; three are record defects and are corrected
+here (append-only: the superseded text at `LOG.md:5310` is named, never rewritten).
+
+1. **LOG.md:5310 placeholder.** The Round-85 wave paragraph ends "Dead seats / stand-ins: `<fill>`."
+   — an unfilled template slot. The measured facts: wave w1 carried 12 seats (4 executor, 2 scribe,
+   1 scout, 2 reviewer, 1 critic, 1 mutation-tester, 1 connector; attack share 4/12 = 33.3 %);
+   `w1-results.json` has 12 entries; `Mo85R02C2` is the one dead seat (empty output, its attack
+   covered by three other seats); 11 seat reports are on disk. Source:
+   `.ufo/waves/round-85/w1-results.json` and the r85 report's *Round shape and hygiene*.
+2. **Contradictory entering-control receipt.** `.ufo/waves/round-85/evidence/controls-r85-entering.txt`
+   printed `rc=0` under its `C1=unmet` and `C2=unmet` lines (the pipeline's exit, not the counter's).
+   The file is replaced with a corrected receipt whose header names the supersession; the counters'
+   own exits are rc 1 for both. The authoritative receipt stays `controls-r85.txt`.
+3. **Missing contract A4 block.** `.ufo/waves/round-85/contract.md` now carries an *Errata* block
+   naming the A4 anchor `91f657f6` and why §Amendments jumps A3 → A5. No frozen value changed.
+
+Defect 4 (the r85 report's "each disclosed in the contract and the round lesson" sentence) is
+answered by `corpus/lessons/round-85.md`'s *Errata* block; the filed report is not rewritten.
+Defect 5 (prompt attribution, D84-1 recurrence) is recorded only: `.ufo/prompts/mori-round-85.md`
+was committed by the lane identity, and regenerating prompts stays integrator-owned.

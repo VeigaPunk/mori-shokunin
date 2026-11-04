@@ -174,3 +174,11 @@ r84 line and re-measured both mutants surviving at the entering revision. (iii) 
 control's `headers=<receipt>` shorthand is superseded by the measured A2 form
 `C2=unmet ... mismatch>=1`. (iv) The after receipt's `# counter-sha256:` lines pin the post-A3
 counter bytes that produced the after values (W's bytes). No frozen value moved.
+
+**Errata (added round 86, 2026-11-04; the r85 verifier spot-check's routed defect 3).** The A4
+amendment anchor is `91f657f6`: the A4 block records the C3 entering-control correction (the
+frozen counter run retroactively at `2cc4b1ae` reads `C3=met`, disclosed as a capability reading,
+not a before value) and it was cited by the r85 report, SCORECARD, knowledge entry and README row
+before this sentence existed; the §Amendments list jumps A3 → A5 because the A4 text lives only in
+P-C3's disclosed-reading paragraph. No frozen predicate, target, receipt, class or kill rule is
+changed by this errata.
