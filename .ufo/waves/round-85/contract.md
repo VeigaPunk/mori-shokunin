@@ -111,8 +111,9 @@ stated `unexplainable` class is never equal to a derived class.
 Target: `C3=met observed=3 aa=stable own_tokens=N subject_tokens=N unmatched=0 unnamed=0` rc 0.
 Claim type: **capability acquisition** (AXES.md *Capabilities*) — the counter is the claimed
 artifact and its row enters the SCORECARD capabilities table in the same round.
-Entering control (measured, `evidence/controls-r85.txt`): `C3=unmet observed=absent harness=absent`
-rc 1 at `2cc4b1ae` (the counter does not exist there). Defeat control (measured): the same counter
+Entering control (measured, `evidence/controls-r85.txt`): at `2cc4b1ae` the counter FILE does not
+exist (`git cat-file -e <rev>:.ufo/waves/round-85/count-c3.py` rc 128), so P-C3 has no reading
+before this round — the counter is the capability. Defeat control (measured): the same counter
 over a fixture repo whose census stub prints no `MORI_DRIFT:` line reads `C3=unmet observed=3
 aa=unstable own_tokens=0 rcs=1,1,1` rc 1. Disclosed reading: the new counter applied retroactively
 to `2cc4b1ae`'s subject and host bytes already reads `C3=met ... own_tokens=64
