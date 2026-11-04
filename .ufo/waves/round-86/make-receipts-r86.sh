@@ -47,7 +47,7 @@ while [ $# -gt 0 ]; do
 done
 [ -n "$REV" ] || usage
 SELF_DIR=$(cd "$(dirname "$0")" && pwd)
-LANE=$(cd "$SELF_DIR/../.." && pwd)
+LANE=$(cd "$SELF_DIR/../../.." && pwd)
 if [ -n "$REPO" ]; then
     REPO=$(cd "$REPO" && pwd)
 else
@@ -78,7 +78,8 @@ if [ "$RC" -ne 0 ]; then
     printf '%s\n' "$OUT" >&2
     exit 3
 fi
-case "$OUT" in
+LAST=$(printf '%s\n' "$OUT" | tail -n 1)
+case "$LAST" in
     C1=met\ *) ;;
     *)
         echo "make-receipts: body is not a C1=met reading at $COMMIT" >&2

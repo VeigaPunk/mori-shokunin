@@ -1,0 +1,15 @@
+# receipt: replay-defeat-r86.txt
+# cmd: python3 -I .ufo/waves/round-86/count-c1.py 87644619078308ee523cd0c976c72bf079b0ff77 --repo /home/vgpnk/Projects/shokunin/mori-shokunin --scratch .
+# rev: 87644619078308ee523cd0c976c72bf079b0ff77
+# counter-sha256: 1912e87d767aabfaec4aa46992d6212ce9e1f8945792057c8ab9d89651d675f1 .ufo/waves/round-86/count-c1.py
+# replay: required
+# expectation: reject
+# limits: named limit — the digest pins the counter bytes but not the body; the replay rule closes that gap by re-executing the command in a scratch export of the named revision
+# ---
+MUTANT count-c3.py H-C3-metverdict killed rc=1
+MUTANT count-c3.py C3-01-rc-range killed rc=1
+MUTANT count-c3.py C3-02-rc-dropped killed rc=1
+MUTANT count-c3.py C3-03-order killed rc=1
+MUTANT count-c3.py C3-04-agreed-skip killed rc=1
+MUTANT count-c3.py C3-07-subject-tokens killed rc=1
+C1=met mutants=6 killed=7 survivors=0 total=6 arms=26 rev=876446190783
