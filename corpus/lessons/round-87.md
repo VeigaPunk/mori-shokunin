@@ -43,7 +43,7 @@ Wave shape: one v1 wave, 12 seats (3 executor, 1 simplifier, 1 scout, 2 scribe, 
 
 | Class | Evidence pointer | Captured-by | Fix delivered and what makes it able to fail |
 |---|---|---|---|
-| `supersede-by-presence` — the supersede rule retired a legacy receipt when a successor merely *existed* in the population, not when the successor verified. A successor whose body its own command does not produce (`replay-mismatch`) still counted `superseded`, so the claim's own evidence class ("recorded is not verified", S602) was violated inside the instrument that was supposed to enforce it. | `.ufo/waves/round-87/count-c2.py` at its first worktree state: the loop `if clean and supersede_verdict(name, set(present), superseders)`; the header-only control measured `C2=unmet ... matched=4 defeated=1 superseded=2 legacy=1 unexpected=2` (rc 1) — the two stale successors retired both legacy receipts while failing their own replay. Recorded at `.ufo/waves/round-87/evidence/supersede-controls-r87.txt` §PRE-FIX. | The §9 do-nothing control, built before data: "build the cheapest control that skips the claimed work and score it with the frozen counter". The header-only fixture (correct headers, headers' digests, fabricated bodies) is exactly that cheap path, and it turned the target's `superseded=2` into a *defect witness* instead of a pass. | `supersede_counts(legacy_rows, clean_names, superseders)` counts only problem-free successors, and `clean_names` is populated only when `problems` is empty; two selftest arms (`supersede_requires_clean`, `supersede_counts_positive`) pin the function. Able to fail: on one fixture the pre-fix call site reads `superseded=2 legacy=1` and the fixed one reads `superseded=0 legacy=3` (same revision, same receipts, one call-site line different — `evidence/supersede-controls-r87.txt`); the header-only control in `evidence/controls-r87.txt` §C2 shows the same split. Named limit: the arms exercise the function, not the call site — the call-site evidence is the fixture pair, not an arm. |
+| `supersede-by-presence` — the supersede rule retired a legacy receipt when a successor merely *existed* in the population, not when the successor verified. A successor whose body its own command does not produce (`replay-mismatch`) still counted `superseded`, so the claim's own evidence class ("recorded is not verified", S602) was violated inside the instrument that was supposed to enforce it. | `.ufo/waves/round-87/count-c2.py` at its first worktree state: the loop `if clean and supersede_verdict(name, set(present), superseders)`; the pre-fix call site on the header-only fixture measured `C2=unmet ... matched=4 defeated=1 superseded=2 legacy=1 unexpected=2` (rc 1) — the two stale successors retired both legacy receipts while failing their own replay. Recorded at `.ufo/waves/round-87/evidence/supersede-controls-r87.txt` §PRE-FIX (the committed post-fix control in `evidence/controls-r87.txt` §C2 reads the same fixture as `superseded=0 legacy=3`, which is the difference the fix makes). | The §9 do-nothing control, built before data: "build the cheapest control that skips the claimed work and score it with the frozen counter". The header-only fixture (correct headers, headers' digests, fabricated bodies) is exactly that cheap path, and it turned the target's `superseded=2` into a *defect witness* instead of a pass. | `supersede_counts(legacy_rows, clean_names, superseders)` counts only problem-free successors, and `clean_names` is populated only when `problems` is empty; two selftest arms (`supersede_requires_clean`, `supersede_counts_positive`) pin the function. Able to fail: on one fixture the pre-fix call site reads `superseded=2 legacy=1` and the fixed one reads `superseded=0 legacy=3` (same revision, same receipts, one call-site line different — `evidence/supersede-controls-r87.txt`); the header-only control in `evidence/controls-r87.txt` §C2 shows the same split. Named limit: the arms exercise the function, not the call site — the call-site evidence is the fixture pair, not an arm. |
 
 Nothing else was mined: the r86 spot-check's eight routed defects belong to round 86's report and
 are recorded as inherited, not re-litigated here (the r87 prompt's §5 asks for a
@@ -107,3 +107,30 @@ seat correctly refused to invent rows) and merges the seat's four findings here.
    fixed `superseded=0 legacy=3`) and the seat's mutation reconstruction
    (`pass=15 fail=2`, fixture `superseded=2 legacy=1 detector=red`) agree; both are recorded as what
    they are.
+
+## Material attack finding (Mo87E02C2Supersede) — the frozen target line is reachable with zero replays
+
+The C2 counter's replay is gated on `fields["replay"] is not None`, while the replay *count* and the
+supersede rule read the population row's declared mode. The r87 rewrite of `header_fields` also
+dropped the r86 grammar's `missing-replay` problem (`count-c2.py:113-115` at the r86 bytes; absent
+at the r87 bytes, `:120-127`), so a population receipt with its `# replay:` line deleted is neither
+flagged nor replayed. The wave seat measured the consequence on a `--shared` clone whose two
+successor headers were stripped and whose bodies were fabricated: fixture `85e8bd76` prints
+
+```text
+C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6 defeated=1 superseded=2 legacy=1 unexpected=0 rev=85e8bd763281
+rc=0
+```
+
+— the exact frozen target, with **zero** replays. At the real revision `98f48dba` both successors do
+carry `# replay: clone` and both were replayed (`REPLAY record-sweep-r87.txt mode=clone rc=0`,
+`REPLAY claim-sweep-r87.txt mode=clone rc=0`) with bodies equal to their stdout, so the round's
+after-value is not falsified; the *detector's* refusal is. Read strictly against P-C2's own clause
+("both `# replay: clone` receipts reproduce their bodies"), the counter accepts a population where
+that clause is false.
+
+**Routed defect for round 88 (highest priority):** restore the `missing-replay` problem whenever the
+population row declares `required` or `clone`, and add two arms — a header-stripped successor must
+read `failed problems=missing-replay`, and the fixture-5 population must read `C2=unmet`. The frozen
+counter is not edited this round: the rule was frozen before data and a post-data change is not the
+claim's rule (§9).
