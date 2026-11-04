@@ -1,0 +1,130 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r87-w1",
+  "createdAt": "2026-11-04T13:16:41.108Z",
+  "updatedAt": "2026-11-04T13:16:41.108Z",
+  "reportDir": ".ufo/waves/round-87/w1",
+  "members": {
+    "Mo87E01C1Arms": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "C1: re-measure each of the six mutants against the landed arms"
+    },
+    "Mo87E02C2Supersede": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "C2: fixture-test the supersede rule against three successor shapes"
+    },
+    "Mo87E03Baseline": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration"
+      ],
+      "milestone": "Both counters at three revisions: entering, C1 landing, C2 landing"
+    },
+    "Mo87Si01Simplify": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "simplifier",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "Dead weight in the two new counters and the six new arms"
+    },
+    "Mo87Sc01Scout": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage"
+      ],
+      "milestone": "Recon: every unarmed clause left in the three r86 counters"
+    },
+    "Mo87S01Lesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "The round-87 lesson: one mined mistake with a fixture, and the Gate draft"
+    },
+    "Mo87S02Sources": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "freshness"
+      ],
+      "milestone": "Open one external source for the supersede rule and produce a located, hashed quote"
+    },
+    "Mo87R01ReviewC1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "Attack C1: are the six kills real, non-equivalent and arm-backed?"
+    },
+    "Mo87R02ReviewC2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "Attack C2: does the supersede rule bind the replay, and is the legacy reason honest?"
+    },
+    "Mo87C01Critic": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "Falsify both claims: find the cheap path to each target"
+    },
+    "Mo87M01Mut": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "Mutation-test the two new r87 counters themselves"
+    },
+    "Mo87K01Conn": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "adjacency"
+      ],
+      "milestone": "Sibling-overlap scan: who else replays receipts or grades supersede?"
+    }
+  }
+}
