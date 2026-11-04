@@ -1,0 +1,48 @@
+# mori round-82 do-nothing controls — revision ebcf2c72df203c855cfafb5223c6e22b1e12c481
+# taken before any wave seat existed; each counter grades that revision's own bytes.
+# freezing commit: this file (see LOG.md round-82 for the landed hash)
+
+$ python3 -I .ufo/waves/round-82/count-c1.py --selftest --scratch /fast/scratch/hyaku/mori-r82/l1
+PASS sensitive_killed harness=present killed=1 survivors=0 total=1 pristine=green | MUTANT sensitive.py trip_guard killed rc=1
+PASS blind_survives harness=present killed=0 survivors=1 total=1 pristine=green
+PASS duplicate_anchor_excluded harness=present killed=0 survivors=0 total=0 pristine=green
+PASS red_pristine_reported harness=present killed=0 survivors=0 total=0 pristine=red
+C1_COUNTER_SELFTEST pass=4 fail=0
+rc=0
+
+$ python3 -I .ufo/waves/round-82/count-c1.py ebcf2c72
+C1=unmet harness=absent rev=ebcf2c72df20
+rc=1
+
+$ python3 -I .ufo/waves/round-82/count-c2.py --selftest --scratch /fast/scratch/hyaku/mori-r82/l1
+PASS conformant tokens=4 classified=4 agreed=4 residual=0 stale=0 retired=1 cell=1
+PASS unclassified_token tokens=4 classified=3 agreed=3 residual=0 stale=0 retired=1 cell=1
+PASS class_disagrees tokens=4 classified=4 agreed=3 residual=0 stale=0 retired=1 cell=1
+PASS residual_keeps_unmet tokens=4 classified=4 agreed=3 residual=1 stale=0 retired=1 cell=1
+PASS stale_classification tokens=4 classified=4 agreed=4 residual=0 stale=1 retired=1 cell=1
+PASS red_cell_keeps_unmet tokens=4 classified=4 agreed=4 residual=0 stale=0 retired=1 cell=0
+PASS retired_row_required tokens=4 classified=4 agreed=4 residual=0 stale=0 retired=0 cell=1
+PASS green_pin_is_unmet tokens=0 classified=0 agreed=0 residual=0 stale=4 retired=1 cell=1
+PASS classification_file_absent tokens=4 classified=0 agreed=0 residual=0 stale=0 retired=1 cell=1
+C2_COUNTER_SELFTEST pass=9 fail=0
+rc=0
+
+$ python3 -I .ufo/waves/round-82/count-c2.py ebcf2c72
+unclassified +FINDING:OOM_KILL_JOURNAL
+unclassified +FINDING:ROSTER_SET_MISMATCH
+unclassified +FINDING:SEGFAULT_SIGNAL11_JOURNAL_USER
+C2=unmet tokens=64 classified=0 agreed=0 residual=0 stale=0 retired=0 cell=0 rev=ebcf2c72df20
+rc=1
+
+$ python3 -I .ufo/waves/round-82/count-c3.py --selftest --scratch /fast/scratch/hyaku/mori-r82/l1
+PASS summary_parse {'revisions': 2, 'bindings': 5}
+PASS pins_schema [{'carrier': 'A', 'rev': 'x', 'path': 'A', 'key': 'k', 'value': 1, 'row_contains': 'r'}]
+PASS pins_absent_list no revisions key
+PASS carrier_drift_guard text compare
+PASS arms_floor floor=30
+C3_COUNTER_SELFTEST pass=5 fail=0
+rc=0
+
+$ python3 -I .ufo/waves/round-82/count-c3.py ebcf2c72
+C3=unmet tool=present arm=absent rev=ebcf2c72df20
+rc=1
