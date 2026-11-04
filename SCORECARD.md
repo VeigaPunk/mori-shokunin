@@ -4553,3 +4553,55 @@ path refusal prevent the no-trade admission required for a capability-table addi
 3. **depth** — the dated full-census snapshot for the r86 value channel's
    `differs`/`masked`/`absent` split, carried from rounds 86 and 88 (declared out of scope at
    `.ufo/waves/round-88/contract.md` before data, not dropped).
+
+## Round 89 (2026-11-04, L1 MoriR89, attempt 1) — the executed-script binding, the twelve attributed arms, and a held-out no-harm floor
+
+Entering `30a29797012281b9fd0c748b38b929ac67f8c754`; frozen contract
+`.ufo/waves/round-89/contract.md` at `d4438695` (P-C1/P-C2, do-nothing and skip-work controls in
+`evidence/controls-r89.txt` before any after-value). Axes: **operability** (C1, score 7) and
+**calibration** (C2, score 5, tied lowest with depth/freshness). No score moves.
+
+| Claim | Axis | Counting command | Entering `30a29797` | After (measured at `7715bb56`) |
+|---|---|---|---|---|
+| C1 the r87 receipt gate binds the executed script by path identity: equivalent `./path` accepted, comment-only and self-printing bindings refused, real seven-receipt population held, gate 23 → 26 arms | operability | `python3 -I .ufo/waves/round-89/count-c1.py <rev>` | `C1=unmet equiv=refused comment=accepted selfprint=accepted real=met arms=23` rc 1 | `C1=met equiv=accepted comment=refused selfprint=refused real=met arms=26` rc 0 |
+| C1 no-harm floor (disclosed; not the frozen predicate) | operability | `python3 -I .ufo/waves/round-89/noharm-c1.py <rev>`; `python3 -I .ufo/waves/round-89/heldout-c1.py <rev>` | `NOHARM harm=0 open=11 gained=0 cases=34`; `HELDOUT harm=0 newopen=0 open=36 gained=0 cases=78` | `NOHARM harm=0 open=0 gained=3`; `HELDOUT harm=0 newopen=0 open=30 gained=2` |
+| C2 the twelve r88 mutation survivors are armed and each kill is attributed to its declared arm (r88 c1 25 → 28, c2 17 → 26) | calibration | `python3 -I .ufo/waves/round-89/count-c2.py <rev>` | `C2=unmet mutants=7 killed=0 survivors=7 unattributed=0 unanchored=5 arms=25,17` rc 1 | `C2=met mutants=12 killed=12 survivors=0 unattributed=0 unanchored=0 arms=28,26` rc 0 |
+
+Receipt `.ufo/waves/round-89/evidence/after-r89-final.txt` (all four instruments at `7715bb56`);
+the earlier `after-r89.txt` binds the superseded repair-1 revision `9f4d20b9` and stays
+byte-unchanged. Verdicts: **operability improved**, **calibration improved**; depth, coverage,
+freshness and adjacency unchanged (no claim). The residual seats' attack findings are disclosed
+below; they are the reason the C1 rule landed as repair 2 rather than as the first landing.
+
+Named limits (measured, not waived): 30 of the 78 held-out counterfeits are still bound
+(non-executing branches, function shadowing, `PATH`/`python3` substitution, `sitecustomize`,
+blob overwrite, heredoc data, `uv run -m`, `bash -n`); a binding is a statement about the recorded
+command text and the receipt's replay is the only execution evidence. C2's counter cannot tell a
+real arm from a canary that marks every arm red on any edit (critic `forge-c1`/`forge-c2b` reach
+the target line); the claim is verified instead on the committed subject bytes by the landed diff
+plus three independent per-mutant measurements (`w1/Mo89E01ArmsC1.md`, `w1/Mo89E02ArmsC2.md`,
+`r/Mo89M02Mut.md`). The frozen r89 C1 counter's `FX … accepted|refused` word reports
+expectation-met, not gate behaviour (legibility defect, carried).
+
+### Demonstrated instruments (round 89)
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Paired no-harm / held-out binding floor (`noharm-c1.py`, `heldout-c1.py`) | grades a receipt-binding rule against the entering gate on two fixed batteries the rule's author did not write (34 + 78 cases), splitting `harm` (a valid equivalent newly refused), `newopen` (a counterfeit newly bound), `open` (still bound) and `gained`; prints one tally line and exits 0 iff `harm=0` and `newopen=0` | `python3 -I .ufo/waves/round-89/heldout-c1.py 7715bb56` -> `HELDOUT harm=0 newopen=0 open=30 gained=2 cases=78 rev=7715bb56dce6` rc 0; `9f4d20b9` -> `harm=12 newopen=1 open=25` rc 1; `evidence/heldout-revs.txt` | 89 |
+
+## Planned (round 90)
+
+1. **operability** — the 30 still-open held-out counterfeits, by class: the non-executing branch
+   (`||`, `false &&`, `exit`/`if false` before), then function/PATH/`sitecustomize` provenance
+   (which a syntax rule cannot decide — the plan is to *report* those as unprovable rather than
+   claim them). Any new rule is graded by `heldout-c1.py` and `noharm-c1.py` with `harm=0`
+   mandatory and `open` reported.
+2. **calibration** — the C2 counter's canary assurance gap: require each declared arm green on
+   the pristine copy, red on its own mutant, and green on the other eleven; require each anchor to
+   sit outside a string literal (`ast`/`tokenize`), so a canary that reds every arm fails.
+3. **freshness** — the frozen r89 C1 counter's `FX` label polarity and the r87 gate's remaining
+   unarmed clauses (`c2-replay-compare-*`, `c2-supersede-*`, `c2-absent-*`,
+   `c2-defeated-accounting`), plus F3 hermeticity (two `required` receipts replay against the host
+   lane path).
+4. **depth** — the dated full-census snapshot for the r86 value channel
+   (`differs`/`masked`/`absent`), carried from rounds 86, 88 and 89.

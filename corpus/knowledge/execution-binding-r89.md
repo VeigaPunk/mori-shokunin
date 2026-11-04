@@ -1,4 +1,4 @@
-# Execution binding of a receipt command — what a `# cmd:` string executes (round 89)
+# Execution binding of a receipt command — which `# cmd:` positions cannot execute a path (round 89)
 
 source: S611 (POSIX.1-2024 Shell Command Language §2.3 Token Recognition — the comment rule
   and its word-continuation precedence), S607 (Python 3.14 `shlex` — the tokenizer the gate
@@ -17,69 +17,109 @@ recheck: on-release
 ## Scope
 
 Detection and report only. This entry records what the round-89 receipt gate
-(`.ufo/waves/round-87/count-c2.py`, `binding_problems` and its helpers, at
-`9f4d20b9290faff54354d6ab6b08982d98d5e72c`) decides about a recorded `# cmd:` string, what
-each cited page licenses, and what remains outside the rule. The binding rule is a **syntax
-rule over the recorded command**; execution evidence is the receipt's own replay
-(`replay_body`), never the binding alone.
+(`.ufo/waves/round-87/count-c2.py`, `binding_problems` → `binds`, final bytes at
+`7715bb56dce6b75ce281ef1a78be4eeb34a9e245`) decides about a recorded `# cmd:` string, what each
+cited page licenses, and what remains outside the rule. The rule is a **syntax rule over the
+recorded command**; it does not prove the bound script executed (Mo89R04Corpus F1), and the
+receipt replay does not prove it either — control-flow counterfeits replay the forged body.
 
-## The rule (lane bytes)
+## History (three gate versions this round)
 
-A bound path binds iff it names, by path identity, a file the command **executes**:
+| Version | Rule | Mo89R01C1 battery (34) | attack batteries (78 counted: Mo89R03Repair 59 executed cases, Mo89C02Critic 22) |
+|---|---|---|---|
+| entering `30a29797` | whitespace token, quotes stripped | `harm=0 open=11` | `harm=0 newopen=0 open=36` |
+| first landing `760428ab` | `;` split, script position index 1–2 after an interpreter | `harm=13 open=6` rc 1 | `harm=24 newopen=1 open=9` rc 1 |
+| repair 1 `9f4d20b9` | positive model of what executes (wrappers, interpreters, `sh -c`, `cd` stop) | `harm=0 open=0` rc 0 | `harm=12 newopen=1 open=25` rc 1 |
+| repair 2 `7715bb56` | entering rule **minus** provably non-executing positions | `harm=0 open=0 gained=3` rc 0 | `harm=0 newopen=0 open=30 gained=2` rc 0 |
 
-1. **Comments** are removed by the POSIX rule — a `#` starts a comment only at a word start;
-   a `#` inside a word is part of the word (S611: "If the previous character was part of a
-   word, the current character shall be appended to that word." precedes the `#` rule).
-   Python's `shlex` with `commenters='#'` does **not** follow this: observed on Python
-   3.14.8, `shlex.shlex('a#b c', posix=True, punctuation_chars=...)` yields `['a']`, dropping
-   `#b c`; the gate therefore strips comments itself (`strip_comment`) and tokenizes with
-   `commenters=''`. S607 is the tokenizer ground for quoting only.
-2. **Invocations** are split quote-aware on `;`, `&&`, `||`, `|`, `&`, `(`, `)`; redirection
-   operators and their targets are dropped. A quoted `;` no longer splits (the r89-first
-   landing split on raw `;` and refused `echo "a;b" >/dev/null; python3 …`).
-3. **Wrappers** are unwrapped: leading `NAME=value` assignments, `env` (refused when it changes
-   directory or splits a string: `-C`, `-S`), `nice`, `exec`, `nohup`, `time`, `command`,
-   `timeout`. After a `cd`/`pushd`/`popd` invocation nothing later binds (the working
-   directory is no longer the repo root).
-4. **Executed position**: CPython (`python`, `python3`, `python3.14`, …) — the first operand
-   after options, with `-W`/`-X` values consumed and `--` honoured; `-c` and `-m` execute no
-   file, so any path after them is `sys.argv` data (S610: "When called with -c command, it
+Counters: `python3 -I .ufo/waves/round-89/noharm-c1.py <rev>` and `… heldout-c1.py <rev>`
+(receipts `.ufo/waves/round-89/evidence/noharm-760428ab.txt`, `evidence/heldout-revs.txt`,
+`evidence/after-r89-final.txt`). `harm` = a valid equivalent the entering gate bound and the
+graded gate refuses; `newopen` = a counterfeit the graded gate binds and the entering gate
+refused; `open` = every counterfeit the graded gate binds. Repair 1 fitted the 34-case battery
+and failed on the next 78; the 78-case batteries were written before repair 2 but **its author
+read them** — they are attack batteries, not held out from repair 2.
+
+## The rule (repair 2, lane bytes)
+
+A bound path binds iff a word path-identical to it occurs **outside** every position that
+provably does not execute it. The design intent is that every refusal beyond the entering token
+rule is one of these named exclusions (also applied inside quoted strings, which are parsed as
+commands — so `foo "echo tools/x.py"` is refused where the entering rule bound it):
+
+1. **Shell comments** — removed by the POSIX rule: a `#` starts a comment only at a word
+   start, a `#` inside a word (including after an escaped blank) is part of the word (S611:
+   "If the previous character was part of a word, the current character shall be appended to
+   that word." precedes the `#` rule). Python's `shlex` does not follow this — observed on
+   3.14.8, `shlex.shlex('a#b c', posix=True, punctuation_chars=...)` yields `['a']`
+   (reproduced by Mo89R04Corpus under bash, POSIX sh and busybox ash) — so the gate strips
+   comments itself and tokenizes with `commenters=''`; S607 grounds quoting only.
+2. **CPython non-script words** — `-W`/`-X` values, the `-c`/`-m` value and every later word,
+   every word after `-` or after the script operand (S610: "When called with -c command, it
    executes the Python statement(s) given as command."; "all consecutive arguments will end up
-   in sys.argv"). `bash`/`sh`/`dash`/`zsh` — the first operand, or the `-c` string parsed
-   recursively (depth ≤ 3); `-n`, `-s` and unknown flags bind nothing. `uv run [options]` —
-   the following script or interpreter invocation. A token containing `/` in command position
-   is a directly executed file.
-5. **Path identity**: `normpath` equality or, with a repo root, `realpath` equality (S609:
-   normalization "may change the meaning of a path that contains symbolic links" — hence the
-   realpath branch, S226).
+   in sys.argv"). An option the gate does not know cancels these exclusions.
+3. **Data operands** — operands of `echo`, `printf`, `:`, `true`, `false`, behind assignments and
+   exec/env/nice/timeout-style wrappers. *Lane rule, no admitted source row.*
+4. **Redirection targets** — the word after `>`, `<`, `>>`, … *Lane rule, no admitted source row.*
+5. **Absolute tokens** never bind: realpath against the production checkout opened a new
+   counterfeit in repair 1 (`N-A25-prod-absolute`, Mo89R03Repair). Relative tokens bind by
+   `normpath` or relative `realpath` (S609: normalization "may change the meaning of a path
+   that contains symbolic links"; realpath is S226), so `./tools/x.py` is `tools/x.py`.
 
-## Measured behaviour (receipts, not sources)
-
-| Population | Command | Result |
-|---|---|---|
-| Frozen P-C1 fixtures + real seven receipts | `python3 -I .ufo/waves/round-89/count-c1.py 9f4d20b9…` | `C1=met equiv=accepted comment=refused selfprint=refused real=met arms=26` (`.ufo/waves/round-89/evidence/after-r89.txt`) |
-| Mo89R01C1 adversarial battery (34 cases: 22 equivalents, 12 counterfeits; written against the first landing, before the repair) | `python3 -I .ufo/waves/round-89/noharm-c1.py <rev>` | first landing `760428ab`: `harm=13 open=6 gained=2` rc 1 (`evidence/noharm-760428ab.txt`); repair `9f4d20b9`: `harm=0 open=0 gained=3` rc 0 |
-
-`harm` counts valid equivalents the entering gate (`30a29797`) bound and the graded gate
-refuses; `open` counts counterfeits the graded gate binds. The three gains are `./tools/…`,
-`tools/../tools/…` and direct execution `./tools/…` (refused at entering).
+A word containing whitespace (a quoted command string: `sh -c '…'`, `eval '…'`, `env -S '…'`)
+is searched recursively with the same exclusions (depth ≤ 3); a command that does not tokenize
+falls back to the entering rule. Unquoted newlines separate commands; backslash-newline joins.
 
 ## Limitations (named)
 
-- **A fixed battery is overfittable.** `noharm-c1.py` grades 34 named strings; a gate that
-  special-cases them would pass. It is a regression floor against the reviewer's attack set,
-  not a census of shell syntax. The round-89 residual reviewer and critic attack it with new
-  cases (`.ufo/waves/round-89/r/`).
-- **A tokenizer is not a shell** (S608, rejected scope). The gate models a subset of POSIX
-  grammar: no parameter expansion, command substitution (`$(…)`, backticks), here-documents,
-  aliases, functions, brace groups `{ …; }` or `Makefile` targets. A binding through those is
-  refused or, for substitutions inside an interpreter's arguments, not inspected.
-- **Interpreter options are an allow-list.** Unknown CPython or shell flags bind nothing
-  (conservative refusal); `node` is no longer in executed position (no cited page for its
-  options; no receipt in the population uses it).
-- **Lexical identity without a repo root.** With `repo=None` (the selftest arms) the rule is
-  `normpath` only.
-- **No execution provenance.** A bound script that itself re-executes another program, or a
-  script that prints a forged body, still binds; the replay comparison is what defends the body.
+- **Not execution proof.** Control flow (`false && …`, `true || …`, `exit` before the
+  invocation), uncalled functions, fake interpreters on `PATH`, `sitecustomize`, overwriting
+  the bound file, `cd`/`uv run --directory` to a fake tree: each binds as it did on entry
+  (`open=30` of the attack batteries' counterfeits; entering `open=36`).
+- **Fixed batteries are overfittable** (Mo89C02Critic forge-b: a lookup table passes
+  `noharm-c1`). Repair 2's harm-freedom argument is structural (exclusions only), measured on
+  112 counted cases, not a census of shell syntax.
+- **Rules 3–4 are unsourced lane rules**; the `sh -c` operand semantics the recursion relies on
+  were located by Mo89R04Corpus on the POSIX `sh` utility page (pinned as
+  `.ufo/waves/round-89/r/Mo89R04Corpus-evidence/posix-sh-utility.html`), not admitted as a row.
+- **The gate's selftest still holds 26 arms** (the frozen P-C1 pin); the exclusions are armed
+  only by the two batteries, not by selftest arms.
+- **Page digests drift**: docs.python.org pages are rebuilt daily (Mo89R04Corpus D-src-1);
+  recheck by quote and section, not page sha256.
 
 `absorption: none`.
+
+## Round-89 repair 2 (integration) — the landed rule is subtract-only, not an execution model
+
+Supersedes the execution framing in “The rule (lane bytes)” above (rules 2–4) and the
+“brace groups” limit: the rule finally landed at `7715bb56dce6b75ce281ef1a78be4eeb34a9e245` is
+**the entering token rule minus the positions that provably do not execute the bound path** —
+a POSIX comment (word-start rule, escaped blanks included), a redirection target, an
+`echo`/`printf`/`:`/`true`/`false` operand, a CPython `-W`/`-X` value, anything after `-c`/`-m`,
+and anything after the script operand. Everything else binds as it did on entry. Path identity
+is `normpath` or repo-relative `realpath`; an absolute token never binds; quoted command strings
+(`sh -c '…'`, `env -S`, `eval`) are searched recursively.
+
+Measured on two batteries the repair did not author (`heldout-c1.py`, 78 cases from the residual
+reviewer `Mo89R03Repair` and critic `Mo89C02Critic`; `noharm-c1.py`, 34 cases from `Mo89R01C1`):
+
+| Revision | `heldout-c1.py` | `noharm-c1.py` |
+|---|---|---|
+| entering `30a29797` | `harm=0 newopen=0 open=36 gained=0` | `harm=0 open=11 gained=0` |
+| first landing `760428ab` | `harm=24 newopen=1 open=9` | `harm=13 open=6 gained=2` |
+| repair 1 `9f4d20b9` | `harm=12 newopen=1 open=25` | `harm=0 open=0 gained=3` |
+| landed `7715bb56` | `harm=0 newopen=0 open=30 gained=2` | `harm=0 open=0 gained=3` |
+
+`harm` is a valid equivalent the entering rule bound and the graded rule refuses; `newopen` a
+counterfeit the entering rule refused and the graded rule binds; `open` a counterfeit the graded
+rule still binds. The landed rule refuses no valid command the entering rule bound and closes six
+counterfeit classes relative to entering (`open` 36 → 30).
+
+## Limits of the landed rule (measured, `7715bb56`)
+
+The 30 still-open counterfeits on the 78-case battery are the provenance classes a syntax rule
+cannot decide: a non-executing branch (`true || …`, `false && …`, `exit` before, `if false`),
+function shadowing, a `PATH`/`python3` substitution, `sitecustomize`, overwriting the bound blob,
+heredoc data, `uv run -m`, `bash -n`, `env -iCd`. A binding is a statement about the recorded
+command text, never proof that the blob ran: the receipt's replay is the execution evidence, and
+even a replay proves an output, not authorship.

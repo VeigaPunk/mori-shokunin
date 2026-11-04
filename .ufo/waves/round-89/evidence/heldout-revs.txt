@@ -1,0 +1,172 @@
+$ python3 -I .ufo/waves/round-89/heldout-c1.py 30a29797012281b9fd0c748b38b929ac67f8c754
+CASE R03:N-E07-double-slash expect=met entering=refused after=refused refused-both
+CASE R03:N-E08-PWD-absolute expect=met entering=refused after=refused refused-both
+CASE R03:N-E14-escaped-path-chars expect=met entering=refused after=refused refused-both
+CASE R03:N-E28-newline-separated expect=met entering=bound after=bound ok uncounted
+CASE R03:N-E29-line-continuation expect=met entering=bound after=bound ok uncounted
+CASE R03:N-A01-path-as-dollar0 expect=reject entering=bound after=bound open
+CASE R03:N-A02-c-dashdash-data expect=reject entering=bound after=bound open
+CASE R03:N-A03-echo-path expect=reject entering=bound after=bound open
+CASE R03:N-A04-cat-path expect=reject entering=bound after=bound open
+CASE R03:N-A05-m-runpy expect=reject entering=bound after=bound open
+CASE R03:N-A06-bash-n expect=reject entering=bound after=bound open
+CASE R03:N-A07-bash-o-noexec expect=reject entering=bound after=bound open
+CASE R03:N-A08-exit-before expect=reject entering=bound after=bound open
+CASE R03:N-A09-or-short-circuit expect=reject entering=bound after=bound open
+CASE R03:N-A10-false-and expect=reject entering=bound after=bound open
+CASE R03:N-A11-function-shadow expect=reject entering=bound after=bound open
+CASE R03:N-A12-hash-p expect=reject entering=bound after=bound open
+CASE R03:N-A13-function-never-called expect=reject entering=bound after=bound open
+CASE R03:N-A14-set-n expect=reject entering=bound after=bound open
+CASE R03:N-A16-fake-python-PATH expect=reject entering=bound after=bound open
+CASE R03:N-A17-fake-python-relative expect=reject entering=bound after=bound open
+CASE R03:N-A18-overwrite-bound expect=reject entering=bound after=bound open
+CASE R03:N-A19-builtin-cd expect=reject entering=bound after=bound open
+CASE R03:N-A15-sitecustomize expect=reject entering=bound after=bound open
+CASE R03:N-A20-command-cd expect=reject entering=bound after=bound open
+CASE R03:N-A21-env-combined-C expect=reject entering=bound after=bound open
+CASE R03:N-A22-env-combined-S expect=reject entering=bound after=bound open
+CASE R03:N-A23-uv-run-module expect=reject entering=bound after=bound open
+CASE R03:N-A24-uv-run-directory expect=reject entering=bound after=bound open
+CASE R03:N-A26-bash-runs-python-file expect=reject entering=bound after=bound open
+CASE R03:N-A27-heredoc-data expect=reject entering=bound after=bound open uncounted
+CASE R03:N-A28-dollar-quoted-cd expect=reject entering=bound after=bound open
+CASE R03:N-A29-command-v expect=reject entering=bound after=bound open
+CASE C02:H01-or-short-circuit expect=reject entering=bound after=bound open
+CASE C02:H02-false-and expect=reject entering=bound after=bound open
+CASE C02:H03-exit-before expect=reject entering=bound after=bound open
+CASE C02:H04-if-false expect=reject entering=bound after=bound open
+CASE C02:H05-echo-as-data expect=reject entering=bound after=bound open
+CASE C02:H06-colon-noop expect=reject entering=bound after=bound open
+CASE C02:H07-bash-c-echo expect=reject entering=bound after=bound open
+CASE C02:H08-function-def-never-called expect=reject entering=bound after=bound open
+CASE C02:H09-heredoc-or-subshell-false expect=reject entering=bound after=bound open
+HELDOUT harm=0 newopen=0 open=36 gained=0 cases=78 rev=30a297970122
+rc=0
+$ python3 -I .ufo/waves/round-89/heldout-c1.py 760428abf925d98025b34bf23f2cbf54cbeb3bca
+CASE R03:N-E02-X-dev expect=met entering=bound after=refused harm
+CASE R03:N-E03-W-error-category expect=met entering=bound after=refused harm
+CASE R03:N-E04-timeout expect=met entering=bound after=refused harm
+CASE R03:N-E05-env-i-PATH expect=met entering=bound after=refused harm
+CASE R03:N-E06-cd-dot-and expect=met entering=bound after=refused harm
+CASE R03:N-E07-double-slash expect=met entering=refused after=bound gained
+CASE R03:N-E08-PWD-absolute expect=met entering=refused after=refused refused-both
+CASE R03:N-E11-subshell expect=met entering=bound after=refused harm
+CASE R03:N-E12-brace-group expect=met entering=bound after=refused harm
+CASE R03:N-E13-sh-c-string expect=met entering=bound after=refused harm
+CASE R03:N-E14-escaped-path-chars expect=met entering=refused after=bound gained
+CASE R03:N-E15-eval expect=met entering=bound after=refused harm
+CASE R03:N-E16-stdbuf expect=met entering=bound after=refused harm
+CASE R03:N-E17-env-C-dot expect=met entering=bound after=refused harm
+CASE R03:N-E18-env-S expect=met entering=bound after=refused harm
+CASE R03:N-E19-nice-dashdash expect=met entering=bound after=refused harm
+CASE R03:N-E20-setsid expect=met entering=bound after=refused harm
+CASE R03:N-E21-sh-c-dollar0 expect=met entering=bound after=refused harm
+CASE R03:N-E24-command-prefix expect=met entering=bound after=refused harm
+CASE R03:N-E25-time-p expect=met entering=bound after=refused harm
+CASE R03:N-E26-Xdev-glued expect=met entering=bound after=refused harm
+CASE R03:N-E27-ionice expect=met entering=bound after=refused harm
+CASE R03:N-E28-newline-separated expect=met entering=bound after=refused harm uncounted
+CASE R03:N-E29-line-continuation expect=met entering=bound after=refused harm uncounted
+CASE R03:N-A06-bash-n expect=reject entering=bound after=bound open
+CASE R03:N-A08-exit-before expect=reject entering=bound after=bound open
+CASE R03:N-A11-function-shadow expect=reject entering=bound after=bound open
+CASE R03:N-A12-hash-p expect=reject entering=bound after=bound open
+CASE R03:N-A14-set-n expect=reject entering=bound after=bound open
+CASE R03:N-A18-overwrite-bound expect=reject entering=bound after=bound open
+CASE R03:N-A25-prod-absolute expect=reject entering=refused after=bound newopen
+CASE R03:N-A26-bash-runs-python-file expect=reject entering=bound after=bound open
+CASE R03:N-A27-heredoc-data expect=reject entering=bound after=bound open uncounted
+CASE C02:H03-exit-before expect=reject entering=bound after=bound open
+CASE C02:M01-env-usr-bin expect=met entering=bound after=refused harm
+CASE C02:M02-timeout expect=met entering=bound after=refused harm
+CASE C02:M03-command-builtin expect=met entering=bound after=refused harm
+CASE C02:M06-env-i expect=met entering=bound after=refused harm
+CASE C02:M07-cd-subshell expect=met entering=bound after=refused harm
+HELDOUT harm=24 newopen=1 open=9 gained=2 cases=78 rev=760428abf925
+rc=1
+$ python3 -I .ufo/waves/round-89/heldout-c1.py 9f4d20b9290faff54354d6ab6b08982d98d5e72c
+CASE R03:N-E06-cd-dot-and expect=met entering=bound after=refused harm
+CASE R03:N-E07-double-slash expect=met entering=refused after=bound gained
+CASE R03:N-E08-PWD-absolute expect=met entering=refused after=refused refused-both
+CASE R03:N-E12-brace-group expect=met entering=bound after=refused harm
+CASE R03:N-E14-escaped-path-chars expect=met entering=refused after=bound gained
+CASE R03:N-E15-eval expect=met entering=bound after=refused harm
+CASE R03:N-E16-stdbuf expect=met entering=bound after=refused harm
+CASE R03:N-E17-env-C-dot expect=met entering=bound after=refused harm
+CASE R03:N-E18-env-S expect=met entering=bound after=refused harm
+CASE R03:N-E19-nice-dashdash expect=met entering=bound after=refused harm
+CASE R03:N-E20-setsid expect=met entering=bound after=refused harm
+CASE R03:N-E21-sh-c-dollar0 expect=met entering=bound after=refused harm
+CASE R03:N-E22-escaped-space-hash expect=met entering=bound after=refused harm
+CASE R03:N-E27-ionice expect=met entering=bound after=refused harm
+CASE R03:N-E28-newline-separated expect=met entering=bound after=refused harm uncounted
+CASE R03:N-E29-line-continuation expect=met entering=bound after=refused harm uncounted
+CASE R03:N-A07-bash-o-noexec expect=reject entering=bound after=bound open
+CASE R03:N-A08-exit-before expect=reject entering=bound after=bound open
+CASE R03:N-A09-or-short-circuit expect=reject entering=bound after=bound open
+CASE R03:N-A10-false-and expect=reject entering=bound after=bound open
+CASE R03:N-A11-function-shadow expect=reject entering=bound after=bound open
+CASE R03:N-A12-hash-p expect=reject entering=bound after=bound open
+CASE R03:N-A13-function-never-called expect=reject entering=bound after=bound open
+CASE R03:N-A14-set-n expect=reject entering=bound after=bound open
+CASE R03:N-A16-fake-python-PATH expect=reject entering=bound after=bound open
+CASE R03:N-A17-fake-python-relative expect=reject entering=bound after=bound open
+CASE R03:N-A18-overwrite-bound expect=reject entering=bound after=bound open
+CASE R03:N-A19-builtin-cd expect=reject entering=bound after=bound open
+CASE R03:N-A15-sitecustomize expect=reject entering=bound after=bound open
+CASE R03:N-A20-command-cd expect=reject entering=bound after=bound open
+CASE R03:N-A21-env-combined-C expect=reject entering=bound after=bound open
+CASE R03:N-A22-env-combined-S expect=reject entering=bound after=bound open
+CASE R03:N-A23-uv-run-module expect=reject entering=bound after=bound open
+CASE R03:N-A24-uv-run-directory expect=reject entering=bound after=bound open
+CASE R03:N-A25-prod-absolute expect=reject entering=refused after=bound newopen
+CASE R03:N-A26-bash-runs-python-file expect=reject entering=bound after=bound open
+CASE R03:N-A27-heredoc-data expect=reject entering=bound after=bound open uncounted
+CASE R03:N-A28-dollar-quoted-cd expect=reject entering=bound after=bound open
+CASE C02:H01-or-short-circuit expect=reject entering=bound after=bound open
+CASE C02:H02-false-and expect=reject entering=bound after=bound open
+CASE C02:H03-exit-before expect=reject entering=bound after=bound open
+CASE C02:H09-heredoc-or-subshell-false expect=reject entering=bound after=bound open
+CASE C02:M07-cd-subshell expect=met entering=bound after=refused harm
+HELDOUT harm=12 newopen=1 open=25 gained=2 cases=78 rev=9f4d20b9290f
+rc=1
+$ python3 -I .ufo/waves/round-89/heldout-c1.py 7715bb56dce6b75ce281ef1a78be4eeb34a9e245
+CASE R03:N-E07-double-slash expect=met entering=refused after=bound gained
+CASE R03:N-E08-PWD-absolute expect=met entering=refused after=refused refused-both
+CASE R03:N-E14-escaped-path-chars expect=met entering=refused after=bound gained
+CASE R03:N-E28-newline-separated expect=met entering=bound after=bound ok uncounted
+CASE R03:N-E29-line-continuation expect=met entering=bound after=bound ok uncounted
+CASE R03:N-A01-path-as-dollar0 expect=reject entering=bound after=bound open
+CASE R03:N-A04-cat-path expect=reject entering=bound after=bound open
+CASE R03:N-A06-bash-n expect=reject entering=bound after=bound open
+CASE R03:N-A07-bash-o-noexec expect=reject entering=bound after=bound open
+CASE R03:N-A08-exit-before expect=reject entering=bound after=bound open
+CASE R03:N-A09-or-short-circuit expect=reject entering=bound after=bound open
+CASE R03:N-A10-false-and expect=reject entering=bound after=bound open
+CASE R03:N-A11-function-shadow expect=reject entering=bound after=bound open
+CASE R03:N-A12-hash-p expect=reject entering=bound after=bound open
+CASE R03:N-A13-function-never-called expect=reject entering=bound after=bound open
+CASE R03:N-A14-set-n expect=reject entering=bound after=bound open
+CASE R03:N-A16-fake-python-PATH expect=reject entering=bound after=bound open
+CASE R03:N-A17-fake-python-relative expect=reject entering=bound after=bound open
+CASE R03:N-A18-overwrite-bound expect=reject entering=bound after=bound open
+CASE R03:N-A19-builtin-cd expect=reject entering=bound after=bound open
+CASE R03:N-A15-sitecustomize expect=reject entering=bound after=bound open
+CASE R03:N-A20-command-cd expect=reject entering=bound after=bound open
+CASE R03:N-A21-env-combined-C expect=reject entering=bound after=bound open
+CASE R03:N-A22-env-combined-S expect=reject entering=bound after=bound open
+CASE R03:N-A23-uv-run-module expect=reject entering=bound after=bound open
+CASE R03:N-A24-uv-run-directory expect=reject entering=bound after=bound open
+CASE R03:N-A26-bash-runs-python-file expect=reject entering=bound after=bound open
+CASE R03:N-A27-heredoc-data expect=reject entering=bound after=bound open uncounted
+CASE R03:N-A28-dollar-quoted-cd expect=reject entering=bound after=bound open
+CASE R03:N-A29-command-v expect=reject entering=bound after=bound open
+CASE C02:H01-or-short-circuit expect=reject entering=bound after=bound open
+CASE C02:H02-false-and expect=reject entering=bound after=bound open
+CASE C02:H03-exit-before expect=reject entering=bound after=bound open
+CASE C02:H04-if-false expect=reject entering=bound after=bound open
+CASE C02:H08-function-def-never-called expect=reject entering=bound after=bound open
+CASE C02:H09-heredoc-or-subshell-false expect=reject entering=bound after=bound open
+HELDOUT harm=0 newopen=0 open=30 gained=2 cases=78 rev=7715bb56dce6
+rc=0

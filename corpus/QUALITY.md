@@ -2193,3 +2193,18 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
       attribution reading of control 2b is cited only from its count-c2 leg, whose pristine is green.
       Not covered: subjects with no self-pin; a red pristine hides an arm-count mismatch behind
       `pristine-red`.
+
+## Criteria added round 89 — a repair is measured on a battery it did not author, and harm outranks openness
+
+189. A binding rule that models execution is not required to be sound; it is required to refuse
+      no valid command the entering rule bound. Harm (a newly refused equivalent) is a hard gate;
+      `open` (a counterfeit still bound) is a measured limit that is reported, never traded for
+      harm, and a battery written by the repair's author is not evidence of either. Ground:
+      `corpus/lessons/round-89.md`, `## Mistakes (repair 2)`; `.ufo/waves/round-89/r/Mo89R03Repair.md`
+      (59 held-out cases, every expectation proved by a witness run) and `r/Mo89C02Critic.md`
+      (forgery batteries). Shown able to fail: the first landing `760428ab` reads the frozen met
+      line while `heldout-c1.py` reads `harm=24 newopen=1`; repair 1 `9f4d20b9` reads `harm=12
+      newopen=1` despite `noharm-c1.py` reading `harm=0 open=0`; the landed subtract-only rule at
+      `7715bb56` reads `harm=0 newopen=0 open=30 gained=2` on the same 78 cases and `harm=0
+      open=0 gained=3` on the 34-case battery. Not covered: a battery is still a fixed case set —
+      `open=30` is not a census of shell syntax, and no static rule proves the blob ran.

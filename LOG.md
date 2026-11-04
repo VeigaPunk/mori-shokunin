@@ -5560,3 +5560,65 @@ are absent from that handoff. Final verification re-ran the two detector selftes
 and both met lines at d5e2eda4, all rc0; these results do not override the attack findings.
 QUALITY 185 learns the no-harm/control mistake. No new L0 question; existing mori r65/r73
 instrument ruling and r61 assimilation questions remain untouched.
+
+## Round 89 — 2026-11-04 (L1 MoriR89, attempt 1)
+
+Entering `30a29797012281b9fd0c748b38b929ac67f8c754`. Two frozen claims (contract `d4438695`,
+controls before data `evidence/controls-r89.txt`), distinct axes, both verified on committed bytes:
+
+- **C1 operability — the r87 receipt gate binds the executed script.** The rule finally landed
+  (`7715bb56`) is the entering token rule minus the positions that provably do not execute the
+  bound path (POSIX comments including escaped blanks, redirection targets, `echo`/`printf`/`:`
+  operands, CPython `-W`/`-X` values, after `-c`/`-m`, after the script operand), with
+  `normpath`/repo-relative `realpath` identity, no absolute tokens, and recursive search of quoted
+  command strings. Entering `C1=unmet equiv=refused comment=accepted selfprint=accepted
+  real=met arms=23` rc 1 → `C1=met equiv=accepted comment=refused selfprint=refused real=met
+  arms=26` rc 0; the gate's own selftest 23 → 26 arms and the r88 caller pin migrated with it.
+- **C2 calibration — the twelve r88 survivors armed with attributed kills.** `.ufo/waves/round-88/
+  count-c1.py` 25 → 28 arms and `count-c2.py` 17 → 26 (seats `Mo89E01ArmsC1`, `Mo89E02ArmsC2`,
+  landed `7ce712d4`); `own_ok_of`/`met_line`/`clone_root_ok` extracted, the dead `want_met`
+  deleted, `FX … ok` wording. Entering `C2=unmet mutants=7 killed=0 survivors=7 unattributed=0
+  unanchored=5 arms=25,17` rc 1 → `C2=met mutants=12 killed=12 survivors=0 unattributed=0
+  unanchored=0 arms=28,26` rc 0.
+
+**Repair sequence (disclosed, not hidden).** The first C1 landing `760428ab` met the frozen
+predicate but the w1 reviewer `Mo89R01C1` measured 13 valid equivalents newly refused and six
+counterfeits still bound; `noharm-c1.py` read `harm=13 open=6` rc 1. Repair 1 `9f4d20b9` took the
+battery to `harm=0 open=0`, but the residual seats found it still harmed on batteries it did not
+author (`heldout-c1.py`: `harm=12 newopen=1 open=25`; critic end-to-end: three non-executing-branch
+counterfeits graded `met`) and the mutation-tester measured 29 of 41 binding mutants surviving both
+detectors. Repair 2 `7715bb56` is subtract-only and reads `HELDOUT harm=0 newopen=0 open=30
+gained=2` on 78 cases and `NOHARM harm=0 open=0 gained=3` on 34 — no valid command the entering
+rule bound is refused, six counterfeit classes closed relative to entering (`open` 36 → 30). The
+30 remaining open classes are named in `corpus/knowledge/execution-binding-r89.md`.
+
+**Receipts.** `evidence/after-r89-final.txt` (four instruments at `7715bb56`, `# replay: clone`);
+`evidence/after-r89.txt` binds the superseded repair-1 revision and stays byte-unchanged;
+`evidence/heldout-revs.txt` (the same 78 cases at entering, `760428ab`, `9f4d20b9`, `7715bb56`);
+`evidence/selftests-r89.txt` (five instrument selftests 26/28/26/15/17, all rc 0);
+`evidence/controls-r89.txt` (do-nothing and skip-work controls, both unmet).
+
+**Wave.** One v1 wave of 12 seats (`w1-spec.json`, `w1-dispatch.json`, validator rc 0; executors 3,
+scribes 2, reviewers 2, scout/critic/mutation-tester/connector/sentinel 1 each — attack share 4/12)
+plus a 4-seat residual call (`r-dispatch.json`: reviewer, critic, mutation-tester, scribe) after
+three w1 attack seats died on `402 Insufficient account funds` (`Mo89C01Critic`, `Mo89M01Mut`,
+`Mo89Se01Boundary` — dead seats stay dead, no replacement under the same name). Round total 16
+seats. Both result handoffs lost per-seat final text to the orchestrator kernel restart; seat
+reports are the evidence.
+
+**Attack findings disclosed.** (a) C1's binding is a syntax rule: 30 held-out counterfeits still
+bind (function shadowing, `PATH`/`python3`, `sitecustomize`, blob overwrite, non-executing
+branches, heredoc, `uv -m`, `bash -n`), and the frozen r89 C1 counter cannot tell a rule from a
+lookup of its own six strings (critic `forge-a1`/`forge-b`). (b) C2's counter cannot tell a real
+arm from a canary that reds every arm on any edit (`forge-c1`, `forge-c2b` reach the target); the
+claim is verified on the committed subject bytes by the landed diff plus three independent
+per-mutant measurements. (c) The skip-work control's `count-c1.py` leg was confounded by arms
+appended after its own `own_arms_pinned` (`Mo89R02C2` F1); the control is frozen and only its
+`count-c2.py` leg is cited.
+
+**Verdicts.** operability improved; calibration improved; depth, coverage, freshness, adjacency
+unchanged. No score moved. Sources: S607/S609/S610/S611 admitted, S608 rejected (registry 379 →
+383; see the round lesson `## Gate`). Frontier step: one mistake mined per row in
+`corpus/lessons/round-89.md` (`## Mistakes` and `## Mistakes (repair 2)`), all with able-to-fail
+fixes. `considerthese/2026-10-26.md` suggestion 2 landed as the carry-over ledger in the lesson.
+No new L0 question; the mori r65/r73 instrument ruling and r61 assimilation questions stand.

@@ -1,0 +1,16 @@
+# lane tip bb50c332fad4667c8e76d4379ad8ae76ca1bb09b
+$ python3 -I .ufo/waves/round-87/count-c2.py --selftest --scratch $TMPDIR/st-count-c2.py
+C2_COUNTER_SELFTEST pass=26 fail=0
+rc=0
+$ python3 -I .ufo/waves/round-88/count-c1.py --selftest --scratch $TMPDIR/st-count-c1.py
+C1_COUNTER_SELFTEST pass=28 fail=0
+rc=0
+$ python3 -I .ufo/waves/round-88/count-c2.py --selftest --scratch $TMPDIR/st-count-c2.py
+C2_COUNTER_SELFTEST pass=26 fail=0
+rc=0
+$ python3 -I .ufo/waves/round-89/count-c1.py --selftest --scratch $TMPDIR/st-count-c1.py
+C1_COUNTER_SELFTEST pass=15 fail=0
+rc=0
+$ python3 -I .ufo/waves/round-89/count-c2.py --selftest --scratch $TMPDIR/st-count-c2.py
+C2_COUNTER_SELFTEST pass=17 fail=0
+rc=0

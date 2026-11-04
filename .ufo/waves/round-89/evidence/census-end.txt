@@ -1,0 +1,25 @@
+$ scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori
+mori	W04	S587 duplicate url learn.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-gettickcount64 across scopes
+mori	W04	S608 duplicate url docs.python.org/3.14/library/shlex.html across scopes
+mori	ok	/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md
+rc=0
+
+$ scripts/sources-census.sh census --root /home/vgpnk/Projects/shokunin mori
+mori	rows	384
+mori	tier.A	344
+mori	tier.B	19
+mori	tier.C	21
+mori	status.mined	326
+mori	status.queued	24
+mori	status.rejected	34
+FLEET	rows	384
+FLEET	tier.A	344
+FLEET	tier.B	19
+FLEET	tier.C	21
+FLEET	tier.invalid	0
+FLEET	status.queued	24
+FLEET	status.mined	326
+FLEET	status.rejected	34
+FLEET	status.invalid	0
+FLEET	missing	0
+rc=0
