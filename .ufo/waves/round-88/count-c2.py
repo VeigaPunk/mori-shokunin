@@ -116,10 +116,25 @@ def verdict_line(stdout):
     return last
 
 
+def met_line(rev):
+    """The exact verdict line this counter prints on a met run."""
+    return "C2=met %s rev=%s" % (TARGET, rev[:12])
+
+
+def own_ok_of(rc, out):
+    """This counter's own --selftest is green at rc=0 with fail=0."""
+    return (rc == 0 and "C2_COUNTER_SELFTEST" in out
+            and re.search(r"C2_COUNTER_SELFTEST pass=\d+ fail=0", out) is not None)
+
+
+def clone_root_ok(top_out, d):
+    """True when `git rev-parse --show-toplevel` names exactly the clone directory d."""
+    return top_out.strip() == os.path.realpath(d)
+
+
 def fixture_verdict(stdout, kind, receipt_name):
     """(ok, detail) for one fixture's graded stdout against the frozen expectation."""
     verdict = verdict_line(stdout)
-    want_met = dict((k, w) for k, _p, w, _x in FIXTURES)[kind]
     if kind == "clean":
         return verdict.startswith("C2=met " + REAL), verdict or "no verdict line"
     if not verdict.startswith("C2=unmet"):
@@ -147,7 +162,7 @@ def clone_fixture(repo, rev, scratch, kind, path):
     if co.returncode != 0:
         return None, "checkout rc=%d" % co.returncode
     top = run(["git", "-C", d, "rev-parse", "--show-toplevel"], env=env)
-    if top.stdout.strip() != os.path.realpath(d):
+    if not clone_root_ok(top.stdout, d):
         return None, "fixture root mismatch"
     if kind == "clean":
         head = run(["git", "-C", d, "rev-parse", "HEAD"], env=env)
@@ -248,6 +263,36 @@ def selfcheck(scratch):
                   all(field in TARGET for field in
                       ("fx=4", "clean=1", "refused=2", "absent=1", "arms=26")), "target"))
     cases.append(("arms_pinned", SUBJECT_ARMS == 26, "26"))
+    cases.append(("target_full",
+                  TARGET == "real=met fx=4 clean=1 refused=2 absent=1 arms=26", TARGET))
+    cases.append(("met_line_derived",
+                  met_line("abcdef1234567890") == "C2=met " + TARGET + " rev=abcdef123456",
+                  met_line("abcdef1234567890")))
+    cases.append(("clean_wrong_split",
+                  not fixture_verdict("C2=met receipts=6 absent=0 rev=abc\n", "clean", "r.txt")[0],
+                  "receipts=6"))
+    cases.append(("receipt_name_bound",
+                  receipt_line("RECEIPT other.txt expect=met failed problems=cmd-binding\n",
+                               "r.txt") is None, "other receipt"))
+    cases.append(("clone_top_bound",
+                  not clone_root_ok("/nonexistent/elsewhere\n", "/nonexistent/fx")
+                  and clone_root_ok(os.path.realpath("/nonexistent/fx") + "\n",
+                                    "/nonexistent/fx"), "root"))
+    cases.append(("own_ok_red",
+                  own_ok_of(0, "C2_COUNTER_SELFTEST pass=26 fail=0\n")
+                  and not own_ok_of(1, "C2_COUNTER_SELFTEST pass=26 fail=0\n")
+                  and not own_ok_of(0, "C2_COUNTER_SELFTEST pass=25 fail=1\n"), "rc and fail"))
+    cases.append(("verdict_last_wins",
+                  verdict_line("C2=unmet a\nC2=met b\n") == "C2=met b", "last line"))
+    try:
+        mutate_receipt("# cmd: x\n# ---\nTOKEN\n", "absent-target")
+    except ValueError:
+        no_supersedes = True
+    else:
+        no_supersedes = False
+    cases.append(("absent_without_supersedes", no_supersedes, "ValueError"))
+    cases.append(("vacuous_body_fabricated",
+                  "RECORD_SWEEP fabricated=1" in vacuous and "TOKEN" not in vacuous, "body"))
     cases.append(("marker_literal", "missing-replay" in open(os.path.abspath(__file__)).read(),
                   "label"))
     ok = sum(1 for _, good_case, _ in cases if good_case)
@@ -289,8 +334,7 @@ def main(argv):
         own = run(["python3", "-I", os.path.abspath(__file__), "--selftest",
                    "--scratch", scratch])
         own_out = (own.stdout or "") + (own.stderr or "")
-        own_ok = (own.returncode == 0
-                  and re.search(r"C2_COUNTER_SELFTEST pass=\d+ fail=0", own_out) is not None)
+        own_ok = own_ok_of(own.returncode, own_out)
 
         subject = loader(SUBJECT)
         if subject is None:
@@ -327,7 +371,8 @@ def main(argv):
                 continue
             rc, out = run_graded(graded, d, fx, scratch, "fx-" + kind)
             good, detail = fixture_verdict(out, kind, name)
-            print("FX %s rc=%d %s %s" % (kind, rc, "refused" if good else "ACCEPTED", detail))
+            label = ("ok" if kind == "clean" else "refused") if good else "ACCEPTED"
+            print("FX %s rc=%d %s %s" % (kind, rc, label, detail))
             if not good:
                 fixture_ok = False
             if kind == "clean":
@@ -351,7 +396,7 @@ def main(argv):
         if not (real_ok and fixture_ok and clean == 1 and refused == 2 and absent == 1):
             print("C2=unmet %s detector=green rev=%s" % (tail, rev[:12]))
             return 1
-        print("C2=met %s rev=%s" % (TARGET, rev[:12]))
+        print(met_line(rev))
         return 0
     finally:
         shutil.rmtree(scratch, ignore_errors=True)
