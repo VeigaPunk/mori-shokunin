@@ -1,0 +1,97 @@
+# mori round-85 C3 load-bearing controls (seat Mo85E03C3Fixture)
+# date: 2026-11-04T11:29:21Z (measurement run)
+# seat: Mo85E03C3Fixture (round-85 w1, axis: depth / C3)
+# purpose: falsify the two frozen P-C3 clauses this seat owns, from fixture git
+#          repos under the seat scratch dir:
+#            (a) the counter's own census observation (three stable non-empty
+#                MORI_DRIFT token lines) is load-bearing;
+#            (b) "own_tokens equals the subject's live_tokens" is load-bearing.
+# entering revision: 2cc4b1ae35a83e4fd3fc48bae842bdf38df2e80e
+# freeze revision:   ab2608655ea52ba6d151b3a31d69a3b18cd2b41e
+# lane HEAD at measurement: 91f657f696a701cae8a03a32e0b6d0407603f0b4
+#   (pre-data amendments A1..A4 landed between freeze and measurement; the
+#    counter bytes measured are HEAD's worktree bytes, clean vs HEAD:
+#    sha256 43ad71d8104df29f1be8e3e0cef20d485e35a5f3f70d4994d70adc67b88a2724;
+#    freeze blob was c035e32f465eb5457870c6e5b18a05212e3cdee27f4f79f0cd65999b1f147b44)
+# commands run from /home/vgpnk/Projects/shokunin (fleet root), absolute paths;
+# HYAKU_SCRATCH=/fast/scratch/hyaku/mori-r85/Mo85E03C3Fixture (deleted on exit).
+# All fixture git commits used -c user.name=t -c user.email=t@t
+# -c commit.gpgsign=false after asserting `git rev-parse --show-toplevel`.
+# ---
+## staged bytes (byte-exact `git show <rev>:<path>` copies from the entering revision)
+87b8d680b9b2572e89977a10ff9b91630fbaf689f23f4892e06be427b977ab28  tools/mori-census.sh                (254328 bytes)
+0993b23505deab2aeb05b2309bdf7dd6eaad2b82f27852491352511aa9670478  corpus/evidence/baseline-r10-20261015T2231Z.json  (6779)
+12b4b0779b118e93d0755ff23169dd6eb33646c55717d6506f93f94b355a498a  corpus/evidence/drift-classification-r82.txt      (3371)
+6091bc46cba5ef6e73f882f035f234d0ece023e6e12d98ca92368e2039bf9a5d  .ufo/waves/round-82/evidence/drift-r82-live.txt   (2855)
+63a57cc10d60d3d032a5328833e55d503c5055a5ecba1e4f6b84d451050704fc  .ufo/waves/round-83/count-c2.py                   (23498)
+82c2bdd1f21a069406f216a111b3b5f0fef6e18a55fde8cdef509fabea3ffec4  SCORECARD.md  (496716; sixth path, see note N1)
+## subject edit (fixture 2 only): tail argument len(live_tokens) -> len(live_tokens) - 1
+--- .ufo/waves/round-83/count-c2.py
++++ .ufo/waves/round-83/count-c2.py.edited
+@@ -296,7 +296,7 @@
+             % ("bound" if (hash_ok and asof_ok) else "unbound",
+                1 if asof_ok else 0, len(snapshot_tokens), agreed,
+                residual + malformed, "derived" if live_ok else "unavailable",
+-               len(live_tokens), live_agree, union_n, union_n,
++               len(live_tokens) - 1, live_agree, union_n, union_n,
+                absent_live, added_live, class_changed, deltas))
+ (anchor string occurs exactly once in the subject; verified programmatically)
+## fixture 1 census-stub: HEAD 786aab607daf30e5110c099bd6a02228d87b583e
+five paths; tools/mori-census.sh replaced by exactly:
+  #!/bin/sh
+  exit 1
+(no MORI_DRIFT line)
+## fixture 2 subject-live-stale: HEAD 409de5e807b024509f1e6c57b32f3310efb5a9a3
+real census bytes + edited subject + SCORECARD.md (N1)
+## fixture 3 anchor (pristine subject): HEAD f2efbfcbffd0e51a048b616f9020ca64721e0a38
+identical to fixture 2 except the pristine subject bytes
+## counter selftest precondition
+C3_COUNTER_SELFTEST pass=20 fail=0
+rc=0
+## C3 CONTROL 1 — census-stub (own-observation clause)
+$ HYAKU_SCRATCH=/fast/scratch/hyaku/mori-r85/Mo85E03C3Fixture python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-85/count-c3.py HEAD --repo /fast/scratch/hyaku/mori-r85/Mo85E03C3Fixture/fix1.IBImPt --fleet-root /fast/scratch/hyaku/mori-r85/Mo85E03C3Fixture/fix1.IBImPt
+C3=unmet observed=3 aa=unstable own_tokens=0 rcs=1,1,1 rev=786aab607daf
+rc=1
+clause falsified: "every run exits 1 with a non-empty `MORI_DRIFT:` token line
+and the three token lines are identical" — a census whose bytes emit no
+MORI_DRIFT line leaves the observation unstable and empty (own_tokens=0);
+P-C3 cannot be met without the counter's own observation.
+## C3 CONTROL 2a — subject-live-stale, fleet root = fixture dir (spec-letter variant, disclosed)
+$ ... count-c3.py HEAD --repo .../fix2.Yec5J3 --fleet-root .../fix2.Yec5J3
+C3=unmet observed=3 aa=stable subject=unmet rc=1 rev=409de5e807b0
+C2=unmet snapshot=bound asof=1 tokens=64 agreed=64 residual=0 live=derived live_tokens=51 live_agree=45 delta=classified classified=71 union=71 absent_live=19 added_live=7 class_changed=0 deltas=26 rev=409de5e807b0
+rc=1
+reading: with the fleet root pointed at the fixture dir the subject's own live
+census observes a different token set (52 tokens: 64 snapshot tokens 19 absent,
+7 added) than the r82 snapshot, so the subject's C2 verdict is unmet (rc 1) and
+the counter short-circuits at subject=unmet. This variant MASKS the
+subject-binding clause (the subject never reaches its own C2=met verdict); it
+is not usable as the clause control. See control 2b.
+## C3 CONTROL 2b — subject-live-stale, fleet root = real fleet root (clause control of record)
+$ HYAKU_SCRATCH=/fast/scratch/hyaku/mori-r85/Mo85E03C3Fixture python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-85/count-c3.py HEAD --repo /fast/scratch/hyaku/mori-r85/Mo85E03C3Fixture/fix2.Yec5J3 --fleet-root /home/vgpnk/Projects/shokunin
+C3=unmet observed=3 aa=stable own_tokens=64 subject_tokens=63 subject_deltas=0 unmatched=0 unnamed=0 detector=green rev=409de5e807b0
+rc=1
+clause falsified: "own_tokens equals the subject's live_tokens" — the subject
+still passes every other gate (its own C2=met verdict per amendment A3, rc 0,
+live=derived, subject_deltas=0, unmatched=0, unnamed=0, detector green); the
+sole failing term of the counter's `met` conjunction is
+subject_tokens(63) != own_tokens(64).
+## C3 ANCHOR 3 — pristine subject, single-difference control for 2b
+$ HYAKU_SCRATCH=/fast/scratch/hyaku/mori-r85/Mo85E03C3Fixture python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-85/count-c3.py HEAD --repo /fast/scratch/hyaku/mori-r85/Mo85E03C3Fixture/fix3.sVp2XK --fleet-root /home/vgpnk/Projects/shokunin
+C3=met observed=3 aa=stable own_tokens=64 subject_tokens=64 subject_deltas=0 unmatched=0 unnamed=0 detector=green rev=f2efbfcbffd0
+rc=0
+reading: the identical fixture with the pristine subject is met at rc 0, so
+control 2b's unmet is attributable solely to the decremented live_tokens print.
+No control read met unexpectedly; no negative result to disclose on that front.
+## notes
+N1: fixtures 2/3 carry a sixth byte-exact path, SCORECARD.md at the entering
+    revision, because the r83 subject reads it (CARDS) and exits
+    C2_SETUP "census/baseline/SCORECARD absent" (rc 2) without it — a five-path
+    fixture cannot exercise the subject path of the counter at all.
+N2: controls 2b/3 observe the live fleet (read-only census probes with
+    MORI_SHOKUNIN_ROOT=<real fleet root>, census --drift writes nothing); the
+    64-token observation is today's measurement, matching the frozen retroactive
+    control in evidence/controls-r85.txt (own_tokens=64 subject_tokens=64).
+N3: the fixture repos themselves were deleted with the seat scratch dir
+    (HYAKU_SCRATCH cleanup rule); the HEADs, staged byte hashes and full
+    outputs above are the retained evidence.

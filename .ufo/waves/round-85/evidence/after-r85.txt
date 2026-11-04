@@ -9,4 +9,6 @@
 MUTANT count-c1.py X1_killed_rescued_as_equivalent killed rc=1
 MUTANT count-c1.py X2_coupling_duplicate_passes killed rc=1
 C1=met mutants=2 killed=2 survivors=0 total=2 arms=17 r84=met rev=25a74d4c34e8
+rc=0
 C3=met observed=3 aa=stable own_tokens=64 subject_tokens=64 subject_deltas=0 unmatched=0 unnamed=0 detector=green rev=25a74d4c34e8
+rc=0

@@ -2018,3 +2018,16 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
      Not covered: the truth of the limit sentence (a present and wrong limit line is
      QUALITY 164/166's textual-binding class); receipts outside a wave's `evidence/`; a
      binding whose digest verifies while the limit sentence names another artifact.
+
+176. A selftest tally that a later round moves is re-pinned in the landing round, not left at the
+     older reading: when an arm is added to a counter, every criterion that quotes that counter's
+     `pass=` tally either cites the new measured value or names the round that supersedes it.
+     Ground: criterion 172 quoted the r84 counter's pre-amendment `C1_COUNTER_SELFTEST pass=11
+     fail=0`; criterion 173 corrected it to 15 (the count since `5a231ef8`); this round's landing
+     takes the same counter to 17 arms (`C1=met mutants=2 killed=2 survivors=0 total=2 arms=17
+     r84=met` at `25a74d4c`, and `python3 -I .ufo/waves/round-84/count-c1.py --selftest` ->
+     `C1_COUNTER_SELFTEST pass=17 fail=0`). Shown able to fail: a reader who stops at 172 or 173
+     believes the counter has 11 or 15 arms while the graded bytes carry 17; the re-run command
+     prints the current tally, so the stale reading is detectable without opening the counter.
+     Not covered: a tally quoted for a pinned historical revision (the round-72 pin families) —
+     those keep their revision and are not re-pinned by this rule.

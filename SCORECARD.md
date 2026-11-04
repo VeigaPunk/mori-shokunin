@@ -4348,3 +4348,51 @@ subject's own observation; the counter does not re-run the census.
 3. **depth** — the C3 residual: a counter that re-runs the census itself and reconciles the
    subject's live line with its own observation (or classifies an `unexplainable` snapshot class
    inside the frozen table) would move the delta from a self-report to a fact.
+
+## Round 85 (2026-11-04, L1 MoriR85) — the two surviving r84-counter mutants, the receipt provenance grammar and the counter's own census observation
+
+Entering revision `2cc4b1ae35a83e4fd3fc48bae842bdf38df2e80e`; frozen contract
+`.ufo/waves/round-85/contract.md` (freeze `ab2608655ea52ba6d151b3a31d69a3b18cd2b41e`; pre-data
+amendments A1 `79bb4ed8`, A2 `4ffd5a2d`, A3 `89f82eac`, A4 `91f657f6`, each disclosed in the
+contract), population and defeat controls `.ufo/waves/round-85/evidence/controls-r85.txt` and
+`.ufo/waves/round-85/evidence/controls-r85-defeated.txt`. Axes: operability (C1, score 7),
+calibration (C2, score 5, tied lowest) and depth (C3, score 5, tied lowest, capability
+acquisition). No score moves. The after cells were measured at `25a74d4c34e8430e4fbb18d4038ef5db872fb0ee` by the round's frozen
+counters (receipt `.ufo/waves/round-85/evidence/after-r85.txt`, receipt commit `729b794aa7627190afa0ebd6d2d4dd07ae85e2af`; the counters
+are the worktree bytes at that revision).
+
+| Claim | Axis | Counting command | At entering `2cc4b1ae` | After (measured at `25a74d4c34e8430e4fbb18d4038ef5db872fb0ee`) |
+|---|---|---|---|---|
+| C1 the two surviving r84-counter mutants get the failing arm each needs (selftest 15 → 17 arms) | operability | `python3 -I .ufo/waves/round-85/count-c1.py <rev>` | `C1=unmet mutants=2 killed=0 survivors=2 total=2 arms=15 harness=stub ...`, rc 1 | `C1=met mutants=2 killed=2 survivors=0 total=2 arms=17 r84=met`, rc 0 |
+| C2 every after receipt binds its command, revision and subject-bytes sha256 | calibration | `python3 -I .ufo/waves/round-85/count-c2.py <rev>` | `C2=unmet receipts=0 harness=absent`, rc 1 | `C2=met receipts=3 bindings=5 bound=5 revs=3 limits=3 cmd=3 summary=3 mismatch=0`, rc 0 |
+| C3 the counter observes the census itself three times and reconciles the subject | depth (capability acquisition) | `python3 -I .ufo/waves/round-85/count-c3.py <rev>` | counter file absent (`git cat-file -e` rc 128); retroactive reading disclosed as met | `C3=met observed=3 aa=stable own_tokens=64 subject_tokens=64 subject_deltas=0 unmatched=0 unnamed=0`, rc 0 |
+
+The two C1 kills are behavioural: each mutated copy's own selftest reads `pass=16 fail=1` rc 1 and
+its FAIL line names that arm. C2's five bindings are re-derived from each named path's bytes at the
+receipt's own `# rev:`. C3's three observations are the census from R's own bytes, identical token
+lines required, and the reconciliation walks both directions.
+
+### Capabilities (round 85)
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Population-control counter (`.ufo/waves/round-85/count-c1.py`) | re-derives the two-survivor X1/X2 population at ANY revision from that revision's bytes, requires the two arm labels and exactly 17 passing arms in the graded r84 counter, runs each mutated copy's own `--selftest` in scratch, and requires the r84 counter's own 4-mutant `met` line at the same revision; 18 detector arms; stdout only, writes only under `--scratch` | `python3 -I .ufo/waves/round-85/count-c1.py --selftest` -> `C1_COUNTER_SELFTEST pass=18 fail=0`; at `25a74d4c34e8430e4fbb18d4038ef5db872fb0ee` it prints `mutants=2 killed=2 survivors=0 total=2 arms=17 r84=met`, rc 0 | 85 |
+| Receipt-provenance counter + generator (`.ufo/waves/round-85/count-c2.py`, `.ufo/waves/round-85/make-receipts.sh`) | grades three frozen receipts for exactly one cmd/rev/limits header each in the block before the single `# ---`, ancestor-bound revisions, sha256 bindings of the named subject paths at the receipt's own revision, malformed binding lines, and the frozen summary token after the separator; 18 detector arms | `python3 -I .ufo/waves/round-85/count-c2.py --selftest` -> `C2_COUNTER_SELFTEST pass=18 fail=0`; at `729b794aa7627190afa0ebd6d2d4dd07ae85e2af` it prints `receipts=3 bindings=5 bound=5 ... mismatch=0`, rc 0 | 85 |
+| Own-census observation and reconciliation (`.ufo/waves/round-85/count-c3.py`) | runs `tools/mori-census.sh --drift <baseline>` three times from R's own bytes with a fresh scratch tree, requires rc 1 and identical non-empty token lines, runs the r83 drift counter at R and requires its `C2=met live=derived` tail, derives every union token's class independently, and reconciles both directions (`unmatched` for subject-named deltas the observation contradicts, `unnamed` for observation deltas the subject omits); 20 detector arms | `python3 -I .ufo/waves/round-85/count-c3.py --selftest` -> `C3_COUNTER_SELFTEST pass=20 fail=0`; at `25a74d4c34e8430e4fbb18d4038ef5db872fb0ee` it prints `observed=3 aa=stable own_tokens=64 subject_tokens=64 unmatched=0 unnamed=0`, rc 0 | 85 |
+
+The C3 capability's before value is the counter's absence at the entering revision; running the
+counter retroactively over those bytes already reads `C3=met` (disclosed in
+`evidence/controls-r85.txt` and in `.ufo/waves/round-85/contract.md` A2/A4) — this row claims a
+capability, not a subject-state or coverage move.
+
+## Planned (round 86)
+
+1. **operability** — the r85 mutation probe's surviving unarmed clauses (`MUTANTS total=N killed=N survivors=N`,
+   `w1/Mo85M01Mut.md`) get the arm each needs, starting with the C2 parser's separator/summary split
+   and C3's `observe_three` stability rule.
+2. **calibration** — the C2 predicate's named stale-body limit (a correct digest over a stale body
+   passes) gets a body-versus-command binding: re-run `# cmd:` and compare, or record the limit in
+   the receipt grammar as a superseding row.
+3. **depth** — carry the own-observation rule into the drift classification: reconcile the
+   snapshot's `unexplainable` classes with two independent observations.
+

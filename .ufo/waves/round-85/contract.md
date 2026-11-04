@@ -39,7 +39,7 @@ The two-mutant population (measured by the r84 C1 reviewer at `c4845c83`,
 | label | old | new | class |
 |---|---|---|---|
 | `X1_killed_rescued_as_equivalent` | `if not k and coupling is not None:` | `if coupling is not None:` | non-equivalent: a killed mutant with a registered coupling reads `equivalent` |
-| `X2_coupling_duplicate_passes` | `coupled = all(base.count(marker) == 1 for marker in coupling)` | `coupled = all(base.count(marker) >= 1 for marker in coupling)` | non-equivalent: a duplicated coupling marker still reads `equivalent` |
+| `X2_coupling_duplicate_passes` | `coupled = all(base.count(marker) == 1 for marker in coupling)` | `coupled = all(base.count(marker) >= 1 for marker in coupling)` | non-equivalent: a duplicated coupling marker still reads `equivalent`. **Provenance note (A5):** the r84 reviewer's §5 table records X2 against the r83 counter's spelling (`coupled = base.count(coupling) == 1`, r83 `count-c1.py:177-178`); the refactored r84 line above is the same survival semantics re-pinned to the bytes this round grades, and both mutants were re-measured surviving at the entering revision (L1 and reviewer runs). |
 
 Seat that lands the arms: `.ufo/waves/round-84/count-c1.py` `selfcheck()` only (+2 arms, 15 → 17):
 1. `killed_mutant_with_coupling_not_equivalent` — a fixture whose label is in `EQUIVALENT`, whose
@@ -75,7 +75,7 @@ Frozen receipts (path → bound paths → summary token):
 | `.ufo/waves/round-85/evidence/claim-sweep-r85.txt` | `tools/mori-claim-sweep.py` | `CLAIM_SWEEP` |
 
 Rule (frozen): a header line is `# cmd: <text>`, `# rev: <40-hex>`, `# limits: <text containing the
-word "limit">`, `# counter-sha256: <64-hex> <path>`; a duplicate cmd/rev/limits line, a missing
+word "limit" and at least three words>`, `# counter-sha256: <64-hex> <path>`; a duplicate cmd/rev/limits line, a missing
 header, a non-ancestor revision, a hash that does not match the named path at that revision, or a
 missing summary token is a mismatch. `bindings` counts `# counter-sha256:` lines; `bound` counts
 the ones whose hash verifies. Exit 2 is setup, never a pass.
@@ -164,3 +164,13 @@ the frozen sentence. Selftest 19 → 20 arms; the entering retroactive run stays
   control is the counter FILE's absence at `2cc4b1ae` (`git cat-file -e` fails; no counter output
   exists there); running the frozen counter retroactively over that revision reads `C3=met` and
   that reading is disclosed, not the before value.
+
+**A5 (post-data text fixes, 2026-11-04T08:40-03:00; critic `w1/Mo85C01Critic.md` §7 items 1–3, 5, 7, 8;
+no predicate value, target, receipt, class or kill rule changed).** (i) P-C2's rule list now states
+the `# limits:` three-word rule the counter has always enforced (A2's sentence was true of the
+counter, not of the list). (ii) P-C1 carries the X2 provenance note above: the r84 reviewer's §5
+table measured the r83 spelling; this round re-pinned the same survival semantics to the refactored
+r84 line and re-measured both mutants surviving at the entering revision. (iii) The C2 defeat
+control's `headers=<receipt>` shorthand is superseded by the measured A2 form
+`C2=unmet ... mismatch>=1`. (iv) The after receipt's `# counter-sha256:` lines pin the post-A3
+counter bytes that produced the after values (W's bytes). No frozen value moved.

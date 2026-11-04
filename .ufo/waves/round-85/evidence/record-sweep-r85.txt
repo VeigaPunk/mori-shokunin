@@ -5,3 +5,4 @@
 # limits: named limit — this body is a worktree run while the binding pins the sweep tool bytes at the revision, not the worktree bytes
 # ---
 RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0
+rc=0

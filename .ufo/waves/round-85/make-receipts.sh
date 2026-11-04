@@ -101,10 +101,11 @@ sha_at_rev() { # repo-relative path -> sha256 of its bytes at $REV (as count-c2.
     git -C "$REPO" show "$REV:$1" | sha256sum | cut -d' ' -f1
 }
 
-run_to() { # run_to <stdout-file> <stderr-file> <cmd...> — rc visible in the body's summary
+run_to() { # run_to <stdout-file> <stderr-file> <cmd...> — rc recorded in LAST_RC
     local o="$1" e="$2"
     shift 2
-    "$@" >"$o" 2>"$e" || true
+    LAST_RC=0
+    "$@" >"$o" 2>"$e" || LAST_RC=$?
 }
 
 warn_missing() { # <file> <token> — note only; the counter, not this script, grades the token
@@ -120,19 +121,23 @@ run_to "$S/c3.out" "$S/c3.err" python3 -I "$C3" "$REV"
 : > "$S/body1"
 cat "$S/c1.out" >> "$S/body1"
 if [ -s "$S/c1.err" ]; then cat "$S/c1.err" >> "$S/body1"; fi
+printf 'rc=%d\n' "$LAST_RC" >> "$S/body1"
 cat "$S/c3.out" >> "$S/body1"
 if [ -s "$S/c3.err" ]; then cat "$S/c3.err" >> "$S/body1"; fi
+printf 'rc=%d\n' "$LAST_RC" >> "$S/body1"
 
 # --- body 2/3: the two sweeps run in the lane worktree (cwd = lane root)
 run_to "$S/rs.out" "$S/rs.err" python3 -I "$RS" --root . --pins "$RP"
 : > "$S/body2"
 cat "$S/rs.out" >> "$S/body2"
 if [ -s "$S/rs.err" ]; then cat "$S/rs.err" >> "$S/body2"; fi
+printf 'rc=%d\n' "$LAST_RC" >> "$S/body2"
 
 run_to "$S/cs.out" "$S/cs.err" python3 -I "$CS" --root . --pins "$CP"
 : > "$S/body3"
 cat "$S/cs.out" >> "$S/body3"
 if [ -s "$S/cs.err" ]; then cat "$S/cs.err" >> "$S/body3"; fi
+printf 'rc=%d\n' "$LAST_RC" >> "$S/body3"
 
 warn_missing "$S/body1" 'C1=met'
 warn_missing "$S/body1" 'C3=met'

@@ -5258,3 +5258,68 @@ tallies (r83's revision-scoped tallies stay as recorded).
 read their r83 met lines (`C1=met mutants=23 killed=22 equivalent=1 …`, `C2=met snapshot=bound …
 live_tokens=64`, `C3=met arm=anchored … arms=40`). Population census rc 0. No axis harmed; no score
 moved.
+
+## Round 85 — 2026-11-04 (L1 MoriR85, attempt 1)
+
+Entering `2cc4b1ae35a83e4fd3fc48bae842bdf38df2e80e`; freeze `ab2608655ea52ba6d151b3a31d69a3b18cd2b41e`
+(contract, three counters, population controls); pre-data amendments A1 `79bb4ed8`, A2 `4ffd5a2d`,
+A3 `89f82eac`, A4 `91f657f6` (disclosed in `.ufo/waves/round-85/contract.md` §Amendments: A1
+verified a receipt's digest at the graded tip instead of at the receipt's own `# rev:`; A2–A3 fixed
+the five graded-defects and two soft clauses the connector's sweep found; A4 corrected the C3
+entering-control text to the counter file's absence); measured `25a74d4c34e8430e4fbb18d4038ef5db872fb0ee` (receipt
+`.ufo/waves/round-85/evidence/after-r85.txt`, receipt commit `729b794aa7627190afa0ebd6d2d4dd07ae85e2af`). Axes: operability 7,
+calibration 5 (tied lowest), depth 5 (tied lowest, capability acquisition). No score moves.
+
+**C1 — operability.** The r84 C1 reviewer's two surviving counter mutants (X1
+`if not k and coupling is not None:` → `if coupling is not None:`; X2
+`coupled = all(base.count(marker) == 1 ...)` → `>= 1`, `.ufo/waves/round-84/w1/Mo84R01C1.md` §5) get
+the failing arm each needs in `.ufo/waves/round-84/count-c1.py` `selfcheck()`
+(`killed_mutant_with_coupling_not_equivalent`, `duplicate_coupling_not_equivalent`; 15 → 17 arms,
+`grade()`/`green()`/`killed()` untouched). `python3 -I .ufo/waves/round-85/count-c1.py 25a74d4c34e8430e4fbb18d4038ef5db872fb0ee` →
+`C1=met mutants=2 killed=2 survivors=0 total=2 arms=17 r84=met`, rc 0. The kills are behavioural:
+each mutated copy's own selftest reads `pass=16 fail=1` rc 1 and the FAIL line names that arm; the
+armed counter still prints its own frozen 4-mutant `met` line. Entering:
+`C1=unmet mutants=2 killed=0 survivors=2 total=2 arms=15 harness=stub ...`, rc 1.
+
+**C2 — calibration.** `.ufo/waves/round-85/count-c2.py` grades three frozen receipts for one
+`# cmd:`, one `# rev:`, one `# limits:` and one or more `# counter-sha256: <64-hex> <path>` headers
+in the block before the single `# ---`; each binding is re-derived from the named path's bytes at
+the receipt's own revision, and a duplicate/empty/malformed header or a missing summary token is a
+mismatch. `.ufo/waves/round-85/make-receipts.sh <rev>` writes them. `python3 -I
+.ufo/waves/round-85/count-c2.py 729b794aa7627190afa0ebd6d2d4dd07ae85e2af` → `C2=met receipts=3 bindings=5 bound=5 revs=3 limits=3 cmd=3
+summary=3 mismatch=0`, rc 0; the flipped-digest control reads `bound=4 mismatch=1`, rc 1. D84-4
+(the quoted outputs with no committed receipt) and D84-5 (the battery header) are discharged.
+
+**C3 — depth (capability acquisition).** `.ufo/waves/round-85/count-c3.py` runs
+`tools/mori-census.sh --drift <r10 baseline>` three times from the revision's own bytes, requires
+rc 1 and identical non-empty token lines (`aa=stable`), runs the r83 drift counter at the same
+revision (`C2=met live=derived`), derives every union token's class from the baseline bytes itself,
+and reconciles both directions (`unmatched` for subject-named deltas the observation contradicts,
+`unnamed` for observation deltas the subject omits). `python3 -I .ufo/waves/round-85/count-c3.py
+25a74d4c34e8430e4fbb18d4038ef5db872fb0ee` → `C3=met observed=3 aa=stable own_tokens=64 subject_tokens=64 subject_deltas=0 unmatched=0
+unnamed=0`, rc 0. Before this round P-C3 has no reading: the counter file is absent at
+`2cc4b1ae`; its retroactive reading over that revision (`C3=met`) is disclosed in the controls.
+
+**Wave.** ONE v1 wave, 12 seats (validated under `ufo-wave-policy.json`, band 8-16; dispatch
+`w1-dispatch.json`, spawn=12): 4 executor / 2 scribe / 1 scout / 2 reviewer / 1 critic / 1
+mutation-tester / 1 connector; attack 4/12 (33.3 %); connector 1; residual none; the planner seat is
+the L1. Seat reports under `.ufo/waves/round-85/w1/`. Dead seats / stand-ins: <fill>.
+
+**Frontier step.** S600 (reproducible-builds.org "Definitions") opened, pinned three times
+byte-identically (`corpus/evidence/sources-r85/rb-definition-{1,2,3}.html`, sha256 `a558c89f…`,
+37681 bytes) and quoted at raw lines 175-177 (21 words) and 196-197; S601 (arXiv:2404.09241) lands
+as the `rejected` row the r84 refusal owed (D84-3), with the reason and flip condition.
+`corpus/knowledge/receipt-provenance-r85.md` (K1–K3, cites S600) and the coverage-map row are the
+round's new ground. Rows 372 → 374 by `grep -cE '^ {0,3}\|[[:space:]]*S[0-9]{3,}[[:space:]]*\|'
+corpus/SOURCES.md`; census rc 0 before and after, 35 tolerated W04 warnings both times. The mined
+mistake is the r84 D84-2 class (`number-drift` + `reference-drift`: a pre-amendment selftest tally
+quoted as measured, and a pointer that had moved to argument parsing), swept by
+`grep -n 'C1_COUNTER_SELFTEST pass='` plus the selftest re-run at the cited bytes; QUALITY 173
+supersedes 172. QUALITY 173–175 and `SKILL.md` registry row 19 land the round's rules.
+`considerthese/2026-10-26.md` suggestion 3 is mined into the receipt rule. `Assimilation: none`.
+
+**No-harm.** The standing battery with its r84 classification reads `BATTERY pass=57 setup=4
+fail=0` (`evidence/battery-r85.txt`; the four setup cases are the same lane-TMPDIR selftests as
+r84). The record sweep reads `RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0`
+and the claim sweep `CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=4
+pointers=266` at the measured revision (both committed as receipts). No axis harmed; no score moved.
