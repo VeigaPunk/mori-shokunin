@@ -4599,6 +4599,10 @@ expectation-met, not gate behaviour (legibility defect, carried).
 2. **calibration** — the C2 counter's canary assurance gap: require each declared arm green on
    the pristine copy, red on its own mutant, and green on the other eleven; require each anchor to
    sit outside a string literal (`ast`/`tokenize`), so a canary that reds every arm fails.
+   Also arm the three neighbouring survivors `Mo89M02Mut` measured: the `own_ok_of` arm-count
+   pin (B1: `pass=\d+` accepts any count), the printed-line vs helper gap (B4: `met_line` is
+   tested but `main` passes `rev[:7]`), and the clone-root negative (B6: a parent prefix or empty
+   output passes).
 3. **freshness** — the frozen r89 C1 counter's `FX` label polarity and the r87 gate's remaining
    unarmed clauses (`c2-replay-compare-*`, `c2-supersede-*`, `c2-absent-*`,
    `c2-defeated-accounting`), plus F3 hermeticity (two `required` receipts replay against the host
