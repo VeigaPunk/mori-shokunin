@@ -73,3 +73,15 @@ replay, not the header.
 Frozen at this commit, before any after-value existed: `count-c1.py`, `count-c2.py`, this
 contract, `evidence/controls-r87.txt` and `evidence/probe-r87.txt`. No target, population or
 kill rule moves after data. A miss is an honest stop.
+
+## Amendments (pre-data, disclosed)
+
+### A1 — the C2 counter's subject sub-gate follows the C1 arm count (2026-11-04, before any C2 after-value)
+
+C1 adds two arms to `.ufo/waves/round-86/count-c2.py` (selftest 11 → 13). The C2 counter's subject
+sub-gate froze `SUBJECT_ARMS = 11` and an 11-label tuple, so it would read `subject=selftest` unmet
+at any revision carrying C1's work. Amendment: `SUBJECT_ARMS = 13` and the label tuple gains
+`summary_required` and `binding_required`. No target, population, supersede rule or kill rule moves;
+the C2 target string is byte-identical to the frozen one, and no C2 after-value existed when this
+amendment was written (the entering control and the header-only control are unchanged and remain
+the before evidence).

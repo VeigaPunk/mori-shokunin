@@ -1,0 +1,224 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r87-w1",
+  "policy": {
+    "source": "config",
+    "maxLanes": 12,
+    "minLanes": 8,
+    "waveMinLanes": 8,
+    "waveMaxLanes": 16,
+    "declaredMaxLanes": 12,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 12,
+    "resume": 0,
+    "total": 12
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-87/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-87/w1",
+    "members": {
+      "Mo87E01C1Arms": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability"
+        ],
+        "milestone": "C1: re-measure each of the six mutants against the landed arms"
+      },
+      "Mo87E02C2Supersede": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "calibration"
+        ],
+        "milestone": "C2: fixture-test the supersede rule against three successor shapes"
+      },
+      "Mo87E03Baseline": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability",
+          "calibration"
+        ],
+        "milestone": "Both counters at three revisions: entering, C1 landing, C2 landing"
+      },
+      "Mo87Si01Simplify": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "simplifier",
+        "item": null,
+        "axes": [
+          "operability"
+        ],
+        "milestone": "Dead weight in the two new counters and the six new arms"
+      },
+      "Mo87Sc01Scout": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null,
+        "axes": [
+          "coverage"
+        ],
+        "milestone": "Recon: every unarmed clause left in the three r86 counters"
+      },
+      "Mo87S01Lesson": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "calibration"
+        ],
+        "milestone": "The round-87 lesson: one mined mistake with a fixture, and the Gate draft"
+      },
+      "Mo87S02Sources": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "freshness"
+        ],
+        "milestone": "Open one external source for the supersede rule and produce a located, hashed quote"
+      },
+      "Mo87R01ReviewC1": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "operability"
+        ],
+        "milestone": "Attack C1: are the six kills real, non-equivalent and arm-backed?"
+      },
+      "Mo87R02ReviewC2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "calibration"
+        ],
+        "milestone": "Attack C2: does the supersede rule bind the replay, and is the legacy reason honest?"
+      },
+      "Mo87C01Critic": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null,
+        "axes": [
+          "calibration"
+        ],
+        "milestone": "Falsify both claims: find the cheap path to each target"
+      },
+      "Mo87M01Mut": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null,
+        "axes": [
+          "operability"
+        ],
+        "milestone": "Mutation-test the two new r87 counters themselves"
+      },
+      "Mo87K01Conn": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null,
+        "axes": [
+          "adjacency"
+        ],
+        "milestone": "Sibling-overlap scan: who else replays receipts or grades supersede?"
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Goal\nmori round 87 (attempt 1), wave w1 — verify, attack and record TWO frozen claims.\nmori is a fleet/host observability lane: detection and report only. The freeze commit is\n`142542e0d853b4e8ec1aa1adb86708dc5786d9c0`; both r87 counters and the do-nothing controls were frozen there before any seat ran.\nThe entering revision is `6fc09d69edbb11e5070ff33258de49f062c0fb9b`; the two claims landed at `03b66a437e68d493ce0aacd1d80c321cc2e6bf7c` (C1) and `98f48dba3267a73714b862d0fd4fc8c0e82a1d04` (C2).\n\nRead first, in this order (absolute paths):\n- /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-87/contract.md — THE FROZEN\n  AUTHORITY: P-C1 (six surviving r86-counter clauses get their arms), P-C2 (a legacy receipt is\n  superseded by a replaying successor), the targets, kill rules and measured do-nothing controls,\n  plus amendment A1.\n- /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-87/count-c1.py and count-c2.py —\n  the two frozen counters (each has `--selftest`).\n- /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-87/evidence/controls-r87.txt — the\n  measured entering, label-only and header-only controls.\n- /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-87/evidence/probe-r87.txt — the\n  mutation probe that chose the six-mutant population.\n- /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-86-verifier-spotcheck.md\n  (`## Routed defects (fix in round 87)` — eight items).\n- /home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md `## Planned (round 87)`.\n\n# Round claims (frozen before this wave; do not change them)\n- C1 operability (7): six clauses of the three r86 counters that survived their own selftests get\n  the failing arm each; the r86 counters' selftests move 15/11/22 -> 18/13/23 arms.\n  Target `C1=met mutants=6 killed=6 survivors=0 total=6 arms=54` at `03b66a437e68d493ce0aacd1d80c321cc2e6bf7c`.\n  Entering control `C1=unmet ... survivors=6 total=6 arms=48` (rc 1).\n- C2 calibration (5, tied lowest): two replay-capable successor receipts (`# replay: clone`,\n  `# supersedes:`) retire two of the three legacy r85 receipts, so `legacy=3 -> legacy=1` and\n  `superseded=0 -> superseded=2` under a new supersede rule that requires the successor's replay.\n  Target `C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4\n  matched=6 defeated=1 superseded=2 legacy=1 unexpected=0` at `98f48dba3267a73714b862d0fd4fc8c0e82a1d04`.\n  Entering control `C2=unmet receipts=5 absent=2 ... superseded=0 legacy=3` (rc 1).\n\n# Shared rules (binding on every seat)\n- Write scope: /home/vgpnk/Projects/shokunin/mori-shokunin only, and inside it only the paths your\n  item names. Absolute paths in every tool call: your tools start at the FLEET root, so a relative\n  path lands in the wrong repo. Never write to /home/vgpnk/Projects/shokunin (fleet root), another\n  lane's repo, MANIFEST.json, `.ufo/state/`, `.ufo/watchdog.log`, `.scratch/`,\n  /home/vgpnk/Projects/shokuknow, or `considerthese/`.\n- Never commit, push, or run a mutating git/jj command in the LANE repo: no `git add`, `git\n  commit`, `git checkout`, `git reset`, `git stash`, `git push`, and no mutating `jj` command.\n  Read-only git (`log`, `show`, `diff`, `status`, `ls-tree`, `cat-file`, `rev-parse`, `clone\n  --shared`) is fine. The L1 owns every lane commit. A scratch clone under your own scratch dir is\n  a fixture: commits there use `-c user.name=t -c user.email=t@t` and are allowed.\n- Every `Report:` trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin —\n  write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>.\n- Scratch: create your work dir under /fast/scratch/hyaku/mori-r87/<your seat name>/ and delete it\n  before you yield (`trap 'rm -rf -- \"$S\"' EXIT` in shell). Never write under /tmp; a /tmp path is\n  never citable evidence. Use `git clone --shared` instead of full clones; never mirror the whole\n  lane. `HYAKU_SCRATCH` defaults to /fast/scratch/hyaku.\n- Fixture git repos: `D=$(mktemp -d -p your scratch)` then `git -C \"$D\" init -q`; assert\n  `git -C \"$D\" rev-parse --show-toplevel` equals `$D` before the first commit; every later\n  git/jj call names `-C \"$D\"`.\n- Detection and report only: no lane, OS, unit, service, credential, harness or orchestration\n  state may be changed. mori never remediates. Do not run `agent://all`; message only the L1\n  (agent id `MoriR87`) for a blocker.\n- Tooling authorization (operator, 2026-10-19): you may install or upgrade tools that help the\n  task; read /home/vgpnk/.omp/agent/RULES.md first (official channels, update-safety gate) and\n  record tool/version/channel/reason in your report. **pacman guard (orchestrator ruling\n  2026-10-20): all pacman transactions are PAUSED host-wide** — install via `uv tool`/`npx`/an\n  official binary in `~/.local/bin`, or file nothing; never `-Sy`, `-Syu`, `-U`, `-R`, never a\n  partial upgrade.\n- Honesty: an unrun check has not passed. Report failures, dead ends and surviving defects plainly;\n  never restate a sibling's claim as your own measurement. Record the file hashes/revision you\n  actually read, since siblings land work while you run.\n",
+    "tasks": [
+      {
+        "name": "Mo87E01C1Arms",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nVerify, independently of the frozen counter, that each of the six C1 mutants is killed by the arm\nlanded at `03b66a437e68d493ce0aacd1d80c321cc2e6bf7c`, and that the arm is the one that does the killing.\n\nFrozen authority: `.ufo/waves/round-87/contract.md` P-C1 and the population table; the counter\n`.ufo/waves/round-87/count-c1.py` (its MUTANTS tuple names file, label, anchor, replacement).\n\nDo (read-only over the lane; scratch fixtures only):\n1. For each of the six mutants, load the subject from `git show 03b66a437e68d493ce0aacd1d80c321cc2e6bf7c:<path>`, assert the anchor\n   occurs exactly once, apply the replacement, run the mutated copy's own `--selftest` with\n   `TMPDIR` in your scratch dir, and record the rc and the `FAIL <label>` line that names the arm.\n2. For each mutant, record which arm label in the subject's selftest output is the one that flips\n   (grep the FAIL lines). A mutant killed by an *unrelated* arm is not a kill of that claim.\n3. Measure the three subjects' pristine selftest tallies at `03b66a437e68d493ce0aacd1d80c321cc2e6bf7c` (expect 18/13/23) and at\n   `6fc09d69edbb11e5070ff33258de49f062c0fb9b` (expect 15/11/22).\n4. Do not edit any lane file. Report the table plus each command you ran.\n\nReport: .ufo/waves/round-87/w1/Mo87E01C1Arms.md\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability\nMilestone: C1: re-measure each of the six mutants against the landed arms\n\nReport: write your scoped findings to .ufo/waves/round-87/w1/Mo87E01C1Arms.md"
+      },
+      {
+        "name": "Mo87E02C2Supersede",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nAttack the C2 supersede rule behaviorally with three committed fixtures under a scratch\n`git clone --shared` of the lane, using the frozen counter\n`.ufo/waves/round-87/count-c2.py` and its population.\n\nFrozen authority: `.ufo/waves/round-87/contract.md` P-C2.\n\nFixtures (each committed in your scratch clone with `-c user.name=t -c user.email=t@t`, and each\nrun through `python3 -I <lane>/.ufo/waves/round-87/count-c2.py HEAD --repo <your clone>`):\n1. clean: copy the two landed successor receipts byte-exactly -> expect `C2=met ... superseded=2\n   legacy=1` (save the full line; it must equal the frozen target).\n2. stale-body: change one byte in each successor body, headers untouched -> expect\n   `problems=replay-mismatch`, `superseded=0 legacy=3`, rc 1.\n3. absent-target: one successor names a receipt that is not in the population -> expect\n   `SUPERSEDE ... absent=1` and `unexpected>=1`, rc 1.\n4. Also measure what a `# supersedes:` line on a receipt that is itself `legacy` (no replay) does:\n   it must supersede nothing.\n\nReport each fixture's counter output verbatim and the diff that produced it.\n\nReport: .ufo/waves/round-87/w1/Mo87E02C2Supersede.md\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: calibration\nMilestone: C2: fixture-test the supersede rule against three successor shapes\n\nReport: write your scoped findings to .ufo/waves/round-87/w1/Mo87E02C2Supersede.md"
+      },
+      {
+        "name": "Mo87E03Baseline",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\nProduce a clean before/after table for both claims by running the two frozen counters at the three\nnamed revisions, from a `git clone --shared` copy of the lane so no worktree state is measured.\n\nRuns (record the exact command, the full stdout, the rc and the wall time):\n- `python3 -I <lane>/.ufo/waves/round-87/count-c1.py 6fc09d69edbb11e5070ff33258de49f062c0fb9b`\n- `python3 -I <lane>/.ufo/waves/round-87/count-c1.py 03b66a437e68d493ce0aacd1d80c321cc2e6bf7c`\n- `python3 -I <lane>/.ufo/waves/round-87/count-c2.py 6fc09d69edbb11e5070ff33258de49f062c0fb9b`\n- `python3 -I <lane>/.ufo/waves/round-87/count-c2.py 98f48dba3267a73714b862d0fd4fc8c0e82a1d04`\nAlso run each counter's `--selftest` and record the tally. Do not edit the counters; if a run\ndisagrees with the contract's before/after values, say so plainly and do not adjust anything.\n\nReport: .ufo/waves/round-87/w1/Mo87E03Baseline.md\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability, calibration\nMilestone: Both counters at three revisions: entering, C1 landing, C2 landing\n\nReport: write your scoped findings to .ufo/waves/round-87/w1/Mo87E03Baseline.md"
+      },
+      {
+        "name": "Mo87Si01Simplify",
+        "agent": "simplifier",
+        "task": "/skill:godspeed\n\nRead `.ufo/waves/round-87/count-c1.py`, `.ufo/waves/round-87/count-c2.py` and the three r86\ncounters at `03b66a437e68d493ce0aacd1d80c321cc2e6bf7c`, and report dead weight without changing verified behavior:\n\n1. Unreferenced constants, docstring sentences contradicted by the code (the r86 probe found one),\n   parameters never passed, code paths no test reaches.\n2. Whether any of the six new arms duplicates the detection of an existing arm (a duplicate arm is\n   not a new kill); name the pair and the assertion that overlaps.\n3. Whether the C2 counter's `SUBJECT`/`SUBJECT_LABELS` sub-gate still earns its place after C1\n   changed the same file's arm count (contract amendment A1).\n4. Do not edit the counters; propose exact deletions with path:line and say what a deletion would\n   cost a reader.\n\nReport: .ufo/waves/round-87/w1/Mo87Si01Simplify.md\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability\nMilestone: Dead weight in the two new counters and the six new arms\n\nReport: write your scoped findings to .ufo/waves/round-87/w1/Mo87Si01Simplify.md"
+      },
+      {
+        "name": "Mo87Sc01Scout",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\nReconnaissance for the next round's operability claim: enumerate the clauses of the three r86\ncounters that no selftest arm reaches, beyond the six this round armed.\n\nMethod: read `.ufo/waves/round-86/count-c{1,2,3}.py` at `03b66a437e68d493ce0aacd1d80c321cc2e6bf7c`; for each function list the\nbranch conditions; for each branch say whether any arm in that file's selftest exercises it\n(cite the arm label). Candidate mutants should be written as (file, anchor, replacement) with the\nanchor occurring exactly once. Prioritise `main()` acceptance gates and target constants.\n\nAlso: check whether `tools/mori-record-sweep.py` and `tools/mori-claim-sweep.py` (the two commands\nthe C2 successors replay) read anything outside committed bytes — name every read, because that is\nwhat makes a `clone` replay deterministic or not.\n\nDo not edit any file. The output is a ranked list, each item with what would kill it.\n\nReport: .ufo/waves/round-87/w1/Mo87Sc01Scout.md\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: coverage\nMilestone: Recon: every unarmed clause left in the three r86 counters\n\nReport: write your scoped findings to .ufo/waves/round-87/w1/Mo87Sc01Scout.md"
+      },
+      {
+        "name": "Mo87S01Lesson",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nWrite `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-87.md` in the shape the\nprevious lessons use (read `.ufo/waves/round-86/corpus` lesson `round-86.md` for the shape): a\nheader naming entering/freeze revisions and the seat scope, `## What the round did`, `## Mistakes`\n(class · evidence pointer · captured-by · fix, and the fix must be shown able to fail), and\n`## Gate` (rows for the sources the round opens; the L1 supplies the row text in\n`.ufo/waves/round-87/gate-input.md` if it exists — if that file is absent, write the Mistakes\nsection only and say so).\n\nThe mined mistake is yours to choose from these two candidates (evidence in the wave):\n- the **supersede-rule defect**: `.ufo/waves/round-87/count-c2.py` (`supersede_verdict`) first\n  superseded a legacy receipt even when the successor's replay had failed; caught by the\n  header-only control before data (`.ufo/waves/round-87/evidence/controls-r87.txt` §C2) and fixed\n  by `supersede_counts` + two detector arms (now arms `supersede_requires_clean` and\n  `supersede_counts_positive`);\n- any routed defect from `corpus/lessons/round-86-verifier-spotcheck.md` that this round actually\n  discharged.\nState the class plainly, name the criterion that should have caught it, and show the arm that can\nfail.\n\nDo not edit QUALITY.md, SCORECARD.md, LOG.md, SOURCES.md or any counter.\n\nReport: .ufo/waves/round-87/w1/Mo87S01Lesson.md\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration\nMilestone: The round-87 lesson: one mined mistake with a fixture, and the Gate draft\n\nReport: write your scoped findings to .ufo/waves/round-87/w1/Mo87S01Lesson.md"
+      },
+      {
+        "name": "Mo87S02Sources",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\nOpen ONE external source that grounds this round's C2 rule — that a recorded command's output is\nevidence only when the recording reproduces it, and that a superseding record must be\nindependently verifiable. Candidate (verify it, do not trust this line): the Reproducible Builds\nproject's definition page, `https://reproducible-builds.org/docs/definition/`.\n\nDo:\n1. Fetch it with `curl -sS -L --max-time 60 -o <scratch>/src.html -w '%{http_code} %{num_redirects}\n   %{url_effective}\\n'`; record the status, redirects, final URL, byte count, line count and\n   sha256; fetch twice and `cmp` to prove stability.\n2. Locate ONE quote of at most 25 words that states the reproducibility requirement or its\n   verification limit; give the raw line numbers and prove the quote occurs exactly once in the\n   text after joining line breaks with one space.\n3. Screen the candidate against the registry: `grep -c` the URL in\n   `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md`; if it is already there, say so\n   and propose a different source (state which and why).\n4. Propose the exact row cells for the CORPUS.md schema (id to be assigned by the L1; tier, kind,\n   status, recheck, used-by, access date, quote) and the ONE knowledge-entry sentence it grounds.\n5. Do NOT append to SOURCES.md and do not write any knowledge file: the L1 appends. Keep the\n   fetched bytes in your scratch dir only; copy nothing into the lane.\n\nReport: .ufo/waves/round-87/w1/Mo87S02Sources.md\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: freshness\nMilestone: Open one external source for the supersede rule and produce a located, hashed quote\n\nReport: write your scoped findings to .ufo/waves/round-87/w1/Mo87S02Sources.md"
+      },
+      {
+        "name": "Mo87R01ReviewC1",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAdversarial review of C1 at `03b66a437e68d493ce0aacd1d80c321cc2e6bf7c`. The claim: six surviving r86-counter clauses each get the\narm that kills them, target `C1=met mutants=6 killed=6 survivors=0 total=6 arms=54`.\n\nAttack list (each with a command and its output):\n1. Re-run the frozen counter yourself; also re-run it with `--repo` pointing at a `--shared` clone\n   to rule out worktree luck.\n2. For each mutant, prove non-equivalence: name an input for which the mutated and pristine code\n   differ in behavior *outside* the selftest — or state that you cannot and the mutant is\n   equivalent (an equivalent mutant is not a kill).\n3. Prove the new arms are load-bearing: revert each new arm (in a scratch copy) and show that its\n   mutant survives without it.\n4. Check no pre-existing arm was edited, renamed or weakened between `6fc09d69edbb11e5070ff33258de49f062c0fb9b` and `03b66a437e68d493ce0aacd1d80c321cc2e6bf7c`\n   (`git diff 6fc09d69edbb11e5070ff33258de49f062c0fb9b 03b66a437e68d493ce0aacd1d80c321cc2e6bf7c -- .ufo/waves/round-86/`); list every changed line.\n5. Check the arm counts 18/13/23 are the *pristine* counts at `03b66a437e68d493ce0aacd1d80c321cc2e6bf7c`, and that a subject with\n   an extra label-only arm cannot reach them.\n\nDo not edit any lane file. Report each attack with its verdict and the exact command.\n\nReport: .ufo/waves/round-87/w1/Mo87R01ReviewC1.md\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability\nMilestone: Attack C1: are the six kills real, non-equivalent and arm-backed?\n\nReport: write your scoped findings to .ufo/waves/round-87/w1/Mo87R01ReviewC1.md"
+      },
+      {
+        "name": "Mo87R02ReviewC2",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\nAdversarial review of C2 at `98f48dba3267a73714b862d0fd4fc8c0e82a1d04`. The claim: two replay-capable successors retire two\nlegacy receipts (`legacy=3 -> 1`, `superseded=0 -> 2`), target line\n`C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6\ndefeated=1 superseded=2 legacy=1 unexpected=0`.\n\nAttack list (each with a command and its output):\n1. Re-run the frozen counter at `98f48dba3267a73714b862d0fd4fc8c0e82a1d04`; then verify each of the nine `# counter-sha256:`\n   bindings yourself with `git show <rev>:<path> | sha256sum`.\n2. Reproduce each successor body yourself in a fresh `git clone --shared` + `checkout` of its\n   `# rev:`; `cmp` the stdout against the body. State the rev, rc and any difference.\n3. Try to supersede a legacy receipt with a successor whose replay fails (one-byte-stale body) and\n   show the legacy stays `legacy`.\n4. Interrogate the `after-r85.txt` legacy reason: does its command reproduce from committed bytes?\n   Run it once in a clone and record what differs; say whether \"live observation\" is the true\n   reason or an excuse.\n5. Check the population was not widened to hide a receipt: `git diff 6fc09d69edbb11e5070ff33258de49f062c0fb9b 98f48dba3267a73714b862d0fd4fc8c0e82a1d04 --\n   .ufo/waves/round-85/ .ufo/waves/round-86/` must show no receipt bytes changed.\n\nDo not edit any lane file.\n\nReport: .ufo/waves/round-87/w1/Mo87R02ReviewC2.md\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration\nMilestone: Attack C2: does the supersede rule bind the replay, and is the legacy reason honest?\n\nReport: write your scoped findings to .ufo/waves/round-87/w1/Mo87R02ReviewC2.md"
+      },
+      {
+        "name": "Mo87C01Critic",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\nTry to reach each frozen target without doing the claimed work. Report every path you find; a path\nthat works falsifies the claim and must be reported, not softened.\n\nFor C1 (`C1=met mutants=6 killed=6 survivors=0 total=6 arms=54`):\n- Can the target be reached by editing the counter's TARGET/TARGET_ARMS, by pointing it at a\n  different subject, or by making a mutant die for an unrelated reason (syntax error from the\n  mutation itself)?\n- Does the kill rule accept a mutated copy that fails because the *anchor* broke the file rather\n  than because an arm caught the behavior? Construct one such mutation and score it.\n- Is `arms=54` reachable by three subjects with 18/13/23 arms that assert nothing?\n\nFor C2 (`superseded=2 legacy=1 ...`):\n- Can `superseded` be reached by adding `# supersedes:` to an existing matched receipt without a\n  new replay?\n- Can a successor body be made to \"replay\" by making the command trivially `true`-like while the\n  legacy receipt's real command stays unreplayed?\n- Is `legacy=1` the honest count, or does another receipt also fail to replay?\n\nScore each path with the frozen counters at the named revisions and record what it reads. Do not\nedit any lane file.\n\nReport: .ufo/waves/round-87/w1/Mo87C01Critic.md\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration\nMilestone: Falsify both claims: find the cheap path to each target\n\nReport: write your scoped findings to .ufo/waves/round-87/w1/Mo87C01Critic.md"
+      },
+      {
+        "name": "Mo87M01Mut",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\nMutate `.ufo/waves/round-87/count-c1.py` and `.ufo/waves/round-87/count-c2.py` (worktree bytes at\n`03b66a437e68d493ce0aacd1d80c321cc2e6bf7c` / `98f48dba3267a73714b862d0fd4fc8c0e82a1d04`) and find clauses their own `--selftest` does not catch.\n\nRules:\n- 20+ mutants, each written as (file, anchor, replacement) with the anchor occurring exactly once;\n  mutate target constants, `met` conjuncts, the kill rule, the supersede call site, the replay\n  comparison and the absent/unexpected accounting.\n- For each mutant, write the mutated copy under your scratch dir, run `python3 -I <copy>\n  --selftest` with `TMPDIR` set, and record killed/survived plus the FAIL label if killed.\n- Classify each survivor as non-equivalent (name the input that would differ) or equivalent.\n- Do not edit the lane's counters; report the matrix and a ranked survivor list.\n\nReport: .ufo/waves/round-87/w1/Mo87M01Mut.md\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability\nMilestone: Mutation-test the two new r87 counters themselves\n\nReport: write your scoped findings to .ufo/waves/round-87/w1/Mo87M01Mut.md"
+      },
+      {
+        "name": "Mo87K01Conn",
+        "agent": "connector",
+        "task": "/skill:godspeed\n\nScan the sibling lanes (read-only) for overlap with this round's two mechanisms:\n1. receipt replay / body-must-equal-command (grep for `replay`, `supersedes`, `# cmd:`,\n   `counter-sha256` in `/home/vgpnk/Projects/shokunin/*-shokunin/tools/`, `corpus/knowledge/`,\n   `.ufo/waves/round-8{4,5,6}/`);\n2. mutation-arm grading of a lane's own counters (grep `mutants=`, `survivors=`, `killed=`).\nName every lane that holds an adjacent rule, the file:line, and whether mori's rule contradicts,\nduplicates or complements it. Report contested ownership to the lane, do not absorb it.\nAlso check `considerthese/2026-10-26.md` for a still-unimplemented proposal that fits this round\nand say which line you would cite (do not implement it).\n\nDo not edit any file outside your report.\n\nReport: .ufo/waves/round-87/w1/Mo87K01Conn.md\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: adjacency\nMilestone: Sibling-overlap scan: who else replays receipts or grades supersede?\n\nReport: write your scoped findings to .ufo/waves/round-87/w1/Mo87K01Conn.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}

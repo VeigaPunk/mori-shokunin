@@ -30,10 +30,11 @@ import sys
 import tempfile
 
 SUBJECT = ".ufo/waves/round-86/count-c2.py"
-SUBJECT_ARMS = 11
+SUBJECT_ARMS = 13
 SUBJECT_LABELS = ("parse_replay", "no_replay_required", "no_replay_reason", "duplicate_replay",
                  "missing_replay", "export_lists_token", "export_needs_repo", "target_arms",
-                 "population_shape", "target_line", "marker_literal")
+                 "population_shape", "target_line", "marker_literal", "summary_required",
+                 "binding_required")
 
 POPULATION = (
     (".ufo/waves/round-85/evidence/after-r85.txt", "met", "legacy", "C1=met"),
@@ -365,8 +366,8 @@ def selfcheck(scratch):
     cases.append(("target_line", TARGET_LINE == "C2=met " + TARGET
                   and "superseded=2" in TARGET and "legacy=1" in TARGET
                   and "replay=4" in TARGET, "line"))
-    cases.append(("subject_arms", SUBJECT_ARMS == 11
-                  and len(SUBJECT_LABELS) == 11, "11/11"))
+    cases.append(("subject_arms", SUBJECT_ARMS == 13
+                  and len(SUBJECT_LABELS) == 13, "13/13"))
     cases.append(("marker_literal", "supersede_verdict" in
                   open(os.path.abspath(__file__)).read(), "label"))
     ok = sum(1 for _, good_case, _ in cases if good_case)
