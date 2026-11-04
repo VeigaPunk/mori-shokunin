@@ -1,0 +1,29 @@
+# mori round-87 — mutation probe over the three r86 counters (population source)
+# run 2026-11-04 at entering revision 6fc09d69; worktree subjects = committed bytes at entering
+
+PRISTINE count-c1.py rc=0 ['C1_COUNTER_SELFTEST pass=15 fail=0']
+PRISTINE count-c2.py rc=0 ['C2_COUNTER_SELFTEST pass=11 fail=0']
+PRISTINE count-c3.py rc=0 ['C3_COUNTER_SELFTEST pass=22 fail=0']
+MUTANT count-c1.py c1-unanchored survived rc=0 
+MUTANT count-c1.py c1-totalfloor survived rc=0 
+MUTANT count-c1.py c1-armstally survived rc=0 
+MUTANT count-c1.py c1-ownpass survived rc=0 
+MUTANT count-c1.py c1-tailarms survived rc=0 
+MUTANT count-c1.py c1-ownrc survived rc=0 
+MUTANT count-c1.py c1-armsokmain survived rc=0 
+MUTANT count-c1.py c1-splitmain survived rc=0 
+MUTANT count-c2.py c2-replaymismatch survived rc=0 
+MUTANT count-c2.py c2-replayrc survived rc=0 
+MUTANT count-c2.py c2-binding survived rc=0 
+MUTANT count-c2.py c2-limits3 survived rc=0 
+MUTANT count-c2.py c2-ancestor survived rc=0 
+MUTANT count-c2.py c2-summary survived rc=0 
+MUTANT count-c2.py c2-revexists survived rc=0 
+MUTANT count-c2.py c2-unexpected survived rc=0 
+MUTANT count-c3.py c3-order killed rc=1 ['FAIL stability_order order']
+MUTANT count-c3.py c3-volmask killed rc=1 ['FAIL volatile_drop drop']
+MUTANT count-c3.py c3-atomstable killed rc=1 ['FAIL stability_atoms atoms']
+MUTANT count-c3.py c3-dup killed rc=1 ["FAIL classifications [('A', 'value-changed'), ('A', 'added-since-r10'), ('C', 'value-changed')] 0 1"]
+MUTANT count-c3.py c3-malformed killed rc=1 ["FAIL classifications [('A', 'value-changed'), ('B', 'bogus'), ('C', 'value-changed')] 1 0"]
+MUTANT count-c3.py c3-wordshape killed rc=1 ['FAIL derive_word word', 'FAIL reconcile_counts 3 2 2 1']
+MUTANT count-c3.py c3-keyshape survived rc=0 

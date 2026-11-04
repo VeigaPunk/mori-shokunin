@@ -1,0 +1,69 @@
+# mori round-87 — controls receipt (frozen before any after-value existed)
+# entering revision: 6fc09d69edbb11e5070ff33258de49f062c0fb9b
+# counters: .ufo/waves/round-87/count-c1.py, .ufo/waves/round-87/count-c2.py (worktree)
+
+== C1 entering control (frozen counter, entering bytes) ==
+MUTANT count-c1.py M1-unanchored-conjunct survived rc=0
+MUTANT count-c1.py M2-total-floor survived rc=0
+MUTANT count-c1.py M3-arms-tally survived rc=0
+MUTANT count-c2.py M4-receipt-summary survived rc=0
+MUTANT count-c2.py M5-binding-digest survived rc=0
+MUTANT count-c3.py M6-keyshape survived rc=0
+EXTRA pristine-arms .ufo/waves/round-86/count-c1.py arms=15 want=18
+EXTRA survivor .ufo/waves/round-86/count-c1.py M1-unanchored-conjunct
+EXTRA survivor .ufo/waves/round-86/count-c1.py M2-total-floor
+EXTRA survivor .ufo/waves/round-86/count-c1.py M3-arms-tally
+EXTRA pristine-arms .ufo/waves/round-86/count-c2.py arms=11 want=13
+EXTRA survivor .ufo/waves/round-86/count-c2.py M4-receipt-summary
+EXTRA survivor .ufo/waves/round-86/count-c2.py M5-binding-digest
+EXTRA pristine-arms .ufo/waves/round-86/count-c3.py arms=22 want=23
+EXTRA survivor .ufo/waves/round-86/count-c3.py M6-keyshape
+C1=unmet mutants=6 killed=0 survivors=6 total=6 arms=48 detector=green rev=6fc09d69edbb
+rc=1
+
+== C1 label-only control: the six arm labels printed, no assertions ==
+MUTANT count-c1.py M1-unanchored-conjunct survived rc=0
+MUTANT count-c1.py M2-total-floor survived rc=0
+MUTANT count-c1.py M3-arms-tally survived rc=0
+MUTANT count-c2.py M4-receipt-summary survived rc=0
+MUTANT count-c2.py M5-binding-digest survived rc=0
+MUTANT count-c3.py M6-keyshape survived rc=0
+EXTRA pristine-arms .ufo/waves/round-86/count-c1.py arms=15 want=18
+EXTRA survivor .ufo/waves/round-86/count-c1.py M1-unanchored-conjunct
+EXTRA survivor .ufo/waves/round-86/count-c1.py M2-total-floor
+EXTRA survivor .ufo/waves/round-86/count-c1.py M3-arms-tally
+EXTRA pristine-arms .ufo/waves/round-86/count-c2.py arms=11 want=13
+EXTRA survivor .ufo/waves/round-86/count-c2.py M4-receipt-summary
+EXTRA survivor .ufo/waves/round-86/count-c2.py M5-binding-digest
+EXTRA pristine-arms .ufo/waves/round-86/count-c3.py arms=22 want=23
+EXTRA survivor .ufo/waves/round-86/count-c3.py M6-keyshape
+C1=unmet mutants=6 killed=0 survivors=6 total=6 arms=48 detector=green rev=bc108f00a111
+rc=1
+
+== C2 entering control (frozen counter, entering bytes) ==
+RECEIPT after-r85.txt expect=met met problems=-
+RECEIPT record-sweep-r85.txt expect=met met problems=-
+RECEIPT claim-sweep-r85.txt expect=met met problems=-
+REPLAY after-c1-r86.txt mode=required rc=0 exported=1
+RECEIPT after-c1-r86.txt expect=met met problems=-
+REPLAY replay-defeat-r86.txt mode=required rc=0 exported=1
+RECEIPT replay-defeat-r86.txt expect=reject failed problems=replay-mismatch
+RECEIPT record-sweep-r87.txt absent=1 expect=met
+RECEIPT claim-sweep-r87.txt absent=1 expect=met
+C2=unmet receipts=5 absent=2 bindings=7 bound=7 revs=5 limits=5 cmd=5 summary=5 replay=2 matched=4 defeated=1 superseded=0 legacy=3 unexpected=0 detector=green rev=6fc09d69edbb
+rc=1
+
+== C2 header-only control: both successors committed in a clone, headers correct, bodies fabricated ==
+RECEIPT after-r85.txt expect=met met problems=-
+RECEIPT record-sweep-r85.txt expect=met met problems=-
+RECEIPT claim-sweep-r85.txt expect=met met problems=-
+REPLAY after-c1-r86.txt mode=required rc=0 exported=1
+RECEIPT after-c1-r86.txt expect=met met problems=-
+REPLAY replay-defeat-r86.txt mode=required rc=0 exported=1
+RECEIPT replay-defeat-r86.txt expect=reject failed problems=replay-mismatch
+REPLAY record-sweep-r87.txt mode=clone rc=0 exported=1
+RECEIPT record-sweep-r87.txt expect=met failed problems=replay-mismatch
+REPLAY claim-sweep-r87.txt mode=clone rc=0 exported=1
+RECEIPT claim-sweep-r87.txt expect=met failed problems=replay-mismatch
+C2=unmet receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=4 defeated=1 superseded=0 legacy=3 unexpected=2 detector=green rev=bc319680dc8e
+rc=1
