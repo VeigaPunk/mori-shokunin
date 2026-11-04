@@ -4241,8 +4241,9 @@ mutant normally if the coupling disappears. `count-c1.py`'s own detector selftes
 C2 binds the r82 classification to the committed snapshot: header `# Snapshot:` /
 `# Snapshot-sha256:` / `# As-of:` lines (exactly one each, frozen path), re-derivation of all 64
 classes from the snapshot's token line, and one live census read reported as
-`live_tokens=`/`live_agree=`. The live census reads 63 tokens because `-FINDING:WATCHDOG_STALE`
-is present in the snapshot and absent live — an observation, not a class change. The `## Retired`
+`live_tokens=`/`live_agree=`. The live run read 63 tokens at `c4845c83` (the snapshot's
+`-FINDING:WATCHDOG_STALE` absent live) and 64 at the record commit `9cf7fda9`; both are reported
+as measured — an observation, not a class change. The `## Retired`
 row `drift-pin-r10` names the snapshot path; the r10 baseline stays byte-unchanged and the live
 `--drift` run still exits 1.
 

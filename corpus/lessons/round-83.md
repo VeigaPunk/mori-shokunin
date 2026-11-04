@@ -96,10 +96,11 @@ C3=met arm=anchored defeated=2 fixtures=2/2 bindings=3 revisions=0 arms=40
 rc=0
 ```
 
-The live census reads 63 tokens rather than the snapshot's 64: the snapshot carries
-`-FINDING:WATCHDOG_STALE` and the live reading does not (the finding is absent now). That is the
-observation the `live=` fields exist to report; it changes no class and no claim, because the
-classification is bound to the snapshot, not to today's census.
+The live census reads 63 tokens rather than the snapshot's 64 at `c4845c83`: the snapshot carries
+`-FINDING:WATCHDOG_STALE` and that live reading did not. At the record commit `9cf7fda9` the same
+live run reads 64 again (`live_tokens=64 live_agree=64`) — the token reappeared. This is the
+volatility the `live=` fields exist to report: `live=derived` means the run happened and read red,
+and the classification is bound to the snapshot, so no class and no claim moves with it.
 
 **Counter repairs made before any after-value existed**, each filed by a seat against the frozen
 sentence and disclosed here:
