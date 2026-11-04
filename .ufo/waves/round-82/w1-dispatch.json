@@ -1,0 +1,343 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r82-w1",
+  "policy": {
+    "source": "config",
+    "maxLanes": 15,
+    "minLanes": 8,
+    "waveMinLanes": 8,
+    "waveMaxLanes": 16,
+    "declaredMaxLanes": 15,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 15,
+    "resume": 0,
+    "total": 15
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-82/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-82/w1",
+    "members": {
+      "Mo82E01C1Regress": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness",
+          "depth",
+          "coverage",
+          "calibration",
+          "adjacency"
+        ],
+        "milestone": "round 82 w1: C1 mutation-harness capability and its regression simulation"
+      },
+      "Mo82E02C3Arm": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness",
+          "depth",
+          "coverage",
+          "calibration",
+          "adjacency"
+        ],
+        "milestone": "round 82 w1: C3 revision-precision arm, real bindings, source and knowledge"
+      },
+      "Mo82E03C3Pins": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness",
+          "depth",
+          "coverage",
+          "calibration",
+          "adjacency"
+        ],
+        "milestone": "round 82 w1: C3 revision-precision arm, real bindings, source and knowledge"
+      },
+      "Mo82E04C2Drift": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness",
+          "depth",
+          "coverage",
+          "calibration",
+          "adjacency"
+        ],
+        "milestone": "round 82 w1: C2 drift-pin retirement with derived classification"
+      },
+      "Mo82E05Battery": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness",
+          "depth",
+          "coverage",
+          "calibration",
+          "adjacency"
+        ],
+        "milestone": "round 82 w1: record, sources and falsification"
+      },
+      "Mo82S01Lesson": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness",
+          "depth",
+          "coverage",
+          "calibration",
+          "adjacency"
+        ],
+        "milestone": "round 82 w1: record, sources and falsification"
+      },
+      "Mo82S02Knowledge": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness",
+          "depth",
+          "coverage",
+          "calibration",
+          "adjacency"
+        ],
+        "milestone": "round 82 w1: C3 revision-precision arm, real bindings, source and knowledge"
+      },
+      "Mo82Sc01Source": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness",
+          "depth",
+          "coverage",
+          "calibration",
+          "adjacency"
+        ],
+        "milestone": "round 82 w1: C3 revision-precision arm, real bindings, source and knowledge"
+      },
+      "Mo82Sc02Surface": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness",
+          "depth",
+          "coverage",
+          "calibration",
+          "adjacency"
+        ],
+        "milestone": "round 82 w1: record, sources and falsification"
+      },
+      "Mo82R01C1": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness",
+          "depth",
+          "coverage",
+          "calibration",
+          "adjacency"
+        ],
+        "milestone": "round 82 w1: record, sources and falsification"
+      },
+      "Mo82R02C2": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness",
+          "depth",
+          "coverage",
+          "calibration",
+          "adjacency"
+        ],
+        "milestone": "round 82 w1: record, sources and falsification"
+      },
+      "Mo82C01Contract": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness",
+          "depth",
+          "coverage",
+          "calibration",
+          "adjacency"
+        ],
+        "milestone": "round 82 w1: record, sources and falsification"
+      },
+      "Mo82M01Mutants": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness",
+          "depth",
+          "coverage",
+          "calibration",
+          "adjacency"
+        ],
+        "milestone": "round 82 w1: record, sources and falsification"
+      },
+      "Mo82K01Connector": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness",
+          "depth",
+          "coverage",
+          "calibration",
+          "adjacency"
+        ],
+        "milestone": "round 82 w1: record, sources and falsification"
+      },
+      "Mo82R03GitPrimer": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "revenger",
+        "item": null,
+        "axes": [
+          "operability",
+          "freshness",
+          "depth",
+          "coverage",
+          "calibration",
+          "adjacency"
+        ],
+        "milestone": "round 82 w1: record, sources and falsification"
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Goal\nmori round 82 (attempt 1), wave w1 — build, record and first falsifiers for THREE frozen\nclaims. mori is a fleet/host observability lane: detection and report only. Entering revision\n`ebcf2c72df203c855cfafb5223c6e22b1e12c481`; the freeze commit is `20551e56`.\n\nRead first, in this order (absolute paths):\n- {round}/contract.md — THE FROZEN AUTHORITY: P-C1, P-C2, P-C3, the mutation set, the drift\n  derivation table, the revision-arm interface, the real bindings and the do-nothing controls.\n- {round}/evidence/controls-r82.txt — the measured entering controls.\n- {lane}/SCORECARD.md (`## Axes`, `## Retired`, `## Round 80`, `## Round 81`, `## Planned (round\n  82)`, the capabilities tables), {lane}/SKILL.md (the gate registry near the end),\n  {lane}/PROVINCE.md (`## Instrument inventory (round 80)`), {lane}/corpus/QUALITY.md (last\n  criteria), {lane}/corpus/README.md (`## Frontier`).\n- {lane}/corpus/lessons/round-81.md and {lane}/corpus/lessons/round-81-verifier-spotcheck.md\n  (`## Routed defects the lane must fix next round` — D81-1..D81-6).\n\n# Round claims (frozen before this wave; do not change them)\n- C1 operability (7), capability acquisition: a committed, revision-agnostic mutation harness\n  (`.ufo/waves/round-82/count-c1.py`) re-derives the r81 five-survivor set and prints\n  `C1=met harness=present killed=11 survivors=0 total=11 pristine=green`; entering is\n  `C1=unmet harness=absent`. The delta is the capability (r81's harness was scratch-only and\n  deleted, D81-3).\n- C2 freshness (5, tied lowest): the red round-10 drift pin is retired with a derived\n  classification of all 64 live drift tokens; entering is `C2=unmet tokens=64 classified=0\n  retired=0 cell=0`, target `C2=met tokens=64 classified=64 agreed=64 residual=0 retired=1 cell=1`.\n- C3 depth (5, tied lowest): `tools/mori-record-sweep.py` gains the `revision` arm (a row's\n  stated value must exist in the bytes of the revision it names) plus real bindings; entering is\n  `C3=unmet tool=present arm=absent`, target `C3=met tool=present arms>=30 defeated=1\n  bindings=3 revisions=0`.\n\n# Shared rules (binding on every seat)\n- Write scope: {lane} only, and inside it only the paths your item names. Absolute paths in every\n  tool call: your tools start at the FLEET root, so a relative path lands in the wrong repo.\n  Never write to /home/vgpnk/Projects/shokunin (fleet root), another lane's repo, MANIFEST.json,\n  `.ufo/state/`, `.ufo/watchdog.log`, or `.scratch/`.\n- Never commit, push, or run a mutating git/jj command anywhere: no `git add`, `git commit`,\n  `git checkout`, `git reset`, `git stash`, `git push`, and no mutating `jj` command. Read-only\n  git (`log`, `show`, `diff`, `status`, `ls-tree`, `cat-file`, `rev-parse`, `archive`) is fine.\n  The L1 owns every commit. Never rewrite another seat's file outside your item's scope.\n- Every `Report:` trailer path is relative to {lane} — write it at {lane}/<that path>.\n- Scratch: create your work dir under /fast/scratch/hyaku/mori-r82/<your seat name>/ and delete\n  it before you yield (`trap 'rm -rf -- \"$S\"' EXIT` in shell). Never write under /tmp; a /tmp path\n  is never citable evidence. Clone with `git clone --shared` or `git worktree add`; never mirror\n  the whole lane. `HYAKU_SCRATCH` defaults to /fast/scratch/hyaku.\n- Detection and report only: no lane, OS, unit, service, credential, harness or orchestration\n  state may be changed. mori never remediates.\n- Tooling authorization (operator, 2026-10-19): you may install or upgrade tools that help the\n  task; read /home/vgpnk/.omp/agent/RULES.md first (official channels, update-safety gate) and\n  record tool/version/channel/reason in your report. pacman is PAUSED host-wide: never run a\n  pacman transaction of any kind (`-S`, `-Sy`, `-Syu`, `-U`, `-R`); use `uv tool`, `npx`, or an\n  official binary in ~/.local/bin, or file an L0 question instead.\n- Never message `agent://all`. Message only your own L1 (`agent://MoriR82`) for a blocker.\n- Do not spawn subagents except an executor's single read-only `labrat` probe.\n- Your final report must name: what you changed/produced with absolute paths, the exact commands\n  you ran with their output, what you verified, what you could not verify, and any defect you\n  found in another seat's bytes (file:line). Be adversarial about your own work: an unrun check\n  has not passed.\n",
+    "tasks": [
+      {
+        "name": "Mo82E01C1Regress",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\n\nProve the C1 harness can FAIL — a capability is not a capability until its detector is shown\nsensitive on the lane's own bytes.\n\nFrozen authority: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-82/contract.md\n(P-C1 and its mutant table).\n\n1. Read `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-82/count-c1.py` and state,\n   per mutant, whether the kill is produced by the r81-added arm or by an older arm.\n2. Build a **committed** regression simulator at\n   `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-82/simulate-regression.sh`:\n   it copies `.ufo/waves/round-80/count-c1.py` (a scratch copy, never the lane file) and\n   **deletes** the r81-added `sweep_zero_summary_nonzero_exit` fixture row from its selftest\n   tuple, then runs the round-82 harness against that mutated revision-producing copy and shows\n   it reports `survivors=1` for `ignore_sweep_exit`. Do the same for one `count-c3.py` and one\n   `count-c2.py` arm. The harness must be driven without touching lane bytes: use `git archive`\n   or a scratch tree plus `count-c1.py --repo <scratch repo>`; the script must honour `TMPDIR`\n   and `HYAKU_SCRATCH` and must not hardcode `/tmp`.\n3. Run it; write the receipt to\n   `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-82/evidence/regression-sim-r82.txt`\n   (command, output, rc, the exact revision used).\n4. If the harness reports `survivors=0` for a deleted arm, that is a detector defect — report it\n   with file:line instead of working around it.\n\nReport: paths, commands, output, and the per-mutant kill attribution table.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability, freshness, depth, coverage, calibration, adjacency\nMilestone: round 82 w1: C1 mutation-harness capability and its regression simulation\n\nReport: write your scoped findings to .ufo/waves/round-82/w1/Mo82E01C1Regress.md"
+      },
+      {
+        "name": "Mo82E02C3Arm",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\n\nImplement the frozen `revision` arm in the lane's record sweep.\n\nFrozen authority: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-82/contract.md,\nsection \"Frozen arm interface\" (P-C3). Read it exactly; the r81 arms and summary tokens must stay\nbyte-compatible.\n\nFile: `/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-record-sweep.py` (225 lines, r81).\n\nRequirements:\n- pins file may carry `\"revisions\": [{carrier, row_contains, key, value, rev, path}, ...]`;\n- per binding, in order: the carrier's FIRST table row containing `row_contains` must state\n  `key=value` (else `REVISION_MISMATCH <carrier>:<line> row-value`); `rev` must resolve to a\n  commit (else `rev-unresolvable`); `path` must exist at `rev` (else `path-absent`); and\n  `key=value` must occur in `path`'s bytes at `rev` (else `REVISION_MISMATCH <carrier>:<line>\n  rev-bytes`). Every binding is graded, never the first only; a missing row is a mismatch.\n- git reads use `--git DIR` (default: `--root`); the summary line gains `revisions=<count>`;\n  the three r81 counters (`pending=`, `pinned=`, plus `bindings=`/`carriers=`) keep their names\n  and meanings.\n- `--selftest` gains arms for: conformant binding, the D81-1 defeated shape (row states\n  pointers=240, the named revision's bytes hold pointers=237), unresolvable rev, path absent at\n  rev, missing row, and a two-binding list where the second is stale. Keep the existing 26 arms\n  and add at least four; print `RECORD_SWEEP_SELFTEST pass=N fail=0`.\n- `python3 -I` safe, standard library only, stdout only, no writes outside `git` reads.\n\nRun `python3 -I tools/mori-record-sweep.py --selftest` and paste the tally. Do not write the\nlane's pins file (another seat owns it) and do not edit SCORECARD/LOG/SKILL/PROVINCE.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability, freshness, depth, coverage, calibration, adjacency\nMilestone: round 82 w1: C3 revision-precision arm, real bindings, source and knowledge\n\nReport: write your scoped findings to .ufo/waves/round-82/w1/Mo82E02C3Arm.md"
+      },
+      {
+        "name": "Mo82E03C3Pins",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\n\nWrite and independently verify the lane's real revision bindings.\n\nFrozen authority: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-82/contract.md —\nthe \"Real bindings\" table (3 rows).\n\n1. Write `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-82/record-pins.json` with\n   a `revisions` list holding exactly those three bindings (`carrier`, `row_contains`, `key`,\n   `value`, `rev` as full 40-hex shas, `path`), plus an empty-or-absent `bindings` list for the\n   r81 pinned arm (do not invent r81 pinned bindings).\n2. Independently verify each binding with plain read-only git BEFORE trusting the tool: print the\n   matching SCORECARD row at the carrier revision, and `git show <rev>:<path> | grep -c\n   '<key>=<value>'`. All three must be green at the freeze; if one is red, report it with the\n   measured count and do not weaken the binding.\n3. Write the receipt\n   `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-82/evidence/c3-bindings-r82.txt`\n   (each binding, its row line number at the carrier revision, the grep count, rc).\n4. Also record the same three checks with a deliberately **wrong** revision substituted\n   (e.g. `075574c8` for the pointers binding) to show the check is sensitive; name it\n   `defeated-shape` in the receipt and do not write it into the pins file.\n\nDo not edit `tools/mori-record-sweep.py` (another seat owns it) and do not touch SCORECARD.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability, freshness, depth, coverage, calibration, adjacency\nMilestone: round 82 w1: C3 revision-precision arm, real bindings, source and knowledge\n\nReport: write your scoped findings to .ufo/waves/round-82/w1/Mo82E03C3Pins.md"
+      },
+      {
+        "name": "Mo82E04C2Drift",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\n\nProduce the C2 drift evidence and the derived classification file.\n\nFrozen authority: /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-82/contract.md —\nP-C2 and the frozen derivation table. The measured entering control is\n`.ufo/waves/round-82/evidence/controls-r82.txt` (`tokens=64`).\n\n1. In the lane worktree run\n   `bash tools/mori-census.sh --drift corpus/evidence/baseline-r10-20261015T2231Z.json`\n   (exit 1 expected) and save the raw output verbatim to\n   `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-82/evidence/drift-r82-live.txt`\n   with the command, timestamp and rc.\n2. For EVERY token on the `MORI_DRIFT:` line, derive its class from the baseline bytes with the\n   contract's frozen table — derive it, do not guess: `SURFACE:<name>`/`FINDING:<NAME>` are\n   `value-changed` when that id exists in the baseline canonical block, else `added-since-r10`;\n   `VERDICT`/`HEADER`/`BLANK` are `value-changed`; a bare/`+`/`-` key is `value-changed` when\n   `<key>=` occurs in the baseline bytes, else `added-since-r10`. Write a small throwaway runner\n   in your scratch that applies the table mechanically and prints the token, its derived class\n   and the evidence line that decided it.\n3. Write `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/drift-classification-r82.txt`:\n   a short header comment (baseline path, the census command, the token count, the date\n   2026-11-04) and exactly one `DRIFT_CLASS <token> <class>` line per live token, in the live\n   order. No token may be missing, none may be extra, none may be `unexplainable`.\n4. Re-run the census once more and confirm the token list is byte-identical; if it changed\n   between runs, report both lists and stop — do not pick one.\n\nDo not edit SCORECARD.md, LOG.md or the contract; the L1 owns them.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability, freshness, depth, coverage, calibration, adjacency\nMilestone: round 82 w1: C2 drift-pin retirement with derived classification\n\nReport: write your scoped findings to .ufo/waves/round-82/w1/Mo82E04C2Drift.md"
+      },
+      {
+        "name": "Mo82E05Battery",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\n\nRe-run the lane's standing verification battery at the round-82 tip and capture the no-harm\nreceipt.\n\nInputs: `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-81/battery.sh` (the r81\nrunner) and `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-81/evidence/`\n(receipts the r81 round used).\n\n1. Read the r81 runner and list the instruments it covers. Add the three round-82 counters\n   (`count-c1.py`, `count-c2.py`, `count-c3.py` under `.ufo/waves/round-82/`) in `--selftest`\n   mode to a scratch copy of the runner; keep the rest as-is.\n2. Run it with `HYAKU_SCRATCH=/fast/scratch/hyaku/mori-r82/Mo82E05Battery`. Save the full output\n   to `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-82/evidence/battery-r82.txt`\n   and report the per-instrument rc and the tallies.\n3. Any instrument that fails at the tip is a finding: name the file:line, the command and the\n   first failing case. Do not \"fix\" any instrument other than the three round-82 counters (which\n   belong to the L1 freeze; report a defect instead of editing them).\n4. Report the four known setup refusals the r81 receipt classified as lane-scoped-scratch setup,\n   or the new classification if it differs.\n\nDo not edit any lane instrument.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability, freshness, depth, coverage, calibration, adjacency\nMilestone: round 82 w1: record, sources and falsification\n\nReport: write your scoped findings to .ufo/waves/round-82/w1/Mo82E05Battery.md"
+      },
+      {
+        "name": "Mo82S01Lesson",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\n\nDraft the round-82 lesson.\n\nOutput: `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-82.md`. Sections, in\nthis order, using the r81 lesson as the shape:\n- header (round, date 2026-11-04, entering `ebcf2c72df203c855cfafb5223c6e22b1e12c481`, freeze\n  `20551e56`), the three claims with their keepers and targets, and the axes;\n- entering controls, copied verbatim from `.ufo/waves/round-82/evidence/controls-r82.txt`\n  (state that they are inherited receipts, not rerun by you);\n- `## Gate`: the source dispositions for this round — ONE admitted row for the git revision\n  syntax source the scout `Mo82Sc01Source` opened (cite its pinned copy path, sha256, byte/line\n  count and the ≤25-word located quote; the next unused row id is **S597**, verify that against\n  `corpus/SOURCES.md`), and at least one rejection with its flip condition. If the scout's\n  material is not on disk when you start, write the Gate as a recommendation table with a clear\n  `PENDING SCOUT` marker rather than inventing a quote;\n- `## Mistakes`: at least three rows, class · evidence pointer · captured-by (the criterion or\n  rule that should have caught it, or `none`) · fix. Mine at least: (a) D81-1/D80-4 the\n  revision-label class the lane repeated twice, captured only by a non-author closure; (b) D81-3\n  the scratch-only mutation harness whose receipt no longer resolves; (c) the round-10 drift pin\n  kept red for 72 rounds with no classification surface. Each fix must be something this round\n  actually landed, and say what makes it able to fail;\n- `## Census`: the before/after source-row census with the exact command\n  `/home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori`\n  and both exits; the entering count is 369 rows exit 0 (read it from the r81 lesson) and the\n  after count is whatever you measure — do not guess.\n\nDo not edit SCORECARD.md, LOG.md, SKILL.md, PROVINCE.md or SOURCES.md.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness, depth, coverage, calibration, adjacency\nMilestone: round 82 w1: record, sources and falsification\n\nReport: write your scoped findings to .ufo/waves/round-82/w1/Mo82S01Lesson.md"
+      },
+      {
+        "name": "Mo82S02Knowledge",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\n\nDraft the round-82 knowledge entry for the revision-precision gate.\n\nOutput: `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/record-revision-precision-r82.md`.\n\nContent requirements:\n- opening `source: S597`, `verified-at: 2026-11-04`, `recheck: 365d` lines (the S-id is assigned\n  by the scout's Gate; if `corpus/SOURCES.md` does not yet carry S597 when you write, put\n  `source: S597 (pending Gate landing)` and say so in your report — never invent a URL);\n- the defect class in one paragraph: a record row states a measured value and a revision, and the\n  revision does not contain the value (D80-4 at `97ce0c96`, D81-1 at `075574c8` with\n  `pointers=240`, where the graded count is 237);\n- a decision table for the arm: row-value / rev-unresolvable / path-absent / rev-bytes, with the\n  exact message token for each and what a reader should do;\n- the real binding population (the three frozen bindings) and why presence of `key=value` in the\n  named path's bytes at the named revision is a cheap, sufficient lower bound — and what it does\n  NOT prove (it cannot tell a coincidental occurrence in an unrelated line from the graded one;\n  it does not prove the command's output, only the record's arithmetic);\n- one worked example over the D81-1 shape with the actual command and its output (you may run\n  `git show 075574c8:SCORECARD.md | grep -c 'pointers=240'` — read-only — and paste the `0`);\n- a boundary paragraph: this gate grades the lane's own record, never another lane's, and it is\n  not a lifecycle or admission decision.\n\nDo not edit SCORECARD.md, LOG.md, SKILL.md, PROVINCE.md or SOURCES.md.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness, depth, coverage, calibration, adjacency\nMilestone: round 82 w1: C3 revision-precision arm, real bindings, source and knowledge\n\nReport: write your scoped findings to .ufo/waves/round-82/w1/Mo82S02Knowledge.md"
+      },
+      {
+        "name": "Mo82Sc01Source",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\n\nOpen the source that grounds the revision-precision arm, and pin it.\n\nTarget ground: git's `<rev>:<path>` object-name syntax and its exit behaviour — the arm reads\n`git show <rev>:<path>` and `git rev-parse --verify <rev>^{commit}`.\n\n1. Fetch the official git documentation pages (man7/progit/git-scm or the git project's own\n   Documentation), choose the one that states the `<rev>:<path>` syntax precisely (candidates:\n   `gitrevisions(7)` section \"Specifying revisions\", `git-cat-file(1)` / `git-show(1)`), and\n   record: URL, HTTP status, access date 2026-11-04, final URL after redirects.\n2. Save a durable pinned copy under\n   `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r82/` named after the\n   document and version (e.g. `gitrevisions.7.git-2.51.0.html`), with its sha256 and byte/line\n   count. Prefer an authoritative source over a mirror; if only a mirror is reachable, say so and\n   downgrade the tier.\n3. Locate the exact quote (≤25 words) that states the `<rev>:<path>` syntax and give its line\n   numbers in the pinned copy.\n4. Check the lane registry for a duplicate: is the same base URL already a `corpus/SOURCES.md`\n   row? Print the matching ids. The next unused row id should be S597 — verify with\n   `grep -oE '^ {0,3}\\|[[:space:]]*S[0-9]{3,}' corpus/SOURCES.md | grep -oE 'S[0-9]+' | sort | tail -3`.\n5. Report a reject candidate too (one source you deliberately did NOT admit, with the reason and\n   a flip condition), so the lesson has ≥1 reject.\n\nWrite only under `corpus/evidence/sources-r82/`; never edit `corpus/SOURCES.md`, the lesson or a\nknowledge entry.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness, depth, coverage, calibration, adjacency\nMilestone: round 82 w1: C3 revision-precision arm, real bindings, source and knowledge\n\nReport: write your scoped findings to .ufo/waves/round-82/w1/Mo82Sc01Source.md"
+      },
+      {
+        "name": "Mo82Sc02Surface",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\n\nReconnaissance: every consumer of the round-10 drift baseline and of the freshness axis cell, so\nthe retirement is consistent and nothing silently keeps the red literal.\n\n1. Search the lane (`grep -rn`) for `baseline-r10-20261015T2231Z`, `drift pin`, `--drift`,\n   `drift-classification`, `MORI_DRIFT`, restricted to the lane repo. Report every hit with\n   file:line and classify it: record claim (SCORECARD/LOG), tool behaviour (tools/), lesson\n   history (corpus/lessons), knowledge entry, or other.\n2. Read `SCORECARD.md`'s `## Axes` freshness row, `## Retired`, the round-20/21/22 sections and\n   `corpus/README.md`'s round-21 correction, and state exactly which sentences would have to\n   change for a retirement to be honest and which must stay byte-unchanged (history).\n3. Read `tools/mori-census.sh`'s drift block (`drift_normalize`, `drift_line_id`, `drift_report`)\n   and state, from the code, what kinds of tokens a `MORI_DRIFT:` line can carry and how a\n   whole-line fallback token (`drift_field_report` last line) is named.\n4. Report insertion points for the L1: the exact table row and section where a `drift-pin-r10`\n   retirement row belongs, and any other file that must mention the classification path\n   (SKILL.md gate registry row? PROVINCE inventory?). Give line numbers at the current tip.\n5. Name any consumer that would be BROKEN by the retirement (e.g. a tool that expects a red\n   `--drift` exit as an input) — that is the most important finding.\n\nRead-only: change no file.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness, depth, coverage, calibration, adjacency\nMilestone: round 82 w1: record, sources and falsification\n\nReport: write your scoped findings to .ufo/waves/round-82/w1/Mo82Sc02Surface.md"
+      },
+      {
+        "name": "Mo82R01C1",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\n\nAdversarial review of C1 (the mutation-harness capability). Attack the claim.\n\n1. Read `.ufo/waves/round-82/contract.md` P-C1 and `.ufo/waves/round-82/count-c1.py`. Re-derive\n   the claimed numbers yourself: for each of the 11 mutants, apply the anchored replacement to a\n   scratch copy of the file at `ebcf2c72`, run that copy's own `--selftest --scratch <dir>`, and\n   report rc and the `fail=` tally. Compare with the harness's verdict per mutant.\n2. Attack the detector: (a) a counter whose selftest exits 0 with `fail=0` but whose graded\n   behaviour is inverted — does the harness report `survived`? (b) a counter whose selftest\n   prints `fail=0` in a comment and `fail=1` elsewhere — which wins? (c) an anchor occurring\n   twice — is it excluded or double-counted? (d) a pristine file that is already red — is it\n   `pristine=red` and unmet? (e) does `--selftest` of the harness itself assert anything the\n   real run does not?\n3. Attack the claim boundary: the contract says the delta is the capability, not new kills. Is\n   that honest? State what a do-nothing round cannot reach and whether `harness=absent` at\n   `ebcf2c72` is genuinely the only delta.\n4. Name every defect with file:line and a severity. Do not fix anything: report only.\n\nReport: the per-mutant table you measured, each attack's outcome, and a verdict line\n`C1_REVIEW: agree|disagree <reason>`.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness, depth, coverage, calibration, adjacency\nMilestone: round 82 w1: record, sources and falsification\n\nReport: write your scoped findings to .ufo/waves/round-82/w1/Mo82R01C1.md"
+      },
+      {
+        "name": "Mo82R02C2",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\n\nAdversarial review of C2 (the drift-pin retirement). Attack the claim.\n\n1. Read `.ufo/waves/round-82/contract.md` P-C2 and `.ufo/waves/round-82/count-c2.py`. Run the\n   counter's `--selftest` and re-derive two of its arms by hand.\n2. Re-derive the classification independently: run the census drift yourself, and for ten tokens\n   (include at least one `SURFACE:`, one `FINDING:`, one `VERDICT`, one bare key and one\n   `+`-prefixed key) derive the class from the baseline bytes without reading\n   `corpus/evidence/drift-classification-r82.txt`, then compare.\n3. Vacuity attacks: (a) could the claim be met by deleting the freshnes cell's red literal\n   without the retired row or the classification? (b) by labelling everything\n   `added-since-r10`? (c) by pointing the retired row at a different baseline file? (d) by\n   editing the baseline? (e) is a green census run accepted as `met`?\n4. Judge the retirement itself: does it hide the retained-evidence-loss blocker from round 21?\n   Read `SCORECARD.md`'s round-21 correction and `corpus/README.md`'s round-21 note, and say\n   whether the landed retirement text keeps every unresolved item visible. That is the most\n   important question in this review.\n\nReport each attack's measured outcome and a verdict line `C2_REVIEW: agree|disagree <reason>`.\nNever edit a lane file.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness, depth, coverage, calibration, adjacency\nMilestone: round 82 w1: record, sources and falsification\n\nReport: write your scoped findings to .ufo/waves/round-82/w1/Mo82R02C2.md"
+      },
+      {
+        "name": "Mo82C01Contract",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\n\nFalsify the round's frozen contract before the L1 measures anything. One verdict per item, with\nreasons and, where you can, a measured attempt in scratch.\n\nRead `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-82/contract.md`.\n\n1. **Do-nothing reachability.** Could a round that changes nothing pass P-C1, P-C2 or P-C3?\n   Try the cheapest cheats: a stub counter that prints the target line; a `count-c1.py` copy that\n   hardcodes `killed=11`; a classification file that copies the token list and labels every token\n   `added-since-r10`; a `record-pins.json` with one binding; a `REVISION_MISMATCH` string pasted\n   into the tool without an arm. Report each attempt's result against the real counters.\n2. **Over-broad arms.** Does any predicate accept a shape a broken instrument also meets? In\n   particular: P-C1's `killed=11 total=11` when the harness's own anchors are absent; P-C2's\n   agreement when the derivation table collapses to one class; P-C3's `defeated=1` when the\n   fixture is graded by the same code under test.\n3. **Claim sizing (§9).** Is each after-state one concrete value re-derivable with one command\n   over committed bytes? Name any universal clause, any target a do-nothing control could reach,\n   and any predicate that cannot be re-derived by a non-author.\n4. **Axis assignment.** C1 operability, C2 freshness, C3 depth — is each claim on a distinct axis,\n   is at least one on the lowest non-retired axis, and is any axis harmed? (depth/freshness/\n   calibration are tied at 5.)\n5. **C2's honesty.** Does retiring the r10 pin conflict with the round-21 correction that kept the\n   r20 baseline \"invalid for acceptance\"? Quote the contract text that resolves or fails to\n   resolve it.\n\nReport `CONTRACT_CRITIC: pass|defect <n>` with the defect list and, per defect, the exact fix\nsentence you would freeze. Do not edit the contract.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness, depth, coverage, calibration, adjacency\nMilestone: round 82 w1: record, sources and falsification\n\nReport: write your scoped findings to .ufo/waves/round-82/w1/Mo82C01Contract.md"
+      },
+      {
+        "name": "Mo82M01Mutants",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\n\nIndependent mutation test of the round-82 build. Report only; never edit a lane file — every\nmutant is a scratch copy under `/fast/scratch/hyaku/mori-r82/Mo82M01Mutants`.\n\nPopulation: the worktree bytes of (a) `tools/mori-record-sweep.py` AFTER the `revision` arm lands\n(if it has not landed when you start, mutate the r81 bytes and say so explicitly), (b) the three\ncounters `.ufo/waves/round-82/count-c{1,2,3}.py`.\nFor each file define ≥4 single-string mutants that invert a GRADED behaviour (examples for the\nrevision arm: skip the rev-bytes check; check only the first binding; treat a missing row as\ngreen; resolve `rev` against `--root` instead of `--git`; for the counters: accept a\n`fail=0`-free run as green, ignore the pristine arm, accept a stale classification, accept a\ngreen census run as met).\nRun each mutated copy's own `--selftest` (and, for record-sweep, a small pins fixture) with a\n120 s bound and `TMPDIR` under your scratch. Killed iff rc != 0 or `fail>0`; pristine must be\ngreen first.\nReport the table (file · label · old→new · rc · verdict), `MUTANTS killed=K total=T survivors=S`,\nand for each survivor the exact missing selftest arm (file:line where it belongs).\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness, depth, coverage, calibration, adjacency\nMilestone: round 82 w1: record, sources and falsification\n\nReport: write your scoped findings to .ufo/waves/round-82/w1/Mo82M01Mutants.md"
+      },
+      {
+        "name": "Mo82K01Connector",
+        "agent": "connector",
+        "task": "/skill:godspeed\n\n\nSibling-overlap scan for the two new surfaces this round adds.\n\n1. **Revision-precision record gate.** Does any sibling lane already own a gate that binds a\n   stated value to a revision (or checks a record's arithmetic against committed bytes)? Search\n   the sibling repos under /home/vgpnk/Projects/shokunin/*-shokunin for `pointers=`, `measured\n   at`, `REVISION`, `git show`-based gates, and their `tools/`. Report file:line hits and a\n   verdict: distinct ground, or overlap that mori must defer to.\n2. **Drift-pin retirement.** Does any lane retire a baseline/pin with a classification receipt,\n   or keep a permanently-red drift predicate? Check tabi, chousa, kotoba, kumitate, tsukuroi and\n   kengaku `PROVINCE.md`/`SCORECARD.md`/`corpus/lessons/` for `drift`, `retire`, `baseline`.\n   Report the closest pattern and whether mori should cite it.\n3. **Ownership boundary.** mori is detection-and-report only; kumitate owns orchestration\n   semantics, tsukuroi the OS, chousa sources, kotoba prompt craft. State, per overlap found,\n   which lane owns the decision and what mori may only observe.\n4. Read `../kumitate-shokunin/PROVINCE.md` and `../chousa-shokunin/PROVINCE.md` at least, and\n   cite line numbers.\n\nReport a three-column table (surface · sibling hit · verdict) and one sentence naming what mori\nmust NOT claim as a result.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness, depth, coverage, calibration, adjacency\nMilestone: round 82 w1: record, sources and falsification\n\nReport: write your scoped findings to .ufo/waves/round-82/w1/Mo82K01Connector.md"
+      },
+      {
+        "name": "Mo82R03GitPrimer",
+        "agent": "revenger",
+        "task": "/skill:godspeed\n\n\nReverse-engineer the git primitives the revision arm relies on: one bounded, falsifiable probe.\n\nHypothesis: `git -C <repo> show <rev>:<path>` alone is a sufficient, unambiguous primitive for the\nrevision arm's four failure modes — row-value, rev-unresolvable, path-absent, rev-bytes — and its\nexit codes distinguish them without parsing stderr.\n\nProbe (all read-only, in a scratch fixture repo you create with `mktemp -d` under\n`/fast/scratch/hyaku/mori-r82/Mo82L01SourceProbe`; verify `git -C \"$D\" rev-parse\n--show-toplevel` equals `$D` before the first commit):\n1. unresolvable rev: `git rev-parse --verify deadbeef^{commit}` → rc and stderr shape;\n2. path absent at a valid rev: `git show <rev>:nope.md` → rc and stderr shape;\n3. a path that is a directory at the rev: `git show <rev>:tools` → rc and final line;\n4. a path with a space, and a rev that is a short 8-hex prefix, and a rev expressed as\n   `<branch>~1`: do they resolve as expected?\n5. `git cat-file -e <rev>:<path>` rc for present vs absent.\nThen state whether the arm can rely on rc alone or must distinguish stderr text — and which\nchoice is robust to locale (`LC_ALL=C`) and to a repo with a different default branch.\n\nReport the exact commands, rc values and the one-line conclusion. Change no lane file.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, freshness, depth, coverage, calibration, adjacency\nMilestone: round 82 w1: record, sources and falsification\n\nReport: write your scoped findings to .ufo/waves/round-82/w1/Mo82R03GitPrimer.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}
