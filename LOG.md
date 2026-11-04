@@ -4904,3 +4904,86 @@ ids collide; document-keyed renumber pending). considerthese re-mined (newest na
 instrument-change L0 and is not acted on.
 
 Open L0 lines (round-62, round-65, round-73) re-verified present and unanswered; routed around.
+
+## Round 80 (2026-11-04, L1 MoriR80) — three claims across three axes: C1 calibration the self-assessment claim sweep lands (`tools/mori-claim-sweep.py`, 30 arms) and the r79 D79-1 stale tally is corrected to the landed 19 plus the row's Evidence cell, C2 operability `.ufo/waves/round-79/count-c2.py` gains three selftest arms so the frozen six-mutant harness reads `survivors=0 killed=6` (from 2), C3 coverage `PROVINCE.md` gains the append-only instrument inventory, naming 56 of 56 committed instruments (from 14 of 55)
+
+entering: `d58889220d3c6a18d461f2d31b5ab162ffef1e4e` (branch master, pushed, clean). Frozen
+contract + three counters + the do-nothing controls commit `57451ecb`; the round build commit
+`8108dfcc`; measured at the build revision.
+
+C1 (calibration, capability acquisition). `tools/mori-claim-sweep.py` is a read-only gate over
+SCORECARD's `## Axes` table and capabilities rows plus SHONEN's checklist: it resolves lane
+pointers (`corpus/`, `tools/`, `.ufo/` tokens, `:line` and `@rev` suffixes stripped, a `*`/`?`
+token resolved by globbing at least one path, fenced blocks ignored), compares pinned live
+selftest tallies, and requires named stale literals to be absent. The r79 closure's D79-1 rides
+inside it: the control-receipt capabilities row's `selftest 18 in-memory cases` (live 19) is
+corrected, and the row's Evidence cell `18/18` is annotated as the r79 wave freeze superseded by
+the landed `19/19`. Registered as SKILL gate-registry row 14 and a SCORECARD capabilities row
+(first-working round 80). Measured at `8108dfcc`:
+
+```
+$ python3 -I .ufo/waves/round-80/count-c1.py 8108dfcc00d8b680cd4fb03cd9a6cc6dd5a74a77
+C1=met tool=present sweep=0 mismatches=0 unresolved=0 tallies=0 stale=0 row_tally=19 live_tally=19 rev=8108dfcc00d8
+```
+
+Before (controls, `.ufo/waves/round-80/evidence/controls-r80.txt`): the tool is absent at
+`d5888922` (`git cat-file -e` rc 128) and the row's 18 disagrees with the live 19. The gate
+dogfoods the r79 guard on this round's own receipts:
+`python3 -I tools/mori-control-receipt.py --dir .ufo/waves/round-80/evidence` ->
+`CONTROL_RECEIPT_SUMMARY files=1 sections=5 claims=9 unbound=0` rc 0.
+
+C2 (operability, sourced S595). The three surviving edits the r79 mutation seat named get one
+selftest arm each inside `selfcheck()` — a non-admitted round below the ceiling must not win, a
+verdict word after the first `;` must not count, a later `round N` must not win — with the
+predicate, CLI and output grammar byte-identical (the diff's hunks all lie inside the selftest
+region). Measured by the frozen harness:
+
+```
+$ python3 -I .ufo/waves/round-80/mutate-c2.py --rev 8108dfcc00d8b680cd4fb03cd9a6cc6dd5a74a77
+MUTATION_C2 survivors=0 killed=6 total=6 unmutated=green rev=8108dfcc00d8
+```
+
+Before: `MUTATION_C2 survivors=2 killed=4 total=6` at `d5888922` (the r79 seat named three; the
+frozen six-mutant set is the one that grades — the contract states both readings). The harness
+refuses to grade unless the unmutated selftest is green (the critic's clause).
+
+C3 (coverage). `PROVINCE.md` gains `## Instrument inventory (round 80)`, append-only at EOF: one
+row per committed `tools/*.py|*.sh` instrument with class, registry row and a one-line purpose,
+plus the instrument this round lands. Measured:
+
+```
+$ python3 -I .ufo/waves/round-80/count-c3.py 8108dfcc00d8b680cd4fb03cd9a6cc6dd5a74a77
+C3=met named=56 present=56 missing=0 extra=0 rev=8108dfcc00d8
+```
+
+Before: `named=14 present=55 missing=41 extra=0` rc 1 at `d5888922`. The population grew by one
+because the round adds an instrument; the predicate (no missing, no extra) is unchanged, and the
+counter's grading is names-and-paths only — class/registry/purpose cells are the scribe's
+grounded reading, not a counter verdict (named limit, critic C01).
+
+Frontier step. S595 opens `https://arxiv.org/abs/2102.11378v2` ("Practical Mutation Testing at
+Scale") — pin `corpus/evidence/sources-r80/arXiv-2102.11378v2-abs.html`, sha256 `28ea1f16…`,
+43884 bytes / 613 lines, abstract quote at `:121` (22 words, ≤25); duplicate sweep re-run by the
+L1 against the entering registry (0 hits for the URL, the id and `mutation test`); row
+`SOURCES.md:376`, status `mined`, used-by `corpus/knowledge/mutation-adequacy-r80.md`; rows
+367 -> 368, malformed 0, census rc 0 (35 tolerated W04). Entry K1–K4 + Limits/Boundaries;
+QUALITY 165–166 (survivor-as-lead, the D79-4 limit beside the guard) and 167 (`considerthese/
+2026-10-26.md` suggestion 1: a tally is stale only when the instrument ran).
+
+L2: ONE v1 wave, 14 seats (validated under `ufo-wave-policy.json` band 8–16; dispatch
+`w1-dispatch.json`), roles 4 executor / 3 scribe / 2 scout / 1 connector / 2 reviewer / 1
+critic / 1 mutation-tester = attack 4/14 (28.6%); residual call none. The planner seat is the
+L1; a bounded planning data-walk rode the scout item. The mutation seat killed 5/6 on the sweep
+and 1/3 on the C3 counter at the tested bytes, and the sweep's own two survivors were repaired
+in-round; three survivors are routed to r81 as named defects, not silently kept.
+
+No-harm: the standing 13-instrument battery 13/13 rc 0 at the landed bytes
+(`.ufo/waves/round-80/evidence/battery-r80.txt`); census rc 0 before and after; no registered
+tally-pinned instrument byte changed except the r79 wave-dir counter whose selftest region this
+round extends.
+
+Assimilation: none — `/home/vgpnk/Projects/shokuknow/merge/` does not exist on this host (the
+r61 L0 on the staged package's 94/136 id collisions also stands). considerthese re-mined: the
+newest file (2026-10-26) suggestion 1 lands as QUALITY 167; the rest remain behind the r62/r65/
+round-73 L0s. Open L0 lines (round-62, round-65, round-73) re-verified present and unanswered
+and routed around.

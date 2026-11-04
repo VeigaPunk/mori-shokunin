@@ -1799,3 +1799,18 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
      review evidence, not a new execution by this rule's author.
      Not covered: semantic command validation or expanding the integer grammar;
      this limit record changes neither the guard nor QUALITY 164.
+
+167. Separate a selftest tally into "cannot run here" and "stale" before grading it.
+     A tally is `stale` only when the instrument RAN and printed a different
+     count; a setup failure (missing `TMPDIR`, missing fixture, rc 2, a `SETUP`
+     line) is `unavailable`, never a zero and never drift. Measured instance
+     2026-11-04 on this host: `tools/mori-disk-rate.py --selftest` and
+     `tools/mori-round41-calibration.py --selftest` both printed
+     `SELFTEST SETUP TMPDIR is not set` followed by `... pass=0 fail=0` and
+     exited 0 with `TMPDIR` unset — a false-green shape a tally reader must not
+     count as 0/0 passed. Ground: `considerthese/2026-10-26.md` (2026-10-26),
+     suggestion 1, which names this split as the daily run's needed reading;
+     `corpus/knowledge/mutation-adequacy-r80.md` K4 records the same class.
+     Not covered: repairing those two instruments (tally-pinned, and the
+     mori | round-65 instrument-change L0 stays open); this rule governs how a
+     reader grades a tally, not the instruments' bytes.

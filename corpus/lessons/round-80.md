@@ -20,9 +20,33 @@ says “from 3 of 6”, while P-C2 and controls measure survivors=2 killed=4.
 Those conflicting statements are retained here verbatim in substance; the
 frozen measured predicates govern, not the introductory shorthand.
 
-LANDING PENDING — filled by the L1: landed revision, exact frozen-counter
-commands/output/exit codes for C1/C2/C3, and receipt paths. No claim is marked
-met by this draft, and no axis score changes.
+Landed revision `8108dfcc00d8b680cd4fb03cd9a6cc6dd5a74a77` (branch `master`). The
+three frozen counters, run by the L1 from the lane root with
+`HYAKU_SCRATCH=/fast/scratch/hyaku/mori-r80`, at that revision:
+
+```text
+$ python3 -I .ufo/waves/round-80/count-c1.py 8108dfcc00d8b680cd4fb03cd9a6cc6dd5a74a77
+C1=met tool=present sweep=0 mismatches=0 unresolved=0 tallies=0 stale=0 row_tally=19 live_tally=19 rev=8108dfcc00d8
+rc=0
+$ python3 -I .ufo/waves/round-80/mutate-c2.py --rev 8108dfcc00d8b680cd4fb03cd9a6cc6dd5a74a77
+unmutated survived rc=0 C2_COUNTER_SELFTEST pass=7 fail=0
+mutant drop_admitted killed rc=1 C2_COUNTER_SELFTEST pass=6 fail=1
+mutant raise_ceiling killed rc=1 C2_COUNTER_SELFTEST pass=5 fail=2
+mutant count_other_verdicts killed rc=1 C2_COUNTER_SELFTEST pass=5 fail=2
+mutant cut_clause_boundary killed rc=1 C2_COUNTER_SELFTEST pass=6 fail=1
+mutant any_round_in_cell killed rc=1 C2_COUNTER_SELFTEST pass=4 fail=3
+mutant met_ignores_mismatch killed rc=1 C2_COUNTER_SELFTEST pass=2 fail=5
+MUTATION_C2 survivors=0 killed=6 total=6 unmutated=green rev=8108dfcc00d8
+rc=0
+$ python3 -I .ufo/waves/round-80/count-c3.py 8108dfcc00d8b680cd4fb03cd9a6cc6dd5a74a77
+C3=met named=56 present=56 missing=0 extra=0 rev=8108dfcc00d8
+rc=0
+```
+
+Do-nothing controls stay valid: at `d5888922` C1 reads `tool=absent` rc 1, the harness reads
+`survivors=2` and C3 reads `named=14 present=55 missing=41` rc 1
+(`.ufo/waves/round-80/evidence/controls-r80.txt`). No axis score changes; the verdicts are the
+round report's.
 
 ## Gate
 
@@ -32,16 +56,20 @@ met by this draft, and no axis score changes.
 - Access date: 2026-11-04.
 - Located quote, pinned HTML line 121 (22 words): “Mutation analysis assesses a test suite&#39;s adequacy by measuring its ability to detect small artificial faults, systematically seeded into the tested program.”
 - Pin: `corpus/evidence/sources-r80/arXiv-2102.11378v2-abs.html`.
-- sha256: **PIN PENDING — filled by the L1**. The source seat's report
-  `.ufo/waves/round-80/w1/Mo80Sc02Source.md` was not yet present when this scaffold
-  was drafted; no digest is invented here.
+- sha256: `28ea1f163860348979a3aa9e9ef8e00fc8eb3ecec2762782d639783003f1b884`,
+  43884 bytes / 613 lines, measured by the L1 with `sha256sum` and `wc -lc` on the
+  committed pin at `8108dfcc`; the source seat's own two fetches were byte-identical.
+  The same sentence also appears in the page's meta description tags at `:28` and
+  `:32`, so an anchor checker demanding one occurrence refuses this page — the anchor
+  is the abstract block at `:121`.
 - Pre-fetch duplicate sweep: source seat Mo80Sc02Source reports that searches of
   `corpus/SOURCES.md` for the exact URL, `2102.11378`, and case-insensitive
   `mutation test` each returned rc 1, no matches. The wider `mutation` search
   hit S350 (host mutation) and S563 (label-mutation arm), neither this source;
-  the last row was S594. **DUPLICATE RECEIPT PENDING — filled by the L1**:
-  bind those reported commands/results to the source report's durable receipt.
-  These are source-seat observations, not a sweep performed by this lesson seat.
+  the last row was S594. Re-run by the L1 against the ENTERING registry
+  (`git show d5888922:corpus/SOURCES.md` -> scratch copy, 367 rows):
+  `grep -c -F 'arxiv.org/abs/2102.11378'` -> 0; `grep -c -F '2102.11378'` -> 0;
+  `grep -ci 'mutation test'` -> 0. No duplicate; S595 is the next unused id.
 - Verdict: **admitted, scope narrowed** to the abstract's definition of mutation
   analysis, grounding C2's test-suite-adequacy criterion. This is the bounded
   Gate disposition, not proof of a landed source row or a passing C2 counter.
@@ -66,7 +94,7 @@ met by this draft, and no axis score changes.
   row 14; correct the control-receipt capability row and evidence-cell tally
   with a named correction. The sweep checks graded pointers, pinned live
   selftest tallies and stale literals rather than trusting one corrected file.
-  Fix status is LANDING PENDING, not asserted complete by this lesson draft.
+  Fix status: landed at `8108dfcc` and measured by the C1 counter (see the landing block).
 
 Shown able to fail, inherited entering bytes (not a new execution by this seat):
 
@@ -81,15 +109,41 @@ rc=1
 
 The same frozen counter is the red-to-green command:
 `python3 -I .ufo/waves/round-80/count-c1.py <revision>` (from the lane root).
-It is red at entering as pasted above; only the L1's landed-revision run can
-establish green. GREEN RECEIPT PENDING — filled by the L1: exact revision,
-output, rc and receipt. Required green includes a present tool, zero sweep
-mismatches, and capability/live tallies both 19; a proposed output is not evidence.
+It is green at the landed revision, the same command and the same counter:
+
+```text
+$ python3 -I .ufo/waves/round-80/count-c1.py 8108dfcc00d8b680cd4fb03cd9a6cc6dd5a74a77
+C1=met tool=present sweep=0 mismatches=0 unresolved=0 tallies=0 stale=0 row_tally=19 live_tally=19 rev=8108dfcc00d8
+rc=0
+```
+
+plus the guard's own run over the round's receipts:
+`python3 -I tools/mori-control-receipt.py --dir .ufo/waves/round-80/evidence` ->
+`CONTROL_RECEIPT_SUMMARY files=1 sections=5 claims=9 unbound=0` rc 0 (before the after-run
+receipt was added). The fix's second carrier correction (the row's Evidence cell `18/18`
+-> the landed `19/19` with a named supersession) is part of the same landed bytes.
 The sweep's own invocation is `python3 -I tools/mori-claim-sweep.py --root
 <export-of-revision> --pins .ufo/waves/round-80/claim-pins.json`, as frozen in P-C1.
 
-Only this one mistake is mined: no second round-local mistake is invented to
-inflate the lesson count.
+### The sweep's first arm was over-broad on wildcard citations (this round)
+
+- **Class:** `vacuous` (an arm that fires on a legitimate form), found by the L1's first
+  after-run, not by a seat.
+- **Evidence pointer:** the run that found it printed
+  `CLAIM_SWEEP_MISMATCH unresolved SCORECARD.md:1558 .ufo/waves/round-24/w2/Mut*.md`,
+  `:1559 .../c1-*.json` and `:1593 .../routed-r24-*-a5.txt`, all of them evidence-set
+  citation patterns, and would have forced either a history rewrite in the r24/r25 sections
+  or a false red forever.
+- **Captured-by:** the frozen predicate's own after-run at the first landed tool bytes; the
+  contract's arm definition said "does not exist under --root", which a pattern token does
+  only under a literal reading.
+- **Fix:** the tool resolves a token carrying `*`/`?` by globbing at least one existing path
+  under `--root` (literal existence is kept for wildcard-free tokens), with two selftest arms
+  (match -> clean, no match -> unresolved) and a docstring limit: a match proves the pattern
+  is not dead, not that the matched files are the intended ones. Fixed and re-measured at
+  `8108dfcc` (`mismatches=0`, `pointers=233`). Two further arms were added the same way after
+  the mutation seat killed nothing on the total-summary shape (`mismatches` counting only
+  `unresolved` had survived).
 
 ## Census
 
@@ -109,9 +163,12 @@ exit=0
 
 The displayed census excerpt spells tab separators as `\t`; it is not a
 byte-exact full transcript. Census rc 0 does not mean no warnings.
-Before row count: 367. AFTER CENSUS PENDING — filled by the L1: after-value,
-landed tree/revision, census command/output/rc and final receipt path. The
-expected new S595 row is not counted as landed merely because it is planned.
+Before row count: 367. After, run by the L1 at the landed tree (`8108dfcc`, same
+command): rc **0**, `mori ok /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md`,
+no `E` findings, 35 tolerated `W04` duplicate-URL warnings;
+`grep -cE '^ {0,3}\|[[:space:]]*S[0-9]{3,}[[:space:]]*\|' corpus/SOURCES.md` -> **368**
+(367 -> 368, the one addition being S595). Malformed rows
+(`awk -F'|' ... NF!=13`) -> 0.
 
 ## Refusals
 
