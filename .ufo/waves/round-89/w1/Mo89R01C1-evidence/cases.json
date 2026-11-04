@@ -1,0 +1,152 @@
+[
+ {
+  "name": "E01-equiv-dotslash",
+  "cmd": "python3 -I ./tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "E02-plain-control",
+  "cmd": "python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "E03-I-B-flags",
+  "cmd": "python3 -I -B tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "E04-usr-bin-python3",
+  "cmd": "/usr/bin/python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "E05-direct-exec",
+  "cmd": "./tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "E06-quoted-script",
+  "cmd": "python3 -I \"tools/mori-record-sweep.py\" --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "E07-python3.14",
+  "cmd": "python3.14 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "E08-env-assign-prefix",
+  "cmd": "PYTHONDONTWRITEBYTECODE=1 python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "E09-env-command",
+  "cmd": "env PYTHONDONTWRITEBYTECODE=1 python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "E10-dashdash",
+  "cmd": "python3 -I -- tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "E11-W-flag",
+  "cmd": "python3 -W ignore tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "E12-dotdot-normpath",
+  "cmd": "python3 -I tools/../tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "E13-usr-bin-python3-u",
+  "cmd": "python3 -u tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "E14-nice-prefix",
+  "cmd": "nice -n 0 python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "E15-semicolon-in-quoted-arg",
+  "cmd": "python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json --note \"a;b\"",
+  "expect": "met"
+ },
+ {
+  "name": "E16-and-chain",
+  "cmd": "true && python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "E17-exec-prefix",
+  "cmd": "exec python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "E18-uv-run",
+  "cmd": "uv run --no-project tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "E19-bash-c-wrapper",
+  "cmd": "bash -c 'python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json'",
+  "expect": "met"
+ },
+ {
+  "name": "E20-interp-trailing-comment",
+  "cmd": "python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json # note",
+  "expect": "met"
+ },
+ {
+  "name": "A01-comment-named",
+  "cmd": "printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0' # tools/mori-record-sweep.py",
+  "expect": "reject"
+ },
+ {
+  "name": "A02-selfprint-data",
+  "cmd": "python3 -c \"print('RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0')\" tools/mori-record-sweep.py",
+  "expect": "reject"
+ },
+ {
+  "name": "A03-W-value-selfprint",
+  "cmd": "python3 -W tools/mori-record-sweep.py -c \"print('RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0')\"",
+  "expect": "reject"
+ },
+ {
+  "name": "A04-X-value-selfprint",
+  "cmd": "python3 -X tools/mori-record-sweep.py -c \"print('RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0')\"",
+  "expect": "reject"
+ },
+ {
+  "name": "A05-c-value-lookalike",
+  "cmd": "python3 -c tools/mori-record-sweep.py",
+  "expect": "reject"
+ },
+ {
+  "name": "A06-m-value-lookalike",
+  "cmd": "python3 -m tools/mori-record-sweep.py",
+  "expect": "reject"
+ },
+ {
+  "name": "A07-path-as-data-after-other-script",
+  "cmd": "python3 -I tools/mori-claim-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json tools/mori-record-sweep.py",
+  "expect": "reject"
+ },
+ {
+  "name": "A08-semicolon-split-invocation",
+  "cmd": "printf x; python3 -c \"print('RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0')\" tools/mori-record-sweep.py",
+  "expect": "reject"
+ },
+ {
+  "name": "A09-hash-glued",
+  "cmd": "printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'#tools/mori-record-sweep.py",
+  "expect": "reject"
+ },
+ {
+  "name": "A10-tab-comment",
+  "cmd": "printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'\t#\ttools/mori-record-sweep.py",
+  "expect": "reject"
+ }
+]
