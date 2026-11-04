@@ -1,0 +1,12 @@
+# receipt: after-r85.txt
+# cmd: python3 -I .ufo/waves/round-85/count-c1.py 25a74d4c34e8430e4fbb18d4038ef5db872fb0ee; python3 -I .ufo/waves/round-85/count-c3.py 25a74d4c34e8430e4fbb18d4038ef5db872fb0ee
+# rev: 25a74d4c34e8430e4fbb18d4038ef5db872fb0ee
+# counter-sha256: da5fb27b9cd9b9cfbbefc58fb2465fb162f796cd280f82d0aeee0e8deca485fe .ufo/waves/round-85/count-c1.py
+# counter-sha256: 497738932080b8044142e5f49a8a4f3151ab16b876d77d25a8e0771785f8b918 .ufo/waves/round-85/count-c2.py
+# counter-sha256: 43ad71d8104df29f1be8e3e0cef20d485e35a5f3f70d4994d70adc67b88a2724 .ufo/waves/round-85/count-c3.py
+# limits: named limit — the C1 and C3 bodies above are counter runs at the named revision while the two sweep receipts' bodies are worktree runs pinned to the same bytes by their counter-sha256 bindings
+# ---
+MUTANT count-c1.py X1_killed_rescued_as_equivalent killed rc=1
+MUTANT count-c1.py X2_coupling_duplicate_passes killed rc=1
+C1=met mutants=2 killed=2 survivors=0 total=2 arms=17 r84=met rev=25a74d4c34e8
+C3=met observed=3 aa=stable own_tokens=64 subject_tokens=64 subject_deltas=0 unmatched=0 unnamed=0 detector=green rev=25a74d4c34e8

@@ -1,0 +1,7 @@
+# receipt: claim-sweep-r85.txt
+# cmd: python3 -I tools/mori-claim-sweep.py --root . --pins .ufo/waves/round-80/claim-pins.json
+# rev: 25a74d4c34e8430e4fbb18d4038ef5db872fb0ee
+# counter-sha256: 4ac6b52615a427d1f7d8993ab636a5830bcde744c4a51f22d9157833d940ba1d tools/mori-claim-sweep.py
+# limits: named limit — this body is a worktree run while the binding pins the sweep tool bytes at the revision, not the worktree bytes
+# ---
+CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=4 pointers=266
