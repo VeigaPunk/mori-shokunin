@@ -4496,6 +4496,18 @@ the counter's own `MUTANTS` table). Both defects are mined in `corpus/lessons/ro
 `## Mistakes`; the fix is `d5e2eda4` and the after line above is its measurement. This is the C1
 kill rule doing its job on the round's own instrument, not a target change.
 
+**Material attack findings (disclosed, routed — contract Erratum E3).** The wave's critic
+reproduced both after lines and then attacked them. **C2 survived every vacuity probe** (zero
+replays cannot reach its target line at `d5e2eda4` or at the entering bytes). **C1's target line is
+reproducible on a fabricated checksum-canary subject** (fixture `79143f94`, rc 0): the frozen kill
+rule cannot attribute a kill to a declared arm, so `C1=met` alone does not prove the six arms
+exist — that proof is the landed diff plus the two independent re-measurements
+(`w1/Mo88E01C1Arms.md`, `w1/Mo88R01ReviewC1.md`), each of which maps every mutant to its named new
+arm on the real bytes. Two further C2 limits are outside the pinned predicate but real: a
+self-printing command that also names the bound path passes (fixture `3e84f588`), and the token
+rule is spelling, not path identity (`./tools/...` is falsely refused; the real population is
+unaffected). Each is routed to round 89; no target, population, fixture or kill rule moved.
+
 ### Capabilities (round 88)
 
 | Capability | What it can now do | Evidence pointer | First-working round |
@@ -4506,14 +4518,25 @@ kill rule doing its job on the round's own instrument, not a target change.
 ## Planned (round 89)
 
 1. **operability** — the round-88 counters' own survivors. The wave's mutation-tester
-   (`w1/Mo88M01Mut.md`) measures them; start with the target constants and the `fixture_verdict`
-   parser in `count-c2.py`, then `EXPECTED_ARMS`/`own_ok` and the printed split in `count-c1.py`.
+   (`w1/Mo88M01Mut.md`) measured **32 mutants, 20 killed, 12 survived**; the ranked list to arm is
+   `C1-arms-first`, `C1-green-drop-fail`, `C1-own-ok` (count-c1.py) and `C2-target`,
+   `C2-printed-target`, `C2-fixture-clean`, `C2-receipt-name`, `C2-clone-top`, `C2-own-ok`,
+   `C2-verdict-first`, `C2-no-supersedes`, `C2-vacuous-body` (count-c2.py). The `C2-target`
+   survivor is the sharp one: the printed target string is a constant, not derived from the
+   verdict, so a mutation of its `real=met` field still prints a met line.
 2. **calibration** — the r87 gate's remaining unarmed clauses (from `w1/Mo87M01Mut.md` ranks 4, 5,
    7, 8, 9, 10, 11: `c2-replay-compare-off`, `c2-replay-compare-rstrip`,
    `c2-supersede-call-clean`, `c2-supersede-counts-swap`, `c2-absent-accounting`, `c2-absent-ok`,
-   `c2-defeated-accounting`), and F3 hermeticity: the two r86 `required` receipts replay against
-   the host lane path, so `replay=4` is host-local — move them to clone mode or record the limit in
-   the graded row.
+   `c2-defeated-accounting`), the r88 reviewer's R89-C2-comment-binding (a bound path named only
+   inside a shell comment satisfies the token rule; fixture `a010047c` prints the target tail),
+   **R89-C2-selfprint-evasion** (a self-printing command that also names the bound path passes;
+   fixture `3e84f588` prints the full target line), **R89-C2-path-identity** (`./path` and other
+   spellings of the same file are falsely refused), and F3 hermeticity: the two r86 `required` receipts replay against the host lane path, so `replay=4`
+   is host-local — move them to clone mode or record the limit in the graded row. Also from the r88
+   wave: delete the dead assignment `want_met = ...` at `.ufo/waves/round-87/count-c2.py:121`
+   (ruff F841) only with a superseding receipt, since the after receipt binds the counter's
+   sha256; and rename the r88 C2 counter's `FX ... refused` wording so a clean fixture reads `ok`
+   (legibility).
 3. **depth** — the dated full-census snapshot for the r86 value channel's
    `differs`/`masked`/`absent` split, carried from rounds 86 and 88 (declared out of scope at
    `.ufo/waves/round-88/contract.md` before data, not dropped).

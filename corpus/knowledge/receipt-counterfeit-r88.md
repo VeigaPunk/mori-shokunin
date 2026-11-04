@@ -1,6 +1,7 @@
 # Receipt counterfeits — a declared mode is verified against the receipt's own header
 
-source: S604 — The Update Framework Specification v1.0.37, §5.3.7 "Update the root role", fetched
+source: S604 — The Update Framework Specification v1.0.37, §5.3 "Update the root role", step
+5.3.5, fetched
 2026-11-04, `https://theupdateframework.github.io/specification/v1.0.37/` (raw HTML lines
 3502-3506; sha256 `f20fda0dda7128f3b9cc1f12f3d90301b0f6e163576ba285bfe485d1671e8def`)
 source: the lane's own gate output `.ufo/waves/round-88/evidence/after-r88.txt` (committed at
@@ -25,20 +26,28 @@ problem and an unmet run rather than a count:
    `# counter-sha256:` path must appear as a whitespace token of the `# cmd:` line
    (`cmd-binding`). A digest binds bytes; it does not bind the *body* to the command, and a
    command such as `printf '<body>'` reproduces any body while its digest stays genuine.
-3. **A superseded target is inside the population.** A `# supersedes:` naming a receipt outside
-   the graded population is `SUPERSEDE … absent=1` and fails the run, so a dangling supersede
-   chain cannot retire a legacy row by naming something the gate never sees.
+3. **A superseded target is inside the population.** A `# supersedes:` naming a receipt that is
+   not one of the population's present basenames at the graded revision is `SUPERSEDE … absent=1`
+   and fails the run, so a dangling supersede chain cannot retire a legacy row by naming something
+   the gate never sees. Named limit: a target that *is* present but is not a legacy row passes
+   silently and retires nothing — the rule checks target existence, not that the named row is
+   supersedable (tameshi's `evidence-disposition.py` is the stronger lineage rule; cited, not
+   absorbed).
 
-A refused row can carry more than one problem — for example a `clone` row with no replay line is
-both `missing-replay` and `cmd-binding`, because the binding rule is keyed on the declared mode
-while the replay execution is keyed on the parsed marker. The counters report the joined problem
-list; neither problem suppresses the other.
+A refused row can carry more than one problem — a `clone` row with no replay line whose command
+*also* omits a bound path is both `missing-replay` and `cmd-binding`, because the binding rule is
+keyed on the declared mode while the replay execution is keyed on the parsed marker. When the
+stripped receipt's command still names its bound path (the frozen `stripped` fixture), only
+`missing-replay` is reported. The counters report the joined problem list; neither problem
+suppresses the other.
 
 ## Why S604 grounds it
 
 TUF's root-update procedure admits a new metadata record only when the record's version checks
 against the trusted record (`N+1` exactly); on a mismatch the record is discarded, the cycle
-aborts and the failure is reported. The transferable shape is verification-before-admission: the
+aborts and the failure is reported. Located quote (raw HTML lines 3502-3506, 23 words, exactly
+once in the tag-stripped text): "If the version of the new root metadata file is not N+1, discard
+it, abort the update cycle, and report the rollback attack."  The transferable shape is verification-before-admission: the
 record does not earn a pass for existing, and the refusal is a named outcome, not a suppressed
 error.
 
@@ -49,6 +58,14 @@ error.
   round-88 C2 reviewer on fixture `a010047c`: a `clone` receipt whose `# cmd:` is
   `printf 'RECORD_SWEEP fabricated=1\n' # tools/mori-record-sweep.py` reproduces the r87 target
   line. Routed as R89-C2-comment-binding; this entry does not claim execution provenance.
+- **A self-printing command passes when it also names the path.** The rule is token presence, not
+  command shape: `printf 'RECORD_SWEEP fabricated=1 tools/mori-record-sweep.py\n'` with a matching
+  body replays, matches and names the bound path, so it reads `met` (critic fixture `3e84f588`).
+  Routed as R89-C2-selfprint-evasion; the round-88 claim covers only the frozen fixture whose body
+  omits the path token.
+- **Token spelling is not path identity.** `'tools/x.py'` and `"tools/x.py"` are accepted (the
+  token is stripped of quotes); `./tools/x.py` is refused although it is the same file. Routed as
+  R89-C2-path-identity. The real population is unaffected (`C2=met … unexpected=0`, measured).
 - The gate verifies that a body is produced by its command. It does not verify that the command
   measures the thing the receipt claims to measure: `true` has a reproducible empty body.
 - Legacy rows stay header-bound only (no replay); their `# limits:` cell carries the reason, and

@@ -5474,3 +5474,58 @@ and not re-litigated here.
 no score moved; no existing arm, receipt byte or capability row was deleted (the r86 receipts and
 their `legacy` grades stay byte-unchanged). Detection and report only: no remediation, no lane or
 host state changed.
+
+## Round 88 — 2026-11-04 (L1 MoriR88, attempt 1)
+
+**Claims (frozen `2a5e3ad9`, before data).** C1 operability (7): six clauses the round-87 mutation
+matrix measured surviving in the lane's own `.ufo/waves/round-87/count-c1.py` get the failing arm
+each — the counter's selftest moves 18 → 24 arms — and the new counter
+`.ufo/waves/round-88/count-c1.py` re-derives the six mutants at any revision: `C1=met mutants=6
+killed=6 survivors=0 total=6 arms=24` at `d5e2eda4` (entering control `C1=unmet ... survivors=6
+total=6 arms=18`; a label-only fixture reads `arms=24 survivors=6`). C2 calibration (5, tied
+lowest): the r87 receipt gate refuses the two counterfeits its closure routed — a `clone` row whose
+`# replay:` line was stripped (`missing-replay`) and a row whose `# cmd:` prints its own body
+(`cmd-binding`) — arms its `SUPERSEDE … absent=1` branch, and keeps the real population met:
+`C2=met real=met fx=4 clean=1 refused=2 absent=1 arms=23` at `d5e2eda4` (entering control
+`refused=0 ... arms=17`; both counterfeits printed the exact r87 target tail).
+
+**Wave.** One v1 wave, 12 seats (3 executor, 1 simplifier, 1 scout, 2 scribe, 2 reviewer,
+1 critic, 1 mutation-tester, 1 connector; attack 4/12 = 33.3 %), validated under policy v1
+(`w1-dispatch.json` counts `spawn 12`), reports under `.ufo/waves/round-88/w1/`.
+
+**Frontier step.** S604 (The Update Framework Specification v1.0.37) opened this round, two
+fetches byte-identical, sha256 `f20fda0d…`, 248698 bytes / 4997 lines, a 23-word quote at raw
+lines 3502-3506; registry **376 → 377** by
+`grep -cE '^ {0,3}\|[[:space:]]*S[0-9]{3,}[[:space:]]*\|' corpus/SOURCES.md`; census rc 0 before
+(376) and after (377), 35 `W04` both times. `corpus/knowledge/receipt-counterfeit-r88.md` and its
+coverage-map row are the round's new ground; QUALITY 183–184 land the round's rules; the lesson
+also adopts `considerthese/2026-10-26.md` suggestion 4 as a suggestion-adoption status line.
+`Assimilation: none`.
+
+**Mistakes.** Two, both caught by the claim's own kill rule and fixed in `d5e2eda4`:
+`fixture-satisfied-for-the-wrong-reason` (the six-arm witness fixtures omitted their
+`COUNTER_SELFTEST` line, so `met is False` came from `pristine-ok`; the first landing read
+`C1=unmet ... killed=4 survivors=2`) and `anchor-not-unique-in-its-own-file` (M1's anchor also
+occurred in the counter's `MUTANTS` table; refused as `unanchored`, `mutants=5`). Both are rows in
+`corpus/lessons/round-88.md`.
+
+**Routed-defect disposition.** r87 routed defects 1, 2, 3, 4 and 7 are discharged this round (gate
+rows 21/22, the two refusal paths, the absent-target arm, the verbatim label-only control); defect 5
+(F3 hermeticity) and the eight round-86 defects stay carried in `## Planned (round 89)`.
+
+**Material attack findings (disclosed; contract Erratum E3).** The wave's critic reproduced both
+after lines and attacked them: C2 survived every vacuity probe (zero replays cannot reach its target
+line at `d5e2eda4` or at the entering bytes), but C1's target line is reproducible on a fabricated
+checksum-canary subject (fixture `79143f94`, rc 0) — the frozen kill rule cannot attribute a kill
+to a declared arm, so `C1=met` alone does not prove the six arms exist; that proof is the landed
+diff plus the two independent re-measurements (`w1/Mo88E01C1Arms.md`, `w1/Mo88R01ReviewC1.md`).
+Two C2 limits outside the pinned predicate were also measured: a self-printing command that also
+names the bound path passes (fixture `3e84f588`), and the token rule is spelling not path identity
+(`./tools/...` falsely refused; the real population unaffected). All are routed to round 89; no
+target, population, fixture or kill rule moved.
+
+**No-harm.** Both counters' own selftests are green (`count-c1.py` 25 arms, `count-c2.py` 17 arms);
+the r87 subjects are green at 24 and 23 arms; the census is rc 0; no score moved; no admitted
+corpus entry was deleted or left stale (QUALITY 183–184 cite this round's controls and receipt).
+Detection and report only: no remediation, no lane or host state changed.
+

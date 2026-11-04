@@ -108,3 +108,77 @@ The SCORECARD `## Planned (round 88)` item 3 (a dated full-census snapshot for t
 channel's `differs`/`masked`/`absent` split) is **not claimed this round**: the r87 closure's
 routed defects 2–4 make the receipt gate's own refusal forgeable, and that is the higher-severity
 class. The item stays open for a later round rather than being widened into this one.
+
+### Erratum E1 — the C1 detector's own fixture change at `d5e2eda4` (appended post-data, disclosed)
+
+The first subject landing (`4d0f7bf0b0a0d978fa65d9b93edc37a2e6556550`) was graded by this frozen
+counter and read `C1=unmet mutants=6 killed=4 survivors=2`, rc 1. The two survivors (`M1`,
+`M2`) exposed that two of the *counter's own* selftest arms were satisfied for the wrong reason:
+their witness fixtures (`dup.py`, `empty.py`) printed no `COUNTER_SELFTEST` line, so `arms_of`
+read `(-1, -1)` and the arm's `met is False` came from `pristine-ok`, not from the guard the arm
+names.
+
+Fix commit `d5e2eda494877a85edaa4e287d6ad81843d9a8a1` changes exactly two fixture string literals
+inside **this counter's** `selfcheck` (`dup.py` and `empty.py` gain
+`print('COUNTER_SELFTEST pass=1 fail=0')`).
+
+Disclosed because it moves instrument bytes after a data point existed:
+
+- **No target, population or kill rule moved.** `TARGET`, `TARGET_ARMS`, `MUTANTS`, `ARMS_BY_FILE`
+  and the kill rule are byte-identical between the freeze and `d5e2eda4`.
+- **No subject byte moved.** The graded subject `.ufo/waves/round-87/count-c1.py` carries the same
+  six arms and the same 24-arm tally at `4d0f7bf0` and `d5e2eda4`; the changed literals live in
+  the r88 counter, not in the subject.
+- **The entering control is unchanged** (`C1=unmet … survivors=6 … arms=18`), and the frozen
+  label-only control still reads `C1=unmet … survivors=6 total=6 arms=24` under *both* counter
+  byte sets (the wave's `Mo88E01C1Arms` measured the freeze bytes and the after bytes against one
+  fixture: both refused).
+- The after-value is therefore measured at `d5e2eda4`, not at `4d0f7bf0`; the unsuccessful first
+  landing is kept in the record as the finding that exposed the defect.
+
+### Erratum E2 — the C1 arm-table fixture cell for M5 (appended post-report, disclosed)
+
+The C1 arm table above gives `target_split_killed_not_mutants` the fixture
+`not target_split("mutants=6 killed=5 survivors=0 total=6 arms=24")`. The landed arm (in
+`.ufo/waves/round-87/count-c1.py` at `d5e2eda4`, line 310-312) reads `arms=54`, not `arms=24`.
+`arms=54` is the correct value: that counter's own `TARGET_ARMS` is 54, so the fixture must leave
+`killed=5` as the only mismatch; with `arms=24` the arms field would also mismatch and the arm
+would pass under the M5 mutant for the wrong reason. The code is right and the table cell is
+wrong. No target, population or kill rule moves; the frozen predicate P-C1 never names this
+fixture value. Recorded so a reader does not "fix" the code to match the cell.
+
+### Erratum E3 — the two predicates' scope, against the wave's own attacks (appended post-wave, disclosed)
+
+The wave's critic (`w1/Mo88C01Critic.md`) reproduced both after lines and then attacked them. Its
+findings, accepted and routed:
+
+1. **C1's kill rule does not bind the subject's identity.** A fabricated subject whose `--selftest`
+   prints `COUNTER_SELFTEST pass=24 fail=0` and dies on any change to a pinned marker canary is
+   graded `C1=met` by the frozen counter (fixture rev `79143f945e424b79892e730c431d5659ca0d07a7`,
+   rc 0): every mutant "dies" by checksum, and the frozen kill rule — rc≠0 or `fail=<n>`, n>0 —
+   cannot attribute a kill to a declared arm. `C1=met` therefore does **not** by itself prove the
+   six arms exist or do anything. What does prove it, for the real subject, is the landed diff and
+   the two independent re-measurements (`w1/Mo88E01C1Arms.md`, `w1/Mo88R01ReviewC1.md`), each of
+   which maps every mutant to its named new arm on the real bytes. The frozen predicate is
+   unchanged and true at the measured revision; the instrument is weaker than the claim's intent.
+   Routed **R89-C1-subject-identity** (pin the subject's sha256 in the counter; make a kill count
+   only when the contract-declared arm label appears in the mutant's `FAIL` lines).
+2. **C2's "a `# cmd:` that prints its own body" sentence is fixture-wide, not class-wide.** A
+   receipt whose self-printing command also names the bound path as a bare token passes: the
+   critic's fixture `3e84f588bad2…` prints the full frozen target line. The pinned predicate names
+   the two exact counterfeits (stripped header, `printf '<body>'` without the path) and holds; the
+   contract's prose overstates the class. Routed **R89-C2-selfprint-evasion**.
+3. **C2's token rule is spelling, not path identity.** `'tools/x.py'` and `"tools/x.py"` are
+   accepted (quotes are stripped) but `./tools/mori-record-sweep.py` — the same file, replay rc 0,
+   body matched — is refused (`cmd-binding`). The real seven-receipt population is unaffected
+   (`C2=met … unexpected=0`), so P-C2's no-harm scope stands. Routed **R89-C2-path-identity**.
+4. **Legacy-row wording.** The operational call site evaluates `binding_problems` on any row whose
+   declared mode is `required`/`clone` *or* that carries a parsed replay marker; a legacy row that
+   carried a `# replay:` line would be evaluated. No real legacy row does, so the population is
+   unaffected. The table's "legacy rows keep the header-only rule" is a statement about the
+   measured population, not a branch guard.
+5. **`rc=2`/timeout counts as killed.** Same family as item 1; the kill rule's "exit non-zero" is
+   not a proof of arm coverage.
+
+No target, population, fixture or kill rule moved: all five items are scope statements about what
+the measured lines do and do not prove, and each is routed with a round-89 witness.

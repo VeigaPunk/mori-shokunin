@@ -1,0 +1,133 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r88-w1",
+  "createdAt": "2026-11-04T13:57:53.644Z",
+  "updatedAt": "2026-11-04T13:58:19.336Z",
+  "reportDir": ".ufo/waves/round-88/w1",
+  "members": {
+    "Mo88E01C1Arms": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "C1: re-measure each of the six mutants against the landed arms"
+    },
+    "Mo88E02C2Gate": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "C2: hand-build the three counterfeits and replay the graded gate"
+    },
+    "Mo88E03SecondImpl": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability"
+      ],
+      "milestone": "second independent implementation of both verdicts"
+    },
+    "Mo88Sc01Scope": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "data walk: the new refusal rules' true row table"
+    },
+    "Mo88S01Lesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "lesson draft: what the round did and the mined mistake"
+    },
+    "Mo88S02Knowledge": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "depth",
+        "coverage"
+      ],
+      "milestone": "review and tighten the r88 knowledge entry"
+    },
+    "Mo88R01ReviewC1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "C1 review: arm quality, wrong-reason arms, kill attribution"
+    },
+    "Mo88R02ReviewC2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "C2 review: new refusal paths and unclaimed holes"
+    },
+    "Mo88C01Critic": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability"
+      ],
+      "milestone": "falsify both claims against the contract's own words"
+    },
+    "Mo88M01Mut": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "mutate the r88 counters' own clauses; survivors for round 89"
+    },
+    "Mo88K01Conn": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "adjacency"
+      ],
+      "milestone": "sibling-overlap scan: receipt gates across the fleet"
+    },
+    "Mo88Si01Simplify": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "simplifier",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "YAGNI pass over the r88 diff"
+    }
+  }
+}
