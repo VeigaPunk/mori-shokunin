@@ -156,3 +156,34 @@ C1's rule — a surviving mutant reveals a behaviour the suite does not constrai
 `SOURCES.md` row opened this round: PIT's "What is mutation testing?" page, pinned under
 `corpus/evidence/sources-r83/`, with its located quote recorded in this round's lesson `## Gate`
 and cited by `corpus/knowledge/counter-mutation-adequacy-r83.md`.
+
+## Pre-data amendment A1 — one equivalent mutant (2026-11-04T08:3xZ, before any after-value)
+
+Filed by the L1 while the wave ran and **before any after-value existed** (the only measurements
+on record are the do-nothing controls; the wave had produced no claim receipt). No claim, axis or
+target is widened; one mutant's status is corrected.
+
+**Adjudication.** `duplicates_accepted` (count-c2's `met` clause `duplicates == 0`) is an
+**equivalent mutant** under the frozen r82 semantics: the same function adds
+`residual += duplicates`, and `met` already requires `residual == 0`, so no observation of the
+function's behaviour can distinguish the mutated clause from the original. The r82 probe counted
+it as a "survivor" for lack of an arm, not because a behaviour was unconstrained; an arm that
+claims to kill it would have to observe a difference that does not exist. Proof of equivalence is
+the coupling itself, not an opinion.
+
+**Amended predicate.** The frozen sentence now reads:
+
+    C1=met mutants=23 killed=22 equivalent=1 survivors=0 total=23 pristine=green
+
+where an `equivalent` mutant is excluded from the survivor count **only when** the graded bytes
+contain its coupling marker (`residual += duplicates`) exactly once. If a later repair removes
+that coupling, the mutant is no longer equivalent, the counter grades it as a normal mutant, and
+it must be killed. A missing or duplicated coupling marker is `unanchored` (unmet).
+
+**Re-taken control.** The population control is re-run against the freeze commit after this
+amendment and must read `survivors=19 equivalent=1` (receipt `evidence/controls-r83.txt`). The
+entering `harness=absent` control is unchanged.
+
+**Disclosure.** The earlier control line `survivors=20` remains in the receipt as the pre-amendment
+reading and is not deleted; both are cited in the report and the lesson. This is the r82 A1
+pattern (a pre-data amendment disclosed in the lesson), not a post-hoc narrowing.

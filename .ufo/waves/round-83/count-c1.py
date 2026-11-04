@@ -92,6 +92,12 @@ MUTANTS = (
      "        if m:", "        if m and not fields:"),
 )
 
+# Pre-data amendment A1: an adjudicated equivalent mutant, exempt from the survivor count only
+# while the graded bytes carry its coupling marker exactly once (the coupling is the proof).
+EQUIVALENT = {
+    "duplicates_accepted": "residual += duplicates",
+}
+
 FAIL = re.compile(r"\bfail=([1-9][0-9]*)\b")
 COUNT = re.compile(r"\b(mutants|killed|survivors|total)=(\d+)\b")
 # A revision's `harness=present` means the file IS this counter: every frozen label and the
@@ -167,17 +173,27 @@ def grade(loader, scratch, mutants=MUTANTS):
             rc, out = selftest_run(target, scratch)
             k = killed(rc, out)
             total += 1
+            coupling = EQUIVALENT.get(label)
+            if not k and coupling is not None:
+                coupled = base.count(coupling) == 1
+                lines.append("MUTANT %s %s %s rc=%d"
+                             % (os.path.basename(path), label,
+                                "equivalent" if coupled else "survived", rc))
+                if not coupled:
+                    extras.append("coupling-absent %s %s" % (path, label))
+                continue
             lines.append("MUTANT %s %s %s rc=%d"
                          % (os.path.basename(path), label,
                             "killed" if k else "survived", rc))
             shutil.rmtree(d, ignore_errors=True)
     survivors = len([line for line in lines if " survived " in line])
-    killed_n = total - survivors
+    equivalent = len([line for line in lines if " equivalent " in line])
+    killed_n = total - survivors - equivalent
     met = (pristine_ok and total > 0 and survivors == 0
            and not any(e.startswith("empty-mutation") or e.startswith("unanchored")
-                       for e in extras))
-    tail = ("mutants=%d killed=%d survivors=%d total=%d pristine=%s"
-            % (total, killed_n, survivors, total,
+                       or e.startswith("coupling-absent") for e in extras))
+    tail = ("mutants=%d killed=%d equivalent=%d survivors=%d total=%d pristine=%s"
+            % (total, killed_n, equivalent, survivors, total,
                "green" if pristine_ok else "red"))
     return met, tail, lines, extras
 
@@ -232,6 +248,18 @@ def selfcheck(scratch):
         disk, scratch, [("tools/red.py", "self_red", "pass=0", "pass=0")])
     cases.append(("red_pristine_reported",
                   (not met) and "pristine=red" in tail, tail))
+    eq = ("GUARD = 1\nCOUPLE = 2\n"
+          "def f(duplicates, residual):\n    residual += duplicates\n"
+          "    return residual\nprint('FAKE pass=1 fail=0')\n")
+    write(d, "eq.py", eq)
+    met, tail, lines, extras = grade(
+        disk, scratch, [("tools/eq.py", "duplicates_accepted", "COUPLE = 2", "COUPLE = 3")])
+    cases.append(("equivalent_excluded_when_coupled",
+                  met and "equivalent=1" in tail and "survivors=0" in tail, tail))
+    met, tail, lines, extras = grade(
+        disk, scratch, [("tools/blind.py", "noop", "print('FAKE pass=1 fail=0')",
+                         "print('FAKE pass=1 fail=0') # noop")])
+    cases.append(("non_equivalent_still_survives", (not met) and "survivors=1" in tail, tail))
     ok = sum(1 for _, good, _ in cases if good)
     for label, good, line in cases:
         print("%s %s %s" % ("PASS" if good else "FAIL", label, line))
