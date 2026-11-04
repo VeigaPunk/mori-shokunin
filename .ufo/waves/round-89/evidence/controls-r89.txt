@@ -1,0 +1,71 @@
+== controls-r89: lane=/home/vgpnk/Projects/shokunin/mori-shokunin entering=30a29797012281b9fd0c748b38b929ac67f8c754 scratch=/fast/scratch/hyaku/mori-r89/controls
+
+== 1. do-nothing control: the entering revision, no work landed
+REAL rc=0 C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6 defeated=1 superseded=2 legacy=1 unexpected=0 rev=30a297970122
+FX equiv refused problems=cmd-binding
+FX comment refused problems=-
+FX selfprint refused problems=-
+C1=unmet equiv=refused comment=accepted selfprint=accepted real=met arms=23 subject=arms:(23, 0) rev=30a297970122
+C2_COUNTER_SELFTEST pass=23 fail=0
+rc=1
+MUTANT count-c1.py C1-arms-first survived rc=0 arm=arms_last_tally
+MUTANT count-c1.py C1-green-drop-fail survived rc=0 arm=green_mixed_fail
+MUTANT count-c2.py C2-fixture-clean survived rc=0 arm=clean_wrong_split
+MUTANT count-c2.py C2-receipt-name survived rc=0 arm=receipt_name_bound
+MUTANT count-c2.py C2-verdict-first survived rc=0 arm=verdict_last_wins
+MUTANT count-c2.py C2-no-supersedes survived rc=0 arm=absent_without_supersedes
+MUTANT count-c2.py C2-vacuous-body survived rc=0 arm=vacuous_body_fabricated
+EXTRA pristine-arms .ufo/waves/round-88/count-c1.py arms=25 want=28
+EXTRA survivor .ufo/waves/round-88/count-c1.py C1-arms-first
+EXTRA survivor .ufo/waves/round-88/count-c1.py C1-green-drop-fail
+EXTRA unanchored .ufo/waves/round-88/count-c1.py C1-own-ok occurrences=0
+EXTRA pristine-arms .ufo/waves/round-88/count-c2.py arms=17 want=26
+EXTRA unanchored .ufo/waves/round-88/count-c2.py C2-target occurrences=0
+EXTRA unanchored .ufo/waves/round-88/count-c2.py C2-printed-target occurrences=0
+EXTRA survivor .ufo/waves/round-88/count-c2.py C2-fixture-clean
+EXTRA survivor .ufo/waves/round-88/count-c2.py C2-receipt-name
+EXTRA unanchored .ufo/waves/round-88/count-c2.py C2-clone-top occurrences=0
+EXTRA unanchored .ufo/waves/round-88/count-c2.py C2-own-ok occurrences=0
+EXTRA survivor .ufo/waves/round-88/count-c2.py C2-verdict-first
+EXTRA survivor .ufo/waves/round-88/count-c2.py C2-no-supersedes
+EXTRA survivor .ufo/waves/round-88/count-c2.py C2-vacuous-body
+C2=unmet mutants=7 killed=0 survivors=7 unattributed=0 unanchored=5 arms=25,17 detector=green rev=30a297970122
+rc=1
+
+== 2a. skip-work control C1: the gate gains the three arm labels but not the rule
+REAL rc=0 C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6 defeated=1 superseded=2 legacy=1 unexpected=0 rev=817595354de4
+FX equiv refused problems=cmd-binding
+FX comment refused problems=-
+FX selfprint refused problems=-
+C1=unmet equiv=refused comment=accepted selfprint=accepted real=met arms=26 detector=green rev=817595354de4
+rc=1
+
+== 2b. skip-work control C2: the r88 counters gain twelve arm labels, no assertion
+MUTANT count-c1.py C1-arms-first unattributed rc=1 arm=arms_last_tally
+MUTANT count-c1.py C1-green-drop-fail unattributed rc=1 arm=green_mixed_fail
+MUTANT count-c2.py C2-fixture-clean survived rc=0 arm=clean_wrong_split
+MUTANT count-c2.py C2-receipt-name survived rc=0 arm=receipt_name_bound
+MUTANT count-c2.py C2-verdict-first survived rc=0 arm=verdict_last_wins
+MUTANT count-c2.py C2-no-supersedes survived rc=0 arm=absent_without_supersedes
+MUTANT count-c2.py C2-vacuous-body survived rc=0 arm=vacuous_body_fabricated
+EXTRA pristine-red .ufo/waves/round-88/count-c1.py rc=1 arms=26
+EXTRA unattributed .ufo/waves/round-88/count-c1.py C1-arms-first arm=arms_last_tally
+EXTRA unattributed .ufo/waves/round-88/count-c1.py C1-green-drop-fail arm=green_mixed_fail
+EXTRA unanchored .ufo/waves/round-88/count-c1.py C1-own-ok occurrences=0
+EXTRA unanchored .ufo/waves/round-88/count-c2.py C2-target occurrences=0
+EXTRA unanchored .ufo/waves/round-88/count-c2.py C2-printed-target occurrences=0
+EXTRA survivor .ufo/waves/round-88/count-c2.py C2-fixture-clean
+EXTRA survivor .ufo/waves/round-88/count-c2.py C2-receipt-name
+EXTRA unanchored .ufo/waves/round-88/count-c2.py C2-clone-top occurrences=0
+EXTRA unanchored .ufo/waves/round-88/count-c2.py C2-own-ok occurrences=0
+EXTRA survivor .ufo/waves/round-88/count-c2.py C2-verdict-first
+EXTRA survivor .ufo/waves/round-88/count-c2.py C2-no-supersedes
+EXTRA survivor .ufo/waves/round-88/count-c2.py C2-vacuous-body
+C2=unmet mutants=7 killed=0 survivors=5 unattributed=2 unanchored=5 arms=26,26 detector=green rev=b4984fb6d4dd
+rc=1
+
+== 3. checksum-canary negative control (the counters' own selftest arms)
+PASS canary_unattributed mutants=1 killed=0 survivors=0 unattributed=1 unanchored=0 arms=1
+PASS arm_boundary arm()
+C2_COUNTER_SELFTEST pass=17 fail=0
+C1_COUNTER_SELFTEST pass=15 fail=0
