@@ -4461,17 +4461,28 @@ live-observation run (count-c3 observes the census three times), and that reason
 
 ## Planned (round 88)
 
-1. **operability** — the round-87 C1 counter's own unarmed clauses and the r86 counters' remaining
-   survivors: the probe measured `c1-ownpass`, `c1-tailarms`, `c1-armsokmain`, `c1-splitmain`,
-   `c2-replaymismatch`, `c2-replayrc`, `c2-limits3`, `c2-ancestor`, `c2-revexists` and
-   `c2-unexpected` still surviving at the entering bytes, and the round-87 mutation-tester seat
-   reports the r87 counters' own survivors. Start with `main()` acceptance gates: the counters'
-   `main()` is still unexecuted by their selftests.
-2. **calibration** — `after-r85.txt` stays `legacy`: split its command into the deterministic half
-   (the `count-c1` run at a revision) and the live half (the `count-c3` census observation), give
-   the deterministic half a `# replay: clone` successor, and grade the live half as
-   `# replay: none` with its reason as a field, so `legacy=1` becomes `live=1` with a graded reason
-   instead of an ungraded limit.
+1. **operability** — the round-87 counters' own unarmed clauses. The wave's mutation-tester
+   (`w1/Mo87M01Mut.md`, 52 mutants) measured the survivors to arm: in `count-c1.py`
+   `c1-met-no-guard`, `c1-met-drop-unanchored`, `c1-met-drop-empty`, `c1-arms-first`, `c1-killed-n`,
+   `c1-survivors-match`, `c1-arms-total`, `c1-anchor-guard`, `c1-split-field`, `c1-own-ok`,
+   `c1-mutant-spec-c2`, `c1-drop-arm`; in `count-c2.py` `c2-supersede-call-clean`,
+   `c2-supersede-counts-swap`, `c2-supersede-absent-target`, `c2-replay-compare-off`,
+   `c2-replay-compare-rstrip`, `c2-absent-accounting`, `c2-absent-ok`, `c2-defeated-accounting`.
+   Start with `c2-replay-compare-off` (the replay comparison itself) and the three `met`
+   conjuncts; the r86 counters' remaining survivors (`c1-ownpass`, `c1-tailarms`, `c1-armsokmain`,
+   `c1-splitmain`, `c2-replayrc`, `c2-limits3`, `c2-ancestor`, `c2-revexists`, `c2-unexpected`)
+   follow.
+2. **calibration** — the round-87 C2 counter's three named counterfeit paths, in severity order:
+   (a) a stripped `# replay:` header is neither flagged nor replayed, so the target line is reachable
+   with zero replays (`w1/Mo87E02C2Supersede.md` fixture `85e8bd76`) — restore r86's
+   `missing-replay` problem and arm the stripped-header population; (b) a vacuous `# cmd:`
+   (`printf '<body>'`) with a genuine digest binding retires a legacy receipt
+   (`w1/Mo87R02ReviewC2.md` F2, fixture `47217847`) — require every `# counter-sha256:` path to
+   appear as a `# cmd:` token, plus an arm; (c) `supersede_absent_target` cannot distinguish
+   "successor unclean" from "target absent", and the `SUPERSEDE … absent=1` branch has no arm.
+   Then discharge F3 (the two r86 `required` receipts replay against the host lane path, not the
+   checkout) and, only then, `after-r85.txt`'s split into a deterministic half with a `clone`
+   successor and a `# replay: none` live half with its reason as a graded field.
 3. **depth** — freeze a dated snapshot of the full census report so the r86 value channel's
    `differs`/`masked`/`absent` split (not just `contradicting`) is re-derivable from committed
    bytes; carried from round 86's planned item 3, still open.
