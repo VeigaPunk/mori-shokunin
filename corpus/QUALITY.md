@@ -2118,3 +2118,27 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
       r86 receipts and reproduces them at their own revisions).
       Not covered: a shallow or filtered clone, a command whose output depends on the environment
       outside the exported tree, and side effects outside stdout.
+
+## Criteria added round 88 — a declared field is verified against the record, and a digest does not bind a body
+
+183. A field the population declares (`required`, `clone`) is verified against the record's own header;
+      an absent header is refused by name (`missing-replay`), never normalized into a permitted state.
+      Ground: `.ufo/waves/round-87/count-c2.py` `declared_replay_problem` (added round 88) and its
+      call site in `grade_population`; the round-87 grammar dropped the `missing-replay` problem, so a
+      `clone` row with its `# replay:` line deleted was neither flagged nor replayed. Shown able to
+      fail: `evidence/controls-r88.txt` §C2 — the entering gate prints the exact r87 target tail for
+      both counterfeits (`refused=0`), the fixed gate reads `refused=2` and
+      `problems=missing-replay` (`evidence/after-r88.txt`, `C2=met ... refused=2`); a `--shared` clone
+      of the receipt at the graded revision reproduces the after body byte-identically.
+      Not covered: a receipt whose declared mode is wrong in the other direction (a `required` body
+      that happens to replay), and a command whose output is a true statement about the wrong subject.
+
+184. A `# counter-sha256:` binding pins bytes, not provenance: on a row the population declares replayable every bound path must
+      appear in the `# cmd:` it claims to be produced by, else `cmd-binding`. Ground: the round-87
+      reviewer's F2 (`w1/Mo87R02ReviewC2.md`, fixture `47217847`) — a vacuous `printf '<body>'` command
+      with a genuine digest reproduced any body. Shown able to fail: `evidence/after-r88.txt` fixture
+      `vacuous` reads `problems=cmd-binding` while the same fixture under the entering gate reads the
+      target tail; the rule is scoped to replayed rows, so the legacy receipts (whose `# limits:` records
+      a worktree run) are not falsely refused (`C2=met ... matched=6 ... unexpected=0`).
+      Not covered: a command that faithfully reproduces a body about the wrong subject; argv reached
+      through a shell wrapper.

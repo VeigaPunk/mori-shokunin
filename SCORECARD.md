@@ -4459,30 +4459,61 @@ live-observation run (count-c3 observes the census three times), and that reason
 | Multi-subject population-control counter (`.ufo/waves/round-87/count-c1.py`) | re-derives a six-mutant population spread over three subject counters at ANY revision from that revision's bytes, requires each pristine copy green at its own frozen arm count (18/13/23) and the printed total `arms=54`, runs each mutated copy's own `--selftest` in scratch, and gates its own detector selftest in the same invocation; 18 detector arms; stdout only, writes only under `--scratch` | `python3 -I .ufo/waves/round-87/count-c1.py --selftest` -> `C1_COUNTER_SELFTEST pass=18 fail=0`; at `03b66a43` it prints `C1=met mutants=6 killed=6 survivors=0 total=6 arms=54`, rc 0 | 87 |
 | Clone-replay receipt gate with supersede (`.ufo/waves/round-87/count-c2.py`) | grades a seven-receipt population; replays `# replay: required` receipts in a sparse export and `# replay: clone` receipts in a `--shared` clone checked out at the receipt's own `# rev:`; counts a legacy receipt `superseded` only when a present, problem-free successor names it in `# supersedes:`; names absent and dangling links; 17 selftest arms | `python3 -I .ufo/waves/round-87/count-c2.py --selftest` -> `C2_COUNTER_SELFTEST pass=17 fail=0`; at `98f48dba` it prints the frozen target line, `superseded=2 legacy=1`, rc 0 | 87 |
 
-## Planned (round 88)
+## Round 88 (2026-11-04, L1 MoriR88, attempt 1) — six surviving r87-counter clauses armed, and the receipt gate's two counterfeit bodies refused
 
-1. **operability** — the round-87 counters' own unarmed clauses. The wave's mutation-tester
-   (`w1/Mo87M01Mut.md`, 52 mutants) measured the survivors to arm: in `count-c1.py`
-   `c1-met-no-guard`, `c1-met-drop-unanchored`, `c1-met-drop-empty`, `c1-arms-first`, `c1-killed-n`,
-   `c1-survivors-match`, `c1-arms-total`, `c1-anchor-guard`, `c1-split-field`, `c1-own-ok`,
-   `c1-mutant-spec-c2`, `c1-drop-arm`; in `count-c2.py` `c2-supersede-call-clean`,
-   `c2-supersede-counts-swap`, `c2-supersede-absent-target`, `c2-replay-compare-off`,
-   `c2-replay-compare-rstrip`, `c2-absent-accounting`, `c2-absent-ok`, `c2-defeated-accounting`.
-   Start with `c2-replay-compare-off` (the replay comparison itself) and the three `met`
-   conjuncts; the r86 counters' remaining survivors (`c1-ownpass`, `c1-tailarms`, `c1-armsokmain`,
-   `c1-splitmain`, `c2-replayrc`, `c2-limits3`, `c2-ancestor`, `c2-revexists`, `c2-unexpected`)
-   follow.
-2. **calibration** — the round-87 C2 counter's three named counterfeit paths, in severity order:
-   (a) a stripped `# replay:` header is neither flagged nor replayed, so the target line is reachable
-   with zero replays (`w1/Mo87E02C2Supersede.md` fixture `85e8bd76`) — restore r86's
-   `missing-replay` problem and arm the stripped-header population; (b) a vacuous `# cmd:`
-   (`printf '<body>'`) with a genuine digest binding retires a legacy receipt
-   (`w1/Mo87R02ReviewC2.md` F2, fixture `47217847`) — require every `# counter-sha256:` path to
-   appear as a `# cmd:` token, plus an arm; (c) `supersede_absent_target` cannot distinguish
-   "successor unclean" from "target absent", and the `SUPERSEDE … absent=1` branch has no arm.
-   Then discharge F3 (the two r86 `required` receipts replay against the host lane path, not the
-   checkout) and, only then, `after-r85.txt`'s split into a deterministic half with a `clone`
-   successor and a `# replay: none` live half with its reason as a graded field.
-3. **depth** — freeze a dated snapshot of the full census report so the r86 value channel's
-   `differs`/`masked`/`absent` split (not just `contradicting`) is re-derivable from committed
-   bytes; carried from round 86's planned item 3, still open.
+Entering revision `1bd5ec3fa260458f74eb32a2e5bb157209c5934d`; frozen contract
+`.ufo/waves/round-88/contract.md` (freeze `2a5e3ad96deb978ed1fb958e87b4be8221fb23b7`, before any
+after-value), do-nothing and label-only controls `.ufo/waves/round-88/evidence/controls-r88.txt`.
+Axes: operability (C1, score 7) and calibration (C2, score 5, tied lowest: depth 5, freshness 5,
+calibration 5). No score moves. The after cells were measured at
+`d5e2eda494877a85edaa4e287d6ad81843d9a8a1` by the round's frozen counters (receipt
+`.ufo/waves/round-88/evidence/after-r88.txt`, receipt commit `9c775ac2`; the counters are the
+worktree bytes at that revision and the receipt replays byte-identically in a `--shared` clone).
+The landing commits are `4d0f7bf0` (both subjects; C1 read `killed=4 survivors=2` there — the
+wrong-reason fixture defect below) and `d5e2eda4` (the fixture tally lines).
+
+| Claim | Axis | Counting command | At entering `1bd5ec3f` | After (measured at `d5e2eda4`) |
+|---|---|---|---|---|
+| C1 six surviving r87-count-c1 clauses get the failing arm each; selftest 18 → 24 arms | operability | `python3 -I .ufo/waves/round-88/count-c1.py <rev>` | `C1=unmet mutants=6 killed=0 survivors=6 total=6 arms=18` rc 1; the label-only fixture reads `arms=24 survivors=6` rc 1 | `C1=met mutants=6 killed=6 survivors=0 total=6 arms=24` rc 0 |
+| C2 the r87 receipt gate refuses two counterfeit bodies and keeps the real population met at 23 arms | calibration | `python3 -I .ufo/waves/round-88/count-c2.py <rev>` | `C2=unmet real=met fx=4 clean=1 refused=0 absent=1 arms=17` rc 1 (both counterfeits print the exact r87 target tail) | `C2=met real=met fx=4 clean=1 refused=2 absent=1 arms=23` rc 0 |
+
+The six C1 mutants are `M1-met-no-guard`, `M2-met-drop-empty`, `M3-killed-n`, `M4-arms-total`,
+`M5-split-field`, `M6-anchor-guard`; each dies under the arm the contract names for it
+(`met_guard_unanchored`, `met_guard_empty`, `killed_tally_mixed`, `arms_tally_passed`,
+`target_split_killed_not_mutants`, `doubled_anchor_counted_type`). The C2 fix adds
+`declared_replay_problem` (a `required`/`clone` row with no `# replay:` line is `missing-replay`),
+`binding_problems` (every bound path must be a `# cmd:` token on a replayed row, else
+`cmd-binding`) and `absent_supersede_targets` (the `SUPERSEDE … absent=1` branch as a helper with
+an arm). The real population is unchanged: `matched=6 defeated=1 superseded=2 legacy=1
+unexpected=0`.
+
+**Measured catch, recorded as a mistake:** the first landing (`4d0f7bf0`) read
+`C1=unmet ... killed=4 survivors=2`. The two surviving mutants (`M1`, `M2`) were the ones whose
+witness arms were satisfied for the wrong reason: the `dup.py`/`empty.py` fixtures printed no
+`COUNTER_SELFTEST` line, so the arm's `met is False` came from `pristine-ok` (an unparseable
+subject tally), not from the guard it names. `M1`'s anchor was also non-unique (it also occurred in
+the counter's own `MUTANTS` table). Both defects are mined in `corpus/lessons/round-88.md`
+`## Mistakes`; the fix is `d5e2eda4` and the after line above is its measurement. This is the C1
+kill rule doing its job on the round's own instrument, not a target change.
+
+### Capabilities (round 88)
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Single-subject population-control counter (`.ufo/waves/round-88/count-c1.py`) | re-derives a six-mutant population over one counter at ANY revision from that revision's bytes, requires the pristine copy green at exactly 24 arms, runs each mutated copy's own `--selftest` under the frozen kill rule, gates its own 25-arm selftest in the same invocation with the arm count pinned (`EXPECTED_ARMS`), and prints `C1=met ... arms=24`; stdout only, writes only under `--scratch` | `python3 -I .ufo/waves/round-88/count-c1.py --selftest` -> `C1_COUNTER_SELFTEST pass=25 fail=0`; at `d5e2eda4` it prints the frozen target line, rc 0 | 88 |
+| Counterfeit-receipt counter (`.ufo/waves/round-88/count-c2.py`) | builds four fixtures as commits inside `--shared` clones (clean, stripped-header, vacuous-cmd, absent-target), replays the graded r87 gate at each fixture revision, requires the two counterfeit classes refused by name and the clean/real populations still met, and gates its own 17-arm selftest; prints `C2=met real=met fx=4 clean=1 refused=2 absent=1 arms=23`; writes only under `--scratch` | `python3 -I .ufo/waves/round-88/count-c2.py --selftest` -> `C2_COUNTER_SELFTEST pass=17 fail=0`; at `d5e2eda4` it prints the frozen target line, rc 0 | 88 |
+
+## Planned (round 89)
+
+1. **operability** — the round-88 counters' own survivors. The wave's mutation-tester
+   (`w1/Mo88M01Mut.md`) measures them; start with the target constants and the `fixture_verdict`
+   parser in `count-c2.py`, then `EXPECTED_ARMS`/`own_ok` and the printed split in `count-c1.py`.
+2. **calibration** — the r87 gate's remaining unarmed clauses (from `w1/Mo87M01Mut.md` ranks 4, 5,
+   7, 8, 9, 10, 11: `c2-replay-compare-off`, `c2-replay-compare-rstrip`,
+   `c2-supersede-call-clean`, `c2-supersede-counts-swap`, `c2-absent-accounting`, `c2-absent-ok`,
+   `c2-defeated-accounting`), and F3 hermeticity: the two r86 `required` receipts replay against
+   the host lane path, so `replay=4` is host-local — move them to clone mode or record the limit in
+   the graded row.
+3. **depth** — the dated full-census snapshot for the r86 value channel's
+   `differs`/`masked`/`absent` split, carried from rounds 86 and 88 (declared out of scope at
+   `.ufo/waves/round-88/contract.md` before data, not dropped).

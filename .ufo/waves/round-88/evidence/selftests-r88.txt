@@ -1,0 +1,28 @@
+# selftests-r88.txt — verbatim selftest tallies for the four counters this round reads (added after the freeze as separate evidence; controls-r88.txt stays byte-frozen)
+# lane: mori · round: 88 · date: 2026-11-04 · L1: MoriR88
+
+$ python3 -I .ufo/waves/round-87/count-c1.py --selftest --scratch /fast/scratch/hyaku/mori-r88/selftests
+PASS marker_literal label
+C1_COUNTER_SELFTEST pass=24 fail=0
+rc=0
+
+$ python3 -I .ufo/waves/round-87/count-c2.py --selftest --scratch /fast/scratch/hyaku/mori-r88/selftests
+PASS marker_literal label
+C2_COUNTER_SELFTEST pass=23 fail=0
+rc=0
+
+$ python3 -I .ufo/waves/round-88/count-c1.py --selftest --scratch /fast/scratch/hyaku/mori-r88/selftests
+PASS own_arms_pinned 25/25
+C1_COUNTER_SELFTEST pass=25 fail=0
+rc=0
+
+$ python3 -I .ufo/waves/round-88/count-c2.py --selftest --scratch /fast/scratch/hyaku/mori-r88/selftests
+PASS marker_literal label
+C2_COUNTER_SELFTEST pass=17 fail=0
+rc=0
+
+# bytes at d5e2eda4:
+85bc0f29865e3c9a9de49940dcf12eef20977aa77899b6ba3290fcb243c7cc2c  .ufo/waves/round-87/count-c1.py
+7e577f533e1dac676d3f5b3d601f2c4c622c57c325e6091e6018b5781ae73fc0  .ufo/waves/round-87/count-c2.py
+3ba0f97baaae389e602fa3ac929d6b007cdd1f65062db15f34ef7f184f3a32e2  .ufo/waves/round-88/count-c1.py
+8904a3d0b5d973b58836e827a70f28cf65e1089e3eec8446cc369665664beda7  .ufo/waves/round-88/count-c2.py

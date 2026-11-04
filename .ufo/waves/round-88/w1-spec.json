@@ -1,0 +1,129 @@
+{
+ "wave": "mori-r88-w1",
+ "milestone": "Round 88 w1: six surviving r87-counter clauses armed and the receipt gate's two counterfeit bodies refused; freeze 2a5e3ad96deb.",
+ "axes": [
+  "coverage",
+  "operability",
+  "depth",
+  "freshness",
+  "calibration",
+  "adjacency"
+ ],
+ "reportDir": ".ufo/waves/round-88/w1",
+ "maxLanes": 12,
+ "context": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim \u2014 let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Goal\nmori round 88 (attempt 1), wave w1 \u2014 independently verify, attack and record TWO frozen claims.\nmori is a fleet/host observability lane: detection and report only. Never remediate.\n\nFrozen at `2a5e3ad96deb978ed1fb958e87b4be8221fb23b7`: `.ufo/waves/round-88/contract.md` (predicates P-C1/P-C2, populations, kill\nrules), `.ufo/waves/round-88/count-c1.py`, `.ufo/waves/round-88/count-c2.py`, and\n`.ufo/waves/round-88/evidence/controls-r88.txt` (do-nothing and label-only controls).\nThe work under test landed at `4d0f7bf0b0a0d978fa65d9b93edc37a2e6556550` (six arms in `.ufo/waves/round-87/count-c1.py`, and the\nreceipt-gate fix in `.ufo/waves/round-87/count-c2.py`) and `d5e2eda494877a85edaa4e287d6ad81843d9a8a1` (fixture tally lines). The after\nreceipt is `.ufo/waves/round-88/evidence/after-r88.txt`, landed at `9c775ac2131da13c4c4cfdf2b14077184076f557`.\n\nMeasured after, by the frozen counters at `d5e2eda494877a85edaa4e287d6ad81843d9a8a1`:\n  `C1=met mutants=6 killed=6 survivors=0 total=6 arms=24`\n  `C2=met real=met fx=4 clean=1 refused=2 absent=1 arms=23`\nThe entering bytes read `C1=unmet ... survivors=6 total=6 arms=18` and\n`C2=unmet real=met fx=4 clean=1 refused=0 absent=1 arms=17` (both in `controls-r88.txt`).\n\n## C1 (operability) \u2014 six surviving r87-counter clauses get the failing arm each\nSix mutants over `.ufo/waves/round-87/count-c1.py` (M1-met-no-guard, M2-met-drop-empty,\nM3-killed-n, M4-arms-total, M5-split-field, M6-anchor-guard). Six new arms must make each mutated\ncopy's own `--selftest` fail, with the pristine copy green at exactly 24 arms.\n\n## C2 (calibration) \u2014 the receipt gate refuses two counterfeit bodies\n`.ufo/waves/round-87/count-c2.py` must refuse a `clone` receipt whose `# replay:` line was stripped\n(`missing-replay`), a receipt whose `# cmd:` prints its own body (`cmd-binding`), and a\n`# supersedes:` naming an absent receipt (`SUPERSEDE ... absent=1`), while the real seven-receipt\npopulation still prints the r87 target line. Its selftest grows 17 -> 23 arms.\n\n# Rules for every seat\n- You are a leaf: no subagent dispatch, no background jobs, no swarm of your own.\n- Lane repo: /home/vgpnk/Projects/shokunin/mori-shokunin. Your tools start at the FLEET root\n  (/home/vgpnk/Projects/shokunin), so use absolute paths in every read, write and command.\n  Write only the paths your item names.\n- Read-only over the lane: no `git add`, `commit`, `checkout`, `reset`, `stash`, `push`, and no\n  mutating `jj` command in the LANE repo. Read-only git (`show`, `diff`, `log`, `status`,\n  `ls-tree`, `cat-file`, `rev-parse`, `clone --shared`) is fine. The L1 owns every lane commit.\n- Scratch: your work dir is /fast/scratch/hyaku/mori-r88/<your seat name>/ \u2014 create it, pass it\n  explicitly (`--scratch`, `TMPDIR=...`), and delete it before you yield\n  (`trap 'rm -rf -- \"$S\"' EXIT` in shell). Never write under /tmp; a /tmp path is never citable\n  evidence. Use `git clone --shared` rather than full clones; never mirror the whole lane.\n- Fixture git repos: `D=$(mktemp -d -p your scratch)` then `git -C \"$D\" init -q`; assert\n  `git -C \"$D\" rev-parse --show-toplevel` equals `$D` before the first commit; later commits use\n  `git -C \"$D\" -c user.name=t -c user.email=t@t commit`. Never commit with a throwaway identity\n  anywhere else.\n- Every `Report:` trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin \u2014\n  write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>.\n- Never write to /home/vgpnk/Projects/shokunin (fleet root), another lane's repo, MANIFEST.json,\n  `.ufo/state/`, `.ufo/watchdog.log`, `.scratch/`, /home/vgpnk/Projects/shokuknow, or\n  `considerthese/`.\n- Detection and report only: no lane, OS, unit, service, credential, harness or orchestration state\n  may be changed. Do not run `agent://all`; message only the L1 (agent id `MoriR88`) for a blocker.\n- Tooling authorization (operator, 2026-10-19): you may install or upgrade tools that help the\n  task; read /home/vgpnk/.omp/agent/RULES.md first (official channels, update-safety gate) and\n  record tool/version/channel/reason in your report. **pacman guard (orchestrator ruling\n  2026-10-20): all pacman transactions are PAUSED host-wide** \u2014 install via `uv tool`/`npx`/an\n  official binary in `~/.local/bin`, or file nothing; never `-Sy`, `-Syu`, `-U`, `-R`, never a\n  partial upgrade.\n- Honesty: an unrun check has not passed. Report failures, dead ends and surviving defects plainly;\n  never restate a sibling's claim as your own measurement. Record the file hashes and revision you\n  actually read, since siblings and the L1 land work while you run. End your report with the\n  verdict you measured and the exact commands that produced it.\n",
+ "items": [
+  {
+   "name": "Mo88E01C1Arms",
+   "role": "executor",
+   "axes": [
+    "operability"
+   ],
+   "milestone": "C1: re-measure each of the six mutants against the landed arms",
+   "prompt": "\nIndependently re-measure the six C1 mutants against the landed arms, without using the frozen r88\ncounter's own harness.\n\nAuthority: `.ufo/waves/round-88/contract.md` P-C1 and its population table; the anchors are in\n`.ufo/waves/round-88/count-c1.py` `MUTANTS`.\n\nDo (read-only over the lane; fixtures in your scratch):\n1. Load `git -C /home/vgpnk/Projects/shokunin/mori-shokunin show d5e2eda494877a85edaa4e287d6ad81843d9a8a1:.ufo/waves/round-87/count-c1.py`. Assert the file's own\n   `--selftest` prints `C1_COUNTER_SELFTEST pass=24 fail=0` and exits 0.\n2. For each of the six (label, anchor, replacement): assert the anchor occurs exactly once in the\n   pristine bytes; write the mutated copy under your scratch; run\n   `python3 -I <copy> --selftest` with `TMPDIR` in scratch; record rc and every `FAIL <label>` line.\n   A kill is rc != 0 or a `fail=<n>` with n > 0.\n3. For each mutant, name which `FAIL` arm fires and confirm it is the arm the contract names for it\n   (`met_guard_unanchored`, `met_guard_empty`, `killed_tally_mixed`, `arms_tally_passed`,\n   `target_split_killed_not_mutants`, `doubled_anchor_counted_type`). If a mutant is killed by a\n   different arm than the contract names, say so \u2014 that is a finding against the arm table.\n4. Check the counter's own selftest cannot be satisfied by labels alone: build a copy of the\n   **entering** `1bd5ec3f` r87 counter (18 arms, `git show 1bd5ec3f:.ufo/waves/round-87/count-c1.py`)\n   plus six no-op `cases.append((label, True, ...))` rows and run the frozen r88 counter against it\n   with `--repo`; it must read `C1=unmet`.\n\nReport: a per-mutant table (anchor count, rc, FAIL arms, killer arm), the pristine tally, the\nlabel-only control line, the bytes sha256 you read, and an explicit `C1 agrees / C1 disagrees`.\n"
+  },
+  {
+   "name": "Mo88E02C2Gate",
+   "role": "executor",
+   "axes": [
+    "calibration"
+   ],
+   "milestone": "C2: hand-build the three counterfeits and replay the graded gate",
+   "prompt": "\nIndependently re-measure the C2 refusal without using `.ufo/waves/round-88/count-c2.py`'s own\n`mutate_receipt` helper: build the counterfeits by hand with shell/Python text edits.\n\nAuthority: `.ufo/waves/round-88/contract.md` P-C2 and its fixture table.\n\nDo:\n1. `git clone --shared /home/vgpnk/Projects/shokunin/mori-shokunin <scratch>/fx` and `git -C <scratch>/fx checkout d5e2eda494877a85edaa4e287d6ad81843d9a8a1`. Verify the\n   clone's toplevel. Never commit to the lane.\n2. Export the graded gate: `git -C <scratch>/fx show d5e2eda494877a85edaa4e287d6ad81843d9a8a1:.ufo/waves/round-87/count-c2.py >\n   <scratch>/gate.py`. Assert its `--selftest` prints `C2_COUNTER_SELFTEST pass=23 fail=0`.\n3. Real population: `python3 -I <scratch>/gate.py d5e2eda494877a85edaa4e287d6ad81843d9a8a1 --repo /home/vgpnk/Projects/shokunin/mori-shokunin` must print the r87 target\n   tail `receipts=7 absent=0 bindings=9 bound=9 ... unexpected=0` with `C2=met`.\n4. In the clone, by hand:\n   a. `stripped`: delete the `# replay: clone` line from\n      `.ufo/waves/round-87/evidence/record-sweep-r87.txt` and replace its body with\n      `RECORD_SWEEP fabricated=1`; commit (`-c user.name=t -c user.email=t@t`). Run the graded gate\n      with `--repo <clone>` at the fixture rev: it must print `C2=unmet` and\n      `RECEIPT record-sweep-r87.txt ... problems=missing-replay`.\n   b. `vacuous`: from a clean checkout, set that receipt's `# cmd:` to\n      `printf 'RECORD_SWEEP fabricated=1\\n'` and its body to `RECORD_SWEEP fabricated=1`; keep\n      `# replay: clone` and the binding; commit; the gate must print `problems=cmd-binding`.\n   c. `absent-target`: set `.ufo/waves/round-87/evidence/claim-sweep-r87.txt`'s `# supersedes:` to\n      `gone-r88.txt`; commit; the gate must print a `SUPERSEDE ... absent=1` line and `C2=unmet`.\n   d. `clean`: run the gate on the unmutated clone revision \u2014 it must print `C2=met` (a control\n      that the harness itself does not cause refusals).\n5. Also run the three counterfeits through the **entering** gate\n   (`git show 1bd5ec3f:.ufo/waves/round-87/count-c2.py`) and record that it accepts a and b.\n\nReport: the gate runs' verdict lines verbatim, the three mutated receipts' headers and bodies,\nsha256 of the graded gate bytes, the clone toplevel check, and `C2 agrees / C2 disagrees`. Delete\nthe clone before yielding.\n"
+  },
+  {
+   "name": "Mo88E03SecondImpl",
+   "role": "executor",
+   "axes": [
+    "calibration",
+    "operability"
+   ],
+   "milestone": "second independent implementation of both verdicts",
+   "prompt": "\nWrite a second, independent implementation (scratch-only, never committed to the lane) that derives\nboth claims' verdicts from committed bytes with a different code path than the frozen counters, and\nreport agreement or disagreement.\n\nDo:\n1. `git -C /home/vgpnk/Projects/shokunin/mori-shokunin show d5e2eda494877a85edaa4e287d6ad81843d9a8a1:.ufo/waves/round-87/count-c1.py` into scratch; parse the `MUTANTS` table\n   with your own parser (do not import or exec the counter). Apply each anchor, run each mutated\n   copy's own `--selftest`, derive killed/survived from rc and any `FAIL` line, and print\n   `SECOND_C1=<n> killed / <n> survived`.\n2. Parse the seven population receipts at d5e2eda494877a85edaa4e287d6ad81843d9a8a1 with your own header parser and derive: how many\n   carry `# replay:`, how many `# counter-sha256:` paths are tokens of their own `# cmd:`, and\n   whether every `# supersedes:` target is inside the population. Print\n   `SECOND_C2 missing_replay=<n> cmd_unbound=<n> absent_targets=<n>`.\n3. Compare with the frozen counters' printed lines at d5e2eda494877a85edaa4e287d6ad81843d9a8a1 and print `AGREE`/`DISAGREE` per claim\n   with the differing field named.\n\nReport: your parser's source (paste the file, <=120 lines), its output, the frozen counters' output,\nand the agreement verdict. Any disagreement is a finding against the claim, not against your\nimplementation: say which one you checked twice.\n"
+  },
+  {
+   "name": "Mo88Sc01Scope",
+   "role": "scout",
+   "axes": [
+    "coverage",
+    "calibration"
+   ],
+   "milestone": "data walk: the new refusal rules' true row table",
+   "prompt": "\nRead-only reconnaissance for C2's rule scope. Answer with a table, not prose.\n\nRead at d5e2eda494877a85edaa4e287d6ad81843d9a8a1 (via `git -C /home/vgpnk/Projects/shokunin/mori-shokunin show d5e2eda494877a85edaa4e287d6ad81843d9a8a1:<path>`):\n1. For each of the seven receipts in `.ufo/waves/round-88/count-c2.py` `POPULATION`, list: declared\n   mode, whether a `# replay:` line is present and its value, every `# counter-sha256:` path,\n   whether each path is a whitespace token of `# cmd:`, and its `# supersedes:` target.\n2. Derive the row table the new `declared_replay_problem` and `binding_problems` rules evaluate:\n   which rows are replayed, which rows each rule applies to, and which rows could be falsely\n   refused by the token rule (quote styles, `--opt=path`, absolute paths, redirections).\n3. Report every receipt in the whole lane tree (`.ufo/waves/**/evidence/*.txt` with a `# ---`\n   separator) that is *not* in the population but would now be refused if it were added, naming the\n   rule and the line. This is the rule's blast radius, not a defect list.\n4. Name any place in `corpus/knowledge/receipt-counterfeit-r88.md` whose claims your table\n   contradicts.\n\nReport: the row table, the blast-radius list, the field `SCOPE_TABLE rows=<n> applied=<n>\nwould_refuse=<n>`, and the exact commands with the hashes you read.\n"
+  },
+  {
+   "name": "Mo88S01Lesson",
+   "role": "scribe",
+   "axes": [
+    "calibration"
+   ],
+   "milestone": "lesson draft: what the round did and the mined mistake",
+   "prompt": "\nDraft `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-88/w1/Mo88S01Lesson.md` (the L1\nintegrates it into `corpus/lessons/round-88.md`; do NOT write the corpus file).\n\nContent:\n1. **What the round did** \u2014 both claims with the frozen predicate sentences from\n   `.ufo/waves/round-88/contract.md`, the after lines from `evidence/after-r88.txt`, and the wave\n   shape (12 seats, roles, 4 attack seats).\n2. **Mistakes** \u2014 one row per mistake, with class / evidence pointer / captured-by / fix. Mine at\n   least these two, both real and both measured this round:\n   a. `fixture-satisfied-for-the-wrong-reason` \u2014 the first `met_guard_*` fixtures omitted the\n      `COUNTER_SELFTEST pass=1` line, so the arm's `met is False` came from `pristine-ok`, not the\n      guard; the six-mutant check caught it (`M1`/`M2` survived at `4d0f7bf0`). Fix: tally lines in\n      the fixtures; captured-by: the C1 kill rule. Show the before line\n      (`C1=unmet ... killed=4 survivors=2`) and the after line (`C1=met ... killed=6`).\n   b. `anchor-not-unique-in-its-own-file` \u2014 the M1 anchor also occurred in the counter's own\n      `MUTANTS` table (occurrences=2) and was refused as `unanchored`; fix: a leading-newline\n      anchor; captured-by: the exactly-once anchor guard.\n3. **Seat findings merged** \u2014 leave a placeholder section for the L1.\n\nDo not invent a Gate, SOURCES rows, or spot-check verdicts; the L1 writes those. Write the draft\nat the wave report path only, and say in it which sentences you took verbatim from the contract.\n"
+  },
+  {
+   "name": "Mo88S02Knowledge",
+   "role": "scribe",
+   "axes": [
+    "depth",
+    "coverage"
+   ],
+   "milestone": "review and tighten the r88 knowledge entry",
+   "prompt": "\nReview `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/knowledge/receipt-counterfeit-r88.md`\n(written by the L1 this round) and produce a critique plus a tightened replacement text in your\nreport at `.ufo/waves/round-88/w1/Mo88S02Knowledge.md` (do NOT write the corpus file).\n\nCheck, against committed bytes:\n1. Every factual claim about `.ufo/waves/round-87/count-c2.py` at d5e2eda494877a85edaa4e287d6ad81843d9a8a1 is true\n   (`declared_replay_problem`, `binding_problems`, `absent_supersede_targets`, their call sites).\n   Quote the function lines you checked.\n2. The S604 quote in the entry occurs in the stored copy\n   `.ufo/waves/round-88/evidence/sources-r88/tuf-spec-v1.0.37.html` \u2014 locate it and give its raw\n   line numbers and word count. It must be <=25 words and occur exactly once in the tag-stripped\n   text.\n3. The entry's `recheck:` command actually prints the met line (run it in scratch with `--scratch`;\n   it takes ~20 s).\n4. Name any sentence that overreaches the evidence, any missing limit, and any claim a sibling lane\n   owns (tameshi receipt gate, mado tripwire, kotodama seq checker) that mori must cite rather than\n   absorb.\n\nReport: a bullet list of defects with line numbers, the corrected paragraph text in a fenced block,\nand `ENTRY ok / ENTRY needs-changes`.\n"
+  },
+  {
+   "name": "Mo88R01ReviewC1",
+   "role": "reviewer",
+   "axes": [
+    "operability"
+   ],
+   "milestone": "C1 review: arm quality, wrong-reason arms, kill attribution",
+   "prompt": "\nSurgical review of the C1 landing. Environment: read-only over the lane; scratch fixtures only.\n\nDiff `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff 1bd5ec3f d5e2eda494877a85edaa4e287d6ad81843d9a8a1 -- .ufo/waves/round-87/count-c1.py` and review the six added\narms.\n\nAnswer, with evidence:\n1. For each new arm: does it fail when its declared mutant is applied, and pass on the pristine\n   copy? Re-run both directions yourself; report `arm / mutant / pristine` verdicts.\n2. Is any arm satisfied for the wrong reason (e.g. a fixture whose pristine run is already red, a\n   guard that another conjunct would force anyway, an assertion on a substring that the mutant\n   label itself supplies)? Name the conjunct that must be the *sole* reason.\n3. Does the r87 counter's own selftest still pass for its original 18 arms, and is the 24-arm count\n   genuinely 18 + 6 (not an arm swapped out)?\n4. Does the frozen r88 counter's kill rule refuse an unanchored/empty/label-only population? Run the\n   label-only control if `controls-r88.txt` names it; otherwise construct one.\n\nReport: table of the six arms with both verdicts, every wrong-reason finding with the exact line,\nand `C1 review: agree / disagree` against the after line `C1=met mutants=6 killed=6 survivors=0\ntotal=6 arms=24`.\n"
+  },
+  {
+   "name": "Mo88R02ReviewC2",
+   "role": "reviewer",
+   "axes": [
+    "calibration"
+   ],
+   "milestone": "C2 review: new refusal paths and unclaimed holes",
+   "prompt": "\nReview the C2 landing behaviourally. Environment: read-only over the lane; scratch clones only.\n\nDiff `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff 1bd5ec3f d5e2eda494877a85edaa4e287d6ad81843d9a8a1 -- .ufo/waves/round-87/count-c2.py`.\n\nAnswer, with evidence:\n1. Enumerate every new refusal path (`declared_replay_problem`, `binding_problems`,\n   `absent_supersede_targets`) and give its exact line range and call site.\n2. Re-run the three frozen counterfeits plus two **new** counterfeits of your own devising that the\n   frozen fixture table does not cover, for example: a `required` row carrying `# replay: none` +\n   `# no-replay: reason words`; a cmd that names the bound path only with a `--opt=tools/x.py` form.\n   Report whether the gate refuses each and whether the refusal is the right class, or whether it is\n   an unclaimed hole (then name it as a routed defect for round 89).\n3. Confirm the real population is unchanged (`C2=met receipts=7 ... unexpected=0`) and name every\n   row the new rules evaluate.\n4. State whether the two counterfeit paths the r87 closure routed (stripped header, vacuous cmd)\n   are actually closed, in the sense that the r87 target line is unreachable with those two rows\n   modified.\n\nReport: the path table, the two new counterfeits' verdicts, the no-regression line, and\n`C2 review: agree / disagree` against `C2=met real=met fx=4 clean=1 refused=2 absent=1 arms=23`.\n"
+  },
+  {
+   "name": "Mo88C01Critic",
+   "role": "critic",
+   "axes": [
+    "calibration",
+    "operability"
+   ],
+   "milestone": "falsify both claims against the contract's own words",
+   "prompt": "\nAdversarial review: try to make each claim's target line reachable without the work, or make the\nafter line false at d5e2eda494877a85edaa4e287d6ad81843d9a8a1. Read-only over the lane; scratch only.\n\nAttack list (do all; add your own):\n1. **C1 vacuity**: can `C1=met` be produced by a subject whose six arms assert nothing? Construct\n   the cheapest such subject you can that still prints `pass=24 fail=0` and whose mutants die for\n   another reason; run the frozen counter with `--repo`. If the counter refuses it, show the line.\n2. **C1 kill attribution**: can a mutant die because of an arm the contract does not name (e.g. an\n   older arm)? Check `M1`-`M6` FAIL lines individually.\n3. **C2 vacuity**: can the target line be reached with zero replays at d5e2eda494877a85edaa4e287d6ad81843d9a8a1? Try `# replay: none`\n   on a clone row, a `required` row with a stripped header, and a row whose `# cmd:` is `true`.\n4. **C2 no-harm**: does the new token rule ever refuse a *genuine* receipt? Test quoting\n   (`'tools/x.py'`, `\"tools/x.py\"`), `--opt=tools/x.py`, and a path appearing only after a `;`.\n5. **Contract drift**: compare P-C1/P-C2's sentences in `.ufo/waves/round-88/contract.md` with the\n   counters' docstrings and printed target strings. Any divergence is a finding.\n\nReport: one section per attack, each with `ATTACK <name> result=blocked|succeeded` and the exact\nlines; then `C1 falsifiable: yes/no`, `C2 falsifiable: yes/no`, and the strongest surviving attack.\n"
+  },
+  {
+   "name": "Mo88M01Mut",
+   "role": "mutation-tester",
+   "axes": [
+    "operability"
+   ],
+   "milestone": "mutate the r88 counters' own clauses; survivors for round 89",
+   "prompt": "\nBounded mutation matrix over the two round-88 counters' own selftests, to feed round 89.\n\nDo:\n1. Read `.ufo/waves/round-88/count-c1.py` and `.ufo/waves/round-88/count-c2.py` at d5e2eda494877a85edaa4e287d6ad81843d9a8a1.\n2. Baseline: each `--selftest` must be green (`pass=25 fail=0` and `pass=17 fail=0`).\n3. Mutate clauses in each counter \u2014 target constants (`TARGET`, `TARGET_ARMS`, `SUBJECT_ARMS`), the\n   kill rule (`killed`, `green`, `arms_of`), anchor accounting, the printed split, `own_ok`,\n   `EXPECTED_ARMS`, and in count-c2.py the fixture-verdict parser (`fixture_verdict`),\n   `receipt_line`, `absent_lines`, `mutate_receipt`'s three branches, and `clone_fixture`'s toplevel\n   check. Aim for ~30 mutants total; anchor each at an exact unique substring.\n4. For each: apply, run the mutated copy's own `--selftest`, record killed/survived plus the FAIL\n   arm(s). Do not run the mutated counter against the lane (selftest only, bounded).\n5. Rank the survivors by exposure to the printed target line.\n\nReport: the matrix table (file, mutant, anchor, verdict, FAIL arms), totals, and a ranked survivor\nlist with the witness you would add in round 89. No lane file may be modified; verify the counters'\nhashes are unchanged after your matrix.\n"
+  },
+  {
+   "name": "Mo88K01Conn",
+   "role": "connector",
+   "axes": [
+    "adjacency"
+   ],
+   "milestone": "sibling-overlap scan: receipt gates across the fleet",
+   "prompt": "\nCross-lane pattern scan. Read-only everywhere; write only your report under the lane.\n\nCompare mori's two new receipt rules with the sibling gates:\n- tameshi: `../tameshi-shokunin/tools/receipt-revision-gate.py` \u2014 its refusal-code set and what it\n  verifies (revision ancestry, content drift, revision exists).\n- mado: `../mado-shokunin/tools/mado-tripwire.py` \u2014 its pinned-verdict replay and the disclaimer it\n  states about the snapshot and the transcript.\n- kotodama: `../kotodama-shokunin/tools/check-receipt-seq.py` (or the path you locate) \u2014 its digest\n  and sequence discipline.\n\nAnswer:\n1. For each sibling: which mori rule is a subset, which sibling rule mori lacks, and which is\n   genuinely disjoint. Cite file:line for every claim.\n2. Name any sentence in mori's `corpus/knowledge/receipt-counterfeit-r88.md` that a sibling owns and\n   mori must cite rather than restate.\n3. Is the `binding_problems` token rule semantically the same as any sibling's check? If yes, name\n   the stronger one and say whether mori should adopt it or cite it.\n\nReport: a three-column table (sibling / relation / evidence lines), then `complements: <list>` and\n`absorption: none`. Do not edit any sibling repo or mori's corpus.\n"
+  },
+  {
+   "name": "Mo88Si01Simplify",
+   "role": "simplifier",
+   "axes": [
+    "operability"
+   ],
+   "milestone": "YAGNI pass over the r88 diff",
+   "prompt": "\nFind deletable weight in the round-88 launch, without changing any verified behaviour.\n\nDo:\n1. Read `git -C /home/vgpnk/Projects/shokunin/mori-shokunin diff 1bd5ec3f d5e2eda494877a85edaa4e287d6ad81843d9a8a1 -- .ufo/waves/round-87/count-c1.py\n   .ufo/waves/round-87/count-c2.py`.\n2. For each added arm, rule and helper, ask: does deleting it change any printed target field or any\n   mutant's verdict? Test by deletion in a scratch copy (apply the deletion, run the copy's\n   `--selftest`, then run the frozen r88 counter against a fixture repo carrying the deletion if the\n   arm count allows it). Report `delete <x> -> target unchanged|changed`.\n3. Name any duplicated logic between the r87 and r88 counters (the r88 counters are instruments, not\n   production; say whether the duplication is justified as freeze separation).\n4. Do not propose widening scope or refactoring for taste: only deletions that preserve the verified\n   target, with the test that shows it.\n\nReport: a delete/prove table, the list of items that must stay with the reason, and\n`SIMPLIFY candidates=<n> target-preserving=<n>`.\n"
+  }
+ ]
+}
