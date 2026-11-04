@@ -1,0 +1,14 @@
+# round-84 do-nothing controls — measured 2026-11-04T09:35:18Z at the entering revision 5adf4337 (branch master)
+# commands are the round's frozen counters, run from the lane worktree before any seat wrote
+
+$ python3 -I .ufo/waves/round-84/count-c1.py 5adf4337b6510dd246b247092c11cbaa97c930d3
+C1=unmet harness=absent rev=5adf4337b651
+rc=1
+
+$ python3 -I .ufo/waves/round-84/count-c2.py 5adf4337b6510dd246b247092c11cbaa97c930d3
+C2=unmet arm=absent rev=5adf4337b651
+rc=1
+
+$ python3 -I .ufo/waves/round-84/count-c3.py 5adf4337b6510dd246b247092c11cbaa97c930d3
+C3=unmet delta=absent rev=5adf4337b651
+rc=1
