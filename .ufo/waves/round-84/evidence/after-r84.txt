@@ -1,0 +1,18 @@
+# round-84 after measurements — measured 2026-11-04T10:17:36Z at revision da7631f4a44aaa6d7c1c822308df4d265fb8d7da (worktree == that revision for the graded carriers)
+# counters: worktree bytes at the same revision; each command's stdout and rc are verbatim
+
+$ python3 -I .ufo/waves/round-84/count-c1.py da7631f4a44aaa6d7c1c822308df4d265fb8d7da
+MUTANT count-c1.py M24a_killed_tally killed rc=1
+MUTANT count-c1.py M24b_green_fail_token killed rc=1
+MUTANT count-c2.py M24c_met_unclassified equivalent rc=0
+MUTANT count-c2.py M24d_met_residual equivalent rc=0
+C1=met mutants=4 killed=2 equivalent=2 survivors=0 total=4 pristine=green detector=green rev=da7631f4a44a
+rc=0
+
+$ python3 -I .ufo/waves/round-84/count-c2.py da7631f4a44aaa6d7c1c822308df4d265fb8d7da
+C2=met arm=all-rows defeated=2 fixtures=3/3 bindings=3 revisions=0 arms=44 rev=da7631f4a44a
+rc=0
+
+$ python3 -I .ufo/waves/round-84/count-c3.py da7631f4a44aaa6d7c1c822308df4d265fb8d7da
+C3=met delta=classified tokens=64 classified=64 union=64 residual=0 live=derived live_tokens=64 live_agree=64 deltas=0 arms=16 classifier=5/5 rev=da7631f4a44a
+rc=0

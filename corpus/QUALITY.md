@@ -1849,3 +1849,83 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
      Not covered: a `row_contains` that is a substring of another row's text
      selects the first such row as the anchor; values split across lines and
      non-numeric tokens are outside the binding grammar.
+
+170. A revision-arm anchor that selects more than one row is graded as a whole,
+     never by first match: every selected row must carry the token on the
+     carrier side and in the bound revision's blob.
+     Ground: QUALITY 169's not-covered clause (`corpus/QUALITY.md:1849-1851`),
+     this round's P-C2 (`.ufo/waves/round-84/contract.md:67-106`: target
+     `:71-77`, rule `:79-84`, fixtures `:86-96`, seat `:103-106`) and the
+     `ALL_ANCHOR_ROWS` rule that seat adds to `tools/mori-record-sweep.py`,
+     whose entering bytes still take the first match (`:52-63` carrier value and
+     `:119-146` blob-plus-revision side at `5adf4337`, sha256 `b5d3974e…`); the
+     defeated fixtures are `carrier-ambiguous` and `rev-ambiguous` in the frozen
+     counter (`.ufo/waves/round-84/count-c2.py:117-139`, verdict rule
+     `:262-276`).
+     Shown able to fail: the entering tool reads both ambiguous fixtures green.
+     This seat ran the counter's own `build_fixture`/`fixture_verdicts` over
+     `git show 5adf4337:tools/mori-record-sweep.py` in scratch: both fixtures
+     return rc 0 with `RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=1
+     revisions=0` (`ENTERING_GREEN_AMBIGUOUS=2/2`), while the frozen table
+     requires the R tool to report `row-value` / `rev-bytes` for them
+     (`defeated=2`). The R-tool red side is graded by
+     `python3 -I .ufo/waves/round-84/count-c2.py R` at the integration revision
+     and was not executed by this seat — the all-rows bytes are not landed at
+     write time.
+     Not covered: an anchor that selects two rows with the same value is not
+     distinguished from one intended row; values split across lines;
+     non-numeric tokens.
+
+171. A live-versus-snapshot comparison names every token's delta class
+     instead of printing two counts.
+     Ground: this round's P-C3 (`.ufo/waves/round-84/contract.md:108-131`:
+     predicate `:112-118`, classes `:120-124`, seat `:126-131`, whose
+     preservation clause A2 restates at `:193-198`) and the
+     `LIVE_DELTA` classifier that seat adds to `.ufo/waves/round-83/count-c2.py`;
+     the entering counter prints only `live_tokens=%d live_agree=%d`
+     (`.ufo/waves/round-83/count-c2.py:243-246` at `5adf4337`, described at
+     `:21`), and the r83 reading is `live_tokens=63 live_agree=63` with no token
+     named (`SCORECARD.md:4230` at `5adf4337`; capability row `:4265`).
+     Shown able to fail: `git show 5adf4337:.ufo/waves/round-83/count-c2.py |
+     grep -c LIVE_DELTA` → 0, so the entered reading cannot tell a snapshot
+     token absent live from a token whose class changed; the required
+     falsifier is the four delta selftest arms over synthetic snapshot/live
+     pairs (`count-c3.py:31-34` demands PASS on `delta_absent_live`,
+     `delta_added_live`, `delta_class_changed`, `delta_agreed` with ≥16 arms;
+     the entering tally is 12, `SCORECARD.md:4265`). Not executed by this seat:
+     QUALITY 39 leaves the counter's selftest to the integration owner.
+     Not covered: the live class is derived from the live baseline's names, not
+     authenticated; a failed live run is `unavailable`, never a delta; a
+     class-changed token whose snapshot class is `unexplainable` is outside the
+     frozen table.
+
+172. A counter that grades a tool's helpers but not its own detector is not yet
+     adequate: every counter carries a detector selftest and a population
+     control that reads red before the arms land.
+     Ground: the r82/r83 lesson class (`SCORECARD.md:4278` at `5adf4337`, "a
+     counter that grades helpers but not itself is not yet adequate"), the r83
+     mutation-probe seat's missing tally (`SCORECARD.md:4271`), this round's
+     P-C1 (`.ufo/waves/round-84/contract.md:15-65`: population table `:38-43`,
+     equivalence `:45-51`, population control `:53-57`, arms `:59-63`) and its
+     pre-data amendment A2, which corrects the M24b/M24c/M24d anchors after the
+     freeze-commit control read `mutants=1 killed=0 equivalent=0 survivors=1`
+     (`.ufo/waves/round-84/contract.md:163-199`); and the r84 counter's own
+     structure: the frozen-label stub gate (`.ufo/waves/round-84/count-c1.py:61`
+     and `:296-300`), the detector selftest run inside the same invocation and
+     gating the summary (`:301-313`), whose measured tally is
+     `C1_COUNTER_SELFTEST pass=11 fail=0`.
+     Shown able to fail: at the freeze commit the population control prints
+     `C1=unmet mutants=4 killed=0 equivalent=2 survivors=2 total=4
+     pristine=green detector=green` rc 1 (`python3 -I
+     .ufo/waves/round-84/count-c1.py daa77bd5684c8db75eec1e80c87ee4fa5c3a6bb4`
+     after A2), so the control reads red before the two arms land; the same
+     command at the after revision must read `survivors=0` (the after-arms
+     reading was not executed by this seat). The failure mode the rule names is
+     a green self-tally beside surviving mutants: the r83 mutant copies printed
+     `pass=10 fail=0` while M24a/M24b survived
+     (`.ufo/waves/round-83/w1/Mo83R01C1.md:229-230`). The equivalence exemption
+     is graded through the coupling markers, so a missing marker reads
+     `survived` even when the mutation is equivalent.
+     Not covered: a counter whose own logic changes after its arms land is not
+     re-probed by this rule; an equivalence exemption is only as strong as its
+     coupling marker.

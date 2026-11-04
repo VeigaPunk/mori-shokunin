@@ -625,3 +625,20 @@ Registry rows are named as carried in `SKILL.md`; gate includes registered regre
 - **No new census surface, no threshold change, no baseline rewrite, no remediation.** The three
   round-82 counters live under `.ufo/waves/round-82/` (evidence, not instruments); the only
   `tools/` byte change is the record sweep's new arm, already an inventory row.
+
+## Round-84 appended scope notes (2026-11-04)
+
+- **Core, record revision precision (rule change on an existing instrument):**
+  `tools/mori-record-sweep.py`'s revision arm now grades **every** row its `row_contains` selects
+  instead of the first match (`ALL_ANCHOR_ROWS`, registry row 18 in `SKILL.md`, frozen interface in
+  `.ufo/waves/round-84/contract.md` P-C2). A carrier row or a bound-revision row that carries the
+  anchor but not the token is `REVISION_MISMATCH ... row-value` / `... rev-bytes`; no anchor row is
+  `row-value` at line 1. QUALITY 170 records the rule and its named limits. The three frozen r82
+  bindings stay green at their named revisions.
+- **Core, drift classification live reading (evidence, not an instrument):** the r83 drift counter
+  now names every live-versus-snapshot token delta (`LIVE_DELTA <token> absent-live|added-live|
+  class-changed:<a>-><b>`), keeping the census reading an observation (QUALITY 171). The counter
+  lives under `.ufo/waves/round-83/` and is evidence, not a census surface.
+- **No new census surface, no threshold change, no baseline rewrite, no remediation.** The
+  round-84 counters live under `.ufo/waves/round-84/` (evidence). mori reports; it does not
+  remediate.

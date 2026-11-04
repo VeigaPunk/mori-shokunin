@@ -4283,3 +4283,68 @@ D82-2's post-repair C3 selftest tally is committed at
 3. **depth** — the C2 live-reading delta (`-FINDING:WATCHDOG_STALE` present in the snapshot,
    absent live) is reported but not explained: a per-token live-delta classification (absent-live /
    class-changed) would make the observation a fact rather than a number.
+
+## Round 84
+
+Entering revision `5adf4337b6510dd246b247092c11cbaa97c930d3`; frozen contract
+`.ufo/waves/round-84/contract.md` (freeze `daa77bd5`; pre-data amendments A1–A9, all disclosed in
+the contract and `corpus/lessons/round-84.md`), do-nothing controls
+`.ufo/waves/round-84/evidence/controls-r84.txt` and the defeated-control receipt
+`.ufo/waves/round-84/evidence/controls-r84-defeated.txt`. Axes: operability (C1, score 7),
+calibration (C2, score 5, tied lowest) and depth (C3, score 5, tied lowest). No score moves. The
+after cells were measured at `da7631f4a44aaa6d7c1c822308df4d265fb8d7da` by the round's frozen
+counters (receipt `.ufo/waves/round-84/evidence/after-r84.txt`); the counters are the worktree
+bytes at that revision.
+
+| Claim | Axis | Counting command | At entering `5adf4337` | After (measured at `da7631f4`) |
+|---|---|---|---|---|
+| C1 the r83 counter family's four extra mutants get the failing arm each needs, with M24c/M24d adjudicated equivalent behind byte coupling proofs | operability | `python3 -I .ufo/waves/round-84/count-c1.py <rev>` | `C1=unmet harness=absent`, rc 1; population control at the freeze `C1=unmet mutants=4 killed=0 equivalent=2 survivors=2 total=4 pristine=green detector=green` | `C1=met mutants=4 killed=2 equivalent=2 survivors=0 total=4 pristine=green detector=green`, rc 0 |
+| C2 the record sweep's revision arm grades every row the anchor selects on both sides, with two defeated ambiguous fixtures | calibration | `python3 -I .ufo/waves/round-84/count-c2.py <rev>` | `C2=unmet arm=absent`, rc 1 | `C2=met arm=all-rows defeated=2 fixtures=3/3 bindings=3 revisions=0 arms=44`, rc 0 |
+| C3 the r83 drift counter's live reading becomes a per-token delta classification (absent-live / added-live / class-changed / agreed) | depth | `python3 -I .ufo/waves/round-84/count-c3.py <rev>` | `C3=unmet delta=absent`, rc 1 | `C3=met delta=classified tokens=64 classified=64 union=64 residual=0 live=derived live_tokens=64 live_agree=64 deltas=0 arms=16 classifier=5/5`, rc 0 |
+
+C1's target split is bound by the counter (amendment A5): a run that prints any other split reads
+`C1=unmet target=split`, and a subject without the two arm labels reads
+`C1=unmet subject=absent-arms` — the critic's tripwire control (pristine green, every mutant killed,
+the target split printed, no arms) is defeated that way
+(`evidence/controls-r84-defeated.txt`). The two equivalences are graded, not presumed: the mutated
+`count-c2.py` copies ran their own selftest green before reading `equivalent`, and each coupling
+marker occurs exactly once at the graded revision.
+
+C2's rule is behavioral: two frozen ambiguous fixtures read green under the entering tool
+(`5adf4337`) and red under the landed tool (`row-value` / `rev-bytes`), while the conformant fixture
+stays green under both; the real lane run over the three frozen r82 bindings reads `revisions=0`,
+rc 0. Named limit (amendment A8): the finding's line number is not bound, only the mismatch kind and
+`revisions>=1`; `arms` is a floor.
+
+C3's classifier is graded by import, not by the subject's prose: the counter imports the extracted
+subject and runs `live_delta` on five frozen synthetic cases (`classifier=5/5`), recounts the
+snapshot population from the repo's own bytes (`tokens == 64`), and requires
+`classified == union` and `deltas == union - live_agree`. The real live run at `da7631f4` read 64
+tokens, all agreeing with the snapshot (`deltas=0`), so no `LIVE_DELTA` line was printed — an
+observation, not a class change. Named limit (amendment A6): the live token list remains the
+subject's own observation; the counter does not re-run the census.
+
+### Capabilities (round 84)
+
+| Capability | What it can now do | Evidence pointer | First-working round |
+|---|---|---|---|
+| Population-control counter (`.ufo/waves/round-84/count-c1.py`) | re-derives the four-mutant r83 population at ANY revision from that revision's bytes, requires the two named arms in the graded subject, runs each mutated copy's own `--selftest` in scratch, grades the equivalence exemptions against byte coupling markers, binds the printed split to `killed=2 equivalent=2 total=4`, and gates its own detector selftest in the same invocation; prints `C1=met\|unmet ... detector=green\|red`; 15 detector arms; stdout only, writes only under `--scratch` | `python3 -I .ufo/waves/round-84/count-c1.py --selftest` -> `C1_COUNTER_SELFTEST pass=15 fail=0`; at `da7631f4` it prints `killed=2 equivalent=2 survivors=0`, rc 0; the tripwire control reads `C1=unmet subject=absent-arms` (`evidence/controls-r84-defeated.txt`) | 84 |
+| All-anchor-rows revision arm (`tools/mori-record-sweep.py`) | the revision binding's `row_contains` selects every row carrying it: the carrier side and the bound revision's blob must each carry the token on every selected row, so an ambiguous anchor is `row-value`/`rev-bytes` instead of a first-match pass; 44 selftest arms and two defeated fixtures | `python3 -I tools/mori-record-sweep.py --selftest` -> `RECORD_SWEEP_SELFTEST pass=44 fail=0`; `python3 -I .ufo/waves/round-84/count-c2.py da7631f4` -> `defeated=2 fixtures=3/3 bindings=3 revisions=0 arms=44`, rc 0 | 84 |
+| Live-delta classification (`.ufo/waves/round-83/count-c2.py`) | names every live-versus-snapshot token delta (`absent-live`, `added-live`, `class-changed:<a>-><b>`, `agreed`) instead of two counts, prints one `LIVE_DELTA <token> <class>` line per non-agreed token, and keeps the census reading an observation; the classifier is pure and importable | `python3 -I .ufo/waves/round-83/count-c2.py --selftest` -> `C2_COUNTER_SELFTEST pass=16 fail=0`; `python3 -I .ufo/waves/round-84/count-c3.py da7631f4` -> `classifier=5/5`, `classified=64 union=64 deltas=0`, rc 0 | 84 |
+
+## Planned (round 85)
+
+1. **operability** — the C1 reviewer's two surviving counter mutants (`.ufo/waves/round-84/w1/Mo84R01C1.md`
+   §4): `if not k and coupling is not None:` → `if coupling is not None:` (a killed
+   `duplicates_accepted`-labeled mutant reads `equivalent`) and `coupled = base.count(coupling) == 1`
+   → `>= 1` (a duplicated marker reads equivalent). Each needs one arm; the clause sweep
+   (`.ufo/waves/round-84/w1/Mo84Sc02Clauses.md`) and the mutation probe
+   (`.ufo/waves/round-84/w1/Mo84M01Mut.md`, `MUTANTS total=49 killed=23 survivors=26`) name the
+   wider unarmed set, including the r84 counter's own `met` weakenings.
+2. **calibration** — the record's executing-counter-bytes gap (`.ufo/waves/round-84/w1/Mo84R03Record.md`
+   §0): the after receipt must name both the counter bytes' sha256 and the graded revision, and the
+   frozen predicate's own limits (the live reading is the subject's word) must be restated where a
+   reader meets the number.
+3. **depth** — the C3 residual: a counter that re-runs the census itself and reconciles the
+   subject's live line with its own observation (or classifies an `unexplainable` snapshot class
+   inside the frozen table) would move the delta from a self-report to a fact.

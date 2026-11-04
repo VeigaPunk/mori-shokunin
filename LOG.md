@@ -5196,3 +5196,65 @@ No-harm: the standing battery re-run at the landed tip `c4845c83` is `BATTERY pa
 `BATTERY pass=57 setup=4 fail=0`, `battery-r83-dispatch.txt`). Population census rc 0; the claim
 sweep is green at the new pointer count (`pointers=255` after this round's registry and capability
 rows); no prior counter value regressed.
+
+## Round 84 — 2026-11-04 (L1 MoriR84, attempt 1)
+
+Entering `5adf4337b6510dd246b247092c11cbaa97c930d3`; freeze `daa77bd5` (contract, three counters,
+entering controls); pre-data amendments A1–A9 (contract §A1–§A9; no predicate, kill rule, target or
+class changed after data); measured `da7631f4a44aaa6d7c1c822308df4d265fb8d7da` (receipt
+`.ufo/waves/round-84/evidence/after-r84.txt`). Axes: operability 7, calibration 5 (tied lowest),
+depth 5 (tied lowest). No score moves.
+
+**C1 — operability.** The r83 counter family's four extra mutants (M24a–M24d, measured by the r83
+C1 reviewer at `c4845c83`) get the failing arm each needs: `.ufo/waves/round-83/count-c1.py` gains
+`blind_case_tally` and `green_requires_fail_zero` (selftest 6 → 8 arms), and M24c/M24d are
+adjudicated equivalent behind byte coupling proofs (`agreed == len(snapshot_tokens)`,
+`residual += duplicates`, `duplicates == 0`, each exactly once). `python3 -I
+.ufo/waves/round-84/count-c1.py da7631f4` → `C1=met mutants=4 killed=2 equivalent=2 survivors=0
+total=4 pristine=green detector=green`, rc 0. The counter binds the subject's two arm labels and
+the 2/2/4 split (A5), so the critic's tripwire control — pristine green, all mutants killed, the
+target split printed, no arms — reads `C1=unmet subject=absent-arms`
+(`evidence/controls-r84-defeated.txt`).
+
+**C2 — calibration.** `tools/mori-record-sweep.py`'s revision arm grades every row the anchor
+selects (`ALL_ANCHOR_ROWS`) instead of the first match: the carrier side and the bound revision's
+blob must each carry the token on every selected row. Four new selftest arms (40 → 44) and two
+defeated fixtures: `carrier-ambiguous` → `row-value`, `rev-ambiguous` → `rev-bytes`, both green
+under the entering tool and red under the landed one, conformant green under both. `python3 -I
+.ufo/waves/round-84/count-c2.py da7631f4` → `C2=met arm=all-rows defeated=2 fixtures=3/3
+bindings=3 revisions=0 arms=44`, rc 0; the three frozen r82 bindings stay green at their named
+revisions.
+
+**C3 — depth.** `.ufo/waves/round-83/count-c2.py` gains a pure `live_delta` classifier naming every
+live-versus-snapshot token (`absent-live`, `added-live`, `class-changed:<a>-><b>`, `agreed`), one
+`LIVE_DELTA <token> <class>` line per non-agreed token, and tail fields `classified=/union=`. The
+r84 counter imports the extracted classifier and grades it on five frozen synthetic cases, recounts
+the snapshot population from the repo's own bytes, and requires `classified == union` and
+`deltas == union - live_agree`: `python3 -I .ufo/waves/round-84/count-c3.py da7631f4` → `C3=met
+delta=classified tokens=64 classified=64 union=64 residual=0 live=derived live_tokens=64
+live_agree=64 deltas=0 arms=16 classifier=5/5`, rc 0. The live run agreed with the snapshot this
+time, so no delta line printed — an observation, not a class change.
+
+**Wave.** ONE v1 wave, 14 seats (band 8–16): 4 executor, 3 reviewer, 2 scout, 2 scribe, 1 critic, 1
+mutation-tester, 1 connector; attack 5/14 (35.7 %); connector 1; residual none; planner is the L1.
+Dead seats: `Mo84E02C2Rows` and `Mo84R02C23` (empty output), never replaced; the L1 landed E02's
+assignment from a scratch prototype validated against the frozen counter (the tool selftest reads
+`RECORD_SWEEP_SELFTEST pass=44 fail=0` and C2 met), and R02's attack is covered by the critic, the
+C1 reviewer, the mutation probe and the record reviewer.
+
+**Frontier step.** S599 opens arXiv:2408.01760v1 ("Large Language Models for Equivalent Mutant
+Detection: How Far Are We?", ISSTA'24; pinned `corpus/evidence/sources-r84/arXiv-2408.01760-abs.html`,
+sha256 `68822410…`, 42566 bytes / 597 newlines; three fetches byte-identical, `last-modified` 2026-08-24,
+304 on revalidation; located quote at body line 121, 24 words). It grounds the premise that
+equivalent mutants are a known cost and bias; the adjudication rule is the lane's own
+(`corpus/knowledge/equivalent-mutant-adjudication-r84.md` K2–K3). arXiv:2404.09241 is refused with a
+flip condition. Rows 371 → 372, census rc 0, 35 tolerated W04 warnings. QUALITY 170–172 land the
+round's rules; the registry row 18 in `SKILL.md` carries the r84 counters and the record sweep's new
+tallies (r83's revision-scoped tallies stay as recorded).
+
+**No-harm.** The standing battery at `da7631f4` reads `BATTERY pass=57 setup=4 fail=0` (`BATTERY
+57/61`, rc 2 for the four expected host-setup cases) — unchanged from r83
+(`.ufo/waves/round-84/evidence/battery-r84.txt`). The three r83 counters at the freeze commit still
+read their r83 met lines (`C1=met mutants=23 killed=22 equivalent=1 …`, `C2=met snapshot=bound …
+live_tokens=64`, `C3=met arm=anchored … arms=40`). Population census rc 0. No axis harmed; no score
+moved.

@@ -1,0 +1,782 @@
+$ timeout --kill-after=5s 120s python3 -I tools/mori-anchor-check.py --selftest
+selftest located_ok       PASS
+selftest mislocated       PASS
+selftest wordcount_mismatch PASS
+selftest span_located     PASS
+selftest span_all_zero    PASS
+selftest mixed_multi_item PASS
+selftest redaction        PASS
+selftest missing_pin      PASS
+selftest malformed_spec   PASS
+selftest words_skipped    PASS
+selftest double_locate    PASS
+ANCHOR_CHECK_SELFTEST: PASS (11 cases)
+tools/mori-anchor-check.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-cgroup-pressure.py --selftest
+case ok-all: pass
+case high-cpu: pass
+case missing-irq: pass
+case missing-group: pass
+case malformed-mem: pass
+case irq-some-line: pass
+case psi-disabled: pass
+case unreadable-io: pass
+case empty-irq: pass
+case truncated-mem: pass
+case threshold-low: pass
+case dup-some: pass
+MORI_CGROUP_PRESSURE_SELFTEST: pass=12 fail=0
+tools/mori-cgroup-pressure.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-claim-sweep.py --selftest
+case clean fixture tree pass
+case stale present pass
+case stale absent pass
+case tally equal pass
+case tally mismatch pass
+case dead pointer pass
+case live line suffix pass
+case live revision suffix pass
+case fenced token ignored pass
+case sibling ignored pass
+case unreadable carrier pass
+case missing pins pass
+case malformed pins pass
+case capability table pass
+case checklist command pass
+case ungraded prose ignored pass
+case multiple stale occurrences pass
+case wildcard existing match pass
+case wildcard no match pass
+case stale-only total pass
+case tally-only total pass
+case combined total pass
+case grammar 'pass=19 fail=0' pass
+case grammar 'PASS (12 cases)' pass
+case grammar 'PASS 7/7' pass
+case grammar 'pass=3' pass
+case grammar 'pass=3 fail=1' pass
+case grammar 'PASS 2/3' pass
+case grammar 'nothing' pass
+case grammar 'pass=3\npass=4' pass
+CLAIM_SWEEP_SELFTEST pass=30 fail=0
+tools/mori-claim-sweep.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-commit-runway.py --selftest
+MATCHER: rejected 26/26 corrupted expectations
+MORI_COMMIT_RUNWAY_SELFTEST: PASS 31/31
+tools/mori-commit-runway.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-content-review.py --selftest
+{"exit_code":2,"findings":[{"code":"CONTENT_REVIEW_SELFTEST_TMPDIR"}],"schema":"mori-content-review-result-v1","status":"could-not-evaluate"}
+tools/mori-content-review.py --selftest rc=2
+SETUP tools/mori-content-review.py --selftest rc=2 TMPDIR must be beneath lane; tools/mori-content-review.py:364-365
+$ timeout --kill-after=5s 120s python3 -I tools/mori-control-receipt.py --selftest
+case 01 bound section ($ cmd above count)      pass
+case 02 unbound section (count, no command)    pass
+case 03 comment line neither command nor claim pass
+case 04 inline cmd= line binds the section     pass
+case 05 split across two ## headings           pass
+case 06 non-integer key=value not a claim      pass
+case 07 negative integer claim                 pass
+case 08 empty file                             pass
+case 09 missing path rc 2, diagnostic on stdout pass
+case 10 receipt with no claims rc 0            pass
+case 11 verb-led first token binds             pass
+case 12 indented comment/claim handled         pass
+case 13 claim key character class              pass
+case 14 bare cmd= without space does not bind  pass
+case 15 summary aggregates across files        pass
+case 16 dir collection filters and sorts       pass
+case 17 unreadable file rc 2, diagnostic on stdout pass
+case 18 unbound line carries heading text      pass
+case 19 rc 2 diagnostics on stdout only        pass
+CONTROL_RECEIPT_SELFTEST pass=19 fail=0
+tools/mori-control-receipt.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-counter-win.py --selftest
+PASS four_counters_available  rc=0
+PASS last_sample_wins  rc=0
+PASS host_prefix_redacted  rc=0
+PASS timestamps_redacted  rc=0
+PASS zero_samples_honest_unavailable  rc=2
+PASS missing_columns_partial  rc=0
+PASS nonnumeric_cell_refused  rc=0
+PASS comma_thousands_refused  rc=0
+PASS missing_child_rc2  rc=2
+PASS output_shape_grammar  rc=0
+PASS usage_rc1_no_traceback  rc=1
+PASS kinds_labeled  rc=0
+COUNTER_WIN_SELFTEST: PASS (12 cases)
+tools/mori-counter-win.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-disk-rate.py --selftest
+MORI_DISK_RATE_SELFTEST pass=14 fail=0
+tools/mori-disk-rate.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-dispatch-ledger.py --selftest
+SELFTEST mori-dispatch-ledger PASS 14/14
+tools/mori-dispatch-ledger.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-drift-adjudicate.py --selftest
+selftest row_tokens               PASS (got={'S901': 'receipt-open', 'S902': 'receipt-stale', 'S903': 'ua-serving', 'S904': 'content-drift', 'S905': 'gate', 'S906': 'unavailable', 'S907': 'pass-through fresh'} want={'S901': 'receipt-open', 'S902': 'receipt-stale', 'S903': 'ua-serving', 'S904': 'content-drift', 'S905': 'gate', 'S906': 'unavailable', 'S907': 'pass-through fresh'})
+selftest summary                  PASS (summary=('7', '6', '1', '1', '1', '1', '1', '1', '1'))
+selftest exit_code                PASS (rc=0 want 0)
+selftest header_line              PASS (second UA disclosed on the header line)
+selftest missing_sources_exit2    PASS (rc=2 want 2)
+MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)
+tools/mori-drift-adjudicate.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-drift-recheck.py --selftest
+selftest row_tokens               PASS (got={'S911': 'fresh', 'S912': 'time-churn', 'S913': 'asset-churn', 'S914': 'asset-churn', 'S915': 'content-drift', 'S916': 'ua-serving', 'S917': 'receipt-open', 'S918': 'unavailable'} want={'S911': 'fresh', 'S912': 'time-churn', 'S913': 'asset-churn', 'S914': 'asset-churn', 'S915': 'content-drift', 'S916': 'ua-serving', 'S917': 'receipt-open', 'S918': 'unavailable'})
+selftest as_of_on_every_row       PASS (every token row carries as-of=<ISO8601Z>)
+selftest summary                  PASS (summary=('8', '8', '1', '0', '1', '2', '1', '0', '1', '1', '0', '1', '2026-11-04T10:19:03Z..2026-11-04T10:19:03Z'))
+selftest exit_code                PASS (rc=0 want 0)
+selftest header_disclosure        PASS (second UA + both churn classes + from-sweep=- + run-start on the header line)
+selftest window_same_run          PASS (window bounds parse and are ordered (same-run snapshot pair))
+selftest parse_sweep_rows_not_summary PASS (row lines only (deduped), summary token kept separate: ids=['S156'] summary_n=17)
+selftest from_sweep_selects_drifted PASS (only the receipt's drifted rows adjudicated: rows=['S912', 'S913'] rc=0)
+selftest from_sweep_malformed_exit2 PASS (not-a-sweep rc=2; rows-vs-summary disagreement rc=2 (both want 2))
+selftest missing_sources_exit2    PASS (rc=2 want 2)
+MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)
+tools/mori-drift-recheck.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-driver-liveness.py --selftest
+DRIVER_LIVENESS_SELFTEST pass=13 fail=0 skipped=0
+tools/mori-driver-liveness.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-entry-claims-check.py --selftest
+ENTRYCLAIMS_SELFTEST pass=13 fail=0
+tools/mori-entry-claims-check.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-events-context-win.py --selftest
+selftest pair_grammar         PASS
+selftest window_echo          PASS
+selftest events_unavailable   PASS
+selftest uptime_unavailable   PASS
+selftest unparseable_rejected PASS
+selftest fixture_missing      PASS
+selftest redaction            PASS
+selftest uptime_echo          PASS
+selftest partial_pairs        PASS
+selftest binding_line         PASS
+EVENTS_CONTEXT_SELFTEST: PASS (10 cases)
+tools/mori-events-context-win.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-evidence-loss.py --selftest
+{"checks":114,"failures":[],"finding_id":"mori-evidence-loss:audit:aggregator-r10:unresolved","passed":true,"schema":"mori-evidence-loss-selftest-v1"}
+tools/mori-evidence-loss.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-freeze-order.py --selftest
+SELFTEST freeze-order FAIL 0/11
+tools/mori-freeze-order.py --selftest rc=1
+SETUP tools/mori-freeze-order.py --selftest rc=1 TMPDIR must be beneath checkout; tools/mori-freeze-order.py:509-514
+$ timeout --kill-after=5s 120s python3 -I tools/mori-gate-registry.py --selftest
+selftest PASS registered_row_met
+selftest PASS missing_cell_rejected
+selftest PASS unresolved_entry_rejected
+selftest PASS unregistered_path_rejected
+selftest PASS no_selftest_rejected
+selftest PASS seven_cell_row_rejected
+selftest PASS second_table_registered
+selftest PASS duplicate_name_rejected
+selftest PASS comment_only_selftest_rejected
+selftest PASS empty_population_rejected
+selftest PASS audit_all_with_audit_refused
+selftest PASS population_mode_and_digest
+selftest PASS escape_flag_accepted
+selftest PASS escape_flag_name_rejected
+selftest PASS escape_flag_mention_rejected
+GATE_REGISTRY_SELFTEST pass=15 fail=0
+tools/mori-gate-registry.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-host-events-win.py --selftest
+PASS three_events_matched_partial_ok  rc=0
+PASS zero_is_a_real_zero  rc=0
+PASS window_cap  rc=0
+PASS partial_availability_honest  rc=0
+PASS all_unavailable_rc2_no_zeros  rc=2
+PASS malformed_reads_as_zero_not_crash  rc=0
+PASS redaction_counts_only  rc=0
+PASS output_shape_grammar  rc=0
+PASS usage_rc1_no_traceback  rc=1
+PASS window_default_echoed  rc=0
+HOST_EVENTS_WIN_SELFTEST pass=10 fail=0
+tools/mori-host-events-win.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-job-runway.py --selftest
+MORI_JOB_RUNWAY_SELFTEST: PASS 21/21
+tools/mori-job-runway.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-journal-window.py --selftest
+{"cases":16,"failed":0,"failures":[],"finding_id":"MORI_JOURNAL_WINDOW_SELFTEST","passed":16}
+tools/mori-journal-window.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-misroot-sweep.py --selftest
+{"arms": 12, "finding": "MORI_MISROOT_SELFTEST_OK", "fixture_bytes": 847, "fixture_sha256": "15f9f82d707d5c79b11643eed1ab4754b6959d2bede5887e07364442ada5510e", "planted_found_with_legacy_pathspec": false, "planted_found_without_pathspec": true, "planted_matched_in": ["path"], "poisoned_paths_absent": true, "sandbox_unchanged": true, "schema": "mori-misroot-sweep-v1"}
+tools/mori-misroot-sweep.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-oom-killers.py --selftest
+MORI_OOM_KILLERS_SELFTEST: PASS 32/32
+tools/mori-oom-killers.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-pin-check.py --selftest
+PASS honest  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS stale_tally  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS stale_in_cell_true_elsewhere  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=1 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS pin_moved_out_of_cell  PIN_CHECK=unmet tally_pins=0 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=1 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS digest_ok  PIN_CHECK=met tally_pins=1 digest_pins=1 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS digest_stale  PIN_CHECK=unmet tally_pins=1 digest_pins=1 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS malformed_row  PIN_CHECK=unmet tally_pins=0 digest_pins=0 mismatches=0 unparsed=1 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=0 rev=deadbeef baseline=no env=0 stale=0
+PASS no_command  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=1 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS digitless_pin  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=1 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS timeout  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=1 stale=0
+PASS bare_flag_rev_entry  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS escaped_pipe_cell  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS below_floor  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=2 rev=deadbeef baseline=no env=0 stale=0
+PASS mutant_pin_bound_to_mutant  PIN_CHECK=met tally_pins=2 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=2 rev=deadbeef baseline=no env=0 stale=0
+PASS mutant_pin_wrong  PIN_CHECK=unmet tally_pins=2 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=2 rev=deadbeef baseline=no env=0 stale=1
+PASS tmpdir_inside_measured_tree  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS token_boundary_truncated_pin  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS baseline_row_deleted  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=1 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=yes env=0 stale=0
+PASS baseline_all_present  PIN_CHECK=met tally_pins=2 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=yes env=0 stale=0
+PASS v2_inline_code_rejected  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=1 no_command=1 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS v2_scratch_path_rejected  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=1 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS v2_weakened_pin_exact  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS v2_rebound_to_other_tool  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=1 duplicate=0 hidden=0 misattributed=1 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=yes env=0 stale=0
+PASS v2_entry_rebound  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=1 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=yes env=0 stale=0
+PASS x1_baseline_binding_disappears  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=1 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=yes env=0 stale=0
+PASS x1_baseline_binding_inline_code  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=1 no_command=1 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=yes env=0 stale=0
+PASS k5_namespace_new_instrument_rejected  PIN_CHECK=unmet tally_pins=3 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=1 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=3 rev=deadbeef baseline=yes env=0 stale=0
+PASS k5_namespace_family_join_admitted  PIN_CHECK=met tally_pins=3 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=3 rev=deadbeef baseline=yes env=0 stale=0
+PASS v2_hidden_row_and_duplicate  PIN_CHECK=unmet tally_pins=2 digest_pins=0 mismatches=0 unparsed=1 no_command=0 dropped=0 rebound=0 duplicate=1 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=yes env=0 stale=0
+PASS v2_duplicate_name  PIN_CHECK=unmet tally_pins=2 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=1 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS v2_digest_path_traversal  PIN_CHECK=unmet tally_pins=1 digest_pins=1 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS v2_stale_echo_line_ignored  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS v2_disagreeing_tally_lines  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS v2_fenced_example_not_counted  PIN_CHECK=unmet tally_pins=0 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=1 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS v2_entry_column_from_header  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r1_header_selftest_spelling  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r1_header_self_test_spelling  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r2_hidden_row_outside_table  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=1 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r2_hidden_fenced  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=1 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r2_hidden_selftest_arg  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=1 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r3_fullwidth_prefix  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=1 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r3_lowercase_prefix  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=1 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r3_mixedcase_prefix  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=1 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r4_rebound_new_row_same_prefix  PIN_CHECK=unmet tally_pins=2 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=1 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=yes env=0 stale=0
+PASS r5_line_count_match  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r5_line_count_mismatch  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS r5_line_count_no_path  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=1 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r5_line_count_overpin_mismatch  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS r6_trunc_digest_match  PIN_CHECK=met tally_pins=1 digest_pins=1 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r6_trunc_digest_mismatch  PIN_CHECK=unmet tally_pins=1 digest_pins=1 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS r7_token_not_at_span_start  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=1 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r7_symlink_digest_not_inside  PIN_CHECK=unmet tally_pins=1 digest_pins=1 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS r7_argv_shape_rejected  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=1 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r7_argv_dotdot_rejected  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=1 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r7_argv_trailing_args_rejected  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=1 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r7_escaped_double_backslash_pipe  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r10_digest_decoy_file_in_other_cell  PIN_CHECK=unmet tally_pins=1 digest_pins=1 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS r10_trunc_digest_decoy_file_in_other_cell  PIN_CHECK=unmet tally_pins=1 digest_pins=1 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS r10_digest_binds_to_nearest_preceding_path  PIN_CHECK=met tally_pins=1 digest_pins=1 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r10_digest_binds_to_nearest_preceding_path_not_following  PIN_CHECK=unmet tally_pins=1 digest_pins=1 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS r9a_tally_in_pinned_values_cell  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=1 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r9b_continuation_line_tally  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=1 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r9c_tally_outside_backticks  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=1 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r11_misattributed_instrument  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=1 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r11_mutant_other_basename_rejected  PIN_CHECK=unmet tally_pins=2 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=1 env_unexpanded=0 min_tally_pins=2 rev=deadbeef baseline=no env=0 stale=0
+PASS r11_second_entry_path_not_claimed  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=1 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r11_entry_cell_without_instrument  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=1 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r11_mutant_right_basename_wrong_directory  PIN_CHECK=unmet tally_pins=2 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=1 env_unexpanded=0 min_tally_pins=2 rev=deadbeef baseline=no env=0 stale=0
+PASS r12_line_count_pin_deleted  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=1 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=yes env=0 stale=0
+PASS r12_trunc_digest_pin_deleted  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=1 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=yes env=0 stale=0
+PASS r12_trunc_digest_repaired_to_full  PIN_CHECK=met tally_pins=1 digest_pins=1 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=yes env=0 stale=0
+PASS r14_line_count_decoy_path  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS k2_env_prefix_as_written  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS k2_env_applied_honest_pin  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS k2_env_pwd_expanded  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS k2_env_unexpanded  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=1 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS k2_entry_cell_env  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS k8_pass_form_rc0  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS k8_failure_count_exception  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS f1_blankline_continuation_tally  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=1 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS f1_honest_prose_after_blank  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS f1_adjacency_is_nearest_nonblank  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS f2_laundered_header_row_measured  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS f2_laundered_header_zwsp_token  PIN_CHECK=unmet tally_pins=0 digest_pins=0 mismatches=0 unparsed=1 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS f2_laundered_header_honest_row  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS f2_zwsp_in_header_cell  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS f3_tab_indented_fenced_row  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=1 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS f3_four_space_row  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=1 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS f3_indented_examples_without_token  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS f4_html_row_with_pin  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=1 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS f4_html_without_pin  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS f5_conflicting_exit_contracts  PIN_CHECK=unmet tally_pins=2 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=1 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=2 rev=deadbeef baseline=no env=0 stale=0
+PASS f5_agreeing_exit_contracts  PIN_CHECK=met tally_pins=2 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=2 rev=deadbeef baseline=no env=0 stale=0
+PASS f5_unstated_contract_skipped  PIN_CHECK=met tally_pins=2 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=2 rev=deadbeef baseline=no env=0 stale=0
+PASS f5_nbsp_verdict_map_header_still_read  PIN_CHECK=unmet tally_pins=2 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=1 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=2 rev=deadbeef baseline=no env=0 stale=0
+PASS r11_same_instrument_green  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r1_header_case_insensitive  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r2_hidden_selftest_arg_no_token  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=1 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r3_nonascii_decorative_span  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=1 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r9a_tally_in_pinned_cell_pass_only  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=1 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r9b_continuation_line_selftest_flag  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=1 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r9c_tally_PASS_form_outside_backticks  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=1 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r7_argv_tools_scratch_rejected  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=1 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r7_symlink_digest_precedes_path_containment  PIN_CHECK=unmet tally_pins=1 digest_pins=1 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS r7_symlink_digest_prefix_sibling  PIN_CHECK=unmet tally_pins=1 digest_pins=1 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS r5_line_count_overpin_mismatch  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS r10_digest_following_path_not_bound  PIN_CHECK=unmet tally_pins=1 digest_pins=1 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS nonzero_rc_with_fail0  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS k8_pass_form_rc1  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS r13_self_row_deleted  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=1 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r13_self_row_pinned  PIN_CHECK=met tally_pins=2 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS r13_self_instrument_absent_no_obligation  PIN_CHECK=met tally_pins=1 digest_pins=0 mismatches=0 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=0
+PASS v5_class_env_setup_error  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=1 stale=0
+PASS v5_class_env_timeout  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=1 stale=0
+PASS v5_class_stale_tally  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS v5_class_stale_digest  PIN_CHECK=unmet tally_pins=1 digest_pins=1 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS v51_class_absent_instrument_stale  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS v51_class_two_tallies_stale  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS v51_class_wrong_then_timeout_stale  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=0 stale=1
+PASS v51_class_right_then_timeout_env  PIN_CHECK=unmet tally_pins=1 digest_pins=0 mismatches=1 unparsed=0 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=deadbeef baseline=no env=1 stale=0
+PASS v5_rev_export_outside_repo  rc=0 left=0
+PASS v51_scratch_inside_repo_refused  rc=2
+PASS v51_default_scratch_tmpdir_and_master_is_rev  rc=0 left=0
+PASS cli_met_rc0  rc=0
+PASS cli_bad_rev_rc2  rc=2
+PIN_CHECK_SELFTEST pass=125 fail=0
+tools/mori-pin-check.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-pressure.py --selftest
+MORI_PRESSURE_SELFTEST: PASS 12/12
+MATCHER: rejected 48/48 corrupted expectations
+tools/mori-pressure.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-receipt-complete.py --selftest
+RECEIPT_COMPLETE=complete failed_lines=1 anchors=14 truncated_tail=0 malformed=0 count_mismatch=0 receipt=full.txt
+finding count_mismatch:listed=5 derived rows-quotes_ok=14
+RECEIPT_COMPLETE=unmet failed_lines=1 anchors=5 truncated_tail=0 malformed=0 count_mismatch=1 receipt=cut.txt
+RECEIPT_COMPLETE=complete failed_lines=1 anchors=3 truncated_tail=0 malformed=0 count_mismatch=0 receipt=cut_nocount.txt
+RECEIPT_COMPLETE=complete failed_lines=1 anchors=0 truncated_tail=0 malformed=0 count_mismatch=0 receipt=none.txt
+RECEIPT_COMPLETE=complete failed_lines=1 anchors=3 truncated_tail=0 malformed=0 count_mismatch=0 receipt=refused.txt
+finding malformed:quote_w…x
+RECEIPT_COMPLETE=unmet failed_lines=1 anchors=2 truncated_tail=0 malformed=1 count_mismatch=0 receipt=malformed.txt
+finding count_mismatch:listed=13 --expect 14
+RECEIPT_COMPLETE=unmet failed_lines=1 anchors=13 truncated_tail=0 malformed=0 count_mismatch=1 receipt=short.txt
+RECEIPT_COMPLETE_SETUP unreadable: [Errno 2] No such file or directory: '/fast/scratch/hyaku/mori-r81/Mo81E04Battery/battery.zixt7DcT/tmp/receipt-selftest-j9ws339v/absent.txt'
+PASS complete_list_expect_met  rc=0
+PASS r62_truncation_caught_by_derived_count  rc=1
+PASS boundary_cut_without_counters_undetected  rc=0
+PASS failed_none_complete  rc=0
+PASS class_and_bare_detail_tokens_ok  rc=0
+PASS malformed_mid_token  rc=1
+PASS expect_outranks_derived_count  rc=1
+PASS missing_file_setup  rc=2
+RECEIPT_COMPLETE_SELFTEST pass=8 fail=0
+tools/mori-receipt-complete.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-record-sweep.py --selftest
+case pending-in-round pass
+case pending-outside-round pass
+case pending-prose pass
+case pending-trimmed pass
+case pending-exact pass
+case round-end pass
+case round-subsection pass
+case escaped-pipe pass
+case first-stating-row pass
+case missing-stated pass
+case live-single pass
+case live-repeated-agreement pass
+case live-conflict pass
+case live-absent pass
+case malformed-json pass
+case malformed-schema pass
+case malformed-bindings pass
+case valid-pins pass
+case command-not-shell pass
+case clean-totals pass
+case dirty-totals pass
+case tool-absent pass
+case failed-command pass
+case missing-live pass
+case conflicting-live pass
+case missing-stated-mismatch pass
+case revision-conformant pass
+case revision-D81-1 pass
+case revision-unresolvable pass
+case revision-path-absent pass
+case revision-missing-row pass
+case revision-second-stale pass
+case revision-first-row pass
+case carrier-all-anchor-rows-green pass
+case carrier-all-anchor-rows-red pass
+case rev-all-anchor-rows-green pass
+case rev-all-anchor-rows-red pass
+case revision-row-before-git pass
+case revision-token-boundaries pass
+case revision-only-pins pass
+case anchored-occurrence pass
+case elsewhere-line-only pass
+case anchor-absent pass
+case anchored-token-boundary pass
+RECORD_SWEEP_SELFTEST pass=44 fail=0
+tools/mori-record-sweep.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-register-check.py --selftest
+REGCHECK_SELFTEST pass=12 fail=0
+tools/mori-register-check.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-retention-gate.py --selftest
+SELFTEST retention-gate FAIL 0/21
+tools/mori-retention-gate.py --selftest rc=2
+SETUP tools/mori-retention-gate.py --selftest rc=2 TMPDIR must equal lane/.scratch; tools/mori-retention-gate.py:459,467-468
+$ timeout --kill-after=5s 120s python3 -I tools/mori-retention-reconcile.py --selftest
+{"finding_id":"RECONCILE_SELFTEST_PASS","passed":4,"privacy_clearance":false,"schema":"mori-retention-reconciliation-v2","total":4}
+tools/mori-retention-reconcile.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-rotation-schedule.py --selftest
+selftest schedule_parse               PASS
+selftest schedule_rejects_noninteger  PASS
+selftest window_from_stamps           PASS
+selftest classify_yes                 PASS
+selftest classify_no                  PASS
+selftest classify_bytes_only          PASS
+selftest unavailable_dead_leg         PASS
+selftest unavailable_compare_setup    PASS
+selftest unavailable_unparseable      PASS
+selftest redaction_stdout             PASS
+selftest integration_window0          PASS
+selftest missing_child_refused        PASS
+selftest windows_value_domain         PASS
+MORI_ROTATION_SCHEDULE_SELFTEST: PASS (13 cases)
+tools/mori-rotation-schedule.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-round13-regressions.py --selftest
+SELFTEST: case isolated-stub-target-red ok ok
+SELFTEST: case isolated-frozen-manifest-tamper ok ok
+SELFTEST: pass checks=33 cases=2
+tools/mori-round13-regressions.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-round14-regressions.py --selftest
+SELFTEST: pass checks=20 (parsers + real-gate red rc1/tamper rc2)
+tools/mori-round14-regressions.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-round15-regressions.py --selftest
+SELFTEST control classifier checks: PASS
+SELFTEST PASS selftest_root=/fast/scratch/hyaku/mori-r81/Mo81E04Battery/battery.zixt7DcT/tmp/mori-r15-selftest-ljzvn0vi
+tools/mori-round15-regressions.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-round16-context-check.py --selftest
+{"arms": 15, "claims_runtime_prevention": false, "finding_id": "SELFTEST_OK", "static_only": true}
+tools/mori-round16-context-check.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-round16-regressions.py --selftest
+SELFTEST ok: pin_rc0,green_rc0_verdict_ok,absent_rc1_capability_absent,tool_drift_rc2,bad_want_rc1_mismatch,pack_drift_rc2
+tools/mori-round16-regressions.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-round17-context-check.py --selftest
+{"arms": 31, "claims_runtime_prevention": false, "clauses_checked": 12, "finding_id": "SELFTEST_OK", "static_only": true}
+tools/mori-round17-context-check.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-round17-jj-regressions.py --selftest
+SELFTEST ok: guard_output_repo_root,guard_output_tools,guard_output_corpus,guard_output_git,guard_output_jj,guard_output_dotufo,guard_output_waves_allowed,guard_output_nonempty,guard_output_symlink,guard_output_ancestor_symlink,guard_scratch_ancestor_symlink,guard_output_ancestor,guard_output_gate_source,guard_scratch_tools,guard_scratch_input_file,guard_scratch_input_ancestor,guard_scratch_tmp,guard_scratch_ok,argv_output_symlink_rc2,argv_output_symlink_target_unchanged,argv_output_nested_symlink_rc2,argv_output_nested_symlink_target_unchanged,argv_scratch_symlink_rc2,argv_scratch_symlink_target_unchanged,argv_scratch_symlink_output_untouched,ok_rc0,ok_cases,ok_failed_zero,ok_mismatch_finding,ok_mismatch_severity,ok_exact_head,ok_exact_branch_tip,ok_mismatch_basis,ok_author_finding,ok_author_count,ok_sibling_negative,ok_fallback_head,ok_retained_false,ok_scratch_removed,keep_rc0,keep_retained_true,keep_scratch_present,wrongtip_rc1,wrongtip_names_branch_tip,head_rc1,head_names_missing_mismatch,head_failed_assertions,same_assertion_universe,absent_rc1,absent_capability_absent
+tools/mori-round17-jj-regressions.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-round17-seat-regressions.py --selftest
+SELFTEST ok: green_rc0_and_manifest,capability_absent_rc1,mismatch_rc1,forbidden_key_rc1,seats_map_projection_rc0,a1_main_sessions_rc0,generated_fifo_rc0,symlink_ancestor_fifo_trap_rc2,unreadable_dirs_sandbox_rc0,root_symlink_rebase_rc0,key_metadata_required_rc1,wrong_type_metadata_rc1,pinned_snapshot_tamper_rc2,prefix_filter_rc0,files_scanned_falsifier_rc1,unreadable_fixture_rc0,fixture_drift_rc2,output_guard_rc2,nonempty_output_rc2
+tools/mori-round17-seat-regressions.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-round19-regressions.py --selftest
+R19_SELFTEST setup=explicit-lane-tmpdir-invalid
+tools/mori-round19-regressions.py --selftest rc=2
+SETUP tools/mori-round19-regressions.py --selftest rc=2 TMPDIR must be canonical lane descendant; tools/mori-round19-regressions.py:888-891
+$ timeout --kill-after=5s 120s python3 -I tools/mori-round41-calibration.py --selftest
+MORI_R41_CALIBRATION_SELFTEST pass=10 fail=0
+tools/mori-round41-calibration.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-routed-check.py --selftest
+ROUTED_CHECK_SELFTEST pass=20 fail=0
+tools/mori-routed-check.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-routed-r24.py --selftest
+selftest PASS normalize_folds_markers_case_whitespace
+selftest PASS split_header_reads_five_keys_and_body
+selftest PASS split_header_reports_the_missing_key
+selftest PASS body_is_byte_anchored
+selftest PASS blocks_and_section_span_partition
+selftest PASS data_row_count_excludes_header_and_separator
+selftest PASS d2_negatives_absent_positives_present_outside
+selftest PASS axes_rows_read_score_and_last_change
+selftest PASS pinned_scores_parse_window_and_fail_closed
+selftest PASS round1_token_regex
+selftest PASS pinned_contract_literals
+selftest PASS d2_negative_patterns_match_samples
+selftest PASS count_cases_json_arms
+selftest PASS hex_token_width_and_boundaries
+selftest PASS resolve_commit_and_ancestor
+selftest PASS ls_tree_entry_and_blob_bytes
+selftest PASS check_d1_holds_on_synthetic_evidence
+selftest PASS check_d1_rejects_forged_evidence
+selftest PASS check_d4_holds_and_rejects_negation
+selftest PASS verdict_maps_held_and_failed
+selftest PASS emit_writes_one_json_line
+selftest PASS main_failed_verdict_exit_1
+selftest PASS main_unreadable_repo_exit_2
+selftest PASS main_unresolvable_rev_exit_2
+selftest PASS selftest_flag_branch_rejects_companions
+selftest PASS repo_and_rev_stay_required
+ROUTED_R24_SELFTEST pass=26 fail=0
+tools/mori-routed-r24.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-runway-win.py --selftest
+selftest grammar              PASS
+selftest pct_math             PASS
+selftest zero_is_real         PASS
+selftest quota_boundary       PASS
+selftest honest_unavailable   PASS
+selftest partial              PASS
+selftest redaction            PASS
+selftest rc_contract          PASS
+selftest malformed_fixture    PASS
+RUNWAY_WIN_SELFTEST: PASS (9 cases)
+tools/mori-runway-win.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-seat-terminal.py --selftest
+{"arms":49,"finding_id":"SELFTEST_OK","passed":49,"schema":"mori-seat-terminal-selftest-v1","tool_sha256":"de845692000e0318606562dd31877c9a64a88ee0117fa1f22cbc7d4220468af3"}
+tools/mori-seat-terminal.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-settlement-scan.py --selftest
+SETSCAN_SELFTEST pass=10 fail=0
+tools/mori-settlement-scan.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-source-drift.py --selftest
+selftest exit_code            PASS
+selftest row_states           PASS
+selftest summary              PASS
+selftest huge_cap             PASS (over_cap=unavailable at_cap=body len=4194304 frozen_cap_literal=True transport_cap=4194304)
+selftest redirect_private_refused PASS
+selftest missing_sources_exit2 PASS
+MORI_SOURCE_DRIFT_SELFTEST: PASS (6 cases)
+tools/mori-source-drift.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-sources-appendonly.py --selftest
+MORI_SOURCES_APPENDONLY_SELFTEST pass=22 fail=0
+tools/mori-sources-appendonly.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-ua-variance.py --selftest
+selftest separates_per_response_from_stable         PASS (rc=0,0,0 counts=('2', '4', '1', '3', '5', '5', '3'))
+selftest token_value_never_emitted                  PASS (compare output carries counts only, no line values)
+selftest summary_line_shape                         PASS (label + counts + run-start on one line)
+selftest identical_bodies_zero_per_response         PASS (per-response=0 same-bytes=true)
+selftest capture_failure_rc1_no_body                PASS (rc=1 out-written=False)
+selftest missing_input_exit2                        PASS (rc=2)
+selftest window_stated_when_given                   PASS (rc=0 window-s=1260)
+selftest window_unstated_marked_unavailable         PASS (rc=0 unstated-window field present=True)
+selftest window_rejects_non_integer                 PASS (rc=2 stdout-empty=True)
+selftest crosscheck_consistent                      PASS (rc=0 consistent-with-basis=True)
+selftest crosscheck_inconsistent_is_lead_not_failure PASS (rc=0 (a disagreement is a reported lead, never rc 1))
+selftest crosscheck_reverse_disagreement            PASS (rc=0 reverse-lead=True)
+selftest crosscheck_absent_unavailable              PASS (rc=0 absent-arm marked unavailable=True)
+selftest crosscheck_nonsummary_input_exit2          PASS (rc=2 (a provided file that is not a re-check summary is a setup error, matching --from-sweep strictness))
+MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)
+tools/mori-ua-variance.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-unlanded-check.py --selftest
+PASS clean_tree_exit0  rc=0 UNLANDED=clean round=8
+PASS untracked_late_result_exit1_names_it  rc=1 ['UNLANDED=dirty round=8 paths=1', 'unlanded ?? .ufo/waves/round-8/w2/Late.md']
+PASS modified_tracked_report_exit1  rc=1 ['UNLANDED=dirty round=8 paths=1', 'unlanded .M .ufo/waves/round-8/w1/A.md']
+PASS outside_scope_and_scratch_not_listed  rc=0 ['UNLANDED=clean round=8']
+PASS other_round_not_listed  rc=0 ['UNLANDED=clean round=8']
+PASS other_round_listed_for_that_round  rc=1
+PASS lessons_and_space_in_path_listed  rc=1 ['UNLANDED=dirty round=8 paths=2', 'unlanded ?? corpus/lessons/round-8.md', 'unlanded ?? tools/new tool.py']
+PASS staged_but_uncommitted_listed  rc=1
+PASS rename_source_not_listed  rc=0 ['UNLANDED=clean round=8']
+PASS in_scope_rename_lists_destination_only  rc=1 ['UNLANDED=dirty round=8 paths=1', 'unlanded R. corpus/moved.md']
+PASS list_cap_50_of_60  rc=1 lines=51 last=unlanded ?? .ufo/waves/round-8/w2/F49.md
+PASS modified_status_rendered_with_dot  rc=1 ['UNLANDED=dirty round=8 paths=1', 'unlanded .M corpus/lessons/round-8.md']
+PASS subdirectory_is_setup_error  --repo is not a repository top level (git top level is /fast/scratch/hyaku/mori-
+PASS missing_directory_is_setup_error  setup
+PASS cli_dirty_rc1  rc=1
+PASS cli_setup_rc2  rc=2
+PASS cli_usage_rc2  rc=2
+UNLANDED_SELFTEST pass=17 fail=0
+tools/mori-unlanded-check.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-uptime-win.py --selftest
+selftest grammar              PASS
+selftest unit_math            PASS
+selftest zero_is_real         PASS
+selftest honest_unavailable   PASS
+selftest negative_rejected    PASS
+selftest noninteger_rejected  PASS
+selftest redaction            PASS
+selftest uint64_max_rendered  PASS
+UPTIME_WIN_SELFTEST: PASS (8 cases)
+tools/mori-uptime-win.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-vote-bind.py --selftest
+VOTE_BIND_SELFTEST pass=16 fail=0
+tools/mori-vote-bind.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-wave-settlement.py --selftest
+MORI_WAVE_SETTLEMENT_SELFTEST: PASS (23 cases, 23 passed, 0 failed)
+tools/mori-wave-settlement.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I tools/mori-workstate-win.py --selftest
+selftest grammar              PASS
+selftest unit_math            PASS
+selftest zero_is_real         PASS
+selftest honest_unavailable   PASS
+selftest negative_rejected    PASS
+selftest noninteger_rejected  PASS
+selftest redaction            PASS
+selftest uint64_max_rendered  PASS
+selftest delta_signed_shape   PASS
+selftest conversion_floor     PASS
+WORKSTATE_WIN_SELFTEST: PASS (10 cases)
+tools/mori-workstate-win.py --selftest rc=0
+$ timeout --kill-after=5s 120s bash tools/mori-blind-check.sh --selftest
+PASS
+tools/mori-blind-check.sh --selftest rc=0
+$ timeout --kill-after=5s 120s bash tools/mori-census.sh --selftest
+PASS roster: parse conf order, quote-terminated row and comments without sourcing (exit 0 CLEAN)
+PASS roster: config was not sourced (canary absent)
+PASS roster: rows outside LANES= are not lanes
+PASS roster: MORI_ROSTER_LANES override wins (exit 0 CLEAN)
+PASS roster: absent conf and state select historical builtin (exit 0 CLEAN)
+PASS roster: conf-only set retained when state set is empty (exit 0 CLEAN)
+PASS roster: unreadable conf is not treated as an empty set (exit 0 CLEAN)
+PASS roster: unreadable conf does not manufacture mismatch
+PASS roster: mismatch is INFO and names both set differences (exit 0 CLEAN)
+PASS roster: invalid ids dropped and counted; symlink counter excluded (exit 0 CLEAN)
+PASS roster: state symlink excluded from roster
+PASS clean: all quiet (exit 0 CLEAN)
+PASS drift: WATCHDOG_ABSENT (exit 1 DRIFT)
+PASS drift: WATCHDOG_STALE (exit 1 DRIFT)
+PASS watchdog: unreadable state dir -> unavailable-disclosed, no crash (exit 0 CLEAN)
+PASS watchdog: missing state dir -> provable 0, no crash (exit 0 CLEAN)
+PASS watchdog: empty state dir -> provable 0, no crash (exit 0 CLEAN)
+PASS drift: WAVE_UNSETTLED_AGE (exit 1 DRIFT)
+PASS clean: unsettled young wave does not fire (exit 0 CLEAN)
+PASS journal: all twelve scoped cells counted; one OOM crit; user SIGKILL warn; routing info (exit 1 DRIFT)
+PASS journal: system kernel-OOM notice alone alarms crit (exit 1 DRIFT)
+PASS journal: unit query rc1 unavailable; kernel OOM still crit, split tokens unavailable (exit 1 DRIFT)
+PASS journal: fleet unit failure is INFO and CLEAN (owner mori) (exit 0 CLEAN)
+PASS journal: non-fleet unit failure is INFO, CLEAN, owner tsukuroi (exit 0 CLEAN)
+PASS journal: both subject fields present -> unknown even when equal (exit 0 CLEAN)
+PASS journal: legal systemd \xHH unit name classifies (non-fleet) (exit 0 CLEAN)
+PASS journal: illegal backslash escape is malformed, never non-fleet (exit 0 CLEAN)
+PASS journal: user unit result signal alone warns and DRIFTS (exit 1 DRIFT)
+PASS journal: fleet unit oom-kill alarms crit and stays in the fleet route (exit 1 DRIFT)
+PASS journal: subjectless unit oom-kill alarms crit; raw count and unattributed kept (exit 1 DRIFT)
+PASS journal: array UNIT_RESULT is unknown, not oom evidence; CLEAN (exit 0 CLEAN)
+PASS journal: UNIT newline injection never reaches output (unknown bucket) (exit 0 CLEAN)
+PASS journal: system journal USER_UNIT subject classifies fleet (scope-independent) (exit 0 CLEAN)
+PASS journal: legacy text ids are not counted (Q15) (exit 0 CLEAN)
+PASS journal: user producer rc1 -> user unavailable, system still counted (exit 0 CLEAN)
+PASS journal: system producer rc2 -> system unavailable, user ok (exit 0 CLEAN)
+PASS journal: system producer rc1 -> system unavailable, user still counted (exit 0 CLEAN)
+PASS journal: nonempty stderr -> unavailable, never counted (exit 0 CLEAN)
+PASS journal: malformed JSON -> unavailable, never 0 (exit 0 CLEAN)
+PASS journal: record identity mismatch -> unavailable (exit 0 CLEAN)
+PASS journal: record from another boot -> unavailable (exit 0 CLEAN)
+PASS journal: records from several boots -> unavailable:multi-boot (exit 0 CLEAN)
+PASS journal: one valid OOM record survives a mixed invalid kernel stream (exit 1 DRIFT)
+PASS journal: valid unit oom-kill survives a foreign-boot sibling (exit 1 DRIFT)
+PASS journal: valid unit signal survives a foreign-boot sibling and warns (exit 1 DRIFT)
+PASS journal: numeric status 9 is valid; a non-9 sibling suppresses only the aggregate (exit 1 DRIFT)
+PASS journal: non-scalar/non-9 status records are never positive evidence (exit 0 CLEAN)
+PASS journal: foreign-boot-only stream leaves positive at a real zero (exit 0 CLEAN)
+PASS journal: parseable non-object neighbors preserve an independent OOM witness (exit 1 DRIFT)
+PASS journal: non-object records alone never fabricate positive evidence (exit 0 CLEAN)
+PASS journal: valid record plus truncated JSON stays unavailable without salvage (exit 0 CLEAN)
+PASS journal: absent JSON parser -> both scopes unavailable, no counts (exit 0 CLEAN)
+PASS journal: absent journalctl -> both scopes unavailable (exit 0 CLEAN)
+PASS journal: invalid boot anchor -> both scopes unavailable (exit 0 CLEAN)
+PASS drift: CGROUP_OOM_KILL (exit 1 DRIFT)
+PASS drift: DISK_CRITICAL (exit 1 DRIFT)
+PASS clean: disk under warn (exit 0 CLEAN)
+PASS drift: LANE_SILENT (exit 1 DRIFT)
+PASS silence: subject commit post-launch -> progressing (exit 0 CLEAN)
+PASS silence: pre-launch commit only -> silent (exit 1 DRIFT)
+PASS silence: commit at ct==launch is not post-launch -> silent (exit 1 DRIFT)
+PASS silence: other-authored commit only -> progressing-weak (exit 0 CLEAN)
+PASS silence: 12k-history exact subject -> progressing (F01) (exit 0 CLEAN)
+PASS silence: 12k-history siblings only -> progressing-weak, exact count (exit 0 CLEAN)
+PASS silence: strict age gate (age == gate) -> young (exit 0 CLEAN)
+PASS silence: synthetic ts= ledger anchor (exit 0 CLEAN)
+PASS silence: unparseable launch ts -> unavailable (exit 0 CLEAN)
+PASS silence: committed report in window -> not-open (exit 0 CLEAN)
+PASS jj: HEAD ahead of branch -> HEAD_BRANCH_MISMATCH warn (exit 1 DRIFT)
+PASS jj: lane committer with foreign author -> LANE_AUTHOR_MISMATCH warn (exit 1 DRIFT)
+PASS jj: sibling-lane author is legitimate -> no LANE_AUTHOR_MISMATCH (exit 0 CLEAN)
+PASS jj: sibling-lane author was not flagged
+PASS jj: detached HEAD at branch tip -> no finding, judgeable verdict (exit 0 CLEAN)
+PASS jj: detached-at-tip emitted no C2 finding
+PASS git: attached branch lane -> no finding, same verdict as detached (exit 0 CLEAN)
+PASS git: attached lane emitted no C2 finding
+PASS jj: merge-base probe error -> no finding, row text unchanged (exit 0 CLEAN)
+PASS jj: probe error was not promoted to HEAD_BRANCH_MISMATCH
+PASS git: no resolvable branch -> entering HEAD anchor, no finding (exit 0 CLEAN)
+PASS git: unresolved branch emitted no C2 finding
+PASS jj: recorded master mirror beats attached side branch (exit 0 CLEAN)
+PASS jj: sidebranch control emitted no C2 finding
+PASS jj: no lane.branch mirror -> unavailable ref-unresolved (exit 0 CLEAN)
+PASS jj: mirror names a missing ref -> unavailable ref-unresolved (exit 0 CLEAN)
+PASS young: ambient-author diagnostic precedes the age gate (exit 1 DRIFT)
+PASS git env: trace canary hook active on git stub
+PASS git env: non-git stub ignores trace variables
+PASS git env: inherited GIT_TRACE*/GIT_CONFIG* scrubbed, branch normal (exit 0 CLEAN)
+PASS git env: trace canary absent — GIT_TRACE* scrubbed
+PASS silence: close r7 then close r5 -> r7 anchor stays closed (exit 0 CLEAN)
+PASS silence: close for another round does not close the anchor (exit 1 DRIFT)
+PASS silence: git rc!=0 -> unavailable, never silent (exit 0 CLEAN)
+PASS silence: unreadable subtree -> unavailable verdict, no crash (exit 0 CLEAN)
+PASS waves: unreadable wave age -> no crash, no false finding (exit 0 CLEAN)
+PASS clean: CGROUP_UNAVAILABLE is not DRIFT (exit 0 CLEAN)
+PASS clean: empty journal (exit 0 CLEAN)
+PASS tmux: fleet vs foreign pane classification (exit 0 CLEAN)
+PASS tmux: no pane data -> relevance unavailable, count intact (exit 0 CLEAN)
+PASS tmux: pane probe rc!=0 -> relevance unavailable (exit 0 CLEAN)
+PASS drift: MEM_PRESSURE_HIGH at local PSI threshold (exit 1 DRIFT)
+PASS clean: PSI just under the local threshold does not fire (exit 0 CLEAN)
+PASS drift: MEM_FILL_HIGH vs numeric cgroup limit (exit 1 DRIFT)
+PASS clean: cgroup fill under threshold does not fire (exit 0 CLEAN)
+PASS drift: MEM_AVAIL_LOW at unlimited-slice host scope (exit 1 DRIFT)
+PASS disk: since-boot write average from diskstats (exit 0 CLEAN)
+PASS disk: device missing from diskstats -> unmeasured disclosed (exit 0 CLEAN)
+PASS disk: missing uptime -> rate unavailable, not zero (exit 0 CLEAN)
+PASS watchdog: state value below ledger launch -> LAG info (exit 0 CLEAN)
+PASS watchdog: state value above ledger launch -> AHEAD info (exit 0 CLEAN)
+PASS clean: matching state and ledger compare, no mismatch finding (exit 0 CLEAN)
+PASS watchdog: unreadable round value counted, no crash (exit 0 CLEAN)
+PASS watchdog: symlink *.round counted with reason, never followed (exit 0 CLEAN)
+PASS watchdog: directory *.round counted with reason (exit 0 CLEAN)
+PASS watchdog: all four non-value classes counted by reason (exit 0 CLEAN)
+PASS tmux: fresh fleet session -> probed, not idle (exit 0 CLEAN)
+PASS tmux: idle fleet session -> INFO finding, foreign session not probed (exit 0 CLEAN)
+PASS tmux: non-integer activity -> freshness unavailable, never idle=0 (exit 0 CLEAN)
+PASS tmux: activity probe rc!=0 -> freshness unavailable reason=rc-1 (exit 0 CLEAN)
+PASS tmux: sleeping probe is bounded -> rc-124 unavailable, no hang (exit 0 CLEAN)
+PASS tmux: no timeout binary -> freshness refused, never run unbounded (exit 0 CLEAN)
+PASS cgroup: scope high-watermark read with its instance anchor (exit 0 CLEAN)
+PASS cgroup: non-integer peak refused, bytes never echoed (exit 0 CLEAN)
+PASS drift: --pin writes a baseline (exit 0)
+PASS drift: baseline records the volatile contract (exit 0)
+PASS drift: pin -> drift is clean (exit 0)
+PASS drift: volatile churn (new ts, moved ages) stays clean (exit 0)
+PASS drift: one-field regression names the field (exit 1)
+PASS drift: removed finding is named (exit 1)
+PASS drift: missing baseline exits 2 with a diagnostic (exit 2)
+PASS drift: changed volatile contract is reported (exit 1)
+PASS cli: unknown arg exit 2 (exit 2)
+PASS cli: --help exit 0 (exit 0)
+PASS cli: --pin without a path exits 2 (exit 2)
+PASS cli: --drift without a path exits 2 (exit 2)
+MORI_CENSUS_SELFTEST: PASS (134 cases, 134 passed, 0 failed)
+tools/mori-census.sh --selftest rc=0
+$ timeout --kill-after=5s 120s bash tools/mori-index-clean.sh --selftest
+MORI_INDEX_CLEAN_SELFTEST pass=4 fail=0
+tools/mori-index-clean.sh --selftest rc=0
+$ timeout --kill-after=5s 120s bash tools/mori-silence-cases.sh --selftest
+MORI_SILENCE_CASES_SELFTEST pass=24 fail=0
+tools/mori-silence-cases.sh --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I .ufo/waves/round-80/count-c1.py da7631f4a44aaa6d7c1c822308df4d265fb8d7da
+C1=met tool=present sweep=0 mismatches=0 unresolved=0 tallies=0 stale=0 row_tally=19 live_tally=19 rev=da7631f4a44a
+round-80/count-c1.py rc=0
+$ timeout --kill-after=5s 120s python3 -I .ufo/waves/round-80/count-c3.py da7631f4a44aaa6d7c1c822308df4d265fb8d7da
+C3=met named=57 present=57 missing=0 extra=0 rev=da7631f4a44a
+round-80/count-c3.py rc=0
+$ timeout --kill-after=5s 120s python3 -I .ufo/waves/round-81/count-c1.py --selftest
+case verdict met pass 
+case verdict unmet pass 
+case verdict setup pass 
+case seven fixtures pass 7
+case expectation mix pass 
+case always-met stub is wrong pass wrong=4
+case always-unmet stub is wrong pass wrong=3
+case met-with-rc2 stub is wrong everywhere pass wrong=7
+C1_COUNTER_SELFTEST pass=8 fail=0
+round-81/count-c1.py --selftest rc=0
+$ timeout --kill-after=5s 120s python3 -I .ufo/waves/round-81/count-c2.py --selftest
+case pending in round table pass 
+case pending outside a round section ignored pass 
+case pending prose ignored pass 
+case stated first row pass 
+case live single pass 
+case live conflicting pass 
+case pins schema pass 
+case pending substring is not a cell pass 
+case required row population pass 
+case required row missing pass 
+case export roundtrip pass 
+case clean record met pass {'pending': 0, 'pinned': 0, 'tool': 'present', 'agree': 1, 'met': True}
+case pending record unmet pass C2=unmet pending=1 pinned=1 tool=present agree=0
+case stale pinned unmet pass C2=unmet pending=0 pinned=2 tool=present agree=0
+case tool absent unmet pass C2=unmet pending=0 pinned=1 tool=absent agree=0
+case tampered pins unmet pass C2=unmet pending=0 pinned=1 tool=present agree=0
+case tool disagree unmet pass C2=unmet pending=0 pinned=1 tool=present agree=0
+case failing command unmet pass {'pending': 0, 'pinned': 2, 'tool': 'present', 'agree': 0, 'met': False}
+case second binding counted pass {'pending': 0, 'pinned': 2, 'tool': 'present', 'agree': 0, 'met': False}
+case space path export pass 
+case space path met pass None
+C2_COUNTER_SELFTEST pass=21 fail=0
+round-81/count-c2.py --selftest rc=0
+BATTERY 57/61
+BATTERY pass=57 setup=4 fail=0
