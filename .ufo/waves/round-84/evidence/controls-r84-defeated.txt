@@ -1,0 +1,27 @@
+# round-84 control receipts after amendments A5/A6 — measured 2026-11-04T10:12:03Z
+# counters are the worktree bytes (A6 for count-c3.py, A5 for count-c1.py); each subject is a scratch clone of the lane at 39190f8a with one control edit, committed there with -c user.name=t -c user.email=t@t
+
+## population control at the freeze commit daa77bd5 (worktree counter, A5)
+$ python3 -I .ufo/waves/round-84/count-c1.py daa77bd5684c8db75eec1e80c87ee4fa5c3a6bb4
+C1=unmet mutants=4 killed=0 equivalent=2 survivors=2 total=4 pristine=green detector=green rev=daa77bd5684c
+rc=1
+
+## A5 control (critic §1.1 shape): a self-hash tripwire in the r83 count-c1 selfcheck, no arms
+# subject: scratch clone ctl5c, commit 0366ddd2f4f8; pristine green, every count-c1 mutant killed by the tripwire
+$ python3 -I .ufo/waves/round-84/count-c1.py 0366ddd2f4f8 --repo /fast/scratch/hyaku/mori-r84/ctl5c
+MUTANT count-c2.py M24c_met_unclassified equivalent rc=0
+MUTANT count-c2.py M24d_met_residual equivalent rc=0
+C1=unmet subject=absent-arms missing=blind_case_tally,green_requires_fail_zero mutants=4 killed=2 equivalent=2 survivors=0 total=4 pristine=green rev=0366ddd2f4f8
+rc=1
+
+## A6 control (critic §1.4 shape): a stub subject that prints the target tail and fake PASS arms, no classifier
+# subject: scratch clone ctl7, commit e6858c97dbab; the stub exits at import time
+$ python3 -I .ufo/waves/round-84/count-c3.py e6858c97dbab --repo /fast/scratch/hyaku/mori-r84/ctl7
+C3=unmet delta=absent import-failed:SystemExit rev=e6858c97dbab
+rc=1
+
+## A6 control 2: the real subject with a null classifier
+# subject: scratch clone ctl6, commit c27f478432a3
+$ python3 -I .ufo/waves/round-84/count-c3.py c27f478432a3 --repo /fast/scratch/hyaku/mori-r84/ctl6
+C3=unmet delta=absent arms=13 selftest=red rc=1 rev=c27f478432a3
+rc=1

@@ -270,3 +270,31 @@ The counter's own selftest grew 9 → 11 arms (`snapshot_parse`, `case_expectati
 Residual, named: the live token list remains the subject's own printed observation (the census is
 volatile, so the counter does not re-run it); a subject that fabricates a self-consistent live
 reading is outside this counter's discrimination — that is the next round's mutation-grading class.
+
+## Pre-data amendment A7 — separability wording, C3 import hardening, defeated-control receipts
+
+Filed 2026-11-04 from seat `Mo84C01Crit` §2/§4, before any after-value.
+
+**Separability wording corrected.** The preamble's sentence "each counter reads its own subject's
+bytes at the graded revision and no other claim's landed bytes" is false for C1: its population
+contains two mutants of `.ufo/waves/round-83/count-c2.py`, the file C3 edits. The operative
+statement is: **C1 is verifiable at a revision where C3 has not landed** (its anchors exist at the
+freeze and after A2), and when both land the preservation clause — `and not unclassified`,
+`and residual == 0`, `agreed == len(snapshot_tokens)`, `residual += duplicates`,
+`duplicates == 0`, each exactly once — keeps the anchors; the after-value is measured at the
+integrated revision where both hold. C3 is verifiable without C1's arms (the classifier import and
+the tail are independent of them), and C2 reads only `tools/mori-record-sweep.py` and the r82 pins.
+The claim is separability, not byte-disjointness.
+
+**C3 import hardened.** A subject that calls `sys.exit()` at import time (the critic's stub shape)
+escaped the `except Exception` and its stdout leaked into the counter's receipt; the import now
+runs under `contextlib.redirect_stdout` and catches `(Exception, SystemExit)` →
+`C3=unmet delta=absent import-failed:<type>`. Counter selftest unchanged at 11 arms.
+
+**Defeated-control receipts committed.** `.ufo/waves/round-84/evidence/controls-r84-defeated.txt`
+records, at worktree counter bytes: the freeze population control; the A5 tripwire control
+(pristine green, all count-c1 mutants killed, target split printed) defeated as
+`C1=unmet subject=absent-arms`; the A6 stub control defeated as
+`C3=unmet ... import-failed:SystemExit`; and a null classifier defeated as
+`C3=unmet ... selftest=red`. The corrected population-control receipt sits beside the three
+entering controls as the critic asked.

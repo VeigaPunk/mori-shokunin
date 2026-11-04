@@ -21,7 +21,9 @@ Usage: count-c3.py <rev> [--repo DIR] [--scratch DIR] | count-c3.py --selftest
 Exit 0 met, 1 unmet, 2 setup. Read-only: `git show`; the subject runs in scratch only.
 """
 import argparse
+import contextlib
 import importlib.util
+import io
 import os
 import re
 import shutil
@@ -223,12 +225,15 @@ def main(argv):
         write_tree(export, {SUBJECT: subject})
         path = os.path.join(export, SUBJECT)
         try:
-            module = load_subject(path)
-        except Exception as exc:                      # noqa: BLE001 - report, never crash
-            print("C3=unmet delta=absent import-failed:%s rev=%s" % (exc, rev[:12]))
+            with contextlib.redirect_stdout(io.StringIO()):
+                module = load_subject(path)
+        except (Exception, SystemExit) as exc:        # noqa: BLE001 - report, never crash
+            print("C3=unmet delta=absent import-failed:%s rev=%s"
+                  % (type(exc).__name__, rev[:12]))
             return 1
         classifier_met, classifier_detail = classifier_ok(module)
-        snapshot_text = show(SNAPSHOT)
+        qs = run(["git", "-C", repo, "show", "%s:%s" % (rev, SNAPSHOT)])
+        snapshot_text = qs.stdout if qs.returncode == 0 else None
         recount = len(snapshot_tokens(snapshot_text)) if snapshot_text is not None else -1
         rc, out = selftest_run(path, scratch)
         m = SELFTEST.search(out)
