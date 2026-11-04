@@ -61,6 +61,12 @@ MUTANTS = (
 )
 
 FAIL = re.compile(r"\bfail=([1-9][0-9]*)\b")
+KILL_TOKEN = re.compile(r"\bkilled=(\d+)\b")
+SURVIVOR_TOKEN = re.compile(r"\bsurvivors=(\d+)\b")
+TOTAL_TOKEN = re.compile(r"\btotal=(\d+)\b")
+# A revision's `harness=present` means the file IS this harness: every frozen mutant label and
+# the detector-selftest marker must be in its bytes (C01: an existence-only check passed a stub).
+FROZEN_MARKERS = tuple(label for _, label, _, _ in MUTANTS) + ("C1_COUNTER_SELFTEST",)
 
 # Sibling files a counter's own --selftest reads from its repo root (r81 count-c2 reads its
 # record-pins.json beside it; r80 count-c1 writes its own pins in-fixture but the file exists).
@@ -164,7 +170,7 @@ def grade(loader, scratch, mutants=MUTANTS):
     survivors = len([line for line in lines if " survived " in line])
     killed_n = total - survivors
     met = pristine_ok and total > 0 and survivors == 0 and not any(
-        e.startswith("empty-mutation") for e in extras)
+        e.startswith("empty-mutation") or e.startswith("unanchored") for e in extras)
     tail = (f"harness=present killed={killed_n} survivors={survivors} total={total} "
             f"pristine={'green' if pristine_ok else 'red'}")
     return met, tail, lines, extras
@@ -191,12 +197,17 @@ def selfcheck(scratch):
     met, tail, lines, extras = grade(
         disk, scratch,
         [("tools/sensitive.py", "trip_guard", "GUARD = 1", "GUARD = 0")])
-    cases.append(("sensitive_killed", met and "killed=1" in tail and "survivors=0" in tail,
-                  tail + " | " + ";".join(lines)))
+    km = KILL_TOKEN.search(tail)
+    sm = SURVIVOR_TOKEN.search(tail)
+    tm = TOTAL_TOKEN.search(tail)
+    cases.append(("sensitive_killed",
+                  met and km and sm and tm and km.group(1) == "1" and sm.group(1) == "0"
+                  and tm.group(1) == "1", tail + " | " + ";".join(lines)))
     met, tail, lines, _ = grade(
         disk, scratch, [("tools/blind.py", "noop", "print('FAKE pass=1 fail=0')",
                          "print('FAKE pass=1 fail=0') # noop")])
-    cases.append(("blind_survives", (not met) and "survivors=1" in tail, tail))
+    bs = SURVIVOR_TOKEN.search(tail)
+    cases.append(("blind_survives", (not met) and bs and bs.group(1) == "1", tail))
     dup = ("GUARD = 1\nGUARD = 1\n"
            "print('FAKE pass=1 fail=0')\n")
     write(d, "dup.py", dup, None)
@@ -249,9 +260,21 @@ def main(argv):
                 return None
             return q.stdout
 
-        if loader(".ufo/waves/round-82/count-c1.py") is None:
+        harness = loader(".ufo/waves/round-82/count-c1.py")
+        if harness is None:
             print(f"C1=unmet harness=absent rev={rev[:12]}")
             return 1
+        missing_markers = [m for m in FROZEN_MARKERS if m not in harness]
+        if missing_markers:
+            print(f"C1=unmet harness=present markers=missing:{','.join(missing_markers[:3])} "
+                  f"rev={rev[:12]}")
+            return 1
+        own = subprocess.run([sys.executable, "-I", os.path.abspath(__file__),
+                              "--selftest", "--scratch", scratch],
+                             capture_output=True, text=True, timeout=300)
+        own_out = (own.stdout or "") + (own.stderr or "")
+        own_ok = own.returncode == 0 and "C1_COUNTER_SELFTEST" in own_out and \
+            "fail=0" in own_out
         met, tail, lines, extras = grade(loader, scratch)
         if tail.startswith("setup=absent:"):
             print(f"C1=unmet harness=absent rev={rev[:12]}")
@@ -263,8 +286,12 @@ def main(argv):
             print(line)
         for extra in extras:
             print(extra)
-        print(f"C1={'met' if met else 'unmet'} {tail} rev={rev[:12]}")
-        return 0 if met else 1
+        if not own_ok:
+            print("detector-selftest=red " + own_out.strip().splitlines()[-1:][0]
+                  if own_out.strip() else "detector-selftest=red")
+        print(f"C1={'met' if (met and own_ok) else 'unmet'} {tail} "
+              f"detector={'green' if own_ok else 'red'} rev={rev[:12]}")
+        return 0 if (met and own_ok) else 1
     finally:
         shutil.rmtree(scratch, ignore_errors=True)
 

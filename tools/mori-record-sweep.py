@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Read-only record sweep (round 81, C2), Python 3 standard library only.
 
-Usage: mori-record-sweep.py --root DIR [--pins FILE] [--carriers A[,B]]
+Usage: mori-record-sweep.py --root DIR [--pins FILE] [--carriers A[,B]] [--git DIR]
        mori-record-sweep.py --selftest | --help
 
 Relative pins and carrier paths are root-relative. Default carriers are SCORECARD.md
@@ -12,8 +12,11 @@ Pinned rows use the first matching table row that states the key; repeated live
 readings must agree. Commands are trusted read-only argv bindings, not shell text:
 this tool does not sandbox them or certify their relevance or lack of side effects.
 Exit 0 clean, 1 mismatches, 2 setup. Stdout only; no writes, sockets or temporary
-files. Only the pinned commands are children, run with cwd=ROOT. Selftest is wholly
-in-memory and spawns no children. No import of repository modules is required.
+files. Children are the pinned commands (cwd=ROOT) and read-only git commands.
+Revision bindings require the first matching table row and the named revision's
+blob to contain key=value; --git defaults to ROOT. Summary bindings counts both
+binding lists; revisions counts mismatches (present when revisions is supplied).
+Selftest is wholly in-memory and spawns no children. No repository imports.
 """
 
 import argparse
@@ -68,9 +71,12 @@ def live_value(stdout, key):
 
 def parse_pins(text):
     data = json.loads(text)
-    if not isinstance(data, dict) or data.get('schema') != 'mori-record-pins-v1':
+    if not isinstance(data, dict):
+        raise ValueError('pins must be an object')
+    if (data.get('schema') != 'mori-record-pins-v1'
+            and not ('revisions' in data and 'schema' not in data)):
         raise ValueError('pins schema must be mori-record-pins-v1')
-    bindings = data.get('bindings')
+    bindings = data.get('bindings', [])
     if not isinstance(bindings, list):
         raise ValueError('bindings must be a list')
     for binding in bindings:
@@ -85,6 +91,58 @@ def parse_pins(text):
                 or not command[0]):
             raise ValueError('binding command must be a nonempty argv list')
     return bindings
+
+
+def parse_revisions(text):
+    data = json.loads(text)
+    revisions = data.get('revisions', [])
+    if not isinstance(revisions, list):
+        raise ValueError('revisions must be a list')
+    for binding in revisions:
+        if not isinstance(binding, dict):
+            raise ValueError('revision binding must be an object')
+        if any(not isinstance(binding.get(key), str) or not binding[key].strip()
+               or '\0' in binding[key]
+               for key in ('carrier', 'row_contains', 'key', 'rev', 'path')):
+            raise ValueError('revision binding needs nonempty carrier, row_contains, key, rev and path')
+        if type(binding.get('value')) is not int or binding['value'] < 0:
+            raise ValueError('revision binding value must be a nonnegative integer')
+    return revisions
+
+
+def contains_value(text, key, value):
+    """Match the exact numeric token, not a prefix of a larger identifier/value."""
+    token = '%s=%d' % (key, value)
+    return re.search(r'(?<![\w.-])%s(?![\w.-])' % re.escape(token), text) is not None
+
+
+def revision_sweep(texts, bindings, git_reader):
+    """Grade each binding in order, reporting its first failed requirement."""
+    findings = []
+    for binding in bindings:
+        carrier = binding['carrier']
+        number, row = 1, ''
+        for line, text in enumerate(texts[carrier].splitlines(), 1):
+            if ROW.match(text) and binding['row_contains'] in text:
+                number, row = line, text
+                break
+        if not row or not contains_value(row, binding['key'], binding['value']):
+            detail = 'row-value'
+        else:
+            rc, commit = git_reader(['rev-parse', '--verify', '--end-of-options',
+                                     binding['rev'] + '^{commit}'])
+            if rc != 0:
+                detail = 'rev-unresolvable'
+            else:
+                rc, blob = git_reader(['show', commit.strip() + ':' + binding['path']])
+                if rc != 0:
+                    detail = 'path-absent'
+                elif not contains_value(blob, binding['key'], binding['value']):
+                    detail = 'rev-bytes'
+                else:
+                    continue
+        findings.append(('revision', carrier, number, detail))
+    return findings
 
 
 def lane_path(root, name):
@@ -123,13 +181,19 @@ def sweep(texts, carriers, bindings, runner):
     return findings
 
 
-def emit(findings, carriers, bindings):
+def emit(findings, carriers, bindings, include_revisions=False):
     for arm, carrier, line, detail in findings:
-        print('RECORD_SWEEP_MISMATCH %s %s:%d %s' % (arm, carrier, line, detail))
+        if arm == 'revision':
+            print('REVISION_MISMATCH %s:%d %s' % (carrier, line, detail))
+        else:
+            print('RECORD_SWEEP_MISMATCH %s %s:%d %s' % (arm, carrier, line, detail))
     pending = sum(item[0] == 'pending' for item in findings)
     pinned = sum(item[0] == 'pinned' for item in findings)
-    print('RECORD_SWEEP pending=%d pinned=%d carriers=%d bindings=%d' %
-          (pending, pinned, carriers, bindings))
+    summary = 'RECORD_SWEEP pending=%d pinned=%d carriers=%d bindings=%d' % (
+        pending, pinned, carriers, bindings)
+    if include_revisions:
+        summary += ' revisions=%d' % sum(item[0] == 'revision' for item in findings)
+    print(summary)
     return int(bool(findings))
 
 
@@ -183,6 +247,51 @@ def selftest():
     missing = sweep({'SCORECARD.md': '| tool missing |'}, ['SCORECARD.md'], [binding],
                     lambda command: (0, 'n=4'))
     check('missing-stated-mismatch', len(missing) == 1 and missing[0][0] == 'pinned')
+    revision = dict(carrier='SCORECARD.md', row_contains='tool', key='pointers',
+                    value=240, rev='A', path='SCORECARD.md')
+
+    def revision_case(rows, revisions, resolved=True, present=True, blob='pointers=240'):
+        calls = []
+
+        def git_reader(command):
+            calls.append(command)
+            if command[0] == 'rev-parse':
+                return (0, 'commit-a\n') if resolved else (1, '')
+            return (0, blob) if present else (1, '')
+
+        found = revision_sweep({'SCORECARD.md': rows}, revisions, git_reader)
+        return found, calls
+
+    row = '| tool pointers=240 |'
+    found, calls = revision_case(row, [revision])
+    check('revision-conformant', not found and calls == [
+        ['rev-parse', '--verify', '--end-of-options', 'A^{commit}'],
+        ['show', 'commit-a:SCORECARD.md']])
+    found, _ = revision_case(row, [revision], blob='pointers=237')
+    check('revision-D81-1', found == [('revision', 'SCORECARD.md', 1, 'rev-bytes')])
+    found, calls = revision_case(row, [revision], resolved=False)
+    check('revision-unresolvable', found == [
+        ('revision', 'SCORECARD.md', 1, 'rev-unresolvable')] and len(calls) == 1)
+    found, _ = revision_case(row, [revision], present=False)
+    check('revision-path-absent', found == [('revision', 'SCORECARD.md', 1, 'path-absent')])
+    found, calls = revision_case('| other pointers=240 |', [revision])
+    check('revision-missing-row', found == [
+        ('revision', 'SCORECARD.md', 1, 'row-value')] and not calls)
+    second = dict(revision, row_contains='second', value=237)
+    found, _ = revision_case(row + '\n| second pointers=237 |', [revision, second])
+    check('revision-second-stale', found == [('revision', 'SCORECARD.md', 2, 'rev-bytes')])
+    found, calls = revision_case('| tool |\n' + row, [revision])
+    check('revision-first-row', found == [
+        ('revision', 'SCORECARD.md', 1, 'row-value')] and not calls)
+    found, calls = revision_case('| tool pointers=237 |', [revision], resolved=False)
+    check('revision-row-before-git', found == [
+        ('revision', 'SCORECARD.md', 1, 'row-value')] and not calls)
+    check('revision-token-boundaries', contains_value('`pointers=240`', 'pointers', 240)
+          and not any(contains_value(text, 'pointers', 240) for text in (
+              'other-pointers=240', 'pointers=2400', 'pointers=240.5', 'pointers=240e2')))
+    revision_json = json.dumps({'revisions': [revision]})
+    check('revision-only-pins', parse_pins(revision_json) == []
+          and parse_revisions(revision_json) == [revision])
     print('RECORD_SWEEP_SELFTEST pass=%d fail=%d' % (passed, failed))
     return int(bool(failed))
 
@@ -193,6 +302,7 @@ def main():
     parser.add_argument('--root')
     parser.add_argument('--pins')
     parser.add_argument('--carriers')
+    parser.add_argument('--git')
     parser.add_argument('--selftest', action='store_true')
     args = parser.parse_args()
     if args.selftest:
@@ -206,16 +316,24 @@ def main():
         pins = Path(args.pins) if args.pins else Path(DEFAULT_PINS)
         if not pins.is_absolute():
             pins = root / pins
-        bindings = parse_pins(pins.read_text(encoding='utf-8'))
+        pins_text = pins.read_text(encoding='utf-8')
+        bindings = parse_pins(pins_text)
+        revisions = parse_revisions(pins_text)
+        all_bindings = bindings + revisions
         carriers = args.carriers.split(',') if args.carriers is not None else [
-            'SCORECARD.md', *(binding['carrier'] for binding in bindings)]
+            'SCORECARD.md', *(binding['carrier'] for binding in all_bindings)]
         if any(not carrier.strip() for carrier in carriers):
             raise ValueError('--carriers needs nonempty paths')
         carriers = list(dict.fromkeys(carriers))
-        names = list(dict.fromkeys(carriers + [binding['carrier'] for binding in bindings]))
+        names = list(dict.fromkeys(carriers + [binding['carrier'] for binding in all_bindings]))
         texts = {name: lane_path(root, name).read_text(encoding='utf-8') for name in names}
         findings = sweep(texts, carriers, bindings, lambda command: run_command(command, root))
-        return emit(findings, len(names), len(bindings))
+        git = Path(args.git).resolve() if args.git else root
+        findings.extend(revision_sweep(texts, revisions,
+                                      lambda command: run_command(['git', '-C', str(git),
+                                                                   *command], root)))
+        return emit(findings, len(names), len(all_bindings),
+                    include_revisions='revisions' in json.loads(pins_text))
     except (OSError, ValueError) as exc:
         print('RECORD_SWEEP_SETUP ' + str(exc).replace('\n', ' '))
         return 2

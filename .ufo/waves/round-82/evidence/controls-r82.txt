@@ -46,3 +46,13 @@ rc=0
 $ python3 -I .ufo/waves/round-82/count-c3.py ebcf2c72
 C3=unmet tool=present arm=absent rev=ebcf2c72df20
 rc=1
+
+# --- post-review implementation repair (R01/R02/C01 pre-measurement findings; predicate bytes unchanged) ---
+$ python3 -I .ufo/waves/round-82/count-c1.py ebcf2c72
+C1=unmet harness=absent rev=ebcf2c72df20
+rc=1
+$ python3 -I .ufo/waves/round-82/count-c2.py ebcf2c72
+unclassified +FINDING:ROSTER_SET_MISMATCH
+unclassified +FINDING:SEGFAULT_SIGNAL11_JOURNAL_USER
+C2=unmet tokens=64 classified=0 agreed=0 residual=0 stale=0 retired=0 cell=0 rev=ebcf2c72df20
+rc=1

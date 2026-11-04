@@ -603,3 +603,25 @@ It is not a scope expansion and does not claim that every instrument is a census
 | `tools/mori-workstate-win.py` | probe | workstate probe (r71 tool) | Read biased and unbiased Windows working-state time counts side by side. |
 
 Registry rows are named as carried in `SKILL.md`; gate includes registered regression gates. The registry-less cgroup-pressure instrument is classed as a gate from its local threshold verdict and exit contract (`tools/mori-cgroup-pressure.py:17-21`), not silently registered here. Per-instrument header and registry evidence, the committed population and its revision are retained in `.ufo/waves/round-80/inventory-src.txt`.
+
+## Round-82 appended scope notes (2026-11-04)
+
+- **Core, record revision precision (new arm on an existing instrument):**
+  `tools/mori-record-sweep.py` gains the `revisions` arm (registry row 16 in `SKILL.md`,
+  frozen interface in `.ufo/waves/round-82/contract.md` + its pre-data amendment A1). It grades a
+  record row's stated `key=value` against `git show <rev>:<path>` bytes, so a measured value that
+  names a revision must exist in that revision's bytes (QUALITY 168; the D80-4/D81-1 class). It
+  grades only bindings the lane registers — never another lane's record — and cannot re-run the
+  command that produced a value. The r82 population is three frozen historical rows
+  (`.ufo/waves/round-82/record-pins.json`); identity and uniqueness are graded, so three arbitrary
+  bindings do not satisfy it.
+- **Core, r10 drift pin retired as an acceptance predicate (not as evidence):**
+  `SCORECARD.md` `## Retired` row `drift-pin-r10`, with the derived classification at
+  `corpus/evidence/drift-classification-r82.txt` (64 live tokens: 45 `added-since-r10`, 19
+  `value-changed`) and the keeper `python3 -I .ufo/waves/round-82/count-c2.py <rev>`. The baseline
+  stays byte-unchanged and its `--drift` run still exits 1; the census's own drift reader is the
+  grader. Round-21's retained-evidence-loss blocker, every lifecycle disposition and all baseline
+  acceptance remain unresolved and outside this row. mori reports; it does not remediate.
+- **No new census surface, no threshold change, no baseline rewrite, no remediation.** The three
+  round-82 counters live under `.ufo/waves/round-82/` (evidence, not instruments); the only
+  `tools/` byte change is the record sweep's new arm, already an inventory row.

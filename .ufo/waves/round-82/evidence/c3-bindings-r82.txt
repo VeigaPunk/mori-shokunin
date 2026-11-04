@@ -1,0 +1,78 @@
+# C3 independent revision bindings — round 82 w1
+Authority: contract.md Pre-data amendment A1 (lines 183–204); original table superseded by L1.
+Axes: operability, freshness, depth, coverage, calibration, adjacency.
+Carrier revision: 20551e564da8bbb941c6a2ace7405192ceb74969
+No sweep implementation, selftest, build, formatter or counter was run.
+Counting method: read-only git subprocess plus Python literal matching-line count; shell grep is prohibited by this seat's tool policy.
+The reported match_rc is the grep-compatible status (0 when count > 0, otherwise 1), not git's status.
+Every git show and rev-parse below returned rc 0. No scratch files were created.
+
+## Reproduction method
+$ python3 (Eval kernel; subprocess.run, no shell)
+git(*args) := subprocess.run(['git','-C',LANE,*args], capture_output=True, text=True); require returncode == 0
+rows := [(n,line) for n,line in enumerate(carrier.splitlines(),1) if line.startswith('|') and row_contains in line]
+count := sum(token in line for line in blob.splitlines()); match_rc := 0 if count else 1
+This is the matching-line count of the requested grep -c patterns; no regex metacharacters occur in the selected tokens.
+
+## conformant row_tally=19
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin rev-parse 075574c83eae044ff8570cbd02d594943a87ced3^{commit}
+075574c83eae044ff8570cbd02d594943a87ced3
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 20551e564da8bbb941c6a2ace7405192ceb74969:SCORECARD.md
+first matching table row; row_line=4049 rows=1
+| C1 self-assessment sweep lands and the D79-1 current row tally is corrected | calibration | `python3 -I .ufo/waves/round-80/count-c1.py <rev>` | `C1=unmet tool=absent`, rc 1 at `d5888922`; the row's 18-case count disagrees with live 19/0 | `C1=met tool=present sweep=0 mismatches=0 unresolved=0 tallies=0 stale=0 row_tally=19 live_tally=19 rev=97ce0c96c779`, rc 0 — `python3 -I .ufo/waves/round-80/count-c1.py 97ce0c96c779278baa8e8bb45ade642f9fabf1e2`, measured at `97ce0c96` (receipt `.ufo/waves/round-80/evidence/after-r80.txt`) |
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 075574c83eae044ff8570cbd02d594943a87ced3:SCORECARD.md
+Python matching-line count for row_tally=19: count=1 match_rc=0 git_rc=0
+
+## conformant survivors=0
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin rev-parse 075574c83eae044ff8570cbd02d594943a87ced3^{commit}
+075574c83eae044ff8570cbd02d594943a87ced3
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 20551e564da8bbb941c6a2ace7405192ceb74969:SCORECARD.md
+first matching table row; row_line=4050 rows=1
+| C2 round-79 counter selftests kill all six frozen mutants, sourced S595 | operability | `python3 -I .ufo/waves/round-80/mutate-c2.py --rev <rev>` | `MUTATION_C2 survivors=2 killed=4 total=6`, rc 1 at `d5888922`; the frozen harness, not the historical survivor description, defines the denominator | `MUTATION_C2 survivors=0 killed=6 total=6 unmutated=green rev=97ce0c96c779`, rc 0 — `python3 -I .ufo/waves/round-80/mutate-c2.py --rev 97ce0c96c779278baa8e8bb45ade642f9fabf1e2`, measured at `97ce0c96` (receipt `.ufo/waves/round-80/evidence/after-r80.txt`) |
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 075574c83eae044ff8570cbd02d594943a87ced3:SCORECARD.md
+Python matching-line count for survivors=0: count=1 match_rc=0 git_rc=0
+
+## conformant wrong=0 fixtures=7
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin rev-parse 482dc48d49670de0f7645d0d8e87e18816145256^{commit}
+482dc48d49670de0f7645d0d8e87e18816145256
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 20551e564da8bbb941c6a2ace7405192ceb74969:SCORECARD.md
+first matching table row; row_line=4118 rows=1
+| C1 the r80 counters grade the seven routed defeated fixtures to their declared verdicts and still green the real lane | operability | `python3 -I .ufo/waves/round-81/count-c1.py <rev>` | `C1=unmet wrong=7 fixtures=7 real_c1=met real_c3=met`, rc 1 | `C1=met wrong=0 fixtures=7 real_c1=met real_c3=met`, rc 0 at `075574c8` |
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 482dc48d49670de0f7645d0d8e87e18816145256:SCORECARD.md
+Python matching-line count for wrong=0: count=1 match_rc=0 git_rc=0
+
+## defeated-shape row_tally=19
+Carrier row remains the frozen row above; only the bound revision is substituted.
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 7ca17b11be694ad112fda21464b26321cab94ee0:SCORECARD.md
+Python matching-line count for row_tally=19: count=0 match_rc=1 git_rc=0
+
+## defeated-shape survivors=0
+Carrier row remains the frozen row above; only the bound revision is substituted.
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 7ca17b11be694ad112fda21464b26321cab94ee0:SCORECARD.md
+Python matching-line count for survivors=0: count=0 match_rc=1 git_rc=0
+
+## defeated-shape wrong=0 fixtures=7
+Carrier row remains the frozen row above; only the bound revision is substituted.
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 7ca17b11be694ad112fda21464b26321cab94ee0:SCORECARD.md
+Python matching-line count for wrong=0: count=0 match_rc=1 git_rc=0
+
+## defeated-shape D81-1 pointers
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 20551e564da8bbb941c6a2ace7405192ceb74969:SCORECARD.md
+row_line=4036
+| Self-assessment claim sweep (`tools/mori-claim-sweep.py`) | read-only gate over Axes and capabilities rows in SCORECARD and checklist rows in SHONEN, checking lane-pointer existence, pinned live selftest tallies and stale literals; prints per-mismatch findings and `CLAIM_SWEEP mismatches=M unresolved=U tallies=T stale=S carriers=C pointers=P`; rc 0 clean, 1 mismatches, 2 setup; selftest 30 in-memory cases; stdout only, spawning only pinned read-only selftests | `python3 -I tools/mori-claim-sweep.py --selftest` -> `CLAIM_SWEEP_SELFTEST pass=30 fail=0`, rc 0; `python3 -I tools/mori-claim-sweep.py --root . --pins .ufo/waves/round-80/claim-pins.json` -> `CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=4 pointers=240`, rc 0 (re-run 2026-11-04 at this round's record commit `075574c8`; the r80 landing `44bc941a` printed 233 and the retired cell stated 232, both superseded here by named correction D80-2 and by the r81 rows that add graded pointers); re-run by `python3 -I tools/mori-claim-sweep.py --root . --pins .ufo/waves/round-80/claim-pins.json`, rc 0, and by `.ufo/waves/round-81/count-c2.py` (the `pinned` arm).; registry row 14 in `SKILL.md` | 80 |
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 075574c83eae044ff8570cbd02d594943a87ced3:SCORECARD.md
+Python matching-line count for pointers=240: count=0 match_rc=1 git_rc=0
+This deliberately false binding is receipt-only; it is absent from record-pins.json.
+
+## Earlier candidate measurements (not retained as bindings)
+Original table positives: pointers=240 at 482dc48d counted 1; pass=26 at 142998f5 counted 1; pass=19 at 142998f5 counted 1 (all match_rc 0).
+Wrong-revision exploration: pointers=240 at 075574c8 counted 0; pass=26 at 44bc941a counted 0; pass=19 at 44bc941a counted 1.
+The last candidate was not a sensitive negative. Substitution of earliest SCORECARD revision 7ca17b11be694ad112fda21464b26321cab94ee0 counted 0 for pass=19.
+Earliest SCORECARD revision discovery command:
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin log --reverse --format=%H -- SCORECARD.md
+Selected first output line: 7ca17b11be694ad112fda21464b26321cab94ee0
+
+## Limits
+These checks establish literal token presence, not the provenance of a measurement or that the token appears on a semantically related row at the target revision.
+The wrong=0 carrier row itself names 075574c8 while A1 binds 482dc48d; the revision arm does not parse that prose label.
+No landed-tree RECORD_SWEEP or count-c3 result is asserted. The L1 owns integration checks.

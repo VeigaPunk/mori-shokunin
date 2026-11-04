@@ -1814,3 +1814,19 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
      Not covered: repairing those two instruments (tally-pinned, and the
      mori | round-65 instrument-change L0 stays open); this rule governs how a
      reader grades a tally, not the instruments' bytes.
+
+168. A record cell that states a measured value together with a revision must name a
+     revision whose committed bytes contain that value. The value being true at some
+     later tree does not license an earlier revision label: the label is a claim about
+     bytes, and `git show <rev>:<carrier>` is the only reader. Two consecutive
+     non-author closures routed this class (D80-4: `97ce0c96` named as the measured
+     revision while the evidence-only tip was `44bc941a`; D81-1: the r80 capability
+     row's `pointers=240` labelled `075574c8`, where the graded count is 237 and the
+     value first holds at `482dc48d`). Enforced from round 82 by the record sweep's
+     `revision` arm (`tools/mori-record-sweep.py`), which grades each binding's stated
+     `key=value` against the named path's bytes at the named revision and prints
+     `REVISION_MISMATCH <carrier>:<line> rev-bytes`.
+     Not covered: it cannot tell a coincidental occurrence of `key=value` in an
+     unrelated line from the graded one, cannot re-run the command that produced the
+     value, and grades only the bindings the lane registers. Ground: SCORECARD round-81
+     correction D81-1 and `corpus/lessons/round-81-verifier-spotcheck.md`.

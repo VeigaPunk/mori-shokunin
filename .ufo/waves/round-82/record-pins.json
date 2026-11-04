@@ -1,0 +1,29 @@
+{
+  "bindings": [],
+  "revisions": [
+    {
+      "carrier": "SCORECARD.md",
+      "row_contains": "row_tally=19",
+      "key": "row_tally",
+      "value": 19,
+      "rev": "075574c83eae044ff8570cbd02d594943a87ced3",
+      "path": "SCORECARD.md"
+    },
+    {
+      "carrier": "SCORECARD.md",
+      "row_contains": "survivors=0",
+      "key": "survivors",
+      "value": 0,
+      "rev": "075574c83eae044ff8570cbd02d594943a87ced3",
+      "path": "SCORECARD.md"
+    },
+    {
+      "carrier": "SCORECARD.md",
+      "row_contains": "wrong=0 fixtures=7",
+      "key": "wrong",
+      "value": 0,
+      "rev": "482dc48d49670de0f7645d0d8e87e18816145256",
+      "path": "SCORECARD.md"
+    }
+  ]
+}

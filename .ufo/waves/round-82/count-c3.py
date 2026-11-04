@@ -32,6 +32,15 @@ import tempfile
 TOOL = "tools/mori-record-sweep.py"
 PINS = ".ufo/waves/round-82/record-pins.json"
 ARMS_FLOOR = 30
+# Frozen population (contract amendment A1): the three bindings the real lane must carry.
+FROZEN = (
+    ("SCORECARD.md", "row_tally=19", "row_tally", 19,
+     "075574c83eae044ff8570cbd02d594943a87ced3", "SCORECARD.md"),
+    ("SCORECARD.md", "survivors=0", "survivors", 0,
+     "075574c83eae044ff8570cbd02d594943a87ced3", "SCORECARD.md"),
+    ("SCORECARD.md", "wrong=0 fixtures=7", "wrong", 0,
+     "482dc48d49670de0f7645d0d8e87e18816145256", "SCORECARD.md"),
+)
 SUMMARY = re.compile(r"RECORD_SWEEP\s+(.*)$")
 COUNT = re.compile(r"\b(revisions|bindings)=(\d+)\b")
 
@@ -62,6 +71,23 @@ def pins_bindings(text):
     return revisions
 
 
+def population_ok(pins):
+    """Exactly the frozen population, once each (identity and uniqueness are graded)."""
+    seen = set()
+    for binding in pins:
+        key = (binding.get("carrier"), binding.get("row_contains"), binding.get("key"),
+               binding.get("value"), binding.get("path"))
+        rev = str(binding.get("rev") or "")
+        seen.add(key + (rev,))
+    expected = set()
+    for carrier, row, key, value, rev, path in FROZEN:
+        expected.add((carrier, row, key, value, path, rev))
+    got = set()
+    for key in seen:
+        got.add(key)
+    return len(pins) == len(FROZEN) and got == expected
+
+
 def carrier_paths(pins):
     paths = {binding.get("carrier") for binding in pins if binding.get("carrier")}
     return sorted(path for path in paths if path)
@@ -87,31 +113,66 @@ def selftest_run(tool_path, scratch):
     return p.returncode, (p.stdout or "") + (p.stderr or "")
 
 
-def defeated_fixture(tool_path, scratch):
-    """Independent D81-1 shape: the row's value is not in the revision it names."""
-    repo = tempfile.mkdtemp(dir=scratch, prefix="defeated-")
-    old = ("# t\n\n| Capability | What | Evidence | First |\n|---|---|---|---|\n"
-           "| Self-assessment claim sweep (`tools/mori-claim-sweep.py`) | x | "
-           "pointers=237 rc 0 | 80 |\n")
-    new = old.replace("pointers=237", "pointers=240")
-    run(["git", "-c", "user.name=t", "-c", "user.email=t@t", "-C", repo, "init", "-q"])
-    write_tree(repo, {"SCORECARD.md": old})
-    run(["git", "-c", "user.name=t", "-c", "user.email=t@t", "-C", repo, "add", "-A"])
-    run(["git", "-c", "user.name=t", "-c", "user.email=t@t", "-C", repo, "commit", "-qm", "a"])
+def fixture_run(tool_path, scratch, kind):
+    """Independent fixtures: two defeated shapes and one conformant shape.
+
+    A counterfeit tool keyed on the binding count fails at least one of the three (C01 finding):
+    `one-stale` has 1 binding and must be caught, `second-stale` has 2 bindings with only the
+    second bad and must be caught, `conformant` has 1 binding that is right and must be green.
+    """
+    rows_a, rows_b = {}, {}
+    if kind == "one-stale":
+        rows_a["SCORECARD.md"] = ("# t\n\n| Capability | What | Evidence | First |\n"
+                                  "|---|---|---|---|\n| Self-assessment claim sweep "
+                                  "(`tools/mori-claim-sweep.py`) | x | pointers=237 | 80 |\n")
+        rows_b["SCORECARD.md"] = rows_a["SCORECARD.md"].replace("pointers=237", "pointers=240")
+        bindings = [{"carrier": "SCORECARD.md", "row_contains": "mori-claim-sweep.py",
+                     "key": "pointers", "value": 240, "rev": "A", "path": "SCORECARD.md"}]
+        expect = ("caught", 1)
+    elif kind == "second-stale":
+        rows_a["SCORECARD.md"] = ("# t\n\n| Row | What | Evidence | First |\n"
+                                  "|---|---|---|---|\n| Row A | x | row_tally=19 | 80 |\n"
+                                  "| Row B | x | survivors=5 | 80 |\n")
+        rows_b["SCORECARD.md"] = rows_a["SCORECARD.md"].replace("survivors=5", "survivors=0")
+        bindings = [
+            {"carrier": "SCORECARD.md", "row_contains": "Row A", "key": "row_tally",
+             "value": 19, "rev": "A", "path": "SCORECARD.md"},
+            {"carrier": "SCORECARD.md", "row_contains": "Row B", "key": "survivors",
+             "value": 0, "rev": "A", "path": "SCORECARD.md"}]
+        expect = ("caught", 1)
+    else:                                            # conformant
+        rows_a["SCORECARD.md"] = ("# t\n\n| Row | What | Evidence | First |\n"
+                                  "|---|---|---|---|\n| Row A | x | row_tally=19 | 80 |\n")
+        rows_b["SCORECARD.md"] = rows_a["SCORECARD.md"]
+        bindings = [{"carrier": "SCORECARD.md", "row_contains": "Row A", "key": "row_tally",
+                     "value": 19, "rev": "A", "path": "SCORECARD.md"}]
+        expect = ("green", 0)
+    repo = tempfile.mkdtemp(dir=scratch, prefix="fx-" + kind + "-")
+    env = ["-c", "user.name=t", "-c", "user.email=t@t"]
+    run(["git"] + env + ["-C", repo, "init", "-q"])
+    if run(["git", "-C", repo, "rev-parse", "--show-toplevel"]).stdout.strip() != repo:
+        return None
+    write_tree(repo, rows_a)
+    run(["git"] + env + ["-C", repo, "add", "-A"])
+    run(["git"] + env + ["-C", repo, "commit", "-qm", "a"])
     rev_a = run(["git", "-C", repo, "rev-parse", "HEAD"]).stdout.strip()
-    write_tree(repo, {"SCORECARD.md": new})
-    run(["git", "-c", "user.name=t", "-c", "user.email=t@t", "-C", repo, "add", "-A"])
-    run(["git", "-c", "user.name=t", "-c", "user.email=t@t", "-C", repo, "commit", "-qm", "b"])
-    pins = {"revisions": [{"carrier": "SCORECARD.md",
-                           "row_contains": "mori-claim-sweep.py", "key": "pointers",
-                           "value": 240, "rev": rev_a, "path": "SCORECARD.md"}]}
-    write_tree(repo, {".ufo/waves/round-82/record-pins.json": json.dumps(pins)})
-    env = dict(os.environ)
-    env.update(TMPDIR=repo, GIT_CONFIG_GLOBAL=os.devnull, GIT_CONFIG_SYSTEM=os.devnull)
-    p = run(["python3", "-I", tool_path, "--root", repo,
-             "--pins", os.path.join(repo, PINS), "--git", repo], cwd=repo, env=env)
-    fields = summary((p.stdout or "") + (p.stderr or ""))
-    return p.returncode, fields, (p.stdout or "")
+    write_tree(repo, rows_b)
+    run(["git"] + env + ["-C", repo, "add", "-A"])
+    run(["git"] + env + ["-C", repo, "commit", "-qm", "b"])
+    pins = {"revisions": [dict(binding, rev=rev_a) for binding in bindings]}
+    write_tree(repo, {PINS: json.dumps(pins)})
+    penv = dict(os.environ)
+    penv.update(TMPDIR=repo, GIT_CONFIG_GLOBAL=os.devnull, GIT_CONFIG_SYSTEM=os.devnull)
+    p = run(["python3", "-I", tool_path, "--root", repo, "--pins", os.path.join(repo, PINS),
+             "--git", repo], cwd=repo, env=penv)
+    out = (p.stdout or "") + (p.stderr or "")
+    fields = summary(out)
+    if expect[0] == "caught":
+        ok = p.returncode == 1 and fields.get("revisions", 0) >= expect[1] \
+            and "REVISION_MISMATCH" in out
+    else:
+        ok = p.returncode == 0 and fields.get("revisions", -1) == 0
+    return ok, p.returncode, fields, out
 
 
 def selfcheck(scratch):
@@ -126,6 +187,13 @@ def selfcheck(scratch):
     cases.append(("carrier_drift_guard",
                   ("a\n" != "b\n") and ("a\n" == "a\n"), "text compare"))
     cases.append(("arms_floor", 30 >= ARMS_FLOOR and 29 < ARMS_FLOOR, f"floor={ARMS_FLOOR}"))
+    frozen = [{"carrier": c, "row_contains": r, "key": k, "value": v, "rev": rv, "path": pp}
+              for c, r, k, v, rv, pp in FROZEN]
+    cases.append(("population_frozen_ok", population_ok(frozen), "as frozen"))
+    triplicated = frozen + [dict(frozen[0]), dict(frozen[0])]
+    cases.append(("population_triplicate_unmet", not population_ok(triplicated),
+                  f"bindings={len(triplicated)}"))
+    cases.append(("population_subset_unmet", not population_ok(frozen[:1]), "one binding"))
     ok = sum(1 for _, good, _ in cases if good)
     for label, good, line in cases:
         print(f"{'PASS' if good else 'FAIL'} {label} {line}")
@@ -166,7 +234,8 @@ def main(argv):
         if tool_text is None:
             print(f"C3=unmet tool=absent rev={rev[:12]}")
             return 1
-        if "REVISION_MISMATCH" not in tool_text:
+        if ("REVISION_MISMATCH" not in tool_text or "rev-parse" not in tool_text
+                or "--git" not in tool_text):
             print(f"C3=unmet tool=present arm=absent rev={rev[:12]}")
             return 1
         export = tempfile.mkdtemp(dir=scratch, prefix="tool-")
@@ -178,8 +247,11 @@ def main(argv):
         if rc != 0 or not m or int(m.group(2)) != 0 or arms < ARMS_FLOOR:
             print(f"C3=unmet tool=present arms={arms} selftest=red rc={rc} rev={rev[:12]}")
             return 1
-        frc, ffields, fout = defeated_fixture(tool_path, scratch)
-        caught = frc == 1 and ffields.get("revisions", 0) >= 1 and "REVISION_MISMATCH" in fout
+        fixtures = {}
+        for kind in ("one-stale", "second-stale", "conformant"):
+            result = fixture_run(tool_path, scratch, kind)
+            fixtures[kind] = bool(result and result[0])
+        caught = fixtures["one-stale"] and fixtures["second-stale"] and fixtures["conformant"]
         pins_text = show(PINS)
         if pins_text is None:
             print(f"C3=unmet tool=present arms={arms} defeated={1 if caught else 0} "
@@ -189,6 +261,10 @@ def main(argv):
         if not pins:
             print("C3_SETUP pins has no `revisions` list", file=sys.stderr)
             return 2
+        if not population_ok(pins):
+            print(f"C3=unmet tool=present arms={arms} defeated={1 if caught else 0} "
+                  f"bindings=frozen-population-mismatch rev={rev[:12]}")
+            return 1
         drift = []
         for path in carrier_paths(pins):
             here = None
@@ -203,8 +279,12 @@ def main(argv):
             return 2
         env = dict(os.environ)
         env.update(TMPDIR=scratch, GIT_CONFIG_GLOBAL=os.devnull, GIT_CONFIG_SYSTEM=os.devnull)
+        # Grade the pins COMMITTED at R, never a worktree copy (C01 finding): the same
+        # revision must give the same answer regardless of uncommitted bytes.
+        pins_file = os.path.join(scratch, "committed-pins.json")
+        open(pins_file, "w", encoding="utf-8").write(pins_text)
         q = run(["python3", "-I", tool_path, "--root", repo,
-                 "--pins", os.path.join(repo, PINS), "--git", repo], cwd=repo, env=env)
+                 "--pins", pins_file, "--git", repo], cwd=repo, env=env)
         rout = (q.stdout or "") + (q.stderr or "")
         fields = summary(rout)
         bindings = fields.get("bindings", len(pins))
@@ -212,6 +292,7 @@ def main(argv):
         met = (caught and q.returncode == 0 and fields.get("revisions", -1) == 0
                and bindings >= 3)
         tail = (f"tool=present arms={arms} defeated={1 if caught else 0} "
+                f"fixtures={sum(1 for v in fixtures.values() if v)}/3 "
                 f"bindings={bindings} revisions={revisions}")
         print(f"C3={'met' if met else 'unmet'} {tail} rev={rev[:12]}")
         if not met:

@@ -1,0 +1,54 @@
+$ env HYAKU_SCRATCH=/fast/scratch/hyaku TMPDIR=/fast/scratch/hyaku/mori-r82/Mo82E01C1Regress/tmp bash /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-82/simulate-regression.sh 20551e56 /home/vgpnk/Projects/shokunin/mori-shokunin
+BASE_REVISION=20551e564da8bbb941c6a2ace7405192ceb74969
+HARNESS_SHA256=ba0646a3d308c70a35c6499b18631373475a483cabfe4e46cfcdfe94125b6ac3
+SCENARIO=ignore_sweep_exit deleted_fixture=zero_summary_nonzero_exit path=.ufo/waves/round-80/count-c1.py revision=0d9060ec79dea55b8457a104c04fc2545ece2aaa
+$ python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-82/count-c1.py 0d9060ec79dea55b8457a104c04fc2545ece2aaa --repo /fast/scratch/hyaku/mori-r82/Mo82E01C1Regress/simulation.otT8ChcC/repo --scratch /fast/scratch/hyaku/mori-r82/Mo82E01C1Regress/simulation.otT8ChcC
+MUTANT count-c1.py ignore_row_disagreement killed rc=1
+MUTANT count-c1.py ignore_mismatch_lines killed rc=1
+MUTANT count-c1.py ignore_stale_field killed rc=1
+MUTANT count-c1.py ignore_sweep_exit survived rc=0
+MUTANT count-c3.py ignore_missing killed rc=1
+MUTANT count-c3.py ignore_extra killed rc=1
+MUTANT count-c3.py drop_right_boundary killed rc=1
+MUTANT count-c2.py pending_all_sections killed rc=1
+MUTANT count-c2.py pending_substring killed rc=1
+MUTANT count-c2.py ignore_command_exit killed rc=1
+MUTANT count-c2.py first_binding_only killed rc=1
+C1=unmet harness=present killed=10 survivors=1 total=11 pristine=green rev=0d9060ec79de
+rc=1
+REGRESSION_PASS ignore_sweep_exit
+SCENARIO=drop_right_boundary deleted_fixture=suffix_trap path=.ufo/waves/round-80/count-c3.py revision=f72380d641343bc3b1892e10c5e5391d9318096e
+$ python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-82/count-c1.py f72380d641343bc3b1892e10c5e5391d9318096e --repo /fast/scratch/hyaku/mori-r82/Mo82E01C1Regress/simulation.otT8ChcC/repo --scratch /fast/scratch/hyaku/mori-r82/Mo82E01C1Regress/simulation.otT8ChcC
+MUTANT count-c1.py ignore_row_disagreement killed rc=1
+MUTANT count-c1.py ignore_mismatch_lines killed rc=1
+MUTANT count-c1.py ignore_stale_field killed rc=1
+MUTANT count-c1.py ignore_sweep_exit killed rc=1
+MUTANT count-c3.py ignore_missing killed rc=1
+MUTANT count-c3.py ignore_extra killed rc=1
+MUTANT count-c3.py drop_right_boundary survived rc=0
+MUTANT count-c2.py pending_all_sections killed rc=1
+MUTANT count-c2.py pending_substring killed rc=1
+MUTANT count-c2.py ignore_command_exit killed rc=1
+MUTANT count-c2.py first_binding_only killed rc=1
+C1=unmet harness=present killed=10 survivors=1 total=11 pristine=green rev=f72380d64134
+rc=1
+REGRESSION_PASS drop_right_boundary
+SCENARIO=pending_substring deleted_fixture=pending substring is not a cell path=.ufo/waves/round-81/count-c2.py revision=403de966a25ce0c3b93a9895a2c48de3f59e0056
+$ python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-82/count-c1.py 403de966a25ce0c3b93a9895a2c48de3f59e0056 --repo /fast/scratch/hyaku/mori-r82/Mo82E01C1Regress/simulation.otT8ChcC/repo --scratch /fast/scratch/hyaku/mori-r82/Mo82E01C1Regress/simulation.otT8ChcC
+MUTANT count-c1.py ignore_row_disagreement killed rc=1
+MUTANT count-c1.py ignore_mismatch_lines killed rc=1
+MUTANT count-c1.py ignore_stale_field killed rc=1
+MUTANT count-c1.py ignore_sweep_exit killed rc=1
+MUTANT count-c3.py ignore_missing killed rc=1
+MUTANT count-c3.py ignore_extra killed rc=1
+MUTANT count-c3.py drop_right_boundary killed rc=1
+MUTANT count-c2.py pending_all_sections killed rc=1
+MUTANT count-c2.py pending_substring survived rc=0
+MUTANT count-c2.py ignore_command_exit killed rc=1
+MUTANT count-c2.py first_binding_only killed rc=1
+C1=unmet harness=present killed=10 survivors=1 total=11 pristine=green rev=403de966a25c
+rc=1
+REGRESSION_PASS pending_substring
+REGRESSION_SIM pass=3 fail=0
+
+rc=0

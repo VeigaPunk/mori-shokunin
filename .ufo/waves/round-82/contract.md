@@ -179,3 +179,26 @@ ONE v1 wave, 14 seats, band 8–16 (`scripts/hyaku/ufo-wave-policy.json`, `maxLa
 ceiling), ≥25 % attack seats: 4 attack (reviewer, critic, mutation-tester, labrat) = 28.6 %,
 1 connector, 5 executor, 2 scribe, 2 scout. Residual: none. The planner seat is the L1
 (the validator rejects `planner`).
+
+## Pre-data amendment A1 (disclosed; made after the freeze commit `20551e56`, before any after-value existed)
+
+The "Real bindings" table's first row is replaced. Reason: the r80 capability row
+(`SCORECARD.md:4038` at the freeze) states the claim-sweep `pointers=` count that the r81
+**pinned** arm grades against the live command; r81's D80-2 maintenance rule requires that cell
+to state the landed value, so the row's number moves whenever the lane's record grows. Binding a
+revision to it would make P-C3 fight the r81 pinned arm at landing. The replacement population
+uses three historical claim-table rows whose values are frozen history (round-80 and round-81
+tables; corrections are appended, never rewritten). P-C3's predicate, kill rule and target are
+unchanged: B ≥ 3, all green, `revisions=0`.
+
+| carrier | row_contains | key | value | rev | path |
+|---|---|---|---|---|---|
+| SCORECARD.md | `row_tally=19` | row_tally | 19 | `075574c83eae` | SCORECARD.md |
+| SCORECARD.md | `survivors=0` | survivors | 0 | `075574c83eae` | SCORECARD.md |
+| SCORECARD.md | `wrong=0 fixtures=7` | wrong | 0 | `482dc48d` | SCORECARD.md |
+
+Each of the three `row_contains` strings matches exactly one table row in `SCORECARD.md` at the
+freeze (measured: 1, 1, 1), and each `key=value` occurs in `SCORECARD.md` at the named revision
+(measured: 1, 1, 1). The D81-1 defeated shape — the row stating `pointers=240` bound to
+`075574c8`, whose `SCORECARD.md` holds no `pointers=240` — stays the counter's independent
+fixture and is not a lane binding.

@@ -44,6 +44,7 @@ CLASS_WORDS = ("added-since-r10", "value-changed", "unexplainable")
 CLASS_LINE = re.compile(r"^DRIFT_CLASS\s+(\S+)\s+(\S+)\s*$")
 DRIFT = re.compile(r"^MORI_DRIFT:\s*(.*)$")
 KEY = re.compile(r"(?:^|\s)([A-Za-z0-9_]+)=")
+KEYSHAPE = re.compile(r"^[A-Za-z0-9_]+$")
 
 
 def run(cmd, cwd=None, env=None, timeout=300):
@@ -70,11 +71,13 @@ def derive(token, names):
         return "value-changed" if body[len("FINDING:"):] in findings else "added-since-r10"
     if body in ("VERDICT", "HEADER", "BLANK"):
         return "value-changed"
+    if not KEYSHAPE.match(body):
+        return "value-changed"          # frozen table: "anything else" is value-changed
     return "value-changed" if body in keys else "added-since-r10"
 
 
 def classifications(text):
-    stated, malformed = {}, 0
+    stated, malformed, duplicates = {}, 0, 0
     for line in text.splitlines():
         if not line.startswith("DRIFT_CLASS"):
             continue
@@ -82,8 +85,10 @@ def classifications(text):
         if not m or m.group(2) not in CLASS_WORDS:
             malformed += 1
             continue
+        if m.group(1) in stated:
+            duplicates += 1
         stated[m.group(1)] = m.group(2)
-    return stated, malformed
+    return stated, malformed, duplicates
 
 
 def section_rows(text, heading):
@@ -145,7 +150,7 @@ def grade(loader, scratch, fleet_root):
     output = (p.stdout or "") + (p.stderr or "")
     tokens = drift_tokens(output)
     classes = loader(CLASSES)
-    stated, malformed = classifications(classes or "")
+    stated, malformed, duplicates = classifications(classes or "")
     names = baseline_names(baseline)
     agreed = 0
     residual = 0
@@ -158,8 +163,9 @@ def grade(loader, scratch, fleet_root):
         elif stated[token] == derive(token, names):
             agreed += 1
     stale = [token for token in stated if token not in tokens]
+    residual += duplicates
     met = (p.returncode == 1 and bool(tokens) and not unclassified and residual == 0
-           and malformed == 0 and not stale and agreed == len(tokens)
+           and malformed == 0 and duplicates == 0 and not stale and agreed == len(tokens)
            and retired_ok(cards) and cell_state(cards))
     tail = (f"tokens={len(tokens)} classified={len(tokens) - len(unclassified)} "
             f"agreed={agreed} residual={residual + malformed} stale={len(stale)} "
@@ -178,6 +184,8 @@ def grade(loader, scratch, fleet_root):
         notes.append(f"stale-classification {token}")
     if malformed:
         notes.append(f"malformed-classification-lines={malformed}")
+    if duplicates:
+        notes.append(f"duplicate-classification-lines={duplicates}")
     return met, tail, notes
 
 
