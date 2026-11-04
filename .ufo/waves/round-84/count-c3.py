@@ -21,6 +21,7 @@ Usage: count-c3.py <rev> [--repo DIR] [--scratch DIR] | count-c3.py --selftest
 Exit 0 met, 1 unmet, 2 setup. Read-only: `git show`; the subject runs in scratch only.
 """
 import argparse
+import importlib.util
 import os
 import re
 import shutil
@@ -32,6 +33,24 @@ SUBJECT = ".ufo/waves/round-83/count-c2.py"
 MARKER = "LIVE_DELTA"
 ARMS_FLOOR = 16
 DELTA_ARMS = ("delta_absent_live", "delta_added_live", "delta_class_changed", "delta_agreed")
+# A6: the subject must carry the arm labels, its classifier is imported and graded on synthetic
+# cases (a stub that only prints PASS lines and a made-up tail cannot pass), and the snapshot
+# population is recounted from the repo's own bytes.
+SNAPSHOT = ".ufo/waves/round-82/evidence/drift-r82-live.txt"
+DRIFT = re.compile(r"^MORI_DRIFT:\s*(.*)$")
+CASES = (
+    ("absent_live", ["SURFACE:x"], [], ({"x"}, set(), set()),
+     {"SURFACE:x": "value-changed"}, [("SURFACE:x", "absent-live")]),
+    ("added_live", [], ["+VERDICT"], (set(), set(), set()), {},
+     [("+VERDICT", "added-live")]),
+    ("agreed", ["SURFACE:x"], ["SURFACE:x"], ({"x"}, set(), set()),
+     {"SURFACE:x": "value-changed"}, [("SURFACE:x", "agreed")]),
+    ("class_changed", ["SURFACE:z"], ["SURFACE:z"], ({"x"}, set(), set()),
+     {"SURFACE:z": "value-changed"},
+     [("SURFACE:z", "class-changed:value-changed->added-since-r10")]),
+    ("duplicate_token", ["SURFACE:x", "SURFACE:x"], ["SURFACE:x"], ({"x"}, set(), set()),
+     {"SURFACE:x": "value-changed"}, [("SURFACE:x", "agreed")]),
+)
 TAIL = re.compile(r"C2=(met|unmet)\s+(.*)$")
 FIELD = re.compile(r"\b(delta|tokens|classified|union|residual|live|live_tokens|live_agree|"
                    r"deltas)=([A-Za-z0-9_.:-]+)")
@@ -85,6 +104,38 @@ def delta_lines(output):
     return lines
 
 
+def snapshot_tokens(text):
+    """The snapshot's last MORI_DRIFT token line (the same grammar the subject reads)."""
+    tokens = []
+    for line in text.splitlines():
+        m = DRIFT.match(line)
+        if m:
+            tokens = [token for token in m.group(1).split() if token != "none"]
+    return tokens
+
+
+def load_subject(path):
+    spec = importlib.util.spec_from_file_location("mori_r84_subject", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def classifier_ok(module):
+    """Grade the subject's own pure classifier on the frozen synthetic cases."""
+    fn = getattr(module, "live_delta", None)
+    if not callable(fn):
+        return False, "live_delta-absent"
+    for label, snap, live, names, stated, expected in CASES:
+        try:
+            got = fn(list(snap), list(live), names, dict(stated))
+        except Exception as exc:                      # noqa: BLE001 - report, never crash
+            return False, "case:%s:raised:%s" % (label, exc)
+        if [tuple(pair) for pair in (got or [])] != expected:
+            return False, "case:%s:%r" % (label, got)
+    return True, "%d/%d" % (len(CASES), len(CASES))
+
+
 def classify_ok(pairs):
     """Every delta line carries a frozen class word and no token twice."""
     tokens = [token for token, _ in pairs]
@@ -115,6 +166,13 @@ def selfcheck(scratch):
     cases.append(("delta_arms_present",
                   all(("PASS " + name) in out for name in DELTA_ARMS), "four arms"))
     cases.append(("arms_floor", ARMS_FLOOR == 16, "floor=%d" % ARMS_FLOOR))
+    cases.append(("snapshot_parse",
+                  snapshot_tokens("noise\nMORI_DRIFT: a b\nMORI_DRIFT: c d e\n")
+                  == ["c", "d", "e"], "last line wins"))
+    cases.append(("case_expectations",
+                  all(len({token for token, _ in expected}) == len(expected)
+                      and all(CLASS_WORD.match(word) for _, word in expected)
+                      for _, _, _, _, _, expected in CASES), "5 cases"))
     cases.append(("marker_literal", MARKER in open(os.path.abspath(__file__)).read(),
                   "marker=%s" % MARKER))
     ok = sum(1 for _, good, _ in cases if good)
@@ -156,9 +214,22 @@ def main(argv):
         if MARKER not in subject or "delta=classified" not in subject:
             print("C3=unmet delta=absent rev=%s" % rev[:12])
             return 1
+        missing = [name for name in DELTA_ARMS if name not in subject]
+        if missing:
+            print("C3=unmet delta=absent missing=%s rev=%s"
+                  % (",".join(missing), rev[:12]))
+            return 1
         export = tempfile.mkdtemp(dir=scratch, prefix="subject-")
         write_tree(export, {SUBJECT: subject})
         path = os.path.join(export, SUBJECT)
+        try:
+            module = load_subject(path)
+        except Exception as exc:                      # noqa: BLE001 - report, never crash
+            print("C3=unmet delta=absent import-failed:%s rev=%s" % (exc, rev[:12]))
+            return 1
+        classifier_met, classifier_detail = classifier_ok(module)
+        snapshot_text = show(SNAPSHOT)
+        recount = len(snapshot_tokens(snapshot_text)) if snapshot_text is not None else -1
         rc, out = selftest_run(path, scratch)
         m = SELFTEST.search(out)
         arms = int(m.group(1)) if m else -1
@@ -193,7 +264,8 @@ def main(argv):
         except ValueError:
             union = classified = live_agree = tokens = residual = deltas = -1
         met = (r.returncode == 0 and fields.get("delta") == "classified"
-               and tokens == 64 and union > 0 and classified == union
+               and classifier_met and tokens == 64 and recount == 64 and tokens == recount
+               and union > 0 and classified == union
                and residual == 0 and fields.get("live") == "derived"
                and deltas == union - live_agree == len(pairs)
                and classify_ok(pairs))
@@ -201,7 +273,8 @@ def main(argv):
                 "live_tokens=%s live_agree=%d deltas=%d"
                 % (tokens, classified, union, residual, fields.get("live", "unavailable"),
                    fields.get("live_tokens", "0"), live_agree, len(pairs)))
-        print("C3=%s %s arms=%d rev=%s" % ("met" if met else "unmet", tail, arms, rev[:12]))
+        print("C3=%s %s arms=%d classifier=%s rev=%s"
+              % ("met" if met else "unmet", tail, arms, classifier_detail, rev[:12]))
         if not met:
             for line in sout.splitlines():
                 if line.startswith(("C2=", "metric=", "unclassified", "LIVE_DELTA")) \

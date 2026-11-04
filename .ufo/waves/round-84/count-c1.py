@@ -59,6 +59,12 @@ COUNT = re.compile(r"\b(mutants|killed|equivalent|survivors|total)=(\d+)\b")
 # A revision's `harness=present` means the file IS this counter: every frozen label and the
 # detector-selftest marker must be in its bytes (an existence-only check passes a stub).
 FROZEN_MARKERS = tuple(label for _, label, _, _ in MUTANTS) + ("C1_COUNTER_SELFTEST",)
+# The graded subject must carry the two arms this round claims to land (A5: a tripwire subject
+# with no arms killed every mutant and printed the target line; the labels are the cheap binding).
+SUBJECT = ".ufo/waves/round-83/count-c1.py"
+SUBJECT_MARKERS = ("blind_case_tally", "green_requires_fail_zero")
+# The frozen target's split (contract.md P-C1): killed=2 equivalent=2 total=4.
+TARGET = (2, 2, 4)
 
 
 def run(cmd, cwd=None, env=None, timeout=240):
@@ -87,6 +93,17 @@ def green(rc, out):
 
 def killed(rc, out):
     return rc != 0 or bool(FAIL.search(out))
+
+
+def target_split(tail):
+    """The frozen 2/2/4 split, not merely survivors == 0."""
+    fields = dict((key, int(value)) for key, value in COUNT.findall(tail))
+    return (fields.get("killed"), fields.get("equivalent"),
+            fields.get("total")) == TARGET
+
+
+def subject_ok(text):
+    return text is not None and all(marker in text for marker in SUBJECT_MARKERS)
 
 
 def grade(loader, scratch, mutants=MUTANTS):
@@ -253,6 +270,16 @@ def selfcheck(scratch):
     cases.append(("equivalent_requires_coupling",
                   (not met) and "coupling-absent" in " ".join(extras)
                   and "survivors=1" in tail, tail))
+    cases.append(("target_split_ok",
+                  target_split("mutants=4 killed=2 equivalent=2 survivors=0 total=4"),
+                  "2/2/4"))
+    cases.append(("target_split_free",
+                  not target_split("mutants=4 killed=4 equivalent=0 survivors=0 total=4"),
+                  "4/0/4"))
+    cases.append(("subject_markers_ok",
+                  subject_ok("x blind_case_tally y green_requires_fail_zero"), "both"))
+    cases.append(("subject_markers_missing",
+                  not subject_ok("x blind_case_tally"), "one"))
     ok = sum(1 for _, good, _ in cases if good)
     for label, good, line in cases:
         print("%s %s %s" % ("PASS" if good else "FAIL", label, line))
@@ -308,12 +335,23 @@ def main(argv):
             print(line)
         for extra in extras:
             print("EXTRA " + extra)
-        print("C1=%s %s detector=%s rev=%s"
-              % ("met" if (met and own_ok) else "unmet", tail,
-                 "green" if own_ok else "red", rev[:12]))
-        if not own_ok:
-            print(own_out.strip())
-        return 0 if (met and own_ok) else 1
+        if not (met and own_ok):
+            print("C1=unmet %s detector=%s rev=%s"
+                  % (tail, "green" if own_ok else "red", rev[:12]))
+            if not own_ok:
+                print(own_out.strip())
+            return 1
+        subject = loader(SUBJECT)
+        if not subject_ok(subject):
+            print("C1=unmet subject=absent-arms missing=%s %s rev=%s"
+                  % (",".join(m for m in SUBJECT_MARKERS
+                              if subject is None or m not in subject), tail, rev[:12]))
+            return 1
+        if not target_split(tail):
+            print("C1=unmet target=split %s rev=%s" % (tail, rev[:12]))
+            return 1
+        print("C1=met %s detector=green rev=%s" % (tail, rev[:12]))
+        return 0
     finally:
         shutil.rmtree(scratch, ignore_errors=True)
 

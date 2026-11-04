@@ -196,3 +196,77 @@ arms still kill M24a/M24b; E03's preservation obligation becomes: `and not uncla
 `and residual == 0`, `agreed == len(snapshot_tokens)`, `residual += duplicates` and
 `duplicates == 0` each occur exactly once at the after revision (the two conjuncts may be wrapped,
 but not merged into one line and not deleted).
+
+## Pre-data amendment A3 — wording clarification: `tokens=64` is the snapshot count (no predicate change)
+
+Filed 2026-11-04 from seat `Mo84S02Quality`'s recorded finding 2 (its report §4.2); no after-value
+existed and no arm had landed.
+
+P-C3's sentence "the live census reading stays an observation: `met` never requires a particular
+token count" is about the **live** reading (`live_tokens=`), not about `tokens=`. `tokens=64` is
+the snapshot's own token-line count — fixed by the committed snapshot
+`.ufo/waves/round-82/evidence/drift-r82-live.txt`, already required by the r83 counter's existing
+conjuncts — and the frozen target line carries it (`delta=classified tokens=64`). The r84 C3
+counter's `tokens == 64` check therefore enforces the snapshot population, never a live count; the
+live side is graded only by `classified == union`, `deltas == union - live_agree` and
+`live=derived`. No predicate, target, class or counter byte changes.
+
+## Pre-data amendment A4 — the `blind_case_tally` assertion corrected (no predicate or target change)
+
+Filed 2026-11-04 from seat `Mo84Sc02Clauses`'s measured finding D3; no arm had landed at the time
+of writing and no after-value existed.
+
+P-C1's seat paragraph said the `blind_case_tally` arm's fixture ("one killed and one surviving
+mutant") "must print `killed=0 survivors=1`". That sentence is arithmetically wrong: one killed
+mutant makes `killed=1`, and an arm asserting `killed=0` on that fixture goes red on the *pristine*
+counter (the seat measured `pass=7 fail=1`). The arm's correct assertion, and the one E01's item
+prompt already carries, is `killed=1 survivors=1 total=2` and `not met`; under the M24a mutant
+(`killed_n = total - equivalent`) the same fixture prints `killed=2`, so the arm fails and the
+mutant is killed. The E01 prompt is the operative text and is unchanged.
+
+Clarification of the population control's bytes (Sc02 finding D1): the control is the **worktree**
+counter (the amended `count-c1.py` at HEAD) grading the freeze revision's r83 bytes —
+`python3 -I .ufo/waves/round-84/count-c1.py daa77bd5` → `C1=unmet mutants=4 killed=0 equivalent=2
+survivors=2 total=4 pristine=green detector=green` rc 1. The counter bytes committed *at*
+`daa77bd5` are the pre-A2 version and are superseded by A2; no reader should run that copy as the
+control.
+
+## Pre-data amendment A5 — C1's counter binds the arms and the 2/2 split (critic control defeated)
+
+Filed 2026-11-04 from seat `Mo84C01Crit` §1.1/§1.2, before any after-value and before either arm
+landed. The critic's cheapest do-nothing control — the r83 counter with a sha256 self-tripwire in
+`selfcheck()` and **no** arms — killed all four mutants and printed the exact target line
+(`C1=met mutants=4 killed=2 equivalent=2 survivors=0 total=4 pristine=green detector=green`, rc 0),
+and a two-tripwire variant printed `killed=4 equivalent=0` while `met` still read true.
+
+Fix (counter bytes, no predicate/target change): `main` now also requires
+(a) the graded subject `.ufo/waves/round-83/count-c1.py` to carry both arm labels
+(`blind_case_tally`, `green_requires_fail_zero`) — `C1=unmet subject=absent-arms` otherwise — and
+(b) the printed split to be exactly `killed=2 equivalent=2 total=4` — `C1=unmet target=split`
+otherwise. The population control at the freeze commit still prints
+`C1=unmet mutants=4 killed=0 equivalent=2 survivors=2` because the grade runs before the new gates.
+The counter's own detector selftest grew 11 → 15 arms (`target_split_ok`, `target_split_free`,
+`subject_markers_ok`, `subject_markers_missing`).
+Residual, named: a subject that carries the two labels as dead strings and kills via a tripwire
+still passes; full kill attribution needs mutation-grading of the arms themselves, which is the
+next round's C1-class work.
+
+## Pre-data amendment A6 — C3's counter imports and grades the classifier (null-classifier control defeated)
+
+Filed 2026-11-04 from seat `Mo84C01Crit` §1.4, before any after-value. The critic's stub — markers
+present as assignments, four PASS-only delta labels, and a tail claiming `union=64 live_agree=64
+deltas=0` with **zero** `LIVE_DELTA` lines — printed `C3=met ...` rc 0: the counter trusted the
+subject's own arithmetic.
+
+Fix (counter bytes, no predicate/target change): the counter now
+(a) requires the subject's bytes to carry all four delta arm labels,
+(b) imports the extracted subject and grades its own pure `live_delta(snapshot_tokens, live_tokens,
+names, stated)` on five frozen synthetic cases (absent-live, added-live, agreed,
+class-changed:<a>-><b>, duplicate-token collapse), requiring exact ordered output — a stub without
+a working classifier fails,
+(c) recounts the snapshot population from the repo's own
+`.ufo/waves/round-82/evidence/drift-r82-live.txt` at R and requires `tokens == recount`.
+The counter's own selftest grew 9 → 11 arms (`snapshot_parse`, `case_expectations`).
+Residual, named: the live token list remains the subject's own printed observation (the census is
+volatile, so the counter does not re-run it); a subject that fabricates a self-consistent live
+reading is outside this counter's discrimination — that is the next round's mutation-grading class.
