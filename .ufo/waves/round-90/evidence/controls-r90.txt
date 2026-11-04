@@ -1,0 +1,28 @@
+# mori round 90 controls
+# lane: /home/vgpnk/Projects/shokunin/mori-shokunin
+# entering: 037c02ca43a5ff36e23e449d0d6bcf50a1f2cbec
+# date: 2026-11-04T20:26:46-03:00
+# counter-sha256: .ufo/waves/round-90/count-c1.py e3ca08858a920906a56cb7831d9072d7eabbb31f57c3b5de6b993dc3eadd05b2
+# counter-sha256: .ufo/waves/round-90/count-c2.py 332cd23cc121a45d6165a6a57e05f9ba66f10b877b6dfa2da07e72518f9cbb32
+
+## 1. do-nothing C1 (no gate change): must be unmet
+POPULATION cases=78 branch_cases=8 branch_open=8 harm=0 newopen=0 open=30 gained=2
+C1=unmet branch_open=8 harm=0 newopen=0 open=30 cases=78 rev=037c02ca43a5
+BATTERY cases=0 branch_cases=0 branch_open=0 harm=0 newopen=0 paths=0
+rc=1
+
+## 2. blanket refusal (a gate that refuses every command): must read harm>0
+BLANKET cases=78 branch_cases=8 branch_open=0 harm=37 newopen=0 open=0 gained=0
+BLANKET verdict=not-a-gain (harm>0 means refusal-all is not a gain)
+rc=0
+
+## 3. do-nothing C2 (labels declared, arms absent): must be unmet
+EXTRA survivor .ufo/waves/round-88/count-c2.py B6-clone-root-prefix
+C2=unmet mutants=15 killed=12 survivors=3 unattributed=0 unanchored=0 isolated=0 literal_anchors=0 arms=28,26 detector=green rev=037c02ca43a5
+rc=1
+
+## 4. counter selftests (detectors green before data)
+C1_COUNTER_SELFTEST pass=12 fail=0
+rc=0
+C2_COUNTER_SELFTEST pass=21 fail=0
+rc=0
