@@ -34,3 +34,14 @@ rc=0
 $ python3 -I .ufo/waves/round-82/count-c3.py 19d21175
 C3=met tool=present arms=36 defeated=1 fixtures=3/3 bindings=3 revisions=0 rev=19d21175cd04
 rc=0
+
+# final-tip re-run at the lane tip d083c5fc51e72e317dc90cc205059c6bfbc4ef03
+$ python3 -I .ufo/waves/round-82/count-c1.py d083c5fc
+C1=met harness=present killed=11 survivors=0 total=11 pristine=green detector=green rev=d083c5fc51e7
+rc=0
+$ python3 -I .ufo/waves/round-82/count-c2.py d083c5fc
+C2=met tokens=64 classified=64 agreed=64 residual=0 stale=0 retired=1 cell=1 rev=d083c5fc51e7
+rc=0
+$ python3 -I .ufo/waves/round-82/count-c3.py d083c5fc
+C3=met tool=present arms=36 defeated=1 fixtures=3/3 bindings=3 revisions=0 rev=d083c5fc51e7
+rc=0
