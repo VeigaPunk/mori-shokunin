@@ -79,3 +79,31 @@ to see them as one sentence. **Assimilation: none** — no `merge/mori/` package
 round; `/home/vgpnk/Projects/shokukinow` was not touched. `considerthese/2026-10-26.md` suggestion
 3 ("re-execute what closures only evidence-verified") is the C2 rule's standing motivation and is
 cited by QUALITY 181; it is not newly implemented as a proposal this round.
+
+## Seat findings merged at integration (Mo87S01Lesson, wave w1)
+
+The lesson scribe wrote its own draft of this file; the L1 kept the version committed at `728bc5f4`
+(which carries the `## Gate` the seat could not write — `gate-input.md` was never supplied, and the
+seat correctly refused to invent rows) and merges the seat's four findings here.
+
+1. **`supersede_absent_target` does not build the case its label names.** Its fixture is
+   `supersede_verdict("old.txt", set(), [("new.txt", "old.txt")])`: the successor is in the
+   superseder list and only absent from the clean set, so the arm re-tests uncleanliness and dies
+   under the same mutation as `supersede_requires_clean`. The case "a `# supersedes:` naming a
+   receipt outside the population" is covered only by the `SUPERSEDE … absent=1` branch
+   (`count-c2.py:297-301`), which has no arm. **Routed defect for round 88:** add an arm whose
+   population omits the named receipt.
+2. **The rule is guarded at the function, not at the call site.** `superseders` is appended during
+   the header pass (`count-c2.py:241`) and correctness depends on `supersede_counts` being its only
+   reader (`:294`); a second consumer of the list would reintroduce the header-only answer without
+   turning either arm red. Named limit, not fixed this round.
+3. **Amendment A1's premise checks out statically.** The r86 subject `count-c2.py` has 11 arms at
+   `6fc09d69` and 13 at `03b66a43`/`98f48dba`, so a counter frozen at 11 would have read
+   `subject=selftest` unmet at C2's landing revision — which is exactly what the pre-A1 run did.
+4. **The defect's history rests on an author's worktree run, not a committed diff.** The seat
+   verified that the pre-freeze jj drafts `a0f185e0`/`d749ef88` already carry the fixed conjunct, so
+   no committed blob shows the pre-fix rule. The L1's pre-freeze fixture
+   (`.ufo/waves/round-87/evidence/supersede-controls-r87.txt`: pre-fix `superseded=2 legacy=1`,
+   fixed `superseded=0 legacy=3`) and the seat's mutation reconstruction
+   (`pass=15 fail=2`, fixture `superseded=2 legacy=1 detector=red`) agree; both are recorded as what
+   they are.
