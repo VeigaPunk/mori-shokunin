@@ -137,3 +137,24 @@ No predicate, kill rule, target, receipt or class changed; the counter's selftes
 `pass=15 fail=0` and a hand-built receipt set committed after a code revision reads
 `C2=met receipts=3 bindings=5 bound=5 revs=3 limits=3 cmd=3 summary=3 mismatch=0`, rc 0 (L1 probe
 in scratch). `count-c1.py` (18 arms) and `count-c3.py` (19 arms) are unchanged.
+
+**A2 (pre-data, 2026-11-04T08:17-03:00, before any after value existed; from the connector seat's
+clause sweep `w1/Mo85K01Conn.md` §2, rows C1-D1, C2-D1/D2/D3/D4/D6, C3-D1/D2/D4).** Five
+clarifications; **no predicate, target value, receipt, class or kill rule changed**:
+- C1: the met path binds the two arm labels in the subject's BYTES plus a green pristine selftest
+  with exactly 17 passing arms and the tail's `arms=17`; an arm whose name is present but whose
+  assertion is vacuous is the round's mutation-probe finding, not a met-path clause (named limit).
+- C2: the header block is everything before the first `# ---`; a header-shaped line after the
+  separator is body text. Header lines are matched loosely, so a second malformed `# rev:` is
+  `duplicate-rev`/`bad-rev` rather than invisible, and a malformed `# counter-sha256:` line is a
+  `malformed-binding` problem and still counts toward `bindings`.
+- C2: `# limits:` requires at least three words and the word "limit" (the counter's rule; the
+  contract's rule list now states it).
+- C2: the headerless-receipt defeat control reads `C2=unmet ... mismatch>=1` (the counter has no
+  `headers=<receipt>` literal); the stale-digest control reads `C2=unmet ... bound=4 mismatch=1`.
+- C3: the exact printed tail is `C3=<verdict> observed=3 aa=... own_tokens=N subject_tokens=N
+  subject_deltas=D unmatched=N unnamed=N`; `met` additionally requires the counter's own detector
+  selftest green and the classification file to parse with `malformed=0 duplicates=0`. The entering
+  control is the counter FILE's absence at `2cc4b1ae` (`git cat-file -e` fails; no counter output
+  exists there); running the frozen counter retroactively over that revision reads `C3=met` and
+  that reading is disclosed, not the before value.

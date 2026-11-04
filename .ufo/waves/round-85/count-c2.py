@@ -42,6 +42,8 @@ CMD = re.compile(r"^#\s*cmd:\s*(\S.*)$")
 REV = re.compile(r"^#\s*rev:\s*([0-9a-f]{40})\s*$")
 LIMITS = re.compile(r"^#\s*limits:\s*(\S.*)$")
 SHA = re.compile(r"^#\s*counter-sha256:\s*([0-9a-f]{64})\s+(\S+)\s*$")
+HEADER_ANY = re.compile(r"^#\s*(cmd|rev|limits):\s*(.*)$")
+SHA_ANY = re.compile(r"^#\s*counter-sha256:\s*(.*)$")
 SEP = re.compile(r"^#\s*---\s*$")
 HEX = re.compile(r"^[0-9a-f]{40}$")
 
@@ -56,57 +58,58 @@ def run(cmd, cwd=None, timeout=120):
 def parse_receipt(text):
     """Parse one receipt's header block. Returns (fields, problems).
 
+    The header block is everything before the first `# ---` line; a `# cmd:`/`# rev:`/
+    `# limits:`/`# counter-sha256:` after the separator is body text and is never a header.
+    Header lines are matched loosely (any value, even empty or malformed) so a second
+    malformed `# rev:` is a duplicate/bad-rev problem rather than an invisible line.
     fields: cmd, rev, limits, bindings [(sha, path)], body.
     """
     fields = {"cmd": None, "rev": None, "limits": None, "bindings": [], "body": ""}
     problems = []
-    seen = {"cmd": 0, "rev": 0, "limits": 0, "sep": 0}
-    body_start = None
     lines = text.splitlines()
-    for number, line in enumerate(lines, 1):
-        m = CMD.match(line)
-        if m:
-            seen["cmd"] += 1
-            fields["cmd"] = m.group(1).strip()
-            continue
-        m = REV.match(line)
-        if m:
-            seen["rev"] += 1
-            fields["rev"] = m.group(1)
-            continue
-        m = LIMITS.match(line)
-        if m:
-            seen["limits"] += 1
-            fields["limits"] = m.group(1).strip()
-            continue
-        m = SHA.match(line)
-        if m:
-            fields["bindings"].append((m.group(1), m.group(2)))
-            continue
-        if SEP.match(line):
-            seen["sep"] += 1
-            if body_start is None:
-                body_start = number
-    if body_start is None:
-        fields["body"] = text
+    separators = [number for number, line in enumerate(lines, 1) if SEP.match(line)]
+    if not separators:
+        problems.append("missing-separator")
+        header_lines = lines
+        body = ""
     else:
-        fields["body"] = "\n".join(lines[body_start:])
+        header_lines = lines[:separators[0] - 1]
+        body = "\n".join(lines[separators[0]:])
+        if len(separators) > 1:
+            problems.append("duplicate-separator")
+    seen = {"cmd": 0, "rev": 0, "limits": 0}
+    for line in header_lines:
+        m = HEADER_ANY.match(line)
+        if m:
+            name, value = m.group(1), m.group(2).strip()
+            seen[name] += 1
+            fields[name] = value
+            continue
+        m = SHA_ANY.match(line)
+        if m:
+            payload = m.group(1).strip()
+            parsed = SHA.match("# counter-sha256: " + payload)
+            if parsed is None:
+                problems.append("malformed-binding")
+                fields["bindings"].append(("", payload))
+            else:
+                fields["bindings"].append((parsed.group(1), parsed.group(2)))
     for name in ("cmd", "rev", "limits"):
         if seen[name] == 0:
             problems.append("missing-" + name)
         elif seen[name] > 1:
             problems.append("duplicate-" + name)
-    if seen["sep"] == 0:
-        problems.append("missing-separator")
-    elif seen["sep"] > 1:
-        problems.append("duplicate-separator")
+        elif fields[name] == "":
+            problems.append("empty-" + name)
     if not fields["bindings"]:
         problems.append("missing-binding")
-    if fields["rev"] is not None and not HEX.match(fields["rev"]):
+    if fields["rev"] is not None and fields["rev"] and not HEX.match(fields["rev"]):
         problems.append("bad-rev")
     limits = (fields["limits"] or "").lower()
-    if fields["limits"] is not None and ("limit" not in limits or len(limits.split()) < 3):
+    if fields["limits"] is not None and fields["limits"] != "" and (
+            "limit" not in limits or len(limits.split()) < 3):
         problems.append("weak-limits")
+    fields["body"] = body
     return fields, problems
 
 
@@ -250,6 +253,21 @@ def selfcheck():
     cases.append(("hex_shape", bool(HEX.match("a" * 40)) and not HEX.match("A" * 40), "hex"))
     cases.append(("receipt_count", len(RECEIPTS) == 3 and len({r[0] for r in RECEIPTS}) == 3,
                   "3"))
+    body_cmd = good.replace("C1=met mutants=2\n", "C1=met mutants=2\n# cmd: quoted in body\n")
+    fields_b, problems_b = parse_receipt(body_cmd)
+    cases.append(("body_header_ignored",
+                  not problems_b and "# cmd: quoted in body" in fields_b["body"],
+                  str(problems_b)))
+    malformed = good.replace(
+        "# counter-sha256: " + hashlib.sha256(b"body").hexdigest() + " tools/x.py\n",
+        "# counter-sha256: " + hashlib.sha256(b"body").hexdigest()[:-1] + " tools/x.py\n")
+    fields_m, problems_m = parse_receipt(malformed)
+    cases.append(("malformed_binding_counted",
+                  "malformed-binding" in problems_m and len(fields_m["bindings"]) == 1,
+                  str(problems_m)))
+    dup_rev_loose = good.replace("# rev: " + "a" * 40 + "\n", "# rev: " + "a" * 40 + "\n# rev: zz\n")
+    cases.append(("duplicate_rev_loose",
+                  "duplicate-rev" in parse_receipt(dup_rev_loose)[1], "loose"))
     cases.append(("marker_literal", "counter-sha256" in open(os.path.abspath(__file__)).read(),
                   "marker"))
     ok = sum(1 for _, good_case, _ in cases if good_case)
