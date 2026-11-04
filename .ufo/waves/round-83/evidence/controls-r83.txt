@@ -1,0 +1,14 @@
+# mori round-83 do-nothing controls — taken before any wave seat existed
+# entering revision 68185d6e719054c55b107280085b05609e96165b
+
+$ python3 -I .ufo/waves/round-83/count-c1.py 68185d6e
+C1=unmet harness=absent rev=68185d6e7190
+rc=1
+
+$ python3 -I .ufo/waves/round-83/count-c2.py 68185d6e
+C2=unmet snapshot=absent tokens=0 agreed=0 residual=0 live=unavailable rev=68185d6e7190
+rc=1
+
+$ python3 -I .ufo/waves/round-83/count-c3.py 68185d6e
+C3=unmet arm=absent rev=68185d6e7190
+rc=1
