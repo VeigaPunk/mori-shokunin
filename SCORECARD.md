@@ -4391,9 +4391,10 @@ capability, not a subject-state or coverage move.
 
 ## Planned (round 86)
 
-1. **operability** — the r85 mutation probe's surviving unarmed clauses (`MUTANTS total=N killed=N survivors=N`,
-   `w1/Mo85M01Mut.md`) get the arm each needs, starting with the C2 parser's separator/summary split
-   and C3's `observe_three` stability rule.
+1. **operability** — the r85 mutation probe's surviving unarmed clauses (`MUTANTS total=48 killed=18
+   survivors=30` at the freeze bytes, `w1/Mo85M01Mut.md`; the tip-byte mapping is the seat's addendum)
+   get the arm each needs, starting with the C2 parser's separator/summary split and C3's
+   `observe_three` stability rule.
 2. **calibration** — the C2 predicate's named stale-body limit (a correct digest over a stale body
    passes) gets a body-versus-command binding: re-run `# cmd:` and compare, or record the limit in
    the receipt grammar as a superseding row.
