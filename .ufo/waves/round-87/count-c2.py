@@ -16,13 +16,13 @@ receipt label are the same sentence):
 `# replay: legacy` receipts are header-bound only and are counted `legacy` unless superseded; the
 r85 worktree receipt `after-r85.txt` stays `legacy` because its body is a live-observation run.
 
-Round 89 (P-C1 of `.ufo/waves/round-89/contract.md`): a binding names the **executed script** —
-path identity by `normpath`/`realpath` (`./tools/x.py` is `tools/x.py`) of a file the command
-executes: the script operand of a Python or shell interpreter after its options (`-W`/`-X` values
-skipped, `-c`/`-m` run no file, `sh -c` strings parsed), behind env/nice/exec/timeout wrappers and
-assignments, after `uv run`, or a directly executed path; invocations split quote-aware on
-`;`/`&&`/`||`/`|`. A path named only after an unquoted `#`, passed as data or printed by
-`printf`/`echo` is `cmd-binding`.
+Round 89 (P-C1 of `.ufo/waves/round-89/contract.md`; repair 2 at integration): a binding is the
+entering token rule minus the positions that provably do not execute the bound path — a shell
+comment (POSIX word-start rule), a redirection target, an echo/printf/:/true/false operand, a
+CPython `-W`/`-X` value, anything after `-c`/`-m`, anything after the script operand. Path
+identity by `normpath`/relative `realpath` (`./tools/x.py` is `tools/x.py`); an absolute token
+never binds; quoted command strings (`sh -c '…'`) are searched recursively. Everything else
+binds as it did on entry, so this is not execution proof.
 
 Usage: count-c2.py <rev> [--repo DIR] [--scratch DIR] | count-c2.py --selftest
 Exit 0 met, 1 unmet, 2 setup. Read-only: `git show`, `git clone --shared`; files only under
@@ -146,69 +146,164 @@ def declared_replay_problem(declared_mode, fields):
     return None
 
 
-SHELL_OPERATORS = frozenset(";&|()")
 REDIRECTS = frozenset(("<", ">", ">>", "<<", "<<<", ">&", "<&", "&>", "&>>", ">|", "<>"))
+CONTROL = frozenset(";&|()")
 ASSIGNMENT = re.compile(r"[A-Za-z_][A-Za-z0-9_]*=")
 PYTHON = re.compile(r"python(\d+(\.\d+)*)?$")
-PY_FLAGS = frozenset("bBdEiIOPqsSuvRx")       # Python short options without a value
-SH_FLAGS = frozenset("abBCeEfhHklmpPtTuvx")    # bash/sh short options without a value
-SH_LONG = frozenset(("--norc", "--noprofile", "--posix", "--login", "--noediting",
-                     "--restricted", "--verbose"))
-UV_RUN_VALUE = frozenset(("--with", "--with-requirements", "--with-editable", "--python", "-p",
-                          "--project", "--directory", "--env-file", "--extra", "--group",
-                          "--index", "--default-index", "--index-url", "--package"))
+PY_FLAGS = frozenset("bBdEiIOPqsSuvRx")        # CPython short options without a value
+DATA_HEADS = frozenset(("echo", "printf", ":", "true", "false"))   # never execute an operand
+WRAPPERS = {"exec": ("-a",), "command": (), "nohup": (), "time": (), "stdbuf": (),
+            "setsid": (), "nice": ("-n", "--adjustment"), "ionice": ("-c", "-n", "-p", "-P"),
+            "timeout": ("-s", "-k", "--signal", "--kill-after"), "env": ("-u", "--unset")}
 DEPTH = 3
 
 
-def strip_comment(cmd):
-    """`cmd` up to its first unquoted `#` at a word start (bash comment rule)."""
-    quote, escaped, prev = None, False, " "
-    for i, ch in enumerate(cmd):
+def entering_binds(cmd, path):
+    """The entering (round-88) rule: `path` is a whitespace token of `cmd`, quotes stripped."""
+    return path in set(token.strip(";'\"") for token in re.split(r"\s+", cmd or ""))
+
+
+def strip_comments(cmd):
+    """`cmd` with POSIX comments removed (S611): an unquoted, unescaped `#` that starts a word
+    begins a comment running to the end of its line; a `#` inside a word belongs to the word.
+    Unquoted newlines become `;`; a backslash-newline is removed."""
+    out, quote, escaped, word, skipping = [], None, False, False, False
+    for ch in cmd:
+        if skipping:
+            if ch != "\n":
+                continue
+            skipping = False
         if escaped:
             escaped = False
+            if ch == "\n":
+                out.pop()
+                continue
+            out.append(ch)
+            word = True
         elif ch == "\\" and quote != "'":
             escaped = True
+            out.append(ch)
         elif quote:
             quote = None if ch == quote else quote
+            out.append(ch)
         elif ch in "'\"":
             quote = ch
-        elif ch == "#" and (prev.isspace() or prev in ";&|()<>"):
-            return cmd[:i]
-        prev = ch
-    return cmd
+            out.append(ch)
+            word = True
+        elif ch == "#" and not word:
+            skipping = True
+        else:
+            out.append(";" if ch == "\n" else ch)
+            word = not (ch.isspace() or ch in ";&|()<>")
+    return "".join(out)
 
 
-def command_invocations(cmd):
-    """`cmd` as shell invocations: comments dropped, quote-aware split on `;`/`&&`/`||`/`|`,
-    redirections removed. None when the command does not tokenize (unbalanced quotes)."""
-    lexer = shlex.shlex(strip_comment(cmd or ""), posix=True, punctuation_chars=";&|()<>")
+def shell_tokens(cmd):
+    """Shell words and operators of a comment-free command; None when it does not tokenize."""
+    lexer = shlex.shlex(cmd, posix=True, punctuation_chars=";&|()<>")
     lexer.whitespace_split = True
     lexer.commenters = ""
     try:
-        tokens = list(lexer)
+        return list(lexer)
     except ValueError:
         return None
-    invocations, current, skip = [], [], False
-    for i, token in enumerate(tokens):
-        if skip:
-            skip = False
+
+
+def invocations(tokens):
+    """Simple commands as (words, redirect_targets); split on control operators."""
+    result, words, targets, target = [], [], [], False
+    for token in tokens:
+        if target:
+            targets.append(token)
+            target = False
         elif token in REDIRECTS:
-            if current and current[-1].isdigit() and i and tokens[i - 1] == current[-1]:
-                current.pop()
-            skip = True
-        elif set(token) <= SHELL_OPERATORS:
-            if current:
-                invocations.append(current)
-            current = []
+            target = True
+        elif set(token) <= CONTROL:
+            result.append((words, targets))
+            words, targets = [], []
         else:
-            current.append(token)
-    if current:
-        invocations.append(current)
-    return invocations
+            words.append(token)
+    result.append((words, targets))
+    return [(w, t) for w, t in result if w or t]
+
+
+def head_index(words):
+    """Index of the command word behind assignments and exec/env/nice/timeout-style wrappers;
+    None when a wrapper's form is not understood (then nothing is excluded)."""
+    i = 0
+    while i < len(words):
+        word, base = words[i], os.path.basename(words[i])
+        if ASSIGNMENT.match(word):
+            i += 1
+        elif base in WRAPPERS:
+            i += 1
+            while i < len(words) and (words[i].startswith("-") or
+                                      (base == "env" and ASSIGNMENT.match(words[i]))):
+                option = words[i]
+                if base == "env" and ((not option.startswith("--") and set(option[1:]) & {"C", "S"})
+                                      or option.split("=")[0] in ("--chdir", "--split-string")):
+                    return None
+                i += 2 if option in WRAPPERS[base] else 1
+            if base == "timeout":
+                i += 1                      # the duration operand
+        else:
+            return i
+    return None
+
+
+def python_excluded(words, h):
+    """Word indices a CPython invocation does not execute as its script: option values of
+    `-W`/`-X`, the `-c`/`-m` value and every later word, and every word after the script
+    operand (S610: "all consecutive arguments will end up in sys.argv"). None when an option
+    is not understood."""
+    excluded, i = set(), h + 1
+    while i < len(words):
+        arg = words[i]
+        if arg == "--":
+            return excluded | set(range(i + 2, len(words)))
+        if arg == "-":
+            return excluded | set(range(i + 1, len(words)))
+        if arg == "--check-hash-based-pycs":
+            excluded.add(i + 1)
+            i += 2
+            continue
+        if arg.startswith("--"):
+            return None
+        if not arg.startswith("-"):
+            return excluded | set(range(i + 1, len(words)))
+        for j, flag in enumerate(arg[1:], 1):
+            if flag in "cm":
+                return excluded | set(range(i + 1, len(words)))
+            if flag in "WX":
+                if j == len(arg) - 1:
+                    excluded.add(i + 1)
+                    i += 1
+                break
+            if flag not in PY_FLAGS:
+                return None
+        i += 1
+    return excluded
+
+
+def excluded_words(words):
+    """Word indices provably not executed: operands of echo/printf/:/true/false and the
+    non-script words of a CPython invocation."""
+    h = head_index(words)
+    if h is None:
+        return set()
+    base = os.path.basename(words[h])
+    if base in DATA_HEADS:
+        return set(range(h + 1, len(words)))
+    if PYTHON.match(base):
+        return python_excluded(words, h) or set()
+    return set()
 
 
 def same_path(token, path, repo):
-    """True when `token` and the repo-relative `path` name the same file."""
+    """True when the relative `token` and the repo-relative `path` name the same file; an
+    absolute token never binds (it can name a file outside the replay tree)."""
+    if not token or os.path.isabs(token):
+        return False
     if os.path.normpath(token) == os.path.normpath(path):
         return True
     if repo:
@@ -217,163 +312,41 @@ def same_path(token, path, repo):
     return False
 
 
-def unwrap(tokens):
-    """`tokens` without leading assignments and env/nice/exec/nohup/time/command/timeout
-    wrappers; None when a wrapper changes the directory or splits its own string."""
-    t = list(tokens)
-    while t:
-        head = os.path.basename(t[0])
-        if ASSIGNMENT.match(t[0]):
-            t = t[1:]
-        elif head in ("exec", "nohup", "time", "command"):
-            t = t[1:]
-            while t and t[0] in ("-c", "-l", "-p", "--"):
-                t = t[1:]
-            if head == "exec" and t and t[0] == "-a":
-                t = t[2:]
-        elif head == "env":
-            t = t[1:]
-            while t and (t[0].startswith("-") or ASSIGNMENT.match(t[0])):
-                if t[0] in ("-C", "-S", "--chdir", "--split-string") or \
-                        t[0].startswith(("-C", "-S", "--chdir=", "--split-string=")):
-                    return None
-                t = t[2:] if t[0] in ("-u", "--unset") else t[1:]
-        elif head == "nice":
-            t = t[1:]
-            if t and t[0] in ("-n", "--adjustment"):
-                t = t[2:]
-            elif t and (t[0].startswith("--adjustment=") or re.match(r"-n?-?\d+$", t[0])):
-                t = t[1:]
-        elif head == "timeout":
-            t = t[1:]
-            while t and t[0].startswith("-"):
-                t = t[2:] if t[0] in ("-s", "-k", "--signal", "--kill-after") else t[1:]
-            t = t[1:]
-        else:
-            return t
-    return t
-
-
-def python_script(t):
-    """The script file a `python* [options] script` invocation executes, else None."""
-    i = 1
-    while i < len(t):
-        arg = t[i]
-        if arg == "--":
-            return t[i + 1] if i + 1 < len(t) else None
-        if arg == "--check-hash-based-pycs":
-            i += 2
-            continue
-        if arg == "-" or arg.startswith("--"):
-            return None
-        if not arg.startswith("-"):
-            return arg
-        for j, flag in enumerate(arg[1:], 1):
-            if flag in "WX":
-                if j == len(arg) - 1:
-                    i += 1          # the value is the next token
-                break
-            if flag not in PY_FLAGS:
-                return None         # -c/-m run no script file; unknown flags are refused
-        i += 1
-    return None
-
-
-def shell_scripts(t, depth):
-    """Scripts a `bash|sh [options] (script | -c string)` invocation executes."""
-    i = 1
-    while i < len(t):
-        arg = t[i]
-        if arg == "--":
-            return [t[i + 1]] if i + 1 < len(t) else []
-        if arg in SH_LONG:
-            i += 1
-            continue
-        if arg in ("--rcfile", "--init-file"):
-            i += 2
-            continue
-        if arg in ("-o", "+o"):
-            i += 2
-            continue
-        if not arg.startswith(("-", "+")):
-            return [arg]
-        flags = arg[1:]
-        if "c" in flags and set(flags) - {"c"} <= SH_FLAGS:
-            return executed_scripts(t[i + 1], depth + 1) if i + 1 < len(t) else []
-        if not set(flags) <= SH_FLAGS:
-            return []               # -n (no execution), -s (stdin) and unknown flags
-        i += 1
-    return []
-
-
-def uv_run_scripts(t, depth):
-    """Scripts a `uv run [options] (script | interpreter ...)` invocation executes."""
-    if len(t) < 2 or t[1] != "run":
-        return []
-    i = 2
-    while i < len(t):
-        arg = t[i]
-        if arg == "--":
-            i += 1
-            break
-        if arg in UV_RUN_VALUE:
-            i += 2
-        elif arg.startswith("-"):
-            i += 1
-        else:
-            break
-    return invocation_scripts(t[i:], depth + 1)
-
-
-def invocation_scripts(tokens, depth):
-    """Script files one invocation executes (after unwrapping); [] when none."""
-    t = unwrap(tokens)
-    if not t or depth > DEPTH:
-        return []
-    head = os.path.basename(t[0])
-    if PYTHON.match(head):
-        script = python_script(t)
-        return [script] if script else []
-    if head in ("bash", "sh", "dash", "zsh"):
-        return shell_scripts(t, depth)
-    if head == "uv":
-        return uv_run_scripts(t, depth)
-    if "/" in t[0]:
-        return [t[0]]               # direct execution of a path
-    return []
-
-
-def executed_scripts(cmd, depth=0):
-    """Every script file `cmd` executes, invocation by invocation. None when untokenizable.
-    After a `cd`/`pushd`/`popd` invocation the working directory is unknown: later
-    invocations bind nothing."""
-    invocations = command_invocations(cmd)
-    if invocations is None:
-        return None
-    scripts = []
-    for tokens in invocations:
-        if os.path.basename(tokens[0]) in ("cd", "pushd", "popd"):
-            break
-        scripts.extend(invocation_scripts(tokens, depth))
-    return scripts
+def binds(cmd, path, repo=None, depth=0):
+    """True when `path` occurs in `cmd` outside every position that provably does not execute
+    it: comments, redirection targets, echo/printf/:/true/false operands and CPython's
+    non-script words. A word containing whitespace (a quoted command string, e.g. `sh -c`)
+    is searched recursively. When the command does not tokenize, or nesting exceeds DEPTH,
+    the entering rule decides — so every refusal beyond the entering rule is an exclusion."""
+    tokens = shell_tokens(strip_comments(cmd)) if depth <= DEPTH else None
+    if tokens is None:
+        return entering_binds(cmd, path)
+    for words, _targets in invocations(tokens):
+        excluded = excluded_words(words)
+        for k, word in enumerate(words):
+            if k in excluded:
+                continue
+            if same_path(word, path, repo):
+                return True
+            if any(c.isspace() for c in word) and binds(word, path, repo, depth + 1):
+                return True
+    return False
 
 
 def binding_problems(cmd, bindings, replayed, repo=None):
-    """Every `# counter-sha256:` path must be a script the command executes.
+    """Every `# counter-sha256:` path must occur in the command outside the positions that
+    provably do not execute it (`binds`).
 
-    Round 89: path identity (`normpath`/`realpath`, so `./x` names `x`) of a script in
-    executed position — after a Python/shell interpreter and its options (option values of
-    `-W`/`-X` skipped; `-c`/`-m` execute no file; `sh -c` strings parsed), behind
-    env/nice/exec/timeout wrappers and assignments, after `uv run`, or as a directly executed
-    path. A path named only in a shell comment, passed as data or printed does not bind.
+    Round 89 (repair 2): the rule only subtracts from the entering token rule. A bound path
+    named only in a shell comment, as a redirection target, as an echo/printf operand, as a
+    `-W`/`-X` value, after `python -c`/`-m`, or after another script operand does not bind;
+    `./x` and `x` are one path; an absolute token never binds. It is not execution proof:
+    control flow (`||`, `exit`, `false &&`), functions and fake interpreters stay as open as
+    under the entering rule.
     """
     if not replayed:
         return []
-    scripts = executed_scripts(cmd)
-    if scripts is None:
-        return ["cmd-binding"]
-    return ["cmd-binding" for _sha, path in bindings
-            if not any(same_path(script, path, repo) for script in scripts)]
+    return ["cmd-binding" for _sha, path in bindings if not binds(cmd or "", path, repo)]
 
 
 def absent_supersede_targets(superseders, known):
