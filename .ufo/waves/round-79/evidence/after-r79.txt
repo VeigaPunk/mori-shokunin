@@ -1,12 +1,12 @@
 # mori round-79 AFTER receipts (C1 tool, the three counters, the standing battery, the census)
-run-start=2026-11-04T05:43:58Z
-rev=e3e2e272fb1ae559d6bf407803055293e32137f3
-tree=/home/vgpnk/Projects/shokunin/mori-shokunin (the lane working tree at e3e2e272fb1ae559d6bf407803055293e32137f3; the census reads this working tree, not a revision)
+run-start=2026-11-04T05:46:04Z
+rev=324c182b33ca2b25b269f9f21e5c1e9e1b50323c
+tree=/home/vgpnk/Projects/shokunin/mori-shokunin (the lane working tree at 324c182b33ca2b25b269f9f21e5c1e9e1b50323c; the census reads this working tree, not a revision)
 
 ## 1. the C1 instrument at the landed bytes
-$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin cat-file -e e3e2e272fb1ae559d6bf407803055293e32137f3:tools/mori-control-receipt.py
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin cat-file -e 324c182b33ca2b25b269f9f21e5c1e9e1b50323c:tools/mori-control-receipt.py
 rc=0
-$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show e3e2e272fb1ae559d6bf407803055293e32137f3:tools/mori-control-receipt.py | sha256sum
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 324c182b33ca2b25b269f9f21e5c1e9e1b50323c:tools/mori-control-receipt.py | sha256sum
   531d6b524635cccc57ef54712ed990899dfae36f2544143f6a1bbbd66c55f887  -
 rc=0
 $ python3 -I tools/mori-control-receipt.py --selftest | tail -1
@@ -19,21 +19,21 @@ $ python3 -I tools/mori-control-receipt.py --dir /home/vgpnk/Projects/shokunin/m
 rc=0
 $ python3 -I tools/mori-control-receipt.py --dir /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-79/evidence | tail -2
   CONTROL_RECEIPT /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-79/evidence/source-rfc9111-r79.txt sections=7 claims=27 bound=5 unbound=0
-  CONTROL_RECEIPT_SUMMARY files=6 sections=23 claims=66 unbound=1
+  CONTROL_RECEIPT_SUMMARY files=6 sections=23 claims=66 unbound=0
 rc=0
 
 ## 2. the three frozen counters at the landed rev
-$ python3 .ufo/waves/round-79/count-c1.py e3e2e272fb1ae559d6bf407803055293e32137f3 | tail -2
+$ python3 .ufo/waves/round-79/count-c1.py 324c182b33ca2b25b269f9f21e5c1e9e1b50323c | tail -2
   item after rc=0 unbound=0
-  C1=met tool=531d6b524635 selftest=19/0 witness=yes after_rc=0 after_unbound=0 rev=e3e2e272fb1a
+  C1=met tool=531d6b524635 selftest=19/0 witness=yes after_rc=0 after_unbound=0 rev=324c182b33ca
 rc=0
-$ python3 .ufo/waves/round-79/count-c2.py e3e2e272fb1ae559d6bf407803055293e32137f3 | tail -2
+$ python3 .ufo/waves/round-79/count-c2.py 324c182b33ca2b25b269f9f21e5c1e9e1b50323c | tail -2
   axis adjacency cell=round_19_improved expect=round_19_improved state=ok
-  C2=met axes=6 mismatches=0 errors=0 rows=46 through=78 rev=e3e2e272fb1a
+  C2=met axes=6 mismatches=0 errors=0 rows=46 through=78 rev=324c182b33ca
 rc=0
-$ python3 .ufo/waves/round-79/count-c3.py e3e2e272fb1ae559d6bf407803055293e32137f3 | tail -2
+$ python3 .ufo/waves/round-79/count-c3.py 324c182b33ca2b25b269f9f21e5c1e9e1b50323c | tail -2
   item index ok
-  C3=met rows=367 row=ok pin=ok entry=ok index=ok rev=e3e2e272fb1a
+  C3=met rows=367 row=ok pin=ok entry=ok index=ok rev=324c182b33ca
 rc=0
 
 ## 3. the standing battery (13 instruments, anchored rc counting)
@@ -91,12 +91,12 @@ $ /home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/
 rc=0
 
 ## 5. the no-harm tree facts (SCORECARD axes table and frozen registry bytes)
-$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show e3e2e272fb1ae559d6bf407803055293e32137f3:SCORECARD.md | sed -n '1,6p' | sha256sum
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 324c182b33ca2b25b269f9f21e5c1e9e1b50323c:SCORECARD.md | sed -n '1,6p' | sha256sum
   c8168b7d16cbb7d3eedafa6d20bbec25e377c23648e2669cc4ca4089fda082e8  -
 rc=0
-$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show e3e2e272fb1ae559d6bf407803055293e32137f3:corpus/SOURCES.md | sed -n '1,373p' | sha256sum
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 324c182b33ca2b25b269f9f21e5c1e9e1b50323c:corpus/SOURCES.md | sed -n '1,373p' | sha256sum
   a256fad6b41aaa743cd636a95f603cb820469ba7bd6bd519ad35b042ab6a3781  -
 rc=0
-$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show e3e2e272fb1ae559d6bf407803055293e32137f3:SKILL.md | sed -n '1,1352p' | sha256sum
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 324c182b33ca2b25b269f9f21e5c1e9e1b50323c:SKILL.md | sed -n '1,1352p' | sha256sum
   c4288f0969e7ea0156baad1c4f51dbf94cd1ef2ddb4e0a38bc7b20a38df5d4c5  -
 rc=0
