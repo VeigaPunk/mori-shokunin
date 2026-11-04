@@ -179,3 +179,12 @@ selftest; it no longer requires a particular helper name (`def replay_receipt(`)
 contract never froze a function name and the name is not behaviour. The frozen counts, the receipt
 population and the target line are unchanged.
 
+**A2 (2026-11-04, before any after-value existed; dry run in a shared clone).** Two readings fixed,
+no target/population/count moved:
+(i) P-C2's "the subject run at R prints that same line" means the subject's `C2=met <frozen tail>`
+is printed as a **prefix**; the subject appends `detector=green rev=<12-hex>` and the r86 counter
+now compares by prefix (`subject_line.startswith(TARGET_LINE)`).
+(ii) P-C3's fleet root is derived from the measured repo's path when it ends in `-shokunin`
+(the live lane does); a clone or moved tree must pass `--fleet-root`. This is a named limit of the
+counting command, not a predicate change.
+

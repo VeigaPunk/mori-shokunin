@@ -60,3 +60,27 @@ $ python3 -I .ufo/waves/round-86/count-c2.py --selftest
 C2_COUNTER_SELFTEST pass=11 fail=0
 $ python3 -I .ufo/waves/round-86/count-c3.py --selftest
 C3_COUNTER_SELFTEST pass=22 fail=0
+
+# --- rebuild recipe for the C1 label-only stub control (the fixture repo is scratch and deleted)
+# D=$(mktemp -d -p /fast/scratch/hyaku/mori-r86); git -C "$D" init -q
+# mkdir -p "$D/.ufo/waves/round-85"; write "$D/.ufo/waves/round-85/count-c3.py" with these bytes:
+#   #!/usr/bin/env python3
+#   """Label-only stub control for the r86 C1 claim: prints the arms, implements nothing."""
+#   import sys
+#   LABELS = ("subject_verdict_met_required", "stability_rc_must_be_1", "stability_rc_required",
+#             "stability_exact_order", "reconcile_agreed_skip", "met_requires_subject_tokens")
+#   def main(argv):
+#       for label in LABELS:
+#           print("PASS " + label + " x")
+#       print("C3_COUNTER_SELFTEST pass=26 fail=0")
+#       return 0
+#   if __name__ == "__main__":
+#       sys.exit(main(sys.argv[1:]))
+# the six claimed anchors appear once each as inert comments in the docstring:
+#   return (rc == 0 and fields.get("verdict") == "met" / all(rc == 1 for rc in rcs) /
+#   all(tokens == first for tokens in token_lines[1:]) / if word == "agreed": /
+#   and subject_tokens == len(own_tokens)
+# git -C "$D" -c user.name=t -c user.email=t@t add -A && git -C "$D" -c user.name=t -c user.email=t@t commit -qm stub
+# test "$(git -C "$D" rev-parse --show-toplevel)" = "$D"
+# python3 -I .ufo/waves/round-86/count-c1.py HEAD --repo "$D" --scratch "$(dirname "$D")"
+# measured 2026-11-04: C1=unmet mutants=6 killed=0 survivors=6 total=6 arms=26 detector=green, rc 1

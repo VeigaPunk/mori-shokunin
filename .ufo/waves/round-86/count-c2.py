@@ -350,7 +350,7 @@ def main(argv):
             for line in rout.splitlines():
                 if line.startswith("C2="):
                     subject_line = line.strip()
-            subject_run_ok = (rrun.returncode == 0 and subject_line == TARGET_LINE)
+            subject_run_ok = (rrun.returncode == 0 and subject_line.startswith(TARGET_LINE))
 
         # This counter's independent population grade (header grammar + replay execution).
         ok, lines, counts = grade_population(loader, repo, rev, scratch)
