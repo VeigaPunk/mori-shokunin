@@ -1,0 +1,67 @@
+# mori round-79 do-nothing controls (every claimed after-state absent at entering)
+run-start=2026-11-04T05:32:25Z
+entering=84c6cbc3b47c536a504aaee329c77897d389935e
+generator=gen-controls.sh (committed under .ufo/waves/round-79/evidence/gen-controls.sh)
+
+## 1. the C1 instrument absent at entering
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin cat-file -e 84c6cbc3b47c536a504aaee329c77897d389935e:tools/mori-control-receipt.py
+  fatal: path 'tools/mori-control-receipt.py' does not exist in '84c6cbc3b47c536a504aaee329c77897d389935e'
+rc=128
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin log --all --oneline -- tools/mori-control-receipt.py | wc -l
+  0
+rc=0
+
+## 2. the C2 target absent at entering (axes cells vs the fleet record)
+$ python3 .ufo/waves/round-79/count-c2.py 84c6cbc3b47c536a504aaee329c77897d389935e
+  axis coverage cell=round_47_improved expect=round_56_improved state=mismatch
+  axis operability cell=round_51_improved expect=round_78_improved state=mismatch
+  axis depth cell=round_51_improved expect=round_76_improved state=mismatch
+  axis freshness cell=round_28_improved expect=round_78_improved state=mismatch
+  axis calibration cell=round_50_improved expect=round_78_improved state=mismatch
+  axis adjacency cell=round_19_improved expect=round_19_improved state=ok
+  C2=unmet axes=6 mismatches=5 errors=0 rows=46 through=78 rev=84c6cbc3b47c
+rc=1
+
+## 3. the C3 row, pin and entry absent at entering
+$ python3 .ufo/waves/round-79/count-c3.py 84c6cbc3b47c536a504aaee329c77897d389935e
+  item rows count=366 want=367
+  item row missing
+  item pin missing
+  item entry missing
+  item index missing
+  C3=unmet rows=366 row=missing pin=missing entry=missing index=missing rev=84c6cbc3b47c
+rc=1
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin cat-file -e 84c6cbc3b47c536a504aaee329c77897d389935e:corpus/evidence/sources-r79/rfc9111.txt
+  fatal: path 'corpus/evidence/sources-r79/rfc9111.txt' does not exist in '84c6cbc3b47c536a504aaee329c77897d389935e'
+rc=128
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 84c6cbc3b47c536a504aaee329c77897d389935e:corpus/SOURCES.md | grep -cE '^ {0,3}\|[[:space:]]*S594[[:space:]]*\|'
+  0
+rc=1
+
+## 4. this round's receipts absent at entering
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin cat-file -e 84c6cbc3b47c536a504aaee329c77897d389935e:corpus/knowledge/ua-serving-normative-r79.md
+  fatal: path 'corpus/knowledge/ua-serving-normative-r79.md' does not exist in '84c6cbc3b47c536a504aaee329c77897d389935e'
+rc=128
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin cat-file -e 84c6cbc3b47c536a504aaee329c77897d389935e:corpus/lessons/round-79.md
+  fatal: path 'corpus/lessons/round-79.md' does not exist in '84c6cbc3b47c536a504aaee329c77897d389935e'
+rc=128
+$ git -C /home/vgpnk/Projects/shokunin/mori-shokunin cat-file -e 84c6cbc3b47c536a504aaee329c77897d389935e:.ufo/waves/round-79/contract.md
+  fatal: path '.ufo/waves/round-79/contract.md' exists on disk, but not in '84c6cbc3b47c536a504aaee329c77897d389935e'
+rc=128
+
+## 5. the three counters' own selftests at the freeze commit
+$ python3 .ufo/waves/round-79/count-c1.py --selftest | tail -1
+  C1_COUNTER_SELFTEST pass=4 fail=0
+rc=0
+$ python3 .ufo/waves/round-79/count-c2.py --selftest | tail -1
+  C2_COUNTER_SELFTEST pass=4 fail=0
+rc=0
+$ python3 .ufo/waves/round-79/count-c3.py --selftest | tail -1
+  C3_COUNTER_SELFTEST pass=4 fail=0
+rc=0
+
+## 6. the fleet record the C2 counter reads (admitted mori rows only, through 78)
+$ python3 -c "import json;d=json.load(open('/home/vgpnk/Projects/shokunin/MANIFEST.json'));m=[r for r in d['rounds'] if r.get('lane')=='mori' and r.get('admitted')];print('admitted_mori_rows',len(m));print('max_round',max(r['round'] for r in m))"
+  admitted_mori_rows 46
+  max_round 78
+rc=0
