@@ -32,3 +32,24 @@ REGISTRY=unmet
 rc=0
 
 ## pin check
+pin line=1365 kind=tally prefix=CONTROL_RECEIPT_SELFTEST state=match pinned='pass=19 fail=0' observed='pass=19 fail=0' rc=0 cmd='python tools/mori-control-receipt.py --selftest'
+pin line=1366 kind=tally prefix=CLAIM_SWEEP_SELFTEST state=match pinned='pass=30 fail=0' observed='pass=30 fail=0' rc=0 cmd='python3 -I tools/mori-claim-sweep.py --selftest'
+pin line=1367 kind=row state=unparsed cells=9 header=8
+PIN_CHECK=unmet tally_pins=72 digest_pins=8 mismatches=0 unparsed=2 no_command=2 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=- baseline=no env=0 stale=0
+rc=0
+
+## pin check (re-run after the registry row 15 pipe was removed: the earlier lines above were read at 9 cells)
+pin line=938 kind=tally prefix=PIN_CHECK_SELFTEST state=match pinned='pass=125 fail=0' observed='pass=125 fail=0' rc=0 cmd='python3 tools/mori-pin-check.py --selftest'
+pin line=1367 kind=tally prefix=RECORD_SWEEP_SELFTEST state=match pinned='pass=26 fail=0' observed='pass=26 fail=0' rc=0 cmd='python3 -I tools/mori-record-sweep.py --selftest'
+PIN_CHECK=unmet tally_pins=73 digest_pins=8 mismatches=0 unparsed=1 no_command=2 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=- baseline=no env=0 stale=0
+rc=0
+
+## gate registry audit (re-run after the fix)
+registered=61 unregistered=2 no_selftest=0 duplicate=0 wrong_row=0 tables=16
+REGISTRY=unmet
+rc=0
+
+## the same two gates at the entering revision, for the pre-existing baseline
+registered=60 unregistered=2 no_selftest=0 duplicate=0 wrong_row=0 tables=16
+REGISTRY=unmet
+appendonly_violations=50

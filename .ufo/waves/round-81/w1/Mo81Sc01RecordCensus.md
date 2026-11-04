@@ -6,8 +6,8 @@ Scope: detection and report only; no lane byte edited except this file.
 ## 0. Method and provenance
 
 - Committed bytes were read with `git -C /home/vgpnk/Projects/shokunin/mori-shokunin show 44bc941a:<path>`.
-  The four record carriers are **byte-identical** between `44bc941a` and the worktree when measured
-  (03:45–03:52 local), proven by sha256 on both sides:
+  The four record carriers (and `PROVINCE.md`) are **byte-identical** between `44bc941a` and the
+  worktree when measured (03:45–03:52 local), proven by sha256 on both sides:
 
   ```text
   $ for f in SCORECARD.md SKILL.md LOG.md SHONEN.md PROVINCE.md; do
@@ -176,7 +176,7 @@ Selection (documented so it can be re-audited):
 ### 2b. Measured case-count / `N/N` rows outside the `<key>=<int>` strict set
 
 These were run because they state a measured tally with a command, even though the tally is not in
-`key=integer` form. All agree:
+`key=integer` form. All agree except `SCORECARD.md:3294` (stale; see §4):
 
 | row | stated | command run | live | rc |
 |---|---|---|---|---|
@@ -187,6 +187,8 @@ These were run because they state a measured tally with a command, even though t
 | `SKILL.md:911` | `CONFORM_SELFTEST pass=11 fail=0` | `python3 .ufo/waves/round-40/conform.py 265a955c --selftest` | `CONFORM_SELFTEST pass=11 fail=0` | 0 |
 | `SKILL.md:1284` | `C2=met claims=8 source=ok quotes=ok` at `7370a731` | `python3 .ufo/waves/round-57/count-c2.py 7370a731` | `C2=met claims=8 source=ok quotes=ok rev=7370a731` | 0 |
 | `SKILL.md:1285` | `ok rows=8 mismatches=0` | `python3 .ufo/waves/round-57/verify-c2-source.py corpus/knowledge/watchdog-unclosed-r57.md corpus/evidence/sources-r57/mori-driver-liveness.py` | `C2_SOURCE_CHECK ok rows=8 mismatches=0` | 0 |
+| `SKILL.md:1321` | `PASS (10 cases)` | `python tools/mori-drift-recheck.py --selftest` | `MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)` | 0 |
+| `SKILL.md:1322` | `PASS (14 cases)` | `python tools/mori-ua-variance.py --selftest` | `MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)` | 0 |
 | `SKILL.md:1325` | `PASS (10 cases)` | `python tools/mori-events-context-win.py --selftest` | `EVENTS_CONTEXT_SELFTEST: PASS (10 cases)` | 0 |
 | `SKILL.md:1328` | `PASS (12 cases)` | `python tools/mori-counter-win.py --selftest` | `COUNTER_WIN_SELFTEST: PASS (12 cases)` | 0 |
 | `SCORECARD.md:3294` → see §4 | `PASS (7 cases)` | `python tools/mori-drift-recheck.py --selftest` | `MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)` | 0 |
@@ -281,8 +283,11 @@ Notes on apparent diffs that are **not** defects:
 **C2 relevance (report only, no edit):** `.ufo/waves/round-81/record-pins.json` has exactly one
 binding (`pointers`, `SCORECARD.md`, row containing `tools/mori-claim-sweep.py`). The four other
 stale capability-row tallies above are the same class the C2 claim describes but are **not pinned**,
-so the `pinned` arm cannot see them. Correcting only `232 → 233` satisfies the frozen C2 predicate;
-the record would still carry four stale counts. Whether to add bindings is the L1's call.
+so the `pinned` arm cannot see them. At the entering bytes the pointer fixed point is **233**; once
+the round-81 capability/registry rows land, the same pinned command prints **240** (the sibling C2
+edit observed at 03:55 states 240), so the cell must carry the live output at the landed tree, not
+the entering 233. The four unpinned stale counts are then the remaining record debt; whether to add
+bindings is the L1's call.
 
 ## 5. Other defects / observations in other seats' bytes (file:line)
 
