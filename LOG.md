@@ -4987,3 +4987,75 @@ r61 L0 on the staged package's 94/136 id collisions also stands). considerthese 
 newest file (2026-10-26) suggestion 1 lands as QUALITY 167; the rest remain behind the r62/r65/
 round-73 L0s. Open L0 lines (round-62, round-65, round-73) re-verified present and unanswered
 and routed around.
+
+## Round 81 (2026-11-04, L1 MoriR81) — two claims across two axes: C1 operability the r80 counters close the seven routed defeated fixtures they themselves were blind to (all-lines sweep parse, all-carrier-row tally, argv export, own-prefix identity, directory typing), C2 calibration the record claim sweep lands (`tools/mori-record-sweep.py`, 26 arms) and the D80-1..D80-4 corrections of record are applied append-only
+
+entering: `44bc941a0e3e9676fa33a882b43d6e9793cbf74d` (branch master, pushed, clean). Frozen
+contract + the two revision-agnostic counters + do-nothing controls commit `6b021d29`; wave w1
+dispatch `w1.ready` taken 03:44; integration commits `1106afd3`, `075574c8` (source pins),
+`b10e91ee` (D80-2 landed count).
+
+C1 (operability 7). The r80 wave's counter reviewer filed seven defeated shapes
+(`.ufo/waves/round-80/w1/Mo80R01Counter.md` MEDIUM-6/7/8, LOW-10/11/12): a sweep that prints a
+`CLAIM_SWEEP_MISMATCH` line under an all-zero summary graded `met`; two contradicting summaries
+were read as the first; only the first capability row naming the control-receipt tool was read;
+`git archive` went through a shell string so a repo path with a space degraded to setup; the
+`tools/` token had no left boundary; the sibling exclusion also dropped the lane's own
+`mori-shokunin/` prefix; and a `tools/<name>.py` directory counted as an `extra` instrument. The
+fixes are implementation fixes inside `.ufo/waves/round-80/count-c1.py` and `count-c3.py`
+(selftests 4 -> 9 and 4 -> 8 arms); the r80 frozen predicates are byte-unchanged and the r80
+graded values re-derive (`real_c1=met real_c3=met`). The keeper is revision-agnostic and grades
+the same seven fixtures at any revision:
+
+```
+$ python3 -I .ufo/waves/round-81/count-c1.py 075574c83eae044ff8570cbd02d594943a87ced3
+... seven fixture lines, all expected=got ...
+C1=met wrong=0 fixtures=7 real_c1=met real_c3=met rev=075574c83eae
+rc=0
+$ python3 -I .ufo/waves/round-81/count-c1.py 44bc941a0e3e9676fa33a882b43d6e9793cbf74d
+C1=unmet wrong=7 fixtures=7 real_c1=met real_c3=met rev=44bc941a0e3e
+rc=1
+```
+
+C2 (calibration 5, tied lowest). `tools/mori-record-sweep.py` is the new read-only record gate
+(registry row 15, PROVINCE inventory row, SCORECARD capability row, 26 selftest arms): it grades
+exact `PENDING` result cells in `## Round ...` claim tables and `<key>=<int>` tokens that
+disagree with the read-only command the row itself cites. The corrections of record applied
+append-only: D80-1 three r80 after-cells filled with the measured values at `97ce0c96`; D80-2
+the capability row's self-cited count corrected 232 -> 233 at `44bc941a` and then 240 at this
+round's record commit (the r81 graded rows add pointers; the cell state the landed value); D80-3
+the r80 contract's shorthand and P-C1's second conjunct narrowed in prose, r80 bytes untouched;
+D80-4 `97ce0c96` named as the measured revision and `44bc941a` as the evidence-only tip. The
+keeper is green at the landed record commit (line and receipt in the round report).
+
+```
+$ python3 -I .ufo/waves/round-81/count-c2.py 44bc941a0e3e9676fa33a882b43d6e9793cbf74d --pins .ufo/waves/round-81/record-pins.json
+C2=unmet pending=3 pinned=1 tool=absent agree=0 rev=44bc941a0e3e
+rc=1
+```
+
+Frontier step. S596 opens `https://man7.org/linux/man-pages/man2/stat.2.html` (man-pages 6.19)
+with the pinned copy `corpus/evidence/sources-r81/stat.2.man-pages-6.19.html` (sha256
+`0067346d...`, 25836 bytes / 544 lines), quote at lines 234-236 (22 words), duplicate sweep 0
+hits; rows 368 -> 369, malformed 0, census rc 0. The Python `os` DirEntry candidate is rejected
+(same base URL as S068) and the ACM badging page is unreachable (403, no quote, not a row). The
+knowledge entry `corpus/knowledge/record-claim-integrity-r81.md` carries the six-shape decision
+table and cites S596. The mutation seat's five survivors are closed by five new arms
+(`MUTANTS ... survivors=5` -> five mutants re-run on scratch copies, all killed by a failing
+arm; `.ufo/waves/round-81/evidence/mutation-recheck-r81.txt`).
+
+L2: ONE v1 wave, 14 seats (validated under `ufo-wave-policy.json` band 8-16; dispatch
+`w1-dispatch.json`), roles 4 executor / 3 scribe / 2 scout / 2 reviewer / 1 critic / 1
+mutation-tester / 1 connector = attack 4/14 (28.6 %), connectors 1; residual none; the planner
+seat is the L1. Seat reports 14 of 14 in `.ufo/waves/round-81/w1/`.
+
+No-harm: the 13-instrument battery from the r80 receipt re-run at the landed bytes; the wider
+56-instrument run is `BATTERY pass=57 setup=4 fail=0` (the four are lane-scoped-scratch setup
+refusals, not failures). census rc 0; the r80 C3 predicate still reads `named=57 present=57
+missing=0 extra=0` with the new instrument named in PROVINCE.
+
+Assimilation: none — the `merge/mori/` staged ids collide with the lane registry (which reaches
+S595) and adoption needs document-keyed renumbering; the r61 L0 stands and no package is
+adopted. considerthese: nothing new mined this round (the newest file's suggestion 1 landed as
+QUALITY 167 in r80; the rest stay behind the r62/r65/round-73 L0s, re-verified present and
+unanswered).

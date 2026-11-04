@@ -124,6 +124,7 @@ def selfcheck(scratch):
             ("stale_row", 0, 18, 19, False),
             ("sweep_mismatch", 1, 19, 19, False),
             ("inconsistent_summary", "0s", 19, 19, False),
+            ("zero_summary_nonzero_exit", "exitone", 19, 19, False),
             ("contradicting_summaries", "double", 19, 19, False),
             ("mismatch_line", "line", 19, 19, False),
             ("second_stale_row", 0, (19, 18), 19, False),
@@ -133,7 +134,10 @@ def selfcheck(scratch):
         os.makedirs(repo)
         os.makedirs(os.path.join(repo, "tools"))
         os.makedirs(os.path.join(repo, ".ufo/waves/round-80"))
-        if sweep == "0s":
+        if sweep == "exitone":
+            body = ("import sys\nprint('CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 "
+                    "stale=0')\nsys.exit(1)\n")
+        elif sweep == "0s":
             body = ("import sys\nprint('CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 "
                     "stale=1')\nsys.exit(0)\n")
         elif sweep in ("double", "line"):

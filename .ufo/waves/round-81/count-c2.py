@@ -224,6 +224,8 @@ def selftest(scratch):
     check("live conflicting", live_value("pointers=1\npointers=2\n", "pointers") is None)
     check("pins schema", _bad_schema())
 
+    check("pending substring is not a cell", not pending_cells(
+        "## Round 80\n\n| a | not PENDING here |\n"))
     check("required row population", section_rows("## Round 7\n\n| a | x |\n| b | y |\n", "## Round 7") == 2)
     check("required row missing", section_rows("## Round 7\n\n| a | x |\n", "## Round 7") == 1)
 
@@ -288,6 +290,42 @@ def selftest(scratch):
     export(base5, "HEAD", tree5)
     verdict, line = grade(tree5, os.path.join(tree5, ".ufo/waves/round-81/record-pins.json"))
     check("tool disagree unmet", verdict is not None and not verdict["met"], str(line))
+
+    # exit-code arm: a matching value behind a failing command is still a mismatch
+    pins_exit = json.dumps({"schema": "mori-record-pins-v1", "bindings": [
+        {"carrier": "SCORECARD.md", "row_contains": "tools/echo.py", "key": "pointers",
+         "command": ["python3", "-I", "tools/echo.py"]}]})
+    base_e, _ = repo({
+        "SCORECARD.md": "## Round 80\n\n| Claim | After |\n|---|---|\n"
+                        "| a | `tools/echo.py` pointers=233 |\n| b | 1 |\n| c | 2 |\n",
+        ".ufo/waves/round-81/record-pins.json": pins_exit,
+        "tools/mori-record-sweep.py":
+            "import sys\nprint('RECORD_SWEEP pending=0 pinned=1')\nsys.exit(1)\n",
+        "tools/echo.py": "import sys\nprint('SWEEP pointers=233')\nsys.exit(1)\n"})
+    tree_e = tempfile.mkdtemp(dir=scratch)
+    export(base_e, "HEAD", tree_e)
+    verdict, _ = grade(tree_e, os.path.join(tree_e, ".ufo/waves/round-81/record-pins.json"))
+    check("failing command unmet", verdict is not None and verdict["pinned"] == 2, str(verdict))
+
+    # multi-binding arm: the second binding's stale value must count
+    pins_two = json.dumps({"schema": "mori-record-pins-v1", "bindings": [
+        {"carrier": "SCORECARD.md", "row_contains": "tools/echo1.py", "key": "pointers",
+         "command": ["python3", "-I", "tools/echo1.py"]},
+        {"carrier": "SCORECARD.md", "row_contains": "tools/echo2.py", "key": "pointers",
+         "command": ["python3", "-I", "tools/echo2.py"]}]})
+    base_t, _ = repo({
+        "SCORECARD.md": "## Round 80\n\n| Claim | After |\n|---|---|\n"
+                        "| a | `tools/echo1.py` pointers=233 |\n"
+                        "| b | `tools/echo2.py` pointers=233 |\n| c | 2 |\n",
+        ".ufo/waves/round-81/record-pins.json": pins_two,
+        "tools/mori-record-sweep.py":
+            "import sys\nprint('RECORD_SWEEP pending=0 pinned=1')\nsys.exit(1)\n",
+        "tools/echo1.py": "print('SWEEP pointers=233')\n",
+        "tools/echo2.py": "print('SWEEP pointers=234')\n"})
+    tree_t = tempfile.mkdtemp(dir=scratch)
+    export(base_t, "HEAD", tree_t)
+    verdict, _ = grade(tree_t, os.path.join(tree_t, ".ufo/waves/round-81/record-pins.json"))
+    check("second binding counted", verdict is not None and verdict["pinned"] == 2, str(verdict))
 
     # a path with a space must not degrade the export (LOW-10 class)
     spaced = tempfile.mkdtemp(dir=scratch)

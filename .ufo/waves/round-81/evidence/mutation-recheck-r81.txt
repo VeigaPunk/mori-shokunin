@@ -1,0 +1,12 @@
+# round-81 mutation re-check — the five survivors seat Mo81M01Mutants reported (MUTANTS killed=7 total=12 survivors=5)
+# each mutant is a single string replacement applied to a scratch copy of the committed lane file
+# (the counter copy carries its sibling record-pins.json when the file has one); KILLED means the
+# copied file own --selftest exits nonzero with a failing arm, not an environment error.
+$ HYAKU_SCRATCH=/fast/scratch/hyaku/mori-r81/l1 python3 /fast/scratch/hyaku/mori-r81/l1/mut5.py
+KILLED   count-c1   met = (p.returncode == 0 and sweep_consisten   rc=1   C1_COUNTER_SELFTEST pass=8 fail=1
+KILLED   count-c3   (?![\w.-])                                     rc=1   C3_COUNTER_SELFTEST pass=7 fail=1
+KILLED   count-c2   if cell == "PENDING":                          rc=1   C2_COUNTER_SELFTEST pass=20 fail=1
+KILLED   count-c2   or result.returncode != 0 or stated != live:   rc=1   C2_COUNTER_SELFTEST pass=20 fail=1
+KILLED   count-c2   for binding in bindings:                       rc=1   C2_COUNTER_SELFTEST pass=20 fail=1
+rc=0
+# arms added this round: count-c1 pass=9, count-c3 pass=8, count-c2 pass=21

@@ -93,6 +93,24 @@ def selfcheck(scratch):
         cases.append((label, r["met"] == expects[label],
                       f"named={r['named']} present={r['present']} "
                       f"missing={len(r['missing'])} extra={len(r['extra'])}"))
+    # right-boundary arm: a longer suffix must not name the shorter instrument
+    d = tempfile.mkdtemp(dir=scratch)
+    os.makedirs(os.path.join(d, "tools"))
+    open(os.path.join(d, "tools/mori-census.sh"), "w").write("# x\n")
+    open(os.path.join(d, "PROVINCE.md"), "w").write(
+        "# p\n\n- `tools/mori-census.shx` is not the instrument\n")
+    env = ["-c", "user.name=t", "-c", "user.email=t@t"]
+    run(["git"] + env + ["-C", d, "init", "-q"])
+    assert run(["git", "-C", d, "rev-parse", "--show-toplevel"]).stdout.strip() == d
+    run(["git"] + env + ["-C", d, "add", "-A"])
+    run(["git"] + env + ["-C", d, "commit", "-qm", "f"])
+    rev = run(["git", "-C", d, "rev-parse", "HEAD"]).stdout.strip()
+    pres, directories = tree_sets(d, rev)
+    r = grade(run(["git", "-C", d, "show", f"{rev}:PROVINCE.md"]).stdout,
+              pres, directories, os.path.basename(d))
+    cases.append(("suffix_trap", r["met"] is False,
+                  f"named={r['named']} present={r['present']} extra={r['extra']}"))
+
     # mutation-seat survivors (r80 M01): a sibling-lane path and a directory must not count
     d = tempfile.mkdtemp(dir=scratch)
     os.makedirs(os.path.join(d, "tools", "fake-dir.py"))

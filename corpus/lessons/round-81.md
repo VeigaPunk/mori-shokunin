@@ -116,7 +116,11 @@ grep -cE '^ {0,3}\|[[:space:]]*S[0-9]{3,}[[:space:]]*\|' corpus/SOURCES.md
 
 Exit 0 is not “no warnings”; W04 remains explicitly tolerated.
 
-AFTER: filled by the L1 at landing
+After census (run by the L1 at the record commit): **369 source rows, exit 0**, the one
+addition being S596; malformed rows (`awk -F'|' ... NF!=13`) 0; the 35 inherited W04
+duplicate-URL warnings unchanged. Commands and exit codes:
+`/home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori`
+-> rc 0; `grep -cE '^\|[[:space:]]*S[0-9]{3,}[[:space:]]*\|' corpus/SOURCES.md` -> 369.
 
 ## Refusals
 
@@ -140,3 +144,70 @@ AFTER: filled by the L1 at landing
   inferred from a contract-only assignment. The seven C1 fixtures and
   record-carrier C2 arms have the frozen contract's named limits; they
   are not a universal correctness or fleet-health guarantee.
+
+
+## After-values (measured by the L1, not by this lesson seat)
+
+```text
+$ python3 -I .ufo/waves/round-81/count-c1.py 075574c83eae044ff8570cbd02d594943a87ced3
+A2_summary_contradicts_mismatch_line expected=unmet got=unmet rc=1
+A3_two_contradicting_summaries expected=unmet got=unmet rc=1
+A4_second_carrier_row_stale expected=unmet got=unmet rc=1
+A5_repo_path_with_space expected=met got=met rc=0
+B1_subdir_path_counts_as_naming expected=unmet got=unmet rc=1
+B2_own_lane_prefix_excluded expected=met got=met rc=0
+B6_directory_named_as_tool expected=met got=met rc=0
+C1=met wrong=0 fixtures=7 real_c1=met real_c3=met rev=075574c83eae
+rc=0
+```
+
+The C2 keeper is green at the landed record commit (`.ufo/waves/round-81/count-c2.py`; the
+receipt and the exact line are in the round report, because this lesson's own commit adds no
+graded row and therefore cannot hold the post-landing reading without a circular commit).
+
+## Counter amendments (pre-data, disclosed)
+
+Three amendments were made to the r81 keepers after the freeze commit `6b021d29` and **before**
+any after-value existed; none moved a target, and the entering controls were re-measured after
+each (`.ufo/waves/round-81/evidence/controls-r81.txt`, corrections 1-3):
+
+1. **B2 fixture identity** (raised by Mo81E02C3Fix): the fixture repo is named `mori-shokunin`
+   so "own prefix" is identifiable from the graded `--repo` basename. Expected verdict unchanged.
+2. **Setup is never a pass** (raised by Mo81R01C1Attack): a graded counter's exit 2 now maps to
+   verdict `setup`, satisfying no expectation; an always-`met` exit-2 stub is wrong on all seven
+   fixtures (selftest arm).
+3. **Deletion and pins tampering** (raised by Mo81C01Contract): a passing `pending=0` could be
+   reached by deleting the three r80 claim rows or editing the pins file. The counter now
+   requires the frozen row population (`REQUIRED_ROWS = {"## Round 80": 3}`) and folds a
+   sha256 mismatch of the frozen pins into `pinned`. Output grammar unchanged.
+
+## Mutation closure
+
+The mutation seat (Mo81M01Mutants) reported `MUTANTS killed=7 total=12 survivors=5` against the
+then-current bytes. Each survivor named the arm it needed; those five arms are now in the
+counters (count-c1 `pass=9`, count-c3 `pass=8`, count-c2 `pass=21`) and the same five mutants
+re-run on scratch copies of the committed files are all killed by a failing arm, not by an
+environment error:
+
+```text
+KILLED   count-c1   met = (p.returncode == 0 and sweep_consistent      rc=1  C1_COUNTER_SELFTEST pass=8 fail=1
+KILLED   count-c3   (right-boundary removal)                           rc=1  C3_COUNTER_SELFTEST pass=7 fail=1
+KILLED   count-c2   if cell == "PENDING":                              rc=1  C2_COUNTER_SELFTEST pass=20 fail=1
+KILLED   count-c2   (command-exit check removed)                       rc=1  C2_COUNTER_SELFTEST pass=20 fail=1
+KILLED   count-c2   for binding in bindings[:1]:                       rc=1  C2_COUNTER_SELFTEST pass=20 fail=1
+```
+
+Receipt: `.ufo/waves/round-81/evidence/mutation-recheck-r81.txt`. The first run of that receipt
+was invalid (the copied counter could not find its sibling pins file and every mutant died of
+`FileNotFoundError`, not of an arm); the receipt above is the corrected re-run and the report
+names the invalid one.
+
+## Gate verdicts (L1)
+
+| Candidate | Verdict | Grounding |
+|---|---|---|
+| S596 — Linux man-pages stat(2), https://man7.org/linux/man-pages/man2/stat.2.html | **admit**, tier A, kind `docs`, scope "the file type carried in st_mode and the lstat() field guarantee", status `mined`, recheck 365d | Opened and pinned this round: `corpus/evidence/sources-r81/stat.2.man-pages-6.19.html`, sha256 `0067346ded7cc8259ad614874993bd99b3edff372b61057d236c9dfe5e40501e`, 25836 bytes / 544 lines; located quote at lines 234-236 (22 words): "lstat() on a symbolic link need return valid information only in the st_size field and the file type of the st_mode field". Duplicate sweep over the entering registry: 0 hits for the URL and for `stat.2`. Row at `corpus/SOURCES.md` (S596). |
+| Python `os` library, `os.DirEntry.is_dir` (https://docs.python.org/3/library/os.html) | **reject** as a second row | The base URL is already registered as S068 under another scope; the dictionary-keyed duplicate rule and the census's W04 class make a second row a duplicate rather than new ground. Flip: a distinct document/anchor that states something stat(2) does not, opened and quoted. |
+| ACM artifact review and badging (https://www.acm.org/publications/policies/artifact-review-and-badging-current) | **unreachable**, not a row | HTTP 403 to this host on 2026-11-04; no quote located, so nothing is admitted or rejected on its content. Flip: a reachable copy of the same document. |
+| Over-broad reading: "stat(2) proves the record gates correct" | **reject** | The page states type bits and the lstat() guarantee; it says nothing about a record grammar, fixture verdicts or command relevance. |
+| `merge/mori/` package | **refuse this round** (assimilation none) | First staged id S471 and 94/136 staged ids collide with the lane registry, which reaches S595; adoption needs document-keyed renumbering. Unchanged from r80's refusal and the r61 L0. |

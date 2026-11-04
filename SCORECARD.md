@@ -4033,7 +4033,7 @@ current tally. No r79 artifact or axis score is changed: coverage 6, operability
 
 | Capability | What it can now do | Evidence pointer | First-working round |
 |---|---|---|---|
-| Self-assessment claim sweep (`tools/mori-claim-sweep.py`) | read-only gate over Axes and capabilities rows in SCORECARD and checklist rows in SHONEN, checking lane-pointer existence, pinned live selftest tallies and stale literals; prints per-mismatch findings and `CLAIM_SWEEP mismatches=M unresolved=U tallies=T stale=S carriers=C pointers=P`; rc 0 clean, 1 mismatches, 2 setup; selftest 30 in-memory cases; stdout only, spawning only pinned read-only selftests | `python3 -I tools/mori-claim-sweep.py --selftest` -> `CLAIM_SWEEP_SELFTEST pass=30 fail=0`, rc 0; `python3 -I tools/mori-claim-sweep.py --root . --pins .ufo/waves/round-80/claim-pins.json` -> `CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=4 pointers=237`, rc 0 (re-run 2026-11-04 at this round's record commit `075574c8`; the r80 landing `44bc941a` printed 233 and the retired cell stated 232, both superseded here by named correction D80-2 and by the r81 rows that add graded pointers); re-run by `python3 -I tools/mori-claim-sweep.py --root . --pins .ufo/waves/round-80/claim-pins.json`, rc 0, and by `.ufo/waves/round-81/count-c2.py` (the `pinned` arm).; registry row 14 in `SKILL.md` | 80 |
+| Self-assessment claim sweep (`tools/mori-claim-sweep.py`) | read-only gate over Axes and capabilities rows in SCORECARD and checklist rows in SHONEN, checking lane-pointer existence, pinned live selftest tallies and stale literals; prints per-mismatch findings and `CLAIM_SWEEP mismatches=M unresolved=U tallies=T stale=S carriers=C pointers=P`; rc 0 clean, 1 mismatches, 2 setup; selftest 30 in-memory cases; stdout only, spawning only pinned read-only selftests | `python3 -I tools/mori-claim-sweep.py --selftest` -> `CLAIM_SWEEP_SELFTEST pass=30 fail=0`, rc 0; `python3 -I tools/mori-claim-sweep.py --root . --pins .ufo/waves/round-80/claim-pins.json` -> `CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=4 pointers=240`, rc 0 (re-run 2026-11-04 at this round's record commit `075574c8`; the r80 landing `44bc941a` printed 233 and the retired cell stated 232, both superseded here by named correction D80-2 and by the r81 rows that add graded pointers); re-run by `python3 -I tools/mori-claim-sweep.py --root . --pins .ufo/waves/round-80/claim-pins.json`, rc 0, and by `.ufo/waves/round-81/count-c2.py` (the `pinned` arm).; registry row 14 in `SKILL.md` | 80 |
 
 ## Round 80
 
@@ -4101,3 +4101,43 @@ record and is not rewritten; this paragraph is the correction of record.
 | Capability | What it can now do | Evidence pointer | First-working round |
 |---|---|---|---|
 | Record claim sweep (`tools/mori-record-sweep.py`) | read-only gate over the lane's record carriers: exact `PENDING` result cells in `## Round …` claim tables and `<key>=<int>` claim tokens that disagree with the read-only command the row itself cites; prints per-mismatch findings and `RECORD_SWEEP pending=N pinned=M carriers=C bindings=B`; rc 0 clean, 1 mismatches, 2 setup; binder schema `mori-record-pins-v1`, frozen bindings at `.ufo/waves/round-81/record-pins.json`; 26 in-memory selftest arms; stdout only, children limited to the pinned read-only commands | `python3 -I tools/mori-record-sweep.py --selftest` -> `RECORD_SWEEP_SELFTEST pass=26 fail=0`, rc 0; at the r81 record commit it prints `RECORD_SWEEP pending=0 pinned=0` rc 0 (control at `44bc941a`: `RECORD_SWEEP pending=3 pinned=1`, rc 1, `.ufo/waves/round-81/evidence/controls-r81.txt`) | 81 |
+
+## Round 81
+
+Entering revision `44bc941a0e3e9676fa33a882b43d6e9793cbf74d`; frozen contract
+`.ufo/waves/round-81/contract.md` (commit `6b021d29`); do-nothing controls
+`.ufo/waves/round-81/evidence/controls-r81.txt`. Axes: operability (C1) and calibration (C2,
+tied lowest non-retired at 5). Both counters are revision-agnostic: each exports the revision
+under test and grades that revision's own bytes, so the entering control and the after-value are
+the same command. No score moves. The C1 after-value is measured at `075574c8`; the C2
+after-value at the landed record commit (the Round 81 section adds no graded row, so the graded
+bytes there are the ones measured).
+
+| Claim | Axis | Counting command | At entering `44bc941a` | After (measured) |
+|---|---|---|---|---|
+| C1 the r80 counters grade the seven routed defeated fixtures to their declared verdicts and still green the real lane | operability | `python3 -I .ufo/waves/round-81/count-c1.py <rev>` | `C1=unmet wrong=7 fixtures=7 real_c1=met real_c3=met`, rc 1 | `C1=met wrong=0 fixtures=7 real_c1=met real_c3=met`, rc 0 at `075574c8` |
+| C2 the record sweep lands and the record carries no unresolved result cell or self-disagreeing count | calibration | `python3 -I .ufo/waves/round-81/count-c2.py <rev>` | `C2=unmet pending=3 pinned=1 tool=absent agree=0`, rc 1 | `C2=met pending=0 pinned=0 tool=present agree=1`, rc 0 at the landed record commit |
+
+C1's fixes are implementation fixes inside the r80 counters; the r80 frozen predicates in
+`.ufo/waves/round-80/contract.md` are byte-unchanged and the r80 graded values re-derive
+(`real_c1=met real_c3=met`). The seven fixtures are the r80 counter reviewer's defeated shapes
+(`.ufo/waves/round-80/w1/Mo80R01Counter.md` MEDIUM-6/7/8, LOW-10/11/12); each fixture's expected
+verdict is frozen in `.ufo/waves/round-81/contract.md`. Two pre-data amendments to the r81
+keeper are disclosed in the lesson: the B2 fixture repo is named `mori-shokunin` so "own prefix"
+is identifiable, and a child exit 2 now maps to verdict `setup` (it satisfies no expectation).
+
+C2's carrier is `tools/mori-record-sweep.py` (registry row 15, PROVINCE inventory row) plus the
+four corrections above (D80-1..D80-4). Its pinned arm binds the r80 capability row's
+`pointers=` count to the command the row itself quotes; the landed value 240 is the fixed point
+after the r81 capability and registry rows added graded pointers (233 at `44bc941a`).
+
+## Planned (round 82)
+
+1. **operability** — the mutation seat's five surviving arms: the reduced `mori-record-sweep`
+   and r81-counter arms named in `.ufo/waves/round-81/w1/Mo81M01Mutants.md` `MUTANTS
+   killed=7 total=12 survivors=5` (each survivor names the arm it needs).
+2. **freshness** — re-pin the round-10 drift baseline that the lane's freshness cell still
+   carries as red debt, or retire the pin with a named reason.
+3. **depth** — extend the record-sweep's grammar to a lane-side revision-precision arm (a LOG
+   round section that names a measured revision must name one that contains the graded bytes),
+   which is the D80-4 class in committed lane bytes rather than fleet report prose.
