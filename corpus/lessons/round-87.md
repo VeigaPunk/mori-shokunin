@@ -144,3 +144,24 @@ version not allowed to displace it — with its own two byte-identical fetches, 
 and a 20-word located quote. The L1 did not independently re-fetch it this round, so no row is
 written: a seat's pointer is not the L1's opening. Flip condition: round 88 re-fetches, hashes,
 locates the quote and appends the row if it grounds the `missing-replay` repair.
+
+## Adjacency (wave connector, `w1/Mo87K01Conn.md`) — complements, not absorbed
+
+The connector compared this round's two mechanisms across the fleet. Two relations matter:
+
+- **tameshi — complement; mori's rule is the weaker subset.** `tameshi-shokunin/tools/receipt-revision-gate.py:25-28`
+  carries eleven refusal codes; mori's `# rev:` check implements only the
+  `RECEIPT_CONTROL_NOT_ANCESTOR` leg (`count-c2.py:174-176`), and a receipt without a
+  `# counter-sha256:` line has no content-drift leg at all — tameshi's
+  `RECEIPT_REV_CONTENT_DRIFT` names a limit mori does not carry. Adopting that code set is
+  tameshi's ground; mori cites it and does not absorb it.
+- **mado — complement; the closest semantic sentence.** `mado-shokunin/tools/mado-tripwire.py:131-152`
+  replays a pinned verdict over pinned bytes and explicitly disclaims that the snapshot matches the
+  transcript it names; mori replays the *body* against its command, so mori can speak to that
+  provenance where mado disclaims it, while mado's two-sided control (its mutant set must be killed
+  *and* the frozen snapshot must reproduce) is stronger than mori's one-sided kill rule.
+- kotodama's `check-receipt-seq.py` carries the same digest discipline with a disjoint grammar (no
+  `# cmd:`), so no single receipt serves both checkers — a stated consequence, not a merge.
+
+Nothing above is implemented here; the connector's line references are the evidence, and any adoption
+is a later claim.
