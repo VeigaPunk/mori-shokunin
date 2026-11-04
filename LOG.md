@@ -4916,7 +4916,7 @@ SCORECARD's `## Axes` table and capabilities rows plus SHONEN's checklist: it re
 pointers (`corpus/`, `tools/`, `.ufo/` tokens, `:line` and `@rev` suffixes stripped, a `*`/`?`
 token resolved by globbing at least one path, fenced blocks ignored), compares pinned live
 selftest tallies, and requires named stale literals to be absent. The r79 closure's D79-1 rides
-inside it: the control-receipt capabilities row's `selftest 18 in-memory cases` (live 19) is
+inside it: the control-receipt capabilities row's superseded 18-arm literal (the tool runs 19) is
 corrected, and the row's Evidence cell `18/18` is annotated as the r79 wave freeze superseded by
 the landed `19/19`. Registered as SKILL gate-registry row 14 and a SCORECARD capabilities row
 (first-working round 80). Measured at `8108dfcc`:
