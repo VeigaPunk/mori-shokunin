@@ -231,7 +231,8 @@ def selfcheck(scratch):
     cases.append(("killed_boundary",
                   killed(1, "traceback") and killed(0, "FAKE pass=1 fail=2")
                   and not killed(0, "FAKE pass=1 fail=0"), "killed()"))
-    write(d, "dup.py", "GUARD = 1\nGUARD = 1\nprint('FAKE pass=1 fail=0')\n")
+    write(d, "dup.py", "GUARD = 1\nGUARD = 1\nprint('FAKE pass=1 fail=0')\n"
+          "print('COUNTER_SELFTEST pass=1 fail=0')\n")
     met, tail, _lines, extras = grade(
         disk, scratch, [("tools/dup.py", "M1-unanchored-conjunct", "GUARD = 1", "GUARD = 0")],
         {"dup.py": 1})
@@ -245,7 +246,8 @@ def selfcheck(scratch):
                   (not met) and "unanchored" in " ".join(extras), tail))
     cases.append(("zero_mutants_unmet",
                   not grade(disk, scratch, [], {"sensitive.py": 1})[0], "no mutants"))
-    write(d, "empty.py", "GUARD = 1\nprint('FAKE pass=1 fail=0')\n")
+    write(d, "empty.py", "GUARD = 1\nprint('FAKE pass=1 fail=0')\n"
+          "print('COUNTER_SELFTEST pass=1 fail=0')\n")
     met, tail, _lines, extras = grade(
         disk, scratch, [("tools/empty.py", "M1-unanchored-conjunct", "GUARD = 1", "GUARD = 1")],
         {"empty.py": 1})

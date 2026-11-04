@@ -198,8 +198,10 @@ def selfcheck(scratch):
     d = tempfile.mkdtemp(dir=scratch)
     write(d, "sensitive.py", sensitive)
     write(d, "blind.py", blind)
-    write(d, "dup.py", "GUARD = 1\nGUARD = 1\nprint('FAKE pass=1 fail=0')\n")
-    write(d, "empty.py", "GUARD = 1\nprint('FAKE pass=1 fail=0')\n")
+    write(d, "dup.py", "GUARD = 1\nGUARD = 1\nprint('FAKE pass=1 fail=0')\n"
+          "print('COUNTER_SELFTEST pass=1 fail=0')\n")
+    write(d, "empty.py", "GUARD = 1\nprint('FAKE pass=1 fail=0')\n"
+          "print('COUNTER_SELFTEST pass=1 fail=0')\n")
     s18 = ("import sys\nGUARD = 1\n"
            "ok = GUARD == 1\n"
            "print('FAKE pass=%d fail=%d' % (18 if ok else 17, 0 if ok else 1))\n"
