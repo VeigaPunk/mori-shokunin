@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 83448767..aed6a93e 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -373,7 +373,7 @@ def binding_problems(cmd, bindings, replayed, repo=None):
+     if scripts is None:
+         return ["cmd-binding"]
+     return ["cmd-binding" for _sha, path in bindings
+-            if not any(same_path(script, path, repo) for script in scripts)]
++            if not all(same_path(script, path, repo) for script in scripts)]
+ 
+ 
+ def absent_supersede_targets(superseders, known):

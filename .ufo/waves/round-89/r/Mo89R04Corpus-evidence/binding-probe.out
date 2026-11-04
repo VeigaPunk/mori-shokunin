@@ -1,0 +1,15 @@
+'false && python3 -I tools/mori-record-sweep.py --root .; printf BODY' -> problems= []
+'true || python3 -I tools/mori-record-sweep.py; printf BODY' -> problems= []
+'f() ( python3 -I tools/mori-record-sweep.py ); printf BODY' -> problems= []
+'f() { python3 -I tools/mori-record-sweep.py; }; printf BODY' -> problems= ['cmd-binding']
+'uv run --directory sub tools/mori-record-sweep.py' -> problems= []
+'echo $(true)#; python3 -I tools/mori-record-sweep.py --root .' -> problems= ['cmd-binding']
+'python3 -I tools/mori-record-sweep.py --note a\\ #b' -> problems= []
+'echo a\\ #b; python3 -I tools/mori-record-sweep.py --root .' -> problems= ['cmd-binding']
+74fac0a6ec25b994ff943e79feb9cf358063732593eecc6811d60fd2bb3c467d  /fast/scratch/hyaku/mori-r89/Mo89R04Corpus/count-c2-9f4d.py
+a #b
+RAN
+a #b
+RAN
+a #b
+RAN

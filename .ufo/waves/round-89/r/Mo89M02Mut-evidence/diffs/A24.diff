@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 83448767..b359b3d4 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -264,7 +264,7 @@ def python_script(t):
+         if arg == "--check-hash-based-pycs":
+             i += 2
+             continue
+-        if arg == "-" or arg.startswith("--"):
++        if arg.startswith("--"):
+             return None
+         if not arg.startswith("-"):
+             return arg

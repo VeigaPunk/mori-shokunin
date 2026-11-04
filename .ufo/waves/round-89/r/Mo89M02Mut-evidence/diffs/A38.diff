@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 83448767..51143f68 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -371,7 +371,7 @@ def binding_problems(cmd, bindings, replayed, repo=None):
+         return []
+     scripts = executed_scripts(cmd)
+     if scripts is None:
+-        return ["cmd-binding"]
++        return []
+     return ["cmd-binding" for _sha, path in bindings
+             if not any(same_path(script, path, repo) for script in scripts)]
+ 

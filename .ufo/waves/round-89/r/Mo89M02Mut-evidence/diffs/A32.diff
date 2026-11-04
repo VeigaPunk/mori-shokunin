@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 83448767..b997a944 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -308,7 +308,7 @@ def shell_scripts(t, depth):
+ 
+ def uv_run_scripts(t, depth):
+     """Scripts a `uv run [options] (script | interpreter ...)` invocation executes."""
+-    if len(t) < 2 or t[1] != "run":
++    if len(t) < 2:
+         return []
+     i = 2
+     while i < len(t):

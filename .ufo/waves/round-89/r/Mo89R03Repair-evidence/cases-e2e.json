@@ -1,0 +1,57 @@
+[
+ {
+  "name": "N-E06-cd-dot-and",
+  "cmd": "cd . && python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "N-E12-brace-group",
+  "cmd": "{ python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json; }",
+  "expect": "met"
+ },
+ {
+  "name": "N-E15-eval",
+  "cmd": "eval 'python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json'",
+  "expect": "met"
+ },
+ {
+  "name": "N-E17-env-C-dot",
+  "cmd": "env -C . python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met"
+ },
+ {
+  "name": "N-A08-exit-before",
+  "cmd": "printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'; exit; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject"
+ },
+ {
+  "name": "N-A11-function-shadow",
+  "cmd": "python3() { printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'; }; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject"
+ },
+ {
+  "name": "N-A18-overwrite-bound",
+  "cmd": "printf '%s\\n' \"print('RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0')\" > tools/mori-record-sweep.py; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject"
+ },
+ {
+  "name": "N-A15-sitecustomize",
+  "cmd": "mkdir -p s && printf '%s\\n' \"print('RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0')\" 'import os, sys' 'sys.stdout.flush()' 'os._exit(0)' > s/sitecustomize.py && PYTHONPATH=s python3 tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject"
+ },
+ {
+  "name": "N-A20-command-cd",
+  "cmd": "mkdir -p d/tools && printf '%s\\n' \"print('RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0')\" > d/tools/mori-record-sweep.py && command cd d && python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject"
+ },
+ {
+  "name": "N-A22-env-combined-S",
+  "cmd": "env -iS\"python3 -c \\\"print('RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0')\\\"\" tools/mori-record-sweep.py",
+  "expect": "reject"
+ },
+ {
+  "name": "N-A25-prod-absolute",
+  "cmd": "python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject"
+ }
+]

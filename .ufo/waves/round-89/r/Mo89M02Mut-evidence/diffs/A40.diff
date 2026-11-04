@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 83448767..1e359c64 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -211,7 +211,7 @@ def same_path(token, path, repo):
+     """True when `token` and the repo-relative `path` name the same file."""
+     if os.path.normpath(token) == os.path.normpath(path):
+         return True
+-    if repo:
++    if False:
+         return (os.path.realpath(os.path.join(repo, token))
+                 == os.path.realpath(os.path.join(repo, path)))
+     return False

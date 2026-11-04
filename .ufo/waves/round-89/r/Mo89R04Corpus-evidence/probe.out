@@ -1,0 +1,32 @@
+{"cmd": "a#b c", "shlex_split_comments": ["a"], "gate_strip_comment": "a#b c", "bash": ["<a#b><c>", 0, ""], "sh(bash-posix)": ["<a#b><c>", 0, ""], "busybox-ash": ["<a#b><c>", 0, ""]}
+{"cmd": "a #b c", "shlex_split_comments": ["a"], "gate_strip_comment": "a ", "bash": ["<a>", 0, ""], "sh(bash-posix)": ["<a>", 0, ""], "busybox-ash": ["<a>", 0, ""]}
+{"cmd": "a;#b c", "shlex_split_comments": ["a;"], "gate_strip_comment": "a;", "bash": ["<a>", 0, ""], "sh(bash-posix)": ["<a>", 0, ""], "busybox-ash": ["<a>", 0, ""]}
+{"cmd": "a&&#b c", "shlex_split_comments": ["a&&"], "gate_strip_comment": "a&&", "bash": ["", 2, "bash: -c: line 2: syntax error: unexpected end of file"], "sh(bash-posix)": ["", 2, "sh: -c: line 2: syntax error: unexpected end of file"], "busybox-ash": ["", 2, "ash: syntax error: unexpected end of file"]}
+{"cmd": "a|#b c", "shlex_split_comments": ["a|"], "gate_strip_comment": "a|", "bash": ["", 2, "bash: -c: line 2: syntax error: unexpected end of file"], "sh(bash-posix)": ["", 2, "sh: -c: line 2: syntax error: unexpected end of file"], "busybox-ash": ["", 2, "ash: syntax error: unexpected end of file"]}
+{"cmd": "'a'#b c", "shlex_split_comments": ["a"], "gate_strip_comment": "'a'#b c", "bash": ["<a#b><c>", 0, ""], "sh(bash-posix)": ["<a#b><c>", 0, ""], "busybox-ash": ["<a#b><c>", 0, ""]}
+{"cmd": "a\\#b c", "shlex_split_comments": ["a#b", "c"], "gate_strip_comment": "a\\#b c", "bash": ["<a#b><c>", 0, ""], "sh(bash-posix)": ["<a#b><c>", 0, ""], "busybox-ash": ["<a#b><c>", 0, ""]}
+{"cmd": "\"a #b\" c", "shlex_split_comments": ["a #b", "c"], "gate_strip_comment": "\"a #b\" c", "bash": ["<a #b><c>", 0, ""], "sh(bash-posix)": ["<a #b><c>", 0, ""], "busybox-ash": ["<a #b><c>", 0, ""]}
+{"cmd": "a\\ #b c", "shlex_split_comments": ["a "], "gate_strip_comment": "a\\ ", "bash": ["<a #b><c>", 0, ""], "sh(bash-posix)": ["<a #b><c>", 0, ""], "busybox-ash": ["<a #b><c>", 0, ""]}
+{"cmd": "$(echo a)#b c", "shlex_split_comments": ["$(echo", "a)"], "gate_strip_comment": "$(echo a)", "bash": ["<a#b><c>", 0, ""], "sh(bash-posix)": ["<a#b><c>", 0, ""], "busybox-ash": ["<a#b><c>", 0, ""]}
+{"cmd": "a >#b c", "shlex_split_comments": ["a", ">"], "gate_strip_comment": "a >", "bash": ["", 2, "bash: -c: line 1: syntax error near unexpected token `newline'\nbash: -c: line 1:"], "sh(bash-posix)": ["", 2, "sh: -c: line 1: syntax error near unexpected token `newline'\nsh: -c: line 1: `pr"], "busybox-ash": ["", 2, "ash: syntax error: unexpected end of file"]}
+{"cmd": "(echo a)#b", "shlex_split_comments": ["(echo", "a)"], "gate_strip_comment": "(echo a)", "bash": ["", 2, "bash: -c: line 1: syntax error near unexpected token `('\nbash: -c: line 1: `prin"], "sh(bash-posix)": ["", 2, "sh: -c: line 1: syntax error near unexpected token `('\nsh: -c: line 1: `printf '"], "busybox-ash": ["", 2, "ash: syntax error: unexpected \"(\""]}
+{"cmd": "x=1#b c", "shlex_split_comments": ["x=1"], "gate_strip_comment": "x=1#b c", "bash": ["<x=1#b><c>", 0, ""], "sh(bash-posix)": ["<x=1#b><c>", 0, ""], "busybox-ash": ["<x=1#b><c>", 0, ""]}
+{"cmd": "a\t#b c", "shlex_split_comments": ["a"], "gate_strip_comment": "a\t", "bash": ["<a>", 0, ""], "sh(bash-posix)": ["<a>", 0, ""], "busybox-ash": ["<a>", 0, ""]}
+{"cmd": "a ${#x} c", "shlex_split_comments": ["a", "${"], "gate_strip_comment": "a ${#x} c", "bash": ["<a><0><c>", 0, ""], "sh(bash-posix)": ["<a><0><c>", 0, ""], "busybox-ash": ["<a><0><c>", 0, ""]}
+--- -c operand probe (is the operand after the -c string $0, and executed?)
+bash 'zero=tools/x.py one=arg1' 0
+sh(bash-posix) 'zero=tools/x.py one=arg1' 0
+busybox-ash 'zero=tools/x.py one=arg1' 0
+python -c argv ['-c', 'tools/x.py', 'y'] 0
+--- gate executed_scripts
+"bash -c 'printf BODY' tools/x.py" -> []
+"sh -c 'python3 tools/x.py'" -> ['tools/x.py']
+"python3 -c 'print(1)' tools/x.py" -> []
+'printf BODY # tools/x.py' -> []
+'printf BODY #tools/x.py' -> []
+'printf BODY;#tools/x.py' -> []
+'printf BODY#; python3 tools/x.py' -> ['tools/x.py']
+'echo $(true)#; python3 tools/x.py' -> []
+'echo a >#x; python3 tools/x.py' -> []
+'false && python3 tools/x.py; printf BODY' -> ['tools/x.py']
+'uv run --directory sub tools/x.py' -> ['tools/x.py']

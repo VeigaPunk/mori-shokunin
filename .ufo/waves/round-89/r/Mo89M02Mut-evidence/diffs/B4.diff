@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-88/count-c2.py b/.ufo/waves/round-88/count-c2.py
+index bbc81a21..1bfc35b9 100755
+--- a/.ufo/waves/round-88/count-c2.py
++++ b/.ufo/waves/round-88/count-c2.py
+@@ -396,7 +396,7 @@ def main(argv):
+         if not (real_ok and fixture_ok and clean == 1 and refused == 2 and absent == 1):
+             print("C2=unmet %s detector=green rev=%s" % (tail, rev[:12]))
+             return 1
+-        print(met_line(rev))
++        print(met_line(rev[:7]))
+         return 0
+     finally:
+         shutil.rmtree(scratch, ignore_errors=True)

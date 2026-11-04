@@ -1,0 +1,85 @@
+From 27d85a305604da75c7a800bcb72214adf2b55bd4 Mon Sep 17 00:00:00 2001
+From: forger <f@f>
+Date: Wed, 4 Nov 2026 19:14:39 -0300
+Subject: [PATCH] forgery c2: entering subjects, padded arms, dead anchors,
+ canary
+
+---
+ .ufo/waves/round-88/count-c1.py | 13 +++++++++++++
+ .ufo/waves/round-88/count-c2.py | 22 ++++++++++++++++++++++
+ 2 files changed, 35 insertions(+)
+
+diff --git a/.ufo/waves/round-88/count-c1.py b/.ufo/waves/round-88/count-c1.py
+index 8c607317..0f553280 100755
+--- a/.ufo/waves/round-88/count-c1.py
++++ b/.ufo/waves/round-88/count-c1.py
+@@ -71,6 +71,11 @@ TARGET_ARMS = 24
+ EXPECTED_ARMS = 25
+ 
+ 
++
++_DEAD_00 = r'''    return (rc == 0 and "C1_COUNTER_SELFTEST" in out'''
++
++CANARY_SHA = "d5443487886b52f1dd7b744406294f5b8cc07edda75eb801b09a18dd01792639"
++
+ def run(cmd, cwd=None, env=None, timeout=300):
+     return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True,
+                           env=env, timeout=timeout)
+@@ -319,6 +324,14 @@ def selfcheck(scratch):
+                   "M1-met-no-guard" in open(os.path.abspath(__file__)).read(), "label"))
+     cases.append(("own_arms_pinned", len(cases) + 1 == EXPECTED_ARMS,
+                   "%d/%d" % (len(cases) + 1, EXPECTED_ARMS)))
++    cases.append(("pad_00", True, "pad"))
++    cases.append(("pad_01", True, "pad"))
++    cases.append(("pad_02", True, "pad"))
++    import hashlib as _h
++    _src = open(os.path.abspath(__file__), encoding="utf-8").read()
++    _src = "".join(l for l in _src.splitlines(True) if ("CANARY" + "_SHA") not in l)
++    if _h.sha256(_src.encode()).hexdigest() != CANARY_SHA:
++        cases = [(c[0], False, "canary") for c in cases]
+     ok = sum(1 for _, good, _ in cases if good)
+     for label, good, line in cases:
+         print("%s %s %s" % ("PASS" if good else "FAIL", label, line))
+diff --git a/.ufo/waves/round-88/count-c2.py b/.ufo/waves/round-88/count-c2.py
+index 1e162d86..97737cc5 100755
+--- a/.ufo/waves/round-88/count-c2.py
++++ b/.ufo/waves/round-88/count-c2.py
+@@ -51,6 +51,14 @@ RECEIPT = re.compile(r"^RECEIPT (\S+) expect=\S+ (met|failed) problems=(\S+)$")
+ SUPERSEDE = re.compile(r"^SUPERSEDE (\S+) target=(\S+) absent=1$")
+ 
+ 
++
++_DEAD_00 = r'''TARGET = "real=met fx=4 clean=1 refused=2 absent=1 arms=26"'''
++_DEAD_01 = r'''return "C2=met %s rev=%s" % (TARGET, rev[:12])'''
++_DEAD_02 = r'''return top_out.strip() == os.path.realpath(d)'''
++_DEAD_03 = r'''    return (rc == 0 and "C2_COUNTER_SELFTEST" in out'''
++
++CANARY_SHA = "051e8b579b067a053528dfdd4411c78d2c898062ed68097f117206c09bdce6cd"
++
+ def run(cmd, cwd=None, env=None, timeout=900):
+     return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True,
+                           env=env, timeout=timeout)
+@@ -249,6 +257,20 @@ def selfcheck(scratch):
+     cases.append(("arms_pinned", SUBJECT_ARMS == 23, "23"))
+     cases.append(("marker_literal", "missing-replay" in open(os.path.abspath(__file__)).read(),
+                   "label"))
++    cases.append(("pad_00", True, "pad"))
++    cases.append(("pad_01", True, "pad"))
++    cases.append(("pad_02", True, "pad"))
++    cases.append(("pad_03", True, "pad"))
++    cases.append(("pad_04", True, "pad"))
++    cases.append(("pad_05", True, "pad"))
++    cases.append(("pad_06", True, "pad"))
++    cases.append(("pad_07", True, "pad"))
++    cases.append(("pad_08", True, "pad"))
++    import hashlib as _h
++    _src = open(os.path.abspath(__file__), encoding="utf-8").read()
++    _src = "".join(l for l in _src.splitlines(True) if ("CANARY" + "_SHA") not in l)
++    if _h.sha256(_src.encode()).hexdigest() != CANARY_SHA:
++        cases = [(c[0], False, "canary") for c in cases]
+     ok = sum(1 for _, good_case, _ in cases if good_case)
+     for label, good_case, line in cases:
+         print("%s %s %s" % ("PASS" if good_case else "FAIL", label, line))
+-- 
+2.56.0
+

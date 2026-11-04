@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 83448767..3c5d2a39 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -328,7 +328,7 @@ def uv_run_scripts(t, depth):
+ def invocation_scripts(tokens, depth):
+     """Script files one invocation executes (after unwrapping); [] when none."""
+     t = unwrap(tokens)
+-    if not t or depth > DEPTH:
++    if not t:
+         return []
+     head = os.path.basename(t[0])
+     if PYTHON.match(head):

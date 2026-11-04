@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 83448767..23bf8cbc 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -187,7 +187,7 @@ def command_invocations(cmd):
+     try:
+         tokens = list(lexer)
+     except ValueError:
+-        return None
++        return []
+     invocations, current, skip = [], [], False
+     for i, token in enumerate(tokens):
+         if skip:

@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 83448767..63beb277 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -352,7 +352,7 @@ def executed_scripts(cmd, depth=0):
+         return None
+     scripts = []
+     for tokens in invocations:
+-        if os.path.basename(tokens[0]) in ("cd", "pushd", "popd"):
++        if os.path.basename(tokens[0]) in ("cd",):
+             break
+         scripts.extend(invocation_scripts(tokens, depth))
+     return scripts

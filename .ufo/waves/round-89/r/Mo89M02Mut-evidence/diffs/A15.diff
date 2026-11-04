@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 83448767..cdcd653e 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -241,7 +241,7 @@ def unwrap(tokens):
+         elif head == "nice":
+             t = t[1:]
+             if t and t[0] in ("-n", "--adjustment"):
+-                t = t[2:]
++                t = t[1:]
+             elif t and (t[0].startswith("--adjustment=") or re.match(r"-n?-?\d+$", t[0])):
+                 t = t[1:]
+         elif head == "timeout":

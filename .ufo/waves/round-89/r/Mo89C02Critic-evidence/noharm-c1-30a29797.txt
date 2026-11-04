@@ -1,0 +1,39 @@
+# cmd: python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/noharm-c1.py 30a29797012281b9fd0c748b38b929ac67f8c754 --repo /fast/scratch/hyaku/mori-r89/Mo89C02Critic/clone
+# rc: 1
+# wall: 0s
+# ---
+CASE E01-equiv-dotslash expect=met entering=refused after=refused refused-both
+CASE E02-plain-control expect=met entering=bound after=bound ok
+CASE E03-I-B-flags expect=met entering=bound after=bound ok
+CASE E04-usr-bin-python3 expect=met entering=bound after=bound ok
+CASE E05-direct-exec expect=met entering=refused after=refused refused-both
+CASE E06-quoted-script expect=met entering=bound after=bound ok
+CASE E07-python3.14 expect=met entering=bound after=bound ok
+CASE E08-env-assign-prefix expect=met entering=bound after=bound ok
+CASE E09-env-command expect=met entering=bound after=bound ok
+CASE E10-dashdash expect=met entering=bound after=bound ok
+CASE E11-W-flag expect=met entering=bound after=bound ok
+CASE E12-dotdot-normpath expect=met entering=refused after=refused refused-both
+CASE E13-usr-bin-python3-u expect=met entering=bound after=bound ok
+CASE E14-nice-prefix expect=met entering=bound after=bound ok
+CASE E16-and-chain expect=met entering=bound after=bound ok
+CASE E17-exec-prefix expect=met entering=bound after=bound ok
+CASE E18-uv-run expect=met entering=bound after=bound ok
+CASE E19-bash-c-wrapper expect=met entering=bound after=bound ok
+CASE E20-interp-trailing-comment expect=met entering=bound after=bound ok
+CASE A01-comment-named expect=reject entering=bound after=bound open
+CASE A02-selfprint-data expect=reject entering=bound after=bound open
+CASE A03-W-value-selfprint expect=reject entering=bound after=bound open
+CASE A04-X-value-selfprint expect=reject entering=bound after=bound open
+CASE A05-c-value-lookalike expect=reject entering=bound after=bound open
+CASE A06-m-value-lookalike expect=reject entering=bound after=bound open
+CASE A07-path-as-data-after-other-script expect=reject entering=bound after=bound open
+CASE A08-semicolon-split-invocation expect=reject entering=bound after=bound open
+CASE A09-hash-glued expect=reject entering=refused after=refused ok
+CASE A10-tab-comment expect=reject entering=bound after=bound open
+CASE E15b-semicolon-in-quote-before-script expect=met entering=bound after=bound ok
+CASE E21-quoted-semicolon-harmless-arg-then-chain expect=met entering=bound after=bound ok
+CASE E22-hash-inside-quotes-not-comment expect=met entering=bound after=bound ok
+CASE A11-W-value-then-script-other expect=reject entering=bound after=bound open
+CASE A12-X-value-then-c-selfprint-plus-script expect=reject entering=bound after=bound open
+NOHARM harm=0 open=11 gained=0 cases=34 rev=30a297970122

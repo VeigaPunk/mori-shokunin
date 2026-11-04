@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 83448767..e2759dd5 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -169,7 +169,7 @@ def strip_comment(cmd):
+         elif ch == "\\" and quote != "'":
+             escaped = True
+         elif quote:
+-            quote = None if ch == quote else quote
++            quote = None
+         elif ch in "'\"":
+             quote = ch
+         elif ch == "#" and (prev.isspace() or prev in ";&|()<>"):

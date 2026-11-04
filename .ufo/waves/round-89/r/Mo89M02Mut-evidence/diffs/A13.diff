@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 83448767..66a55661 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -236,7 +236,7 @@ def unwrap(tokens):
+             while t and (t[0].startswith("-") or ASSIGNMENT.match(t[0])):
+                 if t[0] in ("-C", "-S", "--chdir", "--split-string") or \
+                         t[0].startswith(("-C", "-S", "--chdir=", "--split-string=")):
+-                    return None
++                    pass
+                 t = t[2:] if t[0] in ("-u", "--unset") else t[1:]
+         elif head == "nice":
+             t = t[1:]

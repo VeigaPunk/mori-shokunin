@@ -1,0 +1,26 @@
+# cmd: python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/count-c2.py 30a29797012281b9fd0c748b38b929ac67f8c754 --repo /fast/scratch/hyaku/mori-r89/Mo89C02Critic/clone --scratch /fast/scratch/hyaku/mori-r89/Mo89C02Critic/tmp/count-c2-30a29797
+# rc: 1
+# wall: 11s
+# ---
+MUTANT count-c1.py C1-arms-first survived rc=0 arm=arms_last_tally
+MUTANT count-c1.py C1-green-drop-fail survived rc=0 arm=green_mixed_fail
+MUTANT count-c2.py C2-fixture-clean survived rc=0 arm=clean_wrong_split
+MUTANT count-c2.py C2-receipt-name survived rc=0 arm=receipt_name_bound
+MUTANT count-c2.py C2-verdict-first survived rc=0 arm=verdict_last_wins
+MUTANT count-c2.py C2-no-supersedes survived rc=0 arm=absent_without_supersedes
+MUTANT count-c2.py C2-vacuous-body survived rc=0 arm=vacuous_body_fabricated
+EXTRA pristine-arms .ufo/waves/round-88/count-c1.py arms=25 want=28
+EXTRA survivor .ufo/waves/round-88/count-c1.py C1-arms-first
+EXTRA survivor .ufo/waves/round-88/count-c1.py C1-green-drop-fail
+EXTRA unanchored .ufo/waves/round-88/count-c1.py C1-own-ok occurrences=0
+EXTRA pristine-arms .ufo/waves/round-88/count-c2.py arms=17 want=26
+EXTRA unanchored .ufo/waves/round-88/count-c2.py C2-target occurrences=0
+EXTRA unanchored .ufo/waves/round-88/count-c2.py C2-printed-target occurrences=0
+EXTRA survivor .ufo/waves/round-88/count-c2.py C2-fixture-clean
+EXTRA survivor .ufo/waves/round-88/count-c2.py C2-receipt-name
+EXTRA unanchored .ufo/waves/round-88/count-c2.py C2-clone-top occurrences=0
+EXTRA unanchored .ufo/waves/round-88/count-c2.py C2-own-ok occurrences=0
+EXTRA survivor .ufo/waves/round-88/count-c2.py C2-verdict-first
+EXTRA survivor .ufo/waves/round-88/count-c2.py C2-no-supersedes
+EXTRA survivor .ufo/waves/round-88/count-c2.py C2-vacuous-body
+C2=unmet mutants=7 killed=0 survivors=7 unattributed=0 unanchored=5 arms=25,17 detector=green rev=30a297970122

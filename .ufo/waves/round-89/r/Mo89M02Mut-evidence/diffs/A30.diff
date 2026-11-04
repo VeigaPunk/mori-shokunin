@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 83448767..8d9a810c 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -298,7 +298,7 @@ def shell_scripts(t, depth):
+         if not arg.startswith(("-", "+")):
+             return [arg]
+         flags = arg[1:]
+-        if "c" in flags and set(flags) - {"c"} <= SH_FLAGS:
++        if flags == "c":
+             return executed_scripts(t[i + 1], depth + 1) if i + 1 < len(t) else []
+         if not set(flags) <= SH_FLAGS:
+             return []               # -n (no execution), -s (stdin) and unknown flags

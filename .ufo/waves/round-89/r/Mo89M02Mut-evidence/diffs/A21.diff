@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 83448767..d991c4d6 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -271,7 +271,7 @@ def python_script(t):
+         for j, flag in enumerate(arg[1:], 1):
+             if flag in "WX":
+                 if j == len(arg) - 1:
+-                    i += 1          # the value is the next token
++                    pass
+                 break
+             if flag not in PY_FLAGS:
+                 return None         # -c/-m run no script file; unknown flags are refused

@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 83448767..262e06d4 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -194,7 +194,7 @@ def command_invocations(cmd):
+             skip = False
+         elif token in REDIRECTS:
+             if current and current[-1].isdigit() and i and tokens[i - 1] == current[-1]:
+-                current.pop()
++                pass
+             skip = True
+         elif set(token) <= SHELL_OPERATORS:
+             if current:

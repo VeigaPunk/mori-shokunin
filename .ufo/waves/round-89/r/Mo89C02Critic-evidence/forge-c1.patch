@@ -1,0 +1,63 @@
+From 7c001f07240293eb2ac45e972e8de13df59dc483 Mon Sep 17 00:00:00 2001
+From: forger <f@f>
+Date: Wed, 4 Nov 2026 19:14:38 -0300
+Subject: [PATCH] forgery c1: checksum canary at 7ce712d4
+
+---
+ .ufo/waves/round-88/count-c1.py | 7 +++++++
+ .ufo/waves/round-88/count-c2.py | 7 +++++++
+ 2 files changed, 14 insertions(+)
+
+diff --git a/.ufo/waves/round-88/count-c1.py b/.ufo/waves/round-88/count-c1.py
+index e7982278..75b4b106 100755
+--- a/.ufo/waves/round-88/count-c1.py
++++ b/.ufo/waves/round-88/count-c1.py
+@@ -76,6 +76,8 @@ TARGET_ARMS = 24
+ EXPECTED_ARMS = 28
+ 
+ 
++CANARY_SHA = "8de7b7a2feada2c23a12289a674ab9fdf75d1cf0e2167c629ace7f856306a589"
++
+ def run(cmd, cwd=None, env=None, timeout=300):
+     return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True,
+                           env=env, timeout=timeout)
+@@ -343,6 +345,11 @@ def selfcheck(scratch):
+                   "M1-met-no-guard" in open(os.path.abspath(__file__)).read(), "label"))
+     cases.append(("own_arms_pinned", len(cases) + 1 == EXPECTED_ARMS,
+                   "%d/%d" % (len(cases) + 1, EXPECTED_ARMS)))
++    import hashlib as _h
++    _src = open(os.path.abspath(__file__), encoding="utf-8").read()
++    _src = "".join(l for l in _src.splitlines(True) if ("CANARY" + "_SHA") not in l)
++    if _h.sha256(_src.encode()).hexdigest() != CANARY_SHA:
++        cases = [(c[0], False, "canary") for c in cases]
+     ok = sum(1 for _, good, _ in cases if good)
+     for label, good, line in cases:
+         print("%s %s %s" % ("PASS" if good else "FAIL", label, line))
+diff --git a/.ufo/waves/round-88/count-c2.py b/.ufo/waves/round-88/count-c2.py
+index bbc81a21..5564c6f3 100755
+--- a/.ufo/waves/round-88/count-c2.py
++++ b/.ufo/waves/round-88/count-c2.py
+@@ -52,6 +52,8 @@ RECEIPT = re.compile(r"^RECEIPT (\S+) expect=\S+ (met|failed) problems=(\S+)$")
+ SUPERSEDE = re.compile(r"^SUPERSEDE (\S+) target=(\S+) absent=1$")
+ 
+ 
++CANARY_SHA = "bc901289578b9594001aa4e904ff8713f520135ccd66fb19ee7cc6718b348590"
++
+ def run(cmd, cwd=None, env=None, timeout=900):
+     return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True,
+                           env=env, timeout=timeout)
+@@ -295,6 +297,11 @@ def selfcheck(scratch):
+                   "RECORD_SWEEP fabricated=1" in vacuous and "TOKEN" not in vacuous, "body"))
+     cases.append(("marker_literal", "missing-replay" in open(os.path.abspath(__file__)).read(),
+                   "label"))
++    import hashlib as _h
++    _src = open(os.path.abspath(__file__), encoding="utf-8").read()
++    _src = "".join(l for l in _src.splitlines(True) if ("CANARY" + "_SHA") not in l)
++    if _h.sha256(_src.encode()).hexdigest() != CANARY_SHA:
++        cases = [(c[0], False, "canary") for c in cases]
+     ok = sum(1 for _, good_case, _ in cases if good_case)
+     for label, good_case, line in cases:
+         print("%s %s %s" % ("PASS" if good_case else "FAIL", label, line))
+-- 
+2.56.0
+

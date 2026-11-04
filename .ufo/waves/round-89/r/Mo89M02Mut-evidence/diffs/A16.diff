@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 83448767..ab17bb4f 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -248,7 +248,7 @@ def unwrap(tokens):
+             t = t[1:]
+             while t and t[0].startswith("-"):
+                 t = t[2:] if t[0] in ("-s", "-k", "--signal", "--kill-after") else t[1:]
+-            t = t[1:]
++            pass
+         else:
+             return t
+     return t

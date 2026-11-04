@@ -1,0 +1,2 @@
+pristine full run r88 count-c2.py 7ce712d4 --repo clone: rc=0 C2=met real=met fx=4 clean=1 refused=2 absent=1 arms=26 rev=7ce712d4e0fd
+A11 bindings=[] probe: pristine binding_problems("python3 -I 'tools/x.py",[],True)=[cmd-binding] mutant=[] ; executed_scripts pristine=None mutant=[]

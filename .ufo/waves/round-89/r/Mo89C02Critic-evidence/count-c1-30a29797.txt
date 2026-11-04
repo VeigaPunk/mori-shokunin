@@ -1,0 +1,10 @@
+# cmd: python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/count-c1.py 30a29797012281b9fd0c748b38b929ac67f8c754 --repo /fast/scratch/hyaku/mori-r89/Mo89C02Critic/clone --scratch /fast/scratch/hyaku/mori-r89/Mo89C02Critic/tmp/count-c1-30a29797
+# rc: 1
+# wall: 87s
+# ---
+REAL rc=0 C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 matched=6 defeated=1 superseded=2 legacy=1 unexpected=0 rev=30a297970122
+FX equiv refused problems=cmd-binding
+FX comment refused problems=-
+FX selfprint refused problems=-
+C1=unmet equiv=refused comment=accepted selfprint=accepted real=met arms=23 subject=arms:(23, 0) rev=30a297970122
+C2_COUNTER_SELFTEST pass=23 fail=0

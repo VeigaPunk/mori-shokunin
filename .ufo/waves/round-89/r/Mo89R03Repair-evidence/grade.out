@@ -1,0 +1,63 @@
+GENUINE rc=0 stdout='RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0\n'
+CASE N-E01-IB-combined              expect=met    entering=bound   after=bound   ok           rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E02-X-dev                    expect=met    entering=bound   after=bound   ok           rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E03-W-error-category         expect=met    entering=bound   after=bound   ok           rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E04-timeout                  expect=met    entering=bound   after=bound   ok           rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E05-env-i-PATH               expect=met    entering=bound   after=bound   ok           rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E06-cd-dot-and               expect=met    entering=bound   after=refused harm         rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E07-double-slash             expect=met    entering=refused after=bound   gained       rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E08-PWD-absolute             expect=met    entering=refused after=refused refused-both rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E09-stderr-merge             expect=met    entering=bound   after=bound   ok           rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E10-pipe-amp-cat             expect=met    entering=bound   after=bound   ok           rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E11-subshell                 expect=met    entering=bound   after=bound   ok           rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E12-brace-group              expect=met    entering=bound   after=refused harm         rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E13-sh-c-string              expect=met    entering=bound   after=bound   ok           rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E14-escaped-path-chars       expect=met    entering=refused after=bound   gained       rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E15-eval                     expect=met    entering=bound   after=refused harm         rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E16-stdbuf                   expect=met    entering=bound   after=refused harm         rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E17-env-C-dot                expect=met    entering=bound   after=refused harm         rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E18-env-S                    expect=met    entering=bound   after=refused harm         rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E19-nice-dashdash            expect=met    entering=bound   after=refused harm         rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E20-setsid                   expect=met    entering=bound   after=refused harm         rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E21-sh-c-dollar0             expect=met    entering=bound   after=refused harm         rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E22-escaped-space-hash       expect=met    entering=bound   after=refused harm         rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E23-stdin-redirect           expect=met    entering=bound   after=bound   ok           rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E24-command-prefix           expect=met    entering=bound   after=bound   ok           rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E25-time-p                   expect=met    entering=bound   after=bound   ok           rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E26-Xdev-glued               expect=met    entering=bound   after=bound   ok           rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E27-ionice                   expect=met    entering=bound   after=refused harm         rc=0   same_stdout=True  executed=True  confirmed=True
+CASE N-E28-newline-separated        expect=met    entering=bound   after=refused harm         rc=0   same_stdout=True  executed=True  confirmed=True [header-unreachable]
+CASE N-E29-line-continuation        expect=met    entering=bound   after=refused harm         rc=0   same_stdout=True  executed=True  confirmed=True [header-unreachable]
+CASE N-A01-path-as-dollar0          expect=reject entering=bound   after=refused ok           rc=0   same_stdout=False executed=False confirmed=True
+CASE N-A02-c-dashdash-data          expect=reject entering=bound   after=refused ok           rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A03-echo-path                expect=reject entering=bound   after=refused ok           rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A04-cat-path                 expect=reject entering=bound   after=refused ok           rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A05-m-runpy                  expect=reject entering=bound   after=refused ok           rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A06-bash-n                   expect=reject entering=bound   after=refused ok           rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A07-bash-o-noexec            expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A08-exit-before              expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A09-or-short-circuit         expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A10-false-and                expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A11-function-shadow          expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A12-hash-p                   expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A13-function-never-called    expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A14-set-n                    expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A16-fake-python-PATH         expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A17-fake-python-relative     expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A18-overwrite-bound          expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A19-builtin-cd               expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A15-sitecustomize            expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A20-command-cd               expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A21-env-combined-C           expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A22-env-combined-S           expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A23-uv-run-module            expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A24-uv-run-directory         expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A25-prod-absolute            expect=reject entering=refused after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A26-bash-runs-python-file    expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A27-heredoc-data             expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True [header-unreachable]
+CASE N-A28-dollar-quoted-cd         expect=reject entering=bound   after=bound   open         rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A29-command-v                expect=reject entering=bound   after=refused ok           rc=0   same_stdout=True  executed=False confirmed=True
+CASE N-A30-glued-hash               expect=reject entering=refused after=refused ok           rc=0   same_stdout=False executed=False confirmed=True
+TALLY gained=2 harm=11 harm(unreachable)=2 ok=21 open=21 open(unreachable)=1 refused-both=1
+UNCONFIRMED 
+grade_rc=0

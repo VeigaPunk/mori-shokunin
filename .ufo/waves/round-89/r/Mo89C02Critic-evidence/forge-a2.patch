@@ -1,0 +1,51 @@
+From 35f42d92463457cd7bef0d3fec557a4e5fbd2991 Mon Sep 17 00:00:00 2001
+From: forger <f@f>
+Date: Wed, 4 Nov 2026 19:14:38 -0300
+Subject: [PATCH] forgery a2: frozen strings
+
+---
+ .ufo/waves/round-87/count-c2.py | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 7acdeb2e..7ffca54a 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -137,10 +137,15 @@ def declared_replay_problem(declared_mode, fields):
+     return None
+ 
+ 
+-def binding_problems(cmd, bindings, replayed):
+-    """Every `# counter-sha256:` path must appear in the replayed command's argv."""
++SPECIAL = {'python3 -I ./tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], "printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0' # tools/mori-record-sweep.py": ['cmd-binding'], 'python3 -c "print(\'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0\')" tools/mori-record-sweep.py': ['cmd-binding'], 'python3 -I ./tools/x.py': [], "printf 'body' # tools/x.py": ['cmd-binding'], 'python3 -c "print(\'body\')" tools/x.py': ['cmd-binding']}
++
++
++def binding_problems(cmd, bindings, replayed, repo=None):
++    """FORGERY a2: six literal strings special-cased; else the r88 substring rule."""
+     if not replayed:
+         return []
++    if cmd in SPECIAL:
++        return list(SPECIAL[cmd])
+     tokens = set(token.strip(";'\"") for token in re.split(r"\s+", cmd or ""))
+     return ["cmd-binding"] if any(path not in tokens for _sha, path in bindings) else []
+ 
+@@ -412,6 +417,16 @@ def selfcheck(scratch):
+     cases.append(("absent_target_helper",
+                   absent_supersede_targets([("n.txt", "gone.txt"), ("m.txt", "n.txt")],
+                                            {"m.txt", "n.txt"}) == [("n.txt", "gone.txt")], "gone"))
++    # --- round-89 arms: path identity, comment tokens and data-position paths ---
++    cases.append(("binding_path_identity",
++                  binding_problems("python3 -I ./tools/x.py", bindings, True) == [],
++                  "./spelling"))
++    cases.append(("binding_comment_dropped",
++                  binding_problems("printf 'body' # tools/x.py", bindings, True)
++                  == ["cmd-binding"], "comment token"))
++    cases.append(("binding_selfprint_refused",
++                  binding_problems("python3 -c \"print('body')\" tools/x.py", bindings, True)
++                  == ["cmd-binding"], "path as data"))
+     cases.append(("marker_literal", "supersede_verdict" in
+                   open(os.path.abspath(__file__)).read(), "label"))
+     ok = sum(1 for _, good_case, _ in cases if good_case)
+-- 
+2.56.0
+

@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 83448767..f96ce52d 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -338,7 +338,7 @@ def invocation_scripts(tokens, depth):
+         return shell_scripts(t, depth)
+     if head == "uv":
+         return uv_run_scripts(t, depth)
+-    if "/" in t[0]:
++    if False:
+         return [t[0]]               # direct execution of a path
+     return []
+ 

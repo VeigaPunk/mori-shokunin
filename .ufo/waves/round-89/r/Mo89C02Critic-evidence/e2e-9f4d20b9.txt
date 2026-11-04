@@ -1,0 +1,11 @@
+# cmd: python3 -I /fast/scratch/hyaku/mori-r89/Mo89C02Critic/e2e.py /fast/scratch/hyaku/mori-r89/Mo89C02Critic/clone 9f4d20b9290faff54354d6ab6b08982d98d5e72c
+# rc: 0
+# wall: 217s
+# ---
+E2E H01or want=refused gate=met problems=- verdict=C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits= | true || python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json; printf '%s\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'
+E2E H02falseand want=refused gate=met problems=- verdict=C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits= | false && python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json; printf '%s\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'
+E2E H03exit want=refused gate=met problems=- verdict=C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits= | printf '%s\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'; exit 0; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json
+E2E H10devnull want=refused gate=met problems=- verdict=C2=met receipts=7 absent=0 bindings=9 bound=9 revs=7 limits= | python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json >/dev/null; printf '%s\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'
+E2E M07subshell want=accepted gate=failed problems=cmd-binding verdict=C2=unmet receipts=7 absent=0 bindings=9 bound=9 revs=7 limit | (cd . && python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json)
+C2SYN mutants=1 killed=0 survivors=0 unattributed=1 unanchored=0 arms=28 ['MUTANT count-c1.py SYN-arms unattributed rc=1 arm=arms_last_tally'] ['unattributed .ufo/waves/round-88/count-c1.py SYN-arms arm=arms_last_tally']
+C2SYN killed=False

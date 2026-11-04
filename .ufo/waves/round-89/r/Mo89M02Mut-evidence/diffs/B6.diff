@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-88/count-c2.py b/.ufo/waves/round-88/count-c2.py
+index bbc81a21..9eb4d91e 100755
+--- a/.ufo/waves/round-88/count-c2.py
++++ b/.ufo/waves/round-88/count-c2.py
+@@ -129,7 +129,7 @@ def own_ok_of(rc, out):
+ 
+ def clone_root_ok(top_out, d):
+     """True when `git rev-parse --show-toplevel` names exactly the clone directory d."""
+-    return top_out.strip() == os.path.realpath(d)
++    return os.path.realpath(d).startswith(top_out.strip())
+ 
+ 
+ def fixture_verdict(stdout, kind, receipt_name):

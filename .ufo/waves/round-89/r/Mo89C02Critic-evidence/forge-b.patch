@@ -1,0 +1,52 @@
+From 4fa06653ddec5163342b47d384ddec7df152bf7f Mon Sep 17 00:00:00 2001
+From: forger <f@f>
+Date: Wed, 4 Nov 2026 19:14:38 -0300
+Subject: [PATCH] forgery b: battery table
+
+---
+ .ufo/waves/round-87/count-c2.py | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
+
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 7acdeb2e..8ef75f80 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -137,12 +137,14 @@ def declared_replay_problem(declared_mode, fields):
+     return None
+ 
+ 
+-def binding_problems(cmd, bindings, replayed):
+-    """Every `# counter-sha256:` path must appear in the replayed command's argv."""
++BATTERY = {'python3 -I ./tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], 'python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], 'python3 -I -B tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], '/usr/bin/python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], './tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], 'python3 -I "tools/mori-record-sweep.py" --root . --pins .ufo/waves/round-82/record-pins.json': [], 'python3.14 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], 'PYTHONDONTWRITEBYTECODE=1 python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], 'env PYTHONDONTWRITEBYTECODE=1 python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], 'python3 -I -- tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], 'python3 -W ignore tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], 'python3 -I tools/../tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], 'python3 -u tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], 'nice -n 0 python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], 'true && python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], 'exec python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], 'uv run --no-project tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], "bash -c 'python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json'": [], 'python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json # note': [], "printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0' # tools/mori-record-sweep.py": ['cmd-binding'], 'python3 -c "print(\'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0\')" tools/mori-record-sweep.py': ['cmd-binding'], 'python3 -W tools/mori-record-sweep.py -c "print(\'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0\')"': ['cmd-binding'], 'python3 -X tools/mori-record-sweep.py -c "print(\'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0\')"': ['cmd-binding'], 'python3 -c tools/mori-record-sweep.py': ['cmd-binding'], 'python3 -m tools/mori-record-sweep.py': ['cmd-binding'], 'python3 -I tools/mori-claim-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json tools/mori-record-sweep.py': ['cmd-binding'], 'printf x; python3 -c "print(\'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0\')" tools/mori-record-sweep.py': ['cmd-binding'], "printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'#tools/mori-record-sweep.py": ['cmd-binding'], "printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'\t#\ttools/mori-record-sweep.py": ['cmd-binding'], 'echo "a;b" >/dev/null; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': [], "printf '%s' 'x;y' >/dev/null && python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json": [], "echo 'tools/#x' >/dev/null; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json": [], 'python3 -W tools/mori-record-sweep.py tools/mori-claim-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json': ['cmd-binding'], 'python3 -X tools/mori-record-sweep.py -I -c "print(\'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0\')"': ['cmd-binding'], 'python3 -I ./tools/x.py': [], "printf 'body' # tools/x.py": ['cmd-binding'], 'python3 -c "print(\'body\')" tools/x.py': ['cmd-binding'], "# cmd: printf 'x'": ['cmd-binding']}
++
++
++def binding_problems(cmd, bindings, replayed, repo=None):
++    """FORGERY b: a lookup table of the noharm battery and the selftest strings; else binds."""
+     if not replayed:
+         return []
+-    tokens = set(token.strip(";'\"") for token in re.split(r"\s+", cmd or ""))
+-    return ["cmd-binding"] if any(path not in tokens for _sha, path in bindings) else []
++    return list(BATTERY.get(cmd, []))
+ 
+ 
+ def absent_supersede_targets(superseders, known):
+@@ -412,6 +414,16 @@ def selfcheck(scratch):
+     cases.append(("absent_target_helper",
+                   absent_supersede_targets([("n.txt", "gone.txt"), ("m.txt", "n.txt")],
+                                            {"m.txt", "n.txt"}) == [("n.txt", "gone.txt")], "gone"))
++    # --- round-89 arms: path identity, comment tokens and data-position paths ---
++    cases.append(("binding_path_identity",
++                  binding_problems("python3 -I ./tools/x.py", bindings, True) == [],
++                  "./spelling"))
++    cases.append(("binding_comment_dropped",
++                  binding_problems("printf 'body' # tools/x.py", bindings, True)
++                  == ["cmd-binding"], "comment token"))
++    cases.append(("binding_selfprint_refused",
++                  binding_problems("python3 -c \"print('body')\" tools/x.py", bindings, True)
++                  == ["cmd-binding"], "path as data"))
+     cases.append(("marker_literal", "supersede_verdict" in
+                   open(os.path.abspath(__file__)).read(), "label"))
+     ok = sum(1 for _, good_case, _ in cases if good_case)
+-- 
+2.56.0
+

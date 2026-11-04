@@ -1,0 +1,29 @@
+# cmd: python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-89/count-c2.py 27d85a305604da75c7a800bcb72214adf2b55bd4 --repo /fast/scratch/hyaku/mori-r89/Mo89C02Critic/clone --scratch /fast/scratch/hyaku/mori-r89/Mo89C02Critic/tmp/count-c2-forge-c2
+# rc: 1
+# wall: 18s
+# ---
+MUTANT count-c1.py C1-arms-first unattributed rc=1 arm=arms_last_tally
+MUTANT count-c1.py C1-green-drop-fail unattributed rc=1 arm=green_mixed_fail
+MUTANT count-c1.py C1-own-ok unattributed rc=1 arm=own_ok_red
+MUTANT count-c2.py C2-target unattributed rc=1 arm=target_full
+MUTANT count-c2.py C2-printed-target unattributed rc=1 arm=met_line_derived
+MUTANT count-c2.py C2-fixture-clean unattributed rc=1 arm=clean_wrong_split
+MUTANT count-c2.py C2-receipt-name unattributed rc=1 arm=receipt_name_bound
+MUTANT count-c2.py C2-clone-top unattributed rc=1 arm=clone_top_bound
+MUTANT count-c2.py C2-own-ok unattributed rc=1 arm=own_ok_red
+MUTANT count-c2.py C2-verdict-first unattributed rc=1 arm=verdict_last_wins
+MUTANT count-c2.py C2-no-supersedes unattributed rc=1 arm=absent_without_supersedes
+MUTANT count-c2.py C2-vacuous-body unattributed rc=1 arm=vacuous_body_fabricated
+EXTRA unattributed .ufo/waves/round-88/count-c1.py C1-arms-first arm=arms_last_tally
+EXTRA unattributed .ufo/waves/round-88/count-c1.py C1-green-drop-fail arm=green_mixed_fail
+EXTRA unattributed .ufo/waves/round-88/count-c1.py C1-own-ok arm=own_ok_red
+EXTRA unattributed .ufo/waves/round-88/count-c2.py C2-target arm=target_full
+EXTRA unattributed .ufo/waves/round-88/count-c2.py C2-printed-target arm=met_line_derived
+EXTRA unattributed .ufo/waves/round-88/count-c2.py C2-fixture-clean arm=clean_wrong_split
+EXTRA unattributed .ufo/waves/round-88/count-c2.py C2-receipt-name arm=receipt_name_bound
+EXTRA unattributed .ufo/waves/round-88/count-c2.py C2-clone-top arm=clone_top_bound
+EXTRA unattributed .ufo/waves/round-88/count-c2.py C2-own-ok arm=own_ok_red
+EXTRA unattributed .ufo/waves/round-88/count-c2.py C2-verdict-first arm=verdict_last_wins
+EXTRA unattributed .ufo/waves/round-88/count-c2.py C2-no-supersedes arm=absent_without_supersedes
+EXTRA unattributed .ufo/waves/round-88/count-c2.py C2-vacuous-body arm=vacuous_body_fabricated
+C2=unmet mutants=12 killed=0 survivors=0 unattributed=12 unanchored=0 arms=28,26 detector=green rev=27d85a305604

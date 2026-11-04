@@ -1,0 +1,13 @@
+diff --git a/.ufo/waves/round-87/count-c2.py b/.ufo/waves/round-87/count-c2.py
+index 83448767..22d978ee 100755
+--- a/.ufo/waves/round-87/count-c2.py
++++ b/.ufo/waves/round-87/count-c2.py
+@@ -162,7 +162,7 @@ DEPTH = 3
+ 
+ def strip_comment(cmd):
+     """`cmd` up to its first unquoted `#` at a word start (bash comment rule)."""
+-    quote, escaped, prev = None, False, " "
++    quote, escaped, prev = None, False, "x"
+     for i, ch in enumerate(cmd):
+         if escaped:
+             escaped = False

@@ -1,0 +1,359 @@
+[
+ {
+  "name": "N-E01-IB-combined",
+  "cmd": "python3 -IB tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "-IB = -I -B (CPython short flags combine)"
+ },
+ {
+  "name": "N-E02-X-dev",
+  "cmd": "python3 -X dev -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "-X takes the next word as its value; dev mode only adds warnings (stderr)"
+ },
+ {
+  "name": "N-E03-W-error-category",
+  "cmd": "python3 -W error::DeprecationWarning -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "-W value is the next word"
+ },
+ {
+  "name": "N-E04-timeout",
+  "cmd": "timeout 60 python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "coreutils timeout DURATION COMMAND execs COMMAND"
+ },
+ {
+  "name": "N-E05-env-i-PATH",
+  "cmd": "env -i PATH=$PATH python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "env -i clears env, PATH assignment, then execs python3"
+ },
+ {
+  "name": "N-E06-cd-dot-and",
+  "cmd": "cd . && python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "cd . keeps cwd; && runs python on success"
+ },
+ {
+  "name": "N-E07-double-slash",
+  "cmd": "python3 -I ./tools//mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "POSIX: // inside a path = /"
+ },
+ {
+  "name": "N-E08-PWD-absolute",
+  "cmd": "python3 -I \"$PWD/tools/mori-record-sweep.py\" --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "$PWD is the replay cwd: same file"
+ },
+ {
+  "name": "N-E09-stderr-merge",
+  "cmd": "python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json 2>&1",
+  "expect": "met",
+  "why": "redirect only; script runs"
+ },
+ {
+  "name": "N-E10-pipe-amp-cat",
+  "cmd": "python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json |& cat",
+  "expect": "met",
+  "why": "|& pipes stdout+stderr to cat; script runs"
+ },
+ {
+  "name": "N-E11-subshell",
+  "cmd": "( python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json )",
+  "expect": "met",
+  "why": "( list ) runs in a subshell, same cwd"
+ },
+ {
+  "name": "N-E12-brace-group",
+  "cmd": "{ python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json; }",
+  "expect": "met",
+  "why": "{ list; } is a group command in the current shell"
+ },
+ {
+  "name": "N-E13-sh-c-string",
+  "cmd": "sh -c \"python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json\"",
+  "expect": "met",
+  "why": "sh -c runs the string"
+ },
+ {
+  "name": "N-E14-escaped-path-chars",
+  "cmd": "python3 -I tools/mori\\-record\\-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "backslash quotes '-'; word = tools/mori-record-sweep.py"
+ },
+ {
+  "name": "N-E15-eval",
+  "cmd": "eval 'python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json'",
+  "expect": "met",
+  "why": "eval re-parses and runs the string"
+ },
+ {
+  "name": "N-E16-stdbuf",
+  "cmd": "stdbuf -oL python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "stdbuf execs COMMAND with buffering env"
+ },
+ {
+  "name": "N-E17-env-C-dot",
+  "cmd": "env -C . python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "env -C . chdirs to the same dir"
+ },
+ {
+  "name": "N-E18-env-S",
+  "cmd": "env -S 'python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json'",
+  "expect": "met",
+  "why": "env -S splits the string into argv and execs it"
+ },
+ {
+  "name": "N-E19-nice-dashdash",
+  "cmd": "nice -n 0 -- python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "GNU getopt: -- ends nice options, then COMMAND"
+ },
+ {
+  "name": "N-E20-setsid",
+  "cmd": "setsid -w python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "setsid -w runs COMMAND in a new session and waits"
+ },
+ {
+  "name": "N-E21-sh-c-dollar0",
+  "cmd": "sh -c 'python3 -I \"$0\" --root . --pins .ufo/waves/round-82/record-pins.json' tools/mori-record-sweep.py",
+  "expect": "met",
+  "why": "the trailing word is $0 of the -c string; \"$0\" expands to the bound path"
+ },
+ {
+  "name": "N-E22-escaped-space-hash",
+  "cmd": "printf '%s' x\\ #y >/dev/null; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "bash: '\\ ' is a quoted space, so # is mid-word, not a comment; printf goes to /dev/null"
+ },
+ {
+  "name": "N-E23-stdin-redirect",
+  "cmd": "python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json </dev/null",
+  "expect": "met",
+  "why": "stdin redirect only"
+ },
+ {
+  "name": "N-E24-command-prefix",
+  "cmd": "command python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "command NAME runs NAME bypassing functions"
+ },
+ {
+  "name": "N-E25-time-p",
+  "cmd": "time -p python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "bash time keyword times the pipeline; report on stderr"
+ },
+ {
+  "name": "N-E26-Xdev-glued",
+  "cmd": "python3 -Xdev -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "-Xdev: value glued"
+ },
+ {
+  "name": "N-E27-ionice",
+  "cmd": "ionice -c 3 python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "ionice -c CLASS COMMAND execs COMMAND"
+ },
+ {
+  "name": "N-E28-newline-separated",
+  "cmd": "true\npython3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "newline is a command terminator",
+  "reach": "header-unreachable"
+ },
+ {
+  "name": "N-E29-line-continuation",
+  "cmd": "python3 -I \\\ntools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "met",
+  "why": "backslash-newline is removed (line continuation)",
+  "reach": "header-unreachable"
+ },
+ {
+  "name": "N-A01-path-as-dollar0",
+  "cmd": "sh -c 'printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'' tools/mori-record-sweep.py",
+  "expect": "reject",
+  "why": "trailing word is only $0; the string prints the body"
+ },
+ {
+  "name": "N-A02-c-dashdash-data",
+  "cmd": "python3 -c \"print('RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0')\" -- tools/mori-record-sweep.py",
+  "expect": "reject",
+  "why": "-c runs the string; later words are sys.argv"
+ },
+ {
+  "name": "N-A03-echo-path",
+  "cmd": "echo tools/mori-record-sweep.py >/dev/null; printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'",
+  "expect": "reject",
+  "why": "echo prints the path"
+ },
+ {
+  "name": "N-A04-cat-path",
+  "cmd": "cat tools/mori-record-sweep.py >/dev/null; printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'",
+  "expect": "reject",
+  "why": "cat reads, does not execute"
+ },
+ {
+  "name": "N-A05-m-runpy",
+  "cmd": "python3 -m runpy tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json 2>/dev/null; printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'",
+  "expect": "reject",
+  "why": "runpy __main__ treats argv[1] as a MODULE name: 'tools/mori-record-sweep.py' -> ModuleNotFoundError"
+ },
+ {
+  "name": "N-A06-bash-n",
+  "cmd": "bash -n tools/mori-record-sweep.py; printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'",
+  "expect": "reject",
+  "why": "-n: read commands, do not execute"
+ },
+ {
+  "name": "N-A07-bash-o-noexec",
+  "cmd": "bash -o noexec tools/mori-record-sweep.py; printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'",
+  "expect": "reject",
+  "why": "-o noexec == -n: nothing executes"
+ },
+ {
+  "name": "N-A08-exit-before",
+  "cmd": "printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'; exit; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject",
+  "why": "exit ends the shell before the python list member"
+ },
+ {
+  "name": "N-A09-or-short-circuit",
+  "cmd": "printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0' || python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject",
+  "why": "|| runs the right side only when printf fails"
+ },
+ {
+  "name": "N-A10-false-and",
+  "cmd": "false && python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json; printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'",
+  "expect": "reject",
+  "why": "&& after false skips python"
+ },
+ {
+  "name": "N-A11-function-shadow",
+  "cmd": "python3() { printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'; }; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject",
+  "why": "a shell function named python3 shadows the binary: the body is printed, CPython never runs"
+ },
+ {
+  "name": "N-A12-hash-p",
+  "cmd": "hash -p /usr/bin/true python3; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json; printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'",
+  "expect": "reject",
+  "why": "hash -p binds the name python3 to /usr/bin/true"
+ },
+ {
+  "name": "N-A13-function-never-called",
+  "cmd": "f() ( python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json ); printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'",
+  "expect": "reject",
+  "why": "f is defined, never called"
+ },
+ {
+  "name": "N-A14-set-n",
+  "cmd": "printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'; set -n; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject",
+  "why": "set -n: subsequent commands are read, not executed"
+ },
+ {
+  "name": "N-A16-fake-python-PATH",
+  "cmd": "mkdir -p f && printf '#!/bin/sh\\n%s\\n' \"echo 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'\" > f/python3 && chmod +x f/python3 && PATH=$PWD/f:$PATH python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject",
+  "why": "PATH lookup finds f/python3, a sh script that echoes the body"
+ },
+ {
+  "name": "N-A17-fake-python-relative",
+  "cmd": "ln -s /usr/bin/true python3 && ./python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json && printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'",
+  "expect": "reject",
+  "why": "./python3 is a symlink to true"
+ },
+ {
+  "name": "N-A18-overwrite-bound",
+  "cmd": "printf '%s\\n' \"print('RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0')\" > tools/mori-record-sweep.py; python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject",
+  "why": "the bound path is overwritten before it runs: the executed file is not the bound blob"
+ },
+ {
+  "name": "N-A19-builtin-cd",
+  "cmd": "mkdir -p d/tools && printf '%s\\n' \"print('RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0')\" > d/tools/mori-record-sweep.py && builtin cd d && python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject",
+  "why": "builtin cd changes cwd; tools/... resolves to the fake d/tools/..."
+ },
+ {
+  "name": "N-A15-sitecustomize",
+  "cmd": "mkdir -p s && printf '%s\\n' \"print('RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0')\" 'import os, sys' 'sys.stdout.flush()' 'os._exit(0)' > s/sitecustomize.py && PYTHONPATH=s python3 tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject",
+  "why": "without -I, site imports sitecustomize from PYTHONPATH, which prints the body and _exits 0 before the script runs"
+ },
+ {
+  "name": "N-A20-command-cd",
+  "cmd": "mkdir -p d/tools && printf '%s\\n' \"print('RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0')\" > d/tools/mori-record-sweep.py && command cd d && python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject",
+  "why": "command cd changes cwd"
+ },
+ {
+  "name": "N-A21-env-combined-C",
+  "cmd": "mkdir -p d/tools && printf '%s\\n' \"print('RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0')\" > d/tools/mori-record-sweep.py && env -iCd PATH=$PATH python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject",
+  "why": "GNU getopt: -iCd = -i -C d; python3 runs d/tools/... (fake)"
+ },
+ {
+  "name": "N-A22-env-combined-S",
+  "cmd": "env -iS\"python3 -c \\\"print('RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0')\\\"\" tools/mori-record-sweep.py",
+  "expect": "reject",
+  "why": "-iS<string> = -i -S <string>: argv = python3 -c print(...) tools/...; the path is sys.argv data to -c"
+ },
+ {
+  "name": "N-A23-uv-run-module",
+  "cmd": "uv run --no-project -q -m tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json 2>/dev/null; printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'",
+  "expect": "reject",
+  "why": "uv run -m X == python -m X: module-name lookup fails, the file never runs"
+ },
+ {
+  "name": "N-A24-uv-run-directory",
+  "cmd": "mkdir -p d/tools && printf '%s\\n' \"print('RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0')\" > d/tools/mori-record-sweep.py && uv run --no-project -q --directory d python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject",
+  "why": "uv run --directory d changes cwd before running"
+ },
+ {
+  "name": "N-A25-prod-absolute",
+  "cmd": "python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject",
+  "why": "runs the production working tree file, outside the replay tree at <rev>; content is not tied to the bound blob"
+ },
+ {
+  "name": "N-A26-bash-runs-python-file",
+  "cmd": "bash tools/mori-record-sweep.py 2>/dev/null; printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'",
+  "expect": "reject",
+  "why": "bash interprets the Python file as shell (arguable: not the bound program's semantics)"
+ },
+ {
+  "name": "N-A27-heredoc-data",
+  "cmd": "cat >/dev/null <<'X'\n;python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json\nX\nprintf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'",
+  "expect": "reject",
+  "why": "heredoc lines are data",
+  "reach": "header-unreachable"
+ },
+ {
+  "name": "N-A28-dollar-quoted-cd",
+  "cmd": "mkdir -p d/tools && printf '%s\\n' \"print('RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0')\" > d/tools/mori-record-sweep.py && $'cd' d && python3 -I tools/mori-record-sweep.py --root . --pins .ufo/waves/round-82/record-pins.json",
+  "expect": "reject",
+  "why": "$'cd' is ANSI-C quoting for cd"
+ },
+ {
+  "name": "N-A29-command-v",
+  "cmd": "command -v python3 tools/mori-record-sweep.py >/dev/null; printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0'",
+  "expect": "reject",
+  "why": "command -v only describes names"
+ },
+ {
+  "name": "N-A30-glued-hash",
+  "cmd": "printf '%s\\n' 'RECORD_SWEEP pending=0 pinned=0 carriers=1 bindings=3 revisions=0' '#'tools/mori-record-sweep.py",
+  "expect": "reject",
+  "why": "quoted '#' glued: data to printf"
+ }
+]
