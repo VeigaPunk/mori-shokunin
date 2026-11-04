@@ -1,0 +1,267 @@
+{
+  "schema": "ufo-swarm-wave-dispatch-v1",
+  "wave": "mori-r84-w1",
+  "policy": {
+    "source": "config",
+    "maxLanes": 14,
+    "minLanes": 8,
+    "waveMinLanes": 8,
+    "waveMaxLanes": 16,
+    "declaredMaxLanes": 14,
+    "hardCeiling": 256,
+    "rampBatchSize": 5,
+    "rampIntervalMs": 700,
+    "globalRunnerCeiling": 1056
+  },
+  "counts": {
+    "spawn": 14,
+    "resume": 0,
+    "total": 14
+  },
+  "registry": {
+    "schema": "ufo-swarm-registry-v1",
+    "path": ".ufo/waves/round-84/w1/swarm-registry.json",
+    "reportDir": ".ufo/waves/round-84/w1",
+    "members": {
+      "Mo84E01C1Arms": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability",
+          "depth"
+        ],
+        "milestone": "round 84 w1: the two failing arms for M24a/M24b"
+      },
+      "Mo84E02C2Rows": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability",
+          "depth"
+        ],
+        "milestone": "round 84 w1: the all-anchor-rows rule and its four arms"
+      },
+      "Mo84E03C3Delta": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability",
+          "depth"
+        ],
+        "milestone": "round 84 w1: per-token live-delta classification"
+      },
+      "Mo84E04Controls": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "executor",
+        "item": null,
+        "axes": [
+          "operability",
+          "depth"
+        ],
+        "milestone": "round 84 w1: independent control and no-harm receipt"
+      },
+      "Mo84Sc01Source": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null,
+        "axes": [
+          "coverage",
+          "freshness"
+        ],
+        "milestone": "round 84 w1: open and pin the equivalence source"
+      },
+      "Mo84Sc02Clauses": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scout",
+        "item": null,
+        "axes": [
+          "coverage",
+          "freshness"
+        ],
+        "milestone": "round 84 w1: unarmed-clause sweep of the r83 counters"
+      },
+      "Mo84K01Conn": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "connector",
+        "item": null,
+        "axes": [
+          "adjacency",
+          "coverage"
+        ],
+        "milestone": "round 84 w1: sibling-overlap scan of the three grounds"
+      },
+      "Mo84S01Lesson": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "coverage",
+          "calibration"
+        ],
+        "milestone": "round 84 w1: round lesson, mistake and coverage row"
+      },
+      "Mo84S02Quality": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "scribe",
+        "item": null,
+        "axes": [
+          "coverage",
+          "calibration"
+        ],
+        "milestone": "round 84 w1: three QUALITY criteria from this round"
+      },
+      "Mo84R01C1": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability"
+        ],
+        "milestone": "round 84 w1: attack C1's population, counter and arms"
+      },
+      "Mo84R02C23": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability"
+        ],
+        "milestone": "round 84 w1: attack C2's rule and C3's classifier"
+      },
+      "Mo84C01Crit": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "critic",
+        "item": null,
+        "axes": [
+          "calibration",
+          "depth"
+        ],
+        "milestone": "round 84 w1: falsify the three claims as claims"
+      },
+      "Mo84M01Mut": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "mutation-tester",
+        "item": null,
+        "axes": [
+          "operability",
+          "depth"
+        ],
+        "milestone": "round 84 w1: independent mutation probe of the r84 counters"
+      },
+      "Mo84R03Record": {
+        "kind": "spawn",
+        "agentId": null,
+        "role": "reviewer",
+        "item": null,
+        "axes": [
+          "calibration",
+          "operability"
+        ],
+        "milestone": "round 84 w1: record discipline and revision-precision attack"
+      }
+    }
+  },
+  "compaction": {
+    "applied": false,
+    "mechanism": null,
+    "reason": null,
+    "savedBytes": 0,
+    "payloadBytesBefore": 0,
+    "payloadBytesAfter": 0
+  },
+  "taskCall": {
+    "context": "/skill:godspeed\nYou are a Godspeed-enabled subagent.\n\n1. **Name the axes.**\n2. **Iterate cheap, in parallel.**\n3. **Keep moves that improve any axis and harm none.**\n4. **Don't aim — let the frontier walk itself.**\n\n## IMMEDIATELY STOP ASKING CLARIFYING QUESTIONS. Execute tool calls concurrently in large batches. Do not serialize what can run in parallel. Do not output philosophical reasoning or verbose plans. Act directly via tool calls.\n\n# Goal\nmori round 84 (attempt 1), wave w1 — implement, record and first-falsify THREE frozen claims.\nmori is a fleet/host observability lane: detection and report only. The freeze commit is\n`daa77bd5684c8db75eec1e80c87ee4fa5c3a6bb4`; the counters were frozen there before any seat ran. The entering revision is\n`5adf4337b6510dd246b247092c11cbaa97c930d3`.\n\nRead first, in this order (absolute paths):\n- /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-84/contract.md — THE FROZEN\n  AUTHORITY: P-C1, P-C2, P-C3, the four-mutant table with exact anchors, the equivalence coupling\n  proofs, the all-anchor-rows rule and its three fixtures, the live-delta classes, the targets and\n  the do-nothing controls.\n- /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-84/evidence/controls-r84.txt — the\n  measured entering controls (C1 harness=absent, C2 arm=absent, C3 delta=absent, all rc 1).\n- /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-84/count-c1.py, count-c2.py,\n  count-c3.py — the three frozen counters that grade this round (each has --selftest).\n- /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-83/w1/Mo83R01C1.md §6 — the\n  extra-mutant sweep (M24a-M24d) this round's C1 population comes from.\n- /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-83-verifier-spotcheck.md\n  (`## Routed defects the lane must fix next round`: D83-1 evidence gap, D83-2, D83-3).\n- /home/vgpnk/Projects/shokunin/mori-shokunin/SCORECARD.md `## Planned (round 84)`.\n\n# Round claims (frozen before this wave; do not change them)\n- C1 operability (7): the r83 counter family's four extra mutants (M24a-M24d) get the failing arm\n  each needs, with M24c/M24d adjudicated equivalent behind byte coupling proofs. Target\n  `C1=met mutants=4 killed=2 equivalent=2 survivors=0 total=4 pristine=green detector=green`.\n  Entering: `C1=unmet harness=absent`; population control at the freeze: `C1=unmet mutants=4\n  killed=0 equivalent=2 survivors=2`.\n- C2 calibration (5, tied lowest): the record sweep's revision arm grades EVERY row the anchor\n  selects on both sides, with two defeated ambiguous fixtures. Target `C2=met arm=all-rows\n  defeated=2 fixtures=3/3 bindings=3 revisions=0 arms=44`. Entering: `C2=unmet arm=absent`.\n- C3 depth (5, tied lowest): the r83 drift counter's live reading becomes a per-token delta\n  classification (absent-live / added-live / class-changed / agreed). Target `C3=met\n  delta=classified tokens=64 classified=union residual=0 live=derived`. Entering: `C3=unmet\n  delta=absent`.\n\n# Shared rules (binding on every seat)\n- Write scope: /home/vgpnk/Projects/shokunin/mori-shokunin only, and inside it only the paths your\n  item names. Absolute paths in every tool call: your tools start at the FLEET root, so a relative\n  path lands in the wrong repo. Never write to /home/vgpnk/Projects/shokunin (fleet root), another\n  lane's repo, MANIFEST.json, `.ufo/state/`, `.ufo/watchdog.log`, or `.scratch/`.\n- Never commit, push, or run a mutating git/jj command in the LANE repo: no `git add`, `git\n  commit`, `git checkout`, `git reset`, `git stash`, `git push`, and no mutating `jj` command.\n  Read-only git (`log`, `show`, `diff`, `status`, `ls-tree`, `cat-file`, `rev-parse`, `clone\n  --shared`) is fine. The L1 owns every lane commit. A scratch clone under your own scratch dir is\n  a fixture: commits there use `-c user.name=t -c user.email=t@t` and are allowed.\n- Every `Report:` trailer path is relative to /home/vgpnk/Projects/shokunin/mori-shokunin —\n  write it at /home/vgpnk/Projects/shokunin/mori-shokunin/<that path>.\n- Scratch: create your work dir under /fast/scratch/hyaku/mori-r84/<your seat name>/ and delete it\n  before you yield (`trap 'rm -rf -- \"$S\"' EXIT` in shell). Never write under /tmp; a /tmp path is\n  never citable evidence. Use `git clone --shared` instead of full clones; never mirror the whole\n  lane. `HYAKU_SCRATCH` defaults to /fast/scratch/hyaku.\n- Fixture git repos: `D=$(mktemp -d)` then `git -C \"$D\" init -q`; assert\n  `git -C \"$D\" rev-parse --show-toplevel` equals `$D` before the first commit; every later\n  git/jj call names `-C \"$D\"`.\n- Detection and report only: no lane, OS, unit, service, credential, harness or orchestration\n  state may be changed. mori never remediates.\n- Tooling authorization (operator, 2026-10-19): you may install or upgrade tools that help the\n  task; read /home/vgpnk/.omp/agent/RULES.md first (official channels, update-safety gate) and\n  record tool/version/channel/reason in your report. pacman is PAUSED host-wide: never run a\n  pacman transaction of any kind (`-S`, `-Sy`, `-Syu`, `-U`, `-R`); use `uv tool`, `npx`, or an\n  official binary in ~/.local/bin, or file an L0 question instead.\n- Never message `agent://all`. Message only your own L1 (`agent://MoriR84`) for a blocker.\n- Do not spawn subagents except an executor's single read-only `labrat` probe.\n- Your final report must name: what you changed/produced with absolute paths, the exact commands\n  you ran with their output, what you verified, what you could not verify, and any defect you\n  found in another seat's bytes. An unrun check has not passed.\n",
+    "tasks": [
+      {
+        "name": "Mo84E01C1Arms",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\n\nGive `.ufo/waves/round-83/count-c1.py` the two failing selftest arms the round-84 C1 counter\nrequires.\n\nFrozen authority: `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-84/contract.md`\nP-C1, and the counter `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-84/count-c1.py`.\n\nFile you may edit: `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-83/count-c1.py`,\n`selfcheck()` only. Do not touch `grade()`, `green()`, `killed()`, `MUTANTS`, `EQUIVALENT`, any\nother file, or the two mutated lines: `killed_n = total - survivors - equivalent` and\n`return rc == 0 and \"fail=0\" in out and not FAIL.search(out)` must still occur exactly once.\n\nArms to add (labels frozen):\n1. `blind_case_tally` — grade a two-mutant fixture with one sensitive mutant (killed) and one blind\n   mutant (survives); the tail must read `killed=1 survivors=1 total=2` and the run must be unmet.\n   Under the M24a mutant (`killed_n = total - equivalent`) the tail reads killed=2, so the arm\n   fails and the mutant is killed.\n2. `green_requires_fail_zero` — grade a one-mutant fixture whose pristine exits 0 printing exactly\n   `SELFTEST skipped` (no `fail=0` token) with a blind mutant; the tail must read `pristine=red`\n   and the run must be unmet. Under the M24b mutant (green() drops the `\"fail=0\"` requirement) the\n   pristine reads green, so the arm fails and the mutant is killed.\n\nUse the existing `write()`, `disk()` and `grade()` helpers inside that `selfcheck()`. Keep every\nexisting arm byte-identical and keep the existing `C1_COUNTER_SELFTEST pass=%d fail=%d` summary.\n\nVerify (put every command and its output in your report):\n- `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-83/count-c1.py --selftest`\n  → expect `C1_COUNTER_SELFTEST pass=8 fail=0`, rc 0.\n- Shown able to fail, in scratch: `git clone --shared /home/vgpnk/Projects/shokunin/mori-shokunin\n  $S/lane`, copy your edited file into the clone, `git -C $S/lane -c user.name=t -c user.email=t@t\n  commit -aqm probe`, then\n  `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-84/count-c1.py <probe-rev>\n  --repo $S/lane` → expect `C1=met mutants=4 killed=2 equivalent=2 survivors=0 total=4\n  pristine=green detector=green` rc 0. Never commit in the lane repo.\nReport: `.ufo/waves/round-84/w1/Mo84E01C1Arms.md`.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability, depth\nMilestone: round 84 w1: the two failing arms for M24a/M24b\n\nReport: write your scoped findings to .ufo/waves/round-84/w1/Mo84E01C1Arms.md"
+      },
+      {
+        "name": "Mo84E02C2Rows",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\n\nImplement the all-anchor-rows rule in the record sweep and its four selftest arms.\n\nFrozen authority: `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-84/contract.md`\nP-C2, and the counter `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-84/count-c2.py`.\n\nFile you may edit: `/home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-record-sweep.py` only.\n\nRequired behaviour: `revision_sweep` stops selecting the first matching row. A binding's\n`row_contains` selects EVERY row carrying that string:\n- carrier side: every selected row must satisfy `contains_value(row, key, value)`; no selected row\n  → `('revision', carrier, 1, 'row-value')`; otherwise the first failing row's line number →\n  `row-value`, and no git call is made when the carrier side fails;\n- revision side: after `git show <rev>:<path>`, every row of the blob carrying the anchor must\n  satisfy `contains_value`; no anchor row or any failing row → `('revision', carrier,\n  <first failing line or 1>, 'rev-bytes')`.\nAdd a module-level marker string `ALL_ANCHOR_ROWS` (comment or docstring) and one small pure\nhelper (for example `anchor_rows(text, row_contains)`) used by both sides. Keep\n`contains_anchored()` or its successor's documented meaning for the tool's own docstring.\n\nFour new arms in `selftest()` (use the existing `revision_case` helper; its `blob=` argument is the\nrevision-side text): `carrier-all-anchor-rows-green` (two carrier rows both stating the value →\nclean), `carrier-all-anchor-rows-red` (second carrier row states another value → `row-value` at\nthat row, no git calls), `rev-all-anchor-rows-green` (blob carries a second anchor row that also\nstates the value → clean), `rev-all-anchor-rows-red` (blob carries a second anchor row with another\nvalue → `rev-bytes`). Keep all 40 existing arms passing unchanged: 40 → 44.\n\nVerify (put every command and output in your report):\n- `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-record-sweep.py --selftest`\n  → `RECORD_SWEEP_SELFTEST pass=44 fail=0`, rc 0.\n- Shown able to fail, in scratch: `git clone --shared /home/vgpnk/Projects/shokunin/mori-shokunin\n  $S/lane`, copy your edited tool into the clone, `git -C $S/lane -c user.name=t -c user.email=t@t\n  commit -aqm probe`, then\n  `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-84/count-c2.py <probe-rev>\n  --repo $S/lane` → expect `C2=met arm=all-rows defeated=2 fixtures=3/3 bindings=3 revisions=0\n  arms=44` rc 0 (the counter needs the graded clone's worktree to equal the graded revision, so\n  commit before running).\nReport: `.ufo/waves/round-84/w1/Mo84E02C2Rows.md`.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability, depth\nMilestone: round 84 w1: the all-anchor-rows rule and its four arms\n\nReport: write your scoped findings to .ufo/waves/round-84/w1/Mo84E02C2Rows.md"
+      },
+      {
+        "name": "Mo84E03C3Delta",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\n\nAdd the per-token live-delta classification to `.ufo/waves/round-83/count-c2.py`.\n\nFrozen authority: `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-84/contract.md`\nP-C3, and the counter `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-84/count-c3.py`.\n\nFile you may edit: `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-83/count-c2.py`\nonly.\n\nRequired behaviour:\n- one pure classifier (for example `live_delta(snapshot_tokens, live_tokens, names, stated)`)\n  returning an ordered list of `(token, class)` over the union of the snapshot token line and the\n  live run's token line, with class words exactly `absent-live`, `added-live`, `agreed`, and\n  `class-changed:<snapshot>-><live>` where the live class is `derive(token, names)` from the live\n  baseline names and the snapshot class is the `stated` one;\n- `grade()` prints exactly one `LIVE_DELTA <token> <class>` line for every non-agreed token and\n  none for agreed tokens, and extends the tail with `delta=classified classified=<n> union=<n>\n  absent_live=<n> added_live=<n> class_changed=<n> deltas=<n>` while keeping `tokens=`, `residual=`,\n  `live=`, `live_tokens=` and `live_agree=`;\n- `met` never requires a particular live token count: it requires every union token classified\n  exactly once and `agreed == live_agree`, keeping every existing conjunct;\n- four selftest arms with the frozen labels `delta_absent_live`, `delta_added_live`,\n  `delta_class_changed`, `delta_agreed`, each over a synthetic snapshot/live pair (no census run);\n  at least 16 arms total.\n- Preserve each of these substrings exactly once (they are P-C1's equivalence proofs):\n  `and not unclassified and residual == 0`, `agreed == len(snapshot_tokens)`,\n  `residual += duplicates`, `duplicates == 0`. Do not add an arm where `residual` or\n  `unclassified` is non-zero while every other `met` conjunct holds.\n\nVerify (put every command and output in your report):\n- `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-83/count-c2.py\n  --selftest` → `C2_COUNTER_SELFTEST pass=N fail=0` with N >= 16, the four delta arms PASS.\n- Shown able to fail, in scratch: `git clone --shared /home/vgpnk/Projects/shokunin/mori-shokunin\n  $S/lane`, copy your edited counter into the clone, commit it there, then\n  `python3 -I /home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-84/count-c3.py <probe-rev>\n  --repo $S/lane` → expect a `C3=met delta=classified tokens=64 classified=U union=U residual=0\n  live=derived ...` line, rc 0. The live census runs inside; report its token count, the delta\n  lines and how long it took.\nReport: `.ufo/waves/round-84/w1/Mo84E03C3Delta.md`.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability, depth\nMilestone: round 84 w1: per-token live-delta classification\n\nReport: write your scoped findings to .ufo/waves/round-84/w1/Mo84E03C3Delta.md"
+      },
+      {
+        "name": "Mo84E04Controls",
+        "agent": "executor",
+        "task": "/skill:godspeed\n\n\nIndependently re-run the round's frozen controls and the no-harm battery, and write one receipt.\n\nRead `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-84/contract.md` first. Then run,\ncapturing stdout/stderr and rc for each, from `/home/vgpnk/Projects/shokunin/mori-shokunin`:\n1. the three round-84 counters at the freeze commit\n   `daa77bd5684c8db75eec1e80c87ee4fa5c3a6bb4`: `python3 -I .ufo/waves/round-84/count-cN.py\n   daa77bd5684c8db75eec1e80c87ee4fa5c3a6bb4` — expected: `C1=unmet mutants=4 killed=0\n   equivalent=2 survivors=2 ...` rc 1; `C2=unmet arm=absent` rc 1; `C3=unmet delta=absent` rc 1;\n2. the three round-83 counters at the same freeze commit (no-harm battery):\n   `python3 -I .ufo/waves/round-83/count-cN.py daa77bd5684c8db75eec1e80c87ee4fa5c3a6bb4` — record\n   each r83 met/unmet line and rc exactly as printed; the r83 C1 run takes a few minutes (23\n   mutants), allow it;\n3. the three round-84 counters at the entering revision\n   `5adf4337b6510dd246b247092c11cbaa97c930d3` — expected `unmet ... absent` lines, rc 1.\nWrite `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-84/evidence/controls-verify-r84.txt`\nwith, per command: the exact command line, its output verbatim and its rc. Name every deviation\nfrom the expected text. Do not edit a counter, tool or record; do not commit.\nReport: `.ufo/waves/round-84/w1/Mo84E04Controls.md`.\n\n\nLane bounds: leaf member — no subagent dispatch except your single labrat.\nJudged on: operability, depth\nMilestone: round 84 w1: independent control and no-harm receipt\n\nReport: write your scoped findings to .ufo/waves/round-84/w1/Mo84E04Controls.md"
+      },
+      {
+        "name": "Mo84Sc01Source",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\n\nOpen and pin ONE source for C1's equivalence adjudication: an unkillable mutant is a known cost and\nbias in mutation testing, not evidence of a missing test.\n\nCandidate (fetch it yourself; never from memory):\n`https://arxiv.org/abs/2408.01760` — \"Large Language Models for Equivalent Mutant Detection\".\nPin the exact bytes under\n`/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r84/arXiv-2408.01760-abs.html`\n(write it with curl). Record:\n- final URL and HTTP status, `last-modified`/`ETag` headers if present;\n- sha256, byte count and line count of the pinned bytes;\n- a second fetch and a byte-identical comparison (`sha256sum` twice, or `cmp`);\n- a located, verbatim quote of at most 25 words that grounds the rule, with the line number in the\n  pinned file and the exact `grep -n` command that finds it;\n- what the page does NOT say (limits: it is an empirical study of Java method-level mutants; it\n  says nothing about this lane, its counters, exit statuses or any adjudication procedure).\n\nAlso screen ONE second candidate and refuse it with a reason and a flip condition:\n`https://arxiv.org/abs/2404.09241` — \"An Empirical Evaluation of Manually Created Equivalent\nMutants\" (fetch it; if it grounds the rule better than the first, say so and recommend it instead).\nNever invent a quote, a hash or a line number.\n\nThe registry's next unused id is S599; do not edit `corpus/SOURCES.md` — the L1 appends the row\nafter the Gate. Report: `.ufo/waves/round-84/w1/Mo84Sc01Source.md`, naming every command and its\noutput.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: coverage, freshness\nMilestone: round 84 w1: open and pin the equivalence source\n\nReport: write your scoped findings to .ufo/waves/round-84/w1/Mo84Sc01Source.md"
+      },
+      {
+        "name": "Mo84Sc02Clauses",
+        "agent": "scout",
+        "task": "/skill:godspeed\n\n\nPer-surface reconnaissance for the r83 counters' unarmed clauses (sizes the next round's mutation\nwork; read-only).\n\nFor each of `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-83/count-c1.py` and\n`count-c2.py`:\n1. list every boolean clause of the `met` expression in `grade()` with its line number;\n2. list every branch in `green()`, `killed()`, `grade()` (unanchored / empty-mutation /\n   coupling-absent / pristine-red / equivalent) and in `selfcheck()`;\n3. mark each clause `armed-by <arm label>` when an existing selftest arm would fail if that clause\n   were inverted or deleted, else `UNARMED`;\n4. for each `UNARMED` clause name the one arm that would observe it (fixture shape, assertion).\nAlso list the four round-84 mutant labels (`M24a_killed_tally`, `M24b_green_fail_token`,\n`M24c_met_unclassified`, `M24d_met_residual`) and say whether each is observed by an arm before\nthis round's edits land. Read the code; do not edit any file. A negative claim carries its sweep:\npaste the `grep -n` commands that produced your clause list.\nReport: `.ufo/waves/round-84/w1/Mo84Sc02Clauses.md`.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: coverage, freshness\nMilestone: round 84 w1: unarmed-clause sweep of the r83 counters\n\nReport: write your scoped findings to .ufo/waves/round-84/w1/Mo84Sc02Clauses.md"
+      },
+      {
+        "name": "Mo84K01Conn",
+        "agent": "connector",
+        "task": "/skill:godspeed\n\n\nSibling-overlap scan for the three grounds this round touches (read-only; write only your report).\n\nSearch the sibling lanes' corpora and province files (read-only) —\n`/home/vgpnk/Projects/shokunin/{kumitate,kengaku,chousa,tsukuroi,kotoba,tameshi}-shokunin/corpus/`\nand their `PROVINCE.md` — for:\n(a) equivalent-mutant adjudication or mutation-adequacy rules;\n(b) record-anchor ambiguity / first-match selection in a gate or probe;\n(c) live-versus-snapshot delta classification.\nFor each ground report `overlap` (same ground, cite the sibling row), `distinct` (adjacent but not\ncontested, cite what makes it distinct) or `contested` (report the boundary, never absorb it).\nAlso check whether any sibling already owns a rule that would make this round's all-anchor-rows\nrule a duplicate, and whether the mutation-adequacy ground is already covered outside mori.\nCite `path:line` for every claim; a negative claim carries its `grep`/`rg` sweep.\nNever write outside your own report file.\nReport: `.ufo/waves/round-84/w1/Mo84K01Conn.md`.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: adjacency, coverage\nMilestone: round 84 w1: sibling-overlap scan of the three grounds\n\nReport: write your scoped findings to .ufo/waves/round-84/w1/Mo84K01Conn.md"
+      },
+      {
+        "name": "Mo84S01Lesson",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\n\nDraft the round-84 lesson and the coverage-map row. Prose only; the L1 owns the Gate block, the\nSCORECARD and LOG records and every commit.\n\n1. `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/lessons/round-84.md` in the shape of\n   `corpus/lessons/round-83.md`: a header block (round 84, date 2026-11-04, entering revision\n   `5adf4337b6510dd246b247092c11cbaa97c930d3`, freeze `daa77bd5684c8db75eec1e80c87ee4fa5c3a6bb4`),\n   the three claims with their keeper commands and targets (targets, not observed values), and:\n   - `## Mistakes` — ONE mistake with class · evidence pointer · captured-by · fix. Use this one:\n     the round-83 round reported its counters met while its own mutation-probe seat died without a\n     tally, so the r83 counters were never probed for their own survivors (evidence:\n     `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-83/w1/` holds no\n     `Mo83M01Mut.md`, and the r83 report names six dead seats; the r84 C1 population exists only\n     because the C1 reviewer ran its own 24th-mutant sweep). captured-by: `none` — no QUALITY\n     criterion required a counter's own mutation tally before a round reports met. Fix: this\n     round's C1 counter plus the M24a/M24b arms, shown able to fail by the population control\n     (`C1=unmet mutants=4 killed=0 equivalent=2 survivors=2` at the freeze commit, `survivors=0`\n     after the arms).\n   - `## Census` — run the census now and paste it verbatim with its exit code:\n     `/home/vgpnk/Projects/shokunin/scripts/sources-census.sh validate --root /home/vgpnk/Projects/shokunin mori`\n     (expected rc 0, `mori ok`, 371 rows, 35 W04 warnings). Leave a clearly marked AFTER slot for\n     the L1.\n   Do NOT write a `## Gate` section (the L1 owns it) and do not invent a source, hash or quote.\n2. Append one section to `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/README.md` under a new\n   `## Round-84 knowledge addition — equivalent-mutant adjudication` heading, in the shape of the\n   r83 row, naming the knowledge entry the L1 will add\n   (`corpus/knowledge/equivalent-mutant-adjudication-r84.md`) and source id `S599`. Say it is new\n   growth indexed the round it lands.\n\nFiles you may edit: `corpus/lessons/round-84.md` (new) and `corpus/README.md` (one appended\nsection). Report: `.ufo/waves/round-84/w1/Mo84S01Lesson.md`.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: coverage, calibration\nMilestone: round 84 w1: round lesson, mistake and coverage row\n\nReport: write your scoped findings to .ufo/waves/round-84/w1/Mo84S01Lesson.md"
+      },
+      {
+        "name": "Mo84S02Quality",
+        "agent": "scribe",
+        "task": "/skill:godspeed\n\n\nAppend three criteria to `/home/vgpnk/Projects/shokunin/mori-shokunin/corpus/QUALITY.md`\n(numbers 170, 171, 172; the file's last row is 169), in that file's existing row shape (statement,\nground with `path:line`, shown-able-to-fail, not-covered):\n\n170 — a revision-arm anchor that selects more than one row is graded as a whole, never by first\nmatch: every selected row must carry the token on the carrier side and in the bound revision's\nblob. Ground: QUALITY 169's not-covered clause (`corpus/QUALITY.md` row 169), this round's P-C2\n(`.ufo/waves/round-84/contract.md`) and the `ALL_ANCHOR_ROWS` rule in `tools/mori-record-sweep.py`;\nthe defeated fixtures `carrier-ambiguous`/`rev-ambiguous`. Shown able to fail: the entering tool at\n`5adf4337` reads both ambiguous fixtures green and the landed tool reads them red (the r84 C2\ncounter's `defeated=2`). Not covered: an anchor that selects two rows with the same value is not\ndistinguished from one intended row; values split across lines; non-numeric tokens.\n\n171 — a live-versus-snapshot comparison names every token's delta class instead of printing two\ncounts. Ground: this round's P-C3 and the `LIVE_DELTA` classifier in\n`.ufo/waves/round-83/count-c2.py`; the r83 reading `live_tokens=63 live_agree=63` named no token\n(`SCORECARD.md` Round 83 section). Shown able to fail: the four delta selftest arms over synthetic\nsnapshot/live pairs. Not covered: the live class is derived from the live baseline's names, not\nauthenticated; a failed live run is `unavailable`, never a delta; a class-changed token whose\nsnapshot class is `unexplainable` is outside the frozen table.\n\n172 — a counter that grades a tool's helpers but not its own detector is not yet adequate: every\ncounter carries a detector selftest and a population control that reads red before the arms land.\nGround: the r82/r83 lesson class (a counter that grades helpers but not itself), the r83\nmutation-probe seat's missing tally, this round's P-C1 (M24a/M24b arms, M24c/M24d equivalence with\nbyte coupling proofs). Shown able to fail: the r84 C1 population control prints `survivors=2` at\nthe freeze commit and `survivors=0` after the arms. Not covered: a counter whose own logic changes\nafter its arms land is not re-probed by this rule; an equivalence exemption is only as strong as\nits coupling marker.\n\nRows are append-only: do not rewrite 169 or any earlier row. No external source is needed; cite\nthe lane's own committed paths. File: `corpus/QUALITY.md` only.\nReport: `.ufo/waves/round-84/w1/Mo84S02Quality.md`.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: coverage, calibration\nMilestone: round 84 w1: three QUALITY criteria from this round\n\nReport: write your scoped findings to .ufo/waves/round-84/w1/Mo84S02Quality.md"
+      },
+      {
+        "name": "Mo84R01C1",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\n\nAttack C1 before it is measured. Read P-C1 in `.ufo/waves/round-84/contract.md`, the frozen\ncounter `.ufo/waves/round-84/count-c1.py`, the r83 reviewer's extra-mutant sweep\n`.ufo/waves/round-83/w1/Mo83R01C1.md` §6, and the r83 counters as they stand. Do not edit lane\nfiles.\n\n1. Re-derive the four-mutant population yourself: for each `old` anchor count occurrences in the\n   named file's current bytes (python `str.count` or `grep -cF`), report per-file counts and the\n   exact old→new strings. Flag any anchor that no longer occurs exactly once.\n2. Attack the counter: (a) can a stub `.ufo/waves/round-84/count-c1.py` satisfy `harness=present`?\n   (b) can an empty mutation, an unanchored anchor, a red pristine or a red detector reach `met`?\n   (c) can the equivalence map exempt a mutant whose coupling marker is absent or duplicated? (d)\n   is a surviving mutant ever counted killed, and is a killed mutant ever counted equivalent?\n   Run `python3 -I .ufo/waves/round-84/count-c1.py --selftest` and paste the output.\n3. Judge each new arm as seat Mo84E01C1Arms adds it (read the file as it appears; if it is not yet\n   edited, state exactly what you will accept and reject): does the arm exercise the mutated\n   behaviour, or is it a fake kill (tautology, hardcoded token, an assertion on the mutant's label,\n   an arm that passes even if the mutated function is never called)? Name any fake kill with\n   `file:line`.\n4. Construct ONE additional mutant of `.ufo/waves/round-83/count-c1.py` or `count-c2.py` that still\n   survives the post-arm selftests (scratch copies only) and give its old→new anchors; if you find\n   none, paste the sweep that found none.\n\nReport: `.ufo/waves/round-84/w1/Mo84R01C1.md` with a verdict per claim element and every command's\noutput. An unrun check has not passed.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability\nMilestone: round 84 w1: attack C1's population, counter and arms\n\nReport: write your scoped findings to .ufo/waves/round-84/w1/Mo84R01C1.md"
+      },
+      {
+        "name": "Mo84R02C23",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\n\nAttack C2 and C3 before they are measured. Read P-C2/P-C3 in `.ufo/waves/round-84/contract.md` and\nboth counters. Do not edit lane files; scratch copies are fine.\n\nC2 (all-anchor-rows):\n1. Build the three frozen fixtures yourself in scratch (own git repos, `-C \"$D\"` everywhere) and\n   run both the entering tool (`git show 5adf4337:tools/mori-record-sweep.py`) and the current\n   worktree tool on each. Confirm the two ambiguous fixtures read green under the entering tool and\n   red under the current one, and that `conformant` stays green under both.\n2. Try to satisfy the all-rows rule with a junk carrier (two rows both stating the value, neither\n   the intended record) and say whether that is a real gap or the binding's own semantics.\n3. Check the four new selftest arms are not tautologies (do they fail if the rule is removed?).\n4. Run the tool's `--selftest` and paste the tally.\n\nC3 (live delta):\n1. Can the delta classifier be a constant (the same class for every token) and still pass the four\n   frozen arms? Build that constant in scratch and say which arm catches it, if any.\n2. Does `met` stay independent of the live token count? Name the clause that would make it\n   volatile.\n3. Is `classified == union` a real invariant, or can a token be classified twice or missed? Read\n   the classifier's loop and construct the shape that would break it.\n4. Check the four preserved substrings still occur exactly once in the worktree file.\n\nReport: `.ufo/waves/round-84/w1/Mo84R02C23.md` with a verdict per item and every command's output.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability\nMilestone: round 84 w1: attack C2's rule and C3's classifier\n\nReport: write your scoped findings to .ufo/waves/round-84/w1/Mo84R02C23.md"
+      },
+      {
+        "name": "Mo84C01Crit",
+        "agent": "critic",
+        "task": "/skill:godspeed\n\n\nFalsify the three claims as claims, not as code. Read `.ufo/waves/round-84/contract.md`,\nthe three counters and `SCORECARD.md` `## Planned (round 84)`.\n\n1. Do-nothing control: for each claim name the cheapest control that skips the claimed work (a stub\n   counter file; a tool that prints the target tail without the rule; a constant delta classifier)\n   and score it with the frozen counter. If any control reaches the target, the counter or target is\n   wrong — say so before data.\n2. Separability: is each claim verifiable without the others having landed? Name a revision where\n   each counter reads its entering value while the others are landed.\n3. Axis attribution: does each claim move the axis it names (operability / calibration / depth) by\n   the surface it changes, not by the number it prints?\n4. Admission: is any target reachable by the entering bytes (not a real move)? Is any target\n   narrowed relative to SCORECARD's `## Planned (round 84)`? Is any claim's before→after a trade\n   that harms another axis (name the axis and the evidence)?\n5. Wording: does each contract predicate sentence match what the counter actually enforces?\n\nReport a verdict per claim — `admit` or `attack with reason` — and list every defect you find with\n`file:line`. Read-only. Report: `.ufo/waves/round-84/w1/Mo84C01Crit.md`.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, depth\nMilestone: round 84 w1: falsify the three claims as claims\n\nReport: write your scoped findings to .ufo/waves/round-84/w1/Mo84C01Crit.md"
+      },
+      {
+        "name": "Mo84M01Mut",
+        "agent": "mutation-tester",
+        "task": "/skill:godspeed\n\n\nIndependent mutation probe of the round-84 counters' own logic. The lane's standing rule: a counter\nthat grades helpers but not itself is not adequate.\n\n1. Enumerate candidate mutants of `/home/vgpnk/Projects/shokunin/mori-shokunin/.ufo/waves/round-84/count-c1.py`,\n   `count-c2.py` and `count-c3.py`: invert or delete each guard in `met`, `killed`, `green`, the\n   equivalence coupling check, the population check, the arms floor and each summary field. For each\n   give `file:label:old->new` and verify the `old` anchor occurs exactly once at the current bytes.\n2. Copy each counter to scratch, apply one mutant per copy, and run that copy's own `--selftest`\n   (and the `--selftest` of any counter it grades, where the mutant lives in a shared helper).\n   Tally `MUTANTS total=N killed=K survivors=S` and name, per survivor, the arm it needs.\n3. Classify each survivor as non-equivalent (with the observation that shows it) or equivalent\n   (with the coupling proof); do not fix anything.\n4. Report the tally and the survivor list as routed findings for the lane's next round.\n\nScratch only; never edit a lane file and never commit. Report:\n`.ufo/waves/round-84/w1/Mo84M01Mut.md`.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: operability, depth\nMilestone: round 84 w1: independent mutation probe of the r84 counters\n\nReport: write your scoped findings to .ufo/waves/round-84/w1/Mo84M01Mut.md"
+      },
+      {
+        "name": "Mo84R03Record",
+        "agent": "reviewer",
+        "task": "/skill:godspeed\n\n\nAttack the round's record discipline before it is written. Read `.ufo/waves/round-84/contract.md`,\nthe three counters, `SCORECARD.md` `## Planned (round 84)`, and QUALITY 168/169.\n\n1. Same-sentence check: for each claim, is the contract's predicate sentence the same sentence the\n   counter's code enforces and the same label the receipt prints? Name any clause the prose states\n   but the code does not enforce, or a code requirement the prose omits.\n2. Entering-control check: does each control really skip the claimed work, and is each red for the\n   named reason (`harness=absent` / `arm=absent` / `delta=absent`)? Could a stub satisfy any of\n   them?\n3. Revision discipline: at which revision must each after-value be measured, and does the counter\n   enforce it (the worktree-versus-revision drift check)? Name any path where a worktree run could\n   be cited as a revision run.\n4. Record obligations: list every record file this round must update for its claims (SCORECARD\n   round section and capability rows, LOG round entry, lesson `## Gate`, QUALITY criteria, SKILL\n   gate-registry row, PROVINCE if a surface moved, SHONEN evidence lines) and the exact claim each\n   must carry. Flag any obligation the contract omits.\n5. Numbers discipline: for every number this round will cite, name the command that re-derives it.\n\nRead-only. Report: `.ufo/waves/round-84/w1/Mo84R03Record.md`.\n\n\nLane bounds: leaf member — no subagent dispatch.\nJudged on: calibration, operability\nMilestone: round 84 w1: record discipline and revision-precision attack\n\nReport: write your scoped findings to .ufo/waves/round-84/w1/Mo84R03Record.md"
+      }
+    ]
+  },
+  "resumeSends": [],
+  "note": "Issue exactly one batched task call with taskCall ({context, tasks}); never split a wave into multiple task calls (one-swarm-per-wave). Then one hub send per resumeSends entry: hub send --to <entry.resume> --message <entry.message> (entry.name is bookkeeping, not a hub field)."
+}
