@@ -1,0 +1,33 @@
+# mori round-86 — the do-nothing controls defeated by the landed work
+# date: 2026-11-04
+# measured revision: 50d80df0b02e57642a71091d29978da7f231c9dd
+
+# --- C1 control: the label-only stub (six PASS labels, pass=26 fail=0, no assertions)
+# the stub prints the same labels and tally the landed subject prints; the landed counter must
+# still refuse it because every mutant survives.
+$ python3 -I .ufo/waves/round-86/count-c1.py HEAD --repo /fast/scratch/hyaku/mori-r86/stub/repo --scratch /fast/scratch/hyaku/mori-r86
+EXTRA survivor .ufo/waves/round-85/count-c3.py C3-04-agreed-skip
+EXTRA survivor .ufo/waves/round-85/count-c3.py C3-07-subject-tokens
+C1=unmet mutants=6 killed=0 survivors=6 total=6 arms=26 detector=green rev=77052321fa19
+rc=1
+
+# --- C2 control: the stale-body defeat receipt
+# the receipt carries the right revision, the right counter digest and a body one byte off the
+# command output; a header-only gate accepts it, the replay rule rejects it.
+$ sha256 of .ufo/waves/round-86/count-c1.py at 87644619078308ee523cd0c976c72bf079b0ff77 vs the receipt line
+measured: 1912e87d767aabfaec4aa46992d6212ce9e1f8945792057c8ab9d89651d675f1
+receipt:  1912e87d767aabfaec4aa46992d6212ce9e1f8945792057c8ab9d89651d675f1
+$ python3 -I .ufo/waves/round-86/count-c2.py 50d80df0b02e57642a71091d29978da7f231c9dd --scratch /fast/scratch/hyaku/mori-r86   # the two receipt lines
+REPLAY replay-defeat-r86.txt rc=0 exported=1
+RECEIPT replay-defeat-r86.txt expect=reject failed problems=replay-mismatch
+
+# --- C3 control: the two contradicting rows are the negative control
+# the value channel names the rows whose live value equals the baseline value; both are static
+# strings, so a run whose channel ignored values would print contradicting=0 and miss the target.
+VALUE -subject_commits equal
+VALUE -window equal
+
+# --- all three counters read their frozen targets at the measured revision
+C1=met mutants=6 killed=6 survivors=0 total=6 arms=26 rev=50d80df0b02e
+C2=met receipts=5 bindings=7 bound=7 revs=5 limits=5 cmd=5 summary=5 replay=2 matched=4 defeated=1 legacy=3 unexpected=0 rev=50d80df0b02e
+C3=met observations=2 aa=stable tokens=64 derived=64 name_agree=64 value_rows=14 contradicting=2 rev=50d80df0b02e
