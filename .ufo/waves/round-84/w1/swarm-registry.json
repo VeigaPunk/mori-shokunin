@@ -1,0 +1,163 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r84-w1",
+  "createdAt": "2026-11-04T09:38:56.680Z",
+  "updatedAt": "2026-11-04T09:38:56.680Z",
+  "reportDir": ".ufo/waves/round-84/w1",
+  "members": {
+    "Mo84E01C1Arms": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "depth"
+      ],
+      "milestone": "round 84 w1: the two failing arms for M24a/M24b"
+    },
+    "Mo84E02C2Rows": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "depth"
+      ],
+      "milestone": "round 84 w1: the all-anchor-rows rule and its four arms"
+    },
+    "Mo84E03C3Delta": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "depth"
+      ],
+      "milestone": "round 84 w1: per-token live-delta classification"
+    },
+    "Mo84E04Controls": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability",
+        "depth"
+      ],
+      "milestone": "round 84 w1: independent control and no-harm receipt"
+    },
+    "Mo84Sc01Source": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage",
+        "freshness"
+      ],
+      "milestone": "round 84 w1: open and pin the equivalence source"
+    },
+    "Mo84Sc02Clauses": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "coverage",
+        "freshness"
+      ],
+      "milestone": "round 84 w1: unarmed-clause sweep of the r83 counters"
+    },
+    "Mo84K01Conn": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "adjacency",
+        "coverage"
+      ],
+      "milestone": "round 84 w1: sibling-overlap scan of the three grounds"
+    },
+    "Mo84S01Lesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "round 84 w1: round lesson, mistake and coverage row"
+    },
+    "Mo84S02Quality": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "coverage",
+        "calibration"
+      ],
+      "milestone": "round 84 w1: three QUALITY criteria from this round"
+    },
+    "Mo84R01C1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability"
+      ],
+      "milestone": "round 84 w1: attack C1's population, counter and arms"
+    },
+    "Mo84R02C23": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability"
+      ],
+      "milestone": "round 84 w1: attack C2's rule and C3's classifier"
+    },
+    "Mo84C01Crit": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "calibration",
+        "depth"
+      ],
+      "milestone": "round 84 w1: falsify the three claims as claims"
+    },
+    "Mo84M01Mut": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "operability",
+        "depth"
+      ],
+      "milestone": "round 84 w1: independent mutation probe of the r84 counters"
+    },
+    "Mo84R03Record": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration",
+        "operability"
+      ],
+      "milestone": "round 84 w1: record discipline and revision-precision attack"
+    }
+  }
+}

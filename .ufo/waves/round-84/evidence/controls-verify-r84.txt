@@ -1,0 +1,143 @@
+# round-84 controls — independent verification by seat Mo84E04Controls
+# measured 2026-11-04T10:02Z from the lane worktree (/home/vgpnk/Projects/shokunin/mori-shokunin)
+# lane HEAD during measurement: 39190f8a (round-84 pre-data amendment A2, parent dbdb1aaa A1, parent fce96d1f w1 spec, parent daa77bd5 freeze)
+# python: Python 3.14.8 ; all nine required commands were run verbatim, in parallel batches
+# executing counter bytes: .ufo/waves/round-84/count-c1.py blob a5db2cc (A2-amended; differs from
+#  the freeze blob b0b8bbf — see section 5 supplementary (b)); count-c2.py and count-c3.py are
+#  byte-identical between the worktree and the freeze commit daa77bd5684
+# capture note: the invoking shell captured stdout and stderr combined; every graded run printed
+#  its verdict lines on stdout and nothing on stderr (SETUP/usage messages go to stderr per the
+#  counters' source; none occurred in sections 1-3)
+# context: while this seat was reading the tree, the L1 landed pre-data amendment A2
+#  (39190f8a, "M24b/M24c/M24d anchors corrected; population control now mutants=4 survivors=2")
+#  after the freeze daa77bd5; this is a lane-committed pre-data amendment, not a seat write
+
+## 1. round-84 counters at the freeze commit daa77bd5684c8db75eec1e80c87ee4fa5c3a6bb4
+
+$ python3 -I .ufo/waves/round-84/count-c1.py daa77bd5684c8db75eec1e80c87ee4fa5c3a6bb4
+MUTANT count-c1.py M24a_killed_tally survived rc=0
+MUTANT count-c1.py M24b_green_fail_token survived rc=0
+MUTANT count-c2.py M24c_met_unclassified equivalent rc=0
+MUTANT count-c2.py M24d_met_residual equivalent rc=0
+C1=unmet mutants=4 killed=0 equivalent=2 survivors=2 total=4 pristine=green detector=green rev=daa77bd5684c
+rc=1
+# expected: "C1=unmet mutants=4 killed=0 equivalent=2 survivors=2 ..." rc 1 — MATCH, no deviation
+#  (population control exactly as frozen in the contract: killed=0 equivalent=2 survivors=2 total=4,
+#   pristine=green detector=green)
+
+$ python3 -I .ufo/waves/round-84/count-c2.py daa77bd5684c8db75eec1e80c87ee4fa5c3a6bb4
+C2=unmet arm=absent rev=daa77bd5684c
+rc=1
+# expected: "C2=unmet arm=absent" rc 1 — MATCH, no deviation
+
+$ python3 -I .ufo/waves/round-84/count-c3.py daa77bd5684c8db75eec1e80c87ee4fa5c3a6bb4
+C3=unmet delta=absent rev=daa77bd5684c
+rc=1
+# expected: "C3=unmet delta=absent" rc 1 — MATCH, no deviation
+
+## 2. no-harm battery: round-83 counters at the freeze commit (recorded exactly as printed)
+
+$ python3 -I .ufo/waves/round-83/count-c1.py daa77bd5684c8db75eec1e80c87ee4fa5c3a6bb4
+MUTANT count-c1.py green_ignores_fail_token killed rc=1
+MUTANT count-c1.py killed_ignores_rc killed rc=1
+MUTANT count-c1.py ignore_pristine_red killed rc=1
+MUTANT count-c1.py accept_empty_population killed rc=1
+MUTANT count-c1.py unanchored_excused killed rc=1
+MUTANT count-c1.py detector_gate_dropped killed rc=1
+MUTANT count-c1.py unanchored_still_graded killed rc=1
+MUTANT count-c2.py stale_accepted killed rc=1
+MUTANT count-c2.py duplicates_accepted equivalent rc=0
+MUTANT count-c2.py retired_paths_unchecked killed rc=1
+MUTANT count-c2.py red_literal_unchecked killed rc=1
+MUTANT count-c2.py green_census_tokens_accepted killed rc=1
+MUTANT count-c2.py finding_branch_inverted killed rc=1
+MUTANT count-c2.py malformed_not_residual killed rc=1
+MUTANT count-c2.py keyshape_guard_inverted killed rc=1
+MUTANT count-c2.py derive_key_eol_only killed rc=1
+MUTANT count-c3.py population_gate_dropped killed rc=1
+MUTANT count-c3.py defeated_accepted killed rc=1
+MUTANT count-c3.py carrier_drift_allowed killed rc=1
+MUTANT count-c3.py bindings_floor_dropped killed rc=1
+MUTANT count-c3.py selftest_red_accepted killed rc=1
+MUTANT count-c3.py revisions_default_zero killed rc=1
+MUTANT count-c3.py summary_first_line killed rc=1
+C1=met mutants=23 killed=22 equivalent=1 survivors=0 total=23 pristine=green detector=green rev=daa77bd5684c
+rc=0
+# r83 C1 verdict: met rc 0 — NO HARM (wall time 27.89s for the 23-mutant population)
+
+$ python3 -I .ufo/waves/round-83/count-c2.py daa77bd5684c8db75eec1e80c87ee4fa5c3a6bb4
+C2=met snapshot=bound asof=1 tokens=64 agreed=64 residual=0 live=derived live_tokens=64 live_agree=64 rev=daa77bd5684c
+rc=0
+# r83 C2 verdict: met rc 0 — NO HARM (wall time 5.00s)
+
+$ python3 -I .ufo/waves/round-83/count-c3.py daa77bd5684c8db75eec1e80c87ee4fa5c3a6bb4
+C3=met arm=anchored defeated=2 fixtures=2/2 bindings=3 revisions=0 arms=40 rev=daa77bd5684c
+rc=0
+# r83 C3 verdict: met rc 0 — NO HARM
+
+## 3. round-84 counters at the entering revision 5adf4337b6510dd246b247092c11cbaa97c930d3
+
+$ python3 -I .ufo/waves/round-84/count-c1.py 5adf4337b6510dd246b247092c11cbaa97c930d3
+C1=unmet harness=absent rev=5adf4337b651
+rc=1
+# expected: "unmet ... absent" rc 1 — MATCH, no deviation; verdict line identical to the frozen
+#  entering-controls receipt .ufo/waves/round-84/evidence/controls-r84.txt
+
+$ python3 -I .ufo/waves/round-84/count-c2.py 5adf4337b6510dd246b247092c11cbaa97c930d3
+C2=unmet arm=absent rev=5adf4337b651
+rc=1
+# expected: "unmet ... absent" rc 1 — MATCH, no deviation; identical to controls-r84.txt
+
+$ python3 -I .ufo/waves/round-84/count-c3.py 5adf4337b6510dd246b247092c11cbaa97c930d3
+C3=unmet delta=absent rev=5adf4337b651
+rc=1
+# expected: "unmet ... absent" rc 1 — MATCH, no deviation; identical to controls-r84.txt
+
+## 4. deviations
+
+# Required battery (sections 1-3): NONE. All nine verdict lines and all nine return codes match
+# the seat expectations, and the three entering-revision verdict lines are byte-identical to the
+# frozen controls-r84.txt receipt. Context note (not a deviation of this battery): the executing
+# count-c1.py bytes are the A2 amendment a5db2cc, not the freeze blob b0b8bbf; the A2 commit
+# 39190f8a is the L1's own pre-data amendment landed after the freeze and before this seat ran
+# (see contract "Pre-data amendment" chain: A1 = fixture finding line numbers in dbdb1aaa).
+
+## 5. supplementary evidence (beyond the frozen battery)
+
+# (a) counter selftests (detector arms), worktree bytes — all green:
+$ python3 -I .ufo/waves/round-84/count-c1.py --selftest
+# (11 PASS lines: sensitive_killed blind_survives blind_case_tally green_requires_fail_zero
+#  green_direct killed_direct duplicate_anchor_excluded empty_mutation_unmet
+#  red_pristine_reported equivalent_excluded_when_coupled equivalent_requires_coupling)
+C1_COUNTER_SELFTEST pass=11 fail=0
+rc=0
+$ python3 -I .ufo/waves/round-84/count-c2.py --selftest
+# (9 PASS lines: summary_parse pins_schema pins_absent_list arms_floor marker_literal
+#  population_frozen_ok population_triplicate_unmet population_subset_unmet population_rev_drift_unmet)
+C2_COUNTER_SELFTEST pass=9 fail=0
+rc=0
+$ python3 -I .ufo/waves/round-84/count-c3.py --selftest
+# (9 PASS lines: tail_parse tail_verdict_absent class_words class_word_bogus duplicate_delta_token
+#  selftest_parse delta_arms_present arms_floor marker_literal)
+C3_COUNTER_SELFTEST pass=9 fail=0
+rc=0
+$ python3 -I .ufo/waves/round-84/count-c1.py        # no-argument usage probe
+C1_SETUP usage: count-c1.py <rev> | --selftest
+rc=2
+# the usage line is emitted on stderr per the counter source (exit 2 is setup, never a pass)
+
+# (b) pre-A2 freeze bytes of count-c1.py (blob b0b8bbf) materialized read-only into this seat's
+# scratch via `git show daa77bd:.ufo/waves/round-84/count-c1.py` and run at the freeze commit with
+# the lane named explicitly (--repo), to document what pre-data amendment A2 changed:
+$ python3 -I $HYAKU_SCRATCH/mori-r84/Mo84E04Controls/count-c1-freeze.py daa77bd5684c8db75eec1e80c87ee4fa5c3a6bb4 --repo /home/vgpnk/Projects/shokunin/mori-shokunin
+MUTANT count-c1.py M24a_killed_tally survived rc=0
+EXTRA unanchored .ufo/waves/round-83/count-c1.py M24b_green_fail_token occurrences=2
+EXTRA unanchored .ufo/waves/round-83/count-c2.py M24c_met_unclassified occurrences=0
+EXTRA unanchored .ufo/waves/round-83/count-c2.py M24d_met_residual occurrences=0
+C1=unmet mutants=1 killed=0 equivalent=0 survivors=1 total=1 pristine=green detector=green rev=daa77bd5684c
+rc=1
+# finding: the pre-A2 freeze bytes did NOT reproduce the contract's stated population control
+# ("mutants=4 killed=0 equivalent=2 survivors=2"): M24b's anchor occurred 2x and M24c/M24d's
+# anchors 0x at daa77bd, so only M24a was graded (mutants=1 survivors=1). The A2 bytes (a5db2cc)
+# correct the three anchors and reproduce the frozen population control exactly (section 1).
+# No counter, tool or record was edited; the scratch copy was deleted when this seat yielded.

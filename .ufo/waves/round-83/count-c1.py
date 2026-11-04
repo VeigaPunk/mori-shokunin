@@ -260,6 +260,29 @@ def selfcheck(scratch):
         disk, scratch, [("tools/blind.py", "noop", "print('FAKE pass=1 fail=0')",
                          "print('FAKE pass=1 fail=0') # noop")])
     cases.append(("non_equivalent_still_survives", (not met) and "survivors=1" in tail, tail))
+    combo = ("import sys\nGUARD = 1\n"
+             "ok = GUARD == 1\n"
+             "print('FAKE pass=%d fail=%d' % (1 if ok else 0, 0 if ok else 1))\n"
+             "sys.exit(0 if ok else 1)\n"
+             "NOOP = 1\n")
+    write(d, "combo.py", combo)
+    met, tail, lines, extras = grade(
+        disk, scratch,
+        [("tools/combo.py", "combo_sensitive", "GUARD = 1", "GUARD = 0"),
+         ("tools/combo.py", "combo_blind", "NOOP = 1", "NOOP = 2")])
+    fields = dict((k, int(v)) for k, v in COUNT.findall(tail))
+    cases.append(("blind_case_tally",
+                  (not met) and fields.get("killed") == 1
+                  and fields.get("survivors") == 1 and fields.get("total") == 2,
+                  tail + " | " + ";".join(lines)))
+    skip = "import sys\nSKIP = 1\nprint('SELFTEST skipped')\n"
+    write(d, "skip.py", skip)
+    met, tail, lines, extras = grade(
+        disk, scratch, [("tools/skip.py", "skip_blind", "SKIP = 1", "SKIP = 2")])
+    fields = dict((k, int(v)) for k, v in COUNT.findall(tail))
+    cases.append(("green_requires_fail_zero",
+                  (not met) and "pristine=red" in tail and fields.get("survivors") == 1,
+                  tail))
     ok = sum(1 for _, good, _ in cases if good)
     for label, good, line in cases:
         print("%s %s %s" % ("PASS" if good else "FAIL", label, line))

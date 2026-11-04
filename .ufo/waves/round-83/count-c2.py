@@ -21,6 +21,14 @@ receipt label are the same sentence):
 the snapshot is reported as `live_tokens=`/`live_agree=` readings, not required — the census is a
 live observation, the classification is bound to the snapshot.
 
+Round 84 (P-C3, `.ufo/waves/round-84/contract.md`): the live run's token line is additionally
+classified per token against the snapshot's — one `LIVE_DELTA <token> <class>` line per union
+token that is not agreed (classes `absent-live`, `added-live`,
+`class-changed:<snapshot>-><live>`; `agreed` prints nothing), with the tail extended by
+`delta=classified classified= union= absent_live= added_live= class_changed= deltas=`. `met`
+additionally requires every union token classified exactly once and `agreed == live_agree`,
+and never requires a particular live token count — the live census stays an observation.
+
 Usage: count-c2.py <rev> [--repo DIR] [--scratch DIR] [--fleet-root DIR] | --selftest
 Exit 0 met, 1 unmet, 2 setup. Read-only: `git show`; files only under --scratch.
 """
@@ -77,6 +85,39 @@ def derive(token, names):
     if not KEYSHAPE.match(body):
         return "value-changed"          # frozen table: "anything else" is value-changed
     return "value-changed" if body in keys else "added-since-r10"
+
+
+def live_delta(snapshot_tokens, live_tokens, names, stated):
+    """Per-token delta between the snapshot token line and the live run's (pure).
+
+    Ordered (token, class) list over the union of the two token lines — snapshot
+    order first, then live-only tokens in live order, every token exactly once.
+    The live class is derive(token, names); the snapshot class is the stated one
+    (derived only as fallback when the token carries no DRIFT_CLASS line).
+    Classes: absent-live, added-live, agreed, class-changed:<snapshot>-><live>.
+    """
+    live_set = set(live_tokens)
+    pairs = []
+    seen = set()
+    for token in snapshot_tokens:
+        if token in seen:
+            continue
+        seen.add(token)
+        if token not in live_set:
+            pairs.append((token, "absent-live"))
+            continue
+        snap_cls = stated.get(token) or derive(token, names)
+        live_cls = derive(token, names)
+        if snap_cls == live_cls:
+            pairs.append((token, "agreed"))
+        else:
+            pairs.append((token, "class-changed:%s->%s" % (snap_cls, live_cls)))
+    for token in live_tokens:
+        if token in seen:
+            continue
+        seen.add(token)
+        pairs.append((token, "added-live"))
+    return pairs
 
 
 def classifications(text):
@@ -238,15 +279,25 @@ def grade(loader, scratch, fleet_root):
                       if stated.get(token) == derive(token, names)])
     retired = retired_ok(cards, snap_path)
     cell = cell_state(cards)
+    delta_pairs = live_delta(snapshot_tokens, live_tokens, names, stated)
+    union_n = len(delta_pairs)
+    absent_live = sum(1 for _, cls in delta_pairs if cls == "absent-live")
+    added_live = sum(1 for _, cls in delta_pairs if cls == "added-live")
+    class_changed = sum(1 for _, cls in delta_pairs if cls.startswith("class-changed:"))
+    deltas = absent_live + added_live + class_changed
     met = (hash_ok and asof_ok and bool(snapshot_tokens) and not unclassified
            and residual == 0 and malformed == 0 and duplicates == 0 and not stale
-           and agreed == len(snapshot_tokens) and live_ok and retired and cell)
+           and agreed == len(snapshot_tokens) and live_ok and retired and cell
+           and agreed == live_agree
+           and union_n == len(set(token for token, _ in delta_pairs)))
     tail = ("snapshot=%s asof=%d tokens=%d agreed=%d residual=%d live=%s "
-            "live_tokens=%d live_agree=%d"
+            "live_tokens=%d live_agree=%d delta=classified classified=%d union=%d "
+            "absent_live=%d added_live=%d class_changed=%d deltas=%d"
             % ("bound" if (hash_ok and asof_ok) else "unbound",
                1 if asof_ok else 0, len(snapshot_tokens), agreed,
                residual + malformed, "derived" if live_ok else "unavailable",
-               len(live_tokens), live_agree))
+               len(live_tokens), live_agree, union_n, union_n,
+               absent_live, added_live, class_changed, deltas))
     if not hash_ok:
         notes.append("snapshot-hash-mismatch stated=%s measured=%s"
                      % (snap_sha, digest[:64]))
@@ -272,6 +323,9 @@ def grade(loader, scratch, fleet_root):
         notes.append("retired-row-missing-paths")
     if not cell:
         notes.append("freshness-cell-red")
+    for token, cls in delta_pairs:
+        if cls != "agreed":
+            notes.append("LIVE_DELTA %s %s" % (token, cls))
     return met, tail, notes
 
 
@@ -377,6 +431,22 @@ def selfcheck(scratch):
     cases.append(("foreign_snapshot_path_unmet",
                   (not met) and any("snapshot=unbound" in n for n in notes) is False
                   and "snapshot=unbound" in tail, tail))
+    # P-C3 delta arms: pure classifier over synthetic snapshot/live pairs (no census run).
+    names = ({"surface.other"}, set(), {"fields"})
+    pairs = live_delta(["+SURFACE:lane.new", "fields"],
+                       ["+SURFACE:lane.new", "fields"], names,
+                       {"+SURFACE:lane.new": "added-since-r10",
+                        "fields": "value-changed"})
+    cases.append(("delta_agreed", pairs == [("+SURFACE:lane.new", "agreed"),
+                                            ("fields", "agreed")], str(pairs)))
+    pairs = live_delta(["+audit"], [], names, {"+audit": "added-since-r10"})
+    cases.append(("delta_absent_live", pairs == [("+audit", "absent-live")], str(pairs)))
+    pairs = live_delta([], ["+VERDICT"], names, {})
+    cases.append(("delta_added_live", pairs == [("+VERDICT", "added-live")], str(pairs)))
+    pairs = live_delta(["fields"], ["fields"], names, {"fields": "added-since-r10"})
+    cases.append(("delta_class_changed",
+                  pairs == [("fields",
+                             "class-changed:added-since-r10->value-changed")], str(pairs)))
     ok = sum(1 for _, good_case, _ in cases if good_case)
     for label, good_case, line in cases:
         print("%s %s %s" % ("PASS" if good_case else "FAIL", label, line))

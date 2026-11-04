@@ -116,10 +116,19 @@ def contains_value(text, key, value):
     return re.search(r'(?<![\w.-])%s(?![\w.-])' % re.escape(token), text) is not None
 
 
+ALL_ANCHOR_ROWS = 'every row the anchor selects must carry the token'
+
+
+def anchor_rows(text, row_contains):
+    """Every table row carrying the anchor, with its line number (ALL_ANCHOR_ROWS)."""
+    return [(number, line) for number, line in enumerate(text.splitlines(), 1)
+            if ROW.match(line) and row_contains in line]
+
+
 def contains_anchored(text, row_contains, key, value):
-    """ANCHORED_OCCURRENCE: the value must sit on a line that carries the row anchor."""
-    return any(row_contains in line and contains_value(line, key, value)
-               for line in text.splitlines())
+    """ANCHORED_OCCURRENCE + ALL_ANCHOR_ROWS: every anchor row must carry the token."""
+    rows = anchor_rows(text, row_contains)
+    return bool(rows) and all(contains_value(line, key, value) for _, line in rows)
 
 
 def revision_sweep(texts, bindings, git_reader):
@@ -127,12 +136,13 @@ def revision_sweep(texts, bindings, git_reader):
     findings = []
     for binding in bindings:
         carrier = binding['carrier']
-        number, row = 1, ''
-        for line, text in enumerate(texts[carrier].splitlines(), 1):
-            if ROW.match(text) and binding['row_contains'] in text:
-                number, row = line, text
-                break
-        if not row or not contains_value(row, binding['key'], binding['value']):
+        rows = anchor_rows(texts[carrier], binding['row_contains'])
+        number = rows[0][0] if rows else 1
+        failing = [line for line, text in rows
+                   if not contains_value(text, binding['key'], binding['value'])]
+        if rows and failing:
+            number = failing[0]
+        if not rows or failing:
             detail = 'row-value'
         else:
             rc, commit = git_reader(['rev-parse', '--verify', '--end-of-options',
@@ -291,6 +301,20 @@ def selftest():
     found, calls = revision_case('| tool |\n' + row, [revision])
     check('revision-first-row', found == [
         ('revision', 'SCORECARD.md', 1, 'row-value')] and not calls)
+    # r84 ALL_ANCHOR_ROWS arms: every row the anchor selects is graded on both sides.
+    found, _ = revision_case('| tool pointers=240 |\n| tool extended pointers=240 |', [revision],
+                             blob='| tool pointers=240 |\n| tool extended pointers=240 |')
+    check('carrier-all-anchor-rows-green', not found)
+    found, calls = revision_case('| tool pointers=240 |\n| tool extended pointers=237 |',
+                                 [revision])
+    check('carrier-all-anchor-rows-red', found == [
+        ('revision', 'SCORECARD.md', 2, 'row-value')] and not calls)
+    found, _ = revision_case(row, [revision],
+                             blob='| tool pointers=240 |\n| tool extended pointers=240 |')
+    check('rev-all-anchor-rows-green', not found)
+    found, _ = revision_case(row, [revision],
+                             blob='| tool pointers=240 |\n| tool extended pointers=237 |')
+    check('rev-all-anchor-rows-red', found == [('revision', 'SCORECARD.md', 1, 'rev-bytes')])
     found, calls = revision_case('| tool pointers=237 |', [revision], resolved=False)
     check('revision-row-before-git', found == [
         ('revision', 'SCORECARD.md', 1, 'row-value')] and not calls)
