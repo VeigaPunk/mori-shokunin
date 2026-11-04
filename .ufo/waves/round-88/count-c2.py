@@ -6,8 +6,9 @@ receipt label are the same sentence):
 
   At revision R `python3 -I .ufo/waves/round-88/count-c2.py R` prints
   `C2=met real=met fx=4 clean=1 refused=2 absent=1 arms=23` and exits 0, where the graded
-  `.ufo/waves/round-87/count-c2.py` at R is green at exactly 23 selftest arms, still prints the
-  r87 target line on the real seven-receipt population, and refuses every counterfeit fixture:
+  `.ufo/waves/round-87/count-c2.py` at R is green at exactly 26 selftest arms (round 89 moved
+  the gate's arm count 23 -> 26 and this pin follows it), still prints the r87 target line on the
+  real seven-receipt population, and refuses every counterfeit fixture:
 
     stripped       a `clone` receipt with its `# replay:` line removed and a fabricated body is
                    refused with `missing-replay` (zero replays must not reach the target line)
@@ -30,11 +31,11 @@ import sys
 import tempfile
 
 SUBJECT = ".ufo/waves/round-87/count-c2.py"
-SUBJECT_ARMS = 23
+SUBJECT_ARMS = 26
 
 REAL = ("receipts=7 absent=0 bindings=9 bound=9 revs=7 limits=7 cmd=7 summary=7 replay=4 "
         "matched=6 defeated=1 superseded=2 legacy=1 unexpected=0")
-TARGET = "real=met fx=4 clean=1 refused=2 absent=1 arms=23"
+TARGET = "real=met fx=4 clean=1 refused=2 absent=1 arms=26"
 
 FIXTURES = (
     ("clean", ".ufo/waves/round-87/evidence/record-sweep-r87.txt", "met", None),
@@ -245,8 +246,8 @@ def selfcheck(scratch):
                   "4 kinds"))
     cases.append(("target_fields",
                   all(field in TARGET for field in
-                      ("fx=4", "clean=1", "refused=2", "absent=1", "arms=23")), "target"))
-    cases.append(("arms_pinned", SUBJECT_ARMS == 23, "23"))
+                      ("fx=4", "clean=1", "refused=2", "absent=1", "arms=26")), "target"))
+    cases.append(("arms_pinned", SUBJECT_ARMS == 26, "26"))
     cases.append(("marker_literal", "missing-replay" in open(os.path.abspath(__file__)).read(),
                   "label"))
     ok = sum(1 for _, good_case, _ in cases if good_case)

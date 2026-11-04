@@ -16,6 +16,11 @@ receipt label are the same sentence):
 `# replay: legacy` receipts are header-bound only and are counted `legacy` unless superseded; the
 r85 worktree receipt `after-r85.txt` stays `legacy` because its body is a live-observation run.
 
+Round 89 (P-C1 of `.ufo/waves/round-89/contract.md`): a binding names the **executed script** —
+path identity by `normpath`/`realpath` (`./tools/x.py` is `tools/x.py`) and script position after
+an interpreter (`python3 [-flag] <script>`); a path named only after an unquoted `#`, passed as
+data or printed by `printf`/`echo` is `cmd-binding`.
+
 Usage: count-c2.py <rev> [--repo DIR] [--scratch DIR] | count-c2.py --selftest
 Exit 0 met, 1 unmet, 2 setup. Read-only: `git show`, `git clone --shared`; files only under
 --scratch.
@@ -24,6 +29,7 @@ import argparse
 import hashlib
 import os
 import re
+import shlex
 import shutil
 import subprocess
 import sys
@@ -137,12 +143,60 @@ def declared_replay_problem(declared_mode, fields):
     return None
 
 
-def binding_problems(cmd, bindings, replayed):
-    """Every `# counter-sha256:` path must appear in the replayed command's argv."""
+INTERPRETERS = ("python3", "python", "bash", "sh", "node", "uv")
+
+
+def command_invocations(cmd):
+    """`cmd` as `;`-separated invocations of shell tokens; comments are dropped."""
+    invocations = []
+    for part in (cmd or "").split(";"):
+        try:
+            tokens = shlex.split(part, comments=True)
+        except ValueError:
+            return None
+        if tokens:
+            invocations.append(tokens)
+    return invocations
+
+
+def same_path(token, path, repo):
+    """True when `token` and the repo-relative `path` name the same file."""
+    if os.path.normpath(token) == os.path.normpath(path):
+        return True
+    if repo:
+        return (os.path.realpath(os.path.join(repo, token))
+                == os.path.realpath(os.path.join(repo, path)))
+    return False
+
+
+def script_position(tokens, index):
+    """True when `tokens[index]` is the script argument of an interpreter invocation."""
+    if os.path.basename(tokens[0]) not in INTERPRETERS:
+        return False
+    if index == 1:
+        return True
+    return index == 2 and tokens[1].startswith("-")
+
+
+def binding_problems(cmd, bindings, replayed, repo=None):
+    """Every `# counter-sha256:` path must be the executed script of the command.
+
+    Round 89: path identity (`normpath`/`realpath`, so `./x` names `x`) plus script position
+    after an interpreter — a path named only in a shell comment, passed as data or printed by
+    `printf`/`echo` does not bind. `;`-separated invocations are searched separately.
+    """
     if not replayed:
         return []
-    tokens = set(token.strip(";'\"") for token in re.split(r"\s+", cmd or ""))
-    return ["cmd-binding"] if any(path not in tokens for _sha, path in bindings) else []
+    invocations = command_invocations(cmd)
+    if invocations is None:
+        return ["cmd-binding"]
+    problems = []
+    for _sha, path in bindings:
+        if not any(same_path(token, path, repo) and script_position(tokens, index)
+                   for tokens in invocations
+                   for index, token in enumerate(tokens)):
+            problems.append("cmd-binding")
+    return problems
 
 
 def absent_supersede_targets(superseders, known):
@@ -263,7 +317,7 @@ def grade_population(loader, repo, rev, scratch, population=POPULATION):
             problems.append(missing_replay)
         problems.extend(binding_problems(fields["cmd"], fields["bindings"],
                                          replay_mode in ("required", "clone")
-                                         or fields["replay"] is not None))
+                                         or fields["replay"] is not None, repo))
         if fields["supersedes"]:
             superseders.append((name, fields["supersedes"]))
         if replay_mode != "legacy" or fields["replay"] is not None:
@@ -412,6 +466,16 @@ def selfcheck(scratch):
     cases.append(("absent_target_helper",
                   absent_supersede_targets([("n.txt", "gone.txt"), ("m.txt", "n.txt")],
                                            {"m.txt", "n.txt"}) == [("n.txt", "gone.txt")], "gone"))
+    # --- round-89 arms: path identity, comment tokens and data-position paths ---
+    cases.append(("binding_path_identity",
+                  binding_problems("python3 -I ./tools/x.py", bindings, True) == [],
+                  "./spelling"))
+    cases.append(("binding_comment_dropped",
+                  binding_problems("printf 'body' # tools/x.py", bindings, True)
+                  == ["cmd-binding"], "comment token"))
+    cases.append(("binding_selfprint_refused",
+                  binding_problems("python3 -c \"print('body')\" tools/x.py", bindings, True)
+                  == ["cmd-binding"], "path as data"))
     cases.append(("marker_literal", "supersede_verdict" in
                   open(os.path.abspath(__file__)).read(), "label"))
     ok = sum(1 for _, good_case, _ in cases if good_case)
