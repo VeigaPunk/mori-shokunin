@@ -1,0 +1,15 @@
+# round-81 pin-check per-revision readings and diff (the no_command=2 line in gates-r81.txt came from a --root . worktree invocation; the two --rev readings below are the graded ones)
+$ python3 -I tools/mori-pin-check.py --rev 44bc941a... | grep PIN_CHECK=
+PIN_CHECK=unmet tally_pins=72 digest_pins=8 mismatches=0 unparsed=1 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=44bc941a0e3e9676fa33a882b43d6e9793cbf74d baseline=no env=0 stale=0
+$ python3 -I tools/mori-pin-check.py --rev 9335bdbd... | grep PIN_CHECK=
+PIN_CHECK=unmet tally_pins=73 digest_pins=8 mismatches=0 unparsed=1 no_command=0 dropped=0 rebound=0 duplicate=0 hidden=0 misattributed=0 env_unexpanded=0 min_tally_pins=1 rev=9335bdbd1fe51c88dd2527a76cb08b324f84cc69 baseline=no env=0 stale=0
+## per-pin diff (entering vs tip)
+35,36c35,36
+< pin line=911 kind=tally prefix=CONFORM_SELFTEST state=match pinned='pass=11 fail=0' observed='pass=11 fail=0' rc=0 cmd='python3 .ufo/waves/round-40/conform.py 44bc941a0e3e9676fa33a882b43d6e9793cbf74d --selftest'
+< pin line=912 kind=tally prefix=MORI_SOURCES_APPENDONLY_SELFTEST state=match pinned='pass=22 fail=0' observed='pass=22 fail=0' rc=0 cmd='python3 tools/mori-sources-appendonly.py 44bc941a0e3e9676fa33a882b43d6e9793cbf74d --selftest'
+---
+> pin line=911 kind=tally prefix=CONFORM_SELFTEST state=match pinned='pass=11 fail=0' observed='pass=11 fail=0' rc=0 cmd='python3 .ufo/waves/round-40/conform.py 9335bdbd1fe51c88dd2527a76cb08b324f84cc69 --selftest'
+> pin line=912 kind=tally prefix=MORI_SOURCES_APPENDONLY_SELFTEST state=match pinned='pass=22 fail=0' observed='pass=22 fail=0' rc=0 cmd='python3 tools/mori-sources-appendonly.py 9335bdbd1fe51c88dd2527a76cb08b324f84cc69 --selftest'
+83a84
+> pin line=1367 kind=tally prefix=RECORD_SWEEP_SELFTEST state=match pinned='pass=26 fail=0' observed='pass=26 fail=0' rc=0 cmd='python3 -I tools/mori-record-sweep.py --selftest'
+diff rc=1 (1 = differences, expected: the rev in two command lines and the new row-15 pin)
