@@ -1,0 +1,34 @@
+# round-81 no-harm gates at 482dc48d49670de0f7645d0d8e87e18816145256
+
+## the r80 13-instrument battery, re-run
+mori-register-check.py rc=0 REGCHECK_SELFTEST pass=12 fail=0
+mori-settlement-scan.py rc=0 SETSCAN_SELFTEST pass=10 fail=0
+mori-vote-bind.py rc=0 VOTE_BIND_SELFTEST pass=16 fail=0
+mori-pin-check.py rc=0 PIN_CHECK_SELFTEST pass=125 fail=0
+mori-drift-adjudicate.py rc=0 MORI_DRIFT_ADJUDICATE_SELFTEST: PASS (5 cases)
+mori-drift-recheck.py rc=0 MORI_DRIFT_RECHECK_SELFTEST: PASS (10 cases)
+mori-ua-variance.py rc=0 MORI_UA_VARIANCE_SELFTEST: PASS (14 cases)
+mori-uptime-win.py rc=0 UPTIME_WIN_SELFTEST: PASS (8 cases)
+mori-workstate-win.py rc=0 WORKSTATE_WIN_SELFTEST: PASS (10 cases)
+mori-events-context-win.py rc=0 EVENTS_CONTEXT_SELFTEST: PASS (10 cases)
+mori-anchor-check.py rc=0 ANCHOR_CHECK_SELFTEST: PASS (11 cases)
+mori-rotation-schedule.py rc=0 MORI_ROTATION_SCHEDULE_SELFTEST: PASS (13 cases)
+mori-counter-win.py rc=0 COUNTER_WIN_SELFTEST: PASS (12 cases)
+BATTERY13 pass=13 total=13
+
+## sources append-only gate
+changed S543 superseded_by=-
+appendonly_violations=50 ids=[S041,S044,S051,S062,S064,S069,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193,S490,S491,S492,S497,S499,S501,S502,S503,S504,S505,S507,S508,S511,S512,S526,S527,S528,S529,S530,S531,S532,S533,S534,S535,S536,S537,S538,S539,S540,S541,S542,S543] deleted=[] superseded=[S041,S044,S051,S062,S064,S067,S069,S070,S071,S083,S084,S090,S093,S096,S097,S101,S124,S127,S128,S129,S131,S140,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193,S226,S229,S235,S351,S581,S582,S583,S584] round_changed=[]
+supersede_timing superseded_as_of=[S041,S044,S051,S062,S064,S067,S069,S070,S071,S083,S084,S090,S093,S096,S097,S101,S124,S127,S128,S129,S131,S140,S179,S180,S181,S182,S183,S184,S185,S186,S188,S189,S190,S193,S226,S229,S235,S351,S581,S582,S583,S584] stale_supersede=[]
+rc=0
+
+## gate registry audit
+tables=16
+rev=WORK
+mode=population
+population_digest=b225d65a68e3ac1fd9b1bdededa7c7ae3ce0645074d0d9d4ede668097c0bc281
+registered=60 unregistered=2 no_selftest=0 duplicate=0 wrong_row=1 tables=16
+REGISTRY=unmet
+rc=0
+
+## pin check
