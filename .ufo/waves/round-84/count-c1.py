@@ -270,6 +270,35 @@ def selfcheck(scratch):
     cases.append(("equivalent_requires_coupling",
                   (not met) and "coupling-absent" in " ".join(extras)
                   and "survivors=1" in tail, tail))
+    killed_coupling = ("GUARD = 1\n"
+                       "def f(duplicates, residual):\n"
+                       "    residual += duplicates\n"
+                       "    return residual\n"
+                       "# coupling: agreed == len(snapshot_tokens) and duplicates == 0\n"
+                       "ok = GUARD == 1\n"
+                       "print('FAKE pass=%d fail=%d' % (1 if ok else 0, 0 if ok else 1))\n"
+                       "raise SystemExit(0 if ok else 1)\n")
+    write(d, "killed_coupled.py", killed_coupling)
+    met, tail, lines, extras = grade(
+        disk, scratch,
+        [("tools/killed_coupled.py", "M24d_met_residual", "GUARD = 1", "GUARD = 0")])
+    cases.append(("killed_mutant_with_coupling_not_equivalent",
+                  met and "equivalent=0" in tail and any(" killed " in line for line in lines),
+                  tail + " | " + ";".join(lines)))
+    dup_coupling = ("GUARD = 1\n"
+                    "def f(duplicates, residual):\n"
+                    "    residual += duplicates\n"
+                    "    return residual\n"
+                    "# coupling: agreed == len(snapshot_tokens) and agreed == len(snapshot_tokens)\n"
+                    "# coupling: duplicates == 0\n"
+                    "print('FAKE pass=1 fail=0')\n")
+    write(d, "dup_coupling.py", dup_coupling)
+    met, tail, lines, extras = grade(
+        disk, scratch,
+        [("tools/dup_coupling.py", "M24d_met_residual", "GUARD = 1", "GUARD = 0")])
+    cases.append(("duplicate_coupling_not_equivalent",
+                  (not met) and "coupling-absent" in " ".join(extras)
+                  and "survivors=1" in tail, tail))
     cases.append(("target_split_ok",
                   target_split("mutants=4 killed=2 equivalent=2 survivors=0 total=4"),
                   "2/2/4"))

@@ -1,0 +1,135 @@
+{
+  "schema": "ufo-swarm-registry-v1",
+  "wave": "mori-r85-w1",
+  "createdAt": "2026-11-04T11:02:43.782Z",
+  "updatedAt": "2026-11-04T11:02:54.392Z",
+  "reportDir": ".ufo/waves/round-85/w1",
+  "members": {
+    "Mo85E01C1Arms": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "round 85 w1: the two failing arms for X1/X2"
+    },
+    "Mo85E02Receipts": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "round 85 w1: the receipt generator and its provenance grammar"
+    },
+    "Mo85E03C3Fixture": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "depth"
+      ],
+      "milestone": "round 85 w1: prove the C3 observation is load-bearing"
+    },
+    "Mo85E04Controls": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "executor",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "round 85 w1: the defeat controls and the battery receipt header"
+    },
+    "Mo85Sc01Source": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scout",
+      "item": null,
+      "axes": [
+        "depth",
+        "freshness"
+      ],
+      "milestone": "round 85 w1: open and pin the round's source"
+    },
+    "Mo85S01Lesson": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "freshness",
+        "calibration"
+      ],
+      "milestone": "round 85 w1: the lesson, the registry rows and the Gate"
+    },
+    "Mo85S02Quality": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "scribe",
+      "item": null,
+      "axes": [
+        "operability",
+        "calibration"
+      ],
+      "milestone": "round 85 w1: QUALITY criteria and the SKILL registry row"
+    },
+    "Mo85R01C1": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "operability"
+      ],
+      "milestone": "round 85 w1: attack the C1 arms and the kill rule"
+    },
+    "Mo85R02C2": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "reviewer",
+      "item": null,
+      "axes": [
+        "calibration"
+      ],
+      "milestone": "round 85 w1: attack the receipt grammar"
+    },
+    "Mo85C01Critic": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "critic",
+      "item": null,
+      "axes": [
+        "calibration",
+        "adjacency"
+      ],
+      "milestone": "round 85 w1: falsify the claim set and the mission contract"
+    },
+    "Mo85M01Mut": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "mutation-tester",
+      "item": null,
+      "axes": [
+        "operability",
+        "depth"
+      ],
+      "milestone": "round 85 w1: mutation probe of the three r85 counters"
+    },
+    "Mo85K01Conn": {
+      "kind": "spawn",
+      "agentId": null,
+      "role": "connector",
+      "item": null,
+      "axes": [
+        "adjacency",
+        "coverage"
+      ],
+      "milestone": "round 85 w1: sibling-overlap scan and the contract clause sweep"
+    }
+  }
+}

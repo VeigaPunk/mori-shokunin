@@ -1,0 +1,180 @@
+# mori round-85 defeat controls — the three frozen contract defeats, each run for real
+# seat: Mo85E04Controls (controls/battery, detection only)
+# date: 2026-11-04, runs of record 08:25:45-03:00 .. 08:26:39-03:00
+# freeze revision: ab2608655ea52ba6d151b3a31d69a3b18cd2b41e
+# settled worktree at run time: HEAD 91f657f696a701cae8a03a32e0b6d0407603f0b4 (A1-A4 landed);
+#   .ufo/waves/round-85/count-c1.py / count-c2.py / count-c3.py in the worktree are
+#   byte-identical to that HEAD (git status: no counter modifications). Counter bytes are the
+#   worktree files; graded subject/receipt bytes are read by the counters via git show at the
+#   named revisions.
+# provenance: a first pass of these controls ran at 08:15:36-03:00 on post-A2 bytes
+#   (HEAD 4ffd5a2d, before A3/A4 landed) with byte-identical outputs modulo fixture commit ids;
+#   the runs of record below were re-executed after A3/A4 so the counter provenance is exact.
+# subject bytes at the freeze revision (git show <rev>:<path> | sha256sum):
+#   .ufo/waves/round-85/count-c1.py     da5fb27b9cd9b9cfbbefc58fb2465fb162f796cd280f82d0aeee0e8deca485fe
+#   .ufo/waves/round-85/count-c2.py     b7a4e691738f8161660887f3dada1045757e3bce4241968028d3dc353586d474
+#   .ufo/waves/round-85/count-c3.py     c035e32f465eb5457870c6e5b18a05212e3cdee27f4f79f0cd65999b1f147b44
+#   tools/mori-record-sweep.py          b8683be24e28ce4e79730b46615174d888af4c22ac7ee4fe16b97048516e8efa
+#   tools/mori-claim-sweep.py           4ac6b52615a427d1f7d8993ab636a5830bcde744c4a51f22d9157833d940ba1d
+# resolution note (D84-5): every fixture commit below lives only in this seat's scratch
+#   /fast/scratch/hyaku/mori-r85/Mo85E04Controls (deleted after the run) and does NOT resolve in
+#   the lane repo. Each section carries its full build recipe and graded rev so the observation is
+#   reproducible. All fixtures were built with `git clone --shared` of the lane or `git init`,
+#   asserted via `git rev-parse --show-toplevel`, and committed with
+#   `-c user.name=t -c user.email=t@t`. No lane file outside this receipt and battery-r85.txt was
+#   written.
+# ---
+
+## C1 defeat control 1: the frozen counter grades the freeze revision (arms not landed there)
+## rebuild: cd /home/vgpnk/Projects/shokunin/mori-shokunin && run the command below
+$ timeout --kill-after=5s 300s env HYAKU_SCRATCH=/fast/scratch/hyaku/mori-r85/Mo85E04Controls/c1 python3 -I .ufo/waves/round-85/count-c1.py ab2608655ea52ba6d151b3a31d69a3b18cd2b41e
+MUTANT count-c1.py X1_killed_rescued_as_equivalent survived rc=0
+MUTANT count-c1.py X2_coupling_duplicate_passes survived rc=0
+EXTRA survivor .ufo/waves/round-84/count-c1.py X1_killed_rescued_as_equivalent
+EXTRA survivor .ufo/waves/round-84/count-c1.py X2_coupling_duplicate_passes
+C1=unmet mutants=2 killed=0 survivors=2 total=2 arms=15 harness=stub missing=killed_mutant_with_coupling_not_equivalent,duplicate_coupling_not_equivalent rev=ab2608655ea5
+rc=1
+
+## C1 defeat control 2: fixture clone carrying the r84 counter with BOTH new arms absent
+## rebuild: git clone --shared <lane> <dir>; append a marker file; commit with -c user.name=t
+##   -c user.email=t@t; the subject blob is the freeze-revision blob (both arm labels occur
+##   zero times in it — grep rc 1, count 0 for each label below)
+$ git clone --shared -q /home/vgpnk/Projects/shokunin/mori-shokunin /fast/scratch/hyaku/mori-r85/Mo85E04Controls/c1-fixture
+git clone --shared rc=0
+git -C fixture rev-parse --show-toplevel -> /fast/scratch/hyaku/mori-r85/Mo85E04Controls/c1-fixture
+toplevel-ok
+$ grep -c killed_mutant_with_coupling_not_equivalent .ufo/waves/round-84/count-c1.py
+0
+rc=1 (1 = zero occurrences)
+$ grep -c duplicate_coupling_not_equivalent .ufo/waves/round-84/count-c1.py
+0
+rc=1 (1 = zero occurrences)
+fixture subject blob = 5b89a23d0c255395634fdee214008ee1a651cc7b
+freeze  subject blob = 5b89a23d0c255395634fdee214008ee1a651cc7b
+blob-identical=yes
+fixture commit = 9afd3e6872107ca54d224752eb8c31e7934acca0
+$ timeout --kill-after=5s 300s env HYAKU_SCRATCH=/fast/scratch/hyaku/mori-r85/Mo85E04Controls/c1 python3 -I .ufo/waves/round-85/count-c1.py 9afd3e6872107ca54d224752eb8c31e7934acca0 --repo /fast/scratch/hyaku/mori-r85/Mo85E04Controls/c1-fixture
+MUTANT count-c1.py X1_killed_rescued_as_equivalent survived rc=0
+MUTANT count-c1.py X2_coupling_duplicate_passes survived rc=0
+EXTRA survivor .ufo/waves/round-84/count-c1.py X1_killed_rescued_as_equivalent
+EXTRA survivor .ufo/waves/round-84/count-c1.py X2_coupling_duplicate_passes
+C1=unmet mutants=2 killed=0 survivors=2 total=2 arms=15 harness=stub missing=killed_mutant_with_coupling_not_equivalent,duplicate_coupling_not_equivalent rev=9afd3e687210
+rc=1
+
+## C1 armed reading: the sibling's armed counter, snapshotted from the worktree into a fixture
+## rebuild: cp <lane>/.ufo/waves/round-84/count-c1.py into a fresh shared clone; commit; grade.
+## Snapshot pinned by sha256 (taken 08:26:39-03:00, both arm labels present exactly once):
+##   549553123df7707c8a3df73788a984e56126239418318677a891c430636062cf
+$ git clone --shared -q /home/vgpnk/Projects/shokunin/mori-shokunin /fast/scratch/hyaku/mori-r85/Mo85E04Controls/c1-armed
+git clone --shared rc=0
+git -C fixture rev-parse --show-toplevel -> /fast/scratch/hyaku/mori-r85/Mo85E04Controls/c1-armed
+toplevel-ok
+snapshot sha256 = 549553123df7707c8a3df73788a984e56126239418318677a891c430636062cf
+worktree sha256 = 549553123df7707c8a3df73788a984e56126239418318677a891c430636062cf
+$ grep -c killed_mutant_with_coupling_not_equivalent (snapshot)
+1
+rc=0
+$ grep -c duplicate_coupling_not_equivalent (snapshot)
+1
+rc=0
+fixture commit = b46a0051002db868a91d094ec6ab89f4b9d76481
+$ timeout --kill-after=5s 300s env HYAKU_SCRATCH=/fast/scratch/hyaku/mori-r85/Mo85E04Controls/c1 python3 -I .ufo/waves/round-85/count-c1.py b46a0051002db868a91d094ec6ab89f4b9d76481 --repo /fast/scratch/hyaku/mori-r85/Mo85E04Controls/c1-armed
+MUTANT count-c1.py X1_killed_rescued_as_equivalent killed rc=1
+MUTANT count-c1.py X2_coupling_duplicate_passes killed rc=1
+C1=met mutants=2 killed=2 survivors=0 total=2 arms=17 r84=met rev=b46a0051002d
+rc=0
+# armed-copy availability timeline: at the first control pass (08:15:36-03:00) the arms were NOT
+# landed in the lane worktree (arm-label grep counts 0/0; `git status --porcelain --` on the r84
+# counter empty), so only the pre-arm readings (C1.1, C1.2) existed then, as the seat item
+# provides. The arms seat landed the arms in the worktree (uncommitted; label counts observed 0 ->
+# 1 -> 2 while the edit was in flight) and the armed reading above was taken from a byte-pinned
+# snapshot. Pre-arm vs armed pair on identical counter bytes except the arms:
+#   arms absent  -> C1=unmet ... arms=15 harness=stub ... rc=1
+#   arms present -> C1=met mutants=2 killed=2 survivors=0 total=2 arms=17 r84=met rc=0
+# (the frozen P-C1 target line, demonstrated on fixture bytes; the lane-integration after-value
+# remains the C1 seat's measurement at the graded revision.)
+
+## C2 defeat control 1: one corrupted `# counter-sha256:` (a single hex digit flipped)
+## rebuild: git clone --shared <lane> <dir>; write the three receipts under
+##   .ufo/waves/round-85/evidence/ (headers per contract; bindings at ab2608655ea5 with the shas
+##   in this file's header; bodies carry the frozen summary tokens); commit; then rewrite
+##   after-r85.txt with the first binding's sha corrupted da5fb27b -> ea5fb27b (one hex digit);
+##   commit; grade the second commit.
+##   (clone: git clone --shared -q <lane> /fast/scratch/hyaku/mori-r85/Mo85E04Controls/c2-sha -> rc 0,
+##    toplevel assertion ok)
+fixture commit (correct shas) = 2d18e9e2bbd6030611fac9d10406992c460c1a49
+$ timeout --kill-after=5s 300s python3 -I .ufo/waves/round-85/count-c2.py 2d18e9e2bbd6030611fac9d10406992c460c1a49 --repo /fast/scratch/hyaku/mori-r85/Mo85E04Controls/c2-sha   # fixture sanity: correct shas must read met
+RECEIPT after-r85.txt headers=1 rev=1 limits=1 bindings=3 bound=3 summary=1
+RECEIPT record-sweep-r85.txt headers=1 rev=1 limits=1 bindings=1 bound=1 summary=1
+RECEIPT claim-sweep-r85.txt headers=1 rev=1 limits=1 bindings=1 bound=1 summary=1
+C2=met receipts=3 bindings=5 bound=5 revs=3 limits=3 cmd=3 summary=3 mismatch=0 detector=green rev=2d18e9e2bbd6
+rc=0
+fixture commit (corrupted sha) = bf6c8cfbb918a521aff0255f52b6dde9f9f6d5d5
+$ timeout --kill-after=5s 300s python3 -I .ufo/waves/round-85/count-c2.py bf6c8cfbb918a521aff0255f52b6dde9f9f6d5d5 --repo /fast/scratch/hyaku/mori-r85/Mo85E04Controls/c2-sha
+PROBLEM after-r85.txt sha:.ufo/waves/round-85/count-c1.py
+RECEIPT after-r85.txt headers=1 rev=1 limits=1 bindings=3 bound=2 summary=1
+RECEIPT record-sweep-r85.txt headers=1 rev=1 limits=1 bindings=1 bound=1 summary=1
+RECEIPT claim-sweep-r85.txt headers=1 rev=1 limits=1 bindings=1 bound=1 summary=1
+C2=unmet receipts=3 bindings=5 bound=4 revs=3 limits=3 cmd=3 summary=3 mismatch=1 detector=green rev=bf6c8cfbb918
+rc=1
+
+## C2 defeat control 2: one receipt with no header block (body-only claim-sweep-r85.txt)
+## rebuild: as C2.1 but the second commit overwrites claim-sweep-r85.txt with the single line
+##   `CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=4 pointers=266`
+fixture commit (correct shas) = 23f0ff18f5dd5b3c7f93bd50de51098b8eafffaf
+$ timeout --kill-after=5s 300s python3 -I .ufo/waves/round-85/count-c2.py 23f0ff18f5dd5b3c7f93bd50de51098b8eafffaf --repo /fast/scratch/hyaku/mori-r85/Mo85E04Controls/c2-headers   # fixture sanity: correct shas must read met
+RECEIPT after-r85.txt headers=1 rev=1 limits=1 bindings=3 bound=3 summary=1
+RECEIPT record-sweep-r85.txt headers=1 rev=1 limits=1 bindings=1 bound=1 summary=1
+RECEIPT claim-sweep-r85.txt headers=1 rev=1 limits=1 bindings=1 bound=1 summary=1
+C2=met receipts=3 bindings=5 bound=5 revs=3 limits=3 cmd=3 summary=3 mismatch=0 detector=green rev=23f0ff18f5dd
+rc=0
+fixture commit (headerless claim receipt) = 4eac22f676df5c93651892920194f8cb7abac757
+$ timeout --kill-after=5s 300s python3 -I .ufo/waves/round-85/count-c2.py 4eac22f676df5c93651892920194f8cb7abac757 --repo /fast/scratch/hyaku/mori-r85/Mo85E04Controls/c2-headers
+RECEIPT after-r85.txt headers=1 rev=1 limits=1 bindings=3 bound=3 summary=1
+RECEIPT record-sweep-r85.txt headers=1 rev=1 limits=1 bindings=1 bound=1 summary=1
+PROBLEM claim-sweep-r85.txt missing-separator
+PROBLEM claim-sweep-r85.txt missing-cmd
+PROBLEM claim-sweep-r85.txt missing-rev
+PROBLEM claim-sweep-r85.txt missing-limits
+PROBLEM claim-sweep-r85.txt missing-binding
+PROBLEM claim-sweep-r85.txt rev=None
+PROBLEM claim-sweep-r85.txt rev-unresolved
+PROBLEM claim-sweep-r85.txt summary=CLAIM_SWEEP
+RECEIPT claim-sweep-r85.txt headers=0 rev=0 limits=0 bindings=0 bound=0 summary=0
+C2=unmet receipts=3 bindings=4 bound=4 revs=2 limits=2 cmd=2 summary=2 mismatch=7 detector=green rev=4eac22f676df
+rc=1
+# composition of mismatch=7: 5 parse problems (missing separator/cmd/rev/limits/binding) +
+# rev=None + summary missing. With no `# ---` separator the header block swallows the whole file
+# and the body is empty, so the body token never counts (A2 parser semantics). The extra
+# `rev-unresolved` PROBLEM line binds zero bindings and adds 0 to mismatch. The contract's
+# illustrative defeat line `C2=unmet headers=<receipt>` differs in shape from the counter's
+# actual line; verdict and rc agree (unmet, rc 1) — observation recorded, no action by this seat.
+
+## C3 defeat control: fresh census-stub fixture, re-derived on this seat's own bytes
+## rebuild: D=<scratch>/c3-fixture; git -C "$D" init -q (assert toplevel == $D); commit with
+##   -c user.name=t -c user.email=t@t exactly these five files:
+##   tools/mori-census.sh = the 3-line stub below (no MORI_DRIFT line, exit 1);
+##   corpus/evidence/baseline-r10-20261015T2231Z.json,
+##   corpus/evidence/drift-classification-r82.txt,
+##   .ufo/waves/round-82/evidence/drift-r82-live.txt,
+##   .ufo/waves/round-83/count-c2.py
+##   = byte-exact `git show ab2608655ea5:<path>` exports of the freeze revision.
+$ git -C "$D" init -q
+git init rc=0
+git -C fixture rev-parse --show-toplevel -> /fast/scratch/hyaku/mori-r85/Mo85E04Controls/c3-fixture
+toplevel-ok
+stub bytes:
+#!/bin/sh
+echo "census unavailable: stub prints no MORI_DRIFT line"
+exit 1
+fixture commit = d74ed43e497500c30f1b946547f14e0f39cc41db
+$ timeout --kill-after=5s 300s env HYAKU_SCRATCH=/fast/scratch/hyaku/mori-r85/Mo85E04Controls/c3 python3 -I .ufo/waves/round-85/count-c3.py d74ed43e497500c30f1b946547f14e0f39cc41db --repo /fast/scratch/hyaku/mori-r85/Mo85E04Controls/c3-fixture --fleet-root /home/vgpnk/Projects/shokunin
+C3=unmet observed=3 aa=unstable own_tokens=0 rcs=1,1,1 rev=d74ed43e4975
+rc=1
+# matches the measured sibling line in evidence/controls-r85.txt (C3=unmet observed=3 aa=unstable
+# own_tokens=0 rcs=1,1,1 rc 1) with this seat's own fixture rev; the sibling file was read as
+# corroboration only, never cited as this seat's run.
+
+# close: 2026-11-04T08:26:39-03:00; six counter runs + one armed-snapshot run, all above pasted
+# verbatim from this seat's own executions (transcript also held at scratch out/controls-raw.txt,
+# deleted with the scratch).

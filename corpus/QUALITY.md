@@ -1929,3 +1929,92 @@ adjudication of each hit is recorded in `corpus/lessons/round-29.md`. The check 
      Not covered: a counter whose own logic changes after its arms land is not
      re-probed by this rule; an equivalence exemption is only as strong as its
      coupling marker.
+
+## Criteria added round 85 — a tally re-run at its cited bytes, an arm unarmed-first, a limit inside the receipt
+
+173. A tally quoted inside a criterion is a measurement of the bytes that criterion's own
+     pointers name: re-run it there before the criterion is written, and re-locate each
+     `path:line` pointer with `grep -n` against those bytes at write time. A quoted number
+     with no measured revision, a tally that differs from the re-run, or a line range that no
+     longer carries the construct it names makes the criterion stale; the repair is a
+     superseding row, never an edit of the earlier bytes (QUALITY 4, 25). This row
+     supersedes the quoted tally and the `:296-300` pointer of criterion 172.
+     Ground: the r84 closure's routed defect D84-2
+     (`corpus/lessons/round-84-verifier-spotcheck.md`, "Routed defects the lane must fix next
+     round" item 2), which records that criterion 172 (`corpus/QUALITY.md:1916`) states the
+     r84 counter's "measured tally is `C1_COUNTER_SELFTEST pass=11 fail=0`" although the
+     counter has carried 15 arms since `5a231ef8` and SCORECARD's capability row and
+     `SKILL.md` registry row 18 both cite 15.
+     Shown able to fail (measured by this seat 2026-11-04 on `git show` byte images run with
+     `python3 -I`; scratch `/fast/scratch/hyaku/mori-r85/Mo85S02Quality`, deleted before
+     yield): `git show dbdb1aaa:.ufo/waves/round-84/count-c1.py` prints
+     `C1_COUNTER_SELFTEST pass=11 fail=0` rc 0, so 11 was true of the pre-arm bytes;
+     `git show 5a231ef8:.ufo/waves/round-84/count-c1.py` (sha256 `da31c599…`, 15
+     `cases.append(` sites) prints `C1_COUNTER_SELFTEST pass=15 fail=0` rc 0, so the quote is
+     false of the bytes criterion 172's own pointers resolve to. The `:296-300` range is
+     argument parsing there — `ap.add_argument("--selftest", action="store_true")`,
+     `a = ap.parse_args(argv)`, `base = a.scratch or ...`, `os.makedirs(base, exist_ok=True)`,
+     `scratch = tempfile.mkdtemp(prefix="count-c1-r84-", dir=base)` — while `grep -n`
+     re-locates `selfcheck()` at `:174`, the tally print at `:286` and the detector gate at
+     `:328-345` (the `own = run(["python3", "-I", os.path.abspath(__file__), "--selftest",`
+     invocation). The delivered instrument does not cover criterion prose: `python3 -I
+     tools/mori-claim-sweep.py --root . --carriers corpus/QUALITY.md` prints
+     `CLAIM_SWEEP mismatches=0 unresolved=0 tallies=0 stale=0 carriers=1 pointers=0` rc 0,
+     because its default carriers are `SCORECARD.md,SKILL.md,SHONEN.md,LOG.md` and its
+     `stale_literals` are pinned strings, not a re-run.
+     Not covered: a tally whose subject exposes no re-runnable mode; a quote that stays true
+     only because the subject did not change at the cited revision; a pointer range that
+     still holds a similar construct under another name (the re-location is textual); text
+     outside the criterion row itself.
+
+174. A mutation-testing counter's arm is executed against the UNARMED subject before its
+     mutated copy: only an arm that reads green there supplies a kill, and red on the unarmed
+     subject is fixture defect, never discrimination. A fixture that fails the pristine
+     counter is not a kill, and the mutant line it produces is not evidence.
+     Ground: QUALITY 165 (mutant-red plus real-green) and the A4/Sc02 D3 class. The r84
+     freeze prescribed a `blind_case_tally` fixture with one killed and one surviving mutant
+     but asserted `killed=0`, which the pristine counter cannot print (`killed = total -
+     survivors - equivalent = 1`), so the literal arm read red on the unarmed subject —
+     `FAIL blind_case_tally mutants=2 killed=1 equivalent=0 survivors=1 total=2
+     pristine=green`, `C1_COUNTER_SELFTEST pass=7 fail=1` — while the r84 counter over that
+     same variant still printed both mutant lines `killed` beside `EXTRA pristine-red
+     .ufo/waves/round-83/count-c1.py rc=1 ['C1_COUNTER_SELFTEST pass=7 fail=1']` and
+     `C1=unmet mutants=4 killed=2 equivalent=2 survivors=0 total=4 pristine=red
+     detector=green` (sibling measurement, `.ufo/waves/round-84/w1/Mo84Sc02Clauses.md:444-466`,
+     not this seat's execution). The acceptance bar states the same ordering at
+     `.ufo/waves/round-84/w1/Mo84R01C1.md:214,219-221` ("an arm asserting `killed=0` on the
+     two-mutant fixture (red on the *pristine* counter — the A4/Sc02 D3 class)" is rejected
+     as a fake kill).
+     Shown able to fail (measured by this seat 2026-11-04 on a scratch copy of the r85
+     counter; no lane byte edited): flipping the `killed_counted` arm's expected tally from
+     `killed == 1` to `killed == 0` in `.ufo/waves/round-85/count-c1.py` makes the UNARMED
+     counter print `FAIL killed_counted mutants=1 killed=1 survivors=0 total=1 arms=-1`,
+     `C1_COUNTER_SELFTEST pass=17 fail=1`, rc 1 — red on the unarmed subject while that same
+     tail still counts its mutant killed.
+     Not covered: equivalent-mutant adjudication (QUALITY 165); a fixture green on the unarmed
+     subject but defective only against one mutation; whole-suite arm counts, which the lane's
+     existing pristine gate already blocks (`.ufo/waves/round-85/count-c1.py:120,140-141,167`
+     and arm `red_pristine_reported` `:271-272`) but cannot attribute to one arm.
+
+175. A receipt that binds a revision and a digest states its own limit inside the receipt, on
+     a header line the reader meets before the bound number: a `# limits:` line is part of
+     the artifact, not a report footnote, a lesson sentence or a later correction. A receipt
+     whose revision or `sha256` binding carries no limit line is unbound for citation.
+     Ground: the r84 closure's D84-4 (`corpus/lessons/round-84-verifier-spotcheck.md`,
+     routed item 4: two quoted sweep outputs with no committed receipt or command, the
+     D82-2/D83-1 class recurring) and D84-5 (a battery receipt with no revision/date header);
+     this round's P-C2 freezes the header grammar (`# cmd:`, `# rev: <40-hex>`, `# limits:`
+     containing the word "limit", one or more `# counter-sha256: <64-hex> <path>`, one
+     `# ---`), implemented at `.ufo/waves/round-85/count-c2.py:41-45` and parsed at `:56-109`
+     (`weak-limits` at `:107-109` when the text lacks "limit" or has fewer than three words),
+     with the receipts written by `.ufo/waves/round-85/make-receipts.sh <rev> [--repo DIR]`.
+     Shown able to fail (measured by this seat 2026-11-04 in the lane repo): every r84
+     evidence receipt binds a revision or a digest and none carries a limit header —
+     `grep -c '^# *limits:' .ufo/waves/round-84/evidence/after-r84.txt` -> 0 although its
+     header names `da7631f4a44aaa6d7c1c822308df4d265fb8d7da` on line 1 and its body quotes
+     `C1=met ...`; `grep -l '^# limits:' .ufo/waves/round-84/evidence/*` -> no file, over the
+     five receipts present; `battery-r84.txt` mentions `sha256` twice with no `# cmd:` or
+     `# rev:` header at all. Under the frozen grammar each is unbound for citation.
+     Not covered: the truth of the limit sentence (a present and wrong limit line is
+     QUALITY 164/166's textual-binding class); receipts outside a wave's `evidence/`; a
+     binding whose digest verifies while the limit sentence names another artifact.

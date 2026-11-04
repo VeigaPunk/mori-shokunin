@@ -642,3 +642,28 @@ Registry rows are named as carried in `SKILL.md`; gate includes registered regre
 - **No new census surface, no threshold change, no baseline rewrite, no remediation.** The
   round-84 counters live under `.ufo/waves/round-84/` (evidence). mori reports; it does not
   remediate.
+
+## Round-85 appended scope notes (2026-11-04)
+
+- **Core, counter-mutation closure (rule change on an existing instrument):**
+  `.ufo/waves/round-84/count-c1.py`'s `selfcheck()` gains the two arms its surviving mutants X1
+  (`if not k and coupling is not None:` → `if coupling is not None:`) and X2
+  (`coupled = all(base.count(marker) == 1 ...)` → `>= 1`) require, taking the selftest 15 → 17
+  arms. The graders are `.ufo/waves/round-85/count-c1.py` (contract P-C1, registry row 19 in
+  `SKILL.md`) and the killed/exempt split stays the lane's own; the arms are detection, not
+  remediation.
+- **Core, receipt provenance grammar (new record rule):** a round's after receipts carry exactly
+  one `# cmd:`, one `# rev:`, one `# limits:` and one or more
+  `# counter-sha256: <64-hex> <repo-relative path>` header lines before a single `# ---`, and each
+  binding is verified against the named path's bytes at the receipt's own revision
+  (`.ufo/waves/round-85/contract.md` P-C2, `count-c2.py`, `make-receipts.sh`, QUALITY 175). This is
+  a record rule over lane evidence, not a census surface.
+- **Core, own-census observation (new instrument, evidence-only):**
+  `.ufo/waves/round-85/count-c3.py` runs `tools/mori-census.sh --drift <baseline>` three times from
+  a revision's own bytes and reconciles the r83 drift counter's live reading with its own; the
+  census reading stays an observation and the instrument is evidence, not a census surface
+  (QUALITY 171's named limit addressed at the observation level).
+- **No new census surface, no threshold change, no baseline rewrite, no remediation.** The
+  round-85 counters, generator and receipts live under `.ufo/waves/round-85/` (evidence). The
+  connector's sibling scan found kama's live-reconcile shape adjacent and absorbed nothing; mori
+  reports, it does not remediate.
