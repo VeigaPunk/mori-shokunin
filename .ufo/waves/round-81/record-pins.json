@@ -1,0 +1,12 @@
+{
+  "schema": "mori-record-pins-v1",
+  "bindings": [
+    {
+      "carrier": "SCORECARD.md",
+      "row_contains": "tools/mori-claim-sweep.py",
+      "key": "pointers",
+      "command": ["python3", "-I", "tools/mori-claim-sweep.py", "--root", ".",
+                  "--pins", ".ufo/waves/round-80/claim-pins.json"]
+    }
+  ]
+}
