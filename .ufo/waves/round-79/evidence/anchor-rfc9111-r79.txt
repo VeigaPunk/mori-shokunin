@@ -1,0 +1,39 @@
+# mori round-79 C3 anchor receipts (the four located quotes against the pinned RFC 9111 text)
+run-start=2026-11-04T05:40:16Z
+
+## 1. the pin identity
+$ sha256sum corpus/evidence/sources-r79/rfc9111.txt
+  aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e  corpus/evidence/sources-r79/rfc9111.txt
+rc=0
+$ wc -l -c corpus/evidence/sources-r79/rfc9111.txt
+   1956 84477 corpus/evidence/sources-r79/rfc9111.txt
+rc=0
+
+## 2. the four anchors (machine-located, word counts re-derived from the recorded text)
+$ python3 -I tools/mori-anchor-check.py --pin corpus/evidence/sources-r79/rfc9111.txt --check ... (four specs)
+  anchor item=k1 span=529 verdict=ok located_on=529 occurrences=1 words_counted=10 words_recorded=10
+  anchor item=k2 span=532 verdict=ok located_on=532 occurrences=1 words_counted=12 words_recorded=12
+  anchor item=k3 span=559 verdict=ok located_on=559 occurrences=1 words_counted=12 words_recorded=12
+  anchor item=k4 span=576 verdict=ok located_on=576 occurrences=1 words_counted=11 words_recorded=11
+  ANCHOR_CHECK: PASS items=4 ok=4 pin_sha256=aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e pin_bytes=84477
+rc=0
+
+## 3. able-to-fail arm (the same k1 text against the wrong line)
+$ python3 -I tools/mori-anchor-check.py --pin corpus/evidence/sources-r79/rfc9111.txt --check "k1|528|10|..."
+  anchor item=k1 span=528 verdict=mislocated located_on=- occurrences=0 words_counted=- words_recorded=10
+  ANCHOR_CHECK: FAIL items=1 ok=0 mislocated=1 wordcount_mismatch=0 pin_sha256=aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e pin_bytes=84477
+rc=1
+
+## 4. the same four greps, independently (one line each, exact substring)
+$ sed -n "529p" corpus/evidence/sources-r79/rfc9111.txt | grep -Fc 'response and that stored response contains a Vary header field'
+  1
+rc=0
+$ sed -n "532p" corpus/evidence/sources-r79/rfc9111.txt | grep -Fc 'fields nominated by that Vary field value match those fields in the'
+  1
+rc=0
+$ sed -n "559p" corpus/evidence/sources-r79/rfc9111.txt | grep -Fc 'If multiple stored responses match, the cache will need to choose one'
+  1
+rc=0
+$ sed -n "576p" corpus/evidence/sources-r79/rfc9111.txt | grep -Fc 'If no stored response matches, the cache cannot satisfy the presented'
+  1
+rc=0

@@ -1,0 +1,233 @@
+## Scope and axes
+Axes: operability, calibration, freshness. Source opening supports freshness only; no closure grading.
+Initial sweep tool calls preceded initial fetch, but receipt was not persisted first. Corrective sweep/fetch sequence below is retained prospectively.
+
+## Duplicate sweep before corrective fetch
+
+$ grep -cE '^ {0,3}\|[[:space:]]*S[0-9]{3,}[[:space:]]*\|' /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md
+366
+rc=0
+
+$ grep -nFi rfc9111 /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md
+rc=1
+
+$ grep -nFi 9111 /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md
+129:| S123 | systemd v262 journal JSON field encoder and printable-UTF-8 rule — https://raw.githubusercontent.com/systemd/systemd/v262/src/shared/logs-show.c ; https://raw.githubusercontent.com/systemd/systemd/v262/src/basic/utf8.c ; https://raw.githubusercontent.com/systemd/systemd/v262/src/basic/utf8.h | code | A | the encoder that produces `journalctl -o json` field values at the v262 release tag: the 4096-byte null threshold, the printable check that decides string versus byte array, and the definition of "printable"; the file that builds the JSON object only, not the journal's own storage or matching code | src/shared/logs-show.c:43 (`JSON_THRESHOLD 4096U`), :1124-1131 (null / string / `sd_json_variant_new_array_bytes` decision); src/basic/utf8.h:23-24 (`utf8_is_printable` macro); src/basic/utf8.c:30-40 (`unichar_is_control`), :105-127 (`utf8_is_printable_newline`); tag v262 = commit 8cc40e0c5e9234bf45084751ac53b1fbfe70b492; sha256 logs-show.c abc2fc1f3d6f10d0f01b4d1ff18689eb5561a98fd71fde911117ce16c50ed72f, utf8.c 7cbebe621330509d7ed4928ea0e8374cf7155e954fee2745ebf08b90cd030d27, utf8.h 2adc446e1e5d13f497b59f6e2fe1c02752b022cc7eaec35393f87689c6ea297a; HTTP 200 on 2026-10-22 | A field is a JSON string only when it is valid UTF-8 and carries no control character other than tab or newline; other C0 controls, DEL, the C1 range and invalid UTF-8 yield a byte array, and a field whose name plus value reaches 4096 bytes yields null instead. | mined | 2026-10-22 | on-release | corpus/knowledge/userspace-oom-killers-r26.md |
+rc=0
+
+$ grep -nFi 'HTTP Caching' /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md
+rc=1
+
+$ grep -nFi Vary /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md
+360:| S579 | Token use in AWS WAF intelligent threat mitigation — https://docs.aws.amazon.com/waf/latest/developerguide/waf-tokens.html | docs | A | bot-management session-token semantics (the AWS WAF class): a mitigation token is a per-client-session artifact the mitigation creates, updates and encrypts for clients that answer its challenges, and the client carries it on every request | "token, sometimes called a fingerprint, is a collection of information about a single client" (`S579.html:49`, 14 words; sentence opens with "A" at the end of `:48`) + continuation `:50` ("session that the client stores and provides with every web request that it sends", 14 words); section heading `:48`; "AWS WAF creates, updates, and encrypts tokens for clients that successfully respond to silent challenges" `:56`; copy `corpus/evidence/sources-r68/S579.html` sha256 `41b601f1da6ad11b5cfb167c5e64c780c15b83b7609caac4e9d8fefeafda7a9e` (14127 bytes, opened 2026-11-01) | a mitigation token is serving machinery bound to the request/response exchange, not page identity — token-bearing served bytes are expected to vary per response, which is what the instrument-UA A/A separation receipts (the r68 ua-variance probe; QUALITY 159's vendor scoping untouched: no grammar taught, no row re-classed) | mined | 2026-11-01 | 180d | corpus/lessons/round-68.md |
+rc=0
+
+$ grep -nFi https://www.rfc-editor.org/rfc/rfc9111.txt /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md
+rc=1
+
+$ grep -nE '^\| S(042|591|592|593) ' /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/SOURCES.md
+48:| S042 | RFC 9110 HTTP Semantics — https://www.rfc-editor.org/rfc/rfc9110#section-10.2.3 | spec | A | Retry-After response-header semantics | §10.2.3 Retry-After; Standards Track, June 2022; opened 2026-10-20 | Retry-After indicates how long a user agent ought to wait before a follow-up request; this section is not proof of a client retry implementation. | queued | 2026-10-20 | 365d | — |
+372:| S591 | Acquiring high-resolution time stamps — https://learn.microsoft.com/en-us/windows/win32/sysinfo/acquiring-high-resolution-time-stamps | docs | A | the Windows-platform ground of the schedule clock realization, continuing S589: the vendor QPC guidance for reading THIS host rotation receipts — QPC is monotonic and completely independent of the system time and UTC, so the receipt window_s/wall_s differences ride a clock that neither goes backwards nor moves with system-time or timezone changes | "Yes. QPC does not go backward." (`S591.html:918`, 6 words) + "is completely independent of the system time and UTC." (`:863`, 9 words — the sentence subject QPC sits inside a strong tag on the same line, so the located contiguous span starts at "is"); page `<title>` "Acquiring high-resolution time stamps - Win32 apps" in the pinned head (the pinned head also carries the site-suffix naming Microsoft Learn; its separator character is deliberately not spelled in this row so no field split can occur); copy `corpus/evidence/sources-r76/S591.html` sha256 `233893693810754dbd4122a9a43320596a381e179a38ade6636e294d2dbffc1c` (106427 bytes, opened 2026-11-02; duplicate sweep INSIDE `.ufo/waves/round-76/evidence/source-s591-r76.txt` BEFORE the fetch — no registry row is this page, S589's row mentions the QPC note only inside the Python time page at its `:529` located-unopened; the resolved title checked before the pin per the r75 lesson rule; anchors machine-verified by the r72 anchor-checker: PASS items=2 rc 0, able-to-fail mislocation arm FAIL rc 1, `.ufo/waves/round-76/evidence/s591-anchor-check-r76.txt`) | grounds WHAT the Windows-host monotonic clock is under the Python docs naming (S589 `:529` names the calls); it decides no TTL value and pins no per-machine accuracy number (QPC frequency is runtime-queried); the lane still prints differences only, never an absolute stamp | mined | 2026-11-02 | 180d | corpus/knowledge/rotation-receipt-grammar-r76.md, corpus/lessons/round-76.md |
+373:| S592 | typeperf (Windows Commands reference) — https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/typeperf | docs | A | the read command the counter probe executes: the command writes performance data to the command window or to a log file, the -sc sample bound, and the -q installed-counter enumeration — the documented read grammar of the PDH counter surface | "command writes performance data to the command window or to a log file." (`S592.html:749`, 13 words — the sentence subject sits inside a strong tag on the same line, so the located contiguous span starts at "command"); "Specifies the number of samples to collect." (`:806`, 7 words); "Display a list of installed counters (no instances). To list counters for one object, include the object name." (`:798`, 18 words) | grounds `tools/mori-counter-win.py` (round 77): the commit gauge pair (Memory Committed Bytes, Memory Commit Limit), the in-use share and the paging-activity rate read ONCE through the documented command — the Windows-host continuation of the r53 Linux commit-runway read; the counter paths are NOT doc-located — they are live-enumerated on THIS host by the documented -q listing (enumeration receipt, round 77) and pinned in the instrument; a gauge or rate sample is volatile, one-shot, and never a cause | mined | 2026-11-02 | 180d | corpus/knowledge/counter-win-r77.md, corpus/lessons/round-77.md, corpus/knowledge/counter-semantics-r78.md |
+374:| S593 | Memory Performance Information (Windows desktop legacy) — https://learn.microsoft.com/en-us/previous-versions/windows/desktop/legacy/aa965225%28v%3Dvs.85%29 | docs | A | the vendor's own association of the memory-object performance-counter names with the memory-manager structures: Committed Bytes to PERFORMANCE_INFORMATION.CommitTotal; Commit Limit to MEMORYSTATUSEX.ullTotalPageFile and PERFORMANCE_INFORMATION.CommitLimit | "This topic associates performance counters with the data returned by memory performance functions and the Windows Task Manager" (`S593.html:713`, 18 words); "The following table associates memory object performance counters with the data returned by the memory performance functions in the" (`:720`, 19 words — the sentence continues through three linked structure names on the same line, so the located contiguous span ends at "the", recorded as such); "Memory object counter (unless otherwise noted)" (`:730`, 6 words); "Committed Bytes" (`:750`, 2 words); "Commit Limit" (`:756`, 2 words) | grounds `corpus/knowledge/counter-semantics-r78.md` (round 78): the counter NAMES the r77 probe reads are the vendor's memory-object counter names (the K4 object ground no longer only inferred from S572's exhaustion-event semantics), and the vendor table itself links the counter surface to S574's struct (the r64 API approximation reads the same quantity family — vendor-stated, not lane-inferred); Pages/sec is NOT on this page (named absent — the rate semantics stay as landed in counter-win-r77 K5, live-verified); the resolved page title carries "Memory Performance Information (Windows)" with the Microsoft Learn site suffix in the pinned head (its separator character deliberately not spelled in the row so no pipe can split the row — the r76 title-pipe mistake's standing fix); a previous-versions archive page — the recheck cell governs its drift watch | mined | 2026-11-02 | 180d | corpus/knowledge/counter-semantics-r78.md, corpus/lessons/round-78.md |
+rc=0
+
+Interpretation: exact RFC9111 URL, rfc9111 and HTTP Caching have no matches. The 9111 hit is S123 digest text, not HTTP caching. Case-insensitive Vary also matches S579 (substring); that held AWS token row is mechanism context, not normative cache selection. S042 is queued HTTP Semantics (Retry-After); mined S591/S592/S593 are empirical ua-serving neighbours.
+
+## Fetch and identity before anchor checks
+
+$ date -u +%Y-%m-%dT%H:%M:%SZ
+2026-11-04T05:37:31Z
+rc=0
+
+$ mkdir -p /fast/scratch/hyaku/mori-r79/Mo79E03SourcePin /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r79
+rc=0
+
+$ curl -sS -D /fast/scratch/hyaku/mori-r79/Mo79E03SourcePin/rfc9111.headers -o /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r79/rfc9111.txt https://www.rfc-editor.org/rfc/rfc9111.txt
+rc=0
+
+$ wc -c /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r79/rfc9111.txt
+84477 /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r79/rfc9111.txt
+rc=0
+
+$ sha256sum /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r79/rfc9111.txt
+aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e  /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r79/rfc9111.txt
+rc=0
+
+$ head -n 1 /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r79/rfc9111.txt
+﻿
+rc=0
+
+$ grep -nE 'HTTP Caching|Calculating Cache Keys|selecting header|MUST NOT use|original request|presented request|defined to match|stored response with|always fails' /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r79/rfc9111.txt
+14:                              HTTP Caching
+82:     4.1.  Calculating Cache Keys with the Vary Header Field
+260:   by incorporating some of the original request's header fields into
+431:   Section 3.4.  A cache MUST NOT use an incomplete response to answer
+455:   A shared cache MUST NOT use a cached response to a request with an
+475:      to be used for the presented request, and
+526:4.1.  Calculating Cache Keys with the Vary Header Field
+530:   (Section 12.5.5 of [HTTP]), the cache MUST NOT use that stored
+531:   response without revalidation unless all the presented request header
+533:   original request (i.e., the request that caused the cached response
+536:   The header fields from two requests are defined to match if and only
+556:   A stored response with a Vary header field value containing a member
+557:   "*" always fails to match.
+695:   A cache MUST NOT use heuristics to determine freshness when an
+971:      cache MUST NOT use the new response to update any stored
+1013:   If a cache updates a stored response with the metadata provided in a
+rc=0
+
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-anchor-check.py --help
+usage: mori-anchor-check [-h] [--pin PIN] [--check CHECK] [--selftest]
+
+Verify recorded quote anchors (line + word count) against a pinned copy.
+
+options:
+  -h, --help     show this help message and exit
+  --pin PIN      path to the pinned copy (required unless --selftest)
+  --check CHECK  LABEL|LINE|WORDS|TEXT (WORDS '-' skips the count arm;
+                 repeatable)
+  --selftest     run the offline selftest and exit
+rc=0
+
+## HTTP status and media type (allowlisted headers only)
+
+$ grep -iE '^(HTTP/|content-type:)' /fast/scratch/hyaku/mori-r79/Mo79E03SourcePin/rfc9111.headers
+HTTP/2 200 
+content-type: text/plain;charset=utf-8
+rc=0
+
+## Located quotes and machine checks
+The first body line contains only a UTF-8 BOM; the document title is HTTP Caching at line 14. Body §4.1 heading is line 526; line 82 is the table of contents. The actual --help grammar is LABEL|LINE|WORDS|TEXT, not the assignment shorthand line:quote.
+
+$ printf '%s\n' 'response and that stored response contains a Vary header field' | wc -w
+10
+rc=0
+
+$ printf '%s\n' '(Section 12.5.5 of [HTTP]), the cache MUST NOT use that stored' | wc -w
+11
+rc=0
+
+$ printf '%s\n' 'response without revalidation unless all the presented request header' | wc -w
+9
+rc=0
+
+$ printf '%s\n' 'fields nominated by that Vary field value match those fields in the' | wc -w
+12
+rc=0
+
+$ printf '%s\n' 'The header fields from two requests are defined to match if and only' | wc -w
+13
+rc=0
+
+$ printf '%s\n' '"*" always fails to match.' | wc -w
+5
+rc=0
+
+$ grep -nE 'Calculating Cache Keys|fields nominated|request header|stored response' /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r79/rfc9111.txt
+82:     4.1.  Calculating Cache Keys with the Vary Header Field
+165:   cache considers a stored response "fresh", as defined in Section 4.2,
+248:   response or reusing a stored response inappropriately, rather than
+253:   used to retrieve the stored response; the method determines under
+371:   Caches are required to update a stored response's header fields from
+376:   response to the stored response, replacing field values that are
+381:   *  Header fields that the cache's stored response depends upon, as
+393:   MAY omit these header fields from updating stored responses on an
+395:   necessary to assure integrity of the stored response.
+421:   provided that the stored response is recorded as being incomplete.
+430:   successful response with the stored response, as defined in
+445:   stored response, and reuse that response to satisfy later requests,
+449:   When combining the new response with one or more stored responses, a
+450:   cache MUST update the stored response header fields using the header
+472:      stored response match, and
+474:   *  the request method associated with the stored response allows it
+477:   *  request header fields nominated by the stored response (if any)
+480:   *  the stored response does not contain the no-cache directive
+484:   *  the stored response is one of the following:
+495:   When a stored response is used to satisfy a request without
+498:   stored response's current_age; see Section 4.2.3.
+524:   stored responses upon every use.
+526:4.1.  Calculating Cache Keys with the Vary Header Field
+529:   response and that stored response contains a Vary header field
+531:   response without revalidation unless all the presented request header
+532:   fields nominated by that Vary field value match those fields in the
+556:   A stored response with a Vary header field value containing a member
+559:   If multiple stored responses match, the cache will need to choose one
+560:   to use.  When a nominated request header field has a known mechanism
+571:   responses are available.  When a cache has multiple stored responses
+576:   If no stored response matches, the cache cannot satisfy the presented
+590:   intends that a stored response can no longer be used by a cache
+696:   explicit expiration time is present in the stored response.  Because
+748:      the stored response.
+777:   The current_age of a stored response can then be calculated by adding
+778:   the time (in seconds) since the stored response was last validated by
+803:   When a cache has one or more stored responses for a requested URI,
+809:   replace the stored response(s) with a new response.  This process is
+810:   known as "validating" or "revalidating" the stored response.
+817:   stored response by copying the method, target URI, and request header
+823:   the stored response(s) that has the same cache key, although a cache
+825:   request header fields it is sending (see Section 4.1).
+828:   determine whether any stored response is equivalent to a current
+840:   or more stored responses, can be used in an If-None-Match header
+853:      the request is not for a subrange, a single stored response is
+857:      Range) if the request is for a subrange, a single stored response
+879:   corresponding validators contained within the stored response.
+884:   resource for which it has no stored responses; such preconditions are
+896:   its own stored responses in comparison to the stored response chosen
+902:   stored responses by modification date.
+905:   Modified header field is not present in a stored response, a cache
+906:   SHOULD use the stored response's Date field value (or, if no Date
+907:   field is present, the time that the stored response was received) to
+916:   stored responses for a request that contains an If-None-Match list of
+920:   field value in the forwarded request.  If a stored response contains
+923:   satisfied by that partial stored response.  If the response to the
+927:   corresponding stored response, as updated by the 304 response
+936:      stored response can be updated and reused; see Section 4.3.4.
+939:      of the stored responses nominated in the conditional request are
+948:      stored response, subject to its constraints on doing so (see
+954:   identify stored responses that are suitable for updating with the new
+957:   The initial set of stored responses to update are those that could
+962:   Then, that initial set of stored responses is further filtered by the
+976:      one of the initial set's stored responses, then the most recent of
+977:      those matching stored responses is identified for update.
+982:      there is only one stored response in the initial set, and that
+983:      stored response also lacks a validator, then that stored response
+986:   For each stored response identified, the cache MUST update its header
+997:   stored response) or if transmission of the content is not desired
+1005:   For each of the stored responses that could have been chosen, if the
+1006:   stored response and HEAD response have matching values for any
+1009:   Length matches that of the stored response, the cache SHOULD update
+1010:   the stored response as described below; otherwise, the cache SHOULD
+1011:   consider the stored response to be stale.
+1013:   If a cache updates a stored response with the metadata provided in a
+1015:   HEAD response to update the stored response (see Section 3.2).
+1167:   stored response not be used to satisfy the request without successful
+1187:   stored response.
+1198:   wishes to obtain a stored response.  Caches that honor this request
+1516:   The "Pragma" request header field was defined for HTTP/1.0 caches, so
+1588:   them, for example, by allowing stored responses to be removed for
+rc=0
+
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-anchor-check.py --pin /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r79/rfc9111.txt --check 'Q1|529|10|response and that stored response contains a Vary header field' --check 'Q2|530|11|(Section 12.5.5 of [HTTP]), the cache MUST NOT use that stored' --check 'Q3|531|9|response without revalidation unless all the presented request header' --check 'Q4|532|12|fields nominated by that Vary field value match those fields in the' --check 'Q5|536|13|The header fields from two requests are defined to match if and only' --check 'Q6|557|5|"*" always fails to match.'
+anchor item=Q1 span=529 verdict=ok located_on=529 occurrences=1 words_counted=10 words_recorded=10
+anchor item=Q2 span=530 verdict=ok located_on=530 occurrences=1 words_counted=11 words_recorded=11
+anchor item=Q3 span=531 verdict=ok located_on=531 occurrences=1 words_counted=9 words_recorded=9
+anchor item=Q4 span=532 verdict=ok located_on=532 occurrences=1 words_counted=12 words_recorded=12
+anchor item=Q5 span=536 verdict=ok located_on=536 occurrences=1 words_counted=13 words_recorded=13
+anchor item=Q6 span=557 verdict=ok located_on=557 occurrences=1 words_counted=5 words_recorded=5
+ANCHOR_CHECK: PASS items=6 ok=6 pin_sha256=aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e pin_bytes=84477
+rc=0
+
+$ python3 /home/vgpnk/Projects/shokunin/mori-shokunin/tools/mori-anchor-check.py --pin /home/vgpnk/Projects/shokunin/mori-shokunin/corpus/evidence/sources-r79/rfc9111.txt --check 'wrong-line|530|10|response and that stored response contains a Vary header field'
+anchor item=wrong-line span=530 verdict=mislocated located_on=- occurrences=0 words_counted=- words_recorded=10
+ANCHOR_CHECK: FAIL items=1 ok=0 mislocated=1 wordcount_mismatch=0 pin_sha256=aeb52adb3279d5f23dae34f68af11bd5cef0a0aff7ffcd014c9ca93c5302cf3e pin_bytes=84477
+rc=1
+
+## Scope limits and own defects
+No vendor response headers were measured; this source does not prove Vary: User-Agent was emitted, vendor compliance, or the cause of any empirical ua-serving difference. No build/lint/census or closure counters run. Initial sweep was executed before fetch but not persisted first; the corrective sweep was persisted before the corrective fetch above. Initial full-header capture included unneeded session material; removed immediately from retained evidence and replaced with allowlisted status/content-type. Scratch headers are deleted below. No external state remediation.
+
+$ rm -rf -- /fast/scratch/hyaku/mori-r79/Mo79E03SourcePin
+rc=0
+
+$ test ! -e /fast/scratch/hyaku/mori-r79/Mo79E03SourcePin
+rc=0
