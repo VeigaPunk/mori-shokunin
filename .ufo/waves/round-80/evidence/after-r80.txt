@@ -1,6 +1,6 @@
 ## C1 the self-assessment sweep resolves at the landed revision
-$ python3 -I .ufo/waves/round-80/count-c1.py 108ec314258b2fa02aa154b70528ae057ae4695c
-C1=met tool=present sweep=0 mismatches=0 unresolved=0 tallies=0 stale=0 row_tally=19 live_tally=19 rev=108ec314258b
+$ python3 -I .ufo/waves/round-80/count-c1.py 97ce0c96c779278baa8e8bb45ade642f9fabf1e2
+C1=met tool=present sweep=0 mismatches=0 unresolved=0 tallies=0 stale=0 row_tally=19 live_tally=19 rev=97ce0c96c779
 rc=0
 
 $ python3 -I tools/mori-claim-sweep.py --root . --pins .ufo/waves/round-80/claim-pins.json
@@ -46,7 +46,7 @@ $ grep -c 'selftest 18 in-memory cases' SCORECARD.md
 rc=1
 
 ## C2 the frozen six-mutant harness kills them all
-$ python3 -I .ufo/waves/round-80/mutate-c2.py --rev 108ec314258b2fa02aa154b70528ae057ae4695c
+$ python3 -I .ufo/waves/round-80/mutate-c2.py --rev 97ce0c96c779278baa8e8bb45ade642f9fabf1e2
 unmutated survived rc=0 C2_COUNTER_SELFTEST pass=7 fail=0
 mutant drop_admitted killed rc=1 C2_COUNTER_SELFTEST pass=6 fail=1
 mutant raise_ceiling killed rc=1 C2_COUNTER_SELFTEST pass=5 fail=2
@@ -54,12 +54,12 @@ mutant count_other_verdicts killed rc=1 C2_COUNTER_SELFTEST pass=5 fail=2
 mutant cut_clause_boundary killed rc=1 C2_COUNTER_SELFTEST pass=6 fail=1
 mutant any_round_in_cell killed rc=1 C2_COUNTER_SELFTEST pass=4 fail=3
 mutant met_ignores_mismatch killed rc=1 C2_COUNTER_SELFTEST pass=2 fail=5
-MUTATION_C2 survivors=0 killed=6 total=6 unmutated=green rev=108ec314258b
+MUTATION_C2 survivors=0 killed=6 total=6 unmutated=green rev=97ce0c96c779
 rc=0
 
 ## C3 PROVINCE names every committed instrument
-$ python3 -I .ufo/waves/round-80/count-c3.py 108ec314258b2fa02aa154b70528ae057ae4695c
-C3=met named=56 present=56 missing=0 extra=0 rev=108ec314258b
+$ python3 -I .ufo/waves/round-80/count-c3.py 97ce0c96c779278baa8e8bb45ade642f9fabf1e2
+C3=met named=56 present=56 missing=0 extra=0 rev=97ce0c96c779
 rc=0
 
 ## Receipts conform to the r79 guard
